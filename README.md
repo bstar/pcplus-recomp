@@ -164,6 +164,12 @@ Synchronet editor interaction is verified in DOS.
 Stage the terminal, sibling helpers and
 an authored HELLO example with `./tools/build package`; files appear in
 `build/dos-package` without original executables or private profiles.
+Use `./tools/build package-mouse` for `build/dos-package-mouse`.
+`standalone/package_dos.py --stage-current` stages existing products after
+checking current source and binary identities; run it through `./tools/dev --command python3`.
+The [current package receipt](docs/validation/modem-init-packages.json) verifies
+both packages' example compilation and execution in 8086 DOS. The included
+README describes `/I` initialization waiting and the analog bridge dialing flow.
 
 The [native SET runtime](docs/ASPECT_SET_RUNTIME.md),
 [FIND/SWITCH/CASE integration](docs/ASPECT_FIND_CASE_RUNTIME.md) and

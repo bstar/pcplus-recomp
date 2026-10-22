@@ -61,7 +61,7 @@ async def main(args):
     module.directory_prm=profile
     options=argparse.Namespace(name='enigma',label=args.label,port=23233,com=2,baud=19200,flow='HARD',packet_delay_ms=0,
         dial_fixture=False,directory_fixture=True,directory_browser=False,entry=3,binary=stage/'TERMINAL.EXE',
-        config_fixture=False,keymap_fixture=None,server_log=None,keys='',wait=2,timeout=340)
+        config_fixture=False,keymap_fixture=None,server_log=None,keys='',wait=2,timeout=340,init_wait=args.init_wait)
     with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):code=await module.run(options)
     run=json.loads((out/'result.json').read_text())
     # The modem harness names this direction bbs-sent; the audio relay uses
@@ -80,7 +80,9 @@ async def main(args):
         timer_restored=len(read('KEYOLD.BIN'))==4 and read('KEYOLD.BIN')==read('KEYNEW.BIN'),
         unchanged_helper=sha(stage/'EXITKEY.COM')==helper_sha,
         inputs_unchanged=all(sha(ROOT/name)==digest for name,digest in frozen.items()))
-    result=dict(passed=all(checks.values()),checks=checks,recording=recording,inputs=frozen,
+    if args.init_wait is not None:
+        checks['explicit_initialization_wait']=run['initialization_wait_seconds']==args.init_wait and run['configuration']['command'].split().count(f'/I:{args.init_wait}')==1
+    result=dict(passed=all(checks.values()),checks=checks,recording=recording,inputs=frozen,initialization_wait_seconds=args.init_wait,
         binary_sha256=run['binary_sha256'],helper_sha256=helper_sha,
         captures_sha256={str(p.relative_to(out)):sha(p) for p in out.rglob('*') if p.is_file() and not p.is_relative_to(out/'frozen-source')},
         scope=__doc__+' Real local Telnet BBS and emulated UART; source-built DOS programs and actual BIOS keys. No SIP/audio/physical acceptance.')
@@ -91,4 +93,5 @@ async def main(args):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--keys',type=Path,required=True)
+    p.add_argument('--init-wait',type=int,choices=range(32768),metavar='SECONDS',help='Explicit /I initialization acknowledgement deadline')
     asyncio.run(main(p.parse_args()))

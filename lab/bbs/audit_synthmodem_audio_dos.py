@@ -17,6 +17,11 @@ def main():
   b=wire[at+3:at+size+2];at+=size+2
   if kind==0x15:data.extend(b)
   elif kind==0x13:status.append(json.loads(b))
+ if r.get('initialization_wait_seconds') is not None:
+  wait=r['initialization_wait_seconds'];start=json.loads((out/'run-start.json').read_text())
+  lines=(out/'dosbox.conf').read_text().splitlines()
+  command=[line for line in lines if line.startswith('TERMINAL ')]
+  checks['explicit_initialization_wait']=0<=wait<=32767 and start['initialization_wait_seconds']==wait and len(command)==1 and command[0].split().count(f'/I:{wait}')==1
  prefix=b'ATZ\rATD1\r';checks['numeric_command_prefix']=serial.startswith(prefix) and n['commands']==['ATZ','ATD1']
  # The production session deliberately discards post-training tail bytes while
  # its proxy is detached. Account for that exact sink count, never arbitrary

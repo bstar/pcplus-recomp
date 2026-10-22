@@ -21,6 +21,8 @@ def main():
     for r in (k,t):
         for name,digest in r['inputs'].items():assert sha(ROOT/name)==digest,name
     for name,digest in t['captures_sha256'].items():assert sha(tcp.parent/name)==digest,name
+    if start.get('initialization_wait_seconds') is not None:
+        assert t['initialization_wait_seconds']==start['initialization_wait_seconds']
     assert start['route']=='recording'
     assert not start.get('recording_marker_trace',False),'Diagnostic helper cannot establish production preparation'
     assert start['generated_inputs']['program/EXITKEY.COM']==k['production_helper_sha256']
@@ -47,7 +49,7 @@ def main():
         shutil.copy2(path,copy);assert sha(copy)==sha(path)
         kept[str(copy.relative_to(ROOT))]=sha(copy)
     result=dict(passed=True,preparation_only=True,actual_audio_accepted=False,
-        BIOS_cases=7,TCP_checks=t['checks'],terminal_sha256=t['binary_sha256'],helper_sha256=t['helper_sha256'],
+        initialization_wait_seconds=start.get('initialization_wait_seconds'),BIOS_cases=7,TCP_checks=t['checks'],terminal_sha256=t['binary_sha256'],helper_sha256=t['helper_sha256'],
         runtime_inputs=runtime,audio_admission=str((audio/'run-start.json').relative_to(ROOT)),custody_sha256=kept,
         earlier_audio_failure='docs/validation/recording-audio-early-menu-failure.json',
         earlier_final_page_failure='docs/validation/recording-audio-final-page-failure.json',

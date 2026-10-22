@@ -58,9 +58,29 @@ lacked NASM; its exemption was restored. The accepted replacement uses the full
 Nix development toolchain for DOS execution. Raw failed and accepted cohorts
 remain separate under ignored build storage.
 
-Current-product audio and broader editor/transfer regressions remain required.
-The initialization component receipt predates this BBS receipt and retains its
-explicit unaccepted BBS/audio field. Physical hardware and full F03 remain open.
+A separate [software audio receipt](validation/recording-init-wait-audio.json)
+now accepts the current parent/compiler with `/I:3` on one ENiGMA V22/1200 route
+at 38400 DTE: 26 producer, 35 independent and 12 serial checks pass. All 77
+online guest bytes decode independently from caller RTP and match serial input.
+Recording, actual DOS compilation/replay, subsequent manual Search and
+hardware/timer/SIP/VM cleanup complete. The unchanged seven-case BIOS helper and
+14-check TCP control are bound through a separate
+[preparation receipt](validation/recording-init-wait-audio-preparation.json).
+
+[Current normal/mouse packages](validation/modem-init-packages.json) contain the
+validated terminal, sibling helpers and updated DOS compiler, plus authored
+examples and initialization instructions. Both packages pass actual 8086 DOS
+compilation, bytecode execution and source compile/run of the example. Rebuild
+with `./tools/build package` or `./tools/build package-mouse`. To stage already
+built products, `./tools/dev --command python3 standalone/package_dos.py
+--stage-current` checks their binary and source identities before copying;
+add `--mouse` for the mouse package. This does not prove complete terminal/mouse
+interaction or full distribution acceptance.
+
+Broader editor/transfer and audio routes remain required. The initialization
+component receipt predates these BBS/audio receipts and retains its explicit
+unaccepted BBS/audio field. Physical Boca/SPA2102, V.8/14.4 compatibility and full
+F03 remain open.
 
 # Historical baseline
 

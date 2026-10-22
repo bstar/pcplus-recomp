@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+[Current initialization/audio regression](docs/validation/recording-init-wait-audio.json)
+accepts parent e30df926 with explicit `/I:3` for one ENiGMA software V22/1200
+SIP/audio route at 38400 DTE. Recording, DOS ASP compilation/replay, manual
+Search and hardware/timer/SIP/VM cleanup pass: 26 producer, 35 independent and
+12 serial checks; all 77 online guest bytes decode independently from the
+waveform and match the serial stream. The unchanged BIOS helper retains seven
+cases/56 checks and the current TCP control passes 14 checks. Normal and mouse
+DOS packages now include the current compiler and pass twelve combined actual
+8086 compilation/runner checks. Broader application work, other audio routes,
+physical Boca/SPA2102 and all full F01-F16 gates remain open.
+
 [Current initialization/BBS regression](docs/validation/bbs-initialization-compat.json)
 accepts four independently audited actual DOS Synchronet/ENiGMA sessions with
 explicit `/I:3`: recording, DOS compilation, fresh-session replay and manual
@@ -15,8 +26,8 @@ receipt accepts 74 linked groups, nine DOS connection cases, four DOS retries,
 compiler/stack regressions and thirteen attached PROGRAM workflows. A compiler
 memory correction restores nested compilation under the larger retained parent.
 Fresh source-only builds reproduce normal, mouse and compiler products.
-Current-product audio, broader BBS workflows, physical hardware and every full
-application gate remain open. Earlier checkpoint identities below are historical.
+Broader BBS/audio workflows, physical hardware and every full application gate
+remain open. Earlier checkpoint identities below are historical.
 
 [Failed-hangup policy](docs/validation/hangup-failure-policy.json) now preserves the online session and
 flow state when a blocked hangup leaves DCD high, reports Hangup failed and

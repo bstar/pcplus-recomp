@@ -10,9 +10,9 @@ from build_aspect_runner import ROOT, sha
 OUT = ROOT / 'build/dos-package'
 
 
-def main(mouse=False):
+def main(mouse=False,stage_current=False):
     output=ROOT/'build/dos-package-mouse' if mouse else OUT
-    for name in ['terminal', 'setup', 'xlt_editor', 'aspect_runner', 'aspect_compiler_dos']:
+    for name in ([] if stage_current else ['terminal', 'setup', 'xlt_editor', 'aspect_runner', 'aspect_compiler_dos']):
         subprocess.run([sys.executable, str(ROOT / f'standalone/build_{name}.py'),
                         *(['--mouse'] if mouse and name in ('terminal','setup') else [])], check=True)
     output.mkdir(parents=True, exist_ok=True)
@@ -22,7 +22,7 @@ def main(mouse=False):
     inputs={}
     for leaf, relative in files.items():
         source=ROOT/'build'/relative;manifest=source.parent/'manifest.json';metadata=json.loads(manifest.read_text())
-        assert metadata['binary_sha256']==sha(source)
+        assert metadata.get('original_inputs',[])==[] and metadata['binary_sha256']==sha(source)
         assert all(not Path(p).is_absolute() and '..' not in Path(p).parts and
                    Path(p).parts[0] not in ('analysis','build') and sha(ROOT/p)==h
                    for p,h in metadata['sources'].items())
@@ -41,6 +41,13 @@ def main(mouse=False):
     (output / 'LINK.ASX').write_bytes(compile_source(link))
     instructions = ('PCPlus source reconstruction - current DOS programs\r\n'
                     '\r\nStart: TERMINAL COM1 38400 8N1 SOFT\r\n'
+                    'Configured modem: TERMINAL @PCPLUS.PRM /D:5551234 /I:3\r\n'
+                    '/I:0..32767 sets initialization reply seconds per command.\r\n'
+                    'Omitted or zero keeps legacy initialization without reply waiting.\r\n'
+                    'Positive waits for OK; ERROR/timeout prevents dialing.\r\n'
+                    'Use initialization commands supported by your actual modem.\r\n'
+                    'With the analog bridge, dial its local call target first.\r\n'
+                    'Enter the BBS hostname at CONNECT> after modem carrier.\r\n'
                     'Scripts: Alt-Z, File, A Run script, then HELLO.ASX.\r\n'
                     'Connected scripts resume automatically after success.\r\n'
                     'Offline scripts wait for a key before returning.\r\n'
@@ -88,4 +95,5 @@ def main(mouse=False):
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--mouse',action='store_true')
-    main(parser.parse_args().mouse)
+    parser.add_argument('--stage-current',action='store_true',help='Stage existing products after checking binary and current source identities; skip rebuilding')
+    args=parser.parse_args();main(args.mouse,args.stage_current)

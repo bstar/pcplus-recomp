@@ -1,0 +1,147 @@
+{
+  "passed": true,
+  "packages": {
+    "normal": {
+      "directory": "build/dos-package",
+      "report": "build/package-tests/init-wait-01/result.json",
+      "report_sha256": "5b3a58f68ca9a4812eb58daa6d50c491a6298a05de01d8969fb7386bed557f6b",
+      "manifest_sha256": "3ec1b25435c726755397d81629f44e27b0bde2a1cd858f7a654151631779d911",
+      "files": {
+        "TERMINAL.EXE": "e30df9268e92dbd9706f48e9ba5baddaa2c21964174ebf779f753dca6bbc03a6",
+        "ASPECT.EXE": "183f852dfe0a992faa29515e124eb3b6570e44578bdc25880a8a792a2bf7da3f",
+        "PRMEDIT.EXE": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10",
+        "ASPCOMP.EXE": "0a79af5f831ebd824229900deb9f2549ead91e262042ca8bb4be73aa9b9c96cb",
+        "HELLO.ASP": "07d7fca682e97647fc5ff283ff10eafda4a18f70e61134a10e7267d73b7512ed",
+        "HELLO.ASX": "8e06308110805076a77b354e18097e00850b9e8da5c84e75a0848767aeefe727",
+        "LINK.ASP": "e9a28431c33fb0e4393f3aca9f1af5848410b777be13b385db7498ecba8babe9",
+        "LINK.ASX": "e763ae495f50055b8de7847103c14c1f586d847cdd4c676cd632f5ba02dda245",
+        "README.TXT": "df4a8350031866dcac268b95cbad5bcbfd9a7ac500810b709877b557430cdbf3"
+      },
+      "checks": {
+        "emulator_exit": true,
+        "DOS_exit": true,
+        "DOS_compiler_exact": true,
+        "inputs_unchanged": true,
+        "packaged_sources_unchanged": true,
+        "actual_script_message": true
+      },
+      "input_manifests": {
+        "TERMINAL.EXE": {
+          "manifest": "build/terminal/manifest.json",
+          "sha256": "464135f54d269ede36b85109cf8160b6c89487ea317f99e9eea18e09b78fa85b"
+        },
+        "ASPECT.EXE": {
+          "manifest": "build/aspect-runner/manifest.json",
+          "sha256": "2da7905a9a9147558a863dbcf802d7a0eb8a9c45d4c46eb11fd44f0026033537"
+        },
+        "PRMEDIT.EXE": {
+          "manifest": "build/setup/manifest.json",
+          "sha256": "da6a679b37ebcd99e8ddcdbd43ff4eb8af095708484c3099b5cc8f395932c0c3"
+        },
+        "XLTEDIT.EXE": {
+          "manifest": "build/xlt-editor/manifest.json",
+          "sha256": "f55e06590abe5bb0b0465f1f5b112a568c6042baef2fe8879dbda1a813fab27f"
+        },
+        "ASPCOMP.EXE": {
+          "manifest": "build/aspect-compiler-dos/manifest.json",
+          "sha256": "2fc66b92278e24edd101573a9bc2e137ad2f733e4a6df65e2f64294ee90888c5"
+        }
+      },
+      "captures_sha256": {
+        "TERMINAL.EXE": "e30df9268e92dbd9706f48e9ba5baddaa2c21964174ebf779f753dca6bbc03a6",
+        "ASPECT.EXE": "183f852dfe0a992faa29515e124eb3b6570e44578bdc25880a8a792a2bf7da3f",
+        "PRMEDIT.EXE": "0c814a4122a2b3c705fee8f17e0cd7a2a3d314493df24d164c106f3fe6058646",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10",
+        "ASPCOMP.EXE": "0a79af5f831ebd824229900deb9f2549ead91e262042ca8bb4be73aa9b9c96cb",
+        "HELLO.ASP": "07d7fca682e97647fc5ff283ff10eafda4a18f70e61134a10e7267d73b7512ed",
+        "LINK.ASP": "e9a28431c33fb0e4393f3aca9f1af5848410b777be13b385db7498ecba8babe9",
+        "LINK.ASX": "e763ae495f50055b8de7847103c14c1f586d847cdd4c676cd632f5ba02dda245",
+        "README.TXT": "df4a8350031866dcac268b95cbad5bcbfd9a7ac500810b709877b557430cdbf3",
+        "sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "dosbox.conf": "7281f652596331a91c324423563578c151d9e410833d6c5c0c1cc7583ac67542",
+        "dosbox.log": "ed5fc971f54c8dc21ba2741e68c0b7673acdb67183bc917f21f1e71e6787fbba",
+        "COMPILE.TXT": "1473732771898df8ece5a34f485f7bd89d200e72cf776efaefe63100c164a91b",
+        "REBUILD.ASX": "8e06308110805076a77b354e18097e00850b9e8da5c84e75a0848767aeefe727",
+        "RUN.TXT": "8e8a6bdc6748f9a0b6e29b84610688696ecd93c312bd1124bdaa04acfc0a65c5",
+        "SOURCE.TXT": "8e8a6bdc6748f9a0b6e29b84610688696ecd93c312bd1124bdaa04acfc0a65c5",
+        "HELLO.ASX": "8e06308110805076a77b354e18097e00850b9e8da5c84e75a0848767aeefe727",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "705ef453be9aa82f9f32e6529757a561dcf1c373a5d5a59d640a5962a41a2dd1"
+      }
+    },
+    "mouse": {
+      "directory": "build/dos-package-mouse",
+      "report": "build/package-mouse-tests/init-wait-01/result.json",
+      "report_sha256": "c5c1e0d49e3cd75e13afc3650e30f828d366e09302c3b8c27f8e184c91a72478",
+      "manifest_sha256": "3b127af795787e3f31ae343ef5faa71b2b9a7c2382f8e6bdc12d71a12df9c687",
+      "files": {
+        "TERMINAL.EXE": "dd9ee7aff25d5f326b4d07ce5598b74113bceb26f3dfa4f9fa521f6eb3b3ab0d",
+        "ASPECT.EXE": "183f852dfe0a992faa29515e124eb3b6570e44578bdc25880a8a792a2bf7da3f",
+        "PRMEDIT.EXE": "0f0dafd6b783bf8ae5d170ddd4448273057cf7ff168e8e21d74ef1be657e8128",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10",
+        "ASPCOMP.EXE": "0a79af5f831ebd824229900deb9f2549ead91e262042ca8bb4be73aa9b9c96cb",
+        "HELLO.ASP": "07d7fca682e97647fc5ff283ff10eafda4a18f70e61134a10e7267d73b7512ed",
+        "HELLO.ASX": "8e06308110805076a77b354e18097e00850b9e8da5c84e75a0848767aeefe727",
+        "LINK.ASP": "e9a28431c33fb0e4393f3aca9f1af5848410b777be13b385db7498ecba8babe9",
+        "LINK.ASX": "e763ae495f50055b8de7847103c14c1f586d847cdd4c676cd632f5ba02dda245",
+        "README.TXT": "a7583304e238492a0c2dd8306f4355ea93eb925261d7f7ff213422549a4a680e"
+      },
+      "checks": {
+        "emulator_exit": true,
+        "DOS_exit": true,
+        "DOS_compiler_exact": true,
+        "inputs_unchanged": true,
+        "packaged_sources_unchanged": true,
+        "actual_script_message": true
+      },
+      "input_manifests": {
+        "TERMINAL.EXE": {
+          "manifest": "build/terminal-mouse/manifest.json",
+          "sha256": "a847fe2216dcdf2225e118dba19065c0bd4dd7bbac80286bfa2c3769e827c4fa"
+        },
+        "ASPECT.EXE": {
+          "manifest": "build/aspect-runner/manifest.json",
+          "sha256": "2da7905a9a9147558a863dbcf802d7a0eb8a9c45d4c46eb11fd44f0026033537"
+        },
+        "PRMEDIT.EXE": {
+          "manifest": "build/setup-mouse/manifest.json",
+          "sha256": "1b652a8da45e883ee56de276fcf74148f3c7f4bfe591e3784453e3dd1dc610dd"
+        },
+        "XLTEDIT.EXE": {
+          "manifest": "build/xlt-editor/manifest.json",
+          "sha256": "f55e06590abe5bb0b0465f1f5b112a568c6042baef2fe8879dbda1a813fab27f"
+        },
+        "ASPCOMP.EXE": {
+          "manifest": "build/aspect-compiler-dos/manifest.json",
+          "sha256": "2fc66b92278e24edd101573a9bc2e137ad2f733e4a6df65e2f64294ee90888c5"
+        }
+      },
+      "captures_sha256": {
+        "TERMINAL.EXE": "dd9ee7aff25d5f326b4d07ce5598b74113bceb26f3dfa4f9fa521f6eb3b3ab0d",
+        "ASPECT.EXE": "183f852dfe0a992faa29515e124eb3b6570e44578bdc25880a8a792a2bf7da3f",
+        "PRMEDIT.EXE": "0f0dafd6b783bf8ae5d170ddd4448273057cf7ff168e8e21d74ef1be657e8128",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10",
+        "ASPCOMP.EXE": "0a79af5f831ebd824229900deb9f2549ead91e262042ca8bb4be73aa9b9c96cb",
+        "HELLO.ASP": "07d7fca682e97647fc5ff283ff10eafda4a18f70e61134a10e7267d73b7512ed",
+        "LINK.ASP": "e9a28431c33fb0e4393f3aca9f1af5848410b777be13b385db7498ecba8babe9",
+        "LINK.ASX": "e763ae495f50055b8de7847103c14c1f586d847cdd4c676cd632f5ba02dda245",
+        "README.TXT": "a7583304e238492a0c2dd8306f4355ea93eb925261d7f7ff213422549a4a680e",
+        "sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+        "SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+        "dosbox.conf": "4cc369d03a62e202e0b02dc5dc7b3dd0004edb41642cc81209ccbb56806e501e",
+        "dosbox.log": "eddd9c8626fe13b45953f3e89c16cf553bab421590aabe0d3d4fb127b48955ff",
+        "COMPILE.TXT": "1473732771898df8ece5a34f485f7bd89d200e72cf776efaefe63100c164a91b",
+        "REBUILD.ASX": "8e06308110805076a77b354e18097e00850b9e8da5c84e75a0848767aeefe727",
+        "RUN.TXT": "8e8a6bdc6748f9a0b6e29b84610688696ecd93c312bd1124bdaa04acfc0a65c5",
+        "SOURCE.TXT": "8e8a6bdc6748f9a0b6e29b84610688696ecd93c312bd1124bdaa04acfc0a65c5",
+        "HELLO.ASX": "8e06308110805076a77b354e18097e00850b9e8da5c84e75a0848767aeefe727",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "21de6754c722a9c01616fa7270d31ca60773713ddd9e170378de1d158a768a79"
+      }
+    }
+  },
+  "auditor_sha256": "f0bb7633612049ecbb42cb75bd0e8f62ce1edda52f561446f0eea732e6010b5b",
+  "scope": "Two current source-built DOS package inventories and actual 8086 DOS compilation, bytecode execution and source compile/run of the authored example. Package terminal/mouse interaction, complete distribution and physical hardware require separate evidence."
+}

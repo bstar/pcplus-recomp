@@ -15,15 +15,16 @@ from test_terminal import SAMPLER
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label',default='package-'+uuid.uuid4().hex)
+    parser.add_argument('--normal',action='store_true',help='Validate the ordinary package instead of the mouse package')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
-    package=ROOT/'build/dos-package-mouse';manifest=json.loads((package/'manifest.json').read_text())
-    assert manifest['original_inputs']==[] and manifest['experimental_mouse'] and len(manifest['files'])==10
+    package=ROOT/('build/dos-package' if args.normal else 'build/dos-package-mouse');manifest=json.loads((package/'manifest.json').read_text())
+    assert manifest['original_inputs']==[] and manifest['experimental_mouse']==(not args.normal) and len(manifest['files'])==10
     assert all(sha(package/p)==h for p,h in manifest['files'].items())
     assert all(sha(ROOT/p)==h for p,h in manifest['sources'].items())
     for leaf,info in manifest['input_manifests'].items():
         path=ROOT/info['manifest'];assert sha(path)==info['sha256']
         assert json.loads(path.read_text())['binary_sha256']==sha(package/leaf)
-    out=ROOT/'build/package-mouse-tests'/args.label;out.mkdir(parents=True,exist_ok=False)
+    out=ROOT/('build/package-tests' if args.normal else 'build/package-mouse-tests')/args.label;out.mkdir(parents=True,exist_ok=False)
     for name in manifest['files']:shutil.copyfile(package/name,out/name)
     (out/'sampler.asm').write_text(SAMPLER)
     subprocess.run(['nasm','-fbin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
@@ -72,7 +73,7 @@ exit
         artifacts={p.name:sha(p) for p in out.iterdir() if p.is_file()},
         scope='Declared source-built package files; actual8086 DOS source compiler, compiled runner and automatic source compilation. Terminal/settings interaction has separate acceptance; no physical hardware or full application claim.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n')
-    print('Mouse package:', 'PASS' if report['passed'] else checks,out)
+    print('DOS package:' if args.normal else 'Mouse package:', 'PASS' if report['passed'] else checks,out)
     return 0 if report['passed'] else 1
 
 

@@ -27,6 +27,7 @@ def main():
  p.add_argument('--editor-burst-checks',type=Path,help='Enable one-tick editor BIOS keys using a passing guarded-helper probe')
  p.add_argument('--editor-multiline-checks',type=Path,help='Enable30-line BIOS draft and page movement with a passing helper/TCP proof')
  p.add_argument('--download-pressure-preparation',type=Path,help='Explicit >64KiB fixture/reference/BIOS preparation proof')
+ p.add_argument('--init-wait',type=int,choices=range(32768),metavar='SECONDS',help='Explicit /I initialization acknowledgement deadline')
  p.add_argument('--zmodem-receive-credit',type=int,help='Explicit DOS /Z:1..8192 receive policy; default unchanged')
  a=p.parse_args()
  if a.recording_marker_trace:assert a.route=='recording'
@@ -188,6 +189,7 @@ def main():
   tcp=json.loads(tcp_path.read_text())
   assert tcp['passed'] and all(tcp['checks'].values()) and tcp['helper_sha256']==recording_helper_sha
   assert tcp['binary_sha256']==sha(ROOT/'build/terminal/TERMINAL.EXE')
+  if a.init_wait is not None:assert tcp['initialization_wait_seconds']==a.init_wait
   assert all(sha(ROOT/name)==h for name,h in tcp['inputs'].items())
   assert all(sha(tcp_path.parent/name)==h for name,h in tcp['captures_sha256'].items())
   names += [str(tcp_path.relative_to(ROOT)),*tcp['inputs'],*[str((tcp_path.parent/name).relative_to(ROOT)) for name in tcp['captures_sha256']]]
@@ -265,7 +267,7 @@ def main():
  start_manifest=dict(frozen_inputs=frozen,runtime_inputs=runtime_inputs,server_inputs=server_inputs,server_root=str(enigma.SOURCE),server_fixture=server_fixture,
   generated_inputs=generated,tool_inputs=tool_inputs,profile_sha256=sha(out/'MODEM.PRM'),directory_initial_hex=contact.hex(),
   download_metadata_before=download_before,upload_metadata_before=upload_before,download_path=str(download_path) if download_path else None,
-  route=a.route,recording_marker_trace=bool(a.recording_marker_trace),recording_marker_watchdog_ticks=12000 if a.recording_marker_trace else None,recording_marker_trace_proof=str(a.recording_marker_trace.resolve().relative_to(ROOT)) if a.recording_marker_trace else None,zmodem_receive_credit=a.zmodem_receive_credit,expected_receive_offer=expected_receive_offer,pressure_preparation=str(a.download_pressure_preparation) if pressure_download else None)
+  route=a.route,initialization_wait_seconds=a.init_wait,recording_marker_trace=bool(a.recording_marker_trace),recording_marker_watchdog_ticks=12000 if a.recording_marker_trace else None,recording_marker_trace_proof=str(a.recording_marker_trace.resolve().relative_to(ROOT)) if a.recording_marker_trace else None,zmodem_receive_credit=a.zmodem_receive_credit,expected_receive_offer=expected_receive_offer,pressure_preparation=str(a.download_pressure_preparation) if pressure_download else None)
  (out/'run-start.json').write_text(json.dumps(start_manifest,indent=2)+'\n')
  def clock_anchor(label):
   before=time.monotonic_ns();wall=time.time_ns();after=time.monotonic_ns()
@@ -299,7 +301,7 @@ mount d "{out}"
 c:
 D:\\SNAP B
 EXITKEY
-TERMINAL @D:\\MODEM.PRM /E:D:\\CALL.DIR /N:1{(' /Z:'+str(a.zmodem_receive_credit)) if a.zmodem_receive_credit is not None else ''}
+TERMINAL @D:\\MODEM.PRM /E:D:\\CALL.DIR /N:1{(' /I:'+str(a.init_wait)) if a.init_wait is not None else ''}{(' /Z:'+str(a.zmodem_receive_credit)) if a.zmodem_receive_credit is not None else ''}
 if errorlevel 1 goto fail
 echo PASS>D:\\PASS.TXT
 goto capture
@@ -402,7 +404,7 @@ exit
   else:extra,upload=audio_upload.check(out,rows,upload_before)
   checks.update(extra)
   checks['posttransfer_filename_visible']=('PCXTEST.BIN' if a.upload_cancel and not a.upload_cancel_retry else audio_upload.NAME) in text
- result={'passed':all(checks.values()),'checks':checks,'zmodem_receive_credit':a.zmodem_receive_credit,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
+ result={'passed':all(checks.values()),'checks':checks,'initialization_wait_seconds':a.init_wait,'zmodem_receive_credit':a.zmodem_receive_credit,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
   'DOS_screen':text,'gateway':n,'route':a.route,'expected_receive_offer':expected_receive_offer,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor_multiline_checks':str(multiline_proof.relative_to(ROOT)) if a.editor_multiline_checks else None,'download_pressure_preparation':str(a.download_pressure_preparation.resolve().relative_to(ROOT)) if pressure_download else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
   'recording':recording,'recording_marker_trace':bool(a.recording_marker_trace),'recording_marker_trace_proof':str(a.recording_marker_trace.resolve().relative_to(ROOT)) if a.recording_marker_trace else None,'recording_marker_watchdog_ticks':12000 if a.recording_marker_trace else None,'recording_key_checks':str(a.recording_key_checks.resolve().relative_to(ROOT)) if a.recording_key_checks else None,

@@ -9,7 +9,7 @@ from synthmodem_buffered_runtime import validate as validate_runtime
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path)
-    p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p.add_argument('--output',type=Path,required=True);p.add_argument('--init-wait',type=int,choices=range(32768),metavar='SECONDS');a=p.parse_args()
     out=a.cohort.resolve();target=a.output.resolve()
     assert out.is_relative_to(ROOT/'build') and target.is_relative_to(ROOT/'docs/validation') and not target.exists()
     read=lambda name:json.loads((out/name).read_text())
@@ -38,6 +38,9 @@ def main():
     assert read('node-result.json')==r['gateway'] and r['gateway']['pool']=='stopped' and r['gateway']['VM_exited']
     start=read('run-start.json')
     for group in ('frozen_inputs','runtime_inputs','tool_inputs','generated_inputs','server_inputs'):assert start[group]==r[group],group
+    if a.init_wait is not None:
+        assert r['initialization_wait_seconds']==start['initialization_wait_seconds']==a.init_wait
+        assert audit['checks']['explicit_initialization_wait']
     assert start['route']=='recording' and start['profile_sha256']==sha(out/'MODEM.PRM')
     assert 'program/PCPLUS.ASP' not in start['generated_inputs'] and 'program/PCPLUS.ASX' not in start['generated_inputs']
     journal=read('server-log-capture/result.json');assert journal['passed']
@@ -59,6 +62,7 @@ def main():
     keys=json.loads((ROOT/r['recording_key_checks']).read_text());tcp=json.loads((ROOT/r['recording_tcp_checks']).read_text())
     assert keys['passed'] and len(keys['cases'])==7 and all(case['passed'] and all(case['checks'].values()) for case in keys['cases'])
     assert tcp['passed'] and all(tcp['checks'].values());inputs(keys['inputs']);inputs(tcp['inputs'])
+    if a.init_wait is not None:assert tcp['initialization_wait_seconds']==a.init_wait
     assert sha(out/'program/EXITKEY.COM')==keys['production_helper_sha256']==tcp['helper_sha256']
     for name,path in (('TERMINAL.EXE','build/terminal/TERMINAL.EXE'),('ASPECT.EXE','build/aspect-runner/ASPECT.EXE'),('ASPCOMP.EXE','build/aspect-compiler-dos/ASPCOMP.EXE')):
         assert sha(out/'program'/name)==r['frozen_inputs'][path]
@@ -79,7 +83,7 @@ def main():
     names=list(dict.fromkeys([*r['captures_sha256'],*r['generated_inputs'],'result.json','node-result.json','dosbox.conf',
         'independent-audit.json','serial-io-audit.json','offline-caller.json']))
     result=dict(passed=True,actual_ENiGMA_recording_audio_accepted=True,full_F13_accepted=False,
-        cohort=str(out.relative_to(ROOT)),check_counts=dict(producer=len(r['checks']),independent=len(audit['checks']),
+        cohort=str(out.relative_to(ROOT)),initialization_wait_seconds=r.get('initialization_wait_seconds'),check_counts=dict(producer=len(r['checks']),independent=len(audit['checks']),
             serial=len(io['checks']),BIOS=sum(len(case['checks']) for case in keys['cases']),TCP=len(tcp['checks'])),
         producer_checks=r['checks'],independent_checks=audit['checks'],serial_checks=io['checks'],
         recording=audit['recording'],helper_report=helper,exact_online_bytes=len(online),payloads=audit['payloads'],
