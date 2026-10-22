@@ -7,10 +7,12 @@ extern terminal_option_mask,terminal_translation_path,_xlt_live_initialize
 extern process_psp
 extern terminal_receive_character,terminal_parser_active
 extern terminal_configuration_values,uart_rx_mask
+extern terminal_record_receive_far
 global terminal_load_translation,terminal_translate_input
 global terminal_receive_input
 ; Normal main-loop receive owner; raw monitor/controller/transfers filter first.
 terminal_receive_input:
+ call far terminal_record_receive_far
  call terminal_translate_input
  push ax
  inc word [terminal_parser_active]

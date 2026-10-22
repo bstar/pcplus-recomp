@@ -448,6 +448,7 @@ test-terminal: terminal
 	python3 standalone/check_terminal_capture_live.py
 	python3 standalone/check_recording_foreground_live.py
 	python3 standalone/check_recording_tx_live.py
+	python3 standalone/check_recording_rx_live.py
 	python3 standalone/check_redisplay_live.py
 	python3 standalone/test_redisplay_dos.py
 	python3 standalone/check_history_export_live.py

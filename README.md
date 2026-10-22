@@ -46,7 +46,9 @@ the [stable owner](docs/RECORDING_OWNER.md) now fits both keyboard and mouse
 builds after moving immutable templates into code storage. Startup/shutdown and
 owner APIs are tested. [TX origin tracking](docs/RECORDING_TX.md) now records
 successfully emitted user/binding bytes while excluding queued terminal replies.
-Menu controls, RX taps and complete owner exclusions remain unfinished.
+[RX prompt hooks](docs/RECORDING_RX.md) now cover normal input and parser
+continuations without duplicating lookahead bytes. Menu controls and complete
+owner exclusions remain unfinished.
 
 The [experimental attached PROGRAM binding](docs/ASPECT_PARENT_PROCESS.md) now
 preserves actual parent rendering, selected resources, script streams and VM

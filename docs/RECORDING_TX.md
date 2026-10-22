@@ -48,8 +48,9 @@ it leaves112 near-data bytes and440 resident-code bytes. The mouse build is
 it leaves64 near-data bytes and290 resident-code bytes. Both pass the static
 bank, state and relocation audit; runtime mouse acceptance remains separate.
 
-Next expose Record/save/cancel/recovery choices and connect received prompts,
-including parser continuation paths. Apply transfer/autostart, script, PROGRAM,
+The later [RX checkpoint](RECORDING_RX.md) connects normal/parser prompts and
+guards automatic transfer admission. Next expose Record/save/cancel/recovery
+choices and apply the remaining transfer, script, PROGRAM,
 setup, port-change, monitor/controller and error/exit exclusions. The component
 transfer test deliberately invokes lower-level owners to prove queue draining;
 it does not accept the final UI transition policy. Then test actual foreground

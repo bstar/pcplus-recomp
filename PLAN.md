@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+The [recorder RX checkpoint](docs/RECORDING_RX.md) now observes ordinary bytes
+before XLT and successful native parser continuation reads. Replay/cursor state
+suppresses only lookahead rereads, including physical ring wrap; equal new bytes
+remain distinct and timeout sentinels are excluded. Active/unresolved ownership
+disables automatic transfer admission. Ten RX and ten TX campaigns include a
+native query/prompt/user exchange with replies excluded. Six owner, five
+autostart,783 translation,78 ZMODEM,594 ABI-negative and11 DOS capture cases pass
+against the current binary. Keyboard/mouse data spare96/48; code spare414/264.
+Next Record controls, held-prefix/start/stop boundaries and all manual ownership
+guards, then actual foreground DOS recording/compiler/replay and current BBS/audio.
+All full F01–F16 and physical gates remain open.
+
 The [recorder TX checkpoint](docs/RECORDING_TX.md) now tracks origins for all1024
 ring slots in128 loaded bank bytes, with no near-data increase. Both successful
 queue-drain paths and direct TEXT output feed the stable recorder after UART

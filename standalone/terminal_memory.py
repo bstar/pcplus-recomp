@@ -193,6 +193,24 @@ def inspect_terminal_memory(binary,map_path):
   assert all(c['relative_segment']!=config_seg for c in code_segments if c['name']!='CONFIG_CODE'),'Configuration CS aliases other code'
   assert address('terminal_config_code_start')==config_seg*16
   assert address('terminal_config_code_end')-address('terminal_config_code_start')==config_code['bytes'],'Incomplete configuration extent'
+  if 'terminal_record_receive_far' in symbols:
+   lo=near_code['relative_segment']*16
+   body=image[start+lo:start+lo+near_code['bytes']];sites=[]
+   for name,count in (('terminal_record_receive_far',2),('terminal_record_unread_far',1),('terminal_recording_owned_far',1)):
+    assert symbols[name][0]==config_seg and symbols[name][1]<config_code['bytes'],(name,'RX recorder outside bank')
+    pattern=b'\x9a'+struct.pack('<HH',symbols[name][1],config_seg)
+    assert body.count(pattern)==count,(name,'RX binding count')
+    offset=0
+    for i in range(count):
+     site=lo+body.index(pattern,offset);offset=site-lo+5
+     assert site+3 in relocations,(name,'RX binding relocation')
+     sites.append(site)
+   code=image[start+config_seg*16:start+config_seg*16+config_code['bytes']]
+   pattern=b'\x50\x9a'+struct.pack('<HH',symbols['_recording_terminal_receive'][1],config_seg)+b'\x83\xc4\x02'
+   assert code.count(pattern)==1,'RX recorder callback arguments/cleanup/target'
+   callback=config_seg*16+code.index(pattern)+1
+   assert callback+3 in relocations,'RX callback relocation absent'
+   extra.update(recording_rx_far_call_sites=sites,recording_rx_callback_site=callback)
   if 'terminal_tx_origin_bits' in symbols:
    tag=address('terminal_tx_origin_bits');end=address('terminal_tx_origin_bits_end')
    assert symbols['terminal_tx_origin_bits'][0]==symbols['terminal_tx_origin_bits_end'][0]==config_seg
@@ -222,7 +240,8 @@ def inspect_terminal_memory(binary,map_path):
     name='_recording_terminal_'+suffix
     assert symbols[name][0]==config_seg and symbols[name][1]<config_code['bytes'],(name,'foreground recorder outside bank')
    ranges=[]
-   for name,length in (('_recording_terminal_owner',326),('_recording_terminal_path',64),('_recording_terminal_cookie',2)):
+   for name,length in (('_recording_terminal_owner',326),('_recording_terminal_path',64),('_recording_terminal_cookie',2),
+                       ('_recording_terminal_replay',2),('_recording_terminal_unread_pointer',2)):
     lo=address(name);hi=lo+length
     assert symbols[name][0]==ds and near_start<=lo and hi<=near_start+near_size,(name,'foreground state outside DGROUP')
     assert all(hi<=other_lo or lo>=other_hi for other_lo,other_hi in ranges),(name,'foreground state alias')
@@ -247,7 +266,7 @@ def inspect_terminal_memory(binary,map_path):
     assert code.count(pattern)==1,('Recorder code template absent/duplicated',i)
     if i:assert pattern not in near,('Recorder template remains near',i)
     literal_sites.append(config_seg*16+code.index(pattern))
-   extra.update(recording_terminal_state_bytes=392,recording_terminal_bank_functions_verified=9,
+   extra.update(recording_terminal_state_bytes=396,recording_terminal_bank_functions_verified=9,
     recording_terminal_far_call_sites=sites,recorder_code_literal_bytes_verified=sum(len(x)+1 for x in literals),
     recorder_code_literal_sites=literal_sites)
   if '_recording_file_begin' in symbols:

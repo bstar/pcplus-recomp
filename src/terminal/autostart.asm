@@ -12,6 +12,7 @@ extern terminal_program_pending,terminal_program_active,terminal_macro_active
 extern terminal_tab_wrap,terminal_control_mode_9026,terminal_newline_mode_9020
 extern terminal_parser_active,terminal_ansi_wait_active
 global _terminal_auto_deliver,_terminal_auto_allowed,_terminal_auto_start,_terminal_auto_ticks
+extern terminal_recording_owned_far
 _terminal_auto_ticks:
  jmp terminal_clock_ticks
 _terminal_auto_deliver:
@@ -30,6 +31,9 @@ _terminal_auto_deliver:
  pop bp
  ret
 _terminal_auto_allowed:
+ call far terminal_recording_owned_far
+ or ax,ax
+ jnz .no
  xor ax,ax
  cmp word [_terminal_transfer_preferences],0
  je .done

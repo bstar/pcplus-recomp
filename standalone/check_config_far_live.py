@@ -74,6 +74,24 @@ def main():
    if seg*16+off==wanted:struct.pack_into('<HH',bad,header[12]+4*j,0,0);break
   else:raise AssertionError(('Missing TX origin relocation',i))
   mutations.append((f'TX-origin-binding-{i}-missing-relocation',bad,listing))
+ for name in ('terminal_record_receive_far','terminal_record_unread_far','terminal_recording_owned_far'):
+  bad_listing=re.sub(r'(?m)^[0-9a-f]{4}:([0-9a-f]{4})([*+ ]+\s+'+name+r'\s*)$',lambda m:'0000:'+m[1]+m[2],listing)
+  assert bad_listing!=listing
+  mutations.append((name+':RX-outside-bank',raw,bad_listing))
+ for name in ('_recording_terminal_replay','_recording_terminal_unread_pointer'):
+  bad_listing=re.sub(r'(?m)^[0-9a-f]{4}:([0-9a-f]{4})([*+ ]+\s+'+name+r'\s*)$',lambda m:'0000:'+m[1]+m[2],listing)
+  assert bad_listing!=listing
+  mutations.append((name+':RX-state-outside-DGROUP',raw,bad_listing))
+ for i,site in enumerate(memory['recording_rx_far_call_sites']+[memory['recording_rx_callback_site']]):
+  for field in (1,3):
+   bad=bytearray(raw);bad[start+site+field]^=1
+   mutations.append((f'RX-binding-{i}-target-field-{field}',bad,listing))
+  bad=bytearray(raw);wanted=site+3
+  for j in range(header[3]):
+   off,seg=struct.unpack_from('<HH',bad,header[12]+4*j)
+   if seg*16+off==wanted:struct.pack_into('<HH',bad,header[12]+4*j,0,0);break
+  else:raise AssertionError(('Missing RX relocation',i))
+  mutations.append((f'RX-binding-{i}-missing-relocation',bad,listing))
  entries=[(name,int(n)) for name,n in re.findall(r'^CONFIG_ENTRY (\w+),(\d+)$',(ROOT/'src/terminal/config_abi.inc').read_text(),re.M)]
  assert len(entries)==42 and {n for _,n in entries}=={0,1,2,3,5,6,7,8,9,10}
  for name,count in entries:

@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The [recorder RX component](RECORDING_RX.md) now records normal/parser input
+before XLT, with cursor-based lookahead suppression and active-file autostart
+exclusion. A native query/prompt/user test preserves source ordering and excludes
+the terminal reply. Record controls and complete transition guards remain required;
+all full F01–F16 gates remain open.
+
 The [recorder TX component](RECORDING_TX.md) now records tagged user/binding
 bytes after UART acceptance in both drain loops and direct TEXT output. Ten
 linked campaigns cover origin separation, flow stalls, cancellation, full-ring
