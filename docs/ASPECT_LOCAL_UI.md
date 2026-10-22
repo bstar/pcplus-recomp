@@ -332,12 +332,21 @@ sustained data or terminal-query servicing while a window is open.
 ```sh
 ./tools/build test-terminal-script-window
 ./tools/build test-aspect-script-window-dos
-./tools/dev --command python3 lab/bbs/script_window_dos.py synchronet --label NEW
-./tools/dev --command python3 lab/bbs/script_window_dos.py enigma --label NEW
+./tools/dev --command python3 lab/bbs/recording_dos.py synchronet --label COMPAT_NEW
+./tools/dev --command python3 lab/bbs/recording_dos.py enigma --label COMPAT_NEW
+./tools/dev --command python3 lab/bbs/script_window_dos.py synchronet \
+  --label WINDOW_NEW --baseline-label COMPAT_NEW
+./tools/dev --command python3 lab/bbs/script_window_dos.py enigma \
+  --label WINDOW_NEW --baseline-label COMPAT_NEW
 ./tools/dev --command python3 lab/bbs/audit_script_window_dos.py \
-  --label NEW --cohort build/bbs-lab/window-accepted-NEW \
+  --label WINDOW_NEW --baseline-label COMPAT_NEW \
+  --cohort build/bbs-lab/window-accepted-NEW \
   --output docs/validation/window-accepted-NEW.json
 ```
+
+The independent stock-window auditor also requires the retained historical
+failure cohorts named in its source. These local evidence archives are separate
+from the source-only application build and are not distributed in Git.
 
 ## Implementation and acceptance still required
 
