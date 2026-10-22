@@ -6,14 +6,16 @@ It uses the source-built terminal, ASPECT and DOS ASPCOMP. The selected route is
 File Base → Search → File Base; after replay, manual input opens Search again.
 No generated recording is edited or compiled by the host before replay.
 
-The current parent0eff2348/runner2c80e45c has fresh
-[PAUSE-build audio preparation](../../docs/validation/recording-pause-audio-preparation.json):
-seven BIOS probes and all13 actual DOS/Telnet recorder-control checks pass.
-The pinned200ms V22/1200 runtime, current products, helper and immutable audio
-admission inputs are preserved. This is preparation only; the admitted cohort
-`build/bbs-lab/current-enigma-recording-audio-pause-01` needs its own completed
-producer, independent byte-stream and serial-evidence audits. Earlier accepted
-audio receipts do not accept the current runner.
+The [current PAUSE-build run](../../docs/validation/recording-pause-audio.json)
+accepts parent0eff2348/runner2c80e45c for this selected route:26 producer,
+34 independent and12 serial checks pass. All60,929 display bytes plus187 bridge
+bytes arrive exactly, and independent caller decoding matches77 online bytes.
+Normal hardware/timer/SIP/VM restoration passes without gateway errors or failed,
+skipped or pending writes. [Fresh preparation](../../docs/validation/recording-pause-audio-preparation.json)
+binds seven BIOS probes/56 assertions and13 actual DOS/Telnet checks to the same
+helper/runtime/products. Other peers/profiles, script-time windows over audio,
+physical hardware and full application gates remain open. Older runs below
+retain their exact earlier binary identities and scopes.
 
 The [accepted run03](../../docs/validation/recording-audio-03.json) passes26
 producer,34 independent and12 serial-evidence checks. Its complete60,383-byte BBS

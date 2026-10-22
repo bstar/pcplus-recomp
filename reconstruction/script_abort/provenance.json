@@ -1,0 +1,41 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "ranges": [
+    {
+      "unit": 0,
+      "start": "0x4e6b",
+      "end_exclusive": "0x4eb5",
+      "file_offset": 24683,
+      "bytes": 74,
+      "sha256": "ddef2f0afc0b531a37dd7466dca8a734962480f8864294dc8436268c7e596190",
+      "evidence_id": "ev_d5ac8c9bdecec6f5297ae5ada67765308702dac7d74148b8c6bc300d758d41c9",
+      "mapping_evidence_id": "ev_024df9a7ba9b186dd4096f0592729b6375fbec5a4534c532f39c521ae5ed416d"
+    },
+    {
+      "unit": 1,
+      "start": "0x6dde",
+      "end_exclusive": "0x6e59",
+      "file_offset": 32734,
+      "bytes": 123,
+      "sha256": "17cef652325c5f480ed52bcdb57d5a244f2d585cc6ec32941e28b1047a27416f",
+      "evidence_id": "ev_5515b2481daa4412254077eebc99eaa762e8078b5f1cce264c84e45d96ed8ca9",
+      "mapping_evidence_id": "ev_1d38e5fce01516e5e100245adf6880d75ff62dc6556ec72de54611ce72437918"
+    }
+  ],
+  "services": {
+    "0x3fc7": "abort_window_save",
+    "0x4015": "abort_window_restore",
+    "0x6bf0": "abort_choice_write",
+    "0x6b5a": "abort_cursor_push",
+    "0x6b42": "abort_cursor_pop",
+    "0x6e78": "abort_cursor_set",
+    "0x6dca": "abort_cursor_enable",
+    "0x6e5a": "abort_cursor_disable",
+    "0x64fe": "abort_choice_key_read",
+    "0x376d": "abort_choice_bell"
+  },
+  "limitations": [
+    "Recovered component instruction source; explicit modeled UI/cursor/keyboard service boundaries do not prove actual DOS window or live serial behavior.",
+    "Not integrated into the production application. The maintained runner still cancels immediately on outer Escape. No full F02/F13 acceptance."
+  ]
+}

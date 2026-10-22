@@ -7,8 +7,9 @@ pipeline. [PAUSE validation](validation/aspect-pause-live.json) and
 [PAUSE load validation](validation/aspect-pause-pressure.json) bind normal
 parent `0eff2348` and runner `2c80e45c`; capabilities remain10/11 and the ASIOv4
 descriptor is unchanged. Earlier receipts retain their historical identities.
-Real flow/carrier faults, affected software audio, full command actions and
-physical modem integration remain open.
+Real flow/carrier faults, script-time windows over audio, full command actions
+and physical modem integration remain open. The separate normal recorder route
+now has [current-build audio acceptance](validation/recording-pause-audio.json).
 
 ## Explicit terminal PAUSE
 
@@ -66,8 +67,9 @@ only the passive observer's magic, successful EXEC-return, child-exit and exit-c
 fields through the installed INT21 vector. It injects ordinary BIOS keys after
 actual completion; it writes no product, serial or success-file state. The auditor
 reassembles the observer, offset probe and keyboard driver and retains both
-attempts. These are selected loopback workflows, with no current software-audio
-or physical acceptance and no closure of full application gates.
+attempts. These window workflows are selected loopback tests, without window-over-audio
+or physical acceptance. The separate normal recorder route has current-build
+software-audio acceptance; no full application gate closes.
 
 ## Earlier WAITFOR load and stock BBS checkpoint
 
@@ -347,6 +349,43 @@ sustained data or terminal-query servicing while a window is open.
 The independent stock-window auditor also requires the retained historical
 failure cohorts named in its source. These local evidence archives are separate
 from the source-only application build and are not distributed in Git.
+
+## Native abort-confirmation component
+
+[Component validation](validation/aspect-abort-confirm.json) now binds native
+4E6B (74 bytes) and6DDE (123 bytes) to fresh REA dossiers and original-file
+mappings. Source-built flat and near/far-segment OMF outputs reproduce from an
+isolated tree containing no original executable. All4,610 CPU cases match
+executions of the genuine original ranges; all91 recovered instruction
+addresses execute. The first isolated OMF comparison failed because absolute
+source paths entered NASM object headers. Its source and outputs remain frozen;
+relative source invocation produces identical objects in both trees.
+
+The wrapper saves its window, writes the prompt, invokes default-No yes/no and
+restores the window while preserving its result. The helper accepts Y/y and
+N/n immediately, treats Escape as No, keeps the supplied default on Enter and
+rings the bell for other keys before reading again. Every low-byte key with two
+high-byte forms is exercised across both Boolean defaults, three cursor modes
+and composed wrapper execution. Non-Boolean Enter defaults also retain their
+native values. DS=SS, stack/callee cleanup, saved registers, last full key word,
+frame restoration and cursor/mode restoration are checked. Actual drawing,
+keyboard, cursor and bell services remain explicitly modeled.
+
+Production integration remains required. The existing outer Escape policy still
+cancels immediately; the new component is not linked into the live parent/child.
+A production confirmation owner must keep child UART reception and the actual
+parser responsive, leave WHEN/FILE/frame transitions on valid stacks, define
+when a declined Escape ends an active wait, preserve window dismissal versus
+script abort, and retire on END/error/revocation. A blocking native yes/no call
+with transport-only polling would repeat the query-delay defect. Actual DOS
+No/Enter/Escape/Yes, incoming query/load, cancellation and normal handback tests
+must constrain the eventual owner. No F02/F13 gate closes here.
+
+```sh
+./tools/build test-aspect-abort-confirm
+# Explicit local original comparison, excluded from the normal source-only test:
+./tools/build test-aspect-abort-confirm-original
+```
 
 ## Implementation and acceptance still required
 

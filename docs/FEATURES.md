@@ -9,8 +9,12 @@ is consumed during terminal PAUSE, while raw ASIO keeps its queued-input policy.
 stock Synchronet/ENiGMA. The window driver now observes actual successful EXEC
 return instead of requiring a transient completion banner. Failed attempts are
 preserved. [Semantics and limits](ASPECT_LOCAL_UI.md) distinguish these selected
-checks from full application completion. Current software audio, true flow and
-carrier faults, physical hardware and all full F01–F16 gates remain open.
+checks from full application completion. [Current normal recorder audio](validation/recording-pause-audio.json) also
+passes the selected ENiGMA V22/1200 workflow with exact streams and cleanup.
+The [native abort-confirmation component](validation/aspect-abort-confirm.json)
+adds197 exact bytes,4,610 original comparisons and four original-free products;
+production still cancels immediately on outer Escape. True flow/carrier faults,
+other audio paths, physical hardware and all full F01–F16 gates remain open.
 Entries below retain their historical product identities and scopes.
 
 

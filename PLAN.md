@@ -1,5 +1,30 @@
 # Complete DOS rebuild plan
 
+[Current normal recorder audio](docs/validation/recording-pause-audio.json)
+accepts the0eff2348/2c80e45c pair for one owned stock ENiGMA route through the
+pinned200ms V22/1200 SIP/RTP/DSP/Telnet runtime. Normal File/C recording, unedited
+DOS ASPCOMP compilation/File/A replay and subsequent manual Search pass26
+producer,34 independent and12 serial checks. All60,929 BBS display bytes plus187
+bridge bytes arrive exactly; independent waveform decoding matches77 online
+bytes. Hardware/timer/SIP/VM cleanup passes with no gateway errors, failed,
+skipped or pending writes. Seven BIOS probes/56 assertions and13 DOS/Telnet
+checks bind admission. Other audio routes/profiles, script-time windows over
+audio, actual Boca/SPA2102,14.4 negotiation and all full gates remain open.
+
+The [abort-confirmation component](docs/validation/aspect-abort-confirm.json)
+now recovers197 exact bytes for native4E6B and6DDE, with4,610 modeled-service CPU
+cases and4,610 genuine-original comparisons covering all91 source instruction
+addresses. Four flat/OMF products reproduce in an isolated original-free tree.
+The initial OMF path-dependent headers remain retained; relative assembler
+source paths fix reproducibility without changing native instructions. This
+component is not integrated: outer Escape still cancels immediately. Next wire
+a checked confirmation owner that preserves live child receive/parser/WHEN,
+local key ownership, default-No/decline behavior and cleanup; do not introduce
+another blocking query-delay path. Continue broader flow/carrier/fault tests,
+full command actions and every F01–F16/physical requirement. Earlier checkpoints
+below retain their binary identities and acceptance scopes.
+
+
 The [foreground PAUSE audit](docs/validation/aspect-pause-live.json) accepts
 seven actual DOS query/WHEN cases and Escape cancellation on unchanged normal
 parent0eff2348 with new runner2c80e45c. Reply delays are below11.6ms. Explicit

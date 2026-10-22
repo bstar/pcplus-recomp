@@ -113,6 +113,12 @@ test-aspect-when: aspect-when
 test-aspect-local-window:
 	python3 standalone/check_aspect_local_window.py
 test: test-aspect-local-window
+.PHONY: test-aspect-abort-confirm test-aspect-abort-confirm-original
+test-aspect-abort-confirm:
+	python3 standalone/check_aspect_abort_confirm.py
+test-aspect-abort-confirm-original:
+	python3 standalone/check_aspect_abort_confirm.py --original
+test: test-aspect-abort-confirm
 .PHONY: test-aspect-when-compiler
 test-aspect-when-compiler: aspect-when
 	python3 standalone/test_aspect_when_compiler.py --native
