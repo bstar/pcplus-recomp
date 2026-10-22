@@ -5,10 +5,10 @@ BITS 16
 CPU 8086
 %include "resident_bridge.inc"
 %ifdef ASPECT_EXTERNAL_RENDER
- %define RENDER_CAPABILITY 9
+ %define RENDER_CAPABILITY 11
  extern terminal_program_result
 %else
- %define RENDER_CAPABILITY 8
+ %define RENDER_CAPABILITY 10
 %endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
@@ -76,9 +76,11 @@ extern terminal_status_live,terminal_break_ui,terminal_script_label_update
 extern terminal_break_delay_units
 extern keyboard_bios_mode
 extern terminal_key_output
-extern terminal_script_window
+extern terminal_script_window_open,terminal_script_window_service
+extern terminal_script_window_hide,terminal_script_window_close
+extern terminal_script_window_cooperative
 global terminal_script_window_poll
-global render_child_ds
+global render_child_ds,render_started,render_body,render_attached,render_child_psp
 extern _script_handoff
 global terminal_render_prepare,terminal_render_revoke,terminal_render_validate,terminal_render_typed_abort
 global terminal_render_failure_notice
@@ -138,6 +140,7 @@ terminal_render_prepare:
  retf
 
 terminal_render_revoke:
+ call terminal_script_window_close
  ; Parent cursor cleanup needs no retired child callback or UART operation.
  push bx
  mov bx,1
@@ -257,6 +260,8 @@ render_body:
  cmp di,9
  je .program_begin
 %endif
+ cmp di,11
+ je .window_service
  cmp di,2
  je .end
  cmp di,3
@@ -275,6 +280,7 @@ render_body:
  jne .state
  cmp bx,255
  ja .operand
+ call terminal_script_window_hide
  mov ax,[terminal_parser_active]
  mov [cs:render_saved_parser],ax
  mov ax,[terminal_ansi_wait_active]
@@ -301,6 +307,7 @@ render_body:
  jnz .done
  ; This is the captured bridge's checked parent stack. No child pointers,
  ; receive callbacks, FILE activity or parser entry are used by STATUS.
+ call terminal_script_window_hide
  call far terminal_status_live
  ret
 .break_policy:
@@ -327,6 +334,7 @@ render_body:
  pop bx
  or ax,ax
  jnz .done
+ call terminal_script_window_hide
  call far terminal_break_ui
  ret
 .keyboard_policy:
@@ -350,6 +358,8 @@ render_body:
  jbe .done
  jmp .state
 .key:
+ cmp word [cs:terminal_script_window_cooperative],0
+ jne .state
  cmp word [_script_handoff+22],0
  jne .serial
  push bx
@@ -385,9 +395,13 @@ render_body:
  pop ax
  cmp ax,0x2c00
  jne .ordinary_key
- call terminal_script_window
+ call terminal_script_window_open
+ or ax,ax
+ jnz .key_finished
+ call window_publish
  jmp .key_finished
 .ordinary_key:
+ call terminal_script_window_hide
  call far terminal_key_output
 .key_finished:
  push ax
@@ -479,6 +493,7 @@ render_body:
  loop .label_stem
  lea si,[bp-16]
  mov bx,[bp-2]
+ call terminal_script_window_hide
  call far terminal_script_label_update
  jmp .label_return
 .label_callback_error:
@@ -508,6 +523,7 @@ render_body:
  pop bx
  or ax,ax
  jnz .done
+ call terminal_script_window_close
  inc bx ;1 NOCLEAR,2 SAVE; zero means no external owner.
  mov [cs:render_program_owned],bx
  inc word [cs:render_program_begins]
@@ -572,14 +588,38 @@ render_body:
  add sp,4
  ret
 .end:
+ call terminal_script_window_close
  mov word [cs:render_attached],0
  xor ax,ax
+ ret
+.window_service:
+ cmp bx,1
+ ja .operand
+ cmp word [_script_handoff+22],0
+ jne .serial
+ push bx
+ call _aspect_render_admit
+ pop bx
+ or ax,ax
+ jnz .done
+ call terminal_script_window_service
+ call window_publish
  ret
 .state:
  mov ax,10
  ret
 .operand:
  mov ax,7
+ ret
+
+window_publish:
+ mov bx,[cs:terminal_script_window_cooperative]
+ mov ax,11
+ call resident_bridge_callback
+ cmp ax,14
+ jbe .done
+ mov ax,10
+.done:
  ret
 
 render_proxy:
@@ -776,7 +816,6 @@ render_remaining: dw 0
 render_unsupported: dw 0
 %ifdef ASPECT_EXTERNAL_RENDER
 global render_program_owned,render_program_begins,render_program_ends,render_program_refreshes
-global render_body,render_attached,render_child_ds,render_child_psp
 render_program_owned: dw 0
 render_program_begins: dw 0
 render_program_ends: dw 0

@@ -105,7 +105,7 @@ endpoint:
  je .denied
  cmp word [bx],0x5243
  jne .bad
- cmp word [bx+2],8
+ cmp word [bx+2],10
  jne .bad
  cmp word [bx+4],0x7123
  jne .bad
@@ -287,6 +287,6 @@ def main():
   else:checks.update(noRPC=results[:3]==(0,0,0),not_adopted=lease[10]==0)
   result=dict(case=name,checks=checks,passed=all(checks.values()),exit=rc,results=results,emitted_hex=emitted.hex(),wire_hex=wire.hex())
   cases.append(result);print(json.dumps(result),flush=True)
- report=dict(binary_sha256=digest,checker_sha256=sha(__file__),manifest_sha256=sha(ROOT/'build/aspect-runner/manifest.json'),original_inputs=[],regression_history=[{'path':'build/aspect-render-client-history/label-cap4-pacing-limit-diagnosis','reason':'Both pre-label and label builds hit bounded pacing5 at unconstrained max cycles during native end-wait. Fixed12000 is an explicit supported clock fixture; one-shot callback stimulus prevents error rendering from replacing first results.'},{'path':'build/aspect-render-client-history/pre-WHEN-idle-C9-fixture','reason':'Old MESSAGE callback fixture assumed no native8E20 idle drain; frozenWHEN integration correctly drained preloadZ before MESSAGE.'}],cases=cases,passed=all(c['passed'] for c in cases),limitations=['Lifecycle/callback endpoint fixture only; not a terminal parser, query recognizer or full parent engine proof. COMGETC C9 bypasses native idle drain to expose the queuedZ to callback read/unread/read; plain MESSAGE expects native idle leadZ first.','Actual DOSBox-X 8086 COM1 virtual UART and loopback only; native hardware untested.'])
+ report=dict(binary_sha256=digest,checker_sha256=sha(__file__),manifest_sha256=sha(ROOT/'build/aspect-runner/manifest.json'),original_inputs=[],regression_history=[{'path':'build/aspect-render-client-history/pre-cooperative-cap8-endpoint-01','reason':'The synthetic BEGIN endpoint still required capability8 while its C descriptor and production child required10. Three admitted-lifecycle cases rejected BEGIN; denial and invalid-token guards passed. Update only the explicit endpoint version, retaining all lifecycle/byte/cleanup assertions.'},{'path':'build/aspect-render-client-history/label-cap4-pacing-limit-diagnosis','reason':'Both pre-label and label builds hit bounded pacing5 at unconstrained max cycles during native end-wait. Fixed12000 is an explicit supported clock fixture; one-shot callback stimulus prevents error rendering from replacing first results.'},{'path':'build/aspect-render-client-history/pre-WHEN-idle-C9-fixture','reason':'Old MESSAGE callback fixture assumed no native8E20 idle drain; frozenWHEN integration correctly drained preloadZ before MESSAGE.'}],cases=cases,passed=all(c['passed'] for c in cases),limitations=['Lifecycle/callback endpoint fixture only; not a terminal parser, query recognizer or full parent engine proof. COMGETC C9 bypasses native idle drain to expose the queuedZ to callback read/unread/read; plain MESSAGE expects native idle leadZ first.','Actual DOSBox-X 8086 COM1 virtual UART and loopback only; native hardware untested.'])
  (OUT/'checks.json').write_text(json.dumps(report,indent=2)+'\n');assert sha(binary)==digest;assert report['passed']
 if __name__=='__main__':main()

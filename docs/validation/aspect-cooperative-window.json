@@ -1,0 +1,115 @@
+{
+  "passed": true,
+  "scope": "Selected cooperative production window and query/continuation acceptance. BIOS boundaries are modeled in CPU tests; separate actual DOS uses an emulated UART and owned synthetic peer. No current stock BBS, software audio, physical modem or whole-application acceptance.",
+  "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+  "mouse_parent_sha256": "64fcd17859cf5b6659b105af08080df03b014aa991aba04a49fde2b1c0a04af4",
+  "runner_sha256": "fa026aa8c17452cdff1dc03907f14d05ee4601a7287db93d38d93ab76de11926",
+  "capability_normal": 10,
+  "capability_external": 11,
+  "ASIO_descriptor_bytes": 48,
+  "cooperative_CPU_cases_per_parent": 32,
+  "retained_blocking_CPU_cases_per_parent": 17,
+  "child_key_and_window_cases": 28,
+  "actual_DOS_window_cases": 6,
+  "actual_DOS_child_lifecycle_cases": 5,
+  "linked_child_renderer_groups": 16,
+  "ordinary_key_cases": 837,
+  "edit_cases": 55,
+  "reverse_Tab_cases": 630,
+  "experimental_parent_policy_cases": 29,
+  "experimental_child_policy_cases": 48,
+  "original_free_reproduced_products": 26,
+  "source_proof": "build/aspect-parent-process/source-proofs/cooperative-window-01/result.json",
+  "query_audit": {
+    "evidence_verified": true,
+    "cases": [
+      {
+        "path": "build/aspect-window-query-dos/cooperative-02",
+        "reply_delay_seconds": 0.00653410900849849,
+        "retained_files_verified": 25,
+        "receipt_sha256": "37d388cc9156129ba47b104c0bd0361b1ea2d4ac0335cb238d27c74aa45d4cfb",
+        "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+        "runner_sha256": "fa026aa8c17452cdff1dc03907f14d05ee4601a7287db93d38d93ab76de11926",
+        "defect_reproduced": false,
+        "query_deadline_accepted": true,
+        "broad_compatibility_accepted": false
+      },
+      {
+        "path": "build/aspect-window-query-dos/cooperative-03",
+        "reply_delay_seconds": 0.007065393961966038,
+        "retained_files_verified": 25,
+        "receipt_sha256": "8fdfdb3a4cd16b104c92de783ed74a91e0e8778ed73c70047c56d0f1483b63ee",
+        "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+        "runner_sha256": "fa026aa8c17452cdff1dc03907f14d05ee4601a7287db93d38d93ab76de11926",
+        "defect_reproduced": false,
+        "query_deadline_accepted": true,
+        "broad_compatibility_accepted": false
+      }
+    ],
+    "auditor_sha256": "c7cb76680502779491fbbdd4415d4da7f5cf702cc513a73438e41ccaead03355"
+  },
+  "accepted_receipts": {
+    "build/aspect-script-window-dos/cooperative-04/checks.json": {
+      "sha256": "a13f61e56ba35ab384552d776592b6ea0dc95672d0d849e31a2faafdad3a398e",
+      "cases": 6
+    },
+    "build/aspect-render-client-dos/checks.json": {
+      "sha256": "b6b8503ddbafa8d8d4413ccff73e35a5dda32c9d855cdeae624937025c4ca455",
+      "cases": 5
+    },
+    "build/aspect-render-client/checks.json": {
+      "sha256": "d5debce396d2baf342e59ac40c307d053d9f44f2139295a3bb53de00520e5d6d",
+      "cases": 16
+    },
+    "build/aspect-keyboard/key-client-checks.json": {
+      "sha256": "e87e6fa0898dc7452ac42345cbec4c67e31487e3e4f90603ff9a4b4fdbaf99de",
+      "cases": 28
+    },
+    "build/terminal-cooperative-window/cpu-results.json": {
+      "sha256": "e05d3b13bb22acfe4eb9dd7b1c3dfa898d615dac801c4610736aa655eacb62fc",
+      "cases": 32
+    },
+    "build/terminal-cooperative-window-mouse/cpu-results.json": {
+      "sha256": "bd1703f960dd3b479a593d9092e8e28090d99157177e8db45082496598f97ede",
+      "cases": 32
+    },
+    "build/terminal-process/process-owner-checks.json": {
+      "sha256": "9353c972c2ca18322fcd73fa309c49db845eaea51bc6eb113e015167248476b8",
+      "cases": 29
+    },
+    "build/aspect-process-parent/program-client-checks.json": {
+      "sha256": "bdc3245d1c2004d43fd73950ceb6dfa265fafdc58536e57a80bf9e5df2e57c22",
+      "cases": 48
+    },
+    "build/aspect-parent-process/source-proofs/cooperative-window-01/result.json": {
+      "sha256": "348a398c7f7b2fe98d8080bf75803327b73f862cd518153eee6c1843384ea31a",
+      "cases": 0
+    }
+  },
+  "cohort": "build/aspect-cooperative-window-accepted-01",
+  "cohort_files": 2433,
+  "cohort_files_manifest_sha256": "1a9722b2f4de628dd9f637fa427bbd33e232e353ebedc557724904ac4da9fb04",
+  "failed_attempts_retained": [
+    {
+      "path": "build/aspect-window-query-dos/cooperative-01",
+      "reason": "Functional/query deadline checks passed, but the old requirement that four bytes remain queued correctly failed after receive processing became cooperative."
+    },
+    {
+      "path": "build/aspect-script-window-dos/cooperative-02",
+      "reason": "All functional cases passed, but the new PAUSE-based completion fixture observed no render progression under help. Its whole campaign remains unaccepted. AUTOEND-gated completion passes in fresh03 and the full six-case04 campaign."
+    },
+    {
+      "path": "build/aspect-render-client-history/pre-cooperative-cap8-endpoint-01",
+      "reason": "Explicit synthetic BEGIN endpoint still required capability8; corrected to10 with byte/lifecycle assertions retained."
+    },
+    {
+      "path": "build/window-cooperative-cpu-02.log",
+      "reason": "Lifecycle checker could not locate unexported normal-parent symbols; exporting test-visible names changed no product bytes."
+    }
+  ],
+  "current_stock_BBS_accepted": false,
+  "current_software_audio_accepted": false,
+  "physical_modem_accepted": false,
+  "full_command_actions_accepted": false,
+  "full_application_gates_closed": []
+}

@@ -12,6 +12,7 @@ extern unsigned runtime_receive_pattern_count,runtime_wait_gate;
 extern unsigned __cdecl runtime_when_native_service(void);
 unsigned runtime_when_deferred,runtime_when_pending_service;
 static unsigned service_busy,monitor_busy;
+static unsigned window_keys_suppressed;
 static void disarm(void)
 {
  unsigned i;
@@ -49,6 +50,11 @@ unsigned runtime_when_transport_poll(void)
 {
  unsigned key;
  runtime_serial_poll();if(runtime_error)return 1;
+#if defined(ASPECT_RUNTIME_SERIAL)
+ /* A deferred parser/WHEN callback cannot re-enter the parent. Leave keys,
+  * including Escape, for the cooperative window's next ordinary safe point. */
+ if(aspect_render_window_active())return 0;
+#endif
  key=runtime_keyboard_peek();if(!key)return 0;
  /* Leave ordinary local keys queued for the native service's safe point. */
  if((key&255)==27){runtime_keyboard_read();runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
@@ -70,8 +76,17 @@ unsigned runtime_when_poll(void)
   return runtime_when_transport_poll();
  }
  service_busy=1;runtime_when_pending_service=0;
- runtime_when_native_service();
- service_busy=0;
+ window_keys_suppressed=0;
+#if defined(ASPECT_RUNTIME_SERIAL)
+ if(aspect_render_window_active()){
+  unsigned result;
+  window_keys_suppressed=1;
+  result=aspect_render_window_service();
+  if(result)runtime_set_error(result);
+ }
+#endif
+ if(!runtime_error)runtime_when_native_service();
+ window_keys_suppressed=0;service_busy=0;
  return runtime_error!=0;
 }
 unsigned runtime_when_cancel_poll(void)
@@ -84,7 +99,7 @@ unsigned runtime_when_cancel_poll(void)
 }
 unsigned runtime_when_host_poll(void){return runtime_serial_poll();}
 unsigned runtime_when_key_ready(void)
-{return runtime_error?0:runtime_keyboard_peek();}
+{return runtime_error || window_keys_suppressed?0:runtime_keyboard_peek();}
 unsigned runtime_when_read_key(void)
 {
  return runtime_keyboard_read();

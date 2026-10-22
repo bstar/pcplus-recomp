@@ -1,9 +1,51 @@
 # Local interaction while ASPECT owns the session
 
-## Confirmed query deadline gap
+The production script-time Alt-Z controller is now cooperative. It leaves the
+actual VM, native receive/matcher path and terminal parser running while the
+reference/help window owns local dismissal keys. The
+[cooperative validation](validation/aspect-cooperative-window.json) records the
+current products and selected acceptance; the older capability8/9 window and
+stock BBS receipts below retain their historical product identities. Full local
+command actions, sustained-traffic coverage, fresh stock BBS/audio acceptance
+and physical modem integration remain open.
+
+## Cooperative production interaction
+
+The KEY request opens a frame owner and returns instead of entering the
+recovered blocking loop. At ordinary WHEN safe points the child requests
+WINDOW_SERVICE and receives one checked WINDOW_STATE callback. Native keyboard
+service is suppressed for that poll so an Escape consumed by the window cannot
+also cancel the script. A retained extended key becomes available on the next
+normal poll. Deferred parser/WHEN callbacks keep serial servicing active and
+leave window-owned keys for that safe point, without re-entering the parent.
+
+Before parser, status, script-label or break-notice drawing, the parent exposes
+the saved BBS frame and cursor. The actual parser processes ordinary received
+bytes, continuations and queries in their existing order. An idle service may
+save the updated frame and repaint help; service with queued RX does not
+repaint. Repeated idle requests for an already visible window do not copy the
+frame again. No replacement query recognizer or replay queue is introduced.
+
+Escape and ordinary dismissal, extended-key retention, signed hook comparison,
+and repeated Alt-Z follow the recovered key-consumption contract. Scheduling
+intentionally changes: script waits and execution can advance under the open
+window. END, experimental external PROGRAM acquisition and lease revocation
+close the owner and restore the latest frame/context; revocation never calls
+the retired child. This requires matched capability10 normal or11 external
+parent/child products; the48-byte ASIOv4 descriptor remains unchanged and older
+capabilities fail before UART access.
+
+The retained176-byte blocking component remains linked for original-behavior
+regression. Its CPU proof does not establish the new scheduling behavior.
+Separate cooperative checks exercise updated frame/cursor restoration, hidden
+page changes, idle copy counts, key classification and parent retirement. Actual
+DOS tests separately cover incoming bytes, query timing and script completion
+without a dismissal key. Existing F01–F16 whole-application gates remain open.
+
+## Historical blocking-window query deadline gap
 
 [Two frozen actual DOS runs](validation/aspect-window-query-failure.json) show
-that the current blocking window delays an incoming CPR reply for3.449 and
+that the earlier capability8 blocking window delayed an incoming CPR reply for3.449 and
 3.448 seconds. Both fail the diagnostic's declared one-second deadline. The
 reply is correct for the logical BBS cursor, the four query bytes are observed
 in the child's ring while the window is visible, and both scripts subsequently
@@ -19,9 +61,9 @@ hardware snapshots. Its successful exit means the failure evidence is sound,
 not that the application passes. Reproduce with a fresh label and the exact
 terminal/runner hashes required by the diagnostic CLI.
 
-The production controller currently keeps UART flow/error servicing alive but
-pauses the VM's actual receive/matcher/parser work until dismissal. Correcting
-this requires cooperative window ownership across normal VM safe points:
+That earlier production controller kept UART flow/error servicing alive but
+paused the VM's actual receive/matcher/parser work until dismissal. The cooperative controller addresses that scheduling defect. Its ownership
+requirements remain:
 
 - Retain actual native receive translation, WHEN matching and terminal parsing
   in their ordinary order. Cursor replies must use that real live state.
@@ -42,14 +84,6 @@ Query deadlines, sustained traffic/flow, WHEN transitions, carrier/errors,
 script completion, actual stock BBS workflows and affected SIP/audio routes
 must all constrain the new implementation.
 
-
-The [current live-window validation](validation/aspect-script-window-live.json)
-accepts the native script-time Alt-Z reference/help window in the production
-terminal. Alt-Z during a script wait opens the window; repeated Alt-Z switches
-reference/help pages. Escape dismisses it without aborting the script. Extended
-keys remain queued for subsequent dispatch. Full local command actions during
-scripts remain an application gap. The earlier audio driver's startup-readiness
-gate remains appropriate for its foreground recorder recipe.
 
 ## Original behavior established by static evidence
 
@@ -123,11 +157,11 @@ continuity; the selected production checks below provide separate evidence.
 ./tools/dev --command python3 standalone/check_aspect_local_window.py --original
 ```
 
-## Production window and interaction boundary
+## Capability8/9 production window checkpoint
 
 `runtime_when_dispatch_key()` in `src/aspect/when_runtime.c` sends keys through
 the attached parent renderer. `aspect_render_key()` performs the checked
-synchronous request. The parent's checked KEY handler now routes Alt-Z to the
+synchronous request. That parent's checked KEY handler routed Alt-Z to the
 recovered176-byte window on its captured foreground stack. Other keys continue
 through `terminal_key_output`; local command services not yet connected still
 return typed error3. This window does not launch transfers or nested programs.

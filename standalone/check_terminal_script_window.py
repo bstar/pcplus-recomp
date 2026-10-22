@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Execute the production script window, video copies and native keyboard loop."""
+"""Execute the retained blocking-window component and native keyboard loop."""
 import json,struct,hashlib,argparse
 from pathlib import Path
 from unicorn import UC_HOOK_CODE,UC_HOOK_INTR,UC_HOOK_INSN
@@ -86,7 +86,7 @@ def main():
  cases.append(dict(name='reject-interrupts-disabled',passed=True))
  out=ROOT/'build'/('terminal-script-window-mouse' if a.mouse else 'terminal-script-window');out.mkdir(exist_ok=True)
  r=dict(passed=True,cases=cases,terminal_sha256=sha(ROOT/'build'/PRODUCT/'TERMINAL.EXE'),checker_sha256=sha(Path(__file__)),
-  scope='Actual production native176-byte window, maintained video/owner services, far keyboard adapters and recovered keyboard code. BIOS and child transport-poll endpoint are modeled. Full4000-byte frame, cursor/shape, key retention, repeat help, Escape, long wait, errors, DS=SS with IF and owner rejection are checked. Actual child UART and DOS tested separately.')
+  scope='Retained native176-byte blocking-window component, maintained video/owner services, far keyboard adapters and recovered keyboard code. BIOS and child transport-poll endpoint are modeled. Full4000-byte frame, cursor/shape, key retention, repeat help, Escape, long wait, errors, DS=SS with IF and owner rejection are checked. Actual child UART and DOS tested separately.')
  (out/'cpu-results.json').write_text(json.dumps(r,indent=2)+'\n');print('Product script window',len(cases),'cases PASS')
 
 if __name__=='__main__':main()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Actual DOS script-time native window, queued receive data and continuation."""
+"""Actual DOS cooperative window, live receive data and script continuation."""
 import json,re,struct,subprocess,sys
 from pathlib import Path
 import test_aspect_keys_dos as keys
@@ -16,12 +16,21 @@ def definitions():
    keys='p1800 k e y s p200 a-z '+middle+' d o n e p2500 space p700 r e a d y p700 '+('a-z p500 escape p300 ' if kind=='parent-menu' else '')+'a-x',
    key_wire=b'keys'+(b'\x1bOP' if kind=='F1' else b'')+b'done',post=keys.renderer.QUERY,
    post_reply=keys.renderer.ESC+b'[1;31R',screen=[(0,0,'FIRST BYTE SAFE'),(0,21,'QUEUEDEND')],help=kind=='help',resume_menu=kind=='parent-menu'))
+ # Here the script itself releases the owned peer while help is open and
+ # finishes without a BIOS dismissal key. The shared peer's literal "done"
+ # handshake is script output in this case, not a claimed user-key test.
+ auto=dict(cases[0]);auto.update(name='script-window-4-script-completion',
+  source='proc main\nwaitfor "LOGIN:" 5\nset duplex full\ntransmit "KEYREADY"\nwaitfor "AUTOEND" 20\ntransmit "done"\nwaitfor "END" 10\nif waitfor\ntransmit $D_PWORD\ntransmit "^M"\npause 1\nendif\nendproc\n',
+  keys='p1800 k e y s p200 a-z p5500 space p700 r e a d y p700 a-x',
+  key_wire=b'keysdone',auto_end=True,post_reply=keys.renderer.ESC+b'[1;38R',
+  screen=[(0,0,'FIRST BYTE SAFE'),(0,21,'QUEUEDAUTOENDEND')])
+ cases.append(auto)
  return cases
 
 def symbols(path):
  return {n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)',path.read_text(),re.M|re.I)}
 
-def make_observer(original_observer,parent,child):
+def make_observer(original_observer,parent,child,render_progress=False):
  def observer(offsets):
   result=original_observer(offsets);out=keys.renderer.OUT;path=out/'observer.asm';text=path.read_text()
   old='sample_end:\nowner_table:';assert text.count(old)==1
@@ -71,7 +80,27 @@ def make_observer(original_observer,parent,child):
 .window_done:
 '''
   for token,value in [('WINDOW_CS',parent['render_child_ds'][0]),('CHILD_DS',parent['render_child_ds'][1]),('CHILD_RX',child['uart_rx_count'][1])]:timer=timer.replace(token,str(value))
-  text=text.replace(old,timer)
+  if render_progress:
+   text=text.replace('window_seen: dw 0', 'render_first_tick: dw 0\nrender_advanced: dw 0\nwindow_seen: dw 0')
+   old=' mov es,ax\n mov ax,[es:CHILD_DS]'
+   progress='''
+ mov es,ax
+ mov ax,[es:RENDER_STARTED]
+ cmp word [cs:window_ticks],1
+ jne .compare_render
+ mov [cs:render_first_tick],ax
+.compare_render:
+ cmp ax,[cs:render_first_tick]
+ je .render_checked
+ mov word [cs:render_advanced],1
+.render_checked:
+ mov ax,[es:CHILD_DS]'''
+   # CHILD_DS was already substituted above; use its resolved spelling.
+   old=old.replace('CHILD_DS',str(parent['render_child_ds'][1]))
+   assert timer.count(old)==1
+   progress=progress.replace('CHILD_DS',str(parent['render_child_ds'][1])).replace('RENDER_STARTED',str(parent['render_started'][1]))
+   timer=timer.replace(old,progress)
+  text=text.replace('timer:\n save\n cld\n',timer)
   old='resident_end:\nstart:';assert text.count(old)==1
   helper=r'''window_match:
  mov di,2*(2*80+6)
@@ -107,24 +136,27 @@ def main():
  def adapter():
   module=original_adapter();run=module.run
   def staged(*args,**kwargs):
-   kwargs['online_updates']=[(3.0,b'QUEUED')]
+   kwargs['online_updates']=[(3.0,b'QUEUEDAUTOEND' if args[0].endswith('script-completion') else b'QUEUED')]
    return run(*args,**kwargs)
   module.run=staged;return module
- keys.OUT=BASE;keys.definitions=definitions;keys.adapter=adapter;keys.renderer.observer=make_observer(original_observer,parent,child)
+ keys.OUT=BASE;keys.definitions=definitions;keys.adapter=adapter;keys.renderer.observer=make_observer(original_observer,parent,child,render_progress=True)
  keys.main()
  # The common parser leaves appended passive-window words untouched.
  folder=BASE/sys.argv[sys.argv.index('--label')+1]
  report=json.loads((folder/'checks.json').read_text())
  for case in report['cases']:
   spec=next(c for c in definitions() if c['name']==case['case'])
-  raw=(folder/case['case']/'RENDER.BIN').read_bytes();seen,help_seen,ticks,rx,menu=struct.unpack('<5H',raw[-10:])
+  raw=(folder/case['case']/'RENDER.BIN').read_bytes();first_render_tick,render_advanced,seen,help_seen,ticks,rx,menu=struct.unpack('<7H',raw[-14:])
   case['checks'].update(actual_reference_seen=seen==1,actual_help_seen=bool(help_seen)==spec['help'],
-   modal_wait_exceeded_render_budget=ticks>72,actual_child_ring_retained_six_bytes=rx==6,
+   window_dwell_expected=ticks>(20 if spec.get('auto_end') else 72),live_render_advances_under_window=render_advanced==1,
    parent_menu_owner_resumes=bool(menu)==spec['resume_menu'])
-  case['window_observation']=dict(reference=seen,help=help_seen,ticks=ticks,max_child_rx=rx,parent_menu=menu)
+  case['window_observation']=dict(reference=seen,help=help_seen,ticks=ticks,max_child_rx=rx,parent_menu=menu,first_render_tick=first_render_tick,render_advanced=render_advanced)
+  if spec.get('auto_end'):
+   case['checks']['script_finishes_without_window_dismissal_key']=not any(key in spec['keys'].split() for key in ('escape','f1')) and raw[:8]==struct.pack('<4H',0x524e,1,1,1)
+   case['scope']='AUTOEND arrives after opening help; WAITFOR consumes it and script-origin done releases the fixture peer; ordinary user keys are keys before opening and space/ready after child exit. No BIOS dismissal key is scheduled.'
   case['passed']=all(case['checks'].values());(folder/case['case']/'result.json').write_text(json.dumps(case,indent=2)+'\n')
  report.update(passed=all(c['passed'] for c in report['cases']),checker_sha256=keys.renderer.sha(Path(__file__)),
-  scope='Actual source-built DOS parent/ASPECT, native script-time Alt-Z, repeated help, Escape dismissal or queued F1, both supported profiles/BIOS modes. Passive timer observes actual titles and child RX ring while six peer bytes wait; subsequent exact screen/query/wire and normal return/hardware checks retained. No physical modem, full menu actions or whole-application acceptance.')
+  scope='Actual source-built DOS parent/ASPECT, cooperative script-time Alt-Z, repeated help, Escape dismissal or queued F1, both supported profiles/BIOS modes. Passive timer observes actual titles and render-start progression while peer data is processed; subsequent exact screen/query/wire and normal return/hardware checks retained. No physical modem, full menu actions or whole-application acceptance.')
  (folder/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  print('Actual DOS script window',len(report['cases']),'cases',report['passed'])
  return 0 if report['passed'] else 1

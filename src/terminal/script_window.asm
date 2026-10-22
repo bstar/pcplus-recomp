@@ -1,6 +1,6 @@
-; Native script-time Alt-Z window with maintained, allocation-free services.
-; The child retains UART/VM ownership. Only this captured foreground KEY call
-; may borrow the inactive redisplay frame. No DOS IO, parser or parent UART IO.
+; Cooperative production Alt-Z and retained native blocking-window component.
+; The child retains UART/VM ownership. Only checked foreground RPC services
+; borrow the inactive redisplay frame. No DOS IO, parser or parent UART IO.
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
@@ -16,11 +16,142 @@ SEGMENT ASPECT_CODE public class=FARCODE use16
 extern aspect_local_window,terminal_script_window_poll
 extern terminal_aspect_active,keyboard_debug_gate
 extern redisplay_view,_redisplay_active,_command_menu_active
+extern keyboard_mapping_hook_enabled,keyboard_mapping_hook_character
 global terminal_script_window,terminal_script_window_debug
 global local_window_save,local_window_draw,local_window_keyboard_select
 global local_window_write,local_window_format,local_window_status_draw
 global local_window_key_poll,local_window_key_read,local_window_restore
 global terminal_script_window_active,terminal_script_window_error
+global terminal_script_window_open,terminal_script_window_service
+global terminal_script_window_hide,terminal_script_window_close
+global terminal_script_window_cooperative
+
+; Maintained cooperative controller. The recovered blocking body below stays
+; available as the original-behavior component, not the production scheduler.
+; All state lives in this far code segment; redisplay_view is borrowed only
+; while the terminal/command-menu owners are inactive.
+terminal_script_window_open:
+ cmp word [cs:terminal_script_window_active],0
+ jne .state
+ cmp word [terminal_aspect_active],1
+ jne .state
+ mov ax,[_redisplay_active]
+ or ax,[_command_menu_active]
+ jnz .state
+ pushf
+ pop ax
+ test ax,0x200
+ jz .state
+ mov ax,[keyboard_debug_gate]
+ mov [cs:old_context],ax
+ mov word [keyboard_debug_gate],0x29
+ mov word [cs:terminal_script_window_error],0
+ mov word [cs:saved],0
+ mov word [cs:page],0
+ mov word [cs:terminal_script_window_active],1
+ mov word [cs:terminal_script_window_cooperative],1
+ call cooperative_show
+ xor ax,ax
+ ret
+.state:
+ mov ax,10
+ ret
+
+; Preserve the enclosing RPC's scalar argument, operation and result. The
+; actual BBS frame/cursor is always exposed before any real parser/UI draw.
+terminal_script_window_hide:
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push bp
+ push es
+ cmp word [cs:terminal_script_window_cooperative],1
+ jne .done
+ cmp word [cs:saved],1
+ jne .done
+ mov ax,seg redisplay_view
+ push ax
+ mov ax,redisplay_view
+ push ax
+ push ax ; unused legacy descriptor, restore validates the far frame identity
+ call local_window_restore
+ add sp,6
+.done:
+ pop es
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ ret
+
+cooperative_show:
+ cmp word [cs:saved],0
+ jne .done
+ call local_window_save
+ call paint
+.done:
+ ret
+
+terminal_script_window_close:
+ call terminal_script_window_hide
+ cmp word [cs:terminal_script_window_cooperative],1
+ jne .done
+ push ax
+ mov ax,[cs:old_context]
+ mov [keyboard_debug_gate],ax
+ mov word [cs:terminal_script_window_cooperative],0
+ mov word [cs:terminal_script_window_active],0
+ pop ax
+.done:
+ ret
+
+; BX=1 permits repaint at idle; BX=0 services keys while RX remains queued.
+; No VM/WHEN work runs on this callback stack and no UART byte is consumed.
+terminal_script_window_service:
+ cmp word [cs:terminal_script_window_cooperative],1
+ jne .done
+ push bx
+ call far terminal_script_window_keyboard_poll
+ pop bx
+ or ax,ax
+ jz .idle
+ ; Same low-byte and signed hook comparison as the recovered176-byte body.
+ and ax,0xff
+ jz .close
+ cmp ax,0xe0
+ je .close
+ cmp ax,0x1c
+ je .close
+ cmp ax,0x1d
+ je .close
+ cmp ax,0x1f
+ je .close
+ cmp word [keyboard_mapping_hook_enabled],0
+ je .consume
+ mov dx,ax
+ mov al,[keyboard_mapping_hook_character]
+ cbw
+ cmp ax,dx
+ je .close
+.consume:
+ call far terminal_script_window_keyboard_read
+.close:
+ call terminal_script_window_close
+ jmp .done
+.idle:
+ or bx,bx
+ jz .done
+ call cooperative_show
+.done:
+ xor ax,ax
+ ret
+
 
 terminal_script_window:
  push bp
@@ -73,7 +204,13 @@ terminal_script_window_debug:
  push bp
  push es
  xor word [cs:page],1
+ cmp word [cs:terminal_script_window_cooperative],1
+ jne .paint
+ cmp word [cs:saved],0
+ je .hidden
+.paint:
  call paint
+.hidden:
  pop es
  pop bp
  pop di
@@ -271,13 +408,14 @@ reference:
 help:
  line 2,6,0x5f,' PCPLUS  //  SCRIPT KEYBOARD HELP '
  line 5,6,0x1f,'Escape in this window dismisses the window.'
- line 7,6,0x17,'The running script continues after the window closes.'
+ line 7,6,0x17,'The running script continues while this window is open.'
  line 9,6,0x17,'Escape during an ordinary script wait cancels the script.'
- line 12,6,0x17,'Incoming data stays queued for the script while this is open.'
+ line 12,6,0x17,'Incoming data and terminal queries continue to be processed.'
  line 14,6,0x17,'The selected serial flow control remains active.'
  line 18,6,0x1f,'Alt-Z again: return to the key reference'
  line 21,6,0x5f,' Escape: return to the script '
  dw 0xffff
+terminal_script_window_cooperative: dw 0
 terminal_script_window_active: dw 0
 terminal_script_window_error: dw 0
 old_context: dw 0

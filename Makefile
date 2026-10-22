@@ -984,6 +984,8 @@ test: test-aspect-keyboard-policy
 test-terminal-script-window: terminal terminal-mouse
 	python3 standalone/check_terminal_script_window.py
 	python3 standalone/check_terminal_script_window.py --mouse
+	python3 standalone/check_terminal_cooperative_window.py
+	python3 standalone/check_terminal_cooperative_window.py --mouse
 test-aspect-script-window-dos: terminal aspect-runner
 	python3 standalone/test_aspect_script_window_dos.py --label "window-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
 test: test-terminal-script-window

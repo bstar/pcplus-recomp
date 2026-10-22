@@ -40,7 +40,7 @@ subprocess.run([sys.executable,'standalone/build_terminal.py','--mouse'],check=T
     report=dict(passed=not result.returncode and len(compared)==26 and all(p['expected']==p['actual'] for p in compared.values()),
         original_inputs=[],source_files=len(sources),sources=sources,products=compared,exit_code=result.returncode,
         checker_sha256=sha(Path(__file__)),log_sha256=sha(folder/'build.log'),
-        scope='Fresh declared-source tree; experimental capability9 parent/child, normal capability8 keyboard/mouse products, compiler and20 process components. No originals, existing objects or REA databases.')
+        scope='Fresh declared-source tree; experimental capability11 parent/child, normal capability10 keyboard/mouse products, compiler and20 process components. No originals, existing objects or REA databases.')
     (folder/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('Fresh attached PROGRAM source:',len(compared),'products','PASS' if report['passed'] else 'FAIL');print(folder)
     return 0 if report['passed'] else 1
 

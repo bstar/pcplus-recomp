@@ -1,5 +1,21 @@
 # Complete DOS rebuild plan
 
+The [cooperative script-window checkpoint](docs/validation/aspect-cooperative-window.json)
+replaces the production blocking Alt-Z scheduler while retaining the recovered
+native component as a separate oracle. Normal capability10 and experimental11
+require matching parent/child products. Native VM/WHEN/receive/parser processing
+continues under help; checked idle service owns local dismissal, preserves
+extended keys and restores the updated frame/cursor. END, external PROGRAM and
+revocation retire the owner without a dead-child callback. Actual DOS query
+and window/continuation checks, linked key/frame/lifecycle regressions and a
+fresh26-product original-free source build constrain this change. Earlier
+capability8/9 stock BBS and software-audio receipts remain historical, not current
+product acceptance. Next cover sustained traffic/flow, WHEN/carrier/cancel/fault,
+fresh Synchronet/ENiGMA and affected software audio, then complete full command
+actions and all remaining application work. No full F01–F16 or physical gate
+closes. Earlier checkpoints below retain their identities and limitations.
+
+
 The [script-window query regression](docs/validation/aspect-window-query-failure.json)
 now reproduces a missed one-second CPR deadline in two actual DOS runs with
 unchanged212c1112/58d08556 products: replies take3.449/3.448 seconds. The native
