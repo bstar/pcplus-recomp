@@ -446,6 +446,7 @@ test-terminal: terminal
 	python3 standalone/check_terminal_monitor_live.py
 	python3 standalone/check_terminal_snapshot_live.py
 	python3 standalone/check_terminal_capture_live.py
+	python3 standalone/check_recording_foreground_live.py
 	python3 standalone/check_redisplay_live.py
 	python3 standalone/test_redisplay_dos.py
 	python3 standalone/check_history_export_live.py
@@ -1364,6 +1365,7 @@ test-recording-file: aspect-runner aspect-compiler-dos
 	python3 standalone/check_recording_file.py --output build/recording-file/host-make-$(shell date +%s%N)
 	python3 standalone/test_recording_file_dos.py --output build/recording-file/DOS-make-$(shell date +%s%N)
 	python3 standalone/test_recording_file_dos.py --banked --output build/recording-file/banked-DOS-make-$(shell date +%s%N)
+	python3 standalone/test_recording_file_dos.py --banked --foreground --output build/recording-file/foreground-DOS-make-$(shell date +%s%N)
 test: test-aspect-recorder
 test-aspect-recorder: aspect-runner aspect-compiler-dos
 	python3 standalone/check_aspect_recorder.py --output build/aspect-recorder/host-make-$(shell date +%s%N)

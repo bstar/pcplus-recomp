@@ -193,6 +193,39 @@ def inspect_terminal_memory(binary,map_path):
   assert all(c['relative_segment']!=config_seg for c in code_segments if c['name']!='CONFIG_CODE'),'Configuration CS aliases other code'
   assert address('terminal_config_code_start')==config_seg*16
   assert address('terminal_config_code_end')-address('terminal_config_code_start')==config_code['bytes'],'Incomplete configuration extent'
+  if '_recording_terminal_initialize' in symbols:
+   for suffix in ('initialize','inspect','begin','transmit','receive','stop','cancel','cleanup','shutdown'):
+    name='_recording_terminal_'+suffix
+    assert symbols[name][0]==config_seg and symbols[name][1]<config_code['bytes'],(name,'foreground recorder outside bank')
+   ranges=[]
+   for name,length in (('_recording_terminal_owner',326),('_recording_terminal_path',64),('_recording_terminal_cookie',2)):
+    lo=address(name);hi=lo+length
+    assert symbols[name][0]==ds and near_start<=lo and hi<=near_start+near_size,(name,'foreground state outside DGROUP')
+    assert all(hi<=other_lo or lo>=other_hi for other_lo,other_hi in ranges),(name,'foreground state alias')
+    ranges.append((lo,hi))
+   assert word('_recording_terminal_cookie')==0x5243,'Recorder initialization cookie absent or dirty'
+   body=image[start+near_code['relative_segment']*16:start+near_code['relative_segment']*16+near_code['bytes']]
+   sites=[]
+   for name in ('_recording_terminal_initialize','_recording_terminal_shutdown'):
+    pattern=b'\x9a'+struct.pack('<HH',symbols[name][1],symbols[name][0])
+    assert body.count(pattern)==1,(name,'missing/duplicated foreground lifetime call')
+    site=near_code['relative_segment']*16+body.index(pattern)
+    assert site+3 in relocations,(name,'foreground lifetime relocation')
+    sites.append(site)
+   literals=(b'0123456789ABCDEF',b'transmitraw "',b'strcpy loc_prompt "',b'strpoke loc_prompt ',b' 34\r\n',
+    b'waitfor loc_prompt ',b'if waitfor == 0\r\nexit\r\nendif\r\n',
+    b'; LoC ASPECT recording - maintained runtime required\r\nstring loc_prompt\r\nproc main\r\n',b'endproc\r\n')
+   code=image[start+config_seg*16:start+config_seg*16+config_code['bytes']]
+   near=image[start+near_start:start+near_start+near_size]
+   literal_sites=[]
+   for i,literal in enumerate(literals):
+    pattern=literal+b'\0'
+    assert code.count(pattern)==1,('Recorder code template absent/duplicated',i)
+    if i:assert pattern not in near,('Recorder template remains near',i)
+    literal_sites.append(config_seg*16+code.index(pattern))
+   extra.update(recording_terminal_state_bytes=392,recording_terminal_bank_functions_verified=9,
+    recording_terminal_far_call_sites=sites,recorder_code_literal_bytes_verified=sum(len(x)+1 for x in literals),
+    recorder_code_literal_sites=literal_sites)
   if '_recording_file_begin' in symbols:
    publisher_names=['_recording_file_'+n for n in ('begin','transmit','receive','flush','stop','cancel','cleanup','conflict')]
    core_names=['_aspect_recorder_'+n for n in ('start','transmit','receive','flush','stop','cancel')]

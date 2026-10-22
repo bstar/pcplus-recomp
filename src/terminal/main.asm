@@ -36,6 +36,7 @@ extern _terminal_transfer_initialize
 extern _terminal_upload_initialize
 extern _terminal_batch_initialize
 extern _capture_session_initialize,_capture_session_shutdown
+extern _recording_terminal_initialize,_recording_terminal_shutdown
 extern terminal_capture_poll
 extern _snapshot_file_initialize,terminal_snapshot_shutdown
 extern _monitor_file_initialize,terminal_monitor_poll,terminal_monitor_filter
@@ -73,6 +74,7 @@ _small_code_:
  call _terminal_upload_initialize
  call _terminal_batch_initialize
  call _capture_session_initialize
+ call far _recording_terminal_initialize
  call _snapshot_file_initialize
  call _monitor_file_initialize
  xor ax,ax
@@ -419,6 +421,13 @@ terminal_shutdown:
  mov ah,9
  int 0x21
 .capture_closed:
+ call far _recording_terminal_shutdown
+ or ax,ax
+ jz .recording_closed
+ cmp word [terminal_exit_code],0
+ jne .recording_closed
+ mov word [terminal_exit_code],12
+.recording_closed:
  call terminal_directory_flush_accounting
  or ax,ax
  jz .application_error

@@ -6,13 +6,51 @@
 #include <process.h>
 #include "dos_backend.h"
 #include "capture_file.h"
-static recording_file session,second;
+#ifdef RECORDING_FOREGROUND
+#include "foreground.h"
+extern recording_file recording_terminal_owner;
+extern unsigned recording_terminal_cookie;
+#define session recording_terminal_owner
+static unsigned test_begin(recording_file *s,const recording_file_ops *ops,void *context,const char *name,unsigned mode,unsigned timeout)
+{
+ if(s!=&session)return recording_file_begin(s,ops,context,name,mode,timeout);
+ recording_dos_ops=*ops;strcpy(recording_terminal_path,name);
+ return recording_terminal_begin(mode,timeout);
+}
+static unsigned test_feed(recording_file *s,const void *data,unsigned count,unsigned receive)
+{
+ const unsigned char *bytes=data;unsigned i,status=0;
+ if(s!=&session)return receive?recording_file_receive(s,data,count):recording_file_transmit(s,data,count);
+ for(i=0;i<count&&!status;++i)status=receive?recording_terminal_receive(bytes[i]):recording_terminal_transmit(bytes[i]);
+ return status;
+}
+static unsigned test_transmit(recording_file *s,const void *data,unsigned count)
+{return test_feed(s,data,count,0);}
+static unsigned test_receive(recording_file *s,const void *data,unsigned count)
+{return test_feed(s,data,count,1);}
+static unsigned test_stop(recording_file *s)
+{return s==&session?recording_terminal_stop():recording_file_stop(s);}
+static unsigned test_cancel(recording_file *s)
+{return s==&session?recording_terminal_cancel():recording_file_cancel(s);}
+static unsigned test_cleanup(recording_file *s)
+{return s==&session?recording_terminal_cleanup():recording_file_cleanup(s);}
+#define recording_file_begin test_begin
+#define recording_file_transmit test_transmit
+#define recording_file_receive test_receive
+#define recording_file_stop test_stop
+#define recording_file_cancel test_cancel
+#define recording_file_cleanup test_cleanup
+#else
+static recording_file session;
+#endif
+static recording_file second;
 static unsigned closed,guard_checks,guard_failures;
+static recording_file_ops kernel_ops;
 static unsigned seed(const char *,const char *);
 static unsigned AR_FAR AR_CALL raced_rename(void *context,const char *source,const char *target)
 {
  if(strstr(source,".TMP")&&!strcmp(target,"C:\\CASE.ASP")&&seed(target,"RACED"))return 5;
- return recording_dos_ops.rename(context,source,target);
+ return kernel_ops.rename(context,source,target);
 }
 static unsigned data_segment(void);
 #pragma aux data_segment = "mov ax,ds" value [ax] modify exact [ax];
@@ -24,17 +62,17 @@ static unsigned AR_FAR AR_CALL output(void *context,int handle,const void *data,
  ++guard_checks;
  if(recording_file_cancel(&session)!=RF_BUSY||monitor_file_begin(session.target,CF_REPLACE)!=CF_BUSY||
     memcmp(&before,&monitor_file_result,sizeof(before)))++guard_failures;
- return recording_dos_ops.write(context,handle,data,count,actual);
+ return kernel_ops.write(context,handle,data,count,actual);
 }
 static unsigned AR_FAR AR_CALL close_output(void *context,int handle)
-{++closed;return recording_dos_ops.close(context,handle);}
+{++closed;return kernel_ops.close(context,handle);}
 /* Only the owned diagnostic substitutes this creator. The real DOS kernel
  * rejects the subsequent write through a deliberately read-only handle. */
 static unsigned AR_FAR AR_CALL readonly_create(void *context,const char *path,int *handle)
 {
- unsigned error=recording_dos_ops.create(context,path,handle);
+ unsigned error=kernel_ops.create(context,path,handle);
  if(error)return error;
- error=recording_dos_ops.close(context,*handle);if(error)return error;
+ error=kernel_ops.close(context,*handle);if(error)return error;
  return _dos_open(path,O_RDONLY,handle);
 }
 static unsigned seed(const char *path,const char *text)
@@ -44,16 +82,32 @@ int main(int argc,char **argv)
  recording_file_ops ops=recording_dos_ops;unsigned char bytes[40];unsigned n,status,expected=0,mode=RF_NEW,other=0;
  const char *name=argc>1?argv[1]:"ordinary";
  FILE *input,*report;void (__interrupt __far *before)(void);
- before=_dos_getvect(0);ops.write=output;ops.close=close_output;
+ before=_dos_getvect(0);kernel_ops=recording_dos_ops;ops.write=output;ops.close=close_output;
  if(_chdrive(3)||chdir("\\"))return 89;
  if(!freopen("C:\\ERROR.TXT","wb",stderr))return 90;
+#ifdef RECORDING_FOREGROUND
+ {
+  unsigned i;
+  if(recording_terminal_inspect())return 112;
+  memset(&session,0xa5,sizeof(session));memset(recording_terminal_path,0xa5,64);
+  recording_terminal_cookie=0;
+  if(recording_terminal_initialize()!=RF_STATE||recording_terminal_inspect())return 113;
+  recording_terminal_cookie=0x5243;
+  if(recording_terminal_initialize()||recording_terminal_inspect()!=&session||strcmp(recording_terminal_path,"PCPLUS.ASP"))return 114;
+  for(i=0;i<sizeof(session);++i)if(((unsigned char *)&session)[i])return 115;
+  if(recording_terminal_transmit('x')!=RF_STATE||recording_terminal_receive('y')!=RF_STATE)return 116;
+  report=fopen("C:\\FOREGND.TXT","w");if(!report)return 117;
+  fprintf(report,"%u %u %u\n",FP_SEG(recording_terminal_initialize),FP_SEG(aspect_recorder_start),data_segment()==stack_segment());
+  fclose(report);
+ }
+#endif
 #ifdef RECORDING_BANKED
  report=fopen("C:\\BANK.TXT","w");if(!report)return 110;
- fprintf(report,"%u %u %u %u\n",FP_SEG(main),FP_SEG(recording_file_begin),
+ fprintf(report,"%u %u %u %u\n",FP_SEG(main),FP_SEG(recording_file_conflict),
   FP_SEG(aspect_recorder_start),FP_SEG(ops.close));
  fclose(report);
- if(FP_SEG(main)==FP_SEG(recording_file_begin)||
-    FP_SEG(recording_file_begin)!=FP_SEG(aspect_recorder_start)||
+ if(FP_SEG(main)==FP_SEG(recording_file_conflict)||
+    FP_SEG(recording_file_conflict)!=FP_SEG(aspect_recorder_start)||
     FP_SEG(main)!=FP_SEG(ops.close))return 111;
 #endif
  if(capture_file_initialize()||snapshot_file_initialize()||monitor_file_initialize())return 91;
@@ -74,17 +128,30 @@ int main(int argc,char **argv)
   other=1;
  }
  status=recording_file_begin(&session,&ops,0,"CASE.ASP",mode,1);
+#ifdef RECORDING_FOREGROUND
+ if(!status){
+  recording_file before=session;
+  if(recording_terminal_initialize()!=RF_BUSY||memcmp(&before,&session,sizeof(session)))return 118;
+ }
+#endif
  if(!status&&!strcmp(name,"dual-record-owner")){
   if(recording_file_begin(&second,&recording_dos_ops,0,"SECOND.ASP",RF_NEW,1)!=RF_BUSY||
      second.claimed||second.stage_owned)return 98;
  }
  if(!status&&!strcmp(name,"cwd-change")){if(mkdir("C:\\OTHER")||chdir("C:\\OTHER"))return 99;}
  if(!status)status=recording_file_transmit(&session,"READY>",6);
- if(!status&&!strcmp(name,"cancel")){status=recording_file_cancel(&session);expected=RF_CANCELLED;}
+ if(!status&&(!strcmp(name,"cancel")||!strcmp(name,"shutdown-cancel"))){
+#ifdef RECORDING_FOREGROUND
+  if(!strcmp(name,"shutdown-cancel")){
+   if(recording_terminal_shutdown())return 120;status=session.status;
+  }else
+#endif
+  status=recording_file_cancel(&session);expected=RF_CANCELLED;
+ }
  else if(!status){
   input=fopen("C:\\PROMPT.BIN","rb");if(!input)return 100;
-  n=fread(bytes,1,16,input);fclose(input);
-  if(n)status=recording_file_receive(&session,bytes,n);
+  while(!status&&(n=fread(bytes,1,16,input))!=0)status=recording_file_receive(&session,bytes,n);
+  if(ferror(input))status=102;fclose(input);
   input=fopen("C:\\PAYLOAD.BIN","rb");if(!input)return 101;
   while(!status&&(n=fread(bytes,1,40,input))!=0)status=recording_file_transmit(&session,bytes,n);
   if(ferror(input))status=102;fclose(input);
@@ -103,6 +170,14 @@ int main(int argc,char **argv)
  }
  if(other){if(capture_file_append("B",1)||capture_file_close())return 103;}
  if(!strcmp(name,"shared-target-owner")){if(capture_file_append("!",1)||capture_file_close())return 104;}
+#ifdef RECORDING_FOREGROUND
+ {
+  recording_file before=session;
+  unsigned wanted=session.claimed||session.handle_state||session.stage_owned||session.backup_owned?RF_RECOVERY:
+   session.status>=RF_WRITE&&session.status!=RF_CANCELLED?session.status:RF_OK;
+  if(recording_terminal_shutdown()!=wanted||recording_terminal_shutdown()!=wanted||memcmp(&before,&session,sizeof(session)))return 119;
+ }
+#endif
  if(chdir("\\"))return 105;
  if(!status){
   if(capture_file_begin("C:\\CASE.ASP",CF_APPEND)||capture_file_close())return 106;

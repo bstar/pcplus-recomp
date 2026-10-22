@@ -8,8 +8,9 @@ compiler and replay it through the production UART runner, including all256
 byte values and a2048-byte payload.
 
 This is a component checkpoint. The default terminal now
-[links the banked publisher](RECORDING_BANK.md), but has no foreground recorder
-owner or Record command. Foreground taps and owner exclusions remain required;
+[links the banked publisher](RECORDING_BANK.md) and
+[initializes stable owner state](RECORDING_OWNER.md), but has no Record command.
+Foreground taps and owner exclusions remain required;
 all F01–F16 application gates remain open.
 
 `src/recording/file.h` exposes begin, receive, transmit, flush, stop, cancel and
@@ -71,8 +72,8 @@ Run fresh component campaigns with the pinned toolchain:
 ```
 
 The [bank integration](RECORDING_BANK.md) now verifies the compiled ABI and
-code layout. Next make room for foreground owner state, bind received prompts
+code layout. The [stable owner](RECORDING_OWNER.md) now fits. Next bind received prompts
 and successfully emitted user or binding bytes, add Record UI/recovery notices,
-and enforce transfer, script,
-child, setup, port-change and exit guards. Then test recording, DOS compilation
+and enforce transfer, script, child, setup, port-change and exit guards.
+Then test recording, DOS compilation
 and replay from the actual foreground terminal before new BBS acceptance.

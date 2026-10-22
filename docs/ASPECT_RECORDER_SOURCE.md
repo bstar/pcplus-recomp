@@ -78,7 +78,8 @@ modeled uncertain ownership. The [checked publisher](RECORDING_FILE.md) and its
 [code-bank integration](RECORDING_BANK.md) now pass separate component campaigns.
 
 The component is not yet connected to the terminal's Record command.
-Remaining work is foreground owner storage, start/cancel/stop UI and
+The [stable owner](RECORDING_OWNER.md) now has explicit storage and assembly
+lifecycle calls. Remaining work is start/cancel/stop UI and
 foreground taps for received prompts and successfully emitted user/binding data.
 Transfers, scripts, child programs, setup/port moves and error/exit paths need
 explicit owner exclusion and cleanup tests before normal publication. Modem/BBS

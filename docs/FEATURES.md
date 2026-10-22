@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The [stable recorder owner](RECORDING_OWNER.md) now fits both terminal variants
+after moving immutable templates into code storage. Assembly startup/shutdown,
+dirty-state initialization,54 actual DOS source/ASX/UART cases and six current
+linked owner cases pass. Record UI, automatic taps and application-wide exclusions
+are still required. All F01–F16 gates remain open.
+
 The [recorder publisher component](RECORDING_FILE.md) passes31 host-model cases
 and16 actual DOS publication/compiler/UART sessions. It reserves canonical
 target/scratch/backup identities, implements explicit NEW/REPLACE and retains

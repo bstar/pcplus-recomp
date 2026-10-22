@@ -28,6 +28,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--banked', action='store_true')
+    parser.add_argument('--foreground', action='store_true')
     args = parser.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
@@ -65,7 +66,7 @@ def main():
     sources = [out / 'driver.c', *[p for p in extra if p.suffix == '.c' and p.name != 'recording_file_dos_host.c']]
     if args.banked:
         # Reuse the production declared CRT services and exact bridge macros.
-        names = ('memcpy', 'memset', 'memcmp', 'strchr', 'strcmp', 'strcpy', 'strlen')
+        names = ('memcpy', 'memset', 'memcmp', 'strchr', 'strcmp', 'strcpy', 'strlen', 'memmove')
         abi = (ROOT / 'src/terminal/config_abi.inc').read_text()
         declarations = []
         for name in names:
@@ -86,15 +87,18 @@ def main():
         for source in sources:
             obj = out / (source.stem + '.o')
             flags = ['-ecc']
-            if source in (ROOT / 'src/aspect/recorder.c', ROOT / 'src/recording/file.c'):
+            if source in (ROOT / 'src/aspect/recorder.c', ROOT / 'src/recording/file.c', ROOT / 'src/recording/foreground.c'):
                 flags = ['-nt=CONFIG_CODE', '-nc=FARCODE', *['-d' + n + '=config_' + n + '_service' for n in names]]
             if source == out / 'driver.c':
                 flags += ['-dRECORDING_BANKED']
+                if args.foreground:
+                    flags += ['-dRECORDING_FOREGROUND']
             subprocess.run(['wcc', *base, *flags, '-fo=' + str(obj), str(source)], cwd=out, check=True)
             objects.append(obj)
         subprocess.run(['wcl', *base, '-k8192', '-fm=RECORD.map', '-fe=RECORD.EXE', *map(str, objects)], cwd=out, check=True)
     else:
-        subprocess.run(['wcl', *base, '-ecc', '-k8192', '-fm=RECORD.map', '-fe=RECORD.EXE', *map(str, sources)], cwd=out, check=True)
+        subprocess.run(['wcl', *base, '-ecc', *(['-dRECORDING_FOREGROUND'] if args.foreground else []),
+                        '-k8192', '-fm=RECORD.map', '-fe=RECORD.EXE', *map(str, sources)], cwd=out, check=True)
     (out / 'sampler.asm').write_text(SAMPLER)
     (out / 'setup.asm').write_text('BITS 16\nCPU 8086\nORG 100h\nmov dx,3fbh\nmov al,80h\nout dx,al\nmov dx,3f8h\nmov al,12\nout dx,al\ninc dx\nxor al,al\nout dx,al\nmov dx,3fbh\nmov al,3\nout dx,al\nmov dx,3fch\nmov al,1\nout dx,al\nmov ax,4c00h\nint 21h\n')
     for source, binary in [('sampler', 'SNAP'), ('setup', 'SETUP')]:
@@ -103,9 +107,11 @@ def main():
         ('ordinary', b'Name? ', bytes(range(256)), b'Name? ', 0),
         ('quoted-controls', b'\r\n"^>\x1e\x1f\xff', bytes(range(256)), b'\r\n"^>\x1e\x1f\xff', 0),
         ('long-control-prompt', bytes(range(1, 17)), bytes(range(256)) * 8, bytes(range(1, 17)), 0),
+        ('sliding-prompt', b'Discard this earlier prompt text. LAST PROMPT> ', bytes(range(256)), b'Discard this earlier prompt text. LAST PROMPT> ', 0),
         ('timeout-no-payload', b'Name? ', b'MUST NOT SEND', b'Wrong! ', 0),
         ('writefail', b'', b'', b'', 8),
         ('cancel', b'', b'', b'', 14),
+        ('shutdown-cancel', b'', b'', b'', 14),
         ('replace', b'Name? ', bytes(range(256)), b'Name? ', 0),
         ('cwd-change', b'Name? ', bytes(range(256)), b'Name? ', 0),
         ('scratch-collision', b'Name? ', bytes(range(256)), b'Name? ', 0),
@@ -207,6 +213,10 @@ exit
             checks['distinct_publisher_core_CS_and_resident_callbacks'] = (
                 len(segments) == 4 and segments[0] == segments[3] and
                 segments[1] == segments[2] and segments[0] != segments[1])
+        if args.foreground:
+            segments = list(map(int, (folder / 'FOREGND.TXT').read_text().split()))
+            checks['foreground_dirty_state_initialization_and_DS_SS'] = (
+                len(segments) == 3 and segments[0] == segments[1] and segments[2] == 1)
         temporary = {path.name for path in folder.glob('LPR*.TMP')}
         checks['only_owned_stage_removed_or_complete_recovery_retained'] = temporary == ({'LPR00001.TMP'} if name in ('scratch-collision', 'restore-race') else set())
         checks['no_unexpected_backup'] = len(list(folder.glob('LPR*.BAK'))) == (1 if name == 'restore-race' else 0)
@@ -241,7 +251,7 @@ exit
         print(json.dumps(dict(case=name, passed=result['passed'], bytes=len(wire))), flush=True)
     for name, digest in frozen.items():
         assert sha(ROOT / name) == sha(out / 'frozen-source' / name) == digest, name
-    result = dict(passed=all(case['passed'] for case in results), banked=args.banked, cases=results, inputs=frozen,
+    result = dict(passed=all(case['passed'] for case in results), banked=args.banked, foreground=args.foreground, cases=results, inputs=frozen,
                   binary_sha256=sha(out / 'RECORD.EXE'), captures_sha256={str(path.relative_to(out)): sha(path) for path in out.rglob('*')
                                   if path.is_file() and not path.is_relative_to(out / 'frozen-source')}, scope=__doc__)
     with (out / 'result.json').open('x') as stream:

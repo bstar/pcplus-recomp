@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+The [stable recorder owner](docs/RECORDING_OWNER.md) now fits keyboard/mouse
+builds. Moving223 template bytes into code storage recovers224 near-data bytes;
+bounded far reads preserve near callback spans and exact script/write boundaries.
+The392-byte owner/path/cookie state initializes explicitly despite dirty BSS and
+is connected to assembly startup/shutdown. Seventeen core and31 publisher host
+cases,54 actual DOS publication/compiler/UART cases, six linked owner cases,
+11 current DOS capture cases,24 capture/27 history/78 ZMODEM linked inputs,
+546 ABI negatives and three far-code cases pass. Keyboard/mouse spare data is
+112/64 bytes; resident-code spare is478/330. Next add Record UI/recovery choices,
+normal RX/successful-user-TX taps and all owner exclusions. Controls and automatic
+taps, current BBS/audio, physical and all full F01–F16 gates remain open.
+
 The [recorder bank integration](docs/RECORDING_BANK.md) now places the core and
 publisher in CONFIG_CODE with resident DOS callbacks. Sixteen ordinary and16
 distinct-bank actual DOS cases preserve identical statuses/source/ASX/wire data.

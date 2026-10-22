@@ -1,6 +1,26 @@
 #include "recorder.h"
 #include <string.h>
 
+/* DOS templates belong to this module's code segment, not scarce DGROUP.
+ * Only explicit far reads cross into them; output callbacks still receive
+ * ordinary near DS=SS spans with unchanged write boundaries. */
+#ifdef __WATCOMC__
+#define AR_LITERAL __based(__segname("_CODE"))
+#else
+#define AR_LITERAL
+#endif
+static const char AR_LITERAL hex[]="0123456789ABCDEF";
+static const char AR_LITERAL tx_prefix[]="transmitraw \"";
+static const char AR_LITERAL rx_prefix[]="strcpy loc_prompt \"";
+static const char AR_LITERAL poke_prefix[]="strpoke loc_prompt ";
+static const char AR_LITERAL poke_quote[]=" 34\r\n";
+static const char AR_LITERAL wait_prefix[]="waitfor loc_prompt ";
+static const char AR_LITERAL timeout_guard[]="if waitfor == 0\r\nexit\r\nendif\r\n";
+static const char AR_LITERAL record_header[]="; LoC ASPECT recording - maintained runtime required\r\nstring loc_prompt\r\nproc main\r\n";
+static const char AR_LITERAL record_footer[]="endproc\r\n";
+static void literal_copy(char *to,const char AR_FAR *from,unsigned count)
+{unsigned i;for(i=0;i<count;++i)to[i]=from[i];}
+
 static unsigned enter(aspect_recorder *s)
 {
  if(!s||!s->active||!s->owned||s->busy)return AR_STATE;
@@ -20,8 +40,11 @@ static unsigned write_bytes(aspect_recorder *s,const char *data,unsigned count)
  }
  return s->status;
 }
-static unsigned text(aspect_recorder *s,const char *data)
-{return write_bytes(s,data,(unsigned)strlen(data));}
+static unsigned text(aspect_recorder *s,const char AR_FAR *data,unsigned count)
+{
+ char bytes[sizeof(record_header)-1];
+ literal_copy(bytes,data,count);return write_bytes(s,bytes,count);
+}
 static unsigned decimal(unsigned value,char *out)
 {
  char reverse[5];unsigned count=0,i;
@@ -31,10 +54,9 @@ static unsigned decimal(unsigned value,char *out)
 }
 static unsigned flush_tx(aspect_recorder *s)
 {
- static const char hex[]="0123456789ABCDEF";
  char line[97];unsigned i,n=13;
  if(!s->tx_count)return s->status;
- memcpy(line,"transmitraw \"",13);
+ literal_copy(line,tx_prefix,13);
  for(i=0;i<s->tx_count;++i){line[n++]=hex[s->tx[i]>>4];line[n++]=hex[s->tx[i]&15];}
  line[n++]='"';line[n++]=13;line[n++]=10;
  if(!write_bytes(s,line,n))s->tx_count=0;
@@ -58,17 +80,17 @@ static unsigned flush_rx(aspect_recorder *s)
   }
  }
  if(!n){s->rx_count=0;return AR_OK;}
- memcpy(line,"strcpy loc_prompt \"",19);at=19;
+ literal_copy(line,rx_prefix,19);at=19;
  memcpy(line+at,encoded,n);at+=n;line[at++]='"';line[at++]=13;line[at++]=10;
  if(write_bytes(s,line,at))return s->status;
  for(i=0;i<quote_count;++i){
-  memcpy(line,"strpoke loc_prompt ",19);at=19;at+=decimal(quotes[i],line+at);
-  memcpy(line+at," 34\r\n",5);at+=5;
+  literal_copy(line,poke_prefix,19);at=19;at+=decimal(quotes[i],line+at);
+  literal_copy(line+at,poke_quote,5);at+=5;
   if(write_bytes(s,line,at))return s->status;
  }
- memcpy(line,"waitfor loc_prompt ",19);len=19;
+ literal_copy(line,wait_prefix,19);len=19;
  len+=decimal(s->timeout,line+len);line[len++]=13;line[len++]=10;
- if(write_bytes(s,line,len)||text(s,"if waitfor == 0\r\nexit\r\nendif\r\n"))return s->status;
+ if(write_bytes(s,line,len)||text(s,timeout_guard,sizeof(timeout_guard)-1))return s->status;
  s->rx_count=0;return AR_OK;
 }
 unsigned AR_FAR AR_CALL aspect_recorder_start(aspect_recorder *s,const aspect_recorder_ops *ops,void *context,unsigned timeout)
@@ -78,7 +100,7 @@ unsigned AR_FAR AR_CALL aspect_recorder_start(aspect_recorder *s,const aspect_re
  if(s->owned||s->busy||s->active)return AR_STATE;
  selected=*ops;memset(s,0,sizeof(*s));s->ops=selected;s->context=context;s->timeout=timeout;
  s->started=s->active=s->owned=s->busy=1;
- text(s,"; LoC ASPECT recording - maintained runtime required\r\nstring loc_prompt\r\nproc main\r\n");
+ text(s,record_header,sizeof(record_header)-1);
  return leave(s);
 }
 unsigned AR_FAR AR_CALL aspect_recorder_transmit(aspect_recorder *s,const void *data,unsigned count)
@@ -115,7 +137,7 @@ static unsigned finish(aspect_recorder *s,unsigned cancel)
  s->busy=1;
  if(!s->status){
   if(cancel)s->status=AR_CANCELLED;
-  else if(!flush_tx(s)&&!flush_rx(s))text(s,"endproc\r\n");
+  else if(!flush_tx(s)&&!flush_rx(s))text(s,record_footer,sizeof(record_footer)-1);
  }
  s->owned=s->active=0;close_error=s->ops.close(s->context);s->close_error=close_error;
  if(close_error&&!s->status)s->status=AR_CLOSE;

@@ -50,7 +50,8 @@ The mouse variant also rebuilds and passes the static bank/memory audit, leaving
 356 resident-code bytes and224 near-data bytes. This is build evidence; its
 runtime behavior is outside this checkpoint's terminal campaign.
 
-Next resolve the near-data budget, add initialized stable owner state, Record
+The later [stable owner checkpoint](RECORDING_OWNER.md) resolves the near-data
+allocation and adds initialized state and assembly lifecycle calls. Next add Record
 start/stop/cancel/recovery controls and foreground taps. Record only successfully
 emitted user/binding bytes and intended received prompts; guard transfers,
 scripts, child programs, setup, port changes and exit/error paths. Then run

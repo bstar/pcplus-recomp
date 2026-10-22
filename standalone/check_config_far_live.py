@@ -34,10 +34,29 @@ def main():
   bad_listing=re.sub(r'(?m)^[0-9a-f]{4}:([0-9a-f]{4})([*+ ]+\s+'+name+r'\s*)$',lambda m:f'{segment:04x}:'+m[1]+m[2],listing)
   assert bad_listing!=listing
   mutations.append((name+':wrong-segment',raw,bad_listing))
- for name in (['_recording_file_'+n for n in ('begin','transmit','receive','flush','stop','cancel','cleanup','conflict')]+['_aspect_recorder_'+n for n in ('start','transmit','receive','flush','stop','cancel')]):
+ for name in (['_recording_file_'+n for n in ('begin','transmit','receive','flush','stop','cancel','cleanup','conflict')]+['_aspect_recorder_'+n for n in ('start','transmit','receive','flush','stop','cancel')]+['_recording_terminal_'+n for n in ('initialize','inspect','begin','transmit','receive','stop','cancel','cleanup','shutdown')]):
   bad_listing=re.sub(r'(?m)^[0-9a-f]{4}:([0-9a-f]{4})([*+ ]+\s+'+name+r'\s*)$',lambda m:'0000:'+m[1]+m[2],listing)
   assert bad_listing!=listing
   mutations.append((name+':recording-outside-bank',raw,bad_listing))
+ for name in ('_recording_terminal_owner','_recording_terminal_path','_recording_terminal_cookie'):
+  bad_listing=re.sub(r'(?m)^[0-9a-f]{4}:([0-9a-f]{4})([*+ ]+\s+'+name+r'\s*)$',lambda m:'0000:'+m[1]+m[2],listing)
+  assert bad_listing!=listing
+  mutations.append((name+':foreground-state-outside-DGROUP',raw,bad_listing))
+ bad=bytearray(raw);bad[at('_recording_terminal_cookie')]^=1
+ mutations.append(('recording-foreground-cookie-corrupted',bad,listing))
+ for i,site in enumerate(memory['recorder_code_literal_sites']):
+  bad=bytearray(raw);bad[start+site]^=1
+  mutations.append((f'recorder-code-literal-{i}-corrupted',bad,listing))
+ for i,site in enumerate(memory['recording_terminal_far_call_sites']):
+  for field in (1,3):
+   bad=bytearray(raw);bad[start+site+field]^=1
+   mutations.append((f'recording-lifetime-{i}-target-field-{field}',bad,listing))
+  bad=bytearray(raw);wanted=site+3
+  for j in range(header[3]):
+   off,seg=struct.unpack_from('<HH',bad,header[12]+4*j)
+   if seg*16+off==wanted:struct.pack_into('<HH',bad,header[12]+4*j,0,0);break
+  else:raise AssertionError(('Missing recorder lifetime relocation',i))
+  mutations.append((f'recording-lifetime-{i}-missing-relocation',bad,listing))
  entries=[(name,int(n)) for name,n in re.findall(r'^CONFIG_ENTRY (\w+),(\d+)$',(ROOT/'src/terminal/config_abi.inc').read_text(),re.M)]
  assert len(entries)==42 and {n for _,n in entries}=={0,1,2,3,5,6,7,8,9,10}
  for name,count in entries:

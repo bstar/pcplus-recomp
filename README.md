@@ -42,7 +42,9 @@ host cases and16 actual DOS publication/compiler/UART sessions, including
 replacement and retained recovery files. Terminal Record UI and foreground taps
 remain required. The [bank integration](docs/RECORDING_BANK.md) now links the
 libraries into the source-built terminal and preserves existing capture behavior;
-the recorder's near-data allocation still needs room before UI integration.
+the [stable owner](docs/RECORDING_OWNER.md) now fits both keyboard and mouse
+builds after moving immutable templates into code storage. Startup/shutdown and
+owner APIs are tested; menu controls and automatic taps remain unfinished.
 
 The [experimental attached PROGRAM binding](docs/ASPECT_PARENT_PROCESS.md) now
 preserves actual parent rendering, selected resources, script streams and VM
