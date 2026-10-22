@@ -6,6 +6,15 @@ It uses the source-built terminal, ASPECT and DOS ASPCOMP. The selected route is
 File Base → Search → File Base; after replay, manual input opens Search again.
 No generated recording is edited or compiled by the host before replay.
 
+The current parent0eff2348/runner2c80e45c has fresh
+[PAUSE-build audio preparation](../../docs/validation/recording-pause-audio-preparation.json):
+seven BIOS probes and all13 actual DOS/Telnet recorder-control checks pass.
+The pinned200ms V22/1200 runtime, current products, helper and immutable audio
+admission inputs are preserved. This is preparation only; the admitted cohort
+`build/bbs-lab/current-enigma-recording-audio-pause-01` needs its own completed
+producer, independent byte-stream and serial-evidence audits. Earlier accepted
+audio receipts do not accept the current runner.
+
 The [accepted run03](../../docs/validation/recording-audio-03.json) passes26
 producer,34 independent and12 serial-evidence checks. Its complete60,383-byte BBS
 display plus187-byte bridge prefix survives the DSP path exactly; independent
