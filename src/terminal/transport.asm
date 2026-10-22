@@ -34,7 +34,8 @@ extern terminal_aspect_active,terminal_render_read,terminal_render_unread
 extern terminal_render_poll,terminal_render_send,terminal_render_string
 extern terminal_key_output
 global terminal_menu_pending_poll
-global terminal_poll_io,terminal_enqueue_al,terminal_tick_low,terminal_clock_ticks
+global terminal_poll_io,terminal_enqueue_al,terminal_enqueue_user_al,terminal_tick_low,terminal_clock_ticks
+extern terminal_tx_origin_set_far,terminal_tx_origin_delivered_far
 global ansi_next_byte,ansi_unread_byte,csi_transmit_byte,csi_transmit_string
 
 ; Read only the low BIOS tick word. Unsigned subtraction handles 16-bit wrap.
@@ -115,12 +116,20 @@ ansi_unread_byte:
 ; AL -> bounded TX queue. No busy wait, no local echo. AX is preserved.
 ; Overflow terminates the session with explicit error3 instead of losing bytes.
 terminal_enqueue_al:
+ push dx
+ xor dx,dx
+ jmp terminal_enqueue_classified
+terminal_enqueue_user_al:
+ push dx
+ mov dx,1
+terminal_enqueue_classified:
  cmp word [terminal_aspect_active],0
  je .ordinary
  push ax
  and ax,255
  call far terminal_render_send
  pop ax
+ pop dx
  ret
 .ordinary:
  push bx
@@ -130,12 +139,14 @@ terminal_enqueue_al:
  jae .overflow
  mov bx,[terminal_tx_tail]
  mov [terminal_tx_buffer+bx],al
+ call far terminal_tx_origin_set_far
  inc bx
  and bx,1023
  mov [terminal_tx_tail],bx
  inc word [terminal_tx_count]
 .done:
  pop bx
+ pop dx
  ret
 .overflow:
  mov word [terminal_exit_code],3
@@ -473,6 +484,8 @@ terminal_poll_serial:
  mov al,[terminal_tx_buffer+bx]
  call uart_try_write
  jc .macro
+ mov bx,[terminal_tx_head]
+ call far terminal_tx_origin_delivered_far
  ; try_write preserves AX/DX; keep head lookup independent of future API changes.
  mov bx,[terminal_tx_head]
  inc bx

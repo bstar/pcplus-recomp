@@ -6,7 +6,7 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 global _clipboard_transport,terminal_clipboard_abort
 extern terminal_tx_count,terminal_tx_head,terminal_tx_tail,terminal_tx_buffer
-extern terminal_enqueue_al,terminal_quit,terminal_parser_active
+extern terminal_enqueue_user_al,terminal_quit,terminal_parser_active
 extern terminal_transfer_pending,terminal_transfer_active
 extern terminal_program_pending,terminal_program_active,terminal_macro_active
 extern connection_state
@@ -51,7 +51,7 @@ _clipboard_transport:
  mov word [clipboard_failed],0
 .copy:
  lodsb
- call terminal_enqueue_al
+ call terminal_enqueue_user_al
  loop .copy
  xor ax,ax
  jmp .done

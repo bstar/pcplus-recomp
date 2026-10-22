@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The [recorder TX component](RECORDING_TX.md) now records tagged user/binding
+bytes after UART acceptance in both drain loops and direct TEXT output. Ten
+linked campaigns cover origin separation, flow stalls, cancellation, full-ring
+wrap and file errors. Record controls, RX prompts and complete owner exclusions
+remain required; all F01–F16 gates remain open.
+
 The [stable recorder owner](RECORDING_OWNER.md) now fits both terminal variants
 after moving immutable templates into code storage. Assembly startup/shutdown,
 dirty-state initialization,54 actual DOS source/ASX/UART cases and six current

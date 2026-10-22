@@ -5,7 +5,7 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern terminal_keymap,terminal_quit,terminal_exit_code
-extern terminal_tx_count,terminal_enqueue_al
+extern terminal_tx_count,terminal_enqueue_user_al
 global terminal_enqueue_key_slot
 
 ; AX = zero-based binding slot, 0..78. DS=SS, DF=0.
@@ -53,7 +53,7 @@ terminal_enqueue_key_slot:
  jne .byte
  xor al,al
 .byte:
- call terminal_enqueue_al
+ call terminal_enqueue_user_al
  loop .send
 .success:
  xor ax,ax

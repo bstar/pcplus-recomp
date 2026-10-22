@@ -57,6 +57,23 @@ def main():
    if seg*16+off==wanted:struct.pack_into('<HH',bad,header[12]+4*j,0,0);break
   else:raise AssertionError(('Missing recorder lifetime relocation',i))
   mutations.append((f'recording-lifetime-{i}-missing-relocation',bad,listing))
+ for name in ('terminal_tx_origin_set_far','terminal_tx_origin_delivered_far','terminal_record_user_delivered_far','terminal_tx_origin_bits','terminal_tx_origin_bits_end'):
+  bad_listing=re.sub(r'(?m)^[0-9a-f]{4}:([0-9a-f]{4})([*+ ]+\s+'+name+r'\s*)$',lambda m:'0000:'+m[1]+m[2],listing)
+  assert bad_listing!=listing
+  mutations.append((name+':TX-origin-outside-bank',raw,bad_listing))
+ for i in range(0,128,16):
+  bad=bytearray(raw);bad[start+memory['recording_tx_origin_start']+i]^=1
+  mutations.append((f'TX-origin-initial-byte-{i}',bad,listing))
+ for i,site in enumerate(memory['recording_tx_far_call_sites']+[memory['recording_tx_callback_site']]):
+  for field in (1,3):
+   bad=bytearray(raw);bad[start+site+field]^=1
+   mutations.append((f'TX-origin-binding-{i}-target-field-{field}',bad,listing))
+  bad=bytearray(raw);wanted=site+3
+  for j in range(header[3]):
+   off,seg=struct.unpack_from('<HH',bad,header[12]+4*j)
+   if seg*16+off==wanted:struct.pack_into('<HH',bad,header[12]+4*j,0,0);break
+  else:raise AssertionError(('Missing TX origin relocation',i))
+  mutations.append((f'TX-origin-binding-{i}-missing-relocation',bad,listing))
  entries=[(name,int(n)) for name,n in re.findall(r'^CONFIG_ENTRY (\w+),(\d+)$',(ROOT/'src/terminal/config_abi.inc').read_text(),re.M)]
  assert len(entries)==42 and {n for _,n in entries}=={0,1,2,3,5,6,7,8,9,10}
  for name,count in entries:

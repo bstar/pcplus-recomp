@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [recorder TX checkpoint](docs/RECORDING_TX.md) now tracks origins for all1024
+ring slots in128 loaded bank bytes, with no near-data increase. Both successful
+queue-drain paths and direct TEXT output feed the stable recorder after UART
+acceptance; report/dedicated bytes remain excluded. Ten linked campaigns cover
+all octets, stalled/wrapped/dirty/reset/canceled queues, expanded bindings,
+transfer draining, write-error continuity and register/flag/stack preservation.
+Current transport,837 key vectors,343 TEXT/46 clipboard inputs,78 ZMODEM,
+six owner,11 DOS capture and574 ABI-negative checks pass. Next Record UI,
+RX prompts/continuations and all owner exclusions, then actual foreground DOS
+compile/replay and current BBS/audio. No full F01–F16 or physical gate closes.
+
 The [stable recorder owner](docs/RECORDING_OWNER.md) now fits keyboard/mouse
 builds. Moving223 template bytes into code storage recovers224 near-data bytes;
 bounded far reads preserve near callback spans and exact script/write boundaries.

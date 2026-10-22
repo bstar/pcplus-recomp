@@ -3,14 +3,14 @@
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
-extern keyboard_classify_raw,terminal_enqueue_al,terminal_receive_character
+extern keyboard_classify_raw,terminal_enqueue_user_al,terminal_receive_character
 extern screen_cursor_up,screen_cursor_down,screen_cursor_left,screen_cursor_right,screen_set_cursor
 global terminal_key_classify_far,terminal_key_emit_far,terminal_key_echo_far,terminal_key_cursor_far
 terminal_key_classify_far:
  call keyboard_classify_raw
  retf
 terminal_key_emit_far:
- call terminal_enqueue_al
+ call terminal_enqueue_user_al
  retf
 terminal_key_echo_far:
  push ax

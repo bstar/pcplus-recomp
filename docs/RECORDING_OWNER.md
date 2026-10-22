@@ -59,9 +59,10 @@ It leaves112 near-data bytes and478 resident-code bytes free. The mouse build,
 leaves64 near-data bytes and330 resident-code bytes. Both pass the static bank,
 state, template and relocation audit. Runtime mouse acceptance remains separate.
 
-Next add Record start/save/cancel/recovery controls using these existing bounded
-fields and code-resident UI text. Feed intended received prompts and successfully
-emitted user/binding bytes, excluding reports, protocols, scripts and children.
+The later [TX component](RECORDING_TX.md) now records user/binding bytes after
+UART acceptance and excludes queued replies. Next add Record start/save/cancel/
+recovery controls using these existing bounded fields and code-resident UI text,
+and feed intended received prompts while excluding dedicated byte owners.
 Enforce transfer, setup, port-change, child, error and exit ownership throughout.
 Then run actual foreground recording, DOS compilation/replay and affected modern
 BBS workflows using the resulting exact binaries. Physical modem compatibility,

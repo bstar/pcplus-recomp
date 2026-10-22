@@ -134,6 +134,9 @@ terminal_transfer_poll:
  call uart_try_write
  jc .drain_wait
  mov bx,[terminal_tx_head]
+ extern terminal_tx_origin_delivered_far
+ call far terminal_tx_origin_delivered_far
+ mov bx,[terminal_tx_head]
  inc bx
  and bx,1023
  mov [terminal_tx_head],bx

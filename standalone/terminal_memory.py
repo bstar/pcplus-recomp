@@ -193,6 +193,30 @@ def inspect_terminal_memory(binary,map_path):
   assert all(c['relative_segment']!=config_seg for c in code_segments if c['name']!='CONFIG_CODE'),'Configuration CS aliases other code'
   assert address('terminal_config_code_start')==config_seg*16
   assert address('terminal_config_code_end')-address('terminal_config_code_start')==config_code['bytes'],'Incomplete configuration extent'
+  if 'terminal_tx_origin_bits' in symbols:
+   tag=address('terminal_tx_origin_bits');end=address('terminal_tx_origin_bits_end')
+   assert symbols['terminal_tx_origin_bits'][0]==symbols['terminal_tx_origin_bits_end'][0]==config_seg
+   assert end-tag==128 and end<=config_seg*16+config_code['bytes']
+   assert image[start+tag:start+end]==bytes(128),'TX origins are not initialized in loaded storage'
+   lo=near_code['relative_segment']*16
+   near_body=image[start+lo:start+lo+near_code['bytes']]
+   sites=[]
+   for name,count in (('terminal_tx_origin_set_far',1),('terminal_tx_origin_delivered_far',2),('terminal_record_user_delivered_far',1)):
+    assert symbols[name][0]==config_seg and symbols[name][1]<config_code['bytes'],(name,'TX provenance outside bank')
+    pattern=b'\x9a'+struct.pack('<HH',symbols[name][1],config_seg)
+    assert near_body.count(pattern)==count,(name,'missing/duplicated wire binding')
+    offset=0
+    for i in range(count):
+     site=lo+near_body.index(pattern,offset);offset=site-lo+5
+     assert site+3 in relocations,(name,'wire binding relocation')
+     sites.append(site)
+   code=image[start+config_seg*16:start+config_seg*16+config_code['bytes']]
+   pattern=b'\x50\x9a'+struct.pack('<HH',symbols['_recording_terminal_transmit'][1],config_seg)+b'\x83\xc4\x02'
+   assert code.count(pattern)==1,'Recorder wire callback argument/target/cleanup changed'
+   callback=config_seg*16+code.index(pattern)+1
+   assert callback+3 in relocations,'Recorder wire callback relocation absent'
+   extra.update(recording_tx_origin_bytes=128,recording_tx_origin_start=tag,
+    recording_tx_far_call_sites=sites,recording_tx_callback_site=callback)
   if '_recording_terminal_initialize' in symbols:
    for suffix in ('initialize','inspect','begin','transmit','receive','stop','cancel','cleanup','shutdown'):
     name='_recording_terminal_'+suffix

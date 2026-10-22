@@ -1,6 +1,9 @@
 #include "foreground.h"
 #include "dos_backend.h"
 #include <string.h>
+#include <stddef.h>
+/* The banked wire callback reads this field without entering the owner. */
+typedef char recording_state_offset_check[offsetof(recording_file,state)==136?1:-1];
 recording_file recording_terminal_owner;
 unsigned recording_terminal_cookie=0x5243;
 char recording_terminal_path[64];

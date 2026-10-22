@@ -7,6 +7,7 @@ SEGMENT _TEXT public class=CODE use16
 extern uart_break_hold
 extern terminal_option_mask,terminal_actions_path,_key_actions_dos_read
 extern modem_expand_bounded,terminal_clock_ticks,uart_try_write
+extern terminal_record_user_delivered_far
 extern terminal_quit,terminal_exit_code,connection_state
 extern terminal_program_start,terminal_program_pending,terminal_program_active
 extern terminal_monitor_active
@@ -201,6 +202,7 @@ terminal_macro_poll:
 .write:
  call uart_try_write
  jc .done
+ call far terminal_record_user_delivered_far
  inc word [terminal_macro_tx_epoch]
  mov ax,[terminal_macro_tx_epoch]
  mov [macro_last_tx_epoch],ax

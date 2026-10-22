@@ -44,7 +44,9 @@ remain required. The [bank integration](docs/RECORDING_BANK.md) now links the
 libraries into the source-built terminal and preserves existing capture behavior;
 the [stable owner](docs/RECORDING_OWNER.md) now fits both keyboard and mouse
 builds after moving immutable templates into code storage. Startup/shutdown and
-owner APIs are tested; menu controls and automatic taps remain unfinished.
+owner APIs are tested. [TX origin tracking](docs/RECORDING_TX.md) now records
+successfully emitted user/binding bytes while excluding queued terminal replies.
+Menu controls, RX taps and complete owner exclusions remain unfinished.
 
 The [experimental attached PROGRAM binding](docs/ASPECT_PARENT_PROCESS.md) now
 preserves actual parent rendering, selected resources, script streams and VM
