@@ -1,0 +1,135 @@
+{
+  "gap_reproduced": true,
+  "correction_accepted": false,
+  "full_application_accepted": false,
+  "physical_hardware_accepted": false,
+  "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+  "linked_cases": [
+    {
+      "case": "online-soft",
+      "passed": true,
+      "MODEM_carrier_loss": false,
+      "child_executed": true,
+      "wire_hex": "1311"
+    },
+    {
+      "case": "lost-soft",
+      "passed": true,
+      "MODEM_carrier_loss": true,
+      "child_executed": true,
+      "wire_hex": "13"
+    },
+    {
+      "case": "online-both",
+      "passed": true,
+      "MODEM_carrier_loss": false,
+      "child_executed": true,
+      "wire_hex": "1311"
+    },
+    {
+      "case": "lost-both",
+      "passed": true,
+      "MODEM_carrier_loss": true,
+      "child_executed": true,
+      "wire_hex": "13"
+    }
+  ],
+  "actual_DOS_cases": [
+    {
+      "case": "soft",
+      "passed": true,
+      "checks": {
+        "first_peer_carrier_drop": true,
+        "manual_query_sent": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHILD.COM": true,
+        "fixture_unchanged_TEST.KEY": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "screen_snapshot_complete": true,
+        "child_ran_after_observed_loss": true,
+        "child_released_UART": true,
+        "child_exact_tail": true,
+        "modem_commands_exact": true,
+        "modem_ERROR_count": true,
+        "both_connections": true,
+        "exact_BBS_stream": true
+      },
+      "offline_sample": [
+        0,
+        6,
+        1,
+        1
+      ],
+      "commands": [
+        "ATZ",
+        "ATD127.0.0.1:55209",
+        "\u0013ATZ",
+        "ATD127.0.0.1:55209"
+      ],
+      "wire_hex": "1b5b313b3136521b5b3f36323b32631b5b313b3136521b5b3f36323b326372656164791b5b313b313652"
+    },
+    {
+      "case": "both",
+      "passed": true,
+      "checks": {
+        "first_peer_carrier_drop": true,
+        "manual_query_sent": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHILD.COM": true,
+        "fixture_unchanged_TEST.KEY": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "screen_snapshot_complete": true,
+        "child_ran_after_observed_loss": true,
+        "child_released_UART": true,
+        "child_exact_tail": true,
+        "modem_commands_exact": true,
+        "modem_ERROR_count": true,
+        "both_connections": true,
+        "exact_BBS_stream": true
+      },
+      "offline_sample": [
+        0,
+        6,
+        1,
+        1
+      ],
+      "commands": [
+        "ATZ",
+        "ATD127.0.0.1:58289",
+        "\u0013ATZ",
+        "ATD127.0.0.1:58289"
+      ],
+      "wire_hex": "1b5b313b3136521b5b3f36323b32631b5b313b3136521b5b3f36323b326372656164791b5b313b313652"
+    }
+  ],
+  "linked_report": {
+    "path": "build/program-offline-flow/baseline-01/checks.json",
+    "sha256": "4cbd518d446f3ac0733377c3ba5b99606549298afc7ca9caee013051263253bf"
+  },
+  "DOS_report": {
+    "path": "build/program-offline-modem-dos/baseline-03/checks.json",
+    "sha256": "c637a42f0cd794bbaa5d695935f75fa33792de613a894fe8ae0a3b8fcf20263c"
+  },
+  "sources": {
+    "standalone/check_program_offline_flow.py": "e787cf683ba9a1d63161b784d08c14a78e5b227878fbdadb9f5b0aca967bbd9d",
+    "standalone/test_program_offline_modem_dos.py": "3a69ce4c487acd99a6d07818f0d4cba8aaddcd850126044f23b6ee2f426dac41",
+    "standalone/audit_program_offline_flow.py": "45f81a425a8fe8efe5cbaba5e823f68260ed9a37d13692c541de804817e139a9"
+  },
+  "scope": "Verified current-parent defect, not a fix acceptance. Real DOS virtual-modem drop before PROGRAM, child-observed parent offline and old XOFF flag, restored UART/video, second dirty ATZ/ERROR, successful later dial/manual query. No physical hardware or complete application claim."
+}

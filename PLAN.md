@@ -8,10 +8,14 @@ resume, short timeout and cancellation with manual parent return. The 23 DOS
 CLI, linked parser/ring/midnight checks, 56 process, 13 attached PROGRAM,
 ten confirmation, four carrier-loss and two reconnect cases pass; 26/23 source
 products reproduce without originals. Four fresh Synchronet/ENiGMA recorder/
-replay sessions and two stock script-window workflows pass. Current normal
-ENiGMA recording audio is running; admission inputs are frozen and a passing
-current DOS/Telnet helper control is preserved. Audio outcome remains pending.
-Next: finish that receipt, sustained CTS/RTS/RX, offline PROGRAM after loss,
+replay sessions and two stock script-window workflows pass. Normal ENiGMA
+recording audio passes26 producer/34 independent/12 serial checks, including77
+independently waveform-decoded online bytes and hardware/timer/SIP/VM cleanup.
+One normal V22/1200 software route is accepted; no physical claim follows.
+The [offline PROGRAM baseline](docs/PROGRAM_OFFLINE_CARRIER.md) now reproduces
+another proactive-XOFF defect in four linked and two actual DOS flow cases:
+the helper runs offline, but the next ATZ is prefixed with XOFF and gets ERROR.
+Next: correct that separate path, sustained CTS/RTS/RX,
 manual hangup/cancel reconnect and remaining full F01–F16/physical requirements.
 Earlier checkpoints below retain their recorded identities and scopes.
 

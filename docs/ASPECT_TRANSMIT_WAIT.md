@@ -81,10 +81,13 @@ are rejected despite green producer flags and updated capture hashes.
 pass on owned stock Synchronet/ENiGMA, including normal manual navigation after
 replay. [Two stock script-window workflows](validation/bbs-txwait-window.json)
 also pass, retaining exact user streams and normal parent-menu return.
-Current audio acceptance remains pending. Its
-[sealed preparation](validation/recording-txwait-audio-preparation.json) binds
-the passing DOS/Telnet helper control, pinned software-modem runtime and all
-606 unchanged admission inputs; it does not claim an audio outcome.
+[Current normal recording audio](validation/recording-txwait-audio.json) passes
+26 producer, 34 independent and 12 serial checks, with 77 online bytes decoded
+independently from the caller waveform and normal hardware/timer/SIP/VM cleanup.
+This is one ENiGMA V22/1200 software route. Its
+[sealed preparation](validation/recording-txwait-audio-preparation.json) retains
+the passing DOS/Telnet helper control, pinned runtime and 606 admission inputs.
+Physical and script-window audio remain separate requirements.
 Sustained CTS/RTS pressure, sustained RX, physical modem timing and all full
 F01–F16 requirements remain open.
 
