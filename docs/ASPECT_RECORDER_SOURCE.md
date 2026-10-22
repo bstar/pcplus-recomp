@@ -1,5 +1,12 @@
 # Source-owned ASPECT recorder and byte-exact replay
 
+The newer [BBS recorder checkpoint](BBS_RECORDING.md) integrates the normal
+Record menu, selects prompt suffixes safe for native WAITFOR, and flushes TX at
+stop without an unused final RX wait. Selected production Synchronet/ENiGMA
+recording, DOS compilation and fresh-session replay now pass. The earlier
+component record below retains its original scope and next steps.
+
+
 The [source-recorder checkpoint](validation/aspect-recorder-source.json) accepts
 the bounded recording core and its complete DOS file/compiler/UART replay path.
 It passes17 host cases, six actual DOS recorder cases and six production raw-

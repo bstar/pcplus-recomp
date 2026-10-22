@@ -1370,7 +1370,8 @@ test-recording-file: aspect-runner aspect-compiler-dos
 	python3 standalone/test_recording_file_dos.py --banked --output build/recording-file/banked-DOS-make-$(shell date +%s%N)
 	python3 standalone/test_recording_file_dos.py --banked --foreground --output build/recording-file/foreground-DOS-make-$(shell date +%s%N)
 test: test-aspect-recorder
-test-aspect-recorder: aspect-runner aspect-compiler-dos
+test-aspect-recorder: aspect-runner aspect-compiler-dos aspect-serial-commands
+	python3 standalone/check_recorder_prompt_native.py --output build/aspect-recorder/prompt-native-make-$(shell date +%s%N)
 	python3 standalone/check_aspect_recorder.py --output build/aspect-recorder/host-make-$(shell date +%s%N)
 	python3 standalone/test_aspect_raw_output_dos.py --output build/aspect-recorder/raw-make-$(shell date +%s%N)
 	python3 standalone/test_aspect_recorder_dos.py --output build/aspect-recorder/recorder-make-$(shell date +%s%N)

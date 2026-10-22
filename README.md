@@ -1,9 +1,12 @@
 # PCPlus DOS reconstruction
 
-The [current recorder/BBS investigation](docs/BBS_RECORDING.md) fixes recording
-of ANSI parser continuations that native WAITFOR cannot match. The selected
-DOS Record controls and compiler/replay tests pass; fresh-session replay on
-Synchronet and ENiGMA remains incomplete and is documented with retained failures.
+The [current recorder/BBS checkpoint](docs/BBS_RECORDING.md) passes selected
+record → DOS compile → fresh-session replay workflows on both Synchronet and
+ENiGMA, followed by manual navigation and normal DOS/hardware restoration.
+Prompt selection respects the native matcher; stopping adds no unused final
+prompt wait. Earlier failures and separate diagnostic traces remain preserved.
+Software audio recording/replay, other profiles and full application acceptance
+remain required.
 
 
 An incremental source reconstruction of ProComm Plus 2.01, focused first on

@@ -1,10 +1,10 @@
 # Foreground ASPECT recording
 
-The [current mapped-lead checkpoint](validation/recording-matcher-ui.json)
+The [current mapped-lead checkpoint](validation/recording-prompt-ui.json)
 supersedes the earlier raw-RX tap for normal prompts: recording now follows
 input translation and excludes parser continuations, matching native WAITFOR.
-The [actual BBS replay failures](BBS_RECORDING.md) remain open; the selected
-DOS/linked workflows below do not establish general BBS recorder compatibility.
+The [current BBS checkpoint](BBS_RECORDING.md) also accepts selected production
+recording/replay routes on Synchronet and ENiGMA. Other BBS workflows remain open.
 
 The source-built terminal now exposes recording through its command menu.
 Press **Alt-Z**, select **File**, then use:
@@ -21,7 +21,9 @@ The original remains intact while recording. Successful start returns directly
 to the terminal. Prompts and accepted user output are recorded; native terminal
 query replies are excluded. The generated prompt timeout is 30 seconds.
 
-Choose File/C again to save. A boundary with queued output, an unfinished
+Choose File/C again to save. The source uses the longest observed suffix safe for native WAITFOR. Stopping
+does not add a wait for the final response; the terminal resumes rendering it.
+A boundary with queued output, an unfinished
 parser operation or another serial owner is refused; let the operation finish
 and retry. Saving uses the checked publisher, including exclusive scratch
 creation, close checks and backup/restoration for replacement. File/D asks Y/N;
@@ -59,7 +61,7 @@ checks. A recording file error does not recall bytes already sent to the UART.
 
 ## Evidence and limits
 
-[The current validation record](validation/recording-matcher-ui.json) binds the keyboard and
+[The current validation record](validation/recording-prompt-ui.json) binds the keyboard and
 mouse build inputs, ten linked recorder UI campaigns, 153 command-menu inputs,
 ten TX and ten RX campaigns, 60 PROGRAM inputs, five autostart campaigns,
 78 ZMODEM workflows, 623 ABI counterexamples and eleven actual DOS capture
@@ -72,9 +74,9 @@ The standalone replay fixture explicitly establishes its required asserted-DTR
 baseline. This is a software fixture, not a physical modem result.
 
 The keyboard binary is
-`f041eeaaaeff9e38d8169625f499cd1f26ead00695e343d3e8fe36a4d61987c6`;
+`98ef7cd5466b8c3e55079e49dfc87d2813d511f645230dc1685073f6ff0ea7e5`;
 the mouse binary is
-`a65b8d799579daa2dfd1f1281f07a78f4699498b308ec710729dbeab95736c49`.
+`5ac3f933ec8ccdab77844e8ce7c8adc5728344c60cbdb77f6338f758c6c4729c`.
 Near data has 112/64 bytes spare and resident code has 366/216 bytes spare,
 respectively. Nine actor guards and three UI boundary calls are verified.
 Two compiler/linker optimized same-segment far calls retain the required far
@@ -95,7 +97,7 @@ recordings. Normal File/A replay uses the admitted parent renderer.
 
 Acceptance covers selected 80 by 25 keyboard workflows. Mouse runtime workflows,
 other geometries, immediate asynchronous file-error notification, complete
-original UI/ASPECT language, current-binary modern BBS/audio and physical modem
+original UI/ASPECT language, broader current-binary modern BBS/audio and physical modem
 acceptance remain open. File/F exposes retained asynchronous failures; existing
 shutdown error reporting remains in effect. This checkpoint closes no full
 F01–F16 application gate.

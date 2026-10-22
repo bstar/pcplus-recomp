@@ -22,9 +22,11 @@ async def main(args):
     stage=ROOT/'build/bbs-lab/recording'/args.name/args.label
     assert not stage.exists();stage.mkdir(parents=True)
     inputs={}
-    for directory,binary in (('terminal','TERMINAL.EXE'),('aspect-runner','ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')):
+    runner='aspect-match-trace' if args.trace else 'aspect-runner'
+    for directory,binary in (('terminal','TERMINAL.EXE'),(runner,'ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')):
         base=ROOT/'build'/directory;manifest=read(base/'manifest.json')
         assert sha(base/binary)==manifest['binary_sha256']
+        if directory==runner:assert bool(manifest['diagnostic_build'])==args.trace
         for name,digest in manifest['sources'].items():
             assert sha(ROOT/name)==digest,name
             assert name not in inputs or inputs[name]==digest
@@ -58,9 +60,14 @@ async def main(args):
         'record':login+'a-z p300 c p300 enter p500 '+navigation+'a-z p300 c p500 escape escape',
         'replay':login+'a-z p300 a p300 r e c o r d . a s x enter p14000 '+navigation,
     }
+    if args.trace:
+        # Observe a complete 30-second timeout before testing parent return.
+        # This is diagnostic timing, never a production acceptance shortcut.
+        schedules['replay']=schedules['replay'].replace('p14000','p45000')
     for keys in schedules.values():assert len('ADDKEY p1000 '+keys+' p2000 a-x')<500
     prediction=dict(inputs=inputs,schedules=schedules,expected_payload_hex=payload.hex(),server=args.name,port=port,
-        binary_sha256=sha(stage/'TERMINAL.EXE'),scope=__doc__)
+        binary_sha256=sha(stage/'TERMINAL.EXE'),diagnostic_build=args.trace,
+        runner_sha256=sha(stage/'ASPECT.EXE'),scope=__doc__)
     (stage/'start.json').write_text(json.dumps(prediction,indent=2)+'\n')
     runs={};semantics={}
     for mode,keys in schedules.items():
@@ -148,6 +155,7 @@ exit
         sources_unchanged=all(sha(ROOT/name)==digest for name,digest in inputs.items()),
         no_retained_temporary_files=not list(stage.glob('LPR*.TMP')) and not list(stage.glob('LPR*.BAK')))
     result=dict(passed=all(checks.values()),checks=checks,inputs=inputs,sessions=semantics,
+        diagnostic_build=args.trace,runner_sha256=sha(stage/'ASPECT.EXE'),
         binary_sha256=prediction['binary_sha256'],expected_payload_hex=payload.hex(),
         artifacts={str(p.relative_to(stage)):sha(p) for p in stage.iterdir() if p.is_file()},
         scope='Actual DOS File/C recording, DOS compilation and File/A replay of read-only menu navigation, followed by a second manual navigation proving parent return, on the existing loopback synthetic BBS account. The Hayes model forwards configured shutdown hangup bytes; escape-to-command modem behavior is not modeled. No audio, physical modem, file transfers or full application acceptance.')
@@ -158,4 +166,5 @@ exit
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=('synchronet','enigma'));p.add_argument('--label',required=True)
+    p.add_argument('--trace',action='store_true',help='Separate diagnostic ASPECT observer; no production acceptance')
     asyncio.run(main(p.parse_args()))

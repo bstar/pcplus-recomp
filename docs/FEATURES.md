@@ -1,5 +1,21 @@
 # Full application reconstruction checklist
 
+The [current BBS recorder checkpoint](BBS_RECORDING.md) now passes four
+production DOS sessions on Synchronet and ENiGMA: File/C records read-only menu
+navigation, DOS ASPCOMP compiles the unedited source, File/A replays in a fresh
+session, then manual navigation and normal exit restore sampled hardware.
+The source recorder selects the longest suffix safe for native prefix-only
+WAITFOR and omits stop-only RX waits. A separate diagnostic mapped-stream trace
+and68 native CPU checks establish both causes; earlier failures stay preserved.
+Current RX10/TX10/UI10, menu153, PROGRAM60, autostart5, ZMODEM78, ABI623 and
+11 DOS capture cases pass. New/replace/cancel DOS UI,17 recorder/31 publisher
+host cases,6 recorder DOS and36 ordinary/banked foreground publisher DOS cases
+pass. Keyboard/mouse data spare112/64 and code spare366/216. Next test the new
+recording workflow through software audio and broader profiles, then continue
+all remaining application reconstruction. Every full F01–F16 and physical gate
+remains open. Earlier entries below are historical checkpoints.
+
+
 The [BBS recorder investigation](BBS_RECORDING.md) now preserves six actual
 recording attempts and four failed fresh-session replays. Recording/compilation
 succeed on both servers. A concrete mismatch is corrected: normal prompts now

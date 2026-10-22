@@ -46,6 +46,7 @@ def main():
         m=ready();data=b'A\x1b[31mHELLO\x1b[0m> '
         ordinary(m,data)
         assert received(m)==10 and tail(m)==b'A\x1bHELLO\x1b> '
+        assert m.far('transmit',[ord('X')])==0
         assert m.far('stop')==0
         assert b'strcpy loc_prompt "A^[HELLO^[> "' in m.files['PCPLUS.ASP']
         assert b'[31m' not in m.files['PCPLUS.ASP'] and b'[0m' not in m.files['PCPLUS.ASP']

@@ -62,9 +62,36 @@ static unsigned flush_tx(aspect_recorder *s)
  if(!write_bytes(s,line,n))s->tx_count=0;
  return s->status;
 }
+static unsigned folded(unsigned c)
+{return c>='a'&&c<='z'?c-32:c;}
+/* Native WAITFOR falls back only to zero/one matched byte. For every proper
+ * border of a prefix, extending that border with a different next byte would
+ * require a longer fallback. Select the longest observed suffix without such
+ * a case; preserve the native matcher rather than generating a prompt it can
+ * miss. Pure repeated-byte prompts are safe and retain their full length. */
+static unsigned prompt_start(const unsigned char *bytes,unsigned count)
+{
+ unsigned char prefix[16];unsigned start,size,i,j;
+ for(start=0;start<count;++start){
+  size=count-start;prefix[0]=0;
+  for(i=1;i<size;++i){
+   j=prefix[i-1];
+   while(j&&folded(bytes[start+i])!=folded(bytes[start+j]))j=prefix[j-1];
+   if(folded(bytes[start+i])==folded(bytes[start+j]))++j;
+   prefix[i]=(unsigned char)j;
+  }
+  for(i=1;i<size;++i)
+   for(j=prefix[i-1];j;j=prefix[j-1])
+    if(folded(bytes[start+j])!=folded(bytes[start+i]))goto unsafe;
+  return start;
+unsafe:;
+ }
+ return start;
+}
 static unsigned flush_rx(aspect_recorder *s)
 {
  char encoded[49],line[100];unsigned i,n=0,at=0,has_text=0,leading=1,c,len;
+ unsigned char raw[16];unsigned raw_count=0;
  unsigned quotes[16],quote_count=0;
  if(!s->rx_count)return s->status;
  for(i=0;i<s->rx_count;++i)if(s->rx[i]>32)has_text=1;
@@ -72,6 +99,10 @@ static unsigned flush_rx(aspect_recorder *s)
   c=s->rx[i];if(!c)continue;
   if(has_text&&leading&&c<32)continue;
   leading=0;
+  raw[raw_count++]=(unsigned char)c;
+ }
+ for(i=prompt_start(raw,raw_count);i<raw_count;++i){
+  c=raw[i];
   if(c<32){encoded[n++]='^';encoded[n++]=(char)(c==30?'~':c+64);}
   else if(c=='^'){encoded[n++]='^';encoded[n++]='^';encoded[n++]='^';}
   else{
@@ -137,7 +168,11 @@ static unsigned finish(aspect_recorder *s,unsigned cancel)
  s->busy=1;
  if(!s->status){
   if(cancel)s->status=AR_CANCELLED;
-  else if(!flush_tx(s)&&!flush_rx(s))text(s,record_footer,sizeof(record_footer)-1);
+  else if(!flush_tx(s)){
+   /* Received bytes gate a following user action, never an otherwise complete
+    * recording's exit. The resumed terminal renders the final response. */
+   s->rx_count=0;text(s,record_footer,sizeof(record_footer)-1);
+  }
  }
  s->owned=s->active=0;close_error=s->ops.close(s->context);s->close_error=close_error;
  if(close_error&&!s->status)s->status=AR_CLOSE;

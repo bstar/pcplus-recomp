@@ -1,58 +1,82 @@
-# BBS recorder replay: current failure boundary
+# Recording and replay on Synchronet and ENiGMA
 
-Actual DOS tests against the existing loopback Synchronet and ENiGMA fixtures
-successfully create recordings through File/C and compile them with DOS ASPCOMP.
-**Fresh-session replay is not accepted.** The retained attempts are bound by the
-[diagnostic record](validation/bbs-recording-failure.json).
+The [current validation record](validation/bbs-recording-prompt.json) accepts
+selected read-only recording/replay workflows on both existing loopback BBSes.
+The production DOS terminal records navigation through File/C, actual DOS
+ASPCOMP compiles the unedited source, and a fresh authenticated session launches
+it through File/A and the production ASPECT runner. A second manual navigation
+then proves return to the parent, followed by normal exit and exact sampled
+DOS/UART restoration. Credentials precede recording and are absent from its TX.
 
-Credentials precede recording and are absent from the recorded transmit payload.
-Synchronet records Main → Files → Main (`5451`); ENiGMA records Main → Messages
-→ Main (`4D0D510D`). Both recording sessions exit normally and restore their
-sampled UART/DOS state. Replay uses File/A and the source-built ASPECT runner.
+| Server | Recorded route | Recorded user payload | Replay session |
+| --- | --- | --- | --- |
+| Synchronet 3.22a development snapshot | Main → Files → Main | `5451` | Script route, then same route manually; actual display/video checked |
+| ENiGMA½ 0.5.1-beta | Main → Messages → Main | `4D0D510D` | Server log confirms both script and manual routes |
 
-The first attempts (`recorder-current-01`) stopped at an incorrect audit boundary:
-the Hayes model forwards configured shutdown `+++`/`ATH` bytes to its TCP peer,
-while the audit expected navigation to be the final bytes. The model does not
-implement escape-to-command mode. This limitation is explicit in subsequent
-checks; production modem commands are unchanged.
+The terminal SHA256 is
+`98ef7cd5466b8c3e55079e49dfc87d2813d511f645230dc1685073f6ff0ea7e5`.
+The runner is the ordinary source-built ASPECT executable, not the diagnostic
+observer used to investigate the earlier failures. The independent audit checks
+raw Telnet/user bytes, the original recorded source, frozen inputs and manifests,
+normal DOS exit, hardware snapshots and actual server/display semantics. Earlier
+failed attempts remain [preserved separately](validation/bbs-recording-failure.json).
 
-The next attempts (`recorder-current-02`, terminal `d7d8b18e`) exposed an actual
-stream mismatch. Recording included raw ANSI continuations before input
-translation, creating a prompt such as `CPlus Lab: ESC[37m`. Native ASPECT
-WAITFOR receives translated lead bytes, while its renderer consumes `[37m`
-outside the matcher. Those generated prompts could not match.
+## Receive stream and prompt selection
 
-The corrected tap observes the normal lead after input translation. Continuations
-stay outside recording; an unread parser lookahead enters recording only if
-subsequently delivered as a normal lead. Obsolete four-byte deduplication state
-is removed. Linker alignment leaves keyboard/mouse near-data spare at 112/64
-bytes and resident-code spare at 366/216. ASPECT's native behavior is unchanged.
-Ten linked RX campaigns pass, and 623 damaged layouts/bindings/order mutations
-reject, including an explicit translation-before-recording check.
+The original raw tap recorded ANSI continuations that native WAITFOR cannot see.
+Normal recording now follows input translation; parser continuations remain
+outside matching. An unread parser lookahead enters recording only if delivered
+as a normal lead. This preserves native ASPECT receive/render behavior.
 
-The corrected build is
-`f041eeaaaeff9e38d8169625f499cd1f26ead00695e343d3e8fe36a4d61987c6`.
-Attempts `recorder-current-03` show partial improvement: Synchronet emits both
-recorded commands and later keyboard input, but the final recorded prompt names
-a different message area from the new session. ENiGMA still emits only its first
-recorded command pair before subsequent keyboard input. Both replay attempts
-time out without normal DOS exit, so neither proves parent return or cleanup.
-ASPECT forwards ordinary keyboard input while waiting; those bytes alone do not
-prove the script completed. Failed and successful subchecks remain distinct.
+A separate source-built diagnostic runner then logged the actual mapped stream
+and send/wait outcomes. It showed two further causes. ENiGMA's prompt of thirteen
+spaces followed by three ESC leads occurs in the captured stream, yet the native
+prefix-only matcher misses it. Synchronet's final recorded prompt referred to a
+different message area from the next session. Increasing the diagnostic delay
+exposed timeout/return; it did not make ENiGMA send its missing command.
 
-The next diagnostic must capture the actual translated WAITFOR stream and wait
-outcomes, distinguish changing prompt content from renderer/matcher behavior,
-and exercise both same-session and fresh-session replay. Do not weaken the
-navigation, normal-exit or restoration checks, or edit generated scripts and
-present that as a recorder pass.
+The recorder now selects the longest observed suffix that the unchanged native
+matcher can find reliably. A bounded prefix table identifies prefixes whose
+proper borders would require a fallback longer than the native zero/one-byte
+fallback. ASCII case folding matches native defaults. ENiGMA's example becomes
+one space followed by three ESC leads. Pure repeated-byte prompts keep their
+full length. Existing quote/caret/control encoding and bounded writes remain.
+Sixty-eight native CPU checks include the actual 1908-byte diagnostic stream:
+the old pattern occurs but fails; the generated suffix matches at byte69.
+These CPU tests model transport/time callbacks and remain distinct from DOS.
 
-Reproduce with fresh labels, one session per synthetic account at a time:
+Stopping flushes accepted pending TX and writes the source footer. It does not
+emit a wait for the final RX tail: no later recorded action depends on it, and
+the resumed terminal renders the response. Prompt waits before following user
+output remain bounded and exit before that output on timeout. This avoids
+stalling completed scripts on session-specific final status text. Generated
+recordings are not edited to obtain the accepted BBS results.
+
+## Reproduction and scope
+
+With current source-only terminal/ASPECT/ASPCOMP builds and the existing synthetic
+loopback servers listening on 23231/23233, use fresh labels:
 
 ```sh
 ./tools/dev --command python3 lab/bbs/recording_dos.py synchronet --label NEW
 ./tools/dev --command python3 lab/bbs/recording_dos.py enigma --label NEW
 ```
 
-The fixtures use loopback ports 23231/23233 and synthetic lab accounts. Tests
-use COM2, 19200, 8N1, HARD under DOSBox-X. Software audio, physical Boca/SPA2102,
-real escape/hangup behavior, transfers and every full F01–F16 gate remain open.
+The optional observer builds independently:
+
+```sh
+./tools/dev --command python3 standalone/build_aspect_match_trace.py
+./tools/dev --command python3 lab/bbs/recording_dos.py enigma --trace --label TRACE_NEW
+```
+
+Its manifest identifies diagnostic code, unchanged production baseline hashes,
+record layout and timing effects. Diagnostic success alone does not accept the
+production runner. `./tools/build test-aspect-recorder` includes the portable
+native prompt checks; the recorded-stream option is an additional local proof.
+
+Tests use COM2,19200,8N1,HARD in DOSBox-X with the Hayes/Telnet model. The model
+forwards configured shutdown `+++`/`ATH` bytes and does not implement real escape
+to command mode; the audit requires that exact modem-owner suffix separately
+from navigation. Software audio, physical Boca/SPA2102 timing, other profiles,
+transfers, arbitrary dynamic prompts and complete ASPECT remain unverified.
+This checkpoint closes no full F01–F16 gate.
