@@ -11,6 +11,7 @@ terminal_modem_code_start:
 extern terminal_option_mask,terminal_dial_target,terminal_modem_settings
 extern terminal_directory_mode
 extern terminal_modem_send_start_impl,terminal_modem_send_poll_impl
+extern terminal_modem_send_resync_start_impl
 extern modem_response_slots
 extern uart_port_msr,uart_port_mcr
 extern uart_tx_paused,uart_flow_pending,uart_xoff_sent,uart_rts_lowered
@@ -177,6 +178,12 @@ terminal_connection_start_impl:
  call start_dial
  jmp .done
 .send:
+ cmp byte [connection_resync],0
+ je .send_clean
+ mov byte [connection_resync],0
+ call terminal_modem_send_resync_start_impl
+ jmp .done
+.send_clean:
  call terminal_modem_send_start_impl
 .done:
  restore
@@ -396,6 +403,7 @@ terminal_connection_poll_impl:
 .internal:
  mov word [connection_status],7
 .begin_abort:
+ mov byte [connection_resync],1
  mov word [connection_state],7
  call reset_clock
  jmp .done
@@ -507,6 +515,7 @@ terminal_connection_cancel_impl:
  call reset_clock
  jmp .done
 .cancel:
+ mov byte [connection_resync],1
  mov word [connection_state],7
  call reset_clock
 .done:
@@ -589,6 +598,7 @@ connection_enabled: db 0
 connection_carrier_seen: db 0
 connection_mcr: db 0
 connection_exit_pending: db 0
+connection_resync: db 0
 connection_state: dw 0
 ; Status0idle/1online/2responsefailure/3timeout/4cancel/5hangup/6carrierlost/7internal.
 connection_status: dw 0

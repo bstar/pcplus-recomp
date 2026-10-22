@@ -58,7 +58,7 @@ def main():
     assert old['parent_sha256']!=new['parent_sha256']==sha(ROOT/'build/terminal/TERMINAL.EXE')
     for name,digest in new['inputs'].items():assert sha(ROOT/name)==digest,name
     model=read(a.model);assert model['passed'] and not model['gap_reproduced'] and model['compatibility_accepted'] and len(model['cases'])==4
-    assert model['parent_sha256']==new['parent_sha256'] and all(c['passed'] and c['retry_state']==5 and bytes.fromhex(c['retry_wire_hex'])==b'ATZ\rATDLocal.Example:2323\r' for c in model['cases'])
+    assert model['parent_sha256']==new['parent_sha256'] and all(c['passed'] and c['retry_state']==5 and bytes.fromhex(c['retry_wire_hex'])==(b'\r' if c['case'].startswith('cancel-init-') else b'')+b'ATZ\rATDLocal.Example:2323\r' for c in model['cases'])
     source=read(a.source_proof);assert source['passed'] and source['original_inputs']==[] and len(source['products'])==26
     assert all(v['expected']==v['actual'] for v in source['products'].values()) and source['products']['terminal/TERMINAL.EXE']['actual']==new['parent_sha256']
     for name,digest in source['sources'].items():assert sha(ROOT/name)==digest,name

@@ -1,6 +1,26 @@
 # Retained modem command after canceled initialization
 
-The current parent (SHA256 `1600a5b37094d5a3b666ffee6bf1da387dad7a7435a332be76618975c47bcdab`)
+The main source now includes the paced retry separator. The
+[current component audit](validation/modem-resync.json) accepts four actual DOS
+retained/cleared-parser SOFT/BOTH cases, binds normal/mouse products to fresh
+source-only reproductions, and checks 34 linked synchronization cases plus four
+manual reconnect cases. Normal/mouse SHA256 prefixes are `1cbb4f8f`/`b14074ec`.
+[Additional regressions](validation/modem-resync-regressions.json) pass46 connection
+inputs,42 carrier-policy cases,eight startup ABI cases and13 attached PROGRAM
+workflows using the rebuilt external parent `c3466222`. The unchanged recorder
+helper passes13 ENiGMA TCP-control checks on this parent. These do not accept
+the separate failed audio run or close full application/hardware requirements.
+Four fresh [Synchronet/ENiGMA recorder/replay sessions](validation/bbs-modem-resync-compat.json)
+also pass independent raw audit. Synchronet required a declared temporary
+synthetic-account logon exemption; its original exemption bits are restored.
+
+Run the maintained normal/mouse synchronization checks through Nix:
+
+~~~sh
+./tools/build test-modem-resync
+~~~
+
+The preceding parent (SHA256 `1600a5b37094d5a3b666ffee6bf1da387dad7a7435a332be76618975c47bcdab`)
 fails retry initialization when a modem retains its partial command buffer
 through the cancellation DTR pulse. Both actual DOS SOFT/BOTH lab cases retain
 the first `A`, observe cancellation, then parse retry `ATZ` as `AATZ` and return
@@ -35,29 +55,27 @@ Evidence:
   reject six modified captures/declarations while keeping their declared hashes
   consistent. Failure reproduction remains distinct from product acceptance.
 
-Reproduce with the admitted parent and pinned DCD lab available:
+Run the corrected current workflow with the pinned DCD lab available:
 
 ~~~sh
 ./tools/dev --command python3 standalone/test_manual_cancel_retained_dos.py \
-  --label retained-baseline-new --expect-gap
-./tools/dev --command python3 standalone/audit_manual_cancel_retained.py \
-  build/manual-cancel-dos/retained-baseline-new \
-  --output docs/validation/manual-cancel-retained-gap-new.json
+  --label retained-fixed-new
 ~~~
 
 The producer preserves its scripts under the run's `retained-inputs/standalone`
 directory. The initial recorded run retained both scripts manually with their
-declared hashes before any candidate edits.
+declared hashes before any candidate edits. Historical `--expect-gap` runs
+require the recorded preceding source/product, not the corrected main build.
 
-Recovery is in progress in an isolated candidate tree. Its hypothesis is one
+Recovery was first tested in an isolated candidate tree, using one
 paced carriage return before retry initialization following an aborted MODEM
 attempt, keeping the configured initialization string intact. The isolated
 `build/manual-resync-candidate-01` passes four retained/cleared-parser SOFT/BOTH
 DOS cases: the stale `A` or empty command terminates separately, then clean
 `ATZ` and dialing proceed. The [independent candidate audit](validation/modem-resync-candidate.json)
-checks both parser policies and binds the exact [proposed patch](../patches/modem-retry-resync.patch)
+checks both parser policies and binds the exact [recorded patch](../patches/modem-retry-resync.patch)
 to the admitted old/new product sources. It accepts these candidate cases only;
-the main build remains unchanged pending adoption and broader admission.
+the matching patch is now adopted in the main build with the current audit above.
 The earlier frozen audio run has now ended and is
 [preserved as failed](validation/recording-manual-reconnect-audio-failure.json):
 startup reached Files, but the recipe helper delivered no keys and reached its
@@ -89,9 +107,9 @@ Boca connections still use numeric dialing through the planned SIP/audio bridge.
 
 ~~~sh
 ./tools/dev --command python3 standalone/test_modem_resync_softmodem_dos.py \
-  --baseline-product build/terminal \
-  --candidate-product build/manual-resync-candidate-01/build/terminal \
-  --output build/manual-resync-candidate-01/stock-softmodem-new
+  --baseline-product build/manual-resync-candidate-01/stock-softmodem-03/baseline/admitted-product \
+  --candidate-product build/terminal \
+  --output build/modem-resync-stock-softmodem-new
 ~~~
 
 Keep the baseline product at the recorded old identity when repeating this
@@ -107,6 +125,7 @@ are retained under its ignored build directory. A fresh source-only tree of
 398 declared files reproduces both normal/mouse executables byte-for-byte,
 with no originals or prebuilt inputs. The [regression inventory](validation/modem-resync-candidate-regressions.json)
 records product identities, tool hashes and individual report hashes.
-Broader current-product regressions and application/BBS admission remain
-required before adoption. Full modem and application requirements, and physical
+Other application/BBS workflows remain required after adoption; current TCP
+recorder/replay controls pass while normal audio still needs investigation.
+Full modem and application requirements, and physical
 Boca/SPA2102 testing, remain open.

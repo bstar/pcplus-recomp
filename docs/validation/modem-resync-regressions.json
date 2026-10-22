@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "parent_sha256": "1cbb4f8fa243f9ce63c3a2d0788d0f039c3cb481f8e03d267f77e039823a6ba0",
+  "regressions": {
+    "connection": {
+      "passed": true,
+      "report": "build/terminal/connection-checks.json",
+      "report_sha256": "953bf600b9e5fcb5a257a70890f8d6e86ecda5ec3c48371531526a37b1b1a5f4",
+      "cases": 8,
+      "inputs": 46
+    },
+    "carrier": {
+      "passed": true,
+      "report": "build/modem-resync-main-carrier-01/checks.json",
+      "report_sha256": "c9b08f80583d1291f6b0faeebcef21e22105d8dc7ba7d9bfbc4ddd9f3dd092de",
+      "cases": 42
+    },
+    "startup": {
+      "passed": true,
+      "report": "build/program-startup-bank/resync-main-01/checks.json",
+      "report_sha256": "1646d3f1b352c395080d6fc3d1bfc2abfd0479a228fa86a5fcaf1f5b6351a04c",
+      "cases": 8
+    },
+    "attached_PROGRAM": {
+      "passed": true,
+      "report": "build/aspect-parent-process/modem-resync-main-01/result.json",
+      "report_sha256": "80da45ae127fe53a8a74af5c2dfc6d6207c6b8e1337ea59c40bccd1b241d4f93",
+      "cases": 13
+    },
+    "ENiGMA_TCP_recording_control": {
+      "passed": true,
+      "report": "build/bbs-lab/results/enigma/audio-recording-resync-01/recording-checks.json",
+      "report_sha256": "783825d76c65501faac6df1f9a2ba914c5c2ed037208618187002186afd56c16",
+      "checks": 13
+    },
+    "stock_connection_DOS": {
+      "passed": true,
+      "cases": 5,
+      "report": "build/connection-dos/result.json",
+      "report_sha256": "d712c2bdde4c5bacf4b31e5c15d3639a576c4949534153118a8a97181a3ea2a3"
+    }
+  },
+  "scope": "Report inventory supplementing independent modem-resync component audit. ENiGMA TCP control is not audio acceptance. Normal/mouse/external products are source built; full F01-F16 and physical gates remain open."
+}

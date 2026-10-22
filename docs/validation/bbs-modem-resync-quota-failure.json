@@ -1,0 +1,12 @@
+{
+  "diagnostic_evidence_preserved": true,
+  "compatibility_accepted": false,
+  "reason": "Synchronet synthetic LABUSER daily logon quota exhausted before replay navigation",
+  "parent_sha256": "1cbb4f8fa243f9ce63c3a2d0788d0f039c3cb481f8e03d267f77e039823a6ba0",
+  "recording_passed": true,
+  "replay_passed": false,
+  "producer_report": "build/bbs-lab/recording/synchronet/modem-resync-01/result.json",
+  "producer_report_sha256": "d3a0e52c29d7a2423d9bf8f7579742e55f33629fa593f746177d301a17cb6692",
+  "display_sha256": "f16a986d342a4347088c630d5b7c85f840b804656b982a7e374e14a36bc08da0",
+  "scope": "Server sends daily-logon refusal after credentials; no replay or second manual navigation is established. This is preserved separately from a new attempt using the existing temporary owned-account exemption fixture. No terminal compatibility acceptance follows from the refused attempt."
+}

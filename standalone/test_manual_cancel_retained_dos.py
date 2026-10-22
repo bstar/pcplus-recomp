@@ -13,6 +13,8 @@ def retained(out,events,gap,backend):
     text=text.replace(old,"phase='DTR-low';event('cancel-DTR-low')")
     old="assert value==ord('A');conn.sendall";assert text.count(old)==1
     text=text.replace(old,"assert value==ord('A');line.append(value);conn.sendall")
+    old="if command==b'':event('empty-command-terminated',command);continue";assert text.count(old)==1
+    text=text.replace(old,"if command==b'A':conn.sendall(b'\\r\\nERROR\\r\\n');event('stale-command-terminated',command);continue")
     old="else:checks['unexpected_modem_command']=True";assert text.count(old)==1
     text=text.replace(old,"else:checks['unexpected_modem_command']=True;conn.sendall(b'\\r\\nERROR\\r\\n');event('initialization-ERROR',command)")
     module=types.ModuleType('retained_cancel_factory');module.__dict__.update(base.__dict__)
@@ -23,7 +25,13 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--expect-gap',action='store_true');a=p.parse_args()
     base.adapter=retained;sys.argv=[__file__,'--label',a.label]
     failed=False
-    try:base.main()
+    run=base.main
+    if a.expect_gap:
+        source=inspect.getsource(run)
+        old="else b'\\rATZ\\rATDCaseTest:23\\r'";assert source.count(old)==1
+        source=source.replace(old,"else b'ATZ\\rATDCaseTest:23\\r'")
+        namespace=dict(base.__dict__);exec(compile(source,__file__,'exec'),namespace);run=namespace['main']
+    try:run()
     except AssertionError:failed=True
     folder=ROOT/'build/manual-cancel-dos'/a.label;r=json.loads((folder/'checks.json').read_text())
     preserved=folder/'retained-inputs/standalone';preserved.mkdir(parents=True,exist_ok=False)

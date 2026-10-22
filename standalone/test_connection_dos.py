@@ -65,7 +65,9 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
        continue
       if byte==27:line.clear();checks['configured_abort_reached_wire']=True;continue
       if byte!=13:line.append(byte);continue
-      command=bytes(line);commands.append(command.decode('ascii','replace'));line.clear()
+      command=bytes(line);line.clear()
+      if not command:continue
+      commands.append(command.decode('ascii','replace'))
       if command==b'ATZ':conn.sendall(b'\r\nOK\r\n')
       elif command==b'ATD'+target:
        attempts+=1

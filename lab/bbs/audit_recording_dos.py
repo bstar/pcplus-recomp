@@ -11,7 +11,9 @@ def read(p):return json.loads(p.read_text())
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True)
     p.add_argument('--native',type=Path,required=True);p.add_argument('--cohort',type=Path,required=True)
-    p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--synchronet-logon-fixture',type=Path,help='Declared temporary synthetic-account daily-logon exemption, restored after this attempt')
+    a=p.parse_args()
     assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
     cohort=a.cohort.resolve();output=a.output.resolve()
     assert cohort.is_relative_to(ROOT/'build') and not cohort.exists()
@@ -80,13 +82,26 @@ def main():
     assert native['real_ENiGMA']['old_occurrence_present'] and not native['real_ENiGMA']['old_native_match'] and native['real_ENiGMA']['new_native_match']
     for path,digest in native['inputs'].items():assert sha(ROOT/path)==sha(native_path.parent/'frozen-source'/path)==digest,path
     selected.update(p for p in native_path.parent.rglob('*') if p.is_file())
+    logon_fixture=None
+    if a.synchronet_logon_fixture:
+        path=a.synchronet_logon_fixture.resolve();assert path.is_relative_to(ROOT/'build/bbs-lab')
+        state=read(path);assert state['user']=='LABUSER' and state['restored'] and state['before']==state['after']
+        assert state['bit']==2048 and state['active']==state['before']|state['bit']
+        for operation,restored in [('begin',False),('end',True)]:
+            capture=path.with_suffix('.'+operation+'.stdout').read_text()
+            values=[json.loads(line.partition('PCPLUS_FIXTURE ')[2]) for line in capture.splitlines() if line.startswith('PCPLUS_FIXTURE ')]
+            assert len(values)==1 and values[0]['restored']==restored
+            assert all(values[0][key]==state[key] for key in ('number','user','bit','before','active'))
+            for suffix in ('.js','.stdout','.stderr'):selected.add(path.with_suffix('.'+operation+suffix))
+        selected.update([path,ROOT/'lab/bbs/synchronet_logon_fixture.py'])
+        logon_fixture=dict(record=str(path.relative_to(ROOT)),sha256=sha(path),user=state['user'],before=state['before'],active=state['active'],restored=state['restored'],after=state['after'],scope='Temporary owned-account daily-logon exemption, not a terminal compatibility fix or quota-policy test.')
     cohort.mkdir();kept={}
     for path in sorted(selected):
         target=cohort/'accepted'/path.relative_to(ROOT);target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copy2(path,target);assert sha(target)==sha(path)
         kept[str(target.relative_to(ROOT))]=sha(target)
     result=dict(passed=True,selected_modern_BBS_recorder_workflows_accepted=True,full_F13_accepted=False,
-        servers=servers,native_prompt_cases=68,custody_sha256=kept,
+        servers=servers,native_prompt_cases=68,custody_sha256=kept,synchronet_logon_fixture=logon_fixture,
         earlier_failures='docs/validation/bbs-recording-failure.json',
         scope='Four production actual DOS sessions: record read-only navigation, compile with DOS ASPCOMP, replay the unedited source in a fresh authenticated BBS session, navigate manually afterward, then normal exit and exact UART/DOS restoration. Separate diagnostic observer and native CPU evidence explain the overlap/stop-only wait fixes. Loopback Hayes model forwards configured shutdown bytes. No software audio, physical modem, transfers, arbitrary prompts or full application acceptance.')
     with output.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')

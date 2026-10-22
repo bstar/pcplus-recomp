@@ -10,10 +10,9 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--product',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     text=inspect.getsource(base.run).replace("out=ROOT/'build/connection-dos'/name",'out=CASE_OUT/name')
-    needle="command=bytes(line);commands.append(command.decode('ascii','replace'));line.clear()";assert text.count(needle)==1
-    # A modem command parser may ignore an empty CR without changing the
-    # expected initialization/dial command list. Keep exact wire checks below.
-    text=text.replace(needle,"command=bytes(line);line.clear()\n      if not command:continue\n      commands.append(command.decode('ascii','replace'))")
+    # The common modem peer ignores empty CR commands. Keep exact wire checks
+    # below so ignoring a separator cannot hide changed initialization bytes.
+    assert text.count('if not command:continue')==1
     module=types.ModuleType('resync_connection');module.__dict__.update(base.__dict__)
     module.__dict__.update(CASE_OUT=out,BINARY=a.product.resolve()/'TERMINAL.EXE')
     exec(compile(text,__file__,'exec'),module.__dict__)

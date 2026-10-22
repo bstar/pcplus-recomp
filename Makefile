@@ -419,6 +419,10 @@ test-config-replace: config-replace
 terminal:
 	python3 standalone/build_terminal.py
 
+.PHONY: test-modem-resync
+test-modem-resync: terminal terminal-mouse
+	python3 -c 'import pathlib,subprocess,tempfile; out=pathlib.Path(tempfile.mkdtemp(prefix="modem-resync-",dir="build")); [subprocess.run(["python3","standalone/check_modem_resync.py","--product","build/"+name,"--output",str(out/(name+".json"))],check=True) for name in ("terminal","terminal-mouse")]'
+
 test-terminal: setup live-configuration
 
 test-terminal: terminal

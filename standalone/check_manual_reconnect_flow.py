@@ -34,7 +34,8 @@ def main():
             if m.state() in (0,5):break
         wire=bytes(m.tx)[len(before):]
         assert m.state()==(0 if a.expect_gap else 5)
-        assert wire==(b'' if a.expect_gap else b'ATZ\rATDLocal.Example:2323\r')
+        prefix=b'\r' if kind=='cancel-init' else b''
+        assert wire==(b'' if a.expect_gap else prefix+b'ATZ\rATDLocal.Example:2323\r')
         cases.append(dict(case=kind+('-both' if hard else '-soft'),passed=True,first_status=3 if kind=='hangup' else 4,retry_state=m.state(),retry_wire_hex=wire.hex()))
     binary=ROOT/'build/terminal/TERMINAL.EXE';manifest=json.loads((binary.parent/'manifest.json').read_text());assert manifest['binary_sha256']==sha(binary)
     inputs={**manifest['sources']}

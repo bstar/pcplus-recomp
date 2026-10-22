@@ -54,7 +54,9 @@ def adapter(out,events,gap,backend):
        checks['configured_hangup_reached_wire']=True;conn.sendall(b'\xff\x81\r\nOK\r\n');event('DCD-low-hangup',b'\xff\x81');line.clear();online=False
       continue
      if value!=13:continue
-     command=bytes(line[:-1]);line.clear();commands.append(command.decode('ascii','replace'))
+     command=bytes(line[:-1]);line.clear()
+     if command==b'':event('empty-command-terminated',command);continue
+     commands.append(command.decode('ascii','replace'))
      if command==b'ATZ':conn.sendall(b'\r\nOK\r\n')
      elif command==b'ATD'+target:
       attempts+=1;conn.sendall(b'\xff\x8bCONNECT\r\n'+banner);event('DCD-high-CONNECT',b'\xff\x8b');online=True
@@ -159,7 +161,7 @@ def main():
                 arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',banner=ESC+b'[2J'+ESC+b'[HFIRST BYTE SAFE'+ESC+b'[6n'+ESC+b'[0c')
         finally:(folder/'peer-events.json').write_text(json.dumps(events,indent=2)+'\n')
         sample=struct.unpack('<12H',(folder/'CANCEL.BIN').read_bytes());wire=(folder/'serial.bin').read_bytes()
-        expected=b'A'+(b'' if gap else b'ATZ\rATDCaseTest:23\r'+ESC+b'[1;16R'+ESC+b'[?62;2cready'+ESC+b'[1;16R+++ATH\r')
+        expected=b'A'+(b'' if gap else b'\rATZ\rATDCaseTest:23\r'+ESC+b'[1;16R'+ESC+b'[?62;2cready'+ESC+b'[1;16R+++ATH\r')
         checks=dict(r['checks'],observer_admitted=sample[0]==0x434d and sample[1]!=0 and sample[2]>18 and sample[11]==1,
             actual_initialization_XOFF=sample[3]>8,never_high_before_cancel=sample[4]==sample[5]==0,DTR_low_observed=sample[6]>8,
             actual_cancel_idle=sample[7]==1 and sample[8]==int(gap) and sample[9]==0,
