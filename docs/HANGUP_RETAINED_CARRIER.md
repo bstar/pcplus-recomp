@@ -40,14 +40,16 @@ The retained region is10,278 bytes:10,152 fixed resource bytes plus63 two-byte
 renderer policy words, each compared before/after child execution. The existing
 older recorder ledger's hard-coded10,276-byte expectation is not reused.
 
-[Fresh audio preparation](validation/recording-hangup-policy-audio-preparation.json)
-seals the unchanged BIOS helper proof and13 fresh current-parent DOS/TCP checks.
-The normal audio call is in progress, with frozen admission inputs; preparation
-is not audio acceptance. Independent waveform/serial/producer audits remain
-required after that job terminates.
+[Normal audio acceptance](validation/recording-hangup-policy-audio.json) now
+passes26 producer/34 independent/12 serial checks on this current parent.
+All77 online guest bytes independently decoded from the caller waveform match
+the serial stream. Recording, DOS compilation/replay, manual Search and normal
+hardware/timer/SIP/VM cleanup pass on one ENiGMA V22/1200 software route at38400
+DTE. Its unchanged BIOS helper proof and13 fresh TCP controls remain separately
+sealed in [preparation](validation/recording-hangup-policy-audio-preparation.json).
 
 Physical modem behavior, broader initialization/results/flow-pressure policies,
-current-parent normal SIP/audio validation and all full application gates remain open.
+other audio routes and all full application gates remain open.
 
 ## Preserved baseline
 

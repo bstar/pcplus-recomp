@@ -1,5 +1,15 @@
 # Normal recorder workflow over the software modem
 
+The [failed-hangup build](../../docs/validation/recording-hangup-policy-audio.json)
+accepts parent3b453f2b with unchanged runner183f852d and DOS compilerfc200c8c
+on one normal ENiGMA software V22/1200 SIP/RTP/DSP/Telnet route at38400 DTE.
+All26 producer/34 independent/12 serial checks pass, including77 online caller
+bytes decoded from the waveform, actual recording/compilation/replay/manual
+Search and hardware/timer/SIP/VM cleanup. [Preparation](../../docs/validation/recording-hangup-policy-audio-preparation.json)
+binds the unchanged seven BIOS helper cases/56 checks and13 fresh DOS/TCP checks.
+This does not cover audio flow pressure, other routes, physical Boca/SPA2102 or
+any full application gate. Earlier checkpoints below retain their identities.
+
 The [ASIOv6 carrier build](../../docs/validation/recording-modem-carrier-audio.json)
 accepts parent6075bc18/runnera84dd21d for one normal ENiGMA V22/1200 software
 SIP/RTP/DSP/Telnet recorder route. All26 producer,34 independent and12 serial
