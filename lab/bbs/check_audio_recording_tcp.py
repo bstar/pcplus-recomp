@@ -26,7 +26,7 @@ async def main(args):
         shutil.copy2(base/binary,stage/binary)
     script=login_source();marker='cwhen 0\ncwhen 1\ncwhen 2\nendproc\n'
     assert script.count(marker)==1
-    script=script.replace(marker,'cwhen 0\ncwhen 1\ncwhen 2\nwaitquiet 1 10\ntransmit "F^M"\nwaitfor "File Base" 30\nwaitquiet 1 10\nmessage "RECORDER READY"\nendproc\n')
+    script=script.replace(marker,'cwhen 0\ncwhen 1\ncwhen 2\nwaitquiet 1 10\ntransmit "F^M"\nwaitfor "File Base" 30\nwaitquiet 1 10\n'+audio_recording.READY_MESSAGE+'endproc\n')
     (stage/'AUDIO.ASP').write_text(script);(stage/'AUDIO.ASX').write_bytes(compile_source(script))
     for name,leaf in (('audio_recording_keys.asm','EXITKEY.COM'),('audio_get_vector.asm','KEYVEC.COM')):
         subprocess.run(['nasm','-fbin',str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)

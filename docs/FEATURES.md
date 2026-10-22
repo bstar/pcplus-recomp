@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Marker layout evidence](RECORDING_MARKER_LAYOUT.md) narrows the audio readiness
+failure to a76-sample marker run below the91-sample requirement. A captured late
+footer erases the preceding layout in linked renderer tests. The revised fixture
+passes40 selected renderer cases and13 ordinary-helper TCP checks. Normal audio
+acceptance remains unverified; helper timing and application binaries are unchanged.
+
 [Ready-marker observations](RECORDING_MARKER_DIAGNOSTIC.md) add opt-in private
 BIOS counters with unchanged ordinary helper bytes. Seven ordinary/eight
 diagnostic BIOS probes and three production-admission rejection controls pass;

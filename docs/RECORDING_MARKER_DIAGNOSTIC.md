@@ -1,5 +1,10 @@
 # Recorder ready-marker diagnostic
 
+The completed [diagnostic receipt](validation/recording-marker-audio-diagnostic.json)
+records76 consecutive ready-marker samples before disappearance, with no
+recipe keys or keyboard queue retries. See the
+[layout counterexample and current fixture](RECORDING_MARKER_LAYOUT.md).
+
 The preceding normal audio run reached Files, but the BIOS helper delivered no
 recipe keys before its watchdog. The [failure receipt](validation/recording-manual-reconnect-audio-failure.json)
 does not establish why: the helper requires a visible `RECORDER READY` marker

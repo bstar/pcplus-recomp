@@ -226,7 +226,7 @@ def main():
   else:
    script+='transmit "P^M"\n'+wait('INS',150,'HEADER')+'waitquiet 2 120\ntransmit "^M"\nwaitquiet 2 120\ntransmit "KEYTEST^M"\nwaitquiet 2 120\n'+mark('EDITOR')
  script+='fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\n'
- if a.route=='recording':script+='message "RECORDER READY"\n'
+ if a.route=='recording':script+=audio_recording.READY_MESSAGE
  script+='endproc\n'
  script+='proc advance\ncwhen 0\nwaitquiet 2 120\nwhen 0 "eyboard" call advance\ntransmit "^M"\nendproc\n'
  script+='proc cancel\nif cancel_done == 0\ncancel_done=1\ncwhen 1\nwhen 1 "Main Menu" call reached_main\nwaitquiet 2 120\ntransmit "^["\nendif\nendproc\n'

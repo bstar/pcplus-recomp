@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+The [ready-marker audio diagnostic](docs/validation/recording-marker-audio-diagnostic.json)
+now observes76 consecutive matching samples, below the91 required for admission,
+with no recipe keys or BIOS queue retries. Replaying the captured late File Base
+footer erases the preceding marker under consistent cursor placement. The
+[revised fixture layout](docs/RECORDING_MARKER_LAYOUT.md) separates its marker
+from that repaint area without changing helper timing or application binaries.
+Forty linked renderer cases and13 fresh TCP recording/replay checks pass. A new
+ordinary audio run is in progress; no normal audio outcome is accepted yet.
+
 [Recorder ready-marker diagnostics](docs/RECORDING_MARKER_DIAGNOSTIC.md) now
 preserve the ordinary helper binary while adding opt-in private visibility
 counters. Seven ordinary/eight diagnostic actual DOS BIOS cases and three
