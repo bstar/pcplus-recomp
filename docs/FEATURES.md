@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Stock Synchronet/ENiGMA window tests](validation/bbs-script-window.json) now
+pass native reference/help during a script pause, resumed scripted menu
+navigation and the regular PCPlus menu after actual child exit. Entire typed
+streams, zero relay errors, three completion-gated BIOS keys and timer/hardware
+restoration pass on the current production pair. Earlier timing/oracle attempts
+remain retained. Sustained output/query/flow pressure during windows, SIP/audio,
+full local command actions, physical hardware and all full gates remain open.
+
 [Production script-time Alt-Z](ASPECT_LOCAL_UI.md) now opens the native
 reference/help window while ASPECT waits. Escape dismisses it, extended keys
 remain queued and the child retains UART/RX ownership. Five DOS cases observe

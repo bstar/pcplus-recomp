@@ -1,5 +1,22 @@
 # Complete DOS rebuild plan
 
+The [stock BBS script-window validation](docs/validation/bbs-script-window.json)
+now accepts two production DOS sessions on Synchronet and ENiGMA. Native
+reference/help opens during an ASPECT pause for120/119 observed BIOS ticks,
+Escape dismisses it, then the script performs a checked read-only menu round
+trip. A completion-gated three-key BIOS recipe opens the regular PCPlus menu
+after actual child exit and restores its timer before normal shutdown. Whole
+typed streams match the previously accepted login prefix plus only the script's
+navigation; blank hangup fixtures avoid the test modem's unsupported escape
+mode, and both relays report zero errors. The passive menu flag now requires
+actual EXEC completion. Initial ungated witnesses and ENiGMA's fixed-delay
+post-exit-menu failure remain retained, rather than accepted retrospectively.
+Production binaries remain212c1112/58d08556. This proves the selected stock BBS
+window/continuation paths, not sustained output or query deadlines while a
+window is open. Next cover pressure/flow/WHEN/query behavior and affected
+SIP/audio, then continue full command actions and the remaining application.
+All full F01–F16 and physical gates remain open.
+
 The [production script-time Alt-Z window](docs/ASPECT_LOCAL_UI.md) now opens
 during ASPECT waits, switches reference/help on repeated Alt-Z and consumes
 Escape as dismissal while leaving extended keys queued. The child retains raw

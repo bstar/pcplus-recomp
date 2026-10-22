@@ -21,15 +21,7 @@ def definitions():
 def symbols(path):
  return {n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)',path.read_text(),re.M|re.I)}
 
-def main():
- original_adapter=keys.adapter;original_observer=keys.renderer.observer
- parent=symbols(ROOT/'build/terminal/terminal.map');child=symbols(ROOT/'build/aspect-runner/ASPECT.map')
- def adapter():
-  module=original_adapter();run=module.run
-  def staged(*args,**kwargs):
-   kwargs['online_updates']=[(3.0,b'QUEUED')]
-   return run(*args,**kwargs)
-  module.run=staged;return module
+def make_observer(original_observer,parent,child):
  def observer(offsets):
   result=original_observer(offsets);out=keys.renderer.OUT;path=out/'observer.asm';text=path.read_text()
   old='sample_end:\nowner_table:';assert text.count(old)==1
@@ -45,6 +37,8 @@ def main():
  call window_match_at
  or ax,ax
  jz .try_reference
+ cmp word [cs:exec_done],1
+ jne .try_reference
  mov word [cs:parent_menu_seen],1
 .try_reference:
  mov si,reference_title
@@ -105,7 +99,18 @@ start:'''
   text=text.replace(old,helper);path.write_text(text)
   subprocess.run(['nasm','-fbin',str(path),'-o',str(out/'RENDER.COM')],check=True)
   return ((out/'RENDER.COM').read_bytes(),*result[1:])
- keys.OUT=BASE;keys.definitions=definitions;keys.adapter=adapter;keys.renderer.observer=observer
+ return observer
+
+def main():
+ original_adapter=keys.adapter;original_observer=keys.renderer.observer
+ parent=symbols(ROOT/'build/terminal/terminal.map');child=symbols(ROOT/'build/aspect-runner/ASPECT.map')
+ def adapter():
+  module=original_adapter();run=module.run
+  def staged(*args,**kwargs):
+   kwargs['online_updates']=[(3.0,b'QUEUED')]
+   return run(*args,**kwargs)
+  module.run=staged;return module
+ keys.OUT=BASE;keys.definitions=definitions;keys.adapter=adapter;keys.renderer.observer=make_observer(original_observer,parent,child)
  keys.main()
  # The common parser leaves appended passive-window words untouched.
  folder=BASE/sys.argv[sys.argv.index('--label')+1]

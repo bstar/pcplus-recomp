@@ -130,9 +130,34 @@ normal, mouse, experimental and supporting products exactly. Separate selected
 recorder/replay regressions pass four DOS sessions on Synchronet and ENiGMA;
 those BBS runs are compatibility regressions, not script-window BBS acceptance.
 
+The later [stock BBS window audit](validation/bbs-script-window.json) now accepts
+the actual window path on both owned Synchronet and ENiGMA fixtures. Reference
+and help remain visible for120/119 BIOS ticks while ASPECT pauses, then the
+script performs a read-only Files/Main or Messages/Main round trip. A separate
+BIOS helper waits for the script's own completion marker before opening the
+regular menu. The passive observer counts that menu only after DOS EXEC has
+actually returned. All typed bytes match the accepted login prefix plus only
+script navigation; both relays have zero errors, the three-key helper retires
+and restores its timer, and DOS/UART/configuration checks pass.
+
+The first witness could count the launching menu as a return menu, and an
+initial Synchronet relay reported a reset with forwarded shutdown commands.
+The stricter observer then rejected ENiGMA's fixed-delay parent-menu attempt.
+Those runs remain retained. The accepted tests use the existing lab's blank
+hangup configuration because its Hayes/Telnet model does not implement modem
+escape mode, and completion-gated BIOS keys replace the post-script delay.
+No production executable or server was changed for these corrections.
+The ASPECT script pauses before its BBS navigation, so this does not establish
+sustained data or terminal-query servicing while a window is open.
+
 ```sh
 ./tools/build test-terminal-script-window
 ./tools/build test-aspect-script-window-dos
+./tools/dev --command python3 lab/bbs/script_window_dos.py synchronet --label NEW
+./tools/dev --command python3 lab/bbs/script_window_dos.py enigma --label NEW
+./tools/dev --command python3 lab/bbs/audit_script_window_dos.py \
+  --label NEW --cohort build/bbs-lab/window-accepted-NEW \
+  --output docs/validation/window-accepted-NEW.json
 ```
 
 ## Implementation and acceptance still required
@@ -150,8 +175,8 @@ those BBS runs are compatibility regressions, not script-window BBS acceptance.
 4. Expand the six-byte/100-tick DOS checks to sustained pressure, flow modes,
    carrier changes and wider WHEN/cancellation/fault combinations. Retain exact
    stream, screen/cursor, continuation and keyboard-return acceptance.
-5. Repeat actual DOS/BBS workflows on ENiGMA and Synchronet and affected audio
-   routes with the resulting production binaries. Keep physical modem tests
-   and the remaining F02/F05/F13 requirements separate and open.
+5. Expand the selected stock BBS paths to wider interaction and affected audio
+   routes with the current production pair. Keep physical modem tests and the
+   remaining F02/F05/F13 requirements separate and open.
 
 This selected window integration closes no full application or physical gate.
