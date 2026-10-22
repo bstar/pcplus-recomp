@@ -1,0 +1,35 @@
+{
+  "diagnostic_evidence_preserved": true,
+  "production_control_accepted": false,
+  "cohort": "build/bbs-lab/results/enigma/recording-footer-control-01",
+  "reason": "Attempted raw ANSI footer pattern is unsuitable for connected WAITFOR: parent parser consumes continuation bytes outside matcher. Raw TCP presence alone is insufficient.",
+  "checks": {
+    "recorded_source_complete": false,
+    "exact_recorded_user_bytes": false,
+    "DOS_compiled_exact_source": false,
+    "no_recovery_or_compile_temporary_files": true,
+    "helper_completed_recipe": false,
+    "exact_record_replay_and_manual_route": false,
+    "exact_online_navigation_tail": false,
+    "final_manual_search_visible": false,
+    "harness_normal_exit": false,
+    "single_session": true,
+    "timer_restored": false,
+    "unchanged_helper": true,
+    "inputs_unchanged": true
+  },
+  "recording": {
+    "recorded_payload_hex": "",
+    "expected_payload_hex": "530d1b",
+    "source_sha256": null,
+    "bytecode_sha256": null,
+    "helper_report": [],
+    "menus_after_file_base": [
+      "fileBaseMainMenu"
+    ],
+    "expected_online_tail_hex": "530d1b530d1b530d",
+    "scope": "Selected same-call File/C recording, File/A explicit ASP compilation/replay and manual Search afterward. BIOS keys only. Full stream/audio/SIP/cleanup audits remain mandatory."
+  },
+  "producer_report_sha256": "6855e41734903912987c59febf1a71a3fd83a000ee41be928a250f94fde42eda",
+  "scope": "Failed owned TCP control preserved before replacing its completion pattern with plain footer text. No helper, audio, physical or full application acceptance."
+}
