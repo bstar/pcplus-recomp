@@ -78,6 +78,11 @@ def main():
         wire+=payload(data[512:],512,fmt)+h(11,len(data),fmt)+h(8)+b'OO'
         case(f'checked-sixteen-advancing-old-packets-{fmt}',False,wire,{'TEST.BIN':data},readback=True,
              expected_wire=ready+h(9)+h(3,512)+h(9,512)*16+h(3,1024)+ready+h(8))
+    for fmt in (65,67):
+        data=b'ABCDEFGHIJKL';ready=h(1,0x21000100)
+        wire=offer('TEST.BIN',12,fmt)+payload(data[:8],0,fmt)+payload(data[2:6],2,fmt)+payload(data[8:],8,fmt)+h(11,12,fmt)+h(8)+b'OO'
+        case(f'checked-conservative-credit256-{fmt}',False,wire,{'TEST.BIN':data},readback=True,receive_credit=256,
+             expected_wire=ready+h(9)+h(3,8)+h(9,8)+h(3,12)+ready+h(8))
     for credit in (8193,65535):
         case('invalid-receive-credit-'+str(credit),False,b'',{},expected_status=2,expected_wire=b'',receive_credit=credit)
     case('send-rejects-receive-only-credit',True,b'',{},expected_status=2,expected_wire=b'',receive_credit=256)

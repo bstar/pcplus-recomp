@@ -6,11 +6,14 @@ The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 The [checked active-file recovery](docs/ZMODEM_ACTIVE_REPLAY.md) now verifies
 stored prefixes and resumes at the correct position after stale frames. The
 unchanged stock sender completes the larger-file paced host experiments at
-6000bps with default offers and1200bps with an explicit conservative offer.
+6000bps with default offers and1200bps with a native conservative offer.
+The [current validation record](docs/validation/zmodem-native-conservative.json)
+binds53 host,99 actual DOS,14 linked recovery and160 ordinary linked cases.
 Actual DOS/file-owner and linked-terminal checks remain distinct from those
 host experiments; current stock-BBS/audio and hardware acceptance remain open.
 Machine launch profiles can select [ZMODEM receive credit](docs/ZMODEM_RECEIVE_CREDIT.md)
-with `/Z:1..8192`; omission preserves the existing8192-byte offer.
+with `/Z:1..8192`; checked reception below8192 bytes also clears overlap
+capability. Omission preserves the existing8192-byte offer.
 The [larger ENiGMA software-audio download](docs/ENIGMA_SENDER_CREDIT.md)
 now passes78 producer/independent checks and11 verifier negatives:65797 exact
 bytes,256-byte packets/groups, complete CRC/finish, resumed Search/List and

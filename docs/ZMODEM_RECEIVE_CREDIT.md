@@ -10,7 +10,11 @@ TERMINAL @BOCA.PRM COM1 38400 8N1 HARD /Z:256
 The [validation record](validation/zmodem-receive-credit.json) keeps the host,
 linked and actual DOS scopes separate and binds their source/receipt hashes.
 
-This requests a checkpoint within256 payload bytes from the remote sender.
+This advertises256-byte receive credit to the remote sender. Checked reception
+with credit below8192 also clears CANOVIO, requesting synchronous frames while
+retaining CANFDX and CRC32 (flags33). The default/8192-byte checked offer and all
+legacy API offers retain flags35. A sender can ignore the credit; the stock
+SEXYZ helper still uses larger packets.
 It does not set the DTE speed, modem carrier speed, UART ring size or decoder
 workspace. Omitting the switch preserves the existing8192-byte offer. The
 8192-byte decoder remains available for peers that ignore smaller offers.
@@ -29,6 +33,17 @@ zero selects the existing default. Existing `zm_run` and `zm_run_link` entry
 points retain their previous behavior. Invalid arguments return before session
 mutation or transport/storage callbacks. The linked terminal independently
 checks an invalid receive policy before opening batch storage.
+
+The [native conservative checkpoint](validation/zmodem-native-conservative.json)
+binds53 host,99 actual DOS and14 linked recovery cases, alongside64 file-owner
+fault assertions and160 ordinary linked regressions. Both CRC widths cover
+credits0,1,128,256,1024,8191 and8192 in the checked host API. Two actual DOS
+component cases additionally exercise checked recovery with256-byte credit.
+Fresh unchanged-stock-helper paced host runs complete65797 exact bytes at
+6000bps/default offers and1200bps/native256-byte synchronous offers. Each
+experiment forbids rewriting any complete offer and passes independent
+source/CRC/EOF/ZFIN/OO/opposite-control audits. These host experiments do not
+establish the current DOS-to-stock-BBS audio workflow or physical acceptance.
 
 Small advertised credit alone is insufficient for the stock SEXYZ sender:
 the [stock measurements](validation/sexyz-receive-credit-stock.json) show that

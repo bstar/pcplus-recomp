@@ -58,6 +58,7 @@ def main():
  p.add_argument('--host',type=Path,required=True);p.add_argument('--linked',type=Path,required=True)
  p.add_argument('--paced',type=Path,required=True);p.add_argument('--regression-exit',type=Path,required=True)
  p.add_argument('--paced-conservative',type=Path,required=True)
+ p.add_argument('--native-conservative',action='store_true',help='Bind the later native reduced-credit policy and its expanded tests.')
  p.add_argument('--output',type=Path,required=True);a=p.parse_args()
  host_path=a.host.resolve();linked_path=a.linked.resolve();paced_path=a.paced.resolve();exit_path=a.regression_exit.resolve();target=a.output.resolve();conservative_path=a.paced_conservative.resolve()
  assert all(q.is_relative_to(ROOT/'build') for q in (host_path,linked_path,paced_path,conservative_path,exit_path))
@@ -71,14 +72,15 @@ def main():
  assert manifest['data_stack_bytes']==64896 and manifest['memory_layout']['near_bytes']==64896
  assert manifest['memory_layout']['far_pointer_relocations_verified']
  assert manifest['memory_layout']['resident_code_bytes']<65536
- host=proof(host_path,'inputs');assert host['case_count']==39 and host['baseline']['reproduced_status']==4
+ host_count=53 if a.native_conservative else 39;dos_count=99 if a.native_conservative else 97
+ host=proof(host_path,'inputs');assert host['case_count']==host_count and host['baseline']['reproduced_status']==4
  baseline=host['baseline'];baseline_path=ROOT/baseline['proof'];assert sha(baseline_path)==baseline['proof_sha256']
  baseline_result=read(baseline_path);assert baseline_result['passed']
  assert sha(baseline_path.parent/'session.so')==baseline['library_sha256']
  for name,d in baseline_result['inputs'].items():assert sha(ROOT/baseline['frozen_source_root']/name)==d,name
  assert sha(host_path.parent/'session.so')==host['library_sha256']
  dos_path=ROOT/'build/zmodem-dos/checks.json';dos=proof(dos_path,'sources')
- assert dos['DOS_cases']==97 and dos['isolated_source_build_byte_identical'] and all(row['passed'] for row in dos['cases'])
+ assert dos['DOS_cases']==dos_count and dos['isolated_source_build_byte_identical'] and all(row['passed'] for row in dos['cases'])
  assert sha(dos_path.parent/'SESSION.EXE')==sha(dos_path.parent/'source-only/SESSION.EXE')==dos['binary_sha256']
  faults_path=ROOT/'build/download-compare/faults-01/result.json';faults=proof(faults_path,'inputs');assert faults['case_count']==64
  assert sha(faults_path.parent/'CHECK.EXE')==faults['binary_sha256']
@@ -110,7 +112,8 @@ def main():
    else:raise AssertionError(('Unrecognized regression result',name,row))
   regressions.append(summarize(path,r))
  paced,protocol=verify_paced(paced_path,host['library_sha256'],6000,8192,35,True)
- conservative,conservative_protocol=verify_paced(conservative_path,host['library_sha256'],1200,256,33,False)
+ conservative,conservative_protocol=verify_paced(conservative_path,host['library_sha256'],1200,256,33,a.native_conservative)
+ if a.native_conservative:assert paced['native_offers_only'] and conservative['native_offers_only']
  old_path=ROOT/'build/bbs-lab/sexyz-active-replay-paced-default6000-01/result.json';old=read(old_path)
  assert not old['passed'] and old['status']==4 and old['session_position']==15360 and old['helper_exit']==255
  assert all(row['original_hex']==row['replacement_hex'] for row in old['offers'])
@@ -124,7 +127,7 @@ def main():
  for path in selected:
   copy=custody/path.relative_to(ROOT);copy.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,copy)
   assert sha(copy)==sha(path);kept[str(copy.relative_to(ROOT))]=sha(copy)
- result=dict(passed=True,component_only=True,terminal_sha256=digest,
+ result=dict(passed=True,component_only=True,native_conservative_offer_accepted=a.native_conservative,terminal_sha256=digest,
   terminal_manifest_sha256=sha(manifest_path),terminal_source_inputs=manifest['sources'],memory_layout=manifest['memory_layout'],
   host=summarize(host_path,host),actual_DOS=summarize(dos_path,dos),file_owner_faults=summarize(faults_path,faults),linked=summarize(linked_path,linked),
   normal_regressions=regressions,regression_exit=dict(result=str(exit_path.relative_to(ROOT)),sha256=sha(exit_path)),
@@ -135,13 +138,15 @@ def main():
   conservative_paced_host=dict(result=str(conservative_path.relative_to(ROOT)),sha256=sha(conservative_path),checks=conservative['checks'],
    bps_ceiling=1200,source_bytes=65797,source_sha256=conservative['source_sha256'],helper_sha256=conservative['helper_sha256'],
    receiver_library_byte_identical_to_current_host=True,library_sha256=conservative['library_sha256'],default_offers_byte_identical=False,
-   explicit_wrapper_flags=33,explicit_wrapper_credit=256,native_negotiation_accepted=False,
+   explicit_wrapper_flags=None if a.native_conservative else 33,explicit_wrapper_credit=None if a.native_conservative else 256,
+   native_negotiation_accepted=a.native_conservative,native_offers_not_rewritten=a.native_conservative,
    verified_old_prefix_operations=len(conservative['readback_operations']),protocol=conservative_protocol,capture_sha256=conservative['captures_sha256']),
   retained_stock_counterexample=dict(result=str(old_path.relative_to(ROOT)),sha256=sha(old_path),status=4,verified_position=15360,
    scope='Actual completed earlier stock helper experiment. Retry debt exhausted on forward verified recovery; not an intentional stop.'),
   custody_sha256=kept,recorder_sha256=sha(Path(__file__)),
-  scope='Checked active-stage readback, framed resume recovery and bounded retry accounting. Current source-built DOS component and linked terminal cases are distinct from the stock6000bps paced host-helper capture, whose receiver library is byte-identical to the current host build. No current DOS/BBS/audio,1200bps native negotiation, arbitrary-duration sustained load, physical Boca/SPA2102 or full F01-F16 application acceptance.')
+  scope='Checked active-stage readback, framed resume recovery and bounded retry accounting. '+('Native reduced-credit offers are byte-identical to the selected1200bps conservative policy; strict live-helper runs forbid rewriting. ' if a.native_conservative else 'Conservative1200bps offers use an explicit wrapper, without native negotiation acceptance. ')+
+   'Current source-built DOS component and linked terminal cases are distinct from the paced host-helper captures, whose receiver libraries are byte-identical to the current host build. This does not establish a current DOS-to-BBS audio workflow, arbitrary-duration sustained load, physical Boca/SPA2102 or full F01-F16 application acceptance.')
  with target.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
- print(json.dumps(dict(passed=True,terminal_sha256=digest,host=39,DOS=97,file_faults=64,linked=14,stock_paced_host=True)))
+ print(json.dumps(dict(passed=True,terminal_sha256=digest,host=host_count,DOS=dos_count,file_faults=64,linked=14,stock_paced_host=True,native_conservative=a.native_conservative)))
 
 if __name__=='__main__':main()

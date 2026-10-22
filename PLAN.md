@@ -6,11 +6,15 @@ suffix and requests the verified current position after framed consumption.
 Verified forward recovery endpoints retire retry debt without advancing file
 accounting or the accepted-progress watchdog. The unchanged stock sender
 completes65797 exact bytes in paced host experiments at6000bps/default offers
-and1200bps/explicit non-overlap offers. Their receiver libraries are byte-
+and1200bps/native non-overlap offers. Their receiver libraries are byte-
 identical to the current host build. Actual DOS read/seek, linked UART/file
 ownership and full regression evidence are bound separately in the validation
 ledger; these are not current stock-BBS/audio or physical passes. Native
-conservative negotiation, full recorder/application work and F01–F16 remain open.
+conservative negotiation is now covered by the
+[current component ledger](docs/validation/zmodem-native-conservative.json):53
+host cases,99 actual DOS cases,64 file-owner fault assertions,14 linked recovery
+cases and160 ordinary linked cases. The strict helper experiments reject any
+rewritten offer. Full recorder/application work and F01–F16 remain open.
 
 The [fresh isolated ENiGMA larger-file audio run](docs/validation/current-enigma-credit-pressure-download-audio-02.json)
 now passes78 producer/independent checks and11 verifier negatives. That campaign's

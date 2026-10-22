@@ -28,9 +28,9 @@ class Checked(Fixture):
   self.order.append(['wire',C.string_at(data,n).hex()]);return super().write(context,data,n)
  def abort(self,context):
   self.aborted=bytes(self.stage or b'');return super().abort(context)
- def run_checked(self):
+ def run_checked(self,credit=0):
   self.session=Session()
-  r=self.lib.zm_run_checked_profile(C.byref(self.session),C.byref(self.ops),None,0,0,0,self.verify)
+  r=self.lib.zm_run_checked_profile(C.byref(self.session),C.byref(self.ops),None,0,0,credit,self.verify)
   assert not self.errors and not self.verify_errors,(self.errors,self.verify_errors)
   return r
 
@@ -55,6 +55,14 @@ def main():
   rows.append(dict(case=label,passed=True,status=got,position=f.session.position,events=f.events,order=f.order))
   return f
  ready=h(1,0x23002000);cancel=b'\x18'*8+b'\x08'*10
+ for credit in (0,1,128,256,1024,8191,8192):
+  for fmt in (65,67):
+   f=Checked(lib,offer('CREDIT.BIN',12,fmt)+payload(body,0,fmt)+h(11,12,fmt)+h(8)+b'OO')
+   assert f.run_checked(credit)==0 and f.received=={'CREDIT.BIN':body}
+   flags=0x21000000 if 0<credit<8192 else 0x23000000
+   init=h(1,flags|(credit or 8192))
+   assert f.tx==init+h(9)+h(3,12)+init+h(8) and f.session.capacity==credit
+   rows.append(dict(case='checked-receive-offer',credit=credit,format=fmt,flags=flags>>24,passed=True))
  start=ready+h(9)+h(3,8);finish=h(1,0x23002000)+h(8)
  for fmt in (65,67):
   prefix=offer('TEST.BIN',len(body),fmt)+payload(body[:8],0,fmt)

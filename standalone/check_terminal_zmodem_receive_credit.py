@@ -17,7 +17,8 @@ def main():
    for source in (b'',bytes(range(256))*5+b'\0\xff'):
     m=LiveZmodem(source=source,fmt=fmt)
     m.put('terminal_zmodem_receive_credit',credit)
-    m.script=deque((h(1,0x23000000|(credit or 8192)) if want==h(1,0x23002000) else want,reply) for want,reply in m.script)
+    flags=0x21000000 if 0<credit<8192 else 0x23000000
+    m.script=deque((h(1,flags|(credit or 8192)) if want==h(1,0x23002000) else want,reply) for want,reply in m.script)
     assert m.run(owner=True)==0
     assert not m.script and not m.pending and not m.handles
     assert bytes(m.files['D:\\RECV\\ONE.BIN'])==source

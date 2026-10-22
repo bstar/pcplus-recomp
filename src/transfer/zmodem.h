@@ -87,6 +87,9 @@ unsigned __cdecl zm_run_profile(zm_session *,const zm_ops *,void *,unsigned send
  unsigned response_bps,unsigned receive_credit);
 /* Explicit opt-in for checked stale/overlapping active-file data. Legacy APIs
  * retain their existing mismatch recovery. Sending requires a null verifier.
+ * A verifier with explicit credit1..8191 requests synchronous frames by clearing
+ * CANOVIO. Default/8192 checked offers and all legacy offers stay unchanged.
+ * This requests a checkpoint policy; peers can still send bounded8KiB packets.
  * Old data never advances accepted progress; only a matching stored prefix
  * followed by checked appended bytes can extend the verified position. */
 unsigned __cdecl zm_run_checked_profile(zm_session *,const zm_ops *,void *,unsigned sending,

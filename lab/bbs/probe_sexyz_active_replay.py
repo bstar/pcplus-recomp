@@ -17,8 +17,8 @@ STOCK_SHA='d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd'
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 
 class Paced(Checked):
- def __init__(self,lib,peer,bps,credit,flags,out):
-  super().__init__(lib,b'');self.peer=peer;self.bps=bps;self.offer=(flags<<24)|credit
+ def __init__(self,lib,peer,bps,credit,flags,out,native=False):
+  super().__init__(lib,b'');self.peer=peer;self.bps=bps;self.offer=(flags<<24)|credit;self.native=native
   self.next_byte=time.monotonic();self.deadline=self.next_byte+1800
   self.trace=[];self.offers=[];self.base=self.next_byte;self.log=(out/'trace.jsonl').open('w',buffering=1)
  def event(self,direction,offset,count):
@@ -37,6 +37,7 @@ class Paced(Checked):
   data=C.string_at(pointer,count);headers=list(scan(data))
   if len(headers)==1 and headers[0]['type']==1 and headers[0]['offset']==0 and headers[0]['end']==len(data):
    updated=h(1,self.offer);self.offers.append(dict(original_hex=data.hex(),replacement_hex=updated.hex()))
+   assert not self.native or data==updated,'Native offer differs from requested policy; rewriting forbidden'
    data=updated;pointer=C.create_string_buffer(data);count=len(data)
   self.event('dos',len(self.tx),count)
   return super().write(context,pointer,count)
@@ -49,7 +50,9 @@ class Paced(Checked):
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
  p.add_argument('--bps',type=int,default=1200);p.add_argument('--credit',type=int,default=256)
- p.add_argument('--flags',type=int,choices=(1,3,33,35),default=33);a=p.parse_args()
+ p.add_argument('--flags',type=int,choices=(1,3,33,35),default=33)
+ p.add_argument('--native-offers-only',action='store_true',help='Require byte-identical native offers; reject rewriting before forwarding.')
+ a=p.parse_args()
  out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists() and 300<=a.bps<=14400 and 1<=a.credit<=8192
  out.mkdir(parents=True);helper=ROOT/'build/bbs-lab/enigma/helpers/sexyz';assert sha(helper)==STOCK_SHA
  source=payload();(out/NAME).write_bytes(source)
@@ -60,14 +63,14 @@ def main():
  frozen={str(q.relative_to(ROOT)):sha(q) for q in inputs}
  for q in inputs:
   copy=out/'frozen-source'/q.relative_to(ROOT);copy.parent.mkdir(parents=True,exist_ok=True);copy.write_bytes(q.read_bytes())
- (out/'start.json').write_text(json.dumps(dict(inputs=frozen,helper_sha256=sha(helper),bps=a.bps,credit=a.credit,flags=a.flags),indent=2)+'\n')
+ (out/'start.json').write_text(json.dumps(dict(inputs=frozen,helper_sha256=sha(helper),bps=a.bps,credit=a.credit,flags=a.flags,native_offers_only=a.native_offers_only),indent=2)+'\n')
  library=out/'session.so';subprocess.run(['gcc','-std=c89','-Wall','-Wextra','-Werror','-Wno-misleading-indentation','-shared','-fPIC',*map(str,sources),'-o',str(library)],check=True)
  lib=C.CDLL(str(library));lib.zm_run_checked_profile.argtypes=[P,P,P,U,U,U,VERIFY]
  f=None;peer=None;status=None;error=None
  with (out/'helper.stderr').open('w') as log:
   try:
    peer=subprocess.Popen([str(helper),'-raw','-8','sz',NAME],cwd=out,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=log,bufsize=0)
-   f=Paced(lib,peer,a.bps,a.credit,a.flags,out);f.session=Session()
+   f=Paced(lib,peer,a.bps,a.credit,a.flags,out,a.native_offers_only);f.session=Session()
    status=lib.zm_run_checked_profile(C.byref(f.session),C.byref(f.ops),None,0,0,a.credit,f.verify)
    peer.wait(timeout=20)
   except BaseException as exc:error=repr(exc)
@@ -81,7 +84,8 @@ def main():
   exact_received_file=f.received=={NAME:source},no_callback_errors=not f.errors and not f.verify_errors,
   declared_inputs_unchanged=all(sha(ROOT/n)==digest and sha(out/'frozen-source'/n)==digest for n,digest in frozen.items()),
   stock_helper_unchanged=sha(helper)==STOCK_SHA,source_unchanged=(out/NAME).read_bytes()==source,
-  all_offers_explicit_and_exact=len(f.offers)>=2 and all(x['position']==f.offer for x in scan(bytes(f.tx)) if x['type']==1))
+  all_offers_explicit_and_exact=len(f.offers)>=2 and all(x['position']==f.offer for x in scan(bytes(f.tx)) if x['type']==1),
+  native_offers_not_rewritten=not a.native_offers_only or all(x['original_hex']==x['replacement_hex'] for x in f.offers))
  protocol=None;protocol_error=None
  try:
   protocol=audit_batch(bytes(f.peer_wire),{NAME:source})
@@ -90,7 +94,7 @@ def main():
   checks['complete_independent_source_CRC_finish_opposite_controls']=True
  except BaseException as exc:protocol_error=repr(exc);checks['complete_independent_source_CRC_finish_opposite_controls']=False
  result=dict(passed=all(checks.values()) and error is None,checks=checks,status=status,helper_exit=peer.returncode,error=error,
-  protocol_error=protocol_error,protocol=protocol,bps_ceiling=a.bps,credit=a.credit,flags=a.flags,
+  protocol_error=protocol_error,protocol=protocol,bps_ceiling=a.bps,credit=a.credit,flags=a.flags,native_offers_only=a.native_offers_only,
   callback_errors=f.errors,verify_errors=f.verify_errors,offers=f.offers,readback_operations=[x for x in f.order if x[0]=='verify'],
   session_position=f.session.position,session_bytes=f.session.bytes,session_files=f.session.files,
   source_bytes=len(source),source_sha256=hashlib.sha256(source).hexdigest(),library_sha256=sha(library),helper_sha256=sha(helper),

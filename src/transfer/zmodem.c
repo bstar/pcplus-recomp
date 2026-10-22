@@ -63,8 +63,14 @@ static unsigned receive_init(zm_session *s)
 /* A finite credit defaults to the packet workspace; a machine profile can
  * request smaller checkpoints without shrinking that workspace. Overlap lets
  * a fast TCP peer queue retransmissions/EOF ahead of a slow DOS receiver's
- * replies, even when the UART honors RTS. Request a checkpoint within8KiB. */
-{return header(s,ZRINIT,0x23000000UL|(s->capacity?s->capacity:8192U),ZW_HEX);}
+ * replies, even when the UART honors RTS. Checked reduced-credit profiles
+ * additionally request synchronous frames; some stock senders ignore credit
+ * when growing packets. This does not shrink the8KiB decoder workspace. */
+{
+ zw_u32 flags=0x23000000UL;
+ if(s->verify_received && s->capacity && s->capacity<8192)flags=0x21000000UL;
+ return header(s,ZRINIT,flags|(s->capacity?s->capacity:8192U),ZW_HEX);
+}
 /* A slow bridge can still hold timeout-driven data retransmissions when our
  * checked EOF/ZRINIT reaches the sender. The file is already installed: consume
  * those CRC-framed, in-range bytes without reopening, writing or acknowledging

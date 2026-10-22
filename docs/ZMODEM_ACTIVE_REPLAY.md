@@ -8,6 +8,24 @@ The [validation record](validation/zmodem-active-replay.json) binds current
 source, actual DOS component tests, linked terminal tests and a separate
 unmodified-stock-sender host experiment. These scopes are distinct.
 
+The [native conservative follow-up](validation/zmodem-native-conservative.json)
+now covers53 host cases,99 actual DOS cases,64 file-owner fault assertions,
+14 linked recovery cases and160 ordinary linked regressions. Checked reception
+with an explicit credit from1 through8191 clears CANOVIO while retaining CANFDX
+and CRC32 (flags33). Default/8192-byte checked offers and all legacy API offers
+retain flags35. This selects synchronous framing; it does not force a peer to
+use256-byte packets. The8192-byte decoder workspace remains available.
+
+Two fresh stock-helper host experiments complete65797 exact bytes, with helper
+exit0 and full source/CRC/EOF/ZFIN/OO/opposite-control audits. The6000bps case
+uses native default8192-byte credit/flags35; the1200bps case uses native256-byte
+credit/flags33. Both experiments require every complete offer to pass through
+byte-for-byte and reject rewriting. Both receiver libraries are byte-identical
+to the current host build. The native ledger is a component/host checkpoint;
+current DOS-to-stock-BBS software-audio acceptance remains a separate campaign.
+The counts and wrapper-selected1200bps experiment below describe the earlier
+[active-recovery checkpoint](validation/zmodem-active-replay.json).
+
 The opt-in `zm_run_checked_profile` API accepts a far readback verifier in
 addition to the existing callback table. Legacy APIs pass no verifier and keep
 their existing mismatch policy. The normal terminal selects the checked API.
@@ -75,8 +93,8 @@ evidence for their exact binaries and conditions.
 The separate1200bps experiment also completes65797 exact bytes with helper
 exit0 and full independent source/CRC/finish/control checks. It requests flags33
 and256-byte credit through the explicitly identified wrapper; its receiver
-library is also byte-identical to the current host build. Native selection of
-that conservative offer is not implemented in this checkpoint.
+library is also byte-identical to the current host build. That earlier checkpoint does not implement native selection; the follow-up
+above implements and tests it without the wrapper.
 Current DOS/stock-BBS/audio acceptance, arbitrary-duration load, other protocol
 directions, physical Boca/SPA2102 behavior and all F01–F16 application gates
 remain open. No14.4 negotiation or complete application claim follows.
