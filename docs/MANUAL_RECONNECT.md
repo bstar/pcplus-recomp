@@ -47,10 +47,17 @@ cases. Near-code spare remains318/170 and near-data112/64. Mouse parent is
 
 ## Remaining scope
 
-Canceled initialization under XOFF has linked hardware-model coverage; its
-actual DOS UART/modem test remains required. DTR-disabled/ineffective hangup,
+Canceled initialization under XOFF now also passes the
+[controlled-DCD DOS lab](MANUAL_CANCEL_LAB.md), with an explicitly pinned patched
+UART backend and no stock-emulator/physical claim. DTR-disabled/ineffective hangup,
 other abort policies, late/initially-low/transient DCD, watermark/RTS/sustained
 RX pressure and other modem hardware remain separate requirements. The chosen
 real Boca hardware still needs identification and physical integration testing.
-Current-parent broader confirmation/BBS/audio acceptance is pending; the prior
-accepted audio retains parentdd86139f. Every full F01–F16 gate remains open.
+[Ten current confirmation cases](validation/manual-reconnect-confirmation.json),
+[four stock BBS recorder/replay sessions](validation/bbs-manual-reconnect-compat.json)
+and [two stock script-window workflows](validation/bbs-manual-reconnect-window.json)
+pass independent audit. Current normal ENiGMA recorder audio is running after
+its passing current-parent DOS/Telnet admission control, with
+[sealed preparation](validation/recording-manual-reconnect-audio-preparation.json);
+outcome remains pending.
+The prior accepted audio retains parentdd86139f. Every full F01–F16 gate remains open.

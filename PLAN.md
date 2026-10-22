@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+[Pre-CONNECT canceled initialization](docs/MANUAL_CANCEL_LAB.md) now passes
+old/new actual DOS SOFT/BOTH tests on an explicitly patched DCD lab backend.
+The stock nullmodem FF flags do not control DCD; the separate pinned Nix test
+device adds an opt-in DCD marker. Guest samples keep first-attempt DCD/history
+zero, observe XOFF/DTR cancellation, and distinguish old pause1 from corrected
+pause0, followed by exact retry/CONNECT/manual/query/hangup. Six semantic audit
+corruptions are rejected. No stock-emulator or physical claim follows from this
+lab. Current stock10 confirmation/four BBS recorder/two BBS-window cases also
+pass independent audit. Normal ENiGMA recording audio is live after a passing
+current-parent TCP control. Remaining policies, pressure, full F01–F16 and
+physical requirements stay open.
+
 [Manual reconnect flow lifetime](docs/MANUAL_RECONNECT.md) now passes an
 independent old/new actual DOS SOFT/BOTH audit. Alt-H under XOFF times out and
 drops DTR; the old parent then sends no retry init, while the corrected parent
@@ -9,7 +21,8 @@ Completed MODEM attempts retire old flow atomically without sending control
 bytes. Existing46 connection/42 carrier/eight startup ABI/13 attached PROGRAM
 cases pass;26 products rebuild without originals. Current parents1600a5b3/
 2d59d6fc/0acebeaf retain318/170 code and112/64 data spare, child183f852d unchanged.
-Actual DOS canceled initialization, DTR-disabled/ineffective hangup, other DCD/
+Stock-backend/physical canceled initialization, retained partial commands,
+DTR-disabled/ineffective hangup, other DCD/
 flow pressure, current-parent broader acceptance and all full F01–F16/physical
 requirements remain open. Earlier checkpoints retain their recorded products.
 

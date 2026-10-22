@@ -1,0 +1,11 @@
+--- a/src/hardware/serialport/nullmodem.cpp
++++ b/src/hardware/serialport/nullmodem.cpp
+@@ -201,5 +201,8 @@ Bits CNullModem::readChar(uint8_t &val) {
+ 		Bits rxchar = val;
+ 		if (rxchar==0xff) return rxchar; // 0xff 0xff -> 0xff was meant
++		// PCPlus lab: bit7 opts into bit3 DCD control at the UART boundary.
++		// Ordinary stock control frames retain their existing DCD behavior.
++		if (rxchar&0x80) setCD((rxchar&0x8)!=0);
+ 		rxchar&0x1? setCTS(true) : setCTS(false);
+ 		rxchar&0x2? setDSR(true) : setDSR(false);
+ 		if (rxchar&0x4) receiveByteEx(0x0,0x10);

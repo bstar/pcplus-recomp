@@ -1,11 +1,20 @@
 # Full application reconstruction checklist
 
+[Pre-CONNECT cancellation lab](MANUAL_CANCEL_LAB.md) now accepts two old/new
+actual DOS SOFT/BOTH pairs with explicit patched-UART DCD control. First-attempt
+DCD/history remain zero; the fixed parent clears pause and retries normally.
+Six evidence corruptions are rejected. This is not stock-backend or physical
+acceptance. Separately, current stock10 confirmation/four BBS recorder/two window
+workflows pass independent audits. Current normal recording audio is live;
+remaining modem policies/pressure and all full application/hardware gates stay open.
+
 [Manual reconnect](MANUAL_RECONNECT.md) now retires completed MODEM flow state
 before idle. Independent old/new actual DOS SOFT/BOTH cases reproduce the old
 missing second dial after blocked Alt-H/DTR completion and accept the corrected
 second connection/manual query. Four linked cases also cover pre-DCD dial
 cancellation;46 connection/42 carrier/eight startup ABI/13 attached PROGRAM and
-26-product source rebuilds pass. Actual DOS canceled initialization, other
+26-product source rebuilds pass. Stock-backend/physical canceled initialization,
+retained partial-command behavior, other
 abort/DCD/pressure policies and broader current-parent acceptance stay open.
 No full application or hardware gate closes.
 

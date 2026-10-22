@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "high-first-DCD",
+      "rejected": true,
+      "producer_flags_green": true,
+      "changed_capture_or_input_hash_updated": true
+    },
+    {
+      "case": "retained-pause",
+      "rejected": true,
+      "producer_flags_green": true,
+      "changed_capture_or_input_hash_updated": true
+    },
+    {
+      "case": "bad-vector-restore",
+      "rejected": true,
+      "producer_flags_green": true,
+      "changed_capture_or_input_hash_updated": true
+    },
+    {
+      "case": "lost-init-byte",
+      "rejected": true,
+      "producer_flags_green": true,
+      "changed_capture_or_input_hash_updated": true
+    },
+    {
+      "case": "stock-backend-label",
+      "rejected": true,
+      "producer_flags_green": true,
+      "changed_capture_or_input_hash_updated": true
+    },
+    {
+      "case": "forged-patch-provenance",
+      "rejected": true,
+      "producer_flags_green": true,
+      "changed_capture_or_input_hash_updated": true
+    }
+  ],
+  "auditor_sha256": "dab8018955adf9ff273327f3fce7a432fe8a78b5cc974f9727c6f35767fd9647",
+  "checker_sha256": "1ef8ecb4120b2f3decfa328306df996c26e34ad1da06b22246864e2703a4e641",
+  "scope": "Corrupt raw lab evidence while keeping producer flags and hashes green. Six owned copied-fixture controls. Physical/device claims are not enlarged; actual Nix derivation patch identity must match declared patch bytes."
+}

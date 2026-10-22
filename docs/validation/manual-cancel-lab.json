@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "pre_CONNECT_cancel_lab_accepted": true,
+  "stock_emulator_accepted": false,
+  "physical_hardware_accepted": false,
+  "full_application_accepted": false,
+  "baseline_parent_sha256": "a31eb517eab4732c73b71808fb7c794948bed2368f8e616d0bc3e2e7ce076ca2",
+  "parent_sha256": "1600a5b37094d5a3b666ffee6bf1da387dad7a7435a332be76618975c47bcdab",
+  "emulator": {
+    "test_backend": true,
+    "wrapper": "/nix/store/2q02l8c3irncqarrg3zzrlxsa9wzp2f6-dosbox-x-pcplus-dcd-lab-2026.07.02/bin/dosbox-x",
+    "wrapper_sha256": "f084a923d35a88ee1a3ef1011828c395adb9973ad8bc356a9316281618380770",
+    "binary_sha256": "91360e41ab6ead5eeba5fb556b52fe19beb0a815efa741c6d10cc0a15de53982",
+    "patch_sha256": "93b1ddb1eeb9f359364fd8336c95a781378541fa1e4c5a0496a31a790719776b"
+  },
+  "modem_parser_policy": "Owned peer discards its partial command buffer on observed DTR fall; retained-parser and physical Boca behavior remain unverified.",
+  "baseline": {
+    "soft": {
+      "passed": true,
+      "first_DCD_high_samples": 0,
+      "first_carrier_history_samples": 0,
+      "initialization_paused_ticks": 29,
+      "cancel_DTR_low_ticks": 18,
+      "idle_pause": 1,
+      "online_ticks": 0,
+      "wire_sha256": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+      "modem_status_frames": 9
+    },
+    "both": {
+      "passed": true,
+      "first_DCD_high_samples": 0,
+      "first_carrier_history_samples": 0,
+      "initialization_paused_ticks": 29,
+      "cancel_DTR_low_ticks": 18,
+      "idle_pause": 1,
+      "online_ticks": 0,
+      "wire_sha256": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+      "modem_status_frames": 9
+    }
+  },
+  "fixed": {
+    "soft": {
+      "passed": true,
+      "first_DCD_high_samples": 0,
+      "first_carrier_history_samples": 0,
+      "initialization_paused_ticks": 29,
+      "cancel_DTR_low_ticks": 18,
+      "idle_pause": 0,
+      "online_ticks": 139,
+      "wire_sha256": "6cb356404b9e77b7b84aa2cd9f8f9d46d9c74cbe44a27b7262328b9ccc4b1a86",
+      "modem_status_frames": 9
+    },
+    "both": {
+      "passed": true,
+      "first_DCD_high_samples": 0,
+      "first_carrier_history_samples": 0,
+      "initialization_paused_ticks": 29,
+      "cancel_DTR_low_ticks": 18,
+      "idle_pause": 0,
+      "online_ticks": 139,
+      "wire_sha256": "6cb356404b9e77b7b84aa2cd9f8f9d46d9c74cbe44a27b7262328b9ccc4b1a86",
+      "modem_status_frames": 9
+    }
+  },
+  "cohort": "build/manual-cancel-dos/accepted-04",
+  "files_manifest_sha256": "e894e23c2b20d1c372170d6b871df7831cd4ee665b44bef63516f88f85ac088c",
+  "auditor_sha256": "dab8018955adf9ff273327f3fce7a432fe8a78b5cc974f9727c6f35767fd9647",
+  "scope": "Two old/new actual8086 DOS SOFT/BOTH cancellation workflows on a pinned patched UART lab backend. Independent frame decoding, passive first-attempt DCD/carrier history/flow/DTR/controller samples, exact retry/ANSI/manual/hangup streams, accounting, hardware and observer-vector restoration. Stock nullmodem frames expose CTS/DSR only, so the opt-in DCD extension and binary/derivation identities are explicit. No stock-backend, physical modem or full F01-F16 acceptance follows."
+}
