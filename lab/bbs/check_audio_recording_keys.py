@@ -11,6 +11,18 @@ cpu 8086
 org 100h
 mov ax,3
 int 10h
+%if CASE == 7
+mov si,ready
+call text
+mov cx,2
+call pause
+call clear
+mov si,file
+call text
+mov cx,2d00h
+call key
+jmp finish
+%endif
 %if CASE == 3
 mov si,file
 call text
@@ -263,16 +275,19 @@ name: db 'KEYS.BIN',0
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--marker-trace',action='store_true',help='Diagnostic private visibility counters; does not admit the ordinary helper')
+    a=p.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     helper=ROOT/'lab/bbs/audio_recording_keys.asm'
     subprocess.run(['nasm','-fbin',str(helper),'-o',str(out/'PRODUCTION.COM')],check=True)
     cases=[]
     names=('complete','missing-search-blocks','stale-pre-replay-file-screen-blocks','file-screen-without-ready-watchdog','final-form-watchdog','BIOS-queue-full-retry','final-screen-activity-restarts-dwell')
+    if a.marker_trace:names+=('transient-ready-watchdog',)
     for index,name in enumerate(names):
         folder=out/name;folder.mkdir();(folder/'probe.asm').write_text(PROBE);(folder/'sampler.asm').write_text(SAMPLER)
-        subprocess.run(['nasm','-fbin','-DRECORD_KEY_TICKS=1','-DRECORD_DWELL_TICKS=2','-DRECORD_INITIAL_TICKS=2','-DRECORD_FINAL_TICKS='+('12' if index==6 else '2'),
-            '-DRECORD_WATCHDOG_TICKS='+('36' if index==3 else '300'),str(helper),'-o',str(folder/'EXITKEY.COM')],check=True)
+        subprocess.run(['nasm','-fbin',*(['-DRECORD_MARKER_TRACE=1'] if a.marker_trace else []),'-DRECORD_KEY_TICKS=1','-DRECORD_DWELL_TICKS=2','-DRECORD_INITIAL_TICKS=2','-DRECORD_FINAL_TICKS='+('12' if index==6 else '2'),
+            '-DRECORD_WATCHDOG_TICKS='+('36' if index in (3,7) else '300'),str(helper),'-o',str(folder/'EXITKEY.COM')],check=True)
         for source,leaf,flags in ((folder/'probe.asm','PROBE.COM',['-DCASE='+str(index)]),(folder/'sampler.asm','SNAP.COM',[]),
                 (ROOT/'lab/bbs/audio_get_vector.asm','KEYVEC.COM',[])):
             subprocess.run(['nasm','-fbin',*flags,str(source),'-o',str(folder/leaf)],check=True)
@@ -308,18 +323,26 @@ exit
         read=lambda n:(folder/n).read_bytes() if (folder/n).exists() else b''
         report=struct.unpack('<8H',read('RECKEY.BIN')) if len(read('RECKEY.BIN'))==16 else ()
         checks=dict(normal_exit=process.returncode==0 and bool(read('PASS.TXT')) and not read('FAIL.TXT'),
-            exact_BIOS_keys=len(read('KEYS.BIN'))==(2 if index==3 else 52),
-            exact_helper_outcome=bool(report) and report[0]==0x524b and report[3]==(2 if index in (3,4) else 1),
-            exact_completed_phase=bool(report) and report[1]==(0 if index==3 else 13 if index==4 else 14),
+            exact_BIOS_keys=len(read('KEYS.BIN'))==(2 if index in (3,7) else 52),
+            exact_helper_outcome=bool(report) and report[0]==0x524b and report[3]==(2 if index in (3,4,7) else 1),
+            exact_completed_phase=bool(report) and report[1]==(0 if index in (3,7) else 13 if index==4 else 14),
             queue_full_observed=index!=5 or bool(report and report[5]),
             final_screen_activity_restarts_dwell=index!=6 or bool(report and report[7]),
             hardware_restored=len(read('BEFORE.BIN'))==42 and read('BEFORE.BIN')==read('AFTER.BIN'),
             timer_restored=len(read('KEYOLD.BIN'))==4 and read('KEYOLD.BIN')==read('KEYNEW.BIN'))
-        cases.append(dict(name=name,passed=all(checks.values()),checks=checks,helper_report=report,
+        trace=()
+        if a.marker_trace:
+            trace=struct.unpack('<11H',read('RECTRACE.BIN'))
+            assert trace[:2]==(0x5254,1) and trace[2]>=trace[3]>=trace[7]>=trace[8]
+            assert trace[3]==0 if index==3 else trace[3]>0
+            assert trace[5:7]==(0,0) if index==3 else 0<trace[5]<=trace[6]
+            if index==7:assert trace[4]==1 and 1<=trace[3]<=2 and trace[7]<=2 and trace[8]==0 and trace[9]>0
+            checks['private_marker_trace']=True
+        cases.append(dict(name=name,passed=all(checks.values()),checks=checks,helper_report=report,marker_trace=trace,
             captures_sha256={f.name:sha(f) for f in folder.iterdir() if f.is_file()}))
         print(name,cases[-1]['passed'],report,flush=True)
         assert cases[-1]['passed'],'Inspect retained actual DOS probe'
-    result=dict(passed=True,cases=cases,production_helper_sha256=sha(out/'PRODUCTION.COM'),
+    result=dict(passed=True,cases=cases,diagnostic_marker_trace=a.marker_trace,production_helper_sha256=sha(out/'PRODUCTION.COM'),
         inputs={str(path.relative_to(ROOT)):sha(path) for path in (Path(__file__).resolve(),helper,ROOT/'lab/bbs/audio_get_vector.asm',ROOT/'standalone/test_terminal.py')},
         scope='Actual8086 DOS BIOS fixture only. Independent expected keys, missing/stale markers, queue-full retry, watchdog outcomes and full hardware/timer retirement. Test-only shortened timings; no product/serial/BBS/audio acceptance.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')

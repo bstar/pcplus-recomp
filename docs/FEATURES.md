@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Ready-marker observations](RECORDING_MARKER_DIAGNOSTIC.md) add opt-in private
+BIOS counters with unchanged ordinary helper bytes. Seven ordinary/eight
+diagnostic BIOS probes and three production-admission rejection controls pass;
+fresh ordinary TCP recording/replay passes13 checks. Diagnostic audio outcomes
+remain separate from normal audio acceptance and all full feature gates.
+
 [Retained-command retry](MANUAL_CANCEL_RETAINED.md) now adopts the tested
 separator in main, with current-source/product binding and an actual stock
 modem-parser old/new comparison. Current normal/mouse products pass34 linked

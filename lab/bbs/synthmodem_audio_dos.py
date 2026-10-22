@@ -22,12 +22,14 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload','recording'],default='menus');p.add_argument('--fixture-lab',type=Path);p.add_argument('--upload-cancel',action='store_true');p.add_argument('--upload-cancel-retry',action='store_true');p.add_argument('--upload-key-checks',type=Path);p.add_argument('--posttrain-hold',action='store_true')
  p.add_argument('--recording-key-checks',type=Path,help='Validated BIOS Record/compile/replay helper proof')
  p.add_argument('--recording-tcp-checks',type=Path,help='Actual DOS/BBS control with the unchanged recording helper')
+ p.add_argument('--recording-marker-trace',type=Path,help='Diagnostic visibility probe proof; this run cannot establish production audio acceptance')
  p.add_argument('--buffered-runtime-proof',type=Path,help='Validated normal200ms d-modem runtime receipt')
  p.add_argument('--editor-burst-checks',type=Path,help='Enable one-tick editor BIOS keys using a passing guarded-helper probe')
  p.add_argument('--editor-multiline-checks',type=Path,help='Enable30-line BIOS draft and page movement with a passing helper/TCP proof')
  p.add_argument('--download-pressure-preparation',type=Path,help='Explicit >64KiB fixture/reference/BIOS preparation proof')
  p.add_argument('--zmodem-receive-credit',type=int,help='Explicit DOS /Z:1..8192 receive policy; default unchanged')
  a=p.parse_args()
+ if a.recording_marker_trace:assert a.route=='recording'
  if a.route=='recording':assert a.recording_key_checks and a.recording_tcp_checks and not a.fixture_lab
  elif a.recording_key_checks or a.recording_tcp_checks:raise AssertionError('Recording helper proof requires recording route')
  capture_proof=ROOT/'docs/validation/capture-durability.json';capture=json.loads(capture_proof.read_text())
@@ -171,6 +173,15 @@ def main():
   import audio_recording
   recording_names,recording_helper_sha=audio_recording.inputs(a.recording_key_checks)
   names+=recording_names
+  if a.recording_marker_trace:
+   marker_path=a.recording_marker_trace.resolve();assert marker_path.is_relative_to(ROOT/'build')
+   marker=json.loads(marker_path.read_text())
+   assert marker['passed'] and marker['diagnostic_marker_trace'] and len(marker['cases'])==8
+   assert any(row['name']=='transient-ready-watchdog' for row in marker['cases'])
+   assert all(row['passed'] and all(row['checks'].values()) for row in marker['cases'])
+   assert marker['production_helper_sha256']==recording_helper_sha
+   assert all(sha(ROOT/name)==h for name,h in marker['inputs'].items())
+   names += [str(marker_path.relative_to(ROOT)),*marker['inputs']]
   names+=['lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/audit_serial_io_evidence.py',
    'lab/bbs/diagnose_audio_caller.js','lab/bbs/modem.py','lab/bbs/synthmodem_gateway.py']
   tcp_path=a.recording_tcp_checks.resolve();assert tcp_path.is_relative_to(ROOT/'build')
@@ -230,6 +241,7 @@ def main():
  for name,leaf in [('audio_recording_keys.asm' if a.route=='recording' else 'audio_editor_keys.asm' if a.route=='editor' else 'audio_download_keys.asm' if a.route=='download' else 'audio_upload_keys.asm' if a.route=='upload' else 'audio_exit_keys.asm','EXITKEY.COM'),('audio_get_vector.asm','KEYVEC.COM')]:
   flags=[]
   if leaf=='EXITKEY.COM':
+   if a.recording_marker_trace:flags+=['-DRECORD_MARKER_TRACE=1','-DRECORD_WATCHDOG_TICKS=12000']
    if a.upload_cancel:flags+=['-DAUDIO_UPLOAD_CANCEL=1']
    if a.upload_cancel_retry:flags+=['-DAUDIO_UPLOAD_RETRY=1']
    if a.editor_burst_checks:flags+=['-DAUDIO_EDITOR_BURST=1','-DAUDIO_EDITOR_KEY_TICKS=1']
@@ -237,7 +249,11 @@ def main():
    if pressure_download:flags+=['-DAUDIO_DOWNLOAD_PRESSURE=1']
   subprocess.run(['nasm','-fbin',*flags,str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)
  if a.editor_multiline_checks:assert sha(stage/'EXITKEY.COM')==multiline['production_helper_sha256']
- if a.route=='recording':assert sha(stage/'EXITKEY.COM')==recording_helper_sha
+ if a.route=='recording':
+  if a.recording_marker_trace:
+   subprocess.run(['nasm','-fbin',str(ROOT/'lab/bbs/audio_recording_keys.asm'),'-o',str(stage/'KEYBASE.COM')],check=True)
+   assert sha(stage/'KEYBASE.COM')==recording_helper_sha and sha(stage/'EXITKEY.COM')!=recording_helper_sha
+  else:assert sha(stage/'EXITKEY.COM')==recording_helper_sha
  if pressure_download:assert sha(stage/'EXITKEY.COM')==pressure_download.production_helper_sha256
  generated={str(p.relative_to(out)):sha(p) for p in stage.iterdir()}
  from bbs_log_capture import begin as begin_log,collect as collect_log
@@ -247,7 +263,7 @@ def main():
  start_manifest=dict(frozen_inputs=frozen,runtime_inputs=runtime_inputs,server_inputs=server_inputs,server_root=str(enigma.SOURCE),server_fixture=server_fixture,
   generated_inputs=generated,tool_inputs=tool_inputs,profile_sha256=sha(out/'MODEM.PRM'),directory_initial_hex=contact.hex(),
   download_metadata_before=download_before,upload_metadata_before=upload_before,download_path=str(download_path) if download_path else None,
-  route=a.route,zmodem_receive_credit=a.zmodem_receive_credit,expected_receive_offer=expected_receive_offer,pressure_preparation=str(a.download_pressure_preparation) if pressure_download else None)
+  route=a.route,recording_marker_trace=bool(a.recording_marker_trace),recording_marker_watchdog_ticks=12000 if a.recording_marker_trace else None,recording_marker_trace_proof=str(a.recording_marker_trace.resolve().relative_to(ROOT)) if a.recording_marker_trace else None,zmodem_receive_credit=a.zmodem_receive_credit,expected_receive_offer=expected_receive_offer,pressure_preparation=str(a.download_pressure_preparation) if pressure_download else None)
  (out/'run-start.json').write_text(json.dumps(start_manifest,indent=2)+'\n')
  def clock_anchor(label):
   before=time.monotonic_ns();wall=time.time_ns();after=time.monotonic_ns()
@@ -365,6 +381,10 @@ exit
  if a.route=='recording':
   checks.pop('final_file_menu')
   extra,recording=audio_recording.check(out,rows);checks.update(extra)
+  if a.recording_marker_trace:
+   checks['diagnostic_marker_trace_is_not_production']=False
+   trace_bytes=read('RECTRACE.BIN')
+   recording['diagnostic_marker_trace']=list(struct.unpack('<11H',trace_bytes)) if len(trace_bytes)==22 else []
  if a.route=='download':
   checks.pop('final_file_menu')
   extra,download=audio_download.check(out,rows,download_path,download_before);checks.update(extra)
@@ -383,7 +403,7 @@ exit
  result={'passed':all(checks.values()),'checks':checks,'zmodem_receive_credit':a.zmodem_receive_credit,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
   'DOS_screen':text,'gateway':n,'route':a.route,'expected_receive_offer':expected_receive_offer,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor_multiline_checks':str(multiline_proof.relative_to(ROOT)) if a.editor_multiline_checks else None,'download_pressure_preparation':str(a.download_pressure_preparation.resolve().relative_to(ROOT)) if pressure_download else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
-  'recording':recording,'recording_key_checks':str(a.recording_key_checks.resolve().relative_to(ROOT)) if a.recording_key_checks else None,
+  'recording':recording,'recording_marker_trace':bool(a.recording_marker_trace),'recording_marker_trace_proof':str(a.recording_marker_trace.resolve().relative_to(ROOT)) if a.recording_marker_trace else None,'recording_marker_watchdog_ticks':12000 if a.recording_marker_trace else None,'recording_key_checks':str(a.recording_key_checks.resolve().relative_to(ROOT)) if a.recording_key_checks else None,
   'recording_tcp_checks':str(a.recording_tcp_checks.resolve().relative_to(ROOT)) if a.recording_tcp_checks else None,
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any protocol-helper candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
  observation_paths=[out/n for n in ['run-start.json','exit-status.json','clock-anchors.json','server-log-boundary.json']]

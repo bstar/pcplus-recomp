@@ -151,6 +151,7 @@ def main():
   server_root=Path(r.get('server_root',str(root/'build/bbs-lab/enigma/source')))
   key='configured_BBS_inputs_unchanged' if server_fixture else 'stock_BBS_inputs_unchanged'
   checks[key]=bool(r.get('server_inputs')) and all(sha(server_root/name)==h for name,h in r['server_inputs'].items())
+ if r.get('recording_marker_trace'):checks['diagnostic_marker_trace_is_not_production']=False
  result={'passed':all(checks.values()),'checks':checks,'producer_sha256':sha(out/'result.json'),
   'auditor_sha256':sha(Path(__file__)),'audit_inputs':{name:sha(root/name) for name in ('lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/modem.py','lab/bbs/synthmodem_gateway.py')},'payloads':{'BBS_input_bytes':len(sent),'BBS_display_bytes':len(display),
    'BBS_input_sha256':hashlib.sha256(sent).hexdigest(),'BBS_display_sha256':hashlib.sha256(display).hexdigest(),

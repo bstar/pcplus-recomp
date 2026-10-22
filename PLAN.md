@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Recorder ready-marker diagnostics](docs/RECORDING_MARKER_DIAGNOSTIC.md) now
+preserve the ordinary helper binary while adding opt-in private visibility
+counters. Seven ordinary/eight diagnostic actual DOS BIOS cases and three
+production-admission rejection controls pass independent probe audit. A fresh
+ordinary ENiGMA TCP control passes13 checks. The diagnostic SIP/audio run uses
+an explicit12000-tick observation watchdog and cannot establish normal audio
+acceptance. Its outcome remains unverified; do not change helper timing before
+interpreting the raw visibility evidence. All remaining application/hardware
+requirements stay open.
+
 [Retry command synchronization](docs/MANUAL_CANCEL_RETAINED.md) is now adopted
 in main. The current1cbb4f8f/b14074ec products match the tested candidate and
 pass four independently audited retained/cleared-parser DOS cases,34 linked

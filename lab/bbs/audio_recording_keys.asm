@@ -34,6 +34,21 @@ state: db 0 ;0 marker,1 dwell,2 keys,3 retired
 ticks: dw 0
 key_at: dw 0
 watchdog: dw RECORD_WATCHDOG_TICKS
+%ifdef RECORD_MARKER_TRACE
+; Diagnostic-only private counters; ordinary helper bytes remain unchanged.
+trace_report:
+ dw 5254h,1
+trace_samples: dw 0
+trace_seen: dw 0
+trace_entries: dw 0
+trace_first: dw 0
+trace_last: dw 0
+trace_longest: dw 0
+trace_run: dw 0
+trace_misses: dw 0
+trace_cursor: dw 0
+TRACE_SIZE equ $-trace_report
+%endif
 ready_marker: db 'RECORDER READY',0
 file_marker: db 'File Base >> active filter:',0
 menu_marker: db 'PCPLUS  Command Menu',0
@@ -108,6 +123,9 @@ handler:
  je .keys
  mov si,[stages+bx]
  call scan
+%ifdef RECORD_MARKER_TRACE
+ call trace_ready
+%endif
  jnz .not_ready
  cmp word [phase],13
  jne .markers_ready
@@ -273,12 +291,74 @@ scan:
  pop si
  pop ax
  ret
+%ifdef RECORD_MARKER_TRACE
+; Preserve the original scan ZF and every register used by the key driver.
+; Observe stage0 only; BIOS cursor reads and private stores cannot admit keys.
+trace_ready:
+ pushf
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ mov ax,0
+ jnz .measured
+ inc ax
+.measured:
+ cmp word [phase],0
+ jne .out
+ inc word [trace_samples]
+ or ax,ax
+ jz .absent
+ inc word [trace_seen]
+ cmp word [trace_run],0
+ jne .continuing
+ inc word [trace_entries]
+.continuing:
+ inc word [trace_run]
+ mov ax,[trace_run]
+ cmp ax,[trace_longest]
+ jbe .last
+ mov [trace_longest],ax
+.last:
+ mov ax,[elapsed]
+ mov [trace_last],ax
+ cmp word [trace_first],0
+ jne .out
+ mov [trace_first],ax
+ xor bh,bh
+ mov ah,3
+ int 10h
+ mov [trace_cursor],dx
+ jmp .out
+.absent:
+ mov word [trace_run],0
+ cmp word [trace_seen],0
+ je .out
+ inc word [trace_misses]
+.out:
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ popf
+ ret
+%endif
 resident_end:
 pointer: dw 0
 buffer: times 16 db 0
 pointer_name: db 'D:\RECKEY.PTR',0
 report_name: db 'D:\RECKEY.BIN',0
 old_name: db 'D:\KEYOLD.BIN',0
+%ifdef RECORD_MARKER_TRACE
+trace_buffer: times TRACE_SIZE db 0
+trace_name: db 'D:\RECTRACE.BIN',0
+%endif
 install:
  cmp byte [82h],'R'
  je collect
@@ -340,6 +420,23 @@ collect:
  mov cx,16
  call write_file
  jc failure
+%ifdef RECORD_MARKER_TRACE
+ mov es,[pointer]
+ mov si,trace_report
+ mov di,trace_buffer
+ mov cx,TRACE_SIZE
+.copy_trace:
+ mov al,[es:si]
+ mov [di],al
+ inc si
+ inc di
+ loop .copy_trace
+ mov dx,trace_name
+ mov si,trace_buffer
+ mov cx,TRACE_SIZE
+ call write_file
+ jc failure
+%endif
  mov ax,4c00h
  int 21h
 write_file:

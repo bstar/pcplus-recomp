@@ -15,6 +15,7 @@ def main():
     read=lambda name:json.loads((out/name).read_text())
     r=read('result.json');audit=read('independent-audit.json');io=read('serial-io-audit.json');offline=read('offline-caller.json')
     assert r['route']=='recording' and r['recording_key_checks'] and r['recording_tcp_checks']
+    assert not r.get('recording_marker_trace',False),'Diagnostic helper cannot establish production audio acceptance'
     assert r['buffered_runtime_proof'] and r['posttrain_hold'] and r['input_sequence_timeout_ms']==250
     assert r['server_fixture'] is None and Path(r['server_root'])==enigma.SOURCE and r['server_revision']==enigma.COMMIT
     assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=enigma.SOURCE,text=True).strip()==enigma.COMMIT

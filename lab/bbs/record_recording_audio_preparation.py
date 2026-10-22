@@ -22,6 +22,7 @@ def main():
         for name,digest in r['inputs'].items():assert sha(ROOT/name)==digest,name
     for name,digest in t['captures_sha256'].items():assert sha(tcp.parent/name)==digest,name
     assert start['route']=='recording'
+    assert not start.get('recording_marker_trace',False),'Diagnostic helper cannot establish production preparation'
     assert start['generated_inputs']['program/EXITKEY.COM']==k['production_helper_sha256']
     for name,digest in start['frozen_inputs'].items():assert sha(ROOT/name)==sha(audio/'frozen-source'/name)==digest,name
     for name,digest in start['generated_inputs'].items():assert sha(audio/name)==digest,name

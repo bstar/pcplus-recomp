@@ -10,6 +10,7 @@ ONLINE_TAIL=PAYLOAD*2+b'S\r'
 def inputs(proof):
     proof=proof.resolve();assert proof.is_relative_to(ROOT/'build')
     r=json.loads(proof.read_text())
+    assert not r.get('diagnostic_marker_trace',False),'Diagnostic marker counters do not admit the ordinary helper'
     assert r['passed'] and len(r['cases'])==7 and all(c['passed'] and all(c['checks'].values()) for c in r['cases'])
     assert {c['name'] for c in r['cases']}=={'complete','missing-search-blocks','stale-pre-replay-file-screen-blocks','file-screen-without-ready-watchdog','final-form-watchdog','BIOS-queue-full-retry','final-screen-activity-restarts-dwell'}
     assert all(sha(ROOT/name)==digest for name,digest in r['inputs'].items())
