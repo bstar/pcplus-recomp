@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+The [native script-time Alt-Z component](docs/ASPECT_LOCAL_UI.md) now rebuilds
+176 exact bytes and relocatable OMF, with2,064 CPU cases and2,064 matching
+genuine-original comparisons. Eight composed cases execute WHEN4DE9 through
+the real1604 dispatcher into the window; the remainder cover every low byte,
+hook sign extension, standard/enhanced BIOS, delayed input and repeated Alt-Z.
+An isolated tree without originals reproduces the full source-only result.
+The [component validation](docs/validation/aspect-local-window.json) explicitly
+excludes actual DOS UI, live serial and production menu acceptance. Escape in
+the window dismisses it rather than aborting the script; retained local keys
+and callee cleanup are now constrained by executed native instructions and REA
+service dossiers. Next wire the dedicated interaction lifetime and actual menu
+actions without violating child UART/VM ownership. All full gates remain open.
+
 The [normal recorder audio run03](docs/validation/recording-audio-03.json) now
 passes26 producer,34 independent and12 serial-evidence checks, backed by seven
 BIOS probes/56 assertions and13 DOS/Telnet control checks. Normal File/C records

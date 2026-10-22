@@ -1,0 +1,36 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "start": "0x56fe",
+  "end_exclusive": "0x57ae",
+  "file_offset": 26878,
+  "bytes": 176,
+  "sha256": "1d7cd7dbe3c8c9e18aeec5334072637d9aee1fcd7cee0f7bcba014bad5e72e88",
+  "instructions": 73,
+  "state": {
+    "0x397a": "local_window_help_context",
+    "0x32b2": "local_window_descriptor",
+    "0x1f64": "local_window_box_attribute",
+    "0x232c": "local_window_keyboard_table",
+    "0x232a": "local_window_text",
+    "0x1f66": "local_window_text_attribute",
+    "0x1d6e": "local_window_hook_enabled",
+    "0x1d70": "local_window_hook_character",
+    "0x2328": "local_window_status"
+  },
+  "services": {
+    "0x3fc7": "local_window_save",
+    "0x4056": "local_window_draw",
+    "0x780e": "local_window_keyboard_select",
+    "0x6bf0": "local_window_write",
+    "0x75e8": "local_window_format",
+    "0x3226": "local_window_status_draw",
+    "0x6530": "local_window_key_poll",
+    "0x64fe": "local_window_key_read",
+    "0x4015": "local_window_restore"
+  },
+  "evidence_id": "ev_8c6397f7450acd0fef77d580471c22c3d1d6365d1693861c4ba15c016a200e06",
+  "limitations": [
+    "Recovered instruction source only; window/status/formatting and keyboard-table callbacks are explicit external services.",
+    "No modal UI integration, physical BIOS/UART or complete application acceptance."
+  ]
+}

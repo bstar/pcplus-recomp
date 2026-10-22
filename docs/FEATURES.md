@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+The [native Alt-Z window component](ASPECT_LOCAL_UI.md) recovers176 exact
+bytes and passes2,064 CPU cases against2,064 original-instruction comparisons,
+including eight real WHEN-to-terminal-dispatch compositions. Its source-only
+result reproduces in an isolated tree without originals. This constrains local
+key consumption, Escape dismissal, hook sign extension and ABI cleanup; BIOS
+and window/status services remain modeled. Production script-time menu/UI
+integration, UART continuity, actual DOS view and all full gates remain open.
+
 [Normal recorder audio run03](validation/recording-audio-03.json) passes26
 producer,34 independent and12 serial-evidence checks: actual DOS recording,
 unedited DOS compilation/replay and subsequent manual Search on owned stock

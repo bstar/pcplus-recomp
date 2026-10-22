@@ -1,0 +1,78 @@
+{
+  "component_replay_passed": true,
+  "actual_DOS_UI_accepted": false,
+  "production_integration_accepted": false,
+  "full_F02_accepted": false,
+  "full_F13_accepted": false,
+  "source_only": {
+    "passed": true,
+    "cases": 2064,
+    "original_comparisons": 0,
+    "window_sha256": "1d7cd7dbe3c8c9e18aeec5334072637d9aee1fcd7cee0f7bcba014bad5e72e88",
+    "sources": {
+      "reconstruction/script_menu/window.asm": "3668e8b409c719285c92d7d7646d984e019f538b6251926cb1db33f5750f4edb",
+      "reconstruction/script_menu/provenance.json": "3901ba69ce21d946135011b2f011b75d9c6d64811243a6b831083a64f76cbb03",
+      "reconstruction/keyboard/core.asm": "60059898bd121def771ddd2b604bfe46c65bbcbdfb71d0ebcdba8e3b5997036c",
+      "reconstruction/keyboard/provenance.json": "607480ca125ab544f93a46c3d094685acbe4057d283365c88e3221b020d75aa4",
+      "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+      "standalone/check_aspect_local_window.py": "6f6c6370d12300040497c1f58b4920020203fed2196d1e3a470dfc0d8c2301e9",
+      "reconstruction/keyboard_mapping/dispatch.asm": "ba4008a382f4b29a68f25bc738e5792e2632455727290af94857fe8a066776ca",
+      "reconstruction/keyboard_mapping/provenance.json": "d8aa6012a1075c394b2546749d8d031fee819a146263ed12bd19b6fdb036fb26",
+      "src/aspect/when.asm": "65afd39e167e078ebc3c4c3eb83d3b03418c4d06aadf57b24b03f11836d8eea4"
+    },
+    "cases_sha256": "649f9f86099a1e4ae455facfa96021315d29240ac37714e8bd03eaad5f0e2bd0",
+    "scope": "Recovered176-byte Alt-Z body plus231 recovered keyboard bytes in8086 CPU replay. All low-byte values, hook sign extension, both BIOS modes, delayed input and repeated Alt-Z dispatch execute actual instructions. Eight composed cases enter native WHEN4DE9 and actual1604 dispatcher through the selected original Alt-Z table slot. BIOS and window/status/debug/host callbacks are modeled; frame restoration and callback argument/cleanup contracts are checked. No actual DOS/UI integration, serial continuity or physical acceptance."
+  },
+  "original_comparison": {
+    "passed": true,
+    "cases": 2064,
+    "original_comparisons": 2064,
+    "window_sha256": "1d7cd7dbe3c8c9e18aeec5334072637d9aee1fcd7cee0f7bcba014bad5e72e88",
+    "sources": {
+      "reconstruction/script_menu/window.asm": "3668e8b409c719285c92d7d7646d984e019f538b6251926cb1db33f5750f4edb",
+      "reconstruction/script_menu/provenance.json": "3901ba69ce21d946135011b2f011b75d9c6d64811243a6b831083a64f76cbb03",
+      "reconstruction/keyboard/core.asm": "60059898bd121def771ddd2b604bfe46c65bbcbdfb71d0ebcdba8e3b5997036c",
+      "reconstruction/keyboard/provenance.json": "607480ca125ab544f93a46c3d094685acbe4057d283365c88e3221b020d75aa4",
+      "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+      "standalone/check_aspect_local_window.py": "6f6c6370d12300040497c1f58b4920020203fed2196d1e3a470dfc0d8c2301e9",
+      "reconstruction/keyboard_mapping/dispatch.asm": "ba4008a382f4b29a68f25bc738e5792e2632455727290af94857fe8a066776ca",
+      "reconstruction/keyboard_mapping/provenance.json": "d8aa6012a1075c394b2546749d8d031fee819a146263ed12bd19b6fdb036fb26",
+      "src/aspect/when.asm": "65afd39e167e078ebc3c4c3eb83d3b03418c4d06aadf57b24b03f11836d8eea4"
+    },
+    "cases_sha256": "649f9f86099a1e4ae455facfa96021315d29240ac37714e8bd03eaad5f0e2bd0",
+    "scope": "Recovered176-byte Alt-Z body plus231 recovered keyboard bytes in8086 CPU replay. All low-byte values, hook sign extension, both BIOS modes, delayed input and repeated Alt-Z dispatch execute actual instructions. Eight composed cases enter native WHEN4DE9 and actual1604 dispatcher through the selected original Alt-Z table slot. BIOS and window/status/debug/host callbacks are modeled; frame restoration and callback argument/cleanup contracts are checked. No actual DOS/UI integration, serial continuity or physical acceptance."
+  },
+  "isolated_source": {
+    "passed": true,
+    "originals_absent": true,
+    "exact_source_only_result": true,
+    "cases": 2064,
+    "sources": {
+      "reconstruction/script_menu/window.asm": "3668e8b409c719285c92d7d7646d984e019f538b6251926cb1db33f5750f4edb",
+      "reconstruction/script_menu/provenance.json": "3901ba69ce21d946135011b2f011b75d9c6d64811243a6b831083a64f76cbb03",
+      "reconstruction/keyboard/core.asm": "60059898bd121def771ddd2b604bfe46c65bbcbdfb71d0ebcdba8e3b5997036c",
+      "reconstruction/keyboard/provenance.json": "607480ca125ab544f93a46c3d094685acbe4057d283365c88e3221b020d75aa4",
+      "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+      "standalone/check_aspect_local_window.py": "6f6c6370d12300040497c1f58b4920020203fed2196d1e3a470dfc0d8c2301e9",
+      "reconstruction/keyboard_mapping/dispatch.asm": "ba4008a382f4b29a68f25bc738e5792e2632455727290af94857fe8a066776ca",
+      "reconstruction/keyboard_mapping/provenance.json": "d8aa6012a1075c394b2546749d8d031fee819a146263ed12bd19b6fdb036fb26",
+      "src/aspect/when.asm": "65afd39e167e078ebc3c4c3eb83d3b03418c4d06aadf57b24b03f11836d8eea4"
+    },
+    "cases_sha256": "649f9f86099a1e4ae455facfa96021315d29240ac37714e8bd03eaad5f0e2bd0",
+    "scope": "Fresh isolated source tree with only declared source inputs, inside the existing pinned Nix development environment. No analysis/original directory exists; full component CPU result reproduces exactly. Not a complete application source build."
+  },
+  "original_executable_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "retained_sha256": {
+    "analysis/aspect-when/local-ui-contracts-20261022.evidence.json": "02d54052ba51f409eeb956d09ce63b4c3d6001141ca2dd750f6d9556282f7324",
+    "analysis/aspect-when/local-ui-contracts-20261022.snapshot.json": "49d3e56430a3d6b2888c564967c2d9635e098fe3d3f7741e831b11b10403fd4a",
+    "reconstruction/script_menu/recover.py": "fcceaafb9a712d80465eb4b9cbad85aac0a63dfbef3fa5edf1d5f41aa373be30"
+  },
+  "evidence_ids": [
+    "ev_7753758e6ef19f812067b801bd30a7ebb318af6547000bd2cfbd3e84236826fa",
+    "ev_8c6397f7450acd0fef77d580471c22c3d1d6365d1693861c4ba15c016a200e06",
+    "ev_9c5680c42a12034c026d4170883285f4ebd1b7b437b5279e30dec958893605b8",
+    "ev_7f9e33fba53e582afe714539a420c24db117215acd4f03d96eaad33326e6d42b",
+    "ev_da4d22527ec92140290dfc0bf6ed25718cfd1f69b992c196a4ebfdfc81b8dc13"
+  ],
+  "scope": "Native Alt-Z instruction recovery and controlled CPU replay only. Actual DOS UI, full menu actions, serial continuity, physical hardware and all full application gates remain open."
+}
