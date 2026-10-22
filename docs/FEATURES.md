@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Actual DOS retained-carrier hangup](HANGUP_RETAINED_CARRIER.md) now reproduces the gap in four
+SOFT/BOTH × DTR enabled/disabled cases. Independent transport/timer/file/vector
+audit confirms retry AT bytes enter the still-online peer. The application
+correction and carrier-ignore policy coverage remain open; this is negative
+evidence, not compatibility acceptance.
+
 [Current normal recorder audio](validation/recording-footer-audio.json) passes26
 producer/34 independent/12 serial checks with77 waveform-decoded online bytes,
 actual DOS ASP compilation/replay, manual Search and normal hardware/timer/SIP/VM
@@ -11,7 +17,7 @@ because connected WAITFOR sees display leads rather than parser continuations.
 Eight native boundary cases,40 renderer cases and13 TCP controls pass. Earlier
 raw-ANSI and placement-only attempts remain failed/diagnostic evidence. Four
 [retained-carrier hangup model cases](HANGUP_RETAINED_CARRIER.md) remain an open
-F03 policy gap requiring actual DOS peer evidence before correction.
+F03 policy gap now also reproduced by four actual DOS peer cases; correction remains open.
 
 [Retained-command retry](MANUAL_CANCEL_RETAINED.md) now adopts the tested
 separator in main, with current-source/product binding and an actual stock

@@ -1,5 +1,11 @@
 # Complete DOS rebuild plan
 
+[Actual DOS retained-carrier hangup](docs/HANGUP_RETAINED_CARRIER.md) now reproduces the gap in four
+SOFT/BOTH × DTR enabled/disabled cases. Independent transport/timer/file/vector
+audit confirms retry AT bytes enter the still-online peer. The application
+correction and carrier-ignore policy coverage remain open; this is negative
+evidence, not compatibility acceptance.
+
 [Normal ENiGMA recorder audio](docs/validation/recording-footer-audio.json) now
 passes26 producer/34 independent/12 serial checks on current parent1cbb4f8f,
 with unchanged ASPECT183f852d and source-built DOS compiler. All77 online guest
@@ -15,7 +21,7 @@ and13 connected TCP controls support the diagnosis. The raw-ANSI gate failure,
 placement-only intentional stop and76-sample diagnostic remain separate failed
 or diagnostic evidence; none was promoted to normal acceptance.
 
-Next: actual DOS peer evidence and correction for
+Next: correction, using the actual DOS peer evidence, for
 [retained-carrier hangup](docs/HANGUP_RETAINED_CARRIER.md), distinguishing failed
 hangup from configured carrier-ignore behavior. Other modem/init-result/pressure,
 application, physical Boca/SPA2102 and all full F01–F16 requirements remain open.
