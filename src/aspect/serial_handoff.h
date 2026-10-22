@@ -51,4 +51,9 @@ typedef struct aspect_serial_handoff_v5 {
  unsigned flow_flags;
 } aspect_serial_handoff_v5;
 typedef char aspect_serial_handoff_v5_size_check[sizeof(aspect_serial_handoff_v5)==ASIO_V5_SIZE?1:-1];
+/* v6 retains50 bytes and assigns bit1 to a MODEM session whose parent has
+ * already observed DCD high. Control XOFF/XON must stop after its DCD falls.
+ * Direct/untracked links retain the earlier policy. Legacy v5 accepts bit0. */
+#define ASIO_VERSION_CARRIER 6U
+#define ASIO_V6_SIZE 50U
 #endif

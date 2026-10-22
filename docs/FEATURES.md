@@ -1,5 +1,20 @@
 # Full application reconstruction checklist
 
+The [modem command-mode checkpoint](validation/modem-reconnect.json) accepts
+parent6075bc18/runnera84dd21d for two SOFT/BOTH carrier-loss/redial workflows.
+The old pair reconnects with a contaminated ATZ/ERROR; the new pair sends clean
+ATZ/OK and retains exact second-script/manual streams and accounting. ASIOv6
+adds a guarded known-carrier policy in the existing50-byte layout; legacy1..5
+and renderer capabilities12/13 remain. Forty-two linked cases, eight semantic
+audit-corruption controls, fresh flow/CTS/carrier/confirmation checks,56 process
+and13 PROGRAM cases pass. Clean source reproduces26/23 products. Current normal
+BBS recorder/window tests pass. [Normal software audio](validation/recording-modem-carrier-audio.json)
+passes26/34/12 checks on one ENiGMA V22/1200 route with exact streams and cleanup.
+Longer stalls, RTS/RX, other reconnect/DCD and offline launch paths, physical
+and all full gates remain open.
+[Detailed scope](MODEM_RECONNECT.md) distinguishes emulator and hardware evidence.
+Earlier checkpoints retain their identities.
+
 The [flow-ownership checkpoint](validation/aspect-flow-handoff.json) accepts
 parenta4c377c9/runnerec93148f for SOFT/BOTH entry, successful resume and timeout/
 cancel handback. Four real DOS fault cases keep the peer pause until XON; the

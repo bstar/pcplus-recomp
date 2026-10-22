@@ -77,6 +77,12 @@ static void __far diagnostic_clean_state(void)
  CHECK(runtime_script_file_peak==6&&runtime_script_file_open_calls==6&&runtime_script_file_close_calls==6);
  CHECK(!runtime_script_file_cleanup_errors);
 }
+static void __far diagnostic_result(unsigned expected,unsigned raw)
+{
+ if(!expected){CHECK(runtime_integer_b[0]==317);CHECK(runtime_external_raw_status==raw);CHECK(runtime_external_private_count==7);}
+ CHECK(trace_count==(full_trace?11:expected?2:1));
+ CHECK(native_dos_major==3);
+}
 #pragma code_seg()
 int main(int argc,char **argv)
 {
@@ -118,7 +124,6 @@ int main(int argc,char **argv)
  CHECK(status==expected);CHECK(_dos_getvect(0)==old_zero);
  diagnostic_clean_state();
  if(argc==4&&(!strcmp(argv[3],"fallback")||large_environment))CHECK(native_far_calls==far_before+1);
- if(!expected){CHECK(runtime_integer_b[0]==317);CHECK(runtime_external_raw_status==raw);CHECK(runtime_external_private_count==7);}
  CHECK(_fmemcmp(jft_before,jft,jft_count)==0);
  if(expected){
   recovery=aspect_runtime_run("RECOVER.ASX",3000)==0;
@@ -126,8 +131,7 @@ int main(int argc,char **argv)
   CHECK(!runtime_live&&!runtime_script_file_live&&!runtime_file.handle&&!process_handles_active&&!runtime_script_file_cleanup_errors);
   CHECK(_dos_getvect(0)==old_zero&&_fmemcmp(jft_before,jft,jft_count)==0);
  }
- CHECK(trace_count==(full_trace?11:expected?2:1));
- CHECK(native_dos_major==3);CHECK(aspect_serial_close()==0);
+ diagnostic_result(expected,raw);CHECK(aspect_serial_close()==0);
  CHECK(_dos_getvect(vector)==old_irq&&inp(0x21)==pic);outp(base+4,old_mcr);
  {unsigned long tick=aspect_serial_ticks();while(aspect_serial_ticks()==tick);}
  printf("ASPECT PROCESS COM%u %c result%u raw%u calls%u private%u compiler%u checks%u failures%u recovery%u control98 JFT-preserved\n",port,argv[2][12],status,

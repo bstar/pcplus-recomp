@@ -345,7 +345,7 @@ terminal_script_complete:
  jne .bad
  cmp word [script_handoff+2],0x4f49
  jne .bad
- cmp word [script_handoff+4],5
+ cmp word [script_handoff+4],6
  jne .bad
  cmp word [script_handoff+6],50
  jne .bad
@@ -375,6 +375,9 @@ terminal_script_complete:
  xor ax,[_script_render_token]
  xor ax,[_script_render_version]
  xor ax,[uart_tx_paused] ;Original quiet-parent input, not child's output.
+ mov bx,[_script_flow_flags]
+ and bx,2 ;MODEM policy is immutable; peer pause may change in the child.
+ xor ax,bx
  xor ax,[uart_rx_count]
  cmp word [uart_rx_count],0
  je .check_guard
@@ -412,11 +415,11 @@ terminal_script_complete:
  cmp [script_handoff+24],bx
  jne .bad
  mov bx,[_script_flow_flags]
- cmp bx,1
+ cmp bx,3
  ja .bad
  cmp word [uart_software_flow],0
  jne .flow_valid
- or bx,bx
+ test bl,1
  jnz .bad
 .flow_valid:
  mov ax,[script_handoff+16]
@@ -437,6 +440,7 @@ terminal_script_complete:
  mov byte [uart_rts_lowered],1
 .status:
  mov ax,[_script_flow_flags]
+ and ax,1
  mov [uart_tx_paused],ax
  cmp word [script_handoff+18],0
  je .done

@@ -1,8 +1,9 @@
 # PCPlus DOS reconstruction
 
-The current [script flow handoff](docs/ASPECT_FLOW_HANDOFF.md) preserves peer
-XOFF state across entry, timeout/cancellation and return using ASIOv5. Legacy
-ASIOv1..v4 remain supported. [Emulated CTS tests](docs/ASPECT_CTS_DOS.md) cover
+The current [modem reconnect policy](docs/MODEM_RECONNECT.md) preserves peer
+XOFF state across entry, timeout/cancellation and return, and keeps teardown
+flow bytes out of command-mode ATZ after a known carrier loss using ASIOv6.
+Legacy ASIOv1..v5 remain supported. [Emulated CTS tests](docs/ASPECT_CTS_DOS.md) cover
 short HARD/BOTH stalls. Current source-only, DOS, Synchronet/ENiGMA and selected
 software-audio checkpoints are recorded in [the plan](PLAN.md); the full
 application and physical modem compatibility remain unfinished.

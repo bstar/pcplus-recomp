@@ -1,5 +1,14 @@
 # Recording and replay on Synchronet and ENiGMA
 
+Parent6075bc18/runnera84dd21d passes [four fresh recorder/replay sessions](validation/bbs-modem-carrier-compat.json)
+and [two stock-window sessions](validation/bbs-modem-carrier-window.json) on
+owned stock Synchronet/ENiGMA. [Virtual-modem reconnect](MODEM_RECONNECT.md)
+separately tests clean command mode after a real emulated carrier loss.
+[Fresh normal software audio](validation/recording-modem-carrier-audio.json)
+passes26/34/12 checks:60,929 display bytes plus187 bridge bytes exact,77 online
+bytes independently waveform-decoded and normal cleanup on one ENiGMA V22/1200
+route. Fault/reconnect over audio and physical hardware remain unverified. Earlier receipts retain their product identities.
+
 Parenta4c377c9/runnerec93148f passes [four fresh recorder/replay sessions](validation/bbs-flow-handoff-compat.json)
 and [two stock-window sessions](validation/bbs-flow-handoff-window.json) on
 owned stock Synchronet/ENiGMA. [Flow handoff validation](validation/aspect-flow-handoff.json)

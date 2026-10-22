@@ -93,6 +93,7 @@ _aspect_serial_backend_open:
  mov word [uart_rx_read],uart_rx_buffer
  mov word [uart_rx_write],uart_rx_buffer
  mov word [uart_tx_paused],0
+ mov word [serial_carrier_policy],0
  mov word [uart_software_flow],0
  mov word [uart_hardware_flow],0
  mov byte [uart_flow_pending],0
@@ -417,9 +418,36 @@ _aspect_serial_poll:
  je .flow
  mov word [_aspect_serial_status],5
 .flow:
+ call _aspect_serial_flow_alive
+ or ax,ax
+ jnz .flow_alive
+ ; An admitted MODEM carrier has fallen. Flow bytes now reach its command
+ ; interpreter, not the old BBS. Do not emit a queued XOFF/XON there.
+ pushf
+ cli
+ mov byte [uart_flow_pending],0
+ mov byte [uart_xoff_sent],0
+ popf
+.flow_alive:
  call uart_poll_flow
 .status:
  mov ax,[_aspect_serial_status]
+ ret
+
+global _aspect_serial_flow_alive
+_aspect_serial_flow_alive:
+ push dx
+ mov ax,1
+ cmp word [serial_carrier_policy],0
+ je .done
+ mov dx,[uart_port_msr]
+ in al,dx
+ test al,0x80
+ mov ax,0
+ jz .done
+ inc ax
+.done:
+ pop dx
  ret
 
 ; Proactive compiler flow bracket. Only introduced pauses are retired. The IRQ
@@ -635,6 +663,9 @@ w serial_process_guard_level,1
 %endif
 w _aspect_serial_status,0
 w _aspect_serial_handoff_enabled,0
+global _serial_carrier_policy
+_serial_carrier_policy:
+w serial_carrier_policy,0
 w serial_break_state,0
 w serial_unread_valid,0
 w serial_unread_slot,0

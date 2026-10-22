@@ -1,5 +1,38 @@
 # Complete DOS rebuild plan
 
+The [clean modem-reconnect audit](docs/validation/modem-reconnect.json) accepts
+parent6075bc18/runnera84dd21d for SOFT/BOTH remote drop under XOFF, Alt-D redial,
+a second automatic script/manual query and two directory accounting updates.
+The old pair also reconnects, but prefixes XOFF+XON to the second ATZ and gets
+ERROR; the new pair sends clean ATZ/OK without changing either BBS stream.
+The initial stuck-pause hypothesis was not reproduced and is explicitly retired.
+
+ASIOv6 remains50bytes. Bit1 binds a MODEM session with parent-observed high DCD;
+the child stops queued/closing flow after that carrier falls, and the parent
+retires its introduced pause without sending XON into command mode. Direct/
+untracked links retain their policy. Legacy1..5 and capabilities12/13 remain.
+Forty-two linked policy cases, eight semantic audit-corruption controls, two
+reconnect cases and fresh flow/CTS/carrier/confirmation regressions pass.
+All56 COM/flow/process and13 attached PROGRAM cases pass;26 application/23
+diagnostic products reproduce without originals. Diagnostic pure result checks
+move into PROCESSDIAG, leaving96 near-code bytes. Parent near-data spare is
+112/64 and code spare164/14 for normal/mouse variants.
+
+[Four recorder/replay](docs/validation/bbs-modem-carrier-compat.json) and
+[two stock-window](docs/validation/bbs-modem-carrier-window.json) sessions pass
+on Synchronet/ENiGMA. [Fresh normal recorder audio](docs/validation/recording-modem-carrier-audio.json)
+passes26 producer,34 independent and12 serial checks:60,929 display bytes plus187
+bridge bytes exact and77 independently waveform-decoded online bytes, with
+normal hardware/timer/SIP/VM cleanup. [Admission inputs](docs/validation/recording-modem-carrier-audio-preparation.json)
+remain sealed. This is one normal ENiGMA V22/1200 software route.
+See [policy, exact evidence and limits](docs/MODEM_RECONNECT.md).
+
+Next: configurable longer stalls (still36 BIOS ticks), longer CTS fault handback,
+RTS/sustained RX, initially-low/transient DCD, manual hangup/cancel reconnect
+and offline PROGRAM/script launches after loss, remaining commands and every full F01–F16/physical requirement. Further
+resident code placement is needed before substantial mouse-parent growth.
+Earlier checkpoints below retain their own identities and scopes.
+
 Two [actual DOS emulated CTS cases](docs/validation/aspect-cts-dos.json) also
 pass HARD/BOTH: the peer drives CTS low/high through pinned DOSBox-X2026.07.02
 control framing. No payload crosses during the1.2-second hold;2,048 bytes,

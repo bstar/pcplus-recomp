@@ -1,5 +1,14 @@
 # ASPECT serial commands and DOS port ownership
 
+The [current known-carrier policy](MODEM_RECONNECT.md) uses ASIOv6/50bytes.
+For a MODEM session whose parent observed DCD high, low DCD stops queued and
+closing XOFF/XON; PROGRAM return retires its flow without contaminating ATZ.
+Two actual DOS SOFT/BOTH reconnect workflows pass with clean ATZ/OK and unchanged
+BBS streams. Direct/untracked links keep their prior behavior. Legacy ASIOv1..v5
+remain supported. Initially-low/transient DCD, other reconnect paths, configurable
+longer stalls, RTS/RX and physical validation remain open. Earlier sections below
+describe their frozen checkpoints.
+
 The [current flow handoff](ASPECT_FLOW_HANDOFF.md) adds ASIOv5/50bytes with
 one guarded peer-pause word. It preserves an existing XOFF before child IRQ
 installation and returns the final pause before parent IRQ restoration. Legacy

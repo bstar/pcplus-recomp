@@ -5,11 +5,13 @@
 extern unsigned char uart_rx_buffer[];
 extern unsigned uart_rx_read,uart_rx_write,uart_rx_count;
 extern unsigned uart_software_flow,uart_rx_mask,uart_tx_paused;
+extern unsigned serial_carrier_policy;
 extern unsigned char uart_flow_pending;
 extern unsigned aspect_serial_handoff_enabled;
 extern unsigned __cdecl aspect_serial_backend_close(void);
 extern unsigned __cdecl aspect_serial_psp(void);
 extern unsigned __cdecl aspect_serial_tx_empty(void);
+extern unsigned __cdecl aspect_serial_flow_alive(void);
 extern unsigned __cdecl aspect_serial_compile_hold(void);
 extern unsigned __cdecl aspect_serial_compile_release(void);
 #if defined(ASPECT_RUNTIME_SERIAL)
@@ -27,7 +29,7 @@ static unsigned char directory_record[114];
 static unsigned directory_entry;
 static unsigned char __far *preload_source;
 static unsigned preload_count,preload_read;
-static unsigned preload_flow;
+static unsigned preload_flow,preload_carrier_policy;
 extern unsigned __cdecl directory_accounting_patch(const unsigned char *,unsigned char *,unsigned,unsigned,unsigned,unsigned);
 static unsigned record_bounded(const unsigned char __far *p)
 {
@@ -55,6 +57,7 @@ void __cdecl aspect_serial_preload(void)
  uart_rx_count=preload_count;
  uart_rx_mask=input_translation_mode==ASIO_XLT_MASK7F?127U:255U;
  uart_tx_paused=preload_flow;
+ serial_carrier_policy=preload_carrier_policy;
 }
 unsigned __cdecl aspect_serial_translate(unsigned byte)
 {return input_translation_mode==ASIO_XLT_TABLE?input_translation[byte&255U]:(byte&255U);}
@@ -97,16 +100,16 @@ unsigned __cdecl aspect_serial_open(const char *p)
   end=begin+(unsigned long)*(unsigned __far *)(mcb+3)*16UL;
   if(end>1048576UL || address<begin || address+ASIO_SIZE>end)return ASPECT_SERIAL_ARGUMENT;
   candidate=(aspect_serial_handoff __far *)MK_FP(segment,offset);
-  if(candidate->version==ASIO_VERSION_PRELOAD || candidate->version==ASIO_VERSION_RENDER || candidate->version==ASIO_VERSION_FLOW){
-   descriptor_size=candidate->version==ASIO_VERSION_FLOW?ASIO_V5_SIZE:candidate->version==ASIO_VERSION_RENDER?ASIO_V4_SIZE:ASIO_V3_SIZE;
+  if(candidate->version==ASIO_VERSION_PRELOAD || candidate->version==ASIO_VERSION_RENDER || candidate->version==ASIO_VERSION_FLOW || candidate->version==ASIO_VERSION_CARRIER){
+   descriptor_size=candidate->version==ASIO_VERSION_CARRIER?ASIO_V6_SIZE:candidate->version==ASIO_VERSION_FLOW?ASIO_V5_SIZE:candidate->version==ASIO_VERSION_RENDER?ASIO_V4_SIZE:ASIO_V3_SIZE;
    if((unsigned long)offset+descriptor_size>65536UL || address+descriptor_size>end)return ASPECT_SERIAL_ARGUMENT;
   }
-  if(candidate->magic!=ASIO_MAGIC || (candidate->version!=ASIO_VERSION && candidate->version!=ASIO_VERSION_TRANSLATION && candidate->version!=ASIO_VERSION_PRELOAD && candidate->version!=ASIO_VERSION_RENDER && candidate->version!=ASIO_VERSION_FLOW) || candidate->size!=descriptor_size ||
+  if(candidate->magic!=ASIO_MAGIC || (candidate->version!=ASIO_VERSION && candidate->version!=ASIO_VERSION_TRANSLATION && candidate->version!=ASIO_VERSION_PRELOAD && candidate->version!=ASIO_VERSION_RENDER && candidate->version!=ASIO_VERSION_FLOW && candidate->version!=ASIO_VERSION_CARRIER) || candidate->size!=descriptor_size ||
    candidate->parent_psp!=parent || !candidate->parent_psp ||
    candidate->capacity!=4096 || candidate->returned ||
    (unsigned long)candidate->ring+4096UL>65536UL)return ASPECT_SERIAL_ARGUMENT;
   guard=candidate->parent_psp^candidate->parent_ds^candidate->ring^ASIO_GUARD;
-  if(candidate->version==ASIO_VERSION_PRELOAD || candidate->version==ASIO_VERSION_RENDER || candidate->version==ASIO_VERSION_FLOW){
+  if(candidate->version==ASIO_VERSION_PRELOAD || candidate->version==ASIO_VERSION_RENDER || candidate->version==ASIO_VERSION_FLOW || candidate->version==ASIO_VERSION_CARRIER){
    aspect_serial_handoff_v3 __far *v3=(aspect_serial_handoff_v3 __far *)candidate;
    initial_count=candidate->count;initial_read=candidate->status;entry=v3->entry;record_offset=v3->record;
    year=v3->year;month=v3->month;day=v3->day;delta=v3->delta;
@@ -116,15 +119,15 @@ unsigned __cdecl aspect_serial_open(const char *p)
    guard^=initial_count^initial_read^entry^record_offset;
    guard^=year^month^day^delta;
   }else if(candidate->count || candidate->status)return ASPECT_SERIAL_ARGUMENT;
-  if(candidate->version==ASIO_VERSION_RENDER || candidate->version==ASIO_VERSION_FLOW){
+  if(candidate->version==ASIO_VERSION_RENDER || candidate->version==ASIO_VERSION_FLOW || candidate->version==ASIO_VERSION_CARRIER){
    aspect_serial_handoff_v4 __far *v4=(aspect_serial_handoff_v4 __far *)candidate;
    render_offset=v4->render_offset;render_segment=v4->render_segment;render_token=v4->render_token;has_render=1;
    if(!render_token || v4->render_version!=ASPECT_RENDER_CAP_VERSION)return ASPECT_SERIAL_ARGUMENT;
    guard^=render_offset^render_segment^render_token^v4->render_version;
   }
-  if(candidate->version==ASIO_VERSION_FLOW){
+  if(candidate->version==ASIO_VERSION_FLOW || candidate->version==ASIO_VERSION_CARRIER){
    flow_flags=((aspect_serial_handoff_v5 __far *)candidate)->flow_flags;
-   if(flow_flags>1)return ASPECT_SERIAL_ARGUMENT;
+   if(flow_flags>(candidate->version==ASIO_VERSION_CARRIER?3U:1U))return ASPECT_SERIAL_ARGUMENT;
    guard^=flow_flags;
   }
   if(candidate->version==ASIO_VERSION){
@@ -167,7 +170,7 @@ unsigned __cdecl aspect_serial_open(const char *p)
  }
  flow=(unsigned char)p[12];if(flow>='a'&&flow<='z')flow-=32;
  if(flow!='N'&&flow!='S'&&flow!='H'&&flow!='B')return ASPECT_SERIAL_ARGUMENT;
- if(flow_flags && flow!='S' && flow!='B')return ASPECT_SERIAL_ARGUMENT;
+ if((flow_flags&1) && flow!='S' && flow!='B')return ASPECT_SERIAL_ARGUMENT;
  /* Rejected reopen must not change an active owner's effective table. */
  if(aspect_serial_active)return ASPECT_SERIAL_BUSY;
 #if defined(ASPECT_RUNTIME_SERIAL)
@@ -183,7 +186,7 @@ unsigned __cdecl aspect_serial_open(const char *p)
   *(unsigned char __far *)MK_FP(candidate->parent_ds,record_offset+i):0;
  if(year && directory_accounting_patch(directory_record,directory_record,year,month,day,delta))return ASPECT_SERIAL_ARGUMENT;
  preload_count=initial_count;preload_read=initial_read;
- preload_flow=flow_flags;
+ preload_flow=flow_flags&1;preload_carrier_policy=flow_flags&2;
  preload_source=candidate?(unsigned char __far *)MK_FP(candidate->parent_ds,candidate->ring):0;
  status=aspect_serial_backend_open(p[2]-'1',divisor,lcr,flow);
  if(!status){
@@ -212,7 +215,7 @@ unsigned __cdecl aspect_serial_close(void)
  aspect_serial_break_release();
  /* Stop upstream before taking the child ISR down. Control flow bypasses
   * peer CTS/XOFF. Advisory36tick bound never repeats accepted data bytes. */
- if(uart_software_flow)uart_flow_pending=0x13;
+ if(uart_software_flow && aspect_serial_flow_alive())uart_flow_pending=0x13;
  {
   start=aspect_serial_ticks();
   do{aspect_serial_poll();now=aspect_serial_ticks();if(now<start)now+=1573040UL;}
@@ -228,8 +231,8 @@ unsigned __cdecl aspect_serial_close(void)
   destination=(unsigned char __far *)MK_FP(handoff->parent_ds,handoff->ring);
   for(;n;--n){*destination++=uart_rx_buffer[at];if(++at==4096)at=0;}
   handoff->status=status;handoff->count=count;
-  if(handoff->version==ASIO_VERSION_FLOW)
-   ((aspect_serial_handoff_v5 __far *)handoff)->flow_flags=uart_tx_paused?1U:0U;
+  if(handoff->version==ASIO_VERSION_FLOW || handoff->version==ASIO_VERSION_CARRIER)
+   ((aspect_serial_handoff_v5 __far *)handoff)->flow_flags=preload_carrier_policy|(uart_tx_paused?1U:0U);
   handoff->returned=1;handoff=0;aspect_serial_handoff_enabled=0;
  }
  aspect_serial_status=status;return status;

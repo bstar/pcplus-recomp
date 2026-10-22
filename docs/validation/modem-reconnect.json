@@ -1,0 +1,212 @@
+{
+  "passed": true,
+  "clean_virtual_modem_reconnect_accepted": true,
+  "full_application_accepted": false,
+  "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+  "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+  "variants": {
+    "terminal": {
+      "sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "data_spare": 112,
+      "code_spare": 164
+    },
+    "terminal-mouse": {
+      "sha256": "c50dda5f82482612d162505ae2651ec3e845b9d333c229e41d5f6e62180c86ea",
+      "data_spare": 64,
+      "code_spare": 14
+    },
+    "terminal-process": {
+      "sha256": "52baada1470c30e6e46aae2b3f0ca706b9c7fad7e92c9ed20429eb33f1c79c56",
+      "data_spare": 112,
+      "code_spare": 164
+    }
+  },
+  "baseline": {
+    "soft": {
+      "passed": true,
+      "connections": 2,
+      "first_child_exit": 14,
+      "second_script": "RECONNECTED",
+      "native_call_accounting_delta": 2,
+      "dirty_initialization": true,
+      "modem_error_count": 1,
+      "modem_command_kinds": [
+        "ATZ",
+        "ATD",
+        "XOFF+XON+ATZ",
+        "ATD"
+      ],
+      "first_wire_bytes": 25,
+      "second_wire_bytes": 54,
+      "second_wire_sha256": "a51eae9d5a2754c10885f95db2082b9f998c763040fd79438ca8c845acd9ea55",
+      "whole_wire_sha256": "fa19533530286a6d2442af96bb81de55bcc11a1fd023ec9dc4eb0cb220ae3906",
+      "manual_query_seconds": 0.0078083769185468554,
+      "disconnected_ticks": 40,
+      "reconnected_ticks": 49,
+      "parent_stale_pause_seen": 0
+    },
+    "both": {
+      "passed": true,
+      "connections": 2,
+      "first_child_exit": 14,
+      "second_script": "RECONNECTED",
+      "native_call_accounting_delta": 2,
+      "dirty_initialization": true,
+      "modem_error_count": 1,
+      "modem_command_kinds": [
+        "ATZ",
+        "ATD",
+        "XOFF+XON+ATZ",
+        "ATD"
+      ],
+      "first_wire_bytes": 25,
+      "second_wire_bytes": 54,
+      "second_wire_sha256": "a51eae9d5a2754c10885f95db2082b9f998c763040fd79438ca8c845acd9ea55",
+      "whole_wire_sha256": "fa19533530286a6d2442af96bb81de55bcc11a1fd023ec9dc4eb0cb220ae3906",
+      "manual_query_seconds": 0.008924166089855134,
+      "disconnected_ticks": 40,
+      "reconnected_ticks": 49,
+      "parent_stale_pause_seen": 0
+    }
+  },
+  "fixed": {
+    "soft": {
+      "passed": true,
+      "connections": 2,
+      "first_child_exit": 14,
+      "second_script": "RECONNECTED",
+      "native_call_accounting_delta": 2,
+      "dirty_initialization": false,
+      "modem_error_count": 0,
+      "modem_command_kinds": [
+        "ATZ",
+        "ATD",
+        "ATZ",
+        "ATD"
+      ],
+      "first_wire_bytes": 25,
+      "second_wire_bytes": 54,
+      "second_wire_sha256": "a51eae9d5a2754c10885f95db2082b9f998c763040fd79438ca8c845acd9ea55",
+      "whole_wire_sha256": "fa19533530286a6d2442af96bb81de55bcc11a1fd023ec9dc4eb0cb220ae3906",
+      "manual_query_seconds": 0.007797908969223499,
+      "disconnected_ticks": 40,
+      "reconnected_ticks": 49,
+      "parent_stale_pause_seen": 0
+    },
+    "both": {
+      "passed": true,
+      "connections": 2,
+      "first_child_exit": 14,
+      "second_script": "RECONNECTED",
+      "native_call_accounting_delta": 2,
+      "dirty_initialization": false,
+      "modem_error_count": 0,
+      "modem_command_kinds": [
+        "ATZ",
+        "ATD",
+        "ATZ",
+        "ATD"
+      ],
+      "first_wire_bytes": 25,
+      "second_wire_bytes": 54,
+      "second_wire_sha256": "a51eae9d5a2754c10885f95db2082b9f998c763040fd79438ca8c845acd9ea55",
+      "whole_wire_sha256": "fa19533530286a6d2442af96bb81de55bcc11a1fd023ec9dc4eb0cb220ae3906",
+      "manual_query_seconds": 0.008800467010587454,
+      "disconnected_ticks": 40,
+      "reconnected_ticks": 49,
+      "parent_stale_pause_seen": 0
+    }
+  },
+  "linked_policy_cases": 42,
+  "actual_DOS_reconnect_cases": 2,
+  "actual_DOS_modem_regressions": 4,
+  "actual_DOS_parent_carrier_cases": 1,
+  "actual_DOS_flow_resume_cases": 2,
+  "actual_DOS_flow_entry_cases": 2,
+  "actual_DOS_flow_fault_cases": 4,
+  "actual_DOS_CTS_cases": 2,
+  "flow_resume": {
+    "soft": {
+      "child_paused_ticks": 22,
+      "parent_pause_seen_at_entry": false,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    },
+    "both": {
+      "child_paused_ticks": 22,
+      "parent_pause_seen_at_entry": false,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    }
+  },
+  "flow_entry": {
+    "soft": {
+      "child_paused_ticks": 20,
+      "parent_pause_seen_at_entry": true,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    },
+    "both": {
+      "child_paused_ticks": 20,
+      "parent_pause_seen_at_entry": true,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    }
+  },
+  "flow_fault": {
+    "timeout-soft": {
+      "child_exit": 14,
+      "child_paused_ticks": 36,
+      "parent_paused_ticks": 37,
+      "premature_application_hex": "",
+      "parent_query_after_XON": true,
+      "wire_sha256": "0a0b5cdf7d83d1767c4e182616334bdca6aeae60597fac4769d813f5f866abe0"
+    },
+    "timeout-both": {
+      "child_exit": 14,
+      "child_paused_ticks": 36,
+      "parent_paused_ticks": 37,
+      "premature_application_hex": "",
+      "parent_query_after_XON": true,
+      "wire_sha256": "0a0b5cdf7d83d1767c4e182616334bdca6aeae60597fac4769d813f5f866abe0"
+    },
+    "cancel-soft": {
+      "child_exit": 13,
+      "child_paused_ticks": 12,
+      "parent_paused_ticks": 61,
+      "premature_application_hex": "",
+      "parent_query_after_XON": true,
+      "wire_sha256": "84ddf8ed0463d46d6142f5412929377723b1d5ae4826b1bbb69cccbb8b779cad"
+    },
+    "cancel-both": {
+      "child_exit": 13,
+      "child_paused_ticks": 12,
+      "parent_paused_ticks": 61,
+      "premature_application_hex": "",
+      "parent_query_after_XON": true,
+      "wire_sha256": "84ddf8ed0463d46d6142f5412929377723b1d5ae4826b1bbb69cccbb8b779cad"
+    }
+  },
+  "confirmation_DOS_cases": 10,
+  "process_cases": 56,
+  "attached_PROGRAM_cases": 13,
+  "source_only_products": {
+    "application": 26,
+    "diagnostic": 23
+  },
+  "diagnostic_near_code_remaining": 96,
+  "ABI": "ASIOv6 remains50bytes; bit0 is peer TX pause, bit1 identifies a MODEM session with parent-observed high DCD. Legacy1..5 remain supported; renderer capabilities12/13 are unchanged.",
+  "cohort": "build/modem-carrier-flow/accepted-02",
+  "frozen_files": 11361,
+  "files_manifest_sha256": "a5ccb30300a3e705ef7b0c95f72b54fe4b94108daaafeca75df98fbff13919a6",
+  "auditor_sha256": "2daa940e8cd2de5a77ef7a72215db49a25d074a62cf1f90e3066de9d17a1052c",
+  "scope": "SOFT/BOTH actual8086 DOSBox-X virtual modem, first remote TCP drop under XOFF, native disconnect TRANSMIT fails14, Alt-D redial, second automatic script, exact BBS streams/manual query and two call-accounting updates. Old/current BBS streams match; raw modem commands distinguish old XOFF+XON+ATZ/ERROR from new clean ATZ/OK. First-child JFT/file owners and overall hardware are checked; the observer does not capture the second child frame.",
+  "remaining": [
+    "Initially-low or never-observed-high DCD retains the old flow policy. Late/transient DCD, manual hangup/cancel reconnect paths and other modem behavior remain open.",
+    "Configurable longer transmit stalls, long CTS fault handback, RTS/sustained RX pressure, software-audio fault/reconnect, physical Boca/SPA2102 and every full F01\u2013F16 gate remain open."
+  ]
+}

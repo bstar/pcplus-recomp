@@ -1,0 +1,215 @@
+{
+  "passed": true,
+  "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+  "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+  "results": {
+    "abort-No": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.00632550404407084
+      ],
+      "prompt_ticks": 81,
+      "child_exit": 0,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "5b6b72d834ae704808aa57d7d4574df165bbf9ad548c4e45f43dc4b4ddc91a6e"
+    },
+    "abort-Enter": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.006020569941028953
+      ],
+      "prompt_ticks": 81,
+      "child_exit": 0,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "5b6b72d834ae704808aa57d7d4574df165bbf9ad548c4e45f43dc4b4ddc91a6e"
+    },
+    "abort-Escape": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.0062436399748548865
+      ],
+      "prompt_ticks": 81,
+      "child_exit": 0,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "8cd0f6561cbbe426e0ce0adac2bf30492b4c0448211abf9b571978c43d973f6e"
+    },
+    "abort-invalid-extended": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.007604604004882276
+      ],
+      "prompt_ticks": 93,
+      "child_exit": 0,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "5b6b72d834ae704808aa57d7d4574df165bbf9ad548c4e45f43dc4b4ddc91a6e"
+    },
+    "abort-Yes-WAITFOR": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.007454823004081845
+      ],
+      "prompt_ticks": 81,
+      "child_exit": 13,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "2e1a5edc88de9435b6172047da5ac731a3b8266fcc86d4b0ce65d76556b74df7"
+    },
+    "abort-Yes-PAUSE": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.007478357059881091
+      ],
+      "prompt_ticks": 81,
+      "child_exit": 13,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "2e1a5edc88de9435b6172047da5ac731a3b8266fcc86d4b0ce65d76556b74df7"
+    },
+    "abort-WHEN-TX": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.009322431986220181
+      ],
+      "prompt_ticks": 81,
+      "child_exit": 0,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "bb2195d19d714c45922e6fd028d0370cd4a6d84ab999aa22dee9f2f4a1919fdb"
+    },
+    "abort-WHEN-CALL": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.006790462997741997
+      ],
+      "prompt_ticks": 81,
+      "child_exit": 0,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "0a4741849f8905e87a842ee5617eaca361954029f93bf88919de57a906ac5669"
+    },
+    "abort-RGET": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.0071836840361356735
+      ],
+      "prompt_ticks": 81,
+      "child_exit": 0,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "a3fd12ab20e8805de6da140eb778184ae8ecc519c798c6e44ac907713e6b0e88"
+    },
+    "abort-pressure": {
+      "passed": true,
+      "query_reply_seconds": [
+        0.05255828099325299,
+        0.054340388043783605,
+        0.056243753992021084,
+        0.055591384996660054,
+        0.052924430929124355,
+        0.054139007930643857,
+        0.05568831693381071,
+        0.05403682601172477,
+        0.0536933490075171,
+        0.05397951800841838,
+        0.05561824596952647,
+        0.05682502908166498,
+        0.05382123007439077,
+        0.05568396998569369,
+        0.054178413935005665,
+        0.0540831140242517,
+        0.05602641508448869,
+        0.054231854039244354,
+        0.05374931497499347,
+        0.05327562300954014,
+        0.054243937018327415,
+        0.05424391699489206,
+        0.05782118602655828,
+        0.05342250899411738,
+        0.05440775607712567,
+        0.053537736996077,
+        0.05439468100667,
+        0.056826171930879354,
+        0.053224715986289084,
+        0.056533349910750985,
+        0.053062201011925936,
+        0.054276468930765986,
+        0.05418603797443211,
+        0.05090565700083971,
+        0.054475212935358286,
+        0.054472456919029355,
+        0.053459930000826716,
+        0.05364968709181994,
+        0.05451590893790126,
+        0.05397030105814338,
+        0.053420866024680436,
+        0.0535136719699949,
+        0.05448381893802434,
+        0.053841158049181104
+      ],
+      "prompt_ticks": 91,
+      "child_exit": 0,
+      "parent_sha256": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+      "runner_sha256": "a84dd21d588c7c1372889e7241608ea1d9c067b63c0f1693836fd74a3809a7d8",
+      "whole_wire_sha256": "ee2828cbeaa32d596ea81e6d18ff51c63aa7845931464d8749f92bf71fec1217"
+    }
+  },
+  "supporting_checks": {
+    "build/aspect-abort-owner/checks.json": {
+      "cases": 9,
+      "sha256": "7eddb98adb454bcdc071d67ff5932c43631fb95ef610b871501042b5ed809f59"
+    },
+    "build/terminal-abort-confirm/checks.json": {
+      "cases": 10,
+      "sha256": "4519b45c7096ff0abae51b97ddfa40e9b16ab159ee3bd291b86aa7716af55377"
+    },
+    "build/terminal-abort-confirm-mouse/checks.json": {
+      "cases": 10,
+      "sha256": "c36ed08804b774becaf8299c3e6bb4f396ee2035a57ad1533ab76f0b4abb3847"
+    },
+    "build/aspect-foreground-delay/checks.json": {
+      "cases": 10,
+      "sha256": "c3a020a4ced932b57367d469b19394b8dbc3b23db7188eaca05fa5c552b37e65"
+    },
+    "build/aspect-render-client/checks.json": {
+      "cases": 16,
+      "sha256": "ffee25ae601eca5f5556a84dc896e75a89db62490c27209a4f3f24555dc5a683"
+    },
+    "build/aspect-keyboard/key-client-checks.json": {
+      "cases": 28,
+      "sha256": "3afce70b5e5dec27ba986f732d552c675986c3df029c2118f8bf9d68ac7fd208"
+    },
+    "build/aspect-script-receive-dos/checks.json": {
+      "cases": 15,
+      "sha256": "b749416869981cd0b35476c484440072e07adfdce44a44b487e4d90d5e689f0c"
+    },
+    "build/aspect-render-client-dos/checks.json": {
+      "cases": 5,
+      "sha256": "35bb5ea3fc9a6e5b457059d56a4a4800220ab89a226deca05e9071c183cd717a"
+    }
+  },
+  "original_free_products": 26,
+  "compiler_stack_cases": 2043,
+  "attached_PROGRAM_cases": 13,
+  "source_proof_sha256": "5b871e5b29b2f4508cbc8b1aed70e3c32599c6edae96507c9816e1035e98b941",
+  "compiler_stack_proof_sha256": "660ac7b2d5501eb1f21d0dfd37999c5eed2c28b2c0ecac42511a0a6f2a49f504",
+  "PROGRAM_proof_sha256": "2b154254094cf554bfba66615ddfc3677e8bab8c7325159b41ad16f4fb2700c4",
+  "retained_failed_experiments": [
+    "build/aspect-abort-confirm-dos/immediate-cancel-01: old pair cancels instead of declining; counterexample only",
+    "build/aspect-abort-confirm-dos/cooperative-02: fixture sent END before fresh wait; unaccepted",
+    "build/aspect-abort-confirm-dos/cooperative-04: combined timing events crossed session boundaries; unaccepted",
+    "build/aspect-abort-events-dos/cooperative-01: unsupported string comparison fixture; unaccepted",
+    "build/abort-confirm-external-overflow-01: near TEXT overflow before PROGRAMCODE placement",
+    "build/abort-confirm-compiler-control-01/tree/build/aspect-parent-process/old-control: original baseline repeats heap exhaustion",
+    "build/abort-confirm-compiler-memory-diagnostic-01: private allocator and heap-growth candidates failed; not adopted",
+    "build/aspect-compiler-stack/guard16-01: stderr did not observe CRT console overflow; unaccepted"
+  ],
+  "auditor_sha256": "cd40ffa651bfb1023e9caa9f18ef8672a9036e74f53e17c135c0a1c275c61987",
+  "cohort": "build/modem-carrier-confirmation-accepted-01",
+  "frozen_files": 7920,
+  "files_manifest_sha256": "dd4bb73fa44cecc1f56efd3eee2dcccf7bf0efd4bae3a2bb355016da86c02833",
+  "scope": "Ten actual DOS confirmation workflows: defaultNo/Enter/Esc, invalid extended key, Yes WAITFOR/PAUSE, native WHEN TRANSMIT/deferred framed CALL, suspended RGET, and9114 ANSI bytes/44 CPRs. Exact wires, prompt ownership/render progress, frame/attributes and sampled cleanup. No actual CTS/RTS/XOFF/XON, software audio, physical hardware or whole-application acceptance."
+}

@@ -1,5 +1,11 @@
 # Peer flow state across script ownership
 
+The [later v6 carrier checkpoint](MODEM_RECONNECT.md) retains this50-byte
+layout and adds a bound MODEM/known-DCD bit. It prevents XOFF/XON teardown from
+contaminating command-mode initialization after carrier loss. Legacy v5 pause
+handoff remains supported and tested. The v5 checkpoint below retains its
+original identities, defined bits and scope.
+
 [Independent validation](validation/aspect-flow-handoff.json) covers parent
 a4c377c9 and runner ec93148f. The previous source-built pair loses a received
 XOFF when a script times out or is cancelled. Keyboard input queued after the

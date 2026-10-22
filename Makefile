@@ -1036,6 +1036,12 @@ test-aspect-flow-fault-dos: terminal aspect-runner
 .PHONY: test-aspect-cts-dos
 test-aspect-cts-dos: terminal aspect-runner
 	python3 standalone/test_aspect_cts_dos.py --label "cts-$$(date -u +%Y%m%dT%H%M%S%N)"
+.PHONY: test-modem-carrier-flow test-modem-reconnect-dos
+test-modem-carrier-flow: terminal aspect-runner
+	python3 standalone/check_modem_carrier_flow.py --output "build/modem-carrier-flow/check-$$(date -u +%Y%m%dT%H%M%S%N)"
+test-modem-reconnect-dos: terminal aspect-runner
+	python3 standalone/test_modem_reconnect_dos.py --label "reconnect-$$(date -u +%Y%m%dT%H%M%S%N)"
+test: test-modem-carrier-flow
 test: test-aspect-flow-handoff test-parent-flow-handoff
 test: test-parent-carrier-status
 .PHONY: test-aspect-abort-owner test-terminal-abort-owner test-aspect-abort-dos

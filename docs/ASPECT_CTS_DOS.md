@@ -1,5 +1,11 @@
 # Actual DOS emulated CTS stalls
 
+The [current v6 carrier pair](MODEM_RECONNECT.md) repeats both HARD/BOTH
+short-stall cases in [this fresh receipt](validation/modem-carrier-cts.json).
+Exact payload/control framing, zero software pause and normal return remain
+required. The earlier pair below keeps its own identities; no physical hardware
+claim or long/fault CTS acceptance follows.
+
 [Validation](validation/aspect-cts-dos.json) accepts two8086 DOS sessions on
 parenta4c377c9/runnerec93148f: HARD and BOTH. The owned peer lowers the emulator's
 CTS line for1.2seconds while releasing the script's GO wait, then raises CTS.

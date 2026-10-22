@@ -56,7 +56,7 @@ def observer(out,entry_pause=False):
 '''
     if entry_pause:
         needle=' jne .parent_return\n'
-        timer=timer.replace(needle,needle+' cmp word [es:'+str(parent['_script_flow_flags'][1])+'],1\n jne .entry_checked\n mov word [cs:parent_entry_pause_seen],1\n.entry_checked:\n')
+        timer=timer.replace(needle,needle+' test word [es:'+str(parent['_script_flow_flags'][1])+'],1\n jz .entry_checked\n mov word [cs:parent_entry_pause_seen],1\n.entry_checked:\n')
     for name,value in [('CHILD_OWNER_SEG',parent['render_child_ds'][0]),('CHILD_DS',parent['render_child_ds'][1]),('CHILD_PAUSED',child['uart_tx_paused'][1]),('PARENT_PAUSED',parent['uart_tx_paused'][1])]:timer=timer.replace(name,str(value))
     assert text.count('timer:\n save\n cld\n')==1
     text=text.replace('timer:\n save\n cld\n',timer);p.write_text(text)

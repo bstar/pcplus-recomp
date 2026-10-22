@@ -11,6 +11,11 @@ extern unsigned script_directory_entry,script_directory_record;
 extern unsigned script_directory_year,script_directory_month,script_directory_day,script_directory_delta;
 extern unsigned script_render_offset,script_render_segment,script_render_token,script_render_version;
 extern unsigned script_flow_flags;
+extern unsigned char connection_enabled,connection_carrier_seen;
+extern unsigned terminal_directory_mode;
+#pragma aux connection_enabled "connection_enabled";
+#pragma aux connection_carrier_seen "connection_carrier_seen";
+#pragma aux terminal_directory_mode "terminal_directory_mode";
 static char digit(unsigned value){return value<10?(char)(value+'0'):(char)(value-10+'A');}
 static char *hexword(char *p,unsigned n){*p++=digit(n>>12);*p++=digit((n>>8)&15);*p++=digit((n>>4)&15);*p++=digit(n&15);return p;}
 static unsigned span(const void *p,unsigned n)
@@ -47,7 +52,8 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
     /* Resident prepare has validated/staged the actual live policy in these
      * existing descriptor words before crossing the CONFIG_CODE bridge. */
     translation=script_handoff.reserved1;if(translation>2)return 1;
-    script_handoff.magic=ASIO_MAGIC;script_handoff.version=ASIO_VERSION_FLOW;script_handoff.size=ASIO_V5_SIZE;
+    if(connection_enabled && terminal_directory_mode!=1 && connection_carrier_seen)script_flow_flags|=2;
+    script_handoff.magic=ASIO_MAGIC;script_handoff.version=ASIO_VERSION_CARRIER;script_handoff.size=ASIO_V6_SIZE;
     script_handoff.parent_psp=psp;script_handoff.parent_ds=ds;
     script_handoff.ring=(unsigned)script_parent_ring;script_handoff.capacity=4096;
     script_handoff.returned=0;

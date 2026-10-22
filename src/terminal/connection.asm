@@ -13,6 +13,7 @@ extern terminal_directory_mode
 extern terminal_modem_send_start_impl,terminal_modem_send_poll_impl
 extern modem_response_slots
 extern uart_port_msr,uart_port_mcr
+extern uart_tx_paused,uart_flow_pending,uart_xoff_sent,uart_rts_lowered
 extern terminal_baud_low,terminal_baud_high
 extern connection_clipboard_abort_service
 extern terminal_quit,terminal_tx_count,terminal_tx_head,terminal_tx_tail
@@ -196,6 +197,45 @@ connection_capture_carrier:
  popf
  ret
 
+; Bounded far policy used during PROGRAM return. Only MODEM sessions whose
+; parent actually observed DCD high may retire flow on a low line.
+global terminal_connection_flow_alive
+terminal_connection_flow_alive:
+ push dx
+ mov ax,1
+ cmp byte [connection_enabled],0
+ je .done
+ cmp word [terminal_directory_mode],1
+ je .done
+ cmp byte [connection_carrier_seen],0
+ je .done
+ mov dx,[uart_port_msr]
+ in al,dx
+ test al,0x80
+ jnz .alive
+ call connection_flow_retire
+ xor ax,ax
+ jmp .done
+.alive:
+ mov ax,1
+.done:
+ pop dx
+ retf
+
+connection_flow_retire:
+ mov word [uart_tx_paused],0
+ mov byte [uart_flow_pending],0
+ mov byte [uart_xoff_sent],0
+ cmp byte [uart_rts_lowered],0
+ je .done
+ mov dx,[uart_port_mcr]
+ in al,dx
+ or al,2
+ out dx,al
+ mov byte [uart_rts_lowered],0
+.done:
+ ret
+
 reset_clock:
  call connection_clock_ticks_service
  mov [connection_last_tick],ax
@@ -327,6 +367,7 @@ terminal_connection_poll_impl:
 .carrier_low:
  cmp byte [connection_carrier_seen],0
  je .done
+ call connection_flow_retire
  call connection_break_cancel_service
  call connection_macro_cancel_service
  call connection_program_cancel_service
@@ -535,6 +576,7 @@ terminal_connection_receive_impl:
 SEGMENT _DATA public class=DATA use16
 global terminal_modem_pause,connection_state,connection_status,connection_result
 global connection_enabled,connection_baud_index,connection_elapsed,connection_deadline
+global connection_carrier_seen
 terminal_modem_pause: db 0
 connection_enabled: db 0
 connection_carrier_seen: db 0

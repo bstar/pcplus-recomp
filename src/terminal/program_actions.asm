@@ -16,6 +16,7 @@ extern uart_port_lsr,uart_port_thr,uart_port_lcr,uart_port_ier,uart_port_mcr
 extern uart_port_index,uart_irq_indices,uart_irq_enable_masks
 extern uart_software_flow,uart_hardware_flow,uart_flow_pending,uart_xoff_sent
 extern uart_rts_lowered,uart_rx_count,uart_rx_dropped
+extern terminal_connection_flow_alive
 extern uart_mask_irq,uart_restore_interrupt,uart_install_interrupt
 extern uart_set_baud_divisor,uart_set_line_control
 extern terminal_irq_vector,terminal_baud_low,terminal_baud_high
@@ -675,6 +676,11 @@ program_resume_flow:
  cmp byte [program_pause_sent],0
  je .done
  mov byte [program_pause_sent],0
+ push ax
+ call far terminal_connection_flow_alive
+ or ax,ax
+ pop ax
+ jz .done
  cmp word [uart_rx_count],128
  ja .done
  mov byte [uart_xoff_sent],0

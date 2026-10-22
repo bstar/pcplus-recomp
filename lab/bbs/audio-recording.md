@@ -1,5 +1,17 @@
 # Normal recorder workflow over the software modem
 
+The [ASIOv6 carrier build](../../docs/validation/recording-modem-carrier-audio.json)
+accepts parent6075bc18/runnera84dd21d for one normal ENiGMA V22/1200 software
+SIP/RTP/DSP/Telnet recorder route. All26 producer,34 independent and12 serial
+checks pass:60,929 display bytes plus187 bridge bytes exact,77 caller bytes
+independently waveform-decoded, normal hardware/timer/SIP/VM cleanup and no
+failed/skipped/pending writes. [Preparation](../../docs/validation/recording-modem-carrier-audio-preparation.json)
+binds seven BIOS probes/56 checks and13 DOS/Telnet controls. This route does not
+test carrier loss/reconnect or flow pressure over audio; the [separate virtual
+modem tests](../../docs/MODEM_RECONNECT.md) have their own scope. Physical
+Boca/SPA2102 and all full application gates remain open. Older checkpoints
+below retain their own identities.
+
 The [v5 flow-handoff build](../../docs/validation/recording-flow-handoff-audio.json)
 accepts parenta4c377c9/runnerec93148f on one normal ENiGMA V22/1200 software
 SIP/RTP/DSP/Telnet recorder route. All26 producer,34 independent and12 serial

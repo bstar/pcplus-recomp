@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "dirty-fixed-command",
+      "rejected": true,
+      "producer_checks_still_passed": true,
+      "updated_capture_hashes": [
+        "dosbox.log"
+      ]
+    },
+    {
+      "case": "erased-baseline-error",
+      "rejected": true,
+      "producer_checks_still_passed": true,
+      "updated_capture_hashes": [
+        "dosbox.log"
+      ]
+    },
+    {
+      "case": "wrong-child-exit",
+      "rejected": true,
+      "producer_checks_still_passed": true,
+      "updated_capture_hashes": [
+        "RENDER.BIN"
+      ]
+    },
+    {
+      "case": "wrong-hardware",
+      "rejected": true,
+      "producer_checks_still_passed": true,
+      "updated_capture_hashes": [
+        "AFTER.BIN"
+      ]
+    },
+    {
+      "case": "wrong-second-script",
+      "rejected": true,
+      "producer_checks_still_passed": true,
+      "updated_capture_hashes": [
+        "SECOND.OK"
+      ]
+    },
+    {
+      "case": "wrong-call-count",
+      "rejected": true,
+      "producer_checks_still_passed": true,
+      "updated_capture_hashes": [
+        "TEST.DIR"
+      ]
+    },
+    {
+      "case": "missing-second-socket",
+      "rejected": true,
+      "producer_checks_still_passed": true,
+      "updated_capture_hashes": [
+        "peer-events.json"
+      ]
+    },
+    {
+      "case": "wrong-manual-reply",
+      "rejected": true,
+      "producer_checks_still_passed": true,
+      "updated_capture_hashes": [
+        "serial.bin",
+        "peer-events.json"
+      ]
+    }
+  ],
+  "auditor_sha256": "2daa940e8cd2de5a77ef7a72215db49a25d074a62cf1f90e3066de9d17a1052c",
+  "checker_sha256": "6ff9822b08a9470da7ab396e15127f72124fbc0a0be4d76a4fd62675798deb22",
+  "baseline_sha256": "03abffffde872e3a694820c6bbd198978ff118e4fd6eecfe61823123e1bfec08",
+  "fixed_sha256": "fcddd3f9e6b4038cd99e232935689535db5ae390550533d88fe0112f0cddfa4b",
+  "cohort": "build/modem-carrier-flow/audit-guards-02",
+  "scope": "Corrupt owned copies while keeping producer checks green and hashes current. Eight semantic alterations are rejected independently of producer booleans/capture checksums. Baseline/fixed valid controls pass. No product executable is changed."
+}

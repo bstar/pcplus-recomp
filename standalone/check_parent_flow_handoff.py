@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Execute v5 parent staging and guarded completion; model child publication."""
+"""Execute v6 parent staging and guarded completion; model child publication."""
 import argparse,json,shutil,struct
 from pathlib import Path
 from check_script_launch_live import Script,ROOT,BINARY
 sha=lambda p:__import__('hashlib').sha256(p.read_bytes()).hexdigest()
 
 
-def prepare(soft,hard,paused):
+def prepare(soft,hard,paused,enabled=0,direct=0,seen=0):
     m=Script();m.install_program_name();m.child_status=0
     m.uc.mem_write(m.symbols['_command_menu_script'],b'TEST.ASX\0')
     m.put('uart_software_flow',soft);m.put('uart_hardware_flow',hard);m.put('uart_tx_paused',paused)
+    m.put('connection_enabled',enabled,1);m.put('terminal_directory_mode',direct);m.put('connection_carrier_seen',seen,1)
     assert m.call('terminal_script_start')==0
     m.put('terminal_program_pending',0);m.put('terminal_program_active',1)
     result=m.call('terminal_script_prepare')
@@ -25,7 +26,7 @@ def main():
        for returned in (0,1):
         m,result=prepare(1,hard,initial);assert result==0
         at=m.symbols['_script_handoff'];w=struct.unpack('<I23H',m.uc.mem_read(at,50))
-        assert w[1:3]==(5,50) and w[23]==initial
+        assert w[1:3]==(6,50) and w[23]==initial
         guard=w[3]^w[4]^w[5]^0xa510
         for i in [7,8,*range(11,24)]:guard^=w[i]
         assert w[9]==guard

@@ -1,5 +1,17 @@
 # Local interaction while ASPECT owns the session
 
+Current parent6075bc18/runnera84dd21d uses ASIOv6/50bytes. A guarded policy
+marks MODEM sessions with parent-observed high DCD; after that carrier falls,
+child teardown and parent return stop sending flow bytes into modem command
+mode. [Two real DOS virtual-modem reconnect cases](validation/modem-reconnect.json)
+now send clean second ATZ/OK. [Ten confirmation workflows](validation/modem-carrier-confirmation.json),
+flow/CTS/carrier and stock Synchronet/ENiGMA window regressions pass. Capabilities
+12/13 are unchanged and legacy1..5 remain supported. [Normal recorder audio](validation/recording-modem-carrier-audio.json)
+passes26/34/12 checks on one ENiGMA V22/1200 software route.
+[Policy and boundaries](MODEM_RECONNECT.md) retain direct/untracked behavior.
+Other DCD/reconnect paths, long stalls, full actions, physical and all full gates
+remain open. Earlier checkpoints retain their identities.
+
 Current parenta4c377c9/runnerec93148f uses ASIOv5/50bytes to preserve the
 peer's XOFF state at script entry and on return. Renderer capability12/13 and
 RPC semantics remain unchanged. [Four DOS timeout/cancel cases](validation/aspect-flow-handoff.json)
