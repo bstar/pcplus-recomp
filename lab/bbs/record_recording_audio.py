@@ -56,7 +56,7 @@ def main():
     runtime=next(path for path in first.parents if (path/'source/config.js').is_file())
     assert validate_runtime(runtime,ROOT/r['buffered_runtime_proof'])==r['runtime_inputs']
     keys=json.loads((ROOT/r['recording_key_checks']).read_text());tcp=json.loads((ROOT/r['recording_tcp_checks']).read_text())
-    assert keys['passed'] and len(keys['cases'])==6 and all(case['passed'] and all(case['checks'].values()) for case in keys['cases'])
+    assert keys['passed'] and len(keys['cases'])==7 and all(case['passed'] and all(case['checks'].values()) for case in keys['cases'])
     assert tcp['passed'] and all(tcp['checks'].values());inputs(keys['inputs']);inputs(tcp['inputs'])
     assert sha(out/'program/EXITKEY.COM')==keys['production_helper_sha256']==tcp['helper_sha256']
     for name,path in (('TERMINAL.EXE','build/terminal/TERMINAL.EXE'),('ASPECT.EXE','build/aspect-runner/ASPECT.EXE'),('ASPCOMP.EXE','build/aspect-compiler-dos/ASPCOMP.EXE')):

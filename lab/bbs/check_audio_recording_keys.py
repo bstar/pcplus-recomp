@@ -64,14 +64,47 @@ pop cx
 loop .empty
 .not_full:
 %endif
-%if CASE == 4
-cmp word [stage],13
-je .marker_absent
-%endif
 mov si,[bx]
 call text
-%if CASE == 4
-.marker_absent:
+%if CASE != 4
+cmp word [stage],13
+jne .not_final
+mov word [text_offset],1440
+mov si,late_field
+call text
+mov word [text_offset],1760
+mov si,late_area
+call text
+mov word [text_offset],1000
+push bx
+mov dx,0b25h
+xor bh,bh
+mov ah,2
+int 10h
+pop bx
+%if CASE == 6
+xor ah,ah
+int 1ah
+mov [activity_start],dx
+mov [last_change],dx
+.activity:
+mov ah,1
+int 16h
+jnz failure
+xor ah,ah
+int 1ah
+cmp dx,[last_change]
+je .activity_time
+mov [last_change],dx
+mov ax,0b800h
+mov es,ax
+inc byte [es:2400]
+.activity_time:
+sub dx,[activity_start]
+cmp dx,36
+jb .activity
+%endif
+.not_final:
 %endif
 mov si,[bx+2]
 cmp word [si],0
@@ -183,7 +216,7 @@ push di
 push es
 mov ax,0b800h
 mov es,ax
-mov di,1000
+mov di,[text_offset]
 mov ah,7
 .loop:
 lodsb
@@ -197,6 +230,9 @@ pop di
 pop si
 pop ax
 ret
+text_offset: dw 1000
+activity_start: dw 0
+last_change: dw 0
 stage: dw 0
 used: dw 0
 received: times 26 dw 0
@@ -208,6 +244,8 @@ saved: db 'Recording saved.',0
 script: db 'Script DOS 8.3 path:',0
 search: db 'ESC : cancel',0
 replay: db 'FILE SEARCH',0
+late_field: db 'advanced search',0
+late_area: db '-ALL-',0
 expected0: dw 2c00h,0
 expected1: dw 2e43h,0
 expected2: dw 1c0dh,0
@@ -230,10 +268,10 @@ def main():
     helper=ROOT/'lab/bbs/audio_recording_keys.asm'
     subprocess.run(['nasm','-fbin',str(helper),'-o',str(out/'PRODUCTION.COM')],check=True)
     cases=[]
-    names=('complete','missing-search-blocks','stale-pre-replay-file-screen-blocks','file-screen-without-ready-watchdog','final-watchdog','BIOS-queue-full-retry')
+    names=('complete','missing-search-blocks','stale-pre-replay-file-screen-blocks','file-screen-without-ready-watchdog','final-form-watchdog','BIOS-queue-full-retry','final-screen-activity-restarts-dwell')
     for index,name in enumerate(names):
         folder=out/name;folder.mkdir();(folder/'probe.asm').write_text(PROBE);(folder/'sampler.asm').write_text(SAMPLER)
-        subprocess.run(['nasm','-fbin','-DRECORD_KEY_TICKS=1','-DRECORD_DWELL_TICKS=2','-DRECORD_INITIAL_TICKS=2',
+        subprocess.run(['nasm','-fbin','-DRECORD_KEY_TICKS=1','-DRECORD_DWELL_TICKS=2','-DRECORD_INITIAL_TICKS=2','-DRECORD_FINAL_TICKS='+('12' if index==6 else '2'),
             '-DRECORD_WATCHDOG_TICKS='+('36' if index==3 else '300'),str(helper),'-o',str(folder/'EXITKEY.COM')],check=True)
         for source,leaf,flags in ((folder/'probe.asm','PROBE.COM',['-DCASE='+str(index)]),(folder/'sampler.asm','SNAP.COM',[]),
                 (ROOT/'lab/bbs/audio_get_vector.asm','KEYVEC.COM',[])):
@@ -274,6 +312,7 @@ exit
             exact_helper_outcome=bool(report) and report[0]==0x524b and report[3]==(2 if index in (3,4) else 1),
             exact_completed_phase=bool(report) and report[1]==(0 if index==3 else 13 if index==4 else 14),
             queue_full_observed=index!=5 or bool(report and report[5]),
+            final_screen_activity_restarts_dwell=index!=6 or bool(report and report[7]),
             hardware_restored=len(read('BEFORE.BIN'))==42 and read('BEFORE.BIN')==read('AFTER.BIN'),
             timer_restored=len(read('KEYOLD.BIN'))==4 and read('KEYOLD.BIN')==read('KEYNEW.BIN'))
         cases.append(dict(name=name,passed=all(checks.values()),checks=checks,helper_report=report,

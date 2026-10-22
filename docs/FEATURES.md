@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+The audio recorder's corrected final-page driver passes seven BIOS probes and
+all13 actual DOS/Telnet control checks. The second audio attempt completed the
+functional workflow but lost473 late display bytes and reported a gateway reset;
+[its failure](validation/recording-audio-final-page-failure.json) remains explicit.
+The helper now waits for late fields, focused cursor and a quiet screen before
+exit. [Run03 preparation](validation/recording-audio-final-preparation.json) is
+sealed; actual audio acceptance remains pending. No full application or physical
+gate closes.
+
 The [current BBS recorder checkpoint](BBS_RECORDING.md) now passes four
 production DOS sessions on Synchronet and ENiGMA: File/C records read-only menu
 navigation, DOS ASPCOMP compiles the unedited source, File/A replays in a fresh

@@ -13,6 +13,9 @@ jmp install
 %ifndef RECORD_INITIAL_TICKS
 %define RECORD_INITIAL_TICKS 90
 %endif
+%ifndef RECORD_FINAL_TICKS
+%define RECORD_FINAL_TICKS 180
+%endif
 %ifndef RECORD_WATCHDOG_TICKS
 %define RECORD_WATCHDOG_TICKS 32000
 %endif
@@ -24,7 +27,9 @@ delivered: dw 0
 reason: dw 0 ;0 pending,1 full recipe,2 watchdog
 elapsed: dw 0
 retries: dw 0
- dw 0,0
+last_cursor: dw 0
+quiet_resets: dw 0
+screen_sum: dw 0
 state: db 0 ;0 marker,1 dwell,2 keys,3 retired
 ticks: dw 0
 key_at: dw 0
@@ -37,6 +42,8 @@ saved_marker: db 'Recording saved.',0
 script_marker: db 'Script DOS 8.3 path:',0
 search_marker: db 'ESC : cancel',0
 replay_marker: db 'FILE SEARCH',0
+final_field: db 'advanced search',0
+final_area: db '-ALL-',0
 open_menu: dw 2c00h,0
 record_key: dw 2e43h,0
 enter_key: dw 1c0dh,0
@@ -63,7 +70,7 @@ stages:
  dw script_marker,script_path,RECORD_DWELL_TICKS
  dw replay_marker,no_keys,1
  dw file_marker,search_keys,RECORD_DWELL_TICKS
- dw search_marker,exit_keys,RECORD_DWELL_TICKS
+ dw search_marker,exit_keys,RECORD_FINAL_TICKS
 STAGE_COUNT equ ($-stages)/6
 handler:
  pushf
@@ -102,6 +109,34 @@ handler:
  mov si,[stages+bx]
  call scan
  jnz .not_ready
+ cmp word [phase],13
+ jne .markers_ready
+ mov si,final_field
+ call scan
+ jnz .not_ready
+ mov si,final_area
+ call scan
+ jnz .not_ready
+ push bx
+ push cx
+ xor bh,bh
+ mov ah,3
+ int 10h
+ mov [last_cursor],dx
+ pop cx
+ pop bx
+ cmp dx,0x0b25 ;Complete Search form's first field: row12,column38.
+ jne .not_ready
+ call checksum
+ cmp byte [state],0
+ je .initial_sum
+ cmp ax,[screen_sum]
+ je .markers_ready
+ inc word [quiet_resets]
+ mov byte [state],0
+.initial_sum:
+ mov [screen_sum],ax
+.markers_ready:
  cmp byte [state],0
  jne .dwell
  mov ax,[stages+bx+4]
@@ -176,6 +211,28 @@ inject:
  inc word [retries]
 .ok:
  or al,al
+ ret
+; Final-page stability includes every character/attribute cell and cursor.
+; Local writes/callbacks alone cannot prove the emulator consumed the tail.
+checksum:
+ push cx
+ push dx
+ push si
+ mov ax,0b800h
+ mov es,ax
+ xor dx,dx
+ xor si,si
+ mov cx,2000
+.cell:
+ rol dx,1
+ xor dx,[es:si]
+ add si,2
+ loop .cell
+ mov ax,dx
+ xor ax,[last_cursor]
+ pop si
+ pop dx
+ pop cx
  ret
 ; ZF set only on a complete visible contiguous character match.
 scan:

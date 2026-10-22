@@ -32,6 +32,21 @@ ASPECT child remains an application gap; this driver respects its ownership.
 Earlier driver/probe/fixture failures remain retained. Preparation does not
 establish software-audio acceptance.
 
+The [second audio failure](../../docs/validation/recording-audio-final-page-failure.json)
+completed recording, DOS compilation/replay, manual Search and normal hardware
+restoration. It remains unaccepted: the received display is an exact 60,456-byte
+prefix of the 60,929-byte BBS display, and the gateway reports `read ECONNRESET`.
+The helper exited after the Search footer before 473 late form bytes arrived.
+Local write callbacks do not establish that DOSBox consumed those bytes; the
+kernel unread count was not traced.
+
+The corrected final gate requires the late `advanced search` and `-ALL-` fields,
+the focused input cursor at row 12, column 38, and 180 BIOS ticks of unchanged
+screen characters, attributes and cursor before exiting. Seven BIOS probes now
+include a visible footer without the late form and a changing final screen that
+must restart the quiet interval. These checks supplement the mandatory complete
+byte-stream and zero-gateway-error audits; they cannot replace them.
+
 Use fresh labels and outputs:
 
 ```sh

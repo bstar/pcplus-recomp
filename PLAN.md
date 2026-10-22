@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [final-page audio correction](lab/bbs/audio-recording.md) passes seven actual
+8086 BIOS probes and all13 actual DOS/Telnet recorder-control checks. The second
+audio run completed recording, DOS compilation/replay and normal restoration,
+but missed473 final Search-form bytes and reported a gateway reset; its
+[failure evidence](docs/validation/recording-audio-final-page-failure.json) stays
+unaccepted. The helper now waits for late form fields, the focused input cursor
+and180 quiet screen ticks before exit. [Updated preparation](docs/validation/recording-audio-final-preparation.json)
+freezes the fresh run03 inputs; complete-stream, no-gateway-error and independent
+audio acceptance remain pending. Production application binaries are unchanged.
+All full F01–F16 and physical gates remain open.
+
 The [audio recorder handoff correction](lab/bbs/audio-recording.md) now requires
 startup ASPECT's RECORDER READY marker before the BIOS helper opens Alt-Z.
 Six updated BIOS probes and the actual DOS/Telnet control pass, including visible

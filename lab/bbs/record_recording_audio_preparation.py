@@ -16,7 +16,7 @@ def main():
     keys=a.keys.resolve();tcp=a.tcp.resolve();audio=a.audio_cohort.resolve()
     assert all(path.is_relative_to(ROOT/'build') for path in (keys,tcp,audio))
     k=json.loads(keys.read_text());t=json.loads(tcp.read_text());start=json.loads((audio/'run-start.json').read_text())
-    assert k['passed'] and len(k['cases'])==6 and all(c['passed'] and all(c['checks'].values()) for c in k['cases'])
+    assert k['passed'] and len(k['cases'])==7 and all(c['passed'] and all(c['checks'].values()) for c in k['cases'])
     assert t['passed'] and all(t['checks'].values()) and t['helper_sha256']==k['production_helper_sha256']
     for r in (k,t):
         for name,digest in r['inputs'].items():assert sha(ROOT/name)==digest,name
@@ -46,10 +46,11 @@ def main():
         shutil.copy2(path,copy);assert sha(copy)==sha(path)
         kept[str(copy.relative_to(ROOT))]=sha(copy)
     result=dict(passed=True,preparation_only=True,actual_audio_accepted=False,
-        BIOS_cases=6,TCP_checks=t['checks'],terminal_sha256=t['binary_sha256'],helper_sha256=t['helper_sha256'],
+        BIOS_cases=7,TCP_checks=t['checks'],terminal_sha256=t['binary_sha256'],helper_sha256=t['helper_sha256'],
         runtime_inputs=runtime,audio_admission=str((audio/'run-start.json').relative_to(ROOT)),custody_sha256=kept,
         earlier_audio_failure='docs/validation/recording-audio-early-menu-failure.json',
-        scope='Actual8086 BIOS key/gate/queue/watchdog/vector probes and an actual DOS/Telnet BBS control pass. The helper requires startup RECORDER READY before opening the menu; visible File Base without readiness cannot admit keys. The same helper is admitted to pinned200ms V22/1200 SIP/audio with immutable admission/source inputs preserved. Live audio captures are not sealed here. No audio outcome, physical hardware or full application acceptance.')
+        earlier_final_page_failure='docs/validation/recording-audio-final-page-failure.json',
+        scope='Actual8086 BIOS key/gate/queue/watchdog/vector probes and an actual DOS/Telnet BBS control pass. The helper requires startup RECORDER READY before opening the menu; visible File Base without readiness cannot admit keys. Final exit requires late Search fields, the focused input cursor and180 quiet screen ticks; incomplete forms block exit and display changes restart the interval. The same helper is admitted to pinned200ms V22/1200 SIP/audio with immutable admission/source inputs preserved. Live audio captures are not sealed here. No audio outcome, physical hardware or full application acceptance.')
     with target.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=True,preparation_only=True,actual_audio_accepted=False,custody_files=len(kept))))
 
