@@ -1,5 +1,18 @@
 # Full application reconstruction checklist
 
+The [foreground Record menu](RECORDING_UI.md) now starts/saves recordings,
+confirms replacement and cancellation, and exposes retained-file status/cleanup.
+Ten linked UI campaigns and actual DOS new/replacement/cancel workflows pass;
+new/replacement recordings compile and exactly replay accepted user bytes while
+excluding native query replies. Nine actor guards prevent incompatible serial
+ownership transitions. Current menu153, PROGRAM60, ZMODEM78, ABI629 and eleven
+actual DOS capture scenarios pass. Keyboard/mouse near-data spare is96/48;
+resident-code spare is356/206. Next exercise recording/replay against current
+ENiGMA/Synchronet builds, then continue the application reconstruction below.
+All full F01–F16 and physical gates remain open. Earlier checkpoints below retain
+their historical scope and next-step statements.
+
+
 The [recorder RX component](RECORDING_RX.md) now records normal/parser input
 before XLT, with cursor-based lookahead suppression and active-file autostart
 exclusion. A native query/prompt/user test preserves source ordering and excludes

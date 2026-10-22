@@ -13,6 +13,10 @@ static za_state invitation;
 static unsigned char output[20];
 static unsigned emitting;
 static unsigned long last_tick;
+#ifdef __WATCOMC__
+unsigned __far __cdecl terminal_autostart_busy(void)
+{return invitation.count||emitting;}
+#endif
 static void emit(unsigned count)
 {unsigned i;emitting=1;for(i=0;i<count;++i)terminal_auto_deliver(output[i]);emitting=0;}
 void __cdecl terminal_autostart_initialize(void)

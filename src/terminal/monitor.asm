@@ -42,7 +42,11 @@ GLOBAL terminal_monitor_last_action,terminal_monitor_buffer_count
  ret
 %endmacro
 terminal_monitor_start:
+ extern terminal_recording_owned_far
  save
+ call far terminal_recording_owned_far
+ or ax,ax
+ jnz .denied
  cmp word [terminal_controller_active],0
  jne .denied
  cmp word [terminal_monitor_active],0

@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+The [foreground Record menu](docs/RECORDING_UI.md) now starts/saves recordings,
+confirms replacement and cancellation, and exposes retained-file status/cleanup.
+Ten linked UI campaigns and actual DOS new/replacement/cancel workflows pass;
+new/replacement recordings compile and exactly replay accepted user bytes while
+excluding native query replies. Nine actor guards prevent incompatible serial
+ownership transitions. Current menu153, PROGRAM60, ZMODEM78, ABI629 and eleven
+actual DOS capture scenarios pass. Keyboard/mouse near-data spare is96/48;
+resident-code spare is356/206. Next exercise recording/replay against current
+ENiGMA/Synchronet builds, then continue the application reconstruction below.
+All full F01–F16 and physical gates remain open. Earlier checkpoints below retain
+their historical scope and next-step statements.
+
+
 The [recorder RX checkpoint](docs/RECORDING_RX.md) now observes ordinary bytes
 before XLT and successful native parser continuation reads. Replay/cursor state
 suppresses only lookahead rereads, including physical ring wrap; equal new bytes

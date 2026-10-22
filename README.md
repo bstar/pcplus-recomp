@@ -34,21 +34,24 @@ The [source-owned recorder core](docs/ASPECT_RECORDER_SOURCE.md) now generates
 bounded ASP recordings and passes actual DOS file creation, DOS compilation and
 byte-exact production UART replay, including all256 bytes. Its explicit
 TRANSMITRAW extension preserves existing formatted TRANSMIT behavior. The
-terminal's Record UI and shared file/foreground ownership still need integration.
+terminal's [Record controls](docs/RECORDING_UI.md) now integrate the checked
+publisher, RX/TX taps and serial-owner exclusions.
 [Canonical file reservations](docs/CAPTURE_RESERVATION.md) now protect its future
 target/scratch identities alongside capture, screen, monitor and history sinks.
 The [checked recorder publisher](docs/RECORDING_FILE.md) now passes31 modeled
 host cases and16 actual DOS publication/compiler/UART sessions, including
-replacement and retained recovery files. Terminal Record UI and foreground taps
-remain required. The [bank integration](docs/RECORDING_BANK.md) now links the
+replacement and retained recovery files. The integrated Record UI and foreground taps are covered by the newer
+[foreground workflow checkpoint](docs/RECORDING_UI.md). The [bank integration](docs/RECORDING_BANK.md) now links the
 libraries into the source-built terminal and preserves existing capture behavior;
 the [stable owner](docs/RECORDING_OWNER.md) now fits both keyboard and mouse
 builds after moving immutable templates into code storage. Startup/shutdown and
 owner APIs are tested. [TX origin tracking](docs/RECORDING_TX.md) now records
 successfully emitted user/binding bytes while excluding queued terminal replies.
 [RX prompt hooks](docs/RECORDING_RX.md) now cover normal input and parser
-continuations without duplicating lookahead bytes. Menu controls and complete
-owner exclusions remain unfinished.
+continuations without duplicating lookahead bytes. The [Record menu](docs/RECORDING_UI.md) now starts, saves, confirms replacement
+and cancellation, and exposes retained-file recovery. Actual DOS new/replacement
+recordings compile and replay accepted user bytes exactly; broader modern BBS
+recording/replay and full application acceptance remain required.
 
 The [experimental attached PROGRAM binding](docs/ASPECT_PARENT_PROCESS.md) now
 preserves actual parent rendering, selected resources, script streams and VM

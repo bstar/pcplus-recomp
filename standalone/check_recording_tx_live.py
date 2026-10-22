@@ -101,13 +101,12 @@ def main():
 
     def transfer_drain():
         m = ready();queued(m, b'BEFORE', True);queued(m, b'R', False)
-        m.peer_enabled = True;m.waiting_ui = True;m.filename = b'D:\\RECV.BIN';m.advance_ticks = True
+        before=m.state()
         m.call('terminal_transfer_start')
-        m.call('terminal_transfer_poll', limit=10000000)
-        assert not m.get('terminal_transfer_fault') and not m.get('terminal_transfer_active')
-        assert bytes(m.files['D:\\RECV.BIN']) == bytes(range(128))
-        assert bytes(m.tx).startswith(b'BEFORER') and recorded(m) == b'BEFORE'
-    check('transfer-drain-records-queued-user-prefix-and-excludes-protocol', transfer_drain)
+        assert not m.get('terminal_transfer_pending') and not m.get('terminal_transfer_active')
+        assert m.state()==before and m.get('terminal_tx_count')==7
+        m.drain();assert bytes(m.tx)==b'BEFORER' and recorded(m)==b'BEFORE'
+    check('manual-transfer-refused-with-queued-recording-bytes-preserved', transfer_drain)
 
     def write_error():
         m = ready();m.capture_fault = 'write'

@@ -35,7 +35,11 @@ global terminal_break_start,terminal_break_poll,terminal_break_cancel
  ret
 %endmacro
 terminal_break_start:
+ extern terminal_recording_owned_far
  save
+ call far terminal_recording_owned_far
+ or ax,ax
+ jnz .done
  mov word [terminal_break_status],2
  cmp word [terminal_break_state],0
  jne .done

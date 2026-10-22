@@ -8,6 +8,40 @@ extern _recording_terminal_cookie,_recording_terminal_owner
 extern _recording_terminal_receive,_recording_terminal_replay,_recording_terminal_unread_pointer
 extern uart_rx_read
 global terminal_record_receive_far,terminal_record_unread_far,terminal_recording_owned_far
+global _recording_ui_ready
+extern _terminal_autostart_busy
+extern terminal_tx_count,terminal_macro_active,terminal_parser_active,terminal_quit
+extern terminal_transfer_pending,terminal_transfer_active,terminal_program_pending,terminal_program_active
+extern terminal_monitor_active,terminal_controller_active,terminal_ansi_wait_active,uart_break_hold,connection_state
+; No byte owner, partial parser, pending output or held invitation may straddle
+; a UI recording boundary. Existing menu service lets these drain/expire.
+_recording_ui_ready:
+ mov ax,[terminal_tx_count]
+ or ax,[terminal_macro_active]
+ or ax,[terminal_parser_active]
+ or ax,[terminal_quit]
+ or ax,[terminal_transfer_pending]
+ or ax,[terminal_transfer_active]
+ or ax,[terminal_program_pending]
+ or ax,[terminal_program_active]
+ or ax,[terminal_monitor_active]
+ or ax,[terminal_controller_active]
+ or ax,[terminal_ansi_wait_active]
+ or ax,[uart_break_hold]
+ jnz .no
+ cmp word [connection_state],0
+ je .invitation
+ cmp word [connection_state],6
+ jne .no
+.invitation:
+ call far _terminal_autostart_busy
+ or ax,ax
+ jnz .no
+ mov ax,1
+ retf
+.no:
+ xor ax,ax
+ retf
 %macro save 0
  pushf
  push ax

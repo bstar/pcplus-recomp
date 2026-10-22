@@ -91,10 +91,16 @@ terminal_program_initialize:
 
 ; AX near stored command1..51.0 queued,1 invalid,2 busy,3 modem owns RX.
 terminal_program_start:
+ extern terminal_recording_owned_far
  push bp
  push si
  push di
  push es
+ push ax
+ call far terminal_recording_owned_far
+ or ax,ax
+ pop ax
+ jnz .busy
  cmp word [uart_break_hold],0
  jne .busy
  cmp word [terminal_controller_active],0

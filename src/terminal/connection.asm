@@ -133,7 +133,13 @@ expand:
  ret
 
 terminal_connection_start_impl:
+ extern terminal_recording_owned_far
  save
+ push ax
+ call far terminal_recording_owned_far
+ or ax,ax
+ pop ax
+ jnz .done
  call connection_break_cancel_service
  call connection_macro_cancel_service
  call connection_program_cancel_service
@@ -390,7 +396,13 @@ terminal_connection_poll_impl:
 
 ; AX0 cancels an attempt; AX1 sends configured hangup on an established session.
 terminal_connection_cancel_impl:
+ extern terminal_recording_owned_far
  save
+ push ax
+ call far terminal_recording_owned_far
+ or ax,ax
+ pop ax
+ jnz .done
  call connection_break_cancel_service
  call connection_macro_cancel_service
  call connection_program_cancel_service

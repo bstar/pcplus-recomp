@@ -13,6 +13,10 @@ global terminal_translation_reload_start,terminal_translation_reload_run
 global terminal_translation_reload_safe
 terminal_translation_reload_safe:
 reload_safe:
+ extern terminal_recording_owned_far
+ call far terminal_recording_owned_far
+ or ax,ax
+ jnz .done
  mov ax,[terminal_parser_active]
  or ax,[terminal_macro_active]
  or ax,[terminal_transfer_pending]

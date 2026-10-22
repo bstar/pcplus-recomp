@@ -40,10 +40,16 @@ terminal_transfer_start:
 terminal_upload_start:
  mov ax,1
 transfer_start_direction:
+ extern terminal_recording_owned_far
  push bp
  push si
  push di
  push es
+ push ax
+ call far terminal_recording_owned_far
+ or ax,ax
+ pop ax
+ jnz .done
  cmp word [uart_break_hold],0
  jne .done
  cmp word [terminal_controller_active],0

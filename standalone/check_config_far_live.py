@@ -92,6 +92,28 @@ def main():
    if seg*16+off==wanted:struct.pack_into('<HH',bad,header[12]+4*j,0,0);break
   else:raise AssertionError(('Missing RX relocation',i))
   mutations.append((f'RX-binding-{i}-missing-relocation',bad,listing))
+ for name in ('_recording_ui_ready','_terminal_autostart_busy'):
+  bad_listing=re.sub(r'(?m)^[0-9a-f]{4}:([0-9a-f]{4})([*+ ]+\s+'+name+r'\s*)$',lambda m:'0000:'+m[1]+m[2],listing)
+  assert bad_listing!=listing
+  mutations.append((name+':UI-boundary-outside-bank',raw,bad_listing))
+ ui_optimized=set(memory['recording_UI_optimized_sites'])
+ for i,site in enumerate(sorted(ui_optimized)):
+  displacement=2 if raw[start+site+1]==0xe8 else 3
+  for field in (0,displacement,4 if displacement==2 else 1):
+   bad=bytearray(raw);bad[start+site+field]^=1
+   mutations.append((f'UI-local-far-frame-{i}-field-{field}',bad,listing))
+ new_sites=[site for site in memory['recording_actor_guard_sites'] if site not in memory['recording_rx_far_call_sites']]
+ new_sites += [site for site in memory['recording_UI_boundary_sites'] if site not in ui_optimized]
+ for i,site in enumerate(new_sites):
+  for field in (1,3):
+   bad=bytearray(raw);bad[start+site+field]^=1
+   mutations.append((f'UI-actor-boundary-{i}-field-{field}',bad,listing))
+  bad=bytearray(raw);wanted=site+3
+  for j in range(header[3]):
+   off,seg=struct.unpack_from('<HH',bad,header[12]+4*j)
+   if seg*16+off==wanted:struct.pack_into('<HH',bad,header[12]+4*j,0,0);break
+  else:raise AssertionError(('Missing UI actor relocation',i))
+  mutations.append((f'UI-actor-boundary-{i}-missing-relocation',bad,listing))
  entries=[(name,int(n)) for name,n in re.findall(r'^CONFIG_ENTRY (\w+),(\d+)$',(ROOT/'src/terminal/config_abi.inc').read_text(),re.M)]
  assert len(entries)==42 and {n for _,n in entries}=={0,1,2,3,5,6,7,8,9,10}
  for name,count in entries:

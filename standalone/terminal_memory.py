@@ -196,7 +196,7 @@ def inspect_terminal_memory(binary,map_path):
   if 'terminal_record_receive_far' in symbols:
    lo=near_code['relative_segment']*16
    body=image[start+lo:start+lo+near_code['bytes']];sites=[]
-   for name,count in (('terminal_record_receive_far',2),('terminal_record_unread_far',1),('terminal_recording_owned_far',1)):
+   for name,count in (('terminal_record_receive_far',2),('terminal_record_unread_far',1)):
     assert symbols[name][0]==config_seg and symbols[name][1]<config_code['bytes'],(name,'RX recorder outside bank')
     pattern=b'\x9a'+struct.pack('<HH',symbols[name][1],config_seg)
     assert body.count(pattern)==count,(name,'RX binding count')
@@ -205,12 +205,54 @@ def inspect_terminal_memory(binary,map_path):
      site=lo+body.index(pattern,offset);offset=site-lo+5
      assert site+3 in relocations,(name,'RX binding relocation')
      sites.append(site)
+   auto_site=address('_terminal_auto_allowed')
+   assert symbols['terminal_recording_owned_far'][0]==config_seg and symbols['terminal_recording_owned_far'][1]<config_code['bytes']
+   assert image[start+auto_site:start+auto_site+5]==b'\x9a'+struct.pack('<HH',symbols['terminal_recording_owned_far'][1],config_seg)
+   assert auto_site+3 in relocations
+   sites.append(auto_site)
    code=image[start+config_seg*16:start+config_seg*16+config_code['bytes']]
    pattern=b'\x50\x9a'+struct.pack('<HH',symbols['_recording_terminal_receive'][1],config_seg)+b'\x83\xc4\x02'
    assert code.count(pattern)==1,'RX recorder callback arguments/cleanup/target'
    callback=config_seg*16+code.index(pattern)+1
    assert callback+3 in relocations,'RX callback relocation absent'
    extra.update(recording_rx_far_call_sites=sites,recording_rx_callback_site=callback)
+   guards=[]
+   for region_name,count in (('_TEXT',6),('MODEM_CODE',2),('PRINT_CODE',1)):
+    region=next(c for c in code_segments if c['name']==region_name)
+    lo=region['relative_segment']*16+region['offset'];code=image[start+lo:start+lo+region['bytes']]
+    pattern=b'\x9a'+struct.pack('<HH',symbols['terminal_recording_owned_far'][1],config_seg)
+    assert code.count(pattern)==count,(region_name,'recording actor guard count')
+    offset=0
+    for i in range(count):
+     site=lo+code.index(pattern,offset);offset=site-lo+5
+     assert site+3 in relocations,(region_name,'recording guard relocation')
+     guards.append(site)
+   code=image[start+config_seg*16:start+config_seg*16+config_code['bytes']]
+   ui_sites=[];optimized=[]
+   for name,count in (('_recording_ui_ready',2),('_terminal_autostart_busy',1)):
+    assert symbols[name][0]==config_seg
+    pattern=b'\x9a'+struct.pack('<HH',symbols[name][1],config_seg)
+    far_count=code.count(pattern)
+    local=[]
+    if name=='_recording_ui_ready':
+     # WLINK retains the far return frame when shortening same-CS C calls:
+     # PUSH CS; CALL rel16; NOP, or PUSH CS; DS-prefix CALL rel16.
+     for at in range(len(code)-5):
+      if code[at:at+2]==b'\x0e\xe8' and code[at+4]==0x90:
+       target=(at+4+struct.unpack_from('<h',code,at+2)[0])&65535
+      elif code[at:at+3]==b'\x0e\x3e\xe8':
+       target=(at+5+struct.unpack_from('<h',code,at+3)[0])&65535
+      else:continue
+      if target==symbols[name][1]:local.append(config_seg*16+at)
+    assert far_count+len(local)==count,(name,'recorder UI boundary frames')
+    ui_sites.extend(local);optimized.extend(local)
+    offset=0
+    for i in range(far_count):
+     site=config_seg*16+code.index(pattern,offset);offset=site-config_seg*16+5
+     assert site+3 in relocations,(name,'UI boundary relocation')
+     ui_sites.append(site)
+   extra.update(recording_actor_guard_sites=guards,recording_UI_boundary_sites=ui_sites,
+                recording_UI_optimized_sites=optimized)
   if 'terminal_tx_origin_bits' in symbols:
    tag=address('terminal_tx_origin_bits');end=address('terminal_tx_origin_bits_end')
    assert symbols['terminal_tx_origin_bits'][0]==symbols['terminal_tx_origin_bits_end'][0]==config_seg

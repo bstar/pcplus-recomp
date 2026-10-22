@@ -47,7 +47,11 @@ global terminal_controller_receive_hold_impl,terminal_controller_shutdown_impl
 %endmacro
 
 terminal_controller_start_impl:
+ extern terminal_recording_owned_far
  save
+ call far terminal_recording_owned_far
+ or ax,ax
+ jnz .done
  cmp word [terminal_controller_active],0
  jne .done
  mov word [terminal_controller_last_action],3
