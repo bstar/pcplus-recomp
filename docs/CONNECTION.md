@@ -52,7 +52,7 @@ connection notice, not the complete PCPlus menu/status-window interface.
 ## States and deadlines
 
 `src/terminal/connection.asm` owns raw/idle0, initialization1, dial-send2,
-response-wait5, online6, abort-send7, DTR-pulse8 and configured-hangup9.
+response-wait5, online6, abort-send7, DTR-pulse8 and configured-hangup9, plus initialization reply/drain10.
 Every foreground poll is bounded. The sender attempts at most one physical
 byte; it advances only after the real UART accepts it. CTS, software XOFF and
 THRE stalls leave the byte pending while keyboard/flow/deadline service continues.
@@ -81,14 +81,16 @@ the terminal; they are not automatically DOS process failures. Normal Alt-X
 still returns0. Unsupported terminal services and overflow retain their existing
 explicit error exits and hardware restoration.
 
-## Initialization result gap
+## Initialization result policy
 
-[Four actual DOS controls and counterexamples](MODEM_INITIALIZATION.md) now
-separate immediate OK, intentional quiet-ready behavior, explicit initialization
-ERROR and delayed readiness. Current code starts dialing after byte transmission;
-it does not wait for an initialization acknowledgement or act on ERROR. A
-configurable result-wait policy is pending. Quiet mode must remain supported,
-and the750ms test peer is not a physical modem timing measurement.
+[Configurable initialization waiting](MODEM_INITIALIZATION.md) adds `/I` seconds
+per acknowledgement, with zero/omitted preserving legacy no-wait behavior.
+Initialization ERROR returns response-failure status 2 with an Init failed notice;
+timeout returns status 3. Both prevent ATD and use the existing bounded cleanup.
+Each initialization send retains the PRM send deadline, and successful initialization
+resets the dial clock. Direct/carrier skip policies retain precedence. The
+historical baseline and current independent component receipt remain distinct;
+current-product BBS/audio and physical modem validation are outstanding.
 
 ## Timing and result compatibility
 

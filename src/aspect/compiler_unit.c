@@ -3,22 +3,35 @@
 #include "compiler_unit.h"
 #include <stdlib.h>
 #include <stddef.h>
+#include <limits.h>
 #include <string.h>
 struct aspect_compiler_allocation {
  struct aspect_compiler_allocation *next;
  unsigned long alignment;
+ unsigned used,capacity;
  unsigned char payload[1];
 };
 static const unsigned sizes[4]={2,4,8,81};
 static void *allocate(aspect_compiler_unit *u,unsigned bytes)
 {
  struct aspect_compiler_allocation *block;
+ unsigned alignment=(unsigned)sizeof(void *),rounded,capacity;
+ unsigned char *result;
  unsigned long call=u->allocation_calls++;
- if(call>=u->fail_after)return 0;
- block=malloc(sizeof(*block)-1+bytes);if(!block)return 0;
- block->next=u->allocations;u->allocations=block;
+ /* Keep allocation-failure ceilings and metrics per logical object. Small
+  * source/symbol objects share bounded arenas instead of a CRT block each. */
+ if(call>=u->fail_after || bytes>UINT_MAX-(alignment-1U))return 0;
+ rounded=(bytes+alignment-1U)&~(alignment-1U);
+ block=u->allocations;
+ if(!block || rounded>block->capacity-block->used){
+  capacity=rounded>512U?rounded:512U;
+  if(capacity>UINT_MAX-(unsigned)offsetof(struct aspect_compiler_allocation,payload))return 0;
+  block=malloc(offsetof(struct aspect_compiler_allocation,payload)+capacity);if(!block)return 0;
+  block->next=u->allocations;block->used=0;block->capacity=capacity;u->allocations=block;
+ }
+ result=block->payload+block->used;block->used+=rounded;
  ++u->live_allocations;if(u->live_allocations>u->peak_allocations)u->peak_allocations=u->live_allocations;
- memset(block->payload,0,bytes);return block->payload;
+ memset(result,0,bytes);return result;
 }
 void aspect_compiler_unit_init(aspect_compiler_unit *u)
 {memset(u,0,sizeof(*u));u->fail_after=0xffffffffUL;}
@@ -65,11 +78,19 @@ static aspect_compiler_source *source(aspect_compiler_unit *u,const aspect_compi
  if(!s)return 0;s->line=line->number;s->offset=line->offset;
  if(*tail)(*tail)->next=s;else *head=s;*tail=s;return s;
 }
+static aspect_compiler_initializer *initializer(aspect_compiler_unit *u,
+ const aspect_compiler_line *line,aspect_compiler_procedure *p)
+{
+ aspect_compiler_initializer *s=allocate(u,sizeof(*s));
+ if(!s)return 0;s->line=line->number;s->offset=line->offset;
+ if(p->initializers_tail)p->initializers_tail->next=s;else p->initializers=s;
+ p->initializers_tail=s;return s;
+}
 static unsigned declaration(aspect_compiler_unit *u,aspect_compiler_procedure *p,
                             const aspect_compiler_line *line,unsigned kind,unsigned parameter)
 {
  unsigned start=1,end,parts=0,i,part=0;int depth=0;
- unsigned char name[254];aspect_compiler_symbol *symbol;aspect_compiler_source *init;
+ unsigned char name[254];aspect_compiler_symbol *symbol;aspect_compiler_initializer *init;
  if(parameter && !p)return fail(u,ASPECT_COMPILE_SYNTAX,line);
  /* Count separators exactly like the host, including empty final parts. */
  for(i=1;i<=line->count;++i){
@@ -107,7 +128,7 @@ static unsigned declaration(aspect_compiler_unit *u,aspect_compiler_procedure *p
     symbol->space=ASPECT_SYMBOL_LOCAL;symbol->index=p->size;p->size+=sizes[kind];++p->locals;
     if(end-start>1){
      if(!equal(line,start+1,"="))return fail(u,ASPECT_COMPILE_SYNTAX,line);
-     init=source(u,line,&p->initializers,&p->initializers_tail);
+     init=initializer(u,line,p);
      if(!init)return fail(u,ASPECT_COMPILE_HEAP,line);
      init->first=start+2;init->last=end;init->destination=symbol;
      init->chained=kind!=3 && part+1<parts;

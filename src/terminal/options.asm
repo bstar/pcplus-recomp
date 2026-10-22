@@ -50,6 +50,7 @@ terminal_parse_options:
  mov word [options_keyboard_mode_stage],2
  mov word [options_ansi_m_stage],0
  mov word [options_receive_credit_stage],0
+ mov word [options_init_wait_stage],0xffff
  mov es,dx
  xor cx,cx
  mov cl,[es:0x80]
@@ -264,6 +265,12 @@ terminal_parse_options:
  mov [terminal_ansi_m_policy],ax
  mov ax,[options_receive_credit_stage]
  mov [terminal_zmodem_receive_credit],ax
+ mov ax,[options_init_wait_stage]
+ cmp ax,0xffff
+ jne .init_wait_commit
+ xor ax,ax
+.init_wait_commit:
+ mov [terminal_modem_init_wait],ax
  xor ax,ax
  mov ax,[options_seen]
  mov [terminal_option_mask],ax
@@ -361,12 +368,23 @@ options_process_token:
  mov dx,4096
  jmp .path_start
 .credit_option:
+ cmp word [options_token],'/I'
+ jne .zcredit_option
+ cmp byte [options_token+2],':'
+ jne .zcredit_option
+ cmp word [options_init_wait_stage],0xffff
+ jne .bad
+ mov di,32767
+ jmp .number_begin
+.zcredit_option:
  cmp word [options_token],'/Z'
  jne .ansi_option
  cmp byte [options_token+2],':'
  jne .ansi_option
  test word [options_seen],32768
  jnz .bad
+ mov di,8192
+.number_begin:
  mov si,options_token+3
  cmp byte [si],0
  je .bad
@@ -387,15 +405,20 @@ options_process_token:
  jnz .bad
  add ax,cx
  jc .bad
- cmp ax,8192
+ cmp ax,di
  ja .bad
  mov bx,ax
  jmp .credit_digit
 .credit_done:
+ cmp di,32767
+ je .init_wait_done
  or bx,bx
  jz .bad
  mov [options_receive_credit_stage],bx
  or word [options_seen],32768
+ jmp .good
+.init_wait_done:
+ mov [options_init_wait_stage],bx
  jmp .good
 .ansi_option:
  cmp word [options_token],'/A'
@@ -701,6 +724,8 @@ terminal_directory_codes: dw 0
 terminal_option_mask: dw 0
 terminal_zmodem_receive_credit:
 _terminal_zmodem_receive_credit: dw 0
+global terminal_modem_init_wait
+terminal_modem_init_wait: dw 0
 terminal_usage:
  db 'PCPLUS terminal lab',13,10
  db 'Usage: TERMINAL [@FILE.PRM] [/D:target] [COM1..COM4] [baud] [serial] [flow]',13,10
@@ -711,11 +736,12 @@ terminal_usage:
  db 'Input translation: /X:FILE.XLT loads exactly 256 bytes before connecting.',13,10
  db 'Meta actions: /T:FILE.KEY; Alt-1..Alt-0 run TEXT/PROGRAM; Esc cancels queued action.',13,10
  db 'Capture: Alt-F1 opens/appends or closes; Alt-F2 holds; Alt-F3 toggles CR+LF.',13,10
- db 'Screen file: Alt-G appends the current screen to PCPLUS.SCR.',13,10
+ db 'Alt-G appends screen to PCPLUS.SCR.',13,10
  db 'Monitor: Ctrl-backslash; Y replaces PCPLUS.DMP; Escape returns.',13,10
  db 'Keyboard BIOS: /B:AUTO (default), /B:STANDARD or /B:ENHANCED.',13,10
  db 'ANSI CSI M: /A:NETWORK (delete lines, default) or /A:ORIGINAL (wait).',13,10
  db 'ZMODEM receive credit: /Z:1..8192 bytes (default 8192).',13,10
+ db '/I:0..32767 init reply seconds.',13,10
  db 'Setup: /S @FILE.PRM runs local PRMEDIT.EXE before connecting; 8.3 leaf only.',13,10
  db 'Alt-F10 edits @8.3 PRM; Y confirms serial/profile changes. COM changes need restart.',13,10
  db 'PRM path: explicit only, max 63 bytes; no spaces, quotes or wildcards.',13,10
@@ -746,6 +772,7 @@ options_translation_stage: times 64 db 0
 options_keyboard_mode_stage: dw 2
 options_ansi_m_stage: dw 0
 options_receive_credit_stage: dw 0
+options_init_wait_stage: dw 0xffff
 options_ansi_network: db '/A:NETWORK',0
 options_ansi_original: db '/A:ORIGINAL',0
 options_bios_auto: db '/B:AUTO',0

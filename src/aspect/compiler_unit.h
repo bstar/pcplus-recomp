@@ -12,13 +12,20 @@ typedef struct aspect_compiler_symbol {
 typedef struct aspect_compiler_source {
  struct aspect_compiler_source *next;
  unsigned long line,offset;
+} aspect_compiler_source;
+/* Only initializer ranges need expression/destination metadata. Ordinary
+ * body/declaration lines retain the full32-bit source position alone. */
+typedef struct aspect_compiler_initializer {
+ struct aspect_compiler_initializer *next;
+ unsigned long line,offset;
  unsigned first,last,chained;
  aspect_compiler_symbol *destination;
-} aspect_compiler_source;
+} aspect_compiler_initializer;
 typedef struct aspect_compiler_procedure {
  struct aspect_compiler_procedure *next;
  aspect_compiler_symbol *symbols,*symbols_tail,*parameters,*parameters_tail;
- aspect_compiler_source *body,*body_tail,*initializers,*initializers_tail;
+ aspect_compiler_source *body,*body_tail;
+ aspect_compiler_initializer *initializers,*initializers_tail;
  aspect_compiler_source *declarations,*declarations_tail;
  unsigned size,locals;
  unsigned long parameter_bytes,line,offset;

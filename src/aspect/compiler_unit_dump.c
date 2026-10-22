@@ -15,7 +15,7 @@ static void ranges(FILE *f,aspect_compiler_source *s)
 {for(;s;s=s->next){byte(f,1);dword(f,s->line);dword(f,s->offset);}byte(f,0);}
 int aspect_compiler_unit_dump(FILE *input,FILE *output)
 {
- aspect_compiler_unit unit;aspect_compiler_procedure *p;aspect_compiler_source *s;
+ aspect_compiler_unit unit;aspect_compiler_procedure *p;aspect_compiler_source *s;aspect_compiler_initializer *init;
  unsigned status,i;
  if(!input||!output)return 1;
  aspect_compiler_unit_init(&unit);status=aspect_compiler_unit_load(&unit,input);
@@ -27,9 +27,9 @@ int aspect_compiler_unit_dump(FILE *input,FILE *output)
   for(p=unit.procedures;p;p=p->next){
    byte(output,1);name(output,p->name);word(output,p->size);dword(output,p->parameter_bytes);
    dword(output,p->line);dword(output,p->offset);symbols(output,p->symbols);ranges(output,p->declarations);
-   for(s=p->initializers;s;s=s->next){
-    byte(output,1);dword(output,s->line);dword(output,s->offset);word(output,s->first);word(output,s->last);
-    byte(output,s->chained);name(output,s->destination->name);
+   for(init=p->initializers;init;init=init->next){
+    byte(output,1);dword(output,init->line);dword(output,init->offset);word(output,init->first);word(output,init->last);
+    byte(output,init->chained);name(output,init->destination->name);
    }
    byte(output,0);
    for(s=p->body;s;s=s->next){byte(output,1);dword(output,s->line);dword(output,s->offset);}

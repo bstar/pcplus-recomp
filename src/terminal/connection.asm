@@ -12,6 +12,9 @@ extern terminal_option_mask,terminal_dial_target,terminal_modem_settings
 extern terminal_directory_mode
 extern terminal_modem_send_start_impl,terminal_modem_send_poll_impl
 extern terminal_modem_send_resync_start_impl
+extern terminal_modem_init_wait
+extern terminal_modem_init_validate_impl,terminal_modem_init_begin_impl
+extern terminal_modem_init_poll_impl,terminal_modem_init_receive_impl
 extern modem_response_slots
 extern uart_port_msr,uart_port_mcr
 extern uart_tx_paused,uart_flow_pending,uart_xoff_sent,uart_rts_lowered
@@ -53,6 +56,12 @@ terminal_connection_prepare_impl:
  mov cx,47
  call expand
  jc .done
+ cmp word [terminal_modem_init_wait],0
+ je .init_valid
+ mov si,connection_init
+ call terminal_modem_init_validate_impl
+ jc .done
+.init_valid:
  mov si,terminal_modem_settings+MI_HANGUP
  mov di,connection_hangup
  mov cx,25
@@ -193,6 +202,14 @@ terminal_connection_start_impl:
  call start_dial
  jmp .done
 .send:
+ cmp word [terminal_modem_init_wait],0
+ je .legacy_send
+ xor ax,ax
+ mov al,[connection_resync]
+ mov byte [connection_resync],0
+ call terminal_modem_init_begin_impl
+ jmp .done
+.legacy_send:
  cmp byte [connection_resync],0
  je .send_clean
  mov byte [connection_resync],0
@@ -258,19 +275,25 @@ connection_flow_retire:
 .done:
  ret
 
+global terminal_connection_reset_clock_impl,terminal_connection_seconds_clock_impl
+terminal_connection_reset_clock_impl:
 reset_clock:
+ mov ax,[terminal_modem_settings+MI_TIMEOUT]
+terminal_connection_seconds_clock_impl:
+ push si
+ mov si,ax
  call connection_clock_ticks_service
  mov [connection_last_tick],ax
  mov [connection_last_tick+2],dx
  mov word [connection_elapsed],0
  mov word [connection_elapsed+2],0
  ; ceil(seconds *1193182/65536) ticks, exact integer arithmetic.
- mov ax,[terminal_modem_settings+MI_TIMEOUT]
+ mov ax,si
  mov cx,18
  mul cx
  mov bx,ax
  mov cx,dx
- mov ax,[terminal_modem_settings+MI_TIMEOUT]
+ mov ax,si
  mov dx,13534
  mul dx
  add bx,dx
@@ -282,6 +305,7 @@ reset_clock:
 .ready:
  mov [connection_deadline],bx
  mov [connection_deadline+2],cx
+ pop si
  ret
 start_dial:
  call connection_uart_clear_service
@@ -318,6 +342,13 @@ terminal_connection_poll_impl:
  je .dtr_wait
  cmp word [connection_state],7
  je .abort_send
+ cmp word [connection_state],10
+ je .strict_poll
+ cmp word [connection_state],1
+ jne .ordinary_deadline
+ cmp word [terminal_modem_init_wait],0
+ jne .strict_poll
+.ordinary_deadline:
  mov ax,[connection_elapsed+2]
  cmp ax,[connection_deadline+2]
  ja .timeout
@@ -325,6 +356,23 @@ terminal_connection_poll_impl:
  mov ax,[connection_elapsed]
  cmp ax,[connection_deadline]
  jae .timeout
+ jmp .state
+.strict_poll:
+ call terminal_modem_init_poll_impl
+ or ax,ax
+ jz .done
+ cmp ax,1
+ je .strict_ready
+ cmp ax,3
+ je .dial_timeout
+ mov word [connection_status],2
+ mov si,message_init_failed
+ call connection_notice_service
+ jmp .begin_abort
+.strict_ready:
+ call reset_clock
+ call start_dial
+ jmp .done
 .state:
  cmp word [connection_state],5
  je .response
@@ -595,6 +643,16 @@ terminal_connection_receive_impl:
  je .pass
  cmp word [connection_state],6
  je .pass
+ cmp word [terminal_modem_init_wait],0
+ je .dial_receive
+ cmp word [connection_state],1
+ je .init_receive
+ cmp word [connection_state],10
+ jne .dial_receive
+.init_receive:
+ call terminal_modem_init_receive_impl
+ jmp .consume
+.dial_receive:
  cmp word [connection_state],2
  jb .consume
  cmp word [connection_state],5
@@ -664,3 +722,4 @@ message_offline: db 'Carrier lost',0
 message_disconnected: db 'Disconnected',0
 
 message_hangup_failed: db 'Hangup failed',0
+message_init_failed: db 'Init failed',0

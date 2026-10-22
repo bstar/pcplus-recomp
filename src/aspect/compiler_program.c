@@ -10,11 +10,16 @@
 struct pc_allocation {struct pc_allocation *next;unsigned long alignment;unsigned char bytes[1];};
 void pc_error(pc_compiler *c,unsigned status)
 {if(!c->report->status){c->report->status=status;c->report->line=c->line.number;c->report->offset=c->line.offset;}}
+static unsigned admit_allocation(pc_compiler *c)
+{
+ if(c->report->status)return 0;
+ if(c->report->allocation_calls++>=c->fail_after){pc_error(c,ASPECT_COMPILE_HEAP);return 0;}
+ return 1;
+}
 void *pc_allocate(pc_compiler *c,unsigned bytes,unsigned phase)
 {
  struct pc_allocation *p;
- if(c->report->status)return 0;
- if(c->report->allocation_calls++>=c->fail_after){pc_error(c,ASPECT_COMPILE_HEAP);return 0;}
+ if(!admit_allocation(c))return 0;
  p=malloc(sizeof(*p)-1+bytes);if(!p){pc_error(c,ASPECT_COMPILE_HEAP);return 0;}
  if(phase){p->next=c->phase;c->phase=p;}else{p->next=c->owned;c->owned=p;}
  memset(p->bytes,0,bytes);return p->bytes;
@@ -54,20 +59,28 @@ static void add_exit(pc_compiler *c,pc_block *b,unsigned long offset)
 {pc_patch *p=pc_allocate(c,sizeof(*p),1);if(!p)return;p->offset=offset;p->next=b->exits;b->exits=p;}
 static void emit(pc_compiler *c,unsigned v){aspect_compiler_emit_byte(&c->output,v);}
 static void bad(pc_compiler *c){pc_error(c,ASPECT_COMPILE_SYNTAX);}
-static unsigned load(pc_compiler *c,const aspect_compiler_source *source)
+static unsigned load(pc_compiler *c,unsigned long number,unsigned long offset)
 {
  aspect_compiler_reader reader;
- if(source->offset>LONG_MAX||fseek(c->input,(long)source->offset,SEEK_SET)){pc_error(c,ASPECT_COMPILE_LEXICAL);c->report->lexical_status=ASPECT_LEX_IO;return 0;}
- aspect_compiler_reader_init(&reader,c->input);reader.number=source->line;reader.offset=source->offset;
+ if(offset>LONG_MAX||fseek(c->input,(long)offset,SEEK_SET)){pc_error(c,ASPECT_COMPILE_LEXICAL);c->report->lexical_status=ASPECT_LEX_IO;return 0;}
+ aspect_compiler_reader_init(&reader,c->input);reader.number=number;reader.offset=offset;
  if(aspect_compiler_next_line(&reader,&c->line)!=1){pc_error(c,ASPECT_COMPILE_LEXICAL);c->report->lexical_status=reader.status;return 0;}
  aspect_compiler_expression_init(&c->expression,&c->line,&c->unit,c->current?c->current->source:0,0,c->line.count);
  return 1;
 }
 static pc_block *block(pc_compiler *c,unsigned type)
 {
- pc_block *p=pc_allocate(c,sizeof(*p),1);if(!p)return 0;
+ pc_block *p;
+ if(c->free_blocks){
+  /* Completed control blocks have no remaining patch users. Reuse their
+   * storage while preserving one fault-injection admission per request. */
+  if(!admit_allocation(c))return 0;
+  p=c->free_blocks;c->free_blocks=p->parent;memset(p,0,sizeof(*p));
+ }else{p=pc_allocate(c,sizeof(*p),1);if(!p)return 0;}
  p->type=type;p->parent=c->blocks;c->blocks=p;return p;
 }
+static void retire_block(pc_compiler *c,pc_block *b)
+{c->blocks=b->parent;b->parent=c->free_blocks;c->free_blocks=b;}
 static unsigned expression(pc_compiler *c,unsigned first,unsigned last)
 {
  unsigned root;c->expression.position=first;c->expression.last=last;
@@ -119,7 +132,7 @@ static void switch_statement(pc_compiler *c)
  }else{
   if(c->line.count!=1||b->active){bad(c);return;}
   patch(c,b->has_next?b->next:b->branch,b->has_default?b->default_at:c->output.position);
-  exits(c,b->exits);c->blocks=b->parent;
+  exits(c,b->exits);retire_block(c,b);
  }
 }
 static void call(pc_compiler *c)
@@ -151,7 +164,7 @@ static void statement(pc_compiler *c)
   add_exit(c,b,pc_jump(c,0x62));patch(c,b->branch,c->output.position);
   if(pc_equal(c,0,"elseif"))b->branch=condition(c);else b->active=0;
  }else if(pc_equal(c,0,"endif")){
-  if(!b||b->type!=BLOCK_IF){bad(c);return;}if(b->active)patch(c,b->branch,c->output.position);exits(c,b->exits);c->blocks=b->parent;
+  if(!b||b->type!=BLOCK_IF){bad(c);return;}if(b->active)patch(c,b->branch,c->output.position);exits(c,b->exits);retire_block(c,b);
  }else if(pc_equal(c,0,"while")){
   start=c->output.position;i=0;b=block(c,BLOCK_WHILE);if(b){b->start=start;b->branch=condition(c);}
  }else if(pc_equal(c,0,"exitwhile")||pc_equal(c,0,"loopwhile")){
@@ -160,7 +173,7 @@ static void statement(pc_compiler *c)
   if(pc_equal(c,0,"exitwhile"))add_exit(c,b,start);else patch(c,start,b->start);
  }else if(pc_equal(c,0,"endwhile")){
   if(!b||b->type!=BLOCK_WHILE){bad(c);return;}
-  patch(c,pc_jump(c,0x62),b->start);patch(c,b->branch,c->output.position);exits(c,b->exits);c->blocks=b->parent;
+  patch(c,pc_jump(c,0x62),b->start);patch(c,b->branch,c->output.position);exits(c,b->exits);retire_block(c,b);
  }else if(pc_equal(c,0,"call")||pc_equal(c,0,"gosub"))call(c);
  else if(c->line.count==2&&(pc_equal(c,0,"++")||pc_equal(c,0,"--")||pc_equal(c,1,"++")||pc_equal(c,1,"--"))){
   i=pc_equal(c,0,"++")||pc_equal(c,0,"--");k=pc_equal(c,i?0:1,"++");
@@ -182,7 +195,7 @@ static unsigned graph(pc_compiler *c)
  for(info=c->procedures;info;info=info->next){
   c->current=info;
   for(s=info->source->body;s;s=s->next){
-   if(!load(c,s))return 0;
+   if(!load(c,s->line,s->offset))return 0;
    if(pc_equal(c,0,"call")||pc_equal(c,0,"gosub")){
     target=pc_procedure(c,1);if(target){edge=pc_allocate(c,sizeof(*edge),0);if(!edge)return 0;edge->target=target;edge->next=info->calls;info->calls=edge;}
    }else if(pc_equal(c,0,"when"))for(i=1;i+1<c->line.count;++i)if(pc_equal(c,i,"call")){
@@ -202,7 +215,7 @@ static unsigned declarations(pc_compiler *c,aspect_compiler_source *s)
 {
  unsigned i;int depth;
  for(;s;s=s->next){
-  if(!load(c,s))return 0;depth=0;
+  if(!load(c,s->line,s->offset))return 0;depth=0;
   for(i=0;i<c->line.count;++i){
    if(pc_equal(c,i,"("))++depth;else if(pc_equal(c,i,")"))--depth;
    if(depth<0){bad(c);return 0;}
@@ -213,7 +226,7 @@ static unsigned declarations(pc_compiler *c,aspect_compiler_source *s)
 }
 static void procedures(pc_compiler *c,unsigned all)
 {
- pc_proc *p,*main;pc_call *fixup;aspect_compiler_source *s;unsigned dest,root;
+ pc_proc *p,*main;pc_call *fixup;aspect_compiler_source *s;aspect_compiler_initializer *init;unsigned dest,root;
  emit(c,c->unit.counts[3]);
  if(strcmp(c->procedures->source->name,"main")){
   for(main=c->procedures;main&&strcmp(main->source->name,"main");main=main->next){}
@@ -222,13 +235,13 @@ static void procedures(pc_compiler *c,unsigned all)
  for(p=c->procedures;p&&pc_ready(c);p=p->next){
   if(!all&&!p->selected)continue;c->current=p;p->address=c->output.position;c->blocks=0;
   if(p->source->size){emit(c,0xd2);aspect_compiler_emit_word(&c->output,p->source->size);}
-  for(s=p->source->initializers;s&&pc_ready(c);s=s->next){
-   if(!load(c,s))return;
-   c->expression.first=c->expression.position=s->first-2;c->expression.last=s->last;
-   dest=root=0;aspect_compiler_parse_assignment(&c->expression,&dest,&root);aspect_compiler_emit_assignment(&c->expression,&c->output,dest,root,s->chained);
+  for(init=p->source->initializers;init&&pc_ready(c);init=init->next){
+   if(!load(c,init->line,init->offset))return;
+   c->expression.first=c->expression.position=init->first-2;c->expression.last=init->last;
+   dest=root=0;aspect_compiler_parse_assignment(&c->expression,&dest,&root);aspect_compiler_emit_assignment(&c->expression,&c->output,dest,root,init->chained);
   }
   emit(c,0xcf);
-  for(s=p->source->body;s&&pc_ready(c);s=s->next){if(!load(c,s))return;statement(c);}
+  for(s=p->source->body;s&&pc_ready(c);s=s->next){if(!load(c,s->line,s->offset))return;statement(c);}
   if(c->blocks){bad(c);return;}emit(c,p->source->size||p->source->parameters?0x95:0x94);
  }
  for(fixup=c->calls;fixup&&pc_ready(c);fixup=fixup->next)patch(c,fixup->offset,fixup->target->address);
@@ -256,7 +269,7 @@ unsigned aspect_compiler_program_options(FILE *input,FILE *output,aspect_compile
   if(pc_ready(c)&&report->procedures!=report->emitted_procedures){
    aspect_compiler_output_flush(&c->output);pc_ready(c);
    if(!report->status&&(chsize(fileno(output),0)||fseek(output,0L,SEEK_SET)))pc_error(c,PC_OUTPUT_ERROR);
-   release(&c->phase);c->calls=0;c->blocks=0;
+   release(&c->phase);c->calls=0;c->blocks=0;c->free_blocks=0;
    if(!report->status){aspect_compiler_output_init(&c->output,output);procedures(c,0);}
   }
  }

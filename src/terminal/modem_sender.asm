@@ -14,7 +14,23 @@ terminal_modem_send_resync_start_impl:
  call terminal_modem_send_start_impl
  mov byte [sender_resync],1
  ret
+global terminal_modem_send_line_start_impl,terminal_modem_send_position_impl,terminal_modem_send_line_armed_impl
+terminal_modem_send_line_start_impl:
+ call terminal_modem_send_start_impl
+ mov byte [cs:sender_line],1
+ ret
+terminal_modem_send_position_impl:
+ mov ax,[sender_cursor]
+ ret
+terminal_modem_send_line_armed_impl:
+ xor ax,ax
+ cmp byte [cs:sender_line],2
+ jb .return
+ inc ax
+.return:
+ ret
 terminal_modem_send_start_impl:
+ mov byte [cs:sender_line],0
  mov byte [sender_resync],0
  mov [sender_cursor],si
  mov word [sender_delay],0
@@ -31,6 +47,8 @@ terminal_modem_send_poll_impl:
  jb .busy
  cmp byte [sender_resync],0
  jne .resync
+ cmp byte [cs:sender_line],2
+ je .done
  mov si,[sender_cursor]
  xor ax,ax
  mov al,[si]
@@ -60,9 +78,27 @@ terminal_modem_send_poll_impl:
  jmp .accepted
 .pause:
  mov word [sender_delay],10
+ mov [sender_tick],cx
+ inc word [sender_cursor]
+ ; A pause character is not a physically transmitted command terminator.
+ cmp byte [cs:sender_line],3
+ jne .busy
+ jmp .line_end
 .accepted:
  mov [sender_tick],cx
  inc word [sender_cursor]
+ cmp byte [cs:sender_line],3
+ je .line_end
+ cmp byte [cs:sender_line],1
+ jne .busy
+ cmp al,13
+ jne .busy
+ cmp byte [si+1],10
+ jne .line_end
+ mov byte [cs:sender_line],3
+ jmp .busy
+.line_end:
+ mov byte [cs:sender_line],2
 .busy:
  xor ax,ax
  jmp .return
@@ -75,6 +111,7 @@ terminal_modem_send_poll_impl:
  pop bx
  clc
  ret
+sender_line: db 0 ; CS-owned optional CR/CRLF boundary, not resident near data.
 global terminal_modem_code_end
 terminal_modem_code_end:
 SEGMENT _DATA public class=DATA use16

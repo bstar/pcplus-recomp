@@ -1,5 +1,53 @@
 # Modem initialization result policy
 
+The maintained terminal supports `/I:0..32767`, selecting how many seconds to
+wait for each initialization result. Omitted or `/I:0` preserves legacy sending
+without waiting for initialization acknowledgements. For example:
+
+```dos
+TERMINAL @TEST.PRM /D:5551234 /I:3
+```
+
+The number remains a modem dialing target; a Telnet hostname is entered at the
+Linux bridge's CONNECT> prompt after carrier establishment. Initialization bytes
+come from the configured PRM fields; no modern modem commands are synthesized.
+
+With `/I` positive, each nonempty CR-terminated command must receive a complete
+OK or numeric 0 before the next command or ATD. ERROR or numeric 4 aborts without
+dialing. Matching ignores case and surrounding spaces; echo, unknown lines,
+oversized lines and incomplete replies cannot acknowledge a command. Replies
+arriving immediately after CR are retained even while final pacing completes.
+CRLF and configured pause expansion are preserved. Nonempty unterminated commands
+and embedded physical LF are rejected before serial side effects.
+
+Each send uses the PRM dialing timeout; each acknowledgement uses `/I` seconds.
+An empty physical command or retry synchronization separator drains responses for
+the full `/I` interval before admitting a new command. This bounds stale-response
+handling; it cannot correlate arbitrarily late replies beyond that interval.
+Escape/Alt-X cancellation, DTR cleanup and the failed-online-hangup guard remain.
+Direct lines and the existing initial-carrier setting can bypass initialization.
+The configurable eleven-slot dialing-result matcher remains separate.
+
+No-wait controls suppress initialization acknowledgements while still supplying
+CONNECT for dialing. They do not prove fully silent Q1 automatic dialing.
+Physical Boca command support and timing are unverified.
+
+## Accepted component evidence
+
+[Independent receipt](validation/modem-init-policy.json) binds 74 linked
+normal/mouse groups, nine actual 8086 DOS cases and four DOS cancellation/retry
+cases. It also binds existing connection/startup/carrier/hangup regressions,
+2,025 compiler cases, 2,015 first-pass cases, 2,043 checked-stack cases and thirteen
+attached PROGRAM workflows. Normal, mouse and DOS compiler products reproduce
+byte-identically in a fresh build from 418 declared source files with originals
+absent. The [compiler memory correction](COMPILER_MEMORY.md) preserves nested
+compilation after the new resident code increased conventional-memory pressure.
+
+Current-product Synchronet/ENiGMA and audio regressions are still required.
+The receipt explicitly leaves those, physical hardware and full F03 unaccepted.
+
+# Historical baseline
+
 [Four independently audited actual DOS cases](validation/modem-initialization-baseline.json)
 reproduce an open initialization policy on parent3b453f2b. The maintained
 controller completes transmission of the configured initialization string and
@@ -37,43 +85,3 @@ remains explicit.
   build/modem-initialization/dos-new \
   --output docs/validation/modem-initialization-new.json
 ~~~
-
-## Required correction
-
-Add configurable result waiting while retaining the legacy no-wait mode for
-quiet profiles. Do not silently reinterpret an unknown PRM field or assume a
-newer modem command set. The configured initialization bytes remain owned by
-the existing PRM command fields. A maintained invocation setting is appropriate
-for machine profiles; its exact CLI and help are not implemented yet.
-
-The implementation must cover these behaviors together:
-
-- Validate the setting and stage it atomically before UART acquisition. Reject
-  malformed/range/duplicate settings without partly changing existing options.
-  The current16-bit option mask is fully allocated; a new setting must not
-  alias an existing flag. Normal/mouse memory headroom must remain checked.
-- Keep quiet/no-wait behavior available. In result-wait mode, handle complete
-  verbose OK/ERROR and numeric0/4 lines, fragmented CR/LF and command echo;
-  unrelated substrings must not produce successful initialization.
-- Sequence multiple configured initialization commands and wait for their
-  results before dialing. Preserve command expansion, pause-marker behavior
-  and existing configurable commands. Empty and incomplete command policies
-  need explicit validation and tests, rather than an accidental infinite wait.
-- Accept an early reply delivered after the command terminator but before the
-  sender's final pacing poll. Do not erase it when entering the response wait.
-- Distinguish stale cleanup responses after retry synchronization from results
-  of the new initialization. Retained/cleared command parsers, an absent blank-CR
-  response and late/fragmented stale responses need separate controls.
-- Bound transmission/result waits under CTS, XOFF and THRE stalls. Preserve
-  Escape/Alt-X cancellation, DTR policy, hardware restoration and subsequent
-  retries. Initialization failure or timeout must prevent ATD in wait mode.
-- Preserve direct lines, initial-high/always-high DCD configuration and the
-  failed-online-hangup redial guard. Keep the existing configurable11-slot
-  connection-result/autobaud matcher separate from initialization results.
-
-Before adoption, compare the corrected DOS results against this baseline and
-run normal/mouse linked cases, source-only rebuilds, connection/carrier/startup,
-attached PROGRAM and current BBS/audio regressions. The default legacy mode
-must continue passing its quiet-profile control. Physical Boca and SPA2102
-validation remains separate, including actual modem identification and supported
-initialization commands. No full F03 or application gate closes.

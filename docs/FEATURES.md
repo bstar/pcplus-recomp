@@ -1,12 +1,14 @@
 # Full application reconstruction checklist
 
-[Initialization result baseline](MODEM_INITIALIZATION.md) reproduces two current-parent
-DOS gaps: ATD is sent after init ERROR and starts before a declared750ms ready
-reply. Immediate-OK and intentional quiet/no-reply controls both connect and
-answer actual ANSI queries. Four independent raw audits preserve exact streams
-and UART restoration; no init correction is accepted yet. The next implementation
-must add configurable result waiting while retaining quiet mode, multiple
-commands, retry synchronization and bounded cancellation behavior.
+[Configurable initialization results](MODEM_INITIALIZATION.md) now support
+`/I:0..32767`: legacy no-wait by default, or bounded per-command OK/ERROR waiting,
+numeric replies, multiple commands and retry response draining. The independent
+receipt accepts 74 linked groups, nine DOS connection cases, four DOS retries,
+compiler/stack regressions and thirteen attached PROGRAM workflows. A compiler
+memory correction restores nested compilation under the larger retained parent.
+Fresh source-only builds reproduce normal, mouse and compiler products.
+Current-product BBS/audio, physical hardware and every full application gate
+remain open. Earlier checkpoint identities below are historical.
 
 [Failed-hangup policy](validation/hangup-failure-policy.json) now preserves the online session and
 flow state when a blocked hangup leaves DCD high, reports Hangup failed and

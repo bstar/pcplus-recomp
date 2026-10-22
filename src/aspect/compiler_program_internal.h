@@ -18,7 +18,7 @@ typedef struct pc_compiler {
  FILE *input;aspect_compiler_unit unit;aspect_compiler_line line,filtered;
  aspect_compiler_expression expression;aspect_compiler_output output;
  aspect_compiler_report *report;pc_proc *procedures,*tail,*current;
- pc_block *blocks;pc_call *calls;
+ pc_block *blocks,*free_blocks;pc_call *calls;
  struct pc_allocation *owned,*phase;
  unsigned long fail_after;
 } pc_compiler;
