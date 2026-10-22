@@ -19,13 +19,17 @@ from directory_test_support import accounting_check
 from test_terminal import SAMPLER
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload'],default='menus');p.add_argument('--fixture-lab',type=Path);p.add_argument('--upload-cancel',action='store_true');p.add_argument('--upload-cancel-retry',action='store_true');p.add_argument('--upload-key-checks',type=Path);p.add_argument('--posttrain-hold',action='store_true')
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--receive-trace',action='store_true');p.add_argument('--dmodem',choices=['baseline','candidate']);p.add_argument('--lifecycle',action='store_true');p.add_argument('--carrier',action='store_true');p.add_argument('--carrier-trace',action='store_true');p.add_argument('--key-framing',action='store_true');p.add_argument('--key-framing-trace',action='store_true');p.add_argument('--syscall-trace',action='store_true');p.add_argument('--route',choices=['menus','editor','download','upload','recording'],default='menus');p.add_argument('--fixture-lab',type=Path);p.add_argument('--upload-cancel',action='store_true');p.add_argument('--upload-cancel-retry',action='store_true');p.add_argument('--upload-key-checks',type=Path);p.add_argument('--posttrain-hold',action='store_true')
+ p.add_argument('--recording-key-checks',type=Path,help='Validated BIOS Record/compile/replay helper proof')
+ p.add_argument('--recording-tcp-checks',type=Path,help='Actual DOS/BBS control with the unchanged recording helper')
  p.add_argument('--buffered-runtime-proof',type=Path,help='Validated normal200ms d-modem runtime receipt')
  p.add_argument('--editor-burst-checks',type=Path,help='Enable one-tick editor BIOS keys using a passing guarded-helper probe')
  p.add_argument('--editor-multiline-checks',type=Path,help='Enable30-line BIOS draft and page movement with a passing helper/TCP proof')
  p.add_argument('--download-pressure-preparation',type=Path,help='Explicit >64KiB fixture/reference/BIOS preparation proof')
  p.add_argument('--zmodem-receive-credit',type=int,help='Explicit DOS /Z:1..8192 receive policy; default unchanged')
  a=p.parse_args()
+ if a.route=='recording':assert a.recording_key_checks and a.recording_tcp_checks and not a.fixture_lab
+ elif a.recording_key_checks or a.recording_tcp_checks:raise AssertionError('Recording helper proof requires recording route')
  capture_proof=ROOT/'docs/validation/capture-durability.json';capture=json.loads(capture_proof.read_text())
  assert capture['passed'] and all(row['passed'] for row in capture['cases'])
  assert all(sha(ROOT/n)==h for n,h in capture['inputs'].items())
@@ -163,6 +167,19 @@ def main():
   names+=['src/transfer/terminal_zmodem.c','src/transfer/ymodem.h','src/terminal/ymodem_actions.asm','src/terminal/config_abi.inc','standalone/build_terminal.py','standalone/terminal_memory.py','standalone/check_zmodem_upload_timing.py','standalone/check_zmodem_link_policy.py','standalone/record_zmodem_upload_timing.py','docs/ZMODEM_MODEM_RESPONSE.md','docs/validation/zmodem-upload-response-fixed.json']
  names+=['src/terminal/connection.asm','standalone/check_online_exit.py','docs/validation/online-exit.json']
  names+=['lab/bbs/check_audio_login_readiness.py','docs/validation/synthmodem-audio-login-readiness.json']
+ if a.route=='recording':
+  import audio_recording
+  recording_names,recording_helper_sha=audio_recording.inputs(a.recording_key_checks)
+  names+=recording_names
+  names+=['lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/audit_serial_io_evidence.py',
+   'lab/bbs/diagnose_audio_caller.js','lab/bbs/modem.py','lab/bbs/synthmodem_gateway.py']
+  tcp_path=a.recording_tcp_checks.resolve();assert tcp_path.is_relative_to(ROOT/'build')
+  tcp=json.loads(tcp_path.read_text())
+  assert tcp['passed'] and all(tcp['checks'].values()) and tcp['helper_sha256']==recording_helper_sha
+  assert tcp['binary_sha256']==sha(ROOT/'build/terminal/TERMINAL.EXE')
+  assert all(sha(ROOT/name)==h for name,h in tcp['inputs'].items())
+  assert all(sha(tcp_path.parent/name)==h for name,h in tcp['captures_sha256'].items())
+  names += [str(tcp_path.relative_to(ROOT)),*tcp['inputs'],*[str((tcp_path.parent/name).relative_to(ROOT)) for name in tcp['captures_sha256']]]
  if a.syscall_trace:names+=['lab/bbs/check_dosbox_socket_close.py','lab/bbs/dosbox_socket_close_probe.asm','docs/validation/dosbox-socket-close.json']
  if a.route=='editor':names+=['lab/bbs/audio_editor_keys.asm','lab/bbs/check_audio_editor_watchdog.py','docs/validation/synthmodem-audio-editor-watchdog.json']
  if a.editor_burst_checks:names+=['lab/bbs/check_audio_editor_burst_keys.py',str(burst_proof.relative_to(ROOT))]
@@ -173,6 +190,7 @@ def main():
   shutil.copyfile(ROOT/name,snapshot);assert sha(snapshot)==digest
  stage=out/'program';stage.mkdir()
  for n,leaf in [('build/terminal/TERMINAL.EXE','TERMINAL.EXE'),('build/aspect-runner/ASPECT.EXE','ASPECT.EXE')]:shutil.copyfile(ROOT/n,stage/leaf)
+ if a.route=='recording':audio_recording.prepare(stage)
  relay=Relay(capture_dir=out);relay.server.settimeout(90);relay.thread.start()
  def mark(label):return f'fopen 0 "D:\\STAGES.LOG" "ab"\nfputs 0 "{label}|"\nfclose 0\n'
  def wait(token,timeout,label):return f'waitfor "{token}" {timeout}\nif waitfor == 0\n'+mark('FAIL-'+label)+'exit\nendif\n'
@@ -191,7 +209,7 @@ def main():
  elif a.route=='upload':script+=audio_upload.navigation(wait,mark)
  else:
   script+='transmit "M^M"\n'+wait('MESSAGE AREA',150,'MESSAGES')+'waitquiet 2 120\n'+mark('MESSAGES')
-  if a.route=='menus':
+  if a.route in ('menus','recording'):
    script+='transmit "Q^M"\n'+wait('Main Menu',150,'RETURN')+'waitquiet 2 120\n'+mark('RETURN')+'transmit "F^M"\n'
    script+=wait('File Base',150,'FILES')+'waitquiet 2 120\n'+mark('FILES')
   else:
@@ -207,7 +225,7 @@ def main():
  (out/'MODEM.PRM').write_bytes(profile)
  contact=bytearray(directory(entry=1,target=b'1',port=1,baud=6));contact[250+52:250+61]=b'AUDIO\0\0\0\0';contact=bytes(contact);(out/'CALL.DIR').write_bytes(contact)
  (out/'sampler.asm').write_text(SAMPLER);subprocess.run(['nasm','-fbin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
- for name,leaf in [('audio_editor_keys.asm' if a.route=='editor' else 'audio_download_keys.asm' if a.route=='download' else 'audio_upload_keys.asm' if a.route=='upload' else 'audio_exit_keys.asm','EXITKEY.COM'),('audio_get_vector.asm','KEYVEC.COM')]:
+ for name,leaf in [('audio_recording_keys.asm' if a.route=='recording' else 'audio_editor_keys.asm' if a.route=='editor' else 'audio_download_keys.asm' if a.route=='download' else 'audio_upload_keys.asm' if a.route=='upload' else 'audio_exit_keys.asm','EXITKEY.COM'),('audio_get_vector.asm','KEYVEC.COM')]:
   flags=[]
   if leaf=='EXITKEY.COM':
    if a.upload_cancel:flags+=['-DAUDIO_UPLOAD_CANCEL=1']
@@ -217,6 +235,7 @@ def main():
    if pressure_download:flags+=['-DAUDIO_DOWNLOAD_PRESSURE=1']
   subprocess.run(['nasm','-fbin',*flags,str(ROOT/'lab/bbs'/name),'-o',str(stage/leaf)],check=True)
  if a.editor_multiline_checks:assert sha(stage/'EXITKEY.COM')==multiline['production_helper_sha256']
+ if a.route=='recording':assert sha(stage/'EXITKEY.COM')==recording_helper_sha
  if pressure_download:assert sha(stage/'EXITKEY.COM')==pressure_download.production_helper_sha256
  generated={str(p.relative_to(out)):sha(p) for p in stage.iterdir()}
  from bbs_log_capture import begin as begin_log,collect as collect_log
@@ -267,7 +286,7 @@ goto capture
 :fail
 echo FAIL>D:\\FAIL.TXT
 :capture
-KEYVEC
+{('EXITKEY R' + chr(10)) if a.route=='recording' else ''}KEYVEC
 D:\\SNAP S
 D:\\SNAP A
 exit
@@ -277,7 +296,7 @@ exit
    if a.syscall_trace:command=['strace','--seccomp-bpf','-f','-ttt','-yy','-e','trace=network,close','-o',str(out/'DOS-syscalls.log')]+command
    clock_anchor('before-DOS-launch')
    dos=subprocess.Popen(command,stdout=dl,stderr=dl,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),start_new_session=True)
-   doscode=dos.wait(timeout=OUTER_TIMEOUT if pressure_download else 1220 if a.route in ('download','upload') or a.editor_multiline_checks else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit')
+   doscode=dos.wait(timeout=OUTER_TIMEOUT if pressure_download else 1900 if a.route=='recording' else 1220 if a.route in ('download','upload') or a.editor_multiline_checks else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit')
    (out/'exit-status.json').write_text(json.dumps(dict(DOS=doscode,node=None))+'\n')
    nodecode=node.wait(timeout=60);(out/'exit-status.json').write_text(json.dumps(dict(DOS=doscode,node=nodecode))+'\n')
   finally:
@@ -340,6 +359,10 @@ exit
   checks['multiline_message_count_preserved']=editor['message_count_before']==editor['message_count_after']
  download=None
  upload=None
+ recording=None
+ if a.route=='recording':
+  checks.pop('final_file_menu')
+  extra,recording=audio_recording.check(out,rows);checks.update(extra)
  if a.route=='download':
   checks.pop('final_file_menu')
   extra,download=audio_download.check(out,rows,download_path,download_before);checks.update(extra)
@@ -358,9 +381,13 @@ exit
  result={'passed':all(checks.values()),'checks':checks,'zmodem_receive_credit':a.zmodem_receive_credit,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
   'DOS_screen':text,'gateway':n,'route':a.route,'expected_receive_offer':expected_receive_offer,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor_multiline_checks':str(multiline_proof.relative_to(ROOT)) if a.editor_multiline_checks else None,'download_pressure_preparation':str(a.download_pressure_preparation.resolve().relative_to(ROOT)) if pressure_download else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
+  'recording':recording,'recording_key_checks':str(a.recording_key_checks.resolve().relative_to(ROOT)) if a.recording_key_checks else None,
+  'recording_tcp_checks':str(a.recording_tcp_checks.resolve().relative_to(ROOT)) if a.recording_tcp_checks else None,
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any protocol-helper candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
  observation_paths=[out/n for n in ['run-start.json','exit-status.json','clock-anchors.json','server-log-boundary.json']]
  observation_paths+=sorted((out/'server-log-capture').iterdir())
+ if a.route=='recording':
+  observation_paths += [path for path in (out/'RECKEY.PTR',stage/'PCPLUS.ASP',stage/'PCPLUS.ASX') if path.is_file()]
  result['captures_sha256'].update({str(p.relative_to(out)):sha(p) for p in observation_paths})
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -1,5 +1,11 @@
 # Local BBS compatibility lab
 
+The [normal recorder audio route](audio-recording.md) adds screen-gated BIOS
+Record/save and explicit DOS ASP compilation/replay, followed by manual Search.
+BIOS/TCP preparation passes; actual audio acceptance requires the full run and
+independent stream, SIP and restoration checks.
+
+
 Test the actual source-built DOS terminal against local Synchronet, ENiGMA½
 and Mystic servers. Downloaded server programs, source checkouts, user databases,
 wire captures and DOS snapshots stay under ignored `build/bbs-lab/`.

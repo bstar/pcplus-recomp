@@ -51,6 +51,31 @@ def main():
  for m in menus:
   if index<len(wanted) and m==wanted[index]:index+=1
  checks['authoritative_menu_order']=index==len(wanted)
+ recording=None
+ if r.get('route')=='recording':
+  stage=out/'program';source=stage/'PCPLUS.ASP';compiled=stage/'PCPLUS.ASX'
+  script=source.read_bytes() if source.is_file() else b''
+  payload=b''.join(bytes.fromhex(v.decode()) for v in re.findall(rb'^transmitraw "([0-9A-F]*)"\r?$',script,re.M))
+  user=re.sub(rb'\x1b\[(?:\?[0-9;]*c|[0-9]+;[0-9]+R)',b'',sent)
+  first=menus.index('fileBaseMainMenu') if 'fileBaseMainMenu' in menus else len(menus)
+  expected=['fileBaseMainMenu','fileBaseSearch','fileBaseMainMenu','fileBaseSearch','fileBaseMainMenu','fileBaseSearch']
+  report=(out/'RECKEY.BIN').read_bytes() if (out/'RECKEY.BIN').is_file() else b''
+  state=struct.unpack('<8H',report) if len(report)==16 else ()
+  import sys
+  root=Path(__file__).resolve().parents[2];sys.path.insert(0,str(root/'src/aspect'))
+  from compiler import compile_source
+  checks.update(recording_exact_source_payload=payload==b'S\r\x1b' and script.endswith(b'endproc\r\n'),
+   DOS_created_source_and_bytecode='program/PCPLUS.ASP' not in r['generated_inputs'] and 'program/PCPLUS.ASX' not in r['generated_inputs'] and
+    bool(script) and compiled.is_file() and compiled.read_bytes()==compile_source(script.decode('cp437')),
+   recording_script_replay_and_manual_bytes=user.endswith(b'S\r\x1bS\r\x1bS\r'),
+   recording_exact_authoritative_route=menus[first:]==expected,
+   recording_helper_completed=bool(state) and state[:4]==(0x524b,14,26,1),
+   recording_staged_inputs_unchanged=all(sha(out/name)==h for name,h in r['generated_inputs'].items()),
+   recording_no_scratch_or_compile_logs=not list(stage.glob('LPR*.TMP')) and not list(stage.glob('LPR*.BAK')) and not list(stage.glob('LPC*.LOG')),
+   recording_final_manual_search='FILE SEARCH' in r['DOS_screen'] and 'ESC : cancel' in r['DOS_screen'])
+  recording=dict(source_sha256=sha(source) if source.is_file() else None,bytecode_sha256=sha(compiled) if compiled.is_file() else None,
+   payload_hex=payload.hex(),helper_state=state,menus_after_initial_file_base=menus[first:],
+   scope='Normal File/C source recording, File/A explicit ASP compilation/replay, manual Search, actual BIOS helper retirement. Whole captured audio/serial streams are independently compared above.')
  editor=None
  if editor_route and not r.get('editor_multiline_checks'):
   clean=re.sub(rb'\x1b\[[0-?]*[ -/]*[@-~]',b'',display).decode('cp437');body=clean[clean.find('KEYTEST'):]
@@ -133,7 +158,7 @@ def main():
    'pre_proxy_training_tail_hex':bytes(data[:dropped]).hex(),'unadjusted_serial_guest_identity':online==data},
   'hardware_snapshot':{'layout':'32 IRQ-vector bytes,4 INT1C bytes,6 UART/PIC bytes','INT1C_restored':snapshots_valid and before[32:36]==after[32:36],
    'differing_offsets':[i for i,(a,b) in enumerate(zip(before,after)) if a!=b] if snapshots_valid else None},
-  'editor':editor,'scope':'Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim.'}
+  'editor':editor,'recording':recording,'scope':'Independent read-only actual DOS/ASPECT, BBS authoritative logs, guest frames, serial/Telnet byte identity, RTP continuity, SIP and cleanup audit. No physical modem/ATA claim.'}
  if r.get('editor_multiline_checks'):result['audit_inputs']['lab/bbs/editor_multiline_evidence.py']=sha(root/'lab/bbs/editor_multiline_evidence.py')
  (out/'independent-audit.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

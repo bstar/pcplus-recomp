@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+The [software-audio recorder route](lab/bbs/audio-recording.md) now has six
+actual8086 BIOS gate/queue/watchdog probes and a passing actual DOS/Telnet
+Record → explicit ASP compilation/replay → manual Search control. The same
+helper and unchanged production binaries are admitted to the pinned200ms,
+V22/1200 SIP/RTP/DSP/Telnet path. [Preparation evidence](docs/validation/recording-audio-preparation.json)
+is sealed; actual audio outcome and independent byte/cleanup audits remain
+pending. No F01–F16 or physical hardware gate closes.
+
+
 The [current BBS recorder checkpoint](docs/BBS_RECORDING.md) now passes four
 production DOS sessions on Synchronet and ENiGMA: File/C records read-only menu
 navigation, DOS ASPCOMP compiles the unedited source, File/A replays in a fresh
