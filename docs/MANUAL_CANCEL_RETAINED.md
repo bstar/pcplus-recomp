@@ -126,6 +126,7 @@ are retained under its ignored build directory. A fresh source-only tree of
 with no originals or prebuilt inputs. The [regression inventory](validation/modem-resync-candidate-regressions.json)
 records product identities, tool hashes and individual report hashes.
 Other application/BBS workflows remain required after adoption; current TCP
-recorder/replay controls pass while normal audio still needs investigation.
+controls and the [selected normal recorder audio route](validation/recording-footer-audio.json)
+now pass after correcting fixture readiness.
 Full modem and application requirements, and physical
 Boca/SPA2102 testing, remain open.

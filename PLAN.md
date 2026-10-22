@@ -1,34 +1,24 @@
 # Complete DOS rebuild plan
 
-The [placement-only normal audio attempt](docs/validation/recording-marker-layout-stopped.json)
-was deliberately stopped for a dump after prolonged readiness failure; helper
-phase0/zero keys/zero queue retries remain observed. No normal cleanup/audio
-acceptance follows. The [current footer gate](docs/RECORDING_FOOTER_READINESS.md)
-waits for plain bottom-filter text before signaling readiness. A failed raw-ANSI
-gate is preserved: parent parser continuations bypass connected WAITFOR.
-Eight native boundary cases and13 fresh DOS/TCP controls pass; a new ordinary
-audio run is live with sealed preparation. The separate
-[retained-carrier hangup model](docs/HANGUP_RETAINED_CARRIER.md) reproduces four
-linked cases; actual DOS and policy correction remain required.
+[Normal ENiGMA recorder audio](docs/validation/recording-footer-audio.json) now
+passes26 producer/34 independent/12 serial checks on current parent1cbb4f8f,
+with unchanged ASPECT183f852d and source-built DOS compiler. All77 online guest
+bytes decode independently from the caller waveform and match serial input.
+Actual recording, ASP DOS compilation/replay, subsequent manual Search and
+hardware/timer/SIP/VM cleanup pass on one software V22/1200 route at38400DTE.
+This closes that current-parent checkpoint, not full F13 or physical hardware.
 
-The [ready-marker audio diagnostic](docs/validation/recording-marker-audio-diagnostic.json)
-now observes76 consecutive matching samples, below the91 required for admission,
-with no recipe keys or BIOS queue retries. Replaying the captured late File Base
-footer erases the preceding marker under consistent cursor placement. The
-[revised fixture layout](docs/RECORDING_MARKER_LAYOUT.md) separates its marker
-from that repaint area without changing helper timing or application binaries.
-Forty linked renderer cases and13 fresh TCP recording/replay checks pass. A new
-ordinary audio run is in progress; no normal audio outcome is accepted yet.
+The [readiness fixture](docs/RECORDING_FOOTER_READINESS.md) now waits for plain
+bottom-filter text before its local marker. Initial dwell, key pacing and final
+screen checks are unchanged. Eight native boundary cases,40 linked layout cases
+and13 connected TCP controls support the diagnosis. The raw-ANSI gate failure,
+placement-only intentional stop and76-sample diagnostic remain separate failed
+or diagnostic evidence; none was promoted to normal acceptance.
 
-[Recorder ready-marker diagnostics](docs/RECORDING_MARKER_DIAGNOSTIC.md) now
-preserve the ordinary helper binary while adding opt-in private visibility
-counters. Seven ordinary/eight diagnostic actual DOS BIOS cases and three
-production-admission rejection controls pass independent probe audit. A fresh
-ordinary ENiGMA TCP control passes13 checks. The diagnostic SIP/audio run uses
-an explicit12000-tick observation watchdog and cannot establish normal audio
-acceptance. Its outcome remains unverified; do not change helper timing before
-interpreting the raw visibility evidence. All remaining application/hardware
-requirements stay open.
+Next: actual DOS peer evidence and correction for
+[retained-carrier hangup](docs/HANGUP_RETAINED_CARRIER.md), distinguishing failed
+hangup from configured carrier-ignore behavior. Other modem/init-result/pressure,
+application, physical Boca/SPA2102 and all full F01–F16 requirements remain open.
 
 [Retry command synchronization](docs/MANUAL_CANCEL_RETAINED.md) is now adopted
 in main. The current1cbb4f8f/b14074ec products match the tested candidate and

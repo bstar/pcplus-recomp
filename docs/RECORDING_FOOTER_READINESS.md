@@ -31,7 +31,11 @@ are modeled. A fresh connected DOS/TCP control passes all13 recording, compiler,
 replay, manual Search and hardware/timer checks.
 
 The ordinary helper binary, initial dwell, final-screen stability and key pacing
-are unchanged. Application executables retain their admitted identities. A new
-normal audio run has [sealed preparation](validation/recording-footer-audio-preparation.json);
-its outcome remains unverified. No diagnostic or stopped run establishes normal
-audio, physical Boca/SPA2102 or full application acceptance.
+are unchanged. Application executables retain their admitted identities. The new
+normal run now [passes full selected-route acceptance](validation/recording-footer-audio.json):
+26 producer,34 independent and12 serial checks, with77 independently waveform-
+decoded online bytes, actual ASP DOS compilation/replay, manual Search and normal
+hardware/timer/SIP/VM cleanup. Its [sealed preparation](validation/recording-footer-audio-preparation.json)
+remains separate. This accepts one software V22/1200 route; no diagnostic or
+stopped run, physical Boca/SPA2102,14.4 negotiation or full application acceptance
+is implied.

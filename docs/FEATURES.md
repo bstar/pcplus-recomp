@@ -1,22 +1,17 @@
 # Full application reconstruction checklist
 
-[Footer completion](RECORDING_FOOTER_READINESS.md) now gates readiness on plain
-bottom-filter text; an unsuitable raw-ANSI gate and the stopped placement-only
-audio run remain preserved as failures. Eight native boundary cases and13
-connected DOS/TCP controls pass; ordinary audio outcome is still unverified.
-Four retained-carrier hangup model cases also remain an open F03 policy gap.
+[Current normal recorder audio](validation/recording-footer-audio.json) passes26
+producer/34 independent/12 serial checks with77 waveform-decoded online bytes,
+actual DOS ASP compilation/replay, manual Search and normal hardware/timer/SIP/VM
+cleanup. This is one ENiGMA software V22/1200 route on current parent1cbb4f8f;
+full F13, other routes and physical hardware remain open.
 
-[Marker layout evidence](RECORDING_MARKER_LAYOUT.md) narrows the audio readiness
-failure to a76-sample marker run below the91-sample requirement. A captured late
-footer erases the preceding layout in linked renderer tests. The revised fixture
-passes40 selected renderer cases and13 ordinary-helper TCP checks. Normal audio
-acceptance remains unverified; helper timing and application binaries are unchanged.
-
-[Ready-marker observations](RECORDING_MARKER_DIAGNOSTIC.md) add opt-in private
-BIOS counters with unchanged ordinary helper bytes. Seven ordinary/eight
-diagnostic BIOS probes and three production-admission rejection controls pass;
-fresh ordinary TCP recording/replay passes13 checks. Diagnostic audio outcomes
-remain separate from normal audio acceptance and all full feature gates.
+[Footer readiness](RECORDING_FOOTER_READINESS.md) uses plain bottom-filter text
+because connected WAITFOR sees display leads rather than parser continuations.
+Eight native boundary cases,40 renderer cases and13 TCP controls pass. Earlier
+raw-ANSI and placement-only attempts remain failed/diagnostic evidence. Four
+[retained-carrier hangup model cases](HANGUP_RETAINED_CARRIER.md) remain an open
+F03 policy gap requiring actual DOS peer evidence before correction.
 
 [Retained-command retry](MANUAL_CANCEL_RETAINED.md) now adopts the tested
 separator in main, with current-source/product binding and an actual stock

@@ -43,6 +43,7 @@ data and page artwork.
 The placement-only ordinary-helper TCP control passed13 checks, including actual
 recorded bytes, DOS compilation/replay, manual Search, timer and hardware
 restoration. Its ordinary SIP/audio run did not establish the complete workflow;
-the current footer-gated run remains unverified. Diagnostic results remain ineligible
+the separate [footer-gated normal run is now accepted](validation/recording-footer-audio.json)
+for its selected software route. Diagnostic results remain ineligible
 for production acceptance; physical Boca/SPA2102 and full application
 requirements remain open.

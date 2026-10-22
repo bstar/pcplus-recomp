@@ -4,6 +4,9 @@ The completed [diagnostic receipt](validation/recording-marker-audio-diagnostic.
 records76 consecutive ready-marker samples before disappearance, with no
 recipe keys or keyboard queue retries. See the
 [layout counterexample and current fixture](RECORDING_MARKER_LAYOUT.md).
+A separate [normal footer-gated run](validation/recording-footer-audio.json) now
+passes selected-route audio acceptance; the diagnostic and stopped runs remain
+ineligible for that acceptance.
 
 The preceding normal audio run reached Files, but the BIOS helper delivered no
 recipe keys before its watchdog. The [failure receipt](validation/recording-manual-reconnect-audio-failure.json)
