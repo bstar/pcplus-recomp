@@ -1470,3 +1470,16 @@ test-program-notice-original: program-notice
 	python3 standalone/check_program_notice.py --original
 test-program-notice-source: program-notice
 	python3 standalone/prove_program_notice_source.py --output build/program-notice/source-make-$(shell date +%s%N)
+
+.PHONY: notice-window test-notice-window test-notice-window-original test-notice-window-source test-notice-window-group-control
+notice-window:
+	python3 standalone/build_notice_window.py
+test-notice-window: notice-window
+	python3 standalone/check_notice_window.py
+	python3 standalone/test_notice_window_dos.py --output build/notice-window/DOS-make-$(shell date +%s%N)
+test-notice-window-original: notice-window
+	python3 standalone/check_notice_window.py --original
+test-notice-window-source: notice-window
+	python3 standalone/prove_notice_window_source.py --output build/notice-window/source-make-$(shell date +%s%N)
+test-notice-window-group-control: notice-window
+	python3 standalone/check_window_group_control.py --output build/notice-window/group-make-$(shell date +%s%N)

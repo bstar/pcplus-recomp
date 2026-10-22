@@ -150,8 +150,70 @@ component products, with original executables and analysis absent.
 
 The native controller is not published to the live application yet. Its long
 message arithmetic can produce invalid window coordinates, and its stopped-clock
-wait has no foreground UART service. Next compose the native window save/restore
-and real keyboard/scheduler ownership, then bind error notices into PROGRAM's
-normal and unwind paths. These requirements and the other macro/mouse/UI/geometry
+wait has no foreground UART service. The guarded component below now supplies native window storage/drawing. Real
+keyboard/scheduler ownership and binding error notices into PROGRAM's normal
+and unwind paths remain required. These requirements and the other macro/mouse/UI/geometry
 requirements still precede normal external-command publication; all full F01-F16
 gates and physical modem acceptance remain open.
+
+## Native notice-window ownership
+
+The original notice window pair at 3fc7/4015 now composes with its actual
+frame, shadow, expansion/collapse, cell-copy and cursor-stack instructions.
+[Provenance](../reconstruction/notice_window/provenance.json) binds twenty regions
+(1,940 bytes) to independent MZ source mappings and complete REA byte reads.
+Another 353 bytes reuse existing native full-screen snapshot/restore and display
+helpers. The algorithms preserve native animation, shadow and pacing branches;
+flat products remain byte-identical to the selected original.
+
+The save routine snapshots the entire text screen before drawing its window.
+When that allocation returns NULL, the native alert returns and drawing continues.
+The matching NULL restore alerts without restoring pixels. Two explicit linked
+counterexamples retain that destructive behavior; they are not accepted ownership.
+
+The [source-owned owner](../src/ui/notice_window.c) first validates a complete
+near input extent, stages its fields, checks mode3/page0/80x25 and reserves the
+4,000-byte snapshot with two sixteen-byte guards. Only then can native cursor or
+screen mutation begin. The native allocator consumes that reservation exactly
+once; native restoration releases the real far-heap allocation. Invalid bounds,
+undersized rectangles, wrapping input, attributes above 255, unsupported geometry,
+reentry and allocation denial reject before drawing. Close retains the allocation
+on guard failure or changed geometry; repairing that condition permits cleanup.
+The private cursor/frame state and cdecl adapters explicitly use DGROUP and DS=SS.
+
+[Independent receipt](validation/notice-window.json) accepts 98 linked cases with
+98 genuine-original comparisons. Native snapshot/frame/shadow/animation/cell-copy
+instructions execute against guarded video and heap regions; heap, BIOS scroll/
+cursor, sound and CRTC I/O are declared model boundaries. The actual 8086 DOS
+owner suite passes 771 checks and 114 allocations/frees. It uses real DOS far
+heap and VGA text memory across six rectangles with animation on/off, rejection
+and repair paths, and one hundred repeated lifetimes. Every completed lifetime
+restores the screen/cursor and returns the used far-heap total to baseline.
+The ordinary owner also compiles without diagnostic hooks.
+
+The first two DOS integration attempts failed before emitting the C diagnostic result: local
+data fixups used _DATA offsets while DS held DGROUP. Adding the explicit GROUP
+fixes that adapter. A fresh controlled build that removes only that declaration
+still has thirty identical raw native products but fails the actual DOS probe.
+It remains rejected evidence. This demonstrates why flat byte matching alone
+cannot prove a linked application's data context. Both initial failed DOS
+captures and the controlled failure are retained in the audit custody directory.
+Forty source/provenance files in a fresh tree reproduce all thirty-one products,
+including WINDOW.EXE, with originals and analysis absent from the tree.
+
+```sh
+./tools/build test-notice-window
+./tools/build test-notice-window-source
+./tools/build test-notice-window-group-control
+# Analyst-only: requires the ignored genuine original executable.
+./tools/build test-notice-window-original
+```
+
+This is a component owner, not the normal application's error window yet.
+Its admitted live component configuration disables sound; a reached sound or
+alert dependency exits explicitly rather than pretending success. Native sound
+policy, original shared-window/parent leases, other live geometries and physical
+video timing remain unfinished. Next connect this owner to the timed notice
+controller with real keyboard and foreground UART scheduling, then integrate
+PROGRAM normal/error/unwind ownership. The normal ASPECT dispatcher still rejects
+DOS/RUN/SHELL; all full F01-F16 and physical modem requirements remain open.

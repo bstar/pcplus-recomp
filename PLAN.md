@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Native notice-window ownership](docs/NATIVE_PROGRAM.md#native-notice-window-ownership)
+adds 1,940 exact window/frame/shadow/cursor/animation bytes and 353 reused display
+bytes, with a guarded real DOS far-heap owner. All 98 CPU cases match the original;
+two retain its destructive NULL-snapshot behavior as counterexamples. The actual
+8086 DOS owner passes 771 checks with 114 allocations/frees, covering invalid and
+wrapping input, memory denial before drawing, guard/geometry retention and repair,
+and 100 repeated lifetimes. Forty declared sources reproduce all 31 products.
+A missing-DGROUP control fails in DOS despite identical raw native routines.
+Timed controller/UART/PROGRAM integration and every full application gate remain open.
+
 [Recovered PROGRAM notices](docs/NATIVE_PROGRAM.md#timed-notice-controller)
 now supply 190 exact native wrapper/controller bytes plus 71 reused strlen/DOS
 clock bytes. All 495 source instruction cases match the genuine original;
