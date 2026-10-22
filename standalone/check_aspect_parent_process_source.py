@@ -10,7 +10,7 @@ def main():
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     folder=ROOT/'build/aspect-parent-process/source-proofs'/args.label;folder.mkdir(parents=True,exist_ok=False)
     source=folder/'source';sources={}
-    for name in ('terminal-process','aspect-process-parent','aspect-compiler-dos','aspect-runner'):
+    for name in ('terminal-process','terminal-mouse','aspect-process-parent','aspect-compiler-dos','aspect-runner'):
         manifest=json.loads((ROOT/'build'/name/'manifest.json').read_text())
         for path,digest in manifest['sources'].items():
             assert path not in sources or sources[path]==digest,path
@@ -28,18 +28,19 @@ import build_aspect_runner as runner
 compiler.main();process.main(parent_render=True);runner.main()
 subprocess.run([sys.executable,'standalone/build_terminal.py','--external-render'],check=True)
 subprocess.run([sys.executable,'standalone/build_terminal.py'],check=True)
+subprocess.run([sys.executable,'standalone/build_terminal.py','--mouse'],check=True)
 '''
     with (folder/'build.log').open('w') as log:result=subprocess.run([sys.executable,'-c',code],cwd=source,stdout=log,stderr=log,timeout=180)
     products=['aspect-process-parent/ASPECT.EXE','aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE',
-        'terminal-process/TERMINAL.EXE','terminal/TERMINAL.EXE','native-program/PROGRAM.EXE','native-program/OWN1.COM','native-program/OWN2.COM',
+        'terminal-process/TERMINAL.EXE','terminal/TERMINAL.EXE','terminal-mouse/TERMINAL.EXE','native-program/PROGRAM.EXE','native-program/OWN1.COM','native-program/OWN2.COM',
         'native-display/DISPLAY.EXE','native-display/VIDEO.COM','process-serial/PSERIAL.EXE','process-serial/UART1.COM','process-serial/UART2.COM',
         'native-process/NATIVE.EXE','native-process/NAMES.EXE']
     products+=['native-process/'+name for name in json.loads((ROOT/'build/native-process/manifest.json').read_text())['children']]
     compared={name:dict(expected=sha(ROOT/'build'/name),actual=sha(source/'build'/name)) for name in products} if not result.returncode else {}
-    report=dict(passed=not result.returncode and len(compared)==25 and all(p['expected']==p['actual'] for p in compared.values()),
+    report=dict(passed=not result.returncode and len(compared)==26 and all(p['expected']==p['actual'] for p in compared.values()),
         original_inputs=[],source_files=len(sources),sources=sources,products=compared,exit_code=result.returncode,
         checker_sha256=sha(Path(__file__)),log_sha256=sha(folder/'build.log'),
-        scope='Fresh declared-source tree; experimental capability7 parent/child, normal capability6 products, compiler and20 process components. No originals, existing objects or REA databases.')
+        scope='Fresh declared-source tree; experimental capability9 parent/child, normal capability8 keyboard/mouse products, compiler and20 process components. No originals, existing objects or REA databases.')
     (folder/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('Fresh attached PROGRAM source:',len(compared),'products','PASS' if report['passed'] else 'FAIL');print(folder)
     return 0 if report['passed'] else 1
 

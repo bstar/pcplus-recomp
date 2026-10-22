@@ -1,5 +1,11 @@
 # Shared keyboard output during ASPECT
 
+The [current script-time window](ASPECT_LOCAL_UI.md) extends this earlier
+key-output checkpoint: capability8 adds checked transport-only polling and the
+native Alt-Z reference/help window; capability9 also admits external PROGRAM.
+Ordinary bindings retain this shared output path. Other local actions remain
+unfinished. Earlier capability6/7 evidence below retains its historical scope.
+
 An admitted ASPECT child now forwards ordinary keys through the parent's
 selected keyboard profile and continues its script. The native WHEN service
 still acquires and records keys at its ordinary safe points. A capability6

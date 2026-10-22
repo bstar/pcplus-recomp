@@ -206,6 +206,11 @@ static unsigned callback_dispatch(unsigned operation,unsigned value)
  }
  if(!aspect_serial_active){callback_error=ASPECT_RUN_SERIAL;return operation==ASPECT_RENDER_RAW_WAIT || operation==ASPECT_RENDER_RAW_NOW?65535U:callback_error;}
  switch(operation){
+ case ASPECT_RENDER_TRANSPORT_POLL:
+  /* A local window owns keyboard dismissal. Preserve raw RX for the script's
+   * WAITFOR/RGET, service queued flow control, and never consume Escape here. */
+  if(!key_wait || !key_policy_read || value){callback_error=ASPECT_RUN_STATE;return callback_error;}
+  return runtime_serial_poll();
  case ASPECT_RENDER_KEY_DUPLEX:
   if(!key_wait || key_policy_read || value){callback_error=ASPECT_RUN_STATE;return 65535U;}
   key_policy_read=1;

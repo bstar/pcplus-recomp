@@ -69,7 +69,7 @@ def main():
   "expectations=[{k:(v.hex() if isinstance(v,bytes) else v) for k,v in c.items()} for c in cases]":"expectations=encode(cases)",
   'payload=bytearray(directory());':"payload=bytearray(directory(profile=case['profile']));",
   "settings=bytearray(prm());extra=' /A:NETWORK'":"settings=bytearray(prm());struct.pack_into('<H',settings,0x1d18-0x1b84,case['profile']);extra=' /A:NETWORK /B:'+case['bios_policy']",
-  "files=files,banner=case['banner'],working_drive='d',observer='RENDER')":"files=files,banner=case['banner'],working_drive='d',observer='RENDER',profile=case['profile'])"}
+  "files=files,banner=case['banner'],working_drive='d',observer='RENDER',environment=case.get('environment'))":"files=files,banner=case['banner'],working_drive='d',observer='RENDER',environment=case.get('environment'),profile=case['profile'])"}
  for old,new in pairs.items():assert source.count(old)==1,old;source=source.replace(old,new)
  start=source.index('  keys=(');end=source.index('\n  result=harness.run',start)
  source=source[:start]+"  keys=case['keys']"+source[end:]

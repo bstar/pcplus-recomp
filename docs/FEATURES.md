@@ -1,5 +1,17 @@
 # Full application reconstruction checklist
 
+[Production script-time Alt-Z](ASPECT_LOCAL_UI.md) now opens the native
+reference/help window while ASPECT waits. Escape dismisses it, extended keys
+remain queued and the child retains UART/RX ownership. Five DOS cases observe
+100 window ticks, six retained incoming bytes, script continuation and a later
+normal menu. Keyboard/mouse products pass17 CPU cases each;18 callback-client,
+five DOS lifecycle,837 ordinary-key and153 menu inputs pass. All26 selected
+source-only products reproduce. Matching capabilities8/9 are required.
+[Window validation](validation/aspect-script-window-live.json) and separate
+[BBS recorder regressions](validation/bbs-script-window-compat.json) retain exact
+scope. Full local actions, script-window BBS/audio, broader pressure/flow/mouse
+coverage, physical hardware and every full F01–F16 gate remain open.
+
 The [native Alt-Z window component](ASPECT_LOCAL_UI.md) recovers176 exact
 bytes and passes2,064 CPU cases against2,064 original-instruction comparisons,
 including eight real WHEN-to-terminal-dispatch compositions. Its source-only

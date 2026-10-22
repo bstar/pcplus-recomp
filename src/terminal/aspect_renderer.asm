@@ -5,10 +5,10 @@ BITS 16
 CPU 8086
 %include "resident_bridge.inc"
 %ifdef ASPECT_EXTERNAL_RENDER
- %define RENDER_CAPABILITY 7
+ %define RENDER_CAPABILITY 9
  extern terminal_program_result
 %else
- %define RENDER_CAPABILITY 6
+ %define RENDER_CAPABILITY 8
 %endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
@@ -76,6 +76,9 @@ extern terminal_status_live,terminal_break_ui,terminal_script_label_update
 extern terminal_break_delay_units
 extern keyboard_bios_mode
 extern terminal_key_output
+extern terminal_script_window
+global terminal_script_window_poll
+global render_child_ds
 extern _script_handoff
 global terminal_render_prepare,terminal_render_revoke,terminal_render_validate,terminal_render_typed_abort
 global terminal_render_failure_notice
@@ -380,7 +383,13 @@ render_body:
  mov word [cs:render_remaining],4096
  mov word [terminal_aspect_active],1
  pop ax
+ cmp ax,0x2c00
+ jne .ordinary_key
+ call terminal_script_window
+ jmp .key_finished
+.ordinary_key:
  call far terminal_key_output
+.key_finished:
  push ax
  call render_scope_end
  pop ax
@@ -576,6 +585,24 @@ render_body:
 render_proxy:
  call far [cs:render_callback]
  retf
+; Local keyboard/window polling is a separate foreground lifetime. Keep raw
+; input in the child's ring and service flow without stealing Escape or using
+; the parser continuation's72-tick/4096-operation rendering budget.
+terminal_script_window_poll:
+ cmp word [terminal_aspect_active],1
+ jne .bad
+ cmp word [cs:render_attached],1
+ jne .bad
+ xor bx,bx
+ mov ax,10
+ call resident_bridge_callback
+ cmp ax,14
+ jbe .done
+.bad:
+ mov ax,10
+.done:
+ ret
+
 render_tick:
  push es
  mov ax,0x40

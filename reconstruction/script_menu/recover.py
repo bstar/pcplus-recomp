@@ -43,7 +43,8 @@ def main():
   names={at:f'local_window_at_{at:04x}' for at,_ in rows};names[START]='aspect_local_window'
   names.update(SERVICES)
   lines=['; Recovered native Alt-Z window, not original source. See provenance.json.',
-   'BITS 16','CPU 8086','%ifdef LOCAL_WINDOW_OMF','SEGMENT _TEXT public class=CODE use16',
+   'BITS 16','CPU 8086','%ifdef LOCAL_WINDOW_OMF','%ifdef LOCAL_WINDOW_FAR',
+   'SEGMENT ASPECT_CODE public class=FARCODE use16','%else','SEGMENT _TEXT public class=CODE use16','%endif',
    'global aspect_local_window']+['extern '+name for name in [*STATE.values(),*SERVICES.values()]]
   lines+=['%else',f'ORG 0x{START:x}']+[f'%define {name} 0x{at:x}' for at,name in {**STATE,**SERVICES}.items()]
   lines+=['%endif','%include "encodings.inc"']

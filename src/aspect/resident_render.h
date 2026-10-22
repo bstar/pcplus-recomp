@@ -3,16 +3,18 @@
 /* Maintained application RPC contract, not an original PCPlus structure.
  * ASIOv4 appends four words to the v3 descriptor: parent far entry offset,
  * segment, nonzero lease token, capability version. All four bind the guard.
- * Capability6 adds shared profile key output; capability5 added BIOS inheritance.
+ * Capability8 adds transport-only polling for foreground local windows;
+ * capability9 also admits external PROGRAM. Earlier6/7 exposed key output
+ * without the local-window transport callback;5 added BIOS inheritance.
  * Older capability versions are rejected explicitly.
  * Far request AX=operation/BX=value, AX=result, all other registers/FLAGS
  * preserved. Each context runs DS=SS on its own checked stack slice. */
 #define ASIO_VERSION_RENDER 4U
 #define ASIO_V4_SIZE 48U
 #if defined(ASPECT_EXTERNAL_RENDER)
-#define ASPECT_RENDER_CAP_VERSION 7U
+#define ASPECT_RENDER_CAP_VERSION 9U
 #else
-#define ASPECT_RENDER_CAP_VERSION 6U
+#define ASPECT_RENDER_CAP_VERSION 8U
 #endif
 #define ASPECT_RENDER_CLIENT_MAGIC 0x5243U
 #define ASPECT_RENDER_CLIENT_SIZE 10U
@@ -25,7 +27,7 @@ enum { ASPECT_RENDER_RAW_WAIT=0, ASPECT_RENDER_UNREAD=1,
  ASPECT_RENDER_SEND=2, ASPECT_RENDER_POLL=3, ASPECT_RENDER_ERROR=4,
  ASPECT_RENDER_RAW_NOW=5, ASPECT_RENDER_BREAK_VALUE=6,
  ASPECT_RENDER_LABEL_BYTE=7, ASPECT_RENDER_KEYBOARD_MODE=8,
- ASPECT_RENDER_KEY_DUPLEX=9 };
+ ASPECT_RENDER_KEY_DUPLEX=9, ASPECT_RENDER_TRANSPORT_POLL=10 };
 typedef struct aspect_render_client {
  unsigned magic,version,token,callback_offset,callback_segment;
 } aspect_render_client;

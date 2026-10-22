@@ -2,7 +2,11 @@
 BITS 16
 CPU 8086
 %ifdef LOCAL_WINDOW_OMF
+%ifdef LOCAL_WINDOW_FAR
+SEGMENT ASPECT_CODE public class=FARCODE use16
+%else
 SEGMENT _TEXT public class=CODE use16
+%endif
 global aspect_local_window
 extern local_window_help_context
 extern local_window_descriptor

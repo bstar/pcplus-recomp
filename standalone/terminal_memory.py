@@ -459,6 +459,15 @@ def inspect_terminal_memory(binary,map_path):
                          '_aspect_render_admit','_aspect_render_preflight_modes',
                          '_aspect_render_preflight_control','_aspect_render_client_admit'):
    assert symbols[name][0]==aspect_seg and symbols[name][1]<aspect_code['bytes'],(name,'ASPECT far code identity')
+  for name in ('aspect_local_window','terminal_script_window','terminal_script_window_debug',
+               'terminal_script_window_poll','local_window_key_poll','local_window_key_read'):
+   assert symbols[name][0]==aspect_seg,(name,'script window escaped ASPECT code')
+  for entry,target in [('terminal_script_window_keyboard_poll','keyboard_poll'),
+                       ('terminal_script_window_keyboard_read','keyboard_read')]:
+   assert symbols[entry][0]==near_code['relative_segment']
+   near_call(entry,target)
+  far_call('local_window_key_read','terminal_script_window_keyboard_read')
+  extra['script_window_keyboard_far_adapters_verified']=True
   # Verify the actual resident adapters refer to relocated far service entries.
   # Symbol placement alone cannot prove the inter-segment calling convention.
   resident_lo=near_code['relative_segment']*16+near_code['offset']

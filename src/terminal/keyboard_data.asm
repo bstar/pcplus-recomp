@@ -5,11 +5,15 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern terminal_quit,terminal_exit_code
+extern terminal_script_window_debug
 global keyboard_debug_callback
 keyboard_debug_callback:
+ call far terminal_script_window_debug
+ jnc .handled
  ; This path is disabled by debug_gate=-1. If enabled accidentally, fail visibly.
  mov word [terminal_exit_code],4
  mov word [terminal_quit],1
+.handled:
  ret
 SEGMENT _DATA public align=16 class=DATA use16
 GROUP DGROUP _DATA

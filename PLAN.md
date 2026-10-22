@@ -1,5 +1,27 @@
 # Complete DOS rebuild plan
 
+The [production script-time Alt-Z window](docs/ASPECT_LOCAL_UI.md) now opens
+during ASPECT waits, switches reference/help on repeated Alt-Z and consumes
+Escape as dismissal while leaving extended keys queued. The child retains raw
+RX and UART ownership; a new transport-only callback services flow/errors
+without script cancellation or parser-budget extension. The recovered176-byte
+body uses a checked static far frame and source-owned text, preserving DS=SS
+and IF during copies. Capabilities8/9 require matching rebuilt parent/child.
+[Live validation](docs/validation/aspect-script-window-live.json) accepts17 CPU
+cases per keyboard/mouse product, five actual DOS windows,18 key-client cases,
+five DOS lifecycle cases,837 ordinary-key inputs and153 menu inputs. The DOS
+timer observes100 window ticks and six queued child-ring bytes; the script
+renders them and resumes normally, including a later regular command menu.
+All26 selected source-only products reproduce. The near-data overflow caught
+in the largest mouse diagnostic is preserved and corrected without new near
+data; keyboard/mouse spare remains112/64, resident-code spare350/202.
+[Current BBS recorder regressions](docs/validation/bbs-script-window-compat.json)
+pass four selected DOS sessions on Synchronet/ENiGMA with the new pair. Actual
+script-window BBS/audio, sustained pressure and full local command actions
+remain required; prior audio acceptance retains its earlier binary identities.
+Continue all remaining application reconstruction. No full F01–F16 or physical
+gate closes. Entries below retain their historical identities and scope.
+
 The [native script-time Alt-Z component](docs/ASPECT_LOCAL_UI.md) now rebuilds
 176 exact bytes and relocatable OMF, with2,064 CPU cases and2,064 matching
 genuine-original comparisons. Eight composed cases execute WHEN4DE9 through

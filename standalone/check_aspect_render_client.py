@@ -15,7 +15,7 @@ class Client(q.Machine):
   self.put('__STACKLOW',0xc000);self.put('__STACKTOP',0xe000)
   self.uc.mem_write(0x61100,b'\xb8\0\0\xcb') # Explicit BEGIN/EMIT/END success boundary.
   self.uc.mem_write(self.data_base+0xb000,b'/S1:0003:03:N:6200:0100\0')
-  self.desc=0x62100;self.words=[0x4f495341,4,48,0x6000,0x6200,0x1000,4096,0,0,0,0,0,0,0,0,0,0,0,0,0x100,0x6100,0x7123,6]
+  self.desc=0x62100;self.words=[0x4f495341,4,48,0x6000,0x6200,0x1000,4096,0,0,0,0,0,0,0,0,0,0,0,0,0x100,0x6100,0x7123,8]
   self.publish()
  def publish(self):
   w=self.words;w[9]=w[3]^w[4]^w[5]^0xa510

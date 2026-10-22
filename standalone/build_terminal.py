@@ -39,6 +39,7 @@ sources += [ROOT/'src/process/dos_exec.asm']
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 sources += [ROOT/'src/aspect/resident_bridge.asm']
+sources += [ROOT/'reconstruction/script_menu/window.asm']
 sources += [ROOT/'src/status/status_renderer_bridge.asm',ROOT/'src/status/status_helpers.asm',
  ROOT/'reconstruction/terminal_reset/status_refresh.asm',ROOT/'reconstruction/terminal_reset/status_fill.asm',
  ROOT/'reconstruction/program_exec/strlen.asm']
@@ -58,6 +59,16 @@ objects=[]
 for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
+ if source.parent.name=='script_menu':
+  options=['-DLOCAL_WINDOW_OMF','-DLOCAL_WINDOW_FAR',
+   '-Dlocal_window_help_context=keyboard_debug_gate',
+   '-Dlocal_window_hook_enabled=keyboard_mapping_hook_enabled',
+   '-Dlocal_window_hook_character=keyboard_mapping_hook_character']
+  # The maintained window owns static far storage/prose, not native resource
+  # tables. Its unused legacy pointer/scalar arguments share the initialized
+  # context word; no duplicate near-data resource placeholders are needed.
+  options += ['-Dlocal_window_'+name+'=keyboard_debug_gate' for name in
+   ('descriptor','box_attribute','keyboard_table','text','text_attribute','status')]
  if source.parent.name=='attribute_repair':
   options += ['-DATTRIBUTE_REPAIR_FAR','-Derase_default_attribute=repair_default_attribute',
    '-Derase_previous_attribute=repair_previous_attribute','-Dtext_write_char=repair_text_write_char',

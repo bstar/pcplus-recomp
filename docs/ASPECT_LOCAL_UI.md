@@ -1,8 +1,12 @@
 # Local interaction while ASPECT owns the session
 
-The normal recorder software-audio workflow now passes, but local commands
-during an active script remain an application gap. The audio driver's startup
-readiness gate avoids interrupting a script; it does not implement this feature.
+The [current live-window validation](validation/aspect-script-window-live.json)
+accepts the native script-time Alt-Z reference/help window in the production
+terminal. Alt-Z during a script wait opens the window; repeated Alt-Z switches
+reference/help pages. Escape dismisses it without aborting the script. Extended
+keys remain queued for subsequent dispatch. Full local command actions during
+scripts remain an application gap. The earlier audio driver's startup-readiness
+gate remains appropriate for its foreground recorder recipe.
 
 ## Original behavior established by static evidence
 
@@ -68,50 +72,86 @@ RET6 at4056, RET2 at780E and RET6 at6BF0 in dossiers
 `ev_7f9e33fba53e582afe714539a420c24db117215acd4f03d96eaad33326e6d42b`
 and `ev_da4d22527ec92140290dfc0bf6ed25718cfd1f69b992c196a4ebfdfc81b8dc13`.
 The later private `local-ui-contracts-20261022.*` exports retain those dossiers.
-No actual DOS window, UART continuity or production menu integration is proved.
+That component regression alone does not prove an actual DOS window or serial
+continuity; the selected production checks below provide separate evidence.
 
 ```sh
 ./tools/build test-aspect-local-window
 ./tools/dev --command python3 standalone/check_aspect_local_window.py --original
 ```
 
-## Current implementation boundary
+## Production window and interaction boundary
 
 `runtime_when_dispatch_key()` in `src/aspect/when_runtime.c` sends keys through
 the attached parent renderer. `aspect_render_key()` performs the checked
-synchronous request, and `src/terminal/aspect_renderer.asm` calls the shared
-`terminal_key_output` service on the parent stack. The classifier deliberately
-marks local services FFFE; `src/terminal/key_dispatch.asm` returns typed error 3
-for them. This is why an early Alt-Z stops an active WAITQUIET instead of
-opening the maintained command menu.
+synchronous request. The parent's checked KEY handler now routes Alt-Z to the
+recovered176-byte window on its captured foreground stack. Other keys continue
+through `terminal_key_output`; local command services not yet connected still
+return typed error3. This window does not launch transfers or nested programs.
+
+`src/terminal/script_window.asm` supplies source-owned reference/help text,
+full4000-byte video and BIOS cursor/shape save/restore, and a guarded borrow of
+the inactive redisplay frame. Native resource arguments are unused by these
+maintained services and bind to the already initialized context word, avoiding
+new near-data placeholders. The initial placeholders caused an unrepresentable
+10000 stack endpoint in the largest mouse diagnostic; its failed link/source
+snapshots remain under `build/aspect-script-window-dos/data-limit-failure-01`.
+The corrected variant links at65520 bytes. Ordinary keyboard/mouse builds retain
+112/64 near-data bytes and350/202 resident-code bytes spare.
+
+Frame copies keep DS=SS and interrupts enabled by switching ES per cell. The
+window never touches parent device ports or the parent's TX ring. Its separate
+transport-only child callback services pending flow control and errors while
+leaving raw RX queued for WAITFOR/RGET; it does not peek or consume Escape.
+Callback errors force native window retirement through the matching frame
+restore before propagating a typed error. Repeated Alt-Z uses the owned debug
+callback; the previous unowned-debug failure guard remains intact.
 
 Each renderer callback checks a 4096-operation allowance and an elapsed limit
 of 72 BIOS ticks, approximately four seconds. It is a bounded rendering/key-output scope,
 not a modal UI lifetime. The child owns the active UART lease; ordinary parent
 UI/transfer loops cannot assume their own serial queues own incoming data.
-Removing the classifier rejection or extending the renderer timeout would
-leave those ownership and servicing requirements unresolved.
+The reference window has its own synchronous keyboard lifetime and transport
+polling, so it can wait beyond that parser budget without extending the parser
+budget. The ASIO descriptor remains version4/48 bytes; capability8 requires the
+new callback and capability9 also supports experimental external PROGRAM.
+Use matching rebuilt terminal/ASPECT executables: older capabilities fail before
+UART ownership rather than silently omitting window flow servicing.
+
+The production window passes17 CPU cases in each keyboard/mouse build. Five
+actual DOS cases exercise both supported profiles and BIOS modes, Escape,
+queued F1, repeat help and a subsequent regular command menu. A passive timer
+observes100 window ticks and six bytes retained in the actual child's receive
+ring; the script later renders those bytes, sends exact expected output and
+returns normally. The callback client passes18 cases including pending XOFF
+without dequeue; five actual DOS callback lifecycle cases pass. Ordinary key
+output837 and menu153 inputs pass. A fresh original-free tree reproduces26
+normal, mouse, experimental and supporting products exactly. Separate selected
+recorder/replay regressions pass four DOS sessions on Synchronet and ENiGMA;
+those BBS runs are compatibility regressions, not script-window BBS acceptance.
+
+```sh
+./tools/build test-terminal-script-window
+./tools/build test-aspect-script-window-dos
+```
 
 ## Implementation and acceptance still required
 
-1. Add a dedicated checked foreground interaction lifetime, distinct from the
-   bounded parser/render request. Preserve the child VM continuation, native
-   WHEN safe points, parent/child DS=SS stack slices and script cancellation.
-2. Extend the established native window/key-consumption regression through an
-   actual DOS view and the new interaction lifetime. Preserve ordinary dismiss,
-   queued extended keys, repeated Alt-Z and hook behavior. Outer-script Escape
-   confirmation/decline semantics remain separate unreconstructed services.
+1. Extend the implemented reference-window lifetime to full command actions.
+   Preserve child VM continuation, native WHEN safe points, checked DS=SS stack
+   slices and cancellation while defining the additional owner transitions.
+2. Extend actual DOS coverage to wider hook, mouse and fault combinations.
+   Outer-script Escape confirmation/decline semantics remain separate
+   unreconstructed services; current outer Escape still cancels immediately.
 3. Connect the actual maintained menu/help/redisplay and all advertised actions.
    Define serial handoff or checked child-transport servicing for actions that
    need it, including transfers and external execution. Nested ownership must
    be validated before an action mutates files, vectors, queues or settings.
-4. Test incoming traffic during a modal wait exceeding the existing 72-tick
-   rendering budget. Verify exact bytes, no duplicate WHEN actions, no local
-   scan bytes on the wire, restored screen/cursor, resumed script and normal
-   keyboard operation afterward. Include cancellation and callback failures.
+4. Expand the six-byte/100-tick DOS checks to sustained pressure, flow modes,
+   carrier changes and wider WHEN/cancellation/fault combinations. Retain exact
+   stream, screen/cursor, continuation and keyboard-return acceptance.
 5. Repeat actual DOS/BBS workflows on ENiGMA and Synchronet and affected audio
    routes with the resulting production binaries. Keep physical modem tests
    and the remaining F02/F05/F13 requirements separate and open.
 
-The maintained production terminal/ASPECT binaries have not changed. This
-component recovery and controlled replay close no full application gate.
+This selected window integration closes no full application or physical gate.
