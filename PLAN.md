@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+In-progress [configurable ASPECT transmit stalls](docs/ASPECT_TRANSMIT_WAIT.md)
+now pass six focused actual DOS workflows, 23 DOS CLI admissions and linked
+parser/BIOS-ring ownership checks. The candidate defaults to 30 seconds with
+PCPLUS_TXWAIT=1..3600; Escape behind ordinary typeahead is removed while other
+raw keys remain queued. Broader current-product regressions and independent
+acceptance are still pending. This is not a replacement for the accepted
+checkpoint below, and no full application or hardware gate closes.
+
 The [clean modem-reconnect audit](docs/validation/modem-reconnect.json) accepts
 parent6075bc18/runnera84dd21d for SOFT/BOTH remote drop under XOFF, Alt-D redial,
 a second automatic script/manual query and two directory accounting updates.

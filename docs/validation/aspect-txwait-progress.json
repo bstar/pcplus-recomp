@@ -1,0 +1,136 @@
+{
+  "progress_checks_passed": true,
+  "release_accepted": false,
+  "independent_audit_pending": true,
+  "products": {
+    "terminal": "6075bc182ae9821ae077e78a56a42741d81016cb82e79365556c36ee4782f62a",
+    "aspect-runner": "183f852dfe0a992faa29515e124eb3b6570e44578bdc25880a8a792a2bf7da3f",
+    "aspect-process-parent": "a2e7339bfe843f7d1997e11f50cda68223500aa623c3d3ae1b89551feaa86109",
+    "aspect-process": "fc0618704b89e45280fb7fc8eec46a4673e1b9ff184bece08acedeeb6ceedaf2",
+    "aspect-compiler-dos": "fc200c8ca7c79fb3adc2ef8e1a65824e6e93e3e91128ea690a53245588a484c5"
+  },
+  "sources": {
+    "src/aspect/keyboard.asm": "54f2ff4b6798a0960669db42a5425bb3f8537cb437ed3781654b1ba84890ae0f",
+    "src/aspect/runner.c": "663b0438ac181eb1529351763851c47c7287955cc2e8aae344086255120f515a",
+    "src/aspect/serial_wait.c": "feeb56bcfe9fbe4b57c8d247f2dce653a9c9d26e63786cd1c6e0818c4664a5a4",
+    "src/aspect/serial_runtime.c": "9a5bc1270012b86cc0decb2cfe087450bd51981e02b63103cfbe1fde6dae0a91",
+    "src/aspect/serial_runtime.h": "69644addc455a0baa3ae11aa00d5c3e5e0c0a79d32df88b15fb056e48679e4ff",
+    "src/aspect/when_runtime.c": "abff563bdff606c052f202829e84495089c50b3aa53daa00cb9bfc1671a9147c",
+    "src/aspect/when_runtime.h": "82e99e4deb385095d6eea54be71863ff4ffcc33bfc478ab04bd2198e7a3b3cbe",
+    "standalone/build_aspect_runner.py": "c45a1dda017e268e643c0755a8b96459a8afd3c7f56aae58db274ad76b9dd7f7",
+    "standalone/check_serial_wait_policy.py": "6137d894021900e27dbc458f75f9ecde3bdd4aa7e9d4d0c888e3436ccfd39394",
+    "standalone/check_transport_escape.py": "6ed2bd1deaf432d2756000506d375721b81d461ae2a3b1a0080e90b2db4f6e29",
+    "standalone/test_aspect_txwait_dos.py": "90f9960f0b58ee93f219faf6ccd1f00324d02bc803d67beba4eb418625080da2",
+    "standalone/test_serial_wait_cli_dos.py": "6e4a16575fa6337d5ff904dc9f04c7c5d55cf0a0232872e3294a0155763d1555",
+    "standalone/test_aspect_flow_fault_dos.py": "584b30361c850f27fb8ea245a720b1b72a951dc26309d4ea3c435e357b5dcd96",
+    "standalone/test_aspect_abort_carrier_dos.py": "26349defeb7399d971ab61f38f3bbbe827843181cb753f028e87fcfa5d04a995",
+    "standalone/test_modem_reconnect_dos.py": "0ea25c0a81ad8ac5b1bc3b67463044b724809985820e5d643b0fe1f3496d6551",
+    "standalone/check_aspect_runner.py": "e2fe60cfab4f5d83110234ea5208a99cd1e87e0f67edc40f390aec8bcf3dde2f"
+  },
+  "runs": {
+    "build/aspect-txwait-dos/configured-01/checks.json": {
+      "sha256": "1c8f23c40354aa6e9b7b59a259b6d7d995a4d729ff36a4fd3eb3088180afede1",
+      "passed": true,
+      "cases": 6,
+      "scope": "Actual DOS long XOFF stalls, configured expiry and transport cancellation. Four-second remote XOFF hold, actual8086 DOSBox-X BOTH flow with CTS high, exact2048-byte success or exact error/cancel streams, passive state and hardware/JFT/file-owner checks. Maximum3600 is configuration acceptance plus a short stall, not a one-hour wall-time test. No physical UART/CTS timing or full application claim."
+    },
+    "build/aspect-txwait/escape-fixed-01/checks.json": {
+      "sha256": "e8fa5553d87db0bb6ceb1c805ecae33451c6e080372e62f3f9f6f11620234490",
+      "passed": true,
+      "cases": 6,
+      "scope": "Execute real transport cancellation against a modeled standard BIOS ring. Real native peek/read wrappers and transport service execute; BIOS INT16 and UART/kernel boundaries modeled. Baseline leaves Escape behind ordinary q; fixed owner removes only Escape, retaining q/r and wrap order. Actual DOS and nonstandard BIOS queues require separate evidence."
+    },
+    "build/aspect-txwait/policy-02/checks.json": {
+      "sha256": "791e1dc3b1058619052b407c53ccc44624965ba75f960297e7c6abcdaa936547",
+      "passed": true,
+      "cases": 4,
+      "scope": "Linked 8086 policy parser and standard BIOS ring cancellation ownership. Native linked code executes; BIOS/UART/kernel boundaries modeled. Standard IBM queue only; actual DOS stalls and nonstandard BIOS behavior are separate."
+    },
+    "build/aspect-txwait-cli/policy-01/checks.json": {
+      "sha256": "856ef41e438123329c3df5e07fe50b02c8a78911d561b84eb255b878ec2d0bb1",
+      "passed": true,
+      "cases": 23,
+      "scope": "Actual DOS environment admission before script/UART acquisition. Production child spawned with real DOS environment, redirected handles, vector restoration and statuses. Invalid policy precedes invalid serial admission and absent file. Help remains accessible; deleting assignment restores default. No physical modem claim."
+    },
+    "build/aspect-process/runs/txwait-01/result.json": {
+      "sha256": "140d522c3c0ec0243c64058687f8ba04abc4cb3ae767cf4ffe1814319ae9ddee",
+      "passed": true,
+      "cases": 56,
+      "scope": "Experimental108-slot raw/local ASPECT with composed PROGRAM, private DOS handles and real script/ASX ownership checks. Attached parent rendering rejects before execution; full application publication remains open."
+    },
+    "build/aspect-parent-process/txwait-01/result.json": {
+      "sha256": "6fb3974b1583abc55ac2f6f20618214bdf5aba62278d385de0916d39c961bd65",
+      "passed": true,
+      "cases": 13,
+      "scope": "Experimental capability7; real attached parent renderer, selected synthetic directory, actual DOS child and UART mutation. No physical modem or whole-application publication."
+    },
+    "build/aspect-parent-process/source-proofs/txwait-01/result.json": {
+      "sha256": "47ddd770d5408282a91e1459e31b9bdb9eade5b3025f76d0c42618ab28e154b3",
+      "passed": true,
+      "cases": 0,
+      "scope": "Fresh declared-source tree; experimental capability13 parent/child, normal capability12 keyboard/mouse products, compiler and20 process components. No originals, existing objects or REA databases."
+    },
+    "build/aspect-process/source-proofs/txwait-01/result.json": {
+      "sha256": "de921b01e6122006126fff8d3fc5af30f734ce9bf71c042d5c29bb7d9f3fa625",
+      "passed": true,
+      "cases": 0,
+      "scope": "Fresh experimental ASPECT/PROGRAM and DOS compiler rebuild from declared source inputs. Production dispatch and whole-application/hardware gates remain unchanged."
+    },
+    "build/aspect-flow-fault-dos/txwait-01/checks.json": {
+      "sha256": "1a07091877e9771d519eab9723048e991d3c0de6a4a377a465e143333676e5c4",
+      "passed": true,
+      "cases": 4,
+      "scope": "Observe real XOFF timeout/cancel handback while the peer still holds TX. Actual DOSBox-X8086, SOFT/BOTH with CTS always high; passive timer and independent peer. No injected product/ISR/UART status."
+    },
+    "build/modem-reconnect-dos/txwait-01/checks.json": {
+      "sha256": "6c0e7a1945371c7fe6d8085cfa348c585196a04602bbe45246ddbb79d8199372",
+      "passed": true,
+      "cases": 2,
+      "scope": "Actual DOS carrier loss under XOFF, followed by Alt-D virtual-modem redial.\n\nAn owned TCP BBS drops its first carrier. A passive observer reads parent state\nafter the first child returns. A second socket must complete an automatic\nscript and manual query. No product flag or hardware status is injected.\n Observer covers first child JFT/owner return, not second child frame. Overall hardware snapshots, actual second socket/script/file/manual stream and directory accounting cover reconnect. No physical modem/timing claim."
+    },
+    "build/aspect-runner/checks.json": {
+      "sha256": "8c605a6b25bb4e65209e1e25b04ddc4f410508bfdbd16906805b15aa4f414fbf",
+      "passed": true,
+      "cases": 21,
+      "scope": "Actual production DOS CLI spawned21 times with independent handles; exact stdout/stderr, statuses, BIOS Escape, native delay, malformed serial handoff admission and INT0 restoration. Fixed trusted source cases, not arbitrary-bytecode safety or complete serial scripting."
+    },
+    "build/aspect-abort-confirm-dos/txwait-01/confirmation-checks.json": {
+      "sha256": "e3fdba14ea35aa3906001b90121c9b2604b6a363779736e76979606c9d0a0442",
+      "passed": true,
+      "cases": 4,
+      "scope": "Actual DOS declined script abort, active-wait result and live CPR timing."
+    },
+    "build/aspect-abort-yes-dos/txwait-01/confirmation-checks.json": {
+      "sha256": "9e56d476ab9d35e6480ff1a1b65359333714ee17e98e31da93698859895f21b9",
+      "passed": true,
+      "cases": 2,
+      "scope": "Actual DOS confirmed abort during WAITFOR/PAUSE, with a live prompt query."
+    },
+    "build/aspect-abort-events-dos/txwait-01/confirmation-checks.json": {
+      "sha256": "7cd92b85cb666fd73bf5afd881defb6a572cb5cdc414b1b4145dc276cec7b0b9",
+      "passed": true,
+      "cases": 3,
+      "scope": "Actual DOS confirmation with native WHEN TX/CALL and a suspended RGET."
+    },
+    "build/aspect-abort-pressure-dos/txwait-01/confirmation-checks.json": {
+      "sha256": "90e4b9a2f9b49794541259807b51c098e4947a22c9e32dacb3bd5ad6c5c836eb",
+      "passed": true,
+      "cases": 1,
+      "scope": "Actual DOS native confirmation under9114 paced ANSI bytes and44 CPRs. Transparent emulated UART; no actual CTS/RTS/XOFF/XON or physical acceptance."
+    },
+    "build/aspect-abort-carrier-dos/txwait-01/checks.json": {
+      "sha256": "044b66dbe5cea8dd1ff5c5f655bca243a52a3da94035433dcd4c70ac3ec69a74",
+      "passed": true,
+      "cases": 4,
+      "scope": "Actual DOS virtual-modem hangup during native script confirmation.\n\nThe owned TCP peer closes its BBS socket. DOSBox-X's modem then changes DCD and\nemits NO CARRIER; the observer only reads product/video state. No product flag,\nMSR result, script FILE position or handler output is injected by the observer.\n Emulated modem/DCD; no physical modem or14.4 negotiation claim."
+    }
+  },
+  "limits": [
+    "Producer/component progress record, not an independent release audit.",
+    "Current BBS/audio validation and independent release audit still pending.",
+    "The one-hour setting was checked with a short actual stall and modeled deadline arithmetic, not an hour-long real-time hold.",
+    "Standard IBM BIOS ring only; no physical UART/modem acceptance.",
+    "All full F01-F16 application gates remain open."
+  ],
+  "preserved_failed_baseline": "build/aspect-txwait-dos/baseline-02/checks.json"
+}

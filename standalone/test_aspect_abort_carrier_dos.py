@@ -178,7 +178,7 @@ def main():
         settings=bytearray(prm(soft=int(kind=='XOFF'),hard=int(kind!='XOFF')));settings[0x79:0x79+25]=b'ATH^M'.ljust(25,b'\0')
         try:
             report=harness.run(name,'success',keys,directory=bytes(payload),prm=bytes(settings),profile=4,files=files,
-                arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',working_drive='d',observer='RENDER',banner=banner)
+                arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',working_drive='d',observer='RENDER',banner=banner,environment={'PCPLUS_TXWAIT':'2'} if kind=='XOFF' else {})
         finally:
             (folder/'peer-events.json').write_text(json.dumps(events,indent=2)+'\n')
         raw=(folder/'RENDER.BIN').read_bytes();header=struct.unpack_from('<7H',raw)

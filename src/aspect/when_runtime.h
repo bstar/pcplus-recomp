@@ -7,6 +7,9 @@ void runtime_when_reset(void);
 unsigned __cdecl runtime_keyboard_read(void);
 unsigned __cdecl runtime_keyboard_peek(void);
 unsigned __cdecl runtime_keyboard_auto(void);
+/* Remove only Escape from the validated standard BIOS ring, retaining other
+ * raw words/order. Nonstandard layouts are left untouched. Bounded IF-safe. */
+unsigned __cdecl runtime_keyboard_cancel_pending(void);
 extern unsigned runtime_keyboard_mode;
 void runtime_when_finish(void);
 /* Per-file reset preserves gate, settings and queued/last key values. */

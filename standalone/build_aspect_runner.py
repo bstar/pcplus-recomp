@@ -26,7 +26,7 @@ def main(extension=None):
     objects = []
     sources = [Path(__file__).resolve(), ROOT / 'standalone/build_aspect_runtime.py',
                *[ROOT / 'src/aspect' / name for name in ['runner.c', 'runtime.c', 'runtime.h', 'file_io.c', 'file_io.h', 'script_path.c', 'script_path.h',
-                   'serial_runtime.c','serial_runtime.h','receive_runtime.c','receive_runtime.h','when_runtime.c','when_runtime.h','set_runtime.c','set_runtime.h','find_runtime.c','find_runtime.h','environment_runtime.c','environment_runtime.h','script_file_runtime.c','script_file_runtime.h','file_info_runtime.c','file_info_runtime.h','file_times_runtime.c','file_times_runtime.h','enumeration_runtime.c','enumeration_runtime.h','txpace.c','txpace.h','directory_runtime.c','directory_runtime.h','serial.c','serial.h','serial_handoff.h','resident_render.c','resident_render.h','source_compile.c','source_compile.h']],
+                   'serial_runtime.c','serial_runtime.h','serial_wait.c','receive_runtime.c','receive_runtime.h','when_runtime.c','when_runtime.h','set_runtime.c','set_runtime.h','find_runtime.c','find_runtime.h','environment_runtime.c','environment_runtime.h','script_file_runtime.c','script_file_runtime.h','file_info_runtime.c','file_info_runtime.h','file_times_runtime.c','file_times_runtime.h','enumeration_runtime.c','enumeration_runtime.h','txpace.c','txpace.h','directory_runtime.c','directory_runtime.h','serial.c','serial.h','serial_handoff.h','resident_render.c','resident_render.h','source_compile.c','source_compile.h']],
                ROOT/'reconstruction/translation/receive.asm', ROOT / 'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',
                ROOT/'src/config/resource_path.c',ROOT/'src/config/resource_path.h',
                ROOT/'src/keyboard/api.h',
@@ -67,7 +67,7 @@ def main(extension=None):
                     *feature_flags, *(['-DNATIVE_PROCESS_DIAGNOSTIC'] if extension else []),
                     '-i=' + str(ROOT / 'src/aspect'), '-i='+str(ROOT/'src/process'), '-fm=ASPECT.map', '-fe=ASPECT.EXE',
                     str(main_source), str(ROOT / 'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),
-                    str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/source_compile.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),
+                    str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/source_compile.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/serial_wait.c'),str(ROOT/'src/aspect/receive_runtime.c'),
                     str(ROOT/'src/aspect/serial.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'),
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],

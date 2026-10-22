@@ -1,6 +1,15 @@
 #ifndef PCPLUS_ASPECT_SERIAL_RUNTIME_H
 #define PCPLUS_ASPECT_SERIAL_RUNTIME_H
 void runtime_serial_reset(void);
+/* Invocation setting PCPLUS_TXWAIT:1..3600 BIOS seconds, default30.
+ * Parse before UART acquisition. Invalid text preserves the prior value.
+ * Reset/EXECUTE do not change this invocation policy; close retains36 ticks. */
+extern unsigned runtime_serial_tx_wait_ticks;
+#if defined(NATIVE_PROGRAM_FAR)
+unsigned __far runtime_serial_wait_configure(const char *);
+#else
+unsigned runtime_serial_wait_configure(const char *);
+#endif
 unsigned runtime_serial_ready(void);
 unsigned runtime_serial_poll(void);
 /* Physical MSR80, or explicit diagnostic fixture flags4(high)/8(drop at EOF). */

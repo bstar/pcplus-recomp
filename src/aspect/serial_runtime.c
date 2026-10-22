@@ -90,7 +90,7 @@ unsigned runtime_serial_send(unsigned byte)
   result=aspect_serial_try_write(byte);if(!result)break;
   if(result==2){runtime_serial_error=aspect_serial_status;runtime_set_error(ASPECT_RUN_SERIAL);break;}
   now=aspect_serial_ticks();if(now<start)now+=1573040UL;
-  if(now-start>=36UL){runtime_serial_error=ASPECT_SERIAL_PENDING;runtime_set_error(ASPECT_RUN_SERIAL);break;}
+  if(now-start>=(unsigned long)runtime_serial_tx_wait_ticks){runtime_serial_error=ASPECT_SERIAL_PENDING;runtime_set_error(ASPECT_RUN_SERIAL);break;}
  }
  }
 #endif

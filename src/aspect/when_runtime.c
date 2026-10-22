@@ -73,6 +73,12 @@ unsigned runtime_when_transport_poll(void)
  key=runtime_keyboard_peek();if(!key)return 0;
  /* Leave ordinary local keys queued for the native service's safe point. */
  if((key&255)==27){runtime_keyboard_read();runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
+#if defined(ASPECT_RUNTIME_SERIAL)
+ /* Do not let ordinary typeahead hide Escape for a long transmit stall.
+  * This edits only the validated BIOS ring; no private queue or key dispatch
+  * occurs on a borrowed transport stack. Modal/window owners returned above. */
+ if(runtime_keyboard_cancel_pending()){runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
+#endif
  return 0;
 }
 #if defined(ASPECT_RUNTIME_SERIAL)

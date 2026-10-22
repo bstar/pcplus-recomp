@@ -130,7 +130,7 @@ def main():
         files={'LOGIN.ASP':script.encode(),'LOGIN.ASX':renderer.compile_source(script),'ASPECT.EXE':(ROOT/'build/aspect-runner/ASPECT.EXE').read_bytes(),'RENDER.COM':compiled}
         try:
             r=peer.run(flow,'success','p6000 a-d p4000 r e a d y p800 a-x',directory=bytes(payload),prm=bytes(settings),profile=4,files=files,
-                arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',working_drive='d',observer='RENDER',accounting_delta=2,
+                arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',working_drive='d',observer='RENDER',accounting_delta=2,environment={'PCPLUS_TXWAIT':'2'},
                 banner=ESC+b'[2J'+ESC+b'[HFIRST BYTE SAFE'+ESC+b'[6n'+ESC+b'[0cLOGIN:')
         finally:(folder/'peer-events.json').write_text(json.dumps(events,indent=2)+'\n')
         raw=(folder/'RENDER.BIN').read_bytes();head=struct.unpack_from('<7H',raw);state=dict(zip(FIELDS,struct.unpack('<3H',raw[-6:])))

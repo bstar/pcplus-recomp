@@ -76,7 +76,7 @@ def main():
     (tests / 'ABSENT.ASX').unlink(missing_ok=True)
     for name, file, limit, error in extras:
         program += f' run("{name}",{json.dumps(file) if file else "0"},{json.dumps(limit) if limit else "0"},{error},0);\n'
-        expectations[name] = dict(exit=error, stdout_hex=('ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]\r\n'.encode().hex() if name=='HELP' else ''))
+        expectations[name] = dict(exit=error, stdout_hex=('ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]\r\nPCPLUS_TXWAIT=1..3600 sets transmit stall seconds (default30).\r\n'.encode().hex() if name=='HELP' else ''))
     program += ' printf("RUNNER %u cases %u checks %u failures\\n",cases,checks,failed);return failed?1:0;}\n'
     (tests / 'harness.c').write_text(program)
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-k4096',

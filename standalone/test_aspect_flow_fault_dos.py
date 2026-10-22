@@ -31,7 +31,7 @@ def main():
         keys=('p1800 escape p1200' if mode=='cancel' else 'p3000')+' r e a d y p2300 a-x'
         try:
             r=peer.run(name,'success',keys,directory=bytes(payload),prm=prm(soft=1,hard=hard),
-                arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',files=files,profile=4,working_drive='d',observer='RENDER',
+                arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',files=files,profile=4,working_drive='d',observer='RENDER',environment={'PCPLUS_TXWAIT':'2'},
                 banner=ESC+b'[2J'+ESC+b'[HFIRST BYTE SAFE'+ESC+b'[6n'+ESC+b'[0cLOGIN:')
         finally:(folder/'peer-events.json').write_text(json.dumps(events,indent=2)+'\n')
         raw=(folder/'RENDER.BIN').read_bytes();header=struct.unpack_from('<7H',raw);state=dict(zip(flow.FIELDS,struct.unpack('<3H',raw[-6:])))

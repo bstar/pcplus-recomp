@@ -4,6 +4,7 @@
 #include "serial.h"
 #include "serial_runtime.h"
 #include "resident_render.h"
+#include "environment_runtime.h"
 #include <stdio.h>
 #include <string.h>
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
@@ -61,7 +62,8 @@ int main(int argc,char **argv)
  unsigned limit=10000,result=0,i,has_budget=0,serial_status;
  const char *serial_option=0;
  if(argc==2 && (!strcmp(argv[1],"/?") || !strcmp(argv[1],"--help"))){
-  puts("ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]");return 0;
+  puts("ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]");
+  puts("PCPLUS_TXWAIT=1..3600 sets transmit stall seconds (default30).");return 0;
  }
  if(argc<2 || argc>4 || !path_ok(argv[1]))result=64;
  for(i=2;i<(unsigned)argc && !result;++i){
@@ -71,6 +73,9 @@ int main(int argc,char **argv)
  }
  if(result){
   fputs("Usage: ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]\n",stderr);return 64;
+ }
+ if(runtime_serial_wait_configure(runtime_environment_get("PCPLUS_TXWAIT"))){
+  fputs("ASPECT: PCPLUS_TXWAIT must be 1..3600 seconds (default30).\n",stderr);return 64;
  }
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
  if(program_exit_begin())return ASPECT_RUN_STATE;

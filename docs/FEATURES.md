@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The candidate [configurable transmit wait](ASPECT_TRANSMIT_WAIT.md) adds
+PCPLUS_TXWAIT=1..3600 (default 30 seconds) and standard-BIOS queued Escape
+cancellation. Focused DOS, linked ownership, 56 process, 13 attached PROGRAM
+and original-free product rebuild checks pass. Full current-product acceptance
+is pending; existing accepted BBS/audio receipts describe the preceding runner.
+No full feature or hardware gate closes.
+
 The [modem command-mode checkpoint](validation/modem-reconnect.json) accepts
 parent6075bc18/runnera84dd21d for two SOFT/BOTH carrier-loss/redial workflows.
 The old pair reconnects with a contaminated ATZ/ERROR; the new pair sends clean
