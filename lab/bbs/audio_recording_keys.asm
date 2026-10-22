@@ -29,6 +29,7 @@ state: db 0 ;0 marker,1 dwell,2 keys,3 retired
 ticks: dw 0
 key_at: dw 0
 watchdog: dw RECORD_WATCHDOG_TICKS
+ready_marker: db 'RECORDER READY',0
 file_marker: db 'File Base >> active filter:',0
 menu_marker: db 'PCPLUS  Command Menu',0
 path_marker: db 'Recording file: DOS 8.3 path',0
@@ -49,7 +50,7 @@ exit_keys: dw 2d00h,0
 ; marker, BIOS sequence, dwell. Stage11 observes the replay's Search page
 ; before stage12 accepts File Base; stale pre-script text cannot finish it.
 stages:
- dw file_marker,open_menu,RECORD_INITIAL_TICKS
+ dw ready_marker,open_menu,RECORD_INITIAL_TICKS
  dw menu_marker,record_key,RECORD_DWELL_TICKS
  dw path_marker,enter_key,RECORD_DWELL_TICKS
  dw file_marker,search_keys,RECORD_DWELL_TICKS

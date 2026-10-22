@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [audio recorder handoff correction](lab/bbs/audio-recording.md) now requires
+startup ASPECT's RECORDER READY marker before the BIOS helper opens Alt-Z.
+Six updated BIOS probes and the actual DOS/Telnet control pass, including visible
+File Base without readiness. The first audio campaign preserved exact transport
+bytes but failed after an early Alt-Z interrupted WAITQUIET/D5; an intentional
+diagnostic dump records error3 and helper phase1. Its failure receipt remains
+separate from [updated preparation](docs/validation/recording-audio-ready-preparation.json).
+The fresh audio run and full byte/cleanup acceptance remain pending. Unsupported
+local UI while ASPECT owns the session, all F01–F16 and physical gates stay open.
+
+
 The [software-audio recorder route](lab/bbs/audio-recording.md) now has six
 actual8086 BIOS gate/queue/watchdog probes and a passing actual DOS/Telnet
 Record → explicit ASP compilation/replay → manual Search control. The same

@@ -11,7 +11,7 @@ def inputs(proof):
     proof=proof.resolve();assert proof.is_relative_to(ROOT/'build')
     r=json.loads(proof.read_text())
     assert r['passed'] and len(r['cases'])==6 and all(c['passed'] and all(c['checks'].values()) for c in r['cases'])
-    assert {c['name'] for c in r['cases']}=={'complete','missing-search-blocks','stale-pre-replay-file-screen-blocks','initial-watchdog','final-watchdog','BIOS-queue-full-retry'}
+    assert {c['name'] for c in r['cases']}=={'complete','missing-search-blocks','stale-pre-replay-file-screen-blocks','file-screen-without-ready-watchdog','final-watchdog','BIOS-queue-full-retry'}
     assert all(sha(ROOT/name)==digest for name,digest in r['inputs'].items())
     names=['lab/bbs/audio_recording.py','lab/bbs/audio_recording_keys.asm','lab/bbs/check_audio_recording_keys.py',str(proof.relative_to(ROOT))]
     for directory,binary in (('aspect-runner','ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')):

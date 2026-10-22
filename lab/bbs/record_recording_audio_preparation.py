@@ -48,7 +48,8 @@ def main():
     result=dict(passed=True,preparation_only=True,actual_audio_accepted=False,
         BIOS_cases=6,TCP_checks=t['checks'],terminal_sha256=t['binary_sha256'],helper_sha256=t['helper_sha256'],
         runtime_inputs=runtime,audio_admission=str((audio/'run-start.json').relative_to(ROOT)),custody_sha256=kept,
-        scope='Actual8086 BIOS key/gate/queue/watchdog/vector probes and an actual DOS/Telnet BBS control pass. The same helper is admitted to the pinned200ms V22/1200 SIP/audio run; immutable admission/source inputs are preserved. Live audio captures are deliberately not sealed here. No audio outcome, physical hardware or full application acceptance.')
+        earlier_audio_failure='docs/validation/recording-audio-early-menu-failure.json',
+        scope='Actual8086 BIOS key/gate/queue/watchdog/vector probes and an actual DOS/Telnet BBS control pass. The helper requires startup RECORDER READY before opening the menu; visible File Base without readiness cannot admit keys. The same helper is admitted to pinned200ms V22/1200 SIP/audio with immutable admission/source inputs preserved. Live audio captures are not sealed here. No audio outcome, physical hardware or full application acceptance.')
     with target.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=True,preparation_only=True,actual_audio_accepted=False,custody_files=len(kept))))
 

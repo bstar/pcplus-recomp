@@ -214,7 +214,9 @@ def main():
    script+=wait('File Base',150,'FILES')+'waitquiet 2 120\n'+mark('FILES')
   else:
    script+='transmit "P^M"\n'+wait('INS',150,'HEADER')+'waitquiet 2 120\ntransmit "^M"\nwaitquiet 2 120\ntransmit "KEYTEST^M"\nwaitquiet 2 120\n'+mark('EDITOR')
- script+='fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
+ script+='fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\n'
+ if a.route=='recording':script+='message "RECORDER READY"\n'
+ script+='endproc\n'
  script+='proc advance\ncwhen 0\nwaitquiet 2 120\nwhen 0 "eyboard" call advance\ntransmit "^M"\nendproc\n'
  script+='proc cancel\nif cancel_done == 0\ncancel_done=1\ncwhen 1\nwhen 1 "Main Menu" call reached_main\nwaitquiet 2 120\ntransmit "^["\nendif\nendproc\n'
  script+='proc decline\nif scan_done == 0\nscan_done=1\ncwhen 2\nwhen 2 "Main Menu" call reached_main\nwaitquiet 2 120\ntransmit "N"\nendif\nendproc\n'

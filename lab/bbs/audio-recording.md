@@ -7,17 +7,28 @@ File Base → Search → File Base; after replay, manual input opens Search agai
 No generated recording is edited or compiled by the host before replay.
 
 The BIOS helper waits for visible shell/BBS markers and inserts real BIOS key
-words. It never writes product state, serial bytes, terminal replies or a success
-file. A private report distinguishes normal completion from its watchdog. The
+words. Startup first requires the actual ASPECT script to emit `RECORDER READY`
+after its final wait and success-log close. Visible File Base alone cannot admit
+Alt-Z. The helper never writes product state, serial bytes, terminal replies or a
+success file. A private report distinguishes completion from its watchdog. The
 replay's Search heading is latched before accepting the returned File Base
 footer, so stale pre-script text cannot finish replay. The heading is observed
 early because the final Search footer can be transient on a fast connection.
 
-The [preparation record](../../docs/validation/recording-audio-preparation.json)
+The [preparation record](../../docs/validation/recording-audio-ready-preparation.json)
 binds six actual8086 BIOS probes and a complete actual DOS/Telnet BBS control.
 The probes cover missing/stale markers, initial/final watchdogs and a full BIOS
 keyboard queue. The control verifies source/payload, DOS compilation, the exact
 record/replay/manual route, serial bytes, normal exit and timer restoration.
+The [first audio failure](../../docs/validation/recording-audio-early-menu-failure.json)
+retains an intentional diagnostic stop, exact transport audits and a VGA text
+snapshot. The former File Base trigger delivered Alt-Z while startup ASPECT
+still owned WAITQUIET/D5; the snapshot shows typed error3 and private helper state
+shows one delivered key, phase1. A controlled dump preserved this evidence; it
+was not an unexplained emulator crash. Temporary extracted cores were deleted.
+The new BIOS counterexample displays File Base without readiness and requires
+watchdog retirement without opening the menu. Unsupported local UI during an
+ASPECT child remains an application gap; this driver respects its ownership.
 Earlier driver/probe/fixture failures remain retained. Preparation does not
 establish software-audio acceptance.
 

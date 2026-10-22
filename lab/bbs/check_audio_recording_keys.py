@@ -12,6 +12,8 @@ org 100h
 mov ax,3
 int 10h
 %if CASE == 3
+mov si,file
+call text
 mov cx,2d00h
 call key
 jmp finish
@@ -47,7 +49,7 @@ mov ah,5
 int 16h
 pop cx
 loop .fill
-mov si,file
+mov si,ready
 call text
 mov cx,18
 call pause
@@ -198,6 +200,7 @@ ret
 stage: dw 0
 used: dw 0
 received: times 26 dw 0
+ready: db 'RECORDER READY',0
 file: db 'File Base >> active filter:',0
 menu: db 'PCPLUS  Command Menu',0
 path: db 'Recording file: DOS 8.3 path',0
@@ -215,7 +218,7 @@ expected6: dw 1e41h,0
 expected7: dw 1970h,2e63h,1970h,266ch,1675h,1f73h,342eh,1e61h,1f73h,1970h,1c0dh,0
 expected8: dw 0
 expected9: dw 2d00h,0
-stages: dw file,expected0,menu,expected1,path,expected2,file,expected3,search,expected4,file,expected0,menu,expected1
+stages: dw ready,expected0,menu,expected1,path,expected2,file,expected3,search,expected4,file,expected0,menu,expected1
 dw saved,expected5,file,expected0,menu,expected6,script,expected7,replay,expected8,file,expected3,search,expected9
 name: db 'KEYS.BIN',0
 '''
@@ -227,7 +230,7 @@ def main():
     helper=ROOT/'lab/bbs/audio_recording_keys.asm'
     subprocess.run(['nasm','-fbin',str(helper),'-o',str(out/'PRODUCTION.COM')],check=True)
     cases=[]
-    names=('complete','missing-search-blocks','stale-pre-replay-file-screen-blocks','initial-watchdog','final-watchdog','BIOS-queue-full-retry')
+    names=('complete','missing-search-blocks','stale-pre-replay-file-screen-blocks','file-screen-without-ready-watchdog','final-watchdog','BIOS-queue-full-retry')
     for index,name in enumerate(names):
         folder=out/name;folder.mkdir();(folder/'probe.asm').write_text(PROBE);(folder/'sampler.asm').write_text(SAMPLER)
         subprocess.run(['nasm','-fbin','-DRECORD_KEY_TICKS=1','-DRECORD_DWELL_TICKS=2','-DRECORD_INITIAL_TICKS=2',
