@@ -12,7 +12,7 @@ ROOT=flow.ROOT;sha=flow.sha;ESC=b'\x1b'
 SOURCE_URL='https://github.com/joncampbell123/dosbox-x/blob/dosbox-x-v2026.07.02/src/hardware/serialport/nullmodem.cpp'
 
 
-def adapter(out,events):
+def adapter(out,events,resume_after=1.2):
     # Reuse the exact owned peer/modem/file/restore driver; replace only its
     # transport encoding and hardware-flow stimulus, never UART replies.
     text=inspect.getsource(flow.adapter)
@@ -36,7 +36,7 @@ def adapter(out,events):
     marker="    module=types.ModuleType('flow_return_peer')"
     assert text.count(marker)==1;text=text.replace(marker,"    text=text.replace('transparent:1','transparent:0')\n"+marker)
     module=types.ModuleType('cts_adapter_factory');module.__dict__.update(flow.__dict__)
-    exec(compile(text,__file__,'exec'),module.__dict__);return module.build(out,events)
+    exec(compile(text,__file__,'exec'),module.__dict__);return module.build(out,events,resume_after=resume_after)
 
 
 def observer(out):

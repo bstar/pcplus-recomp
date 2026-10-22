@@ -1,4 +1,4 @@
-# Configurable ASPECT transmit stalls — work in progress
+# Configurable ASPECT transmit stalls
 
 The maintained ASPECT runner now defaults to a 30-second per-byte transmit
 stall limit. Set the DOS environment before launching the application:
@@ -68,11 +68,26 @@ remain unchanged.
 
 Existing short timeout fault/reconnect fixtures explicitly request setting 2;
 their former fixed-key schedules intentionally exercise a short deadline.
-BBS/audio, independent release audit, longer CTS stalls and physical modem
-validation are still required before accepting this change as a new release
-checkpoint. Full F01–F16 requirements remain open.
+The [independent component audit](validation/aspect-transmit-wait.json)
+accepts all six software-flow and six HARD/BOTH CTS cases. The new CTS cases
+hold hardware flow low for four seconds, exercise default-limit resume,
+explicit two-second expiry and queued-key Escape cancellation, then verify
+manual parent input/query return. The peer sends no XOFF in these CTS cases.
+Independent FF/status decoding distinguishes emulator control framing from
+actual UART bytes. [Eight semantic corruption controls](validation/aspect-transmit-wait-audit-guards.json)
+are rejected despite green producer flags and updated capture hashes.
 
-The [progress record](validation/aspect-txwait-progress.json) binds candidate
-product identities, source hashes and passing raw reports. It explicitly does
-not claim independent release acceptance. The prior accepted BBS/audio records
-retain their own earlier product identities.
+[Four fresh BBS recorder/replay sessions](validation/bbs-txwait-compat.json)
+pass on owned stock Synchronet/ENiGMA, including normal manual navigation after
+replay. [Two stock script-window workflows](validation/bbs-txwait-window.json)
+also pass, retaining exact user streams and normal parent-menu return.
+Current audio acceptance remains pending. Its
+[sealed preparation](validation/recording-txwait-audio-preparation.json) binds
+the passing DOS/Telnet helper control, pinned software-modem runtime and all
+606 unchanged admission inputs; it does not claim an audio outcome.
+Sustained CTS/RTS pressure, sustained RX, physical modem timing and all full
+F01–F16 requirements remain open.
+
+The earlier [progress record](validation/aspect-txwait-progress.json) retains
+its pre-audit scope and identities. Prior accepted audio records describe the
+preceding runner and do not establish the current runner's audio behavior.

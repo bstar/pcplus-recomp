@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "wrong-child-result",
+      "rejected": true,
+      "producer_flags_green": true,
+      "modified_capture_hash_updated": true
+    },
+    {
+      "case": "hardware-not-restored",
+      "rejected": true,
+      "producer_flags_green": true,
+      "modified_capture_hash_updated": true
+    },
+    {
+      "case": "wrong-success-marker",
+      "rejected": true,
+      "producer_flags_green": true,
+      "modified_capture_hash_updated": true
+    },
+    {
+      "case": "ordinary-key-lost",
+      "rejected": true,
+      "producer_flags_green": true,
+      "modified_capture_hash_updated": true
+    },
+    {
+      "case": "changed-payload",
+      "rejected": true,
+      "producer_flags_green": true,
+      "modified_capture_hash_updated": true
+    },
+    {
+      "case": "short-stimulus-hold",
+      "rejected": true,
+      "producer_flags_green": true,
+      "modified_capture_hash_updated": true
+    },
+    {
+      "case": "invalid-transport-frame",
+      "rejected": true,
+      "producer_flags_green": true,
+      "modified_capture_hash_updated": true
+    },
+    {
+      "case": "wrong-DOS-policy",
+      "rejected": true,
+      "producer_flags_green": true,
+      "modified_capture_hash_updated": true
+    }
+  ],
+  "auditor_sha256": "59eaa074b3a3472a9f97dbcfe6e575c503799d9038720baae757f47befe47127",
+  "checker_sha256": "832f85953bc8d1c83da93fcd571aad96152c0738a87ed49d9ecafaa84090a463",
+  "scope": "Semantic corruption controls with producer flags and capture hashes green. Owned copied raw fixtures only. All eight semantic corruptions must be rejected; no production binary/state changes."
+}

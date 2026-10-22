@@ -1,12 +1,19 @@
 # Complete DOS rebuild plan
 
-In-progress [configurable ASPECT transmit stalls](docs/ASPECT_TRANSMIT_WAIT.md)
-now pass six focused actual DOS workflows, 23 DOS CLI admissions and linked
-parser/BIOS-ring ownership checks. The candidate defaults to 30 seconds with
-PCPLUS_TXWAIT=1..3600; Escape behind ordinary typeahead is removed while other
-raw keys remain queued. Broader current-product regressions and independent
-acceptance are still pending. This is not a replacement for the accepted
-checkpoint below, and no full application or hardware gate closes.
+[Configurable ASPECT transmit stalls](docs/ASPECT_TRANSMIT_WAIT.md) now pass
+independent raw audit of twelve actual DOS XOFF/CTS cases and eight semantic
+corruption controls. Default30 seconds, PCPLUS_TXWAIT=1..3600; queued Escape
+cancels while retaining ordinary keys. Four-second HARD/BOTH CTS holds cover
+resume, short timeout and cancellation with manual parent return. The 23 DOS
+CLI, linked parser/ring/midnight checks, 56 process, 13 attached PROGRAM,
+ten confirmation, four carrier-loss and two reconnect cases pass; 26/23 source
+products reproduce without originals. Four fresh Synchronet/ENiGMA recorder/
+replay sessions and two stock script-window workflows pass. Current normal
+ENiGMA recording audio is running; admission inputs are frozen and a passing
+current DOS/Telnet helper control is preserved. Audio outcome remains pending.
+Next: finish that receipt, sustained CTS/RTS/RX, offline PROGRAM after loss,
+manual hangup/cancel reconnect and remaining full F01–F16/physical requirements.
+Earlier checkpoints below retain their recorded identities and scopes.
 
 The [clean modem-reconnect audit](docs/validation/modem-reconnect.json) accepts
 parent6075bc18/runnera84dd21d for SOFT/BOTH remote drop under XOFF, Alt-D redial,
