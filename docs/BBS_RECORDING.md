@@ -1,5 +1,15 @@
 # Recording and replay on Synchronet and ENiGMA
 
+Parenta4c377c9/runnerec93148f passes [four fresh recorder/replay sessions](validation/bbs-flow-handoff-compat.json)
+and [two stock-window sessions](validation/bbs-flow-handoff-window.json) on
+owned stock Synchronet/ENiGMA. [Flow handoff validation](validation/aspect-flow-handoff.json)
+separately covers ASIOv5 pause inheritance and XOFF timeout/cancel return.
+[Fresh normal software audio](validation/recording-flow-handoff-audio.json)
+passes26 producer,34 independent and12 serial checks:60,389 display bytes plus187
+bridge bytes exact,77 independently waveform-decoded online bytes and normal
+cleanup on one ENiGMA V22/1200 route. Other flow, physical and whole-application
+requirements remain open. Earlier checkpoints retain their recorded identities.
+
 Parent4dae4ddb with unchanged runnerdfee1e95 passes [four fresh recorder/replay
 sessions](validation/bbs-parent-carrier-compat.json) and [two stock-window
 sessions](validation/bbs-parent-carrier-window.json) on owned stock Synchronet

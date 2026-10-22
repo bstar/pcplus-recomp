@@ -1,5 +1,15 @@
 # Normal recorder workflow over the software modem
 
+The [v5 flow-handoff build](../../docs/validation/recording-flow-handoff-audio.json)
+accepts parenta4c377c9/runnerec93148f on one normal ENiGMA V22/1200 software
+SIP/RTP/DSP/Telnet recorder route. All26 producer,34 independent and12 serial
+checks pass:60,389 display bytes plus187 bridge bytes exact,77 online bytes
+independently waveform-decoded, normal hardware/timer/SIP/VM cleanup and zero
+failed/skipped/pending writes. [Preparation](../../docs/validation/recording-flow-handoff-audio-preparation.json)
+binds seven BIOS probes/56 checks and13 actual DOS/Telnet controls. The normal
+route does not exercise flow stalls, script windows or physical modem hardware.
+Earlier checkpoints below retain their own product identities and scope.
+
 The [parent-status build](../../docs/validation/recording-parent-carrier-audio.json)
 accepts parent4dae4ddb/runnerdfee1e95 for one normal ENiGMA V22/1200 software
 SIP/RTP/DSP/Telnet recorder route. All26 producer,34 independent and12 serial

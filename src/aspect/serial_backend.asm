@@ -698,6 +698,8 @@ _uart_rx_count equ uart_rx_count
 _uart_software_flow equ uart_software_flow
 _uart_flow_pending equ uart_flow_pending
 _uart_rx_mask equ uart_rx_mask
+global _uart_tx_paused
+_uart_tx_paused equ uart_tx_paused
 SEGMENT STACK stack class=STACK use16
 GROUP DGROUP _DATA _BSS STACK
 

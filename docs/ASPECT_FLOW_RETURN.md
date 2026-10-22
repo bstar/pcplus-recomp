@@ -1,5 +1,12 @@
 # Script software-flow control and parent return
 
+The [later v5 handoff checkpoint](ASPECT_FLOW_HANDOFF.md) adds pause inheritance
+and fault return on parenta4c377c9/runnerec93148f. Two fresh successful-resume
+runs retain this2,048-byte workflow; two additional entry cases and four actual
+DOS timeout/cancel cases pass. The earlier pair below did not preserve peer
+pause on fault return; do not apply this historical normal-return acceptance
+to those fault cases. Configurable longer stalls and physical flow remain open.
+
 [Validation](validation/aspect-flow-return.json) covers two source-built8086 DOS
 sessions with the normal parent4dae4ddb and unchanged ASPECTdfee1e95. One uses
 SOFT; the other uses BOTH. DOSBox-X nullmodem keeps CTS asserted, so BOTH is not

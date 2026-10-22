@@ -1,5 +1,18 @@
 # Local interaction while ASPECT owns the session
 
+Current parenta4c377c9/runnerec93148f uses ASIOv5/50bytes to preserve the
+peer's XOFF state at script entry and on return. Renderer capability12/13 and
+RPC semantics remain unchanged. [Four DOS timeout/cancel cases](validation/aspect-flow-handoff.json)
+now hold queued manual bytes until XON; two entry/two resume cases and
+[ten confirmation regressions](validation/flow-handoff-confirmation.json) pass.
+Fresh stock Synchronet/ENiGMA recorder/window checks pass. Normal audio is
+accepted for one normal ENiGMA V22/1200 route with [26/34/12 checks](validation/recording-flow-handoff-audio.json).
+[Two emulated CTS cases](validation/aspect-cts-dos.json) separately cover short
+HARD/BOTH stalls and exact return. [Flow ownership](ASPECT_FLOW_HANDOFF.md) retains the earlier pair's
+counterexample and current scope. Longer stalls, CTS, reconnect, full actions,
+script-window audio, physical hardware and all full gates remain open. Older
+checkpoints below keep their recorded descriptor and product identities.
+
 The [software-flow handback audit](validation/aspect-flow-return.json)
 ([workflow and limits](ASPECT_FLOW_RETURN.md)) passes two actual8086 DOS
 sessions, SOFT and BOTH: a1.2-second XOFF pause is observed for22 BIOS ticks,

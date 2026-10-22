@@ -1024,6 +1024,19 @@ test-parent-carrier-dos: terminal aspect-runner
 .PHONY: test-aspect-flow-return-dos
 test-aspect-flow-return-dos: terminal aspect-runner
 	python3 standalone/test_aspect_flow_return_dos.py --label "flow-$$(date -u +%Y%m%dT%H%M%S%N)"
+.PHONY: test-aspect-flow-handoff test-parent-flow-handoff test-aspect-flow-entry-dos test-aspect-flow-fault-dos
+test-aspect-flow-handoff: aspect-runner
+	python3 standalone/check_aspect_flow_handoff.py --output "build/aspect-flow-handoff/child-$$(date -u +%Y%m%dT%H%M%S%N)"
+test-parent-flow-handoff: terminal
+	python3 standalone/check_parent_flow_handoff.py --output "build/aspect-flow-handoff/parent-$$(date -u +%Y%m%dT%H%M%S%N)"
+test-aspect-flow-entry-dos: terminal aspect-runner
+	python3 standalone/test_aspect_flow_return_dos.py --entry-pause --label "entry-$$(date -u +%Y%m%dT%H%M%S%N)"
+test-aspect-flow-fault-dos: terminal aspect-runner
+	python3 standalone/test_aspect_flow_fault_dos.py --label "fault-$$(date -u +%Y%m%dT%H%M%S%N)"
+.PHONY: test-aspect-cts-dos
+test-aspect-cts-dos: terminal aspect-runner
+	python3 standalone/test_aspect_cts_dos.py --label "cts-$$(date -u +%Y%m%dT%H%M%S%N)"
+test: test-aspect-flow-handoff test-parent-flow-handoff
 test: test-parent-carrier-status
 .PHONY: test-aspect-abort-owner test-terminal-abort-owner test-aspect-abort-dos
 test-aspect-abort-owner: aspect-runner

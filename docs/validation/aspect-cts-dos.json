@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "actual_emulated_CTS_accepted": true,
+  "physical_hardware_accepted": false,
+  "full_application_accepted": false,
+  "parent_sha256": "a4c377c988c6d9b5034a6a494f02be635a56e1cced07f5f1e911704e752301d1",
+  "runner_sha256": "ec93148fc6d5fac2fdd358c819b80f0c7536a33ad9f8c8d63243cb491a055695",
+  "cases": {
+    "hard": {
+      "passed": true,
+      "payload_bytes": 2048,
+      "wire_bytes": 2109,
+      "transport_bytes": 2131,
+      "modem_status_frames": 11,
+      "CTS_low_seconds": 1.2043600629549474,
+      "software_paused_ticks": 0,
+      "hardware_owner_ticks": 34,
+      "wire_sha256": "dc28d2fd1524804ba14c4e1e1c0abdf5ad717100d2a20e26f79fd980404c03fa"
+    },
+    "both": {
+      "passed": true,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "transport_bytes": 2135,
+      "modem_status_frames": 11,
+      "CTS_low_seconds": 1.204225720022805,
+      "software_paused_ticks": 0,
+      "hardware_owner_ticks": 34,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    }
+  },
+  "emulator": {
+    "version": "2026.07.02",
+    "wrapper": "/nix/store/cb0mas86nyk9lgzjas06nr688dpwbs86-dosbox-x-2026.07.02/bin/dosbox-x",
+    "wrapper_sha256": "cf90648a5e2a7821a385aa4feaef1b161d8e1b46c5aa11092a1e8b51e10971c5",
+    "binary_sha256": "9d45970d65da0b2c99e26457cd9693772eddedb69f2339885ec5b78be48b4ed7",
+    "sources": {
+      "nullmodem.cpp": {
+        "url": "https://raw.githubusercontent.com/joncampbell123/dosbox-x/dosbox-x-v2026.07.02/src/hardware/serialport/nullmodem.cpp",
+        "sha256": "984ab6eb7ea632124f301c60d8e4c33d70ab9985bd7bd247427bef51ec9e6f27"
+      },
+      "package.nix": {
+        "url": "https://raw.githubusercontent.com/NixOS/nixpkgs/f13ff45afd1bb73e640eaa08a7066dbed07e3238/pkgs/by-name/do/dosbox-x/package.nix",
+        "sha256": "b39a2a0534e09f837f84bc3818c5ac379efe4e4c8154caf008be476a416fd298"
+      }
+    }
+  },
+  "cohort": "build/aspect-cts-dos/accepted-01",
+  "frozen_files": 539,
+  "files_manifest_sha256": "60d2d37ecb86cd7cea779507bf506ae1d0ca57abbb769592e07cfd9f777c6d14",
+  "auditor_sha256": "45b7a229f60d1c5be6ffc64b55d738d3209a882f538282eadc9ab16d87c7e97c",
+  "scope": "Two actual8086 DOS HARD/BOTH sessions. Owned peer drives CTS low/high through the pinned emulator nontransparent nullmodem FF/status framing. Independent decoding separates transport status from actual UART bytes; no data crosses while CTS is low, no XOFF is sent and child software-pause stays zero. Exact2048-byte payload, manual parent/query return, native child exit and hardware/JFT/file-owner restoration pass.",
+  "remaining": [
+    "Longer CTS stalls, timeout/cancel handback, RTS receive throttling, sustained RX pressure, carrier reconnect and physical ISA UART/modem timing remain open."
+  ]
+}

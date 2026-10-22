@@ -69,6 +69,14 @@ void __far runtime_external_observe(unsigned raw,unsigned processor,unsigned wai
  }
  diagnostic_printf("EXTERNAL %u raw%u processor%u wait%u save%u\n",trace_count,raw,processor,wait,save);++trace_count;
 }
+static void __far diagnostic_clean_state(void)
+{
+ CHECK(!runtime_live&&!runtime_script_file_live&&!runtime_file.handle&&!runtime_abi_bad);
+ CHECK(!runtime_find_live&&!runtime_file_info_live&&!runtime_file_times_live);
+ CHECK(!native_process_busy&&!native_program_busy&&!native_display_owned&&!process_handles_active);
+ CHECK(runtime_script_file_peak==6&&runtime_script_file_open_calls==6&&runtime_script_file_close_calls==6);
+ CHECK(!runtime_script_file_cleanup_errors);
+}
 #pragma code_seg()
 int main(int argc,char **argv)
 {
@@ -108,11 +116,7 @@ int main(int argc,char **argv)
  status=aspect_runtime_run(argv[1],argc==4&&!strcmp(argv[3],"budget")?100:5000);
  native_fail_at=native_fail_near=0;
  CHECK(status==expected);CHECK(_dos_getvect(0)==old_zero);
- CHECK(!runtime_live&&!runtime_script_file_live&&!runtime_file.handle&&!runtime_abi_bad);
- CHECK(!runtime_find_live&&!runtime_file_info_live&&!runtime_file_times_live);
- CHECK(!native_process_busy&&!native_program_busy&&!native_display_owned&&!process_handles_active);
- CHECK(runtime_script_file_peak==6&&runtime_script_file_open_calls==6&&runtime_script_file_close_calls==6);
- CHECK(!runtime_script_file_cleanup_errors);
+ diagnostic_clean_state();
  if(argc==4&&(!strcmp(argv[3],"fallback")||large_environment))CHECK(native_far_calls==far_before+1);
  if(!expected){CHECK(runtime_integer_b[0]==317);CHECK(runtime_external_raw_status==raw);CHECK(runtime_external_private_count==7);}
  CHECK(_fmemcmp(jft_before,jft,jft_count)==0);

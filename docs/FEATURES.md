@@ -1,5 +1,22 @@
 # Full application reconstruction checklist
 
+The [flow-ownership checkpoint](validation/aspect-flow-handoff.json) accepts
+parenta4c377c9/runnerec93148f for SOFT/BOTH entry, successful resume and timeout/
+cancel handback. Four real DOS fault cases keep the peer pause until XON; the
+older pair sends queued input early. Two entry and two resumed payload cases
+pass. ASIOv5 is50 bytes with guarded scalar flow state; legacy1..4 remain
+accepted. Renderer capabilities12/13 are unchanged. Sixteen/thirteen new linked
+cases,104 Script inputs,108 legacy serial inputs,64 carrier/status groups,
+ten confirmation,56 process and13 PROGRAM cases pass;26/23 source-only
+application/diagnostic products reproduce. Fresh Synchronet/ENiGMA recorder
+and stock-window checks pass. [Normal recorder audio](validation/recording-flow-handoff-audio.json)
+passes26/34/12 checks on one ENiGMA V22/1200 software route. [Two actual DOS
+emulated CTS cases](validation/aspect-cts-dos.json) pass1.2-second HARD/BOTH
+stalls and exact payloads with zero software pause. Longer stalls, CTS fault
+handback, RTS/sustained RX, carrier reconnect and all full gates remain open.
+[Semantics](ASPECT_FLOW_HANDOFF.md) distinguish these selected tests from
+whole-application completion. Earlier checkpoints retain their identities.
+
 The [software-flow handback audit](validation/aspect-flow-return.json) passes two actual8086 DOS
 sessions, SOFT and BOTH: a1.2-second XOFF pause is observed for22 BIOS ticks,
 then XON releases2,048 exact script bytes. Manual parent typing and a query

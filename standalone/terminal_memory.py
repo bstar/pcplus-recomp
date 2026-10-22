@@ -492,16 +492,16 @@ def inspect_terminal_memory(binary,map_path):
   assert symbols['terminal_aspect_emit_resident'][0]==symbols['terminal_receive_character'][0]==near_code['relative_segment']
   near_call('terminal_aspect_emit_resident','terminal_receive_character',prefix=b'\x50',suffix=b'\x83\xc4\x02\xcb')
   handoff=address('_script_handoff')
-  assert near_start<=handoff and handoff+48<=near_start+near_size
+  assert near_start<=handoff and handoff+50<=near_start+near_size
   for offset,name in ((40,'_script_render_offset'),(42,'_script_render_segment'),
-                      (44,'_script_render_token'),(46,'_script_render_version')):
-   assert address(name)==handoff+offset,(name,'ASIOv4 capability layout')
+                      (44,'_script_render_token'),(46,'_script_render_version'),(48,'_script_flow_flags')):
+   assert address(name)==handoff+offset,(name,'ASIOv5 flow capability layout')
   for name in ('terminal_aspect_active','terminal_aspect_adopt'):
    assert near_start<=address(name) and address(name)+2<=near_start+near_size
   assert address('terminal_aspect_adopt')==address('terminal_aspect_active')+2
   extra.update(aspect_far_services_verified=len(services),aspect_resident_far_references_verified=references,
                aspect_controller_read_references_verified=controller_read_references,
-               aspect_emit_cdecl_bridge_verified=True,aspect_handoff_bytes=48,aspect_renderer_state_bytes=4)
+               aspect_emit_cdecl_bridge_verified=True,aspect_handoff_bytes=50,aspect_renderer_state_bytes=4)
   controller_start=address('line_controller_code_start');controller_end=address('line_controller_code_end')
   assert symbols['line_controller_code_start'][0]==symbols['line_controller_code_end'][0]==aspect_seg
   assert aspect_seg*16<=controller_start<controller_end<=aspect_seg*16+aspect_code['bytes']

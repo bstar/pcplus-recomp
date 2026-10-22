@@ -41,4 +41,14 @@ typedef struct aspect_serial_handoff_v4 {
  unsigned render_offset,render_segment,render_token,render_version;
 } aspect_serial_handoff_v4;
 typedef char aspect_serial_handoff_v4_size_check[sizeof(aspect_serial_handoff_v4)==ASIO_V4_SIZE?1:-1];
+/* v5 preserves the peer's software TX pause across both UART handoffs.
+ * Only bit0 is defined. Input participates in guard; output is published
+ * before returned=1 after the child IRQ is quiet. v1..v4 retain their ABI. */
+#define ASIO_VERSION_FLOW 5U
+#define ASIO_V5_SIZE 50U
+typedef struct aspect_serial_handoff_v5 {
+ aspect_serial_handoff_v4 base;
+ unsigned flow_flags;
+} aspect_serial_handoff_v5;
+typedef char aspect_serial_handoff_v5_size_check[sizeof(aspect_serial_handoff_v5)==ASIO_V5_SIZE?1:-1];
 #endif

@@ -70,13 +70,13 @@ def main():
   assert m.get('terminal_program_pending') and m.get('terminal_program_kind')==4
   m.put('terminal_program_pending',0);m.put('terminal_program_active',1)
   return m.call('terminal_script_prepare')
- def descriptor(m):return struct.unpack('<I22H',m.uc.mem_read(m.symbols['_script_handoff'],48))
+ def descriptor(m):return struct.unpack('<I23H',m.uc.mem_read(m.symbols['_script_handoff'],50))
  def guard(d):
   g=d[3]^d[4]^d[5]^0xa510
   for value in [*d[7:9],*d[11:]]:g^=value
   return g
  def capability(d):
-  assert d[1:3]==(4,48) and d[19] and d[20] and d[21] and d[22]==1,d
+  assert d[1:3]==(5,50) and d[19] and d[20] and d[21] and d[22]==12,d
   assert d[9]==guard(d),d
 
  for p in [b'TEST.ASX',b'D:\\TEST.ASX',b'D:\\SCRIPTS\\TEST.ASX',b'D:TEST.ASX',b'\\TEST.ASX']:
@@ -169,7 +169,7 @@ def main():
   pointer=m.symbols['terminal_directory_context']-m.data_base+252 if entry else 0
   assert d[13:19]==(entry,pointer,0,0,0,0)
   assert d[9]==guard(d)
- done('ASIOv4-retains-wrapped-full-raw-preload-and-selected-directory-in-quiet-parent',3)
+ done('ASIOv5-retains-wrapped-full-raw-preload-and-selected-directory-in-quiet-parent',3)
  for selected,pending,delta in [(True,True,1),(True,True,0),(True,False,7),(False,True,1)]:
   m=model();path(m,b'TEST.ASX')
   if selected:
@@ -230,18 +230,18 @@ def main():
   capability(d)
   assert d[11:19]==(pointer,mode,0,0,0,0,0,0),d
   assert d[9]==guard(d)
- done('ASIOv4-parent-policy-mode-enabled-dequeuemask-and-existing-table-pointer-guard',3)
+ done('ASIOv5-parent-policy-mode-enabled-dequeuemask-and-existing-table-pointer-guard',3)
  for mode,enabled,mask in [(3,0,255),(0,1,255),(1,0,255),(1,1,127),(2,1,127),(2,0,255),(0,0,127)]:
   m=model();path(m,b'TEST.ASX');m.put('terminal_translation_mode',mode)
   m.put('terminal_translation_enabled',enabled);m.put('uart_rx_mask',mask)
   assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
   assert not m.children and m.get('terminal_program_status')==5;m.restored()
- done('ASIOv4-inconsistent-mode-enabled-and-UARTmask-denied-before-child',7)
+ done('ASIOv5-inconsistent-mode-enabled-and-UARTmask-denied-before-child',7)
  for offset,value in [(4,2),(20,0),(24,1),(26,1),(28,1),(30,1),(32,2026),(34,10),(36,19),(38,1),(40,1),(42,1),(44,0),(46,2)]:
   m=model();path(m,b'TEST.ASX');m.handoff_tamper=(offset,value)
   assert m.call('terminal_script_start')==0;m.keys.append(32);m.safe()
   assert len(m.children)==1 and m.get('terminal_program_status')==5;m.restored()
- done('ASIOv4-parent-completion-rejects-version-guard-table-mode-and-directory-and-projection-and-capability-mutation',14)
+ done('ASIOv5-parent-completion-rejects-version-guard-table-mode-and-directory-and-projection-and-capability-mutation',14)
  for stored,want in [(b'LOGON',b'LOGON.ASX'),(b'go.asx',b'GO.ASX'),(b'D:go',b'D:GO.ASX')]:
   m=model();m.put('terminal_directory_context_valid',1);m.put('connection_state',6)
   m.uc.mem_write(m.symbols['terminal_directory_context'],struct.pack('<H',7))

@@ -15,7 +15,7 @@ def prepare_observer(out,offsets,map_path,exit_map=None,mouse_probe=False,retry_
     resources=[('terminal_directory_context_valid',2),('terminal_directory_context',496),
         ('terminal_translation_mode',2),('terminal_translation_enabled',2),('terminal_translation_table',256),
         ('terminal_configuration_values',44),('uart_rx_mask',2),('terminal_keymap',948),('terminal_tab_stops',30),
-        ('screen_attribute_cells',4096),('erase_attribute_values',4096),('screen_line_flags',128),('_script_handoff',48)]
+        ('screen_attribute_cells',4096),('erase_attribute_values',4096),('screen_line_flags',128),('_script_handoff',50)]
     resources += [(n,2) for n in re.findall(r'X\((\w+)\)',(ROOT/'src/aspect/renderer_policy.h').read_text())]
     size=sum(n for _,n in resources)
     symbols={n:(int(seg,16),int(off,16)) for seg,off,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)',map_path.read_text(),re.M|re.I)}

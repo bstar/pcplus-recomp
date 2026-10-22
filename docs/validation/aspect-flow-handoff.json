@@ -1,0 +1,209 @@
+{
+  "passed": true,
+  "flow_handoff_accepted": true,
+  "full_application_accepted": false,
+  "parent_sha256": "a4c377c988c6d9b5034a6a494f02be635a56e1cced07f5f1e911704e752301d1",
+  "runner_sha256": "ec93148fc6d5fac2fdd358c819b80f0c7536a33ad9f8c8d63243cb491a055695",
+  "variants": {
+    "terminal": {
+      "sha256": "a4c377c988c6d9b5034a6a494f02be635a56e1cced07f5f1e911704e752301d1",
+      "data_spare": 112,
+      "code_spare": 190
+    },
+    "terminal-mouse": {
+      "sha256": "a4827b71f961a471f2eb0245be3105358d01ad0bd3cfc3f007a1f58a61468fc4",
+      "data_spare": 64,
+      "code_spare": 42
+    },
+    "terminal-process": {
+      "sha256": "a50a484b23cca4280118e054430a86f6e54ad85169ee17eb055ee2f609b645ba",
+      "data_spare": 112,
+      "code_spare": 190
+    }
+  },
+  "baseline": {
+    "timeout-soft": {
+      "child_exit": 14,
+      "child_paused_ticks": 36,
+      "parent_paused_ticks": 0,
+      "premature_application_hex": "72656164791b5b353b3152",
+      "parent_query_after_XON": false,
+      "wire_sha256": "0a0b5cdf7d83d1767c4e182616334bdca6aeae60597fac4769d813f5f866abe0"
+    },
+    "timeout-both": {
+      "child_exit": 14,
+      "child_paused_ticks": 36,
+      "parent_paused_ticks": 0,
+      "premature_application_hex": "72656164791b5b353b3152",
+      "parent_query_after_XON": false,
+      "wire_sha256": "0a0b5cdf7d83d1767c4e182616334bdca6aeae60597fac4769d813f5f866abe0"
+    },
+    "cancel-soft": {
+      "child_exit": 13,
+      "child_paused_ticks": 12,
+      "parent_paused_ticks": 0,
+      "premature_application_hex": "72656164791b5b343b3152",
+      "parent_query_after_XON": false,
+      "wire_sha256": "84ddf8ed0463d46d6142f5412929377723b1d5ae4826b1bbb69cccbb8b779cad"
+    },
+    "cancel-both": {
+      "child_exit": 13,
+      "child_paused_ticks": 12,
+      "parent_paused_ticks": 0,
+      "premature_application_hex": "72656164791b5b343b3152",
+      "parent_query_after_XON": false,
+      "wire_sha256": "84ddf8ed0463d46d6142f5412929377723b1d5ae4826b1bbb69cccbb8b779cad"
+    }
+  },
+  "fixed": {
+    "timeout-soft": {
+      "child_exit": 14,
+      "child_paused_ticks": 36,
+      "parent_paused_ticks": 37,
+      "premature_application_hex": "",
+      "parent_query_after_XON": true,
+      "wire_sha256": "0a0b5cdf7d83d1767c4e182616334bdca6aeae60597fac4769d813f5f866abe0"
+    },
+    "timeout-both": {
+      "child_exit": 14,
+      "child_paused_ticks": 36,
+      "parent_paused_ticks": 37,
+      "premature_application_hex": "",
+      "parent_query_after_XON": true,
+      "wire_sha256": "0a0b5cdf7d83d1767c4e182616334bdca6aeae60597fac4769d813f5f866abe0"
+    },
+    "cancel-soft": {
+      "child_exit": 13,
+      "child_paused_ticks": 12,
+      "parent_paused_ticks": 61,
+      "premature_application_hex": "",
+      "parent_query_after_XON": true,
+      "wire_sha256": "84ddf8ed0463d46d6142f5412929377723b1d5ae4826b1bbb69cccbb8b779cad"
+    },
+    "cancel-both": {
+      "child_exit": 13,
+      "child_paused_ticks": 12,
+      "parent_paused_ticks": 61,
+      "premature_application_hex": "",
+      "parent_query_after_XON": true,
+      "wire_sha256": "84ddf8ed0463d46d6142f5412929377723b1d5ae4826b1bbb69cccbb8b779cad"
+    }
+  },
+  "entry": {
+    "soft": {
+      "child_paused_ticks": 20,
+      "parent_pause_seen_at_entry": true,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    },
+    "both": {
+      "child_paused_ticks": 20,
+      "parent_pause_seen_at_entry": true,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    }
+  },
+  "resume": {
+    "soft": {
+      "child_paused_ticks": 22,
+      "parent_pause_seen_at_entry": false,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    },
+    "both": {
+      "child_paused_ticks": 22,
+      "parent_pause_seen_at_entry": false,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    }
+  },
+  "child_linked_cases": 16,
+  "parent_linked_cases": 13,
+  "legacy_child_rejection": {
+    "passed": true,
+    "runner_sha256": "dfee1e95a00621559a36983055cd768447e77f1a6f9bc6fea6f84ca04918170f",
+    "typed_status": 1,
+    "UART_writes": 0,
+    "renderer_requests": 0,
+    "descriptor_unchanged": true,
+    "inputs": {
+      "standalone/check_aspect_flow_legacy.py": "89d5e36a0a39694228404dd77bf664bf236e545532323d2fbffb682a3643bfa2",
+      "standalone/check_aspect_flow_handoff.py": "046790fd72f3556cd3275b6242f2e33a0fcfce795af03b77b4b6b7880f37179e",
+      "standalone/check_aspect_render_client.py": "9e10e2ea4176cb1d941bf48c909552db8bf5a752e9a1032cc8294d31098e4afc",
+      "build/aspect-flow-fault-dos/baseline-02/timeout-soft/ASPECT.EXE": "dfee1e95a00621559a36983055cd768447e77f1a6f9bc6fea6f84ca04918170f",
+      "build/aspect-flow-fault-dos/baseline-02/inputs/build/aspect-runner/ASPECT.map": "52dd08a5efe80a5dd01db8a95e8208bad6505b0d1d577c0b0cc20f2b3a75996b"
+    },
+    "scope": "Prove an earlier source-built child refuses v5 before UART acquisition. Real old parser instructions with modeled DOS/MCB/UART boundaries. Earlier owned source build, not an original proprietary executable. No actual DOS wrong-version launch claim."
+  },
+  "supporting_checks": {
+    "build/aspect-render-client/checks.json": {
+      "cases": 16,
+      "sha256": "408c2b812743378d2de48cc6a0f45d24e57775f1eb5aae4483a5ce4581d8420a"
+    },
+    "build/aspect-keyboard/key-client-checks.json": {
+      "cases": 28,
+      "sha256": "37216805c467cfecd5c02554a82b3e398913edcea6eea4bfd3017a1767364d15"
+    },
+    "build/aspect-foreground-delay/checks.json": {
+      "cases": 10,
+      "sha256": "bd90aa726083827b470b54bd17c1e9ea610cadcd4b1acd063c23da7d41c5047d"
+    },
+    "build/aspect-abort-owner/checks.json": {
+      "cases": 9,
+      "sha256": "5c93112bf819b54baa41d4c3cab3d480fef6d1a2ecebf5e0124448cf46545482"
+    },
+    "build/terminal/script-launch-live-checks.json": {
+      "cases": 22,
+      "sha256": "c4187e153f79ef33d049670b0d6dfeb30ba894bfb577c6494807f33ecf17f35f"
+    },
+    "build/terminal-abort-confirm/checks.json": {
+      "cases": 10,
+      "sha256": "21f5d54106e466efe96f58559e06558c3e92725168715c5c1063dd3ee16c0be7"
+    },
+    "build/terminal-abort-confirm-mouse/checks.json": {
+      "cases": 10,
+      "sha256": "cdf8cdbf84066f9e46fb371366b075b8210a5cdff33f00e0a64fe1ae998486d5"
+    },
+    "build/parent-carrier-status/flow-handoff-normal-01/checks.json": {
+      "cases": 32,
+      "sha256": "4a6f0d5a7eb817178390893ea835c85727514fd2e71bf6e7de3f5c4ac55efae2"
+    },
+    "build/parent-carrier-status/flow-handoff-mouse-01/checks.json": {
+      "cases": 32,
+      "sha256": "108d03957ee7c7833bb65492e709d2bf21e59a09c5025f70fb4b57c771eaf386"
+    },
+    "build/aspect-serial/checks.json": {
+      "groups": 24,
+      "inputs": 108,
+      "sha256": "537c93a128cc4a8f06923e9a2a36ed922aa04ad0091f3dc0b3523d09f5ad33df"
+    }
+  },
+  "actual_DOS_fault_cases": 4,
+  "actual_DOS_entry_cases": 2,
+  "actual_DOS_resume_cases": 2,
+  "confirmation_DOS_cases": 10,
+  "actual_DOS_modem_cases": 4,
+  "actual_DOS_parent_carrier_cases": 1,
+  "process_cases": 56,
+  "attached_PROGRAM_cases": 13,
+  "source_only_products": {
+    "application": 26,
+    "diagnostic": 23
+  },
+  "diagnostic_near_code_remaining": 80,
+  "cohort": "build/aspect-flow-handoff/accepted-02",
+  "frozen_files": 10434,
+  "files_manifest_sha256": "f28d7a5765580f2c547f40dfe15c22d7822763da6ab0b3d1d7290a5069ed0bc4",
+  "auditor_sha256": "a7280729193c2df8f4398851d27422a6bf8feb8d80306eefdf40223983a535eb",
+  "ABI": "ASIOv5 extends v4 from48 to50bytes with one guarded input/output peer-pause word. Legacy v1..v4 remain accepted. Renderer capabilities12/13 are unchanged; an older child rejects v5 before UART acquisition.",
+  "scope": "Real DOSBox-X8086 SOFT/BOTH, remote XOFF/XON, exact complete wires and passive parent/child observations. Old/current fault wires are identical but their timing differs: old parent transmits ready/query before XON; current parent keeps TX paused. Native input preload precedes ISR installation; current parent adopts valid returned pause before UART restoration. Cleanup and source-only regression scopes are explicit.",
+  "remaining": [
+    "The transmit pending bound remains36BIOS ticks; configurable longer-stall policy is still required.",
+    "CTS/RTS stalls, sustained RX pressure, carrier reconnect, software-audio flow pressure and physical UART/modem timing remain open.",
+    "Every whole-application F01\u2013F16 gate remains open."
+  ]
+}

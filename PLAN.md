@@ -1,5 +1,42 @@
 # Complete DOS rebuild plan
 
+Two [actual DOS emulated CTS cases](docs/validation/aspect-cts-dos.json) also
+pass HARD/BOTH: the peer drives CTS low/high through pinned DOSBox-X2026.07.02
+control framing. No payload crosses during the1.2-second hold;2,048 bytes,
+manual parent input/query and cleanup pass. Independent transport decoding
+separates11 modem-status frames from2,109/2,113 UART bytes. Software pause
+stays zero. [Protocol provenance and limits](docs/ASPECT_CTS_DOS.md) retain
+source/tool identities. Longer CTS holds, timeout/cancel and RTS pressure remain open.
+
+The [v5 flow-handoff audit](docs/validation/aspect-flow-handoff.json) accepts
+parenta4c377c9/runnerec93148f. An unchanged previous pair reproduces premature
+parent transmission after XOFF timeout/cancel; four corrected DOS cases retain
+the pause until XON. Two entry cases inherit a pause already held by the parent,
+and two resume cases transmit2,048 exact bytes then return to manual input.
+ASIOv5 adds one guarded scalar word, growing48 to50bytes; legacy1..4 remain
+accepted and the earlier child refuses v5 before UART acquisition. Renderer
+capabilities12/13 remain unchanged.
+
+Sixteen child/thirteen parent linked cases,104 Script-owner inputs,108 legacy
+serial-owner inputs,64 parent carrier/status groups, four modem-drop cases,
+ten confirmation workflows,56 COM/flow/process and13 attached PROGRAM cases
+pass. Fresh source trees reproduce26 application/23 diagnostic products. Pure
+diagnostic cleanup checks move to PROCESSDIAG, leaving80 near-code bytes.
+Normal/mouse near-data spare is112/64 and code spare190/42.
+[Four recorder/replay sessions](docs/validation/bbs-flow-handoff-compat.json) and
+[two stock-window sessions](docs/validation/bbs-flow-handoff-window.json) pass
+on owned Synchronet/ENiGMA. [Fresh normal recorder audio](docs/validation/recording-flow-handoff-audio.json)
+passes26 producer,34 independent and12 serial checks:60,389 display bytes plus187
+bridge bytes exact and77 independently waveform-decoded online bytes, with
+normal hardware/timer/SIP/VM cleanup. [Admission inputs](docs/validation/recording-flow-handoff-audio-preparation.json)
+remain sealed. This is one ENiGMA V22/1200 software route.
+
+Next: configurable longer stalls (the sender still expires after36 BIOS ticks),
+CTS pressure, sustained RX, real carrier reconnect and connection flow reset,
+then remaining command actions and every full F01–F16/physical requirement.
+See [handoff semantics and limitations](docs/ASPECT_FLOW_HANDOFF.md). Earlier
+checkpoints below retain their recorded identities.
+
 The [software-flow handback audit](docs/validation/aspect-flow-return.json) passes two actual8086 DOS
 sessions, SOFT and BOTH: a1.2-second XOFF pause is observed for22 BIOS ticks,
 then XON releases2,048 exact script bytes. Manual parent typing and a query

@@ -10,6 +10,7 @@ extern _command_menu_script,_terminal_script_prepare
 extern terminal_program_command,terminal_program_status
 extern uart_rx_count,uart_rx_dropped,uart_rx_buffer,uart_rx_read,uart_rx_write
 extern uart_port_lcr,uart_port_thr,uart_software_flow,uart_hardware_flow
+extern uart_tx_paused
 extern terminal_port_number,terminal_irq_vector
 extern uart_rts_lowered,terminal_parser_active,terminal_ansi_wait_active
 extern terminal_translation_enabled,terminal_translation_mode,terminal_translation_table,uart_rx_mask
@@ -200,6 +201,10 @@ terminal_script_prepare:
  call script_admit
  or ax,ax
  jnz .done
+ mov ax,[uart_tx_paused]
+ cmp ax,1
+ ja .bad_policy
+ mov [_script_flow_flags],ax
  mov ax,[uart_rx_count]
  mov [script_handoff+16],ax
  xor bx,bx
@@ -340,9 +345,9 @@ terminal_script_complete:
  jne .bad
  cmp word [script_handoff+2],0x4f49
  jne .bad
- cmp word [script_handoff+4],4
+ cmp word [script_handoff+4],5
  jne .bad
- cmp word [script_handoff+6],48
+ cmp word [script_handoff+6],50
  jne .bad
  mov ax,[process_psp]
  cmp [script_handoff+8],ax
@@ -369,6 +374,7 @@ terminal_script_complete:
  xor ax,[_script_render_segment]
  xor ax,[_script_render_token]
  xor ax,[_script_render_version]
+ xor ax,[uart_tx_paused] ;Original quiet-parent input, not child's output.
  xor ax,[uart_rx_count]
  cmp word [uart_rx_count],0
  je .check_guard
@@ -405,6 +411,14 @@ terminal_script_complete:
 .check_table:
  cmp [script_handoff+24],bx
  jne .bad
+ mov bx,[_script_flow_flags]
+ cmp bx,1
+ ja .bad
+ cmp word [uart_software_flow],0
+ jne .flow_valid
+ or bx,bx
+ jnz .bad
+.flow_valid:
  mov ax,[script_handoff+16]
  cmp ax,4096
  ja .bad
@@ -422,6 +436,8 @@ terminal_script_complete:
  jb .status
  mov byte [uart_rts_lowered],1
 .status:
+ mov ax,[_script_flow_flags]
+ mov [uart_tx_paused],ax
  cmp word [script_handoff+18],0
  je .done
 .bad:
@@ -449,6 +465,8 @@ _script_render_offset: dw 0
 _script_render_segment: dw 0
 _script_render_token: dw 0
 _script_render_version: dw 0
+global _script_flow_flags
+_script_flow_flags: dw 0
 _script_divisor:
 script_divisor: dw 0
 _script_lcr:

@@ -1,5 +1,14 @@
 # ASPECT serial commands and DOS port ownership
 
+The [current flow handoff](ASPECT_FLOW_HANDOFF.md) adds ASIOv5/50bytes with
+one guarded peer-pause word. It preserves an existing XOFF before child IRQ
+installation and returns the final pause before parent IRQ restoration. Legacy
+ASIOv1..v4 remain supported. Actual DOS SOFT/BOTH entry/resume and timeout/cancel
+checks pass, with exact bytes and independently checked flow timing. The36-tick
+transmit bound remains; configurable long stalls, CTS, sustained RX, reconnect
+and physical validation remain open. The following describes the historical
+ASIOv1 checkpoint.
+
 The later [input-policy integration](ASPECT_INPUT_POLICY.md) adds native receive
 mapping and ASIOv2 XLT/seven-bit inheritance. This document's ASIOv1 validation
 remains a historical checkpoint; version1 parents are still supported.
