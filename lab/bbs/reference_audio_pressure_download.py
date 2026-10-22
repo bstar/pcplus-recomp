@@ -2,7 +2,7 @@
 """Download the >64KiB fixture from stock ENiGMA with a real lrzsz TCP peer."""
 import argparse,json,os,select,shutil,subprocess,time
 from pathlib import Path
-import enigma,synchronet
+import enigma,synchronet,enigma_transfer
 from modem import Telnet
 from audit_zmodem import audit_batch,audit_controls
 from prepare_audio_pressure_download import NAME,SIZE,validate,entries
@@ -12,7 +12,11 @@ from synthmodem_vm_control import ROOT,sha
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--fixture',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
  executable=shutil.which('rz');assert executable,'Run this reference through ./tools/dev (pinned lrzsz)'
- fixture=a.fixture.resolve();source,before=validate(fixture);out=a.output.resolve()
+ fixture=a.fixture.resolve();fixture_info=json.loads(fixture.read_text());server_fixture=fixture_info.get('server_fixture')
+ if server_fixture:
+  from enigma_fixture import from_result
+  assert from_result(dict(server_fixture=server_fixture,server_root=server_fixture['source'],route='download'))==server_fixture
+ source,before=validate(fixture);out=a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True);recv=out/'RECV';recv.mkdir()
  rz=Path(executable).resolve();log=enigma.SOURCE/'logs/enigma-bbs.log';boundary=(log.stat().st_ino,log.stat().st_size)
  def rows():
@@ -83,15 +87,17 @@ def main():
  checks.update(exact_source_and_reference_file=(recv/NAME).is_file() and (recv/NAME).read_bytes()==source.read_bytes() and len(source.read_bytes())==SIZE,
   only_expected_reference_file={p.name for p in recv.iterdir()}=={NAME},
   official_download_count_advanced=len(selected)==1 and selected[0]['meta'].get('dl_count',0)==before[0]['meta'].get('dl_count',0)+1,
-  stock_helper_exit_zero=sum(r.get('msg')=='Process exited' and r.get('exitCode')==0 for r in server_rows)==1,
+  owned_helper_exit_zero=sum(r.get('msg')=='Process exited' and r.get('exitCode')==0 for r in server_rows)==1,
+  selected_helper_identity=len([r for r in server_rows if r.get('msg')=='Executing external protocol'])==1 and next((r.get('cmd') for r in server_rows if r.get('msg')=='Executing external protocol'),None)==str(enigma_transfer.HELPER),
   no_error=error is None)
  try:validate(fixture);checks['fixture_and_prior_files_metadata_preserved']=True
  except Exception as exc:checks['fixture_and_prior_files_metadata_preserved']=False;error=error or repr(exc)
  r=dict(passed=all(checks.values()),checks=checks,error=error,fixture=str(fixture.relative_to(ROOT)),fixture_sha256=sha(fixture),steps=steps,
+  server_fixture=server_fixture,server_root=str(enigma.SOURCE),server_config_sha256=sha(enigma.SOURCE/'config/config.hjson'),
   receiver_path=str(rz),receiver_sha256=sha(rz),reference_bytes=SIZE,reference_sha256=sha(source),protocol=protocol,
   inputs={str(q.relative_to(ROOT)):sha(q) for q in (Path(__file__).resolve(),ROOT/'lab/bbs/prepare_audio_pressure_download.py',ROOT/'lab/bbs/synchronet.py',ROOT/'lab/bbs/enigma.py',ROOT/'lab/bbs/modem.py',ROOT/'lab/bbs/audit_zmodem.py')},
   captures_sha256={str(q.relative_to(out)):sha(q) for q in out.rglob('*') if q.is_file()},
-  scope='Actual stock owned ENiGMA loopback TCP download to independent real lrzsz receiver. Exact65797-byte source/CRC/EOF/ZFIN/OO/opposite controls, official accounting and post-helper Search/List are mandatory. Declared CPR reference, no DOS/audio/sustained slow-link/physical or full-application acceptance. No protocol replies are fabricated by this wrapper.')
+  scope='Actual '+('isolated sender-candidate' if server_fixture else 'stock owned')+' ENiGMA loopback TCP download to independent real lrzsz receiver. Exact65797-byte source/CRC/EOF/ZFIN/OO/opposite controls, selected helper identity, official accounting and post-helper Search/List are mandatory. Declared CPR reference, no DOS/audio/sustained slow-link/physical or full-application acceptance. No protocol replies are fabricated by this wrapper.')
  (out/'result.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({'passed':r['passed'],'checks':checks,'error':error}));assert r['passed']
 
 

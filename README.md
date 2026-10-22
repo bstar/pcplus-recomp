@@ -5,6 +5,12 @@ serial communication, ANSI terminal handling and BBS compatibility.
 The complete task list and current work are tracked in [PLAN.md](PLAN.md).
 Machine launch profiles can select [ZMODEM receive credit](docs/ZMODEM_RECEIVE_CREDIT.md)
 with `/Z:1..8192`; omission preserves the existing8192-byte offer.
+The [larger ENiGMA software-audio download](docs/ENIGMA_SENDER_CREDIT.md)
+now passes78 producer/independent checks and11 verifier negatives:65797 exact
+bytes,256-byte packets/groups, complete CRC/finish, resumed Search/List and
+normal DOS/hardware cleanup. This uses the explicitly isolated sender candidate;
+[unmodified-stock sender recovery](docs/STOCK_DOWNLOAD_RECOVERY.md) and physical
+modem compatibility remain open.
 The planned [Boca / SPA2102 / SynthModem integration](docs/ANALOG_MODEM_INTEGRATION.md)
 retains real analog handshakes while Linux bridges to Telnet BBSes; hardware
 compatibility and 14.4 negotiation remain unverified.

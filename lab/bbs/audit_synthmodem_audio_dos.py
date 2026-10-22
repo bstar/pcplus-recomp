@@ -9,7 +9,7 @@ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);a=p.parse_args();out=a.cohort.resolve()
  r=json.loads((out/'result.json').read_text());n=json.loads((out/'node-result.json').read_text())
- from enigma_receive_finish_instance import from_result
+ from enigma_fixture import from_result
  server_fixture=from_result(r)
  checks={};serial=(out/'serial-in.bin').read_bytes();wire=(out/'control-wire.bin').read_bytes();at=0;data=bytearray();status=[]
  while at<len(wire):

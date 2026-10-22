@@ -1,0 +1,168 @@
+{
+  "passed": true,
+  "preparation_only": true,
+  "actual_audio_accepted": false,
+  "physical_hardware_accepted": false,
+  "server_fixture": {
+    "kind": "sexyz-send-credit-eof-candidate",
+    "lab": "build/bbs-lab/enigma-sender-credit-01",
+    "manifest": "build/bbs-lab/enigma-sender-credit-01/sender-credit-instance.json",
+    "manifest_sha256": "e8e600002c2bba73e1538857abb709dd15b1a945e0ce21f371fc894bd88beaa5",
+    "helper_sha256": "374bce54847d1db613f6c3ecf70b485055e0493dabe1fb499e62d8b406f9efb4",
+    "source": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-sender-credit-01/source",
+    "port": 23237
+  },
+  "source_revision": "6c25317168b762f7d9088a54d3f8295438827a0e",
+  "candidate_helper_sha256": "374bce54847d1db613f6c3ecf70b485055e0493dabe1fb499e62d8b406f9efb4",
+  "isolation_checks": {
+    "stock_source_config_helper_files_metadata_preserved": true,
+    "clone_source_pin_and_clean_tree": true,
+    "only_declared_config_differences": true,
+    "private_runtime_files_and_database_inodes": true,
+    "all_private_databases_pass_integrity": true,
+    "preloaded_download_modules_bind_candidate": true,
+    "candidate_stock_cached_context_roundtrip": true,
+    "reject_wrong_root": true,
+    "reject_wrong_manifest_hash": true,
+    "reject_wrong_helper_hash": true,
+    "reject_wrong_port": true,
+    "reject_wrong_route": true,
+    "reject_wrong_kind": true,
+    "checks_do_not_mutate_either_board_files_or_entries": true
+  },
+  "fixture_checks": {
+    "exact_copied_pressure_source": true,
+    "official_copied_entry_matches_bytes": true,
+    "all_copied_entries_use_private_storage": true,
+    "private_consistent_database_snapshots": true,
+    "stock_preserved": true,
+    "all256_byte_values_exercised": true
+  },
+  "TCP_reference_checks": {
+    "real_reference_receiver_exit_zero": true,
+    "post_transfer_search_and_list": true,
+    "complete_source_CRC_EOF_ZFIN_OO_and_opposite_controls": true,
+    "exact_source_and_reference_file": true,
+    "only_expected_reference_file": true,
+    "official_download_count_advanced": true,
+    "owned_helper_exit_zero": true,
+    "selected_helper_identity": true,
+    "no_error": true,
+    "fixture_and_prior_files_metadata_preserved": true
+  },
+  "protocol_counterexamples": [
+    {
+      "name": "corrupted_packet_CRC",
+      "rejected": true,
+      "failure": "Data CRC mismatch",
+      "display_sha256": "5f5bcfafd8574e74242e313a00dbccfbb4bb8c611ad4c8acd855dbc7f135e4fd",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "wrong_source_byte_above64KiB",
+      "rejected": true,
+      "failure": "Transferred bytes differ",
+      "display_sha256": "551b9d56910218c013f371e393b78dbd2565816dfd41ef8082f91c3176cafb60",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "a96179f11094d403e722f4b67a476506c0f8e37242f64ffaac469979f2d9ef5d"
+    },
+    {
+      "name": "CRC_valid_EOF_position_wrapped_to16bits",
+      "rejected": true,
+      "failure": "Unverified/mismatched EOF",
+      "display_sha256": "465a7dbf0c817f903094eec15512d24886f692e047e49ae17a73adc0797e6034",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "exact_file_but_missing_finish",
+      "rejected": true,
+      "failure": "Incomplete files or missing ZFIN/OO",
+      "display_sha256": "e270f51a38cba3c316d8b163121d835130b4e334aba65e75530a8cbfa2d4139f",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "missing_literal_OO",
+      "rejected": true,
+      "failure": "Missing complete protocol header",
+      "display_sha256": "55944909da736b9288b3390df16ced338504bebe533450dba12ebb9b4dff4490",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "CRC_valid_ACK_instead_of_receiver_ZFIN",
+      "rejected": true,
+      "failure": "('Missing opposite header', 8, 0, 966844.527773495, 966844.728525159)",
+      "display_sha256": "551b9d56910218c013f371e393b78dbd2565816dfd41ef8082f91c3176cafb60",
+      "opposite_sha256": "0af198f79d5bc40d9fe82b7e53df0b631c4ef4878cc7c554876c0d0bcaafa149",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "ACK_before_complete_packet_CRC",
+      "rejected": true,
+      "failure": "('No ACK or verified-position recovery for subpacket', 58709, 1024)",
+      "display_sha256": "551b9d56910218c013f371e393b78dbd2565816dfd41ef8082f91c3176cafb60",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "receiver_ZFIN_before_sender_ZFIN",
+      "rejected": true,
+      "failure": "('Missing opposite header', 8, 0, 966844.527773495, 966844.728525159)",
+      "display_sha256": "551b9d56910218c013f371e393b78dbd2565816dfd41ef8082f91c3176cafb60",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    },
+    {
+      "name": "completion_ZRINIT_before_EOF",
+      "rejected": true,
+      "failure": "('Missing opposite header', 1, None, 966844.325406893, 966846.763971149)",
+      "display_sha256": "551b9d56910218c013f371e393b78dbd2565816dfd41ef8082f91c3176cafb60",
+      "opposite_sha256": "0f41760dcdbab78bf0fcde9f37011209937377f4d8034840310a082d95710dd0",
+      "expected_source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078"
+    }
+  ],
+  "BIOS_helper_checks": 6,
+  "source_bytes": 65797,
+  "source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+  "source_receipts_sha256": {
+    "build/bbs-lab/enigma-sender-credit-01/isolation/result.json": "c8b49a42443fcfe9f0cd44b06d0361889de48956894387bd9a0af6e2a7b7ce12",
+    "build/bbs-lab/enigma-sender-credit-01/pressure-fixture/result.json": "4960b5576f532109f1e6d0ee8f58d4756ba6b70dcf12b9411d4a51cbc1eb2b07",
+    "build/bbs-lab/enigma-sender-credit-01/reference-01/result.json": "e4817ebbf417dd6a15ad3d0f9254d23cded72eb4890e84edf2ba0fcc6a166ac8",
+    "build/bbs-lab/enigma-sender-credit-01/protocol-controls-02.json": "92b70e9835b80efb4db3fa6520640f9e57d2b0d7515301989d47738d0bd0fac4",
+    "build/bbs-lab/enigma-sender-credit-01/audio-preparation-01.json": "e1b1c1de09b3a6c7fea70fa292e5815b84330c38f5a1f5498f012606aba701f0"
+  },
+  "manifest_sha256": "e8e600002c2bba73e1538857abb709dd15b1a945e0ce21f371fc894bd88beaa5",
+  "stock_preservation": {
+    "server_inputs": {
+      "main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+      "package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+      "core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+      "core/file_transfer.js": "a6e1e8b02947b9c2ac6eb7adff695f2633f445d749aedb874ffb5242f1aaba8e",
+      "core/file_entry.js": "618516d4c7db0fa6b26edf241ac0313e46eb8839f18a472af136ff56e11e0aa0",
+      "config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+      "config/menus/loc-activitypub.hjson": "82861725a47e5892bbfd2251feb02ca0bb46707516a872cf373b350b704c9fe7",
+      "config/menus/loc-doors.hjson": "fb012c018ec054a7e3261f2b4ef28dc568742b0936bfc56ba9377745f8c43530",
+      "config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+      "config/menus/loc-login.hjson": "215f943d381a2acc4c1713ff14331efaee19c474218428eac6b64f77b9355f18",
+      "config/menus/loc-main.hjson": "dc2fd404bbb8a35bc5c8bb43b3fe66378173cd8d87d0ab25978af16bda15d227",
+      "config/menus/loc-message_base.hjson": "607939acb6818c7c5fb50a2d90b04fed1b92d50f51fb9ca4215cef06644d2540",
+      "config/menus/loc-new_user.hjson": "04f466f10cc5c169c03186bc8a7fde7b18d5d938e7f0b70873d74bae15161cec",
+      "config/menus/loc-private_mail.hjson": "ffb59f0d6f2d592181d2bc304d46e9e2a3b71a14c2d6cd65a639f6b0c6f3d382"
+    },
+    "helper_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+    "selected_metadata_preserved": true,
+    "all_physical_file_bytes_inodes_sizes_mtimes_preserved": true
+  },
+  "inputs": {
+    "lab/bbs/enigma_fixture.py": "407d6cb8ee46516ee52d5460d8e1c2b22cc7e1d2e7c52fb86c9465fc98d61ae9",
+    "lab/bbs/enigma_sender_credit_instance.py": "b610547d591174d0177ca85c27da95ad768f818a7f3152a7f75e17b881909097",
+    "lab/bbs/check_sender_credit_instance.py": "2511a5fc170f4eda56d13fd1e6e42cbb04217aa40b0bb55f72d3c7198bdf5272",
+    "lab/bbs/reference_audio_pressure_download.py": "b1a6338551c0d7c58e1bcb691ee2196919d09cf68fe86c75d2bac0f4d50e2920",
+    "lab/bbs/audio_pressure_download.py": "937f6f772f37e580e708459f8a78b6e03d700c182d4bc4cf8cf218f8b9ab1d56",
+    "lab/bbs/check_pressure_download_protocol.py": "21041402418194d89f60a161fc1515272d1d808d00167498498c7919e9abd6d3"
+  },
+  "scope": "Preparation and actual fast TCP reference for a separately identified loopback-only ENiGMA sender candidate. Private DB snapshots/storage, exact allowed configuration differences, preloaded namespace roundtrip/rejection controls, unchanged stock custody,65797-byte real independent lrzsz source/CRC/EOF/ZFIN/OO/opposite controls, selected helper, official accounting and post-helper Search/List are verified. BIOS helper and nine damaged-evidence controls are prerequisites. No DOS/audio/sustained/efficiency/physical or whole-application acceptance follows."
+}

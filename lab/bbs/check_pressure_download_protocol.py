@@ -15,7 +15,11 @@ from check_zmodem_wire import header
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--reference',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
  reference=a.reference.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
- ref=report(reference);cohort=reference.parent;source,_=validate(ROOT/ref['fixture']);expected=source.read_bytes();assert len(expected)==SIZE>65536
+ ref=report(reference)
+ if ref.get('server_fixture'):
+  from enigma_fixture import from_result
+  from_result(dict(server_fixture=ref['server_fixture'],server_root=ref['server_root'],route='download'))
+ cohort=reference.parent;source,_=validate(ROOT/ref['fixture']);expected=source.read_bytes();assert len(expected)==SIZE>65536
  sent,_=Telnet().feed((cohort/'client-wire.bin').read_bytes());display,_=Telnet().feed((cohort/'server-wire.bin').read_bytes())
  events=json.loads((cohort/'events.json').read_text());decoders={d:Telnet() for d in ('in','out')};streams={d:bytearray() for d in decoders};trace=[]
  for event in events:
@@ -65,7 +69,8 @@ def main():
   real_reference_baseline_protocol_exact=True,baseline_opposite_controls=len(baseline['controls']),cases=cases,original_reference_captures_unchanged=preserved,
   inputs={str(q.relative_to(ROOT)):sha(q) for q in (Path(__file__).resolve(),ROOT/'lab/bbs/audio_pressure_download.py',ROOT/'lab/bbs/prepare_audio_pressure_download.py',ROOT/'lab/bbs/audit_zmodem.py',ROOT/'lab/bbs/modem.py',ROOT/'lab/bbs/test_transfer_dos.py',ROOT/'standalone/check_zmodem_wire.py')},
   captures_sha256=ref['captures_sha256'],
-  scope='Verifier controls only using copied bytes/times from the real65797-byte lrzsz/stock ENiGMA TCP reference. Baseline complete source/CRC/EOF/finish/opposite controls must reproduce exactly. Nine corruptions cover CRC, source content above64KiB, EOF position wrapped to16 bits with valid CRC, missing finish/OO/receiver-ZFIN and premature ACK/ZFIN/ZRINIT. No live DOS/audio product/pressure/hardware acceptance follows; original captures are preserved.')
+  server_fixture=ref.get('server_fixture'),
+  scope='Verifier controls only using copied bytes/times from the real65797-byte lrzsz/'+('isolated sender-candidate' if ref.get('server_fixture') else 'stock')+' ENiGMA TCP reference. Baseline complete source/CRC/EOF/finish/opposite controls must reproduce exactly. Nine corruptions cover CRC, source content above64KiB, EOF position wrapped to16 bits with valid CRC, missing finish/OO/receiver-ZFIN and premature ACK/ZFIN/ZRINIT. No live DOS/audio product/pressure/hardware acceptance follows; original captures are preserved.')
  out.parent.mkdir(parents=True,exist_ok=True)
  with out.open('x') as f:f.write(json.dumps(r,indent=2)+'\n')
  print(json.dumps({'passed':True,'rejected_cases':len(cases),'source_bytes':SIZE}))

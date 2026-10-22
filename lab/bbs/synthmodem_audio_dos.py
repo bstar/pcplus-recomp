@@ -24,7 +24,17 @@ def main():
  p.add_argument('--editor-burst-checks',type=Path,help='Enable one-tick editor BIOS keys using a passing guarded-helper probe')
  p.add_argument('--editor-multiline-checks',type=Path,help='Enable30-line BIOS draft and page movement with a passing helper/TCP proof')
  p.add_argument('--download-pressure-preparation',type=Path,help='Explicit >64KiB fixture/reference/BIOS preparation proof')
+ p.add_argument('--zmodem-receive-credit',type=int,help='Explicit DOS /Z:1..8192 receive policy; default unchanged')
  a=p.parse_args()
+ capture_proof=ROOT/'docs/validation/capture-durability.json';capture=json.loads(capture_proof.read_text())
+ assert capture['passed'] and all(row['passed'] for row in capture['cases'])
+ assert all(sha(ROOT/n)==h for n,h in capture['inputs'].items())
+ if a.zmodem_receive_credit is not None:
+  assert a.route=='download' and 1<=a.zmodem_receive_credit<=8192
+ server_fixture=None
+ if a.fixture_lab:
+  from enigma_fixture import bind
+  server_fixture=bind(a.fixture_lab,a.route)
  pressure_download=None
  if a.download_pressure_preparation:
   assert a.route=='download','Pressure preparation requires the download route'
@@ -50,11 +60,6 @@ def main():
  if a.posttrain_hold:a.key_framing=True
  a.upload_cancel=a.upload_cancel or a.upload_cancel_retry
  if a.upload_cancel:assert a.route=='upload' and a.fixture_lab and a.upload_key_checks,'Cancellation requires an explicit isolated upload fixture'
- server_fixture=None
- if a.fixture_lab:
-  assert a.route=='upload','The explicit receiver candidate is an upload-only fixture'
-  from enigma_receive_finish_instance import bind
-  server_fixture=bind(a.fixture_lab)
  assert sum(bool(v) for v in (a.lifecycle,a.carrier,a.carrier_trace,a.key_framing,a.key_framing_trace,a.receive_trace,a.dmodem))<=1,'Choose one pinned runtime profile'
  a.key_framing=a.key_framing or a.key_framing_trace
  trace=a.receive_trace or a.carrier_trace or a.key_framing_trace
@@ -84,7 +89,7 @@ def main():
  server_names=['main.js','core/client.js','package-lock.json','config/config.hjson']+[str(p.relative_to(enigma.SOURCE)) for p in sorted((enigma.SOURCE/'config/menus').glob('*.hjson'))]
  if a.route=='upload':server_names+=['core/upload.js','core/file_transfer.js','core/file_entry.js','core/view_controller.js','core/toggle_menu_view.js']+['art/themes/luciano_blocktronics/'+n+'.ANS' for n in ['ULOPTS','ULDETAIL','ULCHECK','ULDUPES']]
  server_inputs={n:sha(enigma.SOURCE/n) for n in server_names}
- names=['lab/bbs/synthmodem_audio_dos.py','lab/bbs/synthmodem_audio_serial.js','lab/bbs/serial_io_evidence.js','lab/bbs/check_serial_io_evidence.js','docs/validation/synthmodem-serial-io-evidence.json','lab/bbs/audio_exit_keys.asm','lab/bbs/audio_get_vector.asm',
+ names=['lab/bbs/synthmodem_audio_dos.py','lab/bbs/bbs_log_capture.py','lab/bbs/check_capture_durability.py','docs/validation/capture-durability.json','lab/bbs/synthmodem_audio_serial.js','lab/bbs/serial_io_evidence.js','lab/bbs/check_serial_io_evidence.js','docs/validation/synthmodem-serial-io-evidence.json','lab/bbs/audio_exit_keys.asm','lab/bbs/audio_get_vector.asm',
   'lab/bbs/synthmodem_bbs_dos.py','lab/bbs/enigma.py','lab/bbs/synthmodem_sparse_runtime.py','lab/bbs/synthmodem_vm_control.py','docs/validation/synthmodem-sparse.json','standalone/modem_fixtures.py','standalone/directory_fixtures.py',
   'standalone/test_terminal.py','src/aspect/compiler.py','nix/flake.nix','nix/flake.lock','tools/modem-dev','build/terminal/TERMINAL.EXE','build/terminal/terminal.map','build/aspect-runner/ASPECT.EXE',str(ledger.relative_to(ROOT))]
  if a.receive_trace:names+=['docs/validation/synthmodem-receive-trace.json']
@@ -117,7 +122,7 @@ def main():
    names+=['lab/bbs/audio_upload_cancel.py','lab/bbs/check_audio_upload_keys.py',str(key_receipt.relative_to(ROOT))]
    if a.upload_cancel_retry:names+=['lab/bbs/audio_upload_retry.py','lab/bbs/audit_audio_upload_retry.py','lab/bbs/check_audio_retry_control_timing.py','lab/bbs/diagnose_audio_retry_finish.py']
   names+=['lab/bbs/audio_upload.py','lab/bbs/audio_upload_keys.asm','lab/bbs/check_audio_upload_keys.py','lab/bbs/check_audio_upload_navigation.py','docs/validation/audio-upload-keys.json','docs/validation/audio-upload-navigation.json','lab/bbs/enigma_upload_dos.py','lab/bbs/enigma_transfer.py',str(Path(upload_before['source_path']).relative_to(ROOT)),str(audio_upload.helper().relative_to(ROOT))]
- if server_fixture:
+ if server_fixture and a.route=='upload':
   navigation=a.fixture_lab.resolve()/'navigation/result.json';nav=json.loads(navigation.read_text())
   assert nav['passed'] and nav['server_fixture']==server_fixture
   isolation=a.fixture_lab.resolve()/'isolation/result.json';isolated=json.loads(isolation.read_text())
@@ -128,6 +133,18 @@ def main():
    'lab/bbs/patches/sexyz-receive-finish/receive_finish.c','lab/bbs/patches/sexyz-receive-finish/receive_finish.h']
   names+=['lab/bbs/audit_audio_upload.py','lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/audit_serial_io_evidence.py',
    'lab/bbs/audit_audio_download.py','lab/bbs/audit_zmodem.py','lab/bbs/check_audio_control_timing.py']
+ if server_fixture and a.route=='download':
+  assert pressure_download and pressure_download.server_fixture==server_fixture
+  isolation=a.fixture_lab.resolve()/'isolation/result.json';isolated=json.loads(isolation.read_text())
+  assert isolated['passed'] and all(isolated['checks'].values()) and isolated['server_fixture']==server_fixture
+  assert all(sha(ROOT/n)==h for n,h in isolated['inputs'].items())
+  names+=['lab/bbs/enigma_sender_credit_instance.py',server_fixture['manifest'],str(isolation.relative_to(ROOT)),
+   'lab/bbs/check_sender_credit_instance.py','docs/validation/sexyz-send-credit-eof-candidate.json',
+   'nix/sexyz-send-credit-eof.nix','nix/sexyz-send-credit.nix','tools/patch-sexyz-eof-position.py','tools/patch-sexyz-send-credit.py',
+   'lab/bbs/check_audio_control_timing.py']
+ if server_fixture:names+=['lab/bbs/enigma_fixture.py']
+ if a.zmodem_receive_credit is not None:
+  names+=['src/terminal/options.asm','standalone/check_terminal_options.py','docs/validation/zmodem-receive-credit.json']
  if a.route in ('download','upload'):
   names+=['src/terminal/transfer_actions.asm','standalone/check_carrier_transfer_deadline.py','docs/validation/carrier-transfer-deadline-fixed.json']
   names+=['src/transfer/zmodem.c','src/transfer/zmodem.h','src/transfer/zmodem_wire.c','src/transfer/zmodem_wire.h','standalone/check_zmodem_completed_replay.py','standalone/check_zmodem_completion_bounds.py','docs/validation/zmodem-completed-replay-fixed.json']
@@ -139,9 +156,12 @@ def main():
  if a.editor_burst_checks:names+=['lab/bbs/check_audio_editor_burst_keys.py',str(burst_proof.relative_to(ROOT))]
  if a.editor_multiline_checks:names+=['lab/bbs/editor_multiline_evidence.py','lab/bbs/check_editor_multiline_evidence.py','lab/bbs/audit_synthmodem_audio_dos.py','lab/bbs/audit_serial_io_evidence.py','lab/bbs/diagnose_audio_caller.js',str(multiline_proof.relative_to(ROOT)),*multiline['inputs']]
  frozen={n:sha(ROOT/n) for n in names}
+ for name,digest in frozen.items():
+  snapshot=out/'frozen-source'/name;snapshot.parent.mkdir(parents=True,exist_ok=True)
+  shutil.copyfile(ROOT/name,snapshot);assert sha(snapshot)==digest
  stage=out/'program';stage.mkdir()
  for n,leaf in [('build/terminal/TERMINAL.EXE','TERMINAL.EXE'),('build/aspect-runner/ASPECT.EXE','ASPECT.EXE')]:shutil.copyfile(ROOT/n,stage/leaf)
- relay=Relay();relay.server.settimeout(90);relay.thread.start()
+ relay=Relay(capture_dir=out);relay.server.settimeout(90);relay.thread.start()
  def mark(label):return f'fopen 0 "D:\\STAGES.LOG" "ab"\nfputs 0 "{label}|"\nfclose 0\n'
  def wait(token,timeout,label):return f'waitfor "{token}" {timeout}\nif waitfor == 0\n'+mark('FAIL-'+label)+'exit\nendif\n'
  script='integer cancel_done,scan_done,main_seen\nproc main\ninteger attempts\ncancel_done=0\nscan_done=0\nmain_seen=0\n'
@@ -187,12 +207,19 @@ def main():
  if a.editor_multiline_checks:assert sha(stage/'EXITKEY.COM')==multiline['production_helper_sha256']
  if pressure_download:assert sha(stage/'EXITKEY.COM')==pressure_download.production_helper_sha256
  generated={str(p.relative_to(out)):sha(p) for p in stage.iterdir()}
- log=enigma.SOURCE/'logs/enigma-bbs.log';boundary=(log.stat().st_ino,log.stat().st_size)
+ from bbs_log_capture import begin as begin_log,collect as collect_log
+ log=enigma.SOURCE/'logs/enigma-bbs.log';begin_log(log,out/'server-log-boundary.json')
  tool_inputs={str(Path(shutil.which(n)).resolve()):sha(Path(shutil.which(n))) for n in (['dosbox-x','nasm','strace'] if a.syscall_trace else ['dosbox-x','nasm'])}
  clock_anchors=[]
+ start_manifest=dict(frozen_inputs=frozen,runtime_inputs=runtime_inputs,server_inputs=server_inputs,server_root=str(enigma.SOURCE),server_fixture=server_fixture,
+  generated_inputs=generated,tool_inputs=tool_inputs,profile_sha256=sha(out/'MODEM.PRM'),directory_initial_hex=contact.hex(),
+  download_metadata_before=download_before,upload_metadata_before=upload_before,download_path=str(download_path) if download_path else None,
+  route=a.route,zmodem_receive_credit=a.zmodem_receive_credit,pressure_preparation=str(a.download_pressure_preparation) if pressure_download else None)
+ (out/'run-start.json').write_text(json.dumps(start_manifest,indent=2)+'\n')
  def clock_anchor(label):
   before=time.monotonic_ns();wall=time.time_ns();after=time.monotonic_ns()
   clock_anchors.append(dict(label=label,monotonic_before_ns=str(before),wall_ns=str(wall),monotonic_after_ns=str(after)))
+  temporary=out/'clock-anchors.tmp';temporary.write_text(json.dumps(clock_anchors,indent=2)+'\n');temporary.replace(out/'clock-anchors.json')
  node=None;dos=None;doscode=None
  with (out/'node.log').open('w') as nl,(out/'dosbox.log').open('w') as dl:
   try:
@@ -221,7 +248,7 @@ mount d "{out}"
 c:
 D:\\SNAP B
 EXITKEY
-TERMINAL @D:\\MODEM.PRM /E:D:\\CALL.DIR /N:1
+TERMINAL @D:\\MODEM.PRM /E:D:\\CALL.DIR /N:1{(' /Z:'+str(a.zmodem_receive_credit)) if a.zmodem_receive_credit is not None else ''}
 if errorlevel 1 goto fail
 echo PASS>D:\\PASS.TXT
 goto capture
@@ -238,7 +265,9 @@ exit
    if a.syscall_trace:command=['strace','--seccomp-bpf','-f','-ttt','-yy','-e','trace=network,close','-o',str(out/'DOS-syscalls.log')]+command
    clock_anchor('before-DOS-launch')
    dos=subprocess.Popen(command,stdout=dl,stderr=dl,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),start_new_session=True)
-   doscode=dos.wait(timeout=OUTER_TIMEOUT if pressure_download else 1220 if a.route in ('download','upload') or a.editor_multiline_checks else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit');node.wait(timeout=60)
+   doscode=dos.wait(timeout=OUTER_TIMEOUT if pressure_download else 1220 if a.route in ('download','upload') or a.editor_multiline_checks else 720 if a.route=='editor' else 600);clock_anchor('after-DOS-exit')
+   (out/'exit-status.json').write_text(json.dumps(dict(DOS=doscode,node=None))+'\n')
+   nodecode=node.wait(timeout=60);(out/'exit-status.json').write_text(json.dumps(dict(DOS=doscode,node=nodecode))+'\n')
   finally:
    relay.stop.set();relay.thread.join(3)
    if dos is not None and dos.poll() is None:
@@ -252,13 +281,12 @@ exit
     try:node.wait(timeout=8)
     except subprocess.TimeoutExpired:os.killpg(node.pid,signal.SIGKILL);node.wait()
  def read(n):return (out/n).read_bytes() if (out/n).exists() else b''
- assert log.stat().st_ino==boundary[0]
- with log.open('rb') as f:f.seek(boundary[1]);rows=[json.loads(b) for b in f if b.strip()]
+ assert read('bbs-input.bin')==relay.to_bbs and read('bbs-output.bin')==relay.from_bbs
+ assert read('BBS-relay-events.jsonl').decode()==''.join(json.dumps(e)+'\n' for e in relay.trace)
+ rows=collect_log(out/'server-log-boundary.json',out/'server-log-capture')
  sessions={r.get('sessionId') for r in rows if r.get('menuName')=='telnetConnected'};assert len(sessions)==1,sessions
  rows=[r for r in rows if r.get('sessionId') in sessions];menus=[r['menuName'] for r in rows if r.get('menuName')]
  (out/'server-session.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
- (out/'bbs-input.bin').write_bytes(relay.to_bbs);(out/'bbs-output.bin').write_bytes(relay.from_bbs)
- (out/'BBS-relay-events.jsonl').write_text(''.join(json.dumps(e)+'\n' for e in relay.trace))
  (out/'clock-anchors.json').write_text(json.dumps(clock_anchors,indent=2)+'\n')
  n=json.loads((out/'node-result.json').read_text())
  from modem import Telnet
@@ -315,9 +343,12 @@ exit
   else:extra,upload=audio_upload.check(out,rows,upload_before)
   checks.update(extra)
   checks['posttransfer_filename_visible']=('PCXTEST.BIN' if a.upload_cancel and not a.upload_cancel_retry else audio_upload.NAME) in text
- result={'passed':all(checks.values()),'checks':checks,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
+ result={'passed':all(checks.values()),'checks':checks,'zmodem_receive_credit':a.zmodem_receive_credit,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
   'DOS_screen':text,'gateway':n,'route':a.route,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor_multiline_checks':str(multiline_proof.relative_to(ROOT)) if a.editor_multiline_checks else None,'download_pressure_preparation':str(a.download_pressure_preparation.resolve().relative_to(ROOT)) if pressure_download else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
-  'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any receiver candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
+  'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any protocol-helper candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
+ observation_paths=[out/n for n in ['run-start.json','exit-status.json','clock-anchors.json','server-log-boundary.json']]
+ observation_paths+=sorted((out/'server-log-capture').iterdir())
+ result['captures_sha256'].update({str(p.relative_to(out)):sha(p) for p in observation_paths})
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'passed':result['passed'],'checks':checks,'result':str(out/'result.json')},indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "audio_acceptance": {
+    "result": "docs/validation/current-enigma-credit-pressure-download-audio-02.json",
+    "sha256": "2860c29093cc84668d9f9daf4a648885f9e8e68c9976c4126dc481fa36846944",
+    "check_counts": {
+      "producer": 25,
+      "independent": 26,
+      "serial": 12,
+      "download": 15,
+      "actual_control_timing_counterexamples": 2,
+      "TCP_protocol_counterexamples": 9
+    }
+  },
+  "post_audio_isolation": {
+    "result": "build/bbs-lab/enigma-sender-credit-01/isolation-post-audio-01/result.json",
+    "sha256": "c8b49a42443fcfe9f0cd44b06d0361889de48956894387bd9a0af6e2a7b7ce12",
+    "checks": 14,
+    "server_fixture": {
+      "kind": "sexyz-send-credit-eof-candidate",
+      "lab": "build/bbs-lab/enigma-sender-credit-01",
+      "manifest": "build/bbs-lab/enigma-sender-credit-01/sender-credit-instance.json",
+      "manifest_sha256": "e8e600002c2bba73e1538857abb709dd15b1a945e0ce21f371fc894bd88beaa5",
+      "helper_sha256": "374bce54847d1db613f6c3ecf70b485055e0493dabe1fb499e62d8b406f9efb4",
+      "source": "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma-sender-credit-01/source",
+      "port": 23237
+    }
+  },
+  "unchanged_stock_audio_auditor_regression": {
+    "result": "build/bbs-lab/current-enigma-download-audio-01/download-audit-bound-entry-regression.json",
+    "sha256": "1f1e53cecf1b19327e1fa5714160d4141f2b12fdc7d9d152d0417673fd0293c0",
+    "checks": 15,
+    "server_fixture": null
+  },
+  "entrypoint": {
+    "path": "lab/bbs/audit_audio_download_bound.py",
+    "sha256": "1b61b0574adb0f83c859ad455bc582432cd95fe47d9a00678e45d4e91a727771"
+  },
+  "preserved_direct_entry_audit_failure": {
+    "capture": "download-audit-direct-entry-failure.json",
+    "sha256": "60001e55ad25e75d3debccd3088aa7e2956acfcd6ab8813c259aff710c3289b4",
+    "failed_checks": [
+      "real_owned_helper",
+      "official_file_and_counter"
+    ],
+    "cause": "Direct __main__ namespace retained stock storage/helper globals; canonical module receives fixture rebinding. All other audit fields are identical."
+  },
+  "inputs": {
+    "lab/bbs/audit_audio_download_bound.py": "1b61b0574adb0f83c859ad455bc582432cd95fe47d9a00678e45d4e91a727771",
+    "lab/bbs/check_sender_credit_instance.py": "2511a5fc170f4eda56d13fd1e6e42cbb04217aa40b0bb55f72d3c7198bdf5272",
+    "lab/bbs/enigma_fixture.py": "407d6cb8ee46516ee52d5460d8e1c2b22cc7e1d2e7c52fb86c9465fc98d61ae9",
+    "lab/bbs/enigma_sender_credit_instance.py": "b610547d591174d0177ca85c27da95ad768f818a7f3152a7f75e17b881909097",
+    "lab/bbs/record_pressure_download_audio.py": "992138b58202d2e1568cc57cabbfc5d267d7e17015f3eaf3e87b55c0396bf4a9"
+  },
+  "scope": "Accepted selected sender-candidate audio workflow, post-run14-check isolation/custody verification and15-check canonical-entry auditor regression on the retained stock11.5KiB audio campaign. No fresh stock transfer, stock larger-file fix, hardware or full application acceptance."
+}

@@ -56,6 +56,8 @@ def main():
     a=p.parse_args();out=a.cohort.resolve();result_path=a.output.resolve() if a.output else out/'download-audit.json'
     if a.output:assert result_path.is_relative_to(out) and not result_path.exists()
     r=json.loads((out/'result.json').read_text());assert r['route']=='download'
+    from enigma_fixture import from_result
+    server_fixture=from_result(r)
     events=[json.loads(v) for v in (out/'BBS-relay-events.jsonl').read_text().splitlines()]
     raw={'to_bbs':(out/'bbs-input.bin').read_bytes(),'from_bbs':(out/'bbs-output.bin').read_bytes()}
     decoders={d:Telnet() for d in raw};streams={d:bytearray() for d in raw};ends={d:0 for d in raw};trace=[]
@@ -117,13 +119,13 @@ def main():
     checks['producer_hashes']=all(sha(out/name)==h for name,h in r['captures_sha256'].items())
     if protocol:
         for file in protocol.get('files',[]):file.pop('source',None)
-    result={'passed':all(checks.values()),'checks':checks,'protocol':protocol,'errors':errors,'official_metadata':after,
+    result={'passed':all(checks.values()),'checks':checks,'server_fixture':server_fixture,'protocol':protocol,'errors':errors,'official_metadata':after,
             'source_bytes':len(expected),'source_sha256':sha(source),'received_sha256':sha(target) if target.is_file() else None,
             'decoded_streams':{'upstream_bytes':len(sent),'downstream_bytes':len(display)},
             'control_timing':timing,'relay_trace_rows':relay_trace_rows,
             'capture_sha256':{name:sha(out/name) for name in ['result.json','BBS-relay-events.jsonl','bbs-input.bin','bbs-output.bin','server-session.jsonl','MODEM.PRM','independent-audit.json','serial-io-audit.json','node-result.json','serial-in.bin','serial-out.bin','caller-decoded.bin','serial-input-events.jsonl','serial-write-events.jsonl']},
             'auditor_sha256':sha(Path(__file__)),'protocol_auditor_sha256':sha(Path(__file__).with_name('audit_zmodem.py')),
-            'scope':'Actual normal audio/stock BBS download: independent passive CRC/sequence/payload/EOF/finish and opposite-direction control audit, exact installed DOS bytes, official server API and post-helper input/menu sequence. No generated protocol replies or altered BBS. Single file/direction only; no upload/cancel/retry/fault/pressure/physical or whole-application claim.'}
+            'scope':'Actual audio/'+('explicit isolated sender-candidate' if server_fixture else 'stock')+' BBS download: independent passive CRC/sequence/payload/EOF/finish and opposite-direction control audit, exact installed DOS bytes, official server API and post-helper input/menu sequence. No generated protocol replies. Single file/direction only; no upload/cancel/retry/fault/general sustained-pressure/physical or whole-application claim.'}
     result_path.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));assert result['passed']
 
 

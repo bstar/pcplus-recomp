@@ -1,5 +1,68 @@
 # Complete DOS rebuild plan
 
+The [fresh isolated ENiGMA larger-file audio run](docs/validation/current-enigma-credit-pressure-download-audio-02.json)
+now passes78 producer/independent checks and11 verifier negatives. The current
+source-built DOS terminal installs65797 exact bytes with native `/Z:256`, full
+CRC/EOF/ZFIN/OO/opposite controls, matching caller/display streams, resumed
+Search/List, official accounting and normal DOS/UART/helper cleanup. Maximum
+packet/group payload is256 bytes with no observed retransmissions. Normal200ms
+V22/1200 runtime remains unchanged. The full transfer interval is733.48 seconds.
+Frozen109 source inputs/copies, start/exit manifests and62 journal records verify.
+
+The direct-entry auditor's stale `__main__` storage/helper namespace is retained
+as a failed derived receipt. The canonical-module launcher runs the same frozen
+auditor successfully; acceptance checks verify all other receipt fields match.
+No raw observations or frozen source are rewritten. The separate prior journal-
+rotation failure remains incomplete evidence, not retrospectively accepted.
+
+The [stock-sender byte replay](docs/STOCK_DOWNLOAD_RECOVERY.md) passes12 diagnostic
+checks against campaign-era and current cached source-built receivers. Both
+reproduce status6 at15360 bytes with identical responses and a single checked
+abort. It supplies a fast counterexample for active-file stale-frame recovery;
+unmodified sender and physical compatibility remain open. The [454 native tap
+probes](docs/ASPECT_RECORDER_TAP.md) also establish that recording must distinguish
+transmitted bytes from key words and expanded bindings. Full recorder ownership,
+compiler/replay integration and all F01–F16 application gates remain open.
+
+The [stock sender capability matrix](docs/SEXYZ_CAPABILITIES.md) now passes20
+real helper/host transfers with full source/CRC/finish/control checks. All
+sixteen8K-mode CRC/duplex/overlap/credit combinations still use8192-byte packets;
+CRC16 or clearing overlap is not a packet-size fix. Four separate standard-CLI
+mode cases use1024-byte packets, a remote invocation choice rather than an
+installed client fallback. Unmodified-sender slow-path compatibility remains
+open despite the passing isolated-candidate audio rerun.
+
+The first sender-candidate audio call installs the exact65797-byte file and
+retains normal-return/hardware/helper-vector markers, zero helper exit and
+post-transfer Search/List. Its producer fails on midnight journal rotation
+before writing the in-memory BBS relay trace, so [full acceptance remains
+false](docs/validation/enigma-credit-pressure-recording-failure.json).
+[Fourteen durability checks](docs/validation/capture-durability.json) now cover
+numeric rotations, partial boundaries, damaged histories, real binary relay
+capture and retained actual journal-content replay. Relay evidence streams to
+disk and start/clock/exit manifests persist before log finalization. Rerun the
+full audio campaign with these sources; do not infer missing original relay
+evidence from the exact received file or waive any independent acceptance gate.
+The subsequent fresh02 campaign passes those gates as recorded above.
+
+The [recorder literal constraints](docs/validation/aspect-recorder-literal-limits.json)
+add16 source-compiler/native-component cases while the isolated audio campaign
+runs with unchanged inputs. Seven legacy formatter non-roundtrips are explicit:
+quote syntax, caret interpretation, pause/NUL sentinels and adjacent1E/1F
+control ambiguity. Encoded-length chunking is required; source-owner, complete
+compiled-script/DOS replay and F13 remain open.
+
+The [isolated ENiGMA sender fixture](docs/ENIGMA_SENDER_CREDIT.md) now runs on
+loopback23237 with private DB snapshots/storage/runtime. Fourteen isolation
+checks and ten real independent lrzsz TCP checks pass; the selected EOF-capable
+sender,65797-byte source/CRC/finish/opposite controls, official accounting and
+post-helper Search/List are verified. Nine damaged-evidence controls and six
+BIOS-helper checks bind preparation. The native DOS `/Z:256` audio campaign is
+initially ran under `current-enigma-credit-pressure-download-audio-01` with frozen
+source copies and unchanged normal200ms runtime. That incomplete recording is
+retained; the fresh02 result above establishes the selected candidate's bounded
+audio pass. Sustained, physical and full application requirements remain open.
+
 Machine startup profiles now select [ZMODEM receive credit](docs/ZMODEM_RECEIVE_CREDIT.md)
 with `/Z:1..8192`, preserving8192 by default. The core API passes77 host cases,
 the linked parser633 inputs, foreground/UART/file owners31 credit cases and
