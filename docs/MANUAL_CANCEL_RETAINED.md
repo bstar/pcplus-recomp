@@ -57,7 +57,11 @@ DOS cases: the stale `A` or empty command terminates separately, then clean
 `ATZ` and dialing proceed. The [independent candidate audit](validation/modem-resync-candidate.json)
 checks both parser policies and binds the exact [proposed patch](../patches/modem-retry-resync.patch)
 to the admitted old/new product sources. It accepts these candidate cases only;
-the main build remains unchanged while an earlier frozen audio run is active.
+the main build remains unchanged pending adoption and broader admission.
+The earlier frozen audio run has now ended and is
+[preserved as failed](validation/recording-manual-reconnect-audio-failure.json):
+startup reached Files, but the recipe helper delivered no keys and reached its
+watchdog. This run provides no recording/replay/audio acceptance.
 
 Normal and mouse candidates each pass 17 linked instruction cases covering
 CTS/THRE/XOFF stalls before the separator, repeated cancellation, configurable

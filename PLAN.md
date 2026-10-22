@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+[Retry command synchronization](docs/MANUAL_CANCEL_RETAINED.md) has an isolated
+candidate with four independently audited retained/cleared-parser DOS cases,
+34 normal/mouse linked checks,46 connection inputs,42 carrier-policy cases,
+five stock transport cases and two fresh source-only product reproductions.
+An actual stock modem-parser old/new comparison reproduces corrupted retry
+initialization/ERROR in the old parent and clean initialization/OK in the candidate.
+The proposed patch is not yet adopted. The current1600 parent audio run is now
+terminal and [preserved as failed](docs/validation/recording-manual-reconnect-audio-failure.json):
+startup reaches Files, but the BIOS recipe helper delivers no keys and exits
+on its watchdog. No recording/replay/final Search or audio acceptance follows.
+Next: adopt and validate the tested modem patch, investigate the missed helper
+ready marker, and continue broader application/modem requirements.
+
 [Pre-CONNECT canceled initialization](docs/MANUAL_CANCEL_LAB.md) now passes
 old/new actual DOS SOFT/BOTH tests on an explicitly patched DCD lab backend.
 The stock nullmodem FF flags do not control DCD; the separate pinned Nix test
@@ -8,8 +21,8 @@ zero, observe XOFF/DTR cancellation, and distinguish old pause1 from corrected
 pause0, followed by exact retry/CONNECT/manual/query/hangup. Six semantic audit
 corruptions are rejected. No stock-emulator or physical claim follows from this
 lab. Current stock10 confirmation/four BBS recorder/two BBS-window cases also
-pass independent audit. Normal ENiGMA recording audio is live after a passing
-current-parent TCP control. Remaining policies, pressure, full F01–F16 and
+pass independent audit. Normal ENiGMA recording audio failed as recorded above
+after a passing current-parent TCP control. Remaining policies, pressure, full F01–F16 and
 physical requirements stay open.
 
 [Manual reconnect flow lifetime](docs/MANUAL_RECONNECT.md) now passes an

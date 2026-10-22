@@ -1,11 +1,17 @@
 # Full application reconstruction checklist
 
+[Retained-command retry](MANUAL_CANCEL_RETAINED.md) now has a tested isolated
+separator candidate and an actual stock modem-parser old/new comparison. Full
+adoption remains pending. The current parent audio recording run ended normally
+but its helper delivered no keys; recording/replay/final Search failed. See the
+[preserved failure](validation/recording-manual-reconnect-audio-failure.json).
+
 [Pre-CONNECT cancellation lab](MANUAL_CANCEL_LAB.md) now accepts two old/new
 actual DOS SOFT/BOTH pairs with explicit patched-UART DCD control. First-attempt
 DCD/history remain zero; the fixed parent clears pause and retries normally.
 Six evidence corruptions are rejected. This is not stock-backend or physical
 acceptance. Separately, current stock10 confirmation/four BBS recorder/two window
-workflows pass independent audits. Current normal recording audio is live;
+workflows pass independent audits. Current normal recording audio failed as above;
 remaining modem policies/pressure and all full application/hardware gates stay open.
 
 [Manual reconnect](MANUAL_RECONNECT.md) now retires completed MODEM flow state
