@@ -7,11 +7,33 @@ ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/terminal'
 def main():
  binary=OUT/'TERMINAL.EXE';mp=OUT/'terminal.map';raw=binary.read_bytes();listing=mp.read_text()
  memory=inspect_terminal_memory(binary,mp)
- assert memory['configuration_bridge_pairs_verified']==80 and memory['far_code_bridge_pairs_verified']==129
+ # The aggregate includes four transfer-UI entries and three callbacks in
+ # addition to the80 configuration/23 modem/22 controller/four redisplay pairs.
+ assert memory['configuration_bridge_pairs_verified']==80 and memory['far_code_bridge_pairs_verified']==136
+ assert memory['capture_reservation_far_bindings_verified']==2
+ assert memory['capture_reservation_initialized_bytes']==8
  header=struct.unpack_from('<14H',raw);start=header[4]*16
  symbols={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I)}
  def at(name):s,o=symbols[name];return start+s*16+o
  mutations=[]
+ for field in (0,2,4,6):
+  bad=bytearray(raw);bad[at('_capture_reservation')+field]^=1
+  mutations.append((f'reservation-initial-state-field-{field}',bad,listing))
+ for i,site in enumerate(memory['capture_reservation_far_call_sites']):
+  for field in (1,3):
+   bad=bytearray(raw);bad[start+site+field]^=1
+   mutations.append((f'reservation-call-{i}-target-field-{field}',bad,listing))
+  bad=bytearray(raw);wanted=site+3
+  for j in range(header[3]):
+   off,seg=struct.unpack_from('<HH',bad,header[12]+4*j)
+   if seg*16+off==wanted:struct.pack_into('<HH',bad,header[12]+4*j,0,0);break
+  else:raise AssertionError(('Missing reservation relocation',i))
+  mutations.append((f'reservation-call-{i}-missing-relocation',bad,listing))
+ for name in ('_capture_file_reserve','_capture_file_release','_capture_file_reserved','_capture_file_probe_owners','_capture_reservation'):
+  segment=0 if name!='_capture_file_probe_owners' else symbols['_capture_file_reserve'][0]
+  bad_listing=re.sub(r'(?m)^[0-9a-f]{4}:([0-9a-f]{4})([*+ ]+\s+'+name+r'\s*)$',lambda m:f'{segment:04x}:'+m[1]+m[2],listing)
+  assert bad_listing!=listing
+  mutations.append((name+':wrong-segment',raw,bad_listing))
  entries=[(name,int(n)) for name,n in re.findall(r'^CONFIG_ENTRY (\w+),(\d+)$',(ROOT/'src/terminal/config_abi.inc').read_text(),re.M)]
  assert len(entries)==34 and {n for _,n in entries}=={0,1,2,3,5,6,7,8,9,10}
  for name,count in entries:

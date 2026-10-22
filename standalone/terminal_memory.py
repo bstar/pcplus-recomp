@@ -193,6 +193,26 @@ def inspect_terminal_memory(binary,map_path):
   assert all(c['relative_segment']!=config_seg for c in code_segments if c['name']!='CONFIG_CODE'),'Configuration CS aliases other code'
   assert address('terminal_config_code_start')==config_seg*16
   assert address('terminal_config_code_end')-address('terminal_config_code_start')==config_code['bytes'],'Incomplete configuration extent'
+  if '_capture_file_reserved' in symbols or '_capture_reservation' in symbols:
+   for name in ('_capture_file_reserve','_capture_file_release','_capture_file_reserved'):
+    assert symbols[name][0]==config_seg,(name,'reservation operation outside CONFIG_CODE')
+   assert symbols['_capture_file_probe_owners'][0]==near_code['relative_segment'],'Reservation owner scan is not resident'
+   descriptor=address('_capture_reservation')
+   assert near_start<=descriptor and descriptor+8<=near_start+near_size,'Reservation guard outside near data'
+   assert descriptor+8<=module_bytes,'Reservation guard relies on dirty BSS'
+   assert image[start+descriptor:start+descriptor+8]==bytes(8),'Reservation guard not initialized idle'
+   sites=[]
+   for region,target in [(near_code,'_capture_file_reserved'),(config_code,'_capture_file_probe_owners')]:
+    lo=region['relative_segment']*16+region['offset']
+    body=image[start+lo:start+lo+region['bytes']]
+    pattern=b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0])
+    assert body.count(pattern)==1,(target,'missing/duplicated compiled far call')
+    site=lo+body.index(pattern)
+    assert site+3 in relocations,(target,'missing compiled far-call relocation')
+    sites.append(site)
+   extra['capture_reservation_far_bindings_verified']=2
+   extra['capture_reservation_far_call_sites']=sites
+   extra['capture_reservation_initialized_bytes']=8
   if '_command_menu_event' in symbols:
    assert symbols['_command_menu_event'][0]==config_seg,'Command menu is outside CONFIG_CODE'
    for name in ('_command_menu_active','_command_menu_action'):

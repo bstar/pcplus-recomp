@@ -127,6 +127,7 @@ config_sources.add(ROOT/'src/process/program.c')
 config_sources.update({ROOT/'src/transfer/ymodem.c',ROOT/'src/transfer/batch_header.c'})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem.c','zmodem_wire.c','zmodem_name.c','terminal_zmodem.c']})
 config_sources.add(ROOT/'src/transfer/download_compare.c')
+config_sources.add(ROOT/'src/capture/capture_reservation.c')
 config_aliases={'terminal_script_prepare':'terminal_script_prepare_impl'}
 config_aliases.update({name:name+'_impl' for name in ['directory_live_decode','directory_live_read','directory_live_read_context','directory_live_context_matches','live_configuration_decode','live_setup_bind','live_setup_begin','live_setup_finish','live_setup_abort','live_setup_finish_policy','live_setup_acknowledge']})
 config_aliases.update({name:'config_'+name+'_service' for name in ['memcpy','memset','memcmp','strchr','strcmp']})

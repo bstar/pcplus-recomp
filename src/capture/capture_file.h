@@ -75,4 +75,16 @@ unsigned __cdecl monitor_file_cleanup(void);
  */
 enum { HISTORY_BEGIN=0,HISTORY_WRITE=1,HISTORY_CLOSE=2 };
 unsigned __cdecl history_file_event(unsigned operation,const void *data,unsigned count);
+/* One external file owner may reserve additional canonical identities without
+ * adding another binary-sink descriptor. The pure far callback returns nonzero
+ * for its target/scratch/backup paths. It must not perform DOS IO or enter file
+ * owners; mutating file calls reject while a probe runs. Context/path state
+ * remains owned and stable until matching release. Existing open/uncertain
+ * sinks are checked before registration; every later begin probes before IO.
+ * Same-owner refresh rechecks existing sinks. Different registrations cannot
+ * replace or release each other. No external process/host-inode lock follows.
+ */
+typedef unsigned (__far __cdecl *capture_file_probe)(const char *,void *);
+unsigned __far __cdecl capture_file_reserve(capture_file_probe,void *);
+unsigned __far __cdecl capture_file_release(capture_file_probe,void *);
 #endif

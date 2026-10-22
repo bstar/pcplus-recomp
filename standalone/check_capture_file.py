@@ -7,7 +7,7 @@ def main():
  out=ROOT/'build/capture-file';out.mkdir(parents=True,exist_ok=True)
  with (out/'.lock').open('w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-  common=[ROOT/'src/capture/capture_file.c',ROOT/'standalone/capture_file_host.c']
+  common=[ROOT/'src/capture/capture_file.c',ROOT/'src/capture/capture_reservation.c',ROOT/'standalone/capture_file_host.c']
   base=['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192','-i='+str(ROOT/'src/capture')]
   for name,flags,sources in [('CAPTURE.EXE',[],common+[ROOT/'src/capture/capture_fs.c']),('CAPFAULT.EXE',['-dCF_FAULT'],common)]:
    subprocess.run(base+flags+['-fe='+name]+list(map(str,sources)),cwd=out,check=True)
@@ -52,7 +52,7 @@ exit
   for name,want in {'BINARY.BIN':block*2+block[:137]+block[:1024]+block[:128],'DATA/LOG.BIN':block[:128],'READONLY.BIN':b'preserve','ZERO.BIN':b'','REL.BIN':block[:1]}.items():
    checks[name]=(run/name).is_file() and (run/name).read_bytes()==want
   checks['missing_append_never_created']=not (run/'MISSING.BIN').exists()
-  sources=set(common+[ROOT/'src/capture/capture_fs.c',ROOT/'src/capture/capture_file.h',ROOT/'src/capture/capture_fs.h',Path(__file__).resolve()])
+  sources=set(common+[ROOT/'src/capture/capture_fs.c',ROOT/'src/capture/capture_file.h',ROOT/'src/capture/capture_reservation.h',ROOT/'src/capture/capture_fs.h',Path(__file__).resolve()])
   result={'passed':all(checks.values()),'checks':checks,'cases':{n:logs[n].splitlines() for n in labels},'binaries':{n:hashlib.sha256((out/n).read_bytes()).hexdigest() for n in ['CAPTURE.EXE','CAPFAULT.EXE']},'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(sources)},'scope':'Maintained exact binary foreground DOS sink: exclusive NEW or existing APPEND on one write-only seek-END handle; actual DOS normal filesystem and compiled kernel fault boundaries. No formatting/native FILE interoperability, runtime integration, concurrent-writer guarantee, deletion/rollback or crash atomicity.'}
   (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

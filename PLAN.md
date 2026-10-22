@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+The [shared recorder file-reservation checkpoint](docs/CAPTURE_RESERVATION.md)
+now passes302 actual DOS/kernel-model assertions across resident and genuinely
+separate code-bank layouts. Target/scratch identities exclude all four binary
+sinks before mutation, while independent files remain available. Existing open/
+uncertain sinks block conflicting registration; wrong-owner release and probe
+reentry reject. Snapshot/descriptors retain96/134-byte ABIs; eight initialized
+DATA bytes hold the external guard. The current terminal passes24 linked capture,
+27 history,78 ZMODEM and five actual DOS capture scenarios, plus409 ABI/layout
+negatives. Near-code overflow was resolved by banking reservation operations;
+current code/data spare is200/624 bytes. Implement the exclusive recorder scratch
+publisher and replacement recovery next, then Record UI/foreground taps and all
+owner exclusions. The reservation is a prerequisite, not recorder/F13 acceptance.
+
 The [source-owned recorder core and replay path](docs/ASPECT_RECORDER_SOURCE.md)
 now pass17 host cases, six actual DOS recorder/file/compiler/UART sessions and
 six production raw-output UART sessions. Pending tails, bounded prompt/quote/

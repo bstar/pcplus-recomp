@@ -7,7 +7,7 @@ def main():
  out=ROOT/'build/capture-session';out.mkdir(parents=True,exist_ok=True)
  with (out/'.lock').open('w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-  common=[ROOT/'src/capture/capture_session.c',ROOT/'src/capture/capture_file.c',ROOT/'standalone/capture_session_host.c']
+  common=[ROOT/'src/capture/capture_session.c',ROOT/'src/capture/capture_file.c',ROOT/'src/capture/capture_reservation.c',ROOT/'standalone/capture_session_host.c']
   base=['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192','-i='+str(ROOT/'src/capture')]
   for name,flags,sources in [('CAPSESS.EXE',[],common+[ROOT/'src/capture/capture_fs.c']),('CSFAULT.EXE',['-dCS_FAULT'],common)]:
    subprocess.run(base+flags+['-fe='+name]+list(map(str,sources)),cwd=out,check=True)
@@ -52,7 +52,7 @@ exit
   expected={'TEXT.LOG':b'A\r\n\r\0\xff\x7f\r\nB\r\nC','BOUND.LOG':b'x'*255+b'\r\n'+b'y'*254,'TIMED.LOG':b'TU','CLOCK.LOG':b'M','PCPLUS.LOG':b'\r','READONLY.LOG':b'KEEP'}
   for name,want in expected.items():checks[name]=(run/name).is_file() and (run/name).read_bytes()==want
   checks['invalid_before_init_created_no_file']=not (run/'EARLY.LOG').exists()
-  sources=set(common+[ROOT/'src/capture/capture_fs.c',ROOT/'src/capture/capture_session.h',ROOT/'src/capture/capture_file.h',ROOT/'src/capture/capture_fs.h',Path(__file__).resolve()])
+  sources=set(common+[ROOT/'src/capture/capture_fs.c',ROOT/'src/capture/capture_session.h',ROOT/'src/capture/capture_file.h',ROOT/'src/capture/capture_reservation.h',ROOT/'src/capture/capture_fs.h',Path(__file__).resolve()])
   result={'passed':all(checks.values()),'checks':checks,'cases':{n:logs[n].splitlines() for n,_ in recipes},'binaries':{n:hashlib.sha256((out/n).read_bytes()).hexdigest() for n in ['CAPSESS.EXE','CSFAULT.EXE']},'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(sources)},'scope':'Independent actual DOSBox-X8086 compilation of maintained capture_session and binary file owner. Real normal files; compiled filesystem boundary faults. API clock vectors include18ticks/midnight; no native09b6 filtering, live UART, terminal integration, physicaldisk failure or native capture equivalence claim.'}
   (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -1,4 +1,4 @@
-#include "capture_file.h"
+#include "capture_reservation.h"
 #include "capture_fs.h"
 #include <stddef.h>
 #include <string.h>
@@ -32,7 +32,17 @@ static unsigned safe(const void *p,unsigned n)
 {
  return extent(p,n) && disjoint(p,n,&capture_file_result,sizeof(capture_file_result)) &&
  disjoint(p,n,&snapshot_file_result,sizeof(snapshot_file_result)) &&
- disjoint(p,n,&monitor_file_result,sizeof(monitor_file_result)) && disjoint(p,n,&history_file_result,sizeof(history_file_result)) && disjoint(p,n,owners,sizeof(owners));
+ disjoint(p,n,&monitor_file_result,sizeof(monitor_file_result)) && disjoint(p,n,&history_file_result,sizeof(history_file_result)) && disjoint(p,n,owners,sizeof(owners)) && disjoint(p,n,&capture_reservation,sizeof(capture_reservation));
+}
+unsigned __far __cdecl capture_file_probe_owners(capture_file_probe probe,void *context)
+{
+ unsigned i;
+ if(!capture_reservation.busy)return 1;
+ for(i=0;i<4;++i){
+  if(owners[i].cookie==0xcf11 && (owners[i].result->handle_open || owners[i].result->handle_uncertain) &&
+     probe(owners[i].identity,context))return 1;
+ }
+ return 0;
 }
 static unsigned fold(unsigned c){return c>='a' && c<='z'?c-32:c;}
 static unsigned leaf(const char *s,unsigned n)
@@ -93,6 +103,7 @@ static unsigned close_owned(capture_owner *owner)
 static unsigned initialize(capture_owner *owner)
 {
  capture_file_snapshot *r=owner->result;
+ if(capture_reservation.busy)return CF_BUSY;
  if(owner->cookie==0xcf11){
   if(r->handle_uncertain)return CF_RECOVERY;
   if(r->handle_open)return CF_BUSY;
@@ -110,6 +121,7 @@ static unsigned begin(capture_owner *owner,const char *path,unsigned mode)
 {
  capture_file_snapshot *r=owner->result;capture_owner *other;
  char candidate[64],identity[128];unsigned error,attributes,status,i,n;unsigned long position=0;
+ if(capture_reservation.busy)return CF_BUSY;
  if(owner->cookie!=0xcf11)return CF_STATE;
  if(r->handle_uncertain)return CF_RECOVERY;
  if(r->handle_open)return CF_BUSY;
@@ -128,6 +140,7 @@ static unsigned begin(capture_owner *owner,const char *path,unsigned mode)
      (other->result->handle_open || other->result->handle_uncertain) &&
      !strcmp(identity,other->identity))return CF_BUSY;
  }
+ if(capture_file_reserved(identity))return CF_BUSY;
  attempt(owner,candidate,mode);strcpy(owner->identity,identity);
  /* Open the same absolute identity admitted above, so a relative caller's
   * spelling is not reinterpreted between canonicalization and open. */
@@ -158,6 +171,7 @@ static unsigned begin(capture_owner *owner,const char *path,unsigned mode)
 static unsigned append(capture_owner *owner,const void *data,unsigned count)
 {
  capture_file_snapshot *r=owner->result;unsigned error,written=0;
+ if(capture_reservation.busy)return CF_BUSY;
  if(owner->cookie!=0xcf11)return CF_STATE;
  if(r->handle_uncertain)return CF_RECOVERY;
  if(r->first_status)return r->first_status;
@@ -175,12 +189,14 @@ static unsigned append(capture_owner *owner,const void *data,unsigned count)
 static unsigned close_file(capture_owner *owner)
 {
  unsigned status;
+ if(capture_reservation.busy)return CF_BUSY;
  if(owner->cookie!=0xcf11 || owner->result->state==CF_IDLE)return CF_STATE;
  status=close_owned(owner);if(status)return status;
  owner->result->state=CF_CLOSED;return owner->result->first_status;
 }
 static unsigned cleanup(capture_owner *owner)
 {
+ if(capture_reservation.busy)return CF_BUSY;
  if(owner->cookie!=0xcf11)return CF_STATE;
  if(owner->result->state==CF_IDLE)return CF_OK;
  return close_file(owner);
@@ -205,6 +221,7 @@ unsigned __cdecl monitor_file_cleanup(void){return cleanup(&owners[2]);}
 unsigned __cdecl history_file_event(unsigned operation,const void *data,unsigned count)
 {
  capture_owner *owner=&owners[3];unsigned status;
+ if(capture_reservation.busy)return CF_BUSY;
  if(operation>HISTORY_CLOSE)return CF_ARGUMENT;
  if(owner->cookie==0xcf10){status=initialize(owner);if(status)return status;}
  if(operation==HISTORY_WRITE)return append(owner,data,count);

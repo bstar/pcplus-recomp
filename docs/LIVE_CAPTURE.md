@@ -1,5 +1,12 @@
 # Checked live text capture
 
+The [external canonical reservation interface](CAPTURE_RESERVATION.md) now
+protects future recorder target/scratch identities before capture or another
+sink opens or truncates them. Independent paths retain concurrent foreground
+use. The recorder's publisher and UI are still pending; older capture receipts
+below retain their original binary and state-size scope.
+
+
 The maintained DOS terminal now connects the recovered132-byte resident09b6
 logger to a source-built DOS file owner. This implements processed text capture,
 append, pause/resume and checked shutdown. The complete F10 gate also requires

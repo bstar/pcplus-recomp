@@ -47,7 +47,7 @@ def main():
   observer_saw_open_denial=any(b'Cannot open history file.' in f for f in footers),
   normal_keys_resume=b'ready' in (folder/'serial.bin').read_bytes())
  proof['passed']=all(proof['checks'].values());(folder/'result.json').write_text(json.dumps(proof,indent=2)+'\n');cases.append(proof)
- sources=['standalone/test_history_export_dos.py','standalone/test_connection_dos.py','standalone/redisplay_watch.asm','src/redisplay/redisplay.c','src/capture/capture_file.c','src/capture/capture_file.h','src/terminal/main.asm']
+ sources=['standalone/test_history_export_dos.py','standalone/test_connection_dos.py','standalone/redisplay_watch.asm','src/redisplay/redisplay.c','src/capture/capture_file.c','src/capture/capture_reservation.c','src/capture/capture_reservation.h','src/capture/capture_file.h','src/terminal/main.asm']
  report=dict(passed=all(c['passed'] for c in cases),binary_sha256=hashlib.sha256(BINARY.read_bytes()).hexdigest(),cases=cases,sources={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in sources},scope='Production DOS main with W filename prompt, exclusive create, real append past70KB, repeated frozen export, independent INT1C footer observer, incoming cursor reply while viewing, prefix/content/CRLF checks and restored hardware/video. No product test mode, original executable or physical disk/modem claim.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n');assert report['passed']
 if __name__=='__main__':main()

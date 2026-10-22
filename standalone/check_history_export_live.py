@@ -145,7 +145,7 @@ def main():
   assert m.call('_history_file_event',[3,0,0])==1 and m.result()==held
   m.key(27);return 3
  check('protected-history-result-input-aliases-and-invalid-operation-have-no-kernel-effect',aliases)
- sources=['standalone/check_history_export_live.py','standalone/check_redisplay_live.py','standalone/check_terminal_capture_live.py','standalone/check_program_actions_live.py','src/redisplay/redisplay.c','src/capture/capture_file.c','src/capture/capture_file.h','src/terminal/config_abi.inc','src/terminal/capture.asm']
+ sources=['standalone/check_history_export_live.py','standalone/check_redisplay_live.py','standalone/check_terminal_capture_live.py','standalone/check_program_actions_live.py','src/redisplay/redisplay.c','src/capture/capture_file.c','src/capture/capture_reservation.c','src/capture/capture_reservation.h','src/capture/capture_file.h','src/terminal/config_abi.inc','src/terminal/capture.asm']
  result=dict(passed=True,binary_sha256=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),inputs=sum(c['inputs'] for c in cases),cases=cases,sources={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in sources},scope='Actual maintained viewer, far near-cdecl file callback, fourth independent checked DOS owner, native receive/parser and PROGRAM refusal. Kernel/BIOS/UART boundaries modeled; no physical disk or full original clipboard/UI claim.')
  (ROOT/'build/terminal/history-export-checks.json').write_text(json.dumps(result,indent=2)+'\n')
  print('History export:',result['inputs'],'inputs passed')

@@ -626,6 +626,10 @@ test-batch-header: batch-header
 
 .PHONY: test-batch-download test-batch-upload test-terminal-ymodem-live
 .PHONY: test-capture-file test-capture-session
+.PHONY: test-capture-reservation
+test: test-capture-reservation
+test-capture-reservation:
+	python3 standalone/check_capture_reservation.py --output build/aspect-recorder/reservation-make-$(shell date +%s%N)
 .PHONY: test-capture-owners snapshot test-snapshot
 .PHONY: printer test-printer
 .PHONY: print-screen test-print-screen test-printer-device

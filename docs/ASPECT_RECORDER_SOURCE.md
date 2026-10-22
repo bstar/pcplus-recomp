@@ -70,7 +70,12 @@ accepted in the public record.
 ```
 
 This target builds the maintained compiler/runner and creates fresh owned test
-directories. The component is not yet connected to the terminal's Record command.
+directories. The [shared canonical reservation prerequisite](CAPTURE_RESERVATION.md) now
+supports recorder target/scratch identities alongside all four existing sinks.
+It preserves their ABIs and tests real separate-bank calls, aliases, reentry and
+modeled uncertain ownership. The scratch publisher itself remains to implement.
+
+The component is not yet connected to the terminal's Record command.
 Remaining work is the exclusive source-file adapter, start/cancel/stop UI and
 foreground taps for received prompts and successfully emitted user/binding data.
 Transfers, scripts, child programs, setup/port moves and error/exit paths need
