@@ -1,5 +1,15 @@
 # Recording and replay on Synchronet and ENiGMA
 
+The [carrier-build checkpoint](validation/recording-abort-carrier-audio.json)
+accepts parent7b6ded5c/runnerdfee1e95 on the normal recorder route. All26
+producer,34 independent and12 serial checks pass:60,926 BBS display bytes
+plus187 bridge bytes arrive exactly, with78 online bytes independently
+waveform-decoded. Normal hardware/timer/SIP/VM cleanup passes.
+[Fresh direct BBS recorder/replay](validation/bbs-abort-carrier-compat.json) and
+[stock-window checks](validation/bbs-abort-carrier-window.json) also pass.
+This does not cover script-time windows over audio, full parent carrier/status,
+other profiles or physical hardware. Older checkpoints keep their identities.
+
 The [confirmation-build regression](validation/bbs-abort-owner-compat.json)
 repeats all four recorder/replay sessions with parent7b6ded5c, runner12d40249
 and the24KB-stack DOS compilerfc200c8c. [Two fresh script-window sessions](validation/bbs-abort-owner-window.json)

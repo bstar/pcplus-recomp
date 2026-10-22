@@ -1009,6 +1009,12 @@ test-aspect-key-client: aspect-runner
 .PHONY: test-aspect-foreground-delay test-aspect-pause-dos
 test-aspect-foreground-delay: aspect-runner
 	python3 standalone/check_aspect_foreground_delay.py
+.PHONY: test-aspect-abort-carrier test-aspect-abort-carrier-dos
+test-aspect-abort-carrier: aspect-runner
+	python3 standalone/check_aspect_abort_carrier.py --output "build/aspect-abort-carrier/check-$$(date -u +%Y%m%dT%H%M%S%N)"
+test-aspect-abort-carrier-dos: terminal aspect-runner
+	python3 standalone/test_aspect_abort_carrier_dos.py --label "carrier-$$(date -u +%Y%m%dT%H%M%S%N)"
+test: test-aspect-abort-carrier
 .PHONY: test-aspect-abort-owner test-terminal-abort-owner test-aspect-abort-dos
 test-aspect-abort-owner: aspect-runner
 	python3 standalone/check_aspect_abort_owner.py

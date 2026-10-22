@@ -142,7 +142,12 @@ unsigned runtime_when_cancel_poll(void)
 }
 unsigned runtime_when_host_poll(void){return runtime_serial_poll();}
 unsigned runtime_when_key_ready(void)
-{return runtime_error || window_keys_suppressed?0:runtime_keyboard_peek();}
+{
+#if defined(ASPECT_RUNTIME_SERIAL)
+ if(confirmation_active)return 0; /* The modal native reader owns these keys. */
+#endif
+ return runtime_error || window_keys_suppressed?0:runtime_keyboard_peek();
+}
 unsigned runtime_when_read_key(void)
 {
  return runtime_keyboard_read();
@@ -181,7 +186,12 @@ unsigned runtime_abort_read_key(void)
  for(;;){
   if(runtime_error)return 27;
   if(runtime_keyboard_peek())return runtime_keyboard_read();
-  if(runtime_serial_poll())return 27;
+  if(aspect_serial_active!=1){runtime_set_error(ASPECT_RUN_SERIAL);return 27;}
+  /* Ordinary VM stack, inside the outer service's modal confirmation. Native
+   * host/carrier bookkeeping and one-shot DISCONNECT actions remain live;
+   * key_ready suppresses nested keyboard/confirmation dispatch. CALL workers
+   * only stage native FILE/frame state, just as modal receive matches do. */
+  runtime_when_native_service();if(runtime_error)return 27;
   started=aspect_serial_ticks();
   for(leads=0;leads<64 && !runtime_error && aspect_serial_available();++leads){
    /* Modal receive is not a byte appended to the suspended RGET destination.

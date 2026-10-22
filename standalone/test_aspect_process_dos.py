@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Real ASPECT streams/VM -> native PROGRAM -> DOS child -> VM/source compiler."""
-import argparse,itertools,json,os,re,shutil,socket,subprocess,sys,threading,uuid
+import argparse,itertools,json,os,re,shutil,socket,struct,subprocess,sys,threading,uuid
 from pathlib import Path
 import build_aspect_process as build
 import build_aspect_compiler_dos as dos_compiler
@@ -66,7 +66,8 @@ def run(folder,port,flow,kind,manifest):
     (folder/'ROUTE.BAT').write_bytes(b'@echo off\r\necho BATCHPASS>BATCH.OUT\r\n')
     source_name='FULL' if kind=='full' else 'DIVIDE' if kind=='divide' else kind.upper() if kind in ('abort','budget') else 'SOLO'
     argument='' if kind=='full' else ' '+kind
-    (folder/'PCPTEST.BAT').write_text(f'@echo off\nset COMSPEC=Z:\\COMMAND.COM\nASPECT {source_name}.ASX /S{port}:0003:03:{flow}{argument} >CHECKS.TXT\nif errorlevel 1 goto bad\necho PASS>RESULT.TXT\ngoto done\n:bad\necho FAIL>RESULT.TXT\n:done\nexit\n')
+    subprocess.run(['nasm','-fbin',str(ROOT/'standalone/process_capture_idle.asm'),'-o',str(folder/'DRAIN.COM')],check=True)
+    (folder/'PCPTEST.BAT').write_text(f'@echo off\nset COMSPEC=Z:\\COMMAND.COM\nASPECT {source_name}.ASX /S{port}:0003:03:{flow}{argument} >CHECKS.TXT\nif errorlevel 1 goto bad\necho PASS>RESULT.TXT\ngoto done\n:bad\necho FAIL>RESULT.TXT\n:done\nDRAIN\nif errorlevel 1 goto drainbad\nexit\n:drainbad\necho FAIL>RESULT.TXT\nexit\n')
     listener=socket.socket();listener.bind(('127.0.0.1',0));listener.listen(1);listener.settimeout(.2)
     wire=bytearray();sent=[];errors=[];stop=threading.Event()
     def peer():
@@ -110,6 +111,8 @@ def run(folder,port,flow,kind,manifest):
     raw_values=[37,37,37,65535,0,0,37,37,0,1,37] if kind=='full' else [65535 if kind=='memory' else 12 if kind=='divide' else 37]*(2 if kind in ('abort','budget') else 1)
     expected_trace=[(i,raw,int(kind=='full' and i==4),int(kind=='full' and i==2),int(kind!='full' or i!=1)) for i,raw in enumerate(raw_values)]
     trace=[tuple(map(int,row)) for row in re.findall(r'EXTERNAL (\d+) raw(\d+) processor(\d+) wait(\d+) save(\d+)',text)]
+    drain=struct.unpack('<4H',(folder/'DRAIN.BIN').read_bytes()) if (folder/'DRAIN.BIN').is_file() else ()
+    checks['post_return_emulator_drain_observed']=len(drain)==4 and (drain[2]+65536*drain[3])>=2
     checks['all_command_results_and_flags']=trace==expected_trace
     checks['VM_status_and_invocations']=bool(match) and int(match[3])==({'abort':11,'budget':6}.get(kind,0)) and int(match[5])==len(expected_trace) and int(match[6])==7 and int(match[7])==int(kind=='full')
     checks['streams_preserved']=all((folder/f'SLOT{i}.BIN').read_bytes()==f'SEED{i}'.encode() for i in range(5)) and (folder/'SLOT5.BIN').read_bytes()==b'pending5'
@@ -143,7 +146,7 @@ def main():
     for name,digest in manifest['sources'].items():
         assert sha(ROOT/name)==digest,name
         target=folder/'sources'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
-    owned_sources={name:sha(ROOT/name) for name in ('standalone/aspect_process_child.asm','standalone/aspect_process_shell.asm','standalone/aspect_process_exe.c','standalone/native_process_child.asm','src/aspect/compiler.py')}
+    owned_sources={name:sha(ROOT/name) for name in ('standalone/aspect_process_child.asm','standalone/aspect_process_shell.asm','standalone/aspect_process_exe.c','standalone/native_process_child.asm','standalone/process_capture_idle.asm','src/aspect/compiler.py')}
     for name in owned_sources:
         target=folder/'sources'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
     cases=[]

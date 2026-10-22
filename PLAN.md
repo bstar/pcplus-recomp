@@ -1,5 +1,39 @@
 # Complete DOS rebuild plan
 
+The [prompt carrier audit](docs/validation/aspect-abort-carrier.json) accepts
+parent7b6ded5c/runnerdfee1e95 with native host/carrier service during Stop Script.
+The modal reader retains local keys; native TRANSMIT fires once, CALL stages its
+real FILE/frame state, No runs the framed handler afterward, and Yes cancels it.
+A real DOSBox modem/TCP hangup supplies DCD loss without changing product state.
+An XOFF-blocked disconnect TRANSMIT returns child14 through native abort/longjmp
+and restores the parent frame, JFT, owners and hardware. Eight linked groups
+also cover closed UART and first-error preservation. An unchanged earlier build
+reproduces the missing prompt-time dispatch with the same DOS fixture.
+
+[Ten fresh confirmation regressions](docs/validation/aspect-abort-carrier-regression.json)
+pass, including9KB/44 CPRs within59.2ms;13 attached PROGRAM cases pass. Clean
+source trees reproduce26 application and23 diagnostic/component products.
+All56 COM/flow/process cases pass with a recorded UART-free two-BIOS-tick dwell
+between DOS return and emulator shutdown. The earlier22-case attempt missed a
+final XOFF and remains unaccepted; exact wire expectations were not relaxed.
+Diagnostic padding generation now stays in PROCESSDIAG without a near CRT
+adapter. Actual near-code extent ends at65520, leaving16 bytes; further memory
+placement remains required.
+
+[Four recorder/replay sessions](docs/validation/bbs-abort-carrier-compat.json)
+and [two stock-window sessions](docs/validation/bbs-abort-carrier-window.json)
+pass on Synchronet/ENiGMA. [Fresh normal recorder audio](docs/validation/recording-abort-carrier-audio.json)
+passes26 producer,34 independent and12 serial checks:60,926 BBS display bytes
+plus187 bridge bytes exact, with78 online bytes independently waveform-decoded.
+This remains one ENiGMA V22/1200 software SIP/RTP/DSP/Telnet route.
+
+Concrete remaining gaps: final status still shows ON-LINE after carrier loss.
+The parent's carrier-seen guard may also miss a transition entirely inside
+an automatically launched script; that source inference needs a dedicated
+parent-state test. Continue parent carrier/status lifetime, real XOFF/XON
+handback/reconnect and CTS pressure, full command actions and all remaining
+F01–F16/physical requirements. Earlier checkpoints below retain their identities.
+
 The [cooperative abort-confirmation audit](docs/validation/aspect-abort-owner.json)
 accepts ten actual DOS workflows on parent7b6ded5c/runner12d40249. Escape now
 opens the native default-No policy through a checked cooperative parent frame;

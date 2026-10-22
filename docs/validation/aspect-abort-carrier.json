@@ -1,0 +1,130 @@
+{
+  "passed": true,
+  "prompt_carrier_service_accepted": true,
+  "full_application_accepted": false,
+  "parent_sha256": "7b6ded5c921e6464a07f2a9224bec6259043f256ccbca92f83f0213f436bd8fe",
+  "runner_sha256": "dfee1e95a00621559a36983055cd768447e77f1a6f9bc6fea6f84ca04918170f",
+  "results": {
+    "TX-No": {
+      "passed": true,
+      "child_exit": 0,
+      "query_reply_seconds": 0.007037798990495503,
+      "prompt_ticks": 90,
+      "carrier": {
+        "carrier_armed_seen": 1,
+        "carrier_cleared_seen": 1,
+        "carrier_pending_seen": 0,
+        "carrier_error_seen": 0,
+        "carrier_clear_ticks": 43,
+        "carrier_depth_seen": 0,
+        "carrier_last_key_seen": 1,
+        "carrier_tx_paused_seen": 0
+      },
+      "wire_sha256": "ce216e3cc1652ed27d4cd5c40ed3026735cd61942f04b2ef9767f6e0c1464af7",
+      "stale_ON_LINE_label": true
+    },
+    "CALL-No": {
+      "passed": true,
+      "child_exit": 0,
+      "query_reply_seconds": 0.00721641699783504,
+      "prompt_ticks": 90,
+      "carrier": {
+        "carrier_armed_seen": 1,
+        "carrier_cleared_seen": 1,
+        "carrier_pending_seen": 1,
+        "carrier_error_seen": 0,
+        "carrier_clear_ticks": 43,
+        "carrier_depth_seen": 1,
+        "carrier_last_key_seen": 1,
+        "carrier_tx_paused_seen": 0
+      },
+      "wire_sha256": "ce216e3cc1652ed27d4cd5c40ed3026735cd61942f04b2ef9767f6e0c1464af7",
+      "stale_ON_LINE_label": true
+    },
+    "CALL-Yes": {
+      "passed": true,
+      "child_exit": 13,
+      "query_reply_seconds": 0.0074805779149755836,
+      "prompt_ticks": 91,
+      "carrier": {
+        "carrier_armed_seen": 1,
+        "carrier_cleared_seen": 1,
+        "carrier_pending_seen": 1,
+        "carrier_error_seen": 0,
+        "carrier_clear_ticks": 43,
+        "carrier_depth_seen": 1,
+        "carrier_last_key_seen": 1,
+        "carrier_tx_paused_seen": 0
+      },
+      "wire_sha256": "ce216e3cc1652ed27d4cd5c40ed3026735cd61942f04b2ef9767f6e0c1464af7",
+      "stale_ON_LINE_label": true
+    },
+    "XOFF-error": {
+      "passed": true,
+      "child_exit": 14,
+      "query_reply_seconds": 0.007122269948013127,
+      "prompt_ticks": 85,
+      "carrier": {
+        "carrier_armed_seen": 1,
+        "carrier_cleared_seen": 0,
+        "carrier_pending_seen": 0,
+        "carrier_error_seen": 0,
+        "carrier_clear_ticks": 0,
+        "carrier_depth_seen": 0,
+        "carrier_last_key_seen": 1,
+        "carrier_tx_paused_seen": 1
+      },
+      "wire_sha256": "731a8a3168faaec1c14f46bd214d0356854a71decd5606612318cd588d9cf8b9",
+      "stale_ON_LINE_label": true
+    }
+  },
+  "previous_build_counterexample": {
+    "CALL-No": {
+      "passed": true,
+      "child_exit": 0,
+      "query_reply_seconds": 0.005719282082282007,
+      "prompt_ticks": 90,
+      "carrier": {
+        "carrier_armed_seen": 1,
+        "carrier_cleared_seen": 0,
+        "carrier_pending_seen": 0,
+        "carrier_error_seen": 0,
+        "carrier_clear_ticks": 0,
+        "carrier_depth_seen": 0,
+        "carrier_last_key_seen": 1,
+        "carrier_tx_paused_seen": 0
+      },
+      "wire_sha256": "ce216e3cc1652ed27d4cd5c40ed3026735cd61942f04b2ef9767f6e0c1464af7",
+      "stale_ON_LINE_label": true
+    }
+  },
+  "linked_groups": 8,
+  "actual_DOS_modem_cases": 4,
+  "actual_DOS_confirmation_regressions": 10,
+  "attached_PROGRAM_cases": 13,
+  "process_cases": 56,
+  "source_only_products": {
+    "application": 26,
+    "diagnostic": 23
+  },
+  "diagnostic_sha256": "70bb0078813cc5acdcee1e6f41752637b2f6ba6431083bd51a90c5d0a5bb0920",
+  "diagnostic_near_code": {
+    "start": 16,
+    "size": 65504,
+    "end": 65520,
+    "remaining": 16
+  },
+  "cohort": "build/aspect-abort-carrier-accepted-01",
+  "frozen_files": 10007,
+  "files_manifest_sha256": "47357f603d12be5614b0d155829b7cad28514bb855aba583aeae7c8a93222f01",
+  "auditor_sha256": "464acbf71d7ecb018f55df866988e662b1865dbe761dd15467bdac80539e6519",
+  "regression_receipt_sha256": "7376bf788f3d67463d19da73baeb2f28a183a90ee2b93bf3f5f8cfbacfbb6286",
+  "known_gaps": [
+    "The final native status line retains ON-LINE after carrier loss in these captures. Full parent status refresh remains unaccepted.",
+    "Parent carrier-seen bookkeeping may miss a high-to-low transition entirely inside automatic script execution; connection.asm requires prior carrier_seen before acting on low. This is a source inference needing a dedicated parent-state test.",
+    "Hardware CTS stalls, full XOFF/XON handback/reconnect, other commands, physical Boca/SPA2102 and all full F01\u2013F16 gates remain open."
+  ],
+  "capture_boundary": "The first22-case raw run missed its final XOFF in one case and remains unaccepted. Unchanged old/current individual controls subsequently passed. The new56-case run requires a source-owned UART-free two-BIOS-tick dwell after DOS application return, before emulator shutdown; exact expected wires are unchanged. DOSBox upstream nullmodem batches host writes on a separate txdelay event; this supports a shutdown-window explanation, not an exhaustive attribution for the failed run.",
+  "source_reference": "https://github.com/joncampbell123/dosbox-x/blob/master/src/hardware/serialport/nullmodem.cpp",
+  "scope": "Native host/carrier service executes on the ordinary modal VM stack; confirmation owns local keys, normal WHEN TX and framed CALL scheduling persist, Yes cancels pending CALL, and XOFF-blocked native TX unwinds with child14 and clean parent return. Actual DOS virtual modem, TCP hangup, exact raw serial/query/control bytes and passive prompt/owner/frame observations. Eight linked groups also cover closed UART and first-error preservation. No physical modem, full parent carrier/status or whole-application acceptance."
+}

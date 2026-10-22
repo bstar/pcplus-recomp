@@ -1,5 +1,15 @@
 # Full application reconstruction checklist
 
+Current runnerdfee1e95 with parent7b6ded5c passes the [prompt carrier audit](validation/aspect-abort-carrier.json):
+four actual DOS modem-hangup cases, eight linked groups and ten fresh confirmation
+regressions. Native carrier actions run without taking modal keys; framed CALL,
+Yes cancellation and XOFF-blocked TX error14 cleanup pass. Thirteen attached
+PROGRAM and56 process/flow cases pass; clean trees reproduce26 application
+and23 diagnostic products. [Fresh BBS recorder/replay](validation/bbs-abort-carrier-compat.json),
+[stock windows](validation/bbs-abort-carrier-window.json) and [normal recorder audio](validation/recording-abort-carrier-audio.json)
+also pass. Parent carrier/status refresh, broader flow/reconnect, physical
+hardware and all full gates remain open. Earlier checkpoints keep their identities.
+
 Current parent7b6ded5c/runner12d40249 passes the [cooperative abort confirmation
 audit](validation/aspect-abort-owner.json): ten actual DOS workflows, live
 WHEN/parser reception, exact serial/frame cleanup and44 CPRs under9KB load.

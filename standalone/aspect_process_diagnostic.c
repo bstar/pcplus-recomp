@@ -32,12 +32,18 @@ static void __far diagnostic_printf(const char *format,...)
 {
  va_list args;va_start(args,format);vprintf(format,args);va_end(args);
 }
+#pragma code_seg("PROCESSDIAG")
+/* No near CRT calls from this bank. Keep exactly the original fourteen-byte
+ * prefix and241 padding bytes without another near-segment adapter. */
 static void __far diagnostic_padding(char *target,unsigned index)
 {
- unsigned n=sprintf(target,"LOC_PADDING%02u=",index);
- memset(target+n,'P',255-n);target[255]=0;
+ static const char prefix[]="LOC_PADDING00=";
+ unsigned n;
+ for(n=0;n<14;++n)target[n]=prefix[n];
+ target[11]=(char)('0'+index/10);target[12]=(char)('0'+index%10);
+ for(n=14;n<255;++n)target[n]='P';
+ target[255]=0;
 }
-#pragma code_seg("PROCESSDIAG")
 static void __far check(unsigned good,unsigned line){++checks;if(!good){++failures;diagnostic_printf("FAIL %u\n",line);}}
 static unsigned __far seed_large_environment(void)
 {

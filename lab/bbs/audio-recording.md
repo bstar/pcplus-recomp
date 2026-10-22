@@ -1,5 +1,15 @@
 # Normal recorder workflow over the software modem
 
+The [carrier-build checkpoint](../../docs/validation/recording-abort-carrier-audio.json)
+accepts parent7b6ded5c/runnerdfee1e95 on the normal recorder route. All26
+producer,34 independent and12 serial checks pass:60,926 BBS display bytes
+plus187 bridge bytes arrive exactly, with78 online bytes independently
+waveform-decoded. Normal hardware/timer/SIP/VM cleanup passes.
+[Fresh direct BBS recorder/replay](../../docs/validation/bbs-abort-carrier-compat.json) and
+[stock-window checks](../../docs/validation/bbs-abort-carrier-window.json) also pass.
+This does not cover script-time windows over audio, full parent carrier/status,
+other profiles or physical hardware. Older checkpoints keep their identities.
+
 The [confirmation-build run](../../docs/validation/recording-abort-owner-audio.json)
 accepts parent7b6ded5c/runner12d40249 and24KB compilerfc200c8c on this normal
 route. All26 producer,34 independent and12 serial checks pass. All60,389 BBS

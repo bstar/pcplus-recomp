@@ -1,17 +1,55 @@
 # Local interaction while ASPECT owns the session
 
-The current parent7b6ded5c and runner12d40249 use capability12 (experimental
-external-command products use13). The48-byte ASIOv4 descriptor remains unchanged;
-older endpoint versions are rejected before UART adoption. The [confirmation
-audit](validation/aspect-abort-owner.json) binds ten actual DOS cases, linked
-ownership tests, the compiler stack corpus and26 original-free products. Older
-PAUSE/window/BBS/audio receipts below retain their recorded binary identities.
-[Four fresh recorder/replay sessions](validation/bbs-abort-owner-compat.json) and
-[two stock-window sessions](validation/bbs-abort-owner-window.json) pass on owned
-Synchronet/ENiGMA. [Current normal recorder audio](validation/recording-abort-owner-audio.json)
-also passes26 producer,34 independent and12 serial checks with exact streams
-and cleanup. This covers one ENiGMA V22/1200 software-audio recording/replay
-route; script-time windows over audio and physical hardware remain open.
+Current parent7b6ded5c/runnerdfee1e95 uses capability12 (experimental external
+products use13) with the unchanged48-byte ASIOv4 descriptor. The [carrier audit](validation/aspect-abort-carrier.json)
+and [ten confirmation regressions](validation/aspect-abort-carrier-regression.json)
+bind prompt-time host/carrier service and existing receive/parser behavior.
+[Four recorder/replay](validation/bbs-abort-carrier-compat.json),
+[two stock-window](validation/bbs-abort-carrier-window.json) and
+[one normal ENiGMA recorder audio route](validation/recording-abort-carrier-audio.json)
+pass with this pair. Script-time windows over audio, full actions and physical
+hardware remain open. Earlier receipts retain their recorded binary identities.
+
+## Carrier service while confirming
+
+The native yes/no reader calls the genuine native WHEN host/carrier service on
+its ordinary VM stack before each receive burst. Native service key readiness
+returns0 while confirmation owns the keyboard; the modal reader still reads
+actual BIOS answer keys. This prevents recursive confirmation or ordinary-key
+dispatch. Escape remains the outer active-wait result. An inactive UART is
+rejected as serial error14 before a new disconnect action, preserving an earlier
+error. This is a maintained scheduling change, not exact original UI timing.
+
+Native TRANSMIT actions run immediately. CALL only stages the original
+FILE/frame state; its body waits until the prompt ends. No continues through
+the handler and main code. Yes aborts without executing the staged body. If a
+native TRANSMIT faults, the genuine VM abort/longjmp bypasses the modal stack;
+normal runtime/runner cleanup clears WHEN/confirmation state and ends the
+parent-owned frame. No synthetic yes/no policy or direct handler interpreter
+is introduced.
+
+Four actual DOS cases use DOSBox-X's modem, not a substituted carrier API. An
+owned BBS socket closes while the prompt is visible. Tests observe native DCD
+loss/one-shot dispatch, a framed CALL with local37, Yes discarding that CALL,
+and an XOFF-blocked action returning child14. Passive observations bind prompt
+ownership, live rendering, pending frame/gate state and the retained Escape;
+exact wires, hardware/JFT/owner restoration and the normal parent menu pass.
+The virtual modem accepts a lab hostname in ATD; this does not imply Boca
+hardware supports that command. Eight linked boundary groups independently
+cover answer/key ownership, inactive UART and first-error preservation.
+
+The same DOS fixture on runner12d40249 reproduces the earlier gap: carrier
+remains armed for the whole prompt and triggers only after No. The current
+build disarms it for43 observed prompt ticks before the answer in the normal
+cases. Ten receive/confirmation regressions also pass, including9,114 paced
+ANSI bytes,44 CPRs below59.2ms and1,408 character/attribute cells.
+
+Full parent carrier/status behavior remains unaccepted. These captures retain
+an ON-LINE status label after NO CARRIER. Source inspection also shows the
+parent ignores low DCD until its own carrier-seen flag is set; automatic script
+execution may hide the high-to-low transition from that poll. A dedicated
+parent-state test is still required. Physical CTS/RTS, full XOFF/XON handback,
+reconnect, other application commands and physical hardware remain open.
 
 ## Stop Script confirmation
 
@@ -35,8 +73,8 @@ While waiting for an answer, the child services transport and bursts of at
 most64 native receive leads per BIOS tick. Translation, native WHEN matching
 and the actual terminal parser run; CALL workers remain deferred until the
 prompt ends. This path consumes ordinary text without incrementing a suspended
-RGET's destination count. Full carrier/disconnect script-service dispatch is
-still suspended during the prompt and needs further work. Arbitrary parser
+RGET's destination count. Native host/carrier service also runs as described
+above. Arbitrary parser
 continuations can exceed the burst's tick; this is not a hard timing bound.
 
 Actual DOS tests cover No, Enter, Escape, invalid/extended keys, confirmed Yes
