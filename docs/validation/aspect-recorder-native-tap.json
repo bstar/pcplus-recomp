@@ -1,0 +1,211 @@
+{
+  "passed": true,
+  "original_cases": 454,
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "relative_address": "0x1604",
+      "file_offset": 10244,
+      "bytes": 1137,
+      "sha256": "130abfddfde124ac658758549a65d58ed481bda7e150f340e40395f7200874b4"
+    },
+    {
+      "relative_address": "0xa62",
+      "file_offset": 7266,
+      "bytes": 41,
+      "sha256": "6980c36e377c9a8f0710a1367cdc36f10181eeb58f504e907d6a0836f2cca406"
+    }
+  ],
+  "checker_sha256": "b62301364949ceaf3ec2bf86aad2622c34437f3c697e842acdc0955f0aac9d95",
+  "loader_sha256": "9fa54cdddf4ac3ffa429727d7bf87ee5a6dbf88dcad9f7ef6ddb949769b44f96",
+  "manifest_sha256": "f3ee2e96c5891c17e279e22d8192d447f306f2f08a533f1e22e178975f18a0d4",
+  "scope": "Opt-in original dispatcher replay with modeled recorder/serial/UI callees.\n\nNo analysis carrier, complete DOS application, BIOS input or UART is executed.\n",
+  "conclusions": [
+    "Literal keys80h..FFh reach serial service but skip recorder tap.",
+    "CR binding bytes reach serial service before recorder receives key000Dh.",
+    "BindingFF becomes serial-service NUL; caret/pause bytes remain literal.",
+    "Recorder tap is not a byte-by-byte serial-output observer."
+  ],
+  "limitations": [
+    "Synthetic normalized key words; no physical BIOS input provenance.",
+    "Recorder/serial/UI services modeled; no actual UART or generated script replay.",
+    "Only literal20h..FFh and three CR bindings tested; extended/function keys remain open."
+  ],
+  "result": "build/aspect-recorder/native-tap-01.json",
+  "result_sha256": "39438db68d3c868131828ae3d66f2aa451f174a2cdddc7dfa87c2e377115cfde",
+  "rea": [
+    {
+      "evidence_id": "ev_8673681d8b094270bea9db0dc3a78895c834fbb6aef0914c534643bd3d3dfef2",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x11604"
+      },
+      "subject_sha256": "6579570ad64b045a74c5efc13b19f08834b37230f2957db00fbccc1f8cd60518"
+    },
+    {
+      "evidence_id": "ev_84b6a9e9b7b9ee11b9b9efee62ced7bd346f3180f29ffe6948e0fe10eae96d21",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x10a62"
+      },
+      "subject_sha256": "6579570ad64b045a74c5efc13b19f08834b37230f2957db00fbccc1f8cd60518"
+    },
+    {
+      "evidence_id": "ev_8ad7b0e85f0bbcb09d8359860f79d96af01752e870cc22daa3772211c24326fd",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1badb"
+      },
+      "subject_sha256": "6579570ad64b045a74c5efc13b19f08834b37230f2957db00fbccc1f8cd60518"
+    },
+    {
+      "evidence_id": "ev_c23f8953a7e148512397fd0d406398106aae785a0b371b7766b6b5fa8e9c8507",
+      "operation": "procedure_callers",
+      "parameters": {
+        "procedure": "0x1db5e"
+      },
+      "subject_sha256": "6579570ad64b045a74c5efc13b19f08834b37230f2957db00fbccc1f8cd60518"
+    },
+    {
+      "evidence_id": "ev_668d1cb2ab7591225393e00cba2cc9dc675d88422871cc1fc9544bccbda9462f",
+      "operation": "procedure_callers",
+      "parameters": {
+        "procedure": "0x1badb"
+      },
+      "subject_sha256": "6579570ad64b045a74c5efc13b19f08834b37230f2957db00fbccc1f8cd60518"
+    }
+  ],
+  "selected_cases": [
+    {
+      "key": 32,
+      "recording": 1,
+      "events": [
+        [
+          "serial_service",
+          32
+        ],
+        [
+          "recorder",
+          32
+        ]
+      ]
+    },
+    {
+      "key": 65,
+      "recording": 1,
+      "events": [
+        [
+          "serial_service",
+          65
+        ],
+        [
+          "recorder",
+          65
+        ]
+      ]
+    },
+    {
+      "key": 127,
+      "recording": 1,
+      "events": [
+        [
+          "serial_service",
+          127
+        ],
+        [
+          "recorder",
+          127
+        ]
+      ]
+    },
+    {
+      "key": 128,
+      "recording": 1,
+      "events": [
+        [
+          "serial_service",
+          128
+        ]
+      ]
+    },
+    {
+      "key": 255,
+      "recording": 1,
+      "events": [
+        [
+          "serial_service",
+          255
+        ]
+      ]
+    },
+    {
+      "key": 13,
+      "binding_hex": "41",
+      "recording": 1,
+      "events": [
+        [
+          "serial_service",
+          65
+        ],
+        [
+          "recorder",
+          13
+        ]
+      ]
+    },
+    {
+      "key": 13,
+      "binding_hex": "58ff59",
+      "recording": 1,
+      "events": [
+        [
+          "serial_service",
+          88
+        ],
+        [
+          "serial_service",
+          0
+        ],
+        [
+          "serial_service",
+          89
+        ],
+        [
+          "recorder",
+          13
+        ]
+      ]
+    },
+    {
+      "key": 13,
+      "binding_hex": "5e4d7e",
+      "recording": 1,
+      "events": [
+        [
+          "serial_service",
+          94
+        ],
+        [
+          "serial_service",
+          77
+        ],
+        [
+          "serial_service",
+          126
+        ],
+        [
+          "recorder",
+          13
+        ]
+      ]
+    }
+  ],
+  "case_groups": {
+    "literal_keys_each_mode": 224,
+    "recording_modes": [
+      0,
+      1
+    ],
+    "CR_binding_cases_each_mode": 3
+  }
+}
