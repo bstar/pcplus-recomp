@@ -8,4 +8,11 @@ unsigned transfer_fs_write(int handle,const void *data,unsigned count,unsigned *
 unsigned transfer_fs_close(int handle);
 unsigned transfer_fs_rename(const char *from,const char *to);
 unsigned transfer_fs_remove(const char *path);
+#ifdef __WATCOMC__
+#define TF_FS_FAR __far
+#else
+#define TF_FS_FAR
+#endif
+unsigned TF_FS_FAR __cdecl transfer_fs_read(int handle,void *data,unsigned count,unsigned *got);
+unsigned TF_FS_FAR __cdecl transfer_fs_seek(int handle,unsigned long offset,unsigned long *actual);
 #endif

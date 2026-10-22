@@ -17,10 +17,10 @@ from check_zmodem_names import alias
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/zmodem-dos'
 def main():
     OUT.mkdir(parents=True,exist_ok=True);lock=(OUT/'.lock').open('w');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-    src=ROOT/'src/transfer';sources=[src/n for n in ('zmodem.c','zmodem_wire.c','zmodem_name.c','batch_header.c','download_file.c','download_fs.c')]+[ROOT/'standalone/zmodem_host.c']
+    src=ROOT/'src/transfer';sources=[src/n for n in ('zmodem.c','zmodem_wire.c','zmodem_name.c','batch_header.c','download_file.c','download_fs.c','download_compare.c')]+[ROOT/'standalone/zmodem_host.c']
     subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192','-i='+str(src),'-fe=SESSION.EXE',*map(str,sources)],cwd=OUT,check=True)
     isolated=OUT/'source-only';isolated.mkdir(exist_ok=True)
-    headers=[src/n for n in ('zmodem.h','zmodem_wire.h','zmodem_name.h','batch_header.h','download_file.h','download_fs.h')]
+    headers=[src/n for n in ('zmodem.h','zmodem_wire.h','zmodem_name.h','batch_header.h','download_file.h','download_fs.h','download_compare.h')]
     for p in sources+headers:shutil.copy2(p,isolated/p.name)
     subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192','-i=.','-fe=SESSION.EXE',*[p.name for p in sources]],cwd=isolated,check=True)
     assert (isolated/'SESSION.EXE').read_bytes()==(OUT/'SESSION.EXE').read_bytes()
@@ -28,13 +28,13 @@ def main():
     if run.exists():shutil.rmtree(run)
     run.mkdir();shutil.copy2(OUT/'SESSION.EXE',run/'SESSION.EXE')
     cases=[];commands=[];body=bytes(range(256))*257+b'\x1a\0\xff@\r'
-    def case(label,sending,wire,expected_files,expected_status=0,expected_wire=None,source_files=None,preexisting=None,fault=0,checks=None,receive_credit=None):
+    def case(label,sending,wire,expected_files,expected_status=0,expected_wire=None,source_files=None,preexisting=None,fault=0,checks=None,receive_credit=None,readback=False):
         name=f'T{len(cases):03}';path=run/name;path.mkdir()
         (path/'IN.BIN').write_bytes(b''.join(struct.pack('<H',v) for v in wire))
         for filename,data in (preexisting or {}).items():(path/filename).write_bytes(data)
         for filename,data in (source_files or {}).items():(path/filename).write_bytes(data)
         (path/'LIST.TXT').write_text(''.join(n+'\n' for n in (source_files or {})))
-        commands.extend([f'cd \\{name}',f'..\\SESSION {"S" if sending else "R"} {fault}'+('' if receive_credit is None else f' {receive_credit}')+' >RESULT.TXT'])
+        commands.extend([f'cd \\{name}',f'..\\SESSION {"S" if sending else "R"} {fault}'+(f' {receive_credit or 0} 1' if readback else '' if receive_credit is None else f' {receive_credit}')+' >RESULT.TXT'])
         cases.append(dict(label=label,path=path,status=expected_status,files=expected_files,wire=expected_wire,source=source_files or {},preexisting=preexisting or {},extra=checks or {}))
     for fmt in (65,67):
         for n in (0,1,1023,1024,1025,len(body)):
@@ -49,6 +49,21 @@ def main():
             rx+=h(1,0x22000000 if fmt==67 else 0x02000000)+h(8);tx+=h(11,n,fmt)+h(8)+b'OO'
             case(f'send-{fmt}-{n}',True,rx,{},expected_wire=tx,source_files={'TEST.BIN':data},checks={'closes':1,'uncertain':0})
     for fmt in (65,67):
+        small=b'ABCDEFGHIJKL';ready=h(1,0x23002000)
+        prefix=offer('TEST.BIN',12,fmt)+payload(small[:8],0,fmt)
+        tail=h(11,12,fmt)+h(8)+b'OO';begin=ready+h(9)+h(3,8);end=ready+h(8)
+        case(f'checked-active-old-prefix-{fmt}',False,prefix+payload(b'CDEF',2,fmt)+payload(small[8:],8,fmt)+tail,
+             {'TEST.BIN':small},expected_wire=begin+h(9,8)+h(3,12)+end,readback=True)
+        case(f'checked-active-overlap-{fmt}',False,prefix+payload(small[4:],4,fmt)+tail,
+             {'TEST.BIN':small},expected_wire=begin+h(3,12)+end,readback=True)
+        for label,replay,fault,status in [('mismatch',b'C!EF',0,6),('read-error',b'CDEF',6,7),('cancel',b'CDEF',7,5)]:
+            case(f'checked-active-{label}-{fmt}',False,prefix+payload(replay,2,fmt)+tail,{},
+                 expected_status=status,expected_wire=begin+b'\x18'*8+b'\x08'*10,readback=True,fault=fault)
+        wire=offer('TEST.BIN',len(body),fmt)+b''.join(payload(body[i:i+8192],i,fmt) for i in range(0,65536,8192))
+        wire+=payload(body[65530:],65530,fmt)+h(11,len(body),fmt)+h(8)+b'OO'
+        case(f'checked-active-overlap-cross64K-{fmt}',False,wire,{'TEST.BIN':body},readback=True,
+             expected_wire=ready+h(9)+b''.join(h(3,i) for i in range(8192,65537,8192))+h(3,len(body))+end)
+    for fmt in (65,67):
         for credit in (0,1,128,256,1024,8192):
             data=body if (credit==256 and fmt==67) else body[:257]
             wire=offer('CREDIT.BIN',len(data),fmt);expected=h(1,0x23000000|(credit or 8192))+h(9)
@@ -56,6 +71,13 @@ def main():
                 wire+=payload(data[off:off+8192],off,fmt);expected+=h(3,min(off+8192,len(data)))
             wire+=h(11,len(data),fmt)+h(8)+b'OO';expected+=h(1,0x23000000|(credit or 8192))+h(8)
             case(f'receive-credit-{fmt}-{credit}',False,wire,{'CREDIT.BIN':data},expected_wire=expected,receive_credit=credit)
+    for fmt in (65,67):
+        data=bytes(range(256))*4;ready=h(1,0x23002000)
+        wire=offer('TEST.BIN',len(data),fmt)+payload(data[:512],0,fmt)
+        wire+=b''.join(payload(data[i:i+16],i,fmt) for i in range(0,256,16))
+        wire+=payload(data[512:],512,fmt)+h(11,len(data),fmt)+h(8)+b'OO'
+        case(f'checked-sixteen-advancing-old-packets-{fmt}',False,wire,{'TEST.BIN':data},readback=True,
+             expected_wire=ready+h(9)+h(3,512)+h(9,512)*16+h(3,1024)+ready+h(8))
     for credit in (8193,65535):
         case('invalid-receive-credit-'+str(credit),False,b'',{},expected_status=2,expected_wire=b'',receive_credit=credit)
     case('send-rejects-receive-only-credit',True,b'',{},expected_status=2,expected_wire=b'',receive_credit=256)

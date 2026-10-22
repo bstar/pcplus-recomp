@@ -6,6 +6,7 @@
 #include "batch_upload.h"
 #include "batch_download.h"
 #include "upload_file.h"
+#include "download_compare.h"
 #include <stddef.h>
 #include <string.h>
 #include <dos.h>
@@ -110,6 +111,17 @@ unsigned ZM_FAR __cdecl terminal_zmodem_commit(void *ctx)
 {(void)ctx;return batch_download_finish();}
 unsigned ZM_FAR __cdecl terminal_zmodem_abort_received(void *ctx)
 {(void)ctx;return batch_download_cleanup();}
+unsigned ZM_FAR __cdecl terminal_zmodem_verify_received(void *ctx,zw_u32 at,const void *data,unsigned count)
+{
+ const unsigned char *bytes=data;unsigned n,r;(void)ctx;
+ while(count){
+  if(ymodem_io_poll())return terminal_transfer_fault==2?ZM_ABORT:ZM_BROKEN;
+  n=count>128?128:count;r=transfer_download_compare(at,bytes,n);
+  if(r)return r==TF_MISMATCH?ZM_PROTOCOL:ZM_FILE;
+  at+=n;bytes+=n;count-=n;
+ }
+ return 0;
+}
 const zm_ops terminal_zmodem_ops={terminal_zmodem_input,terminal_zmodem_output,terminal_zmodem_next,terminal_zmodem_seek,terminal_zmodem_read_file,terminal_zmodem_close_source,
  terminal_zmodem_open_received,terminal_zmodem_write_received,terminal_zmodem_commit,terminal_zmodem_abort_received};
 unsigned __cdecl terminal_zmodem_store(unsigned sending)
@@ -127,8 +139,8 @@ unsigned __cdecl terminal_zmodem_store(unsigned sending)
   if(!terminal_transfer_fault)terminal_transfer_fault=7;return 1;
  }
  p->observed=p->files=0;
- status=zm_run_profile(&p->session,&terminal_zmodem_ops,p,sending,ymodem_io_modem()?300:0,
-  sending?0:terminal_zmodem_receive_credit);progress(p);
+ status=zm_run_checked_profile(&p->session,&terminal_zmodem_ops,p,sending,ymodem_io_modem()?300:0,
+  sending?0:terminal_zmodem_receive_credit,sending?0:terminal_zmodem_verify_received);progress(p);
  if(upload_source_result.handle_uncertain || batch_download_result.file.handle_uncertain || batch_download_result.file.stage_exists)
   terminal_transfer_cleanup_status=1;
  if(!status)return 0;

@@ -85,6 +85,51 @@ static unsigned completed_replay(zm_session *s,zw_u32 at)
   if(!count)return fail(s,ZM_PROTOCOL);
  }
 }
+/* Active stages need stronger replay semantics than already-installed files:
+ * verify any old prefix and append only the CRC-accepted new suffix. A sender
+ * still behind the stored position gets ZRPOS after framed consumption; only
+ * a packet reaching the current position gets ACK. Never turn readback into
+ * accepted file progress.
+ * The verifier owns cursor restoration and storage/cancel servicing. */
+static unsigned active_replay(zm_session *s,zw_u32 at)
+{
+ unsigned r,count,ending,prefix;
+ zw_data(&s->decoder);
+ for(;;){
+  s->phase=2;r=event(s);
+  if(r!=ZW_DATA){
+   if(s->status)return s->status;
+   ++s->retries;zw_headers(&s->decoder);
+   return header(s,ZRPOS,s->position,ZW_HEX);
+  }
+  count=s->decoder.count;ending=s->decoder.ending;
+  if(at>s->position || 0xffffffffUL-at<count)return fail(s,ZM_PROTOCOL);
+  prefix=s->position-at>count?count:(unsigned)(s->position-at);
+  if(prefix){
+   r=s->verify_received(s->context,at,s->io.rx,prefix);
+   if(r)return fail(s,r==ZM_PROTOCOL?ZM_PROTOCOL:r==ZM_ABORT?ZM_CANCEL:r==ZM_BROKEN?ZM_IO:ZM_FILE);
+  }
+  if(count>prefix){
+   if(s->ops->write_received(s->context,s->io.rx+prefix,count-prefix))return fail(s,ZM_FILE);
+   s->position+=count-prefix;s->retries=0;s->replay_verified=0;
+  }else{
+   /* A sender recovering with smaller packets can need more than ten old
+    * packets to catch up. Verified monotonic endpoints retire retry debt,
+    * while repeated/rewound endpoints remain bounded. File position and the
+    * transport's accepted-progress watchdog do not advance for readback. */
+   if(s->replay_verified && at+count>s->replay_verified)s->retries=0;
+   else if(++s->retries>=LIMIT)return fail(s,ZM_TIMEOUT);
+   if(at+count>s->replay_verified)s->replay_verified=at+count;
+  }
+  at+=count;
+  if(!count && ending!=ZW_CRCE && ending!=ZW_CRCW)return fail(s,ZM_PROTOCOL);
+  if(ending==ZW_CRCQ || ending==ZW_CRCW){
+   if(header(s,at<s->position?ZRPOS:ZACK,at<s->position?s->position:at,ZW_HEX))return s->status;
+  }
+  if(ending==ZW_CRCE && at<s->position)return header(s,ZRPOS,s->position,ZW_HEX);
+  if(ending==ZW_CRCE || ending==ZW_CRCW)return 0;
+ }
+}
 static unsigned finish(zm_session *s)
 {
  unsigned i,r,v,previous=0,closing=0;
@@ -164,7 +209,7 @@ static unsigned receive(zm_session *s)
      header(s,ZSKIP,0,ZW_HEX);continue;
     }
     if(r)return fail(s,ZM_FILE);
-    s->owned=1;s->position=0;s->size=meta.size;s->retries=0;
+    s->owned=1;s->position=0;s->size=meta.size;s->retries=0;s->replay_verified=0;
    }
    header(s,ZRPOS,s->position,ZW_HEX);continue;
   }
@@ -177,6 +222,10 @@ static unsigned receive(zm_session *s)
   if(type==ZDATA && !s->owned && s->files && position(s)<=s->position){
    ++s->retries;
    if(completed_replay(s,position(s)))return s->status;
+   continue;
+  }
+  if(type==ZDATA && s->owned && s->verify_received && position(s)<s->position){
+   if(active_replay(s,position(s)))return s->status;
    continue;
   }
   if(type!=ZDATA || !s->owned || position(s)!=s->position){
@@ -194,7 +243,7 @@ static unsigned receive(zm_session *s)
    if(0xffffffffUL-s->position<count)return fail(s,ZM_PROTOCOL);
    if(count && s->ops->write_received(s->context,s->io.rx,count))return fail(s,ZM_FILE);
    s->position+=count;
-   if(count)s->retries=0;else if(++s->retries==LIMIT)return fail(s,ZM_PROTOCOL);
+   if(count){s->retries=0;s->replay_verified=0;}else if(++s->retries==LIMIT)return fail(s,ZM_PROTOCOL);
    if(ending==ZW_CRCQ || ending==ZW_CRCW)header(s,ZACK,s->position,ZW_HEX);
    if(s->status || ending==ZW_CRCE || ending==ZW_CRCW)break;
   }
@@ -398,10 +447,12 @@ unsigned __cdecl zm_run(zm_session *s,const zm_ops *ops,void *context,unsigned s
 unsigned __cdecl zm_run_link(zm_session *s,const zm_ops *ops,void *context,unsigned sending,unsigned response_bps)
 {return zm_run_profile(s,ops,context,sending,response_bps,0);}
 unsigned __cdecl zm_run_profile(zm_session *s,const zm_ops *ops,void *context,unsigned sending,unsigned response_bps,unsigned receive_credit)
+{return zm_run_checked_profile(s,ops,context,sending,response_bps,receive_credit,0);}
+unsigned __cdecl zm_run_checked_profile(zm_session *s,const zm_ops *ops,void *context,unsigned sending,unsigned response_bps,unsigned receive_credit,zm_verify_received verify_received)
 {
  unsigned r,i;unsigned char cancel[18];
  if(!s || !ops || sending>1 || (response_bps && response_bps<300) || receive_credit>8192 ||
-  (sending && receive_credit))return ZM_ARGUMENT;
+  (sending && (receive_credit || verify_received)))return ZM_ARGUMENT;
 #ifdef __WATCOMC__
  if((unsigned long)(unsigned)s+sizeof(*s)>65536UL || (unsigned long)(unsigned)ops+sizeof(*ops)>65536UL ||
   !((unsigned long)(unsigned)s+sizeof(*s)<=(unsigned)ops || (unsigned long)(unsigned)ops+sizeof(*ops)<=(unsigned)s))return ZM_ARGUMENT;
@@ -411,7 +462,7 @@ unsigned __cdecl zm_run_profile(zm_session *s,const zm_ops *ops,void *context,un
 #endif
  if(!ops->read_byte || !ops->write_wire || (sending?(!ops->next || !ops->seek || !ops->read_file || !ops->close_source):
   (!ops->open_received || !ops->write_received || !ops->commit_received || !ops->abort_received)))return ZM_ARGUMENT;
- memset(s,0,sizeof(*s));s->ops=ops;s->context=context;s->sending=sending;s->response_bps=response_bps;s->capacity=receive_credit;
+ memset(s,0,sizeof(*s));s->ops=ops;s->context=context;s->sending=sending;s->response_bps=response_bps;s->capacity=receive_credit;s->verify_received=verify_received;
  zw_init(&s->decoder,s->io.rx,sizeof(s->io.rx),0);r=sending?send(s):receive(s);
  if(s->owned==1){
   s->cleanup_status=sending?ops->close_source(context,0):ops->abort_received(context);

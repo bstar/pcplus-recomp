@@ -34,6 +34,13 @@ typedef struct zm_ops {
  unsigned (ZM_FAR __cdecl *commit_received)(void *);
  unsigned (ZM_FAR __cdecl *abort_received)(void *);
 } zm_ops;
+/* Optional checked active-stage readback. Compare exactly count bytes at the
+ * supplied offset without changing the append cursor. Return0 only for an
+ * exact match, ZM_PROTOCOL for a mismatch, ZM_ABORT for cancellation,
+ * ZM_BROKEN for transport failure, otherwise a storage failure. The
+ * callback must service cancellation/transport and retain checked file owner
+ * state on every exit. It is never called for unverified packet data. */
+typedef unsigned (ZM_FAR __cdecl *zm_verify_received)(void *,zw_u32,const void *,unsigned);
 typedef struct zm_session {
  const zm_ops *ops;void *context;
  /* owned: 0 resolved, 1 active, 2 source close failed (never called again). */
@@ -49,6 +56,10 @@ typedef struct zm_session {
   * decodes payload packets, so its encoded output can use the same region.
   * 8KiB ZedZap RX plus standard 1KiB TX fits the existing exclusive arena. */
  union {unsigned char rx[ZW_RECEIVE_MAX],wire[ZW_RECEIVE_MAX];} io;
+ zm_verify_received verify_received;
+ /* Recovery frontier bounds repeated old packets without confusing verified
+  * forward readback progress with newly accepted file bytes. */
+ zw_u32 replay_verified;
 } zm_session;
 /* Caller provides the workspace, disjoint ops and durable callback context.
  * No static state or allocation. DOS near arguments, DS=SS; callbacks are far
@@ -74,4 +85,10 @@ unsigned __cdecl zm_run_link(zm_session *,const zm_ops *,void *,unsigned sending
  * policy returns ZM_ARGUMENT before touching the session or callbacks. */
 unsigned __cdecl zm_run_profile(zm_session *,const zm_ops *,void *,unsigned sending,
  unsigned response_bps,unsigned receive_credit);
+/* Explicit opt-in for checked stale/overlapping active-file data. Legacy APIs
+ * retain their existing mismatch recovery. Sending requires a null verifier.
+ * Old data never advances accepted progress; only a matching stored prefix
+ * followed by checked appended bytes can extend the verified position. */
+unsigned __cdecl zm_run_checked_profile(zm_session *,const zm_ops *,void *,unsigned sending,
+ unsigned response_bps,unsigned receive_credit,zm_verify_received);
 #endif

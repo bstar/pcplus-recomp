@@ -702,6 +702,8 @@ test-zmodem-autostart:
 .PHONY: test-zmodem
 test: test-zmodem
 test-zmodem: test-zmodem-wire test-zmodem-autostart
+	python3 standalone/check_zmodem_active_replay.py --output build/zmodem-active-replay/make-$$(date +%s%N)
+	python3 standalone/test_download_compare_dos.py --output build/download-compare/make-$$(date +%s%N)
 	python3 standalone/check_zmodem_completion_bounds.py
 	python3 standalone/check_zmodem_link_policy.py
 	python3 standalone/check_zmodem_receive_credit.py --output build/zmodem-receive-credit/make-$$(date +%s%N)
@@ -714,6 +716,7 @@ test-terminal: test-terminal-zmodem-live
 test-terminal-zmodem-live: terminal
 	python3 standalone/check_terminal_zmodem_live.py
 	python3 standalone/check_terminal_zmodem_receive_credit.py
+	python3 standalone/check_terminal_zmodem_active_replay.py --output build/zmodem-active-replay/linked-make-$$(date +%s%N).json
 	python3 standalone/check_zmodem_upload_timing.py
 	python3 standalone/check_carrier_transfer_deadline.py
 	python3 standalone/check_zmodem_completed_replay.py

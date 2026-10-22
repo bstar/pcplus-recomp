@@ -8,7 +8,8 @@
  */
 typedef unsigned transfer_file_status;
 enum { TF_OK=0,TF_ARGUMENT,TF_BUSY,TF_STATE,TF_CONFLICT,TF_INSPECT,
- TF_CREATE,TF_WRITE,TF_CLOSE,TF_INSTALL,TF_REMOVE,TF_OVERFLOW,TF_RECOVERY };
+ TF_CREATE,TF_WRITE,TF_CLOSE,TF_INSTALL,TF_REMOVE,TF_OVERFLOW,TF_RECOVERY,
+ TF_READ,TF_SEEK,TF_MISMATCH };
 enum { TF_IDLE=0,TF_OPEN,TF_CLOSED,TF_INSTALLED,TF_ABORTED,TF_BROKEN,TF_UNCERTAIN };
 typedef struct transfer_file_result {
  unsigned state,first_status,dos_error,close_error,cleanup_error;

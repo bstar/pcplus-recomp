@@ -14,7 +14,9 @@ ABI(handle_uncertain,14);ABI(bytes_written,16);ABI(target,20);ABI(stage,84);
 typedef char abi_result[sizeof(transfer_file_result)==148?1:-1];
 typedef char abi_word[sizeof(unsigned)==2?1:-1];
 transfer_file_result transfer_download_result;
-static int output_handle;
+/* Private shared handle for the checked readback owner; never a public API. */
+int transfer_download_output_handle;
+#define output_handle transfer_download_output_handle
 static unsigned extent(const void *p,unsigned n)
 { return p && (unsigned long)(unsigned)p+n<=65536UL; }
 static unsigned disjoint(const void *a,unsigned an,const void *b,unsigned bn)

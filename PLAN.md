@@ -1,7 +1,19 @@
 # Complete DOS rebuild plan
 
+The [checked active-file ZMODEM recovery](docs/ZMODEM_ACTIVE_REPLAY.md) now
+compares CRC-accepted old prefixes with the owned stage, appends only a new
+suffix and requests the verified current position after framed consumption.
+Verified forward recovery endpoints retire retry debt without advancing file
+accounting or the accepted-progress watchdog. The unchanged stock sender
+completes65797 exact bytes in paced host experiments at6000bps/default offers
+and1200bps/explicit non-overlap offers. Their receiver libraries are byte-
+identical to the current host build. Actual DOS read/seek, linked UART/file
+ownership and full regression evidence are bound separately in the validation
+ledger; these are not current stock-BBS/audio or physical passes. Native
+conservative negotiation, full recorder/application work and F01–F16 remain open.
+
 The [fresh isolated ENiGMA larger-file audio run](docs/validation/current-enigma-credit-pressure-download-audio-02.json)
-now passes78 producer/independent checks and11 verifier negatives. The current
+now passes78 producer/independent checks and11 verifier negatives. That campaign's
 source-built DOS terminal installs65797 exact bytes with native `/Z:256`, full
 CRC/EOF/ZFIN/OO/opposite controls, matching caller/display streams, resumed
 Search/List, official accounting and normal DOS/UART/helper cleanup. Maximum

@@ -4,6 +4,7 @@
  */
 #include "zmodem.h"
 #include "download_file.h"
+#include "download_compare.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,6 +56,13 @@ static unsigned ZM_FAR __cdecl abort_received(void *ctx)
 {(void)ctx;return transfer_download_abort();}
 static const zm_ops ops={read_byte,write_wire,next,seek_file,read_file,close_source,
  open_received,write_received,commit_received,abort_received};
+static unsigned ZM_FAR __cdecl verify_received(void *ctx,zw_u32 at,const void *data,unsigned n)
+{
+ unsigned r;(void)ctx;
+ if(fault==6)return ZM_FILE;if(fault==7)return ZM_ABORT;
+ r=transfer_download_compare(at,data,n);
+ return r==TF_MISMATCH?ZM_PROTOCOL:r?ZM_FILE:0;
+}
 int main(int argc,char **argv)
 {
  unsigned r;
@@ -62,7 +70,8 @@ int main(int argc,char **argv)
  incoming=fopen("IN.BIN","rb");outgoing=fopen("OUT.BIN","wb");
  if(!incoming || !outgoing)return 2;
  list=fopen("LIST.TXT","r");
- r=argc>3?zm_run_profile(&session,&ops,0,argv[1][0]=='S',0,(unsigned)atoi(argv[3])):
+ r=argc>4?zm_run_checked_profile(&session,&ops,0,argv[1][0]=='S',0,(unsigned)atoi(argv[3]),verify_received):
+  argc>3?zm_run_profile(&session,&ops,0,argv[1][0]=='S',0,(unsigned)atoi(argv[3])):
   zm_run(&session,&ops,0,argv[1][0]=='S');
  fclose(incoming);fclose(outgoing);if(list)fclose(list);
  printf("status=%u files=%lu bytes=%lu cleanup=%u owned=%u closes=%u uncertain=%u stage=%u workspace=%u ops=%u\n",
