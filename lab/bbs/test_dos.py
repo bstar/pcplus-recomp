@@ -44,6 +44,10 @@ async def run(args):
    assert 1<=sx<=999 and 1<=sy<=999
    fixture=bytearray(fixture);struct.pack_into('<HH',fixture,0x4e4,sx,sy)
    fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
+ init_wait=getattr(args,'init_wait',None)
+ if init_wait is not None:
+  assert 0<=init_wait<=32767
+  command+=f' /I:{init_wait}'
  keymap=None
  if args.keymap_fixture:
   keymap=args.keymap_fixture.read_bytes()
@@ -134,6 +138,7 @@ exit
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'keyboard_input':args.keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
+ result['initialization_wait_seconds']=init_wait
  result['server_log']=str(server_log) if server_log is not None else None
  result['server_endpoint']={'address':'127.0.0.1','port':args.port}
  result['modem_packet_delay_ms']=args.packet_delay_ms
@@ -146,6 +151,7 @@ exit
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('name');p.add_argument('--port',type=int,required=True);p.add_argument('--label',default='probe');p.add_argument('--keys',default='');p.add_argument('--wait',type=int,default=12);p.add_argument('--timeout',type=int,default=70)
  p.add_argument('--server-log',type=Path,help='Explicit owned ENiGMA log for a separate test server; default stock fixture')
+ p.add_argument('--init-wait',type=int,choices=range(32768),help='Explicit /I initialization acknowledgement deadline in seconds')
  p.add_argument('--dial-fixture',action='store_true',help='Exercise configured automatic modem initialization/dialing inside DOS')
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')

@@ -10,18 +10,23 @@ def read(p):return json.loads(p.read_text())
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True)
+    p.add_argument('--synchronet-label',help='Separate preserved cohort label when the Synchronet attempt differs')
+    p.add_argument('--init-wait',type=int,choices=range(32768),help='Require explicit initialization wait in every captured DOS invocation')
     p.add_argument('--native',type=Path,required=True);p.add_argument('--cohort',type=Path,required=True)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--synchronet-logon-fixture',type=Path,help='Declared temporary synthetic-account daily-logon exemption, restored after this attempt')
     a=p.parse_args()
     assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
+    if a.synchronet_label:assert re.fullmatch(r'[A-Za-z0-9_-]+',a.synchronet_label)
     cohort=a.cohort.resolve();output=a.output.resolve()
     assert cohort.is_relative_to(ROOT/'build') and not cohort.exists()
     assert output.is_relative_to(ROOT/'docs/validation') and not output.exists()
     selected={Path(__file__).resolve(),ROOT/'lab/bbs/modem.py'};servers={}
     for name,payload in (('synchronet',b'TQ'),('enigma',b'M\rQ\r')):
-        stage=ROOT/'build/bbs-lab/recording'/name/a.label;r=read(stage/'result.json');start=read(stage/'start.json')
+        stage=ROOT/'build/bbs-lab/recording'/name/(a.synchronet_label if name=='synchronet' and a.synchronet_label else a.label);r=read(stage/'result.json');start=read(stage/'start.json')
         assert r['passed'] and all(r['checks'].values()) and not r['diagnostic_build']
+        if a.init_wait is not None:
+            assert r['initialization_wait_seconds']==start['initialization_wait_seconds']==a.init_wait
         assert not start['diagnostic_build'] and set(r['sessions'])=={'record','replay'}
         assert sha(stage/'TERMINAL.EXE')==r['binary_sha256']==sha(ROOT/'build/terminal/TERMINAL.EXE')
         assert sha(stage/'ASPECT.EXE')==r['runner_sha256']==sha(ROOT/'build/aspect-runner/ASPECT.EXE')
@@ -38,6 +43,27 @@ def main():
             assert session['passed'] and all(session['checks'].values())
             folder=(ROOT/session['result']).parent;run=read(folder/'result.json')
             assert run['passed'] and all(run['checks'].values()) and run['binary_sha256']==r['binary_sha256']
+            if a.init_wait is not None:
+                assert run['initialization_wait_seconds']==a.init_wait
+                command=run['configuration']['command']
+                assert command.split().count(f'/I:{a.init_wait}')==1
+                assert '\n'+command+'\n' in (folder/'dosbox.conf').read_text()
+                port=23231 if name=='synchronet' else 23233
+                prefix=f'ATZ\rATDlab.local:{port}\r'.encode('ascii')
+                assert (folder/'serial-received.bin').read_bytes().startswith(prefix)
+                modem=read(folder/'modem.json')
+                commands=[e['command'] for e in modem['events'] if e['kind']=='modem-command']
+                assert commands==['ATZ',f'ATDLAB.LOCAL:{port}']
+                errors=[e for e in modem['events'] if e['kind']=='error']
+                if errors:
+                    # Synchronet cohorts close the DOS serial socket with RST
+                    # after normal DOS exit. Do not admit an earlier transport
+                    # failure or a reset in place of the semantic checks below.
+                    assert name=='synchronet' and errors==[modem['events'][-1]]
+                    assert errors[0]['message']=='[Errno 104] Connection reset by peer'
+                    assert 0<=run['seconds']-errors[0]['seconds']<1
+                    assert run['checks']['dos_normal_exit'] and (folder/'PASS.TXT').exists()
+                    assert modem['events'][-2]['kind']=='bbs-connected'
             assert run['keyboard_input']==start['schedules'][mode]
             assert (folder/'BEFORE.BIN').stat().st_size==42
             assert (folder/'BEFORE.BIN').read_bytes()==(folder/'AFTER.BIN').read_bytes()
@@ -59,7 +85,7 @@ def main():
                 assert len(ids)==1
                 menus=[row['menuName'] for row in rows if row.get('menuName')]
                 assert menus[menus.index('mainMenu'):]==['mainMenu']+['messageBaseMainMenu','mainMenu']*(1 if mode=='record' else 2)
-            sessions[mode]=dict(result=str((folder/'result.json').relative_to(ROOT)),seconds=run['seconds'],checks=session['checks'])
+            sessions[mode]=dict(result=str((folder/'result.json').relative_to(ROOT)),seconds=run['seconds'],checks=session['checks'],transport_close=read(folder/'modem.json')['events'][-1])
             selected.update(p for p in folder.rglob('*') if p.is_file())
         selected.update(p for p in stage.rglob('*') if p.is_file())
         servers[name]=dict(binary_sha256=r['binary_sha256'],runner_sha256=r['runner_sha256'],
@@ -101,7 +127,7 @@ def main():
         shutil.copy2(path,target);assert sha(target)==sha(path)
         kept[str(target.relative_to(ROOT))]=sha(target)
     result=dict(passed=True,selected_modern_BBS_recorder_workflows_accepted=True,full_F13_accepted=False,
-        servers=servers,native_prompt_cases=68,custody_sha256=kept,synchronet_logon_fixture=logon_fixture,
+        servers=servers,initialization_wait_seconds=a.init_wait,native_prompt_cases=68,custody_sha256=kept,synchronet_logon_fixture=logon_fixture,
         earlier_failures='docs/validation/bbs-recording-failure.json',
         scope='Four production actual DOS sessions: record read-only navigation, compile with DOS ASPCOMP, replay the unedited source in a fresh authenticated BBS session, navigate manually afterward, then normal exit and exact UART/DOS restoration. Separate diagnostic observer and native CPU evidence explain the overlap/stop-only wait fixes. Loopback Hayes model forwards configured shutdown bytes. No software audio, physical modem, transfers, arbitrary prompts or full application acceptance.')
     with output.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')

@@ -66,7 +66,7 @@ async def main(args):
         schedules['replay']=schedules['replay'].replace('p14000','p45000')
     for keys in schedules.values():assert len('ADDKEY p1000 '+keys+' p2000 a-x')<500
     prediction=dict(inputs=inputs,schedules=schedules,expected_payload_hex=payload.hex(),server=args.name,port=port,
-        binary_sha256=sha(stage/'TERMINAL.EXE'),diagnostic_build=args.trace,
+        binary_sha256=sha(stage/'TERMINAL.EXE'),diagnostic_build=args.trace,initialization_wait_seconds=args.init_wait,
         runner_sha256=sha(stage/'ASPECT.EXE'),scope=__doc__)
     (stage/'start.json').write_text(json.dumps(prediction,indent=2)+'\n')
     runs={};semantics={}
@@ -76,7 +76,7 @@ async def main(args):
         offset=log.stat().st_size if log else None;inode=log.stat().st_ino if log else None
         options=argparse.Namespace(name=args.name,label=label,port=port,com=2,baud=19200,flow='HARD',packet_delay_ms=0,
             dial_fixture=True,directory_fixture=False,directory_browser=False,entry=3,binary=stage/'TERMINAL.EXE',
-            config_fixture=False,keymap_fixture=None,server_log=log,keys=keys,wait=2,timeout=170)
+            config_fixture=False,keymap_fixture=None,server_log=log,keys=keys,wait=2,timeout=170,init_wait=args.init_wait)
         with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):
             code=await test_dos.run(options)
         run=read(out/'result.json');runs[mode]=run
@@ -155,7 +155,7 @@ exit
         sources_unchanged=all(sha(ROOT/name)==digest for name,digest in inputs.items()),
         no_retained_temporary_files=not list(stage.glob('LPR*.TMP')) and not list(stage.glob('LPR*.BAK')))
     result=dict(passed=all(checks.values()),checks=checks,inputs=inputs,sessions=semantics,
-        diagnostic_build=args.trace,runner_sha256=sha(stage/'ASPECT.EXE'),
+        initialization_wait_seconds=args.init_wait,diagnostic_build=args.trace,runner_sha256=sha(stage/'ASPECT.EXE'),
         binary_sha256=prediction['binary_sha256'],expected_payload_hex=payload.hex(),
         artifacts={str(p.relative_to(stage)):sha(p) for p in stage.iterdir() if p.is_file()},
         scope='Actual DOS File/C recording, DOS compilation and File/A replay of read-only menu navigation, followed by a second manual navigation proving parent return, on the existing loopback synthetic BBS account. The Hayes model forwards configured shutdown hangup bytes; escape-to-command modem behavior is not modeled. No audio, physical modem, file transfers or full application acceptance.')
@@ -166,5 +166,6 @@ exit
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=('synchronet','enigma'));p.add_argument('--label',required=True)
+    p.add_argument('--init-wait',type=int,choices=range(32768),help='Explicit initialization acknowledgement deadline for both DOS sessions')
     p.add_argument('--trace',action='store_true',help='Separate diagnostic ASPECT observer; no production acceptance')
     asyncio.run(main(p.parse_args()))

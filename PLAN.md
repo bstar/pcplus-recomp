@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Current initialization/BBS regression](docs/validation/bbs-initialization-compat.json)
+accepts four independently audited actual DOS Synchronet/ENiGMA sessions with
+explicit `/I:3`: recording, DOS compilation, fresh-session replay and manual
+navigation afterward. Exact initialization/dial commands and UART restoration
+pass; the temporary synthetic-account quota exemption is restored to zero.
+This covers selected loopback Hayes/Telnet workflows on parent e30df926, not
+current-product audio, transfers, full application acceptance or physical hardware.
+
 [Configurable initialization results](docs/MODEM_INITIALIZATION.md) now support
 `/I:0..32767`: legacy no-wait by default, or bounded per-command OK/ERROR waiting,
 numeric replies, multiple commands and retry response draining. The independent
@@ -7,8 +15,8 @@ receipt accepts 74 linked groups, nine DOS connection cases, four DOS retries,
 compiler/stack regressions and thirteen attached PROGRAM workflows. A compiler
 memory correction restores nested compilation under the larger retained parent.
 Fresh source-only builds reproduce normal, mouse and compiler products.
-Current-product BBS/audio, physical hardware and every full application gate
-remain open. Earlier checkpoint identities below are historical.
+Current-product audio, broader BBS workflows, physical hardware and every full
+application gate remain open. Earlier checkpoint identities below are historical.
 
 [Failed-hangup policy](docs/validation/hangup-failure-policy.json) now preserves the online session and
 flow state when a blocked hangup leaves DCD high, reports Hangup failed and

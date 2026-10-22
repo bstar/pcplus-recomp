@@ -43,8 +43,24 @@ byte-identically in a fresh build from 418 declared source files with originals
 absent. The [compiler memory correction](COMPILER_MEMORY.md) preserves nested
 compilation after the new resident code increased conventional-memory pressure.
 
-Current-product Synchronet/ENiGMA and audio regressions are still required.
-The receipt explicitly leaves those, physical hardware and full F03 unaccepted.
+A separate [current-product BBS receipt](validation/bbs-initialization-compat.json)
+now accepts four actual DOS Synchronet/ENiGMA record/replay sessions with explicit
+`/I:3`. The auditor checks the captured invocation, physical ATZ/ATD prefix,
+recorded source, DOS compilation, exact navigation bytes, server routes and
+42-byte UART restoration. Synchronet's synthetic account exemption returns to
+its original zero flags. Its final serial socket reports peer reset during
+normal shutdown, within one second of runner completion; the audit records this
+and requires completed navigation, exact shutdown bytes and successful DOS exit.
+ENiGMA closes with serial EOF. No earlier transport error is admitted.
+
+The first Synchronet attempt failed before DOS launch because the BBS-only shell
+lacked NASM; its exemption was restored. The accepted replacement uses the full
+Nix development toolchain for DOS execution. Raw failed and accepted cohorts
+remain separate under ignored build storage.
+
+Current-product audio and broader editor/transfer regressions remain required.
+The initialization component receipt predates this BBS receipt and retains its
+explicit unaccepted BBS/audio field. Physical hardware and full F03 remain open.
 
 # Historical baseline
 
