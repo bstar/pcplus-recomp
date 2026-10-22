@@ -45,6 +45,7 @@ def main(extension=None):
         sources.append(source)
         subprocess.run(['nasm', '-f', 'obj', include] + feature_flags + (['-D' + define] if define else []) +
                        (['-DASPECT_RUNTIME_SERIAL'] if name in ('bridge','dispatch') else []) +
+                       (['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else []) +
                        [str(source), '-o', str(obj)], check=True)
         objects.append(str(obj))
     if extension:objects += extension['objects']
@@ -57,6 +58,7 @@ def main(extension=None):
                     str(ROOT/'src/aspect/serial.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'),
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
+                  source_extensions={'D7/01':'TRANSMITRAW hexadecimal bytes; requires maintained runtime, not legacy ASX portable'},
                   objects={p.name:sha(p) for p in [*[Path(p) for p in objects],
                       *[output/(p.stem+'.o') for p in compiled_sources]]},
                   sources={str(p.relative_to(ROOT)): sha(p) for p in sources},

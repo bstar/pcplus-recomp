@@ -651,7 +651,8 @@ class Compiler:
             'comgetc': (0xC9, 'i', False), 'comgetcd': (0xCA, 'i', False),
             'message': (0x76, 's', False), 'exit': (0x33, '', False),
             'break': (0x0D, '', False),
-            'transmit': (0xBF, 's', False), 'waitfor': (0xD4, 's', True),
+            'transmit': (0xBF, 's', False), 'transmitraw': (0xD7, 's', False),
+            'waitfor': (0xD4, 's', True),
             'rstrcmp': (0x9A, 'ss', True),
             'atoi': (0x06, 'si', False), 'atol': (0x07, 'sl', False),
             'itoa': (0x61, 'wd', False), 'ltoa': (0x6E, 'qd', False),
@@ -668,6 +669,8 @@ class Compiler:
         if not len(signature) <= len(args) <= len(signature) + int(optional):
             self.error(f'{command} operand count mismatch')
         self.emit(opcode)
+        if command == 'transmitraw':
+            self.emit(1)  # Maintained extension family; no native slot replaced.
         for role, arg in zip(signature, args):
             kind = self.kind(arg)
             if role in 'ds' and kind != 3:

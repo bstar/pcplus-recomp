@@ -1,5 +1,10 @@
 # Recorder input versus transmitted bytes
 
+The [source-owned recorder follow-up](ASPECT_RECORDER_SOURCE.md) now accepts
+explicit transmitted bytes and proves byte-exact DOS compilation/UART replay
+through its maintained raw-output extension. These native tap observations
+remain the boundary evidence; terminal tap/UI integration and F13 stay open.
+
 The [454 original-instruction cases](validation/aspect-recorder-native-tap.json)
 resolve an important boundary for the source-owned recorder: the original
 keyboard tap does not observe every transmitted byte. These are opt-in Unicorn

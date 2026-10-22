@@ -3,7 +3,7 @@
 typedef struct command {const char *name,*roles;unsigned opcode,optional;} command;
 static const command commands[]={
  {"comgetc","i",0xc9,0},{"comgetcd","i",0xca,0},{"message","s",0x76,0},
- {"exit","",0x33,0},{"break","",0x0d,0},{"transmit","s",0xbf,0},
+ {"exit","",0x33,0},{"break","",0x0d,0},{"transmit","s",0xbf,0},{"transmitraw","s",0xd7,0},
  {"waitfor","s",0xd4,1},{"rstrcmp","ss",0x9a,1},{"atoi","si",6,0},
  {"atol","sl",7,0},{"itoa","wd",0x61,0},{"ltoa","qd",0x6e,0},
  {"strcat","ds",0xaa,1},{"strcmp","ss",0xab,1},{"strcpy","ds",0xac,1},
@@ -204,6 +204,7 @@ void pc_commands(pc_compiler *c)
  }
  if(command_index==65535U){bad(c);return;}cmd=&commands[command_index];n=strlen(cmd->roles);
  if(count<n||count>n+cmd->optional){bad(c);return;}emit(c,cmd->opcode);
+ if(cmd->opcode==0xd7)emit(c,1); /* Maintained raw-byte extension, outside native table. */
  for(i=0;i<n&&pc_ready(c);++i){
   role=cmd->roles[i];j=args[i];expected=(unsigned)kind(c,j);
   if((role=='d'||role=='s')&&expected!=3){bad(c);return;}

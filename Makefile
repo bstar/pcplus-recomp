@@ -1352,3 +1352,10 @@ test-terminal-mouse-unwind: terminal-mouse-process aspect-external-unwind
 	python3 standalone/test_aspect_unwind_dos.py --mouse --phase 9 --kind D --port 2 --flow B
 	python3 standalone/test_aspect_unwind_dos.py --mouse --phase 6 --kind D --port 1 --flow S
 	python3 standalone/test_aspect_unwind_dos.py --mouse --phase 10 --kind D --port 2 --flow N
+
+.PHONY: test-aspect-recorder
+test: test-aspect-recorder
+test-aspect-recorder: aspect-runner aspect-compiler-dos
+	python3 standalone/check_aspect_recorder.py --output build/aspect-recorder/host-make-$(shell date +%s%N)
+	python3 standalone/test_aspect_raw_output_dos.py --output build/aspect-recorder/raw-make-$(shell date +%s%N)
+	python3 standalone/test_aspect_recorder_dos.py --output build/aspect-recorder/recorder-make-$(shell date +%s%N)

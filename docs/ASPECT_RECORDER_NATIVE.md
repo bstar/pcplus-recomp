@@ -1,5 +1,10 @@
 # Original ASPECT recorder behavior
 
+The later [source-owned recorder checkpoint](ASPECT_RECORDER_SOURCE.md) now
+implements bounded output ownership and passes actual DOS file/compiler/UART
+replay. The observations below retain their original native-instruction scope;
+foreground UI/file exclusion and F13 remain open.
+
 The [native recorder probes](validation/aspect-recorder-native.json) pass28
 original-instruction cases. REA/Ghidra identifies four buffering/formatting
 routines in overlay12 and the mode controller in overlay16 of the verified2.01

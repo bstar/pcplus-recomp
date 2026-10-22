@@ -95,6 +95,25 @@ unsigned runtime_serial_send(unsigned byte)
 #endif
  return runtime_error;
 }
+static unsigned hex_value(unsigned char c)
+{
+ if(c>='0'&&c<='9')return c-'0';
+ if(c>='a'&&c<='f')return c-'a'+10;
+ if(c>='A'&&c<='F')return c-'A'+10;
+ return 16;
+}
+unsigned runtime_serial_send_hex(const unsigned char *hex)
+{
+ unsigned n,i;
+ if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return runtime_error;}
+ if(!hex){runtime_set_error(ASPECT_RUN_OPERAND);return runtime_error;}
+ for(n=0;n<=80&&hex[n];++n){
+  if(hex_value(hex[n])==16){runtime_set_error(ASPECT_RUN_OPERAND);return runtime_error;}
+ }
+ if(n>80||(n&1)){runtime_set_error(ASPECT_RUN_OPERAND);return runtime_error;}
+ for(i=0;i<n&&!runtime_error;i+=2)runtime_serial_send((hex_value(hex[i])<<4)|hex_value(hex[i+1]));
+ return runtime_error;
+}
 unsigned runtime_serial_read_raw(void)
 {
  unsigned value=65535U;

@@ -45,6 +45,12 @@ extern aspect_dispatch_finish
 extern aspect_dispatch_argument,aspect_dispatch_paused,aspect_dispatch_wait_disabled
 extern aspect_dispatch_seek_enabled,aspect_dispatch_stream,aspect_dispatch_handlers
 extern aspect_dispatch_exit_state,aspect_dispatch_next_script
+%ifdef ASPECT_SOURCE_OUTPUT
+; D7 is outside the native215-slot table. Only maintained builds admit this
+; explicit extension; exact native flat and ordinary component builds retain
+; their original out-of-range behavior.
+extern aspect_dispatch_source_output
+%endif
 %ifdef ASPECT_RUNTIME_SERIAL
 ; Maintained raw-platform compatibility: without a renderer or pattern owner,
 ; leave queued bytes for explicit receive commands or the parent's ASIO return.
@@ -76,7 +82,11 @@ aspect_dispatch:
  jmp near .finish
 .opened:
  mov [bp+4],di
+%ifdef ASPECT_SOURCE_OUTPUT
+ jmp near .loop
+%else
  jmp short .loop
+%endif
 .poll:
  call aspect_dispatch_service
  or_load ax,ax
@@ -114,6 +124,13 @@ aspect_dispatch:
  cmp word [aspect_dispatch_seek_enabled],byte 0
  jnz .loop
 .dispatch:
+%ifdef ASPECT_SOURCE_OUTPUT
+ cmp si,0xd7
+ jne .native_dispatch
+ call aspect_dispatch_source_output
+ jmp short .loop
+.native_dispatch:
+%endif
  cmp si,0xd6
  ja .outside
  shl si,1

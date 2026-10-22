@@ -1,0 +1,551 @@
+{
+  "passed": true,
+  "source_recorder_component_accepted": true,
+  "foreground_recording_accepted": false,
+  "host_cases": 17,
+  "actual_DOS_recorder_cases": 6,
+  "actual_DOS_raw_UART_cases": 6,
+  "raw_extension": {
+    "opcode": "D7/01",
+    "command": "TRANSMITRAW",
+    "operand": "0..80 even ASCII hexadecimal characters",
+    "original_native_slot_replaced": false,
+    "legacy_ASX_portable": false
+  },
+  "production_runner_sha256": "4bdb0380720fe08a6ef2a6363e56577ba865db078825ebdcd0f8db6ccb0aff18",
+  "production_compiler_sha256": "9f28f60621614846980dbf402e81a02cf6fc189f03607439d176e59b2d974e82",
+  "proofs": {
+    "host": {
+      "result": "build/aspect-recorder/source-core-01/result.json",
+      "sha256": "5216d13f63f89fa29bf3e811557747494f92dd92a8cada5a3647f55f99c19e3f",
+      "cases": [
+        {
+          "case": "all-octets",
+          "passed": true,
+          "status": 0,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 9,
+          "closes": 1,
+          "source_sha256": "540cdef438900f56f0e7d5c7191715ddd7af8ec0ed7857130245a66a125cda6b",
+          "transmitted_bytes": 256,
+          "received_bytes": 0
+        },
+        {
+          "case": "reverse-short-writes",
+          "passed": true,
+          "status": 0,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 717,
+          "closes": 1,
+          "source_sha256": "e7d24ac46ad492873ce35837d477713535604575f22321ea96e0d374d9d2fd21",
+          "transmitted_bytes": 256,
+          "received_bytes": 0
+        },
+        {
+          "case": "quote-caret-FF-prompt",
+          "passed": true,
+          "status": 0,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 8,
+          "closes": 1,
+          "source_sha256": "0ae470137b64c1ce113a2cb336b92bda709507163463b80c35760e86b00ed533",
+          "transmitted_bytes": 46,
+          "received_bytes": 7
+        },
+        {
+          "case": "control-prompt",
+          "passed": true,
+          "status": 0,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 7,
+          "closes": 1,
+          "source_sha256": "5d34573e15bf0a4d71c0e22c518750c1d8bdeeab10f546be29420d0cab3d5bf5",
+          "transmitted_bytes": 46,
+          "received_bytes": 16
+        },
+        {
+          "case": "empty-filtered-prompt",
+          "passed": true,
+          "status": 0,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 4,
+          "closes": 1,
+          "source_sha256": "639821c36709eb95478212a242b841aa943de82744527aaae84da70c86874fa0",
+          "transmitted_bytes": 46,
+          "received_bytes": 16
+        },
+        {
+          "case": "sliding-prompt",
+          "passed": true,
+          "status": 0,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 7,
+          "closes": 1,
+          "source_sha256": "3369eb56b997ff4298e6c9cd03c411d0cb8d6db0de26e42134ec57891b279a1f",
+          "transmitted_bytes": 46,
+          "received_bytes": 36
+        },
+        {
+          "case": "cancel-discards-unpublished-tail",
+          "passed": true,
+          "status": 5,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 1,
+          "closes": 1,
+          "source_sha256": "3df5a874de896b3e7fcd2b548822071dcf99755ff38a013e79e234f6afe02fb5",
+          "transmitted_bytes": 4,
+          "received_bytes": 0
+        },
+        {
+          "case": "header-write-error",
+          "passed": true,
+          "status": 3,
+          "write_error": 71,
+          "close_error": 0,
+          "writes": 1,
+          "closes": 1,
+          "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "transmitted_bytes": 0,
+          "received_bytes": 0
+        },
+        {
+          "case": "zero-progress",
+          "passed": true,
+          "status": 3,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 1,
+          "closes": 1,
+          "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "transmitted_bytes": 0,
+          "received_bytes": 0
+        },
+        {
+          "case": "overreported-write",
+          "passed": true,
+          "status": 3,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 1,
+          "closes": 1,
+          "source_sha256": "3df5a874de896b3e7fcd2b548822071dcf99755ff38a013e79e234f6afe02fb5",
+          "transmitted_bytes": 0,
+          "received_bytes": 0
+        },
+        {
+          "case": "primary-write-secondary-close",
+          "passed": true,
+          "status": 3,
+          "write_error": 71,
+          "close_error": 99,
+          "writes": 1,
+          "closes": 1,
+          "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "transmitted_bytes": 0,
+          "received_bytes": 0
+        },
+        {
+          "case": "close-error",
+          "passed": true,
+          "status": 4,
+          "write_error": 0,
+          "close_error": 99,
+          "writes": 2,
+          "closes": 1,
+          "source_sha256": "a51e0d707847cbb9958a5a448e020ad7f49d0a0e556202f9601ea588c8b72fd5",
+          "transmitted_bytes": 0,
+          "received_bytes": 0
+        },
+        {
+          "case": "reentrant-close-rejected",
+          "passed": true,
+          "status": 0,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 3,
+          "closes": 1,
+          "source_sha256": "02fd2db1bc852b32fda91b5e38c4278fc22907c1996a214a25fe71e8d00c1167",
+          "transmitted_bytes": 3,
+          "received_bytes": 0
+        },
+        {
+          "case": "argument-and-state-rejections",
+          "passed": true,
+          "status": 0,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 2,
+          "closes": 1,
+          "source_sha256": "a51e0d707847cbb9958a5a448e020ad7f49d0a0e556202f9601ea588c8b72fd5",
+          "transmitted_bytes": 0,
+          "received_bytes": 0
+        },
+        {
+          "case": "input-counter-overflow",
+          "passed": true,
+          "status": 0,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 2,
+          "closes": 1,
+          "source_sha256": "a51e0d707847cbb9958a5a448e020ad7f49d0a0e556202f9601ea588c8b72fd5",
+          "transmitted_bytes": 4294967295,
+          "received_bytes": 4294967295
+        },
+        {
+          "case": "source-counter-overflow",
+          "passed": true,
+          "status": 3,
+          "write_error": 0,
+          "close_error": 0,
+          "writes": 1,
+          "closes": 1,
+          "source_sha256": "3df5a874de896b3e7fcd2b548822071dcf99755ff38a013e79e234f6afe02fb5",
+          "transmitted_bytes": 40,
+          "received_bytes": 0
+        },
+        {
+          "case": "reuse-aliased-ops",
+          "passed": true,
+          "closes": 2
+        }
+      ]
+    },
+    "raw": {
+      "result": "build/aspect-recorder/raw-UART-03/result.json",
+      "sha256": "fb5a94ba7bf7fd666185397afe39dac8229e6e1763000a4cc160aee4182867c8",
+      "cases": [
+        {
+          "passed": true,
+          "case": "all-octets",
+          "checks": {
+            "DOS_normal_exit": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_runtime_status": true,
+            "actual_DOS_compile_byte_identical": true,
+            "hardware_restored": true,
+            "expected_error_output": true,
+            "ASPECT.EXE_unchanged": true,
+            "ASPCOMP.EXE_unchanged": true
+          },
+          "peer_errors": [],
+          "expected_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "actual_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+        },
+        {
+          "passed": true,
+          "case": "long-stream",
+          "checks": {
+            "DOS_normal_exit": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_runtime_status": true,
+            "actual_DOS_compile_byte_identical": true,
+            "hardware_restored": true,
+            "expected_error_output": true,
+            "ASPECT.EXE_unchanged": true,
+            "ASPCOMP.EXE_unchanged": true
+          },
+          "peer_errors": [],
+          "expected_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "actual_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+        },
+        {
+          "passed": true,
+          "case": "mixed-legacy",
+          "checks": {
+            "DOS_normal_exit": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_runtime_status": true,
+            "actual_DOS_compile_byte_identical": true,
+            "hardware_restored": true,
+            "expected_error_output": true,
+            "ASPECT.EXE_unchanged": true,
+            "ASPCOMP.EXE_unchanged": true
+          },
+          "peer_errors": [],
+          "expected_hex": "00225e7eff41540d",
+          "actual_hex": "00225e7eff41540d"
+        },
+        {
+          "passed": true,
+          "case": "invalid-late",
+          "checks": {
+            "DOS_normal_exit": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_runtime_status": true,
+            "actual_DOS_compile_byte_identical": true,
+            "hardware_restored": true,
+            "expected_error_output": true,
+            "ASPECT.EXE_unchanged": true,
+            "ASPCOMP.EXE_unchanged": true
+          },
+          "peer_errors": [],
+          "expected_hex": "",
+          "actual_hex": ""
+        },
+        {
+          "passed": true,
+          "case": "invalid-odd",
+          "checks": {
+            "DOS_normal_exit": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_runtime_status": true,
+            "actual_DOS_compile_byte_identical": true,
+            "hardware_restored": true,
+            "expected_error_output": true,
+            "ASPECT.EXE_unchanged": true,
+            "ASPCOMP.EXE_unchanged": true
+          },
+          "peer_errors": [],
+          "expected_hex": "",
+          "actual_hex": ""
+        },
+        {
+          "passed": true,
+          "case": "no-attachment",
+          "checks": {
+            "DOS_normal_exit": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_runtime_status": true,
+            "actual_DOS_compile_byte_identical": true,
+            "hardware_restored": true,
+            "expected_error_output": true,
+            "ASPECT.EXE_unchanged": true,
+            "ASPCOMP.EXE_unchanged": true
+          },
+          "peer_errors": [],
+          "expected_hex": "",
+          "actual_hex": ""
+        }
+      ]
+    },
+    "dos": {
+      "result": "build/aspect-recorder/source-DOS-02/result.json",
+      "sha256": "83a5da5466fa556c52af71cea7a1e6cda5348b6498d2e8a56e5b87388c11bab7",
+      "cases": [
+        {
+          "passed": true,
+          "case": "ordinary",
+          "checks": {
+            "DOS_normal_exit": true,
+            "expected_status_and_one_close": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_prompt_reply": true,
+            "hardware_restored": true,
+            "no_script_runtime_errors": true,
+            "source_size_accounted": true,
+            "exact_recorded_input_counts": true,
+            "only_completed_source_published": true
+          },
+          "status": [
+            0,
+            1,
+            1,
+            1,
+            262,
+            6,
+            825
+          ],
+          "actual_hex": "52454144593e000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "expected_hex": "52454144593e000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "peer_replies": [
+            "4e616d653f20"
+          ],
+          "peer_errors": []
+        },
+        {
+          "passed": true,
+          "case": "quoted-controls",
+          "checks": {
+            "DOS_normal_exit": true,
+            "expected_status_and_one_close": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_prompt_reply": true,
+            "hardware_restored": true,
+            "no_script_runtime_errors": true,
+            "source_size_accounted": true,
+            "exact_recorded_input_counts": true,
+            "only_completed_source_published": true
+          },
+          "status": [
+            0,
+            1,
+            1,
+            1,
+            262,
+            8,
+            854
+          ],
+          "actual_hex": "52454144593e000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "expected_hex": "52454144593e000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "peer_replies": [
+            "0d0a225e3e1e1fff"
+          ],
+          "peer_errors": []
+        },
+        {
+          "passed": true,
+          "case": "long-control-prompt",
+          "checks": {
+            "DOS_normal_exit": true,
+            "expected_status_and_one_close": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_prompt_reply": true,
+            "hardware_restored": true,
+            "no_script_runtime_errors": true,
+            "source_size_accounted": true,
+            "exact_recorded_input_counts": true,
+            "only_completed_source_published": true
+          },
+          "status": [
+            0,
+            1,
+            1,
+            1,
+            2054,
+            16,
+            5155
+          ],
+          "actual_hex": "52454144593e000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "expected_hex": "52454144593e000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "peer_replies": [
+            "0102030405060708090a0b0c0d0e0f10"
+          ],
+          "peer_errors": []
+        },
+        {
+          "passed": true,
+          "case": "timeout-no-payload",
+          "checks": {
+            "DOS_normal_exit": true,
+            "expected_status_and_one_close": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_prompt_reply": true,
+            "hardware_restored": true,
+            "no_script_runtime_errors": true,
+            "source_size_accounted": true,
+            "exact_recorded_input_counts": true,
+            "only_completed_source_published": true
+          },
+          "status": [
+            0,
+            1,
+            1,
+            1,
+            19,
+            6,
+            243
+          ],
+          "actual_hex": "52454144593e",
+          "expected_hex": "52454144593e",
+          "peer_replies": [
+            "57726f6e672120"
+          ],
+          "peer_errors": []
+        },
+        {
+          "passed": true,
+          "case": "writefail",
+          "checks": {
+            "DOS_normal_exit": true,
+            "expected_status_and_one_close": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_prompt_reply": true,
+            "hardware_restored": true,
+            "no_script_runtime_errors": true,
+            "no_source_or_bytecode_published": true,
+            "failed_stage_preserved_or_cancelled_stage_removed": true
+          },
+          "status": [
+            3,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "actual_hex": "",
+          "expected_hex": "",
+          "peer_replies": [],
+          "peer_errors": []
+        },
+        {
+          "passed": true,
+          "case": "cancel",
+          "checks": {
+            "DOS_normal_exit": true,
+            "expected_status_and_one_close": true,
+            "exact_UART_bytes": true,
+            "no_peer_errors": true,
+            "expected_prompt_reply": true,
+            "hardware_restored": true,
+            "no_script_runtime_errors": true,
+            "no_source_or_bytecode_published": true,
+            "failed_stage_preserved_or_cancelled_stage_removed": true
+          },
+          "status": [
+            5,
+            1,
+            1,
+            1,
+            6,
+            0,
+            84
+          ],
+          "actual_hex": "",
+          "expected_hex": "",
+          "peer_replies": [],
+          "peer_errors": []
+        }
+      ]
+    }
+  },
+  "regressions": {
+    "runtime": {
+      "result": "build/aspect-runtime/checks.json",
+      "sha256": "147655104d5716f7b7f9ecbbf16fbcfac1eb5a019a0234778037bcce1f616cce",
+      "summary": "ASPECT_RUNTIME 1125 cases 27030 checks 0 failures"
+    },
+    "compiler": {
+      "result": "build/aspect-compiler-dos/checks.json",
+      "sha256": "1bcabd2652667319a06e14fe4d95fb7aefad674aeb517edc9a0154067f75a1a0",
+      "summary": "PROGRAM 2025 cases 0 failures"
+    },
+    "runner": {
+      "result": "build/aspect-runner/checks.json",
+      "sha256": "f010e58ff673c6d91884dbe1fb0cf0c3c146f2551e4b4332ace978f1a6ae2fee",
+      "summary": "RUNNER 21 cases 105 checks 0 failures"
+    },
+    "dispatch": {
+      "result": "build/aspect-dispatch/checks.json",
+      "sha256": "925e832ad7bc0227079588bd56c8f331ea2f704506e6c4bd35abb3952cc9378f",
+      "summary": "ASPECT_DISPATCH 3616 checks 0 failures"
+    }
+  },
+  "inputs": {
+    "standalone/record_aspect_recorder.py": "a155e05914258eee71aec2f57476a923d2fe6ac631875ee210030150229591e4",
+    "src/aspect/recorder.c": "8fcb5007a6a39359c76defcd0a03479520b9a57732045f471439a3e6aaed4e64",
+    "src/aspect/recorder.h": "5078ce9650636932e5cbaf6b73c4183090914f0138269ff5f8a002b98f9891c2",
+    "Makefile": "13bb22c437f0572db32295847b17fd46b64366fa2e020bfd220e66c31e94c5dd"
+  },
+  "scope": "Bounded40-byte transmitted groups and16-byte receive prompts, checked short writes/close ownership, pending-tail flush, cancellation and first/secondary error preservation. Host faults are modeled; DOS tests use actual far recorder callbacks, files, compiler and production UART runner with exact raw bytes, matching prompts, timeout suppression, read-only write failure and unpublished cancellation. Legacy formatted TRANSMIT and native flat dispatcher remain separately checked. No foreground terminal recorder, start/stop UI, shared owner/exclusion, broad modem/BBS/hardware or full F13 acceptance."
+}

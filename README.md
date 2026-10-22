@@ -30,6 +30,12 @@ The planned [Boca / SPA2102 / SynthModem integration](docs/ANALOG_MODEM_INTEGRAT
 retains real analog handshakes while Linux bridges to Telnet BBSes; hardware
 compatibility and 14.4 negotiation remain unverified.
 
+The [source-owned recorder core](docs/ASPECT_RECORDER_SOURCE.md) now generates
+bounded ASP recordings and passes actual DOS file creation, DOS compilation and
+byte-exact production UART replay, including all256 bytes. Its explicit
+TRANSMITRAW extension preserves existing formatted TRANSMIT behavior. The
+terminal's Record UI and shared file/foreground ownership still need integration.
+
 The [experimental attached PROGRAM binding](docs/ASPECT_PARENT_PROCESS.md) now
 preserves actual parent rendering, selected resources, script streams and VM
 continuation across DOS program execution. The [foreground fault recovery](docs/ASPECT_UNWIND.md)

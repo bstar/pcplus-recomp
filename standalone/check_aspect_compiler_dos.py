@@ -99,6 +99,10 @@ int main(void){
 def main():
  build();(OUT/'checks.json').unlink(missing_ok=True);cases,fixtures=source_corpus()
  cases.extend(dict(raw=raw,references=['program:'+name]) for name,raw in EDGES.items())
+ raw_output_path=ROOT/'standalone/fixtures/aspect_raw_output_vectors.json'
+ raw_output=json.loads(raw_output_path.read_text())
+ cases.extend(dict(raw=case['source'].encode('cp437'),references=['source-extension:'+case['name']]) for case in raw_output['vectors'])
+ fixtures[str(raw_output_path.relative_to(ROOT))]=sha(raw_output_path)
  answers=[];folder=OUT/'tests';folder.mkdir(exist_ok=True);listing=[]
  for i,case in enumerate(cases):
   try:answer=dict(accepted=True,data=compiler.compile_source(case['raw'].decode('cp437')))

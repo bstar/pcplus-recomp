@@ -185,6 +185,8 @@ def main():
  console_corpus=json.loads(console_corpus_path.read_text())
  serial_corpus_path=ROOT/'standalone/fixtures/aspect_serial_vectors.json'
  serial_corpus=json.loads(serial_corpus_path.read_text())
+ raw_output_path=ROOT/'standalone/fixtures/aspect_raw_output_vectors.json'
+ raw_output=json.loads(raw_output_path.read_text())
  receive_corpus_path=ROOT/'standalone/fixtures/aspect_receive_vectors.json'
  receive_corpus=json.loads(receive_corpus_path.read_text())
  receive_overrides_path=ROOT/'standalone/fixtures/aspect_receive_runtime_overrides.json'
@@ -210,6 +212,7 @@ def main():
  break_corpus_path=ROOT/'standalone/fixtures/aspect_break_runtime_vectors.json'
  break_corpus=json.loads(break_corpus_path.read_text())
  cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_cases+directory_corpus['vectors']+when_corpus['vectors']+find_corpus['vectors']+break_corpus['vectors']
+ cases+=raw_output['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
@@ -227,10 +230,11 @@ def main():
  sources.append(set_corpus_path)
  sources.append(find_corpus_path)
  sources.append(break_corpus_path)
+ sources.append(raw_output_path)
  sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h',ROOT/'src/keyboard/api.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
-  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
+  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+(['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
  for unit,start,end,base in SUPPORT:
   p=OUT/f'support{unit}.bin'
   subprocess.run(['nasm','-f','bin',inc,'-DASPECT_EXPR_FLAT',f'-DASPECT_EXPR_UNIT={unit}',str(ROOT/'src/aspect/expression_support.asm'),'-o',str(p)],check=True)
@@ -296,6 +300,10 @@ def main():
  # Malformed fixtures stop at header/read/unsupported boundaries, not arbitrary unsafe operands.
  for name,data,error in [('NOHEADER',b'',2),('BADHEAD',bytes.fromhex('81 cf 94'),2),('BADOP',bytes.fromhex('00 ff'),3),('TRUNC',bytes.fromhex('00 cf 5b 00 8d 00 ab 07'),5)]:
   (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
+ program+=' runtime_serial_fixture(0,0,0,0,1,0,1);\n'
+ for name,data,error in [('RAWFAM',bytes.fromhex('00 d7 02'),3),('RAWTRUNC',bytes.fromhex('00 d7'),5),('RAWOPER',bytes.fromhex('00 d7 01'),5)]:
+  (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);serial_output("",0);\n'
+ program+=' runtime_serial_fixture_disable();\n'
  (OUT/'MISSING.ASX').unlink(missing_ok=True);program+=' run("MISSING.ASX",1000,1,0,0,0,0UL,0);\n'
  # Native SET dispatch uses a complete owned table; unimplemented selectors
  # remain typed failures. GET is a separate interactive-input instruction.
@@ -376,8 +384,8 @@ def main():
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
  '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
-  compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC'],fixture_count=len(cases),
-  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+15+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors'])+(256-len(set_supported))+len(break_corpus['raw_getters'])+2,
+  compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC','ASPECT_SOURCE_OUTPUT'],fixture_count=len(cases),
+  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},source_extensions=raw_output['source_owned_extension'],unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+18+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors'])+(256-len(set_supported))+len(break_corpus['raw_getters'])+2,
   SET_family=dict(supported_subcommands={f'{key:02x}':value for key,value in set_supported.items()},unsupported_subcommands_tested=256-len(set_supported),truncated_cases=2,raw_boolean_cases=2,integration_vectors=len(set_corpus['vectors'])),
   BREAK_family=dict(integration_vectors=len(break_corpus['vectors']),raw_fetch_getters=len(break_corpus['raw_getters']),unsupported_fetch_selectors_tested=256-len(set_supported),fetch_truncations=2,diagnostic_timing='Transport readiness only; actual UART pulses covered by separate product DOS tests.'),
   FIND_CASE_family=dict(integration_vectors=len(find_corpus['vectors']),near_failure_cases=sum('near_fail_after' in c for c in find_corpus['vectors']),native_bytes=401,scope='Actual native FIND/SWITCH/CASE with owned near allocations and typed failure before native NULL dereference. FOUND and SWITCH snapshots are shared state; per-invocation SET sensitivity resets separately.'),

@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [source-owned recorder core](ASPECT_RECORDER_SOURCE.md) now passes17 host,
+six actual DOS recording/file/compiler/UART and six production raw-UART cases.
+An explicit maintained TRANSMITRAW extension preserves all256 output bytes;
+legacy formatting and the native flat dispatcher remain checked. Foreground
+Record UI, shared file/tap ownership and all full F01–F16 gates remain open.
+
+
 The [terminal process bank](TERMINAL_PROCESS_BANK.md) preserves the public
 near EXEC ABI while moving its implementation and saved child context out of
 the resident segment. Keyboard/mouse parents recover594/592 bytes of near code.

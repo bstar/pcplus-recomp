@@ -81,6 +81,7 @@ extern _runtime_receive_seconds
 %endif
 extern _runtime_serial_ready,_runtime_serial_send,_runtime_serial_receive,_runtime_serial_character_delay
 extern _runtime_serial_pause
+extern _runtime_serial_send_hex,aspect_string_read
 extern _runtime_serial_wait_second
 extern _runtime_error
 %ifndef ASPECT_RUNTIME_SERIAL
@@ -489,6 +490,21 @@ runtime_serial_transmit:
  or ax,ax
  jz unsupported
  jmp aspect_serial_transmit
+global aspect_dispatch_source_output
+aspect_dispatch_source_output:
+ call aspect_dispatch_read
+ cmp ax,1
+ jne unsupported
+ call _runtime_serial_ready
+ or ax,ax
+ jz unsupported
+ call aspect_string_read
+ push ax
+ call _runtime_serial_send_hex
+ pop bx
+ or ax,ax
+ jnz fail
+ ret
 runtime_serial_wait_for:
  call _runtime_serial_ready
  or ax,ax

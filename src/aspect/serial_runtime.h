@@ -6,6 +6,10 @@ unsigned runtime_serial_poll(void);
 /* Physical MSR80, or explicit diagnostic fixture flags4(high)/8(drop at EOF). */
 unsigned runtime_serial_carrier(void);
 unsigned runtime_serial_send(unsigned byte);
+/* Maintained TRANSMITRAW extension: 0..80 hex characters, even length. Validate
+ * the entire operand before sending any byte. No caret/pause/FF interpretation,
+ * local echo or character delay; normal UART flow/error/cancel bounds apply. */
+unsigned runtime_serial_send_hex(const unsigned char *hex);
 unsigned runtime_serial_read_raw(void);
 unsigned runtime_serial_receive(unsigned delayed);
 unsigned runtime_serial_character_delay(unsigned delay);

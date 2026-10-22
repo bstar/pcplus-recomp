@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+The [source-owned recorder core and replay path](docs/ASPECT_RECORDER_SOURCE.md)
+now pass17 host cases, six actual DOS recorder/file/compiler/UART sessions and
+six production raw-output UART sessions. Pending tails, bounded prompt/quote/
+caret construction, close ownership, first/secondary errors, cancellation and
+prompt-timeout suppression are checked. Both maintained compilers support the
+explicit D7/01 TRANSMITRAW extension, preserving all256 wire bytes without
+changing legacy formatted TRANSMIT. Supporting checks pass1125 DOS VM cases,
+2025 DOS compiler cases,21 legacy CLI runs and the unchanged native flat
+dispatcher. This is a component checkpoint: bind the exclusive scratch publisher,
+Record UI and foreground RX/successful-user-TX taps next, with transfer/script/
+child/setup/exit exclusions and fault cleanup. F13 and all full gates remain open.
+
 The [current stock ENiGMA larger-file audio campaign](docs/ENIGMA_STOCK_AUDIO_DOWNLOAD.md)
 now passes79 producer/independent checks and19 verifier counterexamples with the
 unchanged stock helper. The source-built DOS terminal installs65797 exact bytes
