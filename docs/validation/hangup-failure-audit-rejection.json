@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "pause-retired",
+      "rejected": true
+    },
+    {
+      "case": "carrier-not-high",
+      "rejected": true
+    },
+    {
+      "case": "vector-leaked",
+      "rejected": true
+    }
+  ],
+  "checker_sha256": "6a5677f067708976672a96007c1b4d8a86770b38fb3bd6ece50d65793f3febd8",
+  "cohort_report_sha256": "035210d32bd822f5082f8c40ca99b77cf97f6be53aabbf9196be52a8f47fceb4",
+  "scope": "Ensure semantic DOS evidence corruptions fail even with updated file hashes. Copies owned evidence into temporary directories; production cohorts remain unchanged."
+}

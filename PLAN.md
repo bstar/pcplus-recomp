@@ -1,18 +1,21 @@
 # Complete DOS rebuild plan
 
-[Actual DOS retained-carrier hangup](docs/HANGUP_RETAINED_CARRIER.md) now reproduces the gap in four
-SOFT/BOTH × DTR enabled/disabled cases. Independent transport/timer/file/vector
-audit confirms retry AT bytes enter the still-online peer. The application
-correction and carrier-ignore policy coverage remain open; this is negative
-evidence, not compatibility acceptance.
+[Failed-hangup policy](docs/validation/hangup-failure-policy.json) now preserves the online session and
+flow state when a blocked hangup leaves DCD high, reports Hangup failed and
+refuses redial into that connection. Four audited actual DOS old/new cases,
+two XON/hangup/redial/manual-query recovery cases, two stock DTR-reconnect and
+five ordinary stock modem cases pass. Normal/mouse pass23 linked policy cases
+each plus connection/carrier/retry regressions; both source-only products
+reproduce from398 admitted files. Initial/successful always-high DCD policies
+remain unchanged. This closes the selected gap, not full F03 or hardware.
 
 [Normal ENiGMA recorder audio](docs/validation/recording-footer-audio.json) now
-passes26 producer/34 independent/12 serial checks on current parent1cbb4f8f,
+passes26 producer/34 independent/12 serial checks on preceding parent1cbb4f8f,
 with unchanged ASPECT183f852d and source-built DOS compiler. All77 online guest
 bytes decode independently from the caller waveform and match serial input.
 Actual recording, ASP DOS compilation/replay, subsequent manual Search and
 hardware/timer/SIP/VM cleanup pass on one software V22/1200 route at38400DTE.
-This closes that current-parent checkpoint, not full F13 or physical hardware.
+This closes its recorded checkpoint, not full F13 or physical hardware.
 
 The [readiness fixture](docs/RECORDING_FOOTER_READINESS.md) now waits for plain
 bottom-filter text before its local marker. Initial dwell, key pacing and final
@@ -21,10 +24,11 @@ and13 connected TCP controls support the diagnosis. The raw-ANSI gate failure,
 placement-only intentional stop and76-sample diagnostic remain separate failed
 or diagnostic evidence; none was promoted to normal acceptance.
 
-Next: correction, using the actual DOS peer evidence, for
-[retained-carrier hangup](docs/HANGUP_RETAINED_CARRIER.md), distinguishing failed
-hangup from configured carrier-ignore behavior. Other modem/init-result/pressure,
-application, physical Boca/SPA2102 and all full F01–F16 requirements remain open.
+Next: broader current-parent BBS recorder/window/audio regression, then
+remaining modem initialization/result handling and sustained flow-pressure work.
+Other application, physical Boca/SPA2102 and all full F01–F16 requirements remain open.
+
+## Preceding checkpoints and their product identities
 
 [Retry command synchronization](docs/MANUAL_CANCEL_RETAINED.md) is now adopted
 in main. The current1cbb4f8f/b14074ec products match the tested candidate and
@@ -295,7 +299,7 @@ below retain their identities. Full local actions,
 carrier/flow faults, application gates F01–F16 and physical integration remain
 open. See [local UI](docs/ASPECT_LOCAL_UI.md) and [compiler budget](docs/ASPECT_DOS_COMPILER.md).
 
-[Current normal recorder audio](docs/validation/recording-pause-audio.json)
+[Preceding-parent normal recorder audio](docs/validation/recording-pause-audio.json)
 accepts the0eff2348/2c80e45c pair for one owned stock ENiGMA route through the
 pinned200ms V22/1200 SIP/RTP/DSP/Telnet runtime. Normal File/C recording, unedited
 DOS ASPCOMP compilation/File/A replay and subsequent manual Search pass26

@@ -1,7 +1,43 @@
 # Blocked hangup with retained carrier
 
+[The selected correction](validation/hangup-failure-policy.json) is accepted on
+normal parent `3b453f2b` and its mouse variant. A timed-out online hangup whose
+DCD remains high returns to online state6 with status8, **Hangup failed**, and
+retains the existing flow state. Alt-D refuses to initialize/dial that unresolved
+session. Incoming traffic, including XON, is still serviced; after XON, another
+Alt-H can send the configured hangup. Observed carrier loss permits clean redial.
+
+This gate applies only to the failed online hangup. Initial high DCD, the saved
+initialize-with-carrier setting, successful configured hangup, direct lines and
+pre-CONNECT cancellation retain their existing behavior. If DTR actually lowers
+carrier after the command times out, ordinary idle timeout status3 and clean
+retry are preserved. Explicit exit remains bounded and releases DOS ownership;
+it cannot guarantee an external modem disconnected if that modem ignores DTR.
+
+Four actual DOS old/new cases show the retry/abort contamination is removed;
+two further DOS BOTH cases recover through XON, successful Alt-H, redial and a
+manual query, with DTR enabled/disabled. Independent audits require exact raw
+transport, timer, file and vector evidence. [Three semantic corruption controls](validation/hangup-failure-audit-rejection.json)
+reject retired pause, missing carrier and leaked vectors even after the modified
+file hashes are updated. Two stock DOS modem DTR-reconnect
+cases and five ordinary modem cases pass. Both normal/mouse products pass23
+linked policy cases each, plus retry/carrier/connection regressions, and reproduce
+from398 admitted source files without originals. Normal/mouse resident code
+spare remains318/170 bytes and near-data spare112/64 bytes.
+
+The first recovery fixture expected its final observed pause to remain1 even
+after XON. That assertion was wrong: the observer correctly recorded0 after
+XON. Its failed cohort is retained; the second cohort checks resumed flow and
+the exact subsequent hangup/redial/manual stream. No product correction was
+needed between those recovery cohorts.
+
+Physical modem behavior, broader initialization/results/flow-pressure policies,
+current-parent BBS/audio validation and all full application gates remain open.
+
+## Preserved baseline
+
 [Four linked cases](validation/hangup-retained-carrier-baseline.json) reproduce
-another open controller policy on current parent `1cbb4f8f`. After an established
+the former controller policy on preceding parent `1cbb4f8f`. After an established
 MODEM session receives XOFF, manual hangup cannot send its configured command.
 The attempt times out, retires software flow and returns to idle. If the hardware
 boundary still reports DCD high, retry sends `ATZ` and the configured dial command.
@@ -27,7 +63,7 @@ unconditional DCD-low startup requirement that breaks such configurations.
 ~~~
 
 `passed=true` means the gap was reproduced. `compatibility_accepted=false`
-remains explicit. Policy correction and physical tests are pending; no full F03
+remains explicit. That baseline remains negative evidence after the correction above; no full F03
 or application gate closes.
 
 
@@ -62,7 +98,15 @@ wait. Product instructions and binaries were unchanged between these cohorts.
   build/hangup-retained-carrier/dos-new --output build/hangup-retained-carrier/dos-new/audit.json
 ~~~
 
-Next, implement explicit failed-hangup handling and compare it against this
-baseline, including ordinary successful hangup, carrier loss, pre-CONNECT
-cancellation, exit and intentional always-high carrier configurations. Do not
-solve this by imposing DCD-low on every startup.
+The correction above is compared against this preserved baseline. Its
+acceptance is limited to the declared hangup/recovery workflows. It does not
+impose DCD-low on every startup.
+
+~~~sh
+./tools/dev --command python3 standalone/test_hangup_retained_carrier_dos.py \
+  --expect-fixed --output build/hangup-retained-carrier/fixed-new
+./tools/dev --command python3 standalone/test_hangup_failure_recovery_dos.py \
+  --output build/hangup-retained-carrier/recovery-new
+./tools/dev --command python3 standalone/check_hangup_failure_policy.py \
+  --product build/terminal --output build/hangup-retained-carrier/linked-new.json
+~~~

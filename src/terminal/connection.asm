@@ -142,6 +142,21 @@ terminal_connection_start_impl:
  or ax,ax
  pop ax
  jnz .done
+ ; A timed-out online hangup is not proof that the modem left data mode.
+ ; Gate only that failed session; startup and successful always-high-DCD
+ ; profiles retain their existing initialization policy.
+ cmp word [connection_state],6
+ jne .retry_ready
+ cmp word [connection_status],8
+ jne .retry_ready
+ mov dx,[uart_port_msr]
+ in al,dx
+ test al,0x80
+ jz .retry_ready
+ mov si,message_hangup_failed
+ call connection_notice_service
+ jmp .done
+.retry_ready:
  call connection_break_cancel_service
  call connection_macro_cancel_service
  call connection_program_cancel_service
@@ -388,12 +403,17 @@ terminal_connection_poll_impl:
  call connection_notice_service
  jmp .done
 .timeout:
+ ; A failed online hangup must not inject a dial-abort byte into live data.
+ cmp word [connection_state],9
+ jne .dial_timeout
+ mov word [connection_status],8
+ mov si,message_hangup_failed
+ call connection_notice_service
+ jmp .drop_dtr
+.dial_timeout:
  mov word [connection_status],3
  mov si,message_timeout
  call connection_notice_service
- ; A failed online hangup must not inject the dial-abort character into data.
- cmp word [connection_state],9
- je .drop_dtr
  jmp .begin_abort
 .failure:
  mov word [connection_status],2
@@ -445,6 +465,26 @@ terminal_connection_poll_impl:
  or al,bl
  out dx,al
 .finished:
+ cmp word [connection_status],8
+ jne .retire
+ ; Exit may release ownership even when the external modem ignores DTR.
+ ; Otherwise retain the online flow/receive state until hangup succeeds or
+ ; carrier actually falls. XON and another Alt-H can recover this session.
+ mov dx,[uart_port_msr]
+ in al,dx
+ test al,0x80
+ jz .hangup_carrier_low
+ cmp byte [connection_exit_pending],0
+ jne .retire
+ mov word [connection_state],6
+ jmp .done
+.hangup_carrier_low:
+ ; The command timed out, but DTR did disconnect: preserve the ordinary
+ ; timeout outcome and permit a clean subsequent initialization.
+ mov word [connection_status],3
+ mov si,message_timeout
+ call connection_notice_service
+.retire:
  call connection_uart_clear_service
  ; This MODEM attempt/session is complete, including cancellation before DCD
  ; was ever observed. Its peer pause and driver-owned flow must not leak into
@@ -600,7 +640,7 @@ connection_mcr: db 0
 connection_exit_pending: db 0
 connection_resync: db 0
 connection_state: dw 0
-; Status0idle/1online/2responsefailure/3timeout/4cancel/5hangup/6carrierlost/7internal.
+; Status0idle/1online/2responsefailure/3timeout/4cancel/5hangup/6carrierlost/7internal/8hangupfailed.
 connection_status: dw 0
 connection_result: dw 0xffff
 connection_baud_index: dw 0
@@ -622,3 +662,5 @@ message_cancelled: db 'Cancelled',0
 message_hangup: db 'Hanging up',0
 message_offline: db 'Carrier lost',0
 message_disconnected: db 'Disconnected',0
+
+message_hangup_failed: db 'Hangup failed',0

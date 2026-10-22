@@ -1,23 +1,28 @@
 # Full application reconstruction checklist
 
-[Actual DOS retained-carrier hangup](HANGUP_RETAINED_CARRIER.md) now reproduces the gap in four
-SOFT/BOTH × DTR enabled/disabled cases. Independent transport/timer/file/vector
-audit confirms retry AT bytes enter the still-online peer. The application
-correction and carrier-ignore policy coverage remain open; this is negative
-evidence, not compatibility acceptance.
+[Failed-hangup policy](validation/hangup-failure-policy.json) now preserves the online session and
+flow state when a blocked hangup leaves DCD high, reports Hangup failed and
+refuses redial into that connection. Four audited actual DOS old/new cases,
+two XON/hangup/redial/manual-query recovery cases, two stock DTR-reconnect and
+five ordinary stock modem cases pass. Normal/mouse pass23 linked policy cases
+each plus connection/carrier/retry regressions; both source-only products
+reproduce from398 admitted files. Initial/successful always-high DCD policies
+remain unchanged. This closes the selected gap, not full F03 or hardware.
 
-[Current normal recorder audio](validation/recording-footer-audio.json) passes26
+[Preceding-parent normal recorder audio](validation/recording-footer-audio.json) passes26
 producer/34 independent/12 serial checks with77 waveform-decoded online bytes,
 actual DOS ASP compilation/replay, manual Search and normal hardware/timer/SIP/VM
-cleanup. This is one ENiGMA software V22/1200 route on current parent1cbb4f8f;
+cleanup. This is one ENiGMA software V22/1200 route on preceding parent1cbb4f8f;
 full F13, other routes and physical hardware remain open.
 
 [Footer readiness](RECORDING_FOOTER_READINESS.md) uses plain bottom-filter text
 because connected WAITFOR sees display leads rather than parser continuations.
 Eight native boundary cases,40 renderer cases and13 TCP controls pass. Earlier
-raw-ANSI and placement-only attempts remain failed/diagnostic evidence. Four
-[retained-carrier hangup model cases](HANGUP_RETAINED_CARRIER.md) remain an open
-F03 policy gap now also reproduced by four actual DOS peer cases; correction remains open.
+raw-ANSI and placement-only attempts remain failed/diagnostic evidence. The
+[retained-carrier hangup baseline](HANGUP_RETAINED_CARRIER.md) remains negative
+evidence; the selected correction is accepted above.
+
+## Preceding checkpoints and their product identities
 
 [Retained-command retry](MANUAL_CANCEL_RETAINED.md) now adopts the tested
 separator in main, with current-source/product binding and an actual stock
@@ -169,7 +174,7 @@ is consumed during terminal PAUSE, while raw ASIO keeps its queued-input policy.
 stock Synchronet/ENiGMA. The window driver now observes actual successful EXEC
 return instead of requiring a transient completion banner. Failed attempts are
 preserved. [Semantics and limits](ASPECT_LOCAL_UI.md) distinguish these selected
-checks from full application completion. [Current normal recorder audio](validation/recording-pause-audio.json) also
+checks from full application completion. [Preceding-parent normal recorder audio](validation/recording-pause-audio.json) also
 passes the selected ENiGMA V22/1200 workflow with exact streams and cleanup.
 The [native abort-confirmation component](validation/aspect-abort-confirm.json)
 adds197 exact bytes,4,610 original comparisons and four original-free products;

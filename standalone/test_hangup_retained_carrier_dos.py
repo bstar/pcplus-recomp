@@ -93,8 +93,20 @@ done: dw 0
  cmp word [es:STATE],6
  jne .hangup
  cmp word [es:PAUSED],1
- jne .end
+ jne .online_status
  inc word [cs:online_paused]
+.online_status:
+ cmp word [es:STATUS],8
+ jne .end
+ inc word [cs:idle_ticks]
+ mov ax,[es:PAUSED]
+ mov [cs:idle_paused],ax
+ mov word [cs:idle_status],8
+ mov dx,0x3fe
+ in al,dx
+ test al,0x80
+ jz .end
+ inc word [cs:idle_carrier]
  jmp .end
 .hangup:
  cmp word [es:STATE],9
@@ -146,7 +158,7 @@ done: dw 0
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--expect-fixed',action='store_true');a=p.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     binary=ROOT/'build/terminal/TERMINAL.EXE';manifest=json.loads((binary.parent/'manifest.json').read_text());assert base.sha(binary)==manifest['binary_sha256']
     inputs=dict(manifest['sources'])
@@ -174,12 +186,18 @@ def main():
             retry_while_carrier_high=sample[10]>4,modem_commands_only_before_connection=r['commands']==['ATZ','ATDCaseTest:23'],
             retry_commands_are_online_data=b'armATZ\rATDCaseTest:23\r' in online,hangup_not_transmitted=b'+++ATH\r' not in wire,
             observer_vectors_restored=(folder/'VECOLD.BIN').read_bytes()==(folder/'VECNEW.BIN').read_bytes() and len((folder/'VECOLD.BIN').read_bytes())==8)
+        if a.expect_fixed:
+            for key in ('returned_idle_with_carrier','flow_retired','retry_while_carrier_high','retry_commands_are_online_data'):del checks[key]
+            checks.update(failed_hangup_retains_online=sample[6]>4 and sample[8]>4 and sample[9]==8,
+                failed_hangup_retains_pause=sample[7]==1,no_retry_state=sample[10]==0,
+                no_online_modem_commands=online==b'\x1b[1;16R\x1b[?62;2carm',
+                whole_wire_exact=wire==b'ATZ\rATDCaseTest:23\r'+online)
         rows.append(dict(case=name,passed=all(checks.values()),checks=checks,sample=list(sample),online_data_hex=online.hex(),wire_hex=wire.hex(),captures={str(f.relative_to(folder)):base.sha(f) for f in folder.rglob('*') if f.is_file()}))
         print(json.dumps(dict(case=name,passed=rows[-1]['passed'],sample=list(sample),failed=[k for k,v in checks.items() if not v])),flush=True)
     wrapped=backend.with_name('.dosbox-x-wrapped')
-    result=dict(passed=all(r['passed'] for r in rows),gap_reproduced=all(r['passed'] for r in rows),compatibility_accepted=False,parent_sha256=base.sha(binary),cases=rows,inputs=inputs,
+    result=dict(passed=all(r['passed'] for r in rows),gap_reproduced=not a.expect_fixed and all(r['passed'] for r in rows),retained_carrier_policy_accepted=a.expect_fixed and all(r['passed'] for r in rows),compatibility_accepted=False,parent_sha256=base.sha(binary),cases=rows,inputs=inputs,
         emulator=dict(test_backend=True,wrapper_sha256=base.sha(backend),binary_sha256=base.sha(wrapped),patch_sha256=base.sha(ROOT/'nix/patches/dosbox-dcd-control.patch')),
-        scope='Actual8086 DOS parent/controller/IRQ, real BIOS Alt-H/Alt-D, read-only timer observer, explicit patched lab DCD and owned online peer. Peer stays online and retains carrier across DTR; retry AT bytes are remote data. Passing reproduces a gap, not compatibility. No physical modem or carrier-ignore policy acceptance.')
+        scope='Actual8086 DOS parent/controller/IRQ, real BIOS Alt-H/Alt-D, read-only timer observer, explicit patched lab DCD and owned online peer. Peer stays online and retains carrier across DTR. Expected-gap mode reproduces retry AT bytes as remote data; expected-fixed mode requires retained pause/status8 and no retry/abort bytes. Only this failed-hangup policy is covered; not full compatibility. No physical modem or carrier-ignore policy acceptance.')
     (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n');assert result['passed']
 
 

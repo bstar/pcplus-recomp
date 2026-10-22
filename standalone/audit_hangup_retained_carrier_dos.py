@@ -5,9 +5,10 @@ from pathlib import Path
 from audit_aspect_transmit_wait import ROOT,sha
 
 
-def audit(folder):
+def audit(folder, fixed=False):
     r=json.loads((folder/'checks.json').read_text())
-    assert r['passed'] and r['gap_reproduced'] and r['compatibility_accepted'] is False
+    assert r['passed'] and r['gap_reproduced']==(not fixed) and r['compatibility_accepted'] is False
+    if fixed:assert r['retained_carrier_policy_accepted'] is True
     assert len(r['cases'])==4
     for name,digest in r['inputs'].items():assert sha(folder/'inputs'/name)==digest
     assert sha(folder/'admitted.EXE')==r['parent_sha256']
@@ -30,7 +31,7 @@ def audit(folder):
         wire=(case/'serial.bin').read_bytes();assert bytes(decoded)==wire
         prefix=b'ATZ\rATDCaseTest:23\r\x1b[1;16R\x1b[?62;2c'
         # Alt-X cancels the unacknowledged second dial with configured ESC.
-        assert wire==prefix+b'armATZ\rATDCaseTest:23\r\x1b'
+        assert wire==prefix+(b'arm' if fixed else b'armATZ\rATDCaseTest:23\r\x1b')
         assert [e['kind'] for e in events if e['kind'].startswith('DCD-')]==['DCD-low']
         assert sum(e['kind']=='online-CONNECT' for e in events)==1
         assert sum(e['kind']=='XOFF-online' for e in events)==1
@@ -40,18 +41,20 @@ def audit(folder):
         sample=struct.unpack('<12H',(case/'RETAIN.BIN').read_bytes())
         assert sample[0]==0x4847 and sample[1] and sample[2]>100 and sample[3]>4 and sample[4]>30
         assert (sample[5]>8 if drop else sample[5]==0)
-        assert sample[6]>4 and sample[7]==0 and sample[8]>4 and sample[9]==3 and sample[10]>4 and sample[11]==1
+        assert sample[6]>4 and sample[8]>4 and sample[11]==1
+        if fixed:assert sample[7]==1 and sample[9]==8 and sample[10]==0
+        else:assert sample[7]==0 and sample[9]==3 and sample[10]>4
         assert (case/'BEFORE.BIN').read_bytes()==(case/'AFTER.BIN').read_bytes() and (case/'BEFORE.BIN').stat().st_size==42
         assert (case/'VECOLD.BIN').read_bytes()==(case/'VECNEW.BIN').read_bytes() and (case/'VECOLD.BIN').stat().st_size==8
         assert (case/'PASS.TXT').exists() and not (case/'FAIL.TXT').exists()
         assert row['passed'] and all(row['checks'].values())
         rows.append(dict(case=name,sample=list(sample),wire_hex=wire.hex(),guest_control_values=controls,capture_hashes=row['captures']))
-    return dict(passed=True,gap_reproduced=True,compatibility_accepted=False,cohort=str(folder.relative_to(ROOT)),parent_sha256=r['parent_sha256'],cases=rows,producer_sha256=sha(folder/'checks.json'),auditor_sha256=sha(Path(__file__)),inputs=r['inputs'],emulator=r['emulator'],scope=r['scope'])
+    return dict(passed=True,gap_reproduced=not fixed,retained_carrier_policy_accepted=fixed,compatibility_accepted=False,cohort=str(folder.relative_to(ROOT)),parent_sha256=r['parent_sha256'],cases=rows,producer_sha256=sha(folder/'checks.json'),auditor_sha256=sha(Path(__file__)),inputs=r['inputs'],emulator=r['emulator'],scope=r['scope'])
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
-    r=audit(a.cohort.resolve());a.output.write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(dict(passed=True,gap_reproduced=True,cases=len(r['cases']))))
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);p.add_argument('--output',type=Path,required=True);p.add_argument('--expect-fixed',action='store_true');a=p.parse_args()
+    r=audit(a.cohort.resolve(),a.expect_fixed);a.output.write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(dict(passed=True,gap_reproduced=not a.expect_fixed,cases=len(r['cases']))))
 
 
 if __name__=='__main__':main()
