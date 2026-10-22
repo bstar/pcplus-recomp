@@ -1,0 +1,29 @@
+{
+  "evidence_verified": true,
+  "cases": [
+    {
+      "path": "build/aspect-window-query-dos/query-01",
+      "reply_delay_seconds": 3.4490219979779795,
+      "retained_files_verified": 25,
+      "receipt_sha256": "3d564a71c681f81669f057c82d993a456ba9392b9b4e2d6540d0622cb9cd7060",
+      "parent_sha256": "212c1112675c0398f90490c2e075614d0fe6b058465503d854facbe32a1f4218",
+      "runner_sha256": "58d08556e819b96806ac4e4546d248c1bba55d30907574d0de30cfb74af60696",
+      "defect_reproduced": true,
+      "compatibility_accepted": false
+    },
+    {
+      "path": "build/aspect-window-query-dos/query-02",
+      "reply_delay_seconds": 3.4482938379514962,
+      "retained_files_verified": 25,
+      "receipt_sha256": "d9638339a5511104d8636e3191f97d650031776228751ce955dbce51b2ef1652",
+      "parent_sha256": "212c1112675c0398f90490c2e075614d0fe6b058465503d854facbe32a1f4218",
+      "runner_sha256": "58d08556e819b96806ac4e4546d248c1bba55d30907574d0de30cfb74af60696",
+      "defect_reproduced": true,
+      "compatibility_accepted": false
+    }
+  ],
+  "auditor_sha256": "e66fc06f44ac8b50ddbbdba3bd5f06478453d60526d998e688f3ae01928f602a",
+  "scope": "Two actual DOS/emulated-UART blocking-window CPR reproductions. Evidence verification succeeds; one-second compatibility acceptance fails in both. This is not stock BBS timeout or physical modem acceptance.",
+  "compatibility_accepted": false,
+  "next_action": "Replace the blocking production window with a cooperative owner that leaves actual VM/WHEN/receive/parser processing active. Preserve native component and key-consumption evidence; separately validate new scheduling semantics."
+}

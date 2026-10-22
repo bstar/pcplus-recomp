@@ -1,5 +1,48 @@
 # Local interaction while ASPECT owns the session
 
+## Confirmed query deadline gap
+
+[Two frozen actual DOS runs](validation/aspect-window-query-failure.json) show
+that the current blocking window delays an incoming CPR reply for3.449 and
+3.448 seconds. Both fail the diagnostic's declared one-second deadline. The
+reply is correct for the logical BBS cursor, the four query bytes are observed
+in the child's ring while the window is visible, and both scripts subsequently
+finish with normal sampled hardware restoration. This does not establish the
+timeout used by any particular BBS; it establishes a concrete compatibility
+risk that the existing pause-then-navigation stock BBS tests cannot detect.
+
+`standalone/test_aspect_window_query_dos.py` returns nonzero for this defect.
+The separate `standalone/audit_aspect_window_query.py` verifies frozen-file
+hashes, reconstructs the complete peer stream and CPR completion timing, checks
+both binary identities, and compares the DOS serial capture and before/after
+hardware snapshots. Its successful exit means the failure evidence is sound,
+not that the application passes. Reproduce with a fresh label and the exact
+terminal/runner hashes required by the diagnostic CLI.
+
+The production controller currently keeps UART flow/error servicing alive but
+pauses the VM's actual receive/matcher/parser work until dismissal. Correcting
+this requires cooperative window ownership across normal VM safe points:
+
+- Retain actual native receive translation, WHEN matching and terminal parsing
+  in their ordinary order. Cursor replies must use that real live state.
+- Save the updated BBS frame and cursor while the window is visible; expose it
+  before parser/status drawing and repaint at idle boundaries. Avoid a full
+  frame copy for each received byte.
+- Consume window dismissal before the ordinary Escape-to-cancel policy. Keep
+  the original extended-key and repeated Alt-Z behavior explicitly tested.
+- Close the window before child END, external PROGRAM, lease revocation and
+  parent view adoption, including errors; cleanup cannot call a retired child.
+- Version the parent/child contract and reject older mismatched pairs before
+  UART access. Preserve DS=SS, interrupt service and existing parser budgets.
+
+This intentionally changes production scheduling for modern BBS compatibility.
+The recovered176-byte blocking body remains an original-behavior component;
+its existing exact-byte comparisons cannot prove the cooperative controller.
+Query deadlines, sustained traffic/flow, WHEN transitions, carrier/errors,
+script completion, actual stock BBS workflows and affected SIP/audio routes
+must all constrain the new implementation.
+
+
 The [current live-window validation](validation/aspect-script-window-live.json)
 accepts the native script-time Alt-Z reference/help window in the production
 terminal. Alt-Z during a script wait opens the window; repeated Alt-Z switches

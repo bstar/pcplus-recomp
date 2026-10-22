@@ -1,5 +1,21 @@
 # Complete DOS rebuild plan
 
+The [script-window query regression](docs/validation/aspect-window-query-failure.json)
+now reproduces a missed one-second CPR deadline in two actual DOS runs with
+unchanged212c1112/58d08556 products: replies take3.449/3.448 seconds. The native
+window remains visible for100 BIOS ticks and the passive observer sees all four
+query bytes in the child's ring. Exact whole-wire comparison, correct logical
+cursor replies, script continuation, and sampled hardware restoration pass.
+An independent auditor verifies both frozen capture sets and reconstructs timing
+from socket events, without importing the producer checker. This accepts the
+failure evidence, not compatibility. Current window polling services transport
+but suspends the VM/WHEN/receive/parser path; stock-board pause/navigation tests
+do not cover that deadline. Next replace the production blocking window with a
+cooperative interaction owner, retaining actual parser/matcher semantics and
+separate native-component evidence. Full actions, affected software audio,
+broader compatibility, all F01–F16 and physical gates remain open.
+
+
 The [stock BBS script-window validation](docs/validation/bbs-script-window.json)
 now accepts two production DOS sessions on Synchronet and ENiGMA. Native
 reference/help opens during an ASPECT pause for120/119 observed BIOS ticks,
