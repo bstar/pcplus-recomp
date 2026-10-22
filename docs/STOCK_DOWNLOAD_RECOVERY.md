@@ -1,5 +1,12 @@
 # Stock sender failure replay
 
+The [current source-built stock ENiGMA software-audio campaign](ENIGMA_STOCK_AUDIO_DOWNLOAD.md)
+now completes the larger file with checked recovery and native conservative
+offers. This document retains the earlier failed captures and byte-replay
+counterexample for their recorded binaries; its references to a current cached
+receiver describe that earlier checkpoint. The original observations are unchanged.
+
+
 The [retained-byte replay](validation/stock-download-failure-replay.json)
 reproduces the earlier stock ENiGMA download failure through two cached
 source-built host receivers. Both return protocol status6 at verified position

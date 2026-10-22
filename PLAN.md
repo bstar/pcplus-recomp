@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+The [current stock ENiGMA larger-file audio campaign](docs/ENIGMA_STOCK_AUDIO_DOWNLOAD.md)
+now passes79 producer/independent checks and19 verifier counterexamples with the
+unchanged stock helper. The source-built DOS terminal installs65797 exact bytes
+through the normal200ms V22/1200 SIP/RTP/DSP/Telnet path, completes full source/
+CRC/position/EOF/ZFIN/OO/opposite controls, resumes authenticated Search/List,
+advances official accounting and restores DOS/UART/helper ownership. The native
+credit256/flags33 policy is verified on the wire; the stock sender uses packets/
+synchronous groups up to2048 bytes. Eighteen replayed packets/18432 payload bytes
+are verified; observed ZFILE-through-OO time is800.600 seconds. All453 frozen
+input pairs, including367 terminal sources, pass custody checks. This accepts
+one file/direction/profile on the owned stock board, with no physical or F01–F16
+completion claim. Broader load, other directions/profiles and recorder work remain.
+
 The [checked active-file ZMODEM recovery](docs/ZMODEM_ACTIVE_REPLAY.md) now
 compares CRC-accepted old prefixes with the owned stage, appends only a new
 suffix and requests the verified current position after framed consumption.
@@ -42,7 +55,8 @@ The [stock-sender byte replay](docs/STOCK_DOWNLOAD_RECOVERY.md) passes12 diagnos
 checks against campaign-era and current cached source-built receivers. Both
 reproduce status6 at15360 bytes with identical responses and a single checked
 abort. It supplies a fast counterexample for active-file stale-frame recovery;
-unmodified sender and physical compatibility remain open. The [454 native tap
+that historical failure remains beside the current stock audio pass; broader
+sender and physical compatibility remain open. The [454 native tap
 probes](docs/ASPECT_RECORDER_TAP.md) also establish that recording must distinguish
 transmitted bytes from key words and expanded bindings. Full recorder ownership,
 compiler/replay integration and all F01–F16 application gates remain open.

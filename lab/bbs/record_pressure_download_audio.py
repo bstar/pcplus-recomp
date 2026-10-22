@@ -12,7 +12,7 @@ from synthmodem_vm_control import ROOT,sha
 
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);p.add_argument('--protocol-controls',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('cohort',type=Path);p.add_argument('--protocol-controls',type=Path,required=True);p.add_argument('--receive-policy-controls',type=Path);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
  out=a.cohort.resolve();target=a.output.resolve();controls=a.protocol_controls.resolve()
  assert out.is_relative_to(ROOT/'build') and controls.is_relative_to(ROOT/'build')
  assert target.is_relative_to(ROOT/'docs/validation') and not target.exists()
@@ -60,6 +60,7 @@ def main():
  for group in ('frozen_inputs','runtime_inputs','tool_inputs','generated_inputs','server_inputs'):
   assert start[group]==r[group],group
  assert start['server_fixture']==server_fixture and start['download_metadata_before']==r['download']['metadata_before']
+ assert start.get('expected_receive_offer')==r.get('expected_receive_offer')
  assert start['profile_sha256']==sha(out/'MODEM.PRM')
  journal=read('server-log-capture/result.json');assert journal['passed']
  assert journal['boundary']==read('server-log-boundary.json') and journal['boundary_sha256']==sha(out/'server-log-boundary.json')
@@ -116,6 +117,23 @@ def main():
   assert transfer['server_fixture']==server_fixture and negative['server_fixture']==server_fixture
   assert max_packet<=256 and max_group<=256
   assert 'TERMINAL @D:\\MODEM.PRM /E:D:\\CALL.DIR /N:1 /Z:256\n' in (out/'dosbox.conf').read_text()
+ policy_controls=None
+ if r.get('expected_receive_offer') is not None:
+  assert transfer['checks']['native_receive_offer_policy']
+  assert r['expected_receive_offer']['credit']==(r.get('zmodem_receive_credit') or 8192)
+  assert a.receive_policy_controls is not None
+  policy_path=a.receive_policy_controls.resolve();assert policy_path.is_relative_to(ROOT/'build')
+  policy_controls=json.loads(policy_path.read_text())
+  assert policy_controls['passed'] and policy_controls['verifier_only'] and policy_controls['baseline_passed']
+  assert policy_controls['cohort']==str(out.relative_to(ROOT)) and policy_controls['original_captures_unchanged']
+  assert policy_controls['negative_cases']>=7
+  assert sum(c['rejected'] for c in policy_controls['cases'])==policy_controls['negative_cases']
+  assert sum(c['baseline'] for c in policy_controls['cases'])==1
+  inputs(policy_controls['inputs']);captures(policy_controls['original_capture_sha256'])
+  for c in policy_controls['cases']:
+   directory=policy_path.parent/c['case']
+   for n,h in c['capture_sha256'].items():assert sha(directory/n)==h,n
+   if c['audit_sha256']:assert sha(directory/'policy-audit.json')==c['audit_sha256']
  for n,h in r['frozen_inputs'].items():assert sha(out/'frozen-source'/n)==h,n
  sent,_=Telnet().feed((out/'bbs-input.bin').read_bytes());display,_=Telnet().feed((out/'bbs-output.bin').read_bytes())
  trace,_=frontend_trace(out,sent,display,base['payloads']['expected_bridge_bytes'])
@@ -129,7 +147,8 @@ def main():
   authenticated_session_id=session_id,helper_and_posttransfer_menus_owned_by_authenticated_session=True,
   durable_run_manifest_and_exit_status_verified=True,exact_journal_ranges_verified=True,journal_segments=len(journal['segments']),
   unrelated_server_log_rows=sum(row.get('sessionId') not in (None,session_id) for row in rows),
-  zmodem_receive_credit=r.get('zmodem_receive_credit'),max_packet_payload=max_packet,max_synchronous_group_payload=max_group,
+  zmodem_receive_credit=r.get('zmodem_receive_credit'),expected_receive_offer=r.get('expected_receive_offer'),max_packet_payload=max_packet,max_synchronous_group_payload=max_group,
+  receive_policy_controls=dict(result=str(policy_path.relative_to(ROOT)),sha256=sha(policy_path),negative_cases=policy_controls['negative_cases']) if policy_controls else None,
   check_counts=dict(producer=len(r['checks']),independent=len(base['checks']),serial=len(io['checks']),download=len(transfer['checks']),actual_control_timing_counterexamples=2,TCP_protocol_counterexamples=9),
   producer_checks=r['checks'],independent_checks=base['checks'],serial_checks=io['checks'],download_checks=transfer['checks'],
   source_bytes=SIZE,source_sha256=sha(source),received_sha256=sha(out/'RECV'/NAME),

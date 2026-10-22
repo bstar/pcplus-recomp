@@ -3,6 +3,11 @@
 An incremental source reconstruction of ProComm Plus 2.01, focused first on
 serial communication, ANSI terminal handling and BBS compatibility.
 The complete task list and current work are tracked in [PLAN.md](PLAN.md).
+The [current stock ENiGMA software-audio campaign](docs/ENIGMA_STOCK_AUDIO_DOWNLOAD.md)
+now passes79 checks and19 verifier counterexamples:65797 exact bytes through
+SIP/RTP/V.22-1200 with the unchanged stock sender, complete CRC/finish/opposite
+controls, resumed Search/List and normal DOS/UART cleanup. Native `/Z:256`
+selects synchronous offers;18 verified retransmissions remain explicit.
 The [checked active-file recovery](docs/ZMODEM_ACTIVE_REPLAY.md) now verifies
 stored prefixes and resumes at the correct position after stale frames. The
 unchanged stock sender completes the larger-file paced host experiments at
@@ -10,7 +15,8 @@ unchanged stock sender completes the larger-file paced host experiments at
 The [current validation record](docs/validation/zmodem-native-conservative.json)
 binds53 host,99 actual DOS,14 linked recovery and160 ordinary linked cases.
 Actual DOS/file-owner and linked-terminal checks remain distinct from those
-host experiments; current stock-BBS/audio and hardware acceptance remain open.
+host experiments and the stock audio campaign; broader BBS/audio and physical
+hardware acceptance remain open.
 Machine launch profiles can select [ZMODEM receive credit](docs/ZMODEM_RECEIVE_CREDIT.md)
 with `/Z:1..8192`; checked reception below8192 bytes also clears overlap
 capability. Omission preserves the existing8192-byte offer.
@@ -18,8 +24,8 @@ The [larger ENiGMA software-audio download](docs/ENIGMA_SENDER_CREDIT.md)
 now passes78 producer/independent checks and11 verifier negatives:65797 exact
 bytes,256-byte packets/groups, complete CRC/finish, resumed Search/List and
 normal DOS/hardware cleanup. This uses the explicitly isolated sender candidate;
-[unmodified-stock sender recovery](docs/STOCK_DOWNLOAD_RECOVERY.md) and physical
-modem compatibility remain open.
+the [earlier stock failure](docs/STOCK_DOWNLOAD_RECOVERY.md) is retained beside
+the new stock pass. Physical modem compatibility remains open.
 The planned [Boca / SPA2102 / SynthModem integration](docs/ANALOG_MODEM_INTEGRATION.md)
 retains real analog handshakes while Linux bridges to Telnet BBSes; hardware
 compatibility and 14.4 negotiation remain unverified.

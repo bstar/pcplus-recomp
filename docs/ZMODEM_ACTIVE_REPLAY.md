@@ -4,7 +4,7 @@ The source-built terminal can now consume an old active-file data frame,
 compare its stored prefix, append only a new suffix and request the verified
 current position. It no longer treats that frame's payload as header-search
 noise or repeatedly acknowledges endpoints behind its stored file position.
-The [validation record](validation/zmodem-active-replay.json) binds current
+The [earlier validation record](validation/zmodem-active-replay.json) binds its
 source, actual DOS component tests, linked terminal tests and a separate
 unmodified-stock-sender host experiment. These scopes are distinct.
 
@@ -33,6 +33,13 @@ native256-byte synchronous offers, exact passive source/CRC/EOF/finish checks,
 post-transfer keyboard/DSR and normal DOS/UART/IRQ restoration. It is separate
 from the stock-helper host experiments and current stock ENiGMA audio campaign;
 the direct harness has no per-byte opposite-control timing evidence.
+
+The [current stock ENiGMA audio campaign](ENIGMA_STOCK_AUDIO_DOWNLOAD.md) now
+passes79 checks and19 verifier counterexamples for one65797-byte automatic
+receive, with the unchanged helper, native256-byte flags33 offers,18 verified
+retransmissions, complete source/CRC/finish/opposite controls, resumed Search/List
+and normal DOS/UART/helper return. Its453 frozen inputs include all367 terminal
+sources. This is separate from the host and direct DOS/lrzsz scopes above.
 
 The opt-in `zm_run_checked_profile` API accepts a far readback verifier in
 addition to the existing callback table. Legacy APIs pass no verifier and keep
@@ -103,8 +110,9 @@ exit0 and full independent source/CRC/finish/control checks. It requests flags33
 and256-byte credit through the explicitly identified wrapper; its receiver
 library is also byte-identical to the current host build. That earlier checkpoint does not implement native selection; the follow-up
 above implements and tests it without the wrapper.
-Current DOS/stock-BBS/audio acceptance, arbitrary-duration load, other protocol
-directions, physical Boca/SPA2102 behavior and all F01–F16 application gates
+Beyond the accepted single current DOS/stock-BBS/audio workflow above, arbitrary-
+duration load, other protocol directions, physical Boca/SPA2102 behavior and all
+F01–F16 application gates
 remain open. No14.4 negotiation or complete application claim follows.
 
 ```sh

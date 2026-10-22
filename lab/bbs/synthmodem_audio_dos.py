@@ -145,6 +145,18 @@ def main():
  if server_fixture:names+=['lab/bbs/enigma_fixture.py']
  if a.zmodem_receive_credit is not None:
   names+=['src/terminal/options.asm','standalone/check_terminal_options.py','docs/validation/zmodem-receive-credit.json']
+ # Bind every declared application build input, including the checked stage
+ # readback owner. A binary hash alone cannot identify its source closure.
+ terminal_manifest_path=ROOT/'build/terminal/manifest.json'
+ terminal_manifest=json.loads(terminal_manifest_path.read_text())
+ assert terminal_manifest['kind']=='source-only-interactive-dos-terminal'
+ assert terminal_manifest['binary_sha256']==sha(ROOT/'build/terminal/TERMINAL.EXE')
+ assert all(not n.startswith(('analysis/','build/')) and (ROOT/n).resolve().is_relative_to(ROOT) for n in terminal_manifest['sources'])
+ assert all(sha(ROOT/n)==h for n,h in terminal_manifest['sources'].items())
+ names+=['build/terminal/manifest.json',*terminal_manifest['sources']]
+ receive_credit=a.zmodem_receive_credit or 8192
+ expected_receive_offer=dict(credit=receive_credit,flags=33 if receive_credit<8192 else 35,
+  position=((33 if receive_credit<8192 else 35)<<24)|receive_credit) if a.route=='download' else None
  if a.route in ('download','upload'):
   names+=['src/terminal/transfer_actions.asm','standalone/check_carrier_transfer_deadline.py','docs/validation/carrier-transfer-deadline-fixed.json']
   names+=['src/transfer/zmodem.c','src/transfer/zmodem.h','src/transfer/zmodem_wire.c','src/transfer/zmodem_wire.h','standalone/check_zmodem_completed_replay.py','standalone/check_zmodem_completion_bounds.py','docs/validation/zmodem-completed-replay-fixed.json']
@@ -214,7 +226,7 @@ def main():
  start_manifest=dict(frozen_inputs=frozen,runtime_inputs=runtime_inputs,server_inputs=server_inputs,server_root=str(enigma.SOURCE),server_fixture=server_fixture,
   generated_inputs=generated,tool_inputs=tool_inputs,profile_sha256=sha(out/'MODEM.PRM'),directory_initial_hex=contact.hex(),
   download_metadata_before=download_before,upload_metadata_before=upload_before,download_path=str(download_path) if download_path else None,
-  route=a.route,zmodem_receive_credit=a.zmodem_receive_credit,pressure_preparation=str(a.download_pressure_preparation) if pressure_download else None)
+  route=a.route,zmodem_receive_credit=a.zmodem_receive_credit,expected_receive_offer=expected_receive_offer,pressure_preparation=str(a.download_pressure_preparation) if pressure_download else None)
  (out/'run-start.json').write_text(json.dumps(start_manifest,indent=2)+'\n')
  def clock_anchor(label):
   before=time.monotonic_ns();wall=time.time_ns();after=time.monotonic_ns()
@@ -345,7 +357,7 @@ exit
   checks['posttransfer_filename_visible']=('PCXTEST.BIN' if a.upload_cancel and not a.upload_cancel_retry else audio_upload.NAME) in text
  result={'passed':all(checks.values()),'checks':checks,'zmodem_receive_credit':a.zmodem_receive_credit,'frozen_inputs':frozen,'runtime_inputs':runtime_inputs,'server_inputs':server_inputs,'server_root':str(enigma.SOURCE),'server_fixture':server_fixture,
   'generated_inputs':generated,'tool_inputs':tool_inputs,'syscall_trace':a.syscall_trace,'clock_anchors':clock_anchors,'server_revision':enigma.COMMIT,'server_menus':menus,'script_stages':read('STAGES.LOG').decode('ascii'),'login_readiness':'WAITFOR plus reused one-shot WHEN latch','receive_trace':a.receive_trace,'dmodem_variant':a.dmodem,'lifecycle':a.lifecycle,'carrier':a.carrier,'carrier_trace':a.carrier_trace,'key_framing_trace':a.key_framing_trace,'input_sequence_timeout_ms':250 if a.key_framing else 0,
-  'DOS_screen':text,'gateway':n,'route':a.route,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor_multiline_checks':str(multiline_proof.relative_to(ROOT)) if a.editor_multiline_checks else None,'download_pressure_preparation':str(a.download_pressure_preparation.resolve().relative_to(ROOT)) if pressure_download else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
+  'DOS_screen':text,'gateway':n,'route':a.route,'expected_receive_offer':expected_receive_offer,'upload_cancel':a.upload_cancel,'upload_cancel_retry':a.upload_cancel_retry,'posttrain_hold':a.posttrain_hold,'buffered_runtime_proof':str(a.buffered_runtime_proof.resolve().relative_to(ROOT)) if a.buffered_runtime_proof else None,'editor_burst_checks':str(burst_proof.relative_to(ROOT)) if a.editor_burst_checks else None,'editor_multiline_checks':str(multiline_proof.relative_to(ROOT)) if a.editor_multiline_checks else None,'download_pressure_preparation':str(a.download_pressure_preparation.resolve().relative_to(ROOT)) if pressure_download else None,'editor':editor,'download':download,'upload':upload,'captures_sha256':{p.name:sha(p) for p in out.iterdir() if p.suffix in ('.bin','.BIN','.log','.jsonl')},
   'scope':'Actual source-built DOS terminal and ASPECT directory script through synthetic local Hayes control and real external/internal SIP, CallSession, pool, originating/guest DSP and Telnet to the explicitly recorded owned ENiGMA board. Any protocol-helper candidate is separately identified; no unmodified-stock, physical modem/ATA/UART or whole-application claim follows from a candidate result.'}
  observation_paths=[out/n for n in ['run-start.json','exit-status.json','clock-anchors.json','server-log-boundary.json']]
  observation_paths+=sorted((out/'server-log-capture').iterdir())

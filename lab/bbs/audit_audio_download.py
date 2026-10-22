@@ -3,7 +3,7 @@
 import argparse,hashlib,json
 from pathlib import Path
 from modem import Telnet
-from audit_zmodem import audit_batch,audit_controls
+from audit_zmodem import audit_batch,audit_controls,scan
 from test_transfer_dos import timestamp
 from enigma_transfer import metadata,STORAGE,HELPER
 
@@ -77,6 +77,12 @@ def main():
         pressure=PressureDownload(ROOT/r['download_pressure_preparation']);name=NAME;size=SIZE
         assert sha(out/'program/EXITKEY.COM')==pressure.production_helper_sha256
     source=STORAGE/name;expected=source.read_bytes();checks={'post_protocol_search_key_observed':False};errors=[];protocol=None
+    if r.get('expected_receive_offer') is not None:
+        credit=r.get('zmodem_receive_credit') or 8192;flags=33 if credit<8192 else 35
+        offer=dict(credit=credit,flags=flags,position=(flags<<24)|credit)
+        assert r['expected_receive_offer']==offer
+        offers=[header for header in scan(sent) if header['type']==1]
+        checks['native_receive_offer_policy']=len(offers)>=2 and all(header['position']==offer['position'] for header in offers)
     checks['source_unchanged']=len(expected)==size and sha(source)==r['download']['expected_sha256']
     try:
         protocol=audit_batch(display,{name:expected})

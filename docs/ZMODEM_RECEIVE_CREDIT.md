@@ -55,6 +55,14 @@ The harness has no per-byte timestamps, so it supplies no opposite-control
 causality or audio/BBS/hardware acceptance. The older linked/DOS validation
 record above retains its earlier binary, offer flags and case counts.
 
+The [current stock ENiGMA software-audio run](ENIGMA_STOCK_AUDIO_DOWNLOAD.md)
+now accepts one65797-byte download with this native policy and checked replay
+recovery. Full byte/source/CRC/finish/opposite controls, authenticated Search/List,
+official accounting and normal cleanup pass79 checks;19 verifier counterexamples
+reject. The stock sender still uses packets/groups up to2048 bytes, with18
+verified retransmissions. Broader profile/direction/load and physical acceptance
+remain open; the separate sender-candidate bounds below retain their own scope.
+
 Small advertised credit alone is insufficient for the stock SEXYZ sender:
 the [stock measurements](validation/sexyz-receive-credit-stock.json) show that
 it can still send8192-byte packets after a256-byte offer. The separately pinned
