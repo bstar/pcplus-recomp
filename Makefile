@@ -995,6 +995,15 @@ test-terminal-key-output: terminal
 	python3 standalone/check_terminal_reverse_tab.py
 test-aspect-key-client: aspect-runner
 	python3 standalone/check_aspect_key_client.py
+.PHONY: test-aspect-foreground-delay test-aspect-pause-dos
+test-aspect-foreground-delay: aspect-runner
+	python3 standalone/check_aspect_foreground_delay.py
+test: test-aspect-foreground-delay
+test-aspect-pause-dos: terminal aspect-runner
+	python3 standalone/test_aspect_window_pause_query_dos.py --label "pause-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
+	python3 standalone/test_aspect_pause_when_dos.py --label "pause-when-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
+	python3 standalone/test_aspect_pause_cancel_dos.py --label "pause-cancel-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
+	python3 standalone/test_aspect_window_pressure_dos.py --during-pause --label "pause-load-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
 test-keyboard-echo-native: keyboard_mapping
 	python3 standalone/check_keyboard_echo_native.py
 test: test-terminal-key-output test-aspect-key-client test-keyboard-echo-native

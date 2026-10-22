@@ -47,8 +47,16 @@ The runtime shares native state rather than copying counters:
 
 The exact service routine runs at dispatcher and native4E34 cancellation
 points. WAITFOR and RGET therefore service disconnect actions while waiting.
-Low-level transmit, raw receive, pause and renderer callbacks retain transport
-polling and Escape cancellation without recursively running WHEN services.
+Low-level transmit, raw receive, generic pacing delays and renderer callbacks
+retain transport polling and Escape cancellation without recursively running
+WHEN services. Explicit attached-terminal PAUSE adds a maintained foreground
+receive point: native WHEN/key/carrier service precedes a bounded receive burst
+of64 translated leads, with a BIOS clock check after each completed lead. Text
+is consumed and rendered during that PAUSE; later WAITFOR/RGET see subsequent
+input. Raw ASIO keeps its queued-input delay policy. Deferred WHEN CALL workers
+run after PAUSE finishes. This is an intentional scheduling change, not a claim
+about original PAUSE timing; see [local interaction](ASPECT_LOCAL_UI.md) and
+[PAUSE validation](validation/aspect-pause-live.json).
 The child defers service while on a parent renderer callback stack, then checks
 at the next safe native service point. Native pattern matching runs on each
 translated lead before rendering; parser continuation bytes stay raw and do

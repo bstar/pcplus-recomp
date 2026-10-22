@@ -1,19 +1,75 @@
 # Local interaction while ASPECT owns the session
 
-The production script-time Alt-Z controller is now cooperative. It leaves the
-actual VM, native receive/matcher path and terminal parser running while the
-reference/help window owns local dismissal keys. The
-[cooperative validation](validation/aspect-cooperative-window.json) records the
-current products and selected acceptance; the older capability8/9 window and
-stock BBS receipts below retain their historical product identities. New
-[load](validation/aspect-window-pressure.json),
-[recorder/replay](validation/bbs-cooperative-window-compat.json) and
-[stock-window](validation/bbs-cooperative-window.json) audits now cover the
-unchanged capability10 pair. Explicit PAUSE timing, real flow control, affected
-software audio, full local command actions and physical modem integration
-remain open.
+The production script-time Alt-Z controller is cooperative. The VM, native
+receive/matcher path and terminal parser continue while reference/help owns
+local dismissal keys. Explicit attached-terminal PAUSE now also services this
+pipeline. [PAUSE validation](validation/aspect-pause-live.json) and
+[PAUSE load validation](validation/aspect-pause-pressure.json) bind normal
+parent `0eff2348` and runner `2c80e45c`; capabilities remain10/11 and the ASIOv4
+descriptor is unchanged. Earlier receipts retain their historical identities.
+Real flow/carrier faults, affected software audio, full command actions and
+physical modem integration remain open.
 
-## Current load and stock BBS checks
+## Explicit terminal PAUSE
+
+`runtime_serial_wait_second()` calls foreground-only `runtime_when_delay_poll()`
+when the terminal renderer is attached. A full native WHEN/key/carrier service
+precedes each burst of at most64 translated receive leads. The clock is checked
+after each completed lead; one elapsed BIOS tick ends the burst. This amortizes
+window/WHEN RPC overhead while keeping the command clock advancing. Parser
+continuations retain their existing72-tick/4096-operation budgets: a lead that
+needs continuation processing can exceed one tick. This is not a hard real-time
+bound on arbitrary malformed input.
+
+This intentionally changes script scheduling: ordinary text received during
+terminal PAUSE is translated, matched by native WHEN and rendered. A later
+WAITFOR or RGET sees subsequent input, rather than that already consumed text.
+Arm WHEN beforehand or wait for a prompt directly when the script needs to act
+on arriving text. Raw ASIO, transmit pacing, parser callbacks and generic delay
+services retain transport-only polling and queued input. WHEN CALL workers
+remain deferred until the foreground PAUSE finishes. No separate ANSI query
+recognizer is introduced.
+
+Seven actual DOS query/WHEN cases cover plain terminal and help, transmit
+handlers, deferred/framed CALL, multiple-handler order and exclusion of stale
+text from a future WAITFOR. Replies arrive within11.6ms and four-second PAUSE
+markers arrive after4.13–4.22 seconds. A separate actual DOS Escape case returns
+error13 without transmitting its unreachable tail. Ten linked CPU cases cover
+ownership rejection, closed UART, frozen clock burst limits, midnight wrap,
+cancellation and raw-delay queue retention. Fifteen raw DOS receive cases,
+16 linked renderer groups,28 linked keyboard cases and five DOS callback cases
+also pass. An isolated build reproduces26 products without original inputs.
+
+The sustained PAUSE6 workload sends9,114 paced ANSI bytes, receives44 correct
+CPRs within60ms and verifies all1,408 character/color cells. All replies precede
+PAUSEDONE, independently measured at6.258 seconds after HOLD. The observer
+samples91 window ticks and a26-byte RX peak; this is not an absolute ring
+high-water measurement or CTS/RTS/XOFF/XON pressure acceptance. The first
+per-byte service implementation failed with serial error14 and malformed
+replies under this workload; its frozen source/captures remain retained. The
+accepted implementation uses bounded receive bursts.
+
+## Current stock BBS checks
+
+[Fresh recorder/replay](validation/bbs-pause-live-compat.json) accepts four
+production DOS sessions on the owned Synchronet/ENiGMA fixtures with runner
+2c80e45c. [Fresh window sessions](validation/bbs-pause-live.json) accept two more:
+reference/help is observed for137 BIOS ticks on each board, scripted read-only
+navigation completes, and the ordinary command menu opens after actual child
+return. Exact whole user streams, server routes, timer and hardware restoration
+are independently checked.
+
+The first ENiGMA window attempt completed its script and restored DOS/UART,
+but the banner-gated keyboard driver stayed at phase0 until its watchdog. Its
+post-exit menu gate failed and remains rejected. The corrected test driver reads
+only the passive observer's magic, successful EXEC-return, child-exit and exit-code
+fields through the installed INT21 vector. It injects ordinary BIOS keys after
+actual completion; it writes no product, serial or success-file state. The auditor
+reassembles the observer, offset probe and keyboard driver and retains both
+attempts. These are selected loopback workflows, with no current software-audio
+or physical acceptance and no closure of full application gates.
+
+## Earlier WAITFOR load and stock BBS checkpoint
 
 The owned pressure peer sends44 packets containing9,114 ANSI bytes. Each packet
 paints a separate32-cell tile with alternating red/green text and requests CPR.
@@ -38,23 +94,22 @@ the default historical label still requires identical parent/runner hashes.
 These window sessions pause before BBS navigation, so the owned pressure test
 provides separate evidence for incoming traffic during the open window.
 
-## Confirmed PAUSE-context deadline gap
+## Historical PAUSE-context deadline gap
 
 A separate actual DOS test first waits for HOLD with help open, executes PAUSE4,
 then waits for END. The peer sends a CPR query one second after HOLD. The correct
 reply is delayed3.188 seconds and misses the declared one-second deadline.
 [Failure evidence](validation/aspect-window-pause-query-failure.json) preserves
 exact wire/cursor behavior, normal child return and hardware restoration. This
-is a current failure on the same0eff2348/fa026aa8 pair, not an old blocking-window
-receipt or evidence that a particular stock BBS uses that timeout.
+is a retained failure on the earlier0eff2348/fa026aa8 pair, distinct from the
+older blocking-window failure; it does not identify any stock BBS timeout.
 
 Source inspection shows `runtime_serial_wait_second()` using
 `runtime_serial_pause(18)`. Its loop invokes transport-only cancellation/service,
 which leaves receive/parser work for a later ordinary wait. The queued query is
-processed when WAITFOR resumes. Next constrain any delay-time receive/WHEN
-change with actual DOS tests for matching, raw input, cancellation, local keys,
-carrier/error handling and the existing UART/renderer lifetime. The separate
-passing WAITFOR load test must not be presented as a general PAUSE-time fix.
+processed when WAITFOR resumes. The foreground PAUSE implementation and its separate evidence above address
+this selected deadline. Broader carrier/error and real flow-control behavior
+remain required; the earlier WAITFOR load receipt alone proves no PAUSE fix.
 
 ## Cooperative production interaction
 

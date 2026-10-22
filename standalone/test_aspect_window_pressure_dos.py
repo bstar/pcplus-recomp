@@ -20,6 +20,7 @@ ROOT = keys.ROOT
 BASE = ROOT / 'build/aspect-window-pressure-dos'
 ESC = b'\x1b'
 QUERY = ESC + b'[6n'
+PAUSE = False
 
 
 def packets():
@@ -43,15 +44,21 @@ def definitions():
     source = ('proc main\nwaitfor "LOGIN:" 5\nset duplex full\n'
               'transmit "KEYREADY"\nwaitfor "END" 30\nif waitfor\n'
               'transmit $D_PWORD\ntransmit "^M"\npause 1\nendif\nendproc\n')
-    return [dict(name='window-pressure-4', source=source, profile=4,
+    if PAUSE:
+        source = source.replace('waitfor "END" 30', 'waitfor "HOLD" 10\npause 6\ntransmit "PAUSEDONE"\nwaitfor "END" 30')
+    return [dict(name='window-pressure-4' , source=source, profile=4,
                  bios_policy='STANDARD', custom=False, success=True,
                  banner=ESC + b'[2J' + ESC + b'[HFIRST BYTE SAFE' + QUERY + ESC + b'[0cLOGIN:',
                  keys='p1800 k e y s p200 a-z p7500 escape p300 d o n e p2500 space p700 r e a d y p700 a-x',
-                 key_wire=b'keys' + b''.join(packet['reply'] for packet in packets()) + b'done',
+                 key_wire=b'keys' + b''.join(packet['reply'] for packet in packets()) + (b'PAUSEDONE' if PAUSE else b'') + b'done',
                  post=QUERY, post_reply=ESC + b'[23;76R', screen=[(0, 0, 'FIRST BYTE SAFE')])]
 
 
 def main():
+    global PAUSE
+    if '--during-pause' in sys.argv:
+        PAUSE = True
+        sys.argv.remove('--during-pause')
     original = keys.adapter
     renderer = keys.renderer
     events = []
@@ -64,7 +71,7 @@ def main():
             socket=lambda: TracedSocket(socket.socket(), events), timeout=socket.timeout)
 
         def staged(*args, **kwargs):
-            kwargs['online_updates'] = [(p['scheduled'], p['payload']) for p in workload]
+            kwargs['online_updates'] = ([(1.8,b'HOLD')] if PAUSE else []) + [(p['scheduled'], p['payload']) for p in workload]
             return run(*args, **kwargs)
 
         module.run = staged
@@ -108,7 +115,18 @@ def main():
                   all_1408_tile_characters_match=all(cells),
                   all_1408_tile_attributes_match=all(colors),
                   all_44_CPR_replies_within_one_second=all(d is not None and 0 <= d <= 1 for d in delays))
-    result = dict(passed=all(checks.values()), checks=checks,
+    pause_elapsed = None
+    if PAUSE:
+        hold = next(event for event in events if event['kind'] == 'send' and event['hex'] == b'HOLD'.hex())
+        received = b''
+        for event in events:
+            if event['kind'] == 'receive' and event['time'] >= hold['time']:
+                received += bytes.fromhex(event['hex'])
+                if b'PAUSEDONE' in received:
+                    pause_elapsed = event['time'] - hold['time']
+                    break
+        checks['six_second_pause_duration_retained'] = pause_elapsed is not None and 6 <= pause_elapsed <= 7
+    result = dict(passed=all(checks.values()), checks=checks, during_pause=PAUSE, pause_elapsed_seconds=pause_elapsed,
                   payload_bytes=sum(len(p['payload']) for p in workload), packet_count=len(workload),
                   packet_reply_delay_seconds=delays, window_ticks=ticks, child_ring_peak=peak,
                   first_render_tick=first_tick, tile_cells_match=cells, tile_colors_match=colors,

@@ -60,15 +60,53 @@ async def main(a):
   builder=window.make_observer(renderer.observer,window.symbols(ROOT/'build/terminal/terminal.map'),window.symbols(ROOT/'build/aspect-runner/ASPECT.map'))
   builder(renderer.map_offsets(ROOT/'build/terminal/terminal.map'))
  finally:renderer.OUT=previous_out
- # Reuse the established private BIOS driver, with an explicit three-stage
- # recipe. It waits for the script's own completed-body marker before opening
- # the regular menu. It never writes product, serial or success-file state.
+ # Gate on the passive observer's actual successful EXEC return, rather than
+ # a local MESSAGE banner which late BBS repainting can erase before dwell.
+ # The driver only reads observer state and injects ordinary BIOS keys.
+ probe=(stage/"observer.asm").read_text()+"\ncompletion_offset: dw magic\n"
+ (stage/"COMPOFF.ASM").write_text(probe)
+ subprocess.run(["nasm","-fbin",str(stage/"COMPOFF.ASM"),"-o",str(stage/"COMPOFF.COM")],check=True)
+ sample=struct.unpack("<H",(stage/"COMPOFF.COM").read_bytes()[-2:])[0]
  driver=(ROOT/'lab/bbs/audio_recording_keys.asm').read_text()
  ready="ready_marker: db 'RECORDER READY',0";assert driver.count(ready)==1
  driver=driver.replace(ready,"ready_marker: db 'WINDOW DONE',0")
  begin=driver.index('stages:\n');end=driver.index('STAGE_COUNT equ',begin)
  driver=driver[:begin]+('stages:\n dw ready_marker,open_menu,90\n'
   ' dw menu_marker,escape_key,18\n dw ready_marker,exit_keys,180\n')+driver[end:]
+ # The observer stays at INT21 until collection; its magic and complete
+ # native child lifecycle must all match. No DOS call is made from the timer.
+ gate=f"""completion_gate:
+ cmp word [phase],1
+ je scan
+ push ax
+ push es
+ xor ax,ax
+ mov es,ax
+ mov ax,[es:0x86]
+ mov es,ax
+ cmp word [es:{sample}],0x524e
+ jne .no
+ cmp word [es:{sample+2}],1
+ jne .no
+ cmp word [es:{sample+4}],1
+ jne .no
+ cmp word [es:{sample+6}],1
+ jne .no
+ cmp word [es:{sample+12}],0
+ jne .no
+ xor ax,ax
+ jmp .out
+.no:
+ mov ax,1
+ or ax,ax
+.out:
+ pop es
+ pop ax
+ ret
+"""
+ assert driver.count(' call scan\n')==3
+ driver=driver.replace(' call scan\n',' call completion_gate\n',1)
+ driver=driver.replace('resident_end:\npointer:',gate+'resident_end:\npointer:')
  (stage/'POSTKEY.ASM').write_text(driver)
  subprocess.run(['nasm','-fbin','-DRECORD_WATCHDOG_TICKS=2700',str(stage/'POSTKEY.ASM'),'-o',str(stage/'POSTKEY.COM')],check=True)
  subprocess.run(['nasm','-fbin',str(ROOT/'lab/bbs/audio_get_vector.asm'),'-o',str(stage/'KEYVEC.COM')],check=True)

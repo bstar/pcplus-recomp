@@ -1,0 +1,115 @@
+{
+  "passed": true,
+  "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+  "runner_sha256": "2c80e45ca38bf6f2483cafdcdb21449c991aef1e139c1a82a0bec9f3c963c12d",
+  "explicit_terminal_pause_query_accepted": true,
+  "results": {
+    "plain-PAUSE-query": {
+      "passed": true,
+      "query_reply_seconds": 0.006735549075528979,
+      "pause_complete_seconds": 4.1904042339883745,
+      "open_window": true,
+      "stale_text_excluded_from_future_WAITFOR": false,
+      "wire_sha256": "c7ee80d28d3928d8faef63d9d5183255d5c45e3e467c2911bb43d06313637401",
+      "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+      "runner_sha256": "2c80e45ca38bf6f2483cafdcdb21449c991aef1e139c1a82a0bec9f3c963c12d"
+    },
+    "transmit": {
+      "passed": true,
+      "query_reply_seconds": 0.011590548907406628,
+      "pause_complete_seconds": 4.190727125038393,
+      "open_window": true,
+      "stale_text_excluded_from_future_WAITFOR": false,
+      "wire_sha256": "993780dad8008fcf323432304dcf9746a2fede63eef605e402fee1011a6d784d",
+      "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+      "runner_sha256": "2c80e45ca38bf6f2483cafdcdb21449c991aef1e139c1a82a0bec9f3c963c12d"
+    },
+    "call": {
+      "passed": true,
+      "query_reply_seconds": 0.009884787956252694,
+      "pause_complete_seconds": 4.199136418988928,
+      "open_window": true,
+      "stale_text_excluded_from_future_WAITFOR": false,
+      "wire_sha256": "9423df3174b4a0451a865bbbc94e8e8bf0ed1f0229d0f515ff80d1428b64a0f6",
+      "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+      "runner_sha256": "2c80e45ca38bf6f2483cafdcdb21449c991aef1e139c1a82a0bec9f3c963c12d"
+    },
+    "framed-call": {
+      "passed": true,
+      "query_reply_seconds": 0.00955990795046091,
+      "pause_complete_seconds": 4.212921956088394,
+      "open_window": true,
+      "stale_text_excluded_from_future_WAITFOR": false,
+      "wire_sha256": "fbab31d70e0e09eb26f0e00579cef810b0cdbdd31d4399e48a81aeb1c4f57d87",
+      "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+      "runner_sha256": "2c80e45ca38bf6f2483cafdcdb21449c991aef1e139c1a82a0bec9f3c963c12d"
+    },
+    "plain-terminal": {
+      "passed": true,
+      "query_reply_seconds": 0.004554043989628553,
+      "pause_complete_seconds": 4.131634627003223,
+      "open_window": false,
+      "stale_text_excluded_from_future_WAITFOR": false,
+      "wire_sha256": "e973abfd59709f6101e6f9cdb8982df12648891fe29062d55d666ed9c22ccd13",
+      "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+      "runner_sha256": "2c80e45ca38bf6f2483cafdcdb21449c991aef1e139c1a82a0bec9f3c963c12d"
+    },
+    "future-wait": {
+      "passed": true,
+      "query_reply_seconds": 0.007664019940420985,
+      "pause_complete_seconds": 4.189391634077765,
+      "open_window": true,
+      "stale_text_excluded_from_future_WAITFOR": true,
+      "wire_sha256": "e999fab67bc4b0dec1d32cc4d617702b4770dd4ec4414778f41df48e88a13b9b",
+      "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+      "runner_sha256": "2c80e45ca38bf6f2483cafdcdb21449c991aef1e139c1a82a0bec9f3c963c12d"
+    },
+    "two-calls": {
+      "passed": true,
+      "query_reply_seconds": 0.007754439953714609,
+      "pause_complete_seconds": 4.210417845984921,
+      "open_window": true,
+      "stale_text_excluded_from_future_WAITFOR": false,
+      "wire_sha256": "dacd4505a569e5c2b1083ea5b68efd3c6650b7b010ae87bea947ac1f2901cb5e",
+      "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+      "runner_sha256": "2c80e45ca38bf6f2483cafdcdb21449c991aef1e139c1a82a0bec9f3c963c12d"
+    }
+  },
+  "supporting_checks": {
+    "build/aspect-foreground-delay/checks.json": {
+      "cases": 10,
+      "sha256": "ae6108b4dda706a178ce1565cf2f30897495860d8facde8ecc7e25c8e2afc224"
+    },
+    "build/aspect-script-receive-dos/checks.json": {
+      "cases": 15,
+      "sha256": "b3772198c544fedd540b5d165c3397dc008fc96240f74b0cb86eaf66272a8be9"
+    },
+    "build/aspect-render-client/checks.json": {
+      "cases": 16,
+      "sha256": "bcb6986e42402a63663526c8b8f234c7e312710b6879fd6833d4325e5bf1a95c"
+    },
+    "build/aspect-keyboard/key-client-checks.json": {
+      "cases": 28,
+      "sha256": "8b7ced9bc07e2e21f5571a8543aaf8b4323e515795fd340083e5052fa5e79b48"
+    },
+    "build/aspect-render-client-dos/checks.json": {
+      "cases": 5,
+      "sha256": "f49b03fe1b4c8273205be5dc96050f3e97ed0467513601a8588eccc9d9f04c78"
+    }
+  },
+  "actual_DOS_escape_cancelled": 13,
+  "original_free_products": 26,
+  "source_proof_sha256": "1d92de38c076b1ae3e9bd4b9c1f36e2183c401f9fc6ac3b919b812940408bd71",
+  "auditor_sha256": "7ae3e4754c9526fadd4b00ec4fd8e552354387843136dcb8153138c1949d8f00",
+  "cohort": "build/aspect-pause-live-accepted-02",
+  "frozen_files": 2552,
+  "files_manifest_sha256": "988b72cc35efb86975754564200067418d1e9ed700a423b93fcbe13ddeaeecab",
+  "failed_fixtures_retained": [
+    "pause-pressure-01: per-byte full WHEN/window callbacks caused serial failure14 and corrupt/missing replies under9KB load; no assertion is made about the uncaptured serial subcode. Bounded burst scheduling passes the separate pressure03 audit.",
+    "pause-pressure-02: final burst product passed tiles, replies, duration and cleanup; the expected user wire omitted the scripted PAUSEDONE marker. Corrected fixture passes in03.",
+    "pause-when-02: the subsequent WAITFOR test used FAILURE instead of WAITFOR result; all actual DOS cleanup checks passed, exact wire showed BADSTALE. Corrected fixture passes in03.",
+    "pause-cancel-01: actual DOS exit13 and cleanup passed; collector appended label twice and could not find checks.json. Corrected collector passes in02."
+  ],
+  "scope": "Selected actual DOS attached-terminal PAUSE query/duration, native WHEN TRANSMIT, CALL, framed CALL, two pending calls, ordinary terminal without help, future WAITFOR and Escape cancellation. Raw ASIO binary/tail behavior retains transport-only delays. No query parser substitute, software audio, physical UART/carrier/CTS or whole-application acceptance.",
+  "compatibility_policy": "An admitted terminal consumes ordinary arriving text through native translation/WHEN/rendering during explicit PAUSE. Future WAITFOR/RGET see subsequent input. Raw ASIO and generic low-level delays retain queued input. This is an intentional maintained scheduling change, not exact native delay timing."
+}

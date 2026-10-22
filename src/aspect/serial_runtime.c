@@ -3,6 +3,7 @@
 #include "runtime.h"
 #include "serial_runtime.h"
 #include "receive_runtime.h"
+#include "when_runtime.h"
 #include "set_runtime.h"
 #include <string.h>
 extern unsigned runtime_receive_display;
@@ -277,4 +278,21 @@ unsigned runtime_serial_pause(unsigned ticks)
 #endif
  return runtime_error;
 }
-unsigned runtime_serial_wait_second(void){return runtime_serial_pause(18);}
+unsigned runtime_serial_wait_second(void)
+{
+#if defined(ASPECT_RUNTIME_SERIAL)
+ /* PAUSE is an explicit foreground command, unlike raw/TX/parser pacing
+  * delays. Keep a full attached terminal receiving while its VM waits. Raw
+  * ASIO retains queued bytes and the original transport-only delay policy. */
+ if(aspect_render_active()){
+  unsigned long start=aspect_serial_ticks(),now;
+  for(;;){
+   if(runtime_when_delay_poll())break;
+   now=aspect_serial_ticks();if(now<start)now+=1573040UL;
+   if(now-start>=19UL)break;
+  }
+  return runtime_error;
+ }
+#endif
+ return runtime_serial_pause(18);
+}

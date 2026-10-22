@@ -17,6 +17,10 @@ unsigned runtime_when_poll(void);
 unsigned runtime_when_idle_allowed(void);
 unsigned runtime_when_cancel_poll(void);
 unsigned runtime_when_transport_poll(void);
+/* Explicit attached-terminal PAUSE only, on the ordinary VM stack. Processes
+ * at most64 native receive leads or one BIOS tick, WHEN before display; never call
+ * from parser callbacks, monitors, TX pacing or generic raw delay services. */
+unsigned runtime_when_delay_poll(void);
 void runtime_when_defer_begin(void);
 void runtime_when_defer_end(void);
 void runtime_when_monitor_begin(void);

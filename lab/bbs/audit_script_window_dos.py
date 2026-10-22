@@ -38,8 +38,17 @@ def main():
   driver=(stage/'POSTKEY.ASM').read_text();begin=driver.index('stages:\n');end=driver.index('STAGE_COUNT equ',begin)
   assert driver[begin:end]=='stages:\n dw ready_marker,open_menu,90\n dw menu_marker,escape_key,18\n dw ready_marker,exit_keys,180\n'
   assert "ready_marker: db 'WINDOW DONE',0" in driver
+  probe=(stage/'COMPOFF.ASM').read_text()
+  assert probe==observer+'\ncompletion_offset: dw magic\n'
+  sample=struct.unpack('<H',(stage/'COMPOFF.COM').read_bytes()[-2:])[0]
+  assert 'completion_gate:\n cmp word [phase],1\n je scan\n' in driver
+  assert ' mov ax,[es:0x86]\n mov es,ax\n' in driver
+  for offset,value in [(0,'0x524e'),(2,'1'),(4,'1'),(6,'1'),(12,'0')]:
+   assert f' cmp word [es:{sample+offset}],{value}\n jne .no\n' in driver
+  assert driver.count(' call completion_gate\n')==1
+  assert ' xor ax,ax\n jmp .out\n.no:\n mov ax,1\n or ax,ax\n.out:\n pop es\n pop ax\n ret\nresident_end:' in driver
   with tempfile.TemporaryDirectory(dir=ROOT/'build',prefix='window-audit-') as directory:
-   for source,binary,flags in [('observer.asm','RENDER.COM',[]),('POSTKEY.ASM','POSTKEY.COM',['-DRECORD_WATCHDOG_TICKS=2700'])]:
+   for source,binary,flags in [('observer.asm','RENDER.COM',[]),('COMPOFF.ASM','COMPOFF.COM',[]),('POSTKEY.ASM','POSTKEY.COM',['-DRECORD_WATCHDOG_TICKS=2700'])]:
     product=Path(directory)/binary
     subprocess.run(['nasm','-fbin',*flags,str(stage/source),'-o',str(product)],check=True)
     assert sha(product)==sha(stage/binary)
@@ -69,7 +78,13 @@ def main():
    if label.endswith('01'):assert read(earlier/'acceptance-review.json')['accepted'] is False
    elif name=='enigma':assert not e['passed'] and prior[name+'/'+label]['failed_checks']==['regular_parent_menu_after_child_exit']
    for base in [earlier,ROOT/'build/bbs-lab/results'/name/label]:selected.update(f for f in base.rglob('*') if f.is_file())
-  for base in [stage,out]:selected.update(f for f in base.rglob('*') if f.is_file())
+  rejected=ROOT/'build/bbs-lab/script-window'/name/'pause-live-stock-01'
+  rejected_result=read(rejected/'result.json')
+  prior[name+'/pause-live-stock-01']=dict(producer_passed=rejected_result['passed'],
+   failed_checks=[k for k,v in rejected_result['checks'].items() if not v],
+   reason='The banner-gated driver failed to observe completion on ENiGMA; normal child exit, exact wire and script navigation passed. Actual EXEC-return gating supersedes that driver, without accepting the failed attempt.')
+  if name=='enigma':assert not rejected_result['passed'] and rejected_result['actor_report'][:4]==[0x524b,0,0,2]
+  for base in [rejected,ROOT/'build/bbs-lab/results'/name/'pause-live-stock-01',stage,out]:selected.update(f for f in base.rglob('*') if f.is_file())
  cohort.mkdir();kept={}
  for path in sorted(selected):
   copy=cohort/'accepted'/path.relative_to(ROOT);copy.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,copy)

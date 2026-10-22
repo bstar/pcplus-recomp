@@ -7,8 +7,10 @@
 #include "when_runtime.h"
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "resident_render.h"
+#include "serial.h"
+#include "receive_runtime.h"
 #endif
-extern unsigned runtime_receive_pattern_count,runtime_wait_gate;
+extern unsigned runtime_receive_pattern_count,runtime_wait_gate,runtime_receive_display;
 extern unsigned __cdecl runtime_when_native_service(void);
 unsigned runtime_when_deferred,runtime_when_pending_service;
 static unsigned service_busy,monitor_busy;
@@ -60,6 +62,33 @@ unsigned runtime_when_transport_poll(void)
  if((key&255)==27){runtime_keyboard_read();runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
  return 0;
 }
+#if defined(ASPECT_RUNTIME_SERIAL)
+unsigned runtime_when_delay_poll(void)
+{
+ unsigned leads;unsigned long started,now;
+ /* This is a maintained foreground receive point, not a native timing claim.
+  * Ordinary arriving text is consumed by the live terminal during PAUSE;
+  * later WAITFOR/RGET see subsequent input, just as after an idle VM drain.
+  * Do not enter native monitor/FILE/frame work from a borrowed RPC stack. */
+ if(runtime_error)return 1;
+ if(runtime_when_deferred || service_busy || monitor_busy || !aspect_render_active()){
+  runtime_set_error(ASPECT_RUN_STATE);return 1;
+ }
+ if(aspect_serial_active!=1){runtime_set_error(ASPECT_RUN_SERIAL);return 1;}
+ if(runtime_when_cancel_poll())return 1;
+ /* Amortize the full WHEN/window RPC over a bounded receive burst. Raw
+  * reads and renderer callbacks still service transport/error/cancellation.
+  * Stop after64 leads or one BIOS tick so a continuously readable peer cannot
+  * monopolize the foreground command's clock, keyboard or carrier polls. */
+ started=aspect_serial_ticks();
+ for(leads=0;leads<64 && !runtime_error && aspect_serial_available();++leads){
+  runtime_receive_character(runtime_receive_display,0);
+  now=aspect_serial_ticks();if(now<started)now+=1573040UL;
+  if(now-started>=1UL)break;
+ }
+ return runtime_error!=0;
+}
+#endif
 unsigned runtime_when_idle_allowed(void)
 {
 #if defined(ASPECT_RUNTIME_SERIAL)

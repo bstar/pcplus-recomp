@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "during_pause": true,
+  "pause_elapsed_seconds": 6.258197420975193,
+  "payload_bytes": 9114,
+  "packet_count": 44,
+  "verified_character_cells": 1408,
+  "verified_attribute_cells": 1408,
+  "max_reply_delay_seconds": 0.059930959017947316,
+  "child_ring_peak": 26,
+  "window_visible_ticks": 91,
+  "parent_sha256": "0eff2348bacea6fbb1f56cf3446e56df53cf3ec7b1b29a35a711061d5fd023ea",
+  "runner_sha256": "2c80e45ca38bf6f2483cafdcdb21449c991aef1e139c1a82a0bec9f3c963c12d",
+  "producer_receipt_sha256": "636241e6ca4a2479948df341903c15ff773b9d1870fc98118c6295183a393020",
+  "whole_wire_sha256": "86485d495e1f976aa72f36357d5663533df2e8c1dd97e71d3ada4096d58f4919",
+  "physical_flow_accepted": false,
+  "cohort": "build/aspect-pause-pressure-accepted-01",
+  "frozen_files": 33,
+  "files_manifest_sha256": "c214edcb9b6ac036daf7347dfacbc7c541b13cfe48fc4f11cbb8c08934d899e7",
+  "auditor_sha256": "f7b719df72048dc17768ff0203914fe4970ea2ca9b4557b78a7b0c88b86b5cda",
+  "scope": "Actual DOS parent/ASPECT at fixed6000 DOSBox-X cycles, COM1/38400/HARD fixture with an owned paced TCP modem peer. All44 independent tile/CPR responses,1408 characters/colors, exact whole wire, window/render witnesses, normal child exit and42-byte hardware restoration verified. UART CTS/RTS stalling is not represented by this transparent socket peer; physical flow, software XOFF/XON pressure, transfers, other wait contexts and full application remain unaccepted. All44 replies precede the script PAUSEDONE marker; the explicit six-second pause is independently timed from HOLD."
+}

@@ -1,5 +1,32 @@
 # Complete DOS rebuild plan
 
+The [foreground PAUSE audit](docs/validation/aspect-pause-live.json) accepts
+seven actual DOS query/WHEN cases and Escape cancellation on unchanged normal
+parent0eff2348 with new runner2c80e45c. Reply delays are below11.6ms. Explicit
+attached-terminal PAUSE now runs native WHEN/key/carrier service and bounded
+receive bursts; deferred CALL workers still run after the pause. Ordinary text
+is consumed/rendered during PAUSE and cannot satisfy a later WAITFOR/RGET.
+Raw ASIO and generic pacing delays retain queued input. This is a maintained
+scheduling change; see [semantics](docs/ASPECT_LOCAL_UI.md).
+
+The separate [PAUSE6 load audit](docs/validation/aspect-pause-pressure.json)
+verifies9,114 ANSI bytes,44 CPRs below60ms and1,408 character/color cells. Every
+reply precedes PAUSEDONE at6.258 seconds. The26-byte observed RX peak is sampled,
+not an absolute bound. Per-byte service failed this load with serial error14;
+its exact source and captures remain frozen. The accepted burst implementation
+passes10 linked scheduling cases,15 raw DOS receive cases,16 renderer groups,
+28 key cases and five DOS callbacks. All26 selected source-only products
+reproduce without original inputs. [Fresh recorder/replay](docs/validation/bbs-pause-live-compat.json)
+accepts four DOS sessions on the owned stock Synchronet/ENiGMA fixtures with
+these current products. [Two fresh stock-window sessions](docs/validation/bbs-pause-live.json)
+also pass, including an ordinary menu after successful child return. The BIOS
+driver now gates on the passive observer's actual EXEC completion: ENiGMA
+completed its script but the prior banner-based driver never advanced. That
+failed attempt remains preserved. Current software audio, true flow/carrier faults, full command
+actions, all F01–F16 gates and physical integration remain open. Older
+checkpoints below retain their product identities and scope.
+
+
 The [cooperative-window load audit](docs/validation/aspect-window-pressure.json)
 accepts9,114 paced ANSI bytes during WAITFOR/help:44 distinct CPR replies all
 arrive within59.4ms, and every one of1,408 character/attribute cells matches.

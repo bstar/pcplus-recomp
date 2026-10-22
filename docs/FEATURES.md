@@ -1,5 +1,19 @@
 # Full application reconstruction checklist
 
+Current parent0eff2348/runner2c80e45c accepts selected attached-terminal PAUSE
+reception and cooperative-window paths. [Seven DOS query/WHEN cases plus cancel](validation/aspect-pause-live.json)
+and [9KB PAUSE load](validation/aspect-pause-pressure.json) pass; ordinary text
+is consumed during terminal PAUSE, while raw ASIO keeps its queued-input policy.
+[Four recorder/replay sessions](validation/bbs-pause-live-compat.json) and
+[two window/menu sessions](validation/bbs-pause-live.json) pass against owned
+stock Synchronet/ENiGMA. The window driver now observes actual successful EXEC
+return instead of requiring a transient completion banner. Failed attempts are
+preserved. [Semantics and limits](ASPECT_LOCAL_UI.md) distinguish these selected
+checks from full application completion. Current software audio, true flow and
+carrier faults, physical hardware and all full F01–F16 gates remain open.
+Entries below retain their historical product identities and scopes.
+
+
 [Stock Synchronet/ENiGMA window tests](validation/bbs-script-window.json) now
 pass native reference/help during a script pause, resumed scripted menu
 navigation and the regular PCPlus menu after actual child exit. Entire typed
