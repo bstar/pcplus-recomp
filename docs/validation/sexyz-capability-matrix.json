@@ -1,0 +1,698 @@
+{
+  "passed": true,
+  "case_count": 20,
+  "cases": [
+    {
+      "case": "zedzap8K-flags00-credit256",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 0,
+      "credit": 256,
+      "CRC32": false,
+      "full_duplex": false,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "889f0bcc0d333106028484c1864bba11b885659f79306379048b0d7a4b13998b",
+        "sender.bin": "6f452371492071d77a00074de381917f0b521a6c4bfbb132c67eb8202269af1e",
+        "receiver.bin": "a58c28eae411e6e441e9f58ddd0fba737eb986669224a9de11a2819d6bee5ef0",
+        "trace.json": "fcf0f07cad10edfb620edc70c3eccb98134d6fe388bd54c5b9b21542d7b9e694",
+        "protocol.json": "e376e6fcfb6c19b4722b4414e0b162469612bbfa3c4b540f0a570db3f1d1aeba"
+      }
+    },
+    {
+      "case": "zedzap8K-flags00-credit8192",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 0,
+      "credit": 8192,
+      "CRC32": false,
+      "full_duplex": false,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": true,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "ea4c57f9ebfaf782310be6fa9ccc4d24f42ffa7d1f6fe246f0ce11a86b24abe0",
+        "sender.bin": "6f452371492071d77a00074de381917f0b521a6c4bfbb132c67eb8202269af1e",
+        "receiver.bin": "40560a0ef86ddf068e1b4afc1287d7f23ade4b5561aca6656737f7dd4597ba51",
+        "trace.json": "e6b70347026c47e2e945ea73098cef422e12f69c05e079afd7f13a0c3c4b1275",
+        "protocol.json": "e4c318ff9f7693a866033e6b3a2e68c9caf6ad8b598fef2ce9ce55fb4d45bea8"
+      }
+    },
+    {
+      "case": "zedzap8K-flags01-credit256",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 1,
+      "credit": 256,
+      "CRC32": false,
+      "full_duplex": true,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "2c4b5a6c2f60103e208a280b0cfbca867d0fcee35ef80a5e456cf88d9171d2e5",
+        "sender.bin": "ccab4715e7d6e2070a658307b4015df16b60ddbe54e6dc61288d30e984654ff8",
+        "receiver.bin": "0419c02b263782de77f2c5090a8efffba557aa576950359b882e6d89868a40da",
+        "trace.json": "5ef789dca53c5609464f766aa8bb9c95110ea844832e383925c4bdd48cf73991",
+        "protocol.json": "bf03c07d5369166012fed5329a348034f7310a5b326e5b8302672e58e9f29092"
+      }
+    },
+    {
+      "case": "zedzap8K-flags01-credit8192",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 1,
+      "credit": 8192,
+      "CRC32": false,
+      "full_duplex": true,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": true,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "a0e1a125a5284e6e2df5070c91e52b014e4409113df7540188dc372511cfbeb4",
+        "sender.bin": "ccab4715e7d6e2070a658307b4015df16b60ddbe54e6dc61288d30e984654ff8",
+        "receiver.bin": "7cf88da9670180f110e4033d973754650ecc75e8e9d21cbca1bccbde5e2c6d0e",
+        "trace.json": "b6e81b363c31830d47bc4cb8456b506f76d17c975da09c4a9b1c72759716aa3c",
+        "protocol.json": "b705981cf00a85d259f5615751b7c1ab9ce9c7ff5c43e771a4b3d8f6155328d0"
+      }
+    },
+    {
+      "case": "zedzap8K-flags02-credit256",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 2,
+      "credit": 256,
+      "CRC32": false,
+      "full_duplex": false,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "031fbf0667499193ba987ada1a18ef74822bdc38335d1002fc2c727e4482a636",
+        "sender.bin": "34f85cda2161af1a5e2ba24b8ce2655237e40fdf1f8096bef9b9f7c38196e40f",
+        "receiver.bin": "b10900eb93dfa72c865bf58e4aa219825c73ecd9ff1757c4ccbaeb89726d0d3e",
+        "trace.json": "cfd7ec1a9cf76b16d018584923ffb35ac25dceaece737935d6b22091d3afc6a2",
+        "protocol.json": "6e144ffc95a1b309958fcddbc310902cd33fae99d805e5ce827994837470c764"
+      }
+    },
+    {
+      "case": "zedzap8K-flags02-credit8192",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 2,
+      "credit": 8192,
+      "CRC32": false,
+      "full_duplex": false,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 14336,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "8a05c397b7211be4e567e011f26c27f63c84042d82021c961a6a0f44d57597bf",
+        "sender.bin": "ca6d6cc21c28a647255ba6f5b96c1092306b67bc83bc411cd1312da6b0b2fe24",
+        "receiver.bin": "2b78f7aa50e7f5eb0346f2647bd6438c1e7e3b75bc9c4f44a3cf1871383f8cda",
+        "trace.json": "247c65146c8e261d07b89fd761afbd70cf1e92120b8c0391075d24d979ba3fd4",
+        "protocol.json": "7afcdda830bc5dc932e74073908ee443eca5a39c4f470ff8662c5a8467e1f45e"
+      }
+    },
+    {
+      "case": "zedzap8K-flags03-credit256",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 3,
+      "credit": 256,
+      "CRC32": false,
+      "full_duplex": true,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "218607ffee922d75288f5bc291aa7a5f466496521c2cfa19ee0a2bc3c0095496",
+        "sender.bin": "34f85cda2161af1a5e2ba24b8ce2655237e40fdf1f8096bef9b9f7c38196e40f",
+        "receiver.bin": "1a4dd94ad2ce205a4ea62e9cb41765448f42744fbda5df6bb5e67fd97dca7a81",
+        "trace.json": "6a7bc681ecbfda8c04318ceac18b0cb3e80bdf5a78ce8ce0cb03493fd1dd49d6",
+        "protocol.json": "dd044f4c0537c255a83412d3b1064a798aa940dbb5f35c8d19d0b694b868e4a4"
+      }
+    },
+    {
+      "case": "zedzap8K-flags03-credit8192",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 3,
+      "credit": 8192,
+      "CRC32": false,
+      "full_duplex": true,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 14336,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "0a935fe204a672f2ed2675c83c7e2f0db9f3845c0c49ef41e0a1e2defb1f3e30",
+        "sender.bin": "a4d042d5a945be91d736dd4f83c65826b503b9c952417dc7754a426d62406914",
+        "receiver.bin": "f6738e3ce378b6925b5e0945356a2904f772383766d6116eae3ebd39a020ffcd",
+        "trace.json": "84e6e5968335518c36d95bf40af7f6fa8a6424cb067305f154a358a069c7f736",
+        "protocol.json": "d0c7c913bbdf78e5f665812d0ff75ff9cb00902308051c4cdb8496dfa9e11b3e"
+      }
+    },
+    {
+      "case": "zedzap8K-flags20-credit256",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 32,
+      "credit": 256,
+      "CRC32": true,
+      "full_duplex": false,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "977a7ff50b37fc8d91b3b3762ea6f24329217401478f610c44e54938560a9573",
+        "sender.bin": "b3c926ff2b9eb5fd0bc99e0145a09b68c9bdb760ca06bcd79c704120cf9e7b7c",
+        "receiver.bin": "07d780dea9f8a85bb1f8c2ffd41bf46d316569653793a893c277fee204a755da",
+        "trace.json": "c1d63439abfe4d1836e9456e6f615515733d61c1e507a2ddd1d556a14b0c2948",
+        "protocol.json": "7277cad4b0d9934419eff34591f9713e7d351d3490562c0921aeebc7f45a428e"
+      }
+    },
+    {
+      "case": "zedzap8K-flags20-credit8192",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 32,
+      "credit": 8192,
+      "CRC32": true,
+      "full_duplex": false,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": true,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "6cc9b2d38e8a5258eca3457292ee74c3248e2aa184dde4bd95c4545432467b17",
+        "sender.bin": "8cf1633dfa09a0dd38f90fd4e9774fb38312d2c483645bde354ed0d16ea7d99c",
+        "receiver.bin": "acf1be9e3374696e0495590dc57f43123807a8dd1eacba79d2bcd8172fc8bd50",
+        "trace.json": "2ba4bf1b8f20ec1d77397f9d90f3a8c9ddba26ea95edd2360196993d7922bcf6",
+        "protocol.json": "5dbb4a2c7e7e386f878b62b05cb064d58da93fc6b03a34989f3e6ed33592b15b"
+      }
+    },
+    {
+      "case": "zedzap8K-flags21-credit256",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 33,
+      "credit": 256,
+      "CRC32": true,
+      "full_duplex": true,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "8a4b450eb549c3ffcc2873dad190b7c7676e9f47d34693420b2ab26506a22d62",
+        "sender.bin": "8cf1633dfa09a0dd38f90fd4e9774fb38312d2c483645bde354ed0d16ea7d99c",
+        "receiver.bin": "c461d01a5433d11d541cbbfd5484e43f171ddd87f8d9c207fee1d5ee587714bd",
+        "trace.json": "cee8c8ec3f6a4a7ce918fea248dc50613afad0a7509ffd1a06eae5dce65a7889",
+        "protocol.json": "04c7e6cd4ba4d3661321853f3a9470fd1754d0fdf9cde7c2974302e7a9e72c71"
+      }
+    },
+    {
+      "case": "zedzap8K-flags21-credit8192",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 33,
+      "credit": 8192,
+      "CRC32": true,
+      "full_duplex": true,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": true,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "bff91d11a059122990e4cb43e7dba8ddf730c8ef6673b529268ce206ebbbebc5",
+        "sender.bin": "e7e3333d49671069a8f23cebbddbeab82128793d3f1813f30bedd1c8052f9fcc",
+        "receiver.bin": "6b179b368a0fc4d9f552959ad52f34ca813eda5dc622f627970b93cd6ee49a17",
+        "trace.json": "2ecbddf3f2e9d6fcf218fe2c7f885815e5e8824884de9c0b9906e1100cbc8c9d",
+        "protocol.json": "e6d23d695cb0232d1d1c5155ebd066960996b9faa0722c7acdedb5f9634ca2b5"
+      }
+    },
+    {
+      "case": "zedzap8K-flags22-credit256",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 34,
+      "credit": 256,
+      "CRC32": true,
+      "full_duplex": false,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "abfea0b3e9a88b327413e6532cdb81229578e8b2e91230baee17e553676f4c74",
+        "sender.bin": "e7e3333d49671069a8f23cebbddbeab82128793d3f1813f30bedd1c8052f9fcc",
+        "receiver.bin": "67df4e4506441c271611ac11f18cae980a21903e454a9e2948be1b9b47e59a7d",
+        "trace.json": "f608f36e7b324625b12b84ef5bf5eec6e3b1c265387c5471e58c49ba223cee8d",
+        "protocol.json": "04b774639cbd14d9862842618a3e78a1ca1a7a83c21c3077988b35051f6f6f48"
+      }
+    },
+    {
+      "case": "zedzap8K-flags22-credit8192",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 34,
+      "credit": 8192,
+      "CRC32": true,
+      "full_duplex": false,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 14336,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "dc1bdf79fe6a6daf5a2af9b719f5537de47802e0504ba8c7492487ee2655d073",
+        "sender.bin": "537b141671787bbf01683e791ab6d64a992fe509cdc9b230cd4189d8d9f3ce2f",
+        "receiver.bin": "1c3ebec5c6e29c1cd3b7bac026423a0076b413fc655b4e28d5ffe9bbf2013e86",
+        "trace.json": "7ebbc241787de030bd20a3158c75a3e0d06c474b6e66b59862b44b9aa8c7fa21",
+        "protocol.json": "591fbd232f826950abda14f7ff76cf6d8ce46b515c3f796d20384061a13da6f6"
+      }
+    },
+    {
+      "case": "zedzap8K-flags23-credit256",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 35,
+      "credit": 256,
+      "CRC32": true,
+      "full_duplex": true,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 8192,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "25443992c23db6cd207fdd37bbadbdbe8273ff9fb51a63b1696ce85084f0e534",
+        "sender.bin": "24d62d15055c6ba9121de718b6c09d4990443b9dc8158f846c3783f99ecc75ec",
+        "receiver.bin": "93a458d1fcfa07a7b15d0743d3fe746772ae528808aefd07ef2e425925e4feeb",
+        "trace.json": "1bccda5fa4f39494839fd1096950dc1118ad0ac79749bd7406950d02b97a4d74",
+        "protocol.json": "cd63084c00cb495a6270ecfd48121d42ae23fe03db9a649f02ecae4893da6205"
+      }
+    },
+    {
+      "case": "zedzap8K-flags23-credit8192",
+      "passed": true,
+      "zedzap8K": true,
+      "flags": 35,
+      "credit": 8192,
+      "CRC32": true,
+      "full_duplex": true,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "-8",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 8192,
+      "max_synchronous_group_payload": 14336,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "7425cf17af8b3e54bbca34d2d96ef35712335a9227b16af22ce99bb31f1eef60",
+        "sender.bin": "537b141671787bbf01683e791ab6d64a992fe509cdc9b230cd4189d8d9f3ce2f",
+        "receiver.bin": "e9c437bb2f4ea026c0b1f07303d62cafe7db9078b69c2b5c3a1b49c2a9a40798",
+        "trace.json": "b0b36821260958f03e1bf60a3efcc8e54c3ae952c51d0293f306e3396ca4f268",
+        "protocol.json": "6f3795c07fc3c2a3104561de98f1a0009a0449fee825152aca18df88c8dd8981"
+      }
+    },
+    {
+      "case": "standard1K-flags01-credit256",
+      "passed": true,
+      "zedzap8K": false,
+      "flags": 1,
+      "credit": 256,
+      "CRC32": false,
+      "full_duplex": true,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 1024,
+      "max_synchronous_group_payload": 1024,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "e5eef9720f8156d34479a167444bc46309ff862ac9371a629944ae55196e6e4b",
+        "sender.bin": "2d40825f589d70bdfbb035a6a93a3fa2a98b110ebafa6e550838e800ec206973",
+        "receiver.bin": "dbd5d86431426dcfc908ebee4ea3867074dd6480dd02d2587438f1ff86c75000",
+        "trace.json": "f671cbe1320cf617afdcec3044559d6350af261323fa9141004ba0b265453d29",
+        "protocol.json": "b12443fb73f1d1588fd266a49c7a67946903d2b8e955c37dadbcdebea9f3cf24"
+      }
+    },
+    {
+      "case": "standard1K-flags01-credit8192",
+      "passed": true,
+      "zedzap8K": false,
+      "flags": 1,
+      "credit": 8192,
+      "CRC32": false,
+      "full_duplex": true,
+      "overlap": false,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        65
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 1024,
+      "max_synchronous_group_payload": 1024,
+      "credit_honored": true,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "66ff00decae47a48de08dd0ff90c306ad502322286107fc160d52bbf4ba0a6b9",
+        "sender.bin": "2d40825f589d70bdfbb035a6a93a3fa2a98b110ebafa6e550838e800ec206973",
+        "receiver.bin": "a02d208388cbd10eae96c29ad37a4bb90552233aea8a7c4efb2198d187382a35",
+        "trace.json": "e29c619be7b0c4960342cac14ab8032576dd81ef5caa49189ab5a848da7da99e",
+        "protocol.json": "79eee47bb8f85e560e001be6437db6f31ccbdda0710e6ae656651b6cffe6266b"
+      }
+    },
+    {
+      "case": "standard1K-flags23-credit256",
+      "passed": true,
+      "zedzap8K": false,
+      "flags": 35,
+      "credit": 256,
+      "CRC32": true,
+      "full_duplex": true,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 1024,
+      "max_synchronous_group_payload": 1024,
+      "credit_honored": false,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "3a89f9d6a70d5c666a77a0bcebd74a9dd099c4e98070bc6ac45e0d71e5bec843",
+        "sender.bin": "e10edbfd811c599dc880b092bd2b24aeeaba45685a1af8bf6c34f58d2f3c9cd0",
+        "receiver.bin": "2d67fefdf8b6653b9dfb273dcaa31eacb317b361854efa91ce2174e70c461a15",
+        "trace.json": "e8e39161d4ceb359f7459a8345a0c5338ce0a805da8fa07d63224e697d8953d3",
+        "protocol.json": "bb77df127ea1799ee35b08c22f435c73a2dfbaef2aec8be307c8d9d997c3280f"
+      }
+    },
+    {
+      "case": "standard1K-flags23-credit8192",
+      "passed": true,
+      "zedzap8K": false,
+      "flags": 35,
+      "credit": 8192,
+      "CRC32": true,
+      "full_duplex": true,
+      "overlap": true,
+      "command": [
+        "/home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/helpers/sexyz",
+        "-raw",
+        "sz",
+        "PCPRESS.BIN"
+      ],
+      "data_header_formats": [
+        67
+      ],
+      "helper_exit": 0,
+      "native_status": 0,
+      "source_bytes": 65797,
+      "max_packet_payload": 1024,
+      "max_synchronous_group_payload": 7168,
+      "credit_honored": true,
+      "captures_sha256": {
+        "PCPRESS.BIN": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+        "helper.stderr": "ae988045d639973171d8f85116f3e80a0e5c50c5a7c471f4c3141fea8135a60a",
+        "sender.bin": "be0ed7c78d984cc22ed4efbb363d7029a3a0d84a604130a19e06195677d667bf",
+        "receiver.bin": "2d1ea9d59aa7e92a1c22dcd7d8c24ed81f27a03a3cd9607c9e3b1581f0dcee17",
+        "trace.json": "ec656ec68c586a6cedfb34c38dfd7093bf172e9c3e2d3ba938aea198225bcaca",
+        "protocol.json": "66f5380da11689456ba676f202b8c4f92066b7604f0776c916be994487d85737"
+      }
+    }
+  ],
+  "helper_sha256": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd",
+  "library_sha256": "6223e4cf90785e95430dc06239778eb37f7480d717014c44ac95c44c936fca8c",
+  "source_sha256": "205e79f0e63f900f27e159239f186e23b955f89203b9bf3b9940fd409d5d7078",
+  "library_proof": "build/bbs-lab/sexyz-receive-credit-07/result.json",
+  "library_proof_sha256": "d1e1e9c3b45383446137635992cfad16b4024e2f1a2a9e3a2b9c995fd2a33ebf",
+  "inputs": {
+    "lab/bbs/probe_sexyz_capabilities.py": "aa9a07f69d0bc8d26ae35e972855dfa3f4938d539a09049e6516413feaea1801",
+    "lab/bbs/probe_sexyz_receive_credit.py": "d0858e3362894ee55f6cdbd98a12163d59f699bb05524894ec4f0301b072a576",
+    "lab/bbs/audit_zmodem.py": "21915f685657722a5ea4b0149c5c8a8492bb79c311b8ec319000b6e47d966452",
+    "standalone/check_zmodem.py": "76ac0c78fe6d7f64cd1f15cddf8f670c09f82d00ba174d3a9e596066a5446252"
+  },
+  "scope": "Measure stock SEXYZ framing for CRC/duplex flags and CLI protocol modes.\n\nThis changes only fixture-generated complete ZRINIT offers in fast local pipes.\nIt does not change DOS, a live BBS or the audio campaign.\n Every case requires actual helper/native receiver completion, exact65797-byte file, independent source/CRC/EOF/ZFIN/OO/opposite controls and selected header format. Mode/flag measurements do not establish DOS/BBS/audio behavior, slow-link timing or general compatibility; no fallback is installed.",
+  "source_receipt": "build/bbs-lab/sexyz-capability-matrix-02/result.json",
+  "source_receipt_sha256": "0afad7ca0b00ad1a4efdc22e32f7f4b139391c11651a8ebeecdb314f822d6c40",
+  "actual_DOS_audio_accepted": false,
+  "automatic_client_fallback_installed": false
+}
