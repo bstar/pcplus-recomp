@@ -6,6 +6,16 @@ It uses the source-built terminal, ASPECT and DOS ASPCOMP. The selected route is
 File Base → Search → File Base; after replay, manual input opens Search again.
 No generated recording is edited or compiled by the host before replay.
 
+The [accepted run03](../../docs/validation/recording-audio-03.json) passes26
+producer,34 independent and12 serial-evidence checks. Its complete60,383-byte BBS
+display plus187-byte bridge prefix survives the DSP path exactly; independent
+caller waveform decoding matches77 online bytes. Recording, DOS compilation,
+replay and manual Search finish normally, with no gateway errors or failed,
+skipped or pending frontend writes. DOS/UART/PIC/IRQ/timer/SIP/VM restoration
+passes. This is one selected owned stock ENiGMA V22/1200 software-audio workflow;
+other peers/profiles, physical hardware and full application gates remain open.
+Preparation and failed attempts below remain historical evidence.
+
 The BIOS helper waits for visible shell/BBS markers and inserts real BIOS key
 words. Startup first requires the actual ASPECT script to emit `RECORDER READY`
 after its final wait and success-log close. Visible File Base alone cannot admit

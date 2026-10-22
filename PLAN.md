@@ -1,5 +1,19 @@
 # Complete DOS rebuild plan
 
+The [normal recorder audio run03](docs/validation/recording-audio-03.json) now
+passes26 producer,34 independent and12 serial-evidence checks, backed by seven
+BIOS probes/56 assertions and13 DOS/Telnet control checks. Normal File/C records
+Search/return, File/A invokes DOS ASPCOMP on the unedited recording and replays
+it, then manual Search succeeds. All60,383 BBS display bytes plus187 bridge bytes
+arrive exactly; independent caller-waveform decoding matches77 online bytes.
+There are no gateway errors, skipped/failed/pending writes or missing display
+bytes, and DOS/UART/PIC/IRQ/timer/SIP/VM cleanup passes. The final-form/quiet
+helper correction resolves the retained run02 failure without relaxing gates.
+This accepts one selected stock ENiGMA V22/1200 software-audio workflow on the
+unchanged production binaries. Continue remaining original application services,
+including local UI during ASPECT, broader profiles/peers and physical hardware;
+all full F01–F16 gates remain open. Entries below retain historical scope.
+
 The [final-page audio correction](lab/bbs/audio-recording.md) passes seven actual
 8086 BIOS probes and all13 actual DOS/Telnet recorder-control checks. The second
 audio run completed recording, DOS compilation/replay and normal restoration,

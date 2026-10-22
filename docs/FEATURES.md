@@ -1,5 +1,16 @@
 # Full application reconstruction checklist
 
+[Normal recorder audio run03](validation/recording-audio-03.json) passes26
+producer,34 independent and12 serial-evidence checks: actual DOS recording,
+unedited DOS compilation/replay and subsequent manual Search on owned stock
+ENiGMA through V22/1200 SIP/RTP/DSP/Telnet. All60,383 display bytes plus187 bridge
+bytes arrive exactly; independent caller waveform matches77 online bytes.
+Normal hardware/timer/SIP/VM cleanup passes with zero gateway errors. Seven BIOS
+probes and13 actual DOS/Telnet checks admit the unchanged production binaries
+and corrected final-form driver. Other peers/profiles, local UI during ASPECT,
+physical hardware and every full F01–F16 gate remain open. Earlier preparation
+and failures below retain their historical scope.
+
 The audio recorder's corrected final-page driver passes seven BIOS probes and
 all13 actual DOS/Telnet control checks. The second audio attempt completed the
 functional workflow but lost473 late display bytes and reported a gateway reset;
