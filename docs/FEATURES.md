@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Recovered PROGRAM notices](NATIVE_PROGRAM.md#timed-notice-controller)
+now supply 190 exact native wrapper/controller bytes plus 71 reused strlen/DOS
+clock bytes. All 495 source instruction cases match the genuine original;
+99 stopped-clock cases preserve its unbounded wait as counterexamples. Six
+actual 8086 DOS cases use real DOS seconds, BIOS keys and a maintained screen
+copy platform. A fresh seven-source-only build reproduces all five products.
+Original window heap/drawing, macro keyboard, foreground UART and actual PROGRAM
+binding remain required; normal external opcodes and full application gates stay open.
+
 [Current initialization/audio regression](validation/recording-init-wait-audio.json)
 accepts parent e30df926 with explicit `/I:3` for one ENiGMA software V22/1200
 SIP/audio route at 38400 DTE. Recording, DOS ASP compilation/replay, manual

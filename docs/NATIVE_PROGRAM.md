@@ -104,3 +104,54 @@ Standard BIOS ROM font geometry is covered; arbitrary downloaded fonts, other
 adapters, original additional views and physical Wi-Fi modem timing remain open.
 The current terminal renderer still admits 80x25 mode3/page0. The new component
 does not expand that production admission or publish an external command slot.
+
+## Timed notice controller
+
+The original PROGRAM error-message route passes BX to resident 427f, which
+selects the bell form of 429a. Resident 4288 accepts a stack message and selects
+the alternate tone form. The recovered
+[controller source](../reconstruction/program_notice/core.asm) rebuilds all 190
+bytes exactly, bound by independent MZ mapping and REA read/function evidence in
+[provenance](../reconstruction/program_notice/provenance.json). It reuses 27
+strlen and 44 DOS time-extraction bytes already recovered elsewhere.
+
+The core computes horizontal placement around column 40 using native signed
+16-bit division, updates the descriptor's left/right words, saves the window,
+writes the text and restores the saved window. It returns after a key or three
+observed changes in DOS seconds. A second key poll determines whether to consume
+a key: an earlier transient key indication alone does not force a read. Each
+observed clock change counts once, including backward changes and minute wrap.
+It does not measure three elapsed seconds independently of clock behavior.
+The native strlen requires the caller's forward string direction, and stack
+arguments require DS=SS.
+
+[Independent component receipt](validation/program-notice.json) accepts 495 CPU
+cases and 495 matching genuine-original comparisons across all entries, message
+length boundaries, sound selection, key arrival/disappearance and time changes.
+Screen, sound and key callbacks are explicit modeled dependencies in these cases;
+the actual recovered strlen and DOS time conversion execute. In 99 stopped-clock
+cases the native wait intentionally remains active at the instruction bound.
+Those are reproduced counterexamples, not successful bounded UI behavior.
+
+Six actual 8086 DOS cases cross the three entries with a real BIOS queued key or
+real DOS-clock completion. They verify native stack cleanup, text coordinates and
+exact restoration of the screen captured by the maintained diagnostic platform.
+Sound is an explicit no-op test boundary. The diagnostic does not supply the
+original 3fc7/4015 window allocator/drawing or macro keyboard. A fresh directory
+containing only seven declared source/provenance files reproduces all five
+component products, with original executables and analysis absent.
+
+```sh
+./tools/build test-program-notice
+./tools/build test-program-notice-source
+# Analyst-only; requires the ignored genuine original executable.
+./tools/build test-program-notice-original
+```
+
+The native controller is not published to the live application yet. Its long
+message arithmetic can produce invalid window coordinates, and its stopped-clock
+wait has no foreground UART service. Next compose the native window save/restore
+and real keyboard/scheduler ownership, then bind error notices into PROGRAM's
+normal and unwind paths. These requirements and the other macro/mouse/UI/geometry
+requirements still precede normal external-command publication; all full F01-F16
+gates and physical modem acceptance remain open.

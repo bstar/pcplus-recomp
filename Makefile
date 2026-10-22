@@ -1459,3 +1459,14 @@ test-aspect-recorder: aspect-runner aspect-compiler-dos aspect-serial-commands
 	python3 standalone/check_aspect_recorder.py --output build/aspect-recorder/host-make-$(shell date +%s%N)
 	python3 standalone/test_aspect_raw_output_dos.py --output build/aspect-recorder/raw-make-$(shell date +%s%N)
 	python3 standalone/test_aspect_recorder_dos.py --output build/aspect-recorder/recorder-make-$(shell date +%s%N)
+
+.PHONY: program-notice test-program-notice test-program-notice-original test-program-notice-source
+program-notice:
+	python3 standalone/build_program_notice.py
+test-program-notice: program-notice
+	python3 standalone/check_program_notice.py
+	python3 standalone/test_program_notice_dos.py --output build/program-notice/DOS-make-$(shell date +%s%N)
+test-program-notice-original: program-notice
+	python3 standalone/check_program_notice.py --original
+test-program-notice-source: program-notice
+	python3 standalone/prove_program_notice_source.py --output build/program-notice/source-make-$(shell date +%s%N)

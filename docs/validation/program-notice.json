@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "native_notice_component_accepted": true,
+  "application_binding_accepted": false,
+  "full_PROGRAM_accepted": false,
+  "full_F13_accepted": false,
+  "recovered_bytes": 190,
+  "reused_clock_string_bytes": 71,
+  "CPU_cases": 495,
+  "original_comparisons": 495,
+  "stopped_clock_counterexamples": 99,
+  "DOS_cases": 6,
+  "source_files": 7,
+  "products": {
+    "core.bin": "6448262d68316f53b5a676dea9e57b2f011f7e434e3272fa8fe8fa5c5d7b7e61",
+    "strlen.bin": "feaf2f2cbbdb93b3dcb85e3c8584eaf239cb48d619549f99e746423641c62a9d",
+    "seconds.bin": "5291a203c0c84b71b85b0a50febcd985e2070c672d8ba557d95e652b87140d74",
+    "clock.bin": "c677c642aab995664be684bbcd61ded5f3be8491c1d7a89e8167fb50b53680d0",
+    "NOTICE.EXE": "894de6742db48f4c84aad061ed927e2c8688d77d5996457555ec1e220f3a73c7"
+  },
+  "provenance": {
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "file": "reconstruction/program_notice/core.asm",
+    "start": 17023,
+    "end": 17213,
+    "file_offset": 21631,
+    "bytes": 190,
+    "sha256": "6448262d68316f53b5a676dea9e57b2f011f7e434e3272fa8fe8fa5c5d7b7e61",
+    "read_evidence": "ev_3a6aef3c6da96182cb2bdf31d4fb92f2331ae0cc6a2956e46df3a757e89a22d3",
+    "mapping_evidence": "ev_163522c52e3ecf567397f0c74b9861ee7504375aceb58fbaeb8bc711cde2ff52",
+    "function_evidence": "ev_8e1754d48ed34907f4f3ff9f5abc632e1946ddc996059d38b4a52e0786ec3644",
+    "entries": {
+      "error_bx": 17023,
+      "message_stack": 17032,
+      "window": 17050
+    },
+    "limitations": [
+      "Exact native controller and wrapper recovery only. Dependency execution is separately declared.",
+      "Original signed/16-bit centering is not clipped; long messages can generate invalid window coordinates.",
+      "Native wait counts three clock changes, has no UART service, and cannot finish without a key if the clock stops.",
+      "No application publication or whole PROGRAM/window/ASPECT completion."
+    ]
+  },
+  "reports": {
+    "build/program-notice/manifest.json": "8a80b2cad2ef1c73453d44e15ede6490ac0b18fb4eb5a04a499a782ebcf432b0",
+    "build/program-notice/checks.json": "d6d370adf885ade2ad270c3bd9cf93786f45c83d5be1f48dd939bb0da80a7a9f",
+    "build/program-notice/original-checks.json": "b80666410fa3bb9c5a34eed2a8f90af72b6bcfbe611b650aab07b54e7232c4b1",
+    "build/program-notice/dos-02/result.json": "c10fa1a7cbdec96eb0167aa8f79ef285811354b41baf0b9996fcffcc4ea57e56",
+    "build/program-notice/source-proof-02/result.json": "06ad284350c7d01c96c99f7d407bf5e7c823c9a61e99869dcf5070b04595fad0",
+    "reconstruction/program_notice/provenance.json": "cd01a513cc13b41cffb35c6e15af4e1f381c42a64d5e958ab5269a053d10b2a9"
+  },
+  "inputs": {
+    "standalone/build_program_notice.py": "b3ad0881bf9b922480f946f2d3b92901c96ab06cc62288411346452e9431b0f1",
+    "reconstruction/program_notice/provenance.json": "cd01a513cc13b41cffb35c6e15af4e1f381c42a64d5e958ab5269a053d10b2a9",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/program_notice/core.asm": "d7bc2c89bbb25ca62e66e4cc3e5d3592e0097cc055c9e8ee30a03cc9ccf8b33b",
+    "reconstruction/program_exec/strlen.asm": "a3a4f98217c60ca930b83060071be356bb2340740f6a994e450fecab13d0f5af",
+    "reconstruction/transfer_uart/clock.asm": "f64b3106aeb5633f6edb0002db0b3f8b73c5f563033b752848d13b74490943d0",
+    "standalone/program_notice_diagnostic.asm": "7601a05126f224fe012539e730dcf887154a16de46abd5cd4a201c483afefe09",
+    "standalone/test_program_notice_dos.py": "5c72f012112ff11fdb8f8066f565f8b1fc1ebb5fc62d26be641999acf438e2f4",
+    "standalone/check_program_notice.py": "c6fb227e3e4b92f1b7d990eca685193cd7757ad44d012012e898c8ef9ea27871",
+    "standalone/prove_program_notice_source.py": "a86fc0662dc6c3e9e4e3e418cbc073f7c5e1bb35ee8589c1be202253a29957b8"
+  },
+  "toolchain_inputs": {
+    "nix/flake.nix": "e7291a75d578ce04fffc090ba804f4ae35e3fce295d5eecbbac369e481e9cba0",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/dev": "abbf4bd3a4d6cb91b5f7eecc3919ccbccd15e472bc49463e9d2669adc67e0bca"
+  },
+  "auditor_sha256": "f9ae5794c352416918c2ed14e12cc25c8a35c468b2fd51b748918324c3b51abe",
+  "scope": "Exact native notice wrappers/controller with real recovered strlen and DOS-time extraction. CPU time samples, keys, sound and screen services are declared models. Six actual DOSBox-X8086 cases use real DOS seconds/BIOS keys and a maintained screen-copy test platform; speaker is a no-op test boundary. Original macro keyboard, window heap/drawing, foreground UART, PROGRAM integration, other geometry and physical hardware remain unverified."
+}
