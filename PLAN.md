@@ -12,7 +12,10 @@ cases, exact marker/bytecode regeneration and clean redial with handle cleanup.
 Fresh independent10 confirmation/four carrier/twelve XOFF-CTS regressions pass,
 as do four Synchronet/ENiGMA recorder/replay and two stock script-window sessions.
 Current-parent normal ENiGMA recording audio is live with sealed admission;
-its outcome remains pending. Helper errors/missing children, sustained pressure,
+its outcome remains pending. Six source-bound offline launch-error workflows
+now pass independent raw audit: absent helper (actual DOS EXEC CF1/error2, no
+child exit), absent ASX (child1), invalid header (child2), SOFT/BOTH. Each restores
+owners/hardware and cleanly redials. Remaining allocation/media/helper errors, sustained pressure,
 other DCD/hangup/cancel paths and further code placement remain required.
 The completed transmit-wait audio below retains parent6075bc18, not this new
 parent. All full F01–F16 and physical requirements remain open.

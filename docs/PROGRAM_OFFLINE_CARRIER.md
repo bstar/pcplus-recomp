@@ -90,11 +90,33 @@ run is live, with [sealed preparation](validation/recording-offline-program-audi
 and a passing current-parent DOS/Telnet helper control. No current-parent audio
 outcome is claimed yet.
 
+## Offline launch failures
+
+[Six independently audited error workflows](validation/script-offline-errors.json)
+cover SOFT/BOTH after the same observed MODEM loss:
+
+| Missing or invalid input | Observed result |
+| --- | --- |
+| ASPECT.EXE absent | Actual DOS EXEC returns carry set/error2; no child exit occurs. The ordinary local acknowledgement is consumed before redial. |
+| GO.ASX absent | The actual ASPECT child exits1, reporting the open failure through the adopted renderer. |
+| GO.ASX contains one invalid-header byte | The actual ASPECT child exits2, before the source fixture's unreachable file write. |
+
+All six observe the parent offline with no introduced XOFF at direct EXEC,
+restore hardware/JFT/file owners and produce clean second ATZ/OK plus exact
+BBS/manual-query streams. The observer records actual DOS return FLAGS and AX;
+the missing-helper case is not represented as a fictitious child exit65535.
+The source compiler is retained, and the valid unused ASX in the missing-helper
+case is regenerated independently. No original helper or executable is used.
+
+These checks cover selected file-presence/header faults. Allocation failure,
+media faults, helper exit families, other DOS errors and broader application
+recovery remain separate requirements. No product source change was needed.
+
 Normal parent: dd86139f44a98279c08ccd003a880aebc3a5341cda079dfea9e9d448a84c69e4.
 Mouse parent: 28a80b378a1efbfdcfaf7943be65e434786a61be09ce4e34b3e1fcab05cdb91b.
 The ASPECT child remains183f852d, ASIOv6/capabilities12/13 unchanged.
 
-Current-parent audio acceptance, other helper/error paths,
+Current-parent audio acceptance, remaining helper/allocation/media error paths,
 initially-low/transient DCD, manual hangup/cancel, sustained flow pressure and
 physical UART/modem acceptance remain open. This does not close a full F01–F16
 application gate.

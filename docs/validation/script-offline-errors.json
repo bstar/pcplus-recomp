@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "selected_offline_error_recovery_accepted": true,
+  "physical_hardware_accepted": false,
+  "full_application_accepted": false,
+  "parent_sha256": "dd86139f44a98279c08ccd003a880aebc3a5341cda079dfea9e9d448a84c69e4",
+  "runner_sha256": "183f852dfe0a992faa29515e124eb3b6570e44578bdc25880a8a792a2bf7da3f",
+  "cases": {
+    "missing-runner-soft": {
+      "passed": true,
+      "offline_sample": [
+        0,
+        6,
+        1,
+        0
+      ],
+      "actual_child_exits": 0,
+      "child_exit": null,
+      "DOS_EXEC_carry": true,
+      "DOS_EXEC_error": 2,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f",
+      "connections": 2
+    },
+    "missing-runner-both": {
+      "passed": true,
+      "offline_sample": [
+        0,
+        6,
+        1,
+        0
+      ],
+      "actual_child_exits": 0,
+      "child_exit": null,
+      "DOS_EXEC_carry": true,
+      "DOS_EXEC_error": 2,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f",
+      "connections": 2
+    },
+    "missing-script-soft": {
+      "passed": true,
+      "offline_sample": [
+        0,
+        6,
+        1,
+        0
+      ],
+      "actual_child_exits": 1,
+      "child_exit": 1,
+      "DOS_EXEC_carry": false,
+      "DOS_EXEC_error": null,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f",
+      "connections": 2
+    },
+    "missing-script-both": {
+      "passed": true,
+      "offline_sample": [
+        0,
+        6,
+        1,
+        0
+      ],
+      "actual_child_exits": 1,
+      "child_exit": 1,
+      "DOS_EXEC_carry": false,
+      "DOS_EXEC_error": null,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f",
+      "connections": 2
+    },
+    "bad-header-soft": {
+      "passed": true,
+      "offline_sample": [
+        0,
+        6,
+        1,
+        0
+      ],
+      "actual_child_exits": 1,
+      "child_exit": 2,
+      "DOS_EXEC_carry": false,
+      "DOS_EXEC_error": null,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f",
+      "connections": 2
+    },
+    "bad-header-both": {
+      "passed": true,
+      "offline_sample": [
+        0,
+        6,
+        1,
+        0
+      ],
+      "actual_child_exits": 1,
+      "child_exit": 2,
+      "DOS_EXEC_carry": false,
+      "DOS_EXEC_error": null,
+      "wire_sha256": "e060a88f547e93aaac0700d0b7e7f27ff95123aa821ae3180d2d0d569a4d885f",
+      "connections": 2
+    }
+  },
+  "cohort": "build/script-offline-errors-dos/accepted-01",
+  "files_manifest_sha256": "6b0f6af77b86aa07eb448cdce66288247065d26d626ab5c02589f385739e17d2",
+  "auditor_sha256": "564c4b253ecee70b702feaaf8c1875d3ea766d8579065d61e7741fbe1156eba4",
+  "scope": "Audit raw missing-runner/script/header recovery after MODEM loss. Six actual8086 SOFT/BOTH cases. Absent helper causes real DOS EXEC CF1/error2 and no child exit; present helper returns1 for absent script and2 for one-byte invalid header. Passive offline/return flags, unreachable-file absence, exact modem/BBS/query streams and hardware/JFT/file-owner cleanup checked. Known synthetic file faults only; allocation/media/error families, other DCD/flow paths, physical and all full F01-F16 gates remain open."
+}

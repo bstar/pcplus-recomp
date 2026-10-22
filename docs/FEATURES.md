@@ -17,7 +17,10 @@ audio receipt above retains the preceding parent6075bc18 identity. New-parent
 source-bound File/A launch after loss passes two actual DOS cases; independent
 10 confirmation/four carrier/twelve XOFF-CTS and fresh stock BBS recorder/window
 checks pass. Its normal audio run is live with sealed preparation; outcome and
-physical hardware acceptance remain open.
+physical hardware acceptance remain open. Six independently audited SOFT/BOTH
+offline launch failures now cover absent runner, absent script and invalid
+header, with actual DOS/child errors, cleanup and clean redial. Allocation,
+media and other helper-error families remain required.
 No full feature or hardware gate closes.
 
 The [modem command-mode checkpoint](validation/modem-reconnect.json) accepts
