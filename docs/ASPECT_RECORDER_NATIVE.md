@@ -70,6 +70,26 @@ callback results in the selected instructions, not an actual disk-full event.
 
 ## Source replacement work
 
+The separate [literal-generation constraints](validation/aspect-recorder-literal-limits.json)
+now exercise16 cases through the maintained compiler's acceptance checks and
+source-built native TRANSMIT/caret instructions with modeled device/delay
+callbacks. No original executable is an input. This is not execution of a
+generated script through the complete VM, or a source-owned recorder.
+
+Applying the observed formatter rule exposes seven non-roundtrips: quotes
+produce invalid source; unescaped caret sequences change bytes; the configured
+pause character emits a delay rather than itself; rawFF emits serial NUL; and
+adjacent controls1E/1F become the ambiguous sequence `^^^_`, which decodes to
+literal caret/underscore. Using `^~^_` disambiguates that control pair; `^^^`
+preserves one literal caret and `^@` sends NUL. Twenty-six escaped carets fit the
+80-byte literal limit; twenty-seven do not. Chunking must therefore count the
+encoded length, not only pending raw bytes. Quote construction, the FF/NUL
+sentinel and pause-setting ownership still require deliberate source-owner
+solutions. Copying the old formatter with a larger array cannot establish
+byte-exact recorder replay. The first probe's mistaken expectation that all
+adjacent control encodings round-trip is retained in its failure log; the
+passing probe checks the observed collision explicitly.
+
 Implement a bounded source-owned recorder with checked output/close ownership,
 explicit prompt/key inputs and safe chunking of expanded literals. Preserve the
 documented prompt and key behavior where appropriate; record deliberate fixes
@@ -89,3 +109,12 @@ F13 remain open; these native probes cannot substitute for those requirements.
 
 The command explicitly requires the ignored original and overlay manifest.
 It is an opt-in compatibility diagnostic, not an ordinary build dependency.
+
+The separate source-only literal constraint probe uses cached source-built
+component units, validates their manifest and performs no rebuild itself:
+
+```sh
+./tools/build aspect-serial-commands
+./tools/dev --command python3 standalone/check_aspect_recorder_literal_limits.py \
+  --output build/aspect-recorder/literal-limits-new.json
+```
