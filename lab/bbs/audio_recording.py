@@ -8,6 +8,9 @@ ONLINE_TAIL=PAYLOAD*2+b'S\r'
 # Separate the local marker from the BBS footer's late fixed-row repaint.
 # MESSAGE itself appends the final CRLF; helper dwell/keys stay unchanged.
 READY_MESSAGE='message "^M^JRECORDER READY^M^J^M^J"\n'
+# Bottom filter text follows the page body. Connected WAITFOR sees display
+# leads; parent parser continuation bytes cannot serve as an ANSI delimiter.
+READY_FOOTER='By Date Added'
 
 
 def inputs(proof):

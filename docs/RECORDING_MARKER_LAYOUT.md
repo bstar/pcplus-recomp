@@ -1,5 +1,11 @@
 # Recorder marker and late File Base footer
 
+The placement-only normal attempt was deliberately stopped after its helper
+remained phase0. Its [failure evidence](validation/recording-marker-layout-stopped.json)
+is preserved; the linked layout cases do not prove the whole live workflow.
+The [current fixture also waits for the plain bottom filter](RECORDING_FOOTER_READINESS.md)
+before displaying readiness.
+
 The [audio visibility diagnostic](validation/recording-marker-audio-diagnostic.json)
 observed one76-sample run of `RECORDER READY`, followed by its disappearance.
 The helper needed91 consecutive samples, delivered zero recipe keys, had no
@@ -34,9 +40,9 @@ survives all selected cases. The captured footer is an owned lab fragment with
 provenance and hashes in `lab/bbs/recording_marker_footer.json`, excluding login
 data and page artwork.
 
-The refreshed ordinary-helper TCP control passes13 checks, including actual
+The placement-only ordinary-helper TCP control passed13 checks, including actual
 recorded bytes, DOS compilation/replay, manual Search, timer and hardware
-restoration. A new ordinary SIP/audio run is required to accept the complete
-workflow. Its outcome remains unverified. Diagnostic results remain ineligible
+restoration. Its ordinary SIP/audio run did not establish the complete workflow;
+the current footer-gated run remains unverified. Diagnostic results remain ineligible
 for production acceptance; physical Boca/SPA2102 and full application
 requirements remain open.

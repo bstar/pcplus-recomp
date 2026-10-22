@@ -1,0 +1,88 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "profile": 4,
+      "pattern": "raw-ANSI-suffix",
+      "input_kind": "raw",
+      "native_match": true,
+      "consumed": 458,
+      "stream_bytes": 458,
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "pattern": "raw-ANSI-suffix",
+      "input_kind": "display-leads",
+      "native_match": false,
+      "consumed": 170,
+      "stream_bytes": 170,
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "pattern": "plain-footer",
+      "input_kind": "raw",
+      "native_match": true,
+      "consumed": 130,
+      "stream_bytes": 458,
+      "passed": true
+    },
+    {
+      "profile": 4,
+      "pattern": "plain-footer",
+      "input_kind": "display-leads",
+      "native_match": true,
+      "consumed": 53,
+      "stream_bytes": 170,
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "pattern": "raw-ANSI-suffix",
+      "input_kind": "raw",
+      "native_match": true,
+      "consumed": 458,
+      "stream_bytes": 458,
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "pattern": "raw-ANSI-suffix",
+      "input_kind": "display-leads",
+      "native_match": false,
+      "consumed": 170,
+      "stream_bytes": 170,
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "pattern": "plain-footer",
+      "input_kind": "raw",
+      "native_match": true,
+      "consumed": 130,
+      "stream_bytes": 458,
+      "passed": true
+    },
+    {
+      "profile": 6,
+      "pattern": "plain-footer",
+      "input_kind": "display-leads",
+      "native_match": true,
+      "consumed": 53,
+      "stream_bytes": 170,
+      "passed": true
+    }
+  ],
+  "parent_sha256": "1cbb4f8fa243f9ce63c3a2d0788d0f039c3cb481f8e03d267f77e039823a6ba0",
+  "native_units_manifest_sha256": "944745688f7ca55dc1aab00300ed4a0c535c688f92ecb6147a1e69e400be23c2",
+  "inputs": {
+    "lab/bbs/check_recording_footer_boundary.py": "ac9244dcd8e4b0a4e0ea363726af1d85bbef79b45e743f1a71d4e4d37e167d5a",
+    "lab/bbs/recording_marker_footer.json": "5a4d6b7533b39ee115c7788e88518055fc9fe6f298c374ca9f14fc31106a91d4",
+    "lab/bbs/audio_recording.py": "7b3a4169db46874195ddf080f9a90482d9b0f9f8f69b17e8a54585fd347bb1c1",
+    "standalone/check_terminal_reset_live.py": "38352a70f872a9fd289f59a0b279c95ada20cc34d7c09f5ab0645bd9a99f6fbd",
+    "standalone/check_line_edit_live.py": "3e8b69c1f89d8aba47f2d05ab3eb6a76eb4154bc56979d4561743a6fcaf769eb",
+    "standalone/check_aspect_serial_commands.py": "f9b5e77cfe1ac9455df10048119f9b5ebc70cf8c474a2d88bb75de43f80659fe"
+  },
+  "scope": "Execute parent continuation consumption and native WAITFOR at their explicit boundary. Actual linked parent IRQ/parser instructions produce leads; actual native WAITFOR/string/caret instructions consume explicit raw or lead fixtures. Device/time callbacks modeled; not one attached DOS process. Raw ANSI suffix matches raw capture but cannot match the connected display-lead interface. Plain bottom filter text matches both; live DOS/TCP/audio remains separate."
+}

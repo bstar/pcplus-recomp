@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Footer completion](RECORDING_FOOTER_READINESS.md) now gates readiness on plain
+bottom-filter text; an unsuitable raw-ANSI gate and the stopped placement-only
+audio run remain preserved as failures. Eight native boundary cases and13
+connected DOS/TCP controls pass; ordinary audio outcome is still unverified.
+Four retained-carrier hangup model cases also remain an open F03 policy gap.
+
 [Marker layout evidence](RECORDING_MARKER_LAYOUT.md) narrows the audio readiness
 failure to a76-sample marker run below the91-sample requirement. A captured late
 footer erases the preceding layout in linked renderer tests. The revised fixture

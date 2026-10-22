@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+The [placement-only normal audio attempt](docs/validation/recording-marker-layout-stopped.json)
+was deliberately stopped for a dump after prolonged readiness failure; helper
+phase0/zero keys/zero queue retries remain observed. No normal cleanup/audio
+acceptance follows. The [current footer gate](docs/RECORDING_FOOTER_READINESS.md)
+waits for plain bottom-filter text before signaling readiness. A failed raw-ANSI
+gate is preserved: parent parser continuations bypass connected WAITFOR.
+Eight native boundary cases and13 fresh DOS/TCP controls pass; a new ordinary
+audio run is live with sealed preparation. The separate
+[retained-carrier hangup model](docs/HANGUP_RETAINED_CARRIER.md) reproduces four
+linked cases; actual DOS and policy correction remain required.
+
 The [ready-marker audio diagnostic](docs/validation/recording-marker-audio-diagnostic.json)
 now observes76 consecutive matching samples, below the91 required for admission,
 with no recipe keys or BIOS queue retries. Replaying the captured late File Base

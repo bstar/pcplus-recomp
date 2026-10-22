@@ -222,7 +222,9 @@ def main():
   script+='transmit "M^M"\n'+wait('MESSAGE AREA',150,'MESSAGES')+'waitquiet 2 120\n'+mark('MESSAGES')
   if a.route in ('menus','recording'):
    script+='transmit "Q^M"\n'+wait('Main Menu',150,'RETURN')+'waitquiet 2 120\n'+mark('RETURN')+'transmit "F^M"\n'
-   script+=wait('File Base',150,'FILES')+'waitquiet 2 120\n'+mark('FILES')
+   script+=wait('File Base',150,'FILES')
+   if a.route=='recording':script+=wait(audio_recording.READY_FOOTER,150,'FOOTER')
+   script+='waitquiet 2 120\n'+mark('FILES')
   else:
    script+='transmit "P^M"\n'+wait('INS',150,'HEADER')+'waitquiet 2 120\ntransmit "^M"\nwaitquiet 2 120\ntransmit "KEYTEST^M"\nwaitquiet 2 120\n'+mark('EDITOR')
  script+='fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\n'
