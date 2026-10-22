@@ -21,7 +21,7 @@ def observer(out,product_root):
     parent=window.symbols(product_root/'build/terminal/terminal.map')
     child=window.symbols(product_root/'build/aspect-runner/ASPECT.map')
     builder=window.make_observer(renderer.observer,parent,child)
-    builder=confirmation_observer(builder)
+    builder=confirmation_observer(builder,product_root)
     result=builder(renderer.map_offsets(product_root/'build/terminal/terminal.map'))
     path=out/'observer.asm';text=path.read_text()
     fields=['carrier_armed_seen','carrier_cleared_seen','carrier_pending_seen','carrier_error_seen','carrier_clear_ticks','carrier_depth_seen','carrier_last_key_seen','carrier_tx_paused_seen']
@@ -145,6 +145,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',required=True)
     parser.add_argument('--case',action='append',choices=['TX-No','CALL-No','CALL-Yes','XOFF-error'])
     parser.add_argument('--expect-gap',action='store_true')
+    parser.add_argument('--expect-parent-gap',action='store_true')
     parser.add_argument('--product-root',type=Path,default=ROOT);args=parser.parse_args()
     product_root=args.product_root.resolve();assert product_root==ROOT or product_root.is_relative_to(ROOT/'build')
     assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
@@ -184,9 +185,9 @@ def main():
         extra=struct.unpack('<17H',raw[-34:]);window_state=extra[:5];confirmation=extra[5:9];carrier=dict(zip(fields,extra[9:]))
         wire=(folder/'serial.bin').read_bytes()
         expected=(b'\x13\x11' if kind=='XOFF' else b'')+ESC+b'[1;16R'+ESC+b'[?62;2cKEYREADY'+ESC+b'[1;22R'
-        modem_log=(folder/'dosbox.log').read_text()
-        checks=dict(modem_carrier_loss=modem_log.count('Modem response: NO CARRIER')==1,
-                    exit_hangup_matches_carrier_policy=(('Command sent to modem: ->ATH<-' in modem_log)==(kind!='XOFF')) and 'Modem response: ERROR' not in modem_log,
+        modem_log=(folder/'dosbox.log').read_text();not_parent_gap=not args.expect_parent_gap
+        checks=dict(parent_status_OFF_LINE=(b'OFF-LINE' in (folder/'SCREEN.BIN').read_bytes()[3840:4000:2])==not_parent_gap,modem_carrier_loss=modem_log.count('Modem response: NO CARRIER')==1,
+                    exit_hangup_matches_carrier_policy=(('Command sent to modem: ->ATH<-' in modem_log)==(args.expect_parent_gap and kind!='XOFF')) and 'Modem response: ERROR' not in modem_log,
                     native_TX_action_in_modem=(('Command sent to modem: ->AT<-' in modem_log)==(kind=='TX')),
                     base_DOS_hardware_directory_and_peer=report['passed'],exact_whole_BBS_wire=wire==expected,
                     peer_stream_matches=wire==b''.join(bytes.fromhex(e['hex']) for e in events if e['kind']=='receive'),
@@ -207,7 +208,7 @@ def main():
                     wire_sha256=sha(folder/'serial.bin'),captures={str(p.relative_to(folder)):sha(p) for p in folder.rglob('*') if p.is_file()})
         (folder/'carrier-checks.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(json.dumps(dict(case=name,passed=result['passed'],checks=checks,carrier=carrier)),flush=True)
-    report=dict(passed=all(r['passed'] for r in results),gap_reproduced=args.expect_gap,compatibility_accepted=not args.expect_gap,
+    report=dict(passed=all(r['passed'] for r in results),gap_reproduced=args.expect_gap,expected_parent_gap=args.expect_parent_gap,compatibility_accepted=not (args.expect_gap or args.expect_parent_gap),
                 cases=results,inputs=identities,product_source_root=str(product_root),parent_sha256=sha(product_root/'build/terminal/TERMINAL.EXE'),runner_sha256=sha(product_root/'build/aspect-runner/ASPECT.EXE'),
                 observer_fields=fields,observer_sha256=sha(out/'RENDER.COM'),checker_sha256=sha(Path(__file__)),scope=__doc__+' Emulated modem/DCD; no physical modem or14.4 negotiation claim.')
     (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n');assert report['passed']

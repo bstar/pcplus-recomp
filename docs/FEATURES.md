@@ -1,5 +1,28 @@
 # Full application reconstruction checklist
 
+The [software-flow handback audit](validation/aspect-flow-return.json) passes two actual8086 DOS
+sessions, SOFT and BOTH: a1.2-second XOFF pause is observed for22 BIOS ticks,
+then XON releases2,048 exact script bytes. Manual parent typing and a query
+work afterward; the complete2,113-byte wire, including all four flow bytes,
+and hardware/JFT/file-owner restoration pass. CTS stays asserted in this
+nullmodem fixture. Longer stalls, timeout/cancel handback, sustained RX pressure,
+actual CTS stalls and carrier reconnect remain open. The current sender has
+a36-tick pending bound; the first2-second fixture hits child14/serial7 and is
+retained as unaccepted evidence. No physical flow-control claim follows.
+
+The [parent carrier/status checkpoint](validation/parent-carrier-status.json)
+accepts parent4dae4ddb/runnerdfee1e95 for initial-high DCD loss inside an automatic
+script and normal OFF-LINE/menu return. Both parent variants pass32 linked
+groups; six DOS terminal sessions/48 checks, four modem-drop cases,
+[ten confirmation workflows](validation/parent-carrier-confirmation.json),
+13 PROGRAM cases and26 clean-source products pass. [Four BBS recorder/replay](validation/bbs-parent-carrier-compat.json)
+and [two stock-window sessions](validation/bbs-parent-carrier-window.json) pass.
+[Fresh normal recorder audio](validation/recording-parent-carrier-audio.json)
+passes26/34/12 producer/independent/serial checks with exact streams and cleanup
+on one ENiGMA V22/1200 software route. Late DCD pulses, broader flow/reconnect,
+remaining application functions and every full F01–F16 gate remain open.
+Earlier checkpoints retain their identities and scopes.
+
 Current runnerdfee1e95 with parent7b6ded5c passes the [prompt carrier audit](validation/aspect-abort-carrier.json):
 four actual DOS modem-hangup cases, eight linked groups and ten fresh confirmation
 regressions. Native carrier actions run without taking modal keys; framed CALL,

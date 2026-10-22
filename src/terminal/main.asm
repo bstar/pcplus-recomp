@@ -47,6 +47,7 @@ extern terminal_controller_poll,terminal_controller_filter
 extern terminal_controller_receive_hold,terminal_controller_shutdown
 extern terminal_connection_start,terminal_connection_receive
 extern connection_state,connection_result
+extern terminal_status_poll
 ; Open Watcom small-code consistency marker for the near-C DOS IO subset.
 global _small_code_
 _small_code_:
@@ -246,6 +247,7 @@ _small_code_:
  jne terminal_shutdown
  cmp word [terminal_program_pending],0
  jne .idle
+ call far terminal_status_poll
  cmp word [uart_rx_dropped],0
  jne .overflow
  ; Leave post-match bytes in the actual RX ring while final command pacing

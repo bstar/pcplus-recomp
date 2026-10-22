@@ -10,8 +10,9 @@ FIELDS=['carrier_armed_seen','carrier_cleared_seen','carrier_pending_seen','carr
         'carrier_clear_ticks','carrier_depth_seen','carrier_last_key_seen','carrier_tx_paused_seen']
 
 
-def verify_modem(folder,baseline=False):
+def verify_modem(folder,baseline=False,parent_status=False):
     receipt=read(folder/'checks.json');assert receipt['passed'] and receipt['gap_reproduced']==baseline
+    if parent_status:assert not baseline and not receipt['expected_parent_gap']
     assert receipt['compatibility_accepted']!=baseline and receipt['observer_fields']==FIELDS
     for name,digest in receipt['inputs'].items():assert sha(folder/'inputs'/name)==digest,name
     results={}
@@ -59,12 +60,13 @@ def verify_modem(folder,baseline=False):
         log=(case/'dosbox.log').read_text()
         assert log.count('Modem response: NO CARRIER')==1 and 'Modem response: ERROR' not in log
         assert ('Command sent to modem: ->AT<-' in log)==(name=='TX-No')
-        assert ('Command sent to modem: ->ATH<-' in log)==(not fault)
+        assert ('Command sent to modem: ->ATH<-' in log)==(not fault and not parent_status)
         # The synthetic fixture changes only its selected phone number before
         # execution; the actual ephemeral dial address must match the modem.
         dial=(case/'DIAL.IN').read_bytes()[275:296].split(b'\0',1)[0].decode()
         assert 'Command sent to modem: ->ATD'+dial+'<-' in log
         assert len((case/'SCREEN.BIN').read_bytes())==4000
+        if parent_status:assert (case/'SCREEN.BIN').read_bytes()[3840+71*2:3840+79*2:2]==b'OFF-LINE'
         results[name]=dict(passed=True,child_exit=header[6],query_reply_seconds=completed-query['time'],
                           prompt_ticks=prompt[3],carrier=carrier,wire_sha256=sha(case/'serial.bin'),
                           stale_ON_LINE_label=b'ON-LINE' in (case/'SCREEN.BIN').read_bytes()[::2])

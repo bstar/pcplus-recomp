@@ -1015,6 +1015,16 @@ test-aspect-abort-carrier: aspect-runner
 test-aspect-abort-carrier-dos: terminal aspect-runner
 	python3 standalone/test_aspect_abort_carrier_dos.py --label "carrier-$$(date -u +%Y%m%dT%H%M%S%N)"
 test: test-aspect-abort-carrier
+.PHONY: test-parent-carrier-status test-parent-carrier-dos
+test-parent-carrier-status: terminal terminal-mouse
+	python3 standalone/check_parent_carrier_status.py --output "build/parent-carrier-status/check-$$(date -u +%Y%m%dT%H%M%S%N)"
+	python3 standalone/check_parent_carrier_status.py --mouse --output "build/parent-carrier-status/mouse-$$(date -u +%Y%m%dT%H%M%S%N)"
+test-parent-carrier-dos: terminal aspect-runner
+	python3 standalone/test_parent_carrier_dos.py --label "parent-$$(date -u +%Y%m%dT%H%M%S%N)"
+.PHONY: test-aspect-flow-return-dos
+test-aspect-flow-return-dos: terminal aspect-runner
+	python3 standalone/test_aspect_flow_return_dos.py --label "flow-$$(date -u +%Y%m%dT%H%M%S%N)"
+test: test-parent-carrier-status
 .PHONY: test-aspect-abort-owner test-terminal-abort-owner test-aspect-abort-dos
 test-aspect-abort-owner: aspect-runner
 	python3 standalone/check_aspect_abort_owner.py

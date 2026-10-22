@@ -1,5 +1,32 @@
 # Local interaction while ASPECT owns the session
 
+The [software-flow handback audit](validation/aspect-flow-return.json)
+([workflow and limits](ASPECT_FLOW_RETURN.md)) passes two actual8086 DOS
+sessions, SOFT and BOTH: a1.2-second XOFF pause is observed for22 BIOS ticks,
+then XON releases2,048 exact script bytes. Manual parent typing and a query
+work afterward; the complete2,113-byte wire, including all four flow bytes,
+and hardware/JFT/file-owner restoration pass. CTS stays asserted in this
+nullmodem fixture. Longer stalls, timeout/cancel handback, sustained RX pressure,
+actual CTS stalls and carrier reconnect remain open. The current sender has
+a36-tick pending bound; the first2-second fixture hits child14/serial7 and is
+retained as unaccepted evidence. No physical flow-control claim follows.
+
+Parent4dae4ddb/runnerdfee1e95 now preserves initial-high carrier bookkeeping
+across automatic script entry. After the tested virtual-modem loss during Stop
+Script, normal parent polling reaches state0/status6, menu return and OFF-LINE.
+The [passive DOS counterexample and corrected captures](validation/parent-carrier-status.json)
+retain the unchanged child and failed intermediate status candidate. Ordinary
+status refresh runs only after child/screen owners release their frames; an
+explicit STATUS draw invalidates its cache. A32-byte temporary DS=SS stack frame
+preserves the15-cell connection notice while replacing its underlay.
+[Ten fresh confirmation cases](validation/parent-carrier-confirmation.json) and
+stock Synchronet/ENiGMA recorder/window regressions pass on this pair.
+[Normal recorder audio](validation/recording-parent-carrier-audio.json) passes
+26/34/12 checks on one ENiGMA V22/1200 software route. Capability
+12/13 and the48-byte descriptor remain unchanged. Full actions, late DCD pulses,
+flow/reconnect, script-window audio and physical hardware remain open. Earlier
+checkpoints below are historical.
+
 Current parent7b6ded5c/runnerdfee1e95 uses capability12 (experimental external
 products use13) with the unchanged48-byte ASIOv4 descriptor. The [carrier audit](validation/aspect-abort-carrier.json)
 and [ten confirmation regressions](validation/aspect-abort-carrier-regression.json)

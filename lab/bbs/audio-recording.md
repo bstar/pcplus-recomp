@@ -1,5 +1,15 @@
 # Normal recorder workflow over the software modem
 
+The [parent-status build](../../docs/validation/recording-parent-carrier-audio.json)
+accepts parent4dae4ddb/runnerdfee1e95 for one normal ENiGMA V22/1200 software
+SIP/RTP/DSP/Telnet recorder route. All26 producer,34 independent and12 serial
+checks pass:60,389 display bytes plus187 bridge bytes exact,77 online bytes
+independently waveform-decoded, normal hardware/timer/SIP/VM cleanup and no
+failed/skipped/pending bytes. [Preparation](../../docs/validation/recording-parent-carrier-audio-preparation.json)
+retains seven BIOS probes and13 actual DOS/Telnet control checks. This route
+does not exercise script-time windows, arbitrary flow stalls or physical
+Boca/SPA2102. Earlier checkpoints below retain their own product identities.
+
 The [carrier-build checkpoint](../../docs/validation/recording-abort-carrier-audio.json)
 accepts parent7b6ded5c/runnerdfee1e95 on the normal recorder route. All26
 producer,34 independent and12 serial checks pass:60,926 BBS display bytes

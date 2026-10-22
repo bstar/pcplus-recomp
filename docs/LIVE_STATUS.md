@@ -1,5 +1,22 @@
 # Live parent status service
 
+Current parent4dae4ddb adds ordinary main-loop carrier refresh to the native
+status renderer. [Independent validation](validation/parent-carrier-status.json)
+binds64 keyboard/mouse linked groups, the earlier parent's actual DOS failure
+and corrected passive captures. Initial-high DCD is sampled before automatic
+script scheduling, so loss inside the child is recognized on return. An inactive
+parent uses the normal help label without requiring a script basename. Explicit
+STATUS invalidates cached visibility, including low/high-script/low transitions.
+
+The ordinary poll samples at most once per BIOS tick and defers program, parser,
+ANSI wait, monitor, snapshot, printer, transfer, redisplay, menu and hidden or
+unsupported layout owners. A stack-only15-cell notice copy preserves live text
+and updates the saved underlay. Supported ordinary geometry is80 columns with
+the native bottom status row. DS=SS data spare is112/64 bytes and resident-code
+spare244/94 for normal/mouse variants. DCD initially low with a complete later
+rise/fall inside a child, other geometries and physical hardware remain open.
+The following measurements describe the earlier frozen status checkpoint.
+
 SET WHENCASE now refreshes the connected terminal's status row through an
 admitted ASPECT child. The parent stages its actual line format, rate, profile,
 duplex, script basename and hidden state, then executes the recovered status

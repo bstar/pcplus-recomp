@@ -28,8 +28,8 @@ def definitions():
         cases.append(item)
     return cases
 
-def confirmation_observer(original):
-    parent=symbols(ROOT/'build/terminal/terminal.map')
+def confirmation_observer(original,product_root=None):
+    parent=symbols((product_root or ROOT)/'build/terminal/terminal.map')
     def observer(offsets):
         result=original(offsets);out=keys.renderer.OUT;path=out/'observer.asm';text=path.read_text()
         text=text.replace('sample_end:\nowner_table:','confirmation_first_render: dw 0\nconfirmation_render_advanced: dw 0\nconfirmation_seen: dw 0\nconfirmation_ticks: dw 0\nsample_end:\nowner_table:')

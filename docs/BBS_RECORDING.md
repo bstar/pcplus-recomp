@@ -1,5 +1,18 @@
 # Recording and replay on Synchronet and ENiGMA
 
+Parent4dae4ddb with unchanged runnerdfee1e95 passes [four fresh recorder/replay
+sessions](validation/bbs-parent-carrier-compat.json) and [two stock-window
+sessions](validation/bbs-parent-carrier-window.json) on owned stock Synchronet
+and ENiGMA. Source recording, DOS compilation, replay, manual return and exact
+streams retain their existing requirements. [Parent carrier/status validation](validation/parent-carrier-status.json)
+separately observes a real virtual-modem drop and corrected OFF-LINE state.
+[Normal software audio](validation/recording-parent-carrier-audio.json) also
+passes26 producer,34 independent and12 serial checks with60,389 display bytes
+plus187 bridge bytes exact and77 independently waveform-decoded online bytes.
+This is one ENiGMA V22/1200 software route; physical compatibility and full
+application acceptance remain open. Earlier results below
+retain their product identities.
+
 The [carrier-build checkpoint](validation/recording-abort-carrier-audio.json)
 accepts parent7b6ded5c/runnerdfee1e95 on the normal recorder route. All26
 producer,34 independent and12 serial checks pass:60,926 BBS display bytes

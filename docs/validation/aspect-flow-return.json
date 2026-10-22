@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "parent_sha256": "4dae4ddb8dbec1fcd46dd73489d6898456e84008dc0eae97581edcc858884e60",
+  "runner_sha256": "dfee1e95a00621559a36983055cd768447e77f1a6f9bc6fea6f84ca04918170f",
+  "cases": {
+    "soft": {
+      "passed": true,
+      "child_paused_ticks": 22,
+      "parent_return_ticks": 105,
+      "pause_seconds": 1.2043319300282747,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    },
+    "both": {
+      "passed": true,
+      "child_paused_ticks": 22,
+      "parent_return_ticks": 105,
+      "pause_seconds": 1.2044198100920767,
+      "payload_bytes": 2048,
+      "wire_bytes": 2113,
+      "wire_sha256": "cc4de1cc450ca817e7e479b853da492a83d317dbb9b5d7fab030bd5bcfef2caa"
+    }
+  },
+  "cohort": "build/aspect-flow-return-dos/accepted-01",
+  "frozen_files": 1582,
+  "files_manifest_sha256": "7bb5d16f49349a441af1c2e3536b22e7441e18a0b32ae5125b496f4571714231",
+  "full_application_accepted": false,
+  "scope": "Two actual8086 DOS runs: SOFT and BOTH,1.2-second remote XOFF pause,2048 exact resumed script bytes, live manual parent typing/query and original hardware/JFT/file-owner restoration. Entire wire including all four flow-control bytes is exact. Peer and passive timer independently constrain the pause. CTS remains asserted in DOSBox-X nullmodem.",
+  "remaining": [
+    "CTS/RTS stalls, sustained RX high water, cancellation/timeout handback, carrier reconnect, software audio and physical modem flow timing remain open."
+  ]
+}

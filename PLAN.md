@@ -1,5 +1,42 @@
 # Complete DOS rebuild plan
 
+The [software-flow handback audit](docs/validation/aspect-flow-return.json) passes two actual8086 DOS
+sessions, SOFT and BOTH: a1.2-second XOFF pause is observed for22 BIOS ticks,
+then XON releases2,048 exact script bytes. Manual parent typing and a query
+work afterward; the complete2,113-byte wire, including all four flow bytes,
+and hardware/JFT/file-owner restoration pass. CTS stays asserted in this
+nullmodem fixture. Longer stalls, timeout/cancel handback, sustained RX pressure,
+actual CTS stalls and carrier reconnect remain open. The current sender has
+a36-tick pending bound; the first2-second fixture hits child14/serial7 and is
+retained as unaccepted evidence. No physical flow-control claim follows.
+
+The [parent carrier/status audit](docs/validation/parent-carrier-status.json)
+accepts parent4dae4ddb with unchanged runnerdfee1e95 for the tested initial-high
+DCD transition during automatic ASPECT execution. The unchanged earlier parent
+misses the real virtual-modem loss; the new parent records DCD before queuing
+its script, returns to state0/status6 and displays OFF-LINE. A first candidate
+fixed state but left the row stale; that failure remains preserved. Explicit
+script STATUS now invalidates the ordinary sampler cache. Main-loop refresh
+respects screen owners and preserves the live notice and its refreshed underlay.
+
+Both keyboard/mouse products pass32 linked groups each. Existing connection8,
+status85, six actual DOS terminal sessions/48 checks, four modem-drop cases,
+[ten confirmation regressions](docs/validation/parent-carrier-confirmation.json),
+13 attached PROGRAM cases and26 original-free products pass. Near-data spare
+remains112/64 bytes; near-code spare is244/94. [Four BBS recorder/replay sessions](docs/validation/bbs-parent-carrier-compat.json)
+and [two stock-window sessions](docs/validation/bbs-parent-carrier-window.json)
+pass on Synchronet/ENiGMA. [Fresh normal software audio](docs/validation/recording-parent-carrier-audio.json)
+passes26 producer,34 independent and12 serial checks:60,389 display bytes plus187
+bridge bytes exact and77 online bytes independently waveform-decoded. This is
+one normal ENiGMA V22/1200 software route, with normal hardware/timer/SIP/VM
+cleanup. [Admission inputs](docs/validation/recording-parent-carrier-audio-preparation.json)
+remain sealed. Physical and script-window audio are separate requirements.
+
+Next: real XOFF/XON handback/reconnect and CTS pressure, remaining command
+actions and every full F01–F16 requirement. Initial-low DCD with an entire later
+rise/fall inside a child remains open, as do other status geometries and physical
+Boca/SPA2102. Earlier checkpoints below retain their recorded identities.
+
 The [prompt carrier audit](docs/validation/aspect-abort-carrier.json) accepts
 parent7b6ded5c/runnerdfee1e95 with native host/carrier service during Stop Script.
 The modal reader retains local keys; native TRANSMIT fires once, CALL stages its

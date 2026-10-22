@@ -153,7 +153,7 @@ terminal_connection_start_impl:
  jne .modem
  mov word [connection_state],6
  mov word [connection_status],1
- mov byte [connection_carrier_seen],0
+ call connection_capture_carrier
  call connection_note_connected_service
  call connection_notice_restore_service
  jmp .done
@@ -179,6 +179,22 @@ terminal_connection_start_impl:
  call terminal_modem_send_start_impl
 .done:
  restore
+
+; Remember DCD before the connection callback can queue an automatic script.
+; A low line remains unobserved until it actually rises; direct links and
+; modems that assert DCD after CONNECT retain the existing low-line policy.
+connection_capture_carrier:
+ pushf
+ push ax
+ push dx
+ mov dx,[uart_port_msr]
+ in al,dx
+ and al,0x80
+ mov [connection_carrier_seen],al
+ pop dx
+ pop ax
+ popf
+ ret
 
 reset_clock:
  call connection_clock_ticks_service
@@ -297,6 +313,7 @@ terminal_connection_poll_impl:
 .connected:
  mov word [connection_state],6
  mov word [connection_status],1
+ call connection_capture_carrier
  call connection_note_connected_service
  call connection_notice_restore_service
  jmp .done
