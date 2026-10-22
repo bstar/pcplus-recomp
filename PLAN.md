@@ -1,5 +1,36 @@
 # Complete DOS rebuild plan
 
+The [cooperative abort-confirmation audit](docs/validation/aspect-abort-owner.json)
+accepts ten actual DOS workflows on parent7b6ded5c/runner12d40249. Escape now
+opens the native default-No policy through a checked cooperative parent frame;
+No/Enter/Escape end the active wait without aborting the script, while Yes
+returns13. Translation, native WHEN matching and parser reception continue
+under the prompt; CALL bodies remain deferred. A suspended RGET does not acquire
+modal text. The9,114-byte load returns44 CPRs within59.9ms and preserves all1,408
+character/attribute cells. Nine linked child groups and ten normal/ten mouse
+parent groups constrain ownership, frame restoration and error cleanup.
+Capabilities are12/13 with the unchanged48-byte ASIOv4 descriptor.
+
+The DOS compiler now reserves24KB rather than32KB, leaving room to compile
+beneath the resident application. All2,043 corpus cases, including18 accepted
+line-limit expressions, pass with checked16KB parser/API stacks; a deliberate
+2KB stack overflow proves the guard is active. The production CLI retains24KB.
+All13 attached PROGRAM workflows pass, including nested compilation;26 selected
+products reproduce from an original-free tree. No allocator or grammar limit
+change was adopted. [Four fresh recorder/replay sessions](docs/validation/bbs-abort-owner-compat.json)
+and [two stock-window sessions](docs/validation/bbs-abort-owner-window.json) pass
+on Synchronet/ENiGMA, including normal parent-menu return.
+[Current recorder audio](docs/validation/recording-abort-owner-audio.json) passes
+26 producer,34 independent and12 serial checks with60,389 BBS display bytes
+plus187 bridge bytes exact and77 online bytes independently waveform-decoded.
+Seven BIOS probes/56 assertions and13 DOS/Telnet checks constrain admission.
+This is one normal ENiGMA recording/replay/manual Search route over pinned
+V22/1200 software SIP/RTP/DSP/Telnet. Script-time windows over audio, other
+routes/profiles and physical hardware remain unaccepted. The older receipts
+below retain their identities. Full local actions,
+carrier/flow faults, application gates F01–F16 and physical integration remain
+open. See [local UI](docs/ASPECT_LOCAL_UI.md) and [compiler budget](docs/ASPECT_DOS_COMPILER.md).
+
 [Current normal recorder audio](docs/validation/recording-pause-audio.json)
 accepts the0eff2348/2c80e45c pair for one owned stock ENiGMA route through the
 pinned200ms V22/1200 SIP/RTP/DSP/Telnet runtime. Normal File/C recording, unedited
@@ -17,13 +48,23 @@ cases and4,610 genuine-original comparisons covering all91 source instruction
 addresses. Four flat/OMF products reproduce in an isolated original-free tree.
 The initial OMF path-dependent headers remain retained; relative assembler
 source paths fix reproducibility without changing native instructions. This
-component is not integrated: outer Escape still cancels immediately. Next wire
-a checked confirmation owner that preserves live child receive/parser/WHEN,
+component was not integrated at that checkpoint: outer Escape still cancelled
+immediately. The integrated checkpoint above now supplies a checked confirmation owner that preserves live child receive/parser/WHEN,
 local key ownership, default-No/decline behavior and cleanup; do not introduce
 another blocking query-delay path. Continue broader flow/carrier/fault tests,
 full command actions and every F01–F16/physical requirement. Earlier checkpoints
 below retain their binary identities and acceptance scopes.
 
+
+The [process diagnostic bank](docs/validation/aspect-process-diagnostic-bank.json)
+retains all56 actual DOS COM1/COM2 NONE/SOFT/HARD/BOTH scenarios after the new
+runtime outgrew near code. PROCESSDIAG moves diagnostic observation/check and
+environment helpers behind explicit far CRT adapters; no checks are removed.
+A separate clean source tree reproduces23 diagnostic/component products, and
+the canonical diagnostic is byte-identical to the tested isolated candidate.
+Only16 near code bytes remain in this instrumented build; further application
+growth still requires deliberate code placement. The normal and attached
+application binaries remain unchanged by this diagnostic-only adjustment.
 
 The [foreground PAUSE audit](docs/validation/aspect-pause-live.json) accepts
 seven actual DOS query/WHEN cases and Escape cancellation on unchanged normal

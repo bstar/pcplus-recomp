@@ -13,6 +13,7 @@ import check_aspect_render_client as client
 class Keyboard(client.Client):
     def __init__(self, key=None):
         self.key = key
+        self.next_key = None
         self.frozen_clock = False
         super().__init__()
 
@@ -34,7 +35,7 @@ class Keyboard(client.Client):
             else:
                 assert self.key is not None
                 uc.reg_write(UC_X86_REG_AX, self.key)
-                self.key = None
+                self.key, self.next_key = self.next_key, None
             return
         return super()._interrupt(uc, number, extra)
 
@@ -107,13 +108,14 @@ def main():
     assert machine.get('uart_rx_count') == 1
     cases.append(dict(name='BIOS-midnight-tick-wrap-still-bounds-burst', passed=True))
     machine = Keyboard(0x011b)
+    machine.next_key = 0x1579  # Explicit Yes to the admitted terminal prompt.
     assert machine.open() == 0
     machine.receive_irq(b'Q')
     machine.requests.clear()
     assert poll(machine) == 1
     assert machine.get('_runtime_error') == 13 and machine.key is None
-    assert machine.get('uart_rx_count') == 1 and machine.requests == []
-    cases.append(dict(name='Escape-cancels-before-receive', passed=True))
+    assert machine.get('uart_rx_count') == 1 and machine.requests == [(12,0),(12,1),(12,2),(12,3)]
+    cases.append(dict(name='Escape-then-Yes-cancels-before-receive', passed=True))
     machine = Keyboard()
     assert machine.open() == 0 and machine.call('_aspect_render_finish') == 0
     machine.receive_irq(b'ABC')

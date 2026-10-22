@@ -14,10 +14,12 @@ def main(extension=None):
     output=extension['output'] if extension else OUT
     feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS','-DASPECT_EXTERNAL_UNWIND'] if extension else []
     if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
+    if extension and extension.get('program_far'):feature_flags+=['-DNATIVE_PROGRAM_FAR']
     if extension and extension.get('break_owner'):feature_flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR','-DNATIVE_PROGRAM_FAR']
     main_source=extension.get('driver',ROOT/'src/aspect/runner.c') if extension else ROOT/'src/aspect/runner.c'
     diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c'
     if extension and diagnostic_driver:feature_flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
+    if main_source.name=='aspect_process_diagnostic.c':feature_flags.append('-DASPECT_PROCESS_OBSERVER_FAR')
     output.mkdir(parents=True,exist_ok=True)
     OUT.mkdir(parents=True, exist_ok=True)
     include = '-I' + str(ROOT / 'reconstruction/uart') + '/'
@@ -33,7 +35,9 @@ def main(extension=None):
     serial_asm=[('uart','reconstruction/uart/core.asm','UART_OMF'),('uart_api','src/uart/api.asm',None),
                 ('txpace','src/aspect/txpace.asm',None),
                 ('serial_backend','src/aspect/serial_backend.asm',None),
-                ('resident_client','src/aspect/resident_render_client.asm',None)]
+                ('resident_client','src/aspect/resident_render_client.asm',None),
+                ('abort_confirm','src/aspect/abort_confirm.asm',None),
+                ('abort_yesno','reconstruction/script_abort/confirm.asm','ABORT_CONFIRM_OMF')]
     if extension:
         sources += extension['sources']
         compiled_sources=[p for p in compiled_sources if p!=ROOT/'src/aspect/runner.c']+[main_source,*extension['c_sources']]
@@ -43,7 +47,16 @@ def main(extension=None):
     for name, relative, define in ASM+serial_asm:
         source, obj = ROOT / relative, output / (name + '.obj')
         sources.append(source)
-        subprocess.run(['nasm', '-f', 'obj', include] + feature_flags + (['-D' + define] if define else []) +
+        abort_flags=[]
+        if name=='abort_yesno':
+            abort_flags=['-DABORT_CONFIRM_YESNO_ONLY']
+            abort_flags += ['-D'+key+'='+value for key,value in {
+                'abort_choice_no':'_runtime_abort_no','abort_choice_yes':'_runtime_abort_yes',
+                'abort_choice_cursor_mode':'_runtime_abort_cursor_mode','abort_choice_last_key':'_runtime_abort_last_key',
+                'abort_cursor_push':'_runtime_abort_ui_begin','abort_cursor_pop':'_runtime_abort_ui_end',
+                'abort_cursor_enable':'_runtime_abort_ui_invalid','abort_cursor_disable':'_runtime_abort_ui_invalid',
+                'abort_choice_key_read':'_runtime_abort_read_key','abort_choice_bell':'_runtime_abort_bell'}.items()]
+        subprocess.run(['nasm', '-f', 'obj', include] + feature_flags + abort_flags + (['-D' + define] if define else []) +
                        (['-DASPECT_RUNTIME_SERIAL'] if name in ('bridge','dispatch') else []) +
                        (['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else []) +
                        [str(source), '-o', str(obj)], check=True)
@@ -64,7 +77,7 @@ def main(extension=None):
                   sources={str(p.relative_to(ROOT)): sha(p) for p in sources},
                   platform='8086 DOS, small model, near DS=SS, cdecl, 8192-byte stack',
                   diagnostic_build=False,
-                  scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN and thirteen SET/FETCH families and owned six-slot file streams. Explicit ASP or missing-ASX fallback invokes sibling ASPCOMP with scoped compiler faults and owned UART flow. EXECUTE retains session state and publishes current ASX labels. Capability6 retains inherited BIOS selection and adds shared parent profile key output through the child UART, with checked duplex snapshots and native-derived echo. Local UI/macros, half-duplex reverse-tab/insert/delete, full language/recorder, physical timing and arbitrary-bytecode safety remain unfinished.')
+                  scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN, thirteen SET/FETCH families and owned six-slot streams. Capability12 uses the real parent parser, selected key profile, cooperative help and native yes/no confirmation with child-owned receive. Raw ASIO retains immediate cancellation and queued raw delay semantics. Full language, command actions, other waits/flows, physical timing and arbitrary-bytecode safety remain unfinished.')
     if extension:
         result.update(experimental_external_commands=True,production_dispatch_changed=False,
             experimental_break_owner=bool(extension.get('break_owner')),
@@ -73,7 +86,7 @@ def main(extension=None):
             diagnostic_build=diagnostic_driver,
             main_source=str(main_source.relative_to(ROOT)),
             scope='Experimental108-slot raw/local ASPECT with composed PROGRAM, private DOS handles and real script/ASX ownership checks. Attached parent rendering rejects before execution; full application publication remains open.')
-        if extension.get('parent_render'):result['scope']='Experimental108-slot ASPECT with capability7 attached parent PROGRAM lease, private streams and real UART/display/process controller. Normal capability6/105-slot application is unchanged; complete application ownership and physical acceptance remain open.'
+        if extension.get('parent_render'):result['scope']='Experimental108-slot ASPECT with capability13 attached parent PROGRAM lease, cooperative help/native yes-no confirmation, private streams and the PROGRAMCODE far controller through explicit near-platform adapters. Break/exit policy is selected separately. The normal105-slot application, complete command ownership and physical acceptance remain separate gates.'
     (output / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print('ASPECT.EXE', result['binary_sha256'])
 

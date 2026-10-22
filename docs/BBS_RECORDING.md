@@ -1,5 +1,15 @@
 # Recording and replay on Synchronet and ENiGMA
 
+The [confirmation-build regression](validation/bbs-abort-owner-compat.json)
+repeats all four recorder/replay sessions with parent7b6ded5c, runner12d40249
+and the24KB-stack DOS compilerfc200c8c. [Two fresh script-window sessions](validation/bbs-abort-owner-window.json)
+also pass, including regular parent-menu return. [One fresh normal ENiGMA
+recorder audio route](validation/recording-abort-owner-audio.json) passes26
+producer,34 independent and12 serial checks:60,389 BBS display bytes plus187
+bridge bytes arrive exactly, with77 online bytes independently decoded. This
+is V22/1200 software SIP/RTP/DSP/Telnet; physical hardware and script-time
+windows over audio remain open. Earlier checkpoints below retain their identities.
+
 The [current validation record](validation/bbs-recording-prompt.json) accepts
 selected read-only recording/replay workflows on both existing loopback BBSes.
 The production DOS terminal records navigation through File/C, actual DOS

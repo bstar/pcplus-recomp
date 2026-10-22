@@ -1,5 +1,17 @@
 # Full application reconstruction checklist
 
+Current parent7b6ded5c/runner12d40249 passes the [cooperative abort confirmation
+audit](validation/aspect-abort-owner.json): ten actual DOS workflows, live
+WHEN/parser reception, exact serial/frame cleanup and44 CPRs under9KB load.
+The24KB compiler passes2,043 corpus cases with checked16KB parser/API stacks;
+13 attached PROGRAM workflows and26 original-free products pass.
+[Four fresh recorder/replay sessions](validation/bbs-abort-owner-compat.json) and
+[two stock-window sessions](validation/bbs-abort-owner-window.json) pass against
+Synchronet/ENiGMA. [One current normal ENiGMA recorder audio route](validation/recording-abort-owner-audio.json)
+passes26 producer,34 independent and12 serial checks with exact streams and
+cleanup. Script-time windows over audio and all full gates remain open.
+The following checkpoints retain their historical product identities.
+
 Current parent0eff2348/runner2c80e45c accepts selected attached-terminal PAUSE
 reception and cooperative-window paths. [Seven DOS query/WHEN cases plus cancel](validation/aspect-pause-live.json)
 and [9KB PAUSE load](validation/aspect-pause-pressure.json) pass; ordinary text
@@ -13,7 +25,7 @@ checks from full application completion. [Current normal recorder audio](validat
 passes the selected ENiGMA V22/1200 workflow with exact streams and cleanup.
 The [native abort-confirmation component](validation/aspect-abort-confirm.json)
 adds197 exact bytes,4,610 original comparisons and four original-free products;
-production still cancels immediately on outer Escape. True flow/carrier faults,
+that checkpoint preceded the integrated confirmation owner described above. True flow/carrier faults,
 other audio paths, physical hardware and all full F01–F16 gates remain open.
 Entries below retain their historical product identities and scopes.
 

@@ -12,7 +12,7 @@ static unsigned attached,callback_error;
 static unsigned policy_queried,policy_wait,policy_received;
 static unsigned keyboard_queried,keyboard_wait,keyboard_received;
 static unsigned key_wait,key_policy_read,key_window;
-static unsigned window_owned,window_wait,window_received;
+static unsigned window_owned,window_wait,window_received,confirm_owned;
 extern unsigned runtime_set_duplex_changed,runtime_serial_local_echo;
 static unsigned label_wait,label_next,label_done;
 static unsigned char script_label[13];
@@ -32,7 +32,7 @@ unsigned __cdecl aspect_render_program_active(void){return program_owned;}
 unsigned __cdecl aspect_render_program_begin(unsigned save_screen)
 {
  unsigned result;
- if(!attached || program_owned || policy_wait || keyboard_wait || key_wait || label_wait ||
+ if(!attached || program_owned || confirm_owned || policy_wait || keyboard_wait || key_wait || label_wait ||
     save_screen>1 || aspect_render_client_check())return ASPECT_RUN_STATE;
  if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
  result=typed(aspect_render_request(ASPECT_RENDER_PROGRAM_BEGIN,save_screen));
@@ -66,7 +66,7 @@ unsigned __cdecl aspect_render_prepare(unsigned offset,unsigned segment,unsigned
  aspect_render_client_record.token=token;
  aspect_render_client_record.callback_offset=aspect_render_callback_offset();
  aspect_render_client_record.callback_segment=aspect_render_code_segment();
- callback_error=label_wait=0;aspect_render_policy_reset();
+ callback_error=label_wait=confirm_owned=0;aspect_render_policy_reset();
  return aspect_render_client_prepare();
 }
 unsigned __cdecl aspect_render_attach(void)
@@ -93,7 +93,7 @@ unsigned __cdecl aspect_render_finish(void)
  if(!attached)return 0;
  if(service_check())return ASPECT_RUN_STATE;
  result=typed(aspect_render_request(ASPECT_RENDER_END,0));
- if(!result){attached=0;window_owned=0;}
+ if(!result){attached=0;window_owned=confirm_owned=0;}
  return result;
 }
 unsigned __cdecl aspect_render_status(unsigned duplex)
@@ -155,7 +155,7 @@ unsigned __cdecl aspect_render_keyboard_inherit(void)
 unsigned __cdecl aspect_render_key(unsigned key)
 {
  unsigned result;
- if(!attached || service_check() || key_wait)return ASPECT_RUN_STATE;
+ if(!attached || service_check() || confirm_owned || key_wait)return ASPECT_RUN_STATE;
  if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
  callback_error=key_policy_read=window_received=0;key_window=key==0x2c00;key_wait=1;
  result=typed(aspect_render_request(ASPECT_RENDER_KEY,key));
@@ -178,6 +178,20 @@ unsigned __cdecl aspect_render_window_service(void)
  if(result)return result;
  if(callback_error)return callback_error;
  return window_received?0:ASPECT_RUN_STATE;
+}
+unsigned __cdecl aspect_render_confirm(unsigned operation)
+{
+ unsigned result;
+ if(operation>4)return ASPECT_RUN_OPERAND;
+ if(!attached || service_check() || window_wait || key_wait || label_wait || policy_wait || keyboard_wait)
+  return ASPECT_RUN_STATE;
+ if(operation==0){if(confirm_owned || window_owned)return ASPECT_RUN_STATE;}
+ else if(operation!=3 && !confirm_owned)return ASPECT_RUN_STATE;
+ if(operation!=3 && aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+ result=typed(aspect_render_request(ASPECT_RENDER_ABORT_CONFIRM,operation));
+ if(service_check())return ASPECT_RUN_STATE;
+ if(!result){if(operation==0)confirm_owned=1;else if(operation==3)confirm_owned=0;}
+ return result;
 }
 unsigned __cdecl aspect_render_script_label(const char *path,unsigned duplex)
 {

@@ -15,7 +15,11 @@ int runtime_external_execute(const char *program,const char *tail,
 unsigned runtime_external_scope(unsigned entering);
 extern unsigned runtime_external_calls,runtime_external_raw_status,runtime_external_private_count;
 #if defined(ASPECT_EXTERNAL_DIAGNOSTIC)
+#if defined(ASPECT_PROCESS_OBSERVER_FAR)
+void __far runtime_external_observe(unsigned,unsigned,unsigned,unsigned);
+#else
 void runtime_external_observe(unsigned,unsigned,unsigned,unsigned);
+#endif
 #endif
 #endif
 #endif

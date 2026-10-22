@@ -25,6 +25,55 @@ global terminal_script_window_active,terminal_script_window_error
 global terminal_script_window_open,terminal_script_window_service
 global terminal_script_window_hide,terminal_script_window_close
 global terminal_script_window_cooperative
+global terminal_script_confirm,terminal_script_confirm_active
+
+; Scalar confirmation owner:0 begin,1 No,2 Yes,3 retire,4 idle repaint.
+; The child executes native yes/no and owns all key reads and live receive.
+terminal_script_confirm:
+ cmp bx,4
+ ja .operand
+ or bx,bx
+ jz .begin
+ cmp word [cs:terminal_script_window_cooperative],1
+ jne .unowned
+ cmp word [cs:page],2
+ jne .unowned
+ cmp bx,3
+ je .retire
+ cmp bx,4
+ je .idle
+ call terminal_script_window_hide
+ mov [cs:choice],bx
+.idle:
+ call cooperative_show
+ xor ax,ax
+ ret
+.begin:
+ call terminal_script_window_open
+ or ax,ax
+ jnz .done
+ mov word [cs:page],2
+ mov word [cs:terminal_script_confirm_active],1
+ mov word [cs:choice],1
+ call paint
+ xor ax,ax
+.done:
+ ret
+.retire:
+ call terminal_script_window_close
+ xor ax,ax
+ ret
+.unowned:
+ cmp bx,3
+ je .retired
+ mov ax,10
+ ret
+.retired:
+ xor ax,ax
+ ret
+.operand:
+ mov ax,7
+ ret
 
 ; Maintained cooperative controller. The recovered blocking body below stays
 ; available as the original-behavior component, not the production scheduler.
@@ -106,6 +155,7 @@ terminal_script_window_close:
  mov ax,[cs:old_context]
  mov [keyboard_debug_gate],ax
  mov word [cs:terminal_script_window_cooperative],0
+ mov word [cs:terminal_script_confirm_active],0
  mov word [cs:terminal_script_window_active],0
  pop ax
 .done:
@@ -114,6 +164,11 @@ terminal_script_window_close:
 ; BX=1 permits repaint at idle; BX=0 services keys while RX remains queued.
 ; No VM/WHEN work runs on this callback stack and no UART byte is consumed.
 terminal_script_window_service:
+ cmp word [cs:terminal_script_confirm_active],0
+ je .admitted
+ mov ax,10
+ ret
+.admitted:
  cmp word [cs:terminal_script_window_cooperative],1
  jne .done
  push bx
@@ -193,6 +248,8 @@ terminal_script_window:
 ; Original6530 consumes repeated Alt-Z before this debugger/window callback.
 ; Preserve all registers; CF distinguishes this owner from the old fail guard.
 terminal_script_window_debug:
+ cmp word [cs:terminal_script_confirm_active],0
+ jne .unowned
  cmp word [cs:terminal_script_window_active],1
  jne .unowned
  push ax
@@ -361,9 +418,17 @@ paint:
  cld
  rep stosw
  mov si,reference
+ cmp word [cs:page],2
+ je .confirmation
  cmp word [cs:page],0
  je .line
  mov si,help
+ jmp .line
+.confirmation:
+ mov si,confirm_no
+ cmp word [cs:choice],2
+ jne .line
+ mov si,confirm_yes
 .line:
  mov di,[cs:si]
  add si,2
@@ -409,11 +474,23 @@ help:
  line 2,6,0x5f,' PCPLUS  //  SCRIPT KEYBOARD HELP '
  line 5,6,0x1f,'Escape in this window dismisses the window.'
  line 7,6,0x17,'The running script continues while this window is open.'
- line 9,6,0x17,'Escape during an ordinary script wait cancels the script.'
+ line 9,6,0x17,'Escape during an ordinary script wait asks to stop the script.'
  line 12,6,0x17,'Incoming data and terminal queries continue to be processed.'
  line 14,6,0x17,'The selected serial flow control remains active.'
  line 18,6,0x1f,'Alt-Z again: return to the key reference'
  line 21,6,0x5f,' Escape: return to the script '
+ dw 0xffff
+confirm_no:
+ line 2,6,0x5f,' PCPLUS  //  STOP SCRIPT? '
+ line 7,6,0x1f,'Stop the running script?'
+ line 9,6,0x5f,' No '
+ line 12,6,0x17,'Y: stop   N / Escape: continue   Enter: No'
+ line 16,6,0x17,'Incoming data and terminal queries continue to be processed.'
+ dw 0xffff
+confirm_yes:
+ line 2,6,0x5f,' PCPLUS  //  STOP SCRIPT? '
+ line 7,6,0x1f,'Stop the running script?'
+ line 9,6,0x5f,' Yes '
  dw 0xffff
 terminal_script_window_cooperative: dw 0
 terminal_script_window_active: dw 0
@@ -423,6 +500,8 @@ old_cursor: dw 0
 old_shape: dw 0
 saved: dw 0
 page: dw 0
+choice: dw 1
+terminal_script_confirm_active: dw 0
 
 ; The linker bindings for unused native resource arguments use the initialized
 ; keyboard_debug_gate context word. Services above use their own static far

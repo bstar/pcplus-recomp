@@ -5,10 +5,10 @@ BITS 16
 CPU 8086
 %include "resident_bridge.inc"
 %ifdef ASPECT_EXTERNAL_RENDER
- %define RENDER_CAPABILITY 11
+ %define RENDER_CAPABILITY 13
  extern terminal_program_result
 %else
- %define RENDER_CAPABILITY 10
+ %define RENDER_CAPABILITY 12
 %endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
@@ -77,7 +77,7 @@ extern terminal_break_delay_units
 extern keyboard_bios_mode
 extern terminal_key_output
 extern terminal_script_window_open,terminal_script_window_service
-extern terminal_script_window_hide,terminal_script_window_close
+extern terminal_script_window_hide,terminal_script_window_close,terminal_script_confirm,terminal_script_confirm_active
 extern terminal_script_window_cooperative
 global terminal_script_window_poll
 global render_child_ds,render_started,render_body,render_attached,render_child_psp
@@ -260,6 +260,8 @@ render_body:
  cmp di,9
  je .program_begin
 %endif
+ cmp di,12
+ je .abort_confirm
  cmp di,11
  je .window_service
  cmp di,2
@@ -358,6 +360,8 @@ render_body:
  jbe .done
  jmp .state
 .key:
+ cmp word [cs:terminal_script_confirm_active],0
+ jne .state
  cmp word [cs:terminal_script_window_cooperative],0
  jne .state
  cmp word [_script_handoff+22],0
@@ -514,6 +518,8 @@ render_body:
  ret
 %ifdef ASPECT_EXTERNAL_RENDER
 .program_begin:
+ cmp word [cs:terminal_script_confirm_active],0
+ jne .state
  cmp bx,1
  ja .operand
  cmp word [_script_handoff+22],0
@@ -592,6 +598,24 @@ render_body:
  mov word [cs:render_attached],0
  xor ax,ax
  ret
+.abort_confirm:
+ cmp bx,4
+ ja .operand
+ cmp bx,3
+ je .confirm_retire
+ cmp word [_script_handoff+22],0
+ jne .serial
+ push bx
+ call _aspect_render_admit
+ pop bx
+ or ax,ax
+ jnz .done
+.confirm_retire:
+ ; A bounded drawing scope, with no child callback or parser entry.
+ mov word [terminal_aspect_active],1
+ call terminal_script_confirm
+ mov word [terminal_aspect_active],0
+ ret
 .window_service:
  cmp bx,1
  ja .operand
@@ -603,6 +627,8 @@ render_body:
  or ax,ax
  jnz .done
  call terminal_script_window_service
+ or ax,ax
+ jnz .done
  call window_publish
  ret
 .state:

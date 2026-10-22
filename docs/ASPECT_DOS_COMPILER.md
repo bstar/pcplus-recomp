@@ -10,8 +10,8 @@ subset and the recorder remain unfinished. ASPLEX/ASPINV/ASPEXP are separate
 developer diagnostics.
 
 The normal builds use the pinned Nix Open Watcom toolchain, large-model C and
-an8192-byte stack for lexer/inventory and32768 bytes for recursive expression
-parsing/emission and complete compilation. They read only maintained C sources
+an8192-byte stack for lexer/inventory,32768 bytes for expression diagnostics
+and24576 bytes for the production complete compiler. They read only maintained C sources
 and public headers.
 Neither the original compiler/executable, host ASPECT compiler, fixture database nor REA
 analysis is an input to their application build.
@@ -20,6 +20,31 @@ analysis is an input to their application build.
 ./tools/build aspect-compiler-lexer aspect-compiler-unit aspect-compiler-expression aspect-compiler-dos
 ./tools/build test-aspect-compiler-lexer test-aspect-compiler-unit test-aspect-compiler-expression test-aspect-compiler-dos
 ```
+
+## Production stack budget
+
+The production CLI reserves24KB, reduced from32KB to leave heap space while
+TERMINAL and ASPECT remain resident. The unchanged nested NEXT.ASP workload
+exhausted DOS memory with the previous compiler, including on the earlier
+application baseline. Private allocation-pool and heap-growth experiments were
+not adopted; compiler allocation logic and grammar limits remain unchanged.
+
+`test-aspect-compiler-stack` runs all2,043 maintained corpus cases with checked
+16KB parser/emitter/API stacks, including18 accepted253-byte-limit expression
+cases across integer, long and float types. The CLI retains24KB. A separate
+checked2KB recursive probe must fail with the actual CRT stack-overflow message
+captured from video, proving the guard is active. The first stderr-only probe
+could not observe that console message and remains unaccepted. This bounds the
+current grammar/toolchain, not future language expansions or every DOS system.
+Revalidate when changing recursion, frontend locals or line/node limits.
+
+The24KB product passes all13 attached PROGRAM workflows, including actual DOS
+nested compilation, and reproduces in the26-product original-free build.
+See [integrated evidence](validation/aspect-abort-owner.json). The separate
+[56-case process diagnostic bank](validation/aspect-process-diagnostic-bank.json)
+also covers source compilation, private streams and VM/process recovery across
+COM1/COM2 and all four flow settings. Its observer helpers use a separate code
+segment; the production compiler allocator and grammar remain unchanged.
 
 ## Streaming lexical stage
 

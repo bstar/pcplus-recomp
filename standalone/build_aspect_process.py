@@ -30,32 +30,34 @@ def main(driver=None,parent_render=False,output=None,break_owner=False):
     subprocess.run(['nasm','-fobj','-DNATIVE_PROCESS_SHARED_PATH','-DASPECT_EXTERNAL_UNWIND',str(state),'-o',str(obj)],check=True);objects.append(str(obj))
     c_sources=[ROOT/p for p in ('src/process/native_process.c','src/process/native_display.c',
         'src/process/native_program.c','src/aspect/process_serial.c','src/process/process_handles.c','src/aspect/external_runtime.c')]
+    # All external-command variants need the existing PROGRAMCODE bank as the
+    # ordinary VM grows. This changes placement, not Break/exit policy.
+    # Keep near CRT/platform calls in _TEXT through explicit far adapters.
+    flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_UNWIND','-DNATIVE_PROGRAM_FAR']
+    if break_owner:flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR']
+    if driver:flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
+    controller=output/'native_program_far.obj'
+    subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',
+        *flags,'-nt=PROGRAMCODE','-i='+str(ROOT/'src/aspect'),'-i='+str(ROOT/'src/process'),
+        '-fo='+str(controller),str(ROOT/'src/process/native_program.c')],cwd=output,check=True)
+    objects.append(str(controller))
+    c_sources.remove(ROOT/'src/process/native_program.c');c_sources.append(ROOT/'src/process/program_bank.c')
+    objects.remove(str(program.OUT/'program_ui.obj'))
+    ui_binding=output/'program_ui_bank.obj'
+    subprocess.run(['nasm','-fobj','-DNATIVE_PROGRAM_FAR',str(ROOT/'src/process/program_ui.asm'),'-o',str(ui_binding)],check=True)
+    objects.append(str(ui_binding))
     if break_owner:
-        # Keep near CRT/platform calls in _TEXT through explicit far adapters.
-        flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_UNWIND','-DNATIVE_PROGRAM_BREAK_OWNER',
-               '-DNATIVE_BREAK_FAR','-DNATIVE_PROGRAM_FAR']
-        if driver:flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
-        controller=output/'native_program_far.obj'
-        subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',
-            *flags,'-nt=PROGRAMCODE','-i='+str(ROOT/'src/aspect'),'-i='+str(ROOT/'src/process'),
-            '-fo='+str(controller),str(ROOT/'src/process/native_program.c')],cwd=output,check=True)
-        objects.append(str(controller))
-        c_sources.remove(ROOT/'src/process/native_program.c');c_sources.append(ROOT/'src/process/program_bank.c')
-        objects.remove(str(program.OUT/'program_ui.obj'))
-        ui_binding=output/'program_ui_bank.obj'
-        subprocess.run(['nasm','-fobj','-DNATIVE_PROGRAM_FAR',str(ROOT/'src/process/program_ui.asm'),'-o',str(ui_binding)],check=True)
-        objects.append(str(ui_binding))
         exit_binding=output/'exit_owner.obj'
         subprocess.run(['nasm','-fobj',str(ROOT/'src/process/exit_owner.asm'),'-o',str(exit_binding)],check=True)
         objects.append(str(exit_binding))
         c_sources += [ROOT/'src/process/exit_owner.c',ROOT/'src/aspect/exit_runtime.c']
     sources=[ROOT/name for name in manifest['sources']]
+    sources += [ROOT/'src/process/program_bank.h']
     if break_owner:
         sources += [ROOT/name for name in json.loads((breaker.OUT/'manifest.json').read_text())['sources']]
-        sources += [ROOT/'src/process/program_bank.h']
         sources += [ROOT/'src/process/exit_owner.h',ROOT/'src/process/exit_owner.asm']
     sources += c_sources+[ROOT/'src/process/process_handles.h',ROOT/'src/aspect/external_runtime.h',ROOT/'src/aspect/external_unwind.h',Path(__file__)]
-    extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render,break_owner=break_owner)
+    extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render,break_owner=break_owner,program_far=True)
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
 

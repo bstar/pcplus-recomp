@@ -968,6 +968,11 @@ aspect-compiler-dos:
 test-aspect-compiler-dos: aspect-compiler-dos aspect-runner
 	python3 standalone/check_aspect_compiler_dos.py
 
+
+.PHONY: test-aspect-compiler-stack
+test-aspect-compiler-stack: aspect-compiler-dos aspect-runner
+	python3 standalone/check_aspect_compiler_stack.py --output "build/aspect-compiler-stack/guard-$$(date -u +%Y%m%dT%H%M%S%N)"
+
 .PHONY: test-aspect-source-compile test-aspect-source-serial-dos test-aspect-compile-flow-dos
 test-aspect-source-compile: aspect-runner aspect-compiler-dos
 	python3 standalone/check_aspect_source_compile.py
@@ -1004,6 +1009,18 @@ test-aspect-key-client: aspect-runner
 .PHONY: test-aspect-foreground-delay test-aspect-pause-dos
 test-aspect-foreground-delay: aspect-runner
 	python3 standalone/check_aspect_foreground_delay.py
+.PHONY: test-aspect-abort-owner test-terminal-abort-owner test-aspect-abort-dos
+test-aspect-abort-owner: aspect-runner
+	python3 standalone/check_aspect_abort_owner.py
+test-terminal-abort-owner: terminal terminal-mouse
+	python3 standalone/check_terminal_abort_confirm.py
+	python3 standalone/check_terminal_abort_confirm.py --mouse
+test: test-aspect-abort-owner test-terminal-abort-owner
+test-aspect-abort-dos: terminal aspect-runner
+	python3 standalone/test_aspect_abort_confirm_dos.py --label "confirm-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
+	python3 standalone/test_aspect_abort_yes_dos.py --label "confirm-yes-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
+	python3 standalone/test_aspect_abort_events_dos.py --label "confirm-events-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
+	python3 standalone/test_aspect_abort_pressure_dos.py --label "confirm-load-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"
 test: test-aspect-foreground-delay
 test-aspect-pause-dos: terminal aspect-runner
 	python3 standalone/test_aspect_window_pause_query_dos.py --label "pause-$$(date -u +%Y%m%dT%H%M%S%N)" --terminal-sha256 "$$(sha256sum build/terminal/TERMINAL.EXE | cut -d' ' -f1)" --runner-sha256 "$$(sha256sum build/aspect-runner/ASPECT.EXE | cut -d' ' -f1)"

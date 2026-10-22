@@ -9,7 +9,10 @@ SEGMENT ASPECT_CODE public class=FARCODE use16
 %else
 SEGMENT _TEXT public class=CODE use16
 %endif
-global aspect_abort_confirm,aspect_abort_yesno
+global aspect_abort_yesno
+%ifndef ABORT_CONFIRM_YESNO_ONLY
+global aspect_abort_confirm
+%endif
 extern abort_confirm_descriptor,abort_confirm_prompt,abort_confirm_attribute
 extern abort_choice_attribute,abort_choice_no,abort_choice_yes
 extern abort_choice_cursor_mode,abort_choice_last_key
@@ -46,7 +49,9 @@ ORG 0x6dde
 %define abort_choice_bell 0x376d
 %endif
 %ifdef ABORT_CONFIRM_OMF
+%ifndef ABORT_CONFIRM_YESNO_ONLY
 %define ABORT_CONFIRM_BODY
+%endif
 %define ABORT_YESNO_BODY
 %else
 %if ABORT_CONFIRM_UNIT=0

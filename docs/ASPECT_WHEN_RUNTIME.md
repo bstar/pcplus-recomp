@@ -1,5 +1,11 @@
 # WHEN in the DOS runtime
 
+The current [abort confirmation owner](ASPECT_LOCAL_UI.md#stop-script-confirmation)
+continues native receive matching and TRANSMIT actions while its modal prompt
+is visible. CALL workers remain deferred until the prompt ends. Full carrier
+script-service dispatch during that prompt remains unfinished. This maintained
+scheduling policy is separate from the original-native timing evidence.
+
 The maintained DOS runner now executes native WHEN/CWHEN registration,
 receive matching, TRANSMIT actions and deferred CALL actions. SET WHENCASE
 controls matching independently of WAITFOR case selection. This integrates

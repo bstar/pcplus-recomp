@@ -1,15 +1,54 @@
 # Local interaction while ASPECT owns the session
 
-The production script-time Alt-Z controller is cooperative. The VM, native
-receive/matcher path and terminal parser continue while reference/help owns
-local dismissal keys. Explicit attached-terminal PAUSE now also services this
-pipeline. [PAUSE validation](validation/aspect-pause-live.json) and
-[PAUSE load validation](validation/aspect-pause-pressure.json) bind normal
-parent `0eff2348` and runner `2c80e45c`; capabilities remain10/11 and the ASIOv4
-descriptor is unchanged. Earlier receipts retain their historical identities.
-Real flow/carrier faults, script-time windows over audio, full command actions
-and physical modem integration remain open. The separate normal recorder route
-now has [current-build audio acceptance](validation/recording-pause-audio.json).
+The current parent7b6ded5c and runner12d40249 use capability12 (experimental
+external-command products use13). The48-byte ASIOv4 descriptor remains unchanged;
+older endpoint versions are rejected before UART adoption. The [confirmation
+audit](validation/aspect-abort-owner.json) binds ten actual DOS cases, linked
+ownership tests, the compiler stack corpus and26 original-free products. Older
+PAUSE/window/BBS/audio receipts below retain their recorded binary identities.
+[Four fresh recorder/replay sessions](validation/bbs-abort-owner-compat.json) and
+[two stock-window sessions](validation/bbs-abort-owner-window.json) pass on owned
+Synchronet/ENiGMA. [Current normal recorder audio](validation/recording-abort-owner-audio.json)
+also passes26 producer,34 independent and12 serial checks with exact streams
+and cleanup. This covers one ENiGMA V22/1200 software-audio recording/replay
+route; script-time windows over audio and physical hardware remain open.
+
+## Stop Script confirmation
+
+Ordinary attached-terminal Escape opens a fixed parent frame with the recovered
+123-byte native yes/no helper running on the child's ordinary VM stack. The
+separate197-byte recovery retains the original74-byte wrapper as an oracle.
+The production wrapper requests defaultNo: Enter retains No, N/n/Escape decline,
+Y/y confirm, and other keys ring the bell and continue. Declining ends the
+current wait with its cancellation result and continues the script; it does
+not resume the abandoned WAITFOR. Confirming reports script error13. Raw ASIO
+retains immediate cancellation.
+
+The child owns modal key reads. The parent accepts only scalar begin, No, Yes,
+retire and idle operations; it never reads child text pointers. Its fixed
+hidden-cursor frame restores the latest background, cursor and shape. This is a
+specific confirmation binding, not a generic cursor/window service. Help,
+PROGRAM, nested confirmation and ordinary key callbacks cannot take its frame.
+Retirement remains available after UART closure and is idempotent.
+
+While waiting for an answer, the child services transport and bursts of at
+most64 native receive leads per BIOS tick. Translation, native WHEN matching
+and the actual terminal parser run; CALL workers remain deferred until the
+prompt ends. This path consumes ordinary text without incrementing a suspended
+RGET's destination count. Full carrier/disconnect script-service dispatch is
+still suspended during the prompt and needs further work. Arbitrary parser
+continuations can exceed the burst's tick; this is not a hard timing bound.
+
+Actual DOS tests cover No, Enter, Escape, invalid/extended keys, confirmed Yes
+in WAITFOR/PAUSE, WHEN TRANSMIT, framed deferred CALL and suspended RGET. A
+separate9,114-byte/44-query workload checks1,408 characters and attributes;
+all replies precede decline and arrive within59.9ms. Whole serial streams,
+actual visible prompt ownership, render progress, JFT/resource identities and
+42-byte hardware snapshots are independently checked. Nine linked child and
+ten normal/ten mouse parent groups also cover frame restoration, closed-UART
+retirement and admission conflicts. These are emulated UART checks; CTS/RTS,
+XOFF/XON, software audio, physical hardware and full application completion
+remain unverified for this change.
 
 ## Explicit terminal PAUSE
 

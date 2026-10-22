@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 extern aspect_file runtime_file;
 extern unsigned runtime_find_live,runtime_file_info_live,runtime_file_times_live;
 extern unsigned char native_dos_major;
@@ -25,9 +26,30 @@ static unsigned trace_count,full_trace,expected_trace_raw=37;
 static unsigned large_environment;
 static char padding[32][256];
 static char *seed_environment[128],**original_environment;
-static void check(unsigned good,unsigned line){++checks;if(!good){++failures;printf("FAIL %u\n",line);}}
 #define CHECK(x) check((x)!=0,__LINE__)
-void runtime_external_observe(unsigned raw,unsigned processor,unsigned wait,unsigned save)
+/* Far entry points remain in the near CRT segment. */
+static void __far diagnostic_printf(const char *format,...)
+{
+ va_list args;va_start(args,format);vprintf(format,args);va_end(args);
+}
+static void __far diagnostic_padding(char *target,unsigned index)
+{
+ unsigned n=sprintf(target,"LOC_PADDING%02u=",index);
+ memset(target+n,'P',255-n);target[255]=0;
+}
+#pragma code_seg("PROCESSDIAG")
+static void __far check(unsigned good,unsigned line){++checks;if(!good){++failures;diagnostic_printf("FAIL %u\n",line);}}
+static unsigned __far seed_large_environment(void)
+{
+ unsigned i,count=0;
+ while(original_environment[count]){
+  if(count>=95)return 99;
+  seed_environment[count]=original_environment[count];++count;
+ }
+ for(i=0;i<32;++i){diagnostic_padding(padding[i],i);seed_environment[count+i]=padding[i];}
+ seed_environment[count+32]=0;environ=seed_environment;return 0;
+}
+void __far runtime_external_observe(unsigned raw,unsigned processor,unsigned wait,unsigned save)
 {
  static const unsigned full_raw[]={37,37,37,65535U,0,0,37,37,0,1,37};
  if(full_trace){
@@ -37,10 +59,11 @@ void runtime_external_observe(unsigned raw,unsigned processor,unsigned wait,unsi
  }else{CHECK(raw==expected_trace_raw);CHECK(!processor&&!wait&&save==1);}
  if(large_environment){
   CHECK(native_backup_extent>(unsigned)(runtime_frame-(unsigned)runtime_arena));
-  printf("ARENA borrowed%u live-frame%u\n",native_backup_extent,(unsigned)(runtime_frame-(unsigned)runtime_arena));
+  diagnostic_printf("ARENA borrowed%u live-frame%u\n",native_backup_extent,(unsigned)(runtime_frame-(unsigned)runtime_arena));
  }
- printf("EXTERNAL %u raw%u processor%u wait%u save%u\n",trace_count,raw,processor,wait,save);++trace_count;
+ diagnostic_printf("EXTERNAL %u raw%u processor%u wait%u save%u\n",trace_count,raw,processor,wait,save);++trace_count;
 }
+#pragma code_seg()
 int main(int argc,char **argv)
 {
  unsigned port,base,vector,old_mcr,pic,status,expected=0,raw=37,recovery=0,psp,jft_count,far_before;
@@ -51,13 +74,7 @@ int main(int argc,char **argv)
  setvbuf(stdout,0,_IONBF,0);if(argc<3||argc>4)return 99;
  original_environment=environ;
  large_environment=argc==4&&!strcmp(argv[3],"large");
- if(large_environment){
-  unsigned i,count=0;
-  while(original_environment[count]){if(count>=95)return 99;seed_environment[count]=original_environment[count];++count;}
-  for(i=0;i<32;++i){unsigned n=sprintf(padding[i],"LOC_PADDING%02u=",i);
-   memset(padding[i]+n,'P',255-n);padding[i][255]=0;seed_environment[count+i]=padding[i];}
-  seed_environment[count+32]=0;environ=seed_environment;
- }
+ if(large_environment&&seed_large_environment())return 99;
  full_trace=!strcmp(argv[1],"FULL.ASX");
  port=argv[2][2]-'0';base=port==1?0x3f8:0x2f8;vector=port==1?12:11;
  old_mcr=inp(base+4);pic=inp(0x21);old_irq=_dos_getvect(vector);old_zero=_dos_getvect(0);

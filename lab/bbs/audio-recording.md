@@ -1,5 +1,17 @@
 # Normal recorder workflow over the software modem
 
+The [confirmation-build run](../../docs/validation/recording-abort-owner-audio.json)
+accepts parent7b6ded5c/runner12d40249 and24KB compilerfc200c8c on this normal
+route. All26 producer,34 independent and12 serial checks pass. All60,389 BBS
+display bytes plus187 bridge bytes arrive exactly, and independent caller
+waveform decoding matches77 online bytes. No gateway errors or failed, skipped
+or pending writes remain; hardware/timer/SIP/VM cleanup passes.
+[Preparation](../../docs/validation/recording-abort-owner-audio-preparation.json)
+binds the unchanged seven BIOS probes/56 assertions and a fresh13-check
+DOS/Telnet control to these products. Script-time windows over audio, other
+routes/profiles, physical hardware and full application gates remain open.
+The earlier checkpoints below retain their recorded product identities.
+
 The `recording` route exercises the application's normal File/C recording and
 File/A explicit ASP compilation/replay on the existing owned ENiGMA fixture.
 It uses the source-built terminal, ASPECT and DOS ASPCOMP. The selected route is

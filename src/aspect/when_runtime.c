@@ -1,7 +1,7 @@
 /* Native WHEN lifetime and explicit foreground platform boundaries. File/flow
  * actions run only on the VM's ordinary stack, never on an RPC callback stack.
- * Full native abort-confirmation and local menus remain unrecovered: ESC uses
- * the existing maintained immediate-cancel policy; other UI keys fail typed. */
+ * Attached terminal abort confirmation runs native yes/no policy on this
+ * foreground stack with a cooperative parent frame; raw ASIO stays immediate. */
 #include "runtime.h"
 #include "serial_runtime.h"
 #include "when_runtime.h"
@@ -15,6 +15,13 @@ extern unsigned __cdecl runtime_when_native_service(void);
 unsigned runtime_when_deferred,runtime_when_pending_service;
 static unsigned service_busy,monitor_busy;
 static unsigned window_keys_suppressed;
+#if defined(ASPECT_RUNTIME_SERIAL)
+static unsigned confirmation_active;
+unsigned runtime_abort_cursor_mode=1,runtime_abort_last_key;
+char runtime_abort_no[]="No",runtime_abort_yes[]="Yes";
+extern unsigned __cdecl runtime_abort_confirm_native(void);
+extern unsigned runtime_receive_policy_byte(unsigned,unsigned);
+#endif
 static void disarm(void)
 {
  unsigned i;
@@ -23,6 +30,9 @@ static void disarm(void)
 }
 void runtime_when_reset(void)
 {
+#if defined(ASPECT_RUNTIME_SERIAL)
+ confirmation_active=0;
+#endif
  disarm();runtime_when_case_sensitive=0;runtime_when_keyboard_disabled=0;
  runtime_when_last_key=0;runtime_when_pending_key=65535U;
  runtime_when_deferred=runtime_when_pending_service=service_busy=monitor_busy=0;
@@ -35,6 +45,9 @@ void runtime_when_file_reset(void)
 }
 void runtime_when_finish(void)
 {
+#if defined(ASPECT_RUNTIME_SERIAL)
+ confirmation_active=0;
+#endif
  /* Invalidate references before the script FILE/global strings are released.
   * Do not clear UART RX: ASIO must return all remaining raw bytes. */
  disarm();runtime_wait_gate=0;runtime_when_last_key=0;
@@ -55,7 +68,7 @@ unsigned runtime_when_transport_poll(void)
 #if defined(ASPECT_RUNTIME_SERIAL)
  /* A deferred parser/WHEN callback cannot re-enter the parent. Leave keys,
   * including Escape, for the cooperative window's next ordinary safe point. */
- if(aspect_render_window_active())return 0;
+ if(confirmation_active || aspect_render_window_active())return 0;
 #endif
  key=runtime_keyboard_peek();if(!key)return 0;
  /* Leave ordinary local keys queued for the native service's safe point. */
@@ -121,7 +134,8 @@ unsigned runtime_when_poll(void)
 unsigned runtime_when_cancel_poll(void)
 {
  /* Native4E34 clears CFFA before4DE9. Its ESC result is retained even when
-  * original confirmation declines; maintained policy cancels immediately. */
+  * confirmation declines. The original active wait may end without aborting
+  * the script; the native caller retains that distinction. */
  runtime_when_last_key=0;
  runtime_when_poll();
  return runtime_error || runtime_when_last_key==27;
@@ -133,8 +147,72 @@ unsigned runtime_when_read_key(void)
 {
  return runtime_keyboard_read();
 }
+#if defined(ASPECT_RUNTIME_SERIAL)
+void runtime_abort_ui_begin(void)
+{
+ unsigned result;
+ if(!confirmation_active || runtime_when_deferred || monitor_busy){runtime_set_error(ASPECT_RUN_STATE);return;}
+ result=aspect_render_confirm(0);if(result)runtime_set_error(result);
+}
+void runtime_abort_ui_end(void)
+{unsigned result=aspect_render_confirm(3);if(result)runtime_set_error(result);}
+void runtime_abort_ui_invalid(void){runtime_set_error(ASPECT_RUN_STATE);}
+void runtime_abort_position(unsigned position)
+{
+ /* This fixed prompt owns a hidden cursor in its saved parent frame. Native
+  *031A identifies its choice field; it is not a generic cursor RPC. */
+ if(!confirmation_active || position!=0x031a)runtime_set_error(ASPECT_RUN_STATE);
+}
+void runtime_abort_write(const char *text,unsigned attribute,unsigned position)
+{
+ unsigned result;
+ if(runtime_error)return;
+ if(!confirmation_active || attribute!=0x1f || position!=0x031a ||
+    (text!=runtime_abort_no && text!=runtime_abort_yes)){
+  runtime_set_error(ASPECT_RUN_STATE);return;
+ }
+ result=aspect_render_confirm(text==runtime_abort_no?1:2);
+ if(result)runtime_set_error(result);
+}
+unsigned runtime_abort_read_key(void)
+{
+ unsigned leads,result;unsigned long started,now;
+ if(!confirmation_active){runtime_set_error(ASPECT_RUN_STATE);return 27;}
+ for(;;){
+  if(runtime_error)return 27;
+  if(runtime_keyboard_peek())return runtime_keyboard_read();
+  if(runtime_serial_poll())return 27;
+  started=aspect_serial_ticks();
+  for(leads=0;leads<64 && !runtime_error && aspect_serial_available();++leads){
+   /* Modal receive is not a byte appended to the suspended RGET destination.
+    * Native translation/WHEN still precede the real parent parser. */
+   runtime_receive_policy_byte(runtime_receive_display,0);
+   now=aspect_serial_ticks();if(now<started)now+=1573040UL;
+   if(now-started>=1UL)break;
+  }
+  if(!runtime_error && !aspect_serial_available()){
+   result=aspect_render_confirm(4);if(result)runtime_set_error(result);
+  }
+ }
+}
+#endif
 unsigned runtime_when_confirm_abort(void)
-{runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
+{
+#if defined(ASPECT_RUNTIME_SERIAL)
+ unsigned answer;
+ if(aspect_render_active()){
+  if(confirmation_active || !service_busy || runtime_when_deferred || monitor_busy){
+   runtime_set_error(ASPECT_RUN_STATE);return 1;
+  }
+  confirmation_active=1;
+  answer=runtime_abort_confirm_native();
+  confirmation_active=0;
+  if(runtime_error)return 1;
+  if(!answer)return 0;
+ }
+#endif
+ runtime_set_error(ASPECT_RUN_CANCELLED);return 1;
+}
 void runtime_when_abort(void){runtime_set_error(ASPECT_RUN_CANCELLED);}
 void runtime_when_dispatch_key(unsigned key)
 {

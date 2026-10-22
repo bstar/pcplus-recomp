@@ -3,7 +3,8 @@
 /* Maintained application RPC contract, not an original PCPlus structure.
  * ASIOv4 appends four words to the v3 descriptor: parent far entry offset,
  * segment, nonzero lease token, capability version. All four bind the guard.
- * Capability10 adds cooperative window service/state;11 also admits PROGRAM.
+ * Capability12/13 adds a checked abort-confirmation frame owner.
+ * Earlier capability10 adds cooperative window service/state;11 also admits PROGRAM.
  * Earlier8/9 provided blocking windows with transport-only polling.
  * Earlier6/7 exposed key output
  * without the local-window transport callback;5 added BIOS inheritance.
@@ -13,9 +14,9 @@
 #define ASIO_VERSION_RENDER 4U
 #define ASIO_V4_SIZE 48U
 #if defined(ASPECT_EXTERNAL_RENDER)
-#define ASPECT_RENDER_CAP_VERSION 11U
+#define ASPECT_RENDER_CAP_VERSION 13U
 #else
-#define ASPECT_RENDER_CAP_VERSION 10U
+#define ASPECT_RENDER_CAP_VERSION 12U
 #endif
 #define ASPECT_RENDER_CLIENT_MAGIC 0x5243U
 #define ASPECT_RENDER_CLIENT_SIZE 10U
@@ -24,7 +25,7 @@ enum { ASPECT_RENDER_BEGIN=0, ASPECT_RENDER_EMIT=1, ASPECT_RENDER_END=2,
  ASPECT_RENDER_BREAK_NOTICE=5, ASPECT_RENDER_SCRIPT_LABEL=6,
  ASPECT_RENDER_KEYBOARD_POLICY=7, ASPECT_RENDER_KEY=8,
  ASPECT_RENDER_PROGRAM_BEGIN=9, ASPECT_RENDER_PROGRAM_END=10,
- ASPECT_RENDER_WINDOW_SERVICE=11 };
+ ASPECT_RENDER_WINDOW_SERVICE=11, ASPECT_RENDER_ABORT_CONFIRM=12 };
 enum { ASPECT_RENDER_RAW_WAIT=0, ASPECT_RENDER_UNREAD=1,
  ASPECT_RENDER_SEND=2, ASPECT_RENDER_POLL=3, ASPECT_RENDER_ERROR=4,
  ASPECT_RENDER_RAW_NOW=5, ASPECT_RENDER_BREAK_VALUE=6,
@@ -57,6 +58,9 @@ unsigned __cdecl aspect_render_keyboard_inherit(void);
 unsigned __cdecl aspect_render_key(unsigned key);
 unsigned __cdecl aspect_render_window_active(void);
 unsigned __cdecl aspect_render_window_service(void);
+/*0 begin,1 No,2 Yes,3 retire (also after UART close),4 idle repaint.
+ * Synchronous scalar requests; parent never reads child prompt pointers. */
+unsigned __cdecl aspect_render_confirm(unsigned operation);
 /*0 begins a single owned cursor/notice bracket,1 ends it idempotently.
  * STATUS remains a separate operation; no child pointer crosses this API. */
 unsigned __cdecl aspect_render_break_notice(unsigned end);
@@ -64,7 +68,7 @@ unsigned __cdecl aspect_render_break_notice(unsigned end);
 unsigned __cdecl aspect_render_script_label(const char *,unsigned duplex);
 unsigned __cdecl aspect_render_finish(void);
 #if defined(ASPECT_EXTERNAL_RENDER)
-/* External-render capability11 only. The parent rejects rendering/callback requests until END.
+/* External-render capability13 only. The parent rejects rendering/callback requests until END.
  * END rechecks the real view and retires the lease even on a failed probe. */
 unsigned __cdecl aspect_render_program_begin(unsigned save_screen);
 unsigned __cdecl aspect_render_program_end(unsigned view_reset);

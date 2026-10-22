@@ -1,0 +1,469 @@
+{
+  "passed": true,
+  "diagnostic_sha256": "c8fd6b1604923fc7d0506ce97e096462393b309b9aff249dd2d9775fdd480f67",
+  "actual_DOS_cases": 56,
+  "results": [
+    {
+      "port": 1,
+      "flow": "H",
+      "scenario": "full",
+      "passed": true,
+      "assertions": 75,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "H",
+      "scenario": "fallback",
+      "passed": true,
+      "assertions": 23,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "H",
+      "scenario": "large",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "H",
+      "scenario": "memory",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "H",
+      "scenario": "divide",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "H",
+      "scenario": "abort",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "H",
+      "scenario": "budget",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "N",
+      "scenario": "full",
+      "passed": true,
+      "assertions": 75,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "N",
+      "scenario": "fallback",
+      "passed": true,
+      "assertions": 23,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "N",
+      "scenario": "large",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "N",
+      "scenario": "memory",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "N",
+      "scenario": "divide",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "N",
+      "scenario": "abort",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "N",
+      "scenario": "budget",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 1,
+      "flow": "S",
+      "scenario": "full",
+      "passed": true,
+      "assertions": 75,
+      "wire_sha256": "9b87c1773fb1fc8d083143c65d5f8c29eff149fe5955575e3869db5860e97c3c"
+    },
+    {
+      "port": 1,
+      "flow": "S",
+      "scenario": "fallback",
+      "passed": true,
+      "assertions": 23,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 1,
+      "flow": "S",
+      "scenario": "large",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 1,
+      "flow": "S",
+      "scenario": "memory",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 1,
+      "flow": "S",
+      "scenario": "divide",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 1,
+      "flow": "S",
+      "scenario": "abort",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "f226bda736f7803188c03ebbb9d5b09bc32d1a74621b89892dd64062c97eb8d9"
+    },
+    {
+      "port": 1,
+      "flow": "S",
+      "scenario": "budget",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "f226bda736f7803188c03ebbb9d5b09bc32d1a74621b89892dd64062c97eb8d9"
+    },
+    {
+      "port": 1,
+      "flow": "B",
+      "scenario": "full",
+      "passed": true,
+      "assertions": 75,
+      "wire_sha256": "9b87c1773fb1fc8d083143c65d5f8c29eff149fe5955575e3869db5860e97c3c"
+    },
+    {
+      "port": 1,
+      "flow": "B",
+      "scenario": "fallback",
+      "passed": true,
+      "assertions": 23,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 1,
+      "flow": "B",
+      "scenario": "large",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 1,
+      "flow": "B",
+      "scenario": "memory",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 1,
+      "flow": "B",
+      "scenario": "divide",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 1,
+      "flow": "B",
+      "scenario": "abort",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "f226bda736f7803188c03ebbb9d5b09bc32d1a74621b89892dd64062c97eb8d9"
+    },
+    {
+      "port": 1,
+      "flow": "B",
+      "scenario": "budget",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "f226bda736f7803188c03ebbb9d5b09bc32d1a74621b89892dd64062c97eb8d9"
+    },
+    {
+      "port": 2,
+      "flow": "N",
+      "scenario": "full",
+      "passed": true,
+      "assertions": 75,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "N",
+      "scenario": "fallback",
+      "passed": true,
+      "assertions": 23,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "N",
+      "scenario": "large",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "N",
+      "scenario": "memory",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "N",
+      "scenario": "divide",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "N",
+      "scenario": "abort",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "N",
+      "scenario": "budget",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "S",
+      "scenario": "full",
+      "passed": true,
+      "assertions": 75,
+      "wire_sha256": "9b87c1773fb1fc8d083143c65d5f8c29eff149fe5955575e3869db5860e97c3c"
+    },
+    {
+      "port": 2,
+      "flow": "S",
+      "scenario": "fallback",
+      "passed": true,
+      "assertions": 23,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 2,
+      "flow": "S",
+      "scenario": "large",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 2,
+      "flow": "S",
+      "scenario": "memory",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 2,
+      "flow": "S",
+      "scenario": "divide",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 2,
+      "flow": "S",
+      "scenario": "abort",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "f226bda736f7803188c03ebbb9d5b09bc32d1a74621b89892dd64062c97eb8d9"
+    },
+    {
+      "port": 2,
+      "flow": "S",
+      "scenario": "budget",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "f226bda736f7803188c03ebbb9d5b09bc32d1a74621b89892dd64062c97eb8d9"
+    },
+    {
+      "port": 2,
+      "flow": "H",
+      "scenario": "full",
+      "passed": true,
+      "assertions": 75,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "H",
+      "scenario": "fallback",
+      "passed": true,
+      "assertions": 23,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "H",
+      "scenario": "large",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "H",
+      "scenario": "memory",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "H",
+      "scenario": "divide",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "H",
+      "scenario": "abort",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "H",
+      "scenario": "budget",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "d6f3ebb34335d19647dcba034b801b1f5819d454ce9388770ba525ab69f0f1a8"
+    },
+    {
+      "port": 2,
+      "flow": "B",
+      "scenario": "full",
+      "passed": true,
+      "assertions": 75,
+      "wire_sha256": "9b87c1773fb1fc8d083143c65d5f8c29eff149fe5955575e3869db5860e97c3c"
+    },
+    {
+      "port": 2,
+      "flow": "B",
+      "scenario": "fallback",
+      "passed": true,
+      "assertions": 23,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 2,
+      "flow": "B",
+      "scenario": "large",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 2,
+      "flow": "B",
+      "scenario": "memory",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 2,
+      "flow": "B",
+      "scenario": "divide",
+      "passed": true,
+      "assertions": 22,
+      "wire_sha256": "057e171f51153dbf9014e2a78cf6a5843c10ea7b2180af5d48fdb8b65355cb99"
+    },
+    {
+      "port": 2,
+      "flow": "B",
+      "scenario": "abort",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "f226bda736f7803188c03ebbb9d5b09bc32d1a74621b89892dd64062c97eb8d9"
+    },
+    {
+      "port": 2,
+      "flow": "B",
+      "scenario": "budget",
+      "passed": true,
+      "assertions": 24,
+      "wire_sha256": "f226bda736f7803188c03ebbb9d5b09bc32d1a74621b89892dd64062c97eb8d9"
+    }
+  ],
+  "segments_bytes": {
+    "_TEXT": 65520,
+    "PROCESSDIAG": 491,
+    "PROGRAMCODE": 1367
+  },
+  "remaining_near_code_bytes": 16,
+  "source_only_products": 23,
+  "source_proof_sha256": "69856983d0ed8de8d5e47e88a9e12a7e7ece4608c9f0b04a787fb86e8372bd2f",
+  "auditor_sha256": "7dfa596a54694452c508b259a25800c8a587c2604c455426937a143ebbc6a608",
+  "cohort": "build/aspect-process-diagnostic-bank-accepted-01",
+  "frozen_files": 4087,
+  "files_manifest_sha256": "ad5a339d742bdaae812b468eb373e25dc79125f43d8f761843118ac0aa588a1d",
+  "retained_failure": "Unbanked instrumented build exceeded near TEXT by368 bytes. PROCESSDIAG relocates observation/check/environment helpers behind explicit far CRT adapters; no checks or scenarios are removed.",
+  "scope": "Same diagnostic executable tested in an isolated source tree on COM1/COM2 with NONE/SOFT/HARD/BOTH settings and seven scenarios. Exact wires, source compilation, private streams, inheritance, allocation failure, divide/recovery and VM budget checks. Final canonical executable is byte-identical and rebuilds23 products without originals. Emulated UART settings do not prove physical flow-control timing. Production105-slot and experimental108-slot application identities remain separate; all full application gates stay open."
+}
