@@ -81,6 +81,15 @@ the terminal; they are not automatically DOS process failures. Normal Alt-X
 still returns0. Unsupported terminal services and overflow retain their existing
 explicit error exits and hardware restoration.
 
+## Initialization result gap
+
+[Four actual DOS controls and counterexamples](MODEM_INITIALIZATION.md) now
+separate immediate OK, intentional quiet-ready behavior, explicit initialization
+ERROR and delayed readiness. Current code starts dialing after byte transmission;
+it does not wait for an initialization acknowledgement or act on ERROR. A
+configurable result-wait policy is pending. Quiet mode must remain supported,
+and the750ms test peer is not a physical modem timing measurement.
+
 ## Timing and result compatibility
 
 The live sender intentionally uses one BIOS tick between ordinary bytes and

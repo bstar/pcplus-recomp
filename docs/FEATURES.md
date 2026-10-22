@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Initialization result baseline](MODEM_INITIALIZATION.md) reproduces two current-parent
+DOS gaps: ATD is sent after init ERROR and starts before a declared750ms ready
+reply. Immediate-OK and intentional quiet/no-reply controls both connect and
+answer actual ANSI queries. Four independent raw audits preserve exact streams
+and UART restoration; no init correction is accepted yet. The next implementation
+must add configurable result waiting while retaining quiet mode, multiple
+commands, retry synchronization and bounded cancellation behavior.
+
 [Failed-hangup policy](validation/hangup-failure-policy.json) now preserves the online session and
 flow state when a blocked hangup leaves DCD high, reports Hangup failed and
 refuses redial into that connection. Four audited actual DOS old/new cases,
