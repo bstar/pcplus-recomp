@@ -70,6 +70,9 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
         subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we',*flags,'-nt=NOTICECODE','-fo='+str(obj),str(notice_source)],cwd=output,check=True)
         objects.append(str(obj));sources += [notice_source,ROOT/'src/process/program_notice.h']
         if focused_notice:
+            original=native.OUT/'exec.obj';objects.remove(str(original))
+            obj=output/'notice_exec.obj';source=ROOT/'reconstruction/program_exec/exec.asm'
+            subprocess.run(['nasm','-fobj','-I'+str(ROOT/'reconstruction/uart')+'/','-DPROGRAM_EXEC_OMF','-DPROGRAM_NOTICE_DIAGNOSTIC',str(source),'-o',str(obj)],check=True);objects.append(str(obj))
             probe=ROOT/'standalone/notice_fault_probe.c';obj=output/'notice_fault_probe.obj'
             subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',*flags,'-nt=NOTICECODE','-i='+str(ROOT/'src/aspect'),'-fo='+str(obj),str(probe)],cwd=output,check=True)
             objects.append(str(obj));asm=ROOT/'standalone/notice_fault_native.asm';obj=output/'notice_fault_native.obj'

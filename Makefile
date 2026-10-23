@@ -1519,3 +1519,7 @@ test-program-notices: program-notices-fault
 	python3 standalone/test_program_notices_dos.py --output build/program-notices/DOS-make-$(shell date +%s%N)
 test-program-notices-source: program-notices program-notices-fault
 	python3 standalone/prove_program_notices_source.py --output build/program-notices/source-make-$(shell date +%s%N)
+
+.PHONY: test-program-notice-errors
+test-program-notice-errors: program-notices-fault
+	python3 standalone/test_program_notice_errors_dos.py --output build/program-notice-errors/DOS-make-$(shell date +%s%N)

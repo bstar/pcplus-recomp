@@ -439,3 +439,65 @@ Attached-parent popup fault observations, damaged-window quarantine/retry tests,
 original sound/macros/mouse/shared UI policy, other geometries, BBS workflows and
 physical hardware remain open. The ordinary105-slot interpreter still rejects
 DOS/RUN/SHELL. No full PROGRAM policy or F01-F16 application gate closes here.
+
+## PROGRAM message branches and post-error EXEC
+
+The [expanded independent receipt](validation/program-notice-errors.json) accepts
+all five message-selection branches through actual DOS runs. Each fixture runs
+on COM1/HARD and COM2/BOTH, with the following explicit mechanisms:
+
+| CRT errno | Saved DOS error | Fixture and scope |
+| --- | --- | --- |
+| 2 | 2 | Missing target with a controlled empty PATH. |
+| 7 | 10 | A short RUN command finds a BAT in a long PATH directory; the maintained composed-tail bound rejects it before EXEC. |
+| 8 | 11 | The diagnostic explicitly requests unsupported DOS EXEC mode4 on a valid child. This verifies the real DOS error-to-CRT/popup route, not malformed-MZ rejection. |
+| 12 | 8 | The diagnostic consumes the actual remaining DOS paragraph block after snapshot/heap preparation. A witnessed real EXEC fails; the block is released before drawing the popup. |
+| 13 | 5 | A real empty executable is rejected by the built-in DOS loader and selects the generic message. |
+
+The long-tail fixture keeps the complete RUN text below82 characters to respect
+the recovered frontend's fixed buffer. It reaches the longer composed BAT name
+through PATH rather than overflowing that buffer with a long literal. Clearing
+PATH in each script also makes EXEC attempt counts independent of inherited
+search directories. No batch execution marker may appear.
+
+Every session then starts a second VM invocation, shows the missing-target
+notice, and runs [SUCCESS.COM](../standalone/notice_success_child.asm). The real
+child creates SUCCESS.OK containing OK and exits0. The final comparison word is0,
+both saved CRT/DOS errors are0, and the notice count remains2. This checks that
+the previous failure does not become a stale popup after successful execution.
+All508 peer bytes are retained until the script consumes them afterward. Exact
+software-flow wires include the three PROGRAM pause/resume pairs, then the
+READY!/END exchange; screen/cursor, PSP/JFT/IVT and stream-owner checks also pass.
+
+The focused diagnostic has a FLAGS-preserving counter immediately before the
+actual INT21/4B instruction. A test-only mode byte requests AL4 solely for the
+explicit errno8 fixture. Test-only far memory hooks bracket process execution;
+they do not activate the existing allocator-failure switches. The memory runs
+record30,228 DOS paragraphs held, successful release and one failed EXEC before
+the later missing/successful calls. The guarded long-tail path records no initial
+EXEC attempt, as required. The flat recovered EXEC product retains its exact
+bytes; the ordinary experimental parent also remains byte-identical.
+
+The format distinction matters: the [upstream DOSBox-X loader](https://raw.githubusercontent.com/joncampbell123/dosbox-x/master/src/dos/dos_execute.cpp)
+treats short nonempty files as COM programs and uses invalid-format status for
+unsupported EXEC modes. The explicit mode fixture establishes the mapping and
+presentation route. Acceptance of naturally malformed executables on a real DOS
+kernel remains required; this fixture does not close that requirement.
+
+All10 expanded sessions and all14 original popup/fault regressions pass on the
+new diagnostic. A fresh236-source tree reproduces35 products; the child is also
+independently assembled and hash-checked. Since the ordinary parent is unchanged,
+the previous sealed13 attached-parent workflows remain applicable without being
+rerun. The auditor verifies their complete stored custody and exact image identity.
+Near CODE remains160 bytes spare in the ordinary parent and32 in the diagnostic.
+
+```
+./tools/build test-program-notice-errors
+./tools/build test-program-notices
+./tools/build test-program-notices-source
+```
+
+Natural malformed-executable handling on real DOS, attached-parent popup/fault
+observations, damaged/foreign-window quarantine and retry, original sound/macros/
+mouse/shared UI policies, other geometries, BBS regression and physical modem
+acceptance remain open. Full PROGRAM policy and all F01-F16 gates remain open.

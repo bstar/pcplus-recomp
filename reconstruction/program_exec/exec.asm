@@ -4,6 +4,9 @@ CPU 8086
 %ifdef PROGRAM_EXEC_OMF
 SEGMENT _TEXT public class=CODE use16
 global program_exec
+%ifdef PROGRAM_NOTICE_DIAGNOSTIC
+extern _notice_fault_exec_count,_notice_fault_exec_mode
+%endif
 extern program_exec_result
 extern program_saved_sp
 extern program_saved_ss
@@ -109,6 +112,16 @@ L_6ac1: pop ax
 L_6ac2: mov word [program_exec_active],0x1
 L_6ac8: mov dx,[bp+0x6]
 L_6acb: mov ah,0x4b
+%ifdef PROGRAM_NOTICE_DIAGNOSTIC
+ ; Diagnostic-only witness immediately before the actual DOS call. Preserve
+ ; FLAGS and all registers; the flat and ordinary OMF products are unchanged.
+ pushf
+ inc word [_notice_fault_exec_count]
+ ; Explicit unsupported-mode fixture requests real DOS error11. It does not
+ ; pretend to establish malformed-MZ rejection by the built-in DOS loader.
+ or al,byte [_notice_fault_exec_mode]
+ popf
+%endif
 L_6acd: int byte 0x21
 L_6acf: xchg ax,bx
 L_6ad0: lahf

@@ -3,7 +3,50 @@ CPU 8086
 GROUP DGROUP _DATA
 SEGMENT NOTICECODE public class=CODE use16
 global _notice_fault_raise,_notice_fault_save
-extern _notice_fault_report
+global _notice_fault_memory_acquire,_notice_fault_memory_release
+extern _notice_fault_report,_notice_fault_memory_request,_notice_fault_memory_segment
+; Allocate real free DOS paragraphs only after snapshot/heap preparation.
+; The ordinary error path releases them before drawing the notice window.
+_notice_fault_memory_acquire:
+ push bx
+ cmp word [_notice_fault_memory_request],0
+ je .done
+ mov bx,0xffff
+ mov ah,0x48
+ int 0x21
+ jnc .unexpected
+ cmp ax,8
+ jne .bad
+ mov [_notice_fault_report+64],bx
+ mov ah,0x48
+ int 0x21
+ jc .bad
+ mov [_notice_fault_memory_segment],ax
+ jmp short .done
+.unexpected:
+ ; A fullFFFF-paragraph allocation cannot be an admitted conventional block.
+ mov [_notice_fault_memory_segment],ax
+ mov ax,0xffff
+.bad:
+ mov [_notice_fault_report+66],ax
+.done:
+ pop bx
+ retf
+_notice_fault_memory_release:
+ push es
+ cmp word [_notice_fault_memory_segment],0
+ je .done
+ mov es,[_notice_fault_memory_segment]
+ mov ah,0x49
+ int 0x21
+ jc .bad
+ mov word [_notice_fault_memory_segment],0
+ jmp short .done
+.bad:
+ mov [_notice_fault_report+68],ax
+.done:
+ pop es
+ retf
 _notice_fault_raise:
  push bp
  mov bp,sp
@@ -32,13 +75,13 @@ _notice_fault_save:
  int 0x21
  jc .bad
  mov bx,ax
- mov cx,58
+ mov cx,74
  mov dx,_notice_fault_report
  mov ah,0x40
  int 0x21
  mov si,1
  jc .close
- cmp ax,58
+ cmp ax,74
  jne .close
  xor si,si
 .close:

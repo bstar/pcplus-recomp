@@ -1,5 +1,16 @@
 # Full application reconstruction checklist
 
+[PROGRAM message-branch and recovery fixtures](NATIVE_PROGRAM.md#program-message-branches-and-post-error-exec)
+now exercise CRT errno2/7/8/12/13 on COM1/HARD and COM2/BOTH, then show a second
+missing-target popup and execute a real source-built DOS child successfully.
+All10 sessions retain508 peer bytes, preserve rawFFFF for failure, finish raw0
+with CRT/DOS errors0 and exactly two notices. The memory fixture consumes real
+DOS free paragraphs before witnessed EXEC. Errno8 deliberately uses unsupported
+EXEC mode4; natural malformed-executable rejection on real DOS remains open.
+All14 prior popup/fault cases pass on the instrumented image.236 sources reproduce
+35 products; ordinary parent and recovered flat EXEC remain unchanged. Attached
+popup faults, quarantine/retry, full UI and all application/hardware gates remain open.
+
 [Experimental PROGRAM error notices](NATIVE_PROGRAM.md#program-error-notices-and-outer-recovery)
 now run after failed child execution with rawFFFF preserved and a serviced
 near-TEXT transport callback. Fourteen actual8086 DOS sessions verify error2,

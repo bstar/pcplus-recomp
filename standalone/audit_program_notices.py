@@ -33,7 +33,8 @@ def main():
         assert row['passed'] and all(row['checks'].values());folder=ROOT/row['folder'];assert folder.is_relative_to(dos)
         for name,h in row['captures_sha256'].items():assert sha(folder/name)==h
         assert sha(folder/'ASPECT.EXE')==d['binary_sha256']
-        words=struct.unpack('<29H',(folder/'NOTICE.BIN').read_bytes());assert list(words)==row['report_words']
+        raw=(folder/'NOTICE.BIN').read_bytes();assert len(raw) in [58,74]
+        words=struct.unpack('<'+str(len(raw)//2)+'H',raw);assert list(words)==row['report_words']
         phase=int(row['mode'][0]);kind={'N':0,'D':0,'A':1,'F':2}[row['mode'][1]];error=0 if not phase else 5 if kind==1 else 12
         assert words[:7]==(0x4e46,phase,kind,int(bool(phase)),error,1,2)
         assert words[7] in ([9] if phase==2 else [0,1,2]) and words[8:11]==(0,1,1)

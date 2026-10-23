@@ -13,6 +13,10 @@ void __cdecl native_release(void *);
 
 extern unsigned char runtime_arena[0x3aca];
 extern unsigned native_crt_error,native_dos_error;
+#if defined(PROGRAM_NOTICE_DIAGNOSTIC)
+extern void __far __cdecl notice_fault_memory_acquire(void);
+extern void __far __cdecl notice_fault_memory_release(void);
+#endif
 extern unsigned native_backup_extent;
 extern char **environ;
 char **native_environment;
@@ -246,11 +250,17 @@ static unsigned run(const char *path,const char *tail,
   * making later fopen/malloc fail although all held owners remain valid.
   * Release only unused far heap storage; never guess PSP allocation bounds. */
  _fheapshrink();status=NATIVE_PROCESS_OK;
+#if defined(PROGRAM_NOTICE_DIAGNOSTIC)
+ notice_fault_memory_acquire();
+#endif
  if(!status){
   if(kind==3)child=(unsigned)native_system(path);
   else if(kind==2)child=(unsigned)native_spawn_search(0,path,arguments,environment);
   else child=(unsigned)native_spawn_extension(0,path,arguments,environment,kind);
   local.child_status=child;
+#if defined(PROGRAM_NOTICE_DIAGNOSTIC)
+  notice_fault_memory_release();
+#endif
   external_phase(EXTERNAL_CHILD_RETURN);
   if(child==65535U)status=native_crt_error==12?NATIVE_PROCESS_MEMORY:NATIVE_PROCESS_EXEC;
  }

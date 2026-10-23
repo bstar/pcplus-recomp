@@ -13,7 +13,9 @@
 #include "notice_fault.h"
 #include <dos.h>
 extern aspect_file runtime_file;
-unsigned notice_fault_report[29];
+unsigned notice_fault_report[37];
+unsigned notice_fault_memory_request,notice_fault_memory_segment,notice_fault_exec_count,notice_fault_exec_mode;
+extern unsigned native_crt_error,native_dos_error;
 static unsigned armed,kind,psp,cursor,first_return;
 static unsigned short screen[2000],vectors[6];
 static unsigned char jft[20];
@@ -49,12 +51,22 @@ void __far __cdecl notice_fault_prepare(void)
  armed=request&&request[0]>='0'&&request[0]<='3'?request[0]-'0':0;
  kind=request&&request[1]=='A'?1:request&&request[1]=='F'?2:0;
  notice_fault_report[0]=0x4e46;notice_fault_report[1]=armed;notice_fault_report[2]=kind;
+ notice_fault_memory_request=request&&request[0]&&request[1]&&request[2]&&request[3]=='M';
+ notice_fault_exec_mode=request&&request[0]&&request[1]&&request[2]&&request[3]=='F'?4:0;
 }
 void __cdecl notice_fault_phase(unsigned phase)
 {
  if(phase==2&&program_notice_calls==1){
-  const char *text="Program not found.";unsigned i,match=1;
-  for(i=0;i<18;++i)if(((unsigned __far *)MK_FP(0xb800,0))[10*80+31+i]!=(0x7000|(unsigned char)text[i]))match=0;
+  const char *text;unsigned i,length=0,match=1;
+  switch(program_notice_errno){
+  case 2:text="Program not found.";break;
+  case 7:text="Command line is too long.";break;
+  case 8:text="Invalid executable format.";break;
+  case 12:text="Insufficient memory to run program.";break;
+  default:text="Unable to execute program.";break;
+  }
+  while(text[length])++length;
+  for(i=0;i<length;++i)if(((unsigned __far *)MK_FP(0xb800,0))[10*80+40-length/2+i]!=(0x7000|(unsigned char)text[i]))match=0;
   notice_fault_report[11]=match;
  }
  if(armed!=phase)return;
@@ -77,11 +89,15 @@ unsigned __far __cdecl notice_fault_run(const char *path,unsigned limit)
  notice_fault_report[9]=clean();notice_fault_report[10]=video_equal();
  notice_fault_report[14]=resources_equal();notice_fault_report[15]=runtime_external_raw_status;
  notice_fault_report[16]=runtime_external_recoveries;notice_fault_report[17]=aspect_serial_active;
+ notice_fault_report[31]=native_dos_error;notice_fault_report[35]=notice_fault_exec_count;
+ notice_fault_memory_request=notice_fault_exec_mode=0;
  second=notice_fault_runtime_run("RECOVER.ASX",limit);
  notice_fault_report[18]=second;notice_fault_report[19]=program_notice_calls;
  notice_fault_report[20]=program_notice_result.status;notice_fault_report[21]=program_notice_result.window_status;
  notice_fault_report[22]=clean();notice_fault_report[23]=video_equal();notice_fault_report[24]=resources_equal();
  notice_fault_report[25]=runtime_external_raw_status;notice_fault_report[26]=runtime_external_recoveries;
  notice_fault_report[27]=aspect_serial_active;
+ notice_fault_report[29]=native_crt_error;notice_fault_report[30]=native_dos_error;
+ notice_fault_report[36]=notice_fault_exec_count;
  return first_return;
 }
