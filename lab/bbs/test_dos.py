@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Exercise real loopback BBS servers through the DOS executable and modem model."""
-import argparse,asyncio,hashlib,json,os,subprocess,sys,time
+import argparse,asyncio,hashlib,json,os,re,subprocess,sys,time
 from pathlib import Path
 from modem import Modem
 ROOT=Path(__file__).resolve().parents[2]
@@ -31,6 +31,11 @@ async def run(args):
    # The record overrides a different PRM port/rate; both UART tables are real.
    fixture=directory_prm(port=1,baud=6,soft=int(args.flow=='SOFT'),hard=int(args.flow=='HARD'))
    directory_fixture=directory_image(entry=args.entry,target=f'lab.local:{args.port}'.encode('ascii'),port=args.com,baud=RATES.index(args.baud))
+   binding=getattr(args,'directory_key_binding',None)
+   if binding:
+    assert re.fullmatch(r'[A-Za-z0-9_-]{1,8}',binding)
+    directory_fixture=bytearray(directory_fixture);at=250+(args.entry-1)*114+0x56
+    directory_fixture[at:at+9]=binding.encode().ljust(9,b'\0');directory_fixture=bytes(directory_fixture)
    (output/'TEST.DIR').write_bytes(directory_fixture)
   (output/'TEST.PRM').write_bytes(fixture)
   command='TERMINAL @D:\\TEST.PRM'
@@ -168,6 +173,7 @@ if __name__=='__main__':
  p.add_argument('--server-log',type=Path,help='Explicit owned ENiGMA log for a separate test server; default stock fixture')
  p.add_argument('--init-wait',type=int,choices=range(32768),help='Explicit /I initialization acknowledgement deadline in seconds')
  p.add_argument('--dial-fixture',action='store_true',help='Exercise configured automatic modem initialization/dialing inside DOS')
+ p.add_argument('--directory-key-binding',help='Bind the selected synthetic directory entry to a KEY basename')
  p.add_argument('--meta-fixture',type=Path,help='Load an explicit source-owned ten-record KEY fixture with /T')
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')

@@ -55,3 +55,11 @@ The separate [ASPECT KEY terminal](LIVE_ASPECT_KEYS.md) now supports global
 kind0 filename actions, including empty no-ops, through the existing Script
 owner. The unsupported-ASPECT statements above describe the unchanged baseline
 products. HOOK and directory KEY/META import remain open.
+
+## Optional directory bindings
+
+The separate [directory-key terminal](DIRECTORY_KEY_BINDINGS.md) now accepts
+selected-entry KEY action and META KBD resources during startup. Explicit `/T`
+and `/K` independently override them. Baseline unsupported-directory statements
+above describe the unchanged earlier variants. Native post-connect switching,
+KEY auto-creation and full application requirements remain open.

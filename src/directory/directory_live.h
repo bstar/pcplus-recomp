@@ -71,4 +71,7 @@ unsigned __cdecl directory_live_context_matches(const directory_live_context *co
  * Output13bytes and input9bytes must be disjoint valid near extents.
  * Returns0 on success;1 for malformed/unsupported name. Does not open files. */
 unsigned __cdecl directory_script_name(const unsigned char *stored,char *output);
+#ifdef DIRECTORY_KEY_BINDINGS
+unsigned __cdecl directory_binding_name(const unsigned char *,unsigned,char *);
+#endif
 #endif

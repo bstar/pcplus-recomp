@@ -1710,3 +1710,22 @@ test-aspect-keys: aspect-keys
 	python3 standalone/test_meta_aspect_dos.py --label bad-script-make-$(shell date +%s%N) --case bad-script --port 1
 test-aspect-keys-source: aspect-keys
 	python3 standalone/prove_meta_aspect_source.py --output build/aspect-keys/source-make-$(shell date +%s%N)
+
+.PHONY: directory-keys test-directory-keys test-directory-keys-source
+directory-keys: aspect-keys
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input --aspect-keys --directory-keys
+test-directory-keys: directory-keys
+	python3 standalone/check_directory_key_bindings.py --output build/directory-keys/linked-make-$(shell date +%s%N)
+	python3 standalone/test_directory_key_bindings_dos.py --label selected-make-$(shell date +%s%N) --case selected --port 1
+	python3 standalone/test_directory_key_bindings_dos.py --label script-make-$(shell date +%s%N) --case script --port 2
+	python3 standalone/test_directory_key_bindings_dos.py --label environment-make-$(shell date +%s%N) --case environment --port 1
+	python3 standalone/test_directory_key_bindings_dos.py --label cwd-first-make-$(shell date +%s%N) --case cwd-first --port 2
+	python3 standalone/test_directory_key_bindings_dos.py --label cli-make-$(shell date +%s%N) --case cli --port 1
+	python3 standalone/test_directory_key_bindings_dos.py --label fallback-make-$(shell date +%s%N) --case fallback --port 2
+	python3 standalone/test_directory_key_bindings_dos.py --label missing-make-$(shell date +%s%N) --case missing --port 1
+	python3 standalone/test_directory_key_bindings_dos.py --label bad-key-make-$(shell date +%s%N) --case bad-key --port 2
+	python3 standalone/test_directory_key_bindings_dos.py --label bad-kbd-make-$(shell date +%s%N) --case bad-kbd --port 1
+	python3 standalone/test_directory_key_bindings_dos.py --label bad-name-make-$(shell date +%s%N) --case bad-name --port 2
+	python3 standalone/test_directory_key_bindings_dos.py --label blank-make-$(shell date +%s%N) --case blank --port 1
+test-directory-keys-source: directory-keys
+	python3 standalone/prove_directory_keys_source.py --output build/directory-keys/source-make-$(shell date +%s%N)

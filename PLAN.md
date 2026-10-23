@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Selected-directory KEY/META imports](docs/DIRECTORY_KEY_BINDINGS.md) now have an optional startup
+binding into the existing action and keyboard readers. KEY selects .KEY actions;
+META selects .KBD translation profiles.292 linked inputs and11 actual DOS cases
+cover selection, CWD/PCPLUS/default fallback, independent CLI overrides, blanks,
+ASPECT invocation and pre-UART malformed-resource rejection.662 sources reproduce
+four products; three prior terminal variants retain exact bytes. Current
+ENiGMA/Synchronet entry3 replay without /T is recorded in the independent receipt.
+Native post-connect mutation/general directory switching, factory defaults/KEY
+creation, HOOK, other kernels, physical hardware and all full gates remain open.
+
 [Global KEY ASPECT actions](docs/LIVE_ASPECT_KEYS.md) now have an optional source-built terminal
 entry through the existing guarded Script safe point. Empty definitions are
 no-ops; all ten Alt-digit selections stage bounded filenames without executing

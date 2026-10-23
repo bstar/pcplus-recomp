@@ -70,6 +70,23 @@ unsigned __cdecl directory_script_name(const unsigned char *stored,char *output)
  else{memcpy(name+n,".ASX",5);n+=4;}
  memcpy(output,name,n+1);return 0;
 }
+#ifdef DIRECTORY_KEY_BINDINGS
+/* Stored directory bindings are at most eight basename bytes plus NUL. */
+unsigned __cdecl directory_binding_name(const unsigned char *stored,unsigned meta,char *output)
+{
+ char name[13];unsigned i,n,c;
+ if(!extent(stored,9)||meta>1||!extent(output,13)||!disjoint(stored,9,output,13))return 1;
+ if(blank(stored)){output[0]=0;return 0;}
+ for(n=0;n<9&&stored[n];++n){
+  c=stored[n];if(c>='a'&&c<='z')c-=32;
+  if(!((c>='A'&&c<='Z')||(c>='0'&&c<='9')||c=='_'||c=='-'))return 1;
+  name[n]=(char)c;
+ }
+ if(!n||n>8||name_device(name,n))return 1;
+ name[n++]='.';name[n++]='K';name[n++]=meta?'B':'E';name[n++]=meta?'D':'Y';name[n]=0;
+ for(i=0;i<=n;++i)output[i]=name[i];return 0;
+}
+#endif
 static void put_word(prm_dos_image *image,unsigned at,unsigned value)
 { image->bytes[at]=(unsigned char)value;image->bytes[at+1]=(unsigned char)(value>>8); }
 static unsigned literal(const unsigned char *target)
@@ -130,7 +147,13 @@ directory_live_status __cdecl directory_live_decode(const prm_dos_image *source,
  if(!bounded(record+0x4b,11)){status=DIRECTORY_LIVE_RECORD;goto done;}
  for(i=0;i<3;++i){
   if(!bounded(record+binding_offsets[i],binding_sizes[i])){status=DIRECTORY_LIVE_RECORD;goto done;}
-  if(i? !blank(record+binding_offsets[i]):directory_script_name(record+binding_offsets[i],script_name)){
+  if(i?
+#ifdef DIRECTORY_KEY_BINDINGS
+     directory_binding_name(record+binding_offsets[i],i==2,script_name)
+#else
+     !blank(record+binding_offsets[i])
+#endif
+     :directory_script_name(record+binding_offsets[i],script_name)){
    status=DIRECTORY_LIVE_BINDING;goto done;
   }
  }

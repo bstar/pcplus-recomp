@@ -1,0 +1,19 @@
+{
+  "DOS": [
+    "build/directory-keys/selected-com1-final-01",
+    "build/directory-keys/script-com2-final-01",
+    "build/directory-keys/environment-com1-final-01",
+    "build/directory-keys/cwd-first-com2-final-01",
+    "build/directory-keys/cli-com1-final-01",
+    "build/directory-keys/fallback-com2-final-01",
+    "build/directory-keys/missing-com1-final-01",
+    "build/directory-keys/bad-key-com2-final-01",
+    "build/directory-keys/bad-kbd-com1-final-01",
+    "build/directory-keys/bad-name-com2-final-01",
+    "build/directory-keys/blank-com1-final-01"
+  ],
+  "linked": "build/directory-keys/linked-final-01",
+  "proof": "build/directory-keys/source-final-01",
+  "baseline": "build/directory-keys/baseline-01",
+  "bbs": "docs/validation/bbs-directory-keys.json"
+}

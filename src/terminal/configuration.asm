@@ -26,6 +26,9 @@ extern attributes_color_mode,terminal_dec_keys,terminal_backspace_mode_9058
 extern attributes_bold_active,attributes_blink_active,attributes_reverse_active
 extern terminal_macro_pause_character,terminal_macro_character_delay_units
 
+%ifdef DIRECTORY_KEY_BINDINGS
+extern _terminal_directory_bindings
+%endif
 global terminal_load_configuration,terminal_apply_configuration,terminal_apply_display_configuration
 global terminal_select_directory
 ; AX0 continue / AX1 user cancelled / AX8 invalid selectors or browser error.
@@ -118,6 +121,11 @@ terminal_load_configuration:
  jmp .loaded
 .directory_loaded:
  mov word [terminal_directory_context_valid],1
+%ifdef DIRECTORY_KEY_BINDINGS
+ call far _terminal_directory_bindings
+ or ax,ax
+ jnz .loaded
+%endif
  push ds
  pop es
  cld

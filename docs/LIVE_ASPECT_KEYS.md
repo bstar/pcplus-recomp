@@ -87,3 +87,11 @@ kind0 record and `/T` command to the recorded keyboard schedule. This accepts
 selected global KEY ASPECT integration. Physical
 UART/modem, other DOS kernels, arbitrary combined failures and full F01–F16
 application acceptance remain open.
+
+## Optional directory bindings
+
+The separate [directory-key terminal](DIRECTORY_KEY_BINDINGS.md) now accepts
+selected-entry KEY action and META KBD resources during startup. Explicit `/T`
+and `/K` independently override them. Baseline unsupported-directory statements
+above describe the unchanged earlier variants. Native post-connect switching,
+KEY auto-creation and full application requirements remain open.

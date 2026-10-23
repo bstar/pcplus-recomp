@@ -27,6 +27,8 @@ async def main(args):
     notice_help=getattr(args,'notice_help',False)
     help_resource=getattr(args,'help_resource',False)
     aspect_keys=getattr(args,'aspect_keys',False)
+    directory_keys=getattr(args,'directory_keys',False)
+    assert not directory_keys or aspect_keys
     assert not aspect_keys or help_resource
     assert not help_resource or notice_help
     assert not notice_help or notice_input
@@ -39,6 +41,7 @@ async def main(args):
     if notice_help:runner='aspect-notice-help-parent'
     if help_resource:runner='aspect-help-resource-parent'
     if aspect_keys:parent='terminal-aspect-keys'
+    if directory_keys:parent='terminal-directory-keys'
     for directory,binary in ((parent,'TERMINAL.EXE'),(runner,'ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')):
         base=ROOT/'build'/directory;manifest=read(base/'manifest.json')
         assert sha(base/binary)==manifest['binary_sha256']
@@ -101,7 +104,7 @@ async def main(args):
     for keys in schedules.values():assert len('ADDKEY p1000 '+keys+' p2000 a-x')<500
     prediction=dict(inputs=inputs,schedules=schedules,expected_payload_hex=payload.hex(),server=args.name,port=port,
         binary_sha256=sha(stage/'TERMINAL.EXE'),diagnostic_build=args.trace,initialization_wait_seconds=args.init_wait,
-        runner_sha256=sha(stage/'ASPECT.EXE'),mouse_sound=mouse_sound,program_probe=program_probe,native_notice_input=notice_input,notice_help=notice_help,help_resource=help_resource,aspect_keys=aspect_keys,scope=__doc__)
+        runner_sha256=sha(stage/'ASPECT.EXE'),mouse_sound=mouse_sound,program_probe=program_probe,native_notice_input=notice_input,notice_help=notice_help,help_resource=help_resource,aspect_keys=aspect_keys,directory_keys=directory_keys,scope=__doc__)
     (stage/'start.json').write_text(json.dumps(prediction,indent=2)+'\n')
     runs={};semantics={}
     for mode,keys in schedules.items():
@@ -109,8 +112,8 @@ async def main(args):
         assert not out.exists();out.mkdir(parents=True)
         offset=log.stat().st_size if log else None;inode=log.stat().st_ino if log else None
         options=argparse.Namespace(name=args.name,label=label,port=port,com=2,baud=19200,flow='HARD',packet_delay_ms=0,
-            dial_fixture=True,directory_fixture=False,directory_browser=False,entry=3,binary=stage/'TERMINAL.EXE',
-            config_fixture=False,keymap_fixture=None,meta_fixture=stage/'ACTIONS.KEY' if aspect_keys else None,server_log=log,mouse_scales=(8,4) if mouse_sound else None,program_sound=1 if mouse_sound else None,keys=keys,wait=2,timeout=170,init_wait=args.init_wait)
+            dial_fixture=True,directory_fixture=directory_keys,directory_key_binding='ACTIONS' if directory_keys else None,directory_browser=False,entry=3,binary=stage/'TERMINAL.EXE',
+            config_fixture=False,keymap_fixture=None,meta_fixture=stage/'ACTIONS.KEY' if aspect_keys and not directory_keys else None,server_log=log,mouse_scales=(8,4) if mouse_sound else None,program_sound=1 if mouse_sound else None,keys=keys,wait=2,timeout=170,init_wait=args.init_wait)
         with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):
             code=await test_dos.run(options)
         run=read(out/'result.json');runs[mode]=run
@@ -198,12 +201,12 @@ exit
         sources_unchanged=all(sha(ROOT/name)==digest for name,digest in inputs.items()),
         no_retained_temporary_files=not list(stage.glob('LPR*.TMP')) and not list(stage.glob('LPR*.BAK')))
     result=dict(passed=all(checks.values()),checks=checks,inputs=inputs,sessions=semantics,
-        initialization_wait_seconds=args.init_wait,diagnostic_build=args.trace,mouse_sound=mouse_sound,program_probe=program_probe,native_notice_input=notice_input,notice_help=notice_help,help_resource=help_resource,aspect_keys=aspect_keys,runner_sha256=sha(stage/'ASPECT.EXE'),
+        initialization_wait_seconds=args.init_wait,diagnostic_build=args.trace,mouse_sound=mouse_sound,program_probe=program_probe,native_notice_input=notice_input,notice_help=notice_help,help_resource=help_resource,aspect_keys=aspect_keys,directory_keys=directory_keys,runner_sha256=sha(stage/'ASPECT.EXE'),
         binary_sha256=prediction['binary_sha256'],expected_payload_hex=payload.hex(),
         artifacts={str(p.relative_to(stage)):sha(p) for p in stage.iterdir() if p.is_file()},
         replay_program='SOUND.ASX' if program_probe else 'RECORD.ASX',
         program_probe_scope='Separate derived script runs ABSENT.COM and SUCCESS.COM before the unchanged recorded navigation; failure emits BAD and exits.' if program_probe else None,
-        scope='Actual DOS File/C recording, DOS compilation and '+('Alt-1 KEY ASPECT' if aspect_keys else 'File/A')+' replay of read-only menu navigation, followed by a second manual navigation proving parent return, on the existing loopback synthetic BBS account. The Hayes model forwards configured shutdown hangup bytes; escape-to-command modem behavior is not modeled. No audio, physical modem, file transfers or full application acceptance.')
+        scope='Actual DOS File/C recording, DOS compilation and '+('directory-selected Alt-1 KEY ASPECT' if directory_keys else 'Alt-1 KEY ASPECT' if aspect_keys else 'File/A')+' replay of read-only menu navigation, followed by a second manual navigation proving parent return, on the existing loopback synthetic BBS account. The Hayes model forwards configured shutdown hangup bytes; escape-to-command modem behavior is not modeled. No audio, physical modem, file transfers or full application acceptance.')
     (stage/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=result['passed'],checks=checks,sessions={k:v['checks'] for k,v in semantics.items()})),flush=True)
     assert result['passed'],'Preserve failed attempt and inspect captures'
@@ -214,6 +217,7 @@ if __name__=='__main__':
     p.add_argument('--init-wait',type=int,choices=range(32768),help='Explicit initialization acknowledgement deadline for both DOS sessions')
     p.add_argument('--notice-input',action='store_true',help='Use matching capability16 native notice-input products; requires mouse-sound and program-probe')
     p.add_argument('--notice-help',action='store_true',help='Use the experimental child-owned PROGRAM help build; requires notice-input')
+    p.add_argument('--directory-keys',action='store_true',help='Select the replay KEY file through directory entry3 instead of /T')
     p.add_argument('--aspect-keys',action='store_true',help='Replay through the optional Alt-1 KEY ASPECT action')
     p.add_argument('--help-resource',action='store_true',help='Use the streamed HLP/search child; requires notice-help')
     p.add_argument('--mouse-sound',action='store_true',help='Use matching ordinary mouse/sound terminal and ASPECT builds')

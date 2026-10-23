@@ -20,6 +20,7 @@ def main():
     p.add_argument('--mouse-sound',action='store_true',help='Audit the matching combined mouse/sound builds and DOS-child replay wrapper')
     p.add_argument('--notice-input',action='store_true',help='Audit matching capability16 native notice-input products')
     p.add_argument('--notice-help',action='store_true',help='Audit the child-owned PROGRAM help variant')
+    p.add_argument('--directory-keys',action='store_true',help='Audit selected-directory KEY import without /T')
     p.add_argument('--aspect-keys',action='store_true',help='Audit Alt-1 KEY ASPECT replay')
     p.add_argument('--help-resource',action='store_true',help='Audit the streamed HLP/search variant')
     a=p.parse_args()
@@ -27,6 +28,7 @@ def main():
     assert not a.notice_help or a.notice_input
     assert not a.help_resource or a.notice_help
     assert not a.aspect_keys or a.help_resource
+    assert not a.directory_keys or a.aspect_keys
     assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
     if a.synchronet_label:assert re.fullmatch(r'[A-Za-z0-9_-]+',a.synchronet_label)
     cohort=a.cohort.resolve();output=a.output.resolve()
@@ -40,11 +42,13 @@ def main():
     if a.notice_help:runner='aspect-notice-help-parent'
     if a.help_resource:runner='aspect-help-resource-parent'
     if a.aspect_keys:parent='terminal-aspect-keys'
+    if a.directory_keys:parent='terminal-directory-keys'
     for name,payload in (('synchronet',b'TQ'),('enigma',b'M\rQ\r')):
         stage=ROOT/'build/bbs-lab/recording'/name/(a.synchronet_label if name=='synchronet' and a.synchronet_label else a.label);r=read(stage/'result.json');start=read(stage/'start.json')
         assert r['passed'] and all(r['checks'].values()) and not r['diagnostic_build']
         if a.init_wait is not None:
             assert r['initialization_wait_seconds']==start['initialization_wait_seconds']==a.init_wait
+        assert bool(r.get('directory_keys'))==bool(start.get('directory_keys'))==a.directory_keys
         assert bool(r.get('aspect_keys'))==bool(start.get('aspect_keys'))==a.aspect_keys
         if a.aspect_keys:
             key=(stage/'ACTIONS.KEY').read_bytes();assert len(key)==540 and key[:12]==b'\0\0SOUND.ASX\0'
@@ -105,7 +109,12 @@ def main():
                     assert run['checks']['dos_normal_exit'] and (folder/'PASS.TXT').exists()
                     assert modem['events'][-2]['kind']=='bbs-connected'
             assert run['keyboard_input']==start['schedules'][mode]
-            if a.aspect_keys:
+            if a.directory_keys:
+                command=run['configuration']['command'];assert ' /T:' not in command
+                assert ' /E:D:' in command and '/N:3' in command and run['configuration']['directory_entry']==3
+                raw=(folder/'TEST.DIR').read_bytes();assert raw[250+2*114+0x56:250+2*114+0x56+9]==b'ACTIONS\0\0'
+                assert session['checks']['DOS_and_hardware'] and run['checks']['directory_accounting_exact']
+            elif a.aspect_keys:
                 assert run['meta_actions']['sha256']==sha(stage/'ACTIONS.KEY')==sha(folder/'ACTIONS.KEY')
                 assert run['configuration']['command'].split().count('/T:D:\\ACTIONS.KEY')==1
             if a.mouse_sound:
@@ -203,7 +212,7 @@ def main():
     result=dict(passed=True,selected_modern_BBS_recorder_workflows_accepted=True,full_F13_accepted=False,
         servers=servers,initialization_wait_seconds=a.init_wait,native_prompt_cases=68,custody_sha256=kept,synchronet_logon_fixture=logon_fixture,
         earlier_failures='docs/validation/bbs-recording-failure.json',
-        mouse_sound=a.mouse_sound,program_probe=a.mouse_sound,native_notice_input=a.notice_input,notice_help=a.notice_help,help_resource=a.help_resource,aspect_keys=a.aspect_keys,prerequisite_failures=prerequisites,
+        mouse_sound=a.mouse_sound,program_probe=a.mouse_sound,native_notice_input=a.notice_input,notice_help=a.notice_help,help_resource=a.help_resource,aspect_keys=a.aspect_keys,directory_keys=a.directory_keys,prerequisite_failures=prerequisites,
         scope=('Four actual DOS sessions on the combined mouse/sound build: record read-only BBS navigation, compile the original and a separate DOS-child wrapper with DOS ASPCOMP, replay the wrapper, navigate manually afterward, then exact UART/DOS restoration. The wrapper first runs a missing target and a successful child; conditional BAD wire output is absent. Sound PRM word is enabled; audible output and mouse movement are not observed by this BBS harness. Loopback Hayes model; no physical modem, transfers or full application acceptance.' if a.mouse_sound else 'Four production actual DOS sessions: record read-only navigation, compile with DOS ASPCOMP, replay the unedited source in a fresh authenticated BBS session, navigate manually afterward, then normal exit and exact UART/DOS restoration. Separate diagnostic observer and native CPU evidence explain the overlap/stop-only wait fixes. Loopback Hayes model forwards configured shutdown bytes. No software audio, physical modem, transfers, arbitrary prompts or full application acceptance.'))
     with output.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=True,production_sessions=4,custody_files=len(kept))))
