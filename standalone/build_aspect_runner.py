@@ -15,9 +15,11 @@ def main(extension=None):
     feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS','-DASPECT_EXTERNAL_UNWIND'] if extension else []
     if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
     if extension and extension.get('program_far'):feature_flags+=['-DNATIVE_PROGRAM_FAR']
+    if extension and extension.get('notice_bank'):feature_flags+=['-DNATIVE_PROGRAM_NOTICES','-DNOTICE_BANKED']
     if extension and extension.get('break_owner'):feature_flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR','-DNATIVE_PROGRAM_FAR']
     main_source=extension.get('driver',ROOT/'src/aspect/runner.c') if extension else ROOT/'src/aspect/runner.c'
-    diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c'
+    diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c' and not (extension and extension.get('focused_notice'))
+    if extension and extension.get('focused_notice'):feature_flags+=['-DPROGRAM_NOTICE_DIAGNOSTIC']
     if extension and diagnostic_driver:feature_flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
     if main_source.name=='aspect_process_diagnostic.c':feature_flags.append('-DASPECT_PROCESS_OBSERVER_FAR')
     output.mkdir(parents=True,exist_ok=True)

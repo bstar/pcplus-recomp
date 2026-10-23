@@ -1,5 +1,6 @@
 #include "notice.h"
 #include "notice_window.h"
+#include "notice_unwind.h"
 #include <dos.h>
 #include <string.h>
 #if defined(NOTICE_BANKED)
@@ -9,6 +10,7 @@
 extern unsigned notice_left,notice_right,notice_attribute,notice_descriptor;
 extern unsigned __cdecl notice_checkpoint_call(const char *,unsigned);
 extern void __cdecl notice_checkpoint_abort(void);
+extern void __cdecl notice_checkpoint_discard(void);
 extern unsigned __cdecl notice_seconds_native(void);
 extern unsigned long __cdecl notice_ticks_native(void);
 extern unsigned __cdecl notice_key_pending_native(void);
@@ -113,6 +115,17 @@ unsigned NOTICE_CODE __cdecl notice_recover(notice_result *result)
  if(data_segment()!=stack_segment()||!interrupt_flag())return NOTICE_STATE;
  if(!held.busy){memset(result,0,sizeof(*result));return NOTICE_OK;}
  return retire(result);
+}
+unsigned NOTICE_CODE __cdecl notice_unwind(notice_result *result)
+{
+ unsigned status;
+ if(!extent(result,sizeof(*result)))return NOTICE_ARGUMENT;
+ if(data_segment()!=stack_segment()||!interrupt_flag())return NOTICE_STATE;
+ notice_checkpoint_discard();
+ if(!held.busy){memset(result,0,sizeof(*result));return NOTICE_OK;}
+ if(held.running&&!held.result.cause)held.result.cause=NOTICE_STATE;
+ held.running=0;status=retire(result);
+ return held.busy?status:NOTICE_OK;
 }
 unsigned NOTICE_CODE __cdecl notice_show(const char *message,unsigned kind,const notice_options *options,notice_result *result)
 {

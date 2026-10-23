@@ -15,6 +15,11 @@ SEGMENT NOTICE_CHECKPOINT_SEGMENT public class=NOTICE_CHECKPOINT_CLASS use16
 extern _notice_call_native
 global _notice_checkpoint_call,_notice_checkpoint_abort
 global _notice_checkpoint_active
+global _notice_checkpoint_discard
+; Only an outer owner which has already discarded this frame may call here.
+_notice_checkpoint_discard:
+ mov word [cs:ready],0
+ ret
 _notice_checkpoint_active:
  mov ax,[cs:ready]
  ret

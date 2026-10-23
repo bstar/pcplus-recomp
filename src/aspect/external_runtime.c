@@ -43,6 +43,11 @@ static unsigned retire(unsigned recovery)
   if(other&&!status)status=other==NATIVE_PROGRAM_SERIAL?ASPECT_RUN_SERIAL:ASPECT_RUN_STATE;
   if(reset)held.view_reset=1;
  }
+#if defined(NATIVE_PROGRAM_NOTICES)
+ /* A retained popup still owns the displayed parent frame. Retire neither its
+  * input/view lease nor the private streams underneath that quarantined owner. */
+ if(native_program_busy)return ASPECT_RUN_STATE;
+#endif
  if(process_handles_active){
   other=recovery?process_handles_recover():process_handles_end();
   if(other&&!status)status=ASPECT_RUN_STATE;

@@ -377,3 +377,65 @@ changing the child's raw status, service the live transport through a correct
 near callback, and retire or quarantine window/input leases after outer nonlocal
 faults. Native sound/macros, mouse/shared UI policy, broader views, BBS workflows
 and physical Boca/SPA2102 validation remain open. No full F01-F16 gate closes.
+
+## PROGRAM error notices and outer recovery
+
+The separate experimental notice parent now calls the banked service after
+failed PROGRAM execution. It restores the UART, screen and cursor first, then
+uses the native `FFFF` result plus nonzero CRT errno to select a source-owned
+message. The [presentation adapter](../src/process/program_notice.c) retains
+the recovered2/7/8/12/other error branches; it never overwrites the child's raw
+status. Successful execution does not trigger a stale error notice. The near
+callback getter resides in `_TEXT`, as does the returned transport callback;
+the bank calls it through the existing far service bridge. Polling preserves
+queued input and continues software/hardware flow control. Notices remain quiet;
+native sound policy is still a separate requirement.
+
+PROGRAM tracks a pending notice until its window retires. A retained damaged
+snapshot keeps the controller busy, and external teardown preserves its parent
+lease and private streams. The private [outer recovery ABI](../src/ui/notice_unwind.h)
+may only be called after the outer owner has discarded the stack containing the
+notice and callback. It invalidates the old bank-local frame, clears the running
+state and uses normal generation/identity-checked cleanup. Successful retirement
+returns OK while retaining the original cause in the result. It is not a live
+callback cancellation API or a general interrupt/allocator fault handler.
+
+The [independent receipt](validation/program-notices.json) accepts14 actual8086
+DOS socket-peer sessions. Eight normal sessions cover COM1/2 crossed with NONE,
+SOFT,HARD,BOTH flow. Six fault sessions cover before/during/after notices,
+foreign-DS DIV and native typed abort, including COM2/BOTH. Every session runs
+the same missing-target command twice in the same process across two VM runs,
+preserves rawFFFF for both, and retains508 exact peer bytes until afterward.
+The second script consumes every byte and completes READY!/END exchanges. Actual
+flow-control wires include startup/close bytes and two PROGRAM pause/resume pairs.
+
+The focused banked probe checks the visible error text, restored video/cursor,
+PSP,JFT,INT0/23/24 vectors, six stream owners and continued serial activity. A
+fault during the notice leaves cause STATE while cleanup succeeds; the second
+notice confirms that the abandoned recovery frame does not remain armed. The
+general fault diagnostic initially exceeded near CODE by1,189 bytes, so this
+focused probe lives in NOTICECODE with explicit far platform bridges. Existing
+general fault diagnostics and their checks remain intact. This focused build
+does not enable the general `ASPECT_EXTERNAL_DIAGNOSTIC` instrumentation.
+
+All13 attached terminal/PROGRAM workflows pass on the new ordinary experimental
+parent, including real DOS source compilation and nested children. They prove
+normal return behavior; popup faults above are observed in the raw CLI, rather
+than through the attached parent. A fresh tree with236 declared source files
+reproduces35 products: both experimental ASPECT binaries plus33 notice/window
+products. The updated near/banked notice suites retain583 checks each, and the
+bank-local ABI probe retains2,048 calls. The near notice closure now declares64
+files including the private recovery header. Parent near CODE has160 bytes free;
+the focused diagnostic has48 bytes free.
+
+```
+./tools/build program-notices
+./tools/build test-program-notices
+./tools/build test-program-notices-source
+```
+
+Actual DOS fixtures for errno7/8/12 and generic failures remain to be accepted.
+Attached-parent popup fault observations, damaged-window quarantine/retry tests,
+original sound/macros/mouse/shared UI policy, other geometries, BBS workflows and
+physical hardware remain open. The ordinary105-slot interpreter still rejects
+DOS/RUN/SHELL. No full PROGRAM policy or F01-F16 application gate closes here.

@@ -97,7 +97,7 @@ def main():
         assert r['assertions']==538 and r['maximum']==508 and (folder/'RX.BIN').read_bytes()==payload
         assert sha(folder/'NUART.EXE')==sha(ROOT/'build/notice-uart/NUART.EXE')
         for name,h in r['captures_sha256'].items():assert sha(folder/name)==h
-    assert nf['passed'] and nf['source_files']==63 and len(nf['products'])==33
+    assert nf['passed'] and nf['source_files']==64 and len(nf['products'])==33
     for name,h in nf['products'].items():assert sha(ROOT/name)==h
     for folder,report in [(near_dos,nd),(near_uart,nu),(near_source,nf)]:
         for name,h in report['inputs'].items():assert sha(ROOT/name)==h;selected.add(ROOT/name)

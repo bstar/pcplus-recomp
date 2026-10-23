@@ -34,8 +34,11 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     # ordinary VM grows. This changes placement, not Break/exit policy.
     # Keep near CRT/platform calls in _TEXT through explicit far adapters.
     flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_UNWIND','-DNATIVE_PROGRAM_FAR']
+    if notice_bank:flags+=['-DNATIVE_PROGRAM_NOTICES','-DNOTICE_BANKED']
     if break_owner:flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR']
-    if driver:flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
+    focused_notice=bool(driver and driver.name=='aspect_notice_driver.c')
+    if driver and not focused_notice:flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
+    if focused_notice:flags+=['-DPROGRAM_NOTICE_DIAGNOSTIC']
     controller=output/'native_program_far.obj'
     subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',
         *flags,'-nt=PROGRAMCODE','-i='+str(ROOT/'src/aspect'),'-i='+str(ROOT/'src/process'),
@@ -63,12 +66,23 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
         nm=json.loads((ROOT/'build/notice-bank/manifest.json').read_text())
         objects += [str(ROOT/path) for path in nm['production_objects']]
         sources += [ROOT/path for path in nm['sources']]
-    extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render,break_owner=break_owner,program_far=True)
+        notice_source=ROOT/'src/process/program_notice.c';obj=output/'program_notice.obj'
+        subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we',*flags,'-nt=NOTICECODE','-fo='+str(obj),str(notice_source)],cwd=output,check=True)
+        objects.append(str(obj));sources += [notice_source,ROOT/'src/process/program_notice.h']
+        if focused_notice:
+            probe=ROOT/'standalone/notice_fault_probe.c';obj=output/'notice_fault_probe.obj'
+            subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',*flags,'-nt=NOTICECODE','-i='+str(ROOT/'src/aspect'),'-fo='+str(obj),str(probe)],cwd=output,check=True)
+            objects.append(str(obj));asm=ROOT/'standalone/notice_fault_native.asm';obj=output/'notice_fault_native.obj'
+            subprocess.run(['nasm','-fobj',str(asm),'-o',str(obj)],check=True);objects.append(str(obj))
+            platform=ROOT/'standalone/notice_fault_platform.c';c_sources.append(platform)
+            sources += [probe,asm,platform,ROOT/'standalone/notice_fault.h']
+    extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render,break_owner=break_owner,program_far=True,notice_bank=notice_bank,focused_notice=focused_notice)
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
     if notice_bank:
         path=output/'manifest.json';result=json.loads(path.read_text())
         result['experimental_notice_bank_linked']=True
+        result['experimental_notice_error_binding']=True
         result['notice_PROGRAM_binding_accepted']=False
         path.write_text(json.dumps(result,indent=2)+'\n')
 
@@ -77,10 +91,10 @@ if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--parent-render',action='store_true');parser.add_argument('--fault-diagnostic',action='store_true')
     parser.add_argument('--break-owner',action='store_true')
-    parser.add_argument('--notice-bank',action='store_true',help='Link the production notice bank into a separate experimental parent; PROGRAM binding remains disabled')
+    parser.add_argument('--notice-bank',action='store_true',help='Bind banked PROGRAM error notices in a separate experimental parent')
     args=parser.parse_args()
     if args.notice_bank:
-        assert not args.fault_diagnostic and not args.break_owner
-        main(parent_render=True,output=ROOT/'build/aspect-notice-parent',notice_bank=True)
+        assert not args.break_owner
+        main(ROOT/'standalone/aspect_notice_driver.c' if args.fault_diagnostic else None,parent_render=True,output=ROOT/('build/aspect-notice-fault' if args.fault_diagnostic else 'build/aspect-notice-parent'),notice_bank=True)
     elif args.fault_diagnostic:main(ROOT/'standalone/aspect_fault_driver.c',parent_render=True,output=ROOT/('build/aspect-fault-break' if args.break_owner else 'build/aspect-fault'),break_owner=args.break_owner)
     else:main(parent_render=args.parent_render,output=ROOT/'build/aspect-process-break' if args.break_owner else None,break_owner=args.break_owner)

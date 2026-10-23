@@ -10,7 +10,8 @@
  * Text page0 with standard BIOS font geometry; caller must reconcile renderer,
  * mouse and VM/parent leases before using it in the application. */
 enum { NATIVE_PROGRAM_OK,NATIVE_PROGRAM_ARGUMENT,NATIVE_PROGRAM_BUSY,
- NATIVE_PROGRAM_DISPLAY,NATIVE_PROGRAM_SERIAL,NATIVE_PROGRAM_PROCESS,NATIVE_PROGRAM_BREAK };
+ NATIVE_PROGRAM_DISPLAY,NATIVE_PROGRAM_SERIAL,NATIVE_PROGRAM_PROCESS,NATIVE_PROGRAM_BREAK,
+ NATIVE_PROGRAM_NOTICE };
 typedef struct native_program_result {
  unsigned status,display_status,serial_status,view_reset,wait_key;
  native_process_result process;

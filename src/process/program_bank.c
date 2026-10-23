@@ -8,6 +8,27 @@
 #include <string.h>
 #define PROGRAM_BANK_IMPLEMENTATION
 #include "program_bank.h"
+#if defined(NATIVE_PROGRAM_NOTICES)
+#include "program_notice.h"
+#include "../aspect/external_unwind.h"
+extern unsigned aspect_serial_active;
+#if defined(PROGRAM_NOTICE_DIAGNOSTIC)
+extern unsigned __cdecl aspect_serial_available(void);
+extern void __far __cdecl notice_fault_poll(unsigned);
+#endif
+static unsigned __cdecl program_notice_poll(void)
+{
+ unsigned status;
+ external_phase(EXTERNAL_NOTICE_POLL);
+ status=aspect_serial_active?aspect_serial_poll():0;
+#if defined(PROGRAM_NOTICE_DIAGNOSTIC)
+ if(!status)notice_fault_poll(aspect_serial_available());
+#endif
+ return status;
+}
+notice_service __far __cdecl program_notice_callback(void)
+{return program_notice_poll;}
+#endif
 unsigned __far __cdecl program_bank_native_display_probe(void)
 {return native_display_probe();}
 unsigned __far __cdecl program_bank_native_display_capture(void)

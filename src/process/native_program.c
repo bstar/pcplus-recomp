@@ -6,6 +6,12 @@
 #endif
 #include <dos.h>
 #include <string.h>
+#if defined(NATIVE_PROGRAM_NOTICES)
+#if !defined(ASPECT_EXTERNAL_UNWIND)
+#error PROGRAM notices require the outer recovery owner
+#endif
+#include "program_notice.h"
+#endif
 #if defined(ASPECT_EXTERNAL_UNWIND)
 #include "../aspect/external_unwind.h"
 #else
@@ -26,6 +32,9 @@ unsigned native_program_busy,native_program_waiting;
 static unsigned key_status;
 #if defined(ASPECT_EXTERNAL_UNWIND)
 static struct {unsigned valid,mode,rows,columns,height,cursor,shape,save;} held;
+#if defined(NATIVE_PROGRAM_NOTICES)
+static unsigned notice_pending;
+#endif
 #endif
 #if defined(NATIVE_PROGRAM_FAR)
 #include "program_bank.h"
@@ -70,6 +79,9 @@ unsigned NATIVE_PROGRAM_CODE __cdecl native_program_execute(const char *program,
     aspect_process_serial_detached||aspect_serial_active==2)return NATIVE_PROGRAM_BUSY;
  /* Check before taking a near pointer to a stack local for memset/copy. */
  if(data_segment()!=stack_segment()||!result)return NATIVE_PROGRAM_ARGUMENT;
+#if defined(NATIVE_PROGRAM_NOTICES)
+ if(notice_active())return NATIVE_PROGRAM_BUSY;
+#endif
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
  if(native_break_phase()!=BREAK_CLOSED)return NATIVE_PROGRAM_BUSY;
 #endif
@@ -152,10 +164,27 @@ serial_return:
  }
  native_display_cursor_start=shape>>8;native_display_cursor_end=shape&255;
  program_ui_shape();program_ui_cursor(cursor);
+#if defined(NATIVE_PROGRAM_NOTICES)
+ if(local.process.child_status==65535U&&native_crt_error&&
+    !local.serial_status&&!local.display_status&&local.status!=NATIVE_PROGRAM_BREAK){
+  notice_pending=1;external_phase(EXTERNAL_NOTICE_BEGIN);
+  status=program_notice_error(native_crt_error);
+  external_phase(EXTERNAL_NOTICE_RETURN);
+  if(status==NOTICE_SERVICE){local.serial_status=program_notice_result.service_status;local.status=NATIVE_PROGRAM_SERIAL;}
+  else if(status>NOTICE_CANCELLED)local.status=NATIVE_PROGRAM_NOTICE;
+  if(!notice_active())notice_pending=0;
+ }
+#endif
  goto cleanup;
 display_rejected:
  local.display_status=status;local.status=NATIVE_PROGRAM_DISPLAY;
 cleanup:
+#if defined(NATIVE_PROGRAM_NOTICES)
+ /* Keep the parent/view lease live while a damaged popup still owns storage. */
+ if(notice_pending&&notice_active()){
+  local.status=NATIVE_PROGRAM_NOTICE;*result=local;return local.status;
+ }
+#endif
  /* Failed capture/pause must leave the owner's previous view intact. A
   * failed restore is explicit and retires storage; it is never success. */
  if(native_display_owned)native_display_discard();
@@ -187,6 +216,12 @@ unsigned NATIVE_PROGRAM_CODE __cdecl native_program_recover(unsigned *view_reset
   changed=native_display_probe()||native_display_mode!=held.mode||native_display_rows!=held.rows||
    native_display_columns!=held.columns||*(unsigned __far *)MK_FP(0x40,0x85)!=held.height;
   if(changed&&restore_mode(held.mode,held.rows,held.height))status=NATIVE_PROGRAM_DISPLAY;
+#if defined(NATIVE_PROGRAM_NOTICES)
+  if(notice_pending){
+   if(program_notice_unwind())return NATIVE_PROGRAM_NOTICE;
+   notice_pending=0;
+  }
+#endif
   if(native_display_owned&&native_display_restore())status=NATIVE_PROGRAM_DISPLAY;
   if(!held.save&&changed&&view_reset)*view_reset=1;
   native_display_cursor_start=held.shape>>8;native_display_cursor_end=held.shape&255;

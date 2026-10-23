@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Experimental PROGRAM error notices](docs/NATIVE_PROGRAM.md#program-error-notices-and-outer-recovery)
+now run after failed child execution with rawFFFF preserved and a serviced
+near-TEXT transport callback. Fourteen actual8086 DOS sessions verify error2,
+COM1/2 and all flows, before/during/after real DIV, foreign-DS DIV and typed abort,
+followed by a second popup/VM invocation and508 exact retained peer bytes.
+All13 attached PROGRAM regressions pass.236 declared sources reproduce35
+products; near/banked583-check and2,048-call recovery regressions pass.
+Error7/8/12/generic fixtures, attached-parent popup faults, damaged-window
+quarantine, original UI/input/sound policy and every full application gate stay open.
+
 [Complete notice code bank](docs/NATIVE_PROGRAM.md#complete-notice-code-bank)
 places the runtime/window/native helpers in NOTICECODE through explicit far
 CRT/callback bridges and isolated helper exports. Both banked and near variants

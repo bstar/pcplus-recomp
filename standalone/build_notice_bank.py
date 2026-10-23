@@ -9,7 +9,7 @@ def main():
     window.main()
     wm=json.loads((window.OUT/'manifest.json').read_text())
     sources=dict(wm['sources'])
-    for name in ['standalone/build_notice_bank.py','src/ui/notice_bank.c','src/ui/notice_bank.h','src/ui/notice.c','src/ui/notice.h','src/ui/notice_checkpoint.asm','standalone/notice_diagnostic.c','standalone/notice_clock_probe.asm','standalone/notice_bank_probe.asm']:
+    for name in ['standalone/build_notice_bank.py','src/ui/notice_bank.c','src/ui/notice_bank.h','src/ui/notice.c','src/ui/notice.h','src/ui/notice_unwind.h','src/ui/notice_checkpoint.asm','standalone/notice_diagnostic.c','standalone/notice_clock_probe.asm','standalone/notice_bank_probe.asm']:
         sources[name]=sha(ROOT/name)
     units=[(u['name'],u['file'],[u['define']]) for u in wm['units']]
     units += [('window-binding','src/ui/notice_window_native.asm',[]),('core','reconstruction/program_notice/core.asm',['PROGRAM_NOTICE_OMF']),('strlen','reconstruction/program_exec/strlen.asm',['PROGRAM_EXEC_OMF']),('clock','reconstruction/transfer_uart/clock.asm',['TRANSFER_UART_OMF']),('text','reconstruction/program_ui/text.asm',['PROGRAM_DISPLAY_OMF']),('binding','src/ui/notice_native.asm',[]),('checkpoint','src/ui/notice_checkpoint.asm',[])]

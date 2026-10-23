@@ -1509,3 +1509,13 @@ test-notice-bank: notice-bank
 	python3 standalone/test_notice_dos.py --banked --output build/notice-bank/DOS-make-$(shell date +%s%N)
 test-notice-bank-uart: notice-bank
 	python3 standalone/test_notice_uart_dos.py --banked --output build/notice-bank-uart/DOS-make-$(shell date +%s%N)
+
+.PHONY: program-notices program-notices-fault test-program-notices test-program-notices-source
+program-notices:
+	python3 standalone/build_aspect_process.py --notice-bank
+program-notices-fault:
+	python3 standalone/build_aspect_process.py --notice-bank --fault-diagnostic
+test-program-notices: program-notices-fault
+	python3 standalone/test_program_notices_dos.py --output build/program-notices/DOS-make-$(shell date +%s%N)
+test-program-notices-source: program-notices program-notices-fault
+	python3 standalone/prove_program_notices_source.py --output build/program-notices/source-make-$(shell date +%s%N)

@@ -14,7 +14,7 @@ def main():
     checkpoint=ROOT/'src/ui/notice_checkpoint.asm';checkpoint_object=OUT/'checkpoint.obj'
     subprocess.run(['nasm','-fobj',str(checkpoint),'-o',str(checkpoint_object)],check=True);objects.append(str(checkpoint_object));sources[str(checkpoint.relative_to(ROOT))]=sha(checkpoint)
     owner=ROOT/'src/ui/notice_window.c';runtime=ROOT/'src/ui/notice.c';host=ROOT/'standalone/notice_diagnostic.c'
-    for path in [runtime,host,ROOT/'src/ui/notice.h',ROOT/'reconstruction/program_notice/provenance.json']:sources[str(path.relative_to(ROOT))]=sha(path)
+    for path in [runtime,host,ROOT/'src/ui/notice.h',ROOT/'src/ui/notice_unwind.h',ROOT/'reconstruction/program_notice/provenance.json']:sources[str(path.relative_to(ROOT))]=sha(path)
     subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dNOTICE_WINDOW_DIAGNOSTIC','-i='+str(ROOT/'src/ui'),'-fm=NOTICE.map','-fe=NOTICE.EXE',str(owner),str(runtime),str(host),*objects],cwd=OUT,check=True)
     subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-i='+str(ROOT/'src/ui'),'-fo='+str(OUT/'notice-normal.obj'),str(runtime)],cwd=OUT,check=True)
     m=dict(original_inputs=[],sources=sources,binary_sha256=sha(OUT/'NOTICE.EXE'),normal_runtime_compiled=True,window_products=wm['products'],scope='Composed native timed controller/window/video, source-owned allocation, foreground callback, real BIOS/DOS keys/clocks and typed nonlocal cleanup. Component only; application binding and original sound/macro/shared-parent policies remain open.')

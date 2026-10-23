@@ -38,7 +38,7 @@ def main():
         sent=[bytes.fromhex(e['hex']) for e in events if e['kind']=='send-completed'];assert sent==[(b'\x13'+payload+b'\x11') if row['flow'] in 'SB' else payload,b'READY!']
         assert sum(e['kind']=='EOF' for e in events)==1 and events[-1]['kind']=='EOF'
         cases.append(dict(port=row['port'],flow=row['flow'],mode=row['mode'],assertions=538,callbacks=row['callbacks'],retained_bytes=508,wire_hex=received.hex(),peer_sha256=sha(folder/'peer.json'),raw_input_sha256=sha(folder/'RX.BIN')))
-    assert f['source_files']==len(u['sources'])==63 and len(f['products'])==33 and f['inputs']==u['sources']
+    assert f['source_files']==len(u['sources'])==64 and len(f['products'])==33 and f['inputs']==u['sources']
     assert f['checker_sha256']==sha(ROOT/'standalone/prove_notice_source.py')
     for name,digest in f['manifest_sha256'].items():assert sha(ROOT/name)==digest
     for name,digest in f['products'].items():assert sha(ROOT/name)==digest
@@ -70,7 +70,7 @@ def main():
     for path in sorted(selected):
         target=cohort/'accepted'/path.relative_to(ROOT);target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,target);assert sha(target)==sha(path);kept[str(target.relative_to(ROOT))]=sha(target)
     result=dict(passed=True,serviced_notice_component_accepted=True,PROGRAM_binding_accepted=False,full_F02_accepted=False,full_F13_accepted=False,notice_DOS_assertions=583,notice_allocations=69,notice_frees=69,window_regression_assertions=771,UART_cases=16,UART_assertions=16*538,UART_retained_bytes=16*508,cases=cases,source_files=62,products=f['products'],inputs=u['sources'],toolchain_inputs={name:sha(ROOT/name) for name in ['nix/flake.nix','nix/flake.lock','tools/dev']},custody_sha256=kept,auditor_sha256=sha(Path(__file__)),scope='Exact native timed notice/window/text algorithms with staged bounded messages, real BIOS keys, typed service/budget/clock cleanup and retained generation-checked window ownership.583 actual8086 DOS checks include a fixed DOS2C observer with real BIOS fallback plus separate controlled tick fixtures for wrap/invalid samples.16 actual UART COM1/2 N/S/H/B sessions each retain508 peer bytes during the popup, then exchange READY! and restore selected UART IRQ/PIC/registers and screen/cursor. Nullmodem CTS stays ready and RTS timing is unproved. Sound callbacks are diagnostic record/error boundaries; original sound/macro/shared-parent policy, arbitrary external nonlocal faults, PROGRAM/BBS binding, other geometries and physical hardware remain open.')
-    result.update(source_files=63,bank_local_checkpoint_accepted=True,checkpoint_calls=2048,foreign_CS_callbacks=2048,checkpoint_binary_sha256=c['binary_sha256'],checkpoint_scope=c['scope'])
+    result.update(source_files=64,bank_local_checkpoint_accepted=True,checkpoint_calls=2048,foreign_CS_callbacks=2048,checkpoint_binary_sha256=c['binary_sha256'],checkpoint_scope=c['scope'])
     with output.open('x') as stream:stream.write(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=True,notice_DOS_assertions=583,UART_cases=16,UART_assertions=16*538,custody_files=len(kept))))
 if __name__=='__main__':main()
