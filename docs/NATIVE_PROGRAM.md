@@ -237,7 +237,7 @@ invalid samples handled explicitly. A positive DWORD poll budget provides anothe
 exit path without depending on time advancement; checking before increment avoids
 unsigned wrap at the maximum budget. Defaults are attribute70h, no animation,
 74 BIOS ticks and one million polls. Budget/service/clock failure unwinds through
-an owned C checkpoint and closes the real snapshot. No synthetic key is inserted
+an owned recovery frame and closes the real snapshot. No synthetic key is inserted
 to make the original loop return. The callbacks must return in bounded time.
 
 Cleanup retains the active notice when window guards or geometry prevent close;
@@ -288,3 +288,38 @@ Actual PROGRAM/shared-parent view and input leases, arbitrary external nonlocal
 fault recovery, native sound/macro policy, code-bank placement, other geometries,
 BBS workflows and physical hardware remain required before normal publication.
 The normal interpreter still rejects DOS/RUN/SHELL; no full F01-F16 gate closes.
+
+## Bank-local notice recovery
+
+The notice runtime now uses a [source-owned 8086 recovery frame](../src/ui/notice_checkpoint.asm)
+instead of small-model CRT `setjmp`/`longjmp`. The latter uses near return
+addresses without restoring CS; it cannot be wrapped in a returned C frame to implement recovery
+in a separate notice bank. The new assembly entry owns the native call's live
+stack frame in its own CS, rejects nested entry, and restores SP, BP/BX/SI/DI,
+DS/ES and IF/DF after a synchronous notice abort. An abort without a live frame
+or on a foreign SS terminates with DOS status127 rather than returning success.
+Callbacks in another segment must return through a far bridge before aborting.
+
+The [independent receipt](validation/notice-checkpoint.json) accepts 2,048 actual
+8086 DOS calls across normal, abort, nested and deep-stack cases crossed with
+IF0/1 and DF0/1. The map independently confirms that the probe and checkpoint
+share a CS distinct from the far adapter/near callback's CS. The harness disables
+code packing explicitly; separate segment names alone did not establish that
+condition. Inactive abort is a separate DOS invocation requiring exit127. Four
+declared sources reproduce this diagnostic byte-for-byte in a fresh tree.
+
+The updated composed notice retains all583 DOS assertions and69 matched
+allocations/frees; all16 COM1/2 N/S/H/B cases retain508 peer bytes and pass8,608
+assertions. Sixty-three source files reproduce the33 window/notice/UART products;
+neither notice executable links CRT jump helpers. Run the focused ABI test with:
+
+```
+./tools/build test-notice-checkpoint
+```
+
+This resolves the recovery-frame prerequisite for bank placement. The complete
+notice/window runtime has not yet moved to its own bank. CRT/platform/callback
+far adapters, native helper symbol isolation, PROGRAM error paths and outer
+nonlocal-fault cleanup remain required. The frame is foreground-only and does
+not catch arbitrary interrupts or faults. Normal application binaries and the
+105-slot interpreter remain unchanged; full F01-F16 and physical gates stay open.

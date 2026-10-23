@@ -8,7 +8,7 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
     build_notice.main();OUT.mkdir(parents=True,exist_ok=True)
     m=json.loads((build_notice.OUT/'manifest.json').read_text());wm=json.loads((ROOT/'build/notice-window/manifest.json').read_text());sources=dict(m['sources']);sources[str(Path(__file__).relative_to(ROOT))]=sha(Path(__file__))
-    objects=[str(ROOT/'build/notice-window'/(u['name']+'.obj')) for u in wm['units']]+[str(ROOT/'build/notice-window/binding.obj')]+[str(build_notice.OUT/(name+'.obj')) for name in ['core','strlen','text']]
+    objects=[str(ROOT/'build/notice-window'/(u['name']+'.obj')) for u in wm['units']]+[str(ROOT/'build/notice-window/binding.obj')]+[str(build_notice.OUT/(name+'.obj')) for name in ['core','strlen','text','checkpoint']]
     include='-I'+str(ROOT/'reconstruction/uart')+'/'
     for name,path,flags in [('uart','reconstruction/uart/core.asm',['UART_OMF']),('api','src/uart/api.asm',[]),('serial_backend','src/aspect/serial_backend.asm',[])]:
         source=ROOT/path;obj=OUT/(name+'.obj');subprocess.run(['nasm','-fobj',include,*['-D'+flag for flag in flags],str(source),'-o',str(obj)],check=True);objects.append(str(obj));sources[path]=sha(source)

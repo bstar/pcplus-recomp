@@ -1,11 +1,11 @@
 #include "notice.h"
 #include "notice_window.h"
 #include <dos.h>
-#include <setjmp.h>
 #include <string.h>
 #define DAY_TICKS 1573040UL
 extern unsigned notice_left,notice_right,notice_attribute,notice_descriptor;
-extern void __cdecl notice_call_native(const char *,unsigned);
+extern unsigned __cdecl notice_checkpoint_call(const char *,unsigned);
+extern void __cdecl notice_checkpoint_abort(void);
 extern unsigned __cdecl notice_seconds_native(void);
 extern unsigned long __cdecl notice_ticks_native(void);
 extern unsigned __cdecl notice_key_pending_native(void);
@@ -18,7 +18,6 @@ static struct {
  notice_options options;
  notice_result result;
 } held;
-static jmp_buf checkpoint;
 static unsigned data_segment(void);
 #pragma aux data_segment = "mov ax,ds" value [ax] modify [];
 static unsigned stack_segment(void);
@@ -28,7 +27,7 @@ static unsigned interrupt_flag(void);
 static unsigned extent(const void *pointer,unsigned size)
 {return pointer&&(unsigned long)(unsigned)pointer+size<=65536UL;}
 static void abort_notice(unsigned status)
-{held.result.cause=status;longjmp(checkpoint,1);}
+{held.result.cause=status;notice_checkpoint_abort();}
 static unsigned same_window(void)
 {return held.owned&&notice_window_generation()==held.generation&&
  notice_window_identity()==held.identity;}
@@ -126,6 +125,6 @@ unsigned __cdecl notice_show(const char *message,unsigned kind,const notice_opti
  held.options=staged;memcpy(held.text,text,i+1);memset(&held.result,0,sizeof(held.result));
  held.owned=held.restored=0;held.busy=held.running=1;notice_attribute=staged.attribute;held.start=notice_ticks_native();
  if(held.start>=DAY_TICKS){held.result.cause=NOTICE_STATE;held.running=0;return retire(result);}
- if(!setjmp(checkpoint))notice_call_native(held.text,kind);
+ if(notice_checkpoint_call(held.text,kind)>1)held.result.cause=NOTICE_STATE;
  held.running=0;return retire(result);
 }

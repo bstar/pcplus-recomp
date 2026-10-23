@@ -1495,3 +1495,9 @@ test-notice-uart: notice-uart
 	python3 standalone/test_notice_uart_dos.py --output build/notice-uart/DOS-make-$(shell date +%s%N)
 test-notice-source: notice-uart
 	python3 standalone/prove_notice_source.py --output build/notice/source-make-$(shell date +%s%N)
+
+.PHONY: notice-checkpoint test-notice-checkpoint
+notice-checkpoint:
+	python3 standalone/build_notice_checkpoint.py
+test-notice-checkpoint: notice-checkpoint
+	python3 standalone/test_notice_checkpoint_dos.py --output build/notice-checkpoint/DOS-make-$(shell date +%s%N)

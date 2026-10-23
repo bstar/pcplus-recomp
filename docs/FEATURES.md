@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Bank-local notice recovery](NATIVE_PROGRAM.md#bank-local-notice-recovery)
+replaces the notice's small-model CRT jump dependency with a source-owned8086
+frame. An actual foreign-CS diagnostic passes2,048 calls across normal/abort/
+nested/deep cases and independent IF/DF states, plus an inactive-abort exit127.
+The composed runtime retains583 DOS checks and8,608 UART assertions;63 declared
+sources reproduce33 products. Complete notice bank placement, CRT/callback far
+adapters, PROGRAM error/fault integration and full application gates remain open.
+
 [Serviced timed notices](NATIVE_PROGRAM.md#serviced-timed-notices)
 now compose the exact controller/window/text with real BIOS keys, staged bounded
 messages, typed cleanup and an independent BIOS deadline/poll budget. The DOS
