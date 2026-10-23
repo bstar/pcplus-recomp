@@ -1527,3 +1527,10 @@ test-program-notice-errors: program-notices-fault
 .PHONY: test-program-notice-quarantine
 test-program-notice-quarantine: program-notices-fault
 	python3 standalone/test_program_notice_quarantine_dos.py --output build/program-notice-quarantine/DOS-make-$(shell date +%s%N)
+
+.PHONY: test-program-notices-parent
+test-program-notices-parent: program-notices-fault
+	python3 standalone/build_terminal.py --external-render
+	python3 standalone/test_program_notices_parent_dos.py --label faults-$(shell date +%s%N)
+	python3 standalone/test_program_notices_parent_dos.py --label guard-$(shell date +%s%N) --quarantine guard --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_parent_dos.py --label foreign-$(shell date +%s%N) --quarantine foreign --port 2 --mode 2D --mode 2A --mode 2F

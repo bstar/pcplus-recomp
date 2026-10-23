@@ -570,8 +570,54 @@ original scopes and custody.
 ./tools/build test-program-notices-source
 ```
 
-Attached-parent popup/fault/quarantine observation is still required; the new
-quarantine cases run in the raw CLI. Natural malformed-executable behavior on a
-real DOS kernel, complete original mouse/macros/sound/shared UI policies, other
-geometries, BBS regressions and physical modem validation remain open. Full
-PROGRAM policy and all F01-F16 application gates remain open.
+Those quarantine receipts cover the raw CLI. Attached-parent popup/fault and
+selected quarantine cases are covered separately below. Natural malformed-
+executable behavior on a real DOS kernel, complete original mouse/macros/sound/
+shared UI policies, other geometries, BBS regressions and physical modem validation
+remain open. Full PROGRAM policy and all F01-F16 application gates remain open.
+
+## Attached terminal popup and recovery observation
+
+The [attached checker](../standalone/test_program_notices_parent_dos.py) runs the
+focused notice diagnostic as the real terminal's foreground ASPECT child, with
+an independent passive DOS EXEC observer. Its `PCPNOTICE` request ends in `P`
+after an explicit window selector (`N`, `G` or `W`). This diagnostic mode captures
+the real pre-popup screen/cursor after the login banner; it never resets the
+parent's video mode, paints a synthetic baseline, or asserts UART DTR.
+
+The [receipt](validation/program-notices-parent.json) covers11 actual8086 DOS
+sessions: DIV before/during/after the popup, plus typed abort and foreign-DS DIV
+during the popup, on COM1/HARD; three guard-damage cases on COM1/HARD; and three
+foreign-window cases on COM2/HARD. It checks:
+
+- The first typed/CPU error reaches the outer DOS caller unchanged.
+- Screen/cursor restoration, PSP/JFT/vectors and all six stream owners around
+  the first fault or repaired stopped-owner retry.
+- Rejected live retry, rejected new VM entry, and an unchanged retained window
+  after failed cleanup; repair retires the selected owner and preserves cause.
+- An exact508-byte printable response displays through the real attached ANSI
+  renderer during the next script, followed by another error popup and a real
+  source-built DOS child that writes `SUCCESS.OK`.
+- The passive observer's parent file owners, JFT and saved resource bytes match
+  before/after; all observed PROGRAM lease begins/ends balance and the terminal
+  continues transmitting after ASPECT returns.
+
+The queued response is printable terminal data. An initial arbitrary binary
+fixture reached the terminal's normal between-script display path and correctly
+hit unsupported control handling. Normal successful script completion can drain
+input with display disabled, so this checker specifically exercises fault/retry
+paths. Exact raw binary input preservation is established by the separate14-case
+CLI regression, not by this attached renderer test. The before-popup fault does
+not claim that its response was already queued at the fault instant; the other
+attached fault phases observe508 queued bytes.
+
+The ordinary experimental ASPECT executable remains byte-identical to the
+previous accepted build. Only the focused diagnostic changes;237 declared sources
+still reproduce35 products without an original executable, install or REA database.
+This closes the selected attached popup/fault observation gap, while full shared
+UI policy, other flow-control combinations in this attached test, live BBSes and
+physical modem acceptance remain open.
+
+```sh
+./tools/build test-program-notices-parent
+```

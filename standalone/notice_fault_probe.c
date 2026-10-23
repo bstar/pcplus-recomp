@@ -17,7 +17,7 @@ unsigned notice_fault_report[62];
 unsigned notice_fault_memory_request,notice_fault_memory_segment,notice_fault_exec_count,notice_fault_exec_mode;
 extern unsigned native_crt_error,native_dos_error;
 static unsigned armed,kind,psp,cursor,first_return;
-static unsigned quarantine,quarantine_cursor;
+static unsigned quarantine,quarantine_cursor,attached;
 static unsigned short quarantine_screen[2000];
 static notice_window_rect replacement={2,2,6,25,0x1f};
 extern void __far __cdecl notice_window_damage_guard(void);
@@ -50,9 +50,13 @@ static unsigned clean(void)
 void __far __cdecl notice_fault_prepare(void)
 {
  unsigned i;const char *request=notice_fault_request();
- video();psp=current_psp();cursor=0x0405;
- line_ready(request&&request[2]=='2'?0x2f8:0x3f8);
- for(i=0;i<2000;++i)screen[i]=((unsigned __far *)MK_FP(0xb800,0))[i]=(i%26+65)|0x1700;
+ attached=request&&request[0]&&request[1]&&request[2]&&request[3]&&request[4]&&request[5]=='P';
+ if(!attached)video();psp=current_psp();cursor=*(unsigned __far *)MK_FP(0x40,0x50);
+ if(!attached)line_ready(request&&request[2]=='2'?0x2f8:0x3f8);
+ for(i=0;i<2000;++i){
+  if(!attached)((unsigned __far *)MK_FP(0xb800,0))[i]=(i%26+65)|0x1700;
+  screen[i]=((unsigned __far *)MK_FP(0xb800,0))[i];
+ }
  for(i=0;i<20;++i)jft[i]=((unsigned char __far *)MK_FP(psp,0x18))[i];
  for(i=0;i<6;++i)vectors[i]=((unsigned __far *)MK_FP(0,i<2?0:i<4?0x8c:0x90))[i&1];
  armed=request&&request[0]>='0'&&request[0]<='3'?request[0]-'0':0;
@@ -65,6 +69,12 @@ void __far __cdecl notice_fault_prepare(void)
 }
 void __cdecl notice_fault_phase(unsigned phase)
 {
+ /* An attached renderer has already consumed the login banner by this point.
+  * Observe the real pre-popup view; never reset its BIOS mode or UART DTR. */
+ if(attached&&phase==1&&program_notice_calls==1){
+  unsigned i;for(i=0;i<2000;++i)screen[i]=((unsigned __far *)MK_FP(0xb800,0))[i];
+  cursor=*(unsigned __far *)MK_FP(0x40,0x50);
+ }
  if(phase==2&&program_notice_calls==1){
   const char *text;unsigned i,length=0,match=1;
   switch(program_notice_errno){
