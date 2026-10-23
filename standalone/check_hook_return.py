@@ -23,13 +23,16 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--hook-execute', action='store_true')
     args = parser.parse_args()
     output = args.output.resolve()
     assert output.is_relative_to(ROOT / 'build') and not output.exists()
     output.mkdir(parents=True)
     base = ROOT / 'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return'
+    if args.hook_execute: base = base.with_name(base.name + '-execute')
     manifest = json.loads((base / 'manifest.json').read_text())
     assert manifest['experimental_hook_return'] and sha(base / 'TERMINAL.EXE') == manifest['binary_sha256']
+    if args.hook_execute: assert manifest['experimental_hook_execute']
     model = DosImage(base / 'TERMINAL.EXE', base / 'terminal.map')
     u = model.uc
     seg, off = re.search(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+_hook_return_validate\s*$',

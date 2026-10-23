@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Terminal-linked helper transaction](docs/HOOK_TRANSACTION.md) now combines
+live projection, accepted register snapshot, owned real EXEC, returned validation
+and retirement before publishing a proposal.152 admission and1,995 validation
+cases, fifty DOS helper attempts,14 register workflows and700-source/six-product
+reproduction pass. A combined stack overflow was corrected by separating
+projection and EXEC staging; accepted runs retain the bottom256-byte guard.
+KEY kind2 routing, external-owner handoff and atomic returned adoption remain
+open. This is real terminal-linked EXEC evidence, not full HOOK acceptance.
+
 [Returned PRM validation](docs/HOOK_RETURN.md) now stages understood helper
 settings without changing the active session.1,995 linked cases, five8086 DOS
 workflows and14 register recovery workflows pass;693 sources reproduce six

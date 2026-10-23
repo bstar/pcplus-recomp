@@ -208,6 +208,7 @@ def main():
     parser.add_argument('--port', type=int, choices=[1, 2], default=1)
     parser.add_argument('--session-controls', action='store_true')
     parser.add_argument('--hook-return', action='store_true')
+    parser.add_argument('--hook-execute', action='store_true')
     parser.add_argument('--case', choices=['normal', 'bad-token', 'missing-script', 'missing-helper',
                                           'divide', 'budget', 'abort'], default='normal')
     args = parser.parse_args()
@@ -218,6 +219,9 @@ def main():
     parent = ROOT / 'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers'
     if args.session_controls:parent = parent.with_name(parent.name + '-controls')
     if args.hook_return:parent = parent.with_name(parent.name + '-return')
+    if args.hook_execute:
+        assert args.hook_return
+        parent = parent.with_name(parent.name + '-execute')
     child = ROOT / 'build/aspect-register-parent'
     sources = {}
     for folder, name in [(parent, 'TERMINAL.EXE'), (child, 'ASPECT.EXE')]:
@@ -375,7 +379,7 @@ flag_name: db '{name}.OK',0
         dest = output / 'sources' / name
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / name, dest)
-    report = dict(passed=True, case=args.case, port=args.port, cpu='8086', session_controls=args.session_controls,hook_return=args.hook_return,snapshots=snapshots, sources=sources,
+    report = dict(passed=True, case=args.case, port=args.port, cpu='8086', session_controls=args.session_controls,hook_return=args.hook_return,hook_execute=args.hook_execute,snapshots=snapshots, sources=sources,
                   operand_fixture_patches=patches, parent_sha256=sha(parent / 'TERMINAL.EXE'), child_sha256=sha(child / 'ASPECT.EXE'),
                   DOS=result, scope='Actual source-built DOS terminal/ASPECT and nested observer. All830 register bytes, native reset/tails, returned acceptance and continued serial output. Integer-bank-A destinations are explicit native operand fixtures, not a compiler feature claim. Synthetic modem, no physical hardware or HOOK routing acceptance.')
     (output / 'result.json').write_text(json.dumps(report, indent=2) + '\n')

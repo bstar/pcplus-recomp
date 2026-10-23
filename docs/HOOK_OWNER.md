@@ -64,6 +64,12 @@ They reinforce the requirement for a complete caller-supplied resident extent.
 
 ## Terminal integration remaining
 
+The optional [terminal-linked transaction](HOOK_TRANSACTION.md) now calls this
+owner after live projection and register snapshot, validates returned settings
+and closes before exposing a proposal. Real DOS helpers run in a diagnostic
+terminal before UART/mouse acquisition. Interactive safe-point routing and
+atomic resource/settings/register adoption remain open.
+
 The optional [returned PRM validator](HOOK_RETURN.md) now checks and classifies
 supported settings without applying them. It does not install this owner in
 the terminal or enable KEY kind2. The caller still needs an owned foreground
