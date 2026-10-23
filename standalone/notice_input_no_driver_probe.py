@@ -104,5 +104,27 @@ no_driver_exit:
 .done:
  ret
 '''
+    if 'report_segment: dw 0' in source:
+        start=code.index('no_driver_restore:');end=code.index('no_driver_tick:',start)
+        code=code[:start]+'''no_driver_restore:
+ push ds
+ push es
+ mov es,[cs:report_segment]
+ mov dx,[es:nd_old_off-sample]
+ mov ds,[es:nd_old_seg-sample]
+ mov ax,0x2533
+ int 0x21
+ pop es
+ pop ds
+ push es
+ mov ax,0x3533
+ int 0x21
+ mov dx,es
+ mov es,[cs:report_segment]
+ mov [es:nd_after_off-sample],bx
+ mov [es:nd_after_seg-sample],dx
+ pop es
+ ret
+'''+code[end:]
     for key,value in [('CHILD_DATA',data),('CHILD_BIOS',bios),('CHILD_RESULT',result)]:code=code.replace(key,str(value))
     return source.replace('resident_end:',code+'\nresident_end:').replace('sample_end:',''.join('nd_'+x+': dw 0\n' for x in WORDS)+'sample_end:')

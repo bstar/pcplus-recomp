@@ -238,6 +238,9 @@ mouse_probe_end:
     target='retained_function: dw 0' if 'retained_function: dw 0' in source else 'nested_count: dw 0'
     assert source.count(target)==1
     source=source.replace(target,data+target)
+    return compact_collector(source)
+
+def compact_collector(source):
     # The baseline collector duplicates the full sample in its COM image.
     # Keep the resident snapshots, but allocate the collector's copy through
     # DOS48 after moving its stack inside a correctly resized PSP block.

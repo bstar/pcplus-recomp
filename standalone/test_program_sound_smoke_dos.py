@@ -10,12 +10,14 @@ sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',required=True);parser.add_argument('--mouse',action='store_true');parser.add_argument('--input',action='store_true');parser.add_argument('--no-driver',action='store_true');args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',required=True);parser.add_argument('--mouse',action='store_true');parser.add_argument('--input',action='store_true');parser.add_argument('--no-driver',action='store_true');parser.add_argument('--notice-help',action='store_true');args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     if args.input:assert args.mouse
     if args.no_driver:assert args.input
+    if args.notice_help:assert args.input
     out=ROOT/'build/program-sound-smoke'/args.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/('build/terminal-mouse-notice-sound/TERMINAL.EXE' if args.mouse else 'build/terminal-notice-sound/TERMINAL.EXE');child=ROOT/'build/aspect-notice-sound-parent/ASPECT.EXE';sources={}
     if args.input:parent=ROOT/'build/terminal-mouse-notice-input/TERMINAL.EXE';child=ROOT/'build/aspect-notice-input-parent/ASPECT.EXE'
+    if args.notice_help:child=ROOT/'build/aspect-notice-help-parent/ASPECT.EXE'
     for product in (parent,child):
         m=json.loads((product.parent/'manifest.json').read_text());assert m['binary_sha256']==sha(product)
         for n,h in m['sources'].items():assert n not in sources or sources[n]==h;sources[n]=h
@@ -100,5 +102,6 @@ def main():
     if args.input:
         report['observer_variants']={r['case']:r['observer_sha256'] for r in results}
         report['scope']='Ordinary matching terminal/ASPECT products: configured sound, missing PROGRAM target, successful subsequent DOS child and continued serial input. '+('Owned test disables INT33 before terminal startup, seeds a BIOS Enter at the rendered popup, observes selected BIOS mode and notice read, checks INT33 remains absent at child exit, and restores the original vector after terminal exit. No mouse callback is invoked and no opaque driver-state comparison is claimed in this variant. ' if args.no_driver else 'Separate active INT33 probe verifies the child callback target against its map/PSP, invokes actual native Enter/Escape with foreign DS, observes configured scales/BIOS mode and final notice result, and checks the prior suspended registration before DOS child exit. The existing active parent probe then verifies resume, menu events and complete driver-state restoration. ')+'Independent speaker-gate reads; muted mixer. Physical clicks, acoustic output, contextual Alt-Z UI and full application acceptance remain open.'
+    report['notice_help']=args.notice_help
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');return 0 if report['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -6,6 +6,9 @@
 #include "../aspect/runtime.h"
 #if defined(ASPECT_NOTICE_INPUT)
 #include "../ui/notice_input.h"
+#if defined(ASPECT_NOTICE_HELP)
+#include "../ui/notice_help.h"
+#endif
 extern unsigned __far __cdecl program_notice_mouse_policy(unsigned);
 extern unsigned aspect_render_parent_entry[2];
 static mouse_settings input_settings={8,8,{1,1,1,1,1,1}};
@@ -69,6 +72,9 @@ unsigned __far __cdecl program_notice_error(unsigned error)
  }
  status=notice_input_open(&input_settings);
  if(status)return input_failure(status);
+#if defined(ASPECT_NOTICE_HELP)
+ status=notice_help_configure(1);if(status)return input_failure(status);
+#endif
 #endif
  status=notice_show(message,1,&options,&program_notice_result);
 #if defined(ASPECT_NOTICE_INPUT)

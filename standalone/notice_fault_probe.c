@@ -28,6 +28,10 @@ unsigned notice_fault_memory_request,notice_fault_memory_segment,notice_fault_ex
 extern unsigned native_crt_error,native_dos_error;
 static unsigned armed,kind,psp,cursor,first_return;
 static unsigned quarantine,quarantine_cursor,attached;
+#if defined(ASPECT_NOTICE_HELP)
+#include "../src/ui/notice_help.h"
+static unsigned help_fault,help_started,help_start_tick;
+#endif
 static unsigned short quarantine_screen[2000];
 static notice_window_rect replacement={2,2,6,25,0x1f};
 extern void __far __cdecl notice_window_damage_guard(void);
@@ -79,6 +83,9 @@ void __far __cdecl notice_fault_prepare(void)
  if(request&&request[0]&&request[1]&&request[2]&&request[3]&&request[4]=='S')quarantine=3;
 #endif
  notice_fault_report[37]=quarantine;
+#if defined(ASPECT_NOTICE_HELP)
+ help_fault=request&&request[0]&&request[1]&&request[2]&&request[3]=='H';
+#endif
 }
 void __cdecl notice_fault_phase(unsigned phase)
 {
@@ -143,6 +150,14 @@ void __far __cdecl notice_fault_poll(unsigned count)
  unsigned at=program_notice_calls==1?12:13;
  if(count>notice_fault_report[at])notice_fault_report[at]=count;
  if(armed==2&&count<508)return;
+#if defined(ASPECT_NOTICE_HELP)
+ if(armed==2&&help_fault){
+  unsigned now=*(unsigned __far *)MK_FP(0x40,0x6c);
+  if(!notice_help_active())return;
+  if(!help_started){help_started=1;help_start_tick=now;}
+  if((unsigned)(now-help_start_tick)<100)return;
+ }
+#endif
  notice_fault_phase(2);
 }
 unsigned __far __cdecl notice_fault_run(const char *path,unsigned limit)

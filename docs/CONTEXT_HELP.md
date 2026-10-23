@@ -73,18 +73,79 @@ private and unchanged; no original help text is printed or published. See
 [the receipt](validation/context-help-format.json). This proves format reading,
 not reproduction of the original helper's UI, search, BIOS or process behavior.
 
-## Integration still required
+## PROGRAM notice help integration
 
-The native keyboard gate remains disabled in ASPECT notices. Enabling it safely
-requires a declared foreground help service, context selection, a separately
-owned saved view, and cleanup tied to the notice and outer unwind. The existing
-PROGRAM lease blocks general parent rendering/window RPCs, so the script-window
-service cannot simply be called from this hook. The current child's near code
-segment is full and the parent has16 bytes of near data spare; help code and
-state must use explicit banks without breaking DS=SS or callback-stack guards.
+The optional `--notice-help` ASPECT build now provides a maintained foreground
+help view while a PROGRAM error notice owns the display. It uses the unchanged
+capability16 terminal and lives in `build/aspect-notice-help-parent/ASPECT.EXE`;
+the separate fault driver lives in `build/aspect-notice-help-fault`. Build with
+`./tools/build notice-help`; run the integration suite with
+`./tools/build test-notice-help` and the source proof with
+`./tools/build test-notice-help-source`.
 
-The eventual maintained help content must be authored from source. Broader
-topic navigation/search, application context mapping, failure/reentry behavior,
-shared-screen restoration, queued serial input and native mouse/BIOS composition
-need integrated DOS tests. No native nested EXEC or unvalidated cross-process
-pointer will be enabled by this format checkpoint.
+Alt-Z opens authored PROGRAM/error and serial-session topics. Left/Right,
+Up/Down, PageUp/PageDown, Home/End and T navigate. Enter, Escape or Alt-Z closes
+help; the next key still belongs to the notice. Input-only/default products
+keep their preceding behavior. This replaces the original external-helper path
+for this selected context; it does not invoke PCHELP or read a vendor HLP file.
+The recovered HLP codec remains a separate foundation for broader help.
+
+`src/help/view.c` owns a guarded4,032-byte DOS allocation containing the exact
+4,000-byte video frame. It requires DS=SS, IF1 and fixed mode3/page0/80x25,
+validates immutable bounded topic strings, and saves/restores the BIOS cursor.
+Code resides in NOTICEINPUT_CODE, with content/private state in the child's
+DGROUP. The full near code segment and unchanged parent near state gain no
+code/data. The help child uses49,328 near bytes including its8KiB stack.
+
+The input facade intercepts the local Alt-Z only for a configured live notice.
+Each help input pass still validates its mouse/BIOS owner, and idle passes check
+the view's guards/geometry. Key peeks consumed by help return pending without
+publishing a notice key. Cleanup validates the underlying notice generation
+and identity, retires help first, then restores the underlying notice. Failed
+guard/geometry/free cleanup retains ownership for retry; successful screen
+restoration followed by a failed free is never repeated over a newer frame.
+The existing unresolved-input exit policy retains the owning DOS process.
+
+Transport/flow, speaker and poll-budget work continue on the notice service
+path. Both elapsed-tick deadline and the recovered controller's independent
+three-second clock pause while help is live. A first integrated capture showed
+that pausing only the service deadline still let the native counter dismiss
+help after about three seconds; the fix accounts for both clocks. Other
+builds retain the exact original clock binding.
+
+The [integration receipt](validation/notice-help.json) accepts four ordinary
+help workflows across COM1/2, standard/enhanced BIOS and present/absent INT33.
+Each holds help90 ticks, navigates both topics, compares exact notice/cursor
+restoration, receives508 queued text bytes and runs a subsequent real DOS child.
+Three DIV/typed-abort/foreign-DS outer faults occur with help open; recovery
+preserves private streams and executes the next child. Six native/no-driver
+input regressions and36 view-owner checks also pass. View-owner checks include
+IF0/foreign-DS rejection, damaged-guard and geometry repair, and failed-free
+retry without stale repaint.
+
+Fresh source-only647-file builds reproduce the four matching products. Separate
+641/632-file proofs reproduce the preceding input and published baseline
+products with unchanged executable hashes. Four current-build ENiGMA/Synchronet
+record/compile/replay sessions pass; the BBS harness checks coexistence with
+the help-enabled child and does not open help during those BBS sessions.
+See [the BBS receipt](validation/bbs-notice-help.json).
+
+The first full-terminal observation timeout, the partial clock-pause failure,
+and the no-driver observer COM-size/menu-close failures remain excluded. The
+observer now bounds its COM size and allocates its report buffer separately;
+no-driver navigation closes the parent menu with Escape. All injected keys,
+callback/vector exchanges and owned repair operations are test instrumentation.
+
+## Remaining integration
+
+The original helper's complete UI/content/search and18-byte cross-process
+descriptor admission remain separate work. The new two-topic view covers
+PROGRAM notices, not all original application contexts. It borrows no parent
+window and adds no new parent RPC operation; general rendering/window RPCs
+remain excluded while PROGRAM owns its lease.
+
+Broader authored topic coverage, resource-backed text/search, application context
+mapping, combined help/window/speaker corruption, reentry/arbitrary asynchronous
+faults and real DOS-kernel comparisons remain open. DOSBox-X8086 and injected
+BIOS/mouse events do not prove physical input/modem/acoustic acceptance. Full
+PROGRAM and all whole-application gates remain unproven.

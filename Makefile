@@ -1646,3 +1646,19 @@ test-notice-input-terminal-retention: program-notice-input
 .PHONY: test-help-format
 test-help-format:
 	python3 standalone/test_help_format_dos.py --output build/help-format/source-only-make-$(shell date +%s%N)
+
+.PHONY: notice-help test-notice-help test-notice-help-source
+notice-help: program-notice-input
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input --notice-help
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input --notice-help --fault-diagnostic
+test-notice-help: notice-help
+	python3 standalone/test_help_view_dos.py --output build/help-view/DOS-make-$(shell date +%s%N)
+	python3 standalone/test_notice_help_dos.py --label native-standard-com1-make-$(shell date +%s%N) --bios STANDARD
+	python3 standalone/test_notice_help_dos.py --label native-enhanced-com2-make-$(shell date +%s%N) --port 2
+	python3 standalone/test_notice_help_dos.py --label absent-standard-com2-make-$(shell date +%s%N) --no-driver --bios STANDARD --port 2
+	python3 standalone/test_notice_help_dos.py --label absent-enhanced-com1-make-$(shell date +%s%N) --no-driver
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label help-outer-make-$(shell date +%s%N) --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_sound_smoke_dos.py --mouse --input --notice-help --label help-native-input-make-$(shell date +%s%N)
+	python3 standalone/test_program_sound_smoke_dos.py --mouse --input --notice-help --no-driver --label help-BIOS-input-make-$(shell date +%s%N)
+test-notice-help-source: notice-help
+	python3 standalone/prove_program_notices_sound_source.py --mouse --input --notice-help --output build/notice-help/source-make-$(shell date +%s%N)

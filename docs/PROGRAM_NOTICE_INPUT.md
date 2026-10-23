@@ -134,9 +134,14 @@ assembly errors remain excluded. The test changes no application binary and
 does not invoke a retained child after release. Run
 `./tools/build test-notice-input-terminal-retention`.
 
+The subsequent [optional PROGRAM help binding](CONTEXT_HELP.md#program-notice-help-integration)
+adds a child-owned authored help view and selected foreground/unwind tests while
+leaving this input-only product's binary unchanged.
+
 ## Remaining work
 
-The contextual Alt-Z diagnostic/shared UI remains disabled; direct KEY macro
+This input-only product leaves the native Alt-Z helper gate disabled. The
+optional binding above covers PROGRAM help; broader contexts remain open. Direct KEY macro
 playback is a separate application path. Full mouse-motion/repetition routing
 outside notice lifetimes, broader views and arbitrary asynchronous faults remain
 open. Selected retained input-driver failure through the complete terminal is

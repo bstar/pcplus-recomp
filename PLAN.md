@@ -1,12 +1,24 @@
 # Complete DOS rebuild plan
 
+[PROGRAM contextual help](docs/CONTEXT_HELP.md#program-notice-help-integration)
+now has an optional source-owned child view with authored notice/serial topics.
+Four ordinary COM1/2/BIOS/driver workflows hold help beyond the notice timeout,
+restore exact video/cursor state, preserve508 queued bytes and run a next DOS
+child. Three outer-fault/recovery workflows, six input regressions and36 view
+owner checks pass. Both native and service clocks pause during help; foreground
+transport/speaker/poll-budget work continues.647 sources reproduce the matching
+four products;641/632 reproduce unchanged input/published baselines. Four current
+ENiGMA/Synchronet sessions pass. Full original helper/search/context coverage,
+combined corruptions, real kernels/hardware and all application gates stay open.
+
 [Contextual help recovery](docs/CONTEXT_HELP.md) corrects the native57AE boundary:
 it launches PCHELP.RTE with an18-byte descriptor addressed by a decimal far
 pointer. It is not the maintained local script-reference dialog. Source-owned
 context/HLP decoders pass52 host/8086 DOS checks, an actual seek beyond64KiB,
 and explicit optional reading of all47 original topics/463 lines. Ordinary
-builds use authored fixtures and no originals. Alt-Z remains gated until help
-view ownership, foreground service/context selection and unwind are integrated.
+builds use authored fixtures and no originals. That format checkpoint left
+the view/foreground lifetime open; the optional PROGRAM integration above now
+covers selected authored topics and cleanup, while broader contexts remain open.
 
 [Complete-terminal input retention](docs/PROGRAM_NOTICE_INPUT.md#complete-terminal-retention-boundary)
 now passes four additional ordinary-product DOS sessions across COM1/COM2.

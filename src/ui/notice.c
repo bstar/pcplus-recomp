@@ -4,6 +4,9 @@
 #if defined(NOTICE_NATIVE_INPUT)
 #include "notice_input.h"
 #endif
+#if defined(ASPECT_NOTICE_HELP)
+#include "notice_help.h"
+#endif
 #if defined(NOTICE_SPEAKER)
 #include "speaker.h"
 #include "notice_speaker.h"
@@ -25,6 +28,9 @@ extern unsigned __cdecl notice_key_pending_native(void);
 extern unsigned __cdecl notice_key_read_native(void);
 static struct {
  unsigned busy,running,owned,generation,restored;
+#if defined(ASPECT_NOTICE_HELP)
+ unsigned clock_valid,clock_raw,clock_logical;
+#endif
 #if defined(NOTICE_SPEAKER)
  unsigned speaker_owned,speaker_generation;
 #endif
@@ -78,10 +84,30 @@ static void service(void)
  }
  now=notice_ticks_native();
  if(now>=DAY_TICKS||held.start>=DAY_TICKS)abort_notice(NOTICE_STATE);
+#if defined(ASPECT_NOTICE_HELP)
+ /* Keep elapsed notice time fixed while its child-owned help view is live.
+  * Poll budget, speaker/transport service and clock validation still run. */
+ if(notice_help_active()){
+  held.start=now>=held.result.elapsed_ticks?now-held.result.elapsed_ticks:now+DAY_TICKS-held.result.elapsed_ticks;
+  return;
+ }
+#endif
  held.result.elapsed_ticks=now>=held.start?now-held.start:now+DAY_TICKS-held.start;
  if(held.result.elapsed_ticks>=held.options.timeout_ticks)abort_notice(NOTICE_TIMEOUT);
 }
-unsigned __cdecl notice_platform_clock(void){return notice_seconds_native();}
+unsigned __cdecl notice_platform_clock(void)
+{
+#if defined(ASPECT_NOTICE_HELP)
+ unsigned now=notice_seconds_native(),delta;
+ if(!held.clock_valid){held.clock_valid=1;held.clock_raw=held.clock_logical=now;}
+ delta=now>=held.clock_raw?now-held.clock_raw:now+60-held.clock_raw;
+ held.clock_raw=now;
+ if(!notice_help_active()){held.clock_logical+=delta;if(held.clock_logical>=60)held.clock_logical-=60;}
+ return held.clock_logical;
+#else
+ return notice_seconds_native();
+#endif
+}
 void __cdecl notice_platform_sound(unsigned kind)
 {
  unsigned status;
@@ -144,6 +170,9 @@ unsigned __cdecl notice_platform_read(void)
 void __cdecl notice_platform_restore(const unsigned *descriptor,void __far *identity)
 {
  unsigned status;
+#if defined(ASPECT_NOTICE_HELP)
+ status=notice_help_close();if(status){held.result.service_status=status;abort_notice(NOTICE_CLEANUP);}
+#endif
  if(descriptor!=&notice_descriptor||identity!=held.identity||!same_window())abort_notice(NOTICE_STATE);
  status=notice_window_close();held.result.window_status=status;
  if(status)abort_notice(NOTICE_CLEANUP);
@@ -152,6 +181,10 @@ void __cdecl notice_platform_restore(const unsigned *descriptor,void __far *iden
 static unsigned retire(notice_result *result)
 {
  unsigned status=0;
+#if defined(ASPECT_NOTICE_HELP)
+ status=notice_help_close();
+ if(status){held.result.service_status=status;held.result.status=NOTICE_CLEANUP;*result=held.result;return NOTICE_CLEANUP;}
+#endif
 #if defined(NOTICE_SPEAKER)
  if(held.speaker_owned){
   if(speaker_generation()!=held.speaker_generation){held.speaker_owned=0;held.result.cause=NOTICE_STATE;}
@@ -216,6 +249,9 @@ unsigned NOTICE_CODE __cdecl notice_show(const char *message,unsigned kind,const
  else{staged.attribute=0x70;staged.animated=0;staged.timeout_ticks=74;staged.poll_limit=1000000UL;staged.service=0;staged.sound=0;}
  if(staged.attribute>255||staged.animated>1||!staged.timeout_ticks||staged.timeout_ticks>32767||!staged.poll_limit)return NOTICE_ARGUMENT;
  held.options=staged;memcpy(held.text,text,i+1);memset(&held.result,0,sizeof(held.result));
+#if defined(ASPECT_NOTICE_HELP)
+ held.clock_valid=0;
+#endif
 #if defined(NOTICE_SPEAKER)
  held.speaker_owned=held.speaker_generation=0;
 #endif

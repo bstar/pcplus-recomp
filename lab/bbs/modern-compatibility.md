@@ -1,5 +1,15 @@
 # Modern BBS compatibility checkpoint
 
+## PROGRAM help coexistence
+
+The [help-enabled child receipt](../../docs/validation/bbs-notice-help.json)
+adds four current ENiGMA/Synchronet record/compile/replay sessions using the
+unchanged capability16 terminal. The derived PROGRAM wrapper and subsequent
+manual navigation pass. Help itself is exercised by separate DOS integration
+tests; this BBS harness sends no Alt-Z during a notice. No exemption was applied
+by these runs. Original helper parity, physical modem/audio and full application
+acceptance remain open.
+
 The [capability16 notice-input receipt](../../docs/validation/bbs-native-notice-input.json)
 accepts the same four record/compile/replay/manual-navigation workflows below on
 the new matching native-input parent and ordinary ASPECT child. The label is

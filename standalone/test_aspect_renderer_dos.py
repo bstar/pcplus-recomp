@@ -431,8 +431,12 @@ buffer: times sample_end-sample db 0
  (OUT/'observer.asm').write_text(asm);subprocess.run(['nasm','-fbin',str(OUT/'observer.asm'),'-o',str(OUT/'RENDER.COM')],check=True)
  return (OUT/'RENDER.COM').read_bytes(),modes,policy_pairs,snapshots
 
-def adapter(cpu=None,observer_high=False,observer_collector=None):
+def adapter(cpu=None,observer_high=False,observer_collector=None,timeout_seconds=20):
  path=ROOT/'standalone/test_connection_dos.py';source=path.read_text()
+ assert isinstance(timeout_seconds,int) and 1<=timeout_seconds<=60
+ if timeout_seconds!=20:
+  assert source.count('timeout=20')==1
+  source=source.replace('timeout=20','timeout='+str(timeout_seconds))
  if observer_collector is not None:
   assert re.fullmatch(r'[A-Z0-9]{1,8}',observer_collector)
   old=r"observer_stop=('D:\\'+observer) if observer else ''"
