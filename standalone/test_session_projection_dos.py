@@ -8,10 +8,12 @@ from test_terminal import SAMPLER
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--session-baseline',action='store_true');ap.add_argument('--session-controls',action='store_true');a=ap.parse_args()
+    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--session-baseline',action='store_true');ap.add_argument('--session-controls',action='store_true');ap.add_argument('--hook-return',action='store_true');a=ap.parse_args()
     if a.session_controls:assert a.session_baseline
+    if a.hook_return:assert a.session_controls
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    base=ROOT/'build'/('terminal-directory-keys-process-bank-session-capture-projection'+('-bound' if a.session_baseline else '')+('-registers-controls' if a.session_controls else '')+'-probe');m=json.loads((base/'manifest.json').read_text())
+    base=ROOT/'build'/('terminal-directory-keys-process-bank-session-capture-projection'+('-bound' if a.session_baseline else '')+('-registers-controls' if a.session_controls else '')+('-return' if a.hook_return else '')+'-probe');m=json.loads((base/'manifest.json').read_text())
+    if a.hook_return:assert m['experimental_hook_return']
     if a.session_controls:assert m['experimental_session_controls']
     assert m['session_projection_probe'] and sha(base/'TERMINAL.EXE')==m['binary_sha256']
     raw=bytearray(image());struct.pack_into('<HH',raw,0x4e4,8,4);raw=bytes(raw);cases=[]
@@ -59,6 +61,12 @@ exit
         if a.session_controls:
             struct.pack_into('<H',expected,0x1bc,int(struct.unpack_from('<H',source,0x1bc)[0]==0))
             struct.pack_into('<HH',expected,0x4e4,999,1)
+        current=bytes(expected)
+        if a.hook_return:
+            struct.pack_into('<H',expected,0x1ae,30)
+            struct.pack_into('<H',expected,0x1bc,0 if struct.unpack_from('<H',current,0x1bc)[0] else 65535)
+            struct.pack_into('<HH',expected,0x4e4,321,654)
+            struct.pack_into('<H',expected,0x42c,1)
         checks=dict(emulator_exit=run.returncode==0,DOS_pass=(folder/'PASS.TXT').exists() and not (folder/'FAIL.TXT').exists(),
             projection_status=(folder/'PSTAT.BIN').read_bytes()==b'\0\0',exact_image=(folder/'POUT.BIN').read_bytes()==expected,
             baseline_unchanged=(folder/'PBASE.BIN').read_bytes()==source,
@@ -70,6 +78,13 @@ exit
             for value in struct.unpack('<632H',source):seal=((seal<<1)|(seal>>15))&65535;seal^=value
             checks['startup_file_absent']=not (folder/'TEST.PRM').exists()
             checks['retained_exact_startup_image']=state==struct.pack('<4H',0xb451,1,1,seal)+source
+        if a.hook_return:
+            candidate=(folder/'HRETURN.BIN').read_bytes()
+            checks['exact_return_candidate']=len(candidate)==490 and struct.unpack_from('<3H',candidate)==(int(name in ('MODEM','directory-MODEM')),0xe020,1)
+            checks['returned_control_values']=candidate[484:]==struct.pack('<3H',int(struct.unpack_from('<H',expected,0x1bc)[0]!=0),321,654) and struct.unpack_from('<H',candidate,24)[0]==30 and struct.unpack_from('<H',candidate,418)[0]==1
+            checks['returned_validation_status']=(folder/'HRSTAT.BIN').read_bytes()==struct.pack('<4H',0,0,2,65535)
+            checks['active_state_unchanged_by_validation']=(folder/'PACTIVE.BIN').read_bytes()==(folder/'PAGAIN.BIN').read_bytes()==current
+            checks['opaque_return_rejected_atomically']=(folder/'HREJECT.BIN').read_bytes()==b'X'*490 and (folder/'HERROR.BIN').read_bytes()==struct.pack('<4H',6,0,2,0x200)
         r=dict(case=name,passed=all(checks.values()),checks=checks,arguments=args,inactive_private_invalid=bad,projection_sha256=sha(folder/'POUT.BIN'))
         (folder/'result.json').write_text(json.dumps(r,indent=2)+'\n');assert r['passed'],r
         cases.append(r);print('PASS8086',name,flush=True)
@@ -78,7 +93,7 @@ exit
     for n,h in sources.items():
         assert sha(ROOT/n)==h,n
         dst=out/'source'/n;dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/n,dst)
-    result=dict(passed=True,retained_baseline=a.session_baseline,session_controls=a.session_controls,cases=cases,sources=sources,binary_sha256=m['binary_sha256'],
+    result=dict(passed=True,retained_baseline=a.session_baseline,session_controls=a.session_controls,hook_return=a.hook_return,cases=cases,sources=sources,binary_sha256=m['binary_sha256'],
         scope='Five actual8086 DOS runs of diagnostic source-built terminal: production startup/import/CLI/directory/capture/projection code, explicit probe before mouse/UART acquisition, exact1264-byte images and unchanged hardware/files. Not terminal HOOK execution, online serial continuity, returned settings commit or physical hardware acceptance.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS five actual8086 terminal projection workflows')
 if __name__=='__main__':main()

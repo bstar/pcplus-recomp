@@ -7,6 +7,9 @@ NEAR_NAMED_SERVICE hook_memcpy_service_,memcpy_
 NEAR_NAMED_SERVICE hook_memcmp_service_,memcmp_
 NEAR_CDECL_SERVICE _hook_terminal_decode,_terminal_import_decode,2
 NEAR_CDECL_SERVICE _hook_modem_decode,_modem_import_decode,2
+%ifdef TERMINAL_HOOK_RETURN
+NEAR_CDECL_SERVICE _hook_live_expand,_live_modem_expand,4
+%endif
 SEGMENT CONFIG_CODE public align=16 class=FARCODE use16
 NEAR_CDECL_SERVICE _hook_transfer_decode,_transfer_import_decode,2
 NEAR_CDECL_SERVICE _hook_transfer_path,_transfer_import_path,2
@@ -22,6 +25,9 @@ HOOK_REGISTER hook_memcpy_service_
 HOOK_REGISTER hook_memcmp_service_
 FAR_CDECL_SERVICE _hook_terminal_decode,_terminal_import_decode,2
 FAR_CDECL_SERVICE _hook_modem_decode,_modem_import_decode,2
+%ifdef TERMINAL_HOOK_RETURN
+FAR_CDECL_SERVICE _hook_live_expand,_live_modem_expand,4
+%endif
 FAR_CDECL_SERVICE _hook_transfer_decode,_transfer_import_decode,2
 FAR_CDECL_SERVICE _hook_transfer_path,_transfer_import_path,2
 extern terminal_session_capture_far

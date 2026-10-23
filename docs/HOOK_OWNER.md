@@ -64,6 +64,11 @@ They reinforce the requirement for a complete caller-supplied resident extent.
 
 ## Terminal integration remaining
 
+The optional [returned PRM validator](HOOK_RETURN.md) now checks and classifies
+supported settings without applying them. It does not install this owner in
+the terminal or enable KEY kind2. The caller still needs an owned foreground
+execution and resource/adoption transaction.
+
 The directory/ASPECT terminal can now select the shared banked EXEC backend:
 
 ```

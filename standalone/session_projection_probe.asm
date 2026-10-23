@@ -9,11 +9,18 @@ extern _terminal_session_project_bound,terminal_baseline_storage
 %ifdef TERMINAL_SESSION_CONTROLS
 extern _terminal_mouse_offer_far,_terminal_mouse_commit_far,_terminal_sound_enabled
 %endif
+%ifdef TERMINAL_HOOK_RETURN
+extern _hook_return_validate,terminal_option_mask,terminal_directory_mode
+%endif
 global terminal_session_projection_probe_far
 terminal_session_projection_probe_far:
  push bp
  mov bp,sp
+%ifdef TERMINAL_HOOK_RETURN
+ sub sp,3030
+%else
  sub sp,2530
+%endif
  push ds
  pop es
  lea di,[bp-2528]
@@ -99,6 +106,80 @@ terminal_session_projection_probe_far:
  add sp,4
 %endif
  mov [bp-2530],ax
+%ifdef TERMINAL_HOOK_RETURN
+ or ax,ax
+ jnz .failed
+ ; Keep the actual current projection, then stage a helper-like proposal.
+ push ds
+ pop es
+ lea si,[bp-2528]
+ lea di,[bp-1264]
+ mov cx,632
+ cld
+ rep movsw
+ mov si,active_name
+ lea dx,[bp-1264]
+ mov cx,1264
+ call .write
+ jc .failed
+ mov word [bp-2528+0x1ae],30
+ xor ax,ax
+ cmp word [bp-2528+0x1bc],0
+ jne .sound_off
+ dec ax
+.sound_off:
+ mov [bp-2528+0x1bc],ax
+ mov word [bp-2528+0x4e4],321
+ mov word [bp-2528+0x4e6],654
+ mov word [bp-2528+0x42c],1
+ ; An opaque byte edit must refuse before replacing the staged candidate.
+ push ds
+ pop es
+ lea di,[bp-3020]
+ mov ax,0x5858
+ mov cx,245
+ rep stosw
+ xor byte [bp-2528+0x200],1
+ call .validate
+ cmp ax,6
+ jne .failed
+ mov si,rejected_name
+ lea dx,[bp-3020]
+ mov cx,490
+ call .write
+ jc .failed
+ mov si,rejected_status_name
+ lea dx,[bp-3030]
+ mov cx,8
+ call .write
+ jc .failed
+ xor byte [bp-2528+0x200],1
+ call .validate
+ or ax,ax
+ jnz .failed
+ mov si,return_name
+ lea dx,[bp-3020]
+ mov cx,490
+ call .write
+ jc .failed
+ mov si,return_status_name
+ lea dx,[bp-3030]
+ mov cx,8
+ call .write
+ jc .failed
+ ; Reproject from production state: validation must not apply its proposal.
+ lea ax,[bp-1264]
+ push ax
+ call far _terminal_session_project_bound
+ add sp,2
+ or ax,ax
+ jnz .failed
+ mov si,again_name
+ lea dx,[bp-1264]
+ mov cx,1264
+ call .write
+ jc .failed
+%endif
  mov si,output_name
  lea dx,[bp-2528]
  mov cx,1264
@@ -128,6 +209,33 @@ terminal_session_projection_probe_far:
  mov sp,bp
  pop bp
  retf
+%ifdef TERMINAL_HOOK_RETURN
+.validate:
+ xor ax,ax
+ mov bx,[terminal_option_mask]
+ and bx,96
+ cmp bx,32
+ je .active_modem
+ cmp bx,64
+ jne .modem_selected
+ cmp word [terminal_directory_mode],0
+ jne .modem_selected
+.active_modem:
+ inc ax
+.modem_selected:
+ lea dx,[bp-3030]
+ push dx
+ lea dx,[bp-3020]
+ push dx
+ push ax
+ lea dx,[bp-2528]
+ push dx
+ lea dx,[bp-1264]
+ push dx
+ call far _hook_return_validate
+ add sp,10
+ ret
+%endif
 ; CS:SI file, DS:DX near bytes,CX count. CF reports any open/write/close error.
 .write:
  push cx
@@ -165,4 +273,12 @@ status_name: db 'PSTAT.BIN',0
 startup_name: db 'TEST.PRM',0
 away_name: db 'AWAY.PRM',0
 state_name: db 'BSTATE.BIN',0
+%endif
+%ifdef TERMINAL_HOOK_RETURN
+active_name: db 'PACTIVE.BIN',0
+again_name: db 'PAGAIN.BIN',0
+return_name: db 'HRETURN.BIN',0
+return_status_name: db 'HRSTAT.BIN',0
+rejected_name: db 'HREJECT.BIN',0
+rejected_status_name: db 'HERROR.BIN',0
 %endif

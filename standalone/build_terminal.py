@@ -15,6 +15,7 @@ parser.add_argument('--projection-probe',action='store_true')
 parser.add_argument('--session-baseline',action='store_true')
 parser.add_argument('--register-handoff',action='store_true')
 parser.add_argument('--session-controls',action='store_true')
+parser.add_argument('--hook-return',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
 if args.session_capture:assert args.directory_keys and args.process_bank
 if args.session_projection:assert args.session_capture
@@ -22,6 +23,7 @@ if args.projection_probe:assert args.session_projection
 if args.session_baseline:assert args.session_projection
 if args.register_handoff:assert args.session_baseline
 if args.session_controls:assert args.session_baseline and args.mouse and args.notice_input and args.notice_sound
+if args.hook_return:assert args.session_controls and args.register_handoff
 if args.exit_probe is not None:assert args.exit_guard
 if args.process_bank:assert args.external_render
 if args.traps:assert args.process_bank
@@ -53,6 +55,7 @@ if args.session_projection:out_name+='-projection'
 if args.session_baseline:out_name+='-bound'
 if args.register_handoff:out_name+='-registers'
 if args.session_controls:out_name+='-controls'
+if args.hook_return:out_name+='-return'
 if args.projection_probe:out_name+='-probe'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
@@ -123,6 +126,7 @@ for index,source in enumerate(sources):
  if args.session_baseline:options+=['-DTERMINAL_SESSION_BASELINE']
  if args.register_handoff:options+=['-DTERMINAL_REGISTER_HANDOFF']
  if args.session_controls:options+=['-DTERMINAL_SESSION_CONTROLS']
+ if args.hook_return:options+=['-DTERMINAL_HOOK_RETURN']
  if args.exit_guard:options+=['-DTERMINAL_EXIT_GUARD']
  if args.traps:options+=['-DTERMINAL_TRAPS']
  if args.trap_probe is not None:options+=['-DTERMINAL_TRAP_PROBE='+str(args.trap_probe)]
@@ -173,6 +177,7 @@ if args.mouse:c_sources += [ROOT/'src/mouse/owner.c',ROOT/'src/mouse/terminal.c'
 if args.directory_keys:c_sources.append(ROOT/'src/terminal/directory_keys.c')
 hook_sources={ROOT/'src/config/prm_projection.c',ROOT/'src/terminal/session_projection.c'} if args.session_projection else set()
 if args.register_handoff:hook_sources.add(ROOT/'src/terminal/register_owner.c')
+if args.hook_return:hook_sources.add(ROOT/'src/config/hook_return.c')
 c_sources+=sorted(hook_sources)
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
@@ -233,12 +238,14 @@ for source in c_sources:
   aliases={'memcpy':'hook_memcpy_service','memcmp':'hook_memcmp_service',
            'terminal_import_decode':'hook_terminal_decode_service','modem_import_decode':'hook_modem_decode_service',
            'transfer_import_decode':'hook_transfer_decode_service','transfer_import_path':'hook_transfer_path_service'}
+  if args.hook_return:aliases['live_modem_expand']='hook_live_expand_service'
   options=['-nt=HOOK_CODE','-nc=FARCODE','-dPRM_PROJECT_FAR_RATES',*['-d'+name+'='+alias for name,alias in aliases.items()]]
  if source.parent==ROOT/'src/aspect' and source not in config_sources:options=['-nt=ASPECT_CODE','-nc=FARCODE']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
  if args.register_handoff:options+=['-dTERMINAL_REGISTER_HANDOFF']
  if args.session_controls:options+=['-dTERMINAL_SESSION_CONTROLS']
+ if args.hook_return:options+=['-dTERMINAL_HOOK_RETURN']
  if args.notice_sound:options+=['-dASPECT_SOUND_POLICY','-dTERMINAL_SOUND']
  if args.notice_input:options+=['-dASPECT_NOTICE_INPUT']
  if args.directory_keys:options+=['-dDIRECTORY_KEY_BINDINGS']
@@ -292,6 +299,7 @@ inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
 if args.session_projection:inputs += [ROOT/'src/config/prm_projection.h',ROOT/'src/terminal/session_projection.h']
 if args.session_baseline:inputs += [ROOT/'src/terminal/session_baseline.h']
 if args.register_handoff:inputs += [ROOT/'src/terminal/register_owner.h',ROOT/'src/aspect/register_handoff.h',ROOT/'src/aspect/register_codec.h']
+if args.hook_return:inputs.append(ROOT/'src/config/hook_return.h')
 inputs += sorted((ROOT/'src/translation').glob('*.h'))
 inputs += sorted((ROOT/'src/key_mapping').glob('*.h'))+sorted((ROOT/'src/key_mapping').glob('*.inc'))
 if args.mouse:inputs += [ROOT/'src/mouse/owner.h',ROOT/'reconstruction/program_mouse/provenance.json',ROOT/'reconstruction/program_mouse/defaults.json']
@@ -315,6 +323,7 @@ manifest['session_projection_probe']=args.projection_probe
 manifest['experimental_session_baseline']=args.session_baseline
 manifest['experimental_register_handoff']=args.register_handoff
 manifest['experimental_session_controls']=args.session_controls
+manifest['experimental_hook_return']=args.hook_return
 manifest['terminal_traps']=args.traps
 manifest['terminal_trap_probe']=args.trap_probe
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')

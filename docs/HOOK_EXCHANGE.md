@@ -1,5 +1,9 @@
 # HOOK register exchange
 
+The optional [returned PRM validator](HOOK_RETURN.md) now provides a strict
+staged policy over supported settings. Connecting owned helper execution and
+atomic settings/register adoption to the terminal remains open.
+
 Native KEY kind2 calls the external helper with a generated command tail:
 
 ```text

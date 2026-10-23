@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Returned PRM validation](docs/HOOK_RETURN.md) now stages understood helper
+settings without changing the active session.1,995 linked cases, five8086 DOS
+workflows and14 register recovery workflows pass;693 sources reproduce six
+products without original inputs. Unknown/inactive mutations reject atomically,
+and raw representations remain distinguishable from semantic changes. The
+optional validator adds1,749 banked bytes and22 resident code bytes with unchanged
+near data extent. Guarded helper routing, resource staging and atomic returned
+settings/register adoption remain open; KEY kind2 is still disabled.
+
 [Live sound/mouse projection](docs/SESSION_CONTROLS.md) adds an optional controls
 variant.104 linked cases, five8086 startup/projection workflows and14 COM1/COM2
 register recovery workflows pass. Enabled nonzero sound representations remain
