@@ -501,3 +501,77 @@ Natural malformed-executable handling on real DOS, attached-parent popup/fault
 observations, damaged/foreign-window quarantine and retry, original sound/macros/
 mouse/shared UI policies, other geometries, BBS regression and physical modem
 acceptance remain open. Full PROGRAM policy and all F01-F16 gates remain open.
+
+## PROGRAM window quarantine and stopped-owner retry
+
+The PROGRAM integration now treats either its own active notice or a still-open
+window as an outstanding owner. Previously, a service callback could close the
+notice and open a replacement window: notice cleanup correctly left that foreign
+window alone, but PROGRAM checked only `notice_active()` and could release its
+parent lease anyway. The [banked PROGRAM owner](../src/process/program_notice.c)
+now retains its pending state until both owners retire. Its unwind does not erase
+the previous cause when a foreign window remains after the original notice closes.
+
+VM shutdown also previously continued closing streams after external cleanup
+had deliberately retained the handle mask. The invocation-file close now defers
+while private handles remain masked, and final VM teardown defers while PROGRAM
+is busy. The six script streams, invocation file and their saved positions remain
+owned, rather than being closed through masked DOS handles.
+
+The private `program_notice_retry()` far entry accepts only a stopped invocation
+with a retained external scope. A live callback receives STATE without changing
+ownership. Retry uses the existing process/window/handle/stream teardown; a
+failure keeps the scope and owners held. After an invocation has already returned
+and restored its caller's divide vector, successful retry retires the foreground
+scope without trying to reacquire that dead invocation's ISR scope. Normal active
+scope exit retains its original vector checks. Final VM cleanup runs only after
+the external leases have retired. This is an owner API, not an end-user repair UI.
+
+The [independent receipt](validation/program-notice-quarantine.json) accepts12
+actual8086 DOS sessions: guard damage or a foreign replacement window crossed
+with DIV, foreign-DS DIV and typed abort, on COM1/HARD and COM2/BOTH. The probe:
+
+- Raises the real fault with508 peer bytes queued during the popup.
+- Confirms PROGRAM, the window, six script streams and the invocation file remain
+  held; a masked JFT matches its original baseline while the saved owners stay live.
+- Rejects live-callback retry and a new VM invocation.
+- Retries before repair and confirms the exact displayed window/cursor remain intact.
+- Repairs the guard or closes the replacement through its own window owner.
+- Retires all leases, preserves cause STATE and restores the original screen/cursor,
+  PSP/JFT/IVT state and balanced far allocations/frees.
+- Runs another popup and successful DOS child, consumes all508 exact peer bytes,
+  and completes the READY!/END exchange with the expected flow-control wire.
+
+The focused diagnostic enables the window owner's guard/count hooks; the ordinary
+parent retains the production owner without those hooks. A replacement is never
+closed by the abandoned notice's cleanup. Guard cases release two allocations
+across the session; replacement cases release three, including the foreign owner.
+The initial failed cleanup and subsequent failed/successful retries remain
+distinct, with three recorded recovery attempts and the original CPU/typed result.
+
+The parent build now reuses PROGRAM's existing far `int86` and `memset` bridges
+for the notice bank. The checked OMF transformation changes only EXTDEF names,
+preserving every other record, type index, code/data byte and fixup. Duplicate
+notice wrappers are omitted in the parent-specific platform object; standalone
+notice builds retain their own platform. The auditor independently reconstructs
+both owner/runtime import transformations and checks the linked bridge locations.
+Near CODE has144 bytes spare in the ordinary parent and16 in the focused diagnostic.
+
+All24 previous popup/error sessions and13 attached normal PROGRAM workflows pass
+on the changed images.237 declared sources reproduce35 products in a fresh tree.
+The standalone notice/UART executables are byte-identical to the prior accepted
+component products. The historical general fault and error receipts retain their
+original scopes and custody.
+
+```
+./tools/build test-program-notice-quarantine
+./tools/build test-program-notices
+./tools/build test-program-notice-errors
+./tools/build test-program-notices-source
+```
+
+Attached-parent popup/fault/quarantine observation is still required; the new
+quarantine cases run in the raw CLI. Natural malformed-executable behavior on a
+real DOS kernel, complete original mouse/macros/sound/shared UI policies, other
+geometries, BBS regressions and physical modem validation remain open. Full
+PROGRAM policy and all F01-F16 application gates remain open.

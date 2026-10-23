@@ -75,13 +75,13 @@ _notice_fault_save:
  int 0x21
  jc .bad
  mov bx,ax
- mov cx,74
+ mov cx,124
  mov dx,_notice_fault_report
  mov ah,0x40
  int 0x21
  mov si,1
  jc .close
- cmp ax,74
+ cmp ax,124
  jne .close
  xor si,si
 .close:

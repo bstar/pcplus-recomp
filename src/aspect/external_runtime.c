@@ -18,6 +18,9 @@
 #include <string.h>
 extern aspect_file runtime_file;
 extern unsigned char runtime_arena[0x3aca];
+#if defined(NATIVE_PROGRAM_NOTICES)
+extern unsigned runtime_external_invocation_active,runtime_external_scope_storage;
+#endif
 unsigned runtime_external_calls,runtime_external_raw_status,runtime_external_private_count;
 unsigned runtime_external_recoveries,runtime_external_cleanup_error;
 static struct {
@@ -67,6 +70,12 @@ static unsigned retire(unsigned recovery)
  external_phase(EXTERNAL_PARENT_RETURN);
  /* An unsuccessful teardown must not advertise a reusable interpreter. */
  if(!status&&runtime_external_scope_active()){
+#if defined(NATIVE_PROGRAM_NOTICES)
+  /* A completed invocation restored its caller's divide vector. Retrying its
+   * retained foreground leases must not reacquire the dead VM's ISR scope. */
+  if(recovery&&!runtime_external_invocation_active){runtime_external_scope_storage=0;other=0;}
+  else
+#endif
   other=runtime_external_scope(0);if(other&&!status)status=other;
  }
  held.valid=held.view_reset=0;

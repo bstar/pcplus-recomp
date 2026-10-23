@@ -1,5 +1,16 @@
 # Full application reconstruction checklist
 
+[PROGRAM quarantine and stopped-owner retry](NATIVE_PROGRAM.md#program-window-quarantine-and-stopped-owner-retry)
+now retain damaged/replaced windows and private streams instead of closing them
+during VM shutdown. Live retry/new VM entry reject; owner repair permits full
+retirement without changing the original notice cause. Twelve actual DOS cases
+cover guard/foreign-window owners, DIV/foreign-DS DIV/typed abort and COM1/HARD /
+COM2/BOTH.24 popup/error regressions and13 attached normal workflows also pass.
+237 declared sources reproduce35 products; parent-specific CRT bridge sharing
+preserves code/data/fixups and avoids duplicate near wrappers. Attached-parent
+popup fault/quarantine observation, real DOS malformed executables, full UI and
+all full F01-F16/physical requirements remain open.
+
 [PROGRAM message-branch and recovery fixtures](NATIVE_PROGRAM.md#program-message-branches-and-post-error-exec)
 now exercise CRT errno2/7/8/12/13 on COM1/HARD and COM2/BOTH, then show a second
 missing-target popup and execute a real source-built DOS child successfully.

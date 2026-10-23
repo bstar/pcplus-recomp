@@ -11,6 +11,8 @@
 #if defined(NATIVE_PROGRAM_NOTICES)
 #include "program_notice.h"
 #include "../aspect/external_unwind.h"
+extern unsigned runtime_error;
+extern void runtime_finish(void);
 extern unsigned aspect_serial_active;
 #if defined(PROGRAM_NOTICE_DIAGNOSTIC)
 extern unsigned __cdecl aspect_serial_available(void);
@@ -28,6 +30,10 @@ static unsigned __cdecl program_notice_poll(void)
 }
 notice_service __far __cdecl program_notice_callback(void)
 {return program_notice_poll;}
+unsigned __far __cdecl program_bank_notice_retry(void)
+{runtime_external_recover(runtime_error);return runtime_external_cleanup_error;}
+void __far __cdecl program_bank_notice_finish(void)
+{runtime_finish();}
 #endif
 unsigned __far __cdecl program_bank_native_display_probe(void)
 {return native_display_probe();}

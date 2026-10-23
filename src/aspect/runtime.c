@@ -42,11 +42,20 @@ unsigned char runtime_string_snapshot[128][81];
 unsigned char runtime_console_output[1024];
 unsigned runtime_console_output_size;
 #endif
+#if defined(NATIVE_PROGRAM_NOTICES)
+unsigned runtime_external_invocation_active,runtime_external_scope_storage;
+#define active runtime_external_invocation_active
+#define external_scope runtime_external_scope_storage
+static unsigned end_wait_started;
+#else
 static unsigned active,end_wait_started;
+#endif
 static unsigned compiler_scope;
 extern void __interrupt __far runtime_divide_interrupt(void);
 #if defined(ASPECT_EXTERNAL_PROCESS)
+#if !defined(NATIVE_PROGRAM_NOTICES)
 static unsigned external_scope;
+#endif
 #if defined(ASPECT_EXTERNAL_UNWIND)
 unsigned __cdecl runtime_external_scope_active(void){return external_scope;}
 #endif
@@ -232,6 +241,9 @@ void runtime_cleanup(void)
 }
 unsigned runtime_close(unsigned token)
 {
+#if defined(NATIVE_PROGRAM_NOTICES)
+    if(process_handles_active)return 0xffff;
+#endif
     ++runtime_close_count;
     if(token!=(unsigned)&runtime_file){runtime_set_error(ASPECT_RUN_STATE);return 0xffff;}
     if(aspect_file_close(&runtime_file)!=ASPECT_FILE_OK){runtime_set_error(ASPECT_RUN_IO);return 0xffff;}
@@ -260,6 +272,9 @@ void runtime_finish(void)
 {
 #if defined(ASPECT_EXTERNAL_UNWIND)
     if(runtime_external_checkpoint_active())runtime_external_recover(runtime_error);
+#endif
+#if defined(NATIVE_PROGRAM_NOTICES)
+    if(native_program_busy)return;
 #endif
     runtime_file_times_finish();
     runtime_file_info_finish();

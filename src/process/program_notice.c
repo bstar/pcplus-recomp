@@ -2,6 +2,11 @@
  * It never changes the native process result or the raw child return word. */
 #include "program_notice.h"
 #include "../ui/notice_unwind.h"
+#include "../ui/notice_window.h"
+#include "../aspect/runtime.h"
+extern unsigned runtime_external_invocation_active,runtime_external_scope_storage;
+extern unsigned __far __cdecl program_bank_notice_retry(void);
+extern void __far __cdecl program_bank_notice_finish(void);
 notice_result program_notice_result;
 unsigned program_notice_calls,program_notice_errno;
 static notice_options options={0x70,0,74,1000000UL,0,0};
@@ -30,4 +35,19 @@ unsigned __far __cdecl program_notice_error(unsigned error)
  return status;
 }
 unsigned __far __cdecl program_notice_unwind(void)
-{return notice_unwind(&program_notice_result);}
+{
+ unsigned status=NOTICE_OK;
+ if(notice_active())status=notice_unwind(&program_notice_result);
+ return notice_window_phase()?(status?status:NOTICE_BUSY):status;
+}
+unsigned __far __cdecl program_notice_active(void)
+{return notice_active()||notice_window_phase();}
+unsigned __far __cdecl program_notice_retry(void)
+{
+ unsigned status;
+ /* Only the stopped invocation's owner may retry; never a live callback. */
+ if(runtime_external_invocation_active||!runtime_external_scope_storage)return ASPECT_RUN_STATE;
+ status=program_bank_notice_retry();if(status)return status;
+ program_bank_notice_finish();
+ return runtime_external_scope_storage||program_notice_active()?ASPECT_RUN_STATE:0;
+}

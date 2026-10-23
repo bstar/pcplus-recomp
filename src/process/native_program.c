@@ -80,7 +80,7 @@ unsigned NATIVE_PROGRAM_CODE __cdecl native_program_execute(const char *program,
  /* Check before taking a near pointer to a stack local for memset/copy. */
  if(data_segment()!=stack_segment()||!result)return NATIVE_PROGRAM_ARGUMENT;
 #if defined(NATIVE_PROGRAM_NOTICES)
- if(notice_active())return NATIVE_PROGRAM_BUSY;
+ if(program_notice_active())return NATIVE_PROGRAM_BUSY;
 #endif
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
  if(native_break_phase()!=BREAK_CLOSED)return NATIVE_PROGRAM_BUSY;
@@ -172,7 +172,7 @@ serial_return:
   external_phase(EXTERNAL_NOTICE_RETURN);
   if(status==NOTICE_SERVICE){local.serial_status=program_notice_result.service_status;local.status=NATIVE_PROGRAM_SERIAL;}
   else if(status>NOTICE_CANCELLED)local.status=NATIVE_PROGRAM_NOTICE;
-  if(!notice_active())notice_pending=0;
+  if(!program_notice_active())notice_pending=0;
  }
 #endif
  goto cleanup;
@@ -181,7 +181,7 @@ display_rejected:
 cleanup:
 #if defined(NATIVE_PROGRAM_NOTICES)
  /* Keep the parent/view lease live while a damaged popup still owns storage. */
- if(notice_pending&&notice_active()){
+ if(notice_pending&&program_notice_active()){
   local.status=NATIVE_PROGRAM_NOTICE;*result=local;return local.status;
  }
 #endif

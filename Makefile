@@ -1523,3 +1523,7 @@ test-program-notices-source: program-notices program-notices-fault
 .PHONY: test-program-notice-errors
 test-program-notice-errors: program-notices-fault
 	python3 standalone/test_program_notice_errors_dos.py --output build/program-notice-errors/DOS-make-$(shell date +%s%N)
+
+.PHONY: test-program-notice-quarantine
+test-program-notice-quarantine: program-notices-fault
+	python3 standalone/test_program_notice_quarantine_dos.py --output build/program-notice-quarantine/DOS-make-$(shell date +%s%N)

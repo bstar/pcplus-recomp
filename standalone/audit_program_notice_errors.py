@@ -36,7 +36,8 @@ def main():
             folder=ROOT/row['folder'];assert folder.is_relative_to(errors) or folder.is_relative_to(regression)
             assert row['passed'] and all(row['checks'].values()) and sha(folder/'ASPECT.EXE')==identity
             for name,h in row['captures_sha256'].items():assert sha(folder/name)==h
-            w=struct.unpack('<37H',(folder/'NOTICE.BIN').read_bytes());assert list(w)==row['report_words']
+            raw=(folder/'NOTICE.BIN').read_bytes();assert len(raw) in [74,124]
+            w=struct.unpack('<'+str(len(raw)//2)+'H',raw);assert list(w)==row['report_words']
             phase=int(row['mode'][0]);success=row['successful_child'];error=row['error'];crt,dos=definitions[error]
             expected_status=0 if not phase else 5 if row['mode'][1]=='A' else 12
             assert w[0]==0x4e46 and w[1]==phase and w[3]==int(bool(phase)) and w[4]==w[28]==expected_status

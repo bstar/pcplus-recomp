@@ -4,12 +4,16 @@
 #include <string.h>
 #define NOTICE_BANK_IMPLEMENTATION
 #include "notice_bank.h"
+#if !defined(NOTICE_PROGRAM_ADAPTERS)
 int __far __cdecl notice_bank_int86(int number,union REGS *in,union REGS *out)
 {return int86(number,in,out);}
+#endif
 void * __far __cdecl notice_bank_memcpy(void *to,const void *from,unsigned count)
 {return memcpy(to,from,count);}
+#if !defined(NOTICE_PROGRAM_ADAPTERS)
 void * __far __cdecl notice_bank_memset(void *to,int byte,unsigned count)
 {return memset(to,byte,count);}
+#endif
 void __far * __far __cdecl notice_bank_fmalloc(unsigned count)
 {return _fmalloc(count);}
 void __far __cdecl notice_bank_ffree(void __far *pointer)

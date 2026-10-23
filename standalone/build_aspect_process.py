@@ -66,6 +66,21 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
         nm=json.loads((ROOT/'build/notice-bank/manifest.json').read_text())
         objects += [str(ROOT/path) for path in nm['production_objects']]
         sources += [ROOT/path for path in nm['sources']]
+        # Reuse identical far CRT bridges already provided by PROGRAMCODE's
+        # platform. Only OMF import names change; code/data/fixups stay exact.
+        from omf_imports import records,externals,rename_imports
+        aliases={'_notice_bank_int86':'_program_bank_int86','_notice_bank_memset':'_program_bank_memset'}
+        for name in ['owner-normal','runtime']:
+            original=ROOT/'build/notice-bank'/(name+'.obj')
+            source_object=ROOT/'build/notice-bank/owner.obj' if focused_notice and name=='owner-normal' else original
+            blob=source_object.read_bytes()
+            imports={n.decode() for kind,payload,_ in records(blob) if kind==0x8c for n,_ in externals(payload)}
+            rewritten,_=rename_imports(blob,{a:b for a,b in aliases.items() if a in imports})
+            obj=output/('notice-shared-'+name+'.obj');obj.write_bytes(rewritten)
+            objects[objects.index(str(original))]=str(obj)
+        original=ROOT/'build/notice-bank/notice_bank.o';obj=output/'notice_platform.obj'
+        subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we','-DNOTICE_PROGRAM_ADAPTERS','-fo='+str(obj),str(ROOT/'src/ui/notice_bank.c')],cwd=output,check=True)
+        objects[objects.index(str(original))]=str(obj);sources.append(ROOT/'standalone/omf_imports.py')
         notice_source=ROOT/'src/process/program_notice.c';obj=output/'program_notice.obj'
         subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we',*flags,'-nt=NOTICECODE','-fo='+str(obj),str(notice_source)],cwd=output,check=True)
         objects.append(str(obj));sources += [notice_source,ROOT/'src/process/program_notice.h']
