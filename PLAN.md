@@ -1,5 +1,19 @@
 # Complete DOS rebuild plan
 
+[Combined live Setup](docs/validation/mouse-sound-live.json) now accepts five
+actual8086 DOS Alt-F10 editor workflows on the matching mouse/sound products,
+followed by ordinary ASPECT, a PROGRAM error notice, successful child EXEC and
+continued serial input. Sound on/off/nonzero and simultaneous mouse-scale edits
+apply in the running parent; discard and invalid65536 preserve both the full
+PRM and active settings. Eight total DOS sessions include three startup
+regressions. Independent capture audit checks saved bytes, four actual EXEC
+names, passive speaker samples, native mouse/menu events,576-byte driver state,
+parent resources and UART/PIC/vector restoration. The first fixed-movement
+mouse-probe failure remains retained. Full macro/mouse input inside ASPECT
+notices, shared UI, broader flows/views and physical/full-application gates remain
+open. Run `./tools/build test-mouse-sound-live`; see
+[the integration details](docs/PROGRAM_SOUND.md#live-combined-setup).
+
 [Current combined mouse/sound BBS checkpoint](docs/validation/bbs-mouse-sound.json)
 accepts four actual DOS sessions against the pinned loopback ENiGMA and
 Synchronet servers. File/C recording and DOS ASP compilation preserve the

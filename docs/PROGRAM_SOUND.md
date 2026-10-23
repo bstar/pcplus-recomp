@@ -299,3 +299,48 @@ recording remains unchanged; replay uses an explicitly derived wrapper.
 [Workflow details](../lab/bbs/modern-compatibility.md#combined-mouse-and-program-sound)
 retain the earlier ENiGMA login-timing failure. Audible output, mouse movement,
 live Setup, broader BBS flows and physical acceptance remain separate gates.
+
+## Live combined Setup
+
+The [live receipt](validation/mouse-sound-live.json) closes the selected combined
+Alt-F10 integration checkpoint with five actual8086 DOS sessions. Each starts the
+ordinary matching terminal, opens the51-field editor through Alt-F10, and then
+launches the ordinary ASPECT child through File/A in that same terminal session.
+ASPECT runs a missing target, tests failure, runs a real source-built DOS child,
+tests success and transmits a marker. Ordinary keyboard input resumes afterward.
+No main function is renamed and no product executable is patched.
+
+| Editor action | Initial sound | Active sound afterward | Active mouse X/Y |
+| --- | --- | --- | --- |
+| Save enabled and scales | 0 | 1 | 9/5 |
+| Save quiet and scales | 1 | 0 | 9/5 |
+| Save nonzero and boundary scales | 0 | enabled from65535 | 999/1 |
+| Discard staged sound/scales | 1 | 1 | 8/4 |
+| Reject65536, then discard | 1 | 1 | 8/4 |
+
+Every case compares the complete1264-byte saved PRM with its expected image.
+The independent audit decodes captured EXEC names in order: PRMEDIT, ASPECT,
+ABSENT.COM and SUCCESS.COM. The successful child writes exactly `OK`; conditional
+`BAD` output is absent. Parent file handles/resources and exact42-byte UART/PIC/
+vector snapshots match. Speaker sampling only reads gate bits during ASPECT.
+The separate active mouse probe checks suspension, resumed scales and native
+menu events, then compares the full576-byte driver state at exit.
+
+The initial `live-01` attempt passed PRM/sound/scales but failed menu checks for
+changed Y scales: the existing probe always supplied movement8, appropriate for
+scale4. Its failed captures remain preserved. The corrected probe supplies twice
+the independently observed Y scale, retaining the same expected two menu events
+and one button event. All five `live-02` cases pass. Three ordinary startup/sound
+regressions also pass with that probe, and2,224 evidence files are preserved under
+ignored build storage. Product hashes remain those of the earlier source-only
+combined build.
+
+```sh
+./tools/build test-mouse-sound-live
+```
+
+This accepts selected live Setup composition. Mouse event delivery inside ASPECT
+notices, original macro keyboard/shared UI, broader views and physical modem,
+mouse and audible-output acceptance remain open. The DOSBox mixer stays muted;
+sound-gate samples do not establish acoustic output. Full PROGRAM and all
+F01–F16 requirements remain open.

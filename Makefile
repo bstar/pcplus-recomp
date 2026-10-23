@@ -1601,3 +1601,7 @@ test-program-notice-mouse-sound: program-notice-mouse-sound
 	python3 standalone/test_program_notices_sound_dos.py --label mouse-window-$(shell date +%s%N) --mouse --quarantine foreign --port 2 --mode 2D --mode 2A --mode 2F
 test-program-notice-mouse-sound-source: program-notice-mouse-sound
 	python3 standalone/prove_program_notices_sound_source.py --mouse --output build/program-notices-sound/mouse-source-make-$(shell date +%s%N)
+
+.PHONY: test-mouse-sound-live
+test-mouse-sound-live: program-notice-mouse-sound
+	python3 standalone/test_mouse_sound_live_dos.py --label live-make-$(shell date +%s%N)

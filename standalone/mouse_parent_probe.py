@@ -152,7 +152,8 @@ mouse_probe_tick:
  jne .select
  mov ax,1
  xor si,si
- mov di,8
+ mov di,[cs:mp_scale_y]
+ shl di,1
  call mouse_invoke
  mov ax,[cs:parent_psp]
  add ax,0x10+DATA_SEG
@@ -168,7 +169,8 @@ mouse_probe_tick:
  jne .done
  mov ax,2
  xor si,si
- mov di,8
+ mov di,[cs:mp_scale_y]
+ shl di,1
  call mouse_invoke
  mov ax,[cs:parent_psp]
  add ax,0x10+DATA_SEG
