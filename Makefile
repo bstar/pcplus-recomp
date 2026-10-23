@@ -1662,3 +1662,12 @@ test-notice-help: notice-help
 	python3 standalone/test_program_sound_smoke_dos.py --mouse --input --notice-help --no-driver --label help-BIOS-input-make-$(shell date +%s%N)
 test-notice-help-source: notice-help
 	python3 standalone/prove_program_notices_sound_source.py --mouse --input --notice-help --output build/notice-help/source-make-$(shell date +%s%N)
+
+.PHONY: test-notice-help-combined
+test-notice-help-combined: notice-help
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-guard-make-$(shell date +%s%N) --quarantine guard --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-foreign-make-$(shell date +%s%N) --quarantine foreign --port 2 --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-speaker-make-$(shell date +%s%N) --quarantine speaker --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-help-guard-make-$(shell date +%s%N) --quarantine help-guard --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-help-speaker-make-$(shell date +%s%N) --quarantine help-speaker --port 2 --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-help-foreign-make-$(shell date +%s%N) --quarantine help-foreign --port 2 --mode 2D --mode 2A --mode 2F

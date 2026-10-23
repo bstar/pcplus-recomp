@@ -19,7 +19,11 @@ unsigned __far __cdecl notice_help_configure(unsigned enabled)
 unsigned __far __cdecl notice_help_close(void)
 {
  if(!help_view_active())return MOUSE_OK;
- if(!notice_window_phase()||notice_window_generation()!=help_generation||notice_window_identity()!=help_identity)return MOUSE_STATE;
+ /* The window owner publishes CLOSED only after restoring/freeing its view.
+  * With no window left, our saved popup is stale: discard, never replay it.
+  * An active replacement remains entirely owned by its current caller. */
+ if(!notice_window_phase())return help_view_discard()?MOUSE_STATE:MOUSE_OK;
+ if(notice_window_generation()!=help_generation||notice_window_identity()!=help_identity)return MOUSE_STATE;
  return help_view_close()?MOUSE_STATE:MOUSE_OK;
 }
 #endif

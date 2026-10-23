@@ -41,6 +41,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     if notice_help:flags+=['-DASPECT_NOTICE_HELP']
     if break_owner:flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR']
     focused_notice=bool(driver and driver.name=='aspect_notice_driver.c')
+    if notice_help and focused_notice:flags+=['-DHELP_VIEW_DIAGNOSTIC']
     if driver and not focused_notice:flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
     if focused_notice:flags+=['-DPROGRAM_NOTICE_DIAGNOSTIC']
     controller=output/'native_program_far.obj'
@@ -80,7 +81,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
             objects += [str(ROOT/'build/speaker'/name) for name in ('speaker.obj','backend.obj')]
         if notice_input:
             from build_notice_input_bank import build as build_input
-            input_objects,input_sources=build_input(output,help_view=notice_help)
+            input_objects,input_sources=build_input(output,help_view=notice_help,help_diagnostic=notice_help and focused_notice)
             objects += input_objects;sources += [ROOT/x for x in input_sources]
             runtime=output/'notice-input-runtime.obj'
             subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',*flags,'-nt=NOTICECODE','-fo='+str(runtime),str(ROOT/'src/ui/notice.c')],cwd=output,check=True)

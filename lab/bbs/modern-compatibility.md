@@ -2,6 +2,12 @@
 
 ## PROGRAM help coexistence
 
+The subsequent [combined-failure build receipt](../../docs/validation/bbs-notice-help-combined.json)
+repeats all four workflows on the new ordinary help child with safe stale-view
+discard. ENiGMA and Synchronet record/compile/replay/manual-navigation checks
+pass. The combined corruption/repair behavior is established by its separate
+18-session DOS suite; this BBS harness opens no help view during a notice.
+
 The [help-enabled child receipt](../../docs/validation/bbs-notice-help.json)
 adds four current ENiGMA/Synchronet record/compile/replay sessions using the
 unchanged capability16 terminal. The derived PROGRAM wrapper and subsequent

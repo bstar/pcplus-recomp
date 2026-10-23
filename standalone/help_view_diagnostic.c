@@ -59,5 +59,12 @@ int main(void)
  CHECK(help_view_close()==0&&!help_view_active()&&((unsigned char __far *)MK_FP(0xb800,0))[0]==0x5a);
  CHECK(help_view_open(notice_help_pages,2,0)==0&&help_view_key(13)==0&&!help_view_active());
  CHECK(help_view_key(0)==HELP_VIEW_STATE);
+ CHECK(help_view_open(notice_help_pages,2,0)==0);
+ ((unsigned char __far *)MK_FP(0xb800,0))[0]=0x6b;
+ CHECK(help_view_discard()==0&&!help_view_active()&&((unsigned char __far *)MK_FP(0xb800,0))[0]==0x6b);
+ CHECK(help_view_open(notice_help_pages,2,0)==0);help_view_fail_release=1;
+ CHECK(help_view_discard()==HELP_VIEW_STATE&&help_view_active()==3);
+ ((unsigned char __far *)MK_FP(0xb800,0))[0]=0x6c;help_view_fail_release=0;
+ CHECK(help_view_close()==0&&!help_view_active()&&((unsigned char __far *)MK_FP(0xb800,0))[0]==0x6c);
  printf("HELPVIEW checks=%u failures=%u\n",checks,failures);return failures?1:0;
 }

@@ -30,6 +30,7 @@ static unsigned armed,kind,psp,cursor,first_return;
 static unsigned quarantine,quarantine_cursor,attached;
 #if defined(ASPECT_NOTICE_HELP)
 #include "../src/ui/notice_help.h"
+#include "../src/help/view.h"
 static unsigned help_fault,help_started,help_start_tick;
 #endif
 static unsigned short quarantine_screen[2000];
@@ -85,6 +86,12 @@ void __far __cdecl notice_fault_prepare(void)
  notice_fault_report[37]=quarantine;
 #if defined(ASPECT_NOTICE_HELP)
  help_fault=request&&request[0]&&request[1]&&request[2]&&request[3]=='H';
+ if(request&&request[0]&&request[1]&&request[2]&&request[3]){
+  if(request[4]=='B')quarantine=4;
+  else if(request[4]=='C')quarantine=5;
+  else if(request[4]=='D')quarantine=6;
+  notice_fault_report[37]=quarantine;
+ }
 #endif
 }
 void __cdecl notice_fault_phase(unsigned phase)
@@ -129,9 +136,17 @@ void __cdecl notice_fault_phase(unsigned phase)
  if(phase==2&&quarantine){
   unsigned i;
   notice_fault_report[48]=program_notice_retry(); /* A live callback must reject. */
-  if(quarantine==1)notice_window_damage_guard();
+  if(quarantine==1
+#if defined(ASPECT_NOTICE_HELP)
+     ||quarantine==4
+#endif
+    )notice_window_damage_guard();
 #if defined(PROGRAM_NOTICE_SPEAKER)
-  else if(quarantine==3){
+  else if(quarantine==3
+#if defined(ASPECT_NOTICE_HELP)
+     ||quarantine==5
+#endif
+    ){
    notice_fault_report[50]=speaker_stop();
    if(speaker_start(660,182,1000000UL)!=SPEAKER_PENDING)notice_fault_report[50]=99;
   }
@@ -140,8 +155,17 @@ void __cdecl notice_fault_phase(unsigned phase)
    notice_fault_report[50]=notice_window_close();
    if(notice_window_open(&replacement,0))notice_fault_report[50]=99;
   }
-  for(i=0;i<2000;++i)quarantine_screen[i]=((unsigned __far *)MK_FP(0xb800,0))[i];
-  quarantine_cursor=*(unsigned __far *)MK_FP(0x40,0x50);
+#if defined(ASPECT_NOTICE_HELP)
+  if(quarantine==4||quarantine==5||quarantine==6)help_view_damage_guard();
+  /* A guard-only underlying failure retires help first, exposing the popup
+   * captured before help acquisition. Other failures retain their own frame. */
+  if(!(help_fault&&quarantine==1)){
+#endif
+   for(i=0;i<2000;++i)quarantine_screen[i]=((unsigned __far *)MK_FP(0xb800,0))[i];
+   quarantine_cursor=*(unsigned __far *)MK_FP(0x40,0x50);
+#if defined(ASPECT_NOTICE_HELP)
+  }
+#endif
  }
  armed=0;++notice_fault_report[3];notice_fault_raise(kind);
 }
@@ -153,7 +177,13 @@ void __far __cdecl notice_fault_poll(unsigned count)
 #if defined(ASPECT_NOTICE_HELP)
  if(armed==2&&help_fault){
   unsigned now=*(unsigned __far *)MK_FP(0x40,0x6c);
-  if(!notice_help_active())return;
+  if(!notice_help_active()){
+   if(!help_started&&quarantine==1){
+    unsigned i;for(i=0;i<2000;++i)quarantine_screen[i]=((unsigned __far *)MK_FP(0xb800,0))[i];
+    quarantine_cursor=*(unsigned __far *)MK_FP(0x40,0x50);
+   }
+   return;
+  }
   if(!help_started){help_started=1;help_start_tick=now;}
   if((unsigned)(now-help_start_tick)<100)return;
  }
@@ -169,6 +199,9 @@ unsigned __far __cdecl notice_fault_run(const char *path,unsigned limit)
  notice_fault_report[71]=speaker_generation();notice_fault_report[65]=speaker_active();notice_fault_report[66]=gate();
 #endif
  notice_fault_report[4]=first;notice_fault_report[5]=program_notice_calls;
+#if defined(ASPECT_NOTICE_HELP)
+ notice_fault_report[32]=help_view_active();
+#endif
  notice_fault_report[6]=program_notice_errno;notice_fault_report[7]=program_notice_result.status;
  notice_fault_report[8]=program_notice_result.window_status;
  notice_fault_report[9]=clean();notice_fault_report[10]=video_equal();
@@ -189,9 +222,21 @@ unsigned __far __cdecl notice_fault_run(const char *path,unsigned limit)
 #endif
   quarantine_equal();
   notice_fault_report[49]=notice_fault_runtime_run("RECOVER.ASX",limit);
-  if(quarantine==1)notice_window_damage_guard();
+#if defined(ASPECT_NOTICE_HELP)
+  notice_fault_report[33]=help_view_active();
+  if(quarantine==4||quarantine==5||quarantine==6)help_view_damage_guard();
+#endif
+  if(quarantine==1
+#if defined(ASPECT_NOTICE_HELP)
+     ||quarantine==4
+#endif
+    )notice_window_damage_guard();
 #if defined(PROGRAM_NOTICE_SPEAKER)
-  else if(quarantine==3)notice_fault_report[50]=speaker_stop();
+  else if(quarantine==3
+#if defined(ASPECT_NOTICE_HELP)
+          ||quarantine==5
+#endif
+         )notice_fault_report[50]=speaker_stop();
 #endif
   else notice_fault_report[50]=notice_window_close();
   notice_fault_report[51]=program_notice_retry();
@@ -199,6 +244,9 @@ unsigned __far __cdecl notice_fault_run(const char *path,unsigned limit)
   notice_fault_report[55]=runtime_external_cleanup_error;
   notice_fault_report[56]=notice_window_allocations;notice_fault_report[57]=notice_window_frees;
   notice_fault_report[58]=program_notice_result.cause;
+#if defined(ASPECT_NOTICE_HELP)
+  notice_fault_report[34]=help_view_active();
+#endif
  }
  second=notice_fault_runtime_run("RECOVER.ASX",limit);
  notice_fault_report[18]=second;notice_fault_report[19]=program_notice_calls;

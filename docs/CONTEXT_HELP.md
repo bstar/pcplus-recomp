@@ -136,6 +136,52 @@ observer now bounds its COM size and allocates its report buffer separately;
 no-driver navigation closes the parent menu with Escape. All injected keys,
 callback/vector exchanges and owned repair operations are test instrumentation.
 
+## Combined failure recovery
+
+The [combined-failure receipt](validation/notice-help-combined.json) adds18
+full-terminal sessions on COM1/2: six ownership combinations, each interrupted
+by DIV, typed abort and foreign-DS DIV while help is open. The combinations are
+an underlying window guard, replacement window or replacement speaker, and
+each of those with a damaged help snapshot guard. Retry remains blocked before
+repair; the private six-stream/file state stays owned. After fixture-owned
+repair, cleanup returns the original frame, releases the owners, preserves508
+queued text bytes and executes the next DOS child.
+
+Source review identified a recovery gap in the preceding help binding. Its
+generation check correctly refused to repaint a replacement window, but after
+that replacement was closed it still refused cleanup: no public window owner
+could make the retired original generation current again. The input facade now
+distinguishes an active foreign window from a published CLOSED window owner.
+It still refuses the former. For the latter it uses `help_view_discard` to
+release its stale snapshot without restoring the old popup or cursor.
+
+Discard checks DS=SS, IF and allocation guards. A failed free retains a
+discard-only retry; a subsequent ordinary close cannot replay the stale image.
+The component suite now has41 DOS checks, including discard and failed-free
+retry preserving a newer screen marker. The ordinary product contains the
+recovery code; guard-damage/failure controls exist only in diagnostic builds.
+
+Raw72-word diagnostic reports now use the previously unused words32..34 for
+help phase before retry, after blocked retry and after successful repair. Window
+and speaker ownership, stream identities, allocation balance and exact baseline
+view comparisons remain checked. A replacement window blocks entry to help
+cleanup before its guard is inspected, so help remains phase2 even when its
+guard was deliberately damaged. Once the foreign window is retired and the
+guard repaired, discard succeeds without repainting. Diagnostic repair is not
+a new user-facing or automatic resource-unload facility.
+
+The current build also passes the four ordinary help workflows, three plain
+outer-fault sessions, six input regressions and four current ENiGMA/Synchronet
+sessions.647/641/632-file source-only proofs reproduce the matching helper and
+unchanged input/published baselines. See the separate
+[current BBS receipt](validation/bbs-notice-help-combined.json). Two early checker
+expectations about retained notice/help phases were corrected against the raw
+reports; those attempts remain preserved and excluded from final acceptance.
+
+Run `./tools/build test-notice-help-combined` for the18-session suite. This
+accepts these selected repair/retirement combinations, not arbitrary corruption,
+all repair orders, every asynchronous interruption or a general unload protocol.
+
 ## Remaining integration
 
 The original helper's complete UI/content/search and18-byte cross-process
@@ -145,7 +191,7 @@ window and adds no new parent RPC operation; general rendering/window RPCs
 remain excluded while PROGRAM owns its lease.
 
 Broader authored topic coverage, resource-backed text/search, application context
-mapping, combined help/window/speaker corruption, reentry/arbitrary asynchronous
+mapping, broader combined corruptions/repair orders, reentry/arbitrary asynchronous
 faults and real DOS-kernel comparisons remain open. DOSBox-X8086 and injected
 BIOS/mouse events do not prove physical input/modem/acoustic acceptance. Full
 PROGRAM and all whole-application gates remain unproven.

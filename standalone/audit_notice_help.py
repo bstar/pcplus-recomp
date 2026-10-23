@@ -70,6 +70,34 @@ def main():
         assert sha(folder/'ASPECT.EXE')==d['child_sha256']==sha(ROOT/'build/aspect-notice-help-fault/ASPECT.EXE')
         assert b'Q'*500+b'ENDMARK!' in (folder/'SCREEN.BIN').read_bytes()[::2]
         accepted.append(dict(kind='outer_fault',path=str(folder.relative_to(ROOT))))
+    combined_modes=set()
+    for name in selection.get('combined_faults',[]):
+        run=ROOT/name;d=json.loads((run/'result.json').read_text());assert d['passed'] and len(d['cases'])==3;source_check(d)
+        kind={'guard':1,'foreign':2,'speaker':3,'help-guard':4,'help-speaker':5,'help-foreign':6}[d['quarantine']]
+        phase={1:0,2:2,3:0,4:3,5:3,6:2}[kind]
+        window_phase={1:2,2:1,3:0,4:1,5:1,6:1}[kind]
+        allocations=2 if kind in (2,6) else 1
+        for mode in ['2D','2A','2F']:
+            folder=run/mode;r=json.loads((folder/'result.json').read_text());assert r['passed'] and all(r['checks'].values())
+            raw=(folder/'RENDER.BIN').read_bytes();h=words(raw,7,len(raw)-12014);assert h[:5]==(5,0,1,0,90)
+            assert b'PCPlus // CONTEXT HELP' in raw[-8000:-4000:2]
+            c=words(raw,19,len(raw)-12014-38);head,m=parent_capture(raw[:-12014-38],folder,r['compared_parent_bytes'],True)
+            assert c[16:19]==m[24:27] and head[6]==(5 if mode=='2A' else 12)
+            w=words((folder/'NOTICE.BIN').read_bytes(),72)
+            assert w[0]==0x4e46 and w[3]==1 and w[4]==head[6] and w[9]==0 and w[10]==int(kind==3) and w[12]==508
+            assert w[14:16]==(1,65535) and w[17]==w[27]==1
+            assert w[32:35]==(phase,phase,0)
+            assert w[37:44]==(kind,1,1,6,1,1,window_phase)
+            assert w[44]==w[58]==9 and w[45:50]==(10,1,1,10,10)
+            assert w[50:56]==(0,0,1,1,1,0) and w[56:58]==(allocations,allocations)
+            assert w[59]==w[60]==allocations+1 and w[61]==0
+            assert w[65:69]==((1,3,0,0) if kind in (3,5) else (0,0,0,0))
+            assert (folder/'WRITE.BIN').read_bytes()==b'FIRSTSECOND' and (folder/'SUCCESS.OK').read_bytes()==b'OK'
+            screen=(folder/'SCREEN.BIN').read_bytes()[::2];wire=(folder/'serial.bin').read_bytes()
+            assert b'Q'*500+b'ENDMARK!' in screen and b'RECOVERY OK' in screen and b'BAD' not in wire and b'ready' in wire
+            assert sha(folder/'ASPECT.EXE')==d['child_sha256']==sha(ROOT/'build/aspect-notice-help-fault/ASPECT.EXE')
+            combined_modes.add((kind,mode));accepted.append(dict(kind='combined_fault',path=str(folder.relative_to(ROOT))))
+    if selection.get('combined_faults'):assert combined_modes=={(kind,mode) for kind in range(1,7) for mode in ['2D','2A','2F']}
     for name in selection['input_regressions']:
         run=ROOT/name;d=json.loads((run/'result.json').read_text());assert d['passed'] and d['notice_help'] and len(d['cases'])==3;source_check(d)
         for case in d['cases']:
@@ -84,8 +112,9 @@ def main():
                 assert c[12:16]==expected and c[16:19]==m[24:27]
             assert sha(folder/'ASPECT.EXE')==d['child_sha256']
         accepted.append(dict(kind='input_regression',path=name))
-    component=ROOT/selection['component'];d=json.loads((component/'result.json').read_text());assert d['passed'] and d['self_checks']==36;source_check(d)
-    assert (component/'OUTPUT.TXT').read_bytes()==b'HELPVIEW checks=36 failures=0\r\n'
+    component=ROOT/selection['component'];d=json.loads((component/'result.json').read_text());component_checks=selection.get('component_checks',36)
+    assert d['passed'] and d['self_checks']==component_checks;source_check(d)
+    assert (component/'OUTPUT.TXT').read_bytes()==('HELPVIEW checks='+str(component_checks)+' failures=0\r\n').encode()
     for name in selection['proofs']:
         run=ROOT/name;d=json.loads((run/'result.json').read_text());assert d['passed'] and not d['original_inputs'] and len(d['products'])==4;source_check(d)
         assert d['checker_sha256']==sha(ROOT/'standalone/prove_program_notices_sound_source.py')
@@ -98,7 +127,7 @@ def main():
             assert sha(path)==h,n
     bbs=ROOT/selection['bbs'];b=json.loads(bbs.read_text());assert b['passed'] and b['notice_help']
     for n,h in b['custody_sha256'].items():assert sha(ROOT/n)==h;custody[n]=h
-    paths=[*selection['ordinary'],selection['faults'],*selection['input_regressions'],selection['component'],*selection['proofs']]
+    paths=[*selection['ordinary'],selection['faults'],*selection.get('combined_faults',[]),*selection['input_regressions'],selection['component'],*selection['proofs']]
     for name in paths:
         for path in sorted((ROOT/name).rglob('*')):
             if path.is_file():preserve(path)
@@ -106,10 +135,15 @@ def main():
         path=ROOT/n;assert sha(path)==h
         target=cohort/'source'/n;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(path,target);custody[str(target.relative_to(ROOT))]=h
     for path in [Path(__file__),ROOT/a.selection,bbs,ROOT/'standalone/prove_program_notices_sound_source.py',ROOT/'tools/dev',ROOT/'tools/bbs-dev',ROOT/'nix/flake.nix',ROOT/'nix/flake.lock']:preserve(path)
+    for name in selection.get('earlier_failures',[]):
+        folder=ROOT/name
+        for rel in ['result.json','2D/result.json','2D/NOTICE.BIN','2D/RENDER.BIN','observer.asm','sources/standalone/test_program_notices_sound_dos.py']:
+            path=folder/rel
+            if path.is_file():preserve(path)
     result=dict(passed=True,selected_PROGRAM_context_help_accepted=True,full_contextual_help_accepted=False,full_application_accepted=False,
-        ordinary_sessions=4,outer_fault_sessions=3,input_regression_sessions=6,component_checks=36,BBS_sessions=4,
+        ordinary_sessions=4,outer_fault_sessions=3,combined_fault_sessions=len(combined_modes),selected_combined_help_recovery_accepted=bool(combined_modes),input_regression_sessions=6,component_checks=component_checks,BBS_sessions=4,
         accepted=accepted,selection=selection,custody_sha256=custody,
-        failed_earlier_attempts=['ordinary-01:20s observation timeout','ordinary-02:raw captures expose native3second countdown expiring despite service deadline pause; fixed both clocks','absent-01:oversized observer COM; fixed compact collector and enforced COM bound','absent-02:help passed, post-help command menu needed explicit Escape without mouse driver'],
-        scope='Maintained child-owned two-topic PROGRAM help view. Owned BIOS key/event/vector probes; exact screen/cursor and driver/resource/UART snapshots; selected outer DIV/typed-abort/foreign-DS recovery; native/no-driver input; source-only647/641/632-file four-product rebuilds and selected current ENiGMA/Synchronet workflows. Original helper UI/content/search, all application contexts, combined helper/window/speaker corruption, arbitrary faults, real DOS kernels, physical modem/mouse/audio and full application acceptance remain open.')
+        failed_earlier_attempts=selection.get('failure_notes',['ordinary-01:20s observation timeout','ordinary-02:raw captures expose native3second countdown expiring despite service deadline pause; fixed both clocks','absent-01:oversized observer COM; fixed compact collector and enforced COM bound','absent-02:help passed, post-help command menu needed explicit Escape without mouse driver']),
+        scope='Maintained child-owned two-topic PROGRAM help view. Owned BIOS key/event/vector probes; exact screen/cursor and driver/resource/UART snapshots; selected outer DIV/typed-abort/foreign-DS recovery; optional combined window/speaker/help-guard failures and discard-only stale-view recovery; native/no-driver input; source-only647/641/632-file four-product rebuilds and selected current ENiGMA/Synchronet workflows. Original helper UI/content/search, all application contexts, arbitrary combined/asynchronous faults, real DOS kernels, physical modem/mouse/audio and full application acceptance remain open.')
     out=ROOT/a.output;out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(result,indent=2)+'\n');print('PASS',len(custody),'preserved files')
 if __name__=='__main__':main()

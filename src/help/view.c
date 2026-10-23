@@ -79,12 +79,13 @@ unsigned __far __cdecl help_view_open(const help_page *pages,unsigned count,unsi
  held.ready=1;held.pages=pages;held.count=count;held.topic=topic;
  paint();held.phase=2;return HELP_VIEW_OK;
 }
-unsigned __far __cdecl help_view_close(void)
+static unsigned close_view(unsigned discard)
 {
  unsigned i,status;unsigned char __far *screen=MK_FP(0xb800,0);
  if(!context())return HELP_VIEW_STATE;
  if(!held.phase)return HELP_VIEW_OK;
  if(!guards()){held.phase=3;return HELP_VIEW_GUARD;}
+ if(discard)held.restored=1;
  if(!held.restored&&held.ready){
   if(!geometry()){held.phase=3;return HELP_VIEW_STATE;}
   for(i=0;i<4000;++i)screen[i]=held.block[16+i];
@@ -98,6 +99,8 @@ unsigned __far __cdecl help_view_close(void)
  held.block=0;held.pages=0;held.count=held.ready=held.restored=held.phase=0;
  return HELP_VIEW_OK;
 }
+unsigned __far __cdecl help_view_close(void){return close_view(0);}
+unsigned __far __cdecl help_view_discard(void){return close_view(1);}
 unsigned __far __cdecl help_view_key(unsigned key)
 {
  unsigned topic;

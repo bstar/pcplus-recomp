@@ -4,7 +4,8 @@ from pathlib import Path
 from omf_imports import records,externals
 ROOT=Path(__file__).resolve().parents[1]
 
-def build(output,help_view=False):
+def build(output,help_view=False,help_diagnostic=False):
+    assert not help_diagnostic or help_view
     objects=[];sources=[]
     names=['read','peek','poll','normalize_bios','bios_read','bios_peek','queue_read','read_extended','normalize_extended',
         'queue_count','queue_index','queue_active','queue_peek','queue_values','debug_gate','debug_callback']
@@ -28,7 +29,7 @@ def build(output,help_view=False):
     if help_view:c_units+=['src/help/view.c','src/help/notice_content.c']
     for path in c_units:
         obj=output/('input-'+Path(path).stem+'.obj')
-        subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we','-dNOTICE_BANKED','-dMOUSE_NOTICE_INPUT','-dMOUSE_DOS_PLATFORM','-dNOTICE_INPUT_BIOS_FALLBACK','-dNOTICE_INPUT_EXIT_GUARD','-dPROGRAM_EXIT_NO_BREAK','-dASPECT_EXTERNAL_PROCESS',*(['-dASPECT_NOTICE_HELP'] if help_view else []),'-nt=NOTICEINPUT_CODE','-nc=FARCODE','-fo='+str(obj),str(ROOT/path)],cwd=output,check=True)
+        subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we','-dNOTICE_BANKED','-dMOUSE_NOTICE_INPUT','-dMOUSE_DOS_PLATFORM','-dNOTICE_INPUT_BIOS_FALLBACK','-dNOTICE_INPUT_EXIT_GUARD','-dPROGRAM_EXIT_NO_BREAK','-dASPECT_EXTERNAL_PROCESS',*(['-dASPECT_NOTICE_HELP'] if help_view else []),*(['-dHELP_VIEW_DIAGNOSTIC'] if help_diagnostic else []),'-nt=NOTICEINPUT_CODE','-nc=FARCODE','-fo='+str(obj),str(ROOT/path)],cwd=output,check=True)
         imports={n.decode() for kind,payload,_ in records(obj.read_bytes()) if kind==0x8c for n,_ in externals(payload)}
         assert all(n.startswith(('_mouse_','_notice_','_program_exit_','_native_','_runtime_external_')) or (help_view and n.startswith('_help_')) or n in ('_small_code_','__STACKTOP','__psp','_process_handles_active','_aspect_process_serial_detached','_aspect_serial_active') for n in imports),imports
         objects.append(str(obj));sources.append(path)

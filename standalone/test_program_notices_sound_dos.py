@@ -24,10 +24,11 @@ def main():
     parser.add_argument('--label',required=True);parser.add_argument('--mode',action='append',choices=['1D','2D','3D','2A','2F'])
     parser.add_argument('--input',action='store_true');parser.add_argument('--mouse',action='store_true');parser.add_argument('--sound',type=int,choices=[0,1,65535],default=1)
     parser.add_argument('--notice-help',action='store_true')
-    parser.add_argument('--quarantine',choices=['guard','foreign','speaker']);parser.add_argument('--port',type=int,choices=[1,2],default=1)
+    parser.add_argument('--quarantine',choices=['guard','foreign','speaker','help-guard','help-speaker','help-foreign']);parser.add_argument('--port',type=int,choices=[1,2],default=1)
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     if args.input:assert args.mouse
-    if args.notice_help:assert args.input and not args.quarantine and args.mode and all(m in ('2D','2A','2F') for m in args.mode)
+    if args.notice_help:assert args.input and args.mode and all(m in ('2D','2A','2F') for m in args.mode)
+    if args.quarantine in ('help-guard','help-speaker','help-foreign'):assert args.notice_help
     out=ROOT/'build/program-notices-sound'/args.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/('build/terminal-mouse-notice-sound/TERMINAL.EXE' if args.mouse else 'build/terminal-notice-sound/TERMINAL.EXE');child=ROOT/'build/aspect-notice-sound-fault/ASPECT.EXE';sources={}
     if args.input:parent=ROOT/'build/terminal-mouse-notice-input/TERMINAL.EXE';child=ROOT/'build/aspect-notice-input-fault/ASPECT.EXE'
@@ -68,7 +69,7 @@ def main():
         for i in range(5):files[f'SLOT{i}.BIN']=b'SEED0'
         payload=bytearray(directory(port=port));payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
         harness.RENDER_POST=PAYLOAD;harness.RENDER_TRIGGER=b'PAYLOAD!'
-        request=mode+str(port)+('H' if args.notice_help else 'N')+({'guard':'G','foreign':'W','speaker':'S'}.get(args.quarantine,'N'))+'P'
+        request=mode+str(port)+('H' if args.notice_help else 'N')+({'guard':'G','foreign':'W','speaker':'S','help-guard':'B','help-speaker':'C','help-foreign':'D'}.get(args.quarantine,'N'))+'P'
         settings=bytearray(prm(port=port,soft=0,hard=1));struct.pack_into('<H',settings,0x1bc,args.sound)
         if args.mouse:struct.pack_into('<HH',settings,0x4e4,8,4)
         result=harness.run(name,'success','p12000 space p700 '+('a-z p1500 ' if args.mouse else '')+'r e a d y p700 a-x',directory=bytes(payload),prm=bytes(settings),com=port,
@@ -87,7 +88,7 @@ def main():
         wire=(folder/'serial.bin').read_bytes();screen=(folder/'SCREEN.BIN').read_bytes()[::2];error=5 if mode[1]=='A' else 12
         enabled=int(bool(args.sound));first_enabled=enabled if mode!='1D' else 0
         checks=result['checks'];checks.update(report_present=bool(w),PRM_sound_policy=bool(w) and (w[62],w[69])==(first_enabled,enabled),
-            sound_while_faulting=bool(w) and (w[63],w[64])==(first_enabled,3*first_enabled if mode.startswith('2') else 0),sound_after_recovery=bool(w) and w[65:69]==((1,3,0,0) if args.quarantine=='speaker' else (0,0,0,0)),second_normal_popup_sound=bool(w) and w[70]==enabled,outer_error=head[:4]==(0x524e,1,1,1) and head[6]==error,
+            sound_while_faulting=bool(w) and (w[63],w[64])==(first_enabled,3*first_enabled if mode.startswith('2') else 0),sound_after_recovery=bool(w) and w[65:69]==((1,3,0,0) if args.quarantine in ('speaker','help-speaker') else (0,0,0,0)),second_normal_popup_sound=bool(w) and w[70]==enabled,outer_error=head[:4]==(0x524e,1,1,1) and head[6]==error,
             parent_JFT=raw[14:34]==raw[34:54],parent_file_owners=raw[54:470]==raw[470:886],
             parent_resources=owners[2]==0 and raw[-size*2:-size]==raw[-size:],parent_lease_retired=owners[7]==0 and owners[8]==owners[9] and owners[8]>=3,
             first_resources_and_serial=bool(w) and w[14:16]==(1,65535) and w[17]==w[27]==1,
@@ -112,6 +113,14 @@ def main():
             checks.update(quarantine_held=bool(w) and w[37:44]==(3 if foreign_speaker else count,1,1,6,1,int(guard or foreign_speaker),0 if foreign_speaker else 2 if guard else 1),original_cause=bool(w) and w[44]==w[58]==9,
                 retry_blocked=bool(w) and w[45:50]==(10,1,1,10,10),retry_succeeded=bool(w) and w[50:56]==(0,0,1,1,1,0),
                 quarantine_storage_released=bool(w) and w[56:58]==(count,count),recovery_attempts=bool(w) and w[26]==3)
+            if args.notice_help:
+                kind={'guard':1,'foreign':2,'speaker':3,'help-guard':4,'help-speaker':5,'help-foreign':6}[args.quarantine]
+                window_phase={'guard':2,'foreign':1,'speaker':0,'help-guard':1,'help-speaker':1,'help-foreign':1}[args.quarantine]
+                count=2 if args.quarantine in ('foreign','help-foreign') else 1
+                help_phase=2 if args.quarantine in ('foreign','help-foreign') else 3 if args.quarantine in ('help-guard','help-speaker') else 0
+                checks['quarantine_held']=bool(w) and w[37:44]==(kind,1,1,6,1,1,window_phase)
+                checks['quarantine_storage_released']=bool(w) and w[56:58]==(count,count)
+                checks['help_cleanup_phases']=bool(w) and w[32:35]==(help_phase,help_phase,0)
         else:checks['first_cleanup_and_view']=bool(w) and w[9:11]==(1,1)
         mouse=None
         if args.mouse:

@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+[Combined PROGRAM help recovery](docs/CONTEXT_HELP.md#combined-failure-recovery)
+now accepts18 actual COM1/2 DOS sessions across window guards, foreign windows,
+foreign speakers and each with a damaged help guard. Blocked retries retain
+six private streams; controlled repair restores the original view, queued508
+bytes and a subsequent DOS child. A retired underlying window now permits
+discarding the stale help snapshot without repainting it; an active replacement
+still blocks cleanup.41 component checks and current ordinary/input/BBS/source
+regressions pass. General help content/search/context mapping, arbitrary repair
+orders/corruption, real kernels/hardware and every whole-application gate remain
+open.
+
 [PROGRAM contextual help](docs/CONTEXT_HELP.md#program-notice-help-integration)
 now has an optional source-owned child view with authored notice/serial topics.
 Four ordinary COM1/2/BIOS/driver workflows hold help beyond the notice timeout,
@@ -9,7 +20,7 @@ owner checks pass. Both native and service clocks pause during help; foreground
 transport/speaker/poll-budget work continues.647 sources reproduce the matching
 four products;641/632 reproduce unchanged input/published baselines. Four current
 ENiGMA/Synchronet sessions pass. Full original helper/search/context coverage,
-combined corruptions, real kernels/hardware and all application gates stay open.
+broader corruptions, real kernels/hardware and all application gates stay open.
 
 [Contextual help recovery](docs/CONTEXT_HELP.md) corrects the native57AE boundary:
 it launches PCHELP.RTE with an18-byte descriptor addressed by a decimal far
