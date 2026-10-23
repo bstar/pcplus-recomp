@@ -11,19 +11,37 @@ from check_modem_import import expected as modem_expected
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);a=ap.parse_args()
+    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--session-controls',action='store_true');a=ap.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    base=ROOT/'build/terminal-directory-keys-process-bank-session-capture-projection';m=json.loads((base/'manifest.json').read_text())
+    variant='terminal-directory-keys-process-bank-session-capture-projection'+('-bound-registers-controls' if a.session_controls else '')
+    base=ROOT/'build'/variant;m=json.loads((base/'manifest.json').read_text())
+    if a.session_controls:assert m['experimental_session_controls']
     assert m['experimental_session_projection'] and sha(base/'TERMINAL.EXE')==m['binary_sha256']
     model=DosImage(base/'TERMINAL.EXE',base/'terminal.map');u=model.uc;top=model.offset('terminal_stack_top')
     before_at=top-2650;after_at=top-1350;sp=top-2900
     listing=(base/'terminal.map').read_text();match=re.search(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+_terminal_session_project\s*$',listing,re.M|re.I);assert match
     cs=model.base_segment+int(match[1],16);ip=int(match[2],16);target=cs*16+ip
+    symbols={n:(model.base_segment+int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I)}
     def prohibited(*args):raise AssertionError('projection attempted interrupt/port IO')
     u.hook_add(UC_HOOK_INTR,prohibited)
     for insn in [UC_X86_INS_IN,UC_X86_INS_OUT]:u.hook_add(UC_HOOK_INSN,prohibited,None,1,0,insn)
     def write(name,data):u.mem_write(model.symbols[name],data)
     baseline=fixture()
+    def farcall(name,args=()):
+        segment,offset=symbols[name]
+        for r,v in {UC_X86_REG_CS:segment,UC_X86_REG_IP:offset,UC_X86_REG_DS:model.ds,
+                    UC_X86_REG_SS:model.ds,UC_X86_REG_SP:sp,UC_X86_REG_EFLAGS:0x202}.items():u.reg_write(r,v)
+        u.mem_write(model.data_base+sp,struct.pack('<'+'H'*(2+len(args)),model.return_offset,model.code_segment,*args))
+        model.returned=False;u.emu_start(segment*16+offset,0,count=200000)
+        assert model.returned and u.reg_read(UC_X86_REG_SP)==sp+4,name
+        return u.reg_read(UC_X86_REG_AX)
+    def mouse(x,y,offer=False):
+        raw=bytearray(baseline);struct.pack_into('<HH',raw,0x4e4,x,y)
+        previous=bytes(u.mem_read(model.data_base+before_at,1264))
+        u.mem_write(model.data_base+before_at,bytes(raw))
+        result=farcall('_terminal_mouse_offer_far' if offer else '_terminal_mouse_stage_far',[before_at,1264])
+        u.mem_write(model.data_base+before_at,previous)
+        return result
     actual={'terminal_port_number':2,'terminal_baud_low':19200,'terminal_baud_high':0,'terminal_parity':2,
         'terminal_data_bits':7,'terminal_stop_bits':2,'uart_software_flow':1,'uart_hardware_flow':0,
         'uart_port_rbr':0x2f8,'uart_irq_indices':3,'terminal_translation_mode':2,'_clipboard_separator':32,
@@ -42,6 +60,9 @@ def main():
         model.put('terminal_macro_pause_character',126,1);model.put('terminal_modem_pause',126,1)
         write('_terminal_transfer_preferences',struct.pack('<H',1)+b'D:\\FILES\0'.ljust(64,b'\0'))
         u.mem_write(model.data_base+before_at,baseline);u.mem_write(model.data_base+after_at,b'X'*1264)
+        if a.session_controls:
+            model.put('_terminal_sound_enabled',int(struct.unpack_from('<H',baseline,0x1bc)[0]!=0))
+            assert mouse(8,4)==0
     def invoke(source=before_at,dest=after_at):
         regs={UC_X86_REG_CS:cs,UC_X86_REG_IP:ip,UC_X86_REG_DS:model.ds,UC_X86_REG_SS:model.ds,
               UC_X86_REG_ES:0xb800,UC_X86_REG_BP:0xbabe,UC_X86_REG_SI:0x1234,UC_X86_REG_DI:0x5678,
@@ -61,6 +82,7 @@ def main():
             0x194:6,0x19c:0,0x19e:0,0x1ae:0x1e,0x1b0:15,0x1b2:3,0x1b4:0x70,0x1b6:1,
             0x1e0:2,0x4ea:32,0x1e4:30,0x1a4:350,0x42c:1}
         for at,v in words.items():struct.pack_into('<H',expected,at,v)
+        if a.session_controls:struct.pack_into('<HH',expected,0x4e4,8,4)
         expected[0x1e2]=126;expected[0x31c:0x325]=b'D:\\FILES\0'
         return expected
     cases=[]
@@ -92,10 +114,56 @@ def main():
     for source,dest in [(0,after_at),(before_at,0),(before_at,before_at),(0xfff0,after_at),(before_at,0xfff0)]:
         initialize();status,data=invoke(source,dest);assert status==1 and data==b'X'*1264
         cases.append(dict(rejected='pointer',source=source,dest=dest,passed=True))
+    if a.session_controls:
+        initialize()
+        assert model.get('mouse_present')==model.get('mouse_scale_x')==model.get('mouse_scale_y')==0
+        assert invoke()==(0,oracle(baseline,19200))
+        cases.append(dict(absent_driver_uses_accepted_mouse_preferences=True,passed=True))
+        for raw_sound in [0,1,0x100,0x8000,0xffff]:
+            for live_sound in [0,1]:
+                for x,y in [(1,999),(999,1),(8,4),(333,777)]:
+                    initialize();assert mouse(x,y)==0
+                    raw=bytearray(baseline);struct.pack_into('<H',raw,0x1bc,raw_sound)
+                    u.mem_write(model.data_base+before_at,bytes(raw));model.put('_terminal_sound_enabled',live_sound)
+                    expected=bytearray(oracle(raw,19200))
+                    struct.pack_into('<H',expected,0x1bc,(raw_sound or 1) if live_sound else 0)
+                    struct.pack_into('<HH',expected,0x4e4,x,y)
+                    status,data=invoke();assert status==0 and data==expected,(raw_sound,live_sound,x,y,status)
+                    assert bytes(u.mem_read(model.data_base+before_at,1264))==raw
+                    cases.append(dict(sound_word=raw_sound,enabled=live_sound,x=x,y=y,passed=True))
+        initialize();assert mouse(333,777,offer=True)==16384
+        assert invoke()==(0,oracle(baseline,19200))
+        farcall('_terminal_mouse_discard_far')
+        assert invoke()==(0,oracle(baseline,19200))
+        assert mouse(333,777,offer=True)==16384 and farcall('_terminal_mouse_commit_far')==0
+        expected=bytearray(oracle(baseline,19200));struct.pack_into('<HH',expected,0x4e4,333,777)
+        assert invoke()==(0,bytes(expected))
+        cases.append(dict(offer_discard_commit_selected_preferences=True,passed=True))
+        for sound in [2,0xffff]:
+            initialize();model.put('_terminal_sound_enabled',sound)
+            assert invoke()==(9,b'X'*1264)
+            cases.append(dict(rejected='sound-control',value=sound,passed=True))
+        # The pinned compiler emits two MOV AX,moffs16 / POP BP / RETF paths
+        # in this getter. Decode and verify those operands before injecting
+        # damaged private settings; no routine is substituted or offset guessed.
+        getter=bytes(u.mem_read(model.symbols['_terminal_mouse_selected_scale'],29))
+        assert getter.startswith(b'\x55\x89\xe5\x8b\x46\x06')
+        selected=[struct.unpack('<H',v)[0] for v in re.findall(b'\xa1(..)\x5d\xcb',getter,re.S)]
+        assert len(selected)==2 and selected[1]==selected[0]+2
+        for axis in [0,1]:
+            initialize()
+            assert farcall('_terminal_mouse_selected_scale',[axis])==[8,4][axis]
+            address=model.data_base+selected[axis]
+            for value in [0,1000,0xffff]:
+                u.mem_write(address,struct.pack('<H',value));u.mem_write(model.data_base+after_at,b'X'*1264)
+                assert invoke()==(9,b'X'*1264)
+                cases.append(dict(rejected='damaged-selected-mouse',axis=axis,value=value,passed=True))
+            u.mem_write(address,struct.pack('<H',[8,4][axis]))
     sources=dict(m['sources'])
     for n in ['standalone/check_session_projection.py','standalone/dos_image.py','standalone/check_setup_model.py','standalone/check_startup_import.py','standalone/check_modem_import.py','standalone/terminal_config_fixtures.py']:sources[n]=sha(ROOT/n)
     for n,h in sources.items():assert sha(ROOT/n)==h,n
     report=dict(passed=True,inputs=len(cases),cases=cases,sources=sources,binary_sha256=m['binary_sha256'],
-        scope='Linked terminal capture policy1 -> explicit group policy -> real far bridges/decoders -> atomic full-image projection. Independent byte oracle across36 supported group/rate combinations, inactive bad baselines, rejected policies/shared fields/invalid active data/pointers. No interrupt/port IO or global mutation. No baseline loading, terminal HOOK routing, returned commit, BBS/hardware acceptance.')
+        session_controls=a.session_controls,
+        scope='Linked terminal capture policy1 -> explicit group policy -> real far bridges/decoders -> atomic full-image projection. Independent full-image oracle, group/rate cases, invalid data/pointers, and optional accepted mouse/sound controls including offer/discard/commit. Projection itself performs no interrupt/port IO or global mutation. No terminal HOOK routing, returned commit, BBS/hardware acceptance.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS',len(cases),'combined terminal projection cases')
 if __name__=='__main__':main()

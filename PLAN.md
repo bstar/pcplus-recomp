@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Live sound/mouse projection](docs/SESSION_CONTROLS.md) adds an optional controls
+variant.104 linked cases, five8086 startup/projection workflows and14 COM1/COM2
+register recovery workflows pass. Enabled nonzero sound representations remain
+lossless; mouse preferences come from accepted selection even without a driver.
+Only156 HOOK_CODE bytes are added, with unchanged near code/data extent.691
+sources reproduce six products; the older BBS-tested executable remains exact.
+Further native fields, guarded HOOK and returned-state application remain open.
+
 [Current register-build BBS checks](docs/REGISTER_BBS.md) pass Synchronet script
 login/return/editor with immediate forwarding and stock ENiGMA with explicit30ms
 modem buffering. Repeated immediate ENiGMA trials include a pass and a Home/Insert

@@ -6,6 +6,9 @@ extern _terminal_session_project
 %ifdef TERMINAL_SESSION_BASELINE
 extern _terminal_session_project_bound,terminal_baseline_storage
 %endif
+%ifdef TERMINAL_SESSION_CONTROLS
+extern _terminal_mouse_offer_far,_terminal_mouse_commit_far,_terminal_sound_enabled
+%endif
 global terminal_session_projection_probe_far
 terminal_session_projection_probe_far:
  push bp
@@ -32,6 +35,31 @@ terminal_session_projection_probe_far:
  int 0x21
  pop ds
  jc .failed
+%ifdef TERMINAL_SESSION_CONTROLS
+ ; Controlled diagnostic mutation after startup acceptance. Use the owner's
+ ; normal offer/commit APIs; no native mouse driver has been acquired here.
+ push ds
+ pop es
+ lea di,[bp-1264]
+ xor ax,ax
+ mov cx,632
+ cld
+ rep stosw
+ mov word [bp-1264+0x4e4],999
+ mov word [bp-1264+0x4e6],1
+ mov ax,1264
+ push ax
+ lea ax,[bp-1264]
+ push ax
+ call far _terminal_mouse_offer_far
+ add sp,4
+ cmp ax,16384
+ jne .failed
+ call far _terminal_mouse_commit_far
+ or ax,ax
+ jnz .failed
+ xor word [_terminal_sound_enabled],1
+%endif
  lea ax,[bp-2528]
  push ax
  call far _terminal_session_project_bound

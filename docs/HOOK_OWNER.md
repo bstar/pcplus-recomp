@@ -109,3 +109,9 @@ guarded HOOK execution; KEY kind2 remains disabled.
 [Retained baseline binding](SESSION_BASELINE.md) now supplies the accepted raw
 image to bound projection. The helper owner is still standalone: it does not
 yet consume this path or receive ASPECT register handback in the running terminal.
+
+[Register handback](REGISTER_HANDBACK.md) now retains validated ASPECT banks,
+including failed-child retention and retry. The optional
+[sound/mouse projector](SESSION_CONTROLS.md) also covers those known preferences.
+The standalone helper owner still does not consume these paths; guarded routing,
+other native metadata and validated returned-settings application remain open.

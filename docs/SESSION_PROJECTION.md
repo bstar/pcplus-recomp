@@ -37,6 +37,11 @@ remain preserved. This covers the supported subset, not every native PRM field.
 
 ## Implementation and evidence
 
+The optional [live sound/mouse projection](SESSION_CONTROLS.md) now augments this
+path with validated active sound policy and accepted mouse preferences. It
+preserves raw nonzero sound words and adds no extra PRM frame. Its flag leaves
+the older session/register products' executable behavior unchanged.
+
 The projector executes in HOOK_CODE. Explicit bridges reach resident serial/modem
 decoders and CONFIG_CODE transfer validators; memory services retain their
 register ABI. A code-resident nine-rate table avoids the nearly full DGROUP.

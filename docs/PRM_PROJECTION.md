@@ -51,3 +51,7 @@ sound/mouse configuration and unknown native fields require their own accurate
 capture/projection contracts. Terminal safe-point capture, HOOK routing,
 register lifetime and validated returned-state application remain pending.
 No file I/O, UART access or active setting mutation occurs in this operation.
+
+The optional terminal-level [sound/mouse projection](SESSION_CONTROLS.md) now
+captures those accepted preferences over this projector. Other unknown native
+fields and helper-return application remain separate requirements.
