@@ -139,3 +139,93 @@ mouse/shared UI policies still require integration before normal publication.
 ./tools/build test-speaker-notice
 ./tools/build test-speaker-source
 ```
+
+## PRM-configured PROGRAM sound through the attached terminal
+
+A separate experimental application build now connects that speaker owner to
+PROGRAM error notices and the actual parent setting. Original DS1d40 lies within
+the proved PRM memory image DS1b84..2073, giving file offset01BCh. The original
+switch's REA Evidence `ev_b4bedd3b0c9c20f39dd5f250b025d498eb3c492b0c2861034eb3a518a67ecc41`
+checks this word for zero. Startup normalizes0 to quiet and every nonzero word,
+including FFFFh, to enabled. The existing44-byte settings ABI stays unchanged.
+
+`--notice-sound` builds the matching49-field `PRMEDIT.EXE`; **Program sound** is
+on the TERMINAL page. Viewing a noncanonical nonzero word preserves it. An explicit
+edit changes only the two selected bytes; all other PRM bytes remain intact.
+The standard48-field and mouse50-field editors remain separate products. The
+combined mouse/sound editor and mouse-enabled sound parent are not yet published.
+No default PRM or private configuration is supplied.
+
+The sound-enabled terminal commits its private setting only after the full
+startup import succeeds. Directory-startup failures also leave it unchanged.
+Live Setup stages the image; only acknowledgement of a successful foreground
+offer updates the setting. Cancelled, invalid and consumed offers cannot commit
+it. Sound adoption does not change the existing serial/directory plan layouts or
+force adoption of a deferred baud edit.
+
+Renderer capability15 adds read-only scalar operation13. It returns FF00h/FF01h
+or a typed error, preserving a distinct success range. The parent validates the
+attached child PSP/DS and unreturned handoff before answering. This one query is
+allowed during the PROGRAM lease; it draws nothing, consumes no receive bytes,
+and enters no child callback. A12-byte far adapter in the child's near code
+returns into NOTICECODE. The child checks the reply and configures the serviced
+notice before drawing it. A raw CLI without an attached parent remains quiet.
+Capability12/13 products retain their existing behavior and bytes.
+
+The [application sound receipt](validation/program-notice-sound.json) accepts20
+actual8086 DOS attached fault/recovery sessions plus three ordinary-product DOS
+smoke sessions. The fault cases cover before/during/after-popup DIV, foreign-DS
+DIV and typed abort, sound off/on, FFFFh normalization, guard damage, foreign
+window replacement and foreign speaker replacement. Speaker-on faults observe
+active gate bits before recovery; the original owned tone stops afterward.
+A replacement speaker stays active while PROGRAM/file/view leases remain held.
+Live retry and new VM entry reject; its owner can stop it and then retry cleanup.
+Subsequent normal popups, source-built DOS execution, exact508-byte queued text,
+parent resources, selected sound value and resumed serial input all pass.
+
+The sound diagnostic adds a bounded, transport-only receive gate before the tone.
+It uses the real UART poll and does not dequeue bytes, run WAITFOR, or inject
+success into product services. This arranges the failure while the short tone
+and508 queued bytes coexist. The before-popup fault retains its original scope.
+An earlier script-level WAITFOR gate consumed three payload bytes and was rejected;
+that failed local capture is not accepted evidence. The focused report appends
+sound observations to the existing62-word schema; quiet diagnostics retain their
+original124-byte report and executable bytes.
+
+The ordinary-product smoke uses the actual ordinary child main, without the
+fault driver or product patches. A passive INT1C observer reads speaker gate bits
+while ASPECT EXEC is live. It sees activity only for nonzero settings, then verifies
+successful DOS-child execution and continued terminal input. These are three
+observed gate-state sessions, not recorded acoustic waveforms. All DOS tests use
+a muted mixer; physical speaker/modem behavior and BBS audio remain unverified.
+
+Forty-five linked settings cases cover atomic startup/directory import and live
+offer commit/reject/abort. Twenty-one ordinary-editor field cases verify lossless
+view, range rejection and whole-image preservation. A fresh tree of615 declared
+sources reproduces the editor, parent, ordinary ASPECT and focused diagnostic;
+it contains no original executable, install, private PRM, REA database or previous
+objects. The standard237-source proof still reproduces35 quiet PROGRAM notice
+products. Six cached quiet products retain their hashes; the cached mouse-enabled
+attached parent was stale, and a fresh400-source rebuild from pre-change commit
+8d555a4 independently matches its current executable exactly.
+
+Build and test this matching set explicitly:
+
+```sh
+./tools/build program-notice-sound
+./tools/build test-program-notice-sound
+./tools/build test-program-notice-sound-source
+```
+
+| Product | Source-built executable |
+| --- | --- |
+| Editor | `build/setup-notice-sound/PRMEDIT.EXE` |
+| Terminal parent | `build/terminal-notice-sound/TERMINAL.EXE` |
+| Ordinary ASPECT child | `build/aspect-notice-sound-parent/ASPECT.EXE` |
+| Diagnostic child | `build/aspect-notice-sound-fault/ASPECT.EXE` |
+
+Use the ordinary child as the parent's sibling `ASPECT.EXE`; the diagnostic is a
+separate test product. This accepts selected PROGRAM sound/configuration/recovery
+integration, not all PROGRAM policy. Macro keyboard, shared mouse/UI, wider views,
+current live BBS regressions, physical audio/modem acceptance and full F01–F16
+application requirements remain open. Normal105-slot publication is unchanged.

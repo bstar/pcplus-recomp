@@ -1563,3 +1563,22 @@ test-speaker-notice: speaker-notice
 	python3 standalone/test_speaker_notice_dos.py --output build/speaker-notice/DOS-make-$(shell date +%s%N)
 test-speaker-source: speaker-notice
 	python3 standalone/prove_speaker_source.py --output build/speaker/source-make-$(shell date +%s%N)
+
+.PHONY: program-notice-sound test-program-notice-sound test-program-notice-sound-source
+program-notice-sound:
+	python3 standalone/build_setup.py --notice-sound
+	python3 standalone/build_terminal.py --external-render --notice-sound
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --fault-diagnostic
+test-program-notice-sound: program-notice-sound
+	python3 standalone/check_program_sound_settings.py
+	python3 standalone/check_program_sound_editor.py
+	python3 standalone/test_program_sound_smoke_dos.py --label ordinary-$(shell date +%s%N)
+	python3 standalone/test_program_notices_sound_dos.py --label enabled-$(shell date +%s%N)
+	python3 standalone/test_program_notices_sound_dos.py --label quiet-$(shell date +%s%N) --sound 0
+	python3 standalone/test_program_notices_sound_dos.py --label nonzero-$(shell date +%s%N) --sound 65535 --port 2 --mode 2A
+	python3 standalone/test_program_notices_sound_dos.py --label speaker-$(shell date +%s%N) --quarantine speaker --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --label guard-$(shell date +%s%N) --quarantine guard --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --label window-$(shell date +%s%N) --quarantine foreign --port 2 --mode 2D --mode 2A --mode 2F
+test-program-notice-sound-source: program-notice-sound
+	python3 standalone/prove_program_notices_sound_source.py --output build/program-notices-sound/source-make-$(shell date +%s%N)

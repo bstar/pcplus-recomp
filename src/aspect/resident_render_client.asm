@@ -94,6 +94,19 @@ _aspect_render_request:
  pop bp
  ret
 
+%ifdef ASPECT_SOUND_POLICY
+; Banked PROGRAM calls this only after a validated attached-parent lease.
+; Scalar operation13 returns FF00/FF01 or an ordinary typed error.
+global _program_notice_sound_policy
+_program_notice_sound_policy:
+ push bx
+ mov ax,13
+ xor bx,bx
+ call far [_aspect_render_parent_entry]
+ pop bx
+ retf
+%endif
+
 ; Parent AX=callbackop,BX=value. Preserve every register except resultAX and
 ; original FLAGS (including IF/DF); callbacks execute on lower child stack.
 aspect_render_callback:

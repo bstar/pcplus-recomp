@@ -4,6 +4,12 @@
 #include "../ui/notice_unwind.h"
 #include "../ui/notice_window.h"
 #include "../aspect/runtime.h"
+#if defined(PROGRAM_NOTICE_SPEAKER)
+#include "../ui/notice_speaker.h"
+extern unsigned aspect_render_parent_entry[2];
+extern unsigned __far __cdecl program_notice_sound_policy(void);
+unsigned program_notice_sound_enabled;
+#endif
 extern unsigned runtime_external_invocation_active,runtime_external_scope_storage;
 extern unsigned __far __cdecl program_bank_notice_retry(void);
 extern void __far __cdecl program_bank_notice_finish(void);
@@ -26,6 +32,17 @@ unsigned __far __cdecl program_notice_error(unsigned error)
  ++program_notice_calls;program_notice_errno=error;
 #if defined(PROGRAM_NOTICE_DIAGNOSTIC)
  notice_fault_phase(1);
+#endif
+#if defined(PROGRAM_NOTICE_SPEAKER)
+ /* A raw CLI has no parent policy; attached capability15 owns this setting. */
+ status=aspect_render_parent_entry[1]?program_notice_sound_policy():0xff00;
+ if((status&0xfffe)!=0xff00){
+  program_notice_result.status=program_notice_result.cause=NOTICE_STATE;
+  program_notice_result.service_status=status;return NOTICE_STATE;
+ }
+ program_notice_sound_enabled=status&1;
+ status=notice_speaker_configure(program_notice_sound_enabled);
+ if(status){program_notice_result.status=program_notice_result.cause=status;return status;}
 #endif
  options.service=program_notice_callback();
  status=notice_show(message,1,&options,&program_notice_result);

@@ -13,7 +13,17 @@
 #include "notice_fault.h"
 #include <dos.h>
 extern aspect_file runtime_file;
+#if defined(PROGRAM_NOTICE_SPEAKER)
+#include "../src/ui/speaker.h"
+extern unsigned program_notice_sound_enabled;
+extern unsigned __far __cdecl notice_fault_rx_available(void);
+extern unsigned __far __cdecl program_bank_aspect_serial_poll(void);
+unsigned notice_fault_report[72];
+static unsigned gate(void);
+#pragma aux gate = "in al,0x61" "xor ah,ah" "and ax,3" value [ax];
+#else
 unsigned notice_fault_report[62];
+#endif
 unsigned notice_fault_memory_request,notice_fault_memory_segment,notice_fault_exec_count,notice_fault_exec_mode;
 extern unsigned native_crt_error,native_dos_error;
 static unsigned armed,kind,psp,cursor,first_return;
@@ -65,6 +75,9 @@ void __far __cdecl notice_fault_prepare(void)
  notice_fault_memory_request=request&&request[0]&&request[1]&&request[2]&&request[3]=='M';
  notice_fault_exec_mode=request&&request[0]&&request[1]&&request[2]&&request[3]=='F'?4:0;
  if(request&&request[0]&&request[1]&&request[2]&&request[3])quarantine=request[4]=='G'?1:request[4]=='W'?2:0;
+#if defined(PROGRAM_NOTICE_SPEAKER)
+ if(request&&request[0]&&request[1]&&request[2]&&request[3]&&request[4]=='S')quarantine=3;
+#endif
  notice_fault_report[37]=quarantine;
 }
 void __cdecl notice_fault_phase(unsigned phase)
@@ -75,6 +88,14 @@ void __cdecl notice_fault_phase(unsigned phase)
   unsigned i;for(i=0;i<2000;++i)screen[i]=((unsigned __far *)MK_FP(0xb800,0))[i];
   cursor=*(unsigned __far *)MK_FP(0x40,0x50);
  }
+#if defined(PROGRAM_NOTICE_SPEAKER)
+ /* Diagnostic-only receive gate before the tone: poll real transport, never
+  * dequeue/render data or enter the script's WAITFOR matching path. */
+ if(phase==1&&program_notice_calls==1&&armed!=1){
+  unsigned long budget=1000000UL;
+  while(notice_fault_rx_available()<508&&budget--){if(program_bank_aspect_serial_poll())break;}
+ }
+#endif
  if(phase==2&&program_notice_calls==1){
   const char *text;unsigned i,length=0,match=1;
   switch(program_notice_errno){
@@ -88,11 +109,26 @@ void __cdecl notice_fault_phase(unsigned phase)
   for(i=0;i<length;++i)if(((unsigned __far *)MK_FP(0xb800,0))[10*80+40-length/2+i]!=(0x7000|(unsigned char)text[i]))match=0;
   notice_fault_report[11]=match;
  }
+#if defined(PROGRAM_NOTICE_SPEAKER)
+ if(phase==2&&speaker_active()){
+  if(program_notice_calls==1)notice_fault_report[63]=1;
+  if(program_notice_calls==2)notice_fault_report[70]=1;
+ }
+#endif
  if(armed!=phase)return;
+#if defined(PROGRAM_NOTICE_SPEAKER)
+ notice_fault_report[64]=gate();
+#endif
  if(phase==2&&quarantine){
   unsigned i;
   notice_fault_report[48]=program_notice_retry(); /* A live callback must reject. */
   if(quarantine==1)notice_window_damage_guard();
+#if defined(PROGRAM_NOTICE_SPEAKER)
+  else if(quarantine==3){
+   notice_fault_report[50]=speaker_stop();
+   if(speaker_start(660,182,1000000UL)!=SPEAKER_PENDING)notice_fault_report[50]=99;
+  }
+#endif
   else{
    notice_fault_report[50]=notice_window_close();
    if(notice_window_open(&replacement,0))notice_fault_report[50]=99;
@@ -113,6 +149,10 @@ unsigned __far __cdecl notice_fault_run(const char *path,unsigned limit)
 {
  unsigned first,second;
  first=notice_fault_runtime_run(path,limit);first_return=first;
+#if defined(PROGRAM_NOTICE_SPEAKER)
+ notice_fault_report[62]=program_notice_sound_enabled;
+ notice_fault_report[71]=speaker_generation();notice_fault_report[65]=speaker_active();notice_fault_report[66]=gate();
+#endif
  notice_fault_report[4]=first;notice_fault_report[5]=program_notice_calls;
  notice_fault_report[6]=program_notice_errno;notice_fault_report[7]=program_notice_result.status;
  notice_fault_report[8]=program_notice_result.window_status;
@@ -128,9 +168,16 @@ unsigned __far __cdecl notice_fault_run(const char *path,unsigned limit)
   notice_fault_report[44]=program_notice_result.cause;
   notice_fault_report[45]=program_notice_retry();
   notice_fault_report[46]=program_notice_active()&&native_program_busy&&process_handles_active&&runtime_script_file_live==6;
-  notice_fault_report[47]=quarantine_equal();
+  notice_fault_report[47]=
+#if defined(PROGRAM_NOTICE_SPEAKER)
+  quarantine==3?video_equal():
+#endif
+  quarantine_equal();
   notice_fault_report[49]=notice_fault_runtime_run("RECOVER.ASX",limit);
   if(quarantine==1)notice_window_damage_guard();
+#if defined(PROGRAM_NOTICE_SPEAKER)
+  else if(quarantine==3)notice_fault_report[50]=speaker_stop();
+#endif
   else notice_fault_report[50]=notice_window_close();
   notice_fault_report[51]=program_notice_retry();
   notice_fault_report[52]=clean();notice_fault_report[53]=resources_equal();notice_fault_report[54]=video_equal();
@@ -148,5 +195,9 @@ unsigned __far __cdecl notice_fault_run(const char *path,unsigned limit)
  notice_fault_report[36]=notice_fault_exec_count;
  notice_fault_report[59]=notice_window_allocations;notice_fault_report[60]=notice_window_frees;
  notice_fault_report[61]=program_notice_active();
+#if defined(PROGRAM_NOTICE_SPEAKER)
+ notice_fault_report[67]=speaker_active();notice_fault_report[68]=gate();
+ notice_fault_report[69]=program_notice_sound_enabled;
+#endif
  return first_return;
 }

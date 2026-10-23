@@ -1,6 +1,9 @@
 #include "live_setup_owner.h"
 #include "transfer_import.h"
 extern transfer_import_settings terminal_transfer_preferences;
+#ifdef TERMINAL_SOUND
+extern unsigned terminal_sound_enabled;
+#endif
 #include <string.h>
 #ifdef TERMINAL_MOUSE
 extern unsigned __cdecl terminal_mouse_offer(const unsigned char *,unsigned);
@@ -200,6 +203,9 @@ unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask)
  if(terminal_mouse_commit())return LIVE_SETUP_STATE;
 #endif
  if(committed_baud_mask){owner.source_baud_low=owner.offered_baud_low;owner.source_baud_high=owner.offered_baud_high;}
+#ifdef TERMINAL_SOUND
+ if(owner.transfer_ready==1)terminal_sound_enabled=(owner.image.bytes[0x1bc]|owner.image.bytes[0x1bd])!=0;
+#endif
  owner.source_clipboard_separator=owner.offered_clipboard_separator;
  owner.offered_mask=owner.transfer_ready=0;return LIVE_SETUP_OK;
 }

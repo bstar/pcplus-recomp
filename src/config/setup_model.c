@@ -64,6 +64,9 @@ static const descriptor fields[SETUP_FIELD_COUNT]={
  ,F("Mouse X scale","Horizontal movement per key, 1..999. Applies when setup closes.",1,0x4e4,DECIMAL,1,999)
  ,F("Mouse Y scale","Vertical movement per key, 1..999. Applies when setup closes.",1,0x4e6,DECIMAL,1,999)
 #endif
+#ifdef SETUP_SOUND
+ ,F("Program sound","0 quiet; any nonzero word enables PROGRAM notice tones.",1,0x1bc,DECIMAL,0,65535)
+#endif
 };
 static const unsigned bases[]={0x3f8,0x2f8,0x3e8,0x2e8};
 static const unsigned irqs[]={4,3,4,3};

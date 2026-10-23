@@ -63,6 +63,7 @@ from file/memory-image start, not from original executable start.
 | `019c` | `1d20` | Autowrap enable state, written by recovered CSI mode7 handlers and consumed by rendering. |
 | `019e` | `1d22` | Scroll-enable state, consumed by recovered linefeed. |
 | `01ae`, `01b0`, `01b2`, `01b4`, `01b6` | `1d32..1d3a` | Configured normal, bold, additional preset, reverse and underline attributes; see ATTRIBUTES.md. |
+| `01bc` | `1d40` | Notice sound enable word: zero quiet, any nonzero enabled. Exact switch Evidence `ev_b4bedd3b0c9c20f39dd5f250b025d498eb3c492b0c2861034eb3a518a67ecc41`; optional PROGRAM application binding in [PROGRAM_SOUND.md](PROGRAM_SOUND.md#prm-configured-program-sound-through-the-attached-terminal). |
 | `03ec` | `1f70` | Current attribute word, also mutated by recovered SGR helpers. This illustrates that the legacy image contains live state as well as configuration values. |
 | `04e4`, `04e6` | `2068`, `206a` | Mouse X/Y motion scales. Startup and PROGRAM pass these to native mouse initialization; setup overlay19 uses parent16's signed bounds1..999. The lossless host codec retains all16-bit values; the [maintained mouse owner](MOUSE_KEYBOARD.md) rejects values outside those bounds before driver mutation. |
 

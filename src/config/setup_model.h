@@ -6,9 +6,17 @@
  * Caller owns a baseline and a separate staged image. All APIs reject overlap
  * and segment wrap before mutation. Unknown bytes remain opaque. */
 #ifdef SETUP_MOUSE
+#ifdef SETUP_SOUND
+#define SETUP_FIELD_COUNT 51U
+#else
 #define SETUP_FIELD_COUNT 50U
+#endif
+#else
+#ifdef SETUP_SOUND
+#define SETUP_FIELD_COUNT 49U
 #else
 #define SETUP_FIELD_COUNT 48U
+#endif
 #endif
 #define SETUP_TEXT_SIZE 64U
 #define SETUP_NO_FIELD 65535U

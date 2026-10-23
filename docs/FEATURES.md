@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[PRM-configured PROGRAM sound](PROGRAM_SOUND.md#prm-configured-program-sound-through-the-attached-terminal)
+now binds the serviced speaker owner through capability15 to original sound word
+01BCh, with a matching49-field editor.20 actual attached fault/retry sessions and
+three ordinary-product sessions pass; passive sampling sees speaker activity only
+for nonzero settings.45 linked settings and21 editor cases pass.615 sources
+reproduce four matching products; the237-source/35-product quiet proof stays
+unchanged. A stale mouse-parent cache was independently checked against pre-change
+sources. Macro/mouse/shared UI, BBS/physical audio/modem and full gates remain open.
+
 [Serviced speaker ownership](PROGRAM_SOUND.md#serviced-speaker-ownership-and-optional-notice-composition)
 now adds a separate far bank, validated quiet-speaker admission, finite BIOS tick/
 poll budgets and generation-aware cleanup.68 host checks,513 linked checks with

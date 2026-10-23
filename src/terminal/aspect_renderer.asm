@@ -4,7 +4,10 @@
 BITS 16
 CPU 8086
 %include "resident_bridge.inc"
-%ifdef ASPECT_EXTERNAL_RENDER
+%ifdef ASPECT_SOUND_POLICY
+ %define RENDER_CAPABILITY 15
+ extern _terminal_sound_enabled,terminal_program_result
+%elifdef ASPECT_EXTERNAL_RENDER
  %define RENDER_CAPABILITY 13
  extern terminal_program_result
 %else
@@ -252,6 +255,10 @@ render_body:
  mov ax,[cs:render_caller_ds]
  cmp ax,[cs:render_child_ds]
  jne .state
+%ifdef ASPECT_SOUND_POLICY
+ cmp di,13
+ je .sound_policy
+%endif
 %ifdef ASPECT_EXTERNAL_RENDER
  cmp di,10
  je .program_end
@@ -312,6 +319,19 @@ render_body:
  call terminal_script_window_hide
  call far terminal_status_live
  ret
+%ifdef ASPECT_SOUND_POLICY
+.sound_policy:
+ or bx,bx
+ jnz .operand
+ cmp word [_script_handoff+22],0
+ jne .serial
+ ; Scalar, read-only policy is valid during an owned PROGRAM lease.
+ ; No receive/parser/callback or temporary window state is entered.
+ mov ax,[_terminal_sound_enabled]
+ and ax,1
+ or ax,0xff00
+ ret
+%endif
 .break_policy:
  or bx,bx
  jnz .operand

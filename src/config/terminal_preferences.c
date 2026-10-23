@@ -1,5 +1,11 @@
 #include "terminal_preferences.h"
 #include <string.h>
+#ifdef TERMINAL_SOUND
+/* PRM DS1d40 relative to memory image DS1b84. Any nonzero word enables. */
+unsigned terminal_sound_enabled;
+static unsigned sound(const prm_dos_image *image)
+{return (image->bytes[0x1bc]|image->bytes[0x1bd])!=0;}
+#endif
 #ifdef TERMINAL_MOUSE
 extern unsigned __cdecl terminal_mouse_stage(const unsigned char *,unsigned);
 #endif
@@ -34,6 +40,9 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
  if(transfer_import_decode(&image,&t))return 14;
 #ifdef TERMINAL_MOUSE
  if(terminal_mouse_stage(image.bytes,sizeof(image.bytes)))return 15;
+#endif
+#ifdef TERMINAL_SOUND
+ terminal_sound_enabled=sound(&image);
 #endif
  memcpy(serial,&s,sizeof(s));if(modem)memcpy(modem,&m,sizeof(m));
  memcpy(transfer,&t,sizeof(t));return 0;
@@ -71,6 +80,9 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
  memcpy(result,&decoded,sizeof(decoded));if(status)return status;
 #ifdef TERMINAL_MOUSE
  if(terminal_mouse_stage(image.bytes,sizeof(image.bytes))){result->status=15;return 15;}
+#endif
+#ifdef TERMINAL_SOUND
+ terminal_sound_enabled=sound(&image);
 #endif
  memcpy(serial,&s,sizeof(s));memcpy(modem,&m,sizeof(m));memcpy(plan,&d,sizeof(d));
  memcpy(context,&c,sizeof(c));memcpy(transfer,&t,sizeof(t));return 0;

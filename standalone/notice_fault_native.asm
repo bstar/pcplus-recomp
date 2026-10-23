@@ -75,13 +75,21 @@ _notice_fault_save:
  int 0x21
  jc .bad
  mov bx,ax
+%ifdef PROGRAM_NOTICE_SPEAKER
+ mov cx,144
+%else
  mov cx,124
+%endif
  mov dx,_notice_fault_report
  mov ah,0x40
  int 0x21
  mov si,1
  jc .close
+%ifdef PROGRAM_NOTICE_SPEAKER
+ cmp ax,144
+%else
  cmp ax,124
+%endif
  jne .close
  xor si,si
 .close:
