@@ -1,0 +1,19 @@
+{
+  "DOS": [
+    "build/aspect-keys/serial-com1-03",
+    "build/aspect-keys/serial-com2-final-01",
+    "build/aspect-keys/missing-com1-final-01",
+    "build/aspect-keys/empty-com2-final-01",
+    "build/aspect-keys/repeat-com1-final-01",
+    "build/aspect-keys/source-com2-final-01",
+    "build/aspect-keys/bad-script-com1-final-01"
+  ],
+  "linked": "build/aspect-keys/linked-final-01",
+  "proof": "build/aspect-keys/source-01",
+  "baseline": "build/aspect-keys/baseline-01",
+  "bbs": "docs/validation/bbs-meta-aspect.json",
+  "earlier_failures": [
+    "serial-com1-01",
+    "serial-com1-02"
+  ]
+}

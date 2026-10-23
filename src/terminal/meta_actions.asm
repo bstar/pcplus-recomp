@@ -10,6 +10,9 @@ extern modem_expand_bounded,terminal_clock_ticks,uart_try_write
 extern terminal_record_user_delivered_far
 extern terminal_quit,terminal_exit_code,connection_state
 extern terminal_program_start,terminal_program_pending,terminal_program_active
+%ifdef ASPECT_KEY_ACTIONS
+extern terminal_script_start,_command_menu_script
+%endif
 extern terminal_monitor_active
 extern terminal_controller_active
 global terminal_load_actions,terminal_macro_start,terminal_macro_poll
@@ -84,6 +87,10 @@ terminal_macro_start:
  mul bx
  mov si,terminal_action_definitions
  add si,ax
+%ifdef ASPECT_KEY_ACTIONS
+ cmp word [si],0
+ je .script
+%endif
  cmp word [si],1
  je .program
  cmp word [si],3
@@ -112,10 +119,22 @@ terminal_macro_start:
  mov word [terminal_macro_active],1
  mov word [terminal_macro_status],1
  jmp .success
+%ifdef ASPECT_KEY_ACTIONS
+.script:
+ add si,2
+ call far terminal_meta_script_stage
+ cmp ax,1
+ je .success ; Native empty ASPECT definition is a no-op.
+ or ax,ax
+ jnz .bad_text
+ call terminal_script_start
+ jmp .program_return
+%endif
 .program:
  add si,2
  mov ax,si
  call terminal_program_start
+.program_return:
  or ax,ax
  jz .success
  cmp ax,2
@@ -368,3 +387,38 @@ macro_pending_count: dw 0
 macro_pending_head: dw 0
 macro_pending_tail: dw 0
 macro_pending_keys: times 32 dw 0
+
+%ifdef ASPECT_KEY_ACTIONS
+; Far-bank staging only. Called after the common macro/PROGRAM owner checks.
+; DS:SI identifies a52-byte KEY text field. Publish the shared Script filename
+; only after finding its terminator; no EXEC or UART work from this callback.
+; AX0 staged,1 empty,3 missing terminator. Existing child prepare validates DOS83.
+SEGMENT CONFIG_CODE public class=FARCODE use16
+terminal_meta_script_stage:
+ mov bx,si
+ mov cx,52
+.scan:
+ lodsb
+ or al,al
+ jz .bounded
+ loop .scan
+ mov ax,3
+ retf
+.bounded:
+ mov dx,si
+ sub dx,bx
+ cmp dx,1
+ je .empty
+ mov cx,dx
+ mov si,bx
+ push ds
+ pop es
+ mov di,_command_menu_script
+ cld
+ rep movsb
+ xor ax,ax
+ retf
+.empty:
+ mov ax,1
+ retf
+%endif

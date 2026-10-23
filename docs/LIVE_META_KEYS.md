@@ -48,3 +48,10 @@ executes linked product instructions with modeled hardware, and
 binary UART delivery, pauses and hardware restoration using synthetic files.
 Complete scripting, key editing, translation/font selection,
 physical modem timing and the full PCPlus application remain open.
+
+## Optional ASPECT action build
+
+The separate [ASPECT KEY terminal](LIVE_ASPECT_KEYS.md) now supports global
+kind0 filename actions, including empty no-ops, through the existing Script
+owner. The unsupported-ASPECT statements above describe the unchanged baseline
+products. HOOK and directory KEY/META import remain open.

@@ -1695,3 +1695,18 @@ test-help-resource-combined: help-resource
 	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --help-resource --quarantine help-foreign --port 2 --mode 2D --mode 2A --mode 2F --label resource-help-foreign-make-$(shell date +%s%N)
 test-help-resource-source: help-resource
 	python3 standalone/prove_program_notices_sound_source.py --mouse --input --notice-help --help-resource --output build/help-resource/source-make-$(shell date +%s%N)
+
+.PHONY: aspect-keys test-aspect-keys test-aspect-keys-source
+aspect-keys: help-resource aspect-compiler-dos
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input --aspect-keys
+test-aspect-keys: aspect-keys
+	python3 standalone/check_meta_aspect_live.py --output build/aspect-keys/linked-make-$(shell date +%s%N)
+	python3 standalone/test_meta_aspect_dos.py --label serial-com1-make-$(shell date +%s%N) --case serial --port 1
+	python3 standalone/test_meta_aspect_dos.py --label serial-com2-make-$(shell date +%s%N) --case serial --port 2
+	python3 standalone/test_meta_aspect_dos.py --label missing-make-$(shell date +%s%N) --case missing --port 1
+	python3 standalone/test_meta_aspect_dos.py --label empty-make-$(shell date +%s%N) --case empty --port 2
+	python3 standalone/test_meta_aspect_dos.py --label repeat-make-$(shell date +%s%N) --case repeat --port 1
+	python3 standalone/test_meta_aspect_dos.py --label source-make-$(shell date +%s%N) --case source --port 2
+	python3 standalone/test_meta_aspect_dos.py --label bad-script-make-$(shell date +%s%N) --case bad-script --port 1
+test-aspect-keys-source: aspect-keys
+	python3 standalone/prove_meta_aspect_source.py --output build/aspect-keys/source-make-$(shell date +%s%N)

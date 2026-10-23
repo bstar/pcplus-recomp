@@ -60,6 +60,12 @@ async def run(args):
   assert keymap and len(keymap)%948==0,'Whole native KBD profile blocks required'
   (output/'BOARD.KBD').write_bytes(keymap)
   command+=' /K:D:\\BOARD.KBD'
+ meta=None
+ meta_path=getattr(args,'meta_fixture',None)
+ if meta_path:
+  meta=meta_path.read_bytes();assert len(meta)==540,'Whole ten-record KEY fixture required'
+  (output/'ACTIONS.KEY').write_bytes(meta)
+  command+=' /T:D:\\ACTIONS.KEY'
  base=[0x3f8,0x2f8,0x3e8,0x2e8][args.com-1]
  sampler=SAMPLER
  for offset in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+offset),hex(base+offset))
@@ -140,6 +146,7 @@ exit
  after=(output/'AFTER.BIN').read_bytes() if (output/'AFTER.BIN').exists() else b''
  checks={'dos_normal_exit':code==0 and (output/'PASS.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'screen_captured':len(screen)==4000,'bbs_connected':any(e['kind']=='bbs-connected' for e in modem.events),'bbs_display_received':bool(modem.display)}
  if fixture is not None:checks['configuration_unchanged']=(output/'TEST.PRM').read_bytes()==fixture
+ if meta is not None:checks['meta_actions_unchanged']=(output/'ACTIONS.KEY').read_bytes()==meta
  if keymap is not None:checks['keyboard_profile_unchanged']=(output/'BOARD.KBD').read_bytes()==keymap
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
@@ -148,6 +155,7 @@ exit
  result['server_log']=str(server_log) if server_log is not None else None
  result['server_endpoint']={'address':'127.0.0.1','port':args.port}
  result['modem_packet_delay_ms']=args.packet_delay_ms
+ result['meta_actions']={'sha256':hashlib.sha256(meta).hexdigest(),'file':'ACTIONS.KEY'} if meta is not None else None
  result['keyboard_profile']={'sha256':hashlib.sha256(keymap).hexdigest(),'file':'BOARD.KBD'} if keymap is not None else None
  result['configuration']={'automatic_dial':automatic,'mode':'explicit synthetic partial PRM' if fixture is not None else 'CLI serial options','command':command,'sha256':hashlib.sha256(fixture).hexdigest() if fixture is not None else None,'directory_entry':args.entry if directory_fixture is not None else None,'directory_browser':args.directory_browser,'directory_sha256':hashlib.sha256(directory_fixture).hexdigest() if directory_fixture is not None else None}
  if program_sound is not None:result['configuration']['program_sound_word']=program_sound
@@ -160,6 +168,7 @@ if __name__=='__main__':
  p.add_argument('--server-log',type=Path,help='Explicit owned ENiGMA log for a separate test server; default stock fixture')
  p.add_argument('--init-wait',type=int,choices=range(32768),help='Explicit /I initialization acknowledgement deadline in seconds')
  p.add_argument('--dial-fixture',action='store_true',help='Exercise configured automatic modem initialization/dialing inside DOS')
+ p.add_argument('--meta-fixture',type=Path,help='Load an explicit source-owned ten-record KEY fixture with /T')
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')

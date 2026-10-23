@@ -117,3 +117,10 @@ keys and final hardware restoration can be checked. DOSBox nullmodem has CTS
 ready: these checks do not establish physical modem timing or hardware stall
 behavior. Evidence records remain under ignored `build/terminal/` and
 `build/program-actions-dos/`, with hashes tying each result to its tested build.
+
+## Optional ASPECT action build
+
+The separate [ASPECT KEY terminal](LIVE_ASPECT_KEYS.md) now supports global
+kind0 filename actions, including empty no-ops, through the existing Script
+owner. The unsupported-ASPECT statements above describe the unchanged baseline
+products. HOOK and directory KEY/META import remain open.

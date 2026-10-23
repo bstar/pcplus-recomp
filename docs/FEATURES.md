@@ -1,5 +1,16 @@
 # Full application reconstruction checklist
 
+[Global KEY ASPECT actions](LIVE_ASPECT_KEYS.md) now have an optional source-built terminal
+entry through the existing guarded Script safe point. Empty definitions are
+no-ops; all ten Alt-digit selections stage bounded filenames without executing
+from transport callbacks.40 linked inputs and seven actual DOS workflows pass,
+including COM1/2 serial handback, repeat/empty/error paths and real DOS ASP
+compilation.660 sources reproduce terminal/interpreter/resource/compiler; default
+and prior capability16 terminal bytes remain unchanged. The independent receipt
+is `validation/meta-aspect.json`. Current BBS acceptance is recorded there;
+HOOK, directory KEY/META import, other kernels, hardware and all full application
+gates remain open.
+
 [Streamed PROGRAM help](HELP_RESOURCE.md) now supplies an optional authored
 26-topic resource with topic scrolling and title/body search, F3 continuation,
 wrap and cancellation. Six actual terminal sessions and18 combined failure
