@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Supported active PRM projection](PRM_PROJECTION.md) passes2,660 standalone DOS
+checks and exact independent image/fresh-link comparisons. Unknown bytes and
+string tails stay opaque. This prepares the known serial/modem/transfer subset;
+terminal capture, remaining native fields and HOOK/returned commit stay open.
+
 [Combined terminal process bank](HOOK_OWNER.md#terminal-integration-remaining)
 passes292 linked inputs, three DOS workflows and664-source/four-product
 reproduction. Sharing the near/far executor frees594 near-code bytes without

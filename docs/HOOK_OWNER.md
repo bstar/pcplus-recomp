@@ -94,3 +94,8 @@ nor does it install the HOOK owner or accept KEY kind2.
 General asynchronous recovery, other DOS kernels, physical modem integration
 and every full application acceptance gate remain open. No BBS or hardware
 compatibility claim follows from this standalone checkpoint.
+
+[Supported PRM projection](PRM_PROJECTION.md) now stages explicit active serial,
+modem and transfer settings over an opaque baseline with2,660 DOS checks and
+an exact complete-image oracle. It is not yet bound to terminal capture and
+does not cover all native fields; item4 remains open.

@@ -1738,3 +1738,7 @@ test-hook-exchange:
 test-hook-owner:
 	python3 standalone/test_hook_owner_dos.py --output build/hook-owner/DOS-make-$(shell date +%s%N)
 	python3 standalone/test_hook_owner_dos.py --production --output build/hook-owner/production-make-$(shell date +%s%N)
+
+.PHONY: test-prm-projection
+test-prm-projection:
+	python3 standalone/test_prm_projection_dos.py --output build/prm-projection/DOS-make-$(shell date +%s%N)

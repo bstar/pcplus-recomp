@@ -1,5 +1,11 @@
 # Complete DOS rebuild plan
 
+[Supported active PRM projection](docs/PRM_PROJECTION.md) now stages actual
+caller-supplied serial/modem/transfer settings over an opaque baseline, with
+2,660 DOS checks, an independent full-image byte comparison and fresh-link
+reproduction. Runtime capture and remaining native fields, HOOK routing,
+register lifetime and validated returned-state commit remain open.
+
 [Combined terminal process bank](docs/HOOK_OWNER.md#terminal-integration-remaining)
 now shares the banked EXEC entry across directory KEY/ASPECT and future HOOK
 callers, freeing594 near-code bytes with unchanged data usage.292 linked checks,
