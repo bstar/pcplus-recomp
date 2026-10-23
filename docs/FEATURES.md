@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Combined terminal process bank](HOOK_OWNER.md#terminal-integration-remaining)
+passes292 linked inputs, three DOS workflows and664-source/four-product
+reproduction. Sharing the near/far executor frees594 near-code bytes without
+adding data. This resolves the near/far entry mismatch for the selected
+directory/ASPECT variant; HOOK routing, combined exit lifecycle, BBS/hardware
+and full gates remain open.
+
 [Owned HOOK execution](HOOK_OWNER.md) now has a source-built standalone DOS
 owner and helper, with239 diagnostic and236 normal-backend checks and exact
 fresh-link reproduction. Allocation/PSP/MCB ownership, bank exchange, real EXEC,

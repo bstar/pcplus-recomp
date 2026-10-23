@@ -64,8 +64,24 @@ They reinforce the requirement for a complete caller-supplied resident extent.
 
 ## Terminal integration remaining
 
-1. Reconcile the terminal's near EXEC entry with the banked backend and place
-   state/code without exceeding its nearly full near-code and DGROUP segments.
+The directory/ASPECT terminal can now select the shared banked EXEC backend:
+
+```
+./tools/dev --command python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input --aspect-keys --directory-keys --process-bank
+```
+
+This produces `build/terminal-directory-keys-process-bank/TERMINAL.EXE` with
+660 near-code bytes free (594 more than the preceding terminal), unchanged
+65,520-byte data/stack usage and a635-byte PROCESS_CODE bank. Its near caller
+bridge and far entry share one executor.292 linked binding checks, three DOS
+workflows (COM1 keys, COM2 ASPECT/serial return, invalid resource rejection), and
+an empty-tree664-source/four-product reproduction pass. The
+[receipt](validation/directory-process-bank.json) records raw captures and source
+custody. This variant does not enable the separate exit-guard/trap composition,
+nor does it install the HOOK owner or accept KEY kind2.
+
+1. Place HOOK state/code without exceeding segment limits, using the now-shared
+   banked executor, and reconcile the combined exit-guard/trap lifecycle.
 2. Route KEY kind2 and relevant PROGRAM actions through the guarded foreground
    handoff, preserving UART, screen, input, file and exit-guard ownership.
 3. Establish native register-bank lifetime and ASPECT child handback. Fresh zero

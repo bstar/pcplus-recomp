@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+[Combined terminal process bank](docs/HOOK_OWNER.md#terminal-integration-remaining)
+now shares the banked EXEC entry across directory KEY/ASPECT and future HOOK
+callers, freeing594 near-code bytes with unchanged data usage.292 linked checks,
+three actual DOS workflows and664-source/four-product reproduction pass.
+HOOK is still disabled; state placement, safe-point routing, live PRM projection,
+register lifetime, returned commit and combined exit-guard/trap acceptance remain.
+
 [Owned HOOK execution](docs/HOOK_OWNER.md) now passes239 standalone DOS checks
 and236 checks with the production backend, with reproducible parent/helper
 executables. Real helper EXEC, returned-bank staging, memory ownership, error

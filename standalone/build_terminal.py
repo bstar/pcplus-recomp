@@ -12,7 +12,7 @@ import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
 parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
 if args.exit_probe is not None:assert args.exit_guard
-if args.process_bank:assert args.exit_guard and args.external_render
+if args.process_bank:assert args.external_render
 if args.traps:assert args.process_bank
 if args.trap_probe is not None:assert args.traps and args.exit_probe is None
 out_name='terminal-mouse-process' if args.external_render and args.mouse else 'terminal-mouse' if args.mouse else 'terminal-process' if args.external_render else 'terminal'
@@ -33,6 +33,10 @@ if args.aspect_keys:
 if args.directory_keys:
  assert args.aspect_keys
  out_name='terminal-directory-keys'
+if args.process_bank and args.notice_sound:
+ # Keep the established notice/KEY products intact while giving their near
+ # callers and the upcoming far HOOK owner one shared banked EXEC boundary.
+ out_name+='-process-bank'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']

@@ -18,9 +18,12 @@ def table(text):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True)
     p.add_argument('--case',required=True,choices=['selected','script','environment','cwd-first','cli','fallback','missing','bad-key','bad-kbd','bad-name','blank'])
-    p.add_argument('--port',type=int,choices=[1,2],default=1);a=p.parse_args();assert re.fullmatch('[A-Za-z0-9_-]+',a.label)
+    p.add_argument('--port',type=int,choices=[1,2],default=1)
+    p.add_argument('--process-bank',action='store_true');a=p.parse_args();assert re.fullmatch('[A-Za-z0-9_-]+',a.label)
     out=ROOT/'build/directory-keys'/a.label;out.mkdir(parents=True,exist_ok=False)
-    parent=ROOT/'build/terminal-directory-keys/TERMINAL.EXE';child=ROOT/'build/aspect-help-resource-parent/ASPECT.EXE'
+    parent=ROOT/'build'/('terminal-directory-keys-process-bank' if a.process_bank else 'terminal-directory-keys')/'TERMINAL.EXE';child=ROOT/'build/aspect-help-resource-parent/ASPECT.EXE'
+    parent_manifest=json.loads((parent.parent/'manifest.json').read_text())
+    assert parent_manifest['banked_process']==a.process_bank
     sources={}
     for binary in (parent,child):
         m=json.loads((binary.parent/'manifest.json').read_text());assert sha(binary)==m['binary_sha256']
@@ -56,7 +59,7 @@ def main():
         result['checks']['directory_keyboard_wire']=(want_key+want_map+b'ready') in wire
         result['checks']['unselected_keys_absent']=all(x not in wire for x in [b'DIRKEY\r',b'ENVKEY\r',b'CLIKEY\r',b'DIRSCRIPT\r'] if x!=want_key)
     result['checks']['sources_current']=all(sha(ROOT/n)==h for n,h in sources.items())
-    result.update(passed=all(result['checks'].values()),sources=sources,case=a.case,port=a.port,expected_wire_hex=(want_key+want_map+b'ready').hex() if not bad else '',child_sha256=sha(child),scope='Actual DOS selected-directory startup import, bounded KEY/KBD lookup and unchanged resources; synthetic files/modem only. Explicit CLI precedence, missing fallback and pre-UART rejection are maintained policy; physical hardware/native post-connect parity remain open.')
+    result.update(passed=all(result['checks'].values()),banked_process=a.process_bank,sources=sources,case=a.case,port=a.port,expected_wire_hex=(want_key+want_map+b'ready').hex() if not bad else '',child_sha256=sha(child),scope='Actual DOS selected-directory startup import, bounded KEY/KBD lookup and unchanged resources; synthetic files/modem only. Explicit CLI precedence, missing fallback and pre-UART rejection are maintained policy; physical hardware/native post-connect parity remain open.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');assert result['passed'],{k:result[k] for k in ('case','checks','errors')}
     print('PASS',a.case,flush=True)
 if __name__=='__main__':main()

@@ -8,9 +8,9 @@ import check_transport as transport
 ROOT=transport.ROOT
 
 def main():
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);a=ap.parse_args()
+    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--process-bank',action='store_true');a=ap.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    base=ROOT/'build/terminal-directory-keys';transport.BINARY=base/'TERMINAL.EXE';transport.MAP=base/'terminal.map'
+    base=ROOT/'build'/('terminal-directory-keys-process-bank' if a.process_bank else 'terminal-directory-keys');transport.BINARY=base/'TERMINAL.EXE';transport.MAP=base/'terminal.map'
     from check_script_launch_live import Script
     class Model(Script):
         def __init__(self):
