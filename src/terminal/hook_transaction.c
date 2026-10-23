@@ -10,6 +10,9 @@ extern unsigned terminal_option_mask,terminal_directory_mode;
 #pragma aux terminal_directory_mode "terminal_directory_mode";
 extern unsigned __far __cdecl terminal_register_context(void);
 extern prm_dos_image __far terminal_hook_before;
+#ifdef TERMINAL_HOOK_APPLY
+extern unsigned __far terminal_hook_apply_epoch,terminal_hook_apply_seal;
+#endif
 typedef char stage_abi[sizeof(terminal_hook_stage)==2584?1:-1];
 typedef char result_abi[sizeof(terminal_hook_result)==20?1:-1];
 static unsigned extent(const void *p,unsigned n)
@@ -32,6 +35,10 @@ static unsigned execute(const char *path,long context,unsigned active,terminal_h
  unsigned i,status,code;
  for(i=0;i<1264;++i)before.bytes[i]=terminal_hook_before.bytes[i];
  if(terminal_register_snapshot(stage.integers,stage.strings)){result->status=TERMINAL_HOOK_REGISTERS;return result->status;}
+#ifdef TERMINAL_HOOK_APPLY
+ terminal_hook_apply_epoch=terminal_register_owner.epoch;
+ terminal_hook_apply_seal=terminal_register_owner.seal;
+#endif
  code=hook_owner_initialize(&terminal_hook_owner);
  if(code){result->owner_status=code;result->status=TERMINAL_HOOK_OWNER;return result->status;}
  terminal_hook_phase=1;

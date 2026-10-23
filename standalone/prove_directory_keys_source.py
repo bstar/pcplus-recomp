@@ -6,7 +6,8 @@ ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--process-bank',action='store_true');ap.add_argument('--session-capture',action='store_true');ap.add_argument('--session-projection',action='store_true');ap.add_argument('--session-baseline',action='store_true');ap.add_argument('--serial-bank',action='store_true');ap.add_argument('--register-handoff',action='store_true');ap.add_argument('--session-controls',action='store_true');ap.add_argument('--hook-return',action='store_true')
-    ap.add_argument('--hook-execute',action='store_true');ap.add_argument('--hook-modem',action='store_true');ap.add_argument('--hook-input',action='store_true');a=ap.parse_args()
+    ap.add_argument('--hook-execute',action='store_true');ap.add_argument('--hook-modem',action='store_true');ap.add_argument('--hook-input',action='store_true');ap.add_argument('--hook-apply',action='store_true');a=ap.parse_args()
+    if a.hook_apply:assert a.hook_input
     if a.hook_input:assert a.hook_modem
     if a.hook_modem:assert a.hook_execute
     if a.hook_execute:assert a.hook_return
@@ -27,6 +28,7 @@ def main():
     if a.hook_execute:parent+='-execute'
     if a.hook_modem:parent+='-modem'
     if a.hook_input:parent+='-input'
+    if a.hook_apply:parent+='-apply'
     child='aspect-register-parent' if a.register_handoff else 'aspect-serial-bank-parent' if a.serial_bank else 'aspect-help-resource-parent'
     targets=[(parent,'TERMINAL.EXE'),(child,'ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')]
     if a.session_capture:targets.append(('setup-mouse-notice-sound','PRMEDIT.EXE'))
@@ -62,6 +64,7 @@ def main():
         if a.hook_execute:commands[0].append('--hook-execute')
         if a.hook_modem:commands[0].append('--hook-modem')
         if a.hook_input:commands[0].append('--hook-input')
+        if a.hook_apply:commands[0].append('--hook-apply')
         if a.session_projection:commands.append([*commands[0],'--hook-probe' if a.hook_execute else '--projection-probe'])
         if a.hook_input:commands.append([*commands[0],'--input-probe'])
         if a.session_capture:commands.append(['standalone/build_setup.py','--mouse','--notice-sound'])

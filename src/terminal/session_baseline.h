@@ -5,6 +5,9 @@ enum {SESSION_BASELINE_OK,SESSION_BASELINE_ARGUMENT,SESSION_BASELINE_CONTEXT,
  SESSION_BASELINE_MISSING,SESSION_BASELINE_DAMAGED};
 #define SESSION_BASELINE_STARTUP 1U
 #define SESSION_BASELINE_SETUP 2U
+#ifdef TERMINAL_HOOK_APPLY
+#define SESSION_BASELINE_HOOK 3U
+#endif
 /* Internal foreground far-cdecl store; DS=SS=DGROUP, IF1/DF0. No IO, heap or
  * near static storage. Publish only a complete accepted image. Validation of
  * PRM schema/selection is the caller's responsibility. Invalid argument/context

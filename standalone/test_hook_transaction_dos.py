@@ -29,12 +29,14 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--hook-modem', action='store_true')
     parser.add_argument('--hook-input', action='store_true')
+    parser.add_argument('--hook-apply', action='store_true')
     args = parser.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     out.mkdir(parents=True)
     if args.hook_input:assert args.hook_modem
-    base = ROOT / ('build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute'+('-modem' if args.hook_modem else '')+('-input' if args.hook_input else '')+'-hookprobe')
+    if args.hook_apply:assert args.hook_input
+    base = ROOT / ('build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute'+('-modem' if args.hook_modem else '')+('-input' if args.hook_input else '')+('-apply' if args.hook_apply else '')+'-hookprobe')
     manifest = json.loads((base / 'manifest.json').read_text())
     assert manifest['experimental_hook_execute'] and manifest['hook_transaction_probe']
     if args.hook_modem:assert manifest['experimental_hook_modem']
@@ -171,7 +173,7 @@ exit
                     '-k8192', '-fm=HOOKCH.map', '-fe=HOOKCH.EXE', str(helper_source),
                     str(base / 'hook_exchange.obj')], cwd=rebuild, check=True)
     assert sha(rebuild / 'HOOKCH.EXE') == sha(out / 'HOOKCH.EXE')
-    report = dict(passed=True, hook_modem=args.hook_modem,hook_input=args.hook_input,cases=cases, sources=sources, binary_sha256=manifest['binary_sha256'],
+    report = dict(passed=True, hook_modem=args.hook_modem,hook_input=args.hook_input,hook_apply=args.hook_apply,cases=cases, sources=sources, binary_sha256=manifest['binary_sha256'],
                   helper_sha256=sha(out / 'HOOKCH.EXE'), original_inputs=[],
                   scope='Actual source-built terminal startup and owned helper EXEC on8086. Accepted register bank '
                   'preserved without per-script reset, supported proposals validated, nonzero/missing/invalid child '

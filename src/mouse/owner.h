@@ -34,5 +34,11 @@ unsigned __cdecl mouse_owner_bytes(void);
 /* Suspended-owner settings update only. Original driver/native snapshots stay
  * unchanged; next resume installs the accepted settings. */
 unsigned __cdecl mouse_owner_reconfigure(const mouse_settings *);
+#ifdef TERMINAL_HOOK_APPLY
+unsigned __cdecl mouse_owner_reconfigure_check(const mouse_settings *);
+/* Internal foreground publication immediately after a successful check.
+ * Caller keeps the suspended owner stable; no validation or driver IO. */
+void __cdecl mouse_owner_reconfigure_publish(const mouse_settings *);
+#endif
 #endif
 #endif

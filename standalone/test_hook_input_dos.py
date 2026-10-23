@@ -23,9 +23,9 @@ def keymap(profile):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
+    parser.add_argument('--output',type=Path,required=True);parser.add_argument('--hook-apply',action='store_true');args=parser.parse_args()
     out=args.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    base=ROOT/'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-inputprobe'
+    base=ROOT/('build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input'+('-apply' if args.hook_apply else '')+'-inputprobe')
     manifest=json.loads((base/'manifest.json').read_text());assert manifest['hook_input_probe'] and manifest['experimental_hook_input']
     assert sha(base/'TERMINAL.EXE')==manifest['binary_sha256']
     def compile(folder):

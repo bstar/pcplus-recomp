@@ -45,7 +45,14 @@ port_enter:
  cmp word [terminal_program_active],1
  jne .invalid
  cmp word [terminal_program_kind],1
+%ifdef TERMINAL_HOOK_APPLY
+ je .owner_ok
+ cmp word [terminal_program_kind],5
+%endif
  jne .invalid
+%ifdef TERMINAL_HOOK_APPLY
+.owner_ok:
+%endif
  cmp word [terminal_program_status],4
  jne .invalid
  mov bx,[si+TI_PORT]

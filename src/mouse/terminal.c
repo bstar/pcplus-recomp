@@ -55,3 +55,21 @@ unsigned __cdecl terminal_mouse_commit(void)
  }
  offered_valid=0;return 0;
 }
+#ifdef TERMINAL_HOOK_APPLY
+unsigned __cdecl terminal_mouse_check(void)
+{
+ unsigned phase=mouse_owner_phase();
+ if(!offered_valid || offered_valid>2)return MOUSE_STATE;
+ if(phase==MOUSE_CLOSED)return 0;
+ return phase==MOUSE_SUSPENDED?mouse_owner_reconfigure_check(&offered):MOUSE_STATE;
+}
+void __cdecl terminal_mouse_publish(void)
+{
+ unsigned i;
+ if(offered_valid==2){
+  if(mouse_owner_phase()==MOUSE_SUSPENDED)mouse_owner_reconfigure_publish(&offered);
+  for(i=0;i<sizeof(selected);++i)((unsigned char *)&selected)[i]=((unsigned char *)&offered)[i];
+ }
+ offered_valid=0;
+}
+#endif

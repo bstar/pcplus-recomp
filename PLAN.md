@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Interactive helper adoption](docs/HOOK_APPLY.md) now routes KEY kind2 through
+PROGRAM and publishes supported returned settings/registers after resource and
+mouse/UART checks.40 linked application cases, twenty offline/nine online8086
+application workflows, two combined HOOK→ASPECT→HOOK cases,14 register workflows,
+the component regressions and712-source/seven-product reproduction pass.
+Actual divisor/line/IRQ state, queued-byte refusal and continued RX/parser/TX
+are checked. Baseline kind3 and register epochs advance together. Native-field/
+lookup parity, combined exit/trap and full application/live BBS/physical gates
+remain open; this is scoped supported helper acceptance.
+
 [Helper input resource preparation](docs/HOOK_INPUT.md) now freezes translation
 lookup paths before EXEC and stages complete keyboard/translation offers before
 active mutation.39 linked input checks, nineteen8086 CWD/decoy/resource workflows,

@@ -25,10 +25,14 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--hook-input',action='store_true')
+    parser.add_argument('--hook-apply',action='store_true')
     args=parser.parse_args();out=args.output.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     base=ROOT/'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem'
     if args.hook_input:base=base.with_name(base.name+'-input')
+    if args.hook_apply:
+        assert args.hook_input
+        base=base.with_name(base.name+'-apply')
     manifest=json.loads((base/'manifest.json').read_text());assert manifest['experimental_hook_modem']
     assert sha(base/'TERMINAL.EXE')==manifest['binary_sha256']
     model=DosImage(base/'TERMINAL.EXE',base/'terminal.map');u=model.uc

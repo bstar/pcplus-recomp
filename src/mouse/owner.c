@@ -131,6 +131,16 @@ unsigned __cdecl mouse_owner_resume(void)
  held.phase=MOUSE_READY;return MOUSE_OK;
 }
 #ifdef TERMINAL_MOUSE
+#ifdef TERMINAL_HOOK_APPLY
+unsigned __cdecl mouse_owner_reconfigure_check(const mouse_settings *settings)
+{
+ if(!same_segments()||!interrupts_on()||!valid(settings))return MOUSE_ARGUMENT;
+ if(held.phase!=MOUSE_SUSPENDED)return MOUSE_STATE;
+ return intact()&&mouse_platform_depth()==65535U?MOUSE_OK:MOUSE_STATE;
+}
+void __cdecl mouse_owner_reconfigure_publish(const mouse_settings *settings)
+{OWNER_COPY(&held.settings,settings,sizeof(held.settings));}
+#endif
 unsigned __cdecl mouse_owner_reconfigure(const mouse_settings *settings)
 {
  if(!same_segments()||!interrupts_on()||!valid(settings))return MOUSE_ARGUMENT;

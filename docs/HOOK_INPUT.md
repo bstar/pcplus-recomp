@@ -1,5 +1,9 @@
 # Prepared helper input resources
 
+The subsequent [interactive adoption variant](HOOK_APPLY.md) now consumes these
+offers through the PROGRAM safe point with mouse/UART checks and accepted-state
+publication. This page and its receipt describe the earlier staging-only product.
+
 The optional `--hook-input` product freezes translation lookup paths before
 helper EXEC and prepares returned profile/translation resources in a private
 offer. Missing or invalid resources reject before active settings change.

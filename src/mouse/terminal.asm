@@ -30,6 +30,10 @@ FAR_CDECL_ENTRY _terminal_mouse_stage,2
 FAR_CDECL_ENTRY _terminal_mouse_offer,2
 FAR_CDECL_ENTRY _terminal_mouse_commit,0
 FAR_CDECL_ENTRY _terminal_mouse_discard,0
+%ifdef TERMINAL_HOOK_APPLY
+FAR_CDECL_ENTRY _terminal_mouse_check,0
+FAR_CDECL_ENTRY _terminal_mouse_publish,0
+%endif
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs,process_memory_released
 global _mouse_terminal_release_unused,terminal_mouse_exit
 _mouse_terminal_release_unused:

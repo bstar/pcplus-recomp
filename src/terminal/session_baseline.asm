@@ -70,7 +70,11 @@ _hook_baseline_publish:
  mov ax,[bp+8]
  cmp ax,1
  jb .argument
+%ifdef TERMINAL_HOOK_APPLY
+ cmp ax,3
+%else
  cmp ax,2
+%endif
  ja .argument
  mov bx,[cs:terminal_baseline_generation]
  inc bx
@@ -122,7 +126,11 @@ _hook_baseline_copy:
  mov ax,[cs:terminal_baseline_kind]
  cmp ax,1
  jb .damaged
+%ifdef TERMINAL_HOOK_APPLY
+ cmp ax,3
+%else
  cmp ax,2
+%endif
  ja .damaged
  mov dx,0xb41d
  xor dx,bx

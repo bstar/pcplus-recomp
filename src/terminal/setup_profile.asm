@@ -142,6 +142,9 @@ terminal_setup_profile_status: dw 0 ;0none,1confirmed,2declined,3staging failure
 terminal_setup_profile_ready: dw 0
 terminal_setup_keyboard_bound: dw 0
 setup_profile_target: dw 0
+%ifdef TERMINAL_HOOK_APPLY
+global setup_profile_target
+%endif
 setup_profile_keyboard_io: times 14 db 0
 SEGMENT _BSS public align=2 class=BSS use16
 global setup_profile_keymap,setup_keyboard_absolute

@@ -708,6 +708,9 @@ connection_elapsed: dd 0
 connection_deadline: dd 0
 connection_rates: dd 300,1200,2400,4800,9600,19200,38400,57600,115200
 connection_init: times 129 db 0
+%ifdef TERMINAL_HOOK_APPLY
+global connection_init,connection_dial,connection_hangup
+%endif
 connection_dial: times 129 db 0
 connection_hangup: times 129 db 0
 connection_scratch: times 129 db 0

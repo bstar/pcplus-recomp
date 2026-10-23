@@ -93,6 +93,10 @@ terminal_macro_start:
 %endif
  cmp word [si],1
  je .program
+%ifdef TERMINAL_HOOK_APPLY
+ cmp word [si],2
+ je .hook
+%endif
  cmp word [si],3
  jne .unsupported
  cmp byte [si+2],0
@@ -134,6 +138,17 @@ terminal_macro_start:
  add si,2
  mov ax,si
  call terminal_program_start
+%ifdef TERMINAL_HOOK_APPLY
+ jmp .program_return
+.hook:
+ add si,2
+ mov ax,si
+ call terminal_program_start
+ or ax,ax
+ jnz .program_return
+ extern terminal_program_kind
+ mov word [terminal_program_kind],5
+%endif
 .program_return:
  or ax,ax
  jz .success

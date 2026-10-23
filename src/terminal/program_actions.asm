@@ -308,6 +308,14 @@ terminal_program_poll:
  call terminal_translation_reload_run
  jmp .record_status
 .execute_child:
+%ifdef TERMINAL_HOOK_APPLY
+ cmp word [terminal_program_kind],5
+ jne .ordinary_child
+ extern _terminal_hook_run
+ call far _terminal_hook_run
+ jmp .record_status
+.ordinary_child:
+%endif
  mov ax,terminal_program_result
  push ax
  cmp word [terminal_program_kind],4
@@ -373,6 +381,13 @@ terminal_program_poll:
  ; A child may leave its UART ISR/interrupt-enable state behind. Quiet that
  ; port and restore its baseline vector before drawing or waiting for a key.
  call program_quiet_uart
+%ifdef TERMINAL_HOOK_APPLY
+ cmp word [terminal_program_kind],5
+ jne .hook_staged
+ extern _terminal_hook_stage_return
+ call far _terminal_hook_stage_return
+.hook_staged:
+%endif
  cmp word [terminal_program_kind],4
  jne .not_script_complete
  call terminal_script_complete
@@ -404,6 +419,13 @@ terminal_program_poll:
  call far terminal_render_failure_notice
  jmp .restore_port
 .ordinary_view:
+%ifdef TERMINAL_HOOK_APPLY
+ cmp word [terminal_program_kind],5
+ jne .ordinary_script
+ cmp word [connection_state],6
+ je .restore_screen
+.ordinary_script:
+%endif
  ; A successful online script must resume the terminal immediately. A welcome
  ; stream can exceed the bounded raw ring while a user acknowledges console
  ; output; native inline scripting does not insert that application pause.
@@ -469,6 +491,22 @@ terminal_program_poll:
  xor bh,bh
  mov ah,2
  int 0x10
+%ifdef TERMINAL_HOOK_APPLY
+ cmp word [terminal_program_kind],5
+ jne .ordinary_profile
+ extern _terminal_hook_complete,_terminal_hook_cleanup,terminal_hook_apply_notice
+ call far _terminal_hook_complete
+ cmp word [terminal_program_status],4
+ jne .hook_cleanup
+ call terminal_setup_profile_finish
+.hook_cleanup:
+ call far _terminal_hook_cleanup
+ cmp word [terminal_program_status],5
+ jne .restore_port
+ call far terminal_hook_apply_notice
+ jmp .restore_port
+.ordinary_profile:
+%endif
  cmp word [terminal_program_kind],1
  jne .restore_port
  call terminal_setup_profile_finish
@@ -582,8 +620,15 @@ program_restore_uart:
  add sp,2
  ; Do not call uart_enable here: it reads/discards RBR. Preserve pending input.
  mov al,[program_mcr]
+%ifdef TERMINAL_HOOK_APPLY
+ cmp word [terminal_program_kind],5
+ je .setup_flow_status
+%endif
  cmp word [terminal_program_kind],1
  jne .old_rts
+%ifdef TERMINAL_HOOK_APPLY
+.setup_flow_status:
+%endif
  cmp word [terminal_setup_link_status],1
  jne .old_rts
  or al,2 ;An accepted flow change must release the old port's lowered RTS.
