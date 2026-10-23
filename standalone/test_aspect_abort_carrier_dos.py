@@ -176,6 +176,9 @@ def main():
         # Carrier is already down when the parent exits. Use the configurable
         # command-mode hangup rather than sending an online escape sequence.
         settings=bytearray(prm(soft=int(kind=='XOFF'),hard=int(kind!='XOFF')));settings[0x79:0x79+25]=b'ATH^M'.ljust(25,b'\0')
+        # This fixture is deliberately partial. Mouse-enabled products need
+        # explicit valid scale words rather than its A5 padding defaults.
+        struct.pack_into('<HH',settings,0x4e4,8,4)
         try:
             report=harness.run(name,'success',keys,directory=bytes(payload),prm=bytes(settings),profile=4,files=files,
                 arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',working_drive='d',observer='RENDER',banner=banner,environment={'PCPLUS_TXWAIT':'2'} if kind=='XOFF' else {})

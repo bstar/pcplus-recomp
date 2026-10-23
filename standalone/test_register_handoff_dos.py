@@ -55,9 +55,11 @@ def assigned(previous, generation):
     return bytes(result), values, strings
 
 
-def script(generation, fault=False, hide=False):
+def script(generation, fault=False, hide=False, runtime_fault=None):
     _, values, strings = assigned(bytes(830), generation)
     source = 'integer ' + ','.join(f'g{i}' for i in range(10)) + '\nproc main\nrun "D:\\DUMP.COM" NOCLEAR\n'
+    if runtime_fault == 'divide':
+        source = source.replace('\nproc main\n', '\ninteger divisor\nproc main\n', 1)
     for index in range(10):
         source += f'g{index}={values[index]}\ns{index}="{strings[index]}"\n'
     source += 'run "D:\\DUMP.COM" NOCLEAR\n'
@@ -65,6 +67,12 @@ def script(generation, fault=False, hide=False):
         source += 'run "D:\\FAULT.COM" NOCLEAR\n'
     if hide:
         source += 'run "D:\\HIDE.COM" NOCLEAR\n'
+    if runtime_fault == 'divide':
+        source += 'divisor=0\ndivisor=1/divisor\n'
+    elif runtime_fault == 'budget':
+        source += 'while 1\nendwhile\n'
+    elif runtime_fault == 'abort':
+        source += 'waitfor "NEVER" 30\n'
     source += f'transmit "BANK{generation}^M"\nendproc\n'
     compiled = compile_source(source)
     # The maintained compiler exposes native S0..S9 but not integer bank A.
@@ -198,7 +206,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', required=True)
     parser.add_argument('--port', type=int, choices=[1, 2], default=1)
-    parser.add_argument('--case', choices=['normal', 'bad-token', 'missing-script', 'missing-helper'], default='normal')
+    parser.add_argument('--case', choices=['normal', 'bad-token', 'missing-script', 'missing-helper',
+                                          'divide', 'budget', 'abort'], default='normal')
     args = parser.parse_args()
     assert re.fullmatch('[A-Za-z0-9_-]+', args.label)
     output = ROOT / 'build/register-handoff-dos' / args.label
@@ -266,7 +275,8 @@ flag_name: db '{name}.OK',0
     shutil.copyfile(parent / 'TERMINAL.EXE', package / 'TERMINAL.EXE')
     shutil.copyfile(child / 'ASPECT.EXE', package / 'ASPECT.EXE')
     bindings = bytearray(actions(b'FIRST.ASX', 0))
-    for index, target in [(1, b'BAD.ASX' if args.case == 'bad-token' else b'ABSENT.ASX' if args.case == 'missing-script' else b'SECOND.ASX'),
+    failed_script = args.case in ('bad-token', 'divide', 'budget', 'abort')
+    for index, target in [(1, b'BAD.ASX' if failed_script else b'ABSENT.ASX' if args.case == 'missing-script' else b'SECOND.ASX'),
                           (2, b'SECOND.ASX'), (3, b'OBSERVE.ASX')]:
         struct.pack_into('<H', bindings, index * 54, 0)
         bindings[index * 54 + 2:index * 54 + 2 + len(target)] = target
@@ -280,7 +290,9 @@ flag_name: db '{name}.OK',0
         files[name + '.COM'] = (output / (name + '.COM')).read_bytes()
     patches = {}
     for name, generation, fault in [('FIRST', 1, False), ('SECOND', 2, False), ('BAD', 2, True)]:
-        source, compiled, edits = script(generation, fault, hide=name == 'FIRST' and args.case == 'missing-helper')
+        source, compiled, edits = script(generation, fault=fault and args.case == 'bad-token',
+                                         hide=name == 'FIRST' and args.case == 'missing-helper',
+                                         runtime_fault=args.case if name == 'BAD' and args.case in ('divide', 'budget', 'abort') else None)
         (output / (name + '.ASP')).write_text(source)
         files[name + '.ASX'] = compiled
         patches[name] = edits
@@ -289,7 +301,11 @@ flag_name: db '{name}.OK',0
     settings = bytearray(prm(port=args.port))
     struct.pack_into('<HH', settings, 0x4e4, 8, 4)
     keys = 'p3000 a-1 p900 a-2 p900 '
-    if args.case in ('bad-token', 'missing-script'):
+    if args.case == 'abort':
+        keys = 'p3000 a-1 p900 a-2 p350 escape p300 y p900 '
+    elif args.case == 'budget':
+        keys = 'p3000 a-1 p900 a-2 p2500 '
+    if failed_script or args.case == 'missing-script':
         keys += 'p300 a-3 p900 '
     if args.case == 'missing-helper':
         keys += 'space p300 a-3 p900 space p300 a-4 p900 a-5 p700 '
@@ -305,15 +321,16 @@ flag_name: db '{name}.OK',0
     first, _, _ = assigned(zero, 1)
     second, _, _ = assigned(first, 2)
     expected = [(zero, zero), (zero, first), (first, reset(first))]
-    if args.case == 'bad-token':
+    if failed_script:
         expected += [(first, second), (first, reset(first))]
     expected += [(first, second), (second, reset(second))]
-    # Missing script never initializes the interpreter or runs the observer.
+    # Missing script/executable never reaches the nested observer. The missing
+    # script may already have run native initialization; retention must hold.
     if args.case in ('missing-script', 'missing-helper'):
         expected = [(zero, zero), (zero, first), (first, reset(first)), (first, second), (second, reset(second))]
     tokens = [1, 1, 2, 2, 3]
     epochs = [0, 0, 1, 1, 2]
-    if args.case == 'bad-token':
+    if failed_script:
         tokens = [1, 1, 2, 2, 3, 3, 4]
         epochs = [0, 0, 1, 1, 1, 1, 3]
     elif args.case in ('missing-script', 'missing-helper'):

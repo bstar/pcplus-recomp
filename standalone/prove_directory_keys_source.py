@@ -5,16 +5,18 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--process-bank',action='store_true');ap.add_argument('--session-capture',action='store_true');ap.add_argument('--session-projection',action='store_true');ap.add_argument('--session-baseline',action='store_true');ap.add_argument('--serial-bank',action='store_true');a=ap.parse_args()
+    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--process-bank',action='store_true');ap.add_argument('--session-capture',action='store_true');ap.add_argument('--session-projection',action='store_true');ap.add_argument('--session-baseline',action='store_true');ap.add_argument('--serial-bank',action='store_true');ap.add_argument('--register-handoff',action='store_true');a=ap.parse_args()
     if a.session_capture:assert a.process_bank
     if a.session_projection:assert a.session_capture
     if a.session_baseline:assert a.session_projection
+    if a.register_handoff:assert a.session_baseline and a.serial_bank
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     sources={};products={}
     parent='terminal-directory-keys'+('-process-bank' if a.process_bank else '')+('-session-capture' if a.session_capture else '')
     if a.session_projection:parent+='-projection'
     if a.session_baseline:parent+='-bound'
-    child='aspect-serial-bank-parent' if a.serial_bank else 'aspect-help-resource-parent'
+    if a.register_handoff:parent+='-registers'
+    child='aspect-register-parent' if a.register_handoff else 'aspect-serial-bank-parent' if a.serial_bank else 'aspect-help-resource-parent'
     targets=[(parent,'TERMINAL.EXE'),(child,'ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')]
     if a.session_capture:targets.append(('setup-mouse-notice-sound','PRMEDIT.EXE'))
     if a.session_projection:targets.append((parent+'-probe','TERMINAL.EXE'))
@@ -26,6 +28,11 @@ def main():
     with tempfile.TemporaryDirectory(prefix='pcplus-meta-aspect-source-') as name:
         stage=Path(name)
         for n,h in sources.items():
+            rel=Path(n)
+            assert not rel.is_absolute() and '..' not in rel.parts
+            assert rel.parts[0] not in ('build','analysis','install','original','originals','.git')
+            assert rel.suffix.lower() in ('.asm','.c','.h','.py','.inc','.json'),n
+            assert (ROOT/n).is_file() and not (ROOT/n).is_symlink(),n
             assert sha(ROOT/n)==h,n
             p=stage/n;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/n,p)
         commands=[['standalone/build_terminal.py','--external-render','--mouse','--notice-sound','--notice-input','--aspect-keys','--directory-keys'],
@@ -36,6 +43,8 @@ def main():
         if a.session_projection:commands[0].append('--session-projection')
         if a.session_baseline:commands[0].append('--session-baseline')
         if a.serial_bank:commands[1].append('--serial-bank')
+        if a.register_handoff:
+            commands[0].append('--register-handoff');commands[1].append('--register-handoff')
         if a.session_projection:commands.append([*commands[0],'--projection-probe'])
         if a.session_capture:commands.append(['standalone/build_setup.py','--mouse','--notice-sound'])
         with (out/'build.log').open('w') as log:

@@ -80,14 +80,15 @@ UART/renderer and a synthetic serial peer; it does not inspect every returned
 bank byte.
 
 The current checkpoint passes924 linked input cases, separate COM1/COM2 DOS
-script smoke sessions and eight8086 DOS register workflows. Both older terminal and ASPECT products match their
+script smoke sessions and fourteen8086 DOS register workflows. Both older terminal and ASPECT products match their
 previous executable hashes exactly. The new ABI declarations are feature-gated:
 exposing otherwise unused types changed Watcom's static symbol order, so merely
 disabling calls was insufficient to preserve the older executable.
 
-The eight workflows cover normal return, a damaged exchange token, a missing
-script and a temporarily absent ASPECT executable, each on COM1 and COM2. A
-source-built nested DOS observer captures44 pairs of parent owner and child bank
+The fourteen workflows cover normal return, a damaged exchange token, a missing
+script, a temporarily absent ASPECT executable, divide-by-zero, instruction-budget
+exhaustion and confirmed abort, each on COM1 and COM2. A
+source-built nested DOS observer captures86 pairs of parent owner and child bank
 images. Checks cover all830 bytes, accepted epoch/seal, native invocation reset,
 80-character strings, shorter assignment replacing a complete slot, failure
 retention and clean retry. The peer sends a DSR query only after the final script
@@ -110,34 +111,72 @@ Run one workflow with a fresh label:
   --label register-next --case missing-helper --port 2
 ```
 
-Supported cases are `normal`, `bad-token`, `missing-script` and `missing-helper`.
-The [current receipt](validation/register-handback-dos.json) binds current source
+Supported cases are `normal`, `bad-token`, `missing-script`, `missing-helper`,
+`divide`, `budget` and `abort`.
+
+An empty temporary tree containing only691 declared source inputs reproduces
+six products byte for byte: terminal, its projection probe, ASPECT, DOS compiler,
+settings editor and help resource. Admission rejects non-source extensions,
+symlinks, traversal and original/install/build/analysis paths. It uses the pinned
+Nix toolchain; original executables, disk images, prior objects and REA databases
+are absent from the copied inputs.
+
+Four additional8086 virtual-modem cases exercise DCD loss during native script
+confirmation: `TX-No`, `CALL-No`, `CALL-Yes` and `XOFF-error`. The peer closes its
+socket and DOSBox's modem changes carrier state. Checks cover actual child exit,
+parser progress under the prompt, OFF-LINE status, JFT/owner restoration, framed
+CALL behavior and the exact peer stream. These cases use the current register
+build but do not seed and inspect a nonzero register mutation during the drop.
+The partial PRM fixture explicitly initializes mouse scales for this product;
+the first attempt's pre-UART fixture rejection is retained under ignored build
+storage and is not a passing carrier result.
+
+Run the clean-source proof and carrier checks with fresh output labels:
+
+```sh
+./tools/dev --command python3 standalone/prove_directory_keys_source.py \
+  --process-bank --session-capture --session-projection --session-baseline \
+  --serial-bank --register-handoff --output build/register-source-next
+./tools/dev --command python3 standalone/test_aspect_abort_carrier_dos.py \
+  --label register-carrier-next --product-root build/register-carrier-products-01
+```
+
+The carrier product root is an isolated mapping of current source-built terminal
+and ASPECT products to the test's conventional product names, with exact source
+and product hashes checked before execution. Its input files are under ignored
+build storage; the test does not replace the ordinary products.
+
+The [current receipt](validation/register-recovery-source.json) binds current source
 hashes, linked binaries/maps/manifests, all raw observer/DOS fixture/capture
 hashes and the older product comparison. The
 [initial receipt](validation/register-handback.json) retains the earlier923-case
-checkpoint. Recreate the current receipt from completed captures using:
+checkpoint; the [next receipt](validation/register-handback-dos.json) retains its
+eight-workflow extension. Recreate the current receipt from completed captures using:
 
 ```sh
 ./tools/dev --command python3 standalone/record_register_handoff.py \
   --linked build/register-handoff-linked-04 \
-  --dos-label register-retain-smoke-1 --dos-label register-retain-smoke-2 \
-  --register-label accepted-1-normal --register-label accepted-1-bad-token \
-  --register-label accepted-1-missing-script --register-label accepted-1-missing-helper \
-  --register-label accepted-2-normal --register-label accepted-2-bad-token \
-  --register-label accepted-2-missing-script --register-label accepted-2-missing-helper \
-  --output docs/validation/register-handback-dos.json
+  --dos-label register-recovery-smoke-1 --dos-label register-recovery-smoke-2 \
+  --register-label recovery-1-normal --register-label recovery-1-bad-token \
+  --register-label recovery-1-missing-script --register-label recovery-1-missing-helper \
+  --register-label recovery-1-divide --register-label recovery-1-budget --register-label recovery-1-abort \
+  --register-label recovery-2-normal --register-label recovery-2-bad-token \
+  --register-label recovery-2-missing-script --register-label recovery-2-missing-helper \
+  --register-label recovery-2-divide --register-label recovery-2-budget --register-label recovery-2-abort \
+  --source-proof build/register-source-proof-02 \
+  --carrier build/aspect-abort-carrier-dos/register-carrier-03 \
+  --output docs/validation/register-recovery-source.json
 ```
 
 ## Remaining acceptance
 
 This checkpoint does not establish full register/HOOK acceptance. Still required:
 
-- Broader runtime abort/carrier-loss, malformed-helper and partial-publication
-  recovery policies. The current DOS cases cover token damage and missing
-  script/executable retention; they do not prove every error route. The linked
+- Combined register mutation/carrier-loss and further malformed-helper,
+  partial-publication and pressure policies. Current runtime abort/error cases
+  and separate carrier recovery do not prove every combined route. The linked
   admission tests cover allocation edges, known overlaps and segment wrapping.
-- An empty-source-tree reproduction and combined parent/child proof for this
-  optional build, plus current Synchronet/ENiGMA interaction coverage.
+- Current Synchronet/ENiGMA interaction coverage for this optional build.
 - Guarded HOOK routing, remaining native PRM fields, returned-settings staging
   and application, and composition with the exit/trap owners.
 - Physical Boca/SPA2102/SynthModem and complete application acceptance.

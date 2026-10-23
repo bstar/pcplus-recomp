@@ -96,11 +96,12 @@ with no original executable or generated analysis database.
 
 The optional [ASIO v7 register handback](REGISTER_HANDBACK.md) now defines a
 parent-owned far bank and per-invocation child initialization/publication.
-924 linked API cases, COM1/COM2 DOS script smoke tests and eight8086 DOS workflows
-now inspect every bank byte, failed-child retention and retry, with real
-post-child serial/parser replies. Broader abort/carrier and helper-error policies
-remain open; this does not satisfy the complete register-lifetime/HOOK requirement
-below.
+924 linked API cases, COM1/COM2 DOS script smoke tests and fourteen8086 DOS
+workflows inspect every bank byte, failed-child and runtime abort/error retention,
+and retry with real post-child serial/parser replies.691 sources reproduce six
+products; four virtual-modem carrier-confirmation cases pass separately. Combined
+register mutation/carrier and further helper-error policies remain open; this
+does not satisfy the complete register-lifetime/HOOK requirement below.
 
 The [standalone owner](HOOK_OWNER.md) now implements owned allocation, real
 banked EXEC and returned staging, with239 diagnostic and236 normal-backend DOS

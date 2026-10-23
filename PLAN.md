@@ -2,13 +2,16 @@
 
 [Experimental register handback](docs/REGISTER_HANDBACK.md) adds an optional
 ASIO v7 far descriptor and bounded parent-owned integer/string exchange.
-924 linked cases, separate COM1/COM2 DOS script smoke sessions and eight8086 DOS
-register workflows pass.44 paired snapshots check every bank byte, epochs,
-native reset/tails, damaged token and missing script/executable retention/retry,
+924 linked cases, separate COM1/COM2 DOS script smoke sessions and fourteen8086
+DOS register workflows pass.86 paired snapshots check every bank byte, epochs,
+native reset/tails, damaged token, missing script/executable and runtime
+divide/budget/confirmed-abort retention/retry,
 with actual post-child RX/parser/TX replies. Failed children may hand back serial
 ownership but cannot replace the accepted bank; this fixes missing-script reset
 publication. Both older terminal/ASPECT executables still reproduce exactly.
-Broader abort/carrier recovery, empty-tree proof, guarded HOOK routing and
+An empty691-source tree reproduces six products. Four8086 virtual-modem carrier
+confirmation cases pass separately on this variant. Combined nonzero-register
+mutation/carrier recovery, current BBS interactions, guarded HOOK routing and
 returned-settings integration remain open. This is an
 experimental protocol checkpoint, not full HOOK or application acceptance.
 

@@ -17,6 +17,8 @@ def main():
     parser.add_argument('--linked', type=Path, required=True)
     parser.add_argument('--dos-label', action='append', required=True)
     parser.add_argument('--register-label', action='append', default=[])
+    parser.add_argument('--source-proof', type=Path)
+    parser.add_argument('--carrier', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     linked_path = args.linked.resolve() / 'result.json'
@@ -86,8 +88,52 @@ def main():
         register_cases.append(dict(label=label, case=result['case'], port=result['port'],
                                    snapshots=len(result['snapshots']), passed=True))
     if register_cases:
+        kinds = {case['case'] for case in register_cases}
+        assert {'normal', 'bad-token', 'missing-script', 'missing-helper'} <= kinds
+        assert kinds <= {'normal', 'bad-token', 'missing-script', 'missing-helper', 'divide', 'budget', 'abort'}
         assert {(case['port'], case['case']) for case in register_cases} == {
-            (port, case) for port in [1, 2] for case in ['normal', 'bad-token', 'missing-script', 'missing-helper']}
+            (port, case) for port in [1, 2] for case in kinds}
+    source_proof = None
+    if args.source_proof:
+        path = args.source_proof.resolve() / 'result.json'
+        assert path.is_relative_to(ROOT / 'build')
+        proof = json.loads(path.read_text())
+        assert proof['passed'] and proof['original_inputs'] == [] and len(proof['products']) == 6
+        assert proof['checker_sha256'] == sha(ROOT / 'standalone/prove_directory_keys_source.py')
+        for name, digest in proof['sources'].items():
+            assert name not in sources or sources[name] == digest, name
+            sources[name] = digest
+        for name, digest in proof['products'].items():
+            assert sha(ROOT / name) == digest, name
+        assert proof['products'][str(parent.relative_to(ROOT))] == sha(parent)
+        assert proof['products'][str(child.relative_to(ROOT))] == sha(child)
+        for artifact in [path, path.parent / 'build.log']:
+            custody[str(artifact.relative_to(ROOT))] = sha(artifact)
+        sources['standalone/prove_directory_keys_source.py'] = proof['checker_sha256']
+        source_proof = dict(source_files=proof['source_files'], products=proof['products'], passed=True)
+    carrier_cases = []
+    if args.carrier:
+        path = args.carrier.resolve() / 'checks.json'
+        assert path.is_relative_to(ROOT / 'build')
+        proof = json.loads(path.read_text())
+        assert proof['passed'] and proof['compatibility_accepted']
+        assert not proof['gap_reproduced'] and not proof['expected_parent_gap']
+        assert proof['parent_sha256'] == sha(parent) and proof['runner_sha256'] == sha(child)
+        assert {case['case'] for case in proof['cases']} == {'TX-No', 'CALL-No', 'CALL-Yes', 'XOFF-error'}
+        for case in proof['cases']:
+            assert case['passed'] and all(case['checks'].values())
+            folder = path.parent / case['case']
+            assert 'cputype=8086' in (folder / 'dosbox.conf').read_text()
+            for name, digest in case['captures'].items():
+                assert sha(folder / name) == digest, name
+                custody[str((folder / name).relative_to(ROOT))] = digest
+            carrier_cases.append(dict(case=case['case'], checks=case['checks'], passed=True))
+        for name, digest in proof['inputs'].items():
+            if name.startswith('build/'):
+                continue
+            assert name not in sources or sources[name] == digest, name
+            sources[name] = digest
+        custody[str(path.relative_to(ROOT))] = sha(path)
     previous = ROOT / 'docs/validation/aspect-serial-bank.json'
     baseline = json.loads(previous.read_text())
     legacy = {}
@@ -105,13 +151,15 @@ def main():
     output.parent.mkdir(parents=True, exist_ok=True)
     report = dict(passed=True, linked_inputs=linked['inputs'], linked_cases=linked['cases'],
                   DOS_smoke_cases=dos_cases, DOS_register_workflows=register_cases,
+                  source_proof=source_proof, carrier_workflows=carrier_cases,
                   parent_sha256=sha(parent), child_sha256=sha(child),
                   unchanged_legacy_products=legacy, sources=sources, custody_sha256=custody,
                   scope='Experimental maintained ASIO v7 register APIs and COM1/COM2 DOS script smoke. '
-                        'When listed, eight 8086 DOS workflows additionally inspect every bank byte, '
-                        'failed-publication/missing-script/missing-executable retention and retry, '
-                        'and actual post-child RX/parser/TX replies. No empty-tree rebuild, HOOK, '
-                        'returned-settings, modern BBS interaction or physical hardware acceptance is claimed.')
+                        'Listed 8086 DOS register workflows inspect every bank byte, failure retention/retry '
+                        'and post-child RX/parser/TX replies. Optional source proof reproduces six products; '
+                        'optional virtual-modem cases check DCD loss during native confirmation, not a seeded '
+                        'register-bank mutation during carrier loss. No HOOK, returned-settings, modern BBS '
+                        'interaction or physical hardware acceptance is claimed.')
     output.write_text(json.dumps(report, indent=2) + '\n')
     print('PASS', report['linked_inputs'], 'linked cases;', len(register_cases),
           'DOS register workflows; COM1/COM2 DOS smoke; two exact legacy products')
