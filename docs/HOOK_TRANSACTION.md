@@ -1,5 +1,10 @@
 # Terminal-linked helper transaction
 
+The subsequent [modem preparation](HOOK_MODEM.md) stage corrects response
+validation: already-expanded caret bytes are accepted literally. Its newer DOS
+cohort includes the resulting successful active-modem return; this checkpoint's
+receipt retains the earlier restrictive behavior for historical comparison.
+
 The optional `--hook-execute` product links the existing DOS exchange owner,
 live session projection, accepted register snapshot and returned-PRM validator
 into one transaction. It directly executes a source-built helper, validates its

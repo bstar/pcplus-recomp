@@ -24,12 +24,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--hook-execute', action='store_true')
+    parser.add_argument('--hook-modem', action='store_true')
     args = parser.parse_args()
     output = args.output.resolve()
     assert output.is_relative_to(ROOT / 'build') and not output.exists()
     output.mkdir(parents=True)
     base = ROOT / 'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return'
     if args.hook_execute: base = base.with_name(base.name + '-execute')
+    if args.hook_modem:
+        assert args.hook_execute
+        base = base.with_name(base.name + '-modem')
     manifest = json.loads((base / 'manifest.json').read_text())
     assert manifest['experimental_hook_return'] and sha(base / 'TERMINAL.EXE') == manifest['binary_sha256']
     if args.hook_execute: assert manifest['experimental_hook_execute']
@@ -141,9 +145,36 @@ def main():
         changed=bytearray(raw);struct.pack_into('<H',changed,at,value)
         status,_,detail=invoke(second=bytes(changed));assert status==want,(at,status)
         assert struct.unpack('<4H',detail)[2]==1
-    changed=bytearray(raw);changed[0xc4:0xc4+2]=b'^\0'
-    assert invoke(second=bytes(changed))[0]==7
-    done('malformed-known-values-and-response-expansion',8)
+    changed=bytearray(raw);changed[0x18:0x18+2]=b'^\0'
+    assert invoke(second=bytes(changed))[0]==3
+    done('malformed-known-values-and-command-expansion',8)
+    # Expanded response bytes must survive the helper boundary literally and
+    # be usable by the actual recovered matcher linked into this executable.
+    response_cases=0
+    for slot in range(11):
+        at=0xc4+slot*16
+        for value in range(1,256):
+            changed=bytearray(raw);changed[at:at+2]=bytes([value,0])
+            status,candidate,_=invoke(second=bytes(changed))
+            semantic=raw[at:at+16].split(b'\0')[0]!=bytes([value])
+            assert status==0 and struct.unpack_from('<3H',candidate)==(1,128 if semantic else 0,int(changed!=raw))
+            assert candidate[50:418]==modem_expected(changed)
+            slots=bytearray(176);slots[slot*16:slot*16+16]=candidate[50+190+slot*16:50+206+slot*16]
+            u.mem_write(model.symbols['modem_response_slots'],bytes(slots))
+            assert model.call('modem_responses_reset_bounded')==0
+            assert model.call('modem_responses_feed_bounded',[value])==slot
+            response_cases+=1
+        changed=bytearray(raw);changed[at:at+3]=b'^M\0'
+        status,candidate,_=invoke(second=bytes(changed));assert status==0
+        slots=bytearray(176);slots[slot*16:slot*16+16]=candidate[50+190+slot*16:50+206+slot*16]
+        u.mem_write(model.symbols['modem_response_slots'],bytes(slots))
+        assert model.call('modem_responses_reset_bounded')==0
+        assert model.call('modem_responses_feed_bounded',[ord('^')])==65535
+        assert model.call('modem_responses_feed_bounded',[ord('M')])==slot
+        changed[at:at+16]=b'X'*16
+        assert invoke(second=bytes(changed))[0]==3
+        response_cases+=2
+    done('literal-expanded-response-bytes-through-actual-matcher',response_cases)
     for pointers in [[0,after,1,dest,result],[before,0,1,dest,result],
                      [before,after,1,0,result],[before,after,1,dest,0],
                      [before,before,1,dest,result],[before,after,1,before,result],

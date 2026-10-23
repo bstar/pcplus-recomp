@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import struct
 import subprocess
+import sys
 from check_setup_model import image
 from check_startup_import import terminal_expected
 from check_modem_import import expected as modem_expected
@@ -15,6 +16,8 @@ from directory_fixtures import directory
 from test_terminal import SAMPLER
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'src/config'))
+from prm import expand_modem_command
 
 
 def sha(path):
@@ -24,13 +27,15 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--hook-modem', action='store_true')
     args = parser.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     out.mkdir(parents=True)
-    base = ROOT / 'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-hookprobe'
+    base = ROOT / ('build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute'+('-modem' if args.hook_modem else '')+'-hookprobe')
     manifest = json.loads((base / 'manifest.json').read_text())
     assert manifest['experimental_hook_execute'] and manifest['hook_transaction_probe']
+    if args.hook_modem:assert manifest['experimental_hook_modem']
     assert sha(base / 'TERMINAL.EXE') == manifest['binary_sha256']
     helper_source = ROOT / 'standalone/hook_transaction_child.c'
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-w4', '-we',
@@ -41,8 +46,8 @@ def main():
     struct.pack_into('<H', raw, 0x1bc, 1)
     cases = []
     recipes = [('serial', '@TEST.PRM 19200', None, False),
-               ('MODEM', '@TEST.PRM /D:CaseTest:23 38400', None, False),
-               ('directory-MODEM', '@TEST.PRM /E:TEST.DIR /N:1', 0, False),
+               ('MODEM', '@TEST.PRM /D:CaseTest:23 38400 /I:3', None, False),
+               ('directory-MODEM', '@TEST.PRM /E:TEST.DIR /N:1 /I:3', 0, False),
                ('directory-DIRECT', '@TEST.PRM /E:TEST.DIR /N:1', 1, True),
                ('serial-inactive', '@TEST.PRM 19200', None, True)]
     initial_bank = bytearray(128 + i % 127 for i in range(830))
@@ -101,11 +106,13 @@ exit
         latest = None
         for index in range(10):
             actual = (folder / f'STAGE{index}.BIN').read_bytes()
-            if index in (0, 5, 6):
-                proposal = bytearray(changed if index == 0 else current)
+            success=index in (0,5,6) or (index==7 and active)
+            if success:
+                proposal = bytearray(changed if index in (0,7) else current)
                 if index == 6: struct.pack_into('<H', proposal, 0x1bc, 65535)
-                bank = changed_bank if index == 0 else initial_bank
-                plan = bytearray(struct.pack('<3H', int(active), 0xe020 if index == 0 else 0, int(index != 5)))
+                if index == 7:proposal[0xc4:0xc6]=b'^\0'
+                bank = changed_bank if index in (0,7) else initial_bank
+                plan = bytearray(struct.pack('<3H', int(active), 0xe0a0 if index==7 else 0xe020 if index == 0 else 0, int(index != 5)))
                 plan += terminal_expected(proposal)
                 if active: plan += modem_expected(proposal)
                 else:
@@ -114,17 +121,26 @@ exit
                     struct.pack_into('<H', modem, 12, struct.unpack_from('<H', current, 0x1e4)[0])
                     struct.pack_into('<H', modem, 366, struct.unpack_from('<H', current, 0x1a4)[0])
                     plan += modem
-                plan += struct.pack('<H', int(index == 0)) + b'.\0'.ljust(64, b'\0')
-                plan += struct.pack('<3H', int(index != 0), 321 if index == 0 else 8, 654 if index == 0 else 4)
+                plan += struct.pack('<H', int(index in (0,7))) + b'.\0'.ljust(64, b'\0')
+                plan += struct.pack('<3H', int(index not in (0,7)), 321 if index in (0,7) else 8, 654 if index in (0,7) else 4)
                 latest = bank + proposal + plan
+                if args.hook_modem:
+                    expected_modem=struct.pack('<3H',int(active),5 if serial else 6,proposal[0x1e2] if active else 0)
+                    if active:
+                        commands=[expand_modem_command(proposal[at:at+cap].split(b'\0')[0]) for at,cap in [(0x18,47),(0x47,25),(0x60,25),(0x79,25),(0x92,25),(0xab,25)]]
+                        target=b'CaseTest:23'
+                        dial=commands[1].split(b'\0')[0]+target+commands[2].split(b'\0')[0]
+                        expected_modem+=b''.join(c.ljust(129,b'\0')for c in commands)+dial.ljust(129,b'\0')+proposal[0xc4:0x174]+b'\0'
+                    else:expected_modem+=bytes(1080)
+                    assert (folder/f'MODEM{index}.BIN').read_bytes()==expected_modem,(name,index)
             assert actual == latest, (name, index, [(i,a,b) for i,(a,b) in enumerate(zip(actual, latest)) if a != b][:10])
         results = (folder / 'RESULTS.BIN').read_bytes()
         assert len(results) == 200
         words = [struct.unpack_from('<10H', results, i*20) for i in range(10)]
-        assert [r[0] for r in words] == [0,5,7,7,6,0,0,7,7,5]
+        assert [r[0] for r in words] == [0,5,7,7,6,0,0,0 if active else 7,7,5]
         assert words[1][1] == 5 and words[2][6:] == (6,0,2,0x200)
         assert words[3][6] == 5 and words[4][4] == 23
-        assert words[7][6] == (7 if active else 6) and words[8][6] == 2
+        assert words[7][6] == (0 if active else 6) and words[8][6] == 2
         assert words[9][1] == 4 and words[9][2] != 0
         assert (folder / 'RBFORE.BIN').read_bytes() == (folder / 'RBAGAIN.BIN').read_bytes() == initial_bank
         assert (folder / 'BASE0.BIN').read_bytes() == (folder / 'BASE1.BIN').read_bytes()
@@ -134,6 +150,9 @@ exit
         assert len((folder / 'BEFORE.BIN').read_bytes()) == 42
         assert (folder / 'DIAG.BIN').read_bytes() == b'\0\0'
         assert (folder / 'STACK.BIN').read_bytes() == b'\xa5' * 256
+        if args.hook_modem:
+            statuses=list(struct.iter_unpack('<2H',(folder/'MSTAT.BIN').read_bytes()))
+            assert statuses==[(0,65535) if i in (0,5,6) or (i==7 and active) else (65535,65535) for i in range(10)]
         assert sha(folder / 'TERMINAL.EXE') == manifest['binary_sha256']
         cases.append(dict(case=name, passed=True, helpers=10, statuses=[r[0] for r in words],
                           artifacts={p.name:sha(p) for p in folder.iterdir() if p.is_file()}))
@@ -141,7 +160,7 @@ exit
     sources = dict(manifest['sources'])
     for name in ['standalone/test_hook_transaction_dos.py', 'standalone/hook_transaction_child.c',
                  'standalone/check_setup_model.py', 'standalone/check_startup_import.py',
-                 'standalone/check_modem_import.py', 'standalone/directory_fixtures.py', 'standalone/test_terminal.py']:
+                 'standalone/check_modem_import.py', 'standalone/directory_fixtures.py', 'standalone/test_terminal.py','src/config/prm.py']:
         sources[name] = sha(ROOT / name)
     for name, digest in sources.items(): assert sha(ROOT / name) == digest, name
     rebuild = out / 'rebuild'
@@ -150,7 +169,7 @@ exit
                     '-k8192', '-fm=HOOKCH.map', '-fe=HOOKCH.EXE', str(helper_source),
                     str(base / 'hook_exchange.obj')], cwd=rebuild, check=True)
     assert sha(rebuild / 'HOOKCH.EXE') == sha(out / 'HOOKCH.EXE')
-    report = dict(passed=True, cases=cases, sources=sources, binary_sha256=manifest['binary_sha256'],
+    report = dict(passed=True, hook_modem=args.hook_modem,cases=cases, sources=sources, binary_sha256=manifest['binary_sha256'],
                   helper_sha256=sha(out / 'HOOKCH.EXE'), original_inputs=[],
                   scope='Actual source-built terminal startup and owned helper EXEC on8086. Accepted register bank '
                   'preserved without per-script reset, supported proposals validated, nonzero/missing/invalid child '

@@ -60,6 +60,8 @@ name 'RESULTS.BIN'
 name 'ABSENT.EXE'
 name 'DIAG.BIN'
 name 'STACK.BIN'
+name 'MODEM0.BIN'
+name 'MSTAT.BIN'
 extern terminal_stack_top
 global _hook_probe_stack
 _hook_probe_stack:

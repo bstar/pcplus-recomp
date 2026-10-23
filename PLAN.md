@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Helper modem preparation](docs/HOOK_MODEM.md) now stages all six commands,
+dial concatenation, literal responses and optional reply framing before active
+state changes. It also fixes the helper validator's incorrect second expansion
+of already-expanded response bytes.3,394 preparation and4,822 return/matcher
+cases,152 admission checks, fifty helper attempts with17 exact offers,14
+register workflows, nine initialization workflows and703-source/six-product
+reproduction pass. Keyboard/profile/translation resource staging, interactive
+routing, UART handoff and atomic returned adoption remain open.
+
 [Terminal-linked helper transaction](docs/HOOK_TRANSACTION.md) now combines
 live projection, accepted register snapshot, owned real EXEC, returned validation
 and retirement before publishing a proposal.152 admission and1,995 validation

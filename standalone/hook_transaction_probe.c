@@ -2,10 +2,16 @@
 #include "../src/terminal/register_owner.h"
 #include "../src/aspect/register_codec.h"
 #include <dos.h>
+#ifdef TERMINAL_HOOK_MODEM
+#include "../src/config/hook_modem.h"
+#endif
 extern unsigned __far __cdecl hook_probe_write(const char *,const void __far *,unsigned);
 extern unsigned char __far terminal_baseline_storage[];
-extern const char __far hook_probe_names[10][13];
+extern const char __far hook_probe_names[12][13];
 extern unsigned char * __far __cdecl hook_probe_stack(void);
+extern unsigned terminal_option_mask,terminal_directory_mode;
+#pragma aux terminal_option_mask "terminal_option_mask";
+#pragma aux terminal_directory_mode "terminal_directory_mode";
 #pragma aux terminal_baseline_storage "terminal_baseline_storage";
 static void copy(char *to,unsigned index)
 {unsigned i;for(i=0;i<13;++i)to[i]=hook_probe_names[index][i];}
@@ -13,15 +19,24 @@ static unsigned write(unsigned index,const void __far *data,unsigned bytes)
 {char name[13];copy(name,index);return hook_probe_write(name,data,bytes);}
 unsigned __far __cdecl terminal_hook_probe(void)
 {
- unsigned i,j,status,failures=0;
+ unsigned i,j,status,failures=0,active;
+#ifdef TERMINAL_HOOK_MODEM
+ hook_modem_result modem_results[10],modem_busy;
+ char modem_name[13];
+#endif
  unsigned char bank[830];
  terminal_hook_result results[10],busy;
  char path[64],name[13];
  unsigned char __far *raw=(unsigned char __far *)&terminal_hook_proposal;
  unsigned char *guard=hook_probe_stack();
+#ifdef TERMINAL_HOOK_MODEM
+ for(i=0;i<10;++i){modem_results[i].status=65535U;modem_results[i].field=65535U;}
+ copy(modem_name,10);
+#endif
  for(i=0;i<256;++i)guard[i]=0xa5;
  for(i=0;i<2584;++i)raw[i]='X';
  copy(path,0);copy(name,1);
+ active=(terminal_option_mask&32) || ((terminal_option_mask&64) && !terminal_directory_mode);
  /* Seed a previous accepted bank. HOOK receives it directly, without the
   * per-script integer/first-string-byte reset used by ASPECT startup. */
  for(i=0;i<830;++i)terminal_register_owner.accepted[i]=(unsigned char)(128+i%127);
@@ -35,11 +50,17 @@ unsigned __far __cdecl terminal_hook_probe(void)
  for(i=0;i<10;++i){
   if(i==9)copy(path,7);
   status=terminal_hook_execute(path,(long)(i+3),&results[i]);
-  if(status!=((i==0||i==5||i==6)?0:(i==1||i==9)?5:i==4?6:7) || results[i].status!=status)failures|=1;
+  if(status!=((i==0||i==5||i==6||(i==7&&active))?0:(i==1||i==9)?5:i==4?6:7) || results[i].status!=status)failures|=1;
   if(terminal_hook_owner.phase || terminal_hook_owner.segment)failures|=2;
   if(!status){
    if(terminal_hook_phase!=2)failures|=4;
    if(terminal_hook_execute(path,3L,&busy)!=TERMINAL_HOOK_BUSY)failures|=8;
+#ifdef TERMINAL_HOOK_MODEM
+   if(terminal_hook_prepare_modem(&modem_results[i]) || terminal_hook_phase!=3)failures|=256;
+   if(terminal_hook_prepare_modem(&modem_busy)!=HOOK_MODEM_STATE || terminal_hook_phase!=3)failures|=512;
+   modem_name[5]='0'+i;
+   if(hook_probe_write(modem_name,&terminal_hook_modem_offer,1086))return 27;
+#endif
   }else if(terminal_hook_phase)failures|=4;
   name[5]='0'+i;
   if(hook_probe_write(name,&terminal_hook_proposal,2584))return 23;
@@ -58,6 +79,9 @@ unsigned __far __cdecl terminal_hook_probe(void)
   write(6,(const void __far *)results,sizeof(results)) ||
   write(8,(const void __far *)&failures,2) ||
   write(9,(const void __far *)guard,256))return 24;
+#ifdef TERMINAL_HOOK_MODEM
+ if(write(11,(const void __far *)modem_results,sizeof(modem_results)))return 28;
+#endif
  for(i=0;i<256;++i)if(guard[i]!=0xa5)return 26;
  return failures?25:0;
 }

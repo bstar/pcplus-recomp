@@ -33,7 +33,8 @@ static unsigned commands(const modem_import_settings *m)
  p[2]=m->dial_suffix;n[2]=25;p[3]=m->hangup;n[3]=25;
  p[4]=m->answer_on;n[4]=25;p[5]=m->answer_off;n[5]=25;
  for(i=0;i<6;++i)if(live_modem_expand(p[i],buffer,n[i],129))return 0;
- for(i=0;i<11;++i)if(live_modem_expand(m->responses[i],buffer,16,129))return 0;
+ /* Responses already contain expanded bytes. The importer proves their NUL
+  * bounds; caret bytes are literal matcher input, not command notation. */
  return 1;
 }
 static unsigned decode(const prm_dos_image *p,unsigned active,hook_return_plan *out,hook_return_result *r)

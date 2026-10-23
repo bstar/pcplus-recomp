@@ -1,5 +1,10 @@
 # Returned PRM validation
 
+[Modem preparation](HOOK_MODEM.md) corrects an error in this initial checkpoint:
+already-expanded response slots are literal data and must not undergo command
+expansion again. Current validation accepts literal caret bytes and tests them
+through the actual matcher. The receipt below records the earlier policy.
+
 The optional `--hook-return` terminal links a staged validator for external
 helper settings. It validates and classifies a proposed return without changing
 active settings. KEY kind2 execution and foreground application remain open.
@@ -38,8 +43,9 @@ geometry or CPU context returns before writing the result. The candidate stays
 unchanged on every failure.
 
 Both images must decode. Mouse scales must be 1–999; any nonzero sound word
-means enabled. Active modem commands and all eleven responses must pass the
-existing bounded native expansion. With an inactive modem, unchanged private
+means enabled. Active modem commands must pass bounded native expansion;
+already-expanded responses must be NUL-bounded and remain literal. With an
+inactive modem, unchanged private
 bytes can be invalid; the candidate clears private settings and explicitly
 marks them inactive, while keeping shared pause/delay and BREAK values.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Actual DOS configurable initialization acknowledgements with an owned peer."""
-import argparse,inspect,json,shutil,types
+import argparse,inspect,json,shutil,struct,types
 from pathlib import Path
 import test_modem_initialization_dos as baseline
 from modem_fixtures import fixture
@@ -25,9 +25,9 @@ def adapter(out,events,policy,commands):
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--terminal',type=Path,default=ROOT/'build/terminal/TERMINAL.EXE');a=p.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    product=ROOT/'build/terminal';binary=product/'TERMINAL.EXE';manifest=json.loads((product/'manifest.json').read_text());assert sha(binary)==manifest['binary_sha256'];inputs=dict(manifest['sources'])
+    binary=a.terminal.resolve();assert binary.is_relative_to(ROOT/'build') and binary.name=='TERMINAL.EXE';product=binary.parent;manifest=json.loads((product/'manifest.json').read_text());assert sha(binary)==manifest['binary_sha256'];inputs=dict(manifest['sources'])
     for path in (Path(__file__),Path(baseline.__file__),ROOT/'standalone/test_connection_dos.py',ROOT/'standalone/modem_fixtures.py',ROOT/'standalone/test_terminal.py'):
         inputs[str(path.relative_to(ROOT))]=sha(path)
     for name,digest in inputs.items():
@@ -39,6 +39,7 @@ def main():
         commands=['ATZ']+(['ATE0'] if policy=='multi' else [])+(['ATDCaseTest:23'] if connected else [])
         peer=adapter(out,events,policy,commands);peer.BINARY=folder/'TERMINAL.EXE'
         payload=bytearray(fixture(timeout=3))
+        if manifest.get('experimental_mouse'):struct.pack_into('<HH',payload,0x4e4,8,4)
         if policy=='multi':payload[0x18:0x47]=b'ATZ^MATE0^M'.ljust(47,b'\0')
         try:r=peer.run(name,'success' if connected else 'busy','p4500 a-x',prm=bytes(payload),profile=6,arguments='@D:\\TEST.PRM /D:CaseTest:23 /I:'+str(seconds))
         finally:(folder/'peer-events.json').write_text(json.dumps(events,indent=2)+'\n')
@@ -48,7 +49,7 @@ def main():
             exact_initialization_unchanged=(folder/'TEST.PRM').read_bytes()==bytes(payload))
         rows.append(dict(case=name,policy=policy,wait_seconds=seconds,connected=connected,passed=all(checks.values()),checks=checks,wire_hex=wire.hex(),events=events,captures={str(path.relative_to(folder)):sha(path) for path in folder.rglob('*') if path.is_file()}))
         print(json.dumps(dict(case=name,passed=rows[-1]['passed'],failed=[k for k,v in checks.items() if not v])),flush=True)
-    r=dict(passed=all(row['passed'] for row in rows),selected_initialization_policy_accepted=all(row['passed'] for row in rows),parent_sha256=sha(binary),inputs=inputs,cases=rows,checker_sha256=sha(Path(__file__)),
+    r=dict(passed=all(row['passed'] for row in rows),selected_initialization_policy_accepted=all(row['passed'] for row in rows),parent_sha256=sha(binary),inputs=inputs,cases=rows,mouse_scales=[8,4] if manifest.get('experimental_mouse') else None,checker_sha256=sha(Path(__file__)),
         scope=__doc__+' Nine actual8086 DOS cases: immediate/delayed/ERROR, legacy quiet and explicit quiet timeout, numeric0/4, two configured commands with delayed second ACK, and echo/unrelated lines. Exact UART/modem commands, actual ANSI replies on connected cases, no pre-ready ATD, normal exit and42-byte UART restoration. Not physical Boca timing, SIP/audio, retry/flow-pressure or full F03 acceptance.')
     (out/'checks.json').write_text(json.dumps(r,indent=2)+'\n');assert r['passed']
 

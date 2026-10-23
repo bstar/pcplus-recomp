@@ -17,13 +17,25 @@ global terminal_modem_init_poll_impl,terminal_modem_init_receive_impl
 ; Every nonempty command must have a physical CR. CRLF and pause/LF-only
 ; trailers are preserved. Embedded physical LF inside a command is rejected.
 terminal_modem_init_validate_impl:
+%ifdef TERMINAL_HOOK_MODEM
+ mov dl,[terminal_modem_pause]
+ jmp short init_validate_common
+global terminal_modem_init_validate_plan_impl
+terminal_modem_init_validate_plan_impl:
+ mov dl,al
+init_validate_common:
+%endif
  xor bx,bx
  mov cx,129
 .next:
  lodsb
  or al,al
  jz .end
+%ifdef TERMINAL_HOOK_MODEM
+ cmp al,dl
+%else
  cmp al,[terminal_modem_pause]
+%endif
  je .advance
  cmp al,13
  je .terminated
