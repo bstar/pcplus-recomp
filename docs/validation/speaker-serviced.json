@@ -1,0 +1,471 @@
+{
+  "passed": true,
+  "serviced_speaker_owner_accepted": true,
+  "optional_notice_speaker_composition_accepted": true,
+  "PROGRAM_sound_binding_accepted": false,
+  "full_PROGRAM_policy_accepted": false,
+  "full_application_accepted": false,
+  "host_checks": 68,
+  "linked_checks": 513,
+  "modeled_abandonments": 196,
+  "UART_sessions": 16,
+  "UART_checks": 8760,
+  "notice_DOS_checks": 49,
+  "quiet_regression_checks": 583,
+  "source_files": 74,
+  "products": {
+    "build/speaker/SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+    "build/speaker-notice/NSOUND.EXE": "3ba19d4482fec50846c8b148be9948f64b6643cb32e45f9e84ae550d967f5871",
+    "build/notice-bank/NOTICE.EXE": "8005ddefc6277deac2551c759dc1d3d46454fcf066a3c6480a0dd07a77797caa",
+    "build/notice-bank-uart/NUART.EXE": "0770f1f48f884d0abc794b3e4ad3cc72bbf516eb010586545ffd64bea65a482f"
+  },
+  "PROGRAM_source_files": 237,
+  "PROGRAM_products": {
+    "build/aspect-notice-parent/ASPECT.EXE": "2a4c5443acfb63493e74b089e0f90a6ce4edd306e95f46cc07ab0e0e2262716f",
+    "build/aspect-notice-fault/ASPECT.EXE": "c5110ef9d4409f3697ddc964d9d7f132659097716640ff226270d6383f840dc7",
+    "build/notice-bank/NOTICE.EXE": "8005ddefc6277deac2551c759dc1d3d46454fcf066a3c6480a0dd07a77797caa",
+    "build/notice-bank-uart/NUART.EXE": "0770f1f48f884d0abc794b3e4ad3cc72bbf516eb010586545ffd64bea65a482f",
+    "build/notice-window/save.bin": "2d0344e73b8a98a5ca483a0cdb7fb5809f8fe9117a8452a47afe52dfca809b59",
+    "build/notice-window/restore.bin": "35fbd2d1ab5be3a89bc5ffbcdf375d44de6e7df4162802d7cc8e5cfcada990eb",
+    "build/notice-window/expand.bin": "f969b0706e15d6349d6d461770ce99af7ef0b7f2981df6021d2cf82a330352d0",
+    "build/notice-window/collapse.bin": "f03f9f4217d9b5838c9d0c505239425c18ea6ee3221a4a0f014a1f69c701efba",
+    "build/notice-window/restore_cell.bin": "5a9aa75b2e9b16deac9512f33656c10eedf17643846231e6bba386a0273b2119",
+    "build/notice-window/collapse_delay.bin": "bc58e283798d46142527aa793ccf114516285895c05a1ab84103043a15a80a37",
+    "build/notice-window/frame.bin": "330d12d476f29508fb449ead10d6cd6b12e8b8b3f7b4bf2c8dafa373c393dd0a",
+    "build/notice-window/shadow.bin": "f2aceb077edbeef29248d1086a4af8906e689b169d2574fb82ddd97ddc23a4c8",
+    "build/notice-window/vertical.bin": "12f6be26b4ca4bc0cbcb988f500a891df4488eaeddb8e01ced0e183ea0575f95",
+    "build/notice-window/cell.bin": "8d5c11a3861cad2722da59bc0837e7f8ab639e0e93df30c779f178b461e308da",
+    "build/notice-window/horizontal.bin": "deb8aafb45000bdc23cb3b505daf2719a0a74e033cb2dab9e84edcaf307b1240",
+    "build/notice-window/attribute.bin": "2e800efd0916e83873500ec7575d08c0e89c024f047bfb276e4075bb6939b8bf",
+    "build/notice-window/write.bin": "824cbac888a2dbb3b696604640283795555e4eb6ec80fa96413cc2ef09d571c7",
+    "build/notice-window/stride.bin": "c5235adbe8221b45b7ed4bc497703c283d0b46acb0b6f3f696ce4da6b8c5c699",
+    "build/notice-window/copy_cell.bin": "b80cfb24d4efed177a01b23419d39f5e25d9409460ef5b8286b2a8ea21fd6251",
+    "build/notice-window/offset16.bin": "c7759c8acc85e71cc79487fc67c13cf1ae39c90fb5c982f7c93f749064ec2700",
+    "build/notice-window/cursor_pop.bin": "abeb2eb16fd1d5cb88f2e6e2d10d0379e65732acb917c0132a2d5697129927ce",
+    "build/notice-window/cursor_push.bin": "b8cf98c71a7789f24cea2f160e4f521032f2da547afffafbd0092894bd93cd3f",
+    "build/notice-window/cursor_get.bin": "ca5cacff797fbe0ebdeb2cde96e2e1293c11cd54634069b6a03b128a80e4db1b",
+    "build/notice-window/pace.bin": "a7149212d6d9857e43f3e86112c258c9e11c2aeae0d292ef964a908b43beb850",
+    "build/notice-window/program_display-snapshot.bin": "164dc8ffafd40e92ac35748da7c406bab2ca02d88b1fafc0d9b55f760193ebe5",
+    "build/notice-window/program_display-restore.bin": "b09b806dfc742a30e693288cb672da6825b25b1c9cdf49f9d5ed6f94bb66b2cf",
+    "build/notice-window/program_display-snow_enable.bin": "aeb0332b6f43a6fbd8a691b197b2036c863ea3c5832b0602ac5ae8e44024288d",
+    "build/notice-window/program_display-snow_disable.bin": "2cc6e3631df4700f866b38ea1f726e830474355ea81536da84aca5593cd1ab0f",
+    "build/notice-window/program_ui-scroll.bin": "030b69e0c6597681f4d67663a739e8edf5d5ef943b7ac556ee5114d97283d8d1",
+    "build/notice-window/program_ui-cell_offset.bin": "2f6af5067d295e49ffc695ccab98323358719eda2ea5e33efb4e012f763a6a76",
+    "build/notice-window/program_ui-cursor.bin": "743e345fcdb471636b2dbbb1c007f1daf3db6fc552104c2d1b7e00aeb60cb847",
+    "build/notice-window/program_ui-fill.bin": "08ea48781227a85522ff2a3f6938525b9f5d52ca6f12b262cd167949e39b7e00",
+    "build/notice-window/program_ui-snow_cell.bin": "7bab9cb56a22ca9a320334852827b48aeee7cb8ab1f6e43ead984650d07060b1",
+    "build/notice-window/ui_windows-read_byte.bin": "57301f1aaf386d6b48cd18376a06363cf0c6cd5f382266d39123fb4d6040212a",
+    "build/notice-window/WINDOW.EXE": "d8e01c9c5641de742bf6d468fd1437136bb18494362e4f7535d7ce28f4b77c44"
+  },
+  "quiet_PROGRAM_products_unchanged": true,
+  "sources": {
+    "src/ui/speaker_native.asm": "496d74954eff909384533fdd1d182049d39f6854d80080bec2310181b9374908",
+    "reconstruction/uart/core.asm": "9c0a38a7a305c5eec8e1c2299da74953656d33bdcae63f9866d7ef2d576fa52f",
+    "src/uart/api.asm": "ea76dd20ce14ccc8f9a6af725a05202f7888e1b7cb349d93a96f8faa16f9ae6d",
+    "src/aspect/serial_backend.asm": "da8a2d6b7525c51fb367c49d1c237442959efdf9a1eaf07f74e184cc46d4490d",
+    "standalone/build_speaker.py": "394a6dfe112a19c63af2af7b300f56438f03510d001a39b88b2423670038143e",
+    "standalone/omf_imports.py": "b831a013f7dcb19bd1250bb9a73bf56218d24f48a6fe22feb86b6fc677db7473",
+    "src/ui/speaker.c": "3a8ffeeb549737ca19eecb1149e9c2b1182fd93a31ab7fc3964507dbf727c21e",
+    "src/ui/speaker.h": "922ff24f980dcb2f33477ecc3c03f63802373f1febd938aefcbd93395fd94a13",
+    "src/aspect/serial.h": "2d8a7972238bfddc8180c69d62bde1fa02d10dab3c6178a64978b7eb4ffce23b",
+    "src/aspect/serial_handoff.h": "1b8363a4c6da26afc22762c700b77ada11e79b4c014352af2c2cd3606ddfa105",
+    "src/aspect/resident_render.h": "f30a3f983873050ebb965d9f98ae06c90b6f8ac695fdc8f6c083858cf7fdfcc4",
+    "reconstruction/uart/layout.inc": "1e732d890b17486bdace3f978276ce48e55da318df70787aa54475203fa9bd21",
+    "reconstruction/directory_accounting/patch.asm": "3ed899cd9515303cf7906d572ee87d0a884a7dca90b8cf14ac1ff316b30200ac",
+    "src/aspect/serial.c": "1c777bc64beb0dc365257ec5633759a53462e254596462b3951ab1f4ff41fc87",
+    "standalone/speaker_uart_diagnostic.c": "0e722893f26feb8ac4f45c02815b3ed4276eb84df0843c4b7f467941e21b7494",
+    "standalone/build_notice_window.py": "379074b00b0ca5eece6c5664d2f755a1990dbd71adddabe18a749abbf68ad313",
+    "reconstruction/notice_window/provenance.json": "ca21b48e5618df93f0813f964382639ba24840865b03a332f4d303b43e10f1bd",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/program_display/provenance.json": "6b3a2f47120c20ba43cac11f074da5daf7ca85f388a1ba87739be0f3fe41cb27",
+    "reconstruction/program_ui/provenance.json": "ea7cf6e3e92da71a06921b9106514642458a361cd5c177f9bc90b348fa0aa790",
+    "reconstruction/ui_windows/provenance.json": "3953e1dad63071a2ee11e0ee9bf82205cb4cc857afcb8ee7f645d113cc8bf0ea",
+    "reconstruction/notice_window/save.asm": "7bed7d121a96911f7769b2793f159a273618afecf24b52fa1c4c0b41ee2121e5",
+    "reconstruction/notice_window/restore.asm": "9f8275060c34f048502ccc44b626da82ee15042b20d3268c9a5075f34bd8ae91",
+    "reconstruction/notice_window/expand.asm": "ec9368a47fd44a0fda60caecddb0ef5f9ea7fdaf56abe1e1c07ad8edf262b95f",
+    "reconstruction/notice_window/collapse.asm": "80d3799801cb148d1b8659dcedb3d2d19a968b3f52bbff5c64a52f3b7919a44c",
+    "reconstruction/notice_window/restore_cell.asm": "f7997c8b063923bc90014f72b83e2a38b0198f4791f3cf66b6d9ea125b70e717",
+    "reconstruction/notice_window/collapse_delay.asm": "2d808233a570e0e8cd0a6b3354042020af8a9c666fd1e0b97ba219a505cb55ee",
+    "reconstruction/notice_window/frame.asm": "5b43ce4583e42b9948e1430806dffd132e03f76cf4299c167a4298f879e1a39a",
+    "reconstruction/notice_window/shadow.asm": "01f7ea5a5fcbd111967c15f39382b45937f11f7ee09a5c5643c4d2ad1e2620b9",
+    "reconstruction/notice_window/vertical.asm": "dba845a22a23faaa64fc3eb86d214c15346092824fa079dc335ea50d26b7bebe",
+    "reconstruction/notice_window/cell.asm": "bacbc08fd8f27313b230e057dccab0518625a9eea4969d7a6832dda94df44b00",
+    "reconstruction/notice_window/horizontal.asm": "0d29a25e5715b93906195502d072904932f5cf471b0cd7b9d869eeed4c9ecc4e",
+    "reconstruction/notice_window/attribute.asm": "78b3a9e145fcca9a5836bd19e4ea4342bcb769182435d1ff79c7da2ddc698e84",
+    "reconstruction/notice_window/write.asm": "2b2bdd2b8343dccba7fbff038c78b44f91632b22038eb2aace6401224c1890bd",
+    "reconstruction/notice_window/stride.asm": "bc50dc167b92c4d957bac499cf533da0f41ca9b2a93941200587ad37954e7e1e",
+    "reconstruction/notice_window/copy_cell.asm": "4899fc4228859cd227b5b11c508be2e2dcfb6b68b22e30cb3750b95ec1db8b80",
+    "reconstruction/notice_window/offset16.asm": "1d208999e0e0a62780ba04b2ec59cce813c390b6d3025e4564229ec010732b46",
+    "reconstruction/notice_window/cursor_pop.asm": "d2a00520742f1de18767a104b42933737959642d384b8ca638db082cfadab212",
+    "reconstruction/notice_window/cursor_push.asm": "45599c016260c5e12d08ecdecd486f52168654abec47c184505bf163d8a1b754",
+    "reconstruction/notice_window/cursor_get.asm": "6f98f7b563f3914673fefb5175501b6352ff8d0d78d4241af25b10cd948195a0",
+    "reconstruction/notice_window/pace.asm": "5ffc068cdd61660b1c5d7742c5bc5332ae22ec6b3654b4bd32d138cde22ebc97",
+    "reconstruction/program_display/snapshot.asm": "b14553105adce657970031110614ad769cd5208ec1580660cb71cffc69183ce5",
+    "reconstruction/program_display/restore.asm": "0afe70fb362c90e08977a9daf1b9f73b533398b1fb837cf64067efd1ae1e7f3e",
+    "reconstruction/program_display/snow_enable.asm": "acfc80bf0dac30c7733784fafe7bb25ae9f50358a8539e149604fc7a75a57ab9",
+    "reconstruction/program_display/snow_disable.asm": "2ca6e6e84047f235d2c994a8bfb319f664b80442cb4b36ec7a61f76cb7612990",
+    "reconstruction/program_ui/scroll.asm": "b5cb519b3edcb8a86dcd40764ea6b24933d45bfb4fdf43d52d821672d4122884",
+    "reconstruction/program_ui/cell_offset.asm": "9064c4a63d7ae1668e533f851767779951acc9c23c674fa9e2ea9c082706944c",
+    "reconstruction/program_ui/cursor.asm": "dac8ddb81da4e77050386cb3b2cda6b74c1960834eab4341ae9d53f24222798e",
+    "reconstruction/program_ui/fill.asm": "6c0678fa6e50f61c99a29dd1ab3448a497a2b6ffb657fa93b0f5ea81d415a973",
+    "reconstruction/program_ui/snow_cell.asm": "4200155b4cb6e34565f9184bec558877631edfff824973d7a5df6a8c4f56c356",
+    "reconstruction/ui_windows/read_byte.asm": "fc7cc46379666140e7082a0a3a8504b616495cc04c82488d2ffd3c69253a5d76",
+    "src/ui/notice_window_native.asm": "9c7bbdcb95c33319d24716382c198faafc100444aa75fc3df63728c895829ef0",
+    "src/ui/notice_window.c": "479b21a8677f54d1c7f6a89851a5eb503d199fdbe9ff915d758e4b56d16704ce",
+    "standalone/notice_window_diagnostic.c": "32d92283aaa14b67ef49899d419cca22a05db56837d735feb92bc4b33ee4d4ad",
+    "src/ui/notice_window.h": "08470d7725e35fae3f12ec7a2b328d8afbe72d60244b02c674487d761689cd4f",
+    "src/ui/notice.h": "4480c8653d038cd9044955c7a3c8a5ed62ed11b74624d509afb300787e853ed7",
+    "standalone/build_notice_bank.py": "e3a2001edb8ca718021da248958f1c716b65efa1e8ab851091cecb22aa14aeda",
+    "src/ui/notice_bank.c": "0adc8e3793685849c7f0fa6ab6ce17ed24bd72d426a4422eba103fe3e0b0a51f",
+    "src/ui/notice_bank.h": "9613aab28b7cc1f9238d43031dd30f6c8002eea499706a5d85a27a2678bc8fd2",
+    "src/ui/notice.c": "5ba72efc8f94a95d4fc101589131daf561e1aecf6858487d0f94db5385c30872",
+    "src/ui/notice_unwind.h": "cbae91c800f11e85d1715d6dd2f2716ce078a02554a508cf1263a3a9a1bc1f76",
+    "src/ui/notice_checkpoint.asm": "eb81fc0f403871bb39071e90af635f35aa1f93d413fa059d513ae606d0ee7156",
+    "standalone/notice_diagnostic.c": "906713ea5d829c29734dea0f6d3ead37a65838d09c11a0885993f10b5aa896c7",
+    "standalone/notice_clock_probe.asm": "c1cdc71546bd3ed9af28eae811e82da0dd0ffb3ea1feb350cbec83825dbeada0",
+    "standalone/notice_bank_probe.asm": "f24e83798be6f13f4a8aef626e35dcf0229c20324a53ac5ec6b57636aa0e6532",
+    "reconstruction/program_notice/core.asm": "d7bc2c89bbb25ca62e66e4cc3e5d3592e0097cc055c9e8ee30a03cc9ccf8b33b",
+    "reconstruction/program_exec/strlen.asm": "a3a4f98217c60ca930b83060071be356bb2340740f6a994e450fecab13d0f5af",
+    "reconstruction/transfer_uart/clock.asm": "f64b3106aeb5633f6edb0002db0b3f8b73c5f563033b752848d13b74490943d0",
+    "reconstruction/program_ui/text.asm": "d9cef80cd9fae124cf63eb596a293746a8e8de679d30c9ea11228ab0596bc9d7",
+    "src/ui/notice_native.asm": "86b7f62701a247d6efec86234612066caeb16578a8ef7f6d23901f02bca4dda8",
+    "standalone/build_speaker_notice.py": "f55d4da60a09bbd4370f7260b8cfeb25797342492654fa458a88a620a7021a0f",
+    "standalone/speaker_notice_diagnostic.c": "7b92da53428f32b9555beb960b91f7e1fe7d5ed80bd8bceb02b52196c513d43a",
+    "src/ui/notice_speaker.h": "8beb65c152ca1425d7a0d1139b2c3a5b9e880f8304c0dacf0cf476e648e38c84",
+    "standalone/test_speaker_host.py": "d9ec6ddb85906f303baee36275a464fda884700b8807ebeec530b651e2d2f4c8",
+    "standalone/speaker_host.c": "c6fc0785f088dff6954ebd83cddc55530e6f9b430d4d9ad166426e7ff84c7c20",
+    "standalone/check_speaker.py": "abb6d7811a275ceb01dedee420a340ef7d505519c80a65d2855ad6e9e27ec763",
+    "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+    "standalone/prove_speaker_source.py": "a07c81cd2a9745a82dbda4dfa7c3f239c94ed3b80e496955749bb0cdeaa4de5a",
+    "standalone/test_speaker_notice_dos.py": "fc20284f733ae6e3d440e4b6bad0eb20e867a89d1688d2bba98afc1c94b5801e",
+    "standalone/test_speaker_uart_dos.py": "d0b2a7ba6ddc6f14748b65a9db0a48f52b88214d0d6a0945eaf7e7755f4bb43d"
+  },
+  "reports": {
+    "host": {
+      "path": "build/speaker/host-result.json",
+      "sha256": "88de28614cf1fde5ebdb44e913f346e24de4a8c7954d74c42baaabe8f642c605"
+    },
+    "linked": {
+      "path": "build/speaker/checks.json",
+      "sha256": "c47f159a24789f2b986bd3fe0d111ff97bb99daa33c4112aa1d7e8ec08126bcf"
+    },
+    "UART": {
+      "path": "build/speaker/uart-03/result.json",
+      "sha256": "5374de141dbf4976113f5af36ad025f80fdb4465d9d5d3707c1389f838ad2137"
+    },
+    "notice": {
+      "path": "build/speaker-notice/dos-04/result.json",
+      "sha256": "f55e6e01b9f16f08955eef207ac6100df83b8b89d2d587352611bcbf3854db4c"
+    },
+    "source": {
+      "path": "build/speaker/source-02/result.json",
+      "sha256": "a54fa447db2112e63f1518f255f6bbf7d17b4bf7fd79224de17e68636de6295c"
+    },
+    "quiet_regression": {
+      "path": "build/speaker/notice-regression-01/result.json",
+      "sha256": "5c80735c6411c0c877f8fbf170bcf6d763226116bd52dfdb8d421a8282f2c9f0"
+    },
+    "PROGRAM_source": {
+      "path": "build/speaker/program-source-01/result.json",
+      "sha256": "09608d979c9b63666fa1dab4b1b82f81415a2a6e37f5b7cd1aee5eb651cebdfb"
+    }
+  },
+  "UART_cases": [
+    {
+      "port": 1,
+      "flow": "N",
+      "mode": "N",
+      "checks": 547,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com1-N-N",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "1f3d5321b3ad0bfeed611cee95c115dc067c2e005d858afe21ebbb641ec8d6e1",
+        "dosbox.log": "86c3998948c1c24dcd1dca53e540aa4f225b67694358a3ccc90447b5c131a264",
+        "OUTPUT.TXT": "fb2cd152fddae9e64f38e1b79171803729b10a1d43655c504a3029e9f9f89662",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "5a964620dce44183353a8010cd8f818fbcb4be3d3c02003ab9759e180d929b21",
+        "wire.bin": "7d64a3e621b177f3e4b3a3fc6d8edd675b35a0c125394e5977a280367038926f"
+      }
+    },
+    {
+      "port": 1,
+      "flow": "N",
+      "mode": "E",
+      "checks": 548,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com1-N-E",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "317191cc2f975109b99b25d3cf934da8217ffae6d2efa3888e7e1a9d843675a3",
+        "dosbox.log": "0cadf9cdcdc82a74903178df3608aa2507faa873b268072c5f79480eca3b2658",
+        "OUTPUT.TXT": "d466592dfbba64a21cf17536e0a43b51685b72fd14d71696a6bf3dce4caf310b",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "cf5f7a503ab91cd60e38fc1171194c0b48133f8e1a87cdabca24de275946c14b",
+        "wire.bin": "7d64a3e621b177f3e4b3a3fc6d8edd675b35a0c125394e5977a280367038926f"
+      }
+    },
+    {
+      "port": 1,
+      "flow": "S",
+      "mode": "N",
+      "checks": 547,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com1-S-N",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "6882e0093f115ce4f26ecdf137cc7df87c7c38a68dd46bc070bd8fd9feada673",
+        "dosbox.log": "3fdfe776e7c7f59a7d7a7dff4c67e7b1072cf1998b12db11758276b355b1d6f0",
+        "OUTPUT.TXT": "784a19ac1ff9a62bd5dda3b83f7ff44cb7be080a5c78a9c9f2bddd5a4002654a",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "f94056d72437b3cf193c2d7a882a0467a3e7493fdfaaec27051ffe8330e74c47",
+        "wire.bin": "440d999711ad4eeeebbfb54e89d643fa2baabb2027c901cc69af9206bb7a4243"
+      }
+    },
+    {
+      "port": 1,
+      "flow": "S",
+      "mode": "E",
+      "checks": 548,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com1-S-E",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "28147ec614fddb2270733c9a2fe7f1f32272d37b4482a41025a861f4f1a95d1d",
+        "dosbox.log": "941fdbf2037dc35cbcab0ac830a36cae743d59bb0a6da766265795575a36e88f",
+        "OUTPUT.TXT": "e6e6d22ec432bf77d960a2fca8917ae713f49f7f28ecae0f807cd42283b3377d",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "78ab847fd75182e5b4f8aa0e809c06ba0ed4499ccd9ef997ddf2d6f13d47a25a",
+        "wire.bin": "440d999711ad4eeeebbfb54e89d643fa2baabb2027c901cc69af9206bb7a4243"
+      }
+    },
+    {
+      "port": 1,
+      "flow": "H",
+      "mode": "N",
+      "checks": 547,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com1-H-N",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "63e6eb4fa2cf3cc440a03f499c10b01272b29b214cdf5ebb7b47401d24214a4c",
+        "dosbox.log": "efd64286ee0e793900c61fbf89d6edf2bf48a193c1c7cb69efe71c1e48a47ea9",
+        "OUTPUT.TXT": "099fac9041237c5cca0b9583d7e479012b76fce057a4eff893672a4d38ce34df",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "3d7e7a04636e56587bd0ab7c15da8db27cd3e80bc799db2cb263a66939bad388",
+        "wire.bin": "7d64a3e621b177f3e4b3a3fc6d8edd675b35a0c125394e5977a280367038926f"
+      }
+    },
+    {
+      "port": 1,
+      "flow": "H",
+      "mode": "E",
+      "checks": 548,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com1-H-E",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "d85df4ca3507c67eb21657b4b81fa806ab31d7e5c6563bdfef5b5ed6d50afd7b",
+        "dosbox.log": "9aac6273f5306e753a5f8eb330e0d6ac501d42e3a12d230e99c2d2f2f7110c6b",
+        "OUTPUT.TXT": "779207625b9da8b647f853309ccbc849f565ddb38462ea3e12d1517d07c07aba",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "8c85dcf332a82929e8d5eaa27b38f37461008e2f042b8382e6c9537ad28c0c55",
+        "wire.bin": "7d64a3e621b177f3e4b3a3fc6d8edd675b35a0c125394e5977a280367038926f"
+      }
+    },
+    {
+      "port": 1,
+      "flow": "B",
+      "mode": "N",
+      "checks": 547,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com1-B-N",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "9b298535a4559913fd790400fb89771d7dceea5ddac6f38377e9dcdd4630a23e",
+        "dosbox.log": "d7f10fbcf2d37999231eff6d36de0c760c38a7ff0ffbfc692d4926841e2f15ba",
+        "OUTPUT.TXT": "6500ff13f14bdec25630214d8f93d422029b72738f87b2cd720d88acf2c6eae7",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "e23c213292efe039ed245898404d5e950073265de35361fb4130cbafc97613a0",
+        "wire.bin": "440d999711ad4eeeebbfb54e89d643fa2baabb2027c901cc69af9206bb7a4243"
+      }
+    },
+    {
+      "port": 1,
+      "flow": "B",
+      "mode": "E",
+      "checks": 548,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com1-B-E",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "9e3939f4958e8c789b9e50b92cf983372e73e25e893af86e052f18e869448ca9",
+        "dosbox.log": "2a170719bd786ef005a89fcb7122f58ef631d94e8ab8865a5be2e12c1324585f",
+        "OUTPUT.TXT": "cf4e2086ad2e2ce5a64d12af9e36da69c61ae3704e33fa530399ab9f207489ca",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "7abc26e58ba190057d762ed0b7a1a05ab673958ae0d9a66ca0bec739c339d09e",
+        "wire.bin": "440d999711ad4eeeebbfb54e89d643fa2baabb2027c901cc69af9206bb7a4243"
+      }
+    },
+    {
+      "port": 2,
+      "flow": "N",
+      "mode": "N",
+      "checks": 547,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com2-N-N",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "b7efecad6afd29eecd967e5d17c171bcf8428709c83f188979d0b425625b419e",
+        "dosbox.log": "5cae55a8cb907a15b007621a6ab0a00652e2495ef5a59e99e8df3ee651dc3f11",
+        "OUTPUT.TXT": "0cb375003311091f93b49744c31f0af2316eb72de655947922c84640f1164796",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "fdad0de8e7981a10ff418a915d478488dfd3299ec78fc7b31c452afdb49d426d",
+        "wire.bin": "7d64a3e621b177f3e4b3a3fc6d8edd675b35a0c125394e5977a280367038926f"
+      }
+    },
+    {
+      "port": 2,
+      "flow": "N",
+      "mode": "E",
+      "checks": 548,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com2-N-E",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "be8d9a23a9e037bb5c50926f8cd4abab516503d7834e4540326abf902fd17efd",
+        "dosbox.log": "9bc0ae5ffcdcfd70878ce1108859c36dc42e29661cb5b18f3f639d0d1b80b09b",
+        "OUTPUT.TXT": "a55a37e1340031bce1c0dfc7c608bcc67431c8465f3082ad14316bbcfab46786",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "3db2599618f8e98b930abf9f20db07ef92bbf8164aa4aee32b0797b67200b232",
+        "wire.bin": "7d64a3e621b177f3e4b3a3fc6d8edd675b35a0c125394e5977a280367038926f"
+      }
+    },
+    {
+      "port": 2,
+      "flow": "S",
+      "mode": "N",
+      "checks": 547,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com2-S-N",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "084d6a7ea9023640c42cab431df2e6ee4174e5e182c41ea77ebd7a98349f0294",
+        "dosbox.log": "8b6afec8bd7dbffae7c49098341818209651d7959c9fe505fbfb359f47291a6d",
+        "OUTPUT.TXT": "ef36574e6206c65a1d2333be46384bda25f57e478f9757984fc6d4b2da2eb146",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "a78886c505cf3b53fe875db58d58b8698bf1f866e436e1db5f4590d11dd3c51c",
+        "wire.bin": "440d999711ad4eeeebbfb54e89d643fa2baabb2027c901cc69af9206bb7a4243"
+      }
+    },
+    {
+      "port": 2,
+      "flow": "S",
+      "mode": "E",
+      "checks": 548,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com2-S-E",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "3fb7ae02bf78f4956497c46b2e5ee0f09907bcf3c5b895ca8255d6de8ba54e30",
+        "dosbox.log": "b7456b396bd8995b481be7ffdd06404a0dfe2f8b7ef8888e2b7fab9b9efa1393",
+        "OUTPUT.TXT": "8af3645fa442f87088c5c0b654a2bede33fa579d409d08f458a063b32f8e8acf",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "5832f096191016cff06152a275a0a431b5ee7bac453e0839d06dac4ea79a6d4a",
+        "wire.bin": "440d999711ad4eeeebbfb54e89d643fa2baabb2027c901cc69af9206bb7a4243"
+      }
+    },
+    {
+      "port": 2,
+      "flow": "H",
+      "mode": "N",
+      "checks": 547,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com2-H-N",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "74ae026647039a1f0bec4d640bd93bc02df780451d5fa9dd88da3fb81ef47894",
+        "dosbox.log": "5bf1c0ca8157afca886844f3c82f11a07cf44db424541417f9e89efd381b2c83",
+        "OUTPUT.TXT": "eb842a9ea9406863a59d991021af2a4902ab76f59628f97e6285e815ae8a77a8",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "00d4f6c03101bef7100b3712bb4b0f85174c5c9eeb1b3209d6855daede31c501",
+        "wire.bin": "7d64a3e621b177f3e4b3a3fc6d8edd675b35a0c125394e5977a280367038926f"
+      }
+    },
+    {
+      "port": 2,
+      "flow": "H",
+      "mode": "E",
+      "checks": 548,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com2-H-E",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "f32911dee7cc2d5beccb20859a5ef4b3cf01b3dc3f42410fc5a740810fa42677",
+        "dosbox.log": "8d96fd66acc2cefa87c3d1f7df9c3e24462973bc8dd611496c063ea6fce0e228",
+        "OUTPUT.TXT": "2bfecd9af6e89960066e157cfb1f34b9896a50df7e0411e09b37ebb419904b19",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "fe8beac3065c5f3948fc30d5ce5d60844d0d9e7bcea6cc01d94d28eeb1c6eddb",
+        "wire.bin": "7d64a3e621b177f3e4b3a3fc6d8edd675b35a0c125394e5977a280367038926f"
+      }
+    },
+    {
+      "port": 2,
+      "flow": "B",
+      "mode": "N",
+      "checks": 547,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com2-B-N",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "e34cb55ecc9cc8aac548270184861692595f771d2e342fab15d7dcde75a3df23",
+        "dosbox.log": "5db2fae3b22fd73a1b9932ae9c029c7ca6562b3f5cf8a5c51b3a1a7e0626539d",
+        "OUTPUT.TXT": "0aa393aab43de44972244976bf999c826a4f87cf06c6dcb0e68690f26d0d459b",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "59b712a3cee13bd921c8bf401ad3f0e2b7efb30e47013da26bc0d13bc589b349",
+        "wire.bin": "440d999711ad4eeeebbfb54e89d643fa2baabb2027c901cc69af9206bb7a4243"
+      }
+    },
+    {
+      "port": 2,
+      "flow": "B",
+      "mode": "E",
+      "checks": 548,
+      "maximum": 508,
+      "folder": "build/speaker/uart-03/com2-B-E",
+      "captures_sha256": {
+        "SPEAKER.EXE": "797bf1961ee7329d83d447139b674f7474a8f46300a985f6685c09763d46d13d",
+        "dosbox.conf": "a20ee8dc412350b89d9f1a72d6cc77cbfefbdfa566699d437d385db8999def4d",
+        "dosbox.log": "ee5cd5635f276560ac3d7963bbf4826bf8e79fb36fdd112081b29507c20e7394",
+        "OUTPUT.TXT": "2074c253b84aaef55bfa68462a7bc17df3d2b396c9a3f08360690657c6cbbd03",
+        "RX.BIN": "bac1c04536a5cef95d7829c151b350b5f9981f5266139334bc1d7ef76cd76086",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "peer.json": "1cbce4eae968ba8bda2c9c7fb7f796e3c085a1d7264bfad30222d37b215c3e23",
+        "wire.bin": "440d999711ad4eeeebbfb54e89d643fa2baabb2027c901cc69af9206bb7a4243"
+      }
+    }
+  ],
+  "limitations": [
+    "Standalone UART and notice lifecycle diagnostics are separate; no combined attached PROGRAM/BBS sound workflow accepted.",
+    "Modeled instruction cuts assume caller has already repaired DS=SS/IF; actual asynchronous CPU/hardware fault coverage is not claimed.",
+    "Foreground caller must keep bounded polling or invoke cleanup; no autonomous watchdog if callbacks never return.",
+    "Only a previously inactive cooperating speaker is admitted; PIT2 mode/count are left programmed with gate off, not fully restored.",
+    "DOS mixer muted; no acoustic waveform or physical speaker/modem timing.",
+    "Actual application sound configuration/PROGRAM binding, macro/mouse/shared UI, broader views and full F01-F16 gates remain open."
+  ]
+}

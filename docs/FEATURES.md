@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Serviced speaker ownership](PROGRAM_SOUND.md#serviced-speaker-ownership-and-optional-notice-composition)
+now adds a separate far bank, validated quiet-speaker admission, finite BIOS tick/
+poll budgets and generation-aware cleanup.68 host checks,513 linked checks with
+196 modeled abandonment cuts,16 actual UART DOS cases and49 notice DOS checks
+pass. Actual longjmp/IF-disabled recovery and foreign-owner quarantine preserve
+screen/window/speaker ownership.74 sources reproduce four products; quiet583-check
+regression and the237-source/35-product PROGRAM proof pass unchanged. Application
+sound settings, actual PROGRAM/BBS binding, physical audio and full gates stay open.
+
 [Native PROGRAM notice sound](PROGRAM_SOUND.md) now has108 exact recovered bytes
 plus the existing38-byte calibrated delay.100 original instruction comparisons,
 an actual8086 DOS diagnostic and a ten-source/six-product rebuild pass. Configured

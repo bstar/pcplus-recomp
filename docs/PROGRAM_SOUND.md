@@ -62,3 +62,80 @@ regressions, physical hardware and full F01–F16 gates remain open.
 ./tools/build test-program-sound-original  # Analyst comparison needs ignored original.
 ./tools/build test-program-sound-source
 ```
+
+## Serviced speaker ownership and optional notice composition
+
+The maintained [speaker owner](../src/ui/speaker.c) now supplies separate
+start/poll/stop APIs in `SPEAKERCODE`. These do not replace the exact native
+baseline above. They require foreground DS=SS and interrupts enabled, reject
+frequencies below19Hz before any PIT write, admit only1–182 BIOS ticks with a
+nonzero32-bit poll limit, and refuse an already-active speaker (either port61h
+bit0 or bit1). Polling stops on elapsed time, invalid BIOS time or exhausted poll
+budget, including BIOS midnight wrap. It neither dequeues UART bytes nor owns an
+ISR. The caller must continue bounded polling or explicitly stop; this is not
+an autonomous watchdog if a callback hangs forever.
+
+The backend checks and publishes the generation/cleanup owner under a short
+interrupt-disabled interval before its first PIT write. Generation skips zero.
+Stop clears only the owned gate bits, preserving other bits from the immediate
+input read, and publishes release after the hardware write. It never stops an
+unowned active speaker. Invalid DS=SS/IF context retains ownership for repaired
+retry. Inactive-speaker admission means the gate baseline is quiet; the PIT2
+counter/mode is left programmed in mode3 with its gate disabled. Arbitrary prior
+PIT modes/counts, noncooperating direct port writers and physical hardware are
+outside this ownership contract.
+
+All public owner operations cross an explicit far bank boundary. The builder
+checks that the four near platform helpers share the owner's CS, that main has a
+different CS, and that the C object imports no unexpected near CRT helper.
+The optional notice diagnostic adds a third bank, `NOTICECODE`; no near sound
+callback is incorrectly invoked from another CS.
+
+`NOTICE_SPEAKER` enables the optional composition. Its private
+[configuration API](../src/ui/notice_speaker.h) defaults to quiet and rejects
+changes during a live notice/window/speaker lease. Explicit enable lets a NULL
+legacy sound callback select the built-in220/440Hz tone. A supplied legacy
+callback takes precedence. The ABI and quiet behavior of builds without
+`NOTICE_SPEAKER` remain unchanged. The built-in error/information durations are
+3/4 BIOS ticks, a maintained coarse timing policy rather than a claim of exact
+native150/200ms calibration.
+
+Notice service polls the tone while its existing callback can service UART.
+Normal completion, service errors, deadlines and explicit outer unwind stop only
+the notice's speaker generation. The notice reserves the expected claim generation
+before entering start, so an abandoned claim remains identifiable. A foreign
+stop/reopen is retained; configuration and a new notice reject until that owner
+is closed. Retried cleanup preserves the original cause. An unwind attempted
+with IF clear rejects without releasing either speaker or window; repair permits
+retirement.
+
+The [serviced receipt](validation/speaker-serviced.json) covers:
+
+- 68 host checks of arguments, state/context, clock wrap/stall, budget and generation.
+- 513 linked8086 checks, including196 instruction-boundary abandonment/cleanup cases.
+  These cuts model a caller that already repaired DS=SS/IF; they are not actual
+  asynchronous hardware/CPU faults.
+- Sixteen actual8086 DOS COM1/COM2 N/S/H/B cases, with normal completion or an
+  explicit early stop after508 queued bytes. All8,760 DOS checks pass; both tones
+  retain exact peer input and continue the READY! exchange with exact flow bytes
+  and restored UART/vector/PIC state.
+- 49 actual DOS notice checks covering serviced tone completion, service-error
+  cleanup, a real outer C longjmp, IF-disabled retention/repair, foreign-owner
+  quarantine/retry, quiet mode and legacy callback precedence. All windows,
+  screen/cursor and owned speaker gates retire correctly.
+- A74-source-only rebuild reproduces both new diagnostics and both quiet notice
+  components. The quiet component's583-check DOS regression passes. The separate
+  237-source proof reproduces all35 existing PROGRAM notice products, including
+  the unchanged ordinary and focused ASPECT executables.
+
+The mixer is muted in DOS tests; acoustic waveform and physical speaker timing
+remain unverified. The UART and notice lifecycle diagnostics are separate tests;
+this is not yet a single attached PROGRAM/BBS sound workflow. Actual application
+sound configuration, PROGRAM/outer recovery binding, original macro keyboard and
+mouse/shared UI policies still require integration before normal publication.
+
+```sh
+./tools/build test-speaker
+./tools/build test-speaker-notice
+./tools/build test-speaker-source
+```

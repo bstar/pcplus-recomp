@@ -1549,3 +1549,17 @@ test-program-sound-original: program-sound
 	python3 standalone/check_program_sound.py --original
 test-program-sound-source: program-sound
 	python3 standalone/prove_program_sound_source.py --output build/program-sound/source-make-$(shell date +%s%N)
+
+.PHONY: speaker speaker-notice test-speaker test-speaker-notice test-speaker-source
+speaker:
+	python3 standalone/build_speaker.py
+speaker-notice:
+	python3 standalone/build_speaker_notice.py
+test-speaker: speaker
+	python3 standalone/test_speaker_host.py
+	python3 standalone/check_speaker.py
+	python3 standalone/test_speaker_uart_dos.py --output build/speaker/UART-make-$(shell date +%s%N)
+test-speaker-notice: speaker-notice
+	python3 standalone/test_speaker_notice_dos.py --output build/speaker-notice/DOS-make-$(shell date +%s%N)
+test-speaker-source: speaker-notice
+	python3 standalone/prove_speaker_source.py --output build/speaker/source-make-$(shell date +%s%N)
