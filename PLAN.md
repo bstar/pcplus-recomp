@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Complete-terminal input retention](docs/PROGRAM_NOTICE_INPUT.md#complete-terminal-retention-boundary)
+now passes four additional ordinary-product DOS sessions across COM1/COM2.
+An unrepaired INT33 replacement causes both ASPECT and terminal DOS31 retention;
+the foreign vector remains untouched. Restoring the vector at the child's final
+DOS31 boundary permits normal terminal resume and DOS4C exit, while the child
+stays retained. Independent raw-capture audit verifies actual exit words, PSP
+owners,030Ah parent result, serial continuation policy and full driver/hardware
+restoration by test-owned cleanup. No product binary changed. General retained-
+child cleanup/retry/unload, real kernels and hardware acceptance remain open.
+
 [Guarded ASPECT notice input](docs/PROGRAM_NOTICE_INPUT.md) now binds the native
 mouse/BIOS reader in a child-owned code bank, with capability16 configured-scale
 queries, inherited BIOS mode and a no-driver fallback. Six ordinary and14 fault/
@@ -10,7 +20,7 @@ callback after memory pressure. Four current ENiGMA/Synchronet sessions,78
 component checks and12 existing exit regressions pass.641 sources reproduce the
 matching four products;270 reproduce exit fixtures and87 BIOS/quiet components.
 The published four-product baseline remains unchanged. Contextual shared UI,
-broader input/KEY macro routing, complete-parent retained-driver cases, real
+broader input/KEY macro routing, general retained-child recovery, real
 kernel/hardware and all full application gates remain open.
 
 [Native notice input](docs/NOTICE_INPUT.md) now has a separate guarded mouse/BIOS

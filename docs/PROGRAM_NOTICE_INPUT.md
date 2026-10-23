@@ -108,13 +108,40 @@ resource bytes. The no-driver variant claims vector restoration, not an opaque
 driver-state comparison. Probes that query/exchange registration or inject
 events/vectors/BIOS keys are explicitly active test instruments.
 
+## Complete-terminal retention boundary
+
+The [complete-terminal receipt](validation/notice-input-terminal-retention.json)
+adds four DOSBox-X8086 sessions using the unchanged ordinary terminal and ASPECT
+executables on COM1 and COM2. An owned observer recognizes the child's actual
+callback, guard and PSP lineage, then replaces INT33 with its own IRET handler.
+The child reports NOTICE_INPUT with underlying MOUSE_STATE and retains its
+allocation through DOS310Ah. The terminal records the real030Ah child result.
+
+With the vector left unrepaired, terminal mouse resume fails, serial user input
+does not resume, and the terminal displays both retention messages before
+DOS310Eh. Both PSP MCBs still name their owners after return to DOS. In the
+separate repair cases, the observer restores only the vector at the child's
+final DOS31 boundary. The terminal then resumes serial keyboard input and exits
+normally through DOS4C. The child remains retained: this does not retry its
+cleanup, free its allocations or make its VM reusable.
+
+After terminal return, test-owned cleanup restores the original driver snapshot
+and vector; the independent audit compares the actual576-byte driver snapshots
+and exact42-byte hardware snapshots. The collector remains resident and a tiny
+8086 COM enters it, avoiding another full observer load when both applications
+have retained most conventional memory. Earlier report-collection failures and
+assembly errors remain excluded. The test changes no application binary and
+does not invoke a retained child after release. Run
+`./tools/build test-notice-input-terminal-retention`.
+
 ## Remaining work
 
 The contextual Alt-Z diagnostic/shared UI remains disabled; direct KEY macro
 playback is a separate application path. Full mouse-motion/repetition routing
 outside notice lifetimes, broader views and arbitrary asynchronous faults remain
-open. Retained input-driver failure through the complete terminal parent, real
-DOS-kernel comparisons, and broader live Setup/editor/transfer workflows on this
+open. Selected retained input-driver failure through the complete terminal is
+covered above; safe retained-child cleanup/retry/unload remains unimplemented.
+Real DOS-kernel comparisons and broader live Setup/editor/transfer workflows on this
 exact build also remain open. DOSBox-X 8086 tests, injected events and muted
 speaker-gate samples do not establish physical mouse, modem or acoustic output.
 Full PROGRAM, F01–F16 and Boca/SPA2102/SynthModem acceptance remain unproven.

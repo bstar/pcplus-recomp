@@ -1635,3 +1635,10 @@ test-notice-input-exit: notice-input-exit
 	python3 standalone/test_notice_input_exit_dos.py --output build/notice-input-exit/DOS-make-$(shell date +%s%N)
 test-notice-input-exit-source: notice-input-exit
 	python3 standalone/prove_notice_input_exit_source.py --output build/notice-input-exit/source-make-$(shell date +%s%N)
+
+.PHONY: test-notice-input-terminal-retention
+test-notice-input-terminal-retention: program-notice-input
+	python3 standalone/test_notice_input_terminal_retention_dos.py --label unrepaired-com1-make-$(shell date +%s%N)
+	python3 standalone/test_notice_input_terminal_retention_dos.py --label unrepaired-com2-make-$(shell date +%s%N) --port 2
+	python3 standalone/test_notice_input_terminal_retention_dos.py --label repaired-com1-make-$(shell date +%s%N) --repair-on-child-exit
+	python3 standalone/test_notice_input_terminal_retention_dos.py --label repaired-com2-make-$(shell date +%s%N) --repair-on-child-exit --port 2
