@@ -1,5 +1,17 @@
 # Full application reconstruction checklist
 
+[Streamed PROGRAM help](HELP_RESOURCE.md) now supplies an optional authored
+26-topic resource with topic scrolling and title/body search, F3 continuation,
+wrap and cancellation. Six actual terminal sessions and18 combined failure
+sessions pass an independent raw-capture audit;168 reader/search,49 view and52
+format checks pass.656 sources reproduce four executables and two HLP companions;
+preceding products remain unchanged. Four current ENiGMA/Synchronet sessions
+verify coexistence. This supersedes the narrower contextual-help limitations
+in historical checkpoint entries below for the selected PROGRAM notice only.
+Broader context mapping/shared menu runtime, original helper ABI/UI, real DOS
+kernels, physical hardware and every full F01–F16 gate remain open.
+
+
 [Combined mouse parent and sound editor](PROGRAM_SOUND.md#combined-mouse-parent-and-sound-editor)
 now build together.20 attached fault/retry and three ordinary DOS sessions pass
 mouse suspension/resume, native menu events and complete576-byte driver-state
