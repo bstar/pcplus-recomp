@@ -1538,3 +1538,14 @@ test-program-notices-parent: program-notices-fault
 .PHONY: test-program-notices-kernel
 test-program-notices-kernel: program-notices-fault
 	python3 standalone/test_program_notices_kernel_dos.py --label kernel-$(shell date +%s%N)
+
+.PHONY: program-sound test-program-sound test-program-sound-original test-program-sound-source
+program-sound:
+	python3 standalone/build_program_sound.py
+test-program-sound: program-sound
+	python3 standalone/check_program_sound.py
+	python3 standalone/test_program_sound_dos.py --output build/program-sound/DOS-make-$(shell date +%s%N)
+test-program-sound-original: program-sound
+	python3 standalone/check_program_sound.py --original
+test-program-sound-source: program-sound
+	python3 standalone/prove_program_sound_source.py --output build/program-sound/source-make-$(shell date +%s%N)

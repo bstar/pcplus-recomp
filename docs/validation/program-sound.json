@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "native_sound_component_accepted": true,
+  "maintained_serviced_sound_accepted": false,
+  "PROGRAM_sound_binding_accepted": false,
+  "full_application_accepted": false,
+  "recovered_bytes": 108,
+  "reused_bytes": 38,
+  "CPU_cases": 100,
+  "original_comparisons": 100,
+  "native_fault_counterexamples": 12,
+  "DOS_checks": {
+    "emulator_exit": true,
+    "DOS_pass": true,
+    "native_cases": true,
+    "binary_unchanged": true
+  },
+  "source_files": 10,
+  "products": {
+    "switch.bin": "3f985dab01a32a339e5ba599626a8230c301e4a69fd333fe9d463bdf1ad7c9da",
+    "tone.bin": "151172db2166448ae181e83fd277a293ae4e16e107349e62c3c759686ece1fbf",
+    "bell.bin": "e06980e61a5a448f1a7de7c96e1eaadf1d716b74fe79bb68d21e7895f7482995",
+    "ports.bin": "40e83aaf8b31249c99d57de3cca6db1b62e8eb80299add240b3e2259900e328a",
+    "delay.bin": "a7149212d6d9857e43f3e86112c258c9e11c2aeae0d292ef964a908b43beb850",
+    "SOUND.EXE": "a635a35569ce6b32645c9a463fe57d5f3c20d9ef44ed0f9130eb4f29c3412cd0"
+  },
+  "sources": {
+    "reconstruction/program_sound/switch.asm": "baaad7c6c95e1440f49521979631ba80d1bb412a05442bd9147bd6f1229c121e",
+    "reconstruction/program_sound/tone.asm": "baa57322426424b5e382e919e42b8b89f5bc575f07b6d9abbacf96566e9e1b72",
+    "reconstruction/program_sound/bell.asm": "e640bc8da1bcaaa9b634fba2364ffe5bf97aec6ed39c6bf0fa9a261d1b0daa2f",
+    "reconstruction/program_sound/ports.asm": "091dde4366fd1a502435e8d7629340daf4121c4a9fe4e2d3ed68df32bda2d06d",
+    "reconstruction/notice_window/pace.asm": "5ffc068cdd61660b1c5d7742c5bc5332ae22ec6b3654b4bd32d138cde22ebc97",
+    "standalone/build_program_sound.py": "91a1c8e3525cf3d3dfd174563cea5cff4d84f469f4c2463958149ac8804218e0",
+    "standalone/program_sound_diagnostic.asm": "113cd1791978f63cb2d272cd3b54abbd56e207d91ff0ce5e12d9774f5c85696b",
+    "reconstruction/program_sound/provenance.json": "58e3fa36b9d27c4859b499bbe265bce2936ce8e7c55df918068f77fb1871dc4e",
+    "reconstruction/notice_window/provenance.json": "ca21b48e5618df93f0813f964382639ba24840865b03a332f4d303b43e10f1bd",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+  },
+  "reports": {
+    "build/program-sound/manifest.json": "b75e9976662d2d7fce7908ea15cf3e4879bd73b03d2c017d4bfd96f6cfa5b80a",
+    "build/program-sound/original-checks.json": "8b0179203eed3756f119a9f0e1346b1a2be54b5f58c76ddf0c494c78baadd618",
+    "build/program-sound/dos-01/result.json": "fb197046bd6a7ec2c92ada69894c0ef6481f3818ad04084557709088562949de",
+    "build/program-sound/source-01/result.json": "68d68c73e7f729149561524c02bc02a130e57212fd6b3c193ec8efa073cc1690"
+  },
+  "limitations": [
+    "Exact native busy delay is not bounded UART-serviced application timing.",
+    "Unsafe native frequencies and preexisting-speaker overwrite are preserved counterexamples.",
+    "DOS mixer muted; no acoustic/physical audio or accurate milliseconds established.",
+    "Application configuration, near/far ABI and fault cleanup integration remain open."
+  ]
+}

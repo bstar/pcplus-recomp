@@ -1,0 +1,58 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "name": "switch",
+      "file": "reconstruction/program_sound/switch.asm",
+      "start": 14189,
+      "end": 14219,
+      "file_offset": 18797,
+      "bytes": 30,
+      "sha256": "3f985dab01a32a339e5ba599626a8230c301e4a69fd333fe9d463bdf1ad7c9da",
+      "read_evidence": "ev_ad9350114af18a74fd3e58b3da732c53af8bf795a93ed290976248495c139248",
+      "mapping_evidence": "ev_947afd969f27c718afb24cc13dda235c8becd5ed0cb026dd0843a3fc132070bf"
+    },
+    {
+      "name": "tone",
+      "file": "reconstruction/program_sound/tone.asm",
+      "start": 30498,
+      "end": 30541,
+      "file_offset": 35106,
+      "bytes": 43,
+      "sha256": "151172db2166448ae181e83fd277a293ae4e16e107349e62c3c759686ece1fbf",
+      "read_evidence": "ev_6137921a1ff4fedcaa75ccf982d1ac513ef195fd632ce638394313b6f505628b",
+      "mapping_evidence": "ev_72f37cdb0e3943cd70be8dd1d28859a1067d78bfe63bc96d1aee04960100e6fc"
+    },
+    {
+      "name": "bell",
+      "file": "reconstruction/program_sound/bell.asm",
+      "start": 30542,
+      "end": 30554,
+      "file_offset": 35150,
+      "bytes": 12,
+      "sha256": "e06980e61a5a448f1a7de7c96e1eaadf1d716b74fe79bb68d21e7895f7482995",
+      "read_evidence": "ev_6137921a1ff4fedcaa75ccf982d1ac513ef195fd632ce638394313b6f505628b",
+      "mapping_evidence": "ev_72f37cdb0e3943cd70be8dd1d28859a1067d78bfe63bc96d1aee04960100e6fc"
+    },
+    {
+      "name": "ports",
+      "file": "reconstruction/program_sound/ports.asm",
+      "start": 32672,
+      "end": 32695,
+      "file_offset": 37280,
+      "bytes": 23,
+      "sha256": "40e83aaf8b31249c99d57de3cca6db1b62e8eb80299add240b3e2259900e328a",
+      "read_evidence": "ev_0bb343a8b59d1cf31593f3085b3035906b5939eafb752ba7002f0cb742b37923",
+      "mapping_evidence": "ev_0cfb9ab0f3108175a55c715ff03a842a4ef281ca36d0e6a327a5ca4b205d18c7"
+    }
+  ],
+  "recovered_bytes": 108,
+  "reused_delay": "reconstruction/notice_window/pace.asm",
+  "limitations": [
+    "Native configured220/440Hz sound, PIT and speaker instructions only.",
+    "Exact calibrated busy delay blocks without UART service; calibration is an external platform responsibility.",
+    "Generic tone divides by unchecked frequency and uses wrapped16-bit duration multiplication.",
+    "Native sound clears speaker gate bits at completion, rather than restoring a preexisting active speaker owner.",
+    "Maintained bounded UART-serviced sound, application configuration binding and physical audio remain open."
+  ]
+}

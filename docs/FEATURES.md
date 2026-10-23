@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Native PROGRAM notice sound](PROGRAM_SOUND.md) now has108 exact recovered bytes
+plus the existing38-byte calibrated delay.100 original instruction comparisons,
+an actual8086 DOS diagnostic and a ten-source/six-product rebuild pass. Configured
+220/440Hz wrappers, PIT/gate writes and stack cleanup are established. Native
+invalid-frequency DIV faults and active-speaker overwrite remain counterexamples.
+Bounded UART-serviced ownership, sound configuration/bank/fault integration and
+physical audio remain required; current application notice bindings stay quiet.
+
 [Natural malformed-MZ rejection](NATIVE_PROGRAM.md#natural-malformed-mz-rejection-on-freedos)
 now passes on a booted pinned FreeDOS1.4 kernel using ordinary EXEC mode0.
 A missing relocation produces DOS13/CRT22 and the generic PROGRAM notice;
