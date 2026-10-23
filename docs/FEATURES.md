@@ -1,5 +1,25 @@
 # Full application reconstruction checklist
 
+[Natural malformed-MZ rejection](NATIVE_PROGRAM.md#natural-malformed-mz-rejection-on-freedos)
+now passes on a booted pinned FreeDOS1.4 kernel using ordinary EXEC mode0.
+A missing relocation produces DOS13/CRT22 and the generic PROGRAM notice;
+rawFFFF, stream positions, exact508-byte input, screen/cursor/JFT/vectors and
+subsequent script/child execution are preserved. The identical MZ with relocation
+count zero exits99 as a positive control. Natural DOS11/CRT8, other kernels and
+FreeDOS attached-parent behavior remain unverified; full application and hardware
+gates remain open.
+
+[Attached PROGRAM popup recovery](NATIVE_PROGRAM.md#attached-terminal-popup-and-recovery-observation)
+now passes11 actual8086 DOS sessions through the real terminal parent. DIV
+before/during/after the popup, foreign-DS DIV and typed abort preserve the outer
+error and permit subsequent script/DOS-child execution. Guard damage and a
+foreign window reject premature retry/new VM entry, then retire after owner
+repair. Passive parent resource/JFT checks and balanced leases pass;508 printable
+queued bytes display exactly. The separate14-case raw binary regression and
+237-source/35-product rebuild also pass. Full UI policy, other attached flow/view
+combinations, current BBS regressions and physical hardware acceptance stay open.
+Historical receipts below retain their checkpoint-specific limitations.
+
 [PROGRAM quarantine and stopped-owner retry](NATIVE_PROGRAM.md#program-window-quarantine-and-stopped-owner-retry)
 now retain damaged/replaced windows and private streams instead of closing them
 during VM shutdown. Live retry/new VM entry reject; owner repair permits full

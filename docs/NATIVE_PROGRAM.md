@@ -621,3 +621,42 @@ physical modem acceptance remain open.
 ```sh
 ./tools/build test-program-notices-parent
 ```
+
+## Natural malformed MZ rejection on FreeDOS
+
+The [kernel checker](../standalone/test_program_notices_kernel_dos.py) boots the
+pinned FreeDOS1.4 floppy distribution, using its actual kernel rather than
+DOSBox's internal DOS. An independent COM witness records reported and true DOS
+version7.10 and OEM FD before ASPECT starts. The diagnostic runs ordinary EXEC
+mode0: the request contains no unsupported-mode selector, memory-pressure fixture
+or fault injection.
+
+A38-byte MZ declares one relocation at file offset1000h, beyond EOF. The loader
+returns DOS13, which the exact native error map converts to CRT22. PROGRAM shows
+its generic execution-error notice, preserves rawFFFF and restores the screen,
+cursor, PSP, JFT and vectors. A second invocation runs the missing-file popup,
+consumes508 exact queued binary bytes, retains all six stream positions/output,
+and executes the source-built success child with final CRT/DOS errors0. Both
+window allocations are freed. The command processor then executes the identical
+MZ with only its relocation count cleared; its body exits99 and the batch file
+checks that exact result. This positive control distinguishes rejection of the
+missing relocation from a nonworking EXE environment.
+
+The [receipt](validation/program-notices-kernel.json) records the pinned archive,
+boot template, tested executable, source and capture hashes. The current upstream
+[FreeDOS loader](https://github.com/FDOS/kernel/blob/master/kernel/task.c) also
+contains an invalid-data return when relocation reading fails; the booted
+pinned distribution and observed result establish this test's behavior separately.
+
+An initial empty-file attempt returned raw0 on this pinned kernel and is retained
+as a failed local experiment, not accepted format-error evidence. This test proves
+one natural malformed-MZ rejection as DOS13/CRT22. It does not establish natural
+DOS11/CRT8 behavior, other DOS kernels or malformed headers, attached-parent
+behavior on FreeDOS, or physical modem compatibility. The earlier explicit
+EXEC-mode4 fixture remains the evidence for the specific format-error popup.
+
+```sh
+# Uses the same pinned archive cache as test_kernel_critical_dos.py:
+# build/freedos-kernel-lab/FD14-FloppyEdition.zip
+./tools/build test-program-notices-kernel
+```

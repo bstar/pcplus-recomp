@@ -1534,3 +1534,7 @@ test-program-notices-parent: program-notices-fault
 	python3 standalone/test_program_notices_parent_dos.py --label faults-$(shell date +%s%N)
 	python3 standalone/test_program_notices_parent_dos.py --label guard-$(shell date +%s%N) --quarantine guard --mode 2D --mode 2A --mode 2F
 	python3 standalone/test_program_notices_parent_dos.py --label foreign-$(shell date +%s%N) --quarantine foreign --port 2 --mode 2D --mode 2A --mode 2F
+
+.PHONY: test-program-notices-kernel
+test-program-notices-kernel: program-notices-fault
+	python3 standalone/test_program_notices_kernel_dos.py --label kernel-$(shell date +%s%N)
