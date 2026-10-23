@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+[Streamed PROGRAM help](docs/HELP_RESOURCE.md) now accepts an optional authored
+26-topic HLP resource with scrolling and incremental title/body search, F3,
+wrap, no-match feedback and cancellation. Six actual terminal workflows and18
+combined fault cases preserve the view, input/file ownership,508 queued bytes
+and subsequent DOS EXEC. Reader/search168 and view/controller49 checks pass;
+52 format checks and optional original47-topic/463-line reading also pass.
+A656-source proof reproduces four executables and two resources; earlier
+647/641/632-source products remain unchanged. Four current ENiGMA/Synchronet
+record/replay sessions pass. The independent raw-capture audit is in
+`docs/validation/help-resource.json`. Next: broader context mapping/shared menu
+integration and KEY macro policy; original helper UI/process parity, real DOS
+kernels, hardware and every full application gate remain open.
+
 [Combined PROGRAM help recovery](docs/CONTEXT_HELP.md#combined-failure-recovery)
 now accepts18 actual COM1/2 DOS sessions across window guards, foreign windows,
 foreign speakers and each with a damaged help guard. Blocked retries retain

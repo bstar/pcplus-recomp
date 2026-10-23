@@ -6,6 +6,9 @@ extern void __cdecl help_view_cursor(unsigned,unsigned);
 static struct {
  unsigned phase,ready,restored,topic,count,cursor,shape;
  const help_page *pages;
+#ifdef ASPECT_HELP_RESOURCE
+ const char *footer;
+#endif
  unsigned char __far *block;
 } held;
 #ifdef HELP_VIEW_DIAGNOSTIC
@@ -50,7 +53,11 @@ static void paint(void)
  line(1,"PCPlus // CONTEXT HELP",0x1f);
  line(3,held.pages[held.topic].title,0x1e);
  for(i=0;i<17;++i)line(5+i,held.pages[held.topic].lines[i],0x17);
+#ifdef ASPECT_HELP_RESOURCE
+ line(23,held.footer?held.footer:"Left/Right: topic   Home/End: first/last   Esc or Enter: return",0x1f);
+#else
  line(23,"Left/Right: topic   Home/End: first/last   Esc or Enter: return",0x1f);
+#endif
  help_view_cursor(0,0x2000);
 }
 unsigned __far __cdecl help_view_active(void){return held.phase;}
@@ -77,6 +84,9 @@ unsigned __far __cdecl help_view_open(const help_page *pages,unsigned count,unsi
  held.cursor=*(unsigned __far *)MK_FP(0x40,0x50);
  held.shape=*(unsigned __far *)MK_FP(0x40,0x60);
  held.ready=1;held.pages=pages;held.count=count;held.topic=topic;
+#ifdef ASPECT_HELP_RESOURCE
+ held.footer=0;
+#endif
  paint();held.phase=2;return HELP_VIEW_OK;
 }
 static unsigned close_view(unsigned discard)
@@ -101,6 +111,16 @@ static unsigned close_view(unsigned discard)
 }
 unsigned __far __cdecl help_view_close(void){return close_view(0);}
 unsigned __far __cdecl help_view_discard(void){return close_view(1);}
+#ifdef ASPECT_HELP_RESOURCE
+unsigned __far __cdecl help_view_update(const help_page *page,const char *footer)
+{
+ unsigned i;
+ if(!context()||held.phase!=2||!geometry()||!guards())return HELP_VIEW_STATE;
+ if(!extent(page,sizeof(*page))||!page->title||!text_valid(page->title)||!text_valid(footer))return HELP_VIEW_ARGUMENT;
+ for(i=0;i<17;++i)if(!text_valid(page->lines[i]))return HELP_VIEW_ARGUMENT;
+ held.pages=page;held.count=1;held.topic=0;held.footer=footer;paint();return HELP_VIEW_OK;
+}
+#endif
 unsigned __far __cdecl help_view_key(unsigned key)
 {
  unsigned topic;

@@ -24,15 +24,18 @@ def main():
     parser.add_argument('--label',required=True);parser.add_argument('--mode',action='append',choices=['1D','2D','3D','2A','2F'])
     parser.add_argument('--input',action='store_true');parser.add_argument('--mouse',action='store_true');parser.add_argument('--sound',type=int,choices=[0,1,65535],default=1)
     parser.add_argument('--notice-help',action='store_true')
+    parser.add_argument('--help-resource',action='store_true')
     parser.add_argument('--quarantine',choices=['guard','foreign','speaker','help-guard','help-speaker','help-foreign']);parser.add_argument('--port',type=int,choices=[1,2],default=1)
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     if args.input:assert args.mouse
     if args.notice_help:assert args.input and args.mode and all(m in ('2D','2A','2F') for m in args.mode)
     if args.quarantine in ('help-guard','help-speaker','help-foreign'):assert args.notice_help
+    if args.help_resource:assert args.notice_help
     out=ROOT/'build/program-notices-sound'/args.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/('build/terminal-mouse-notice-sound/TERMINAL.EXE' if args.mouse else 'build/terminal-notice-sound/TERMINAL.EXE');child=ROOT/'build/aspect-notice-sound-fault/ASPECT.EXE';sources={}
     if args.input:parent=ROOT/'build/terminal-mouse-notice-input/TERMINAL.EXE';child=ROOT/'build/aspect-notice-input-fault/ASPECT.EXE'
     if args.notice_help:child=ROOT/'build/aspect-notice-help-fault/ASPECT.EXE'
+    if args.help_resource:child=ROOT/'build/aspect-help-resource-fault/ASPECT.EXE'
     for product in (parent,child):
         manifest=json.loads((product.parent/'manifest.json').read_text());assert manifest['binary_sha256']==sha(product)
         for name,digest in manifest['sources'].items():
@@ -47,6 +50,8 @@ def main():
         for product,mapname in [(parent,'terminal.map'),(child,'ASPECT.map')]:
             for path in [product.parent/mapname,product.parent/'manifest.json']:sources[str(path.relative_to(ROOT))]=sha(path)
     if args.notice_help:sources['standalone/notice_help_probe.py']=sha(ROOT/'standalone/notice_help_probe.py')
+    if args.help_resource:
+        for path in [child.parent/'LOCHELP.HLP',child.parent/'help-resource.json']:sources[str(path.relative_to(ROOT))]=sha(path)
     for name,digest in sources.items():
         assert sha(ROOT/name)==digest,name
         target=out/'sources'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
@@ -66,6 +71,7 @@ def main():
         name=mode;folder=out/name;folder.mkdir();shutil.copyfile(parent,folder/'TERMINAL.EXE');shutil.copyfile(child,folder/'ASPECT.EXE');harness.BINARY=folder/'TERMINAL.EXE'
         subprocess.run(['nasm','-fbin',str(out/'sources/standalone/notice_success_child.asm'),'-o',str(folder/'SUCCESS.COM')],check=True)
         files={'LOGIN.ASP':first.encode(),'LOGIN.ASX':compile_source(first),'RECOVER.ASP':second.encode(),'RECOVER.ASX':compile_source(second),'RENDER.COM':observer,'SUCCESS.COM':(folder/'SUCCESS.COM').read_bytes()}
+        if args.help_resource:files['LOCHELP.HLP']=(child.parent/'LOCHELP.HLP').read_bytes()
         for i in range(5):files[f'SLOT{i}.BIN']=b'SEED0'
         payload=bytearray(directory(port=port));payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
         harness.RENDER_POST=PAYLOAD;harness.RENDER_TRIGGER=b'PAYLOAD!'
@@ -133,7 +139,7 @@ def main():
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL '+','.join(k for k,v in checks.items() if not v),flush=True)
     for name,digest in sources.items():assert sha(ROOT/name)==digest,name
-    report=dict(passed=all(r['passed'] for r in results),cases=results,sources=sources,parent_sha256=sha(parent),child_sha256=sha(child),observer_sha256=sha(out/'RENDER.COM'),quarantine=args.quarantine,port=port,sound=args.sound,mouse=args.mouse,native_notice_input=args.input,notice_help=args.notice_help,
+    report=dict(passed=all(r['passed'] for r in results),cases=results,sources=sources,parent_sha256=sha(parent),child_sha256=sha(child),observer_sha256=sha(out/'RENDER.COM'),quarantine=args.quarantine,port=port,sound=args.sound,mouse=args.mouse,native_notice_input=args.input,notice_help=args.notice_help,help_resource=args.help_resource,
         scope='Actual PRM-configured PROGRAM sound and DOS attached terminal, popup error, checkpoint recovery, retained streams, 508 queued printable UART bytes restored through the actual renderer and real subsequent DOS child. Mixer muted; physical audio/modem and complete PROGRAM shared UI policy remain unverified.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');return 0 if report['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

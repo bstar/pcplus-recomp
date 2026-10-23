@@ -1,0 +1,30 @@
+{
+  "ordinary": [
+    "build/notice-help/resource-absent-com1-enhanced-final-01",
+    "build/notice-help/resource-absent-com2-standard-final-01",
+    "build/notice-help/resource-bad-com1-final-01",
+    "build/notice-help/resource-missing-com2-final-01",
+    "build/notice-help/resource-normal-com1-standard-final-01",
+    "build/notice-help/resource-normal-com2-enhanced-final-01"
+  ],
+  "combined_faults": [
+    "build/program-notices-sound/resource-guard-final-01",
+    "build/program-notices-sound/resource-foreign-final-01",
+    "build/program-notices-sound/resource-speaker-final-01",
+    "build/program-notices-sound/resource-help-guard-final-01",
+    "build/program-notices-sound/resource-help-speaker-final-01",
+    "build/program-notices-sound/resource-help-foreign-final-01"
+  ],
+  "proofs": [
+    "build/help-resource/source-final-01",
+    "build/help-resource/help-baseline-source-01",
+    "build/help-resource/input-baseline-source-01",
+    "build/help-resource/published-baseline-source-01"
+  ],
+  "components": [
+    "build/help-document/DOS-final-01",
+    "build/help-resource/DOS-final-01",
+    "build/help-format/resource-regression-01",
+    "build/help-format/resource-compat-01"
+  ]
+}

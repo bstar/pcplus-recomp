@@ -1,0 +1,48 @@
+[
+  {
+    "id": "program",
+    "title": "EXTERNAL PROGRAM / ERROR NOTICE",
+    "lines": [
+      "The command could not run. Check its DOS filename and PATH setting.",
+      "A missing program can also mean that its drive is not available.",
+      "Invalid executable format: verify that the file is a DOS program.",
+      "Insufficient memory: reduce other resident programs before retrying.",
+      "",
+      "Enter or Escape returns from help to the error notice.",
+      "The next Enter or Escape dismisses the notice itself.",
+      "The notice timer pauses while help is open.",
+      "",
+      "Left and Right select a topic. Up and Down scroll its text.",
+      "PageUp and PageDown move by a screen. Home and End move within a topic.",
+      "Press / to find text. Enter starts the search; Escape cancels it.",
+      "F3 continues after the matching line and wraps through the document.",
+      "",
+      "CHECKING A COMMAND",
+      "Use a short DOS filename and confirm the file exists on the named drive.",
+      "A program may need support files in its current working directory.",
+      "Check that a batch command invokes the intended DOS program.",
+      "A damaged or incompatible executable can fail before it displays text.",
+      "Keep working files separate from the program's executable files.",
+      "",
+      "Use the session, transfer and settings topics for related commands."
+    ]
+  },
+  {
+    "id": "serial",
+    "title": "SERIAL SESSION / LOCAL INPUT",
+    "lines": [
+      "Serial receive and flow control continue while help is displayed.",
+      "Incoming display bytes remain queued until the notice releases its view.",
+      "The bounded queue cannot store an unlimited incoming stream.",
+      "",
+      "Help keys are local. They are not transmitted to the remote system.",
+      "The selected standard or enhanced BIOS keyboard mode remains in use.",
+      "Mouse direction events scroll or select topics. Enter returns.",
+      "The current session continues to control the serial modem connection.",
+      "",
+      "Escape closes help. The next queued key still belongs to the notice.",
+      "Search finds command names and help text. ASCII letters ignore case.",
+      "A search can be canceled while the serial session remains active."
+    ]
+  }
+]

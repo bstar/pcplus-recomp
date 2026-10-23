@@ -17,6 +17,11 @@ unsigned __far __cdecl help_view_close(void);
 unsigned __far __cdecl help_view_discard(void);
 unsigned __far __cdecl help_view_active(void);
 unsigned __far __cdecl help_view_topic(void);
+#ifdef ASPECT_HELP_RESOURCE
+/* Atomically switch to another immutable rendered page, retaining the original
+ * snapshot. Resource controller owns the buffers until the next update/close. */
+unsigned __far __cdecl help_view_update(const help_page *,const char *);
+#endif
 #ifdef HELP_VIEW_DIAGNOSTIC
 extern unsigned help_view_fail_allocate,help_view_fail_release;
 void __far __cdecl help_view_damage_guard(void);

@@ -8,9 +8,16 @@ static unsigned owned;
 #include "notice_help.h"
 #include "notice_window.h"
 #include "../help/notice_content.h"
+#ifdef ASPECT_HELP_RESOURCE
+#include "../help/resource.h"
+#endif
 static unsigned help_enabled,help_generation;
 static void __far *help_identity;
-unsigned __far __cdecl notice_help_active(void){return help_view_active();}
+unsigned __far __cdecl notice_help_active(void){return help_view_active()
+#ifdef ASPECT_HELP_RESOURCE
+ ||help_resource_active()
+#endif
+ ;}
 unsigned __far __cdecl notice_help_configure(unsigned enabled)
 {
  if(enabled>1||!owned||notice_active()||help_view_active())return MOUSE_STATE;
@@ -18,6 +25,9 @@ unsigned __far __cdecl notice_help_configure(unsigned enabled)
 }
 unsigned __far __cdecl notice_help_close(void)
 {
+#ifdef ASPECT_HELP_RESOURCE
+ if(help_resource_close())return MOUSE_STATE;
+#endif
  if(!help_view_active())return MOUSE_OK;
  /* The window owner publishes CLOSED only after restoring/freeing its view.
   * With no window left, our saved popup is stale: discard, never replay it.
@@ -90,18 +100,39 @@ unsigned __far __cdecl notice_input_peek(unsigned *key)
  unsigned value,status;
  if(!input_context()||!key||(unsigned long)(unsigned)key+sizeof(*key)>65536UL)return MOUSE_ARGUMENT;
  status=raw_peek(&value);
- if(status==MOUSE_PENDING&&help_view_active())return help_view_key(0)?MOUSE_STATE:MOUSE_PENDING;
+ if(status==MOUSE_PENDING&&help_view_active()){
+#ifdef ASPECT_HELP_RESOURCE
+  if(!notice_window_phase()||notice_window_generation()!=help_generation||notice_window_identity()!=help_identity)return MOUSE_STATE;
+#endif
+  if(help_view_key(0))return MOUSE_STATE;
+#ifdef ASPECT_HELP_RESOURCE
+  if(help_resource_active()&&help_resource_step())return MOUSE_STATE;
+#endif
+  return MOUSE_PENDING;
+ }
  if(status)return status;
  if(help_view_active()){
   status=notice_input_read(&value);if(status)return status;
   if(notice_window_generation()!=help_generation||notice_window_identity()!=help_identity)return MOUSE_STATE;
+#ifdef ASPECT_HELP_RESOURCE
+  if(help_resource_active()){
+   status=help_resource_key(value);
+   if(status==HELP_RESOURCE_CLOSE)status=notice_help_close();
+   return status?MOUSE_STATE:MOUSE_PENDING;
+  }
+#endif
   status=help_view_key(value);return status?MOUSE_STATE:MOUSE_PENDING;
  }
  if(help_enabled&&notice_active()&&value==0x2c00){
   status=notice_input_read(&value);if(status)return status;
   if(value!=0x2c00)return MOUSE_STATE;
   help_generation=notice_window_generation();help_identity=notice_window_identity();
+#ifdef ASPECT_HELP_RESOURCE
+  status=help_resource_open("LOCHELP.HLP");
+  if(status==HELP_RESOURCE_MISSING)status=help_view_open(notice_help_pages,2,0);
+#else
   status=help_view_open(notice_help_pages,2,0);
+#endif
   return status?(status==HELP_VIEW_MEMORY?MOUSE_MEMORY:MOUSE_STATE):MOUSE_PENDING;
  }
  *key=value;return MOUSE_OK;

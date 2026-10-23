@@ -10,8 +10,8 @@ unsigned help_pointer_parse(const char *text,unsigned long *out)
  while(*text){
   if(*text<'0'||*text>'9'||++count>10)return HELP_FORMAT;
   digit=*text++-'0';
-  if(value>(0xffffffffUL-digit)/10UL)return HELP_RANGE;
-  value=value*10UL+digit;
+  if(value>429496729UL||(value==429496729UL&&digit>5))return HELP_RANGE;
+  value=(value<<3)+(value<<1)+digit;
  }
  /* An18-byte descriptor must fit in its16-bit parent segment. Parsing is
   * validation only: no foreign pointer is dereferenced by this module. */
@@ -37,7 +37,7 @@ unsigned help_header_decode(const unsigned char *data,unsigned bytes,unsigned lo
  if(!data||!out)return HELP_ARGUMENT;
  if(bytes!=HELP_HEADER_BYTES)return HELP_FORMAT;
  candidate.topics=data[0];candidate.lines=word(data+1);
- candidate.text_start=3UL+candidate.topics*38UL;
+ candidate.text_start=3UL+(unsigned)(candidate.topics*38U);
  if(!candidate.topics||candidate.text_start>file_bytes)return HELP_FORMAT;
  *out=candidate;return HELP_OK;
 }
@@ -46,7 +46,7 @@ unsigned help_record_decode(const unsigned char *data,unsigned bytes,const help_
  help_record candidate;unsigned i;
  if(!data||!header||!out)return HELP_ARGUMENT;
  if(bytes!=HELP_RECORD_BYTES)return HELP_FORMAT;
- if(!header->topics||header->topics>255||header->text_start!=3UL+header->topics*38UL||header->text_start>file_bytes)return HELP_FORMAT;
+ if(!header->topics||header->topics>255||header->text_start!=3UL+(unsigned)(header->topics*38U)||header->text_start>file_bytes)return HELP_FORMAT;
  for(i=0;i<32;++i)candidate.title[i]=data[i];
  candidate.title[32]=0;
  candidate.lines=word(data+32);candidate.offset=dword(data+34);

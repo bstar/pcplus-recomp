@@ -25,6 +25,8 @@ async def main(args):
     mouse_sound=getattr(args,'mouse_sound',False);program_probe=getattr(args,'program_probe',False)
     notice_input=getattr(args,'notice_input',False)
     notice_help=getattr(args,'notice_help',False)
+    help_resource=getattr(args,'help_resource',False)
+    assert not help_resource or notice_help
     assert not notice_help or notice_input
     assert not notice_input or (mouse_sound and program_probe)
     assert not mouse_sound or not args.trace
@@ -33,6 +35,7 @@ async def main(args):
     runner='aspect-notice-sound-parent' if mouse_sound else 'aspect-match-trace' if args.trace else 'aspect-runner'
     if notice_input:parent='terminal-mouse-notice-input';runner='aspect-notice-input-parent'
     if notice_help:runner='aspect-notice-help-parent'
+    if help_resource:runner='aspect-help-resource-parent'
     for directory,binary in ((parent,'TERMINAL.EXE'),(runner,'ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')):
         base=ROOT/'build'/directory;manifest=read(base/'manifest.json')
         assert sha(base/binary)==manifest['binary_sha256']
@@ -43,6 +46,10 @@ async def main(args):
             inputs[name]=digest
         for file in (base/binary,base/'manifest.json'):inputs[str(file.relative_to(ROOT))]=sha(file)
         shutil.copy2(base/binary,stage/binary)
+    if help_resource:
+        base=ROOT/'build'/runner
+        for file in [base/'LOCHELP.HLP',base/'help-resource.json']:inputs[str(file.relative_to(ROOT))]=sha(file)
+        shutil.copy2(base/'LOCHELP.HLP',stage/'LOCHELP.HLP')
     support=['lab/bbs/test_dos.py','lab/bbs/modem.py','lab/bbs/editor-recipes.json',
         'standalone/test_terminal.py','standalone/terminal_config_fixtures.py',
         'standalone/modem_fixtures.py','standalone/directory_fixtures.py',
@@ -85,7 +92,7 @@ async def main(args):
     for keys in schedules.values():assert len('ADDKEY p1000 '+keys+' p2000 a-x')<500
     prediction=dict(inputs=inputs,schedules=schedules,expected_payload_hex=payload.hex(),server=args.name,port=port,
         binary_sha256=sha(stage/'TERMINAL.EXE'),diagnostic_build=args.trace,initialization_wait_seconds=args.init_wait,
-        runner_sha256=sha(stage/'ASPECT.EXE'),mouse_sound=mouse_sound,program_probe=program_probe,native_notice_input=notice_input,notice_help=notice_help,scope=__doc__)
+        runner_sha256=sha(stage/'ASPECT.EXE'),mouse_sound=mouse_sound,program_probe=program_probe,native_notice_input=notice_input,notice_help=notice_help,help_resource=help_resource,scope=__doc__)
     (stage/'start.json').write_text(json.dumps(prediction,indent=2)+'\n')
     runs={};semantics={}
     for mode,keys in schedules.items():
@@ -182,7 +189,7 @@ exit
         sources_unchanged=all(sha(ROOT/name)==digest for name,digest in inputs.items()),
         no_retained_temporary_files=not list(stage.glob('LPR*.TMP')) and not list(stage.glob('LPR*.BAK')))
     result=dict(passed=all(checks.values()),checks=checks,inputs=inputs,sessions=semantics,
-        initialization_wait_seconds=args.init_wait,diagnostic_build=args.trace,mouse_sound=mouse_sound,program_probe=program_probe,native_notice_input=notice_input,notice_help=notice_help,runner_sha256=sha(stage/'ASPECT.EXE'),
+        initialization_wait_seconds=args.init_wait,diagnostic_build=args.trace,mouse_sound=mouse_sound,program_probe=program_probe,native_notice_input=notice_input,notice_help=notice_help,help_resource=help_resource,runner_sha256=sha(stage/'ASPECT.EXE'),
         binary_sha256=prediction['binary_sha256'],expected_payload_hex=payload.hex(),
         artifacts={str(p.relative_to(stage)):sha(p) for p in stage.iterdir() if p.is_file()},
         replay_program='SOUND.ASX' if program_probe else 'RECORD.ASX',
@@ -198,6 +205,7 @@ if __name__=='__main__':
     p.add_argument('--init-wait',type=int,choices=range(32768),help='Explicit initialization acknowledgement deadline for both DOS sessions')
     p.add_argument('--notice-input',action='store_true',help='Use matching capability16 native notice-input products; requires mouse-sound and program-probe')
     p.add_argument('--notice-help',action='store_true',help='Use the experimental child-owned PROGRAM help build; requires notice-input')
+    p.add_argument('--help-resource',action='store_true',help='Use the streamed HLP/search child; requires notice-help')
     p.add_argument('--mouse-sound',action='store_true',help='Use matching ordinary mouse/sound terminal and ASPECT builds')
     p.add_argument('--program-probe',action='store_true',help='Compile a separate replay wrapper that runs a missing target and a successful DOS child')
     p.add_argument('--trace',action='store_true',help='Separate diagnostic ASPECT observer; no production acceptance')

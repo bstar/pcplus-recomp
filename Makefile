@@ -1671,3 +1671,27 @@ test-notice-help-combined: notice-help
 	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-help-guard-make-$(shell date +%s%N) --quarantine help-guard --mode 2D --mode 2A --mode 2F
 	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-help-speaker-make-$(shell date +%s%N) --quarantine help-speaker --port 2 --mode 2D --mode 2A --mode 2F
 	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-help-foreign-make-$(shell date +%s%N) --quarantine help-foreign --port 2 --mode 2D --mode 2A --mode 2F
+
+.PHONY: help-resource test-help-document test-help-resource test-help-resource-combined test-help-resource-source
+help-resource: program-notice-input
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input --notice-help --help-resource
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input --notice-help --help-resource --fault-diagnostic
+test-help-document:
+	python3 standalone/test_help_document_dos.py --output build/help-document/source-only-make-$(shell date +%s%N)
+test-help-resource: help-resource
+	python3 standalone/test_help_resource_dos.py --output build/help-resource/view-make-$(shell date +%s%N)
+	python3 standalone/test_notice_help_dos.py --help-resource --port 1 --bios STANDARD --label resource-normal-com1-make-$(shell date +%s%N)
+	python3 standalone/test_notice_help_dos.py --help-resource --port 2 --bios ENHANCED --label resource-normal-com2-make-$(shell date +%s%N)
+	python3 standalone/test_notice_help_dos.py --help-resource --no-driver --port 1 --bios ENHANCED --label resource-absent-com1-make-$(shell date +%s%N)
+	python3 standalone/test_notice_help_dos.py --help-resource --no-driver --port 2 --bios STANDARD --label resource-absent-com2-make-$(shell date +%s%N)
+	python3 standalone/test_notice_help_dos.py --help-resource --resource-case bad --port 1 --bios ENHANCED --label resource-bad-make-$(shell date +%s%N)
+	python3 standalone/test_notice_help_dos.py --help-resource --resource-case missing --port 2 --bios ENHANCED --label resource-missing-make-$(shell date +%s%N)
+test-help-resource-combined: help-resource
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --help-resource --quarantine guard --port 1 --mode 2D --mode 2A --mode 2F --label resource-guard-make-$(shell date +%s%N)
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --help-resource --quarantine foreign --port 2 --mode 2D --mode 2A --mode 2F --label resource-foreign-make-$(shell date +%s%N)
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --help-resource --quarantine speaker --port 1 --mode 2D --mode 2A --mode 2F --label resource-speaker-make-$(shell date +%s%N)
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --help-resource --quarantine help-guard --port 1 --mode 2D --mode 2A --mode 2F --label resource-help-guard-make-$(shell date +%s%N)
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --help-resource --quarantine help-speaker --port 2 --mode 2D --mode 2A --mode 2F --label resource-help-speaker-make-$(shell date +%s%N)
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --help-resource --quarantine help-foreign --port 2 --mode 2D --mode 2A --mode 2F --label resource-help-foreign-make-$(shell date +%s%N)
+test-help-resource-source: help-resource
+	python3 standalone/prove_program_notices_sound_source.py --mouse --input --notice-help --help-resource --output build/help-resource/source-make-$(shell date +%s%N)

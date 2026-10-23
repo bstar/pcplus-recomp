@@ -7,8 +7,9 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False):
     if notice_help:assert notice_input
+    if help_resource:assert notice_help
     if output is None:output=ROOT/'build/aspect-process-parent' if parent_render else OUT
     program.main();output.mkdir(parents=True,exist_ok=True)
     native=program.display.process
@@ -39,6 +40,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     if notice_sound:flags+=['-DPROGRAM_NOTICE_SPEAKER','-DNOTICE_SPEAKER','-DSPEAKER_BANKED','-DASPECT_SOUND_POLICY']
     if notice_input:flags+=['-DASPECT_NOTICE_INPUT','-DNOTICE_NATIVE_INPUT','-DMOUSE_NOTICE_INPUT']
     if notice_help:flags+=['-DASPECT_NOTICE_HELP']
+    if help_resource:flags+=['-DASPECT_HELP_RESOURCE']
     if break_owner:flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR']
     focused_notice=bool(driver and driver.name=='aspect_notice_driver.c')
     if notice_help and focused_notice:flags+=['-DHELP_VIEW_DIAGNOSTIC']
@@ -81,7 +83,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
             objects += [str(ROOT/'build/speaker'/name) for name in ('speaker.obj','backend.obj')]
         if notice_input:
             from build_notice_input_bank import build as build_input
-            input_objects,input_sources=build_input(output,help_view=notice_help,help_diagnostic=notice_help and focused_notice)
+            input_objects,input_sources=build_input(output,help_view=notice_help,help_diagnostic=notice_help and focused_notice,help_resource=help_resource)
             objects += input_objects;sources += [ROOT/x for x in input_sources]
             runtime=output/'notice-input-runtime.obj'
             subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',*flags,'-nt=NOTICECODE','-fo='+str(runtime),str(ROOT/'src/ui/notice.c')],cwd=output,check=True)
@@ -114,7 +116,11 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
             subprocess.run(['nasm','-fobj',*(['-DPROGRAM_NOTICE_SPEAKER'] if notice_sound else []),str(asm),'-o',str(obj)],check=True);objects.append(str(obj))
             platform=ROOT/'standalone/notice_fault_platform.c';c_sources.append(platform)
             sources += [probe,asm,platform,ROOT/'standalone/notice_fault.h']
-    extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render,break_owner=break_owner,program_far=True,notice_bank=notice_bank,focused_notice=focused_notice,notice_sound=notice_sound,notice_input=notice_input,notice_help=notice_help)
+    if help_resource:
+        from build_help_resource import generate
+        resource=generate(output/'LOCHELP.HLP');sources += [ROOT/n for n in resource['sources']]
+        (output/'help-resource.json').write_text(json.dumps(resource,indent=2)+'\n')
+    extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render,break_owner=break_owner,program_far=True,notice_bank=notice_bank,focused_notice=focused_notice,notice_sound=notice_sound,notice_input=notice_input,notice_help=notice_help,help_resource=help_resource)
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
     if notice_bank:
@@ -124,6 +130,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
         result['experimental_notice_sound_binding']=notice_sound
         result['experimental_notice_input_binding']=notice_input
         result['experimental_notice_help_binding']=notice_help
+        result['experimental_help_resource']=help_resource
         result['notice_PROGRAM_binding_accepted']=False
         path.write_text(json.dumps(result,indent=2)+'\n')
 
@@ -134,14 +141,16 @@ if __name__=='__main__':
     parser.add_argument('--break-owner',action='store_true')
     parser.add_argument('--notice-input',action='store_true')
     parser.add_argument('--notice-help',action='store_true')
+    parser.add_argument('--help-resource',action='store_true')
     parser.add_argument('--notice-sound',action='store_true',help='Experimental parent sound policy and serviced speaker binding')
     parser.add_argument('--notice-bank',action='store_true',help='Bind banked PROGRAM error notices in a separate experimental parent')
     args=parser.parse_args()
     if args.notice_sound:assert args.notice_bank
     if args.notice_input:assert args.notice_sound
     if args.notice_help:assert args.notice_input
+    if args.help_resource:assert args.notice_help
     if args.notice_bank:
         assert not args.break_owner
-        main(ROOT/'standalone/aspect_notice_driver.c' if args.fault_diagnostic else None,parent_render=True,output=ROOT/(('build/aspect-notice-help-fault' if args.fault_diagnostic else 'build/aspect-notice-help-parent') if args.notice_help else ('build/aspect-notice-input-fault' if args.fault_diagnostic else 'build/aspect-notice-input-parent') if args.notice_input else ('build/aspect-notice-sound-fault' if args.fault_diagnostic else 'build/aspect-notice-sound-parent') if args.notice_sound else ('build/aspect-notice-fault' if args.fault_diagnostic else 'build/aspect-notice-parent')),notice_bank=True,notice_sound=args.notice_sound,notice_input=args.notice_input,notice_help=args.notice_help)
+        main(ROOT/'standalone/aspect_notice_driver.c' if args.fault_diagnostic else None,parent_render=True,output=ROOT/(('build/aspect-help-resource-fault' if args.fault_diagnostic else 'build/aspect-help-resource-parent') if args.help_resource else ('build/aspect-notice-help-fault' if args.fault_diagnostic else 'build/aspect-notice-help-parent') if args.notice_help else ('build/aspect-notice-input-fault' if args.fault_diagnostic else 'build/aspect-notice-input-parent') if args.notice_input else ('build/aspect-notice-sound-fault' if args.fault_diagnostic else 'build/aspect-notice-sound-parent') if args.notice_sound else ('build/aspect-notice-fault' if args.fault_diagnostic else 'build/aspect-notice-parent')),notice_bank=True,notice_sound=args.notice_sound,notice_input=args.notice_input,notice_help=args.notice_help,help_resource=args.help_resource)
     elif args.fault_diagnostic:main(ROOT/'standalone/aspect_fault_driver.c',parent_render=True,output=ROOT/('build/aspect-fault-break' if args.break_owner else 'build/aspect-fault'),break_owner=args.break_owner)
     else:main(parent_render=args.parent_render,output=ROOT/'build/aspect-process-break' if args.break_owner else None,break_owner=args.break_owner)

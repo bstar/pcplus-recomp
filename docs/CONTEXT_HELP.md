@@ -195,3 +195,11 @@ mapping, broader combined corruptions/repair orders, reentry/arbitrary asynchron
 faults and real DOS-kernel comparisons remain open. DOSBox-X8086 and injected
 BIOS/mouse events do not prove physical input/modem/acoustic acceptance. Full
 PROGRAM and all whole-application gates remain unproven.
+
+## Resource-backed PROGRAM help
+
+The optional resource build extends the compiled two-topic view with an authored
+26-topic file, incremental search and scrolling. See
+[its build instructions, ownership contract and evidence](HELP_RESOURCE.md).
+It is still limited to the PROGRAM notice entry point; the original PCHELP
+process ABI and broader context mapping remain unimplemented.
