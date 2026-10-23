@@ -1605,3 +1605,11 @@ test-program-notice-mouse-sound-source: program-notice-mouse-sound
 .PHONY: test-mouse-sound-live
 test-mouse-sound-live: program-notice-mouse-sound
 	python3 standalone/test_mouse_sound_live_dos.py --label live-make-$(shell date +%s%N)
+
+.PHONY: notice-input test-notice-input test-notice-input-source
+notice-input:
+	python3 standalone/build_notice_input.py
+test-notice-input: notice-input
+	python3 standalone/test_notice_input_dos.py --output build/notice-input/DOS-make-$(shell date +%s%N)
+test-notice-input-source: notice-input
+	python3 standalone/prove_notice_input_source.py --output build/notice-input/source-make-$(shell date +%s%N)

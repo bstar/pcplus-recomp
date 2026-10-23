@@ -23,6 +23,11 @@ unsigned __cdecl mouse_owner_suspend(void);
 unsigned __cdecl mouse_owner_resume(void);
 unsigned __cdecl mouse_owner_close(void);
 unsigned __cdecl mouse_owner_key(unsigned *);
+#ifdef MOUSE_NOTICE_INPUT
+/* Non-consuming native peek for timed notice controllers. Mouse Enter/Escape
+ * peek words differ from read words; never replace this with a cached read. */
+unsigned __cdecl mouse_owner_peek(unsigned *);
+#endif
 unsigned __cdecl mouse_owner_phase(void);
 unsigned __cdecl mouse_owner_bytes(void);
 #ifdef TERMINAL_MOUSE

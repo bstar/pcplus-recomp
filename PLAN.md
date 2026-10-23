@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+[Native notice input](docs/NOTICE_INPUT.md) now has a separate guarded mouse/BIOS
+binding with66 actual8086 DOS checks, including non-consuming peek, original
+Enter/Escape peek/read differences, typeahead, timeout, outer unwind and driver
+quarantine/repair.86 declared sources reproduce three products; the quiet notice
+regression retains583 checks and632 sources reproduce four unchanged application
+products. Fresh REA confirms that direct notice input uses mouse/BIOS plus a
+contextual Alt-Z display hook; KEY macros are a separate application path.
+Next: move this executing-child owner into ASPECT banks, pass current scales and
+BIOS mode explicitly, and bind retained-owner cleanup to PROGRAM and outer faults.
+Attached input, contextual shared UI, full KEY macro policy and every full
+application/physical gate remain open.
+
 [Combined live Setup](docs/validation/mouse-sound-live.json) now accepts five
 actual8086 DOS Alt-F10 editor workflows on the matching mouse/sound products,
 followed by ordinary ASPECT, a PROGRAM error notice, successful child EXEC and
@@ -9,8 +21,8 @@ PRM and active settings. Eight total DOS sessions include three startup
 regressions. Independent capture audit checks saved bytes, four actual EXEC
 names, passive speaker samples, native mouse/menu events,576-byte driver state,
 parent resources and UART/PIC/vector restoration. The first fixed-movement
-mouse-probe failure remains retained. Full macro/mouse input inside ASPECT
-notices, shared UI, broader flows/views and physical/full-application gates remain
+mouse-probe failure remains retained. Native input inside ASPECT notices,
+shared UI, separate KEY macro support, broader flows/views and physical/full-application gates remain
 open. Run `./tools/build test-mouse-sound-live`; see
 [the integration details](docs/PROGRAM_SOUND.md#live-combined-setup).
 

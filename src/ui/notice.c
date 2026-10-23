@@ -1,6 +1,9 @@
 #include "notice.h"
 #include "notice_window.h"
 #include "notice_unwind.h"
+#if defined(NOTICE_NATIVE_INPUT)
+#include "notice_input.h"
+#endif
 #if defined(NOTICE_SPEAKER)
 #include "speaker.h"
 #include "notice_speaker.h"
@@ -113,12 +116,28 @@ void __far *__cdecl notice_platform_save(const unsigned *descriptor)
  return held.identity;
 }
 unsigned __cdecl notice_platform_poll(void)
-{service();return notice_key_pending_native();}
+{
+#if defined(NOTICE_NATIVE_INPUT)
+ unsigned key,status;
+ service();status=notice_input_peek(&key);
+ if(status==MOUSE_PENDING)return 0;
+ if(status){held.result.service_status=status;abort_notice(NOTICE_SERVICE);}
+ return key;
+#else
+ service();return notice_key_pending_native();
+#endif
+}
 unsigned __cdecl notice_platform_read(void)
 {
  unsigned key;
+#if defined(NOTICE_NATIVE_INPUT)
+ unsigned status=notice_input_read(&key);
+ if(status){held.result.service_status=status;abort_notice(NOTICE_SERVICE);}
+#else
  if(!notice_key_pending_native())abort_notice(NOTICE_STATE);
- key=notice_key_read_native();held.result.key=key;
+ key=notice_key_read_native();
+#endif
+ held.result.key=key;
  held.result.cause=(key&255)==27?NOTICE_CANCELLED:NOTICE_KEY;
  return key;
 }

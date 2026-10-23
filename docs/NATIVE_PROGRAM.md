@@ -1,5 +1,11 @@
 # Composed PROGRAM controller
 
+The [native notice-input component](NOTICE_INPUT.md) now accepts66 actual DOS
+checks with guarded non-consuming mouse/BIOS input and retained driver ownership.
+Fresh REA corrects the direct dependency: mouse/BIOS plus the contextual Alt-Z
+display hook, with KEY macro dispatch separate. Attached ASPECT input, original
+shared UI and full PROGRAM/application acceptance remain open.
+
 The source-built `PROGRAM.EXE` diagnostic now combines real recovered DOS
 namespace/EXEC, far-backed screen snapshots, PROGRAM display services and the
 gated external UART owner. This is an application-integration component;

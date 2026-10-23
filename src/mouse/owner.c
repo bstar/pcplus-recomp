@@ -164,3 +164,15 @@ unsigned __cdecl mouse_owner_key(unsigned *key)
  if(!mouse_platform_poll())return MOUSE_PENDING;
  *key=mouse_platform_read();return MOUSE_OK;
 }
+#ifdef MOUSE_NOTICE_INPUT
+unsigned __cdecl mouse_owner_peek(unsigned *key)
+{
+ unsigned value;
+ if(!same_segments()||!interrupts_on()||!extent(key,sizeof(*key)))return MOUSE_ARGUMENT;
+ if(held.phase!=MOUSE_READY)return MOUSE_STATE;
+ if(mouse_platform_depth()!=65535U||mouse_scale_x!=held.settings.scale_x||
+    mouse_scale_y!=held.settings.scale_y||(mouse_count&&mouse_code>=6)||!intact())return quarantine();
+ value=mouse_platform_poll();if(!value)return MOUSE_PENDING;
+ *key=value;return MOUSE_OK;
+}
+#endif
