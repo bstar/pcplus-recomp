@@ -37,7 +37,8 @@ def probe_child():
  subprocess.run(['nasm','-f','obj',str(OUT/'probe.asm'),'-o',str(OUT/'probe.obj')],check=True)
  subprocess.run(['wlink','system','dos','option','quiet','name',str(OUT/'PROBE.EXE'),'file',str(OUT/'probe.obj')],check=True)
  return (OUT/'PROBE.EXE').read_bytes()
-def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False,rate_mask=None,line_mask=None,expected_profile=None,profile_clear=False,keyboard_file=None,files=None,environment=None,child_binary=None,post_banner=None,expected_files=None,pause_after_input=None):
+def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate=1200,expected=0,ready=True,post_echo=False,rate_mask=None,line_mask=None,expected_profile=None,profile_clear=False,keyboard_file=None,files=None,environment=None,child_binary=None,post_banner=None,expected_files=None,pause_after_input=None,cpu='386'):
+ assert cpu in ('386','8086')
  assert set(expected_files or {})<=set(files or {}),'Expected mutations must name explicit owned fixture files'
  directory=OUT/name
  if directory.exists():shutil.rmtree(directory)
@@ -112,7 +113,7 @@ def run(name,*,keys='',child='editor',payload=None,arguments='/S @TEST.PRM',rate
 output=surface
 [cpu]
 core=normal
-cputype=386
+cputype={cpu}
 cycles=fixed 6000
 [mixer]
 nosound=true

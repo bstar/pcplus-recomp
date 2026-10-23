@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Shared terminal capture](docs/SESSION_CAPTURE.md) now serves the optional live
+editor path and provides a separate actual-session policy for helper projection.
+144 linked cases, three8086 DOS workflows and675-source/five-product reproduction
+pass. Capture adds no data storage and preserves the editor's existing display
+policy. Inactive modem groups and divergent shared pause fields now have explicit
+integration gaps; HOOK routing, register lifetime, full PRM projection/commit,
+BBS/hardware and all whole-application gates remain open.
+
 [Supported active PRM projection](docs/PRM_PROJECTION.md) now stages actual
 caller-supplied serial/modem/transfer settings over an opaque baseline, with
 2,660 DOS checks, an independent full-image byte comparison and fresh-link

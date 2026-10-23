@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Shared terminal capture](SESSION_CAPTURE.md) passes144 linked cases and three
+actual8086 DOS workflows, with675-source/five-product reproduction. Optional
+live setup uses its legacy policy; actual-session policy captures runtime
+profile/palette/modes/pacing independently. No near data is added. Full native
+PRM coverage, inactive-group/shared-field integration and HOOK/returned commit
+remain open.
+
 [Supported active PRM projection](PRM_PROJECTION.md) passes2,660 standalone DOS
 checks and exact independent image/fresh-link comparisons. Unknown bytes and
 string tails stay opaque. This prepares the known serial/modem/transfer subset;

@@ -99,3 +99,8 @@ compatibility claim follows from this standalone checkpoint.
 modem and transfer settings over an opaque baseline with2,660 DOS checks and
 an exact complete-image oracle. It is not yet bound to terminal capture and
 does not cover all native fields; item4 remains open.
+
+[Shared terminal capture](SESSION_CAPTURE.md) now supplies the live setup path
+and a separate session policy. It captures actual runtime fields, but inactive
+modem groups and divergent shared fields need explicit projection policy before
+the HOOK owner can consume it. KEY kind2 remains disabled.

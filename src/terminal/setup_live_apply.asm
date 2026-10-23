@@ -89,6 +89,18 @@ terminal_setup_prepare:
  mov word [terminal_setup_outcome+2],0
  mov word [terminal_setup_outcome+4],0
  mov word [terminal_setup_outcome+6],0
+%ifdef TERMINAL_SESSION_CAPTURE
+ extern terminal_session_capture_far
+ mov ax,terminal_setup_plan
+ xor bx,bx ;Keep setup's configured display policy, unlike a helper snapshot.
+ xor dx,dx
+ call far terminal_session_capture_far
+ or ax,ax
+ jz .captured
+ mov [terminal_setup_apply_status],ax
+ restore
+.captured:
+%else
  mov si,terminal_configuration_values
  mov di,terminal_setup_plan
  mov cx,TI_SIZE/2
@@ -119,6 +131,7 @@ terminal_setup_prepare:
  rep movsw
  xor ax,ax
  stosw ;628-byte plan ends in the change mask.
+%endif
  mov ax,terminal_dial_target
  push ax
  push word [terminal_option_mask]

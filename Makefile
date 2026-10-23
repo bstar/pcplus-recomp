@@ -1742,3 +1742,11 @@ test-hook-owner:
 .PHONY: test-prm-projection
 test-prm-projection:
 	python3 standalone/test_prm_projection_dos.py --output build/prm-projection/DOS-make-$(shell date +%s%N)
+
+.PHONY: session-capture test-session-capture
+session-capture:
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input --aspect-keys --directory-keys --process-bank --session-capture
+test-session-capture: session-capture
+	python3 standalone/build_setup.py --mouse --notice-sound
+	python3 standalone/check_session_capture.py --output build/session-capture/linked-make-$(shell date +%s%N)
+	python3 standalone/test_session_capture_dos.py --output build/session-capture/DOS-make-$(shell date +%s%N)

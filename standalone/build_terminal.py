@@ -10,7 +10,8 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
-parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.session_capture:assert args.directory_keys and args.process_bank
 if args.exit_probe is not None:assert args.exit_guard
 if args.process_bank:assert args.external_render
 if args.traps:assert args.process_bank
@@ -37,6 +38,7 @@ if args.process_bank and args.notice_sound:
  # Keep the established notice/KEY products intact while giving their near
  # callers and the upcoming far HOOK owner one shared banked EXEC boundary.
  out_name+='-process-bank'
+if args.session_capture:out_name+='-session-capture'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
@@ -99,6 +101,7 @@ for index,source in enumerate(sources):
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
  if args.directory_keys:options+=['-DDIRECTORY_KEY_BINDINGS']
+ if args.session_capture:options+=['-DTERMINAL_SESSION_CAPTURE']
  if args.exit_guard:options+=['-DTERMINAL_EXIT_GUARD']
  if args.traps:options+=['-DTERMINAL_TRAPS']
  if args.trap_probe is not None:options+=['-DTERMINAL_TRAP_PROBE='+str(args.trap_probe)]
@@ -271,6 +274,7 @@ manifest['experimental_notice_input']=args.notice_input
 manifest['terminal_exit_guard']=args.exit_guard
 manifest['terminal_exit_probe']=args.exit_probe
 manifest['banked_process']=args.process_bank
+manifest['experimental_session_capture']=args.session_capture
 manifest['terminal_traps']=args.traps
 manifest['terminal_trap_probe']=args.trap_probe
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
