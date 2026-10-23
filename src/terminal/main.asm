@@ -143,6 +143,10 @@ _small_code_:
  or ax,ax
  jnz .configuration_error
  call terminal_setup_bind
+%ifdef TERMINAL_SPECIAL_EDITION
+ extern terminal_special_splash
+ call far terminal_special_splash
+%endif
 %ifdef TERMINAL_HOOK_INPUT_PROBE
  extern _terminal_hook_input_probe
  call far _terminal_hook_input_probe

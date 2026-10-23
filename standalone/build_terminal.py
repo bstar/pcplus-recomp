@@ -20,6 +20,7 @@ parser.add_argument('--hook-execute',action='store_true')
 parser.add_argument('--hook-modem',action='store_true')
 parser.add_argument('--hook-input',action='store_true')
 parser.add_argument('--hook-apply',action='store_true')
+parser.add_argument('--special-edition',action='store_true',help='Show the magenta LoC Special Edition startup screen')
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
@@ -75,6 +76,7 @@ if args.hook_apply:out_name+='-apply'
 if args.input_probe:out_name+='-inputprobe'
 if args.hook_probe:out_name+='-hookprobe'
 if args.projection_probe:out_name+='-probe'
+if args.special_edition:out_name+='-special'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
@@ -152,6 +154,7 @@ for index,source in enumerate(sources):
  if args.hook_modem:options+=['-DTERMINAL_HOOK_MODEM']
  if args.hook_input:options+=['-DTERMINAL_HOOK_INPUT']
  if args.hook_apply:options+=['-DTERMINAL_HOOK_APPLY']
+ if args.special_edition:options+=['-DTERMINAL_SPECIAL_EDITION']
  if args.input_probe:options+=['-DTERMINAL_HOOK_INPUT_PROBE']
  if args.hook_probe:options+=['-DTERMINAL_HOOK_PROBE']
  if args.exit_guard:options+=['-DTERMINAL_EXIT_GUARD']
