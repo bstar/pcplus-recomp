@@ -1,5 +1,52 @@
 # Modern BBS compatibility checkpoint
 
+## Combined mouse and PROGRAM sound
+
+The [current receipt](../../docs/validation/bbs-mouse-sound.json) accepts four
+actual DOS sessions on the matching experimental mouse/sound terminal and
+ordinary ASPECT child. Both pinned loopback servers pass File/C recording,
+DOS compilation, File/A replay and a second manual navigation proving parent
+return. Synchronet visits File/Main; ENiGMA visits Message Base/Main. No messages
+are posted and no transfers are requested.
+
+The original `PCPLUS.ASP` remains unchanged. A separate `SOUND.ASP` inserts a
+missing `ABSENT.COM` launch and a successful source-built `SUCCESS.COM` launch
+before its recorded navigation. Failure branches emit `BAD` and exit. DOS
+ASPCOMP compiles both files; an independent host compiler comparison matches
+both outputs. Replay creates the child's exact `OK` marker, sends both recorded
+and later manual navigation, and emits no `BAD`. The sound PRM word is1 and
+mouse scales are8/4. This BBS harness does not observe audible output or mouse
+movement; those selected software paths have separate
+[mouse/sound evidence](../../docs/PROGRAM_SOUND.md#combined-mouse-parent-and-sound-editor).
+
+The independent audit checks raw wire bytes, server routes, current executable
+and source hashes, configuration words and exact42-byte UART/DOS restoration.
+It preserves3,263 evidence files under ignored build storage. The accepted
+cohort is `mouse-sound-bbs-04`; the preceding ENiGMA `mouse-sound-bbs-03`
+authenticated but recorded navigation during its new-file scan. Its menu-route
+failure remains in the receipt. Longer login-art waits and explicit scan decline
+correct the test prerequisite. No account quota exemption was needed. Earlier
+setup attempts stopped before DOS execution because the BBS Nix shell omitted
+NASM and DOSBox-X; both are now declared dependencies.
+
+Rebuild the matching products, then use a fresh label for each attempt:
+
+```sh
+./tools/build program-notice-mouse-sound
+./tools/dev --command python3 standalone/build_aspect_compiler_dos.py
+./tools/bbs-dev --command python3 lab/bbs/recording_dos.py enigma \
+  --label YOUR-NEW-LABEL --init-wait 3 --mouse-sound --program-probe
+./tools/bbs-dev --command python3 lab/bbs/recording_dos.py synchronet \
+  --label YOUR-NEW-LABEL --init-wait 3 --mouse-sound --program-probe
+```
+
+These commands require the existing owned lab servers and synthetic accounts.
+The transport is the loopback Hayes/Telnet model, which forwards configured
+shutdown bytes; it does not model escape-to-command mode. This checkpoint does
+not establish editor/transfer coverage on this build, physical Boca/SPA2102
+compatibility, combined live Setup, complete PROGRAM policy or full application
+acceptance. Ordinary105-slot publication remains unchanged.
+
 The [SynthModem/ENiGMA upload](synthmodem-enigma.md#logged-in-upload) passes19
 checks and serial/protocol/server audits: exact new file/metadata, actual details
 form, helper exit0 and return to the file list. It complements the download

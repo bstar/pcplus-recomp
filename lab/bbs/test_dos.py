@@ -44,6 +44,12 @@ async def run(args):
    assert 1<=sx<=999 and 1<=sy<=999
    fixture=bytearray(fixture);struct.pack_into('<HH',fixture,0x4e4,sx,sy)
    fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
+ program_sound=getattr(args,'program_sound',None)
+ if program_sound is not None:
+  assert fixture is not None and program_sound in (0,1,65535)
+  import struct
+  fixture=bytearray(fixture);struct.pack_into('<H',fixture,0x1bc,program_sound)
+  fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
  init_wait=getattr(args,'init_wait',None)
  if init_wait is not None:
   assert 0<=init_wait<=32767
@@ -144,6 +150,7 @@ exit
  result['modem_packet_delay_ms']=args.packet_delay_ms
  result['keyboard_profile']={'sha256':hashlib.sha256(keymap).hexdigest(),'file':'BOARD.KBD'} if keymap is not None else None
  result['configuration']={'automatic_dial':automatic,'mode':'explicit synthetic partial PRM' if fixture is not None else 'CLI serial options','command':command,'sha256':hashlib.sha256(fixture).hexdigest() if fixture is not None else None,'directory_entry':args.entry if directory_fixture is not None else None,'directory_browser':args.directory_browser,'directory_sha256':hashlib.sha256(directory_fixture).hexdigest() if directory_fixture is not None else None}
+ if program_sound is not None:result['configuration']['program_sound_word']=program_sound
  (output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print(json.dumps(result,indent=2));print(text)
  return 0 if result['passed'] else 1
@@ -158,6 +165,7 @@ if __name__=='__main__':
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')
  p.add_argument('--directory-browser',action='store_true',help='Choose the fixture entry through native DOS browser keys')
  p.add_argument('--entry',type=int,choices=range(1,201),default=3)
+ p.add_argument('--program-sound',type=int,choices=[0,1,65535],help='Set only the sound word in the explicit synthetic PRM fixture')
  p.add_argument('--config-fixture',action='store_true',help='Read synthetic PRM in DOS; no serial CLI overrides or private configuration')
  p.add_argument('--com',type=int,choices=range(1,5),default=1);p.add_argument('--baud',type=int,choices=[300,1200,2400,4800,9600,19200,38400,57600,115200],default=38400);p.add_argument('--flow',choices=['NONE','SOFT','HARD'],default='SOFT')
  raise SystemExit(asyncio.run(run(p.parse_args())))

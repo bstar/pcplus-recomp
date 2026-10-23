@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+[Current combined mouse/sound BBS checkpoint](docs/validation/bbs-mouse-sound.json)
+accepts four actual DOS sessions against the pinned loopback ENiGMA and
+Synchronet servers. File/C recording and DOS ASP compilation preserve the
+original recording; a separately compiled replay wrapper runs a missing target
+and a successful DOS child before returning to recorded and manual navigation.
+An independent audit verifies exact wire payloads, server menu routes, PRM sound
+and mouse words, source/binary custody and UART/DOS restoration. The earlier
+ENiGMA login-timing failure remains preserved. NASM and DOSBox-X are now explicit
+members of the pinned BBS Nix environment. This closes the selected current-build
+BBS regression checkpoint, with combined live Setup, macro/mouse input inside
+ASPECT notices, broader UI, full F01–F16 and physical modem/audio acceptance open.
+See [the workflow and commands](lab/bbs/modern-compatibility.md#combined-mouse-and-program-sound).
+
 [PROGRAM quarantine and stopped-owner retry](docs/NATIVE_PROGRAM.md#program-window-quarantine-and-stopped-owner-retry)
 now retain damaged/replaced windows and private streams instead of closing them
 during VM shutdown. Live retry/new VM entry reject; owner repair permits full

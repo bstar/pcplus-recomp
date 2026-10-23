@@ -22,8 +22,12 @@ async def main(args):
     stage=ROOT/'build/bbs-lab/recording'/args.name/args.label
     assert not stage.exists();stage.mkdir(parents=True)
     inputs={}
-    runner='aspect-match-trace' if args.trace else 'aspect-runner'
-    for directory,binary in (('terminal','TERMINAL.EXE'),(runner,'ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')):
+    mouse_sound=getattr(args,'mouse_sound',False);program_probe=getattr(args,'program_probe',False)
+    assert not mouse_sound or not args.trace
+    assert not program_probe or mouse_sound
+    parent='terminal-mouse-notice-sound' if mouse_sound else 'terminal'
+    runner='aspect-notice-sound-parent' if mouse_sound else 'aspect-match-trace' if args.trace else 'aspect-runner'
+    for directory,binary in ((parent,'TERMINAL.EXE'),(runner,'ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')):
         base=ROOT/'build'/directory;manifest=read(base/'manifest.json')
         assert sha(base/binary)==manifest['binary_sha256']
         if directory==runner:assert bool(manifest['diagnostic_build'])==args.trace
@@ -38,6 +42,9 @@ async def main(args):
         'standalone/modem_fixtures.py','standalone/directory_fixtures.py',
         'standalone/directory_test_support.py','src/aspect/compiler.py',
         'build/bbs-lab/'+('synchronet/provenance.json' if args.name=='synchronet' else 'enigma/metadata.json')]
+    if program_probe:
+        support.append('standalone/notice_success_child.asm')
+        subprocess.run(['nasm','-fbin',str(ROOT/'standalone/notice_success_child.asm'),'-o',str(stage/'SUCCESS.COM')],check=True)
     for path in (Path(__file__).resolve(),*(ROOT/p for p in support)):
         inputs[str(path.relative_to(ROOT))]=sha(path)
     for name,digest in inputs.items():
@@ -53,6 +60,10 @@ async def main(args):
         port=23233
         canonical=read(ROOT/'lab/bbs/editor-recipes.json')['enigma_unsaved']['keyboard_input']
         login=canonical[:canonical.index('M enter')]
+        # Login art/CPR fallback can occupy ten seconds per screen. Short
+        # delays drop advance keys and can start Record inside the new scan.
+        login=login.replace('p5000','p11000').replace('escape p2500','escape p11000')
+        login=login.replace(' n ',' N ')
         navigation='M enter p3500 Q enter p3500 '
         payload=b'M\rQ\r'
         log=ROOT/'build/bbs-lab/enigma/source/logs/enigma-bbs.log'
@@ -60,6 +71,7 @@ async def main(args):
         'record':login+'a-z p300 c p300 enter p500 '+navigation+'a-z p300 c p500 escape escape',
         'replay':login+'a-z p300 a p300 r e c o r d . a s x enter p14000 '+navigation,
     }
+    if program_probe:schedules['replay']=schedules['replay'].replace('r e c o r d . a s x','s o u n d . a s x')
     if args.trace:
         # Observe a complete 30-second timeout before testing parent return.
         # This is diagnostic timing, never a production acceptance shortcut.
@@ -67,7 +79,7 @@ async def main(args):
     for keys in schedules.values():assert len('ADDKEY p1000 '+keys+' p2000 a-x')<500
     prediction=dict(inputs=inputs,schedules=schedules,expected_payload_hex=payload.hex(),server=args.name,port=port,
         binary_sha256=sha(stage/'TERMINAL.EXE'),diagnostic_build=args.trace,initialization_wait_seconds=args.init_wait,
-        runner_sha256=sha(stage/'ASPECT.EXE'),scope=__doc__)
+        runner_sha256=sha(stage/'ASPECT.EXE'),mouse_sound=mouse_sound,program_probe=program_probe,scope=__doc__)
     (stage/'start.json').write_text(json.dumps(prediction,indent=2)+'\n')
     runs={};semantics={}
     for mode,keys in schedules.items():
@@ -76,7 +88,7 @@ async def main(args):
         offset=log.stat().st_size if log else None;inode=log.stat().st_ino if log else None
         options=argparse.Namespace(name=args.name,label=label,port=port,com=2,baud=19200,flow='HARD',packet_delay_ms=0,
             dial_fixture=True,directory_fixture=False,directory_browser=False,entry=3,binary=stage/'TERMINAL.EXE',
-            config_fixture=False,keymap_fixture=None,server_log=log,keys=keys,wait=2,timeout=170,init_wait=args.init_wait)
+            config_fixture=False,keymap_fixture=None,server_log=log,mouse_scales=(8,4) if mouse_sound else None,program_sound=1 if mouse_sound else None,keys=keys,wait=2,timeout=170,init_wait=args.init_wait)
         with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):
             code=await test_dos.run(options)
         run=read(out/'result.json');runs[mode]=run
@@ -98,6 +110,7 @@ async def main(args):
             actual_navigation_bytes=user.endswith(expected+hangup),
             recording_unchanged_in_replay=mode=='record' or sha(stage/'PCPLUS.ASP')==recorded_sha,
             no_unsupported_terminal='unsupported terminal' not in clean.lower())
+        if program_probe and mode=='replay':checks['successful_DOS_child']=(stage/'SUCCESS.OK').exists() and (stage/'SUCCESS.OK').read_bytes()==b'OK'
         if args.name=='synchronet':
             file_at=clean.find('■ File ■')
             checks.update(authenticated='Logging on to LoC Protocol Lab as LABUSER' in clean,
@@ -126,6 +139,13 @@ async def main(args):
                           no_credentials=b'LABUSER' not in source and b'loclab' not in source)
             semantics[mode]['passed']=all(checks.values())
             if not semantics[mode]['passed']:break
+            extra_compile=''
+            if program_probe:
+                prefix=b'run "ABSENT.COM"\r\nif success\r\ntransmitraw "424144"\r\nexit\r\nendif\r\nrun "SUCCESS.COM"\r\nif failure\r\ntransmitraw "424144"\r\nexit\r\nendif\r\n'
+                assert source.count(b'proc main\r\n')==1
+                derived=source.replace(b'proc main\r\n',b'proc main\r\n'+prefix)
+                (stage/'SOUND.ASP').write_bytes(derived)
+                extra_compile='ASPCOMP SOUND.ASP SOUND.ASX\nif errorlevel 1 goto failed\n'
             config=fr'''[sdl]
 output=surface
 [mixer]
@@ -141,7 +161,7 @@ mount c "{stage}"
 c:
 ASPCOMP PCPLUS.ASP RECORD.ASX
 if errorlevel 1 goto failed
-echo PASS>COMPILE.OK
+{extra_compile}echo PASS>COMPILE.OK
 :failed
 exit
 '''
@@ -151,13 +171,16 @@ exit
                     env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=capture,stderr=capture,timeout=45)
             assert compiled.returncode==0 and (stage/'COMPILE.OK').exists()
             assert (stage/'RECORD.ASX').read_bytes()==compile_source(source.decode('ascii'))
+            if program_probe:assert (stage/'SOUND.ASX').read_bytes()==compile_source(derived.decode('ascii'))
     checks=dict(both_sessions=len(semantics)==2 and all(s['passed'] for s in semantics.values()),
         sources_unchanged=all(sha(ROOT/name)==digest for name,digest in inputs.items()),
         no_retained_temporary_files=not list(stage.glob('LPR*.TMP')) and not list(stage.glob('LPR*.BAK')))
     result=dict(passed=all(checks.values()),checks=checks,inputs=inputs,sessions=semantics,
-        initialization_wait_seconds=args.init_wait,diagnostic_build=args.trace,runner_sha256=sha(stage/'ASPECT.EXE'),
+        initialization_wait_seconds=args.init_wait,diagnostic_build=args.trace,mouse_sound=mouse_sound,program_probe=program_probe,runner_sha256=sha(stage/'ASPECT.EXE'),
         binary_sha256=prediction['binary_sha256'],expected_payload_hex=payload.hex(),
         artifacts={str(p.relative_to(stage)):sha(p) for p in stage.iterdir() if p.is_file()},
+        replay_program='SOUND.ASX' if program_probe else 'RECORD.ASX',
+        program_probe_scope='Separate derived script runs ABSENT.COM and SUCCESS.COM before the unchanged recorded navigation; failure emits BAD and exits.' if program_probe else None,
         scope='Actual DOS File/C recording, DOS compilation and File/A replay of read-only menu navigation, followed by a second manual navigation proving parent return, on the existing loopback synthetic BBS account. The Hayes model forwards configured shutdown hangup bytes; escape-to-command modem behavior is not modeled. No audio, physical modem, file transfers or full application acceptance.')
     (stage/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=result['passed'],checks=checks,sessions={k:v['checks'] for k,v in semantics.items()})),flush=True)
@@ -167,5 +190,7 @@ exit
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=('synchronet','enigma'));p.add_argument('--label',required=True)
     p.add_argument('--init-wait',type=int,choices=range(32768),help='Explicit initialization acknowledgement deadline for both DOS sessions')
+    p.add_argument('--mouse-sound',action='store_true',help='Use matching ordinary mouse/sound terminal and ASPECT builds')
+    p.add_argument('--program-probe',action='store_true',help='Compile a separate replay wrapper that runs a missing target and a successful DOS child')
     p.add_argument('--trace',action='store_true',help='Separate diagnostic ASPECT observer; no production acceptance')
     asyncio.run(main(p.parse_args()))

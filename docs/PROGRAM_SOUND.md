@@ -289,3 +289,13 @@ Use `build/setup-mouse-notice-sound/PRMEDIT.EXE` and
 `build/terminal-mouse-notice-sound/TERMINAL.EXE` with the ordinary sibling
 `ASPECT.EXE` from `build/aspect-notice-sound-parent/`. These remain separate
 experimental products; normal105-slot publication is unchanged.
+
+The subsequent [combined BBS checkpoint](validation/bbs-mouse-sound.json) accepts
+four actual DOS sessions on these same parent/ordinary-child products against
+the pinned loopback ENiGMA and Synchronet servers. It checks recording, DOS
+compilation, replay through a missing-target notice and successful child launch,
+manual navigation afterward, and exact UART/DOS restoration. The original
+recording remains unchanged; replay uses an explicitly derived wrapper.
+[Workflow details](../lab/bbs/modern-compatibility.md#combined-mouse-and-program-sound)
+retain the earlier ENiGMA login-timing failure. Audible output, mouse movement,
+live Setup, broader BBS flows and physical acceptance remain separate gates.

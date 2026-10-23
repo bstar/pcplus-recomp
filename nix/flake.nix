@@ -97,7 +97,7 @@
         };
         bbs = pkgs.mkShell {
           packages = with pkgs; [
-            nodejs_24 python3 gcc gnumake pkg-config git curl
+            nodejs_24 python3 gcc gnumake pkg-config git curl nasm dosbox-x
             nspr libarchive ncurses perl unzip zip patch
             autoconf automake libtool patchelf mosquitto
           ];
