@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Contextual help recovery](docs/CONTEXT_HELP.md) corrects the native57AE boundary:
+it launches PCHELP.RTE with an18-byte descriptor addressed by a decimal far
+pointer. It is not the maintained local script-reference dialog. Source-owned
+context/HLP decoders pass52 host/8086 DOS checks, an actual seek beyond64KiB,
+and explicit optional reading of all47 original topics/463 lines. Ordinary
+builds use authored fixtures and no originals. Alt-Z remains gated until help
+view ownership, foreground service/context selection and unwind are integrated.
+
 [Complete-terminal input retention](docs/PROGRAM_NOTICE_INPUT.md#complete-terminal-retention-boundary)
 now passes four additional ordinary-product DOS sessions across COM1/COM2.
 An unrepaired INT33 replacement causes both ASPECT and terminal DOS31 retention;

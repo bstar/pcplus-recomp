@@ -85,8 +85,9 @@ is the queue count, and its button-pending word is the active flag. The six
 original peek words differ from the read words for Enter/Escape. Neither read
 routine advances the index because this is a repeated mouse event, not a ring.
 The original keyboard-only host retains independent tables. Its debug callback only counts
-invocations; the original callback at 57aeh creates a diagnostic display and
-requires application UI services outside this unit.
+invocations; the original callback at57AE launches PCHELP.RTE with contextual
+state through the external-program controller. See the corrected
+[helper analysis](CONTEXT_HELP.md); its process/UI services are outside this unit.
 
 ## Integration and remaining scope
 

@@ -1642,3 +1642,7 @@ test-notice-input-terminal-retention: program-notice-input
 	python3 standalone/test_notice_input_terminal_retention_dos.py --label unrepaired-com2-make-$(shell date +%s%N) --port 2
 	python3 standalone/test_notice_input_terminal_retention_dos.py --label repaired-com1-make-$(shell date +%s%N) --repair-on-child-exit
 	python3 standalone/test_notice_input_terminal_retention_dos.py --label repaired-com2-make-$(shell date +%s%N) --repair-on-child-exit --port 2
+
+.PHONY: test-help-format
+test-help-format:
+	python3 standalone/test_help_format_dos.py --output build/help-format/source-only-make-$(shell date +%s%N)

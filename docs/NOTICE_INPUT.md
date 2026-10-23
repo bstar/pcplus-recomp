@@ -22,7 +22,12 @@ confirms the recovered notice's direct input boundaries:
 | 6530 | Peek mouse/BIOS; gated Alt-Z display callback | `ev_4e1b6a73df0456f0f688846077e41b2a714d0e90ba683c1edd24aeebb38db882` |
 | 64fe | Poll, read mouse first, otherwise normalized BIOS | `ev_8e40cf9d5f190f977da1b135d35970d1fcab5cac3261658c9dabbd80eb7dfbd6` |
 | 651a | Non-consuming mouse peek, otherwise BIOS peek | `ev_9bc44de1285653267fe1e2c64a2f8d8f3fffa0fb3fcccfe61137d4b9fbc4fcd5` |
-| 57ae | Gather contextual values, format and display diagnostic/script dialog | `ev_7a8b8dcc588f1a3338056f8bac107d3c67712bdc0f3aab2c18ec53dd024e19f6` |
+| 57ae | Build contextual helper descriptor and launch PCHELP.RTE; see corrected analysis below | `ev_7a8b8dcc588f1a3338056f8bac107d3c67712bdc0f3aab2c18ec53dd024e19f6` |
+
+The [subsequent helper analysis](CONTEXT_HELP.md) identifies57AE as an external
+PCHELP invocation, correcting the earlier local-dialog interpretation. Its
+18-byte handoff and HLP index now have source-owned host/DOS decoders; the
+ASPECT notice gate remains disabled pending safe foreground UI integration.
 
 The original was statically analyzed and closed. Complete records remain in
 ignored `analysis/notice-input-01.rea.json` and frozen custody. No original or
