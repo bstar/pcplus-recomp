@@ -188,6 +188,13 @@ def main():
     snapshot(raw)
     done('missing-child-publication-and-post-extract-damage', 3)
 
+    prepare()
+    publish(bytes(830))
+    assert call('extract', [pointer, 0]) == 0
+    assert call('commit') == 0
+    snapshot(raw)
+    done('failed-child-valid-publication-retains-accepted-bank')
+
     for offset, value in [(16, 4097), (48, 4), (48, 2)]:
         prepare()
         publish(bytes(830))

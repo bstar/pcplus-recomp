@@ -6,7 +6,8 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=()):
+def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386'):
+ assert cpu in ('8086','286','386','486')
  assert working_drive in ("c","d")
  assert observer is None or (observer.isalnum() and observer.isupper() and len(observer)<=8 and observer+'.COM' in (files or {}))
  observer_start=('D:\\'+observer+' T') if observer else ''
@@ -34,9 +35,9 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
  (out/'sampler.asm').write_text(sampler)
  subprocess.run(['nasm','-f','bin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
  server=socket.socket();server.bind(('127.0.0.1',0));server.listen(1);server.settimeout(5)
- wire=bytearray();commands=[];errors=[];stop=threading.Event();checks={};attempts=0
+ wire=bytearray();commands=[];errors=[];stop=threading.Event();checks={};attempts=0;triggered=0
  def peer():
-  nonlocal attempts
+  nonlocal attempts,triggered
   try:
    conn,_=server.accept()
    with conn:
@@ -59,6 +60,8 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
      for byte in block:
       if online:
        line.append(byte)
+       if triggered<len(online_triggers) and line.endswith(online_triggers[triggered][0]):
+        conn.sendall(online_triggers[triggered][1]);triggered+=1
        if line.endswith(b'+++~'):raise AssertionError('Pause marker reached physical wire')
        if line.endswith(b'+++ATH\r'):
         checks['configured_hangup_reached_wire']=True;conn.sendall(b'\r\nOK\r\n');line.clear();online=False
@@ -87,7 +90,7 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
 output=surface
 [cpu]
 core=normal
-cputype=386
+cputype={cpu}
 cycles=fixed 6000
 [mixer]
 nosound=true
@@ -139,7 +142,8 @@ exit
  if mode in ('busy','silence'):checks['configured_abort_reached_wire']=bool(checks.get('configured_abort_reached_wire'))
  (out/'serial.bin').write_bytes(wire)
  (out/'screen.txt').write_text('\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25))+'\n')
- proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'environment':environment or {},'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
+ if online_triggers:checks['online_triggers_sent']=triggered==len(online_triggers)
+ proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'environment':environment or {},'cpu':cpu,'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
  (out/'result.json').write_text(json.dumps(proof,indent=2)+'\n');print(name,'PASS' if proof['passed'] else json.dumps(proof),flush=True);return proof
 def main():
  cases=[('fast-connect-banner','success','p4000 a-x'),('busy-abort','busy','p4000 a-x'),('timeout-abort','silence','p4000 a-x'),('configured-hangup','hangup','p3000 a-h p2200 a-x'),('explicit-redial','redial','p3500 a-d p3500 a-x')]

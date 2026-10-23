@@ -16,6 +16,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--linked', type=Path, required=True)
     parser.add_argument('--dos-label', action='append', required=True)
+    parser.add_argument('--register-label', action='append', default=[])
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     linked_path = args.linked.resolve() / 'result.json'
@@ -55,6 +56,38 @@ def main():
             custody[str(artifact.relative_to(ROOT))] = sha(artifact)
         dos_cases.append(dict(label=label, port=result['port'], passed=True))
     assert {case['port'] for case in dos_cases} == {1, 2}
+    register_cases = []
+    for label in args.register_label:
+        path = ROOT / 'build/register-handoff-dos' / label / 'result.json'
+        assert path.resolve().is_relative_to(ROOT / 'build/register-handoff-dos')
+        result = json.loads(path.read_text())
+        assert result['passed'] and result['cpu'] == '8086'
+        assert result['DOS']['passed'] and all(result['DOS']['checks'].values())
+        assert result['parent_sha256'] == sha(parent) and result['child_sha256'] == sha(child)
+        assert result['DOS']['binary_sha256'] == sha(parent)
+        package = path.parent / 'package'
+        assert sha(package / 'TERMINAL.EXE') == sha(parent)
+        assert sha(package / 'ASPECT.EXE') == sha(child)
+        folder = ROOT / 'build/connection-dos' / ('register-' + label)
+        for snapshot in result['snapshots']:
+            index = snapshot['index']
+            assert sha(folder / f'OWNER{index}.BIN') == snapshot['owner_sha256']
+            assert sha(folder / f'CHILD{index}.BIN') == snapshot['child_sha256']
+        wire = (folder / 'serial.bin').read_bytes()
+        assert wire.index(b'OBSERVE\r') < wire.index(b'\x1b[0n')
+        for name, digest in result['sources'].items():
+            assert name not in sources or sources[name] == digest, name
+            sources[name] = digest
+        artifacts = [p for p in path.parent.iterdir() if p.is_file()]
+        artifacts += [p for p in folder.iterdir() if p.is_file()]
+        artifacts += [package / 'TERMINAL.EXE', package / 'ASPECT.EXE']
+        for artifact in artifacts:
+            custody[str(artifact.relative_to(ROOT))] = sha(artifact)
+        register_cases.append(dict(label=label, case=result['case'], port=result['port'],
+                                   snapshots=len(result['snapshots']), passed=True))
+    if register_cases:
+        assert {(case['port'], case['case']) for case in register_cases} == {
+            (port, case) for port in [1, 2] for case in ['normal', 'bad-token', 'missing-script', 'missing-helper']}
     previous = ROOT / 'docs/validation/aspect-serial-bank.json'
     baseline = json.loads(previous.read_text())
     legacy = {}
@@ -71,13 +104,17 @@ def main():
     assert output.is_relative_to(ROOT / 'build') or output.is_relative_to(ROOT / 'docs/validation')
     output.parent.mkdir(parents=True, exist_ok=True)
     report = dict(passed=True, linked_inputs=linked['inputs'], linked_cases=linked['cases'],
-                  DOS_smoke_cases=dos_cases, parent_sha256=sha(parent), child_sha256=sha(child),
+                  DOS_smoke_cases=dos_cases, DOS_register_workflows=register_cases,
+                  parent_sha256=sha(parent), child_sha256=sha(child),
                   unchanged_legacy_products=legacy, sources=sources, custody_sha256=custody,
                   scope='Experimental maintained ASIO v7 register APIs and COM1/COM2 DOS script smoke. '
-                        'No full DOS bank handback sequence, empty-tree rebuild, HOOK, returned-settings, '
-                        'modern BBS interaction or physical hardware acceptance is claimed.')
+                        'When listed, eight 8086 DOS workflows additionally inspect every bank byte, '
+                        'failed-publication/missing-script/missing-executable retention and retry, '
+                        'and actual post-child RX/parser/TX replies. No empty-tree rebuild, HOOK, '
+                        'returned-settings, modern BBS interaction or physical hardware acceptance is claimed.')
     output.write_text(json.dumps(report, indent=2) + '\n')
-    print('PASS', report['linked_inputs'], 'linked cases; COM1/COM2 DOS smoke; two exact legacy products')
+    print('PASS', report['linked_inputs'], 'linked cases;', len(register_cases),
+          'DOS register workflows; COM1/COM2 DOS smoke; two exact legacy products')
 
 
 if __name__ == '__main__':

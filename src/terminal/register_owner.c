@@ -54,17 +54,21 @@ unsigned __far __cdecl terminal_register_extract(aspect_serial_handoff *base,uns
  else if(owner.exchange.returned || child_success || owner.exchange.magic!=REGISTER_MAGIC || owner.exchange.token!=owner.token)goto bad;
  base->count=b->count;base->status=b->status;
  ((aspect_serial_handoff_v5 *)base)->flow_flags=owner.descriptor.base.flow_flags;
- base->returned=1;owner.phase=2;return 0;
+ /* A failed child may still return valid serial ownership and a staged bank.
+  * Keep that extraction distinct: it must not replace accepted registers. */
+ base->returned=1;owner.phase=child_success?2:3;return 0;
 bad:owner.phase=0;return 1;
 }
 unsigned __far __cdecl terminal_register_commit(void)
 {
  unsigned i;
- if(!terminal_register_context() || owner.phase!=2)return 1;
+ if(!terminal_register_context() || (owner.phase!=2 && owner.phase!=3))return 1;
  if(owner.exchange.returned){
   if(!staged()){owner.phase=0;return 1;}
-  for(i=0;i<830;++i)owner.accepted[i]=owner.exchange.bytes[i];
-  owner.epoch=owner.token;owner.seal=register_seal(owner.accepted,owner.epoch);
+  if(owner.phase==2){
+   for(i=0;i<830;++i)owner.accepted[i]=owner.exchange.bytes[i];
+   owner.epoch=owner.token;owner.seal=register_seal(owner.accepted,owner.epoch);
+  }
  }
  owner.phase=0;return 0;
 }
