@@ -115,6 +115,9 @@ D:\\SNAP S
 D:\\SNAP A
 exit
 '''
+ cpu=getattr(args,'cpu','386')
+ assert cpu in ('8086','286','386','486')
+ if cpu!='386':config=config.replace('cputype=386','cputype='+cpu)
  (output/'dosbox.conf').write_text(config)
  server_log=None
  if args.server_log:
@@ -157,6 +160,7 @@ exit
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'keyboard_input':args.keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
  result['initialization_wait_seconds']=init_wait
+ result['cpu']=next(line.split('=',1)[1] for line in config.splitlines() if line.startswith('cputype='))
  result['server_log']=str(server_log) if server_log is not None else None
  result['server_endpoint']={'address':'127.0.0.1','port':args.port}
  result['modem_packet_delay_ms']=args.packet_delay_ms
@@ -182,5 +186,7 @@ if __name__=='__main__':
  p.add_argument('--entry',type=int,choices=range(1,201),default=3)
  p.add_argument('--program-sound',type=int,choices=[0,1,65535],help='Set only the sound word in the explicit synthetic PRM fixture')
  p.add_argument('--config-fixture',action='store_true',help='Read synthetic PRM in DOS; no serial CLI overrides or private configuration')
+ p.add_argument('--mouse-scales',type=int,nargs=2,metavar=('X','Y'),help='Explicit valid mouse scales in the synthetic PRM')
+ p.add_argument('--cpu',choices=['8086','286','386','486'],default='386')
  p.add_argument('--com',type=int,choices=range(1,5),default=1);p.add_argument('--baud',type=int,choices=[300,1200,2400,4800,9600,19200,38400,57600,115200],default=38400);p.add_argument('--flow',choices=['NONE','SOFT','HARD'],default='SOFT')
  raise SystemExit(asyncio.run(run(p.parse_args())))

@@ -170,13 +170,18 @@ eight-workflow extension. Recreate the current receipt from completed captures u
 
 ## Remaining acceptance
 
+[Current owned BBS editor checks](REGISTER_BBS.md) now cover live script return
+on this exact variant. Synchronet passes immediate forwarding; stock ENiGMA
+retains a packetization-dependent editor gap despite passing buffered trials.
+
 This checkpoint does not establish full register/HOOK acceptance. Still required:
 
 - Combined register mutation/carrier-loss and further malformed-helper,
   partial-publication and pressure policies. Current runtime abort/error cases
   and separate carrier recovery do not prove every combined route. The linked
   admission tests cover allocation edges, known overlaps and segment wrapping.
-- Current Synchronet/ENiGMA interaction coverage for this optional build.
+- Further live register mutation, transfer/pressure/reconnect composition and
+  resolution of the stock ENiGMA key-fragmentation gap for this optional build.
 - Guarded HOOK routing, remaining native PRM fields, returned-settings staging
   and application, and composition with the exit/trap owners.
 - Physical Boca/SPA2102/SynthModem and complete application acceptance.

@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 from modem import Telnet
+from product_inputs import select_product
 
 
 def sha(path):
@@ -57,12 +58,18 @@ def main():
     parser.add_argument('--source', action='store_true', help='Compile LOGON.ASP in the actual DOS child')
     parser.add_argument('--profile', choices=['network', 'enigma-editor'], default='network')
     parser.add_argument('--packet-delay-ms', type=int, choices=range(101), default=0)
+    parser.add_argument('--terminal', type=Path, default=ROOT/'build/terminal/TERMINAL.EXE')
+    parser.add_argument('--runner', type=Path, default=ROOT/'build/aspect-runner/ASPECT.EXE')
+    parser.add_argument('--mouse-scales', type=int, nargs=2)
+    parser.add_argument('--cpu', choices=['8086','286','386','486'], default='386')
     args = parser.parse_args()
     assert args.label and all(c.isalnum() or c in '-_' for c in args.label)
     output = ROOT / 'build/bbs-lab/results/enigma' / args.label
     stage = ROOT / 'build/bbs-lab/script-login' / args.label
     assert not output.exists() and not stage.exists(), 'Preserve earlier attempts; choose a fresh label'
     stage.mkdir(parents=True)
+    terminal, terminal_sources = select_product(args.terminal, 'TERMINAL.EXE')
+    runner, runner_sources = select_product(args.runner, 'ASPECT.EXE')
     sys.path.insert(0, str(ROOT / 'standalone'))
     import test_script_launch_dos as launch
     launch.OUT = stage
@@ -97,9 +104,8 @@ def main():
     watch = watch.replace('buffer: times 8 db 0', 'buffer: times 4008 db 0')
     (stage / 'watch.asm').write_text(watch)
     subprocess.run(['nasm', '-f', 'bin', str(stage / 'watch.asm'), '-o', str(stage / 'SCRIPT.COM')], check=True)
-    for source, leaf in [('terminal/TERMINAL.EXE', 'TERMINAL.EXE'),
-                         ('aspect-runner/ASPECT.EXE', 'ASPECT.EXE')]:
-        shutil.copyfile(ROOT / 'build' / source, stage / leaf)
+    for product, leaf in [(terminal, 'TERMINAL.EXE'), (runner, 'ASPECT.EXE')]:
+        shutil.copyfile(product, stage / leaf)
     # Both fields are painted before focus is installed. WAITQUIET drains the
     # complete form and terminal probes before transmitting either field.
     # The native directory password field holds only ten characters; this
@@ -119,6 +125,7 @@ def main():
     assert 'LoC-Lab-2026!' not in keys.replace(' ', '')
     assert 'enter' not in keys[keys.index('A B C D E'):].split()
     sources = [Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']
+    sources += terminal_sources + runner_sources
     sources += [ROOT / 'standalone' / leaf for leaf in
                 ('test_script_launch_dos.py', 'command_menu_watch.asm')]
     sources += [ROOT / 'lab/bbs' / leaf for leaf in
@@ -143,6 +150,9 @@ def main():
                '--label', args.label, '--com', '2', '--baud', '19200', '--flow', 'HARD',
                '--directory-fixture', '--entry', '3', '--keymap-fixture', str(keymap),
                '--packet-delay-ms', str(args.packet_delay_ms), '--timeout', '170', '--wait', '2', '--keys', keys]
+    command += ['--cpu', args.cpu]
+    if args.mouse_scales:
+        command += ['--mouse-scales', *map(str, args.mouse_scales)]
     # Freeze the inputs, schedule and expected credential boundary before DOS.
     (stage / 'predictions.json').write_text(json.dumps(dict(
         sources=inputs, staged=staged, command=command,
@@ -167,8 +177,8 @@ def main():
     magic, bits, ticks, _ = struct.unpack('<4H', observed[:8]) if len(observed) == 4008 else (0, 0, 0, 0)
     checks = dict(
         DOS_harness=code == 0 and run['passed'],
-        current_terminal=run['binary_sha256'] == staged['TERMINAL.EXE'] == sha(ROOT / 'build/terminal/TERMINAL.EXE'),
-        current_runner=staged['ASPECT.EXE'] == sha(ROOT / 'build/aspect-runner/ASPECT.EXE'),
+        current_terminal=run['binary_sha256'] == staged['TERMINAL.EXE'] == sha(terminal),
+        current_runner=staged['ASPECT.EXE'] == sha(runner),
         source_compilation=(not args.source or (stage/'LOGON.ASX').read_bytes()==compile_source(source)),
         inputs_unchanged=inputs == {str(p.relative_to(ROOT)): sha(p) for p in sources}
                          and all(sha(stage / leaf) == digest for leaf, digest in staged.items()),

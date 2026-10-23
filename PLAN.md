@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Current register-build BBS checks](docs/REGISTER_BBS.md) pass Synchronet script
+login/return/editor with immediate forwarding and stock ENiGMA with explicit30ms
+modem buffering. Repeated immediate ENiGMA trials include a pass and a Home/Insert
+failure; login/handback and emitted keys pass in both. Separate actual Client
+replay retains84 key/9 editor partition differences, while the isolated candidate
+has zero across122 checks. The running servers remain unchanged. This records
+conditional compatibility, not perfect ENiGMA, HOOK or full application acceptance.
+
 [Experimental register handback](docs/REGISTER_HANDBACK.md) adds an optional
 ASIO v7 far descriptor and bounded parent-owned integer/string exchange.
 924 linked cases, separate COM1/COM2 DOS script smoke sessions and fourteen8086
