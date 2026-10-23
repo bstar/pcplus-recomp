@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Owned HOOK execution](docs/HOOK_OWNER.md) now passes239 standalone DOS checks
+and236 checks with the production backend, with reproducible parent/helper
+executables. Real helper EXEC, returned-bank staging, memory ownership, error
+retention and repeated allocation/free are verified. Terminal kind2 remains
+disabled. Next: banked EXEC integration, guarded UART/UI handoff, register
+lifetime, active PRM projection and validated returned-state commit. Full
+application, BBS integration and physical gates remain open.
+
 [HOOK register exchange](docs/HOOK_EXCHANGE.md) now types the native pointer contract as
 20 integer-bank bytes,810 string-bank bytes and a1,264-byte PRM image. A pure
 source-owned KEY-tail codec and opaque staging layer pass325 host/8086 DOS

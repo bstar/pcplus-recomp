@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Owned HOOK execution](HOOK_OWNER.md) now has a source-built standalone DOS
+owner and helper, with239 diagnostic and236 normal-backend checks and exact
+fresh-link reproduction. Allocation/PSP/MCB ownership, bank exchange, real EXEC,
+error retention and repeat/free restoration pass. This supersedes the standalone
+allocation gap below only; terminal kind2, safe-point integration, register
+lifetime, live PRM projection/commit, hardware and full gates remain open.
+
 [HOOK register exchange](HOOK_EXCHANGE.md) now types the native pointer contract as
 20 integer-bank bytes,810 string-bank bytes and a1,264-byte PRM image. A pure
 source-owned KEY-tail codec and opaque staging layer pass325 host/8086 DOS

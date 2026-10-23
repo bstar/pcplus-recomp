@@ -1733,3 +1733,8 @@ test-directory-keys-source: directory-keys
 .PHONY: test-hook-exchange
 test-hook-exchange:
 	python3 standalone/test_hook_exchange_dos.py --output build/hook-exchange/DOS-make-$(shell date +%s%N)
+
+.PHONY: test-hook-owner
+test-hook-owner:
+	python3 standalone/test_hook_owner_dos.py --output build/hook-owner/DOS-make-$(shell date +%s%N)
+	python3 standalone/test_hook_owner_dos.py --production --output build/hook-owner/production-make-$(shell date +%s%N)
