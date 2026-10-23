@@ -71,11 +71,20 @@ static unsigned neighbor(unsigned field,unsigned reverse)
 static void draw(unsigned field,unsigned pos,const char *message)
 {
  unsigned row=5,i,p=setup_field(field)->page;char text[SETUP_TEXT_SIZE];
+#if defined(SETUP_MOUSE) && defined(SETUP_SOUND)
+ unsigned first_visible=0,selected=0,ordinal=0;
+ for(i=0;i<field;++i)if(setup_field(i)->page==p)++selected;
+ if(selected>=14)first_visible=selected-13;
+#endif
  for(i=0;i<25;++i)put(i,0,"",0x17,80);
  put(0,0," PCPlus / SYSTEM CONFIGURATION",0x1f,80);
  put(1,2,document.target,0x1e,13);put(1,18,"Existing 2.01 image / mapped fields",0x17,45);
  put(3,2,pages[p],0x1e,20);
  for(i=0;i<SETUP_FIELD_COUNT;++i)if(setup_field(i)->page==p){
+#if defined(SETUP_MOUSE) && defined(SETUP_SOUND)
+  if(ordinal++<first_visible)continue;
+  if(row>=19)break;
+#endif
   put(row,2,setup_field(i)->label,i==field?0x70:0x17,22);
   if(i==field)strcpy(text,edit);
   else if(setup_get(&document.staged,i,text,sizeof(text))!=SETUP_OK)strcpy(text,"<INVALID - edit to repair>");
@@ -85,6 +94,9 @@ static void draw(unsigned field,unsigned pos,const char *message)
  put(21,2,message,0x1f,76);
  put(23,0," Tab/Arrows Field  PgUp/PgDn Page  F1 Help  F10 Save  Esc Discard",0x70,80);
  row=5;for(i=0;i<field;++i)if(setup_field(i)->page==p)++row;
+#if defined(SETUP_MOUSE) && defined(SETUP_SOUND)
+ row-=first_visible;
+#endif
  position(row,25+(pos<52?pos:52));
 }
 static unsigned run(void)

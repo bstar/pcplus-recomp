@@ -10,16 +10,18 @@ sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',required=True);args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',required=True);parser.add_argument('--mouse',action='store_true');args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     out=ROOT/'build/program-sound-smoke'/args.label;out.mkdir(parents=True,exist_ok=False)
-    parent=ROOT/'build/terminal-notice-sound/TERMINAL.EXE';child=ROOT/'build/aspect-notice-sound-parent/ASPECT.EXE';sources={}
+    parent=ROOT/('build/terminal-mouse-notice-sound/TERMINAL.EXE' if args.mouse else 'build/terminal-notice-sound/TERMINAL.EXE');child=ROOT/'build/aspect-notice-sound-parent/ASPECT.EXE';sources={}
     for product in (parent,child):
         m=json.loads((product.parent/'manifest.json').read_text());assert m['binary_sha256']==sha(product)
         for n,h in m['sources'].items():assert n not in sources or sources[n]==h;sources[n]=h
     for n in ['standalone/test_program_sound_smoke_dos.py','standalone/test_aspect_parent_process_dos.py','standalone/test_aspect_renderer_dos.py','standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py','standalone/modem_fixtures.py','standalone/terminal_config_fixtures.py','standalone/directory_test_support.py','standalone/notice_success_child.asm','src/aspect/compiler.py']:sources[n]=sha(ROOT/n)
+    if args.mouse:
+        for n in ['standalone/mouse_parent_probe.py','standalone/mouse_sound_checks.py']:sources[n]=sha(ROOT/n)
     for n,h in sources.items():
         assert sha(ROOT/n)==h;npath=out/'sources'/n;npath.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/n,npath)
-    render.OUT=out;observer,size=prepare_observer(out,render.map_offsets(parent.parent/'terminal.map'),parent.parent/'terminal.map',sound_probe=True)
+    render.OUT=out;observer,size=prepare_observer(out,render.map_offsets(parent.parent/'terminal.map'),parent.parent/'terminal.map',sound_probe=True,mouse_probe=args.mouse)
     source=(out/'observer.asm').read_text();assert source.count('timer:\n save\n')==source.count('sample_end:')==1
     source=source.replace('sample_end:','audio_ticks: dw 0\nsample_end:').replace('timer:\n save\n', '''timer:
  save
@@ -44,16 +46,21 @@ def main():
         files={'LOGIN.ASP':script.encode(),'LOGIN.ASX':compile_source(script),'SUCCESS.COM':(folder/'SUCCESS.COM').read_bytes(),'RENDER.COM':observer}
         payload=bytearray(directory(port=port));payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
         settings=bytearray(prm(port=port,soft=0,hard=1));struct.pack_into('<H',settings,0x1bc,setting)
+        if args.mouse:struct.pack_into('<HH',settings,0x4e4,8,4)
         harness.RENDER_POST=render.QUERY;harness.RENDER_TRIGGER=b'Synth42\r'
-        result=harness.run(name,'success','p9000 space p700 r e a d y p700 a-x',directory=bytes(payload),prm=bytes(settings),com=port,arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',files=files,banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0cLOGIN:',working_drive='d',observer='RENDER')
+        result=harness.run(name,'success','p9000 space p700 '+('a-z p1500 ' if args.mouse else '')+'r e a d y p700 a-x',directory=bytes(payload),prm=bytes(settings),com=port,arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',files=files,banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0cLOGIN:',working_drive='d',observer='RENDER')
         capture=(folder/'RENDER.BIN').read_bytes();audio=struct.unpack('<H',capture[-2:])[0];raw=capture[:-2];head=struct.unpack_from('<7H',raw);owners=struct.unpack_from('<13H',raw,len(raw)-26-32*70-size*2)
         wire=(folder/'serial.bin').read_bytes();screen=(folder/'SCREEN.BIN').read_bytes()[::2]
         checks=result['checks'];checks.update(ordinary_ASPECT_success=head[:4]==(0x524e,1,1,1) and head[6]==0,parent_JFT=raw[14:34]==raw[34:54],parent_file_owners=raw[54:470]==raw[470:886],parent_resources=owners[2]==0 and raw[-size*2:-size]==raw[-size:],parent_lease_retired=owners[7]==0 and owners[8]==owners[9] and owners[8]>=2,
             passive_sound_policy=bool(audio)==bool(setting),real_success_child=(folder/'SUCCESS.OK').exists() and (folder/'SUCCESS.OK').read_bytes()==b'OK',continued_session=b'AFTER SOUND' in screen and b'BAD' not in wire and b'ready' in wire and wire.count(b'Synth42\r')==1)
-        result.update(passed=all(checks.values()),speaker_active_timer_samples=audio,sound=setting,port=port,passive_header=head,owner_words=owners,compared_parent_bytes=size)
+        mouse=None
+        if args.mouse:
+            from mouse_sound_checks import verify
+            mouse_checks,mouse=verify(raw,parent.parent/'terminal.map',size,folder);checks.update(mouse_checks)
+        result.update(mouse=mouse,passed=all(checks.values()),speaker_active_timer_samples=audio,sound=setting,port=port,passive_header=head,owner_words=owners,compared_parent_bytes=size)
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL '+','.join(k for k,v in checks.items() if not v),flush=True)
     assert all(sha(ROOT/n)==h for n,h in sources.items())
-    report=dict(passed=all(r['passed'] for r in results),cases=results,sources=sources,parent_sha256=sha(parent),child_sha256=sha(child),observer_sha256=sha(out/'RENDER.COM'),scope=__doc__+' No diagnostic ASPECT driver or product patch. Observer reads speaker gate bits during live EXEC; it does not program ports or call product helpers. Mixer muted, so this is not acoustic or physical audio evidence.')
+    report=dict(mouse=args.mouse,passed=all(r['passed'] for r in results),cases=results,sources=sources,parent_sha256=sha(parent),child_sha256=sha(child),observer_sha256=sha(out/'RENDER.COM'),scope=__doc__+' No diagnostic ASPECT driver or product patch. Audio sampling only reads speaker gate bits during live EXEC. '+('The separate mouse probe exchanges INT33 registration and deliberately invokes the actual native callback/menu events, then checks full driver restoration. ' if args.mouse else 'The observer does not program speaker ports or invoke product helpers. ')+'Mixer muted, so this is not acoustic or physical audio evidence.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');return 0 if report['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

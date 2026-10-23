@@ -22,8 +22,8 @@ if args.traps:out_name='terminal-traps-mouse' if args.mouse else 'terminal-traps
 if args.exit_probe is not None:out_name+='-probe-'+str(args.exit_probe)
 if args.trap_probe is not None:out_name+='-probe-'+str(args.trap_probe)
 if args.notice_sound:
- assert args.external_render and not (args.mouse or args.exit_guard or args.traps)
- out_name='terminal-notice-sound'
+ assert args.external_render and not (args.exit_guard or args.traps)
+ out_name='terminal-mouse-notice-sound' if args.mouse else 'terminal-notice-sound'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']

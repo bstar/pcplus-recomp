@@ -1582,3 +1582,22 @@ test-program-notice-sound: program-notice-sound
 	python3 standalone/test_program_notices_sound_dos.py --label window-$(shell date +%s%N) --quarantine foreign --port 2 --mode 2D --mode 2A --mode 2F
 test-program-notice-sound-source: program-notice-sound
 	python3 standalone/prove_program_notices_sound_source.py --output build/program-notices-sound/source-make-$(shell date +%s%N)
+
+.PHONY: program-notice-mouse-sound test-program-notice-mouse-sound test-program-notice-mouse-sound-source
+program-notice-mouse-sound:
+	python3 standalone/build_setup.py --mouse --notice-sound
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --fault-diagnostic
+test-program-notice-mouse-sound: program-notice-mouse-sound
+	python3 standalone/check_program_sound_editor.py --mouse
+	python3 standalone/test_mouse_sound_editor_dos.py --label UI-$(shell date +%s%N)
+	python3 standalone/test_program_sound_smoke_dos.py --label mouse-ordinary-$(shell date +%s%N) --mouse
+	python3 standalone/test_program_notices_sound_dos.py --label mouse-enabled-$(shell date +%s%N) --mouse
+	python3 standalone/test_program_notices_sound_dos.py --label mouse-quiet-$(shell date +%s%N) --mouse --sound 0
+	python3 standalone/test_program_notices_sound_dos.py --label mouse-nonzero-$(shell date +%s%N) --mouse --sound 65535 --port 2 --mode 2A
+	python3 standalone/test_program_notices_sound_dos.py --label mouse-speaker-$(shell date +%s%N) --mouse --quarantine speaker --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --label mouse-guard-$(shell date +%s%N) --mouse --quarantine guard --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --label mouse-window-$(shell date +%s%N) --mouse --quarantine foreign --port 2 --mode 2D --mode 2A --mode 2F
+test-program-notice-mouse-sound-source: program-notice-mouse-sound
+	python3 standalone/prove_program_notices_sound_source.py --mouse --output build/program-notices-sound/mouse-source-make-$(shell date +%s%N)

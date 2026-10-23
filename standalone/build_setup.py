@@ -4,8 +4,7 @@ from pathlib import Path
 import argparse
 import hashlib,json,subprocess
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--mouse',action='store_true');parser.add_argument('--notice-sound',action='store_true');args=parser.parse_args()
-assert not (args.mouse and args.notice_sound), 'Combined mouse/sound editor is not yet published'
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/('build/setup-notice-sound' if args.notice_sound else 'build/setup-mouse' if args.mouse else 'build/setup');OUT.mkdir(parents=True,exist_ok=True)
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/('build/setup-mouse-notice-sound' if args.notice_sound and args.mouse else 'build/setup-notice-sound' if args.notice_sound else 'build/setup-mouse' if args.mouse else 'build/setup');OUT.mkdir(parents=True,exist_ok=True)
 SOURCES=['setup_main.c','setup_document.c','setup_model.c','transfer_import.c','terminal_import.c','modem_import.c','prm_dos.c','prm_replace.c','prm_replace_fs.c']
 sources=[ROOT/'src/config'/p for p in SOURCES]
 subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k16384',*(['-dSETUP_MOUSE'] if args.mouse else []),*(['-dSETUP_SOUND'] if args.notice_sound else []),'-i='+str(ROOT/'src/config'),'-fm=setup.map','-fe=PRMEDIT.EXE',*map(str,sources)],cwd=OUT,check=True)

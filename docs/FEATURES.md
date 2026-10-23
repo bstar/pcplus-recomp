@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Combined mouse parent and sound editor](PROGRAM_SOUND.md#combined-mouse-parent-and-sound-editor)
+now build together.20 attached fault/retry and three ordinary DOS sessions pass
+mouse suspension/resume, native menu events and complete576-byte driver-state
+restoration alongside configured sound and retained input. The51-field editor
+scrolls its last TERMINAL field above help; four actual DOS save/discard/rejection
+workflows and21 field checks pass.632 sources reproduce four combined products;
+the615-source nonmouse proof stays unchanged. Mouse input inside ASPECT windows,
+macro/shared UI, live BBS and physical hardware/full acceptance remain open.
+
 [PRM-configured PROGRAM sound](PROGRAM_SOUND.md#prm-configured-program-sound-through-the-attached-terminal)
 now binds the serviced speaker owner through capability15 to original sound word
 01BCh, with a matching49-field editor.20 actual attached fault/retry sessions and

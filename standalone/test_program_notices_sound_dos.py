@@ -22,21 +22,23 @@ def scripts():
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label',required=True);parser.add_argument('--mode',action='append',choices=['1D','2D','3D','2A','2F'])
-    parser.add_argument('--sound',type=int,choices=[0,1,65535],default=1)
+    parser.add_argument('--mouse',action='store_true');parser.add_argument('--sound',type=int,choices=[0,1,65535],default=1)
     parser.add_argument('--quarantine',choices=['guard','foreign','speaker']);parser.add_argument('--port',type=int,choices=[1,2],default=1)
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     out=ROOT/'build/program-notices-sound'/args.label;out.mkdir(parents=True,exist_ok=False)
-    parent=ROOT/'build/terminal-notice-sound/TERMINAL.EXE';child=ROOT/'build/aspect-notice-sound-fault/ASPECT.EXE';sources={}
+    parent=ROOT/('build/terminal-mouse-notice-sound/TERMINAL.EXE' if args.mouse else 'build/terminal-notice-sound/TERMINAL.EXE');child=ROOT/'build/aspect-notice-sound-fault/ASPECT.EXE';sources={}
     for product in (parent,child):
         manifest=json.loads((product.parent/'manifest.json').read_text());assert manifest['binary_sha256']==sha(product)
         for name,digest in manifest['sources'].items():
             assert name not in sources or sources[name]==digest,name
             sources[name]=digest
     for name in ('standalone/test_program_notices_sound_dos.py','standalone/test_program_notices_dos.py','standalone/test_aspect_parent_process_dos.py','standalone/test_aspect_renderer_dos.py','standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py','standalone/modem_fixtures.py','standalone/terminal_config_fixtures.py','standalone/directory_test_support.py','standalone/notice_success_child.asm','src/aspect/compiler.py'):sources[name]=sha(ROOT/name)
+    if args.mouse:
+        for name in ['standalone/mouse_parent_probe.py','standalone/mouse_sound_checks.py']:sources[name]=sha(ROOT/name)
     for name,digest in sources.items():
         assert sha(ROOT/name)==digest,name
         target=out/'sources'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
-    render.OUT=out;observer,size=prepare_observer(out,render.map_offsets(parent.parent/'terminal.map'),parent.parent/'terminal.map',sound_probe=True)
+    render.OUT=out;observer,size=prepare_observer(out,render.map_offsets(parent.parent/'terminal.map'),parent.parent/'terminal.map',sound_probe=True,mouse_probe=args.mouse)
     harness=render.adapter(cpu='8086');results=[];first,second=scripts();port=args.port
     for mode in args.mode or ['1D','2D','3D','2A','2F']:
         assert not args.quarantine or mode in ('2D','2A','2F')
@@ -48,7 +50,8 @@ def main():
         harness.RENDER_POST=PAYLOAD;harness.RENDER_TRIGGER=b'PAYLOAD!'
         request=mode+str(port)+'N'+({'guard':'G','foreign':'W','speaker':'S'}.get(args.quarantine,'N'))+'P'
         settings=bytearray(prm(port=port,soft=0,hard=1));struct.pack_into('<H',settings,0x1bc,args.sound)
-        result=harness.run(name,'success','p12000 space p700 r e a d y p700 a-x',directory=bytes(payload),prm=bytes(settings),com=port,
+        if args.mouse:struct.pack_into('<HH',settings,0x4e4,8,4)
+        result=harness.run(name,'success','p12000 space p700 '+('a-z p1500 ' if args.mouse else '')+'r e a d y p700 a-x',directory=bytes(payload),prm=bytes(settings),com=port,
             arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK',files=files,environment={'PCPNOTICE':request},
             banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0cLOGIN:',working_drive='d',observer='RENDER')
         raw=(folder/'RENDER.BIN').read_bytes();head=struct.unpack_from('<7H',raw);owners=struct.unpack_from('<13H',raw,len(raw)-26-32*70-size*2)
@@ -73,11 +76,15 @@ def main():
                 retry_blocked=bool(w) and w[45:50]==(10,1,1,10,10),retry_succeeded=bool(w) and w[50:56]==(0,0,1,1,1,0),
                 quarantine_storage_released=bool(w) and w[56:58]==(count,count),recovery_attempts=bool(w) and w[26]==3)
         else:checks['first_cleanup_and_view']=bool(w) and w[9:11]==(1,1)
-        result.update(passed=all(checks.values()),notice_words=w,passive_header=head,owner_words=owners,compared_parent_bytes=size)
+        mouse=None
+        if args.mouse:
+            from mouse_sound_checks import verify
+            mouse_checks,mouse=verify(raw,parent.parent/'terminal.map',size,folder);checks.update(mouse_checks)
+        result.update(mouse=mouse,passed=all(checks.values()),notice_words=w,passive_header=head,owner_words=owners,compared_parent_bytes=size)
         (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n');results.append(result)
         print(name,'FINAL PASS' if result['passed'] else 'FINAL FAIL '+','.join(k for k,v in checks.items() if not v),flush=True)
     for name,digest in sources.items():assert sha(ROOT/name)==digest,name
-    report=dict(passed=all(r['passed'] for r in results),cases=results,sources=sources,parent_sha256=sha(parent),child_sha256=sha(child),observer_sha256=sha(out/'RENDER.COM'),quarantine=args.quarantine,port=port,sound=args.sound,
+    report=dict(passed=all(r['passed'] for r in results),cases=results,sources=sources,parent_sha256=sha(parent),child_sha256=sha(child),observer_sha256=sha(out/'RENDER.COM'),quarantine=args.quarantine,port=port,sound=args.sound,mouse=args.mouse,
         scope='Actual PRM-configured PROGRAM sound and DOS attached terminal, popup error, checkpoint recovery, retained streams, 508 queued printable UART bytes restored through the actual renderer and real subsequent DOS child. Mixer muted; physical audio/modem and complete PROGRAM shared UI policy remain unverified.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');return 0 if report['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

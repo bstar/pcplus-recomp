@@ -153,7 +153,8 @@ including FFFFh, to enabled. The existing44-byte settings ABI stays unchanged.
 on the TERMINAL page. Viewing a noncanonical nonzero word preserves it. An explicit
 edit changes only the two selected bytes; all other PRM bytes remain intact.
 The standard48-field and mouse50-field editors remain separate products. The
-combined mouse/sound editor and mouse-enabled sound parent are not yet published.
+combined mouse/sound editor and parent have a separate experimental composition
+described below.
 No default PRM or private configuration is supplied.
 
 The sound-enabled terminal commits its private setting only after the full
@@ -229,3 +230,62 @@ separate test product. This accepts selected PROGRAM sound/configuration/recover
 integration, not all PROGRAM policy. Macro keyboard, shared mouse/UI, wider views,
 current live BBS regressions, physical audio/modem acceptance and full F01–F16
 application requirements remain open. Normal105-slot publication is unchanged.
+
+## Combined mouse parent and sound editor
+
+The matching experimental mouse/sound products now build together. The parent
+retains the existing mouse owner and capability15 sound query, with65,520 bytes
+in DGROUP and16 bytes spare. The ordinary and focused ASPECT children are the
+same source-built sound children used by the nonmouse parent; there is no second
+mouse-specific interpreter ABI.
+
+The combined51-field editor exposes mouse scales and Program sound together.
+Its TERMINAL page has15 fields, so the selected field now scrolls within14 visible
+rows. The last field stays on row18, above the help row19 and footer. This viewport
+change is conditional on the combined editor build;48/49/50-field layouts retain
+their previous code and behavior. Explicit viewport logic avoids simply drawing
+the last field over its help text.
+
+The [combined receipt](validation/program-notice-mouse-sound.json) accepts20
+attached DOS sound/fault/retry sessions and three ordinary-product sessions on
+COM1/COM2 HARD flow. Each also runs the established independent mouse probe:
+
+- The actual INT33 callback is suspended while the ASPECT child runs.
+- The expected native registration resumes afterward with PRM scales8/4.
+- A neutral callback with foreign DS preserves its caller and queue/depth state.
+- Real native menu events select a screen capture after the command menu closes.
+- At parent exit, the original registration and every reported driver-state byte
+  match the pre-launch snapshot (576 bytes in this DOSBox-X build).
+
+The mouse probe queries/exchanges INT33 state and deliberately invokes the actual
+native callback/menu events; it is not a passive input observer. The ordinary
+sound sampler separately reads speaker gate bits without programming them.
+Source-built DOS children still run after recovery,508 queued text bytes survive,
+parent resources match, and terminal serial input continues. This establishes
+parent mouse suspension/resume around ASPECT with sound; it does not establish
+mouse event delivery inside ASPECT notices or every child-induced driver failure.
+
+Four additional actual8086 DOS workflows run the ordinary51-field editor with
+no renamed main or product patch: save1, saveFFFFh, discard and reject65536.
+A separate INT1C snapshot observes the selected last field, cursor, scrolled first
+row and intact help row before returning control. Exact1264-byte PRM comparisons
+show only an accepted sound-word edit changes the file; discard/rejection leave
+it untouched, and no recovery files remain. Twenty-one linked field checks retain
+the range and opaque-byte preservation coverage.
+
+A fresh632-source-only tree reproduces the combined editor and parent plus both
+ASPECT sound children. The separate615-source nonmouse proof reproduces its four
+previous product hashes unchanged. The mixer remains muted; physical mouse/audio,
+combined live Setup child execution, full macro/shared UI, broader video modes,
+live BBS regression and full application acceptance remain open.
+
+```sh
+./tools/build program-notice-mouse-sound
+./tools/build test-program-notice-mouse-sound
+./tools/build test-program-notice-mouse-sound-source
+```
+
+Use `build/setup-mouse-notice-sound/PRMEDIT.EXE` and
+`build/terminal-mouse-notice-sound/TERMINAL.EXE` with the ordinary sibling
+`ASPECT.EXE` from `build/aspect-notice-sound-parent/`. These remain separate
+experimental products; normal105-slot publication is unchanged.
