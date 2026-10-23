@@ -3,6 +3,9 @@
 #include "../config/resource_path.h"
 #include "../aspect/serial_handoff.h"
 #include <dos.h>
+#ifdef TERMINAL_REGISTER_HANDOFF
+#include "register_owner.h"
+#endif
 extern aspect_serial_handoff script_handoff;
 extern unsigned script_divisor,script_lcr;
 extern unsigned script_port_index,script_soft_flow,script_hard_flow;
@@ -33,6 +36,9 @@ static unsigned device(const char *p,unsigned n)
 unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tail)
 {
  unsigned i=1,start=1,base=0,extension=0,dot=0,c,status,ds,translation;char *p;
+#ifdef TERMINAL_REGISTER_HANDOFF
+ unsigned long register_descriptor;
+#endif
  if(!span(executable,64)||!span(tail,96)||!apart(executable,64,tail,96)||tail[0]!=' ')return 1;
  /* Optional drive and root; every following component is a strict DOS83 name.
   * Reject shell syntax, whitespace, traversal and device aliases even though
@@ -62,10 +68,18 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
      script_handoff.status^script_directory_entry^script_directory_record^
      script_directory_year^script_directory_month^script_directory_day^script_directory_delta^
      script_render_offset^script_render_segment^script_render_token^script_render_version^script_flow_flags;
+#ifdef TERMINAL_REGISTER_HANDOFF
+    register_descriptor=terminal_register_prepare(&script_handoff);
+    if(!register_descriptor)return 3;
+#endif
     p=tail+i;*p++=' ';*p++='/';*p++='S';*p++='1'+script_port_index;*p++=':';
     p=hexword(p,script_divisor);*p++=':';*p++=digit(script_lcr>>4);*p++=digit(script_lcr&15);*p++=':';
     *p++=script_soft_flow?(script_hard_flow?'B':'S'):script_hard_flow?'H':'N';*p++=':';
+#ifdef TERMINAL_REGISTER_HANDOFF
+    p=hexword(p,(unsigned)(register_descriptor>>16));*p++=':';p=hexword(p,(unsigned)register_descriptor);*p=0;
+#else
     p=hexword(p,ds);*p++=':';p=hexword(p,(unsigned)&script_handoff);*p=0;
+#endif
     return 0;
    }
    start=i+1;base=extension=dot=0;continue;

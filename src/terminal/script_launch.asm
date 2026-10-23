@@ -339,6 +339,21 @@ script_marker: db 'ASPECT',0
 SEGMENT _TEXT
 terminal_script_complete:
  call far terminal_render_revoke
+%ifdef TERMINAL_REGISTER_HANDOFF
+ extern _terminal_register_extract,_terminal_register_commit,_terminal_register_discard
+ xor ax,ax
+ cmp word [terminal_program_status],4
+ jne .register_success
+ inc ax
+.register_success:
+ push ax
+ mov ax,script_handoff
+ push ax
+ call far _terminal_register_extract
+ add sp,4
+ or ax,ax
+ jnz .bad
+%endif
  cmp word [script_handoff+22],1
  jne .missing
  cmp word [script_handoff],0x5341
@@ -443,8 +458,18 @@ terminal_script_complete:
  and ax,1
  mov [uart_tx_paused],ax
  cmp word [script_handoff+18],0
+%ifdef TERMINAL_REGISTER_HANDOFF
+ jne .bad
+ call far _terminal_register_commit
+ or ax,ax
+ jz .done
+%else
  je .done
+%endif
 .bad:
+%ifdef TERMINAL_REGISTER_HANDOFF
+ call far _terminal_register_discard
+%endif
  mov word [terminal_program_status],5
  ret
 .missing:

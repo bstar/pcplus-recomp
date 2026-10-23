@@ -114,6 +114,9 @@ void runtime_set_error(unsigned error)
 {
     if(!runtime_error)runtime_error=error;
 }
+#ifdef ASPECT_REGISTER_HANDOFF
+#include "register_handoff.h"
+#endif
 void runtime_reset_native(void)
 {
     unsigned base=(unsigned)runtime_arena+0x1b1a;
@@ -143,6 +146,9 @@ void runtime_reset_native(void)
     memset(runtime_arena,0,sizeof(runtime_arena));
     /* Native framed top-level return pops this owned prefix before exiting. */
     *((unsigned *)(runtime_arena+0x1b1a-2))=base;
+#ifdef ASPECT_REGISTER_HANDOFF
+    if(aspect_register_start())runtime_set_error(ASPECT_RUN_STATE);
+#endif
 }
 unsigned runtime_open(unsigned owner,const char *path)
 {

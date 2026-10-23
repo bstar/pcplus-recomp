@@ -94,6 +94,12 @@ with no original executable or generated analysis database.
 
 ## Integration remaining
 
+The optional [ASIO v7 register handback](REGISTER_HANDBACK.md) now defines a
+parent-owned far bank and per-invocation child initialization/publication.
+923 linked API cases and COM1/COM2 DOS script smoke tests pass. Multi-invocation
+DOS bank inspection and end-to-end malformed-helper recovery are still required;
+this does not satisfy the complete register-lifetime/HOOK requirement below.
+
 The [standalone owner](HOOK_OWNER.md) now implements owned allocation, real
 banked EXEC and returned staging, with239 diagnostic and236 normal-backend DOS
 checks. That satisfies the standalone allocation/EXEC portion below; foreground

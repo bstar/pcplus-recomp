@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Experimental register handback](docs/REGISTER_HANDBACK.md) adds an optional
+ASIO v7 far descriptor and bounded parent-owned integer/string exchange.
+923 linked cases and separate COM1/COM2 DOS script smoke sessions pass.
+Commit requires prior extraction and validation; failure retains the accepted
+bank. Both older terminal/ASPECT executables still reproduce exactly. Real DOS
+multi-invocation bank inspection, malformed-helper recovery, empty-tree proof,
+guarded HOOK routing and returned-settings integration remain open. This is an
+experimental protocol checkpoint, not full HOOK or application acceptance.
+
 [Banked ASPECT serial controller](docs/ASPECT_SERIAL_BANK.md) frees3,104 near-code
 bytes needed for register handback, with identical3,415-byte C instructions,
 23 audited ABI bridge pairs and unchanged data extent.28 DOS script cases and

@@ -19,11 +19,13 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True)
     p.add_argument('--case',required=True,choices=['selected','script','environment','cwd-first','cli','fallback','missing','bad-key','bad-kbd','bad-name','blank'])
     p.add_argument('--port',type=int,choices=[1,2],default=1)
-    p.add_argument('--process-bank',action='store_true');p.add_argument('--session-projection',action='store_true');a=p.parse_args();assert re.fullmatch('[A-Za-z0-9_-]+',a.label)
+    p.add_argument('--process-bank',action='store_true');p.add_argument('--session-projection',action='store_true');p.add_argument('--register-handoff',action='store_true');a=p.parse_args();assert re.fullmatch('[A-Za-z0-9_-]+',a.label)
     if a.session_projection:assert a.process_bank
+    if a.register_handoff:assert a.session_projection
     out=ROOT/'build/directory-keys'/a.label;out.mkdir(parents=True,exist_ok=False)
     parent_name='terminal-directory-keys'+('-process-bank' if a.process_bank else '')+('-session-capture-projection' if a.session_projection else '')
-    parent=ROOT/'build'/parent_name/'TERMINAL.EXE';child=ROOT/'build/aspect-help-resource-parent/ASPECT.EXE'
+    if a.register_handoff:parent_name+='-bound-registers'
+    parent=ROOT/'build'/parent_name/'TERMINAL.EXE';child=ROOT/('build/aspect-register-parent/ASPECT.EXE' if a.register_handoff else 'build/aspect-help-resource-parent/ASPECT.EXE')
     parent_manifest=json.loads((parent.parent/'manifest.json').read_text())
     assert parent_manifest['banked_process']==a.process_bank
     sources={}

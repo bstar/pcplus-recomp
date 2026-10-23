@@ -20,6 +20,7 @@ def main(extension=None):
     if extension and extension.get('notice_input'):feature_flags+=['-DASPECT_NOTICE_INPUT','-DNOTICE_NATIVE_INPUT','-DMOUSE_NOTICE_INPUT']
     if extension and extension.get('notice_help'):feature_flags+=['-DASPECT_NOTICE_HELP']
     if extension and extension.get('help_resource'):feature_flags+=['-DASPECT_HELP_RESOURCE']
+    if extension and extension.get('register_handoff'):feature_flags+=['-DASPECT_REGISTER_HANDOFF']
     if extension and extension.get('break_owner'):feature_flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR','-DNATIVE_PROGRAM_FAR']
     main_source=extension.get('driver',ROOT/'src/aspect/runner.c') if extension else ROOT/'src/aspect/runner.c'
     diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c' and not (extension and extension.get('focused_notice'))
@@ -84,6 +85,11 @@ def main(extension=None):
         subprocess.run(['nasm','-fobj','-I'+str(ROOT/'src/aspect')+'/',str(bridge),'-o',str(bridge_obj)],check=True)
         objects += [str(output/'serial.o'),str(bridge_obj)]
         sources += [bridge,ROOT/'src/aspect/serial_bank.inc']
+        if extension.get('register_handoff'):
+            register_source=ROOT/'src/aspect/register_handoff.c';register_obj=output/'register_handoff.o'
+            subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',*feature_flags,
+                '-nt=ASIO_CODE','-nc=FARCODE','-fo='+str(register_obj),str(register_source)],cwd=output,check=True)
+            objects.append(str(register_obj));sources += [register_source,ROOT/'src/aspect/register_handoff.h',ROOT/'src/aspect/register_codec.h']
     if extension:objects += extension['objects']
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-w4', '-we', '-k8192','-dASPECT_RUNTIME_SERIAL',
                     *(['-ob','-os'] if extension else []),
@@ -95,6 +101,7 @@ def main(extension=None):
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
                   experimental_serial_bank=banked_serial,
+                  experimental_register_handoff=bool(extension and extension.get('register_handoff')),
                   source_extensions={'D7/01':'TRANSMITRAW hexadecimal bytes; requires maintained runtime, not legacy ASX portable'},
                   objects={p.name:sha(p) for p in [*[Path(p) for p in objects],
                       *[output/(p.stem+'.o') for p in compiled_sources]]},

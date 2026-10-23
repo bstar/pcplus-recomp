@@ -56,4 +56,18 @@ typedef char aspect_serial_handoff_v5_size_check[sizeof(aspect_serial_handoff_v5
  * Direct/untracked links retain the earlier policy. Legacy v5 accepts bit0. */
 #define ASIO_VERSION_CARRIER 6U
 #define ASIO_V6_SIZE 50U
+/* Optional maintained register extension. Descriptor may live outside parent
+ * DS; parent_ds still addresses the ring/table/record. All four extension
+ * words participate in the input guard. Legacy builds reject this version. */
+/* Even unused type declarations can reorder Watcom's static data symbols.
+ * Keep this optional ABI out of legacy translation units entirely. */
+#if defined(ASPECT_REGISTER_HANDOFF) || defined(TERMINAL_REGISTER_HANDOFF)
+#define ASIO_VERSION_REGISTERS 7U
+#define ASIO_V7_SIZE 58U
+typedef struct aspect_serial_handoff_v7 {
+ aspect_serial_handoff_v5 base;
+ unsigned register_offset,register_segment,register_bytes,register_token;
+} aspect_serial_handoff_v7;
+typedef char aspect_serial_handoff_v7_size_check[sizeof(aspect_serial_handoff_v7)==ASIO_V7_SIZE?1:-1];
+#endif
 #endif
