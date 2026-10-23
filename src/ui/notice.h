@@ -11,7 +11,7 @@
  * bytes or local keys, and return in bounded time. All callbacks run in the
  * foreground, never an ISR. */
 enum {NOTICE_OK,NOTICE_KEY,NOTICE_CANCELLED,NOTICE_ARGUMENT,NOTICE_BUSY,
- NOTICE_WINDOW,NOTICE_SERVICE,NOTICE_TIMEOUT,NOTICE_BUDGET,NOTICE_STATE,NOTICE_CLEANUP};
+ NOTICE_WINDOW,NOTICE_SERVICE,NOTICE_TIMEOUT,NOTICE_BUDGET,NOTICE_STATE,NOTICE_CLEANUP,NOTICE_INPUT};
 typedef unsigned (__cdecl *notice_service)(void);
 typedef unsigned (__cdecl *notice_sound)(unsigned kind);
 #if !defined(NOTICE_BANKED)

@@ -6,6 +6,11 @@ extern unsigned __cdecl mouse_terminal_release_unused(void);
 static mouse_settings selected={8,8,{1,1,1,1,1,1}};
 static mouse_settings offered;
 static unsigned offered_valid;
+#ifdef ASPECT_NOTICE_INPUT
+/* Read configuration even when no INT33 driver acquired native state. */
+unsigned __far __cdecl terminal_mouse_selected_scale(unsigned axis)
+{return axis==0?selected.scale_x:axis==1?selected.scale_y:0;}
+#endif
 void __cdecl terminal_mouse_bootstrap(void){mouse_owner_bootstrap();offered_valid=0;}
 unsigned __cdecl terminal_mouse_stage(const unsigned char *image,unsigned bytes)
 {

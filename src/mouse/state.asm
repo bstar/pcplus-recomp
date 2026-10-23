@@ -23,9 +23,14 @@ keyboard_queue_count:
 wordvar mouse_count
 keyboard_queue_index:
 wordvar mouse_code
+%ifdef MOUSE_EXTERNAL_BIOS
+extern keyboard_bios_mode
+global keyboard_debug_gate
+%else
 global keyboard_bios_mode,_keyboard_bios_mode,keyboard_debug_gate
 keyboard_bios_mode:
 _keyboard_bios_mode: db 0
+%endif
 keyboard_debug_gate: dw -1
 SEGMENT _TEXT public class=CODE use16
 %ifndef TERMINAL_MOUSE

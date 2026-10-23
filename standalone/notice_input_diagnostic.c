@@ -91,13 +91,26 @@ int main(void)
  CHECK(notice_input_open(&settings)==MOUSE_OK);
  _dos_setvect(0x33,replaced);
  options.service=0;status=notice_show("Changed driver vector",0,&options,&result);
- CHECK(status==NOTICE_SERVICE&&result.service_status==MOUSE_STATE&&!notice_active());
+ CHECK(status==NOTICE_INPUT&&result.service_status==MOUSE_STATE&&!notice_active());
  CHECK(mouse_owner_phase()==MOUSE_QUARANTINED&&mouse_owner_bytes()==bytes);
  CHECK(notice_input_close()==MOUSE_STATE&&mouse_owner_bytes()==bytes);
  _dos_setvect(0x33,vector);CHECK(notice_input_close()==MOUSE_OK);
  mouse_platform_save(after);CHECK(!_fmemcmp(before,after,bytes));
  CHECK(!memcmp(native,&mouse_scale_x,22)&&!memcmp(native+22,mouse_enabled,6));
  CHECK(notice_input_close()==MOUSE_OK&&polls>0);
+#ifdef NOTICE_INPUT_BIOS_FALLBACK
+ _dos_setvect(0x33,0);
+ CHECK(notice_input_open(&settings)==MOUSE_OK&&notice_input_active()==2);
+ CHECK(mouse_owner_phase()==MOUSE_CLOSED&&mouse_owner_bytes()==0);
+ seed(0x1c0d);seed(0x011b);seed(0x2c7a);
+ CHECK(notice_input_peek(&key)==MOUSE_OK&&key==0x1c0d);
+ status=notice_show("No mouse: BIOS Enter",0,&options,&result);CHECK(status==NOTICE_KEY&&result.key==13);
+ status=notice_show("No mouse: BIOS Escape",0,&options,&result);CHECK(status==NOTICE_CANCELLED&&result.key==27);
+ CHECK(notice_input_read(&key)==MOUSE_OK&&key=='z');
+ CHECK(notice_input_close()==MOUSE_OK&&!notice_input_active());
+ _dos_setvect(0x33,vector);mouse_platform_save(after);CHECK(!_fmemcmp(before,after,bytes));
+ CHECK(!memcmp(native,&mouse_scale_x,22)&&!memcmp(native+22,mouse_enabled,6));
+#endif
  exchange(0,0);_ffree(before);_ffree(after);
  printf("NINPUT checks=%u failures=%u driver_bytes=%u\n",checks,failures,bytes);
  return failures?1:0;

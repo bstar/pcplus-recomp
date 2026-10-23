@@ -1,9 +1,15 @@
 # Native notice input and executing-child mouse ownership
 
+The subsequent [guarded ASPECT binding](PROGRAM_NOTICE_INPUT.md) adds selected
+ordinary-child mouse/BIOS input, enhanced BIOS and no-driver fallback, startup
+exit ownership, current BBS regressions and actual retained-CLI tests. The
+component checkpoint below records the earlier boundary; full contextual UI
+and application policy remain open.
+
 The [receipt](validation/notice-input.json) accepts a separate notice-input
 component with66 actual8086 DOS checks. It combines the recovered mouse/keyboard
-producer and consumer with the banked timed-notice controller. Attached ASPECT
-input remains open.
+producer and consumer with the banked timed-notice controller. At that checkpoint
+attached ASPECT input remained open; the subsequent binding is linked above.
 
 ## Original input boundary
 
@@ -68,11 +74,12 @@ The quiet regression retains583 checks with69 allocations/frees. A separate
 632-source tree reproduces all four matching mouse/sound application products
 at their preceding hashes; the component changes no published behavior.
 
-Next, move the child-local native input/owner into explicit ASPECT banks, share
+The initial next steps were to move the child-local native input/owner into explicit ASPECT banks, share
 the interpreter's BIOS mode through a declared ABI, and pass the parent's current
 scales while its callback stays suspended. Bind open/close, quarantine and retry
 to PROGRAM notices and every outer fault/child-exit path, then test queued serial
 bytes and ordinary products. This component tests BIOS mode0 with the Alt-Z gate
 disabled. Original contextual/shared UI, enhanced BIOS composition, attached input,
 broader views, physical modem/mouse/audio and all full application gates remain
-open. This receipt does not enable KEY macro playback in notices.
+open in that receipt. The subsequent binding covers selected bank/BIOS/cleanup
+integration; neither receipt enables KEY macro playback in notices.

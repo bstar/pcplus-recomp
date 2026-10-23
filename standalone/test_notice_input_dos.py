@@ -5,8 +5,9 @@ from pathlib import Path
 from build_native_mouse import ROOT,sha
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
-    out=p.parse_args().output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    base=ROOT/'build/notice-input';m=json.loads((base/'manifest.json').read_text());assert not m['original_inputs']
+    p.add_argument('--bios-fallback',action='store_true');args=p.parse_args()
+    out=args.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
+    base=ROOT/('build/notice-input-bios' if args.bios_fallback else 'build/notice-input');m=json.loads((base/'manifest.json').read_text());assert not m['original_inputs']
     assert sha(base/'NINPUT.EXE')==m['binary_sha256']
     for n,h in m['sources'].items():
         assert sha(ROOT/n)==h;target=out/'sources'/n;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/n,target)
@@ -39,7 +40,7 @@ exit
     checks=dict(emulator_exit=r.returncode==0,DOS_pass=(out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),
         self_checks=bool(summary) and int(summary[1])>=50 and 0<int(summary[2])<65504,
         binary_unchanged=sha(out/'NINPUT.EXE')==m['binary_sha256'],sources_unchanged=all(sha(ROOT/n)==h for n,h in m['sources'].items()))
-    result=dict(passed=all(checks.values()),checks=checks,self_checks=int(summary[1]) if summary else None,driver_bytes=int(summary[2]) if summary else None,
+    result=dict(bios_fallback=args.bios_fallback,passed=all(checks.values()),checks=checks,self_checks=int(summary[1]) if summary else None,driver_bytes=int(summary[2]) if summary else None,
         binary_sha256=m['binary_sha256'],manifest_sha256=sha(base/'manifest.json'),checker_sha256=sha(Path(__file__)),
         captures_sha256={x.name:sha(x) for x in out.iterdir() if x.is_file()},sources=m['sources'],
         scope=__doc__+' Real native callback on foreign DS/SS, mouse repetition priority, distinct peek/read words, BIOS normalization/typeahead, timed idle, outer longjmp unwind and vector quarantine/repair with exact opaque driver/native-state restoration. Component only; no attached ASPECT, debug UI, KEY macro, physical clicks or full application acceptance.')

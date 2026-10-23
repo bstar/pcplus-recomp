@@ -28,7 +28,11 @@ static unsigned paragraphs(unsigned psp,unsigned floor)
 unsigned __cdecl program_exit_begin(void)
 {
  unsigned psp,ds,top,extra;
- if(data_segment()!=stack_segment()||!(flags()&0x200)||native_break_phase()!=BREAK_CLOSED)return 10;
+ if(data_segment()!=stack_segment()||!(flags()&0x200)
+#ifndef PROGRAM_EXIT_NO_BREAK
+ ||native_break_phase()!=BREAK_CLOSED
+#endif
+ )return 10;
  if(valid)return 10;
  psp=current_psp();ds=data_segment();top=_STACKTOP;
  if(psp!=_psp||ds<psp||!top)return 10;
@@ -45,8 +49,12 @@ unsigned __cdecl program_exit_finish(unsigned result)
  unsigned count;
  if(!valid){program_exit_stop();return 10;}
  if(current_psp()!=owner)restore_psp(owner);
+#ifndef PROGRAM_EXIT_NO_BREAK
  if(native_break_phase()!=BREAK_CLOSED)native_break_recover();
  if(native_break_phase()==BREAK_CLOSED&&!program_exit_live())return result;
+#else
+ if(!program_exit_live())return result;
+#endif
  count=paragraphs(owner,minimum);
  if(!count){program_exit_stop();return 10;}
  /* DOS31 keeps this complete PSP block and its other DOS-owned allocations.

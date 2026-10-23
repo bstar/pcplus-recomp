@@ -10,6 +10,9 @@
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
 #include "../process/exit_owner.h"
 #endif
+#if defined(ASPECT_NOTICE_INPUT)
+#include "../ui/notice_input_exit.h"
+#endif
 
 static const char *errors[]={"success","cannot open script","invalid script header",
  "unsupported command or service","floating-point service unavailable","file or output error",
@@ -79,6 +82,8 @@ int main(int argc,char **argv)
  }
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
  if(program_exit_begin())return ASPECT_RUN_STATE;
+#elif defined(ASPECT_NOTICE_INPUT)
+ if(notice_input_exit_prepare())return ASPECT_RUN_STATE;
 #endif
  if(serial_option){
   serial_status=aspect_serial_open(serial_option);
@@ -100,6 +105,9 @@ int main(int argc,char **argv)
   }
  }
  serial_status=aspect_render_finish();if(serial_status && !result)result=serial_status;
+#if defined(ASPECT_NOTICE_INPUT)
+ result=notice_input_exit_finish(result);
+#endif
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
  result=program_exit_finish(result);
 #endif

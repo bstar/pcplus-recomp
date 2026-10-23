@@ -18,7 +18,9 @@ def main():
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--synchronet-logon-fixture',type=Path,help='Declared temporary synthetic-account daily-logon exemption, restored after this attempt')
     p.add_argument('--mouse-sound',action='store_true',help='Audit the matching combined mouse/sound builds and DOS-child replay wrapper')
+    p.add_argument('--notice-input',action='store_true',help='Audit matching capability16 native notice-input products')
     a=p.parse_args()
+    assert not a.notice_input or a.mouse_sound
     assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
     if a.synchronet_label:assert re.fullmatch(r'[A-Za-z0-9_-]+',a.synchronet_label)
     cohort=a.cohort.resolve();output=a.output.resolve()
@@ -28,6 +30,7 @@ def main():
         ROOT/'nix/flake.nix',ROOT/'nix/flake.lock',ROOT/'tools/bbs-dev'};servers={}
     parent='terminal-mouse-notice-sound' if a.mouse_sound else 'terminal'
     runner='aspect-notice-sound-parent' if a.mouse_sound else 'aspect-runner'
+    if a.notice_input:parent='terminal-mouse-notice-input';runner='aspect-notice-input-parent'
     for name,payload in (('synchronet',b'TQ'),('enigma',b'M\rQ\r')):
         stage=ROOT/'build/bbs-lab/recording'/name/(a.synchronet_label if name=='synchronet' and a.synchronet_label else a.label);r=read(stage/'result.json');start=read(stage/'start.json')
         assert r['passed'] and all(r['checks'].values()) and not r['diagnostic_build']
@@ -45,6 +48,7 @@ def main():
         assert re.search(rb'transmitraw "[0-9A-F]+"\r\nendproc\r\n$',source),'Stop-only RX must not add a wait'
         assert (stage/'COMPILE.OK').read_bytes().strip()==b'PASS' and (stage/'RECORD.ASX').stat().st_size>0
         assert (stage/'RECORD.ASX').read_bytes()==compile_source(source.decode('ascii'))
+        assert bool(r.get('native_notice_input'))==bool(start.get('native_notice_input'))==a.notice_input
         assert bool(r.get('mouse_sound'))==bool(start.get('mouse_sound'))==a.mouse_sound
         assert bool(r.get('program_probe'))==bool(start.get('program_probe'))==a.mouse_sound
         if a.mouse_sound:
@@ -177,7 +181,7 @@ def main():
     result=dict(passed=True,selected_modern_BBS_recorder_workflows_accepted=True,full_F13_accepted=False,
         servers=servers,initialization_wait_seconds=a.init_wait,native_prompt_cases=68,custody_sha256=kept,synchronet_logon_fixture=logon_fixture,
         earlier_failures='docs/validation/bbs-recording-failure.json',
-        mouse_sound=a.mouse_sound,program_probe=a.mouse_sound,prerequisite_failures=prerequisites,
+        mouse_sound=a.mouse_sound,program_probe=a.mouse_sound,native_notice_input=a.notice_input,prerequisite_failures=prerequisites,
         scope=('Four actual DOS sessions on the combined mouse/sound build: record read-only BBS navigation, compile the original and a separate DOS-child wrapper with DOS ASPCOMP, replay the wrapper, navigate manually afterward, then exact UART/DOS restoration. The wrapper first runs a missing target and a successful child; conditional BAD wire output is absent. Sound PRM word is enabled; audible output and mouse movement are not observed by this BBS harness. Loopback Hayes model; no physical modem, transfers or full application acceptance.' if a.mouse_sound else 'Four production actual DOS sessions: record read-only navigation, compile with DOS ASPCOMP, replay the unedited source in a fresh authenticated BBS session, navigate manually afterward, then normal exit and exact UART/DOS restoration. Separate diagnostic observer and native CPU evidence explain the overlap/stop-only wait fixes. Loopback Hayes model forwards configured shutdown bytes. No software audio, physical modem, transfers, arbitrary prompts or full application acceptance.'))
     with output.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=True,production_sessions=4,custody_files=len(kept))))

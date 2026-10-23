@@ -17,6 +17,7 @@ def main(extension=None):
     if extension and extension.get('program_far'):feature_flags+=['-DNATIVE_PROGRAM_FAR']
     if extension and extension.get('notice_bank'):feature_flags+=['-DNATIVE_PROGRAM_NOTICES','-DNOTICE_BANKED']
     if extension and extension.get('notice_sound'):feature_flags+=['-DPROGRAM_NOTICE_SPEAKER','-DNOTICE_SPEAKER','-DSPEAKER_BANKED','-DASPECT_SOUND_POLICY']
+    if extension and extension.get('notice_input'):feature_flags+=['-DASPECT_NOTICE_INPUT','-DNOTICE_NATIVE_INPUT','-DMOUSE_NOTICE_INPUT']
     if extension and extension.get('break_owner'):feature_flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR','-DNATIVE_PROGRAM_FAR']
     main_source=extension.get('driver',ROOT/'src/aspect/runner.c') if extension else ROOT/'src/aspect/runner.c'
     diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c' and not (extension and extension.get('focused_notice'))

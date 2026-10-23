@@ -94,6 +94,9 @@ _aspect_render_request:
  pop bp
  ret
 
+%ifdef ASPECT_NOTICE_INPUT
+SEGMENT NOTICEINPUT_CODE public align=16 class=FARCODE use16
+%endif
 %ifdef ASPECT_SOUND_POLICY
 ; Banked PROGRAM calls this only after a validated attached-parent lease.
 ; Scalar operation13 returns FF00/FF01 or an ordinary typed error.
@@ -105,6 +108,23 @@ _program_notice_sound_policy:
  call far [_aspect_render_parent_entry]
  pop bx
  retf
+%endif
+
+%ifdef ASPECT_NOTICE_INPUT
+; Selector0/1 returns F000|scale1..999 or a typed ordinary error.
+; No near calls: keep this scalar bridge outside the constrained CRT CODE.
+global _program_notice_mouse_policy
+_program_notice_mouse_policy:
+ push bp
+ mov bp,sp
+ push bx
+ mov bx,[bp+6]
+ mov ax,14
+ call far [_aspect_render_parent_entry]
+ pop bx
+ pop bp
+ retf
+SEGMENT _TEXT
 %endif
 
 ; Parent AX=callbackop,BX=value. Preserve every register except resultAX and

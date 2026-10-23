@@ -121,7 +121,7 @@ unsigned __cdecl notice_platform_poll(void)
  unsigned key,status;
  service();status=notice_input_peek(&key);
  if(status==MOUSE_PENDING)return 0;
- if(status){held.result.service_status=status;abort_notice(NOTICE_SERVICE);}
+ if(status){held.result.service_status=status;abort_notice(NOTICE_INPUT);}
  return key;
 #else
  service();return notice_key_pending_native();
@@ -132,7 +132,7 @@ unsigned __cdecl notice_platform_read(void)
  unsigned key;
 #if defined(NOTICE_NATIVE_INPUT)
  unsigned status=notice_input_read(&key);
- if(status){held.result.service_status=status;abort_notice(NOTICE_SERVICE);}
+ if(status){held.result.service_status=status;abort_notice(NOTICE_INPUT);}
 #else
  if(!notice_key_pending_native())abort_notice(NOTICE_STATE);
  key=notice_key_read_native();

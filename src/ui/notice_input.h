@@ -8,4 +8,5 @@ unsigned __far __cdecl notice_input_open(const mouse_settings *);
 unsigned __far __cdecl notice_input_close(void);
 unsigned __far __cdecl notice_input_peek(unsigned *);
 unsigned __far __cdecl notice_input_read(unsigned *);
+unsigned __far __cdecl notice_input_active(void);
 #endif

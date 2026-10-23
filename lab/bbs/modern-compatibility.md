@@ -1,5 +1,18 @@
 # Modern BBS compatibility checkpoint
 
+The [capability16 notice-input receipt](../../docs/validation/bbs-native-notice-input.json)
+accepts the same four record/compile/replay/manual-navigation workflows below on
+the new matching native-input parent and ordinary ASPECT child. The label is
+`native-input-bbs-03`, with explicit `/I:3`, sound1 and scales8/4. Replay includes
+the missing-target notice and successful DOS child before BBS navigation.
+These runs applied no quota exemption. The [input/exit checkpoint](../../docs/PROGRAM_NOTICE_INPUT.md)
+separately covers native callbacks, BIOS fallback and retained-image lifetime;
+the BBS harness itself observes none of the physical mouse/audio path.
+
+Select this explicit build in the lab producer with `--notice-input` in addition
+to `--mouse-sound --program-probe`. Earlier receipts below keep their executable
+identities; none establishes full application or physical modem compatibility.
+
 ## Combined mouse and PROGRAM sound
 
 The [current receipt](../../docs/validation/bbs-mouse-sound.json) accepts four

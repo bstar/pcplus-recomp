@@ -4,6 +4,19 @@
 #include "../ui/notice_unwind.h"
 #include "../ui/notice_window.h"
 #include "../aspect/runtime.h"
+#if defined(ASPECT_NOTICE_INPUT)
+#include "../ui/notice_input.h"
+extern unsigned __far __cdecl program_notice_mouse_policy(unsigned);
+extern unsigned aspect_render_parent_entry[2];
+static mouse_settings input_settings={8,8,{1,1,1,1,1,1}};
+static unsigned input_failure(unsigned status)
+{
+ program_notice_result.status=program_notice_result.cause=NOTICE_INPUT;
+ program_notice_result.service_status=status;program_notice_result.key=0;
+ program_notice_result.window_status=0;program_notice_result.polls=program_notice_result.elapsed_ticks=0;
+ return NOTICE_INPUT;
+}
+#endif
 #if defined(PROGRAM_NOTICE_SPEAKER)
 #include "../ui/notice_speaker.h"
 extern unsigned aspect_render_parent_entry[2];
@@ -45,7 +58,25 @@ unsigned __far __cdecl program_notice_error(unsigned error)
  if(status){program_notice_result.status=program_notice_result.cause=status;return status;}
 #endif
  options.service=program_notice_callback();
+#if defined(ASPECT_NOTICE_INPUT)
+ if(aspect_render_parent_entry[1]){
+  status=program_notice_mouse_policy(0);
+  if(status<0xf001U||status>0xf3e7U)return input_failure(status);
+  input_settings.scale_x=status&0x3ff;
+  status=program_notice_mouse_policy(1);
+  if(status<0xf001U||status>0xf3e7U)return input_failure(status);
+  input_settings.scale_y=status&0x3ff;
+ }
+ status=notice_input_open(&input_settings);
+ if(status)return input_failure(status);
+#endif
  status=notice_show(message,1,&options,&program_notice_result);
+#if defined(ASPECT_NOTICE_INPUT)
+ if(!notice_active()){
+  unsigned other=notice_input_close();
+  if(other){program_notice_result.service_status=other;program_notice_result.status=NOTICE_CLEANUP;return NOTICE_CLEANUP;}
+ }
+#endif
 #if defined(PROGRAM_NOTICE_DIAGNOSTIC)
  notice_fault_phase(3);
 #endif
@@ -55,10 +86,20 @@ unsigned __far __cdecl program_notice_unwind(void)
 {
  unsigned status=NOTICE_OK;
  if(notice_active())status=notice_unwind(&program_notice_result);
+#if defined(ASPECT_NOTICE_INPUT)
+ if(!notice_active()){
+  unsigned other=notice_input_close();
+  if(other){program_notice_result.service_status=other;return NOTICE_CLEANUP;}
+ }
+#endif
  return notice_window_phase()?(status?status:NOTICE_BUSY):status;
 }
 unsigned __far __cdecl program_notice_active(void)
-{return notice_active()||notice_window_phase();}
+{return notice_active()||notice_window_phase()
+#if defined(ASPECT_NOTICE_INPUT)
+ ||notice_input_active()
+#endif
+ ;}
 unsigned __far __cdecl program_notice_retry(void)
 {
  unsigned status;

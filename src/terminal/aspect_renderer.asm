@@ -4,6 +4,10 @@
 BITS 16
 CPU 8086
 %include "resident_bridge.inc"
+%ifdef ASPECT_NOTICE_INPUT
+ %define RENDER_CAPABILITY 16
+ extern _terminal_sound_enabled,terminal_program_result,_terminal_mouse_selected_scale
+%else
 %ifdef ASPECT_SOUND_POLICY
  %define RENDER_CAPABILITY 15
  extern _terminal_sound_enabled,terminal_program_result
@@ -12,6 +16,7 @@ CPU 8086
  extern terminal_program_result
 %else
  %define RENDER_CAPABILITY 12
+%endif
 %endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
@@ -255,6 +260,10 @@ render_body:
  mov ax,[cs:render_caller_ds]
  cmp ax,[cs:render_child_ds]
  jne .state
+%ifdef ASPECT_NOTICE_INPUT
+ cmp di,14
+ je .mouse_policy
+%endif
 %ifdef ASPECT_SOUND_POLICY
  cmp di,13
  je .sound_policy
@@ -330,6 +339,22 @@ render_body:
  mov ax,[_terminal_sound_enabled]
  and ax,1
  or ax,0xff00
+ ret
+%endif
+%ifdef ASPECT_NOTICE_INPUT
+.mouse_policy:
+ cmp bx,1
+ ja .operand
+ cmp word [_script_handoff+22],0
+ jne .serial
+ push bx
+ call far _terminal_mouse_selected_scale
+ add sp,2
+ cmp ax,1
+ jb .state
+ cmp ax,999
+ ja .state
+ or ax,0xf000
  ret
 %endif
 .break_policy:

@@ -10,7 +10,7 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
-parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
 if args.exit_probe is not None:assert args.exit_guard
 if args.process_bank:assert args.exit_guard and args.external_render
 if args.traps:assert args.process_bank
@@ -24,6 +24,9 @@ if args.trap_probe is not None:out_name+='-probe-'+str(args.trap_probe)
 if args.notice_sound:
  assert args.external_render and not (args.exit_guard or args.traps)
  out_name='terminal-mouse-notice-sound' if args.mouse else 'terminal-notice-sound'
+if args.notice_input:
+ assert args.notice_sound and args.mouse
+ out_name='terminal-mouse-notice-input'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
@@ -83,6 +86,7 @@ for index,source in enumerate(sources):
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
+ if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.exit_guard:options+=['-DTERMINAL_EXIT_GUARD']
  if args.traps:options+=['-DTERMINAL_TRAPS']
  if args.trap_probe is not None:options+=['-DTERMINAL_TRAP_PROBE='+str(args.trap_probe)]
@@ -187,6 +191,7 @@ for source in c_sources:
  if source.parent==ROOT/'src/aspect' and source not in config_sources:options=['-nt=ASPECT_CODE','-nc=FARCODE']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-dASPECT_SOUND_POLICY','-dTERMINAL_SOUND']
+ if args.notice_input:options+=['-dASPECT_NOTICE_INPUT']
  if args.mouse:
   options+=['-dTERMINAL_MOUSE']
   if source.parent==ROOT/'src/mouse':
@@ -247,6 +252,7 @@ manifest['zmodem_compiler_helper_adapters']=zmodem_helper_adapters
 manifest['limitations'].append('Maintained YMODEM framing and header codec execute in CONFIG_CODE with unchanged near data and protocol logic. Explicit callbacks bridge resident UART/CRC/file owners; zero-argument callbacks have their own declared family. Newly compiled batch_header OMF imports for Watcom32-bit arithmetic are renamed to local register adapters; all code/data/fixup records and external indices are preserved. Original ordinary XMODEM modules remain resident and unchanged.')
 manifest['experimental_external_render']=args.external_render
 manifest['experimental_mouse']=args.mouse
+manifest['experimental_notice_input']=args.notice_input
 manifest['terminal_exit_guard']=args.exit_guard
 manifest['terminal_exit_probe']=args.exit_probe
 manifest['banked_process']=args.process_bank

@@ -13,7 +13,9 @@
  * preserved. Each context runs DS=SS on its own checked stack slice. */
 #define ASIO_VERSION_RENDER 4U
 #define ASIO_V4_SIZE 48U
-#if defined(ASPECT_SOUND_POLICY)
+#if defined(ASPECT_NOTICE_INPUT)
+#define ASPECT_RENDER_CAP_VERSION 16U
+#elif defined(ASPECT_SOUND_POLICY)
 #define ASPECT_RENDER_CAP_VERSION 15U
 #elif defined(ASPECT_EXTERNAL_RENDER)
 #define ASPECT_RENDER_CAP_VERSION 13U

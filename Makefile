@@ -1613,3 +1613,25 @@ test-notice-input: notice-input
 	python3 standalone/test_notice_input_dos.py --output build/notice-input/DOS-make-$(shell date +%s%N)
 test-notice-input-source: notice-input
 	python3 standalone/prove_notice_input_source.py --output build/notice-input/source-make-$(shell date +%s%N)
+
+.PHONY: program-notice-input test-program-notice-input test-program-notice-input-source notice-input-exit test-notice-input-exit test-notice-input-exit-source
+program-notice-input:
+	python3 standalone/build_setup.py --mouse --notice-sound
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input --fault-diagnostic
+test-program-notice-input: program-notice-input
+	python3 standalone/test_program_sound_smoke_dos.py --mouse --input --label input-ordinary-$(shell date +%s%N)
+	python3 standalone/test_program_sound_smoke_dos.py --mouse --input --no-driver --label input-BIOS-$(shell date +%s%N)
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --label input-fault-$(shell date +%s%N)
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --label input-guard-$(shell date +%s%N) --quarantine guard --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --label input-window-$(shell date +%s%N) --quarantine foreign --port 2 --mode 2D --mode 2A --mode 2F
+	python3 standalone/test_program_notices_sound_dos.py --mouse --input --label input-speaker-$(shell date +%s%N) --quarantine speaker --mode 2D --mode 2A --mode 2F
+test-program-notice-input-source: program-notice-input
+	python3 standalone/prove_program_notices_sound_source.py --mouse --input --output build/program-notices-sound/input-source-make-$(shell date +%s%N)
+notice-input-exit:
+	python3 standalone/build_notice_input_exit.py
+test-notice-input-exit: notice-input-exit
+	python3 standalone/test_notice_input_exit_dos.py --output build/notice-input-exit/DOS-make-$(shell date +%s%N)
+test-notice-input-exit-source: notice-input-exit
+	python3 standalone/prove_notice_input_exit_source.py --output build/notice-input-exit/source-make-$(shell date +%s%N)

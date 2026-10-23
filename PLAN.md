@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+[Guarded ASPECT notice input](docs/PROGRAM_NOTICE_INPUT.md) now binds the native
+mouse/BIOS reader in a child-owned code bank, with capability16 configured-scale
+queries, inherited BIOS mode and a no-driver fallback. Six ordinary and14 fault/
+retry sessions check input, queued text, private streams, successful subsequent
+EXEC and callback retirement before DOS4C. Three actual exit tests include the
+ordinary CLI retaining an unrepaired input owner through DOS31 and executing its
+callback after memory pressure. Four current ENiGMA/Synchronet sessions,78
+component checks and12 existing exit regressions pass.641 sources reproduce the
+matching four products;270 reproduce exit fixtures and87 BIOS/quiet components.
+The published four-product baseline remains unchanged. Contextual shared UI,
+broader input/KEY macro routing, complete-parent retained-driver cases, real
+kernel/hardware and all full application gates remain open.
+
 [Native notice input](docs/NOTICE_INPUT.md) now has a separate guarded mouse/BIOS
 binding with66 actual8086 DOS checks, including non-consuming peek, original
 Enter/Escape peek/read differences, typeahead, timeout, outer unwind and driver
@@ -7,10 +20,10 @@ quarantine/repair.86 declared sources reproduce three products; the quiet notice
 regression retains583 checks and632 sources reproduce four unchanged application
 products. Fresh REA confirms that direct notice input uses mouse/BIOS plus a
 contextual Alt-Z display hook; KEY macros are a separate application path.
-Next: move this executing-child owner into ASPECT banks, pass current scales and
-BIOS mode explicitly, and bind retained-owner cleanup to PROGRAM and outer faults.
-Attached input, contextual shared UI, full KEY macro policy and every full
-application/physical gate remain open.
+That component checkpoint left ASPECT banking, scale/BIOS configuration and
+PROGRAM cleanup integration open. The guarded binding above now covers selected
+cases; contextual shared UI, full KEY macro policy and every full application/
+physical gate remain open.
 
 [Combined live Setup](docs/validation/mouse-sound-live.json) now accepts five
 actual8086 DOS Alt-F10 editor workflows on the matching mouse/sound products,
