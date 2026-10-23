@@ -1483,3 +1483,15 @@ test-notice-window-source: notice-window
 	python3 standalone/prove_notice_window_source.py --output build/notice-window/source-make-$(shell date +%s%N)
 test-notice-window-group-control: notice-window
 	python3 standalone/check_window_group_control.py --output build/notice-window/group-make-$(shell date +%s%N)
+
+.PHONY: notice notice-uart test-notice test-notice-uart test-notice-source
+notice:
+	python3 standalone/build_notice.py
+notice-uart:
+	python3 standalone/build_notice_uart.py
+test-notice: notice
+	python3 standalone/test_notice_dos.py --output build/notice/DOS-make-$(shell date +%s%N)
+test-notice-uart: notice-uart
+	python3 standalone/test_notice_uart_dos.py --output build/notice-uart/DOS-make-$(shell date +%s%N)
+test-notice-source: notice-uart
+	python3 standalone/prove_notice_source.py --output build/notice/source-make-$(shell date +%s%N)

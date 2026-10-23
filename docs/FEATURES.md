@@ -1,5 +1,15 @@
 # Full application reconstruction checklist
 
+[Serviced timed notices](NATIVE_PROGRAM.md#serviced-timed-notices)
+now compose the exact controller/window/text with real BIOS keys, staged bounded
+messages, typed cleanup and an independent BIOS deadline/poll budget. The DOS
+suite passes 583 checks with 69 allocations/frees; window regressions retain 771
+checks. Sixteen actual COM1/COM2 N/S/H/B normal/error sessions each retain 508
+peer bytes during the popup, then exchange READY! and restore the selected UART
+IRQ/PIC/registers. All 8,608 UART assertions pass. Sixty-two source files reproduce
+33 products, including three DOS diagnostics. PROGRAM/shared-parent/fault binding,
+original sound/macros, broader views and every full application gate remain open.
+
 [Native notice-window ownership](NATIVE_PROGRAM.md#native-notice-window-ownership)
 adds 1,940 exact window/frame/shadow/cursor/animation bytes and 353 reused display
 bytes, with a guarded real DOS far-heap owner. All 98 CPU cases match the original;

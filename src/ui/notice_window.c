@@ -8,7 +8,7 @@
 struct descriptor {unsigned top,left,bottom,right;unsigned *attribute;};
 typedef char descriptor_size[(sizeof(struct descriptor)==10&&sizeof(unsigned)==2)?1:-1];
 static struct descriptor view;
-static unsigned attribute,phase,used,freed;
+static unsigned attribute,phase,used,freed,generation;
 static unsigned char __far *block;
 static unsigned char __far *payload;
 extern void __cdecl window_native_initialize(unsigned);
@@ -55,6 +55,8 @@ void __cdecl window_platform_free(void __far *pointer)
 #endif
 }
 unsigned __cdecl notice_window_phase(void){return phase;}
+void __far * __cdecl notice_window_identity(void){return phase?payload:0;}
+unsigned __cdecl notice_window_generation(void){return generation;}
 unsigned __cdecl notice_window_open(const notice_window_rect *rect,unsigned animated)
 {
  void __far *result;notice_window_rect staged;
@@ -78,7 +80,7 @@ unsigned __cdecl notice_window_open(const notice_window_rect *rect,unsigned anim
 #endif
  attribute=rect->attribute;view.top=rect->top;view.left=rect->left;
  view.bottom=rect->bottom;view.right=rect->right;view.attribute=&attribute;
- used=freed=0;phase=1;window_native_initialize(animated);
+ used=freed=0;phase=1;if(!++generation)++generation;window_native_initialize(animated);
  result=window_begin_native(&view);
  if(result!=payload||!used||!guards()){phase=2;return NOTICE_WINDOW_GUARD;}
  return NOTICE_WINDOW_OK;

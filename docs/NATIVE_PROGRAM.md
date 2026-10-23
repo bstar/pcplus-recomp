@@ -213,7 +213,78 @@ This is a component owner, not the normal application's error window yet.
 Its admitted live component configuration disables sound; a reached sound or
 alert dependency exits explicitly rather than pretending success. Native sound
 policy, original shared-window/parent leases, other live geometries and physical
-video timing remain unfinished. Next connect this owner to the timed notice
-controller with real keyboard and foreground UART scheduling, then integrate
-PROGRAM normal/error/unwind ownership. The normal ASPECT dispatcher still rejects
+video timing remain unfinished. The serviced composition below now connects this owner to the timed notice
+controller and foreground transport service. Actual PROGRAM normal/error/unwind
+ownership remains required. The normal ASPECT dispatcher still rejects
 DOS/RUN/SHELL; all full F01-F16 and physical modem requirements remain open.
+
+## Serviced timed notices
+
+The [notice runtime](../src/ui/notice.c) now composes the exact native timed
+controller, window algorithms and text writer through explicit cdecl/callee-pop
+adapters. It stages a NUL-terminated near message of at most 74 bytes and validates
+all option/result extents before admission. Native centering therefore stays
+inside the supported 80x25 window. Empty text and high CP437 bytes retain native
+writing behavior. The caller may select animation, attribute, a bounded foreground
+service callback and a sound callback. A NULL sound callback selects quiet
+operation; the diagnostics record sound selection/errors and do not implement
+or establish the original speaker policy.
+
+Normal completion still follows three observed DOS-second changes or a real
+BIOS key. Escape and extended keys have explicit result words. An independent
+atomic BIOS tick sample enforces a configurable deadline, with midnight wrap and
+invalid samples handled explicitly. A positive DWORD poll budget provides another
+exit path without depending on time advancement; checking before increment avoids
+unsigned wrap at the maximum budget. Defaults are attribute70h, no animation,
+74 BIOS ticks and one million polls. Budget/service/clock failure unwinds through
+an owned C checkpoint and closes the real snapshot. No synthetic key is inserted
+to make the original loop return. The callbacks must return in bounded time.
+
+Cleanup retains the active notice when window guards or geometry prevent close;
+after repair, `notice_recover` retries cleanup and preserves the original cause.
+Recovery attempted from the running notice callback rejects. Window identities
+also carry an open generation: a replacement window detected during a callback
+stays with its current owner, including when the far allocator reused an address.
+The tested callbacks must preserve queued display/input bytes rather than render
+into the popup's saved screen.
+
+[Independent receipt](validation/serviced-notice.json) accepts 583 actual 8086 DOS
+checks and 69 matched window allocations/frees. Coverage includes native key
+completion, Escape, extended keys, empty and maximum-length CP437 text, reentry,
+sound/service errors, memory denial, guard/geometry retention and repair, foreign
+window replacement, poll limits and fifty repeated lifetimes. A diagnostic INT21
+observer returns a fixed DOS2C time while preserving other calls; real BIOS ticks
+still force timeout. Separate controlled tick fixtures exercise midnight wrap and
+invalid samples. The original INT21 vector is restored. The window-only suite
+also passes all 771 checks on the updated generation-aware owner.
+
+The real UART diagnostic passes sixteen COM1/COM2 cases crossed with NONE,
+software, hardware and both flow policies and native completion/injected service
+error. Each case passes 538 assertions (8,608 total), observes all 508 independent
+peer bytes queued during the popup, then reads those exact bytes, exchanges
+`READY!` afterward and restores the selected UART IRQ/vector/PIC/registers plus
+screen/cursor. The payload contains all byte values except software-flow11h/13h,
+repeated twice; those controls are separate explicit stimuli in S/B cases. The
+exact guest wire is RPF for N/H and XON,RPF,XOFF for S/B. The first UART attempt
+rejected the latter due to an incomplete oracle; that failed cohort is preserved,
+and the accepted audit requires those lifecycle controls exactly, without stripping
+arbitrary bytes. DOSBox nullmodem holds CTS ready and does not enforce RTS; this
+is not physical flow timing or a Telnet/BBS interaction test.
+
+A fresh tree with 62 declared sources reproduces all 33 products, including the
+window, notice and UART diagnostic executables. Normal window/notice owners also
+compile without diagnostic hooks. The UART variant gives the notice's recovered
+clock a distinct symbol so it cannot silently replace the backend's deliberately
+unreachable legacy clock fail-stop. Original and generated executable artifacts
+are absent from the fresh tree's inputs.
+
+```sh
+./tools/build test-notice
+./tools/build test-notice-uart
+./tools/build test-notice-source
+```
+
+Actual PROGRAM/shared-parent view and input leases, arbitrary external nonlocal
+fault recovery, native sound/macro policy, code-bank placement, other geometries,
+BBS workflows and physical hardware remain required before normal publication.
+The normal interpreter still rejects DOS/RUN/SHELL; no full F01-F16 gate closes.
