@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Terminal session projection](SESSION_PROJECTION.md) passes54 linked cases,
+2,688 component DOS checks and five actual8086 startup workflows, with681-source/
+six-product reproduction. Inactive modem fields retain their baseline; active
+shared conflicts reject. Baseline binding, full native fields, register handback
+and HOOK execution/returned commit remain open.
+
 [Shared terminal capture](SESSION_CAPTURE.md) passes144 linked cases and three
 actual8086 DOS workflows, with675-source/five-product reproduction. Optional
 live setup uses its legacy policy; actual-session policy captures runtime

@@ -5,7 +5,8 @@ HOOK execution. It writes explicitly supplied active serial, modem and transfer
 settings into a copy of an opaque1,264-byte PRM baseline. Reading the saved PRM
 alone cannot account for CLI/directory overrides, negotiated speed or runtime
 clipboard/translation changes. The caller must capture those actual values.
-This component is not yet connected to terminal execution.
+The [terminal session API](SESSION_PROJECTION.md) now connects capture and this
+projector with explicit active/inactive modem policy. HOOK routing remains open.
 
 The projector covers the44-byte serial plan,368-byte modem plan and66-byte
 transfer plan accepted by the existing maintained importers. It writes the
@@ -25,16 +26,18 @@ active plan represents current directory as `.`. These rules avoid unrelated
 normalization of opaque state.
 
 Run `./tools/dev --command make test-prm-projection`. The source-only8086 DOS
-diagnostic passes2,660 checks, including720 port/rate/parity/bits/stop
+diagnostic passes2,688 checks, including the preceding2,660 and720 port/rate/parity/bits/stop
 combinations, all terminator positions in six commands and eleven response
 slots, invalid values, shared-field conflicts, output preservation, null/alias
 and segment-wrap rejection. An independent Python fixture checks every byte of
 the baseline and projected image, including untouched tails. A second fresh
 compilation/link reproduces the executable.
-The [independent receipt](validation/prm-projection.json) binds raw output,
+The [original receipt](validation/prm-projection.json) binds the earlier raw output,
 baseline/projected bytes, fresh executable, frozen sources and exact OMF imports.
 The projector object imports only the existing validators and memory/string
 services, with no DOS, file, UART or hardware entry.
+The current session checkpoint adds inactive-group and explicit BREAK cases;
+see [session projection](SESSION_PROJECTION.md) for current evidence and scope.
 
 The first two diagnostic runs incorrectly compared rejected output against the
 initial sentinel after successful calls had already replaced it. All23 failures

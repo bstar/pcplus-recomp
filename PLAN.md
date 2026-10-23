@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+[Terminal session projection](docs/SESSION_PROJECTION.md) joins capture,
+active/inactive modem policy and the supported PRM projector in a far bank.
+54 linked cases,2,688 component DOS checks and five actual8086 startup workflows
+pass;681 sources reproduce six products. Working storage stays on the existing
+stack. Baseline binding, remaining native fields, register handback, guarded
+HOOK routing/returned commit and full gates remain open.
+
 [Shared terminal capture](docs/SESSION_CAPTURE.md) now serves the optional live
 editor path and provides a separate actual-session policy for helper projection.
 144 linked cases, three8086 DOS workflows and675-source/five-product reproduction

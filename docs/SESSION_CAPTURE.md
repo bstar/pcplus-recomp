@@ -73,8 +73,7 @@ An initial DOS runner completed all three workflows but failed while collecting
 provenance because a fixture dependency was listed under the wrong filename.
 That recording error was corrected before the accepted source-bound runs.
 
-Next: join capture and opaque-baseline projection with explicit inactive-group
-and shared-field policy; establish register lifetime/handback; route HOOK through
-PROGRAM's guarded execution owner; validate and apply returned changes. Complete
-native PRM coverage, combined exit/trap ownership, BBS sessions and physical
-hardware acceptance remain open.
+[Terminal session projection](SESSION_PROJECTION.md) now joins capture with
+explicit inactive-group/shared-field policy. Baseline binding, remaining native
+PRM fields, register lifetime/handback, guarded HOOK execution and returned-state
+commit remain open, along with exit/trap, BBS and physical acceptance.

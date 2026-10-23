@@ -18,4 +18,13 @@ enum {PRM_PROJECT_OK,PRM_PROJECT_ARGUMENT,PRM_PROJECT_SERIAL,
 unsigned __cdecl prm_project_active(const prm_dos_image *,
  const terminal_import_settings *,const modem_import_settings *,
  const transfer_import_settings *,prm_dos_image *);
+/* Session variant: NULL modem explicitly denotes an inactive group. Preserve
+ * its private baseline fields without validating them; active serial pacing
+ * still supplies the shared pause/delay and BREAK always uses the explicit
+ * current line value. A non-NULL active modem must agree on shared fields.
+ * The other four objects remain required and disjoint. This neither infers
+ * group activity nor makes inactive/unknown baseline fields valid. */
+unsigned __cdecl prm_project_session(const prm_dos_image *,
+ const terminal_import_settings *,const modem_import_settings *,
+ const transfer_import_settings *,unsigned,prm_dos_image *);
 #endif

@@ -56,13 +56,20 @@ exit
     strings={0x18:b'ATZ^M',0x47:b'ATDT',0x60:b'^M',0x79:b'+++~ATH0^M',0x92:b'',0xab:b''}
     strings.update({0xc4+i*16:(b'CONNECT' if i==0 else b'NO CARRIER' if i==1 else b'') for i in range(11)})
     for at,value in strings.items():expected[at:at+len(value)+1]=value+b'\0'
+    inactive_base=bytearray(baseline);inactive_base[0xa:0x174]=bytes([255])*(0x174-0xa)
+    inactive=bytearray(inactive_base)
+    for at,value in words.items():
+        if at<0xa or at>=0x174:struct.pack_into('<H',inactive,at,350 if at==0x1a4 else value)
+    inactive[0x1e2]=ord('~')
     checks=dict(emulator_exit=run.returncode==0,DOS_assertions=bool(match),DOS_pass=(out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),
         baseline_exact=(out/'BASE.BIN').read_bytes()==baseline,projection_exact=(out/'ACTIVE.BIN').read_bytes()==expected,
+        inactive_baseline_exact=(out/'INBASE.BIN').read_bytes()==inactive_base,
+        inactive_projection_exact=(out/'INACTIVE.BIN').read_bytes()==inactive,
         sources_current=all(sha(ROOT/n)==h==sha(stage/n) for n,h in sources.items()))
     compile(out/'rebuild');checks['fresh_link']=sha(out/'PRMPROJ.EXE')==sha(out/'rebuild/PRMPROJ.EXE')
     report=dict(passed=all(checks.values()),checks=checks,self_checks=int(match[1]) if match else None,sources=sources,
         original_inputs=[],binary_sha256=sha(out/'PRMPROJ.EXE'),projected_sha256=sha(out/'ACTIVE.BIN'),
-        scope='Supported serial/modem/transfer fields projected over opaque PRM baseline, actual8086 DOS. Exact1264-byte independent oracle and fresh-link reproduction. No terminal capture, directory metadata projection, sound/mouse/current attribute projection, register handback, helper routing, returned settings commit or hardware acceptance.')
+        scope='Supported serial/modem/transfer fields over opaque PRM baseline, actual8086 DOS; optional inactive modem preserves private fields while projecting shared serial values and explicit current BREAK. Two exact1264-byte independent oracles and fresh-link reproduction. No directory metadata, sound/mouse/current attribute projection, register handback, helper routing, returned settings commit or hardware acceptance.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');assert report['passed'],report
     print('PASS',report['self_checks'],'DOS checks and exact active image')
 if __name__=='__main__':main()

@@ -101,6 +101,7 @@ an exact complete-image oracle. It is not yet bound to terminal capture and
 does not cover all native fields; item4 remains open.
 
 [Shared terminal capture](SESSION_CAPTURE.md) now supplies the live setup path
-and a separate session policy. It captures actual runtime fields, but inactive
-modem groups and divergent shared fields need explicit projection policy before
-the HOOK owner can consume it. KEY kind2 remains disabled.
+and a separate session policy. [Terminal session projection](SESSION_PROJECTION.md)
+now applies explicit inactive-group/shared-field policy to that capture. Baseline
+binding, remaining native fields and register handback are still required before
+guarded HOOK execution; KEY kind2 remains disabled.

@@ -1750,3 +1750,13 @@ test-session-capture: session-capture
 	python3 standalone/build_setup.py --mouse --notice-sound
 	python3 standalone/check_session_capture.py --output build/session-capture/linked-make-$(shell date +%s%N)
 	python3 standalone/test_session_capture_dos.py --output build/session-capture/DOS-make-$(shell date +%s%N)
+
+.PHONY: session-projection test-session-projection
+session-projection:
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input --aspect-keys --directory-keys --process-bank --session-capture --session-projection
+test-session-projection: session-projection
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input --aspect-keys --directory-keys --process-bank --session-capture --session-projection --projection-probe
+	python3 standalone/check_session_projection.py --output build/session-projection/linked-make-$(shell date +%s%N)
+	python3 standalone/test_prm_projection_dos.py --output build/prm-projection/session-DOS-make-$(shell date +%s%N)
+	python3 standalone/test_session_projection_dos.py --output build/session-projection/DOS-make-$(shell date +%s%N)
+	python3 standalone/test_directory_key_bindings_dos.py --process-bank --session-projection --label projection-script-make-$(shell date +%s%N) --case script --port 2

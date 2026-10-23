@@ -10,8 +10,12 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser.add_argument('--session-projection',action='store_true')
+parser.add_argument('--projection-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
 if args.session_capture:assert args.directory_keys and args.process_bank
+if args.session_projection:assert args.session_capture
+if args.projection_probe:assert args.session_projection
 if args.exit_probe is not None:assert args.exit_guard
 if args.process_bank:assert args.external_render
 if args.traps:assert args.process_bank
@@ -39,6 +43,8 @@ if args.process_bank and args.notice_sound:
  # callers and the upcoming far HOOK owner one shared banked EXEC boundary.
  out_name+='-process-bank'
 if args.session_capture:out_name+='-session-capture'
+if args.session_projection:out_name+='-projection'
+if args.projection_probe:out_name+='-probe'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
@@ -56,6 +62,7 @@ sources += sorted((ROOT/'reconstruction/character_edit').glob('*.asm'))
 sources += [ROOT/'src/process/dos_exec.asm']
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
+if args.projection_probe:sources.append(ROOT/'standalone/session_projection_probe.asm')
 sources += [ROOT/'src/aspect/resident_bridge.asm']
 sources += [ROOT/'reconstruction/script_menu/window.asm']
 sources += [ROOT/'src/status/status_renderer_bridge.asm',ROOT/'src/status/status_helpers.asm',
@@ -102,6 +109,8 @@ for index,source in enumerate(sources):
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
  if args.directory_keys:options+=['-DDIRECTORY_KEY_BINDINGS']
  if args.session_capture:options+=['-DTERMINAL_SESSION_CAPTURE']
+ if args.session_projection:options+=['-DTERMINAL_SESSION_PROJECTION']
+ if args.projection_probe:options+=['-DTERMINAL_SESSION_PROJECTION_PROBE']
  if args.exit_guard:options+=['-DTERMINAL_EXIT_GUARD']
  if args.traps:options+=['-DTERMINAL_TRAPS']
  if args.trap_probe is not None:options+=['-DTERMINAL_TRAP_PROBE='+str(args.trap_probe)]
@@ -150,6 +159,8 @@ c_sources += sorted((ROOT/'src/recording').glob('*.c'))
 c_sources += [ROOT/'src/status/status_formatter.c']
 if args.mouse:c_sources += [ROOT/'src/mouse/owner.c',ROOT/'src/mouse/terminal.c']
 if args.directory_keys:c_sources.append(ROOT/'src/terminal/directory_keys.c')
+hook_sources={ROOT/'src/config/prm_projection.c',ROOT/'src/terminal/session_projection.c'} if args.session_projection else set()
+c_sources+=sorted(hook_sources)
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
@@ -205,6 +216,11 @@ helper_adapters={};zmodem_helper_adapters={}
 for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
+ if source in hook_sources:
+  aliases={'memcpy':'hook_memcpy_service','memcmp':'hook_memcmp_service',
+           'terminal_import_decode':'hook_terminal_decode_service','modem_import_decode':'hook_modem_decode_service',
+           'transfer_import_decode':'hook_transfer_decode_service','transfer_import_path':'hook_transfer_path_service'}
+  options=['-nt=HOOK_CODE','-nc=FARCODE','-dPRM_PROJECT_FAR_RATES',*['-d'+name+'='+alias for name,alias in aliases.items()]]
  if source.parent==ROOT/'src/aspect' and source not in config_sources:options=['-nt=ASPECT_CODE','-nc=FARCODE']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-dASPECT_SOUND_POLICY','-dTERMINAL_SOUND']
@@ -257,6 +273,7 @@ inputs += [ROOT/'src/transfer/zmodem.h',ROOT/'src/transfer/zmodem_wire.h',ROOT/'
 inputs += [ROOT/'src/transfer/download_compare.h']
 inputs += [ROOT/'standalone/omf_imports.py',Path(__file__).resolve()]
 inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
+if args.session_projection:inputs += [ROOT/'src/config/prm_projection.h',ROOT/'src/terminal/session_projection.h']
 inputs += sorted((ROOT/'src/translation').glob('*.h'))
 inputs += sorted((ROOT/'src/key_mapping').glob('*.h'))+sorted((ROOT/'src/key_mapping').glob('*.inc'))
 if args.mouse:inputs += [ROOT/'src/mouse/owner.h',ROOT/'reconstruction/program_mouse/provenance.json',ROOT/'reconstruction/program_mouse/defaults.json']
@@ -275,6 +292,8 @@ manifest['terminal_exit_guard']=args.exit_guard
 manifest['terminal_exit_probe']=args.exit_probe
 manifest['banked_process']=args.process_bank
 manifest['experimental_session_capture']=args.session_capture
+manifest['experimental_session_projection']=args.session_projection
+manifest['session_projection_probe']=args.projection_probe
 manifest['terminal_traps']=args.traps
 manifest['terminal_trap_probe']=args.trap_probe
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')

@@ -143,6 +143,14 @@ _small_code_:
  or ax,ax
  jnz .configuration_error
  call terminal_setup_bind
+%ifdef TERMINAL_SESSION_PROJECTION_PROBE
+ ; Source-built diagnostic only: observe projection after genuine startup
+ ; configuration and before mouse/UART ownership. Normal product has no call.
+ extern terminal_session_projection_probe_far
+ call far terminal_session_projection_probe_far
+ mov [terminal_exit_code],ax
+ jmp terminal_shutdown
+%endif
 %ifdef TERMINAL_MOUSE
  call _terminal_mouse_start
  or ax,ax

@@ -118,5 +118,33 @@ int main(void)
  check(prm_project_active(&baseline,&serial,&modem,(transfer_import_settings *)0xfff0,&output)==PRM_PROJECT_ARGUMENT);
  check(prm_project_active(&baseline,&serial,&modem,&transfer,(prm_dos_image *)0xfff0)==PRM_PROJECT_ARGUMENT);
  check(!memcmp(&output,&saved,sizeof(output)));
+ /* An inactive modem is explicit, not a zero-filled active plan. Even bad
+  * private baseline commands/flags survive; shared serial fields and current
+  * BREAK still project. Existing all-active entry keeps rejecting NULL. */
+ fixture();memset(baseline.bytes+0x0a,0xff,0x174-0x0a);
+ check(prm_project_session(&baseline,&serial,0,&transfer,350,&output)==PRM_PROJECT_OK);
+ check(!memcmp(output.bytes+0x0a,baseline.bytes+0x0a,0x174-0x0a));
+ check(output.bytes[0x1a4]==94 && output.bytes[0x1a5]==1);
+ check(!terminal_import_decode(&output,&read_serial));
+ check(!memcmp(&serial,&read_serial,sizeof(serial)));
+ write_file("INBASE.BIN",&baseline,sizeof(baseline));write_file("INACTIVE.BIN",&output,sizeof(output));
+ for(i=0;i<3;++i){
+  n=i==0?0:i==1?350:65535U;
+  check(prm_project_session(&baseline,&serial,0,&transfer,n,&output)==PRM_PROJECT_OK);
+  check((output.bytes[0x1a4]|((unsigned)output.bytes[0x1a5]<<8))==n);
+ }
+ fixture();check(prm_project_session(&baseline,&serial,&modem,&transfer,123,&output)==PRM_PROJECT_OK);
+ check(output.bytes[0x1a4]==123 && !output.bytes[0x1a5]);
+ fixture();++modem.command_pause_character;
+ check(prm_project_session(&baseline,&serial,&modem,&transfer,350,&output)==PRM_PROJECT_SHARED);
+ check(!memcmp(&output,&saved,sizeof(output)));
+ fixture();modem.dial_timeout_seconds=0;
+ check(prm_project_session(&baseline,&serial,&modem,&transfer,350,&output)==PRM_PROJECT_MODEM);
+ check(!memcmp(&output,&saved,sizeof(output)));
+ fixture();check(prm_project_session(&baseline,0,0,&transfer,350,&output)==PRM_PROJECT_ARGUMENT);
+ check(prm_project_session(&baseline,&serial,0,0,350,&output)==PRM_PROJECT_ARGUMENT);
+ check(prm_project_session(&baseline,&serial,0,&transfer,350,&baseline)==PRM_PROJECT_ARGUMENT);
+ check(prm_project_session(&baseline,&serial,(modem_import_settings *)0xfff0,&transfer,350,&output)==PRM_PROJECT_ARGUMENT);
+ check(!memcmp(&output,&saved,sizeof(output)));
  printf("PRMPROJECT checks=%u failures=%u\n",checks,failures);return failures?1:0;
 }
