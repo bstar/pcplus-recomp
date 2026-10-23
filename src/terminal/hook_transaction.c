@@ -2,6 +2,9 @@
 #include "register_owner.h"
 #include "session_projection.h"
 #include <string.h>
+#ifdef TERMINAL_HOOK_INPUT
+#include "../config/hook_input.h"
+#endif
 extern unsigned terminal_option_mask,terminal_directory_mode;
 #pragma aux terminal_option_mask "terminal_option_mask";
 #pragma aux terminal_directory_mode "terminal_directory_mode";
@@ -76,9 +79,23 @@ unsigned __far __cdecl terminal_hook_execute(const char *path,long context,
   result->status=TERMINAL_HOOK_BUSY;return result->status;
  }
  terminal_hook_phase=1;
- if(project()){terminal_hook_phase=0;result->status=TERMINAL_HOOK_PROJECTION;return result->status;}
+ if(project()){
+  terminal_hook_phase=0;result->status=TERMINAL_HOOK_PROJECTION;
+#ifdef TERMINAL_HOOK_INPUT
+  terminal_hook_input_cancel();
+#endif
+  return result->status;
+ }
+#ifdef TERMINAL_HOOK_INPUT
+ terminal_hook_phase=0;
+ if(terminal_hook_bind_input()){result->status=TERMINAL_HOOK_BUSY;return result->status;}
+ terminal_hook_phase=1;
+#endif
  mode=terminal_option_mask&96;
  status=execute(path,context,mode==32 || (mode==64 && !terminal_directory_mode),result);
+#ifdef TERMINAL_HOOK_INPUT
+ if(status)terminal_hook_input_cancel();
+#endif
  if(status && !terminal_hook_owner.phase && !terminal_hook_owner.segment)terminal_hook_phase=0;
  return status;
 }
@@ -86,5 +103,8 @@ unsigned __far __cdecl terminal_hook_discard(void)
 {
  if(!terminal_register_context())return TERMINAL_HOOK_ARGUMENT;
  if(terminal_hook_owner.phase || terminal_hook_owner.segment || terminal_hook_phase==1)return TERMINAL_HOOK_BUSY;
+#ifdef TERMINAL_HOOK_INPUT
+ terminal_hook_input_cancel();
+#endif
  terminal_hook_phase=0;return 0;
 }

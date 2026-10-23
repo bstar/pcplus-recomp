@@ -18,6 +18,11 @@ unsigned __cdecl xlt_live_stage(unsigned mode,xlt_dos_result *result);
  * input. Output256 must be nonwrapping and outside private storage. No active
  * globals are read or changed here. Wrong/missing stage returns STATE. */
 unsigned __cdecl xlt_live_commit(unsigned mode,unsigned char *table);
+#ifdef TERMINAL_HOOK_INPUT
+/* Snapshot the matching staged table without consuming readiness or changing
+ * active_path/binding. Modes0/2 preserve unused table bytes. No IO. */
+unsigned __cdecl xlt_live_offer(unsigned mode,unsigned char *table);
+#endif
 /* Startup only: reset binding, stage exact mode1 table (explicit path or the
  * default current/PCPLUS lookup), and commit. Modes0/2 do no filesystem IO.
  * Remember the chosen canonical source for a later explicit reload. Invalid

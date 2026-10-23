@@ -143,6 +143,12 @@ _small_code_:
  or ax,ax
  jnz .configuration_error
  call terminal_setup_bind
+%ifdef TERMINAL_HOOK_INPUT_PROBE
+ extern _terminal_hook_input_probe
+ call far _terminal_hook_input_probe
+ mov [terminal_exit_code],ax
+ jmp terminal_shutdown
+%endif
 %ifdef TERMINAL_HOOK_PROBE
  ; Private diagnostic after normal startup, before UART/mouse acquisition.
  extern _terminal_hook_probe

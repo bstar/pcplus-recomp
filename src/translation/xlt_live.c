@@ -66,6 +66,16 @@ unsigned __cdecl xlt_live_commit(unsigned mode,unsigned char *table)
  active_bound=1;owner.ready=owner.reload=0;return XLT_DOS_OK;
 }
 
+#ifdef TERMINAL_HOOK_INPUT
+unsigned __cdecl xlt_live_offer(unsigned mode,unsigned char *table)
+{
+ if(mode>2 || !external(table,256))return XLT_DOS_ARGUMENT;
+ if(bound!=1 || !owner.ready || mode!=owner.mode)return XLT_LIVE_STATE;
+ if(mode==1)memcpy(table,owner.table,256);
+ return XLT_DOS_OK;
+}
+#endif
+
 /* Startup uses the same staged reader as live changes. Remember the actual
  * chosen canonical source only after the checked read and commit succeed. */
 unsigned __cdecl xlt_live_initialize(unsigned psp,unsigned mode,const char *path,

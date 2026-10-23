@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Helper input resource preparation](docs/HOOK_INPUT.md) now freezes translation
+lookup paths before EXEC and stages complete keyboard/translation offers before
+active mutation.39 linked input checks, nineteen8086 CWD/decoy/resource workflows,
+the existing modem/return/executor regressions,14 register workflows and
+708-source/seven-product reproduction pass. Unchanged tables and XLT editor
+identity remain exact; malformed resources cannot publish a partial offer.
+Mouse/UART ownership, atomic returned adoption and interactive routing remain
+open; phase4 is a private offer, not full helper/application acceptance.
+
 [Helper modem preparation](docs/HOOK_MODEM.md) now stages all six commands,
 dial concatenation, literal responses and optional reply framing before active
 state changes. It also fixes the helper validator's incorrect second expansion

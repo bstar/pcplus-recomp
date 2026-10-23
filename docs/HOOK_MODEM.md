@@ -106,7 +106,8 @@ Source proof, returned validation, admission and register recovery tools also
 accept that selector. Normal initialization tests accept `--terminal` with
 this product's `TERMINAL.EXE` path.
 
-Keyboard/profile and translation resource staging, UART handoff, interactive
+The subsequent [input resource stage](HOOK_INPUT.md) now prepares keyboard/profile
+and translation offers. UART handoff, interactive
 KEY kind2 routing and atomic settings/register adoption still need integration.
 Full application, ENiGMA immediate-forwarding and physical modem gates remain
 open. The new offer does not itself apply settings or establish hardware use.
