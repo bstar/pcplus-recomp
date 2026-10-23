@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Banked ASPECT serial controller](docs/ASPECT_SERIAL_BANK.md) frees3,104 near-code
+bytes needed for register handback, with identical3,415-byte C instructions,
+23 audited ABI bridge pairs and unchanged data extent.28 DOS script cases and
+two full COM1/2 workflows pass; the passive observer must load high for the
+nested compiler. Local Synchronet/ENiGMA greetings and685-source/six-product
+reproduction pass. Register protocol/handback, guarded HOOK and full gates remain
+open; this changes placement without extending ASIO yet.
+
 [Retained session baseline](docs/SESSION_BASELINE.md) now captures exact accepted
 startup bytes and successful live-setup acknowledgements in far storage.1,330
 linked cases, five8086 renamed-file startup workflows and two live acceptance/

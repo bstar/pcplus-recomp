@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[ASPECT serial bank](ASPECT_SERIAL_BANK.md) preserves all3,415 serial instruction
+bytes and frees3,104 near-code bytes through23 audited bridge pairs.28 DOS script
+cases, two full attached COM1/2 workflows, local BBS greetings and685-source/
+six-product reproduction pass. Low-observer DOS8 failures are retained; accepted
+full workflows load that diagnostic high. ASIO register handback and HOOK remain
+open.
+
 [Retained baseline](SESSION_BASELINE.md) passes1,330 linked cases, five8086
 startup projections after source-file rename, and two live acknowledgement/
 rejection sessions. Exact accepted images, nonzero generations and corruption

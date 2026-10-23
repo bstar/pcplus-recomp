@@ -1,0 +1,26 @@
+; Explicit near-cdecl public entries and resident callbacks. No variadic,
+; callee-cleaned or far-pointer arguments. The accounting callback has six
+; words and deliberately uses this separate adapter family.
+SERIAL_ENTRY _aspect_serial_directory_entry,0
+SERIAL_ENTRY _aspect_serial_directory_record,0
+SERIAL_ENTRY _aspect_serial_preload,0
+SERIAL_ENTRY _aspect_serial_translate,1
+SERIAL_ENTRY _aspect_serial_translation_policy,0
+SERIAL_ENTRY _aspect_serial_open,1
+SERIAL_ENTRY _aspect_serial_close,0
+SERIAL_ENTRY _aspect_serial_compile_pause,0
+SERIAL_ENTRY _aspect_serial_compile_resume,0
+SERIAL_CALLBACK _serial_bank_psp,_aspect_serial_psp,0
+SERIAL_CALLBACK _serial_bank_render_active,_aspect_render_active,0
+SERIAL_CALLBACK _serial_bank_render_prepare,_aspect_render_prepare,3
+SERIAL_CALLBACK _serial_bank_accounting,_directory_accounting_patch,6
+SERIAL_CALLBACK _serial_bank_backend_open,_aspect_serial_backend_open,4
+SERIAL_CALLBACK _serial_bank_render_attach,_aspect_render_attach,0
+SERIAL_CALLBACK _serial_bank_break_release,_aspect_serial_break_release,0
+SERIAL_CALLBACK _serial_bank_flow_alive,_aspect_serial_flow_alive,0
+SERIAL_CALLBACK _serial_bank_ticks,_aspect_serial_ticks,0
+SERIAL_CALLBACK _serial_bank_poll,_aspect_serial_poll,0
+SERIAL_CALLBACK _serial_bank_tx_empty,_aspect_serial_tx_empty,0
+SERIAL_CALLBACK _serial_bank_backend_close,_aspect_serial_backend_close,0
+SERIAL_CALLBACK _serial_bank_compile_hold,_aspect_serial_compile_hold,0
+SERIAL_CALLBACK _serial_bank_compile_release,_aspect_serial_compile_release,0

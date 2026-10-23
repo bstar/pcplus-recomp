@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--process-bank',action='store_true');ap.add_argument('--session-capture',action='store_true');ap.add_argument('--session-projection',action='store_true');ap.add_argument('--session-baseline',action='store_true');a=ap.parse_args()
+    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--process-bank',action='store_true');ap.add_argument('--session-capture',action='store_true');ap.add_argument('--session-projection',action='store_true');ap.add_argument('--session-baseline',action='store_true');ap.add_argument('--serial-bank',action='store_true');a=ap.parse_args()
     if a.session_capture:assert a.process_bank
     if a.session_projection:assert a.session_capture
     if a.session_baseline:assert a.session_projection
@@ -14,14 +14,15 @@ def main():
     parent='terminal-directory-keys'+('-process-bank' if a.process_bank else '')+('-session-capture' if a.session_capture else '')
     if a.session_projection:parent+='-projection'
     if a.session_baseline:parent+='-bound'
-    targets=[(parent,'TERMINAL.EXE'),('aspect-help-resource-parent','ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')]
+    child='aspect-serial-bank-parent' if a.serial_bank else 'aspect-help-resource-parent'
+    targets=[(parent,'TERMINAL.EXE'),(child,'ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')]
     if a.session_capture:targets.append(('setup-mouse-notice-sound','PRMEDIT.EXE'))
     if a.session_projection:targets.append((parent+'-probe','TERMINAL.EXE'))
     for base,leaf in targets:
         folder=ROOT/'build'/base;m=json.loads((folder/'manifest.json').read_text());assert not m.get('original_inputs')
         assert sha(folder/leaf)==m['binary_sha256'];products[str((folder/leaf).relative_to(ROOT))]=m['binary_sha256']
         for n,h in m['sources'].items():assert n not in sources or sources[n]==h,n;sources[n]=h
-    resource=ROOT/'build/aspect-help-resource-parent/LOCHELP.HLP';products[str(resource.relative_to(ROOT))]=sha(resource)
+    resource=ROOT/'build'/child/'LOCHELP.HLP';products[str(resource.relative_to(ROOT))]=sha(resource)
     with tempfile.TemporaryDirectory(prefix='pcplus-meta-aspect-source-') as name:
         stage=Path(name)
         for n,h in sources.items():
@@ -34,6 +35,7 @@ def main():
         if a.session_capture:commands[0].append('--session-capture')
         if a.session_projection:commands[0].append('--session-projection')
         if a.session_baseline:commands[0].append('--session-baseline')
+        if a.serial_bank:commands[1].append('--serial-bank')
         if a.session_projection:commands.append([*commands[0],'--projection-probe'])
         if a.session_capture:commands.append(['standalone/build_setup.py','--mouse','--notice-sound'])
         with (out/'build.log').open('w') as log:

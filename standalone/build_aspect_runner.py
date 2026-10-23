@@ -67,6 +67,23 @@ def main(extension=None):
                        (['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else []) +
                        [str(source), '-o', str(obj)], check=True)
         objects.append(str(obj))
+    banked_serial=bool(extension and extension.get('serial_bank'))
+    if banked_serial:
+        public=['aspect_serial_directory_entry','aspect_serial_directory_record','aspect_serial_preload','aspect_serial_translate',
+                'aspect_serial_translation_policy','aspect_serial_open','aspect_serial_close','aspect_serial_compile_pause','aspect_serial_compile_resume']
+        callbacks={'aspect_serial_psp':'psp','aspect_render_active':'render_active','aspect_render_prepare':'render_prepare',
+            'directory_accounting_patch':'accounting','aspect_serial_backend_open':'backend_open','aspect_render_attach':'render_attach',
+            'aspect_serial_break_release':'break_release','aspect_serial_flow_alive':'flow_alive','aspect_serial_ticks':'ticks',
+            'aspect_serial_poll':'poll','aspect_serial_tx_empty':'tx_empty','aspect_serial_backend_close':'backend_close',
+            'aspect_serial_compile_hold':'compile_hold','aspect_serial_compile_release':'compile_release'}
+        aliases={n:n+'_impl' for n in public};aliases.update({n:'serial_bank_'+v for n,v in callbacks.items()})
+        subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',
+            '-dASPECT_RUNTIME_SERIAL',*feature_flags,'-nt=ASIO_CODE','-nc=FARCODE',
+            *['-d'+n+'='+v for n,v in aliases.items()],'-fo='+str(output/'serial.o'),str(ROOT/'src/aspect/serial.c')],cwd=output,check=True)
+        bridge=ROOT/'src/aspect/serial_bank.asm';bridge_obj=output/'serial_bank.obj'
+        subprocess.run(['nasm','-fobj','-I'+str(ROOT/'src/aspect')+'/',str(bridge),'-o',str(bridge_obj)],check=True)
+        objects += [str(output/'serial.o'),str(bridge_obj)]
+        sources += [bridge,ROOT/'src/aspect/serial_bank.inc']
     if extension:objects += extension['objects']
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-w4', '-we', '-k8192','-dASPECT_RUNTIME_SERIAL',
                     *(['-ob','-os'] if extension else []),
@@ -74,9 +91,10 @@ def main(extension=None):
                     '-i=' + str(ROOT / 'src/aspect'), '-i='+str(ROOT/'src/process'), '-fm=ASPECT.map', '-fe=ASPECT.EXE',
                     str(main_source), str(ROOT / 'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),
                     str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/source_compile.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/serial_wait.c'),str(ROOT/'src/aspect/receive_runtime.c'),
-                    str(ROOT/'src/aspect/serial.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'),
+                    *([] if banked_serial else [str(ROOT/'src/aspect/serial.c')]),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'),
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
+                  experimental_serial_bank=banked_serial,
                   source_extensions={'D7/01':'TRANSMITRAW hexadecimal bytes; requires maintained runtime, not legacy ASX portable'},
                   objects={p.name:sha(p) for p in [*[Path(p) for p in objects],
                       *[output/(p.stem+'.o') for p in compiled_sources]]},

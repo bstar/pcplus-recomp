@@ -293,18 +293,22 @@ def main():
     parser.add_argument('--terminal-exit-guard',action='store_true')
     parser.add_argument('--process-bank',action='store_true')
     parser.add_argument('--traps',action='store_true')
+    parser.add_argument('--serial-bank',action='store_true')
+    parser.add_argument('--observer-high',action='store_true')
     args=parser.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     if args.exit_probe:assert args.break_owner
     if args.retry:assert args.exit_probe
     if args.terminal_exit_guard:assert args.break_owner
     if args.process_bank:assert args.terminal_exit_guard
     if args.traps:assert args.process_bank
+    if args.serial_bank:assert args.mouse and not any([args.break_owner,args.notice_bank,args.exit_probe,args.retry,args.terminal_exit_guard,args.process_bank,args.traps])
     directory_name='aspect-parent-exit' if args.exit_probe else 'aspect-parent-break' if args.break_owner else 'aspect-parent-process'
     if args.mouse:directory_name+='-mouse'
     if args.retry:directory_name+='-retry'
     if args.terminal_exit_guard:directory_name+='-guarded'
     if args.process_bank:directory_name+='-banked'
     if args.traps:directory_name+='-traps'
+    if args.serial_bank:directory_name+='-serial-bank'
     if args.notice_bank:
         assert not any([args.break_owner,args.exit_probe,args.retry,args.terminal_exit_guard,args.process_bank,args.traps])
         directory_name+='-notice-bank'
@@ -317,6 +321,9 @@ def main():
     if args.traps:parent=ROOT/('build/terminal-traps-mouse/TERMINAL.EXE' if args.mouse else 'build/terminal-traps/TERMINAL.EXE')
     if args.exit_probe:child=ROOT/'build/aspect-exit-parent/ASPECT.EXE'
     if args.retry:child=ROOT/'build/aspect-exit-retry/ASPECT.EXE'
+    if args.serial_bank:
+        parent=ROOT/'build/terminal-directory-keys-process-bank-session-capture-projection-bound/TERMINAL.EXE'
+        child=ROOT/'build/aspect-serial-bank-parent/ASPECT.EXE'
     identities={}
     for product in (parent,child,ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE'):
         manifest=json.loads((product.parent/'manifest.json').read_text())
@@ -332,7 +339,7 @@ def main():
     render.OUT=out
     offsets=render.map_offsets(parent.parent/'terminal.map')
     observer,resource_size=prepare_observer(out,offsets,parent.parent/'terminal.map',child.parent/'ASPECT.map' if args.exit_probe else None,args.mouse,args.retry,args.traps and args.exit_probe)
-    harness=render.adapter(observer_high=args.retry);results=[]
+    harness=render.adapter(observer_high=args.retry or args.observer_high);results=[]
     cases=[dict(name=k,kind=k,option=o,port=1,flow='H',translation='identity',full=False) for k,o in [('G',''),('T',' NOCLEAR'),('W',' WAIT'),('R',' NOCLEAR'),('F','')]]
     cases += [dict(name=f'full-{port}-{flow}',kind='FULL',option='',port=port,flow=flow,translation=('table' if (port+ord(flow))%2 else 'seven'),full=True) for port in (1,2) for flow in 'NSHB']
     if args.exit_probe:

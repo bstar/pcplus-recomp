@@ -1769,3 +1769,12 @@ test-session-baseline: session-baseline
 	python3 standalone/check_session_baseline.py --output build/session-baseline/linked-make-$(shell date +%s%N)
 	python3 standalone/test_session_projection_dos.py --session-baseline --output build/session-baseline/DOS-make-$(shell date +%s%N)
 	python3 standalone/test_session_baseline_live_dos.py --output build/session-baseline/live-DOS-make-$(shell date +%s%N)
+
+.PHONY: aspect-serial-bank test-aspect-serial-bank
+aspect-serial-bank:
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input --notice-help --help-resource --serial-bank
+test-aspect-serial-bank: aspect-serial-bank session-baseline aspect-compiler-dos
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input --notice-help --help-resource
+	python3 standalone/check_aspect_serial_bank.py --output build/aspect-serial-bank/linked-make-$(shell date +%s%N)
+	python3 standalone/test_aspect_script_serial_dos.py --runner build/aspect-serial-bank-parent/ASPECT.EXE
+	python3 standalone/test_aspect_parent_process_dos.py --serial-bank --mouse --observer-high --label serial-bank-full-make-$(shell date +%s%N) --case full-1-B --case full-2-S

@@ -25,12 +25,12 @@ TARGETS = {
 }
 
 
-async def run(name, binary, driver):
+async def run(name, binary, driver,root=None):
     port, needle, expected, process_name = TARGETS[name]
     listener = subprocess.run(['ss', '-ltnp', f'sport = :{port}'],
                               check=True, text=True, capture_output=True).stdout
     assert f'127.0.0.1:{port}' in listener and f'"{process_name}"' in listener, listener
-    output = ROOT / 'build/aspect-serial-bbs' / name
+    output = (root or ROOT / 'build/aspect-serial-bbs') / name
     output.mkdir(parents=True, exist_ok=True)
     for item in ('STATUS.TXT', 'STDOUT.BIN', 'STDERR.BIN', 'RETURN.BIN', 'LEASE.BIN'):
         (output / item).unlink(missing_ok=True)
@@ -124,16 +124,19 @@ async def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--runner', type=Path, default=ROOT / 'build/aspect-runner/ASPECT.EXE')
     parser.add_argument('--bbs', choices=TARGETS, action='append')
+    parser.add_argument('--output',type=Path)
     args = parser.parse_args()
     assert args.runner.is_file() and not args.runner.name.endswith('.analysis.exe')
-    output = ROOT / 'build/aspect-serial-bbs'
+    output = args.output.resolve() if args.output else ROOT / 'build/aspect-serial-bbs'
+    assert output.is_relative_to(ROOT/'build')
+    if args.output:assert not output.exists()
     output.mkdir(parents=True, exist_ok=True)
     driver = build_driver(output)
     binary_sha256 = sha(args.runner)
     runner_manifest = args.runner.parent / 'manifest.json'
     if runner_manifest.exists():
         assert json.loads(runner_manifest.read_text())['binary_sha256'] == binary_sha256
-    results = [await run(name, args.runner, driver)
+    results = [await run(name, args.runner, driver,output)
                for name in (args.bbs or TARGETS)]
     assert all(result['runner_sha256'] == binary_sha256 for result in results), 'Runner changed during validation.'
     report = dict(passed=all(result['passed'] for result in results), original_inputs=[],
