@@ -5,8 +5,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];PAYLOAD=bytes(value for value in range(256) if value not in (17,19))*2
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    base=ROOT/'build/notice-uart';m=json.loads((base/'manifest.json').read_text());assert m['original_inputs']==[]
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--banked',action='store_true');a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
+    base=ROOT/('build/notice-bank-uart' if a.banked else 'build/notice-uart');m=json.loads((base/'manifest.json').read_text());assert m['original_inputs']==[]
     assert sha(base/'NUART.EXE')==m['binary_sha256'] and all(sha(ROOT/path)==h for path,h in m['sources'].items())
     cases=[]
     for port,flow,mode in itertools.product([1,2],'NSHB','NE'):

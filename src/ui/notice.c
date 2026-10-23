@@ -2,6 +2,9 @@
 #include "notice_window.h"
 #include <dos.h>
 #include <string.h>
+#if defined(NOTICE_BANKED)
+#include "notice_bank.h"
+#endif
 #define DAY_TICKS 1573040UL
 extern unsigned notice_left,notice_right,notice_attribute,notice_descriptor;
 extern unsigned __cdecl notice_checkpoint_call(const char *,unsigned);
@@ -39,7 +42,7 @@ static void service(void)
  ++held.result.polls;
  if(held.owned&&!same_window())abort_notice(NOTICE_STATE);
  if(held.options.service){
-  status=held.options.service();
+  status=NOTICE_SERVICE_CALL(held.options.service);
   if(status){held.result.service_status=status;abort_notice(NOTICE_SERVICE);}
   if(held.owned&&!same_window())abort_notice(NOTICE_STATE);
  }
@@ -52,7 +55,7 @@ unsigned __cdecl notice_platform_clock(void){return notice_seconds_native();}
 void __cdecl notice_platform_sound(unsigned kind)
 {
  unsigned status;
- if(held.options.sound){status=held.options.sound(kind);if(status){held.result.service_status=status;abort_notice(NOTICE_SERVICE);}}
+ if(held.options.sound){status=NOTICE_SOUND_CALL(held.options.sound,kind);if(status){held.result.service_status=status;abort_notice(NOTICE_SERVICE);}}
 }
 void __far *__cdecl notice_platform_save(const unsigned *descriptor)
 {
@@ -102,8 +105,8 @@ static unsigned retire(notice_result *result)
  if(!held.owned)held.busy=0;
  *result=held.result;return held.result.status;
 }
-unsigned __cdecl notice_active(void){return held.busy;}
-unsigned __cdecl notice_recover(notice_result *result)
+unsigned NOTICE_CODE __cdecl notice_active(void){return held.busy;}
+unsigned NOTICE_CODE __cdecl notice_recover(notice_result *result)
 {
  if(held.running)return NOTICE_BUSY;
  if(!extent(result,sizeof(*result)))return NOTICE_ARGUMENT;
@@ -111,7 +114,7 @@ unsigned __cdecl notice_recover(notice_result *result)
  if(!held.busy){memset(result,0,sizeof(*result));return NOTICE_OK;}
  return retire(result);
 }
-unsigned __cdecl notice_show(const char *message,unsigned kind,const notice_options *options,notice_result *result)
+unsigned NOTICE_CODE __cdecl notice_show(const char *message,unsigned kind,const notice_options *options,notice_result *result)
 {
  notice_options staged;char text[75];unsigned i;
  if(held.busy||notice_window_phase())return NOTICE_BUSY;

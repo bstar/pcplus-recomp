@@ -317,9 +317,63 @@ neither notice executable links CRT jump helpers. Run the focused ABI test with:
 ./tools/build test-notice-checkpoint
 ```
 
-This resolves the recovery-frame prerequisite for bank placement. The complete
-notice/window runtime has not yet moved to its own bank. CRT/platform/callback
-far adapters, native helper symbol isolation, PROGRAM error paths and outer
+This resolved the recovery-frame prerequisite for bank placement. The following
+checkpoint supplies complete notice/window placement, CRT/platform/callback far
+adapters and native helper isolation. PROGRAM error paths and outer
 nonlocal-fault cleanup remain required. The frame is foreground-only and does
 not catch arbitrary interrupts or faults. Normal application binaries and the
 105-slot interpreter remain unchanged; full F01-F16 and physical gates stay open.
+
+## Complete notice code bank
+
+The notice runtime, guarded window owner, timed controller and native drawing,
+text, clock and recovery helpers now link into NOTICECODE. The C entry points
+use an explicit far ABI under `NOTICE_BANKED`; their data and stack arguments
+remain near pointers within shared DGROUP and require DS=SS. Private native/C
+callbacks stay near within the bank. The [CRT/platform bridges](../src/ui/notice_bank.c)
+stay in the near CRT's `_TEXT` segment and return far. Service/sound callbacks
+retain their original near pointer types and execute through these bridges in
+`_TEXT`; supplying a near callback from a different CS is outside this ABI.
+
+Reused display/string/clock symbols receive a consistent `notice_` prefix in
+both their definitions and references, allowing the original application helpers
+to coexist. The native algorithm sources and flat byte proofs are unchanged.
+The builder emits separate production binding/owner objects without clock
+fixtures, diagnostic key bridges or allocation-failure hooks. Default diagnostic
+bank placement explicitly disables code packing, so the bank and near adapter
+really execute with different CS values.
+
+The [independent receipt](validation/notice-bank.json) accepts all583 DOS
+notice assertions,69 matched allocations/frees and sixteen actual COM1/2
+N/S/H/B normal/error cases with8,608 UART assertions. Each popup retains508 peer
+bytes until close and then exchanges READY!, restoring screen/cursor and the
+selected UART IRQ/PIC/registers. Decoded owner/runtime objects have no near call
+escaping their code bank; every external far call names an explicit platform
+adapter or bank API. Sixty-four declared sources reproduce all33 window/banked
+notice/UART component products in a fresh tree without originals or prior objects.
+
+The separate `build/aspect-notice-parent/ASPECT.EXE` also links the production
+bank and passes all13 attached PROGRAM workflows, including the real DOS source
+compiler and nested child execution. The parent has176 bytes left in near CODE;
+NOTICECODE occupies5,237 bytes and may share a packed CS with PROGRAMCODE, while
+remaining separate from the near CRT. These tests establish coexistence, not an
+executed PROGRAM error popup. The standard105-slot interpreter is unchanged.
+
+The near diagnostic builds were also rebuilt: an added header changed private
+data ordering, so their actual new binaries were retested rather than assumed
+identical. They retain583 DOS and8,608 UART assertions, and63 declared sources
+reproduce33 products. The standalone window suite retains771 assertions with114
+matched allocations/frees; its source declaration now includes the shared header.
+
+```
+./tools/build test-notice-bank
+./tools/build test-notice-bank-uart
+./tools/dev --command python3 standalone/build_aspect_process.py --notice-bank
+./tools/dev --command python3 standalone/test_aspect_parent_process_dos.py --notice-bank
+```
+
+The next integration must show notices after failed PROGRAM execution without
+changing the child's raw status, service the live transport through a correct
+near callback, and retire or quarantine window/input leases after outer nonlocal
+faults. Native sound/macros, mouse/shared UI policy, broader views, BBS workflows
+and physical Boca/SPA2102 validation remain open. No full F01-F16 gate closes.

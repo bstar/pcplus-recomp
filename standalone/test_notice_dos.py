@@ -5,8 +5,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    base=ROOT/'build/notice';m=json.loads((base/'manifest.json').read_text());assert m['original_inputs']==[]
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--banked',action='store_true');a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
+    base=ROOT/('build/notice-bank' if a.banked else 'build/notice');m=json.loads((base/'manifest.json').read_text());assert m['original_inputs']==[]
     assert all(sha(ROOT/path)==h for path,h in m['sources'].items()) and sha(base/'NOTICE.EXE')==m['binary_sha256'];shutil.copy2(base/'NOTICE.EXE',out/'NOTICE.EXE')
     cfg=f'''[sdl]
 output=surface

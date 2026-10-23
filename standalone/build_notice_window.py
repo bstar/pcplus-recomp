@@ -20,7 +20,7 @@ def main():
     binding=ROOT/'src/ui/notice_window_native.asm';sources.append(binding)
     subprocess.run(['nasm','-fobj',str(binding),'-o',str(OUT/'binding.obj')],check=True)
     owner=ROOT/'src/ui/notice_window.c';host=ROOT/'standalone/notice_window_diagnostic.c'
-    sources += [owner,host,ROOT/'src/ui/notice_window.h']
+    sources += [owner,host,ROOT/'src/ui/notice_window.h',ROOT/'src/ui/notice.h']
     objects=[str(OUT/(u['name']+'.obj')) for u in units]+[str(OUT/'binding.obj')]
     subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dNOTICE_WINDOW_DIAGNOSTIC','-i='+str(ROOT/'src/ui'),'-fm=WINDOW.map','-fe=WINDOW.EXE',str(owner),str(host),*objects],cwd=OUT,check=True)
     products['WINDOW.EXE']=sha(OUT/'WINDOW.EXE')

@@ -285,6 +285,7 @@ def exit_observer(source,map_path):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',default='parent-'+uuid.uuid4().hex);parser.add_argument('--case',action='append')
     parser.add_argument('--break-owner',action='store_true')
+    parser.add_argument('--notice-bank',action='store_true')
     parser.add_argument('--exit-probe',action='store_true')
     parser.add_argument('--mouse',action='store_true')
     parser.add_argument('--retry',action='store_true')
@@ -303,8 +304,12 @@ def main():
     if args.terminal_exit_guard:directory_name+='-guarded'
     if args.process_bank:directory_name+='-banked'
     if args.traps:directory_name+='-traps'
+    if args.notice_bank:
+        assert not any([args.break_owner,args.exit_probe,args.retry,args.terminal_exit_guard,args.process_bank,args.traps])
+        directory_name+='-notice-bank'
     out=ROOT/'build'/directory_name/args.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/'build/terminal-process/TERMINAL.EXE';child=ROOT/('build/aspect-process-break/ASPECT.EXE' if args.break_owner else 'build/aspect-process-parent/ASPECT.EXE')
+    if args.notice_bank:child=ROOT/'build/aspect-notice-parent/ASPECT.EXE'
     if args.mouse:parent=ROOT/'build/terminal-mouse-process/TERMINAL.EXE'
     if args.terminal_exit_guard:parent=ROOT/('build/terminal-exit-mouse/TERMINAL.EXE' if args.mouse else 'build/terminal-exit/TERMINAL.EXE')
     if args.process_bank:parent=ROOT/('build/terminal-process-bank-mouse/TERMINAL.EXE' if args.mouse else 'build/terminal-process-bank/TERMINAL.EXE')

@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Complete notice code bank](docs/NATIVE_PROGRAM.md#complete-notice-code-bank)
+places the runtime/window/native helpers in NOTICECODE through explicit far
+CRT/callback bridges and isolated helper exports. Both banked and near variants
+pass583 DOS checks and16 UART cases/8,608 assertions each;771 window regressions
+also pass. Sixty-four declared sources reproduce33 banked component products.
+The production bank links into a separate experimental ASPECT parent with176
+near-CODE bytes spare;13 attached PROGRAM workflows pass. Actual PROGRAM notice
+error/fault binding, sound/macros, broader views and all application gates remain open.
+
 [Bank-local notice recovery](docs/NATIVE_PROGRAM.md#bank-local-notice-recovery)
 replaces the notice's small-model CRT jump dependency with a source-owned8086
 frame. An actual foreign-CS diagnostic passes2,048 calls across normal/abort/

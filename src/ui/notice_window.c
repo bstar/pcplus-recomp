@@ -2,6 +2,9 @@
 #include <dos.h>
 #include <malloc.h>
 #include <string.h>
+#if defined(NOTICE_BANKED)
+#include "notice_bank.h"
+#endif
 
 #define BYTES 4000U
 #define GUARD 16U
@@ -16,7 +19,7 @@ extern void __far *__cdecl window_begin_native(const struct descriptor *);
 extern void __cdecl window_end_native(const struct descriptor *,void __far *);
 #if defined(NOTICE_WINDOW_DIAGNOSTIC)
 unsigned notice_window_fail_alloc,notice_window_allocations,notice_window_frees;
-void __cdecl notice_window_damage_guard(void){if(block)block[0]^=1;}
+void NOTICE_CODE __cdecl notice_window_damage_guard(void){if(block)block[0]^=1;}
 #endif
 static unsigned data_segment(void);
 #pragma aux data_segment = "mov ax,ds" value [ax] modify [];
@@ -54,10 +57,10 @@ void __cdecl window_platform_free(void __far *pointer)
  ++notice_window_frees;
 #endif
 }
-unsigned __cdecl notice_window_phase(void){return phase;}
-void __far * __cdecl notice_window_identity(void){return phase?payload:0;}
-unsigned __cdecl notice_window_generation(void){return generation;}
-unsigned __cdecl notice_window_open(const notice_window_rect *rect,unsigned animated)
+unsigned NOTICE_CODE __cdecl notice_window_phase(void){return phase;}
+void __far * NOTICE_CODE __cdecl notice_window_identity(void){return phase?payload:0;}
+unsigned NOTICE_CODE __cdecl notice_window_generation(void){return generation;}
+unsigned NOTICE_CODE __cdecl notice_window_open(const notice_window_rect *rect,unsigned animated)
 {
  void __far *result;notice_window_rect staged;
  if(phase)return NOTICE_WINDOW_BUSY;
@@ -85,7 +88,7 @@ unsigned __cdecl notice_window_open(const notice_window_rect *rect,unsigned anim
  if(result!=payload||!used||!guards()){phase=2;return NOTICE_WINDOW_GUARD;}
  return NOTICE_WINDOW_OK;
 }
-unsigned __cdecl notice_window_close(void)
+unsigned NOTICE_CODE __cdecl notice_window_close(void)
 {
  if(!phase)return NOTICE_WINDOW_OK;
  if(data_segment()!=stack_segment()||!interrupt_flag()||!mode_valid())return NOTICE_WINDOW_STATE;

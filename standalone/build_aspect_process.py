@@ -7,7 +7,7 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False):
     if output is None:output=ROOT/'build/aspect-process-parent' if parent_render else OUT
     program.main();output.mkdir(parents=True,exist_ok=True)
     native=program.display.process
@@ -57,15 +57,30 @@ def main(driver=None,parent_render=False,output=None,break_owner=False):
         sources += [ROOT/name for name in json.loads((breaker.OUT/'manifest.json').read_text())['sources']]
         sources += [ROOT/'src/process/exit_owner.h',ROOT/'src/process/exit_owner.asm']
     sources += c_sources+[ROOT/'src/process/process_handles.h',ROOT/'src/aspect/external_runtime.h',ROOT/'src/aspect/external_unwind.h',Path(__file__)]
+    if notice_bank:
+        import build_notice_bank as notice
+        notice.main()
+        nm=json.loads((ROOT/'build/notice-bank/manifest.json').read_text())
+        objects += [str(ROOT/path) for path in nm['production_objects']]
+        sources += [ROOT/path for path in nm['sources']]
     extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render,break_owner=break_owner,program_far=True)
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
+    if notice_bank:
+        path=output/'manifest.json';result=json.loads(path.read_text())
+        result['experimental_notice_bank_linked']=True
+        result['notice_PROGRAM_binding_accepted']=False
+        path.write_text(json.dumps(result,indent=2)+'\n')
 
 
 if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--parent-render',action='store_true');parser.add_argument('--fault-diagnostic',action='store_true')
     parser.add_argument('--break-owner',action='store_true')
+    parser.add_argument('--notice-bank',action='store_true',help='Link the production notice bank into a separate experimental parent; PROGRAM binding remains disabled')
     args=parser.parse_args()
-    if args.fault_diagnostic:main(ROOT/'standalone/aspect_fault_driver.c',parent_render=True,output=ROOT/('build/aspect-fault-break' if args.break_owner else 'build/aspect-fault'),break_owner=args.break_owner)
+    if args.notice_bank:
+        assert not args.fault_diagnostic and not args.break_owner
+        main(parent_render=True,output=ROOT/'build/aspect-notice-parent',notice_bank=True)
+    elif args.fault_diagnostic:main(ROOT/'standalone/aspect_fault_driver.c',parent_render=True,output=ROOT/('build/aspect-fault-break' if args.break_owner else 'build/aspect-fault'),break_owner=args.break_owner)
     else:main(parent_render=args.parent_render,output=ROOT/'build/aspect-process-break' if args.break_owner else None,break_owner=args.break_owner)

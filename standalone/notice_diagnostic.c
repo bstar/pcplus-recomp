@@ -13,13 +13,18 @@ static notice_result result,side;
 static unsigned original_rows;
 static notice_window_rect other={2,2,6,25,0x1f};
 extern void __interrupt __far notice_clock_hook(void);
-extern void __cdecl notice_clock_enable(void (__interrupt __far *)(void));
-extern void __cdecl notice_clock_disable(void);
-extern void __cdecl notice_ticks_enable(unsigned long,unsigned long);
-extern void __cdecl notice_ticks_disable(void);
+extern void NOTICE_CODE __cdecl notice_clock_enable(void (__interrupt __far *)(void));
+extern void NOTICE_CODE __cdecl notice_clock_disable(void);
+extern void NOTICE_CODE __cdecl notice_ticks_enable(unsigned long,unsigned long);
+extern void NOTICE_CODE __cdecl notice_ticks_disable(void);
 static void ck(unsigned yes){++checks;if(!yes){printf("NOTICE FAIL %u mode%u cause%u window%u\n",checks,service_mode,result.cause,result.window_status);exit(1);}}
 static void key(unsigned value){union REGS in,out;in.h.ah=5;in.x.cx=value;int86(0x16,&in,&out);ck(out.h.al==0);}
+#if defined(NOTICE_BANKED)
+extern unsigned __far __cdecl notice_test_key_pending(void);
+static unsigned pending(void){return notice_test_key_pending();}
+#else
 static unsigned pending(void){extern unsigned __cdecl notice_key_pending_native(void);return notice_key_pending_native();}
+#endif
 static void drain(void){union REGS in,out;while(pending()){in.h.ah=0;int86(0x16,&in,&out);}}
 static unsigned long heap_used(void){struct _heapinfo item;int status;unsigned long total=0;item._pentry=0;while((status=_fheapwalk(&item))==_HEAPOK)if(item._useflag==_USEDENTRY)total+=item._size;ck(status==_HEAPEND||status==_HEAPEMPTY);return total;}
 static void equal(void){ck(!_fmemcmp(screen,MK_FP(0xb800,0),4000));ck(*(unsigned __far *)MK_FP(0x40,0x50)==0x0405);}

@@ -1,6 +1,13 @@
 ; Diagnostic-only, exact INT21 pass-through except selected DOS2C samples.
 BITS 16
 CPU 8086
+%ifdef NOTICE_BANKED
+%define ARGS 6
+%define RETURN retf
+%else
+%define ARGS 4
+%define RETURN ret
+%endif
 SEGMENT _TEXT public class=CODE use16
 global _notice_clock_hook,_notice_clock_enable,_notice_clock_disable
 _notice_clock_hook:
@@ -19,16 +26,16 @@ _notice_clock_hook:
 _notice_clock_enable:
  push bp
  mov bp,sp
- mov ax,[bp+4]
+ mov ax,[bp+ARGS]
  mov [cs:previous],ax
- mov ax,[bp+6]
+ mov ax,[bp+ARGS+2]
  mov [cs:previous+2],ax
  mov byte [cs:enabled],1
  pop bp
- ret
+ RETURN
 _notice_clock_disable:
  mov byte [cs:enabled],0
- ret
+ RETURN
 previous: dd 0
 enabled: db 0
 ; Controlled tick fixtures are a diagnostic wrapper around the unmodified
@@ -53,21 +60,21 @@ _notice_ticks_native:
 _notice_ticks_enable:
  push bp
  mov bp,sp
- mov ax,[bp+4]
+ mov ax,[bp+ARGS]
  mov [cs:tick_first],ax
- mov ax,[bp+6]
+ mov ax,[bp+ARGS+2]
  mov [cs:tick_first+2],ax
- mov ax,[bp+8]
+ mov ax,[bp+ARGS+4]
  mov [cs:tick_next],ax
- mov ax,[bp+10]
+ mov ax,[bp+ARGS+6]
  mov [cs:tick_next+2],ax
  mov byte [cs:tick_seen],0
  mov byte [cs:tick_enabled],1
  pop bp
- ret
+ RETURN
 _notice_ticks_disable:
  mov byte [cs:tick_enabled],0
- ret
+ RETURN
 tick_enabled: db 0
 tick_seen: db 0
 tick_first: dd 0
