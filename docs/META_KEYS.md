@@ -109,8 +109,10 @@ There is one leading space, the literal `PCPLUS`, and single spaces between
 arguments. Each packed pointer is formatted as **unsigned decimal of
 (DS <<16) | offset**. It is not a linear physical address, COM number, or a
 value read from that memory. The last argument is signed16 decimal; Alt digits
-pass3. DSd126/d13a are shared exchange addresses whose complete external HOOK
-structure remains untyped; DS1b84 is the PRM-image base. Relocated OMF symbols
+pass3. [Subsequent register recovery](HOOK_EXCHANGE.md) establishes DSd126 as
+ten16-bit words and DSd13a as ten81-byte string slots; DS1b84 is the1,264-byte
+PRM-image base. Live helper admission and returned-state application remain open.
+Relocated OMF symbols
 supply the current offsets, so command values legitimately change after linking.
 No undocumented HOOK input syntax or exchange-record layout is invented.
 

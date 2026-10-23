@@ -1,5 +1,15 @@
 # Full application reconstruction checklist
 
+[HOOK register exchange](HOOK_EXCHANGE.md) now types the native pointer contract as
+20 integer-bank bytes,810 string-bank bytes and a1,264-byte PRM image. A pure
+source-owned KEY-tail codec and opaque staging layer pass325 host/8086 DOS
+checks with exact output/fresh-link agreement and no near CRT bank imports.
+Five direct original414C/new-codec comparisons and297 existing native KEY
+comparisons pass; fresh REA observes both bank-index formulas. The running
+terminal still rejects kind2. Allocation/PSP ownership, accurate live PRM
+projection, register lifetime, safe-point EXEC and returned-state commit remain
+next; no whole application or physical gate closes.
+
 [Selected-directory KEY/META imports](DIRECTORY_KEY_BINDINGS.md) now have an optional startup
 binding into the existing action and keyboard readers. KEY selects .KEY actions;
 META selects .KBD translation profiles.292 linked inputs and11 actual DOS cases

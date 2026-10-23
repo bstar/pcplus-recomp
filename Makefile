@@ -1729,3 +1729,7 @@ test-directory-keys: directory-keys
 	python3 standalone/test_directory_key_bindings_dos.py --label blank-make-$(shell date +%s%N) --case blank --port 1
 test-directory-keys-source: directory-keys
 	python3 standalone/prove_directory_keys_source.py --output build/directory-keys/source-make-$(shell date +%s%N)
+
+.PHONY: test-hook-exchange
+test-hook-exchange:
+	python3 standalone/test_hook_exchange_dos.py --output build/hook-exchange/DOS-make-$(shell date +%s%N)
