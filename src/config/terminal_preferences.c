@@ -1,5 +1,8 @@
 #include "terminal_preferences.h"
 #include <string.h>
+#ifdef TERMINAL_SESSION_BASELINE
+#include "../terminal/session_baseline.h"
+#endif
 #ifdef TERMINAL_SOUND
 /* PRM DS1d40 relative to memory image DS1b84. Any nonzero word enables. */
 unsigned terminal_sound_enabled;
@@ -28,6 +31,9 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
  prm_dos_image image;terminal_import_settings s;modem_import_settings m;
  transfer_import_settings t;unsigned n,status,count=0;
  const void *p[5];unsigned sizes[5];
+#ifdef TERMINAL_SESSION_BASELINE
+ if(hook_baseline_invalidate())return 16;
+#endif
  n=path_size(path);if(!n)return TERMINAL_IMPORT_ARGUMENT;
  p[count]=path;sizes[count++]=n;p[count]=serial;sizes[count++]=sizeof(*serial);
  p[count]=transfer;sizes[count++]=sizeof(*transfer);
@@ -44,6 +50,9 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
 #ifdef TERMINAL_SOUND
  terminal_sound_enabled=sound(&image);
 #endif
+#ifdef TERMINAL_SESSION_BASELINE
+ if(hook_baseline_publish(&image,SESSION_BASELINE_STARTUP))return 16;
+#endif
  memcpy(serial,&s,sizeof(s));if(modem)memcpy(modem,&m,sizeof(m));
  memcpy(transfer,&t,sizeof(t));return 0;
 }
@@ -56,6 +65,9 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
  terminal_import_settings s;modem_import_settings m;directory_live_plan d;
  directory_live_context c;transfer_import_settings t;directory_live_result decoded;
  unsigned a,b,status,count=0;const void *p[8];unsigned sizes[8];
+#ifdef TERMINAL_SESSION_BASELINE
+ if(hook_baseline_invalidate())return 16;
+#endif
  a=path_size(path);b=path_size(directory);
  if(!a || !b || !entry || entry>200 || codes>1)return DIRECTORY_LIVE_ARGUMENT;
  p[count]=path;sizes[count++]=a;p[count]=directory;sizes[count++]=b;
@@ -83,6 +95,9 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
 #endif
 #ifdef TERMINAL_SOUND
  terminal_sound_enabled=sound(&image);
+#endif
+#ifdef TERMINAL_SESSION_BASELINE
+ if(hook_baseline_publish(&image,SESSION_BASELINE_STARTUP)){result->status=16;return 16;}
 #endif
  memcpy(serial,&s,sizeof(s));memcpy(modem,&m,sizeof(m));memcpy(plan,&d,sizeof(d));
  memcpy(context,&c,sizeof(c));memcpy(transfer,&t,sizeof(t));return 0;

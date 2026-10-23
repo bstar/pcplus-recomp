@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Retained session baseline](docs/SESSION_BASELINE.md) now captures exact accepted
+startup bytes and successful live-setup acknowledgements in far storage.1,330
+linked cases, five8086 renamed-file startup workflows and two live acceptance/
+rejection sessions pass. Bound projection performs no file read; failed startup
+imports invalidate while failed live edits retain the last accepted image.
+Register handback, remaining native fields, guarded HOOK/returned commit and
+all full application/BBS/hardware gates remain open.
+
 [Terminal session projection](docs/SESSION_PROJECTION.md) joins capture,
 active/inactive modem policy and the supported PRM projector in a far bank.
 54 linked cases,2,688 component DOS checks and five actual8086 startup workflows

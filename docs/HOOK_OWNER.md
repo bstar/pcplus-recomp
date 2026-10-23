@@ -105,3 +105,7 @@ and a separate session policy. [Terminal session projection](SESSION_PROJECTION.
 now applies explicit inactive-group/shared-field policy to that capture. Baseline
 binding, remaining native fields and register handback are still required before
 guarded HOOK execution; KEY kind2 remains disabled.
+
+[Retained baseline binding](SESSION_BASELINE.md) now supplies the accepted raw
+image to bound projection. The helper owner is still standalone: it does not
+yet consume this path or receive ASPECT register handback in the running terminal.

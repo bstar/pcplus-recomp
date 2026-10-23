@@ -5,6 +5,9 @@ extern transfer_import_settings terminal_transfer_preferences;
 extern unsigned terminal_sound_enabled;
 #endif
 #include <string.h>
+#ifdef TERMINAL_SESSION_BASELINE
+#include "../terminal/session_baseline.h"
+#endif
 #ifdef TERMINAL_MOUSE
 extern unsigned __cdecl terminal_mouse_offer(const unsigned char *,unsigned);
 extern unsigned __cdecl terminal_mouse_commit(void);
@@ -201,6 +204,9 @@ unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask)
  if(committed_baud_mask && !(owner.offered_mask&LIVE_CHANGE_BAUD))return LIVE_SETUP_STATE;
 #ifdef TERMINAL_MOUSE
  if(terminal_mouse_commit())return LIVE_SETUP_STATE;
+#endif
+#ifdef TERMINAL_SESSION_BASELINE
+ if(owner.transfer_ready==1 && hook_baseline_publish(&owner.image,SESSION_BASELINE_SETUP))return LIVE_SETUP_STATE;
 #endif
  if(committed_baud_mask){owner.source_baud_low=owner.offered_baud_low;owner.source_baud_high=owner.offered_baud_high;}
 #ifdef TERMINAL_SOUND

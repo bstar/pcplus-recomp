@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Retained baseline](SESSION_BASELINE.md) passes1,330 linked cases, five8086
+startup projections after source-file rename, and two live acknowledgement/
+rejection sessions. Exact accepted images, nonzero generations and corruption
+seals stay in far storage; bound projection needs no filesystem lookup. Native
+register handback, full PRM state and HOOK routing/returned commit remain open.
+
 [Terminal session projection](SESSION_PROJECTION.md) passes54 linked cases,
 2,688 component DOS checks and five actual8086 startup workflows, with681-source/
 six-product reproduction. Inactive modem fields retain their baseline; active

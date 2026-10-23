@@ -74,6 +74,10 @@ provenance because a fixture dependency was listed under the wrong filename.
 That recording error was corrected before the accepted source-bound runs.
 
 [Terminal session projection](SESSION_PROJECTION.md) now joins capture with
-explicit inactive-group/shared-field policy. Baseline binding, remaining native
+explicit inactive-group/shared-field policy. Remaining native
 PRM fields, register lifetime/handback, guarded HOOK execution and returned-state
 commit remain open, along with exit/trap, BBS and physical acceptance.
+
+[Retained baseline binding](SESSION_BASELINE.md) now supplies accepted raw bytes
+without rereading disk. Remaining native fields, register handback and guarded
+HOOK execution/returned commit still require integration.

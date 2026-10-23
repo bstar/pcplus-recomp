@@ -1,5 +1,8 @@
 #include "session_projection.h"
 #include "../config/live_configuration.h"
+#ifdef TERMINAL_SESSION_BASELINE
+#include "session_baseline.h"
+#endif
 extern unsigned __cdecl hook_session_capture(live_configuration_plan *,transfer_import_settings *);
 extern unsigned terminal_option_mask;
 extern unsigned terminal_directory_mode;
@@ -21,3 +24,11 @@ unsigned __far __cdecl terminal_session_project(const prm_dos_image *baseline,pr
  if(mode==32 || (mode==64 && !terminal_directory_mode))modem=&plan.modem;
  return prm_project_session(baseline,&plan.serial,modem,&transfer,plan.modem.break_delay_units,out);
 }
+#ifdef TERMINAL_SESSION_BASELINE
+unsigned __far __cdecl terminal_session_project_bound(prm_dos_image *out)
+{
+ prm_dos_image baseline;
+ if(hook_baseline_copy(&baseline))return SESSION_PROJECT_BASELINE;
+ return terminal_session_project(&baseline,out);
+}
+#endif

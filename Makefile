@@ -1760,3 +1760,12 @@ test-session-projection: session-projection
 	python3 standalone/test_prm_projection_dos.py --output build/prm-projection/session-DOS-make-$(shell date +%s%N)
 	python3 standalone/test_session_projection_dos.py --output build/session-projection/DOS-make-$(shell date +%s%N)
 	python3 standalone/test_directory_key_bindings_dos.py --process-bank --session-projection --label projection-script-make-$(shell date +%s%N) --case script --port 2
+
+.PHONY: session-baseline test-session-baseline
+session-baseline:
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input --aspect-keys --directory-keys --process-bank --session-capture --session-projection --session-baseline
+test-session-baseline: session-baseline
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input --aspect-keys --directory-keys --process-bank --session-capture --session-projection --session-baseline --projection-probe
+	python3 standalone/check_session_baseline.py --output build/session-baseline/linked-make-$(shell date +%s%N)
+	python3 standalone/test_session_projection_dos.py --session-baseline --output build/session-baseline/DOS-make-$(shell date +%s%N)
+	python3 standalone/test_session_baseline_live_dos.py --output build/session-baseline/live-DOS-make-$(shell date +%s%N)

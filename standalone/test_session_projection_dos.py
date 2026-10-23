@@ -8,9 +8,9 @@ from test_terminal import SAMPLER
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);a=ap.parse_args()
+    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--session-baseline',action='store_true');a=ap.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    base=ROOT/'build/terminal-directory-keys-process-bank-session-capture-projection-probe';m=json.loads((base/'manifest.json').read_text())
+    base=ROOT/'build'/('terminal-directory-keys-process-bank-session-capture-projection'+('-bound' if a.session_baseline else '')+'-probe');m=json.loads((base/'manifest.json').read_text())
     assert m['session_projection_probe'] and sha(base/'TERMINAL.EXE')==m['binary_sha256']
     raw=bytearray(image());struct.pack_into('<HH',raw,0x4e4,8,4);raw=bytes(raw);cases=[]
     recipes=[('serial','@TEST.PRM 19200',False,None,5,4,350),
@@ -56,9 +56,15 @@ exit
         if line_break is not None:struct.pack_into('<H',expected,0x1a4,line_break)
         checks=dict(emulator_exit=run.returncode==0,DOS_pass=(folder/'PASS.TXT').exists() and not (folder/'FAIL.TXT').exists(),
             projection_status=(folder/'PSTAT.BIN').read_bytes()==b'\0\0',exact_image=(folder/'POUT.BIN').read_bytes()==expected,
-            baseline_unchanged=(folder/'PBASE.BIN').read_bytes()==source,settings_unchanged=(folder/'TEST.PRM').read_bytes()==source,
+            baseline_unchanged=(folder/'PBASE.BIN').read_bytes()==source,
+            settings_unchanged=(folder/('AWAY.PRM' if a.session_baseline else 'TEST.PRM')).read_bytes()==source,
             hardware_restored=(folder/'BEFORE.BIN').read_bytes()==(folder/'AFTER.BIN').read_bytes() and len((folder/'BEFORE.BIN').read_bytes())==42,
             binary_unchanged=sha(folder/'TERMINAL.EXE')==m['binary_sha256'])
+        if a.session_baseline:
+            state=(folder/'BSTATE.BIN').read_bytes();seal=0xb41d^1^1
+            for value in struct.unpack('<632H',source):seal=((seal<<1)|(seal>>15))&65535;seal^=value
+            checks['startup_file_absent']=not (folder/'TEST.PRM').exists()
+            checks['retained_exact_startup_image']=state==struct.pack('<4H',0xb451,1,1,seal)+source
         r=dict(case=name,passed=all(checks.values()),checks=checks,arguments=args,inactive_private_invalid=bad,projection_sha256=sha(folder/'POUT.BIN'))
         (folder/'result.json').write_text(json.dumps(r,indent=2)+'\n');assert r['passed'],r
         cases.append(r);print('PASS8086',name,flush=True)
@@ -67,7 +73,7 @@ exit
     for n,h in sources.items():
         assert sha(ROOT/n)==h,n
         dst=out/'source'/n;dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/n,dst)
-    result=dict(passed=True,cases=cases,sources=sources,binary_sha256=m['binary_sha256'],
+    result=dict(passed=True,retained_baseline=a.session_baseline,cases=cases,sources=sources,binary_sha256=m['binary_sha256'],
         scope='Five actual8086 DOS runs of diagnostic source-built terminal: production startup/import/CLI/directory/capture/projection code, explicit probe before mouse/UART acquisition, exact1264-byte images and unchanged hardware/files. Not terminal HOOK execution, online serial continuity, returned settings commit or physical hardware acceptance.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS five actual8086 terminal projection workflows')
 if __name__=='__main__':main()

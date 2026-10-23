@@ -12,6 +12,9 @@ The API `terminal_session_project(baseline, output)` is declared in
 owner context described in [session capture](SESSION_CAPTURE.md). The caller
 supplies a disjoint opaque baseline with established identity/version/lifetime.
 The API does not read a file or prove that its baseline matches the session.
+The optional [retained-baseline build](SESSION_BASELINE.md) now provides
+`terminal_session_project_bound`, sourcing exact accepted startup/live-setup
+bytes from far storage instead of requiring a separate caller baseline.
 
 ## Group policy
 
@@ -72,7 +75,7 @@ The [independent receipt](validation/session-projection.json) binds current
 sources, exact object imports, normal/probe separation, raw DOS images and
 hardware samples, COM2 handback and the six-product source proof.
 
-Next: bind a retained baseline, cover remaining native PRM fields, establish
+Next: integrate the retained baseline with the helper owner, cover native fields, establish
 register lifetime and ASPECT handback, and route HOOK through the guarded PROGRAM
 owner. Returned commit, combined exit/trap ownership, online BBS tests and
 physical hardware remain open.

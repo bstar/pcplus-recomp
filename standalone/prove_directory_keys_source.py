@@ -5,13 +5,15 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--process-bank',action='store_true');ap.add_argument('--session-capture',action='store_true');ap.add_argument('--session-projection',action='store_true');a=ap.parse_args()
+    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--process-bank',action='store_true');ap.add_argument('--session-capture',action='store_true');ap.add_argument('--session-projection',action='store_true');ap.add_argument('--session-baseline',action='store_true');a=ap.parse_args()
     if a.session_capture:assert a.process_bank
     if a.session_projection:assert a.session_capture
+    if a.session_baseline:assert a.session_projection
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     sources={};products={}
     parent='terminal-directory-keys'+('-process-bank' if a.process_bank else '')+('-session-capture' if a.session_capture else '')
     if a.session_projection:parent+='-projection'
+    if a.session_baseline:parent+='-bound'
     targets=[(parent,'TERMINAL.EXE'),('aspect-help-resource-parent','ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')]
     if a.session_capture:targets.append(('setup-mouse-notice-sound','PRMEDIT.EXE'))
     if a.session_projection:targets.append((parent+'-probe','TERMINAL.EXE'))
@@ -31,6 +33,7 @@ def main():
         if a.process_bank:commands[0].append('--process-bank')
         if a.session_capture:commands[0].append('--session-capture')
         if a.session_projection:commands[0].append('--session-projection')
+        if a.session_baseline:commands[0].append('--session-baseline')
         if a.session_projection:commands.append([*commands[0],'--projection-probe'])
         if a.session_capture:commands.append(['standalone/build_setup.py','--mouse','--notice-sound'])
         with (out/'build.log').open('w') as log:
