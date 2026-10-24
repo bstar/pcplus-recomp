@@ -1,5 +1,10 @@
 # Native viewport panes and data-segment repair
 
+The later [owned shadow-reset controller](SHADOW_RESET_OWNER.md) now binds real
+DOS allocation and synchronous rollback in a separate native diagnostic. The
+viewport-only build documented below retains its allocation boundary; neither
+checkpoint enables live width switching in the interactive terminal.
+
 REA recovery now supplies the 75-byte pane-switch group at CS:4816..4861 and
 108-byte far-copy routine at CS:644C..64B8. All 183 flat instruction bytes match
 the selected original. Relocatable OMF builds use named geometry, video/shadow

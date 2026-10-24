@@ -1,4 +1,10 @@
 .DEFAULT_GOAL := all
+.PHONY: shadow-reset test-shadow-reset
+shadow-reset:
+	python3 standalone/build_terminal_reset.py --viewport --shadow-owner
+test-shadow-reset: shadow-reset
+	python3 standalone/test_shadow_reset_dos.py --output build/shadow-reset-dos/$$(date +%Y%m%d-%H%M%S-%N)
+	python3 standalone/prove_shadow_reset_source.py --output build/shadow-reset-source/$$(date +%Y%m%d-%H%M%S-%N)
 .PHONY: viewport test-viewport test-viewport-compat
 viewport:
 	python3 standalone/build_viewport.py

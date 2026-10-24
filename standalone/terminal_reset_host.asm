@@ -4,6 +4,7 @@ SEGMENT _TEXT public class=CODE use16
 GROUP DGROUP _DATA STACK
 extern terminal_reset_native,screen_set_cursor
 global terminal_reset_test_initialize
+%ifndef RESET_SHADOW
 ..start:
  mov ax,DGROUP
  mov ds,ax
@@ -40,6 +41,7 @@ global terminal_reset_test_initialize
 .failed:
  mov ax,0x4c01
  int 0x21
+%endif
 terminal_reset_test_initialize:
  push es
  push di
@@ -129,26 +131,41 @@ global screen_viewport_refresh
 extern terminal_reset_status_refresh
 screen_viewport_refresh: jmp terminal_reset_status_refresh
 global terminal_reset_allocate_far
+%ifdef RESET_SHADOW
+extern _shadow_allocate
+terminal_reset_allocate_far: jmp _shadow_allocate
+%else
 terminal_reset_allocate_far:
  mov ax,0x860f
  mov [reset_unimplemented_service],ax
  int 3
  mov ax,0x4c02
  int 0x21
+%endif
 global terminal_reset_application_error
+%ifdef RESET_SHADOW
+extern _shadow_native_error
+terminal_reset_application_error: jmp _shadow_native_error
+%else
 terminal_reset_application_error:
  mov ax,0x427f
  mov [reset_unimplemented_service],ax
  int 3
  mov ax,0x4c02
  int 0x21
+%endif
 global terminal_reset_free_far
+%ifdef RESET_SHADOW
+extern _shadow_release_request
+terminal_reset_free_far: jmp _shadow_release_request
+%else
 terminal_reset_free_far:
  mov ax,0x85fc
  mov [reset_unimplemented_service],ax
  int 3
  mov ax,0x4c02
  int 0x21
+%endif
 global terminal_reset_input_attribute
 terminal_reset_input_attribute:
  mov ax,0xbb8f
@@ -905,6 +922,29 @@ global ui_flow_suppressed
 ui_flow_suppressed equ reset_data_image+0x1d46
 global ui_flow_video_base
 ui_flow_video_base equ reset_data_image+0x7a82
+%ifdef RESET_SHADOW
+global _shadow_image,_shadow_offset,_shadow_segment,_shadow_bytes,_shadow_rows,_shadow_columns
+global _shadow_cga_port,_shadow_bios_cursor,_shadow_configured_wide,_shadow_status_hidden,_shadow_dec_keys
+global _shadow_flags_pointer,_shadow_values_pointer,_shadow_flag_plane,_shadow_value_plane
+global _shadow_viewport_enabled,_shadow_logical_columns
+_shadow_image equ reset_data_image
+_shadow_offset equ erase_shadow_offset
+_shadow_segment equ erase_shadow_segment
+_shadow_bytes equ reset_shadow_bytes
+_shadow_rows equ program_state_7a74
+_shadow_columns equ program_state_7a72
+_shadow_cga_port equ text_cga_status_port
+_shadow_bios_cursor equ screen_use_bios_cursor
+_shadow_configured_wide equ reset_configured_wide
+_shadow_status_hidden equ reset_status_hidden
+_shadow_dec_keys equ terminal_dec_keys
+_shadow_flags_pointer equ screen_attributes_base
+_shadow_values_pointer equ erase_attribute_values_base
+_shadow_flag_plane equ screen_attribute_cells
+_shadow_value_plane equ erase_attribute_values
+_shadow_viewport_enabled equ screen_viewport_enabled
+_shadow_logical_columns equ screen_attribute_row_bytes
+%endif
 SEGMENT STACK stack class=STACK use16
  resb 4096
 stack_top:

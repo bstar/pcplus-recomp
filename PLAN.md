@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+[Owned native shadow reset](docs/SHADOW_RESET_OWNER.md) now joins real DOS memory
+to recovered width/reset/geometry with guarded snapshot, deferred old-storage
+release and synchronous rollback.77 actual DOS8086 checks cover repeated width
+cycles, genuine DOS exhaustion at both allocation stages, exact full-state
+comparisons, typed faults, foreign/reentrant/IF/DF refusal and retained cleanup.
+43 allocations/releases balance and the largest DOS free block restores.66
+sources reproduce the executable without originals; ordinary/viewport controls
+stay exact with47 original and ten composition cases. A frozen pre-fix
+shutdown/reuse timeout is retained; inconsistent closed views now refuse until
+initialization. Live renderer/schema/bank/UI/BBS integration, asynchronous and
+physical acceptance remain open. The package and card are unchanged.
+
 [Native viewport panes](docs/VIEWPORT_PANES.md) recover183 exact bytes and repair
 the copy's original foreign-DS CGA callback in a separate maintained variant.
 160 source-only and160 paired original cases verify guarded planes and callback
