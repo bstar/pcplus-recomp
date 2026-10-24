@@ -1,5 +1,10 @@
 # Screen cursor recovery
 
+The later [viewport pane component](VIEWPORT_PANES.md) recovers the external
+enter/leave services and joins them to these actual cursor instructions in an
+optional reset diagnostic. Live width/allocator/renderer admission remains open;
+the original cursor-only diagnostic below retains its explicit boundaries.
+
 Eight resident routines are recovered as editable assembly in
 `reconstruction/screen`. Their flat builds reproduce **662 bytes** of the selected
 PCPlus 2.01 executable exactly. Symbolic OMF builds link into an independent DOS

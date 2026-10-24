@@ -1,4 +1,14 @@
 .DEFAULT_GOAL := all
+.PHONY: viewport test-viewport test-viewport-compat
+viewport:
+	python3 standalone/build_viewport.py
+	python3 standalone/build_terminal_reset.py --viewport
+test-viewport: viewport
+	python3 standalone/check_viewport.py --output build/viewport/checks.json
+	python3 standalone/check_viewport_cursor.py
+	python3 standalone/test_viewport_dos.py --output build/viewport-dos/$$(date +%Y%m%d-%H%M%S-%N)
+test-viewport-compat: viewport
+	python3 standalone/check_viewport.py --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE --output build/viewport/paired-checks.json
 .PHONY: width-request test-width-request test-width-request-compat
 width-request:
 	python3 standalone/build_width_request.py

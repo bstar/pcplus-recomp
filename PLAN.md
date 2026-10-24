@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+[Native viewport panes](docs/VIEWPORT_PANES.md) recover183 exact bytes and repair
+the copy's original foreign-DS CGA callback in a separate maintained variant.
+160 source-only and160 paired original cases verify guarded planes and callback
+ownership. Six actual cursor transitions and four full stable80 native resets
+now compose with real pane switching; wide reset still stops at allocation and
+needs an unwind owner. DOS8086 copies and a three-product empty-tree rebuild
+pass. The ordinary reset matches pre-change sources and retains47 original
+comparisons. Failed decoy/DS=SS fixtures remain recorded. Live allocation,
+renderer/UI admission, physical video and full application gates remain open;
+the packaged terminal and card are unchanged.
+
 [Native width-request recovery](docs/SCREEN_WIDTH_REQUEST.md) adds34 exact bytes
 at CS:2A6E with relocatable configuration/reset imports. Sixty source-only and
 sixty paired original CPU cases verify its temporary configuration, reset(0),

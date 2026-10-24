@@ -1,0 +1,42 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/viewport/switch.asm",
+      "start": 18454,
+      "end": 18529,
+      "bytes": 75,
+      "file_offset": 23062,
+      "sha256": "db853d4cefd0b07524c0c6877cba3cacd34d88ea9e44f16be9065e98f67f04f6"
+    },
+    {
+      "file": "reconstruction/viewport/copy.asm",
+      "start": 25676,
+      "end": 25784,
+      "bytes": 108,
+      "file_offset": 30284,
+      "sha256": "d64eb7a72d12f6a069c19dd28e18a9e1c0182f145c440f60985217233276681e"
+    }
+  ],
+  "state": {
+    "3256": "screen_viewport_active",
+    "7a72": "viewport_physical_columns",
+    "7a74": "viewport_rows",
+    "ce2e": "screen_viewport_left",
+    "7a78": "text_video_segment",
+    "5dea": "erase_shadow_offset",
+    "5dec": "erase_shadow_segment"
+  },
+  "services": {
+    "77be": "ui_cga_blank",
+    "77ae": "ui_cga_unblank"
+  },
+  "evidence_ids": [
+    "ev_c6001227a6a6de750bdaa77c99c736083662803198e8cc4ac75efbb765f12a39",
+    "ev_76504a4eb9677918eabb6c110c1259c0be9d5d0bc8008e0c64203dda00ef4e37",
+    "ev_1852932ae0229a298330ba187371143877ab234b0925a30c472d6d56f85fd87d"
+  ],
+  "limitations": [
+    "Flat native bytes unchanged. VIEWPORT_PRESERVE_DS repairs original foreign-DS video-end callback only. Valid positive dimensions, owned extents, DF clear and nonaliasing are caller preconditions. No allocator or application width integration."
+  ]
+}

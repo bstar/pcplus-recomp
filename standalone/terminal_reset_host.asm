@@ -73,6 +73,14 @@ terminal_reset_test_initialize:
  pop es
  ret
 global erase_complex_protected
+%ifdef RESET_VIEWPORT
+global terminal_width_request_test
+extern modes_width_request_native
+terminal_width_request_test:
+ push word [reset_width_request_argument]
+ call modes_width_request_native
+ ret
+%endif
 erase_complex_protected:
  mov ax,0xd05f
  mov [reset_unimplemented_service],ax
@@ -94,19 +102,29 @@ screen_adjust_attribute_boundary:
  mov ax,0x4c02
  int 0x21
 global screen_viewport_enter
+%ifdef RESET_VIEWPORT
+ extern viewport_enter
+screen_viewport_enter: jmp viewport_enter
+%else
 screen_viewport_enter:
  mov ax,0x482a
  mov [reset_unimplemented_service],ax
  int 3
  mov ax,0x4c02
  int 0x21
+%endif
 global screen_viewport_leave
+%ifdef RESET_VIEWPORT
+ extern viewport_leave
+screen_viewport_leave: jmp viewport_leave
+%else
 screen_viewport_leave:
  mov ax,0x4850
  mov [reset_unimplemented_service],ax
  int 3
  mov ax,0x4c02
  int 0x21
+%endif
 global screen_viewport_refresh
 extern terminal_reset_status_refresh
 screen_viewport_refresh: jmp terminal_reset_status_refresh
@@ -869,6 +887,12 @@ global text_bios_output
 text_bios_output equ reset_data_image+0x7a92
 global text_cga_status_port
 text_cga_status_port equ reset_data_image+0x7a8e
+%ifdef RESET_VIEWPORT
+global viewport_physical_columns,viewport_rows,reset_width_request_argument
+viewport_physical_columns equ program_state_7a72
+viewport_rows equ program_state_7a74
+reset_width_request_argument equ reset_data_image+0xd502
+%endif
 global text_video_segment
 text_video_segment equ reset_data_image+0x7a78
 global ui_flow_attribute

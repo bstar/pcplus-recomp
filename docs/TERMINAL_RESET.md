@@ -115,6 +115,12 @@ describes the independently validated configuration subset.
 
 ## Geometry, display and remaining contracts
 
+The optional [viewport composition](VIEWPORT_PANES.md) now joins actual native
+cursor/reset code to recovered pane switching and a DS-restoring far-copy
+variant. It verifies real pane movement, stable80 reset and an explicit wide
+allocation boundary. The ordinary diagnostic remains byte-identical; allocation
+and abnormal-reset cleanup are still separate work.
+
 The recovered geometry code handles80/132-column layouts, metadata movement,
 viewport/shadow allocation, far freeing and failure reporting. Actual stable
 geometry executes without a fake callback in the successful soft-reset test.
@@ -164,6 +170,8 @@ and opt-in original results kept separately. Full nonzero reset, visible
 application UI, allocation/error handling and the complete PCPlus application
 remain unfinished.
 
-Final diagnostic `RESET.EXE` SHA256:
+Earlier diagnostic checkpoint `RESET.EXE` SHA256:
 `4e7cd57c0f73ad6a84642eedc3f4823548aa4ba0d5968f711c4c62310d52b72e`.
 The DS=SS group is59,136 bytes and the build checks that it fits one near segment.
+The newer viewport receipt identifies its current ordinary control and optional
+composed executable separately.
