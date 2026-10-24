@@ -132,7 +132,10 @@ def main(args):
     finish=next(h for h in scan(opposite) if h['type']==8);late=copy.deepcopy(trace)
     entry=next(e for e in late if e['direction']=='bbs' and e['offset']<=finish['offset']<e['offset']+e['size'])
     entry['seconds']=timestamp(trace,'dos',audited['end']-2)+.001;reject('receiver-ZFIN-after-OO',times=late)
-    at=opposite.rindex(b'NFO | lines');reject('missing-post-upload-NFO',received=damage(opposite,at))
+    # A page change can redraw the heading. Remove every copy to model a
+    # genuinely missing NFO response rather than damaging one valid redraw.
+    assert b'NFO | lines'in opposite
+    reject('missing-post-upload-NFO',received=opposite.replace(b'NFO | lines',b'XFO | lines'))
     for field,value,label in [('byte_size',1,'wrong-empty-size'),('upload_by_username','locadmin','wrong-uploader')]:
         changed=copy.deepcopy(rows);row=next(r for r in changed if not expected[r['name']]);row['entries'][0]['meta'][field]=value;reject(label,entries=changed)
     changed=copy.deepcopy(rows);changed[0]['entries'][0]['fileSha256']='0'*64;reject('wrong-catalog-hash',entries=changed)

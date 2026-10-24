@@ -10,6 +10,7 @@ from enigma_upload_watch import SAMPLER,events as form_events
 from enigma_key_stream_fixture import ROOT,PORT,owned,verify_running,pid
 from enigma_notes_dos import sha,messages
 from enigma_script_login import source as login_source
+from product_inputs import select_product
 
 
 def metadata(candidate,names):
@@ -31,6 +32,10 @@ async def run(args):
     cleanup_error=getattr(args,'cleanup_error',False)
     assert not cleanup_error or cancel_first
     sampler=SAMPLER;decode_forms=form_events;temporary=None
+    if args.compact_observer:
+        assert not cancel_first,'Cancellation uses its own observer layout'
+        from enigma_upload_watch import compact_sampler,compact_events
+        sampler=compact_sampler();decode_forms=compact_events
     if cancel_first:
         assert args.upload_bytes>=32768
         from enigma_upload_cancel_watch import SAMPLER as sampler,events as decode_forms
@@ -51,8 +56,12 @@ async def run(args):
     assert not any(row['entries'] for row in metadata(candidate,list(expected))),'Use a fresh owned fixture; no upload replacement'
     for name,data in expected.items():(send/name).write_bytes(data)
     stats={p.name:(p.stat().st_ino,p.stat().st_size,p.stat().st_mtime_ns,sha(p)) for p in send.iterdir()}
-    for rel in ('terminal/TERMINAL.EXE','aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE'):
-        p=ROOT/'build'/rel;shutil.copyfile(p,stage/p.name);inputs[rel]=p;inputs['staged/'+p.name]=stage/p.name
+    for rel,selected in [('terminal/TERMINAL.EXE',args.terminal),
+                         ('aspect-runner/ASPECT.EXE',args.runner),
+                         ('aspect-compiler-dos/ASPCOMP.EXE',args.compiler)]:
+        p,sources=select_product(selected,Path(rel).name)
+        shutil.copyfile(p,stage/p.name);inputs[rel]=p;inputs['staged/'+p.name]=stage/p.name
+        for source in sources:inputs[str(source.relative_to(ROOT))]=source
     script=login_source();(stage/'LOGON.ASP').write_bytes(script.replace('\n','\r\n').encode('ascii'))
     inputs.update(runner=Path(__file__),login=stage/'LOGON.ASP',harness=Path(test_dos.__file__),
         observer=ROOT/'lab/bbs/test_transfer_dos.py',auditor=ROOT/'lab/bbs/audit_zmodem.py',
@@ -88,7 +97,8 @@ async def run(args):
     test_dos.Modem=Observer;test_dos.directory_image=directory;test_dos.SAMPLER=sampler
     options=argparse.Namespace(name='enigma',label=args.label,port=PORT,com=2,baud=19200,flow='HARD',packet_delay_ms=0,
         dial_fixture=True,directory_fixture=True,directory_browser=False,entry=3,binary=stage/'TERMINAL.EXE',config_fixture=False,
-        keymap_fixture=ROOT/'build/keyboard-profiles/NETWORK.KBD',server_log=log,keys=keys,wait=2,timeout=430 if cancel_first else 330)
+        keymap_fixture=ROOT/'build/keyboard-profiles/NETWORK.KBD',server_log=log,keys=keys,wait=2,timeout=430 if cancel_first else 330,
+        cpu=args.cpu,irq=args.irq,mouse_scales=args.mouse_scales)
     started=time.time_ns()
     try:
         with (out/'harness.log').open('w') as capture,contextlib.redirect_stdout(capture):code=await test_dos.run(options)
@@ -189,6 +199,9 @@ async def run(args):
         cancel_first=cancel_first,canceled_protocol=canceled,cancel_snapshots=snapshots,
         cleanup_error_expected=cleanup_error,filesystem_faults=faults,
         expected={name:dict(bytes=len(data),sha256=sha(send/name)) for name,data in expected.items()},
+        products={name:dict(path=str(path.relative_to(ROOT)),sha256=sha(path)) for name,path in inputs.items()
+                  if name in ('terminal/TERMINAL.EXE','aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE')},
+        cpu=args.cpu,irq=args.irq,compact_observer=args.compact_observer,
         scope='One actual DOS/owned ENiGMA session: DOS-built ASPECT login, real upload form/protocol selector, binary and empty ZMODEM batch, official FileEntry API/storage audit, details acceptance and NFO input afterward. Synthetic account/area, modeled19200/HARD UART; no live board or physical modem claim.')
     (out/'upload-checks.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(passed=result['passed'],checks=checks,metadata_checks=metadata_checks,errors=errors,menus=menus),indent=2))
     return 0 if result['passed'] else 1
@@ -197,6 +210,13 @@ async def run(args):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--label',required=True)
     p.add_argument('--upload-bytes',type=int,default=1501,help='Generated binary size1..65539; empty file is always included')
+    p.add_argument('--terminal',type=Path,default=ROOT/'build/terminal/TERMINAL.EXE')
+    p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-runner/ASPECT.EXE')
+    p.add_argument('--compiler',type=Path,default=ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE')
+    p.add_argument('--cpu',choices=['8086','286','386','486'],default='386')
+    p.add_argument('--irq',type=int,choices=[3,4,5,7])
+    p.add_argument('--mouse-scales',type=int,nargs=2)
+    p.add_argument('--compact-observer',action='store_true',help='Retain only twelve form events in the resident observer')
     p.add_argument('--cancel-first',action='store_true',help='Cancel a nonempty upload, open NFO, retry the batch, reopen NFO in the same DOS session')
     p.add_argument('--cleanup-error',action='store_true',help='Require one staged modeled cleanup denial, responsive NFO, and retirement on retry')
     raise SystemExit(asyncio.run(run(p.parse_args())))

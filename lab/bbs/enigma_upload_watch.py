@@ -217,6 +217,18 @@ compare_text:
 '''+BASE[END:]
 
 
+def compact_sampler():
+    """Keep exactly the twelve bounded eight-byte events in conventional RAM."""
+    assert SAMPLER.count('frames: times 2560 db 0')==1
+    assert SAMPLER.count('2566')==4
+    return SAMPLER.replace('frames: times 2560 db 0','frames: times 96 db 0').replace('2566','102')
+
+
+def compact_events(raw):
+    assert len(raw)==102
+    return events(raw+bytes(2566-102))
+
+
 def events(raw):
     assert len(raw)==2566
     magic,count,submitted=struct.unpack_from('<HHH',raw)

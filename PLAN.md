@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Current IRQ uploads](docs/IRQ_UPLOAD.md) now pass DOS8086 source login, a
+65,539-byte plus empty ZMODEM batch, official storage/metadata/date checks and
+same-session NFO return on IRQ7. A bounded observer fits beneath the current
+parent; the earlier startup failures remain recorded. Independent replay and
+fourteen corruption checks pass, including a corrected missing-NFO mutation
+that removes every heading copy. The newer server revision was checked in a
+separate clean export. Reconnect/cancel/load, LAN/physical acceptance, packaging
+and full native application work remain open. The fixture is stopped and the
+card is unchanged.
+
 [Current IRQ downloads](docs/IRQ_TRANSFERS.md) now pass after editor discard on
 the isolated framed ENiGMA server: 11,521 bytes on IRQ7 and 65,539 bytes on IRQ5,
 with independent CRC/completion replay and subsequent same-session menus.
