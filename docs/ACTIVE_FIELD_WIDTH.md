@@ -122,3 +122,7 @@ Partial-width wrapped scrolling, keyboard/UI/ASPECT/modal rendering composition
 at 132 columns and width-changing BBS sessions remain open. The card package
 has not been changed. Physical modem, reconnection and transfer acceptance are
 still separate requirements.
+
+The later [serviced UI checkpoint](WIDE_SERVICED_UI.md) composes menu, history
+and clipboard frames with wide background parsing. The identities and limits
+above describe this earlier field-width checkpoint.

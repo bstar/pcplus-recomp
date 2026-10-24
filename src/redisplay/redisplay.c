@@ -12,6 +12,8 @@ typedef struct context {
  word start,end,head,wrapped;
 } context;
 unsigned redisplay_active=0;
+/* Only event2 grants live video ownership; local frames revoke it before paint. */
+unsigned redisplay_live_ready=0;
 unsigned redisplay_search_pending=0;
 unsigned redisplay_export_pending=0;
 static byte __far *snapshot;
@@ -212,7 +214,7 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   length=direct_clipboard?0:(c->wrapped?63000U:c->head-c->start);p=c->wrapped?c->head:c->start;
   for(i=0;i<length;++i){snapshot[i]=source[p];if(++p==c->end)p=c->start;}
   cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
-  redisplay_search_pending=redisplay_export_pending=0;export_edit=export_notice=0;oldest_skip=c->wrapped && length && snapshot[0]==13;query_size=query_edit=0;query[0]=0;found=1;last_match=65535U;visible=1;clipboard_ui_visible=1;redisplay_active=1;index_rows();bottom();
+  redisplay_search_pending=redisplay_export_pending=0;export_edit=export_notice=0;oldest_skip=c->wrapped && length && snapshot[0]==13;query_size=query_edit=0;query[0]=0;found=1;last_match=65535U;visible=1;redisplay_live_ready=0;clipboard_ui_visible=1;redisplay_active=1;index_rows();bottom();
   if(direct_clipboard==2){command_menu_event(0,0,view);copy((word __far *)MK_FP(0xb800,0),view);hide();}
   else if(direct_clipboard){copy(view,live);clipboard_ui_event(0,0,view);}else draw();return 1;
  }
@@ -220,7 +222,7 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
  if(command_menu_active && (event==1 || event==4)){
   if(command_menu_event(event,key,view)){if(visible){copy((word __far *)MK_FP(0xb800,0),view);hide();}return 1;}
   if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();}
-  redisplay_search_pending=redisplay_export_pending=0;redisplay_active=visible=0;
+  redisplay_search_pending=redisplay_export_pending=0;redisplay_active=visible=redisplay_live_ready=0;
   return command_menu_action?0:1;
  }
  if(clipboard_ui_active && (event==1 || event==4)){
@@ -236,10 +238,10 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   if(event==1 && query_edit && key==27){query_edit=0;draw();return 1;}
   if(redisplay_export_pending)export_close(2);
   if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();}
-  export_edit=0;redisplay_search_pending=0;redisplay_active=visible=0;return key==0x2d00?0:1;
+  export_edit=0;redisplay_search_pending=0;redisplay_active=visible=redisplay_live_ready=0;return key==0x2d00?0:1;
  }
- if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;clipboard_ui_visible=0;if(clipboard_ui_active)clipboard_ui_event(2,0,view);}return 0;}
- if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}
+ if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;redisplay_live_ready=1;clipboard_ui_visible=0;if(clipboard_ui_active)clipboard_ui_event(2,0,view);}return 0;}
+ if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));redisplay_live_ready=0;visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}
   clipboard_ui_visible=visible;if(clipboard_ui_active)clipboard_ui_event(3,0,view);return 0;}
  if(event!=1)return 0;
  if(redisplay_export_pending)return 1;

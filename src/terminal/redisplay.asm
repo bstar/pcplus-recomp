@@ -26,6 +26,7 @@ extern terminal_monitor_active,terminal_controller_active,terminal_ansi_wait_act
 extern terminal_snapshot_active,uart_break_hold
 extern screen_viewport_enabled,text_cga_status_port,text_video_segment
 extern screen_attribute_row_bytes,screen_video_row_bytes,connection_state
+extern terminal_viewport_admit_far
 
 terminal_redisplay_key_impl:
  cmp word [_redisplay_active],0
@@ -50,13 +51,21 @@ terminal_redisplay_key_impl:
  or ax,[terminal_ansi_wait_active]
  or ax,[terminal_snapshot_active]
  or ax,[uart_break_hold]
- or ax,[screen_viewport_enabled]
  or ax,[text_cga_status_port]
  jnz .denied
  cmp word [text_video_segment],0xb800
  jne .denied
+ cmp word [screen_attribute_row_bytes],132
+ je .wide
  cmp word [screen_attribute_row_bytes],80
  jne .denied
+ cmp word [screen_viewport_enabled],0
+ jne .denied
+ jmp .physical
+.wide:
+ call far terminal_viewport_admit_far
+ jc .denied
+.physical:
  cmp word [screen_video_row_bytes],160
  jne .denied
  cmp word [connection_state],0
@@ -126,6 +135,8 @@ terminal_redisplay_key_impl:
 .ordinary:
  clc
  ret
+global terminal_redisplay_key_end
+terminal_redisplay_key_end:
 terminal_redisplay_before_impl:
  mov dx,2
  jmp redisplay_event

@@ -499,6 +499,11 @@ def inspect_terminal_memory(binary,map_path):
   redisplay_bridges+=1
  bridges+=redisplay_bridges
  extra['redisplay_bridge_pairs_verified']=redisplay_bridges
+ lo=address('terminal_redisplay_key_impl');hi=address('terminal_redisplay_key_end')
+ target=symbols['terminal_viewport_admit_far'];call=b'\x9a'+struct.pack('<HH',target[1],target[0])
+ code=image[start+lo:start+hi];assert code.count(call)==1 and lo+code.index(call)+3 in relocations
+ assert symbols['_redisplay_live_ready'][0]==ds and word('_redisplay_live_ready')==0
+ extra['viewer_live_plane_admission_verified']=True
  if any(c['name']=='ASPECT_CODE' for c in code_segments):
   aspect_code=next(c for c in code_segments if c['name']=='ASPECT_CODE')
   aspect_seg=aspect_code['relative_segment']

@@ -589,6 +589,11 @@ The launcher uses a separate private installation under `reconstruction/lab`.
 Type `ATDThost:port` to dial its emulated Hayes modem; Alt-X exits. Its generated
 startup script and executable are refreshed on launch.
 
+The [wide serviced UI](docs/WIDE_SERVICED_UI.md) now opens the physical command
+menu, history and clipboard over either132-column pane while incoming data
+continues against the restored live display. Other wide application owners
+remain unfinished.
+
 The [active-field width transaction](docs/ACTIVE_FIELD_WIDTH.md) now reshapes
 field planes by admitted rows and repaints through the private native repair.
 Guarded chooser/PROGRAM screen sharing recovers 4,000 bytes in the optional

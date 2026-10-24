@@ -36,14 +36,16 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
  (out/'sampler.asm').write_text(sampler)
  subprocess.run(['nasm','-f','bin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
  server=socket.socket();server.bind(('127.0.0.1',0));server.listen(1);server.settimeout(5)
- wire=bytearray();commands=[];errors=[];stop=threading.Event();checks={};attempts=0;triggered=0
+ wire=bytearray();commands=[];errors=[];stop=threading.Event();checks={};attempts=0;triggered=0;trigger_chunks_expected=0;trigger_chunks_sent=0
  def peer():
-  nonlocal attempts,triggered
+  nonlocal attempts,triggered,trigger_chunks_expected,trigger_chunks_sent
   try:
    conn,_=server.accept()
    with conn:
-    conn.settimeout(.05);line=bytearray();online=False;probe=bytearray();next_probe=0;online_at=0;update_at=0
+    conn.settimeout(.05);line=bytearray();online=False;probe=bytearray();next_probe=0;online_at=0;update_at=0;scheduled=[]
     while not stop.is_set():
+     while scheduled and time.monotonic()>=scheduled[0][0]:
+      _,chunk=scheduled.pop(0);conn.sendall(chunk);trigger_chunks_sent+=1
      if online and online_at and update_at<len(online_updates) and time.monotonic()-online_at>=online_updates[update_at][0]:
       conn.sendall(online_updates[update_at][1]);update_at+=1
      if mode=='direct' and not online and time.monotonic()>=next_probe:
@@ -62,7 +64,17 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
       if online:
        line.append(byte)
        if triggered<len(online_triggers) and line.endswith(online_triggers[triggered][0]):
-        conn.sendall(online_triggers[triggered][1]);triggered+=1
+        response=online_triggers[triggered][1];triggered+=1
+        if isinstance(response,bytes):conn.sendall(response)
+        else:
+         # Ordered relative delays make a split parser fixture independent of
+         # startup/menu timing. These are synthetic peer chunks, never replies
+         # supplied on behalf of the DOS terminal.
+         previous=-1;started=time.monotonic()
+         for delay,chunk in response:
+          assert isinstance(chunk,bytes)and 0<=delay and delay>=previous
+          previous=delay;scheduled.append((started+delay,chunk));trigger_chunks_expected+=1
+         scheduled.sort(key=lambda item:item[0])
        if line.endswith(b'+++~'):raise AssertionError('Pause marker reached physical wire')
        if line.endswith(b'+++ATH\r'):
         checks['configured_hangup_reached_wire']=True;conn.sendall(b'\r\nOK\r\n');line.clear();online=False
@@ -151,6 +163,7 @@ exit
  (out/'serial.bin').write_bytes(wire)
  (out/'screen.txt').write_text('\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25))+'\n')
  if online_triggers:checks['online_triggers_sent']=triggered==len(online_triggers)
+ if trigger_chunks_expected:checks['online_trigger_chunks_sent']=trigger_chunks_sent==trigger_chunks_expected
  proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'environment':environment or {},'cpu':configured_cpu,'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
  if irq is not None:proof['serial_irq']=irq
  (out/'result.json').write_text(json.dumps(proof,indent=2)+'\n');print(name,'PASS' if proof['passed'] else json.dumps(proof),flush=True);return proof
