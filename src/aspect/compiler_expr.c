@@ -40,9 +40,9 @@ static void number(aspect_compiler_expression *e,unsigned index,unsigned token)
  v->explicit_long=n && text[n-1]=='l';if(v->explicit_long)text[--n]=0;
  if(!(n>1&&text[0]=='0'&&text[1]=='x') && (strchr((char *)text,'.')||strchr((char *)text,'e'))){
   v->kind=2;
-  if(aspect_compiler_decimal(text,n,v->ieee)){aspect_compiler_expression_error(e,ASPECT_COMPILE_SYNTAX);return;}
-  v->nonzero=(v->ieee[7]&127)!=0;
-  for(i=0;i<7;++i)if(v->ieee[i])v->nonzero=1;
+  if(aspect_compiler_decimal(text,n,v->number.ieee)){aspect_compiler_expression_error(e,ASPECT_COMPILE_SYNTAX);return;}
+  v->nonzero=(v->number.ieee[7]&127)!=0;
+  for(i=0;i<7;++i)if(v->number.ieee[i])v->nonzero=1;
   return;
  }
  i=0;if(n>1&&text[0]=='0'&&text[1]=='x'){base=16;i=2;}
@@ -52,7 +52,7 @@ static void number(aspect_compiler_expression *e,unsigned index,unsigned token)
   value=value*base+digit;
   if(digit)v->nonzero=1;
  }
- v->integer=value;v->kind=v->explicit_long||v->wide||value>32767UL?1:0;
+ v->number.integer=value;v->kind=v->explicit_long||v->wide||value>32767UL?1:0;
 }
 unsigned aspect_compiler_parse_expression(aspect_compiler_expression *e,unsigned minimum)
 {
@@ -119,7 +119,7 @@ int aspect_compiler_expression_kind(aspect_compiler_expression *e,unsigned index
  aspect_compiler_expression_error(e,ASPECT_COMPILE_STATE);return -1;
 }
 static void negate(aspect_compiler_value *v)
-{if(v->kind==2)v->ieee[7]^=128;else if(v->nonzero)v->negative^=1;}
+{if(v->kind==2)v->number.ieee[7]^=128;else if(v->nonzero)v->negative^=1;}
 unsigned aspect_compiler_atomic(aspect_compiler_expression *e,unsigned index,aspect_compiler_value *v)
 {
  aspect_compiler_node *n;
@@ -137,13 +137,13 @@ unsigned aspect_compiler_word_argument(aspect_compiler_expression *e,unsigned in
  n=&e->nodes[index-1];
  if(n->value.tag==ASPECT_EXPR_UNARY&&n->operation==ASPECT_OP_SUB){
   child=&e->nodes[n->left-1];minimum=child->value.tag==ASPECT_EXPR_CONSTANT && child->value.kind!=2 &&
-   !child->value.wide && child->value.integer==32768UL && !child->value.explicit_long;
+   !child->value.wide && child->value.number.integer==32768UL && !child->value.explicit_long;
  }
  kind=aspect_compiler_expression_kind(e,index);
  if(e->status)return e->status;
  if(kind!=0&&!minimum)aspect_compiler_expression_error(e,ASPECT_COMPILE_SYNTAX);
  if(v->tag==ASPECT_EXPR_CONSTANT){
-  if(v->wide||v->integer>(v->negative?32768UL:32767UL))aspect_compiler_expression_error(e,ASPECT_COMPILE_SYNTAX);
+  if(v->wide||v->number.integer>(v->negative?32768UL:32767UL))aspect_compiler_expression_error(e,ASPECT_COMPILE_SYNTAX);
   v->kind=0;
  }
  return e->status;

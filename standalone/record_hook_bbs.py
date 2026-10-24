@@ -26,7 +26,7 @@ def fields(path):
     return answer
 
 
-def verify_case(server,label,mode,delay,terminal,runner,immediate=False):
+def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expected_cpu='8086'):
     assert server in ('synchronet','enigma') and mode in ('accept','reject')
     assert label and all(c.isalnum() or c in '-_' for c in label)
     stage=ROOT/'build/bbs-lab/script-login'/label
@@ -49,7 +49,8 @@ def verify_case(server,label,mode,delay,terminal,runner,immediate=False):
         for source,digest in report['server_sources'].items():assert sha(server_root/source)==digest
         assert report['checks']['stock_server_unchanged']
     assert run['passed'] and all(run['checks'].values())
-    assert run['cpu']=='8086' and 'cputype=8086' in (output/'dosbox.conf').read_text()
+    assert expected_cpu in ('8086','286','386','486')
+    assert run['cpu']==expected_cpu and 'cputype='+expected_cpu in (output/'dosbox.conf').read_text()
     assert run['modem_packet_delay_ms']==audit['modem_packet_delay_ms']==delay
     assert run['serial']['com']==2 and run['serial']['baud']==19200 and run['serial']['flow']=='HARD'
     assert run['server_endpoint']==dict(address='127.0.0.1',port=23231 if server=='synchronet' else 23233)

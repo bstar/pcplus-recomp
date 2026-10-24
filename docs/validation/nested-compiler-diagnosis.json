@@ -1,0 +1,45 @@
+{
+  "scope": "Declared diagnostic interpreter; no production binary patch. Counter values are observed execution; REA is static evidence.",
+  "target_sha256": "c5f6d0d92aab4cb5cda75b17ebccabf1dda42dadde6e83d0adca93ba87a40a62",
+  "evidence": {
+    "load_image": "ev_a8fce6da63cd5f87236a6beb65c9c4ba2a16cb5f11074e87f0735c288e0dac3a",
+    "CRT_spawn": "ev_e899c4f8fb3cda18b294efa567abbf573d65af258785d6db095358bba77456b7",
+    "DOS_EXEC_pseudocode": "ev_fbd2271a6fa104563667b10c5e0dc3bc9ddc200222224beb1a3fe127b9dba2da",
+    "DOS_EXEC_dossier": "ev_bae27d724b99e9cf9d88fbcb53930f5ad79c20b7a445d468fecc31848f96b04a"
+  },
+  "counters": {
+    "control": {
+      "largest_before_main_paragraphs": 6101,
+      "near_free_before_main": 7894,
+      "near_max_before_main": 7894,
+      "ASPECT_result": 0,
+      "compiler_calls": 1,
+      "compiler_exit": 0,
+      "compiler_CRT_errno": 0,
+      "largest_after_main_paragraphs": 6101
+    },
+    "current": {
+      "largest_before_main_paragraphs": 4918,
+      "near_free_before_main": 7894,
+      "near_max_before_main": 7894,
+      "ASPECT_result": 8,
+      "compiler_calls": 1,
+      "compiler_exit": 65535,
+      "compiler_CRT_errno": 5,
+      "largest_after_main_paragraphs": 4918
+    }
+  },
+  "artifacts": {
+    "build/nested-compiler-memory-probe/driver.c": "70cfbce62a3216662597c45f837bc8ec0ed682e7a18978386ac005616467581f",
+    "build/nested-compiler-memory-probe/build.log": "8837b90907f221932f21e6a81eedfb5f233b557a7d5ffdd13230b30148bb22e5",
+    "build/nested-compiler-memory-probe/rea-spawn-evidence.json": "2122ac59ff241cd687d55cd8f41534f3cfd6569f6e21a219d354c17247968426",
+    "build/nested-compiler-memory-probe/current/MEMPROBE.BIN": "c3558043036f4c7e3fbb8dea650bab374c35d727dfc8e794dcc050d2dc695b23",
+    "build/nested-compiler-memory-probe/control/MEMPROBE.BIN": "0e07b790e72f0b3eb875430c19553debcf18c5bf72d8d162e69ffe125a3c6839",
+    "build/nested-compiler-memory-probe/product/manifest.json": "0ba6c7e17b0fdeafccf15ceda022e8e7121c237cae8fb1ddf860a57adef9aed7"
+  },
+  "limitations": [
+    "Largest-free-block counter is taken before ASPECT main, not at the eventual EXEC.",
+    "runtime_compiler_dos_error records CRT errno; the raw DOS AX error was not directly captured.",
+    "Ghidra pseudocode has an explicit stack-space tracking limitation and is not original source."
+  ]
+}

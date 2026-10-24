@@ -1,4 +1,5 @@
 #include "compiler_program_internal.h"
+#include <dos.h>
 #include <stdlib.h>
 #include <string.h>
 #include <io.h>
@@ -246,13 +247,13 @@ static void procedures(pc_compiler *c,unsigned all)
  }
  for(fixup=c->calls;fixup&&pc_ready(c);fixup=fixup->next)patch(c,fixup->offset,fixup->target->address);
 }
-unsigned aspect_compiler_program_options(FILE *input,FILE *output,aspect_compiler_report *report,const aspect_compiler_options *options)
+static unsigned program(FILE *input,FILE *output,aspect_compiler_report *report,const aspect_compiler_options *options,pc_compiler *workspace)
 {
  pc_compiler *c;aspect_compiler_procedure *p;unsigned status;
  if(!report)return ASPECT_COMPILE_STATE;memset(report,0,sizeof(*report));report->line=1;
  if(!input||!output||input==output||ftell(input)!=0||ftell(output)!=0){report->status=ASPECT_COMPILE_STATE;return report->status;}
  report->allocation_calls=1;
- c=options&&!options->fail_after?0:malloc(sizeof(*c));if(!c){report->status=ASPECT_COMPILE_HEAP;return report->status;}
+ c=workspace?workspace:options&&!options->fail_after?0:malloc(sizeof(*c));if(!c){report->status=ASPECT_COMPILE_HEAP;return report->status;}
  memset(c,0,sizeof(*c));c->input=input;c->report=report;c->line.number=1;
  c->fail_after=options?options->fail_after:ULONG_MAX;
  aspect_compiler_unit_init(&c->unit);aspect_compiler_output_init(&c->output,output);
@@ -275,7 +276,25 @@ unsigned aspect_compiler_program_options(FILE *input,FILE *output,aspect_compile
  }
  aspect_compiler_output_flush(&c->output);pc_ready(c);report->bytes=c->output.position;
  report->unit_allocation_calls=c->unit.allocation_calls;
- release(&c->phase);release(&c->owned);aspect_compiler_unit_dispose(&c->unit);free(c);return report->status;
+ release(&c->phase);release(&c->owned);aspect_compiler_unit_dispose(&c->unit);if(!workspace)free(c);return report->status;
 }
 unsigned aspect_compiler_program(FILE *input,FILE *output,aspect_compiler_report *report)
 {return aspect_compiler_program_options(input,output,report,0);}
+
+unsigned aspect_compiler_program_options(FILE *input,FILE *output,aspect_compiler_report *report,const aspect_compiler_options *options)
+{return program(input,output,report,options,0);}
+static unsigned overlap(const void *a,unsigned an,const void *b,unsigned bn)
+{
+ unsigned long aa=(unsigned long)FP_SEG(a)*16UL+FP_OFF(a),bb=(unsigned long)FP_SEG(b)*16UL+FP_OFF(b);
+ return aa+an>bb && bb+bn>aa;
+}
+unsigned aspect_compiler_program_workspace(FILE *input,FILE *output,aspect_compiler_report *report,void *workspace,unsigned bytes)
+{
+ if(!workspace || bytes<sizeof(pc_compiler) || (FP_OFF(workspace)&1U) ||
+    (unsigned long)FP_OFF(workspace)+sizeof(pc_compiler)>65536UL ||
+    (unsigned long)FP_SEG(workspace)*16UL+FP_OFF(workspace)+sizeof(pc_compiler)>1048576UL ||
+    (report&&overlap(workspace,sizeof(pc_compiler),report,sizeof(*report))) ||
+    (input&&overlap(workspace,sizeof(pc_compiler),input,sizeof(*input))) ||
+    (output&&overlap(workspace,sizeof(pc_compiler),output,sizeof(*output))))return ASPECT_COMPILE_STATE;
+ return program(input,output,report,0,workspace);
+}

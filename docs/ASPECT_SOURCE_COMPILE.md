@@ -120,3 +120,7 @@ hashes, test artifacts and BBS checks are bound in
 maintained host grammar; full native language/recorder/original compiler UI,
 other application families, physical machines/modems and untested timing remain
 required. No F01–F16 whole-application gate closes here.
+
+The subsequent [nested compiler memory checkpoint](NESTED_COMPILER_MEMORY.md)
+addresses the compiler under the larger helper-enabled parent without reducing
+the shipped stack or grammar bounds. Its BBS observer/memory scope is explicit.

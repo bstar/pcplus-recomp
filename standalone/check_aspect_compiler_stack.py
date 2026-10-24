@@ -4,7 +4,7 @@
 The candidate CLI retains24KB. A deliberate checked-stack overflow separately
 proves that the test toolchain's guard is live; no grammar limit is reduced.
 """
-import argparse,hashlib,json,re,shutil
+import argparse,hashlib,json,os,re,shutil
 from pathlib import Path
 import check_aspect_compiler_dos as corpus
 
@@ -134,7 +134,42 @@ def main():
     video=(out/'tests/STKVIDEO.BIN').read_bytes();assert len(video)==4000
     assert b'stack overflow' in video[::2].lower(),video[::2]
     assert (out/'tests/STKENTER.OK').read_bytes()==b'ENTER' and not (out/'tests/STKRET.OK').exists()
+    # Exercise the CLI's own automatic workspace, not only the heap-context API
+    # in PROGRAM. Build all CLI frames with the pinned CRT stack checks enabled.
+    cli=out/'checked-cli';cli.mkdir()
+    command=['wcl','-q','-bt=dos','-0','-ml','-fpc','-ecc','-w4','-we','-k24576',
+             '-fm=ASPCOMP.map','-fe=ASPCOMP.EXE',
+             *[str(ROOT/'src/aspect'/(name+'.c'))for name in corpus.MODULES],
+             str(ROOT/'src/aspect/compiler_main.c')]
+    original_run(command,cwd=cli,check=True)
+    expected={};commands=[]
+    for index,key in enumerate(deep):
+        stem='D%07d'%index;source=corpus.EDGES[key]
+        (cli/(stem+'.ASP')).write_bytes(source)
+        expected[stem]=corpus.compiler.compile_source(source.decode())
+        commands += [f'ASPCOMP {stem}.ASP >{stem}.TXT','if errorlevel 1 goto failed']
+    small=[x.replace('-k24576','-k2048').replace('-fe=ASPCOMP.EXE','-fe=STKCLI.EXE')
+           .replace('-fm=ASPCOMP.map','-fm=STKCLI.map')for x in command]
+    original_run(small,cwd=cli,check=True)
+    shutil.copyfile(out/'tests/STKVID.COM',cli/'STKVID.COM')
+    commands += ['STKCLI D0000000.ASP OVR.ASX >OVERFLOW.TXT',
+                 'if not errorlevel 1 goto failed','STKVID',
+                 'echo PASS>PASS.TXT','exit',':failed','echo FAIL>FAIL.TXT','exit']
+    config=cli/'dosbox.conf'
+    config.write_text('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\ncycles=fixed 12000\n'
+                      '[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "'+str(cli)+'"\nc:\n'+'\n'.join(commands)+'\n')
+    with (cli/'dosbox.log').open('w')as log:
+        completed=original_run(['dosbox-x','-fastlaunch','-nogui','-conf',str(config)],
+            cwd=cli,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),
+            stdout=log,stderr=log,timeout=45)
+    assert completed.returncode==0 and (cli/'PASS.TXT').exists() and not (cli/'FAIL.TXT').exists()
+    assert all((cli/(stem+'.ASX')).read_bytes()==raw for stem,raw in expected.items())
+    assert b'stack overflow' in (cli/'STKVIDEO.BIN').read_bytes()[::2].lower()
+    assert not (cli/'OVR.ASX').exists()
     result=dict(passed=True,candidate_CLI_stack_bytes=24576,checked_API_stack_bytes=16384,
+        checked_CLI_stack_bytes=24576,checked_CLI_cases=len(expected),
+        checked_CLI_sha256=sha(cli/'ASPCOMP.EXE'),checked_CLI_command=command,
+        checked_CLI_overflow_sha256=sha(cli/'STKCLI.EXE'),
         deliberate_overflow_stack_bytes=2048,guarded_compile_commands=guarded,depth_cases=deep,
         corpus_cases=report['case_count'],accepted=report['accepted'],rejected=report['rejected'],
         compiler_sha256=sha(binary),checker_sha256=sha(Path(__file__)),reused_corpus_checker_sha256=sha(Path(corpus.__file__)),

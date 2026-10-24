@@ -14,4 +14,8 @@ unsigned aspect_compiler_program(FILE *,FILE *,aspect_compiler_report *);
  * Includes the context allocation and every owned/phase allocation. The unit
  * ceiling separately covers the already maintained inventory allocator. */
 unsigned aspect_compiler_program_options(FILE *,FILE *,aspect_compiler_report *,const aspect_compiler_options *);
+/* Caller-owned, suitably aligned workspace for the same compiler. A short,
+ * wrapping or overlapping span is rejected. The workspace remains borrowed;
+ * its contents are scratch and no allocator may retire it. */
+unsigned aspect_compiler_program_workspace(FILE *,FILE *,aspect_compiler_report *,void *,unsigned);
 #endif

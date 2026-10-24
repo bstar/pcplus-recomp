@@ -29,13 +29,15 @@ def sha(path):
 def observed_driver():
     """Add only an INT1C video observer around the unchanged DOS application."""
     sys.argv.pop(1)
+    observer_high='--observer-high' in sys.argv
+    if observer_high:sys.argv.remove('--observer-high')
     path = ROOT / 'lab/bbs/editor_dos_probe.py'
     adapter = path.read_text()
     marker = "exec(compile(text,str(source),'exec'),{'__file__':str(source),'__name__':'__main__'})"
     assert adapter.count(marker) == 1
     before = 'D:' + chr(92) * 2 + 'SNAP B'
     after = 'D:' + chr(92) * 2 + 'SNAP S'
-    install = before + '\nC:' + chr(92) * 2 + 'SCRIPT T'
+    install = before + ('\nLOADHIGH C:' if observer_high else '\nC:') + chr(92) * 2 + 'SCRIPT T'
     collect = 'C:' + chr(92) * 2 + 'SCRIPT\n' + after
     fixture_code = """
 def bound_directory(**options):
@@ -49,6 +51,8 @@ def bound_directory(**options):
                + 'text = text.replace("async def run(args):", ' + repr(fixture_code + '\nasync def run(args):') + ')\n')
     prelude = (f'assert text.count({before!r}) == text.count({after!r}) == 1\n'
                f'text = text.replace({before!r}, {install!r}).replace({after!r}, {collect!r})\n')
+    if observer_high:
+        prelude += "assert text.count('[mixer]\\nnosound=true') == 1\ntext = text.replace('[mixer]\\nnosound=true', '[dos]\\numb=true\\n[mixer]\\nnosound=true')\n"
     exec(compile(adapter.replace(marker, fixture + prelude + marker), str(path), 'exec'),
          {'__file__': str(path), '__name__': '__main__'})
 
@@ -58,6 +62,7 @@ def main():
     parser.add_argument('--label', required=True)
     parser.add_argument('--hook-session',choices=['accept','reject'],help='Exercise live kind2 helper returns before editing')
     parser.add_argument('--source', action='store_true', help='Compile LOGON.ASP in the actual DOS child')
+    parser.add_argument('--observer-high',action='store_true',help='Require the passive observer to reside in DOS upper memory')
     parser.add_argument('--profile', choices=['network', 'enigma-editor'], default='network')
     parser.add_argument('--packet-delay-ms', type=int, choices=range(101), default=0)
     parser.add_argument('--terminal', type=Path, default=ROOT/'build/terminal/TERMINAL.EXE')
@@ -102,6 +107,7 @@ def main():
  pop ds
 .seen:
  or [sample+2],bx''')
+    watch = watch.replace('mov dx,handler','mov ax,cs\n mov [sample+6],ax\n mov dx,handler')
     watch = watch.replace('mov cx,8', 'mov cx,4008').replace('cmp ax,8', 'cmp ax,4008')
     watch = watch.replace('buffer: times 8 db 0', 'buffer: times 4008 db 0')
     (stage / 'watch.asm').write_text(watch)
@@ -155,6 +161,7 @@ def main():
                '--directory-fixture', '--entry', '3', '--keymap-fixture', str(keymap),
                '--packet-delay-ms', str(args.packet_delay_ms), '--timeout', '170', '--wait', '2', '--keys', keys]
     if args.hook_session:command += ['--meta-fixture',str(stage/'ACTIONS.KEY')]
+    if args.observer_high:command += ['--observer-high']
     command += ['--cpu', args.cpu]
     if args.mouse_scales:
         command += ['--mouse-scales', *map(str, args.mouse_scales)]
@@ -179,7 +186,7 @@ def main():
     display = (output / 'display.bin').read_bytes()
     prefix = wire.split(b'loclab', 1)[0] if b'loclab' in wire else wire
     observed = (output / 'SCRIPT.BIN').read_bytes() if (output / 'SCRIPT.BIN').exists() else b''
-    magic, bits, ticks, _ = struct.unpack('<4H', observed[:8]) if len(observed) == 4008 else (0, 0, 0, 0)
+    magic, bits, ticks, observer_segment = struct.unpack('<4H', observed[:8]) if len(observed) == 4008 else (0, 0, 0, 0)
     checks = dict(
         DOS_harness=code == 0 and run['passed'],
         current_terminal=run['binary_sha256'] == staged['TERMINAL.EXE'] == sha(terminal),
@@ -195,6 +202,7 @@ def main():
         no_other_login_text_before_script=all(c in b'\x1b[?;0123456789cR\r' for c in prefix),
         authenticated_server_log=any(json.loads(row).get('msg') == 'User \"loclab\" successfully logged in' for row in (output / 'server-session.jsonl').read_text().splitlines()),
         no_error_or_blocking_return_prompt=magic == 0x4d43 and ticks > 0 and (bits & 6) == 0,
+        observer_placement=not args.observer_high or observer_segment>=0xa000,
         resumed_parent_editor=audit_code == 0 and audit['passed'],
         no_post_saved=audit['checks']['no_post_saved'],
     )
@@ -207,7 +215,7 @@ def main():
                   staged=staged, predictions_sha256=sha(stage / 'predictions.json'),
                   terminal_sha256=staged['TERMINAL.EXE'], runner_sha256=staged['ASPECT.EXE'],
                   run=run, editor=audit,
-                  observer_bits=bits,
+                  observer_bits=bits,observer_segment=observer_segment,observer_high=args.observer_high,
                   artifacts={str(p.relative_to(ROOT)): sha(p) for p in output.iterdir() if p.is_file()},
                   scope='Actual DOS directory-bound script sends only synthetic local ENiGMA credentials after native prompt and quiet waits. Passive INT1C observer checks launcher errors. Stock editor checks use the explicitly recorded modem buffering delay and keyboard profile. Disconnect leaves the draft unsaved. Buffered experiments do not replace immediate-forwarding failures. No physical modem or full application claim.')
     (stage / 'checks.json').write_text(json.dumps(result, indent=2) + '\n')

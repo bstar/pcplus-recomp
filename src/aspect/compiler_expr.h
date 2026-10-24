@@ -8,9 +8,11 @@ enum { ASPECT_OP_ASSIGN=1,ASPECT_OP_OR,ASPECT_OP_AND,ASPECT_OP_EQ,ASPECT_OP_NE,
  ASPECT_OP_LT,ASPECT_OP_GT,ASPECT_OP_LE,ASPECT_OP_GE,ASPECT_OP_ADD,ASPECT_OP_SUB,
  ASPECT_OP_MUL,ASPECT_OP_DIV,ASPECT_OP_MOD,ASPECT_OP_INC,ASPECT_OP_DEC };
 typedef struct aspect_compiler_value {
- unsigned tag,kind,index,node,negative,nonzero,wide,explicit_long;
- unsigned long integer;
- unsigned char ieee[8];
+ unsigned index,node;
+ unsigned char tag,kind,negative,nonzero,wide,explicit_long;
+ /* Constants have one numeric kind. Keep its integer or exact IEEE payload,
+  * rather than reserving both for every node in the bounded AST. */
+ union {unsigned long integer;unsigned char ieee[8];} number;
 } aspect_compiler_value;
 typedef struct aspect_compiler_node {
  aspect_compiler_value value;
@@ -28,7 +30,7 @@ typedef struct aspect_compiler_expression {
 typedef struct aspect_compiler_symbol_info {
  unsigned kind,space,index,readonly,builtin;
 } aspect_compiler_symbol_info;
-/* Caller supplies pool storage (about11KiB), outside the recursive stack. The
+/* Caller supplies pool storage (about8KiB), outside the recursive stack. The
  * AST borrows token/line and inventory views until the next init. Node0=null.
  * A parse consumes one expression at the requested precedence, retaining the
  * next-token cursor for command arguments. All error states are sticky. */

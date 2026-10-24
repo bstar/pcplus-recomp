@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Nested compiler memory](docs/NESTED_COMPILER_MEMORY.md) now removes the CLI's
+second heap workspace, compacts numeric storage and uses bounded formatting and
+512-byte CRT growth. The24KiB stack and253-byte grammar bounds stay intact.
+2,043 grammar cases,18 guarded CLI depth cases,12,746 workspace checks, eight
+bare8086 COM1/2 source workflows,22 lifecycle/seven UART cases and713-source/
+seven-product reproduction pass. Source login/helper/editor passes on386 with
+an actually high-resident observer on Synchronet and buffered ENiGMA. Low-memory
+8086 observer cases remain failed; arbitrary driver budgets, immediate ENiGMA,
+full native/application and physical gates remain open. The card is unchanged.
+
 [Live helper/BBS composition](docs/HOOK_BBS.md) now checks directory ASPECT login,
 three real KEY kind2 returns and the unsaved stock editor on the current helper
 build. Acceptance and rejection pass on Synchronet immediate and ENiGMA30ms;

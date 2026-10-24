@@ -37,11 +37,11 @@ void aspect_compiler_emit_operand(aspect_compiler_expression *e,aspect_compiler_
  if(!ready(e,o))return;
  switch(v->tag){
  case ASPECT_EXPR_CONSTANT:
-  if(v->kind==2){aspect_compiler_emit_byte(o,0xad);for(i=0;i<8;++i)aspect_compiler_emit_byte(o,v->ieee[i]);}
-  else if(v->kind==1){aspect_compiler_emit_byte(o,0xac);wire=v->negative?0UL-v->integer:v->integer;aspect_compiler_emit_dword(o,wire);}
+  if(v->kind==2){aspect_compiler_emit_byte(o,0xad);for(i=0;i<8;++i)aspect_compiler_emit_byte(o,v->number.ieee[i]);}
+  else if(v->kind==1){aspect_compiler_emit_byte(o,0xac);wire=v->negative?0UL-v->number.integer:v->number.integer;aspect_compiler_emit_dword(o,wire);}
   else if(v->kind==0){
-   wire=v->negative?0UL-v->integer:v->integer;
-   if(compact&&!v->negative&&!v->wide&&v->integer<=255UL){aspect_compiler_emit_byte(o,0xb5);aspect_compiler_emit_byte(o,(unsigned)wire);}
+   wire=v->negative?0UL-v->number.integer:v->number.integer;
+   if(compact&&!v->negative&&!v->wide&&v->number.integer<=255UL){aspect_compiler_emit_byte(o,0xb5);aspect_compiler_emit_byte(o,(unsigned)wire);}
    else{aspect_compiler_emit_byte(o,0xab);aspect_compiler_emit_word(o,(unsigned)wire);}
   }else error(e);
   break;
@@ -69,7 +69,7 @@ static unsigned long jump(aspect_compiler_output *o,unsigned opcode)
 static void temporary(aspect_compiler_value *v,unsigned kind,unsigned slot)
 {memset(v,0,sizeof(*v));v->tag=ASPECT_EXPR_TEMPORARY;v->kind=kind;v->index=slot;}
 static void negate(aspect_compiler_value *v)
-{if(v->kind==2)v->ieee[7]^=128;else if(v->nonzero)v->negative^=1;}
+{if(v->kind==2)v->number.ieee[7]^=128;else if(v->nonzero)v->negative^=1;}
 /* Branch lists are caller-owned fixed storage, bounded by the source token
  * count. Each nested short-circuit scope retires its own list after patching. */
 typedef struct branches {unsigned head,tail;} branches;

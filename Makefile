@@ -986,6 +986,20 @@ test-aspect-compile-flow-dos:
 	python3 standalone/test_aspect_compile_flow_dos.py
 test: test-aspect-source-compile test-aspect-source-serial-dos test-aspect-compile-flow-dos
 
+.PHONY: test-aspect-compiler-workspace nested-compiler-products test-nested-compiler-memory
+test-aspect-compiler-workspace:
+	python3 standalone/check_aspect_compiler_workspace.py --output "build/aspect-compiler-workspace/check-$$(date -u +%Y%m%dT%H%M%S%N)"
+nested-compiler-products: aspect-compiler-dos
+	python3 standalone/build_terminal.py --external-render --mouse --notice-sound --notice-input --aspect-keys --directory-keys --process-bank --session-capture --session-projection --session-baseline --register-handoff --session-controls --hook-return --hook-execute --hook-modem --hook-input --hook-apply
+	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input --notice-help --help-resource --serial-bank --register-handoff
+test-nested-compiler-memory: nested-compiler-products
+	@stamp=$$(date -u +%Y%m%dT%H%M%S%N); \
+	for port in 1 2; do for kind in explicit fallback chain rejected; do \
+	python3 standalone/test_nested_compiler_memory_dos.py --port $$port --case $$kind \
+	--output "build/nested-compiler-memory/$$stamp-$$port-$$kind" || exit $$?; \
+	done; done
+test: test-aspect-compiler-workspace test-nested-compiler-memory
+
 .PHONY: test-aspect-keyboard test-aspect-keyboard-policy
 test-aspect-keyboard: aspect-runner
 	python3 standalone/check_aspect_keyboard.py

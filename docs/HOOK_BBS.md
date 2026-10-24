@@ -54,7 +54,7 @@ semantic editor outcomes and draft cancellation. The [six corrupted-copy checks]
 changed completion status, active normal attribute, accepted bank, quiet UART IER,
 returned proposal and executable identity. Original artifacts are untouched.
 
-## Source compilation remains open
+## Source compilation follow-up
 
 The live source-login attempts do not count as passes: no LOGON.ASX was produced
 and authentication failed. A separate actual DOS control compiles the same source
@@ -91,3 +91,8 @@ explicit labels; optional immediate observations retain their actual outcomes.
 Native helper lookup/field parity, composed exit/trap ownership, compiler memory,
 other application services, full BBS acceptance and physical Boca/SPA2102 testing
 remain required. No full F01–F16 gate is closed.
+
+The later [nested compiler memory checkpoint](NESTED_COMPILER_MEMORY.md) adds
+a compact CLI and successful bare8086 source and observed386 BBS workflows.
+It preserves the low-conventional-memory observer failures and the limits above;
+the original receipt remains scoped to its precompiled scripts.
