@@ -31,7 +31,10 @@ class ObservedModem(Modem):
   self.trace.append(dict(seconds=time.monotonic()-self.start,direction='dos',offset=self.dos_offset,size=len(data)));self.dos_offset+=len(data)
  def observe_bbs(self,data):
   decoded,_=self.audit_codec.feed(data)
-  self.trace.append(dict(seconds=time.monotonic()-self.start,direction='bbs',offset=self.bbs_offset,size=len(decoded)));self.bbs_offset+=len(decoded)
+  # This trace addresses decoded application bytes. Negotiation-only chunks
+  # remain in the raw modem capture but own no byte range in this timeline.
+  if decoded:self.trace.append(dict(seconds=time.monotonic()-self.start,direction='bbs',offset=self.bbs_offset,size=len(decoded)))
+  self.bbs_offset+=len(decoded)
  async def accept(self,reader,writer):
   task=asyncio.current_task();pair=(task,writer);self.clients.add(pair)
   try:return await super().accept(ReadObserver(reader,self.observe_dos),writer)

@@ -13,6 +13,7 @@ import subprocess
 import sys
 
 from enigma_key_stream_fixture import ROOT, STOCK, PORT, owned, verify_running
+from product_inputs import select_product
 
 
 def sha(path):
@@ -47,6 +48,10 @@ def main():
     parser.add_argument("mode", choices=["editor", "editor-transfer"])
     parser.add_argument("--candidate", type=Path, required=True)
     parser.add_argument("--label", required=True)
+    parser.add_argument('--terminal',type=Path,default=ROOT/'build/terminal/TERMINAL.EXE')
+    parser.add_argument('--irq',type=int,choices=[3,4,5,7])
+    parser.add_argument('--cpu',choices=['8086','286','386','486'],default='386')
+    parser.add_argument('--mouse-scales',type=int,nargs=2)
     args = parser.parse_args()
     assert args.label and all(c.isalnum() or c in "-_" for c in args.label)
     candidate = owned(args.candidate)
@@ -57,17 +62,17 @@ def main():
     wrapper = output.with_name(args.label + "-wrapper")
     wrapper.mkdir(exist_ok=False)
     output.rmdir()
-    inputs = [ROOT / "build/terminal/TERMINAL.EXE", STOCK / "core/client.js",
+    binary,product_sources=select_product(args.terminal,'TERMINAL.EXE')
+    inputs = [binary, binary.parent/'manifest.json', *product_sources, STOCK / "core/client.js",
               STOCK / "config/config.hjson", candidate / "core/client.js",
               candidate / "core/key_stream.js", candidate / "config/config.hjson",
               candidate / "helpers/sexyz", candidate / "file_base/pcplus_transfer/PCXTEST.BIN"]
     inputs += [ROOT / "lab/bbs" / name for name in [
         "enigma_key_stream_dos.py", "enigma_key_stream_fixture.py", "editor_dos_probe.py",
         "test_dos.py", "check_editor_dos.py", "test_transfer_dos.py", "test_zmodem_dos.py",
-        "modem.py", "audit_zmodem.py", "editor-recipes.json"]]
+        "modem.py", "audit_zmodem.py", "editor-recipes.json", "product_inputs.py"]]
     before = {str(p.relative_to(ROOT)): sha(p) for p in inputs}
     message_count = messages(candidate)
-    binary = ROOT / "build/terminal/TERMINAL.EXE"
     keys = recipe(args.mode)
     if args.mode == "editor":
         command = [sys.executable, "lab/bbs/editor_dos_probe.py", str(binary), "enigma",
@@ -76,6 +81,7 @@ def main():
                    "--timeout", "160", "--wait", "2", "--keys", keys]
     else:
         command = [sys.executable, "lab/bbs/test_zmodem_dos.py", "enigma", "--port", str(PORT),
+                   '--binary',str(binary),
                    "--server-instance", str(candidate / "instance.json"), "--editor-first",
                    "--label", args.label, "--sha256", sha(binary), "--mode", "download",
                    "--file", "PCXTEST.BIN=" + str(candidate / "file_base/pcplus_transfer/PCXTEST.BIN"),
@@ -83,6 +89,9 @@ def main():
                    "--start-input-hex", "504358544553542e42494e0d", "--post-input-hex", "530d",
                    "--post-menu", "PCXTEST.BIN ", "--post-menu", "11.25 ", "--post-menu", "KB ",
                    "--timeout", "200"]
+    command += ['--cpu',args.cpu]
+    if args.irq is not None:command += ['--irq',str(args.irq)]
+    if args.mouse_scales:command += ['--mouse-scales',*map(str,args.mouse_scales)]
     (wrapper / "command.json").write_text(json.dumps(command, indent=2) + "\n")
     with (wrapper / "harness.log").open("w") as log:
         code = subprocess.call(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)

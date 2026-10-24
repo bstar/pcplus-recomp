@@ -6,7 +6,7 @@ the owned lab setup tools. --file NAME=build/... is repeatable, including empty 
 DOS upload pattern D:\\SEND\\*.BIN; receive directory D:\\RECV. Supply paced
 ADDKEY --keys including local F2 inside the AltR/AltS filename prompt; no sessions start on import.
 """
-import argparse,asyncio,fcntl,hashlib,json,os,re,subprocess,sys,time
+import argparse,asyncio,fcntl,hashlib,json,os,re,struct,subprocess,sys,time
 from pathlib import Path
 from test_transfer_dos import (ROOT,BINARY,owned_file,ObservedModem,timestamp,
  offset_after,audit_enigma_server,SAMPLER,config_image,RATES,modem_fixture,
@@ -43,6 +43,7 @@ async def run(a):
  else:assert a.keys.lower().split().count('f2')>=2,'Keys must explicitly select DOS ZMODEM with F2'
  fixture=None;directory_fixture=None;automatic=a.dial_fixture or a.directory_fixture
  command=f'TERMINAL COM{a.com} {a.baud} {a.flow}'
+ if a.mouse_scales:assert a.config_fixture or automatic or a.auto_download,'Mouse selection requires a saved configuration fixture'
  if a.config_fixture or automatic or a.auto_download:
   fixture=config_image(port=a.com,baud=RATES.index(a.baud),soft=0,hard=int(a.flow=='HARD'),normal=7)
   if automatic:
@@ -53,6 +54,11 @@ async def run(a):
    fixture=directory_prm(port=1,baud=6,soft=0,hard=int(a.flow=='HARD'));directory_fixture=directory_image(entry=a.entry,target=f'lab.local:{a.port}'.encode(),port=a.com,baud=RATES.index(a.baud));(output/'TEST.DIR').write_bytes(directory_fixture)
   if a.auto_download:
    raw=bytearray(fixture);raw[0x42c:0x42e]=b'\x01\0';path=b'D:\\RECV\\\0';raw[0x31c:0x31c+len(path)]=path;fixture=bytes(raw)
+  if a.mouse_scales:
+   sx,sy=a.mouse_scales;assert 1<=sx<=999 and 1<=sy<=999
+   raw=bytearray(fixture);struct.pack_into('<HH',raw,0x4e4,sx,sy);fixture=bytes(raw)
+  if a.irq is not None:
+   raw=bytearray(fixture);struct.pack_into('<H',raw,0x184+(a.com-1)*2,a.irq);fixture=bytes(raw)
   (output/'TEST.PRM').write_bytes(fixture);command='TERMINAL @D:\\TEST.PRM'
   if a.directory_fixture:command+=' /E:D:\\TEST.DIR'+('' if a.directory_browser else f' /N:{a.entry}')
   elif a.dial_fixture:command+=f' /D:lab.local:{a.port}'
@@ -67,6 +73,9 @@ async def run(a):
  keys=prefix+a.keys+f' p{a.wait*1000} a-x'
  assert len('ADDKEY '+keys)<500,'Complete ADDKEY command exceeds safe DOS bound'
  serial='\n'.join('serial'+str(i)+'='+(f'nullmodem server:127.0.0.1 port:{port} transparent:1 rxdelay:200 txdelay:1' if i==a.com else 'disabled') for i in range(1,5))
+ if a.irq is not None:
+  assert fixture is not None,'Explicit IRQ requires a saved configuration fixture'
+  serial=serial.replace('nullmodem ',f'nullmodem irq:{a.irq} ')
  config=f'''[sdl]
 output=surface
 [dosbox]
@@ -97,6 +106,7 @@ D:\\SNAP S
 D:\\SNAP A
 exit
 '''
+ if a.cpu!='386':config=config.replace('cputype=386','cputype='+a.cpu)
  (output/'dosbox.conf').write_text(config)
  if a.name=='enigma':
   server_log=a.experimental_server_log or ROOT/'build/bbs-lab/enigma/source/logs/enigma-bbs.log'
@@ -196,14 +206,21 @@ exit
  confirmed=bool(audit and audit.get('controls') and audit.get('finish'))
  result=dict(passed=all(checks.values()),standard_completion=confirmed,name=a.name,label=a.label,mode=a.mode,binary_sha256=a.sha256,payload_sha256=payload_hash,checks=checks,errors=errors,seconds=round(time.monotonic()-start,3),keys=keys,command=command,serial=dict(com=a.com,baud=a.baud,flow=a.flow),scope='Actual local BBS ZMODEM via unchanged observed Hayes/Telnet bridge and production DOS F2/AltR/AltS/UART/files. Independent passive header/data CRC, verified offsets, ZEOF and ZFIN/OO, opposite headers and post-transfer menu input/response. Synthetic media, no injected protocol replies or physical modem claim.')
  result['server_endpoint']={'address':'127.0.0.1','port':a.port}
+ result['cpu']=a.cpu
+ if a.irq is not None:result['serial']['irq']=a.irq
  result['experimental_server_instance']=str(a.server_instance) if a.server_instance else None
  (output/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
 
 def main():
+ global BINARY
  if '--self-check' in sys.argv:self_check();return 0
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('name',choices=['synchronet','enigma']);p.add_argument('--port',type=int,required=True)
  p.add_argument('--label',required=True);p.add_argument('--sha256',required=True)
+ p.add_argument('--binary',type=Path,help='Explicit source-built TERMINAL.EXE; manifest/source closure checked before use')
+ p.add_argument('--irq',type=int,choices=[3,4,5,7])
+ p.add_argument('--cpu',choices=['8086','286','386','486'],default='386')
+ p.add_argument('--mouse-scales',type=int,nargs=2)
  p.add_argument('--mode',choices=['upload','download'],required=True)
  p.add_argument('--file',action='append',required=True,help='DOSNAME.BIN=owned build/fixture path')
  p.add_argument('--keys',required=True);p.add_argument('--start-input-hex',required=True)
@@ -217,6 +234,9 @@ def main():
  p.add_argument('--auto-download',action='store_true');p.add_argument('--config-fixture',action='store_true');p.add_argument('--dial-fixture',action='store_true')
  p.add_argument('--directory-fixture',action='store_true');p.add_argument('--directory-browser',action='store_true')
  p.add_argument('--entry',type=int,choices=range(1,201),default=3);a=p.parse_args()
+ if a.binary:
+  from product_inputs import select_product
+  BINARY,_=select_product(a.binary,'TERMINAL.EXE')
  assert bytes.fromhex(a.start_input_hex) and bytes.fromhex(a.post_input_hex)
  a.experimental_server_log=None
  if a.server_instance:

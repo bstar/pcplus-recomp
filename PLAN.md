@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Current IRQ downloads](docs/IRQ_TRANSFERS.md) now pass after editor discard on
+the isolated framed ENiGMA server: 11,521 bytes on IRQ7 and 65,539 bytes on IRQ5,
+with independent CRC/completion replay and subsequent same-session menus.
+The decoded observer handles negotiation-only chunks; 269 partitions and four
+evidence corruption checks pass. Three failed pilots remain recorded, including
+an achievement popup that disrupted timed menu input. Notification-aware tests,
+uploads/reconnect/load, LAN/physical acceptance, packaging and full native
+application work remain open. Temporary instances are stopped; the card is
+unchanged.
+
 [Immediate framed ENiGMA checks](docs/FRAMED_IRQ_BBS.md) now compose the current
 DOS8086 IRQ build with the isolated server decoder fix. Stock IRQ7 again fails
 Home/Insert; the framed instance passes with identical client inputs and zero
