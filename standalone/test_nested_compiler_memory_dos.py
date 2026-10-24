@@ -15,7 +15,9 @@ def main():
     p.add_argument('--port',type=int,choices=[1,2],required=True)
     p.add_argument('--case',choices=['explicit','fallback','chain','rejected'],required=True)
     p.add_argument('--terminal',type=Path);p.add_argument('--runner',type=Path)
-    p.add_argument('--irq',type=int,choices=[3,4,5,7]);a=p.parse_args()
+    p.add_argument('--irq',type=int,choices=[3,4,5,7])
+    p.add_argument('--splash-key',action='store_true',help='Dismiss the explicitly selected branded parent splash')
+    a=p.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     products={'TERMINAL.EXE':'terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-apply',
               'ASPECT.EXE':'aspect-register-parent','ASPCOMP.EXE':'aspect-compiler-dos'}
@@ -42,25 +44,28 @@ def main():
     if a.irq is not None:struct.pack_into('<H',raw,0x184+(a.port-1)*2,a.irq)
     files={leaf:text.encode('cp437')for leaf,text in scripts.items()};files['ACTIONS.KEY']=actions(path,0)
     connection.BINARY=out/'TERMINAL.EXE';label='heap-'+out.parent.name+'-'+out.name
-    report=connection.run(label,'success','p2000 a-1 p6500 o b s e r v e enter p800 r e a d y p700 a-x',
+    keys=('p900 enter 'if a.splash_key else'')+'p2000 a-1 p6500 o b s e r v e enter p800 r e a d y p700 a-x'
+    report=connection.run(label,'success',keys,
         prm=bytes(raw),com=a.port,working_drive='d',files=files,cpu='8086',
         arguments='@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\ACTIONS.KEY',
         online_triggers=[(b'observe\r',b'\x1b[5n')],irq=a.irq)
     result=ROOT/'build/connection-dos'/label;wire=(result/'serial.bin').read_bytes()
-    assert report['passed'] and wire.index(b'observe\r')<wire.rindex(b'\x1b[0n')
-    assert wire.count(b'COMPILED\r')==(0 if a.case=='rejected' else 1)
-    for leaf,data in expected.items():assert (result/leaf).read_bytes()==data,leaf
-    if a.case=='rejected':assert not (result/'LOGON.ASX').exists()
-    assert (result/'TEST.PRM').read_bytes()==raw
-    assert (result/'BEFORE.BIN').read_bytes()==(result/'AFTER.BIN').read_bytes()
+    checks=dict(connection_passed=report['passed'],
+        post_child_parser=b'observe\r'in wire and b'\x1b[0n'in wire and wire.index(b'observe\r')<wire.rindex(b'\x1b[0n'),
+        expected_script_output=wire.count(b'COMPILED\r')==(0 if a.case=='rejected' else 1),
+        PRM_unchanged=(result/'TEST.PRM').read_bytes()==raw,
+        hardware_restored=(result/'BEFORE.BIN').read_bytes()==(result/'AFTER.BIN').read_bytes())
+    for leaf,data in expected.items():checks['exact_'+leaf]=(result/leaf).exists()and(result/leaf).read_bytes()==data
+    if a.case=='rejected':checks['rejected_source_has_no_ASX']=not(result/'LOGON.ASX').exists()
     for name in ['standalone/test_nested_compiler_memory_dos.py','standalone/test_connection_dos.py',
                  'standalone/test_terminal.py','standalone/modem_fixtures.py','standalone/test_directory_key_bindings_dos.py',
                  'src/aspect/compiler.py']:sources[name]=sha(ROOT/name)
-    data=dict(passed=True,case=a.case,port=a.port,products=hashes,sources=sources,connection=report,
+    data=dict(passed=all(checks.values()),checks=checks,case=a.case,port=a.port,products=hashes,sources=sources,connection=report,splash_key_sent=a.splash_key,
         artifacts={str(f.relative_to(ROOT)):sha(f)for folder in (out,result)for f in folder.iterdir()if f.is_file()},
         scope=__doc__+' Actual8086 COM1/2 modem, bare parent and sibling source-built compiler. '
         'Full-line nested parentheses, source/fallback/chained numeric+BREAK retention and rejected-source recovery. '
         'Exact ASX, no-TX-on-rejection, post-child RX/parser/TX, PRM and selected UART restoration checked. '
         'No physical or arbitrary-size compilation claim.')
-    (out/'result.json').write_text(json.dumps(data,indent=2)+'\n');print('PASS nested source',a.case,a.port)
-if __name__=='__main__':main()
+    (out/'result.json').write_text(json.dumps(data,indent=2)+'\n');print(('PASS'if data['passed']else'FAIL')+' nested source '+a.case+' '+str(a.port)+' '+json.dumps(checks))
+    return 0 if data['passed']else 1
+if __name__=='__main__':raise SystemExit(main())

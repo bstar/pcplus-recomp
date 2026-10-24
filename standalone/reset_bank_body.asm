@@ -13,11 +13,20 @@ extern reset_configured_wide,program_state_7a74,terminal_dec_keys
 extern csi_last_row,screen_last_row,screen_bottom_margin,screen_viewport_right
 extern screen_attribute_row_bytes,screen_cursor_row,screen_cursor_column
 extern uart_rx_count
+%ifdef RESET_BANK_OVERLAY
+extern redisplay_snapshot
+%endif
 global reset_bank_body,reset_bank_allocate,reset_bank_free,reset_bank_error
 global reset_bank_observation,reset_bank_wait
 reset_bank_observation: times 10 dw 0
 reset_bank_wait: dw 0
 reset_bank_body:
+%ifdef RESET_BANK_APP
+ cmp word [cs:reset_bank_request],1
+ jbe .observe
+ mov ax,1
+ ret
+%else
  cmp word [cs:reset_bank_request],2
  jne .normal
  push ax
@@ -33,6 +42,7 @@ reset_bank_body:
  jne reset_bank_error
  cmp word [cs:reset_bank_busy],1
  jne reset_bank_error
+%endif
 .observe:
  mov [cs:reset_bank_observation],ds
  mov [cs:reset_bank_observation+2],ss
@@ -51,10 +61,12 @@ reset_bank_body:
  mov word [screen_bottom_margin],23
  mov word [screen_viewport_right],79
  mov ax,[cs:reset_bank_request]
+%ifndef RESET_BANK_APP
  cmp ax,3
  jne .request
  mov ax,1
 .request:
+%endif
  push ax
  call modes_width_request_native
  mov ax,[screen_attribute_row_bytes]
@@ -65,6 +77,7 @@ reset_bank_body:
  mov [cs:reset_bank_observation+12],ax
  mov ax,[screen_cursor_column]
  mov [cs:reset_bank_observation+14],ax
+%ifndef RESET_BANK_APP
  ; A bounded tick interval lets a real UART IRQ run on the private stack.
  cmp word [cs:reset_bank_wait],0
  je .done
@@ -93,6 +106,7 @@ reset_bank_body:
  mov ax,[es:uart_rx_count]
  mov [cs:reset_bank_observation+18],ax
 .done:
+%endif
  xor ax,ax
  ret
 reset_bank_allocate:
@@ -100,24 +114,41 @@ reset_bank_allocate:
  cmp word [bx+2],6336
  jne reset_bank_error
  mov ax,bank_shadow
+%ifdef RESET_BANK_OVERLAY
+ mov dx,seg redisplay_snapshot
+%else
  mov dx,seg bank_shadow
+%endif
  ret
 reset_bank_free:
  mov bx,sp
  cmp word [bx+2],bank_shadow
  jne reset_bank_error
+%ifdef RESET_BANK_OVERLAY
+ mov ax,seg redisplay_snapshot
+%else
  mov ax,seg bank_shadow
+%endif
  cmp [bx+4],ax
  jne reset_bank_error
  ret
 reset_bank_error:
  mov ax,3
  jmp reset_bank_abort
-SEGMENT BANK_SHADOW public align=16 class=FAR_DATA use16
 global bank_shadow,bank_shadow_end
+%ifdef RESET_BANK_OVERLAY
+bank_shadow equ 0xe700
+bank_shadow_end equ 0xffc0
+%else
+SEGMENT BANK_SHADOW public align=16 class=FAR_DATA use16
 bank_shadow: resb 6336
 bank_shadow_end:
+%endif
 SEGMENT _DATA public align=16 class=DATA use16
 SEGMENT _BSS public align=16 class=BSS use16
 SEGMENT STACK stack align=16 class=STACK use16
+%ifdef RESET_BANK_APP
+SEGMENT RESET_DATA public align=16 class=NATIVE_DATA use16
+%else
 SEGMENT RESET_DATA public align=16 class=DATA use16
+%endif

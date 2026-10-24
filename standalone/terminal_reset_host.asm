@@ -238,7 +238,14 @@ terminal_reset_ui_7630:
  mov ax,0x4c02
  int 0x21
 SEGMENT _DATA public class=DATA use16
+%ifdef RESET_BANK_OVERLAY
+; Absolute near offsets describe a borrowed far workspace. They allocate no
+; second image; the context owner supplies its segment after exclusive admission.
+ABSOLUTE 0
+ resb 256
+%else
  times 256 db 0
+%endif
 global reset_data_image
 reset_data_image: resb 0xd600
 global terminal_reset_script_label
@@ -963,7 +970,9 @@ _shadow_logical_columns equ screen_attribute_row_bytes
 %ifdef RESET_BANK
 ; Keep the private image and its stack in one physical segment. Separate
 ; DATA/STACK classes can interleave the root group in this combined link.
+%ifndef RESET_BANK_OVERLAY
 SEGMENT _DATA
+%endif
 %else
 SEGMENT STACK stack class=STACK use16
 %endif
@@ -972,3 +981,6 @@ SEGMENT STACK stack class=STACK use16
 global stack_top
 %endif
 stack_top:
+%ifdef RESET_BANK_OVERLAY
+SEGMENT _DATA
+%endif

@@ -9,6 +9,11 @@ ORG 0x100
 %ifndef REQUIRED_PARAS
 %error Linker-derived maximum REQUIRED_PARAS required
 %endif
+%ifdef NATIVE_BANK_SEG
+%define NATIVE_SUCCESS 128
+%else
+%define NATIVE_SUCCESS 0
+%endif
 start:
  mov ax,cs
  cli
@@ -87,6 +92,22 @@ start:
  mov word [result+58],CONFIG_BYTES
  call config_sum
  mov [result+60],ax
+%ifdef NATIVE_BANK_SEG
+ mov ax,[result+2]
+ add ax,16+NATIVE_BANK_SEG
+ mov [result+64],ax
+ mov es,ax
+ mov word [result+66],NATIVE_BANK_BYTES
+ call native_bank_sum
+ mov [result+68],ax
+ mov ax,[result+2]
+ add ax,16+NATIVE_SHADOW_SEG
+ mov [result+72],ax
+ mov es,ax
+ mov word [result+74],NATIVE_SHADOW_BYTES
+ call native_shadow_sum
+ mov [result+76],ax
+%endif
  mov ax,[result+2]
  add ax,16+UI_SEG
  mov es,ax
@@ -159,6 +180,19 @@ start:
  cmp ax,[result+60]
  jne .free
  or word [result],64
+%ifdef NATIVE_BANK_SEG
+ mov es,[result+64]
+ call native_bank_sum
+ mov [result+70],ax
+ cmp ax,[result+68]
+ jne .free
+ mov es,[result+72]
+ call native_shadow_sum
+ mov [result+78],ax
+ cmp ax,[result+76]
+ jne .free
+ or word [result],128
+%endif
  mov es,[result+34]
  mov si,BROWSER_OFF
  call ui_sum
@@ -198,14 +232,14 @@ start:
  jc .exit
  mov bx,ax
  mov dx,result
- mov cx,64
+ mov cx,result_end-result
  mov ah,0x40
  int 0x21
  mov ah,0x3e
  int 0x21
 .exit:
  mov ax,0x4c01
- cmp word [result],127
+ cmp word [result],127+NATIVE_SUCCESS
  jne .terminate
  xor al,al
 .terminate:
@@ -224,6 +258,16 @@ config_sum:
  mov si,CONFIG_START
  mov cx,CONFIG_BYTES
  jmp sum_bytes
+%ifdef NATIVE_BANK_SEG
+native_bank_sum:
+ mov si,NATIVE_BANK_OFFSET
+ mov cx,NATIVE_BANK_BYTES
+ jmp sum_bytes
+native_shadow_sum:
+ mov si,NATIVE_SHADOW_OFFSET
+ mov cx,NATIVE_SHADOW_BYTES
+ jmp sum_bytes
+%endif
 ui_sum:
  mov cx,4000
 sum_bytes:
@@ -238,6 +282,10 @@ sum_bytes:
  ret
 output: db 'D:\FARTEST.BIN',0
 result: times 32 dw 0
+%ifdef NATIVE_BANK_SEG
+ times 8 dw 0
+%endif
+result_end:
 
 align 2
  times 1024 db 0

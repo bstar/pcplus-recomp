@@ -23,6 +23,8 @@ parser.add_argument('--hook-apply',action='store_true')
 parser.add_argument('--hook-lookup',action='store_true')
 parser.add_argument('--custom-irq',action='store_true')
 parser.add_argument('--special-edition',action='store_true',help='Show the magenta LoC Special Edition startup screen')
+parser.add_argument('--native-reset-bank',action='store_true',help='Link the experimental namespaced native bank; peer width ownership remains disabled')
+parser.add_argument('--native-reset-static',action='store_true',help='Retain the larger static bank as a memory regression control')
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
@@ -39,6 +41,7 @@ if args.hook_input:assert args.hook_modem
 if args.hook_apply:assert args.hook_input
 if args.hook_lookup:assert args.hook_apply
 if args.custom_irq:assert args.register_handoff
+if args.native_reset_static:assert args.native_reset_bank
 if args.input_probe:assert args.hook_input and not args.hook_probe and not args.projection_probe
 if args.hook_probe:assert args.hook_execute and not args.projection_probe
 if args.exit_probe is not None:assert args.exit_guard
@@ -87,6 +90,8 @@ if args.notice_sound and args.trap_probe is not None:out_name+='-probe-'+str(arg
 if args.notice_sound and args.exit_probe is not None:out_name+='-exit-probe-'+str(args.exit_probe)
 if args.custom_irq:out_name+='-custom-irq'
 if args.special_edition:out_name+='-special'
+if args.native_reset_bank:out_name+='-native-bank'
+if args.native_reset_static:out_name+='-static'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
@@ -176,6 +181,8 @@ for index,source in enumerate(sources):
  if args.hook_lookup:options+=['-DTERMINAL_HOOK_LOOKUP']
  if args.custom_irq:options+=['-DTERMINAL_CUSTOM_IRQ']
  if args.special_edition:options+=['-DTERMINAL_SPECIAL_EDITION']
+ if args.native_reset_bank:options+=['-DTERMINAL_NATIVE_RESET_BANK']
+ if args.native_reset_bank and not args.native_reset_static:options+=['-DTERMINAL_NATIVE_RESET_OVERLAY']
  if args.input_probe:options+=['-DTERMINAL_HOOK_INPUT_PROBE']
  if args.hook_probe:options+=['-DTERMINAL_HOOK_PROBE']
  if args.exit_guard:options+=['-DTERMINAL_EXIT_GUARD']
@@ -341,7 +348,13 @@ native=build_native_receiver(ROOT,OUT)
 objects += list(map(str,native['objects']))
 sender=build_native_sender(ROOT,OUT)
 objects += list(map(str,sender['objects']))
-subprocess.run(['wlink','system','dos','order','clname','CODE','clname','FARCODE','clname','DATA','clname','BSS','clname','STACK','option','quiet','option','map='+str(OUT/'terminal.map'),'name',str(OUT/'TERMINAL.EXE'),'file',','.join(objects),'library',str(Path(os.environ['WATCOM'])/'lib286/dos/clibs.lib')],check=True)
+reset_bank=None
+if args.native_reset_bank:
+ from ui.native_reset_link import build_native_reset_bank
+ reset_bank=build_native_reset_bank(ROOT,OUT,overlay=not args.native_reset_static)
+ objects+=list(map(str,reset_bank['objects']));sources+=reset_bank['inputs']
+ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+['DATA','BSS','STACK']
+subprocess.run(['wlink','system','dos','order',*[value for kind in ordering for value in ('clname',kind)],'option','quiet','option','map='+str(OUT/'terminal.map'),'name',str(OUT/'TERMINAL.EXE'),'file',','.join(objects),'library',str(Path(os.environ['WATCOM'])/'lib286/dos/clibs.lib')],check=True)
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
 assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64KiB'
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
@@ -350,6 +363,7 @@ inputs += [ROOT/'src/config/live_configuration.h',ROOT/'src/aspect/resident_rend
 inputs += [ROOT/'src/status/status_state.inc',ROOT/'src/status/status_formatter.h']
 inputs += [ROOT/'src/config/live_setup_owner.h',ROOT/'src/config/terminal_preferences.h',ROOT/'src/config/transfer_import.h']
 inputs += [ROOT/'src/config/resource_path.h']
+if args.custom_irq:inputs.append(ROOT/'src/config/irq_policy.h')
 inputs += sorted((ROOT/'src/directory').glob('*.h'))+sorted((ROOT/'src/directory').glob('*.inc'))
 inputs += sorted((ROOT/'src/process').glob('*.h'))
 inputs += sorted((ROOT/'src/capture').glob('*.h'))
@@ -406,5 +420,11 @@ manifest['hook_transaction_probe']=args.hook_probe
 manifest['terminal_traps']=args.traps
 manifest['terminal_trap_probe']=args.trap_probe
 if args.custom_irq:manifest['experimental_custom_irq']=True
+if args.special_edition:manifest['special_edition']=True
+if args.native_reset_bank:
+ manifest['experimental_native_reset_bank']=True
+ manifest['native_reset_overlay']=not args.native_reset_static
+ manifest['native_reset_namespace']=reset_bank['namespace']
+ manifest['limitations'].append(reset_bank['scope'])
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Built',str((OUT/'TERMINAL.EXE').relative_to(ROOT)),manifest['binary_sha256'],'DS/SS bytes',manifest['data_stack_bytes'])

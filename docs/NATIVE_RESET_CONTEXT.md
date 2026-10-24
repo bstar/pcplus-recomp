@@ -87,7 +87,12 @@ and DOS replay in a new directory. To retain an explicitly named run, use
 
 ## Remaining application integration
 
-The bank still needs a namespace and typed callback bindings alongside the live
+The [experimental parent checkpoint](NATIVE_RESET_PARENT.md) supplies the
+namespace and exclusive borrowed workspace. Its cold-call and DOS retention
+checks pass, but nested source compilation still fails memory admission. The
+following projection/transaction and broader handler gates remain open.
+
+The bank still needs production typed callback bindings alongside the live
 application, an explicit renderer/profile projection and commit schema, and
 display/shadow rollback for failed native operations. Copying the root data
 image remains prohibited: receive queues, flow state, handles, parser/owner

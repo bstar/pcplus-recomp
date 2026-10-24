@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Experimental native parent](docs/NATIVE_RESET_PARENT.md) now links a namespaced
+reset bank with an exclusively borrowed inactive far workspace. Cold native
+calls preserve live data/RX/shadow, eleven modal owners refuse before mutation,
+and redisplay rebuilds after cache reuse. The default application remains exact.
+Conventional-memory acceptance is still failed: the optional branded parent
+cannot complete nested ASPECT source compilation, while its control can. A
+passing16KB DOS allocation child proves retention only. Keep this experimental
+product out of the card package. Resolve parent/child admission, then complete
+renderer projection/commit/rollback and normal width/UI/BBS/physical integration.
+
 [Private native reset context](docs/NATIVE_RESET_CONTEXT.md) now runs actual
 width/soft-reset code with a separate DS=SS image/stack while real UART IRQs
 deliver512 binary bytes to root data. Twenty checked returns preserve registers
@@ -7,9 +17,10 @@ and full FLAGS; typed abandonment/reuse, private reentry refusal and IF/DF/forei
 DS refusals pass. Hardware/vector restoration and root canaries verify.76
 declared source/test/toolchain files reproduce and repeat DOS8086 IRQ execution;
 both ordinary reset controls remain exact. Failed stack-origin observation and
-missing-include closure remain recorded. Full application namespace/projection,
-display rollback, retained-parent/child memory, normal width/UI/BBS and physical
-integration remain open; application, package and card are unchanged.
+missing-include closure remain recorded. This component checkpoint alone does
+not establish application projection, rollback, child admission or normal width
+workflows; see the newer optional-parent findings above. The ordinary application,
+package and card remain unchanged.
 
 [Wide field repair/navigation](docs/ATTRIBUTE_REPAIR_WIDE.md) now reuses owned
 viewport admission for132-column native repair and reconciles logical versus

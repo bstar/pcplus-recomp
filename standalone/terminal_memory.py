@@ -33,6 +33,44 @@ def inspect_terminal_memory(binary,map_path):
  assert address('erase_shadow_segment') in relocations
  assert address('terminal_history_pointer')+2 in relocations
  extra={};static_end=max(stack_end,far_end)
+ if 'nreset_reset_data_image' in symbols:
+  native_overlay=symbols['nreset_reset_data_image'][0]==0
+  if native_overlay:
+   workspace_seg,workspace_off=symbols['redisplay_snapshot'];assert workspace_off==0
+   assert symbols['terminal_snapshot_image'][0]==workspace_seg,'Native workspace must share the checked far frame'
+   native_start=address('redisplay_snapshot');workspace_end=address('terminal_snapshot_image_end')
+   native_size=symbols['nreset_stack_top'][1];native_end=native_start+native_size
+   native_image=native_start+symbols['nreset_reset_data_image'][1];native_top=native_end
+   private_shadow=native_start+symbols['bank_shadow'][1];private_end=native_start+symbols['bank_shadow_end'][1]
+   assert native_end==private_shadow and private_end<=workspace_end<=native_start+65536
+   native_data_segment=0
+  else:
+   native_group=re.search(r'^RESET_GROUP\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)',listing,re.M|re.I);assert native_group
+   native_start=int(native_group[1],16)*16+int(native_group[2],16)
+   native_size=int(native_group[3],16);native_end=native_start+native_size
+   native_image=address('nreset_reset_data_image');native_top=address('nreset_stack_top')
+   private_shadow=address('bank_shadow');private_end=address('bank_shadow_end')
+   native_data_segment=int(native_group[1],16)
+  assert native_size<65536 and native_top-native_image==0xd600+4096 and native_top==native_end
+  assert native_end<=near_start or native_start>=near_start+near_size,'Native reset bank overlaps root DGROUP'
+  assert native_end<=shadow or native_start>=far_end,'Native reset bank overlaps root far buffers'
+  assert private_end-private_shadow==6336 and symbols['bank_shadow'][1]+6336<=65536
+  assert private_end<=native_start or private_shadow>=native_end,'Native reset shadow overlaps private data'
+  assert private_end<=near_start or private_shadow>=near_start+near_size,'Native reset shadow overlaps root DGROUP'
+  assert private_end<=shadow or private_shadow>=far_end,'Native reset shadow aliases root far buffers'
+  native_code=next(re.finditer(r'^RESET_CODE\s+FARCODE\s+\S+\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)',listing,re.M|re.I),None);assert native_code
+  native_cs=int(native_code[1],16);assert int(native_code[3],16)<65536
+  exported=[name for name in symbols if name.startswith('nreset_')]
+  assert len(exported)>200 and all(symbols[name][0]in(native_cs,native_data_segment)for name in exported)
+  assert symbols['screen_cursor_row'][0]==ds
+  assert address('screen_cursor_row')!=address('nreset_screen_cursor_row')
+  static_end=max(static_end,native_end,private_end)
+  extra.update(native_reset_bank_bytes=native_size,native_reset_bank_start=native_start,
+   native_reset_bank_end=native_end,native_reset_image_offset=native_image-native_start,
+   native_reset_private_stack_bytes=4096,native_reset_shadow_bytes=6336,native_reset_shadow_end=private_end,
+   native_reset_namespace_symbols=len(exported),native_reset_code_segment=native_cs,
+   native_reset_overlay=native_overlay,native_reset_additional_storage_bytes=0 if native_overlay else native_size+6336)
+  if native_overlay:extra.update(native_reset_workspace_end=workspace_end,native_reset_workspace_bytes=workspace_end-native_start)
  if 'terminal_snapshot_image' in symbols:
   frozen=address('terminal_snapshot_image');frozen_end=address('terminal_snapshot_image_end')
   frozen_seg,frozen_off=symbols['terminal_snapshot_image']
@@ -42,7 +80,7 @@ def inspect_terminal_memory(binary,map_path):
   assert word('terminal_snapshot_image_segment')==frozen_seg
   assert address('terminal_snapshot_image_segment') in relocations
   static_end=max(static_end,frozen_end)
-  extra={'snapshot_relative_segment':frozen_seg,'snapshot_image_offset':frozen_off,'snapshot_bytes':2000,'snapshot_end_linear':frozen_end}
+  extra.update(snapshot_relative_segment=frozen_seg,snapshot_image_offset=frozen_off,snapshot_bytes=2000,snapshot_end_linear=frozen_end)
  # Independent full-screen owners must never alias across nested UI/EXEC.
  ui_buffers={}
  for name in ('browser_screen','ed_screen','program_screen','redisplay_live','redisplay_view'):
@@ -608,6 +646,20 @@ def inspect_terminal_memory(binary,map_path):
   extra.update(mouse_bridge_pairs_verified=10,mouse_code_bytes=mouse_code['bytes'],mouse_shared_native_state_bytes=28)
   bridges+=10
  bridges+=extra.get('process_bridge_pairs_verified',0)
+ if 'native_reset_bank_bytes'in extra:
+  code_end=max(item['relative_segment']*16+item['offset']+item['bytes']for item in code_segments)
+  assert code_end<=native_start
+  if not native_overlay:assert native_end<=near_start,'Static native bank must precede root data'
+  owners=[(near_start,near_start+near_size),(shadow,far_end)]
+  owners +=[(item['start_linear'],item['end_linear'])for item in ui_buffers.values()]
+  if not native_overlay:
+   owners.append((snap_lo,snap_hi))
+   if 'terminal_snapshot_image'in symbols:owners.append((frozen,frozen_end))
+   if '_redisplay_row_index'in symbols:
+    owners.append((address('_redisplay_row_index'),address('_redisplay_row_index_end')))
+  for lo,hi in owners:
+   assert native_end<=lo or native_start>=hi,'Native data bank overlaps an existing live owner'
+   assert private_end<=lo or private_shadow>=hi,'Native shadow overlaps an existing live owner'
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'

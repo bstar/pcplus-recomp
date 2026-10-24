@@ -7,6 +7,11 @@ SEGMENT _TEXT public class=CODE use16
 extern uart_break_hold
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs
 extern terminal_stack_top,terminal_far_storage_end,_program_execute
+%ifdef TERMINAL_NATIVE_RESET_BANK
+%ifndef TERMINAL_NATIVE_RESET_OVERLAY
+extern nreset_stack_top,bank_shadow_end
+%endif
+%endif
 extern terminal_aspect_adopt,terminal_render_failure_notice
 extern redisplay_snapshot_end,redisplay_view_end
 extern terminal_snapshot_image_end,browser_screen_end,ed_screen_end
@@ -76,6 +81,12 @@ terminal_program_initialize_far:
  keep_static_end browser_screen_end
  keep_static_end ed_screen_end
  keep_static_end program_screen_end
+%ifdef TERMINAL_NATIVE_RESET_BANK
+%ifndef TERMINAL_NATIVE_RESET_OVERLAY
+ keep_static_end nreset_stack_top
+ keep_static_end bank_shadow_end
+%endif
+%endif
  mov ax,dx
  sub ax,[process_psp]
  mov [process_keep_paragraphs],ax

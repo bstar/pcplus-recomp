@@ -14,6 +14,11 @@ reset_bank_call:
 
 SEGMENT RESET_CODE public align=16 class=FARCODE use16
 extern reset_bank_body,reset_stack_top
+%ifdef RESET_BANK_OVERLAY
+extern redisplay_snapshot,_redisplay_active,_redisplay_export_pending,_redisplay_search_pending
+extern _command_menu_active,terminal_snapshot_active,terminal_program_active,terminal_program_pending
+extern terminal_monitor_active,terminal_controller_active,terminal_transfer_active,terminal_transfer_pending
+%endif
 global reset_bank_call_far,reset_bank_abort,reset_bank_request,reset_bank_busy
 reset_bank_request: dw 0
 reset_bank_busy: dw 0
@@ -58,13 +63,31 @@ reset_bank_call_far:
  jne .reject
  cmp word [cs:reset_bank_busy],0
  jne .reject
+%ifdef RESET_BANK_OVERLAY
+ mov ax,[_redisplay_active]
+ or ax,[_redisplay_export_pending]
+ or ax,[_redisplay_search_pending]
+ or ax,[_command_menu_active]
+ or ax,[terminal_snapshot_active]
+ or ax,[terminal_program_active]
+ or ax,[terminal_program_pending]
+ or ax,[terminal_monitor_active]
+ or ax,[terminal_controller_active]
+ or ax,[terminal_transfer_active]
+ or ax,[terminal_transfer_pending]
+ jnz .reject
+%endif
  mov ax,[ss:bx+16]
  mov [cs:reset_bank_request],ax
  mov word [cs:reset_bank_busy],1
  mov [cs:saved_ss],ss
  mov [cs:saved_sp],sp
  cli
+%ifdef RESET_BANK_OVERLAY
+ mov ax,seg redisplay_snapshot
+%else
  mov ax,RESET_GROUP
+%endif
  mov ss,ax
  mov sp,reset_stack_top
  mov ds,ax
@@ -93,4 +116,8 @@ reset_bank_call_far.return:
 SEGMENT _DATA public align=16 class=DATA use16
 SEGMENT _BSS public align=16 class=BSS use16
 SEGMENT STACK stack align=16 class=STACK use16
+%ifdef RESET_BANK_APP
+SEGMENT RESET_DATA public align=16 class=NATIVE_DATA use16
+%else
 SEGMENT RESET_DATA public align=16 class=DATA use16
+%endif
