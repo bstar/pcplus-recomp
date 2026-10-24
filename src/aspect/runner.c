@@ -5,6 +5,7 @@
 #include "serial_runtime.h"
 #include "resident_render.h"
 #include "environment_runtime.h"
+#include "runner_error.h"
 #include <stdio.h>
 #if defined(ASPECT_REGISTER_HANDOFF)
 #include <stdlib.h>
@@ -19,11 +20,6 @@ unsigned _WCDATA _amblksiz=512;
 #if defined(ASPECT_NOTICE_INPUT)
 #include "../ui/notice_input_exit.h"
 #endif
-
-static const char *errors[]={"success","cannot open script","invalid script header",
- "unsupported command or service","floating-point service unavailable","file or output error",
- "instruction budget exhausted","invalid operand","out of memory","script stack overflow",
- "invalid runtime state","division by zero","CPU arithmetic fault","cancelled","serial service error"};
 
 static unsigned folded(unsigned c){return c>='a'&&c<='z'?c-32:c;}
 static unsigned path_ok(const char *path)
@@ -55,15 +51,14 @@ static unsigned budget(const char *text,unsigned *value)
  if(!number)return 0;
  *value=(unsigned)number;return 1;
 }
-static void render_error(unsigned result)
+static void report_error(unsigned result)
 {
  char text[192];unsigned i,n;
- n=(unsigned)sprintf(text,"ASPECT: %s (error %u, opcode %02X, step %u",
-   result<sizeof(errors)/sizeof(errors[0])?errors[result]:"runtime error",result,runtime_last_opcode,runtime_steps);
- if(runtime_native_error_code)n+=(unsigned)sprintf(text+n,", native %u",runtime_native_error_code);
- if(runtime_serial_error)n+=(unsigned)sprintf(text+n,", serial %u",runtime_serial_error);
- if(runtime_serial_pacing_error)n+=(unsigned)sprintf(text+n,", pacing %u",runtime_serial_pacing_error);
- text[n++]=')';text[n++]=13;text[n++]=10;
+ n=aspect_runner_error(text,sizeof(text)-2,result,runtime_last_opcode,runtime_steps,
+   runtime_native_error_code,runtime_serial_error,runtime_serial_pacing_error);
+ if(!aspect_render_active()){fputs(text,stderr);fputc('\n',stderr);return;}
+ if(n>sizeof(text)-3)n=sizeof(text)-3;
+ text[n++]=13;text[n++]=10;
  for(i=0;i<n && i<sizeof(text);++i)if(aspect_render_emit((unsigned char)text[i]))break;
 }
 int main(int argc,char **argv)
@@ -100,16 +95,7 @@ int main(int argc,char **argv)
   serial_status=aspect_serial_close();
   if(serial_status){runtime_serial_error=serial_status;if(!result)result=ASPECT_RUN_SERIAL;}
  }
- if(result){
-  if(aspect_render_active())render_error(result);
-  else{
-  fprintf(stderr,"ASPECT: %s (error %u, opcode %02X, step %u",result<sizeof(errors)/sizeof(errors[0])?errors[result]:"runtime error",result,runtime_last_opcode,runtime_steps);
-  if(runtime_native_error_code)fprintf(stderr,", native %u",runtime_native_error_code);
-  if(runtime_serial_error)fprintf(stderr,", serial %u",runtime_serial_error);
-  if(runtime_serial_pacing_error)fprintf(stderr,", pacing %u",runtime_serial_pacing_error);
-  fputs(")\n",stderr);
-  }
- }
+ if(result)report_error(result);
  serial_status=aspect_render_finish();if(serial_status && !result)result=serial_status;
 #if defined(ASPECT_NOTICE_INPUT)
  result=notice_input_exit_finish(result);

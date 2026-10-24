@@ -1,13 +1,25 @@
 # Complete DOS rebuild plan
 
+[Compact interpreter formatting](docs/COMPACT_RUNTIME_FORMAT.md) now closes the
+optional native parent's recorded nested-compilation memory gate:2,656 bytes
+reclaimed,8KiB interpreter stack unchanged, compiler/terminal unchanged.741
+declared files reproduce four products and repeat exact formatting, CLI/source
+and all four nested DOS8086 workflows, including32 existing log collisions.
+Native runtime/enumeration/timestamp/query consumers and seven UART compiler
+cases, including three3200-byte pressure cases, also pass. Implement live
+renderer/profile projection, commit and display rollback next; normal width,
+UI/BBS/full native application and physical acceptance remain open. Package/card
+deployment remains separate.
+
 [Experimental native parent](docs/NATIVE_RESET_PARENT.md) now links a namespaced
 reset bank with an exclusively borrowed inactive far workspace. Cold native
 calls preserve live data/RX/shadow, eleven modal owners refuse before mutation,
 and redisplay rebuilds after cache reuse. The default application remains exact.
-Conventional-memory acceptance is still failed: the optional branded parent
-cannot complete nested ASPECT source compilation, while its control can. A
+Its initial conventional-memory acceptance failed: the optional branded parent
+could not complete nested ASPECT compilation while its control could. The newer
+compact interpreter checkpoint above resolves those recorded cases. A
 passing16KB DOS allocation child proves retention only. Keep this experimental
-product out of the card package. Resolve parent/child admission, then complete
+product out of the card package. Complete
 renderer projection/commit/rollback and normal width/UI/BBS/physical integration.
 
 [Private native reset context](docs/NATIVE_RESET_CONTEXT.md) now runs actual
@@ -19,7 +31,7 @@ declared source/test/toolchain files reproduce and repeat DOS8086 IRQ execution;
 both ordinary reset controls remain exact. Failed stack-origin observation and
 missing-include closure remain recorded. This component checkpoint alone does
 not establish application projection, rollback, child admission or normal width
-workflows; see the newer optional-parent findings above. The ordinary application,
+workflows; see the newer optional-parent findings above. The ordinary terminal,
 package and card remain unchanged.
 
 [Wide field repair/navigation](docs/ATTRIBUTE_REPAIR_WIDE.md) now reuses owned

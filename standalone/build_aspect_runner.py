@@ -36,7 +36,7 @@ def main(extension=None):
                *[ROOT / 'src/aspect' / name for name in ['runner.c', 'runtime.c', 'runtime.h', 'file_io.c', 'file_io.h', 'script_path.c', 'script_path.h',
                    'serial_runtime.c','serial_runtime.h','serial_wait.c','receive_runtime.c','receive_runtime.h','when_runtime.c','when_runtime.h','set_runtime.c','set_runtime.h','find_runtime.c','find_runtime.h','environment_runtime.c','environment_runtime.h','script_file_runtime.c','script_file_runtime.h','file_info_runtime.c','file_info_runtime.h','file_times_runtime.c','file_times_runtime.h','enumeration_runtime.c','enumeration_runtime.h','txpace.c','txpace.h','directory_runtime.c','directory_runtime.h','serial.c','serial.h','serial_handoff.h','resident_render.c','resident_render.h','source_compile.c','source_compile.h']],
                ROOT/'reconstruction/translation/receive.asm', ROOT / 'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',
-               ROOT/'src/config/resource_path.c',ROOT/'src/config/resource_path.h',
+               ROOT/'src/config/resource_path.c',ROOT/'src/config/resource_path.h',ROOT/'src/aspect/runner_error.h',ROOT/'src/aspect/runtime_format.h',
                ROOT/'src/keyboard/api.h',
                ROOT/'reconstruction/directory_accounting/patch.asm']
     compiled_sources=[p for p in sources if p.suffix=='.c']

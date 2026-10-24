@@ -17,7 +17,9 @@ def main():
     p.add_argument('--terminal',type=Path);p.add_argument('--runner',type=Path)
     p.add_argument('--irq',type=int,choices=[3,4,5,7])
     p.add_argument('--splash-key',action='store_true',help='Dismiss the explicitly selected branded parent splash')
+    p.add_argument('--log-collisions',type=int,default=0,help='Precreate synthetic LPC log names to verify collision preservation')
     a=p.parse_args()
+    assert 0<=a.log_collisions<=999
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     products={'TERMINAL.EXE':'terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-apply',
               'ASPECT.EXE':'aspect-register-parent','ASPCOMP.EXE':'aspect-compiler-dos'}
@@ -43,6 +45,8 @@ def main():
     struct.pack_into('<H',raw,0x184+(a.port-1)*2,4 if a.port==1 else 3)
     if a.irq is not None:struct.pack_into('<H',raw,0x184+(a.port-1)*2,a.irq)
     files={leaf:text.encode('cp437')for leaf,text in scripts.items()};files['ACTIONS.KEY']=actions(path,0)
+    existing_logs={f'LPC{i:05X}.LOG':b'PREEXISTING LOG '+str(i).encode()for i in range(a.log_collisions)}
+    files.update(existing_logs)
     connection.BINARY=out/'TERMINAL.EXE';label='heap-'+out.parent.name+'-'+out.name
     keys=('p900 enter 'if a.splash_key else'')+'p2000 a-1 p6500 o b s e r v e enter p800 r e a d y p700 a-x'
     report=connection.run(label,'success',keys,
@@ -56,11 +60,13 @@ def main():
         PRM_unchanged=(result/'TEST.PRM').read_bytes()==raw,
         hardware_restored=(result/'BEFORE.BIN').read_bytes()==(result/'AFTER.BIN').read_bytes())
     for leaf,data in expected.items():checks['exact_'+leaf]=(result/leaf).exists()and(result/leaf).read_bytes()==data
+    checks['existing_logs_preserved']=all((result/name).read_bytes()==data for name,data in existing_logs.items())
+    checks['temporary_logs_retired']={p.name for p in result.glob('LPC*.LOG')}==set(existing_logs)
     if a.case=='rejected':checks['rejected_source_has_no_ASX']=not(result/'LOGON.ASX').exists()
     for name in ['standalone/test_nested_compiler_memory_dos.py','standalone/test_connection_dos.py',
                  'standalone/test_terminal.py','standalone/modem_fixtures.py','standalone/test_directory_key_bindings_dos.py',
                  'src/aspect/compiler.py']:sources[name]=sha(ROOT/name)
-    data=dict(passed=all(checks.values()),checks=checks,case=a.case,port=a.port,products=hashes,sources=sources,connection=report,splash_key_sent=a.splash_key,
+    data=dict(passed=all(checks.values()),checks=checks,case=a.case,port=a.port,products=hashes,sources=sources,connection=report,splash_key_sent=a.splash_key,log_collisions=a.log_collisions,
         artifacts={str(f.relative_to(ROOT)):sha(f)for folder in (out,result)for f in folder.iterdir()if f.is_file()},
         scope=__doc__+' Actual8086 COM1/2 modem, bare parent and sibling source-built compiler. '
         'Full-line nested parentheses, source/fallback/chained numeric+BREAK retention and rejected-source recovery. '

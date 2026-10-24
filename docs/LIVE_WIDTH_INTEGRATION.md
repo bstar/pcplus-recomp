@@ -19,8 +19,9 @@ The [private native reset context](NATIVE_RESET_CONTEXT.md) now proves actual
 native soft reset can run on a separate DS=SS bank while the real UART ISR
 updates root receive data. The [optional parent integration](NATIVE_RESET_PARENT.md)
 namespaces that bank and borrows inactive redisplay storage with exclusive owner
-admission. Retained-child allocation passes, but nested ASPECT source compilation
-still fails conventional-memory admission. Live projection/commit, rollback and
+admission. Retained-child allocation passes, and the
+[compact interpreter](COMPACT_RUNTIME_FORMAT.md) now passes nested ASPECT source
+compilation in four recorded DOS8086 workflows. Live projection/commit, rollback and
 normal width ownership remain required.
 
 The current application already reserves two independent 4,096-byte near

@@ -4,7 +4,8 @@ The recovered native width/soft-reset code now executes with its own DS=SS
 image and stack while the real UART receive interrupt continues writing to the
 root data segment. The [receipt](validation/reset-bank.json) binds the component
 to actual DOS8086 binary traffic, exact source reproduction and the unchanged
-ordinary reset controls. It is not yet linked into the interactive application.
+ordinary reset controls. It is now optionally linked into the interactive parent;
+see the [experimental parent checkpoint](NATIVE_RESET_PARENT.md).
 
 `src/ui/reset_bank_context.asm` supplies the register interface: AX carries the
 body request and returns its status. The bridge preserves the other registers
@@ -89,7 +90,8 @@ and DOS replay in a new directory. To retain an explicitly named run, use
 
 The [experimental parent checkpoint](NATIVE_RESET_PARENT.md) supplies the
 namespace and exclusive borrowed workspace. Its cold-call and DOS retention
-checks pass, but nested source compilation still fails memory admission. The
+checks pass. The [compact interpreter](COMPACT_RUNTIME_FORMAT.md) now also passes
+the four recorded nested compilation workflows. The
 following projection/transaction and broader handler gates remain open.
 
 The bank still needs production typed callback bindings alongside the live
@@ -105,5 +107,6 @@ already tight; this component alone does not prove a full packaged parent plus
 child fits conventional memory. Modal UI, break/critical traps, other handlers,
 profile paths, general allocation/error presentation and full width/reset/BBS
 workflows also remain open. IRQ evidence here covers the selected UART ISR,
-not every installed handler or physical machine. The ordinary application,
-Special Edition package, staged card payload and card are unchanged.
+not every installed handler or physical machine. The ordinary terminal,
+Special Edition package, staged card payload and card are unchanged. The later
+compact-runtime checkpoint changes ASPECT separately, with its own validation.

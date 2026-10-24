@@ -219,6 +219,7 @@ def main():
  assert len({c['name'] for c in cases})==len(cases)
  sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,parameter_corpus_path,command_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/script_file_runtime.c',ROOT/'src/aspect/file_info_runtime.c',ROOT/'src/aspect/file_times_runtime.c',ROOT/'src/aspect/enumeration_runtime.c',ROOT/'src/aspect/script_file_runtime.h',ROOT/'src/aspect/file_info_runtime.h',ROOT/'src/aspect/file_times_runtime.h',ROOT/'src/aspect/enumeration_runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h',ROOT/'src/aspect/script_path.c',ROOT/'src/aspect/script_path.h']
  objects=[];units=[]
+ sources.append(ROOT/'src/aspect/runtime_format.h')
  sources.append(conversion_corpus_path)
  sources.append(compiler_corpus_path)
  sources.append(ROOT/'src/aspect/compiler.py')

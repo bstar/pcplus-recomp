@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include "runtime_format.h"
 extern unsigned enum_first_service(unsigned mask),enum_next_service(unsigned formatted);
 extern unsigned enum_extension;
 extern unsigned char enum_mask[81],enum_line[44],enum_dta[43],enum_attributes[7];
@@ -44,5 +45,5 @@ void *runtime_enum_memmove(void *to,const void *from,unsigned count){return memm
 int runtime_enum_sprintf(char *out,const char *format,...)
 {
  int result;va_list args;
- va_start(args,format);result=vsprintf(out,format,args);va_end(args);return result;
+ va_start(args,format);result=aspect_runtime_format(out,format,args);va_end(args);return result;
 }

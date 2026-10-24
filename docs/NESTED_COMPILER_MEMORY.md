@@ -1,5 +1,10 @@
 # Nested DOS compiler memory
 
+The later [compact interpreter checkpoint](COMPACT_RUNTIME_FORMAT.md) addresses
+the extra resident cost of the optional native-reset parent. The compiler and
+its24KiB stack remain unchanged; ASPECT formatting is intentionally smaller.
+The following records the earlier compiler-specific fix and its evidence.
+
 The source-built DOS compiler now fits beneath the full helper-enabled parent
 for the recorded bare 8086 serial workflows and 386 BBS workflows. Its grammar,
 253-byte source-line bound and 24 KiB reserved stack are unchanged. The fix is in

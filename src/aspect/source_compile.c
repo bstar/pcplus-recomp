@@ -41,11 +41,15 @@ static unsigned preflight(const char *path)
 }
 static int reserve_log(const char *source,char *path)
 {
- unsigned i,n=0;int handle;const char *p;
+ unsigned i,j,value,n=0;int handle;const char *p;
  for(p=source;*p;++p)if(*p=='\\'||*p==':')n=(unsigned)(p-source+1);
  if(n+13>=128)return -1;
  memcpy(path,source,n);
- for(i=0;i<1000;++i){sprintf(path+n,"LPC%05X.LOG",i);handle=open(path,O_CREAT|O_EXCL|O_RDWR|O_BINARY,S_IREAD|S_IWRITE);if(handle>=0)return handle;}
+ memcpy(path+n,"LPC00000.LOG",13);
+ for(i=0;i<1000;++i){
+  value=i;for(j=0;j<5;++j){path[n+7-j]="0123456789ABCDEF"[value&15U];value>>=4;}
+  handle=open(path,O_CREAT|O_EXCL|O_RDWR|O_BINARY,S_IREAD|S_IWRITE);if(handle>=0)return handle;
+ }
  return -1;
 }
 static unsigned compile(const char *source)

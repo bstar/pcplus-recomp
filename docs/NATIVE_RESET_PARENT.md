@@ -31,7 +31,13 @@ It does not select code based on observed test coverage. Both selected and omitt
 candidate sources are declared inputs because their exports determine that
 closure.413 native code/data symbols remain, separate from root symbols.
 
-## Conventional-memory gate remains failed
+## Initial conventional-memory failure
+
+The table below records the preceding interpreter. The subsequent
+[compact runtime checkpoint](COMPACT_RUNTIME_FORMAT.md) reclaims2,656 interpreter
+bytes without reducing its stack or features and passes the four recorded
+nested source workflows beneath this same optional terminal. The initial failed
+receipt remains historical evidence; it is not the current gate result.
 
 | Parent | Minimum allocated module bytes | Nested source compilation |
 | --- | ---: | --- |
@@ -93,8 +99,8 @@ three exact products, ownership reports, DOS allocation checks, raw comparison
 artifacts and unchanged component binaries. It explicitly records
 `accepted_for_deployment: false`; successful isolation is not release acceptance.
 
-Resolve resident parent/child memory admission while retaining terminal and
-compiler functionality, then implement explicit renderer/profile projection,
+The recorded nested compiler admission now passes with the compact interpreter.
+Implement explicit renderer/profile projection,
 commit and display rollback. Normal width requests must wait for those operations
 and local UI/child/scroll/field workflows to compose. Repeat incoming-data/BBS
 acceptance afterward. This optional parent is not approved for card deployment;
