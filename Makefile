@@ -1,4 +1,11 @@
 .DEFAULT_GOAL := all
+.PHONY: reset-bank test-reset-bank
+reset-bank:
+	python3 standalone/build_reset_bank.py
+	python3 standalone/build_terminal_reset.py
+	python3 standalone/build_terminal_reset.py --viewport
+test-reset-bank: reset-bank
+	python3 standalone/prove_reset_bank_source.py
 .PHONY: shadow-reset test-shadow-reset
 shadow-reset:
 	python3 standalone/build_terminal_reset.py --viewport --shadow-owner

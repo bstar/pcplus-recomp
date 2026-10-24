@@ -15,6 +15,10 @@ test-only wide-state fixture. Normal width requests remain disabled.
 The [wide-field checkpoint](ATTRIBUTE_REPAIR_WIDE.md) extends shared admission
 to native repair and boundary navigation, including a DOS region-repaint
 consumer. Broader width/reset and UI/child workflows remain open.
+The [private native reset context](NATIVE_RESET_CONTEXT.md) now proves actual
+native soft reset can run on a separate DS=SS bank while the real UART ISR
+updates root receive data. Its live projection/commit, rollback and retained
+parent/child memory integration are still required.
 
 The current application already reserves two independent 4,096-byte near
 attribute planes and an 8,192-byte far shadow in `src/terminal/state.asm`.

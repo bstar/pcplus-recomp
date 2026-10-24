@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+[Private native reset context](docs/NATIVE_RESET_CONTEXT.md) now runs actual
+width/soft-reset code with a separate DS=SS image/stack while real UART IRQs
+deliver512 binary bytes to root data. Twenty checked returns preserve registers
+and full FLAGS; typed abandonment/reuse, private reentry refusal and IF/DF/foreign
+DS refusals pass. Hardware/vector restoration and root canaries verify.76
+declared source/test/toolchain files reproduce and repeat DOS8086 IRQ execution;
+both ordinary reset controls remain exact. Failed stack-origin observation and
+missing-include closure remain recorded. Full application namespace/projection,
+display rollback, retained-parent/child memory, normal width/UI/BBS and physical
+integration remain open; application, package and card are unchanged.
+
 [Wide field repair/navigation](docs/ATTRIBUTE_REPAIR_WIDE.md) now reuses owned
 viewport admission for132-column native repair and reconciles logical versus
 visible cursor offsets.360 repair cases,84 circular boundary/pane searches and

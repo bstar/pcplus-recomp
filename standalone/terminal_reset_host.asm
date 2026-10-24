@@ -1,10 +1,15 @@
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
+%ifdef RESET_BANK
+GROUP DGROUP _DATA
+%else
 GROUP DGROUP _DATA STACK
+%endif
 extern terminal_reset_native,screen_set_cursor
 global terminal_reset_test_initialize
 %ifndef RESET_SHADOW
+%ifndef RESET_BANK
 ..start:
  mov ax,DGROUP
  mov ds,ax
@@ -41,6 +46,7 @@ global terminal_reset_test_initialize
 .failed:
  mov ax,0x4c01
  int 0x21
+%endif
 %endif
 terminal_reset_test_initialize:
  push es
@@ -131,7 +137,10 @@ global screen_viewport_refresh
 extern terminal_reset_status_refresh
 screen_viewport_refresh: jmp terminal_reset_status_refresh
 global terminal_reset_allocate_far
-%ifdef RESET_SHADOW
+%ifdef RESET_BANK
+extern reset_bank_allocate
+terminal_reset_allocate_far: jmp reset_bank_allocate
+%elifdef RESET_SHADOW
 extern _shadow_allocate
 terminal_reset_allocate_far: jmp _shadow_allocate
 %else
@@ -143,7 +152,10 @@ terminal_reset_allocate_far:
  int 0x21
 %endif
 global terminal_reset_application_error
-%ifdef RESET_SHADOW
+%ifdef RESET_BANK
+extern reset_bank_error
+terminal_reset_application_error: jmp reset_bank_error
+%elifdef RESET_SHADOW
 extern _shadow_native_error
 terminal_reset_application_error: jmp _shadow_native_error
 %else
@@ -155,7 +167,10 @@ terminal_reset_application_error:
  int 0x21
 %endif
 global terminal_reset_free_far
-%ifdef RESET_SHADOW
+%ifdef RESET_BANK
+extern reset_bank_free
+terminal_reset_free_far: jmp reset_bank_free
+%elifdef RESET_SHADOW
 extern _shadow_release_request
 terminal_reset_free_far: jmp _shadow_release_request
 %else
@@ -945,6 +960,15 @@ _shadow_value_plane equ erase_attribute_values
 _shadow_viewport_enabled equ screen_viewport_enabled
 _shadow_logical_columns equ screen_attribute_row_bytes
 %endif
+%ifdef RESET_BANK
+; Keep the private image and its stack in one physical segment. Separate
+; DATA/STACK classes can interleave the root group in this combined link.
+SEGMENT _DATA
+%else
 SEGMENT STACK stack class=STACK use16
+%endif
  resb 4096
+%ifdef RESET_BANK
+global stack_top
+%endif
 stack_top:
