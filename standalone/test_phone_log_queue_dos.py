@@ -59,15 +59,15 @@ def expected_file(case, folder):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--variant', choices=['near', 'far'], required=True)
+    parser.add_argument('--variant', choices=['near', 'far', 'bank'], required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     out.mkdir(parents=True)
-    build = ROOT / 'build/phone-log-queue'
+    build = ROOT / ('build/phone-log-bank' if args.variant == 'bank' else 'build/phone-log-queue')
     manifest = json.loads((build / 'manifest.json').read_text())
-    binary = build / args.variant / 'QUEUE.EXE'
+    binary = (build if args.variant == 'bank' else build / args.variant) / 'QUEUE.EXE'
     assert not manifest['original_inputs']
     assert sha(binary) == manifest['outputs'][args.variant]['binary_sha256']
     for name, digest in manifest['sources'].items():
@@ -127,10 +127,10 @@ SNAP B
             checks['exact_file'] = False
         if fields:
             checks.update(DS_equals_SS=fields[0] == fields[1] and fields[0] != 0,
-                          storage_placement=(fields[2] != fields[0]) == (args.variant == 'far'),
+                          storage_placement=(fields[2] != fields[0]) == (args.variant != 'near'),
                           native_sizes=fields[4:6] == (666, 24),
                           reentry_exercised=(fields[7] == 0) == (case == 7),
-                          alias_guard=case != 6 or args.variant == 'far' or fields[6] == 1)
+                          alias_guard=case != 6 or args.variant != 'near' or fields[6] == 1)
         cases[str(case)] = dict(passed=all(checks.values()), checks=checks,
             assertions=result.decode('ascii', errors='replace').strip(),
             state=list(struct.unpack('<6H3I', state)) if len(state) == 24 else [], context=list(fields))

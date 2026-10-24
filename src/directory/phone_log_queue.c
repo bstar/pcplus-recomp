@@ -29,7 +29,12 @@ typedef char plq_snapshot24[sizeof(phone_log_queue_snapshot)==24?1:-1];
 #endif
 /* Initialized DATA, not a near BSS assumption. The far build keeps the entire
  * private event/path/timestamp owner outside DGROUP without changing DS/SS. */
+#if defined(PHONE_LOG_QUEUE_EXTERNAL)
+/* Application bank supplies explicitly ordered initialized far storage. */
+extern queue_store QFAR phone_log_queue_store;
+#else
 queue_store QFAR phone_log_queue_store={0x514c};
+#endif
 #define owner phone_log_queue_store
 static unsigned extent(const void *p,unsigned n)
 {

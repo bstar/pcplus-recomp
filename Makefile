@@ -1,4 +1,11 @@
 .DEFAULT_GOAL := all
+.PHONY: phone-log-bank test-phone-log-bank test-phone-log-bank-source
+phone-log-bank:
+	python3 standalone/build_phone_log_bank.py
+test-phone-log-bank: phone-log-bank
+	python3 standalone/test_phone_log_queue_dos.py --variant bank --output build/phone-log-bank-dos/$$(date +%Y%m%d-%H%M%S-%N)
+test-phone-log-bank-source: phone-log-bank
+	python3 standalone/prove_phone_log_queue.py --bank --output build/phone-log-bank-source/$$(date +%Y%m%d-%H%M%S-%N)
 .PHONY: phone-log-queue test-phone-log-queue test-phone-log-queue-source
 phone-log-queue:
 	python3 standalone/build_phone_log_queue.py

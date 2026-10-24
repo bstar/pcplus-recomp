@@ -182,6 +182,45 @@ def inspect_terminal_memory(binary,map_path):
   displacement=struct.unpack_from('<h',code,at+1)[0]
   assert symbols[source][0]==symbols[target][0]
   assert (symbols[source][1]+at+3+displacement)&65535==symbols[target][1],(source,'wrong near target')
+ if 'terminal_phone_log_code_start' in symbols:
+  bank=next(c for c in code_segments if c['name']=='PHONE_LOG_CODE')
+  bank_seg=bank['relative_segment']
+  assert bank_seg!=near_code['relative_segment'] and bank['offset']==0
+  assert address('terminal_phone_log_code_start')==bank_seg*16
+  assert address('terminal_phone_log_code_end')-address('terminal_phone_log_code_start')==bank['bytes']
+  queue=address('_phone_log_queue_store');queue_end=address('phone_log_queue_storage_end')
+  assert queue_end-queue==666 and symbols['_phone_log_queue_store'][0]!=ds
+  assert symbols['_phone_log_queue_store'][1]+666<=65536
+  assert queue_end<=module_bytes and queue_end<=near_start and queue_end<=static_end
+  assert raw('_phone_log_queue_store',666)==b'\x4c\x51'+bytes(664),'Queue not initialized idle'
+  abi=Path(__file__).resolve().parents[1]/'src/terminal/phone_log_abi.inc'
+  pairs=0
+  for name,count in re.findall(r'^PHONE_ENTRY (\w+),(\d+)$',abi.read_text(),re.M):
+   count=int(count);assert symbols[name+'_far'][0]==symbols[name+'_impl'][0]==bank_seg
+   prefix=b'\x55\x89\xe5'+b''.join(b'\xff\x76'+bytes([6+2*i])for i in reversed(range(count)))
+   near_call(name+'_far',name+'_impl',prefix=prefix,suffix=b'\x8d\x66\x00\x5d\xcb')
+   pairs+=1
+  sites=[]
+  for name,target in re.findall(r'^PHONE_REGISTER (\w+),(\w+)$',abi.read_text(),re.M):
+   assert symbols[name][0]==bank_seg and symbols[name+'_resident'][0]==near_code['relative_segment']
+   far_call(name,name+'_resident');near_call(name+'_resident',target)
+   sites.append(address(name));pairs+=1
+  assert pairs==17,'Incomplete logger entry/register ABI'
+  name='phone_dos_write_service_';target='_dos_write_'
+  assert symbols[name][0]==bank_seg and symbols[name+'_resident'][0]==symbols[target][0]==near_code['relative_segment']
+  assert raw(name,8)==b'\x9a'+struct.pack('<HH',symbols[name+'_resident'][1],symbols[name+'_resident'][0])+b'\xc2\x02\x00'
+  assert address(name)+3 in relocations
+  near_call(name+'_resident',target,prefix=b'\x55\x89\xe5\xff\x76\x08',suffix=b'\x5d\xcb')
+  sites.append(address(name))
+  shared=Path(__file__).resolve().parents[1]/'src/terminal/phone_log_bank.asm'
+  for name,target in re.findall(r'^PHONE_SHARED (\w+),(\w+)$',shared.read_text(),re.M):
+   assert symbols[name][0]==bank_seg and symbols[target+'_resident'][0]==near_code['relative_segment']
+   far_call(name,target+'_resident');sites.append(address(name))
+  assert len(sites)==18,'Incomplete logger callbacks'
+  extra.update(phone_log_bank_bytes=bank['bytes'],phone_log_far_queue_bytes=666,
+               phone_log_far_queue_start=queue,phone_log_far_queue_end=queue_end,
+               phone_log_entry_pairs_verified=10,phone_log_callback_pairs_verified=18,
+               phone_log_callback_sites=sites,phone_log_DOS_write_spill_verified=True)
  bridges=0
  if 'terminal_process_code_start' in symbols:
   bank=next(c for c in code_segments if c['name']=='PROCESS_CODE')

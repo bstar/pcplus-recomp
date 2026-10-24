@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[The logger code bank](PHONE_LOG_BANK.md) now links the checked logger into an
+experimental full terminal, with exact ABI/memory inspection and selected8086
+connect/redial regressions. It still lacks live event/startup/reservation/poll
+integration and closes no whole-application gate.
+
 [Checked telephone-log persistence](PHONE_LOG_FILE.md) adds a maintained
 append backend with same-handle rollback and explicit recovery-required states.
 It passes138 model cases/7239 assertions,18 DOS workflows/499 native assertions

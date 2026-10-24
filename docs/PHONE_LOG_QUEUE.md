@@ -89,8 +89,10 @@ checked independently. The diagnostics also check JFT restoration, nested-call
 rejection, actual far placement, DS=SS and unchanged 42-byte kernel snapshots.
 Failure injection is explicit test code, not an application binary patch.
 
-Accepted witnesses are `build/phone-log-queue-near-dos-01`,
-`build/phone-log-queue-far-dos-01` and `build/phone-log-queue-source-01`.
+Current witnesses are `build/phone-log-queue-near-dos-02`,
+`build/phone-log-queue-far-dos-02` and `build/phone-log-queue-source-02`.
+They repeat the prior accepted -01 cases after adding the optional external
+storage declaration for the separate application code bank.
 The source proof copies only sixteen declared files, with no original binary,
 private settings, REA database or old object. OMF normalization changes only
 THEADR filenames; every later instruction/symbol/fixup record remains identical.
@@ -111,9 +113,9 @@ carrier-loss, hangup, shutdown and ASPECT paths with a stable generation.
 Handle queue saturation and visibly expose retry/recovery states. Reserve the
 log's canonical identity against capture, scripts and other file writers.
 
-Place code and bridges within measured terminal segment limits; the current
-terminal has only 76 resident-code bytes spare. Far queue storage is proved in
-the diagnostic, not yet in the application. Do not shrink compiler/VM stacks or
-limits to make it fit. Schedule filesystem polling safely with UART traffic and
+The [dedicated code bank](PHONE_LOG_BANK.md) now links the code, explicit
+bridges and retained far storage into an experimental terminal. It has only
+38 resident-code bytes spare; live hooks remain absent. Do not shrink compiler/VM
+stacks or limits to make them fit. Schedule filesystem polling safely with UART traffic and
 test BBS sessions before physical modem and card acceptance. SynthModem/SPA2102
 and Boca handshake compatibility remain separate unverified hardware work.

@@ -1,5 +1,11 @@
 # PCPlus DOS reconstruction
 
+The [telephone-log code bank](docs/PHONE_LOG_BANK.md) now fits in an experimental
+full Special Edition terminal without reducing stacks or limits. Nine banked
+DOS workflows, exact clean-source reproduction and selected8086 connect/redial
+tests pass. The standard terminal remains byte-identical. Logger startup/event
+hooks, shared file reservations and scheduling remain unfinished.
+
 The [call-log event layer](docs/PHONE_LOG_QUEUE.md) now preserves queued
 timestamps through safe failures and explicit retry, formats the native log
 layout, reads the DOS clock and decodes the saved PRM enable flag. Eighteen
