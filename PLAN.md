@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Native width-request recovery](docs/SCREEN_WIDTH_REQUEST.md) adds34 exact bytes
+at CS:2A6E with relocatable configuration/reset imports. Sixty source-only and
+sixty paired original CPU cases verify its temporary configuration, reset(0),
+callee cleanup and ABI; two actual DOS8086 observer calls and a five-source
+empty-tree rebuild pass. The reset is an explicit modeled boundary here.
+Native geometry/viewport/allocator integration, 80/132-column renderer/UI work,
+abnormal unwind and live width support remain open. No terminal/package/card
+binary changed, and no whole-application gate closes.
+
 [Selectable-IRQ Special Edition](docs/SPECIAL_EDITION.md#selectable-isa-modem-irq-package)
 now packages matching terminal/interpreter/editor products with the magenta
 splash. DOS8086 START/nested compile on IRQ5, splash/SETUP on IRQ7 and the exact

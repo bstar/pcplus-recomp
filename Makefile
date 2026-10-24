@@ -1,4 +1,12 @@
 .DEFAULT_GOAL := all
+.PHONY: width-request test-width-request test-width-request-compat
+width-request:
+	python3 standalone/build_width_request.py
+test-width-request: width-request
+	python3 standalone/check_width_request.py --output build/width-request/checks.json
+	python3 standalone/test_width_request_dos.py --output build/width-request-dos/$$(date +%Y%m%d-%H%M%S-%N)
+test-width-request-compat: width-request
+	python3 standalone/check_width_request.py --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE --output build/width-request/paired-checks.json
 .PHONY: attribute-repair test-attribute-repair
 .PHONY: test-zmodem-names
 test-zmodem-names:

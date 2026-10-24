@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "application_integrated": false,
+  "recovered_bytes": 34,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "evidence_id": "ev_b597875f82bfb0ccc9874ec7a07979258dd2d34cac4d826b047f01d2ba16f854",
+  "inline_evidence_sha256": "1b42b1897ba674ea8a978c1e151705999dfecf55575474fbac37f770c19c47c0",
+  "binary_sha256": "c04c89757e643fe96f71c29898358d2959e7fe7b5feac7f8777963aec9eec6b9",
+  "source_only_cases": 60,
+  "paired_original_cases": 60,
+  "dos_observer_calls": 2,
+  "source_build_inputs": 5,
+  "tools": {
+    "nasm": {
+      "path": "/nix/store/l54xicbgjfxvqiv1x4jk83i0nhfrrz38-nasm-3.02/bin/nasm",
+      "sha256": "86010d0df9528258197f59d9b28af253bb37563d0e2267b4bd33dec4fbdb9a94"
+    },
+    "wlink": {
+      "path": "/nix/store/wks50wdhsyxs7wx9gvqlwjgavhkkdag1-open-watcom-v2-0-unstable-2026-04-11/bin/wlink",
+      "sha256": "bbdea65b9b41900968d5ce94ecc6eca24a571a4f5eb2095263310954f7f52268"
+    }
+  },
+  "sources": {
+    "reconstruction/modes/width_request.asm": "7c63f53c9b4778c765b0ef227e0f6a5ae78d8a11d4e1a5c32d58979bf1203597",
+    "standalone/width_request_host.asm": "cfa534023bfd816f2c220adbd18c5e33ba16b8dc184c1f02fe25edc409d2f5ee",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/modes/width_request_provenance.json": "e976f25b9d1896f58eca4fb958221f22022ea345493f9948335e41deb122c1e3",
+    "standalone/build_width_request.py": "da8150cb5f7ebc0538b8eb63128fff1188b71ee00ea8115460815265a0a730bf",
+    "standalone/check_width_request.py": "b8327b4104e883457406b15f15477c451c7d1556d2f741d32ed4773af871d935",
+    "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+    "standalone/test_width_request_dos.py": "47b47461b882abef63a7993f4023a91393e25615b57e5ea571d1a52ae7dd2e5b",
+    "Makefile": "3f7d2601aa07a972fa5381c8a78607a955730ff0e61f549426c8fbab2ff34f07",
+    "nix/flake.nix": "ac88b1a6c3fc161297577f176e2452bb8dc6231f3df0d112888c4c1d38dc41b4",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/build": "3c5d980ed2b874542ed114805f01eb024f507895cf958c3b7304acb05b0006f8",
+    "tools/dev": "abbf4bd3a4d6cb91b5f7eecc3919ccbccd15e472bc49463e9d2669adc67e0bca"
+  },
+  "artifacts": {
+    "build/width-request/baseline.bin": "dbe1fd015af8b3ec55e766a6d08ba9098ee543f9f3ab19159e8e2e45d6a16c4c",
+    "build/width-request/unit-0.obj": "90239757bdc1ca9fabde17f2ad4bfd6a2dbbd7b69a59a77eff8cc14cc6f203b4",
+    "build/width-request/unit-1.obj": "70cc1c2d46798a7e6d9b7c1547caa96f27f994b0b61364e12a2672231ed4a1f9",
+    "build/width-request/width.map": "06aebbc304c0925a0e11edb401b9384156864e2c2d093762d1c885ae99d6796b",
+    "build/width-request/manifest.json": "34317bf66658478e9b4bd56f39af71f842f6fc1f2c7b91b539d4ba0f1b232003",
+    "build/width-request/paired-checks.json": "d8e539f5ad7247698e3e8433d1d01f18819a741ffda16f1b64eeefaa395a9fd5",
+    "build/width-request/source-only-checks.json": "f5e700eb72da53783b6aa668fb1318dfe7c5203438ce05a7bcde93bfc4bafee3",
+    "build/width-request/WIDTH.EXE": "c04c89757e643fe96f71c29898358d2959e7fe7b5feac7f8777963aec9eec6b9",
+    "build/width-request/checks.json": "f5e700eb72da53783b6aa668fb1318dfe7c5203438ce05a7bcde93bfc4bafee3",
+    "build/width-request-dos-01/source-build.log": "a3bbd7fd2766044c5e0a80f8cd1dc96e16c5837adcd844106ffdabfe4213d723",
+    "build/width-request-dos-01/dosbox.conf": "d8ea7b462d4c49fabf09a25db2097243704ef130854c7746631b998a0c7c1edc",
+    "build/width-request-dos-01/dosbox.log": "0d5e698d20e72a2775d37fc90d52cf78d958cc57b7819be04713dc5d8de7890a",
+    "build/width-request-dos-01/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/width-request-dos-01/result.json": "5e93295fd195f4c6bd03a7fd68c2f0d6b3a5badd8bf14c11d87d779b97887d36",
+    "build/width-request-dos-01/source/standalone/width_request_host.asm": "cfa534023bfd816f2c220adbd18c5e33ba16b8dc184c1f02fe25edc409d2f5ee",
+    "build/width-request-dos-01/source/standalone/build_width_request.py": "da8150cb5f7ebc0538b8eb63128fff1188b71ee00ea8115460815265a0a730bf",
+    "build/width-request-dos-01/source/build/width-request/baseline.bin": "dbe1fd015af8b3ec55e766a6d08ba9098ee543f9f3ab19159e8e2e45d6a16c4c",
+    "build/width-request-dos-01/source/build/width-request/unit-0.obj": "0901db45f6f2b4e33148b4b10142395cfaf01f0c4b20c230493c049a95e4892e",
+    "build/width-request-dos-01/source/build/width-request/unit-1.obj": "122ad1f918092816ee64a816e9de114918f336b3af5de58f91dd4a800d4952ef",
+    "build/width-request-dos-01/source/build/width-request/width.map": "edcf28bb2432c714dd8aaa307626ecca640ccbef815f15eb0745343ea63fe107",
+    "build/width-request-dos-01/source/build/width-request/WIDTH.EXE": "c04c89757e643fe96f71c29898358d2959e7fe7b5feac7f8777963aec9eec6b9",
+    "build/width-request-dos-01/source/build/width-request/manifest.json": "34317bf66658478e9b4bd56f39af71f842f6fc1f2c7b91b539d4ba0f1b232003",
+    "build/width-request-dos-01/source/reconstruction/modes/width_request.asm": "7c63f53c9b4778c765b0ef227e0f6a5ae78d8a11d4e1a5c32d58979bf1203597",
+    "build/width-request-dos-01/source/reconstruction/modes/width_request_provenance.json": "e976f25b9d1896f58eca4fb958221f22022ea345493f9948335e41deb122c1e3",
+    "build/width-request-dos-01/source/reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+  },
+  "scope": "Native width request adapter only; controlled reset observer, exact flat bytes and optional original CPU replay. Two DOS8086 boundary calls and byte-identical empty-tree build. Real reset, geometry/viewport/rendering, abnormal unwind and live width support remain open. No application/package/card change."
+}

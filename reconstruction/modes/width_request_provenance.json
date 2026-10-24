@@ -1,0 +1,26 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "file": "reconstruction/modes/width_request.asm",
+  "start": 10862,
+  "end": 10896,
+  "file_offset": 15470,
+  "bytes": 34,
+  "sha256": "dbe1fd015af8b3ec55e766a6d08ba9098ee543f9f3ab19159e8e2e45d6a16c4c",
+  "evidence_id": "ev_b597875f82bfb0ccc9874ec7a07979258dd2d34cac4d826b047f01d2ba16f854",
+  "provider": {
+    "id": "ghidra",
+    "name": "Ghidra",
+    "version": "12.1.2"
+  },
+  "analysis_profile_digest": "3cd9d21bc233a2347f0fed1a0c26c0e45668a7f3052b5e412f5c16e41c7e55dd",
+  "state": {
+    "1d2e": "reset_configured_wide"
+  },
+  "services": {
+    "20a4": "terminal_reset_native"
+  },
+  "calling_convention": "near callee removes one word; reset callback near cdecl mode0",
+  "limitations": [
+    "Only width-request adapter recovered here. Reset callback must preserve SI/BP; full native geometry, viewport, allocator and display integration remain separate. Live width service still traps."
+  ]
+}
