@@ -31,6 +31,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--mode',type=int,choices=range(13),default=0);parser.add_argument('--port',type=int,choices=[1,2],default=1)
     parser.add_argument('--online',action='store_true')
+    parser.add_argument('--irq',type=int,choices=[3,4,5,7])
     parser.add_argument('--lookup-case',choices=['exact-before-pcplus','pcplus-file','pcplus-stem','path-file','path-stem','com-priority','batch-collision','long-pcplus'])
     parser.add_argument('--terminal',type=Path,default=ROOT/'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-apply/TERMINAL.EXE')
     args=parser.parse_args();out=args.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
@@ -41,12 +42,13 @@ def main():
     symbols={name:(int(seg,16),int(off,16))for seg,off,name in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',(base/'terminal.map').read_text(),re.M|re.I)}
     (out/'parent_layout.h').write_text('static const struct {unsigned segment,offset,bytes;} parent_spans[]={\n'+
         ''.join('{%d,%d,%d},\n'%(*symbols[name],size)for name,size in FIELDS)+'};\n')
-    subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192',*(['-dHOOK_LOOKUP_BATCH']if args.lookup_case=='batch-collision'else[]),'-i='+str(out),
+    subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192',*(['-dHOOK_CUSTOM_IRQ']if args.irq is not None else[]),*(['-dHOOK_LOOKUP_BATCH']if args.lookup_case=='batch-collision'else[]),'-i='+str(out),
                     '-fm=APPLYCH.map','-fe=APPLYCH.EXE',str(ROOT/'standalone/hook_apply_child.c'),str(base/'hook_exchange.obj')],cwd=out,check=True)
     shutil.copyfile(base/'TERMINAL.EXE',out/'TERMINAL.EXE')
     raw=bytearray(image());struct.pack_into('<HH',raw,0x4e4,8,4);struct.pack_into('<H',raw,0x194,6)
     if args.online:raw[10:0x174]=modem_fixture(timeout=5)[10:0x174]
     struct.pack_into('<H',raw,0,args.port-1);struct.pack_into('<H',raw,2,6)
+    if args.irq is not None:struct.pack_into('<H',raw,0x184+(args.port-1)*2,args.irq)
     struct.pack_into('<HH',raw,0x198,0,0);(out/'TEST.PRM').write_bytes(raw)
     helper=(out/'APPLYCH.EXE').read_bytes();launch_name=b'APPLYCH.EXE';launch_files={'APPLYCH.EXE':helper};launch_env={}
     if args.lookup_case:
@@ -112,7 +114,7 @@ exit
         peer_result=connection.run(label,'success','p2000 a-1 p1000 a-1 p1000 a-1 p1000 o b s e r v e enter p800 r e a d y p700 a-x',
             prm=bytes(raw),com=args.port,working_drive='d',files=files,cpu='8086',environment=launch_env,
             arguments='@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\ACTIONS.KEY',
-            online_triggers=[(b'observe\r',b'\x1b[5n')])
+            online_triggers=[(b'observe\r',b'\x1b[5n')],irq=args.irq)
         folder=ROOT/'build/connection-dos'/label
         for artifact in folder.iterdir():
             if artifact.is_file():shutil.copyfile(artifact,out/artifact.name)
@@ -149,14 +151,15 @@ exit
         assert baseline[8:]==(before[i][830:] if committed or i==2 else raw)
         assert struct.unpack_from('<H',baseline,4)[0]==(3 if committed or i==2 else 1)
     for i in range(3):
-        hardware=struct.unpack('<13H',(out/f'H{i}.BIN').read_bytes());p=before[i][830:]
+        hardware=struct.unpack('<17H' if args.irq is not None else '<13H',(out/f'H{i}.BIN').read_bytes());p=before[i][830:]
         selected=struct.unpack_from('<H',p)[0];baud=struct.unpack_from('<H',p,2)[0]
         parity,stop,bits=struct.unpack_from('<3H',p,4)
         line=([0,8,0x18,0x28,0x38][parity])|(2 if bits==7 else 3)|(0 if stop==1 else 4)
         assert hardware[selected*4]==[384,96,48,24,12,6,3,2,1][baud],(args.mode,i,'divisor',hardware)
         assert hardware[selected*4+1]==line and hardware[selected*4+3]==0 and not hardware[selected*4+2]&2
         irq=struct.unpack_from('<H',p,0x184+selected*2)[0];assert hardware[8]&(1<<irq)
-        vector=hardware[9:11] if irq==4 else hardware[11:13]
+        vector_at={4:9,3:11,5:13,7:15}[irq]
+        vector=hardware[vector_at:vector_at+2]
         assert vector==tuple(struct.unpack('<H',snapshots[i][field])[0] for field in ['uart_previous_irq_offset','uart_previous_irq_segment'])
     if not committed:
         for name,_ in FIELDS:

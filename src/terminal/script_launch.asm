@@ -12,6 +12,9 @@ extern uart_rx_count,uart_rx_dropped,uart_rx_buffer,uart_rx_read,uart_rx_write
 extern uart_port_lcr,uart_port_thr,uart_software_flow,uart_hardware_flow
 extern uart_tx_paused
 extern terminal_port_number,terminal_irq_vector
+%ifdef TERMINAL_CUSTOM_IRQ
+extern uart_irq_indices
+%endif
 extern uart_rts_lowered,terminal_parser_active,terminal_ansi_wait_active
 extern terminal_translation_enabled,terminal_translation_mode,terminal_translation_table,uart_rx_mask
 extern terminal_directory_context_valid,terminal_directory_context
@@ -264,9 +267,24 @@ terminal_script_prepare:
  mov dx,[cs:script_bases+bx]
  cmp dx,[uart_port_thr]
  jne .bad_policy
+%ifdef TERMINAL_CUSTOM_IRQ
+ mov dx,[uart_irq_indices]
+ cmp dx,3
+ je .irq_ok
+ cmp dx,4
+ je .irq_ok
+ cmp dx,5
+ je .irq_ok
+ cmp dx,7
+ jne .bad_policy
+.irq_ok:
+ mov [_script_irq_index],dx
+ add dx,8
+%else
  mov dx,[cs:script_vectors+bx]
+%endif
  cmp dx,[terminal_irq_vector]
- jne .bad_policy ;The current child ABI supports standard IRQs only.
+ jne .bad_policy ;The vector must match the selected child lease.
  mov [_script_port_index],ax
  mov ax,[uart_software_flow]
  mov [_script_soft_flow],ax
@@ -503,5 +521,9 @@ script_lcr: dw 0
 global _script_parent_ring,_script_port_index,_script_soft_flow,_script_hard_flow
 _script_parent_ring: dw uart_rx_buffer
 _script_port_index: dw 0
+%ifdef TERMINAL_CUSTOM_IRQ
+global _script_irq_index
+_script_irq_index: dw 0
+%endif
 _script_soft_flow: dw 0
 _script_hard_flow: dw 0

@@ -3,6 +3,9 @@
 #include "terminal_import.h"
 #include <stddef.h>
 #include <string.h>
+#ifdef TERMINAL_CUSTOM_IRQ
+#include "irq_policy.h"
+#endif
 #define ORIGINAL_BASE 0x1b84U
 #define OFFSET(ds) ((ds)-ORIGINAL_BASE)
 #define WORD_ABI(member,offset) typedef char abi_##member[(offsetof(terminal_import_settings,member)==offset) ? 1 : -1]
@@ -22,7 +25,9 @@ terminal_import_status __cdecl terminal_import_decode(const prm_dos_image *image
 {
  static const unsigned long rates[]={300UL,1200UL,2400UL,4800UL,9600UL,19200UL,38400UL,57600UL,115200UL};
  static const unsigned bases[]={0x3f8,0x2f8,0x3e8,0x2e8};
+#ifndef TERMINAL_CUSTOM_IRQ
  static const unsigned irqs[]={4,3,4,3};
+#endif
  terminal_import_settings candidate;
  unsigned port,baud;
  unsigned long rate;
@@ -38,7 +43,13 @@ terminal_import_status __cdecl terminal_import_decode(const prm_dos_image *image
  candidate.irq=word(image,OFFSET(0x1d08)+port*2);
  if(candidate.parity>4 || (candidate.stop_bits!=1 && candidate.stop_bits!=2) ||
   (candidate.data_bits!=7 && candidate.data_bits!=8) ||
-  candidate.io_base!=bases[port] || candidate.irq!=irqs[port])return TERMINAL_IMPORT_SERIAL;
+  candidate.io_base!=bases[port] ||
+#ifdef TERMINAL_CUSTOM_IRQ
+  !PCPLUS_MASTER_IRQ_VALID(candidate.irq)
+#else
+  candidate.irq!=irqs[port]
+#endif
+  )return TERMINAL_IMPORT_SERIAL;
  candidate.software_flow=word(image,OFFSET(0x1d1c));
  candidate.hardware_flow=word(image,OFFSET(0x1d1e));
  if(candidate.software_flow>1 || candidate.hardware_flow>1)return TERMINAL_IMPORT_FLOW;

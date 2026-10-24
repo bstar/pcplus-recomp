@@ -122,6 +122,12 @@ _hook_apply_uart_check:
  cmp bx,3
  je .irq
  cmp bx,4
+%ifdef TERMINAL_CUSTOM_IRQ
+ je .irq
+ cmp bx,5
+ je .irq
+ cmp bx,7
+%endif
  jne .bad
 .irq:
  mov ax,bx

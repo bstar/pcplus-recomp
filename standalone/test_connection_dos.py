@@ -6,8 +6,9 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386'):
+def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None):
  assert cpu in ('8086','286','386','486')
+ assert irq is None or irq in (3,4,5,7)
  assert working_drive in ("c","d")
  assert observer is None or (observer.isalnum() and observer.isupper() and len(observer)<=8 and observer+'.COM' in (files or {}))
  observer_start=('D:\\'+observer+' T') if observer else ''
@@ -118,6 +119,9 @@ D:\\SNAP S
 D:\\SNAP A
 exit
 '''
+ if irq is not None:
+  cfg=cfg.replace('transparent:1 rxdelay:200 txdelay:1','transparent:1 irq:'+str(irq)+' rxdelay:200 txdelay:1')
+  assert cfg.count('irq:')==1
  # Retain the literal default for the existing source-inspecting adapters.
  if cpu!='386':cfg=cfg.replace('cputype=386','cputype='+cpu)
  configured_cpu=next(line.split('=',1)[1] for line in cfg.splitlines() if line.startswith('cputype='))
@@ -148,6 +152,7 @@ exit
  (out/'screen.txt').write_text('\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25))+'\n')
  if online_triggers:checks['online_triggers_sent']=triggered==len(online_triggers)
  proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'environment':environment or {},'cpu':configured_cpu,'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
+ if irq is not None:proof['serial_irq']=irq
  (out/'result.json').write_text(json.dumps(proof,indent=2)+'\n');print(name,'PASS' if proof['passed'] else json.dumps(proof),flush=True);return proof
 def main():
  cases=[('fast-connect-banner','success','p4000 a-x'),('busy-abort','busy','p4000 a-x'),('timeout-abort','silence','p4000 a-x'),('configured-hangup','hangup','p3000 a-h p2200 a-x'),('explicit-redial','redial','p3500 a-d p3500 a-x')]

@@ -207,6 +207,8 @@ def main():
     parser.add_argument('--label', required=True)
     parser.add_argument('--port', type=int, choices=[1, 2], default=1)
     parser.add_argument('--terminal',type=Path)
+    parser.add_argument('--runner',type=Path)
+    parser.add_argument('--irq',type=int,choices=[3,4,5,7])
     parser.add_argument('--session-controls', action='store_true')
     parser.add_argument('--hook-return', action='store_true')
     parser.add_argument('--hook-execute', action='store_true')
@@ -239,6 +241,9 @@ def main():
         assert args.terminal.name=='TERMINAL.EXE'
         parent=args.terminal.resolve().parent
     child = ROOT / 'build/aspect-register-parent'
+    if args.runner:
+        assert args.runner.name=='ASPECT.EXE'
+        child=args.runner.resolve().parent
     sources = {}
     for folder, name in [(parent, 'TERMINAL.EXE'), (child, 'ASPECT.EXE')]:
         manifest = json.loads((folder / 'manifest.json').read_text())
@@ -325,6 +330,8 @@ flag_name: db '{name}.OK',0
     raw[250 + 0x56:250 + 0x56 + 9] = b'actions\0\0'
     settings = bytearray(prm(port=args.port))
     struct.pack_into('<HH', settings, 0x4e4, 8, 4)
+    if args.irq is not None:
+        struct.pack_into('<H',settings,0x184+(args.port-1)*2,args.irq)
     keys = 'p3000 a-1 p900 a-2 p900 '
     if args.case == 'abort':
         keys = 'p3000 a-1 p900 a-2 p350 escape p300 y p900 '
@@ -340,7 +347,7 @@ flag_name: db '{name}.OK',0
     harness.BINARY = package / 'TERMINAL.EXE'
     result = harness.run('register-' + args.label, 'success', keys, directory=bytes(raw), prm=bytes(settings),
                          com=args.port, working_drive='d', arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1',
-                         files=files, cpu='8086', online_triggers=[(b'OBSERVE\r', b'\x1b[5n')])
+                         files=files, cpu='8086', online_triggers=[(b'OBSERVE\r', b'\x1b[5n')],irq=args.irq)
     folder = ROOT / 'build/connection-dos' / ('register-' + args.label)
     zero = bytes(830)
     first, _, _ = assigned(zero, 1)
@@ -398,6 +405,7 @@ flag_name: db '{name}.OK',0
     report = dict(passed=True, case=args.case, port=args.port, cpu='8086', session_controls=args.session_controls,hook_return=args.hook_return,hook_execute=args.hook_execute,hook_modem=args.hook_modem,hook_input=args.hook_input,hook_apply=args.hook_apply,snapshots=snapshots, sources=sources,
                   operand_fixture_patches=patches, parent_sha256=sha(parent / 'TERMINAL.EXE'), child_sha256=sha(child / 'ASPECT.EXE'),
                   DOS=result, scope='Actual source-built DOS terminal/ASPECT and nested observer. All830 register bytes, native reset/tails, returned acceptance and continued serial output. Integer-bank-A destinations are explicit native operand fixtures, not a compiler feature claim. Synthetic modem, no physical hardware or HOOK routing acceptance.')
+    if args.irq is not None:report['irq']=args.irq
     (output / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
     print('PASS', args.case, args.port, len(expected), 'complete bank snapshots')
 

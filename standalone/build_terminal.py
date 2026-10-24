@@ -21,6 +21,7 @@ parser.add_argument('--hook-modem',action='store_true')
 parser.add_argument('--hook-input',action='store_true')
 parser.add_argument('--hook-apply',action='store_true')
 parser.add_argument('--hook-lookup',action='store_true')
+parser.add_argument('--custom-irq',action='store_true')
 parser.add_argument('--special-edition',action='store_true',help='Show the magenta LoC Special Edition startup screen')
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
@@ -37,6 +38,7 @@ if args.hook_modem:assert args.hook_execute
 if args.hook_input:assert args.hook_modem
 if args.hook_apply:assert args.hook_input
 if args.hook_lookup:assert args.hook_apply
+if args.custom_irq:assert args.register_handoff
 if args.input_probe:assert args.hook_input and not args.hook_probe and not args.projection_probe
 if args.hook_probe:assert args.hook_execute and not args.projection_probe
 if args.exit_probe is not None:assert args.exit_guard
@@ -83,6 +85,7 @@ if args.notice_sound and args.exit_guard:out_name+='-guarded'
 if args.notice_sound and args.traps:out_name+='-traps'
 if args.notice_sound and args.trap_probe is not None:out_name+='-probe-'+str(args.trap_probe)
 if args.notice_sound and args.exit_probe is not None:out_name+='-exit-probe-'+str(args.exit_probe)
+if args.custom_irq:out_name+='-custom-irq'
 if args.special_edition:out_name+='-special'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
@@ -163,6 +166,7 @@ for index,source in enumerate(sources):
  if args.hook_input:options+=['-DTERMINAL_HOOK_INPUT']
  if args.hook_apply:options+=['-DTERMINAL_HOOK_APPLY']
  if args.hook_lookup:options+=['-DTERMINAL_HOOK_LOOKUP']
+ if args.custom_irq:options+=['-DTERMINAL_CUSTOM_IRQ']
  if args.special_edition:options+=['-DTERMINAL_SPECIAL_EDITION']
  if args.input_probe:options+=['-DTERMINAL_HOOK_INPUT_PROBE']
  if args.hook_probe:options+=['-DTERMINAL_HOOK_PROBE']
@@ -294,6 +298,7 @@ for source in c_sources:
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
  if args.register_handoff:options+=['-dTERMINAL_REGISTER_HANDOFF']
+ if args.custom_irq:options+=['-dTERMINAL_CUSTOM_IRQ']
  if args.session_controls:options+=['-dTERMINAL_SESSION_CONTROLS']
  if args.hook_return:options+=['-dTERMINAL_HOOK_RETURN']
  if args.hook_modem:options+=['-dTERMINAL_HOOK_MODEM']
@@ -392,5 +397,6 @@ manifest['hook_input_probe']=args.input_probe
 manifest['hook_transaction_probe']=args.hook_probe
 manifest['terminal_traps']=args.traps
 manifest['terminal_trap_probe']=args.trap_probe
+if args.custom_irq:manifest['experimental_custom_irq']=True
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Built',str((OUT/'TERMINAL.EXE').relative_to(ROOT)),manifest['binary_sha256'],'DS/SS bytes',manifest['data_stack_bytes'])

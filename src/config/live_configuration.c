@@ -10,9 +10,15 @@ static unsigned extent(const void *p,unsigned n)
 { return p && (unsigned long)(unsigned)p+n<=65536UL; }
 static unsigned disjoint(const void *a,unsigned n,const void *b,unsigned m)
 { return (unsigned long)(unsigned)a+n<=(unsigned)b || (unsigned long)(unsigned)b+m<=(unsigned)a; }
+#ifdef TERMINAL_CUSTOM_IRQ
+#include "irq_policy.h"
+#endif
 static unsigned valid_serial(const terminal_import_settings *s)
 {
- static const unsigned bases[]={0x3f8,0x2f8,0x3e8,0x2e8},irqs[]={4,3,4,3};
+ static const unsigned bases[]={0x3f8,0x2f8,0x3e8,0x2e8};
+#ifndef TERMINAL_CUSTOM_IRQ
+ static const unsigned irqs[]={4,3,4,3};
+#endif
  static const unsigned long rates[]={300UL,1200UL,2400UL,4800UL,9600UL,19200UL,38400UL,57600UL,115200UL};
  unsigned i;unsigned long rate;
  if(s->port_number<1 || s->port_number>4 || s->parity>4 ||
@@ -21,7 +27,13 @@ static unsigned valid_serial(const terminal_import_settings *s)
   s->normal_attribute>255 || s->bold_attribute>255 || s->preset_attribute>255 ||
   s->reverse_attribute>255 || s->underline_attribute>255 || s->autowrap>1 ||
   s->scroll_enabled>1 || s->mapping_pause_character>255 || s->translation_mode>2 || s->clipboard_separator>255)return 0;
- if(s->io_base!=bases[s->port_number-1] || s->irq!=irqs[s->port_number-1])return 0;
+ if(s->io_base!=bases[s->port_number-1] ||
+#ifdef TERMINAL_CUSTOM_IRQ
+  !PCPLUS_MASTER_IRQ_VALID(s->irq)
+#else
+  s->irq!=irqs[s->port_number-1]
+#endif
+  )return 0;
  rate=s->baud_low|((unsigned long)s->baud_high<<16);
  for(i=0;i<9;++i)if(rate==rates[i])return 1;
  return 0;

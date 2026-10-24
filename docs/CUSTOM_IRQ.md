@@ -2,7 +2,8 @@
 
 The optional `ASPECT_CUSTOM_IRQ` build now accepts a selected master-PIC IRQ
 instead of deriving it only from the COM number. This is the child half of the
-ISA-modem configuration work. The normal terminal/importer/editor still require
+ISA-modem configuration work. The [composed optional parent](PARENT_CUSTOM_IRQ.md)
+now integrates saved settings, live setup, v7 and guarded helpers. The normal terminal/importer/editor still require
 IRQ4/3/4/3; no card or Special Edition package has been changed by this work.
 
 ## Interface and ownership
@@ -93,17 +94,15 @@ products, first build the standard controls through the same builders without
 
 ## Remaining integration
 
-1. Extend the optional PRM/import/live validators and editor together; preserve
-   standard defaults when a new COM is selected.
-2. Carry the parent IRQ through script publication and prove actual v7 register,
-   renderer, flow, failure and return ownership on IRQ5/7.
-3. Extend guarded helper admission, startup and selective returned-settings
-   adoption. Confirm offline same-COM IRQ changes and different-COM changes,
-   restoring the old vector/hardware baseline before capturing the target.
-4. Check refusal/confirmation races, all affected PIC/vector snapshots and
-   continued real UART traffic. Repeat source reproduction and current BBS
-   workflows on the composed product before packaging it.
-5. Identify the Boca hardware and jumpers. Test physical exclusive IRQ ownership,
+The [parent receipt](PARENT_CUSTOM_IRQ.md) now covers optional PRM/editor/live
+validation, preserved per-COM IRQ choices, actual v7 and guarded-helper ownership,
+IRQ-only and different-COM transitions, source compilation and reproduction.
+IRQ-only changes retain the original UART baseline and DTR rather than restoring
+and recapturing live hardware. Remaining work includes:
+
+1. Additional confirmation/refusal races, sustained BBS/editor/transfer pressure
+   and current owned BBS workflows on the composed product before packaging it.
+2. Identify the Boca hardware and jumpers. Test physical exclusive IRQ ownership,
    sustained load, carrier, flow and restoration. Shared IRQs, slave-PIC handling
    and physical IRQ7/spurious-interrupt behavior are not established here.
 

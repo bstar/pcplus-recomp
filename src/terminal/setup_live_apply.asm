@@ -556,7 +556,11 @@ setup_deferred: db 13,10,'Changes saved for next startup. Press a key to return.
 setup_mixed: db 13,10,'Settings applied; deferred changes need restart. Press a key to return.',0
 setup_apply_failed: db 13,10,'Could not validate saved settings. Active settings unchanged. Press a key.',0
 setup_serial_question: db 13,10,'Apply current-port baud/line/flow now? Peer must match. Y applies; other keys keep link.',0
+%ifdef TERMINAL_CUSTOM_IRQ
+setup_port_question: db 13,10,'Apply saved COM/IRQ/baud/line/flow? Line must be idle. Y applies; other keys keep link.',0
+%else
 setup_port_question: db 13,10,'Move to saved COM/baud/line/flow? Both ports must be idle. Y moves; other keys keep link.',0
+%endif
 setup_port_busy: db 13,10,'COM not available. Hang up (Alt-H) and drain line, then retry. Press a key.',0
 setup_link_busy: db 13,10,'Line busy; kept current serial settings. Press a key to return.',0
 setup_profile_question: db 13,10,'Switch profile, reset keys/modes and clear screen? Y switches; other keys keep profile.',0

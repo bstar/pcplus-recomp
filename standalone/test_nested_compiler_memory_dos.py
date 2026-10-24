@@ -14,13 +14,16 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--port',type=int,choices=[1,2],required=True)
     p.add_argument('--case',choices=['explicit','fallback','chain','rejected'],required=True)
-    p.add_argument('--terminal',type=Path);a=p.parse_args()
+    p.add_argument('--terminal',type=Path);p.add_argument('--runner',type=Path)
+    p.add_argument('--irq',type=int,choices=[3,4,5,7]);a=p.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     products={'TERMINAL.EXE':'terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-apply',
               'ASPECT.EXE':'aspect-register-parent','ASPCOMP.EXE':'aspect-compiler-dos'}
     sources={};hashes={}
     for leaf,folder in products.items():
         src=a.terminal.resolve() if leaf=='TERMINAL.EXE' and a.terminal else ROOT/'build'/folder/leaf
+        if leaf=='ASPECT.EXE' and a.runner:
+            assert a.runner.name=='ASPECT.EXE';src=a.runner.resolve()
         m=json.loads((src.parent/'manifest.json').read_text())
         assert not m.get('original_inputs') and sha(src)==m['binary_sha256']
         for name,digest in m['sources'].items():assert sha(ROOT/name)==digest;sources[name]=digest
@@ -36,12 +39,13 @@ def main():
     raw=bytearray(fixture(timeout=5));struct.pack_into('<H',raw,0,a.port-1);struct.pack_into('<HH',raw,0x4e4,8,4)
     struct.pack_into('<H',raw,0x174+(a.port-1)*2,0x3f8 if a.port==1 else 0x2f8)
     struct.pack_into('<H',raw,0x184+(a.port-1)*2,4 if a.port==1 else 3)
+    if a.irq is not None:struct.pack_into('<H',raw,0x184+(a.port-1)*2,a.irq)
     files={leaf:text.encode('cp437')for leaf,text in scripts.items()};files['ACTIONS.KEY']=actions(path,0)
     connection.BINARY=out/'TERMINAL.EXE';label='heap-'+out.parent.name+'-'+out.name
     report=connection.run(label,'success','p2000 a-1 p6500 o b s e r v e enter p800 r e a d y p700 a-x',
         prm=bytes(raw),com=a.port,working_drive='d',files=files,cpu='8086',
         arguments='@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\ACTIONS.KEY',
-        online_triggers=[(b'observe\r',b'\x1b[5n')])
+        online_triggers=[(b'observe\r',b'\x1b[5n')],irq=a.irq)
     result=ROOT/'build/connection-dos'/label;wire=(result/'serial.bin').read_bytes()
     assert report['passed'] and wire.index(b'observe\r')<wire.rindex(b'\x1b[0n')
     assert wire.count(b'COMPILED\r')==(0 if a.case=='rejected' else 1)

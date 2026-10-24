@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Composed optional IRQ configuration](docs/PARENT_CUSTOM_IRQ.md) now joins saved
+IRQ3/4/5/7, per-COM editor retention, offline ownership transfer, actual v7 script
+recovery and guarded helpers.324 linked inputs,28 DOS8086 owner workflows,
+86 register snapshots and eight bare nested-compiler workflows pass. An empty
+715-source tree reproduces eight products with five exact standard controls.
+IRQ-only changes preserve the original UART snapshot and asserted DTR. BBS/load,
+physical/shared IRQs, branded packaging and card deployment remain open.
+
 [Explicit child IRQ leases](docs/CUSTOM_IRQ.md) now support optional IRQ3/4/5/7
 through bounded command-line selection, complete master-PIC mask tables and a
 five-word bank adapter.309 targeted and108 existing linked inputs,29 DOS8086

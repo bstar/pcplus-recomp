@@ -9,6 +9,10 @@
 extern aspect_serial_handoff script_handoff;
 extern unsigned script_divisor,script_lcr;
 extern unsigned script_port_index,script_soft_flow,script_hard_flow;
+#ifdef TERMINAL_CUSTOM_IRQ
+#include "../config/irq_policy.h"
+extern unsigned script_irq_index;
+#endif
 extern unsigned script_parent_ring;
 extern unsigned script_directory_entry,script_directory_record;
 extern unsigned script_directory_year,script_directory_month,script_directory_day,script_directory_delta;
@@ -52,6 +56,9 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
    if(!c){
     status=resource_program_path(psp,"ASPECT.EXE",executable);if(status)return 2;
     if(script_port_index>3 || !script_divisor || (script_lcr&192))return 1;
+#ifdef TERMINAL_CUSTOM_IRQ
+    if(!PCPLUS_MASTER_IRQ_VALID(script_irq_index))return 1;
+#endif
     ds=FP_SEG((void __far *)&script_handoff);
     /* Match the actual main-loop policy: table only when enabled; mode2 is
      * disabled-table plus ISR7-bit mask. Reject inconsistent live settings. */
@@ -79,6 +86,9 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
     p=hexword(p,(unsigned)(register_descriptor>>16));*p++=':';p=hexword(p,(unsigned)register_descriptor);*p=0;
 #else
     p=hexword(p,ds);*p++=':';p=hexword(p,(unsigned)&script_handoff);*p=0;
+#endif
+#ifdef TERMINAL_CUSTOM_IRQ
+    *p++=':';*p++='I';*p++=(char)('0'+script_irq_index);*p=0;
 #endif
     return 0;
    }

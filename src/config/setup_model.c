@@ -3,6 +3,9 @@
 #include "modem_import.h"
 #include "transfer_import.h"
 #include <string.h>
+#ifdef TERMINAL_CUSTOM_IRQ
+#include "irq_policy.h"
+#endif
 
 enum { DECIMAL, HEXWORD, PORT, BAUD, PARITY, BITS, PROFILE, COMMAND, RESPONSE,
  BASE, IRQ, PATH };
@@ -12,7 +15,11 @@ typedef struct descriptor {
 } descriptor;
 #define F(label,help,page,at,kind,lo,hi) {{label,help,page},at,kind,lo,hi}
 static const descriptor fields[SETUP_FIELD_COUNT]={
+#ifdef TERMINAL_CUSTOM_IRQ
+ F("Port","COM 1..4; keeps valid saved base/IRQ, otherwise uses defaults.",0,0,PORT,1,4),
+#else
  F("Port","COM 1..4; selecting a port installs its standard base and IRQ.",0,0,PORT,1,4),
+#endif
  F("Baud","300 1200 2400 4800 9600 19200 38400 57600 115200",0,2,BAUD,0,8),
  F("Data bits","7 or 8",0,8,BITS,7,8),
  F("Parity","N O E M S",0,4,PARITY,0,4),
@@ -20,7 +27,11 @@ static const descriptor fields[SETUP_FIELD_COUNT]={
  F("Software flow","0 disabled, 1 enabled",0,0x198,DECIMAL,0,1),
  F("Hardware flow","0 disabled, 1 enabled",0,0x19a,DECIMAL,0,1),
  F("I/O base","Hex; standard base for selected COM port only.",0,0,BASE,0,0),
+#ifdef TERMINAL_CUSTOM_IRQ
+ F("IRQ","3, 4, 5 or 7; must match the modem hardware.",0,0,IRQ,0,0),
+#else
  F("IRQ","Standard IRQ for selected COM port only.",0,0,IRQ,0,0),
+#endif
  F("Terminal profile","Supported profile ID: 4 (VT220), 6 (ANSI)",1,0x194,PROFILE,4,6),
  F("Autowrap","0 disabled, 1 enabled",1,0x19c,DECIMAL,0,1),
  F("Scrolling","0 disabled, 1 enabled",1,0x19e,DECIMAL,0,1),
@@ -154,7 +165,13 @@ setup_status __cdecl setup_get(const prm_dos_image *image,unsigned index,char *t
     if(f->kind==HEXWORD && v>255)return SETUP_STORED_VALUE;
     n=f->kind==BASE?4:2;
     for(i=0;i<n;++i)tmp[i]=hex[(v>>((n-i-1)*4))&15];tmp[n]=0;break;
-   case IRQ:if(v!=irqs[word(image,0)])return SETUP_STORED_VALUE;decimal(tmp,v);break;
+   case IRQ:
+#ifdef TERMINAL_CUSTOM_IRQ
+    if(!PCPLUS_MASTER_IRQ_VALID(v))return SETUP_STORED_VALUE;
+#else
+    if(v!=irqs[word(image,0)])return SETUP_STORED_VALUE;
+#endif
+    decimal(tmp,v);break;
    default:if(v<f->minimum || v>f->maximum)return SETUP_STORED_VALUE;decimal(tmp,v);
   }
  }
@@ -199,7 +216,11 @@ setup_status __cdecl setup_set(const prm_dos_image *baseline,prm_dos_image *stag
    if(value>65535UL)return SETUP_VALUE;v=(unsigned)value;
    if(f->kind==BASE || f->kind==IRQ){
     p=word(staged,0);if(p>3)return SETUP_VALUE;
+#ifdef TERMINAL_CUSTOM_IRQ
+    if((f->kind==BASE && v!=bases[p]) || (f->kind==IRQ && !PCPLUS_MASTER_IRQ_VALID(v)))return SETUP_VALUE;
+#else
     if(v!=(f->kind==BASE?bases[p]:irqs[p]))return SETUP_VALUE;
+#endif
     at=(f->kind==BASE?0x174:0x184)+p*2;
    }else if(v<f->minimum || v>f->maximum || (f->kind==PROFILE && v!=4 && v!=6))return SETUP_VALUE;
   }
@@ -209,7 +230,13 @@ setup_status __cdecl setup_set(const prm_dos_image *baseline,prm_dos_image *stag
   memcpy(staged->bytes+at,baseline->bytes+at,f->maximum);
   memcpy(staged->bytes+at,bytes,n);staged->bytes[at+n]=0;
  }else if(f->kind==PORT){
-  --v;putword(staged,0,v);putword(staged,0x174+v*2,bases[v]);putword(staged,0x184+v*2,irqs[v]);
+  --v;putword(staged,0,v);
+#ifdef TERMINAL_CUSTOM_IRQ
+  if(word(staged,0x174+v*2)!=bases[v])putword(staged,0x174+v*2,bases[v]);
+  if(!PCPLUS_MASTER_IRQ_VALID(word(staged,0x184+v*2)))putword(staged,0x184+v*2,irqs[v]);
+#else
+  putword(staged,0x174+v*2,bases[v]);putword(staged,0x184+v*2,irqs[v]);
+#endif
  }else if(bytefield(at))staged->bytes[at]=(unsigned char)v;
  else putword(staged,at,v);
  return SETUP_OK;

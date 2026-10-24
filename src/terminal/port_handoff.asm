@@ -63,11 +63,32 @@ port_enter:
  mov dx,[cs:port_bases+bx]
  cmp dx,[si+TI_IO_BASE]
  jne .invalid
+%ifdef TERMINAL_CUSTOM_IRQ
+ mov ax,[si+TI_IRQ]
+ cmp ax,3
+ je .irq_ok
+ cmp ax,4
+ je .irq_ok
+ cmp ax,5
+ je .irq_ok
+ cmp ax,7
+ jne .invalid
+.irq_ok:
+%else
  mov ax,[cs:port_irqs+bx]
  cmp ax,[si+TI_IRQ]
  jne .invalid
+%endif
  cmp dx,[uart_port_rbr]
+%ifdef TERMINAL_CUSTOM_IRQ
+ jne .different_uart
+ cmp ax,[uart_irq_indices]
+ je .invalid ;Same port AND IRQ is not a resource transfer.
+ ; IRQ-only changes retain the original UART snapshot and asserted DTR.
+.different_uart:
+%else
  je .invalid ;Never capture the live UART as its own startup baseline.
+%endif
  mov ax,0x40
  mov es,ax
  cmp dx,[es:bx]
@@ -141,7 +162,19 @@ port_enter:
  push word [terminal_irq_vector]
  call uart_restore_interrupt
  add sp,2
+%ifdef TERMINAL_CUSTOM_IRQ
+ xor di,di
+ mov ax,[si+TI_IO_BASE]
+ cmp ax,[uart_port_rbr]
+ jne .restore_old_hardware
+ inc di
+ jmp .hardware_released
+.restore_old_hardware:
+%endif
  call uart_restore_hardware_state
+%ifdef TERMINAL_CUSTOM_IRQ
+.hardware_released:
+%endif
  mov ax,[si+TI_PORT]
  mov [terminal_port_number],ax
  mov ax,[si+TI_IRQ]
@@ -162,7 +195,14 @@ port_enter:
  mov [uart_port_lsr],dx
  inc dx
  mov [uart_port_msr],dx
+%ifdef TERMINAL_CUSTOM_IRQ
+ or di,di
+ jnz .baseline_ready ;Same UART: never replace its original snapshot with live state.
+%endif
  call uart_save_hardware_state
+%ifdef TERMINAL_CUSTOM_IRQ
+.baseline_ready:
+%endif
  ; Do not use native disable: MCR0 would pulse an already asserted DTR and
  ; can reset a modem. Mask IRQ, clear snapshot's DLAB, disable IER and lower
  ; only RTS. The target's original MCR remains in its native exit snapshot.

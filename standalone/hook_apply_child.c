@@ -18,7 +18,12 @@ static unsigned write(const char *name,const unsigned char __far *p,unsigned byt
 int main(int argc,char **argv)
 {
  char tail[48],name[13];hook_key_command c;unsigned n=0,i,j,index=0,mode=0,parent,base;
- unsigned char __far *a;unsigned char __far *b;unsigned char __far *p;FILE *f;unsigned hardware[13];
+ unsigned char __far *a;unsigned char __far *b;unsigned char __far *p;FILE *f;
+#ifdef HOOK_CUSTOM_IRQ
+ unsigned hardware[17];
+#else
+ unsigned hardware[13];
+#endif
  if(argc!=6)return 90;
  for(i=1;i<6;++i){if(n>=47)return 91;tail[n++]=' ';for(j=0;argv[i][j];++j){if(n>=47)return 91;tail[n++]=argv[i][j];}}
  if(hook_key_parse(tail,n,&c)||hook_key_spans(&c)||c.context!=3)return 92;
@@ -51,7 +56,11 @@ int main(int argc,char **argv)
  hardware[8]=inp(0x21);
  hardware[9]=*(unsigned __far *)MK_FP(0,0x30);hardware[10]=*(unsigned __far *)MK_FP(0,0x32);
  hardware[11]=*(unsigned __far *)MK_FP(0,0x2c);hardware[12]=*(unsigned __far *)MK_FP(0,0x2e);
- sprintf(name,"H%u.BIN",index);if(write(name,(const unsigned char __far *)hardware,26))return 103;
+#ifdef HOOK_CUSTOM_IRQ
+ hardware[13]=*(unsigned __far *)MK_FP(0,0x34);hardware[14]=*(unsigned __far *)MK_FP(0,0x36);
+ hardware[15]=*(unsigned __far *)MK_FP(0,0x3c);hardware[16]=*(unsigned __far *)MK_FP(0,0x3e);
+#endif
+ sprintf(name,"H%u.BIN",index);if(write(name,(const unsigned char __far *)hardware,sizeof(hardware)))return 103;
  for(i=0;i<20;++i)frame[i]=a[i];for(i=0;i<810;++i)frame[20+i]=b[i];for(i=0;i<1264;++i)frame[830+i]=p[i];
  sprintf(name,"B%u.BIN",index);if(write(name,(const unsigned char __far *)frame,2094))return 99;
  if(index==0){

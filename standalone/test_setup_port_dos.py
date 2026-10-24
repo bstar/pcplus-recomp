@@ -9,11 +9,17 @@ ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/setup-port-dos'
 BINARY=ROOT/'build/terminal/TERMINAL.EXE';EDITOR=ROOT/'build/setup/PRMEDIT.EXE'
 BASES=[0x3f8,0x2f8,0x3e8,0x2e8]
 
-def run(name,source,target,*,accept=True,missing=False,combined=False):
+def run(name,source,target,*,accept=True,missing=False,combined=False,source_irq=None,target_irq=None):
  folder=OUT/name
  if folder.exists():shutil.rmtree(folder)
  folder.mkdir(parents=True)
- raw=word(image(),0,source-1);wanted=word(raw,0,target-1)
+ raw=word(image(),0,source-1)
+ if source_irq is not None:
+  assert source_irq in (3,4,5,7) and target_irq in (3,4,5,7) and not combined
+  raw=word(raw,0x184+(source-1)*2,source_irq)
+  raw=word(word(raw,0x4e4,8),0x4e6,4)
+ wanted=word(raw,0,target-1)
+ if target_irq is not None:wanted=word(wanted,0x184+(target-1)*2,target_irq)
  (folder/'TEST.PRM').write_bytes(raw)
  for binary in [BINARY,EDITOR]:shutil.copyfile(binary,folder/binary.name)
  for index,base in enumerate(BASES,1):
@@ -27,6 +33,7 @@ def run(name,source,target,*,accept=True,missing=False,combined=False):
   sock=socket.socket();sock.bind(('127.0.0.1',0));ports.append(sock.getsockname()[1]);reservations.append(sock)
  selected=target if accept and not missing else source
  keys=f'p1500 a-f10 p300 home del {target}'
+ if target_irq is not None:keys+=' tab'*8+f' home del {target_irq}'
  if combined:
   keys+=' tab home del del del del 1 9 2 0 0 pgdown home del 6'
   wanted=word(word(wanted,2,5),0x194,6)
@@ -34,6 +41,10 @@ def run(name,source,target,*,accept=True,missing=False,combined=False):
  keys+=' p6500 r e a d y p1800 a-x'
  schedule='ADDKEY p750 '+' p120 '.join(keys.split())
  serial='\n'.join(f'serial{i}='+ (f'nullmodem port:{ports[i-1]} transparent:1 nonlocal:0 rxdelay:200 txdelay:1' if i<=3 else 'disabled') for i in range(1,5))
+ if source_irq is not None:
+  actual_irqs=[4,3,4,3];actual_irqs[source-1]=source_irq
+  if accept and not missing:actual_irqs[target-1]=target_irq
+  serial='\n'.join(line.replace('nullmodem ',f'nullmodem irq:{actual_irqs[i]} ') for i,line in enumerate(serial.splitlines()))
  before='\n'.join(f'SNAP{i} B' for i in range(1,5));after='\n'.join(f'SNAP{i} A' for i in range(1,5))
  config=f'''[sdl]
 output=surface
@@ -65,6 +76,8 @@ WATCH
 exit
 '''
  (folder/'dosbox.conf').write_text(config)
+ if source_irq is not None:
+  config=config.replace('cputype=386','cputype=8086');(folder/'dosbox.conf').write_text(config)
  stop=threading.Event();wire=bytearray();checks={};errors=[]
  def peer():
   # No TCP carrier during the settings choices. Establish it only after the
@@ -114,6 +127,7 @@ exit
  checks['actual_video_matches_resumed_remote_output']=screen[:30:2]==b'PORT READY LIVE'
  result=dict(case=name,passed=all(checks.values()),checks=checks,source=source,target=target,selected=selected,observations=observations,peer_errors=errors,
   terminal_sha256=hashlib.sha256((folder/'TERMINAL.EXE').read_bytes()).hexdigest(),editor_sha256=hashlib.sha256((folder/'PRMEDIT.EXE').read_bytes()).hexdigest())
+ if source_irq is not None:result.update(source_irq=source_irq,target_irq=target_irq,physical_irqs=actual_irqs)
  (folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  assert result['passed'],result
  print(name,'passed',flush=True);return result

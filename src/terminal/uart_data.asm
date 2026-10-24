@@ -38,10 +38,17 @@ bytevar uart_saved_ier, 0
 bytevar uart_saved_dll, 0
 bytevar uart_saved_dlm, 0
 wordvar uart_irq_indices, 4
+%ifdef TERMINAL_CUSTOM_IRQ
+wordvar uart_irq_enable_masks, 0xfe
+ dw 0xfd, 0xfb, 0xf7, 0xef, 0xdf, 0xbf, 0x7f
+wordvar uart_irq_disable_masks, 1
+ dw 2, 4, 8, 0x10, 0x20, 0x40, 0x80
+%else
 wordvar uart_irq_enable_masks, 0xff
  dw 0xff, 0xff, 0xf7, 0xef, 0xff, 0xff, 0xff
 wordvar uart_irq_disable_masks, 0
  dw 0, 0, 8, 0x10, 0, 0, 0
+%endif
 global uart_flow_message
 uart_flow_message: db 'Wait for XON', 0 ; Must fit the original14-character region.
 SEGMENT _BSS public align=16 class=BSS use16
