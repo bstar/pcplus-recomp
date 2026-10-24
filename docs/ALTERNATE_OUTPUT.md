@@ -124,6 +124,7 @@ The complete proof is `build/alternate-output-source-02`; the recorder checks
 its source/artifact custody, exact products and full case matrix. The earlier
 failed proof and diagnostic pilots remain in ignored build storage.
 
-Peer-requested width, other unsupported emulations and application families,
-physical modem/BBS interoperability and card deployment remain separate.
+The later [peer-width checkpoint](PEER_WIDTH.md) supplies that experimental
+binding. Other unsupported emulations and application families, physical
+modem/BBS interoperability and card deployment remain separate.
 The receipt explicitly retains `accepted_for_deployment: false`.

@@ -755,6 +755,18 @@ def inspect_terminal_memory(binary,map_path):
    assert symbols['terminal_native_width'][0]==near_code['relative_segment']
    assert image[start+entry:start+entry+6]==b'\x9a'+struct.pack('<HH',target_off,native_cs)+b'\xc3'
    assert entry+3 in relocations
+   peer=address('modes_screen_width');target=symbols['terminal_peer_width_far']
+   expected=b'\x55\x89\xe5\x8b\x46\x04\x9a'+struct.pack('<HH',target[1],target[0])+b'\x5d\xc2\x02\x00'
+   assert target[0]==native_cs and image[start+peer:start+peer+15]==expected
+   assert peer+9 in relocations
+   assert symbols['terminal_width_aspect_owner_far'][0]==symbols['resident_bridge_busy'][0]
+   owner=symbols['terminal_width_aspect_owner_far'];owner_call=b'\x9a'+struct.pack('<HH',owner[1],owner[0])
+   native_code=next(c for c in code_segments if c['relative_segment']==native_cs and c['name']=='RESET_CODE')
+   native_at=native_cs*16+native_code['offset'];native_blob=image[start+native_at:start+native_at+native_code['bytes']]
+   assert native_blob.count(owner_call)==2
+   for at in(i for i in range(len(native_blob)-4)if native_blob[i:i+5]==owner_call):assert native_at+at+3 in relocations
+   assert word('live_backup_offset')==symbols['program_screen'][1]
+   assert word('live_backup_segment')==symbols['program_screen'][0]and address('live_backup_segment')in relocations
    for name in ['terminal_native_width_far','reset_live_prepare','reset_live_finish','reset_live_validate',
                 'reset_live_commit','reset_live_rollback','reset_live_active']:
     assert symbols[name][0]==native_cs,name
@@ -780,7 +792,9 @@ def inspect_terminal_memory(binary,map_path):
    extra['native_reset_field_repair_verified']=True
    backup=ui_buffers['program_screen'];assert backup['bytes']==4000
    extra.update(native_reset_transaction=True,native_reset_backup_start=backup['start_linear'],
-                native_reset_backup_bytes=4000,native_reset_transaction_bridge_verified=True)
+                native_reset_backup_bytes=4000,native_reset_transaction_bridge_verified=True,peer_width_mode_bridge_verified=True,
+                native_reset_ASPECT_backup_start=ui_buffers['redisplay_live']['start_linear'])
+ assert word('terminal_peer_width_available')==int('terminal_native_width'in symbols)
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'

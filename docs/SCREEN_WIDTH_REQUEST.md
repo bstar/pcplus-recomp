@@ -1,5 +1,10 @@
 # Native screen-width request adapter
 
+The experimental application now has a guarded [peer-width binding](PEER_WIDTH.md)
+with source/DOS validation. The exact adapter and standalone boundary observer
+below retain their historical scope; ordinary non-transaction builds still
+reject the application width boundary.
+
 The missing mode service at CS:2A6E is a 34-byte adapter, recovered through REA
 from the selected original PCPlus2.01 image. Its rebuilt flat bytes match the
 original exactly; the relocatable OMF build uses named data and reset imports.

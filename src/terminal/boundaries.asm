@@ -35,8 +35,21 @@ modes_keyboard_map:
  jmp terminal_keyboard_mode
 global modes_screen_width
 modes_screen_width:
+%ifdef TERMINAL_NATIVE_RESET_TRANSACTION
+ extern terminal_peer_width_far
+ push bp
+ mov bp,sp
+ mov ax,[bp+4]
+ call far terminal_peer_width_far
+ pop bp
+ ret 2
+global terminal_peer_width_abort_far
+terminal_peer_width_abort_far:
+ jmp terminal_abort
+%else
  mov ax,0x2a6e
  jmp csi_unimplemented
+%endif
 global ansi_escape_service_e0f8
 ansi_escape_service_e0f8:
  mov ax,0xe0f8
@@ -180,3 +193,12 @@ global terminal_control_bb83
 terminal_control_bb83:
  mov ax,0xbb83
  jmp csi_unimplemented
+
+SEGMENT _DATA public class=DATA use16
+global terminal_peer_width_available
+terminal_peer_width_available:
+%ifdef TERMINAL_NATIVE_RESET_TRANSACTION
+ dw 1
+%else
+ dw 0
+%endif

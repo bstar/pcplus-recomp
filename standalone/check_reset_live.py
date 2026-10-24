@@ -211,13 +211,12 @@ def main():
   assert near(m)==before and bytes(m.uc.mem_read(cache,65504))==b'\x5a'*65504
   refusals+=1
  m,_=fixture()
- try:m.feed(b'\x1b[?3h')
- except Abort as error:assert error.args==(0x2a6e,)
- else:raise AssertionError('Peer width unexpectedly enabled')
+ m.feed(b'\x1b[?3h');assert m.get('screen_attribute_row_bytes')==132
+ m.feed(b'\x1b[?3l');assert m.get('screen_attribute_row_bytes')==80
  result=dict(passed=True,binary_sha256=sha(binary),successes=successes,general_row_commits=row_cases,native_fault_rollbacks=failures,
   refusals=refusals,real_UART_ISR_in_private_context=True,root_near_and_owned_shadow_preserved_on_failure=True,
-  status_row_update_preserved=True,RIS_baseline_preserved=True,peer_width_still_unbound=True,sources=manifest['sources'],memory_layout=memory,
-  checker_sha256=sha(Path(__file__)),original_inputs=[],scope=__doc__+' Plain profiles4/6,1..25 rows, status-aware legacy startup normalization, full-margin reset and saved/deferred-wrap bounds. Peer width remains unbound. Faults explicitly mutate native allocation arguments/results; real error/validation/rollback executes. No actual DOS transaction or broad UI/protected-field/BBS acceptance implied.')
+  status_row_update_preserved=True,RIS_baseline_preserved=True,peer_width_still_unbound=False,peer_width_parser_roundtrip=True,sources=manifest['sources'],memory_layout=memory,
+  checker_sha256=sha(Path(__file__)),original_inputs=[],scope=__doc__+' Plain profiles4/6,1..25 rows, status-aware legacy startup normalization, full-margin reset and saved/deferred-wrap bounds. A normal parser mode3 roundtrip is checked. Faults explicitly mutate native allocation arguments/results; real error/validation/rollback executes. No actual DOS transaction or broad UI/protected-field/BBS acceptance implied.')
  (binary.parent/'reset-live-checks.json').write_text(json.dumps(result,indent=2)+'\n')
  print('PASS native live transaction:',successes,'commits,',row_cases,'row/margin/save cases,',failures,'IRQ/fault rollbacks,',refusals,'refusals')
 if __name__=='__main__':main()

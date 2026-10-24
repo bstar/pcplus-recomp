@@ -1,10 +1,16 @@
 # PCPlus DOS reconstruction
 
+The experimental [peer-width checkpoint](docs/PEER_WIDTH.md) connects BBS
+private mode3 requests to the validated80/132-column transaction, including
+captured ASPECT sessions. Logical132 columns use overlapping80-column panes.
+An exact clean rebuild and101 DOS workflows pass; ordinary builds keep their
+existing width boundary. BBS/hardware and card acceptance remain open.
+
 The optional [alternate field-output checkpoint](docs/ALTERNATE_OUTPUT.md)
 restores native metadata/color output and bounded output-map selection. Guarded
 screen sharing frees another4KB so wide-display DOS source compilation fits
 without reducing compiler limits. A clean source-only rebuild and55 DOS
-workflows pass. Peer width requests, full application/hardware acceptance and
+workflows pass. Full application/hardware acceptance and
 card deployment remain open.
 
 The optional [native helper lookup build](docs/HOOK_LOOKUP.md) adds PCPLUS/PATH

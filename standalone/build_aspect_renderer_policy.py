@@ -146,6 +146,24 @@ for(setting=0;setting<2;++setting)for(priv=0;priv<2;++priv)for(prefix=0;prefix<2
   ck(aspect_render_preflight_modes(setting)==result);ck(digest()==h);ansi_parameters[i]=7;
  }
 }
+/* Peer width is available only in the transaction parent and within the
+ * existing scoped renderer lifetime. Report-prefix/native ignore semantics
+ * stay unchanged. Every query must remain read-only. */
+for(k=0;k<3;++k)for(setting=0;setting<2;++setting)for(priv=0;priv<2;++priv)for(prefix=0;prefix<2;++prefix){
+ fixture_valid();terminal_aspect_active=1;terminal_parser_active=1;
+ terminal_peer_width_available=k;ansi_parameter_count=1;ansi_parameters[0]=3;ansi_private=priv;csi_report_private_prefix=prefix;
+ h=digest();result=(!prefix&&priv&&k!=1)?3:0;
+ ck(aspect_render_preflight_modes(setting)==result);ck(digest()==h);
+}
+for(k=0;k<4;++k)for(setting=0;setting<2;++setting){
+ fixture_valid();terminal_aspect_active=1;terminal_parser_active=1;terminal_peer_width_available=1;
+ ansi_parameter_count=1;ansi_parameters[0]=3;ansi_private=1;
+ if(k==0)terminal_aspect_active=0;
+ if(k==1)terminal_parser_active=0;
+ if(k==2)csi_terminal_id=8;
+ if(k==3)terminal_program_kind=0;
+ ck(aspect_render_preflight_modes(setting)==3);
+}
 /* CAN/SUB reject before unsafe branches; VT9026 continuation is explicitly
  * accepted, as are ordinary DEC linefeeds and inactive unsupported branches. */
 for(k=0;k<64;++k){

@@ -202,6 +202,7 @@ for index,source in enumerate(sources):
  if args.custom_irq:options+=['-DTERMINAL_CUSTOM_IRQ']
  if args.special_edition:options+=['-DTERMINAL_SPECIAL_EDITION']
  if args.native_reset_bank:options+=['-DTERMINAL_NATIVE_RESET_BANK']
+ if args.native_reset_transaction:options+=['-DTERMINAL_NATIVE_RESET_TRANSACTION']
  if args.native_reset_bank and not args.native_reset_static:options+=['-DTERMINAL_NATIVE_RESET_OVERLAY']
  if args.input_probe:options+=['-DTERMINAL_HOOK_INPUT_PROBE']
  if args.hook_probe:options+=['-DTERMINAL_HOOK_PROBE']

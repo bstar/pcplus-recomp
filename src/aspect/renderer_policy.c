@@ -116,7 +116,9 @@ unsigned __cdecl aspect_render_preflight_modes(unsigned setting)
  if(csi_report_private_prefix)return 0;
  for(i=0;i<ansi_parameter_count;++i){
   value=ansi_parameters[i];
-  if((!ansi_private && value==4) || (ansi_private && value==3) ||
+  if(ansi_private && value==3 &&
+     (terminal_peer_width_available!=1 || render_live_state(1)))return 3;
+  if((!ansi_private && value==4) ||
      (value==12 && (setting || !ansi_private)) ||
      (!setting && ansi_private && value==2))return 3;
  }

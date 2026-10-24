@@ -105,7 +105,7 @@ def main():
     except Abort as problem:assert problem.args==(0x2a6e,)
     else:raise AssertionError('Cold bank unexpectedly enabled peer width ownership')
     report=dict(passed=True,binary_sha256=manifest['binary_sha256'],cases=cases,memory_layout=memory,
-        actual_PROGRAM_retention_verified=True,peer_width_still_unbound=True,workspace_owner_refusals=owner_refusals,
+        actual_PROGRAM_retention_verified=True,peer_width_still_unbound=not manifest.get('native_reset_transaction',False),uninitialized_peer_width_refused=True,workspace_owner_refusals=owner_refusals,
         viewer_rebuilt_after_native_use=viewer_rebuilt,malformed_layout_refusals=layout_refusals,checker_sha256=sha(Path(__file__)),
         sources=manifest['sources'],original_inputs=[],scope='Actual optional parent MZ with separate native symbols/bank; cold native0/1 calls preserve all live near data/BSS, RX and owned live shadow, return0/1 metadata and expected physical clear; unsupported requests refuse. Actual startup retention covers the workspace. Overlay admission excludes eleven concurrent owners and preserves the unused tail guard. The non-mouse model additionally rebuilds history after cache reuse. Malformed map ownership is refused. Hardware model and explicit test cleanup; no live projection/commit, normal peer width or broad UI/BBS acceptance.')
     (base/'native-bank-parent-checks.json').write_text(json.dumps(report,indent=2)+'\n')

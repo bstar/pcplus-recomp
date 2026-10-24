@@ -133,7 +133,12 @@ handler10:
  mov byte [CSI_ERASE_ATTRIBUTE],7
  mov ax,1
  sti
+%ifdef PEER_WIDTH
+ ; This fixture initializes only fields. Width changes must arrive on wire.
+ xor ax,ax
+%else
  call far [cs:live_call]
+%endif
  cli
  mov [cs:width_result],ax
 %ifdef ALTERNATE_OUTPUT

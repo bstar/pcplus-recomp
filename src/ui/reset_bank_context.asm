@@ -20,7 +20,7 @@ extern _command_menu_active,terminal_snapshot_active,terminal_program_active,ter
 extern terminal_monitor_active,terminal_controller_active,terminal_transfer_active,terminal_transfer_pending
 %endif
 %ifdef RESET_BANK_TRANSACTION
-extern reset_live_active
+extern reset_live_active,terminal_width_aspect_owner_far
 %endif
 global reset_bank_call_far,reset_bank_abort,reset_bank_request,reset_bank_busy
 reset_bank_request: dw 0
@@ -86,13 +86,31 @@ reset_bank_call_far:
  or ax,[_redisplay_search_pending]
  or ax,[_command_menu_active]
  or ax,[terminal_snapshot_active]
- or ax,[terminal_program_active]
  or ax,[terminal_program_pending]
  or ax,[terminal_monitor_active]
  or ax,[terminal_controller_active]
  or ax,[terminal_transfer_active]
  or ax,[terminal_transfer_pending]
  jnz .reject
+ cmp word [terminal_program_active],0
+ je .program_checked
+%ifdef RESET_BANK_TRANSACTION
+ ; The live transaction already owns a separate rollback frame. Do not lend
+ ; the native workspace to arbitrary PROGRAM or cold-reset callers.
+ cmp word [cs:reset_live_active],1
+ jne .reject
+ mov ax,[ss:bx+16]
+ cmp ax,0x100
+ je .aspect_owner
+ cmp ax,0x101
+ jne .reject
+.aspect_owner:
+ call far terminal_width_aspect_owner_far
+ jc .reject
+%else
+ jmp .reject
+%endif
+.program_checked:
 %endif
  mov ax,[ss:bx+16]
  mov [cs:reset_bank_request],ax

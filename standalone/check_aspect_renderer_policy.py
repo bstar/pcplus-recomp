@@ -78,6 +78,12 @@ def cpu_matrix():
   valid();word('render_translation_enabled',1);u.mem_write(address('render_translation_mask'),bytes([mask]))
   actual=invoke('_aspect_render_admit');assert actual==0
   records.append(dict(kind='independent_output_mask',mask=mask,result=actual))
+ for available,depth,expected in [(0,1,3),(1,1,0),(2,1,3),(1,0,3),(1,16,0),(1,17,3)]:
+  valid()
+  for field,value in dict(terminal_peer_width_available=available,terminal_aspect_active=1,terminal_parser_active=depth,
+    ansi_parameter_count=1,ansi_private=1,ansi_parameters=3).items():word(field,value)
+  actual=invoke('_aspect_render_preflight_modes',1);assert actual==expected
+  records.append(dict(kind='independent_peer_width',available=available,depth=depth,result=actual))
  return dict(passed=True,cases=records,count=len(records),visited_instruction_addresses=len(visited),no_nonstack_writes=not outside,scope='Actual relocated compiled policy; controlled BDA and fixture state, DS=SS cdecl ABI and writes restricted to caller stack. No renderer or service bridge execution.')
 
 def main():

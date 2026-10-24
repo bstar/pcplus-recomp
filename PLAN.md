@@ -1,5 +1,19 @@
 # Complete DOS rebuild plan
 
+[Peer width integration](docs/PEER_WIDTH.md) now passes its source/DOS checkpoint. The experimental
+parent routes private mode3 to the live transaction, with separate rollback
+storage and a specific captured-ASPECT ownership exception. The basic linked
+model passes64 parser commits,768 controlled owner states and IRQ/rollback
+cases; expanded policy checks pass58,962 DOS assertions and48 CPU probes.
+Genuine DOS main-loop, precompiled/source child and mixed-mode-list cases
+pass; full-plane comparisons cover both profiles. The clean865-source proof
+passes101 DOS workflows, including46 peer-width cases; the
+[receipt](docs/validation/peer-width.json) binds2432 artifacts. Real DOS failed
+width/interrupted-session coverage beyond the modeled faults, owned BBS width
+sessions, hardware acceptance and card deployment remain required. This is
+an experimental source checkpoint, not a card release. Earlier checkpoints
+below retain their historical scope.
+
 [Alternate field-cell output](docs/ALTERNATE_OUTPUT.md) restores the native
 `bb53` path and canonical output-map selection in the optional application.
 The first clean run exposed conventional-memory pressure in the wide DOS

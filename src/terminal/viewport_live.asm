@@ -47,6 +47,34 @@ extern terminal_transfer_active,terminal_transfer_pending
 extern _redisplay_active,_command_menu_active,_redisplay_live_ready
 extern terminal_program_kind,terminal_aspect_active,render_attached,resident_bridge_busy
 extern terminal_script_overlay_visible
+%ifdef TERMINAL_NATIVE_RESET_TRANSACTION
+extern terminal_parser_active
+; A display transaction may borrow inactive UI storage during a genuine
+; captured ASPECT renderer call. Cold bank calls cannot acquire this grant.
+global terminal_width_aspect_owner_far
+terminal_width_aspect_owner_far:
+ cmp word [terminal_program_active],1
+ jne .bad
+ cmp word [terminal_program_kind],4
+ jne .bad
+ cmp word [terminal_aspect_active],1
+ jne .bad
+ cmp word [terminal_parser_active],1
+ jb .bad
+ cmp word [terminal_parser_active],16
+ ja .bad
+ cmp word [cs:render_attached],1
+ jne .bad
+ cmp word [cs:resident_bridge_busy],1
+ jne .bad
+ cmp word [cs:terminal_script_overlay_visible],0
+ jne .bad
+ clc
+ retf
+.bad:
+ stc
+ retf
+%endif
 
 %macro save 0
  push ax

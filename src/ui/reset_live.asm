@@ -1,7 +1,7 @@
 ; Experimental field-aware width transaction for1..25 content rows. Native owns its
 ; projected bank and physical content rows. Root metadata is committed only
 ; after validation; UART, connection, parser, handles and RIS defaults never
-; enter this projection. Peer width dispatch is deliberately still unbound.
+; enter this projection. Peer mode dispatch retains the native RET2 ABI.
 BITS 16
 CPU 8086
 GROUP DGROUP _DATA _BSS STACK
@@ -13,13 +13,15 @@ terminal_native_width:
 
 SEGMENT RESET_CODE public align=16 class=FARCODE use16
 extern reset_bank_call_far,reset_bank_busy,reset_bank_abort,bank_shadow
-extern redisplay_snapshot,program_screen
+extern redisplay_snapshot,program_screen,redisplay_live
 extern _redisplay_active,_redisplay_export_pending,_redisplay_search_pending,_command_menu_active
 extern terminal_program_active,terminal_program_pending,terminal_macro_active
 extern terminal_monitor_active,terminal_snapshot_active,terminal_screen_print_active
 extern terminal_controller_active,terminal_ansi_wait_active,terminal_transfer_active,terminal_transfer_pending
 extern reset_ready,connection_state,text_video_segment,text_cga_status_port
-extern terminal_browser_screen_owned
+extern terminal_browser_screen_owned,terminal_editor_screen_owned,terminal_aspect_active
+extern terminal_width_aspect_owner_far,_redisplay_live_ready
+extern csi_unimplemented_service,terminal_peer_width_abort_far
 extern screen_attributes_base,screen_attribute_cells,erase_attribute_values_base,erase_attribute_values
 extern erase_shadow_offset,erase_shadow_segment,erase_shadow_cells
 extern ui_flow_region_cells,ui_flow_video_base,ui_flow_coordinate_base,ui_flow_suppressed,csi_row_count
@@ -46,6 +48,22 @@ saved_shape: dw 0
 live_rows: dw 0
 live_cells: dw 0
 live_shadow_words: dw 0
+global live_backup_offset,live_backup_segment
+live_backup_offset: dw program_screen
+live_backup_segment: dw seg program_screen
+
+; Native mode3 adapter is callee-cleaned in resident code. Any refusal uses
+; the established terminal/ASPECT unwind rather than continuing half a mode.
+global terminal_peer_width_far
+terminal_peer_width_far:
+ call far terminal_native_width_far
+ or ax,ax
+ jnz .bad
+ retf
+.bad:
+ mov ax,0x2a6e
+ mov [csi_unimplemented_service],ax
+ jmp far terminal_peer_width_abort_far
 
 ; Each row explicitly declares root/native offsets and whether native output
 ; may be committed (high bit of the root offset). Link inspection verifies
@@ -166,10 +184,11 @@ terminal_native_width_far:
  call live_admit
  jc .refuse
  mov word [cs:reset_live_active],1
- ; program_screen is disposable only while all declared modal owners are idle.
- mov ax,seg program_screen
+ ; ASPECT already owns program_screen. Its transaction uses the separate,
+ ; idle editor/viewer live backup selected by the admission below.
+ mov ax,[cs:live_backup_segment]
  mov es,ax
- mov di,program_screen
+ mov di,[cs:live_backup_offset]
  push ds
  mov ax,0xb800
  mov ds,ax
@@ -208,8 +227,24 @@ terminal_native_width_far:
 live_admit:
  cmp byte [terminal_browser_screen_owned],0
  jne .bad_owner
- mov ax,[terminal_program_active]
- or ax,[terminal_program_pending]
+ cmp byte [terminal_editor_screen_owned],0
+ jne .bad_owner
+ cmp word [_redisplay_live_ready],0
+ jne .bad_owner
+ mov word [cs:live_backup_offset],program_screen
+ mov word [cs:live_backup_segment],seg program_screen
+ cmp word [terminal_program_active],0
+ je .foreground_owner
+ call far terminal_width_aspect_owner_far
+ jc .bad_owner
+ mov word [cs:live_backup_offset],redisplay_live
+ mov word [cs:live_backup_segment],seg redisplay_live
+ jmp .other_owners
+.foreground_owner:
+ cmp word [terminal_aspect_active],0
+ jne .bad_owner
+.other_owners:
+ mov ax,[terminal_program_pending]
  or ax,[terminal_macro_active]
  or ax,[terminal_monitor_active]
  or ax,[terminal_snapshot_active]
@@ -793,9 +828,9 @@ reset_live_rollback:
  ; updated an independently owned status row since admission. Restore only
  ; admitted content (all25 rows when status is hidden).
  push ds
- mov ax,seg program_screen
+ mov ax,[cs:live_backup_segment]
  mov ds,ax
- mov si,program_screen
+ mov si,[cs:live_backup_offset]
  mov ax,0xb800
  mov es,ax
  xor di,di

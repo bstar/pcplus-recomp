@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Peer width integration](PEER_WIDTH.md) connects private mode3 to the guarded
+transaction in the experimental parent, with a separate rollback frame during
+captured ASPECT rendering. The clean865-source proof passes101 DOS workflows
+and both parents' linked regressions. Logical132-column content still uses an
+80-column physical display. Other profiles, broader failed/interrupted DOS
+sessions, owned BBS width tests, full F01–F16/hardware and card acceptance stay
+open. This supersedes only the corresponding unbound-peer statements below.
+
 [Alternate field-cell output](ALTERNATE_OUTPUT.md) restores152 native bytes
 behind the historical `bb53` boundary, with canonical output mapping and RIS
 selection. This operation updates metadata/colors; font resources and loading
