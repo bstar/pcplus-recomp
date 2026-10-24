@@ -9,6 +9,7 @@ from enigma_key_stream_fixture import ROOT,PORT,owned,verify_running
 from enigma_notes_dos import sha,messages
 from enigma_script_login import source as login_source
 from audit_zmodem import scan,packet,metadata,audit_batch,audit_controls
+from product_inputs import select_product
 sys.path.insert(0,str(ROOT/'standalone'))
 from directory_fixtures import prm,directory
 from directory_test_support import accounting_check
@@ -28,8 +29,14 @@ async def run(args):
     wire_name=archive['name'].upper();local=f'{zlib.crc32(wire_name.encode()):08X}.ZIP'
     out=ROOT/'build/bbs-lab/results/enigma'/args.label;out.mkdir(parents=True,exist_ok=False)
     stage=out/'program';stage.mkdir();target=out/'RECV';target.mkdir()
-    for rel in ('terminal/TERMINAL.EXE','aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE'):
-        original=ROOT/'build'/rel;shutil.copyfile(original,stage/original.name);inputs[rel]=original;inputs['staged/'+original.name]=stage/original.name
+    products={}
+    for rel,selected in [('terminal/TERMINAL.EXE',args.terminal),
+                         ('aspect-runner/ASPECT.EXE',args.runner),
+                         ('aspect-compiler-dos/ASPCOMP.EXE',args.compiler)]:
+        original,sources=select_product(selected,Path(rel).name)
+        shutil.copyfile(original,stage/original.name);inputs[rel]=original;inputs['staged/'+original.name]=stage/original.name
+        products[rel]=dict(path=str(original.relative_to(ROOT)),sha256=sha(original))
+        for source in sources:inputs[str(source.relative_to(ROOT))]=source
     script=login_source();(stage/'LOGON.ASP').write_bytes(script.replace('\n','\r\n').encode('ascii'))
     inputs.update(login=stage/'LOGON.ASP',runner=Path(__file__),relay=ROOT/'lab/bbs/carrier_relay.py',
         observer=ROOT/'lab/bbs/carrier_notice_watch.py',observer_base=ROOT/'lab/bbs/zmodem_label_watch.py',
@@ -48,6 +55,10 @@ async def run(args):
     snapshots=[];finished=asyncio.Event()
     async with carrier_relay(PORT) as (relay_port,sessions):
         image=bytearray(prm(port=2,baud=5,soft=0,hard=1))
+        if args.irq is not None:struct.pack_into('<H',image,0x186,args.irq)
+        if args.mouse_scales:
+            sx,sy=args.mouse_scales;assert 1<=sx<=999 and 1<=sy<=999
+            struct.pack_into('<HH',image,0x4e4,sx,sy)
         init=b'AT&K3^M';image[0x18:0x47]=init.ljust(47,b'\0')
         image[0x42c:0x42e]=b'\x01\0';path=b'D:\\RECV\\\0';image[0x31c:0x31c+len(path)]=path
         (out/'TEST.PRM').write_bytes(image)
@@ -71,13 +82,13 @@ output=surface
 memsize=8
 [cpu]
 core=normal
-cputype=386
+cputype={args.cpu}
 cycles=fixed 6000
 [mixer]
 nosound=true
 [serial]
 serial1=disabled
-serial2=modem listenport:0
+serial2=modem {('irq:'+str(args.irq)+' ')if args.irq is not None else ''}listenport:0
 serial3=disabled
 serial4=disabled
 [autoexec]
@@ -156,6 +167,8 @@ exit
     checks['two_authenticated_sessions']=len(authenticated)==2
     result=dict(passed=all(checks.values()) and not errors,checks=checks,errors=errors,notices=notices,snapshots=snapshots,
         terminal_sha256=before['terminal/TERMINAL.EXE'],input_hashes=before,protocol=protocol,
+        input_paths={name:str(path.resolve().relative_to(ROOT))for name,path in inputs.items()},
+        products=products,cpu=args.cpu,irq=args.irq,
         scope='One real DOS process, built-in DOSBox-X Hayes modem with RTS/CTS and emulated DCD, Telnet-only bridge. Deliberate first-link abort after actual partial file write; redial and source-built ASPECT login, exact ZIP retry and NFO. Isolated ENiGMA; not physical Wi-Fi firmware acceptance.')
     (out/'carrier-checks.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=result['passed'],checks=checks,errors=errors,notices=notices),indent=2))
@@ -164,4 +177,10 @@ exit
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--label',required=True)
+    p.add_argument('--terminal',type=Path,default=ROOT/'build/terminal/TERMINAL.EXE')
+    p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-runner/ASPECT.EXE')
+    p.add_argument('--compiler',type=Path,default=ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE')
+    p.add_argument('--cpu',choices=['8086','286','386','486'],default='386')
+    p.add_argument('--irq',type=int,choices=[3,4,5,7])
+    p.add_argument('--mouse-scales',type=int,nargs=2)
     raise SystemExit(asyncio.run(run(p.parse_args())))

@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Current IRQ carrier recovery](docs/IRQ_CARRIER.md) now passes in one DOS8086
+process on IRQ5: a verified 4,096-byte partial triggers link abort, emulated DCD
+loss clears staging, redial and a second script login succeed, and the exact
+34,169-byte retry finishes before NFO navigation. Sixteen producer, thirteen
+capture-corruption and five relay checks pass with restored hardware and both
+directory updates. The script is compiled before starting the terminal. This
+closes one composed emulated recovery case; repeated cycles/load, other loss
+conditions, physical/SIP acceptance, packaging and full native application
+work remain open. The fixture is stopped; the card and LAN board are unchanged.
+
 [Current IRQ uploads](docs/IRQ_UPLOAD.md) now pass DOS8086 source login, a
 65,539-byte plus empty ZMODEM batch, official storage/metadata/date checks and
 same-session NFO return on IRQ7. A bounded observer fits beneath the current
