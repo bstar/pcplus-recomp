@@ -28,8 +28,9 @@ def fields(path):
     return answer
 
 
-def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expected_cpu='8086',expected_irq=3):
+def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expected_cpu='8086',expected_irq=3,server_instance=None):
     assert server in ('synchronet','enigma') and mode in ('accept','reject')
+    if server_instance is not None:server_instance=server_instance.resolve()
     assert label and all(c.isalnum() or c in '-_' for c in label)
     stage=ROOT/'build/bbs-lab/script-login'/label
     output=ROOT/'build/bbs-lab/results'/server/label
@@ -49,7 +50,16 @@ def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expect
         assert sha(stage/'LOGON.ASX')==prediction['expected_ASX_sha256']
         assert (stage/'LOGON.ASX').read_bytes()==compile_source((stage/'LOGON.ASP').read_text())
     if server=='enigma':
-        server_root=ROOT/'build/bbs-lab/enigma/source'
+        stock_root=ROOT/'build/bbs-lab/enigma/source'
+        server_root=stock_root
+        if server_instance is not None:
+            server_root=server_instance.resolve();assert server_root.is_relative_to(ROOT/'build')
+            assert server_root!=stock_root
+            fixture=report['server_fixture'];assert fixture['kind']=='isolated-key-stream'
+            assert ROOT/fixture['root']==server_root and report['checks']['selected_server_unchanged']
+            assert sha(server_root/'instance.json')==fixture['instance_sha256']
+            assert sha(server_root.parent/'report.json')==fixture['replay_sha256']
+            for source,digest in fixture['stock_sources'].items():assert sha(stock_root/source)==digest
         for source,digest in report['server_sources'].items():assert sha(server_root/source)==digest
         assert report['checks']['stock_server_unchanged']
     assert run['passed'] and all(run['checks'].values())
@@ -58,7 +68,14 @@ def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expect
     assert run['modem_packet_delay_ms']==audit['modem_packet_delay_ms']==delay
     assert run['serial']['com']==2 and run['serial']['baud']==19200 and run['serial']['flow']=='HARD'
     assert run['serial'].get('irq',3)==expected_irq
-    assert run['server_endpoint']==dict(address='127.0.0.1',port=23231 if server=='synchronet' else 23233)
+    expected_port=23231 if server=='synchronet' else 23233
+    if server_instance is not None:
+        assert server=='enigma'
+        instance=json.loads((server_instance/'instance.json').read_text())
+        assert instance['address']=='127.0.0.1' and instance['port']==23234
+        assert run['server_log']==str(server_instance/'logs/enigma-bbs.log')
+        expected_port=instance['port']
+    assert run['server_endpoint']==dict(address='127.0.0.1',port=expected_port)
     assert report['checks']['helper_session']
     passed=report['passed'];assert passed is audit['passed']
     assert all(v for k,v in report['checks'].items() if k!='resumed_parent_editor')
@@ -103,6 +120,7 @@ def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expect
         at={3:11,4:9,5:13,7:15}[expected_irq]
         assert h[at:at+2]==(word(s['irqoff']),word(s['irqseg']))
     return dict(server=server,label=label,mode=mode,packet_delay_ms=delay,editor_passed=passed,serial_irq=expected_irq,
+        server_fixture=report.get('server_fixture'),
         source_compilation=prediction['compile_in_DOS'],helper_calls=3,
         server_revision=report.get('server_commit'),server_sources=report.get('server_sources',{}),
         first_return_status=word(snapshots[1]['status']),second_return_status=word(snapshots[2]['status']),

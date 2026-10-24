@@ -65,6 +65,11 @@ It is not a fresh replay, a deployed patch or proof of arbitrary latency
 handling. The [key-stream candidate](../lab/bbs/patches/enigma-key-stream/README.md)
 and the user's LAN board remain separate integration targets.
 
+The [current framed-server comparison](FRAMED_IRQ_BBS.md) now passes immediate
+source login, helpers and editor interaction on IRQ5/7 against a separate
+checked instance. Its stock control still fails Home/Insert. The temporary
+server is stopped and no live board has received that patch.
+
 ## Reproduction
 
 Existing owned loopback fixtures must listen on23231/23233. Use the pinned Nix

@@ -71,6 +71,7 @@ def main():
     parser.add_argument('--runner', type=Path, default=ROOT/'build/aspect-runner/ASPECT.EXE')
     parser.add_argument('--mouse-scales', type=int, nargs=2)
     parser.add_argument('--irq', type=int, choices=[3,4,5,7])
+    parser.add_argument('--candidate',type=Path,help='Explicit running isolated key-stream fixture; never modifies the stock board')
     parser.add_argument('--cpu', choices=['8086','286','386','486'], default='386')
     args = parser.parse_args()
     assert not (args.observer_high and args.compact_observer)
@@ -146,26 +147,45 @@ def main():
     sources += [ROOT / 'lab/bbs' / leaf for leaf in
                 ('editor_dos_probe.py', 'test_dos.py', 'modem.py', 'check_editor_dos.py')]
     sources += [ROOT / 'standalone/directory_fixtures.py', ROOT / 'standalone/directory_test_support.py']
+    stock_server = ROOT / 'build/bbs-lab/enigma/source'
+    server = stock_server
+    server_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=stock_server, text=True).strip()
+    assert server_commit == '6c25317168b762f7d9088a54d3f8295438827a0e'
+    stock_sources = {}
+    for leaf in ('core/client.js', 'core/multi_line_edit_text_view.js'):
+        original_bytes = subprocess.check_output(['git', 'show', 'HEAD:' + leaf], cwd=stock_server)
+        assert (stock_server / leaf).read_bytes() == original_bytes, 'Stock server input/editor required'
+        stock_sources[leaf] = sha(stock_server / leaf)
+    server_sources=dict(stock_sources);server_port=23233;server_log=None;server_fixture=None
+    if args.candidate:
+        from enigma_key_stream_fixture import owned,verify_running,PORT
+        server=owned(args.candidate);server_log=verify_running(server);server_port=PORT
+        instance=json.loads((server/'instance.json').read_text())
+        replay=json.loads((server.parent/'report.json').read_text())
+        assert instance['upstream_revision']==server_commit and replay['passed']
+        assert replay['stock_client_sha256']==stock_sources['core/client.js']
+        assert replay['candidate_client_sha256']==instance['client_sha256']==sha(server/'core/client.js')
+        assert replay['candidate_key_stream_sha256']==instance['key_stream_sha256']==sha(server/'core/key_stream.js')
+        assert sha(server/'core/multi_line_edit_text_view.js')==stock_sources['core/multi_line_edit_text_view.js']
+        server_sources={leaf:sha(server/leaf)for leaf in (*stock_sources,'core/key_stream.js')}
+        sources += [ROOT/'lab/bbs/enigma_key_stream_fixture.py',server/'instance.json',server.parent/'report.json',server/'config/config.hjson']
+        sources += [server/leaf for leaf in server_sources]
+        server_fixture=dict(kind='isolated-key-stream',root=str(server.relative_to(ROOT)),
+                            instance_sha256=sha(server/'instance.json'),replay_sha256=sha(server.parent/'report.json'),
+                            stock_sources=stock_sources)
     inputs = {str(p.relative_to(ROOT)): sha(p) for p in sources}
     staged = {p.name: sha(p) for p in stage.iterdir() if p.is_file()}
-    server = ROOT / 'build/bbs-lab/enigma/source'
-    server_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=server, text=True).strip()
-    assert server_commit == '6c25317168b762f7d9088a54d3f8295438827a0e'
-    server_sources = {}
-    for leaf in ('core/client.js', 'core/multi_line_edit_text_view.js'):
-        original_bytes = subprocess.check_output(['git', 'show', 'HEAD:' + leaf], cwd=server)
-        assert (server / leaf).read_bytes() == original_bytes, 'Stock server input/editor required'
-        server_sources[leaf] = sha(server / leaf)
     keymap = ROOT / 'build/keyboard-profiles' / ('ENIGMA.KBD' if args.profile == 'enigma-editor' else 'NETWORK.KBD')
     assert keymap.is_file(), 'Build keyboard-profiles first'
     sources.append(keymap)
     inputs[str(keymap.relative_to(ROOT))] = sha(keymap)
     command = [sys.executable, str(Path(__file__)), '--observe-driver',
-               str(stage / 'TERMINAL.EXE'), 'enigma', '--port', '23233',
+               str(stage / 'TERMINAL.EXE'), 'enigma', '--port', str(server_port),
                '--label', args.label, '--com', '2', '--baud', '19200', '--flow', 'HARD',
                '--directory-fixture', '--entry', '3', '--keymap-fixture', str(keymap),
                '--packet-delay-ms', str(args.packet_delay_ms), '--timeout', '170', '--wait', '2', '--keys', keys]
     if args.hook_session:command += ['--meta-fixture',str(stage/'ACTIONS.KEY')]
+    if server_log:command += ['--server-log',str(server_log)]
     if args.observer_high:command += ['--observer-high']
     command += ['--cpu', args.cpu]
     if args.irq is not None:command += ['--irq',str(args.irq)]
@@ -200,7 +220,7 @@ def main():
         source_compilation=(not args.source or (stage/'LOGON.ASX').read_bytes()==compile_source(source)),
         inputs_unchanged=inputs == {str(p.relative_to(ROOT)): sha(p) for p in sources}
                          and all(sha(stage / leaf) == digest for leaf, digest in staged.items()),
-        stock_server_unchanged=server_sources == {leaf: sha(server / leaf) for leaf in server_sources},
+        stock_server_unchanged=stock_sources == {leaf: sha(stock_server / leaf) for leaf in stock_sources},
         credentials_not_in_keyboard=run['keyboard_input'] == keys
                                    and 'LoC-Lab-2026!' not in keys.replace(' ', ''),
         script_credentials_once=wire.count(b'loclab\r') == wire.count(b'LoC-Lab-2026!\r') == 1
@@ -215,6 +235,7 @@ def main():
     if args.hook_session:
         hook=hook_session_probe.inspect(stage,args.hook_session)
         checks['helper_session']=hook['passed']
+    if server_fixture:checks['selected_server_unchanged']=server_sources=={leaf:sha(server/leaf)for leaf in server_sources}
     result = dict(keyboard_profile=args.profile, modem_packet_delay_ms=args.packet_delay_ms,
                   server_commit=server_commit, server_sources=server_sources,
                   passed=all(checks.values()), checks=checks, sources=inputs,
@@ -224,6 +245,7 @@ def main():
                   observer_bits=bits,observer_segment=observer_segment,observer_high=args.observer_high,observer_compact=args.compact_observer,
                   artifacts={str(p.relative_to(ROOT)): sha(p) for p in output.iterdir() if p.is_file()},
                   scope='Actual DOS directory-bound script sends only synthetic local ENiGMA credentials after native prompt and quiet waits. Passive INT1C observer checks launcher errors. Stock editor checks use the explicitly recorded modem buffering delay and keyboard profile. Disconnect leaves the draft unsaved. Buffered experiments do not replace immediate-forwarding failures. No physical modem or full application claim.')
+    if server_fixture:result['server_fixture']=server_fixture
     (stage / 'checks.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(dict(passed=result['passed'], checks=checks), indent=2))
     assert result['passed'], 'Script login/editor workflow failed; retained evidence must be inspected'

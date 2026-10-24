@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Immediate framed ENiGMA checks](docs/FRAMED_IRQ_BBS.md) now compose the current
+DOS8086 IRQ build with the isolated server decoder fix. Stock IRQ7 again fails
+Home/Insert; the framed instance passes with identical client inputs and zero
+buffering. IRQ5 helper rejection/retry also passes. Fresh decoder checks and
+four evidence corruptions pass; only the temporary instance was started and it
+is now stopped. Live LAN deployment, transfers/load, physical acceptance,
+packaging and full native application gates remain open.
+
 [Current IRQ BBS checks](docs/IRQ_BBS.md) now cover DOS8086 source login, v7
 return, guarded-helper adoption/rejection and unsaved stock editors on IRQ5/7.
 Synchronet passes immediately; stock ENiGMA passes with explicit30ms buffering
