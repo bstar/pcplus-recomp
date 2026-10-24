@@ -589,6 +589,12 @@ The launcher uses a separate private installation under `reconstruction/lab`.
 Type `ATDThost:port` to dial its emulated Hayes modem; Alt-X exits. Its generated
 startup script and executable are refreshed on launch.
 
+The [wide ASPECT development checkpoint](docs/WIDE_ASPECT.md) adds guarded
+parent rendering across132-column panes, active fields and status-aware rows.
+A clean source rebuild passes the existing field/UI/compiler regressions and
+eight actual DOS ASPECT workflows, including compilation with the wide display
+active. This optional build has not been deployed to the card.
+
 The [wide serviced UI](docs/WIDE_SERVICED_UI.md) now opens the physical command
 menu, history and clipboard over either132-column pane while incoming data
 continues against the restored live display. Other wide application owners

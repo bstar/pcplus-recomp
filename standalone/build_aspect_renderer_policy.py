@@ -16,6 +16,7 @@ C=r'''
 #include "batch_download.h"
 #define WORD(name) unsigned name;
 ASPECT_RENDER_WORDS(WORD)
+ASPECT_RENDER_DISPLAY_WORDS(WORD)
 #undef WORD
 unsigned redisplay_active,command_menu_active;
 unsigned char terminal_history_pending;
@@ -33,6 +34,7 @@ static void ck(unsigned ok){++checks;if(!ok){++failures;if(failures<8)printf("FA
 static unsigned digest(void){unsigned h=0,i;
 #define HASH(name) h=(h*31)^name;
 ASPECT_RENDER_WORDS(HASH)
+ASPECT_RENDER_DISPLAY_WORDS(HASH)
 #undef HASH
 for(i=0;i<16;++i)h=(h*31)^ansi_parameters[i];
 h^=screen_attribute_cells[0]^screen_attribute_cells[4095]^erase_attribute_values[0]^erase_attribute_values[4095];
@@ -41,6 +43,7 @@ return h;}
 void __cdecl fixture_valid(void){
 #define ZERO(name) name=0;
 ASPECT_RENDER_WORDS(ZERO)
+ASPECT_RENDER_DISPLAY_WORDS(ZERO)
 #undef ZERO
 redisplay_active=command_menu_active=0;terminal_history_pending=0;
 memset(&capture_file_result,0,sizeof(capture_file_result));memset(&snapshot_file_result,0,sizeof(snapshot_file_result));
@@ -65,7 +68,7 @@ int main(void){unsigned i,k,setting,priv,prefix,v,h,result;FILE *f;
 fixture_valid();admit(0);csi_terminal_id=4;admit(0);
 /* Native-compatible edgecursor, scrolled origin, pending history and resolved
  * historicerrors are admitted; no requirement for an empty BBS screen. */
-fixture_valid();screen_cursor_row=24;screen_cursor_column=79;screen_attribute_offset=1999;screen_video_offset=3998;
+fixture_valid();screen_cursor_row=24;screen_cursor_column=screen_visible_column=79;screen_attribute_offset=1999;screen_video_offset=3998;
 screen_first_row=3;csi_origin_row=3;terminal_history_pointer[0]=terminal_history_end-1;
 terminal_history_pending=2;terminal_history_wrapped=1;capture_file_result.state=CF_CLOSED;capture_file_result.first_status=CF_WRITE;admit(0);
 '''
@@ -78,8 +81,8 @@ BAD={
  'terminal_printer_closing':1,'csi_printer_ready':1,'capture_session_buffered':1,
  'screen_columns':81,'screen_video_row_bytes':162,'screen_attribute_row_bytes':81,'csi_last_column':80,'csi_column_count':81,
  'csi_last_row':25,'csi_row_count':26,'text_video_segment':0xb000,'text_cga_status_port':0x3da,
- 'screen_viewport_active':1,'screen_viewport_enabled':1,'screen_viewport_offset':1,'screen_attribute_checks':1,'terminal_mode_372c':1,
- 'render_translation_enabled':1,'erase_protection_mode':1,'erase_cell_count':2001,'screen_cursor_row':25,'screen_cursor_column':80,
+ 'screen_viewport_active':2,'screen_viewport_enabled':1,'screen_viewport_offset':1,'screen_attribute_checks':2,'terminal_mode_372c':1,
+ 'render_translation_enabled':1,'erase_protection_mode':2,'erase_cell_count':2001,'screen_cursor_row':25,'screen_cursor_column':80,
  'screen_first_row':25,'screen_last_row':25,'csi_origin_row':25,'csi_origin_bottom':25,'screen_attribute_offset':1,'screen_video_offset':2,
  'screen_attributes_base':0xffff,'erase_attribute_values_base':0xffff,'erase_shadow_segment':0xffff,'erase_shadow_offset':0xffff,
  'terminal_history_start':0xffff,'terminal_history_end':0xffff,'terminal_history_pointer[0]':0xffff,'terminal_history_pointer[1]':0xffff,
@@ -90,9 +93,36 @@ BAD['upload_source_result.discovery_open']=1;BAD['upload_source_result.binary_op
 C+='\n'.join(f'BAD({n},{v});' for n,v in BAD.items())+'\n'
 C+=r'''
 fixture_valid();
-for(i=0;i<2000;++i){screen_attribute_cells[i]=0x80;admit(3);screen_attribute_cells[i]=0;}
+for(i=0;i<2000;++i){screen_attribute_cells[i]=0x80;admit(0);screen_attribute_cells[i]=0;}
 for(i=0;i<25;++i){screen_line_flags[i]=0x40;admit(3);screen_line_flags[i]=0;}
 for(i=0;i<79;++i){memset(terminal_keymap+i*12,'X',12);admit(3);memset(terminal_keymap+i*12,0,12);}
+/* Every row count, both panes, both status policies, both supported profiles,
+ * and all field mode combinations. Cursor caches describe the last visible
+ * cell; pane0 is the right pane, pane1 the left pane. */
+for(k=1;k<=25;++k)for(setting=0;setting<2;++setting)for(priv=0;priv<2;++priv)
+for(prefix=0;prefix<2;++prefix)for(v=0;v<16;++v){
+ fixture_valid();csi_terminal_id=prefix?4:6;
+ screen_attribute_row_bytes=csi_column_count=132;csi_last_column=131;
+ csi_row_count=k;csi_last_row=screen_last_row=csi_origin_bottom=k-1;
+ erase_cell_count=k*132;screen_cursor_row=k-1;
+ screen_viewport_enabled=1;screen_viewport_left=52;screen_viewport_right=79;
+ screen_viewport_active=setting;screen_viewport_offset=setting?0:52;
+ screen_cursor_column=screen_viewport_offset+79;screen_visible_column=79;
+ screen_attribute_offset=(k-1)*132+screen_cursor_column;
+ screen_video_offset=(k-1)*160+158;
+ ui_flow_suppressed=priv;ui_flow_region_cells=80;ui_flow_video_base=3840;ui_flow_coordinate_base=0x1800;
+ screen_cursor_wrap=v&1;screen_attribute_checks=(v>>1)&1;
+ erase_protection_mode=(v>>2)&1;attributes_color_mode=(v>>3)&1;
+ screen_attribute_cells[screen_attribute_offset]=0x81;
+ result=(!priv&&k==25)||(screen_cursor_wrap&&erase_protection_mode&&!attributes_color_mode)?3:0;
+ admit(result);
+ terminal_aspect_active=1;terminal_parser_active=1;
+ for(i=0;i<3;++i){
+  ansi_command=i==0?'J':i==1?'K':'P';h=digest();
+  ck(aspect_render_preflight_command()==(result||(i<2&&screen_cursor_wrap&&screen_attribute_checks)?3:0));
+  ck(digest()==h);
+ }
+}
 fixture_valid();ansi_parameter_count=17;ck(aspect_render_preflight_modes(1)==3);ansi_parameter_count=16;
 ck(aspect_render_preflight_modes(2)==3);
 /* Frozen supported/unsupported classes, every position in a16-mode list.

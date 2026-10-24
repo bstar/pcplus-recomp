@@ -6,6 +6,7 @@
  */
 unsigned __cdecl aspect_render_admit(void);
 unsigned __cdecl aspect_render_preflight_modes(unsigned setting);
+unsigned __cdecl aspect_render_preflight_command(void);
 unsigned __cdecl aspect_render_preflight_control(unsigned character);
 #define ASPECT_RENDER_WORDS(X) \
  X(terminal_program_active) X(terminal_program_kind) X(terminal_program_pending) \
@@ -27,8 +28,14 @@ unsigned __cdecl aspect_render_preflight_control(unsigned character);
  X(ansi_parameter_count) X(ansi_private) X(csi_report_private_prefix) \
  X(terminal_tab_wrap) X(terminal_control_mode_9026) X(terminal_control_mode_1fb0) \
  X(terminal_dec_keys) X(terminal_newline_mode_9020) X(terminal_ansi_m_policy)
+#define ASPECT_RENDER_DISPLAY_WORDS(X) \
+ X(screen_visible_column) X(screen_viewport_left) X(screen_viewport_right) \
+ X(screen_cursor_wrap) X(screen_vertical_attribute_check) X(screen_reverse_wrap_blocked) \
+ X(ui_flow_suppressed) X(ui_flow_region_cells) X(ui_flow_video_base) X(ui_flow_coordinate_base) \
+ X(attributes_color_mode) X(ansi_command)
 #define AR_WORD(name) extern unsigned name;
 ASPECT_RENDER_WORDS(AR_WORD)
+ASPECT_RENDER_DISPLAY_WORDS(AR_WORD)
 #undef AR_WORD
 extern unsigned redisplay_active,command_menu_active;
 extern unsigned char terminal_history_pending;
@@ -38,6 +45,18 @@ extern unsigned char terminal_keymap[948],screen_line_flags[128];
 extern unsigned char __far erase_shadow_cells[8192];
 extern unsigned char __far terminal_history_buffer[63000];
 #ifdef __WATCOMC__
+#pragma aux screen_visible_column "screen_visible_column";
+#pragma aux screen_viewport_left "screen_viewport_left";
+#pragma aux screen_viewport_right "screen_viewport_right";
+#pragma aux screen_cursor_wrap "screen_cursor_wrap";
+#pragma aux screen_vertical_attribute_check "screen_vertical_attribute_check";
+#pragma aux screen_reverse_wrap_blocked "screen_reverse_wrap_blocked";
+#pragma aux ui_flow_suppressed "ui_flow_suppressed";
+#pragma aux ui_flow_region_cells "ui_flow_region_cells";
+#pragma aux ui_flow_video_base "ui_flow_video_base";
+#pragma aux ui_flow_coordinate_base "ui_flow_coordinate_base";
+#pragma aux attributes_color_mode "attributes_color_mode";
+#pragma aux ansi_command "ansi_command";
 #pragma aux terminal_program_active "terminal_program_active";
 #pragma aux terminal_program_kind "terminal_program_kind";
 #pragma aux terminal_program_pending "terminal_program_pending";

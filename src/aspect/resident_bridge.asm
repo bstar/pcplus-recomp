@@ -228,6 +228,8 @@ rb_check_guards:
  ret
 
 rb_ready: dw 0
+global resident_bridge_busy
+resident_bridge_busy:
 rb_busy: dw 0
 rb_ds: dw 0
 rb_low: dw 0

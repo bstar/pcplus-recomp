@@ -28,7 +28,7 @@ class Model(Live):
 def fixture(profile=6,attribute=7,rows=24,hidden=0):
  m=Model()
  for name,value in dict(csi_terminal_id=profile,attributes_normal_value=attribute,csi_row_count=rows,
-  csi_last_row=rows-1,screen_last_row=rows-1,erase_cell_count=rows*80,terminal_dec_keys=1,
+  csi_last_row=rows-1,screen_last_row=rows-1,csi_origin_bottom=rows-1,erase_cell_count=rows*80,terminal_dec_keys=1,
   ui_flow_suppressed=hidden).items():m.put(name,value)
  m.uc.mem_write(0x449,b'\x03\x50\x00');m.uc.mem_write(0x462,b'\0');m.uc.mem_write(0x484,b'\x18')
  assert m.call('terminal_reset_capture')==0;m.position(min(5,rows-1),17)
@@ -68,7 +68,7 @@ def main():
  writable=['attributes_current','screen_attribute_row_bytes','screen_last_column','erase_cell_count',
   'screen_cursor_row','screen_cursor_column','screen_visible_column','screen_previous_row','screen_previous_column',
   'screen_video_offset','screen_attribute_offset','screen_viewport_enabled','screen_viewport_active',
-  'screen_viewport_offset','screen_viewport_left','csi_saved_row','csi_saved_column','csi_wrap_pending','cursor_state_saved_3342']
+  'screen_viewport_offset','screen_viewport_left','csi_saved_row','csi_saved_column','csi_wrap_pending','cursor_state_saved_3342','csi_origin_row','csi_origin_bottom']
  for profile in (4,6):
   for attr in (7,0x1e):
    m,shadow=fixture(profile,attr)
@@ -116,7 +116,8 @@ def main():
     for origin in (0,1):
      for restricted in range(2 if rows>=5 else 1):
       m,shadow=fixture(profile,rows=rows,hidden=hidden)
-      if restricted:m.put('screen_first_row',1);m.put('screen_last_row',rows-2)
+      if restricted:
+       m.put('screen_first_row',1);m.put('screen_last_row',rows-2);m.put('csi_origin_row',1);m.put('csi_origin_bottom',rows-2)
       m.put('csi_origin_mode',origin);m.position(rows-2 if restricted and origin else rows-1,79)
       m.put('csi_wrap_pending',1);m.feed(b'\x1b7')
       baseline_rows=rows;target=24 if rows==25 and not hidden else rows
@@ -126,6 +127,7 @@ def main():
        abi(m);width=132 if request else 80
        assert(m.get('csi_row_count'),m.get('csi_last_row'),m.get('screen_first_row'),m.get('screen_last_row'))==(target,target-1,0,target-1)
        assert m.get('erase_cell_count')==width*target and m.get('csi_origin_mode')==origin
+       assert(m.get('csi_origin_row'),m.get('csi_origin_bottom'))==(0,target-1)
        assert not m.get('csi_wrap_pending')and not m.get('cursor_state_saved_3342')
        assert m.get('csi_saved_row')<target and m.get('csi_saved_column')<width
        assert bytes(m.uc.mem_read(0xb8000,target*160))==b' \x07'*(target*80)

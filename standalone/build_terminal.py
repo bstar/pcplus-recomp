@@ -143,7 +143,7 @@ objects=[]
 for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
- if source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_CHARACTER_PREFLIGHT','-DTERMINAL_LINE_PREFLIGHT']
+ if source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_CHARACTER_PREFLIGHT','-DTERMINAL_LINE_PREFLIGHT','-DTERMINAL_RENDER_PREFLIGHT']
  if source==ROOT/'reconstruction/erase/rectangle.asm':options+=['-Dcsi_service_2530=terminal_rectangle_native']
  if source==ROOT/'reconstruction/scroll/scroll_up.asm':options+=['-Dscroll_up=terminal_scroll_up_native']
  if source.parent.name=='script_menu':

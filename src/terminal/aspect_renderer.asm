@@ -56,6 +56,13 @@ terminal_receive_character:
  ret
 .native:
  jmp terminal_receive_character_native
+global terminal_aspect_command
+terminal_aspect_command:
+ cmp word [terminal_aspect_active],0
+ je .done
+ call far terminal_render_command
+.done:
+ ret
 terminal_aspect_set_modes:
  cmp word [terminal_aspect_active],0
  je .native
@@ -78,7 +85,7 @@ SEGMENT ASPECT_CODE public align=16 class=FARCODE use16
 extern resident_bridge_initialize,resident_bridge_disable,resident_bridge_entry
 extern resident_bridge_caller_ds,resident_bridge_callback,resident_bridge_abort
 extern _aspect_render_admit,_aspect_render_preflight_control
-extern _aspect_render_preflight_modes
+extern _aspect_render_preflight_modes,_aspect_render_preflight_command
 extern _aspect_render_client_admit
 extern terminal_status_live,terminal_break_ui,terminal_script_label_update
 extern terminal_break_delay_units
@@ -831,6 +838,20 @@ terminal_render_control:
  add sp,2
  or ax,ax
  jnz terminal_render_typed_abort
+ retf
+global terminal_render_command
+terminal_render_command:
+ push bp
+ push si
+ push di
+ push es
+ call _aspect_render_preflight_command
+ or ax,ax
+ jnz terminal_render_typed_abort
+ pop es
+ pop di
+ pop si
+ pop bp
  retf
 terminal_render_set_modes:
  mov ax,1

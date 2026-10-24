@@ -63,6 +63,17 @@ def cpu_matrix():
   valid();word('terminal_aspect_active',1);word('terminal_parser_active',depth)
   actual=invoke('_aspect_render_preflight_control',65);assert actual==(0 if 1<=depth<=16 else 3)
   records.append(dict(kind='parser_depth',depth=depth,result=actual))
+ # Independently seed wide state; this does not call the generated C matrix.
+ for rows,hidden,pane in [(1,0,1),(24,0,0),(25,1,1),(25,0,0)]:
+  valid()
+  for field,value in dict(screen_attribute_row_bytes=132,csi_column_count=132,csi_last_column=131,csi_row_count=rows,csi_last_row=rows-1,screen_last_row=rows-1,csi_origin_bottom=rows-1,erase_cell_count=rows*132,screen_viewport_enabled=1,screen_viewport_left=52,screen_viewport_right=79,screen_viewport_active=pane,screen_viewport_offset=0 if pane else 52,screen_cursor_column=0 if pane else 52,screen_attribute_offset=0 if pane else 52,ui_flow_suppressed=hidden,ui_flow_region_cells=80,ui_flow_video_base=3840,ui_flow_coordinate_base=0x1800,screen_cursor_wrap=1,screen_attribute_checks=1,erase_protection_mode=1,attributes_color_mode=1).items():word(field,value)
+  result=invoke('_aspect_render_admit');assert result==(3 if rows==25 and not hidden else 0)
+  records.append(dict(kind='independent_wide_geometry',rows=rows,hidden=hidden,pane=pane,result=result))
+  if result:continue
+  word('terminal_aspect_active',1);word('terminal_parser_active',1)
+  for command in ['J','K','P']:
+   word('ansi_command',ord(command));actual=invoke('_aspect_render_preflight_command');assert actual==(0 if command=='P'else 3)
+   records.append(dict(kind='independent_field_command',rows=rows,pane=pane,command=command,result=actual))
  return dict(passed=True,cases=records,count=len(records),visited_instruction_addresses=len(visited),no_nonstack_writes=not outside,scope='Actual relocated compiled policy; controlled BDA and fixture state, DS=SS cdecl ABI and writes restricted to caller stack. No renderer or service bridge execution.')
 
 def main():

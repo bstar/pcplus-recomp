@@ -42,7 +42,7 @@ WRITABLE=['attributes_current','screen_attribute_row_bytes','screen_last_column'
  'screen_cursor_row','screen_cursor_column','screen_visible_column','screen_previous_row','screen_previous_column',
  'screen_video_offset','screen_attribute_offset','screen_viewport_enabled','screen_viewport_active',
  'screen_viewport_offset','screen_viewport_left','csi_saved_row','csi_saved_column','csi_wrap_pending','cursor_state_saved_3342',
- 'csi_row_count','csi_last_row','screen_first_row','screen_last_row']
+ 'csi_row_count','csi_last_row','screen_first_row','screen_last_row','csi_origin_row','csi_origin_bottom']
 
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);a=p.parse_args()

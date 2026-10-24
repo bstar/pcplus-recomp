@@ -45,6 +45,8 @@ extern terminal_monitor_active,terminal_snapshot_active,terminal_screen_print_ac
 extern terminal_controller_active,terminal_ansi_wait_active
 extern terminal_transfer_active,terminal_transfer_pending
 extern _redisplay_active,_command_menu_active,_redisplay_live_ready
+extern terminal_program_kind,terminal_aspect_active,render_attached,resident_bridge_busy
+extern terminal_script_overlay_visible
 
 %macro save 0
  push ax
@@ -118,8 +120,7 @@ terminal_viewport_admit_impl:
  and ax,0x600
  cmp ax,0x200
  jne .bad
- mov ax,[terminal_program_active]
- or ax,[terminal_program_pending]
+ mov ax,[terminal_program_pending]
  or ax,[terminal_macro_active]
  or ax,[terminal_monitor_active]
  or ax,[terminal_snapshot_active]
@@ -129,6 +130,28 @@ terminal_viewport_admit_impl:
  or ax,[terminal_transfer_active]
  or ax,[terminal_transfer_pending]
  jnz .bad
+ cmp word [terminal_program_active],0
+ je .foreground
+ cmp word [terminal_program_active],1
+ jne .bad
+ cmp word [terminal_program_kind],4
+ jne .bad
+ cmp word [terminal_aspect_active],1
+ jne .bad
+ cmp word [cs:render_attached],1
+ jne .bad
+ cmp word [cs:resident_bridge_busy],1
+ jne .bad
+ cmp word [cs:terminal_script_overlay_visible],0
+ jne .bad
+ mov ax,[_redisplay_active]
+ or ax,[_command_menu_active]
+ or ax,[_redisplay_live_ready]
+ jnz .bad
+ jmp .owners_ready
+.foreground:
+ cmp word [terminal_aspect_active],0
+ jne .bad
  ; The viewer owns an80-column overlay, while its event2 restores the live
  ; terminal before normal parsing. Pane copies may run only in that interval.
  mov ax,[_redisplay_active]

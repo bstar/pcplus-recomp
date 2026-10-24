@@ -544,13 +544,13 @@ def inspect_terminal_memory(binary,map_path):
             'terminal_render_failure_notice','terminal_render_unsupported',
             'terminal_render_typed_abort','terminal_render_read','terminal_render_read_now',
             'terminal_render_unread','terminal_render_send','terminal_render_string',
-            'terminal_render_poll','terminal_render_cancel','terminal_render_control',
+            'terminal_render_poll','terminal_render_cancel','terminal_render_control','terminal_render_command',
             'terminal_render_set_modes','terminal_render_reset_modes')
   for name in services+('resident_bridge_entry','resident_bridge_initialize',
                          'resident_bridge_disable','resident_bridge_callback',
                          'resident_bridge_abort','resident_bridge_caller_ds',
                          '_aspect_render_admit','_aspect_render_preflight_modes',
-                         '_aspect_render_preflight_control','_aspect_render_client_admit'):
+                         '_aspect_render_preflight_control','_aspect_render_preflight_command','_aspect_render_client_admit'):
    assert symbols[name][0]==aspect_seg and symbols[name][1]<aspect_code['bytes'],(name,'ASPECT far code identity')
   for name in ('aspect_local_window','terminal_script_window','terminal_script_window_debug',
                'terminal_script_window_poll','local_window_key_poll','local_window_key_read'):
@@ -561,6 +561,18 @@ def inspect_terminal_memory(binary,map_path):
    near_call(entry,target)
   far_call('local_window_key_read','terminal_script_window_keyboard_read')
   extra['script_window_keyboard_far_adapters_verified']=True
+  # Bind the CSI pre-dispatch guard and read-only lease words to their actual
+  # linked owners; a symbol list alone cannot establish these call/read paths.
+  near_call('ansi_dispatch_command','terminal_aspect_command',prefix=b'\x55\x8b\xec\x83\xec\x02\x57\x56',suffix=b'')
+  lo=address('terminal_viewport_admit_impl')
+  guard=image[start+lo:start+lo+256]
+  for name,value in [('render_attached',1),('resident_bridge_busy',1),('terminal_script_overlay_visible',0)]:
+   assert symbols[name][0]==aspect_seg,(name,'lease state outside ASPECT CS')
+   assert word(name)==0,(name,'lease word not initially idle')
+   encoded=b'\x2e\x83\x3e'+struct.pack('<H',symbols[name][1])+bytes([value])
+   assert guard.count(encoded)==1,(name,'missing/duplicate CS-qualified ownership check')
+  extra['aspect_command_preflight_verified']=True
+  extra['aspect_viewport_lease_words_verified']=3
   # Verify the actual resident adapters refer to relocated far service entries.
   # Symbol placement alone cannot prove the inter-segment calling convention.
   resident_lo=near_code['relative_segment']*16+near_code['offset']
@@ -715,7 +727,7 @@ def inspect_terminal_memory(binary,map_path):
    # offset that grows past15 bits must never silently become a write flag.
    rows=[('csi_terminal_id',0),('attributes_normal_value',0),('attributes_preset_value',0),('attributes_current',1),('attributes_monochrome',0),
     ('screen_columns',0),('screen_video_row_bytes',0),('screen_attribute_row_bytes',1),('screen_last_column',1),
-    ('csi_last_row',1),('screen_first_row',1),('screen_last_row',1),('screen_cursor_row',1),('screen_cursor_column',1),
+    ('csi_last_row',1),('screen_first_row',1),('screen_last_row',1),('csi_origin_row',1),('csi_origin_bottom',1),('screen_cursor_row',1),('screen_cursor_column',1),
     ('screen_visible_column',1),('screen_previous_row',1),('screen_previous_column',1),('screen_video_offset',1),
     ('screen_attribute_offset',1),('screen_viewport_enabled',1),('screen_viewport_active',1),('screen_viewport_offset',1),
     ('screen_viewport_left',1),('screen_viewport_right',0),('screen_use_bios_cursor',0),('screen_attribute_checks',0),('screen_cursor_wrap',0),

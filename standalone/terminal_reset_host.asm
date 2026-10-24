@@ -822,6 +822,8 @@ global screen_attributes_base
 screen_attributes_base equ reset_data_image+0x39c4
 global screen_bottom_margin
 screen_bottom_margin equ reset_data_image+0xcee4
+global csi_origin_bottom
+csi_origin_bottom equ reset_data_image+0xcee4
 global screen_columns
 screen_columns equ reset_data_image+0x7a72
 global screen_cursor_column

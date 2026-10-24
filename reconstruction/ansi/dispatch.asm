@@ -11,6 +11,9 @@ ORG 0xe4b2
 %endif
 %include "encodings.inc"
 %include "dispatch-layout.inc"
+%ifdef TERMINAL_RENDER_PREFLIGHT
+extern terminal_aspect_command
+%endif
 %ifdef TERMINAL_LINE_PREFLIGHT
 extern line_preflight_far
 %endif
@@ -23,6 +26,9 @@ L_e4b3: mov_load bp,sp
 L_e4b5: sub sp,0x2
 L_e4b8: push di
 L_e4b9: push si
+%ifdef TERMINAL_RENDER_PREFLIGHT
+ call terminal_aspect_command
+%endif
 L_e4ba: mov di,[ansi_command]
 L_e4be: mov_load ax,di
 L_e4c0: jmp near L_ebc4

@@ -20,7 +20,7 @@ static unsigned capture_closed(const capture_file_snapshot *owner)
  * passes guarded modes/controls/edit helpers. Recheck dynamic state per byte. */
 static unsigned render_live_state(unsigned scoped)
 {
- unsigned cell,start,end,segment;
+ unsigned cell,start,end,segment,width,rows,visible;
  volatile unsigned char __far *bda=(volatile unsigned char __far *)MK_FP(0x40,0);
  if(terminal_program_active!=1 || terminal_program_kind!=4 || terminal_program_pending ||
     terminal_ansi_wait_active || terminal_monitor_active ||
@@ -46,16 +46,31 @@ static unsigned render_live_state(unsigned scoped)
     capture_session_buffered)return 3;
  if(bda[0x49]!=3 || *(volatile unsigned __far *)(bda+0x4a)!=80 || bda[0x62] ||
     (bda[0x84] && bda[0x84]!=24))return 3;
- if(screen_columns!=80 || screen_video_row_bytes!=160 || screen_attribute_row_bytes!=80 ||
-    csi_last_column!=79 || csi_column_count!=80 || csi_last_row!=24 || csi_row_count!=25 ||
-    text_video_segment!=0xb800 || text_cga_status_port ||
-    screen_viewport_active || screen_viewport_enabled || screen_viewport_offset ||
-    screen_attribute_checks || terminal_mode_372c || render_translation_enabled ||
-    erase_protection_mode || erase_cell_count!=2000)return 3;
- if(screen_cursor_row>24 || screen_cursor_column>79 || screen_first_row>screen_last_row ||
-    screen_last_row>24 || csi_origin_row>csi_origin_bottom || csi_origin_bottom>24)return 3;
- cell=screen_cursor_row*80+screen_cursor_column;
- if(screen_attribute_offset!=cell || screen_video_offset!=cell*2)return 3;
+ width=screen_attribute_row_bytes;rows=csi_row_count;
+ if(screen_columns!=80 || screen_video_row_bytes!=160 || (width!=80 && width!=132) ||
+    csi_last_column!=width-1 || csi_column_count!=width || !rows || rows>25 || csi_last_row!=rows-1 ||
+    text_video_segment!=0xb800 || text_cga_status_port || screen_viewport_active>1 ||
+    screen_attribute_checks>1 || screen_cursor_wrap>1 || erase_protection_mode>1 ||
+    screen_vertical_attribute_check || screen_reverse_wrap_blocked ||
+    terminal_mode_372c || render_translation_enabled || attributes_color_mode>1 ||
+    erase_cell_count!=width*rows)return 3;
+ /* Field font output is not linked. Refuse its configuration before a lease
+  * or byte can reach the native font provider; ordinary field edits remain
+  * available with either color path and without that provider. */
+ if(screen_cursor_wrap && erase_protection_mode && !attributes_color_mode)return 3;
+ if(width==132){
+  if(screen_viewport_enabled!=1 || screen_viewport_left!=52 || screen_viewport_right!=79 ||
+     screen_viewport_offset!=(screen_viewport_active?0:52) || ui_flow_suppressed>1)return 3;
+  if(!ui_flow_suppressed && (rows>24 || ui_flow_region_cells!=80 ||
+     ui_flow_video_base!=3840 || ui_flow_coordinate_base!=0x1800))return 3;
+ }else if(screen_viewport_enabled || screen_viewport_offset || screen_viewport_left)return 3;
+ if(screen_cursor_row>=rows || screen_cursor_column>=width || screen_first_row>screen_last_row ||
+    screen_last_row>=rows || csi_origin_row>csi_origin_bottom || csi_origin_bottom>=rows ||
+    screen_cursor_column<screen_viewport_offset)return 3;
+ visible=screen_cursor_column-screen_viewport_offset;
+ if(visible>=80 || screen_visible_column!=visible)return 3;
+ cell=screen_cursor_row*width+screen_cursor_column;
+ if(screen_attribute_offset!=cell || screen_video_offset!=screen_cursor_row*160+visible*2)return 3;
  if(!near_span((unsigned)screen_attribute_cells,4096) ||
     !near_span((unsigned)erase_attribute_values,4096) ||
     !near_span((unsigned)terminal_keymap,948) ||
@@ -76,15 +91,23 @@ unsigned __cdecl aspect_render_admit(void)
 {
  unsigned i,j;
  if(render_live_state(0))return 3;
- /* Admission-only contents. The suspended parent has no outside writer;
-  * supported guarded commands retain these bounds/cleared complex metadata. */
- /* Reject unsupported metadata providers before render/scroll mutates video. */
- for(i=0;i<2000;++i)if(screen_attribute_cells[i]&0x80)return 3;
- for(i=0;i<25;++i)if(screen_line_flags[i]&0x40)return 3;
+ /* Admission-only immutable contents. Field markers now use the owned
+  * repair/edit kernels; double-width rendering still needs its own owner. */
+ for(i=0;i<csi_row_count;++i)if(screen_line_flags[i]&0x40)return 3;
  for(i=0;i<79;++i){
   for(j=0;j<12 && terminal_keymap[i*12+j];++j){}
   if(j==12)return 3;
  }
+ return 0;
+}
+
+unsigned __cdecl aspect_render_preflight_command(void)
+{
+ if(render_live_state(1))return 3;
+ /* Protected ED/EL still delegates to an absent native complex provider.
+  * Check before dispatch homes or changes any other display owner. */
+ if(screen_cursor_wrap && screen_attribute_checks &&
+    (ansi_command=='J' || ansi_command=='K'))return 3;
  return 0;
 }
 

@@ -69,6 +69,8 @@ projection:
  field csi_last_row,1
  field screen_first_row,1
  field screen_last_row,1
+ field csi_origin_row,1
+ field csi_origin_bottom,1
  field screen_cursor_row,1
  field screen_cursor_column,1
  field screen_visible_column,1
