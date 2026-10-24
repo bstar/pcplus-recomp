@@ -1,14 +1,25 @@
 # Complete DOS rebuild plan
 
+[Compiler heap admission](docs/COMPILER_ARENA_ADMISSION.md) now passes beneath the
+larger transaction parent. Metadata pools reduce optional slack under pressure;
+two stream buffers borrow 1,024 bytes from the existing 24KiB stack reservation.
+Parent/ASPECT bytes and grammar limits remain unchanged. 799 declared files
+reproduce four products and repeat physical/logical allocation controls,
+2,043 grammar cases, 18 stack cases, workspace checks and all four nested DOS
+workflows. 2,015 inventory cases and seven UART compilation cases also pass.
+Continue with general row/margin/protected-field and UI/child display composition
+before enabling normal peer width requests. BBS/physical/full native application
+acceptance and card deployment remain open.
+
 [Explicit live width transaction](docs/LIVE_RESET_TRANSACTION.md) now projects
 only display state into the native bank, validates before commit and rolls back
 content/cursor without restoring stale serial/status data. Both parents pass22
 modeled commits, five private-stack UART/fault rollbacks and58 refusals, plus
 actual DOS8086 commits and exact132x24 parser/pane/CPR checks. Four products
 reproduce from source; ordinary and cold-only binaries remain exact. The new
-branded variant adds1504 resident bytes and fails ASPCOMP heap allocation at
-source line1, while the cold-only parent remains verified with compact ASPECT.
-Investigate the first-pass metadata arena under that pressure, then broaden
+branded variant adds1504 resident bytes and initially failed ASPCOMP heap
+allocation at source line1. The compiler fix above resolves the recorded
+ordinary-display workflows beneath that same parent. Broaden
 row/margin/protected-field and UI/child/scroll composition before enabling peer
 width requests. Full application/BBS/physical acceptance and card deployment
 remain open.
@@ -19,8 +30,8 @@ reclaimed,8KiB interpreter stack unchanged, compiler/terminal unchanged.741
 declared files reproduce four products and repeat exact formatting, CLI/source
 and all four nested DOS8086 workflows, including32 existing log collisions.
 Native runtime/enumeration/timestamp/query consumers and seven UART compiler
-cases, including three3200-byte pressure cases, also pass. Implement live
-renderer/profile projection, commit and display rollback next; normal width,
+cases, including three3200-byte pressure cases, also pass. Those cold-parent
+checks alone do not establish the newer live display transaction above; normal width,
 UI/BBS/full native application and physical acceptance remain open. Package/card
 deployment remains separate.
 

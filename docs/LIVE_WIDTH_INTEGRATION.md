@@ -24,8 +24,9 @@ admission. Retained-child allocation passes, and the
 compilation in four recorded DOS8086 workflows for the cold-only parent. The new
 [explicit live transaction](LIVE_RESET_TRANSACTION.md) now supplies checked
 projection/commit and display rollback for a plain24-row layout. Both modeled
-fault/IRQ checks and actual DOS commits pass, but this larger variant fails
-ASPCOMP heap admission. General geometry/protected-field/UI composition and
+fault/IRQ checks and actual DOS commits pass. The subsequent
+[compiler heap fix](COMPILER_ARENA_ADMISSION.md) now passes nested compilation
+beneath this larger variant in ordinary display geometry. General geometry/protected-field/UI composition and
 normal peer width ownership remain required.
 
 The current application already reserves two independent 4,096-byte near

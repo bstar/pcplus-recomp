@@ -47,6 +47,10 @@ int main(int argc,char **argv)
 {
  char source[PATH_SIZE],target[PATH_SIZE],scratch[PATH_SIZE],backup[PATH_SIZE];
  char supplied[PATH_SIZE];const char *ext;FILE *input=0,*output=0;
+ /* The CLI already reserves 24KiB of stack. Lend ordinary 512-byte stream
+  * buffers from that reservation instead of taking two more far-heap blocks
+  * beneath the retained terminal/interpreter. They outlive both fclose calls. */
+ char input_buffer[512],output_buffer[512];
  pc_compiler workspace;
  aspect_compiler_report report;unsigned status,sequence=0,had_target=0,attributes;int result=2;
  if(argc<2||argc>3){fputs("Usage: ASPCOMP source[.ASP] [output.ASX]\n",stderr);return 64;}
@@ -63,6 +67,8 @@ int main(int argc,char **argv)
  input=fopen(source,"rb");if(!input){named_error("ASPCOMP: cannot open ",source);return 1;}
  if(!sibling(target,scratch,"TMP",&sequence)){fputs("ASPCOMP: cannot reserve output staging file\n",stderr);fclose(input);return 2;}
  output=fopen(scratch,"w+b");if(!output)goto cleanup;
+ if(setvbuf(input,input_buffer,_IOFBF,sizeof(input_buffer))||
+    setvbuf(output,output_buffer,_IOFBF,sizeof(output_buffer)))goto cleanup;
  status=aspect_compiler_program_workspace(input,output,&report,&workspace,sizeof(workspace));
  if(fclose(output)){output=0;goto cleanup;}output=0;
  if(fclose(input)){input=0;goto cleanup;}input=0;

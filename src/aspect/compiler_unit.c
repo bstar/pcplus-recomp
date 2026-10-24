@@ -26,7 +26,17 @@ static void *allocate(aspect_compiler_unit *u,unsigned bytes)
  if(!block || rounded>block->capacity-block->used){
   capacity=rounded>512U?rounded:512U;
   if(capacity>UINT_MAX-(unsigned)offsetof(struct aspect_compiler_allocation,payload))return 0;
-  block=malloc(offsetof(struct aspect_compiler_allocation,payload)+capacity);if(!block)return 0;
+  block=malloc(offsetof(struct aspect_compiler_allocation,payload)+capacity);
+  /* Pool slack is optional. Under a retained terminal/interpreter, a small
+   * object can fit an existing heap fragment even when a 512-byte arena cannot.
+   * Reduce slack geometrically, retaining room to pool subsequent objects when
+   * possible. At most ten physical attempts reach the exact aligned extent;
+   * logical fault ceilings/counters still apply once per requested object. */
+  while(!block && capacity>rounded){
+   capacity/=2U;if(capacity<rounded)capacity=rounded;
+   block=malloc(offsetof(struct aspect_compiler_allocation,payload)+capacity);
+  }
+  if(!block)return 0;
   block->next=u->allocations;block->used=0;block->capacity=capacity;u->allocations=block;
  }
  result=block->payload+block->used;block->used+=rounded;

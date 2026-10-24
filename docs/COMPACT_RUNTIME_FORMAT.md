@@ -1,5 +1,10 @@
 # Compact interpreter formatting and nested compilation
 
+This records the interpreter-only checkpoint and its then-unchanged compiler.
+The newer [compiler heap admission proof](COMPILER_ARENA_ADMISSION.md) is the
+current validation path for the larger transaction parent. Replay the original
+pinned compiler controls here from commit17722ec or its saved source snapshot.
+
 The optional native-reset parent can now compile and execute source scripts
 with the maintained ASPECT interpreter. The preceding attempt failed at step0
 with out-of-memory; it remains recorded in
@@ -70,12 +75,13 @@ matching proof with `standalone/record_compact_runtime.py --proof ... --output .
 
 This closes the recorded nested-compilation memory gate. It is not an arbitrary
 conventional-memory guarantee or complete native-width application acceptance.
-The cold bank still needs live renderer/profile projection, commit and display
-rollback. General width/UI/BBS composition, full native application/language and
+The cold-bank checkpoint alone does not establish live projection or rollback.
+General width/UI/BBS composition, full native application/language and
 physical modem acceptance remain open. The staged package and card are unchanged.
 
 The subsequent [live transaction](LIVE_RESET_TRANSACTION.md) implements an
 explicit plain24-row projection/commit/rollback API and passes modeled and DOS
-display checks. Its added resident code exhausts ASPCOMP's first-pass heap. The
+display checks. Its added resident code initially exhausted ASPCOMP's first-pass
+heap; the later compiler admission fix resolves the recorded cases. The
 passing nested-compilation evidence here applies to the unchanged cold-only
 terminal hash above; it does not establish admission for that larger variant.

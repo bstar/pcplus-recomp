@@ -1,5 +1,10 @@
 # Experimental live width transaction
 
+The later [compiler admission fix](COMPILER_ARENA_ADMISSION.md) now passes the
+four recorded nested source workflows beneath this unchanged parent. The failed
+compiler observations below remain historical. General display/child/protected
+field integration and normal peer dispatch are still open.
+
 `--native-reset-bank --native-reset-transaction` links an explicit
 `terminal_native_width` API. AX0 requests80 columns and AX1 requests132. It is
 not wired to peer CSI requests: those still stop at2A6E. Entry currently admits
@@ -63,17 +68,18 @@ The new base transaction is
 the guarded branded transaction is
 `64681b77eec3421a53647afdc1bde5c3fecc7025a1ed91f5376049cb4904997a`.
 
-**The new branded transaction fails nested source compilation.** Its resident
+**The initial branded transaction failed nested source compilation.** Its resident
 module is404,544 bytes,1,504 above the preceding cold-only parent. ASPCOMP starts,
 but reports heap error3 at source line1; ASPECT propagates file/output error5.
 No ASX is published. Parent parser recovery, PRM preservation, log cleanup and
 hardware restoration still pass. This differs from the earlier EXEC admission
-failure and must not be described as a failed compiler load. The current first
-pass requests a512-byte metadata arena for its initial small allocation; its
-behavior under the tighter heap is the next concrete memory investigation.
+failure and must not be described as a failed compiler load. At that point the
+first pass required a512-byte arena for its initial small allocation. That
+observation led to the bounded-pool and borrowed-buffer fix linked above.
 
-The preceding compact interpreter's passing memory receipt still applies to its
-cold-only parent, not this larger variant. The new transaction remains excluded
+The preceding compact interpreter's passing memory receipt applied to its
+cold-only parent. The newer compiler fix verifies admission for this larger
+variant in the recorded ordinary-display trials. The transaction remains excluded
 from the staged package and card. Conventional-memory admission, general row/
 margin/protected-field operation, broader UI/child/scroll composition and a
 width-changing BBS session must pass before normal peer requests can be enabled.
@@ -88,5 +94,6 @@ Physical modem compatibility remains unverified.
 The source proof expects current product manifests for ordinary, cold-only, base
 transaction and guarded branded transaction builds. Its accepted run is
 `build/reset-live-source-01`; it repeats both models and both DOS commits in the
-fresh tree. Nested compilation is deliberately a separate failing gate, recorded
-from `build/reset-live-nested-02/explicit` without weakening its assertions.
+fresh tree. Its original nested-compilation failure remains recorded from
+`build/reset-live-nested-02/explicit`; the later compiler proof supersedes that
+gate without weakening its assertions.
