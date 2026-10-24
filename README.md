@@ -7,6 +7,9 @@ output. A clean 870-file source proof passes all 177 DOS workflows. Separate
 precompiled scripts with both window states, plus a stock ENiGMA buffered case.
 [Synchronet ASPECT width tests](lab/bbs/synchronet-aspect-width.md) now pass
 the same four source/ASX and window combinations with immediate forwarding.
+Six [carrier-loss/reconnect checks](lab/bbs/peer-width-carrier.md) also pass
+with an incomplete width request, actual emulated DCD loss and same-process
+redial. Native disconnect workers retain the active WAITFOR completion rule.
 Stock ENiGMA immediate fragmentation, broader application/hardware acceptance
 and card deployment remain open.
 

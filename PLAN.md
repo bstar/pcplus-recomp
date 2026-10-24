@@ -24,7 +24,13 @@ forwarding. Its delayed-start shell requires A from the actual child before
 issuing width requests; 56 producer checks and an independent audit bind136
 artifacts. DOS compiler output, real renderer/window owners, manual stock
 File Transfer return and complete hardware restoration verify. The server is
-stopped after the campaign. These use synthetic menu/shell fixtures. Wider
+stopped after the campaign. These use synthetic menu/shell fixtures.
+Six [carrier-loss width workflows](lab/bbs/peer-width-carrier.md) now pass:
+actual emulated DCD falls with a partial CSI pending, native WAITFOR/handler
+completion retires owners, and the same DOS process redials and handles fresh
+width and keyboard requests. Both compiler/window variants and three-/thirty-
+second wait controls restore the independent46-byte hardware snapshot exactly.
+The sealed receipt binds142 artifacts; no application binaries changed. Wider
 failure/interruption, wide transfers and unsupported application families,
 physical modem acceptance and card deployment remain open. This is a source
 checkpoint; the disconnected card has not received these builds.

@@ -6,7 +6,12 @@ cases and native control-glyph dispatch. Separate ENiGMA ASPECT/BBS tests cover
 source/ASX and both script-window states, plus a stock buffered case.
 [Synchronet ASPECT width composition](../lab/bbs/synchronet-aspect-width.md)
 also passes all four combinations with immediate forwarding, exact DOS compiler
-output and manual stock File Transfer return. Stock immediate ENiGMA
+output and manual stock File Transfer return.
+[Six carrier-loss width cases](../lab/bbs/peer-width-carrier.md) verify real
+emulated DCD loss with a partial CSI, native wait/handler completion, idle
+owners, same-process redial and exact46-byte hardware restoration. These cover
+source/ASX, both windows and three-/thirty-second wait controls; application
+binaries are unchanged. Stock immediate ENiGMA
 fragmentation, wider interruption/transfer coverage, broader F01–F16, hardware
 and card acceptance remain open. Earlier checkpoints retain their scope.
 
