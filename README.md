@@ -10,6 +10,9 @@ the same four source/ASX and window combinations with immediate forwarding.
 Six [carrier-loss/reconnect checks](lab/bbs/peer-width-carrier.md) also pass
 with an incomplete width request, actual emulated DCD loss and same-process
 redial. Native disconnect workers retain the active WAITFOR completion rule.
+[Wide DOS-child tests](lab/bbs/peer-width-process.md) pass16 source/window,
+SAVE/NOCLEAR and text/graphics combinations with continued renderer/keyboard
+handling and exact hardware restoration.
 Stock ENiGMA immediate fragmentation, broader application/hardware acceptance
 and card deployment remain open.
 

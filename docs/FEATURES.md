@@ -11,7 +11,11 @@ output and manual stock File Transfer return.
 emulated DCD loss with a partial CSI, native wait/handler completion, idle
 owners, same-process redial and exact46-byte hardware restoration. These cover
 source/ASX, both windows and three-/thirty-second wait controls; application
-binaries are unchanged. Stock immediate ENiGMA
+binaries are unchanged. A [wide DOS-child matrix](../lab/bbs/peer-width-process.md)
+passes16 source/window/SAVE/NOCLEAR/text/graphics combinations with actual
+EXEC/renderer ownership, child37 then interpreter0, continued replies and
+exact hardware restoration. This covers selected RUN workflows, without a
+full logical-plane comparison or arbitrary OS-interruption claim. Stock immediate ENiGMA
 fragmentation, wider interruption/transfer coverage, broader F01–F16, hardware
 and card acceptance remain open. Earlier checkpoints retain their scope.
 

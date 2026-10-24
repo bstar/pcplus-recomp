@@ -98,9 +98,18 @@ For the basic experimental parent and linked peer test:
 
 ## Work still required
 
-Verify real DOS failed-width requests and interrupted sessions beyond the
-current controlled ownership/fault matrix. Run owned Synchronet/ENiGMA width
-sessions and physical target tests separately. Other terminal/video profiles,
+Later checkpoints add actual DOS [SUB/refusal/interrupted-request cases](SUBSTITUTE_CONTROL.md),
+authenticated [ENiGMA](../lab/bbs/enigma-aspect-width.md) and
+[Synchronet](../lab/bbs/synchronet-aspect-width.md) width sessions, and
+[emulated carrier loss with same-process redial](../lab/bbs/peer-width-carrier.md).
+Those receipts supersede the corresponding open software witnesses in this
+historical checkpoint; they do not establish physical target acceptance.
+The [wide DOS-child matrix](../lab/bbs/peer-width-process.md) separately adds16
+actual RUN workflows, continued rendering and hardware restoration. It does
+not establish arbitrary OS interruption or full-plane preservation around EXEC.
+
+Verify interruptions beyond those selected cases and the controlled
+ownership/fault matrix. Other terminal/video profiles,
 arbitrary modal compositions, partial-width wrapped scrolling, font resources
 and full application reconstruction remain open. The receipt explicitly keeps
 `accepted_for_deployment: false`. The card is absent and has not received this

@@ -30,7 +30,13 @@ actual emulated DCD falls with a partial CSI pending, native WAITFOR/handler
 completion retires owners, and the same DOS process redials and handles fresh
 width and keyboard requests. Both compiler/window variants and three-/thirty-
 second wait controls restore the independent46-byte hardware snapshot exactly.
-The sealed receipt binds142 artifacts; no application binaries changed. Wider
+The sealed receipt binds142 artifacts; no application binaries changed.
+The subsequent [wide DOS-child matrix](lab/bbs/peer-width-process.md) passes16
+source/window/SAVE-versus-NOCLEAR/text-versus-graphics combinations. Passive
+BIOS and EXEC observations verify real renderer/PROGRAM ownership, child37
+then interpreter0, continued wide replies, manual keyboard/narrow return and
+exact hardware restoration; the independent receipt binds448 artifacts.
+These are selected RUN workflows, not arbitrary OS interruption. Wider
 failure/interruption, wide transfers and unsupported application families,
 physical modem acceptance and card deployment remain open. This is a source
 checkpoint; the disconnected card has not received these builds.
