@@ -505,6 +505,10 @@ def inspect_terminal_memory(binary,map_path):
    assert resident.count(call)==2
    for at in (i for i in range(len(resident)-4)if resident[i:i+5]==call):assert near_code['relative_segment']*16+at+3 in relocations
    extra['wide_character_far_calls_verified']=2
+   target=symbols['character_wide_prepare_far'];call=b'\x9a'+struct.pack('<HH',target[1],target[0])
+   assert target[0]==aspect_seg and resident.count(call)==1
+   at=resident.index(call);assert near_code['relative_segment']*16+at+3 in relocations
+   extra['wide_character_prepare_far_calls_verified']=1
   assert aspect_code['kind']=='FARCODE' and aspect_code['offset']==0
   assert all(c['relative_segment']!=aspect_seg for c in code_segments if c['name']!='ASPECT_CODE'),'ASPECT CS aliases other code'
   services=('terminal_render_prepare','terminal_render_revoke','terminal_render_validate',

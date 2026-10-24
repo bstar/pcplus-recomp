@@ -11,6 +11,9 @@ ORG 0xe4b2
 %endif
 %include "encodings.inc"
 %include "dispatch-layout.inc"
+%ifdef TERMINAL_CHARACTER_PREFLIGHT
+extern terminal_character_prepare
+%endif
 ansi_dispatch_command:
 L_e4b2: push bp
 L_e4b3: mov_load bp,sp
@@ -360,7 +363,14 @@ L_e870: push dx
 L_e871: push word [attributes_current]
 L_e875: jmp short L_e7fc
 L_e877: nop
-L_e878: mov word [csi_wrap_pending],0x0
+L_e878:
+%ifdef TERMINAL_CHARACTER_PREFLIGHT
+ push di
+ mov di,1
+ call terminal_character_prepare
+ pop di
+%endif
+ mov word [csi_wrap_pending],0x0
 L_e87e: mov si,0x1
 L_e881: jmp short L_e888
 L_e883: nop
@@ -370,7 +380,14 @@ L_e888: cmp [ansi_parameters],si
 L_e88c: jg short L_e884
 L_e88e: call csi_service_d440
 L_e891: jmp near L_e9ce
-L_e894: mov word [csi_wrap_pending],0x0
+L_e894:
+%ifdef TERMINAL_CHARACTER_PREFLIGHT
+ push di
+ mov di,0
+ call terminal_character_prepare
+ pop di
+%endif
+ mov word [csi_wrap_pending],0x0
 L_e89a: mov si,0x1
 L_e89d: jmp short L_e8a4
 L_e89f: nop

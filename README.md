@@ -589,6 +589,9 @@ The launcher uses a separate private installation under `reconstruction/lab`.
 Type `ATDThost:port` to dial its emulated Hayes modem; Alt-X exits. Its generated
 startup script and executable are refreshed on launch.
 
+The [field-aware character owner](docs/WIDE_CHARACTER_FIELDS.md) now checks
+protected bounds, metadata and marker-deletion repair across both panes.
+
 The [wide character owner](docs/WIDE_CHARACTER_EDIT.md) now handles plain
 ICH/DCH across the logical row and retains the compiler admission gate.
 

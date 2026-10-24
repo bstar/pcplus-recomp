@@ -80,6 +80,17 @@ def run():
      t.feed(b'\x1b[3'+command)
      assert t.cells()==(t.original if boundary==17 else expected(t,5,17,3,1,insert,end=boundary))
  check('actual-protected-current-and-neighbor-boundaries-no-blanket-mode-skip',protected)
+ def protected_double_clip():
+  for insert,command in [(True,b'@'),(False,b'P')]:
+   for span in (0,1,3,5):
+    for count in (3,32767):
+     t=Live();t.position(5,16);t.put('screen_attribute_checks',1)
+     t.uc.mem_write(t.symbols['screen_line_flags']+5,b'\x40')
+     t.uc.mem_write(t.symbols['screen_attribute_cells']+5*80+16+span,b'\x80')
+     units=min(count,span//2);t.feed(b'\x1b['+str(count).encode()+command)
+     assert t.cells()==expected(t,5,16,units,2,insert,end=16+span)
+     assert t.get('ansi_parameters')==max(1,units)
+ check('protected-pairs-clip-before-dispatch-final-call-and-never-cross-marker',protected_double_clip)
  def hts():
   t=Live();t.position(5,12);t.uc.mem_write(t.symbols['terminal_tab_stops'],bytes([8,16,24]+[254]*27));t.feed(b'\x1bH')
   assert bytes(t.uc.mem_read(t.symbols['terminal_tab_stops'],30))==bytes([8,12,24]+[254]*27)

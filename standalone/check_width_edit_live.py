@@ -80,7 +80,7 @@ def main():
   m.feed(b'\x1b[3'+(b'@'if insert else b'P'))
   assert bytes(m.uc.mem_read(0xb8000,4000))==struct.pack('<2000H',*expected)
   narrow_cases+=1
- for field,value in [('screen_cursor_wrap',1),('screen_attribute_checks',1),('screen_attribute_offset',1),('screen_video_offset',1),('erase_shadow_segment',0),('screen_viewport_offset',1)]:
+ for field,value in [('_command_menu_active',1),('screen_attributes_base',0),('screen_attribute_offset',1),('screen_video_offset',1),('erase_shadow_segment',0),('screen_viewport_offset',1)]:
   for command in (b'@',b'P'):
    m,address=fixture();assert m.call('terminal_native_width',ax=1,limit=2000000)==0
    m.position(5,17);m.put(field,value);shadow=bytes(m.uc.mem_read(address,8192));video=bytes(m.uc.mem_read(0xb8000,4000))

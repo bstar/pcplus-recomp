@@ -129,8 +129,8 @@ attribute_plane_admit:
  jne .bad
  cmp word [screen_viewport_enabled],0
  jne .bad
- cmp word [screen_viewport_active],0
- jne .bad
+ cmp word [screen_viewport_active],1
+ ja .bad
  cmp word [screen_viewport_offset],0
  jne .bad
  cmp word [screen_last_column],79

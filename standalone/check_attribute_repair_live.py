@@ -11,6 +11,7 @@ from check_terminal_reverse_tab import Reverse
 from check_keyboard_mapping_raw import KEYS
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/attribute-repair'
 def main():
+ OUT.mkdir(parents=True,exist_ok=True)
  cases=0;visited=set();geometry_errors=0
  def stage(height,cursor,flags,values,wrap):
   t=Live();t.put('csi_last_row',height-1);t.put('screen_last_row',height-1);t.put('erase_cell_count',height*80)
@@ -36,7 +37,7 @@ def main():
    assert (t.get('screen_cursor_row'),t.get('screen_cursor_column'))==divmod(cursor,80)
    for reg,value in [(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_DS,t.ds),(UC_X86_REG_SS,t.ds)]:assert t.uc.reg_read(reg)==value
    cases+=1
- mutations=[('screen_columns',0),('screen_attribute_row_bytes',0),('screen_video_row_bytes',0),('text_video_segment',0),('screen_viewport_enabled',1),('screen_viewport_active',1),('screen_viewport_offset',1),('screen_last_column',78),('csi_last_row',25),('screen_first_row',25),('screen_last_row',25),('erase_cell_count',1999),('screen_attributes_base',0xff00),('erase_attribute_values_base',0xff00),('screen_cursor_column',80),('screen_attribute_offset',1),('screen_video_offset',1)]
+ mutations=[('screen_columns',0),('screen_attribute_row_bytes',0),('screen_video_row_bytes',0),('text_video_segment',0),('screen_viewport_enabled',1),('screen_viewport_active',2),('screen_viewport_offset',1),('screen_last_column',78),('csi_last_row',25),('screen_first_row',25),('screen_last_row',25),('erase_cell_count',1999),('screen_attributes_base',0xff00),('erase_attribute_values_base',0xff00),('screen_cursor_column',80),('screen_attribute_offset',1),('screen_video_offset',1)]
  for name,value in mutations:
   t=stage(25,417,bytes(2000),bytes(2000),1);t.put(name,value);before=snapshots(t)
   try:t.call('erase_repair_attributes',[2],cleanup=2)

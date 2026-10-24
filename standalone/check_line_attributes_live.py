@@ -50,7 +50,7 @@ def main():
   for reg,want in [(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_ES,0xb800),(UC_X86_REG_DS,t.ds),(UC_X86_REG_SS,t.ds)]:assert t.uc.reg_read(reg)==want,(identity,reg)
   assert t.uc.reg_read(UC_X86_REG_EFLAGS)&0x400==0,'Backward copy left DF set'
   count+=1
- mutations=[('screen_columns',79),('screen_attribute_row_bytes',79),('screen_video_row_bytes',158),('text_video_segment',0xb000),('screen_viewport_enabled',1),('screen_viewport_active',1),('screen_viewport_offset',1),('screen_last_column',78),('csi_last_row',25),('erase_cell_count',1999),('screen_attributes_base',0xff00),('erase_attribute_values_base',0xff00),('screen_cursor_column',80),('screen_attribute_offset',1),('screen_video_offset',1)]
+ mutations=[('screen_columns',79),('screen_attribute_row_bytes',79),('screen_video_row_bytes',158),('text_video_segment',0xb000),('screen_viewport_enabled',1),('screen_viewport_active',2),('screen_viewport_offset',1),('screen_last_column',78),('csi_last_row',25),('erase_cell_count',1999),('screen_attributes_base',0xff00),('erase_attribute_values_base',0xff00),('screen_cursor_column',80),('screen_attribute_offset',1),('screen_video_offset',1)]
  for service,(key,value) in itertools.product(('csi_service_d668','csi_service_d73c','csi_service_daf2'),mutations):
   t=Live();t.position(5,17);t.put('screen_cursor_wrap',1);t.put('ansi_parameters',3);t.put(key,value);before=snapshots(t)
   try:t.call(service)

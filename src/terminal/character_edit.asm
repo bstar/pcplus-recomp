@@ -12,8 +12,37 @@ extern screen_viewport_active,screen_viewport_offset,text_video_segment,screen_v
 extern screen_line_flags,screen_cursor_wrap,screen_attribute_checks
 extern screen_attributes_base,screen_attribute_cells
 extern erase_attribute_values_base,erase_attribute_values
-extern attribute_repair_admit_far,character_wide_edit_far
+extern attribute_repair_admit_far,character_wide_edit_far,character_wide_prepare_far
 global csi_service_d270,csi_service_d440,ansi_escape_service_dac6
+
+global terminal_character_prepare
+; Validate the repetition bound before the dispatcher's unconditional final
+; call. Clipping only inside a helper would execute one extra clipped unit.
+terminal_character_prepare:
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push bp
+ push es
+ cmp word [screen_attribute_row_bytes],132
+ jne .ordinary
+ call far character_wide_prepare_far
+ jmp .done
+.ordinary:
+ call character_edit_prepare
+.done:
+ pop es
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ ret
 
 csi_service_d270:
  push bp
@@ -70,6 +99,12 @@ csi_service_d440:
 ; DI0 insert/1 delete. Clip the outer dispatcher's signed repetition count.
 ; No-op invalid state also sets count1 so the parser cannot loop32767 times.
 character_edit_prepare:
+ call far character_edit_prepare_far
+ ret
+
+SEGMENT ASPECT_CODE public align=16 class=FARCODE use16
+global character_edit_prepare_far
+character_edit_prepare_far:
  cmp word [screen_columns],80
  jne .outside
  cmp word [screen_attribute_row_bytes],80
@@ -125,7 +160,7 @@ character_edit_prepare:
  cmp word [erase_attribute_values_base],erase_attribute_values
  jne .outside
  cmp word [screen_attribute_checks],0
- jne .count
+ jne .protected_count
  or di,di
  jz .count
  ; Check the whole remaining metadata span, not just the first deleted byte.
@@ -145,6 +180,30 @@ character_edit_prepare:
 .repair_ready:
  call far attribute_repair_admit_far
  jc .unsupported_attributes
+ jmp .count
+.protected_count:
+ mov si,[screen_attribute_offset]
+ add si,[screen_attributes_base]
+ mov cx,[screen_last_column]
+ sub cx,[screen_cursor_column]
+ inc cx
+ xor ax,ax
+.field_scan:
+ test byte [si],0x81
+ jnz .field_end
+ inc si
+ inc ax
+ loop .field_scan
+.field_end:
+ test byte [screen_line_flags+bx],0x40
+ jz .field_units
+ shr ax,1
+.field_units:
+ or ax,ax
+ jz .outside
+ cmp dx,ax
+ jbe .count
+ mov dx,ax
 .count:
  mov ax,[ansi_parameters]
  cmp ax,1
@@ -157,17 +216,18 @@ character_edit_prepare:
 .store:
  mov [ansi_parameters],ax
  clc
- ret
+ retf
 .outside:
  mov word [ansi_parameters],1
  xor ax,ax
  stc
- ret
+ retf
 .unsupported_attributes:
  mov ax,0x2d98
  stc
- ret
+ retf
 
+SEGMENT _TEXT
 ; AX0 insert/1 delete. Keyboard admission precedes all wire/echo effects.
 ; Preserve parser count and caller registers; unsupported layouts return3.
 global terminal_key_edit_admit_far,terminal_key_edit_far

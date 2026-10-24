@@ -1,5 +1,9 @@
 # Character editing across the logical row
 
+The later [field-aware checkpoint](WIDE_CHARACTER_FIELDS.md) adds protected
+bounds, coherent attribute metadata and dispatcher preflight clipping. The
+hashes and receipt below describe the preceding plain-cell checkpoint.
+
 Plain ICH and DCH now work after the explicit132-column width transaction.
 Previously the character controller required an80-byte logical stride, so
 `CSI 3 @` and `CSI 3 P` silently returned without editing a wide row. Its
