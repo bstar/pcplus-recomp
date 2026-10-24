@@ -206,6 +206,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', required=True)
     parser.add_argument('--port', type=int, choices=[1, 2], default=1)
+    parser.add_argument('--terminal',type=Path)
     parser.add_argument('--session-controls', action='store_true')
     parser.add_argument('--hook-return', action='store_true')
     parser.add_argument('--hook-execute', action='store_true')
@@ -234,6 +235,9 @@ def main():
     if args.hook_apply:
         assert args.hook_input
         parent=parent.with_name(parent.name+'-apply')
+    if args.terminal:
+        assert args.terminal.name=='TERMINAL.EXE'
+        parent=args.terminal.resolve().parent
     child = ROOT / 'build/aspect-register-parent'
     sources = {}
     for folder, name in [(parent, 'TERMINAL.EXE'), (child, 'ASPECT.EXE')]:

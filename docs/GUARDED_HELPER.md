@@ -104,3 +104,8 @@ Synchronet and `lab/bbs/enigma_directory_script_probe.py` for ENiGMA. Select
 this terminal, `build/aspect-register-parent/ASPECT.EXE`, fresh labels and
 `--source --hook-session accept --cpu 386 --observer-high --mouse-scales 8 4`.
 ENiGMA's passing comparison also selects `--packet-delay-ms 30`.
+
+The later [helper lookup checkpoint](HOOK_LOOKUP.md) adds an optional filename
+policy above this executor and repeats the composed regressions. Its register
+interpreter has a new heap-growth configuration; this checkpoint's original
+product identities and receipt remain historical rather than being rewritten.

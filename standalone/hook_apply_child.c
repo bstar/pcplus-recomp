@@ -28,7 +28,14 @@ int main(int argc,char **argv)
  a=MK_FP((unsigned)(c.integers>>16),(unsigned)c.integers);
  b=MK_FP((unsigned)(c.strings>>16),(unsigned)c.strings);
  p=MK_FP((unsigned)(c.prm>>16),(unsigned)c.prm);
- parent=*(unsigned __far *)MK_FP(_psp,0x16);base=parent+16;
+#ifdef HOOK_LOOKUP_BATCH
+ /* The explicit batch test has an intermediate COMMAND process. The exchange
+  * block remains owned by the terminal; observe that PSP without modifying it. */
+ parent=*(unsigned __far *)MK_FP((unsigned)(c.integers>>16)-1,1);
+#else
+ parent=*(unsigned __far *)MK_FP(_psp,0x16);
+#endif
+ base=parent+16;
  sprintf(name,"S%u.BIN",index);f=fopen(name,"wb");if(!f)return 96;
  for(i=0;i<sizeof(parent_spans)/sizeof(parent_spans[0]);++i){
   const unsigned char __far *source=MK_FP(base+parent_spans[i].segment,parent_spans[i].offset);

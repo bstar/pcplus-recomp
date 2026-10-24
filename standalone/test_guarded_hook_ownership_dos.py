@@ -8,8 +8,9 @@ ROOT=apply.ROOT
 EXTRA=[('terminal_trap_phase',26),('terminal_exit_guard_valid',2),('terminal_exit_guard_owner',10)]
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
+ p.add_argument('--terminal',type=Path,default=ROOT/'build'/GUARDED/'TERMINAL.EXE')
  p.add_argument('--port',type=int,choices=[1,2],required=True);p.add_argument('--mode',type=int,choices=[0,1],required=True);a=p.parse_args()
- out=a.output.resolve();binary=ROOT/'build'/GUARDED/'TERMINAL.EXE'
+ out=a.output.resolve();binary=a.terminal.resolve()
  # The existing child reads declared parent_spans without modifying them.
  # Extend only its generated map-bound observation list, retaining all of the
  # existing settings/register/UART checks and child failure/recovery behavior.

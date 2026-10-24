@@ -132,3 +132,7 @@ The later [guarded helper composition](GUARDED_HELPER.md) combines the supported
 interactive transaction with trap and final-exit owners. It supplies separately
 bound DOS, source-compiler and BBS evidence; native parity and full application
 gates remain open.
+
+The later [native helper lookup](HOOK_LOOKUP.md) option supplies the original
+two-stage filename policy and corrects literal batch targeting. It retains this
+transaction's exchange/adoption boundary and has its own composed acceptance.

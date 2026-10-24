@@ -6,6 +6,12 @@
 #include "resident_render.h"
 #include "environment_runtime.h"
 #include <stdio.h>
+#if defined(ASPECT_REGISTER_HANDOFF)
+#include <stdlib.h>
+/* Keep startup heap slack bounded while a retained terminal and this VM
+ * invoke the sibling DOS compiler. This changes growth, not stack or limits. */
+unsigned _WCDATA _amblksiz=512;
+#endif
 #include <string.h>
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
 #include "../process/exit_owner.h"

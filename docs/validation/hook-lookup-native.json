@@ -1,0 +1,54 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "resolver": {
+    "address": "0x1353d",
+    "file_offset": 18237,
+    "bytes": 105,
+    "sha256": "c7ec6dcd6c2a8f0bd8bbe662d0c4e31f1fa7db0b4c2b844848a054bc47fa3319",
+    "evidence_id": "ev_693ec4d4013f6fc7cd11d14cd613da4a7499361c589c313a23aac7547825accb"
+  },
+  "program_service": {
+    "address": "0x1433d",
+    "bytes": 557,
+    "evidence_id": "ev_19bca81ac493fb31bdaa5ff06736dc23ce71d10fe7a32beb6e97d993a151ef88"
+  },
+  "spawnlp": {
+    "address": "0x18d34",
+    "evidence_id": "ev_d1808163373bc829211597c98fd1a2bd94c1f73a24d840691811ca47f8795270"
+  },
+  "spawn_adapter": {
+    "address": "0x1a64e",
+    "evidence_id": "ev_235df1b38506cadcb6c093353d46a1f92ce3c5ef978fc85d151f7be19e62a2ec"
+  },
+  "data_analysis_image": {
+    "sha256": "7fda4f6320fd3d5b5e1916b85835618cbe73eff81a07336c33b858e94a0cc783",
+    "role": "Static-only overlay16 materialization including original overlay32 data; never executed.",
+    "read_mode_and_separator": {
+      "address": "0x2428c",
+      "bytes_hex": "72005c00",
+      "evidence_id": "ev_1abe6011c82f0f51528fb5131095095c62cfd27488ce6cf08d6c179ca0b1e89c"
+    },
+    "environment_key_pointer": {
+      "address": "0x22dbc",
+      "bytes_hex": "681b",
+      "evidence_id": "ev_eb704eda4e03b42da2b7fc6ed2148057d0726213a93b70a36a1cefe2d2b4456d"
+    },
+    "environment_key": {
+      "address": "0x216d8",
+      "bytes_hex": "5043504c555300",
+      "evidence_id": "ev_90935b9c5650e31db119d9b00e23af9b04358fc4daca8feb07fd17e16380aa47"
+    }
+  },
+  "provider": {
+    "REA": "6.5.0",
+    "Ghidra": "12.1.2",
+    "load_segment": "0x1000",
+    "address_coordinates": "linear-byte-offset"
+  },
+  "limitations": [
+    "Static decompilation does not observe DOS filesystem or process behavior.",
+    "Resident-only MZ analysis does not map initialized overlay32 data; the derived image supplies the separately identified data mapping.",
+    "Paired native CPU replay uses the genuine original plus declared overlay12/32 loading and modeled filesystem/EXEC boundaries, not an executed synthetic analysis image.",
+    "The maintained batch route deliberately retains the .BAT suffix and qualifies relative targets; native65ca overwrites the suffix."
+  ]
+}

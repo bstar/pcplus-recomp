@@ -20,6 +20,7 @@ parser.add_argument('--hook-execute',action='store_true')
 parser.add_argument('--hook-modem',action='store_true')
 parser.add_argument('--hook-input',action='store_true')
 parser.add_argument('--hook-apply',action='store_true')
+parser.add_argument('--hook-lookup',action='store_true')
 parser.add_argument('--special-edition',action='store_true',help='Show the magenta LoC Special Edition startup screen')
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
@@ -35,6 +36,7 @@ if args.hook_execute:assert args.hook_return
 if args.hook_modem:assert args.hook_execute
 if args.hook_input:assert args.hook_modem
 if args.hook_apply:assert args.hook_input
+if args.hook_lookup:assert args.hook_apply
 if args.input_probe:assert args.hook_input and not args.hook_probe and not args.projection_probe
 if args.hook_probe:assert args.hook_execute and not args.projection_probe
 if args.exit_probe is not None:assert args.exit_guard
@@ -73,6 +75,7 @@ if args.hook_execute:out_name+='-execute'
 if args.hook_modem:out_name+='-modem'
 if args.hook_input:out_name+='-input'
 if args.hook_apply:out_name+='-apply'
+if args.hook_lookup:out_name+='-lookup'
 if args.input_probe:out_name+='-inputprobe'
 if args.hook_probe:out_name+='-hookprobe'
 if args.projection_probe:out_name+='-probe'
@@ -97,6 +100,7 @@ sources += [ROOT/'reconstruction/line_edit/insert_line.asm',ROOT/'reconstruction
 sources += sorted((ROOT/'reconstruction/character_edit').glob('*.asm'))
 sources += [ROOT/'src/process/dos_exec.asm']
 if args.hook_execute:sources.append(ROOT/'src/process/hook_owner_dos.asm')
+if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 if args.projection_probe:sources.append(ROOT/'standalone/session_projection_probe.asm')
@@ -158,6 +162,7 @@ for index,source in enumerate(sources):
  if args.hook_modem:options+=['-DTERMINAL_HOOK_MODEM']
  if args.hook_input:options+=['-DTERMINAL_HOOK_INPUT']
  if args.hook_apply:options+=['-DTERMINAL_HOOK_APPLY']
+ if args.hook_lookup:options+=['-DTERMINAL_HOOK_LOOKUP']
  if args.special_edition:options+=['-DTERMINAL_SPECIAL_EDITION']
  if args.input_probe:options+=['-DTERMINAL_HOOK_INPUT_PROBE']
  if args.hook_probe:options+=['-DTERMINAL_HOOK_PROBE']
@@ -166,6 +171,7 @@ for index,source in enumerate(sources):
  if args.notice_sound and (args.exit_guard or args.traps):options+=['-DTERMINAL_FAR_USAGE']
  if args.trap_probe is not None:options+=['-DTERMINAL_TRAP_PROBE='+str(args.trap_probe)]
  if args.process_bank and source==ROOT/'src/process/dos_exec.asm':options+=['-DPROCESS_CODE_BANK']
+ if args.hook_lookup and source==ROOT/'src/process/dos_exec.asm':options+=['-DPROCESS_LONG_PATHS']
  if args.exit_probe is not None:options+=['-DTERMINAL_EXIT_PROBE='+str(args.exit_probe)]
  if args.mouse:
   options+=['-DTERMINAL_MOUSE']
@@ -217,6 +223,7 @@ if args.hook_execute:hook_sources.update({ROOT/'src/terminal/hook_transaction.c'
 if args.hook_modem:hook_sources.add(ROOT/'src/config/hook_modem.c')
 if args.hook_input:hook_sources.add(ROOT/'src/config/hook_input.c')
 if args.hook_apply:hook_sources.update({ROOT/'src/config/hook_apply.c',ROOT/'src/terminal/hook_launch.c'})
+if args.hook_lookup:hook_sources.add(ROOT/'src/process/hook_lookup.c')
 if args.hook_probe:hook_sources.add(ROOT/'standalone/hook_transaction_probe.c')
 if args.input_probe:hook_sources.add(ROOT/'standalone/hook_input_probe.c')
 c_sources+=sorted(hook_sources)
@@ -351,6 +358,7 @@ if args.hook_execute:inputs += [ROOT/'src/terminal/hook_transaction.h',ROOT/'src
 if args.hook_modem:inputs.append(ROOT/'src/config/hook_modem.h')
 if args.hook_input:inputs.append(ROOT/'src/config/hook_input.h')
 if args.hook_apply:inputs.append(ROOT/'src/config/hook_apply.h')
+if args.hook_lookup:inputs.append(ROOT/'src/process/hook_lookup.h')
 inputs += sorted((ROOT/'src/translation').glob('*.h'))
 inputs += sorted((ROOT/'src/key_mapping').glob('*.h'))+sorted((ROOT/'src/key_mapping').glob('*.inc'))
 if args.mouse:inputs += [ROOT/'src/mouse/owner.h',ROOT/'reconstruction/program_mouse/provenance.json',ROOT/'reconstruction/program_mouse/defaults.json']
@@ -379,6 +387,7 @@ manifest['experimental_hook_execute']=args.hook_execute
 manifest['experimental_hook_modem']=args.hook_modem
 manifest['experimental_hook_input']=args.hook_input
 manifest['experimental_hook_apply']=args.hook_apply
+manifest['experimental_hook_lookup']=args.hook_lookup
 manifest['hook_input_probe']=args.input_probe
 manifest['hook_transaction_probe']=args.hook_probe
 manifest['terminal_traps']=args.traps

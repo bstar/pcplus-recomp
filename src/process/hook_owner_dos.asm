@@ -139,7 +139,12 @@ _hook_platform_execute:
  push word [bp+8]
  push word [bp+6]
  push word [bp+4]
+%ifdef TERMINAL_HOOK_LOOKUP
+ extern _hook_lookup_run
+ call far _hook_lookup_run
+%else
  call far process_run_far
+%endif
  mov sp,bp
  pop bp
  ret

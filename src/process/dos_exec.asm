@@ -36,7 +36,7 @@ process_run_far:
  retf
 %endif
 
-; (path ASCIIZ1..127, optional tail ASCIIZ0..126, optional result8).
+; (path ASCIIZ1..127, or1..259 with PROCESS_LONG_PATHS; optional tail0..126/result8).
 ; AX0 child ran;1 invalid arguments/state;2 resize failure;3 EXEC failure;4 busy.
 ; Result WORDs: status,DOS error,child termination/exit AX,retained paragraphs.
 ; Invalid arguments/busy leave result unchanged. Preserve BP/SI/DI/DS/ES/SS/SP.
@@ -69,7 +69,11 @@ _process_run:
  mov si,[bp+4]
  or si,si
  jz .invalid
+%ifdef PROCESS_LONG_PATHS
+ mov ax,259
+%else
  mov ax,127
+%endif
  call process_string_length
  jc .invalid
  or cx,cx

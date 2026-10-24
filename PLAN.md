@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+[Native helper lookup](docs/HOOK_LOOKUP.md) now composes exact-read/PCPLUS
+resolution with COM/EXE/BAT and PATH search. Literal batch targets retain their
+suffix and qualification, correcting the native overwrite and shell built-in
+ambiguity. Sixteen DOS target workflows, 28 paired policy cases, fourteen
+bounds/cancellation checks and the full helper/guard/register regressions pass.
+Register ASPECT uses 512-byte CRT growth to retain nested source compilation
+under the larger parent; its full stack and language bounds remain intact.
+Both owned BBS comparisons pass within their recorded buffering/observer scope;
+704 sources reproduce eleven products. Native-field/application parity,
+immediate ENiGMA and physical gates remain open. The card is unchanged.
+
 [Guarded helper composition](docs/GUARDED_HELPER.md) combines the complete
 helper variant with the existing trap, cancellation and final-exit owners.
 Read-only help moves to a retained far segment so the full 8 KiB stack and

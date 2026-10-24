@@ -1,5 +1,11 @@
 # PCPlus DOS reconstruction
 
+The optional [native helper lookup build](docs/HOOK_LOOKUP.md) adds PCPLUS/PATH
+and extension lookup to KEY helpers, and executes the requested batch filename
+even when it shares a name with a shell command or COM file. Build it with
+`./tools/build hook-lookup`; its register interpreter also uses smaller CRT
+growth chunks so nested DOS compilation fits beneath the larger terminal.
+
 The [guarded helper build](docs/GUARDED_HELPER.md) combines current helper and
 script handback with DOS trap ownership, foreground cancellation and protected
 final exit. Build it with `./tools/build guarded-helper`; its validation keeps

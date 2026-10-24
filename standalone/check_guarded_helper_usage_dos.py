@@ -12,9 +12,10 @@ def usage(folder):
  result=raw[header+lo[0]*16+lo[1]:header+hi[0]*16+hi[1]];assert result[-1:]==b'$'
  return result[:-1]
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
+ p.add_argument('--terminal',type=Path,default=ROOT/'build'/GUARDED/'TERMINAL.EXE');a=p.parse_args()
  out=a.output.resolve();assert out.is_relative_to(ROOT/'build')and not out.exists();out.mkdir(parents=True)
- binary=ROOT/'build'/GUARDED/'TERMINAL.EXE';m=json.loads((binary.parent/'manifest.json').read_text())
+ binary=a.terminal.resolve();m=json.loads((binary.parent/'manifest.json').read_text())
  assert m['terminal_traps']and m['terminal_exit_guard']and sha(binary)==m['binary_sha256']
  for name,digest in m['sources'].items():assert sha(ROOT/name)==digest,name
  expected=usage(binary.parent);assert expected==usage(ROOT/'build'/CONTROL)

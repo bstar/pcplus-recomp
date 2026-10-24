@@ -2,7 +2,7 @@
 """Bind current guarded-helper products to raw DOS, BBS and source evidence."""
 import argparse,json,re,struct,sys
 from pathlib import Path
-from build_guarded_helper import ROOT,GUARDED,CONTROL
+from build_guarded_helper import ROOT,GUARDED,CONTROL,LOOKUP
 from prove_guarded_helper_source import sha
 from check_guarded_helper_usage_dos import usage
 from test_hook_apply_dos import FIELDS
@@ -13,6 +13,7 @@ from compiler import compile_source
 def load(p):return json.loads(p.read_text())
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--root',type=Path,required=True)
+ p.add_argument('--lookup',action='store_true')
  p.add_argument('--trap-label',required=True);p.add_argument('--cancel-label',required=True)
  p.add_argument('--sync-label',required=True);p.add_argument('--enigma-label',required=True)
  p.add_argument('--output',type=Path,required=True);a=p.parse_args();root=a.root.resolve()
@@ -31,11 +32,13 @@ def main():
   base=ROOT/'build'/folder;m=load(base/'manifest.json');assert not m.get('original_inputs')
   assert sha(base/leaf)==m['binary_sha256'];merge(m['sources']);capture(base/leaf);capture(base/'manifest.json')
   return base/leaf,m
- terminal,m=current(GUARDED,'TERMINAL.EXE');control,c=current(CONTROL,'TERMINAL.EXE')
+ selected=LOOKUP if a.lookup else GUARDED
+ terminal,m=current(selected,'TERMINAL.EXE');control,c=current(CONTROL,'TERMINAL.EXE')
  runner,_=current('aspect-register-parent','ASPECT.EXE');compiler,_=current('aspect-compiler-dos','ASPCOMP.EXE')
  assert sha(control)=='a024383fa0171baa88ca317c27b01461f14abd2c9c33cec364975c27a5483679'
  assert m['terminal_traps']and m['terminal_exit_guard']and m['experimental_hook_apply']and m['terminal_trap_probe']is None
- memory=m['memory_layout'];assert memory['near_bytes']==64064 and memory['near_spare_bytes']==1472
+ memory=m['memory_layout'];assert memory['near_bytes']==(64096 if a.lookup else 64064)and memory['near_spare_bytes']==(1440 if a.lookup else 1472)
+ assert bool(m.get('experimental_hook_lookup'))==a.lookup
  assert memory['far_usage_bytes']==1493 and memory['far_usage_DS_restore_verified']
  listing=(terminal.parent/'terminal.map').read_text();assert re.search(r'^STACK\s+STACK\s+DGROUP\s+\S+\s+00002000\s*$',listing,re.M)
  assert usage(terminal.parent)==usage(control.parent)
@@ -43,7 +46,7 @@ def main():
  assert trap['passed']and {r['case']for r in trap['cases']}=={str(m)+str(b)for m in range(5)for b in(0,1)}
  merge(trap['sources']);trap_cases=[]
  for r in trap['cases']:
-  mode,initial=r['mode'],r['initial_break'];folder=trap_root/r['case'];binary,probe=current(GUARDED+'-probe-'+str(mode),'TERMINAL.EXE')
+  mode,initial=r['mode'],r['initial_break'];folder=trap_root/r['case'];binary,probe=current(selected+'-probe-'+str(mode),'TERMINAL.EXE')
   assert r['passed']and all(r['checks'].values())and r['cpu']=='8086'and r['child_sha256']==sha(binary)
   assert r['parent_sha256']==sha(folder/'TROBS.EXE')and r['startup_child_sha256']==sha(folder/'PRMEDIT.EXE')
   w=struct.unpack('<31H',(folder/'TRAPWIT.BIN').read_bytes());child=struct.unpack('<11H',(folder/'CHILTRAP.BIN').read_bytes())
@@ -111,7 +114,8 @@ def main():
    assert r['passed']and r['port']==port and r['case']==case
    assert r['products']=={'TERMINAL.EXE':sha(terminal),'ASPECT.EXE':sha(runner),'ASPCOMP.EXE':sha(compiler)}
    assert r['connection']['passed']and r['connection']['cpu']=='8086'and all(r['connection']['checks'].values())
-   raw=ROOT/'build/connection-dos'/('heap-'+folder.name);wire=(raw/'serial.bin').read_bytes()
+   label=r['connection']['case'];assert re.fullmatch('[A-Za-z0-9_-]+',label)
+   raw=ROOT/'build/connection-dos'/label;wire=(raw/'serial.bin').read_bytes()
    assert wire.count(b'COMPILED\r')==(case!='rejected')and wire.index(b'observe\r')<wire.rindex(b'\x1b[0n')
    assert(raw/'BEFORE.BIN').read_bytes()==(raw/'AFTER.BIN').read_bytes()
    for path in raw.glob('*.ASP'):
@@ -121,9 +125,9 @@ def main():
    bind(folder);nested.append(dict(port=port,case=case))
  u=load(root/'final-usage/result.json');assert u['passed']and u['binary_sha256']==sha(terminal);merge(u['sources'])
  assert(root/'final-usage/HELP.TXT').read_bytes()==(root/'final-usage/INVALID.TXT').read_bytes()==usage(terminal.parent);bind(root/'final-usage')
- proof=load(root/'final-source/result.json');assert proof['passed']and not proof['original_inputs']and len(proof['products'])==9;merge(proof['sources'])
+ proof=load(root/'final-source/result.json');assert proof['passed']and not proof['original_inputs']and len(proof['products'])==(11 if a.lookup else 9);merge(proof['sources'])
  for folder,digest in proof['products'].items():
-  leaf='ASPECT.EXE'if folder=='aspect-register-parent'else'ASPCOMP.EXE'if folder=='aspect-compiler-dos'else'TERMINAL.EXE'
+  leaf='ASPECT.EXE'if folder in('aspect-register-parent','aspect-runner')else'ASPCOMP.EXE'if folder=='aspect-compiler-dos'else'TERMINAL.EXE'
   assert sha(ROOT/'build'/folder/leaf)==digest
  capture(root/'final-source/result.json');capture(root/'final-source/build.log')
  bbs=[]
@@ -145,5 +149,5 @@ def main():
    'ENiGMA passes with explicit30ms buffering. Immediate-forwarding and the physical modem remain unverified here.',
    'Additional native parity, complete application gates and card deployment remain open.'],scope=__doc__)
  a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(result,indent=2)+'\n')
- print('PASS guarded helper:',len(trap_cases),'trap,',len(cancellations),'cancel,',len(helpers),'helper,',len(ownership),'ownership,',len(nested),'compiler,',len(bbs),'BBS;9 original-free products')
+ print('PASS guarded helper:',len(trap_cases),'trap,',len(cancellations),'cancel,',len(helpers),'helper,',len(ownership),'ownership,',len(nested),'compiler,',len(bbs),'BBS;',len(proof['products']),'original-free products')
 if __name__=='__main__':main()

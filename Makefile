@@ -1020,6 +1020,13 @@ test-guarded-helper: guarded-helper
 	for kind in explicit fallback chain rejected; do \
 	python3 standalone/test_nested_compiler_memory_dos.py --terminal "$$prefix/TERMINAL.EXE" --port $$port --case $$kind --output "build/guarded-helper/$$stamp-compiler-$$port-$$kind" || exit $$?; done; done
 
+.PHONY: hook-lookup test-hook-lookup
+hook-lookup: nested-compiler-products
+	python3 standalone/build_guarded_helper.py --lookup
+test-hook-lookup: hook-lookup
+	python3 standalone/build_guarded_helper.py --lookup --probes
+	python3 standalone/test_hook_lookup_dos.py --output "build/hook-lookup-tests/cohort-$$(date -u +%Y%m%dT%H%M%S%N)"
+
 .PHONY: test-aspect-keyboard test-aspect-keyboard-policy
 test-aspect-keyboard: aspect-runner
 	python3 standalone/check_aspect_keyboard.py

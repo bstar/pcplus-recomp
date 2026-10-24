@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Native helper lookup](HOOK_LOOKUP.md) adds the selected KEY kind2 filename
+policy and literal batch correction to the guarded helper build. Sixteen DOS
+target workflows, paired native policy and bounds cases, helper/trap/register
+regressions and two owned BBS comparisons pass; eleven products reproduce from
+704 sources. The register interpreter's smaller CRT growth quantum preserves
+nested compilation under this parent. Native fields, general external-protocol
+adapters, other advertised features and the full F01–F16/physical gates remain
+open; this does not close the entire external-helper feature family.
+
 [ASPECT serial bank](ASPECT_SERIAL_BANK.md) preserves all3,415 serial instruction
 bytes and frees3,104 near-code bytes through23 audited bridge pairs.28 DOS script
 cases, two full attached COM1/2 workflows, local BBS greetings and685-source/

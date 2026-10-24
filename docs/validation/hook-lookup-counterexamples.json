@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "selected-helper",
+      "target": "build/hook-lookup/final-lookup-1-pcplus-file/BIN/APPLYCH.EXE",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "171d9d125b742d0f746dff1940935b4cdaa64355d48372271690c653adbbedf4",
+      "rejection_file": "record_hook_lookup.py",
+      "rejection_line": 69
+    },
+    {
+      "case": "COM-decoy",
+      "target": "build/hook-lookup/final-lookup-1-batch-collision/CALL.COM",
+      "offset": 1,
+      "rejected": true,
+      "target_sha256": "c7bc60038e2be0d738172a5654546dea6711acb31ea69bc473a403f215625ca1",
+      "rejection_file": "record_hook_lookup.py",
+      "rejection_line": 69
+    },
+    {
+      "case": "batch-qualification",
+      "target": "build/hook-lookup/final-lookup-1-batch-collision/BATARGS.TXT",
+      "offset": 1,
+      "rejected": true,
+      "target_sha256": "0e9111516838e4e035c73b66ff97528a1519ce12825a47ddb47894ad28888e57",
+      "rejection_file": "record_hook_lookup.py",
+      "rejection_line": 81
+    },
+    {
+      "case": "fixture-mode",
+      "target": "build/hook-lookup/final-lookup-1-pcplus-file/MODE.BIN",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
+      "rejection_file": "record_hook_lookup.py",
+      "rejection_line": 67
+    },
+    {
+      "case": "KEY-target",
+      "target": "build/hook-lookup/final-lookup-1-pcplus-file/ACTIONS.KEY",
+      "offset": 2,
+      "rejected": true,
+      "target_sha256": "545f007edbef3388059fb614d3a9e5bc9c246590e97df37db3501a48cf7a4f54",
+      "rejection_file": "record_hook_lookup.py",
+      "rejection_line": 68
+    },
+    {
+      "case": "returned-registers",
+      "target": "build/hook-lookup/final-lookup-1-pcplus-file/S1.BIN",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "626654dfd935840574a0e8fd8785aa11e423f8100300a16657864a7f403eafb2",
+      "rejection_file": "record_hook_lookup.py",
+      "rejection_line": 74
+    },
+    {
+      "case": "returned-frame",
+      "target": "build/hook-lookup/final-lookup-1-pcplus-file/B1.BIN",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "1d87ebb0a1af2d5603d55c97b96168acb7079020889a97e8c671f367b87b6286",
+      "rejection_file": "record_hook_lookup.py",
+      "rejection_line": 72
+    },
+    {
+      "case": "native-result-with-pass-flag",
+      "target": "build/hook-lookup/final-linked/result.json",
+      "offset": 537,
+      "rejected": true,
+      "target_sha256": "0bc99a75162fc45b1ec27e66d4af5b49fb77e9ec2c926ef565178d1100c4fbab",
+      "rejection_file": "record_hook_lookup.py",
+      "rejection_line": 56
+    },
+    {
+      "case": "register-owner",
+      "target": "build/connection-dos/register-lookup-final-register-1-normal/OWNER0.BIN",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "9df3f5aa875b94ee2140b4b7c0978e54b8fa61c3563861d26ce88643107c2b29",
+      "rejection_file": "record_hook_lookup.py",
+      "rejection_line": 96
+    },
+    {
+      "case": "compiled-output",
+      "target": "build/connection-dos/heap-hook-lookup-final-compiler-1-explicit/LOGON.ASX",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "110e29d9cec2ed2b4023e92ab69027389ff3e8858541e71e9ba3dd5035f87969",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 123
+    },
+    {
+      "case": "interpreter-image",
+      "target": "build/aspect-register-parent/ASPECT.EXE",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "efb4083976464eff2ad1c00ae3a0d0fd1b5f4037c6e281d49f66a98e0d659d3b",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 33
+    },
+    {
+      "case": "observer-address",
+      "target": "build/bbs-lab/results/synchronet/lookup-final-sync/SCRIPT.BIN",
+      "offset": 6,
+      "rejected": true,
+      "target_sha256": "7691d63554f70dc5cd9713b62211ac0518ad7ac96c9189b8090ac20f7cc8162d",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 138
+    }
+  ],
+  "scope": "Reject damaged lookup evidence using read overlays; captured files stay intact.",
+  "receipt_sha256": "4e399e7bd33a19177a2581e28ff2db38e66269e189d86143dfb40577eb696129",
+  "checker_sha256": "1e5208aafe7f2a8bed07d836e0b39b27b838bcc0fb4d7f62c474932b1cd478dc",
+  "verifier_sha256": "eded335212970c098c7a8831748c62ed43075ec16db69de570c2ae6de4685999",
+  "shared_verifier_sha256": "66bfbfb3345776b991638b3b098cb48cbec9cec40df4d7d9bb02b6bb9dfc2441"
+}

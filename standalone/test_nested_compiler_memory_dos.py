@@ -37,7 +37,7 @@ def main():
     struct.pack_into('<H',raw,0x174+(a.port-1)*2,0x3f8 if a.port==1 else 0x2f8)
     struct.pack_into('<H',raw,0x184+(a.port-1)*2,4 if a.port==1 else 3)
     files={leaf:text.encode('cp437')for leaf,text in scripts.items()};files['ACTIONS.KEY']=actions(path,0)
-    connection.BINARY=out/'TERMINAL.EXE';label='heap-'+out.name
+    connection.BINARY=out/'TERMINAL.EXE';label='heap-'+out.parent.name+'-'+out.name
     report=connection.run(label,'success','p2000 a-1 p6500 o b s e r v e enter p800 r e a d y p700 a-x',
         prm=bytes(raw),com=a.port,working_drive='d',files=files,cpu='8086',
         arguments='@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\ACTIONS.KEY',

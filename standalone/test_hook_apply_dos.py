@@ -31,6 +31,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--mode',type=int,choices=range(13),default=0);parser.add_argument('--port',type=int,choices=[1,2],default=1)
     parser.add_argument('--online',action='store_true')
+    parser.add_argument('--lookup-case',choices=['exact-before-pcplus','pcplus-file','pcplus-stem','path-file','path-stem','com-priority','batch-collision','long-pcplus'])
     parser.add_argument('--terminal',type=Path,default=ROOT/'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-apply/TERMINAL.EXE')
     args=parser.parse_args();out=args.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     binary=args.terminal.resolve();base=binary.parent
@@ -40,14 +41,23 @@ def main():
     symbols={name:(int(seg,16),int(off,16))for seg,off,name in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',(base/'terminal.map').read_text(),re.M|re.I)}
     (out/'parent_layout.h').write_text('static const struct {unsigned segment,offset,bytes;} parent_spans[]={\n'+
         ''.join('{%d,%d,%d},\n'%(*symbols[name],size)for name,size in FIELDS)+'};\n')
-    subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-i='+str(out),
+    subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192',*(['-dHOOK_LOOKUP_BATCH']if args.lookup_case=='batch-collision'else[]),'-i='+str(out),
                     '-fm=APPLYCH.map','-fe=APPLYCH.EXE',str(ROOT/'standalone/hook_apply_child.c'),str(base/'hook_exchange.obj')],cwd=out,check=True)
     shutil.copyfile(base/'TERMINAL.EXE',out/'TERMINAL.EXE')
     raw=bytearray(image());struct.pack_into('<HH',raw,0x4e4,8,4);struct.pack_into('<H',raw,0x194,6)
     if args.online:raw[10:0x174]=modem_fixture(timeout=5)[10:0x174]
     struct.pack_into('<H',raw,0,args.port-1);struct.pack_into('<H',raw,2,6)
     struct.pack_into('<HH',raw,0x198,0,0);(out/'TEST.PRM').write_bytes(raw)
-    (out/'MODE.BIN').write_bytes(struct.pack('<H',args.mode));(out/'ACTIONS.KEY').write_bytes(actions(b'APPLYCH.EXE',2))
+    helper=(out/'APPLYCH.EXE').read_bytes();launch_name=b'APPLYCH.EXE';launch_files={'APPLYCH.EXE':helper};launch_env={}
+    if args.lookup_case:
+        from hook_lookup_fixtures import fixture as lookup_fixture
+        assert manifest.get('experimental_hook_lookup')
+        launch_name,launch_files,launch_env=lookup_fixture(args.lookup_case,helper)
+        (out/'BUILD').mkdir();shutil.move(out/'APPLYCH.EXE',out/'BUILD/APPLYCH.EXE')
+        for name,data in launch_files.items():
+            target=out/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+    environment_lines='\n'.join('set '+key+'='+value for key,value in launch_env.items())
+    (out/'MODE.BIN').write_bytes(struct.pack('<H',args.mode));(out/'ACTIONS.KEY').write_bytes(actions(launch_name,2))
     if args.mode==4:(out/'PCPLUS.XLT').write_bytes(bytes(range(256)))
     for port in [1,2]:
         sampler=SAMPLER
@@ -77,6 +87,7 @@ nosound=true
 mount d "{out}"
 d:
 set PCPLUS=
+{environment_lines}
 SNAP1 B
 SNAP2 B
 ADDKEY p700 a-1 p700 space p400 a-1 p700 space p400 a-1 p700 space p500 a-x
@@ -96,10 +107,10 @@ exit
     if args.online:
         assert args.mode in [0,1,2,3,5,6,9,10]
         connection.BINARY=out/'TERMINAL.EXE'
-        files={name:(out/name).read_bytes()for name in ['APPLYCH.EXE','ACTIONS.KEY','MODE.BIN']}
-        label='hookapply-'+out.name
+        files={name:(out/name).read_bytes()for name in ['ACTIONS.KEY','MODE.BIN']};files.update(launch_files)
+        label='hookapply-'+out.parent.name+'-'+out.name
         peer_result=connection.run(label,'success','p2000 a-1 p1000 a-1 p1000 a-1 p1000 o b s e r v e enter p800 r e a d y p700 a-x',
-            prm=bytes(raw),com=args.port,working_drive='d',files=files,cpu='8086',
+            prm=bytes(raw),com=args.port,working_drive='d',files=files,cpu='8086',environment=launch_env,
             arguments='@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\ACTIONS.KEY',
             online_triggers=[(b'observe\r',b'\x1b[5n')])
         folder=ROOT/'build/connection-dos'/label
@@ -165,8 +176,10 @@ exit
                  'standalone/test_terminal.py','standalone/test_directory_key_bindings_dos.py','standalone/test_connection_dos.py']:
         sources[name]=sha(ROOT/name)
     for name,digest in sources.items():assert sha(ROOT/name)==digest,name
+    if args.lookup_case:sources['standalone/hook_lookup_fixtures.py']=sha(ROOT/'standalone/hook_lookup_fixtures.py')
     result=dict(passed=True,mode=args.mode,port=args.port,online=args.online,restored_uart_count=1 if args.online else 2,peer=peer_result,committed=committed,status=observed,sources=sources,binary_sha256=manifest['binary_sha256'],
-                helper_sha256=sha(out/'APPLYCH.EXE'),snapshots=[sha(out/f'S{i}.BIN')for i in range(3)],
+                helper_sha256=hashlib.sha256(helper).hexdigest(),lookup_case=args.lookup_case,lookup_environment=launch_env,launch_name=launch_name.decode('ascii'),
+                snapshots=[sha(out/f'S{i}.BIN')for i in range(3)],
                 scope='Actual8086 KEY kind2/PROGRAM/UART+mouse handoff, source-built helper and application. Three real helper '
                 'invocations observe accepted bank/PRM/resources, including first-child failure retention in rejection cases. Offline checks both UART snapshots; online checks the selected UART. '
                 'Optional synthetic modem peer proves post-helper RX/parser/TX; no live BBS or physical hardware acceptance.')
