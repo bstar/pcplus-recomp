@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+[Branded IRQ carrier recovery](docs/SPECIAL_IRQ_CARRIER.md) now verifies the
+exact Special Edition package in one DOS8086 IRQ5 process: interrupted partial
+download, emulated DCD loss, staging cleanup, redial, second script login,
+exact34,169-byte retry and subsequent NFO input. Sixteen checks, thirteen
+capture-corruption controls and five relay checks pass; the isolated framed
+ENiGMA instance is stopped. Application binaries and the disconnected card are
+unchanged. Repeated recovery/load, physical acceptance and full application
+work remain open. [Live width integration boundaries](docs/LIVE_WIDTH_INTEGRATION.md)
+record the existing static-buffer capacity and the renderer/UI/child ownership
+work required before enabling peer width requests; diagnostic whole-image
+rollback must not replace live receive state.
+
 [Owned native shadow reset](docs/SHADOW_RESET_OWNER.md) now joins real DOS memory
 to recovered width/reset/geometry with guarded snapshot, deferred old-storage
 release and synchronous rollback.77 actual DOS8086 checks cover repeated width

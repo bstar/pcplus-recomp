@@ -50,7 +50,7 @@ async def run(args):
     import subprocess
     subprocess.run(['nasm','-fbin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
     menu='c-y F enter p1600 S enter p1600 P C P L U S space P R O B E space 0 1 enter p2000 enter p1600 '
-    keys='p85000 '+menu+'d p1500 a p1000 enter p15000 enter p1200 a-d p85000 '+menu+'d p1500 a p1000 enter p65000 enter p1200 n p1600 p2000 a-x'
+    keys=('p900 enter 'if args.splash_key else '')+'p85000 '+menu+'d p1500 a p1000 enter p15000 enter p1200 a-d p85000 '+menu+'d p1500 a p1000 enter p65000 enter p1200 n p1600 p2000 a-x'
     assert len('ADDKEY '+keys)<500
     snapshots=[];finished=asyncio.Event()
     async with carrier_relay(PORT) as (relay_port,sessions):
@@ -168,7 +168,7 @@ exit
     result=dict(passed=all(checks.values()) and not errors,checks=checks,errors=errors,notices=notices,snapshots=snapshots,
         terminal_sha256=before['terminal/TERMINAL.EXE'],input_hashes=before,protocol=protocol,
         input_paths={name:str(path.resolve().relative_to(ROOT))for name,path in inputs.items()},
-        products=products,cpu=args.cpu,irq=args.irq,
+        products=products,cpu=args.cpu,irq=args.irq,splash_key_sent=args.splash_key,
         scope='One real DOS process, built-in DOSBox-X Hayes modem with RTS/CTS and emulated DCD, Telnet-only bridge. Deliberate first-link abort after actual partial file write; redial and source-built ASPECT login, exact ZIP retry and NFO. Isolated ENiGMA; not physical Wi-Fi firmware acceptance.')
     (out/'carrier-checks.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=result['passed'],checks=checks,errors=errors,notices=notices),indent=2))
@@ -183,4 +183,5 @@ if __name__=='__main__':
     p.add_argument('--cpu',choices=['8086','286','386','486'],default='386')
     p.add_argument('--irq',type=int,choices=[3,4,5,7])
     p.add_argument('--mouse-scales',type=int,nargs=2)
+    p.add_argument('--splash-key',action='store_true',help='Press Enter at startup for the explicitly selected branded terminal')
     raise SystemExit(asyncio.run(run(p.parse_args())))

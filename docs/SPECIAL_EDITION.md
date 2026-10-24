@@ -108,8 +108,11 @@ The [branded IRQ receipt](validation/special-irq-package.json) verifies:
 
 The branded terminal SHA256 is
 `413e274e826a314e7f9ec388072f763836a1d7beeea49e7b930878ce28ca7217`.
-The unbranded carrier-recovery receipt remains evidence for its exact binary;
-it does not establish branded reconnect/load or physical modem acceptance.
+The [branded carrier-recovery checkpoint](SPECIAL_IRQ_CARRIER.md) now separately
+verifies this exact package's partial download, emulated DCD loss, cleanup,
+redial, second script login, exact retry and NFO return in one DOS8086 process
+on IRQ5. Sixteen checks and thirteen damaged-capture controls pass. Repeated
+recovery/load and physical modem acceptance remain open.
 
 The initial package proof inherited the surrounding Git checkout to populate
 VERSION.TXT. A retained control fails when ancestor Git is disabled. Packaging

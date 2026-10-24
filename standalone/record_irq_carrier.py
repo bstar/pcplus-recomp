@@ -21,6 +21,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--candidate',type=Path,required=True);p.add_argument('--label',required=True)
     p.add_argument('--relay-label',required=True);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--package',type=Path,help='Verify the exact branded selectable-IRQ package instead of the ordinary IRQ parent')
     args=p.parse_args();candidate=owned(args.candidate)
     assert pid(candidate)is None
     with socket.socket()as check:check.bind(('127.0.0.1',23234))
@@ -29,7 +30,16 @@ def main():
     result=read('carrier-checks.json');negative=read('carrier-current-audit-negative-checks.json')
     assert result['passed']and all(result['checks'].values())and not result['errors']
     assert result['cpu']=='8086'and result['irq']==5
-    products={'terminal/TERMINAL.EXE':ROOT/'build'/(LOOKUP+'-custom-irq')/'TERMINAL.EXE',
+    package=None
+    if args.package:
+        package=args.package.resolve();assert package.is_relative_to(ROOT/'build')
+        package_manifest=json.loads((package/'manifest.json').read_text())
+        assert package_manifest['experimental_custom_irq'] and not package_manifest['contains_private_configuration']
+        assert not package_manifest['original_inputs'] and result['splash_key_sent'] is True
+        assert 'ADDKEY p900 enter p85000 ' in (folder/'dosbox.conf').read_text()
+        assert set(p.name for p in(package/'PCPLUSSE').iterdir())==set(package_manifest['files'])
+        for name,digest in package_manifest['files'].items():assert sha(package/'PCPLUSSE'/name)==digest
+    products={'terminal/TERMINAL.EXE':ROOT/'build'/(LOOKUP+'-custom-irq'+('-special'if package else''))/'TERMINAL.EXE',
               'aspect-runner/ASPECT.EXE':ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE',
               'aspect-compiler-dos/ASPCOMP.EXE':ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE'}
     sources={}
@@ -37,6 +47,9 @@ def main():
         binary,inputs=select_product(path,path.name)
         assert result['products'][key]==dict(path=str(binary.relative_to(ROOT)),sha256=sha(binary))
         assert sha(folder/'program'/binary.name)==sha(binary)
+        if package:
+            assert sha(binary)==package_manifest['files'][binary.name]
+            assert sha(binary.parent/'manifest.json')==package_manifest['products'][binary.name]['manifest_sha256']
         for path in inputs:sources[str(path.relative_to(ROOT))]=sha(path)
     assert set(result['input_paths'])==set(result['input_hashes'])
     for name,digest in result['input_hashes'].items():
@@ -107,6 +120,9 @@ def main():
     for path in [relay_path,candidate.parent/'report.json',candidate/'instance.json',candidate/'search-instance.json',source]:
         artifacts[str(path.relative_to(ROOT))]=sha(path)
     sources[str(Path(__file__).relative_to(ROOT))]=sha(Path(__file__))
+    if package:
+        for path in [package/'manifest.json',*(package/'PCPLUSSE').iterdir()]:
+            artifacts[str(path.relative_to(ROOT))]=sha(path)
     receipt=dict(passed=True,compatibility_complete=False,products=result['products'],checks=result['checks'],
                  protocol=protocol,snapshots=result['snapshots'],notices=result['notices'],negative=negative,
                  relay_checks=relay['checks'],sources=sources,artifacts=artifacts,temporary_server_stopped=True,
@@ -115,6 +131,9 @@ def main():
                  'a verified partial ZIP write, redial, second script login, exact retry and NFO return. '
                  'Script compiled in DOS before starting the terminal. Isolated framed ENiGMA; no physical '
                  'Boca/SPA2102, SIP/audio loss, saturation, card/LAN deployment or full application claim.')
+    if package:
+        receipt.update(package_files=package_manifest['files'],card_written=False,
+                       scope=receipt['scope']+' The exact branded selectable-IRQ package products are verified; startup Enter dismisses the Special Edition splash. The separate package receipt proves splash rendering and launcher behavior; this capture proves one branded recovery cycle, not repeated in-process recovery.')
     args.output.write_text(json.dumps(receipt,indent=2)+'\n')
     print('PASS current IRQ link loss, cleanup, redial, exact retry and NFO return')
 
