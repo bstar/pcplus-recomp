@@ -19,6 +19,15 @@ terminal_directory_choose:
  push di
  push es
  cld
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+ extern terminal_program_pending,terminal_program_active
+ cmp byte [browser_saved],0
+ jne .busy
+ cmp word [terminal_program_pending],0
+ jne .busy
+ cmp word [terminal_program_active],0
+ jne .busy
+%endif
  mov word [browser_result],2
  mov word [browser_notice],0
  mov byte [browser_saved],0
@@ -202,12 +211,22 @@ terminal_directory_choose:
  mov ax,[browser_old_segment]
  mov [text_video_segment],ax
 .finish:
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+ mov byte [browser_saved],0
+%endif
  mov ax,[browser_result]
+.unwind:
  pop es
  pop di
  pop si
  pop bp
  ret
+
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+.busy:
+ mov ax,2
+ jmp .unwind
+%endif
 
 ; Guard against historical INT10 implementations clobbering BP/DS/ES.
 browser_bios:
@@ -370,6 +389,8 @@ browser_character:
 SEGMENT _DATA public class=DATA use16
 browser_result: dw 2
 browser_notice: dw 0
+global terminal_browser_screen_owned
+terminal_browser_screen_owned:
 browser_saved: db 0
 browser_page: db 0
 browser_old_segment: dw 0
@@ -400,3 +421,12 @@ GROUP UI_GROUP UI_STORAGE
 global browser_screen,browser_screen_end
 browser_screen: resb 4000
 browser_screen_end:
+
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+; The synchronous chooser restores before any queued PROGRAM can launch.
+; Bidirectional admission prevents this shared backup from changing owners
+; until the old owner has restored its display.
+global program_screen,program_screen_end
+program_screen equ browser_screen
+program_screen_end equ browser_screen_end
+%endif

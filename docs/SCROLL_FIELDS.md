@@ -95,3 +95,7 @@ Partial-width wrapped scrolling, width changes with fields already active,
 keyboard/UI/ASPECT/modal composition at 132 columns and width-changing BBS
 sessions remain open. The card package is unchanged. Physical modem connection,
 flow control, reconnection and file-transfer acceptance remain unverified.
+
+The later [active-field width checkpoint](ACTIVE_FIELD_WIDTH.md) adds bounded
+plane reshape and private native repaint during explicit width changes. The
+identities and limitations above describe this earlier scroll checkpoint.

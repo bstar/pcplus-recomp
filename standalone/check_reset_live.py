@@ -85,7 +85,7 @@ def main():
     assert bytes(m.uc.mem_read(0xb8000+3840,160))==video[3840:]
     for name,item in memory['ui_screen_buffers'].items():
      observed=bytes(m.uc.mem_read(m.base+item['start_linear'],4000))
-     assert observed==(video[:3840]+ui_before[name][3840:]if name=='program_screen'else ui_before[name]),name
+     assert observed==(video[:3840]+ui_before[name][3840:]if name in('program_screen','browser_screen')else ui_before[name]),name
     after=near(m);mask=set()
     for name in writable:mask.update(range(m.offset(name),m.offset(name)+2))
     for name,n in [('screen_attribute_cells',3168),('erase_attribute_values',3168),('screen_line_flags',128),('terminal_tab_stops',30)]:mask.update(range(m.offset(name),m.offset(name)+n))
@@ -175,8 +175,8 @@ def main():
   'terminal_transfer_active','terminal_transfer_pending','_redisplay_active','_redisplay_export_pending',
   '_redisplay_search_pending','_command_menu_active']
  invalid={name:1 for name in owners}
- invalid.update(csi_row_count=25,screen_cursor_wrap=1,screen_attribute_checks=1,terminal_tab_wrap=1,
-  screen_vertical_attribute_check=1,erase_protection_mode=1,screen_columns=132,text_video_segment=0xb000,
+ invalid.update(terminal_browser_screen_owned=1,csi_row_count=25,screen_cursor_wrap=2,screen_attribute_checks=2,terminal_tab_wrap=1,
+  screen_vertical_attribute_check=1,erase_protection_mode=2,screen_columns=132,text_video_segment=0xb000,
   text_cga_status_port=0x3da,screen_viewport_enabled=1,screen_attributes_base=0,
   erase_attribute_values_base=0,erase_shadow_segment=0,screen_cursor_column=80,csi_terminal_id=8,reset_ready=0)
  invalid.update(terminal_dec_keys=0,screen_use_bios_cursor=0,csi_last_row=24,screen_last_row=24,
@@ -186,7 +186,7 @@ def main():
   screen_reverse_wrap_blocked=1,screen_cursor_row=24,connection_state=1,reset_live_active=1,reset_bank_busy=1)
  invalid.update(screen_previous_row=24,screen_previous_column=80,screen_visible_column=80,screen_video_offset=1,screen_attribute_offset=1)
  for name,value in invalid.items():
-  m,shadow=fixture();m.put(name,value);before=near(m);video=bytes(m.uc.mem_read(0xb8000,4000))
+  m,shadow=fixture();m.put(name,value,1 if name=='terminal_browser_screen_owned'else 2);before=near(m);video=bytes(m.uc.mem_read(0xb8000,4000))
   cache=m.base+memory['native_reset_bank_start'];m.uc.mem_write(cache,b'\x5a'*65504)
   assert m.call('terminal_native_width',ax=1)==1,name
   assert near(m)==before and bytes(m.uc.mem_read(0xb8000,4000))==video,name

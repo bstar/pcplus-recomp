@@ -1,4 +1,4 @@
-; Experimental plain width transaction for1..25 content rows. Native owns its
+; Experimental field-aware width transaction for1..25 content rows. Native owns its
 ; projected bank and physical content rows. Root metadata is committed only
 ; after validation; UART, connection, parser, handles and RIS defaults never
 ; enter this projection. Peer width dispatch is deliberately still unbound.
@@ -19,11 +19,15 @@ extern terminal_program_active,terminal_program_pending,terminal_macro_active
 extern terminal_monitor_active,terminal_snapshot_active,terminal_screen_print_active
 extern terminal_controller_active,terminal_ansi_wait_active,terminal_transfer_active,terminal_transfer_pending
 extern reset_ready,connection_state,text_video_segment,text_cga_status_port
+extern terminal_browser_screen_owned
 extern screen_attributes_base,screen_attribute_cells,erase_attribute_values_base,erase_attribute_values
 extern erase_shadow_offset,erase_shadow_segment,erase_shadow_cells
 extern ui_flow_region_cells,ui_flow_video_base,ui_flow_coordinate_base,ui_flow_suppressed,csi_row_count
 extern screen_line_flags,terminal_tab_stops,terminal_viewport_admit_far
 extern csi_saved_row,csi_saved_column,csi_wrap_pending,cursor_state_saved_3342
+extern nreset_terminal_reset_geometry_native,nreset_erase_repair_attributes
+extern nreset_screen_cursor_wrap,nreset_screen_attribute_checks,nreset_erase_protection_mode
+extern csi_erase_attribute,nreset_csi_erase_attribute
 extern nreset_screen_attributes_base,nreset_screen_attribute_cells
 extern nreset_erase_attribute_values_base,nreset_erase_attribute_values
 extern nreset_erase_shadow_offset,nreset_erase_shadow_segment,nreset_reset_shadow_bytes
@@ -55,6 +59,7 @@ reset_live_projection:
 projection:
  field csi_terminal_id,0
  field attributes_normal_value,0
+ field attributes_preset_value,0
  field attributes_current,1
  field attributes_monochrome,0
  field screen_columns,0
@@ -92,9 +97,9 @@ PROJECTION_COUNT equ ($-projection)/4
 ; Declarative admission keeps the resident implementation compact without
 ; weakening any layout/owner constraint as more native services are linked.
 common_layout:
- dw reset_ready,1,screen_attribute_checks,0,screen_cursor_wrap,0
+ dw reset_ready,1
  dw screen_vertical_attribute_check,0,screen_reverse_wrap_blocked,0
- dw erase_protection_mode,0,terminal_tab_wrap,0,terminal_dec_keys,1
+ dw terminal_tab_wrap,0,terminal_dec_keys,1
  dw screen_use_bios_cursor,1,screen_columns,80
  dw screen_video_row_bytes,160,screen_viewport_right,79
  dw screen_attributes_base,screen_attribute_cells
@@ -199,6 +204,8 @@ terminal_native_width_far:
  retf
 
 live_admit:
+ cmp byte [terminal_browser_screen_owned],0
+ jne .bad_owner
  mov ax,[terminal_program_active]
  or ax,[terminal_program_pending]
  or ax,[terminal_macro_active]
@@ -230,6 +237,12 @@ live_admit:
  stc
  ret
 .plain:
+ cmp word [screen_attribute_checks],1
+ ja .bad_rows
+ cmp word [screen_cursor_wrap],1
+ ja .bad_rows
+ cmp word [erase_protection_mode],1
+ ja .bad_rows
  mov si,common_layout
  mov cx,COMMON_COUNT
  call match_layout
@@ -372,6 +385,9 @@ reset_live_prepare:
  mov [di],ax
  add si,4
  loop .fields
+ ; The root erase attribute is a byte followed by an independent mode word.
+ mov al,[es:csi_erase_attribute]
+ mov [nreset_csi_erase_attribute],al
  mov word [nreset_screen_attributes_base],nreset_screen_attribute_cells
  mov word [nreset_erase_attribute_values_base],nreset_erase_attribute_values
  mov word [nreset_program_state_7a72],80
@@ -473,6 +489,136 @@ nreset_terminal_reset_width:
  pop bp
  ret
 
+; Keep native geometry/allocation, replacing its fixed24-row field reshape.
+; DS=SS=native bank. The native second argument is only a metadata-move gate.
+; A full reset retains its existing owner; live width calls pass zero.
+global nreset_terminal_reset_geometry
+nreset_terminal_reset_geometry:
+ push bp
+ mov bp,sp
+ sub sp,2
+ push si
+ push di
+ push es
+ mov word [bp-2],0
+ cmp word [bp+6],0
+ jne .native
+ mov ax,[nreset_screen_cursor_wrap]
+ or ax,[nreset_screen_attribute_checks]
+ or ax,[nreset_erase_protection_mode]
+ jz .native
+ mov word [bp-2],1
+ mov si,nreset_screen_attribute_cells
+ call .reshape
+ mov si,nreset_erase_attribute_values
+ call .reshape
+.native:
+ mov ax,[bp+6]
+ or ax,[bp-2] ; Bypass only the native fixed-row metadata conversion.
+ push ax
+ push word [bp+4]
+ call nreset_terminal_reset_geometry_native
+ add sp,4
+ cmp word [bp-2],0
+ je .done
+ ; Canonical left pane is needed by the native position/advance descriptors.
+ mov word [nreset_screen_viewport_active],1
+ mov word [nreset_screen_viewport_offset],0
+ xor ax,ax
+ xor dx,dx
+ call nreset_screen_set_cursor
+ xor ax,ax
+ push ax
+ call nreset_erase_repair_attributes
+.done:
+ pop es
+ pop di
+ pop si
+ mov sp,bp
+ pop bp
+ ret
+.reshape:
+ ; Copy overlapping rows in the direction required by width expansion or
+ ; contraction. SI is a fixed4096-byte plane. Preserve all cells past the
+ ; admitted destination footprint; root commit remains a separate owner.
+ push bp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ sub sp,8
+ mov bx,sp
+ mov [ss:bx],si ; plane base
+ mov ax,[nreset_screen_attribute_row_bytes]
+ mov [ss:bx+2],ax ; old stride
+ mov ax,80
+ cmp word [cs:live_request],0
+ je .target
+ mov ax,132
+.target:
+ mov [ss:bx+4],ax ; new stride
+ cmp ax,[ss:bx+2]
+ je .reshape_done
+ push ds
+ pop es
+ xor di,di
+ cmp ax,[ss:bx+2]
+ jb .row
+ mov di,[cs:live_rows]
+ dec di
+.row:
+ mov ax,di
+ mul word [ss:bx+2]
+ add ax,[ss:bx]
+ mov si,ax
+ mov ax,di
+ mul word [ss:bx+4]
+ add ax,[ss:bx]
+ mov [ss:bx+6],di ; row index
+ mov di,ax
+ mov cx,80
+ cmp word [ss:bx+4],132
+ jne .forward
+ ; Expanding, move each row backward so row0 and later sources survive.
+ add si,79
+ add di,79
+ std
+ rep movsb
+ cld
+ add di,81
+ xor ax,ax
+ cmp word [ss:bx],nreset_erase_attribute_values
+ jne .blank
+ mov ax,[nreset_attributes_normal_value]
+.blank:
+ mov cx,52
+ rep stosb
+ mov di,[ss:bx+6]
+ or di,di
+ jz .reshape_done
+ dec di
+ jmp .row
+.forward:
+ cld
+ rep movsb
+ mov di,[ss:bx+6]
+ inc di
+ cmp di,[cs:live_rows]
+ jb .row
+.reshape_done:
+ cld
+ add sp,8
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ ret
+
 ; Root DS=SS. Inspect every committed geometry/pointer before any root write.
 reset_live_validate:
  mov ax,seg redisplay_snapshot
@@ -491,6 +637,9 @@ reset_live_validate:
 .next:
  add si,4
  loop .readonly
+ mov al,[csi_erase_attribute]
+ cmp al,[es:nreset_csi_erase_attribute]
+ jne .bad_geometry
  mov ax,80
  cmp word [cs:live_request],0
  je .columns

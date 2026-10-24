@@ -589,6 +589,11 @@ The launcher uses a separate private installation under `reconstruction/lab`.
 Type `ATDThost:port` to dial its emulated Hayes modem; Alt-X exits. Its generated
 startup script and executable are refreshed on launch.
 
+The [active-field width transaction](docs/ACTIVE_FIELD_WIDTH.md) now reshapes
+field planes by admitted rows and repaints through the private native repair.
+Guarded chooser/PROGRAM screen sharing recovers 4,000 bytes in the optional
+parent to preserve nested compiler admission. Peer width requests and wider UI composition remain unbound.
+
 The [scroll field owner](docs/SCROLL_FIELDS.md) now keeps metadata and inherited
 attribute repair inside full-width scroll regions, including protected edits
 after scrolling. Wider application and physical-machine acceptance remain open.

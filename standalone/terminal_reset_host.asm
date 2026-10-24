@@ -95,6 +95,7 @@ erase_complex_protected:
  int 3
  mov ax,0x4c02
  int 0x21
+%ifndef RESET_BANK_FIELDS
 global erase_repair_attributes
 erase_repair_attributes:
  mov ax,0x2d98
@@ -102,6 +103,7 @@ erase_repair_attributes:
  int 3
  mov ax,0x4c02
  int 0x21
+%endif
 global screen_adjust_attribute_boundary
 screen_adjust_attribute_boundary:
  mov ax,0x2adc
@@ -276,6 +278,8 @@ global attributes_normal_value
 attributes_normal_value equ reset_data_image+0x1d32
 global attributes_preset_value
 attributes_preset_value equ reset_data_image+0x1d36
+global attributes_protected_value
+attributes_protected_value equ reset_data_image+0x1d36
 global attributes_reverse_active
 attributes_reverse_active equ reset_data_image+0x321c
 global attributes_reverse_value

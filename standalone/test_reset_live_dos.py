@@ -5,9 +5,20 @@ from pathlib import Path
 import test_connection_dos as harness
 ROOT=harness.ROOT
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def active_width_expected(rows):
+ cells=rows*132;flags=bytearray(cells);values=bytearray([7])*cells;paint=[7]*cells;carry=7
+ for i in range(cells):
+  row,col=divmod(i,132)
+  if(row,col)in[(5,17),(5,79),(6,0)]:
+   flags[i]=0x81 if col==79 else 0x80
+   carry={(5,17):0x1e,(5,79):0x2a,(6,0):0x3e}[(row,col)]
+  values[i]=carry;paint[i]=7 if flags[i]&0x80 else carry
+ return flags,values,[32|(attr<<8)for attr in paint]
+
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--hidden-status',action='store_true');p.add_argument('--character-edits',action='store_true');p.add_argument('--field-edits',action='store_true');p.add_argument('--scroll-fields',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--hidden-status',action='store_true');p.add_argument('--character-edits',action='store_true');p.add_argument('--field-edits',action='store_true');p.add_argument('--scroll-fields',action='store_true');p.add_argument('--active-width-fields',action='store_true');a=p.parse_args()
  assert not a.scroll_fields or a.field_edits
+ assert not a.active_width_fields or a.field_edits
  binary=a.terminal.resolve();manifest=json.loads((binary.parent/'manifest.json').read_text())
  assert manifest['native_reset_transaction']and sha(binary)==manifest['binary_sha256']
  for name,digest in manifest['sources'].items():assert sha(ROOT/name)==digest,name
@@ -21,7 +32,7 @@ def main():
  dg=int(re.search(r'^DGROUP\s+([0-9a-f]+):',listing,re.M|re.I)[1],16)
  names=['screen_attribute_row_bytes','screen_columns','screen_attributes_base','screen_attribute_cells','erase_attribute_values_base','erase_attribute_values',
   'screen_cursor_wrap','screen_attribute_checks','attributes_current','attributes_preset_value','csi_erase_attribute','attributes_normal_value','erase_cell_count','screen_cursor_row','screen_cursor_column',
-  'csi_row_count','csi_last_row','screen_last_row','terminal_dec_keys','ui_flow_suppressed','screen_viewport_active','erase_shadow_segment','erase_shadow_offset']
+  'erase_protection_mode','csi_row_count','csi_last_row','screen_last_row','terminal_dec_keys','ui_flow_suppressed','screen_viewport_active','erase_shadow_segment','erase_shadow_offset']
  defines={name.upper():symbols[name][0]*16+symbols[name][1]-dg*16 for name in names}
  cs,off=symbols['terminal_native_width_far'];defines.update(DGROUP_REL=dg,LIVE_CODE_REL=cs,LIVE_OFF=off)
  (out/'line_attributes_offsets.inc').write_text(''.join(f'%define {name} {value}\n'for name,value in defines.items()))
@@ -140,6 +151,90 @@ def main():
  mov byte [SCREEN_ATTRIBUTE_CELLS+5*132+17],0x80""".replace('FIELD_CELLS',str(cells)),1)
 
 
+ if a.active_width_fields:
+  # A declared observer seeds modes before the actual transaction, captures
+  # its result, then releases that fixture before the ordinary parser stream.
+  text=text.replace(' mov ax,1\n sti\n call far [cs:live_call]',""" push ds
+ pop es
+ mov di,SCREEN_ATTRIBUTE_CELLS
+ xor ax,ax
+ mov cx,2000
+ rep stosb
+ mov di,ERASE_ATTRIBUTE_VALUES
+ mov al,7
+ mov cx,2000
+ rep stosb
+ mov byte [SCREEN_ATTRIBUTE_CELLS+5*80+17],0x80
+ mov byte [SCREEN_ATTRIBUTE_CELLS+5*80+79],0x81
+ mov byte [SCREEN_ATTRIBUTE_CELLS+6*80],0x80
+ mov di,ERASE_ATTRIBUTE_VALUES+5*80+17
+ mov al,0x1e
+ mov cx,62
+ rep stosb
+ mov al,0x2a
+ stosb
+ mov di,ERASE_ATTRIBUTE_VALUES+6*80
+ mov al,0x3e
+ mov cx,2000-6*80
+ rep stosb
+ mov word [SCREEN_CURSOR_WRAP],1
+ mov word [SCREEN_ATTRIBUTE_CHECKS],1
+ mov word [ERASE_PROTECTION_MODE],1
+ mov word [ATTRIBUTES_PRESET_VALUE],0x4e
+ mov byte [CSI_ERASE_ATTRIBUTE],7
+ mov ax,1
+ sti
+ call far [cs:live_call]""",1)
+  text=text.replace(' call snapshot\n ; Observe the native clear', ' sti\n call snapshot\n call width_snapshot\n cli\n ; Observe the native clear',1)
+  text=text.replace(' cmp [si],ax\n jne .not_blank',' cmp byte [si],32\n jne .not_blank',1)
+  text=text.replace('.not_blank:\n pop ds\n restore',""".not_blank:
+ pop ds
+ mov word [SCREEN_CURSOR_WRAP],0
+ mov word [SCREEN_ATTRIBUTE_CHECKS],0
+ mov word [ERASE_PROTECTION_MODE],0
+ restore""",1)
+  text=text.replace('buffer: times sample_end-sample db 0','buffer equ sample',1)
+  text=text.replace('sample_end:',"""width_modes: times 3 dw 0
+width_flags: times 4096 db 0
+width_values: times 4096 db 0
+width_video: times 4000 db 0
+width_shadow: times 6600 db 0
+sample_end:""",1)
+  text=text.replace('resident_end:',"""width_snapshot:
+ push cs
+ pop es
+ mov bx,[SCREEN_CURSOR_WRAP]
+ mov [cs:width_modes],bx
+ mov ax,[SCREEN_ATTRIBUTE_CHECKS]
+ mov [cs:width_modes+2],ax
+ mov ax,[ERASE_PROTECTION_MODE]
+ mov [cs:width_modes+4],ax
+ mov si,SCREEN_ATTRIBUTE_CELLS
+ mov di,width_flags
+ mov cx,4096
+ rep movsb
+ mov si,ERASE_ATTRIBUTE_VALUES
+ mov di,width_values
+ mov cx,4096
+ rep movsb
+ ; Read the root-owned shadow pointer after commit.
+ mov bx,[ERASE_SHADOW_OFFSET]
+ push ds
+ mov ds,[ERASE_SHADOW_SEGMENT]
+ mov si,bx
+ mov di,width_shadow
+ mov cx,6600
+ rep movsb
+ mov ax,0xb800
+ mov ds,ax
+ xor si,si
+ mov di,width_video
+ mov cx,2000
+ rep movsw
+ pop ds
+ ret
+resident_end:""",1)
+
  text=text.replace('cmp dx,0x184f','cmp dx,0x174f')
  text=text.replace('mov ax,[SCREEN_CURSOR_WRAP]','mov ax,[SCREEN_VIEWPORT_ACTIVE]')
  text=text.replace(' inc word [cs:exits]',' call snapshot\n inc word [cs:exits]')
@@ -160,9 +255,10 @@ def main():
   text=text.replace(anchor,' pop ds\n mov si,SCREEN_ATTRIBUTE_CELLS\n mov di,field_flags\n mov cx,4096\n rep movsb\n mov si,ERASE_ATTRIBUTE_VALUES\n mov di,field_values\n mov cx,4096\n rep movsb\n push ds\n mov ax,0xb800')
  (out/'observer.asm').write_text(text)
  subprocess.run(['nasm','-fbin','-I',str(out)+'/',str(out/'observer.asm'),'-o',str(out/'RWATCH.COM')],check=True)
+ assert (out/'RWATCH.COM').stat().st_size<=0xff00,'Observer exceeds a DOS COM segment'
  payload=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c\x1b[6;18H\x1b[1;1HFIRST BYTE SAFE'
  edits=[(0,131,b'R'),(5,0,b'LEFT'),(rows-1,80,b'HIDDEN'),(5,79,b'E'),(5,80,b'F')]
- expected=[0x0720]*cells
+ expected=active_width_expected(rows)[2]if a.active_width_fields else[0x0720]*cells
  for col,char in enumerate(b'FIRST BYTE SAFE'):expected[col]=0x700|char
  for row,col,data in edits:
   payload+=b'\x1b['+str(row+1).encode()+b';'+str(col+1).encode()+b'H'+data
@@ -215,7 +311,7 @@ def main():
  if manifest.get('experimental_mouse'):struct.pack_into('<HH',settings,0x4e4,8,4)
  result=scope['run']('product','success',keys,arguments='@D:\\TEST.PRM /D:CaseTest:23 /A:NETWORK',banner=payload,
   files={'RWATCH.COM':(out/'RWATCH.COM').read_bytes()},observer='RWATCH',cpu='8086',prm=bytes(settings))
- raw=(out/'product/LINEATTR.BIN').read_bytes();assert len(raw)==(20414 if a.field_edits else 12220),len(raw)
+ raw=(out/'product/LINEATTR.BIN').read_bytes();assert len(raw)==((20414 if a.field_edits else 12220)+(18798 if a.active_width_fields else 0)),len(raw)
  state=struct.unpack_from('<12H',raw);shadow=bytearray(raw[24:8216]);video=raw[8216:12216]
  for row in range(rows):shadow[row*264:row*264+160]=video[row*160:row*160+160]
  wire=(out/'product/serial.bin').read_bytes();checks=dict(result['checks'])
@@ -229,10 +325,22 @@ def main():
   checks.update(actual_field_fixture_reached=struct.unpack_from('<H',raw,12220)[0]==(2 if a.scroll_fields else 1),
    actual_field_flags=raw[12222:12222+cells]==field_expected[0],
    actual_field_values=raw[16318:16318+cells]==field_expected[1])
+ if a.active_width_fields:
+  start=20414
+  modes=struct.unpack_from('<3H',raw,start);start+=6
+  wf=raw[start:start+4096];start+=4096
+  wv=raw[start:start+4096];start+=4096
+  vv=raw[start:start+4000];start+=4000
+  ws=bytearray(raw[start:start+6600])
+  for row in range(rows):ws[row*264:row*264+160]=vv[row*160:row*160+160]
+  flags,values,width_words=active_width_expected(rows)
+  checks.update(actual_active_width_modes=modes==(1,1,1),actual_active_width_flags=wf[:cells]==flags,
+   actual_active_width_values=wv[:cells]==values,
+   actual_active_width_pixels=bytes(ws[:cells*2])==struct.pack('<'+'H'*cells,*width_words))
  report=dict(passed=all(checks.values()),checks=checks,binary_sha256=sha(binary),state=list(state),transaction_status=struct.unpack_from('<H',raw,12216)[0],
   sources=manifest['sources'],checker_sha256=sha(Path(__file__)),observer_base_sha256=sha(observer),
   artifacts={str(path.relative_to(ROOT)):sha(path)for path in out.rglob('*')if path.is_file()},original_inputs=[],
-  hidden_status_fixture=a.hidden_status,content_rows=rows,character_edits_fixture=a.character_edits,field_edits_fixture=a.field_edits,scroll_fields_fixture=a.scroll_fields,scope=__doc__+' Real startup25-row geometry; optional fixture hides status. IF-enabled far call after the BIOS operation, not a peer width request. Actual UART/parser/output/pan/CPR and hardware restoration follow. No failure injection, private-context IRQ timing, general UI/child or physical acceptance claimed.')
+  hidden_status_fixture=a.hidden_status,content_rows=rows,character_edits_fixture=a.character_edits,field_edits_fixture=a.field_edits,scroll_fields_fixture=a.scroll_fields,active_width_fields_fixture=a.active_width_fields,scope=__doc__+' Real startup25-row geometry; optional fixture hides status. IF-enabled far call after the BIOS operation, not a peer width request. Actual UART/parser/output/pan/CPR and hardware restoration follow. No failure injection, private-context IRQ timing, general UI/child or physical acceptance claimed.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n');print(('PASS'if report['passed']else'FAIL')+' DOS live transaction '+json.dumps(checks))
  return 0 if report['passed']else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -91,7 +91,10 @@ def inspect_terminal_memory(binary,map_path):
   assert hi<=near_start or lo>=near_start+near_size,(name,'UI screen overlapsDGROUP')
   assert hi<=shadow or lo>=far_end,(name,'UI screen overlaps native far storage')
   if 'terminal_snapshot_image' in symbols:assert hi<=frozen or lo>=frozen_end,(name,'UI screen overlaps frozen screen')
-  for other in ui_buffers.values():assert hi<=other['start_linear'] or lo>=other['end_linear'],(name,'nested owners alias')
+  for other_name,other in ui_buffers.items():
+   shared=('nreset_reset_data_image'in symbols and native_overlay and name=='program_screen'and other_name=='browser_screen')
+   if shared:assert(lo,hi)==(other['start_linear'],other['end_linear'])
+   else:assert hi<=other['start_linear'] or lo>=other['end_linear'],(name,'nested owners alias')
   assert lo>=module_bytes,(name,'UI buffer unexpectedly serialized in MZ')
   assert word(name+'_segment')==seg and address(name+'_segment') in relocations,(name,'invalid relocated segment pointer')
   ui_buffers[name]=dict(relative_segment=seg,offset=off,bytes=4000,start_linear=lo,end_linear=hi)
@@ -99,7 +102,9 @@ def inspect_terminal_memory(binary,map_path):
  if ui_buffers:
   assert len(ui_buffers)==5,'Incomplete terminal UI screen ownership'
   assert len({b['relative_segment'] for b in ui_buffers.values()})==1
-  extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=20000)
+  overlay='nreset_reset_data_image'in symbols and native_overlay
+  extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=16000 if overlay else 20000,program_browser_screen_overlay=overlay)
+  if overlay:assert symbols['program_screen']==symbols['browser_screen']and symbols['program_screen_end']==symbols['browser_screen_end']
  # Frozen redisplay bytes are independent of the live history writer.
  snap_lo=address('redisplay_snapshot');snap_hi=address('redisplay_snapshot_end')
  snap_seg,snap_off=symbols['redisplay_snapshot']
@@ -703,7 +708,7 @@ def inspect_terminal_memory(binary,map_path):
     assert symbols[name][0]==native_cs,name
    # Inspect the compact projection against named root/native owners. A root
    # offset that grows past15 bits must never silently become a write flag.
-   rows=[('csi_terminal_id',0),('attributes_normal_value',0),('attributes_current',1),('attributes_monochrome',0),
+   rows=[('csi_terminal_id',0),('attributes_normal_value',0),('attributes_preset_value',0),('attributes_current',1),('attributes_monochrome',0),
     ('screen_columns',0),('screen_video_row_bytes',0),('screen_attribute_row_bytes',1),('screen_last_column',1),
     ('csi_last_row',1),('screen_first_row',1),('screen_last_row',1),('screen_cursor_row',1),('screen_cursor_column',1),
     ('screen_visible_column',1),('screen_previous_row',1),('screen_previous_column',1),('screen_video_offset',1),
@@ -718,6 +723,9 @@ def inspect_terminal_memory(binary,map_path):
     encoded=struct.unpack_from('<HH',image,start+address('reset_live_projection')+i*4)
     assert encoded==(off+writable*0x8000,symbols[native][1]),name
    extra['native_reset_projection_fields_verified']=len(rows)
+   assert symbols['nreset_erase_repair_attributes'][0]==symbols['nreset_terminal_reset_geometry_native'][0]==native_cs
+   assert raw('nreset_erase_repair_attributes',6)==b'\x55\x8b\xec\x83\xec\x0e'
+   extra['native_reset_field_repair_verified']=True
    backup=ui_buffers['program_screen'];assert backup['bytes']==4000
    extra.update(native_reset_transaction=True,native_reset_backup_start=backup['start_linear'],
                 native_reset_backup_bytes=4000,native_reset_transaction_bridge_verified=True)
