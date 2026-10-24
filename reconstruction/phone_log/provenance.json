@@ -1,0 +1,44 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_file_offset": 67753,
+  "start": 58025,
+  "end": 58283,
+  "bytes": 258,
+  "instructions": 115,
+  "sha256": "dc5e23cb78eac0de698422b1ee546093227286845402d7edd917001710433e00",
+  "rea_evidence": "ev_8fbdeb2c8c59e1604bf53207279cda86462bc7e81ef53e858cf6bb35fb013b96",
+  "analysis_artifact_sha256": "d9b4c834ff96f6d4971976ad3f6a4471365ce6ef6460c73ba9b2ee8e304b7648",
+  "state": {
+    "1d6a": "phone_log_enabled",
+    "333a": "phone_log_pending",
+    "3320": "phone_log_filename",
+    "7094": "phone_log_append_mode",
+    "4a08": "phone_log_error_format",
+    "4a1a": "phone_log_heading_name",
+    "4a20": "phone_log_heading_format",
+    "e650": "phone_log_name",
+    "e669": "phone_log_number",
+    "7097": "phone_log_connect_format",
+    "2c7c": "phone_log_elapsed",
+    "70ad": "phone_log_disconnect_format"
+  },
+  "services": {
+    "37a5": "phone_log_stop_clock",
+    "3f61": "phone_log_start_clock",
+    "353d": "phone_log_resolve",
+    "3673": "phone_log_exists",
+    "48a1": "phone_log_prepare",
+    "841a": "phone_log_open",
+    "82b6": "phone_log_sprintf",
+    "427f": "phone_log_notice",
+    "9786": "phone_log_fprintf",
+    "498b": "phone_log_time",
+    "36d4": "phone_log_date",
+    "8318": "phone_log_close"
+  },
+  "limitations": [
+    "Static-only overlay image is never executed.",
+    "Exact controller only; clock, path, FILE/format and notice providers remain separate dependencies.",
+    "Original ignores formatted-write/close errors and updates pending before close; production persistence needs explicit failure handling."
+  ]
+}

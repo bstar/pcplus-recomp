@@ -1,4 +1,14 @@
 .DEFAULT_GOAL := all
+.PHONY: phone-log test-phone-log test-phone-log-compat test-phone-log-source
+phone-log:
+	python3 standalone/build_phone_log.py
+test-phone-log: phone-log
+	python3 standalone/check_phone_log.py
+	python3 standalone/test_phone_log_dos.py --output build/phone-log-dos/$$(date +%Y%m%d-%H%M%S-%N)
+test-phone-log-compat: phone-log
+	python3 standalone/check_phone_log.py --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE
+test-phone-log-source: phone-log
+	python3 standalone/prove_phone_log.py --output build/phone-log-source/$$(date +%Y%m%d-%H%M%S-%N)
 .PHONY: reset-bank test-reset-bank
 reset-bank:
 	python3 standalone/build_reset_bank.py

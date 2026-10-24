@@ -1,5 +1,10 @@
 # PCPlus DOS reconstruction
 
+The [native telephone-log component](docs/PHONE_LOG.md) now reproduces258
+original instruction bytes and passes CPU/DOS/source-rebuild checks.
+`PCPLUS.FON` is a call log; the prior font-resource inference is corrected.
+Terminal logging integration and reliable persistence remain unfinished.
+
 The [SUB and interrupted-request checkpoint](docs/SUBSTITUTE_CONTROL.md) fixes
 the missing native profile 4 provider and preserves profile 6 control-glyph
 output. A clean 870-file source proof passes all 177 DOS workflows. Separate

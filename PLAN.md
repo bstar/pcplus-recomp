@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Telephone-call log recovery](docs/PHONE_LOG.md) corrects the earlier resource
+inventory: PCPLUS.FON is a text call log, not font-format evidence. Its258-byte
+native overlay4 controller now assembles exactly and passes384 policy/ABI
+inputs,33 actual DOS FILE/handle/hardware checks and a seven-source exact
+rebuild. The native routine ignores write/close failures; production reliable
+persistence, clock/path/PRM bindings and connection-lifecycle integration remain
+required. No application binary changed and no F07/F10/font gate closes.
+
 [SUB control recovery](docs/SUBSTITUTE_CONTROL.md) now passes its source/DOS
 checkpoint. The recovered 53-byte provider fixes the profile 4 unsupported
 boundary. Four dispatcher cases preserve native CP437 control-glyph behavior;
