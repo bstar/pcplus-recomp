@@ -94,6 +94,7 @@ Selected [ENiGMA ASPECT/BBS sessions](../lab/bbs/enigma-aspect-width.md) and
 [Synchronet main-loop width navigation](../lab/bbs/synchronet-peer-width.md)
 are separate evidence. Stock ENiGMA immediate-forwarding fragmentation still
 fails; buffered and explicitly patched-decoder passes retain their own scope.
-Active Synchronet/ASPECT width composition, carrier/OS cancellation, unsupported
-profiles, broader application families, wide transfers and physical modem/card
-acceptance remain open. This source checkpoint is not a card release.
+The later [Synchronet ASPECT width campaign](../lab/bbs/synchronet-aspect-width.md)
+passes all four source/ASX and window combinations. Carrier/OS cancellation,
+unsupported profiles, broader application families, wide transfers and physical
+modem/card acceptance remain open. This source checkpoint is not a card release.

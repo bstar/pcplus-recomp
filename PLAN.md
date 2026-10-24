@@ -18,8 +18,14 @@ window-state combinations, plus a stock source/window case with 20ms buffering.
 Its passive observer verifies actual renderer/window ownership, child return
 and complete hardware restoration. The [Synchronet session](lab/bbs/synchronet-peer-width.md)
 passes immediate forwarding and returns into its stock File Transfer menu.
-These use synthetic menu/shell fixtures. Active Synchronet/ASPECT width
-composition, wider failure/interruption, unsupported application families,
+The later [Synchronet ASPECT composition](lab/bbs/synchronet-aspect-width.md)
+passes all four source/ASX and open/closed-window cases with immediate
+forwarding. Its delayed-start shell requires A from the actual child before
+issuing width requests; 56 producer checks and an independent audit bind136
+artifacts. DOS compiler output, real renderer/window owners, manual stock
+File Transfer return and complete hardware restoration verify. The server is
+stopped after the campaign. These use synthetic menu/shell fixtures. Wider
+failure/interruption, wide transfers and unsupported application families,
 physical modem acceptance and card deployment remain open. This is a source
 checkpoint; the disconnected card has not received these builds.
 

@@ -5,7 +5,8 @@ the missing native profile 4 provider and preserves profile 6 control-glyph
 output. A clean 870-file source proof passes all 177 DOS workflows. Separate
 [BBS/ASPECT width tests](lab/bbs/enigma-aspect-width.md) pass compiled-source and
 precompiled scripts with both window states, plus a stock ENiGMA buffered case.
-[Synchronet width navigation](lab/bbs/synchronet-peer-width.md) also passes.
+[Synchronet ASPECT width tests](lab/bbs/synchronet-aspect-width.md) now pass
+the same four source/ASX and window combinations with immediate forwarding.
 Stock ENiGMA immediate fragmentation, broader application/hardware acceptance
 and card deployment remain open.
 

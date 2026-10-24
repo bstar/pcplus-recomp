@@ -3,10 +3,12 @@
 [SUB recovery and interrupted requests](SUBSTITUTE_CONTROL.md) now pass a
 clean 870-source, 177-DOS-workflow checkpoint, including 76 refusal/interruption
 cases and native control-glyph dispatch. Separate ENiGMA ASPECT/BBS tests cover
-source/ASX and both script-window states, plus a stock buffered case; Synchronet
-main-loop navigation also passes. Stock immediate ENiGMA fragmentation and
-active Synchronet/ASPECT width composition remain open, along with broader
-F01–F16, hardware and card acceptance. Earlier checkpoints retain their scope.
+source/ASX and both script-window states, plus a stock buffered case.
+[Synchronet ASPECT width composition](../lab/bbs/synchronet-aspect-width.md)
+also passes all four combinations with immediate forwarding, exact DOS compiler
+output and manual stock File Transfer return. Stock immediate ENiGMA
+fragmentation, wider interruption/transfer coverage, broader F01–F16, hardware
+and card acceptance remain open. Earlier checkpoints retain their scope.
 
 [Peer width integration](PEER_WIDTH.md) connects private mode3 to the guarded
 transaction in the experimental parent, with a separate rollback frame during

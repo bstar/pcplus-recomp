@@ -1,5 +1,12 @@
 # Local BBS compatibility lab
 
+[Synchronet ASPECT width composition](synchronet-aspect-width.md) now passes
+all four source/precompiled and open/closed-window cases. The delayed-start
+fixture waits for the actual child before requesting width changes. Native
+server cursor/key handling, DOS compiler output, renderer/window ownership,
+manual stock File Transfer return and exact hardware restoration are checked
+with immediate forwarding. No application binary changes were required.
+
 The [ASPECT width composition](enigma-aspect-width.md) passes five actual DOS
 sessions: the four source/precompiled and open/closed-window decoder cases,
 plus a stock-server source/window case with declared modem buffering. Passive
