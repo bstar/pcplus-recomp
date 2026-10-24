@@ -13,6 +13,9 @@ redial. Native disconnect workers retain the active WAITFOR completion rule.
 [Wide DOS-child tests](lab/bbs/peer-width-process.md) pass16 source/window,
 SAVE/NOCLEAR and text/graphics combinations with continued renderer/keyboard
 handling and exact hardware restoration.
+[Wide-view transfer checks](lab/bbs/peer-width-transfer.md) pass six strict
+X/YMODEM clipboard workflows and six independent `lrzsz` ZMODEM workflows,
+including automatic conservative-credit downloads and files over64KiB.
 Stock ENiGMA immediate fragmentation, broader application/hardware acceptance
 and card deployment remain open.
 

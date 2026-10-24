@@ -36,7 +36,15 @@ source/window/SAVE-versus-NOCLEAR/text-versus-graphics combinations. Passive
 BIOS and EXEC observations verify real renderer/PROGRAM ownership, child37
 then interpreter0, continued wide replies, manual keyboard/narrow return and
 exact hardware restoration; the independent receipt binds448 artifacts.
-These are selected RUN workflows, not arbitrary OS interruption. Wider
+These are selected RUN workflows, not arbitrary OS interruption.
+Six [wide clipboard/X/YMODEM workflows](lab/bbs/peer-width-transfer.md) pass
+strict selection, binary/empty/batch data, stale-name and prompt-cancel recovery,
+post-transfer reuse and exact hardware restoration. Six independent
+[wide lrzsz/ZMODEM workflows](lab/bbs/peer-width-zmodem.md) pass CRC16/CRC32,
+ordinary/escaped uploads, files over64KiB and automatic `/Z:256` downloads.
+Passive wire audits recheck framing/CRC/data/finish, with134 and122 artifacts
+sealed respectively. Failed pilot/video, saved-profile and partial-reply
+fixtures remain explicit; no application sources or binaries changed. Wider
 failure/interruption, wide transfers and unsupported application families,
 physical modem acceptance and card deployment remain open. This is a source
 checkpoint; the disconnected card has not received these builds.

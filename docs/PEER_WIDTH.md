@@ -107,6 +107,11 @@ historical checkpoint; they do not establish physical target acceptance.
 The [wide DOS-child matrix](../lab/bbs/peer-width-process.md) separately adds16
 actual RUN workflows, continued rendering and hardware restoration. It does
 not establish arbitrary OS interruption or full-plane preservation around EXEC.
+The [wide transfer checkpoint](../lab/bbs/peer-width-transfer.md) adds six strict
+X/YMODEM clipboard workflows and six independent lrzsz ZMODEM workflows with
+actual width replies before/after protocol and keyboard/narrow recovery.
+Those selected cases supersede the blanket untested-wide-transfer statement;
+arbitrary mid-protocol width changes and wider protocol/BBS/audio coverage remain.
 
 Verify interruptions beyond those selected cases and the controlled
 ownership/fault matrix. Other terminal/video profiles,

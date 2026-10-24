@@ -15,7 +15,12 @@ binaries are unchanged. A [wide DOS-child matrix](../lab/bbs/peer-width-process.
 passes16 source/window/SAVE/NOCLEAR/text/graphics combinations with actual
 EXEC/renderer ownership, child37 then interpreter0, continued replies and
 exact hardware restoration. This covers selected RUN workflows, without a
-full logical-plane comparison or arbitrary OS-interruption claim. Stock immediate ENiGMA
+full logical-plane comparison or arbitrary OS-interruption claim.
+[Wide transfer composition](../lab/bbs/peer-width-transfer.md) adds six strict
+clipboard/X/YMODEM workflows and six independent `lrzsz` ZMODEM cases, including
+automatic `/Z:256`, CRC16/CRC32, escaped uploads and files over64KiB. Separate
+passive wire audits check file bytes/CRC/finish and hardware restoration;
+neither receipt closes F08 or physical/BBS/audio acceptance. Stock immediate ENiGMA
 fragmentation, wider interruption/transfer coverage, broader F01–F16, hardware
 and card acceptance remain open. Earlier checkpoints retain their scope.
 
