@@ -1,5 +1,14 @@
 # PCPlus DOS reconstruction
 
+The [SUB and interrupted-request checkpoint](docs/SUBSTITUTE_CONTROL.md) fixes
+the missing native profile 4 provider and preserves profile 6 control-glyph
+output. A clean 870-file source proof passes all 177 DOS workflows. Separate
+[BBS/ASPECT width tests](lab/bbs/enigma-aspect-width.md) pass compiled-source and
+precompiled scripts with both window states, plus a stock ENiGMA buffered case.
+[Synchronet width navigation](lab/bbs/synchronet-peer-width.md) also passes.
+Stock ENiGMA immediate fragmentation, broader application/hardware acceptance
+and card deployment remain open.
+
 The experimental [peer-width checkpoint](docs/PEER_WIDTH.md) connects BBS
 private mode3 requests to the validated80/132-column transaction, including
 captured ASPECT sessions. Logical132 columns use overlapping80-column panes.

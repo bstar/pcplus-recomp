@@ -98,7 +98,7 @@ if args.native_reset_transaction:out_name+='-transaction'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
-modules += ['viewport','protected_erase','alternate_output']
+modules += ['viewport','protected_erase','alternate_output','substitute_control']
 sources=[]
 for module in modules:
  sources += sorted((ROOT/'reconstruction'/module).glob('*.asm'))
@@ -148,6 +148,11 @@ for alternate_unit in json.loads(alternate_provenance.read_text())['units']:
  flat=OUT/('alternate-'+Path(alternate_unit['file']).stem+'-baseline.bin')
  subprocess.run(['nasm','-fbin','-I',str(ROOT/'reconstruction/uart')+'/',str(ROOT/alternate_unit['file']),'-o',str(flat)],check=True)
  assert flat.stat().st_size==alternate_unit['bytes']and hashlib.sha256(flat.read_bytes()).hexdigest()==alternate_unit['sha256']
+substitute_provenance=ROOT/'reconstruction/substitute_control/provenance.json'
+substitute_unit=json.loads(substitute_provenance.read_text())['units'][0]
+substitute_flat=OUT/'substitute-control-baseline.bin'
+subprocess.run(['nasm','-fbin',str(ROOT/substitute_unit['file']),'-o',str(substitute_flat)],check=True)
+assert substitute_flat.stat().st_size==substitute_unit['bytes']==53 and hashlib.sha256(substitute_flat.read_bytes()).hexdigest()==substitute_unit['sha256']
 render_import_adapters={}
 sources.append(ROOT/'src/aspect/break_cursor_read.asm')
 objects=[]
@@ -381,7 +386,7 @@ assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
 inputs=sources+c_sources+[ROOT/'src/config/prm_dos.h',ROOT/'src/config/terminal_import.h',ROOT/'src/config/terminal_import.inc',ROOT/'src/config/modem_import.h',ROOT/'src/config/modem_import.inc',ROOT/'src/config/startup_import.h',ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc']
 inputs += [ROOT/'src/config/live_configuration.h',ROOT/'src/aspect/resident_render.h',ROOT/'src/aspect/resident_bridge.inc',ROOT/'src/aspect/renderer_policy.h',ROOT/'src/aspect/serial_handoff.h']
-inputs += [protected_provenance,alternate_provenance]
+inputs += [protected_provenance,alternate_provenance,substitute_provenance]
 inputs += [ROOT/'src/status/status_state.inc',ROOT/'src/status/status_formatter.h']
 inputs += [ROOT/'src/config/live_setup_owner.h',ROOT/'src/config/terminal_preferences.h',ROOT/'src/config/transfer_import.h']
 inputs += [ROOT/'src/config/resource_path.h']

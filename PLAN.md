@@ -1,5 +1,28 @@
 # Complete DOS rebuild plan
 
+[SUB control recovery](docs/SUBSTITUTE_CONTROL.md) now passes its source/DOS
+checkpoint. The recovered 53-byte provider fixes the profile 4 unsupported
+boundary. Four dispatcher cases preserve native CP437 control-glyph behavior;
+CAN/SUB interruption is followed by ESC resynchronization, without a claim of
+independent cancellation. The clean source-03 proof reproduces four parents,
+both unchanged interpreters, the unchanged compiler and CSI from 870 declared
+files. All 177 DOS workflows pass, including 76 new refusal/interruption cases;
+the [receipt](docs/validation/substitute-control.json) binds 4,172 artifacts.
+The earlier failed profile 6 oracle and terminated source-01 run remain explicit.
+
+Selected authenticated BBS width witnesses are separately sealed. The
+[ENiGMA comparison](lab/bbs/peer-width.md) retains stock immediate-forwarding
+failure beside passing buffered and decoder-candidate sessions. The new
+[ASPECT composition](lab/bbs/enigma-aspect-width.md) passes four source/ASX and
+window-state combinations, plus a stock source/window case with 20ms buffering.
+Its passive observer verifies actual renderer/window ownership, child return
+and complete hardware restoration. The [Synchronet session](lab/bbs/synchronet-peer-width.md)
+passes immediate forwarding and returns into its stock File Transfer menu.
+These use synthetic menu/shell fixtures. Active Synchronet/ASPECT width
+composition, wider failure/interruption, unsupported application families,
+physical modem acceptance and card deployment remain open. This is a source
+checkpoint; the disconnected card has not received these builds.
+
 [Peer width integration](docs/PEER_WIDTH.md) now passes its source/DOS checkpoint. The experimental
 parent routes private mode3 to the live transaction, with separate rollback
 storage and a specific captured-ASPECT ownership exception. The basic linked

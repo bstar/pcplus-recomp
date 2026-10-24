@@ -86,7 +86,7 @@ build-free source tree. No original executable, private configuration, disk
 image or REA database is a build input. Each DOS subprocess owns separate files and an ephemeral
 TCP port; at most two run together after all model/build dependencies finish.
 Both transaction parents repeat the linked ownership, width, field, erase,
-scroll, UI and IRQ regressions. The full parent retains401200 bytes and keeps
+scroll, UI and IRQ regressions. The full parent retains401440 bytes including its PSP and keeps
 130 resident-code bytes spare. Compiler/VM stacks and limits are unchanged.
 
 For the basic experimental parent and linked peer test:

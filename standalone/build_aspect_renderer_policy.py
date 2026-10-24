@@ -164,7 +164,7 @@ for(k=0;k<4;++k)for(setting=0;setting<2;++setting){
  if(k==3)terminal_program_kind=0;
  ck(aspect_render_preflight_modes(setting)==3);
 }
-/* CAN/SUB reject before unsafe branches; VT9026 continuation is explicitly
+/* CAN rejects before unsafe branches; SUB has its own provider. VT9026 continuation is explicitly
  * accepted, as are ordinary DEC linefeeds and inactive unsupported branches. */
 for(k=0;k<64;++k){
  fixture_valid();terminal_aspect_active=1;terminal_parser_active=1;terminal_tab_wrap=k&1;terminal_control_mode_9026=(k>>1)&1;
@@ -172,13 +172,19 @@ for(k=0;k<64;++k){
  csi_terminal_id=(k&32)?4:6;
  for(i=0;i<256;++i){
   result=0;
-  if((i==24||i==26) && (terminal_tab_wrap||terminal_control_mode_9026||(!terminal_newline_mode_9020&&terminal_control_mode_1fb0)))result=3;
+  if(i==24 && (terminal_tab_wrap||terminal_control_mode_9026||(!terminal_newline_mode_9020&&terminal_control_mode_1fb0)))result=3;
   if(i==11&&!terminal_control_mode_9026&&!terminal_dec_keys&&terminal_newline_mode_9020)result=3;
   ck(aspect_render_preflight_control(i)==result);
  }
 }
 fixture_valid();terminal_aspect_active=1;terminal_parser_active=1;terminal_printer_count=1;ck(aspect_render_preflight_control('A')==3);
 fixture_valid();terminal_aspect_active=1;terminal_parser_active=1;screen_video_offset=2;ck(aspect_render_preflight_control('A')==3);
+for(k=0;k<8;++k){
+ fixture_valid();terminal_aspect_active=1;terminal_parser_active=1;
+ render_direct_output=k&1;terminal_control_mode_9026=(k>>1)&1;terminal_newline_mode_9020=(k>>2)&1;
+ terminal_tab_wrap=terminal_control_mode_1fb0=1;h=digest();
+ ck(aspect_render_preflight_control(26)==0);ck(digest()==h);
+}
 printf("POLICY checks=%lu failures=%lu\n",checks,failures);
 f=fopen("SUMMARY.TXT","w");if(!f)return 2;fprintf(f,"checks=%lu failures=%lu\n",checks,failures);fclose(f);
 return failures?1:0;

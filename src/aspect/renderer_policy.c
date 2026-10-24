@@ -129,7 +129,9 @@ unsigned __cdecl aspect_render_preflight_control(unsigned character)
 {
  if(render_live_state(1))return 3;
  character&=255;
- if(character==0x18 || character==0x1a){
+ /* CAN still reaches protocol-edit branches without providers. SUB has its
+  * own recovered return/clear/up/down path for the admitted profiles. */
+ if(character==0x18){
   if(terminal_tab_wrap || terminal_control_mode_9026 ||
      (!terminal_newline_mode_9020 && terminal_control_mode_1fb0))return 3;
  }

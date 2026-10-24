@@ -45,6 +45,9 @@ child_ss: dw 0
 compiler_calls: dw 0
 compiler_exit: dw 0
 compiler_error: dw 0
+%ifmacro PEER_WATCH_DATA 0
+ PEER_WATCH_DATA
+%endif
 sample_end:
 failure_offsets: dw SCREEN_CURSOR_ROW,SCREEN_CURSOR_COLUMN,SCREEN_ATTRIBUTE_OFFSET,SCREEN_VIDEO_OFFSET,SCREEN_VISIBLE_COLUMN,SCREEN_VIEWPORT_ACTIVE,SCREEN_VIEWPORT_OFFSET,SCREEN_LAST_COLUMN,SCREEN_ATTRIBUTE_ROW_BYTES,SCREEN_CURSOR_WRAP,SCREEN_ATTRIBUTE_CHECKS
 %macro save 0
@@ -131,6 +134,9 @@ handler10:
  mov word [ERASE_PROTECTION_MODE],1
  mov word [ATTRIBUTES_PRESET_VALUE],0x4e
  mov byte [CSI_ERASE_ATTRIBUTE],7
+%ifmacro PEER_WATCH_STAGE 0
+ PEER_WATCH_STAGE
+%endif
  mov ax,1
  sti
 %ifdef PEER_WIDTH
@@ -276,6 +282,9 @@ handler21:
  mov [cs:compiler_exit],bx
  mov bx,[COMPILER_ERROR]
  mov [cs:compiler_error],bx
+%ifmacro PEER_WATCH_CHILD 0
+ PEER_WATCH_CHILD
+%endif
  jmp .done
 .root_exit:
  xor ah,ah
@@ -295,6 +304,9 @@ handler21:
  mov [cs:protection],ax
  mov ax,[SCREEN_VIEWPORT_ACTIVE]
  mov [cs:pane],ax
+%ifmacro PEER_WATCH_ROOT 0
+ PEER_WATCH_ROOT
+%endif
 %ifndef COMPACT_OBSERVER
  push cs
  pop es

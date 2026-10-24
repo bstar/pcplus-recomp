@@ -84,6 +84,14 @@ def cpu_matrix():
     ansi_parameter_count=1,ansi_private=1,ansi_parameters=3).items():word(field,value)
   actual=invoke('_aspect_render_preflight_modes',1);assert actual==expected
   records.append(dict(kind='independent_peer_width',available=available,depth=depth,result=actual))
+ for direct in (0,1):
+  for up in (0,1):
+   for down in (0,1):
+    valid()
+    for field,value in dict(terminal_aspect_active=1,terminal_parser_active=1,render_direct_output=direct,
+     terminal_control_mode_9026=up,terminal_newline_mode_9020=down,terminal_tab_wrap=1,terminal_control_mode_1fb0=1).items():word(field,value)
+    actual=invoke('_aspect_render_preflight_control',26);assert actual==0
+    records.append(dict(kind='independent_SUB_preflight',direct=direct,up=up,down=down,result=actual))
  return dict(passed=True,cases=records,count=len(records),visited_instruction_addresses=len(visited),no_nonstack_writes=not outside,scope='Actual relocated compiled policy; controlled BDA and fixture state, DS=SS cdecl ABI and writes restricted to caller stack. No renderer or service bridge execution.')
 
 def main():

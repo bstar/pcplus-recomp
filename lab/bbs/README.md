@@ -1,5 +1,22 @@
 # Local BBS compatibility lab
 
+The [ASPECT width composition](enigma-aspect-width.md) passes five actual DOS
+sessions: the four source/precompiled and open/closed-window decoder cases,
+plus a stock-server source/window case with declared modem buffering. Passive
+observation checks real renderer/window ownership, child return and complete
+hardware restoration. Stock immediate-forwarding failures remain explicit.
+
+The [authenticated width comparison](peer-width.md) now retains the stock
+ENiGMA immediate-forwarding failure beside passing20ms-buffered and explicitly
+patched-decoder runs. All three use the experimental source-built DOS parent
+and an isolated synthetic menu. This does not establish full compatibility or
+physical modem acceptance.
+
+The separate [Synchronet width session](synchronet-peer-width.md) passes
+native server cursor queries and both arrows with immediate forwarding, then
+returns into the stock File Transfer menu. Its runtime/account are isolated
+from the existing lab server; full application and hardware gates remain open.
+
 The [normal recorder audio route](audio-recording.md) adds screen-gated BIOS
 Record/save and explicit DOS ASP compilation/replay, followed by manual Search.
 BIOS/TCP preparation passes; actual audio acceptance requires the full run and

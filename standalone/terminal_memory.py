@@ -1,6 +1,6 @@
 """Validate small-model near ABI and all retained static far extents from MZ/map."""
 from pathlib import Path
-import re,struct
+import hashlib,re,struct
 
 def inspect_terminal_memory(binary,map_path):
  image=Path(binary).read_bytes();header=struct.unpack_from('<14H',image)
@@ -146,6 +146,19 @@ def inspect_terminal_memory(binary,map_path):
    assert hi<=other_lo or lo>=other_lo+other['bytes'],(name,'code segments overlap')
   code_segments.append(dict(name=name,kind=kind,relative_segment=seg,offset=off,bytes=length))
  near_code=next(c for c in code_segments if c['name']=='_TEXT')
+ if 'terminal_substitute_profile_ge20'in symbols:
+  control=address('terminal_control_1248');control_seg,control_off=symbols['terminal_control_1248']
+  assert control_seg==near_code['relative_segment']
+  normalized=bytearray(image[start+control:start+control+53]);assert len(normalized)==53
+  for at,name,original in [(2,'csi_terminal_id',0x1d18),(20,'render_direct_output',0x9056),(32,'terminal_control_mode_9026',0x9026),(44,'terminal_newline_mode_9020',0x9020)]:
+   assert symbols[name][0]==ds and struct.unpack_from('<H',normalized,at)[0]==symbols[name][1],name
+   struct.pack_into('<H',normalized,at,original)
+  for at,name,original in [(11,'terminal_substitute_profile_ge20',0xbb77),(25,'terminal_formfeed_profile_6_7',0xba4b),(37,'screen_cursor_up',0x1efc),(49,'screen_cursor_down',0x1e0c)]:
+   assert symbols[name][0]==control_seg and normalized[at]==0xe8,name
+   assert(control_off+at+3+struct.unpack_from('<h',normalized,at+1)[0])&65535==symbols[name][1],name
+   struct.pack_into('<H',normalized,at+1,(original-(0x1248+at+3))&65535)
+  assert hashlib.sha256(normalized).hexdigest()=='5b2571477ed4c15ca96375422965c8eef406e476e4d62ec6a3d03ca5c8eaaa6b'
+  extra.update(substitute_native_bytes_verified=53,substitute_native_dependencies_verified=4,substitute_state_words_verified=4)
  if any(c['name']=='USAGE_CODE' for c in code_segments):
   usage=next(c for c in code_segments if c['name']=='USAGE_CODE')
   seg,off=symbols['terminal_usage'];end_seg,end_off=symbols['terminal_usage_end']

@@ -153,9 +153,9 @@ global terminal_control_123c
 terminal_control_123c:
  mov ax,0x123c
  jmp csi_unimplemented
-global terminal_control_1248
-terminal_control_1248:
- mov ax,0x1248
+global terminal_substitute_profile_ge20
+terminal_substitute_profile_ge20:
+ mov ax,0xbb77
  jmp csi_unimplemented
 global terminal_control_127e
 terminal_control_127e:
