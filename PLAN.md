@@ -1,5 +1,19 @@
 # Complete DOS rebuild plan
 
+[Alternate field-cell output](docs/ALTERNATE_OUTPUT.md) restores the native
+`bb53` path and canonical output-map selection in the optional application.
+The first clean run exposed conventional-memory pressure in the wide DOS
+source-compilation witness. Guarded editor/viewer screen sharing reclaims an
+additional4000 bytes; the mapped-output/window/source pilot now compiles to an
+exact ASX and returns normally. The clean proof now passes55 DOS workflows,
+both parents' linked models and exact rebuilds from864 declared source files;
+the [receipt](docs/validation/alternate-output.json) binds1380 artifacts.
+Compiler and interpreter stacks, grammar and workspace limits are unchanged.
+Peer-requested width,
+remaining native terminal/resource families, full application/BBS/physical
+acceptance and package/card deployment remain open. The DOS card was absent
+when checked on2026-10-24; unrelated MiSTer and POCKET media are not targets.
+
 [Compiler heap admission](docs/COMPILER_ARENA_ADMISSION.md) now passes beneath the
 larger transaction parent. Metadata pools reduce optional slack under pressure;
 two stream buffers borrow 1,024 bytes from the existing 24KiB stack reservation.

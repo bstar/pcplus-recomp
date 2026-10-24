@@ -1,5 +1,11 @@
 # Recovered high-level character renderer
 
+The optional application parent now implements the historical `bb53` boundary
+as [alternate field-cell output](ALTERNATE_OUTPUT.md), including bounded output
+mapping and reset selection. It is a metadata/color operation. The unresolved
+boundary list below describes this older standalone renderer checkpoint;
+it does not establish font loading or the original font-resource format.
+
 `reconstruction/render/character.asm` recovers the actual PCPlus resident
 `0730..09b5` function: 646 bytes, with flat assembly checked against original
 SHA-256 `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904`.

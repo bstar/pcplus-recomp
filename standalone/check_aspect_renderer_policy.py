@@ -57,7 +57,7 @@ def cpu_matrix():
  for at,value,expected in [(0x449,3,0),(0x449,7,3),(0x44a,79,3),(0x44b,1,3),(0x462,1,3),(0x484,43,3),(0x484,0,0),(0x484,24,0)]:
   valid();u.mem_write(at,bytes([value]));actual=invoke('_aspect_render_admit');assert actual==expected
   records.append(dict(kind='BDA',address=at,value=value,result=actual))
- for field,value,expected in [('screen_attributes_base',65535,3),('erase_attribute_values_base',65535,3),('terminal_history_start',65535,3),('erase_shadow_offset',65535,3),('screen_video_offset',2,3),('csi_terminal_id',4,0)]:
+ for field,value,expected in [('screen_attributes_base',65535,3),('erase_attribute_values_base',65535,3),('terminal_history_start',65535,3),('erase_shadow_offset',65535,3),('screen_video_offset',2,3),('csi_terminal_id',4,0),('render_translation_base',65535,3),('render_translation_enabled',1,0),('render_translation_enabled',2,3),('render_direct_output',1,0),('render_direct_output',2,3)]:
   valid();word(field,value);actual=invoke('_aspect_render_admit');assert actual==expected;records.append(dict(kind='pointer_geometry',field=field,result=actual))
  for depth in [0,1,2,16,17,65535]:
   valid();word('terminal_aspect_active',1);word('terminal_parser_active',depth)
@@ -74,6 +74,10 @@ def cpu_matrix():
   for command in ['J','K','P']:
    word('ansi_command',ord(command));actual=invoke('_aspect_render_preflight_command');assert actual==0
    records.append(dict(kind='independent_field_command',rows=rows,pane=pane,command=command,result=actual))
+ for mask in [0,127,255]:
+  valid();word('render_translation_enabled',1);u.mem_write(address('render_translation_mask'),bytes([mask]))
+  actual=invoke('_aspect_render_admit');assert actual==0
+  records.append(dict(kind='independent_output_mask',mask=mask,result=actual))
  return dict(passed=True,cases=records,count=len(records),visited_instruction_addresses=len(visited),no_nonstack_writes=not outside,scope='Actual relocated compiled policy; controlled BDA and fixture state, DS=SS cdecl ABI and writes restricted to caller stack. No renderer or service bridge execution.')
 
 def main():

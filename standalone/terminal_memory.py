@@ -92,7 +92,7 @@ def inspect_terminal_memory(binary,map_path):
   assert hi<=shadow or lo>=far_end,(name,'UI screen overlaps native far storage')
   if 'terminal_snapshot_image' in symbols:assert hi<=frozen or lo>=frozen_end,(name,'UI screen overlaps frozen screen')
   for other_name,other in ui_buffers.items():
-   shared=('nreset_reset_data_image'in symbols and native_overlay and name=='program_screen'and other_name=='browser_screen')
+   shared=('nreset_reset_data_image'in symbols and native_overlay and (name=='program_screen'and other_name=='browser_screen' or name=='redisplay_live'and other_name=='ed_screen'))
    if shared:assert(lo,hi)==(other['start_linear'],other['end_linear'])
    else:assert hi<=other['start_linear'] or lo>=other['end_linear'],(name,'nested owners alias')
   assert lo>=module_bytes,(name,'UI buffer unexpectedly serialized in MZ')
@@ -103,8 +103,9 @@ def inspect_terminal_memory(binary,map_path):
   assert len(ui_buffers)==5,'Incomplete terminal UI screen ownership'
   assert len({b['relative_segment'] for b in ui_buffers.values()})==1
   overlay='nreset_reset_data_image'in symbols and native_overlay
-  extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=16000 if overlay else 20000,program_browser_screen_overlay=overlay)
+  extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=12000 if overlay else 20000,program_browser_screen_overlay=overlay,editor_viewer_screen_overlay=overlay)
   if overlay:assert symbols['program_screen']==symbols['browser_screen']and symbols['program_screen_end']==symbols['browser_screen_end']
+  if overlay:assert symbols['ed_screen']==symbols['redisplay_live']and symbols['ed_screen_end']==symbols['redisplay_live_end']
  # Frozen redisplay bytes are independent of the live history writer.
  snap_lo=address('redisplay_snapshot');snap_hi=address('redisplay_snapshot_end')
  snap_seg,snap_off=symbols['redisplay_snapshot']
@@ -592,6 +593,21 @@ def inspect_terminal_memory(binary,map_path):
   assert symbols['erase_after_projection_active'][0]==aspect_seg and word('erase_after_projection_active')==0
   extra['erase_after_projection_initially_idle']=True
   extra['wide_clear_rectangle_route_verified']=True
+  for name in ('alternate_output_native','alternate_output_attribute','alternate_output_read','alternate_output_checked_far','alternate_output_text'):
+   assert symbols[name][0]==aspect_seg,(name,'alternate output outside ASPECT CS')
+  code=raw('render_font_output',18)
+  expected=b'\x55\x89\xe5\xff\x76\x06\xff\x76\x04\x9a'+struct.pack('<HH',symbols['alternate_output_checked_far'][1],aspect_seg)+b'\x5d\xc2\x04\x00'
+  assert code==expected and address('render_font_output')+12 in relocations,'Alternate output RET4 far bridge'
+  for source,unit_bytes,targets in [('alternate_output_native',74,('repair_previous_attribute','alternate_output_attribute','alternate_output_text')),('alternate_output_attribute',31,('alternate_output_read',))]:
+   body=raw(source,unit_bytes)
+   for target in targets:
+    matches=[i for i in range(unit_bytes-2)if body[i]==0xe8 and (symbols[source][1]+i+3+struct.unpack_from('<h',body,i+1)[0])&65535==symbols[target][1]]
+    assert len(matches)==1,(source,target,'alternate output dependency')
+  assert word('render_translation_base')==address('render_translation_table')-near_start
+  assert raw('render_translation_table',256)==bytes(range(256)),'Initial output map is not the source-owned identity table'
+  extra['alternate_output_far_bridge_verified']=True
+  extra['alternate_output_native_dependencies_verified']=4
+  extra['source_owned_output_table_bytes']=256
   # Verify the actual resident adapters refer to relocated far service entries.
   # Symbol placement alone cannot prove the inter-segment calling convention.
   resident_lo=near_code['relative_segment']*16+near_code['offset']

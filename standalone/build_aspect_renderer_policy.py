@@ -19,7 +19,8 @@ ASPECT_RENDER_WORDS(WORD)
 ASPECT_RENDER_DISPLAY_WORDS(WORD)
 #undef WORD
 unsigned redisplay_active,command_menu_active;
-unsigned char terminal_history_pending;
+unsigned char terminal_history_pending,render_translation_mask;
+unsigned char render_translation_table[256];
 unsigned terminal_history_pointer[2],ansi_parameters[16];
 unsigned char screen_attribute_cells[4096],erase_attribute_values[4096],terminal_keymap[948],screen_line_flags[128];
 /* Far planes are separate ASMsegments, exactly like actualparent. */
@@ -38,7 +39,8 @@ ASPECT_RENDER_DISPLAY_WORDS(HASH)
 #undef HASH
 for(i=0;i<16;++i)h=(h*31)^ansi_parameters[i];
 h^=screen_attribute_cells[0]^screen_attribute_cells[4095]^erase_attribute_values[0]^erase_attribute_values[4095];
-h^=terminal_keymap[0]^terminal_keymap[947];
+h^=terminal_keymap[0]^terminal_keymap[947]^render_translation_mask;
+h^=render_translation_table[0]^render_translation_table[255];
 return h;}
 void __cdecl fixture_valid(void){
 #define ZERO(name) name=0;
@@ -57,6 +59,7 @@ terminal_program_active=1;terminal_program_kind=4;reset_ready=1;csi_terminal_id=
 screen_columns=csi_column_count=screen_attribute_row_bytes=80;screen_video_row_bytes=160;
 csi_last_column=79;csi_last_row=screen_last_row=csi_origin_bottom=24;csi_row_count=25;
 text_video_segment=0xb800;erase_cell_count=2000;
+render_translation_base=(unsigned)render_translation_table;render_translation_mask=255;
 screen_attributes_base=(unsigned)screen_attribute_cells;erase_attribute_values_base=(unsigned)erase_attribute_values;
 erase_shadow_segment=FP_SEG(erase_shadow_cells);erase_shadow_offset=FP_OFF(erase_shadow_cells);
 terminal_history_start=terminal_history_pointer[0]=FP_OFF(terminal_history_buffer);terminal_history_end=terminal_history_start+63000;
@@ -82,7 +85,7 @@ BAD={
  'screen_columns':81,'screen_video_row_bytes':162,'screen_attribute_row_bytes':81,'csi_last_column':80,'csi_column_count':81,
  'csi_last_row':25,'csi_row_count':26,'text_video_segment':0xb000,'text_cga_status_port':0x3da,
  'screen_viewport_active':2,'screen_viewport_enabled':1,'screen_viewport_offset':1,'screen_attribute_checks':2,'terminal_mode_372c':1,
- 'render_translation_enabled':1,'erase_protection_mode':2,'erase_cell_count':2001,'screen_cursor_row':25,'screen_cursor_column':80,
+ 'render_translation_enabled':2,'render_translation_base':65535,'render_direct_output':2,'erase_protection_mode':2,'erase_cell_count':2001,'screen_cursor_row':25,'screen_cursor_column':80,
  'screen_first_row':25,'screen_last_row':25,'csi_origin_row':25,'csi_origin_bottom':25,'screen_attribute_offset':1,'screen_video_offset':2,
  'screen_attributes_base':0xffff,'erase_attribute_values_base':0xffff,'erase_shadow_segment':0xffff,'erase_shadow_offset':0xffff,
  'terminal_history_start':0xffff,'terminal_history_end':0xffff,'terminal_history_pointer[0]':0xffff,'terminal_history_pointer[1]':0xffff,
@@ -114,7 +117,7 @@ for(prefix=0;prefix<2;++prefix)for(v=0;v<16;++v){
  screen_cursor_wrap=v&1;screen_attribute_checks=(v>>1)&1;
  erase_protection_mode=(v>>2)&1;attributes_color_mode=(v>>3)&1;
  screen_attribute_cells[screen_attribute_offset]=0x81;
- result=(!priv&&k==25)||(screen_cursor_wrap&&erase_protection_mode&&!attributes_color_mode)?3:0;
+ result=(!priv&&k==25)?3:0;
  admit(result);
  terminal_aspect_active=1;terminal_parser_active=1;
  for(i=0;i<3;++i){
@@ -122,6 +125,12 @@ for(prefix=0;prefix<2;++prefix)for(v=0;v<16;++v){
   ck(aspect_render_preflight_command()==(result?3:0));
   ck(digest()==h);
  }
+}
+/* Every byte mask remains inside the owned full256-byte output table. */
+for(k=0;k<256;++k)for(setting=0;setting<2;++setting)for(priv=0;priv<2;++priv)for(prefix=0;prefix<2;++prefix){
+ fixture_valid();render_translation_mask=k;render_translation_enabled=setting;
+ render_direct_output=priv;attributes_color_mode=prefix;
+ screen_cursor_wrap=1;erase_protection_mode=1;admit(0);
 }
 fixture_valid();ansi_parameter_count=17;ck(aspect_render_preflight_modes(1)==3);ansi_parameter_count=16;
 ck(aspect_render_preflight_modes(2)==3);

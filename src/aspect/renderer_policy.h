@@ -32,19 +32,24 @@ unsigned __cdecl aspect_render_preflight_control(unsigned character);
  X(screen_visible_column) X(screen_viewport_left) X(screen_viewport_right) \
  X(screen_cursor_wrap) X(screen_vertical_attribute_check) X(screen_reverse_wrap_blocked) \
  X(ui_flow_suppressed) X(ui_flow_region_cells) X(ui_flow_video_base) X(ui_flow_coordinate_base) \
- X(attributes_color_mode) X(ansi_command)
+ X(attributes_color_mode) X(ansi_command) X(render_translation_base) X(render_direct_output)
 #define AR_WORD(name) extern unsigned name;
 ASPECT_RENDER_WORDS(AR_WORD)
 ASPECT_RENDER_DISPLAY_WORDS(AR_WORD)
 #undef AR_WORD
 extern unsigned redisplay_active,command_menu_active;
-extern unsigned char terminal_history_pending;
+extern unsigned char terminal_history_pending,render_translation_mask;
+extern unsigned char render_translation_table[256];
 extern unsigned terminal_history_pointer[2],ansi_parameters[16];
 extern unsigned char screen_attribute_cells[4096],erase_attribute_values[4096];
 extern unsigned char terminal_keymap[948],screen_line_flags[128];
 extern unsigned char __far erase_shadow_cells[8192];
 extern unsigned char __far terminal_history_buffer[63000];
 #ifdef __WATCOMC__
+#pragma aux render_translation_base "render_translation_base";
+#pragma aux render_direct_output "render_direct_output";
+#pragma aux render_translation_mask "render_translation_mask";
+#pragma aux render_translation_table "render_translation_table";
 #pragma aux screen_visible_column "screen_visible_column";
 #pragma aux screen_viewport_left "screen_viewport_left";
 #pragma aux screen_viewport_right "screen_viewport_right";

@@ -41,6 +41,13 @@ terminal_redisplay_key_impl:
  jne .pass
 .open:
  push ax
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+ extern terminal_browser_screen_owned,terminal_editor_screen_owned
+ cmp byte [terminal_browser_screen_owned],0
+ jne .denied
+ cmp byte [terminal_editor_screen_owned],0
+ jne .denied
+%endif
  mov ax,[terminal_transfer_pending]
  or ax,[terminal_transfer_active]
  or ax,[terminal_program_pending]
@@ -194,6 +201,13 @@ SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
 global redisplay_live,redisplay_live_end,redisplay_view,redisplay_view_end
 redisplay_live: resb 4000
 redisplay_live_end:
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+; Directory editing is synchronous inside the chooser. Bidirectional owner
+; checks prevent it and the serviced viewer from borrowing this frame at once.
+global ed_screen,ed_screen_end
+ed_screen equ redisplay_live
+ed_screen_end equ redisplay_live_end
+%endif
 redisplay_view: resb 4000
 redisplay_view_end:
 SEGMENT REDISPLAY_STORAGE public align=16 class=FAR_DATA use16

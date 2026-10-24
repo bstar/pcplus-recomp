@@ -1,0 +1,56 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/alternate_output/output.asm",
+      "start": 62482,
+      "end": 62556,
+      "source_file_offset": 98498,
+      "bytes": 74,
+      "instructions": 30,
+      "sha256": "4238d1712605155eae22e288bec765b7e7d3bf4cdac8a71ca405aaa738ea0c16",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/alternate_output/attribute.asm",
+      "start": 62556,
+      "end": 62587,
+      "source_file_offset": 98572,
+      "bytes": 31,
+      "instructions": 15,
+      "sha256": "93a86aee72ff230cce2f88dafc7a3d39f66e77a6a811c6d7053a229ed37d3826",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/alternate_output/read.asm",
+      "start": 28576,
+      "end": 28623,
+      "source_file_offset": 33184,
+      "bytes": 47,
+      "instructions": 23,
+      "sha256": "57301f1aaf386d6b48cd18376a06363cf0c6cd5f382266d39123fb4d6040212a",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "372e": "render_translation_enabled",
+    "39c4": "screen_attributes_base",
+    "3344": "screen_video_offset",
+    "1d36": "attributes_protected_value",
+    "7a78": "text_video_segment",
+    "7a8e": "text_cga_status_port"
+  },
+  "services": {
+    "2d4c": "erase_previous_attribute",
+    "6c5e": "text_write_cell"
+  },
+  "rea_evidence": {
+    "output": "ev_9ba37655f5393246fd69aadffb2c665e1de309fcf5ff01eb6ffe48c54874be63",
+    "attribute": "ev_00a413edb91c97be838a8ba9d074f7b89ef3dd6d4aa7cb4e32cbcc29c5847dad"
+  },
+  "overlay": 13,
+  "limitations": [
+    "Original overlay13 output is reached through resident trampoline bb53 and removes two argument words. It marks metadata and writes a cell; it does not load fonts. The attribute helper and resident video-byte reader preserve their original ABIs.",
+    "REA used a synthetic static-only overlay image with verified original bytes; no synthetic image is executable or deployable."
+  ]
+}

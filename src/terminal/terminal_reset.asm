@@ -95,6 +95,7 @@ extern terminal_dec_keys
 extern terminal_mode_372c
 extern render_deferred_row
 extern render_deferred_column
+extern render_translation_enabled,render_translation_base,render_translation_mask
 extern render_direct_output
 extern render_linefeed_suppression_enabled
 extern render_input_character
@@ -396,6 +397,8 @@ reset_word_addresses:
  dw terminal_mode_372c
  dw render_deferred_row
  dw render_deferred_column
+ dw render_translation_enabled
+ dw render_translation_base
  dw render_direct_output
  dw render_linefeed_suppression_enabled
  dw render_input_character
@@ -412,6 +415,7 @@ reset_byte_addresses:
  dw attributes_reverse_active
  dw csi_erase_attribute
  dw terminal_backspace_erases
+ dw render_translation_mask
 RESET_BYTE_COUNT equ ($-reset_byte_addresses)/2
 SEGMENT _BSS public align=16 class=BSS use16
 reset_words: resw RESET_WORD_COUNT

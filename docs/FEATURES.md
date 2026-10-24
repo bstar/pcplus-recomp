@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Alternate field-cell output](ALTERNATE_OUTPUT.md) restores152 native bytes
+behind the historical `bb53` boundary, with canonical output mapping and RIS
+selection. This operation updates metadata/colors; font resources and loading
+remain separate. A clean864-source rebuild passes55 DOS workflows and both
+parents' linked models. Guarded editor/viewer backup sharing reclaims another
+4000 storage bytes while preserving compiler/interpreter stacks and limits.
+Peer width requests, full F01–F16 acceptance, BBS/hardware and card deployment
+remain open.
+
 [Native helper lookup](HOOK_LOOKUP.md) adds the selected KEY kind2 filename
 policy and literal batch correction to the guarded helper build. Sixteen DOS
 target workflows, paired native policy and bounds cases, helper/trap/register

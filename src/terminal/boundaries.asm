@@ -52,10 +52,6 @@ global render_service_b9f7
 render_service_b9f7:
  mov ax,0xb9f7
  jmp csi_unimplemented
-global render_font_output
-render_font_output:
- mov ax,0xbb53
- jmp csi_unimplemented
 global terminal_escape_b98b
 terminal_escape_b98b:
  mov ax,0xb98b

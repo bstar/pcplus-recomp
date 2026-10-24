@@ -18,6 +18,15 @@ terminal_directory_edit:
  push di
  push es
  cld
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+ extern _redisplay_active,terminal_program_pending,terminal_program_active
+ cmp byte [ed_saved],0
+ jne .busy
+ mov ax,[_redisplay_active]
+ or ax,[terminal_program_pending]
+ or ax,[terminal_program_active]
+ jnz .busy
+%endif
  mov word [ed_result],0
  mov byte [ed_saved],0
  mov si,[bp+4]
@@ -200,12 +209,19 @@ terminal_directory_edit:
  mov ax,[ed_old_segment]
  mov [text_video_segment],ax
 .done:
+ mov byte [ed_saved],0
  mov ax,[ed_result]
+.return:
  pop es
  pop di
  pop si
  pop bp
  ret
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+.busy:
+ xor ax,ax
+ jmp .return
+%endif
 
 ; BX=current8byte field descriptor; SI=stage field.
 ed_descriptor:
@@ -671,6 +687,8 @@ ed_bios:
 SEGMENT _DATA public class=DATA use16
 ed_record: dw 0
 ed_result: dw 0
+global terminal_editor_screen_owned
+terminal_editor_screen_owned:
 ed_saved: db 0
 ed_page: db 0
 ed_old_segment: dw 0
@@ -772,6 +790,10 @@ global ed_screen_segment
 ed_screen_segment: dw seg ed_screen
 SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
 GROUP UI_GROUP UI_STORAGE
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+extern ed_screen,ed_screen_end
+%else
 global ed_screen,ed_screen_end
 ed_screen: resb 4000
 ed_screen_end:
+%endif

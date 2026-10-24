@@ -20,12 +20,16 @@ terminal_directory_choose:
  push es
  cld
 %ifdef TERMINAL_NATIVE_RESET_OVERLAY
- extern terminal_program_pending,terminal_program_active
+ extern terminal_program_pending,terminal_program_active,_redisplay_active,terminal_editor_screen_owned
  cmp byte [browser_saved],0
  jne .busy
  cmp word [terminal_program_pending],0
  jne .busy
  cmp word [terminal_program_active],0
+ jne .busy
+ cmp word [_redisplay_active],0
+ jne .busy
+ cmp byte [terminal_editor_screen_owned],0
  jne .busy
 %endif
  mov word [browser_result],2

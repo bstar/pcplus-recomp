@@ -1,5 +1,12 @@
 # PCPlus DOS reconstruction
 
+The optional [alternate field-output checkpoint](docs/ALTERNATE_OUTPUT.md)
+restores native metadata/color output and bounded output-map selection. Guarded
+screen sharing frees another4KB so wide-display DOS source compilation fits
+without reducing compiler limits. A clean source-only rebuild and55 DOS
+workflows pass. Peer width requests, full application/hardware acceptance and
+card deployment remain open.
+
 The optional [native helper lookup build](docs/HOOK_LOOKUP.md) adds PCPLUS/PATH
 and extension lookup to KEY helpers, and executes the requested batch filename
 even when it shares a name with a shell command or COM file. Build it with

@@ -52,12 +52,12 @@ static unsigned render_live_state(unsigned scoped)
     text_video_segment!=0xb800 || text_cga_status_port || screen_viewport_active>1 ||
     screen_attribute_checks>1 || screen_cursor_wrap>1 || erase_protection_mode>1 ||
     screen_vertical_attribute_check || screen_reverse_wrap_blocked ||
-    terminal_mode_372c || render_translation_enabled || attributes_color_mode>1 ||
+    terminal_mode_372c || render_translation_enabled>1 || render_direct_output>1 || attributes_color_mode>1 ||
     erase_cell_count!=width*rows)return 3;
- /* Field font output is not linked. Refuse its configuration before a lease
-  * or byte can reach the native font provider; ordinary field edits remain
-  * available with either color path and without that provider. */
- if(screen_cursor_wrap && erase_protection_mode && !attributes_color_mode)return 3;
+ /* Native output translation indexes a source-owned256-byte table with a
+  * byte mask. It is separate from the UART input-translation owner. */
+ if(render_translation_base!=(unsigned)render_translation_table ||
+    !near_span((unsigned)render_translation_table,256))return 3;
  if(width==132){
   if(screen_viewport_enabled!=1 || screen_viewport_left!=52 || screen_viewport_right!=79 ||
      screen_viewport_offset!=(screen_viewport_active?0:52) || ui_flow_suppressed>1)return 3;

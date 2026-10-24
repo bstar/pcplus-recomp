@@ -39,6 +39,12 @@ aspect_bridge_ticks: dw 0
 aspect_overlay_ticks: dw 0
 failure_service: dw 0
 failure_details: times 11 dw 0
+child_exit_count: dw 0
+child_ds: dw 0
+child_ss: dw 0
+compiler_calls: dw 0
+compiler_exit: dw 0
+compiler_error: dw 0
 sample_end:
 failure_offsets: dw SCREEN_CURSOR_ROW,SCREEN_CURSOR_COLUMN,SCREEN_ATTRIBUTE_OFFSET,SCREEN_VIDEO_OFFSET,SCREEN_VISIBLE_COLUMN,SCREEN_VIEWPORT_ACTIVE,SCREEN_VIEWPORT_OFFSET,SCREEN_LAST_COLUMN,SCREEN_ATTRIBUTE_ROW_BYTES,SCREEN_CURSOR_WRAP,SCREEN_ATTRIBUTE_CHECKS
 %macro save 0
@@ -130,6 +136,20 @@ handler10:
  call far [cs:live_call]
  cli
  mov [cs:width_result],ax
+%ifdef ALTERNATE_OUTPUT
+ or ax,ax
+ jnz .done
+ mov word [ATTRIBUTES_COLOR_MODE],0
+ mov word [RENDER_DIRECT_OUTPUT],0
+ mov byte [RENDER_TRANSLATION_MASK],OUTPUT_MASK
+%ifdef OUTPUT_MAP
+ mov word [RENDER_TRANSLATION_ENABLED],1
+ mov byte [RENDER_TRANSLATION_TABLE+0xb3],0xc4
+ mov byte [RENDER_TRANSLATION_TABLE+0xdb],0xb1
+%else
+ mov word [RENDER_TRANSLATION_ENABLED],0
+%endif
+%endif
 .done:
  restore
  jmp far [cs:old10]
@@ -240,7 +260,19 @@ handler21:
  jne .done
  mov bx,ds
  cmp bx,[cs:root_ds]
- jne .done
+ je .root_exit
+ inc word [cs:child_exit_count]
+ mov bx,ds
+ mov [cs:child_ds],bx
+ mov [cs:child_ss],ss
+ mov bx,[COMPILER_CALLS]
+ mov [cs:compiler_calls],bx
+ mov bx,[COMPILER_EXIT]
+ mov [cs:compiler_exit],bx
+ mov bx,[COMPILER_ERROR]
+ mov [cs:compiler_error],bx
+ jmp .done
+.root_exit:
  xor ah,ah
  mov [cs:exit_status],ax
  mov [cs:root_ss],ss
