@@ -1,4 +1,4 @@
-; Experimental plain24-row width transaction. Native execution owns only its
+; Experimental plain width transaction for1..25 content rows. Native owns its
 ; projected bank and physical content rows. Root metadata is committed only
 ; after validation; UART, connection, parser, handles and RIS defaults never
 ; enter this projection. Peer width dispatch is deliberately still unbound.
@@ -23,6 +23,7 @@ extern screen_attributes_base,screen_attribute_cells,erase_attribute_values_base
 extern erase_shadow_offset,erase_shadow_segment,erase_shadow_cells
 extern ui_flow_region_cells,ui_flow_video_base,ui_flow_coordinate_base,ui_flow_suppressed,csi_row_count
 extern screen_line_flags,terminal_tab_stops,terminal_viewport_admit_far
+extern csi_saved_row,csi_saved_column,csi_wrap_pending,cursor_state_saved_3342
 extern nreset_screen_attributes_base,nreset_screen_attribute_cells
 extern nreset_erase_attribute_values_base,nreset_erase_attribute_values
 extern nreset_erase_shadow_offset,nreset_erase_shadow_segment,nreset_reset_shadow_bytes
@@ -30,6 +31,7 @@ extern nreset_reset_geometry_initialized,nreset_reset_wide_mode,nreset_reset_con
 extern nreset_program_state_7a72,nreset_program_state_7a74,nreset_reset_video_cells
 extern nreset_reset_status_hidden,nreset_text_video_segment,nreset_text_cga_status_port
 extern nreset_screen_line_flags,nreset_terminal_tab_stops,nreset_screen_set_cursor
+extern nreset_terminal_reset_width_native,nreset_screen_top_margin,nreset_screen_bottom_margin
 global terminal_native_width_far,reset_live_prepare,reset_live_finish
 global reset_live_active,reset_live_validate,reset_live_commit,reset_live_rollback
 reset_live_active: dw 0
@@ -37,13 +39,19 @@ live_request: dw 0
 live_result: dw 0
 saved_cursor: dw 0
 saved_shape: dw 0
+live_rows: dw 0
+live_cells: dw 0
+live_shadow_words: dw 0
 
 ; Each row explicitly declares root/native offsets and whether native output
-; may be committed. No pointer, parser state or reset baseline is writable here.
+; may be committed (high bit of the root offset). Link inspection verifies
+; every root offset fits15 bits. No pointer/parser/reset baseline is writable.
 %macro field 2
  extern %1,nreset_ %+ %1
- dw %1,nreset_ %+ %1,%2
+ dw %1 + (%2 << 15),nreset_ %+ %1
 %endmacro
+global reset_live_projection,reset_live_projection_end
+reset_live_projection:
 projection:
  field csi_terminal_id,0
  field attributes_normal_value,0
@@ -53,9 +61,9 @@ projection:
  field screen_video_row_bytes,0
  field screen_attribute_row_bytes,1
  field screen_last_column,1
- field csi_last_row,0
- field screen_first_row,0
- field screen_last_row,0
+ field csi_last_row,1
+ field screen_first_row,1
+ field screen_last_row,1
  field screen_cursor_row,1
  field screen_cursor_column,1
  field screen_visible_column,1
@@ -78,15 +86,16 @@ projection:
  field erase_cell_count,1
  field terminal_dec_keys,0
  field terminal_tab_wrap,0
-PROJECTION_COUNT equ ($-projection)/6
+ dw csi_row_count + 0x8000,nreset_program_state_7a74
+reset_live_projection_end:
+PROJECTION_COUNT equ ($-projection)/4
 ; Declarative admission keeps the resident implementation compact without
 ; weakening any layout/owner constraint as more native services are linked.
 common_layout:
  dw reset_ready,1,screen_attribute_checks,0,screen_cursor_wrap,0
  dw screen_vertical_attribute_check,0,screen_reverse_wrap_blocked,0
  dw erase_protection_mode,0,terminal_tab_wrap,0,terminal_dec_keys,1
- dw screen_use_bios_cursor,1,csi_row_count,24,csi_last_row,23
- dw screen_first_row,0,screen_last_row,23,screen_columns,80
+ dw screen_use_bios_cursor,1,screen_columns,80
  dw screen_video_row_bytes,160,screen_viewport_right,79
  dw screen_attributes_base,screen_attribute_cells
  dw erase_attribute_values_base,erase_attribute_values
@@ -95,7 +104,7 @@ common_layout:
  dw ui_flow_region_cells,80,ui_flow_video_base,3840,ui_flow_coordinate_base,0x1800
 COMMON_COUNT equ ($-common_layout)/4
 narrow_layout:
- dw screen_attribute_row_bytes,80,screen_last_column,79,erase_cell_count,1920
+ dw screen_attribute_row_bytes,80,screen_last_column,79
  dw screen_viewport_enabled,0,screen_viewport_left,0,screen_viewport_offset,0
 NARROW_COUNT equ ($-narrow_layout)/4
 
@@ -158,7 +167,7 @@ terminal_native_width_far:
  mov ax,0xb800
  mov ds,ax
  xor si,si
- mov cx,1920
+ mov cx,[cs:live_cells]
  rep movsw
  pop ds
  mov ah,3
@@ -204,54 +213,131 @@ live_admit:
  or ax,[_redisplay_export_pending]
  or ax,[_redisplay_search_pending]
  or ax,[_command_menu_active]
- jnz .bad
+ jnz .bad_owner
  mov ax,[connection_state]
  or ax,ax
  jz .profile
  cmp ax,6
- jne .bad
+ jne .bad_owner
 .profile:
  mov ax,[csi_terminal_id]
  cmp ax,4
  je .plain
  cmp ax,6
- jne .bad
+ jne .bad_owner
+ jmp .plain
+.bad_owner:
+ stc
+ ret
 .plain:
  mov si,common_layout
  mov cx,COMMON_COUNT
  call match_layout
- jc .bad
- cmp word [screen_cursor_row],23
- ja .bad
+ jc .bad_rows
+ mov ax,[csi_row_count]
+ cmp ax,1
+ jb .bad_rows
+ cmp ax,25
+ ja .bad_rows
+ mov dx,ax
+ dec ax
+ cmp ax,[csi_last_row]
+ jne .bad_rows
+ cmp [screen_last_row],ax
+ ja .bad_rows
+ mov ax,[screen_first_row]
+ cmp ax,[screen_last_row]
+ ja .bad_rows
+ mov ax,[screen_cursor_row]
+ cmp ax,[csi_last_row]
+ ja .bad_rows
  mov ax,[screen_cursor_column]
  cmp ax,[screen_last_column]
- ja .bad
+ ja .bad_rows
+ ; Keep a visible physical status row outside the transaction. The legacy
+ ; narrow startup exposes25 rows; its first width reset adopts24 content rows.
+ cmp word [ui_flow_suppressed],1
+ ja .bad_rows
+ jne .visible
+ jmp .rows
+.visible:
+ cmp dx,25
+ jne .rows
+ cmp word [screen_attribute_row_bytes],80
+ jne .bad_rows
+ dec dx
+ jmp .rows
+.bad_rows:
+ stc
+ ret
+.rows:
+ mov [cs:live_rows],dx
+ mov ax,80
+ mul dx
+ mov [cs:live_cells],ax
+ mov ax,132
+ mul word [cs:live_rows]
+ mov [cs:live_shadow_words],ax
+ mov ax,[screen_attribute_row_bytes]
+ mul word [csi_row_count]
+ cmp ax,[erase_cell_count]
+ jne .bad_layout
  cmp word [screen_attribute_row_bytes],132
  je .wide
  mov si,narrow_layout
  mov cx,NARROW_COUNT
  call match_layout
- jc .bad
+ jc .bad_layout
  cmp word [screen_viewport_active],1
- ja .bad
+ ja .bad_layout
  mov ax,0x40
  mov es,ax
  cmp byte [es:0x49],3
- jne .bad
+ jne .bad_layout
  cmp word [es:0x4a],80
- jne .bad
+ jne .bad_layout
  cmp byte [es:0x62],0
- jne .bad
+ jne .bad_layout
  cmp byte [es:0x84],0
  je .okay
  cmp byte [es:0x84],24
- jne .bad
+ jne .bad_layout
+ jmp .okay
+.bad_layout:
+ stc
+ ret
 .okay:
+ ; A stable public transaction boundary must have coherent cursor caches;
+ ; unlike the pane's internal callback, it never admits an intermediate pan.
+ mov ax,[screen_cursor_row]
+ cmp ax,[screen_previous_row]
+ jne .bad
+ mov ax,[screen_cursor_column]
+ cmp ax,[screen_previous_column]
+ jne .bad
+ sub ax,[screen_viewport_offset]
+ jc .bad
+ cmp ax,[screen_visible_column]
+ jne .bad
+ shl ax,1
+ mov bx,ax
+ mov ax,[screen_cursor_row]
+ mov cx,160
+ mul cx
+ add ax,bx
+ cmp ax,[screen_video_offset]
+ jne .bad
+ mov ax,[screen_cursor_row]
+ mul word [screen_attribute_row_bytes]
+ add ax,[screen_cursor_column]
+ cmp ax,[screen_attribute_offset]
+ jne .bad
  clc
  ret
 .wide:
  call far terminal_viewport_admit_far
- ret
+ jc .bad
+ jmp .okay
 .bad:
  stc
  ret
@@ -280,16 +366,28 @@ reset_live_prepare:
  mov cx,PROJECTION_COUNT
 .fields:
  mov bx,[cs:si]
+ and bx,0x7fff
  mov di,[cs:si+2]
  mov ax,[es:bx]
  mov [di],ax
- add si,6
+ add si,4
  loop .fields
  mov word [nreset_screen_attributes_base],nreset_screen_attribute_cells
  mov word [nreset_erase_attribute_values_base],nreset_erase_attribute_values
  mov word [nreset_program_state_7a72],80
- mov word [nreset_program_state_7a74],24
- mov word [nreset_reset_video_cells],1920
+ mov ax,[cs:live_rows]
+ mov [nreset_program_state_7a74],ax
+ dec ax
+ mov [nreset_csi_last_row],ax
+ mov [nreset_screen_last_row],ax
+ mov [nreset_screen_bottom_margin],ax
+ mov word [nreset_screen_first_row],0
+ mov word [nreset_screen_top_margin],0
+ mov ax,[cs:live_cells]
+ mov [nreset_reset_video_cells],ax
+ mov ax,[nreset_screen_attribute_row_bytes]
+ mul word [cs:live_rows]
+ mov [nreset_erase_cell_count],ax
  mov word [nreset_reset_status_hidden],1 ; Root status owner is never native UI.
  mov word [nreset_text_video_segment],0xb800
  mov word [nreset_text_cga_status_port],0
@@ -304,7 +402,10 @@ reset_live_prepare:
  inc ax
  mov [nreset_erase_shadow_segment],ds
  mov word [nreset_erase_shadow_offset],bank_shadow
- mov word [nreset_reset_shadow_bytes],6336
+ mov ax,[cs:live_shadow_words]
+ shl ax,1
+ mov [nreset_reset_shadow_bytes],ax
+ mov ax,1
 .width:
  mov [nreset_reset_wide_mode],ax
  ; Root planes remain owned and unchanged throughout native execution.
@@ -315,11 +416,11 @@ reset_live_prepare:
  mov ds,ax
  mov si,screen_attribute_cells
  mov di,nreset_screen_attribute_cells
- mov cx,3168
+ mov cx,3300
  rep movsb
  mov si,erase_attribute_values
  mov di,nreset_erase_attribute_values
- mov cx,3168
+ mov cx,3300
  rep movsb
  mov si,screen_line_flags
  mov di,nreset_screen_line_flags
@@ -333,7 +434,7 @@ reset_live_prepare:
  mov ds,ax
  mov si,erase_shadow_cells
  mov di,bank_shadow
- mov cx,3168
+ mov cx,3300
  rep movsw
  pop ds
  ret
@@ -351,6 +452,27 @@ reset_live_finish:
  call nreset_screen_set_cursor
  ret
 
+; Retain the recovered width instructions and their ABI; derive the count
+; from the admitted row owner instead of their original24-row constants.
+global nreset_terminal_reset_width
+nreset_terminal_reset_width:
+ push bp
+ mov bp,sp
+ push word [bp+4]
+ call nreset_terminal_reset_width_native
+ pushf
+ push ax
+ push dx
+ mov ax,[nreset_screen_attribute_row_bytes]
+ mul word [nreset_program_state_7a74]
+ mov [nreset_erase_cell_count],ax
+ pop dx
+ pop ax
+ popf
+ mov sp,bp
+ pop bp
+ ret
+
 ; Root DS=SS. Inspect every committed geometry/pointer before any root write.
 reset_live_validate:
  mov ax,seg redisplay_snapshot
@@ -358,15 +480,16 @@ reset_live_validate:
  mov si,projection
  mov cx,PROJECTION_COUNT
 .readonly:
- cmp word [cs:si+4],0
+ test word [cs:si],0x8000
  jne .next
  mov bx,[cs:si]
+ and bx,0x7fff
  mov di,[cs:si+2]
  mov ax,[bx]
  cmp ax,[es:di]
- jne .bad
+ jne .bad_geometry
 .next:
- add si,6
+ add si,4
  loop .readonly
  mov ax,80
  cmp word [cs:live_request],0
@@ -374,27 +497,43 @@ reset_live_validate:
  mov ax,132
 .columns:
  cmp ax,[es:nreset_screen_attribute_row_bytes]
- jne .bad
+ jne .bad_geometry
  dec ax
  cmp ax,[es:nreset_screen_last_column]
- jne .bad
+ jne .bad_geometry
  inc ax
- mov cx,24
- mul cx
+ mul word [cs:live_rows]
  cmp ax,[es:nreset_erase_cell_count]
- jne .bad
+ jne .bad_geometry
  mov ax,[cs:live_request]
  cmp ax,[es:nreset_screen_viewport_enabled]
- jne .bad
+ jne .bad_geometry
  mov cx,52
  mul cx
  cmp ax,[es:nreset_screen_viewport_left]
- jne .bad
+ jne .bad_geometry
  cmp word [es:nreset_screen_viewport_active],1
- jne .bad
+ jne .bad_geometry
  cmp word [es:nreset_screen_viewport_offset],0
+ jne .bad_geometry
+ jmp .rows
+.bad_geometry:
+ stc
+ ret
+.rows:
+ mov ax,[cs:live_rows]
+ cmp ax,[es:nreset_program_state_7a74]
  jne .bad
- cmp word [es:nreset_program_state_7a74],24
+ dec ax
+ cmp ax,[es:nreset_csi_last_row]
+ jne .bad
+ cmp ax,[es:nreset_screen_last_row]
+ jne .bad
+ cmp ax,[es:nreset_screen_bottom_margin]
+ jne .bad
+ cmp word [es:nreset_screen_first_row],0
+ jne .bad
+ cmp word [es:nreset_screen_top_margin],0
  jne .bad
  cmp word [es:nreset_screen_attributes_base],nreset_screen_attribute_cells
  jne .bad
@@ -406,8 +545,9 @@ reset_live_validate:
  or ax,[es:nreset_screen_video_offset]
  or ax,[es:nreset_screen_attribute_offset]
  jnz .bad
- cmp word [es:nreset_screen_previous_row],23
- ja .bad
+ mov ax,[es:nreset_screen_previous_row]
+ cmp ax,[cs:live_rows]
+ jae .bad
  mov ax,[es:nreset_screen_previous_column]
  cmp ax,[es:nreset_screen_last_column]
  ja .bad
@@ -421,7 +561,9 @@ reset_live_validate:
  jne .bad
  cmp word [es:nreset_erase_shadow_offset],bank_shadow
  jne .bad
- cmp word [es:nreset_reset_shadow_bytes],6336
+ mov ax,[cs:live_shadow_words]
+ shl ax,1
+ cmp ax,[es:nreset_reset_shadow_bytes]
  jne .bad
  clc
  ret
@@ -439,15 +581,32 @@ reset_live_commit:
  mov si,projection
  mov cx,PROJECTION_COUNT
 .fields:
- cmp word [cs:si+4],0
+ test word [cs:si],0x8000
  je .next
  mov bx,[cs:si]
+ and bx,0x7fff
  mov di,[cs:si+2]
  mov ax,[es:di]
  mov [bx],ax
 .next:
- add si,6
+ add si,4
  loop .fields
+ ; Saved coordinates are display state too. Restoring an old bottom/right
+ ; point must not leave the new logical bounds, and a wrap latch from the old
+ ; edge is invalid after a cleared/home display in either width.
+ mov ax,[cs:live_rows]
+ dec ax
+ cmp [csi_saved_row],ax
+ jbe .saved_row
+ mov [csi_saved_row],ax
+.saved_row:
+ mov ax,[es:nreset_screen_last_column]
+ cmp [csi_saved_column],ax
+ jbe .saved_column
+ mov [csi_saved_column],ax
+.saved_column:
+ mov word [csi_wrap_pending],0
+ mov word [cursor_state_saved_3342],0
  push ds
  mov ax,es
  mov ds,ax
@@ -455,11 +614,11 @@ reset_live_commit:
  mov es,ax
  mov si,nreset_screen_attribute_cells
  mov di,screen_attribute_cells
- mov cx,3168
+ mov cx,3300
  rep movsb
  mov si,nreset_erase_attribute_values
  mov di,erase_attribute_values
- mov cx,3168
+ mov cx,3300
  rep movsb
  mov si,nreset_screen_line_flags
  mov di,screen_line_flags
@@ -473,14 +632,15 @@ reset_live_commit:
  mov es,ax
  mov si,bank_shadow
  mov di,erase_shadow_cells
- mov cx,3168
+ mov cx,3300
  rep movsw
  pop ds
  ret
 
 reset_live_rollback:
  ; No root data has been committed. Restore content only: the UART may have
- ; updated the physical status row since admission. Never resurrect that row.
+ ; updated an independently owned status row since admission. Restore only
+ ; admitted content (all25 rows when status is hidden).
  push ds
  mov ax,seg program_screen
  mov ds,ax
@@ -488,7 +648,7 @@ reset_live_rollback:
  mov ax,0xb800
  mov es,ax
  xor di,di
- mov cx,1920
+ mov cx,[cs:live_cells]
  rep movsw
  pop ds
  mov dx,[cs:saved_cursor]

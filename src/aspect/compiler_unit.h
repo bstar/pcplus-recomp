@@ -34,6 +34,9 @@ typedef struct aspect_compiler_procedure {
 struct aspect_compiler_allocation;
 typedef struct aspect_compiler_unit {
  struct aspect_compiler_allocation *allocations;
+ /* Internal workspace adapter lends aligned storage until dispose. Ordinary
+  * initialized units leave this empty and retain CRT ownership semantics. */
+ void *borrowed;unsigned borrowed_bytes,borrowed_used;
  aspect_compiler_symbol *globals,*globals_tail;
  aspect_compiler_procedure *procedures,*procedures_tail;
  aspect_compiler_source *declarations,*declarations_tail;

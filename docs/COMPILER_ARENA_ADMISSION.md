@@ -1,5 +1,9 @@
 # Compiler heap admission beneath the live-transaction parent
 
+The later [row/startup checkpoint](LIVE_RESET_ROWS.md) adds a borrowed metadata
+tail for the larger parent and repeats the compiler corpus and ownership checks.
+The identities and receipts below describe this earlier allocation fix.
+
 The larger transaction parent now passes all four recorded nested source
 workflows with the maintained compiler. The parent and ASPECT binaries retain
 their previous identities; the change is in ASPCOMP's allocation policy and

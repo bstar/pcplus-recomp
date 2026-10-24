@@ -57,6 +57,9 @@ reset_bank_body:
  pushf
  pop word [cs:reset_bank_observation+6]
  call terminal_reset_test_initialize
+%ifdef RESET_BANK_TRANSACTION
+ mov word [program_state_7a74],24
+%endif
  xor ax,ax
  push ax
  call terminal_reset_width
@@ -130,7 +133,20 @@ reset_bank_body:
 %endif
 reset_bank_allocate:
  mov bx,sp
+%ifdef RESET_BANK_TRANSACTION
+ mov ax,[program_state_7a74]
+ cmp ax,1
+ jb reset_bank_error
+ cmp ax,25
+ ja reset_bank_error
+ push cx
+ mov cx,264
+ mul cx
+ pop cx
+ cmp [bx+2],ax
+%else
  cmp word [bx+2],6336
+%endif
  jne reset_bank_error
  mov ax,bank_shadow
 %ifdef RESET_BANK_OVERLAY
@@ -156,8 +172,13 @@ reset_bank_error:
  jmp reset_bank_abort
 global bank_shadow,bank_shadow_end
 %ifdef RESET_BANK_OVERLAY
+%ifdef RESET_BANK_TRANSACTION
+bank_shadow equ 0xe600
+bank_shadow_end equ 0xffc8
+%else
 bank_shadow equ 0xe700
 bank_shadow_end equ 0xffc0
+%endif
 %else
 SEGMENT BANK_SHADOW public align=16 class=FAR_DATA use16
 bank_shadow: resb 6336

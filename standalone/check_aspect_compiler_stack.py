@@ -113,7 +113,10 @@ def main():
         if Path(str(arguments[0])).name=='wcl':
             arguments=[x for x in arguments if x!='-s']
             if '-k32768' in arguments:
-                arguments[arguments.index('-k32768')]='-k16384';guarded.append(arguments)
+                # The API harness borrows no automatic context; CLI fault variants
+                # have the same automatic workspace and24KiB budget as ASPCOMP.
+                cli_frame=any(str(x).endswith('compiler_main.c')for x in arguments)
+                arguments[arguments.index('-k32768')]='-k24576'if cli_frame else'-k16384';guarded.append(arguments)
         if Path(str(arguments[0])).name=='dosbox-x':
             folder=out/'tests';probe=folder/'stack_probe.c';probe.write_text(PROBE)
             original_run(['wcl','-q','-bt=dos','-0','-ml','-ecc','-w4','-we','-k2048',
@@ -129,6 +132,8 @@ def main():
     try:corpus.main()
     finally:corpus.subprocess.run=original_run
     report=json.loads((out/'checks.json').read_text());assert report['passed'] and len(guarded)==3
+    assert sum('-k16384'in command for command in guarded)==1
+    assert sum('-k24576'in command for command in guarded)==2
     # This pinned CRT writes its fatal message to the console, bypassing the
     # reopened stderr stream. Observe the real video before PROGRAM runs.
     video=(out/'tests/STKVIDEO.BIN').read_bytes();assert len(video)==4000
@@ -167,7 +172,7 @@ def main():
     assert b'stack overflow' in (cli/'STKVIDEO.BIN').read_bytes()[::2].lower()
     assert not (cli/'OVR.ASX').exists()
     result=dict(passed=True,candidate_CLI_stack_bytes=24576,checked_API_stack_bytes=16384,
-        checked_CLI_stack_bytes=24576,checked_CLI_cases=len(expected),
+        checked_CLI_stack_bytes=24576,checked_fault_CLI_stack_bytes=24576,checked_CLI_cases=len(expected),
         checked_CLI_sha256=sha(cli/'ASPCOMP.EXE'),checked_CLI_command=command,
         checked_CLI_overflow_sha256=sha(cli/'STKCLI.EXE'),
         deliberate_overflow_stack_bytes=2048,guarded_compile_commands=guarded,depth_cases=deep,

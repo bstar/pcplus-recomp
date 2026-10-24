@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Check actual native width projection, commit and rollback with hardware modeled."""
-import argparse,hashlib,json,struct
+import argparse,hashlib,json,struct,itertools
 from pathlib import Path
 from unicorn import UC_HOOK_CODE
 from unicorn.x86_const import *
@@ -25,12 +25,13 @@ class Model(Live):
    if ax>>8==2:self.bios_cursor=u.reg_read(UC_X86_REG_DX)
    if ax>>8==1:self.bios_shape=u.reg_read(UC_X86_REG_CX)
   return super().interrupt(u,n,d)
-def fixture(profile=6,attribute=7):
+def fixture(profile=6,attribute=7,rows=24,hidden=0):
  m=Model()
- for name,value in dict(csi_terminal_id=profile,attributes_normal_value=attribute,csi_row_count=24,
-  csi_last_row=23,screen_last_row=23,erase_cell_count=1920,terminal_dec_keys=1).items():m.put(name,value)
+ for name,value in dict(csi_terminal_id=profile,attributes_normal_value=attribute,csi_row_count=rows,
+  csi_last_row=rows-1,screen_last_row=rows-1,erase_cell_count=rows*80,terminal_dec_keys=1,
+  ui_flow_suppressed=hidden).items():m.put(name,value)
  m.uc.mem_write(0x449,b'\x03\x50\x00');m.uc.mem_write(0x462,b'\0');m.uc.mem_write(0x484,b'\x18')
- assert m.call('terminal_reset_capture')==0;m.position(5,17)
+ assert m.call('terminal_reset_capture')==0;m.position(min(5,rows-1),17)
  for name,n in [('screen_attribute_cells',4096),('erase_attribute_values',4096),('screen_line_flags',128)]:
   m.uc.mem_write(m.symbols[name],bytes((i*13+5)&255 for i in range(n)))
  shadow=m.get('erase_shadow_segment')*16+m.get('erase_shadow_offset')
@@ -61,13 +62,13 @@ def main():
  for name,digest in manifest['sources'].items():assert sha(ROOT/name)==digest,name
  memory=inspect_terminal_memory(binary,binary.parent/'terminal.map')
  check_transport.BINARY=binary;check_transport.MAP=binary.parent/'terminal.map'
- successes=0;failures=0;refusals=0;payload=bytes(range(256))*2
+ successes=0;failures=0;refusals=0;row_cases=0;payload=bytes(range(256))*2
  # The independent contract lists only display fields that this operation may
  # commit. Full near-data comparison catches accidental baseline/parser writes.
  writable=['attributes_current','screen_attribute_row_bytes','screen_last_column','erase_cell_count',
   'screen_cursor_row','screen_cursor_column','screen_visible_column','screen_previous_row','screen_previous_column',
   'screen_video_offset','screen_attribute_offset','screen_viewport_enabled','screen_viewport_active',
-  'screen_viewport_offset','screen_viewport_left']
+  'screen_viewport_offset','screen_viewport_left','csi_saved_row','csi_saved_column','csi_wrap_pending','cursor_state_saved_3342']
  for profile in (4,6):
   for attr in (7,0x1e):
    m,shadow=fixture(profile,attr)
@@ -99,34 +100,73 @@ def main():
      assert m.get('screen_viewport_active')==1 and m.get('screen_cursor_column')==1
     successes+=1
    m.call('csi_reset_terminal');assert m.get('screen_attribute_row_bytes')==80 and m.get('csi_row_count')==24
- for request in (0,1):
-  m,shadow=fixture();control,_=fixture();control.receive_irq(payload)
+ for rows,hidden,request in [(24,0,0),(24,0,1),(25,0,1),(25,1,1),(1,0,1)]:
+  m,shadow=fixture(rows=rows,hidden=hidden);control,_=fixture(rows=rows,hidden=hidden);control.receive_irq(payload)
   fired=inject(m,payload,'reset_live_prepare')
   assert m.call('terminal_native_width',ax=request,limit=2000000)==0
   assert fired and m.get('uart_rx_count')==512 and not m.rx
   for name,n in [('uart_rx_buffer',4096),('uart_rx_count',2),('uart_rx_write',2),('uart_rx_read',2),('uart_rx_dropped',2)]:
    assert bytes(m.uc.mem_read(m.symbols[name],n))==bytes(control.uc.mem_read(control.symbols[name],n)),name
   abi(m);successes+=1
- for fault in ('metadata','allocation','readonly','plane_pointer','cursor'):
-  m,shadow=fixture();control,_=fixture();control.receive_irq(payload);expected=near(control)
+ # Independent row/ownership contract: a visible physical status row reserves
+ # row25. Legacy narrow25 therefore adopts24; a hidden status permits all25.
+ for rows in (1,5,24,25):
+  for hidden in (0,1):
+   for profile in (4,6):
+    for origin in (0,1):
+     for restricted in range(2 if rows>=5 else 1):
+      m,shadow=fixture(profile,rows=rows,hidden=hidden)
+      if restricted:m.put('screen_first_row',1);m.put('screen_last_row',rows-2)
+      m.put('csi_origin_mode',origin);m.position(rows-2 if restricted and origin else rows-1,79)
+      m.put('csi_wrap_pending',1);m.feed(b'\x1b7')
+      baseline_rows=rows;target=24 if rows==25 and not hidden else rows
+      for request in (1,0):
+       video=bytes(m.uc.mem_read(0xb8000,4000));tail=bytes(m.uc.mem_read(shadow+target*264,8192-target*264))
+       assert m.call('terminal_native_width',ax=request,limit=2000000)==0,(rows,hidden,origin,restricted,request)
+       abi(m);width=132 if request else 80
+       assert(m.get('csi_row_count'),m.get('csi_last_row'),m.get('screen_first_row'),m.get('screen_last_row'))==(target,target-1,0,target-1)
+       assert m.get('erase_cell_count')==width*target and m.get('csi_origin_mode')==origin
+       assert not m.get('csi_wrap_pending')and not m.get('cursor_state_saved_3342')
+       assert m.get('csi_saved_row')<target and m.get('csi_saved_column')<width
+       assert bytes(m.uc.mem_read(0xb8000,target*160))==b' \x07'*(target*80)
+       assert bytes(m.uc.mem_read(0xb8000+target*160,4000-target*160))==video[target*160:]
+       assert bytes(m.uc.mem_read(shadow+target*264,8192-target*264))==tail
+       if request:
+        assert bytes(m.uc.mem_read(shadow,target*264))==b' \x07'*(target*132)
+        m.feed(b'\x1b8X')
+        assert m.get('screen_cursor_row')==m.get('csi_saved_row')and m.get('screen_cursor_column')==80
+        m.feed(b'\x1b['+str(target).encode()+b';132HZ\x1b7')
+        assert m.get('csi_saved_column')==131 and m.get('cursor_state_saved_3342')==1
+       else:
+        m.feed(b'\x1b8')
+        assert m.get('screen_cursor_row')==target-1 and m.get('screen_cursor_column')==79 and not m.get('csi_wrap_pending')
+       row_cases+=1
+      m.call('csi_reset_terminal')
+      assert(m.get('csi_row_count'),m.get('screen_first_row'),m.get('screen_last_row'))==(baseline_rows,0,baseline_rows-1)
+ for (rows,hidden),fault in itertools.product([(24,0),(25,0),(25,1),(1,0)],('metadata','allocation','readonly','plane_pointer','cursor')):
+  m,shadow=fixture(rows=rows,hidden=hidden);control,_=fixture(rows=rows,hidden=hidden)
+  for state in (m,control):
+   state.position(rows-1,79);state.put('csi_wrap_pending',1);state.feed(b'\x1b7')
+  control.receive_irq(payload);expected=near(control);target=24 if rows==25 and not hidden else rows
   oldshadow=bytes(m.uc.mem_read(shadow,8192));video=bytes(m.uc.mem_read(0xb8000,4000));cursor=m.bios_cursor;shape=m.bios_shape
   fired=inject(m,payload,'reset_live_prepare');changed=[];status=bytes([ord('S'),0x4f])*80
   def corrupt(u,at,size,_):
-   target='nreset_reset_bank_allocate'if fault=='allocation'else'reset_live_validate'
-   if changed or at!=m.symbols[target]:return
+   hook_target='nreset_reset_bank_allocate'if fault=='allocation'else'reset_live_validate'
+   if changed or at!=m.symbols[hook_target]:return
    changed.append(True);u.mem_write(0xb8000+3840,status)
    if fault=='allocation':
     ss=u.reg_read(UC_X86_REG_SS);sp=u.reg_read(UC_X86_REG_SP);u.mem_write(ss*16+sp+2,struct.pack('<H',6338))
    else:
     field,value={'metadata':('screen_attribute_row_bytes',133),'readonly':('csi_terminal_id',8),
-     'plane_pointer':('screen_attributes_base',0),'cursor':('screen_previous_row',24)}[fault]
+     'plane_pointer':('screen_attributes_base',0),'cursor':('screen_previous_row',target)}[fault]
     bank=m.base+memory['native_reset_bank_start'];u.mem_write(bank+m.symbols['nreset_'+field]-m.base,struct.pack('<H',value))
   m.uc.hook_add(UC_HOOK_CODE,corrupt)
   assert m.call('terminal_native_width',ax=1,limit=2000000)==3
   assert fired and changed and m.get('uart_rx_count')==512 and not m.rx
   assert near(m)==expected and bytes(m.uc.mem_read(shadow,8192))==oldshadow
-  assert bytes(m.uc.mem_read(0xb8000,3840))==video[:3840]
-  assert bytes(m.uc.mem_read(0xb8000+3840,160))==status
+  expected_video=video[:3840]+status
+  expected_video=video[:target*160]+expected_video[target*160:]
+  assert bytes(m.uc.mem_read(0xb8000,4000))==expected_video
   assert (m.bios_cursor,m.bios_shape)==(cursor,shape);abi(m)
   assert m.call('terminal_native_width',ax=1,limit=2000000)==0,'Failed transaction did not release ownership'
   failures+=1
@@ -137,13 +177,14 @@ def main():
  invalid={name:1 for name in owners}
  invalid.update(csi_row_count=25,screen_cursor_wrap=1,screen_attribute_checks=1,terminal_tab_wrap=1,
   screen_vertical_attribute_check=1,erase_protection_mode=1,screen_columns=132,text_video_segment=0xb000,
-  text_cga_status_port=0x3da,screen_viewport_enabled=1,screen_first_row=3,screen_attributes_base=0,
+  text_cga_status_port=0x3da,screen_viewport_enabled=1,screen_attributes_base=0,
   erase_attribute_values_base=0,erase_shadow_segment=0,screen_cursor_column=80,csi_terminal_id=8,reset_ready=0)
  invalid.update(terminal_dec_keys=0,screen_use_bios_cursor=0,csi_last_row=24,screen_last_row=24,
   screen_video_row_bytes=264,screen_viewport_right=131,erase_shadow_offset=1,ui_flow_region_cells=132,
   ui_flow_video_base=0,ui_flow_coordinate_base=0,erase_cell_count=2000,screen_last_column=80,
   screen_viewport_active=2,screen_viewport_left=52,screen_viewport_offset=52,
   screen_reverse_wrap_blocked=1,screen_cursor_row=24,connection_state=1,reset_live_active=1,reset_bank_busy=1)
+ invalid.update(screen_previous_row=24,screen_previous_column=80,screen_visible_column=80,screen_video_offset=1,screen_attribute_offset=1)
  for name,value in invalid.items():
   m,shadow=fixture();m.put(name,value);before=near(m);video=bytes(m.uc.mem_read(0xb8000,4000))
   cache=m.base+memory['native_reset_bank_start'];m.uc.mem_write(cache,b'\x5a'*65504)
@@ -171,10 +212,10 @@ def main():
  try:m.feed(b'\x1b[?3h')
  except Abort as error:assert error.args==(0x2a6e,)
  else:raise AssertionError('Peer width unexpectedly enabled')
- result=dict(passed=True,binary_sha256=sha(binary),successes=successes,native_fault_rollbacks=failures,
+ result=dict(passed=True,binary_sha256=sha(binary),successes=successes,general_row_commits=row_cases,native_fault_rollbacks=failures,
   refusals=refusals,real_UART_ISR_in_private_context=True,root_near_and_owned_shadow_preserved_on_failure=True,
   status_row_update_preserved=True,RIS_baseline_preserved=True,peer_width_still_unbound=True,sources=manifest['sources'],memory_layout=memory,
-  checker_sha256=sha(Path(__file__)),original_inputs=[],scope=__doc__+' Plain24-row profiles4/6 only. Peer width remains unbound. Faults are explicit test mutations of a native allocation argument or result; actual error/validation/rollback instructions execute. No actual DOS transaction or broad UI/protected-field/BBS acceptance implied.')
+  checker_sha256=sha(Path(__file__)),original_inputs=[],scope=__doc__+' Plain profiles4/6,1..25 rows, status-aware legacy startup normalization, full-margin reset and saved/deferred-wrap bounds. Peer width remains unbound. Faults explicitly mutate native allocation arguments/results; real error/validation/rollback executes. No actual DOS transaction or broad UI/protected-field/BBS acceptance implied.')
  (binary.parent/'reset-live-checks.json').write_text(json.dumps(result,indent=2)+'\n')
- print('PASS native live transaction:',successes,'commits,',failures,'IRQ/fault rollbacks,',refusals,'refusals')
+ print('PASS native live transaction:',successes,'commits,',row_cases,'row/margin/save cases,',failures,'IRQ/fault rollbacks,',refusals,'refusals')
 if __name__=='__main__':main()

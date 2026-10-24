@@ -22,6 +22,11 @@ static void *allocate(aspect_compiler_unit *u,unsigned bytes)
   * source/symbol objects share bounded arenas instead of a CRT block each. */
  if(call>=u->fail_after || bytes>UINT_MAX-(alignment-1U))return 0;
  rounded=(bytes+alignment-1U)&~(alignment-1U);
+ /* Optional caller-owned workspace is never linked into the CRT free list. */
+ if(rounded<=u->borrowed_bytes-u->borrowed_used){
+  result=(unsigned char *)u->borrowed+u->borrowed_used;u->borrowed_used+=rounded;
+  goto obtained;
+ }
  block=u->allocations;
  if(!block || rounded>block->capacity-block->used){
   capacity=rounded>512U?rounded:512U;
@@ -40,6 +45,7 @@ static void *allocate(aspect_compiler_unit *u,unsigned bytes)
   block->next=u->allocations;block->used=0;block->capacity=capacity;u->allocations=block;
  }
  result=block->payload+block->used;block->used+=rounded;
+obtained:
  ++u->live_allocations;if(u->live_allocations>u->peak_allocations)u->peak_allocations=u->live_allocations;
  memset(result,0,bytes);return result;
 }
@@ -51,6 +57,7 @@ void aspect_compiler_unit_dispose(aspect_compiler_unit *u)
  if(!u)return;
  for(block=u->allocations;block;block=next){next=block->next;free(block);}
  u->allocations=0;u->live_allocations=0;
+ u->borrowed=0;u->borrowed_bytes=u->borrowed_used=0;
  u->declarations=u->declarations_tail=0;
  u->globals=u->globals_tail=0;u->procedures=u->procedures_tail=0;
  memset(u->counts,0,sizeof(u->counts));u->loaded=0;

@@ -242,7 +242,9 @@ SEGMENT _DATA public class=DATA use16
 ; Absolute near offsets describe a borrowed far workspace. They allocate no
 ; second image; the context owner supplies its segment after exclusive admission.
 ABSOLUTE 0
+%ifndef RESET_BANK_TRANSACTION
  resb 256
+%endif
 %else
  times 256 db 0
 %endif

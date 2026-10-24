@@ -1,5 +1,9 @@
 # Experimental live width transaction
 
+The newer [row/startup checkpoint](LIVE_RESET_ROWS.md) extends the explicit API
+to valid row counts/margins and real startup geometry. The24-row hashes and
+results below describe this earlier checkpoint.
+
 The later [compiler admission fix](COMPILER_ARENA_ADMISSION.md) now passes the
 four recorded nested source workflows beneath this unchanged parent. The failed
 compiler observations below remain historical. General display/child/protected

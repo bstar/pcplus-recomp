@@ -49,10 +49,15 @@ def build_native_reset_bank(root,out,overlay=True,transaction=False):
     objects=[]
     for number,path in enumerate(native):
         obj=out/f'native-{number}.obj';objects.append(obj)
+        local_namespace=dict(namespace)
+        if transaction and path==root/'reconstruction/terminal_reset/width.asm':
+            local_namespace['terminal_reset_width']='nreset_terminal_reset_width_native'
+        local_aliases=['-D'+name+'='+target for name,target in local_namespace.items()]
         subprocess.run(['nasm','-fobj','-D'+path.parent.name.upper()+'_OMF',*(['-DRESET_BANK_OVERLAY']if overlay else[]),
+            *(['-DRESET_BANK_TRANSACTION']if transaction else[]),
             '-DRESET_VIEWPORT','-DRESET_BANK','-DVIEWPORT_PRESERVE_DS','-DWIDTH_REQUEST_OMF',
             '-D_TEXT=RESET_CODE','-DCODE=FARCODE','-D_DATA=RESET_DATA','-DDATA=NATIVE_DATA',
-            '-DSTACK=RESET_STACK','-DDGROUP=RESET_GROUP',*aliases,
+            '-DSTACK=RESET_STACK','-DDGROUP=RESET_GROUP',*local_aliases,
             '-I',str(root/'reconstruction/uart')+'/',str(path.relative_to(root)),'-o',str(obj)],cwd=root,check=True)
     helpers=[root/'src/ui/reset_bank_context.asm',root/'standalone/reset_bank_body.asm']
     if transaction:helpers.append(root/'src/ui/reset_live.asm')
@@ -65,5 +70,5 @@ def build_native_reset_bank(root,out,overlay=True,transaction=False):
     inputs=inventory+helpers+[Path(__file__).resolve(),root/'reconstruction/uart/encodings.inc']
     return dict(objects=objects,inputs=inputs,namespace=namespace,overlay=overlay,
         source_hashes={str(path.relative_to(root)):hashlib.sha256(path.read_bytes()).hexdigest()for path in inputs},
-        scope=('Experimental plain24-row live projection, validation, commit and display rollback; normal peer width and broader profiles/UI remain unbound.'if transaction else
+        scope=('Experimental plain1..25-row live transaction with status-aware geometry; normal peer width and protected-field/UI composition remain unbound.'if transaction else
             'Namespaced cold native reset bank; live projection/commit/rollback and normal width ownership remain unbound.'))

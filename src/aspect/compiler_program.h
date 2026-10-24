@@ -16,6 +16,8 @@ unsigned aspect_compiler_program(FILE *,FILE *,aspect_compiler_report *);
 unsigned aspect_compiler_program_options(FILE *,FILE *,aspect_compiler_report *,const aspect_compiler_options *);
 /* Caller-owned, suitably aligned workspace for the same compiler. A short,
  * wrapping or overlapping span is rejected. The workspace remains borrowed;
- * its contents are scratch and no allocator may retire it. */
+ * its contents are scratch and no allocator may retire it. Bytes beyond the
+ * internal compiler context lend metadata storage, with normal heap fallback
+ * when full. The entire supplied span must satisfy the bounds/alias rules. */
 unsigned aspect_compiler_program_workspace(FILE *,FILE *,aspect_compiler_report *,void *,unsigned);
 #endif

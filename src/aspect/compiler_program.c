@@ -247,7 +247,7 @@ static void procedures(pc_compiler *c,unsigned all)
  }
  for(fixup=c->calls;fixup&&pc_ready(c);fixup=fixup->next)patch(c,fixup->offset,fixup->target->address);
 }
-static unsigned program(FILE *input,FILE *output,aspect_compiler_report *report,const aspect_compiler_options *options,pc_compiler *workspace)
+static unsigned program(FILE *input,FILE *output,aspect_compiler_report *report,const aspect_compiler_options *options,pc_compiler *workspace,unsigned workspace_bytes)
 {
  pc_compiler *c;aspect_compiler_procedure *p;unsigned status;
  if(!report)return ASPECT_COMPILE_STATE;memset(report,0,sizeof(*report));report->line=1;
@@ -257,6 +257,10 @@ static unsigned program(FILE *input,FILE *output,aspect_compiler_report *report,
  memset(c,0,sizeof(*c));c->input=input;c->report=report;c->line.number=1;
  c->fail_after=options?options->fail_after:ULONG_MAX;
  aspect_compiler_unit_init(&c->unit);aspect_compiler_output_init(&c->output,output);
+ if(workspace && workspace_bytes>sizeof(*c)){
+  c->unit.borrowed=(unsigned char *)workspace+sizeof(*c);
+  c->unit.borrowed_bytes=workspace_bytes-sizeof(*c);
+ }
  if(options)c->unit.fail_after=options->unit_fail_after;
  status=aspect_compiler_unit_load(&c->unit,input);
  if(status){report->status=status;report->lexical_status=c->unit.lexical_status;report->line=c->unit.error_line;report->offset=c->unit.error_offset;}
@@ -282,7 +286,7 @@ unsigned aspect_compiler_program(FILE *input,FILE *output,aspect_compiler_report
 {return aspect_compiler_program_options(input,output,report,0);}
 
 unsigned aspect_compiler_program_options(FILE *input,FILE *output,aspect_compiler_report *report,const aspect_compiler_options *options)
-{return program(input,output,report,options,0);}
+{return program(input,output,report,options,0,0);}
 static unsigned overlap(const void *a,unsigned an,const void *b,unsigned bn)
 {
  unsigned long aa=(unsigned long)FP_SEG(a)*16UL+FP_OFF(a),bb=(unsigned long)FP_SEG(b)*16UL+FP_OFF(b);
@@ -291,10 +295,10 @@ static unsigned overlap(const void *a,unsigned an,const void *b,unsigned bn)
 unsigned aspect_compiler_program_workspace(FILE *input,FILE *output,aspect_compiler_report *report,void *workspace,unsigned bytes)
 {
  if(!workspace || bytes<sizeof(pc_compiler) || (FP_OFF(workspace)&1U) ||
-    (unsigned long)FP_OFF(workspace)+sizeof(pc_compiler)>65536UL ||
-    (unsigned long)FP_SEG(workspace)*16UL+FP_OFF(workspace)+sizeof(pc_compiler)>1048576UL ||
-    (report&&overlap(workspace,sizeof(pc_compiler),report,sizeof(*report))) ||
-    (input&&overlap(workspace,sizeof(pc_compiler),input,sizeof(*input))) ||
-    (output&&overlap(workspace,sizeof(pc_compiler),output,sizeof(*output))))return ASPECT_COMPILE_STATE;
- return program(input,output,report,0,workspace);
+    (unsigned long)FP_OFF(workspace)+bytes>65536UL ||
+    (unsigned long)FP_SEG(workspace)*16UL+FP_OFF(workspace)+bytes>1048576UL ||
+    (report&&overlap(workspace,bytes,report,sizeof(*report))) ||
+    (input&&overlap(workspace,bytes,input,sizeof(*input))) ||
+    (output&&overlap(workspace,bytes,output,sizeof(*output))))return ASPECT_COMPILE_STATE;
+ return program(input,output,report,0,workspace,bytes);
 }

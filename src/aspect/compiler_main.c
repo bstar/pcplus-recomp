@@ -47,11 +47,13 @@ int main(int argc,char **argv)
 {
  char source[PATH_SIZE],target[PATH_SIZE],scratch[PATH_SIZE],backup[PATH_SIZE];
  char supplied[PATH_SIZE];const char *ext;FILE *input=0,*output=0;
- /* The CLI already reserves 24KiB of stack. Lend ordinary 512-byte stream
+ /* The workspace also lends256 bytes for first-pass metadata; larger sources
+  * retain the same heap fallback and grammar limits.
+  * The CLI already reserves 24KiB of stack. Lend ordinary 512-byte stream
   * buffers from that reservation instead of taking two more far-heap blocks
   * beneath the retained terminal/interpreter. They outlive both fclose calls. */
  char input_buffer[512],output_buffer[512];
- pc_compiler workspace;
+ struct {pc_compiler compiler;unsigned char metadata[256];} workspace;
  aspect_compiler_report report;unsigned status,sequence=0,had_target=0,attributes;int result=2;
  if(argc<2||argc>3){fputs("Usage: ASPCOMP source[.ASP] [output.ASX]\n",stderr);return 64;}
  if(strlen(argv[1])+5>=sizeof(supplied))return 64;strcpy(supplied,argv[1]);

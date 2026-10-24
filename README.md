@@ -589,6 +589,10 @@ The launcher uses a separate private installation under `reconstruction/lab`.
 Type `ATDThost:port` to dial its emulated Hayes modem; Alt-X exits. Its generated
 startup script and executable are refreshed on launch.
 
+The optional [explicit width transaction](docs/LIVE_RESET_ROWS.md) now checks
+normal startup and status-aware1..25-row geometry. It remains excluded from the
+card package while protected fields and broader UI/child rendering are composed.
+
 ## Source and evidence
 
 - `reconstruction/uart/core.asm`: recovered resident UART block, with exact

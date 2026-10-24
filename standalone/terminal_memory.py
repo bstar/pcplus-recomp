@@ -54,7 +54,8 @@ def inspect_terminal_memory(binary,map_path):
   assert native_size<65536 and native_top-native_image==0xd600+4096 and native_top==native_end
   assert native_end<=near_start or native_start>=near_start+near_size,'Native reset bank overlaps root DGROUP'
   assert native_end<=shadow or native_start>=far_end,'Native reset bank overlaps root far buffers'
-  assert private_end-private_shadow==6336 and symbols['bank_shadow'][1]+6336<=65536
+  native_shadow_bytes=6600 if 'terminal_native_width'in symbols else 6336
+  assert private_end-private_shadow==native_shadow_bytes and symbols['bank_shadow'][1]+native_shadow_bytes<=65536
   assert private_end<=native_start or private_shadow>=native_end,'Native reset shadow overlaps private data'
   assert private_end<=near_start or private_shadow>=near_start+near_size,'Native reset shadow overlaps root DGROUP'
   assert private_end<=shadow or private_shadow>=far_end,'Native reset shadow aliases root far buffers'
@@ -67,9 +68,9 @@ def inspect_terminal_memory(binary,map_path):
   static_end=max(static_end,native_end,private_end)
   extra.update(native_reset_bank_bytes=native_size,native_reset_bank_start=native_start,
    native_reset_bank_end=native_end,native_reset_image_offset=native_image-native_start,
-   native_reset_private_stack_bytes=4096,native_reset_shadow_bytes=6336,native_reset_shadow_end=private_end,
+   native_reset_private_stack_bytes=4096,native_reset_shadow_bytes=native_shadow_bytes,native_reset_shadow_end=private_end,
    native_reset_namespace_symbols=len(exported),native_reset_code_segment=native_cs,
-   native_reset_overlay=native_overlay,native_reset_additional_storage_bytes=0 if native_overlay else native_size+6336)
+   native_reset_overlay=native_overlay,native_reset_additional_storage_bytes=0 if native_overlay else native_size+native_shadow_bytes)
   if native_overlay:extra.update(native_reset_workspace_end=workspace_end,native_reset_workspace_bytes=workspace_end-native_start)
  if 'terminal_snapshot_image' in symbols:
   frozen=address('terminal_snapshot_image');frozen_end=address('terminal_snapshot_image_end')
@@ -669,9 +670,26 @@ def inspect_terminal_memory(binary,map_path):
    for name in ['terminal_native_width_far','reset_live_prepare','reset_live_finish','reset_live_validate',
                 'reset_live_commit','reset_live_rollback','reset_live_active']:
     assert symbols[name][0]==native_cs,name
+   # Inspect the compact projection against named root/native owners. A root
+   # offset that grows past15 bits must never silently become a write flag.
+   rows=[('csi_terminal_id',0),('attributes_normal_value',0),('attributes_current',1),('attributes_monochrome',0),
+    ('screen_columns',0),('screen_video_row_bytes',0),('screen_attribute_row_bytes',1),('screen_last_column',1),
+    ('csi_last_row',1),('screen_first_row',1),('screen_last_row',1),('screen_cursor_row',1),('screen_cursor_column',1),
+    ('screen_visible_column',1),('screen_previous_row',1),('screen_previous_column',1),('screen_video_offset',1),
+    ('screen_attribute_offset',1),('screen_viewport_enabled',1),('screen_viewport_active',1),('screen_viewport_offset',1),
+    ('screen_viewport_left',1),('screen_viewport_right',0),('screen_use_bios_cursor',0),('screen_attribute_checks',0),('screen_cursor_wrap',0),
+    ('screen_vertical_attribute_check',0),('screen_reverse_wrap_blocked',0),('erase_lineflags_enabled',0),('erase_protection_mode',0),
+    ('erase_cell_count',1),('terminal_dec_keys',0),('terminal_tab_wrap',0),('csi_row_count',1)]
+   assert address('reset_live_projection_end')-address('reset_live_projection')==len(rows)*4
+   for i,(name,writable) in enumerate(rows):
+    off=symbols[name][1];assert symbols[name][0]==ds and off<0x8000,name
+    native='nreset_program_state_7a74'if name=='csi_row_count'else'nreset_'+name
+    encoded=struct.unpack_from('<HH',image,start+address('reset_live_projection')+i*4)
+    assert encoded==(off+writable*0x8000,symbols[native][1]),name
+   extra['native_reset_projection_fields_verified']=len(rows)
    backup=ui_buffers['program_screen'];assert backup['bytes']==4000
    extra.update(native_reset_transaction=True,native_reset_backup_start=backup['start_linear'],
-                native_reset_backup_bytes=3840,native_reset_transaction_bridge_verified=True)
+                native_reset_backup_bytes=4000,native_reset_transaction_bridge_verified=True)
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
