@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+"""Stage the current branded DOS application; never access a removable card."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+from build_guarded_helper import FLAGS, LOOKUP, ROOT
+
+SPECIAL = LOOKUP + '-special'
+PRODUCTS = {
+    'TERMINAL.EXE': SPECIAL,
+    'ASPECT.EXE': 'aspect-register-parent',
+    'ASPCOMP.EXE': 'aspect-compiler-dos',
+    'PRMEDIT.EXE': 'setup-mouse-notice-sound',
+    'XLTEDIT.EXE': 'xlt-editor',
+}
+COMMANDS = [
+    [sys.executable, 'standalone/build_terminal.py', *FLAGS,
+     '--hook-lookup', '--exit-guard', '--traps', '--special-edition'],
+    [sys.executable, 'standalone/build_aspect_process.py', '--notice-bank',
+     '--notice-sound', '--notice-input', '--notice-help', '--help-resource',
+     '--serial-bank', '--register-handoff'],
+    [sys.executable, 'standalone/build_aspect_compiler_dos.py'],
+    [sys.executable, 'standalone/build_setup.py', '--mouse', '--notice-sound'],
+    [sys.executable, 'standalone/build_xlt_editor.py'],
+]
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def dos_text(text):
+    return text.replace('\r\n', '\n').replace('\n', '\r\n').encode('ascii')
+
+
+def launch(setup=False):
+    return dos_text('@ECHO OFF\n'
+        'SET LOC_PCPLUS=%PCPLUS%\n'
+        'SET PCPLUS=C:\\PCPLUSSE\n'
+        'C:\nCD \\PCPLUSSE\n'
+        'TERMINAL ' + ('/S ' if setup else '') + '@PCPLUS.PRM %1 %2 %3 %4 %5 %6 %7 %8 %9\n'
+        'SET PCPLUS=%LOC_PCPLUS%\nSET LOC_PCPLUS=\n')
+
+
+def stage(out):
+    # Validate the complete input set before creating an output. Profiles,
+    # directories and tables are never package inputs, even for local staging.
+    sources = {}
+    manifests = {}
+    for leaf, folder in PRODUCTS.items():
+        base = ROOT / 'build' / folder
+        manifest = json.loads((base / 'manifest.json').read_text())
+        if manifest.get('original_inputs'):
+            raise ValueError('original build input: ' + folder)
+        if sha(base / leaf) != manifest['binary_sha256']:
+            raise ValueError('changed binary: ' + folder)
+        for name, digest in manifest['sources'].items():
+            path = Path(name)
+            if path.is_absolute() or '..' in path.parts or path.parts[0] in ('build', 'analysis'):
+                raise ValueError('invalid source path: ' + name)
+            if sha(ROOT / path) != digest or (name in sources and sources[name] != digest):
+                raise ValueError('stale source: ' + name)
+            sources[name] = digest
+        manifests[leaf] = dict(folder=folder, manifest_sha256=sha(base / 'manifest.json'),
+                               binary_sha256=manifest['binary_sha256'])
+    out.mkdir(parents=True, exist_ok=False)
+    payload = out / 'PCPLUSSE'
+    payload.mkdir()
+    for leaf, folder in PRODUCTS.items():
+        shutil.copyfile(ROOT / 'build' / folder / leaf, payload / leaf)
+    (payload / 'START.BAT').write_bytes(launch())
+    (payload / 'SETUP.BAT').write_bytes(launch(setup=True))
+    (payload / 'README.TXT').write_bytes(dos_text(
+        'PROCOMM PLUS // LoC SPECIAL EDITION\n\n'
+        'START.BAT starts the terminal with your PCPLUS.PRM.\n'
+        'SETUP.BAT opens configuration. Alt-Z commands; Alt-X returns to shell.\n'
+        'Keep your PCPLUS.PRM, PCPLUS.DIR, PCPLUS.XLT and other local files.\n'
+        'The original C:\\PCPLUS installation is separate.\n\n'
+        'Includes guarded helpers, filename lookup and the smaller DOS compiler.\n'
+        'This is an application milestone. Full original parity and physical\n'
+        'modem acceptance remain unfinished. IRQ5/7 are not supported yet.\n'))
+    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    (payload / 'VERSION.TXT').write_bytes(dos_text(
+        'LoC SPECIAL EDITION\nSource base: ' + commit + '\n'
+        'TERMINAL SHA256:\n' + manifests['TERMINAL.EXE']['binary_sha256'] + '\n'))
+    for name in ('standalone/package_special_edition.py', 'standalone/build_guarded_helper.py'):
+        sources[name] = sha(ROOT / name)
+    result = dict(kind='source-built-special-edition-package', source_base_commit=commit,
+                  products=manifests, sources=sources,
+                  files={p.name: sha(p) for p in sorted(payload.iterdir())},
+                  original_inputs=[], contains_private_configuration=False,
+                  card_written=False, validation='Not validated by packaging; see separate DOS receipts.')
+    (out / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--build', action='store_true')
+    args = parser.parse_args()
+    out = args.output.resolve()
+    if not out.is_relative_to(ROOT / 'build') or out.exists():
+        parser.error('output must be a new directory under build/')
+    if args.build:
+        for command in COMMANDS:
+            subprocess.run(command, cwd=ROOT, check=True)
+    result = stage(out)
+    print('Staged', len(result['files']), 'files at', out / 'PCPLUSSE')
+    print('No card was accessed. Private settings must be preserved during installation.')
+
+
+if __name__ == '__main__':
+    main()

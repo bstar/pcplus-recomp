@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+The newer guarded lookup terminal can now be staged with the magenta splash,
+current interpreter/compiler and both editors. [Packaging and DOS launcher
+checks](docs/SPECIAL_EDITION.md#current-package) keep user profiles out of the
+public package and preserve the existing card paths. This is a host staging
+checkpoint; the disconnected card has not received this update. The same
+document records the cross-owner IRQ5/7 integration gap. Full application,
+stock ENiGMA fragmentation and physical modem gates remain open.
+
 [Native helper lookup](docs/HOOK_LOOKUP.md) now composes exact-read/PCPLUS
 resolution with COM/EXE/BAT and PATH search. Literal batch targets retain their
 suffix and qualification, correcting the native overwrite and shell built-in
