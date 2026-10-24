@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Guarded helper composition](docs/GUARDED_HELPER.md) combines the complete
+helper variant with the existing trap, cancellation and final-exit owners.
+Read-only help moves to a retained far segment so the full 8 KiB stack and
+working buffers fit within DS=SS. The ordinary helper control stays exact.
+Ten trap, fourteen cancellation, 42 helper, four child-owner, eight nested compiler
+and two BBS cases pass; 701 sources reproduce nine products. Eight damaged-input
+checks reject. Physical/device-critical, immediate ENiGMA, native parity and full
+application gates remain open. The card is unchanged.
+
 [Nested compiler memory](docs/NESTED_COMPILER_MEMORY.md) now removes the CLI's
 second heap workspace, compacts numeric storage and uses bounded formatting and
 512-byte CRT growth. The24KiB stack and253-byte grammar bounds stay intact.

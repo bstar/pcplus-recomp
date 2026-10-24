@@ -101,6 +101,19 @@ def inspect_terminal_memory(binary,map_path):
    assert hi<=other_lo or lo>=other_lo+other['bytes'],(name,'code segments overlap')
   code_segments.append(dict(name=name,kind=kind,relative_segment=seg,offset=off,bytes=length))
  near_code=next(c for c in code_segments if c['name']=='_TEXT')
+ if any(c['name']=='USAGE_CODE' for c in code_segments):
+  usage=next(c for c in code_segments if c['name']=='USAGE_CODE')
+  seg,off=symbols['terminal_usage'];end_seg,end_off=symbols['terminal_usage_end']
+  assert seg==end_seg==usage['relative_segment'] and off==usage['offset']==0
+  assert end_off==usage['bytes'] and seg!=ds,'Usage text must leave near data'
+  # DOS09 needs the relocated far string's segment, with caller DS restored
+  # before the shared shutdown/trap/exit path. Check the actual linked bytes.
+  code=b'\x1e\xb8'+struct.pack('<H',seg)+b'\x8e\xd8\xba'+struct.pack('<H',off)+b'\xb4\x09\xcd\x21\x1f'
+  module=image[start:start+module_bytes];at=module.find(code)
+  assert at>=0 and module.find(code,at+1)<0 and at+2 in relocations,'Far usage DS/relocation boundary'
+  assert near_code['relative_segment']*16<=at<near_code['relative_segment']*16+near_code['bytes']
+  assert module[seg*16+end_off-1:seg*16+end_off]==b'$'
+  extra.update(far_usage_bytes=usage['bytes'],far_usage_segment=seg,far_usage_DS_restore_verified=True)
  def raw(name,n):return image[start+address(name):start+address(name)+n]
  def far_call(source,target):
   assert raw(source,6)==b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0])+b'\xc3',(source,'far target/return')

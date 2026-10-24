@@ -1,5 +1,11 @@
 # PCPlus DOS reconstruction
 
+The [guarded helper build](docs/GUARDED_HELPER.md) combines current helper and
+script handback with DOS trap ownership, foreground cancellation and protected
+final exit. Build it with `./tools/build guarded-helper`; its validation keeps
+the ordinary helper executable unchanged and separates emulated DOS/BBS
+results from physical hardware and full application acceptance.
+
 The current [modem reconnect policy](docs/MODEM_RECONNECT.md) preserves peer
 XOFF state across entry, timeout/cancellation and return, and keeps teardown
 flow bytes out of command-mode ATZ after a known carrier loss using ASIOv6.

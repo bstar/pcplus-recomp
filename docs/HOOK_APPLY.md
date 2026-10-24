@@ -127,3 +127,8 @@ The subsequent [live helper/BBS checkpoint](HOOK_BBS.md) adds current normal
 product script/helper/editor evidence and retains immediate ENiGMA and nested
 source-compiler memory failures explicitly. It does not broaden the scope of
 the original synthetic receipt above.
+
+The later [guarded helper composition](GUARDED_HELPER.md) combines the supported
+interactive transaction with trap and final-exit owners. It supplies separately
+bound DOS, source-compiler and BBS evidence; native parity and full application
+gates remain open.

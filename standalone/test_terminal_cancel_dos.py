@@ -24,11 +24,14 @@ CASES={
 }
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--mouse',action='store_true')
+ p.add_argument('--terminal',type=Path)
  p.add_argument('--label',default='cancel-'+uuid.uuid4().hex);p.add_argument('--case',action='append',choices=CASES)
  args=p.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
  out=ROOT/'build/terminal-cancel-tests'/args.label;out.mkdir(parents=True,exist_ok=False)
  binary=ROOT/'build'/('terminal-traps-mouse' if args.mouse else 'terminal-traps')/'TERMINAL.EXE'
+ if args.terminal:binary=args.terminal.resolve()
  manifest=json.loads((binary.parent/'manifest.json').read_text());assert manifest['terminal_traps']
+ assert manifest['experimental_mouse']==args.mouse
  assert manifest['binary_sha256']==sha(binary)
  names=['test_terminal_cancel_dos.py','terminal_cancel_parent.c','cancel_settings_child.c','test_connection_dos.py',
   'test_terminal.py','test_aspect_renderer_dos.py','modem_fixtures.py','terminal_config_fixtures.py','directory_fixtures.py','directory_test_support.py']

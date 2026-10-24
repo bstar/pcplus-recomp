@@ -48,7 +48,7 @@ if args.traps:out_name='terminal-traps-mouse' if args.mouse else 'terminal-traps
 if args.exit_probe is not None:out_name+='-probe-'+str(args.exit_probe)
 if args.trap_probe is not None:out_name+='-probe-'+str(args.trap_probe)
 if args.notice_sound:
- assert args.external_render and not (args.exit_guard or args.traps)
+ assert args.external_render
  out_name='terminal-mouse-notice-sound' if args.mouse else 'terminal-notice-sound'
 if args.notice_input:
  assert args.notice_sound and args.mouse
@@ -76,6 +76,10 @@ if args.hook_apply:out_name+='-apply'
 if args.input_probe:out_name+='-inputprobe'
 if args.hook_probe:out_name+='-hookprobe'
 if args.projection_probe:out_name+='-probe'
+if args.notice_sound and args.exit_guard:out_name+='-guarded'
+if args.notice_sound and args.traps:out_name+='-traps'
+if args.notice_sound and args.trap_probe is not None:out_name+='-probe-'+str(args.trap_probe)
+if args.notice_sound and args.exit_probe is not None:out_name+='-exit-probe-'+str(args.exit_probe)
 if args.special_edition:out_name+='-special'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
@@ -159,6 +163,7 @@ for index,source in enumerate(sources):
  if args.hook_probe:options+=['-DTERMINAL_HOOK_PROBE']
  if args.exit_guard:options+=['-DTERMINAL_EXIT_GUARD']
  if args.traps:options+=['-DTERMINAL_TRAPS']
+ if args.notice_sound and (args.exit_guard or args.traps):options+=['-DTERMINAL_FAR_USAGE']
  if args.trap_probe is not None:options+=['-DTERMINAL_TRAP_PROBE='+str(args.trap_probe)]
  if args.process_bank and source==ROOT/'src/process/dos_exec.asm':options+=['-DPROCESS_CODE_BANK']
  if args.exit_probe is not None:options+=['-DTERMINAL_EXIT_PROBE='+str(args.exit_probe)]

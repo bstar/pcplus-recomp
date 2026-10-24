@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "scope": "Reject damaged raw evidence without changing any captured file on disk.",
+  "receipt_sha256": "3c472c7f79bf9ea0e33aa37db21c935bc67dab2da6759a26dec311dd99b51ff6",
+  "checker_sha256": "fcf289cc3a77f896e5c30d9075c3f37af83a549ffabf7debb9f95a9df632703f",
+  "verifier_sha256": "38f1294af67ca9acceeb7997a4920e1e4962e0776f1da882184cb1a88ca9cc01",
+  "cases": [
+    {
+      "case": "closed-trap-phase",
+      "target": "build/terminal-trap-tests/guarded-helper-traps-02/00/TRAPWIT.BIN",
+      "offset": 6,
+      "rejected": true,
+      "target_sha256": "5e65370665d9910efe74172000b1160b805985d4e3a4e712bad5b58d678bbf68",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 50
+    },
+    {
+      "case": "startup-caller-break",
+      "target": "build/terminal-trap-tests/guarded-helper-traps-02/00/CHILTRAP.BIN",
+      "offset": 20,
+      "rejected": true,
+      "target_sha256": "61348b2f87365225dc3819f71106c814f1b7d4283217c7f38fe88cb987b34610",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 52
+    },
+    {
+      "case": "cancellation-rescue",
+      "target": "build/terminal-cancel-tests/guarded-helper-cancel-02/capture/CANCEL.BIN",
+      "offset": 8,
+      "rejected": true,
+      "target_sha256": "90e3923de7620c1514ca843ddaef0b4a72aaec6a1be102110ce6eb428b23ae87",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 66
+    },
+    {
+      "case": "returned-frame",
+      "target": "build/guarded-helper/final-apply-1-00/B1.BIN",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "b4d91c20262805c6fe5bff8970e42f8a7b2fd690adc49ee9157d2bcbbefa84c0",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 84
+    },
+    {
+      "case": "register-owner",
+      "target": "build/guarded-helper/final-apply-1-00/S1.BIN",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "f3b0b2ca1b8369caee0e6cf21d66e30904925ad13de90a54a74a22dad294a624",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 87
+    },
+    {
+      "case": "helper-child-phase",
+      "target": "build/guarded-helper/final-ownership-1-00/S0.BIN",
+      "offset": 4704,
+      "rejected": true,
+      "target_sha256": "1e5a9be72ac84690f3166a694a82585ae06058b4196148e16d2ad7fe9aec7fb9",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 87
+    },
+    {
+      "case": "compiled-bytecode",
+      "target": "build/connection-dos/heap-final-compiler-1-explicit/LOGON.ASX",
+      "offset": 0,
+      "rejected": true,
+      "target_sha256": "110e29d9cec2ed2b4023e92ab69027389ff3e8858541e71e9ba3dd5035f87969",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 119
+    },
+    {
+      "case": "BBS-observer",
+      "target": "build/bbs-lab/results/synchronet/guarded-helper-sync-02/SCRIPT.BIN",
+      "offset": 6,
+      "rejected": true,
+      "target_sha256": "31dcc3b90a0532da0d0f050f3a11fba40b1ab268396d34c01bd5e7b04b45b9bd",
+      "rejection_file": "record_guarded_helper.py",
+      "rejection_line": 134
+    }
+  ]
+}

@@ -1000,6 +1000,26 @@ test-nested-compiler-memory: nested-compiler-products
 	done; done
 test: test-aspect-compiler-workspace test-nested-compiler-memory
 
+.PHONY: guarded-helper test-guarded-helper
+guarded-helper: nested-compiler-products
+	python3 standalone/build_guarded_helper.py
+test-guarded-helper: guarded-helper
+	python3 standalone/build_guarded_helper.py --probes
+	@stamp=$$(date -u +%Y%m%dT%H%M%S%N); \
+	prefix=build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-apply-guarded-traps; \
+	python3 standalone/check_guarded_helper_usage_dos.py --output "build/guarded-helper/$$stamp-usage" && \
+	python3 standalone/test_terminal_traps_dos.py --mouse --terminal-prefix "$$prefix" --label "guarded-helper-$$stamp" && \
+	python3 standalone/test_terminal_cancel_dos.py --mouse --terminal "$$prefix/TERMINAL.EXE" --label "guarded-helper-$$stamp" || exit $$?; \
+	for port in 1 2; do \
+	for mode in $$(seq 0 12); do \
+	python3 standalone/test_hook_apply_dos.py --terminal "$$prefix/TERMINAL.EXE" --port $$port --mode $$mode --output "build/guarded-helper/$$stamp-apply-$$port-$$mode" || exit $$?; done; \
+	for mode in 0 1 2 3 5 6 9 10; do \
+	python3 standalone/test_hook_apply_dos.py --terminal "$$prefix/TERMINAL.EXE" --online --port $$port --mode $$mode --output "build/guarded-helper/$$stamp-online-$$port-$$mode" || exit $$?; done; \
+	for mode in 0 1; do \
+	python3 standalone/test_guarded_hook_ownership_dos.py --port $$port --mode $$mode --output "build/guarded-helper/$$stamp-ownership-$$port-$$mode" || exit $$?; done; \
+	for kind in explicit fallback chain rejected; do \
+	python3 standalone/test_nested_compiler_memory_dos.py --terminal "$$prefix/TERMINAL.EXE" --port $$port --case $$kind --output "build/guarded-helper/$$stamp-compiler-$$port-$$kind" || exit $$?; done; done
+
 .PHONY: test-aspect-keyboard test-aspect-keyboard-policy
 test-aspect-keyboard: aspect-runner
 	python3 standalone/check_aspect_keyboard.py

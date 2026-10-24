@@ -31,8 +31,10 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--mode',type=int,choices=range(13),default=0);parser.add_argument('--port',type=int,choices=[1,2],default=1)
     parser.add_argument('--online',action='store_true')
+    parser.add_argument('--terminal',type=Path,default=ROOT/'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-apply/TERMINAL.EXE')
     args=parser.parse_args();out=args.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
-    base=ROOT/'build/terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-apply'
+    binary=args.terminal.resolve();base=binary.parent
+    assert binary.name=='TERMINAL.EXE'
     manifest=json.loads((base/'manifest.json').read_text());assert manifest['experimental_hook_apply']
     assert sha(base/'TERMINAL.EXE')==manifest['binary_sha256']
     symbols={name:(int(seg,16),int(off,16))for seg,off,name in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',(base/'terminal.map').read_text(),re.M|re.I)}

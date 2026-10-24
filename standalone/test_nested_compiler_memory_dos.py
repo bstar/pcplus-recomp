@@ -13,13 +13,15 @@ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--port',type=int,choices=[1,2],required=True)
-    p.add_argument('--case',choices=['explicit','fallback','chain','rejected'],required=True);a=p.parse_args()
+    p.add_argument('--case',choices=['explicit','fallback','chain','rejected'],required=True)
+    p.add_argument('--terminal',type=Path);a=p.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     products={'TERMINAL.EXE':'terminal-directory-keys-process-bank-session-capture-projection-bound-registers-controls-return-execute-modem-input-apply',
               'ASPECT.EXE':'aspect-register-parent','ASPCOMP.EXE':'aspect-compiler-dos'}
     sources={};hashes={}
     for leaf,folder in products.items():
-        src=ROOT/'build'/folder/leaf;m=json.loads((src.parent/'manifest.json').read_text())
+        src=a.terminal.resolve() if leaf=='TERMINAL.EXE' and a.terminal else ROOT/'build'/folder/leaf
+        m=json.loads((src.parent/'manifest.json').read_text())
         assert not m.get('original_inputs') and sha(src)==m['binary_sha256']
         for name,digest in m['sources'].items():assert sha(ROOT/name)==digest;sources[name]=digest
         shutil.copyfile(src,out/leaf);hashes[leaf]=sha(src)

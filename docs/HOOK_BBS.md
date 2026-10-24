@@ -96,3 +96,8 @@ The later [nested compiler memory checkpoint](NESTED_COMPILER_MEMORY.md) adds
 a compact CLI and successful bare8086 source and observed386 BBS workflows.
 It preserves the low-conventional-memory observer failures and the limits above;
 the original receipt remains scoped to its precompiled scripts.
+
+The subsequent [guarded helper composition](GUARDED_HELPER.md) adds trap/exit
+ownership to a distinct product and repeats source login, helpers and editor
+return on both owned services. Its receipt preserves the 386/high-observer and
+ENiGMA buffering limits rather than broadening this checkpoint's scope.

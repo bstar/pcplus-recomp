@@ -109,9 +109,17 @@ _small_code_:
 .bad_options:
  mov word [terminal_exit_code],1
 .usage:
+%ifdef TERMINAL_FAR_USAGE
+ push ds
+ mov ax,seg terminal_usage
+ mov ds,ax
+%endif
  mov dx,terminal_usage
  mov ah,9
  int 0x21
+%ifdef TERMINAL_FAR_USAGE
+ pop ds
+%endif
  jmp terminal_shutdown
 .configured:
  call terminal_select_directory

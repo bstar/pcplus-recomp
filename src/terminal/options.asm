@@ -726,6 +726,11 @@ terminal_zmodem_receive_credit:
 _terminal_zmodem_receive_credit: dw 0
 global terminal_modem_init_wait
 terminal_modem_init_wait: dw 0
+%ifdef TERMINAL_FAR_USAGE
+; Read-only startup help need not consume scarce DS=SS data. Its only reader
+; supplies the relocated segment explicitly around DOS09 and restores DS.
+SEGMENT USAGE_CODE public align=16 class=FARCODE use16
+%endif
 terminal_usage:
  db 'PCPLUS terminal lab',13,10
  db 'Usage: TERMINAL [@FILE.PRM] [/D:target] [COM1..COM4] [baud] [serial] [flow]',13,10
@@ -750,6 +755,11 @@ terminal_usage:
  db 'Alt-R: XMODEM download (HARD/NONE). Escape cancels. Alt-X exits.',13,10
  db 'Alt-S: XMODEM upload, automatic 1K blocks (HARD/NONE).',13,10
  db 'Defaults: COM1 38400 8N1 NONE. /? shows this help.',13,10,'$'
+global terminal_usage_end
+terminal_usage_end:
+%ifdef TERMINAL_FAR_USAGE
+SEGMENT _DATA
+%endif
 options_defaults: dw 1,38400,0,0,8,1,0,0
 options_stage:
 options_port: dw 0

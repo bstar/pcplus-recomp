@@ -7,6 +7,7 @@ from modem_fixtures import fixture
 ROOT=render.ROOT;sha=render.sha
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--mouse',action='store_true')
+    p.add_argument('--terminal-prefix',type=Path,help='Build directory prefix before -probe-MODE')
     p.add_argument('--label',default='traps-'+uuid.uuid4().hex);p.add_argument('--case',action='append',choices=[str(m)+str(b) for m in range(5) for b in [0,1]])
     args=p.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',args.label)
     out=ROOT/'build/terminal-trap-tests'/args.label;out.mkdir(parents=True,exist_ok=False)
@@ -16,7 +17,9 @@ def main():
     modes=sorted({int(c[0]) for c in args.case}) if args.case else list(range(5))
     for mode in modes:
         binary=ROOT/'build'/('terminal-traps-mouse-probe-'+str(mode) if args.mouse else 'terminal-traps-probe-'+str(mode))/'TERMINAL.EXE'
+        if args.terminal_prefix:binary=Path(str(args.terminal_prefix.resolve())+'-probe-'+str(mode))/'TERMINAL.EXE'
         manifest=json.loads((binary.parent/'manifest.json').read_text());assert manifest['terminal_traps'] and manifest['terminal_trap_probe']==mode
+        assert manifest['experimental_mouse']==args.mouse
         assert manifest['binary_sha256']==sha(binary)
         for n,h in manifest['sources'].items():assert n not in sources or sources[n]==h;sources[n]=h
         products[mode]=(binary,manifest)
