@@ -458,21 +458,27 @@ def inspect_terminal_memory(binary,map_path):
     assert symbols[name][0]==config_seg,(name,'reservation operation outside CONFIG_CODE')
    assert symbols['_capture_file_probe_owners'][0]==near_code['relative_segment'],'Reservation owner scan is not resident'
    descriptor=address('_capture_reservation')
-   assert near_start<=descriptor and descriptor+8<=near_start+near_size,'Reservation guard outside near data'
-   assert descriptor+8<=module_bytes,'Reservation guard relies on dirty BSS'
-   assert image[start+descriptor:start+descriptor+8]==bytes(8),'Reservation guard not initialized idle'
+   reservation_bytes=74 if '_capture_file_claim' in symbols else 8
+   if reservation_bytes==74:
+    assert symbols['_capture_file_claim'][0]==symbols['_capture_file_unclaim'][0]==config_seg
+   assert near_start<=descriptor and descriptor+reservation_bytes<=near_start+near_size,'Reservation guard outside near data'
+   assert descriptor+reservation_bytes<=module_bytes,'Reservation guard relies on dirty BSS'
+   assert image[start+descriptor:start+descriptor+reservation_bytes]==bytes(reservation_bytes),'Reservation guard not initialized idle'
    sites=[]
    for region,target in [(near_code,'_capture_file_reserved'),(config_code,'_capture_file_probe_owners')]:
     lo=region['relative_segment']*16+region['offset']
     body=image[start+lo:start+lo+region['bytes']]
     pattern=b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0])
-    assert body.count(pattern)==1,(target,'missing/duplicated compiled far call')
-    site=lo+body.index(pattern)
-    assert site+3 in relocations,(target,'missing compiled far-call relocation')
-    sites.append(site)
-   extra['capture_reservation_far_bindings_verified']=2
+    expected=2 if reservation_bytes==74 and target=='_capture_file_probe_owners' else 1
+    assert body.count(pattern)==expected,(target,'missing/duplicated compiled far call')
+    offset=0
+    for i in range(expected):
+     site=lo+body.index(pattern,offset);offset=site-lo+5
+     assert site+3 in relocations,(target,'missing compiled far-call relocation')
+     sites.append(site)
+   extra['capture_reservation_far_bindings_verified']=len(sites)
    extra['capture_reservation_far_call_sites']=sites
-   extra['capture_reservation_initialized_bytes']=8
+   extra['capture_reservation_initialized_bytes']=reservation_bytes
   if '_command_menu_event' in symbols:
    assert symbols['_command_menu_event'][0]==config_seg,'Command menu is outside CONFIG_CODE'
    for name in ('_command_menu_active','_command_menu_action'):

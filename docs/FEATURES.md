@@ -1,5 +1,9 @@
 # Full application reconstruction checklist
 
+[A fixed log-path claim](CAPTURE_FIXED_RESERVATION.md) now coexists with the
+dynamic recorder reservation in the experimental logger terminal. Actual DOS
+near/far conflict and ambiguity checks pass; queue claim lifetime is not wired.
+
 [The logger code bank](PHONE_LOG_BANK.md) now links the checked logger into an
 experimental full terminal, with exact ABI/memory inspection and selected8086
 connect/redial regressions. It still lacks live event/startup/reservation/poll

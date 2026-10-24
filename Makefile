@@ -1,4 +1,7 @@
 .DEFAULT_GOAL := all
+.PHONY: test-capture-fixed-reservation
+test-capture-fixed-reservation:
+	python3 standalone/check_capture_fixed_reservation.py --output build/capture-fixed-reservation/$$(date +%Y%m%d-%H%M%S-%N)
 .PHONY: phone-log-bank test-phone-log-bank test-phone-log-bank-source
 phone-log-bank:
 	python3 standalone/build_phone_log_bank.py

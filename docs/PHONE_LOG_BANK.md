@@ -11,9 +11,9 @@ The standard full terminal still rebuilds to SHA256
 `2978657cb75ac29067796c98d81ff253b91eee96b995924d266d05bdfbae471c`.
 The bank-linked Special Edition is
 `build/terminal-phone-log-bank-4a10b5574901/TERMINAL.EXE`, SHA256
-`e716e88dd9fb9c233cbb67cb88a2906d0c098e45d82abc7206d51f0b8d355ea7`.
-Its code bank is 6,058 bytes, its near data/stack is 64,416 bytes with
-1,120 bytes spare, and resident code is 65,498 bytes with 38 bytes spare.
+`0f3ca44a7370fe065d5e7b8769619cfc3b9152f475c7c76c118525f9f187a6f4`.
+Its code bank is 6,058 bytes, its near data/stack is 64,496 bytes with
+1,040 bytes spare, and resident code is 65,498 bytes with 38 bytes spare.
 Those margins still constrain the remaining application hooks.
 
 ## ABI and storage
@@ -52,7 +52,7 @@ application build.
 ## Verification and limits
 
 The [validation receipt](validation/phone-log-bank.json) records the exact
-bank diagnostic/source rebuild, terminal memory inspection, 68 damaged-ABI
+bank diagnostic/source rebuild, terminal memory inspection, 73 damaged-ABI
 rejections and two actual8086 terminal runs. The bank diagnostic repeats all
 nine queue/clock/PRM/file cases with314 assertions through the real far bridges. The clean rebuild
 copies 24 declared files and reproduces its DOS executable and eleven objects
@@ -85,7 +85,8 @@ application/hardware compatibility gates.
 
 Next, bind saved PRM enable/path selection, capture all connection lifetimes
 including nested ASPECT paths, and schedule accepted events with UART service.
-The existing external reservation slot is used by the recorder; the logger
-must coexist with it while protecting canonical identities against capture,
-history, scripts and other writers. Queue-full, retry and recovery outcomes
+The new [fixed identity claim](CAPTURE_FIXED_RESERVATION.md) coexists with the
+recorder slot and excludes conflicting capture/history/recorder paths. The
+queue must still acquire and retain it across its configured lifetime and any
+pending/recovery state. Queue-full, retry and recovery outcomes
 need visible application handling before BBS/load/modem/card acceptance.

@@ -1,5 +1,10 @@
 # PCPlus DOS reconstruction
 
+The experimental terminal now has a [fixed log-path claim](docs/CAPTURE_FIXED_RESERVATION.md)
+alongside recorder reservations. Four DOS cases pass446 assertions, and all
+six legacy reservation runs still pass. The queue does not acquire the claim
+yet; event/startup/poll integration and card deployment remain open.
+
 The [telephone-log code bank](docs/PHONE_LOG_BANK.md) now fits in an experimental
 full Special Edition terminal without reducing stacks or limits. Nine banked
 DOS workflows, exact clean-source reproduction and selected8086 connect/redial

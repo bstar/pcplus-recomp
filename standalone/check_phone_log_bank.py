@@ -29,6 +29,8 @@ def main():
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--application-evidence', type=Path, required=True)
     parser.add_argument('--baseline', type=Path, required=True)
+    parser.add_argument('--fixed-reservation', type=Path)
+    parser.add_argument('--reservation-baseline', type=Path)
     args = parser.parse_args()
     build = ROOT / 'build/phone-log-bank'
     manifest = read(build / 'manifest.json')
@@ -105,6 +107,17 @@ def main():
         bad = bytearray(raw)
         bad[offset(name) + delta] ^= 1
         mutations.append((name + ':byte-' + str(delta), bad, listing))
+    if memory['capture_reservation_initialized_bytes'] == 74:
+        assert args.fixed_reservation and args.reservation_baseline
+        for delta in [8, 10, 73]:
+            bad = bytearray(raw)
+            bad[offset('_capture_reservation') + delta] ^= 1
+            mutations.append(('fixed-reservation-state-' + str(delta), bad, listing))
+        for name in ['_capture_file_claim', '_capture_file_unclaim']:
+            bad_map = re.sub(r'(?m)^[0-9a-f]{4}:([0-9a-f]{4})([*+ ]+\s+' + name + r'\s*)$',
+                             lambda match: '0000:' + match[1] + match[2], listing)
+            assert bad_map != listing
+            mutations.append((name + ':wrong-segment', raw, bad_map))
     rejected = []
     with tempfile.TemporaryDirectory(prefix='phone-log-bank-audit-') as temporary:
         folder = Path(temporary)
@@ -142,6 +155,28 @@ def main():
     for path in [build / 'manifest.json', build / 'QUEUE.EXE', dos_path / 'checks.json',
                  source_path / 'checks.json', binary, map_path, terminal / 'manifest.json', application_path, baseline]:
         artifacts[str(path.relative_to(ROOT))] = sha(path)
+    fixed = legacy = None
+    if args.fixed_reservation:
+        folder = args.fixed_reservation.resolve()
+        legacy_folder = args.reservation_baseline.resolve()
+        assert folder.is_relative_to(ROOT / 'build') and legacy_folder.is_relative_to(ROOT / 'build')
+        fixed, legacy = read(folder / 'checks.json'), read(legacy_folder / 'result.json')
+        assert fixed['passed'] and all(fixed['checks'].values()) and len(fixed['cases']) == 4
+        assert not fixed['original_inputs'] and sum(row['assertions'] for row in fixed['cases'].values()) == 446
+        assert all(row['passed'] and all(row['checks'].values()) for row in fixed['cases'].values())
+        assert legacy['passed'] and all(legacy['checks'].values()) and len(legacy['logs']) == 6
+        for report, source_key in [(fixed, 'sources'), (legacy, 'inputs')]:
+            for name, digest in report[source_key].items():
+                assert sha(ROOT / name) == digest
+        for name, digest in fixed['artifacts'].items():
+            assert sha(ROOT / name) == digest
+            artifacts[name] = digest
+        for name, digest in legacy['captures_sha256'].items():
+            path = legacy_folder / name
+            assert sha(path) == digest
+            artifacts[str(path.relative_to(ROOT))] = digest
+        for path in [folder / 'checks.json', legacy_folder / 'result.json']:
+            artifacts[str(path.relative_to(ROOT))] = sha(path)
     names = ['standalone/check_phone_log_bank.py', 'standalone/prove_phone_log_queue.py',
              'standalone/test_phone_log_queue_dos.py', 'standalone/terminal_memory.py',
              'standalone/test_connection_dos.py', 'standalone/test_terminal.py',
@@ -151,6 +186,7 @@ def main():
                   DOS=dos, source_rebuild=source, native_assertions=native_assertions,
                   terminal_sha256=sha(binary), memory=memory, rejected_mutations=rejected,
                   application_tests=application, unchanged_baseline_sha256=sha(baseline), artifacts=artifacts,
+                  fixed_reservation=fixed, legacy_reservation=legacy,
                   sources={name: sha(ROOT / name) for name in names},
                   limitations=['Logger bank linked but no terminal event/startup/reservation/poll hooks yet.',
                                'Actual DOS banked queue/rollback tests and selected synthetic serial terminal regressions; no real modem/card acceptance.',

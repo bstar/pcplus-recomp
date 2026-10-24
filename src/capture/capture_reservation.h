@@ -7,6 +7,10 @@ typedef struct capture_reservation_state {
  capture_file_probe probe;
  void *context;
  unsigned busy;
+#ifdef CAPTURE_FIXED_RESERVATION
+ void *fixed_owner;
+ char fixed_identity[64];
+#endif
 } capture_reservation_state;
 extern capture_reservation_state capture_reservation;
 unsigned __far __cdecl capture_file_reserved(const char *identity);

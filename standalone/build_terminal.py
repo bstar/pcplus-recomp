@@ -344,6 +344,8 @@ for source in c_sources:
            'transfer_import_decode':'hook_transfer_decode_service','transfer_import_path':'hook_transfer_path_service'}
   if args.hook_return:aliases['live_modem_expand']='hook_live_expand_service'
   options=['-nt=HOOK_CODE','-nc=FARCODE','-dPRM_PROJECT_FAR_RATES',*['-d'+name+'='+alias for name,alias in aliases.items()]]
+ if args.phone_log_bank and source in (ROOT/'src/capture/capture_file.c',ROOT/'src/capture/capture_reservation.c'):
+  options+=['-dCAPTURE_FIXED_RESERVATION']
  if source.parent==ROOT/'src/aspect' and source not in config_sources:options=['-nt=ASPECT_CODE','-nc=FARCODE']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']

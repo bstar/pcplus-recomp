@@ -87,4 +87,16 @@ unsigned __cdecl history_file_event(unsigned operation,const void *data,unsigned
 typedef unsigned (__far __cdecl *capture_file_probe)(const char *,void *);
 unsigned __far __cdecl capture_file_reserve(capture_file_probe,void *);
 unsigned __far __cdecl capture_file_release(capture_file_probe,void *);
+#ifdef CAPTURE_FIXED_RESERVATION
+/* A second, fixed canonical identity may coexist with the dynamic recorder
+ * probe. Caller resolves DOS identity first; this API does no DOS IO. Accepts
+ * only an absolute drive-qualified DOS83 path<=63 bytes, normalizing case and
+ * slashes. Non-null opaque owner token controls refresh/release. Registration
+ * checks all open/uncertain sinks and the dynamic probe before publication;
+ * later dynamic refresh and sink begin check this claim as well. No reset or
+ * release of another owner's claim. Caller must retain the claim through any
+ * pending event, open handle or recovery ambiguity. Foreground DS=SS only. */
+unsigned __far __cdecl capture_file_claim(const char *,void *);
+unsigned __far __cdecl capture_file_unclaim(void *);
+#endif
 #endif
