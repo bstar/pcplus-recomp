@@ -122,3 +122,8 @@ native fields/metadata and helper lookup parity, combined exit/trap ownership,
 full application gates, current live BBS acceptance and physical modem integration
 remain open. The ENiGMA immediate-forwarding gap remains conditional as documented
 in the separate BBS evidence.
+
+The subsequent [live helper/BBS checkpoint](HOOK_BBS.md) adds current normal
+product script/helper/editor evidence and retains immediate ENiGMA and nested
+source-compiler memory failures explicitly. It does not broaden the scope of
+the original synthetic receipt above.

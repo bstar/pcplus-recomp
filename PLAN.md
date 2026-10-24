@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+[Live helper/BBS composition](docs/HOOK_BBS.md) now checks directory ASPECT login,
+three real KEY kind2 returns and the unsaved stock editor on the current helper
+build. Acceptance and rejection pass on Synchronet immediate and ENiGMA30ms;
+a separate immediate ENiGMA run retains the known Home/Insert failure. Raw
+register/baseline/configuration/UART snapshots and independent receipt checks
+bind the outcomes. A mutable Synchronet sub-board fixture was made explicit.
+Live source-login attempts exposed a required composed memory gap: direct DOS
+compilation succeeds, while a minimal source script under the retained parent
+reports error8. Precise allocation diagnosis and a fix remain next, alongside
+native parity, composed exit/trap, full application/BBS and physical gates.
+
 [Interactive helper adoption](docs/HOOK_APPLY.md) now routes KEY kind2 through
 PROGRAM and publishes supported returned settings/registers after resource and
 mouse/UART checks.40 linked application cases, twenty offline/nine online8086

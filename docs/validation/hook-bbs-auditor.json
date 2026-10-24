@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "baseline_passes": 2,
+  "rejected": [
+    "completed status",
+    "active normal attribute",
+    "accepted register bank",
+    "quiet UART IER",
+    "returned bank proposal",
+    "product identity"
+  ],
+  "label": "hook-live-enigma-accept30-01",
+  "sources": {
+    "standalone/test_record_hook_bbs.py": "5454772893da6c7f95e4dcc468a08db19bf2dc7cb03c0e524b91474daaa34a30",
+    "standalone/record_hook_bbs.py": "20ffd800be5e4bf58c1aad6bc8a483bf96ef2947d98ce15994a3cf3bffa37b00"
+  },
+  "scope": "Copied raw application/BBS evidence only; original artifacts and services are untouched."
+}

@@ -56,8 +56,16 @@ text = text[:start] + '    source = ' + repr(source) + '\n' + text[end:]
 replace("    keys = ('p13000 a-z p300 a p300 l o g o n . a s x enter '\n            'p8000 ' + original[len(login):])",
         "    keys = 'p25000 ' + original[len(login):]")
 replace("'--dial-fixture', '--timeout', '140'", "'--directory-fixture', '--entry', '3', '--timeout', '160'")
-replace("sources = [Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']",
-        "sources = [Path(__file__), ROOT / 'lab/bbs/script_login_dos_probe.py', recipe_path, ROOT / 'src/aspect/compiler.py']")
+# A previous cancelled/failed session can retain the Notices sub-board. Select
+# writable General explicitly instead of depending on mutable account history.
+replace("    if args.hook_session:keys=hook_session_probe.schedule(keys)",
+        "    if args.hook_session:\n"
+        "        assert keys.count('P p2000 K E Y T E S T') == 1\n"
+        "        keys=keys.replace('P p2000 K E Y T E S T','J p600 1 enter p800 2 enter p1000 P p2000 K E Y T E S T')\n"
+        "        keys=hook_session_probe.schedule(keys)")
+
+replace("sources = hook_sources + [ROOT/'lab/bbs/hook_session_probe.py', Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']",
+        "sources = hook_sources + [ROOT/'lab/bbs/hook_session_probe.py', Path(__file__), ROOT / 'lab/bbs/script_login_dos_probe.py', recipe_path, ROOT / 'src/aspect/compiler.py']")
 replace("'editor_dos_probe.py', 'test_dos.py', 'modem.py', 'check_editor_dos.py')",
         "'editor_dos_probe.py', 'test_dos.py', 'modem.py', 'check_editor_dos.py')]\n"
         "    sources += [ROOT / 'standalone/directory_fixtures.py', ROOT / 'standalone/directory_test_support.py']\n"

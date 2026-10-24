@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 from modem import Telnet
 from product_inputs import select_product
+import hook_session_probe
 
 
 def sha(path):
@@ -55,6 +56,7 @@ def bound_directory(**options):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', required=True)
+    parser.add_argument('--hook-session',choices=['accept','reject'],help='Exercise live kind2 helper returns before editing')
     parser.add_argument('--source', action='store_true', help='Compile LOGON.ASP in the actual DOS child')
     parser.add_argument('--profile', choices=['network', 'enigma-editor'], default='network')
     parser.add_argument('--packet-delay-ms', type=int, choices=range(101), default=0)
@@ -116,6 +118,7 @@ def main():
         shutil.copyfile(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE',stage/'ASPCOMP.EXE')
     else:
         (stage / 'LOGON.ASX').write_bytes(compile_source(source))
+    hook_sources=hook_session_probe.prepare(stage,terminal,args.hook_session) if args.hook_session else []
     recipe_path = ROOT / 'lab/bbs/editor-recipes.json'
     original = json.loads(recipe_path.read_text())['enigma_unsaved']['keyboard_input']
     login = 'p12000 enter p7000 l o c l a b enter p2500 L o C - L a b - 2 0 2 6 ! enter p11000 '
@@ -124,7 +127,8 @@ def main():
     assert 'loclab' not in keys.replace(' ', '')
     assert 'LoC-Lab-2026!' not in keys.replace(' ', '')
     assert 'enter' not in keys[keys.index('A B C D E'):].split()
-    sources = [Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']
+    if args.hook_session:keys=hook_session_probe.schedule(keys)
+    sources = hook_sources + [ROOT/'lab/bbs/hook_session_probe.py', Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']
     sources += terminal_sources + runner_sources
     sources += [ROOT / 'standalone' / leaf for leaf in
                 ('test_script_launch_dos.py', 'command_menu_watch.asm')]
@@ -150,6 +154,7 @@ def main():
                '--label', args.label, '--com', '2', '--baud', '19200', '--flow', 'HARD',
                '--directory-fixture', '--entry', '3', '--keymap-fixture', str(keymap),
                '--packet-delay-ms', str(args.packet_delay_ms), '--timeout', '170', '--wait', '2', '--keys', keys]
+    if args.hook_session:command += ['--meta-fixture',str(stage/'ACTIONS.KEY')]
     command += ['--cpu', args.cpu]
     if args.mouse_scales:
         command += ['--mouse-scales', *map(str, args.mouse_scales)]
@@ -193,6 +198,9 @@ def main():
         resumed_parent_editor=audit_code == 0 and audit['passed'],
         no_post_saved=audit['checks']['no_post_saved'],
     )
+    if args.hook_session:
+        hook=hook_session_probe.inspect(stage,args.hook_session)
+        checks['helper_session']=hook['passed']
     result = dict(keyboard_profile=args.profile, modem_packet_delay_ms=args.packet_delay_ms,
                   server_commit=server_commit, server_sources=server_sources,
                   passed=all(checks.values()), checks=checks, sources=inputs,

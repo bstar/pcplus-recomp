@@ -18,6 +18,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 from modem import Telnet
 from product_inputs import select_product
+import hook_session_probe
 
 
 def sha(path):
@@ -44,6 +45,7 @@ def observed_driver():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', required=True)
+    parser.add_argument('--hook-session',choices=['accept','reject'],help='Exercise live kind2 helper returns before editing')
     parser.add_argument('--source', action='store_true', help='Compile LOGON.ASP in the actual DOS child')
     parser.add_argument('--terminal', type=Path, default=ROOT/'build/terminal/TERMINAL.EXE')
     parser.add_argument('--runner', type=Path, default=ROOT/'build/aspect-runner/ASPECT.EXE')
@@ -106,6 +108,7 @@ def main():
         shutil.copyfile(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE',stage/'ASPCOMP.EXE')
     else:
         (stage / 'LOGON.ASX').write_bytes(compile_source(source))
+    hook_sources=hook_session_probe.prepare(stage,terminal,args.hook_session) if args.hook_session else []
     recipe_path = ROOT / 'lab/bbs/synchronet-editor-recipe.json'
     original = json.loads(recipe_path.read_text())['keyboard_input']
     login = 'p13000 L A B U S E R enter p2000 L A B P A S S 4 2 enter p8000 '
@@ -117,7 +120,8 @@ def main():
     assert 'LABUSER' not in keys.replace(' ', '').upper()
     assert 'LABPASS42' not in keys.replace(' ', '').upper()
     assert 'enter' not in keys[keys.index('A B C D E'):].split()
-    sources = [Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']
+    if args.hook_session:keys=hook_session_probe.schedule(keys)
+    sources = hook_sources + [ROOT/'lab/bbs/hook_session_probe.py', Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']
     sources += terminal_sources + runner_sources
     sources += [ROOT / 'standalone' / leaf for leaf in
                 ('test_script_launch_dos.py', 'command_menu_watch.asm')]
@@ -129,6 +133,7 @@ def main():
                str(stage / 'TERMINAL.EXE'), 'synchronet', '--port', '23231',
                '--label', args.label, '--com', '2', '--baud', '19200', '--flow', 'HARD',
                '--dial-fixture', '--timeout', '140', '--wait', '2', '--keys', keys]
+    if args.hook_session:command += ['--meta-fixture',str(stage/'ACTIONS.KEY')]
     command += ['--cpu', args.cpu]
     if args.mouse_scales:
         command += ['--mouse-scales', *map(str, args.mouse_scales)]
@@ -170,6 +175,9 @@ def main():
         resumed_parent_editor=audit_code == 0 and audit['passed'],
         draft_aborted=audit['checks']['draft_aborted'],
     )
+    if args.hook_session:
+        hook=hook_session_probe.inspect(stage,args.hook_session)
+        checks['helper_session']=hook['passed']
     result = dict(passed=all(checks.values()), checks=checks, sources=inputs,
                   staged=staged, predictions_sha256=sha(stage / 'predictions.json'),
                   terminal_sha256=staged['TERMINAL.EXE'], runner_sha256=staged['ASPECT.EXE'],
