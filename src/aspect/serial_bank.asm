@@ -17,7 +17,13 @@ CPU 8086
  ret
 %endmacro
 %macro SERIAL_CALLBACK 3
- %if %3 < 0 || %3 > 6
+ %assign %%count %3
+ %ifdef ASPECT_CUSTOM_IRQ
+  %ifidni %1,_serial_bank_backend_open
+   %assign %%count 5
+  %endif
+ %endif
+ %if %%count < 0 || %%count > 6
   %error Serial callback count must be0..6
  %endif
  extern %2
@@ -25,8 +31,8 @@ CPU 8086
  %1 %+ _resident:
  push bp
  mov bp,sp
- %assign %%arg %3-1
- %rep %3
+ %assign %%arg %%count-1
+ %rep %%count
  push word [bp+8+2*%%arg]
  %assign %%arg %%arg-1
  %endrep

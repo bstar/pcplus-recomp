@@ -21,6 +21,7 @@ def main(extension=None):
     if extension and extension.get('notice_help'):feature_flags+=['-DASPECT_NOTICE_HELP']
     if extension and extension.get('help_resource'):feature_flags+=['-DASPECT_HELP_RESOURCE']
     if extension and extension.get('register_handoff'):feature_flags+=['-DASPECT_REGISTER_HANDOFF']
+    if extension and extension.get('custom_irq'):feature_flags+=['-DASPECT_CUSTOM_IRQ']
     if extension and extension.get('break_owner'):feature_flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR','-DNATIVE_PROGRAM_FAR']
     main_source=extension.get('driver',ROOT/'src/aspect/runner.c') if extension else ROOT/'src/aspect/runner.c'
     diagnostic_driver=main_source!=ROOT/'src/aspect/runner.c' and not (extension and extension.get('focused_notice'))
@@ -82,7 +83,7 @@ def main(extension=None):
             '-dASPECT_RUNTIME_SERIAL',*feature_flags,'-nt=ASIO_CODE','-nc=FARCODE',
             *['-d'+n+'='+v for n,v in aliases.items()],'-fo='+str(output/'serial.o'),str(ROOT/'src/aspect/serial.c')],cwd=output,check=True)
         bridge=ROOT/'src/aspect/serial_bank.asm';bridge_obj=output/'serial_bank.obj'
-        subprocess.run(['nasm','-fobj','-I'+str(ROOT/'src/aspect')+'/',str(bridge),'-o',str(bridge_obj)],check=True)
+        subprocess.run(['nasm','-fobj',*(['-DASPECT_CUSTOM_IRQ'] if extension.get('custom_irq') else []),'-I'+str(ROOT/'src/aspect')+'/',str(bridge),'-o',str(bridge_obj)],check=True)
         objects += [str(output/'serial.o'),str(bridge_obj)]
         sources += [bridge,ROOT/'src/aspect/serial_bank.inc']
         if extension.get('register_handoff'):
@@ -118,6 +119,9 @@ def main(extension=None):
             main_source=str(main_source.relative_to(ROOT)),
             scope='Experimental108-slot raw/local ASPECT with composed PROGRAM, private DOS handles and real script/ASX ownership checks. Attached parent rendering rejects before execution; full application publication remains open.')
         if extension.get('parent_render'):result['scope']='Experimental108-slot ASPECT with capability13 attached parent PROGRAM lease, cooperative help/native yes-no confirmation, private streams and the PROGRAMCODE far controller through explicit near-platform adapters. Break/exit policy is selected separately. The normal105-slot application, complete command ownership and physical acceptance remain separate gates.'
+    if extension and extension.get('custom_irq'):
+        result['experimental_custom_irq']=True
+        result['source_extensions']['serial_IRQ']='Optional :I3/:I4/:I5/:I7 suffix; master-PIC child lease only.'
     (output / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print('ASPECT.EXE', result['binary_sha256'])
 

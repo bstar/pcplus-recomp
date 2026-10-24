@@ -41,6 +41,19 @@ _aspect_serial_backend_open:
  mov ax,[bp+4]
  cmp ax,3
  ja .arg
+%ifdef ASPECT_CUSTOM_IRQ
+ mov ax,[bp+12]
+ cmp ax,3
+ je .irq_valid
+ cmp ax,4
+ je .irq_valid
+ cmp ax,5
+ je .irq_valid
+ cmp ax,7
+ jne .arg
+.irq_valid:
+ mov ax,[bp+4]
+%endif
  mov bx,ax
  shl bx,1
  push ds
@@ -67,6 +80,12 @@ _aspect_serial_backend_open:
  mov [uart_port_index],ax
  mov bx,ax
  shl bx,1
+%ifdef ASPECT_CUSTOM_IRQ
+ mov ax,[bp+12]
+ mov [uart_irq_indices+bx],ax
+ add ax,8
+ mov [serial_vectors+bx],ax
+%endif
  mov ax,[serial_vectors+bx]
  mov [serial_vector],ax
  ; Establish complete baseline before enabling any child interrupt. Preserve
@@ -709,10 +728,17 @@ b uart_saved_dll,0
 b uart_saved_dlm,0
 w uart_irq_indices,4
  dw 3,4,3
+%ifdef ASPECT_CUSTOM_IRQ
+w uart_irq_enable_masks,0xfe
+ dw 0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f
+w uart_irq_disable_masks,1
+ dw 2,4,8,16,32,64,128
+%else
 w uart_irq_enable_masks,255
  dw 255,255,0xf7,0xef
 w uart_irq_disable_masks,0
  dw 0,0,8,16
+%endif
 global uart_flow_message,uart_flow_screen_save
 uart_flow_message: db 0
 uart_flow_screen_save: db 0

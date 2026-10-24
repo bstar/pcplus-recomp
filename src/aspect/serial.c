@@ -74,7 +74,11 @@ unsigned __cdecl aspect_serial_translate(unsigned byte)
 {return input_translation_mode==ASIO_XLT_TABLE?input_translation[byte&255U]:(byte&255U);}
 unsigned __cdecl aspect_serial_translation_policy(void)
 {return input_translation_mode;}
+#ifdef ASPECT_CUSTOM_IRQ
+extern unsigned __cdecl aspect_serial_backend_open(unsigned,unsigned,unsigned,unsigned,unsigned);
+#else
 extern unsigned __cdecl aspect_serial_backend_open(unsigned,unsigned,unsigned,unsigned);
+#endif
 static unsigned hex(unsigned c)
 {if(c>='0'&&c<='9')return c-'0';if(c>='a'&&c<='f')return c-'a'+10;if(c>='A'&&c<='F')return c-'A'+10;return 65535U;}
 unsigned __cdecl aspect_serial_open(const char *p)
@@ -86,6 +90,9 @@ unsigned __cdecl aspect_serial_open(const char *p)
  unsigned year=0,month=0,day=0,delta=0;
  unsigned render_offset=0,render_segment=0,render_token=0,has_render=0;
  unsigned flow_flags=0;
+#ifdef ASPECT_CUSTOM_IRQ
+ unsigned irq,parent_option;
+#endif
 #ifdef ASPECT_REGISTER_HANDOFF
  unsigned long render_address=0;
 #else
@@ -101,8 +108,28 @@ unsigned __cdecl aspect_serial_open(const char *p)
  for(i=4;i<8;++i){v=hex((unsigned char)p[i]);if(v>15)return ASPECT_SERIAL_ARGUMENT;divisor=divisor*16+v;}
  for(i=9;i<11;++i){v=hex((unsigned char)p[i]);if(v>15)return ASPECT_SERIAL_ARGUMENT;lcr=lcr*16+v;}
  if(!divisor || (lcr&192) || ((lcr&3)!=2 && (lcr&3)!=3))return ASPECT_SERIAL_ARGUMENT;
+#ifdef ASPECT_CUSTOM_IRQ
+ /* Bound every byte of the optional suffix, including near-segment wrap.
+  * Existing13/23-byte forms retain their standard COM mapping. The optional
+  * :I3/:I4/:I5/:I7 suffix follows either form; no ASIO ABI word is reassigned. */
+ for(i=13;i<27;++i){
+  if((unsigned long)(unsigned)p+i>=65536UL)return ASPECT_SERIAL_ARGUMENT;
+  if(!p[i])break;
+ }
+ if(i!=13 && i!=16 && i!=23 && i!=26)return ASPECT_SERIAL_ARGUMENT;
+ irq=(p[2]=='1'||p[2]=='3')?4:3;
+ if(i==16 || i==26){
+  if(p[i-3]!=':' || (p[i-2]!='I' && p[i-2]!='i') ||
+     (p[i-1]!='3' && p[i-1]!='4' && p[i-1]!='5' && p[i-1]!='7'))return ASPECT_SERIAL_ARGUMENT;
+  irq=p[i-1]-'0';
+ }
+ parent_option=i==23 || i==26;
+ if(parent_option){
+  if(p[13]!=':' || p[18]!=':')return ASPECT_SERIAL_ARGUMENT;
+#else
  if(p[13]){
   if((unsigned long)(unsigned)p+24UL>65536UL || p[13]!=':' || p[18]!=':' || p[23])return ASPECT_SERIAL_ARGUMENT;
+#endif
   for(i=14;i<18;++i){v=hex((unsigned char)p[i]);if(v>15)return ASPECT_SERIAL_ARGUMENT;segment=segment*16+v;}
   for(i=19;i<23;++i){v=hex((unsigned char)p[i]);if(v>15)return ASPECT_SERIAL_ARGUMENT;offset=offset*16+v;}
   address=(unsigned long)segment*16UL+offset;
@@ -217,7 +244,11 @@ unsigned __cdecl aspect_serial_open(const char *p)
  preload_count=initial_count;preload_read=initial_read;
  preload_flow=flow_flags&1;preload_carrier_policy=flow_flags&2;
  preload_source=candidate?(unsigned char __far *)MK_FP(candidate->parent_ds,candidate->ring):0;
+#ifdef ASPECT_CUSTOM_IRQ
+ status=aspect_serial_backend_open(p[2]-'1',divisor,lcr,flow,irq);
+#else
  status=aspect_serial_backend_open(p[2]-'1',divisor,lcr,flow);
+#endif
  if(!status){
   compile_pause_owned=0;
   handoff=candidate;aspect_serial_handoff_enabled=candidate!=0;

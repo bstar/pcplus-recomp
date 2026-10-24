@@ -8,7 +8,10 @@ enum { ASPECT_SERIAL_OK=0,ASPECT_SERIAL_ARGUMENT=1,ASPECT_SERIAL_BUSY=2,
  ASPECT_SERIAL_ABSENT=3,ASPECT_SERIAL_STATE=4,ASPECT_SERIAL_OVERFLOW=5,
  ASPECT_SERIAL_UNREAD=6,ASPECT_SERIAL_PENDING=7,ASPECT_SERIAL_LINE=8 };
 extern unsigned aspect_serial_active,aspect_serial_status,aspect_serial_rx_count;
-/* Optional :ssss:oooo ASIOv1/v2/v3 parent descriptor; validated before IO. */
+/* Optional :ssss:oooo ASIOv1/v2/v3 parent descriptor; validated before IO.
+ * The separate ASPECT_CUSTOM_IRQ build accepts :I3/:I4/:I5/:I7 after either
+ * the base option or descriptor. Legacy forms still select standard IRQ4/3.
+ * This does not change the ASIO descriptor or enable parent PRM support. */
 unsigned __cdecl aspect_serial_open(const char *option);
 unsigned __cdecl aspect_serial_close(void);
 /* Immutable effective input table established before IRQ admission. Identity

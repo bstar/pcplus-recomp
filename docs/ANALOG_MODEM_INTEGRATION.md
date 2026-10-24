@@ -42,7 +42,7 @@ receipts remain scoped to those environments.
 
 | Requirement | Current implementation and remaining acceptance |
 | --- | --- |
-| COM / base / IRQ | `src/config/terminal_import.c` accepts COM1..4 at 3F8/2F8/3E8/2E8, IRQ4/3/4/3. `setup_model.c` enforces those pairs. Nonstandard ISA jumper settings and shared-IRQ operation are unsupported; identify the Boca configuration first. |
+| COM / base / IRQ | `src/config/terminal_import.c` accepts COM1..4 at 3F8/2F8/3E8/2E8, IRQ4/3/4/3. `setup_model.c` enforces those pairs. The separate [child IRQ extension](CUSTOM_IRQ.md) now tests3/4/5/7, but parent setup/v7/helper integration remains open. Nonstandard ISA jumper settings are not yet supported by the composed application; shared IRQs remain unsupported. Identify the Boca configuration first. |
 | 8N1 / DTE speed | Import and setup support 8N1 and selectable 300,1200,2400,4800,9600,19200,38400,57600,115200 baud. DTE speed is distinct from negotiated line rate. Choose a documented fixed DTE rate supported by this modem/UART; start conservatively and measure overruns. |
 | RTS/CTS | Hardware flow can be enabled independently; bounded TX waits service cancellation/deadlines. Prefer HARD with software flow off for binary acceptance, provided Boca flow configuration matches. Physical CTS stalls, RTS receive backpressure and FIFO/UART behavior remain untested. |
 | DCD | `connection.asm` samples MSR bit7 online and detects loss only after seeing DCD high in that session. A forced-high DCD profile hides loss; a carrier that never asserts DCD is not rejected. Verify modem carrier-following behavior and both failure cases. |

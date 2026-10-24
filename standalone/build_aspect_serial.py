@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Source-only bounded ASPECT child UART owner diagnostic, no originals."""
-import hashlib,json,subprocess
+import argparse,hashlib,json,subprocess
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/aspect-serial';OUT.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--custom-irq',action='store_true');args=parser.parse_args()
+FLAGS=['-DASPECT_CUSTOM_IRQ'] if args.custom_irq else []
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/('build/aspect-serial-custom-irq' if args.custom_irq else 'build/aspect-serial');OUT.mkdir(parents=True,exist_ok=True)
 sources=[ROOT/'src/aspect/serial_backend.asm',ROOT/'reconstruction/uart/core.asm',ROOT/'src/uart/api.asm']
 objects=[]
 for i,p in enumerate(sources):
- o=OUT/f'{i}.obj';objects.append(str(o));subprocess.run(['nasm','-fobj','-DUART_OMF','-I',str(ROOT/'reconstruction/uart')+'/',str(p),'-o',str(o)],check=True)
+ o=OUT/f'{i}.obj';objects.append(str(o));subprocess.run(['nasm','-fobj',*FLAGS,'-DUART_OMF','-I',str(ROOT/'reconstruction/uart')+'/',str(p),'-o',str(o)],check=True)
 (OUT/'main.c').write_text(r'''#include "serial.h"
 #include <conio.h>
 #include <stdio.h>
@@ -31,6 +33,6 @@ int main(int argc,char **argv){
  return finish(aspect_serial_close());
 }
 ''')
-subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-os','-k8192','-I'+str(ROOT/'src/aspect'),'-fm=serial.map','-fe=SERIAL.EXE',str(OUT/'main.c'),str(ROOT/'src/aspect/serial.c'),*objects],cwd=OUT,check=True)
+subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-os','-k8192',*FLAGS,'-I'+str(ROOT/'src/aspect'),'-fm=serial.map','-fe=SERIAL.EXE',str(OUT/'main.c'),str(ROOT/'src/aspect/serial.c'),*objects],cwd=OUT,check=True)
 sources += [ROOT/'src/aspect/serial.c',ROOT/'src/aspect/serial.h',ROOT/'src/aspect/serial_handoff.h',ROOT/'src/aspect/resident_render.h',ROOT/'reconstruction/directory_accounting/patch.asm',Path(__file__).resolve()]
 (OUT/'manifest.json').write_text(json.dumps(dict(binary_sha256=hashlib.sha256((OUT/'SERIAL.EXE').read_bytes()).hexdigest(),original_inputs=[],sources={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}),indent=2)+'\n')

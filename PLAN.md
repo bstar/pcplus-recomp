@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+[Explicit child IRQ leases](docs/CUSTOM_IRQ.md) now support optional IRQ3/4/5/7
+through bounded command-line selection, complete master-PIC mask tables and a
+five-word bank adapter.309 targeted and108 existing linked inputs,29 DOS8086
+workflows and287-source/five-product reproduction pass; three standard controls
+remain byte-identical. Parent PRM/setup/helper and actual v7 IRQ inheritance
+are the next integration work. No card or packaged application was updated.
+
 The newer guarded lookup terminal can now be staged with the magenta splash,
 current interpreter/compiler and both editors. [Packaging and DOS launcher
 checks](docs/SPECIAL_EDITION.md#current-package) keep user profiles out of the
