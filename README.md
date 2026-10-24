@@ -1,5 +1,10 @@
 # PCPlus DOS reconstruction
 
+The [checked call-log backend](docs/PHONE_LOG_FILE.md) now handles partial
+appends, same-handle rollback and ambiguous close without blind retries.
+Eighteen DOS workflows and a clean executable/object rebuild pass; terminal
+event and file-reservation integration remain unfinished.
+
 The [native telephone-log component](docs/PHONE_LOG.md) now reproduces258
 original instruction bytes and passes CPU/DOS/source-rebuild checks.
 `PCPLUS.FON` is a call log; the prior font-resource inference is corrected.

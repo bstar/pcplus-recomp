@@ -80,6 +80,10 @@ proof is `build/phone-log-source-01`; the independent recorder is
 
 ## Work still required
 
+The newer [checked append backend](PHONE_LOG_FILE.md) now verifies exact writes,
+commit/close, same-handle EOF rollback and recovery-required ambiguity. It
+remains separate from the native controller and terminal scheduler.
+
 Bind clock/date/elapsed, PCPLUS path resolution, error notices and saved setting
 import to actual application services. Recover the setting's PRM mapping rather
 than assuming a DS offset is a file offset. Add checked append/flush/close and

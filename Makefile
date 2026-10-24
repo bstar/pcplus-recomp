@@ -1,4 +1,11 @@
 .DEFAULT_GOAL := all
+.PHONY: phone-log-file test-phone-log-file test-phone-log-file-source
+phone-log-file:
+	python3 standalone/build_phone_log_file.py
+test-phone-log-file: phone-log-file
+	python3 standalone/test_phone_log_file_dos.py --output build/phone-log-file-dos/$$(date +%Y%m%d-%H%M%S-%N)
+test-phone-log-file-source: phone-log-file
+	python3 standalone/prove_phone_log_file.py --output build/phone-log-file-source/$$(date +%Y%m%d-%H%M%S-%N)
 .PHONY: phone-log test-phone-log test-phone-log-compat test-phone-log-source
 phone-log:
 	python3 standalone/build_phone_log.py

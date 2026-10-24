@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Checked telephone-log appends](docs/PHONE_LOG_FILE.md) now pass138 model
+cases/7239 assertions,18 actual DOS workflows/499 native assertions and an
+exact nine-source executable/three-object rebuild. Partial write/commit failures
+roll back on the same handle; failed rollback or uncertain close latches
+recovery and blocks duplicate retries. Maximum binary payload, empty-log heading
+retry and rollback above64KiB pass. The receipt binds100 artifacts. This is a
+maintained backend, not terminal logging integration: formatter/clock/PRM,
+file reservations, lifecycle events and code banking remain next.
+
 [Telephone-call log recovery](docs/PHONE_LOG.md) corrects the earlier resource
 inventory: PCPLUS.FON is a text call log, not font-format evidence. Its258-byte
 native overlay4 controller now assembles exactly and passes384 policy/ABI

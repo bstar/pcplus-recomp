@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Checked telephone-log persistence](PHONE_LOG_FILE.md) adds a maintained
+append backend with same-handle rollback and explicit recovery-required states.
+It passes138 model cases/7239 assertions,18 DOS workflows/499 native assertions
+and a nine-source exact executable/object rebuild. Formatter/clock/PRM,
+cross-file reservation, event scheduling and banking remain unintegrated;
+this does not close F07/F10.
+
 [Native telephone logging](PHONE_LOG.md) recovers258 exact controller bytes,
 384 policy/ABI inputs,33 actual DOS FILE checks and a seven-source rebuild.
 PCPLUS.FON is a text call log, correcting the earlier font-resource inference.
