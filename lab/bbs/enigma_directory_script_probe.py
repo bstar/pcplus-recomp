@@ -20,6 +20,7 @@ from compiler import compile_source
 from modem import Telnet
 from product_inputs import select_product
 import hook_session_probe
+from observer_layout import compact_watcher
 
 
 def sha(path):
@@ -63,13 +64,16 @@ def main():
     parser.add_argument('--hook-session',choices=['accept','reject'],help='Exercise live kind2 helper returns before editing')
     parser.add_argument('--source', action='store_true', help='Compile LOGON.ASP in the actual DOS child')
     parser.add_argument('--observer-high',action='store_true',help='Require the passive observer to reside in DOS upper memory')
+    parser.add_argument('--compact-observer',action='store_true',help='Retain pattern/tick checks with no resident screen-copy buffer')
     parser.add_argument('--profile', choices=['network', 'enigma-editor'], default='network')
     parser.add_argument('--packet-delay-ms', type=int, choices=range(101), default=0)
     parser.add_argument('--terminal', type=Path, default=ROOT/'build/terminal/TERMINAL.EXE')
     parser.add_argument('--runner', type=Path, default=ROOT/'build/aspect-runner/ASPECT.EXE')
     parser.add_argument('--mouse-scales', type=int, nargs=2)
+    parser.add_argument('--irq', type=int, choices=[3,4,5,7])
     parser.add_argument('--cpu', choices=['8086','286','386','486'], default='386')
     args = parser.parse_args()
+    assert not (args.observer_high and args.compact_observer)
     assert args.label and all(c.isalnum() or c in '-_' for c in args.label)
     output = ROOT / 'build/bbs-lab/results/enigma' / args.label
     stage = ROOT / 'build/bbs-lab/script-login' / args.label
@@ -110,6 +114,7 @@ def main():
     watch = watch.replace('mov dx,handler','mov ax,cs\n mov [sample+6],ax\n mov dx,handler')
     watch = watch.replace('mov cx,8', 'mov cx,4008').replace('cmp ax,8', 'cmp ax,4008')
     watch = watch.replace('buffer: times 8 db 0', 'buffer: times 4008 db 0')
+    if args.compact_observer:watch=compact_watcher(watch)
     (stage / 'watch.asm').write_text(watch)
     subprocess.run(['nasm', '-f', 'bin', str(stage / 'watch.asm'), '-o', str(stage / 'SCRIPT.COM')], check=True)
     for product, leaf in [(terminal, 'TERMINAL.EXE'), (runner, 'ASPECT.EXE')]:
@@ -135,7 +140,7 @@ def main():
     assert 'enter' not in keys[keys.index('A B C D E'):].split()
     if args.hook_session:keys=hook_session_probe.schedule(keys)
     sources = hook_sources + [ROOT/'lab/bbs/hook_session_probe.py', Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']
-    sources += terminal_sources + runner_sources
+    sources += terminal_sources + runner_sources + [ROOT/'lab/bbs/observer_layout.py']
     sources += [ROOT / 'standalone' / leaf for leaf in
                 ('test_script_launch_dos.py', 'command_menu_watch.asm')]
     sources += [ROOT / 'lab/bbs' / leaf for leaf in
@@ -163,6 +168,7 @@ def main():
     if args.hook_session:command += ['--meta-fixture',str(stage/'ACTIONS.KEY')]
     if args.observer_high:command += ['--observer-high']
     command += ['--cpu', args.cpu]
+    if args.irq is not None:command += ['--irq',str(args.irq)]
     if args.mouse_scales:
         command += ['--mouse-scales', *map(str, args.mouse_scales)]
     # Freeze the inputs, schedule and expected credential boundary before DOS.
@@ -186,7 +192,7 @@ def main():
     display = (output / 'display.bin').read_bytes()
     prefix = wire.split(b'loclab', 1)[0] if b'loclab' in wire else wire
     observed = (output / 'SCRIPT.BIN').read_bytes() if (output / 'SCRIPT.BIN').exists() else b''
-    magic, bits, ticks, observer_segment = struct.unpack('<4H', observed[:8]) if len(observed) == 4008 else (0, 0, 0, 0)
+    magic, bits, ticks, observer_segment = struct.unpack('<4H', observed[:8]) if len(observed) == (8 if args.compact_observer else 4008) else (0, 0, 0, 0)
     checks = dict(
         DOS_harness=code == 0 and run['passed'],
         current_terminal=run['binary_sha256'] == staged['TERMINAL.EXE'] == sha(terminal),
@@ -215,7 +221,7 @@ def main():
                   staged=staged, predictions_sha256=sha(stage / 'predictions.json'),
                   terminal_sha256=staged['TERMINAL.EXE'], runner_sha256=staged['ASPECT.EXE'],
                   run=run, editor=audit,
-                  observer_bits=bits,observer_segment=observer_segment,observer_high=args.observer_high,
+                  observer_bits=bits,observer_segment=observer_segment,observer_high=args.observer_high,observer_compact=args.compact_observer,
                   artifacts={str(p.relative_to(ROOT)): sha(p) for p in output.iterdir() if p.is_file()},
                   scope='Actual DOS directory-bound script sends only synthetic local ENiGMA credentials after native prompt and quiet waits. Passive INT1C observer checks launcher errors. Stock editor checks use the explicitly recorded modem buffering delay and keyboard profile. Disconnect leaves the draft unsaved. Buffered experiments do not replace immediate-forwarding failures. No physical modem or full application claim.')
     (stage / 'checks.json').write_text(json.dumps(result, indent=2) + '\n')

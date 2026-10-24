@@ -55,6 +55,12 @@ async def run(args):
   import struct
   fixture=bytearray(fixture);struct.pack_into('<H',fixture,0x1bc,program_sound)
   fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
+ irq=getattr(args,'irq',None)
+ if irq is not None:
+  assert fixture is not None and irq in (3,4,5,7),'IRQ selection requires an explicit configuration fixture'
+  import struct
+  fixture=bytearray(fixture);struct.pack_into('<H',fixture,0x184+(args.com-1)*2,irq)
+  fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
  init_wait=getattr(args,'init_wait',None)
  if init_wait is not None:
   assert 0<=init_wait<=32767
@@ -85,6 +91,7 @@ async def run(args):
   prefix='p500 '+('down p100 '*(args.entry-1))+'enter p1000 '
  keys=prefix+args.keys+f' p{args.wait*1000} a-x'
  serial='\n'.join(f'serial{i}='+ (f'nullmodem server:127.0.0.1 port:{port} transparent:1 rxdelay:200 txdelay:1' if i==args.com else 'disabled') for i in range(1,5))
+ if irq is not None:serial=serial.replace('nullmodem ',f'nullmodem irq:{irq} ')
  config=f'''[sdl]
 output=surface
 [dosbox]
@@ -161,6 +168,7 @@ exit
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'keyboard_input':args.keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
  result['initialization_wait_seconds']=init_wait
  result['cpu']=next(line.split('=',1)[1] for line in config.splitlines() if line.startswith('cputype='))
+ if irq is not None:result['serial']['irq']=irq
  result['server_log']=str(server_log) if server_log is not None else None
  result['server_endpoint']={'address':'127.0.0.1','port':args.port}
  result['modem_packet_delay_ms']=args.packet_delay_ms
@@ -188,5 +196,6 @@ if __name__=='__main__':
  p.add_argument('--config-fixture',action='store_true',help='Read synthetic PRM in DOS; no serial CLI overrides or private configuration')
  p.add_argument('--mouse-scales',type=int,nargs=2,metavar=('X','Y'),help='Explicit valid mouse scales in the synthetic PRM')
  p.add_argument('--cpu',choices=['8086','286','386','486'],default='386')
+ p.add_argument('--irq',type=int,choices=[3,4,5,7],help='Explicit saved IRQ and emulated UART IRQ; requires a configuration fixture')
  p.add_argument('--com',type=int,choices=range(1,5),default=1);p.add_argument('--baud',type=int,choices=[300,1200,2400,4800,9600,19200,38400,57600,115200],default=38400);p.add_argument('--flow',choices=['NONE','SOFT','HARD'],default='SOFT')
  raise SystemExit(asyncio.run(run(p.parse_args())))

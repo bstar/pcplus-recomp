@@ -64,8 +64,8 @@ replace("    if args.hook_session:keys=hook_session_probe.schedule(keys)",
         "        keys=keys.replace('P p2000 K E Y T E S T','J p600 1 enter p800 2 enter p1000 P p2000 K E Y T E S T')\n"
         "        keys=hook_session_probe.schedule(keys)")
 
-replace("sources = hook_sources + [ROOT/'lab/bbs/hook_session_probe.py', Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']",
-        "sources = hook_sources + [ROOT/'lab/bbs/hook_session_probe.py', Path(__file__), ROOT / 'lab/bbs/script_login_dos_probe.py', recipe_path, ROOT / 'src/aspect/compiler.py']")
+replace("sources = hook_sources + [ROOT/'lab/bbs/observer_layout.py', ROOT/'lab/bbs/hook_session_probe.py', Path(__file__), recipe_path, ROOT / 'src/aspect/compiler.py']",
+        "sources = hook_sources + [ROOT/'lab/bbs/observer_layout.py', ROOT/'lab/bbs/hook_session_probe.py', Path(__file__), ROOT / 'lab/bbs/script_login_dos_probe.py', recipe_path, ROOT / 'src/aspect/compiler.py']")
 replace("'editor_dos_probe.py', 'test_dos.py', 'modem.py', 'check_editor_dos.py')",
         "'editor_dos_probe.py', 'test_dos.py', 'modem.py', 'check_editor_dos.py')]\n"
         "    sources += [ROOT / 'standalone/directory_fixtures.py', ROOT / 'standalone/directory_test_support.py']\n"

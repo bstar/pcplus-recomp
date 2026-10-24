@@ -99,5 +99,7 @@ Use fresh output labels for actual DOS workflows:
 
 The last command also needs the five standard control products/manifests built
 from current sources. The receipt recorder accepts the DOS, compilation and
-source-proof output paths separately. BBS/editor/transfer pressure, additional
-refusal races, branded packaging and real Boca/adapter tests remain next gates.
+source-proof output paths separately. [Current stock BBS checks](IRQ_BBS.md) now
+cover source login, helpers and editors with recorded ENiGMA buffering limits.
+BBS/transfer pressure, additional refusal races, branded packaging and real
+Boca/adapter tests remain next gates.

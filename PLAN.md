@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Current IRQ BBS checks](docs/IRQ_BBS.md) now cover DOS8086 source login, v7
+return, guarded-helper adoption/rejection and unsaved stock editors on IRQ5/7.
+Synchronet passes immediately; stock ENiGMA passes with explicit30ms buffering
+and still fails Home/Insert with immediate forwarding. A compact observer
+retains timer/error checks without the resident screen copy that invalidated
+two first pilots. Five evidence corruptions reject. Sustained load/transfers,
+LAN/physical acceptance, packaging and the full application remain open.
+
 [Composed optional IRQ configuration](docs/PARENT_CUSTOM_IRQ.md) now joins saved
 IRQ3/4/5/7, per-COM editor retention, offline ownership transfer, actual v7 script
 recovery and guarded helpers.324 linked inputs,28 DOS8086 owner workflows,

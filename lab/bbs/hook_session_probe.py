@@ -21,7 +21,7 @@ def prepare(stage,terminal,mode):
         (terminal.parent/'terminal.map').read_text(),re.M|re.I)}
     (stage/'parent_layout.h').write_text('static const struct {unsigned segment,offset,bytes;} parent_spans[]={\n'+
         ''.join('{%d,%d,%d},\n'%(*symbols[name],size) for name,size in FIELDS)+'};\n')
-    subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-i='+str(stage),
+    subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192',*(['-dHOOK_CUSTOM_IRQ']if manifest.get('experimental_custom_irq')else[]),'-i='+str(stage),
         '-fm=APPLYCH.map','-fe=APPLYCH.EXE',str(ROOT/'standalone/hook_apply_child.c'),
         str(terminal.parent/'hook_exchange.obj')],cwd=stage,check=True)
     (stage/'MODE.BIN').write_bytes(struct.pack('<H',0 if mode=='accept' else 1))
@@ -68,10 +68,13 @@ def inspect(stage,mode):
             expected=after[0] if accepted else before[0]
             assert before[index]==expected
     for index in range(3):
-        h=struct.unpack('<13H',(stage/f'H{index}.BIN').read_bytes())
-        assert h[4]==6 and h[5]==3 and h[7]==0 and not h[6]&2 and h[8]&8
-        assert h[11]==struct.unpack('<H',snapshots[index]['uart_previous_irq_offset'])[0]
-        assert h[12]==struct.unpack('<H',snapshots[index]['uart_previous_irq_segment'])[0]
+        raw=(stage/f'H{index}.BIN').read_bytes();assert len(raw) in (26,34)
+        h=struct.unpack('<17H' if len(raw)==34 else '<13H',raw)
+        irq=struct.unpack_from('<H',snapshots[index]['terminal_configuration_values'],34)[0]
+        assert irq in (3,4,5,7)
+        assert h[4]==6 and h[5]==3 and h[7]==0 and not h[6]&2 and h[8]&(1<<irq)
+        at={3:11,4:9,5:13,7:15}[irq]
+        assert h[at:at+2]==tuple(struct.unpack('<H',snapshots[index][n])[0]for n in ('uart_previous_irq_offset','uart_previous_irq_segment'))
     result=dict(passed=True,mode=mode,helper_calls=3,initial_register_epoch=initial,
         first_return_accepted=accepted,second_return_accepted=True,
         third_child_exit=23,scope='Raw snapshots prove first return adoption/rejection and second return adoption. '

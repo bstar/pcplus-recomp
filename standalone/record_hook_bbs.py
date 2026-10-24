@@ -11,6 +11,8 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'lab/bbs'))
 from modem import Telnet
 from product_inputs import select_product
+sys.path.insert(0,str(ROOT/'src/aspect'))
+from compiler import compile_source
 
 # Independent raw layout from the captured public DOS structs and native import
 # ABI, rather than the helper probe's pass booleans or interpretation routine.
@@ -26,7 +28,7 @@ def fields(path):
     return answer
 
 
-def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expected_cpu='8086'):
+def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expected_cpu='8086',expected_irq=3):
     assert server in ('synchronet','enigma') and mode in ('accept','reject')
     assert label and all(c.isalnum() or c in '-_' for c in label)
     stage=ROOT/'build/bbs-lab/script-login'/label
@@ -44,6 +46,8 @@ def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expect
     if prediction['compile_in_DOS']:
         compiler,_=select_product(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE','ASPCOMP.EXE')
         assert sha(stage/'ASPCOMP.EXE')==sha(compiler)
+        assert sha(stage/'LOGON.ASX')==prediction['expected_ASX_sha256']
+        assert (stage/'LOGON.ASX').read_bytes()==compile_source((stage/'LOGON.ASP').read_text())
     if server=='enigma':
         server_root=ROOT/'build/bbs-lab/enigma/source'
         for source,digest in report['server_sources'].items():assert sha(server_root/source)==digest
@@ -53,6 +57,7 @@ def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expect
     assert run['cpu']==expected_cpu and 'cputype='+expected_cpu in (output/'dosbox.conf').read_text()
     assert run['modem_packet_delay_ms']==audit['modem_packet_delay_ms']==delay
     assert run['serial']['com']==2 and run['serial']['baud']==19200 and run['serial']['flow']=='HARD'
+    assert run['serial'].get('irq',3)==expected_irq
     assert run['server_endpoint']==dict(address='127.0.0.1',port=23231 if server=='synchronet' else 23233)
     assert report['checks']['helper_session']
     passed=report['passed'];assert passed is audit['passed']
@@ -92,10 +97,12 @@ def verify_case(server,label,mode,delay,terminal,runner,immediate=False,*,expect
             assert word(s['sound'])==0 and word(s['transfer'])==1 and word(s['modem'],366)==123
         else:assert s['config']==snapshots[0]['config']
     for i,s in enumerate(snapshots):
-        h=struct.unpack('<13H',(stage/f'H{i}.BIN').read_bytes())
-        assert h[4]==6 and h[5]==3 and h[7]==0 and not h[6]&2 and h[8]&8
-        assert h[11:13]==(word(s['irqoff']),word(s['irqseg']))
-    return dict(server=server,label=label,mode=mode,packet_delay_ms=delay,editor_passed=passed,
+        raw=(stage/f'H{i}.BIN').read_bytes();assert len(raw) in (26,34)
+        h=struct.unpack('<17H'if len(raw)==34 else'<13H',raw)
+        assert h[4]==6 and h[5]==3 and h[7]==0 and not h[6]&2 and h[8]&(1<<expected_irq)
+        at={3:11,4:9,5:13,7:15}[expected_irq]
+        assert h[at:at+2]==(word(s['irqoff']),word(s['irqseg']))
+    return dict(server=server,label=label,mode=mode,packet_delay_ms=delay,editor_passed=passed,serial_irq=expected_irq,
         source_compilation=prediction['compile_in_DOS'],helper_calls=3,
         server_revision=report.get('server_commit'),server_sources=report.get('server_sources',{}),
         first_return_status=word(snapshots[1]['status']),second_return_status=word(snapshots[2]['status']),
