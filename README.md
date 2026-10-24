@@ -1,5 +1,11 @@
 # PCPlus DOS reconstruction
 
+The [call-log event layer](docs/PHONE_LOG_QUEUE.md) now preserves queued
+timestamps through safe failures and explicit retry, formats the native log
+layout, reads the DOS clock and decodes the saved PRM enable flag. Eighteen
+near/far-storage DOS workflows and exact source-only rebuilds pass. Terminal
+event hooks, file reservations and application code placement remain open.
+
 The [checked call-log backend](docs/PHONE_LOG_FILE.md) now handles partial
 appends, same-handle rollback and ambiguous close without blind retries.
 Eighteen DOS workflows and a clean executable/object rebuild pass; terminal

@@ -20,6 +20,8 @@ extern phone_log_file_snapshot phone_log_file_result;
 /* Initialization never clears uncertain handle/file history. Resolved complete
  * or failed history remains available until a subsequent valid append starts. */
 unsigned __cdecl phone_log_file_initialize(void);
+/* Pure lexical/span check; no initialization, snapshot changes or DOS IO. */
+unsigned __cdecl phone_log_file_validate_path(const char *path);
 /* Explicit ASCII DOS83 path<=63. No wildcard/devices/traversal. Canonicalize
  * once and open that absolute identity. Existing writable regular file or
  * exclusive creation only. record_count1..256; total heading+record<=256.

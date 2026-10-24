@@ -1,4 +1,13 @@
 .DEFAULT_GOAL := all
+.PHONY: phone-log-queue test-phone-log-queue test-phone-log-queue-source
+phone-log-queue:
+	python3 standalone/build_phone_log_queue.py
+test-phone-log-queue: phone-log-queue
+	python3 standalone/check_phone_log_format.py
+	python3 standalone/test_phone_log_queue_dos.py --variant near --output build/phone-log-queue-near-dos/$$(date +%Y%m%d-%H%M%S-%N)
+	python3 standalone/test_phone_log_queue_dos.py --variant far --output build/phone-log-queue-far-dos/$$(date +%Y%m%d-%H%M%S-%N)
+test-phone-log-queue-source: phone-log-queue
+	python3 standalone/prove_phone_log_queue.py --output build/phone-log-queue-source/$$(date +%Y%m%d-%H%M%S-%N)
 .PHONY: phone-log-file test-phone-log-file test-phone-log-file-source
 phone-log-file:
 	python3 standalone/build_phone_log_file.py

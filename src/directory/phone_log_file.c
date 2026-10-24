@@ -79,6 +79,8 @@ static unsigned failure(unsigned status,unsigned error)
  r->state=r->recovery_required?PLF_UNCERTAIN:PLF_FAILED;
  return r->status;
 }
+unsigned __cdecl phone_log_file_validate_path(const char *path)
+{char candidate[64];return normalize(path,candidate);}
 static void close_once(void)
 {
  phone_log_file_snapshot *r=&phone_log_file_result;unsigned error;

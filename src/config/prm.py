@@ -26,6 +26,7 @@ WORD_FIELDS={
  'underline_attribute':0x1d3a-ORIGINAL_DS_BASE,
  'current_attribute':0x1f70-ORIGINAL_DS_BASE,
  'translation_mode':0x1d64-ORIGINAL_DS_BASE,
+ 'phone_log_enabled':0x1d6a-ORIGINAL_DS_BASE,
  'mouse_scale_x':0x2068-ORIGINAL_DS_BASE,
  'mouse_scale_y':0x206a-ORIGINAL_DS_BASE,
  'clipboard_separator':0x206e-ORIGINAL_DS_BASE,

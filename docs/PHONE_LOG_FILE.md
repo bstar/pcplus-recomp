@@ -79,8 +79,11 @@ to the logical source path. Raw objects are retained, and the independent
 audit requires every later instruction/symbol/relocation record byte to match.
 The executable remains identical across this metadata correction.
 
-Accepted evidence is `build/phone-log-file-dos-06` and
-`build/phone-log-file-source-05`. Earlier exploratory outputs remain local and
+Current evidence is `build/phone-log-file-dos/20261024-191646-027511088` and
+`build/phone-log-file-source-06`, repeated after exposing the pure path validator
+for the event queue. The previous accepted checkpoint used
+`build/phone-log-file-dos-06` and `build/phone-log-file-source-05`.
+Earlier exploratory outputs remain local and
 are excluded. The clean tree contains nine declared sources, no original,
 private configuration, REA database or old object. It reproduces PHONEAPP.EXE
 and all three production objects exactly, then repeats the host model.
@@ -96,10 +99,11 @@ interpreter or compiler binary changed at this checkpoint.
 
 ## Integration still required
 
-Bind the native-compatible record formatter, actual date/clock/elapsed and
-saved PRM settings. Preserve an event until the backend confirms it, distinguish
-safe retry from recovery-required ambiguity, and avoid duplicate start/end
-records across MODEM/DIRECT, redial, carrier loss, hangup and exit. Reserve
+The separate [event layer](PHONE_LOG_QUEUE.md) now supplies bounded formatting,
+DOS date/clock reads, saved PRM flag decoding and retained events with explicit
+retry/recovery states. It is not integrated into the terminal. Bind saved
+settings at startup and avoid duplicate start/end records across MODEM/DIRECT,
+redial, carrier loss, hangup and exit. Reserve
 canonical file identities against other foreground writers. Place the code
 with checked DOS/CRT bridges in the larger terminal: its resident code has only
 76 bytes spare, and compiler/VM stacks and limits must remain intact. Then test
