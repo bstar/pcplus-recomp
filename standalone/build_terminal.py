@@ -25,6 +25,7 @@ parser.add_argument('--custom-irq',action='store_true')
 parser.add_argument('--special-edition',action='store_true',help='Show the magenta LoC Special Edition startup screen')
 parser.add_argument('--native-reset-bank',action='store_true',help='Link the experimental namespaced native bank; peer width ownership remains disabled')
 parser.add_argument('--native-reset-static',action='store_true',help='Retain the larger static bank as a memory regression control')
+parser.add_argument('--native-reset-transaction',action='store_true',help='Experimental checked live display transaction; peer requests remain disabled')
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
@@ -42,6 +43,7 @@ if args.hook_apply:assert args.hook_input
 if args.hook_lookup:assert args.hook_apply
 if args.custom_irq:assert args.register_handoff
 if args.native_reset_static:assert args.native_reset_bank
+if args.native_reset_transaction:assert args.native_reset_bank and not args.native_reset_static
 if args.input_probe:assert args.hook_input and not args.hook_probe and not args.projection_probe
 if args.hook_probe:assert args.hook_execute and not args.projection_probe
 if args.exit_probe is not None:assert args.exit_guard
@@ -92,6 +94,7 @@ if args.custom_irq:out_name+='-custom-irq'
 if args.special_edition:out_name+='-special'
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
+if args.native_reset_transaction:out_name+='-transaction'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
@@ -351,7 +354,7 @@ objects += list(map(str,sender['objects']))
 reset_bank=None
 if args.native_reset_bank:
  from ui.native_reset_link import build_native_reset_bank
- reset_bank=build_native_reset_bank(ROOT,OUT,overlay=not args.native_reset_static)
+ reset_bank=build_native_reset_bank(ROOT,OUT,overlay=not args.native_reset_static,transaction=args.native_reset_transaction)
  objects+=list(map(str,reset_bank['objects']));sources+=reset_bank['inputs']
 ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+['DATA','BSS','STACK']
 subprocess.run(['wlink','system','dos','order',*[value for kind in ordering for value in ('clname',kind)],'option','quiet','option','map='+str(OUT/'terminal.map'),'name',str(OUT/'TERMINAL.EXE'),'file',','.join(objects),'library',str(Path(os.environ['WATCOM'])/'lib286/dos/clibs.lib')],check=True)
@@ -425,6 +428,7 @@ if args.native_reset_bank:
  manifest['experimental_native_reset_bank']=True
  manifest['native_reset_overlay']=not args.native_reset_static
  manifest['native_reset_namespace']=reset_bank['namespace']
+ manifest['native_reset_transaction']=args.native_reset_transaction
  manifest['limitations'].append(reset_bank['scope'])
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Built',str((OUT/'TERMINAL.EXE').relative_to(ROOT)),manifest['binary_sha256'],'DS/SS bytes',manifest['data_stack_bytes'])

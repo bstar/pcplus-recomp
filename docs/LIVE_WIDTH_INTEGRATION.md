@@ -21,8 +21,12 @@ updates root receive data. The [optional parent integration](NATIVE_RESET_PARENT
 namespaces that bank and borrows inactive redisplay storage with exclusive owner
 admission. Retained-child allocation passes, and the
 [compact interpreter](COMPACT_RUNTIME_FORMAT.md) now passes nested ASPECT source
-compilation in four recorded DOS8086 workflows. Live projection/commit, rollback and
-normal width ownership remain required.
+compilation in four recorded DOS8086 workflows for the cold-only parent. The new
+[explicit live transaction](LIVE_RESET_TRANSACTION.md) now supplies checked
+projection/commit and display rollback for a plain24-row layout. Both modeled
+fault/IRQ checks and actual DOS commits pass, but this larger variant fails
+ASPCOMP heap admission. General geometry/protected-field/UI composition and
+normal peer width ownership remain required.
 
 The current application already reserves two independent 4,096-byte near
 attribute planes and an 8,192-byte far shadow in `src/terminal/state.asm`.

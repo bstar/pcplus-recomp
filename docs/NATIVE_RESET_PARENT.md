@@ -1,5 +1,10 @@
 # Experimental native reset bank in the terminal
 
+The later [live transaction checkpoint](LIVE_RESET_TRANSACTION.md) adds an
+explicit checked projection/commit/rollback API. It remains separate from the
+cold invocation described below and from normal peer width dispatch. Its new
+resident cost reintroduces a compiler heap failure; it is not a deployable build.
+
 The optional `--native-reset-bank` parent links recovered reset code with its
 own `nreset_` namespace and DS=SS context. A cold invocation runs native soft
 reset for80/132 columns without changing live UART, parser, near data or the

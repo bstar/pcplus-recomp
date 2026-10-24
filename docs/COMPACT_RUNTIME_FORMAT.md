@@ -73,3 +73,9 @@ conventional-memory guarantee or complete native-width application acceptance.
 The cold bank still needs live renderer/profile projection, commit and display
 rollback. General width/UI/BBS composition, full native application/language and
 physical modem acceptance remain open. The staged package and card are unchanged.
+
+The subsequent [live transaction](LIVE_RESET_TRANSACTION.md) implements an
+explicit plain24-row projection/commit/rollback API and passes modeled and DOS
+display checks. Its added resident code exhausts ASPCOMP's first-pass heap. The
+passing nested-compilation evidence here applies to the unchanged cold-only
+terminal hash above; it does not establish admission for that larger variant.

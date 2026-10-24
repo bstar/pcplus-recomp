@@ -21,6 +21,13 @@ global reset_bank_observation,reset_bank_wait
 reset_bank_observation: times 10 dw 0
 reset_bank_wait: dw 0
 reset_bank_body:
+%ifdef RESET_BANK_TRANSACTION
+ extern reset_live_prepare,reset_live_finish
+ cmp word [cs:reset_bank_request],0x100
+ je .live
+ cmp word [cs:reset_bank_request],0x101
+ je .live
+%endif
 %ifdef RESET_BANK_APP
  cmp word [cs:reset_bank_request],1
  jbe .observe
@@ -109,6 +116,18 @@ reset_bank_body:
 %endif
  xor ax,ax
  ret
+%ifdef RESET_BANK_TRANSACTION
+.live:
+ call terminal_reset_test_initialize
+ call reset_live_prepare
+ mov ax,[cs:reset_bank_request]
+ and ax,1
+ push ax
+ call modes_width_request_native
+ call reset_live_finish
+ xor ax,ax
+ ret
+%endif
 reset_bank_allocate:
  mov bx,sp
  cmp word [bx+2],6336

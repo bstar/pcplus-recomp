@@ -660,6 +660,18 @@ def inspect_terminal_memory(binary,map_path):
   for lo,hi in owners:
    assert native_end<=lo or native_start>=hi,'Native data bank overlaps an existing live owner'
    assert private_end<=lo or private_shadow>=hi,'Native shadow overlaps an existing live owner'
+  if 'terminal_native_width'in symbols:
+   assert native_overlay
+   entry=address('terminal_native_width');target_off=symbols['terminal_native_width_far'][1]
+   assert symbols['terminal_native_width'][0]==near_code['relative_segment']
+   assert image[start+entry:start+entry+6]==b'\x9a'+struct.pack('<HH',target_off,native_cs)+b'\xc3'
+   assert entry+3 in relocations
+   for name in ['terminal_native_width_far','reset_live_prepare','reset_live_finish','reset_live_validate',
+                'reset_live_commit','reset_live_rollback','reset_live_active']:
+    assert symbols[name][0]==native_cs,name
+   backup=ui_buffers['program_screen'];assert backup['bytes']==4000
+   extra.update(native_reset_transaction=True,native_reset_backup_start=backup['start_linear'],
+                native_reset_backup_bytes=3840,native_reset_transaction_bridge_verified=True)
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'

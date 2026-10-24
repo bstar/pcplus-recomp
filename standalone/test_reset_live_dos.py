@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""Invoke the real transaction from a declared BIOS-boundary fixture in DOS8086."""
+import argparse,hashlib,json,re,struct,subprocess
+from pathlib import Path
+import test_connection_dos as harness
+ROOT=harness.ROOT
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def main():
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ binary=a.terminal.resolve();manifest=json.loads((binary.parent/'manifest.json').read_text())
+ assert manifest['native_reset_transaction']and sha(binary)==manifest['binary_sha256']
+ for name,digest in manifest['sources'].items():assert sha(ROOT/name)==digest,name
+ out=a.output.resolve();assert out.is_relative_to(ROOT/'build')and not out.exists();out.mkdir(parents=True)
+ # The MZ is unmodified. A resident test fixture normalizes its admitted row
+ # count at one BIOS boundary, then calls the public transaction far entry.
+ listing=(binary.parent/'terminal.map').read_text()
+ symbols={name:(int(seg,16),int(off,16))for seg,off,name in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I)}
+ dg=int(re.search(r'^DGROUP\s+([0-9a-f]+):',listing,re.M|re.I)[1],16)
+ names=['screen_columns','screen_attributes_base','screen_attribute_cells','erase_attribute_values_base','erase_attribute_values',
+  'screen_cursor_wrap','attributes_normal_value','erase_cell_count','screen_cursor_row','screen_cursor_column',
+  'csi_row_count','csi_last_row','screen_last_row','terminal_dec_keys','screen_viewport_active','erase_shadow_segment','erase_shadow_offset']
+ defines={name.upper():symbols[name][0]*16+symbols[name][1]-dg*16 for name in names}
+ cs,off=symbols['terminal_native_width_far'];defines.update(DGROUP_REL=dg,LIVE_CODE_REL=cs,LIVE_OFF=off)
+ (out/'line_attributes_offsets.inc').write_text(''.join(f'%define {name} {value}\n'for name,value in defines.items()))
+ observer=ROOT/'standalone/line_attributes_watch.asm';text=observer.read_text()
+ start=text.index(' push ds\n pop es\n mov di,SCREEN_ATTRIBUTE_CELLS')
+ end=text.index(' inc word [cs:staged]',start)
+ end=text.index(' jmp .done',end)+len(' jmp .done')
+ text=text[:start]+''' ; Let the original BIOS cursor operation finish before invoking another
+ ; BIOS-using routine. The interrupted application has already stored its
+ ; cursor fields and performs no later store after its cursor-output call.
+ pushf
+ call far [cs:old10]
+ mov word [CSI_ROW_COUNT],24
+ mov word [CSI_LAST_ROW],23
+ mov word [SCREEN_LAST_ROW],23
+ mov word [ERASE_CELL_COUNT],1920
+ mov word [TERMINAL_DEC_KEYS],1
+ inc word [cs:staged]
+ mov ax,ds
+ sub ax,DGROUP_REL
+ add ax,LIVE_CODE_REL
+ mov [cs:live_call+2],ax
+ mov ax,1
+ sti
+ call far [cs:live_call]
+ cli
+ mov [cs:transaction_status],ax
+ call snapshot
+ ; Observe the native clear before the parser redraws its next banner.
+ mov ax,[ATTRIBUTES_NORMAL_VALUE]
+ mov ah,al
+ mov al,32
+ push ds
+ mov dx,0xb800
+ mov ds,dx
+ xor si,si
+ mov cx,1920
+.blank:
+ cmp [si],ax
+ jne .not_blank
+ add si,2
+ loop .blank
+ inc word [cs:clear_observed]
+.not_blank:
+ pop ds
+ restore
+ iret'''+text[end:]
+ text=text.replace('sample:\n','live_call: dw LIVE_OFF,0\nsample:\n')
+ text=text.replace('sample_end:','transaction_status: dw 0xffff\nclear_observed: dw 0\nsample_end:')
+ text=text.replace('cmp dx,0x184f','cmp dx,0x174f')
+ text=text.replace('mov ax,[SCREEN_CURSOR_WRAP]','mov ax,[SCREEN_VIEWPORT_ACTIVE]')
+ text=text.replace(' inc word [cs:exits]',' call snapshot\n inc word [cs:exits]')
+ start=text.index(' mov si,SCREEN_ATTRIBUTE_CELLS\n mov di,flags',text.index('snapshot:'))
+ end=text.index(' push ds\n mov ax,0xb800',start)
+ text=text[:start]+''' mov bx,[ERASE_SHADOW_OFFSET]
+ push ds
+ mov ds,[ERASE_SHADOW_SEGMENT]
+ mov si,bx
+ mov di,flags
+ mov cx,8192
+ rep movsb
+ pop ds
+'''+text[end:]
+ (out/'observer.asm').write_text(text)
+ subprocess.run(['nasm','-fbin','-I',str(out)+'/',str(out/'observer.asm'),'-o',str(out/'RWATCH.COM')],check=True)
+ payload=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c\x1b[6;18H\x1b[1;1HFIRST BYTE SAFE'
+ edits=[(0,131,b'R'),(5,0,b'LEFT'),(23,80,b'HIDDEN'),(5,79,b'E'),(5,80,b'F')]
+ expected=[0x0720]*3168
+ for col,char in enumerate(b'FIRST BYTE SAFE'):expected[col]=0x700|char
+ for row,col,data in edits:
+  payload+=b'\x1b['+str(row+1).encode()+b';'+str(col+1).encode()+b'H'+data
+  for i,char in enumerate(data):expected[row*132+col+i]=0x700|char
+ payload+=b'\x1b[24;132HZ\x1b[6n\x1b[1;16H\x1b[6n'
+ expected[3167]=0x75a
+ source=Path(harness.__file__).read_text();needle="out=ROOT/'build/connection-dos'/name";assert source.count(needle)==1
+ scope=dict(harness.__dict__);scope['LABEL_ROOT']=out
+ exec(compile(source.replace(needle,'out=LABEL_ROOT/name'),str(Path(harness.__file__)),'exec'),scope)
+ scope['BINARY']=binary
+ # Mount a short owned copy to avoid DOSBox-X's host-path length overflow.
+ short=out/'parent';short.mkdir();(short/'TERMINAL.EXE').write_bytes(binary.read_bytes());scope['BINARY']=short/'TERMINAL.EXE'
+ keys=('p900 enter 'if manifest.get('special_edition')else'')+'p6500 a-x'
+ settings=bytearray(harness.fixture(timeout=5))
+ if manifest.get('experimental_custom_irq'):struct.pack_into('<HH',settings,0x184,4,3)
+ if manifest.get('experimental_mouse'):struct.pack_into('<HH',settings,0x4e4,8,4)
+ result=scope['run']('product','success',keys,arguments='@D:\\TEST.PRM /D:CaseTest:23 /A:NETWORK',banner=payload,
+  files={'RWATCH.COM':(out/'RWATCH.COM').read_bytes()},observer='RWATCH',cpu='8086',prm=bytes(settings))
+ raw=(out/'product/LINEATTR.BIN').read_bytes();assert len(raw)==12220,len(raw)
+ state=struct.unpack_from('<12H',raw);shadow=bytearray(raw[24:8216]);video=raw[8216:12216]
+ for row in range(24):shadow[row*264:row*264+160]=video[row*160:row*160+160]
+ wire=(out/'product/serial.bin').read_bytes();checks=dict(result['checks'])
+ checks.update(actual_native_transaction_committed=struct.unpack_from('<H',raw,12216)[0]==0 and state[1]==1,
+  native_clear_observed_before_redraw=struct.unpack_from('<H',raw,12218)[0]==1,
+  root_context_restored=state[4]==state[5]!=0,actual_logical_screen=bytes(shadow[:6336])==struct.pack('<3168H',*expected),
+  actual_132_column_CPR=b'\x1b[24;132R'in wire and b'\x1b[1;16R'in wire,
+  cursor_and_geometry=state[6]==1 and state[8:11]==(3168,0,15),
+  unmodified_terminal=sha(short/'TERMINAL.EXE')==sha(binary)==manifest['binary_sha256'])
+ report=dict(passed=all(checks.values()),checks=checks,binary_sha256=sha(binary),state=list(state),transaction_status=struct.unpack_from('<H',raw,12216)[0],
+  sources=manifest['sources'],checker_sha256=sha(Path(__file__)),observer_base_sha256=sha(observer),
+  artifacts={str(path.relative_to(ROOT)):sha(path)for path in out.rglob('*')if path.is_file()},original_inputs=[],
+  scope=__doc__+' Test-owned normalization from25 to24 content rows and IF-enabled far call after the BIOS operation, not a peer width request. Actual UART/parser/output/pan/CPR and hardware restoration follow. No failure injection, private-context IRQ timing, general UI/child or physical acceptance claimed.')
+ (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n');print(('PASS'if report['passed']else'FAIL')+' DOS live transaction '+json.dumps(checks))
+ return 0 if report['passed']else 1
+if __name__=='__main__':raise SystemExit(main())

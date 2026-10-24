@@ -1,5 +1,18 @@
 # Complete DOS rebuild plan
 
+[Explicit live width transaction](docs/LIVE_RESET_TRANSACTION.md) now projects
+only display state into the native bank, validates before commit and rolls back
+content/cursor without restoring stale serial/status data. Both parents pass22
+modeled commits, five private-stack UART/fault rollbacks and58 refusals, plus
+actual DOS8086 commits and exact132x24 parser/pane/CPR checks. Four products
+reproduce from source; ordinary and cold-only binaries remain exact. The new
+branded variant adds1504 resident bytes and fails ASPCOMP heap allocation at
+source line1, while the cold-only parent remains verified with compact ASPECT.
+Investigate the first-pass metadata arena under that pressure, then broaden
+row/margin/protected-field and UI/child/scroll composition before enabling peer
+width requests. Full application/BBS/physical acceptance and card deployment
+remain open.
+
 [Compact interpreter formatting](docs/COMPACT_RUNTIME_FORMAT.md) now closes the
 optional native parent's recorded nested-compilation memory gate:2,656 bytes
 reclaimed,8KiB interpreter stack unchanged, compiler/terminal unchanged.741

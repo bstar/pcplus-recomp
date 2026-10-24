@@ -9,7 +9,8 @@ import re
 import subprocess
 
 
-def build_native_reset_bank(root,out,overlay=True):
+def build_native_reset_bank(root,out,overlay=True,transaction=False):
+    assert not transaction or overlay
     root=Path(root);out=Path(out)/'native-reset-bank';out.mkdir(parents=True,exist_ok=True)
     native=[]
     for module in ['screen','erase','scroll','text','cursor_shape','terminal_services','terminal_reset','viewport']:
@@ -54,13 +55,15 @@ def build_native_reset_bank(root,out,overlay=True):
             '-DSTACK=RESET_STACK','-DDGROUP=RESET_GROUP',*aliases,
             '-I',str(root/'reconstruction/uart')+'/',str(path.relative_to(root)),'-o',str(obj)],cwd=root,check=True)
     helpers=[root/'src/ui/reset_bank_context.asm',root/'standalone/reset_bank_body.asm']
+    if transaction:helpers.append(root/'src/ui/reset_live.asm')
     for path in helpers:
         obj=out/(path.stem+'.obj');objects.append(obj)
-        flags=['-DRESET_BANK_APP']+(['-DRESET_BANK_OVERLAY']if overlay else[])
-        flags+=(['-Dreset_stack_top=nreset_stack_top']if path.name=='reset_bank_context.asm'else aliases)
+        flags=['-DRESET_BANK_APP']+(['-DRESET_BANK_OVERLAY']if overlay else[])+(['-DRESET_BANK_TRANSACTION']if transaction else[])
+        flags+=(['-Dreset_stack_top=nreset_stack_top']if path.name=='reset_bank_context.asm'else aliases if path.name=='reset_bank_body.asm'else[])
         subprocess.run(['nasm','-fobj',*flags,str(path.relative_to(root)),'-o',str(obj)],cwd=root,check=True)
     # Selection reads the full inventory, so every candidate is a build input.
     inputs=inventory+helpers+[Path(__file__).resolve(),root/'reconstruction/uart/encodings.inc']
     return dict(objects=objects,inputs=inputs,namespace=namespace,overlay=overlay,
         source_hashes={str(path.relative_to(root)):hashlib.sha256(path.read_bytes()).hexdigest()for path in inputs},
-        scope='Namespaced cold native reset bank; live projection/commit/rollback and normal width ownership remain unbound.')
+        scope=('Experimental plain24-row live projection, validation, commit and display rollback; normal peer width and broader profiles/UI remain unbound.'if transaction else
+            'Namespaced cold native reset bank; live projection/commit/rollback and normal width ownership remain unbound.'))

@@ -19,6 +19,9 @@ extern redisplay_snapshot,_redisplay_active,_redisplay_export_pending,_redisplay
 extern _command_menu_active,terminal_snapshot_active,terminal_program_active,terminal_program_pending
 extern terminal_monitor_active,terminal_controller_active,terminal_transfer_active,terminal_transfer_pending
 %endif
+%ifdef RESET_BANK_TRANSACTION
+extern reset_live_active
+%endif
 global reset_bank_call_far,reset_bank_abort,reset_bank_request,reset_bank_busy
 reset_bank_request: dw 0
 reset_bank_busy: dw 0
@@ -63,6 +66,20 @@ reset_bank_call_far:
  jne .reject
  cmp word [cs:reset_bank_busy],0
  jne .reject
+%ifdef RESET_BANK_TRANSACTION
+ mov ax,[ss:bx+16]
+ cmp ax,0x100
+ je .live_owner
+ cmp ax,0x101
+ je .live_owner
+ cmp word [cs:reset_live_active],0
+ jne .reject
+ jmp .owner_checked
+.live_owner:
+ cmp word [cs:reset_live_active],1
+ jne .reject
+.owner_checked:
+%endif
 %ifdef RESET_BANK_OVERLAY
  mov ax,[_redisplay_active]
  or ax,[_redisplay_export_pending]
