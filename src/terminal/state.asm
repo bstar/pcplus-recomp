@@ -119,6 +119,8 @@ global csi_last_row
 csi_last_row:
  dw 24
 global csi_row_count
+global viewport_rows
+viewport_rows:
 csi_row_count:
  dw 25
 global screen_attribute_checks
@@ -158,6 +160,8 @@ global screen_use_bios_cursor
 screen_use_bios_cursor:
  dw 1
 global screen_columns
+global viewport_physical_columns
+viewport_physical_columns:
 screen_columns:
  dw 80
 global screen_video_row_bytes

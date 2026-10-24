@@ -9,6 +9,9 @@ state and stack. Width requests still stop explicitly in
 The [logical row-stride checkpoint](LINE_METADATA_STRIDE.md) removes fixed80
 arithmetic from the live line-metadata owner and verifies its buffer operation
 at132 columns. The wider admission and composition requirements below remain.
+The [live viewport checkpoint](VIEWPORT_LIVE.md) now joins actual cursor/pane
+copying, parser output and row erase over the static shadow, including a DOS8086
+test-only wide-state fixture. Normal width requests remain disabled.
 
 The current application already reserves two independent 4,096-byte near
 attribute planes and an 8,192-byte far shadow in `src/terminal/state.asm`.
@@ -30,7 +33,7 @@ requests include:
 
 | Owner | Current constraint | Required integration evidence |
 | --- | --- | --- |
-| Cursor and viewport | Live enter/leave hooks trap; refresh is currently a capture-error discriminator | Real pane saves/restores, cursor offsets and separate capture/status refresh ownership |
+| Cursor and viewport | Owned pane hooks, separate capture refresh and static-shadow cursor/output/erase now pass; width requests still trap | Integrate normal width/reset ownership and broader scrolling/field operations with the checked pane state |
 | Attribute navigation and repair | `attribute_boundary.asm` admits fixed 80-column video and logical planes | Bounded logical-plane indexing and consistent physical/pane offsets in both widths |
 | NETWORK line metadata | Logical row stride now drives the buffer kernel; live admission still requires 80 columns | Compose the verified132-byte buffer operation with native video, region bounds and field repair in both panes |
 | Current-profile RIS | `terminal_reset.asm` restores captured startup geometry and clears static storage | Explicit semantics for width requests versus RIS, with no stale viewport pointers or configured defaults |

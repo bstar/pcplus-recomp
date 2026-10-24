@@ -10,23 +10,6 @@ csi_service_12c8:
  jmp screen_wrap_forward
 extern csi_clear_tabs
 extern csi_reset_scroll_region
-global screen_viewport_refresh
-extern terminal_capture_native_refresh
-screen_viewport_refresh:
- call terminal_capture_native_refresh
- jnc .capture_done
- mov ax,0x2fb8
- jmp csi_unimplemented
-.capture_done:
- ret
-global screen_viewport_enter
-screen_viewport_enter:
- mov ax,0x482a
- jmp csi_unimplemented
-global screen_viewport_leave
-screen_viewport_leave:
- mov ax,0x4850
- jmp csi_unimplemented
 global ansi_escape_service_da46
 ansi_escape_service_da46:
  jmp scroll_index

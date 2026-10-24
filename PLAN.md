@@ -1,5 +1,16 @@
 # Complete DOS rebuild plan
 
+[Live static-shadow viewport](docs/VIEWPORT_LIVE.md) now binds the actual cursor
+to recovered pane switching/copying in the far code bank.80 cursor transitions,
+60 real UART/parser output/erase cases and186 pre-copy refusals pass, with owned
+DS callbacks, receive preservation and separate capture refresh. An unchanged
+DOS8086 application passes a test-only132x24 fixture, column132 CPR, full logical
+screen/tail guards and hardware restoration.405 source/test files reproduce and
+replay exactly; removing the DS correction fails the owned-callback oracle.
+Near data/stack is unchanged. Normal width/reset ownership, general132 fields,
+scrolling/UI/child/BBS workflows, branded package and physical acceptance remain
+open; staging and card are unchanged.
+
 [Logical row-stride line editing](docs/LINE_METADATA_STRIDE.md) now removes
 literal80-byte row arithmetic from the live NETWORK plane owner. The actual
 linked kernel passes240 cases at each of80/132 columns while preserving receive,

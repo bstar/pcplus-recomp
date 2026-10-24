@@ -90,6 +90,7 @@ if args.special_edition:out_name+='-special'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
+modules += ['viewport']
 sources=[]
 for module in modules:
  sources += sorted((ROOT/'reconstruction'/module).glob('*.asm'))
@@ -148,6 +149,9 @@ for index,source in enumerate(sources):
   options += ['-DATTRIBUTE_REPAIR_FAR','-Derase_default_attribute=repair_default_attribute',
    '-Derase_previous_attribute=repair_previous_attribute','-Dtext_write_char=repair_text_write_char',
    '-Dattributes_protected_value=attributes_preset_value']
+ if source.parent.name=='viewport':
+  options += ['-D_TEXT=ASPECT_CODE','-DCODE=FARCODE','-DVIEWPORT_PRESERVE_DS',
+   '-Dui_cga_blank=viewport_cga_blank','-Dui_cga_unblank=viewport_cga_unblank']
  if source.parent.name in ('attribute_boundary','keyboard_reverse_tab') or source.name=='protected_home.asm':
   options += ['-DKEYBOARD_ECHO_FAR','-Dscreen_set_cursor=attribute_screen_set_cursor',
    '-Dscreen_cursor_left=attribute_screen_cursor_left','-Dscreen_cursor_right=attribute_screen_cursor_right',
