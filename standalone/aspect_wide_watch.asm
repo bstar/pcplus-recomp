@@ -37,7 +37,10 @@ frames: times 48*320 db 0
 aspect_attached_ticks: dw 0
 aspect_bridge_ticks: dw 0
 aspect_overlay_ticks: dw 0
+failure_service: dw 0
+failure_details: times 11 dw 0
 sample_end:
+failure_offsets: dw SCREEN_CURSOR_ROW,SCREEN_CURSOR_COLUMN,SCREEN_ATTRIBUTE_OFFSET,SCREEN_VIDEO_OFFSET,SCREEN_VISIBLE_COLUMN,SCREEN_VIEWPORT_ACTIVE,SCREEN_VIEWPORT_OFFSET,SCREEN_LAST_COLUMN,SCREEN_ATTRIBUTE_ROW_BYTES,SCREEN_CURSOR_WRAP,SCREEN_ATTRIBUTE_CHECKS
 %macro save 0
  pushf
  push ax
@@ -85,6 +88,9 @@ handler10:
  sub ax,DGROUP_REL
  add ax,LIVE_CODE_REL
  mov [cs:live_call+2],ax
+%ifdef FIELD_COLOR
+ mov word [ATTRIBUTES_MONOCHROME],0
+%endif
 %ifdef HIDDEN_STATUS
  mov word [UI_FLOW_SUPPRESSED],1
 %endif
@@ -206,6 +212,26 @@ handler1c:
 %endif
 handler21:
  save
+ cmp ah,9
+ jne .exit_check
+ cmp word [cs:staged],1
+ jne .done
+ mov ax,[cs:root_ds]
+ mov es,ax
+ mov ax,[es:CSI_UNIMPLEMENTED_SERVICE]
+ mov [cs:failure_service],ax
+ or ax,ax
+ jz .done
+ xor bx,bx
+.failure_details:
+ mov si,[cs:failure_offsets+bx]
+ mov ax,[es:si]
+ mov [cs:failure_details+bx],ax
+ add bx,2
+ cmp bx,22
+ jb .failure_details
+ jmp .done
+.exit_check:
  cmp ah,0x4c
  jne .done
  cmp word [cs:staged],1

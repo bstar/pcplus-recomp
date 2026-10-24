@@ -98,7 +98,7 @@ if args.native_reset_transaction:out_name+='-transaction'
 OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
-modules += ['viewport']
+modules += ['viewport','protected_erase']
 sources=[]
 for module in modules:
  sources += sorted((ROOT/'reconstruction'/module).glob('*.asm'))
@@ -137,6 +137,12 @@ if args.mouse:
   flat=OUT/('mouse-baseline-'+source.stem+'.bin')
   subprocess.run(['nasm','-fbin','-I',str(ROOT/'reconstruction/uart')+'/',str(source),'-o',str(flat)],check=True)
   assert hashlib.sha256(flat.read_bytes()).hexdigest()==unit['sha256']
+protected_provenance=ROOT/'reconstruction/protected_erase/provenance.json'
+protected_unit=json.loads(protected_provenance.read_text())['units'][0]
+protected_flat=OUT/'protected-erase-baseline.bin'
+subprocess.run(['nasm','-fbin','-I',str(ROOT/'reconstruction/uart')+'/',str(ROOT/protected_unit['file']),'-o',str(protected_flat)],check=True)
+assert protected_flat.stat().st_size==protected_unit['bytes']==142
+assert hashlib.sha256(protected_flat.read_bytes()).hexdigest()==protected_unit['sha256']
 render_import_adapters={}
 sources.append(ROOT/'src/aspect/break_cursor_read.asm')
 objects=[]
@@ -144,6 +150,7 @@ for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
  if source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_CHARACTER_PREFLIGHT','-DTERMINAL_LINE_PREFLIGHT','-DTERMINAL_RENDER_PREFLIGHT']
+ if source==ROOT/'reconstruction/erase/display_after.asm':options+=['-Dcsi_service_d8b6=terminal_erase_after_native','-DTERMINAL_ERASE_PREFLIGHT']
  if source==ROOT/'reconstruction/erase/rectangle.asm':options+=['-Dcsi_service_2530=terminal_rectangle_native']
  if source==ROOT/'reconstruction/scroll/scroll_up.asm':options+=['-Dscroll_up=terminal_scroll_up_native']
  if source.parent.name=='script_menu':
@@ -156,6 +163,7 @@ for index,source in enumerate(sources):
   # context word; no duplicate near-data resource placeholders are needed.
   options += ['-Dlocal_window_'+name+'=keyboard_debug_gate' for name in
    ('descriptor','box_attribute','keyboard_table','text','text_attribute','status')]
+ if source.parent.name=='protected_erase':options += ['-Derase_repair_attributes=protected_erase_repair']
  if source.parent.name=='attribute_repair':
   options += ['-DATTRIBUTE_REPAIR_FAR','-Derase_default_attribute=repair_default_attribute',
    '-Derase_previous_attribute=repair_previous_attribute','-Dtext_write_char=repair_text_write_char',
@@ -366,6 +374,7 @@ assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
 inputs=sources+c_sources+[ROOT/'src/config/prm_dos.h',ROOT/'src/config/terminal_import.h',ROOT/'src/config/terminal_import.inc',ROOT/'src/config/modem_import.h',ROOT/'src/config/modem_import.inc',ROOT/'src/config/startup_import.h',ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc']
 inputs += [ROOT/'src/config/live_configuration.h',ROOT/'src/aspect/resident_render.h',ROOT/'src/aspect/resident_bridge.inc',ROOT/'src/aspect/renderer_policy.h',ROOT/'src/aspect/serial_handoff.h']
+inputs += [protected_provenance]
 inputs += [ROOT/'src/status/status_state.inc',ROOT/'src/status/status_formatter.h']
 inputs += [ROOT/'src/config/live_setup_owner.h',ROOT/'src/config/terminal_preferences.h',ROOT/'src/config/transfer_import.h']
 inputs += [ROOT/'src/config/resource_path.h']

@@ -119,7 +119,7 @@ for(prefix=0;prefix<2;++prefix)for(v=0;v<16;++v){
  terminal_aspect_active=1;terminal_parser_active=1;
  for(i=0;i<3;++i){
   ansi_command=i==0?'J':i==1?'K':'P';h=digest();
-  ck(aspect_render_preflight_command()==(result||(i<2&&screen_cursor_wrap&&screen_attribute_checks)?3:0));
+  ck(aspect_render_preflight_command()==(result?3:0));
   ck(digest()==h);
  }
 }

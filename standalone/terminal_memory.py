@@ -573,6 +573,25 @@ def inspect_terminal_memory(binary,map_path):
    assert guard.count(encoded)==1,(name,'missing/duplicate CS-qualified ownership check')
   extra['aspect_command_preflight_verified']=True
   extra['aspect_viewport_lease_words_verified']=3
+  for name in ('protected_erase_native','protected_erase_checked_far','protected_erase_repair','terminal_wide_clear_far'):
+   assert symbols[name][0]==aspect_seg,(name,'protected erase owner outside ASPECT CS')
+  code=raw('erase_complex_protected',13)
+  expected=b'\x55\x89\xe5\xff\x76\x04\x9a'+struct.pack('<HH',symbols['protected_erase_checked_far'][1],aspect_seg)+b'\x5d\xc3'
+  assert code==expected and address('erase_complex_protected')+9 in relocations,'Protected erase caller-cleaned far bridge'
+  native=raw('protected_erase_native',142)
+  assert native[-1:]==b'\xc3','Protected erase native RET contract'
+  for target in ('attribute_position_to_video','attribute_repair_write','attribute_repair_advance','protected_erase_repair'):
+   matches=[i for i in range(len(native)-2)if native[i]==0xe8 and (symbols['protected_erase_native'][1]+i+3+struct.unpack_from('<h',native,i+1)[0])&65535==symbols[target][1]]
+   assert len(matches)==1,(target,'native protected erase dependency')
+  lo=address('terminal_rectangle_far');hi=address('terminal_rectangle_end')
+  code=image[start+lo:start+hi];target=symbols['terminal_wide_clear_far']
+  call=b'\x9a'+struct.pack('<HH',target[1],target[0])
+  assert code.count(call)==1 and lo+code.index(call)+3 in relocations,'Wide clear relocated rectangle call'
+  extra['protected_erase_far_bridge_verified']=True
+  extra['protected_erase_native_dependencies_verified']=4
+  assert symbols['erase_after_projection_active'][0]==aspect_seg and word('erase_after_projection_active')==0
+  extra['erase_after_projection_initially_idle']=True
+  extra['wide_clear_rectangle_route_verified']=True
   # Verify the actual resident adapters refer to relocated far service entries.
   # Symbol placement alone cannot prove the inter-segment calling convention.
   resident_lo=near_code['relative_segment']*16+near_code['offset']

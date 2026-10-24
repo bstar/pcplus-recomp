@@ -40,7 +40,7 @@ extern repair_previous_attribute,attribute_repair_native,terminal_region_metadat
 extern screen_cursor_row,screen_cursor_column,screen_attribute_offset
 extern screen_first_row,screen_last_row,screen_last_column,csi_last_row
 extern screen_attribute_row_bytes,screen_attributes_base,erase_attribute_values_base,erase_cell_count
-extern scroll_skip_attribute_scan,csi_wrap_pending
+extern scroll_skip_attribute_scan,csi_wrap_pending,terminal_wide_clear_far
 global terminal_rectangle_far,terminal_scroll_up_far,scroll_region_repair,terminal_rectangle_end
 terminal_scroll_up_far:
  push bp
@@ -148,6 +148,17 @@ terminal_rectangle_far:
  jnz .unit
  jmp .done
 .native:
+ cmp word [bp+12],0
+ jne .native_rectangle
+ cmp word [screen_attribute_row_bytes],132
+ jne .native_rectangle
+ push word [bp+12]
+ push word [bp+10]
+ push word [bp+8]
+ push word [bp+6]
+ call far terminal_wide_clear_far
+ jmp .done
+.native_rectangle:
  push word [bp+12]
  push word [bp+10]
  push word [bp+8]

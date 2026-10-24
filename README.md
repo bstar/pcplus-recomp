@@ -589,6 +589,12 @@ The launcher uses a separate private installation under `reconstruction/lab`.
 Type `ATDThost:port` to dial its emulated Hayes modem; Alt-X exits. Its generated
 startup script and executable are refreshed on launch.
 
+The [protected erase checkpoint](docs/PROTECTED_ERASE.md) restores field-aware
+ED/EL, fixes whole-line metadata offsets and prevents wide clears from crossing
+rectangle boundaries in overlapping panes. Clean-source verification includes
+16 new DOS workflows in color-field and monochrome modes. Card deployment and
+physical modem acceptance remain separate.
+
 The [wide ASPECT development checkpoint](docs/WIDE_ASPECT.md) adds guarded
 parent rendering across132-column panes, active fields and status-aware rows.
 A clean source rebuild passes the existing field/UI/compiler regressions and

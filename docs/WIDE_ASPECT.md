@@ -1,5 +1,9 @@
 # ASPECT rendering over a wide terminal
 
+The later [protected erase checkpoint](PROTECTED_ERASE.md) implements the
+protected ED/EL provider that this earlier checkpoint still refused. The
+following evidence describes the earlier checkpoint's scope.
+
 The guarded parent renderer now admits 80- or 132-column logical displays,
 1–25 content rows and supported field modes. Physical video remains 80 columns.
 ASPECT continues to own the serial port while the suspended parent executes its

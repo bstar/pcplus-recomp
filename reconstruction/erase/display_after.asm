@@ -61,6 +61,11 @@ L_d8b7: mov_load bp,sp
 L_d8b9: sub sp,0x6
 L_d8bc: push di
 L_d8bd: push si
+%ifdef TERMINAL_ERASE_PREFLIGHT
+ ; Monochrome output bypasses the field-marker scan. Its later line-repair
+ ; decision must not depend on an uninitialized native stack local.
+ mov word [bp-0x4],0
+%endif
 L_d8be: cmp word [attributes_monochrome],0x0
 L_d8c3: jz short L_d8ca
 L_d8c5: mov al,[attributes_current]

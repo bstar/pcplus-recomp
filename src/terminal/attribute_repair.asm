@@ -36,6 +36,7 @@ repair_text_far:
 SEGMENT ASPECT_CODE public align=16 class=FARCODE use16
 extern attribute_repair_native,attribute_geometry_admit,attribute_plane_admit
 extern screen_cursor_wrap,erase_attribute_values_base,erase_attribute_values
+extern erase_after_projection_active
 global attribute_repair_checked_far,attribute_repair_admit,attribute_repair_admit_far
 global repair_default_attribute,repair_previous_attribute,repair_text_write_char
 ; Read-only fixed-plane admission. Native wrap-disabled repair is a no-op.
@@ -62,6 +63,11 @@ attribute_repair_checked_far:
  mov bp,sp
  cmp word [screen_cursor_wrap],0
  je .native
+ cmp word [bp+6],3
+ jne .ordinary
+ cmp word [cs:erase_after_projection_active],1
+ je .plane
+.ordinary:
  cmp word [bp+6],0
  je .plane
  call attribute_repair_admit

@@ -1,0 +1,35 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/protected_erase/protected.asm",
+      "start": 62588,
+      "end": 62730,
+      "source_file_offset": 98604,
+      "bytes": 142,
+      "instructions": 59,
+      "sha256": "5806cb8aa0223436fde3ba46f966693d2f28602a286fc46d41825130fec6f2c0",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "399e": "screen_cursor_column",
+    "399c": "screen_cursor_row",
+    "325a": "screen_attribute_row_bytes",
+    "325c": "erase_cell_count",
+    "39c4": "screen_attributes_base",
+    "3736": "erase_protection_mode"
+  },
+  "services": {
+    "2b86": "attribute_position_to_video",
+    "2c3a": "attribute_repair_write",
+    "2cf2": "attribute_repair_advance",
+    "2d98": "erase_repair_attributes"
+  },
+  "rea_evidence": "ev_fdfc6216a1a29af2a940ed59bbce4f838dad18ef0f88f942ae636260f900fa79",
+  "overlay": 13,
+  "limitations": [
+    "Original overlay13 helper, reached through resident trampoline d05f. Caller removes its one-word argument. Native dependencies and bounded application admission are separate.",
+    "REA used a synthetic static-only overlay image with verified original bytes; no synthetic image is executable or deployable."
+  ]
+}

@@ -103,12 +103,9 @@ unsigned __cdecl aspect_render_admit(void)
 
 unsigned __cdecl aspect_render_preflight_command(void)
 {
- if(render_live_state(1))return 3;
- /* Protected ED/EL still delegates to an absent native complex provider.
-  * Check before dispatch homes or changes any other display owner. */
- if(screen_cursor_wrap && screen_attribute_checks &&
-    (ansi_command=='J' || ansi_command=='K'))return 3;
- return 0;
+ /* Recheck before dispatch can temporarily home EL2's column. Protected
+  * erase now has a bounded provider with its own logical-offset projection. */
+ return render_live_state(1);
 }
 
 unsigned __cdecl aspect_render_preflight_modes(unsigned setting)

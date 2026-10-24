@@ -72,7 +72,7 @@ def cpu_matrix():
   if result:continue
   word('terminal_aspect_active',1);word('terminal_parser_active',1)
   for command in ['J','K','P']:
-   word('ansi_command',ord(command));actual=invoke('_aspect_render_preflight_command');assert actual==(0 if command=='P'else 3)
+   word('ansi_command',ord(command));actual=invoke('_aspect_render_preflight_command');assert actual==0
    records.append(dict(kind='independent_field_command',rows=rows,pane=pane,command=command,result=actual))
  return dict(passed=True,cases=records,count=len(records),visited_instruction_addresses=len(visited),no_nonstack_writes=not outside,scope='Actual relocated compiled policy; controlled BDA and fixture state, DS=SS cdecl ABI and writes restricted to caller stack. No renderer or service bridge execution.')
 
