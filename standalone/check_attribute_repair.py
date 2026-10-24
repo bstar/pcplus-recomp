@@ -76,7 +76,7 @@ class Machine:
     values[i]=carry
    if paint is not None:
     if visible:video[offset+1]=paint
-    else:shadow[0x40+offset+1]=paint
+    else:shadow[getattr(self,'shadow_offset',0x40)+offset+1]=paint
     touched.append((i,visible,paint))
    if stop:break
    col+=1

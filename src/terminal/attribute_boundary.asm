@@ -5,6 +5,7 @@ SEGMENT _TEXT public class=CODE use16
 extern attribute_boundary_native,pcplus_flow_bell,terminal_abort
 extern screen_columns,screen_attribute_row_bytes,screen_video_row_bytes,text_video_segment
 extern screen_viewport_enabled,screen_viewport_active,screen_viewport_offset
+extern screen_visible_column,terminal_viewport_admit_impl
 extern csi_last_row,screen_last_column,screen_first_row,screen_last_row
 extern erase_cell_count,screen_attributes_base,screen_attribute_cells
 extern screen_cursor_row,screen_cursor_column,screen_attribute_offset,screen_video_offset
@@ -71,14 +72,32 @@ attribute_geometry_admit:
  mov ax,[screen_cursor_row]
  cmp ax,[csi_last_row]
  ja .bad
- cmp word [screen_cursor_column],79
- ja .bad
- mov cx,80
+ mov bx,[screen_cursor_column]
+ cmp bx,[screen_attribute_row_bytes]
+ jae .bad
+ mov cx,[screen_attribute_row_bytes]
  mul cx
- add ax,[screen_cursor_column]
+ add ax,bx
  cmp ax,[screen_attribute_offset]
  jne .bad
+ cmp word [screen_viewport_enabled],0
+ je .ordinary
+ mov ax,bx
+ sub ax,[screen_viewport_offset]
+ jc .bad
+ cmp ax,80
+ jae .bad
+ cmp ax,[screen_visible_column]
+ jne .bad
  shl ax,1
+ mov cx,ax
+ mov ax,[screen_cursor_row]
+ mul word [screen_video_row_bytes]
+ add ax,cx
+ jmp .video
+.ordinary:
+ shl ax,1
+.video:
  cmp ax,[screen_video_offset]
  jne .bad
  clc
@@ -90,6 +109,12 @@ attribute_geometry_admit:
 ; Whole-plane repair during native wrapping ignores temporarily stale cursor
 ; offsets; it still requires bounded real backing and fixed video geometry.
 attribute_plane_admit:
+ cmp word [screen_attribute_row_bytes],132
+ jne .ordinary
+ ; Reuse the owned static-shadow/status/modal admission. Native whole-plane
+ ; repair deliberately ignores cursor offsets while its own scan is moving.
+ jmp terminal_viewport_admit_impl
+.ordinary:
  cmp word [screen_columns],80
  jne .bad
  cmp word [screen_attribute_row_bytes],80

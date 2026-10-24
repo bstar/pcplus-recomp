@@ -18,7 +18,9 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--viewport',action='store_true',help='Run the live pane oracle in the fresh tree and reject a build without its DS correction')
+    parser.add_argument('--wide-repair',action='store_true',help='Also replay the wide native field-repair oracle')
     args=parser.parse_args();out=args.output.resolve()
+    assert not args.wide_repair or args.viewport
     assert out.is_relative_to(ROOT/'build') and not out.exists()
     base=ROOT/'build/terminal';manifest=json.loads((base/'manifest.json').read_text())
     assert sha(base/'TERMINAL.EXE')==manifest['binary_sha256']
@@ -27,6 +29,9 @@ def main():
     inputs={**manifest['sources'],'reconstruction/modes/width_request.asm':sha(ROOT/'reconstruction/modes/width_request.asm')}
     if args.viewport:
         for name in ['check_viewport_live.py','check_line_edit_live.py','check_transport.py','check_scroll.py','dos_image.py']:
+            inputs['standalone/'+name]=sha(ROOT/'standalone'/name)
+    if args.wide_repair:
+        for name in ['check_attribute_repair_wide.py','check_attribute_repair.py']:
             inputs['standalone/'+name]=sha(ROOT/'standalone'/name)
     fresh=out/'source'
     for name,digest in inputs.items():
@@ -74,6 +79,11 @@ def main():
             subprocess.run([sys.executable,'standalone/check_viewport_live.py'],cwd=fresh,
                 stdout=log,stderr=log,check=True,timeout=90)
         assert json.loads((rebuilt/'viewport-live-checks.json').read_text())['passed']
+    if args.wide_repair:
+        with(out/'wide-repair-check.log').open('w')as log:
+            subprocess.run([sys.executable,'standalone/check_attribute_repair_wide.py'],cwd=fresh,
+                stdout=log,stderr=log,check=True,timeout=180)
+        assert json.loads((rebuilt/'attribute-repair-wide-checks.json').read_text())['passed']
     for name,digest in inputs.items():assert sha(ROOT/name)==sha(fresh/name)==digest
     result=dict(passed=True,binary_sha256=manifest['binary_sha256'],source_files=len(inputs),
         sources=inputs,original_inputs=[],negative_exit_code=failed.returncode,
@@ -83,6 +93,9 @@ def main():
     if args.viewport:
         result.update(viewport_passed=True,foreign_DS_negative=cga_result,
             viewport_log_sha256=sha(out/'viewport-check.log'),viewport_report_sha256=sha(rebuilt/'viewport-live-checks.json'))
+    if args.wide_repair:
+        result.update(wide_repair_passed=True,wide_repair_log_sha256=sha(out/'wide-repair-check.log'),
+            wide_repair_report_sha256=sha(rebuilt/'attribute-repair-wide-checks.json'))
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     print('PASS terminal source reproduction:',len(inputs),'sources; diagnostic-glob counterexample rejects')
 

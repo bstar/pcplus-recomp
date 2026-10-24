@@ -12,6 +12,9 @@ at132 columns. The wider admission and composition requirements below remain.
 The [live viewport checkpoint](VIEWPORT_LIVE.md) now joins actual cursor/pane
 copying, parser output and row erase over the static shadow, including a DOS8086
 test-only wide-state fixture. Normal width requests remain disabled.
+The [wide-field checkpoint](ATTRIBUTE_REPAIR_WIDE.md) extends shared admission
+to native repair and boundary navigation, including a DOS region-repaint
+consumer. Broader width/reset and UI/child workflows remain open.
 
 The current application already reserves two independent 4,096-byte near
 attribute planes and an 8,192-byte far shadow in `src/terminal/state.asm`.
@@ -34,7 +37,7 @@ requests include:
 | Owner | Current constraint | Required integration evidence |
 | --- | --- | --- |
 | Cursor and viewport | Owned pane hooks, separate capture refresh and static-shadow cursor/output/erase now pass; width requests still trap | Integrate normal width/reset ownership and broader scrolling/field operations with the checked pane state |
-| Attribute navigation and repair | `attribute_boundary.asm` admits fixed 80-column video and logical planes | Bounded logical-plane indexing and consistent physical/pane offsets in both widths |
+| Attribute navigation and repair | Ordinary80 checks and owned132 viewport admission now cover repair/navigation | Compose normal width/reset transitions and broader scrolling/editing/keyboard consumers with these verified planes |
 | NETWORK line metadata | Logical row stride now drives the buffer kernel; live admission still requires 80 columns | Compose the verified132-byte buffer operation with native video, region bounds and field repair in both panes |
 | Current-profile RIS | `terminal_reset.asm` restores captured startup geometry and clears static storage | Explicit semantics for width requests versus RIS, with no stale viewport pointers or configured defaults |
 | Screen snapshot | `snapshot.asm` freezes exactly 25 rows of at most 80 characters | Logical-width export or an explicit visible-pane operation without truncating a claimed whole-screen export |

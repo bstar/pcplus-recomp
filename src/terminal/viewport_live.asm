@@ -110,6 +110,7 @@ screen_viewport_refresh_impl:
 ; Read-only plane/pane admission, CF0 valid. Preserve every general register
 ; and ES so the recovered cursor's pending SI/DI destination survives. Cursor
 ; offsets are intentionally not inspected during its intermediate pan commit.
+global terminal_viewport_admit_impl
 terminal_viewport_admit_impl:
  save
  pushf

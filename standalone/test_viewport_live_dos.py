@@ -17,6 +17,7 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--label',required=True)
+    parser.add_argument('--fields',action='store_true',help='Seed a deleted field boundary and verify native region repair in wide mode')
     args=parser.parse_args();assert re.fullmatch('[A-Za-z0-9_-]+',args.label)
     out=ROOT/'build/viewport-live-dos'/args.label;out.mkdir(parents=True,exist_ok=False)
     binary=ROOT/'build/terminal/TERMINAL.EXE';listing=(ROOT/'build/terminal/terminal.map').read_text()
@@ -70,6 +71,32 @@ def main():
  pop ds
 '''
     text=text[:start]+stage+text[end:]
+    if args.fields:
+        seed=''' push ds
+ pop es
+ mov di,SCREEN_ATTRIBUTE_CELLS
+ mov al,0x55
+ mov cx,4096
+ rep stosb
+ mov di,SCREEN_ATTRIBUTE_CELLS
+ xor ax,ax
+ mov cx,3168
+ rep stosb
+ mov di,ERASE_ATTRIBUTE_VALUES
+ mov al,0x66
+ mov cx,4096
+ rep stosb
+ mov di,ERASE_ATTRIBUTE_VALUES
+ mov al,7
+ mov cx,3168
+ rep stosb
+ mov byte [SCREEN_ATTRIBUTE_CELLS+3*132+50],0x80
+ mov byte [SCREEN_ATTRIBUTE_CELLS+10*132],0x81
+ mov byte [ERASE_ATTRIBUTE_VALUES+3*132-1],0x1e
+ mov word [SCREEN_CURSOR_WRAP],1
+'''
+        text=text.replace(' inc word [cs:staged]',seed+' inc word [cs:staged]')
+        text=text.replace('sample_end:','plane_flags: times 4096 db 0\nplane_values: times 4096 db 0\nsample_end:')
     text=text.replace('cmp dx,0x184f','cmp dx,0x174f')
     text=text.replace('mov ax,[SCREEN_CURSOR_WRAP]','mov ax,[SCREEN_VIEWPORT_ACTIVE]')
     assert text.count(' inc word [cs:exits]')==1
@@ -85,12 +112,27 @@ def main():
  rep movsb
  pop ds
 '''+text[end:]
+    if args.fields:
+        at=text.index(' push ds\n mov ax,0xb800',text.index('snapshot:'))
+        text=text[:at]+''' mov si,SCREEN_ATTRIBUTE_CELLS
+ mov di,plane_flags
+ mov cx,4096
+ rep movsb
+ mov si,ERASE_ATTRIBUTE_VALUES
+ mov di,plane_values
+ mov cx,4096
+ rep movsb
+'''+text[at:]
     (out/'observer.asm').write_text(text)
     subprocess.run(['nasm','-fbin','-I',str(out)+'/',str(out/'observer.asm'),'-o',str(out/'VPWATCH.COM')],check=True)
     esc=b'\x1b';payload=esc+b'[2J'+esc+b'[HFIRST BYTE SAFE'+esc+b'[6n'+esc+b'[0c'+esc+b'[6;18H'
     expected=[0x0720]*(132*24)
     for col,char in enumerate(b'FIRST BYTE SAFE'):expected[col]=0x700|char
-    edits=[(0,131,b'R'),(5,0,b'LEFT'),(23,80,b'HIDDEN'),(5,79,b'E'),(5,80,b'F')]
+    if args.fields:
+        payload+=esc+b'[3;6r'+esc+b'[4;18H'+esc+b'[M'+esc+b'[r'
+        expected[3*132:6*132]=[0x1e20]*(3*132)
+    text_row=7 if args.fields else 5
+    edits=[(0,131,b'R'),(text_row,0,b'LEFT'),(23,80,b'HIDDEN'),(text_row,79,b'E'),(text_row,80,b'F')]
     for row,col,data in edits:
         payload+=esc+b'['+str(row+1).encode()+b';'+str(col+1).encode()+b'H'+data
         for i,char in enumerate(data):expected[row*132+col+i]=0x700|char
@@ -105,8 +147,8 @@ def main():
     exec(compile(source.replace(old,'out=LABEL_ROOT/name'),str(Path(harness.__file__)),'exec'),scope)
     result=scope['run']('product','success','p6000 a-x',arguments='@D:\\TEST.PRM /D:CaseTest:23 /A:NETWORK',
         banner=payload,files={'VPWATCH.COM':(out/'VPWATCH.COM').read_bytes()},observer='VPWATCH',cpu='8086')
-    raw=(out/'product/LINEATTR.BIN').read_bytes();assert len(raw)==12216
-    state=struct.unpack_from('<12H',raw);shadow=bytearray(raw[24:8216]);video=raw[8216:]
+    raw=(out/'product/LINEATTR.BIN').read_bytes();assert len(raw)==(20408 if args.fields else 12216)
+    state=struct.unpack_from('<12H',raw);shadow=bytearray(raw[24:8216]);video=raw[8216:12216]
     # Final cursor has returned to the left pane. Overlay its real video;
     # the shadow's visible portion may be stale until the next pan saves it.
     for row in range(24):shadow[row*264:row*264+160]=video[row*160:row*160+160]
@@ -117,9 +159,15 @@ def main():
         shadow_tail_guard=shadow[6336:]==b'\x5a\xa5'*928,
         wide_cursor_report=esc+b'[24;132R' in wire,returned_cursor_report=esc+b'[1;16R' in wire,
         inputs_unchanged=inputs=={name:sha(ROOT/name)for name in inputs})
+    if args.fields:
+        flags=bytearray(3168);flags[10*132]=0x81
+        values=bytearray(b'\x07'*3168);values[3*132-1:6*132]=b'\x1e'*(3*132+1)
+        checks.update(field_flags_and_guard=raw[12216:16312]==flags+b'\x55'*928,
+            field_values_and_guard=raw[16312:]==values+b'\x66'*928,
+            repaired_region_video=all(struct.unpack_from('<H',shadow,i*2)[0]==0x1e20 for i in range(3*132,6*132)))
     report=dict(passed=all(checks.values()),checks=checks,binary_sha256=sha(binary),inputs=inputs,
         state=list(state),observer_sha256=sha(out/'VPWATCH.COM'),capture_sha256=sha(out/'product/LINEATTR.BIN'),
-        expected_logical_sha256=hashlib.sha256(struct.pack('<3168H',*expected)).hexdigest(),cpu='8086',
+        expected_logical_sha256=hashlib.sha256(struct.pack('<3168H',*expected)).hexdigest(),cpu='8086',fields=args.fields,
         scope='Actual unchanged DOS terminal, real UART/parser/output/erase and native BIOS viewport copies at132x24 over80 physical columns. Declared test-only geometry fixture, far-shadow tail guard, real132-column CPR, restored left pane and hardware restoration. No peer width mode, general field repair/UI/child/BBS or physical acceptance.')
     (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(dict(passed=report['passed'],checks=checks),indent=2))

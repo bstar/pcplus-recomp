@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Wide field repair/navigation](docs/ATTRIBUTE_REPAIR_WIDE.md) now reuses owned
+viewport admission for132-column native repair and reconciles logical versus
+visible cursor offsets.360 repair cases,84 circular boundary/pane searches and
+13 pre-mutation refusals pass;925 ordinary repair/consumer cases remain green.
+Actual DOS8086 deletion repaints only its seeded region with1Eh, preserving the
+outside field, full planes/guards, logical screen and hardware.407 source/test
+files reproduce and replay exactly. Normal width/reset ownership and broader
+scrolling/UI/child/BBS/package/physical work remain open; card and staging are
+unchanged.
+
 [Live static-shadow viewport](docs/VIEWPORT_LIVE.md) now binds the actual cursor
 to recovered pane switching/copying in the far code bank.80 cursor transitions,
 60 real UART/parser output/erase cases and186 pre-copy refusals pass, with owned
