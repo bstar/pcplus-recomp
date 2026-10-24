@@ -1,5 +1,17 @@
 # Complete DOS rebuild plan
 
+[Logical row-stride line editing](docs/LINE_METADATA_STRIDE.md) now removes
+literal80-byte row arithmetic from the live NETWORK plane owner. The actual
+linked kernel passes240 cases at each of80/132 columns while preserving receive,
+deferred, video and shadow state. Existing512 attribute cases/192 native repairs,
+eight policy groups,24 callback cases and45 layout controls pass; actual DOS
+video/guards/cursor/hardware verify.397 sources reproduce the changed default
+terminal exactly. A recovered native width diagnostic accidentally entering the
+application glob is now excluded, with the failing inclusion retained in the
+source proof. Live132 video/admission/UI/child/BBS integration, updated branded
+package acceptance and physical tests remain open; host staging and card are
+unchanged.
+
 [Branded IRQ carrier recovery](docs/SPECIAL_IRQ_CARRIER.md) now verifies the
 exact Special Edition package in one DOS8086 IRQ5 process: interrupted partial
 download, emulated DCD loss, staging cleanup, redial, second script login,

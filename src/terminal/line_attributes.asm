@@ -6,6 +6,7 @@ SEGMENT ASPECT_CODE public align=16 class=FARCODE use16
 extern screen_cursor_wrap,attributes_normal_value,screen_cursor_row
 extern screen_cursor_column,screen_last_row,screen_attribute_offset
 extern screen_attributes_base,erase_attribute_values_base,erase_cell_count
+extern screen_attribute_row_bytes
 extern line_native_insert_far,line_native_delete_far
 extern repair_previous_attribute,attribute_repair_native,attribute_repair_admit
 extern repair_abort_far
@@ -36,7 +37,7 @@ line_edit:
  je .previous
  mov ax,[screen_last_row]
  inc ax
- mov dx,80
+ mov dx,[screen_attribute_row_bytes]
  mul dx
 .previous:
  push ax
@@ -50,7 +51,7 @@ line_edit:
  mov si,[screen_attribute_offset]
  sub si,[screen_cursor_column]
  add si,[screen_attributes_base]
- mov cx,80
+ mov cx,[screen_attribute_row_bytes]
 .scan:
  test byte [si],0x80
  jz .next
@@ -68,30 +69,9 @@ line_edit:
  pop word [screen_cursor_wrap]
  pop word [attributes_normal_value]
  ; The native cursor home has supplied the admitted row-start offset.
- push ds
- pop es
- mov si,[screen_attributes_base]
- call .shift
- mov si,[erase_attribute_values_base]
- call .shift
- mov di,[screen_attribute_offset]
- cmp word [bp-2],0
- je .fill
- mov ax,[screen_last_row]
- mov dx,80
- mul dx
- mov di,ax
-.fill:
- mov si,di
- add di,[screen_attributes_base]
- xor ax,ax
- mov cx,80
- rep stosb
- mov di,si
- add di,[erase_attribute_values_base]
- mov ax,[bp-4]
- mov cx,80
- rep stosb
+ mov ax,[bp-2]
+ mov dx,[bp-4]
+ call terminal_line_metadata_move
  cmp word [bp-2],0
  je .done
  cmp word [bp-6],0
@@ -105,7 +85,7 @@ line_edit:
  push word [erase_cell_count]
  mov ax,[screen_last_row]
  inc ax
- mov dx,80
+ mov dx,[screen_attribute_row_bytes]
  mul dx
  mov [erase_cell_count],ax
  mov ax,2
@@ -129,13 +109,61 @@ line_edit:
 .delete_video:
  call far line_native_delete_far
  ret
+
+; Owned logical-plane operation, separated from physical video and field
+; repaint. AX=0 insert/1 delete; DL=vacated value attribute. The caller has
+; admitted disjoint near planes, a bounded region and row-start cursor offset.
+; Reads logical row bytes, never physical columns. DS=SS; preserves BP/BX/SI/
+; DI/ES and returns DF clear. It neither polls nor restores UART/owner state.
+global terminal_line_metadata_move
+terminal_line_metadata_move:
+ push bp
+ mov bp,sp
+ sub sp,4
+ push bx
+ push si
+ push di
+ push es
+ mov [bp-2],ax
+ mov [bp-4],dx
+ push ds
+ pop es
+ cld
+ mov si,[screen_attributes_base]
+ call .shift
+ mov si,[erase_attribute_values_base]
+ call .shift
+ mov di,[screen_attribute_offset]
+ cmp word [bp-2],0
+ je .fill
+ mov ax,[screen_last_row]
+ mul word [screen_attribute_row_bytes]
+ mov di,ax
+.fill:
+ mov si,di
+ add di,[screen_attributes_base]
+ xor ax,ax
+ mov cx,[screen_attribute_row_bytes]
+ rep stosb
+ mov di,si
+ add di,[erase_attribute_values_base]
+ mov ax,[bp-4]
+ mov cx,[screen_attribute_row_bytes]
+ rep stosb
+ pop es
+ pop di
+ pop si
+ pop bx
+ mov sp,bp
+ pop bp
+ ret
 .shift:
  ; SI names one admitted near plane. Overlap is intentional and directional.
  add si,[screen_attribute_offset]
  mov di,si
  mov ax,[screen_last_row]
  sub ax,[screen_cursor_row]
- mov dx,80
+ mov dx,[screen_attribute_row_bytes]
  mul dx
  mov cx,ax
  cmp word [bp-2],0
@@ -144,13 +172,13 @@ line_edit:
  add si,cx
  dec si
  mov di,si
- add di,80
+ add di,[screen_attribute_row_bytes]
  std
  rep movsb
  cld
  ret
 .forward:
- add si,80
+ add si,[screen_attribute_row_bytes]
  rep movsb
 .shift_done:
  ret

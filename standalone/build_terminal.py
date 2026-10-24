@@ -94,7 +94,11 @@ sources=[]
 for module in modules:
  sources += sorted((ROOT/'reconstruction'/module).glob('*.asm'))
 sources += [ROOT/'reconstruction/uart/core.asm',ROOT/'reconstruction/keyboard/core.asm',ROOT/'src/uart/api.asm',ROOT/'src/ansi/decimal.asm',ROOT/'src/reports/decimal.asm',ROOT/'src/reports/data.asm']
-sources = [p for p in sources if p != ROOT/'reconstruction/modem_responses/attempt.asm']
+# These native diagnostic entries have separate owners. A new recovered file
+# must not enter the interactive application merely through a module glob.
+sources = [p for p in sources if p not in (
+ ROOT/'reconstruction/modem_responses/attempt.asm',
+ ROOT/'reconstruction/modes/width_request.asm')]
 sources += [ROOT/'reconstruction/directory_dial/bounded.asm',ROOT/'reconstruction/directory_accounting/patch.asm']
 sources += [ROOT/'reconstruction/keyboard_mapping/classifier.asm']
 sources += [ROOT/'reconstruction/keyboard_mapping/raw_classifier.asm']
