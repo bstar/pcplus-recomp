@@ -66,6 +66,10 @@ attribute_boundary_notice_far:
 
 SEGMENT ASPECT_CODE public align=16 class=FARCODE use16
 ; Read-only geometry check; near callers live in this far segment.
+global attribute_geometry_admit_far
+attribute_geometry_admit_far:
+ call attribute_geometry_admit
+ retf
 attribute_geometry_admit:
  call attribute_plane_admit
  jc .bad

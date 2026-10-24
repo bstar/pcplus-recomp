@@ -112,6 +112,7 @@ def main():
         arguments=list(arguments)
         if Path(str(arguments[0])).name=='wcl':
             arguments=[x for x in arguments if x!='-s']
+            if '-os'not in arguments:arguments.append('-os')
             if '-k32768' in arguments:
                 # The API harness borrows no automatic context; CLI fault variants
                 # have the same automatic workspace and24KiB budget as ASPCOMP.
@@ -142,7 +143,7 @@ def main():
     # Exercise the CLI's own automatic workspace, not only the heap-context API
     # in PROGRAM. Build all CLI frames with the pinned CRT stack checks enabled.
     cli=out/'checked-cli';cli.mkdir()
-    command=['wcl','-q','-bt=dos','-0','-ml','-fpc','-ecc','-w4','-we','-k24576',
+    command=['wcl','-q','-os','-bt=dos','-0','-ml','-fpc','-ecc','-w4','-we','-k24576',
              '-fm=ASPCOMP.map','-fe=ASPCOMP.EXE',
              *[str(ROOT/'src/aspect'/(name+'.c'))for name in corpus.MODULES],
              str(ROOT/'src/aspect/compiler_main.c')]

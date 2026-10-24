@@ -39,7 +39,7 @@ def run():
    assert t.cells()==expected(t,row,17,2,1,False)
  check('character-edits-independent-of-vertical-scroll-margins',outside_scroll)
  def invalid():
-  mutations=[('screen_cursor_row',25),('screen_cursor_column',80),('screen_last_column',80),('screen_video_offset',2),('screen_attribute_offset',1),('screen_attribute_row_bytes',0),('screen_video_row_bytes',0),('screen_columns',0),('screen_viewport_active',1),('screen_viewport_offset',1),('text_video_segment',0),('csi_last_row',25)]
+  mutations=[('screen_cursor_row',25),('screen_cursor_column',80),('screen_last_column',80),('screen_video_offset',2),('screen_attribute_offset',1),('screen_attribute_row_bytes',0),('screen_video_row_bytes',0),('screen_columns',0),('screen_viewport_active',2),('screen_viewport_offset',1),('text_video_segment',0),('csi_last_row',25)]
   for entry in ('csi_service_d270','csi_service_d440'):
    for field,value in mutations:
     t=Live();t.position(5,17);t.put(field,value);t.put('ansi_parameters',32767);t.call(entry)

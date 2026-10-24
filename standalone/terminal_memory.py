@@ -497,6 +497,14 @@ def inspect_terminal_memory(binary,map_path):
  if any(c['name']=='ASPECT_CODE' for c in code_segments):
   aspect_code=next(c for c in code_segments if c['name']=='ASPECT_CODE')
   aspect_seg=aspect_code['relative_segment']
+  if 'character_wide_edit_far'in symbols:
+   assert symbols['character_wide_edit_far'][0]==symbols['character_wide_end'][0]==aspect_seg
+   near_call('attribute_geometry_admit_far','attribute_geometry_admit')
+   target=symbols['character_wide_edit_far'];call=b'\x9a'+struct.pack('<HH',target[1],target[0])
+   resident=image[start+near_code['relative_segment']*16:start+near_code['relative_segment']*16+near_code['bytes']]
+   assert resident.count(call)==2
+   for at in (i for i in range(len(resident)-4)if resident[i:i+5]==call):assert near_code['relative_segment']*16+at+3 in relocations
+   extra['wide_character_far_calls_verified']=2
   assert aspect_code['kind']=='FARCODE' and aspect_code['offset']==0
   assert all(c['relative_segment']!=aspect_seg for c in code_segments if c['name']!='ASPECT_CODE'),'ASPECT CS aliases other code'
   services=('terminal_render_prepare','terminal_render_revoke','terminal_render_validate',

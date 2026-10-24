@@ -1,5 +1,9 @@
 # Explicit width changes from normal startup
 
+The later [character-edit checkpoint](WIDE_CHARACTER_EDIT.md) composes plain
+ICH/DCH across the wide logical row and adds compiler size optimization.
+The hashes and receipt below describe this earlier row/startup checkpoint.
+
 The optional native width transaction now accepts coherent plain profile4/6
 layouts with1..25 rows and valid scrolling margins. The normal peer width
 requests remain unbound. This extends the earlier

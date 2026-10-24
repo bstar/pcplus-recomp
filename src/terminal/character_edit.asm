@@ -1,6 +1,6 @@
 ; Maintained live bounds around actual recovered ICH/DCH/HTS instructions.
-; The live renderer owns a fixed80x25 direct video plane. Unvalidated viewport
-; layouts are no-ops; attribute repair admission precedes any cell movement.
+; Ordinary80-column layouts use recovered helpers. Owned132-column layouts
+; use the logical-row owner; unsupported layouts remain bounded no-ops.
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
@@ -8,11 +8,11 @@ extern csi_insert_character,csi_delete_character,terminal_set_tab,terminal_abort
 extern ansi_parameters,screen_cursor_row,screen_cursor_column,csi_last_row
 extern screen_last_column,screen_columns,screen_video_row_bytes
 extern screen_attribute_row_bytes,screen_video_offset,screen_attribute_offset
-extern screen_viewport_active,screen_viewport_offset,text_video_segment
+extern screen_viewport_active,screen_viewport_offset,text_video_segment,screen_viewport_enabled
 extern screen_line_flags,screen_cursor_wrap,screen_attribute_checks
 extern screen_attributes_base,screen_attribute_cells
 extern erase_attribute_values_base,erase_attribute_values
-extern attribute_repair_admit_far
+extern attribute_repair_admit_far,character_wide_edit_far
 global csi_service_d270,csi_service_d440,ansi_escape_service_dac6
 
 csi_service_d270:
@@ -21,9 +21,14 @@ csi_service_d270:
  push di
  push es
  xor di,di
+ cmp word [screen_attribute_row_bytes],132
+ je .wide
  call character_edit_prepare
  jc .failed
  call csi_insert_character
+ jmp .done
+.wide:
+ call far character_wide_edit_far
  jmp .done
 .failed:
  or ax,ax
@@ -42,9 +47,14 @@ csi_service_d440:
  push di
  push es
  mov di,1
+ cmp word [screen_attribute_row_bytes],132
+ je .wide
  call character_edit_prepare
  jc .failed
  call csi_delete_character
+ jmp .done
+.wide:
+ call far character_wide_edit_far
  jmp .done
 .failed:
  or ax,ax
@@ -68,9 +78,11 @@ character_edit_prepare:
  jne .outside
  cmp word [text_video_segment],0xb800
  jne .outside
- cmp word [screen_viewport_active],0
- jne .outside
+ cmp word [screen_viewport_active],1
+ ja .outside
  cmp word [screen_viewport_offset],0
+ jne .outside
+ cmp word [screen_viewport_enabled],0
  jne .outside
  cmp word [csi_last_row],24
  ja .outside

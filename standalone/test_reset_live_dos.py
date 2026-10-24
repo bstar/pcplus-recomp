@@ -6,7 +6,7 @@ import test_connection_dos as harness
 ROOT=harness.ROOT
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--hidden-status',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--hidden-status',action='store_true');p.add_argument('--character-edits',action='store_true');a=p.parse_args()
  binary=a.terminal.resolve();manifest=json.loads((binary.parent/'manifest.json').read_text())
  assert manifest['native_reset_transaction']and sha(binary)==manifest['binary_sha256']
  for name,digest in manifest['sources'].items():assert sha(ROOT/name)==digest,name
@@ -91,6 +91,14 @@ def main():
  for row,col,data in edits:
   payload+=b'\x1b['+str(row+1).encode()+b';'+str(col+1).encode()+b'H'+data
   for i,char in enumerate(data):expected[row*132+col+i]=0x700|char
+ if a.character_edits:
+  seed=bytes(65+i%26 for i in range(132));payload+=b'\x1b[6;1H'+seed
+  expected[5*132:6*132]=[0x700|char for char in seed]
+  for col,insert in [(79,True),(51,False),(80,True),(131,False)]:
+   payload+=b'\x1b[6;'+str(col+1).encode()+b'H\x1b[3'+(b'@'if insert else b'P')
+   first=5*132+col;last=6*132;n=min(3,last-first)
+   if insert:expected[first:last]=[0x0720]*n+expected[first:last-n]
+   else:expected[first:last]=expected[first+n:last]+[0x0720]*n
  payload+=b'\x1b['+str(rows).encode()+b';132HZ\x1b[6n\x1b[1;16H\x1b[6n'
  expected[cells-1]=0x75a
  source=Path(harness.__file__).read_text();needle="out=ROOT/'build/connection-dos'/name";assert source.count(needle)==1
@@ -118,7 +126,7 @@ def main():
  report=dict(passed=all(checks.values()),checks=checks,binary_sha256=sha(binary),state=list(state),transaction_status=struct.unpack_from('<H',raw,12216)[0],
   sources=manifest['sources'],checker_sha256=sha(Path(__file__)),observer_base_sha256=sha(observer),
   artifacts={str(path.relative_to(ROOT)):sha(path)for path in out.rglob('*')if path.is_file()},original_inputs=[],
-  hidden_status_fixture=a.hidden_status,content_rows=rows,scope=__doc__+' Real startup25-row geometry; optional fixture hides status. IF-enabled far call after the BIOS operation, not a peer width request. Actual UART/parser/output/pan/CPR and hardware restoration follow. No failure injection, private-context IRQ timing, general UI/child or physical acceptance claimed.')
+  hidden_status_fixture=a.hidden_status,content_rows=rows,character_edits_fixture=a.character_edits,scope=__doc__+' Real startup25-row geometry; optional fixture hides status. IF-enabled far call after the BIOS operation, not a peer width request. Actual UART/parser/output/pan/CPR and hardware restoration follow. No failure injection, private-context IRQ timing, general UI/child or physical acceptance claimed.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n');print(('PASS'if report['passed']else'FAIL')+' DOS live transaction '+json.dumps(checks))
  return 0 if report['passed']else 1
 if __name__=='__main__':raise SystemExit(main())
