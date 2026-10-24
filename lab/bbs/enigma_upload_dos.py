@@ -73,7 +73,7 @@ async def run(args):
     upload='U enter p1600 tab tab tab enter p1600 enter p1000 '
     sender='a-s p300 f2 f2 D : \\ S E N D \\ '
     nfo='c-y S enter p1600 P C P L U S space P R O B E space 0 1 enter p1800 enter p1500 n p1500 '
-    keys='p85000 c-y F enter p1600 '+upload+sender
+    keys=('p900 enter 'if args.splash_key else '')+'p85000 c-y F enter p1600 '+upload+sender
     if cancel_first:
         keys+='P C U P 0 1 . B I N enter p22000 escape p2000 '+nfo+'escape p1000 escape p1000 escape p1000 c-y '+upload+sender.replace('f2 f2 ','')
     keys+='* . B I N enter '+('p150000 ' if args.upload_bytes>32768 else 'p105000 ' if args.upload_bytes>8192 else 'p65000 ')+'p6000 '+nfo
@@ -201,7 +201,7 @@ async def run(args):
         expected={name:dict(bytes=len(data),sha256=sha(send/name)) for name,data in expected.items()},
         products={name:dict(path=str(path.relative_to(ROOT)),sha256=sha(path)) for name,path in inputs.items()
                   if name in ('terminal/TERMINAL.EXE','aspect-runner/ASPECT.EXE','aspect-compiler-dos/ASPCOMP.EXE')},
-        cpu=args.cpu,irq=args.irq,compact_observer=args.compact_observer,
+        cpu=args.cpu,irq=args.irq,compact_observer=args.compact_observer,splash_key_sent=args.splash_key,
         scope='One actual DOS/owned ENiGMA session: DOS-built ASPECT login, real upload form/protocol selector, binary and empty ZMODEM batch, official FileEntry API/storage audit, details acceptance and NFO input afterward. Synthetic account/area, modeled19200/HARD UART; no live board or physical modem claim.')
     (out/'upload-checks.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(passed=result['passed'],checks=checks,metadata_checks=metadata_checks,errors=errors,menus=menus),indent=2))
     return 0 if result['passed'] else 1
@@ -217,6 +217,7 @@ if __name__=='__main__':
     p.add_argument('--irq',type=int,choices=[3,4,5,7])
     p.add_argument('--mouse-scales',type=int,nargs=2)
     p.add_argument('--compact-observer',action='store_true',help='Retain only twelve form events in the resident observer')
+    p.add_argument('--splash-key',action='store_true',help='Press Enter at startup for the explicitly selected branded terminal')
     p.add_argument('--cancel-first',action='store_true',help='Cancel a nonempty upload, open NFO, retry the batch, reopen NFO in the same DOS session')
     p.add_argument('--cleanup-error',action='store_true',help='Require one staged modeled cleanup denial, responsive NFO, and retirement on retry')
     raise SystemExit(asyncio.run(run(p.parse_args())))

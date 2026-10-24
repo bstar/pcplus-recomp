@@ -77,14 +77,52 @@ connected or written during packaging. On the next installation, back up
 configuration/dialing/script resources, verify copied hashes, then unmount the
 card. The existing Favorites entry needs no path change.
 
-## ISA modem IRQ gap
+## Selectable ISA modem IRQ package
 
-Setup, startup import and live validation currently require the standard
-IRQ4/3/4/3 mapping. Supporting a jumper-selected IRQ5/7 requires changes beyond
-the setup field: `port_handoff.asm` rejects same-UART ownership transfers,
-`hook_apply_bridge.asm` admits only IRQ3/4, and `script_launch.asm` plus the child
-`serial_backend.asm` assume the standard COM IRQ. The current ASIO descriptor
-does not carry a selected IRQ. The recovered ISR acknowledges only the master
-PIC. Keep this limitation explicit until configuration, parent/child ownership,
-saved vectors/masks, refusal paths and actual UART traffic are tested together.
-The Boca model/jumper settings and physical adapter tests remain outstanding.
+An optional package now joins the tested IRQ-capable parent, register interpreter
+and setup editor with the magenta Special Edition splash:
+
+```sh
+./tools/dev --command python3 standalone/package_special_edition.py \
+  --build --custom-irq --output build/special-irq-package-next
+```
+
+The standard package retains standard COM IRQ mapping. `--custom-irq` selects
+matching master-PIC IRQ3/4/5/7 products throughout startup, configuration,
+ASPECT ownership transfer and helper return. The underlying configuration and
+ownership work is documented in [parent custom IRQ checks](PARENT_CUSTOM_IRQ.md).
+Physical jumper settings still need to match the selected COM/IRQ; the Boca
+model and adapter acceptance remain outstanding.
+
+The [branded IRQ receipt](validation/special-irq-package.json) verifies:
+
+- START, nested DOS source compilation and return on IRQ5.
+- Independently captured magenta splash and SETUP/cancel/return on IRQ7.
+- Unchanged PRM/DIR/XLT sentinels, restored PCPLUS environment and all 42 sampled
+  hardware bytes in each DOS8086 launcher workflow.
+- All nine package files reproduced exactly from 719 declared source files and
+  the explicit source-base identifier, with ancestor Git unavailable.
+- This exact branded terminal's DOS source login, 65,539-byte plus empty upload,
+  installed data/metadata/dates and subsequent NFO input on isolated framed
+  ENiGMA. Fourteen damaged-capture cases reject. The temporary server is stopped.
+
+The branded terminal SHA256 is
+`413e274e826a314e7f9ec388072f763836a1d7beeea49e7b930878ce28ca7217`.
+The unbranded carrier-recovery receipt remains evidence for its exact binary;
+it does not establish branded reconnect/load or physical modem acceptance.
+
+The initial package proof inherited the surrounding Git checkout to populate
+VERSION.TXT. A retained control fails when ancestor Git is disabled. Packaging
+now accepts `--source-base-commit`; the source checker supplies that declared
+identifier and forbids discovery of ancestor Git. The strengthened proof and
+launcher repeats produce the same nine payload files. Interactive packaging may
+still infer the base from the current checkout when the option is omitted.
+
+The verified host copy is
+`/home/bstar/projects/DOS/staging/pcplus-special-irq-20261024/PCPLUSSE`.
+It includes no local PRM, DIR or XLT files. The card remains disconnected and
+has not received this package. Its existing `C:\PCPLUSSE\START.BAT` and Favorites
+paths require no change when the nine verified files are installed. Back up the
+existing installation, preserve all local resources, verify copied hashes and
+unmount after installation. Full native application and hardware gates remain
+open.

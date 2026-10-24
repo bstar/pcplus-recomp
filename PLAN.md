@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Selectable-IRQ Special Edition](docs/SPECIAL_EDITION.md#selectable-isa-modem-irq-package)
+now packages matching terminal/interpreter/editor products with the magenta
+splash. DOS8086 START/nested compile on IRQ5, splash/SETUP on IRQ7 and the exact
+branded binary's large/empty ENiGMA upload plus NFO pass. Fourteen capture
+corruptions reject. All nine files reproduce from 719 declared sources and an
+explicit source base with ancestor Git disabled; the prior undeclared Git
+dependency is retained as a failing control. Verified host staging is ready;
+the disconnected card is unchanged. Branded reconnect/load, deployment,
+physical acceptance and full native application work remain open.
+
 [Current IRQ carrier recovery](docs/IRQ_CARRIER.md) now passes in one DOS8086
 process on IRQ5: a verified 4,096-byte partial triggers link abort, emulated DCD
 loss clears staging, redial and a second script login succeed, and the exact

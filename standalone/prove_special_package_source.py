@@ -2,6 +2,7 @@
 """Reproduce all nine package files in an empty tree of declared source inputs."""
 import argparse
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -33,10 +34,15 @@ def main():
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / path, target)
     assert not (fresh / 'build').exists()
+    environment=dict(os.environ,GIT_CEILING_DIRECTORIES=str(out))
+    discover=subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=environment,capture_output=True)
+    assert discover.returncode!=0,'Fresh source tree must not discover ancestor Git metadata'
     with (out / 'build.log').open('w') as log:
         subprocess.run([sys.executable, 'standalone/package_special_edition.py', '--build',
-                        '--output', 'build/package'], cwd=fresh, check=True,
-                       stdout=log, stderr=log, timeout=300)
+                        '--output', 'build/package',
+                        '--source-base-commit',manifest['source_base_commit'],
+                        *(['--custom-irq']if manifest.get('experimental_custom_irq')else[])], cwd=fresh, check=True,
+                       stdout=log, stderr=log, timeout=300,env=environment)
     rebuilt = json.loads((fresh / 'build/package/manifest.json').read_text())
     assert rebuilt['files'] == manifest['files']
     for leaf, digest in rebuilt['files'].items():
@@ -46,6 +52,7 @@ def main():
     result = dict(passed=True, package_manifest_sha256=sha(package / 'manifest.json'),
                   files=rebuilt['files'], sources=manifest['sources'], source_files=len(manifest['sources']),
                   original_inputs=[], build_log_sha256=sha(out / 'build.log'),
+                  source_base_commit=manifest['source_base_commit'],ancestor_git_unavailable=True,
                   checker_sha256=sha(Path(__file__)), scope=__doc__)
     (out / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print('PASS package reproduction:', len(result['sources']), 'sources, nine files')

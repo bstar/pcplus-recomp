@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False):
+def run(package, out, setup=False, splash_only=False,irq=None):
     manifest = json.loads((package / 'manifest.json').read_text())
     assert manifest['card_written'] is False
     for name, digest in manifest['sources'].items():
@@ -33,6 +33,9 @@ def run(package, out, setup=False, splash_only=False):
     raw = bytearray(image())
     struct.pack_into('<H', raw, 0, 1)  # The card's selected COM2.
     struct.pack_into('<HH', raw, 0x4e4, 8, 4)
+    if irq is not None:
+        assert irq in (3,4,5,7)and manifest.get('experimental_custom_irq')
+        struct.pack_into('<H',raw,0x186,irq)
     fixtures = {'PCPLUS.PRM': bytes(raw), 'PCPLUS.XLT': bytes(range(256)),
                 'PCPLUS.DIR': b'PRIVATE-DIRECTORY-PRESERVATION-SENTINEL'}
     # No directory selector is requested; a local dialing file is not opened.
@@ -56,7 +59,7 @@ def run(package, out, setup=False, splash_only=False):
             'p900 enter p1500 a-z p700 escape p600 a-x' if splash_only else
             'p900 enter p1500 a-1 p6500 space p700 a-x')
     config = ('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\n'
-              'cycles=fixed 12000\n[serial]\nserial1=dummy\nserial2=dummy\n'
+              'cycles=fixed 12000\n[serial]\nserial1=dummy\nserial2=dummy'+(' irq:'+str(irq)if irq is not None else '')+'\n'
               '[mixer]\nnosound=true\n[autoexec]\n@echo off\n'
               'mount c "' + str(drive) + '"\nc:\nset PCPLUS=C:\\ORIGINAL\n' +
               ('WATCH T\n' if observe else '') + 'SNAP B\nADDKEY ' + keys + '\n'
@@ -89,6 +92,7 @@ def run(package, out, setup=False, splash_only=False):
     for leaf in PRODUCTS:
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, cpu='8086', port=2, resident_observer=observe,
+                  irq=irq,
                   package_manifest_sha256=sha(package / 'manifest.json'),
                   package_files=manifest['files'],
                   checks=['launcher returns to DOS', 'PCPLUS environment restored',
@@ -111,11 +115,12 @@ def main():
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--setup', action='store_true')
     p.add_argument('--splash-only', action='store_true')
+    p.add_argument('--irq',type=int,choices=[3,4,5,7])
     args = p.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     assert not (args.setup and args.splash_only)
-    run(args.package.resolve(), out, args.setup, args.splash_only)
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq)
 
 
 if __name__ == '__main__':
