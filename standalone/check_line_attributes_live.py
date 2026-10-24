@@ -2,6 +2,7 @@
 """Independent bounded line-plane/video oracle through actual parser and helpers."""
 import hashlib,itertools,json,struct
 from pathlib import Path
+from unicorn import UC_HOOK_CODE
 from unicorn.x86_const import *
 from check_line_edit_live import Live,Abort,ROOT
 from check_attribute_repair import Machine as Repair
@@ -59,6 +60,24 @@ def main():
   assert snapshots(t)==before and t.get('ansi_parameters')==3
   assert (t.get('screen_cursor_row'),t.get('screen_cursor_column'))==(5,80 if key=='screen_cursor_column' else 17)
   rejections+=1
+ # A one-row field whose initial attribute differs from the default exposes
+ # the dispatcher's extra final call if clipping happens inside the first edit.
+ for policy,insert in itertools.product((0,1),(False,True)):
+  t=Live();t.put('terminal_ansi_m_policy',policy);t.put('attributes_monochrome',0)
+  for name,value in dict(csi_row_count=1,csi_last_row=0,screen_first_row=0,screen_last_row=0,erase_cell_count=80).items():t.put(name,value)
+  t.position(0,17);t.put('screen_cursor_wrap',1);t.put('csi_erase_attribute',0x17)
+  t.uc.mem_write(t.symbols['screen_attribute_cells'],b'\x80'+bytes(79)+b'\x55'*4016)
+  t.uc.mem_write(t.symbols['erase_attribute_values'],b'\x1e'*80+b'\x66'*4016)
+  before=bytes(t.uc.mem_read(0xb8000,4000));calls=[];entry=t.symbols['terminal_line_insert_far'if insert else'terminal_line_delete_far']
+  def count_edit(u,at,size,_):
+   if at==entry:calls.append(at)
+  t.uc.hook_add(UC_HOOK_CODE,count_edit);t.feed(b'\x1b[3'+(b'L'if insert else b'M'))
+  assert len(calls)==1 and t.get('ansi_parameters')==1
+  assert bytes(t.uc.mem_read(0xb8000,4000))==b' \x1e'*80+before[160:]
+  assert bytes(t.uc.mem_read(t.symbols['screen_attribute_cells'],4096))==bytes(80)+b'\x55'*4016
+  assert bytes(t.uc.mem_read(t.symbols['erase_attribute_values'],4096))==b'\x1e'*80+b'\x66'*4016
+  assert t.get('screen_cursor_column')==(0 if policy else 17)
+  count+=1
  assert repairs
  result=dict(passed=True,binary_sha256=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),cases=count,repair_operations=repairs,pre_mutation_rejections=rejections,checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),repair_reference_sha256=hashlib.sha256((ROOT/'standalone/check_attribute_repair.py').read_bytes()).hexdigest(),scope='Actual UART/parser NETWORK line dispatch, maintained bounded plane owner, real recovered native video-only line helpers and native field repair. Independent window shifts and field oracle; complete4096-byte planes/video canaries, smaller heights, final row, restricted margins, repeat counts, both profile gates, raw wrap word, DF/DS=SS/callee registers and sticky-state restoration. Modeled hardware/BIOS; no actual DOS/BBS or physical claim.')
  (ROOT/'build/terminal/line-attributes-live-checks.json').write_text(json.dumps(result,indent=2)+'\n');print('Bounded line attributes:',count,'cases,',repairs,'repairs,',rejections,'pre-edit rejections PASS')

@@ -589,6 +589,10 @@ The launcher uses a separate private installation under `reconstruction/lab`.
 Type `ATDThost:port` to dial its emulated Hayes modem; Alt-X exits. Its generated
 startup script and executable are refreshed on launch.
 
+The [scroll field owner](docs/SCROLL_FIELDS.md) now keeps metadata and inherited
+attribute repair inside full-width scroll regions, including protected edits
+after scrolling. Wider application and physical-machine acceptance remain open.
+
 The [field-aware character owner](docs/WIDE_CHARACTER_FIELDS.md) now checks
 protected bounds, metadata and marker-deletion repair across both panes.
 

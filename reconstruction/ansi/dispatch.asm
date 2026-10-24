@@ -11,6 +11,9 @@ ORG 0xe4b2
 %endif
 %include "encodings.inc"
 %include "dispatch-layout.inc"
+%ifdef TERMINAL_LINE_PREFLIGHT
+extern line_preflight_far
+%endif
 %ifdef TERMINAL_CHARACTER_PREFLIGHT
 extern terminal_character_prepare
 %endif
@@ -397,7 +400,11 @@ L_e8a4: cmp [ansi_parameters],si
 L_e8a8: jg short L_e8a0
 L_e8aa: call csi_service_d270
 L_e8ad: jmp near L_e9ce
-L_e8b0: mov si,0x1
+L_e8b0:
+%ifdef TERMINAL_LINE_PREFLIGHT
+ call far line_preflight_far
+%endif
+ mov si,0x1
 L_e8b3: jmp short L_e8ba
 L_e8b5: nop
 L_e8b6: call csi_service_d668
@@ -411,7 +418,11 @@ L_e8cb: jz short L_e8d4
 L_e8cd: call csi_service_daf2
 L_e8d0: jmp near L_e9ce
 L_e8d3: nop
-L_e8d4: mov si,0x1
+L_e8d4:
+%ifdef TERMINAL_LINE_PREFLIGHT
+ call far line_preflight_far
+%endif
+ mov si,0x1
 L_e8d7: jmp short L_e8de
 L_e8d9: nop
 L_e8da: call csi_service_d73c

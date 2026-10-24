@@ -18,8 +18,37 @@ global line_insert_controller_far,line_delete_controller_far,line_alternate_cont
 global line_controller_code_start,line_controller_code_end
 line_controller_code_start:
 
+; Clip before the dispatcher's unconditional final call. Keep unwrapped
+; ORIGINAL policy's legacy repetition; wrapped operations use the bounded owner.
+global line_preflight_far
+line_preflight_far:
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push bp
+ push es
+ cmp word [terminal_ansi_m_policy],0
+ je .bounded
+ cmp word [screen_cursor_wrap],0
+ je .done
+.bounded:
+ call line_edit_region
+.done:
+ pop es
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ retf
+
 ; NETWORK clips repetition to the active region and preserves the column.
-; ORIGINAL calls the recovered per-line operation with its original semantics.
+; ORIGINAL keeps column-home semantics and bounds wrapped metadata too.
 line_insert_controller_far:
  cmp word [terminal_ansi_m_policy],0
  jne .original
@@ -41,6 +70,22 @@ line_insert_controller_far:
  pop bp
  retf
 .original:
+ cmp word [screen_cursor_wrap],0
+ je .original_native
+ push bp
+ push si
+ push di
+ push es
+ call line_edit_region
+ jc .original_done
+ call far terminal_line_insert_far
+.original_done:
+ pop es
+ pop di
+ pop si
+ pop bp
+ retf
+.original_native:
  call far line_native_insert_far
  retf
 
@@ -65,6 +110,22 @@ line_delete_controller_far:
  pop bp
  retf
 .original:
+ cmp word [screen_cursor_wrap],0
+ je .original_native
+ push bp
+ push si
+ push di
+ push es
+ call line_edit_region
+ jc .original_done
+ call far terminal_line_delete_far
+.original_done:
+ pop es
+ pop di
+ pop si
+ pop bp
+ retf
+.original_native:
  call far line_native_delete_far
  retf
 

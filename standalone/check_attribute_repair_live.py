@@ -6,6 +6,7 @@ from unicorn import UC_HOOK_CODE
 from unicorn.x86_const import *
 from check_line_edit_live import Live,Abort
 from check_attribute_repair import Machine as Reference
+from check_scroll_fields_live import reference as scroll_reference
 from check_terminal_key_edit import Edit
 from check_terminal_reverse_tab import Reverse
 from check_keyboard_mapping_raw import KEYS
@@ -48,8 +49,8 @@ def main():
   t.put('screen_cursor_wrap',0);t.call('erase_repair_attributes',[2],cleanup=2);assert snapshots(t)==before;cases+=1
  for name in ('attribute_repair_native','attribute_repair_write','attribute_repair_advance','attribute_position_to_video','erase_default_attribute','erase_previous_attribute','text_write_char'):
   assert t.symbols[name] in visited,('Native dependency did not execute',name)
- # Consumer tests retain native whole-plane metadata movement even when the
- # BIOS video scroll rectangle is smaller. Do not assume they share a region.
+ # Live consumers now keep metadata and pixels inside the same rectangle.
+ # The separate native component retains its recovered whole-plane behavior.
  def repair_reference(flags,values,video,cursor,mode):
   r=object.__new__(Reference);r.cols=80;r.rows=25;r.flags=bytes(flags);r.values=bytes(values);r.cursor=cursor;r.video=bytearray(video);r.shadow=bytearray(8000)
   values,video,_,_=r.reference(mode,True,None);return bytes(values),bytes(video)
@@ -67,10 +68,9 @@ def main():
   for name,value in [('attributes_current',0x9c),('attributes_preset_value',0x4e),('attributes_normal_value',0x27),('csi_erase_attribute',0x17)]:t.put(name,value,1)
   t.position(bottom+1 if method=='reverse-key' else bottom,10 if method=='reverse-key' else 79)
   t.uc.mem_write(t.symbols['screen_attribute_cells'],bytes(flags));t.uc.mem_write(t.symbols['erase_attribute_values'],values)
-  cells=t.cells();video=cells[:]
-  for row in range(top,bottom+1):video[row*80:row*80+80]=cells[(row+1)*80:(row+2)*80] if row<bottom else [values[-1]*256+32]*80
-  shifted_flags=flags[80:]+bytes(80);shifted_values=values[80:]+bytes([values[-1]])*80
-  wanted_values,wanted_video=repair_reference(shifted_flags,shifted_values,struct.pack('<2000H',*video),0,0)
+  cells=t.cells()
+  expected,shifted_flags,wanted_values,_=scroll_reference(cells,flags,values,80,25,top,bottom,False,values[(bottom+1)*80-1],False)
+  wanted_video=struct.pack('<2000H',*expected)
   if method=='reverse-key':assert t.key()==0 and t.wire()==b'R'
   else:t.call(method,limit=2000000)
   assert bytes(t.uc.mem_read(t.symbols['screen_attribute_cells'],2000))==shifted_flags,(top,bottom,method,pattern,'flags')
@@ -110,6 +110,6 @@ def main():
   assert t.get('ansi_parameters')==32767
   assert (t.get('screen_cursor_row'),t.get('screen_cursor_column'))==((5,17) if keyboard=='delete' else (11,10))
   cases+=1;prewire_cases+=1
- report=dict(passed=True,cases=cases,consumer_cases=consumer_cases,prewire_cases=prewire_cases,geometry_errors=geometry_errors,binary_sha256=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),reference_sha256=hashlib.sha256((ROOT/'standalone/check_attribute_repair.py').read_bytes()).hexdigest(),original_inputs=[],scope='Actual application RET2 resident bridge, checked far repair and real coordinate/default/previous/video dependencies. Full flag/value guards and video, cursor/DS=SS/callee ABI, malformed geometry before mutation; actual scroll, wrapped reverse Tab and repeated parser/keyboard DCH consumers. Invalid repair backing/geometry rejects keys before wire/cursor/parser/video/plane changes. Native whole-plane metadata shift with partial video regions is characterized. No viewport or physical hardware compatibility claim.')
+ report=dict(passed=True,cases=cases,consumer_cases=consumer_cases,prewire_cases=prewire_cases,geometry_errors=geometry_errors,binary_sha256=hashlib.sha256((ROOT/'build/terminal/TERMINAL.EXE').read_bytes()).hexdigest(),checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),reference_sha256=hashlib.sha256((ROOT/'standalone/check_attribute_repair.py').read_bytes()).hexdigest(),original_inputs=[],scope='Actual application RET2 resident bridge, checked far repair and real coordinate/default/previous/video dependencies. Full flag/value guards and video, cursor/DS=SS/callee ABI, malformed geometry before mutation; actual scroll, wrapped reverse Tab and repeated parser/keyboard DCH consumers. Invalid repair backing/geometry rejects keys before wire/cursor/parser/video/plane changes. Live scroll metadata and repair stay inside the requested video region. No viewport or physical hardware compatibility claim.')
  (OUT/'live-checks.json').write_text(json.dumps(report,indent=2)+'\n');print('Live attribute repair',cases,'cases PASS')
 if __name__=='__main__':main()

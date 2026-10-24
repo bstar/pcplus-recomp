@@ -497,6 +497,25 @@ def inspect_terminal_memory(binary,map_path):
  if any(c['name']=='ASPECT_CODE' for c in code_segments):
   aspect_code=next(c for c in code_segments if c['name']=='ASPECT_CODE')
   aspect_seg=aspect_code['relative_segment']
+  if 'terminal_rectangle_far'in symbols:
+   prefix=b'\x55\x89\xe5'+b''.join(b'\xff\x76'+bytes([n])for n in (10,8,6,4))
+   entry=address('csi_service_2530');target=symbols['terminal_rectangle_far']
+   assert raw('csi_service_2530',24)==prefix+b'\x9a'+struct.pack('<HH',target[1],target[0])+b'\x5d\xc2\x08\x00'
+   assert entry+len(prefix)+3 in relocations and target[0]==aspect_seg
+   prefix=b'\x55\x89\xe5'+b''.join(b'\xff\x76'+bytes([n])for n in (12,10,8,6))
+   near_call('terminal_rectangle_native_far','terminal_rectangle_native',prefix=prefix,suffix=b'\x5d\xca\x08\x00')
+   lo=address('scroll_up');hi=address('scroll_up_bridge_end');code=image[start+lo:start+hi]
+   target=symbols['terminal_scroll_up_far'];call=b'\x9a'+struct.pack('<HH',target[1],target[0])
+   assert code.count(call)==1 and lo+code.index(call)+3 in relocations and target[0]==aspect_seg
+   assert symbols['terminal_region_metadata_move'][0]==symbols['attribute_repair_plane_admit'][0]==aspect_seg
+   extra['scroll_field_bridge_pairs_verified']=3
+   target=symbols['line_preflight_far'];call=b'\x9a'+struct.pack('<HH',target[1],target[0])
+   resident=image[start+near_code['relative_segment']*16:start+near_code['relative_segment']*16+near_code['bytes']]
+   sites=[i for i in range(len(resident)-4)if resident[i:i+5]==call]
+   assert len(sites)==2 and target[0]==aspect_seg
+   assert all(near_code['relative_segment']*16+i+3 in relocations for i in sites)
+   extra['line_preflight_far_calls_verified']=2
+
   if 'character_wide_edit_far'in symbols:
    assert symbols['character_wide_edit_far'][0]==symbols['character_wide_end'][0]==aspect_seg
    near_call('attribute_geometry_admit_far','attribute_geometry_admit')
@@ -580,7 +599,7 @@ def inspect_terminal_memory(binary,map_path):
    encoded=bytes([opcode])+struct.pack('<HH',symbols[target][1],symbols[target][0])
    matches=[i for i in range(len(source_bytes)-4) if source_bytes[i:i+5]==encoded and source_start+i+3 in relocations]
    assert len(matches)==wanted,(target,'line controller relocated far references')
-  for name,wanted in (('terminal_line_insert_far',1),('terminal_line_delete_far',2)):
+  for name,wanted in (('terminal_line_insert_far',2),('terminal_line_delete_far',3)):
    assert symbols[name][0]==aspect_seg and symbols[name][1]<aspect_code['bytes'],(name,'line-plane far owner')
    line_calls(controller,controller_start,name,wanted);line_references+=wanted
   aspect_lo=aspect_seg*16

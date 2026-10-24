@@ -6,7 +6,8 @@ import test_connection_dos as harness
 ROOT=harness.ROOT
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--hidden-status',action='store_true');p.add_argument('--character-edits',action='store_true');p.add_argument('--field-edits',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--hidden-status',action='store_true');p.add_argument('--character-edits',action='store_true');p.add_argument('--field-edits',action='store_true');p.add_argument('--scroll-fields',action='store_true');a=p.parse_args()
+ assert not a.scroll_fields or a.field_edits
  binary=a.terminal.resolve();manifest=json.loads((binary.parent/'manifest.json').read_text())
  assert manifest['native_reset_transaction']and sha(binary)==manifest['binary_sha256']
  for name,digest in manifest['sources'].items():assert sha(ROOT/name)==digest,name
@@ -108,6 +109,36 @@ def main():
  inc word [cs:field_seeded]
 .ordinary_observe:
 """.replace('FIELD_CELLS',str(cells)))
+  if a.scroll_fields:
+   text=text.replace('.observe:\n',""".observe:
+ cmp word [cs:field_seeded],1
+ jne .field_activation
+ cmp dx,0x1411
+ jne .field_activation
+ cmp word [SCREEN_CURSOR_ROW],20
+ jne .field_activation
+ cmp word [SCREEN_CURSOR_COLUMN],17
+ jne .field_activation
+ mov ax,[cs:live_call+2]
+ sub ax,LIVE_CODE_REL
+ add ax,DGROUP_REL
+ mov bx,ds
+ cmp ax,bx
+ jne .field_activation
+ mov word [SCREEN_ATTRIBUTE_CHECKS],1
+ inc word [cs:field_seeded]
+.field_activation:
+""",1)
+   text=text.replace(' mov byte [SCREEN_ATTRIBUTE_CELLS+5*132+17],0x80',""" mov di,ERASE_ATTRIBUTE_VALUES+5*132+17
+ mov al,0x1e
+ mov cx,FIELD_CELLS-5*132-17
+ rep stosb
+ mov di,ERASE_ATTRIBUTE_VALUES+5*132+80
+ mov al,0x2a
+ mov cx,FIELD_CELLS-5*132-80
+ rep stosb
+ mov byte [SCREEN_ATTRIBUTE_CELLS+5*132+17],0x80""".replace('FIELD_CELLS',str(cells)),1)
+
 
  text=text.replace('cmp dx,0x184f','cmp dx,0x174f')
  text=text.replace('mov ax,[SCREEN_CURSOR_WRAP]','mov ax,[SCREEN_VIEWPORT_ACTIVE]')
@@ -146,14 +177,31 @@ def main():
    else:expected[first:last]=expected[first+n:last]+[0x0720]*n
  payload+=b'\x1b['+str(rows).encode()+b';132HZ\x1b[6n\x1b[1;16H\x1b[6n'
  expected[cells-1]=0x75a
+ if a.scroll_fields:
+  for line,char in [(6,66),(7,67)]:
+   payload+=b'\x1b['+str(line+1).encode()+b';1H'+bytes([char])*132
+   expected[line*132:(line+1)*132]=[0x700|char]*132
+  payload+=b'\x1b[1;16H\x1b[6n'
+
  field_expected=None
  if a.field_edits:
   from check_width_fields_live import reference
   flags=bytearray(cells);flags[5*132+17]=0x80;flags[5*132+80]=0x81
   values=bytearray([0x17])*cells
+  if a.scroll_fields:
+   values[5*132+17:]=bytes([0x1e])*(cells-5*132-17)
+   values[5*132+80:]=bytes([0x2a])*(cells-5*132-80)
   expected,flags,values,_,_=reference(expected,flags,values,rows,5,17,1,False,3,1,0)
   field_expected=(bytes(flags),bytes(values))
   payload+=b'\x1b[22;18H\x1b[6;18H\x1b[3P\x1b[1;16H\x1b[6n'
+  if a.scroll_fields:
+   from check_scroll_fields_live import reference as scroll_reference
+   expected,flags,values,_=scroll_reference(expected,flags,values,132,rows,5,7,False,0x17,False)
+   expected,flags,values,_=scroll_reference(expected,flags,values,132,rows,5,7,True,0x17,False)
+   expected,flags,values,_,_=reference(expected,flags,values,rows,6,17,1,False,2,1,1)
+   field_expected=(bytes(flags),bytes(values))
+   payload+=b'\x1b[21;18H\x1b[6;8r\x1b[8;18H\x1bD\x1b[6;18H\x1bM\x1b[7;18H\x1b[2P\x1b[1;'+str(rows).encode()+b'r\x1b[1;16H\x1b[6n'
+
 
  source=Path(harness.__file__).read_text();needle="out=ROOT/'build/connection-dos'/name";assert source.count(needle)==1
  scope=dict(harness.__dict__);scope['LABEL_ROOT']=out
@@ -178,13 +226,13 @@ def main():
   cursor_and_geometry=state[6]==1 and state[8:11]==(cells,0,15),
   unmodified_terminal=sha(short/'TERMINAL.EXE')==sha(binary)==manifest['binary_sha256'])
  if a.field_edits:
-  checks.update(actual_field_fixture_reached=struct.unpack_from('<H',raw,12220)[0]==1,
+  checks.update(actual_field_fixture_reached=struct.unpack_from('<H',raw,12220)[0]==(2 if a.scroll_fields else 1),
    actual_field_flags=raw[12222:12222+cells]==field_expected[0],
    actual_field_values=raw[16318:16318+cells]==field_expected[1])
  report=dict(passed=all(checks.values()),checks=checks,binary_sha256=sha(binary),state=list(state),transaction_status=struct.unpack_from('<H',raw,12216)[0],
   sources=manifest['sources'],checker_sha256=sha(Path(__file__)),observer_base_sha256=sha(observer),
   artifacts={str(path.relative_to(ROOT)):sha(path)for path in out.rglob('*')if path.is_file()},original_inputs=[],
-  hidden_status_fixture=a.hidden_status,content_rows=rows,character_edits_fixture=a.character_edits,field_edits_fixture=a.field_edits,scope=__doc__+' Real startup25-row geometry; optional fixture hides status. IF-enabled far call after the BIOS operation, not a peer width request. Actual UART/parser/output/pan/CPR and hardware restoration follow. No failure injection, private-context IRQ timing, general UI/child or physical acceptance claimed.')
+  hidden_status_fixture=a.hidden_status,content_rows=rows,character_edits_fixture=a.character_edits,field_edits_fixture=a.field_edits,scroll_fields_fixture=a.scroll_fields,scope=__doc__+' Real startup25-row geometry; optional fixture hides status. IF-enabled far call after the BIOS operation, not a peer width request. Actual UART/parser/output/pan/CPR and hardware restoration follow. No failure injection, private-context IRQ timing, general UI/child or physical acceptance claimed.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n');print(('PASS'if report['passed']else'FAIL')+' DOS live transaction '+json.dumps(checks))
  return 0 if report['passed']else 1
 if __name__=='__main__':raise SystemExit(main())

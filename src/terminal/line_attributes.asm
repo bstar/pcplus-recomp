@@ -117,15 +117,33 @@ line_edit:
 ; DI/ES and returns DF clear. It neither polls nor restores UART/owner state.
 global terminal_line_metadata_move
 terminal_line_metadata_move:
+ push bx
+ push cx
+ mov bx,[screen_cursor_row]
+ mov cx,[screen_last_row]
+ call terminal_region_metadata_move
+ pop cx
+ pop bx
+ ret
+
+; AX0 insert/1 delete, DL fill, BX first row, CX final row. The caller owns
+; geometry admission. This shared kernel never changes cursor/scroll globals.
+global terminal_region_metadata_move
+terminal_region_metadata_move:
  push bp
  mov bp,sp
- sub sp,4
+ sub sp,10
  push bx
  push si
  push di
  push es
  mov [bp-2],ax
  mov [bp-4],dx
+ mov [bp-8],bx
+ mov [bp-10],cx
+ mov ax,bx
+ mul word [screen_attribute_row_bytes]
+ mov [bp-6],ax
  push ds
  pop es
  cld
@@ -133,10 +151,10 @@ terminal_line_metadata_move:
  call .shift
  mov si,[erase_attribute_values_base]
  call .shift
- mov di,[screen_attribute_offset]
+ mov di,[bp-6]
  cmp word [bp-2],0
  je .fill
- mov ax,[screen_last_row]
+ mov ax,[bp-10]
  mul word [screen_attribute_row_bytes]
  mov di,ax
 .fill:
@@ -159,10 +177,10 @@ terminal_line_metadata_move:
  ret
 .shift:
  ; SI names one admitted near plane. Overlap is intentional and directional.
- add si,[screen_attribute_offset]
+ add si,[bp-6]
  mov di,si
- mov ax,[screen_last_row]
- sub ax,[screen_cursor_row]
+ mov ax,[bp-10]
+ sub ax,[bp-8]
  mov dx,[screen_attribute_row_bytes]
  mul dx
  mov cx,ax

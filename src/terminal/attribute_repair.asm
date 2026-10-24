@@ -78,6 +78,8 @@ attribute_repair_checked_far:
 .invalid:
  call far repair_abort_far
  ; The resident abort unwinds the application. This cannot return normally.
+global attribute_repair_plane_admit
+attribute_repair_plane_admit equ attribute_repair_admit.plane
 attribute_repair_admit_far:
  push bx
  push cx

@@ -104,3 +104,7 @@ Width changes while field modes are active, protected scrolling, full keyboard/
 UI/ASPECT/modal composition, and a width-changing BBS session remain open.
 The card package has not been changed. Physical modem and machine acceptance
 remain unverified.
+
+The later [scroll checkpoint](SCROLL_FIELDS.md) owns bounded full-width wrapped
+scrolling and repeats the DOS character/field workflow before and after scrolling.
+The identities and counts above describe this earlier character checkpoint.
