@@ -82,7 +82,8 @@ async def run(args):
  for offset in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+offset),hex(base+offset))
  (output/'sampler.asm').write_text(sampler)
  subprocess.run(['nasm','-f','bin',str(output/'sampler.asm'),'-o',str(output/'SNAP.COM')],check=True)
- modem=Modem('127.0.0.1',args.port,output,soft=args.flow=='SOFT',baud=args.baud,packet_delay_ms=args.packet_delay_ms)
+ modem=Modem('127.0.0.1',args.port,output,soft=args.flow=='SOFT',baud=args.baud,packet_delay_ms=args.packet_delay_ms,
+             raw=getattr(args,'raw_upstream',False))
  server=await asyncio.start_server(modem.accept,'127.0.0.1',0)
  port=server.sockets[0].getsockname()[1]
  prefix=('p1000 ' if automatic else 'p1000 a t d enter ')
@@ -172,6 +173,7 @@ exit
  result['server_log']=str(server_log) if server_log is not None else None
  result['server_endpoint']={'address':'127.0.0.1','port':args.port}
  result['modem_packet_delay_ms']=args.packet_delay_ms
+ result['raw_upstream']=getattr(args,'raw_upstream',False)
  result['meta_actions']={'sha256':hashlib.sha256(meta).hexdigest(),'file':'ACTIONS.KEY'} if meta is not None else None
  result['keyboard_profile']={'sha256':hashlib.sha256(keymap).hexdigest(),'file':'BOARD.KBD'} if keymap is not None else None
  result['configuration']={'automatic_dial':automatic,'mode':'explicit synthetic partial PRM' if fixture is not None else 'CLI serial options','command':command,'sha256':hashlib.sha256(fixture).hexdigest() if fixture is not None else None,'directory_entry':args.entry if directory_fixture is not None else None,'directory_browser':args.directory_browser,'directory_sha256':hashlib.sha256(directory_fixture).hexdigest() if directory_fixture is not None else None}
@@ -189,6 +191,7 @@ if __name__=='__main__':
  p.add_argument('--meta-fixture',type=Path,help='Load an explicit source-owned ten-record KEY fixture with /T')
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')
+ p.add_argument('--raw-upstream',action='store_true',help='Upstream is an explicit serial-side bridge; leave Telnet ownership to that bridge')
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')
  p.add_argument('--directory-browser',action='store_true',help='Choose the fixture entry through native DOS browser keys')
  p.add_argument('--entry',type=int,choices=range(1,201),default=3)

@@ -1,0 +1,238 @@
+{
+  "kind": "stock-enigma-actual-proxy-software-checkpoint",
+  "date": "2026-10-25",
+  "software_candidate_passed": true,
+  "physical_acceptance": false,
+  "card_written": false,
+  "control_failure_retained": true,
+  "cases": [
+    {
+      "label": "installed-proxy-stock-off-20261025",
+      "semantic_passed": false,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": false,
+        "insert_toggled_overtype": false,
+        "home_moves_before_marker": false
+      },
+      "serial": {
+        "com": 3,
+        "baud": 19200,
+        "line": "8N1",
+        "flow": "HARD",
+        "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.",
+        "irq": 5
+      },
+      "input_sequence_timeout_ms": 0,
+      "input_byte_delay_ms": 2,
+      "binary_sha256": "e096c53b802df1561ce4e9a135cd091a7ba8edb03fe24822341061e8fac91a9b",
+      "proxy_sources": {
+        "config.js": "3590ff925e88ab482d6b9466af607597280c6de0e9f2c4ed63250cd132ad2804",
+        "src/telnet/TelnetProxy.js": "683fdb388357c3f23d515f19a819d5544dcf47d08487917f2af151ca39fd1dba",
+        "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+        "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+      },
+      "artifacts": {
+        "result.json": "848eb9987264ebc377b87208f2fb4b89704c8d300f6d1c618d7b591e21919344",
+        "semantic-audit.json": "d52ddc06baad9cb206464901c591ba141a93d726eff80a89ef55b300d957d7c4",
+        "SCREEN.BIN": "abc19c366e9a90ef14584d6ad711b1bd3a705e4a38e121918ded3143f8e2d828",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial-received.bin": "ec880259d0d8d678b1c3fe81a188b82228a886ccbb1cd81403b91e249886db8f",
+        "display.bin": "bcd3119859a5edafb3913eb56f8c83fd9d47dbf3f87966e9f5c5d57843c5628a",
+        "server-session.jsonl": "b12f1d3ad422aeab0a003e97abb93fd74f966c2b480540d2283948a53bebcaf3",
+        "proxy/ready.json": "5d733b67ea964a00a02c2f638af5d84722c63d2a5538308249c61f112e667cee",
+        "proxy/1-closed.json": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452",
+        "proxy/1-serial-input.bin": "763a8f74b9d4038d3a0e110aab1b2c58feb3edafe7223889ab0945e87ebac152",
+        "proxy/1-serial-output.bin": "f4bc68bd4890aded5825c0edde0ac4e00b98e470f3bc3141308052924dcfb72b"
+      }
+    },
+    {
+      "label": "installed-proxy-stock-on-20261025",
+      "semantic_passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": true,
+        "home_moves_before_marker": true
+      },
+      "serial": {
+        "com": 3,
+        "baud": 19200,
+        "line": "8N1",
+        "flow": "HARD",
+        "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.",
+        "irq": 5
+      },
+      "input_sequence_timeout_ms": 250,
+      "input_byte_delay_ms": 2,
+      "binary_sha256": "e096c53b802df1561ce4e9a135cd091a7ba8edb03fe24822341061e8fac91a9b",
+      "proxy_sources": {
+        "config.js": "3590ff925e88ab482d6b9466af607597280c6de0e9f2c4ed63250cd132ad2804",
+        "src/telnet/TelnetProxy.js": "683fdb388357c3f23d515f19a819d5544dcf47d08487917f2af151ca39fd1dba",
+        "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+        "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+      },
+      "artifacts": {
+        "result.json": "728218de1207dd9eb43f09c6acbec7700fc964f319e0bd404c4742d00e9a4c78",
+        "semantic-audit.json": "7780b7b100a89270004e768b924d9d2c15e5eb6850862bae762e673a18564700",
+        "SCREEN.BIN": "51df36cfab8b83cd62e2cd111149cbdde1107b33b37bcc3c6407ae789313d714",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial-received.bin": "3a23fe8047339621743afc7bae7cfa316b8fc5d5e5806bc84d68846703c4c43d",
+        "display.bin": "c8e7ed78136e78b744f5cd9ddbc144c98944b99d8074ccefc81ffa6e5d355dbd",
+        "server-session.jsonl": "75bc90de96b482ff765eb584cfb5fd98f610d9771b20739e9e8d1d50a0e25c52",
+        "proxy/ready.json": "f20cf168141897f9645871764ecd6773a50067af3a11ec89dfc7ae72a0281191",
+        "proxy/1-closed.json": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452",
+        "proxy/1-serial-input.bin": "763a8f74b9d4038d3a0e110aab1b2c58feb3edafe7223889ab0945e87ebac152",
+        "proxy/1-serial-output.bin": "c8e7ed78136e78b744f5cd9ddbc144c98944b99d8074ccefc81ffa6e5d355dbd"
+      }
+    },
+    {
+      "label": "composed-proxy-stock-editor-20261025",
+      "semantic_passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": true,
+        "home_moves_before_marker": true
+      },
+      "serial": {
+        "com": 3,
+        "baud": 19200,
+        "line": "8N1",
+        "flow": "HARD",
+        "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.",
+        "irq": 5
+      },
+      "input_sequence_timeout_ms": 250,
+      "input_byte_delay_ms": 2,
+      "binary_sha256": "e096c53b802df1561ce4e9a135cd091a7ba8edb03fe24822341061e8fac91a9b",
+      "proxy_sources": {
+        "config.js": "3590ff925e88ab482d6b9466af607597280c6de0e9f2c4ed63250cd132ad2804",
+        "src/telnet/TelnetProxy.js": "8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628",
+        "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+        "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+      },
+      "artifacts": {
+        "result.json": "c0ddf5e47924609a42dc837dc3a00cf7464f1c8631b22ec33e662d6aed4f5c50",
+        "semantic-audit.json": "849e58f851a6baa0305738e222a147e45487a89d0eab83b35b91ae3a82869552",
+        "SCREEN.BIN": "51df36cfab8b83cd62e2cd111149cbdde1107b33b37bcc3c6407ae789313d714",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial-received.bin": "2b6e4e7d562704f484b20800bbbbcb594bd5360da1209987eb7edc8d88835f1f",
+        "display.bin": "f5b091034f06537d3151a2fe4d10d942f8224895a3a728bdd294bc44ca254e1c",
+        "server-session.jsonl": "3d13ecf09620ae9f24e487311d70fa228f4b14ee7572dce6b9a997ca24ac4a58",
+        "proxy/ready.json": "76b6737f6f75f533c949b23e71dc83e0022869fa6fcbd39b1779ce8fa9ba3804",
+        "proxy/1-closed.json": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452",
+        "proxy/1-serial-input.bin": "763a8f74b9d4038d3a0e110aab1b2c58feb3edafe7223889ab0945e87ebac152",
+        "proxy/1-serial-output.bin": "f5b091034f06537d3151a2fe4d10d942f8224895a3a728bdd294bc44ca254e1c",
+        "proxy-integration.json": "89bfa026a778a48e2eea38d4e8f0197618ac71bccaa1cded109359c612c81d25"
+      }
+    }
+  ],
+  "pressure": {
+    "passed": true,
+    "assertions": 9589,
+    "stock_defects": {
+      "oversize_throws": true,
+      "write_pressure_not_returned": true,
+      "session_swallows_oversize_failure": true
+    },
+    "loopback": {
+      "payload_size": 16777216,
+      "payload_sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1",
+      "drain_events": 1,
+      "retained_payload_when_paused": 36630,
+      "node_wire_bytes_when_paused": 66261
+    }
+  },
+  "telnet": {
+    "passed": true,
+    "assertions": 1220,
+    "stockDefectsObserved": {
+      "dimensionsReadFromWrongConfigSection": true,
+      "negotiationLeaksToSerial": true,
+      "literalIACNotEscaped": true,
+      "singleByteMenuEscapeConsumesPayload": true,
+      "coalescedSameEscapeStaysOnline": true
+    },
+    "candidate": [
+      "all 256 bytes at every two-chunk split and singleton chunks",
+      "fragmented Telnet negotiation, TTYPE and escaped NAWS",
+      "duplicate/crossed offers and refusal",
+      "NVT CR policy and bounded malformed/oversize subnegotiation",
+      "default binary-safe forwarding and explicit chunk-independent escape opt-in",
+      "remote close/menu/reconnect with stale-socket isolation",
+      "real loopback TCP full-byte duplex"
+    ]
+  },
+  "framer": {
+    "passed": true,
+    "checks": {
+      "complete_keys_DA_CPR_all_splits_and_1200_baud_pacing": true,
+      "plain_input_immediate_and_lone_escape_deadline": true,
+      "trickle_does_not_extend_absolute_deadline": true,
+      "invalid_oversize_and_repeated_escape_preserve_bytes": true,
+      "all_256_bytes_all_two_part_splits_and_singletons": true,
+      "close_cancels_pending_and_rejects_later_bytes": true,
+      "invalid_bounds_rejected": true,
+      "actual_proxy_default_unchanged": true,
+      "actual_proxy_opt_in_assembles_key": true,
+      "actual_proxy_binary_codec_preserves_every_byte": true,
+      "actual_proxy_close_does_not_leak_pending_to_reconnect": true
+    }
+  },
+  "aliases_test_passed": true,
+  "component_log_sha256": {
+    "merged-pressure.log": "435623df9f12defac0fe8de72ceb330bef1006d6ec4b3dcbdf045e82487f1f66",
+    "merged-telnet.log": "cabe5339a945d707dd7f6a15854239a602bba9b6344fca38e96de7a3cdc99379",
+    "merged-framing.log": "96d486678fef4094d468fd680ed42d77862caaca7039459bd9446839ae249cf0",
+    "merged-aliases.log": "847f6df4454779c8c96e5b6137119100b79060bb2cc4cc891b302185a7c39e6f"
+  },
+  "deployment": {
+    "installed_sha256": {
+      "src/backends/PjsipBackend.js": "99e3c39ae8aacc48a630c1361146b8b6a0e82639c4fcb54ab61ea8c615eb9099",
+      "src/backends/ControlWriter.js": "e96a0e54e4ed6a446403882afcc9b790f62294f9dc49b56197f135d6f2a78ec1",
+      "src/session/CallSession.js": "164b2f6394ff77acd1829fcae236745509d63b50b373f7ebb2d20a35309f712b",
+      "src/telnet/TelnetProxy.js": "8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628"
+    },
+    "input_sequence_timeout_ms": 250,
+    "idle_guard": {
+      "Hook State:": "On",
+      "Call 1 State:": "Idle"
+    },
+    "modem_profile_changed": false,
+    "VM_image_changed": false,
+    "service_ready_observed": true
+  },
+  "harness_sources": {
+    "lab/bbs/test_synthmodem_proxy_dos.py": "5529c03444db2b0e95677b8852e97feae5ff775ee027ab6eef4671bac4c75f80",
+    "lab/bbs/synthmodem_proxy_serial.js": "8c9d1f529693989550d9607ffa78ed820f70e892124a055191250ee5ad0dbbca",
+    "lab/bbs/test_dos.py": "056a44614ea75d7e697a8f24d19ae167909ab957a113c9eaa9cc8b461f23f7ae",
+    "lab/bbs/modem.py": "c6e82301f326c4378eb29e57dac87241cb71cba344e83330b8c38762be79370f",
+    "lab/bbs/check_editor_dos.py": "6857d87a4e476d5237ad2b03eef32180f415901034b426dc84a2d6c203d30783",
+    "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
+    "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649"
+  },
+  "limits": [
+    "Synthetic Hayes/nullmodem, not an analog call or physical CTS timing.",
+    "Paced input deliberately splits bytes; TCP write boundaries are not guaranteed.",
+    "Control accidentally saved a synthetic post; both passing sessions saved no post.",
+    "Large-output test uses actual Node methods and TCP with modeled VM/SIP resources.",
+    "The unchanged VM-side C helper and actual modem data path require further acceptance.",
+    "No transfer, multiline renderer or full application/menu-parity closure."
+  ]
+}

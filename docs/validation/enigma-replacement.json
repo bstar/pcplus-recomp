@@ -1,0 +1,199 @@
+{
+  "kind": "enigma-replacement-software-checkpoint",
+  "date": "2026-10-25",
+  "software_checks_passed": true,
+  "physical_acceptance": false,
+  "card_written": false,
+  "bridge": {
+    "installed_sha256": {
+      "src/telnet/TelnetProxy.js": "683fdb388357c3f23d515f19a819d5544dcf47d08487917f2af151ca39fd1dba",
+      "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+      "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a"
+    },
+    "transport_assertions": 1220,
+    "aliases_test_passed": true,
+    "framer_component_checks_passed": true,
+    "loopback": {
+      "passed": true,
+      "baseline": {
+        "timeout_ms": 0,
+        "application_bytes": 259,
+        "echo_bytes": 259,
+        "upstream_exact": true,
+        "downstream_exact": true,
+        "Home_delivery_events": [
+          {
+            "hex": "1b"
+          },
+          {
+            "hex": "5b"
+          },
+          {
+            "hex": "48"
+          }
+        ],
+        "Home_in_one_actual_TCP_delivery": false
+      },
+      "candidate": {
+        "timeout_ms": 250,
+        "application_bytes": 259,
+        "echo_bytes": 259,
+        "upstream_exact": true,
+        "downstream_exact": true,
+        "Home_delivery_events": [
+          {
+            "hex": "1b5b48"
+          }
+        ],
+        "Home_in_one_actual_TCP_delivery": true
+      },
+      "scope": "Actual local TCP/codec readback of paced Home and all256 bytes in both directions. Local event boundaries are observed, never guaranteed for arbitrary networks. No modem, DOS, BBS editor or physical hardware claim."
+    },
+    "input_framing_enabled": false,
+    "idle_guard": {
+      "Hook State:": "On",
+      "Call 1 State:": "Idle"
+    },
+    "modem_profile_changed": false,
+    "service_ready_observed": true
+  },
+  "package": {
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+      "README.TXT": "2a6e820f0da22c47cfdbf9a096a4e3ffdba446a9ed48eab595be4a8074fb323a",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "e096c53b802df1561ce4e9a135cd091a7ba8edb03fe24822341061e8fac91a9b",
+      "VERSION.TXT": "ee7b9ab9e8a4a841ae3211601de7cf3413e3092ca3e27d55452395b117bcd909",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "original_inputs": [],
+    "manifest_sha256": "311d6f28abcad66fd136a6e1ccaaadc7fd05456ac780147c49f85f46adc536fd",
+    "launchers": [
+      {
+        "launcher": "START",
+        "port": 3,
+        "io_base": 1000,
+        "irq": 5,
+        "cpu": "8086",
+        "checks": [
+          "launcher returns to DOS",
+          "PCPLUS environment restored",
+          "COM3/PIC/IRQ vectors restored",
+          "private PRM/DIR/XLT unchanged",
+          "packaged binaries unchanged",
+          "nested DOS source compilation produces exact ASX",
+          "script writes expected result"
+        ]
+      },
+      {
+        "launcher": "SETUP",
+        "port": 3,
+        "io_base": 1000,
+        "irq": 5,
+        "cpu": "8086",
+        "checks": [
+          "launcher returns to DOS",
+          "PCPLUS environment restored",
+          "COM3/PIC/IRQ vectors restored",
+          "private PRM/DIR/XLT unchanged",
+          "packaged binaries unchanged",
+          "actual magenta splash captured by independent timer"
+        ]
+      }
+    ]
+  },
+  "editor": {
+    "binary_sha256": "e096c53b802df1561ce4e9a135cd091a7ba8edb03fe24822341061e8fac91a9b",
+    "serial": {
+      "com": 3,
+      "baud": 19200,
+      "line": "8N1",
+      "flow": "HARD",
+      "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.",
+      "irq": 5
+    },
+    "checks": {
+      "DOS_harness": true,
+      "typed_draft_sent": true,
+      "all_exercised_keys_emitted": true,
+      "experimental_editor_entered": true,
+      "no_post_saved": true,
+      "insert_toggled_overtype": true,
+      "home_moves_before_marker": true
+    },
+    "observed_key_wire": {
+      "home": true,
+      "end": true,
+      "insert": true,
+      "delete": true,
+      "page_up": true,
+      "page_down": true,
+      "tab": true,
+      "delete_line_ctrl_y": true
+    },
+    "actual_screen_checks": {
+      "draft_UNSAVED": true,
+      "cursor_OVR_01_08": true
+    },
+    "stock_server": false,
+    "screen_sha256": "51df36cfab8b83cd62e2cd111149cbdde1107b33b37bcc3c6407ae789313d714",
+    "audit_sha256": "ec732ef260e59dc9f3657c915440daadd7821da1d6cd4c6360ccb92a416e9286"
+  },
+  "renderer": {
+    "component": {
+      "passed": true,
+      "binary_sha256": "4823cf56b1800c50e784d5718963e214ad943ad1403c214a85124cd3cbd8fc5f",
+      "cases": [
+        {
+          "case": "all-256-character-attribute-values-and-cursor-offsets",
+          "passed": true
+        },
+        {
+          "case": "deferred-wrap-and-autowrap-disabled",
+          "passed": true
+        },
+        {
+          "case": "immediate-wrap-and-bottom-with-scrolling-disabled",
+          "passed": true
+        },
+        {
+          "case": "british-pound-graphics-and-configured-translation-paths",
+          "passed": true
+        },
+        {
+          "case": "lineflag-two-cell-output-through-real-fill-and-packed-writers",
+          "passed": true
+        },
+        {
+          "case": "unrecovered-mode-and-attribute-boundaries-fail-fast",
+          "passed": true
+        },
+        {
+          "case": "bottom-margin-deferred-wrap-through-real-scroll-service",
+          "passed": true
+        }
+      ],
+      "scope": "Actual recovered highlevel character/cursor/video instructions with host-supplied configuration and glyph-map fixtures; unresolved services trap."
+    },
+    "actual_dos": {
+      "passed": true,
+      "returncode": 0,
+      "binary_sha256": "4823cf56b1800c50e784d5718963e214ad943ad1403c214a85124cd3cbd8fc5f",
+      "scope": "Source-only DOS executable checks actual high-level renderer/cell writes/cursor advancement/deferred wrap in DOSBox-X; no original executable or modem."
+    }
+  },
+  "local_sources": {
+    "standalone/test_special_package_dos.py": "34b1546f7f5c9c01da85f9fc48ea0c070d03b47a298a52c8f7c9efd2483285cf",
+    "standalone/prepare_boca_profile.py": "9c9a1ec4f650fea36178fd16be6ce913bc47f329cef67ecb82f9a2c4a7138666"
+  },
+  "limits": [
+    "Editor uses isolated corrected ENiGMA decoder, not the live board.",
+    "DOSBox nullmodem holds CTS ready; no physical flow timing claim.",
+    "No Boca/SPA2102 call or transfer repeated in this checkpoint.",
+    "Optional input framing remains disabled; TCP event boundaries are not guaranteed.",
+    "No claim of complete original UI parity or perfect universal ANSI rendering."
+  ]
+}

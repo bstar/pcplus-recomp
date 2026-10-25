@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False,irq=None):
+def run(package, out, setup=False, splash_only=False,irq=None,com=2):
     manifest = json.loads((package / 'manifest.json').read_text())
     assert manifest['card_written'] is False
     for name, digest in manifest['sources'].items():
@@ -31,11 +31,14 @@ def run(package, out, setup=False, splash_only=False,irq=None):
     app = drive / 'PCPLUSSE'
     shutil.copytree(package / 'PCPLUSSE', app)
     raw = bytearray(image())
-    struct.pack_into('<H', raw, 0, 1)  # The card's selected COM2.
+    assert com in (1,2,3,4)
+    base=(0x3f8,0x2f8,0x3e8,0x2e8)[com-1]
+    struct.pack_into('<H', raw, 0, com-1)
+    struct.pack_into('<H', raw, 0x174+2*(com-1), base)
     struct.pack_into('<HH', raw, 0x4e4, 8, 4)
     if irq is not None:
         assert irq in (3,4,5,7)and manifest.get('experimental_custom_irq')
-        struct.pack_into('<H',raw,0x186,irq)
+        struct.pack_into('<H',raw,0x184+2*(com-1),irq)
     fixtures = {'PCPLUS.PRM': bytes(raw), 'PCPLUS.XLT': bytes(range(256)),
                 'PCPLUS.DIR': b'PRIVATE-DIRECTORY-PRESERVATION-SENTINEL'}
     # No directory selector is requested; a local dialing file is not opened.
@@ -48,7 +51,7 @@ def run(package, out, setup=False, splash_only=False,irq=None):
     (app / 'ACTIONS.KEY').write_bytes(actions(b'C:\\PCPLUSSE\\TEST.ASP', 0))
     sampler = SAMPLER.replace('D:\\', 'C:\\')
     for offset in (0, 1, 3, 4):
-        sampler = sampler.replace(hex(0x3f8 + offset), hex(0x2f8 + offset))
+        sampler = sampler.replace(hex(0x3f8 + offset), hex(base + offset))
     (drive / 'sample.asm').write_text(sampler)
     subprocess.run(['nasm', '-fbin', str(drive / 'sample.asm'), '-o', str(drive / 'SNAP.COM')], check=True)
     subprocess.run(['nasm', '-fbin', str(ROOT / 'standalone/special_watch.asm'),
@@ -59,7 +62,9 @@ def run(package, out, setup=False, splash_only=False,irq=None):
             'p900 enter p1500 a-z p700 escape p600 a-x' if splash_only else
             'p900 enter p1500 a-1 p6500 space p700 a-x')
     config = ('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\n'
-              'cycles=fixed 12000\n[serial]\nserial1=dummy\nserial2=dummy'+(' irq:'+str(irq)if irq is not None else '')+'\n'
+              'cycles=fixed 12000\n[serial]\n'+
+              ''.join('serial'+str(n)+'=dummy'+(' irq:'+str(irq)if n==com and irq is not None else '')+'\n'
+                      for n in range(1,5))+
               '[mixer]\nnosound=true\n[autoexec]\n@echo off\n'
               'mount c "' + str(drive) + '"\nc:\nset PCPLUS=C:\\ORIGINAL\n' +
               ('WATCH T\n' if observe else '') + 'SNAP B\nADDKEY ' + keys + '\n'
@@ -91,12 +96,12 @@ def run(package, out, setup=False, splash_only=False,irq=None):
         assert not (app / 'TEST.ASX').exists() and not (app / 'RESULT.BIN').exists()
     for leaf in PRODUCTS:
         assert sha(app / leaf) == manifest['files'][leaf]
-    result = dict(passed=True, launcher=launcher, cpu='8086', port=2, resident_observer=observe,
+    result = dict(passed=True, launcher=launcher, cpu='8086', port=com, io_base=base, resident_observer=observe,
                   irq=irq,
                   package_manifest_sha256=sha(package / 'manifest.json'),
                   package_files=manifest['files'],
                   checks=['launcher returns to DOS', 'PCPLUS environment restored',
-                          'COM2/PIC/IRQ vectors restored', 'private PRM/DIR/XLT unchanged',
+                          f'COM{com}/PIC/IRQ vectors restored', 'private PRM/DIR/XLT unchanged',
                           'packaged binaries unchanged'] + (['actual magenta splash captured by independent timer'] if observe else
                           ['nested DOS source compilation produces exact ASX', 'script writes expected result']),
                   sources={n: sha(ROOT / n) for n in ['standalone/test_special_package_dos.py',
@@ -116,11 +121,12 @@ def main():
     p.add_argument('--setup', action='store_true')
     p.add_argument('--splash-only', action='store_true')
     p.add_argument('--irq',type=int,choices=[3,4,5,7])
+    p.add_argument('--com',type=int,choices=[1,2,3,4],default=2)
     args = p.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     assert not (args.setup and args.splash_only)
-    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq)
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com)
 
 
 if __name__ == '__main__':
