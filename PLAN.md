@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[LoC.2 original-key restoration](docs/ORIGINAL_KEYS.md) now passes 29 linked
+inputs, actual DOS recording/compilation/replay, Alt-S/Alt-P settings return,
+COM3/IRQ5 package launch and stock ENiGMA editor/video checks. The ten-file
+package includes authored helper help and reproduces exactly from 744 committed
+source files. Original Alt-Z reference/pull-down layout, live Alt-D directory,
+Alt-F8 mapping and dedicated line/port UI remain next interface work; physical,
+card and full F01–F16 acceptance remain open.
+
 The current integration priority is a usable branded replacement for original
 2.01 on the Boca COM3/IRQ5 → SPA2102 → SynthModem → LoSs oF CoNtRoL route.
 [Stock ENiGMA proxy tests](docs/STOCK_ENIGMA_PROXY.md) now retain the fragmented-key
