@@ -1,0 +1,158 @@
+{
+  "kind": "workstation-vm-helper-software-checkpoint",
+  "date": "2026-10-25",
+  "software_checks_passed": true,
+  "physical_acceptance": false,
+  "card_written": false,
+  "pressure": {
+    "checks": {
+      "guest_HELLO_matches_build": true,
+      "coalesced_guest_AT_exact": true,
+      "guest_actual_mode_transition": true,
+      "forward_source_backpressured": true,
+      "reverse_service_during_forward_stall": true,
+      "forward_payload_exact": true,
+      "forward_worker_complete": true,
+      "reverse_source_backpressured": true,
+      "forward_service_during_reverse_stall": true,
+      "reverse_payload_exact": true,
+      "reverse_worker_complete": true,
+      "guest_exited_after_transport_close": true,
+      "no_worker_errors": true,
+      "workers_stopped": true
+    },
+    "forward_bytes": 16777219,
+    "reverse_bytes": 16777219,
+    "forward_sha256": "179ca3c42c75ab3e8d8f7773eef6dc6ae9c88a5c5c05047d4438eeab37b43638",
+    "reverse_sha256": "179ca3c42c75ab3e8d8f7773eef6dc6ae9c88a5c5c05047d4438eeab37b43638",
+    "helper_sha256": "fd9c7505baba91003992dabc1b1970567d967a1c1c4558183e71106a3cd7d02e",
+    "ELF_class": "ELF32 static Intel i386",
+    "Nix_build": [
+      {
+        "drvPath": "/nix/store/z15q16l3hcpa0q6amy04hgj9gr79am03-synthmodem-control-candidate-b1752e4-pcplus.drv",
+        "outputs": {
+          "out": "/nix/store/ifnbhwa0yy4w1xrfsbvxl4fawfa5mnyr-synthmodem-control-candidate-b1752e4-pcplus"
+        }
+      }
+    ],
+    "frozen_inputs": {
+      "lab/bbs/synthmodem_vm_control.py": "7eb30e96af9a7e7cd319cd645a68331c0386aa3dda3e9eba68ca5563b5b8a456",
+      "nix/flake.nix": "ac88b1a6c3fc161297577f176e2452bb8dc6231f3df0d112888c4c1d38dc41b4",
+      "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+      "tools/modem-dev": "a49712e70a969fe8b62a1fb56974eb8be6cc2959635ca7ad48efa553fd8fe110",
+      "lab/bbs/patches/synthmodem-control/control.patch": "752bfef57ec7ae4dbffa819603900e94a6b5181be6c46a3c2f91aba1e0094e4e"
+    },
+    "diagnostic_image_sha256": "e9b3bedc704825d7ab55b63d6cfc055d0a0eec4f0f8f70e88f3259eca4c939dd"
+  },
+  "production_image": {
+    "source_image_sha256": "c52f230a8b38a8e3476b4a669948e02dd615a367ab0f649251e93209fd659ead",
+    "candidate_image_sha256": "7317dd602fa2cd94c388c28afac7997e53539f1ed425ab9b916d60d318921d2f",
+    "helper_sha256": "fd9c7505baba91003992dabc1b1970567d967a1c1c4558183e71106a3cd7d02e",
+    "changed_entries": [
+      "usr/local/bin/modemd-ctrl"
+    ],
+    "added_entries": [],
+    "installed": false,
+    "helper_VM_pressure_proof_sha256": "f2b4df6d7a5b38c45d11cc643e7bafc763798afed4a357a2f05180cf051ed305"
+  },
+  "AT_checks": [
+    {
+      "command": "AT",
+      "response": "AT\r\r\nOK",
+      "ok": true
+    },
+    {
+      "command": "ATE0",
+      "response": "\r\nATE0\r\r\nOK",
+      "ok": true
+    },
+    {
+      "command": "ATI",
+      "response": "\r\nSmartLink Soft Modem\r\nOK\r\n",
+      "ok": true
+    },
+    {
+      "command": "AT+MS=?",
+      "response": "(21,22,23,122,32,132,34,103,212,90,92),(0,1),(300-56000),(300-56000)\r\nOK",
+      "ok": true
+    },
+    {
+      "command": "AT+MS=132,0,4800,14400",
+      "response": "\r\nOK",
+      "ok": true
+    },
+    {
+      "command": "AT+MS?",
+      "response": "\r\n132,0,4800,14400\r\nOK\r\n",
+      "ok": true
+    },
+    {
+      "command": "AT&E0",
+      "response": "OK\r\n",
+      "ok": true
+    },
+    {
+      "command": "AT+MS?",
+      "response": "132,0,4800,14400\r\nOK\r\n",
+      "ok": true
+    }
+  ],
+  "sip_audio": {
+    "checks": {
+      "normal_init_READY": true,
+      "actual_registrar_binding": true,
+      "helper_HELLO": true,
+      "real_modem_AT_commands": true,
+      "real_INVITE_answer": true,
+      "actual_RING": true,
+      "answer_init_accepted": true,
+      "RTP_both_directions": true,
+      "real_DSP_audio": true,
+      "silence_is_not_CONNECT": true,
+      "actual_BYE_teardown": true,
+      "resources_released": true,
+      "QEMU_stopped": true,
+      "no_errors": true
+    },
+    "profile": "v32bis",
+    "atInit": [
+      "AT&E0",
+      "AT+MS=132,0,4800,14400"
+    ],
+    "sent_packets": 300,
+    "received_packets": 304,
+    "errors": [],
+    "carrier_connections": 0
+  },
+  "deployment": {
+    "before_sha256": "c52f230a8b38a8e3476b4a669948e02dd615a367ab0f649251e93209fd659ead",
+    "after_sha256": "7317dd602fa2cd94c388c28afac7997e53539f1ed425ab9b916d60d318921d2f",
+    "idle_guard": {
+      "Hook State:": "On",
+      "Call 1 State:": "Idle"
+    },
+    "service_ready": true,
+    "changed_archive_entries": [
+      "usr/local/bin/modemd-ctrl"
+    ],
+    "DSP_unchanged": true,
+    "kernel_unchanged": true,
+    "modem_profile_changed": false
+  },
+  "artifacts_sha256": {
+    "pressure-result.json": "f2b4df6d7a5b38c45d11cc643e7bafc763798afed4a357a2f05180cf051ed305",
+    "staging.json": "967d3893be14211274a1c8ac64108ebcac877654bd05289a6c436efcfc9f3152",
+    "result.json": "c878e4458fe28cb549ab12806e442e3bf5cfcf788b98dd97f7a92da9f4af8097",
+    "node-result.json": "84a7235c0cb11005af99271a65a2bad6d5fa8dcc32b426ff169802ab22c602f4",
+    "probe.cjs": "428d4d3f47565720adc7d406afe79f920a167d6028c4afd1ab212079d2c7bfc7",
+    "runtime-isolated.js": "17337b1b271c6436664eedd61fbcc517f54b9f624f39b439cf61c574d40188b1",
+    "rtp-from-modem.bin": "b3c5a79ad7c82dc0d7a9b27cb163ed0ee9bba7e564626b053216642f7cfde42a",
+    "rtp-to-modem.bin": "2766c2d8fd83f833c52e554e24799fd363f7d6bd765cf54fe2c6720b73cb8945"
+  },
+  "generated_harness_changes": [
+    "AT probe uses candidate production image and an isolated output directory, removes intentional unsupported-command probe.",
+    "Runtime harness subclasses only host UDP binding to use 25062/21002/21003; actual backend methods and VM remain real.",
+    "Runtime V32bis initialization matches workstation AT&E0 and AT+MS=132,0,4800,14400."
+  ],
+  "scope": "Booted VM partial-I/O/duplex checks and actual modem AT/SIP/PCMU answering audio. Silence caller never establishes carrier; no physical Boca/SPA2102 data or transfer acceptance."
+}

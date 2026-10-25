@@ -1,5 +1,9 @@
 # Stock ENiGMA through SynthModem's actual proxy
 
+The subsequent [workstation VM helper update](WORKSTATION_VM_HELPER.md) adds
+the separately validated partial-I/O correction to the installed VM. References
+to an unchanged VM below describe this earlier JavaScript checkpoint.
+
 The 2026-10-25 follow-up reproduces and corrects the fragmented-key failure
 without changing the stock lab BBS. These are actual DOS8086 COM3/IRQ5 sessions
 using the branded terminal at 19200 8N1, the real SynthModem proxy and its real
