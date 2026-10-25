@@ -1,5 +1,23 @@
 # Complete DOS rebuild plan
 
+The current integration priority is a usable branded replacement for original
+2.01 on the Boca COM3/IRQ5 → SPA2102 → SynthModem → LoSs oF CoNtRoL route.
+[Stock ENiGMA proxy tests](docs/STOCK_ENIGMA_PROXY.md) now retain the fragmented-key
+counterexample beside passing actual DOS8086 login/editor/video checks through
+the real proxy. Telnet/key framing and large-output backpressure fixes are
+installed. The [Nix-built VM helper](docs/WORKSTATION_VM_HELPER.md) also passes
+16MiB in both directions under real VM backpressure, production AT/SIP/audio
+startup and cleanup; its single-entry production replacement is installed.
+These software checks do not prove physical serial/audio integrity or perfect
+rendering. The DOS card is absent and no card deployment is claimed.
+
+Continue physical login/editor, sustained data, reconnect and transfer acceptance
+when the target is available. Independent application work remains: restore the
+original command/help/hotkey behavior, complete telephone-log startup/events and
+UART-aware polling, and close every remaining requirement in the full
+[F01–F16 matrix](docs/FEATURES.md). The existing plan and complete application,
+protocol/emulation, scripting, Host, source-build and hardware scope remain intact.
+
 [Checked telephone-log appends](docs/PHONE_LOG_FILE.md) now pass138 model
 cases/7239 assertions,18 actual DOS workflows/499 native assertions and an
 exact nine-source executable/three-object rebuild. Partial write/commit failures
