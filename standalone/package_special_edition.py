@@ -107,7 +107,8 @@ def stage(out,custom_irq=False,source_base_commit=None):
     if len(commit)not in (40,64)or any(c not in '0123456789abcdef'for c in commit):
         raise ValueError('source base must be a complete lowercase Git object ID')
     (payload / 'VERSION.TXT').write_bytes(dos_text(
-        'LoC SPECIAL EDITION\nSource base: ' + commit + '\n'
+        'LoC SPECIAL EDITION\nVersion: 2.01-LoC.1\n'
+        'LoSs oF CoNtRoL / Sysop: bstar\nSource base: ' + commit + '\n'
         'TERMINAL SHA256:\n' + manifests['TERMINAL.EXE']['binary_sha256'] + '\n'))
     for name in ('standalone/package_special_edition.py', 'standalone/build_guarded_helper.py'):
         sources[name] = sha(ROOT / name)

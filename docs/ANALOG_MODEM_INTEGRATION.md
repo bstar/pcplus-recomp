@@ -2,16 +2,17 @@
 
 Compatibility is the priority. This adds a hardware acceptance target to the
 ongoing source-built DOS PCPlus reconstruction; it does not replace the full
-application plan or establish hardware compatibility. Hardware testing remains
-planned; DOS/bridge software checkpoints are recorded below. No adapter, analog
-carrier, handshake audio or Boca test has run.
+application plan or establish hardware compatibility of the source-built
+terminal. Initial hardware testing with original PCPlus reached the local BBS;
+see the [commissioning observations](BOCA_COMMISSIONING.md). Source-built
+hardware login, sustained data and transfers remain unverified.
 
 ## Equipment and connection
 
 - DOS PC with Boca 14.4 kbps ISA modem; exact model, chipset, UART, jumpers,
   I/O base, IRQ and supported AT command set still need identification.
-- Ordered unlocked Cisco/Linksys SPA2102, administrator access and power supply;
-  adapter has not arrived. Ethernet and RJ11 cables are available.
+- Unlocked Cisco/Linksys SPA2102 has arrived and is configured on the LAN with
+  its existing firmware. Ethernet and RJ11 cables are connected.
 - Linux Framework workstation on the same home router/switch.
 
 ```text

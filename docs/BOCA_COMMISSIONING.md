@@ -1,9 +1,24 @@
 # Boca / SPA2102 commissioning worksheet
 
-Status: adapter ordered; no physical test performed. This worksheet implements
+Status: original PCPlus hardware connection reached the BBS on October 24;
+source-built terminal hardware acceptance remains unverified. This worksheet implements
 the [integration plan](ANALOG_MODEM_INTEGRATION.md) without changing the ongoing
 source-built PCPlus objective. Fill a separate copy per run in ignored local
 storage. Publish only redacted settings and synthetic/public test evidence.
+
+User-reported working resources are COM3, I/O `3E8h`, IRQ5. Original PCPlus
+accepted modem commands, dialed local extension 555 through SPA2102 PHONE 1,
+and displayed the local LoSs oF CoNtRoL ENiGMA BBS. Bridge logs show the high-rate
+backend timing out during negotiation, then native V.22bis carrier detection at
+2400 bps. This is not acceptance of V.32bis, transfers, or the source-built
+Special Edition. Original-PCPlus login remains problematic: the caller reports
+an apparently unfocused/noninteractive login area; the cause is unresolved.
+
+Speaker commands M1L3 and M2L3 did not produce audible dialing/training, although
+relay clicks were heard and a data connection was reported. No speaker jumper
+has been identified. Speaker/joint inspection and electrical diagnosis are
+planned with power disconnected. Do not disturb the working serial jumpers
+while investigating the separate audio-monitoring issue.
 
 ## Identify and freeze the setup
 

@@ -1,9 +1,36 @@
 # LoC Special Edition
 
-The `--special-edition` terminal build displays an authored magenta BIOS text
-splash headed `PROCOMM PLUS` and `LoC SPECIAL EDITION`. It waits for a key before
+The `--special-edition` terminal build displays the original 2.01 three-line
+CP437 `PROCOMM PLUS` logo on a magenta BIOS text splash. Beneath it are
+`Version 2.01-LoC.1`, `LoC SPECIAL EDITION`, and
+`LoSs oF CoNtRoL / Sysop: bstar`. It waits for a key before
 mouse or UART acquisition. It uses no additional DGROUP storage. Other builds
 retain their existing startup behavior.
+
+The logo characters were transcribed from the preserved 2.01 executable
+SHA256 `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904`:
+file offsets `2880c`, `2883c`, `2886c` (hex), corresponding to initialized
+DS offsets `2ebc`, `2eec`, `2f1c`. Their lengths are 47, 47 and 51 bytes,
+excluding terminators. They are explicit CP437 byte literals in the assembly;
+building does not extract or read an original executable. The original `(r)`
+mark remains on the last logo line. Company/contact lines are omitted from
+this edition's splash. The surrounding layout is maintained presentation;
+this does not claim pixel-for-pixel recovery of the complete original screen.
+
+An attempted isolated original-screen capture did not return from PCPlus;
+its two DOSBox processes were stopped without touching the live bridge or BBS.
+That attempt is not visual confirmation of original screen placement/colors.
+The original character data and the new rendered splash are separate evidence.
+
+The October 24 logo checkpoint is staged locally at
+`build/special-original-logo-final-20261024/PCPLUSSE`; it has not been installed
+on the card. Independent DOS8086 video capture matches all three preserved
+logo rows and the version/edition/sysop lines. START with nested compilation,
+the splash-only START path, and SETUP/cancel/return pass on synthetic IRQ5.
+All nine files reproduce exactly from 744 declared sources with ancestor Git
+unavailable and no original executable inputs. This establishes the package
+and splash behavior, not original menu parity or hardware login compatibility.
+The checkpoint receipt is [special-logo.json](validation/special-logo.json).
 
 Build with the pinned Nix toolchain and the current application feature flags,
 adding `--special-edition` to `standalone/build_terminal.py`. The output has a

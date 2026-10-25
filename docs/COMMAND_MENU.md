@@ -3,6 +3,29 @@
 Alt-Z opens a keyboard command menu in the maintained DOS terminal. This is
 source-owned UI and help, not a recovered copy of PCPlus menus or help text.
 
+## Original interface restoration requirements
+
+The October 24 original-interface audit establishes that original Alt-Z opens
+context-sensitive help / the terminal command reference, while backtick or a
+mouse button opens the pull-down menu line. Original HLP topics 19, 41 and 45
+describe those separate interfaces. The original executable's reference frame
+and 39 command labels are at file offsets approximately `25b00..26216` (hex).
+Its COMMUNICATIONS / SET UP / OTHER FUNCTIONS columns and BEFORE / AFTER /
+DURING / OTHER subdivisions are not reproduced by the browser below.
+
+Keyboard restoration must accompany visual restoration: original Alt-S is
+Setup, PgUp/PgDn send/receive, Alt-R recording, Alt-F6 redisplay, Alt-F8 key
+mapping, Alt-P line/port setup and Alt-D the dialing directory. The maintained
+build instead uses Alt-S/Alt-R for send/receive, Alt-F8 for input translation,
+Alt-F10 for setup and Alt-D for redial of an already selected target. Those
+bindings remain unchanged in this splash checkpoint. Replacing only the help
+labels would misrepresent the actual dispatcher.
+
+Next acceptance work must cover original command IDs and shortcuts, serviced
+serial input and screen restoration while help is open, and a visible refusal
+for unfinished operations without exiting the terminal. Full mouse/pull-down,
+line/port and live directory behavior remain required application work.
+
 | Group | Commands |
 | --- | --- |
 | File | Receive, send, screen file, capture open/close, capture hold/resume, CR-adds-LF, exit |

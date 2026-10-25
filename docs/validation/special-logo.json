@@ -1,0 +1,94 @@
+{
+  "kind": "original-logo-special-edition-checkpoint",
+  "version": "2.01-LoC.1",
+  "passed": true,
+  "package_manifest_sha256": "75cec69725e4e7eaf1c1eed6b1bd78eb400804971b3ab0002506f121afb8d86e",
+  "files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "2a6e820f0da22c47cfdbf9a096a4e3ffdba446a9ed48eab595be4a8074fb323a",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "e096c53b802df1561ce4e9a135cd091a7ba8edb03fe24822341061e8fac91a9b",
+    "VERSION.TXT": "d50523350acf87b3ea6efcd8b9de9b5f00d4f405fd89e80761483d078e90aa8c",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "sources": {
+    "src/terminal/special_splash.asm": "75bbd8e562b2f3d93d04ddbe16785947d28e0dac3309ec3d4661c7c28e7f6931",
+    "standalone/package_special_edition.py": "419d453cd83731db57ded23ae4e65bd265510596e42ae645c9089ed66fa8cb4a"
+  },
+  "logo_comparison": {
+    "checks": {
+      "original_logo_row_4": true,
+      "original_logo_row_5": true,
+      "original_logo_row_6": true,
+      "identity_row_8": true,
+      "identity_row_9": true,
+      "identity_row_11": true,
+      "company_line_removed": true
+    },
+    "passed": true,
+    "video_sha256": "dc75ec83e4aac03a45711f80e5887a024f7aae3bdade1a3af1fdf82b92880e8f",
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "scope": "Captured DOS video cells; original full-screen placement/colors not confirmed."
+  },
+  "dos_checks": {
+    "splash": {
+      "passed": true,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM2/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ],
+      "cpu": "8086",
+      "irq": 5,
+      "scope": "Run packaged START/SETUP launchers on a synthetic card in actual DOS8086. Dummy serial ports; no live BBS, card write or physical modem test."
+    },
+    "start": {
+      "passed": true,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM2/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "nested DOS source compilation produces exact ASX",
+        "script writes expected result"
+      ],
+      "cpu": "8086",
+      "irq": 5,
+      "scope": "Run packaged START/SETUP launchers on a synthetic card in actual DOS8086. Dummy serial ports; no live BBS, card write or physical modem test."
+    },
+    "setup": {
+      "passed": true,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM2/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ],
+      "cpu": "8086",
+      "irq": 5,
+      "scope": "Run packaged START/SETUP launchers on a synthetic card in actual DOS8086. Dummy serial ports; no live BBS, card write or physical modem test."
+    }
+  },
+  "source_only": {
+    "passed": true,
+    "source_files": 744,
+    "original_inputs": [],
+    "ancestor_git_unavailable": true,
+    "source_base_commit": "73c6f29163d7cf533bd797fbe7c019ac419fe62c"
+  },
+  "card_written": false,
+  "limitations": [
+    "Original full-screen positions/colors were not captured successfully.",
+    "Original Alt-Z/pull-down and shortcut parity remain unfinished.",
+    "The new executable has not been accepted on the physical modem or for hardware ENiGMA login."
+  ]
+}
