@@ -317,7 +317,7 @@
     "standalone/check_original_keys.py": "4941a274c14da72c70fe6524c3faa3013c91688243e98341da44ecd3e2c26da4",
     "standalone/test_recording_ui_dos.py": "6afc32f4e7f563ac19a57662bdfff85a408edb3dcc11c2e07763bdfe42668bb1",
     "standalone/check_recording_foreground_live.py": "7f541f5ecabd4dc2349e318d1ba22183fbcec4eebbb3698263d47b23d6d6f386",
-    "standalone/prove_special_package_source.py": "ca24a5d4b63cba713bf47beecd3dda3d95d3050c62d625028a25f3290be0c676",
+    "standalone/prove_special_package_source.py": "b4b637f9810b831c72fe53e3776684439100ada25d849b7df935fec4ad100e6e",
     "standalone/build_help_resource.py": "fd6b09e62b3e4cd4aa2469f59f7eb9674bf282f393000f0fcfb3c76639e66fb6",
     "standalone/package_special_edition.py": "045a80f390d035408125a6616f55295855020128c434fec5b101a2a65cdc3552",
     "src/redisplay/command_menu.c": "54df4fc7ecae9be343913b901f67711561d3ccac0ca97406c61a6a6baab9c705",
@@ -332,5 +332,25 @@
     "Alt-Z reference/pull-down layout, Alt-D live chooser and Alt-F8 mapping remain required.",
     "BBS uses synthetic Hayes/nullmodem and actual proxy, not physical SIP/audio/UART.",
     "No sustained physical, transfer, multiline rendering or complete F01-F16 acceptance."
-  ]
+  ],
+  "committed_source_rebuild": {
+    "source_commit": "bc2a788f1b2acd2e56b84b3cbf772b38f93dae84",
+    "source_files": 744,
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+      "README.TXT": "62e6072afdeb72f305fe8a31cf1be43c1be4871a519960c7b5a3786774fe82a0",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "71a51fc438ec6a08eef133ad373e99d482d021f57be7fa82490760fd824359c1",
+      "VERSION.TXT": "f47533cbfa8f5603129a9c7bf0ec80c0bc11ba35c0069f94cf856385ecfb9272",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "original_inputs": [],
+    "ancestor_git_unavailable": true,
+    "receipt_sha256": "be386379c411a8562d9121db3fa47396b442b644f5945dbfd0cca52e125c4766",
+    "checker_sha256": "b4b637f9810b831c72fe53e3776684439100ada25d849b7df935fec4ad100e6e"
+  }
 }

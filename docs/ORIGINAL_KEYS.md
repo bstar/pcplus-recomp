@@ -67,6 +67,10 @@ The [receipt](validation/original-keys.json) binds these distinct checks:
   snapshot, and returns normally. No post is saved.
 - An empty tree of 744 declared source inputs reproduces all ten package files
   exactly without originals or ancestor Git metadata.
+- A second export of only the 744 committed files at `bc2a788` produces the
+  same ten files, excluding every uncommitted worktree change. Repeat with
+  `standalone/prove_special_package_source.py --package PACKAGE --output
+  build/NEW-proof --commit bc2a788` inside the pinned Nix environment.
 
 The initial package attempt exposed a help extractor that only accepted literal
 ENTRY titles. It now preprocesses the authored text block with the pinned C
