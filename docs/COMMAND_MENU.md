@@ -3,6 +3,11 @@
 Alt-Z opens a keyboard command menu in the maintained DOS terminal. This is
 source-owned UI and help, not a recovered copy of PCPlus menus or help text.
 
+The [2.01-LoC.2 original-key candidate](ORIGINAL_KEYS.md) now restores direct
+recording/settings/history shortcuts and native-local page-key transfers in
+an explicit build variant. The ordinary build and historical browser behavior
+below remain unchanged; full original reference/pull-down layout is still open.
+
 ## Original interface restoration requirements
 
 The October 24 original-interface audit establishes that original Alt-Z opens

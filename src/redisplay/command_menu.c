@@ -15,7 +15,26 @@ static word __far *view;
 #define MENU_TEXT __based(__segname("_CODE"))
 #define TEXT(n,s) static const char MENU_TEXT n[]=s
 #define ENTRY(n,t,h) TEXT(n##_name,t);TEXT(n##_help,h)
-ENTRY(record,"Record / save ASPECT script",
+#ifdef TERMINAL_ORIGINAL_KEYS
+#define RECEIVE_KEY 0xfa00
+#define SEND_KEY 0xf900
+#define RECEIVE_LABEL "Receive files                  PgDn*"
+#define SEND_LABEL "Send files                     PgUp*"
+#define RECORD_SUFFIX "  Alt-R"
+#define SETTINGS_LABEL "Edit saved settings            Alt-S/P"
+#define HISTORY_LABEL "Redisplay history              Alt-F6"
+#define PAGE_HELP "\n* An assigned page key sends its keyboard-profile binding.\nUnassigned enhanced PgUp/PgDn opens local send/receive."
+#else
+#define RECEIVE_KEY 0x1300
+#define SEND_KEY 0x1f00
+#define RECEIVE_LABEL "Receive files                  Alt-R"
+#define SEND_LABEL "Send files                     Alt-S"
+#define RECORD_SUFFIX ""
+#define SETTINGS_LABEL "Edit saved settings            Alt-F10"
+#define HISTORY_LABEL "Redisplay history              Ctrl-PgUp"
+#define PAGE_HELP ""
+#endif
+ENTRY(record,"Record / save ASPECT script" RECORD_SUFFIX,
  "Start a checked .ASP recording of prompts and bytes accepted by the UART.\n"
  "Existing files require Y before replacement; the original stays intact\n"
  "until save succeeds. Choose this command again to save. Output must\n"
@@ -30,16 +49,16 @@ ENTRY(record_files,"Recording status / recovery",
  "U offers explicit cleanup of safely owned temporary files. An original\n"
  "backup from failed restoration is never discarded here. End the session\n"
  "and recover it from DOS if necessary. Do not overwrite retained originals.");
-ENTRY(receive,"Receive files                  Alt-R",
+ENTRY(receive,RECEIVE_LABEL,
  "Receive into a local DOS file with XMODEM. F2 in the filename prompt\n"
  "selects YMODEM; enter a destination directory for a batch. Request the\n"
  "download at the BBS first. HARD or NONE flow is required. XMODEM may\n"
- "retain SUB padding; YMODEM preserves each declared file length.");
-ENTRY(send,"Send files                     Alt-S",
+ "retain SUB padding; YMODEM preserves each declared file length." PAGE_HELP);
+ENTRY(send,SEND_LABEL,
  "Choose a local DOS file to send with XMODEM/1K. F2 selects YMODEM;\n"
  "enter a DOS file pattern for a batch. Start the BBS upload first.\n"
  "Sources are opened read-only. A transfer owns the local keyboard\n"
- "until it completes or is canceled; menu keys are not protocol data.");
+ "until it completes or is canceled; menu keys are not protocol data." PAGE_HELP);
 ENTRY(snapshot,"Write screen                   Alt-G",
  "Append the current 80 by 25 text screen to PCPLUS.SCR. This is a\n"
  "character snapshot, not a graphics image. File errors are reported;\n"
@@ -76,7 +95,7 @@ ENTRY(linebreak,"Send BREAK                     Alt-B",
  "then release it while continuing to service received data.\n"
  "The pulse is a serial-line condition, not a transmitted character.\n"
  "Its physical timing requires verification on the target UART.");
-ENTRY(history,"Redisplay history              Ctrl-PgUp",
+ENTRY(history,HISTORY_LABEL,
  "Browse a frozen snapshot of up to 63,000 history characters.\n"
  "Use arrows, PgUp/PgDn and Home/End; / searches and F3 repeats.\n"
  "W appends history to a DOS file; C opens the filename clipboard.\n"
@@ -95,7 +114,7 @@ ENTRY(printer,"Open / close printer copy      Alt-L",
  "Toggle a checked processed-text copy to DOS PRN. The bounded queue\n"
  "reports printer stalls and write failures. Device readiness in an\n"
  "emulator does not establish physical printer compatibility.");
-ENTRY(settings,"Edit saved settings            Alt-F10",
+ENTRY(settings,SETTINGS_LABEL,
  "Open source-built PRMEDIT for the explicitly selected current-folder\n"
  "8.3 PRM leaf. An eligible idle session can adopt validated changes\n"
  "after returning; serial/profile changes require confirmation.\n"
@@ -138,7 +157,7 @@ ENTRY(scope,"Application status",
  "Loopback BBS tests do not replace physical UART/modem validation.");
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
 static const item MENU_TEXT items[]={
- ROW(receive,0,0x1300,'R'),ROW(send,0,0x1f00,'S'),ROW(snapshot,0,0x2200,'W'),
+ ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
  ROW(script,0,0xfe00,'A'),ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
  ROW(redial,1,0x2000,'D'),ROW(hangup,1,0x2300,'H'),ROW(linebreak,1,0x3000,'B'),
  ROW(history,2,0x8400,'R'),ROW(clipboard,2,0x8300,'F'),ROW(monitor,2,0x2b1c,'M'),ROW(printer,2,0x2600,'P'),
@@ -197,7 +216,7 @@ static word record_blocked(word key)
 {
  const recording_file *r=recording_terminal_inspect();
  if(!r || !r->claimed)return 0;
- return key==0x1300 || key==0x1f00 || key==0xfe00 || key==0x2000 || key==0x2300 ||
+ return key==RECEIVE_KEY || key==SEND_KEY || key==0xfe00 || key==0x2000 || key==0x2300 ||
   key==0x3000 || key==0x2b1c || key==0x7100 || key==0x7000 || key==0x6f00;
 }
 static void record_view(void)
@@ -261,11 +280,25 @@ static void search(void)
   selected=i;category=items[i].category;phase=1;return;}}
  notice=1;phase=0;
 }
+#ifdef TERMINAL_ORIGINAL_KEYS
+static void record_toggle(void)
+{
+ const recording_file *r=recording_terminal_inspect();
+ if(r && r->state==RF_RECORDING){
+  phase=6;if(!recording_ui_ready())notice=103;else{word status=recording_terminal_stop();notice=status?status:101;}
+ }else if(r && (r->claimed || r->state==RF_RECOVERY_STATE)){phase=6;notice=r->status?r->status:RF_RECOVERY;}
+ else{phase=4;notice=0;for(query_size=0;query_size<63 && recording_terminal_path[query_size];++query_size){} }
+}
+#endif
 unsigned __cdecl command_menu_event(word event,word key,word __far *frame)
 {
  word i,n;byte c=(byte)key;
  if(event==0){command_menu_action=0;command_menu_active=1;category=selected=phase=notice=0;view=frame;
-  if(!recording_terminal_inspect())recording_terminal_initialize();draw();return 1;}
+  if(!recording_terminal_inspect())recording_terminal_initialize();
+#ifdef TERMINAL_ORIGINAL_KEYS
+  if(key==0x1300){for(i=0;i<COUNT;++i)if(items[i].key==0xfd00){selected=i;break;}record_toggle();}
+#endif
+  draw();return 1;}
  if(event==4){command_menu_action=command_menu_active=0;return 0;}
  if(!command_menu_active)return 0;
  if(event!=1)return 1;
@@ -312,11 +345,15 @@ unsigned __cdecl command_menu_event(word event,word key,word __far *frame)
    if(i==COUNT){draw();return 1;}}
   if(record_blocked(items[selected].key)){phase=6;notice=104;}
   else if(items[selected].key==0xfd00){
+#ifdef TERMINAL_ORIGINAL_KEYS
+   record_toggle();
+#else
    const recording_file *r=recording_terminal_inspect();
    if(r && r->state==RF_RECORDING){
     phase=6;if(!recording_ui_ready())notice=103;else{n=recording_terminal_stop();notice=n?n:101;}
    }else if(r && (r->claimed || r->state==RF_RECOVERY_STATE)){phase=6;notice=r->status?r->status:RF_RECOVERY;}
    else{phase=4;notice=0;for(query_size=0;query_size<63 && recording_terminal_path[query_size];++query_size){} }
+#endif
   }
   else if(items[selected].key==0xfc00){const recording_file *r=recording_terminal_inspect();
    phase=r && (r->state==RF_RECORDING || (r->claimed && !r->published))?7:6;notice=r?r->status:RF_STATE;}

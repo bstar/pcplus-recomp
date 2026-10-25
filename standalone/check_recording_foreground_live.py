@@ -11,12 +11,13 @@ import struct
 from unicorn.x86_const import *
 from check_terminal_capture_live import Capture
 from check_meta_actions_live import ROOT, BINARY
+import check_transport as transport
 
 
 class Recorder(Capture):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        listing = (ROOT / 'build/terminal/terminal.map').read_text()
+        listing = transport.MAP.read_text()
         self.entries = {n: (int(s, 16), int(o, 16)) for s, o, n in re.findall(
             r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$', listing, re.M | re.I)}
 

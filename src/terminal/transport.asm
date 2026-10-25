@@ -280,9 +280,17 @@ terminal_poll_io:
  je .capture_pause
  cmp ax,0x6a00 ;Native Alt-F3 CR-adds-LF
  je .capture_crlf
+%ifdef TERMINAL_ORIGINAL_KEYS
+ cmp ax,0xfa00 ; Source-owned menu action: receive. Alt-R owns recording.
+%else
  cmp ax,0x1300 ;Alt-R: exclusive ordinaryXMODEM receive owner
+%endif
  je .receive_file
+%ifdef TERMINAL_ORIGINAL_KEYS
+ cmp ax,0xf900 ; Source-owned menu action: send. Alt-S owns setup.
+%else
  cmp ax,0x1f00 ;Alt-S: exclusive ordinaryXMODEM send owner
+%endif
  je .send_file
  cmp ax,0x2d00
  je .quit
@@ -336,8 +344,15 @@ terminal_poll_io:
  call terminal_translation_reload_start
  jmp .done
 .settings_key:
+%ifdef TERMINAL_ORIGINAL_KEYS
+ cmp ax,0x1f00 ; Original Alt-S: saved settings.
+ je .setup
+ cmp ax,0x1900 ; Original Alt-P: editor starts with the port field selected.
+ je .setup
+%endif
  cmp ax,0x7100 ;Alt-F10: direct maintained settings editor.
  jne .ordinary_meta
+.setup:
  call terminal_setup_start
  jmp .done
 .ordinary_meta:
@@ -356,11 +371,31 @@ terminal_poll_io:
  jmp .unsupported
 .classify:
  mov bx,0xffff
+%ifdef TERMINAL_ORIGINAL_KEYS
+ push ax
+%endif
  call far terminal_key_output
+%ifdef TERMINAL_ORIGINAL_KEYS
+ pop dx
+%endif
  cmp word [terminal_quit],0
  jne .done
  or ax,ax
  jz .done
+%ifdef TERMINAL_ORIGINAL_KEYS
+ ; Keep assigned BBS page keys. Only the native local classification falls
+ ; back to file transfer; invalid bindings/queue errors retain their errors.
+ cmp ax,3
+ jne .unsupported
+ cmp dx,0x49e0
+ je .send_file
+ cmp dx,0x4900
+ je .send_file
+ cmp dx,0x51e0
+ je .receive_file
+ cmp dx,0x5100
+ je .receive_file
+%endif
 .unsupported:
  ; A recognized original local command needs application UI/services that have
  ; not been reconstructed. Keep this explicit instead of transmitting the key.

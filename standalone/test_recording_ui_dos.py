@@ -12,13 +12,21 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True);parser.add_argument('--sha256',required=True)
     parser.add_argument('--mode',choices=('new','replace','cancel'),default='new')
+    parser.add_argument('--terminal',type=Path,default=ROOT/'build/terminal/TERMINAL.EXE')
+    parser.add_argument('--runner',type=Path,default=ROOT/'build/aspect-runner/ASPECT.EXE')
+    parser.add_argument('--compiler',type=Path,default=ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE')
     args=parser.parse_args();out=args.output.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     original=b'ORIGINAL\x1aKEEP\r\n'
     if args.mode!='new':(out/'PCPLUS.ASP').write_bytes(original)
     frozen={}
     for directory,binary in (('terminal','TERMINAL.EXE'),('aspect-runner','ASPECT.EXE'),('aspect-compiler-dos','ASPCOMP.EXE')):
-        base=ROOT/'build'/directory;manifest=json.loads((base/'manifest.json').read_text())
+        base=({'terminal':args.terminal,'aspect-runner':args.runner,'aspect-compiler-dos':args.compiler}[directory]).resolve().parent
+        assert base.is_relative_to(ROOT/'build')
+        manifest=json.loads((base/'manifest.json').read_text())
+        if directory=='terminal':
+            original_keys=manifest.get('experimental_original_keys',False)
+            special=manifest.get('special_edition',False)
         assert sha(base/binary)==manifest['binary_sha256']
         if directory=='terminal':assert manifest['binary_sha256']==args.sha256
         else:assert not manifest['original_inputs']
@@ -69,6 +77,10 @@ def main():
     accept='p300 y ' if args.mode!='new' else ''
     finish='d p300 y' if args.mode=='cancel' else 'c'
     keys=f'p1800 a-z p300 c p300 enter {accept}p700 m 1 p1000 b s t a r enter p1000 a-z p300 {finish} p500 escape escape p400 a-x'
+    if original_keys:
+        stop_keys='a-z p300 d p300 y' if args.mode=='cancel' else 'a-r'
+        keys=f'p1800 a-r p300 enter {accept}p700 m 1 p1000 b s t a r enter p1000 {stop_keys} p500 escape escape p400 a-x'
+    if special:keys='p900 enter '+keys
     replay_commands='' if args.mode=='cancel' else r'''C:\ASPCOMP D:\PCPLUS.ASP D:\RECORD.ASX
 if errorlevel 1 goto failed
 C:\ASPECT D:\RECORD.ASX /S1:0003:03:N

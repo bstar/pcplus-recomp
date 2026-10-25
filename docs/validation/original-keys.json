@@ -1,0 +1,336 @@
+{
+  "kind": "original-keyboard-source-and-DOS-checkpoint",
+  "software_candidate_passed": true,
+  "full_original_interface": false,
+  "physical_acceptance": false,
+  "card_written": false,
+  "version": "2.01-LoC.2",
+  "terminal_sha256": "71a51fc438ec6a08eef133ad373e99d482d021f57be7fa82490760fd824359c1",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "62e6072afdeb72f305fe8a31cf1be43c1be4871a519960c7b5a3786774fe82a0",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "71a51fc438ec6a08eef133ad373e99d482d021f57be7fa82490760fd824359c1",
+    "VERSION.TXT": "f47533cbfa8f5603129a9c7bf0ec80c0bc11ba35c0069f94cf856385ecfb9272",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "model": {
+    "cases": [
+      {
+        "case": "Alt-R-start-receive-transmit-and-save-real-recorder",
+        "inputs": 9,
+        "passed": true
+      },
+      {
+        "case": "direct-recorder-services-BBS-query-and-restores-updated-screen",
+        "inputs": 1,
+        "passed": true
+      },
+      {
+        "case": "Alt-S-Alt-P-and-retained-Alt-F10-use-settings-eligibility",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "Alt-F6-and-existing-Ctrl-PgUp-open-serviced-history",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "assigned-page-keys-send-exactly-unassigned-open-transfer-invalid-stays-error",
+        "inputs": 5,
+        "passed": true
+      },
+      {
+        "case": "menu-transfers-remain-accessible-after-Alt-R-Alt-S-restoration",
+        "inputs": 2,
+        "passed": true
+      },
+      {
+        "case": "direct-recorder-respects-existing-exclusive-owner-guards",
+        "inputs": 6,
+        "passed": true
+      }
+    ],
+    "inputs": 29,
+    "result_sha256": "5373f29256a066e01df3220585398f1e14479b0bf6e77522115cafb468fef482"
+  },
+  "recording_DOS": [
+    {
+      "mode": "new",
+      "checks": {
+        "normal_DOS_exit": true,
+        "expected_real_sessions": true,
+        "no_peer_errors": true,
+        "actual_user_session": true,
+        "query_responses_seen": true,
+        "temporary_files_resolved": true,
+        "hardware_restored": true,
+        "menu_published_complete_source": true,
+        "query_responses_excluded": true,
+        "exact_compiled_UART_replay": true,
+        "recorded_prompt_timeout": true
+      },
+      "result_sha256": "6e8846987e7675b5b86f4b9060b7d5af3708b13591435d0a91768a3b615e953a",
+      "artifacts": {
+        "BEFORE.BIN": "6995887d0eb72e34164d85e1acaf287e6649fa157a149b8276657039caa7d361",
+        "AFTER.BIN": "6995887d0eb72e34164d85e1acaf287e6649fa157a149b8276657039caa7d361",
+        "SCREEN.BIN": "96c95fe314c6133aa1c1f6a228ee1281e3dfc264c0d84cbc118ce4f18335454b",
+        "wire.bin": "fc80fc05f6c204b85d560624710ac1b6176191afe92eeb2053767ed48051861a",
+        "PCPLUS.ASP": "eca90b4cfd4e186f7abbde077c3fadaea5f1f7fa9ed565dd1e8ae3a2b920051c"
+      }
+    },
+    {
+      "mode": "replace",
+      "checks": {
+        "normal_DOS_exit": true,
+        "expected_real_sessions": true,
+        "no_peer_errors": true,
+        "actual_user_session": true,
+        "query_responses_seen": true,
+        "temporary_files_resolved": true,
+        "hardware_restored": true,
+        "menu_published_complete_source": true,
+        "query_responses_excluded": true,
+        "exact_compiled_UART_replay": true,
+        "recorded_prompt_timeout": true,
+        "original_intact_during_recording": true
+      },
+      "result_sha256": "1ebfafccc234c14838dd2971ebe0c1ae80befca562115bc3af198782f179b672",
+      "artifacts": {
+        "BEFORE.BIN": "6995887d0eb72e34164d85e1acaf287e6649fa157a149b8276657039caa7d361",
+        "AFTER.BIN": "6995887d0eb72e34164d85e1acaf287e6649fa157a149b8276657039caa7d361",
+        "SCREEN.BIN": "96c95fe314c6133aa1c1f6a228ee1281e3dfc264c0d84cbc118ce4f18335454b",
+        "wire.bin": "fc80fc05f6c204b85d560624710ac1b6176191afe92eeb2053767ed48051861a",
+        "PCPLUS.ASP": "eca90b4cfd4e186f7abbde077c3fadaea5f1f7fa9ed565dd1e8ae3a2b920051c"
+      }
+    },
+    {
+      "mode": "cancel",
+      "checks": {
+        "normal_DOS_exit": true,
+        "expected_real_sessions": true,
+        "no_peer_errors": true,
+        "actual_user_session": true,
+        "query_responses_seen": true,
+        "temporary_files_resolved": true,
+        "hardware_restored": true,
+        "original_preserved_on_cancel": true,
+        "no_bytecode_on_cancel": true,
+        "original_intact_during_recording": true
+      },
+      "result_sha256": "6b0e04a4d56d3b42ced82ea20f262f73aca93f40f725a4b676d7cb14a1e25ef0",
+      "artifacts": {
+        "BEFORE.BIN": "6995887d0eb72e34164d85e1acaf287e6649fa157a149b8276657039caa7d361",
+        "AFTER.BIN": "6995887d0eb72e34164d85e1acaf287e6649fa157a149b8276657039caa7d361",
+        "SCREEN.BIN": "f6f3c93d59b3036bc6c81598e3f07399285726bbf13ceb61f88c0fd78d1d02dc",
+        "wire.bin": "68930e0a75c402480e3cac2d34c60cb783b0cd30d3b1cae56cad3824937289a1",
+        "PCPLUS.ASP": "976fb27b97c8fb8576d0f1cb5dd84c87c6303189cf17d72c6046f1d7ce6eb77d"
+      }
+    }
+  ],
+  "settings_DOS": {
+    "passed": true,
+    "terminal_sha256": "71a51fc438ec6a08eef133ad373e99d482d021f57be7fa82490760fd824359c1",
+    "editor_sha256": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "cases": [
+      {
+        "case": "original-keys-a-s-20261025",
+        "passed": true,
+        "checks": {
+          "expected_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "no_recovery_files": true,
+          "actual_terminal_ready_reply": true,
+          "actual_terminal_cursor_reply": true,
+          "post_editor_receive_render_and_cursor_reply": true,
+          "both_peer_checks_seen": true,
+          "actual_video_ready": true,
+          "independent_timer_samples": true,
+          "actual_configured_UART_divisor": true,
+          "exact_profile_preserved": true
+        },
+        "expected_exit": 0,
+        "arguments": "@TEST.PRM",
+        "observed_errors": []
+      },
+      {
+        "case": "original-keys-a-p-20261025",
+        "passed": true,
+        "checks": {
+          "expected_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "no_recovery_files": true,
+          "actual_terminal_ready_reply": true,
+          "actual_terminal_cursor_reply": true,
+          "post_editor_receive_render_and_cursor_reply": true,
+          "both_peer_checks_seen": true,
+          "actual_video_ready": true,
+          "independent_timer_samples": true,
+          "actual_configured_UART_divisor": true,
+          "exact_profile_preserved": true
+        },
+        "expected_exit": 0,
+        "arguments": "@TEST.PRM",
+        "observed_errors": []
+      }
+    ]
+  },
+  "package_launchers": [
+    {
+      "launcher": "START",
+      "port": 3,
+      "irq": 5,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "nested DOS source compilation produces exact ASX",
+        "script writes expected result"
+      ],
+      "result_sha256": "9a25d4e7851b1f098a8d8b0e1c28124687fee237a7d43108f8345aadda18f818"
+    },
+    {
+      "launcher": "SETUP",
+      "port": 3,
+      "irq": 5,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ],
+      "result_sha256": "01df2170423d3387928a37ab0fd297cf19faee980330d42ae4e876ba78a74c20"
+    }
+  ],
+  "splash_sha256": "d92c74b64c9c9c0891ffd07e6e6371c6b3a695043fc35968a9a415e156044a1e",
+  "help_DOS": {
+    "result": {
+      "passed": true,
+      "checks": {
+        "emulator_exit": true,
+        "DOS_pass": true,
+        "self_checks": true,
+        "resource_unchanged": true,
+        "sources_unchanged": true
+      },
+      "self_checks": 49,
+      "binary_sha256": "0f33b537e46387aa8bd4b8811f8e73e8c74ccc8549a628781535a3216adf9fbe",
+      "sources": {
+        "src/help/view.c": "a7ce9dcb50986c60ec710caf2c42ba11731b23355bc52bde8018190731b8252a",
+        "src/help/resource.c": "05969b809231692326edec1fd9cc63c1a448cb2599d9ad0b87bea247ae86cbd7",
+        "src/help/document.c": "841e34e8672064e0213acbc10026ac58b8766f60c2d0bf58931386fb314aaa21",
+        "src/help/format.c": "a6f7585e56c793998f29047172929f8fb25e5ec424679524efcecb0f06a40571",
+        "src/help/view_cursor.asm": "c90cbc73c2e01d5ba951a26c3fdd746f2a3bdf54a14c1efc37bb2178282231ae",
+        "src/help/resource_io.asm": "65ac8d2f2121fc636e3788657b8f7515b9cbca64cb689c3120eebf75d4a9c2cb",
+        "src/mouse/dos_memory.asm": "cf72befb4939e6d5d3375d46d280497906809ca87e761badb9543900d926c650",
+        "src/help/view.h": "d27d631c785eba7490b9a7b2b0ba693c53df8b3ce8f8a1156fcb0c28ee07a57f",
+        "src/help/resource.h": "219c60488b98e55f18151f06dce50d46b3fd3aa98e1b8cf733b70a44dda0bd42",
+        "src/help/document.h": "2e49fe1f9fa76e293eaa2a255d3e403282ad27101290d87b5a6f51fb24078fb8",
+        "src/help/format.h": "bf9c74896bcc57c935273f1315350193bc44df35b923f1c1078ed4ab55e70283",
+        "standalone/help_resource_diagnostic.c": "ed47dd1ca5ede3467dfce774dc8b62b66b76a86648e66ce097bff99a2776860e",
+        "standalone/test_help_resource_dos.py": "d5816c9203edd7bcf797d3eb4d7272c20a9d27f8f81e1d08b55ff5fe2bde92b4",
+        "standalone/build_help_resource.py": "fd6b09e62b3e4cd4aa2469f59f7eb9674bf282f393000f0fcfb3c76639e66fb6",
+        "resources/help/notice.json": "6514c2c9203e7f6ed2fdf064738429374a513c0f32580382efe20117efe88416",
+        "src/redisplay/command_menu.c": "54df4fc7ecae9be343913b901f67711561d3ccac0ca97406c61a6a6baab9c705"
+      },
+      "original_inputs": [],
+      "scope": "Actual8086 DOS resource-backed help, scrolling/search and handle restoration.26 authored topics, real DOS reads, sparse model separately checked, native VGA snapshot and exact PSP JFT restoration. Component only; attached serial/outer unwind and full application acceptance remain unverified."
+    },
+    "resource_sha256": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf"
+  },
+  "stock_ENiGMA": {
+    "checks": {
+      "harness": true,
+      "semantic_audit": true,
+      "exact_screen": true,
+      "proxy_source_unchanged": true,
+      "product_source_unchanged": true
+    },
+    "semantic_checks": {
+      "DOS_harness": true,
+      "typed_draft_sent": true,
+      "all_exercised_keys_emitted": true,
+      "stock_editor_entered": true,
+      "no_post_saved": true,
+      "insert_toggled_overtype": true,
+      "home_moves_before_marker": true
+    },
+    "serial": {
+      "com": 3,
+      "baud": 19200,
+      "line": "8N1",
+      "flow": "HARD",
+      "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.",
+      "irq": 5
+    },
+    "source_identities": {
+      "config.js": "3590ff925e88ab482d6b9466af607597280c6de0e9f2c4ed63250cd132ad2804",
+      "src/telnet/TelnetProxy.js": "8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628",
+      "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+      "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+      "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+    },
+    "result_sha256": "44007ad7332742b9cb815dc71994d1c5573e3a0bdc920bedd9bd69918953b068",
+    "screen_sha256": "51df36cfab8b83cd62e2cd111149cbdde1107b33b37bcc3c6407ae789313d714",
+    "post_saved": false
+  },
+  "source_rebuild": {
+    "source_files": 744,
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+      "README.TXT": "62e6072afdeb72f305fe8a31cf1be43c1be4871a519960c7b5a3786774fe82a0",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "71a51fc438ec6a08eef133ad373e99d482d021f57be7fa82490760fd824359c1",
+      "VERSION.TXT": "f47533cbfa8f5603129a9c7bf0ec80c0bc11ba35c0069f94cf856385ecfb9272",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "original_inputs": [],
+    "ancestor_git_unavailable": true,
+    "receipt_sha256": "f6cf7116e3f9e3735e4641bc009a5234f0ed366f3b322a84ca4bf17248848433"
+  },
+  "controls": {
+    "ordinary_terminal_sha256": "bd86a10b94544007242d2ce6bb737be5ab90909d4fcf2bac8713120d2b2ffa10",
+    "ordinary_branded_sha256": "e096c53b802df1561ce4e9a135cd091a7ba8edb03fe24822341061e8fac91a9b",
+    "other_package_executables_unchanged": true
+  },
+  "retained_harness_failures": {
+    "build/special-original-keys-20261025.log": "c4dd6a97c211ab50d2e0da1dbc73f13e9d0e62afa626f2f48e102ca3af48d1b8",
+    "build/original-keys-record-new-20261025.log": "bfe352a84d3430ae2e68f41f3888b3080f99a32b28e6ba63b0c20d4c6c2d1374",
+    "build/original-key-full-checks-20261025-final.log": "abd377b11de15cf9d27fd0094bce20b6ae9d5afecd4853a5606bd43b67703767"
+  },
+  "source_inputs": {
+    "standalone/check_original_keys.py": "4941a274c14da72c70fe6524c3faa3013c91688243e98341da44ecd3e2c26da4",
+    "standalone/test_recording_ui_dos.py": "6afc32f4e7f563ac19a57662bdfff85a408edb3dcc11c2e07763bdfe42668bb1",
+    "standalone/check_recording_foreground_live.py": "7f541f5ecabd4dc2349e318d1ba22183fbcec4eebbb3698263d47b23d6d6f386",
+    "standalone/prove_special_package_source.py": "ca24a5d4b63cba713bf47beecd3dda3d95d3050c62d625028a25f3290be0c676",
+    "standalone/build_help_resource.py": "fd6b09e62b3e4cd4aa2469f59f7eb9674bf282f393000f0fcfb3c76639e66fb6",
+    "standalone/package_special_edition.py": "045a80f390d035408125a6616f55295855020128c434fec5b101a2a65cdc3552",
+    "src/redisplay/command_menu.c": "54df4fc7ecae9be343913b901f67711561d3ccac0ca97406c61a6a6baab9c705",
+    "src/redisplay/redisplay.c": "84af1407f04b8637d7828d7c77cf469b727f5b42688a5e8df7195455cda603e8",
+    "src/terminal/transport.asm": "6ae7ebf55849be48cdbbcbc8e96ebde8dc9a78d0dd61867a530dd38d1adc7ee4",
+    "src/terminal/redisplay.asm": "51f78e910f1951aa201271af49bd77d22cbfe8ff8826e500aaa5df64175001c7",
+    "src/terminal/special_splash.asm": "c17ee13d5f915eee2aa8f263b32194f64390d80ecc331daf421f5bf5fa89c770"
+  },
+  "limits": [
+    "Explicit original-key variant; ordinary build remains byte-identical.",
+    "Alt-P reuses saved-settings editor, not the original dedicated popup.",
+    "Alt-Z reference/pull-down layout, Alt-D live chooser and Alt-F8 mapping remain required.",
+    "BBS uses synthetic Hayes/nullmodem and actual proxy, not physical SIP/audio/UART.",
+    "No sustained physical, transfer, multiline rendering or complete F01-F16 acceptance."
+  ]
+}

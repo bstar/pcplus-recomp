@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproduce all nine package files in an empty tree of declared source inputs."""
+"""Reproduce every package file in an empty tree of declared source inputs."""
 import argparse
 import json
 import os
@@ -41,7 +41,8 @@ def main():
         subprocess.run([sys.executable, 'standalone/package_special_edition.py', '--build',
                         '--output', 'build/package',
                         '--source-base-commit',manifest['source_base_commit'],
-                        *(['--custom-irq']if manifest.get('experimental_custom_irq')else[])], cwd=fresh, check=True,
+                        *(['--custom-irq']if manifest.get('experimental_custom_irq')else[]),
+                        *(['--original-keys']if manifest.get('experimental_original_keys')else[])], cwd=fresh, check=True,
                        stdout=log, stderr=log, timeout=300,env=environment)
     rebuilt = json.loads((fresh / 'build/package/manifest.json').read_text())
     assert rebuilt['files'] == manifest['files']
@@ -55,7 +56,7 @@ def main():
                   source_base_commit=manifest['source_base_commit'],ancestor_git_unavailable=True,
                   checker_sha256=sha(Path(__file__)), scope=__doc__)
     (out / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
-    print('PASS package reproduction:', len(result['sources']), 'sources, nine files')
+    print('PASS package reproduction:', len(result['sources']), 'sources,',len(result['files']),'files')
 
 
 if __name__ == '__main__':

@@ -1,17 +1,30 @@
 #!/usr/bin/env python3
 """Generate an authored HLP resource, reusing existing command-menu prose."""
-import argparse,ast,hashlib,json,re,struct,textwrap
+import argparse,ast,hashlib,json,re,struct,textwrap,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 STRING = '"(?:\\\\.|[^"\\\\])*"'
-def menu_topics(path):
-    pattern=re.compile(r'^ENTRY\((\w+),\s*('+STRING+r'),\s*((?:'+STRING+r'\s*)+)\);',re.M)
+def menu_topics(path,original_keys=False):
+    # Expand the actual authored declaration block with the pinned C
+    # preprocessor. No headers are needed for text; don't parse an inactive
+    # #else branch or silently omit macro-based titles/concatenated prose.
+    source=path.read_text();start=source.index('#define MENU_TEXT ');end=source.index('#define ROW(')
+    expanded=subprocess.check_output(['cpp','-P','-undef','-nostdinc',
+        *(['-DTERMINAL_ORIGINAL_KEYS'] if original_keys else []),'-'],
+        input=source[start:end],text=True)
+    pattern=re.compile(r'\b(\w+)_(name|help)\[\]\s*=\s*((?:'+STRING+r'\s*)+);')
+    declared={};order=[]
+    for m in pattern.finditer(expanded):
+        if m[1] not in declared:declared[m[1]]={};order.append(m[1])
+        assert m[2] not in declared[m[1]],'Duplicate help declaration'
+        declared[m[1]][m[2]]=b''.join(ast.literal_eval('b'+s) for s in re.findall(STRING,m[3])).decode('cp437')
     topics=[]
-    for m in pattern.finditer(path.read_text()):
-        title=ast.literal_eval('b'+m[2]).decode('cp437')
+    for name in order:
+        assert set(declared[name])=={'name','help'},name
+        title=declared[name]['name']
         title=re.split(r' {2,}',title)[0][:32]
-        body=b''.join(ast.literal_eval('b'+s) for s in re.findall(STRING,m[3])).decode('cp437')
-        topics.append(dict(id='menu.'+m[1],title=title,lines=body.split('\n')))
+        body=declared[name]['help']
+        topics.append(dict(id='menu.'+name,title=title,lines=body.split('\n')))
     assert len(topics)==24,'Command-menu declaration changed; review extraction'
     return topics
 def generate(path):

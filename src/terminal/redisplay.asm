@@ -33,6 +33,12 @@ terminal_redisplay_key_impl:
  jne .key
  cmp ax,0x2c00 ; Alt-Z, maintained command menu and contextual help.
  je .open
+%ifdef TERMINAL_ORIGINAL_KEYS
+ cmp ax,0x1300 ; Original Alt-R: checked recorder dialog through this owner.
+ je .open
+ cmp ax,0x6d00 ; Original Alt-F6: redisplay.
+ je .open
+%endif
  cmp ax,0x8300 ; Alt-=, local filename clipboard.
  je .open
  cmp ax,0x8400 ; Ctrl-PgUp, local redisplay.
