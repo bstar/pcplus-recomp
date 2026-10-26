@@ -85,7 +85,9 @@ The [receipt](validation/directory-storage-bank.json) binds the final candidate:
  editing and discards the draft with no post saved through the actual proxy at
  20ms input-byte pacing. This excludes SIP/DSP, analog and physical CTS/DCD.
 - A clean 760-source export reproduces all ten package files. Six older ordinary/
- LoC.1–5 application controls retain their prior executable bytes.
+ LoC.1–5 application controls retain their prior executable bytes. The same
+ package and both component proofs pass from committed sources at `f6a86e8`,
+ excluding pending telephone-log worktree changes.
 
 The first parent fixture omitted the required mouse 8/4 settings and was rejected
 by both LoC.5 and this candidate; the corrected fixture passes. The native serial

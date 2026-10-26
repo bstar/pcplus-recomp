@@ -420,5 +420,31 @@
     "Old-selection accounting retirement and confirmed UART/profile restoration",
     "Selected-entry adoption/dialing, original interface/F01-F16 and ENiGMA workflows",
     "Real Boca/SPA2102/card and sustained-data/reconnect/transfer acceptance"
-  ]
+  ],
+  "committed_source_proofs": {
+    "package": {
+      "path": "build/directory-storage-shared-committed-package-20261026/result.json",
+      "sha256": "cf1f3b1e9ef32c94ecb9e77b56747b3ca7096355f7242d1b1443da85bcc24c43",
+      "source_commit": "f6a86e8aa7a780bd642e0c4b1066f5d815a199d1",
+      "source_files": 760,
+      "ancestor_git_unavailable": true,
+      "passed": true
+    },
+    "core": {
+      "path": "build/directory-storage-shared-committed-core-20261026/result.json",
+      "sha256": "64aefb39e281569bbadaed698c60fc5d1a7800d162b236d5ae950f0b31e95b29",
+      "source_commit": "f6a86e8aa7a780bd642e0c4b1066f5d815a199d1",
+      "source_files": 20,
+      "ancestor_git_unavailable": true,
+      "passed": true
+    },
+    "actions": {
+      "path": "build/directory-storage-shared-committed-actions-20261026/result.json",
+      "sha256": "aebdbeae8fc167aa4a2046fde465431292d5e24879804775e9107278aa63db87",
+      "source_commit": "f6a86e8aa7a780bd642e0c4b1066f5d815a199d1",
+      "source_files": 22,
+      "ancestor_git_unavailable": true,
+      "passed": true
+    }
+  }
 }
