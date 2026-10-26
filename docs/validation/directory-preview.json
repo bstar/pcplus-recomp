@@ -1,0 +1,380 @@
+{
+  "passed": true,
+  "full_application_complete": false,
+  "selection_adoption_complete": false,
+  "physical_acceptance": false,
+  "card_written": false,
+  "binary_sha256": "11140d1b6558d3a92bb36d20a021addb0cf2f4daa6a37661332c91d79d1fd3ef",
+  "package": "build/special-directory-preview-02-20261025/PCPLUSSE",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "8f54addbd6b57a62f668e988a407c50a6109ae8a0289e082527ea1fea9b44035",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "11140d1b6558d3a92bb36d20a021addb0cf2f4daa6a37661332c91d79d1fd3ef",
+    "VERSION.TXT": "134741e3ffcfd0888bbc175b5f9639d7eb02793d2193e3d33ede7f6724824381",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "source_files": 758,
+  "linked_directory_inputs": 41,
+  "reference_inputs": 84,
+  "full_preview_owner": {
+    "maximum_full_owner_stack": 6292,
+    "stack_budget": 8192,
+    "proposal_sha256": "ff6d22de49abb2eee5fa36457d5d2fd34770dc42588a2484d3de480d6bdb70b3",
+    "actual_COM": 3,
+    "actual_IRQ": 5,
+    "actual_DTE": 38400,
+    "accepted_PRM_reread": false,
+    "adopted": false
+  },
+  "memory": {
+    "near_bytes": 64272,
+    "near_spare_bytes": 1264,
+    "near_relative_segment": 12034,
+    "far_relative_segment": 20895,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 21407,
+    "history_bytes": 63000,
+    "far_end_linear": 405512,
+    "stack_end_linear": 256816,
+    "loaded_module_bytes": 225070,
+    "minimum_allocated_module_bytes": 405520,
+    "retained_parent_paragraphs": 25361,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 16801,
+    "snapshot_image_offset": 63504,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 334320,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 16051,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 256816,
+        "end_linear": 260816
+      },
+      "ed_screen": {
+        "relative_segment": 16051,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 260816,
+        "end_linear": 264816
+      },
+      "program_screen": {
+        "relative_segment": 16051,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 256816,
+        "end_linear": 260816
+      },
+      "redisplay_live": {
+        "relative_segment": 16051,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 260816,
+        "end_linear": 264816
+      },
+      "redisplay_view": {
+        "relative_segment": 16051,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 264816,
+        "end_linear": 268816
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "program_browser_screen_overlay": true,
+    "editor_viewer_screen_overlay": true,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 331816,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 16801,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 332310,
+    "substitute_native_bytes_verified": 53,
+    "substitute_native_dependencies_verified": 4,
+    "substitute_state_words_verified": 4,
+    "far_usage_bytes": 1493,
+    "far_usage_segment": 10192,
+    "far_usage_DS_restore_verified": true,
+    "directory_view_code_bytes": 5710,
+    "directory_view_FS_callbacks_verified": 3,
+    "directory_view_scratch_offset": 3135,
+    "directory_view_scratch_bytes": 512,
+    "directory_view_snapshot_page_bytes": 2788,
+    "directory_preview_proposal_bytes": 1190,
+    "directory_preview_snapshot_bytes": 3978,
+    "directory_preview_capture_policy": 1,
+    "directory_preview_capture_adapter_verified": true,
+    "process_bank_bytes": 661,
+    "process_bridge_pairs_verified": 1,
+    "process_near_entry_bytes": 22,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "recording_matcher_lead_site": 38570,
+    "recording_rx_far_call_sites": [
+      38573,
+      15124
+    ],
+    "recording_rx_callback_site": 108925,
+    "recording_actor_guard_sites": [
+      15124,
+      15523,
+      25181,
+      29232,
+      36372,
+      38899,
+      160392,
+      161493,
+      164584
+    ],
+    "recording_UI_boundary_sites": [
+      185464,
+      187018,
+      108879
+    ],
+    "recording_UI_optimized_sites": [],
+    "recording_tx_origin_bytes": 128,
+    "recording_tx_origin_start": 111159,
+    "recording_tx_far_call_sites": [
+      39369,
+      36689,
+      40251,
+      24698
+    ],
+    "recording_tx_callback_site": 111150,
+    "recording_terminal_state_bytes": 392,
+    "recording_terminal_bank_functions_verified": 9,
+    "recording_terminal_far_call_sites": [
+      23165,
+      24084
+    ],
+    "recorder_code_literal_bytes_verified": 223,
+    "recorder_code_literal_sites": [
+      153436,
+      153453,
+      153467,
+      153487,
+      153507,
+      153513,
+      153533,
+      153564,
+      153649
+    ],
+    "recording_bank_functions_verified": 14,
+    "recording_resident_callbacks_verified": 9,
+    "recording_adapter_far_call_sites": [
+      60650,
+      60674,
+      60698
+    ],
+    "capture_reservation_far_bindings_verified": 2,
+    "capture_reservation_far_call_sites": [
+      58525,
+      152505
+    ],
+    "capture_reservation_initialized_bytes": 8,
+    "command_menu_banked_call_sites": [
+      129710,
+      129825,
+      130352
+    ],
+    "command_menu_code_segment": 10970,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "configuration_bridge_pairs_verified": 94,
+    "transfer_ui_far_entries_verified": 4,
+    "transfer_ui_resident_callbacks_verified": 3,
+    "redisplay_bridge_pairs_verified": 4,
+    "viewer_live_plane_admission_verified": true,
+    "scroll_field_bridge_pairs_verified": 3,
+    "line_preflight_far_calls_verified": 2,
+    "wide_character_far_calls_verified": 2,
+    "wide_character_prepare_far_calls_verified": 1,
+    "script_window_keyboard_far_adapters_verified": true,
+    "aspect_command_preflight_verified": true,
+    "aspect_viewport_lease_words_verified": 3,
+    "protected_erase_far_bridge_verified": true,
+    "protected_erase_native_dependencies_verified": 4,
+    "erase_after_projection_initially_idle": true,
+    "wide_clear_rectangle_route_verified": true,
+    "alternate_output_far_bridge_verified": true,
+    "alternate_output_native_dependencies_verified": 4,
+    "source_owned_output_table_bytes": 256,
+    "aspect_far_services_verified": 17,
+    "aspect_resident_far_references_verified": 21,
+    "aspect_controller_read_references_verified": 1,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 50,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_controller_references_verified": 5,
+    "line_attribute_video_callbacks_verified": 2,
+    "line_controller_entry_pairs_verified": 4,
+    "line_controller_register_callbacks_verified": 3,
+    "line_controller_code_bytes": 421,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "mouse_bridge_pairs_verified": 10,
+    "mouse_code_bytes": 2896,
+    "mouse_shared_native_state_bytes": 28,
+    "resident_code_bytes": 65506,
+    "resident_code_spare_bytes": 30,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65506
+      },
+      {
+        "name": "SPLASH_CODE",
+        "kind": "CODE",
+        "relative_segment": 4094,
+        "offset": 2,
+        "bytes": 377
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4118,
+        "offset": 0,
+        "bytes": 12908
+      },
+      {
+        "name": "PROCESS_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4925,
+        "offset": 0,
+        "bytes": 661
+      },
+      {
+        "name": "HOOK_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4967,
+        "offset": 0,
+        "bytes": 27318
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6675,
+        "offset": 0,
+        "bytes": 53351
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10010,
+        "offset": 0,
+        "bytes": 2900
+      },
+      {
+        "name": "USAGE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10192,
+        "offset": 0,
+        "bytes": 1493
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10286,
+        "offset": 0,
+        "bytes": 1461
+      },
+      {
+        "name": "TRAP_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10378,
+        "offset": 0,
+        "bytes": 864
+      },
+      {
+        "name": "MOUSE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10432,
+        "offset": 0,
+        "bytes": 2896
+      },
+      {
+        "name": "DIRECTORY_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10613,
+        "offset": 0,
+        "bytes": 5710
+      },
+      {
+        "name": "REFERENCE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10970,
+        "offset": 0,
+        "bytes": 17022
+      }
+    ],
+    "far_code_bridge_pairs_verified": 161
+  },
+  "older_application_controls": 5,
+  "reports": {
+    "build/terminal-directory-preview-c6142e053593/directory-view-checks.json": {
+      "sha256": "c848ffbbb42c611fb9214e14d62bef70ca1bfd33f76a4902cdcd480d43a9f960",
+      "passed": true
+    },
+    "build/terminal-directory-preview-c6142e053593/reference-checks.json": {
+      "sha256": "31b493a8f8c8f193b6ae07a367086beef327d6b6821e62e6bd4e5f3562c714df",
+      "passed": true
+    },
+    "build/terminal-directory-preview-c6142e053593/original-key-checks.json": {
+      "sha256": "389f688f315f49a35bfc2a7f4e0f4cbafb0cc93c3886c6734e666a2a9337ce17",
+      "passed": true
+    },
+    "build/terminal-directory-preview-c6142e053593/shared-screen-checks.json": {
+      "sha256": "2382b60686c8120e638a271ca7cdc34a542d899be05b80db6560a2b1890460a5",
+      "passed": true
+    },
+    "build/directory-view-dos/preview-final-20261025/result.json": {
+      "sha256": "dea3b8d9d7f9108fe1e5980f81f88fa329ced850d85bc03b5d2b0c937e81eeee",
+      "passed": true
+    },
+    "build/directory-preview-start-final-20261025/result.json": {
+      "sha256": "747869518b1d1568eb83364fea5dfebf82dc3768fbee49b91881087c508255c8",
+      "passed": true
+    },
+    "build/directory-preview-setup-final-20261025/result.json": {
+      "sha256": "951f017527dac70282ff59b28a974ed5e0d1b14d34e0c38a9a628f259f45ccfe",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/directory-preview-final-stock-20261025/proxy-integration.json": {
+      "sha256": "00e1ea7fb9dc1e07ba23fa3e2ea91c70e236cb3b5d69f8ea6e6d72c024f0d6a0",
+      "passed": true
+    },
+    "build/directory-preview-package-final-source-20261025/result.json": {
+      "sha256": "6d45737a03f862d07c8ac50c94119ded6f5aa77c24f20ad6935f1af028dc5e35",
+      "passed": true
+    },
+    "build/directory-preview-controls-final-20261025.json": {
+      "sha256": "80877458ffa837767f72a61bbb1907af257a54928d90d20ebf389277682b3664",
+      "passed": true
+    }
+  },
+  "visual_artifacts": {
+    "build/directory-view-dos/preview-final-20261025/preview.png": "c05e12f416fb07dbc47ecf36a3a6a888c523cb7cfa5511045e1802d638a30912",
+    "build/directory-view-dos/preview-final-20261025/preview.bin": "b146c732119711888f320f21db92a2ca66fcdd960a902ff47ebce9532c89ad98",
+    "build/directory-preview-setup-final-20261025/drive/SPLASH.BIN": "af49bb0a3a6444c49dda0f6ae986647ab46937f5d9db6a1766a5b0f14b9f91f0"
+  },
+  "pending": [
+    "Canonical resource identities/claims and resource staging",
+    "Baseline freshness and old-selection accounting",
+    "Confirmed UART/profile/transfer handoff and selected-entry dialing",
+    "Full F01-F16, ENiGMA workflows and real Boca/SPA2102/card acceptance"
+  ],
+  "original_key_inputs": 29
+}

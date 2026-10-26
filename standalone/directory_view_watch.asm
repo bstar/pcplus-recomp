@@ -5,9 +5,17 @@ ORG 100h
 jmp start
 old_vector: dw 0,0
 sample: dw 0x4456,0,0
+%ifdef DIRECTORY_PREVIEW
+%define CAPTURE_SIZE 16006
+%else
+%define CAPTURE_SIZE 12006
+%endif
 reference_frame: times 4000 db 0
 refusal_frame: times 4000 db 0
 browser_frame: times 4000 db 0
+%ifdef DIRECTORY_PREVIEW
+preview_frame: times 4000 db 0
+%endif
 last_sum: dw 0
 stable: dw 0
 handler:
@@ -30,6 +38,19 @@ handler:
  jne .done
  cmp word [es:6],0x1f43
  jne .done
+%ifdef DIRECTORY_PREVIEW
+ cmp word [es:3842],0x1f50 ; Preview footer written after proposed fields.
+ jne .path
+ cmp word [es:484],0x1f53 ; SELECTED ENTRY heading, row3 col2.
+ jne .path
+ test word [sample+2],16
+ jnz .done
+ mov di,preview_frame
+ call capture
+ or word [sample+2],16
+ jmp .done
+.path:
+%endif
  cmp word [es:3842],0x1f45 ; Enter footer in path prompt.
  jne .loading
  or word [sample+2],8
@@ -133,7 +154,7 @@ collect:
  cli
  mov si,sample
  mov di,buffer
- mov cx,12006
+ mov cx,CAPTURE_SIZE
 .copy:
  mov al,[es:si]
  mov [di],al
@@ -155,11 +176,11 @@ collect:
  jc failed
  mov bx,ax
  mov dx,buffer
- mov cx,12006
+ mov cx,CAPTURE_SIZE
  mov ah,40h
  int 21h
  jc failed
- cmp ax,12006
+ cmp ax,CAPTURE_SIZE
  jne failed
  mov ah,3eh
  int 21h
@@ -200,4 +221,4 @@ filename: db 'D:\DIRVIEW.BIN',0
 fontname: db 'D:\VGA16.BIN',0
 font_segment: dw 0
 font_offset: dw 0
-buffer: times 12006 db 0
+buffer: times CAPTURE_SIZE db 0

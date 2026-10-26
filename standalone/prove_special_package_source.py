@@ -58,7 +58,8 @@ def main():
                         *(['--custom-irq']if manifest.get('experimental_custom_irq')else[]),
                         *(['--original-keys']if manifest.get('experimental_original_keys')else[]),
                         *(['--original-reference']if manifest.get('experimental_original_reference')else[]),
-                        *(['--directory-view']if manifest.get('experimental_directory_view')else[])], cwd=fresh, check=True,
+                        *(['--directory-view']if manifest.get('experimental_directory_view')else[]),
+                        *(['--directory-preview']if manifest.get('experimental_directory_preview')else[])], cwd=fresh, check=True,
                        stdout=log, stderr=log, timeout=300,env=environment)
     rebuilt = json.loads((fresh / 'build/package/manifest.json').read_text())
     assert rebuilt['files'] == manifest['files']

@@ -161,4 +161,22 @@ terminal_session_capture_far:
 .bad_extent:
  stc
  ret
+%ifdef TERMINAL_DIRECTORY_PREVIEW
+; Far-cdecl adapter for CONFIG_CODE's caller-owned actual-session snapshot.
+; Keep it in HOOK_CODE; the resident segment is not enlarged.
+global _directory_preview_capture
+_directory_preview_capture:
+ push bp
+ mov bp,sp
+ push bx
+ push dx
+ mov ax,[bp+6]
+ xor dx,dx
+ mov bx,1
+ call far terminal_session_capture_far
+ pop dx
+ pop bx
+ pop bp
+ retf
+%endif
 %endif

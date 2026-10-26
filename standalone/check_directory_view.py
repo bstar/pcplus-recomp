@@ -11,7 +11,7 @@ import re
 import tempfile
 from pathlib import Path
 from unicorn import UC_HOOK_CODE
-from unicorn.x86_const import (UC_X86_REG_AX, UC_X86_REG_BX, UC_X86_REG_CX, UC_X86_REG_CS, UC_X86_REG_IP,
+from unicorn.x86_const import (UC_X86_REG_AX, UC_X86_REG_BX, UC_X86_REG_CX, UC_X86_REG_CS, UC_X86_REG_IP, UC_X86_REG_BP, UC_X86_REG_EFLAGS,
     UC_X86_REG_DX, UC_X86_REG_DS, UC_X86_REG_SS, UC_X86_REG_SP)
 import struct
 import check_transport as transport
@@ -41,12 +41,22 @@ def main():
             self.short = short
             self.close_error = close_error
             self.leases = []
+            self.preview_leases = []
             super().__init__()
             if data is not None:
                 self.files['PCPLUS.DIR'] = bytearray(data)
             self.uc.hook_add(UC_HOOK_CODE, self.observe)
 
         def observe(self, uc, address, size, user):
+            if address == self.symbols.get('_directory_preview_stage'):
+                assert uc.reg_read(UC_X86_REG_DS) == uc.reg_read(UC_X86_REG_SS) == self.ds
+                at = self.data_base + uc.reg_read(UC_X86_REG_SP) + 4
+                po, ps, entry, path, outo, outs = struct.unpack('<6H', uc.mem_read(at, 12))
+                assert ps*16+po == self.symbols['redisplay_snapshot']+1394
+                assert outs*16+outo == self.symbols['redisplay_snapshot']+2788
+                assert self.get('_redisplay_active') and self.get('_command_menu_active')
+                self.preview_leases.append(entry)
+                return
             if address != self.symbols['_directory_reader_begin']:
                 return
             assert uc.reg_read(UC_X86_REG_DS) == uc.reg_read(UC_X86_REG_SS) == self.ds
@@ -147,7 +157,20 @@ def main():
                 try:inspect_terminal_memory(target, transport.MAP)
                 except AssertionError:pass
                 else:raise AssertionError(('Damaged directory ABI accepted', kind))
-        return 3
+            if manifest.get('experimental_directory_preview'):
+                adapter = entries['_directory_preview_capture']
+                reloc = next(header[12]+i*4 for i in range(header[3]) if
+                    (lambda pair: pair[0]+pair[1]*16)(struct.unpack_from('<HH',image,header[12]+i*4)) == adapter+16)
+                for kind in ('configured-policy','caller-word','capture-relocation'):
+                    damaged = bytearray(image)
+                    if kind == 'configured-policy':damaged[module+adapter+11] = 0
+                    elif kind == 'caller-word':damaged[module+adapter+7] = 8
+                    else:struct.pack_into('<HH',damaged,reloc,0,0)
+                    target.write_bytes(damaged)
+                    try:inspect_terminal_memory(target,transport.MAP)
+                    except AssertionError:pass
+                    else:raise AssertionError(('Damaged preview capture accepted',kind))
+        return 6 if manifest.get('experimental_directory_preview') else 3
     check('reject-damaged-DOS-read-stack-forwarding-cleanup-and-loader-relocation', damaged_bindings)
 
     def loading():
@@ -285,8 +308,181 @@ def main():
         return 2
     check('reference-and-browser-entry-return-to-their-own-parent', entry_paths)
 
+    preview_evidence = {}
+    if manifest.get('experimental_directory_preview'):
+        from check_setup_model import image
+        from check_startup_import import terminal_expected
+        from check_modem_import import expected as modem_expected
+        from check_directory_live import word
+
+        def publish(m, raw):
+            source = m.stage_near(raw)
+            name = '_hook_baseline_publish'
+            segment, offset = m.entries[name]
+            words = [m.return_offset, m.code_segment, source, 1]
+            top = m.offset('terminal_stack_top')
+            sp = top-2*len(words)
+            m.uc.mem_write(m.data_base+sp, struct.pack('<4H', *words))
+            for reg, value in [(UC_X86_REG_CS, m.base_segment+segment),
+                               (UC_X86_REG_DS, m.ds), (UC_X86_REG_SS, m.ds),
+                               (UC_X86_REG_SP, sp), (UC_X86_REG_BP, 0xbabe),
+                               (UC_X86_REG_EFLAGS, 0x202)]:
+                m.uc.reg_write(reg, value)
+            m.returned = False
+            m.uc.emu_start(m.symbols[name], 0, count=200000)
+            assert m.returned and m.uc.reg_read(UC_X86_REG_AX) == 0
+            assert m.uc.reg_read(UC_X86_REG_SP) == sp+4
+            m.fixture_scratch_end = None
+
+        def configured(*, raw=None, data=fixture(), mask=15):
+            m = Directory(data=data)
+            raw = image() if raw is None else raw
+            publish(m, raw)
+            serial = terminal_expected(image())
+            m.uc.mem_write(m.symbols['terminal_configuration_values'], serial)
+            modem = modem_expected(image())
+            m.uc.mem_write(m.symbols['terminal_modem_settings'], modem)
+            fields = {0:'terminal_port_number',2:'terminal_baud_low',4:'terminal_baud_high',
+                6:'terminal_parity',8:'terminal_data_bits',10:'terminal_stop_bits',
+                12:'uart_software_flow',14:'uart_hardware_flow',16:'csi_terminal_id',
+                18:'attributes_normal_value',20:'attributes_bold_value',22:'attributes_preset_value',
+                24:'attributes_reverse_value',26:'attributes_underline_value',
+                28:'render_autowrap',30:'scroll_enabled',32:'uart_port_rbr',34:'uart_irq_indices',
+                38:'terminal_macro_character_delay_units',40:'terminal_translation_mode',42:'_clipboard_separator'}
+            for at, name in fields.items():
+                m.put(name, struct.unpack_from('<H', serial, at)[0])
+            m.put('terminal_macro_pause_character', serial[36], 1)
+            m.put('terminal_modem_pause', modem[14], 1)
+            m.put('terminal_break_delay_units', struct.unpack_from('<H', modem, 366)[0])
+            # Actual transport intentionally differs from accepted/configured PRM.
+            m.put('terminal_port_number', 3);m.put('uart_port_rbr', 0x3e8)
+            m.put('uart_irq_indices', 5);m.put('terminal_baud_low', 38400)
+            m.put('terminal_option_mask', mask)
+            m.uc.mem_write(m.symbols['terminal_config_path'], b'ACCEPTED.PRM\0'+bytes(51))
+            m.uc.mem_write(m.symbols['terminal_dial_target'], b'CURRENT:23'+bytes(54))
+            m.put('connection_state', 6)
+            m.open();m.finish()
+            return m
+
+        def state(m):
+            # Entire near data before the stack is too broad: UI-private phase
+            # and reader state must change. Bind every live adoption plane.
+            names = [('terminal_configuration_values',44),('terminal_modem_settings',368),
+                ('terminal_directory_plan',214),('terminal_directory_context',496),
+                ('terminal_dial_target',64),('terminal_keymap',948),('terminal_action_definitions',540),
+                ('terminal_keyboard_path',64),('terminal_actions_path',64),
+                ('terminal_directory_path',64),('_terminal_transfer_preferences',66),
+                ('terminal_baseline_storage',1272)]
+            values = {n: bytes(m.uc.mem_read(m.symbols[n], size)) for n, size in names}
+            for n in ('terminal_directory_entry','terminal_option_mask','connection_state',
+                'terminal_port_number','terminal_baud_low','terminal_baud_high',
+                'terminal_parity','terminal_data_bits','terminal_stop_bits',
+                'uart_port_rbr','uart_irq_indices','uart_software_flow','uart_hardware_flow',
+                'csi_terminal_id','terminal_translation_mode','terminal_break_delay_units'):
+                values[n] = m.get(n)
+            return values
+
+        def prepare(m):
+            io = len(m.directory_io)
+            m.key(13)
+            assert b'Checking the selected entry' in m.text()
+            m.idle()
+            assert len(m.directory_io) == io and not m.handles
+
+        def proposed():
+            m = configured()
+            before = state(m)
+            end = m.symbols['redisplay_snapshot']+3978
+            m.uc.mem_write(end, b'AFTER-PROPOSAL')
+            high = [0]
+            def stack(uc, address, size, user):
+                assert uc.reg_read(UC_X86_REG_SS) == m.ds
+                used = m.offset('terminal_stack_top')-uc.reg_read(UC_X86_REG_SP)
+                high[0] = max(high[0], used)
+                assert 0 <= used <= 8192, 'full preview owner exceeded8KiB stack'
+            hook = m.uc.hook_add(UC_HOOK_CODE, stack)
+            prepare(m)
+            m.uc.hook_del(hook)
+            assert b'SELECTED ENTRY // PROPOSED SETTINGS' in m.text()
+            assert b'LoSs oF CoNtRoL' in m.text() and b'38400' in m.text()
+            proposal = bytes(m.uc.mem_read(m.symbols['redisplay_snapshot']+2788,1190))
+            assert struct.unpack_from('<H',proposal,496)[0] == 3
+            assert struct.unpack_from('<H',proposal,496+34)[0] == 5
+            assert struct.unpack_from('<H',proposal,496+2)[0] == 38400
+            assert struct.unpack_from('<H',proposal,496+16)[0] == 6
+            assert proposal[496+412+35:496+412+39] == b'555\0'
+            assert proposal[2:252] == fixture()[:250]
+            assert proposal[252:366] == fixture()[250:364]
+            assert b'SECRETA' not in m.text() and b'HIDDENPASS' not in m.text()
+            assert m.preview_leases == [1]
+            assert bytes(m.uc.mem_read(end,14)) == b'AFTER-PROPOSAL'
+            assert state(m) == before and not m.tx
+            # Real parser work/reply while the proposal remains on screen.
+            m.call('terminal_redisplay_before');ordinary(m,b'\x1b[7;1HBBS-PREVIEW\x1b[6n')
+            m.idle();m.drain()
+            assert b'SELECTED ENTRY' in m.text() and bytes(m.tx) == b'\x1b[7;12R'
+            m.key(27);assert b'LoSs oF CoNtRoL' in m.text() and b'PROPOSED SETTINGS' not in m.text()
+            m.key(27);assert b'BBS-PREVIEW' in m.text() and not m.get('_redisplay_active')
+            assert state(m) == before and bytes(m.files['PCPLUS.DIR']) == fixture()
+            preview_evidence.update(maximum_full_owner_stack=high[0],stack_budget=8192,
+                proposal_sha256=hashlib.sha256(proposal).hexdigest(),actual_COM=3,actual_IRQ=5,
+                actual_DTE=38400,accepted_PRM_reread=False,adopted=False)
+            return 1
+        check('preview-accepted-baseline-actual-session-privacy-UART-return-and-full-stack',proposed)
+
+        def refusals():
+            cases_ = [(word(image(),0,4),fixture(),b'serial settings'),
+                      (image(),fixture(),b'name is unsupported')]
+            # Unsupported script spelling in a strictly published raw record.
+            bad = bytearray(fixture());bad[250+0x34:250+0x3d] = b'BAD.EXE\0\0'
+            cases_[1] = (image(),bytes(bad),b'name is unsupported')
+            for raw, data, notice in cases_:
+                m = configured(raw=raw,data=data)
+                before = state(m)
+                at = m.symbols['redisplay_snapshot']+2788
+                m.uc.mem_write(at,b'\xcc'*1190)
+                prepare(m)
+                assert notice in m.text() and b'not been applied' in m.text()
+                assert bytes(m.uc.mem_read(at,1190)) == b'\xcc'*1190 and state(m) == before
+                m.key(27);m.key(27)
+                assert not m.get('_redisplay_active') and not m.tx
+            m = Directory();m.open();m.finish();prepare(m)
+            assert b'Accepted PRM settings unavailable' in m.text()
+            m.key(27);m.key(27)
+            m = configured()
+            store = m.symbols['terminal_baseline_image']
+            m.uc.mem_write(store,b'\xff')
+            prepare(m);assert b'Accepted PRM settings unavailable' in m.text()
+            m.key(27);m.key(27)
+            return 4
+        check('preview-global-before-CLI-binding-missing-and-damaged-baseline-refusals',refusals)
+
+        def preview_cancel():
+            m = configured();before = state(m)
+            m.key(13);assert b'Checking the selected entry' in m.text()
+            m.key(27);m.idle()
+            assert b'PROPOSED SETTINGS' not in m.text() and state(m) == before
+            m.key(27)
+            assert not m.get('_redisplay_active') and not m.handles and not m.tx
+            return 1
+        check('cancel-preview-before-preparation-retains-session-and-reader-ownership',preview_cancel)
+
+        def long_path_and_rate():
+            raw=bytearray(image());path=b'C:\\'+b'ABCDEFG\\'*7+b'LAST'
+            assert len(path)==63
+            raw[0x31c:0x35c]=path+b'\0'
+            data=bytearray(fixture());struct.pack_into('<H',data,250+0x2e,8)
+            m=configured(raw=bytes(raw),data=bytes(data),mask=0);before=state(m)
+            prepare(m)
+            assert b'115200' in m.text() and m.text()[1537:1600]==path
+            assert state(m)==before and not m.tx
+            m.key(27);m.key(27)
+            return 1
+        check('preview-full63-byte-download-path-and115200-baud-without-adoption',long_path_and_rate)
+
     result = dict(passed=True, cases=cases, inputs=sum(r['inputs'] for r in cases),
         binary_sha256=manifest['binary_sha256'],
+        preview=preview_evidence,
         sources={str(p.relative_to(transport.ROOT)): sha(p) for p in
                  (Path(__file__).resolve(), transport.ROOT / 'standalone/directory_view_fixture.py')},
         scope=__doc__ + ' Actual compiled code with observed far page/scratch leases, bounded IO, both viewer entry paths, background parsing and exact reply bytes, cancel/stop/failure and unchanged selection/file. Live selection adoption and physical driver/serial acceptance remain open.')

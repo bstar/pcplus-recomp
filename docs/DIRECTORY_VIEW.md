@@ -1,5 +1,8 @@
 # Serviced Alt-D view — 2.01-LoC.4
 
+The later [LoC.5 preview](DIRECTORY_PREVIEW.md) adds validated selected-entry
+preview from the accepted baseline and actual session; adoption remains open.
+
 The later [handle-inheritance correction](DIRECTORY_HANDLE_INHERITANCE.md)
 protects active/uncertain directory handles from DOS children. Its package and
 hash supersede this original view checkpoint's staging details.

@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[LoC.5 live directory preview](docs/DIRECTORY_PREVIEW.md) connects staged
+selection to Alt-D Enter using the accepted in-memory PRM and actual session.
+Full owner stack use is 6,292/8,192 bytes; resident code and near storage stay
+unchanged. Linked/DOS preview, stock ENiGMA editor, packaged START/SETUP and
+758-source ten-file reproduction pass. Selected-entry adoption/dialing,
+resource identities, old-selection accounting, physical/card and complete
+F01–F16 acceptance remain open.
+
 [Validated selection proposals](docs/DIRECTORY_SELECTION.md) now retain a
 chosen published record, paths, configuration and transfer preferences without
 changing the live session. 294 golden vectors pass linked and DOS8086 execution

@@ -26,6 +26,7 @@ parser.add_argument('--special-edition',action='store_true',help='Show the magen
 parser.add_argument('--original-keys',action='store_true',help='Restore original recorder/setup/history shortcuts and unmapped page-key transfers')
 parser.add_argument('--original-reference',action='store_true',help='Original 39-command Alt-Z reference and guarded command refusals; implies --original-keys')
 parser.add_argument('--directory-view',action='store_true',help='Serviced read-only Alt-D view; implies --original-reference; dialing adoption remains pending')
+parser.add_argument('--directory-preview',action='store_true',help='Validate and preview an Alt-D selection; implies --directory-view; adoption remains pending')
 parser.add_argument('--phone-log-bank',action='store_true',help='Link the checked logger code bank; event/startup integration remains disabled')
 parser.add_argument('--native-reset-bank',action='store_true',help='Link the experimental namespaced native bank; peer width ownership remains disabled')
 parser.add_argument('--native-reset-static',action='store_true',help='Retain the larger static bank as a memory regression control')
@@ -33,6 +34,9 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.directory_preview:
+ args.directory_view=True
+ assert args.session_baseline and args.session_capture
 if args.directory_view:args.original_reference=True
 if args.original_reference:args.original_keys=True
 if args.session_capture:assert args.directory_keys and args.process_bank
@@ -101,6 +105,7 @@ if args.special_edition:out_name+='-special'
 if args.original_keys:out_name='terminal-original-keys-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.original_reference:out_name='terminal-reference-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_view:out_name='terminal-directory-view-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
+if args.directory_preview:out_name='terminal-directory-preview-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
 if args.native_reset_transaction:out_name+='-transaction'
@@ -208,6 +213,7 @@ for index,source in enumerate(sources):
  if args.original_keys:options+=['-DTERMINAL_ORIGINAL_KEYS']
  if args.original_reference:options+=['-DTERMINAL_REFERENCE']
  if args.directory_view:options+=['-DTERMINAL_DIRECTORY_VIEW']
+ if args.directory_preview:options+=['-DTERMINAL_DIRECTORY_PREVIEW']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
@@ -269,6 +275,7 @@ c_sources += [ROOT/'src/translation/xlt_live.c',ROOT/'src/redisplay/redisplay.c'
 c_sources += [ROOT/'src/redisplay/command_menu.c',ROOT/'src/terminal/script_launch.c']
 if args.original_reference:c_sources.append(ROOT/'src/redisplay/command_reference.c')
 if args.directory_view:c_sources += [ROOT/'src/redisplay/directory_view.c',ROOT/'src/directory/directory_reader.c',ROOT/'src/directory/directory_reader_fs.c']
+if args.directory_preview:c_sources += [ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c']
 c_sources += sorted((ROOT/'src/clipboard').glob('*.c'))
 c_sources += [ROOT/'src/transfer'/name for name in ['download_file.c','download_fs.c','native_file_bridge.c','terminal_receive.c']]
 c_sources += [ROOT/'src/transfer/download_compare.c']
@@ -296,6 +303,7 @@ if args.hook_probe:hook_sources.add(ROOT/'standalone/hook_transaction_probe.c')
 if args.input_probe:hook_sources.add(ROOT/'standalone/hook_input_probe.c')
 c_sources+=sorted(hook_sources)
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
+if args.directory_preview:config_sources.update({ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c'})
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
 config_sources.add(ROOT/'src/translation/xlt_dos.c')
@@ -371,6 +379,7 @@ for source in c_sources:
  if args.original_keys:options+=['-dTERMINAL_ORIGINAL_KEYS']
  if args.original_reference:options+=['-dTERMINAL_REFERENCE']
  if args.directory_view:options+=['-dTERMINAL_DIRECTORY_VIEW']
+ if args.directory_preview:options+=['-dTERMINAL_DIRECTORY_PREVIEW']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
  if args.register_handoff:options+=['-dTERMINAL_REGISTER_HANDOFF']
@@ -452,6 +461,7 @@ inputs += [ROOT/'standalone/omf_imports.py',Path(__file__).resolve()]
 inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
 if args.session_projection:inputs += [ROOT/'src/config/prm_projection.h',ROOT/'src/terminal/session_projection.h']
 if args.session_baseline:inputs += [ROOT/'src/terminal/session_baseline.h']
+if args.directory_preview:inputs += [ROOT/'src/terminal/directory_preview.h']
 if args.register_handoff:inputs += [ROOT/'src/terminal/register_owner.h',ROOT/'src/aspect/register_handoff.h',ROOT/'src/aspect/register_codec.h']
 if args.hook_return:inputs.append(ROOT/'src/config/hook_return.h')
 if args.hook_execute:inputs += [ROOT/'src/terminal/hook_transaction.h',ROOT/'src/process/hook_owner.h',ROOT/'src/process/hook_exchange.h']
@@ -466,6 +476,9 @@ manifest={'experimental_directory_keys':args.directory_keys,'experimental_aspect
 manifest['experimental_original_keys']=args.original_keys
 manifest['experimental_original_reference']=args.original_reference
 manifest['experimental_directory_view']=args.directory_view
+manifest['experimental_directory_preview']=args.directory_preview
+if args.directory_preview:
+ manifest['limitations'].append('LoC.5: Enter in a published Alt-D page stages and previews a selection from the accepted in-memory PRM and actual session capture. Pure preparation runs on a foreground idle turn. The existing empty command snapshot lends1190 more far bytes after its2788-byte page lease. No active target/settings/resource/accounting changes occur; validated adoption and dialing remain pending. Paths retain spellings, not canonical claims; preview success does not prove resource availability or physical compatibility.')
 manifest['directory_filesystem_import_adapters']=directory_fs_adapters
 if args.directory_view:
  manifest['limitations'].append('LoC.4: Alt-D opens a serviced read-only directory view. Explicit path, bounded incremental IO and separate far staging publish pages only after complete read/probe/close. Arrows/page/Home/End browse; F2 changes file and F5 reloads. Current target/configuration/connection and deferred accounting identity stay unchanged. This is the view component; live dialing/profile/key/script/translation/accounting adoption remains unfinished. Borrowed startup scratch and empty command snapshot are mutually exclusive with their other owners. Driver call-time and physical serial integrity remain unverified.')

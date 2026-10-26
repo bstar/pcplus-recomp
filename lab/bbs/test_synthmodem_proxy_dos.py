@@ -28,7 +28,9 @@ def main():
     p.add_argument('--byte-delay-ms', type=int, choices=range(21), default=2)
     p.add_argument('--reference-overlay', action='store_true', help='Observe Alt-Z/refusal during the stock BBS editor workflow')
     p.add_argument('--directory-overlay', action='store_true', help='Observe read-only Alt-D loading/pages during the stock editor workflow')
+    p.add_argument('--directory-preview-overlay', action='store_true', help='Observe validated Alt-D preview inside the stock editor workflow')
     args = p.parse_args()
+    if args.directory_preview_overlay:args.directory_overlay=True
     assert re.fullmatch('[A-Za-z0-9_-]+', args.label)
     assert not (args.reference_overlay and args.directory_overlay)
     assert process_pid(), 'Start the owned stock ENiGMA fixture first'
@@ -66,10 +68,10 @@ def main():
             assert json.loads((binary.parent/'manifest.json').read_text())['experimental_directory_view']
             marker='K E Y T E S T enter p1800 '
             assert keys.count(marker)==1
-            keys=keys.replace(marker,marker+'a-d p600 enter p3500 end p3500 escape p500 ')
+            keys=keys.replace(marker,marker+('a-d p600 enter p3500 enter p1800 escape p500 end p3500 escape p500 ' if args.directory_preview_overlay else 'a-d p600 enter p3500 end p3500 escape p500 '))
             observer=base/(args.label+'-observer.COM')
             assert not observer.exists()
-            subprocess.run(['nasm','-fbin',str(ROOT/'standalone/directory_view_watch.asm'),'-o',str(observer)],check=True)
+            subprocess.run(['nasm','-fbin',*(['-DDIRECTORY_PREVIEW']if args.directory_preview_overlay else[]),str(ROOT/'standalone/directory_view_watch.asm'),'-o',str(observer)],check=True)
         command = [sys.executable, str(ROOT/'lab/bbs/editor_dos_probe.py'), str(binary),
             'enigma', '--port', str(ready['endpoint']['port']),
             '--server-log', str(SOURCE/'logs/enigma-bbs.log'), '--label', args.label,
@@ -100,12 +102,17 @@ def main():
             checks['unavailable_AltD_observed']=flags&2!=0 and b'Not available in this build:' in capture[4006:8006:2]
             observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'REFVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
         if args.directory_overlay:
-            capture=(output/'DIRVIEW.BIN').read_bytes();assert len(capture)==12006
+            capture=(output/'DIRVIEW.BIN').read_bytes();assert len(capture)==(16006 if args.directory_preview_overlay else 12006)
             magic,flags,ticks=struct.unpack_from('<3H',capture)
             first,last,loading=(capture[6+i*4000:4006+i*4000:2] for i in range(3))
             checks['directory_prompt_and_loading']=magic==0x4456 and flags&12==12 and b'Reading directory...' in loading
             checks['directory_first_and_last_pages']=flags&3==3 and b'LoSs oF CoNtRoL' in first and b'FINAL 200' in last
             checks['no_private_directory_fields']=all(b'HIDDENPASS' not in frame and b'SECRETA' not in frame for frame in (first,last,loading))
+            if args.directory_preview_overlay:
+                proposed=capture[12006:16006:2]
+                checks['directory_preview_observed']=flags&16!=0 and b'SELECTED ENTRY // PROPOSED SETTINGS' in proposed
+                checks['preview_target_and_DTE']=b'555' in proposed and b'19200' in proposed
+                checks['preview_privacy']=b'HIDDENPASS' not in proposed and b'SECRETA' not in proposed
             observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'DIRVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
         result = dict(passed=all(checks.values()), checks=checks,
             bridge=ready, command=command, binary_sha256=sha(binary),

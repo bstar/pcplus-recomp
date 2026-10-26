@@ -17,18 +17,21 @@ def main():
     parser.add_argument('--terminal', type=Path, required=True)
     parser.add_argument('--label', required=True)
     parser.add_argument('--missing', action='store_true', help='Exercise an actual missing-file notice and live return')
+    parser.add_argument('--preview', action='store_true', help='Observe selected-entry preview before live return')
     args = parser.parse_args()
     binary = args.terminal.resolve()
     manifest = json.loads((binary.parent / 'manifest.json').read_text())
     sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
     assert manifest['experimental_directory_view'] and sha(binary) == manifest['binary_sha256']
+    assert not (args.preview and args.missing)
+    if args.preview:assert manifest['experimental_directory_preview']
     for name, digest in manifest['sources'].items():
         assert sha(driver.ROOT / name) == digest, name
     assert args.label and all(c.isalnum() or c in '-_' for c in args.label)
     out = driver.ROOT / 'build/directory-view-dos' / args.label
     out.mkdir(parents=True, exist_ok=False)
     observer = out / 'DIRWATCH.COM'
-    subprocess.run(['nasm', '-fbin', str(driver.ROOT / 'standalone/directory_view_watch.asm'), '-o', str(observer)], check=True)
+    subprocess.run(['nasm', '-fbin', *(['-DDIRECTORY_PREVIEW'] if args.preview else []), str(driver.ROOT / 'standalone/directory_view_watch.asm'), '-o', str(observer)], check=True)
     prm = bytearray(modem_fixture(timeout=5))
     struct.pack_into('<2H', prm, 0, 2, 5)
     struct.pack_into('<H', prm, 0x178, 0x3e8)
@@ -40,6 +43,7 @@ def main():
     assert not runout.exists()
     keys = 'p900 enter p3500 a-d p500 enter p3400 end p3400 escape p500 r e a d y p300 a-x'
     if args.missing:keys='p900 enter p3500 a-d p500 enter p900 escape p500 r e a d y p300 a-x'
+    if args.preview:keys='p900 enter p3500 a-d p500 enter p3400 enter p1800 escape p500 end p3400 escape p500 r e a d y p300 a-x'
     files={'DIRWATCH.COM': observer.read_bytes()}
     if not args.missing:files['PCPLUS.DIR']=fixture()
     result = driver.run(case, 'success', keys, prm=bytes(prm), com=3, irq=5, cpu='8086', working_drive='d',
@@ -47,7 +51,7 @@ def main():
         online_updates=[(2.8 if args.missing else 3.0, b'\x1b[5;1HBBS-DURING-READ\x1b[6n')])
     capture = (runout / 'DIRVIEW.BIN').read_bytes()
     font = (runout / 'VGA16.BIN').read_bytes()
-    assert len(capture) == 12006 and len(font) == 4096
+    assert len(capture) == (16006 if args.preview else 12006) and len(font) == 4096
     magic, flags, ticks = struct.unpack_from('<3H', capture)
     first, last, loading = (capture[6 + i * 4000:4006 + i * 4000] for i in range(3))
     wire = (runout / 'serial.bin').read_bytes()
@@ -65,11 +69,19 @@ def main():
     if args.missing:
         for name in ('first_page','last_page','loading_view','controls_sanitized_CP437_preserved'):del checks[name]
         checks['actual_missing_notice']=bool(flags&4) and b'Could not load the directory.' in loading[::2]
-    for name, frame in ([('error',loading)] if args.missing else [('first-page', first), ('last-page', last), ('loading', loading)]):
+    frames=[('error',loading)] if args.missing else [('first-page', first), ('last-page', last), ('loading', loading)]
+    if args.preview:
+        proposed=capture[12006:16006]
+        checks['actual_preview']=bool(flags&16) and b'SELECTED ENTRY // PROPOSED SETTINGS' in proposed[::2]
+        checks['preview_target_and_DTE']=b'555' in proposed[::2] and b'19200' in proposed[::2]
+        checks['preview_private_fields_hidden']=b'HIDDENPASS' not in proposed[::2] and b'SECRETA' not in proposed[::2]
+        checks['preview_retains_COM3_IRQ5']=proposed[1622:1624:2]==b'3' and proposed[1638:1640:2]==b'5'
+        frames.append(('preview',proposed))
+    for name, frame in frames:
         (out / (name + '.bin')).write_bytes(frame)
         png(out / (name + '.png'), frame, font)
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary), observer_flags=flags,
-        observer_ticks=ticks, keyboard=keys, missing=args.missing, serial=dict(com=3, irq=5, baud=19200, cpu='8086'),
+        observer_ticks=ticks, keyboard=keys, missing=args.missing, preview=args.preview, serial=dict(com=3, irq=5, baud=19200, cpu='8086'),
         sources={str(p.relative_to(driver.ROOT)): sha(p) for p in [Path(__file__).resolve(),
             driver.ROOT / 'standalone/directory_view_watch.asm', driver.ROOT / 'standalone/directory_view_fixture.py',
             driver.ROOT / 'standalone/test_connection_dos.py', driver.ROOT / 'standalone/test_command_reference_dos.py']},

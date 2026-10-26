@@ -17,7 +17,8 @@ opening those resources. The function performs no DOS, BIOS or UART calls and
 allocates no storage. It uses DOS16 near cdecl, DS=SS; ES is scratch for far data.
 
 This is an application prerequisite, not a completed dialing chooser. Alt-D in
-the current LoC.4 application remains the [read-only view](DIRECTORY_VIEW.md).
+the LoC.4 application remains the [read-only view](DIRECTORY_VIEW.md). The later
+[LoC.5 integration](DIRECTORY_PREVIEW.md) adds live preview; adoption remains open.
 The source-built terminal/package and all live services are unchanged. No card
 deployment or physical modem acceptance is claimed.
 

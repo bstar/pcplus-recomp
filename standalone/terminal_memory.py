@@ -205,6 +205,17 @@ def inspect_terminal_memory(binary,map_path):
   extra.update(directory_view_code_bytes=directory['bytes'],directory_view_FS_callbacks_verified=3,
                directory_view_scratch_offset=symbols['_directory_view_scratch'][1],directory_view_scratch_bytes=512,
                directory_view_snapshot_page_bytes=2788)
+ if '_directory_preview_stage' in symbols:
+  config=next(c for c in code_segments if c['name']=='CONFIG_CODE')
+  assert symbols['_directory_preview_stage'][0]==symbols['_directory_selection_stage'][0]==config['relative_segment']
+  assert symbols['_directory_preview_capture'][0]==symbols['terminal_session_capture_far'][0]!=near_code['relative_segment']
+  prefix=b'\x55\x89\xe5\x53\x52\x8b\x46\x06\x31\xd2\xbb\x01\x00'
+  target=symbols['terminal_session_capture_far']
+  expected=prefix+b'\x9a'+struct.pack('<HH',target[1],target[0])+b'\x5a\x5b\x5d\xcb'
+  assert raw('_directory_preview_capture',len(expected))==expected,'Actual-session cdecl adapter'
+  assert address('_directory_preview_capture')+len(prefix)+3 in relocations,'Actual-session capture relocation'
+  extra.update(directory_preview_proposal_bytes=1190,directory_preview_snapshot_bytes=3978,
+               directory_preview_capture_policy=1,directory_preview_capture_adapter_verified=True)
  if 'terminal_phone_log_code_start' in symbols:
   bank=next(c for c in code_segments if c['name']=='PHONE_LOG_CODE')
   bank_seg=bank['relative_segment']
