@@ -4,7 +4,7 @@
 pages in bounded foreground turns: at most512 input bytes and one DOS call per
 step, publishing only after complete size/probe/close success. Cancel and
 uncertain-close ownership preserve the old page. Both near and1378-byte code
-bank forms pass22 DOS workflows each;12 isolated source files reproduce both
+bank forms pass22 DOS workflows each;12 committed source files reproduce both
 executables/nine objects and repeat44 workflows/13,022 assertions. This is the
 loading component: live Alt-D UI, serial servicing and validated selection
 adoption are next. Physical/card and full F01–F16 acceptance remain open.

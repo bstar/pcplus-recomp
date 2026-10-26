@@ -296,5 +296,41 @@
     "directory": "build/directory-reader-dos-20261025",
     "reason": "Sampler D: mount omitted; native workflows completed but outer audit could not read BEFORE.BIN. Corrected fresh runs retained separately."
   },
-  "scope": "Incremental foreground directory-read component only. Near/far-bank exact source rebuild and44 actual8086 DOS workflows pass. No parent/UI/serial/BBS integration, concurrent-writer exclusion, DOS-driver call-time bound, card deployment or full F01-F16 completion claim."
+  "scope": "Incremental foreground directory-read component only. Near/far-bank exact source rebuild and44 actual8086 DOS workflows pass. No parent/UI/serial/BBS integration, concurrent-writer exclusion, DOS-driver call-time bound, card deployment or full F01-F16 completion claim.",
+  "committed_source_proof": {
+    "commit": "9db9b78b66bbee47dc53febf19454753236b8638",
+    "report": "build/directory-reader-committed-source-20261025/result.json",
+    "sha256": "3ade14df372152bb562252dde1f32e6756f0ea4c60377c46ce77da7abfa7e234",
+    "source_files": 12,
+    "DOS_cases": 44,
+    "DOS_assertions": 13022,
+    "runs": {
+      "near": {
+        "binary_sha256": "dc988a8731ed0dafaef78d0b083de88b141b6d05ad61f76cb07f39c359879b08",
+        "objects": {
+          "reader.obj": "1695bea5bb781b662c6eb73c44a1b5aa54966df7b2ad150efbe5d49f7500f5a8",
+          "filesystem.obj": "673f047d2dac8faa801a6ac7010a71cd2b680d150ee5cad8ee663cdd3dec0780",
+          "filesystem_real.obj": "b832fdaf5b26e7a0d23458a3b59b60be232433d10cea3b2ad193a455b75e3eac",
+          "diagnostic.obj": "55d024a7759d093fb592eebd8511e65ce17f088fd58c74e48ad7490eb3355590"
+        },
+        "DOS_cases": 22,
+        "DOS_assertions": 6511,
+        "report": "export/build/near-dos/result.json"
+      },
+      "bank": {
+        "binary_sha256": "d6bacc77c78b3a04a8fe6db7933d259cd4f75e1f8931eab6520b4edb2812e373",
+        "objects": {
+          "reader.obj": "761aaf182fa8b851c225346ed0ad518d763e7e0d841004a5a67aa8ab2c07a60a",
+          "filesystem.obj": "673f047d2dac8faa801a6ac7010a71cd2b680d150ee5cad8ee663cdd3dec0780",
+          "filesystem_real.obj": "b832fdaf5b26e7a0d23458a3b59b60be232433d10cea3b2ad193a455b75e3eac",
+          "diagnostic.obj": "5cc5136189f5965e9634932ccd448aacdb3789ca838c33902283cb27e7381169",
+          "bank.obj": "3ae11300311464f79252c232293304453995ac91676b10c93008daa815969c8e"
+        },
+        "DOS_cases": 22,
+        "DOS_assertions": 6511,
+        "report": "export/build/bank-dos/result.json"
+      }
+    },
+    "scope": "Twelve files exported from committed sources alone, outside ancestor Git metadata. Exact binaries/nine objects and44 DOS workflows repeat; excludes unrelated pending logger changes."
+  }
 }

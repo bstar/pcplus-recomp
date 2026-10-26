@@ -60,6 +60,8 @@ counts and destination preservation, full final pages, unchanged source files,
 process handle tables and an independent 42-byte hardware snapshot. The clean
 12-source export rebuilds both executables and all nine objects exactly, then
 repeats 44 workflows/13,022 native assertions outside all ancestor Git metadata.
+The same exact rebuild and 44 workflows also pass from only the committed
+sources at `9db9b78`, excluding unrelated pending logger changes.
 These are component checks; no serial servicing, BBS rendering or physical
 driver-time acceptance is claimed.
 
