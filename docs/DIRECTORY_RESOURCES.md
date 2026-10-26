@@ -70,8 +70,9 @@ workflows and1,757 assertions, with independently constructed exact bundle bytes
  bytes with defaults. All source resource files, CWD decoys and the42-byte
  hardware snapshot remain unchanged.
 
-An isolated35-source export, without Git or original files, reproduces the
-diagnostic and all15 objects, then repeats those36 DOS workflows. Ordinary and
+An isolated35-source export of committed source `0c35362`, without Git or
+original files, reproduces the diagnostic and all15 objects, then repeats those
+36 DOS workflows. Ordinary and
 LoC.6 current-source terminal builds remain byte-identical to their accepted
 products. These source changes do not alter the card or running services.
 

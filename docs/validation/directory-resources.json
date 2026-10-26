@@ -476,7 +476,8 @@
   "evidence": {
     "build/directory-resources-dos/fixed-06-20261026/result.json": "6a258aa95af0ec0b204873969df6abd7a1b9c59857475604216fa9975da94bd1",
     "build/directory-resources-source-fixed-20261026/result.json": "dd4f2e666da8c7193f6c9c63c9f65083090291051e1f41a9c900e88d06e434f4",
-    "build/directory-resources-terminal-controls-20261026.json": "1d19853f41527cc3b6cbe8e7bd452b56c6f361d4c006e7318d64052ffe2be642"
+    "build/directory-resources-terminal-controls-20261026.json": "1d19853f41527cc3b6cbe8e7bd452b56c6f361d4c006e7318d64052ffe2be642",
+    "build/directory-resources-source-committed-20261026/result.json": "41c3d1580f4dd0bd3fc23e3d7e99e6c61d92ded74069c72bc7dda4e3ee208982"
   },
   "unchanged_application_controls": [
     {
@@ -498,5 +499,14 @@
     "Stage translation/scripts and reconcile old-selection accounting before commit.",
     "Integrate resource EXEC admission, UART/profile adoption and dialing; verify the actual live owner.",
     "Continue complete F01\u2013F16, BBS/transfer and physical/card acceptance."
-  ]
+  ],
+  "committed_source_proof": {
+    "commit": "0c35362fe89517a8fbc1047337ba68daa5671152",
+    "source_files": 35,
+    "DOS_workflows": 36,
+    "native_assertions": 1757,
+    "exact_objects": 15,
+    "ancestor_git_unavailable": true,
+    "original_inputs": []
+  }
 }
