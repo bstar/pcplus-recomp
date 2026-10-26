@@ -25,10 +25,10 @@ deployment or physical modem acceptance is claimed.
 
 The [receipt](validation/directory-selection.json) binds these checks:
 
-- 294 independently constructed1190-byte golden vectors execute the linked
+- 294 independently constructed 1,190-byte golden vectors execute the linked
  8086 instructions and repeat under real DOS8086: all 200 entry numbers, partial
  pages, all 16 CLI masks, literal and A–J expansion, private/opaque bytes, binding
- syntax,63-byte paths, transfer preferences and DIRECT's modem-skip policy.
+ syntax, 63-byte paths, transfer preferences and DIRECT's modem-skip policy.
  Rejections include malformed pages, global/record/active settings, unterminated
  strings, unsupported bindings, empty targets and unsafe transfer paths.
 - 39 additional linked cases reject null/wrapping extents, exact/partial aliases
@@ -36,18 +36,21 @@ The [receipt](validation/directory-selection.json) binds these checks:
  preserve all caller data and the result. Interrupt and IN/OUT hooks reject
  any attempted IO in every linked case.
 - DOS independently compares complete proposal/result bytes, all source objects
- and guard bytes against the host's golden vectors:6174 native assertions pass.
+ and guard bytes against the host's golden vectors: 6,174 native assertions pass.
  The input vector file stays exact and the 42-byte hardware snapshot is restored.
 - Measured component stack high water is 4,290 of 8,192 bytes. This excludes a future
  live UI caller's buffers, which must be included in its integration checks.
 - An isolated 32-source export outside every Git ancestor, with no analysis or
  original installation present, reproduces SELECT.EXE and all ten objects
- exactly and repeats the linked and DOS checks.
+ exactly and repeats the linked and DOS checks. The same proof passes from
+ committed sources at `2280272`, excluding the pending telephone-log changes.
 
 The first isolated-build attempt rejected an absolute NASM THEADR source path.
 The builder now assembles the logical relative source path. This corrected the
 object reproducibility mismatch without changing executable bytes; the failed
-attempt remains under `build/directory-selection-source-20261025`.
+attempt remains under `build/directory-selection-source-20261025`. Its later
+`path-control.json` reproduces the differing THEADR names and verifies that all
+remaining object records are identical.
 
 ## Reproduce
 

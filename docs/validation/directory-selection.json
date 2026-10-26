@@ -36,5 +36,19 @@
     "Canonical resource identity/claims and staged resources",
     "Baseline freshness, old-selection accounting and UART/profile handoff",
     "Full F01-F16, ENiGMA and physical/card acceptance"
-  ]
+  ],
+  "committed_source_proof": {
+    "path": "build/directory-selection-committed-20261025/result.json",
+    "sha256": "32ac43abf1d804c107258e728e90df8e3ba73fcfbc6d72c5a81a63fb57faf928",
+    "commit": "228027201bf8bc0dadcf619bf5bb5de4c94107b2",
+    "source_files": 32,
+    "ancestor_git_unavailable": true,
+    "binary_sha256": "e70e6e6b792643f19b65e4cb4ff9306bea4d7e4980db73804f6822818095230e",
+    "golden_vectors": 294,
+    "native_assertions": 6174
+  },
+  "NASM_path_control": {
+    "path": "build/directory-selection-source-20261025/path-control.json",
+    "sha256": "96d2d67566d7d5bea6c59e03c68bd9ec6c8d2a5efcf9a0636d8083300bcd0dec"
+  }
 }
