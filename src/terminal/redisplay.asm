@@ -31,6 +31,22 @@ extern terminal_viewport_admit_far
 terminal_redisplay_key_impl:
  cmp word [_redisplay_active],0
  jne .key
+%ifdef TERMINAL_REFERENCE
+ extern _command_reference_unavailable
+ push ax
+ push ax
+ call far _command_reference_unavailable
+ add sp,2
+ or ax,ax
+ pop ax
+ jnz .open
+ cmp al,'`'
+ je .open
+ cmp ax,0x6c00 ; Original Alt-F5: source-owned script filename prompt.
+ je .open
+ cmp ax,0x1700 ; Original Alt-I: authored application information.
+ je .open
+%endif
  cmp ax,0x2c00 ; Alt-Z, maintained command menu and contextual help.
  je .open
 %ifdef TERMINAL_ORIGINAL_KEYS

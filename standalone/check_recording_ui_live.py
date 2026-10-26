@@ -8,6 +8,7 @@ from check_terminal_monitor_live import Monitor
 
 
 class UI(Monitor,Recorder):
+    browser_key=0x2c00
     def __init__(self,**kwargs):
         super().__init__(**kwargs)
         self.uc.mem_write(0x484,b'\x18')
@@ -16,7 +17,7 @@ class UI(Monitor,Recorder):
     def key(self,value):
         self.keys.append(value);self.call('terminal_poll_io',limit=1000000)
     def menu(self):
-        self.key(0x2c00);assert self.get('_command_menu_active')
+        self.key(self.browser_key);assert self.get('_command_menu_active')
     def choice(self,value):self.menu();self.key(ord(value))
     def text(self):return bytes(self.uc.mem_read(0xb8000,4000))[::2]
     def start_record(self):

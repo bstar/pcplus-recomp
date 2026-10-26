@@ -1,0 +1,624 @@
+{
+  "kind": "original-layout-command-reference-checkpoint",
+  "version": "2.01-LoC.3",
+  "software_candidate_passed": true,
+  "full_original_interface": false,
+  "physical_acceptance": false,
+  "card_written": false,
+  "original_evidence": {
+    "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "file_region": [
+      154340,
+      156182
+    ],
+    "region_sha256": "0011e9d6bf184587641ac19e961481385399ea083768fded8aa8890b654474f2",
+    "labels": [
+      {
+        "offset": 155488,
+        "bytes": 17,
+        "name": "Dialing Directory"
+      },
+      {
+        "offset": 155506,
+        "bytes": 16,
+        "name": "Script Files"
+      },
+      {
+        "offset": 155523,
+        "bytes": 17,
+        "name": "Meta Keys"
+      },
+      {
+        "offset": 155541,
+        "bytes": 17,
+        "name": "Redisplay"
+      },
+      {
+        "offset": 155559,
+        "bytes": 17,
+        "name": "Clear Screen"
+      },
+      {
+        "offset": 155577,
+        "bytes": 17,
+        "name": "Break Key"
+      },
+      {
+        "offset": 155595,
+        "bytes": 17,
+        "name": "Elapsed Time"
+      },
+      {
+        "offset": 155613,
+        "bytes": 17,
+        "name": "Chat Mode"
+      },
+      {
+        "offset": 155631,
+        "bytes": 17,
+        "name": "Host Mode"
+      },
+      {
+        "offset": 155649,
+        "bytes": 17,
+        "name": "Auto Answer"
+      },
+      {
+        "offset": 155667,
+        "bytes": 17,
+        "name": "Init Modem"
+      },
+      {
+        "offset": 155685,
+        "bytes": 17,
+        "name": "Reset Terminal"
+      },
+      {
+        "offset": 155703,
+        "bytes": 17,
+        "name": "Hang Up"
+      },
+      {
+        "offset": 155721,
+        "bytes": 17,
+        "name": "Exit"
+      },
+      {
+        "offset": 155739,
+        "bytes": 18,
+        "name": "Send Files"
+      },
+      {
+        "offset": 155758,
+        "bytes": 18,
+        "name": "Receive Files"
+      },
+      {
+        "offset": 155777,
+        "bytes": 15,
+        "name": "Log File On/Off"
+      },
+      {
+        "offset": 155793,
+        "bytes": 17,
+        "name": "Log File Pause"
+      },
+      {
+        "offset": 155811,
+        "bytes": 17,
+        "name": "Screen Snapshot"
+      },
+      {
+        "offset": 155829,
+        "bytes": 17,
+        "name": "Printer On/Off"
+      },
+      {
+        "offset": 155847,
+        "bytes": 17,
+        "name": "Record Mode"
+      },
+      {
+        "offset": 155865,
+        "bytes": 17,
+        "name": "Duplex Toggle"
+      },
+      {
+        "offset": 155883,
+        "bytes": 16,
+        "name": "CR-CR/LF Toggle"
+      },
+      {
+        "offset": 155900,
+        "bytes": 17,
+        "name": "Kermit Server Cmd"
+      },
+      {
+        "offset": 155918,
+        "bytes": 17,
+        "name": "Screen Pause"
+      },
+      {
+        "offset": 155936,
+        "bytes": 17,
+        "name": "Setup Facility"
+      },
+      {
+        "offset": 155954,
+        "bytes": 17,
+        "name": "Line/Port Setup"
+      },
+      {
+        "offset": 155972,
+        "bytes": 17,
+        "name": "Translate Table"
+      },
+      {
+        "offset": 155990,
+        "bytes": 16,
+        "name": "Key Mapping"
+      },
+      {
+        "offset": 156007,
+        "bytes": 17,
+        "name": "File Directory"
+      },
+      {
+        "offset": 156025,
+        "bytes": 16,
+        "name": "Change Directory"
+      },
+      {
+        "offset": 156042,
+        "bytes": 17,
+        "name": "View a File"
+      },
+      {
+        "offset": 156060,
+        "bytes": 17,
+        "name": "Editor"
+      },
+      {
+        "offset": 156078,
+        "bytes": 16,
+        "name": "DOS Gateway"
+      },
+      {
+        "offset": 156095,
+        "bytes": 17,
+        "name": "Program Info"
+      },
+      {
+        "offset": 156113,
+        "bytes": 17,
+        "name": "Clipboard"
+      },
+      {
+        "offset": 156131,
+        "bytes": 16,
+        "name": "Monitor Mode"
+      },
+      {
+        "offset": 156148,
+        "bytes": 16,
+        "name": "Toggle Status"
+      },
+      {
+        "offset": 156165,
+        "bytes": 16,
+        "name": "Toggle Lines"
+      }
+    ],
+    "reference_labels": 39,
+    "authority": "Original immutable file bytes; functional labels, frame tokens and shortcut data only.",
+    "REA_evidence_ids": [
+      "ev_35fde0cb28bdf67b05a70bfbe2477720d3503f843a6269b561fa5cd1f202f9e6",
+      "ev_e64adede842cb5581a5caa88c7267b5fe09e200a2aa6cbcc31d7beee9f04e6ab"
+    ],
+    "limitations": [
+      "Ghidra MZ verification covers module/file identity and identifies appended overlays.",
+      "Reference data lies in appended bytes, not initialized Ghidra module memory; empty memory search is not absence from the original file.",
+      "Placement follows static frame/label arrangement; no original runtime screenshot or control-flow equivalence is claimed.",
+      "Navigation, help prose, highlighting and nonfatal refusals are maintained implementations."
+    ],
+    "build_reads_original": false
+  },
+  "terminal_sha256": "20d237917e2c4eb08042f9e274a0842fd8ffa5877c4a6b307d3ffdb8f9208302",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "bbcfe6f22acff8a83f1a789367d2d4c6104df374a0f8819196063fe5cc81eaf8",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "20d237917e2c4eb08042f9e274a0842fd8ffa5877c4a6b307d3ffdb8f9208302",
+    "VERSION.TXT": "c426fc643be2990b64dbfbad195c446c781e4b16bb4ac4293aa356a91c4f4346",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "package_manifest_sha256": "e97b9189f29a5fd5062416e6617ab7db1911d701b5ee961c9e055094137daa0c",
+  "model": {
+    "passed": true,
+    "cases": [
+      {
+        "case": "all-39-native-labels-column-placement-and-availability-attributes",
+        "inputs": 39,
+        "passed": true
+      },
+      {
+        "case": "every-unavailable-original-shortcut-refuses-without-wire-file-or-carrier-change",
+        "inputs": 20,
+        "passed": true
+      },
+      {
+        "case": "column-navigation-contextual-help-return-and-backtick-browser-toggle",
+        "inputs": 9,
+        "passed": true
+      },
+      {
+        "case": "live-UART-parser-query-and-updated-screen-restoration-through-reference",
+        "inputs": 1,
+        "passed": true
+      },
+      {
+        "case": "reference-page-shortcuts-enter-real-send-receive-and-cancel-cleanly",
+        "inputs": 4,
+        "passed": true
+      },
+      {
+        "case": "original-script-and-info-keys-use-owned-prompts-and-recorder-refusal",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "Alt-W-translation-binding-and-Alt-F8-never-launches-wrong-editor",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "unavailable-key-refusal-respects-existing-exclusive-byte-owners",
+        "inputs": 6,
+        "passed": true
+      }
+    ],
+    "inputs": 85,
+    "binary_sha256": "20d237917e2c4eb08042f9e274a0842fd8ffa5877c4a6b307d3ffdb8f9208302",
+    "source_inputs": {
+      "standalone/check_command_reference.py": "9306d52b73e93be5735474761dac21a28838838182012defa86c888ff6c43cda",
+      "src/redisplay/command_reference.c": "a297714553a54be3015c7e241391951b06f2fb8ecc9c1e7dc1b58e71464afce9",
+      "reconstruction/command_reference/provenance.json": "3da00f2405cf2d56c722beb040e6e091867bb1dbbef48f08f65e826e66bfb6de"
+    },
+    "scope": "Actual linked reference, command dispatch and serviced UI; hardware/DOS modeled. Functional names/static grouping follow original file data. Navigation/refusal is maintained; no original runtime/pixel equivalence or physical hardware claim."
+  },
+  "original_keys": {
+    "cases": [
+      {
+        "case": "Alt-R-start-receive-transmit-and-save-real-recorder",
+        "inputs": 9,
+        "passed": true
+      },
+      {
+        "case": "direct-recorder-services-BBS-query-and-restores-updated-screen",
+        "inputs": 1,
+        "passed": true
+      },
+      {
+        "case": "Alt-S-Alt-P-and-retained-Alt-F10-use-settings-eligibility",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "Alt-F6-and-existing-Ctrl-PgUp-open-serviced-history",
+        "inputs": 3,
+        "passed": true
+      },
+      {
+        "case": "assigned-page-keys-send-exactly-unassigned-open-transfer-invalid-stays-error",
+        "inputs": 5,
+        "passed": true
+      },
+      {
+        "case": "menu-transfers-remain-accessible-after-Alt-R-Alt-S-restoration",
+        "inputs": 2,
+        "passed": true
+      },
+      {
+        "case": "direct-recorder-respects-existing-exclusive-owner-guards",
+        "inputs": 6,
+        "passed": true
+      }
+    ],
+    "inputs": 29
+  },
+  "actual_DOS": {
+    "passed": true,
+    "checks": {
+      "base_harness": true,
+      "independent_reference_capture": true,
+      "all_39_commands_visible": true,
+      "direct_AltD_refusal_observed": true,
+      "source_help_observed": true,
+      "backtick_browser_observed": true,
+      "no_hidden_redial": true,
+      "background_cursor_reply": true,
+      "post_reference_keyboard": true,
+      "UI_keys_not_forwarded": true,
+      "updated_live_video_restored": true,
+      "captured_ROM_font_nonempty": true
+    },
+    "binary_sha256": "20d237917e2c4eb08042f9e274a0842fd8ffa5877c4a6b307d3ffdb8f9208302",
+    "serial": {
+      "com": 3,
+      "irq": 5,
+      "baud": 19200
+    },
+    "cpu": "8086",
+    "observer_flags": 15,
+    "observer_ticks": 203,
+    "keyboard": "p900 enter p3500 a-z p700 a-d p800 escape p500 a-z p400 right down down f1 p500 escape p400 ` p600 escape p400 r e a d y p500 a-x",
+    "inputs": {
+      "standalone/test_command_reference_dos.py": "5f0a25b011d9249369eb5a2437275846128c2aded2f6942775ea63ac7470bf4a",
+      "standalone/reference_watch.asm": "db65afa63e1982c1af0438563ea899d30bde74ea06835d968666fc0b262d4c89",
+      "standalone/test_connection_dos.py": "642c9d8c617d15c30d2e1776647a81c972c804473ee34ebd7df6204b5688628c",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "reconstruction/command_reference/provenance.json": "3da00f2405cf2d56c722beb040e6e091867bb1dbbef48f08f65e826e66bfb6de"
+    },
+    "artifacts": {
+      "build/connection-dos/reference-reference-01-20261025/REFVIEW.BIN": "f87f902145e6762d265aa6ba444286948014bc8292494b345873113f65b43f1a",
+      "build/connection-dos/reference-reference-01-20261025/VGA16.BIN": "a8bad6fd78475a6bc2a05438c19207a9bb8c0f4f4099f60384e158cdc3eba580",
+      "build/connection-dos/reference-reference-01-20261025/serial.bin": "8021f48d0f27618be18efe88e5e3231d4cbb7adeefe2c53aa1efa0cc2a8ddeda",
+      "build/connection-dos/reference-reference-01-20261025/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "build/connection-dos/reference-reference-01-20261025/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "build/connection-dos/reference-reference-01-20261025/SCREEN.BIN": "fc4579fb133b5a2e34b58ca3967d471c2de49788a3bd37cd93f8cf8393a54b77"
+    },
+    "scope": "Observe reference/refusal/browser/help in actual DOS8086 on COM3/IRQ5. Passive timer reads video only; no UART/keyboard/product writes. Synthetic modem peer, no physical DCD/CTS/audio or original-runtime equivalence. PNG uses captured ROM glyphs and standard VGA palette."
+  },
+  "package_launchers": [
+    {
+      "launcher": "START",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "nested DOS source compilation produces exact ASX",
+        "script writes expected result"
+      ],
+      "result_sha256": "d8330afb9d8eb2b80625b4c88499580505ec34ba7b6f78bd3910ed153007841e"
+    },
+    {
+      "launcher": "SETUP",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ],
+      "result_sha256": "a6488375966e3eeabe61a4793347a1cfb8efd15e518bcc6cc64c62091b3f96d3"
+    }
+  ],
+  "splash_sha256": "fa46046ea0e7994731f27f1f70661234471b9672ddf5d3e4b612d142677fa01a",
+  "recording_cancel_checks": {
+    "normal_DOS_exit": true,
+    "expected_real_sessions": true,
+    "no_peer_errors": true,
+    "actual_user_session": true,
+    "query_responses_seen": true,
+    "temporary_files_resolved": true,
+    "hardware_restored": true,
+    "original_preserved_on_cancel": true,
+    "no_bytecode_on_cancel": true,
+    "original_intact_during_recording": true
+  },
+  "BBS": {
+    "checks": {
+      "harness": true,
+      "semantic_audit": true,
+      "exact_screen": true,
+      "proxy_source_unchanged": true,
+      "product_source_unchanged": true,
+      "actual_reference_observed": true,
+      "all_39_reference_commands": true,
+      "unavailable_AltD_observed": true
+    },
+    "semantic_checks": {
+      "DOS_harness": true,
+      "typed_draft_sent": true,
+      "all_exercised_keys_emitted": true,
+      "stock_editor_entered": true,
+      "no_post_saved": true,
+      "insert_toggled_overtype": true,
+      "home_moves_before_marker": true
+    },
+    "serial": {
+      "com": 3,
+      "baud": 19200,
+      "line": "8N1",
+      "flow": "HARD",
+      "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.",
+      "irq": 5
+    },
+    "reference_observer": {
+      "flags": 3,
+      "ticks": 1717,
+      "capture_sha256": "271fc91203defb7a7c3a02ab6da5831775f4547cba9069582f26ff8d2bb716f6",
+      "font_sha256": "a8bad6fd78475a6bc2a05438c19207a9bb8c0f4f4099f60384e158cdc3eba580",
+      "observer_sha256": "d3718ddb1c8275e28ecd78b2dda28df3da7a95641bb343906f99cd85782c491c"
+    },
+    "result_sha256": "82d017f7aa7a48372f3aebc27cd041cebd2d015bb16a864c0658da9013f4b4f0",
+    "screen_sha256": "51df36cfab8b83cd62e2cd111149cbdde1107b33b37bcc3c6407ae789313d714",
+    "no_post_saved": true
+  },
+  "source_rebuild": {
+    "source_files": 746,
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+      "README.TXT": "bbcfe6f22acff8a83f1a789367d2d4c6104df374a0f8819196063fe5cc81eaf8",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "20d237917e2c4eb08042f9e274a0842fd8ffa5877c4a6b307d3ffdb8f9208302",
+      "VERSION.TXT": "c426fc643be2990b64dbfbad195c446c781e4b16bb4ac4293aa356a91c4f4346",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "original_inputs": [],
+    "ancestor_git_unavailable": true,
+    "receipt_sha256": "bea0e04b5d7cd5681e83acb7aebf69129c28960086b1381b74018f0b6e54a704"
+  },
+  "controls": {
+    "ordinary": "bd86a10b94544007242d2ce6bb737be5ab90909d4fcf2bac8713120d2b2ffa10",
+    "LoC.1": "e096c53b802df1561ce4e9a135cd091a7ba8edb03fe24822341061e8fac91a9b",
+    "LoC.2": "71a51fc438ec6a08eef133ad373e99d482d021f57be7fa82490760fd824359c1"
+  },
+  "data_stack_bytes": 64096,
+  "code_segments": [
+    {
+      "name": "_TEXT",
+      "kind": "CODE",
+      "relative_segment": 0,
+      "offset": 0,
+      "bytes": 65386
+    },
+    {
+      "name": "SPLASH_CODE",
+      "kind": "CODE",
+      "relative_segment": 4086,
+      "offset": 10,
+      "bytes": 377
+    },
+    {
+      "name": "ASPECT_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 4111,
+      "offset": 0,
+      "bytes": 12908
+    },
+    {
+      "name": "PROCESS_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 4918,
+      "offset": 0,
+      "bytes": 661
+    },
+    {
+      "name": "HOOK_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 4960,
+      "offset": 0,
+      "bytes": 27302
+    },
+    {
+      "name": "CONFIG_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 6667,
+      "offset": 0,
+      "bytes": 65184
+    },
+    {
+      "name": "MODEM_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 10741,
+      "offset": 0,
+      "bytes": 2900
+    },
+    {
+      "name": "USAGE_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 10923,
+      "offset": 0,
+      "bytes": 1493
+    },
+    {
+      "name": "PRINT_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 11017,
+      "offset": 0,
+      "bytes": 1461
+    },
+    {
+      "name": "TRAP_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 11109,
+      "offset": 0,
+      "bytes": 864
+    },
+    {
+      "name": "MOUSE_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 11163,
+      "offset": 0,
+      "bytes": 2896
+    },
+    {
+      "name": "REFERENCE_CODE",
+      "kind": "FARCODE",
+      "relative_segment": 11344,
+      "offset": 0,
+      "bytes": 3331
+    }
+  ],
+  "preview_sha256": {
+    "reference.png": "7a4d219216c61523e8b122b623acaaedcba20d701957400666aa8816d8a79bb7",
+    "refusal.png": "25832f87972c8b1eafa705c253a959d4c2228849bf3e0be6c4c2b5965ef549b2",
+    "browser.png": "7a59f12e2f3c7e64358c7fe49aa282d817bbca5d4e675b41ad5a511488fd9dcd"
+  },
+  "inputs": {
+    "src/redisplay/command_reference.c": "a297714553a54be3015c7e241391951b06f2fb8ecc9c1e7dc1b58e71464afce9",
+    "src/redisplay/command_reference.h": "7425260eda0388adea975ffef7f68280c6cb288dadddae2b5a975203ee460829",
+    "src/redisplay/command_menu.c": "232c4d7db8120f2579ac7557f89d32fc64ee6eec285a5c4ecbb7d2dcc9f2a9a9",
+    "src/redisplay/redisplay.c": "9a598d175a5e9ec5242c490514f303a763b4147c22a16edc057b4ef8b59037bd",
+    "src/terminal/transport.asm": "6fcba354a564ec89d38590b63ea91c0d22eaa6935e4b7feb6bce91753fd37054",
+    "src/terminal/redisplay.asm": "761028f9852993c6d0292d5ec388f7ac03f3af2fdd0ae09350cd7440a0279278",
+    "standalone/check_command_reference.py": "9306d52b73e93be5735474761dac21a28838838182012defa86c888ff6c43cda",
+    "standalone/test_command_reference_dos.py": "5f0a25b011d9249369eb5a2437275846128c2aded2f6942775ea63ac7470bf4a",
+    "standalone/reference_watch.asm": "db65afa63e1982c1af0438563ea899d30bde74ea06835d968666fc0b262d4c89",
+    "lab/bbs/test_dos.py": "ea87ad3ada753f5b710474a2214081b79e657957e4afce3bd3ce64dc6723f501",
+    "lab/bbs/test_synthmodem_proxy_dos.py": "4960725bcb359952b923424818bcc26a67e7d6d81745d8cdc9a01d9937ff0902",
+    "standalone/package_special_edition.py": "d5640f6a9d954c597e726d42847c1646cea7929863a278db6d6ac45b0fb1d8e9",
+    "standalone/prove_special_package_source.py": "7cad14ce0fcf6fa3f63bc400d871d9501a74cdf43709d6e242b93700cfac2aa1",
+    "standalone/test_recording_ui_dos.py": "9f1ecdb138e86e5520b07ca618fe8190b83b02ceb0908bff3c270075e4441b89"
+  },
+  "limits": [
+    "Static original frame/name/shortcut arrangement; maintained selection, help, highlighting and refusals.",
+    "No original runtime/controller or exact original-pixel/color equivalence is claimed.",
+    "20 command services, original pull-downs/mouse, dedicated port UI and complete F02 remain open.",
+    "Synthetic serial modem and actual proxy/stock BBS; no physical SIP/audio/DCD/CTS claim.",
+    "Full F01-F16, sustained physical integrity, transfers, reconnects, multiline rendering and card deployment remain open."
+  ],
+  "reference_recording_DOS": {
+    "checks": {
+      "normal_DOS_exit": true,
+      "expected_real_sessions": true,
+      "no_peer_errors": true,
+      "actual_user_session": true,
+      "query_responses_seen": true,
+      "temporary_files_resolved": true,
+      "hardware_restored": true,
+      "menu_published_complete_source": true,
+      "query_responses_excluded": true,
+      "exact_compiled_UART_replay": true,
+      "recorded_prompt_timeout": true
+    },
+    "result_sha256": "92c879b8cfd20c08e12acc8607db64e6824f32f0ed5fa92b2a3ee4e272c91bf2",
+    "artifacts": {
+      "wire.bin": "fc80fc05f6c204b85d560624710ac1b6176191afe92eeb2053767ed48051861a",
+      "PCPLUS.ASP": "eca90b4cfd4e186f7abbde077c3fadaea5f1f7fa9ed565dd1e8ae3a2b920051c",
+      "RECORD.ASX": "edbdc2f622687f16824f8efd2d3059d54f9f5c578e3cd298b4e14e7c700beb39",
+      "BEFORE.BIN": "6995887d0eb72e34164d85e1acaf287e6649fa157a149b8276657039caa7d361",
+      "AFTER.BIN": "6995887d0eb72e34164d85e1acaf287e6649fa157a149b8276657039caa7d361",
+      "SCREEN.BIN": "96c95fe314c6133aa1c1f6a228ee1281e3dfc264c0d84cbc118ce4f18335454b"
+    }
+  },
+  "recording_cancel_result_sha256": "ed9beb080c16071567125c2ce00ec7e0f703f85aff2e74985bb689448cfa0898"
+}

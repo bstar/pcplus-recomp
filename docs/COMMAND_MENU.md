@@ -3,6 +3,11 @@
 Alt-Z opens a keyboard command menu in the maintained DOS terminal. This is
 source-owned UI and help, not a recovered copy of PCPlus menus or help text.
 
+The [LoC.3 reference candidate](COMMAND_REFERENCE.md) now puts the 39-command
+original arrangement on Alt-Z and this maintained browser on backtick. It
+adds safe direct refusals for missing original commands. The ordinary build
+and LoC.2 behavior described below remain unchanged.
+
 The [2.01-LoC.2 original-key candidate](ORIGINAL_KEYS.md) now restores direct
 recording/settings/history shortcuts and native-local page-key transfers in
 an explicit build variant. The ordinary build and historical browser behavior

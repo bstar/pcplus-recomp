@@ -12,6 +12,7 @@ import re
 import subprocess
 import sys
 import time
+import struct
 
 from enigma import process_pid, SOURCE
 from product_inputs import ROOT, select_product, sha
@@ -25,6 +26,7 @@ def main():
     p.add_argument('--label', required=True)
     p.add_argument('--framing-ms', type=int, choices=[0,250], default=0)
     p.add_argument('--byte-delay-ms', type=int, choices=range(21), default=2)
+    p.add_argument('--reference-overlay', action='store_true', help='Observe Alt-Z/refusal during the stock BBS editor workflow')
     args = p.parse_args()
     assert re.fullmatch('[A-Za-z0-9_-]+', args.label)
     assert process_pid(), 'Start the owned stock ENiGMA fixture first'
@@ -49,12 +51,22 @@ def main():
         ready = json.loads((bridge/'ready.json').read_text())
         keys = 'p900 enter p2500 l o c enter '+json.loads(
             (ROOT/'lab/bbs/editor-recipes.json').read_text())['enigma_unsaved']['keyboard_input']
+        observer=None
+        if args.reference_overlay:
+            assert json.loads((binary.parent/'manifest.json').read_text())['experimental_original_reference']
+            marker='K E Y T E S T enter p1800 '
+            assert keys.count(marker)==1
+            keys=keys.replace(marker,marker+'a-z p600 a-d p600 escape p500 ')
+            observer=base/(args.label+'-observer.COM')
+            assert not observer.exists()
+            subprocess.run(['nasm','-fbin',str(ROOT/'standalone/reference_watch.asm'),'-o',str(observer)],check=True)
         command = [sys.executable, str(ROOT/'lab/bbs/editor_dos_probe.py'), str(binary),
             'enigma', '--port', str(ready['endpoint']['port']),
             '--server-log', str(SOURCE/'logs/enigma-bbs.log'), '--label', args.label,
             '--com', '3', '--baud', '19200', '--flow', 'HARD', '--dial-fixture',
             '--irq', '5', '--mouse-scales', '8', '4', '--cpu', '8086',
             '--timeout', '160', '--wait', '2', '--raw-upstream', '--keys', keys]
+        if observer:command+=['--video-observer',str(observer)]
         with log_path.open('w') as log:
             run = subprocess.run(command, cwd=ROOT, stdout=log, stderr=log, timeout=175)
         # Audit even a failed harness when artifacts exist. A normal DOS return
@@ -67,9 +79,19 @@ def main():
             exact_screen=len(video)==4000 and 'UNSAVED' in text and 'OVR 01,08' in text,
             proxy_source_unchanged=closed['source_unchanged'],
             product_source_unchanged=all(sha(ROOT/n)==h for n,h in before.items()))
+        observed={}
+        if observer:
+            capture=(output/'REFVIEW.BIN').read_bytes();assert len(capture)==12006
+            magic,flags,ticks=struct.unpack_from('<3H',capture)
+            names=json.loads((ROOT/'reconstruction/command_reference/provenance.json').read_text())['labels']
+            checks['actual_reference_observed']=magic==0x5246 and flags&1!=0 and ticks>20
+            checks['all_39_reference_commands']=all(r['name'].encode() in capture[6:4006:2] for r in names)
+            checks['unavailable_AltD_observed']=flags&2!=0 and b'Not available in this build:' in capture[4006:8006:2]
+            observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'REFVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
         result = dict(passed=all(checks.values()), checks=checks,
             bridge=ready, command=command, binary_sha256=sha(binary),
             screen_sha256=sha(output/'SCREEN.BIN'), product_inputs=before,
+            reference_observer=observed,
             scope='Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, '
                   'actual SynthModem proxy and stock loopback ENiGMA. '
                   'Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.')

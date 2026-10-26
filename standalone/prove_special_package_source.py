@@ -56,7 +56,8 @@ def main():
                         '--output', 'build/package',
                         '--source-base-commit',manifest['source_base_commit'],
                         *(['--custom-irq']if manifest.get('experimental_custom_irq')else[]),
-                        *(['--original-keys']if manifest.get('experimental_original_keys')else[])], cwd=fresh, check=True,
+                        *(['--original-keys']if manifest.get('experimental_original_keys')else[]),
+                        *(['--original-reference']if manifest.get('experimental_original_reference')else[])], cwd=fresh, check=True,
                        stdout=log, stderr=log, timeout=300,env=environment)
     rebuilt = json.loads((fresh / 'build/package/manifest.json').read_text())
     assert rebuilt['files'] == manifest['files']

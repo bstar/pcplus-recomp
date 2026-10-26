@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--terminal',type=Path,default=ROOT/'build/terminal/TERMINAL.EXE')
     parser.add_argument('--runner',type=Path,default=ROOT/'build/aspect-runner/ASPECT.EXE')
     parser.add_argument('--compiler',type=Path,default=ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE')
+    parser.add_argument('--reference-record',action='store_true',help='Start/save the recording through the original command reference')
     args=parser.parse_args();out=args.output.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     original=b'ORIGINAL\x1aKEEP\r\n'
@@ -27,6 +28,7 @@ def main():
         if directory=='terminal':
             original_keys=manifest.get('experimental_original_keys',False)
             special=manifest.get('special_edition',False)
+            reference=manifest.get('experimental_original_reference',False)
         assert sha(base/binary)==manifest['binary_sha256']
         if directory=='terminal':assert manifest['binary_sha256']==args.sha256
         else:assert not manifest['original_inputs']
@@ -78,8 +80,13 @@ def main():
     finish='d p300 y' if args.mode=='cancel' else 'c'
     keys=f'p1800 a-z p300 c p300 enter {accept}p700 m 1 p1000 b s t a r enter p1000 a-z p300 {finish} p500 escape escape p400 a-x'
     if original_keys:
-        stop_keys='a-z p300 d p300 y' if args.mode=='cancel' else 'a-r'
-        keys=f'p1800 a-r p300 enter {accept}p700 m 1 p1000 b s t a r enter p1000 {stop_keys} p500 escape escape p400 a-x'
+        stop_keys=('` p300 d p300 y' if reference else 'a-z p300 d p300 y') if args.mode=='cancel' else 'a-r'
+        start_keys='a-r'
+        if args.reference_record:
+            assert reference
+            start_keys='a-z p300 a-r'
+            if args.mode!='cancel':stop_keys='a-z p300 a-r'
+        keys=f'p1800 {start_keys} p300 enter {accept}p700 m 1 p1000 b s t a r enter p1000 {stop_keys} p500 escape escape p400 a-x'
     if special:keys='p900 enter '+keys
     replay_commands='' if args.mode=='cancel' else r'''C:\ASPCOMP D:\PCPLUS.ASP D:\RECORD.ASX
 if errorlevel 1 goto failed

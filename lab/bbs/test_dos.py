@@ -91,6 +91,11 @@ async def run(args):
   assert args.directory_fixture and args.entry<=10,'Browser lab recipe supports first-page selection'
   prefix='p500 '+('down p100 '*(args.entry-1))+'enter p1000 '
  keys=prefix+args.keys+f' p{args.wait*1000} a-x'
+ observer=getattr(args,'video_observer',None);observer_start=observer_stop='';observer_bytes=None
+ if observer:
+  observer=observer.resolve();assert observer.is_relative_to(ROOT/'build') and observer.suffix.upper()=='.COM'
+  observer_bytes=observer.read_bytes();(output/'OBSERVE.COM').write_bytes(observer_bytes)
+  observer_start='D:\\OBSERVE T';observer_stop='D:\\OBSERVE'
  serial='\n'.join(f'serial{i}='+ (f'nullmodem server:127.0.0.1 port:{port} transparent:1 rxdelay:200 txdelay:1' if i==args.com else 'disabled') for i in range(1,5))
  if irq is not None:serial=serial.replace('nullmodem ',f'nullmodem irq:{irq} ')
  config=f'''[sdl]
@@ -111,6 +116,7 @@ mount c "{binary.parent}"
 mount d "{output}"
 c:
 D:\\SNAP B
+{observer_start}
 ADDKEY {keys}
 {command}
 if errorlevel 1 goto failed
@@ -120,6 +126,7 @@ goto capture
 echo FAIL>D:\\FAIL.TXT
 :capture
 D:\\SNAP S
+{observer_stop}
 D:\\SNAP A
 exit
 '''
@@ -166,6 +173,7 @@ exit
  if keymap is not None:checks['keyboard_profile_unchanged']=(output/'BOARD.KBD').read_bytes()==keymap
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
+ if observer_bytes is not None:checks['video_observer_unchanged']=(output/'OBSERVE.COM').read_bytes()==observer_bytes
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'keyboard_input':args.keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
  result['initialization_wait_seconds']=init_wait
  result['cpu']=next(line.split('=',1)[1] for line in config.splitlines() if line.startswith('cputype='))
@@ -174,6 +182,7 @@ exit
  result['server_endpoint']={'address':'127.0.0.1','port':args.port}
  result['modem_packet_delay_ms']=args.packet_delay_ms
  result['raw_upstream']=getattr(args,'raw_upstream',False)
+ result['video_observer_sha256']=hashlib.sha256(observer_bytes).hexdigest() if observer_bytes is not None else None
  result['meta_actions']={'sha256':hashlib.sha256(meta).hexdigest(),'file':'ACTIONS.KEY'} if meta is not None else None
  result['keyboard_profile']={'sha256':hashlib.sha256(keymap).hexdigest(),'file':'BOARD.KBD'} if keymap is not None else None
  result['configuration']={'automatic_dial':automatic,'mode':'explicit synthetic partial PRM' if fixture is not None else 'CLI serial options','command':command,'sha256':hashlib.sha256(fixture).hexdigest() if fixture is not None else None,'directory_entry':args.entry if directory_fixture is not None else None,'directory_browser':args.directory_browser,'directory_sha256':hashlib.sha256(directory_fixture).hexdigest() if directory_fixture is not None else None}
@@ -192,6 +201,7 @@ if __name__=='__main__':
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')
  p.add_argument('--raw-upstream',action='store_true',help='Upstream is an explicit serial-side bridge; leave Telnet ownership to that bridge')
+ p.add_argument('--video-observer',type=Path,help='Explicit source-built passive COM observer under build/; install with T and collect after DOS return')
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')
  p.add_argument('--directory-browser',action='store_true',help='Choose the fixture entry through native DOS browser keys')
  p.add_argument('--entry',type=int,choices=range(1,201),default=3)

@@ -1,0 +1,218 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "file_region": [
+    154340,
+    156182
+  ],
+  "region_sha256": "0011e9d6bf184587641ac19e961481385399ea083768fded8aa8890b654474f2",
+  "labels": [
+    {
+      "offset": 155488,
+      "bytes": 17,
+      "name": "Dialing Directory"
+    },
+    {
+      "offset": 155506,
+      "bytes": 16,
+      "name": "Script Files"
+    },
+    {
+      "offset": 155523,
+      "bytes": 17,
+      "name": "Meta Keys"
+    },
+    {
+      "offset": 155541,
+      "bytes": 17,
+      "name": "Redisplay"
+    },
+    {
+      "offset": 155559,
+      "bytes": 17,
+      "name": "Clear Screen"
+    },
+    {
+      "offset": 155577,
+      "bytes": 17,
+      "name": "Break Key"
+    },
+    {
+      "offset": 155595,
+      "bytes": 17,
+      "name": "Elapsed Time"
+    },
+    {
+      "offset": 155613,
+      "bytes": 17,
+      "name": "Chat Mode"
+    },
+    {
+      "offset": 155631,
+      "bytes": 17,
+      "name": "Host Mode"
+    },
+    {
+      "offset": 155649,
+      "bytes": 17,
+      "name": "Auto Answer"
+    },
+    {
+      "offset": 155667,
+      "bytes": 17,
+      "name": "Init Modem"
+    },
+    {
+      "offset": 155685,
+      "bytes": 17,
+      "name": "Reset Terminal"
+    },
+    {
+      "offset": 155703,
+      "bytes": 17,
+      "name": "Hang Up"
+    },
+    {
+      "offset": 155721,
+      "bytes": 17,
+      "name": "Exit"
+    },
+    {
+      "offset": 155739,
+      "bytes": 18,
+      "name": "Send Files"
+    },
+    {
+      "offset": 155758,
+      "bytes": 18,
+      "name": "Receive Files"
+    },
+    {
+      "offset": 155777,
+      "bytes": 15,
+      "name": "Log File On/Off"
+    },
+    {
+      "offset": 155793,
+      "bytes": 17,
+      "name": "Log File Pause"
+    },
+    {
+      "offset": 155811,
+      "bytes": 17,
+      "name": "Screen Snapshot"
+    },
+    {
+      "offset": 155829,
+      "bytes": 17,
+      "name": "Printer On/Off"
+    },
+    {
+      "offset": 155847,
+      "bytes": 17,
+      "name": "Record Mode"
+    },
+    {
+      "offset": 155865,
+      "bytes": 17,
+      "name": "Duplex Toggle"
+    },
+    {
+      "offset": 155883,
+      "bytes": 16,
+      "name": "CR-CR/LF Toggle"
+    },
+    {
+      "offset": 155900,
+      "bytes": 17,
+      "name": "Kermit Server Cmd"
+    },
+    {
+      "offset": 155918,
+      "bytes": 17,
+      "name": "Screen Pause"
+    },
+    {
+      "offset": 155936,
+      "bytes": 17,
+      "name": "Setup Facility"
+    },
+    {
+      "offset": 155954,
+      "bytes": 17,
+      "name": "Line/Port Setup"
+    },
+    {
+      "offset": 155972,
+      "bytes": 17,
+      "name": "Translate Table"
+    },
+    {
+      "offset": 155990,
+      "bytes": 16,
+      "name": "Key Mapping"
+    },
+    {
+      "offset": 156007,
+      "bytes": 17,
+      "name": "File Directory"
+    },
+    {
+      "offset": 156025,
+      "bytes": 16,
+      "name": "Change Directory"
+    },
+    {
+      "offset": 156042,
+      "bytes": 17,
+      "name": "View a File"
+    },
+    {
+      "offset": 156060,
+      "bytes": 17,
+      "name": "Editor"
+    },
+    {
+      "offset": 156078,
+      "bytes": 16,
+      "name": "DOS Gateway"
+    },
+    {
+      "offset": 156095,
+      "bytes": 17,
+      "name": "Program Info"
+    },
+    {
+      "offset": 156113,
+      "bytes": 17,
+      "name": "Clipboard"
+    },
+    {
+      "offset": 156131,
+      "bytes": 16,
+      "name": "Monitor Mode"
+    },
+    {
+      "offset": 156148,
+      "bytes": 16,
+      "name": "Toggle Status"
+    },
+    {
+      "offset": 156165,
+      "bytes": 16,
+      "name": "Toggle Lines"
+    }
+  ],
+  "reference_labels": 39,
+  "authority": "Original immutable file bytes; functional labels, frame tokens and shortcut data only.",
+  "REA_evidence_ids": [
+    "ev_35fde0cb28bdf67b05a70bfbe2477720d3503f843a6269b561fa5cd1f202f9e6",
+    "ev_e64adede842cb5581a5caa88c7267b5fe09e200a2aa6cbcc31d7beee9f04e6ab"
+  ],
+  "limitations": [
+    "Ghidra MZ verification covers module/file identity and identifies appended overlays.",
+    "Reference data lies in appended bytes, not initialized Ghidra module memory; empty memory search is not absence from the original file.",
+    "Placement follows static frame/label arrangement; no original runtime screenshot or control-flow equivalence is claimed.",
+    "Navigation, help prose, highlighting and nonfatal refusals are maintained implementations."
+  ],
+  "build_reads_original": false
+}

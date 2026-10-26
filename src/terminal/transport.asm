@@ -296,7 +296,11 @@ terminal_poll_io:
  je .quit
  cmp ax,0x2300 ; Alt-H: configured hang-up
  je .hangup
+%ifdef TERMINAL_REFERENCE
+ cmp ax,0xf600 ; Browser-only redial; Alt-D belongs to the directory chooser.
+%else
  cmp ax,0x2000 ; Alt-D: repeat explicitly selected target
+%endif
  je .redial
  cmp word [terminal_ansi_wait_active],0
  je .connection_key
@@ -334,8 +338,15 @@ terminal_poll_io:
  call terminal_script_start
  jmp .done
 .script_not_selected:
+%ifdef TERMINAL_REFERENCE
+ cmp ax,0x1100 ; Original Alt-W: translation table.
+ je .translation_editor
+ cmp ax,0xf700 ; Browser/private translation action; Alt-F8 is key mapping.
+%else
  cmp ax,0x6f00 ;Alt-F8: maintained direct input-table editor.
+%endif
  jne .reload_key
+.translation_editor:
  call terminal_translation_edit_start
  jmp .done
 .reload_key:

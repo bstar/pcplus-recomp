@@ -4,6 +4,9 @@
 #include "../capture/capture_file.h"
 #include "../clipboard/clipboard_ui.h"
 #include "command_menu.h"
+#ifdef TERMINAL_REFERENCE
+#include "command_reference.h"
+#endif
 typedef unsigned short word;
 typedef unsigned char byte;
 typedef struct context {
@@ -211,7 +214,11 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   live=(word __far *)MK_FP(c->live_seg,c->live_off);
   view=(word __far *)MK_FP(c->view_seg,c->view_off);
 #ifdef TERMINAL_ORIGINAL_KEYS
-  direct_clipboard=(key==0x2c00 || key==0x1300)?2:key==0x8300;
+  direct_clipboard=(key==0x2c00 || key==0x1300
+#ifdef TERMINAL_REFERENCE
+   || (key&255)=='`' || key==0x6c00 || key==0x1700 || command_reference_unavailable(key)
+#endif
+   )?2:key==0x8300;
 #else
   direct_clipboard=key==0x2c00?2:key==0x8300;
 #endif

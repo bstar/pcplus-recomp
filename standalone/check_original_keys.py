@@ -18,6 +18,7 @@ def main():
         assert hashlib.sha256((transport.ROOT/name).read_bytes()).hexdigest()==digest,name
     transport.BINARY=binary;transport.MAP=base/'terminal.map'
     from check_recording_ui_live import UI
+    if manifest.get('experimental_original_reference'):UI.browser_key=0x2960
     from check_recording_rx_live import ordinary
     cases=[]
     def check(name,fn):
