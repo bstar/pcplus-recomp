@@ -246,6 +246,15 @@ SEGMENT REDISPLAY_STORAGE public align=16 class=FAR_DATA use16
 global redisplay_snapshot,redisplay_snapshot_end
 redisplay_snapshot: resb 63000
 redisplay_snapshot_end:
+%ifdef TERMINAL_DIRECTORY_STORAGE
+; Alt-G is synchronous and refuses an active viewer/command owner. The viewer
+; already refuses terminal_snapshot_active. Inactive frozen history is rebuilt
+; from the separate63000-byte live ring on every opening; its tail can lend a
+; complete2000-byte character image without reducing any role's capacity.
+global terminal_snapshot_image,terminal_snapshot_image_end
+terminal_snapshot_image equ redisplay_snapshot+61000
+terminal_snapshot_image_end equ redisplay_snapshot_end
+%endif
 ; The row index is used only by the far-aware C viewer, never as a near DOS
 ; buffer. Keep it beside the retained snapshot, outside the DS=SS group.
 global _redisplay_row_index,_redisplay_row_index_end

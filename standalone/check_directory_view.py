@@ -170,7 +170,25 @@ def main():
                     try:inspect_terminal_memory(target,transport.MAP)
                     except AssertionError:pass
                     else:raise AssertionError(('Damaged preview capture accepted',kind))
-        return 6 if manifest.get('experimental_directory_preview') else 3
+            if manifest.get('experimental_directory_storage'):
+                process=entries['terminal_process_code_start'];end=entries['terminal_process_code_end']
+                # Use the actual map spelling, not a normalized CS, for MZ fixups.
+                target_pair=next((int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I) if n=='_directory_storage_exec_allowed')
+                pattern=b'\x9a'+struct.pack('<HH',target_pair[1],target_pair[0])+b'\x09\xc0'
+                at=image[module+process:module+end].index(pattern)+process
+                reloc=next(header[12]+i*4 for i in range(header[3]) if
+                    (lambda pair: pair[0]+pair[1]*16)(struct.unpack_from('<HH',image,header[12]+i*4)) == at+3)
+                for kind in ('directory-callback-word','directory-entry-word','EXEC-relocation','EXEC-condition'):
+                    damaged=bytearray(image)
+                    if kind=='directory-callback-word':damaged[module+entries['_config_directory_replace_resident']+5]^=2
+                    elif kind=='directory-entry-word':damaged[module+entries['_directory_save_accounting']+5]^=2
+                    elif kind=='EXEC-relocation':struct.pack_into('<HH',damaged,reloc,0,0)
+                    else:damaged[module+at+7]=0x74
+                    target.write_bytes(damaged)
+                    try:inspect_terminal_memory(target,transport.MAP)
+                    except AssertionError:pass
+                    else:raise AssertionError(('Damaged directory storage accepted',kind))
+        return (6 if manifest.get('experimental_directory_preview') else 3)+(4 if manifest.get('experimental_directory_storage') else 0)
     check('reject-damaged-DOS-read-stack-forwarding-cleanup-and-loader-relocation', damaged_bindings)
 
     def loading():

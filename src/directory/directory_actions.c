@@ -1,5 +1,8 @@
 #include "directory_actions.h"
 #include <string.h>
+#ifdef TERMINAL_DIRECTORY_STORAGE
+#include "directory_storage.h"
+#endif
 unsigned __cdecl directory_accounting_patch(const unsigned char *source,
  unsigned char *destination,unsigned year,unsigned month,unsigned day,unsigned delta);
 static unsigned extent(const void *pointer,unsigned length)
@@ -16,11 +19,54 @@ static unsigned valid(const char *path,const unsigned char *left,
  if(!extent(left,114) || !extent(right,114) || !path)return 0;
  for(size=0;size<64;++size){if(!extent(path,size+1))return 0;if(!path[size])break;}
  if(!size || size==64)return 0;
+#ifdef TERMINAL_DIRECTORY_STORAGE
+ if(!disjoint(path,size+1,&directory_storage_result,sizeof(directory_storage_result)) ||
+  !disjoint(left,114,&directory_storage_result,sizeof(directory_storage_result)) ||
+  !disjoint(right,114,&directory_storage_result,sizeof(directory_storage_result)) ||
+  (result && !disjoint(result,sizeof(*result),&directory_storage_result,sizeof(directory_storage_result))))return 0;
+#endif
  return !result || (extent(result,sizeof(*result)) &&
   disjoint(result,sizeof(*result),left,114) &&
   disjoint(result,sizeof(*result),right,114) &&
   disjoint(result,sizeof(*result),path,size+1));
 }
+#ifdef TERMINAL_DIRECTORY_STORAGE
+/* Never expose a previous transaction's installed flag on a refused retry. */
+static unsigned storage_result(unsigned status,directory_replace_result *result,unsigned attempted)
+{
+ directory_replace_result local;unsigned mapped;
+ memset(&local,0,sizeof(local));
+ if(attempted && status!=DIRECTORY_STORAGE_BUSY && status!=DIRECTORY_STORAGE_STATE)
+  memcpy(&local,&directory_storage_result.replacement,sizeof(local));
+ if(attempted && status==DIRECTORY_STORAGE_CANONICAL)local.dos_error=directory_storage_result.dos_error;
+ if(status==DIRECTORY_STORAGE_ARGUMENT || status==DIRECTORY_STORAGE_PATH)return DIRECTORY_REPLACE_ARGUMENT;
+ mapped=!status?0:status==DIRECTORY_STORAGE_REPLACE?local.status:
+  status==DIRECTORY_STORAGE_RECOVERY?DIRECTORY_REPLACE_RECOVERY:DIRECTORY_REPLACE_OWNER;
+ local.status=mapped;
+ if(result)memcpy(result,&local,sizeof(local));
+ return mapped;
+}
+directory_replace_status __cdecl directory_save_record(const char *path,unsigned entry,
+ const unsigned char *expected,const unsigned char *replacement,directory_replace_result *result)
+{
+ unsigned status;
+ if(!valid(path,expected,replacement,result) || !entry || entry>200)return DIRECTORY_REPLACE_ARGUMENT;
+ status=directory_storage_initialize();
+ if(status)return storage_result(status,result,0);
+ status=directory_storage_save_record(path,entry,expected,replacement);
+ return storage_result(status,result,1);
+}
+directory_replace_status __cdecl directory_save_accounting(const char *path,unsigned entry,
+ unsigned char *baseline,unsigned year,unsigned month,unsigned day,unsigned delta,directory_replace_result *result)
+{
+ unsigned status;
+ if(!valid(path,baseline,baseline,result) || !entry || entry>200)return DIRECTORY_REPLACE_ARGUMENT;
+ status=directory_storage_initialize();
+ if(status)return storage_result(status,result,0);
+ status=directory_storage_save_accounting(path,entry,baseline,year,month,day,delta);
+ return storage_result(status,result,1);
+}
+#else
 directory_replace_status __cdecl directory_save_record(const char *path,unsigned entry,
  const unsigned char *expected,const unsigned char *replacement,
  directory_replace_result *result)
@@ -46,3 +92,4 @@ directory_replace_status __cdecl directory_save_accounting(const char *path,unsi
  if(result)memcpy(result,&local,sizeof(local));
  return status;
 }
+#endif

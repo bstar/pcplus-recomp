@@ -42,6 +42,12 @@ global terminal_snapshot_last_action
 %endmacro
 terminal_snapshot_start:
  save
+%ifdef TERMINAL_DIRECTORY_STORAGE
+ extern _redisplay_active,_command_menu_active
+ mov ax,[_redisplay_active]
+ or ax,[_command_menu_active]
+ jnz .denied
+%endif
  cmp word [terminal_controller_active],0
  jne .denied
  cmp word [terminal_monitor_active],0
@@ -285,7 +291,11 @@ snapshot_denied: db 'Screen denied',0
 snapshot_error: db 'Screen error',0
 global terminal_snapshot_image_segment
 terminal_snapshot_image_segment: dw seg terminal_snapshot_image
+%ifdef TERMINAL_DIRECTORY_STORAGE
+extern terminal_snapshot_image,terminal_snapshot_image_end
+%else
 SEGMENT SNAPSHOT_STORAGE public align=16 class=FAR_DATA use16
 global terminal_snapshot_image,terminal_snapshot_image_end
 terminal_snapshot_image: resb 2000
 terminal_snapshot_image_end:
+%endif

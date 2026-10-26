@@ -25,10 +25,11 @@ sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--actions', action='store_true')
     args = parser.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists()
-    build = ROOT/'build/directory-storage'
+    build = ROOT/('build/directory-storage-actions' if args.actions else 'build/directory-storage')
     manifest = json.loads((build/'manifest.json').read_text())
     assert not manifest['original_inputs'] and sha(build/'STORAGE.EXE') == manifest['binary_sha256']
     for name, digest in manifest['sources'].items():
@@ -97,7 +98,13 @@ SNAP B
         phase, status, dos, claim, release = struct.unpack_from('<5H', state)
         replacement = dict(zip('status dos close cleanup rollback bytes installed backup stage source'.split(),
                                struct.unpack_from('<10H', state, 10)))
-        assert fields[1] == status or mode == 12 and fields[1] == 1 and status == 0
+        if args.actions:
+            mapped=1 if status in (1,5) or mode==12 else replacement['status'] if status==7 else 14 if status else 0
+            assert fields[1]==mapped,(name,fields[1],status,mapped)
+            api=struct.unpack('<10H',(case/'API.BIN').read_bytes())
+            if mapped!=1:assert api[0]==mapped and api[6]==replacement['installed']
+            else:assert api==(0xa5a5,)*10
+        else:assert fields[1] == status or mode == 12 and fields[1] == 1 and status == 0
         installed = mode in (0, 9, 15, 16, 21)
         held = mode in (6, 7, 8, 9, 15)
         assert bool(replacement['installed']) == installed
@@ -128,7 +135,7 @@ SNAP B
             state=phase, assertions=fields[2], core_closes=fields[3], renames=fields[4],
             admission_witnesses=fields[5], canonical_calls=fields[6], replacement=replacement))
     report = dict(passed=True, binary_sha256=manifest['binary_sha256'],
-        case_count=len(reports), native_assertions=sum(r['assertions'] for r in reports),
+        case_count=len(reports), native_assertions=sum(r['assertions'] for r in reports),actions=args.actions,
         cases=reports, hardware_restored=True, CWD_decoy_preserved=True,
         sources=manifest['sources'], test_sources={n: sha(ROOT/n) for n in
             ['standalone/test_directory_storage_dos.py', 'standalone/test_terminal.py']},

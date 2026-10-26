@@ -56,6 +56,10 @@ def wire_layout(rows,colors):
   if text:data+=f'\x1b[{row+1};1H\x1b[{colors.get(row,0)}m'.encode()+text
  data+=f'\x1b[0m\x1b[{CURSOR[0]};{CURSOR[1]}H'.encode();return bytes(data)
 def snapshot(rows):return b''.join(row.rstrip(b' ')+b'\r\n' for row in rows)
+def snapshot_rows(recipe,rows):
+ result=list(rows)
+ if 'owned_status_row' in recipe:result[24]=recipe['owned_status_row']
+ return result
 def recipes():
  return [dict(name='blank-25-records',kind='blank'),dict(name='leading-interior-trailing',kind='layout'),dict(name='fullwidth-80columns',kind='fullwidth'),dict(name='CP437-characters',kind='cp437'),dict(name='repeat-appends-preserve1A',repeat=True,seed=SEED),dict(name='prior-transient-status',notice=True),dict(name='capture-open-independent',capture='D:\\OTHER.LOG'),dict(name='capture-held-independent',capture='D:\\OTHER.LOG',hold=True),dict(name='capture-path-alias-conflict',capture='D:\\PCPLUS.SCR',conflict=True),dict(name='capture-held-alias-conflict',capture='D:\\PCPLUS.SCR',hold=True,conflict=True),dict(name='readonly-existing-preserved',readonly=True,seed=SEED)]
 class SnapshotPeer(TerminalPeer):
@@ -85,7 +89,7 @@ class SnapshotPeer(TerminalPeer):
      self.wait_marker(b'm'+str(ordinal+2).encode());self.query();self.checks['actual_post_snapshot_CPR_DSR_unchanged']=True
      path=self.output/'PCPLUS.SCR'
      if not r.get('conflict') and not r.get('readonly'):
-      expected=r.get('seed',b'')+snapshot(rows)*(ordinal+1)
+      expected=r.get('seed',b'')+snapshot(snapshot_rows(r,rows))*(ordinal+1)
       assert path.exists() and path.read_bytes()==expected,('Snapshot bytes not closed/exact before next key',ordinal)
       self.checks['snapshot_closed_exact_after_each_hotkey']=True
     if r.get('capture'):
@@ -104,7 +108,7 @@ def run_case(r,a):
  for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(base+off))
  for stem,source in [('SNAP',sampler),('META',META)]:
   (out/(stem+'.asm')).write_text(source);subprocess.run(['nasm','-fbin',str(out/(stem+'.asm')),'-o',str(out/(stem+'.COM'))],check=True)
- peer=SnapshotPeer(r,out);peer.thread.start();keys=['p1500']
+ peer=SnapshotPeer(r,out);peer.thread.start();keys=['p900','enter','p1500'] if a.special else ['p1500']
  if r.get('capture'):
   keys+=['a-f1','p300']+list(r['capture'])+['enter','p300']
   if r.get('hold'):keys+=['a-f2','p300']
@@ -114,8 +118,15 @@ def run_case(r,a):
  if r.get('repeat'):keys+=['a-g','p500','m','3','p500']
  if r.get('capture'):keys+=['a-f1','p500']
  keys+=['r','e','a','d','y','p500','a-x']
- serial='\n'.join('serial'+str(i)+'='+(f'nullmodem server:127.0.0.1 port:{peer.port} transparent:1 rxdelay:200 txdelay:1' if i==a.com else 'disabled') for i in range(1,5));command=f'C:\\TERMINAL COM{a.com} {a.baud} 8N1 {a.flow}'
- conf=f'''[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=386\ncycles=fixed 6000\n[mixer]\nnosound=true\n[serial]\n{serial}\n[autoexec]\n@echo off\nmount c "{BINARY.parent}"\nmount d "{out}"\nd:\nSNAP B\nADDKEY {' '.join(keys)}\n{command}\nif errorlevel 1 goto fail\necho PASS>PASS.TXT\ngoto capture\n:fail\necho FAIL>FAIL.TXT\n:capture\nMETA\nSNAP S\nSNAP A\nexit\n'''
+ serial='\n'.join('serial'+str(i)+'='+(f'nullmodem server:127.0.0.1 port:{peer.port} transparent:1'+(f' irq:{a.irq}' if a.irq else '')+' rxdelay:200 txdelay:1' if i==a.com else 'disabled') for i in range(1,5));command=f'C:\\TERMINAL COM{a.com} {a.baud} 8N1 {a.flow}'
+ if a.irq:
+  import struct
+  from modem_fixtures import fixture
+  raw=bytearray(fixture());struct.pack_into('<H',raw,0,a.com-1)
+  struct.pack_into('<H',raw,0x174+2*(a.com-1),base);struct.pack_into('<H',raw,0x184+2*(a.com-1),a.irq)
+  struct.pack_into('<HH',raw,0x4e4,8,4);(out/'SNAP.PRM').write_bytes(raw)
+  command=f'C:\\TERMINAL @D:\\SNAP.PRM {a.baud} 8N1 {a.flow}'
+ conf=f'''[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype={a.cpu}\ncycles=fixed 6000\n[mixer]\nnosound=true\n[serial]\n{serial}\n[autoexec]\n@echo off\nmount c "{BINARY.parent}"\nmount d "{out}"\nd:\nSNAP B\nADDKEY {' '.join(keys)}\n{command}\nif errorlevel 1 goto fail\necho PASS>PASS.TXT\ngoto capture\n:fail\necho FAIL>FAIL.TXT\n:capture\nMETA\nSNAP S\nSNAP A\nexit\n'''
  (out/'dosbox.conf').write_text(conf);assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==a.sha256,'Runtime changed';started=time.monotonic()
  with (out/'dosbox.log').open('w') as f:
   try:code=subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')],cwd=out,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=f,stderr=f,timeout=a.timeout).returncode
@@ -127,7 +138,7 @@ def run_case(r,a):
  peer.server.close();peer.thread.join(2)
  def read(n):return (out/n).read_bytes() if (out/n).exists() else b''
  capture_expected=b'' if r.get('hold') else b''.join(rows)+(b'POSTSHOT' if r.get('capture') else b'')
- expected=(capture_expected if r.get('conflict') else r.get('seed',b'') if r.get('readonly') else r.get('seed',b'')+snapshot(rows)*(2 if r.get('repeat') else 1))
+ expected=(capture_expected if r.get('conflict') else r.get('seed',b'') if r.get('readonly') else r.get('seed',b'')+snapshot(snapshot_rows(r,rows))*(2 if r.get('repeat') else 1))
  checks=dict(peer.checks);checks.update(actual_initial_DSR=bool(checks.get('actual_terminal_ready')),required_pre_snapshot_cursor=bool(checks.get('actual_pre_snapshot_CPR_DSR')),required_post_snapshot_cursor=bool(checks.get('actual_post_snapshot_CPR_DSR_unchanged')),required_later_keyboard_DSR=bool(checks.get('actual_later_keyboard_and_DSR')),DOS_normal_exit=code==0 and (out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),hardware_restored=len(read('BEFORE.BIN'))==42 and read('BEFORE.BIN')==read('AFTER.BIN'),no_peer_errors=not peer.errors,runtime_unchanged=hashlib.sha256(BINARY.read_bytes()).hexdigest()==a.sha256,exact_snapshot_or_conflict_file=target.exists() and target.read_bytes()==expected)
  if r.get('capture') and not r.get('conflict'):checks['independent_capture_log_exact']=(out/'OTHER.LOG').exists() and (out/'OTHER.LOG').read_bytes()==capture_expected
  if r.get('readonly'):checks['readonly_flag_preserved']=target.stat().st_mode&0o222==0
@@ -136,8 +147,12 @@ def run_case(r,a):
  meta=read('BIOS.BIN');checks['actual_BIOS_cursor_unchanged']=len(meta)==7 and meta[:2]==bytes([CURSOR[1]-1,CURSOR[0]-1]) and meta[4:]==bytes([3,80,0])
  if colors:checks['actual_color_attributes_preserved']=len(screen)==4000 and all(screen[4*160+i*2+1]&7==4 for i in range(len(rows[4])))
  allowed={'SNAP.asm','SNAP.COM','META.asm','META.COM','dosbox.conf','dosbox.log','PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN','BIOS.BIN','PCPLUS.SCR'}|({'OTHER.LOG'} if r.get('capture') and not r.get('conflict') else set());checks['no_other_files_created']=not [p for p in out.iterdir() if p.name not in allowed]
+ if a.irq:
+  checks['PRM_unchanged']=read('SNAP.PRM')==raw
+  checks['no_other_files_created']=not [p for p in out.iterdir() if p.name not in allowed|{'SNAP.PRM'}]
  (out/'serial.bin').write_bytes(peer.wire);(out/'peer.bin').write_bytes(peer.sent);(out/'events.json').write_text(json.dumps(peer.events,indent=2)+'\n');(out/'screen.txt').write_text('\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25))+'\n');(out/'expected-snapshot.bin').write_bytes(expected)
  result=dict(passed=all(checks.values()),case=r['name'],checks=checks,errors=peer.errors,binary_sha256=a.sha256,seconds=round(time.monotonic()-started,3),keys=' '.join(keys),command=command,actual_CPRs=peer.cprs,expected_sha256=hashlib.sha256(expected).hexdigest(),actual_sha256=hashlib.sha256(target.read_bytes()).hexdigest() if target.exists() else None,scope='ActualDOS AltG snapshots with independent ANSI rows/char-byte oracle, actualCPR/DSR/keyboard, B800sampling and BIOScursor/UART/IRQ restoration. Separate captureowner active/held and DOSpathalias conflicts. No physicalNUL injection,1A-in-row,physicalhardware or filesystemwrite-fault claim.')
+ if 'owned_status_row' in r:result['declared_owned_status_row']=r['owned_status_row'].decode('cp437')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(r['name'],'PASS' if result['passed'] else json.dumps(result),flush=True);return result
 
 def self_check():
@@ -147,9 +162,18 @@ def self_check():
  assert b'\x82\xb3\xdb' in snapshot(layout('cp437')[0]);assert all('period' not in list(r.get('capture','')) for r in recipes())
  print('Independent25-row/trim/fullwidth/CP437 oracle self-check passed; no terminal executed')
 def main():
+ global BINARY
  if '--self-check' in __import__('sys').argv:self_check();return 0
- p=argparse.ArgumentParser();p.add_argument('--sha256',required=True);p.add_argument('--label',required=True);p.add_argument('--case',action='append',default=[]);p.add_argument('--com',type=int,choices=range(1,5),default=1);p.add_argument('--baud',type=int,default=38400);p.add_argument('--flow',choices=['HARD','NONE'],default='HARD');p.add_argument('--timeout',type=int,default=80);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--sha256',required=True);p.add_argument('--label',required=True);p.add_argument('--case',action='append',default=[]);p.add_argument('--com',type=int,choices=range(1,5),default=1);p.add_argument('--baud',type=int,default=38400);p.add_argument('--flow',choices=['HARD','NONE'],default='HARD');p.add_argument('--timeout',type=int,default=80)
+ p.add_argument('--terminal',type=Path);p.add_argument('--irq',type=int,choices=[3,4,5,7]);p.add_argument('--cpu',choices=['8086','386'],default='386')
+ p.add_argument('--owned-status-row',help='Explicit visible row25 after capture status refresh; applies only to capture recipes');a=p.parse_args()
+ if a.terminal:BINARY=a.terminal.resolve()
+ manifest=json.loads((BINARY.parent/'manifest.json').read_text());a.special=manifest.get('special_edition',False)
+ if a.irq:assert manifest['experimental_custom_irq']
  assert a.label.replace('-','').replace('_','').isalnum();assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==a.sha256,'Explicit runtimefreeze required';OUT.mkdir(parents=True,exist_ok=True);selected=[r for r in recipes() if not a.case or r['name'] in a.case];assert selected
+ if a.owned_status_row is not None:
+  owned=a.owned_status_row.encode('cp437');assert len(owned)<=80 and not any(c in owned for c in (0,10,13))
+  selected=[dict(r,owned_status_row=owned) if r.get('capture') else r for r in selected]
  with (OUT/'.lock').open('w') as f:fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB);rows=[run_case(r,a) for r in selected]
  result=dict(passed=all(r['passed'] for r in rows),binary_sha256=a.sha256,cases=rows);(OUT/a.label/'checks.json').write_text(json.dumps(result,indent=2)+'\n');return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

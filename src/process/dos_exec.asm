@@ -121,6 +121,12 @@ _process_run:
  call process_result_disjoint
  jc .invalid
 .validated:
+%ifdef TERMINAL_DIRECTORY_STORAGE
+ extern _directory_storage_exec_allowed
+ call far _directory_storage_exec_allowed
+ or ax,ax
+ jz .busy
+%endif
  mov word [process_busy],1
  mov word [process_status],0
  mov word [process_dos_error],0

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Source-only DOS shared directory owner with real-kernel fault witnesses."""
+import argparse
 import hashlib
 import json
 import os
@@ -12,6 +13,11 @@ OUT = ROOT/'build/directory-storage'
 
 
 def main():
+    global OUT
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--actions',action='store_true',help='Test the terminal-facing save/accounting adapters')
+    args=parser.parse_args()
+    if args.actions:OUT=ROOT/'build/directory-storage-actions'
     OUT.mkdir(parents=True, exist_ok=True)
     units = [
         ('storage', 'src/directory/directory_storage.c', ['capture_file_release=storage_test_release']),
@@ -23,6 +29,9 @@ def main():
         ('capture_fs', 'src/capture/capture_fs.c',
          ['capture_fs_canonical=storage_real_canonical', 'capture_fs_close=storage_real_capture_close']),
         ('diagnostic', 'standalone/directory_storage_diagnostic.c', [])]
+    if args.actions:
+        units.append(('actions','src/directory/directory_actions.c',['TERMINAL_DIRECTORY_STORAGE']))
+        units=[(n,s,a+(['DIRECTORY_STORAGE_ACTIONS'] if n=='diagnostic' else [])) for n,s,a in units]
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
     for name, source, aliases in units:
         subprocess.run(['wcl', '-c', *flags, *['-d'+a for a in aliases], '-fo='+name+'.obj',
@@ -37,10 +46,11 @@ def main():
         'src/directory/directory_dos.h', 'src/capture/capture_file.h',
         'src/capture/capture_fs.h', 'src/capture/capture_reservation.h',
         'standalone/build_directory_storage.py', 'standalone/build_phone_log_file.py']
+    if args.actions:names.append('src/directory/directory_actions.h')
     sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
     report = dict(kind='source-only-shared-directory-storage-owner', original_inputs=[],
         binary_sha256=sha(OUT/'STORAGE.EXE'), sources={n: sha(ROOT/n) for n in sorted(set(names))},
-        objects={n: sha(OUT/n) for n in objects}, snapshot_bytes=222,
+        objects={n: sha(OUT/n) for n in objects}, snapshot_bytes=222,actions=args.actions,
         limitations=['Component only; application selection adoption and UART handoff remain open.',
                      'DOS canonical identities exclude same-process owners, not external writers or host aliases.',
                      'Uncertain handles/recovery files retain claims until process exit.'])

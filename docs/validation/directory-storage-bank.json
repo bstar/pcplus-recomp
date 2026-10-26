@@ -1,0 +1,424 @@
+{
+  "passed": true,
+  "selection_adoption_complete": false,
+  "full_application_complete": false,
+  "physical_acceptance": false,
+  "card_written": false,
+  "binary_sha256": "4c23fa0750e65c857435d5d587cbeba30a0fe42a85da9951bc15e61352c1f589",
+  "package": "build/special-directory-storage-final-05-20261026/PCPLUSSE",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "6b6aa69dd4f9f41262dac7e042153116988fa3f6dd8f52a33cbf42e571f58eaf",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "4c23fa0750e65c857435d5d587cbeba30a0fe42a85da9951bc15e61352c1f589",
+    "VERSION.TXT": "b71127a033e276d60173761c0d3ef53ea1959f4a2e25b04f418c92cd29ffda7b",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "source_files": 760,
+  "linked_accounting_inputs": 36,
+  "linked_directory_inputs": 45,
+  "linked_snapshot_inputs": 35,
+  "reference_inputs": 84,
+  "original_key_inputs": 29,
+  "shared_owner_refusals": 12,
+  "native_component_workflows": 44,
+  "native_component_assertions": 1612,
+  "native_parent_workflows": 2,
+  "native_snapshot_workflows": 3,
+  "older_application_controls": 6,
+  "memory": {
+    "near_bytes": 64496,
+    "near_spare_bytes": 1040,
+    "near_relative_segment": 12132,
+    "far_relative_segment": 20882,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 21394,
+    "history_bytes": 63000,
+    "far_end_linear": 405304,
+    "stack_end_linear": 258608,
+    "loaded_module_bytes": 226640,
+    "minimum_allocated_module_bytes": 405312,
+    "retained_parent_paragraphs": 25348,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 16913,
+    "snapshot_image_offset": 61000,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 333608,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 16163,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 258608,
+        "end_linear": 262608
+      },
+      "ed_screen": {
+        "relative_segment": 16163,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 262608,
+        "end_linear": 266608
+      },
+      "program_screen": {
+        "relative_segment": 16163,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 258608,
+        "end_linear": 262608
+      },
+      "redisplay_live": {
+        "relative_segment": 16163,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 262608,
+        "end_linear": 266608
+      },
+      "redisplay_view": {
+        "relative_segment": 16163,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 266608,
+        "end_linear": 270608
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "program_browser_screen_overlay": true,
+    "editor_viewer_screen_overlay": true,
+    "snapshot_history_tail_overlay": true,
+    "snapshot_history_bytes_reclaimed": 2000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 333608,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 16913,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 334102,
+    "substitute_native_bytes_verified": 53,
+    "substitute_native_dependencies_verified": 4,
+    "substitute_state_words_verified": 4,
+    "far_usage_bytes": 1493,
+    "far_usage_segment": 10290,
+    "far_usage_DS_restore_verified": true,
+    "directory_view_code_bytes": 5710,
+    "directory_view_FS_callbacks_verified": 3,
+    "directory_view_scratch_offset": 3135,
+    "directory_view_scratch_bytes": 512,
+    "directory_view_snapshot_page_bytes": 2788,
+    "directory_preview_proposal_bytes": 1190,
+    "directory_preview_snapshot_bytes": 3978,
+    "directory_preview_capture_policy": 1,
+    "directory_preview_capture_adapter_verified": true,
+    "process_bank_bytes": 673,
+    "process_bridge_pairs_verified": 1,
+    "process_near_entry_bytes": 22,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "recording_matcher_lead_site": 38728,
+    "recording_rx_far_call_sites": [
+      38731,
+      15124
+    ],
+    "recording_rx_callback_site": 108653,
+    "recording_actor_guard_sites": [
+      15124,
+      15523,
+      25327,
+      29378,
+      36530,
+      39057,
+      161960,
+      163061,
+      166152
+    ],
+    "recording_UI_boundary_sites": [
+      187032,
+      188586,
+      108607
+    ],
+    "recording_UI_optimized_sites": [],
+    "recording_tx_origin_bytes": 128,
+    "recording_tx_origin_start": 110887,
+    "recording_tx_far_call_sites": [
+      39527,
+      36847,
+      40409,
+      24844
+    ],
+    "recording_tx_callback_site": 110878,
+    "recording_terminal_state_bytes": 392,
+    "recording_terminal_bank_functions_verified": 9,
+    "recording_terminal_far_call_sites": [
+      23311,
+      24230
+    ],
+    "recorder_code_literal_bytes_verified": 223,
+    "recorder_code_literal_sites": [
+      154999,
+      155016,
+      155030,
+      155050,
+      155070,
+      155076,
+      155096,
+      155127,
+      155212
+    ],
+    "recording_bank_functions_verified": 14,
+    "recording_resident_callbacks_verified": 9,
+    "recording_adapter_far_call_sites": [
+      60287,
+      60311,
+      60335
+    ],
+    "capture_reservation_far_bindings_verified": 2,
+    "capture_reservation_far_call_sites": [
+      58162,
+      154068
+    ],
+    "capture_reservation_initialized_bytes": 8,
+    "command_menu_banked_call_sites": [
+      130096,
+      130211,
+      130738
+    ],
+    "command_menu_code_segment": 11068,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "directory_storage_snapshot_bytes": 222,
+    "directory_storage_callbacks_verified": 3,
+    "directory_storage_EXEC_gate_verified": true,
+    "configuration_bridge_pairs_verified": 99,
+    "transfer_ui_far_entries_verified": 4,
+    "transfer_ui_resident_callbacks_verified": 3,
+    "redisplay_bridge_pairs_verified": 4,
+    "viewer_live_plane_admission_verified": true,
+    "scroll_field_bridge_pairs_verified": 3,
+    "line_preflight_far_calls_verified": 2,
+    "wide_character_far_calls_verified": 2,
+    "wide_character_prepare_far_calls_verified": 1,
+    "script_window_keyboard_far_adapters_verified": true,
+    "aspect_command_preflight_verified": true,
+    "aspect_viewport_lease_words_verified": 3,
+    "protected_erase_far_bridge_verified": true,
+    "protected_erase_native_dependencies_verified": 4,
+    "erase_after_projection_initially_idle": true,
+    "wide_clear_rectangle_route_verified": true,
+    "alternate_output_far_bridge_verified": true,
+    "alternate_output_native_dependencies_verified": 4,
+    "source_owned_output_table_bytes": 256,
+    "aspect_far_services_verified": 17,
+    "aspect_resident_far_references_verified": 21,
+    "aspect_controller_read_references_verified": 1,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 50,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_controller_references_verified": 5,
+    "line_attribute_video_callbacks_verified": 2,
+    "line_controller_entry_pairs_verified": 4,
+    "line_controller_register_callbacks_verified": 3,
+    "line_controller_code_bytes": 421,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "mouse_bridge_pairs_verified": 10,
+    "mouse_code_bytes": 2896,
+    "mouse_shared_native_state_bytes": 28,
+    "resident_code_bytes": 65142,
+    "resident_code_spare_bytes": 394,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65142
+      },
+      {
+        "name": "SPLASH_CODE",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 65142,
+        "bytes": 377
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4095,
+        "offset": 0,
+        "bytes": 12908
+      },
+      {
+        "name": "PROCESS_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4902,
+        "offset": 0,
+        "bytes": 673
+      },
+      {
+        "name": "HOOK_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4945,
+        "offset": 0,
+        "bytes": 27318
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6653,
+        "offset": 0,
+        "bytes": 55266
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10108,
+        "offset": 0,
+        "bytes": 2900
+      },
+      {
+        "name": "USAGE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10290,
+        "offset": 0,
+        "bytes": 1493
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10384,
+        "offset": 0,
+        "bytes": 1461
+      },
+      {
+        "name": "TRAP_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10476,
+        "offset": 0,
+        "bytes": 864
+      },
+      {
+        "name": "MOUSE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10530,
+        "offset": 0,
+        "bytes": 2896
+      },
+      {
+        "name": "DIRECTORY_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10711,
+        "offset": 0,
+        "bytes": 5710
+      },
+      {
+        "name": "REFERENCE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11068,
+        "offset": 0,
+        "bytes": 17022
+      }
+    ],
+    "far_code_bridge_pairs_verified": 166
+  },
+  "reports": {
+    "build/terminal-directory-storage-276a15011380/directory-actions-checks.json": {
+      "sha256": "10f37d4b6d96e24b4cb3eaa475f3fd5de61218bae78bf9f334904f54402ac35e",
+      "passed": true
+    },
+    "build/terminal-directory-storage-276a15011380/directory-view-checks.json": {
+      "sha256": "9bc317d763818a21431ae34dad703928d844529dd7a20004f08c39165f3f08a7",
+      "passed": true
+    },
+    "build/terminal-directory-storage-276a15011380/terminal-snapshot-live-checks.json": {
+      "sha256": "285a50acf12f67bc84f6c710fdb186f76462bc9c303b06c069edd512b0ff85c8",
+      "passed": true
+    },
+    "build/terminal-directory-storage-276a15011380/reference-checks.json": {
+      "sha256": "7cc0530ee6db4e776f2172511b87e745de53e0e985be379e20545c60bd35c8eb",
+      "passed": true
+    },
+    "build/terminal-directory-storage-276a15011380/original-key-checks.json": {
+      "sha256": "bce3119738bada9e4e38976e8ca9062744cb1bee2f56263babb31e0809aead4a",
+      "passed": true
+    },
+    "build/terminal-directory-storage-276a15011380/shared-screen-checks.json": {
+      "sha256": "7672de337ba1acb313128e9d2cf4cfd20cc4eb786a15b9fa8206b6d78c88265a",
+      "passed": true
+    },
+    "build/directory-storage-parent/shared-final-20261026/result.json": {
+      "sha256": "b7b52afb9ac6a2fc475b11ffad4b03bd35b5ea2d08c5fa427344c5867edbeff1",
+      "passed": true
+    },
+    "build/directory-storage-shared-final-start-20261026/result.json": {
+      "sha256": "aea37d58147209a02abff1aa30a784581f264c14bae260f6283e6b4dca6ad40f",
+      "passed": true
+    },
+    "build/directory-storage-shared-final-setup-20261026/result.json": {
+      "sha256": "f65c8a81306327936ff9771e3f12a82448b4dabae5df8481722cbc2e130bd418",
+      "passed": true
+    },
+    "build/terminal-snapshot-dos/directory-storage-status-row-final-20261026/checks.json": {
+      "sha256": "58640f2347a94c8219ed6968ca80a6c0cf804d3877adfe68a29f7742661de12c",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/directory-storage-shared-final-stock-20261026/proxy-integration.json": {
+      "sha256": "661cebca9ff162a0f23302b6333539256d3da0f9e267f8b07173bb37ced20ad1",
+      "passed": true
+    },
+    "build/directory-storage-shared-final-package-source-20261026/result.json": {
+      "sha256": "21c0670b6978f521c98491757210fb6d80386e969bbc2df474286e5075fa1fc0",
+      "passed": true
+    },
+    "build/directory-storage-controls-final-20261026.json": {
+      "sha256": "5ba3a9f1e57b81dde9f218f71f0e827f3b7afc199ffce284b5469ebe9e0f80ad",
+      "passed": true
+    },
+    "build/directory-storage-shared-final-core-source-20261026/result.json": {
+      "sha256": "316a9d5ec1309ca7750cf078339faaa8ae17649252c5b9845b75908b8130570f",
+      "passed": true
+    },
+    "build/directory-storage-shared-final-actions-source-20261026/result.json": {
+      "sha256": "be88cbcd4305e92e123361e7db0ab880b1de008683d5b267f127539a233d1271",
+      "passed": true
+    }
+  },
+  "auxiliary_sources": {
+    "standalone/test_directory_storage_parent_dos.py": "ef92cc0f9ac91d1c32a22d5fae7da3d9374f88361dfef90d94d79e1f41a308ee",
+    "standalone/test_terminal_snapshot_dos.py": "981418c0173b453c634b541155524f38220ba33c7d0917a325b6f5b9af8f6e5f",
+    "standalone/check_terminal_snapshot_live.py": "df19802a94509f0e26d75a453e47e40bdee6078b36256674353f422d201ba57f",
+    "standalone/check_directory_actions.py": "6a3366355b69d4dc9d75bc7040bdacb9a9ac8280aac606e53024360365d8a7cb",
+    "standalone/check_directory_view.py": "b68e50c20bb8757356324cd2928d542c393e33dda8d9290a899417a9d2f83a38",
+    "standalone/directory_fixtures.py": "e4b0cf7ad4a2c408f2a11d093b2c568633aa8bed6ff62cb53f6f67ff3aa5962c",
+    "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+    "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+    "src/status/status_state.inc": "c2b6c5e98aaef86be0467fc315022c394ebf63fb028d9b2571d7a0318eb5d9f6"
+  },
+  "splash": {
+    "path": "build/directory-storage-shared-final-setup-20261026/drive/SPLASH.BIN",
+    "sha256": "16880b77b86fd0d26e7290151d580025f1896f4e3e0f9fb52bae32dd7b94c272"
+  },
+  "failed_memory_control": {
+    "path": "build/directory-storage-start-final-20261026/drive/SCREEN.BIN",
+    "sha256": "74aec8bbc312c7bd48eaf33e89313bfe577d208c9dde3ed51695285c02b2c535",
+    "retained_parent_bytes": 407312,
+    "accepted": false
+  },
+  "retained_fixture_failures": [
+    "build/directory-storage-parent/initial-20261025",
+    "build/directory-storage-parent/paths-02-20261025",
+    "build/terminal-snapshot-dos/directory-storage-shared-20261026",
+    "build/terminal-snapshot-dos/directory-storage-shared-final-20261026"
+  ],
+  "pending": [
+    "Quiesced live selection/resource staging and baseline freshness",
+    "Old-selection accounting retirement and confirmed UART/profile restoration",
+    "Selected-entry adoption/dialing, original interface/F01-F16 and ENiGMA workflows",
+    "Real Boca/SPA2102/card and sustained-data/reconnect/transfer acceptance"
+  ]
+}

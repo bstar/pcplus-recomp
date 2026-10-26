@@ -47,7 +47,8 @@ def launch(setup=False):
         'SET PCPLUS=%LOC_PCPLUS%\nSET LOC_PCPLUS=\n')
 
 
-def products_for(custom_irq=False,original_keys=False,original_reference=False,directory_view=False,directory_preview=False):
+def products_for(custom_irq=False,original_keys=False,original_reference=False,directory_view=False,directory_preview=False,directory_storage=False):
+    if directory_storage:directory_preview=True
     if directory_preview:directory_view=True
     if directory_view:original_reference=True
     if original_reference:original_keys=True
@@ -64,15 +65,18 @@ def products_for(custom_irq=False,original_keys=False,original_reference=False,d
         products['TERMINAL.EXE']='terminal-directory-view-'+hashlib.sha256(products['TERMINAL.EXE'].encode('ascii')).hexdigest()[:12]
     if directory_preview:
         products['TERMINAL.EXE']='terminal-directory-preview-'+hashlib.sha256(products['TERMINAL.EXE'].encode('ascii')).hexdigest()[:12]
+    if directory_storage:
+        products['TERMINAL.EXE']='terminal-directory-storage-'+hashlib.sha256(products['TERMINAL.EXE'].encode('ascii')).hexdigest()[:12]
     return products
 
 
-def commands_for(custom_irq=False,original_keys=False,original_reference=False,directory_view=False,directory_preview=False):
-    return [command+(['--custom-irq']if custom_irq and index in (0,1,3)else[])+(['--original-keys']if original_keys and index==0 else[])+(['--original-reference']if original_reference and index==0 else[])+(['--directory-view']if directory_view and index==0 else[])+(['--directory-preview']if directory_preview and index==0 else[])
+def commands_for(custom_irq=False,original_keys=False,original_reference=False,directory_view=False,directory_preview=False,directory_storage=False):
+    return [command+(['--custom-irq']if custom_irq and index in (0,1,3)else[])+(['--original-keys']if original_keys and index==0 else[])+(['--original-reference']if original_reference and index==0 else[])+(['--directory-view']if directory_view and index==0 else[])+(['--directory-preview']if directory_preview and index==0 else[])+(['--directory-storage']if directory_storage and index==0 else[])
             for index,command in enumerate(COMMANDS)]
 
 
-def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,original_reference=False,directory_view=False,directory_preview=False):
+def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,original_reference=False,directory_view=False,directory_preview=False,directory_storage=False):
+    if directory_storage:directory_preview=True
     if directory_preview:directory_view=True
     if directory_view:original_reference=True
     if original_reference:original_keys=True
@@ -80,7 +84,7 @@ def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,origi
     # directories and tables are never package inputs, even for local staging.
     sources = {}
     manifests = {}
-    products=products_for(custom_irq,original_keys,original_reference,directory_view,directory_preview)
+    products=products_for(custom_irq,original_keys,original_reference,directory_view,directory_preview,directory_storage)
     for leaf, folder in products.items():
         base = ROOT / 'build' / folder
         manifest = json.loads((base / 'manifest.json').read_text())
@@ -98,6 +102,8 @@ def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,origi
             raise ValueError('mismatched directory-view variant: '+folder)
         if leaf=='TERMINAL.EXE' and bool(manifest.get('experimental_directory_preview'))!=directory_preview:
             raise ValueError('mismatched directory-preview variant: '+folder)
+        if leaf=='TERMINAL.EXE' and bool(manifest.get('experimental_directory_storage'))!=directory_storage:
+            raise ValueError('mismatched directory-storage variant: '+folder)
         for name, digest in manifest['sources'].items():
             path = Path(name)
             if path.is_absolute() or '..' in path.parts or path.parts[0] in ('build', 'analysis'):
@@ -151,12 +157,15 @@ def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,origi
          if directory_view else '')+
         ('Enter on a directory entry previews its proposed settings.\n'
          'Esc returns to the directory; preview does not dial or apply.\n'
-         if directory_preview else '')))
+         if directory_preview else '')+
+        ('Directory writes share capture/recording ownership checks.\n'
+         'Held directory recovery blocks child programs until exit.\n'
+         if directory_storage else '')))
     commit = source_base_commit or subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     if len(commit)not in (40,64)or any(c not in '0123456789abcdef'for c in commit):
         raise ValueError('source base must be a complete lowercase Git object ID')
     (payload / 'VERSION.TXT').write_bytes(dos_text(
-        'LoC SPECIAL EDITION\nVersion: '+('2.01-LoC.5' if directory_preview else '2.01-LoC.4' if directory_view else '2.01-LoC.3' if original_reference else '2.01-LoC.2' if original_keys else '2.01-LoC.1')+'\n'
+        'LoC SPECIAL EDITION\nVersion: '+('2.01-LoC.6' if directory_storage else '2.01-LoC.5' if directory_preview else '2.01-LoC.4' if directory_view else '2.01-LoC.3' if original_reference else '2.01-LoC.2' if original_keys else '2.01-LoC.1')+'\n'
         'LoSs oF CoNtRoL / Sysop: bstar\nSource base: ' + commit + '\n'
         'TERMINAL SHA256:\n' + manifests['TERMINAL.EXE']['binary_sha256'] + '\n'))
     for name in ('standalone/package_special_edition.py', 'standalone/build_guarded_helper.py'):
@@ -170,6 +179,7 @@ def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,origi
                   experimental_original_reference=original_reference,
                   experimental_directory_view=directory_view,
                   experimental_directory_preview=directory_preview,
+                  experimental_directory_storage=directory_storage,
                   authored_help_sha256=help_manifest['sha256'],
                   card_written=False, validation='Not validated by packaging; see separate DOS receipts.')
     (out / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
@@ -185,8 +195,10 @@ def main():
     parser.add_argument('--original-reference',action='store_true',help='Package the original reference candidate as 2.01-LoC.3')
     parser.add_argument('--directory-view',action='store_true',help='Package the serviced read-only directory candidate as 2.01-LoC.4')
     parser.add_argument('--directory-preview',action='store_true',help='Package the validated directory preview candidate as 2.01-LoC.5')
+    parser.add_argument('--directory-storage',action='store_true',help='Package shared directory persistence and held-owner EXEC admission as LoC.6')
     parser.add_argument('--source-base-commit',help='Explicit source-base object ID; avoids Git discovery during archive reproduction')
     args = parser.parse_args()
+    if args.directory_storage:args.directory_preview=True
     if args.directory_preview:args.directory_view=True
     if args.directory_view:args.original_reference=True
     if args.original_reference:args.original_keys=True
@@ -194,9 +206,9 @@ def main():
     if not out.is_relative_to(ROOT / 'build') or out.exists():
         parser.error('output must be a new directory under build/')
     if args.build:
-        for command in commands_for(args.custom_irq,args.original_keys,args.original_reference,args.directory_view,args.directory_preview):
+        for command in commands_for(args.custom_irq,args.original_keys,args.original_reference,args.directory_view,args.directory_preview,args.directory_storage):
             subprocess.run(command, cwd=ROOT, check=True)
-    result = stage(out,args.custom_irq,args.source_base_commit,args.original_keys,args.original_reference,args.directory_view,args.directory_preview)
+    result = stage(out,args.custom_irq,args.source_base_commit,args.original_keys,args.original_reference,args.directory_view,args.directory_preview,args.directory_storage)
     print('Staged', len(result['files']), 'files at', out / 'PCPLUSSE')
     print('No card was accessed. Private settings must be preserved during installation.')
 

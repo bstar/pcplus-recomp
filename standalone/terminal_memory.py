@@ -113,7 +113,11 @@ def inspect_terminal_memory(binary,map_path):
  assert snap_hi-snap_lo==63000 and snap_off+63000<=65536
  assert snap_lo>=module_bytes and (snap_hi<=near_start or snap_lo>=near_start+near_size)
  assert snap_hi<=shadow or snap_lo>=far_end
- if 'terminal_snapshot_image' in symbols:assert snap_hi<=frozen or snap_lo>=frozen_end,'Frozen redisplay overlaps screen snapshot'
+ if 'terminal_snapshot_image' in symbols:
+  if '_directory_storage_exec_allowed' in symbols:
+   assert frozen==snap_lo+61000 and frozen_end==snap_hi,'Snapshot lease must be exactly the inactive frozen tail'
+   extra.update(snapshot_history_tail_overlay=True,snapshot_history_bytes_reclaimed=2000)
+  else:assert snap_hi<=frozen or snap_lo>=frozen_end,'Frozen redisplay overlaps screen snapshot'
  assert word('redisplay_snapshot_segment')==snap_seg and address('redisplay_snapshot_segment') in relocations
  for buf in ui_buffers.values():assert snap_hi<=buf['start_linear'] or snap_lo>=buf['end_linear']
  static_end=max(static_end,snap_hi)
@@ -557,8 +561,13 @@ def inspect_terminal_memory(binary,map_path):
   config_bridges=0
   def cdecl_prefix(count,first):
    return b'\x55\x89\xe5'+b''.join(bytes([0xff,0x76,first+2*i]) for i in reversed(range(count)))
+  storage_enabled='_directory_storage_exec_allowed' in symbols
+  enabled=True
   for line in abi.read_text().splitlines():
    if not line or line.startswith(';'):continue
+   if line=='%ifdef TERMINAL_DIRECTORY_STORAGE':enabled=storage_enabled;continue
+   if line=='%endif':enabled=True;continue
+   if not enabled:continue
    fields=line.replace(',',' ').split();kind,name=fields[:2]
    if kind=='CONFIG_ENTRY':
     assert len(fields)==3
@@ -571,21 +580,35 @@ def inspect_terminal_memory(binary,map_path):
     assert address(name)+len(prefix)+3 in relocations,(name,'missing entry relocation')
     near_call(name+'_far',name+'_impl',prefix=cdecl_prefix(count,6),suffix=b'\x8d\x66\x00\x5d\xcb')
    else:
-    assert kind in ('CONFIG_REGISTER','CONFIG_CDECL','CONFIG_ZERO')
+    assert kind in ('CONFIG_REGISTER','CONFIG_CDECL','CONFIG_ZERO','CONFIG_DIRECTORY')
     target=fields[2]
     service=name if kind=='CONFIG_REGISTER' else name+'_service'
     assert symbols[service][0]==config_seg
     assert symbols[name+'_resident'][0]==symbols[target][0]==near_code['relative_segment']
     far_call(service,name+'_resident')
     prefix=b'';suffix=b'\xcb'
-    if kind=='CONFIG_CDECL':
+    if kind in ('CONFIG_CDECL','CONFIG_DIRECTORY'):
      assert len(fields)==4
-     count=int(fields[3]);assert 1<=count<=4
+     count=int(fields[3]);assert count in (3,6,7) if kind=='CONFIG_DIRECTORY' else 1<=count<=4
      prefix=cdecl_prefix(count,8);suffix=b'\x8d\x66\x00\x5d\xcb'
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==94,'Incomplete configuration ABI validation'
+  assert config_bridges==(99 if storage_enabled else 94),'Incomplete configuration ABI validation'
+  if storage_enabled:
+   assert symbols['_directory_storage_exec_allowed'][0]==config_seg
+   process=next(c for c in code_segments if c['name']=='PROCESS_CODE')
+   lo=process['relative_segment']*16;body=image[start+lo:start+lo+process['bytes']]
+   target=symbols['_directory_storage_exec_allowed']
+   pattern=b'\x9a'+struct.pack('<HH',target[1],target[0])+b'\x09\xc0'
+   assert body.count(pattern)==1,'Missing/duplicated directory EXEC gate'
+   at=body.index(pattern);assert lo+at+3 in relocations,'EXEC gate relocation'
+   tail=body[at+7:at+12]
+   assert tail[:3]==b'\x75\x03\xe9','EXEC gate must reject AX0'
+   busy=at+12+struct.unpack('<h',tail[3:5])[0]
+   assert body[busy:busy+8]==b'\xb8\x04\x00\x07\x5f\x5e\x5d\xc3','EXEC gate busy return'
+   extra.update(directory_storage_snapshot_bytes=222,directory_storage_callbacks_verified=3,
+                directory_storage_EXEC_gate_verified=True)
   bridges+=config_bridges
   extra['configuration_bridge_pairs_verified']=config_bridges
  # Four unchanged resident no-argument APIs now enter the banked transfer UI.

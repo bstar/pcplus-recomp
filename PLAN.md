@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[LoC.6 banked directory persistence](docs/DIRECTORY_STORAGE_BANK.md) now
+routes real record/accounting saves through canonical shared ownership and
+blocks child EXEC while recovery is held. A refused retry clears old installed
+flags without consuming a new pending count. The inactive history tail lends
+the complete 2,000-byte Alt-G image; all capacities remain and nested START
+passes with 405,312 retained bytes. Selection/resource/UART adoption, dialing,
+physical/card and the complete F01–F16 scope remain open.
+
 [Shared directory persistence](docs/DIRECTORY_STORAGE.md) now stages an
 absolute target/recovery-name claim before replacement.22 DOS8086 workflows /
 704 assertions cover all four binary owners, uncertain close, rollback and

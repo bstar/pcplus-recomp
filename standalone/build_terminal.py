@@ -27,6 +27,7 @@ parser.add_argument('--original-keys',action='store_true',help='Restore original
 parser.add_argument('--original-reference',action='store_true',help='Original 39-command Alt-Z reference and guarded command refusals; implies --original-keys')
 parser.add_argument('--directory-view',action='store_true',help='Serviced read-only Alt-D view; implies --original-reference; dialing adoption remains pending')
 parser.add_argument('--directory-preview',action='store_true',help='Validate and preview an Alt-D selection; implies --directory-view; adoption remains pending')
+parser.add_argument('--directory-storage',action='store_true',help='Shared directory persistence claims and EXEC recovery gate; implies --directory-preview')
 parser.add_argument('--phone-log-bank',action='store_true',help='Link the checked logger code bank; event/startup integration remains disabled')
 parser.add_argument('--native-reset-bank',action='store_true',help='Link the experimental namespaced native bank; peer width ownership remains disabled')
 parser.add_argument('--native-reset-static',action='store_true',help='Retain the larger static bank as a memory regression control')
@@ -34,6 +35,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.directory_storage:args.directory_preview=True
 if args.directory_preview:
  args.directory_view=True
  assert args.session_baseline and args.session_capture
@@ -106,6 +108,7 @@ if args.original_keys:out_name='terminal-original-keys-'+hashlib.sha256(out_name
 if args.original_reference:out_name='terminal-reference-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_view:out_name='terminal-directory-view-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_preview:out_name='terminal-directory-preview-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
+if args.directory_storage:out_name='terminal-directory-storage-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
 if args.native_reset_transaction:out_name+='-transaction'
@@ -214,6 +217,7 @@ for index,source in enumerate(sources):
  if args.original_reference:options+=['-DTERMINAL_REFERENCE']
  if args.directory_view:options+=['-DTERMINAL_DIRECTORY_VIEW']
  if args.directory_preview:options+=['-DTERMINAL_DIRECTORY_PREVIEW']
+ if args.directory_storage:options+=['-DTERMINAL_DIRECTORY_STORAGE']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
@@ -276,6 +280,7 @@ c_sources += [ROOT/'src/redisplay/command_menu.c',ROOT/'src/terminal/script_laun
 if args.original_reference:c_sources.append(ROOT/'src/redisplay/command_reference.c')
 if args.directory_view:c_sources += [ROOT/'src/redisplay/directory_view.c',ROOT/'src/directory/directory_reader.c',ROOT/'src/directory/directory_reader_fs.c']
 if args.directory_preview:c_sources += [ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c']
+if args.directory_storage:c_sources.append(ROOT/'src/directory/directory_storage.c')
 c_sources += sorted((ROOT/'src/clipboard').glob('*.c'))
 c_sources += [ROOT/'src/transfer'/name for name in ['download_file.c','download_fs.c','native_file_bridge.c','terminal_receive.c']]
 c_sources += [ROOT/'src/transfer/download_compare.c']
@@ -304,6 +309,7 @@ if args.input_probe:hook_sources.add(ROOT/'standalone/hook_input_probe.c')
 c_sources+=sorted(hook_sources)
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
 if args.directory_preview:config_sources.update({ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c'})
+if args.directory_storage:config_sources.update({ROOT/'src/directory/directory_actions.c',ROOT/'src/directory/directory_storage.c'})
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
 config_sources.add(ROOT/'src/translation/xlt_dos.c')
@@ -323,6 +329,10 @@ config_sources.add(ROOT/'src/capture/capture_session.c')
 config_sources.update({ROOT/'src/recording/file.c',ROOT/'src/aspect/recorder.c'})
 config_sources.add(ROOT/'src/recording/foreground.c')
 config_aliases={'terminal_script_prepare':'terminal_script_prepare_impl'}
+if args.directory_storage:
+ config_aliases.update({name:name+'_impl' for name in ['directory_save_record','directory_save_accounting']})
+ config_aliases.update({name:'config_directory_'+short+'_service' for name,short in {
+  'directory_replace_paths':'paths','directory_replace_record':'replace','directory_accounting_patch':'patch'}.items()})
 if args.hook_input:config_aliases['xlt_live_offer']='xlt_live_offer_impl'
 if args.hook_apply:config_aliases.update({'xlt_live_commit_check':'xlt_live_commit_check_impl','xlt_live_publish':'xlt_live_publish_impl'})
 config_aliases.update({name:name+'_impl' for name in ['directory_live_decode','directory_live_read','directory_live_read_context','directory_live_context_matches','live_configuration_decode','live_setup_bind','live_setup_begin','live_setup_finish','live_setup_abort','live_setup_finish_policy','live_setup_acknowledge']})
@@ -360,6 +370,8 @@ helper_adapters={};zmodem_helper_adapters={};directory_fs_adapters={}
 for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
+ if args.directory_storage and source in (ROOT/'src/directory/directory_actions.c',ROOT/'src/directory/directory_storage.c'):
+  options+=['-os']
  if source==ROOT/'src/redisplay/command_reference.c':options=['-nt=REFERENCE_CODE','-nc=FARCODE']
  if args.original_reference and source==ROOT/'src/redisplay/command_menu.c':
   # The foreground owner remains in CONFIG_CODE. Its explicitly far cdecl
@@ -380,6 +392,7 @@ for source in c_sources:
  if args.original_reference:options+=['-dTERMINAL_REFERENCE']
  if args.directory_view:options+=['-dTERMINAL_DIRECTORY_VIEW']
  if args.directory_preview:options+=['-dTERMINAL_DIRECTORY_PREVIEW']
+ if args.directory_storage:options+=['-dTERMINAL_DIRECTORY_STORAGE']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
  if args.register_handoff:options+=['-dTERMINAL_REGISTER_HANDOFF']
@@ -477,6 +490,9 @@ manifest['experimental_original_keys']=args.original_keys
 manifest['experimental_original_reference']=args.original_reference
 manifest['experimental_directory_view']=args.directory_view
 manifest['experimental_directory_preview']=args.directory_preview
+manifest['experimental_directory_storage']=args.directory_storage
+if args.directory_storage:
+ manifest['limitations'].append('LoC.6: record/accounting saves use a banked canonical three-name shared file claim. Close/rollback/recovery-file/release uncertainty holds the owner and the shared DOS EXEC boundary refuses child launch. A refused retry returns no stale installed flag. No force recovery/reset, live selection adoption or new UART handoff is implemented.')
 if args.directory_preview:
  manifest['limitations'].append('LoC.5: Enter in a published Alt-D page stages and previews a selection from the accepted in-memory PRM and actual session capture. Pure preparation runs on a foreground idle turn. The existing empty command snapshot lends1190 more far bytes after its2788-byte page lease. No active target/settings/resource/accounting changes occur; validated adoption and dialing remain pending. Paths retain spellings, not canonical claims; preview success does not prove resource availability or physical compatibility.')
 manifest['directory_filesystem_import_adapters']=directory_fs_adapters

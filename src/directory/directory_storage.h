@@ -19,6 +19,9 @@ extern directory_storage_snapshot directory_storage_result;
 /* Once-only DATA-cookie initialization. Repeated calls preserve resolved
  * history; active/held calls refuse unchanged. No reset of a retained claim. */
 unsigned __cdecl directory_storage_initialize(void);
+/* Pure far foreground EXEC admission. Unused/idle/resolved owners permit it;
+ * active, held or damaged owner state refuses. Does not initialize/reset state. */
+unsigned __far __cdecl directory_storage_exec_allowed(void);
 /* Validate before IO, resolve DOS3+ absolute identity without fallback, derive
  * same-parent recovery names, then reserve ALL THREE names with the shared
  * capture/monitor/history/recorder registry before replacement starts.

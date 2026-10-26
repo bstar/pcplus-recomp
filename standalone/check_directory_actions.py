@@ -3,7 +3,7 @@
 import argparse,hashlib,json,random,struct
 from pathlib import Path
 from unicorn import UC_HOOK_CODE
-from unicorn.x86_const import (UC_X86_REG_AX,UC_X86_REG_BX,UC_X86_REG_CX,UC_X86_REG_DX,UC_X86_REG_ES,UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_SP,UC_X86_REG_IP)
+from unicorn.x86_const import (UC_X86_REG_AX,UC_X86_REG_BX,UC_X86_REG_CX,UC_X86_REG_DX,UC_X86_REG_ES,UC_X86_REG_DS,UC_X86_REG_BP,UC_X86_REG_SI,UC_X86_REG_DI,UC_X86_REG_SP,UC_X86_REG_IP,UC_X86_REG_EFLAGS)
 from check_terminal_options import Options
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE';MAP=ROOT/'build/terminal/terminal.map'
 def patch(raw,date,delta):
@@ -16,6 +16,12 @@ class Actions(Options):
   self.raw=random.Random(201).randbytes(114);self.uc.mem_write(self.data_base+self.baseline,self.raw);self.put('terminal_option_mask',64)
   self.uc.hook_add(UC_HOOK_CODE,self.replacement)
  def interrupt(self,uc,number,unused):
+  if number==0x21 and uc.reg_read(UC_X86_REG_AX)>>8==0x60 and '_directory_storage_result' in self.symbols:
+   source=uc.reg_read(UC_X86_REG_DS)*16+uc.reg_read(UC_X86_REG_SI)
+   path=bytes(uc.mem_read(source,64)).split(b'\0')[0]
+   assert path==b'C:\\SUB\\TEST.DIR'
+   uc.mem_write(uc.reg_read(UC_X86_REG_ES)*16+uc.reg_read(UC_X86_REG_DI),path+b'\0')
+   uc.reg_write(UC_X86_REG_AX,0);uc.reg_write(UC_X86_REG_EFLAGS,uc.reg_read(UC_X86_REG_EFLAGS)&~1);return
   if number!=0x21 or uc.reg_read(UC_X86_REG_AX)>>8!=0x2a:raise AssertionError('Unexpected DOS/BIOS IO during directory actions')
   year,month,day=self.calendar;uc.reg_write(UC_X86_REG_CX,year);uc.reg_write(UC_X86_REG_DX,month<<8|day);uc.reg_write(UC_X86_REG_AX,0x2a00);self.calendar_calls+=1
  def cstring(self,offset):return bytes(self.uc.mem_read(self.data_base+offset,64)).split(b'\0',1)[0]
@@ -89,6 +95,20 @@ def main():
  c=Actions();c.put('directory_pending_count',65535);c.note();assert c.get('directory_pending_count')==0 and c.get('directory_pending',1)==1
  assert c.flush()==0 and c.calls[0]['replacement']==patch(c.raw,c.calendar,0) and not c.get('directory_pending',1)
  done('pending-delta-wrap-preserves-original-modular-counter-and-updates-date',1)
+ if '_directory_storage_result' in Actions().symbols:
+  c=Actions();c.note();c.status=13;c.installed=1
+  assert c.flush()==1 and not c.get('directory_pending',1)
+  baseline=c.baseline_bytes();assert len(c.calls)==1
+  c.note();assert c.get('directory_pending_count')==1
+  assert c.flush()==1 and c.get('directory_pending',1)==1 and c.get('directory_pending_count')==1
+  assert c.baseline_bytes()==baseline and len(c.calls)==1
+  raw=bytes(c.uc.mem_read(c.symbols['directory_account_result'],20))
+  assert raw==struct.pack('<H',15)+bytes(18),'Refusal leaked a previous installed flag'
+  c.put('process_psp',c.base_segment-16);c.put('process_keep_paragraphs',16);c.put('process_minimum_paragraphs',16)
+  path=c.stage_near(b'C:\\CHILD.COM\0'+bytes(3)+b'\xa5'*8);result=path+16
+  assert c.call('_process_run',[path,0,result],limit=500000)==4
+  assert bytes(c.uc.mem_read(c.data_base+result,8))==b'\xa5'*8 and not c.get('process_busy')
+  done('held-owner-refuses-new-accounting-without-stale-installed-flag-and-blocks-EXEC-before-DOS',2)
  # Reuse the declared UART/BIOS-keyboard/tick model to execute real controller
  # transitions; no controller, transport, matcher or note callback is skipped.
  import check_transport
@@ -116,6 +136,6 @@ def main():
  assert m.state()==0 and m.calendar_calls==0 and m.get('directory_pending_count')==0
  done('actual-MODEM-DIRECT-success-transitions-note-once-per-connection-and-never-on-failure',4)
  assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==digest
- result={'passed':True,'binary_sha256':digest,'inputs':sum(case['inputs'] for case in cases),'cases':cases,'scope':'Actual linked C save helpers, pure date/count patch ASM and deferred accounting ASM. Only transactional replacement entry and DOS get-calendar boundary modeled; pure-action tests forbid other interrupts/port IO. Additional actual MODEM/DIRECT controller tests reuse declared UART/keyboard/tick hardware models. Source-only synthetic records; real DOS backend tested separately.'}
- output=ROOT/'build/terminal/directory-actions-checks.json';output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
+ result={'passed':True,'binary_sha256':digest,'inputs':sum(case['inputs'] for case in cases),'cases':cases,'scope':'Actual linked C save helpers, pure date/count patch ASM and deferred accounting ASM. Transactional replacement entry, DOS calendar and (for the guarded variant) DOS canonicalization are modeled. Guard, reservation registry and bank adapters execute normally. Held-owner EXEC refusal must return before any DOS memory/EXEC call; result stays exact. Additional MODEM/DIRECT transitions use declared UART/keyboard/tick models. Real DOS backend is tested separately.'}
+ output=BINARY.parent/'directory-actions-checks.json';output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

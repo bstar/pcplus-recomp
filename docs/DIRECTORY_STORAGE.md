@@ -1,5 +1,9 @@
 # Shared ownership for directory persistence
 
+The later [LoC.6 integration](DIRECTORY_STORAGE_BANK.md) routes the application
+save/accounting entry points through this guard and adds held-owner EXEC
+admission. The unlinked-component limitations below describe this checkpoint.
+
 The new `directory_storage` component resolves and reserves a directory's
 absolute DOS identity plus `PCPSTG.$$$` and `PCPBAK.$$$` before calling the checked
 replacement backend. Actual replacement operations use that same absolute

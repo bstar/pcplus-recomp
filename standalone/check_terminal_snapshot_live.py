@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Actual linked snapshot/native-row/file/PROGRAM instructions; kernel/HW models."""
-import hashlib,json,struct
+import argparse,hashlib,json,struct
+from pathlib import Path
 from unicorn.x86_const import *
 from check_terminal_capture_live import Capture
 from check_meta_actions_live import ROOT,BINARY
@@ -31,6 +32,11 @@ class Snapshot(Capture):
 
 WANT=b'  ONE  TWO\r\nA B\x82\xb3\xdb\r\n'+b'X'*80+b'\r\n'+b'\r\n'*21+b'END\r\n'
 def main():
+ global BINARY
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path);args=p.parse_args()
+ if args.terminal:
+  import check_transport
+  BINARY=args.terminal.resolve();check_transport.BINARY=BINARY;check_transport.MAP=BINARY.parent/'terminal.map'
  digest=hashlib.sha256(BINARY.read_bytes()).hexdigest();groups=[]
  def check(name,fn):
   n=fn();groups.append(dict(case=name,inputs=n,passed=True));print(name,'PASS',n,flush=True)
@@ -109,7 +115,31 @@ def main():
    m.save();assert not m.capture_calls;n+=1
   return n
  check('other-owner-geometry-CGA-retrace-and-invalid-far-source-reject-before-fileIO',rejects)
+ if '_directory_storage_exec_allowed' in Snapshot().symbols:
+  def shared_tail():
+   from check_redisplay_live import Redisplay
+   for owner in ('_redisplay_active','_command_menu_active'):
+    m=Snapshot();m.paint();m.put(owner,1)
+    frozen=b'Q'*63000;m.uc.mem_write(m.symbols['redisplay_snapshot'],frozen)
+    m.save();assert not m.capture_calls and bytes(m.uc.mem_read(m.symbols['redisplay_snapshot'],63000))==frozen
+   m=Snapshot();m.put('terminal_snapshot_active',1);frozen=b'Q'*63000
+   m.uc.mem_write(m.symbols['redisplay_snapshot'],frozen)
+   m.call('terminal_redisplay_key',ax=0x8400)
+   assert m.uc.reg_read(UC_X86_REG_EFLAGS)&1 and not m.get('_redisplay_active')
+   assert bytes(m.uc.mem_read(m.symbols['redisplay_snapshot'],63000))==frozen
+   m=Snapshot();m.paint();Redisplay.seed(m,b'X'*63000,wrapped=True)
+   history=bytes(m.uc.mem_read(m.symbols['terminal_history_buffer'],63000));m.save()
+   assert m.snapshot()==WANT and not m.get('terminal_snapshot_active')
+   assert m.symbols['terminal_snapshot_image']==m.symbols['redisplay_snapshot']+61000
+   assert bytes(m.uc.mem_read(m.symbols['terminal_history_buffer'],63000))==history
+   m.call('terminal_connection_notice_restore')
+   m.call('terminal_redisplay_key',ax=0x8400,limit=30000000)
+   assert m.get('_redisplay_active') and bytes(m.uc.mem_read(m.symbols['redisplay_snapshot'],63000))==history
+   m.keys.append(27);m.call('terminal_poll_io',limit=30000000)
+   assert not m.get('_redisplay_active') and not m.handles
+   return 4
+  check('reciprocal-snapshot-history-tail-lease-and-full63000-byte-ring-preservation',shared_tail)
  report=dict(passed=True,binary_sha256=digest,cases=groups,scope='Actual linked native3446/64b8 and CGA-disabled brackets, maintained frozen-view writer, both checked DOS owners and PROGRAM guard. Only DOSkernel/BIOS/UART boundaries modeled. No physical DMA atomicity, physicaldisk or full viewport/UI claim.')
- (ROOT/'build/terminal/terminal-snapshot-live-checks.json').write_text(json.dumps(report,indent=2)+'\n')
+ (BINARY.parent/'terminal-snapshot-live-checks.json').write_text(json.dumps(report,indent=2)+'\n')
  print('Linked snapshot:',len(groups),'groups',sum(r['inputs'] for r in groups),'inputs PASS')
 if __name__=='__main__':main()

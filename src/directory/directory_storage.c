@@ -28,6 +28,12 @@ unsigned __cdecl directory_storage_initialize(void)
  if(cookie==0xd510){memset(&directory_storage_result,0,sizeof(directory_storage_result));cookie=0xd511;return 0;}
  return available();
 }
+unsigned __far __cdecl directory_storage_exec_allowed(void)
+{
+ if(cookie==0xd510)return 1;
+ return cookie==0xd511 && (directory_storage_result.state==DIRECTORY_STORAGE_IDLE ||
+  directory_storage_result.state==DIRECTORY_STORAGE_RESOLVED);
+}
 static unsigned __far __cdecl reserved(const char *identity,void *context)
 {
  if(context!=&directory_storage_result)return 1;

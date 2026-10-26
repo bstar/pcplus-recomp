@@ -7,6 +7,13 @@ CONFIG_ENTRY _directory_live_read,8
 CONFIG_ENTRY _directory_live_read_context,9
 CONFIG_ENTRY _directory_live_context_matches,5
 CONFIG_ENTRY _live_configuration_decode,7
+%ifdef TERMINAL_DIRECTORY_STORAGE
+CONFIG_ENTRY _directory_save_record,5
+CONFIG_ENTRY _directory_save_accounting,8
+CONFIG_DIRECTORY _config_directory_paths,_directory_replace_paths,3
+CONFIG_DIRECTORY _config_directory_replace,_directory_replace_record,7
+CONFIG_DIRECTORY _config_directory_patch,_directory_accounting_patch,6
+%endif
 CONFIG_ENTRY _live_setup_bind,3
 CONFIG_ENTRY _live_setup_begin,5
 CONFIG_ENTRY _live_setup_finish,2

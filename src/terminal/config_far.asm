@@ -19,4 +19,7 @@ terminal_config_code_start:
 %macro CONFIG_ZERO 2
  FAR_SERVICE %1
 %endmacro
+%ifdef TERMINAL_DIRECTORY_STORAGE
+%define CONFIG_DIRECTORY FAR_CDECL_SERVICE
+%endif
 %include "config_abi.inc"
