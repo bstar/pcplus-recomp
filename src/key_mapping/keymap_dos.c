@@ -35,7 +35,11 @@ keymap_dos_status __cdecl keymap_dos_read(const char *path,unsigned profile,
  int handle;
  if(!valid(path,destination,result))return KEYMAP_DOS_ARGUMENT;
  memset(r,0,sizeof(*r));
- error=_dos_open(path,O_RDONLY,&handle);
+ error=_dos_open(path,O_RDONLY
+#ifdef KEY_RESOURCE_PRIVATE_READS
+  |O_NOINHERIT
+#endif
+  ,&handle);
  if(error){fail(r,KEYMAP_DOS_OPEN,error);return r->status;}
  error=keymap_dos_seek(handle,0,2,&actual);
  if(error)fail(r,KEYMAP_DOS_SEEK,error);

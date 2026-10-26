@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Directory resource staging](docs/DIRECTORY_RESOURCES.md) now resolves, reserves
+and reads both KEY/KBD resources before publishing selected bytes. Original CLI
+provenance is explicit; blank/missing directory bindings reset defaults.36 DOS8086
+workflows/1,757 assertions and a35-source isolated rebuild pass, including actual
+child noninheritance after uncertain close. Ordinary/LoC.6 binaries remain exact.
+Live CLI binding, resource leases, translation/scripts, selection/UART adoption,
+dialing, physical/card and the full F01–F16 scope remain open.
+
 [LoC.6 banked directory persistence](docs/DIRECTORY_STORAGE_BANK.md) now
 routes real record/accounting saves through canonical shared ownership and
 blocks child EXEC while recovery is held. A refused retry clears old installed

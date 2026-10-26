@@ -33,7 +33,11 @@ key_actions_dos_status __cdecl key_actions_dos_read(const char *path,
  int handle;
  if(!valid(path,destination,result))return KEY_ACTIONS_DOS_ARGUMENT;
  memset(r,0,sizeof(*r));
- error=_dos_open(path,O_RDONLY,&handle);
+ error=_dos_open(path,O_RDONLY
+#ifdef KEY_RESOURCE_PRIVATE_READS
+  |O_NOINHERIT
+#endif
+  ,&handle);
  if(error){fail(r,KEY_ACTIONS_DOS_OPEN,error);return r->status;}
  done=0;
  while(!r->status && done<KEY_ACTIONS_SIZE){
