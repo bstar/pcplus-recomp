@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Shared directory persistence](docs/DIRECTORY_STORAGE.md) now stages an
+absolute target/recovery-name claim before replacement.22 DOS8086 workflows /
+704 assertions cover all four binary owners, uncertain close, rollback and
+cleanup/release failures, exact accounting/record bytes and CWD drift.20 sources
+reproduce the diagnostic/eight objects and repeat the tests. Actual terminal
+save/accounting integration, quiesced selection adoption, physical/card and
+full F01–F16 acceptance remain open; LoC.5 products are unchanged.
+
 [LoC.5 live directory preview](docs/DIRECTORY_PREVIEW.md) connects staged
 selection to Alt-D Enter using the accepted in-memory PRM and actual session.
 Full owner stack use is 6,292/8,192 bytes; resident code and near storage stay

@@ -835,6 +835,12 @@ test-setup-startup: terminal setup
 	python3 standalone/check_setup_startup.py
 	python3 standalone/test_setup_startup_dos.py
 
+.PHONY: directory-storage test-directory-storage
+directory-storage:
+	python3 standalone/build_directory_storage.py
+test-directory-storage: directory-storage
+	python3 standalone/test_directory_storage_dos.py --output build/directory-storage/DOS-make-$(shell date +%s%N)
+
 .PHONY: directory-selection test-directory-selection
 directory-selection:
 	python3 standalone/build_directory_selection.py
