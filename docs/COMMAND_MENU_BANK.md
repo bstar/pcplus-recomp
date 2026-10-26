@@ -67,3 +67,7 @@ selection/profile adoption, cancel without session mutation, and directory
 accounting/key/script handoff. Active connection, incoming data and screen
 restoration must remain intact while browsing. Dedicated port/key-map UI,
 other refused services, physical acceptance and the full F01–F16 plan remain.
+
+The later [incremental reader](DIRECTORY_READER.md) supplies a checked,
+bounded-work loading component for that view. Parent integration and selection
+adoption remain open.
