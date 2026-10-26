@@ -35,3 +35,7 @@ The updated stage is `build/special-directory-private-handles-20261025/PCPLUSSE`
 its terminal SHA256 is
 `6fb218345a2357441a49b24e472f1e0ef6b8b5d32767aa093fb7afa5038e226d`.
 The EXEC witness is test-only and is not included in the application package.
+
+Both proofs also pass from committed sources alone at `19a0e4e`: the component
+repeats all 50 DOS workflows, and 754 application inputs reproduce all ten
+package files. Pending worktree logger changes are excluded.

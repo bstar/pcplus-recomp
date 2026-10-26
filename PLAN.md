@@ -4,7 +4,7 @@
 concrete child-inheritance gap before selection adoption. DOS3+ reader opens
 are non-inheritable; actual EXEC witnesses reject active and uncertain reader
 handles while a plain read-only control remains readable. Both reader forms
-pass25 DOS workflows each;13 isolated sources reproduce diagnostics/helper
+pass25 DOS workflows each;13 committed sources reproduce diagnostics/helper
 and eleven objects, repeating50 workflows/14,116 assertions. Linked/live DOS
 view, stock ENiGMA editor, nested START and754-source package rebuild pass.
 Canonical reservations, selection/adoption/accounting, physical/card and full

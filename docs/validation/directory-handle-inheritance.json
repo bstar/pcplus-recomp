@@ -491,5 +491,21 @@
     "minimum_allocated_module_bytes": 402240,
     "far_ui_storage_bytes": 12000
   },
-  "scope": "DOS3+ reader handles request non-inheritance. Real EXEC active/recovery/error6 and raw inheritable/data control pass in both reader forms; parent linked/DOS/stock ENiGMA/START and exact source package checks pass. No selection adoption, canonical reservations, broad owner/recovery coordination, physical modem/card or full-F01-F16 acceptance claim."
+  "scope": "DOS3+ reader handles request non-inheritance. Real EXEC active/recovery/error6 and raw inheritable/data control pass in both reader forms; parent linked/DOS/stock ENiGMA/START and exact source package checks pass. No selection adoption, canonical reservations, broad owner/recovery coordination, physical modem/card or full-F01-F16 acceptance claim.",
+  "committed_source_rebuild": {
+    "commit": "19a0e4e62483d418cf9f5b3b1947b9bfc4f626f6",
+    "proofs": {
+      "component": {
+        "report": "build/directory-reader-inheritance-committed-20261025/result.json",
+        "sha256": "bb7a01920594c3a9c5a5e0b77e3c6377811a7bb7839fe5c4cea99c221c8e10cb",
+        "source_files": 13
+      },
+      "application": {
+        "report": "build/directory-handles-package-committed-20261025/result.json",
+        "sha256": "f20ac99dcb7edc50c8e23405a8ba388ac01651b38b727a3a369e19bb31459c5b",
+        "source_files": 754
+      }
+    },
+    "scope": "Committed-only exports reproduce component products and repeat50 DOS cases, and independently reproduce all ten application package files. Pending worktree logger changes are excluded."
+  }
 }
