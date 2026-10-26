@@ -45,6 +45,8 @@ memory layouts, source inputs, artifact hashes and passing checks:
   cell-by-cell rendering comparison or a physical modem test.
 - A clean export of 746 declared sources reproduces all ten package files.
   Original executables and private configuration are absent from build inputs.
+  The same ten files reproduce from only the 746 committed sources at
+  `6380609`, excluding pending worktree logger changes.
 
 The staged package is
 `build/special-command-bank-20261025/PCPLUSSE`. The terminal SHA256 is

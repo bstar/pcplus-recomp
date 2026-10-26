@@ -36,7 +36,8 @@
     "actual_DOS_recording": true,
     "stock_ENiGMA": true,
     "ordinary_LoC1_LoC2_controls": true,
-    "source_only_package": true
+    "source_only_package": true,
+    "committed_source_package": true
   },
   "reports": {
     "ABI_and_damaged_bindings": "build/terminal-reference-c911e6208e81/command-bank-checks.json",
@@ -102,7 +103,8 @@
     "build/command-bank-recording-20261025/result.json": "3b05b324dcc74faf43472d08d98a4ccea29ba8d47309ec84b4abe0a19c567473",
     "build/bbs-lab/results/enigma/command-bank-stock-20261025/proxy-integration.json": "5655e3dac56315ef39fa843e9918106f55326badff16465155b88d57e132a847",
     "build/command-bank-controls-20261025.json": "4670743354c29a56a855110d1e76b49a5e4909bc6a67e3100b03a1dc08bcd064",
-    "build/command-bank-source-20261025/result.json": "a6903d80b2526e42fdcf9ba73eb01041527d3537f6c71fb7669e6b46397e98b7"
+    "build/command-bank-source-20261025/result.json": "a6903d80b2526e42fdcf9ba73eb01041527d3537f6c71fb7669e6b46397e98b7",
+    "build/command-bank-committed-source-20261025/result.json": "b07726d87bf54c6c56ad32fe263a603974f90101c3b8cefb085973a648ab9ec1"
   },
   "source_inputs": {
     "src/redisplay/command_menu.h": "672f6bb61ca5524bfe41cfdd0caf4f76ef922a3405fff7cc1261a0a921821fce",
@@ -111,5 +113,24 @@
     "standalone/terminal_memory.py": "868f10c9ccbde73cedcb7dbf458d308cf2bc3e2300b81dd63daf2723116c5308",
     "standalone/check_command_menu_bank.py": "25c2c7a1669502a0fd0aca1de2f75698e236832a77f66597fd41b2c214454eb1"
   },
-  "scope": "Reference variant only: move command controller and code constants to REFERENCE_CODE using explicit far cdecl. Shared frame/DGROUP and all stacks/history/buffers retain their owners and capacities. Actual DOS menu and recorder compilation/replay, stock ENiGMA editor at20ms per input byte, exact old controls and746-source ten-file reproduction pass. This creates code room for the pending serviced Alt-D directory; does not implement it or prove physical serial/rendering or full F01-F16 acceptance."
+  "scope": "Reference variant only: move command controller and code constants to REFERENCE_CODE using explicit far cdecl. Shared frame/DGROUP and all stacks/history/buffers retain their owners and capacities. Actual DOS menu and recorder compilation/replay, stock ENiGMA editor at20ms per input byte, exact old controls and746-source ten-file reproduction pass. This creates code room for the pending serviced Alt-D directory; does not implement it or prove physical serial/rendering or full F01-F16 acceptance.",
+  "committed_source_rebuild": {
+    "commit": "6380609f283cc949001aa2943207031301ab8f92",
+    "report": "build/command-bank-committed-source-20261025/result.json",
+    "source_files": 746,
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+      "README.TXT": "bbcfe6f22acff8a83f1a789367d2d4c6104df374a0f8819196063fe5cc81eaf8",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "197f440e82ebad6b5adb97a563b0d70b46ebeb3c752dd64ab38020c190e6c323",
+      "VERSION.TXT": "65436f51cf899975a222db6965af125c1da60d732fc9e8023db3d47d30335235",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "report_sha256": "b07726d87bf54c6c56ad32fe263a603974f90101c3b8cefb085973a648ab9ec1",
+    "scope": "Only746 declared sources exported from Git; no working-tree logger changes, original inputs or ancestor Git metadata. All ten staged files reproduce exactly."
+  }
 }
