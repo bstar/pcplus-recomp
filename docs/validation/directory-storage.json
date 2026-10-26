@@ -571,5 +571,15 @@
     "Canonical resource staging, baseline freshness and confirmed UART/profile handoff",
     "Selected-entry adoption/dialing and full F01-F16/physical/card acceptance",
     "Block child EXEC for held legacy replacement handles, or validate a private-handle backend"
-  ]
+  ],
+  "committed_source_proof": {
+    "path": "build/directory-storage-committed-20261025/result.json",
+    "sha256": "d6b8c212cef70142da081807713ffdd343a4ed584351ae327c367920b7ca4047",
+    "commit": "c8cc45afb26f2dde890c24bede2da0d51a1f551f",
+    "source_files": 20,
+    "DOS_workflows": 22,
+    "native_assertions": 704,
+    "ancestor_git_unavailable": true,
+    "passed": true
+  }
 }

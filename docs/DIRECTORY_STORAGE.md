@@ -73,7 +73,8 @@ workflows and 704 assertions:
  originally admitted file and preserves a decoy in the new directory.
 - Hardware snapshots match before and after execution. A 20-source export outside
  every Git ancestor, with no original installation, reproduces STORAGE.EXE and
- all eight objects exactly and repeats the DOS workflows.
+ all eight objects exactly and repeats the DOS workflows. The same proof passes
+ from committed sources at `c8cc45a`, excluding pending telephone-log changes.
 
 The diagnostic uses explicit wrappers for selected DOS close/rename/delete,
 canonicalization and reservation-release faults around real kernel operations.
