@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[LoC.3 command reference](docs/COMMAND_REFERENCE.md) now shows all 39 original
+functional names/grouping, with 20 safe refusals and a separate backtick browser.
+85 linked inputs, the existing 29 keyboard inputs, actual DOS8086 COM3/IRQ5
+captures and a stock ENiGMA editor session with the popup observed all pass.
+Reference recording compiles/replays exactly; 746 committed sources reproduce
+all ten package files. Next implement the live directory chooser, key-map and
+dedicated port UI, original pull-down/mouse behavior and the refused command
+services. Physical/card and complete F01–F16 acceptance remain open.
+
 [LoC.2 original-key restoration](docs/ORIGINAL_KEYS.md) now passes 29 linked
 inputs, actual DOS recording/compilation/replay, Alt-S/Alt-P settings return,
 COM3/IRQ5 package launch and stock ENiGMA editor/video checks. The ten-file

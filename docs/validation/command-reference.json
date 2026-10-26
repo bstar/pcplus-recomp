@@ -620,5 +620,24 @@
       "SCREEN.BIN": "96c95fe314c6133aa1c1f6a228ee1281e3dfc264c0d84cbc118ce4f18335454b"
     }
   },
-  "recording_cancel_result_sha256": "ed9beb080c16071567125c2ce00ec7e0f703f85aff2e74985bb689448cfa0898"
+  "recording_cancel_result_sha256": "ed9beb080c16071567125c2ce00ec7e0f703f85aff2e74985bb689448cfa0898",
+  "committed_source_rebuild": {
+    "source_commit": "6d11fcc6d3f4ed90874e4080079c080d4dab08a9",
+    "source_files": 746,
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+      "README.TXT": "bbcfe6f22acff8a83f1a789367d2d4c6104df374a0f8819196063fe5cc81eaf8",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "20d237917e2c4eb08042f9e274a0842fd8ffa5877c4a6b307d3ffdb8f9208302",
+      "VERSION.TXT": "c426fc643be2990b64dbfbad195c446c781e4b16bb4ac4293aa356a91c4f4346",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "original_inputs": [],
+    "ancestor_git_unavailable": true,
+    "receipt_sha256": "1cbf6063584730debc5de587e3176a9762b00e9350e46703a972b8678ad1e539"
+  }
 }

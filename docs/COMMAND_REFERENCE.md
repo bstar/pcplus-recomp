@@ -15,9 +15,9 @@ This navigation, highlighting and command activation are maintained behavior.
 Nineteen reference entries reach existing services or information. Twenty
 unfinished commands are dim and show a visible refusal. Their original keys
 also open that refusal from the terminal instead of ending the session.
-Alt-D therefore does not secretly redial a different target, and Alt-F8 does
-not launch the translation editor. The browser retains its explicit selected-
-target dialing command. Alt-F5 opens the checked script filename prompt, and
+Alt-D selects the pending directory command, and Alt-F8 selects the pending
+key-map editor. The browser retains its explicit selected-target dialing
+command. Alt-F5 opens the checked script filename prompt, and
 Alt-W now reaches translation editing. Recorder ownership still blocks a new
 script/serial owner until the recording is saved or canceled.
 
@@ -78,6 +78,9 @@ The [receipt](validation/command-reference.json) binds:
 - Exact ten-file reproduction from 746 declared source inputs, with no originals
   or ancestor Git metadata. Ordinary, LoC.1 and LoC.2 controls retain their exact
   earlier binary hashes.
+- The same ten files reproduce from only the 746 committed sources exported
+  at `6d11fcc`, excluding all uncommitted worktree changes. Use the source-proof
+  command with `--commit 6d11fcc` to repeat that boundary.
 
 The 3,331-byte REFERENCE_CODE bank holds the new code and text. The full parent
 retains 64,096 bytes of near data/stack; resident code is 65,386 bytes and
