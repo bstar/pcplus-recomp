@@ -309,7 +309,7 @@ static void record_toggle(void)
  else{phase=4;notice=0;for(query_size=0;query_size<63 && recording_terminal_path[query_size];++query_size){} }
 }
 #endif
-unsigned __cdecl command_menu_event(word event,word key,word __far *frame)
+unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *frame)
 {
  word i,n;byte c=(byte)key;
  if(event==0){command_menu_action=0;command_menu_active=1;category=selected=phase=notice=0;view=frame;

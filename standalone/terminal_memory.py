@@ -344,14 +344,16 @@ def inspect_terminal_memory(binary,map_path):
      site=lo+code.index(pattern,offset);offset=site-lo+5
      assert site+3 in relocations,(region_name,'recording guard relocation')
      guards.append(site)
-   code=image[start+config_seg*16:start+config_seg*16+config_code['bytes']]
    ui_sites=[];optimized=[]
    for name,count in (('_recording_ui_ready',2),('_terminal_autostart_busy',1)):
     assert symbols[name][0]==config_seg
+    caller_seg=symbols['_command_menu_event'][0] if name=='_recording_ui_ready' else config_seg
+    caller_region=next(c for c in code_segments if c['relative_segment']==caller_seg)
+    code=image[start+caller_seg*16:start+caller_seg*16+caller_region['bytes']]
     pattern=b'\x9a'+struct.pack('<HH',symbols[name][1],config_seg)
     far_count=code.count(pattern)
     local=[]
-    if name=='_recording_ui_ready':
+    if name=='_recording_ui_ready' and caller_seg==config_seg:
      # WLINK retains the far return frame when shortening same-CS C calls:
      # PUSH CS; CALL rel16; NOP, or PUSH CS; DS-prefix CALL rel16.
      for at in range(len(code)-5):
@@ -365,7 +367,7 @@ def inspect_terminal_memory(binary,map_path):
     ui_sites.extend(local);optimized.extend(local)
     offset=0
     for i in range(far_count):
-     site=config_seg*16+code.index(pattern,offset);offset=site-config_seg*16+5
+     site=caller_seg*16+code.index(pattern,offset);offset=site-caller_seg*16+5
      assert site+3 in relocations,(name,'UI boundary relocation')
      ui_sites.append(site)
    extra.update(recording_actor_guard_sites=guards,recording_UI_boundary_sites=ui_sites,
@@ -480,7 +482,22 @@ def inspect_terminal_memory(binary,map_path):
    extra['capture_reservation_far_call_sites']=sites
    extra['capture_reservation_initialized_bytes']=reservation_bytes
   if '_command_menu_event' in symbols:
-   assert symbols['_command_menu_event'][0]==config_seg,'Command menu is outside CONFIG_CODE'
+   menu_seg=symbols['_command_menu_event'][0]
+   if menu_seg!=config_seg:
+    reference=next(c for c in code_segments if c['name']=='REFERENCE_CODE')
+    assert reference['kind']=='FARCODE' and reference['offset']==0
+    assert menu_seg==reference['relative_segment']==symbols['_command_reference_event'][0]
+    assert symbols['_command_menu_event'][1]<reference['bytes']
+    lo=config_seg*16;body=image[start+lo:start+lo+config_code['bytes']]
+    pattern=b'\x9a'+struct.pack('<HH',symbols['_command_menu_event'][1],menu_seg)
+    assert body.count(pattern)==2,'Redisplay must use two compiled far menu calls'
+    sites=[];offset=0
+    for i in range(2):
+     site=lo+body.index(pattern,offset);offset=site-lo+5
+     assert site+3 in relocations,'Compiled menu call lacks segment relocation'
+     sites.append(site)
+    extra['command_menu_banked_call_sites']=sites
+   extra['command_menu_code_segment']=menu_seg
    for name in ('_command_menu_active','_command_menu_action'):
     assert near_start<=address(name)<near_start+near_size-1,(name,'menu state outside DGROUP')
    extra['command_menu_far_code_verified']=True

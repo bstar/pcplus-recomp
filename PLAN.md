@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Command-menu banking](docs/COMMAND_MENU_BANK.md) frees13,023 bytes in
+CONFIG_CODE without reducing stacks, buffers or history. Sixteen cross-bank
+returns and four damaged-binding controls pass, alongside85 reference inputs,
+29 original-key inputs, actual DOS recording/compilation/replay and stock
+ENiGMA editor checks at20ms per input byte. All ten package files reproduce
+from746 source inputs; ordinary/LoC.1/LoC.2 executables remain exact. This is
+preparation for the serviced live directory, which remains unimplemented;
+physical/card and complete F01–F16 acceptance remain open.
+
 [LoC.3 command reference](docs/COMMAND_REFERENCE.md) now shows all 39 original
 functional names/grouping, with 20 safe refusals and a separate backtick browser.
 85 linked inputs, the existing 29 keyboard inputs, actual DOS8086 COM3/IRQ5

@@ -1,5 +1,9 @@
 # Alt-Z command reference — 2.01-LoC.3
 
+The later [command-menu bank](COMMAND_MENU_BANK.md) keeps this behavior while
+moving the controller out of CONFIG_CODE. Its package/hash/memory measurements
+supersede the corresponding staging details below; Alt-D remains unfinished.
+
 The new `--original-reference` candidate restores the original 39-command
 reference arrangement: two Communications columns, Before/After/During/Other
 subsections, Setup and Other Functions on the right. Backtick opens the separate

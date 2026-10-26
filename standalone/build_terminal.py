@@ -347,6 +347,10 @@ for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
  if source==ROOT/'src/redisplay/command_reference.c':options=['-nt=REFERENCE_CODE','-nc=FARCODE']
+ if args.original_reference and source==ROOT/'src/redisplay/command_menu.c':
+  # The foreground owner remains in CONFIG_CODE. Its explicitly far cdecl
+  # menu entry shares the reference bank; DGROUP and frame ownership stay put.
+  options=['-nt=REFERENCE_CODE','-nc=FARCODE']
  if source in hook_sources:
   aliases={'memcpy':'hook_memcpy_service','memcmp':'hook_memcmp_service',
            'terminal_import_decode':'hook_terminal_decode_service','modem_import_decode':'hook_modem_decode_service',
