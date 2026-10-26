@@ -6,6 +6,10 @@
 #include "command_reference.h"
 static unsigned reference_origin;
 #endif
+#ifdef TERMINAL_DIRECTORY_VIEW
+#include "directory_view.h"
+static unsigned directory_parent;
+#endif
 #include "../recording/foreground.h"
 extern unsigned __far __cdecl recording_ui_ready(void);
 typedef unsigned short word;
@@ -170,6 +174,14 @@ ENTRY(scope,"Application status",
  "Other emulations, Host, additional transfer protocols and\n"
  "complete original menus/settings remain under development.\n"
  "Loopback BBS tests do not replace physical UART/modem validation.");
+#ifdef TERMINAL_DIRECTORY_VIEW
+ENTRY(directory,"Browse dialing directory       Alt-D",
+ "Browse an explicitly selected PCPLUS.DIR-format file without changing\n"
+ "the current target, configuration or connection. Reads are split into\n"
+ "foreground turns while received data continues. Arrows and page keys\n"
+ "browse; F2 changes the path; F5 reloads. Escape returns to the session.\n"
+ "Dialing and profile adoption from this view remain under development.");
+#endif
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
@@ -177,7 +189,11 @@ static const item MENU_TEXT items[]={
  ROW(redial,1,REDIAL_KEY,'D'),ROW(hangup,1,0x2300,'H'),ROW(linebreak,1,0x3000,'B'),
  ROW(history,2,0x8400,'R'),ROW(clipboard,2,0x8300,'F'),ROW(monitor,2,0x2b1c,'M'),ROW(printer,2,0x2600,'P'),
  ROW(settings,3,0x7100,'E'),ROW(reload,3,0x7000,'R'),ROW(table,3,TABLE_KEY,'T'),ROW(using,4,0,'U'),ROW(keys,4,0,'K'),ROW(scope,4,0,'A'),
- ROW(record,0,0xfd00,'C'),ROW(cancel_record,0,0xfc00,'D'),ROW(record_files,0,0xfb00,'F')};
+ ROW(record,0,0xfd00,'C'),ROW(cancel_record,0,0xfc00,'D'),ROW(record_files,0,0xfb00,'F')
+#ifdef TERMINAL_DIRECTORY_VIEW
+ ,ROW(directory,1,0xf500,'L')
+#endif
+};
 #define COUNT (sizeof(items)/sizeof(items[0]))
 static const char MENU_TEXT categories[][12]={"File","Connection","View","Setup","Help"};
 TEXT(title,"PCPLUS  Command Menu");
@@ -265,6 +281,9 @@ static void record_view(void)
 static void draw(void)
 {
  word i,n=0,at;
+#ifdef TERMINAL_DIRECTORY_VIEW
+ if(phase==10){directory_view_event(2,0,view);return;}
+#endif
 #ifdef TERMINAL_REFERENCE
  if(phase==9){command_reference_event(2,0,view);return;}
 #endif
@@ -316,6 +335,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(!recording_terminal_inspect())recording_terminal_initialize();
 #ifdef TERMINAL_REFERENCE
   reference_origin=0;
+#ifdef TERMINAL_DIRECTORY_VIEW
+  if(key==0x2000){directory_parent=0;phase=10;directory_view_event(0,key,view);return 1;}
+#endif
   if(key==0x2c00 || command_reference_unavailable(key)){
    reference_origin=1;phase=9;command_reference_event(0,key,view);return 1;}
   if(key==0x6c00){reference_origin=1;command_reference_event(0,key,view);
@@ -327,8 +349,20 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(key==0x1300){for(i=0;i<COUNT;++i)if(items[i].key==0xfd00){selected=i;break;}record_toggle();}
 #endif
   draw();return 1;}
- if(event==4){command_menu_action=command_menu_active=0;return 0;}
+ if(event==4){
+#ifdef TERMINAL_DIRECTORY_VIEW
+  if(phase==10)directory_view_event(4,0,view);
+#endif
+  command_menu_action=command_menu_active=0;return 0;}
  if(!command_menu_active)return 0;
+#ifdef TERMINAL_DIRECTORY_VIEW
+ if(phase==10 && (event==1 || event==3)){
+  if(event==1 && key==0x2d00){directory_view_event(4,0,view);command_menu_action=key;command_menu_active=0;return 0;}
+  if(directory_view_event(event,key,view))return 1;
+  if(!directory_parent){command_menu_active=0;return 0;}
+  phase=directory_parent==1?9:0;notice=0;draw();return 1;
+ }
+#endif
  if(event!=1)return 1;
  if(key==0x2d00){command_menu_action=key;command_menu_active=0;return 0;}
  if(c==27){
@@ -407,6 +441,9 @@ activate:
   else if(items[selected].key==0xfb00){const recording_file *r=recording_terminal_inspect();
    phase=6;notice=r?r->status:RF_STATE;if(notice==RF_CANCELLED)notice=102;}
   else if(items[selected].key==0xfe00){phase=3;query_size=0;query[0]=0;}
+#ifdef TERMINAL_DIRECTORY_VIEW
+  else if(items[selected].key==0xf500){directory_parent=reference_origin?1:2;phase=10;directory_view_event(0,0,view);return 1;}
+#endif
   else if(!items[selected].key)phase=1;
   else{command_menu_action=items[selected].key;command_menu_active=0;return 0;}
  }

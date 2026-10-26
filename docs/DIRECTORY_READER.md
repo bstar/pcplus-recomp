@@ -1,5 +1,9 @@
 # Incremental directory reader for the live chooser
 
+The later [LoC.4 directory view](DIRECTORY_VIEW.md) integrates this reader into
+the running command screen owner. The original component measurements and
+receipts below remain historical; live selection adoption is still open.
+
 The strict startup reader scans all 23,050 bytes synchronously. The live Alt-D
 view needs a foreground reader that returns between kernel calls so the parent
 can service received bytes, flow control, replies and local cancellation.

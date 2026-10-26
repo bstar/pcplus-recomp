@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[LoC.4 serviced directory view](docs/DIRECTORY_VIEW.md) now opens Alt-D
+read-only browsing through bounded foreground IO.31 linked inputs,84 reference
+inputs,29 keyboard inputs, actual DOS page/error captures and stock ENiGMA
+editor checks pass. Shared full snapshots reclaim8,000 bytes; nested START
+compilation/replay passes with3,424 fewer retained bytes than LoC.3. All ten
+package files reproduce from754 source inputs, and four older application
+controls stay exact. Selected-entry adoption, resource/identity/accounting
+handoff, physical/card and complete F01–F16 acceptance remain open.
+
 [Incremental directory loading](docs/DIRECTORY_READER.md) now validates
 pages in bounded foreground turns: at most512 input bytes and one DOS call per
 step, publishing only after complete size/probe/close success. Cancel and

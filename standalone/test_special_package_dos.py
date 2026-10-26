@@ -69,7 +69,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2):
               'mount c "' + str(drive) + '"\nc:\nset PCPLUS=C:\\ORIGINAL\n' +
               ('WATCH T\n' if observe else '') + 'SNAP B\nADDKEY ' + keys + '\n'
               'CALL C:\\PCPLUSSE\\' + launcher + '.BAT /T:ACTIONS.KEY\n'
-              'SET >C:\\ENV.TXT\nC:\\SNAP A\n' + ('C:\\WATCH\n' if observe else '') +
+              'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n' + ('C:\\WATCH\n' if observe else '') +
               'if errorlevel 1 goto failed\necho RETURNED>C:\\RETURN.TXT\nexit\n'
               ':failed\necho FAIL>C:\\FAIL.TXT\nexit\n')
     (out / 'dosbox.conf').write_text(config)

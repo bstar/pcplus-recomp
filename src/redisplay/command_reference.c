@@ -64,6 +64,15 @@ LABEL(dim,"Dim commands are unavailable. Assigned BBS page keys remain unchanged
 LABEL(refused,"Not available in this build: ");
 static word selected,refusal;
 static word __far *view;
+#ifdef TERMINAL_DIRECTORY_VIEW
+static word action(word i)
+{
+ if(i==0)return 24;
+ return items[i].action;
+}
+#else
+#define action(i) (items[i].action)
+#endif
 static word normalize(word key)
 {
  if((key&255)==0xe0)key&=0xff00;
@@ -75,7 +84,7 @@ static word normalize(word key)
 unsigned __far __cdecl command_reference_unavailable(word key)
 {
  word i;key=normalize(key);
- for(i=0;i<COUNT;++i)if(key==items[i].key)return items[i].action==UNAVAILABLE;
+ for(i=0;i<COUNT;++i)if(key==items[i].key)return action(i)==UNAVAILABLE;
  return 0;
 }
 static word length(const char __far *s){word n=0;while(s[n])++n;return n;}
@@ -98,7 +107,7 @@ static void draw(void)
  rule(7,52,78,205);view[612]=0x1fcc;view[638]=0x1fb9;text(617,other,0x1f00);
  for(i=0;i<COUNT;++i){
   row=items[i].row;start=items[i].column==0?3:items[i].column==1?28:54;end=start+23;
-  attribute=i==selected?0x7000:items[i].action==UNAVAILABLE?0x0800:0x0700;
+  attribute=i==selected?0x7000:action(i)==UNAVAILABLE?0x0800:0x0700;
   for(at=start;at<=end;++at)view[row*80+at]=attribute|'.';
   text(row*80+start,items[i].label,attribute);
   text(row*80+end+1-length(items[i].shortcut),items[i].shortcut,attribute);
@@ -127,7 +136,7 @@ unsigned __far __cdecl command_reference_event(word event,word key,word __far *f
 {
  word i;view=frame;
  if(!event){selected=refusal=0;key=normalize(key);
-  for(i=0;i<COUNT;++i)if(key==items[i].key){selected=i;refusal=items[i].action==UNAVAILABLE;break;}
+  for(i=0;i<COUNT;++i)if(key==items[i].key){selected=i;refusal=action(i)==UNAVAILABLE;break;}
   draw();return 0;}
  if(event==2){draw();return 0;}
  if((key&255)==27 || key==0x2c00)return 1;
@@ -146,8 +155,8 @@ unsigned __far __cdecl command_reference_event(word event,word key,word __far *f
    for(i=0;i<COUNT && key!=items[i].key;++i){}
    if(i==COUNT){draw();return 0;}selected=i;
   }
-  if(items[selected].action==UNAVAILABLE)refusal=1;
-  else return (key==0x3b00?0x300:0x100)+items[selected].action;
+  if(action(selected)==UNAVAILABLE)refusal=1;
+  else return (key==0x3b00?0x300:0x100)+action(selected);
  }
  draw();return 0;
 }

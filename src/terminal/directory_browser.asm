@@ -7,6 +7,12 @@ BITS 16
 CPU 8086
 %include "trap_wait.inc"
 %include "directory_dos.inc"
+%include "ui_storage.inc"
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%define DIRECTORY_BROWSER_OWNER_GUARD
+%elifdef TERMINAL_DIRECTORY_VIEW
+%define DIRECTORY_BROWSER_OWNER_GUARD
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern _directory_dos_page
 extern terminal_directory_path,terminal_directory_entry,terminal_directory_codes
@@ -19,7 +25,7 @@ terminal_directory_choose:
  push di
  push es
  cld
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef DIRECTORY_BROWSER_OWNER_GUARD
  extern terminal_program_pending,terminal_program_active,_redisplay_active,terminal_editor_screen_owned
  cmp byte [browser_saved],0
  jne .busy
@@ -215,7 +221,7 @@ terminal_directory_choose:
  mov ax,[browser_old_segment]
  mov [text_video_segment],ax
 .finish:
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef DIRECTORY_BROWSER_OWNER_GUARD
  mov byte [browser_saved],0
 %endif
  mov ax,[browser_result]
@@ -226,7 +232,7 @@ terminal_directory_choose:
  pop bp
  ret
 
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef DIRECTORY_BROWSER_OWNER_GUARD
 .busy:
  mov ax,2
  jmp .unwind
@@ -418,6 +424,12 @@ browser_error_notice: db 'Save failed. Check directory and recovery files.',0
 browser_warning_notice: db 'Entry installed; recovery files retained. Check before another save.',0
 browser_io: times DD_RESULT_SIZE db 0
 browser_page_data: times DD_PAGE_SIZE db 0
+%ifdef TERMINAL_DIRECTORY_VIEW
+; Startup and serviced command views are mutually exclusive. The live reader
+; borrows only512 bytes and never calls the synchronous browser/editor.
+global _directory_view_scratch
+_directory_view_scratch equ browser_page_data
+%endif
 global browser_screen_segment
 browser_screen_segment: dw seg browser_screen
 SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
@@ -426,7 +438,7 @@ global browser_screen,browser_screen_end
 browser_screen: resb 4000
 browser_screen_end:
 
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef TERMINAL_UI_SCREEN_OVERLAY
 ; The synchronous chooser restores before any queued PROGRAM can launch.
 ; Bidirectional admission prevents this shared backup from changing owners
 ; until the old owner has restored its display.

@@ -27,8 +27,10 @@ def main():
     p.add_argument('--framing-ms', type=int, choices=[0,250], default=0)
     p.add_argument('--byte-delay-ms', type=int, choices=range(21), default=2)
     p.add_argument('--reference-overlay', action='store_true', help='Observe Alt-Z/refusal during the stock BBS editor workflow')
+    p.add_argument('--directory-overlay', action='store_true', help='Observe read-only Alt-D loading/pages during the stock editor workflow')
     args = p.parse_args()
     assert re.fullmatch('[A-Za-z0-9_-]+', args.label)
+    assert not (args.reference_overlay and args.directory_overlay)
     assert process_pid(), 'Start the owned stock ENiGMA fixture first'
     binary, sources = select_product(args.terminal, 'TERMINAL.EXE')
     before = {str(f.relative_to(ROOT)): sha(f) for f in sources}
@@ -60,6 +62,14 @@ def main():
             observer=base/(args.label+'-observer.COM')
             assert not observer.exists()
             subprocess.run(['nasm','-fbin',str(ROOT/'standalone/reference_watch.asm'),'-o',str(observer)],check=True)
+        if args.directory_overlay:
+            assert json.loads((binary.parent/'manifest.json').read_text())['experimental_directory_view']
+            marker='K E Y T E S T enter p1800 '
+            assert keys.count(marker)==1
+            keys=keys.replace(marker,marker+'a-d p600 enter p3500 end p3500 escape p500 ')
+            observer=base/(args.label+'-observer.COM')
+            assert not observer.exists()
+            subprocess.run(['nasm','-fbin',str(ROOT/'standalone/directory_view_watch.asm'),'-o',str(observer)],check=True)
         command = [sys.executable, str(ROOT/'lab/bbs/editor_dos_probe.py'), str(binary),
             'enigma', '--port', str(ready['endpoint']['port']),
             '--server-log', str(SOURCE/'logs/enigma-bbs.log'), '--label', args.label,
@@ -67,6 +77,7 @@ def main():
             '--irq', '5', '--mouse-scales', '8', '4', '--cpu', '8086',
             '--timeout', '160', '--wait', '2', '--raw-upstream', '--keys', keys]
         if observer:command+=['--video-observer',str(observer)]
+        if args.directory_overlay:command+=['--directory-view-fixture']
         with log_path.open('w') as log:
             run = subprocess.run(command, cwd=ROOT, stdout=log, stderr=log, timeout=175)
         # Audit even a failed harness when artifacts exist. A normal DOS return
@@ -80,7 +91,7 @@ def main():
             proxy_source_unchanged=closed['source_unchanged'],
             product_source_unchanged=all(sha(ROOT/n)==h for n,h in before.items()))
         observed={}
-        if observer:
+        if args.reference_overlay:
             capture=(output/'REFVIEW.BIN').read_bytes();assert len(capture)==12006
             magic,flags,ticks=struct.unpack_from('<3H',capture)
             names=json.loads((ROOT/'reconstruction/command_reference/provenance.json').read_text())['labels']
@@ -88,6 +99,14 @@ def main():
             checks['all_39_reference_commands']=all(r['name'].encode() in capture[6:4006:2] for r in names)
             checks['unavailable_AltD_observed']=flags&2!=0 and b'Not available in this build:' in capture[4006:8006:2]
             observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'REFVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
+        if args.directory_overlay:
+            capture=(output/'DIRVIEW.BIN').read_bytes();assert len(capture)==12006
+            magic,flags,ticks=struct.unpack_from('<3H',capture)
+            first,last,loading=(capture[6+i*4000:4006+i*4000:2] for i in range(3))
+            checks['directory_prompt_and_loading']=magic==0x4456 and flags&12==12 and b'Reading directory...' in loading
+            checks['directory_first_and_last_pages']=flags&3==3 and b'LoSs oF CoNtRoL' in first and b'FINAL 200' in last
+            checks['no_private_directory_fields']=all(b'HIDDENPASS' not in frame and b'SECRETA' not in frame for frame in (first,last,loading))
+            observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'DIRVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
         result = dict(passed=all(checks.values()), checks=checks,
             bridge=ready, command=command, binary_sha256=sha(binary),
             screen_sha256=sha(output/'SCREEN.BIN'), product_inputs=before,

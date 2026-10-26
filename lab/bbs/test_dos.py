@@ -19,6 +19,7 @@ async def run(args):
  output.mkdir(parents=True,exist_ok=True)
  for name in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):(output/name).unlink(missing_ok=True)
  fixture=None;directory_fixture=None
+ view_fixture=None;working_drive='c'
  automatic=args.dial_fixture or args.directory_fixture
  command=f'TERMINAL COM{args.com} {args.baud} {args.flow}'
  if args.config_fixture or automatic:
@@ -49,6 +50,11 @@ async def run(args):
    assert 1<=sx<=999 and 1<=sy<=999
    fixture=bytearray(fixture);struct.pack_into('<HH',fixture,0x4e4,sx,sy)
    fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
+ if getattr(args,'directory_view_fixture',False):
+  from directory_view_fixture import fixture as view_image
+  view_fixture=view_image();(output/'PCPLUS.DIR').write_bytes(view_fixture)
+  assert command.startswith('TERMINAL ')
+  command='C:\\'+command;working_drive='d'
  program_sound=getattr(args,'program_sound',None)
  if program_sound is not None:
   assert fixture is not None and program_sound in (0,1,65535)
@@ -114,7 +120,7 @@ nosound=true
 @echo off
 mount c "{binary.parent}"
 mount d "{output}"
-c:
+{working_drive}:
 D:\\SNAP B
 {observer_start}
 ADDKEY {keys}
@@ -174,6 +180,7 @@ exit
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
  if observer_bytes is not None:checks['video_observer_unchanged']=(output/'OBSERVE.COM').read_bytes()==observer_bytes
+ if view_fixture is not None:checks['read_only_directory_unchanged']=(output/'PCPLUS.DIR').read_bytes()==view_fixture
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'keyboard_input':args.keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
  result['initialization_wait_seconds']=init_wait
  result['cpu']=next(line.split('=',1)[1] for line in config.splitlines() if line.startswith('cputype='))
@@ -203,6 +210,7 @@ if __name__=='__main__':
  p.add_argument('--raw-upstream',action='store_true',help='Upstream is an explicit serial-side bridge; leave Telnet ownership to that bridge')
  p.add_argument('--video-observer',type=Path,help='Explicit source-built passive COM observer under build/; install with T and collect after DOS return')
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')
+ p.add_argument('--directory-view-fixture',action='store_true',help='Browse an independent read-only directory on D: without changing the dialing target')
  p.add_argument('--directory-browser',action='store_true',help='Choose the fixture entry through native DOS browser keys')
  p.add_argument('--entry',type=int,choices=range(1,201),default=3)
  p.add_argument('--program-sound',type=int,choices=[0,1,65535],help='Set only the sound word in the explicit synthetic PRM fixture')

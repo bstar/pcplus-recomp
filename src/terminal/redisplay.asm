@@ -2,6 +2,12 @@
 ; native parsing/capture/history continue against the real live display.
 BITS 16
 CPU 8086
+%include "ui_storage.inc"
+%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%define REDISPLAY_SCREEN_OWNER_GUARD
+%elifdef TERMINAL_DIRECTORY_VIEW
+%define REDISPLAY_SCREEN_OWNER_GUARD
+%endif
 SEGMENT _TEXT public class=CODE use16
 %include "far_bridge.inc"
 NEAR_ENTRY terminal_redisplay_key
@@ -46,6 +52,10 @@ terminal_redisplay_key_impl:
  je .open
  cmp ax,0x1700 ; Original Alt-I: authored application information.
  je .open
+%ifdef TERMINAL_DIRECTORY_VIEW
+ cmp ax,0x2000 ; Serviced read-only directory; no redial or selection mutation.
+ je .open
+%endif
 %endif
  cmp ax,0x2c00 ; Alt-Z, maintained command menu and contextual help.
  je .open
@@ -63,7 +73,7 @@ terminal_redisplay_key_impl:
  jne .pass
 .open:
  push ax
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef REDISPLAY_SCREEN_OWNER_GUARD
  extern terminal_browser_screen_owned,terminal_editor_screen_owned
  cmp byte [terminal_browser_screen_owned],0
  jne .denied
@@ -223,7 +233,7 @@ SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
 global redisplay_live,redisplay_live_end,redisplay_view,redisplay_view_end
 redisplay_live: resb 4000
 redisplay_live_end:
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef TERMINAL_UI_SCREEN_OVERLAY
 ; Directory editing is synchronous inside the chooser. Bidirectional owner
 ; checks prevent it and the serviced viewer from borrowing this frame at once.
 global ed_screen,ed_screen_end

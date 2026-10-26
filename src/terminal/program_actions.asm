@@ -3,6 +3,7 @@
 BITS 16
 CPU 8086
 %include "trap_wait.inc"
+%include "ui_storage.inc"
 SEGMENT _TEXT public class=CODE use16
 extern uart_break_hold
 extern process_psp,process_keep_paragraphs,process_minimum_paragraphs
@@ -122,7 +123,7 @@ terminal_program_start:
  or ax,ax
  pop ax
  jnz .busy
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef TERMINAL_UI_SCREEN_OVERLAY
  extern terminal_browser_screen_owned
  cmp byte [terminal_browser_screen_owned],0
  jne .busy
@@ -838,7 +839,7 @@ program_view_notice: db 'Program view',0
 
 SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
 GROUP UI_GROUP UI_STORAGE
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef TERMINAL_UI_SCREEN_OVERLAY
 extern program_screen,program_screen_end
 %else
 global program_screen,program_screen_end

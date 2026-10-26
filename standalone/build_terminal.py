@@ -25,6 +25,7 @@ parser.add_argument('--custom-irq',action='store_true')
 parser.add_argument('--special-edition',action='store_true',help='Show the magenta LoC Special Edition startup screen')
 parser.add_argument('--original-keys',action='store_true',help='Restore original recorder/setup/history shortcuts and unmapped page-key transfers')
 parser.add_argument('--original-reference',action='store_true',help='Original 39-command Alt-Z reference and guarded command refusals; implies --original-keys')
+parser.add_argument('--directory-view',action='store_true',help='Serviced read-only Alt-D view; implies --original-reference; dialing adoption remains pending')
 parser.add_argument('--phone-log-bank',action='store_true',help='Link the checked logger code bank; event/startup integration remains disabled')
 parser.add_argument('--native-reset-bank',action='store_true',help='Link the experimental namespaced native bank; peer width ownership remains disabled')
 parser.add_argument('--native-reset-static',action='store_true',help='Retain the larger static bank as a memory regression control')
@@ -32,6 +33,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.directory_view:args.original_reference=True
 if args.original_reference:args.original_keys=True
 if args.session_capture:assert args.directory_keys and args.process_bank
 if args.session_projection:assert args.session_capture
@@ -98,6 +100,7 @@ if args.custom_irq:out_name+='-custom-irq'
 if args.special_edition:out_name+='-special'
 if args.original_keys:out_name='terminal-original-keys-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.original_reference:out_name='terminal-reference-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
+if args.directory_view:out_name='terminal-directory-view-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
 if args.native_reset_transaction:out_name+='-transaction'
@@ -132,7 +135,7 @@ sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 # The dedicated call-log bank is built explicitly; never pull its callbacks or
 # end marker into established terminals through the assembly glob.
 sources = [p for p in sources if p.name not in
- ('phone_log_bank.asm','phone_log_resident.asm','phone_log_storage.asm','phone_log_end.asm')]
+ ('phone_log_bank.asm','phone_log_resident.asm','phone_log_storage.asm','phone_log_end.asm','directory_reader_bank.asm')]
 if args.projection_probe:sources.append(ROOT/'standalone/session_projection_probe.asm')
 if args.hook_probe:sources.append(ROOT/'standalone/hook_transaction_probe.asm')
 if args.input_probe:sources += [ROOT/'standalone/hook_transaction_probe.asm',ROOT/'standalone/hook_input_probe.asm']
@@ -170,6 +173,7 @@ assert substitute_flat.stat().st_size==substitute_unit['bytes']==53 and hashlib.
 render_import_adapters={}
 sources.append(ROOT/'src/aspect/break_cursor_read.asm')
 objects=[]
+if args.directory_view:sources.append(ROOT/'src/terminal/directory_reader_bank.asm')
 for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
@@ -203,6 +207,7 @@ for index,source in enumerate(sources):
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
  if args.original_keys:options+=['-DTERMINAL_ORIGINAL_KEYS']
  if args.original_reference:options+=['-DTERMINAL_REFERENCE']
+ if args.directory_view:options+=['-DTERMINAL_DIRECTORY_VIEW']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
@@ -263,6 +268,7 @@ c_sources += [ROOT/'src/translation/xlt_default.c',ROOT/'src/config/resource_pat
 c_sources += [ROOT/'src/translation/xlt_live.c',ROOT/'src/redisplay/redisplay.c']
 c_sources += [ROOT/'src/redisplay/command_menu.c',ROOT/'src/terminal/script_launch.c']
 if args.original_reference:c_sources.append(ROOT/'src/redisplay/command_reference.c')
+if args.directory_view:c_sources += [ROOT/'src/redisplay/directory_view.c',ROOT/'src/directory/directory_reader.c',ROOT/'src/directory/directory_reader_fs.c']
 c_sources += sorted((ROOT/'src/clipboard').glob('*.c'))
 c_sources += [ROOT/'src/transfer'/name for name in ['download_file.c','download_fs.c','native_file_bridge.c','terminal_receive.c']]
 c_sources += [ROOT/'src/transfer/download_compare.c']
@@ -342,7 +348,7 @@ config_aliases.update({name:'config_'+short+'_service' for name,short in {
  'batch_download_finish':'bd_finish','batch_download_cleanup':'bd_cleanup',
  'batch_upload_begin':'bu_begin','batch_upload_read':'bu_read','batch_upload_next':'bu_next',
  'batch_upload_close':'bu_close','batch_upload_abort':'bu_abort'}.items()})
-helper_adapters={};zmodem_helper_adapters={}
+helper_adapters={};zmodem_helper_adapters={};directory_fs_adapters={}
 for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
@@ -351,6 +357,8 @@ for source in c_sources:
   # The foreground owner remains in CONFIG_CODE. Its explicitly far cdecl
   # menu entry shares the reference bank; DGROUP and frame ownership stay put.
   options=['-nt=REFERENCE_CODE','-nc=FARCODE']
+ if args.directory_view and source in (ROOT/'src/redisplay/directory_view.c',ROOT/'src/directory/directory_reader.c',ROOT/'src/directory/directory_reader_fs.c'):
+  options=['-nt=DIRECTORY_CODE','-nc=FARCODE','-dDIRECTORY_READER_FAR']
  if source in hook_sources:
   aliases={'memcpy':'hook_memcpy_service','memcmp':'hook_memcmp_service',
            'terminal_import_decode':'hook_terminal_decode_service','modem_import_decode':'hook_modem_decode_service',
@@ -362,6 +370,7 @@ for source in c_sources:
  if source.parent==ROOT/'src/aspect' and source not in config_sources:options=['-nt=ASPECT_CODE','-nc=FARCODE']
  if args.original_keys:options+=['-dTERMINAL_ORIGINAL_KEYS']
  if args.original_reference:options+=['-dTERMINAL_REFERENCE']
+ if args.directory_view:options+=['-dTERMINAL_DIRECTORY_VIEW']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
  if args.register_handoff:options+=['-dTERMINAL_REGISTER_HANDOFF']
@@ -383,6 +392,12 @@ for source in c_sources:
    options+=['-nt=MOUSE_CODE','-nc=FARCODE','-ecc','-dMOUSE_DOS_PLATFORM',*['-d'+n+'='+n+'_impl' for n in mouse_names]]
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(source)],cwd=OUT,check=True)
+ if args.directory_view and source.name=='directory_reader_fs.c':
+  before=obj.read_bytes();normalized,counts=rename_imports(before,{
+   '_dos_'+name+'_':'directory_dos_'+name+'_service_' for name in ('open','read','close')})
+  assert counts=={'_dos_open_':1,'_dos_read_':1,'_dos_close_':1}
+  (OUT/'directory-fs-compiler.obj').write_bytes(before);obj.write_bytes(normalized)
+  directory_fs_adapters=dict(import_counts=counts,compiler_sha256=hashlib.sha256(before).hexdigest(),normalized_sha256=hashlib.sha256(normalized).hexdigest())
  if source in (ROOT/'src/transfer/batch_header.c',ROOT/'src/transfer/zmodem.c'):
   before=obj.read_bytes();normalized,counts=rename_imports(before,{'__U4D':'config_u4div_service_','__U4M':'config_u4mul_service_'})
   (OUT/('batch-header-compiler.obj' if source.stem=='batch_header' else 'zmodem-compiler.obj')).write_bytes(before);obj.write_bytes(normalized)
@@ -450,6 +465,10 @@ if args.mouse:inputs += [ROOT/'src/mouse/owner.h',ROOT/'reconstruction/program_m
 manifest={'experimental_directory_keys':args.directory_keys,'experimental_aspect_keys':args.aspect_keys,'aspect_renderer_import_adapters':render_import_adapters,'kind':'source-only-interactive-dos-terminal','binary_sha256':hashlib.sha256((OUT/'TERMINAL.EXE').read_bytes()).hexdigest(),'data_stack_bytes':int(group[1],16),'memory_layout':memory,'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},'limitations':['Interactive terminal milestone, not the complete PCPlus application.','Explicit /X:FILE.XLT stages an exact256-byte input table before UART ownership. Normal terminal bytes translate after connection/raw-monitor/controller/transfer filtering; parser continuations, TX and binary/dedicated owners stay raw. RIS preserves selection. Saved PRM modes0/1/2 select identity, current-directory then bounded PCPLUS-environment PCPLUS.XLT lookup, or a7-bit driver mask; /X overrides valid saved modes. Binary transfers reject non-FF masks. AltF10 mode changes use a frozen pre-child current/PCPLUS namespace, checked table staging and separate confirmation before table/enabled/mask commit while serial ownership is handed off. Explicit /X pins its selection. Queued raw input uses the accepted mode after return. Alt-F9 or Setup/Reload input table stages the frozen active canonical source and asks before accepting a same-mode reload over the drained PROGRAM UART owner, without DOS EXEC. Failed/declined reloads retain the table; queued input uses an accepted table. Startup canonical source paths are limited to63 bytes, including resolved CWD. Alt-F8/menu launches sibling XLTEDIT for the frozen active canonical table via a bounded DOS3+ PSP trailer and direct EXEC. A fresh checked snapshot requires separate confirmation after return. The editor accepts DOS8.3 leaves and absolute63-byte paths with same-parent recovery. Complete resource and settings integration remain unfinished.','Selected ANSI/ordinary controls and ASCII/raw CP437 output; all79 raw keyboard binding slots, function/modifier/keypad banks and bounded binary output now integrated. Specialized controls, fonts, other profiles and full UI remain unfinished.','Maintained /S @8.3-leaf runs local source-built PRMEDIT.EXE directly before UART ownership; failure stops startup and successful return reloads through existing validation/CLI precedence. Alt-F10 invokes the editor through the live PROGRAM handoff for an explicit current-directory8.3 leaf. A canonical startup binding, validated candidate and selective commit adopt display, pacing, future modem commands/responses and BREAK; A separate Y/N choice permits same-port baud/line/flow changes after old-format XON/TEMT handoff; Supported4/6 profile changes use a separate confirmation, staged canonical KBD selection and clean RIS/view baseline. Confirmed COM moves require idle ports, preserve target DTR, restore old hardware/vector ownership and recheck acquisition after profile confirmation. No automatic hangup/redial, original PCSETUP ABI, complete emulation collection or source of defaults.', 'Standard BIOS-listed COM1..4; explicit partial2.01 PRM import and CLI category overrides. Explicit KBD profile import stages and validates before UART access. AUTO BIOS detection and manual STANDARD/ENHANCED selection supported; no complete PRM schema/default generation.','Explicit-target and directory/browser MODEM/DIRECT connections supported. Native 16-field editor stages changes until acceptance; explicit saves use validated full-file staging and backup replacement.', 'Successful directory connections queue date/call-count updates for deferred foreground persistence. Replacement does not guarantee crash atomicity or concurrent-writer exclusion.', 'Stored password remains private metadata, masked in the editor and never automatically transmitted. Scripts, KEY/META bindings and HALF mode fail explicitly; cycles, advanced transfers, Host and the complete original settings/UI remain unfinished.','NETWORK line editing clips counts to the active region and preserves the column. ORIGINAL ANSI CSI M uses a serviced36-tick discard wait; the exact unbounded original helper is not linked. Complex attribute repair remains explicit. Supported-profile RIS restores a captured source-owned startup state and keymap without DOS/file IO.', 'KBD defaults are maintained network choices, not recovered factory per-profile blocks. Unknown original local actions stop explicitly; Explicit /T:FILE.KEY stages ten actions before UART installation. Alt1..Alt0 execute bounded nonblocking TEXT; PROGRAM uses bounded COMSPEC/PATH lookup, static-parent DOS EXEC, serial handoff, screen restoration and a return key prompt. ASPECT/HOOK execution and binding UI remain unfinished.', 'Alt-G freezes80x25 characters through recovered row helpers and appends checked PCPLUS.SCR rows via an independent canonical-path file owner. Far memory is retained across PROGRAM. Full original snapshot/printer/script/UI modes remain unfinished.', 'Alt-F1/F2 processed text capture uses checked append/exclusive creation, pause/resume and periodic buffering. Alt-F3 toggles CR-adds-LF. Write/close failures retain partial logs and sticky exit12; PROGRAM closes capture before EXEC. Full capture/printer/settings/UI and ASPECT modes remain unfinished.', 'Ctrl-backslash enters a serviced raw monitor using the actual UART and renderer. Explicit Y replaces PCPLUS.DMP through a third checked canonical-path owner; other answers select view-only. Binary256-byte buffering, periodic flush and failure-aware shutdown preserve text-capture ownership. Nested local/KEY/PROGRAM owners are blocked; the exact original owner/resolver/prompt remain separate diagnostics. Native HOOK and complete monitor/UI geometry remain unfinished.', 'AltR receives ordinary XMODEM CRC/checksum128/1024 using the real UART and checked staged DOS storage. HARD/NONE only; SOFT rejects before staging. FinalACK follows checked installation. AltS uses the native ordinary sender with checked read-only DOS source files and automatic1K blocks; only actual ACKs advance maintained progress. F2 inside the transfer prompt selects maintained CRC YMODEM batch transfer with checked per-file ownership and exact declared lengths. Window/streaming/other protocols, full transfer settings/UI and physical peers remain unfinished.', 'CtrlPgUp opens a maintained63000-byte frozen history viewer in80x25 BIOS mode3/page0 with local line/page/Home/End navigation, ASCII case-insensitive incremental search/F3 and Escape return to the updated live screen. UART/parser/history/capture/replies continue, with frame swaps at top-level receive/idle and64 search candidates per turn. W appends the frozen snapshot through a fourth checked file owner, expanding CR to CRLF in128-source-byte foreground chunks. Append/create, short writes, cancellation, close ambiguity and DOS child inheritance are checked. Alt-= opens a maintained filename clipboard and C enters it from redisplay. The15-entry list supports bounded extraction, add/edit/delete/purge, tags, runtime decimal separator and one/all/tagged paste. Whole-packet TX admission requires an empty queue; cancellation removes only the unsent prefix and preserves later parser replies. Single removal waits for actual UART acceptance, and connection queue resets retain the entry as interrupted. PRM04EA imports a validated0..255 separator through the44-byte settings plan; PRMEDIT offers46 fields. Live setup applies deliberate saved separator edits and preserves session R across canceled/no-op/unrelated returns using an acknowledged source baseline in the628-byte candidate owner. Full native UI, transfer-prompt workflows and other geometries remain unfinished.', 'PROGRAM preserves DTR, pauses configured flow and releases its UART IRQ during child execution; NONE cannot guarantee incoming-data preservation while a child owns the machine. No physical UART/modem/public BBS validation. ENiGMA editor escape-fragmentation behavior remains a server/packetization compatibility boundary.']}
 manifest['experimental_original_keys']=args.original_keys
 manifest['experimental_original_reference']=args.original_reference
+manifest['experimental_directory_view']=args.directory_view
+manifest['directory_filesystem_import_adapters']=directory_fs_adapters
+if args.directory_view:
+ manifest['limitations'].append('LoC.4: Alt-D opens a serviced read-only directory view. Explicit path, bounded incremental IO and separate far staging publish pages only after complete read/probe/close. Arrows/page/Home/End browse; F2 changes file and F5 reloads. Current target/configuration/connection and deferred accounting identity stay unchanged. This is the view component; live dialing/profile/key/script/translation/accounting adoption remains unfinished. Borrowed startup scratch and empty command snapshot are mutually exclusive with their other owners. Driver call-time and physical serial integrity remain unverified.')
 if args.original_reference:
  manifest['limitations']=[s.replace('Alt-F8/menu launches sibling XLTEDIT','Alt-W/browser launches sibling XLTEDIT') for s in manifest['limitations']]
  manifest['limitations'].append('LoC.3 reference candidate: Alt-Z opens the 39-command Communications/Setup/Other Functions reference. Backtick opens the maintained browser. Missing original commands show a nonfatal refusal through the shared serviced view; Alt-D does not secretly redial and Alt-F8 does not open translation editing. Alt-F5 prompts for a script and Alt-W edits translation. Navigation and contextual help are maintained; exact original runtime interaction, original pull-downs and missing services remain open.')

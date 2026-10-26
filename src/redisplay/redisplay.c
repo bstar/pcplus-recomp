@@ -217,6 +217,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   direct_clipboard=(key==0x2c00 || key==0x1300
 #ifdef TERMINAL_REFERENCE
    || (key&255)=='`' || key==0x6c00 || key==0x1700 || command_reference_unavailable(key)
+#ifdef TERMINAL_DIRECTORY_VIEW
+   || key==0x2000
+#endif
 #endif
    )?2:key==0x8300;
 #else
@@ -259,6 +262,14 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
  }
  if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;redisplay_live_ready=1;clipboard_ui_visible=0;if(clipboard_ui_active)clipboard_ui_event(2,0,view);}return 0;}
  if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));redisplay_live_ready=0;visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}
+#ifdef TERMINAL_DIRECTORY_VIEW
+  if(command_menu_active){
+   if(!command_menu_event(3,0,view)){
+    copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();
+    redisplay_search_pending=redisplay_export_pending=0;redisplay_active=visible=redisplay_live_ready=0;return 0;}
+   copy((word __far *)MK_FP(0xb800,0),view);hide();
+  }
+#endif
   clipboard_ui_visible=visible;if(clipboard_ui_active)clipboard_ui_event(3,0,view);return 0;}
  if(event!=1)return 0;
  if(redisplay_export_pending)return 1;

@@ -84,6 +84,7 @@ def inspect_terminal_memory(binary,map_path):
   extra.update(snapshot_relative_segment=frozen_seg,snapshot_image_offset=frozen_off,snapshot_bytes=2000,snapshot_end_linear=frozen_end)
  # Independent full-screen owners must never alias across nested UI/EXEC.
  ui_buffers={}
+ screen_overlay=('_directory_view_event' in symbols or ('nreset_reset_data_image'in symbols and native_overlay))
  for name in ('browser_screen','ed_screen','program_screen','redisplay_live','redisplay_view'):
   if name not in symbols:continue
   lo=address(name);hi=address(name+'_end');seg,off=symbols[name]
@@ -92,7 +93,7 @@ def inspect_terminal_memory(binary,map_path):
   assert hi<=shadow or lo>=far_end,(name,'UI screen overlaps native far storage')
   if 'terminal_snapshot_image' in symbols:assert hi<=frozen or lo>=frozen_end,(name,'UI screen overlaps frozen screen')
   for other_name,other in ui_buffers.items():
-   shared=('nreset_reset_data_image'in symbols and native_overlay and (name=='program_screen'and other_name=='browser_screen' or name=='redisplay_live'and other_name=='ed_screen'))
+   shared=(screen_overlay and (name=='program_screen'and other_name=='browser_screen' or name=='redisplay_live'and other_name=='ed_screen'))
    if shared:assert(lo,hi)==(other['start_linear'],other['end_linear'])
    else:assert hi<=other['start_linear'] or lo>=other['end_linear'],(name,'nested owners alias')
   assert lo>=module_bytes,(name,'UI buffer unexpectedly serialized in MZ')
@@ -102,7 +103,7 @@ def inspect_terminal_memory(binary,map_path):
  if ui_buffers:
   assert len(ui_buffers)==5,'Incomplete terminal UI screen ownership'
   assert len({b['relative_segment'] for b in ui_buffers.values()})==1
-  overlay='nreset_reset_data_image'in symbols and native_overlay
+  overlay=screen_overlay
   extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=12000 if overlay else 20000,program_browser_screen_overlay=overlay,editor_viewer_screen_overlay=overlay)
   if overlay:assert symbols['program_screen']==symbols['browser_screen']and symbols['program_screen_end']==symbols['browser_screen_end']
   if overlay:assert symbols['ed_screen']==symbols['redisplay_live']and symbols['ed_screen_end']==symbols['redisplay_live_end']
@@ -182,6 +183,28 @@ def inspect_terminal_memory(binary,map_path):
   displacement=struct.unpack_from('<h',code,at+1)[0]
   assert symbols[source][0]==symbols[target][0]
   assert (symbols[source][1]+at+3+displacement)&65535==symbols[target][1],(source,'wrong near target')
+ if '_directory_view_event' in symbols:
+  directory=next(c for c in code_segments if c['name']=='DIRECTORY_CODE')
+  directory_seg=directory['relative_segment']
+  assert directory['kind']=='FARCODE' and directory['offset']==0
+  for name in ('_directory_view_event',*['_directory_reader_'+n for n in ('initialize','begin','step','cancel')],
+               *['_directory_reader_fs_'+n for n in ('open','read','close')]):
+   assert symbols[name][0]==directory_seg and symbols[name][1]<directory['bytes'],(name,'directory code escaped bank')
+  for suffix in ('open','read','close'):
+   name='directory_dos_'+suffix+'_service_';target='_dos_'+suffix+'_'
+   assert symbols[name][0]==directory_seg and symbols[name+'_resident'][0]==symbols[target][0]==near_code['relative_segment']
+   if suffix=='read':
+    call=b'\x9a'+struct.pack('<HH',symbols[name+'_resident'][1],symbols[name+'_resident'][0])+b'\xc2\x02\x00'
+    assert raw(name,8)==call and address(name)+3 in relocations,'DOS read stack forwarding/relocation'
+    near_call(name+'_resident',target,prefix=b'\x55\x89\xe5\xff\x76\x08',suffix=b'\x5d\xcb')
+    assert raw(target,33)[-3:]==b'\xc2\x02\x00','Pinned DOS read must consume its one stack output pointer'
+   else:
+    far_call(name,name+'_resident');near_call(name+'_resident',target)
+  scratch=address('_directory_view_scratch')
+  assert near_start<=scratch and scratch+512<=near_start+near_size
+  extra.update(directory_view_code_bytes=directory['bytes'],directory_view_FS_callbacks_verified=3,
+               directory_view_scratch_offset=symbols['_directory_view_scratch'][1],directory_view_scratch_bytes=512,
+               directory_view_snapshot_page_bytes=2788)
  if 'terminal_phone_log_code_start' in symbols:
   bank=next(c for c in code_segments if c['name']=='PHONE_LOG_CODE')
   bank_seg=bank['relative_segment']
@@ -490,9 +513,10 @@ def inspect_terminal_memory(binary,map_path):
     assert symbols['_command_menu_event'][1]<reference['bytes']
     lo=config_seg*16;body=image[start+lo:start+lo+config_code['bytes']]
     pattern=b'\x9a'+struct.pack('<HH',symbols['_command_menu_event'][1],menu_seg)
-    assert body.count(pattern)==2,'Redisplay must use two compiled far menu calls'
+    menu_calls=3 if '_directory_view_event' in symbols else 2
+    assert body.count(pattern)==menu_calls,'Redisplay compiled far menu calls'
     sites=[];offset=0
-    for i in range(2):
+    for i in range(menu_calls):
      site=lo+body.index(pattern,offset);offset=site-lo+5
      assert site+3 in relocations,'Compiled menu call lacks segment relocation'
      sites.append(site)

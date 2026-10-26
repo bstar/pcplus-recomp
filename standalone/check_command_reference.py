@@ -20,6 +20,7 @@ def main():
  items=[dict(id=n,key=int(k,16),row=int(r),column=int(c),action=int(v)) for n,k,r,c,v in
         re.findall(r'ITEM\((\w+),(0x[0-9a-f]+),(\d+),(\d+),(\d+)\)',source)]
  assert len(items)==39
+ if manifest.get('experimental_directory_view'):items[0]['action']=24
  native=json.loads((transport.ROOT/'reconstruction/command_reference/provenance.json').read_text())
  assert [names[x['id']] for x in items]==[x['name'] for x in native['labels']]
  cases=[]

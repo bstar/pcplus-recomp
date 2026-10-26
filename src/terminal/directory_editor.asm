@@ -8,6 +8,7 @@ BITS 16
 CPU 8086
 %include "directory_dos.inc"
 %include "trap_wait.inc"
+%include "ui_storage.inc"
 SEGMENT _TEXT public class=CODE use16
 extern terminal_screen_save_far,terminal_screen_restore_far,text_video_segment
 global terminal_directory_edit
@@ -18,7 +19,7 @@ terminal_directory_edit:
  push di
  push es
  cld
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef TERMINAL_UI_SCREEN_OVERLAY
  extern _redisplay_active,terminal_program_pending,terminal_program_active
  cmp byte [ed_saved],0
  jne .busy
@@ -217,7 +218,7 @@ terminal_directory_edit:
  pop si
  pop bp
  ret
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef TERMINAL_UI_SCREEN_OVERLAY
 .busy:
  xor ax,ax
  jmp .return
@@ -790,7 +791,7 @@ global ed_screen_segment
 ed_screen_segment: dw seg ed_screen
 SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
 GROUP UI_GROUP UI_STORAGE
-%ifdef TERMINAL_NATIVE_RESET_OVERLAY
+%ifdef TERMINAL_UI_SCREEN_OVERLAY
 extern ed_screen,ed_screen_end
 %else
 global ed_screen,ed_screen_end

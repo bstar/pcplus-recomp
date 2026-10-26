@@ -1,5 +1,8 @@
 # Alt-Z command reference — 2.01-LoC.3
 
+The optional [LoC.4 directory view](DIRECTORY_VIEW.md) adds read-only Alt-D
+browsing. LoC.3 itself retains the safe refusal described here.
+
 The later [command-menu bank](COMMAND_MENU_BANK.md) keeps this behavior while
 moving the controller out of CONFIG_CODE. Its package/hash/memory measurements
 supersede the corresponding staging details below; Alt-D remains unfinished.
