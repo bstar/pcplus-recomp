@@ -75,8 +75,10 @@ paths, profile6 and raw selected metadata. Operational/path failures preserve
 both active selectors; rebinding refuses; malformed/missing resources preserve
 the output bundle. All source files and42-byte hardware snapshots remain intact.
 
-An isolated38-source export reproduces the diagnostic and all17 objects, then
-repeats those DOS workflows. Application checks cover directory accounting,
+An isolated38-source export of committed source `c9bed2c` reproduces the
+diagnostic and all17 objects, then repeats those DOS workflows. A separate
+764-source export of that commit reproduces all ten package files, with Git and
+originals unavailable. Application checks cover directory accounting,
 startup edit/save and subsequent real DOS EXEC; packaged START performs nested
 120-level ASPECT source compilation/replay, and SETUP preserves the exact splash.
 Stock loopback ENiGMA is tested through the actual SynthModem proxy with20ms per

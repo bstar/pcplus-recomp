@@ -288,7 +288,9 @@
     "build/directory-resource-cli-far-start-20261026/result.json": "306323e2667e07f5016d11acd55d0fe0d5a4e42e2d3d19e2b0e464e7b9ff6b3e",
     "build/directory-resource-cli-far-setup-20261026/result.json": "8c3c59aff16a41f2e88a93c1057196749758217cf3a85b10318d9a3f8a9873c4",
     "build/bbs-lab/results/enigma/directory_resource_cli_far_stock_20261026/proxy-integration.json": "59ab809a16cd852d52aa57ff0a44e8fc983f99d65bf69b4f60d26a5a2c5765f6",
-    "build/directory-resource-cli-controls-20261026.json": "77b89fd80ecd96b2ff9be20702de44b8064995ff8483e30b4438f7cc040cf91a"
+    "build/directory-resource-cli-controls-20261026.json": "77b89fd80ecd96b2ff9be20702de44b8064995ff8483e30b4438f7cc040cf91a",
+    "build/directory-resource-cli-source-committed-20261026/result.json": "7568a333f349cc360f7c3dbb67b6265ade92df24938ea48edbd491274bb8dec4",
+    "build/directory-resource-cli-package-committed-20261026/result.json": "f00d2e045485460f37a31b17627a8ad138279252a074eef4a8393ff4d065605d"
   },
   "limitations": [
     "The opt-in parent captures CLI resource provenance before directory startup, but live UI does not yet call resource staging or adopt the selected entry.",
@@ -296,5 +298,16 @@
     "LoC.6 branding/UI is retained. No card or live services were changed.",
     "Stock ENiGMA software route uses synthetic serial/Hayes with actual proxy; no SIP/DSP, analog or physical CTS acceptance.",
     "Full F01\u2013F16, broad rendering, application, transfers, hardware and deployment remain open."
-  ]
+  ],
+  "committed_source_proof": {
+    "commit": "c9bed2cec7c957a1d24e4b6eb9cafe83347a6107",
+    "component_source_files": 38,
+    "component_objects": 17,
+    "DOS_workflows": 17,
+    "native_assertions": 486,
+    "package_source_files": 764,
+    "package_files": 10,
+    "ancestor_git_unavailable": true,
+    "original_inputs": []
+  }
 }
