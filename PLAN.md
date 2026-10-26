@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Validated selection proposals](docs/DIRECTORY_SELECTION.md) now retain a
+chosen published record, paths, configuration and transfer preferences without
+changing the live session. 294 golden vectors pass linked and DOS8086 execution
+with 6,174 native assertions; 39 invalid extent/alias cases preserve caller data.
+Component stack use is 4,290/8,192 bytes. 32 isolated sources reproduce SELECT.EXE
+and ten objects, then repeat the tests. Alt-D preview/adoption, resource and
+accounting handoff, physical/card and full F01–F16 acceptance remain open.
+
 [Directory handle privacy](docs/DIRECTORY_HANDLE_INHERITANCE.md) closes a
 concrete child-inheritance gap before selection adoption. DOS3+ reader opens
 are non-inheritable; actual EXEC witnesses reject active and uncertain reader

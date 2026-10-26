@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "binary_sha256": "e70e6e6b792643f19b65e4cb4ff9306bea4d7e4980db73804f6822818095230e",
+  "source_files": 32,
+  "golden_vectors": 294,
+  "native_assertions": 6174,
+  "invalid_extents_aliases": 39,
+  "maximum_component_stack": 4290,
+  "hardware_restored": true,
+  "original_inputs": [],
+  "limitations": [
+    "Component only; live UI and selected-entry adoption remain open.",
+    "Path spellings and binding syntax do not establish resource identity or availability."
+  ],
+  "full_application_complete": false,
+  "live_selection_UI_complete": false,
+  "live_selection_adoption_complete": false,
+  "component_stack_budget": 8192,
+  "proof": "build/directory-selection-source-02-20261025/result.json",
+  "proof_sha256": "120c96328a4a28147647ee0f10588bca3075dfcb6778d45ce452b6e9b643b6d4",
+  "unchanged_package": {
+    "build/special-directory-private-handles-20261025/PCPLUSSE/ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "build/special-directory-private-handles-20261025/PCPLUSSE/ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "build/special-directory-private-handles-20261025/PCPLUSSE/LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "build/special-directory-private-handles-20261025/PCPLUSSE/PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "build/special-directory-private-handles-20261025/PCPLUSSE/README.TXT": "635b4daa3382570ad804a8db0319641caafe904eea4b981bff7293906783e097",
+    "build/special-directory-private-handles-20261025/PCPLUSSE/SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "build/special-directory-private-handles-20261025/PCPLUSSE/START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "build/special-directory-private-handles-20261025/PCPLUSSE/TERMINAL.EXE": "6fb218345a2357441a49b24e472f1e0ef6b8b5d32767aa093fb7afa5038e226d",
+    "build/special-directory-private-handles-20261025/PCPLUSSE/VERSION.TXT": "eee3041f8dda86f3aef10beb4b286e5ea43bd7366f71f28d39ef0a8f49e54f38",
+    "build/special-directory-private-handles-20261025/PCPLUSSE/XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "failed_source_attempt": "build/directory-selection-source-20261025",
+  "pending": [
+    "Serviced view proposal preview and actual caller stack accounting",
+    "Canonical resource identity/claims and staged resources",
+    "Baseline freshness, old-selection accounting and UART/profile handoff",
+    "Full F01-F16, ENiGMA and physical/card acceptance"
+  ]
+}
