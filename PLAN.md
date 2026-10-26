@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Original CLI resource identities](docs/DIRECTORY_RESOURCE_CLI.md) are now bound
+in an opt-in application variant before directory startup.17 DOS8086 workflows/
+486 assertions and a38-source exact rebuild cover the actual adapter through
+request generation and staging. The separate splash bank retains its exact
+screen image and leaves382 resident-CS bytes free. Packaged nested START and
+SETUP pass at406,416 minimum module bytes. LoC.6 UI/version is retained; live
+resource leases, selection/UART commit, dialing and full F01–F16 remain open.
+
 [Directory resource staging](docs/DIRECTORY_RESOURCES.md) now resolves, reserves
 and reads both KEY/KBD resources before publishing selected bytes. Original CLI
 provenance is explicit; blank/missing directory bindings reset defaults.36 DOS8086

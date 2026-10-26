@@ -28,6 +28,7 @@ parser.add_argument('--original-reference',action='store_true',help='Original 39
 parser.add_argument('--directory-view',action='store_true',help='Serviced read-only Alt-D view; implies --original-reference; dialing adoption remains pending')
 parser.add_argument('--directory-preview',action='store_true',help='Validate and preview an Alt-D selection; implies --directory-view; adoption remains pending')
 parser.add_argument('--directory-storage',action='store_true',help='Shared directory persistence claims and EXEC recovery gate; implies --directory-preview')
+parser.add_argument('--directory-resource-cli',action='store_true',help='Bind original CLI keyboard resource identities before directory startup; implies --directory-storage')
 parser.add_argument('--phone-log-bank',action='store_true',help='Link the checked logger code bank; event/startup integration remains disabled')
 parser.add_argument('--native-reset-bank',action='store_true',help='Link the experimental namespaced native bank; peer width ownership remains disabled')
 parser.add_argument('--native-reset-static',action='store_true',help='Retain the larger static bank as a memory regression control')
@@ -35,6 +36,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.directory_resource_cli:args.directory_storage=True
 if args.directory_storage:args.directory_preview=True
 if args.directory_preview:
  args.directory_view=True
@@ -109,6 +111,7 @@ if args.original_reference:out_name='terminal-reference-'+hashlib.sha256(out_nam
 if args.directory_view:out_name='terminal-directory-view-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_preview:out_name='terminal-directory-preview-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_storage:out_name='terminal-directory-storage-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
+if args.directory_resource_cli:out_name='terminal-resource-cli-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
 if args.native_reset_transaction:out_name+='-transaction'
@@ -218,6 +221,7 @@ for index,source in enumerate(sources):
  if args.directory_view:options+=['-DTERMINAL_DIRECTORY_VIEW']
  if args.directory_preview:options+=['-DTERMINAL_DIRECTORY_PREVIEW']
  if args.directory_storage:options+=['-DTERMINAL_DIRECTORY_STORAGE']
+ if args.directory_resource_cli:options+=['-DTERMINAL_DIRECTORY_RESOURCE_CLI']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
@@ -281,6 +285,7 @@ if args.original_reference:c_sources.append(ROOT/'src/redisplay/command_referenc
 if args.directory_view:c_sources += [ROOT/'src/redisplay/directory_view.c',ROOT/'src/directory/directory_reader.c',ROOT/'src/directory/directory_reader_fs.c']
 if args.directory_preview:c_sources += [ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c']
 if args.directory_storage:c_sources.append(ROOT/'src/directory/directory_storage.c')
+if args.directory_resource_cli:c_sources += [ROOT/'src/directory/directory_resource_cli.c',ROOT/'src/terminal/resource_cli_bind.c']
 c_sources += sorted((ROOT/'src/clipboard').glob('*.c'))
 c_sources += [ROOT/'src/transfer'/name for name in ['download_file.c','download_fs.c','native_file_bridge.c','terminal_receive.c']]
 c_sources += [ROOT/'src/transfer/download_compare.c']
@@ -310,6 +315,7 @@ c_sources+=sorted(hook_sources)
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
 if args.directory_preview:config_sources.update({ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c'})
 if args.directory_storage:config_sources.update({ROOT/'src/directory/directory_actions.c',ROOT/'src/directory/directory_storage.c'})
+if args.directory_resource_cli:config_sources.update({ROOT/'src/directory/directory_resource_cli.c',ROOT/'src/terminal/resource_cli_bind.c'})
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
 config_sources.add(ROOT/'src/translation/xlt_dos.c')
@@ -393,6 +399,7 @@ for source in c_sources:
  if args.directory_view:options+=['-dTERMINAL_DIRECTORY_VIEW']
  if args.directory_preview:options+=['-dTERMINAL_DIRECTORY_PREVIEW']
  if args.directory_storage:options+=['-dTERMINAL_DIRECTORY_STORAGE']
+ if args.directory_resource_cli:options+=['-dTERMINAL_DIRECTORY_RESOURCE_CLI']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
  if args.register_handoff:options+=['-dTERMINAL_REGISTER_HANDOFF']
@@ -475,6 +482,7 @@ inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
 if args.session_projection:inputs += [ROOT/'src/config/prm_projection.h',ROOT/'src/terminal/session_projection.h']
 if args.session_baseline:inputs += [ROOT/'src/terminal/session_baseline.h']
 if args.directory_preview:inputs += [ROOT/'src/terminal/directory_preview.h']
+if args.directory_resource_cli:inputs += [ROOT/'src/directory/directory_resource_cli.h',ROOT/'src/directory/directory_resources.h']
 if args.register_handoff:inputs += [ROOT/'src/terminal/register_owner.h',ROOT/'src/aspect/register_handoff.h',ROOT/'src/aspect/register_codec.h']
 if args.hook_return:inputs.append(ROOT/'src/config/hook_return.h')
 if args.hook_execute:inputs += [ROOT/'src/terminal/hook_transaction.h',ROOT/'src/process/hook_owner.h',ROOT/'src/process/hook_exchange.h']
@@ -491,6 +499,8 @@ manifest['experimental_original_reference']=args.original_reference
 manifest['experimental_directory_view']=args.directory_view
 manifest['experimental_directory_preview']=args.directory_preview
 manifest['experimental_directory_storage']=args.directory_storage
+manifest['experimental_directory_resource_cli']=args.directory_resource_cli
+if args.directory_resource_cli:manifest['limitations'].append('Original CLI KEY/KBD identities are bound before directory startup; staged live resources, lease/UART adoption and dialing remain pending. This experimental build retains the LoC.6 splash version.')
 if args.directory_storage:
  manifest['limitations'].append('LoC.6: record/accounting saves use a banked canonical three-name shared file claim. Close/rollback/recovery-file/release uncertainty holds the owner and the shared DOS EXEC boundary refuses child launch. A refused retry returns no stale installed flag. No force recovery/reset, live selection adoption or new UART handoff is implemented.')
 if args.directory_preview:

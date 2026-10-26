@@ -4,8 +4,9 @@ Live selection needs to distinguish original `/K` and `/T` overrides from files
 chosen for the previous directory entry. Startup currently augments
 `terminal_option_mask` with the latter, so reusing that mask would incorrectly
 pin the old board's resources. `directory_resources_stage` instead requires an
-explicit original CLI mask and previously bound absolute CLI paths. Capturing
-that provenance at startup remains an application integration task.
+explicit original CLI mask and previously bound absolute CLI paths. The later
+[CLI integration](DIRECTORY_RESOURCE_CLI.md) captures that provenance in an
+opt-in application variant; the unchanged LoC.6 build still lacks that capture.
 
 The new component reads and validates both resources into a proposed bundle
 before publishing any of it. A missing or blank directory binding resets the

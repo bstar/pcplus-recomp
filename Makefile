@@ -835,6 +835,12 @@ test-setup-startup: terminal setup
 	python3 standalone/check_setup_startup.py
 	python3 standalone/test_setup_startup_dos.py
 
+.PHONY: directory-resource-cli test-directory-resource-cli
+directory-resource-cli:
+	python3 standalone/build_directory_resource_cli.py
+test-directory-resource-cli: directory-resource-cli
+	python3 standalone/test_directory_resource_cli_dos.py --output build/directory-resource-cli/DOS-make-$(shell date +%s%N)
+
 .PHONY: directory-resources test-directory-resources
 directory-resources:
 	python3 standalone/build_directory_resources.py

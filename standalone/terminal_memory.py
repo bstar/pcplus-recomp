@@ -151,6 +151,8 @@ def inspect_terminal_memory(binary,map_path):
    assert hi<=other_lo or lo>=other_lo+other['bytes'],(name,'code segments overlap')
   code_segments.append(dict(name=name,kind=kind,relative_segment=seg,offset=off,bytes=length))
  near_code=next(c for c in code_segments if c['name']=='_TEXT')
+ resident_cs_end=max(c['offset']+c['bytes'] for c in code_segments if c['relative_segment']==near_code['relative_segment'])
+ extra.update(resident_CS_extent_bytes=resident_cs_end,resident_CS_spare_bytes=65536-resident_cs_end)
  if 'terminal_substitute_profile_ge20'in symbols:
   control=address('terminal_control_1248');control_seg,control_off=symbols['terminal_control_1248']
   assert control_seg==near_code['relative_segment']
@@ -220,6 +222,27 @@ def inspect_terminal_memory(binary,map_path):
   assert address('_directory_preview_capture')+len(prefix)+3 in relocations,'Actual-session capture relocation'
   extra.update(directory_preview_proposal_bytes=1190,directory_preview_snapshot_bytes=3978,
                directory_preview_capture_policy=1,directory_preview_capture_adapter_verified=True)
+ if '_terminal_resource_cli_bind' in symbols:
+  config=next(c for c in code_segments if c['name']=='CONFIG_CODE')
+  for name in ('_terminal_resource_cli_bind','_directory_resource_cli_initialize','_directory_resource_cli_bind','_directory_resource_cli_request'):
+   assert symbols[name][0]==config['relative_segment'],(name,'CLI provenance outside CONFIG_CODE')
+  owner=address('_directory_resource_cli');assert near_start<=owner and owner+138<=near_start+near_size
+  site=address('terminal_resource_cli_startup');target=symbols['_terminal_resource_cli_bind']
+  assert raw('terminal_resource_cli_startup',7)==b'\x9a'+struct.pack('<HH',target[1],target[0])+b'\x09\xc0','CLI startup must bind and check before directory selection'
+  assert site+3 in relocations,'CLI startup far relocation'
+  tail=raw('terminal_resource_cli_startup',15)[7:]
+  assert tail[:3]==b'\x74\x03\xe9' and tail[5]==0xe8,'CLI bind failure must bypass directory selection'
+  error=site+12+struct.unpack('<h',tail[3:5])[0]
+  assert error==address('terminal_resource_cli_error'),'CLI bind failure must enter the configuration error path'
+  select=site+15+struct.unpack('<h',tail[6:8])[0]
+  assert select==address('terminal_select_directory'),'CLI identities must precede directory chooser'
+  if 'terminal_special_splash' in symbols:
+   splash=next(c for c in code_segments if c['name']=='SPLASH_CODE')
+   assert splash['relative_segment']!=near_code['relative_segment'] and splash['offset']==0,'Startup-only splash must not consume resident CS'
+   assert symbols['terminal_special_splash']==(splash['relative_segment'],0)
+   assert splash['bytes']==377,'Keep the complete startup logo and version image'
+   extra['directory_resource_cli_far_splash_bytes']=splash['bytes']
+  extra.update(directory_resource_cli_snapshot_bytes=138,directory_resource_cli_startup_order_verified=True)
  if 'terminal_phone_log_code_start' in symbols:
   bank=next(c for c in code_segments if c['name']=='PHONE_LOG_CODE')
   bank_seg=bank['relative_segment']

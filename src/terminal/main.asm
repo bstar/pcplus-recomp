@@ -122,6 +122,14 @@ _small_code_:
 %endif
  jmp terminal_shutdown
 .configured:
+%ifdef TERMINAL_DIRECTORY_RESOURCE_CLI
+ extern _terminal_resource_cli_bind
+ global terminal_resource_cli_startup
+ terminal_resource_cli_startup equ $
+ call far _terminal_resource_cli_bind
+ or ax,ax
+ jnz .configuration_error
+%endif
  call terminal_select_directory
 %ifdef TERMINAL_TRAPS
  call far terminal_trap_poll
@@ -335,6 +343,10 @@ _small_code_:
  mov word [terminal_exit_code],5
  jmp terminal_shutdown
 .configuration_error:
+%ifdef TERMINAL_DIRECTORY_RESOURCE_CLI
+ global terminal_resource_cli_error
+ terminal_resource_cli_error equ $
+%endif
  mov dx,configuration_argument
 %ifdef TERMINAL_MOUSE
  cmp ax,15

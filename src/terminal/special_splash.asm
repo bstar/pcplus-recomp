@@ -2,7 +2,13 @@
 BITS 16
 CPU 8086
 %ifdef TERMINAL_SPECIAL_EDITION
+%ifdef TERMINAL_DIRECTORY_RESOURCE_CLI
+; The existing FAR entry and CS-relative text are self-contained. Keep the
+; startup-only image out of the almost-full resident CS in this new variant.
+SEGMENT SPLASH_CODE public align=16 class=FARCODE use16
+%else
 SEGMENT SPLASH_CODE public class=CODE use16
+%endif
 global terminal_special_splash
 terminal_special_splash:
  push ax

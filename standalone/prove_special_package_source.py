@@ -60,7 +60,8 @@ def main():
                         *(['--original-reference']if manifest.get('experimental_original_reference')else[]),
                         *(['--directory-view']if manifest.get('experimental_directory_view')else[]),
                         *(['--directory-preview']if manifest.get('experimental_directory_preview')else[]),
-                        *(['--directory-storage']if manifest.get('experimental_directory_storage')else[])], cwd=fresh, check=True,
+                        *(['--directory-storage']if manifest.get('experimental_directory_storage')else[]),
+                        *(['--directory-resource-cli']if manifest.get('experimental_directory_resource_cli')else[])], cwd=fresh, check=True,
                        stdout=log, stderr=log, timeout=300,env=environment)
     rebuilt = json.loads((fresh / 'build/package/manifest.json').read_text())
     assert rebuilt['files'] == manifest['files']
