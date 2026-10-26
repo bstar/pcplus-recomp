@@ -90,6 +90,8 @@ The [receipt](validation/directory-view.json) binds the frozen candidate:
 - Packaged START/SETUP and reference-driven recording → DOS compilation →
   exact UART replay pass. The captured magenta splash identifies LoC.4.
 - A clean 754-source export reproduces all ten package files exactly.
+  The same ten files also reproduce from only committed sources at `cb2381a`,
+  excluding pending worktree logger changes and ancestor Git metadata.
   Four older application controls and HEAD-source standalone browser/editor
   controls reproduce their unchanged executable hashes.
 

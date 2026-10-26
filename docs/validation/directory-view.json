@@ -18,7 +18,8 @@
     "recording": true,
     "source_only_package": true,
     "older_application_controls": true,
-    "standalone_HEAD_controls": true
+    "standalone_HEAD_controls": true,
+    "committed_source_package": true
   },
   "reports": {
     "linked_directory": "build/terminal-directory-view-07753956134c/directory-view-checks.json",
@@ -160,5 +161,24 @@
     "lab/bbs/test_dos.py": "cc8080494999dfce60c1a1e17680a4621ce489f4dadee096db91d815a63910e7",
     "lab/bbs/test_synthmodem_proxy_dos.py": "d74d385c388ef24f19055ca8c24aaf4ed0e3fd9f280a0af6d42ed1528b5e21c0"
   },
-  "scope": "LoC.4 explicit read-only Alt-D candidate. Real linked code, actual DOS pages/errors/launchers/recording and stock ENiGMA editor through real proxy pass;754-source exact ten-file rebuild. Older application controls remain exact. No complete-application/F01-F16 acceptance, card write, live service/network change or physical modem claim."
+  "scope": "LoC.4 explicit read-only Alt-D candidate. Real linked code, actual DOS pages/errors/launchers/recording and stock ENiGMA editor through real proxy pass;754-source exact ten-file rebuild. Older application controls remain exact. No complete-application/F01-F16 acceptance, card write, live service/network change or physical modem claim.",
+  "committed_source_rebuild": {
+    "commit": "cb2381ae343fdd47fd0805da9ddd1ef938f3affc",
+    "report": "build/directory-view-committed-source-20261025/result.json",
+    "sha256": "12be5047d799417e1f20e5bac843f6eb9a32623790aee2b3c4110e1bd549bc3d",
+    "source_files": 754,
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+      "README.TXT": "635b4daa3382570ad804a8db0319641caafe904eea4b981bff7293906783e097",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "d3eea16441617c80ca302a9985d8b01aea7a0590235a580d43865355e562f72f",
+      "VERSION.TXT": "34ed6fb00904bf7bf5c12b06081501e024c7644b0e17b626c854afdd513c78ea",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "scope": "Only committed declared sources, excluding pending worktree logger changes and ancestor Git metadata, reproduce all ten staged package files exactly."
+  }
 }

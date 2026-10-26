@@ -5,7 +5,7 @@ read-only browsing through bounded foreground IO.31 linked inputs,84 reference
 inputs,29 keyboard inputs, actual DOS page/error captures and stock ENiGMA
 editor checks pass. Shared full snapshots reclaim8,000 bytes; nested START
 compilation/replay passes with3,424 fewer retained bytes than LoC.3. All ten
-package files reproduce from754 source inputs, and four older application
+package files reproduce from754 committed sources, and four older application
 controls stay exact. Selected-entry adoption, resource/identity/accounting
 handoff, physical/card and complete F01–F16 acceptance remain open.
 
