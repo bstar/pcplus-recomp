@@ -62,10 +62,10 @@ def main():
             ax = uc.reg_read(UC_X86_REG_AX)
             ah = ax >> 8
             handle = uc.reg_read(UC_X86_REG_BX)
-            if number != 0x21 or not (ax == 0x3d00 or handle in self.directory_handles and ah in (0x3f, 0x3e)):
+            if number != 0x21 or not (ax == 0x3d80 or handle in self.directory_handles and ah in (0x3f, 0x3e)):
                 return super().interrupt(uc, number, user)
             count, error, value = 0, 0, 0
-            if ax == 0x3d00:
+            if ax == 0x3d80:
                 path = self.path(uc.reg_read(UC_X86_REG_DS), uc.reg_read(UC_X86_REG_DX))
                 if path not in self.files:
                     error = 2

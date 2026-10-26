@@ -25,7 +25,8 @@ def main():
              ('filesystem', 'src/directory/directory_reader_fs.c', []),
              ('filesystem_real', 'src/directory/directory_reader_fs.c',
               ['-ddirectory_reader_fs_' + n + '=directory_reader_real_' + n for n in ('open', 'read', 'close')]),
-             ('diagnostic', 'standalone/directory_reader_diagnostic.c', [])]
+             ('diagnostic', 'standalone/directory_reader_diagnostic.c', []),
+             ('child', 'standalone/directory_reader_child.c', [])]
     for name, source, extra in units:
         extra = list(extra)
         if args.bank and name in ('reader', 'diagnostic'):
@@ -43,6 +44,7 @@ def main():
             'src/terminal/directory_reader_bank.asm', '-o', str(out / 'bank.obj')], cwd=ROOT, check=True)
         objects.append('bank.obj')
     subprocess.run(['wcl', *flags, '-k8192', '-fm=READER.map', '-fe=READER.EXE', *objects], cwd=out, check=True)
+    subprocess.run(['wcl',*flags,'-k2048','-fm=INHERIT.map','-fe=INHERIT.EXE','child.obj'],cwd=out,check=True)
     names = [source for _, source, _ in units] + ['src/directory/directory_reader.h',
              'src/directory/directory_reader_fs.h', 'src/directory/directory_dos.h',
              'standalone/build_directory_reader.py', 'standalone/build_phone_log_file.py']
@@ -51,8 +53,9 @@ def main():
     sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
     result = dict(kind='source-only-incremental-directory-reader', original_inputs=[],
         sources={n: sha(ROOT / n) for n in sorted(set(names))},
-        objects={n: sha(out / n) for n in ['reader.obj', 'filesystem.obj', 'filesystem_real.obj', 'diagnostic.obj'] + (['bank.obj'] if args.bank else [])},
+        objects={n: sha(out / n) for n in ['reader.obj', 'filesystem.obj', 'filesystem_real.obj', 'diagnostic.obj','child.obj'] + (['bank.obj'] if args.bank else [])},
         binary_sha256=sha(out / 'READER.EXE'),
+        child_binary_sha256=sha(out/'INHERIT.EXE'),
         bank=args.bank,
         limitations=['Foreground component; terminal UI/serial polling integration remains open.',
                      'Driver call duration and concurrent external file writers are not bounded.'])

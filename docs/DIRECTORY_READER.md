@@ -1,5 +1,8 @@
 # Incremental directory reader for the live chooser
 
+The later [handle-inheritance correction](DIRECTORY_HANDLE_INHERITANCE.md)
+adds DOS3+ non-inheritable opens and three real EXEC workflows per reader form.
+
 The later [LoC.4 directory view](DIRECTORY_VIEW.md) integrates this reader into
 the running command screen owner. The original component measurements and
 receipts below remain historical; live selection adoption is still open.

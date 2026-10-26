@@ -67,10 +67,10 @@ def main():
                     '--build', str(folder), '--output', str(export / 'build' / (name + '-dos'))],
                     cwd=export, stdout=log, stderr=log, check=True)
             run = json.loads((export / 'build' / (name + '-dos/result.json')).read_text())
-            assert run['passed'] and run['case_count'] == 22 and run['hardware_restored']
+            assert run['passed'] and run['case_count'] == 25 and run['hardware_restored']
             assert run['binary_sha256'] == rebuilt['binary_sha256']
             runs[name] = dict(binary_sha256=run['binary_sha256'], objects=rebuilt['objects'],
-                DOS_cases=run['case_count'], DOS_assertions=run['native_assertions'],
+                child_binary_sha256=rebuilt['child_binary_sha256'],DOS_cases=run['case_count'], DOS_assertions=run['native_assertions'],
                 report='export/build/' + name + '-dos/result.json')
         shutil.copytree(export, out / 'export')
     for name, digest in sources.items():
@@ -82,7 +82,7 @@ def main():
         DOS_assertions=sum(r['DOS_assertions'] for r in runs.values()), captures_sha256=captures,
         checker_sha256=sha(Path(__file__)),
         toolchain_inputs={p: sha(ROOT / p) for p in ('nix/flake.nix', 'nix/flake.lock', 'tools/dev')},
-        scope='Both exact DOS diagnostic binaries and all nine objects rebuilt from declared sources outside all Git ancestors;44 fresh8086 workflows repeat with independent complete-page/file/JFT/hardware audits. No original executables, user media, parent UI/serial integration or physical-driver timing claim.')
+        scope='Both exact DOS reader diagnostics, EXEC witness and eleven objects rebuilt from declared sources outside all Git ancestors;50 fresh8086 workflows repeat with independent complete-page/file/JFT/hardware audits. No original executables, user media, parent UI/serial integration or physical-driver timing claim.')
     (out / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(dict(passed=True, sources=len(sources), DOS_cases=result['DOS_cases'], DOS_assertions=result['DOS_assertions'])))
 

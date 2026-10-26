@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <process.h>
+#include <fcntl.h>
 unsigned __cdecl directory_reader_real_open(const char *,int *);
 unsigned __cdecl directory_reader_real_read(int,void *,unsigned,unsigned *);
 unsigned __cdecl directory_reader_real_close(int);
@@ -30,7 +32,7 @@ unsigned __cdecl directory_reader_fs_read(int handle,void *data,unsigned n,unsig
 unsigned __cdecl directory_reader_fs_close(int handle)
 {
  unsigned status;++closes;
- if(mode==9)return 6;
+ if(mode==9||mode==24)return 6;
  status=directory_reader_real_close(handle);
  if((mode==8||mode==15)&&!status)return 6;
  return status;
@@ -60,6 +62,15 @@ static unsigned page_matches(const directory_dos_page_data __far *page,unsigned 
  for(i=0;i<1140;++i)if(records[i]!=(i<count*114?pattern(start+i):0))return 0;
  return 1;
 }
+static unsigned child(int handle,unsigned expected)
+{
+ char number[8],code[8];unsigned result[3];FILE *file;
+ itoa(handle,number,10);itoa(expected,code,10);
+ if(spawnl(P_WAIT,"..\\INHERIT.EXE","INHERIT.EXE",number,code,(char *)0)!=0)return 0;
+ file=fopen("CHILD.BIN","rb");if(!file)return 0;
+ if(fread(result,2,3,file)!=3||fclose(file))return 0;
+ return result[0]==expected && result[1]==(expected?0:1) && result[2]==(expected?0:11);
+}
 int main(int argc,char **argv)
 {
  unsigned segment,i,first=1,status,before,previous,steps=0,expected=0;
@@ -67,7 +78,7 @@ int main(int argc,char **argv)
  unsigned char __far *jft;directory_dos_page_data __far *stage;
  directory_dos_page_data __far *page;
  directory_reader saved;char long_path[128];FILE *file;union REGS regs;
- if(argc!=2)return 1;mode=(unsigned)atoi(argv[1]);if(mode>21)return 1;
+ if(argc!=2)return 1;mode=(unsigned)atoi(argv[1]);if(mode>24)return 1;
  CHECK(_dos_allocmem((2*BLOCK_SIZE+15)/16,&segment)==0);
  memory=(unsigned char __far *)MK_FP(segment,0);
  for(i=0;i<2*BLOCK_SIZE;++i)memory[i]=0x6c;
@@ -102,6 +113,11 @@ int main(int argc,char **argv)
  CHECK(directory_reader_begin(&state,"FILE.DIR",first,stage,page,scratch)==DIRECTORY_READER_BUSY);
  CHECK(directory_reader_initialize(&state)==DIRECTORY_READER_BUSY);
  CHECK(memcmp(&state,&saved,sizeof(state))==0&&opens==1);
+ if(mode==22)CHECK(child(state.handle,6));
+ if(mode==23){
+  CHECK(_dos_open("FILE.DIR",O_RDONLY,&other)==0);
+  CHECK(child(other,0));CHECK(_dos_close(other)==0);
+ }
  if(mode==10)CHECK(directory_reader_cancel(&state)==DIRECTORY_READER_PENDING);
  while(status==DIRECTORY_READER_PENDING){
   CHECK(++steps<1600);before=opens+reads+closes;previous=state.bytes_processed;
@@ -121,7 +137,7 @@ int main(int argc,char **argv)
  }
  if(mode==4||mode==5||mode==17||mode==18)expected=DIRECTORY_DOS_SIZE;
  if(mode==7||mode==13||mode==15||mode==19)expected=DIRECTORY_DOS_READ;
- if(mode==8||mode==9)expected=DIRECTORY_DOS_CLOSE;
+ if(mode==8||mode==9||mode==24)expected=DIRECTORY_DOS_CLOSE;
  if(mode==10||mode==11||mode==12||mode==20)expected=DIRECTORY_READER_CANCELLED;
  CHECK(status==expected&&state.status==expected&&closes==1&&max_read<=512);
  if(!status){CHECK(page_matches(page,first));CHECK(state.bytes_processed==23050);}
@@ -137,7 +153,10 @@ int main(int argc,char **argv)
   CHECK(directory_reader_initialize(&state)==DIRECTORY_READER_BUSY);
   CHECK(directory_reader_begin(&state,"FILE.DIR",first,stage,page,scratch)==DIRECTORY_READER_BUSY);
   CHECK(memcmp(&state,&saved,sizeof(state))==0);
-  if(mode==9)CHECK(directory_reader_real_close(state.handle)==0);
+  if(mode==9||mode==24){
+   if(mode==24){CHECK(child(state.handle,6));CHECK(directory_reader_real_read(state.handle,scratch,1,&count)==0&&count==0);}
+   CHECK(directory_reader_real_close(state.handle)==0);
+  }
   else{
    /* Close reported failure after actually releasing its handle. A new file
     * reuses that number; repeated reader calls must never close it. */

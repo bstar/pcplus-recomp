@@ -1,5 +1,9 @@
 # Serviced Alt-D view — 2.01-LoC.4
 
+The later [handle-inheritance correction](DIRECTORY_HANDLE_INHERITANCE.md)
+protects active/uncertain directory handles from DOS children. Its package and
+hash supersede this original view checkpoint's staging details.
+
 The explicit `--directory-view` candidate connects the incremental reader to
 the running terminal's command screen owner. Alt-D opens a path prompt, seeded
 from the startup directory selector or PCPLUS.DIR. Enter opens the file

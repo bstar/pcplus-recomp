@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Directory handle privacy](docs/DIRECTORY_HANDLE_INHERITANCE.md) closes a
+concrete child-inheritance gap before selection adoption. DOS3+ reader opens
+are non-inheritable; actual EXEC witnesses reject active and uncertain reader
+handles while a plain read-only control remains readable. Both reader forms
+pass25 DOS workflows each;13 isolated sources reproduce diagnostics/helper
+and eleven objects, repeating50 workflows/14,116 assertions. Linked/live DOS
+view, stock ENiGMA editor, nested START and754-source package rebuild pass.
+Canonical reservations, selection/adoption/accounting, physical/card and full
+F01–F16 acceptance remain open.
+
 [LoC.4 serviced directory view](docs/DIRECTORY_VIEW.md) now opens Alt-D
 read-only browsing through bounded foreground IO.31 linked inputs,84 reference
 inputs,29 keyboard inputs, actual DOS page/error captures and stock ENiGMA

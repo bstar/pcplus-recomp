@@ -17,7 +17,8 @@ NAMES = ['first-page', 'last-full-page', 'last-single-record', 'short-reads17',
          'cancel-read', 'cancel-before-probe', 'cancel-keeps-read-error',
          'invalid-aliases-and-extents', 'read-and-close-errors', 'short-reads511',
          'empty', 'early-zero-read', 'invalid-read-count', 'cancel-before-publish',
-         'new-page-after-completion']
+         'new-page-after-completion','EXEC-does-not-inherit-active-reader',
+         'EXEC-raw-inheritable-control','EXEC-does-not-inherit-uncertain-reader']
 
 
 def sha(path):
@@ -37,6 +38,8 @@ def main():
         assert sha(ROOT / name) == digest, name
     out.mkdir(parents=True)
     shutil.copyfile(build / 'READER.EXE', out / 'READER.EXE')
+    assert sha(build/'INHERIT.EXE')==manifest['child_binary_sha256']
+    shutil.copyfile(build/'INHERIT.EXE',out/'INHERIT.EXE')
     (out / 'sampler.asm').write_text(SAMPLER)
     subprocess.run(['nasm', '-fbin', str(out / 'sampler.asm'), '-o', str(out / 'SNAP.COM')], check=True)
     commands, fixtures = [], {}
@@ -82,7 +85,7 @@ SNAP B
     before, after = (out / 'BEFORE.BIN').read_bytes(), (out / 'AFTER.BIN').read_bytes()
     assert len(before) == 42 and before == after
     cases = []
-    successes = {0, 1, 2, 3, 16, 21}
+    successes = {0, 1, 2, 3, 16, 21,22,23}
     fields = 'mode status phase dos_error close_error bytes_processed steps opens reads closes max_read max_operations uncertain checks'.split()
     for mode, name in enumerate(NAMES):
         case = out / f'T{mode:03}'
@@ -99,9 +102,9 @@ SNAP B
             assert page == wanted and state['status'] == 0 and state['phase'] == 4 and not state['uncertain']
         else:
             assert page == bytes([0xa5]) * 1394
-        expected = 2 if mode == 6 else 3 if mode in (7, 13, 15, 19) else 4 if mode in (4, 5, 17, 18) else 5 if mode in (8, 9) else 6 if mode in (10, 11, 12, 20) else 0
+        expected = 2 if mode == 6 else 3 if mode in (7, 13, 15, 19) else 4 if mode in (4, 5, 17, 18) else 5 if mode in (8, 9,24) else 6 if mode in (10, 11, 12, 20) else 0
         assert state['status'] == expected, (name, state)
-        if mode in (8, 9, 15):
+        if mode in (8, 9, 15,24):
             assert state['phase'] == 5 and state['close_error'] == 6 and state['uncertain']
         if mode == 14:
             assert state['phase'] == 0 and not state['opens'] and not state['reads'] and not state['closes']
@@ -110,6 +113,8 @@ SNAP B
         else:
             assert not (case / 'FILE.DIR').exists()
         assert (case / 'RESULT.TXT').read_text().startswith(f'PASS mode{mode} ')
+        if mode in (22,23,24):
+            assert struct.unpack('<3H',(case/'CHILD.BIN').read_bytes())==((0,1,11) if mode==23 else (6,0,0))
         cases.append(dict(case=name, passed=True, **state))
     artifacts = {str(p.relative_to(out)): sha(p) for p in out.rglob('*') if p.is_file()}
     result = dict(passed=True, cases=cases, case_count=len(cases), native_assertions=sum(c['checks'] for c in cases),
