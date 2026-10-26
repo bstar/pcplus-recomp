@@ -71,6 +71,8 @@ SETUP returns after the saved-settings editor and captures the LoC.5 splash.
 Both preserve private fixture files, restore PCPLUS and hardware and retain
 the packaged binaries. A clean 758-source export reproduces all ten package
 files exactly without an original installation or ancestor Git metadata.
+The same ten files reproduce from committed sources at `eb4279c`, excluding
+pending telephone-log worktree changes.
 
 ## Reproduce
 

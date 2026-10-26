@@ -376,5 +376,14 @@
     "Confirmed UART/profile/transfer handoff and selected-entry dialing",
     "Full F01-F16, ENiGMA workflows and real Boca/SPA2102/card acceptance"
   ],
-  "original_key_inputs": 29
+  "original_key_inputs": 29,
+  "committed_source_proof": {
+    "path": "build/directory-preview-package-committed-20261025/result.json",
+    "sha256": "4363087bbc4478edfe1c1c2aefe161c85eb81c4cc8203ecaf4be088bc31038f1",
+    "source_commit": "eb4279c00e64f19d2e18b6ff91f92215ac1bca31",
+    "source_files": 758,
+    "package_files": 10,
+    "ancestor_git_unavailable": true,
+    "passed": true
+  }
 }
