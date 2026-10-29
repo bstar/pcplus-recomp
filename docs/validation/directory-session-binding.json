@@ -1,0 +1,402 @@
+{
+  "passed": true,
+  "binary_sha256": "5545c1225cb4a2f5a01b4feede57f183900a3de6a709b0b9afe554351899ecbe",
+  "package": "build/special-directory-session-binding-20261029/PCPLUSSE",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "d29aa0acf4456bedadd9a1d0a0a80dc2008798bc18376f0936f697224f29798a",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "5545c1225cb4a2f5a01b4feede57f183900a3de6a709b0b9afe554351899ecbe",
+    "VERSION.TXT": "584ec62ad04743952cc3db19d9d3ba0aa360bb84a2dd04e301d703bf65511622",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "source_base_commit": "80fb08a1bbaf990cf2932b1b3f5f3498c0cb6278",
+  "source_files": 768,
+  "live_selection_adoption_complete": false,
+  "full_application_complete": false,
+  "physical_acceptance": false,
+  "card_written": false,
+  "actual_session_bytes": 694,
+  "retained_preview_bytes": 698,
+  "far_lease_end": 6300,
+  "native_owner_workflows": 9,
+  "linked_admission_cases": 8,
+  "linked_directory_cases": 45,
+  "damaged_ABI_controls": 9,
+  "memory_loan_cases": 14,
+  "preview_full_stack_high_water": 6358,
+  "memory": {
+    "near_bytes": 64976,
+    "near_spare_bytes": 560,
+    "near_relative_segment": 12410,
+    "far_relative_segment": 17221,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 17733,
+    "history_bytes": 63000,
+    "far_end_linear": 346728,
+    "stack_end_linear": 263536,
+    "loaded_module_bytes": 231260,
+    "minimum_allocated_module_bytes": 410240,
+    "retained_parent_paragraphs": 25656,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 21671,
+    "snapshot_image_offset": 61000,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 409736,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 16471,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 263536,
+        "end_linear": 267536
+      },
+      "ed_screen": {
+        "relative_segment": 16471,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 267536,
+        "end_linear": 271536
+      },
+      "program_screen": {
+        "relative_segment": 16471,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 263536,
+        "end_linear": 267536
+      },
+      "redisplay_live": {
+        "relative_segment": 16471,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 267536,
+        "end_linear": 271536
+      },
+      "redisplay_view": {
+        "relative_segment": 16471,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 271536,
+        "end_linear": 275536
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "program_browser_screen_overlay": true,
+    "editor_viewer_screen_overlay": true,
+    "snapshot_history_tail_overlay": true,
+    "snapshot_history_bytes_reclaimed": 2000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 409736,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 21671,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 410230,
+    "resident_CS_extent_bytes": 65328,
+    "resident_CS_spare_bytes": 208,
+    "substitute_native_bytes_verified": 53,
+    "substitute_native_dependencies_verified": 4,
+    "substitute_state_words_verified": 4,
+    "far_usage_bytes": 1493,
+    "far_usage_segment": 10521,
+    "far_usage_DS_restore_verified": true,
+    "directory_view_code_bytes": 5875,
+    "directory_view_FS_callbacks_verified": 3,
+    "directory_view_scratch_offset": 3141,
+    "directory_view_scratch_bytes": 512,
+    "directory_view_snapshot_page_bytes": 2788,
+    "directory_preview_proposal_bytes": 1190,
+    "directory_preview_snapshot_bytes": 3978,
+    "directory_preview_capture_policy": 1,
+    "directory_preview_capture_adapter_verified": true,
+    "directory_resource_cli_far_splash_bytes": 377,
+    "directory_resource_cli_snapshot_bytes": 138,
+    "directory_resource_cli_startup_order_verified": true,
+    "directory_resource_owner_snapshot_bytes": 14,
+    "directory_resource_bundle_bytes": 1624,
+    "directory_resource_lease_start": 2788,
+    "directory_resource_lease_end": 6300,
+    "directory_resource_actual_session_bytes": 694,
+    "directory_resource_preview_binding_bytes": 698,
+    "process_loan_full_paragraphs": 25656,
+    "process_loan_critical_paragraphs": 21687,
+    "process_loan_bytes": 63504,
+    "process_loan_code_calls_verified": true,
+    "process_child_quiet_before_trap_resume_verified": true,
+    "process_bank_bytes": 903,
+    "process_bridge_pairs_verified": 1,
+    "process_near_entry_bytes": 22,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "recording_matcher_lead_site": 38911,
+    "recording_rx_far_call_sites": [
+      38914,
+      15124
+    ],
+    "recording_rx_callback_site": 108733,
+    "recording_actor_guard_sites": [
+      15124,
+      15523,
+      25414,
+      29465,
+      36713,
+      39240,
+      165656,
+      166757,
+      169848
+    ],
+    "recording_UI_boundary_sites": [
+      191464,
+      193018,
+      108687
+    ],
+    "recording_UI_optimized_sites": [],
+    "recording_tx_origin_bytes": 128,
+    "recording_tx_origin_start": 110967,
+    "recording_tx_far_call_sites": [
+      39710,
+      37030,
+      40592,
+      24931
+    ],
+    "recording_tx_callback_site": 110958,
+    "recording_terminal_state_bytes": 392,
+    "recording_terminal_bank_functions_verified": 9,
+    "recording_terminal_far_call_sites": [
+      23386,
+      24317
+    ],
+    "recorder_code_literal_bytes_verified": 223,
+    "recorder_code_literal_sites": [
+      158707,
+      158724,
+      158738,
+      158758,
+      158778,
+      158784,
+      158804,
+      158835,
+      158920
+    ],
+    "recording_bank_functions_verified": 14,
+    "recording_resident_callbacks_verified": 9,
+    "recording_adapter_far_call_sites": [
+      60472,
+      60496,
+      60520
+    ],
+    "capture_reservation_far_bindings_verified": 2,
+    "capture_reservation_far_call_sites": [
+      58347,
+      157776
+    ],
+    "capture_reservation_initialized_bytes": 8,
+    "command_menu_banked_call_sites": [
+      130176,
+      130291,
+      130818
+    ],
+    "command_menu_code_segment": 11345,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "directory_storage_snapshot_bytes": 222,
+    "directory_storage_callbacks_verified": 3,
+    "directory_storage_EXEC_gate_verified": true,
+    "configuration_bridge_pairs_verified": 102,
+    "transfer_ui_far_entries_verified": 4,
+    "transfer_ui_resident_callbacks_verified": 3,
+    "redisplay_bridge_pairs_verified": 4,
+    "viewer_live_plane_admission_verified": true,
+    "scroll_field_bridge_pairs_verified": 3,
+    "line_preflight_far_calls_verified": 2,
+    "wide_character_far_calls_verified": 2,
+    "wide_character_prepare_far_calls_verified": 1,
+    "script_window_keyboard_far_adapters_verified": true,
+    "aspect_command_preflight_verified": true,
+    "aspect_viewport_lease_words_verified": 3,
+    "protected_erase_far_bridge_verified": true,
+    "protected_erase_native_dependencies_verified": 4,
+    "erase_after_projection_initially_idle": true,
+    "wide_clear_rectangle_route_verified": true,
+    "alternate_output_far_bridge_verified": true,
+    "alternate_output_native_dependencies_verified": 4,
+    "source_owned_output_table_bytes": 256,
+    "aspect_far_services_verified": 17,
+    "aspect_resident_far_references_verified": 21,
+    "aspect_controller_read_references_verified": 1,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 50,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_controller_references_verified": 5,
+    "line_attribute_video_callbacks_verified": 2,
+    "line_controller_entry_pairs_verified": 4,
+    "line_controller_register_callbacks_verified": 3,
+    "line_controller_code_bytes": 421,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "mouse_bridge_pairs_verified": 10,
+    "mouse_code_bytes": 3065,
+    "mouse_shared_native_state_bytes": 28,
+    "resident_code_bytes": 65328,
+    "resident_code_spare_bytes": 208,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65328
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4083,
+        "offset": 0,
+        "bytes": 12908
+      },
+      {
+        "name": "PROCESS_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4890,
+        "offset": 0,
+        "bytes": 903
+      },
+      {
+        "name": "HOOK_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4947,
+        "offset": 0,
+        "bytes": 27350
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6657,
+        "offset": 0,
+        "bytes": 58910
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10339,
+        "offset": 0,
+        "bytes": 2900
+      },
+      {
+        "name": "USAGE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10521,
+        "offset": 0,
+        "bytes": 1493
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10615,
+        "offset": 0,
+        "bytes": 1461
+      },
+      {
+        "name": "SPLASH_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10707,
+        "offset": 0,
+        "bytes": 377
+      },
+      {
+        "name": "TRAP_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10731,
+        "offset": 0,
+        "bytes": 864
+      },
+      {
+        "name": "MOUSE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10785,
+        "offset": 0,
+        "bytes": 3065
+      },
+      {
+        "name": "DIRECTORY_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10977,
+        "offset": 0,
+        "bytes": 5875
+      },
+      {
+        "name": "REFERENCE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11345,
+        "offset": 0,
+        "bytes": 17029
+      }
+    ],
+    "far_code_bridge_pairs_verified": 169
+  },
+  "ENiGMA_checks": {
+    "harness": true,
+    "semantic_audit": true,
+    "exact_screen": true,
+    "proxy_source_unchanged": true,
+    "product_source_unchanged": true,
+    "directory_prompt_and_loading": true,
+    "directory_first_and_last_pages": true,
+    "no_private_directory_fields": true,
+    "directory_preview_observed": true,
+    "preview_target_and_DTE": true,
+    "preview_privacy": true,
+    "online_resource_check_refused": true,
+    "resource_check_key_stayed_local": true
+  },
+  "evidence": {
+    "native_owner": {
+      "path": "build/directory-session-binding-DOS-serial-20261029/result.json",
+      "sha256": "5ad7bb25aa9b36112660be7ce792fc24950c811e32095d91553d33291f1a5b47"
+    },
+    "admission": {
+      "path": "build/terminal-resource-owner-f8838a85007e/directory-resource-session-checks.json",
+      "sha256": "6a6e98ff5f2a287b0520977d990670c31ae0f541a22b4cf672f8324be6656f57"
+    },
+    "ABI": {
+      "path": "build/directory-session-binding-linked-20261029/result.json",
+      "sha256": "461f52b98467be1c0cd2990c559bfd344512e46cb119c78da7d9645590e69dce"
+    },
+    "directory": {
+      "path": "build/terminal-resource-owner-f8838a85007e/directory-view-checks.json",
+      "sha256": "e5ef7a903e94cc4d3dcda3e38ce2338fbce85bf4f5ca7ab35f6fcb244185dab1",
+      "checker_commit": "80fb08a"
+    },
+    "memory_loan": {
+      "path": "build/directory-session-binding-loan-20261029/result.json",
+      "sha256": "59ca6e475a071de55d977843530a3a445fa1b4d50e0a4a023e0fffbf462e0af2"
+    },
+    "nested_child_and_viewer": {
+      "path": "build/directory-session-binding-child-20261029/result.json",
+      "sha256": "6a9a399e9af2bf7aabf569976fb4b0da74cfa23ea38fd3b968933f0f56f54439"
+    },
+    "ENiGMA": {
+      "path": "build/bbs-lab/results/enigma/directory_session_binding_stock_20261029/proxy-integration.json",
+      "sha256": "f39a8985c912f611911a024c277c716812c8e2f30cef87f54144cf58ea82a213"
+    },
+    "controls": {
+      "path": "build/directory-session-binding-controls-20261029.json",
+      "sha256": "495489a9621310083d9f0cf4d6def5c76a77619b154168baa8b9154dec49ca4b"
+    }
+  },
+  "source_reproduction": "Pending committed-source proof; not yet claimed.",
+  "limitations": [
+    "Resource preflight only; no active selection/settings/resource publication or dialing.",
+    "Exact694-byte comparison covers actual configuration and transfer planes, not every application owner or active key/translation table.",
+    "Baseline/proposal seals detect accidental damage, not authenticity or external freshness.",
+    "ENiGMA final markers and semantic interaction are checked; historical exact_screen is not a complete independent character/attribute oracle.",
+    "Physical Boca/SPA2102, card and full F01\u2013F16 acceptance remain open."
+  ]
+}

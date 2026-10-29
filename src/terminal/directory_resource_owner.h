@@ -7,10 +7,17 @@ typedef struct directory_resource_owner_snapshot {
  unsigned state,status,detail,proposal_seal,baseline_seal,mask,attempts;
 } directory_resource_owner_snapshot;
 extern directory_resource_owner_snapshot terminal_directory_resources;
+/* Preview-only: retain the exact694-byte actual plan/transfer snapshot and
+ * proposal/accepted-image seals at frozen+5602..6300. Inputs are disjoint
+ * caller-owned near stack objects, DS=SS. No IO or active-state mutation. */
+unsigned __far __cdecl terminal_directory_resources_bind(const prm_dos_image *,
+ const live_configuration_plan *,const transfer_import_settings *);
+unsigned __far __cdecl directory_resource_capture(live_configuration_plan *,transfer_import_settings *);
 /* Internal DS=SS, IF1/DF0 foreground far-cdecl APIs. Only the validated
  * preview may queue its exact1190-byte proposal at frozen-history+2788.
  * Queue PROGRAM before releasing the popup, so its existing pending/active
  * gates preserve the far lease across screen restore and UART quiescence.
+ * Reject a changed actual session, accepted image or proposal since preview.
  * No file IO, settings adoption or transmitted bytes at this boundary. */
 unsigned __far __cdecl terminal_directory_resources_queue(const directory_selection_proposal __far *);
 unsigned __far __cdecl terminal_directory_resources_queued(void);

@@ -11,9 +11,10 @@ FIELDS=[('terminal_option_mask',2),('terminal_dial_target',64),('terminal_direct
  ('terminal_directory_path',64),('terminal_configuration_values',44),('terminal_modem_settings',368),
  ('terminal_directory_plan',214),('terminal_directory_context',496),('terminal_directory_context_valid',2),
  ('terminal_keymap',948),('terminal_action_definitions',540),('terminal_keyboard_path',64),
- ('terminal_actions_path',64),('_terminal_transfer_preferences',66),('terminal_translation_table',256)]
+ ('terminal_actions_path',64),('_terminal_transfer_preferences',66),('terminal_translation_table',256),('terminal_baud_low',2)]
 NAMES=['valid-directory-pair-profile6','invalid-KBD-no-publication','invalid-KEY-no-publication','missing-bindings-reset-defaults',
- 'reference-parent-releases-whole-popup','browser-parent-releases-whole-popup','proposal-corrupted-after-queue-before-UART-stage']
+ 'reference-parent-releases-whole-popup','browser-parent-releases-whole-popup','proposal-corrupted-after-queue-before-UART-stage',
+ 'actual-transfer-changed-after-queue-before-resource-read','actual-DTE-changed-after-queue-before-resource-read']
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);args=p.parse_args()
@@ -25,6 +26,7 @@ def main():
  ds=syms['terminal_stack_top'][0];field_bytes=sum(n for _,n in FIELDS)
  assert all(syms[n][0]==ds for n,_ in FIELDS)
  definitions={
+ 'TRANSFER':syms['_terminal_transfer_preferences'][1],'ACTUAL_BAUD':syms['terminal_baud_low'][1],
  'OWNER':syms['_terminal_directory_resources'][1],'RESOURCE':syms['_directory_resource_result'][1],
  'PROGRAM_PENDING':syms['terminal_program_pending'][1],'PROGRAM_ACTIVE':syms['terminal_program_active'][1],
  'PROGRAM_KIND':syms['terminal_program_kind'][1],'PROGRAM_STATUS':syms['terminal_program_status'][1],
@@ -49,7 +51,7 @@ def main():
  for mode,name in enumerate(NAMES):
   case=out/f'T{mode:03}';case.mkdir();shutil.copyfile(binary,case/'TERMINAL.EXE')
   for leaf in ['WATCH.COM','SNAP.COM']:shutil.copyfile(out/leaf,case/leaf)
-  if mode==6:subprocess.run(['nasm','-fbin','-DCORRUPT_PROPOSAL','-I'+str(out)+'/',str(ROOT/'standalone/directory_resource_owner_watch.asm'),'-o',str(case/'WATCH.COM')],check=True)
+  if mode>=6:subprocess.run(['nasm','-fbin',{6:'-DCORRUPT_PROPOSAL',7:'-DCORRUPT_SESSION',8:'-DCORRUPT_BAUD'}[mode],'-I'+str(out)+'/',str(ROOT/'standalone/directory_resource_owner_watch.asm'),'-o',str(case/'WATCH.COM')],check=True)
   subprocess.run(['nasm','-fbin',str(ROOT/'standalone/dos_strategy_sample.asm'),'-o',str(case/'STRAT.COM')],check=True)
   settings=bytearray(prm(timeout=5));struct.pack_into('<HH',settings,0,2,5)
   struct.pack_into('<H',settings,0x178,0x3e8);struct.pack_into('<H',settings,0x188,5);struct.pack_into('<HH',settings,0x4e4,8,4)
@@ -109,17 +111,22 @@ exit
   assert len((case/'STRATB.BIN').read_bytes())==2 and (case/'STRATB.BIN').read_bytes()==(case/'STRATA.BIN').read_bytes(),name
   observed=(case/'OWNER.BIN').read_bytes();assert len(observed)==14+2*field_bytes+1190+2*1624+14+142+4000+14
   magic,flags,ticks,io_calls,opens,violations,app_ds=struct.unpack_from('<7H',observed)
-  assert magic==0x524f and flags==(15 if mode==6 else 7) and ticks>20 and not violations and app_ds,(name,magic,flags,ticks,io_calls,opens,violations)
-  assert observed[14:14+field_bytes]==observed[14+field_bytes:14+2*field_bytes],name
+  assert magic==0x524f and flags==(15 if mode>=6 else 7) and ticks>20 and not violations and app_ds,(name,magic,flags,ticks,io_calls,opens,violations)
+  expected_fields=bytearray(observed[14:14+field_bytes])
+  if mode==7:
+   transfer_at=sum(size for field,size in FIELDS[:next(i for i,(field,size) in enumerate(FIELDS) if field=='_terminal_transfer_preferences')])
+   expected_fields[transfer_at]^=1
+  if mode==8:expected_fields[-2:]=struct.pack('<H',38400)
+  assert expected_fields==observed[14+field_bytes:14+2*field_bytes],name
   pos=14+2*field_bytes;proposed=observed[pos:pos+1190];pos+=1190
   before=observed[pos:pos+1624];pos+=1624;bundle=observed[pos:pos+1624];pos+=1624
   owner=struct.unpack_from('<7H',observed,pos);pos+=14;resource=observed[pos:pos+142];pos+=142
   prompt=observed[pos:pos+4000];success=mode in (0,3,4,5)
   released=struct.unpack_from('<7H',observed,pos+4000)
   assert released[0]==0 and released[1:]==owner[1:],(name,released,owner)
-  assert owner[0]==(3 if success else 4) and owner[1]==(0 if success else 4 if mode==6 else 7) and owner[6]==1,(name,owner)
+  assert owner[0]==(3 if success else 4) and owner[1]==(0 if success else 4 if mode>=6 else 7) and owner[6]==1,(name,owner)
   assert opens==(2 if mode in (0,2,4,5) else 1 if mode==1 else 0),(name,opens)
-  assert (io_calls==0 if mode==6 else io_calls>0),name
+  assert (io_calls==0 if mode>=6 else io_calls>0),name
   if success:
    loaded=mode in (0,4,5)
    expected=struct.pack('<4H',6,4608 if loaded else 0,2 if loaded else 0,2 if loaded else 0)
@@ -130,7 +137,7 @@ exit
   else:
    assert bundle==before and b'Could not prepare KEY/KBD resources.' in prompt[::2],name
   for leaf,original in originals.items():assert (case/leaf).read_bytes()==original,(name,leaf)
-  reports.append(dict(case=name,passed=True,observer_ticks=ticks,DOS_operations_under_quiescence=io_calls,content_opens=opens,ownership_violations=violations,owner_state=owner,resource_state=struct.unpack_from('<7H',resource),active_state_unchanged=True,hardware_restored=True))
+  reports.append(dict(case=name,passed=True,observer_ticks=ticks,DOS_operations_under_quiescence=io_calls,content_opens=opens,ownership_violations=violations,owner_state=owner,resource_state=struct.unpack_from('<7H',resource),active_state_unchanged=mode not in (7,8),declared_session_fault_only=mode in (7,8),hardware_restored=True))
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
  result=dict(passed=True,binary_sha256=sha(binary),cases=reports,case_count=len(reports),source_resources_unchanged=True,
   sources={n:sha(ROOT/n) for n in ['standalone/test_directory_resource_owner_dos.py','standalone/directory_resource_owner_watch.asm','standalone/dos_strategy_sample.asm','standalone/test_terminal.py','standalone/modem_fixtures.py','standalone/directory_view_fixture.py','standalone/test_directory_resources_dos.py']},

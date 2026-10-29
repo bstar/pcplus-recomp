@@ -22,11 +22,13 @@ from terminal_memory import inspect_terminal_memory
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--terminal', type=Path, required=True)
+    parser.add_argument('--owner-binding-only',action='store_true',help='Run only actual-session resource admission cases')
     args = parser.parse_args()
     binary = args.terminal.resolve()
     manifest = json.loads((binary.parent / 'manifest.json').read_text())
     sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
     assert manifest['experimental_directory_view'] and sha(binary) == manifest['binary_sha256']
+    if args.owner_binding_only:assert manifest.get('experimental_directory_resource_owner')
     for name, digest in manifest['sources'].items():
         assert sha(transport.ROOT / name) == digest, name
     transport.BINARY, transport.MAP = binary, binary.parent / 'terminal.map'
@@ -42,6 +44,7 @@ def main():
             self.close_error = close_error
             self.leases = []
             self.preview_leases = []
+            self.observed_DOS_calls = []
             super().__init__()
             if data is not None:
                 self.files['PCPLUS.DIR'] = bytearray(data)
@@ -70,6 +73,7 @@ def main():
 
         def interrupt(self, uc, number, user):
             ax = uc.reg_read(UC_X86_REG_AX)
+            if number==0x21:self.observed_DOS_calls.append(ax)
             ah = ax >> 8
             handle = uc.reg_read(UC_X86_REG_BX)
             if number != 0x21 or not (ax == 0x3d80 or handle in self.directory_handles and ah in (0x3f, 0x3e)):
@@ -130,6 +134,7 @@ def main():
 
     cases = []
     def check(name, function):
+        if args.owner_binding_only and not name.startswith('resource-preview-'):return
         n = function()
         cases.append(dict(case=name, inputs=n, passed=True))
         print(name, n, flush=True)
@@ -498,13 +503,50 @@ def main():
             return 1
         check('preview-full63-byte-download-path-and115200-baud-without-adoption',long_path_and_rate)
 
+        if manifest.get('experimental_directory_resource_owner'):
+            def resource_session_admission():
+                results=[]
+                for fault in ('actual-baud','actual-profile','actual-modem','transfer','accepted-image','proposal','retained-session','none'):
+                    m=configured();m.put('connection_state',0);prepare(m)
+                    assert b'SELECTED ENTRY // PROPOSED SETTINGS' in m.text()
+                    original_seal=m.symbols['redisplay_snapshot']+5602
+                    assert struct.unpack('<H',m.uc.mem_read(original_seal+2,2))[0]==38400
+                    if fault=='actual-baud':m.put('terminal_baud_low',19200)
+                    elif fault=='actual-profile':m.put('csi_terminal_id',6 if m.get('csi_terminal_id')==4 else 4)
+                    elif fault=='actual-modem':m.put('terminal_modem_settings',m.get('terminal_modem_settings')^1)
+                    elif fault=='transfer':m.put('_terminal_transfer_preferences',m.get('_terminal_transfer_preferences')^1)
+                    elif fault=='accepted-image':
+                        changed=bytearray(image());changed[0x1bc]^=1;publish(m,bytes(changed))
+                    elif fault in ('proposal','retained-session'):
+                        at=m.symbols['redisplay_snapshot']+(2788 if fault=='proposal' else 5602)
+                        m.uc.mem_write(at,bytes([m.uc.mem_read(at,1)[0]^1]))
+                    before=state(m);io=len(m.observed_DOS_calls);m.key(ord('r'))
+                    assert len(m.observed_DOS_calls)==io and not m.handles and not m.tx
+                    assert state(m)==before
+                    if fault=='none':
+                        assert m.get('terminal_program_pending')==1 and m.get('terminal_program_kind')==6
+                        assert m.get('_terminal_directory_resources')==1 and not m.get('_redisplay_active') and not m.get('_command_menu_active')
+                        m.call('terminal_program_cancel')
+                        assert not m.get('terminal_program_pending') and not m.get('_terminal_directory_resources')
+                    else:
+                        assert not m.get('terminal_program_pending') and not m.get('terminal_program_active'),fault
+                        assert not m.get('_terminal_directory_resources') and m.get('_redisplay_active') and m.get('_command_menu_active')
+                        assert b'Resource check unavailable.' in m.text()
+                        m.key(27);m.key(27)
+                    results.append(dict(fault=fault,admitted=fault=='none',DOS_calls_during_queue=0,passed=True))
+                preview_evidence['resource_session_admission']=results
+                return len(results)
+            check('resource-preview-exact-session-baseline-and-proposal-admission',resource_session_admission)
+
     result = dict(passed=True, cases=cases, inputs=sum(r['inputs'] for r in cases),
         binary_sha256=manifest['binary_sha256'],
         preview=preview_evidence,
         sources={str(p.relative_to(transport.ROOT)): sha(p) for p in
                  (Path(__file__).resolve(), transport.ROOT / 'standalone/directory_view_fixture.py')},
-        scope=__doc__ + ' Actual compiled code with observed far page/scratch leases, bounded IO, both viewer entry paths, background parsing and exact reply bytes, cancel/stop/failure and unchanged selection/file. Live selection adoption and physical driver/serial acceptance remain open.')
-    (binary.parent / 'directory-view-checks.json').write_text(json.dumps(result, indent=2) + '\n')
+        scope=('Actual linked preview/capture/queue/cancel instructions; seven declared stale-input mutations and one unchanged admission, with kernel/BIOS/UART boundaries modeled. No resource DOS calls, active adoption or transmitted bytes. Not the broader directory/renderer or physical acceptance suite.' if args.owner_binding_only else
+            __doc__ + ' Actual compiled code with observed far page/scratch leases, bounded IO, both viewer entry paths, background parsing and exact reply bytes, cancel/stop/failure and unchanged selection/file. Live selection adoption and physical driver/serial acceptance remain open.'))
+    leaf='directory-resource-session-checks.json' if args.owner_binding_only else 'directory-view-checks.json'
+    (binary.parent / leaf).write_text(json.dumps(result, indent=2) + '\n')
 
 
 if __name__ == '__main__':

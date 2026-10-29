@@ -36,6 +36,7 @@ def main():
   ('reversed-resource-EXEC-condition',start+gate+7,0x74),
   ('wrong-loan-restore-call',start+address('process_loan_end_site')+1,0),
   ('wrong-child-UART-quiet-call',start+address('process_child_quiet_site')+1,0),
+  ('wrong-actual-transfer-caller-word',start+address('_directory_resource_capture')+10,10),
   ('wrong-critical-retention-store',start+address('terminal_program_critical_site')+1,0)]
  for name,at,value in variants:
   data=bytearray(image);assert data[at]!=value,(name,'control must change a byte');data[at]=value
@@ -49,6 +50,6 @@ def main():
  else:raise AssertionError('Damaged resource relocation accepted')
  result=dict(passed=True,binary_sha256=sha(binary),memory=memory,damaged_controls=cases,original_inputs=[],
   sources={n:sha(ROOT/n) for n in ['standalone/check_directory_resource_owner.py','standalone/terminal_memory.py','src/terminal/config_abi.inc']},
-  scope='Actual linked ABI/scheduling/ownership/retention bytes and eight rejected non-executable controls. Native DOS separately checks real UART quiescence and exact staged resources.')
+  scope='Actual linked ABI/scheduling/ownership/retention bytes and nine rejected non-executable controls. Native DOS separately checks real UART quiescence and exact staged resources.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS resource owner ABI/retention and',len(cases),'damaged controls')
 if __name__=='__main__':main()

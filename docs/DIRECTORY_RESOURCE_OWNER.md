@@ -1,5 +1,9 @@
 # Foreground directory resource preflight
 
+This records the initial preflight checkpoint. The later
+[actual-session binding](DIRECTORY_SESSION_BINDING.md) extends its far lease
+and revalidates the session at queue and handoff boundaries.
+
 The opt-in `--directory-resource-owner` build connects the Alt-D selection
 preview to the existing PROGRAM serial handoff. Press **R** while disconnected
 to check and stage the selected entry's KEY/KBD resources. The notice reports

@@ -1,16 +1,25 @@
 ; Test-only passive DOS/INT1C observer. No keyboard/UART writes, product hooks,
-; fake returns. Runtime data offsets come from map. CORRUPT_PROPOSAL enables
-; one declared test-only RAM fault at the actual mouse-suspend boundary.
+; fake returns. Runtime data offsets come from map. CORRUPT_PROPOSAL or
+; CORRUPT_SESSION/CORRUPT_BAUD enables one declared RAM fault at mouse suspend.
 BITS 16
 CPU 8086
 ORG 100h
 %include "owner-watch.inc"
+%ifdef CORRUPT_PROPOSAL
+%define CORRUPT_OWNER
+%endif
+%ifdef CORRUPT_SESSION
+%define CORRUPT_OWNER
+%endif
+%ifdef CORRUPT_BAUD
+%define CORRUPT_OWNER
+%endif
 %define CAPTURE_SIZE (14+2*FIELD_BYTES+1190+2*1624+14+142+4000+14)
 jmp start
 old_tick: dw 0,0
 old_dos: dw 0,0
 old_irq: dw 0,0
-%ifdef CORRUPT_PROPOSAL
+%ifdef CORRUPT_OWNER
 old_mouse: dw 0,0
 %endif
 sample: dw 0x524f,0,0,0,0,0,0
@@ -29,7 +38,7 @@ parent_mcr: db 0
 parent_pic: db 0
 directory_name: db 'PCPLUS.DIR',0
 prompt_text: db 'Press any key.',0
-%ifdef CORRUPT_PROPOSAL
+%ifdef CORRUPT_OWNER
 mouse_handler:
  pushf
  push ax
@@ -46,9 +55,17 @@ mouse_handler:
  jne .done
  cmp word [es:PROGRAM_KIND],6
  jne .done
+%ifdef CORRUPT_SESSION
+ xor byte [es:TRANSFER],1
+%else
+%ifdef CORRUPT_BAUD
+ mov word [es:ACTUAL_BAUD],38400
+%else
  add ax,FROZEN_RELATIVE
  mov es,ax
  xor byte [es:FROZEN_OFFSET+2788],1
+%endif
+%endif
  or word [cs:sample+2],8
 .done:
  pop es
@@ -350,7 +367,7 @@ start:
  int 21h
  mov [old_irq],bx
  mov [old_irq+2],es
-%ifdef CORRUPT_PROPOSAL
+%ifdef CORRUPT_OWNER
  mov ax,3533h
  int 21h
  mov [old_mouse],bx
@@ -385,7 +402,7 @@ collect:
  inc di
  loop .copy
  popf
-%ifdef CORRUPT_PROPOSAL
+%ifdef CORRUPT_OWNER
  mov dx,[es:old_mouse]
  mov ax,[es:old_mouse+2]
  push ds

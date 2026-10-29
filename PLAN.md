@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+[Actual-session preview binding](docs/DIRECTORY_SESSION_BINDING.md) now retains
+the exact694-byte session/transfer state used to calculate the selection and
+rechecks it before queueing and after UART handoff. Stale session, baseline and
+proposal inputs refuse before resource IO. This closes a prerequisite for
+adoption; translation/scripts, accounting transition, selected-state commit,
+dialing, physical/card and the full F01–F16 scope remain open.
+
 [Foreground directory resource preflight](docs/DIRECTORY_RESOURCE_OWNER.md)
 now admits a disconnected Alt-D R check through the quiesced PROGRAM owner.
 It stages KEY/KBD resources under a frozen-buffer lease without applying the

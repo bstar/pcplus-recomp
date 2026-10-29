@@ -252,6 +252,12 @@ def inspect_terminal_memory(binary,map_path):
    assert symbols[name][0]==ds and near_start<=address(name) and address(name)+owner_bytes<=near_start+near_size
   assert symbols['_directory_resources_defaults'][0]==near_code['relative_segment']
   near_call('_directory_resources_defaults','terminal_build_keymap',prefix=b'\x55\x89\xe5\x8b\x46\x06',suffix=b'\x5d\xcb')
+  assert symbols['_directory_resource_capture'][0]==symbols['terminal_session_capture_far'][0]
+  prefix=bytes.fromhex('55 89 e5 53 52 8b 46 06 8b 56 08 bb 01 00')
+  capture=symbols['terminal_session_capture_far']
+  expected=prefix+b'\x9a'+struct.pack('<HH',capture[1],capture[0])+b'\x5a\x5b\x5d\xcb'
+  assert raw('_directory_resource_capture',len(expected))==expected,'Actual session/transfer far-cdecl adapter'
+  assert address('_directory_resource_capture')+len(prefix)+3 in relocations,'Actual session/transfer relocation'
   for name in ('process_loan_begin','process_loan_end','process_loan_begin_site','process_loan_end_site'):
    assert symbols[name][0]==process,(name,'memory loan outside PROCESS_CODE')
   near_call('process_loan_begin_site','process_loan_begin',suffix=b'')
@@ -269,7 +275,8 @@ def inspect_terminal_memory(binary,map_path):
   full=(static_end+15)//16+16;critical=(critical_end+15)//16+16
   assert (full-critical)*16>=63000+494
   extra.update(directory_resource_owner_snapshot_bytes=14,directory_resource_bundle_bytes=1624,
-   directory_resource_lease_start=2788,directory_resource_lease_end=5602,
+   directory_resource_lease_start=2788,directory_resource_lease_end=6300,
+   directory_resource_actual_session_bytes=694,directory_resource_preview_binding_bytes=698,
    process_loan_full_paragraphs=full,process_loan_critical_paragraphs=critical,
    process_loan_bytes=(full-critical)*16,process_loan_code_calls_verified=True,process_child_quiet_before_trap_resume_verified=True)
  if 'terminal_phone_log_code_start' in symbols:

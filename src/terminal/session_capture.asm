@@ -179,4 +179,22 @@ _directory_preview_capture:
  pop bp
  retf
 %endif
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+; Both outputs remain in the caller's checked stack. Capture the actual
+; configuration and transfer preferences together; never project from PRM.
+global _directory_resource_capture
+_directory_resource_capture:
+ push bp
+ mov bp,sp
+ push bx
+ push dx
+ mov ax,[bp+6]
+ mov dx,[bp+8]
+ mov bx,1
+ call far terminal_session_capture_far
+ pop dx
+ pop bx
+ pop bp
+ retf
+%endif
 %endif
