@@ -24,7 +24,7 @@ def main():
   assert not any((p/'.git').exists() for p in [export,*export.parents])
   with (out/'build.log').open('w') as log:subprocess.run([sys.executable,'standalone/build_directory_scripts.py'],cwd=export,stdout=log,stderr=log,check=True)
   rebuilt=json.loads((export/'build/directory-scripts/manifest.json').read_text());assert rebuilt==m
-  for n,h in m['objects'].items():assert sha(export/'build/directory-translation'/n)==h,n
+  for n,h in m['objects'].items():assert sha(export/'build/directory-scripts'/n)==h,n
   assert sha(export/'build/directory-scripts/SCRIPTS.EXE')==m['binary_sha256']
   with (out/'test.log').open('w') as log:subprocess.run([sys.executable,'standalone/test_directory_scripts_dos.py','--output',str(export/'build/native')],cwd=export,stdout=log,stderr=log,check=True)
   tested=json.loads((export/'build/native/result.json').read_text());assert tested['passed'] and tested['case_count']==28 and tested['noninheritable_child_witness'] and tested['sources']==m['sources']
