@@ -45,6 +45,20 @@ it fingerprints the observed stream and does not lock an external writer or
 prevent a later namespace replacement. Adoption/execution must retain and check
 this identity/fingerprint before using the script.
 
+Current validation passes 33 actual application DOS workflows and 28 component
+DOS workflows with 1,002 assertions. Fifteen linked CLI cases, 35 linked
+retirement/setup cases and 15 rejected damaged linkage controls pass. The five
+accounting/recovery workflows, nested compilation followed by scrollback, and
+stock ENiGMA login/editor/preview pass on this exact application binary.
+
+Committed source at `68311de` reproduces all ten package files from 774 declared
+sources without ancestor Git metadata or original binary inputs. A separate
+42-file committed export reproduces the component executable and all 17 objects,
+then repeats its 28 DOS workflows. All six earlier control executables remain
+byte for byte identical. Both proofs exclude the pending telephone-log work.
+Near storage is 65,344 bytes, resident CS has 240 spare bytes and module retention
+is 413,472 bytes. Both 63,000-byte histories and the 8 KiB stack are preserved.
+
 The [receipt](validation/directory-script-resources.json) binds the exact application,
 component, proofs and tests. The component uses real DOS IO with explicitly
 identified fault adapters and a separate Python zlib CRC oracle. It covers

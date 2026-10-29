@@ -1,0 +1,1874 @@
+{
+  "passed": true,
+  "binary_sha256": "de268313a1db01adc4424ac6294035f73afb8fd6d69251a35940922cd6ccdfe8",
+  "package": "build/special-directory-scripts-final-20261029/PCPLUSSE",
+  "package_manifest_sha256": "675a6f9c084a7f140650f4fb0ac115f1a29a87320ca76e9ff878fbf13cea0dae",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "9195773501ebfde765077387fd01f9bb8065d88b1c91a8f09da05663e019a0f8",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "de268313a1db01adc4424ac6294035f73afb8fd6d69251a35940922cd6ccdfe8",
+    "VERSION.TXT": "a2f72e27d51aed19b1514e64560682cd2554ef0fcaf1cd9e90742cdfca66e724",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "source_base_commit": "1162c1cf1b2b3ba1628f61c044e21bef560521bd",
+  "source_files": 774,
+  "original_inputs": [],
+  "application_workflows": [
+    {
+      "case": "valid-directory-pair-profile6",
+      "passed": true,
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59933,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "invalid-KBD-no-publication",
+      "passed": true,
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 9,
+      "content_opens": 1,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        8,
+        59933,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        8,
+        6,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "invalid-KEY-no-publication",
+      "passed": true,
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        9,
+        59933,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        9,
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "missing-bindings-reset-defaults",
+      "passed": true,
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59933,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "reference-parent-releases-whole-popup",
+      "passed": true,
+      "observer_ticks": 178,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59933,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "browser-parent-releases-whole-popup",
+      "passed": true,
+      "observer_ticks": 184,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59933,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "proposal-corrupted-after-queue-before-UART-stage",
+      "passed": true,
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 0,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        4,
+        0,
+        59933,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "actual-transfer-changed-after-queue-before-resource-read",
+      "passed": true,
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 0,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        4,
+        0,
+        59933,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": true,
+      "hardware_restored": true
+    },
+    {
+      "case": "actual-DTE-changed-after-queue-before-resource-read",
+      "passed": true,
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 0,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        4,
+        0,
+        59933,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": true,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-current-default",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        51741,
+        23531,
+        20992,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-PCPLUS-default",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 21,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        51741,
+        23531,
+        20992,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-original-CLI-overrides-mode2",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        51741,
+        56298,
+        20992,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-missing-required",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        6,
+        51741,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-truncated",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        12,
+        51741,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        12,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-suffixed",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        12,
+        51741,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        12,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-invalid-current-no-fallback",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        12,
+        51741,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        12,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-directory-no-fallback",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        6,
+        51741,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        6,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-mode2-no-read",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        43549,
+        56298,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-mode0-no-read",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59933,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-current-ASX",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59084,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-environment-ASX-before-current-ASP",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 21,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59084,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-current-ASP-needs-compiler",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 21,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59084,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-environment-ASP-needs-compiler",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 25,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59084,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-bad-header-no-fallback",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 18,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        13,
+        59084,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        13,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-over64KiB",
+      "passed": true,
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 403,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59084,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-missing",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 8,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        6,
+        59084,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-qualified",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        42007,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-empty-ASX",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 18,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        13,
+        59084,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        13,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-empty-ASP-needs-compiler",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 20,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59084,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-blank",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59933,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-directory-no-fallback",
+      "passed": true,
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        6,
+        59084,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        6,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-capture-preserved",
+      "passed": true,
+      "observer_ticks": 312,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        59084,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-capture-conflict",
+      "passed": true,
+      "observer_ticks": 312,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        7,
+        59084,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        7,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    }
+  ],
+  "application_case_count": 33,
+  "component_workflows": [
+    {
+      "case": "blank-script",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 3,
+      "closes": 3,
+      "script_reads": 0,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "compiled",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "compiled-over64KiB",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 386,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "header128",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "bad-header-no-ASP-fallback",
+      "passed": true,
+      "native_assertions": 34,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 1,
+      "held": false,
+      "status": 13,
+      "detail": 4
+    },
+    {
+      "case": "empty-compiled",
+      "passed": true,
+      "native_assertions": 34,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 1,
+      "held": false,
+      "status": 13,
+      "detail": 4
+    },
+    {
+      "case": "fragmented-reads",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 7,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "current-ASP",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "PCPLUS-ASP",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "PCPLUS-ASX-before-current-ASP",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "qualified-script",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "missing-script",
+      "passed": true,
+      "native_assertions": 35,
+      "content_opens": 0,
+      "closes": 0,
+      "script_reads": 0,
+      "held": false,
+      "status": 6,
+      "detail": 0
+    },
+    {
+      "case": "empty-source-needs-compiler",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 1,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "script-open-error",
+      "passed": true,
+      "native_assertions": 34,
+      "content_opens": 4,
+      "closes": 3,
+      "script_reads": 0,
+      "held": false,
+      "status": 13,
+      "detail": 2
+    },
+    {
+      "case": "script-read-error",
+      "passed": true,
+      "native_assertions": 34,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 13,
+      "detail": 3
+    },
+    {
+      "case": "script-close-still-open",
+      "passed": true,
+      "native_assertions": 40,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": true,
+      "status": 13,
+      "detail": 6
+    },
+    {
+      "case": "script-close-already-closed",
+      "passed": true,
+      "native_assertions": 37,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": true,
+      "status": 13,
+      "detail": 6
+    },
+    {
+      "case": "fixed-script-claim",
+      "passed": true,
+      "native_assertions": 37,
+      "content_opens": 0,
+      "closes": 0,
+      "script_reads": 0,
+      "held": false,
+      "status": 7,
+      "detail": 0
+    },
+    {
+      "case": "release-error",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": true,
+      "status": 10,
+      "detail": 0
+    },
+    {
+      "case": "CWD-drift",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "bad-stored-name",
+      "passed": true,
+      "native_assertions": 35,
+      "content_opens": 0,
+      "closes": 0,
+      "script_reads": 0,
+      "held": false,
+      "status": 1,
+      "detail": 0
+    },
+    {
+      "case": "malformed-environment-current-ASP",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "oversized-read-count",
+      "passed": true,
+      "native_assertions": 34,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 1,
+      "held": false,
+      "status": 13,
+      "detail": 5
+    },
+    {
+      "case": "failed-second-stage-preserves-first",
+      "passed": true,
+      "native_assertions": 38,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "absolute-script",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 4,
+      "closes": 4,
+      "script_reads": 2,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "space-blank-script",
+      "passed": true,
+      "native_assertions": 36,
+      "content_opens": 3,
+      "closes": 3,
+      "script_reads": 0,
+      "held": false,
+      "status": 0,
+      "detail": 0
+    },
+    {
+      "case": "directory-ASX-no-ASP-fallback",
+      "passed": true,
+      "native_assertions": 35,
+      "content_opens": 0,
+      "closes": 0,
+      "script_reads": 0,
+      "held": false,
+      "status": 6,
+      "detail": 0
+    },
+    {
+      "case": "script-metadata-error",
+      "passed": true,
+      "native_assertions": 35,
+      "content_opens": 0,
+      "closes": 0,
+      "script_reads": 0,
+      "held": false,
+      "status": 6,
+      "detail": 0
+    }
+  ],
+  "component_case_count": 28,
+  "component_native_assertions": 1002,
+  "CRC_oracle": "Python zlib.crc32 over whole selected file including header",
+  "largest_script_bytes": 98305,
+  "noninheritable_child_witness": true,
+  "linked_CLI_cases": 15,
+  "linked_retirement_cases": 35,
+  "damaged_ABI_controls": [
+    {
+      "case": "defaults-caller-word",
+      "rejected": true,
+      "sha256": "bdebea4d0772cfdb818c795d57f3842f21b34d9033b55dc5b128c87b252b2c92"
+    },
+    {
+      "case": "keymap-forwarded-word",
+      "rejected": true,
+      "sha256": "83e051dcf1d8bbaf65c832a85fb3031346bfe0f74a2d84c4dbfc867388cb6951"
+    },
+    {
+      "case": "wrong-PROGRAM-kind",
+      "rejected": true,
+      "sha256": "c785ffa1241894a1179326e5569c6f1d0be17d1c71967dc1e0e7efa1dd3de6d6"
+    },
+    {
+      "case": "reversed-resource-EXEC-condition",
+      "rejected": true,
+      "sha256": "01dfe2cc3bd6c074f330653d909340b243efdbfc4a35d4af1f8b8edad6c3df8d"
+    },
+    {
+      "case": "wrong-loan-restore-call",
+      "rejected": true,
+      "sha256": "30b9dd2145c5a224b16fdf5342a1943627861caca5d8759d9a3b4620ddeb16c0"
+    },
+    {
+      "case": "wrong-child-UART-quiet-call",
+      "rejected": true,
+      "sha256": "21f6f34a4c4af40be114b0f7f1551e0755e6c00d828f34b9791efb1be68c4f6e"
+    },
+    {
+      "case": "wrong-actual-transfer-caller-word",
+      "rejected": true,
+      "sha256": "9fabb7993b28c4d363acd67ed88d457fc9d7e5189207cf593d9deed61155491d"
+    },
+    {
+      "case": "wrong-critical-retention-store",
+      "rejected": true,
+      "sha256": "182c197354f7b88c2cbec4d63e2e31f0f49bab5a9cd99cbc5dca3a75a085149b"
+    },
+    {
+      "case": "missing-resource-EXEC-relocation",
+      "rejected": true,
+      "sha256": "8fb677ec0059be430d50a197b30a911c87632248ab1d6f22deb26d9ecdf15719"
+    }
+  ],
+  "damaged_retirement_controls": [
+    {
+      "case": "wrong-retirement-kind",
+      "rejected": true
+    },
+    {
+      "case": "wrong-setup-kind",
+      "rejected": true
+    },
+    {
+      "case": "wrong-flush-target",
+      "rejected": true
+    },
+    {
+      "case": "wrong-poll-target",
+      "rejected": true
+    },
+    {
+      "case": "wrong-frozen-setup-target",
+      "rejected": true
+    },
+    {
+      "case": "missing-poll-relocation",
+      "rejected": true
+    }
+  ],
+  "retirement_native_cases": [
+    {
+      "case": "normal",
+      "passed": true
+    },
+    {
+      "case": "counter-wrap",
+      "passed": true
+    },
+    {
+      "case": "capture-preserved",
+      "passed": true
+    },
+    {
+      "case": "existing-backup",
+      "passed": true
+    },
+    {
+      "case": "installed-cleanup-error",
+      "passed": true
+    }
+  ],
+  "memory": {
+    "near_bytes": 65344,
+    "near_spare_bytes": 192,
+    "near_relative_segment": 12589,
+    "far_relative_segment": 17423,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 17935,
+    "history_bytes": 63000,
+    "far_end_linear": 349960,
+    "stack_end_linear": 266768,
+    "loaded_module_bytes": 234304,
+    "minimum_allocated_module_bytes": 413472,
+    "retained_parent_paragraphs": 25858,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 21873,
+    "snapshot_image_offset": 61000,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 412968,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 16673,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 266768,
+        "end_linear": 270768
+      },
+      "ed_screen": {
+        "relative_segment": 16673,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 270768,
+        "end_linear": 274768
+      },
+      "program_screen": {
+        "relative_segment": 16673,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 266768,
+        "end_linear": 270768
+      },
+      "redisplay_live": {
+        "relative_segment": 16673,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 270768,
+        "end_linear": 274768
+      },
+      "redisplay_view": {
+        "relative_segment": 16673,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 274768,
+        "end_linear": 278768
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "program_browser_screen_overlay": true,
+    "editor_viewer_screen_overlay": true,
+    "snapshot_history_tail_overlay": true,
+    "snapshot_history_bytes_reclaimed": 2000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 412968,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 21873,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 413462,
+    "resident_CS_extent_bytes": 65296,
+    "resident_CS_spare_bytes": 240,
+    "substitute_native_bytes_verified": 53,
+    "substitute_native_dependencies_verified": 4,
+    "substitute_state_words_verified": 4,
+    "far_usage_bytes": 1493,
+    "far_usage_segment": 10701,
+    "far_usage_DS_restore_verified": true,
+    "directory_view_code_bytes": 5862,
+    "directory_view_FS_callbacks_verified": 3,
+    "directory_view_scratch_offset": 3141,
+    "directory_view_scratch_bytes": 512,
+    "directory_view_snapshot_page_bytes": 2788,
+    "directory_preview_proposal_bytes": 1190,
+    "directory_preview_snapshot_bytes": 3978,
+    "directory_preview_capture_policy": 1,
+    "directory_preview_capture_adapter_verified": true,
+    "directory_translation_layout_verified": true,
+    "directory_script_fingerprint_bytes": 12,
+    "directory_resource_cli_far_splash_bytes": 377,
+    "directory_resource_cli_snapshot_bytes": 202,
+    "directory_resource_cli_startup_order_verified": true,
+    "directory_resource_owner_snapshot_bytes": 14,
+    "directory_resource_bundle_bytes": 2024,
+    "directory_resource_lease_start": 2788,
+    "directory_resource_lease_end": 6700,
+    "directory_resource_actual_session_bytes": 694,
+    "directory_resource_preview_binding_bytes": 698,
+    "directory_account_canonical_identity_callbacks_verified": 1,
+    "process_loan_full_paragraphs": 25858,
+    "process_loan_critical_paragraphs": 21889,
+    "process_loan_bytes": 63504,
+    "process_loan_code_calls_verified": true,
+    "process_child_quiet_before_trap_resume_verified": true,
+    "directory_retirement_snapshot_bytes": 10,
+    "directory_retirement_poll_before_PROGRAM_verified": true,
+    "directory_frozen_setup_tail_bytes": 68,
+    "directory_frozen_setup_executable_bytes": 64,
+    "process_bank_bytes": 903,
+    "process_bridge_pairs_verified": 1,
+    "process_near_entry_bytes": 22,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "recording_matcher_lead_site": 38880,
+    "recording_rx_far_call_sites": [
+      38883,
+      15124
+    ],
+    "recording_rx_callback_site": 108717,
+    "recording_actor_guard_sites": [
+      15124,
+      15523,
+      25483,
+      29534,
+      36682,
+      39209,
+      168536,
+      169637,
+      172728
+    ],
+    "recording_UI_boundary_sites": [
+      194328,
+      195882,
+      108671
+    ],
+    "recording_UI_optimized_sites": [],
+    "recording_tx_origin_bytes": 128,
+    "recording_tx_origin_start": 110951,
+    "recording_tx_far_call_sites": [
+      39679,
+      36999,
+      40561,
+      25000
+    ],
+    "recording_tx_callback_site": 110942,
+    "recording_terminal_state_bytes": 392,
+    "recording_terminal_bank_functions_verified": 9,
+    "recording_terminal_far_call_sites": [
+      23450,
+      24386
+    ],
+    "recorder_code_literal_bytes_verified": 223,
+    "recorder_code_literal_sites": [
+      161586,
+      161603,
+      161617,
+      161637,
+      161657,
+      161663,
+      161683,
+      161714,
+      161799
+    ],
+    "recording_bank_functions_verified": 14,
+    "recording_resident_callbacks_verified": 9,
+    "recording_adapter_far_call_sites": [
+      60441,
+      60465,
+      60489
+    ],
+    "capture_reservation_far_bindings_verified": 2,
+    "capture_reservation_far_call_sites": [
+      58316,
+      160655
+    ],
+    "capture_reservation_initialized_bytes": 8,
+    "command_menu_banked_call_sites": [
+      130441,
+      130556,
+      131083
+    ],
+    "command_menu_code_segment": 11524,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "directory_storage_snapshot_bytes": 222,
+    "directory_storage_callbacks_verified": 3,
+    "directory_storage_EXEC_gate_verified": true,
+    "configuration_bridge_pairs_verified": 102,
+    "transfer_ui_far_entries_verified": 4,
+    "transfer_ui_resident_callbacks_verified": 3,
+    "redisplay_bridge_pairs_verified": 4,
+    "viewer_live_plane_admission_verified": true,
+    "scroll_field_bridge_pairs_verified": 3,
+    "line_preflight_far_calls_verified": 2,
+    "wide_character_far_calls_verified": 2,
+    "wide_character_prepare_far_calls_verified": 1,
+    "script_window_keyboard_far_adapters_verified": true,
+    "aspect_command_preflight_verified": true,
+    "aspect_viewport_lease_words_verified": 3,
+    "protected_erase_far_bridge_verified": true,
+    "protected_erase_native_dependencies_verified": 4,
+    "erase_after_projection_initially_idle": true,
+    "wide_clear_rectangle_route_verified": true,
+    "alternate_output_far_bridge_verified": true,
+    "alternate_output_native_dependencies_verified": 4,
+    "source_owned_output_table_bytes": 256,
+    "aspect_far_services_verified": 17,
+    "aspect_resident_far_references_verified": 21,
+    "aspect_controller_read_references_verified": 1,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 50,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_controller_references_verified": 5,
+    "line_attribute_video_callbacks_verified": 2,
+    "line_controller_entry_pairs_verified": 4,
+    "line_controller_register_callbacks_verified": 3,
+    "line_controller_code_bytes": 421,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "mouse_bridge_pairs_verified": 10,
+    "mouse_code_bytes": 3065,
+    "mouse_shared_native_state_bytes": 28,
+    "resident_code_bytes": 65296,
+    "resident_code_spare_bytes": 240,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65296
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4081,
+        "offset": 0,
+        "bytes": 12908
+      },
+      {
+        "name": "PROCESS_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4888,
+        "offset": 0,
+        "bytes": 903
+      },
+      {
+        "name": "HOOK_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4945,
+        "offset": 0,
+        "bytes": 27366
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6656,
+        "offset": 0,
+        "bytes": 61805
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10519,
+        "offset": 0,
+        "bytes": 2900
+      },
+      {
+        "name": "USAGE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10701,
+        "offset": 0,
+        "bytes": 1493
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10795,
+        "offset": 0,
+        "bytes": 1461
+      },
+      {
+        "name": "SPLASH_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10887,
+        "offset": 0,
+        "bytes": 377
+      },
+      {
+        "name": "TRAP_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10911,
+        "offset": 0,
+        "bytes": 864
+      },
+      {
+        "name": "MOUSE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10965,
+        "offset": 0,
+        "bytes": 3065
+      },
+      {
+        "name": "DIRECTORY_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11157,
+        "offset": 0,
+        "bytes": 5862
+      },
+      {
+        "name": "REFERENCE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11524,
+        "offset": 0,
+        "bytes": 17029
+      }
+    ],
+    "far_code_bridge_pairs_verified": 169
+  },
+  "enigma_checks": {
+    "harness": true,
+    "semantic_audit": true,
+    "exact_screen": true,
+    "proxy_source_unchanged": true,
+    "product_source_unchanged": true,
+    "directory_prompt_and_loading": true,
+    "directory_first_and_last_pages": true,
+    "no_private_directory_fields": true,
+    "directory_preview_observed": true,
+    "preview_target_and_DTE": true,
+    "preview_privacy": true,
+    "online_resource_check_refused": true,
+    "resource_check_key_stayed_local": true
+  },
+  "control_binaries": [
+    {
+      "variant": "terminal",
+      "flags": {},
+      "expected_sha256": "bd86a10b94544007242d2ce6bb737be5ab90909d4fcf2bac8713120d2b2ffa10",
+      "sha256": "bd86a10b94544007242d2ce6bb737be5ab90909d4fcf2bac8713120d2b2ffa10",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-directory-storage-276a15011380",
+      "flags": {
+        "custom_irq": true,
+        "directory_storage": true
+      },
+      "expected_sha256": "4c23fa0750e65c857435d5d587cbeba30a0fe42a85da9951bc15e61352c1f589",
+      "sha256": "4c23fa0750e65c857435d5d587cbeba30a0fe42a85da9951bc15e61352c1f589",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-resource-cli-80b5a4c35d40",
+      "flags": {
+        "custom_irq": true,
+        "directory_resource_cli": true
+      },
+      "expected_sha256": "a89f4382bc01fec3c62cc20e42e2bdd15ba77c78ee86bd05021d953be5ad9869",
+      "sha256": "a89f4382bc01fec3c62cc20e42e2bdd15ba77c78ee86bd05021d953be5ad9869",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-resource-owner-f8838a85007e",
+      "flags": {
+        "custom_irq": true,
+        "directory_resource_owner": true
+      },
+      "expected_sha256": "e718b0bce67cd0fb86b7f8ca049a3ae429e13a7b6ea1033ce2fb012450cbdbbe",
+      "sha256": "e718b0bce67cd0fb86b7f8ca049a3ae429e13a7b6ea1033ce2fb012450cbdbbe",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-directory-retirement-e05c11cbe77f",
+      "flags": {
+        "custom_irq": true,
+        "directory_retirement": true
+      },
+      "expected_sha256": "fb36d39ecc4beaeb7a7ae3c1fd07eb2fe31c949516324b8f71962f30e6fa1e91",
+      "sha256": "fb36d39ecc4beaeb7a7ae3c1fd07eb2fe31c949516324b8f71962f30e6fa1e91",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-directory-translation-0e0e358e40f5",
+      "flags": {
+        "custom_irq": true,
+        "directory_translation": true
+      },
+      "expected_sha256": "473418b7b869d8047957db1439e28ab990493303f379ece9656d39631d589336",
+      "sha256": "473418b7b869d8047957db1439e28ab990493303f379ece9656d39631d589336",
+      "unchanged": true
+    }
+  ],
+  "committed_source_proofs": {
+    "package_proof": {
+      "source_commit": "68311de66df89e93a13ee47d215fc804888db812",
+      "source_files": 774,
+      "ancestor_git_unavailable": true,
+      "exact": true,
+      "objects": 0
+    },
+    "component_proof": {
+      "source_commit": "68311de66df89e93a13ee47d215fc804888db812",
+      "source_files": 42,
+      "ancestor_git_unavailable": true,
+      "exact": true,
+      "objects": 17
+    }
+  },
+  "evidence": {
+    "application": {
+      "path": "build/directory-scripts-native-final-20261029/result.json",
+      "sha256": "f373d5a6bb886e7426ea99ee81167046567894d4cb0d8770d09ac343ca9e765e"
+    },
+    "component": {
+      "path": "build/directory-scripts-component-final-20261029/result.json",
+      "sha256": "c2dd3d3e51ede631629925def9afc299eab264bba9735d52f3be576acc1fde56"
+    },
+    "CLI": {
+      "path": "build/directory-scripts-cli-final-20261029/result.json",
+      "sha256": "2164f4aeb3cb911f34dd5f517286617403ddbe3474491e5354694f5a56f515ea"
+    },
+    "ABI": {
+      "path": "build/directory-scripts-linked-final-20261029/result.json",
+      "sha256": "860f93f421ed3004b2c54e1724b75a42caee260e0a335b89786dbf9f41ca4082"
+    },
+    "retirement_linked": {
+      "path": "build/directory-scripts-retirement-linked-final-20261029/result.json",
+      "sha256": "72464c411babeb26a6848322c9b63730fa634c27a0a1bb31a4ce46e19b4fcefb"
+    },
+    "retirement_native": {
+      "path": "build/directory-scripts-retirement-native-final-20261029/result.json",
+      "sha256": "a22c3ed6241f424eeaa0072da1616a6732d905b7fc875b4abfea5c34bfea8d44"
+    },
+    "nested": {
+      "path": "build/directory-scripts-nested-final-20261029/result.json",
+      "sha256": "3f82b493087af47d649ab3d1996e5cc5ca8f01dd41b13105616d2f7a5e56447e"
+    },
+    "enigma": {
+      "path": "build/bbs-lab/results/enigma/directory_scripts_final_20261029/proxy-integration.json",
+      "sha256": "73849e7fa5d3c7d29a2be88fec6f13c18a5ef087f02001fd951901d58b57b22b"
+    },
+    "controls": {
+      "path": "build/directory-scripts-controls-final-20261029/result.json",
+      "sha256": "7181cfbf990293f9ae3ecafb772cb116444ab1caf8e931d8ff4ecc37ccb1d74d"
+    },
+    "package_proof": {
+      "path": "build/directory-scripts-package-proof-final-20261029/result.json",
+      "sha256": "6adc9397e28f30c81f208dab351e748a1d46f41cd66d42bda18d9373b4a967c9"
+    },
+    "component_proof": {
+      "path": "build/directory-scripts-component-proof-final-20261029/result.json",
+      "sha256": "c7e16c41227f32ec6192474cf922ab24750c1c5b6f5bc439b72d5617ce2ec11d"
+    }
+  },
+  "earlier_failures": [
+    {
+      "path": "build/directory-scripts-native-20261029.log",
+      "reason": "The application correctly chose current ASP; the new environment-ASX fixture had not set PCPLUS. Corrected fixture passes in the final run.",
+      "excluded_from_pass_counts": true
+    },
+    {
+      "path": "build/directory-scripts-committed-component-20261029.log",
+      "reason": "Proof checker retained the old object-output folder. Corrected in68311de; final committed export passes.",
+      "excluded_from_pass_counts": true
+    }
+  ],
+  "directory_source_compilation_complete": false,
+  "live_selection_adoption_complete": false,
+  "full_application_complete": false,
+  "physical_acceptance": false,
+  "card_written": false,
+  "limitations": [
+    "Preflight stages a path/fingerprint, not script body bytes. Header checking is not full bytecode validation. SOURCE candidates require compilation before adoption.",
+    "Compiler-output ownership, launch-time fingerprint checks, selected-state/resource publication and dialing remain open.",
+    "CRC32 fingerprints the observed stream; it does not establish authenticity or lock external writers/namespace replacement.",
+    "Component faults are explicit diagnostic adapters; damaged analysis executables are inspected only.",
+    "ENiGMA exact_screen checks frame size/markers, not an independent full character/attribute oracle.",
+    "Proxy evidence is isolated software; no physical CTS, SIP, DSP, analog or card acceptance.",
+    "Full F01-F16 remains open."
+  ]
+}
