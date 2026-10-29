@@ -34,7 +34,11 @@ xlt_dos_status __cdecl xlt_dos_read(const char *path,
  int handle;
  if(!valid(path,destination,result))return XLT_DOS_ARGUMENT;
  memset(r,0,sizeof(*r));
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+ error=xlt_fs_open(path,O_RDONLY|0x80,&handle);
+#else
  error=xlt_fs_open(path,O_RDONLY,&handle);
+#endif
  if(error){fail(r,XLT_DOS_OPEN,error);return r->status;}
  while(!r->status && done<XLT_TABLE_SIZE){
   count=0;error=xlt_fs_read(handle,stage+done,XLT_TABLE_SIZE-done,&count);

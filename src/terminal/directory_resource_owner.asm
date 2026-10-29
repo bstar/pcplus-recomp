@@ -47,8 +47,13 @@ _directory_retire_flush:
 SEGMENT _DATA public class=DATA use16
 directory_resource_command: db '[DIRECTORY]',0
 global directory_resources_ready_notice,directory_resources_failed_notice
+%ifdef DIRECTORY_TRANSLATION_RESOURCES
+directory_resources_ready_notice: db 13,10,'KEY/KBD/XLT resources checked. Settings unchanged. Press any key.',0
+directory_resources_failed_notice: db 13,10,'Could not prepare KEY/KBD/XLT resources. Settings unchanged. Press any key.',0
+%else
 directory_resources_ready_notice: db 13,10,'KEY/KBD resources checked. Settings unchanged. Press any key.',0
 directory_resources_failed_notice: db 13,10,'Could not prepare KEY/KBD resources. Settings unchanged. Press any key.',0
+%endif
 %ifdef TERMINAL_DIRECTORY_RETIREMENT
 directory_retire_command: db '[ACCOUNT]',0
 global directory_retire_failed_notice

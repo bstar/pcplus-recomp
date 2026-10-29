@@ -3,15 +3,25 @@
 #include "../config/resource_path.h"
 #include "../capture/capture_file.h"
 #include "../capture/capture_fs.h"
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+#include "../translation/xlt_dos.h"
+#endif
 #include <dos.h>
 #include <string.h>
 #ifndef KEY_RESOURCE_PRIVATE_READS
 #error Directory resources require non-inheritable KEY/KBD readers
 #endif
 typedef char dr_word_abi[sizeof(unsigned)==2?1:-1];
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+typedef char dr_request_abi[sizeof(directory_resource_request)==314?1:-1];
+typedef char dr_bundle_abi[sizeof(directory_resource_bundle)==1948?1:-1];
+typedef char dr_snapshot_abi[sizeof(directory_resource_snapshot)==206?1:-1];
+const unsigned directory_translation_layout[5]={314,1948,206,202,6624};
+#else
 typedef char dr_request_abi[sizeof(directory_resource_request)==248?1:-1];
 typedef char dr_bundle_abi[sizeof(directory_resource_bundle)==1624?1:-1];
 typedef char dr_snapshot_abi[sizeof(directory_resource_snapshot)==142?1:-1];
+#endif
 directory_resource_snapshot directory_resource_result;
 static unsigned cookie=0xd620;
 static unsigned long linear(const void __far *p)
@@ -75,7 +85,11 @@ static unsigned lookup(unsigned psp,const char *leaf,char *out)
 static unsigned __far __cdecl reserved(const char *identity,void *context)
 {
  if(context!=&directory_resource_result)return 1;
- return !strcmp(identity,directory_resource_result.keyboard_path) || !strcmp(identity,directory_resource_result.actions_path);
+ return !strcmp(identity,directory_resource_result.keyboard_path) || !strcmp(identity,directory_resource_result.actions_path)
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+  || !strcmp(identity,directory_resource_result.translation_path)
+#endif
+ ;
 }
 unsigned __cdecl directory_resources_stage(const directory_resource_request *request,
  const unsigned char *defaults,directory_resource_bundle __far *output)
@@ -83,12 +97,29 @@ unsigned __cdecl directory_resources_stage(const directory_resource_request *req
  directory_resource_bundle stage;
  directory_resource_snapshot *r=&directory_resource_result;
  keymap_dos_result kbd;key_actions_dos_result key;
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+ xlt_dos_result xlt;
+ const unsigned allowed_mask=512U|4096U|16384U;
+#endif
  char keyboard[13],actions[13];unsigned status,i,j,claim=0;
  status=available();if(status)return status;
  if(!external(request,sizeof(*request)) || !external(defaults,948) || !external(output,sizeof(*output)) ||
   !separate(request,sizeof(*request),defaults,948) || !separate(request,sizeof(*request),output,sizeof(*output)) ||
   !separate(defaults,948,output,sizeof(*output)))return DR_ARGUMENT;
- if((request->profile!=4 && request->profile!=6) || (request->cli_mask&~(512U|4096U)))return DR_ARGUMENT;
+ if((request->profile!=4 && request->profile!=6) || (request->cli_mask&~(
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+  allowed_mask
+#else
+  512U|4096U
+#endif
+ )))return DR_ARGUMENT;
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+ if(request->translation_mode>2)return DR_ARGUMENT;
+ if(request->cli_mask&16384){
+  for(j=0;j<64 && request->cli_translation[j];++j){}
+  if(j==64 || !absolute(request->cli_translation))return DR_ARGUMENT;
+ }
+#endif
  /* Fixed-size request fields must be terminated before the path validator. */
  for(i=0;i<2;++i){
   const char *path=i?request->cli_actions:request->cli_keyboard;
@@ -122,8 +153,23 @@ unsigned __cdecl directory_resources_stage(const directory_resource_request *req
   if(status==2)goto resolved;
   if(status==1)stage.actions_source=DR_DEFAULT;
  }
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+ stage.translation_mode=request->cli_mask&16384?1:request->translation_mode;
+ if(stage.translation_mode==1){
+  if(request->cli_mask&16384){
+   status=inspect(request->cli_translation,stage.translation_path);stage.translation_source=DR_CLI;
+  }else status=lookup(request->psp,"PCPLUS.XLT",stage.translation_path);
+  if(status==1){r->status=DR_LOOKUP;r->dos_error=2;}
+  if(status)goto resolved;
+ }
+ memcpy(r->translation_path,stage.translation_path,64);
+#endif
  memcpy(r->keyboard_path,stage.keyboard_path,64);memcpy(r->actions_path,stage.actions_path,64);
- if(stage.keyboard_path[0] || stage.actions_path[0]){
+ if(stage.keyboard_path[0] || stage.actions_path[0]
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+  || stage.translation_path[0]
+#endif
+ ){
   r->claim_status=capture_file_reserve(reserved,r);
   if(r->claim_status){r->status=DR_CLAIM;goto resolved;}
   claim=1;
@@ -138,6 +184,13 @@ unsigned __cdecl directory_resources_stage(const directory_resource_request *req
   if(status){r->status=DR_ACTIONS;r->source_status=status;r->dos_error=key.dos_error;r->close_error=key.close_error;goto finished;}
   stage.mask|=4096;
  }
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+ if(stage.translation_path[0]){
+  status=xlt_dos_read(stage.translation_path,stage.translation,&xlt);
+  if(status){r->status=DR_TRANSLATION;r->source_status=status;r->dos_error=xlt.dos_error;r->close_error=xlt.close_error;goto finished;}
+  stage.mask|=16384;
+ }
+#endif
 finished:
  if(r->close_error){r->state=DR_HELD;return r->status;}
  if(claim){r->release_status=capture_file_release(reserved,r);if(r->release_status){r->state=DR_HELD;if(!r->status)r->status=DR_RELEASE;return r->status;}}

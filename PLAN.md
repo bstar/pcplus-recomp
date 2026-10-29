@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+[Directory translation staging](docs/DIRECTORY_TRANSLATION.md) extends the
+opt-in resource transaction to KEY/KBD/XLT, retains original CLI /X identity
+across CWD changes, and preserves the whole bundle on any read/close failure.
+It keeps both history allocations and the existing stack. Selected entry/XLT
+owner publication, script staging, dialing and full application acceptance
+remain open.
+
 [Offline accounting retirement](docs/DIRECTORY_RETIREMENT.md) now uses an
 opt-in quiesced PROGRAM worker after disconnect, preserving pending/recovery
 ownership and reconciling installed statistics into logical/setup contexts.

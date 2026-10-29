@@ -29,6 +29,7 @@ parser.add_argument('--directory-view',action='store_true',help='Serviced read-o
 parser.add_argument('--directory-preview',action='store_true',help='Validate and preview an Alt-D selection; implies --directory-view; adoption remains pending')
 parser.add_argument('--directory-storage',action='store_true',help='Shared directory persistence claims and EXEC recovery gate; implies --directory-preview')
 parser.add_argument('--directory-resource-cli',action='store_true',help='Bind original CLI keyboard resource identities before directory startup; implies --directory-storage')
+parser.add_argument('--directory-translation',action='store_true',help='Stage translation with KEY/KBD before selection adoption; implies --directory-retirement')
 parser.add_argument('--directory-retirement',action='store_true',help='Save pending statistics through a quiesced PROGRAM owner after disconnect; implies --directory-resource-owner')
 parser.add_argument('--directory-resource-owner',action='store_true',help='Quiesced KEY/KBD preflight from directory preview R; implies --directory-resource-cli')
 parser.add_argument('--phone-log-bank',action='store_true',help='Link the checked logger code bank; event/startup integration remains disabled')
@@ -38,6 +39,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.directory_translation:args.directory_retirement=True
 if args.directory_retirement:args.directory_resource_owner=True
 if args.directory_resource_owner:args.directory_resource_cli=True
 if args.directory_resource_owner:assert not args.native_reset_bank,'Frozen EXEC loans require the independent live ring; native reset overlay is a separate ownership variant'
@@ -120,6 +122,7 @@ if args.directory_storage:out_name='terminal-directory-storage-'+hashlib.sha256(
 if args.directory_resource_cli:out_name='terminal-resource-cli-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_resource_owner:out_name='terminal-resource-owner-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_retirement:out_name='terminal-directory-retirement-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
+if args.directory_translation:out_name='terminal-directory-translation-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
 if args.native_reset_transaction:out_name+='-transaction'
@@ -232,6 +235,7 @@ for index,source in enumerate(sources):
  if args.directory_resource_cli:options+=['-DTERMINAL_DIRECTORY_RESOURCE_CLI']
  if args.directory_resource_owner:options+=['-DTERMINAL_DIRECTORY_RESOURCE_OWNER']
  if args.directory_retirement:options+=['-DTERMINAL_DIRECTORY_RETIREMENT']
+ if args.directory_translation:options+=['-DDIRECTORY_TRANSLATION_RESOURCES']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
@@ -419,6 +423,7 @@ for source in c_sources:
  if args.directory_resource_cli:options+=['-dTERMINAL_DIRECTORY_RESOURCE_CLI']
  if args.directory_resource_owner:options+=['-dTERMINAL_DIRECTORY_RESOURCE_OWNER']
  if args.directory_retirement:options+=['-dTERMINAL_DIRECTORY_RETIREMENT']
+ if args.directory_translation:options+=['-dDIRECTORY_TRANSLATION_RESOURCES']
  if args.directory_resource_owner and source.name in ('directory_resources.c','keymap_dos.c','key_actions_dos.c'):options+=['-dKEY_RESOURCE_PRIVATE_READS']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
@@ -525,6 +530,8 @@ manifest['experimental_directory_storage']=args.directory_storage
 manifest['experimental_directory_resource_cli']=args.directory_resource_cli
 manifest['experimental_directory_resource_owner']=args.directory_resource_owner
 manifest['experimental_directory_retirement']=args.directory_retirement
+manifest['experimental_directory_translation']=args.directory_translation
+if args.directory_translation:manifest['limitations'].append('Preview R stages XLT with KEY/KBD as one far bundle, retaining original CLI /X identity. No active translation, selected entry, script or dialing is published.')
 if args.directory_retirement:manifest['limitations'].append('Offline pending accounting queues one PROGRAM kind7 attempt per connected event, with no child or acknowledgement prompt. Installed statistics reconcile the frozen logical/setup contexts. Refusals preserve pending counts for shutdown; file recovery is never retried. Selected entry adoption and dialing remain pending.')
 if args.directory_resource_owner:manifest['limitations'].append('Preview R checks KEY/KBD resources through PROGRAM kind6 under UART quiescence. Pending/active guards pin the proposal/bundle until restore. This preflight does not adopt settings/target/accounting or dial; translation/script staging and full live selection remain pending.')
 if args.directory_resource_cli:manifest['limitations'].append('Original CLI KEY/KBD identities are bound before directory startup; staged live resources, lease/UART adoption and dialing remain pending. This experimental build retains the LoC.6 splash version.')

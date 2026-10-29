@@ -28,7 +28,11 @@ typedef struct preview_session {
  actual_session actual;
  unsigned proposal_seal,baseline_seal;
 } preview_session;
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+#define PREVIEW ((preview_session __far *)(redisplay_snapshot+3978+sizeof(directory_resource_bundle)))
+#else
 #define PREVIEW ((preview_session __far *)(redisplay_snapshot+5602))
+#endif
 directory_resource_owner_snapshot terminal_directory_resources;
 static unsigned cookie=0xd840;
 typedef char dro_word_abi[sizeof(unsigned)==2?1:-1];
@@ -103,6 +107,9 @@ unsigned __far __cdecl terminal_directory_resources_run(void)
  for(i=0;i<114;++i)record[i]=PROPOSAL->context.selection.record[i];
  status=directory_resource_cli_request(record,PROPOSAL->configuration.serial.terminal_id,process_psp,&request);
  if(status){r->status=DRO_REQUEST;r->detail=status;goto failed;}
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+ request.translation_mode=PROPOSAL->configuration.serial.translation_mode;
+#endif
  status=directory_resources_defaults(defaults);
  if(status){r->status=DRO_DEFAULTS;r->detail=status;goto failed;}
  status=directory_resources_stage(&request,defaults,BUNDLE);

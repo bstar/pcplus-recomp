@@ -78,7 +78,11 @@ TEXT(auto_label,"Automatic download: ");
 TEXT(on_label,"ON");
 TEXT(off_label,"OFF");
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+TEXT(preview_keys,"R: check KEY/KBD/XLT resources  Esc: directory. Settings have not been applied.");
+#else
 TEXT(preview_keys,"R: check KEY/KBD resources  Esc: directory. Settings have not been applied.");
+#endif
 TEXT(resource_busy,"Resource check unavailable. Disconnect first or release other owners.");
 #else
 TEXT(preview_keys,"Preview only. Settings have not been applied. Esc: directory");

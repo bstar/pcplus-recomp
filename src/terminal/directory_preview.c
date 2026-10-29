@@ -2,6 +2,9 @@
 #include "session_baseline.h"
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
 #include "directory_resource_owner.h"
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+#include "../directory/directory_resource_cli.h"
+#endif
 #endif
 extern unsigned __far __cdecl directory_preview_capture(live_configuration_plan *);
 extern unsigned terminal_option_mask,terminal_directory_codes;
@@ -32,6 +35,14 @@ unsigned __far __cdecl directory_preview_stage(const directory_dos_page_data __f
   terminal_option_mask&15,&active,terminal_config_path,path,proposal,&result);
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
  if(!status){
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+  if(directory_resource_cli.state!=DRC_BOUND)return 0x4000U|DRO_CONTEXT;
+  if(directory_resource_cli.original_mask&16384){
+   proposal->configuration.serial.translation_mode=1;
+   proposal->configuration.change_mask&=~LIVE_CHANGE_TRANSLATION;
+   if(active.serial.translation_mode!=1)proposal->configuration.change_mask|=LIVE_CHANGE_TRANSLATION;
+  }
+#endif
   status=terminal_directory_resources_bind(&baseline,&active,&current_transfer);
   if(status)return 0x4000U|status;
  }

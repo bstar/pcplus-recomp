@@ -14,7 +14,13 @@ ORG 100h
 %ifdef CORRUPT_BAUD
 %define CORRUPT_OWNER
 %endif
-%define CAPTURE_SIZE (14+2*FIELD_BYTES+1190+2*1624+14+142+4000+14)
+%ifndef BUNDLE_BYTES
+%define BUNDLE_BYTES 1624
+%endif
+%ifndef RESOURCE_BYTES
+%define RESOURCE_BYTES 142
+%endif
+%define CAPTURE_SIZE (14+2*FIELD_BYTES+1190+2*BUNDLE_BYTES+14+RESOURCE_BYTES+4000+14)
 jmp start
 old_tick: dw 0,0
 old_dos: dw 0,0
@@ -26,10 +32,10 @@ sample: dw 0x524f,0,0,0,0,0,0
 before_fields: times FIELD_BYTES db 0
 after_fields: times FIELD_BYTES db 0
 proposal: times 1190 db 0
-before_bundle: times 1624 db 0
-after_bundle: times 1624 db 0
+before_bundle: times BUNDLE_BYTES db 0
+after_bundle: times BUNDLE_BYTES db 0
 owner_state: times 14 db 0
-resource_state: times 142 db 0
+resource_state: times RESOURCE_BYTES db 0
 prompt_frame: times 4000 db 0
 released_owner: times 14 db 0
 parent_irq: dw 0,0
@@ -216,7 +222,7 @@ tick_handler:
  rep movsb
  mov si,FROZEN_OFFSET+3978
  mov di,before_bundle
- mov cx,1624
+ mov cx,BUNDLE_BYTES
  rep movsb
  or word [cs:sample+2],1
  jmp .done
@@ -268,14 +274,14 @@ tick_handler:
  rep movsb
  mov si,RESOURCE
  mov di,resource_state
- mov cx,142
+ mov cx,RESOURCE_BYTES
  rep movsb
  mov ax,ds
  add ax,FROZEN_RELATIVE
  mov ds,ax
  mov si,FROZEN_OFFSET+3978
  mov di,after_bundle
- mov cx,1624
+ mov cx,BUNDLE_BYTES
  rep movsb
  mov ax,0b800h
  mov ds,ax

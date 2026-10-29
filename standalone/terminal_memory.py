@@ -222,11 +222,14 @@ def inspect_terminal_memory(binary,map_path):
   assert address('_directory_preview_capture')+len(prefix)+3 in relocations,'Actual-session capture relocation'
   extra.update(directory_preview_proposal_bytes=1190,directory_preview_snapshot_bytes=3978,
                directory_preview_capture_policy=1,directory_preview_capture_adapter_verified=True)
+ if '_directory_translation_layout' in symbols:
+  assert raw('_directory_translation_layout',10)==struct.pack('<5H',314,1948,206,202,6624),'Translation resource layout ABI'
+  extra['directory_translation_layout_verified']=True
  if '_terminal_resource_cli_bind' in symbols:
   config=next(c for c in code_segments if c['name']=='CONFIG_CODE')
   for name in ('_terminal_resource_cli_bind','_directory_resource_cli_initialize','_directory_resource_cli_bind','_directory_resource_cli_request'):
    assert symbols[name][0]==config['relative_segment'],(name,'CLI provenance outside CONFIG_CODE')
-  owner=address('_directory_resource_cli');assert near_start<=owner and owner+138<=near_start+near_size
+  owner=address('_directory_resource_cli');assert near_start<=owner and owner+(202 if '_directory_translation_layout' in symbols else 138)<=near_start+near_size
   site=address('terminal_resource_cli_startup');target=symbols['_terminal_resource_cli_bind']
   assert raw('terminal_resource_cli_startup',7)==b'\x9a'+struct.pack('<HH',target[1],target[0])+b'\x09\xc0','CLI startup must bind and check before directory selection'
   assert site+3 in relocations,'CLI startup far relocation'
@@ -242,7 +245,7 @@ def inspect_terminal_memory(binary,map_path):
    assert symbols['terminal_special_splash']==(splash['relative_segment'],0)
    assert splash['bytes']==377,'Keep the complete startup logo and version image'
    extra['directory_resource_cli_far_splash_bytes']=splash['bytes']
-  extra.update(directory_resource_cli_snapshot_bytes=138,directory_resource_cli_startup_order_verified=True)
+  extra.update(directory_resource_cli_snapshot_bytes=202 if '_directory_translation_layout' in symbols else 138,directory_resource_cli_startup_order_verified=True)
  if '_terminal_directory_resources_run' in symbols:
   config=next(c for c in code_segments if c['name']=='CONFIG_CODE')['relative_segment']
   process=next(c for c in code_segments if c['name']=='PROCESS_CODE')['relative_segment']
@@ -257,7 +260,7 @@ def inspect_terminal_memory(binary,map_path):
   assert raw('terminal_directory_account_argument_site',1)==b'\x53','Accounting must pass the retained canonical path'
   for name in ('_terminal_directory_resources_queue','_terminal_directory_resources_queued','_terminal_directory_resources_run','_terminal_directory_resources_release','_directory_resources_exec_allowed'):
    assert symbols[name][0]==config,(name,'resource owner outside CONFIG_CODE')
-  for name,owner_bytes in (('_terminal_directory_resources',14),('_directory_resource_result',142)):
+  for name,owner_bytes in (('_terminal_directory_resources',14),('_directory_resource_result',206 if '_directory_translation_layout' in symbols else 142)):
    assert symbols[name][0]==ds and near_start<=address(name) and address(name)+owner_bytes<=near_start+near_size
   assert symbols['_directory_resources_defaults'][0]==near_code['relative_segment']
   near_call('_directory_resources_defaults','terminal_build_keymap',prefix=b'\x55\x89\xe5\x8b\x46\x06',suffix=b'\x5d\xcb')
@@ -283,8 +286,8 @@ def inspect_terminal_memory(binary,map_path):
   assert index_lo==snap_hi and index_hi==static_end,'Frozen snapshot/index must be the final complete allocation'
   full=(static_end+15)//16+16;critical=(critical_end+15)//16+16
   assert (full-critical)*16>=63000+494
-  extra.update(directory_resource_owner_snapshot_bytes=14,directory_resource_bundle_bytes=1624,
-   directory_resource_lease_start=2788,directory_resource_lease_end=6300,
+  extra.update(directory_resource_owner_snapshot_bytes=14,directory_resource_bundle_bytes=1948 if '_directory_translation_layout' in symbols else 1624,
+   directory_resource_lease_start=2788,directory_resource_lease_end=6624 if '_directory_translation_layout' in symbols else 6300,
    directory_resource_actual_session_bytes=694,directory_resource_preview_binding_bytes=698,
    directory_account_canonical_identity_callbacks_verified=1,
    process_loan_full_paragraphs=full,process_loan_critical_paragraphs=critical,

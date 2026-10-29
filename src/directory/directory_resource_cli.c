@@ -3,7 +3,11 @@
 #include "../capture/capture_fs.h"
 #include <string.h>
 typedef char drc_word_abi[sizeof(unsigned)==2?1:-1];
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+typedef char drc_snapshot_abi[sizeof(directory_resource_cli_snapshot)==202?1:-1];
+#else
 typedef char drc_snapshot_abi[sizeof(directory_resource_cli_snapshot)==138?1:-1];
+#endif
 directory_resource_cli_snapshot directory_resource_cli;
 static unsigned cookie=0xd730;
 static unsigned extent(const void *p,unsigned n)
@@ -30,16 +34,27 @@ static unsigned identity(const char *path,char *output,unsigned *error)
  if(n<4 || n>63 || canonical[0]<'A' || canonical[0]>'Z' || canonical[1]!=':' || canonical[2]!='\\' || !capture_file_validate_path(canonical,0))return DRC_PATH;
  memcpy(output,canonical,n+1);return 0;
 }
-unsigned __cdecl directory_resource_cli_bind(unsigned mask,const char *keyboard,const char *actions)
+unsigned __cdecl directory_resource_cli_bind(unsigned mask,const char *keyboard,const char *actions
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+ ,const char *translation
+#endif
+ )
 {
  directory_resource_cli_snapshot stage;unsigned status;
  if(cookie!=0xd731 || directory_resource_cli.state!=DRC_IDLE)return DRC_STATE;
- if(!external(keyboard,64) || !external(actions,64))return DRC_ARGUMENT;
+ if(!external(keyboard,64) || !external(actions,64)
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+  || !external(translation,64)
+#endif
+ )return DRC_ARGUMENT;
  memset(&stage,0,sizeof(stage));stage.original_mask=mask;
  directory_resource_cli.state=DRC_BINDING;
  stage.failed_resource=512;
  status=mask&512?identity(keyboard,stage.keyboard,&stage.dos_error):0;
  if(!status && (mask&4096)){stage.failed_resource=4096;status=identity(actions,stage.actions,&stage.dos_error);}
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+ if(!status && (mask&16384)){stage.failed_resource=16384;status=identity(translation,stage.translation,&stage.dos_error);}
+#endif
  if(status){
   directory_resource_cli.state=DRC_FAILED;directory_resource_cli.status=status;
   directory_resource_cli.original_mask=mask;directory_resource_cli.failed_resource=stage.failed_resource;
@@ -55,7 +70,14 @@ unsigned __cdecl directory_resource_cli_request(const unsigned char *record,
  if(!external(record,114) || !external(request,sizeof(*request)) ||
   !separate(record,114,request,sizeof(*request)) || (profile!=4 && profile!=6) || !psp)return DRC_ARGUMENT;
  memset(&stage,0,sizeof(stage));memcpy(stage.record,record,114);
- stage.profile=profile;stage.psp=psp;stage.cli_mask=directory_resource_cli.original_mask&(512U|4096U);
+ stage.profile=profile;stage.psp=psp;stage.cli_mask=directory_resource_cli.original_mask&(512U|4096U
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+  |16384U
+#endif
+ );
  memcpy(stage.cli_keyboard,directory_resource_cli.keyboard,64);memcpy(stage.cli_actions,directory_resource_cli.actions,64);
+#ifdef DIRECTORY_TRANSLATION_RESOURCES
+ memcpy(stage.cli_translation,directory_resource_cli.translation,64);
+#endif
  memcpy(request,&stage,sizeof(stage));return 0;
 }

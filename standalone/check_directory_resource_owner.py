@@ -27,7 +27,7 @@ def main():
   busy=at+12+struct.unpack('<h',tail[3:5])[0];assert body[busy:busy+8]==b'\xb8\x04\x00\x07\x5f\x5e\x5d\xc3'
   reloc=[(i,s*16+o) for i,(o,s) in enumerate(struct.unpack_from('<HH',data,header[12]+j*4) for j in range(header[3]))]
   assert sum(a==process+at+3 for i,a in reloc)==1,'Resource EXEC predicate segment relocation'
-  assert memory['configuration_bridge_pairs_verified']==102 and memory['directory_resource_bundle_bytes']==1624
+  assert memory['configuration_bridge_pairs_verified']==102 and memory['directory_resource_bundle_bytes']==(1948 if manifest.get('experimental_directory_translation') else 1624)
   return memory,process+at,next(i for i,a in reloc if a==process+at+3)
  memory,gate,reloc=verify(binary);cases=[]
  variants=[('defaults-caller-word',start+address('_directory_resources_defaults')+5,8),
