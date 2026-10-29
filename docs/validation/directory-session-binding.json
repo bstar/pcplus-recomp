@@ -391,7 +391,15 @@
       "sha256": "495489a9621310083d9f0cf4d6def5c76a77619b154168baa8b9154dec49ca4b"
     }
   },
-  "source_reproduction": "Pending committed-source proof; not yet claimed.",
+  "source_reproduction": {
+    "passed": true,
+    "exported_commit": "5e409478465b4aa6179bd44e1bb2e1ce4eb654a5",
+    "source_files": 768,
+    "package_files": 10,
+    "ancestor_git_unavailable": true,
+    "path": "build/directory-session-binding-committed-source-20261029/result.json",
+    "sha256": "241ddc084dbd02438b9956669b915373a30320287c8a94b06280bd3bae74d4fc"
+  },
   "limitations": [
     "Resource preflight only; no active selection/settings/resource publication or dialing.",
     "Exact694-byte comparison covers actual configuration and transfer planes, not every application owner or active key/translation table.",

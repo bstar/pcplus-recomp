@@ -30,7 +30,9 @@ subsequent history viewing. The ordinary, LoC.6 and CLI-only controls stay exact
 ## Evidence
 
 The [validation receipt](validation/directory-session-binding.json) identifies
-the candidate, package and test artifacts. Eight linked admission cases cover
+the candidate, package and test artifacts. A clean export of committed source
+`5e40947`, without ancestor Git metadata, rebuilds all ten package files exactly
+from 768 declared source inputs. Eight linked admission cases cover
 changes to actual baud, profile, modem settings, transfer preferences, accepted
 image, proposal and retained session, plus an unchanged successful queue/cancel.
 They execute the actual UI, capture and queue code. Refusals preserve the changed
