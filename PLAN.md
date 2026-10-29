@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+[Canonical accounting source identity](docs/DIRECTORY_ACCOUNT_IDENTITY.md)
+fixes a reproduced wrong-file update after an ASPECT child changes CWD.
+Selected-directory startup now opens and retains the same canonical name;
+accounting validates context/entry/path before writes. This prepares old-entry
+retirement; selected-state adoption, translation/scripts, dialing, physical/card
+acceptance and the complete F01–F16 scope remain open.
+
 [Actual-session preview binding](docs/DIRECTORY_SESSION_BINDING.md) now retains
 the exact694-byte session/transfer state used to calculate the selection and
 rechecks it before queueing and after UART handoff. Stale session, baseline and

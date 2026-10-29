@@ -1,5 +1,8 @@
 #include "terminal_preferences.h"
 #include <string.h>
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+#include "../terminal/directory_identity.h"
+#endif
 #ifdef TERMINAL_SESSION_BASELINE
 #include "../terminal/session_baseline.h"
 #endif
@@ -82,8 +85,15 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
   status=DIRECTORY_LIVE_PRM_IO;goto failed;}
  if(terminal_import_decode(&image,&s)){status=DIRECTORY_LIVE_SERIAL;goto failed;}
  if(transfer_import_decode(&image,&t)){status=14;goto failed;}
- memset(&c,0,sizeof(c));c.codes=codes;memcpy(c.prm_path,path,a);memcpy(c.directory_path,directory,b);
+ memset(&c,0,sizeof(c));c.codes=codes;memcpy(c.prm_path,path,a);
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ status=directory_identity_path(directory,c.directory_path);
+ if(status){result->source_status=status;status=DIRECTORY_LIVE_DIRECTORY_IO;goto failed;}
+ status=directory_dos_read(c.directory_path,entry,&c.selection,&dio);
+#else
+ memcpy(c.directory_path,directory,b);
  status=directory_dos_read(directory,entry,&c.selection,&dio);
+#endif
  if(status){result->source_status=status;result->dos_error=dio.dos_error;
   result->close_error=dio.close_error;result->bytes_processed=dio.bytes_processed;
   status=DIRECTORY_LIVE_DIRECTORY_IO;goto failed;}

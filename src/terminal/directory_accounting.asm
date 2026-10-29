@@ -9,6 +9,9 @@ extern _directory_save_accounting
 extern terminal_directory_path,terminal_directory_entry,terminal_directory_plan
 extern terminal_option_mask,terminal_exit_code
 extern terminal_directory_script_connected
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+extern _terminal_directory_account_identity
+%endif
 global terminal_directory_note_connected
 global terminal_directory_flush_accounting
 %macro save 0
@@ -73,6 +76,14 @@ terminal_directory_flush_accounting:
  xor ax,ax
  mov cx,DR_RESULT_SIZE/2
  rep stosw
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ global terminal_directory_account_path_site
+ terminal_directory_account_path_site equ $
+ call far _terminal_directory_account_identity
+ or ax,ax
+ jz .identity_failed
+ mov bx,ax
+%endif
  mov ax,directory_account_result
  push ax
  push word [directory_pending_count]
@@ -82,8 +93,14 @@ terminal_directory_flush_accounting:
  mov ax,terminal_directory_plan+DL_RECORD
  push ax
  push word [terminal_directory_entry]
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ global terminal_directory_account_argument_site
+ terminal_directory_account_argument_site equ $
+ push bx
+%else
  mov ax,terminal_directory_path
  push ax
+%endif
  call _directory_save_accounting
  add sp,16
  mov [directory_account_status],ax
@@ -94,6 +111,11 @@ terminal_directory_flush_accounting:
 .success:
  xor ax,ax
  jmp .done
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+.identity_failed:
+ mov word [directory_account_status],DR_ARGUMENT
+ mov word [directory_account_result+DR_STATUS],DR_ARGUMENT
+%endif
 .failed:
  cmp word [directory_account_result+DR_INSTALLED],0
  je .not_installed

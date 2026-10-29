@@ -292,7 +292,7 @@ if args.directory_view:c_sources += [ROOT/'src/redisplay/directory_view.c',ROOT/
 if args.directory_preview:c_sources += [ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c']
 if args.directory_storage:c_sources.append(ROOT/'src/directory/directory_storage.c')
 if args.directory_resource_cli:c_sources += [ROOT/'src/directory/directory_resource_cli.c',ROOT/'src/terminal/resource_cli_bind.c']
-if args.directory_resource_owner:c_sources += [ROOT/'src/directory/directory_resources.c',ROOT/'src/terminal/directory_resource_owner.c']
+if args.directory_resource_owner:c_sources += [ROOT/'src/directory/directory_resources.c',ROOT/'src/terminal/directory_resource_owner.c',ROOT/'src/terminal/directory_identity.c']
 c_sources += sorted((ROOT/'src/clipboard').glob('*.c'))
 c_sources += [ROOT/'src/transfer'/name for name in ['download_file.c','download_fs.c','native_file_bridge.c','terminal_receive.c']]
 c_sources += [ROOT/'src/transfer/download_compare.c']
@@ -323,7 +323,7 @@ config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_conf
 if args.directory_preview:config_sources.update({ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c'})
 if args.directory_storage:config_sources.update({ROOT/'src/directory/directory_actions.c',ROOT/'src/directory/directory_storage.c'})
 if args.directory_resource_cli:config_sources.update({ROOT/'src/directory/directory_resource_cli.c',ROOT/'src/terminal/resource_cli_bind.c'})
-if args.directory_resource_owner:config_sources.update({ROOT/'src/directory/directory_resources.c',ROOT/'src/terminal/directory_resource_owner.c'})
+if args.directory_resource_owner:config_sources.update({ROOT/'src/directory/directory_resources.c',ROOT/'src/terminal/directory_resource_owner.c',ROOT/'src/terminal/directory_identity.c'})
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
 config_sources.add(ROOT/'src/translation/xlt_dos.c')
@@ -497,7 +497,7 @@ if args.session_projection:inputs += [ROOT/'src/config/prm_projection.h',ROOT/'s
 if args.session_baseline:inputs += [ROOT/'src/terminal/session_baseline.h']
 if args.directory_preview:inputs += [ROOT/'src/terminal/directory_preview.h']
 if args.directory_resource_cli:inputs += [ROOT/'src/directory/directory_resource_cli.h',ROOT/'src/directory/directory_resources.h']
-if args.directory_resource_owner:inputs += [ROOT/'src/terminal/directory_resource_owner.h']
+if args.directory_resource_owner:inputs += [ROOT/'src/terminal/directory_resource_owner.h',ROOT/'src/terminal/directory_identity.h']
 if args.register_handoff:inputs += [ROOT/'src/terminal/register_owner.h',ROOT/'src/aspect/register_handoff.h',ROOT/'src/aspect/register_codec.h']
 if args.hook_return:inputs.append(ROOT/'src/config/hook_return.h')
 if args.hook_execute:inputs += [ROOT/'src/terminal/hook_transaction.h',ROOT/'src/process/hook_owner.h',ROOT/'src/process/hook_exchange.h']

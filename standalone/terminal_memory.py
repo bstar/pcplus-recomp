@@ -246,6 +246,15 @@ def inspect_terminal_memory(binary,map_path):
  if '_terminal_directory_resources_run' in symbols:
   config=next(c for c in code_segments if c['name']=='CONFIG_CODE')['relative_segment']
   process=next(c for c in code_segments if c['name']=='PROCESS_CODE')['relative_segment']
+  for name in ('_terminal_directory_account_identity','_directory_identity_path'):
+   assert symbols[name][0]==config,(name,'directory identity outside CONFIG_CODE')
+  for site,target in (('terminal_directory_account_path_site','_terminal_directory_account_identity'),):
+   target_seg,target_off=symbols[target]
+   assert raw(site,7)==b'\x9a'+struct.pack('<HH',target_off,target_seg)+b'\x09\xc0','Checked directory identity callback'
+   assert address(site)+3 in relocations,'Directory identity callback relocation'
+   assert raw(site,9)[7]==0x74,'Directory identity zero result branch'
+  assert raw('terminal_directory_account_path_site',11)[9:]==b'\x89\xc3','Accounting must retain the checked path in BX'
+  assert raw('terminal_directory_account_argument_site',1)==b'\x53','Accounting must pass the retained canonical path'
   for name in ('_terminal_directory_resources_queue','_terminal_directory_resources_queued','_terminal_directory_resources_run','_terminal_directory_resources_release','_directory_resources_exec_allowed'):
    assert symbols[name][0]==config,(name,'resource owner outside CONFIG_CODE')
   for name,owner_bytes in (('_terminal_directory_resources',14),('_directory_resource_result',142)):
@@ -277,6 +286,7 @@ def inspect_terminal_memory(binary,map_path):
   extra.update(directory_resource_owner_snapshot_bytes=14,directory_resource_bundle_bytes=1624,
    directory_resource_lease_start=2788,directory_resource_lease_end=6300,
    directory_resource_actual_session_bytes=694,directory_resource_preview_binding_bytes=698,
+   directory_account_canonical_identity_callbacks_verified=1,
    process_loan_full_paragraphs=full,process_loan_critical_paragraphs=critical,
    process_loan_bytes=(full-critical)*16,process_loan_code_calls_verified=True,process_child_quiet_before_trap_resume_verified=True)
  if 'terminal_phone_log_code_start' in symbols:
