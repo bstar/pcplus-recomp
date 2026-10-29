@@ -15,6 +15,9 @@ extern unsigned __far __cdecl recording_ui_ready(void);
 typedef unsigned short word;
 typedef unsigned char byte;
 typedef struct item { const char __far *name;const char __far *help;word category,key,letter; } item;
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+extern unsigned __far __cdecl terminal_directory_resources_queued(void);
+#endif
 unsigned command_menu_active=0,command_menu_action=0;
 static word category,selected,phase,query_size,notice;
 char command_menu_script[64];
@@ -359,7 +362,11 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
  if(phase==10 && (event==1 || event==3)){
   if(event==1 && key==0x2d00){directory_view_event(4,0,view);command_menu_action=key;command_menu_active=0;return 0;}
   if(directory_view_event(event,key,view))return 1;
-  if(!directory_parent){command_menu_active=0;return 0;}
+  if(!directory_parent
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+   || terminal_directory_resources_queued()
+#endif
+  ){command_menu_active=0;return 0;}
   phase=directory_parent==1?9:0;notice=0;draw();return 1;
  }
 #endif

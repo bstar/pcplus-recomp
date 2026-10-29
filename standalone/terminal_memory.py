@@ -243,6 +243,35 @@ def inspect_terminal_memory(binary,map_path):
    assert splash['bytes']==377,'Keep the complete startup logo and version image'
    extra['directory_resource_cli_far_splash_bytes']=splash['bytes']
   extra.update(directory_resource_cli_snapshot_bytes=138,directory_resource_cli_startup_order_verified=True)
+ if '_terminal_directory_resources_run' in symbols:
+  config=next(c for c in code_segments if c['name']=='CONFIG_CODE')['relative_segment']
+  process=next(c for c in code_segments if c['name']=='PROCESS_CODE')['relative_segment']
+  for name in ('_terminal_directory_resources_queue','_terminal_directory_resources_queued','_terminal_directory_resources_run','_terminal_directory_resources_release','_directory_resources_exec_allowed'):
+   assert symbols[name][0]==config,(name,'resource owner outside CONFIG_CODE')
+  for name,owner_bytes in (('_terminal_directory_resources',14),('_directory_resource_result',142)):
+   assert symbols[name][0]==ds and near_start<=address(name) and address(name)+owner_bytes<=near_start+near_size
+  assert symbols['_directory_resources_defaults'][0]==near_code['relative_segment']
+  near_call('_directory_resources_defaults','terminal_build_keymap',prefix=b'\x55\x89\xe5\x8b\x46\x06',suffix=b'\x5d\xcb')
+  for name in ('process_loan_begin','process_loan_end','process_loan_begin_site','process_loan_end_site'):
+   assert symbols[name][0]==process,(name,'memory loan outside PROCESS_CODE')
+  near_call('process_loan_begin_site','process_loan_begin',suffix=b'')
+  near_call('process_loan_end_site','process_loan_end',suffix=b'')
+  assert symbols['process_child_quiet_site'][0]==process
+  for step,target in ((0,'terminal_process_quiet_uart'),(5,'terminal_trap_resume')):
+   target_seg,target_off=symbols[target]
+   assert raw('process_child_quiet_site',10)[step:step+5]==b'\x9a'+struct.pack('<HH',target_off,target_seg),'Child UART must be quiet before trap resume enables interrupts'
+   assert address('process_child_quiet_site')+step+3 in relocations,'Child return far-call relocation'
+  assert raw('terminal_program_critical_site',3)==b'\xa3'+struct.pack('<H',symbols['terminal_program_critical_paragraphs'][1])
+  assert raw('terminal_program_full_site',6)==b'\xa3'+struct.pack('<H',symbols['process_keep_paragraphs'][1])+b'\xa3'+struct.pack('<H',symbols['process_minimum_paragraphs'][1])
+  critical_end=max(near_start+near_size,far_end,max(b['end_linear'] for b in ui_buffers.values()),max(c['relative_segment']*16+c['offset']+c['bytes'] for c in code_segments))
+  assert snap_lo==(critical_end+15)//16*16,'Only inactive frozen storage may follow the critical prefix'
+  assert index_lo==snap_hi and index_hi==static_end,'Frozen snapshot/index must be the final complete allocation'
+  full=(static_end+15)//16+16;critical=(critical_end+15)//16+16
+  assert (full-critical)*16>=63000+494
+  extra.update(directory_resource_owner_snapshot_bytes=14,directory_resource_bundle_bytes=1624,
+   directory_resource_lease_start=2788,directory_resource_lease_end=5602,
+   process_loan_full_paragraphs=full,process_loan_critical_paragraphs=critical,
+   process_loan_bytes=(full-critical)*16,process_loan_code_calls_verified=True,process_child_quiet_before_trap_resume_verified=True)
  if 'terminal_phone_log_code_start' in symbols:
   bank=next(c for c in code_segments if c['name']=='PHONE_LOG_CODE')
   bank_seg=bank['relative_segment']
@@ -585,10 +614,12 @@ def inspect_terminal_memory(binary,map_path):
   def cdecl_prefix(count,first):
    return b'\x55\x89\xe5'+b''.join(bytes([0xff,0x76,first+2*i]) for i in reversed(range(count)))
   storage_enabled='_directory_storage_exec_allowed' in symbols
+  resource_enabled='_terminal_directory_resources_run' in symbols
   enabled=True
   for line in abi.read_text().splitlines():
    if not line or line.startswith(';'):continue
    if line=='%ifdef TERMINAL_DIRECTORY_STORAGE':enabled=storage_enabled;continue
+   if line=='%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER':enabled=resource_enabled;continue
    if line=='%endif':enabled=True;continue
    if not enabled:continue
    fields=line.replace(',',' ').split();kind,name=fields[:2]
@@ -617,7 +648,7 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==(99 if storage_enabled else 94),'Incomplete configuration ABI validation'
+  assert config_bridges==((99 if storage_enabled else 94)+(3 if resource_enabled else 0)),'Incomplete configuration ABI validation'
   if storage_enabled:
    assert symbols['_directory_storage_exec_allowed'][0]==config_seg
    process=next(c for c in code_segments if c['name']=='PROCESS_CODE')

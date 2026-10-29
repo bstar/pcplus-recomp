@@ -68,9 +68,18 @@ _mouse_terminal_release_unused:
 
 extern _terminal_mouse_stop_impl
 terminal_mouse_exit:
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ extern _mouse_platform_strategy_finish
+ call _mouse_platform_strategy_finish
+ or ax,ax
+ jnz .retain
+%endif
  call _terminal_mouse_stop_impl
  or ax,ax
  jz .released
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+.retain:
+%endif
  ; Cleanup of UART/file/video owners has already completed. If an IRQ driver
  ; can still reference us, DOS4C would leave a dangling pointer. Keep the full
  ; checked static parent and its DOS48 blocks resident, returning typed error14.

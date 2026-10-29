@@ -1,0 +1,403 @@
+{
+  "passed": true,
+  "live_selection_adoption_complete": false,
+  "full_application_complete": false,
+  "physical_acceptance": false,
+  "card_written": false,
+  "binary_sha256": "674abe98669d6a72c1799a766f3d8a72ad4c8f9815983035d969f731d576599b",
+  "package": "build/special-directory-resource-owner-verified-20261029/PCPLUSSE",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "d29aa0acf4456bedadd9a1d0a0a80dc2008798bc18376f0936f697224f29798a",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "674abe98669d6a72c1799a766f3d8a72ad4c8f9815983035d969f731d576599b",
+    "VERSION.TXT": "e9fb6a7986e16726e0b264edc76dbae11005ba157afa89aa275125530d665606",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "source_files": 768,
+  "source_base_commit": "942fecd8b74bece3c1d6e1fa4279f8761a946c5d",
+  "native_resource_workflows": 7,
+  "linked_directory_inputs": 45,
+  "linked_snapshot_inputs": 35,
+  "memory_loan_inputs": 14,
+  "mouse_allocation_inputs": 24,
+  "damaged_ABI_controls": 8,
+  "ENiGMA_checks": {
+    "harness": true,
+    "semantic_audit": true,
+    "exact_screen": true,
+    "proxy_source_unchanged": true,
+    "product_source_unchanged": true,
+    "directory_prompt_and_loading": true,
+    "directory_first_and_last_pages": true,
+    "no_private_directory_fields": true,
+    "directory_preview_observed": true,
+    "preview_target_and_DTE": true,
+    "preview_privacy": true,
+    "online_resource_check_refused": true,
+    "resource_check_key_stayed_local": true
+  },
+  "memory": {
+    "near_bytes": 64976,
+    "near_spare_bytes": 560,
+    "near_relative_segment": 12387,
+    "far_relative_segment": 17198,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 17710,
+    "history_bytes": 63000,
+    "far_end_linear": 346360,
+    "stack_end_linear": 263168,
+    "loaded_module_bytes": 230892,
+    "minimum_allocated_module_bytes": 409872,
+    "retained_parent_paragraphs": 25633,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 21648,
+    "snapshot_image_offset": 61000,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 409368,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 16448,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 263168,
+        "end_linear": 267168
+      },
+      "ed_screen": {
+        "relative_segment": 16448,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 267168,
+        "end_linear": 271168
+      },
+      "program_screen": {
+        "relative_segment": 16448,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 263168,
+        "end_linear": 267168
+      },
+      "redisplay_live": {
+        "relative_segment": 16448,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 267168,
+        "end_linear": 271168
+      },
+      "redisplay_view": {
+        "relative_segment": 16448,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 271168,
+        "end_linear": 275168
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "program_browser_screen_overlay": true,
+    "editor_viewer_screen_overlay": true,
+    "snapshot_history_tail_overlay": true,
+    "snapshot_history_bytes_reclaimed": 2000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 409368,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 21648,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 409862,
+    "resident_CS_extent_bytes": 65328,
+    "resident_CS_spare_bytes": 208,
+    "substitute_native_bytes_verified": 53,
+    "substitute_native_dependencies_verified": 4,
+    "substitute_state_words_verified": 4,
+    "far_usage_bytes": 1493,
+    "far_usage_segment": 10498,
+    "far_usage_DS_restore_verified": true,
+    "directory_view_code_bytes": 5875,
+    "directory_view_FS_callbacks_verified": 3,
+    "directory_view_scratch_offset": 3141,
+    "directory_view_scratch_bytes": 512,
+    "directory_view_snapshot_page_bytes": 2788,
+    "directory_preview_proposal_bytes": 1190,
+    "directory_preview_snapshot_bytes": 3978,
+    "directory_preview_capture_policy": 1,
+    "directory_preview_capture_adapter_verified": true,
+    "directory_resource_cli_far_splash_bytes": 377,
+    "directory_resource_cli_snapshot_bytes": 138,
+    "directory_resource_cli_startup_order_verified": true,
+    "directory_resource_owner_snapshot_bytes": 14,
+    "directory_resource_bundle_bytes": 1624,
+    "directory_resource_lease_start": 2788,
+    "directory_resource_lease_end": 5602,
+    "process_loan_full_paragraphs": 25633,
+    "process_loan_critical_paragraphs": 21664,
+    "process_loan_bytes": 63504,
+    "process_loan_code_calls_verified": true,
+    "process_child_quiet_before_trap_resume_verified": true,
+    "process_bank_bytes": 903,
+    "process_bridge_pairs_verified": 1,
+    "process_near_entry_bytes": 22,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "recording_matcher_lead_site": 38911,
+    "recording_rx_far_call_sites": [
+      38914,
+      15124
+    ],
+    "recording_rx_callback_site": 108701,
+    "recording_actor_guard_sites": [
+      15124,
+      15523,
+      25414,
+      29465,
+      36713,
+      39240,
+      165288,
+      166389,
+      169480
+    ],
+    "recording_UI_boundary_sites": [
+      191096,
+      192650,
+      108655
+    ],
+    "recording_UI_optimized_sites": [],
+    "recording_tx_origin_bytes": 128,
+    "recording_tx_origin_start": 110935,
+    "recording_tx_far_call_sites": [
+      39710,
+      37030,
+      40592,
+      24931
+    ],
+    "recording_tx_callback_site": 110926,
+    "recording_terminal_state_bytes": 392,
+    "recording_terminal_bank_functions_verified": 9,
+    "recording_terminal_far_call_sites": [
+      23386,
+      24317
+    ],
+    "recorder_code_literal_bytes_verified": 223,
+    "recorder_code_literal_sites": [
+      158336,
+      158353,
+      158367,
+      158387,
+      158407,
+      158413,
+      158433,
+      158464,
+      158549
+    ],
+    "recording_bank_functions_verified": 14,
+    "recording_resident_callbacks_verified": 9,
+    "recording_adapter_far_call_sites": [
+      60472,
+      60496,
+      60520
+    ],
+    "capture_reservation_far_bindings_verified": 2,
+    "capture_reservation_far_call_sites": [
+      58347,
+      157405
+    ],
+    "capture_reservation_initialized_bytes": 8,
+    "command_menu_banked_call_sites": [
+      130144,
+      130259,
+      130786
+    ],
+    "command_menu_code_segment": 11322,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "directory_storage_snapshot_bytes": 222,
+    "directory_storage_callbacks_verified": 3,
+    "directory_storage_EXEC_gate_verified": true,
+    "configuration_bridge_pairs_verified": 102,
+    "transfer_ui_far_entries_verified": 4,
+    "transfer_ui_resident_callbacks_verified": 3,
+    "redisplay_bridge_pairs_verified": 4,
+    "viewer_live_plane_admission_verified": true,
+    "scroll_field_bridge_pairs_verified": 3,
+    "line_preflight_far_calls_verified": 2,
+    "wide_character_far_calls_verified": 2,
+    "wide_character_prepare_far_calls_verified": 1,
+    "script_window_keyboard_far_adapters_verified": true,
+    "aspect_command_preflight_verified": true,
+    "aspect_viewport_lease_words_verified": 3,
+    "protected_erase_far_bridge_verified": true,
+    "protected_erase_native_dependencies_verified": 4,
+    "erase_after_projection_initially_idle": true,
+    "wide_clear_rectangle_route_verified": true,
+    "alternate_output_far_bridge_verified": true,
+    "alternate_output_native_dependencies_verified": 4,
+    "source_owned_output_table_bytes": 256,
+    "aspect_far_services_verified": 17,
+    "aspect_resident_far_references_verified": 21,
+    "aspect_controller_read_references_verified": 1,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 50,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_controller_references_verified": 5,
+    "line_attribute_video_callbacks_verified": 2,
+    "line_controller_entry_pairs_verified": 4,
+    "line_controller_register_callbacks_verified": 3,
+    "line_controller_code_bytes": 421,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "mouse_bridge_pairs_verified": 10,
+    "mouse_code_bytes": 3065,
+    "mouse_shared_native_state_bytes": 28,
+    "resident_code_bytes": 65328,
+    "resident_code_spare_bytes": 208,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65328
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4083,
+        "offset": 0,
+        "bytes": 12908
+      },
+      {
+        "name": "PROCESS_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4890,
+        "offset": 0,
+        "bytes": 903
+      },
+      {
+        "name": "HOOK_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4947,
+        "offset": 0,
+        "bytes": 27318
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6655,
+        "offset": 0,
+        "bytes": 58571
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10316,
+        "offset": 0,
+        "bytes": 2900
+      },
+      {
+        "name": "USAGE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10498,
+        "offset": 0,
+        "bytes": 1493
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10592,
+        "offset": 0,
+        "bytes": 1461
+      },
+      {
+        "name": "SPLASH_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10684,
+        "offset": 0,
+        "bytes": 377
+      },
+      {
+        "name": "TRAP_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10708,
+        "offset": 0,
+        "bytes": 864
+      },
+      {
+        "name": "MOUSE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10762,
+        "offset": 0,
+        "bytes": 3065
+      },
+      {
+        "name": "DIRECTORY_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10954,
+        "offset": 0,
+        "bytes": 5875
+      },
+      {
+        "name": "REFERENCE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11322,
+        "offset": 0,
+        "bytes": 17029
+      }
+    ],
+    "far_code_bridge_pairs_verified": 169
+  },
+  "evidence": {
+    "resource_DOS": {
+      "path": "build/directory-resource-owner-DOS/verified-20261029/result.json",
+      "sha256": "8b66cead50a18e6c0214e0bdf6795477fc4cc2fed2ffcead6d4b9635a8764132"
+    },
+    "linked_ABI": {
+      "path": "build/directory-resource-owner-linked/verified-20261029/result.json",
+      "sha256": "630e9e702afb170cfe01d8b72cf3e94a55ce5204c572185898c9c36863e0cce4"
+    },
+    "memory_loan": {
+      "path": "build/resource-memory-loan/verified-02-20261029/result.json",
+      "sha256": "785a811a99d901be54eb38d2851009d5b54f9870babebe7f0f212ace3f60d24e"
+    },
+    "mouse_allocation": {
+      "path": "build/resource-mouse-allocation/verified-20261029/result.json",
+      "sha256": "1a75c331d4529657c9272a9f81128ac5ab56cd6b9f616ae6e9b14de7e5c41c37"
+    },
+    "START_after_child": {
+      "path": "build/directory-resource-owner-postchild-view-20261029/result.json",
+      "sha256": "820a3e6345b7ec47a50bfcab48a4bea3b7e5e80d0a023fb23e8da93fad30c992"
+    },
+    "SETUP": {
+      "path": "build/directory-resource-owner-setup-20261029/result.json",
+      "sha256": "7aa13cc54619526de829e08710b316cec28761501388f86037254e86f6543674"
+    },
+    "directory": {
+      "path": "build/terminal-resource-owner-f8838a85007e/directory-view-checks.json",
+      "sha256": "3e295f8638b31a917fe935cd8458b4a5d66c81b96e5d4b10ba1607ef9ed3b4e8"
+    },
+    "snapshot": {
+      "path": "build/terminal-resource-owner-f8838a85007e/terminal-snapshot-live-checks.json",
+      "sha256": "251e618ed8f4cc3988b940ede0bc22292d67c135f215009f764cf5a026640522"
+    },
+    "ENiGMA": {
+      "path": "build/bbs-lab/results/enigma/directory_resource_owner_stock_20261029/proxy-integration.json",
+      "sha256": "17416a7e8e8aa64008e809e2627d90d7ec98bc79d2d7b5fbd65a1f1354fdc791"
+    },
+    "control_binaries": {
+      "path": "build/resource-owner-controls-20261029.json",
+      "sha256": "495489a9621310083d9f0cf4d6def5c76a77619b154168baa8b9154dec49ca4b"
+    }
+  },
+  "source_reproduction": "Pending committed-source proof; not yet claimed.",
+  "limitations": [
+    "Preflight only; selected settings, target, resources and accounting remain unchanged.",
+    "DOS boundaries and UART registers are modeled in memory/fault checks; native package and resource checks run separately.",
+    "ENiGMA uses stock loopback BBS and actual proxy with paced synthetic serial; no SIP/DSP or physical acceptance.",
+    "Full F01\u2013F16 scope remains open."
+  ]
+}

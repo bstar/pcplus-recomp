@@ -15,6 +15,11 @@ CONFIG_DIRECTORY _config_directory_replace,_directory_replace_record,7
 CONFIG_DIRECTORY _config_directory_patch,_directory_accounting_patch,6
 %endif
 CONFIG_ENTRY _live_setup_bind,3
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+CONFIG_CDECL _config_resource_keymap,_keymap_dos_read,4
+CONFIG_CDECL _config_resource_actions,_key_actions_dos_read,3
+CONFIG_REGISTER config_resource_attributes_service_,capture_fs_attributes_
+%endif
 CONFIG_ENTRY _live_setup_begin,5
 CONFIG_ENTRY _live_setup_finish,2
 CONFIG_ENTRY _live_setup_abort,1

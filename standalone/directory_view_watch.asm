@@ -5,7 +5,9 @@ ORG 100h
 jmp start
 old_vector: dw 0,0
 sample: dw 0x4456,0,0
-%ifdef DIRECTORY_PREVIEW
+%ifdef DIRECTORY_RESOURCE_OWNER
+%define CAPTURE_SIZE 20006
+%elifdef DIRECTORY_PREVIEW
 %define CAPTURE_SIZE 16006
 %else
 %define CAPTURE_SIZE 12006
@@ -15,6 +17,9 @@ refusal_frame: times 4000 db 0
 browser_frame: times 4000 db 0
 %ifdef DIRECTORY_PREVIEW
 preview_frame: times 4000 db 0
+%endif
+%ifdef DIRECTORY_RESOURCE_OWNER
+resource_frame: times 4000 db 0
 %endif
 last_sum: dw 0
 stable: dw 0
@@ -39,16 +44,35 @@ handler:
  cmp word [es:6],0x1f43
  jne .done
 %ifdef DIRECTORY_PREVIEW
+%ifdef DIRECTORY_RESOURCE_OWNER
+ cmp word [es:3842],0x1f52 ; R resource-check footer in this variant.
+%else
  cmp word [es:3842],0x1f50 ; Preview footer written after proposed fields.
+%endif
  jne .path
  cmp word [es:484],0x1f53 ; SELECTED ENTRY heading, row3 col2.
  jne .path
  test word [sample+2],16
+%ifdef DIRECTORY_RESOURCE_OWNER
+ jnz .resource_notice
+%else
  jnz .done
+%endif
  mov di,preview_frame
  call capture
  or word [sample+2],16
  jmp .done
+%ifdef DIRECTORY_RESOURCE_OWNER
+.resource_notice:
+ cmp word [es:3524],0x0752 ; Resource check unavailable, row22col2.
+ jne .done
+ test word [sample+2],32
+ jnz .done
+ mov di,resource_frame
+ call capture
+ or word [sample+2],32
+ jmp .done
+%endif
 .path:
 %endif
  cmp word [es:3842],0x1f45 ; Enter footer in path prompt.

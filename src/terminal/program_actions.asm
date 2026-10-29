@@ -76,9 +76,13 @@ terminal_program_initialize_far:
 %%done:
  %endmacro
  keep_static_end terminal_far_storage_end
+%ifndef TERMINAL_DIRECTORY_RESOURCE_OWNER
  keep_static_end redisplay_snapshot_end
+%endif
  keep_static_end redisplay_view_end
+%ifndef TERMINAL_DIRECTORY_RESOURCE_OWNER
  keep_static_end terminal_snapshot_image_end
+%endif
  keep_static_end browser_screen_end
  keep_static_end ed_screen_end
  keep_static_end program_screen_end
@@ -88,8 +92,22 @@ terminal_program_initialize_far:
  keep_static_end bank_shadow_end
 %endif
 %endif
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ global terminal_program_critical_paragraphs
+ extern _redisplay_row_index_end
  mov ax,dx
  sub ax,[process_psp]
+ global terminal_program_critical_site
+ terminal_program_critical_site equ $
+ mov [terminal_program_critical_paragraphs],ax
+ keep_static_end _redisplay_row_index_end
+%endif
+ mov ax,dx
+ sub ax,[process_psp]
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ global terminal_program_full_site
+ terminal_program_full_site equ $
+%endif
  mov [process_keep_paragraphs],ax
  mov [process_minimum_paragraphs],ax
  pop dx
@@ -320,6 +338,14 @@ terminal_program_poll:
  push word [terminal_irq_vector]
  call uart_restore_interrupt
  add sp,2
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ cmp word [terminal_program_kind],6
+ jne .ordinary_operation
+ extern _terminal_directory_resources_run
+ call far _terminal_directory_resources_run
+ jmp .record_status
+.ordinary_operation:
+%endif
  cmp word [terminal_program_kind],2
  jne .execute_child
  call terminal_translation_reload_run
@@ -453,6 +479,17 @@ terminal_program_poll:
  cmp word [connection_state],6
  je .restore_screen
 .ordinary_prompt:
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ cmp word [terminal_program_kind],6
+ jne .ordinary_program_prompt
+ extern directory_resources_ready_notice,directory_resources_failed_notice
+ mov si,directory_resources_ready_notice
+ cmp word [terminal_program_status],4
+ je .prompt
+ mov si,directory_resources_failed_notice
+ jmp .prompt
+.ordinary_program_prompt:
+%endif
  cmp word [terminal_program_kind],2
  je .restore_screen ;Reload owns its confirmation/failure acknowledgement.
  ; Original PROGRAM asks for a local key after the command. BIOS output avoids
@@ -540,6 +577,13 @@ terminal_program_poll:
  mov word [terminal_quit],1
 .mouse_ready:
 %endif
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ cmp word [terminal_program_kind],6
+ jne .resource_owner_finished
+ extern _terminal_directory_resources_release
+ call far _terminal_directory_resources_release
+.resource_owner_finished:
+%endif
  mov word [terminal_program_active],0
  call program_resume_flow
  jmp .done
@@ -598,6 +642,22 @@ program_quiet_uart:
  call uart_restore_interrupt
  add sp,2
  ret
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+; Called with IF0 after DOS restored parent DS/SS/SP, before trap resume can
+; enable interrupts or memory reacquisition invokes DOS. A misbehaving child
+; must not leave an enabled UART pointing into its released executable.
+global terminal_process_quiet_uart
+terminal_process_quiet_uart:
+ cmp word [terminal_program_active],1
+ jne .done
+ cmp word [terminal_program_pending],0
+ jne .done
+ cmp word [terminal_program_kind],5
+ ja .done
+ call program_quiet_uart
+.done:
+ retf
+%endif
 
 global terminal_program_restore_uart
 terminal_program_restore_uart:
@@ -782,6 +842,12 @@ terminal_program_cancel:
 .reload_cancel:
  mov word [terminal_translation_reload_status],4
 .clear:
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ cmp word [terminal_program_kind],6
+ jne .resource_owner_canceled
+ call far _terminal_directory_resources_release
+.resource_owner_canceled:
+%endif
  mov word [terminal_program_pending],0
  mov word [terminal_program_kind],0
  call program_resume_flow
@@ -811,6 +877,9 @@ program_progress:
  ret
 
 SEGMENT _DATA public align=16 class=DATA use16
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+terminal_program_critical_paragraphs: dw 0
+%endif
 global terminal_program_pending,terminal_program_active,terminal_program_status
 global terminal_program_command,terminal_program_result
 global terminal_program_kind

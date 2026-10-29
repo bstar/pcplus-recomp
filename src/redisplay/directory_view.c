@@ -7,6 +7,10 @@
 #ifdef TERMINAL_DIRECTORY_PREVIEW
 #include "../terminal/directory_preview.h"
 #endif
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+#include "../terminal/directory_resource_owner.h"
+static unsigned resource_notice;
+#endif
 typedef unsigned short word;
 typedef unsigned char byte;
 extern byte __far redisplay_snapshot[63000];
@@ -73,7 +77,12 @@ TEXT(download_label,"Download path: ");
 TEXT(auto_label,"Automatic download: ");
 TEXT(on_label,"ON");
 TEXT(off_label,"OFF");
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+TEXT(preview_keys,"R: check KEY/KBD resources  Esc: directory. Settings have not been applied.");
+TEXT(resource_busy,"Resource check unavailable. Disconnect first or release other owners.");
+#else
 TEXT(preview_keys,"Preview only. Settings have not been applied. Esc: directory");
+#endif
 TEXT(rejected,"This entry could not be prepared. Settings have not been applied.");
 TEXT(baseline_error,"Accepted PRM settings unavailable. Load valid settings before previewing.");
 TEXT(capture_error,"The current session could not be captured.");
@@ -104,6 +113,9 @@ static void proposal_draw(void)
 {
  word status=preview_status&15,detail=(preview_status>>8)&15;
  const terminal_import_settings __far *serial=&PROPOSAL->configuration.serial;
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ if(resource_notice)text(22*80+2,resource_busy,0x0700);
+#endif
  if(phase==PREPARING){text(402,preparing,0x0700);return;}
  if(phase==REJECTED){
   text(322,rejected,0x0f00);
@@ -209,6 +221,9 @@ unsigned __far __cdecl directory_view_event(word event,word key,word __far *fram
  if(event==3){
 #ifdef TERMINAL_DIRECTORY_PREVIEW
   if(phase==PREPARING){preview_status=directory_preview_stage(PAGE,selected+1,path,PROPOSAL);
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+   resource_notice=0;
+#endif
    phase=preview_status?REJECTED:PREVIEW;draw();return 1;}
 #endif
   if(phase!=LOADING && phase!=CANCELING)return 1;
@@ -237,6 +252,13 @@ unsigned __far __cdecl directory_view_event(word event,word key,word __far *fram
  }
  if(phase==ERROR)return 1;
 #ifdef TERMINAL_DIRECTORY_PREVIEW
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ if(phase==PREVIEW && (c=='r' || c=='R')){
+  resource_notice=terminal_directory_resources_queue(PROPOSAL);
+  if(!resource_notice){active=0;return 0;}
+  draw();return 1;
+ }
+#endif
  if(phase>=PREPARING)return 1;
  if(c==13){phase=PREPARING;draw();return 1;}
 #endif

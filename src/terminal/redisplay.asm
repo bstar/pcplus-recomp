@@ -242,7 +242,13 @@ ed_screen_end equ redisplay_live_end
 %endif
 redisplay_view: resb 4000
 redisplay_view_end:
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+; Last allocation in this variant. A quiesced child may borrow only this
+; inactive snapshot/index; the distinct live ring remains retained throughout.
+SEGMENT REDISPLAY_STORAGE public align=16 class=FROZEN_DATA use16
+%else
 SEGMENT REDISPLAY_STORAGE public align=16 class=FAR_DATA use16
+%endif
 global redisplay_snapshot,redisplay_snapshot_end
 redisplay_snapshot: resb 63000
 redisplay_snapshot_end:

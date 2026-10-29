@@ -53,6 +53,13 @@ _process_run:
  push es
  cmp word [process_busy],0
  jne .busy
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ extern mouse_allocation_strategy_held
+ cmp word [process_loan_restore_error],0
+ jne .busy
+ cmp word [mouse_allocation_strategy_held],0
+ jne .busy
+%endif
  mov ax,ss
  mov dx,ds
  cmp ax,dx
@@ -126,6 +133,12 @@ _process_run:
  call far _directory_storage_exec_allowed
  or ax,ax
  jz .busy
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ extern _directory_resources_exec_allowed
+ call far _directory_resources_exec_allowed
+ or ax,ax
+ jz .busy
+%endif
 %endif
  mov word [process_busy],1
  mov word [process_status],0
@@ -153,6 +166,11 @@ _process_run:
  mov di,process_command_tail+1
  rep movsb
  mov byte [di],13
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ global process_loan_begin_site
+ process_loan_begin_site equ $
+ call process_loan_begin
+%endif
  cmp word [process_memory_released],0
  jne .execute
  mov es,[process_psp]
@@ -205,6 +223,12 @@ _process_run:
  mov ss,[cs:process_saved_ss]
  mov sp,[cs:process_saved_sp]
  mov ds,[cs:process_saved_ds]
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ extern terminal_process_quiet_uart
+ global process_child_quiet_site
+ process_child_quiet_site equ $
+ call far terminal_process_quiet_uart
+%endif
 %ifdef TERMINAL_TRAPS
  call far terminal_trap_resume
  or ax,ax
@@ -227,6 +251,11 @@ _process_run:
 .trap_failed:
  mov word [process_status],7
 .result:
+%endif
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ global process_loan_end_site
+ process_loan_end_site equ $
+ call process_loan_end
 %endif
  mov di,[process_result]
  or di,di
@@ -254,6 +283,77 @@ _process_run:
  pop si
  pop bp
  ret
+
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+; The frozen snapshot/index is the final allocation. It is rebuilt from the
+; separately retained live ring at the next view, and has no active consumer
+; across these explicit PROGRAM/owner gates. Never lend for resource kind6.
+extern terminal_program_pending,terminal_program_active,terminal_program_kind
+extern _redisplay_active,_command_menu_active,_redisplay_live_ready,terminal_snapshot_active
+extern terminal_program_critical_paragraphs,terminal_quit,terminal_exit_code
+global process_loan_begin,process_loan_end
+process_loan_begin:
+ mov word [process_loan_active],0
+ cmp word [terminal_program_active],1
+ jne .done
+ mov ax,[terminal_program_kind]
+ cmp ax,5
+ ja .done
+ cmp ax,2
+ je .done
+ mov ax,[terminal_program_pending]
+ or ax,[_redisplay_active]
+ or ax,[_command_menu_active]
+ or ax,[_redisplay_live_ready]
+ or ax,[terminal_snapshot_active]
+ jnz .done
+ mov ax,[process_keep_paragraphs]
+ cmp ax,[process_minimum_paragraphs]
+ jne .done
+ mov dx,[terminal_program_critical_paragraphs]
+ cmp dx,10h
+ jb .done
+ cmp dx,ax
+ jae .done
+ mov [process_loan_full],ax
+ mov [process_keep_paragraphs],dx
+ mov [process_minimum_paragraphs],dx
+ mov word [process_loan_active],1
+ mov word [process_memory_released],0 ;Every loan must actually resize again.
+.done:
+ ret
+process_loan_end:
+ cmp word [process_loan_active],1
+ jne .done
+ mov es,[process_psp]
+ mov bx,[process_loan_full]
+ mov ah,4ah
+ int 21h
+ jc .failed
+ mov ax,[process_loan_full]
+ mov [process_keep_paragraphs],ax
+ mov [process_minimum_paragraphs],ax
+ mov word [process_loan_active],0
+ mov word [process_memory_released],1
+ ret
+.failed:
+ mov [process_loan_restore_error],ax
+ cmp word [process_dos_error],0
+ jne .primary
+ mov [process_dos_error],ax
+.primary:
+ mov ax,[process_loan_full]
+ mov [process_minimum_paragraphs],ax
+ ; Keep reflects the smaller actual block, never falsely report reacquisition.
+ mov word [process_status],8
+ mov word [process_loan_active],0
+ mov word [terminal_quit],1
+ cmp word [terminal_exit_code],0
+ jne .done
+ mov word [terminal_exit_code],7
+.done:
+ ret
+%endif
 
 ; DS:SI ASCIIZ, AX max payload. CX payload length, CF1 invalid/wrapped.
 ; Reject CR/LF: an internal CR must not silently truncate a DOS command tail.
@@ -339,6 +439,12 @@ process_keep_paragraphs: dw 0
 process_minimum_paragraphs: dw 0
 process_memory_released: dw 0
 process_busy: dw 0
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+global process_loan_active,process_loan_full,process_loan_restore_error
+process_loan_active: dw 0
+process_loan_full: dw 0
+process_loan_restore_error: dw 0
+%endif
 ; Keep the three result WORDs contiguous.
 process_status: dw 0
 process_dos_error: dw 0

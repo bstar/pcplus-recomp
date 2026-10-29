@@ -58,6 +58,11 @@ terminal_snapshot_start:
  jne .denied
  cmp word [terminal_program_pending],0
  jne .denied
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+ extern terminal_program_active
+ cmp word [terminal_program_active],0
+ jne .denied
+%endif
  cmp word [terminal_ansi_wait_active],0
  jne .denied
  cmp word [terminal_transfer_pending],0

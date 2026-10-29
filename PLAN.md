@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Foreground directory resource preflight](docs/DIRECTORY_RESOURCE_OWNER.md)
+now admits a disconnected Alt-D R check through the quiesced PROGRAM owner.
+It stages KEY/KBD resources under a frozen-buffer lease without applying the
+selection. Nested child compilation and the later history viewer work with a
+checked temporary memory loan and restored DOS allocation strategy. Selection
+adoption, translation/scripts, accounting transition, dialing, physical/card
+acceptance and the complete F01–F16 scope remain open.
+
 [Original CLI resource identities](docs/DIRECTORY_RESOURCE_CLI.md) are now bound
 in an opt-in application variant before directory startup.17 DOS8086 workflows/
 486 assertions and a38-source exact rebuild cover the actual adapter through

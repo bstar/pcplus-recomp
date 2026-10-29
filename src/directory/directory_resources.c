@@ -143,6 +143,12 @@ finished:
  if(claim){r->release_status=capture_file_release(reserved,r);if(r->release_status){r->state=DR_HELD;if(!r->status)r->status=DR_RELEASE;return r->status;}}
 resolved:
  r->state=DR_RESOLVED;
- if(!r->status)_fmemcpy(output,&stage,sizeof(stage));
+ if(!r->status){
+#ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+  for(i=0;i<sizeof(stage);++i)((unsigned char __far *)output)[i]=((unsigned char *)&stage)[i];
+#else
+  _fmemcpy(output,&stage,sizeof(stage));
+#endif
+ }
  return r->status;
 }

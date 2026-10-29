@@ -68,16 +68,25 @@ def main():
             assert json.loads((binary.parent/'manifest.json').read_text())['experimental_directory_view']
             marker='K E Y T E S T enter p1800 '
             assert keys.count(marker)==1
-            keys=keys.replace(marker,marker+('a-d p600 enter p3500 enter p1800 escape p500 end p3500 escape p500 ' if args.directory_preview_overlay else 'a-d p600 enter p3500 end p3500 escape p500 '))
+            resource_owner=bool(json.loads((binary.parent/'manifest.json').read_text()).get('experimental_directory_resource_owner'))
+            keys=keys.replace(marker,marker+('a-d p600 enter p3500 enter p1800 '+('r p700 ' if resource_owner else '')+'escape p500 end p3500 escape p500 ' if args.directory_preview_overlay else 'a-d p600 enter p3500 end p3500 escape p500 '))
             observer=base/(args.label+'-observer.COM')
             assert not observer.exists()
-            subprocess.run(['nasm','-fbin',*(['-DDIRECTORY_PREVIEW']if args.directory_preview_overlay else[]),str(ROOT/'standalone/directory_view_watch.asm'),'-o',str(observer)],check=True)
+            subprocess.run(['nasm','-fbin',*(['-DDIRECTORY_PREVIEW']if args.directory_preview_overlay else[]),*(['-DDIRECTORY_RESOURCE_OWNER']if resource_owner and args.directory_preview_overlay else[]),str(ROOT/'standalone/directory_view_watch.asm'),'-o',str(observer)],check=True)
+        exit_wait='2'
+        if args.directory_preview_overlay and resource_owner:
+            # Preserve the recipe's3-second final pause and one ordinary Alt-X,
+            # supplied by the adapter. Its redundant second exit would push
+            # this expanded preflight recipe past the DOS500-character bound.
+            assert keys.endswith(' p3000 a-x')
+            keys=keys[:-len(' p3000 a-x')]
+            exit_wait='3'
         command = [sys.executable, str(ROOT/'lab/bbs/editor_dos_probe.py'), str(binary),
             'enigma', '--port', str(ready['endpoint']['port']),
             '--server-log', str(SOURCE/'logs/enigma-bbs.log'), '--label', args.label,
             '--com', '3', '--baud', '19200', '--flow', 'HARD', '--dial-fixture',
             '--irq', '5', '--mouse-scales', '8', '4', '--cpu', '8086',
-            '--timeout', '160', '--wait', '2', '--raw-upstream', '--keys', keys]
+            '--timeout', '160', '--wait', exit_wait, '--raw-upstream', '--keys', keys]
         if observer:command+=['--video-observer',str(observer)]
         if args.directory_overlay:command+=['--directory-view-fixture']
         with log_path.open('w') as log:
@@ -102,7 +111,7 @@ def main():
             checks['unavailable_AltD_observed']=flags&2!=0 and b'Not available in this build:' in capture[4006:8006:2]
             observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'REFVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
         if args.directory_overlay:
-            capture=(output/'DIRVIEW.BIN').read_bytes();assert len(capture)==(16006 if args.directory_preview_overlay else 12006)
+            capture=(output/'DIRVIEW.BIN').read_bytes();assert len(capture)==(20006 if args.directory_preview_overlay and resource_owner else 16006 if args.directory_preview_overlay else 12006)
             magic,flags,ticks=struct.unpack_from('<3H',capture)
             first,last,loading=(capture[6+i*4000:4006+i*4000:2] for i in range(3))
             checks['directory_prompt_and_loading']=magic==0x4456 and flags&12==12 and b'Reading directory...' in loading
@@ -113,6 +122,10 @@ def main():
                 checks['directory_preview_observed']=flags&16!=0 and b'SELECTED ENTRY // PROPOSED SETTINGS' in proposed
                 checks['preview_target_and_DTE']=b'555' in proposed and b'19200' in proposed
                 checks['preview_privacy']=b'HIDDENPASS' not in proposed and b'SECRETA' not in proposed
+                if resource_owner:
+                    blocked=capture[16006:20006:2]
+                    checks['online_resource_check_refused']=flags&32!=0 and b'Resource check unavailable.' in blocked
+                    checks['resource_check_key_stayed_local']=b'r' not in (output/'serial-received.bin').read_bytes()
             observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'DIRVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
         result = dict(passed=all(checks.values()), checks=checks,
             bridge=ready, command=command, binary_sha256=sha(binary),

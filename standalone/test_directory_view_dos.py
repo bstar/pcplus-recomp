@@ -31,7 +31,8 @@ def main():
     out = driver.ROOT / 'build/directory-view-dos' / args.label
     out.mkdir(parents=True, exist_ok=False)
     observer = out / 'DIRWATCH.COM'
-    subprocess.run(['nasm', '-fbin', *(['-DDIRECTORY_PREVIEW'] if args.preview else []), str(driver.ROOT / 'standalone/directory_view_watch.asm'), '-o', str(observer)], check=True)
+    resource_owner=bool(manifest.get('experimental_directory_resource_owner'))
+    subprocess.run(['nasm', '-fbin', *(['-DDIRECTORY_PREVIEW'] if args.preview else []),*(['-DDIRECTORY_RESOURCE_OWNER'] if args.preview and resource_owner else []), str(driver.ROOT / 'standalone/directory_view_watch.asm'), '-o', str(observer)], check=True)
     prm = bytearray(modem_fixture(timeout=5))
     struct.pack_into('<2H', prm, 0, 2, 5)
     struct.pack_into('<H', prm, 0x178, 0x3e8)
@@ -51,7 +52,7 @@ def main():
         online_updates=[(2.8 if args.missing else 3.0, b'\x1b[5;1HBBS-DURING-READ\x1b[6n')])
     capture = (runout / 'DIRVIEW.BIN').read_bytes()
     font = (runout / 'VGA16.BIN').read_bytes()
-    assert len(capture) == (16006 if args.preview else 12006) and len(font) == 4096
+    assert len(capture) == (20006 if args.preview and resource_owner else 16006 if args.preview else 12006) and len(font) == 4096
     magic, flags, ticks = struct.unpack_from('<3H', capture)
     first, last, loading = (capture[6 + i * 4000:4006 + i * 4000] for i in range(3))
     wire = (runout / 'serial.bin').read_bytes()
