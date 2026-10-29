@@ -622,5 +622,15 @@
     "Uninstalled save failure or cancellation retains pending statistics for shutdown; installed cleanup error consumes statistics once and preserves recovery ownership.",
     "No automatic retry/reset of uncertain file ownership.",
     "The full F01-F16 application scope remains open."
-  ]
+  ],
+  "committed_source_proof": {
+    "path": "build/directory-retirement-committed-source-20261029/result.json",
+    "sha256": "fcf0e0d5e7d9a91a4459956b8e399cdf124212ef9560f3c440ea681e552c4d67",
+    "source_commit": "a580fc70104a8732bddb16c25db740cad6e7f690",
+    "source_files": 772,
+    "package_files": 10,
+    "ancestor_git_unavailable": true,
+    "exact_files": true,
+    "original_inputs": []
+  }
 }

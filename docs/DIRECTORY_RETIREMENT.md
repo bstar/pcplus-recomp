@@ -89,6 +89,11 @@ run through the actual proxy, pass. The ENiGMA check uses250 ms key framing and
 no artificial input-byte delay; its historical `exact_screen` predicate checks
 final markers/frame size, not a complete character/attribute oracle.
 
+An isolated export of all 772 declared source files from commit `a580fc7`
+reproduces all ten package files exactly with the pinned Nix toolchain. The
+export cannot discover ancestor Git metadata and includes no original binary
+input. Uncommitted telephone-log work is excluded from that reproduction.
+
 The candidate retains both63000-byte history allocations, the8192-byte stack
 and the existing63504-byte frozen-memory loan. Near storage is65136 bytes,
 resident CS has246 spare bytes and minimum module retention is411904 bytes.
