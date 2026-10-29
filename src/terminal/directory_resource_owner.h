@@ -9,7 +9,7 @@ typedef struct directory_resource_owner_snapshot {
 extern directory_resource_owner_snapshot terminal_directory_resources;
 /* Preview-only: retain the exact694-byte actual plan/transfer snapshot and
  * proposal/accepted-image seals at frozen+5602..6300 (5926..6624 with
- * DIRECTORY_TRANSLATION_RESOURCES). Inputs are disjoint
+ * DIRECTORY_TRANSLATION_RESOURCES;6002..6700 with script resources). Inputs are disjoint
  * caller-owned near stack objects, DS=SS. No IO or active-state mutation. */
 unsigned __far __cdecl terminal_directory_resources_bind(const prm_dos_image *,
  const live_configuration_plan *,const transfer_import_settings *);
@@ -27,6 +27,8 @@ unsigned __far __cdecl terminal_directory_resources_queued(void);
  * Check seals, then stage resources at frozen-history+3978. No selected entry,
  * keymap, UART configuration, target or accounting baseline is applied.
  * DIRECTORY_TRANSLATION_RESOURCES stages XLT in the same1948-byte bundle.
+ * DIRECTORY_SCRIPT_RESOURCES adds canonical script/fingerprint metadata for
+ * a2024-byte bundle. No source is compiled or script body executed here.
  * Serial quiescence is a caller obligation; C additionally checks ownership.
  * A16-bit seal detects accidental changes, not authenticity/version identity.
  */

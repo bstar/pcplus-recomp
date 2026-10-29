@@ -1,5 +1,11 @@
 # Complete DOS rebuild plan
 
+[Directory script preflight](docs/DIRECTORY_SCRIPT_RESOURCES.md) adds ASX/ASP lookup
+and whole-file32-bit length/CRC32 fingerprints to the KEY/KBD/XLT transaction.
+Source candidates remain explicit and require compilation before adoption.
+Independent capture remains open through the internal check. Compile/output
+ownership, launch fingerprint checks, selected-state publication/dialing and full application acceptance remain open.
+
 [Directory translation staging](docs/DIRECTORY_TRANSLATION.md) extends the
 opt-in resource transaction to KEY/KBD/XLT, retains original CLI /X identity
 across CWD changes, and preserves the whole bundle on any read/close failure.

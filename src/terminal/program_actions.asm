@@ -279,8 +279,12 @@ terminal_program_poll:
  jmp .done ; Wait for this XOFF's physical shift-register completion too.
 .launch:
 %ifdef TERMINAL_DIRECTORY_RETIREMENT
- ; This internal file transaction never EXECs a child. Keep independent
+ ; Internal file transactions never EXEC a child. Keep independent
  ; capture/printer/file owners alive; shared directory claims reject aliases.
+%ifdef DIRECTORY_SCRIPT_RESOURCES
+ cmp word [terminal_program_kind],6
+ je .retirement_capture_ready
+%endif
  cmp word [terminal_program_kind],7
  je .retirement_capture_ready
 %endif

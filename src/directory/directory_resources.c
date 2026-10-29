@@ -14,9 +14,15 @@
 typedef char dr_word_abi[sizeof(unsigned)==2?1:-1];
 #ifdef DIRECTORY_TRANSLATION_RESOURCES
 typedef char dr_request_abi[sizeof(directory_resource_request)==314?1:-1];
+#ifdef DIRECTORY_SCRIPT_RESOURCES
+typedef char dr_bundle_abi[sizeof(directory_resource_bundle)==2024?1:-1];
+typedef char dr_snapshot_abi[sizeof(directory_resource_snapshot)==272?1:-1];
+const unsigned directory_translation_layout[5]={314,2024,272,202,6700};
+#else
 typedef char dr_bundle_abi[sizeof(directory_resource_bundle)==1948?1:-1];
 typedef char dr_snapshot_abi[sizeof(directory_resource_snapshot)==206?1:-1];
 const unsigned directory_translation_layout[5]={314,1948,206,202,6624};
+#endif
 #else
 typedef char dr_request_abi[sizeof(directory_resource_request)==248?1:-1];
 typedef char dr_bundle_abi[sizeof(directory_resource_bundle)==1624?1:-1];
@@ -82,12 +88,27 @@ static unsigned lookup(unsigned psp,const char *leaf,char *out)
  if(status){directory_resource_result.status=DR_LOOKUP;directory_resource_result.source_status=status;return 2;}
  return inspect(path,out);
 }
+#ifdef DIRECTORY_SCRIPT_RESOURCES
+/* Match the interpreter: qualified operands have no PCPLUS fallback; bare
+ * names try compiled CWD/PCPLUS before source CWD/PCPLUS. An unavailable or
+ * malformed PCPLUS environment supplies no fallback, as runtime_source_open. */
+static unsigned script_lookup(unsigned psp,const char *name,char *out)
+{
+ char path[64];unsigned status=inspect(name,out);
+ if(status!=1 || strchr(name,'\\') || strchr(name,':'))return status;
+ if(resource_pcplus_path(psp,name,path))return 1;
+ return inspect(path,out);
+}
+#endif
 static unsigned __far __cdecl reserved(const char *identity,void *context)
 {
  if(context!=&directory_resource_result)return 1;
  return !strcmp(identity,directory_resource_result.keyboard_path) || !strcmp(identity,directory_resource_result.actions_path)
 #ifdef DIRECTORY_TRANSLATION_RESOURCES
   || !strcmp(identity,directory_resource_result.translation_path)
+#endif
+#ifdef DIRECTORY_SCRIPT_RESOURCES
+  || !strcmp(identity,directory_resource_result.script_path)
 #endif
  ;
 }
@@ -96,6 +117,10 @@ unsigned __cdecl directory_resources_stage(const directory_resource_request *req
 {
  directory_resource_bundle stage;
  directory_resource_snapshot *r=&directory_resource_result;
+#ifdef DIRECTORY_SCRIPT_RESOURCES
+ directory_script_result script_result;
+ char script_name[13];
+#endif
  keymap_dos_result kbd;key_actions_dos_result key;
 #ifdef DIRECTORY_TRANSLATION_RESOURCES
  xlt_dos_result xlt;
@@ -129,8 +154,14 @@ unsigned __cdecl directory_resources_stage(const directory_resource_request *req
  }
  if(directory_binding_name(request->record+0x56,0,actions) ||
   directory_binding_name(request->record+0x5f,1,keyboard))return DR_ARGUMENT;
+#ifdef DIRECTORY_SCRIPT_RESOURCES
+ if(directory_script_name(request->record+0x34,script_name))return DR_ARGUMENT;
+#endif
  for(i=0;i<79;++i){for(j=0;j<12 && defaults[i*12+j];++j){}if(j==12)return DR_ARGUMENT;}
  memset(r,0,sizeof(*r));r->state=DR_ACTIVE;
+#ifdef DIRECTORY_SCRIPT_RESOURCES
+ r->script_handle=65535U;
+#endif
  memset(&stage,0,sizeof(stage));stage.profile=request->profile;
  memcpy(stage.keyboard,defaults,948);
  for(i=0;i<10;++i)stage.actions[i*54]=3;
@@ -164,10 +195,27 @@ unsigned __cdecl directory_resources_stage(const directory_resource_request *req
  }
  memcpy(r->translation_path,stage.translation_path,64);
 #endif
+#ifdef DIRECTORY_SCRIPT_RESOURCES
+ if(script_name[0]){
+  stage.script.kind=DSCRIPT_COMPILED;
+  status=script_lookup(request->psp,script_name,stage.script_path);
+  if(status==1){
+   for(i=0;script_name[i];++i){}
+   script_name[i-1]='P';stage.script.kind=DSCRIPT_SOURCE;
+   status=script_lookup(request->psp,script_name,stage.script_path);
+  }
+  if(status==1){r->status=DR_LOOKUP;r->dos_error=2;}
+  if(status)goto resolved;
+ }
+ memcpy(r->script_path,stage.script_path,64);
+#endif
  memcpy(r->keyboard_path,stage.keyboard_path,64);memcpy(r->actions_path,stage.actions_path,64);
  if(stage.keyboard_path[0] || stage.actions_path[0]
 #ifdef DIRECTORY_TRANSLATION_RESOURCES
   || stage.translation_path[0]
+#endif
+#ifdef DIRECTORY_SCRIPT_RESOURCES
+  || stage.script_path[0]
 #endif
  ){
   r->claim_status=capture_file_reserve(reserved,r);
@@ -189,6 +237,14 @@ unsigned __cdecl directory_resources_stage(const directory_resource_request *req
   status=xlt_dos_read(stage.translation_path,stage.translation,&xlt);
   if(status){r->status=DR_TRANSLATION;r->source_status=status;r->dos_error=xlt.dos_error;r->close_error=xlt.close_error;goto finished;}
   stage.mask|=16384;
+ }
+#endif
+#ifdef DIRECTORY_SCRIPT_RESOURCES
+ if(stage.script_path[0]){
+  memset(&script_result,0,sizeof(script_result));script_result.handle=65535U;
+  status=directory_script_read(stage.script_path,stage.script.kind,&stage.script,&script_result);
+  r->script_handle=script_result.handle;
+  if(status){r->status=DR_SCRIPT;r->source_status=status;r->dos_error=script_result.dos_error;r->close_error=script_result.close_error;goto finished;}
  }
 #endif
 finished:
