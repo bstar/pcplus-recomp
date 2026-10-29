@@ -61,7 +61,12 @@ compiles an ASPECT source and reopens the frozen viewer after child return.
 The build uses 64,976 near bytes, leaves 188 resident-CS bytes free and retains
 410,688 module bytes. No capacities or stack sizes change. Ordinary, LoC.6 and
 CLI-only control binaries remain byte-identical. All work uses the pinned Nix
-toolchain and public source inputs.
+toolchain and public source inputs. Exporting only committed source from
+`ad2d8ff` into an empty tree without ancestor Git metadata rebuilds all ten
+package files byte for byte from 770 declared source inputs. Stock ENiGMA
+login/editor, preview and online-refusal checks pass through the actual proxy
+with 250 ms key framing and no artificial input-byte delay. These are semantic
+interaction and final-marker checks, not a full independent rendering oracle.
 
 ## Remaining transition work
 

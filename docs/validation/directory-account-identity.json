@@ -387,7 +387,15 @@
       "sha256": "495489a9621310083d9f0cf4d6def5c76a77619b154168baa8b9154dec49ca4b"
     }
   },
-  "source_reproduction": "Pending committed-source proof; not yet claimed.",
+  "source_reproduction": {
+    "passed": true,
+    "exported_commit": "ad2d8fffa71d6582692775e016303589876ef301",
+    "source_files": 770,
+    "package_files": 10,
+    "ancestor_git_unavailable": true,
+    "path": "build/directory-account-identity-committed-source-20261029/result.json",
+    "sha256": "43d47f8ab0df8fbcde8271235440287cd7492c266d6282ba8cc8ac48b698819b"
+  },
   "limitations": [
     "Canonical DOS namespace identity, not an externally locked file generation or physical medium.",
     "Startup source names must resolve to validated absolute DOS83 paths of at most63 bytes.",
