@@ -1,0 +1,626 @@
+{
+  "passed": true,
+  "binary_sha256": "fb36d39ecc4beaeb7a7ae3c1fd07eb2fe31c949516324b8f71962f30e6fa1e91",
+  "package": "build/special-directory-retirement-capture-20261029/PCPLUSSE",
+  "package_manifest_sha256": "af46e8c2c9c3cb3bdae4c2a4a7be223fa27b5e93cbe1a58ce8e26d9a521465a8",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "b7f3d522359c58f046f760c0c7e031b45e7d1663c5506e72db8360df13668f93",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "fb36d39ecc4beaeb7a7ae3c1fd07eb2fe31c949516324b8f71962f30e6fa1e91",
+    "VERSION.TXT": "06929ff1f7bb835f8ad97ffe09a0802c549ab8acc200d1855b2cad7054a68c31",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "source_base_commit": "304bb0bda1b51f1354bc00efd5caa6bfc8eb7912",
+  "source_files": 772,
+  "original_inputs": [],
+  "native_workflows": [
+    {
+      "case": "normal",
+      "passed": true,
+      "DOS_operations": 414,
+      "violations": 0,
+      "setup_EXECs": 1,
+      "injected_faults": 0,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true
+      }
+    },
+    {
+      "case": "counter-wrap",
+      "passed": true,
+      "DOS_operations": 414,
+      "violations": 0,
+      "setup_EXECs": 0,
+      "injected_faults": 0,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true
+      }
+    },
+    {
+      "case": "capture-preserved",
+      "passed": true,
+      "DOS_operations": 414,
+      "violations": 0,
+      "setup_EXECs": 0,
+      "injected_faults": 0,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true,
+        "capture_stayed_open": true,
+        "capture_file_created": true
+      }
+    },
+    {
+      "case": "existing-backup",
+      "passed": true,
+      "DOS_operations": 4,
+      "violations": 0,
+      "setup_EXECs": 0,
+      "injected_faults": 0,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "recovery_file_preserved": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true
+      }
+    },
+    {
+      "case": "installed-cleanup-error",
+      "passed": true,
+      "DOS_operations": 414,
+      "violations": 0,
+      "setup_EXECs": 0,
+      "injected_faults": 1,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true
+      }
+    }
+  ],
+  "linked_inputs": 35,
+  "damaged_linkage_controls": [
+    {
+      "case": "wrong-retirement-kind",
+      "rejected": true
+    },
+    {
+      "case": "wrong-setup-kind",
+      "rejected": true
+    },
+    {
+      "case": "wrong-flush-target",
+      "rejected": true
+    },
+    {
+      "case": "wrong-poll-target",
+      "rejected": true
+    },
+    {
+      "case": "wrong-frozen-setup-target",
+      "rejected": true
+    },
+    {
+      "case": "missing-poll-relocation",
+      "rejected": true
+    }
+  ],
+  "memory": {
+    "near_bytes": 65136,
+    "near_spare_bytes": 400,
+    "near_relative_segment": 12504,
+    "far_relative_segment": 17325,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 17837,
+    "history_bytes": 63000,
+    "far_end_linear": 348392,
+    "stack_end_linear": 265200,
+    "loaded_module_bytes": 232924,
+    "minimum_allocated_module_bytes": 411904,
+    "retained_parent_paragraphs": 25760,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 21775,
+    "snapshot_image_offset": 61000,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 411400,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 16575,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 265200,
+        "end_linear": 269200
+      },
+      "ed_screen": {
+        "relative_segment": 16575,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 269200,
+        "end_linear": 273200
+      },
+      "program_screen": {
+        "relative_segment": 16575,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 265200,
+        "end_linear": 269200
+      },
+      "redisplay_live": {
+        "relative_segment": 16575,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 269200,
+        "end_linear": 273200
+      },
+      "redisplay_view": {
+        "relative_segment": 16575,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 273200,
+        "end_linear": 277200
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "program_browser_screen_overlay": true,
+    "editor_viewer_screen_overlay": true,
+    "snapshot_history_tail_overlay": true,
+    "snapshot_history_bytes_reclaimed": 2000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 411400,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 21775,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 411894,
+    "resident_CS_extent_bytes": 65290,
+    "resident_CS_spare_bytes": 246,
+    "substitute_native_bytes_verified": 53,
+    "substitute_native_dependencies_verified": 4,
+    "substitute_state_words_verified": 4,
+    "far_usage_bytes": 1493,
+    "far_usage_segment": 10615,
+    "far_usage_DS_restore_verified": true,
+    "directory_view_code_bytes": 5875,
+    "directory_view_FS_callbacks_verified": 3,
+    "directory_view_scratch_offset": 3141,
+    "directory_view_scratch_bytes": 512,
+    "directory_view_snapshot_page_bytes": 2788,
+    "directory_preview_proposal_bytes": 1190,
+    "directory_preview_snapshot_bytes": 3978,
+    "directory_preview_capture_policy": 1,
+    "directory_preview_capture_adapter_verified": true,
+    "directory_resource_cli_far_splash_bytes": 377,
+    "directory_resource_cli_snapshot_bytes": 138,
+    "directory_resource_cli_startup_order_verified": true,
+    "directory_resource_owner_snapshot_bytes": 14,
+    "directory_resource_bundle_bytes": 1624,
+    "directory_resource_lease_start": 2788,
+    "directory_resource_lease_end": 6300,
+    "directory_resource_actual_session_bytes": 694,
+    "directory_resource_preview_binding_bytes": 698,
+    "directory_account_canonical_identity_callbacks_verified": 1,
+    "process_loan_full_paragraphs": 25760,
+    "process_loan_critical_paragraphs": 21791,
+    "process_loan_bytes": 63504,
+    "process_loan_code_calls_verified": true,
+    "process_child_quiet_before_trap_resume_verified": true,
+    "directory_retirement_snapshot_bytes": 10,
+    "directory_retirement_poll_before_PROGRAM_verified": true,
+    "directory_frozen_setup_tail_bytes": 68,
+    "directory_frozen_setup_executable_bytes": 64,
+    "process_bank_bytes": 903,
+    "process_bridge_pairs_verified": 1,
+    "process_near_entry_bytes": 22,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "recording_matcher_lead_site": 38873,
+    "recording_rx_far_call_sites": [
+      38876,
+      15124
+    ],
+    "recording_rx_callback_site": 108717,
+    "recording_actor_guard_sites": [
+      15124,
+      15523,
+      25483,
+      29534,
+      36675,
+      39202,
+      167160,
+      168261,
+      171352
+    ],
+    "recording_UI_boundary_sites": [
+      192968,
+      194522,
+      108671
+    ],
+    "recording_UI_optimized_sites": [],
+    "recording_tx_origin_bytes": 128,
+    "recording_tx_origin_start": 110951,
+    "recording_tx_far_call_sites": [
+      39672,
+      36992,
+      40554,
+      25000
+    ],
+    "recording_tx_callback_site": 110942,
+    "recording_terminal_state_bytes": 392,
+    "recording_terminal_bank_functions_verified": 9,
+    "recording_terminal_far_call_sites": [
+      23450,
+      24386
+    ],
+    "recorder_code_literal_bytes_verified": 223,
+    "recorder_code_literal_sites": [
+      160202,
+      160219,
+      160233,
+      160253,
+      160273,
+      160279,
+      160299,
+      160330,
+      160415
+    ],
+    "recording_bank_functions_verified": 14,
+    "recording_resident_callbacks_verified": 9,
+    "recording_adapter_far_call_sites": [
+      60434,
+      60458,
+      60482
+    ],
+    "capture_reservation_far_bindings_verified": 2,
+    "capture_reservation_far_call_sites": [
+      58309,
+      159271
+    ],
+    "capture_reservation_initialized_bytes": 8,
+    "command_menu_banked_call_sites": [
+      130438,
+      130553,
+      131080
+    ],
+    "command_menu_code_segment": 11439,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "directory_storage_snapshot_bytes": 222,
+    "directory_storage_callbacks_verified": 3,
+    "directory_storage_EXEC_gate_verified": true,
+    "configuration_bridge_pairs_verified": 102,
+    "transfer_ui_far_entries_verified": 4,
+    "transfer_ui_resident_callbacks_verified": 3,
+    "redisplay_bridge_pairs_verified": 4,
+    "viewer_live_plane_admission_verified": true,
+    "scroll_field_bridge_pairs_verified": 3,
+    "line_preflight_far_calls_verified": 2,
+    "wide_character_far_calls_verified": 2,
+    "wide_character_prepare_far_calls_verified": 1,
+    "script_window_keyboard_far_adapters_verified": true,
+    "aspect_command_preflight_verified": true,
+    "aspect_viewport_lease_words_verified": 3,
+    "protected_erase_far_bridge_verified": true,
+    "protected_erase_native_dependencies_verified": 4,
+    "erase_after_projection_initially_idle": true,
+    "wide_clear_rectangle_route_verified": true,
+    "alternate_output_far_bridge_verified": true,
+    "alternate_output_native_dependencies_verified": 4,
+    "source_owned_output_table_bytes": 256,
+    "aspect_far_services_verified": 17,
+    "aspect_resident_far_references_verified": 21,
+    "aspect_controller_read_references_verified": 1,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 50,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_controller_references_verified": 5,
+    "line_attribute_video_callbacks_verified": 2,
+    "line_controller_entry_pairs_verified": 4,
+    "line_controller_register_callbacks_verified": 3,
+    "line_controller_code_bytes": 421,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "mouse_bridge_pairs_verified": 10,
+    "mouse_code_bytes": 3065,
+    "mouse_shared_native_state_bytes": 28,
+    "resident_code_bytes": 65290,
+    "resident_code_spare_bytes": 246,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65290
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4081,
+        "offset": 0,
+        "bytes": 12908
+      },
+      {
+        "name": "PROCESS_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4888,
+        "offset": 0,
+        "bytes": 903
+      },
+      {
+        "name": "HOOK_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4945,
+        "offset": 0,
+        "bytes": 27366
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6656,
+        "offset": 0,
+        "bytes": 60421
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10433,
+        "offset": 0,
+        "bytes": 2900
+      },
+      {
+        "name": "USAGE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10615,
+        "offset": 0,
+        "bytes": 1493
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10709,
+        "offset": 0,
+        "bytes": 1461
+      },
+      {
+        "name": "SPLASH_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10801,
+        "offset": 0,
+        "bytes": 377
+      },
+      {
+        "name": "TRAP_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10825,
+        "offset": 0,
+        "bytes": 864
+      },
+      {
+        "name": "MOUSE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10879,
+        "offset": 0,
+        "bytes": 3065
+      },
+      {
+        "name": "DIRECTORY_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11071,
+        "offset": 0,
+        "bytes": 5875
+      },
+      {
+        "name": "REFERENCE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11439,
+        "offset": 0,
+        "bytes": 17029
+      }
+    ],
+    "far_code_bridge_pairs_verified": 169
+  },
+  "enigma_checks": {
+    "harness": true,
+    "semantic_audit": true,
+    "exact_screen": true,
+    "proxy_source_unchanged": true,
+    "product_source_unchanged": true,
+    "directory_prompt_and_loading": true,
+    "directory_first_and_last_pages": true,
+    "no_private_directory_fields": true,
+    "directory_preview_observed": true,
+    "preview_target_and_DTE": true,
+    "preview_privacy": true,
+    "online_resource_check_refused": true,
+    "resource_check_key_stayed_local": true
+  },
+  "control_binaries": [
+    {
+      "variant": "terminal",
+      "sha256": "bd86a10b94544007242d2ce6bb737be5ab90909d4fcf2bac8713120d2b2ffa10",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-directory-storage-276a15011380",
+      "sha256": "4c23fa0750e65c857435d5d587cbeba30a0fe42a85da9951bc15e61352c1f589",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-resource-cli-80b5a4c35d40",
+      "sha256": "a89f4382bc01fec3c62cc20e42e2bdd15ba77c78ee86bd05021d953be5ad9869",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-resource-owner-f8838a85007e",
+      "sha256": "e718b0bce67cd0fb86b7f8ca049a3ae429e13a7b6ea1033ce2fb012450cbdbbe",
+      "unchanged": true
+    }
+  ],
+  "evidence": {
+    "native": {
+      "path": "build/directory-retirement-native-capture-20261029/result.json",
+      "sha256": "c65539e61f6366e527480ce0a77ad9161fd3bddb0aaa5d6c97ac0b088aa41100"
+    },
+    "linked": {
+      "path": "build/directory-retirement-linked-capture-20261029/result.json",
+      "sha256": "e2c5bb09206bb3cbaddd6304547a8102080ceeb372ea184598056632b6956100"
+    },
+    "nested": {
+      "path": "build/directory-retirement-nested-final-20261029/result.json",
+      "sha256": "892e98d0def7d2b537345252a17203f4a4b0aee1ff9a689fbe889401e755de5e"
+    },
+    "enigma": {
+      "path": "build/bbs-lab/results/enigma/directory_retirement_final_20261029/proxy-integration.json",
+      "sha256": "65b94b95e4c5f2fd4fa5e77daf12659fc60f719f7b166295530e0716c8c0ff9e"
+    },
+    "controls": {
+      "path": "build/directory-retirement-controls-20261029.json",
+      "sha256": "28b7b71a7d9ea0eb9f2606d3e4109afa2e7fd7130f58f9f57b2b7fa86a9c83d4"
+    }
+  },
+  "live_selection_adoption_complete": false,
+  "full_application_complete": false,
+  "physical_acceptance": false,
+  "card_written": false,
+  "limitations": [
+    "Selected-entry adoption, translation/script staging and dialing remain open.",
+    "ENiGMA exact_screen checks frame size and selected markers, not an independent complete character/attribute oracle.",
+    "The proxy test uses an isolated software bridge and stock loopback ENiGMA; no SIP, DSP, physical CTS or analog validation.",
+    "Uninstalled save failure or cancellation retains pending statistics for shutdown; installed cleanup error consumes statistics once and preserves recovery ownership.",
+    "No automatic retry/reset of uncertain file ownership.",
+    "The full F01-F16 application scope remains open."
+  ]
+}

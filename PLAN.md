@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+[Offline accounting retirement](docs/DIRECTORY_RETIREMENT.md) now uses an
+opt-in quiesced PROGRAM worker after disconnect, preserving pending/recovery
+ownership and reconciling installed statistics into logical/setup contexts.
+The same variant fixes settings launch after child CWD changes by retaining
+the frozen PRM namespace and locating the sibling editor. Selected-entry commit,
+translation/scripts, dialing, physical/card and full F01–F16 remain open.
+
 [Canonical accounting source identity](docs/DIRECTORY_ACCOUNT_IDENTITY.md)
 fixes a reproduced wrong-file update after an ASPECT child changes CWD.
 Selected-directory startup now opens and retains the same canonical name;

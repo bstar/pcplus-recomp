@@ -8,6 +8,13 @@ extern terminal_program_start,terminal_program_kind
 global terminal_setup_start
 ; AX0 queued,1 no explicit supported leaf,2 busy. Preserve BP/SI/DI/ES.
 terminal_setup_start:
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+ extern _terminal_setup_frozen_start
+ push es
+ call far _terminal_setup_frozen_start
+ pop es
+ ret
+%else
  push bp
  push si
  push di
@@ -107,8 +114,14 @@ terminal_setup_start:
  pop si
  pop bp
  ret
+%endif
 SEGMENT _DATA public class=DATA use16
 global terminal_setup_tail,terminal_setup_status
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+terminal_setup_tail: times 68 db 0
+global setup_schedule_command
+%else
 terminal_setup_tail: times 14 db 0
+%endif
 terminal_setup_status: dw 0
 setup_schedule_command: db 'PRMEDIT.EXE',0

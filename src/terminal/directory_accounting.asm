@@ -40,6 +40,10 @@ terminal_directory_note_connected:
  test word [terminal_option_mask],64
  jz .done
  call terminal_directory_script_connected
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+ extern _directory_retire_armed
+ mov word [_directory_retire_armed],1
+%endif
  mov byte [directory_pending],1
  inc word [directory_pending_count]
  mov ah,0x2a

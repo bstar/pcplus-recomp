@@ -53,4 +53,14 @@ unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask);
  * cannot be reused. Mask8192 reports an independently adopted preference edit. */
 unsigned __cdecl live_setup_transfer_settings(transfer_import_settings *destination);
 unsigned __cdecl live_setup_abort(unsigned unused);
+#ifdef TERMINAL_DIRECTORY_RETIREMENT
+/* Pure foreground reconciliation after owned accounting. Only the record's
+ * date/count bytes61..71 may differ. action0 checks,1 publishes these11 bytes
+ * into the frozen setup context, preserving all source settings baselines.
+ * No pending setup/offer, IO, canonical lookup or active state mutation. */
+unsigned __cdecl live_setup_reconcile_accounting(const directory_live_context *,unsigned);
+/* Build a bounded explicit tail for the frozen canonical PRM. No IO or state
+ * mutation. The settings launcher uses this same identity as finish(). */
+unsigned __cdecl live_setup_frozen_command(char *);
+#endif
 #endif

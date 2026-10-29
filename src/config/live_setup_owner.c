@@ -5,6 +5,9 @@ extern transfer_import_settings terminal_transfer_preferences;
 extern unsigned terminal_sound_enabled;
 #endif
 #include <string.h>
+#ifdef TERMINAL_DIRECTORY_RETIREMENT
+#include "../capture/capture_file.h"
+#endif
 #ifdef TERMINAL_SESSION_BASELINE
 #include "../terminal/session_baseline.h"
 #endif
@@ -73,7 +76,9 @@ unsigned __cdecl live_setup_begin(const char *path,
  const directory_live_context *context,const live_configuration_plan *active,
  unsigned option_mask,const unsigned char *target)
 {
+#ifndef TERMINAL_DIRECTORY_RETIREMENT
  char canonical[128];
+#endif
  if(!external(path,64) || !external(active,sizeof(*active)) || !external(target,64) ||
   (context && !external(context,sizeof(*context))))return LIVE_SETUP_ARGUMENT;
  if(owner.bound!=1)return LIVE_SETUP_UNBOUND;
@@ -82,8 +87,10 @@ unsigned __cdecl live_setup_begin(const char *path,
   (context!=0)!=owner.has_context || ((option_mask&64)!=0)!=owner.has_context ||
   !(option_mask&16) || !string_size((const char *)target,64))return LIVE_SETUP_IDENTITY;
  if(context && memcmp(context,&owner.context,sizeof(*context)))return LIVE_SETUP_IDENTITY;
+#ifndef TERMINAL_DIRECTORY_RETIREMENT
  memset(canonical,0,sizeof(canonical));
  if(capture_fs_canonical(path,canonical) || !same(canonical,owner.canonical,128))return LIVE_SETUP_IDENTITY;
+#endif
  memcpy(&owner.active,active,sizeof(*active));memcpy(owner.target,target,64);
  owner.option_mask=option_mask;owner.offered_mask=owner.transfer_ready=0;
 #ifdef TERMINAL_MOUSE
@@ -222,3 +229,31 @@ unsigned __cdecl live_setup_transfer_settings(transfer_import_settings *destinat
  if(owner.bound!=1 || owner.pending || owner.transfer_ready!=1)return LIVE_SETUP_STATE;
  return transfer_import_decode(&owner.image,destination)?LIVE_SETUP_DECODE:LIVE_SETUP_OK;
 }
+#ifdef TERMINAL_DIRECTORY_RETIREMENT
+unsigned __cdecl live_setup_frozen_command(char *tail)
+{
+ char stage[68];unsigned n;
+ if(!external(tail,68))return LIVE_SETUP_ARGUMENT;
+ if(owner.bound!=1)return LIVE_SETUP_UNBOUND;
+ if(owner.pending || owner.offered_mask || owner.transfer_ready)return LIVE_SETUP_STATE;
+ for(n=0;n<128 && owner.canonical[n];++n){}
+ if(!n || n>63 || owner.canonical[0]<'A' || owner.canonical[0]>'Z' || owner.canonical[1]!=':' || owner.canonical[2]!='\\' ||
+  !capture_file_validate_path(owner.canonical,0))return LIVE_SETUP_IDENTITY;
+ memset(stage,0,sizeof(stage));stage[0]=' ';memcpy(stage+1,owner.canonical,n);
+ memcpy(tail,stage,sizeof(stage));return LIVE_SETUP_OK;
+}
+unsigned __cdecl live_setup_reconcile_accounting(const directory_live_context *context,unsigned action)
+{
+ unsigned i;const unsigned char *from=(const unsigned char *)context;
+ const unsigned char *to=(const unsigned char *)&owner.context;
+ if(action>1 || !external(context,sizeof(*context)))return LIVE_SETUP_ARGUMENT;
+ if(owner.bound!=1 || !owner.has_context)return LIVE_SETUP_UNBOUND;
+ if(owner.pending || owner.offered_mask || owner.transfer_ready)return LIVE_SETUP_STATE;
+ for(i=0;i<sizeof(*context);++i){
+  if(i>=252+61 && i<252+72)continue;
+  if(from[i]!=to[i])return LIVE_SETUP_IDENTITY;
+ }
+ if(action)memcpy(owner.context.selection.record+61,context->selection.record+61,11);
+ return LIVE_SETUP_OK;
+}
+#endif

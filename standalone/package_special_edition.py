@@ -47,7 +47,8 @@ def launch(setup=False):
         'SET PCPLUS=%LOC_PCPLUS%\nSET LOC_PCPLUS=\n')
 
 
-def products_for(custom_irq=False,original_keys=False,original_reference=False,directory_view=False,directory_preview=False,directory_storage=False,directory_resource_cli=False,directory_resource_owner=False):
+def products_for(custom_irq=False,original_keys=False,original_reference=False,directory_view=False,directory_preview=False,directory_storage=False,directory_resource_cli=False,directory_resource_owner=False,directory_retirement=False):
+    if directory_retirement:directory_resource_owner=True
     if directory_resource_owner:directory_resource_cli=True
     if directory_resource_cli:directory_storage=True
     if directory_storage:directory_preview=True
@@ -73,15 +74,18 @@ def products_for(custom_irq=False,original_keys=False,original_reference=False,d
         products['TERMINAL.EXE']='terminal-resource-cli-'+hashlib.sha256(products['TERMINAL.EXE'].encode('ascii')).hexdigest()[:12]
     if directory_resource_owner:
         products['TERMINAL.EXE']='terminal-resource-owner-'+hashlib.sha256(products['TERMINAL.EXE'].encode('ascii')).hexdigest()[:12]
+    if directory_retirement:
+        products['TERMINAL.EXE']='terminal-directory-retirement-'+hashlib.sha256(products['TERMINAL.EXE'].encode('ascii')).hexdigest()[:12]
     return products
 
 
-def commands_for(custom_irq=False,original_keys=False,original_reference=False,directory_view=False,directory_preview=False,directory_storage=False,directory_resource_cli=False,directory_resource_owner=False):
-    return [command+(['--custom-irq']if custom_irq and index in (0,1,3)else[])+(['--original-keys']if original_keys and index==0 else[])+(['--original-reference']if original_reference and index==0 else[])+(['--directory-view']if directory_view and index==0 else[])+(['--directory-preview']if directory_preview and index==0 else[])+(['--directory-storage']if directory_storage and index==0 else[])+(['--directory-resource-cli']if directory_resource_cli and index==0 else[])+(['--directory-resource-owner']if directory_resource_owner and index==0 else[])
+def commands_for(custom_irq=False,original_keys=False,original_reference=False,directory_view=False,directory_preview=False,directory_storage=False,directory_resource_cli=False,directory_resource_owner=False,directory_retirement=False):
+    return [command+(['--custom-irq']if custom_irq and index in (0,1,3)else[])+(['--original-keys']if original_keys and index==0 else[])+(['--original-reference']if original_reference and index==0 else[])+(['--directory-view']if directory_view and index==0 else[])+(['--directory-preview']if directory_preview and index==0 else[])+(['--directory-storage']if directory_storage and index==0 else[])+(['--directory-resource-cli']if directory_resource_cli and index==0 else[])+(['--directory-resource-owner']if directory_resource_owner and index==0 else[])+(['--directory-retirement']if directory_retirement and index==0 else[])
             for index,command in enumerate(COMMANDS)]
 
 
-def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,original_reference=False,directory_view=False,directory_preview=False,directory_storage=False,directory_resource_cli=False,directory_resource_owner=False):
+def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,original_reference=False,directory_view=False,directory_preview=False,directory_storage=False,directory_resource_cli=False,directory_resource_owner=False,directory_retirement=False):
+    if directory_retirement:directory_resource_owner=True
     if directory_resource_owner:directory_resource_cli=True
     if directory_resource_cli:directory_storage=True
     if directory_storage:directory_preview=True
@@ -92,7 +96,7 @@ def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,origi
     # directories and tables are never package inputs, even for local staging.
     sources = {}
     manifests = {}
-    products=products_for(custom_irq,original_keys,original_reference,directory_view,directory_preview,directory_storage,directory_resource_cli,directory_resource_owner)
+    products=products_for(custom_irq,original_keys,original_reference,directory_view,directory_preview,directory_storage,directory_resource_cli,directory_resource_owner,directory_retirement)
     for leaf, folder in products.items():
         base = ROOT / 'build' / folder
         manifest = json.loads((base / 'manifest.json').read_text())
@@ -116,6 +120,8 @@ def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,origi
             raise ValueError('mismatched CLI-resource variant: '+folder)
         if leaf=='TERMINAL.EXE' and bool(manifest.get('experimental_directory_resource_owner'))!=directory_resource_owner:
             raise ValueError('mismatched resource-owner variant: '+folder)
+        if leaf=='TERMINAL.EXE' and bool(manifest.get('experimental_directory_retirement'))!=directory_retirement:
+            raise AssertionError('Directory retirement variant mismatch')
         for name, digest in manifest['sources'].items():
             path = Path(name)
             if path.is_absolute() or '..' in path.parts or path.parts[0] in ('build', 'analysis'):
@@ -178,7 +184,10 @@ def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,origi
          if directory_resource_cli else '')+
         ('R in directory preview checks KEY/KBD under UART quiescence.\n'
          'Press a key to return; no settings are adopted and nothing is dialed.\n'
-         if directory_resource_owner else '')))
+         if directory_resource_owner else '')+
+        ('Call statistics save after disconnect without a return-key prompt.\n'
+         'Log save errors leave pending/recovery state for shutdown.\n'
+         if directory_retirement else '')))
     commit = source_base_commit or subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     if len(commit)not in (40,64)or any(c not in '0123456789abcdef'for c in commit):
         raise ValueError('source base must be a complete lowercase Git object ID')
@@ -200,6 +209,7 @@ def stage(out,custom_irq=False,source_base_commit=None,original_keys=False,origi
                   experimental_directory_storage=directory_storage,
                   experimental_directory_resource_cli=directory_resource_cli,
                   experimental_directory_resource_owner=directory_resource_owner,
+                  experimental_directory_retirement=directory_retirement,
                   authored_help_sha256=help_manifest['sha256'],
                   card_written=False, validation='Not validated by packaging; see separate DOS receipts.')
     (out / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
@@ -217,9 +227,11 @@ def main():
     parser.add_argument('--directory-preview',action='store_true',help='Package the validated directory preview candidate as 2.01-LoC.5')
     parser.add_argument('--directory-storage',action='store_true',help='Package shared directory persistence and held-owner EXEC admission as LoC.6')
     parser.add_argument('--directory-resource-cli',action='store_true',help='Package original CLI resource binding experiment; keeps LoC.6 UI')
+    parser.add_argument('--directory-retirement',action='store_true',help='Package offline call-statistics retirement; keeps LoC.6 UI')
     parser.add_argument('--directory-resource-owner',action='store_true',help='Package quiesced directory KEY/KBD preflight; no selection adoption')
     parser.add_argument('--source-base-commit',help='Explicit source-base object ID; avoids Git discovery during archive reproduction')
     args = parser.parse_args()
+    if args.directory_retirement:args.directory_resource_owner=True
     if args.directory_resource_owner:args.directory_resource_cli=True
     if args.directory_resource_cli:args.directory_storage=True
     if args.directory_storage:args.directory_preview=True
@@ -230,9 +242,9 @@ def main():
     if not out.is_relative_to(ROOT / 'build') or out.exists():
         parser.error('output must be a new directory under build/')
     if args.build:
-        for command in commands_for(args.custom_irq,args.original_keys,args.original_reference,args.directory_view,args.directory_preview,args.directory_storage,args.directory_resource_cli,args.directory_resource_owner):
+        for command in commands_for(args.custom_irq,args.original_keys,args.original_reference,args.directory_view,args.directory_preview,args.directory_storage,args.directory_resource_cli,args.directory_resource_owner,args.directory_retirement):
             subprocess.run(command, cwd=ROOT, check=True)
-    result = stage(out,args.custom_irq,args.source_base_commit,args.original_keys,args.original_reference,args.directory_view,args.directory_preview,args.directory_storage,args.directory_resource_cli,args.directory_resource_owner)
+    result = stage(out,args.custom_irq,args.source_base_commit,args.original_keys,args.original_reference,args.directory_view,args.directory_preview,args.directory_storage,args.directory_resource_cli,args.directory_resource_owner,args.directory_retirement)
     print('Staged', len(result['files']), 'files at', out / 'PCPLUSSE')
     print('No card was accessed. Private settings must be preserved during installation.')
 

@@ -289,6 +289,30 @@ def inspect_terminal_memory(binary,map_path):
    directory_account_canonical_identity_callbacks_verified=1,
    process_loan_full_paragraphs=full,process_loan_critical_paragraphs=critical,
    process_loan_bytes=(full-critical)*16,process_loan_code_calls_verified=True,process_child_quiet_before_trap_resume_verified=True)
+ if '_terminal_directory_retire_poll' in symbols:
+  config=next(c for c in code_segments if c['name']=='CONFIG_CODE')['relative_segment']
+  for name in ('_terminal_directory_retire_poll','_terminal_directory_retire_run','_terminal_directory_retire_cancel','_terminal_setup_frozen_start','_live_setup_reconcile_accounting','_live_setup_frozen_command'):
+   assert symbols[name][0]==config,(name,'retirement/setup outside CONFIG_CODE')
+  for site,target in (('terminal_directory_retire_poll_site','_terminal_directory_retire_poll'),('terminal_directory_retire_run_site','_terminal_directory_retire_run')):
+   target_seg,target_off=symbols[target]
+   assert raw(site,5)==b'\x9a'+struct.pack('<HH',target_off,target_seg),(site,'retirement far callback')
+   assert address(site)+3 in relocations,(site,'retirement far relocation')
+  near_call('terminal_directory_retire_poll_site','terminal_program_poll',prefix=raw('terminal_directory_retire_poll_site',5),suffix=b'')
+  for name,kind in (('_directory_retire_queue',7),('_directory_setup_queue',1)):
+   body=raw(name,17)
+   assert body[0]==0xb8 and body[3]==0xe8
+   assert (symbols[name][1]+6+struct.unpack_from('<h',body,4)[0])&65535==symbols['terminal_program_start'][1]
+   assert body[6:]==b'\x09\xc0\x75\x06\xc7\x06'+struct.pack('<H',symbols['terminal_program_kind'][1])+struct.pack('<H',kind)+b'\xcb',(name,'queued kind/return')
+  near_call('_directory_retire_flush','terminal_directory_flush_accounting')
+  target=symbols['_terminal_setup_frozen_start']
+  assert raw('terminal_setup_start',8)==b'\x06\x9a'+struct.pack('<HH',target[1],target[0])+b'\x07\xc3','Frozen setup launcher ES/far return'
+  assert address('terminal_setup_start')+4 in relocations,'Frozen setup launcher relocation'
+  assert symbols['terminal_setup_status'][1]-symbols['terminal_setup_tail'][1]==68
+  assert raw('program_setup_executable',64)==bytes(64)
+  assert 0<raw('directory_retire_failed_notice',15).find(b'\0')<=14,'Notice must fit the15-cell region'
+  for name,span in (('_terminal_directory_retirement',10),('_directory_retire_armed',2)):
+   assert symbols[name][0]==ds and near_start<=address(name) and address(name)+span<=near_start+near_size
+  extra.update(directory_retirement_snapshot_bytes=10,directory_retirement_poll_before_PROGRAM_verified=True,directory_frozen_setup_tail_bytes=68,directory_frozen_setup_executable_bytes=64)
  if 'terminal_phone_log_code_start' in symbols:
   bank=next(c for c in code_segments if c['name']=='PHONE_LOG_CODE')
   bank_seg=bank['relative_segment']

@@ -283,6 +283,12 @@ _small_code_:
  call terminal_transfer_poll
  cmp word [terminal_quit],0
  jne terminal_shutdown
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+ extern _terminal_directory_retire_poll
+ global terminal_directory_retire_poll_site
+ terminal_directory_retire_poll_site equ $
+ call far _terminal_directory_retire_poll
+%endif
  call terminal_program_poll
  cmp word [terminal_quit],0
  jne terminal_shutdown

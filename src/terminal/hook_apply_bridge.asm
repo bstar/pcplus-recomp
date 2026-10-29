@@ -82,9 +82,22 @@ _hook_apply_uart_check:
  cmp word [terminal_program_active],1
  jne .bad
  cmp word [terminal_program_kind],5
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+ je .hook_owner
+ cmp word [terminal_program_kind],7
  jne .bad
+ cmp word [terminal_program_status],2
+ jne .bad
+ jmp .owner_ready
+.hook_owner:
+%else
+ jne .bad
+%endif
  cmp word [terminal_program_status],4
  jne .bad
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+.owner_ready:
+%endif
  cmp word [uart_rx_dropped],0
  jne .bad
  mov bx,[terminal_port_number]

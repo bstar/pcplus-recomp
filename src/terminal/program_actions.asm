@@ -278,11 +278,20 @@ terminal_program_poll:
  call program_progress
  jmp .done ; Wait for this XOFF's physical shift-register completion too.
 .launch:
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+ ; This internal file transaction never EXECs a child. Keep independent
+ ; capture/printer/file owners alive; shared directory claims reject aliases.
+ cmp word [terminal_program_kind],7
+ je .retirement_capture_ready
+%endif
  call terminal_capture_before_program
  cmp ax,2
  je .printer_wait
  or ax,ax
  jnz .cancel
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+.retirement_capture_ready:
+%endif
  call terminal_connection_notice_restore
  ; The current live renderer is fixed80x25 mode3/page0. Reject other BIOS views.
  mov ah,0x0f
@@ -339,6 +348,16 @@ terminal_program_poll:
  call uart_restore_interrupt
  add sp,2
 %ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+ cmp word [terminal_program_kind],7
+ jne .not_retirement
+ extern _terminal_directory_retire_run
+ global terminal_directory_retire_run_site
+ terminal_directory_retire_run_site equ $
+ call far _terminal_directory_retire_run
+ jmp .record_status
+.not_retirement:
+%endif
  cmp word [terminal_program_kind],6
  jne .ordinary_operation
  extern _terminal_directory_resources_run
@@ -453,6 +472,10 @@ terminal_program_poll:
  jne .return_prompt
  call terminal_setup_complete
 .return_prompt:
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+ cmp word [terminal_program_kind],7
+ je .restore_screen
+%endif
  cmp word [terminal_program_kind],4
  jne .ordinary_view
  cmp word [terminal_aspect_adopt],1
@@ -569,6 +592,16 @@ terminal_program_poll:
  je .port_restored ;Script's serviced console already owns the parent ISR.
  call program_restore_uart
 .port_restored:
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+ cmp word [terminal_program_kind],7
+ jne .retirement_notice_done
+ cmp word [terminal_program_status],5
+ jne .retirement_notice_done
+ extern directory_retire_failed_notice
+ mov si,directory_retire_failed_notice
+ call terminal_connection_notice
+.retirement_notice_done:
+%endif
 %ifdef TERMINAL_MOUSE
  call _terminal_mouse_resume
  or ax,ax
@@ -842,6 +875,13 @@ terminal_program_cancel:
 .reload_cancel:
  mov word [terminal_translation_reload_status],4
 .clear:
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+ cmp word [terminal_program_kind],7
+ jne .retirement_canceled
+ extern _terminal_directory_retire_cancel
+ call far _terminal_directory_retire_cancel
+.retirement_canceled:
+%endif
 %ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
  cmp word [terminal_program_kind],6
  jne .resource_owner_canceled
@@ -902,7 +942,12 @@ global program_screen_segment
 program_screen_segment: dw seg program_screen
 program_return_prompt: db 13,10,'Press a key to return to the terminal.',0
 program_error_prompt: db 13,10,'Program could not run. Press a key to return.',0
+%ifdef TERMINAL_DIRECTORY_RETIREMENT
+global program_setup_executable
+program_setup_executable: times 64 db 0
+%else
 program_setup_executable: db 'PRMEDIT.EXE',0
+%endif
 program_busy_notice: db 'Program busy',0
 program_view_notice: db 'Program view',0
 
