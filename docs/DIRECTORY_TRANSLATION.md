@@ -40,6 +40,22 @@ actual-session snapshot and its two damage seals move to frozen offsets
 63,000-byte histories, the 8 KiB stack and the 63,504-byte child memory loan
 remain intact. Linked ABI and lease checks distinguish the two layouts.
 
+Current validation passes 19 application DOS workflows, 16 component DOS
+workflows with 1,448 native assertions, 15 linked CLI cases, 35 linked
+retirement/setup cases and 15 rejected damaged ABI controls. The five native
+accounting/recovery cases, nested compilation followed by scrollback, and stock
+ENiGMA login/editor/preview also pass on this exact application binary.
+
+An export from commit `f1d70f6` reproduces all ten package files from 772 declared
+source files without ancestor Git metadata or original binary inputs. A separate
+39-file committed export reproduces the component executable and all 16 objects,
+then repeats its 16 DOS workflows. The ordinary, LoC.6, CLI-only, resource-owner
+and retirement control binaries remain byte for byte identical. Uncommitted
+telephone-log work is excluded from both committed-source proofs.
+
+Near storage remains 65,280 bytes; resident CS has 246 bytes free and retained
+module allocation is 412,432 bytes. No stack/history capacity was reduced.
+
 The [validation receipt](validation/directory-translation.json) records exact
 binaries, source closures, native workflows, fault injection and limitations.
 Application workflows exercise real DOS8086 COM3/IRQ5 handoff. Translation
