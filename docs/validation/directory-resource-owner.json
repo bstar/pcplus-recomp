@@ -407,5 +407,28 @@
     "DOS boundaries and UART registers are modeled in memory/fault checks; native package and resource checks run separately.",
     "ENiGMA uses stock loopback BBS and actual proxy with paced synthetic serial; no SIP/DSP or physical acceptance.",
     "Full F01\u2013F16 scope remains open."
-  ]
+  ],
+  "ENiGMA_normal_delivery": {
+    "passed": true,
+    "input_byte_delay_ms": 0,
+    "input_sequence_timeout_ms": 250,
+    "checks": {
+      "harness": true,
+      "semantic_audit": true,
+      "exact_screen": true,
+      "proxy_source_unchanged": true,
+      "product_source_unchanged": true,
+      "directory_prompt_and_loading": true,
+      "directory_first_and_last_pages": true,
+      "no_private_directory_fields": true,
+      "directory_preview_observed": true,
+      "preview_target_and_DTE": true,
+      "preview_privacy": true,
+      "online_resource_check_refused": true,
+      "resource_check_key_stayed_local": true
+    },
+    "path": "build/bbs-lab/results/enigma/directory_resource_owner_normal_20261029/proxy-integration.json",
+    "sha256": "d7bd32d97702bcc63b16375f2e6d2df716d2207ea7ed497437305460eade7d07"
+  },
+  "rendering_evidence_limit": "The historical exact_screen predicate checks frame size plus draft/cursor-status markers, not a full independent character/attribute oracle."
 }

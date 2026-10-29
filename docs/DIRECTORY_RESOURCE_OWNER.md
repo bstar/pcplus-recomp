@@ -91,5 +91,10 @@ build storage and are not counted as successful validation.
 Selected-entry adoption, translation/script staging, retiring old-selection
 accounting, transactional UART/profile/resource publication and dialing remain
 unfinished. The full F01–F16 plan, real modem/SPA2102 acceptance and card
-deployment remain open. Software ENiGMA evidence cannot establish perfect
+deployment remain open. Both 20 ms fragmented-input and 0 ms unpaced-input
+ENiGMA runs pass with the proxy's 250 ms input-sequence framer enabled. The
+editor check verifies server-side interaction, the final draft
+marker and cursor-status text. Its historical `exact_screen` field checks
+those markers and the 4,000-byte frame size; it is not an independent full
+character/attribute comparison. This evidence cannot establish perfect
 rendering of every screen or analog/file-transfer compatibility.
