@@ -393,7 +393,15 @@
       "sha256": "495489a9621310083d9f0cf4d6def5c76a77619b154168baa8b9154dec49ca4b"
     }
   },
-  "source_reproduction": "Pending committed-source proof; not yet claimed.",
+  "source_reproduction": {
+    "passed": true,
+    "exported_commit": "6e3509e5e8973411395a8117af2b17e985578bbb",
+    "source_files": 768,
+    "package_files": 10,
+    "ancestor_git_unavailable": true,
+    "path": "build/directory-resource-owner-committed-source-20261029/result.json",
+    "sha256": "d25e9bc9230d14b2c192d64ac1a2fe1ce0ea6acba9cf0911e74be0a1388faae9"
+  },
   "limitations": [
     "Preflight only; selected settings, target, resources and accounting remain unchanged.",
     "DOS boundaries and UART registers are modeled in memory/fault checks; native package and resource checks run separately.",

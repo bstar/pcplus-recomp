@@ -65,7 +65,10 @@ does not continue using memory that DOS may have assigned to another owner.
 ## Validation and limits
 
 The machine-readable [receipt](validation/directory-resource-owner.json) binds
-the candidate and its evidence. Seven actual DOS 8086 workflows check valid
+the candidate and its evidence. Exporting only committed sources from
+`6e3509e` into an empty tree with no ancestor Git metadata rebuilds all ten
+package files byte for byte from 768 source inputs. The three ordinary, LoC.6
+and CLI-only control binaries remain exact. Seven actual DOS 8086 workflows check valid
 resources, each malformed format, defaults, both nested popup entry paths and
 a deliberately damaged queued proposal. Passive observers verify every
 resource DOS call has DS=SS and the quiesced UART/vector/owner state. The fault
