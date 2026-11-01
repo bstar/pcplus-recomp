@@ -1,5 +1,13 @@
 # PCPlus DOS reconstruction
 
+[Delayed writes and paced traffic](docs/PHONE_LOG_SLOW_IO.md) now pass three native
+workflows with delays of nine and 36 BIOS ticks, actual UART input and DOS writes.
+SOFT/BOTH preserve a bounded in-flight burst and resume flow; NONE defers online
+writes until shutdown. All 48 cursor replies, the final 1,920 glyphs/attributes,
+keyboard input and exact call records pass. A committed-source rebuild repeats
+these three and 36 earlier cases with the same image. Larger bursts/watermark
+collisions, sustained protocols, full rendering and physical/card gates remain open.
+
 [DOS log access and repair](docs/PHONE_LOG_PERMISSIONS.md) now pass four additional native
 workflows using genuine read-only attributes. Enabled logging refuses a
 read-only file before UART ownership; disabled logging ignores it. Runtime

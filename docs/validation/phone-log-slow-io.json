@@ -1,0 +1,673 @@
+{
+  "passed": true,
+  "source_commit": "1759b2a9dfd5db1d32aa8b411691bed323c6d1db",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/terminal-phone-log-bank-3d164fda0202/TERMINAL.EXE",
+    "sha256": "2c5f5fc4dd4b9948b897db6499e920f694f30fbbbcdf3d1fb0596cbc921027f7",
+    "unchanged_from_permissions_checkpoint": true
+  },
+  "original_slow_cases": 3,
+  "public_cases": 39,
+  "public_source_proof": {
+    "path": "build/phone-log-slow-public-01/result.json",
+    "sha256": "195de29be9421d223825359688685445c5a949146754c8a360df04e4b8fe0309",
+    "source_count": 1744,
+    "build_log_sha256": "36a77a76c7edfdaac823f0342c2cec40844bad210e5255c02fef2c5f35112fd5"
+  },
+  "evidence": {
+    "native_slow": {
+      "path": "build/phone-log-slow-terminal/slow-final-02/result.json",
+      "sha256": "30f8ca58e008112740103f5f271fc898b13bd4b790bffc777cd678e5ecbe3a78",
+      "cases": [
+        {
+          "case": "soft-9",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true
+          }
+        },
+        {
+          "case": "both-36",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true
+          }
+        },
+        {
+          "case": "none-36",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true
+          }
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-existing": {
+      "path": "build/phone-log-slow-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "460b3371f91191863fbefb2ea651b92fb3b235c2ff696564e37afa8eea94e3c6",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-controls": {
+      "path": "build/phone-log-slow-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "d24f17fddda5603d5c147bba0fe8258ca765f69933923d9b019457be51d2fef5",
+      "cases": [
+        {
+          "case": "success",
+          "passed": true
+        },
+        {
+          "case": "hangup",
+          "passed": true
+        },
+        {
+          "case": "busy",
+          "passed": true
+        },
+        {
+          "case": "silence",
+          "passed": true
+        },
+        {
+          "case": "redial",
+          "passed": true
+        },
+        {
+          "case": "disabled",
+          "passed": true
+        },
+        {
+          "case": "direct",
+          "passed": true
+        },
+        {
+          "case": "capacity",
+          "passed": true
+        },
+        {
+          "case": "soft",
+          "passed": true
+        },
+        {
+          "case": "both",
+          "passed": true
+        },
+        {
+          "case": "none",
+          "passed": true
+        },
+        {
+          "case": "fs-failure",
+          "passed": true
+        },
+        {
+          "case": "program",
+          "passed": true
+        },
+        {
+          "case": "ui-ready",
+          "passed": true
+        },
+        {
+          "case": "ui-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-unrepaired",
+          "passed": true
+        },
+        {
+          "case": "ui-recovery",
+          "passed": true
+        },
+        {
+          "case": "ui-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 316
+    },
+    "public-preexisting": {
+      "path": "build/phone-log-slow-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+      "sha256": "06fd7b97d4ea41d96dd034d3f672fae30710fe0dbeb686459784d02ddb43d97f",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-io-failures": {
+      "path": "build/phone-log-slow-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+      "sha256": "285567fabee93beb03dff5ac6b04442d4ecd2e65642abb6fbfb556fdb7afd370",
+      "cases": [
+        {
+          "case": "ui-commit-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-truncate",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-commit",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 61
+    },
+    "public-permissions": {
+      "path": "build/phone-log-slow-public-01/source/build/phone-log-events-terminal/public-permissions/result.json",
+      "sha256": "e91c3c396e5ed27fc6fc419360931c0676b6482f844d4661669294b63d19605c",
+      "cases": [
+        {
+          "case": "ui-readonly-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-readonly-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 42
+    },
+    "public-readonly": {
+      "path": "build/phone-log-slow-public-01/source/build/phone-log-startup-terminal/public-readonly/result.json",
+      "sha256": "a0343147ddcb3d46d651a22365837d4648df44f88f1eb3c62fabf76132190002",
+      "cases": [
+        {
+          "case": "readonly",
+          "passed": true
+        },
+        {
+          "case": "readonly-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 36
+    },
+    "public-slow": {
+      "path": "build/phone-log-slow-public-01/source/build/phone-log-slow-terminal/public-slow/result.json",
+      "sha256": "e5e7161f3d8c5abc54691c6b8ae29e2f8a0f1f8dfae672d275c82c2e23994c85",
+      "cases": [
+        {
+          "case": "soft-9",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true
+          }
+        },
+        {
+          "case": "both-36",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true
+          }
+        },
+        {
+          "case": "none-36",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true
+          }
+        }
+      ],
+      "verified_artifacts": 60
+    }
+  },
+  "delay_and_traffic_observations": [
+    {
+      "run": "native_slow",
+      "case": "soft-9",
+      "delay_UART_snapshot": [
+        21324,
+        1,
+        9,
+        9,
+        61954,
+        1,
+        0,
+        356,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        11,
+        62022,
+        15660
+      ],
+      "flow_events": [
+        {
+          "byte": 19,
+          "at": 0.06259066300117411
+        },
+        {
+          "byte": 17,
+          "at": 0.5483600919978926
+        }
+      ],
+      "peer_send_chunks": 45,
+      "peer_payload_bytes": 4296,
+      "peer_payload_sha256": "c7d0b4b4d739a313b4ec4ce42e1462533447fe684c1f361d88cbd0ac2af4657a",
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_glyphs": 1920,
+      "exact_final_attributes": 1920
+    },
+    {
+      "run": "native_slow",
+      "case": "both-36",
+      "delay_UART_snapshot": [
+        21324,
+        1,
+        36,
+        36,
+        61954,
+        1,
+        0,
+        356,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        62022,
+        15660
+      ],
+      "flow_events": [
+        {
+          "byte": 19,
+          "at": 0.0637400979976519
+        },
+        {
+          "byte": 17,
+          "at": 2.0322710269974777
+        }
+      ],
+      "peer_send_chunks": 45,
+      "peer_payload_bytes": 4296,
+      "peer_payload_sha256": "c7d0b4b4d739a313b4ec4ce42e1462533447fe684c1f361d88cbd0ac2af4657a",
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_glyphs": 1920,
+      "exact_final_attributes": 1920
+    },
+    {
+      "run": "native_slow",
+      "case": "none-36",
+      "delay_UART_snapshot": [
+        21324,
+        1,
+        36,
+        36,
+        61954,
+        0,
+        0,
+        0,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        0,
+        62022,
+        15660
+      ],
+      "flow_events": [],
+      "peer_send_chunks": 48,
+      "peer_payload_bytes": 4296,
+      "peer_payload_sha256": "c7d0b4b4d739a313b4ec4ce42e1462533447fe684c1f361d88cbd0ac2af4657a",
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_glyphs": 1920,
+      "exact_final_attributes": 1920
+    },
+    {
+      "run": "public-slow",
+      "case": "soft-9",
+      "delay_UART_snapshot": [
+        21324,
+        1,
+        9,
+        9,
+        61954,
+        1,
+        0,
+        356,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        11,
+        62022,
+        15660
+      ],
+      "flow_events": [
+        {
+          "byte": 19,
+          "at": 0.06313954399956856
+        },
+        {
+          "byte": 17,
+          "at": 0.5491589790035505
+        }
+      ],
+      "peer_send_chunks": 45,
+      "peer_payload_bytes": 4296,
+      "peer_payload_sha256": "c7d0b4b4d739a313b4ec4ce42e1462533447fe684c1f361d88cbd0ac2af4657a",
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_glyphs": 1920,
+      "exact_final_attributes": 1920
+    },
+    {
+      "run": "public-slow",
+      "case": "both-36",
+      "delay_UART_snapshot": [
+        21324,
+        1,
+        36,
+        36,
+        61954,
+        1,
+        0,
+        356,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        62022,
+        15660
+      ],
+      "flow_events": [
+        {
+          "byte": 19,
+          "at": 0.06314017799741123
+        },
+        {
+          "byte": 17,
+          "at": 2.0327007649975712
+        }
+      ],
+      "peer_send_chunks": 45,
+      "peer_payload_bytes": 4296,
+      "peer_payload_sha256": "c7d0b4b4d739a313b4ec4ce42e1462533447fe684c1f361d88cbd0ac2af4657a",
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_glyphs": 1920,
+      "exact_final_attributes": 1920
+    },
+    {
+      "run": "public-slow",
+      "case": "none-36",
+      "delay_UART_snapshot": [
+        21324,
+        1,
+        36,
+        36,
+        61954,
+        0,
+        0,
+        0,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        0,
+        62022,
+        15660
+      ],
+      "flow_events": [],
+      "peer_send_chunks": 48,
+      "peer_payload_bytes": 4296,
+      "peer_payload_sha256": "c7d0b4b4d739a313b4ec4ce42e1462533447fe684c1f361d88cbd0ac2af4657a",
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_glyphs": 1920,
+      "exact_final_attributes": 1920
+    }
+  ],
+  "source_files": {
+    "standalone/test_phone_log_slow_terminal.py": "5b2ee0c22825436f4f05a93271bf65486c3777d5b17e7eefb8cee979e1be1185",
+    "standalone/phone_log_slow_write.asm": "0a30aa6c3305a2beabbdee5a74f60b4d6b91925eb611a82794dccbf6eb5d68c8",
+    "standalone/test_connection_dos.py": "32cd4738dee53fa270946e6a66b20f9b2dd300c5d0bcd3476c09cb18cf4d1cbd",
+    "standalone/prove_phone_log_existing_terminal.py": "40ddbf1137a6751185fb854545f1357d34dacc7f4c944677c1d3cf750bddf17a"
+  },
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "IRQ-friendly fixture stall before the first real DOS write, not arbitrary physical disk latency or a driver masking IRQs.",
+    "One bounded 356-byte in-flight burst; no driver high-watermark collision, larger buffer or unbounded incoming traffic acceptance.",
+    "Paced synthetic ASCII/ANSI stream; exact every-query and selected final 1920-cell glyph/attribute checks, not every rendered BBS frame or file transfer.",
+    "BOTH samples actual low MCR RTS; peer follows software XOFF/XON. Physical RTS propagation and real modem behavior remain unverified.",
+    "Initial glyph-only native probe/draft excluded; only final native run and committed-source repeat accepted.",
+    "No full F01-F16, broad feature combinations, physical Boca/SPA2102 or card-deployment closure.",
+    "Published package, card, live BBS, installed bridge, ATA and host network unchanged."
+  ]
+}

@@ -1,5 +1,9 @@
 # DOS call-log access and repair
 
+The later [delayed-write checkpoint](PHONE_LOG_SLOW_IO.md) adds selected
+IRQ-friendly stalls with paced serial traffic. This page retains its real
+read-only access and repair boundary.
+
 The optional call-log controls image now has four real DOS read-only workflows:
 two at startup and two after startup. These use actual DOS attributes and a
 real DOS child, rather than an invented filesystem error return. The application
