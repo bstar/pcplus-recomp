@@ -6,10 +6,13 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False,dial_action=None,online_actions=(),auxiliary=()):
+def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False,dial_action=None,online_actions=(),auxiliary=(),flow_updates=(),flow_inflight=b''):
  assert cpu in ('8086','286','386','486')
  assert irq is None or irq in (3,4,5,7)
  assert working_drive in ("c","d")
+ assert not flow_inflight or flow_updates
+ assert all(isinstance(data,bytes) and delay>=0 for delay,data in flow_updates)
+ assert all(a[0]<=b[0] for a,b in zip(flow_updates,flow_updates[1:]))
  assert observer is None or (observer.isalnum() and observer.isupper() and len(observer)<=8 and observer+'.COM' in (files or {}))
  for helper in auxiliary:assert helper.isalnum() and helper.isupper() and len(helper)<=8 and helper+'.COM' in (files or {})
  auxiliary_start='\n'.join('D:\\'+helper+' T' for helper in auxiliary)
@@ -48,16 +51,25 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
   (out/'TEST.DIR').write_bytes(directory)
 
  wire=bytearray();commands=[];errors=[];stop=threading.Event();checks={};attempts=0;triggered=0;trigger_chunks_expected=0;trigger_chunks_sent=0;actions_run=0
+ flow_events=[];flow_sends=[];flow_payload=bytearray();flow_index=0;inflight_sent=False
  def peer():
-  nonlocal attempts,triggered,trigger_chunks_expected,trigger_chunks_sent,actions_run
+  nonlocal attempts,triggered,trigger_chunks_expected,trigger_chunks_sent,actions_run,flow_index,inflight_sent
   try:
    conn,_=server.accept()
    with conn:
-    conn.settimeout(.05);line=bytearray();online=False;probe=bytearray();next_probe=0;online_at=0;update_at=0;scheduled=[]
+    conn.settimeout(.05);line=bytearray();online=False;probe=bytearray();next_probe=0;online_at=0;update_at=0;scheduled=[];flow_paused=False;inflight_at=0
     if emulated_modem:
      checks['emulated_modem_connected_to_selected_endpoint']=True;online=True;online_at=time.monotonic()
      conn.sendall(banner if banner is not None else b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c')
     while not stop.is_set():
+     if online and flow_updates:
+      now=time.monotonic()
+      if inflight_at and not inflight_sent and now>=inflight_at:
+       conn.sendall(flow_inflight);inflight_sent=True;flow_payload.extend(flow_inflight)
+       flow_sends.append(dict(kind='bounded-inflight',at=now-online_at,count=len(flow_inflight),paused=flow_paused))
+      if not flow_paused and (not flow_inflight or inflight_sent) and flow_index<len(flow_updates) and now-online_at>=flow_updates[flow_index][0]:
+       data=flow_updates[flow_index][1];conn.sendall(data);flow_index+=1;flow_payload.extend(data)
+       flow_sends.append(dict(kind='scheduled',at=now-online_at,count=len(data),paused=flow_paused))
      while scheduled and time.monotonic()>=scheduled[0][0]:
       _,chunk=scheduled.pop(0);conn.sendall(chunk);trigger_chunks_sent+=1
      if online and online_at and update_at<len(online_updates) and time.monotonic()-online_at>=online_updates[update_at][0]:
@@ -78,6 +90,10 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
       continue
      for byte in block:
       if online:
+       if flow_updates and byte in (0x11,0x13):
+        flow_paused=byte==0x13
+        flow_events.append(dict(byte=byte,at=time.monotonic()-online_at))
+        if flow_paused and flow_inflight and not inflight_at:inflight_at=time.monotonic()+.1
        line.append(byte)
        if actions_run<len(online_actions) and line.endswith(online_actions[actions_run][0]):
         online_actions[actions_run][1](out);actions_run+=1
@@ -193,6 +209,11 @@ exit
  if online_actions:checks['owned_online_actions_run']=actions_run==len(online_actions)
  if online_triggers:checks['online_triggers_sent']=triggered==len(online_triggers)
  if trigger_chunks_expected:checks['online_trigger_chunks_sent']=trigger_chunks_sent==trigger_chunks_expected
+ if flow_updates:
+  checks.update(flow_updates_complete=flow_index==len(flow_updates),bounded_inflight_complete=inflight_sent==bool(flow_inflight),
+   scheduled_data_respected_XOFF=all(not item['paused'] for item in flow_sends if item['kind']=='scheduled'))
+  (out/'flow-state.json').write_text(json.dumps(dict(events=flow_events,sends=flow_sends),indent=2)+'\n')
+  (out/'flow-payload.bin').write_bytes(flow_payload)
  proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'environment':environment or {},'cpu':configured_cpu,'emulated_modem':emulated_modem,'target':target.decode(),'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
  if irq is not None:proof['serial_irq']=irq
  (out/'result.json').write_text(json.dumps(proof,indent=2)+'\n');print(name,'PASS' if proof['passed'] else json.dumps(proof),flush=True);return proof
