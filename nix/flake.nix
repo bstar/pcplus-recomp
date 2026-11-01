@@ -113,7 +113,7 @@
           packages = with pkgs; [
             rea ghidra jdk21 nodejs_24
             open-watcom-v2 nasm gnumake binutils file
-            dosbox-x mtools jq lhasa lrzsz
+            dosbox-x mtools jq lhasa lrzsz libvterm-neovim pkg-config
           ] ++ [ python ];
           GHIDRA_INSTALL_DIR = "${pkgs.ghidra}/lib/ghidra";
           JAVA_HOME = "${pkgs.jdk21}";
