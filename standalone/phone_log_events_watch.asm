@@ -25,6 +25,9 @@ ORG 100h
 %ifdef TRANSFER_WATCH
 %assign SAMPLE_BYTES SAMPLE_BYTES+64
 %endif
+%ifdef TRANSFER_BATCH
+%assign SAMPLE_BYTES SAMPLE_BYTES+60
+%endif
 jmp start
 old_timer: dd 0
 old_dos: dd 0
@@ -40,6 +43,9 @@ child_watch: times 9 dw 0
 %endif
 %ifdef TRANSFER_WATCH
 transfer_watch: times 32 dw 0
+%endif
+%ifdef TRANSFER_BATCH
+batch_watch: times 30 dw 0
 %endif
 ui_title: db 'Telephone call log',0
 ui_confirm: db 'Retry retained records? Y/N',0
@@ -281,8 +287,34 @@ capture_transfer:
  add bx,2
  add di,2
  loop .upload
+%ifdef TRANSFER_BATCH
+ mov ax,[es:BATCH_PROTOCOL]
+ mov [batch_watch],ax
+ mov di,batch_watch+2
+ mov bx,BATCH_DOWNLOAD
+ mov cx,14
+ call .copy
+ mov bx,BATCH_UPLOAD
+ mov cx,4
+ call .copy
+ mov bx,BATCH_YMODEM
+ mov cx,9
+ call .copy
+ mov bx,BATCH_ZFILES
+ mov cx,2
+ call .copy
+%endif
 .done:
  ret
+%ifdef TRANSFER_BATCH
+.copy:
+ mov ax,[es:bx]
+ mov [di],ax
+ add bx,2
+ add di,2
+ loop .copy
+ ret
+%endif
 %endif
 ; DX1 timer, DX2 final. All scratch registers belong to handler's saved frame.
 capture:
