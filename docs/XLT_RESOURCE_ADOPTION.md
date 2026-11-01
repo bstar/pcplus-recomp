@@ -29,7 +29,11 @@ after CWD drift, mode0/2, 63-byte names, caller reuse, pending settings/reload
 offers, invalid extents/paths and both declared forms of uncertain close. Actual
 DOS opens/reads/closes execute; wrappers count calls and inject only the two
 explicit close errors. Adoption itself performs no IO. The component exercises
-the production owner and reader, not a model of publication.
+the production owner and reader. An isolated export of 18 committed source files
+reproduces the executable and seven objects, then repeats all 13 workflows. The
+776-source package control reproduces all ten files. Nine match the previous
+package; VERSION.TXT changes only its source-base commit line. All five program
+executables remain byte-for-byte identical.
 
 ```sh
 ./tools/dev --command python3 standalone/build_xlt_resource_adoption.py
