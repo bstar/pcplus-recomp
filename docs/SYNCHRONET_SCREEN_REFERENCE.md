@@ -72,3 +72,8 @@ document boundaries, not multiline editing. It does not establish unframed,
 SIP/DSP/analog, physical CTS, sustained transfer, font-pixel or complete
 application acceptance. No live BBS, bridge service, ATA, host network or card
 was changed; only owned loopback fixtures and ignored test storage were used.
+
+The later [ENiGMA multiline checkpoint](ENIGMA_MULTILINE_EDITOR.md) exercises
+a24-line draft, real page navigation and preserved edits with two additional
+whole-cell/cursor comparisons. The one-line scopes in this earlier checkpoint
+remain historical; broader rendering and application gates remain open.

@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Stock ENiGMA multiline editing](docs/ENIGMA_MULTILINE_EDITOR.md) now
+passes actual24-line DOS keyboard workflows with Page Up, an inserted edit,
+and Page Down. Both measured windows match all1920 cells and the real cursor
+against the independent reference;20 copied-artifact screen/semantic controls
+and unchanged default-helper/one-line controls pass. Package/card bytes are
+unchanged. These selected windows do not close every-frame/profile rendering,
+sustained protocols, physical Boca/SPA2102 or full F01–F16 acceptance.
+
 [Multiline ANSI reference measurements](docs/ANSI_MULTILINE_REFERENCE.md)
 now retain22 native prefix checkpoints with seven-byte/byte-at-a-time input.
 Twenty captures match pyte exactly; the final colored-wrap prefix differs in
