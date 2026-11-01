@@ -32,7 +32,7 @@
           runHook postInstall
         '';
       };
-      python = pkgs.python3.withPackages (ps: [ ps.unicorn ]);
+      python = pkgs.python3.withPackages (ps: [ ps.unicorn ps.pyte ]);
       controlSource = pkgs.runCommand "synthmodem-control-source" {} ''
         mkdir -p "$out/vm/ctrl"
         cp ${pkgs.fetchurl {

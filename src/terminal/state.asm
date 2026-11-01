@@ -2,6 +2,13 @@
 ; Source-owned defaults; no original install/configuration bytes are embedded.
 BITS 16
 CPU 8086
+%ifdef DIRECTORY_RESOURCE_ADOPTION
+; This application always displays its status on physical row25. Keep that
+; row outside terminal scrolling, addressing, erasure and RIS geometry.
+%define TERMINAL_ROWS 24
+%else
+%define TERMINAL_ROWS 25
+%endif
 GROUP DGROUP _DATA _BSS STACK
 SEGMENT _DATA public align=16 class=DATA use16
 ; Source-owned geometry for the recovered UART's bottom-row status service.
@@ -117,12 +124,12 @@ screen_previous_column:
  dw 0
 global csi_last_row
 csi_last_row:
- dw 24
+ dw TERMINAL_ROWS-1
 global csi_row_count
 global viewport_rows
 viewport_rows:
 csi_row_count:
- dw 25
+ dw TERMINAL_ROWS
 global screen_attribute_checks
 screen_attribute_checks:
  dw 0
@@ -227,7 +234,7 @@ global csi_scroll_bottom
 global screen_last_row
 csi_scroll_bottom:
 screen_last_row:
- dw 24
+ dw TERMINAL_ROWS-1
 global ansi_private
 ansi_private:
  dw 0
@@ -243,7 +250,7 @@ global csi_origin_bottom
 global screen_bottom_margin
 csi_origin_bottom:
 screen_bottom_margin:
- dw 24
+ dw TERMINAL_ROWS-1
 global screen_line_flags
 screen_line_flags:
  times 128 db 0
@@ -265,7 +272,7 @@ scroll_suppress_next_linefeed: dw 0
 global erase_lineflags_enabled,erase_protection_mode,erase_cell_count
 erase_lineflags_enabled: dw 0
 erase_protection_mode: dw 0
-erase_cell_count: dw 2000
+erase_cell_count: dw TERMINAL_ROWS*80
 global erase_attribute_values_base,erase_shadow_offset,erase_shadow_segment
 erase_attribute_values_base: dw erase_attribute_values
 global snapshot_shadow_offset
