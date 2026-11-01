@@ -15,6 +15,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--terminal', required=True, type=Path)
     parser.add_argument('--label', required=True)
+    parser.add_argument('--readonly', action='store_true', help='Test real DOS read-only attributes before startup')
     args = parser.parse_args()
     assert re.fullmatch('[a-z0-9-]+', args.label)
     parent = args.terminal.resolve()
@@ -38,13 +39,19 @@ def main():
     observer = output / 'PLWATCH.COM'
     subprocess.run(['nasm', '-fbin', *[f'-D{k}={v}' for k, v in defines.items()],
         str(ROOT / 'standalone/phone_log_startup_watch.asm'), '-o', str(observer)], check=True)
+    if args.readonly:
+        attribute_helper=output/'ATTRLOCK.COM'
+        subprocess.run(['nasm','-fbin','-DPRELOCK=1',str(ROOT/'standalone/phone_log_attributes.asm'),
+                        '-o',str(attribute_helper)],check=True)
     sources = dict(manifest['sources'])
     for name in ['standalone/test_phone_log_startup_terminal.py', 'standalone/phone_log_startup_watch.asm',
             'standalone/test_connection_dos.py', 'standalone/modem_fixtures.py',
             'standalone/terminal_config_fixtures.py', 'standalone/directory_test_support.py', 'standalone/test_terminal.py']:
         sources[name] = sha(ROOT / name)
+    if args.readonly:sources['standalone/phone_log_attributes.asm']=sha(ROOT/'standalone/phone_log_attributes.asm')
     results = []
-    for name, enabled, env, files, error, expected_path in [
+    artifacts = {}
+    cases = [
         ('unconfigured', 0, 'BAD;DIR', {}, 0, b''),
         ('disabled', 0, 'BAD;DIR', {}, 0, b''),
         ('current', 1, '', {}, 0, b'D:\\PCPLUS.FON'),
@@ -52,23 +59,36 @@ def main():
         ('precedence', 65535, 'BAD;DIR', {'PCPLUS.FON': b'EXISTING'}, 0, b'D:\\PCPLUS.FON'),
         ('bad-env', 1, 'BAD;DIR', {}, 2, None),
         ('bad-parent', 1, 'D:\\MISSING', {}, 4, None),
-    ]:
+    ]
+    if args.readonly:
+        cases=[('readonly',1,'',{'PCPLUS.FON':b'OWNED OLD LOG'},4,None),
+               ('readonly-disabled',0,'BAD;DIR',{'PCPLUS.FON':b'OWNED OLD LOG'},0,b'')]
+    for name, enabled, env, files, error, expected_path in cases:
         settings = bytearray(fixture(timeout=5))
         struct.pack_into('<HH', settings, 0x4e4, 8, 4)
         struct.pack_into('<H', settings, 0x1e6, enabled)
         case = args.label + '-' + name
         folder = ROOT / 'build/connection-dos' / case
         assert not folder.exists()
+        options={}
+        if args.readonly:
+            files={**files,'ATTRLOCK.COM':attribute_helper.read_bytes()}
+            options['auxiliary']=('ATTRLOCK',)
         run = terminal.run(case, 'reject' if error else 'direct' if name == 'unconfigured' else 'success', 'p900 enter p4000 a-x',
             prm=bytes(settings), files={**files, 'PLWATCH.COM': observer.read_bytes()}, observer='PLWATCH',
             arguments='COM1 19200 HARD' if name == 'unconfigured' else None,
-            working_drive='d', environment={'PCPLUS': env}, expected=7 if error else 0, cpu='8086')
+            working_drive='d', environment={'PCPLUS': env}, expected=7 if error else 0, cpu='8086',**options)
         captured = (folder / 'PLSTART.BIN').read_bytes()
         assert len(captured) == (754 if reserved else 680)
         header = struct.unpack_from('<7H', captured)
         queue = captured[14:680]
         checks = dict(normal_terminal=run['passed'], observer_magic=header[0] == 0x4c53,
-            no_log_creation=set(p.relative_to(folder).as_posix() for p in folder.rglob('*.FON') if p.is_file()) == ({'PCPLUS.FON'} if name == 'precedence' else set()))
+            no_log_creation=set(p.relative_to(folder).as_posix() for p in folder.rglob('*.FON') if p.is_file()) == ({'PCPLUS.FON'} if name == 'precedence' or args.readonly else set()))
+        if args.readonly:
+            attr=struct.unpack('<8H',(folder/'ATTR.BIN').read_bytes())
+            checks.update(real_readonly_preserved=attr[:4]==(0x414c,1,int(bool(enabled)),1)
+                and not(attr[4]&1) and attr[5]&1==1 and attr[6]==0 and attr[7]&1==1,
+                no_modem_commands_if_refused=not run['commands'] if error else bool(run['commands']))
         if error:
             checks['refused_before_UART_ownership'] = header[1] == 0
             checks['accurate_log_setup_notice'] = b'Call-log setup failed.' in (folder / 'SCREEN.BIN').read_bytes()[::2]
@@ -85,12 +105,16 @@ def main():
                     claim_identity=claim[10:74].split(b'\0',1)[0]==expected_path)
         results.append(dict(case=name, passed=all(checks.values()), checks=checks, native=run,
             observer_header=header, expected_path=expected_path.decode() if expected_path is not None else None))
+        if args.readonly:artifacts.update({str(p.relative_to(ROOT)):sha(p) for p in folder.rglob('*') if p.is_file()})
     checks = dict(all_cases=all(r['passed'] for r in results),
         sources_unchanged=all(sha(ROOT / name) == digest for name, digest in sources.items()),
         binary_unchanged=sha(binary) == manifest['binary_sha256'])
     result = dict(passed=all(checks.values()), checks=checks, cases=results, sources=sources,
+        readonly_matrix=args.readonly,artifacts=artifacts,
         terminal_sha256=sha(binary), observer_defines=defines,
         scope=__doc__ + ' Passive ISR/vector-derived memory observation only; no product RAM writes or fake replies. '
+            + ('A separate owned helper sets genuine read-only attributes before startup, records final attributes and restores fixture metadata after observation. ' if args.readonly else '')
+            +
             'Accepted image import and real pre-UART failures; no connection-event logging or poll scheduling yet.')
     (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(dict(passed=result['passed'], checks=checks, failed=[r for r in results if not r['passed']]), indent=2))

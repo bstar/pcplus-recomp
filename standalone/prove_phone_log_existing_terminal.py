@@ -16,6 +16,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--commit', required=True)
     parser.add_argument('--extended', action='store_true', help='Also repeat preexisting-startup and failed-rollback cases')
+    parser.add_argument('--permissions', action='store_true', help='Repeat real DOS read-only startup/runtime cases')
     args = parser.parse_args()
     parent, output = args.terminal.resolve(), args.output.resolve()
     assert parent.is_relative_to(ROOT/'build') and output.is_relative_to(ROOT/'build')
@@ -29,6 +30,9 @@ def main():
     names |= {'standalone/phone_log_events_watch.asm', 'standalone/phone_log_close_fault.asm',
               'standalone/phone_log_write_fault.asm', 'standalone/program_handoff_child.asm',
               'nix/flake.nix', 'nix/flake.lock', 'tools/dev'}
+    if args.permissions:
+        names |= {'standalone/phone_log_attributes.asm','standalone/phone_log_clear_attributes.asm',
+                  'standalone/phone_log_startup_watch.asm'}
     output.mkdir(parents=True)
     fresh, sources = output/'source', {}
     for name in sorted(names):
@@ -54,6 +58,7 @@ def main():
         if args.extended:
             matrices += [('public-preexisting', ['--existing', '--preexisting'], 5),
                          ('public-io-failures', ['--io-failures'], 3)]
+        if args.permissions:matrices += [('public-permissions',['--permissions'],2)]
         for label, extra, expected in matrices:
             subprocess.run([sys.executable, 'standalone/test_phone_log_events_terminal.py',
                             '--terminal', str(rebuilt), '--label', label, *extra],
@@ -65,6 +70,16 @@ def main():
             assert report['terminal_sha256'] == manifest['binary_sha256']
             assert all(row['passed'] and all(row['checks'].values()) for row in report['cases'])
             reports[label] = {'path': str(path.relative_to(ROOT)), 'sha256': sha(path), 'cases': expected}
+        if args.permissions:
+            subprocess.run([sys.executable,'standalone/test_phone_log_startup_terminal.py',
+                            '--terminal',str(rebuilt),'--label','public-readonly','--readonly'],
+                           cwd=fresh,stdout=log,stderr=log,check=True)
+            path=fresh/'build/phone-log-startup-terminal/public-readonly/result.json'
+            report=json.loads(path.read_text())
+            assert report['passed'] and report['readonly_matrix'] and len(report['cases'])==2
+            assert all(report['checks'].values()) and all(row['passed'] and all(row['checks'].values()) for row in report['cases'])
+            assert report['terminal_sha256']==manifest['binary_sha256']
+            reports['public-readonly']={'path':str(path.relative_to(ROOT)),'sha256':sha(path),'cases':2}
     assert all(sha(fresh/name) == digest and sha(ROOT/name) == digest for name, digest in sources.items())
     result = dict(passed=True, source_commit=revision, source_count=len(sources), sources=sources,
                   terminal_sha256=sha(rebuilt/'TERMINAL.EXE'), reports=reports, original_inputs=[],
