@@ -18,7 +18,8 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False):
+def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False):
+    assert not precompile or not (setup or splash_only or after_child_view)
     manifest = json.loads((package / 'manifest.json').read_text())
     assert manifest['card_written'] is False
     for name, digest in manifest['sources'].items():
@@ -48,7 +49,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
               '\nif value==37\nfopen 0 "RESULT.BIN" "wb"\n'
               'fputs 0 "SPECIAL-COMPILED"\nfclose 0\nendif\nendproc\n')
     (app / 'TEST.ASP').write_text(source, encoding='ascii')
-    (app / 'ACTIONS.KEY').write_bytes(actions(b'C:\\PCPLUSSE\\TEST.ASP', 0))
+    (app / 'ACTIONS.KEY').write_bytes(actions(b'C:\\PCPLUSSE\\TEST.ASX' if precompile else b'C:\\PCPLUSSE\\TEST.ASP', 0))
     sampler = SAMPLER.replace('D:\\', 'C:\\')
     for offset in (0, 1, 3, 4):
         sampler = sampler.replace(hex(0x3f8 + offset), hex(base + offset))
@@ -75,7 +76,9 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
                       for n in range(1,5))+
               '[mixer]\nnosound=true\n[autoexec]\n@echo off\n'
               'mount c "' + str(drive) + '"\nc:\nset PCPLUS=C:\\ORIGINAL\n' +
-              ('WATCH T\n' if observe else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+'SNAP B\nADDKEY ' + keys + '\n'
+              ('WATCH T\n' if observe else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+'SNAP B\n'+
+              ('CD \\PCPLUSSE\nASPCOMP TEST.ASP\nIF ERRORLEVEL 1 GOTO failed\nCD \\\n' if precompile else '')+
+              'ADDKEY ' + keys + '\n'
               'CALL C:\\PCPLUSSE\\' + launcher + '.BAT /T:ACTIONS.KEY\n'+
               ('C:\\STRAT A\n' if strategy else '')+'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n'+('C:\\RVIEW\n' if after_child_view else '')+('C:\\WATCH\n' if observe else '')+
               'if errorlevel 1 goto failed\necho RETURNED>C:\\RETURN.TXT\nexit\n'
@@ -111,13 +114,13 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     for leaf in PRODUCTS:
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, cpu='8086', port=com, io_base=base, resident_observer=observe,
-                  irq=irq,
+                  irq=irq, precompiled_before_terminal=precompile,
                   package_manifest_sha256=sha(package / 'manifest.json'),
                   package_files=manifest['files'],
                   checks=['launcher returns to DOS', 'PCPLUS environment restored',
                           f'COM{com}/PIC/IRQ vectors restored', 'private PRM/DIR/XLT unchanged',
                           'packaged binaries unchanged'] + (['actual magenta splash captured by independent timer'] if observe else
-                          ['nested DOS source compilation produces exact ASX', 'script writes expected result'])+(['DOS allocation strategy restored'] if strategy else [])+(['frozen-history viewer reopens after nested child return'] if after_child_view else []),
+                          [('DOS precompilation produces exact ASX' if precompile else 'nested DOS source compilation produces exact ASX'), 'script writes expected result'])+(['DOS allocation strategy restored'] if strategy else [])+(['frozen-history viewer reopens after nested child return'] if after_child_view else []),
                   sources={n: sha(ROOT / n) for n in ['standalone/test_special_package_dos.py',
                            'standalone/special_watch.asm', 'standalone/test_terminal.py',
                            'standalone/check_setup_model.py', 'standalone/test_directory_key_bindings_dos.py',
@@ -137,11 +140,12 @@ def main():
     p.add_argument('--after-child-view',action='store_true',help='Observe redisplay after nested compilation and frozen-memory reacquisition')
     p.add_argument('--irq',type=int,choices=[3,4,5,7])
     p.add_argument('--com',type=int,choices=[1,2,3,4],default=2)
+    p.add_argument('--precompile',action='store_true',help='Compile at the DOS prompt before retaining the terminal/interpreter')
     args = p.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     assert not (args.setup and args.splash_only)
-    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view)
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile)
 
 
 if __name__ == '__main__':

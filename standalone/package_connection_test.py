@@ -6,7 +6,7 @@ from package_special_edition import ROOT,dos_text,launch
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
-def stage(output,products):
+def stage(output,products,source_base_commit=None):
     assert output.is_relative_to(ROOT/'build') and not output.exists()
     sources={};identities={};manifests={}
     for leaf,binary in products.items():
@@ -31,13 +31,14 @@ def stage(output,products):
     for leaf,binary in products.items():shutil.copyfile(binary,payload/leaf)
     shutil.copyfile(help_base/'LOCHELP.HLP',payload/'LOCHELP.HLP')
     (payload/'START.BAT').write_bytes(launch());(payload/'SETUP.BAT').write_bytes(launch(True))
-    revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    revision=source_base_commit or subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
     (payload/'VERSION.TXT').write_bytes(dos_text('LoC SPECIAL EDITION / CONNECTION TEST\nSysop: bstar\nSource base: '+revision+'\nTERMINAL SHA256: '+sha(products['TERMINAL.EXE'])+'\n'))
     (payload/'README.TXT').write_bytes(dos_text(
         'PROCOMM PLUS / LoC SPECIAL EDITION - CONNECTION TEST\n\n'
         'Keep your existing PCPLUS.PRM, PCPLUS.DIR, PCPLUS.XLT and key files.\n'
         'This package contains no private configuration or dialing directory.\n'
-        'Use a separate C:\\PCPLUSSE copy and retain the working installation.\n'
+        'Back up an existing C:\\PCPLUSSE before replacing application files.\n'
         'Before START, place a copy of your known working PCPLUS.PRM here.\n'
         'Preserve the Boca settings: COM3,3E8h,IRQ5 as previously established.\n'
         'Keep the initialization/flow settings that worked on this modem.\n'
@@ -55,7 +56,12 @@ def stage(output,products):
         'Backtick opens the browser; Connection/Redial repeats the target.\n'
         'Dim commands remain unavailable. This is a test candidate.\n\n'
         'Check login/input, ANSI/CP437, editor navigation and reconnect first.\n'
-        'Then use owned small files to verify transfers in both directions.\n'
+        'Then use owned small files to verify transfers in both directions.\n\n'
+        'For source scripts, compile at the DOS prompt before starting PCPlus:\n'
+        '  ASPCOMP SCRIPT.ASP\n'
+        'Then select SCRIPT.ASX with Alt-F5. Automatic ASP compilation while\n'
+        'the terminal and interpreter are resident can run out of conventional\n'
+        'RAM in this candidate. The standalone compiler remains included.\n'
         'Physical modem/SIP/audio and complete original feature acceptance\n'
         'remain unverified. Building/staging does not update a card.\n'))
     for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
@@ -68,7 +74,8 @@ def stage(output,products):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--source-base-commit',help='Explicit source identity for isolated reproduction without Git metadata')
     for name in ('terminal','runner','compiler','setup','translation'):p.add_argument('--'+name,type=Path,required=True)
     a=p.parse_args();products=dict(zip(('TERMINAL.EXE','ASPECT.EXE','ASPCOMP.EXE','PRMEDIT.EXE','XLTEDIT.EXE'),(a.terminal,a.runner,a.compiler,a.setup,a.translation)))
-    r=stage(a.output.resolve(),products);print('Staged',len(r['files']),'files; sources and shared inputs agree; no card/configuration writes.')
+    r=stage(a.output.resolve(),products,a.source_base_commit);print('Staged',len(r['files']),'files; sources and shared inputs agree; no card/configuration writes.')
 if __name__=='__main__':main()
