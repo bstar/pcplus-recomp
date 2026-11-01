@@ -7,8 +7,9 @@ NIC's existing boot-ROM enable, address and size.
 
 ## Dedicated management boot
 
-Select **Network management (Ethernet / FTP)** in the DOS startup menu.
-The default remains EM (Expanded memory + Mouse), with its ten-second timeout.
+Select **GREENTREE**, then **Network management (Ethernet / FTP)** in the DOS
+startup menu. The [machine-profile menu](MACHINE_BOOT_PROFILES.md) defaults to
+GREENTREE, then EM (Expanded memory + Mouse).
 The management entry uses HIMEM and EMM386 NOEMS, branches before UNISOUND
 initialization, loads MMOUSE using the saved machine-profile command and skips the game shell.
 `C:\NET\NETMGR.BAT` loads the packet driver,

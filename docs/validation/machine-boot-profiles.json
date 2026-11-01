@@ -1,0 +1,25 @@
+{
+  "installed_verified": true,
+  "physical_boot_tested": false,
+  "menu_choices": 45,
+  "backup": "C:\\BOOT\\MACHBK01",
+  "recovery": "C:\\BOOT\\OLDMENU.BAT",
+  "current_windows_unchanged": true,
+  "afterdark_disabled": true,
+  "validation": {
+    "routing_pairs": 45,
+    "windows_save_restore": true,
+    "explicit_profile_edit": true,
+    "missing_profile_refused": true,
+    "real_dos_kernel_boots": [
+      "GREEN EM",
+      "CHIPS N"
+    ],
+    "hardware_startup_fixture": true
+  },
+  "root_hashes": {
+    "/AUTOEXEC.BAT": "f33be131f765fdc5b68406b8b7804e49b7838c0921a7830b6ea252621a454bdc",
+    "/CHOOSE.BAT": "5c88669ea16ec11b745d923ca9aae0ef4253f1468379159b7472431c43eab7f7",
+    "/CONFIG.SYS": "97f060ed10eade6e1d3f1a6927039a0aeb542b1400d6e7925b55c092da97560a"
+  }
+}
