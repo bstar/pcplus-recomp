@@ -19,8 +19,10 @@ it is installed at `C:\PCPLUS`, with the real audible test still pending.
 
 [DOS network updates](docs/DOS_NETWORK_UPDATES.md) are the next integration step.
 The NIC photo identifies a 3C509-TP with an installed XTIDE ROM. Its diagnostic,
-packet driver and existing mTCP are staged at `C:\NET`, without boot/ROM changes.
-Resource inspection, DHCP and a verified FTP round trip await the DOS machine.
+packet driver and existing mTCP are installed at `C:\NET`. A dedicated Network
+management boot now starts DHCP and FTP, preserving I/O300h, IRQ5 and the XTIDE
+ROM settings. Reboot before modem use because IRQ5 is shared between sessions.
+Physical DHCP and a verified FTP round trip await the DOS machine.
 
 On November 1, bstar replaced the broad remaining-work objective with this
 milestone: prepare the new PCPlus build for a real connection through the Boca

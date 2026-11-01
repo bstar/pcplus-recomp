@@ -5,51 +5,53 @@ installed boot ROM used for XTIDE. Ethernet uses the RJ45 connector, not AUI.
 The Boca modem already uses COM3/3E8h/IRQ5. Preserve those settings and the
 NIC's existing boot-ROM enable, address and size.
 
-The attached DOS card now has these manually started tools in `C:\NET`:
+## Dedicated management boot
 
-- 3C509.COM packet driver and 3CCFG.EXE adapter configuration/diagnostics.
-- The card's existing mTCP2020 DHCP, FTP server/client, Ping, packet utility
-  and HTTP client, copied without modifying `C:\UTILS\NET`.
-- MTCP.CFG using software packet interrupt60h, hostname LOC386, MTU576 and
-  a single FTP client; DHCP supplies the IP/network settings.
-- A named FTP account confined to C:, with no anonymous account. Private
-  credentials are kept on the card and in ignored local analyst storage;
-  they must never enter the public repository or logs.
-- NETUP.BAT for driver/DHCP and NETFTP.BAT for the foreground FTP server.
+Select **Network management (Ethernet / FTP)** in the DOS startup menu.
+The default remains EM (Expanded memory + Mouse), with its ten-second timeout.
+The management entry uses HIMEM, branches before UNISOUND initialization, and
+skips the mouse and game shell. `C:\NET\NETMGR.BAT` loads the packet driver,
+runs DHCP, then starts the foreground FTP server only after successful DHCP.
+Failures stop at the DOS prompt with the diagnostic visible.
 
-No boot files, motherboard/network settings, NIC EEPROM or boot ROM were
-changed. Actual Ethernet initialization, DHCP and file transfer are **untested**.
+The confirmed NIC settings remain **I/O300h, IRQ5, onboard TP/RJ45**, with
+XTIDE ROM at **D8000h–DBFFFh**. No EEPROM or ROM settings were changed.
+Software packet interrupt60h is separate from hardware IRQ5.
+The Boca modem also uses IRQ5: **reboot before using PCPlus**. Closing FTP does
+not unload the packet driver; this setup is for separate management sessions,
+not simultaneous modem and Ethernet operation.
 
-## First physical check
-
-After reinstalling the NIC and card, run:
-
-```dos
-C:\NET\3CCFG LIST
-```
-
-The EtherDisk manual documents LIST as adapter enumeration. Then run 3CCFG
-without arguments to view its configuration menu. Record the I/O base, IRQ,
-transceiver, boot-ROM address and size; exit without saving. Do not use AUTO
-configuration. Resolve any IRQ5 conflict before enabling the packet driver.
-Software interrupt60h is separate from the hardware IRQ.
-
-After confirming the resource settings, connect RJ45 to the home LAN and run:
+Connect RJ45 to the home LAN, boot the management entry, and report the DHCP
+IP address. Leave the FTP server running for workstation updates. Use the
+named account `bstar`; private credentials remain on the card and in ignored
+local storage. No anonymous account is enabled. Alt-X exits the server.
+DHCP supplies the IP address; no static LAN IP was assigned.
+If DHCP fails after the driver loads, retry:
 
 ```dos
-C:\NET\NETUP
-```
-
-Report the driver output and DHCP IP, then run:
-
-```dos
+SET MTCPCFG=C:\NET\MTCP.CFG
+C:\NET\DHCP
 C:\NET\NETFTP
 ```
 
-Leave the FTP server running while the workstation transfers files. Alt-X
-exits it before returning to PCPlus. If the driver is already loaded, run
-`SET MTCPCFG=C:\NET\MTCP.CFG` and `C:\NET\DHCP` directly instead of loading
-the driver twice. No resident TCP/IP stack or DOS startup change is needed.
+Do not load the packet driver twice. For a manual driver/DHCP start after a
+fresh boot, `C:\NET\NETUP` remains available; observe the same reboot boundary.
+
+`C:\NET` contains the 3C509 packet driver and configuration utility plus the
+card's existing mTCP2020 DHCP, FTP server/client, Ping, packet utility and HTTP
+client. `C:\UTILS\NET` is unchanged. MTCP.CFG uses hostname LOC386, MTU576,
+packet interrupt60h and one FTP client. Boot files were backed up on the card
+at `C:\NET\BOOTBK01` and locally in ignored `build/network-boot-01`.
+To restore the previous boot menu and startup:
+
+```dos
+COPY C:\NET\BOOTBK01\CONFIG.SYS C:\CONFIG.SYS
+COPY C:\NET\BOOTBK01\AUTOEXEC.BAT C:\AUTOEXEC.BAT
+```
+
+Installation checks verified DOS CRLF text, boot dispatch before sound
+initialization, unchanged default selection and required files. **Physical
+packet-driver initialization, DHCP and FTP transfer remain untested.**
 
 The first workstation check should download a known file and compare its hash,
 then upload a new temporary file and read it back for byte verification. For
