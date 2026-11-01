@@ -365,6 +365,15 @@ def inspect_terminal_memory(binary,map_path):
                phone_log_far_queue_start=queue,phone_log_far_queue_end=queue_end,
                phone_log_entry_pairs_verified=10,phone_log_callback_pairs_verified=18,
                phone_log_callback_sites=sites,phone_log_DOS_write_spill_verified=True)
+ if '_phone_log_startup_owner_far' in symbols:
+  assert symbols['_phone_log_startup_owner_far'][0]==symbols['_phone_log_startup_owner_impl'][0]==bank_seg
+  near_call('_phone_log_startup_owner_far','_phone_log_startup_owner_impl',prefix=b'\x55\x89\xe5',suffix=b'\x8d\x66\x00\x5d\xcb')
+  assert raw('terminal_phone_log_startup_call',5)==b'\x9a'+struct.pack('<HH',symbols['_phone_log_startup_owner_far'][1],symbols['_phone_log_startup_owner_far'][0])
+  assert address('terminal_phone_log_startup_call')+3 in relocations
+  assert raw('terminal_phone_log_startup_call',7)[5:]==b'\x09\xc0'
+  assert address('terminal_phone_log_startup_done')-address('terminal_phone_log_startup_call')<=15
+  assert symbols['_terminal_phone_log_startup_status'][0]==ds
+  extra.update(phone_log_startup_entry_verified=True,phone_log_startup_call_bytes=address('terminal_phone_log_startup_done')-address('terminal_phone_log_startup_call'))
  bridges=0
  if 'terminal_process_code_start' in symbols:
   bank=next(c for c in code_segments if c['name']=='PROCESS_CODE')

@@ -1,6 +1,6 @@
 #ifndef PCPLUS_PHONE_LOG_STARTUP_H
 #define PCPLUS_PHONE_LOG_STARTUP_H
-enum { PLS_OK=0,PLS_ARGUMENT,PLS_RESOURCE,PLS_PATH,PLS_FILESYSTEM,
+enum { PLS_OK=0,PLS_ARGUMENT,PLS_RESOURCE,PLS_PATH,PLS_FILESYSTEM,PLS_BASELINE,
        PLS_QUEUE_BASE=256 };
 /* Foreground DOS16 near cdecl, DS=SS. Read the accepted exact1264-byte PRM
  * image; do not reopen a configuration file or publish any new PRM values.

@@ -159,6 +159,18 @@ _small_code_:
  or ax,ax
  jnz .configuration_error
  call terminal_setup_bind
+%ifdef TERMINAL_PHONE_LOG_STARTUP
+ extern _phone_log_startup_owner_far
+ global terminal_phone_log_startup_call,terminal_phone_log_startup_done
+terminal_phone_log_startup_call equ $
+ call far _phone_log_startup_owner_far
+ or ax,ax
+ jz .phone_log_ready
+ mov dx,phone_log_startup_failed
+ jmp .configuration_message
+.phone_log_ready:
+terminal_phone_log_startup_done equ $
+%endif
 %ifdef TERMINAL_SPECIAL_EDITION
  extern terminal_special_splash
  call far terminal_special_splash
@@ -537,6 +549,9 @@ terminal_shutdown:
 SEGMENT _DATA public align=16 class=DATA use16
 global terminal_parser_active
 terminal_parser_active: dw 0
+%ifdef TERMINAL_PHONE_LOG_STARTUP
+phone_log_startup_failed: db 'Call-log setup failed. Check PCPLUS path and log access.',13,10,'$'
+%endif
 global hardware_active,vector_active
 hardware_active: db 0
 vector_active: db 0

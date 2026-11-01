@@ -36,6 +36,7 @@ parser.add_argument('--directory-translation',action='store_true',help='Stage tr
 parser.add_argument('--directory-retirement',action='store_true',help='Save pending statistics through a quiesced PROGRAM owner after disconnect; implies --directory-resource-owner')
 parser.add_argument('--directory-resource-owner',action='store_true',help='Quiesced KEY/KBD preflight from directory preview R; implies --directory-resource-cli')
 parser.add_argument('--phone-log-bank',action='store_true',help='Link the checked logger code bank; event/startup integration remains disabled')
+parser.add_argument('--phone-log-startup',action='store_true',help='Configure the call-log queue from accepted settings before UART startup; requires --session-baseline')
 parser.add_argument('--native-reset-bank',action='store_true',help='Link the experimental namespaced native bank; peer width ownership remains disabled')
 parser.add_argument('--native-reset-static',action='store_true',help='Retain the larger static bank as a memory regression control')
 parser.add_argument('--native-reset-transaction',action='store_true',help='Experimental checked live display transaction; peer requests remain disabled')
@@ -59,6 +60,9 @@ if args.directory_preview:
  assert args.session_baseline and args.session_capture
 if args.directory_view:args.original_reference=True
 if args.original_reference:args.original_keys=True
+if args.phone_log_startup:
+ args.phone_log_bank=True
+ assert args.session_baseline
 if args.session_capture:assert args.directory_keys and args.process_bank
 if args.session_projection:assert args.session_capture
 if args.projection_probe:assert args.session_projection
@@ -137,6 +141,7 @@ if args.directory_adopt:out_name='terminal-directory-adopt-'+hashlib.sha256(out_
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
 if args.native_reset_transaction:out_name+='-transaction'
+if args.phone_log_startup:out_name+='-log-startup'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
  # buffers as the existing feature suffix chain grows.
@@ -168,7 +173,7 @@ sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 # The dedicated call-log bank is built explicitly; never pull its callbacks or
 # end marker into established terminals through the assembly glob.
 sources = [p for p in sources if p.name not in
- ('phone_log_bank.asm','phone_log_resident.asm','phone_log_storage.asm','phone_log_end.asm','directory_reader_bank.asm')]
+ ('phone_log_bank.asm','phone_log_resident.asm','phone_log_storage.asm','phone_log_end.asm','phone_log_startup_bank.asm','directory_reader_bank.asm')]
 if args.projection_probe:sources.append(ROOT/'standalone/session_projection_probe.asm')
 if args.hook_probe:sources.append(ROOT/'standalone/hook_transaction_probe.asm')
 if args.input_probe:sources += [ROOT/'standalone/hook_transaction_probe.asm',ROOT/'standalone/hook_input_probe.asm']
@@ -267,6 +272,7 @@ for index,source in enumerate(sources):
  if args.hook_input:options+=['-DTERMINAL_HOOK_INPUT']
  if args.hook_apply:options+=['-DTERMINAL_HOOK_APPLY']
  if args.hook_lookup:options+=['-DTERMINAL_HOOK_LOOKUP']
+ if args.phone_log_startup:options+=['-DTERMINAL_PHONE_LOG_STARTUP']
  if args.custom_irq:options+=['-DTERMINAL_CUSTOM_IRQ']
  if args.special_edition:options+=['-DTERMINAL_SPECIAL_EDITION']
  if args.native_reset_bank:options+=['-DTERMINAL_NATIVE_RESET_BANK']
@@ -500,7 +506,7 @@ if args.native_reset_bank:
 phone_log_bank=None
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
- phone_log_bank=build_bank(OUT)
+ phone_log_bank=build_bank(OUT,startup=args.phone_log_startup)
  objects+=list(map(str,phone_log_bank['objects']));sources+=phone_log_bank['sources']
 ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
 if args.directory_resource_owner:ordering+=['FAR_DATA','FROZEN_DATA']
@@ -613,6 +619,7 @@ if args.custom_irq:manifest['experimental_custom_irq']=True
 if args.special_edition:manifest['special_edition']=True
 if args.phone_log_bank:
  manifest['experimental_phone_log_bank']=True
+ if args.phone_log_startup:manifest['experimental_phone_log_startup']=True
  manifest['phone_log_compiler_adapters']=phone_log_bank['adapters']
  manifest['limitations'].append('Checked call-log code bank linked with retained far event storage and explicit DOS/CRT callbacks. No modem events, startup PRM/path adoption, shared file reservations or poll scheduling are wired yet; this build does not produce a live telephone log.')
 if args.native_reset_bank:

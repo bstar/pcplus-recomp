@@ -32,18 +32,23 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def build_bank(out):
+def build_bank(out, startup=False):
     OUT = Path(out)
     OUT.mkdir(parents=True, exist_ok=True)
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
     sources = ['src/directory/' + name + '.c' for name in
                ['phone_log_queue', 'phone_log_format', 'phone_log_clock', 'phone_log_file', 'phone_log_fs']]
+    aliases = dict(ALIASES)
+    if startup:
+        sources += ['src/directory/phone_log_startup.c', 'src/directory/phone_log_startup_owner.c', 'src/config/resource_path.c']
+        aliases.update(phone_log_startup_owner='phone_log_startup_owner_impl',
+            resource_pcplus_path='phone_resource_pcplus_path', resource_program_path='phone_resource_program_path')
     objects = []
     adapters = {}
     for source in sources:
-        obj = OUT / (Path(source).stem + '.obj')
+        obj = OUT / (('phone_resource_path' if source == 'src/config/resource_path.c' else Path(source).stem) + '.obj')
         subprocess.run(['wcl', '-c', *flags, '-dPHONE_LOG_QUEUE_FAR', '-dPHONE_LOG_QUEUE_EXTERNAL', '-nt=PHONE_LOG_CODE', '-nc=FARCODE',
-                        *['-d' + name + '=' + value for name, value in ALIASES.items()],
+                        *['-d' + name + '=' + value for name, value in aliases.items()],
                         '-fo=' + obj.name, os.path.relpath(ROOT / source, OUT)], cwd=OUT, check=True)
         stable_header(obj, source)
         before = obj.read_bytes()
@@ -59,8 +64,9 @@ def build_bank(out):
         objects.append(obj.name)
     asm_sources = ['src/terminal/phone_log_bank.asm', 'src/terminal/phone_log_resident.asm',
                    'src/terminal/phone_log_storage.asm', 'src/terminal/phone_log_end.asm']
+    if startup:asm_sources.insert(-1, 'src/terminal/phone_log_startup_bank.asm')
     for source in asm_sources:
-        obj = OUT / (Path(source).stem + '.obj')
+        obj = OUT / (('phone_resource_path' if source == 'src/config/resource_path.c' else Path(source).stem) + '.obj')
         subprocess.run(['nasm', '-fobj', '-I' + str(ROOT / 'src/terminal') + '/',
                         source, '-o', str(obj)], cwd=ROOT, check=True)
         objects.append(obj.name)
@@ -70,6 +76,9 @@ def build_bank(out):
         'src/capture/capture_fs.h', 'src/config/prm_dos.h', 'src/terminal/phone_log_abi.inc',
         'src/terminal/far_bridge.inc', 'standalone/build_phone_log_bank.py',
         'standalone/build_phone_log_file.py', 'standalone/omf_imports.py']
+    if startup:
+        names += ['src/directory/phone_log_startup.h', 'src/config/resource_path.h',
+                  'src/terminal/session_baseline.h']
     objects.remove('phone_log_bank.obj')
     objects.insert(0, 'phone_log_bank.obj')
     return dict(objects=[OUT / name for name in objects], sources=[ROOT / name for name in names],
