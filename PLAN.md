@@ -1,5 +1,10 @@
 # Complete DOS rebuild plan
 
+[Translation resource publication](docs/XLT_RESOURCE_ADOPTION.md) adds a checked
+component handoff of selected bytes and the Reload/Edit canonical identity.
+Pending offers and close uncertainty are preserved. This prerequisite is not
+yet wired to the application selection/UART/accounting transaction or dialing.
+
 [Directory source compilation](docs/DIRECTORY_SCRIPT_COMPILE.md) adds explicit
 preview C, private resource staging and direct ASPCOMP without script execution.
 Canonical source/output/helper/scratch claims and independent far recovery state

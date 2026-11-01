@@ -39,4 +39,18 @@ unsigned __cdecl xlt_live_reload(unsigned action,unsigned char *table,xlt_dos_re
  * Output executable64 and quoted tail68 must be external and disjoint. No IO
  * or owner mutation; any failure preserves both outputs. */
 unsigned __cdecl xlt_live_editor(unsigned psp,char *executable,char *tail);
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+/* Adopt an already checked resource without reopening it. Foreground owner
+ * must have quiesced input/UART. Three disjoint caller-owned near allocations:
+ * canonical_path64, selected_table256 and active_table256, DS=SS. Mode1 needs
+ * an absolute uppercase DOS83 filename; modes0/2 need an empty path and leave
+ * unused active table bytes intact. All checks precede publication of bytes
+ * and the Reload/Edit identity. Pending settings/reload offers and any prior
+ * uncertain reader close refuse; binding/cancel cannot clear that uncertainty.
+ * Failure preserves both the active destination and all internal bindings. No IO,
+ * mode/enabled/RX-mask mutation, authentication or external-writer exclusion.
+ */
+unsigned __cdecl xlt_live_resource_adopt(unsigned mode,const char *canonical_path,
+ const unsigned char *selected_table,unsigned char *active_table);
+#endif
 #endif

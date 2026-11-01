@@ -1,6 +1,9 @@
 /* Maintained staged input-mode handoff. Native editor shared memory is separate. */
 #include "xlt_live.h"
 #include "../config/resource_path.h"
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+#include "../capture/capture_file.h"
+#endif
 #include <string.h>
 extern unsigned capture_fs_canonical(const char *,char *);
 static struct {
@@ -12,13 +15,21 @@ static struct {
 static unsigned bound=2;
 static unsigned active_bound=2;
 static char active_path[64];
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+/* Never discard an uncertain reader close when another API resets staging. */
+static unsigned resource_held=0;
+#endif
 static unsigned extent(const void *p,unsigned n)
 {return p && (unsigned long)(unsigned)p+n<=65536UL;}
 static unsigned separate(const void *a,unsigned an,const void *b,unsigned bn)
 {return (unsigned long)(unsigned)a+an<=(unsigned)b || (unsigned long)(unsigned)b+bn<=(unsigned)a;}
 static unsigned external(const void *p,unsigned n)
 {return extent(p,n) && separate(p,n,&owner,sizeof(owner)) && separate(p,n,&bound,sizeof(bound)) &&
- separate(p,n,&active_bound,sizeof(active_bound)) && separate(p,n,active_path,sizeof(active_path));}
+ separate(p,n,&active_bound,sizeof(active_bound)) && separate(p,n,active_path,sizeof(active_path))
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+ && separate(p,n,&resource_held,sizeof(resource_held))
+#endif
+ ;}
 static unsigned canonical(const char *source,char *destination,unsigned *error)
 {
  char absolute[128];unsigned n;
@@ -51,6 +62,9 @@ unsigned __cdecl xlt_live_stage(unsigned mode,xlt_dos_result *result)
    if(owner.fallback_kind==2){memset(result,0,sizeof(*result));result->status=XLT_DOS_RESOURCE;result->dos_error=owner.fallback_error;return result->status;}
    if(!owner.fallback_kind){owner.selected=2;status=xlt_dos_read(owner.fallback,owner.table,result);}
   }
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+  if(result->close_error)resource_held=1;
+#endif
   if(status)return status;
  }
  owner.mode=mode;owner.ready=1;return XLT_DOS_OK;
@@ -122,6 +136,9 @@ unsigned __cdecl xlt_live_initialize(unsigned psp,unsigned mode,const char *path
     result->dos_error=owner.fallback_error;return result->status;
    }
    owner.selected=2;status=xlt_dos_read(owner.fallback,owner.table,result);
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+   if(result->close_error)resource_held=1;
+#endif
    if(!status){owner.mode=owner.ready=1;}
   }else if(lookup!=RESOURCE_PATH_ABSENT){memset(result,0,sizeof(*result));result->status=status=XLT_DOS_RESOURCE;}
  }
@@ -162,3 +179,27 @@ unsigned __cdecl xlt_live_editor(unsigned psp,char *executable,char *tail)
  memcpy(command+2,active_path,n);command[n+2]='"';
  memcpy(executable,program,sizeof(program));memcpy(tail,command,sizeof(command));return XLT_DOS_OK;
 }
+
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+unsigned __cdecl xlt_live_resource_adopt(unsigned mode,const char *path,
+ const unsigned char *selected,unsigned char *table)
+{
+ unsigned n,c;
+ if(mode>2 || !external(path,64) || !external(selected,256) || !external(table,256) ||
+  !separate(path,64,selected,256) || !separate(path,64,table,256) ||
+  !separate(selected,256,table,256))return XLT_DOS_ARGUMENT;
+ for(n=0;n<64 && path[n];++n){
+  c=(unsigned char)path[n];
+  if((c>='a' && c<='z') || c=='/')return XLT_DOS_RESOURCE;
+ }
+ if(n==64 || (mode==1?(!n || path[0]<'A' || path[0]>'Z' || path[1]!=':' ||
+  path[2]!='\\' || !capture_file_validate_path(path,0)):n!=0))return XLT_DOS_RESOURCE;
+ /* Serialized guards take precedence over potentially dirty initial BSS. */
+ if(resource_held || (bound!=1 && bound!=2) || (active_bound!=1 && active_bound!=2) ||
+  (bound==1 && owner.ready))return XLT_LIVE_STATE;
+ if(mode==1)memcpy(table,selected,256);
+ memset(active_path,0,sizeof(active_path));if(mode==1)memcpy(active_path,path,n);
+ memset(&owner,0,sizeof(owner));bound=active_bound=1;
+ return XLT_DOS_OK;
+}
+#endif
