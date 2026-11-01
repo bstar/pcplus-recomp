@@ -257,6 +257,9 @@ connection_capture_carrier:
  in al,dx
  and al,0x80
  mov [connection_carrier_seen],al
+%ifdef TERMINAL_CUSTOM_IRQ
+ mov byte [connection_carrier_low_pending],0
+%endif
  pop dx
  pop ax
  popf
@@ -274,10 +277,16 @@ terminal_connection_flow_alive:
  je .done
  cmp byte [connection_carrier_seen],0
  je .done
+%ifdef TERMINAL_CUSTOM_IRQ
+ call connection_carrier_qualified
+ or ax,ax
+ jnz .alive
+%else
  mov dx,[uart_port_msr]
  in al,dx
  test al,0x80
  jnz .alive
+%endif
  call connection_flow_retire
  xor ax,ax
  jmp .done
@@ -286,6 +295,55 @@ terminal_connection_flow_alive:
 .done:
  pop dx
  retf
+
+%ifdef TERMINAL_CUSTOM_IRQ
+; Physical MODEM sessions can briefly deassert DCD at the training/data-mode
+; boundary. Confirm four BIOS ticks of continuous low before retiring them.
+; This shared foreground sampler also protects PROGRAM-return flow ownership.
+; AX=1 alive/unconfirmed,0 sustained loss. Preserve other registers and IF/DF.
+connection_carrier_qualified:
+ push bx
+ push cx
+ push dx
+ mov dx,[uart_port_msr]
+ in al,dx
+ test al,0x80
+ jz .low
+ mov byte [connection_carrier_seen],1
+ mov byte [connection_carrier_low_pending],0
+ jmp .alive
+.low:
+ cmp byte [connection_carrier_seen],0
+ je .alive
+ call connection_clock_ticks_service
+ cmp byte [connection_carrier_low_pending],0
+ jne .elapsed
+ mov [connection_carrier_low_tick],ax
+ mov [connection_carrier_low_tick+2],dx
+ mov byte [connection_carrier_low_pending],1
+ jmp .alive
+.elapsed:
+ sub ax,[connection_carrier_low_tick]
+ sbb dx,[connection_carrier_low_tick+2]
+ jnc .bounded
+ add ax,0x00b0
+ adc dx,0x0018
+.bounded:
+ or dx,dx
+ jnz .lost
+ cmp ax,4
+ jae .lost
+.alive:
+ mov ax,1
+ jmp .done
+.lost:
+ xor ax,ax
+.done:
+ pop dx
+ pop cx
+ pop bx
+ ret
+%endif
 
 connection_flow_retire:
  mov word [uart_tx_paused],0
@@ -462,6 +520,15 @@ terminal_connection_poll_impl:
 %endif
  jmp .done
 .carrier:
+%ifdef TERMINAL_CUSTOM_IRQ
+ cmp word [terminal_directory_mode],1
+ je .direct_carrier
+ call connection_carrier_qualified
+ or ax,ax
+ jnz .done
+ jmp .carrier_lost
+.direct_carrier:
+%endif
  mov dx,[uart_port_msr]
  in al,dx
  test al,0x80
@@ -471,6 +538,7 @@ terminal_connection_poll_impl:
 .carrier_low:
  cmp byte [connection_carrier_seen],0
  je .done
+.carrier_lost:
  ; A falling carrier can leave an already accepted transfer tail in the
  ; modem's command buffer. Reuse the bounded retry separator/guard before
  ; the next initialization, for both legacy and acknowledged policies.
@@ -831,6 +899,10 @@ global connection_init,connection_dial,connection_hangup
 connection_dial: times 129 db 0
 connection_hangup: times 129 db 0
 connection_scratch: times 129 db 0
+%ifdef TERMINAL_CUSTOM_IRQ
+connection_carrier_low_pending: db 0
+connection_carrier_low_tick: dd 0
+%endif
 message_initializing: db 'Initializing',0
 message_dialing: db 'Dialing',0
 message_waiting: db 'Await CONNECT',0
