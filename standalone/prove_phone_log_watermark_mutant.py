@@ -22,7 +22,7 @@ def main():
     copied={};output.mkdir(parents=True);fresh=output/'source'
     for path in sorted(source.rglob('*')):
         relative=path.relative_to(source)
-        if not path.is_file() or relative.parts[0]=='build':continue
+        if not path.is_file() or relative.parts[0]=='build' or '__pycache__' in relative.parts:continue
         assert relative.parts[0] not in ('.git','original','originals','analysis','install')
         assert relative.suffix.lower() not in ('.exe','.com','.obj','.img','.db','.prm','.fon')
         public=subprocess.check_output(['git','show',revision+':'+relative.as_posix()])
