@@ -54,6 +54,19 @@ foreground application tests exercise the actual process_run memory, UART,
 IRQ/vector and popup handoff. Authored scripts contain a file-write marker that
 must remain absent after compilation.
 
+The full foreground suite passes 42 DOS workflows, including nine C cases with
+the actual parent EXEC/memory/UART handoff, long paths and capture close policy.
+Packaged nested compilation/history and five native retirement cases pass.
+The committed-source checks reproduce all ten package files from 776 declared
+sources, and all three component executables plus seven objects from 43 sources.
+The isolated component repeats 19 DOS workflows with 715 assertions. Linked
+checks cover 25 compiler lifecycle/EXEC guard inputs, 15 CLI inputs and 35
+retirement inputs; nine damaged ABI and six damaged retirement controls refuse.
+Seven older application variants retain their exact accepted executable bytes.
+The loopback ENiGMA check observes online C refusal without transmitting the
+command. Its screen checks cover frame size and markers, not a complete
+independent character/attribute comparison.
+
 Selection adoption/UART/resource publication and dialing remain open. The full
 F01–F16 application, independent complete rendering oracle, physical Boca/
 SPA2102 and card acceptance remain open. No live BBS, SynthModem or card is
