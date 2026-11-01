@@ -66,6 +66,15 @@ adoption. A valid decoy in the changed CWD must never execute. This carrier mode
 is deliberately separate from transparent null-modem TCP, which asserts carrier
 as soon as TCP connects. Neither model proves analog or physical modem behavior.
 
+The final checkpoint passes eight Apply workflows plus the profile 4 switch,
+42 existing read-only/compile workflows, three dial/script workflows, 20 linked
+adoption guard cases, 15 CLI inputs, 35 retirement inputs and five native retirement
+workflows. Nested packaged compilation/history passes. Seven older executables
+remain exact. The isolated rebuild from 778 source files reproduces all ten package files;
+the 18-source translation rebuild repeats 13 DOS workflows with 823 assertions.
+The ENiGMA check uses 250 ms sequence framing and 20 ms input-byte pacing. The public
+receipt records earlier failed fixtures and the explicit limits of each check.
+
 Full F01–F16 application acceptance, an independent complete BBS character/
 attribute rendering comparison, physical Boca/SPA2102 reconnect/transfers and
 card installation/acceptance remain open. Loopback ENiGMA checks exercise an

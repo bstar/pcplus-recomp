@@ -1,0 +1,3180 @@
+{
+  "passed": true,
+  "source_commit": "fdbe535a9509af04f2d9b3406367a753a6594ae6",
+  "binary_sha256": "15a3009fe6dfb5c93690da2a96254ad13742aa774423783618a6437484966269",
+  "original_inputs": [],
+  "package": "build/special-directory-adopt-final-20261031/PCPLUSSE",
+  "package_manifest_sha256": "881d8f92df303dbdd08116394bc87b85f28ffaaee26c7899fb75b554146da98b",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "dfe757facb47448a9b6dbf88f4a759f46b4302761a31abe14f4335320bc6ec89",
+    "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "15a3009fe6dfb5c93690da2a96254ad13742aa774423783618a6437484966269",
+    "VERSION.TXT": "909ccb983e2a1902b7f49ee29711554de36690cad6f707aa02eb6e5ab09d7a7e",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "application_workflows": [
+    {
+      "case": "valid-directory-pair-profile6",
+      "passed": true,
+      "adoption": {
+        "applied": true,
+        "final_fields_verified": true,
+        "canonical_script_binding_verified": true,
+        "sampled_stack_bytes": 66
+      },
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        36832,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "invalid-KBD-no-publication",
+      "passed": true,
+      "adoption": {
+        "applied": false,
+        "final_fields_verified": true,
+        "canonical_script_binding_verified": true,
+        "sampled_stack_bytes": 66
+      },
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 9,
+      "content_opens": 1,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        8,
+        36832,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        8,
+        6,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "invalid-KEY-no-publication",
+      "passed": true,
+      "adoption": {
+        "applied": false,
+        "final_fields_verified": true,
+        "canonical_script_binding_verified": true,
+        "sampled_stack_bytes": 66
+      },
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        9,
+        36832,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        9,
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "missing-bindings-reset-defaults",
+      "passed": true,
+      "adoption": {
+        "applied": true,
+        "final_fields_verified": true,
+        "canonical_script_binding_verified": true,
+        "sampled_stack_bytes": 66
+      },
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        36832,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-current-default",
+      "passed": true,
+      "adoption": {
+        "applied": true,
+        "final_fields_verified": true,
+        "canonical_script_binding_verified": true,
+        "sampled_stack_bytes": 3166
+      },
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        63017,
+        23531,
+        20992,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-current-ASP",
+      "passed": true,
+      "adoption": {
+        "applied": true,
+        "final_fields_verified": true,
+        "canonical_script_binding_verified": true,
+        "sampled_stack_bytes": 66
+      },
+      "compiler": {
+        "EXEC_requests": 1,
+        "owner": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "child": [
+          0,
+          0,
+          0,
+          26230
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 45,
+      "content_opens": 6,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-syntax-error",
+      "passed": true,
+      "adoption": {
+        "applied": false,
+        "final_fields_verified": true,
+        "canonical_script_binding_verified": true,
+        "sampled_stack_bytes": 66
+      },
+      "compiler": {
+        "EXEC_requests": 1,
+        "owner": [
+          4,
+          8,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "child": [
+          0,
+          0,
+          1,
+          26230
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 38,
+      "content_opens": 4,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        8,
+        56056,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-no-script",
+      "passed": true,
+      "adoption": {
+        "applied": true,
+        "final_fields_verified": true,
+        "canonical_script_binding_verified": true,
+        "sampled_stack_bytes": 4442
+      },
+      "compiler": {
+        "EXEC_requests": 0,
+        "owner": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "child": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        54825,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    }
+  ],
+  "application_case_count": 8,
+  "profile4": {
+    "passed": true,
+    "active_terminal_id_after_restore": 4,
+    "profile_keyboard_exact": true,
+    "case": {
+      "case": "valid-directory-pair-profile6",
+      "passed": true,
+      "adoption": {
+        "applied": true,
+        "final_fields_verified": true,
+        "canonical_script_binding_verified": true,
+        "sampled_stack_bytes": 66
+      },
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        44834,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    }
+  },
+  "read_only_compile_regression_workflows": [
+    {
+      "case": "valid-directory-pair-profile6",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        36832,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "invalid-KBD-no-publication",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 9,
+      "content_opens": 1,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        8,
+        36832,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        8,
+        6,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "invalid-KEY-no-publication",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        9,
+        36832,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        9,
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "missing-bindings-reset-defaults",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        36832,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "reference-parent-releases-whole-popup",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 178,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        36832,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "browser-parent-releases-whole-popup",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 184,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        36832,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "proposal-corrupted-after-queue-before-UART-stage",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 0,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        4,
+        0,
+        36832,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "actual-transfer-changed-after-queue-before-resource-read",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 0,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        4,
+        0,
+        36832,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": true,
+      "hardware_restored": true
+    },
+    {
+      "case": "actual-DTE-changed-after-queue-before-resource-read",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 171,
+      "DOS_operations_under_quiescence": 0,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        4,
+        0,
+        36832,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": false,
+      "declared_session_fault_only": true,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-current-default",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        63017,
+        23531,
+        20992,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-PCPLUS-default",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 21,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        63017,
+        23531,
+        20992,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-original-CLI-overrides-mode2",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        63017,
+        56298,
+        20992,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-missing-required",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        6,
+        63017,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-truncated",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        12,
+        63017,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        12,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-suffixed",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        12,
+        63017,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        12,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-invalid-current-no-fallback",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        12,
+        63017,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        12,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-directory-no-fallback",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        6,
+        63017,
+        23531,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        6,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-mode2-no-read",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        38441,
+        56298,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "XLT-mode0-no-read",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        54825,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-current-ASX",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-environment-ASX-before-current-ASP",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 21,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-current-ASP-needs-compiler",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 21,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-environment-ASP-needs-compiler",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 25,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-bad-header-no-fallback",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 18,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        13,
+        56056,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        13,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-over64KiB",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 403,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-missing",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 8,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        6,
+        56056,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        6,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-qualified",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        38947,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-empty-ASX",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 18,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        13,
+        56056,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        13,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-empty-ASP-needs-compiler",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 20,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-blank",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        54825,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-directory-no-fallback",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 289,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        6,
+        56056,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        6,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-capture-preserved",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 312,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "script-capture-conflict",
+      "passed": true,
+      "adoption": {},
+      "compiler": {},
+      "observer_ticks": 312,
+      "DOS_operations_under_quiescence": 6,
+      "content_opens": 0,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        7,
+        56056,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        7,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-current-ASP",
+      "passed": true,
+      "adoption": {},
+      "compiler": {
+        "EXEC_requests": 1,
+        "owner": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "child": [
+          0,
+          0,
+          0,
+          26230
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 45,
+      "content_opens": 6,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-environment-ASP",
+      "passed": true,
+      "adoption": {},
+      "compiler": {
+        "EXEC_requests": 1,
+        "owner": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "child": [
+          0,
+          0,
+          0,
+          26230
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 49,
+      "content_opens": 6,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-syntax-error",
+      "passed": true,
+      "adoption": {},
+      "compiler": {
+        "EXEC_requests": 1,
+        "owner": [
+          4,
+          8,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "child": [
+          0,
+          0,
+          1,
+          26230
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 38,
+      "content_opens": 4,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        8,
+        56056,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-empty-source",
+      "passed": true,
+      "adoption": {},
+      "compiler": {
+        "EXEC_requests": 1,
+        "owner": [
+          4,
+          8,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "child": [
+          0,
+          0,
+          1,
+          26230
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 36,
+      "content_opens": 4,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        8,
+        56056,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-already-ASX",
+      "passed": true,
+      "adoption": {},
+      "compiler": {
+        "EXEC_requests": 0,
+        "owner": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "child": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 19,
+      "content_opens": 3,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-no-script",
+      "passed": true,
+      "adoption": {},
+      "compiler": {
+        "EXEC_requests": 0,
+        "owner": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "child": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 13,
+      "content_opens": 2,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        54825,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-missing-helper",
+      "passed": true,
+      "adoption": {},
+      "compiler": {
+        "EXEC_requests": 1,
+        "owner": [
+          4,
+          8,
+          3,
+          2,
+          0,
+          0,
+          1,
+          0
+        ],
+        "child": [
+          3,
+          2,
+          0,
+          26230
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 37,
+      "content_opens": 4,
+      "ownership_violations": 0,
+      "owner_state": [
+        4,
+        7,
+        8,
+        56056,
+        56299,
+        0,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-capture-policy",
+      "passed": true,
+      "adoption": {},
+      "compiler": {
+        "EXEC_requests": 1,
+        "owner": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "child": [
+          0,
+          0,
+          0,
+          26230
+        ]
+      },
+      "observer_ticks": 416,
+      "DOS_operations_under_quiescence": 45,
+      "content_opens": 6,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    },
+    {
+      "case": "compile-long-source-path",
+      "passed": true,
+      "adoption": {},
+      "compiler": {
+        "EXEC_requests": 1,
+        "owner": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "child": [
+          0,
+          0,
+          0,
+          26230
+        ]
+      },
+      "observer_ticks": 393,
+      "DOS_operations_under_quiescence": 49,
+      "content_opens": 6,
+      "ownership_violations": 0,
+      "owner_state": [
+        3,
+        0,
+        0,
+        56056,
+        56299,
+        4608,
+        1
+      ],
+      "resource_state": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "active_state_unchanged": true,
+      "declared_session_fault_only": false,
+      "hardware_restored": true
+    }
+  ],
+  "regression_case_count": 42,
+  "connection_script_workflows": [
+    {
+      "case": "canonical-ASX",
+      "passed": true,
+      "checks": {
+        "emulated_modem_connected_to_selected_endpoint": true,
+        "configured_hangup_reached_wire": true,
+        "emulated_modem_disconnected_peer": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_WATCH.COM": true,
+        "fixture_unchanged_DOIT.KEY": true,
+        "fixture_unchanged_OTHER/GO.ASX": true,
+        "fixture_unchanged_OTHER/KEEP.BIN": true,
+        "fixture_unchanged_GO.ASX": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "selected_target_dialed": true,
+        "wrong_script_never_executed": true,
+        "canonical_script_executed": true,
+        "CWD_decoy_ignored": true
+      },
+      "cohort": "build/connection-dos/directory-adopt-connect-final-20261031-canonical-ASX",
+      "binary_sha256": "15a3009fe6dfb5c93690da2a96254ad13742aa774423783618a6437484966269",
+      "artifacts": {
+        "TEST.PRM": "73ed58c527024b62c2a54be9a31b82b735b86a41b58c172a3e659d9874046e66",
+        "WATCH.COM": "dd7b05cff9859e2f2bf5a410ba489eabd1d6b8874c1431a27de439a775f2f1e6",
+        "DOIT.KEY": "f553262744703a6a77e893e251448a31432aeea5a517c64ec00bfa669c3be09d",
+        "GO.ASX": "cdc5ddb4d1e02ffaef7832d18de28bef5896006f569f92cf92a5386df0d0df28",
+        "sampler.asm": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+        "SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+        "dosbox.conf": "ad2a024187cefd7165d5bd19e0b7b6f4f676def16e1c4aad330fb8e7d7911f26",
+        "dosbox.log": "7095def0deed89eff7630d04ebaa9f280cde945fbec5e3e823793a902e122955",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "CANON.OK": "e979a06be39c5d84dd6d50df560a7d59512dfda0c3d15e65ba52dcb6f801ecff",
+        "TEST.DIR": "d68d789b2bd4aca45a849d758b38553244aaea40b112064476aefba1be32cafd",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "45dcc0ae1b891bde2054fc0e89ccd95ec3bae7005ce8d7280a95a4f865eedfd5",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "078c1a449e77626a90ab91c6b6dd72d11d375845620bc4ea3c38d2a44d8f33cd",
+        "peer-state.json": "9bf3f2d2543a553b1cab2288c5a42aef90c10026af2803503cf25543a6d7e7ef",
+        "screen.txt": "7b8407c68739c86b461148c53e5aa732fa07a957fd67fb4c99239c01dd12eec2",
+        "result.json": "2cd5dab1ae0bb65b370db6fbb9a542198046ab38336185fffcab52a6255e526e",
+        "OTHER/GO.ASX": "7238c194ffce1f1b3d4af5fff9266bc5676488a60fff1dd3e948eb8d4b9b5eae",
+        "OTHER/KEEP.BIN": "c15119bf48642ebd770e71839aa3ff711312ad058b32d14fec21e8f7dd4786ef",
+        "OTHER/OWNER.BIN": "88dd372765d1383e467aba1d4fa2e49fcc1d40171a610cd3bf113d8ea5f70e28"
+      }
+    },
+    {
+      "case": "compiled-ASP",
+      "passed": true,
+      "checks": {
+        "emulated_modem_connected_to_selected_endpoint": true,
+        "configured_hangup_reached_wire": true,
+        "emulated_modem_disconnected_peer": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_WATCH.COM": true,
+        "fixture_unchanged_DOIT.KEY": true,
+        "fixture_unchanged_OTHER/GO.ASX": true,
+        "fixture_unchanged_OTHER/KEEP.BIN": true,
+        "fixture_unchanged_GO.ASP": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "selected_target_dialed": true,
+        "wrong_script_never_executed": true,
+        "canonical_script_executed": true,
+        "CWD_decoy_ignored": true,
+        "actual_ASPCOMP_produced_exact_ASX": true
+      },
+      "cohort": "build/connection-dos/directory-adopt-connect-final-20261031-compiled-ASP",
+      "binary_sha256": "15a3009fe6dfb5c93690da2a96254ad13742aa774423783618a6437484966269",
+      "artifacts": {
+        "TEST.PRM": "73ed58c527024b62c2a54be9a31b82b735b86a41b58c172a3e659d9874046e66",
+        "WATCH.COM": "dd7b05cff9859e2f2bf5a410ba489eabd1d6b8874c1431a27de439a775f2f1e6",
+        "DOIT.KEY": "f553262744703a6a77e893e251448a31432aeea5a517c64ec00bfa669c3be09d",
+        "GO.ASP": "d1bea18c2477efda1b19c710aa85e4f15c0c58dbe4d7bb27acfa90b0ae5343d7",
+        "sampler.asm": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+        "SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+        "dosbox.conf": "ed3e403c7ac9d679a3e9d12ce3370777c6116f214a4663e65346ae1eae6dbb42",
+        "dosbox.log": "a8ddf5526b513e902644d2e25eae56f04a6deb49b3186a17e4effbfbb134c656",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "GO.ASX": "cdc5ddb4d1e02ffaef7832d18de28bef5896006f569f92cf92a5386df0d0df28",
+        "CANON.OK": "e979a06be39c5d84dd6d50df560a7d59512dfda0c3d15e65ba52dcb6f801ecff",
+        "TEST.DIR": "4318fbd16469d0e5eb59c115ba4dcdadcf43c672ba4bf1716fb5d7aae40e2040",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "45dcc0ae1b891bde2054fc0e89ccd95ec3bae7005ce8d7280a95a4f865eedfd5",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "078c1a449e77626a90ab91c6b6dd72d11d375845620bc4ea3c38d2a44d8f33cd",
+        "peer-state.json": "9bf3f2d2543a553b1cab2288c5a42aef90c10026af2803503cf25543a6d7e7ef",
+        "screen.txt": "7b8407c68739c86b461148c53e5aa732fa07a957fd67fb4c99239c01dd12eec2",
+        "result.json": "8e43fcb511e0c6c2e24a549c39a0a67fed1e665d042b79ba22aa64a480ee78e4",
+        "OTHER/GO.ASX": "7238c194ffce1f1b3d4af5fff9266bc5676488a60fff1dd3e948eb8d4b9b5eae",
+        "OTHER/KEEP.BIN": "c15119bf48642ebd770e71839aa3ff711312ad058b32d14fec21e8f7dd4786ef",
+        "OTHER/OWNER.BIN": "e15619d730490f7f52ccf8003f6787a8d42b658a5a001110cfe6c9d074ac5b14"
+      }
+    },
+    {
+      "case": "changed-ASX-refused",
+      "passed": true,
+      "checks": {
+        "emulated_modem_connected_to_selected_endpoint": true,
+        "configured_hangup_reached_wire": true,
+        "emulated_modem_disconnected_peer": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_WATCH.COM": true,
+        "fixture_unchanged_DOIT.KEY": true,
+        "fixture_unchanged_OTHER/GO.ASX": true,
+        "fixture_unchanged_OTHER/KEEP.BIN": true,
+        "fixture_unchanged_GO.ASP": true,
+        "fixture_unchanged_BAD.ASX": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "selected_target_dialed": true,
+        "wrong_script_never_executed": true,
+        "changed_compiled_script_not_executed": true,
+        "actual_PROGRAM_replaced_ASX": true
+      },
+      "cohort": "build/connection-dos/directory-adopt-connect-final-20261031-changed-ASX-refused",
+      "binary_sha256": "15a3009fe6dfb5c93690da2a96254ad13742aa774423783618a6437484966269",
+      "artifacts": {
+        "TEST.PRM": "73ed58c527024b62c2a54be9a31b82b735b86a41b58c172a3e659d9874046e66",
+        "WATCH.COM": "dd7b05cff9859e2f2bf5a410ba489eabd1d6b8874c1431a27de439a775f2f1e6",
+        "DOIT.KEY": "3520304781c57081fbadba2e8178a334ca017376e3ba27bc14b07f5a7c63e3ad",
+        "GO.ASP": "d1bea18c2477efda1b19c710aa85e4f15c0c58dbe4d7bb27acfa90b0ae5343d7",
+        "BAD.ASX": "7238c194ffce1f1b3d4af5fff9266bc5676488a60fff1dd3e948eb8d4b9b5eae",
+        "sampler.asm": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+        "SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+        "dosbox.conf": "c336f12c6b398963c9c6fc998d44225d750163e1b0a9fb8b2619197161131f0a",
+        "dosbox.log": "ded59f7e7961d58f948f7938a2b9a1aa9789049dc84e02c61164f4d796b585db",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "GO.ASX": "7238c194ffce1f1b3d4af5fff9266bc5676488a60fff1dd3e948eb8d4b9b5eae",
+        "TEST.DIR": "181225c796e5ead8ece06a4919bca704a17828848aae9cebc0f8730b97b27535",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "45dcc0ae1b891bde2054fc0e89ccd95ec3bae7005ce8d7280a95a4f865eedfd5",
+        "OWNER.BIN": "bb81635a7b201fe5cf6c36a91e0d250ae534c361ff2520ab8fa6144997c35d14",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "078c1a449e77626a90ab91c6b6dd72d11d375845620bc4ea3c38d2a44d8f33cd",
+        "peer-state.json": "9bf3f2d2543a553b1cab2288c5a42aef90c10026af2803503cf25543a6d7e7ef",
+        "screen.txt": "7b8407c68739c86b461148c53e5aa732fa07a957fd67fb4c99239c01dd12eec2",
+        "result.json": "aebcd50a4a4bfd54b549a54cb7cf9d20681af5f6e82a3ef68a70fefa88413d2e",
+        "OTHER/GO.ASX": "7238c194ffce1f1b3d4af5fff9266bc5676488a60fff1dd3e948eb8d4b9b5eae",
+        "OTHER/KEEP.BIN": "c15119bf48642ebd770e71839aa3ff711312ad058b32d14fec21e8f7dd4786ef"
+      }
+    }
+  ],
+  "connection_script_case_count": 3,
+  "linked_adoption_cases": [
+    {
+      "case": "script-claim-EXEC-guard-0",
+      "passed": true
+    },
+    {
+      "case": "script-claim-EXEC-guard-1",
+      "passed": true
+    },
+    {
+      "case": "script-claim-EXEC-guard-2",
+      "passed": true
+    },
+    {
+      "case": "script-claim-EXEC-guard-65535",
+      "passed": true
+    },
+    {
+      "case": "canonical-name-0-0-False",
+      "passed": true
+    },
+    {
+      "case": "canonical-name-1-0-False",
+      "passed": true
+    },
+    {
+      "case": "canonical-name-1-0-True",
+      "passed": true
+    },
+    {
+      "case": "canonical-name-1-1-True",
+      "passed": true
+    },
+    {
+      "case": "refuse-_terminal_directory_adopt_requested-0",
+      "passed": true
+    },
+    {
+      "case": "refuse-_terminal_directory_adopt_requested-2",
+      "passed": true
+    },
+    {
+      "case": "refuse-terminal_program_active-0",
+      "passed": true
+    },
+    {
+      "case": "refuse-terminal_program_kind-6",
+      "passed": true
+    },
+    {
+      "case": "refuse-terminal_program_status-4",
+      "passed": true
+    },
+    {
+      "case": "refuse-connection_state-6",
+      "passed": true
+    },
+    {
+      "case": "refuse-uart_rx_count-1",
+      "passed": true
+    },
+    {
+      "case": "refuse-uart_rx_dropped-1",
+      "passed": true
+    },
+    {
+      "case": "refuse-terminal_transfer_active-1",
+      "passed": true
+    },
+    {
+      "case": "refuse-terminal_macro_active-1",
+      "passed": true
+    },
+    {
+      "case": "refuse-process_busy-1",
+      "passed": true
+    },
+    {
+      "case": "refuse-terminal_directory_context_valid-2",
+      "passed": true
+    }
+  ],
+  "linked_adoption_case_count": 20,
+  "damaged_adoption_controls": [
+    {
+      "case": "directory_adopt_setup-wrong-caller-word",
+      "rejected": true,
+      "sha256": "da38ae55a6799bddf928ab867ddf71216f35269883c896a7125124a36409e659"
+    },
+    {
+      "case": "directory_adopt_xlt_check-wrong-caller-word",
+      "rejected": true,
+      "sha256": "275fb86494dbddedc97b59e9ffaaec3df6e7c0cc52821255d2fb19f14a8fcd51"
+    },
+    {
+      "case": "directory_adopt_xlt_publish-wrong-caller-word",
+      "rejected": true,
+      "sha256": "d3873c6a91c0c11c14605839a3b5a830985f1ad9d0d23c74ddebc3aa7bcbd525"
+    },
+    {
+      "case": "directory_adopt_script_read-wrong-caller-word",
+      "rejected": true,
+      "sha256": "21651fa7f267a84ca76f865a488e995d4af2b331f27e13f85f1691a76b65a2c8"
+    },
+    {
+      "case": "dirty-initial-script-owner",
+      "rejected": true,
+      "sha256": "77b6f836afa7c7c02b509244d886b344780f2ffc618d5a97ee423cc8a00ac05b"
+    }
+  ],
+  "damaged_ABI_controls": [
+    {
+      "case": "defaults-caller-word",
+      "rejected": true,
+      "sha256": "b43a3076d8b178b31b20359f3efaabdecc129690cc4fc901c6bbd406bb45ff10"
+    },
+    {
+      "case": "keymap-forwarded-word",
+      "rejected": true,
+      "sha256": "385f7044ec56924071ca318df359f7814c9dbe7f4bc2a7e6900ba866893a8faa"
+    },
+    {
+      "case": "wrong-PROGRAM-kind",
+      "rejected": true,
+      "sha256": "f5caf281272eeeef5ff1c4e17db592a36b16a30a6a00ec2c49bbd5a988d511d6"
+    },
+    {
+      "case": "reversed-resource-EXEC-condition",
+      "rejected": true,
+      "sha256": "9524a01cee7f536c55eaab7d648e702c0630874e2235f5f1a1cd6687a9e134ac"
+    },
+    {
+      "case": "wrong-loan-restore-call",
+      "rejected": true,
+      "sha256": "e46c04308b612029e972ef3d404e3ff9d11e9fe9b7dd7e69a2bd4c00b3567694"
+    },
+    {
+      "case": "wrong-child-UART-quiet-call",
+      "rejected": true,
+      "sha256": "2352ff02d5cc8a56ccb95294a40e23e55ddcaeb699292fce48fdabff69aa4720"
+    },
+    {
+      "case": "wrong-actual-transfer-caller-word",
+      "rejected": true,
+      "sha256": "73e748ced21c9c5de9ca606b978ead44ed4d0078a518867c1a0d711f44c75e92"
+    },
+    {
+      "case": "wrong-critical-retention-store",
+      "rejected": true,
+      "sha256": "6a33ac40996ade4c15f124869b57d83bfb98e8fedfc30d340944ef53680fd7ff"
+    },
+    {
+      "case": "missing-resource-EXEC-relocation",
+      "rejected": true,
+      "sha256": "dc83c8bb6212200cb0a04499aaf54ddc67aa29774e0c66b2bf197ee170be1dc4"
+    }
+  ],
+  "linked_CLI_cases": 15,
+  "linked_retirement_cases": 35,
+  "damaged_retirement_controls": [
+    {
+      "case": "wrong-retirement-kind",
+      "rejected": true
+    },
+    {
+      "case": "wrong-setup-kind",
+      "rejected": true
+    },
+    {
+      "case": "wrong-flush-target",
+      "rejected": true
+    },
+    {
+      "case": "wrong-poll-target",
+      "rejected": true
+    },
+    {
+      "case": "wrong-frozen-setup-target",
+      "rejected": true
+    },
+    {
+      "case": "missing-poll-relocation",
+      "rejected": true
+    }
+  ],
+  "retirement_native_cases": [
+    {
+      "case": "normal",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true
+      },
+      "observer_flags": 7,
+      "DOS_operations": 414,
+      "violations": 0,
+      "setup_EXECs": 1,
+      "injected_faults": 0,
+      "retirement": [
+        3,
+        0,
+        0,
+        1,
+        1
+      ],
+      "accounting": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        23050,
+        1,
+        0,
+        0,
+        23050
+      ],
+      "cohort": "build/connection-dos/directory-adopt-retirement-native-20261031-normal",
+      "artifacts": {
+        "TEST.PRM": "73ed58c527024b62c2a54be9a31b82b735b86a41b58c172a3e659d9874046e66",
+        "CHDIR.ASX": "80a97f75f2aa2aa754ae8a758c494b6a5ad990c64fc28443dfc53927325d94da",
+        "RETWATCH.COM": "e43a6dbe17da5b62e13e5e59c67269ff9c51259fd6805c311ca35afb2b4faebc",
+        "sampler.asm": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+        "SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+        "dosbox.conf": "e2b300291850ec4a22ddf8078ef1a2f04794cd6618a82cb9bf5bbe7a024a4948",
+        "dosbox.log": "7147edc12e65c34a94a7781bc586c45ab6a11c9e3fd6cdeaa0d357f4946f540e",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "TEST.DIR": "18c5ac431f9af9005d31755b9759ab21247a82fdce3b03ac294572019c349ec2",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "31c865bd3043f67cbe379d6b0bfc5edf8b9e4f97a810acc18f65d27e4f084cb1",
+        "RETIRE.BIN": "021c19d1803510a52d5b5f970f413706811aff35c86660a58ed72cd45eb57f4b",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "732a8f91a77400a12d2553a12d15b84af50c397806085f78e3a8180091ac1f94",
+        "peer-state.json": "372ccfd790b0de0d855491e2dfe6a7dbfe71208afb95d7af5a39f0aa18e69af9",
+        "screen.txt": "0200d2f502d10a647cbd870249dbc7cf2fef96ced42e9d303892143d7c054055",
+        "result.json": "35fa5440cc843e08e815843aeb525f496304f81d5e2737f23c573a3ed46097bb",
+        "OTHER/TEST.DIR": "b4b8d2e0a2ec00b67851793e8061aebf0fa0ba7a31e5f929776f6bc610f53b2f"
+      }
+    },
+    {
+      "case": "counter-wrap",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true
+      },
+      "observer_flags": 7,
+      "DOS_operations": 414,
+      "violations": 0,
+      "setup_EXECs": 0,
+      "injected_faults": 0,
+      "retirement": [
+        3,
+        0,
+        0,
+        1,
+        1
+      ],
+      "accounting": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        23050,
+        1,
+        0,
+        0,
+        23050
+      ],
+      "cohort": "build/connection-dos/directory-adopt-retirement-native-20261031-counter-wrap",
+      "artifacts": {
+        "TEST.PRM": "73ed58c527024b62c2a54be9a31b82b735b86a41b58c172a3e659d9874046e66",
+        "CHDIR.ASX": "80a97f75f2aa2aa754ae8a758c494b6a5ad990c64fc28443dfc53927325d94da",
+        "RETWATCH.COM": "e43a6dbe17da5b62e13e5e59c67269ff9c51259fd6805c311ca35afb2b4faebc",
+        "sampler.asm": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+        "SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+        "dosbox.conf": "a8b445c5f0f82d252ef07e9fbecac27d14b0d7dec0dc919a2a9a5a3ca1c464ae",
+        "dosbox.log": "018bbc2958091d0a57ed526240f12dad5af5fcc8b34369730ceb4c2a154a9faa",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "TEST.DIR": "fa98cae69b38f280aec7778995f78b0875f39d0487840f2db498fc0049dcde05",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "31c865bd3043f67cbe379d6b0bfc5edf8b9e4f97a810acc18f65d27e4f084cb1",
+        "RETIRE.BIN": "4f88f28ff5e2230608fb810752952020a48c4d8cdea4bb5ec5f9926cb4710dd3",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "3b4293edccecb3d994c7d658af05675e49709b6ff03507a3aa2de18eecf7ecb1",
+        "peer-state.json": "372ccfd790b0de0d855491e2dfe6a7dbfe71208afb95d7af5a39f0aa18e69af9",
+        "screen.txt": "0200d2f502d10a647cbd870249dbc7cf2fef96ced42e9d303892143d7c054055",
+        "result.json": "2d3b6f1850c12d01d5a8c8439c98a32161021bce2005d52f8ff62a53be820572",
+        "OTHER/TEST.DIR": "00cd8a710acce70beab629520fb0ba33ee512f1206938849b236621d2aa58702"
+      }
+    },
+    {
+      "case": "capture-preserved",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true,
+        "capture_stayed_open": true,
+        "capture_file_created": true
+      },
+      "observer_flags": 7,
+      "DOS_operations": 414,
+      "violations": 0,
+      "setup_EXECs": 0,
+      "injected_faults": 0,
+      "retirement": [
+        3,
+        0,
+        0,
+        1,
+        1
+      ],
+      "accounting": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        23050,
+        1,
+        0,
+        0,
+        23050
+      ],
+      "cohort": "build/connection-dos/directory-adopt-retirement-native-20261031-capture-preserved",
+      "artifacts": {
+        "TEST.PRM": "73ed58c527024b62c2a54be9a31b82b735b86a41b58c172a3e659d9874046e66",
+        "CHDIR.ASX": "80a97f75f2aa2aa754ae8a758c494b6a5ad990c64fc28443dfc53927325d94da",
+        "RETWATCH.COM": "e43a6dbe17da5b62e13e5e59c67269ff9c51259fd6805c311ca35afb2b4faebc",
+        "sampler.asm": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+        "SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+        "dosbox.conf": "25ef92597d509d8567b908c35cd178c267fdb87c5a7c369133e201fe1fe1290f",
+        "dosbox.log": "77171c217b74bceb86a9b1ebd68da0de29e288ea3bd663c3ce79f50271bbea02",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "TEST.DIR": "18c5ac431f9af9005d31755b9759ab21247a82fdce3b03ac294572019c349ec2",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "31c865bd3043f67cbe379d6b0bfc5edf8b9e4f97a810acc18f65d27e4f084cb1",
+        "RETIRE.BIN": "119c3afb15b3701ca333b67bb01c360727259826ad14755bd5efe604e943c119",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "3b4293edccecb3d994c7d658af05675e49709b6ff03507a3aa2de18eecf7ecb1",
+        "peer-state.json": "372ccfd790b0de0d855491e2dfe6a7dbfe71208afb95d7af5a39f0aa18e69af9",
+        "screen.txt": "0200d2f502d10a647cbd870249dbc7cf2fef96ced42e9d303892143d7c054055",
+        "result.json": "1b63eed9b3c9e9cadaefe569aa3c1dfff10ac8e728e29365c7bcff93ac0096a4",
+        "OTHER/TEST.DIR": "b4b8d2e0a2ec00b67851793e8061aebf0fa0ba7a31e5f929776f6bc610f53b2f",
+        "OTHER/CAPTURE.LOG": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "case": "existing-backup",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "recovery_file_preserved": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true
+      },
+      "observer_flags": 15,
+      "DOS_operations": 4,
+      "violations": 0,
+      "setup_EXECs": 0,
+      "injected_faults": 0,
+      "retirement": [
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "accounting": [
+        2,
+        80,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cohort": "build/connection-dos/directory-adopt-retirement-native-20261031-existing-backup",
+      "artifacts": {
+        "PCPBAK.$$$": "2c3019cf6f6634bc2109a02f3521de6f0cb4e068b6d749cbdbdc339a0cba966a",
+        "TEST.PRM": "73ed58c527024b62c2a54be9a31b82b735b86a41b58c172a3e659d9874046e66",
+        "TEST.DIR": "b4b8d2e0a2ec00b67851793e8061aebf0fa0ba7a31e5f929776f6bc610f53b2f",
+        "CHDIR.ASX": "80a97f75f2aa2aa754ae8a758c494b6a5ad990c64fc28443dfc53927325d94da",
+        "RETWATCH.COM": "e43a6dbe17da5b62e13e5e59c67269ff9c51259fd6805c311ca35afb2b4faebc",
+        "sampler.asm": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+        "SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+        "dosbox.conf": "ddab4aa90d99ead9e0e3eb50b5daebb8ca009d69bccddde9b81c5a70f64630a1",
+        "dosbox.log": "03366cbdb11427372e89d5b98b0a9c52429a4e880ea420bd0eb6c7c0545a88eb",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "ab4b128303c588c03f2d867bd308a663c18db87f5fa89832395ab32d77e1f972",
+        "RETIRE.BIN": "bee3017e63579be11e0cc2fb09f351e588a1ac0bf3a8d3c61159d1c1f5ab9500",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "3b4293edccecb3d994c7d658af05675e49709b6ff03507a3aa2de18eecf7ecb1",
+        "peer-state.json": "372ccfd790b0de0d855491e2dfe6a7dbfe71208afb95d7af5a39f0aa18e69af9",
+        "screen.txt": "ee70d616b4c2b9802457844ecd7588f651eea4d4e9d7fb31534bd357cf9cbba2",
+        "result.json": "8c1e62079416b1df263c323073aa2886612752bfbebe4d58469ffc731fa86ce9",
+        "OTHER/TEST.DIR": "b4b8d2e0a2ec00b67851793e8061aebf0fa0ba7a31e5f929776f6bc610f53b2f"
+      }
+    },
+    {
+      "case": "installed-cleanup-error",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_CHDIR.ASX": true,
+        "fixture_unchanged_OTHER/TEST.DIR": true,
+        "fixture_unchanged_RETWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "observer_valid": true,
+        "before_after_return_observed": true,
+        "all_account_IO_quiesced": true,
+        "exact_active_changes_only": true,
+        "retirement_completed": true,
+        "actual_child_CWD_changed": true,
+        "setup_reused_reconciled_context": true,
+        "declared_fault_only": true,
+        "visible_error_notice": true,
+        "source_accounted_exactly_once": true,
+        "decoy_unchanged": true,
+        "recovery_backup_preserved": true
+      },
+      "observer_flags": 31,
+      "DOS_operations": 414,
+      "violations": 0,
+      "setup_EXECs": 0,
+      "injected_faults": 1,
+      "retirement": [
+        4,
+        3,
+        13,
+        1,
+        1
+      ],
+      "accounting": [
+        13,
+        5,
+        0,
+        5,
+        0,
+        23050,
+        1,
+        1,
+        0,
+        23050
+      ],
+      "cohort": "build/connection-dos/directory-adopt-retirement-native-20261031-installed-cleanup-error",
+      "artifacts": {
+        "TEST.PRM": "73ed58c527024b62c2a54be9a31b82b735b86a41b58c172a3e659d9874046e66",
+        "CHDIR.ASX": "80a97f75f2aa2aa754ae8a758c494b6a5ad990c64fc28443dfc53927325d94da",
+        "RETWATCH.COM": "ad4f73ec91e2f205ce77b838605508c0934cbbecb7354bcb39fe0f45ca790bee",
+        "sampler.asm": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+        "SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+        "dosbox.conf": "6dae79877b0d1a58811f5fa6fa7e9593f9581fd814ad87a7f59d552e8a44ece4",
+        "dosbox.log": "92d0f44a8b106eb6e3f6b603a173bbfe901e95bb5b23cfe96a4711d7351e63eb",
+        "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "PCPBAK.$$$": "b4b8d2e0a2ec00b67851793e8061aebf0fa0ba7a31e5f929776f6bc610f53b2f",
+        "TEST.DIR": "18c5ac431f9af9005d31755b9759ab21247a82fdce3b03ac294572019c349ec2",
+        "PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "SCREEN.BIN": "dcd3e8c7cac7937d9ec9d73c6e69d9bc32d39dac9baaf8b5d9d8332b17e6b777",
+        "RETIRE.BIN": "e5485afadaafc030cd5bfa5deffd7b0b96c7ce427c8bbe35cd39ef3890a1cea2",
+        "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+        "serial.bin": "3b4293edccecb3d994c7d658af05675e49709b6ff03507a3aa2de18eecf7ecb1",
+        "peer-state.json": "372ccfd790b0de0d855491e2dfe6a7dbfe71208afb95d7af5a39f0aa18e69af9",
+        "screen.txt": "14313fc15f18b8fcce1f459f57d470251cd3247812dcba9fcbeafe108da25451",
+        "result.json": "0c362017c186f42da51cdc3bb84bab85f228143a823e2bce17f7d3450e8c0630",
+        "OTHER/TEST.DIR": "b4b8d2e0a2ec00b67851793e8061aebf0fa0ba7a31e5f929776f6bc610f53b2f"
+      }
+    }
+  ],
+  "nested_checks": [
+    "launcher returns to DOS",
+    "PCPLUS environment restored",
+    "COM2/PIC/IRQ vectors restored",
+    "private PRM/DIR/XLT unchanged",
+    "packaged binaries unchanged",
+    "nested DOS source compilation produces exact ASX",
+    "script writes expected result",
+    "DOS allocation strategy restored",
+    "frozen-history viewer reopens after nested child return"
+  ],
+  "xlt_component_cases": 13,
+  "xlt_native_assertions": 823,
+  "memory": {
+    "near_bytes": 65376,
+    "near_spare_bytes": 160,
+    "near_relative_segment": 12943,
+    "far_relative_segment": 17779,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 18307,
+    "history_bytes": 63000,
+    "far_end_linear": 355912,
+    "stack_end_linear": 272464,
+    "loaded_module_bytes": 239986,
+    "minimum_allocated_module_bytes": 419440,
+    "retained_parent_paragraphs": 26230,
+    "far_pointer_relocations_verified": true,
+    "snapshot_relative_segment": 22245,
+    "snapshot_image_offset": 61000,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 418920,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 17029,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 272464,
+        "end_linear": 276464
+      },
+      "ed_screen": {
+        "relative_segment": 17029,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 276464,
+        "end_linear": 280464
+      },
+      "program_screen": {
+        "relative_segment": 17029,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 272464,
+        "end_linear": 276464
+      },
+      "redisplay_live": {
+        "relative_segment": 17029,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 276464,
+        "end_linear": 280464
+      },
+      "redisplay_view": {
+        "relative_segment": 17029,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 280464,
+        "end_linear": 284464
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "program_browser_screen_overlay": true,
+    "editor_viewer_screen_overlay": true,
+    "snapshot_history_tail_overlay": true,
+    "snapshot_history_bytes_reclaimed": 2000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 418920,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 22245,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 419414,
+    "resident_CS_extent_bytes": 65384,
+    "resident_CS_spare_bytes": 152,
+    "substitute_native_bytes_verified": 53,
+    "substitute_native_dependencies_verified": 4,
+    "substitute_state_words_verified": 4,
+    "far_usage_bytes": 1493,
+    "far_usage_segment": 11051,
+    "far_usage_DS_restore_verified": true,
+    "directory_view_code_bytes": 5935,
+    "directory_view_FS_callbacks_verified": 3,
+    "directory_view_scratch_offset": 3141,
+    "directory_view_scratch_bytes": 512,
+    "directory_view_snapshot_page_bytes": 2788,
+    "directory_preview_proposal_bytes": 1190,
+    "directory_preview_snapshot_bytes": 3978,
+    "directory_preview_capture_policy": 1,
+    "directory_preview_capture_adapter_verified": true,
+    "directory_translation_layout_verified": true,
+    "directory_script_fingerprint_bytes": 12,
+    "directory_compile_owner_bytes": 256,
+    "directory_compile_candidate_bytes": 2024,
+    "directory_compile_lease_end": 8724,
+    "directory_resource_cli_far_splash_bytes": 377,
+    "directory_resource_cli_snapshot_bytes": 202,
+    "directory_resource_cli_startup_order_verified": true,
+    "directory_resource_owner_snapshot_bytes": 14,
+    "directory_resource_bundle_bytes": 2024,
+    "directory_resource_lease_start": 2788,
+    "directory_resource_lease_end": 6700,
+    "directory_resource_actual_session_bytes": 694,
+    "directory_resource_preview_binding_bytes": 698,
+    "directory_account_canonical_identity_callbacks_verified": 1,
+    "process_loan_full_paragraphs": 26230,
+    "process_loan_critical_paragraphs": 22261,
+    "process_loan_bytes": 63504,
+    "process_loan_code_calls_verified": true,
+    "process_child_quiet_before_trap_resume_verified": true,
+    "directory_retirement_snapshot_bytes": 10,
+    "directory_retirement_poll_before_PROGRAM_verified": true,
+    "directory_frozen_setup_tail_bytes": 68,
+    "directory_frozen_setup_executable_bytes": 64,
+    "process_bank_bytes": 903,
+    "process_bridge_pairs_verified": 1,
+    "process_near_entry_bytes": 22,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "recording_matcher_lead_site": 38968,
+    "recording_rx_far_call_sites": [
+      38971,
+      15124
+    ],
+    "recording_rx_callback_site": 111133,
+    "recording_actor_guard_sites": [
+      15124,
+      15523,
+      25483,
+      29563,
+      36770,
+      39297,
+      174136,
+      175237,
+      178328
+    ],
+    "recording_UI_boundary_sites": [
+      199992,
+      201546,
+      111087
+    ],
+    "recording_UI_optimized_sites": [],
+    "recording_tx_origin_bytes": 128,
+    "recording_tx_origin_start": 113367,
+    "recording_tx_far_call_sites": [
+      39767,
+      37087,
+      40649,
+      25000
+    ],
+    "recording_tx_callback_site": 113358,
+    "recording_terminal_state_bytes": 392,
+    "recording_terminal_bank_functions_verified": 9,
+    "recording_terminal_far_call_sites": [
+      23450,
+      24386
+    ],
+    "recorder_code_literal_bytes_verified": 223,
+    "recorder_code_literal_sites": [
+      167180,
+      167197,
+      167211,
+      167231,
+      167251,
+      167257,
+      167277,
+      167308,
+      167393
+    ],
+    "recording_bank_functions_verified": 14,
+    "recording_resident_callbacks_verified": 9,
+    "recording_adapter_far_call_sites": [
+      60529,
+      60553,
+      60577
+    ],
+    "capture_reservation_far_bindings_verified": 2,
+    "capture_reservation_far_call_sites": [
+      58404,
+      166249
+    ],
+    "capture_reservation_initialized_bytes": 8,
+    "command_menu_banked_call_sites": [
+      133797,
+      133912,
+      134439
+    ],
+    "command_menu_code_segment": 11878,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "directory_storage_snapshot_bytes": 222,
+    "directory_storage_callbacks_verified": 3,
+    "directory_storage_EXEC_gate_verified": true,
+    "configuration_bridge_pairs_verified": 102,
+    "transfer_ui_far_entries_verified": 4,
+    "transfer_ui_resident_callbacks_verified": 3,
+    "redisplay_bridge_pairs_verified": 4,
+    "viewer_live_plane_admission_verified": true,
+    "scroll_field_bridge_pairs_verified": 3,
+    "line_preflight_far_calls_verified": 2,
+    "wide_character_far_calls_verified": 2,
+    "wide_character_prepare_far_calls_verified": 1,
+    "script_window_keyboard_far_adapters_verified": true,
+    "aspect_command_preflight_verified": true,
+    "aspect_viewport_lease_words_verified": 3,
+    "protected_erase_far_bridge_verified": true,
+    "protected_erase_native_dependencies_verified": 4,
+    "erase_after_projection_initially_idle": true,
+    "wide_clear_rectangle_route_verified": true,
+    "alternate_output_far_bridge_verified": true,
+    "alternate_output_native_dependencies_verified": 4,
+    "source_owned_output_table_bytes": 256,
+    "aspect_far_services_verified": 17,
+    "aspect_resident_far_references_verified": 21,
+    "aspect_controller_read_references_verified": 1,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 50,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_controller_references_verified": 5,
+    "line_attribute_video_callbacks_verified": 2,
+    "line_controller_entry_pairs_verified": 4,
+    "line_controller_register_callbacks_verified": 3,
+    "line_controller_code_bytes": 421,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "mouse_bridge_pairs_verified": 10,
+    "mouse_code_bytes": 3065,
+    "mouse_shared_native_state_bytes": 28,
+    "resident_code_bytes": 65384,
+    "resident_code_spare_bytes": 152,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65384
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4087,
+        "offset": 0,
+        "bytes": 12908
+      },
+      {
+        "name": "PROCESS_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4894,
+        "offset": 0,
+        "bytes": 903
+      },
+      {
+        "name": "HOOK_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4951,
+        "offset": 0,
+        "bytes": 29593
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6801,
+        "offset": 0,
+        "bytes": 65079
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10869,
+        "offset": 0,
+        "bytes": 2900
+      },
+      {
+        "name": "USAGE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11051,
+        "offset": 0,
+        "bytes": 1493
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11145,
+        "offset": 0,
+        "bytes": 1461
+      },
+      {
+        "name": "SPLASH_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11237,
+        "offset": 0,
+        "bytes": 377
+      },
+      {
+        "name": "TRAP_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11261,
+        "offset": 0,
+        "bytes": 864
+      },
+      {
+        "name": "MOUSE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11315,
+        "offset": 0,
+        "bytes": 3065
+      },
+      {
+        "name": "DIRECTORY_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11507,
+        "offset": 0,
+        "bytes": 5935
+      },
+      {
+        "name": "REFERENCE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11878,
+        "offset": 0,
+        "bytes": 17029
+      }
+    ],
+    "far_code_bridge_pairs_verified": 169
+  },
+  "enigma_checks": {
+    "harness": true,
+    "semantic_audit": true,
+    "exact_screen": true,
+    "proxy_source_unchanged": true,
+    "product_source_unchanged": true,
+    "directory_prompt_and_loading": true,
+    "directory_first_and_last_pages": true,
+    "no_private_directory_fields": true,
+    "directory_preview_observed": true,
+    "preview_target_and_DTE": true,
+    "preview_privacy": true,
+    "online_resource_check_refused": true,
+    "online_compile_request_refused": true,
+    "resource_check_key_stayed_local": true,
+    "online_selection_adoption_refused": true
+  },
+  "enigma_framing_ms": 250,
+  "enigma_input_byte_delay_ms": 20,
+  "control_binaries": [
+    {
+      "variant": "terminal",
+      "flags": {},
+      "expected_sha256": "bd86a10b94544007242d2ce6bb737be5ab90909d4fcf2bac8713120d2b2ffa10",
+      "sha256": "bd86a10b94544007242d2ce6bb737be5ab90909d4fcf2bac8713120d2b2ffa10",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-directory-storage-276a15011380",
+      "flags": {
+        "custom_irq": true,
+        "directory_storage": true
+      },
+      "expected_sha256": "4c23fa0750e65c857435d5d587cbeba30a0fe42a85da9951bc15e61352c1f589",
+      "sha256": "4c23fa0750e65c857435d5d587cbeba30a0fe42a85da9951bc15e61352c1f589",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-resource-cli-80b5a4c35d40",
+      "flags": {
+        "custom_irq": true,
+        "directory_resource_cli": true
+      },
+      "expected_sha256": "a89f4382bc01fec3c62cc20e42e2bdd15ba77c78ee86bd05021d953be5ad9869",
+      "sha256": "a89f4382bc01fec3c62cc20e42e2bdd15ba77c78ee86bd05021d953be5ad9869",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-resource-owner-f8838a85007e",
+      "flags": {
+        "custom_irq": true,
+        "directory_resource_owner": true
+      },
+      "expected_sha256": "e718b0bce67cd0fb86b7f8ca049a3ae429e13a7b6ea1033ce2fb012450cbdbbe",
+      "sha256": "e718b0bce67cd0fb86b7f8ca049a3ae429e13a7b6ea1033ce2fb012450cbdbbe",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-directory-retirement-e05c11cbe77f",
+      "flags": {
+        "custom_irq": true,
+        "directory_retirement": true
+      },
+      "expected_sha256": "fb36d39ecc4beaeb7a7ae3c1fd07eb2fe31c949516324b8f71962f30e6fa1e91",
+      "sha256": "fb36d39ecc4beaeb7a7ae3c1fd07eb2fe31c949516324b8f71962f30e6fa1e91",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-directory-translation-0e0e358e40f5",
+      "flags": {
+        "custom_irq": true,
+        "directory_translation": true
+      },
+      "expected_sha256": "473418b7b869d8047957db1439e28ab990493303f379ece9656d39631d589336",
+      "sha256": "473418b7b869d8047957db1439e28ab990493303f379ece9656d39631d589336",
+      "unchanged": true
+    },
+    {
+      "variant": "terminal-directory-scripts-9f00e7c9ffec",
+      "flags": {
+        "custom_irq": true,
+        "directory_scripts": true
+      },
+      "expected_sha256": "de268313a1db01adc4424ac6294035f73afb8fd6d69251a35940922cd6ccdfe8",
+      "sha256": "de268313a1db01adc4424ac6294035f73afb8fd6d69251a35940922cd6ccdfe8",
+      "unchanged": true
+    }
+  ],
+  "committed_source_proofs": {
+    "package_proof": {
+      "source_commit": "fdbe535a9509af04f2d9b3406367a753a6594ae6",
+      "source_files": 778,
+      "ancestor_git_unavailable": true,
+      "exact": true
+    },
+    "xlt_proof": {
+      "source_commit": "fdbe535a9509af04f2d9b3406367a753a6594ae6",
+      "source_files": 18,
+      "ancestor_git_unavailable": true,
+      "exact": true
+    }
+  },
+  "evidence": {
+    "application": {
+      "path": "build/directory-adopt-application-verified-20261031/result.json",
+      "sha256": "43dec1ace60d58eb6aace6957a8a8c3e51959038a1da40ea7cef167c8135416f"
+    },
+    "profile4": {
+      "path": "build/directory-adopt-profile4-native-20261031/result.json",
+      "sha256": "bc1ce20af0fcbd9a193021a830f36837bb55e2e8808c477c1c968e461c01ee55"
+    },
+    "regression": {
+      "path": "build/directory-adopt-regression-native-20261031/result.json",
+      "sha256": "b1dfcecc75eab1496f77cfb9c86d950dbc312c9a1a6a76c03928e4aaf4f710ed"
+    },
+    "connection_scripts": {
+      "path": "build/directory-adopt-connect-final-20261031/result.json",
+      "sha256": "0d608111c6ddfbf14320a37be625bd9dd5b74d9591d2dc518d41001de94b6c49"
+    },
+    "linked_adoption": {
+      "path": "build/directory-adopt-linked-verified-20261031/result.json",
+      "sha256": "4fbea885ae3e0a416897818dc3f14d8db032791d01fb6627f9f20158bb687e20"
+    },
+    "ABI": {
+      "path": "build/directory-adopt-owner-ABI-20261031/result.json",
+      "sha256": "9efeb59f733a66574558c828ad3f4bcfd4c889540638520a798fb4406c8c1c13"
+    },
+    "CLI": {
+      "path": "build/directory-adopt-cli-20261031/result.json",
+      "sha256": "8db988c0d6378e004affe57c9501fbae93d89f4bf9aa26b3858fd51792bbbbe3"
+    },
+    "retirement_linked": {
+      "path": "build/directory-adopt-retirement-linked-20261031/result.json",
+      "sha256": "95b2342b5ca5a727cc7b132d59105a4143ca8a2ffaa55b0c6f3e3c19c5b2b7bd"
+    },
+    "retirement_native": {
+      "path": "build/directory-adopt-retirement-native-20261031/result.json",
+      "sha256": "009489f324d8f3476165e2c38ae7a6186d566fc8469cd4593d26f1fabf721afd"
+    },
+    "nested": {
+      "path": "build/directory-adopt-nested-20261031/result.json",
+      "sha256": "6cf0f1839924ee5a0f67bfca67ba1d49f8f8ed54e87c4392b03dff418cbdc5ca"
+    },
+    "xlt_component": {
+      "path": "build/directory-adopt-xlt-native-20261031/result.json",
+      "sha256": "d35d1c46f0c20f7b917fef412e62d0ca99987e168c8e93d1fd25940559e4887f"
+    },
+    "xlt_proof": {
+      "path": "build/directory-adopt-xlt-proof-20261031/result.json",
+      "sha256": "52f658428fa1d64bb344e831027d687a550bbb4f7e57b39f4119345a77811146"
+    },
+    "package_proof": {
+      "path": "build/directory-adopt-package-proof-20261031/result.json",
+      "sha256": "e7086cd9f523cff443b5acc9903e4957a5ec44ff193953cf1dad360a7538b07c"
+    },
+    "controls": {
+      "path": "build/directory-adopt-controls-20261031/result.json",
+      "sha256": "9ddb6e416fd44a608e2ec120f3656c2353eb82ad4a8407276f9db5df8617c1f9"
+    },
+    "enigma": {
+      "path": "build/bbs-lab/results/enigma/directory_adopt_final_20261031/proxy-integration.json",
+      "sha256": "5a7be3abb0e8175d12b556ee9ec7b50e31b13b2c29ecb96d7444af959e355646"
+    },
+    "legacy_Hayes": {
+      "path": "build/connection-dos/directory-adopt-legacy-Hayes-control-20261031/result.json",
+      "sha256": "349db91a47d969a73461e494fb2de24c75485ecc6bd47bdd9e6140948673aac4"
+    }
+  },
+  "directory_application_adoption_implemented": true,
+  "manual_connection_menu_dials_adopted_target": true,
+  "automatic_canonical_ASX_and_compiled_ASP_implemented": true,
+  "directory_selection_adoption_fully_accepted": false,
+  "exhaustive_stack_high_water_verified": false,
+  "new_variant_port_move_fully_accepted": false,
+  "full_application_complete": false,
+  "independent_full_rendering_oracle_complete": false,
+  "physical_acceptance": false,
+  "card_written": false,
+  "limitations": [
+    "A applies a staged selection; dialing uses the maintained Connection menu. Complete original directory workflow and full F01-F16 acceptance remain open.",
+    "Native application tests cover COM3/IRQ5 and a 6-to-4 profile switch. Additional port/IRQ handoffs and injected late-arrival/failure races in this new owner remain open.",
+    "Timer stack samples are observations, not a complete worst-case high-water proof. Both63000-byte histories and the8192-byte stack remain; persistent script metadata80 is retained outside the child memory loan.",
+    "Canonical script checking is synchronous during the serial handoff. Sustained incoming traffic during large script checks, and native end-to-end uncertain-close/release faults in the new launch owner, require further acceptance. Linked held-state gates and underlying resource/compiler components have separate tests.",
+    "CRC32 is a stream damage fingerprint, not authentication or exclusion of external file writers/namespace replacement. Header checking is not full bytecode validation.",
+    "Connection tests use DOSBox modem emulation with a loopback TCP BBS peer. Legacy Hayes/null-modem remains a separate exact-program control. Neither proves physical CTS/DCD, SIP/DSP, analog handshake, real reconnect or file-transfer acceptance.",
+    "ENiGMA authentication/editor and frame/marker checks pass with250ms framing and20ms serial input pacing. This is not an independent complete character/attribute rendering comparison.",
+    "The source-built test package was not installed on the card. Live BBS, SynthModem service, ATA and network were untouched."
+  ],
+  "earlier_failures": [
+    {
+      "path": "build/directory-adopt-connect-initial-20261031.log",
+      "reason": "Initial protocol recipe exceeded the old20s harness limit and used an unsupported backspace token. Corrected bs input, slower directory-reader pacing, declared timeout and carrier model; excluded.",
+      "excluded_from_pass_counts": true
+    },
+    {
+      "path": "build/directory-adopt-connect-observed-20261031.log",
+      "reason": "At6000cycles the preview key arrived before directory validation finished; passive frame showed the page rather than a preview. Corrected fixture pacing; final frozen three-case run passes.",
+      "excluded_from_pass_counts": true
+    },
+    {
+      "path": "build/directory-adopt-connect-paced-20261031.log",
+      "reason": "Actual dial/script checks passed; diagnostic postprocessor looked for OWNER.BIN in root after real PROGRAM CD moved CWD. Corrected observer-output lookup; final run passes.",
+      "excluded_from_pass_counts": true
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/directory_adopt_verified_20261031/proxy-integration.json",
+      "reason": "Unframed paced serial input splits editor escape sequences; online A refusal passed but editor semantics did not. Final accepted configuration uses250ms sequence framing.",
+      "excluded_from_pass_counts": true
+    },
+    {
+      "path": "build/bbs-lab/results/enigma/directory_adopt_framed_20261031/proxy-integration.json",
+      "reason": "Editor/semantic checks passed, but rebuilding the manifest during the run invalidated the product-input integrity check. Repeated against frozen final product.",
+      "excluded_from_pass_counts": true
+    },
+    {
+      "path": "build/directory-adopt-linked-20261031.log",
+      "reason": "Inspector initially treated wrapped16-bit near displacement as a non-wrapping linear address; corrected modulo65536 comparison. Final five damaged controls refuse.",
+      "excluded_from_pass_counts": true
+    }
+  ]
+}
