@@ -1,17 +1,22 @@
 # PCPlus DOS reconstruction
 
+The optional [session-event build](docs/PHONE_LOG_EVENTS.md) now records actual
+call boundaries in RAM and gates new admission when the queue is full. Eight
+DOS event cases repeat from 1,735 committed public sources. Disk scheduling is
+unfinished: this experimental build explicitly reports unsaved records at exit.
+
 The [banked event producer](docs/PHONE_LOG_LIFECYCLE_BANK.md) now fits in the
 optional full terminal with five checked far entries. Twenty-one DOS producer
 cases/1,041 assertions plus ten startup/capture cases pass; a 1,730-file public
-export reproduces the exact application and repeats them. Session hooks and
-live disk scheduling are still unfinished, so live call logging remains open.
+export reproduces the exact application and repeats them. The subsequent session-event checkpoint adds RAM hooks; live disk scheduling
+and durable call logging remain open.
 
 The optional [startup-owned call-log path](docs/PHONE_LOG_RESERVATION.md) now
 combines saved settings, canonical path selection and queue-held file claims.
 Capture to the claimed log is refused; capture to another file still works.
 Twenty-five DOS workflows pass, and a 1,723-file public-source export reproduces
 the exact terminal and repeats them. The feature-disabled control remains exact.
-Connection-event hooks, disk polling and visible retry/recovery remain next;
+The later session-event build adds RAM hooks; disk polling and visible retry/recovery remain next;
 no card deployment or full F07/F10 acceptance is claimed.
 
 The earlier [fixed claim](docs/CAPTURE_FIXED_RESERVATION.md),

@@ -1,10 +1,16 @@
 # Full application reconstruction checklist
 
+[Actual session-event hooks](PHONE_LOG_EVENTS.md) now queue RAM records in the
+optional terminal. Eight native cases and committed-source repeats pass; durable
+logging remains unfinished and unsaved records explicitly fail shutdown. Disk
+scheduling, recovery UI and complete carrier/child/exception coverage remain open;
+this closes no whole F07/F10 or application gate.
+
 [The retained-event producer is now banked](PHONE_LOG_LIFECYCLE_BANK.md) in the
 optional full terminal. Five far entry ABIs, 21 native producer cases/1,041
 assertions, ten startup/capture cases and exact public source reproduction
-pass. Actual session hooks, live disk scheduling and visible recovery remain
-unfinished; full F07/F10 acceptance is still open.
+pass. The later event checkpoint above adds selected RAM hooks; live disk
+scheduling and visible recovery remain unfinished; full F07/F10 acceptance is still open.
 
 [Startup-owned log claims](PHONE_LOG_RESERVATION.md) now combine the accepted
 PRM image, canonical path and retained queue identity. Fifteen queue/claim DOS

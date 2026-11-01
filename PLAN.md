@@ -1,13 +1,23 @@
 # Complete DOS rebuild plan
 
+[RAM session events](docs/PHONE_LOG_EVENTS.md) now connect actual call
+admission, CONNECT/DIRECT success, observed disconnect/retirement and common
+shutdown to the retained producer. Eight full-terminal DOS cases and their
+1,735-source public rebuild repeats pass; another 46 scoped regressions pass,
+and both disabled controls remain byte-exact. Queued records are not yet
+persisted: this experimental build explicitly reports unsaved data/error12.
+UART-aware disk scheduling/draining, retry/recovery UI, carrier/child/exception
+coverage and all full application/physical/card gates remain open.
+
 [The banked event producer](docs/PHONE_LOG_LIFECYCLE_BANK.md) now fits in the
 full optional terminal with five checked far entries and no new resident
 trampolines. Twenty-one native producer cases/1,041 assertions, seven startup
 cases and three capture-UI cases pass. A clean 1,730-file public export
 reproduces the full image and all three diagnostics, repeats those 31 cases
 and passes 15 queue-claim regressions. The feature-disabled control stays exact.
-Transition/admission hooks, child observations, UART-aware disk polls and visible
-recovery remain next; full application/physical/card gates stay open.
+At that checkpoint transition hooks were absent; the later RAM-event checkpoint
+above supplies selected boundaries. Child observations, UART-aware disk polls
+and visible recovery remain open, alongside full application/physical/card gates.
 
 [Retained connection events](docs/PHONE_LOG_LIFECYCLE.md) now implement
 single-producer call-pair admission, nonzero generation ownership and a retained

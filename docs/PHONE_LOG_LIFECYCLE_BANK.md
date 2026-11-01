@@ -1,5 +1,10 @@
 # Banked call-event producer
 
+The later [session-event checkpoint](PHONE_LOG_EVENTS.md) adds selected actual
+transition hooks to this banked producer. The placement-only measurements and
+31-case evidence below retain their historical scope; durable logging is still
+unfinished.
+
 The optional `--phone-log-lifecycle` application now links the
 [retained-event producer](PHONE_LOG_LIFECYCLE.md) into PHONE_LOG_CODE. It implies
 startup settings/path selection, queue file claims and the logger bank. This
