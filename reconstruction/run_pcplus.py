@@ -54,6 +54,7 @@ fullscreen=false
 output=surface
 autolock=false
 [dosbox]
+quit warning=false
 machine=svga_s3
 memsize=8
 [cpu]
