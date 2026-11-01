@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Existing call logs and rollback](PHONE_LOG_EXISTING.md) now have five additional
+full-terminal DOS cases: empty/prior-record/over64KB appends and real partial
+writes followed by short-count or explicit-error returns. Both fault cases
+restore the original file before confirmed retry and save the original START
+once. The unchanged application reproduces from committed public sources;
+five new and 19 previous application cases pass locally and in that export.
+Startup with an existing destination, permissions, slow I/O, rollback failure
+and wider application/physical/card gates remain open.
+
 [Call-log status and confirmed retry](PHONE_LOG_CONTROLS.md) now provide an optional
 Alt-Z/File pane. Nineteen native DOS cases and their 1,743-source public rebuild
 repeats pass, plus 67 scoped regressions. Confirmed retry preserves original

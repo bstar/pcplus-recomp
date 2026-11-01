@@ -105,7 +105,9 @@ names the final image and both final runs explicitly.
 
 ## Remaining work
 
-Existing-file application coverage, slow/error-I/O and rollback composition,
+The later [existing-file checkpoint](PHONE_LOG_EXISTING.md) covers selected
+appends and real partial-write rollback in this exact image. Startup with an
+existing destination, permissions, slow I/O and failed-rollback composition,
 sustained traffic/protocols, carrier/child/ASPECT/exception paths and broader
 menu/feature composition remain open. Uncertain files require external
 inspection; automated reconciliation is not implemented. Every-frame BBS
