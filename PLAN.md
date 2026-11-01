@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Independent ANSI comparison/status geometry](docs/ANSI_REFERENCE_GEOMETRY.md)
+found and fixed terminal scrolling through the visible status row in the
+directory-adoption candidate. Fourteen whole-cell/cursor scenarios and three
+byte-at-a-time cases match pyte; native Apply/profile4, the paced stock ENiGMA
+proxy workflow, seven unchanged controls and committed-source ten-file package
+reproduction pass. Full rendering across all emulations/BBS screens, sustained
+traffic/protocols and physical Boca/SPA2102/card acceptance remain open.
+
 [Selection and settings workflows](docs/DIRECTORY_ADOPTION_SETTINGS.md)
 now verify preview-A IRQ-only changes after deferred PRMEDIT saves to IRQ3/4/7,
 plus selected-context settings save/cancel after PROGRAM changes directory.

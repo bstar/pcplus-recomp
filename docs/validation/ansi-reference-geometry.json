@@ -1,0 +1,748 @@
+{
+  "passed": true,
+  "source_commit": "2673d203ce6695787ad51bdc4e3e35c5dbd75442",
+  "package": "build/special-status-geometry-final-20261031/PCPLUSSE",
+  "package_manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+    "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+    "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+  "original_inputs": [],
+  "compared_cell_pairs": 32640,
+  "application_bytes": 243586,
+  "changed_initial_state_bytes": [
+    223134,
+    223136,
+    223238,
+    223246,
+    223391
+  ],
+  "before_fix": {
+    "insert-delete-lines": {
+      "before_report": "build/ansi-reference-remaining-20261031/insert-delete-lines/result.json",
+      "before_sha256": "211642935aadb763dea33a5bd327c24e5e519dcc5a978d358b2623dc7eee0133",
+      "before_different_cells": 6,
+      "before_cursor": [
+        [
+          14,
+          1
+        ]
+      ],
+      "after_cursor": [
+        [
+          14,
+          1
+        ]
+      ],
+      "input_sha256": "dace2dfa0ab0bbd68f5e2becb36094011c0f94ea333996658983ee4e2ae44633",
+      "after_different_cells": 0
+    },
+    "bottom-scroll": {
+      "before_report": "build/ansi-reference-remaining-20261031/bottom-scroll/result.json",
+      "before_sha256": "7f633da5ddb27514e739b56a932d55c96224b95c189f10c55241e8e9a35b9822",
+      "before_different_cells": 30,
+      "before_cursor": [
+        [
+          25,
+          1
+        ]
+      ],
+      "after_cursor": [
+        [
+          24,
+          1
+        ]
+      ],
+      "input_sha256": "b0fa8de71e7ac11ccf3e88c4f98c27ae59643b9b3e114b914d9494d56e2a18fd",
+      "after_different_cells": 0
+    }
+  },
+  "evidence": {
+    "reference_7_byte": {
+      "path": "build/ansi-reference-final-20261031/result.json",
+      "sha256": "f838fdf8628a4bd51886acfe74b8fb3d09b5fa30e58936c2857beacb2682ae1e",
+      "passed": true,
+      "scope": "Compare actual DOS video cells/cursor replies with an independent pyte screen. Real DOS8086 UART stream, 80x24 CP437 cell/attribute comparison and real CPR. pyte is a Linux/VT-style reference, not an authoritative specification for every PCPlus emulation. Status row, font pixels, physical transport and complete stock BBS screens are not covered.",
+      "pyte_version": "0.8.2",
+      "wcwidth_version": "0.8.2",
+      "reference_modules": {
+        "pyte.screens": "aa787bbcd5b59c195ff828a8fb9e876caffa80a49c7c45ffbd6e0c92093f9105",
+        "pyte.streams": "a8c667e0f288b20064c3d8600aaf792f562cdfa84b4a39bc852ce05acc04c14d",
+        "pyte.graphics": "6a38c4f4cdcbc8178097ec90ce1d7bce6b3b356d9f2e27d4b7e2d26d35fa898a",
+        "pyte.charsets": "9b9da43e3b5e8b7bfe4a1917e864063f6f54119f97bc9a9694e065ac7cdfc98b",
+        "pyte.modes": "ffc0ad1a8264ac7e500349d5f3a8084cc634b72cc782b8664d0841d5d24e2650",
+        "pyte.control": "dc799b2f4311d1d6457b9651be5471abcd081cebcc2db225e2a730fb7d54d2a2",
+        "pyte.escape": "6a150147f0120ca5cb993b9b43e191c1cfadf27a093a6e9a53439cdf1babcb48",
+        "wcwidth.wcwidth": "597eba94e3ed8a01ff6b1a9cbd4d0931315df79d23c55e0c1ab644047a06904b"
+      },
+      "nix_lock_sha256": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+      "fragment_bytes": 7,
+      "cases": [
+        {
+          "case": "CP437-panel",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            7,
+            53
+          ],
+          "actual_cursor_replies": [
+            [
+              7,
+              53
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "cursor-controls",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            7,
+            17
+          ],
+          "actual_cursor_replies": [
+            [
+              7,
+              17
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "erase-line",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            5,
+            21
+          ],
+          "actual_cursor_replies": [
+            [
+              5,
+              21
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "erase-display",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            8,
+            15
+          ],
+          "actual_cursor_replies": [
+            [
+              8,
+              15
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "insert-delete-characters",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            4,
+            20
+          ],
+          "actual_cursor_replies": [
+            [
+              4,
+              20
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "insert-delete-lines",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            14,
+            1
+          ],
+          "actual_cursor_replies": [
+            [
+              14,
+              1
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "scroll-region",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            3,
+            3
+          ],
+          "actual_cursor_replies": [
+            [
+              3,
+              3
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "deferred-wrap",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            13,
+            80
+          ],
+          "actual_cursor_replies": [
+            [
+              13,
+              80
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "bottom-scroll",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            24,
+            1
+          ],
+          "actual_cursor_replies": [
+            [
+              24,
+              1
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "colors",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            16,
+            11
+          ],
+          "actual_cursor_replies": [
+            [
+              16,
+              11
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "save-restore-cursor",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            5,
+            13
+          ],
+          "actual_cursor_replies": [
+            [
+              5,
+              13
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "origin-mode",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            2,
+            11
+          ],
+          "actual_cursor_replies": [
+            [
+              2,
+              11
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "status-boundary",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            24,
+            80
+          ],
+          "actual_cursor_replies": [
+            [
+              24,
+              80
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "RIS-status-boundary",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            24,
+            80
+          ],
+          "actual_cursor_replies": [
+            [
+              24,
+              80
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        }
+      ]
+    },
+    "reference_1_byte": {
+      "path": "build/ansi-reference-one-byte-20261031/result.json",
+      "sha256": "24ecbac817eeb7fc701e0f294da154519adddd655a1693962387bedb4414b0a5",
+      "passed": true,
+      "scope": "Compare actual DOS video cells/cursor replies with an independent pyte screen. Real DOS8086 UART stream, 80x24 CP437 cell/attribute comparison and real CPR. pyte is a Linux/VT-style reference, not an authoritative specification for every PCPlus emulation. Status row, font pixels, physical transport and complete stock BBS screens are not covered.",
+      "pyte_version": "0.8.2",
+      "wcwidth_version": "0.8.2",
+      "reference_modules": {
+        "pyte.screens": "aa787bbcd5b59c195ff828a8fb9e876caffa80a49c7c45ffbd6e0c92093f9105",
+        "pyte.streams": "a8c667e0f288b20064c3d8600aaf792f562cdfa84b4a39bc852ce05acc04c14d",
+        "pyte.graphics": "6a38c4f4cdcbc8178097ec90ce1d7bce6b3b356d9f2e27d4b7e2d26d35fa898a",
+        "pyte.charsets": "9b9da43e3b5e8b7bfe4a1917e864063f6f54119f97bc9a9694e065ac7cdfc98b",
+        "pyte.modes": "ffc0ad1a8264ac7e500349d5f3a8084cc634b72cc782b8664d0841d5d24e2650",
+        "pyte.control": "dc799b2f4311d1d6457b9651be5471abcd081cebcc2db225e2a730fb7d54d2a2",
+        "pyte.escape": "6a150147f0120ca5cb993b9b43e191c1cfadf27a093a6e9a53439cdf1babcb48",
+        "wcwidth.wcwidth": "597eba94e3ed8a01ff6b1a9cbd4d0931315df79d23c55e0c1ab644047a06904b"
+      },
+      "nix_lock_sha256": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+      "fragment_bytes": 1,
+      "cases": [
+        {
+          "case": "CP437-panel",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            7,
+            53
+          ],
+          "actual_cursor_replies": [
+            [
+              7,
+              53
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "insert-delete-lines",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            14,
+            1
+          ],
+          "actual_cursor_replies": [
+            [
+              14,
+              1
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        },
+        {
+          "case": "RIS-status-boundary",
+          "passed": true,
+          "checks": {
+            "actual_DSR_ready": true,
+            "reference_cursor_reply": true,
+            "DOS_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "no_peer_errors": true,
+            "exact_1920_cells": true,
+            "status_help_visible": true
+          },
+          "expected_cursor": [
+            24,
+            80
+          ],
+          "actual_cursor_replies": [
+            [
+              24,
+              80
+            ]
+          ],
+          "different_cells": 0,
+          "first_differences": [],
+          "peer_errors": []
+        }
+      ]
+    },
+    "native_apply6": {
+      "path": "build/status-geometry-apply-20261031/result.json",
+      "sha256": "a682f9b29f4dc3866ed6579a6064ad591ba28dd7a3d5f923d368248022295156",
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Preview A applies selected settings/resources/target; exact fields before prompt and after return verified. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim.",
+      "cases": [
+        {
+          "case": "valid-directory-pair-profile6",
+          "passed": true,
+          "adoption": {
+            "applied": true,
+            "final_fields_verified": true,
+            "canonical_script_binding_verified": true,
+            "sampled_stack_bytes": 66
+          },
+          "ownership_violations": 0,
+          "hardware_restored": true
+        }
+      ]
+    },
+    "native_apply4_IRQ7": {
+      "path": "build/status-geometry-profile4-apply-20261031/result.json",
+      "sha256": "78bb9d707bb073462834ad1c0a8f45a13ad93c1df00a8a6ac656315bfeb9a5b4",
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Preview A applies selected settings/resources/target; exact fields before prompt and after return verified. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim.",
+      "cases": [
+        {
+          "case": "valid-directory-pair-profile6",
+          "passed": true,
+          "adoption": {
+            "applied": true,
+            "final_fields_verified": true,
+            "canonical_script_binding_verified": true,
+            "sampled_stack_bytes": 1440,
+            "target_port": 0,
+            "missing_target": false,
+            "all_four_hardware_snapshots_restored": true,
+            "active_port_ticks": [
+              0,
+              0,
+              138,
+              0
+            ],
+            "source_IRQ": 5,
+            "target_IRQ": 7,
+            "new_IRQ_active_samples": 16,
+            "old_IRQ_mask_violations": 0,
+            "actual_PRMEDIT_saved_IRQ": true,
+            "editor_sha256": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+            "saved_IRQ_deferred_until_preview": true
+          },
+          "ownership_violations": 0,
+          "hardware_restored": true
+        }
+      ]
+    },
+    "earlier_controls": {
+      "path": "build/status-geometry-controls-20261031/result.json",
+      "sha256": "9ddb6e416fd44a608e2ec120f3656c2353eb82ad4a8407276f9db5df8617c1f9",
+      "passed": true,
+      "controls": [
+        {
+          "variant": "terminal",
+          "flags": {},
+          "expected_sha256": "bd86a10b94544007242d2ce6bb737be5ab90909d4fcf2bac8713120d2b2ffa10",
+          "sha256": "bd86a10b94544007242d2ce6bb737be5ab90909d4fcf2bac8713120d2b2ffa10",
+          "unchanged": true
+        },
+        {
+          "variant": "terminal-directory-storage-276a15011380",
+          "flags": {
+            "custom_irq": true,
+            "directory_storage": true
+          },
+          "expected_sha256": "4c23fa0750e65c857435d5d587cbeba30a0fe42a85da9951bc15e61352c1f589",
+          "sha256": "4c23fa0750e65c857435d5d587cbeba30a0fe42a85da9951bc15e61352c1f589",
+          "unchanged": true
+        },
+        {
+          "variant": "terminal-resource-cli-80b5a4c35d40",
+          "flags": {
+            "custom_irq": true,
+            "directory_resource_cli": true
+          },
+          "expected_sha256": "a89f4382bc01fec3c62cc20e42e2bdd15ba77c78ee86bd05021d953be5ad9869",
+          "sha256": "a89f4382bc01fec3c62cc20e42e2bdd15ba77c78ee86bd05021d953be5ad9869",
+          "unchanged": true
+        },
+        {
+          "variant": "terminal-resource-owner-f8838a85007e",
+          "flags": {
+            "custom_irq": true,
+            "directory_resource_owner": true
+          },
+          "expected_sha256": "e718b0bce67cd0fb86b7f8ca049a3ae429e13a7b6ea1033ce2fb012450cbdbbe",
+          "sha256": "e718b0bce67cd0fb86b7f8ca049a3ae429e13a7b6ea1033ce2fb012450cbdbbe",
+          "unchanged": true
+        },
+        {
+          "variant": "terminal-directory-retirement-e05c11cbe77f",
+          "flags": {
+            "custom_irq": true,
+            "directory_retirement": true
+          },
+          "expected_sha256": "fb36d39ecc4beaeb7a7ae3c1fd07eb2fe31c949516324b8f71962f30e6fa1e91",
+          "sha256": "fb36d39ecc4beaeb7a7ae3c1fd07eb2fe31c949516324b8f71962f30e6fa1e91",
+          "unchanged": true
+        },
+        {
+          "variant": "terminal-directory-translation-0e0e358e40f5",
+          "flags": {
+            "custom_irq": true,
+            "directory_translation": true
+          },
+          "expected_sha256": "473418b7b869d8047957db1439e28ab990493303f379ece9656d39631d589336",
+          "sha256": "473418b7b869d8047957db1439e28ab990493303f379ece9656d39631d589336",
+          "unchanged": true
+        },
+        {
+          "variant": "terminal-directory-scripts-9f00e7c9ffec",
+          "flags": {
+            "custom_irq": true,
+            "directory_scripts": true
+          },
+          "expected_sha256": "de268313a1db01adc4424ac6294035f73afb8fd6d69251a35940922cd6ccdfe8",
+          "sha256": "de268313a1db01adc4424ac6294035f73afb8fd6d69251a35940922cd6ccdfe8",
+          "unchanged": true
+        }
+      ]
+    },
+    "stock_Enigma_proxy": {
+      "path": "build/bbs-lab/results/enigma/status-geometry-enigma-20261031/proxy-integration.json",
+      "sha256": "4903d0feffe12e5cbdcbc7acfb78b2dd668ff08f8f2a0c36b558a77496569726",
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, actual SynthModem proxy and stock loopback ENiGMA. Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.",
+      "checks": {
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "directory_prompt_and_loading": true,
+        "directory_first_and_last_pages": true,
+        "no_private_directory_fields": true,
+        "directory_preview_observed": true,
+        "preview_target_and_DTE": true,
+        "preview_privacy": true,
+        "online_resource_check_refused": true,
+        "online_compile_request_refused": true,
+        "resource_check_key_stayed_local": true,
+        "online_selection_adoption_refused": true
+      }
+    },
+    "committed_source_package": {
+      "path": "build/status-geometry-source-proof-20261031/result.json",
+      "sha256": "2617864d8f58b1a3718b71124fd873f9f3aff5b25bd437dc043e056beb76fea4",
+      "passed": true,
+      "scope": "Reproduce every package file in an empty tree of declared source inputs.",
+      "source_files": 778,
+      "exported_source_commit": "2673d203ce6695787ad51bdc4e3e35c5dbd75442"
+    }
+  },
+  "sources": {
+    "src/terminal/state.asm": "08c5eb731438e238c709731038b55af0c675b808aa783066563f86d5e6b4cd2e",
+    "standalone/test_ansi_reference_dos.py": "1729658c9c37a0d8b5547421009d4f79add82688143a9a5d5930a9ae90bf342d",
+    "nix/flake.nix": "149e1fc48d9982833de247a70877d808d30e931b2816c35b2b9c459c0f8fddd4",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "limitations": [
+    "The independent reference covers the enumerated profile6 ANSI scenarios, not every emulation or timing.",
+    "VGA cell bytes are compared; font pixels and exact status contents are not.",
+    "Stock ENiGMA still uses explicit250ms key framing and20ms serial pacing. No SIP/DSP or physical analog acceptance.",
+    "Full BBS rendering, application/protocol, sustained-data and physical Boca/SPA2102/card acceptance remain open.",
+    "No live BBS, bridge, ATA, host network or card changed."
+  ]
+}

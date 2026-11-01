@@ -1,5 +1,10 @@
 # Apply a directory selection
 
+The later [ANSI geometry checkpoint](ANSI_REFERENCE_GEOMETRY.md) reserves the
+physical status row outside terminal scrolling/addressing/erasure and adds
+independent whole-cell/cursor comparisons. Earlier receipts below retain their
+original application identities and scopes.
+
 [Selection/settings workflow coverage](DIRECTORY_ADOPTION_SETTINGS.md) now
 includes native preview-A IRQ-only changes after a deferred PRMEDIT save,
 and settings save/cancel after selection and a child directory change.
