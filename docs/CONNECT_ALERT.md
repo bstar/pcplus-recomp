@@ -44,3 +44,19 @@ the existing sound field controls both notices and the connect alert.
 Physical audible output remains unverified until the updated executable is put
 on the DOS card and exercised. This is PC speaker audio, separate from analog
 handshake audio.
+
+[Validation receipt](validation/connect-alert.json): 23 linked timing/ownership
+cases; four actual DOS8086 cases for quiet mode, expiry, key cancellation and
+ASPECT handoff; COM3/IRQ5 package execution with the BIOS entry omitted; the
+20-case carrier qualification regression; and 2,012 public-source inputs
+reproducing all five executables and ten package files exactly. The passive DOS
+observer sees 14 tone starts/42 sounding ticks for its five-second fixture,
+with the BBS banner visible during sound, and quiet gates after exit. The key
+case has fewer tones and transmits its key exactly once. These are hardware-port
+and video observations with the emulator mixer muted, not an acoustic test.
+
+The ready archive is `build/connection-test-package-alert-01/PCPLUS-UPD.zip`,
+containing application files under `PCPLUS/` with launchers adjusted for
+`C:\PCPLUS`. It includes no private configuration. Keep the existing resources
+that match `C:\UTILS\PCPLUS` when applying the update. The executable also
+contains the preceding BIOS-omitted UART and carrier-qualification fixes.

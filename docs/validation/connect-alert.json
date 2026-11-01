@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "application_source_commit": "5cf03978edddc4d9d897e74abe9e721e5bb5f94e",
+  "terminal_sha256": "f28a03f74118ea4e64dec825a1f7370a8e1596d8b00966ccf96e81f5edd82f68",
+  "products": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "3212b36bbf4488481462e523d5b460d18599c28ccb65a8bf6366c5cc61bd4b2c",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "f28a03f74118ea4e64dec825a1f7370a8e1596d8b00966ccf96e81f5edd82f68",
+    "VERSION.TXT": "27fde241c086cf51c91d32d2c36da19878a7184606f426c715bf0a051ad18ee1",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "checks": {
+    "build/connect-alert-linked-01/result.json": {
+      "passed": true,
+      "sha256": "441ebe7f40e66c626343b59245b012ebfec80feb9396408a600e04c4a12e6463"
+    },
+    "build/connect-alert-dos-complete-01/result.json": {
+      "passed": true,
+      "sha256": "8ea4606620c7f306d41a992d3663eebe20d9525afbeeecd13509a1b7e5389908"
+    },
+    "build/connect-alert-public-source-01/result.json": {
+      "passed": true,
+      "sha256": "5e3bc04f891118bb06b4acd3edd097ad968d30ee1861c536f8cb751cba662ab4"
+    },
+    "build/connect-alert-package-dos-01/result.json": {
+      "passed": true,
+      "sha256": "c081fd945098d6c8b536b20f0fae74426d38a952517ea9fb7f891e74abd4b674"
+    },
+    "build/connect-alert-carrier-grace-01/result.json": {
+      "passed": true,
+      "sha256": "2f5d9cb984815ac41bc95b478999cc8feed931b1d5a98a435a0894f69e3a251a"
+    }
+  },
+  "native_cases": 23,
+  "dos_connect_cases": 4,
+  "public_source_count": 2012,
+  "archive": {
+    "path": "build/connection-test-package-alert-01/PCPLUS-UPD.zip",
+    "sha256": "eee8c8fb55d583564bbd9bfb9ec55e39078c30bc1f5692aa2d18e52f0e9066b4",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+      "README.TXT": "2c169bea8c3a6d1cacfa57969e211e3fdb9bd568c34f9413892b53a61ec05928",
+      "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+      "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+      "TERMINAL.EXE": "f28a03f74118ea4e64dec825a1f7370a8e1596d8b00966ccf96e81f5edd82f68",
+      "VERSION.TXT": "27fde241c086cf51c91d32d2c36da19878a7184606f426c715bf0a051ad18ee1",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10",
+      "PCPLUS.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818"
+    },
+    "launcher_adaptation": "C:\\PCPLUS; executable/help files identical to tested package; no private profiles included"
+  },
+  "installed_on_card": false,
+  "physical_audio_tested": false,
+  "scope": "Source-built paired connect alert, actual linked PIT/UART timing+ownership cases and passive real DOS gate/video evidence. Source reproduction binds five binaries. Physical audio requires card update; previous broad original-feature acceptance remains open."
+}
