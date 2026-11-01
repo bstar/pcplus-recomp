@@ -1,5 +1,13 @@
 # PCPlus DOS reconstruction
 
+[Transfer carrier recovery](docs/TRANSFER_CARRIER_RECOVERY.md) fixes cancellation bytes corrupting
+the next modem initialization after a lost file-transfer carrier. A retained
+old-image case fails; four native receive/upload loss workflows pass with clean
+same-parent redial, file cleanup and two logged calls. The fixed candidate also
+passes 103 linked transfer/cancellation inputs and a 53-workflow public rebuild.
+Fresh stock-BBS rendering/log sessions are bound in its receipt. Broader
+protocol, full UI/feature and physical/card gates remain open.
+
 [ASPECT carrier loss and logged redial](docs/PHONE_LOG_ASPECT_CARRIER.md) now pass WAITFOR and
 WHEN DISCONNECT, each with and without the real cooperative Alt-Z window.
 Four native cases and a clean public-source replay of all 49 logging workflows

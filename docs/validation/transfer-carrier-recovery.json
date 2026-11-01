@@ -1,0 +1,2089 @@
+{
+  "passed": true,
+  "source_commit": "adee8366ca6f32a176642964f33f3fcafc39f603",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/transfer-carrier-fixed-source-01/build/terminal-phone-log-bank-d882144fee4f/TERMINAL.EXE",
+    "sha256": "512f782e9befeef39db1f8dfe03b6b786e89d44910cc99bb0ea4f7d83bbb3eba",
+    "manifest_sha256": "b2decb06f50aac1ba40b6d280c8bedbc05d8df996772e8bd8c0e73bf9dd19d6b",
+    "near_bytes": 64752,
+    "resident_CS_bytes": 65534,
+    "resident_CS_spare_bytes": 2
+  },
+  "counterexample": {
+    "path": "build/phone-log-carrier-terminal/transfer-carrier-baseline-03/result.json",
+    "sha256": "d66e74b388ea0f8356cf3230a89b0e7381e2a7d266d53d781dee0da6c4fba514",
+    "terminal_sha256": "003bc6b7a0529c737b697c1149d2cfecfef930b5e96406df9dba31d9c137380f",
+    "failed_checks": [
+      "two_real_initializations"
+    ],
+    "other_case_checks_pass": true,
+    "sources_unchanged_during_run": true,
+    "source_product_baseline_commit": "47c4ba0",
+    "old_modem_log_sha256": "6b7dae5586ea17843d398aad4c3474301c5e22f269a7e2102bdc17f1569e9409",
+    "stage_before_drop": {
+      "bytes": 8192,
+      "exact": true
+    }
+  },
+  "native_transfer_cases": 4,
+  "public_cases": 53,
+  "public_source_proof": {
+    "path": "build/phone-log-transfer-carrier-public-01/result.json",
+    "sha256": "5c2e840b73295c9eb7b557ad24776c3e02b999f6befa5b7695099f31f4b241c6",
+    "source_count": 1983,
+    "build_log_sha256": "67b19afb08934af3e75cd606429b85294e929242515b778b57e6b66135044eee",
+    "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+  },
+  "evidence": {
+    "native_transfer": {
+      "path": "build/phone-log-carrier-terminal/transfer-carrier-final-01/result.json",
+      "sha256": "1bf3d959d6839ae3d9501e2109f5ef25d72a2d4e062a1f54915841efbab73498",
+      "cases": [
+        {
+          "case": "receive-negotiation",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_download_negotiation": true,
+            "actual_download_progress": true,
+            "real_staged_file": true,
+            "download_aborted": true,
+            "exact_received_bytes": true
+          },
+          "transfer": {
+            "upload": false,
+            "partial": false,
+            "observer": [
+              11,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45757 11/01/26 04:27:32 ",
+              "end": "04:27:33 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45757 11/01/26 04:27:49 ",
+              "end": "04:27:56 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.34
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4088
+                },
+                {
+                  "kind": "download-CRC-request",
+                  "seconds": 3.8355
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.0857
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.0858
+                }
+              ],
+              "errors": []
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.6977
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.8487
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.5781
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "3a29e341054461b7b6165fed927691a2925b9816c801fcfd3fd98b93620220d1",
+          "snapshot_sha256": "d744c2b0e3493b9e2dc0f9a643185f676ff61ef2cc3a0771094700d30d2f2f8e"
+        },
+        {
+          "case": "receive-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_download_negotiation": true,
+            "actual_download_progress": true,
+            "real_staged_file": true,
+            "download_aborted": true,
+            "exact_received_bytes": true
+          },
+          "transfer": {
+            "upload": false,
+            "partial": true,
+            "observer": [
+              219,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              10240,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:43955 11/01/26 04:27:59 ",
+              "end": "04:28:12 00:00:13",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:43955 11/01/26 04:28:16 ",
+              "end": "04:28:23 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3424
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4111
+                },
+                {
+                  "kind": "download-CRC-request",
+                  "seconds": 3.8375
+                },
+                {
+                  "kind": "download-frame-1",
+                  "seconds": 3.8379
+                },
+                {
+                  "kind": "download-ACK-1",
+                  "seconds": 4.8759
+                },
+                {
+                  "kind": "download-frame-2",
+                  "seconds": 4.8759
+                },
+                {
+                  "kind": "download-ACK-2",
+                  "seconds": 5.9112
+                },
+                {
+                  "kind": "download-frame-3",
+                  "seconds": 5.9113
+                },
+                {
+                  "kind": "download-ACK-3",
+                  "seconds": 6.9507
+                },
+                {
+                  "kind": "download-frame-4",
+                  "seconds": 6.9508
+                },
+                {
+                  "kind": "download-ACK-4",
+                  "seconds": 7.9866
+                },
+                {
+                  "kind": "download-frame-5",
+                  "seconds": 7.9867
+                },
+                {
+                  "kind": "download-ACK-5",
+                  "seconds": 9.0239
+                },
+                {
+                  "kind": "download-frame-6",
+                  "seconds": 9.0239
+                },
+                {
+                  "kind": "download-ACK-6",
+                  "seconds": 10.0623
+                },
+                {
+                  "kind": "download-frame-7",
+                  "seconds": 10.0623
+                },
+                {
+                  "kind": "download-ACK-7",
+                  "seconds": 11.0983
+                },
+                {
+                  "kind": "download-frame-8",
+                  "seconds": 11.0983
+                },
+                {
+                  "kind": "download-ACK-8",
+                  "seconds": 12.1389
+                },
+                {
+                  "kind": "download-frame-9",
+                  "seconds": 12.1389
+                },
+                {
+                  "kind": "download-ACK-9",
+                  "seconds": 13.1746
+                },
+                {
+                  "kind": "download-frame-10",
+                  "seconds": 13.1746
+                },
+                {
+                  "kind": "download-ACK-10",
+                  "seconds": 14.2124
+                },
+                {
+                  "kind": "download-frame-11",
+                  "seconds": 14.2124
+                },
+                {
+                  "kind": "download-ACK-11",
+                  "seconds": 15.2513
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 15.5019
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 15.502
+                }
+              ],
+              "errors": [],
+              "stage_before_drop": {
+                "bytes": 8192,
+                "exact": true
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.7005
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.8519
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.5808
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "31f425c6aff7cb9a9f9e0251dea685ba3e8d9179ace201b8329bac48650dd986",
+          "snapshot_sha256": "1eb83f62ea68d5d982203140fba7f2ad84602710a595c0b70b840ddbd0b3a5ab"
+        },
+        {
+          "case": "upload-unacked",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_upload_frame": true,
+            "actual_upload_progress": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "upload": true,
+            "partial": false,
+            "observer": [
+              24,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1,
+              4096,
+              0,
+              4096,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45661 11/01/26 04:28:26 ",
+              "end": "04:28:28 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45661 11/01/26 04:28:43 ",
+              "end": "04:28:50 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3448
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4135
+                },
+                {
+                  "kind": "upload-frame-1",
+                  "seconds": 4.5402
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.7906
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.7907
+                }
+              ],
+              "errors": [],
+              "frames": [
+                "0201fe4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494aacb6"
+              ]
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.7025
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.8536
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.5827
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "61065669e1df3c6f61b26b991f201d92e2feb942ab9f8337ea83181c309ac89c",
+          "snapshot_sha256": "9409c57775e0d5bf6368a8f3556e88365df0ce030ca0f3b1d805667d632e3637"
+        },
+        {
+          "case": "upload-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_upload_frame": true,
+            "actual_upload_progress": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "upload": true,
+            "partial": true,
+            "observer": [
+              34,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1,
+              4096,
+              0,
+              4096,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34185 11/01/26 04:28:52 ",
+              "end": "04:28:55 00:00:03",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34185 11/01/26 04:29:09 ",
+              "end": "04:29:16 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.342
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4107
+                },
+                {
+                  "kind": "upload-frame-1",
+                  "seconds": 4.538
+                },
+                {
+                  "kind": "upload-ACK-1",
+                  "seconds": 4.538
+                },
+                {
+                  "kind": "upload-frame-2",
+                  "seconds": 5.0857
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.3361
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.3361
+                }
+              ],
+              "errors": [],
+              "frames": [
+                "0201fe4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494aacb6",
+                "0202fd4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535448b5"
+              ]
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.6995
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.8504
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.5804
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "f34f7d617c634f239e4518d149b4160d54701d623d6e75fe31d1522aa208c69c",
+          "snapshot_sha256": "c58c859878207351be4d6067c41b55799a8808b82e6196a7e74a9ac1d37c152d"
+        }
+      ],
+      "verified_artifacts": 70
+    },
+    "public-existing": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "6204428f19d752afe92748811c8c9ff6281c2517ee423fdae2f6d1423f680070",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-controls": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "be16e615a1532396e1c740db8f6cb049610bb3a20187b215a33a4522d370a854",
+      "cases": [
+        {
+          "case": "success",
+          "passed": true
+        },
+        {
+          "case": "hangup",
+          "passed": true
+        },
+        {
+          "case": "busy",
+          "passed": true
+        },
+        {
+          "case": "silence",
+          "passed": true
+        },
+        {
+          "case": "redial",
+          "passed": true
+        },
+        {
+          "case": "disabled",
+          "passed": true
+        },
+        {
+          "case": "direct",
+          "passed": true
+        },
+        {
+          "case": "capacity",
+          "passed": true
+        },
+        {
+          "case": "soft",
+          "passed": true
+        },
+        {
+          "case": "both",
+          "passed": true
+        },
+        {
+          "case": "none",
+          "passed": true
+        },
+        {
+          "case": "fs-failure",
+          "passed": true
+        },
+        {
+          "case": "program",
+          "passed": true
+        },
+        {
+          "case": "ui-ready",
+          "passed": true
+        },
+        {
+          "case": "ui-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-unrepaired",
+          "passed": true
+        },
+        {
+          "case": "ui-recovery",
+          "passed": true
+        },
+        {
+          "case": "ui-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 316
+    },
+    "public-preexisting": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+      "sha256": "13a651d6f993e59add7eb2207a046f9329afbdf7ffbf244e4fe9948549aec628",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-io-failures": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+      "sha256": "3879637e9f52c9c0b59d03d69fffebcc3fa266a7088732d5f23f5446baadfc51",
+      "cases": [
+        {
+          "case": "ui-commit-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-truncate",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-commit",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 61
+    },
+    "public-permissions": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-events-terminal/public-permissions/result.json",
+      "sha256": "a48522bc51fbc641afb47bab800be3d3db80ac19c7a81fafd290287c7d54200c",
+      "cases": [
+        {
+          "case": "ui-readonly-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-readonly-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 42
+    },
+    "public-readonly": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-startup-terminal/public-readonly/result.json",
+      "sha256": "e73d97c84453959a10aa1e69475b081da86c6fd0745f6d8c95c5ee6cd59dcc52",
+      "cases": [
+        {
+          "case": "readonly",
+          "passed": true
+        },
+        {
+          "case": "readonly-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 36
+    },
+    "public-slow": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-slow-terminal/public-slow/result.json",
+      "sha256": "8627a6b7bb5b453837d64ce1a123766f4f47bf7f2ca3e60930193017d8163f73",
+      "cases": [
+        {
+          "case": "soft-9",
+          "passed": true
+        },
+        {
+          "case": "both-36",
+          "passed": true
+        },
+        {
+          "case": "none-36",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-watermark": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-slow-terminal/public-watermark/result.json",
+      "sha256": "be5e0a8d999bd49293f8707fe67b332cfb7aadb12ed1266be807f9acba15bc0c",
+      "cases": [
+        {
+          "case": "soft-watermark",
+          "passed": true
+        },
+        {
+          "case": "both-watermark",
+          "passed": true
+        },
+        {
+          "case": "hard-watermark",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-carrier": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-carrier-terminal/public-carrier/result.json",
+      "sha256": "78ae5cc27637328410661425479175bfe9ef784cd038b99e8589158d6ebffd56",
+      "cases": [
+        {
+          "case": "idle-hard",
+          "passed": true
+        },
+        {
+          "case": "write-hard",
+          "passed": true
+        },
+        {
+          "case": "write-soft",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 51
+    },
+    "public-aspect-carrier": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-carrier-terminal/public-aspect-carrier/result.json",
+      "sha256": "cd8fe2998d5a9d259db5b0d3ac769eca28ea04e0ddac703f7fdf7f65e87f233a",
+      "cases": [
+        {
+          "case": "aspect-wait",
+          "passed": true
+        },
+        {
+          "case": "aspect-when",
+          "passed": true
+        },
+        {
+          "case": "aspect-wait-window",
+          "passed": true
+        },
+        {
+          "case": "aspect-when-window",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 92
+    },
+    "public-transfer-carrier": {
+      "path": "build/phone-log-transfer-carrier-public-01/source/build/phone-log-carrier-terminal/public-transfer-carrier/result.json",
+      "sha256": "545f63ee93332bda7d76fb8c6b4bc8b0e84a2bce80f918e89730b8e051cb87fc",
+      "cases": [
+        {
+          "case": "receive-negotiation",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_download_negotiation": true,
+            "actual_download_progress": true,
+            "real_staged_file": true,
+            "download_aborted": true,
+            "exact_received_bytes": true
+          },
+          "transfer": {
+            "upload": false,
+            "partial": false,
+            "observer": [
+              11,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34615 11/01/26 04:36:51 ",
+              "end": "04:36:52 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34615 11/01/26 04:37:08 ",
+              "end": "04:37:15 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.339
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4075
+                },
+                {
+                  "kind": "download-CRC-request",
+                  "seconds": 3.8335
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.084
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.084
+                }
+              ],
+              "errors": []
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.6964
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.847
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.5768
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "fcad08cf4ab65947db3318713a27f6de791f5519291ef66a0cec8ab584aab89e",
+          "snapshot_sha256": "a6b9047af1cb8cbc5aaac6a8b189d39f8a24b17858ef0ca8c38f610507770a3a"
+        },
+        {
+          "case": "receive-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_download_negotiation": true,
+            "actual_download_progress": true,
+            "real_staged_file": true,
+            "download_aborted": true,
+            "exact_received_bytes": true
+          },
+          "transfer": {
+            "upload": false,
+            "partial": true,
+            "observer": [
+              219,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              10240,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45553 11/01/26 04:37:18 ",
+              "end": "04:37:31 00:00:13",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45553 11/01/26 04:37:35 ",
+              "end": "04:37:42 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3307
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.3995
+                },
+                {
+                  "kind": "download-CRC-request",
+                  "seconds": 3.8257
+                },
+                {
+                  "kind": "download-frame-1",
+                  "seconds": 3.8263
+                },
+                {
+                  "kind": "download-ACK-1",
+                  "seconds": 4.8639
+                },
+                {
+                  "kind": "download-frame-2",
+                  "seconds": 4.864
+                },
+                {
+                  "kind": "download-ACK-2",
+                  "seconds": 5.8995
+                },
+                {
+                  "kind": "download-frame-3",
+                  "seconds": 5.8996
+                },
+                {
+                  "kind": "download-ACK-3",
+                  "seconds": 6.9386
+                },
+                {
+                  "kind": "download-frame-4",
+                  "seconds": 6.9387
+                },
+                {
+                  "kind": "download-ACK-4",
+                  "seconds": 7.9747
+                },
+                {
+                  "kind": "download-frame-5",
+                  "seconds": 7.9747
+                },
+                {
+                  "kind": "download-ACK-5",
+                  "seconds": 9.0115
+                },
+                {
+                  "kind": "download-frame-6",
+                  "seconds": 9.0115
+                },
+                {
+                  "kind": "download-ACK-6",
+                  "seconds": 10.0498
+                },
+                {
+                  "kind": "download-frame-7",
+                  "seconds": 10.0498
+                },
+                {
+                  "kind": "download-ACK-7",
+                  "seconds": 11.0851
+                },
+                {
+                  "kind": "download-frame-8",
+                  "seconds": 11.0851
+                },
+                {
+                  "kind": "download-ACK-8",
+                  "seconds": 12.1248
+                },
+                {
+                  "kind": "download-frame-9",
+                  "seconds": 12.1249
+                },
+                {
+                  "kind": "download-ACK-9",
+                  "seconds": 13.1606
+                },
+                {
+                  "kind": "download-frame-10",
+                  "seconds": 13.1606
+                },
+                {
+                  "kind": "download-ACK-10",
+                  "seconds": 14.1988
+                },
+                {
+                  "kind": "download-frame-11",
+                  "seconds": 14.1988
+                },
+                {
+                  "kind": "download-ACK-11",
+                  "seconds": 15.2372
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 15.4877
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 15.4877
+                }
+              ],
+              "errors": [],
+              "stage_before_drop": {
+                "bytes": 8192,
+                "exact": true
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.6885
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.84
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.5689
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "5ae5b898779a59dcdbd7f1c37f856fe2c2863d208f93c766446db287251aff42",
+          "snapshot_sha256": "0ee2a73bb6314f57ddf37e2ce7cce6a0ef25529494bdefd384d1ab9ef1db2c5a"
+        },
+        {
+          "case": "upload-unacked",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_upload_frame": true,
+            "actual_upload_progress": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "upload": true,
+            "partial": false,
+            "observer": [
+              24,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1,
+              4096,
+              0,
+              4096,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:40991 11/01/26 04:37:44 ",
+              "end": "04:37:46 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:40991 11/01/26 04:38:01 ",
+              "end": "04:38:08 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3349
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4034
+                },
+                {
+                  "kind": "upload-frame-1",
+                  "seconds": 4.5307
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.7811
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.7812
+                }
+              ],
+              "errors": [],
+              "frames": [
+                "0201fe4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494aacb6"
+              ]
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.6929
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.8444
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.5734
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "72becb8e305331a1015df46b01aab14ffbfccdc31d97f4d6c4877cdda1b5dbbb",
+          "snapshot_sha256": "975530c2390917276cd9134a346be3c6a6af645ab8b053a10a23f1483d6c2dc2"
+        },
+        {
+          "case": "upload-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_upload_frame": true,
+            "actual_upload_progress": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "upload": true,
+            "partial": true,
+            "observer": [
+              34,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1,
+              4096,
+              0,
+              4096,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:38759 11/01/26 04:38:11 ",
+              "end": "04:38:14 00:00:03",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:38759 11/01/26 04:38:28 ",
+              "end": "04:38:35 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3432
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4119
+                },
+                {
+                  "kind": "upload-frame-1",
+                  "seconds": 4.538
+                },
+                {
+                  "kind": "upload-ACK-1",
+                  "seconds": 4.538
+                },
+                {
+                  "kind": "upload-frame-2",
+                  "seconds": 5.086
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.3364
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.3364
+                }
+              ],
+              "errors": [],
+              "frames": [
+                "0201fe4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494aacb6",
+                "0202fd4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535455565758595a4142434445464748494a4b4c4d4e4f505152535448b5"
+              ]
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.7005
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.8522
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.5808
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "be73b5b85481ebe6424d85411bd0a87ab04b6a8d44d06444a9851f9367ce2885",
+          "snapshot_sha256": "3c02f2a93250bddb8426e48d30a80d1a3e82efa6f5227266753324094b44c6ec"
+        }
+      ],
+      "verified_artifacts": 70
+    }
+  },
+  "linked_regressions": {
+    "terminal-transfer-live-checks.json": {
+      "path": "build/transfer-carrier-fixed-source-01/build/terminal/terminal-transfer-live-checks.json",
+      "sha256": "287d9925ff5e13ee7b57b0411a529c737f9bbcd0ce0826a04f9c426dd34cb0a0",
+      "inputs": 44,
+      "cases": [
+        {
+          "case": "SOFT-and-modem-owned-connections-reject-before-stage",
+          "inputs": 9,
+          "passed": true
+        },
+        {
+          "case": "actual-native-CRC128-1024-mixed-and-empty-EOT-ACK-after-checked-install",
+          "inputs": 4,
+          "passed": true
+        },
+        {
+          "case": "physical-CTS-THRE-drain-bound-lowword-wrap-and-midnight",
+          "inputs": 6,
+          "passed": true
+        },
+        {
+          "case": "progressing300baud128byte-drain-exceeds36ticks-with-wrap-midnight",
+          "inputs": 3,
+          "passed": true
+        },
+        {
+          "case": "outer-context-cancel-carrier-and-native-TX-stall-before-native-setjmp",
+          "inputs": 15,
+          "passed": true
+        },
+        {
+          "case": "whole-owner-progress-timeout-full-BIOS-ticks-wrap-midnight",
+          "inputs": 3,
+          "passed": true
+        },
+        {
+          "case": "DOS-shortwrite-write-close-install-faults-never-publish-final-ACK",
+          "inputs": 4,
+          "passed": true
+        }
+      ]
+    },
+    "terminal-upload-live-checks.json": {
+      "path": "build/transfer-carrier-fixed-source-01/build/terminal/terminal-upload-live-checks.json",
+      "sha256": "35e9b3f78d57b8ca7953ae3369c7e76fe7f5f1aeebe7024aa9e8c970fcb2409e",
+      "inputs": 54,
+      "cases": [
+        {
+          "case": "SOFT-and-modem-owned-state-reject-before-source-open",
+          "inputs": 9,
+          "passed": true
+        },
+        {
+          "case": "binary-empty-CRC-checksum-mixed-over10240-and-DWORD-over64K",
+          "inputs": 7,
+          "passed": true
+        },
+        {
+          "case": "NAK-retransmit-and15failed-native-count-not-maintained-accepted",
+          "inputs": 3,
+          "passed": true
+        },
+        {
+          "case": "read-only-open-seek-read-shrink-close-errors-no-EOT",
+          "inputs": 6,
+          "passed": true
+        },
+        {
+          "case": "outer-context-Escape-AltX-carrier-before-native-checkpoint",
+          "inputs": 9,
+          "passed": true
+        },
+        {
+          "case": "CTS-THRE-physical-TX-stall-midnight-bounded",
+          "inputs": 6,
+          "passed": true
+        },
+        {
+          "case": "no-ACK-whole-owner-watchdog-lowword-wrap-midnight",
+          "inputs": 3,
+          "passed": true
+        },
+        {
+          "case": "same-instance-success-size-change-read-failure-success-Escape-success-no-reinitialize",
+          "inputs": 6,
+          "passed": true
+        },
+        {
+          "case": "same-instance-ambiguous-close-seek-read-cleanup-close-retry-no-DOS-no-forgotten-error",
+          "inputs": 3,
+          "passed": true
+        },
+        {
+          "case": "peer-double-CAN-real-ISR-native11-is-cancel-not-timeout-no-EOT",
+          "inputs": 2,
+          "passed": true
+        }
+      ]
+    },
+    "zmodem-cancel-checks.json": {
+      "path": "build/transfer-carrier-fixed-source-01/build/terminal/zmodem-cancel-checks.json",
+      "sha256": "b9ff973e39b06a125448d3e78169015a5c536d5edd470d49a5ca320dcf21841c",
+      "inputs": 5,
+      "cases": [
+        {
+          "case": "quiet",
+          "passed": true,
+          "elapsed_modeled_ticks": 12,
+          "late_bursts": 0
+        },
+        {
+          "case": "late",
+          "passed": true,
+          "elapsed_modeled_ticks": 15,
+          "late_bursts": 2
+        },
+        {
+          "case": "continuous",
+          "passed": true,
+          "elapsed_modeled_ticks": 183,
+          "late_bursts": 183
+        },
+        {
+          "case": "quiet-upload",
+          "passed": true,
+          "elapsed_modeled_ticks": 11,
+          "late_bursts": 0
+        },
+        {
+          "case": "clock-jump",
+          "passed": true,
+          "elapsed_modeled_ticks": 65540,
+          "late_bursts": 0
+        }
+      ]
+    }
+  },
+  "stock_BBS_sessions": {
+    "enigma": {
+      "producer_path": "build/bbs-lab/results/enigma/transfer-fix-enigma-01/proxy-integration.json",
+      "producer_sha256": "6a78d661fab05f7acc6e30e0e7435931ae3c824fdb6f579ef0dd9b841c4b2f74",
+      "producer_checks": {
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "actual_call_log": true,
+        "reference_freeze_completed": true,
+        "compiled_geometry_advertised": true
+      },
+      "phone_log": {
+        "passed": true,
+        "checks": {
+          "final_kind": true,
+          "startup_ok": true,
+          "lifecycle_idle": true,
+          "generation": true,
+          "queue_flags": true,
+          "queue_generations": true,
+          "final_status": true,
+          "heading_and_size": true,
+          "exact_event_records": true,
+          "observer_final": true,
+          "actual_parent_segments": true,
+          "exact_append_attempts": true,
+          "START_saved_online": true,
+          "only_owned_log_created": true
+        },
+        "records": [
+          {
+            "generation": 1,
+            "start": "\r\nMODEM                       lab.local:32897 11/01/26 04:28:27 ",
+            "end": "04:30:31 00:02:04",
+            "valid": true
+          }
+        ],
+        "observer_header": [
+          19525,
+          2327,
+          3,
+          1,
+          2968,
+          15674,
+          15632,
+          6,
+          0,
+          0
+        ],
+        "log_sha256": "fac9d59b3fe0ad55d2d2123c5d72982d73b18a218e5040afb4667b65815ec0dc",
+        "observer_sha256": "883789299c33680f226fe838bfb1fe1f20bb1e5ef8a9a15e8997db5d79fb61b3",
+        "snapshot_sha256": "75077ef28918462fc9e93038a440fe39b18302b2aec14832d8fc4e5202dcd053",
+        "scope": "Actual owned stock BBS, parent event/file owners and passive 8086 COM3/IRQ5 snapshots. One normal call pair; not physical DCD/SIP or complete logging composition."
+      },
+      "screen_audit_path": "build/bbs-lab/results/enigma/transfer-fix-enigma-01/screen-reference-audit.json",
+      "screen_audit_sha256": "109e21aa55e76d47599618a99c953b3550661931e6d4d8ec55aa16e395b9f0f4",
+      "screen_checks": {
+        "producer_passed": true,
+        "runtime_unchanged": true,
+        "exact_delivered_prefix": true,
+        "real_single_CPR_boundary": true,
+        "cursor_matches_reference": true,
+        "all_1920_cells_match": true,
+        "hardware_restored": true,
+        "status_visible": true,
+        "font_probe_projection_explicit": true,
+        "held_output_exact": true
+      },
+      "screen_reference": {
+        "enabled": true,
+        "terminalRows": 24,
+        "trigger": "UNSAVED",
+        "quietMs": 750,
+        "reply": [
+          22,
+          8
+        ],
+        "probeReplyConsumed": true,
+        "prefixBytes": 88702,
+        "prefixSha256": "f2487cb14cfce34c36ddc70ffcd2cfadc364f80e85e7fc6f75ae612a9c28aa5d",
+        "probeReplyHex": "1b5b32323b3852",
+        "armed": true,
+        "frozen": true,
+        "heldBytes": 2819
+      },
+      "bridge_closed_sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+    },
+    "synchronet": {
+      "producer_path": "build/bbs-lab/results/synchronet/transfer-fix-synchronet-01/proxy-integration.json",
+      "producer_sha256": "8c6d98959683f4c2617e7fcca4df74fda8b0f19df6868863daa8a307ca90c123",
+      "producer_checks": {
+        "harness": true,
+        "runtime_unchanged": true,
+        "server_static_inputs_unchanged": true,
+        "message_bodies_unchanged": true,
+        "no_message_mail_or_transfer_writes": true,
+        "actual_ASPECT_login": true,
+        "staged_inputs_unchanged": true,
+        "frozen_editor_frame": true,
+        "actual_CPR_boundary": true,
+        "fixture_CPR_consumed": true,
+        "compiled_geometry_advertised": true,
+        "source_inputs_unchanged": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true,
+        "actual_call_log": true
+      },
+      "phone_log": {
+        "passed": true,
+        "checks": {
+          "final_kind": true,
+          "startup_ok": true,
+          "lifecycle_idle": true,
+          "generation": true,
+          "queue_flags": true,
+          "queue_generations": true,
+          "final_status": true,
+          "heading_and_size": true,
+          "exact_event_records": true,
+          "observer_final": true,
+          "actual_parent_segments": true,
+          "exact_append_attempts": true,
+          "START_saved_online": true,
+          "only_owned_log_created": true
+        },
+        "records": [
+          {
+            "generation": 1,
+            "start": "\r\nLAB NODE 003                lab.local:45405 11/01/26 04:30:52 ",
+            "end": "04:31:44 00:00:52",
+            "valid": true
+          }
+        ],
+        "observer_header": [
+          19525,
+          1002,
+          3,
+          1,
+          2958,
+          15664,
+          15622,
+          6,
+          0,
+          0
+        ],
+        "log_sha256": "6d0bb27cfbb75c915bd5fa8bc96a90ab89c3e3c44906ad1f04e5ad27729b2776",
+        "observer_sha256": "883789299c33680f226fe838bfb1fe1f20bb1e5ef8a9a15e8997db5d79fb61b3",
+        "snapshot_sha256": "74eacac34caf6880443ace224e538ca935a8a78f01aab13a89b240219b986302",
+        "scope": "Actual owned stock BBS, parent event/file owners and passive 8086 COM3/IRQ5 snapshots. One normal call pair; not physical DCD/SIP or complete logging composition."
+      },
+      "screen_audit_path": "build/bbs-lab/results/synchronet/transfer-fix-synchronet-01/screen-reference-audit.json",
+      "screen_audit_sha256": "859d8089abab719488bc011f05bbd29aea1d6cd636fd2c874a2538d024ad6c80",
+      "screen_checks": {
+        "producer_passed": true,
+        "runtime_unchanged": true,
+        "exact_delivered_prefix": true,
+        "real_single_CPR_boundary": true,
+        "cursor_matches_reference": true,
+        "all_1920_cells_match": true,
+        "hardware_restored": true,
+        "status_visible": true,
+        "font_probe_projection_explicit": true,
+        "held_output_exact": true
+      },
+      "screen_reference": {
+        "enabled": true,
+        "terminalRows": 24,
+        "trigger": "UNSAVED",
+        "quietMs": 150,
+        "reply": [
+          5,
+          8
+        ],
+        "probeReplyConsumed": true,
+        "prefixBytes": 23053,
+        "prefixSha256": "a9ec52295ddbbc08e1cdca11bf3e38171ecc31d93173685a13bf74ac77cc801b",
+        "probeReplyHex": "1b5b353b3852",
+        "armed": true,
+        "frozen": true,
+        "heldBytes": 13988
+      },
+      "bridge_closed_sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+    }
+  },
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Actual virtual modem DCD, not physical Boca/SPA2102/SIP/DSP/analog acceptance.",
+    "Confirmed fault4 suppresses foreground cancellation; carrier loss during a different cancellation reason remains unverified.",
+    "Four ordinary XMODEM receive/upload loss cases, not YMODEM/ZMODEM DCD loss, all protocols/profiles or every transfer/child/fault composition.",
+    "Disk-visible stage prefix and successful DOS-write count differ due emulator buffering; both are checked independently; no physical durable-write claim.",
+    "103 linked cases model BIOS/UART/DOS boundaries; native workflows use DOSBox-X and synthetic protocol peers.",
+    "Selected actual stock ENiGMA multiline and Synchronet ASPECT/editor workflows with independent 1920-cell/cursor comparison, not every BBS frame/emulation.",
+    "Resident code has only two spare bytes. Full original UI/F01-F16, broad rendering, physical hardware and card deployment remain open.",
+    "Earlier stage-visibility and over-capacity implementation probes excluded. Accepted final failing control, fixed matrix, public repeat, linked checks and stock-BBS runs only.",
+    "Prior accepted binaries, published package/card, live BBS, installed bridge, ATA and host network unchanged."
+  ]
+}
