@@ -40,11 +40,16 @@ The [receipt](validation/setup-selection-handoff.json) binds 11 DOS8086 workflow
 covering first/replacement selection, a read-only check, stale/reconciled
 accounting contexts, both pending-statistic indicators, pending settings/offers,
 invalid extents/aliases/identities/data, and a 63-byte directory identity. Every
-selection invocation checks that IO counters are unchanged. Subsequent settings
+selection invocation checks that IO counters are unchanged. The 11 workflows
+pass 309 native assertions. Subsequent settings
 finishes read the real PRM and verify new entry, negotiated speed and separator.
 The synthetic PRM and directory files remain byte-identical. The component uses production decoders,
 setup owner, the recovered command expander through its bounded wrapper and actual DOS filesystem;
 wrappers only count DOS calls and preserve their real pointer/return ABI.
+An isolated 36-file committed-source export reproduces SELECT.EXE and 16 objects
+and repeats all 11 workflows. The 776-source application control reproduces all
+ten package files; all five executables and nine files match the prior package,
+with only the source-base commit line in VERSION.TXT updated.
 
 ```sh
 ./tools/dev --command python3 standalone/build_setup_selection.py
