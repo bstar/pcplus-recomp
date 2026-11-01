@@ -1,4 +1,7 @@
 .DEFAULT_GOAL := all
+.PHONY: test-phone-log-lifecycle
+test-phone-log-lifecycle:
+	python3 standalone/test_phone_log_lifecycle_dos.py --output build/phone-log-lifecycle/$$(date +%Y%m%d-%H%M%S-%N)
 .PHONY: test-phone-log-reservation
 test-phone-log-reservation:
 	python3 standalone/test_phone_log_reservation_dos.py --output build/phone-log-reservation/$$(date +%Y%m%d-%H%M%S-%N)
