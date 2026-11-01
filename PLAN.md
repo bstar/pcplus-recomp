@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Stock ENiGMA screen reference](docs/ENIGMA_SCREEN_REFERENCE.md) now pairs
+a delivered incoming prefix with a real final CPR and native screen snapshot.
+All1920 cells/cursor match the independent reference; only the declared default
+font probe is projected out. Compiled geometry replaces the lab's hardcoded
+25 rows, a fixture lock excludes overlapping accounts/logs, altered-capture
+controls reject, and an ordinary unfrozen workflow passes. DOS/package bytes
+are unchanged. Every-frame/font/cross-peer, sustained protocol and physical
+Boca/SPA2102/card/full-application acceptance remain open.
+
 [Independent ANSI comparison/status geometry](docs/ANSI_REFERENCE_GEOMETRY.md)
 found and fixed terminal scrolling through the visible status row in the
 directory-adoption candidate. Fourteen whole-cell/cursor scenarios and three

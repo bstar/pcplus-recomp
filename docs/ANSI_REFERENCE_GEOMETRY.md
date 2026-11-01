@@ -1,5 +1,10 @@
 # Independent ANSI comparison and status geometry
 
+The later [stock ENiGMA frame checkpoint](ENIGMA_SCREEN_REFERENCE.md) pairs a
+complete delivered stream prefix with a final native screen through an actual
+CPR boundary. It adds a whole-frame BBS comparison for the unchanged candidate;
+the matrix and earlier paced-navigation scopes below remain historical.
+
 An independent whole-cell comparison found a real geometry error in the
 directory-adoption application: it displayed its status on physical row25,
 but its terminal scrolling/addressing/erasure bounds still included that row.

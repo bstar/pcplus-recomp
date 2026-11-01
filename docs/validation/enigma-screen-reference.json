@@ -1,0 +1,311 @@
+{
+  "passed": true,
+  "test_source_commit": "8d101384dc7bec30a67ac7e0db63b6d2f698196f",
+  "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+  "application_and_package_unchanged": true,
+  "original_inputs": [],
+  "package": "build/special-status-geometry-final-20261031/PCPLUSSE",
+  "package_manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+  "evidence": {
+    "screen_oracle": {
+      "path": "build/bbs-lab/results/enigma/screen-reference-enigma-serialized-20261031/screen-reference-audit.json",
+      "sha256": "d224ab5f429c3bc08bb3bb05693118cb84bd258ee06b3494b82aec53783c8c40",
+      "passed": true,
+      "checks": {
+        "producer_passed": true,
+        "runtime_unchanged": true,
+        "exact_delivered_prefix": true,
+        "real_single_CPR_boundary": true,
+        "cursor_matches_reference": true,
+        "all_1920_cells_match": true,
+        "hardware_restored": true,
+        "status_visible": true,
+        "font_probe_projection_explicit": true,
+        "held_output_exact": true
+      },
+      "scope": "One actual stock ENiGMA editor snapshot after the complete delivered stream prefix, at compiled80x24 geometry. Independent pyte cell/cursor interpretation; only the explicitly recorded default-font probe is projected out. A real final CPR proves ordered parser consumption; later BBS output is held by the owned fixture until DOS exits. No font-pixel, every-intermediate-frame, unframed/SIP/DSP/analog or physical acceptance.",
+      "different_cells": 0,
+      "reference_cursor": [
+        9,
+        8
+      ],
+      "actual_CPR": [
+        9,
+        8
+      ],
+      "delivered_bytes": 48092,
+      "held_after_boundary": 919,
+      "font_projections": [
+        {
+          "offset": 491,
+          "bytes_hex": "1b5b303b302044",
+          "reason": "Default primary CP437 font selection; font pixels excluded"
+        }
+      ],
+      "pyte_version": "0.8.2",
+      "wcwidth_version": "0.8.2",
+      "reference_modules": {
+        "pyte.screens": "aa787bbcd5b59c195ff828a8fb9e876caffa80a49c7c45ffbd6e0c92093f9105",
+        "pyte.streams": "a8c667e0f288b20064c3d8600aaf792f562cdfa84b4a39bc852ce05acc04c14d",
+        "pyte.graphics": "6a38c4f4cdcbc8178097ec90ce1d7bce6b3b356d9f2e27d4b7e2d26d35fa898a",
+        "pyte.charsets": "9b9da43e3b5e8b7bfe4a1917e864063f6f54119f97bc9a9694e065ac7cdfc98b",
+        "pyte.modes": "ffc0ad1a8264ac7e500349d5f3a8084cc634b72cc782b8664d0841d5d24e2650",
+        "pyte.control": "dc799b2f4311d1d6457b9651be5471abcd081cebcc2db225e2a730fb7d54d2a2",
+        "pyte.escape": "6a150147f0120ca5cb993b9b43e191c1cfadf27a093a6e9a53439cdf1babcb48",
+        "wcwidth.wcwidth": "597eba94e3ed8a01ff6b1a9cbd4d0931315df79d23c55e0c1ab644047a06904b"
+      }
+    },
+    "reference_producer": {
+      "path": "build/bbs-lab/results/enigma/screen-reference-enigma-serialized-20261031/proxy-integration.json",
+      "sha256": "2cb366b10ac75c6295c13d34b150efa4e802e1e2e6808a9f917dae6ce85e0e8d",
+      "passed": true,
+      "checks": {
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "directory_prompt_and_loading": true,
+        "directory_first_and_last_pages": true,
+        "no_private_directory_fields": true,
+        "directory_preview_observed": true,
+        "preview_target_and_DTE": true,
+        "preview_privacy": true,
+        "online_resource_check_refused": true,
+        "online_compile_request_refused": true,
+        "resource_check_key_stayed_local": true,
+        "online_selection_adoption_refused": true,
+        "reference_freeze_completed": true,
+        "compiled_geometry_advertised": true
+      },
+      "scope": "Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, actual SynthModem proxy and stock loopback ENiGMA. Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.",
+      "terminal_geometry": {
+        "columns": 80,
+        "rows": 24,
+        "values": {
+          "csi_column_count": 80,
+          "csi_row_count": 24,
+          "csi_last_row": 23,
+          "screen_first_row": 0,
+          "screen_last_row": 23,
+          "csi_origin_bottom": 23,
+          "erase_cell_count": 1920,
+          "ui_flow_video_base": 3840,
+          "ui_flow_suppressed": 0
+        },
+        "file_offsets": {
+          "csi_column_count": 223124,
+          "csi_row_count": 223136,
+          "csi_last_row": 223134,
+          "screen_first_row": 223234,
+          "screen_last_row": 223238,
+          "csi_origin_bottom": 223246,
+          "erase_cell_count": 223391,
+          "ui_flow_video_base": 223044,
+          "ui_flow_suppressed": 223048
+        },
+        "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+        "map_sha256": "098f2206c09aec32d7895e5bbd8f1484d738842f1581f7da7e685c2391199479"
+      },
+      "screen_reference": {
+        "enabled": true,
+        "terminalRows": 24,
+        "trigger": "UNSAVED",
+        "quietMs": 750,
+        "reply": [
+          9,
+          8
+        ],
+        "prefixBytes": 48092,
+        "prefixSha256": "3525eda86b6711d50114eb1133f10c1c09c55f3f9e6395cf1ef9fb07b66c2a99",
+        "armed": true,
+        "frozen": true,
+        "heldBytes": 919
+      }
+    },
+    "reference_semantics": {
+      "path": "build/bbs-lab/results/enigma/screen-reference-enigma-serialized-20261031/semantic-audit.json",
+      "sha256": "62960ce2f1036b43420a82ea38fbf167fb1a020ff3d8d3fb6a29cac7e6424d30",
+      "passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": true,
+        "home_moves_before_marker": true
+      },
+      "scope": "Actual loopback editor draft and captured DOS keyboard wire. Server identity is recorded separately. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim."
+    },
+    "ordinary_producer": {
+      "path": "build/bbs-lab/results/enigma/geometry-enigma-normal-serialized-20261031/proxy-integration.json",
+      "sha256": "cd6ac0f7c5333f89f137a4289e42c6eb926ea1fcbd20a4e6672ded4e4c9e66be",
+      "passed": true,
+      "checks": {
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "directory_prompt_and_loading": true,
+        "directory_first_and_last_pages": true,
+        "no_private_directory_fields": true,
+        "directory_preview_observed": true,
+        "preview_target_and_DTE": true,
+        "preview_privacy": true,
+        "online_resource_check_refused": true,
+        "online_compile_request_refused": true,
+        "resource_check_key_stayed_local": true,
+        "online_selection_adoption_refused": true
+      },
+      "scope": "Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, actual SynthModem proxy and stock loopback ENiGMA. Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.",
+      "terminal_geometry": {
+        "columns": 80,
+        "rows": 24,
+        "values": {
+          "csi_column_count": 80,
+          "csi_row_count": 24,
+          "csi_last_row": 23,
+          "screen_first_row": 0,
+          "screen_last_row": 23,
+          "csi_origin_bottom": 23,
+          "erase_cell_count": 1920,
+          "ui_flow_video_base": 3840,
+          "ui_flow_suppressed": 0
+        },
+        "file_offsets": {
+          "csi_column_count": 223124,
+          "csi_row_count": 223136,
+          "csi_last_row": 223134,
+          "screen_first_row": 223234,
+          "screen_last_row": 223238,
+          "csi_origin_bottom": 223246,
+          "erase_cell_count": 223391,
+          "ui_flow_video_base": 223044,
+          "ui_flow_suppressed": 223048
+        },
+        "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+        "map_sha256": "098f2206c09aec32d7895e5bbd8f1484d738842f1581f7da7e685c2391199479"
+      }
+    },
+    "ordinary_semantics": {
+      "path": "build/bbs-lab/results/enigma/geometry-enigma-normal-serialized-20261031/semantic-audit.json",
+      "sha256": "410e7a3c9496801df65b0df12ee7f802d252408cbc3778a39a48fdcf6d7615b4",
+      "passed": true,
+      "checks": {
+        "DOS_harness": true,
+        "typed_draft_sent": true,
+        "all_exercised_keys_emitted": true,
+        "stock_editor_entered": true,
+        "no_post_saved": true,
+        "insert_toggled_overtype": true,
+        "home_moves_before_marker": true
+      },
+      "scope": "Actual loopback editor draft and captured DOS keyboard wire. Server identity is recorded separately. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim."
+    },
+    "copied_capture_controls": {
+      "path": "build/screen-reference-controls-20261031/result.json",
+      "sha256": "a99f4eb2eda19ab3bde0a6d006662ae302f2f04f993cdc0ea76092485e45f97c",
+      "passed": true,
+      "scope": "Reject altered copies of a real screen-reference capture; never run DOS. Synthetic counterexamples are declared in copied metadata to exercise cell/cursor comparison beyond hash validation. The positive capture, binaries, fixture server and live services remain unchanged.",
+      "cases": [
+        {
+          "case": "unchanged",
+          "passed": true,
+          "rejected": false,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "character",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "attribute",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "cursor",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "prefix-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Snapshot must pair with exactly the delivered prefix",
+          "different_cells": null
+        },
+        {
+          "case": "unsupported-font",
+          "passed": true,
+          "rejected": true,
+          "error": "('Unsupported reference intermediate', 491, '1b5b303b312044')",
+          "different_cells": null
+        }
+      ]
+    }
+  },
+  "busy_guard": {
+    "path": "build/screen-reference-enigma-lock-control-20261031.log",
+    "sha256": "efaa30e0e43b4af45d5c894f8850c22c7862f9bbe209c21cadb5ee95c410a246",
+    "rejected_before_proxy_creation": true,
+    "lock_released_for_subsequent_normal_run": true,
+    "lock_free_after_both_runs": true
+  },
+  "stock_server": {
+    "commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+    "version": "0.5.1-beta",
+    "package_lock_sha256": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56"
+  },
+  "server_font_authority": {
+    "core/ansi_term.js": "d969384d00cfd603d57acd55c25a9e33cfc78e0a96100d55cf9081954fe493f7",
+    "core/connect.js": "fe7393822e4d2eadb64c4ed494d52e9811163b3c4d0fb1fb2272da3484954198"
+  },
+  "font_standard": "https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf#page=58",
+  "prior_exact_package_reproduction": {
+    "path": "build/status-geometry-source-proof-20261031/result.json",
+    "sha256": "2617864d8f58b1a3718b71124fd873f9f3aff5b25bd437dc043e056beb76fea4",
+    "source_files": 778,
+    "files": 10,
+    "exported_source_commit": "2673d203ce6695787ad51bdc4e3e35c5dbd75442"
+  },
+  "sources": {
+    "lab/bbs/synthmodem_proxy_serial.js": "cf96c8bb5548837050b20140be3a2c97120949889437bc0433a6eacf048ef3cc",
+    "lab/bbs/test_synthmodem_proxy_dos.py": "6668d809f679eebae6c24b699350f0bc2316829e19ed41c746403765551d3592",
+    "lab/bbs/terminal_geometry.py": "a09fe10ba3634c8eb6af6df5bf234ac9bcc0f29853b9ef82f1a837494de6902c",
+    "lab/bbs/audit_screen_reference.py": "4c3d84fbb18481b159dfc1656b37881f4e1e9b78b1ebcb8ccd2b27b57739bbe3",
+    "lab/bbs/check_screen_reference_controls.py": "f8d27e1e909f50d59ef6244d994bb6e628264bac1d88097e47992d9ca809b4ac",
+    "standalone/test_ansi_reference_dos.py": "1729658c9c37a0d8b5547421009d4f79add82688143a9a5d5930a9ae90bf342d",
+    "nix/flake.nix": "149e1fc48d9982833de247a70877d808d30e931b2816c35b2b9c459c0f8fddd4",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "excluded_overlapping_attempts": [
+    {
+      "path": "build/screen-reference-enigma-final-20261031.log",
+      "sha256": "e108e8f2881f6e1283fc6c04984e73a15768e4eab04c001faf4acaf18739aa1b",
+      "reason": "Overlapped on the shared synthetic account before fixture locking; not acceptance evidence"
+    },
+    {
+      "path": "build/geometry-enigma-normal-final-20261031.log",
+      "sha256": "afc32456d430ea563d3257d0153a31ff2429c8b4c96c6e18a8d086fd1628d84b",
+      "reason": "Overlapped on the shared synthetic account before fixture locking; not acceptance evidence"
+    }
+  ],
+  "limitations": [
+    "One final stock ENiGMA editor frame; no every-intermediate-frame acceptance.",
+    "Only default CP437 FNT is explicitly projected out. No font-pixel or other-font acceptance.",
+    "Both runs retain250ms key framing and20ms serial input pacing. No unframed/SIP/DSP/analog or physical acceptance.",
+    "Full cross-peer/profile rendering, sustained data/transfers and complete F01-F16/card/Boca/SPA2102 acceptance remain open.",
+    "No live BBS, bridge service, ATA, host network or removable card changed."
+  ]
+}
