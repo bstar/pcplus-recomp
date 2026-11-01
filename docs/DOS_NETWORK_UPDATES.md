@@ -129,14 +129,17 @@ resident memory footprint; measured placement on this machine awaits reboot.
 
 Network management now calls `C:\NET\AFTERUP.BAT` after the mouse, packet
 driver and successful DHCP, immediately before the foreground FTP server.
-The helper sets ADPATH to C:\ADDOS and runs `LH C:\ADDOS\ADTSR.EXE` from
+The helper sets ADPATH to C:\ADDOS and runs `C:\ADDOS\ADTSR.EXE` from
 the application directory, returning to the C:\ root afterward. This follows
 the installed After Dark README requirement to load ADTSR after every other
 TSR. It does not open ADPANEL or run ADRUN as a foreground demo.
 
 The existing ADDOS.CFG already selects FLYING.ADD. ADDOS.CFG, MODULES.CFG and
 ADTSR.CFG were preserved byte for byte, retaining the user's module settings,
-timeout and other preferences. Startup output goes to C:\NET\ADBOOT.LOG;
+other preferences. The requested timeout was subsequently set to two minutes,
+with the binary configuration checksum recomputed. ADTSR explicitly rejects
+high-memory loading, so it runs without LH; MMOUSE still loads high.
+Startup output goes to C:\NET\ADBOOT.LOG;
 the subsequent MEM /C snapshot goes to C:\NET\MEMNET.TXT, including both
 network and screen-saver residents. The previous NETMGR.BAT is backed up in
 C:\NET\ADBK01. FTP read-back verified installation; actual TSR loading,
@@ -159,3 +162,12 @@ The profile still matches `C:\UTILS\PCPLUS`, including sound enabled and
 alert countdown5. The new call-log append was preserved, rather than replacing
 its history with the older copy. Network transfer remains pending user-operated
 hardware setup; no successful DHCP or FTP session is claimed here.
+
+## Reusable machine skill
+
+The locally installed `dos-machine-management` skill at
+`/home/bstar/.codex/skills/dos-machine-management/SKILL.md` preserves the connection
+workflow, hardware resources, confirmed mouse setup, application deployment
+rules and physical-test limitations. Its Python helper supports read-only probe,
+list, download and PCPlus hash verification, loading credentials from ignored
+private storage. Credentials and vendor binaries are not embedded in the skill.
