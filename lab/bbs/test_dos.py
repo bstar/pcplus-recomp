@@ -68,6 +68,14 @@ async def run(args):
   fixture=bytearray(fixture);struct.pack_into('<H',fixture,0x1bc,program_sound)
   fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
  irq=getattr(args,'irq',None)
+ phone_log=getattr(args,'phone_log',False)
+ environment=''
+ if phone_log:
+  assert fixture is not None and not (binary.parent/'PCPLUS.FON').exists() and not (output/'PCPLUS.FON').exists()
+  import struct
+  fixture=bytearray(fixture);struct.pack_into('<H',fixture,0x1e6,1)
+  fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
+  environment='set PCPLUS=D:\\'
  if irq is not None:
   assert fixture is not None and irq in (3,4,5,7),'IRQ selection requires an explicit configuration fixture'
   import struct
@@ -132,6 +140,7 @@ nosound=true
 mount c "{binary.parent}"
 mount d "{output}"
 {working_drive}:
+{environment}
 D:\\SNAP B
 {observer_start}
 {helper_start}
@@ -207,6 +216,7 @@ exit
  result['keyboard_profile']={'sha256':hashlib.sha256(keymap).hexdigest(),'file':'BOARD.KBD'} if keymap is not None else None
  result['configuration']={'automatic_dial':automatic,'mode':'explicit synthetic partial PRM' if fixture is not None else 'CLI serial options','command':command,'sha256':hashlib.sha256(fixture).hexdigest() if fixture is not None else None,'directory_entry':args.entry if directory_fixture is not None else None,'directory_browser':args.directory_browser,'directory_sha256':hashlib.sha256(directory_fixture).hexdigest() if directory_fixture is not None else None}
  if program_sound is not None:result['configuration']['program_sound_word']=program_sound
+ if phone_log:result['configuration']['phone_log_enabled']=True
  (output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print(json.dumps(result,indent=2));print(text)
  return 0 if result['passed'] else 1
@@ -224,6 +234,7 @@ if __name__=='__main__':
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')
  p.add_argument('--raw-upstream',action='store_true',help='Upstream is an explicit serial-side bridge; leave Telnet ownership to that bridge')
  p.add_argument('--video-observer',type=Path,help='Explicit source-built passive COM observer under build/; install with T and collect after DOS return')
+ p.add_argument('--phone-log',action='store_true',help='Enable saved telephone logging to the owned D: fixture using PCPLUS fallback')
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')
  p.add_argument('--directory-view-fixture',action='store_true',help='Browse an independent read-only directory on D: without changing the dialing target')
  p.add_argument('--directory-browser',action='store_true',help='Choose the fixture entry through native DOS browser keys')

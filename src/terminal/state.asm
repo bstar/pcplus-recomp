@@ -2,7 +2,9 @@
 ; Source-owned defaults; no original install/configuration bytes are embedded.
 BITS 16
 CPU 8086
-%ifdef DIRECTORY_RESOURCE_ADOPTION
+%ifdef TERMINAL_STATUS_GEOMETRY
+%define TERMINAL_ROWS 24
+%elifdef DIRECTORY_RESOURCE_ADOPTION
 ; This application always displays its status on physical row25. Keep that
 ; row outside terminal scrolling, addressing, erasure and RIS geometry.
 %define TERMINAL_ROWS 24

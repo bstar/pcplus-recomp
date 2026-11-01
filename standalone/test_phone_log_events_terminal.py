@@ -68,7 +68,7 @@ def inspect_record(raw, calls, enabled, name, target):
     return checks, rows
 
 
-def inspect_disk_record(raw, calls, enabled, name, target, data):
+def inspect_disk_record(raw, calls, enabled, name, target, data, max_elapsed=30):
     meta = struct.unpack_from('<6H', raw)
     life, queue = raw[12:50], raw[50:]
     checks = dict(final_kind=meta[0] == 2, startup_ok=meta[5] == 0,
@@ -94,7 +94,7 @@ def inspect_disk_record(raw, calls, enabled, name, target, data):
                     h, m, sec, eh, em, es = map(int, match.groups())
                     elapsed = eh * 3600 + em * 60 + es
                     finish = stamp + dt.timedelta(seconds=elapsed)
-                    valid &= em < 60 and es < 60 and elapsed < 30 and (finish.hour, finish.minute, finish.second) == (h, m, sec)
+                    valid &= em < 60 and es < 60 and elapsed < max_elapsed and (finish.hour, finish.minute, finish.second) == (h, m, sec)
                 if i == calls - 1:
                     captured = struct.unpack_from('<6H', life, 14)
                     valid &= captured[0] % 100 == stamp.year % 100 and captured[1:] == (stamp.month, stamp.day, stamp.hour, stamp.minute, stamp.second)

@@ -32,7 +32,11 @@ def inspect_terminal_memory(binary,map_path):
  relocations={seg*16+off for off,seg in (struct.unpack_from('<HH',image,header[12]+i*4) for i in range(header[3]))}
  assert address('erase_shadow_segment') in relocations
  assert address('terminal_history_pointer')+2 in relocations
- extra={};static_end=max(stack_end,far_end)
+ rows=word('csi_row_count');columns=word('csi_column_count')
+ assert rows in (24,25) and columns==80 and word('screen_first_row')==0
+ assert word('csi_last_row')==word('screen_last_row')==word('csi_origin_bottom')==rows-1
+ assert word('erase_cell_count')==rows*columns and word('ui_flow_video_base')==3840
+ extra={'initial_terminal_rows':rows,'initial_terminal_columns':columns,'initial_geometry_coherent':True};static_end=max(stack_end,far_end)
  if 'nreset_reset_data_image' in symbols:
   native_overlay=symbols['nreset_reset_data_image'][0]==0
   if native_overlay:

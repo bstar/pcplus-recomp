@@ -32,12 +32,14 @@ def main():
     p.add_argument('--directory-preview-overlay', action='store_true', help='Observe validated Alt-D preview inside the stock editor workflow')
     p.add_argument('--screen-reference', action='store_true', help='Match compiled geometry and freeze incoming bytes after a real final CPR probe')
     p.add_argument('--multiline-editor', choices=['page-up','page-down'], help='Native BIOS input enters24 lines and exercises actual editor page navigation')
+    p.add_argument('--phone-log', action='store_true', help='Enable and passively audit the call log during the real BBS workflow')
     args = p.parse_args()
     if args.directory_preview_overlay:args.directory_overlay=True
     assert re.fullmatch('[A-Za-z0-9_-]+', args.label)
     assert not (args.reference_overlay and args.directory_overlay)
     if args.multiline_editor:
         assert args.screen_reference and not args.reference_overlay and not args.directory_overlay
+    if args.phone_log:assert not args.reference_overlay and not args.directory_overlay
     assert process_pid(), 'Start the owned stock ENiGMA fixture first'
     # One synthetic account/server log is shared by these runs. Keep its
     # authentication/menu audit unambiguous; independent DOS fixtures may run
@@ -49,6 +51,8 @@ def main():
     from terminal_geometry import terminal_geometry
     geometry=terminal_geometry(binary)
     sources += [binary.parent/'terminal.map',ROOT/'lab/bbs/terminal_geometry.py']
+    if args.phone_log:
+        sources += [ROOT/n for n in ('lab/bbs/phone_log_evidence.py','standalone/phone_log_events_watch.asm','standalone/test_phone_log_events_terminal.py')]
     if args.multiline_editor:
         sources += [ROOT/'lab/bbs/test_synthmodem_proxy_dos.py',ROOT/'lab/bbs/audio_synchronet_editor_keys.asm',ROOT/'lab/bbs/test_dos.py',ROOT/'lab/bbs/editor-recipes.json',ROOT/'lab/bbs/check_editor_dos.py',ROOT/'lab/bbs/enigma_multiline.py']
     reference_args=['--terminal-rows',str(geometry['rows'])]+(['--screen-reference'] if args.screen_reference else [])
@@ -73,6 +77,9 @@ def main():
         keys = 'p900 enter p2500 l o c enter '+json.loads(
             (ROOT/'lab/bbs/editor-recipes.json').read_text())['enigma_unsaved']['keyboard_input']
         observer=None
+        if args.phone_log:
+            from phone_log_evidence import build_observer
+            observer=build_observer(binary,base/(args.label+'-logwatch.COM'))
         if args.reference_overlay:
             assert json.loads((binary.parent/'manifest.json').read_text())['experimental_original_reference']
             marker='K E Y T E S T enter p1800 '
@@ -132,6 +139,7 @@ def main():
             '--irq', '5', '--mouse-scales', '8', '4', '--cpu', '8086',
             '--timeout', '160', '--wait', exit_wait, '--raw-upstream', '--keys', keys]
         if observer:command+=['--video-observer',str(observer)]
+        if args.phone_log:command+=['--phone-log']
         if keyboard_helper:command+=['--keyboard-helper',str(keyboard_helper)]
         if args.directory_overlay:command+=['--directory-view-fixture']
         with log_path.open('w') as log:
@@ -192,6 +200,11 @@ def main():
             scope='Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, '
                   'actual SynthModem proxy and stock loopback ENiGMA. '
                   'Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.')
+        if args.phone_log:
+            from phone_log_evidence import audit as audit_log
+            result['phone_log']=audit_log(output)
+            checks['actual_call_log']=result['phone_log']['passed']
+            result['passed']=all(checks.values())
         if args.multiline_editor:result['multiline_editor']=multiline
         if args.screen_reference:
             proof=json.loads((bridge/'1-screen-reference.json').read_text())
