@@ -74,6 +74,7 @@ handler:
  mov bx,[key_at]
  cmp word [bx],2d00h
  jne .tick
+%ifndef SCREEN_REFERENCE_FREEZE
  ; The editor/abort clears old Main text. Neither a partial menu nor an
  ; elapsed fixed delay proves its final3500-byte screen has arrived.
  mov si,main_prompt
@@ -82,6 +83,7 @@ handler:
  mov si,main_footer
  call visible
  jnc .done
+%endif
 .tick:
  dec word [ticks]
  jnz .done

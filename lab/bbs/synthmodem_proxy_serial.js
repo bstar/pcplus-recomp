@@ -12,6 +12,7 @@ const {values} = parseArgs({options: {
   'byte-delay-ms': {type: 'string', default: '0'},
   'terminal-rows': {type: 'string', default: '25'},
   'screen-reference': {type: 'boolean', default: false},
+  'screen-quiet-ms': {type: 'string', default: '750'},
 }});
 if (!values.runtime || !values.output) throw new Error('--runtime and --output required');
 const runtime = fs.realpathSync(values.runtime), output = path.resolve(values.output);
@@ -20,8 +21,10 @@ if (!output.startsWith(root + '/build/')) throw new Error('Output must be inside
 const port = Number(values['bbs-port']), timeout = Number(values['framing-ms']);
 const delay = Number(values['byte-delay-ms']);
 const rows = Number(values['terminal-rows']);
+const quietMs = Number(values['screen-quiet-ms']);
 if (![24,25].includes(rows)) throw new Error('Only 24/25 terminal rows supported');
-if (![23233, 23234].includes(port)) throw new Error('Only isolated ENiGMA lab ports allowed');
+if (![150,750].includes(quietMs)) throw new Error('Only measured screen capture intervals supported');
+if (![23231,23233,23234].includes(port)) throw new Error('Only owned loopback BBS ports allowed');
 if (![0, 250].includes(timeout) || !Number.isInteger(delay) || delay < 0 || delay > 20) {
   throw new Error('Invalid framing/delivery settings');
 }
@@ -42,12 +45,18 @@ const server = net.createServer(socket => {
   const id = ++count, proxy = new TelnetProxy(), sent = [], received = [];
   let chain = Promise.resolve(), closed = false;
   let armed = false, frozen = false, timer = null, prefix = null;
-  const held = [], passed = [], replyWire = [];
+  let probePending = false, probeBuffer = Buffer.alloc(0), probeTimer = null;
+  const held = [], passed = [], replyWire = [], proxyInput = [];
   const oracle = {enabled: values['screen-reference'], terminalRows: rows,
-    trigger: 'UNSAVED', quietMs: 750, reply: null};
+    trigger: 'UNSAVED', quietMs, reply: null, probeReplyConsumed: false};
   function freeze() {
     if (!armed || frozen || closed) return;
     frozen = true;
+    probePending = true;
+    probeTimer = setTimeout(() => {
+      oracle.probeTimeout = true; probePending = false;
+      enqueue(probeBuffer); probeBuffer = Buffer.alloc(0);
+    },2000);
     const query = Buffer.from('\x1b[6n');
     received.push(query); socket.write(query);
     prefix = Buffer.concat(received);
@@ -71,26 +80,46 @@ const server = net.createServer(socket => {
     if (frozen) {held.push(Buffer.from(data)); return;}
     received.push(Buffer.from(data)); socket.write(data); schedule();
   });
-  socket.on('data', data => {
-    sent.push(Buffer.from(data));
-    if (frozen) {
-      replyWire.push(Buffer.from(data));
-      const match = /\x1b\[(\d+);(\d+)R/.exec(Buffer.concat(replyWire).toString('latin1'));
-      if (match && !oracle.reply) oracle.reply = [Number(match[1]),Number(match[2])];
-    }
+  function enqueue(data) {
+    if (!data.length) return;
     chain = chain.then(async () => {
-      if (!delay) {if (!closed) {proxy.receive(data); inputPassed(data);} return;}
+      if (!delay) {if (!closed) {proxyInput.push(Buffer.from(data)); proxy.receive(data); inputPassed(data);} return;}
       for (const byte of data) {
         if (closed) break;
-        proxy.receive(Buffer.from([byte]));
+        proxyInput.push(Buffer.from([byte])); proxy.receive(Buffer.from([byte]));
         inputPassed(Buffer.from([byte]));
         await new Promise(resolve => setTimeout(resolve, delay));
       }
     }).catch(error => {console.error(error); socket.destroy(); process.exitCode = 1;});
+  }
+  socket.on('data', data => {
+    sent.push(Buffer.from(data));
+    if (frozen) replyWire.push(Buffer.from(data));
+    if (probePending) {
+      probeBuffer = Buffer.concat([probeBuffer,data]);
+      const match = /\x1b\[(\d+);(\d+)R/.exec(probeBuffer.toString('latin1'));
+      if (!match) {
+        if (probeBuffer.length>128) {
+          oracle.probeOverflow = true; clearTimeout(probeTimer); probePending = false;
+          enqueue(probeBuffer); probeBuffer = Buffer.alloc(0);
+        }
+        return;
+      }
+      oracle.reply = [Number(match[1]),Number(match[2])];
+      oracle.probeReplyHex = Buffer.from(match[0],'latin1').toString('hex');
+      oracle.probeReplyConsumed = true;
+      clearTimeout(probeTimer); probePending = false;
+      // The query originated here. Consume only its real reply here; never
+      // inject it as editor input into the stock BBS. Preserve all other TX.
+      enqueue(Buffer.concat([probeBuffer.subarray(0,match.index),probeBuffer.subarray(match.index+match[0].length)]));
+      probeBuffer = Buffer.alloc(0);
+      return;
+    }
+    enqueue(data);
   });
   socket.on('error', error => {console.error(error.message); process.exitCode = 1;});
   socket.on('close', () => {
-    clearTimeout(timer);
+    clearTimeout(timer); clearTimeout(probeTimer);
     closed = true; proxy.disconnect(); sessions.delete(socket);
     fs.writeFileSync(path.join(output, `${id}-serial-input.bin`), Buffer.concat(sent));
     fs.writeFileSync(path.join(output, `${id}-serial-output.bin`), Buffer.concat(received));
@@ -102,6 +131,7 @@ const server = net.createServer(socket => {
       fs.writeFileSync(path.join(output, `${id}-screen-prefix.bin`), prefix || Buffer.alloc(0));
       fs.writeFileSync(path.join(output, `${id}-held-output.bin`), Buffer.concat(held));
       fs.writeFileSync(path.join(output, `${id}-probe-input.bin`), Buffer.concat(replyWire));
+      fs.writeFileSync(path.join(output, `${id}-proxy-input.bin`), Buffer.concat(proxyInput));
       fs.writeFileSync(path.join(output, `${id}-screen-reference.json`), JSON.stringify(oracle,null,2));
     }
   });

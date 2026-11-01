@@ -37,6 +37,12 @@ async def run(args):
     assert re.fullmatch(r'[A-Za-z0-9_-]{1,8}',binding)
     directory_fixture=bytearray(directory_fixture);at=250+(args.entry-1)*114+0x56
     directory_fixture[at:at+9]=binding.encode().ljust(9,b'\0');directory_fixture=bytes(directory_fixture)
+   if getattr(args,'directory_script_fixture',None):
+    script=args.directory_script_fixture.resolve()
+    assert script.is_relative_to(ROOT/'build') and script.suffix.upper()=='.ASX' and re.fullmatch('[A-Za-z0-9_-]{1,8}',script.stem)
+    directory_fixture=bytearray(directory_fixture);at=250+(args.entry-1)*114+0x34
+    directory_fixture[at:at+9]=script.stem.encode().ljust(9,b'\0');directory_fixture=bytes(directory_fixture)
+    (output/(script.stem.upper()+'.ASX')).write_bytes(script.read_bytes())
    (output/'TEST.DIR').write_bytes(directory_fixture)
   (output/'TEST.PRM').write_bytes(fixture)
   command='TERMINAL @D:\\TEST.PRM'
@@ -102,6 +108,11 @@ async def run(args):
   observer=observer.resolve();assert observer.is_relative_to(ROOT/'build') and observer.suffix.upper()=='.COM'
   observer_bytes=observer.read_bytes();(output/'OBSERVE.COM').write_bytes(observer_bytes)
   observer_start='D:\\OBSERVE T';observer_stop='D:\\OBSERVE'
+ keyboard_helper=getattr(args,'keyboard_helper',None);helper_start='';helper_bytes=None
+ if keyboard_helper:
+  keyboard_helper=keyboard_helper.resolve();assert keyboard_helper.is_relative_to(ROOT/'build') and keyboard_helper.suffix.upper()=='.COM'
+  helper_bytes=keyboard_helper.read_bytes();(output/'KEYS.COM').write_bytes(helper_bytes)
+  helper_start='D:\\KEYS.COM'
  serial='\n'.join(f'serial{i}='+ (f'nullmodem server:127.0.0.1 port:{port} transparent:1 rxdelay:200 txdelay:1' if i==args.com else 'disabled') for i in range(1,5))
  if irq is not None:serial=serial.replace('nullmodem ',f'nullmodem irq:{irq} ')
  config=f'''[sdl]
@@ -123,6 +134,7 @@ mount d "{output}"
 {working_drive}:
 D:\\SNAP B
 {observer_start}
+{helper_start}
 ADDKEY {keys}
 {command}
 if errorlevel 1 goto failed
@@ -180,6 +192,7 @@ exit
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
  if observer_bytes is not None:checks['video_observer_unchanged']=(output/'OBSERVE.COM').read_bytes()==observer_bytes
+ if helper_bytes is not None:checks['keyboard_helper_unchanged']=(output/'KEYS.COM').read_bytes()==helper_bytes
  if view_fixture is not None:checks['read_only_directory_unchanged']=(output/'PCPLUS.DIR').read_bytes()==view_fixture
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'keyboard_input':args.keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
  result['initialization_wait_seconds']=init_wait
@@ -204,6 +217,8 @@ if __name__=='__main__':
  p.add_argument('--init-wait',type=int,choices=range(32768),help='Explicit /I initialization acknowledgement deadline in seconds')
  p.add_argument('--dial-fixture',action='store_true',help='Exercise configured automatic modem initialization/dialing inside DOS')
  p.add_argument('--directory-key-binding',help='Bind the selected synthetic directory entry to a KEY basename')
+ p.add_argument('--directory-script-fixture',type=Path,help='Bind/copy a source-built ASX from build/ into an automatic directory fixture')
+ p.add_argument('--keyboard-helper',type=Path,help='Install a source-built BIOS input helper from build/ once before the application')
  p.add_argument('--meta-fixture',type=Path,help='Load an explicit source-owned ten-record KEY fixture with /T')
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')

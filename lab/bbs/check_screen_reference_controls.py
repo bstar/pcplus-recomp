@@ -16,7 +16,9 @@ def main():
     assert out.is_relative_to(ROOT/'build') and not out.exists()
     accepted=json.loads((source/'screen-reference-audit.json').read_text());assert accepted['passed']
     out.mkdir(parents=True);reports=[]
-    for kind in ['unchanged','character','attribute','cursor','prefix-truncated','unsupported-font']:
+    kinds=['unchanged','character','attribute','cursor','prefix-truncated','unsupported-font']
+    if (bridge/'1-proxy-input.bin').exists():kinds.append('proxy-input-truncated')
+    for kind in kinds:
         folder=out/kind;capture=folder/'capture';peer=folder/'bridge'
         shutil.copytree(source,capture);shutil.copytree(bridge,peer)
         producer=json.loads((capture/'proxy-integration.json').read_text())
@@ -27,6 +29,7 @@ def main():
         elif kind=='cursor':
             old=proof['reply'];new=[old[0],old[1]%80+1];proof['reply']=new
             replacement=f'\x1b[{new[0]};{new[1]}R'.encode()
+            if 'probeReplyHex' in proof:proof['probeReplyHex']=replacement.hex()
             path=peer/'1-probe-input.bin';data=path.read_bytes()
             altered,count=re.subn(rb'\x1b\[\d+;\d+R',lambda _:replacement,data)
             assert count==1;path.write_bytes(altered)
@@ -34,11 +37,15 @@ def main():
             path.write_bytes(original[:-len(data)]+altered)
         elif kind=='prefix-truncated':
             path=peer/'1-screen-prefix.bin';path.write_bytes(path.read_bytes()[:-1])
+        elif kind=='proxy-input-truncated':
+            path=peer/'1-proxy-input.bin';path.write_bytes(path.read_bytes()[:-1])
         elif kind=='unsupported-font':
-            data=(peer/'1-screen-prefix.bin').read_bytes();assert data.count(b'\x1b[0;0 D')==1
-            changed=data.replace(b'\x1b[0;0 D',b'\x1b[0;1 D')
+            data=(peer/'1-screen-prefix.bin').read_bytes()
+            assert data.count(b'\x1b[0;0 D') in (0,1)
+            changed=data.replace(b'\x1b[0;0 D',b'\x1b[0;1 D') if b'\x1b[0;0 D' in data else data[:-4]+b'\x1b[0;1 D'+data[-4:]
             for path in [peer/'1-screen-prefix.bin',peer/'1-serial-output.bin',capture/'serial-sent.bin']:path.write_bytes(changed)
             proof['prefixSha256']=sha(peer/'1-screen-prefix.bin')
+            proof['prefixBytes']=len(changed)
         if kind!='unchanged':
             producer['synthetic_audit_control']=kind
             producer['screen_reference']=proof
