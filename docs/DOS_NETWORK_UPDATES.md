@@ -10,7 +10,7 @@ NIC's existing boot-ROM enable, address and size.
 Select **Network management (Ethernet / FTP)** in the DOS startup menu.
 The default remains EM (Expanded memory + Mouse), with its ten-second timeout.
 The management entry uses HIMEM and EMM386 NOEMS, branches before UNISOUND
-initialization, loads CuteMouse on COM1/IRQ4 and skips the game shell.
+initialization, loads CuteMouse on COM1 or COM2 and skips the game shell.
 `C:\NET\NETMGR.BAT` loads the packet driver,
 runs DHCP, then starts the foreground FTP server only after successful DHCP.
 Failures stop at the DOS prompt with the diagnostic visible.
@@ -65,7 +65,8 @@ log. Full file access is available only while the foreground server runs.
 ## Mouse and upper memory
 
 The network profile now uses `C:\NET\CTMOUSE.EXE` (CuteMouse 2.1 beta4),
-loaded with `LH` and `/S14` to select COM1/IRQ4 explicitly. This replaces
+loaded with `LH`; MOUSEUP.BAT tries `/S14` (COM1/IRQ4), then `/S23`
+(COM2/IRQ3) only if detection fails. COM3/modem is not probed. This replaces
 only the network entry's mouse command; normal game boot entries and their
 existing drivers remain unchanged. The previous network profile provided
 HIMEM alone, so it did not create upper memory blocks for `LH`.
@@ -88,12 +89,20 @@ The first physical reboot reported CuteMouse `Error: device not found`.
 MEM confirmed EMM386 and 139 KiB of free upper memory, with no mouse resident.
 A manual `LH MOUSE.COM` launched from `C:\UTILS` reported successful Microsoft
 Mouse 8.20 installation; the accompanying MEMLIVE.TXT was empty, so its actual
-high-memory placement remains unverified. Startup now calls
-`C:\NET\MOUSEUP.BAT`: try CuteMouse first, and on errorlevel5 run Microsoft
-Mouse with LH from C:\UTILS, then return to C:\ before network initialization.
-The fallback output is saved as MSMOUSE.LOG; MEMBOOT.TXT remains the next-boot
-placement check. The fallback startup has been installed and read back over
-FTP, but has not yet been exercised by a reboot.
+high-memory placement was not verified. A Microsoft fallback was briefly
+installed, then removed at bstar's request. The current MOUSEUP.BAT is
+**CuteMouse only**, with separate COM1/IRQ4 and COM2/IRQ3 attempts and visible
+failure if neither detects a mouse. MOUSE.LOG records both attempts, while
+MEMBOOT.TXT records placement. This updated startup has been read back over
+FTP; physical detection and mouse interaction await another boot.
+
+Inspection of `C:\SCRIPTS\COMPS` found GREEN, CHIPS and BAH selecting
+`C:\DRIVERS\MMOUSE\MMOUSE.COM`; its embedded identification is MOUSE 3.02a.
+DTK and ENOS select `C:\DRIVERS\CTMOUSE.EXE` without a forced port. Both the
+DRIVERS and UTILS/STARTER copies identify as CuteMouse 2.0 alpha4. No profile
+proves the present KVM's physical port. The Microsoft MouseType=Serial1 setting
+was insufficient evidence to restrict CuteMouse permanently to COM1.
+MMOUSE is retained as a separate candidate, not silently loaded as a fallback.
 
 Pre-change CONFIG.SYS/AUTOEXEC.BAT are in `C:\NET\MOUSEBK`. The driver and
 its license/documentation were copied from the

@@ -1,0 +1,17 @@
+@ECHO OFF
+ECHO CuteMouse: checking COM1, IRQ4.
+LH C:\NET\CTMOUSE.EXE /S14 > C:\NET\MOUSE.LOG
+IF ERRORLEVEL 5 GOTO COM2
+GOTO READY
+:COM2
+ECHO CuteMouse: checking COM2, IRQ3.
+LH C:\NET\CTMOUSE.EXE /S23 >> C:\NET\MOUSE.LOG
+IF ERRORLEVEL 5 GOTO FAILED
+:READY
+TYPE C:\NET\MOUSE.LOG
+GOTO END
+:FAILED
+TYPE C:\NET\MOUSE.LOG
+ECHO CuteMouse did not detect a mouse on COM1 or COM2.
+ECHO No alternate driver was loaded. Network startup will continue.
+:END
