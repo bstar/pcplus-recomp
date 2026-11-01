@@ -1,0 +1,1145 @@
+{
+  "passed": true,
+  "source_commit": "e3196541a0727ce3dd8ee88932cda777b1c66b45",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/terminal-phone-log-bank-d882144fee4f/TERMINAL.EXE",
+    "sha256": "003bc6b7a0529c737b697c1149d2cfecfef930b5e96406df9dba31d9c137380f",
+    "unchanged_from_stock_BBS_checkpoint": true
+  },
+  "original_carrier_cases": 3,
+  "public_cases": 45,
+  "public_source_proof": {
+    "path": "build/phone-log-carrier-public-01/result.json",
+    "sha256": "db861288da48c632e3e012a4432b0fd67bcebc55f3aaf71e0dc6d5d6c292fa09",
+    "source_count": 1749,
+    "build_log_sha256": "abe9675abf76878e557d9e5ffa50a14ec0d6a1293d6fed757f6d3064b7d4493d"
+  },
+  "evidence": {
+    "native_carrier": {
+      "path": "build/phone-log-carrier-terminal/carrier-final-03/result.json",
+      "sha256": "4ee8968a34eabf6e77c94d578388638e5f4a1b042ac0236a23e039435f4f67f9",
+      "cases": [
+        {
+          "case": "idle-hard",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:33145 11/01/26 03:37:51 ",
+              "end": "03:37:51 00:00:00",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:33145 11/01/26 03:37:57 ",
+              "end": "03:38:04 00:00:07",
+              "valid": true
+            }
+          ]
+        },
+        {
+          "case": "write-hard",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:46109 11/01/26 03:38:07 ",
+              "end": "03:38:09 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:46109 11/01/26 03:38:13 ",
+              "end": "03:38:20 00:00:07",
+              "valid": true
+            }
+          ]
+        },
+        {
+          "case": "write-soft",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44039 11/01/26 03:38:22 ",
+              "end": "03:38:24 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44039 11/01/26 03:38:28 ",
+              "end": "03:38:35 00:00:07",
+              "valid": true
+            }
+          ]
+        }
+      ],
+      "verified_artifacts": 51
+    },
+    "public-existing": {
+      "path": "build/phone-log-carrier-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "b4d61584db5f89408ab73a08b33c83c021d62ebdb080041b6364c98d266f4d48",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-controls": {
+      "path": "build/phone-log-carrier-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "7f242f8f4d3c59c85005c17896a3b2477515403e50b7d4f59a482b070a6d7ccd",
+      "cases": [
+        {
+          "case": "success",
+          "passed": true
+        },
+        {
+          "case": "hangup",
+          "passed": true
+        },
+        {
+          "case": "busy",
+          "passed": true
+        },
+        {
+          "case": "silence",
+          "passed": true
+        },
+        {
+          "case": "redial",
+          "passed": true
+        },
+        {
+          "case": "disabled",
+          "passed": true
+        },
+        {
+          "case": "direct",
+          "passed": true
+        },
+        {
+          "case": "capacity",
+          "passed": true
+        },
+        {
+          "case": "soft",
+          "passed": true
+        },
+        {
+          "case": "both",
+          "passed": true
+        },
+        {
+          "case": "none",
+          "passed": true
+        },
+        {
+          "case": "fs-failure",
+          "passed": true
+        },
+        {
+          "case": "program",
+          "passed": true
+        },
+        {
+          "case": "ui-ready",
+          "passed": true
+        },
+        {
+          "case": "ui-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-unrepaired",
+          "passed": true
+        },
+        {
+          "case": "ui-recovery",
+          "passed": true
+        },
+        {
+          "case": "ui-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 316
+    },
+    "public-preexisting": {
+      "path": "build/phone-log-carrier-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+      "sha256": "f6d0165df51f519f4b85efa20ec13c6de4eed3be798bc7602504c453a8979702",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-io-failures": {
+      "path": "build/phone-log-carrier-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+      "sha256": "e250737cb43de3dbe71cd388f52c0434d34f9c03a0e2e2f4a773f580ed5bb5ae",
+      "cases": [
+        {
+          "case": "ui-commit-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-truncate",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-commit",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 61
+    },
+    "public-permissions": {
+      "path": "build/phone-log-carrier-public-01/source/build/phone-log-events-terminal/public-permissions/result.json",
+      "sha256": "b31a3bc2572bb13bce36a219064238be60e85ba55f132a42ba03a8af31110465",
+      "cases": [
+        {
+          "case": "ui-readonly-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-readonly-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 42
+    },
+    "public-readonly": {
+      "path": "build/phone-log-carrier-public-01/source/build/phone-log-startup-terminal/public-readonly/result.json",
+      "sha256": "e5ce1eb7d5d55629e77d174e6e7f9f6cbbb37b0c4dcf2ade5e9f20cfe8c37bda",
+      "cases": [
+        {
+          "case": "readonly",
+          "passed": true
+        },
+        {
+          "case": "readonly-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 36
+    },
+    "public-slow": {
+      "path": "build/phone-log-carrier-public-01/source/build/phone-log-slow-terminal/public-slow/result.json",
+      "sha256": "4b3d9a44e921b65e669a3b903a017f70865788ec702ae3a3144f974af62117bc",
+      "cases": [
+        {
+          "case": "soft-9",
+          "passed": true
+        },
+        {
+          "case": "both-36",
+          "passed": true
+        },
+        {
+          "case": "none-36",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-watermark": {
+      "path": "build/phone-log-carrier-public-01/source/build/phone-log-slow-terminal/public-watermark/result.json",
+      "sha256": "f70ba377d2c806ae3a24b7e63bec917d4f5cfd6543ed36e161a5535b24f0cd2b",
+      "cases": [
+        {
+          "case": "soft-watermark",
+          "passed": true
+        },
+        {
+          "case": "both-watermark",
+          "passed": true
+        },
+        {
+          "case": "hard-watermark",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-carrier": {
+      "path": "build/phone-log-carrier-public-01/source/build/phone-log-carrier-terminal/public-carrier/result.json",
+      "sha256": "5e8d780ee4be0c3a6777951115c7d3462c3730023915c88b87315215d63ab651",
+      "cases": [
+        {
+          "case": "idle-hard",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45509 11/01/26 03:45:46 ",
+              "end": "03:45:46 00:00:00",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45509 11/01/26 03:45:52 ",
+              "end": "03:45:59 00:00:07",
+              "valid": true
+            }
+          ]
+        },
+        {
+          "case": "write-hard",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:38797 11/01/26 03:46:01 ",
+              "end": "03:46:03 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:38797 11/01/26 03:46:07 ",
+              "end": "03:46:14 00:00:07",
+              "valid": true
+            }
+          ]
+        },
+        {
+          "case": "write-soft",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36945 11/01/26 03:46:16 ",
+              "end": "03:46:18 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36945 11/01/26 03:46:22 ",
+              "end": "03:46:29 00:00:07",
+              "valid": true
+            }
+          ]
+        }
+      ],
+      "verified_artifacts": 51
+    }
+  },
+  "actual_virtual_DCD_and_stamp_observations": [
+    {
+      "run": "native_carrier",
+      "case": "idle-hard",
+      "delay_MSR_stamp_snapshot": [
+        21324,
+        1,
+        0,
+        0,
+        61954,
+        1,
+        0,
+        0,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        62082,
+        15666,
+        176,
+        176,
+        0,
+        1,
+        2026,
+        11,
+        1,
+        3,
+        37,
+        51
+      ],
+      "sessions": [
+        {
+          "index": 1,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 2.3429
+            },
+            {
+              "kind": "partial-CSI",
+              "seconds": 2.6115
+            },
+            {
+              "kind": "carrier-drop",
+              "seconds": 2.8119
+            },
+            {
+              "kind": "closed",
+              "seconds": 2.8119
+            }
+          ],
+          "errors": [],
+          "dropped": true
+        },
+        {
+          "index": 2,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 8.3297
+            },
+            {
+              "kind": "keyboard-after-redial",
+              "seconds": 11.5059
+            },
+            {
+              "kind": "closed",
+              "seconds": 14.2118
+            }
+          ],
+          "errors": [],
+          "keyboard": true
+        }
+      ],
+      "observer_header": [
+        19525,
+        275,
+        6,
+        1,
+        2960,
+        15666,
+        15624,
+        11,
+        0,
+        0
+      ],
+      "physical_log_sha256": "da436d8c81646f10b6e8f6f84e9507b65e8ba595ef77e704d8b9f0c210f73f8d"
+    },
+    {
+      "run": "native_carrier",
+      "case": "write-hard",
+      "delay_MSR_stamp_snapshot": [
+        21324,
+        1,
+        36,
+        36,
+        61954,
+        1,
+        0,
+        0,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        62022,
+        15666,
+        176,
+        48,
+        1,
+        1,
+        2026,
+        11,
+        1,
+        3,
+        38,
+        7
+      ],
+      "sessions": [
+        {
+          "index": 1,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 2.3394
+            },
+            {
+              "kind": "partial-CSI",
+              "seconds": 2.6092
+            },
+            {
+              "kind": "carrier-drop",
+              "seconds": 2.8096
+            },
+            {
+              "kind": "closed",
+              "seconds": 2.8097
+            }
+          ],
+          "errors": [],
+          "dropped": true
+        },
+        {
+          "index": 2,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 8.3272
+            },
+            {
+              "kind": "keyboard-after-redial",
+              "seconds": 11.5022
+            },
+            {
+              "kind": "closed",
+              "seconds": 14.2087
+            }
+          ],
+          "errors": [],
+          "keyboard": true
+        }
+      ],
+      "observer_header": [
+        19525,
+        275,
+        5,
+        1,
+        2960,
+        15666,
+        15624,
+        11,
+        0,
+        0
+      ],
+      "physical_log_sha256": "c25df01e91bd4da1f3d6bd7542003c16d0e3aee49d7e8b0a3b3ae99e4c539f10"
+    },
+    {
+      "run": "native_carrier",
+      "case": "write-soft",
+      "delay_MSR_stamp_snapshot": [
+        21324,
+        1,
+        36,
+        36,
+        61954,
+        1,
+        0,
+        16,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        11,
+        62022,
+        15666,
+        176,
+        48,
+        1,
+        1,
+        2026,
+        11,
+        1,
+        3,
+        38,
+        22
+      ],
+      "sessions": [
+        {
+          "index": 1,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 2.3421
+            },
+            {
+              "kind": "partial-CSI",
+              "seconds": 2.6113
+            },
+            {
+              "kind": "carrier-drop",
+              "seconds": 2.8116
+            },
+            {
+              "kind": "closed",
+              "seconds": 2.8117
+            }
+          ],
+          "errors": [],
+          "dropped": true
+        },
+        {
+          "index": 2,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 8.3282
+            },
+            {
+              "kind": "keyboard-after-redial",
+              "seconds": 11.504
+            },
+            {
+              "kind": "closed",
+              "seconds": 14.2111
+            }
+          ],
+          "errors": [],
+          "keyboard": true
+        }
+      ],
+      "observer_header": [
+        19525,
+        275,
+        5,
+        1,
+        2960,
+        15666,
+        15624,
+        11,
+        0,
+        0
+      ],
+      "physical_log_sha256": "ce1b2df0d92d148dd34a99f70aecd5e542621d7b34477853a9bbd94c3b7aa649"
+    },
+    {
+      "run": "public-carrier",
+      "case": "idle-hard",
+      "delay_MSR_stamp_snapshot": [
+        21324,
+        1,
+        0,
+        0,
+        61954,
+        1,
+        0,
+        0,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        62082,
+        15666,
+        176,
+        176,
+        0,
+        1,
+        2026,
+        11,
+        1,
+        3,
+        45,
+        46
+      ],
+      "sessions": [
+        {
+          "index": 1,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 2.3439
+            },
+            {
+              "kind": "partial-CSI",
+              "seconds": 2.6127
+            },
+            {
+              "kind": "carrier-drop",
+              "seconds": 2.8129
+            },
+            {
+              "kind": "closed",
+              "seconds": 2.8129
+            }
+          ],
+          "errors": [],
+          "dropped": true
+        },
+        {
+          "index": 2,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 8.3313
+            },
+            {
+              "kind": "keyboard-after-redial",
+              "seconds": 11.5069
+            },
+            {
+              "kind": "closed",
+              "seconds": 14.2125
+            }
+          ],
+          "errors": [],
+          "keyboard": true
+        }
+      ],
+      "observer_header": [
+        19525,
+        275,
+        6,
+        1,
+        2960,
+        15666,
+        15624,
+        11,
+        0,
+        0
+      ],
+      "physical_log_sha256": "6b53a0b66df028c960525557fb7e2db68ac8a47893d3def03eeab99feb914121"
+    },
+    {
+      "run": "public-carrier",
+      "case": "write-hard",
+      "delay_MSR_stamp_snapshot": [
+        21324,
+        1,
+        36,
+        36,
+        61954,
+        1,
+        0,
+        0,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        62022,
+        15666,
+        176,
+        48,
+        1,
+        1,
+        2026,
+        11,
+        1,
+        3,
+        46,
+        1
+      ],
+      "sessions": [
+        {
+          "index": 1,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 2.3345
+            },
+            {
+              "kind": "partial-CSI",
+              "seconds": 2.6034
+            },
+            {
+              "kind": "carrier-drop",
+              "seconds": 2.8038
+            },
+            {
+              "kind": "closed",
+              "seconds": 2.8039
+            }
+          ],
+          "errors": [],
+          "dropped": true
+        },
+        {
+          "index": 2,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 8.3212
+            },
+            {
+              "kind": "keyboard-after-redial",
+              "seconds": 11.4963
+            },
+            {
+              "kind": "closed",
+              "seconds": 14.2029
+            }
+          ],
+          "errors": [],
+          "keyboard": true
+        }
+      ],
+      "observer_header": [
+        19525,
+        275,
+        5,
+        1,
+        2960,
+        15666,
+        15624,
+        11,
+        0,
+        0
+      ],
+      "physical_log_sha256": "30f78ced1d4eaf5cec68a1d144d126a19de39047f494da263a3aa035bd6211fd"
+    },
+    {
+      "run": "public-carrier",
+      "case": "write-soft",
+      "delay_MSR_stamp_snapshot": [
+        21324,
+        1,
+        36,
+        36,
+        61954,
+        1,
+        0,
+        16,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        11,
+        62022,
+        15666,
+        176,
+        48,
+        1,
+        1,
+        2026,
+        11,
+        1,
+        3,
+        46,
+        16
+      ],
+      "sessions": [
+        {
+          "index": 1,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 2.3485
+            },
+            {
+              "kind": "partial-CSI",
+              "seconds": 2.6171
+            },
+            {
+              "kind": "carrier-drop",
+              "seconds": 2.8174
+            },
+            {
+              "kind": "closed",
+              "seconds": 2.8174
+            }
+          ],
+          "errors": [],
+          "dropped": true
+        },
+        {
+          "index": 2,
+          "events": [
+            {
+              "kind": "connected",
+              "seconds": 8.3352
+            },
+            {
+              "kind": "keyboard-after-redial",
+              "seconds": 11.5109
+            },
+            {
+              "kind": "closed",
+              "seconds": 14.2173
+            }
+          ],
+          "errors": [],
+          "keyboard": true
+        }
+      ],
+      "observer_header": [
+        19525,
+        275,
+        5,
+        1,
+        2960,
+        15666,
+        15624,
+        11,
+        0,
+        0
+      ],
+      "physical_log_sha256": "497b3f0b28b5fea034e02a2032184a492641513e1ed30badae9496e849e768c4"
+    }
+  ],
+  "unchanged_delay_fixture_controls": [
+    {
+      "case": "soft-9",
+      "sha256": "aa0f38a7edda88bff8bd0efb4c869d31168021c76123a9c9efc033251efa2949"
+    },
+    {
+      "case": "both-36",
+      "sha256": "7148b1d93b23ac00aa3d50751e0bc7fefdb3a3cb6c3a082577a84e1d0b6d515b"
+    },
+    {
+      "case": "none-36",
+      "sha256": "7148b1d93b23ac00aa3d50751e0bc7fefdb3a3cb6c3a082577a84e1d0b6d515b"
+    },
+    {
+      "case": "soft-watermark",
+      "sha256": "40e2f7da484e0f3c70b5a9bbbe3c98daaa0abaef85822e00ebd199aa9b177b67"
+    },
+    {
+      "case": "both-watermark",
+      "sha256": "40e2f7da484e0f3c70b5a9bbbe3c98daaa0abaef85822e00ebd199aa9b177b67"
+    },
+    {
+      "case": "hard-watermark",
+      "sha256": "40e2f7da484e0f3c70b5a9bbbe3c98daaa0abaef85822e00ebd199aa9b177b67"
+    }
+  ],
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Actual DOSBox virtual modem CONNECT/NO CARRIER and DCD; no physical Boca/SPA2102, SIP/DSP or analog acceptance.",
+    "Peer sends ANSI and drops TCP; it never supplies modem response strings or writes product state. MSR reads clear delta bits; carrier policy uses its level bit.",
+    "The first START is witnessed before held write/loss; END is foreground observation time, not a reconstructed physical-drop timestamp.",
+    "Selected same-parent directory redial, no ASPECT/transfer/generic-child loss or every deadline/profile/feature combination.",
+    "Initial peer-collection, immutable-path and busy-queue timestamp attempts excluded; final native matrix and committed public repeat only.",
+    "No new stock-BBS sessions; previous receipt applies to the exact unchanged image. No full F01-F16 or deployment closure.",
+    "Published package/card, live BBS, installed bridge service, ATA and host network unchanged."
+  ]
+}

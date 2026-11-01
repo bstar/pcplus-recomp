@@ -1,5 +1,12 @@
 # PCPlus DOS reconstruction
 
+[Carrier loss and logged redial](docs/PHONE_LOG_CARRIER.md) now pass ordinary HARD loss
+and loss during HARD/SOFT writes using actual virtual modem DCD. Each original
+DOS parent redials, resumes input and saves two exact call pairs, preserving
+both START stamps and the old file prefix. Three final native cases and 45
+committed-source workflows pass with unchanged application bytes. ASPECT/
+transfer/child loss, broad feature/rendering and physical/card gates remain open.
+
 [Logging with stock BBS editors](docs/PHONE_LOG_STOCK_BBS.md) now passes ENiGMA's
 multiline Page Up/edit/Page Down workflow and Synchronet's actual ASPECT login/
 editor workflow. Each has one exact call pair and all 1,920 final cells/cursor
