@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--terminal', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--commit', required=True)
+    parser.add_argument('--extended', action='store_true', help='Also repeat preexisting-startup and failed-rollback cases')
     args = parser.parse_args()
     parent, output = args.terminal.resolve(), args.output.resolve()
     assert parent.is_relative_to(ROOT/'build') and output.is_relative_to(ROOT/'build')
@@ -49,7 +50,11 @@ def main():
                        cwd=fresh, stdout=log, stderr=log, check=True)
         rebuilt = fresh/'build'/parent.name
         assert sha(rebuilt/'TERMINAL.EXE') == manifest['binary_sha256']
-        for label, extra, expected in [('public-existing', ['--existing'], 5), ('public-controls', [], 19)]:
+        matrices = [('public-existing', ['--existing'], 5), ('public-controls', [], 19)]
+        if args.extended:
+            matrices += [('public-preexisting', ['--existing', '--preexisting'], 5),
+                         ('public-io-failures', ['--io-failures'], 3)]
+        for label, extra, expected in matrices:
             subprocess.run([sys.executable, 'standalone/test_phone_log_events_terminal.py',
                             '--terminal', str(rebuilt), '--label', label, *extra],
                            cwd=fresh, stdout=log, stderr=log, check=True)
@@ -68,7 +73,7 @@ def main():
                   'no original installs, previous objects or Git metadata exported. '
                   'No physical disk failure, sustained transport or full-application acceptance.')
     (output/'result.json').write_text(json.dumps(result, indent=2)+'\n')
-    print('PASS:', len(sources), 'public sources; exact terminal; five existing-file and 19 menu/disk cases')
+    print('PASS:', len(sources), 'public sources; exact terminal;', sum(r['cases'] for r in reports.values()), 'DOS cases')
 
 
 if __name__ == '__main__':

@@ -8,6 +8,15 @@ ORG 100h
 %ifndef RETURN_ERROR
 %define RETURN_ERROR 0
 %endif
+%ifndef WRITE_FULL
+%define WRITE_FULL 0
+%endif
+%ifndef FAIL_FIRST_COMMIT
+%define FAIL_FIRST_COMMIT 0
+%endif
+%ifndef FAIL_TRUNCATE
+%define FAIL_TRUNCATE 0
+%endif
 jmp start
 old_dos: dd 0
 sample: dw 0x5746,0,0,0,0,0xffff,0,0,0
@@ -46,7 +55,9 @@ handler:
  jb .pass
  mov [cs:REQUESTED],cx
  push cx
+%if !WRITE_FULL
  mov cx,7
+%endif
  pushf
  call far [cs:old_dos]
  mov [cs:REAL_AX],ax
@@ -81,9 +92,19 @@ handler:
  jmp .pass
 .commit:
  inc word [cs:COMMITS]
+%if FAIL_FIRST_COMMIT
+ cmp word [cs:COMMITS],1
+ jne .pass
+ mov ax,5
+ jmp .error
+%endif
  jmp .pass
 .truncate:
  inc word [cs:TRUNCATES]
+%if FAIL_TRUNCATE
+ mov ax,5
+ jmp .error
+%endif
 .pass:
  pop bp
  popf

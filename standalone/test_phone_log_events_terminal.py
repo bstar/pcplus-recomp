@@ -18,6 +18,7 @@ OLD_CALL = (b'\r\n' + b'PREVIOUS CALL'.ljust(22) + b' ' + b'5550100'.rjust(20)
 assert len(OLD_CALL) == 81
 EXISTING_CASES = ('existing-empty', 'existing-records', 'existing-large',
                   'ui-short-retry', 'ui-write-error-retry')
+IO_CASES = ('ui-commit-retry', 'ui-rollback-truncate', 'ui-rollback-commit')
 
 
 def inspect_record(raw, calls, enabled, name, target):
@@ -108,7 +109,9 @@ def main():
     parser.add_argument('--terminal', type=Path, required=True)
     parser.add_argument('--label', required=True)
     parser.add_argument('--existing', action='store_true', help='Run the separate existing-file/rollback application matrix')
-    parser.add_argument('--case', choices=['success', 'hangup', 'busy', 'silence', 'redial', 'disabled', 'direct', 'capacity', 'soft', 'both', 'none', 'fs-failure', 'program', 'ui-ready', 'ui-retry', 'ui-cancel', 'ui-unrepaired', 'ui-recovery', 'ui-disabled', *EXISTING_CASES])
+    parser.add_argument('--preexisting', action='store_true', help='Seed the existing matrix before application startup')
+    parser.add_argument('--io-failures', action='store_true', help='Run commit and rollback-failure application cases')
+    parser.add_argument('--case', choices=['success', 'hangup', 'busy', 'silence', 'redial', 'disabled', 'direct', 'capacity', 'soft', 'both', 'none', 'fs-failure', 'program', 'ui-ready', 'ui-retry', 'ui-cancel', 'ui-unrepaired', 'ui-recovery', 'ui-disabled', *EXISTING_CASES, *IO_CASES])
     args = parser.parse_args()
     assert re.fullmatch('[a-z0-9-]+', args.label)
     parent = args.terminal.resolve()
@@ -117,6 +120,8 @@ def main():
     disk = bool(manifest.get('experimental_phone_log_disk'))
     controls=bool(manifest.get('experimental_phone_log_controls'))
     assert not args.existing or controls
+    assert not args.preexisting or args.existing
+    assert not args.io_failures or controls and not args.existing
     binary = parent / 'TERMINAL.EXE'
     assert sha(binary) == manifest['binary_sha256']
     terminal.BINARY = binary
@@ -145,13 +150,15 @@ def main():
     if controls:
         close_fault=output/'CLOSEFLT.COM'
         subprocess.run(['nasm','-fbin',str(ROOT/'standalone/phone_log_close_fault.asm'),'-o',str(close_fault)],check=True)
-    if args.existing:
-        for suffix, error in (('SHORT', 0), ('WRERR', 1)):
-            subprocess.run(['nasm', '-fbin', '-DRETURN_ERROR='+str(error),
+    if args.existing or args.io_failures:
+        for suffix, options in (('SHORT', ['RETURN_ERROR=0']), ('WRERR', ['RETURN_ERROR=1']),
+                ('COMMIT', ['WRITE_FULL=1', 'FAIL_FIRST_COMMIT=1']),
+                ('RBTRUNC', ['FAIL_TRUNCATE=1']), ('RBCOMMIT', ['FAIL_FIRST_COMMIT=1'])):
+            subprocess.run(['nasm', '-fbin', *['-D'+o for o in options],
                 str(ROOT/'standalone/phone_log_write_fault.asm'), '-o', str(output/(suffix+'.COM'))], check=True)
     sources = dict(manifest['sources'])
     if controls:sources['standalone/phone_log_close_fault.asm']=sha(ROOT/'standalone/phone_log_close_fault.asm')
-    if args.existing:sources['standalone/phone_log_write_fault.asm']=sha(ROOT/'standalone/phone_log_write_fault.asm')
+    if args.existing or args.io_failures:sources['standalone/phone_log_write_fault.asm']=sha(ROOT/'standalone/phone_log_write_fault.asm')
     if disk:sources['standalone/program_handoff_child.asm']=sha(ROOT/'standalone/program_handoff_child.asm')
     for name in ('standalone/test_phone_log_events_terminal.py', 'standalone/phone_log_events_watch.asm',
         'standalone/test_connection_dos.py', 'standalone/modem_fixtures.py', 'standalone/directory_fixtures.py',
@@ -179,6 +186,12 @@ def main():
         cases = [(name, 'success',
             'p2000 f i x enter p500 a-z l p700 r p700 y p900 escape p300 escape p1100 a-x'
             if name.startswith('ui-') else 'p3500 a-x', 1, 1) for name in EXISTING_CASES]
+    if args.io_failures:
+        cases = [(name, 'success',
+            'p2000 f i x enter p500 a-z l p700 r p700 y p900 escape p300 escape p1100 a-x'
+            if name=='ui-commit-retry' else
+            'p2000 a-1 p800 a-z l p700 r p700 y p700 escape p300 escape p900 a-x',
+            1, 1) for name in IO_CASES]
     assert not args.case or any(row[0] == args.case for row in cases)
     results, artifacts = [], {}
     for name, mode, keys, enabled, calls in cases:
@@ -196,13 +209,21 @@ def main():
         folder = ROOT / 'build/connection-dos' / case
         assert not folder.exists()
         seed = None
-        retry_case = name in ('ui-retry', 'ui-short-retry', 'ui-write-error-retry')
-        if name in EXISTING_CASES:
-            seed = b'' if name == 'existing-empty' else HEADING + OLD_CALL * (900 if name in ('existing-large', 'ui-write-error-retry') else 1)
+        retry_case = name in ('ui-retry', 'ui-short-retry', 'ui-write-error-retry', 'ui-commit-retry')
+        recovery_case = name in ('ui-recovery', 'ui-rollback-truncate', 'ui-rollback-commit')
+        if name in EXISTING_CASES or name in IO_CASES:
+            seed = b'' if name == 'existing-empty' else HEADING + OLD_CALL * (900 if name in ('existing-large', 'ui-write-error-retry', *IO_CASES) else 1)
             def seed_existing(owned):
                 assert owned == folder and not (owned/'PCPLUS.FON').exists()
                 (owned/'PCPLUS.FON').write_bytes(seed)
-            options['dial_action'] = seed_existing
+            if args.preexisting or args.io_failures:
+                folder.mkdir(parents=True)
+                seed_existing(folder)
+                def verify_startup_preserved(owned):
+                    assert owned==folder and (owned/'PCPLUS.FON').read_bytes()==seed
+                options['dial_action']=verify_startup_preserved
+            else:
+                options['dial_action'] = seed_existing
             if retry_case:
                 def verify_rollback(owned):
                     assert owned == folder and (owned/'PCPLUS.FON').read_bytes() == seed
@@ -220,7 +241,7 @@ def main():
                 (owned/'PCPLUS.FON'/'KEEP.BIN').unlink();(owned/'PCPLUS.FON').rmdir()
             options['online_actions']=((b'fix\r',repair_namespace),)
         files={'PLWATCH.COM':observer.read_bytes()}
-        if name in ('program','ui-recovery'):
+        if name == 'program' or recovery_case:
             keymap=bytearray(540)
             for i in range(10):struct.pack_into('<H',keymap,i*54,3)
             command=b'D:\\CHILD.COM /OWNED'
@@ -229,11 +250,13 @@ def main():
             options['arguments']='@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY'
         if name=='ui-recovery':
             files['CLOSEFLT.COM']=close_fault.read_bytes();options['auxiliary']=('CLOSEFLT',)
-        if name in ('ui-short-retry', 'ui-write-error-retry'):
-            helper = 'SHORT' if name == 'ui-short-retry' else 'WRERR'
+        if name in ('ui-short-retry', 'ui-write-error-retry', *IO_CASES):
+            helper = {'ui-short-retry':'SHORT', 'ui-write-error-retry':'WRERR',
+                      'ui-commit-retry':'COMMIT', 'ui-rollback-truncate':'RBTRUNC',
+                      'ui-rollback-commit':'RBCOMMIT'}[name]
             files[helper+'.COM'] = (output/(helper+'.COM')).read_bytes()
             options['auxiliary'] = (helper,)
-        expected_exit = 12 if (calls and not disk) or name in ('fs-failure','ui-cancel','ui-unrepaired','ui-recovery') else 0
+        expected_exit = 12 if (calls and not disk) or recovery_case or name in ('fs-failure','ui-cancel','ui-unrepaired') else 0
         native = terminal.run(case, mode, 'p900 enter ' + keys, prm=bytes(settings),
             files=files, observer='PLWATCH', working_drive='d',
             expected=expected_exit, cpu='8086', **options)
@@ -247,20 +270,25 @@ def main():
             acks=struct.unpack_from('<H',final,720)[0] if controls else 0
             attempts, disk_status = struct.unpack_from('<2H', final, 716)
             samples=[captured[20+i*record_bytes:20+(i+1)*record_bytes] for i in range(header[2])]
-            if name=='ui-recovery':
+            if recovery_case:
                 meta=struct.unpack_from('<6H',final);life=final[12:50];queue=final[50:716]
-                fault=struct.unpack('<6H',(folder/'CLOSE.BIN').read_bytes())
                 start_count=struct.unpack_from('<H',queue,106)[0]
                 original_start=queue[114:114+start_count]
                 heading=b'\r\nNAME                                NUMBER    DATE    ONLINE  OFFLINE  ELAPSED'
                 checks=dict(final_kind=meta[0]==2,actual_recovery=meta[2]==8 and disk_status==8,
-                    real_close_then_error=fault[0]==0x4346 and fault[1:3]==(1,1) and not (fault[4]&1),
                     no_blind_retry=attempts==1 and acks==0,
-                    queue_recovery_preserved=struct.unpack_from('<9H',queue)==(0x514d,0,1,0,1,1,1,1,9),
+                    queue_recovery_preserved=struct.unpack_from('<9H',queue)==(0x514d,0,1,0,1,1,1,1,9 if name=='ui-recovery' else 7),
                     original_generation_preserved=struct.unpack_from('<3I',queue,18)==(1,0,0),
                     retained_END=struct.unpack_from('<I',life,2)[0]==1 and struct.unpack_from('<4H',life,6)==(1,1,0,8),
-                    partial_file_exact=(folder/'PCPLUS.FON').read_bytes()==heading+original_start,
+                    partial_file_exact=(folder/'PCPLUS.FON').read_bytes()==(
+                        heading+original_start if name=='ui-recovery' else seed+original_start[:7] if name=='ui-rollback-truncate' else seed),
                     uncertain_handle_blocks_child=not (folder/'HANDOFF.BIN').exists() and not (folder/'HANDARG.BIN').exists())
+                if name=='ui-recovery':
+                    fault=struct.unpack('<6H',(folder/'CLOSE.BIN').read_bytes())
+                    checks['real_close_then_error']=fault[0]==0x4346 and fault[1:3]==(1,1) and not (fault[4]&1)
+                else:
+                    fault=struct.unpack('<9H',(folder/'WRITE.BIN').read_bytes())
+                    checks['real_partial_write_then_failed_rollback']=fault[:4]==(0x5746,1,64,7) and not (fault[4]&1) and fault[5:]==(0xffff,1,1,int(name=='ui-rollback-commit'))
                 rows=[]
             elif name in ('fs-failure','ui-cancel','ui-unrepaired'):
                 checks, rows = inspect_record(final, calls, enabled, identity, number)
@@ -277,12 +305,12 @@ def main():
                     checks.update(existing_prefix_preserved=data.startswith(seed),
                         exact_physical_append=len(data)==len(seed or HEADING)+calls*81,
                         heading_not_duplicated=data.count(HEADING)==1)
-                if name in ('ui-short-retry', 'ui-write-error-retry'):
+                if name in ('ui-short-retry', 'ui-write-error-retry', 'ui-commit-retry'):
                     fault = struct.unpack('<9H', (folder/'WRITE.BIN').read_bytes())
                     before_ack = [r for r in samples if struct.unpack_from('<H', r, 720)[0] == 0
                                   and struct.unpack_from('<2H', r, 716) == (1, 9)]
-                    checks.update(real_partial_write=fault[0]==0x5746 and fault[1:4]==(1,64,7) and not (fault[4]&1),
-                        rollback_truncate_and_commit=fault[6:]==(3,1,3),
+                    checks.update(first_data_write_observed=fault[0]==0x5746 and fault[1:4]==(1,64,64 if name=='ui-commit-retry' else 7) and not (fault[4]&1),
+                        rollback_truncate_and_commit=fault[6:]==(3,1,4 if name=='ui-commit-retry' else 3),
                         rollback_verified_before_retry=native['checks'].get('owned_online_actions_run') is True,
                         original_timestamp_not_replaced=bool(before_ack) and all(r[26:38]==final[26:38] for r in before_ack),
                         retained_START_saved_exactly=bool(before_ack) and all(
@@ -326,7 +354,7 @@ def main():
             if retry_case or name=='ui-unrepaired':
                 checks['confirmed_ack_visible']=bool(ui_flags&4) and bool(ui_flags&8)
                 checks['ack_enqueued_no_disk_IO']=any(struct.unpack_from('<H',r,720)[0]==1 and struct.unpack_from('<H',r,716)[0]==1 for r in samples)
-            if name=='ui-recovery':checks['recovery_retry_refused']=bool(ui_flags&64) and not (ui_flags&4) and not (ui_flags&8)
+            if recovery_case:checks['recovery_retry_refused']=bool(ui_flags&64) and not (ui_flags&4) and not (ui_flags&8)
             if retry_case:checks['repaired_original_timestamp_saved']=all(r['valid'] for r in rows)
         if name == 'capacity':
             checks['capacity_refusal_visible'] = (b'Call log blocked' in screen) == (not disk)
@@ -337,6 +365,7 @@ def main():
     checks = dict(all_cases=bool(results) and all(r['passed'] for r in results), sources_unchanged=all(sha(ROOT / n) == d for n, d in sources.items()),
         binary_unchanged=sha(binary) == manifest['binary_sha256'])
     result = dict(passed=all(checks.values()), disk_scheduling=disk, checks=checks, cases=results, sources=sources,
+        existing_files_before_startup=bool(args.preexisting or args.io_failures), io_failure_matrix=args.io_failures,
         terminal_sha256=sha(binary), observer_defines=defines, artifacts=artifacts, original_inputs=[],
         scope=__doc__ + ' Stable passive observer snapshots at parent INT21/4C before deallocation; no synthesized terminal replies. The separate uncertain-close fixture performs a real DOS close then explicitly changes its returned error/CF, without patching product variables or executable bytes. '
         + ('The separate existing-file matrix includes real seven-byte writes, short-count/error returns, real rollback and confirmed retry; owned serial callbacks inspect the physical file before acknowledgement. ' if args.existing else '')
