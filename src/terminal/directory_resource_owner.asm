@@ -48,7 +48,11 @@ SEGMENT _DATA public class=DATA use16
 directory_resource_command: db '[DIRECTORY]',0
 global directory_resources_ready_notice,directory_resources_failed_notice
 %ifdef DIRECTORY_SCRIPT_RESOURCES
+%ifdef DIRECTORY_RESOURCE_ADOPTION
+directory_resources_ready_notice: db 13,10,'Selection/resources ready. Press any key.',0
+%else
 directory_resources_ready_notice: db 13,10,'Resources checked. Scripts are not executed. Press any key.',0
+%endif
 directory_resources_failed_notice: db 13,10,'Could not prepare resources/script. Settings unchanged. Press any key.',0
 %else
 %ifdef DIRECTORY_TRANSLATION_RESOURCES

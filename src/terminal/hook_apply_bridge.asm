@@ -81,6 +81,17 @@ _hook_apply_uart_check:
  jne .bad
  cmp word [terminal_program_active],1
  jne .bad
+%ifdef DIRECTORY_RESOURCE_ADOPTION
+ extern _terminal_directory_adopt_requested
+ cmp word [terminal_program_kind],8
+ jne .not_directory_adopt
+ cmp word [_terminal_directory_adopt_requested],1
+ jne .bad
+ cmp word [terminal_program_status],2
+ jne .bad
+ jmp .owner_ready
+.not_directory_adopt:
+%endif
  cmp word [terminal_program_kind],5
 %ifdef TERMINAL_DIRECTORY_RETIREMENT
  je .hook_owner

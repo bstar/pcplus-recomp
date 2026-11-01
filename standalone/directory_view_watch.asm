@@ -45,7 +45,11 @@ handler:
  jne .done
 %ifdef DIRECTORY_PREVIEW
 %ifdef DIRECTORY_RESOURCE_OWNER
+%ifdef DIRECTORY_ADOPT
+ cmp word [es:3842],0x1f41 ; A apply footer in the adoption variant.
+%else
  cmp word [es:3842],0x1f52 ; R resource-check footer in this variant.
+%endif
 %else
  cmp word [es:3842],0x1f50 ; Preview footer written after proposed fields.
 %endif

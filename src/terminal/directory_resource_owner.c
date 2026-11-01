@@ -39,12 +39,19 @@ typedef struct preview_session {
 #endif
 directory_resource_owner_snapshot terminal_directory_resources;
 static unsigned cookie=0xd840;
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+unsigned terminal_directory_adopt_requested=0xd850;
+#endif
 typedef char dro_word_abi[sizeof(unsigned)==2?1:-1];
 typedef char dro_snapshot_abi[sizeof(directory_resource_owner_snapshot)==14?1:-1];
 typedef char dro_actual_abi[sizeof(actual_session)==694?1:-1];
 typedef char dro_preview_abi[sizeof(preview_session)==698?1:-1];
 static void initialize(void)
-{if(cookie==0xd840){memset(&terminal_directory_resources,0,sizeof(terminal_directory_resources));cookie=0xd841;}}
+{if(cookie==0xd840){memset(&terminal_directory_resources,0,sizeof(terminal_directory_resources));cookie=0xd841;
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+ terminal_directory_adopt_requested=0;
+#endif
+ }}
 static unsigned seal(const unsigned char __far *bytes,unsigned count)
 {unsigned value=0xa953;while(count--){value=(value<<1)|(value>>15);value^=*bytes++;}return value;}
 /* Keep the1264-byte accepted image off the resource-reading call stack. */
@@ -101,6 +108,14 @@ unsigned __far __cdecl terminal_directory_compile_queue(const directory_selectio
  return status;
 }
 #endif
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+unsigned __far __cdecl terminal_directory_adopt_queue(const directory_selection_proposal __far *proposal)
+{
+ unsigned status=terminal_directory_compile_queue(proposal);
+ if(!status)terminal_directory_adopt_requested=1;
+ return status;
+}
+#endif
 unsigned __far __cdecl terminal_directory_resources_run(void)
 {
  directory_resource_request request;
@@ -147,6 +162,13 @@ unsigned __far __cdecl terminal_directory_resources_run(void)
   status=accepted(&baseline);if(status){r->status=DRO_BASELINE;r->detail=status;goto failed;}
   if(baseline!=r->baseline_seal || seal((const unsigned char __far *)PROPOSAL,sizeof(*PROPOSAL))!=r->proposal_seal){r->status=DRO_CHANGED;goto failed;}
   status=current();if(status){r->status=status;goto failed;}
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+  if(terminal_directory_adopt_requested==1){
+   status=terminal_directory_adopt(PROPOSAL,bundle);
+   if(status){r->status=DRO_RESOURCES;r->detail=status;goto failed;}
+   terminal_directory_adopt_requested=2;
+  }
+#endif
   for(i=0;i<sizeof(*bundle);++i)((unsigned char __far *)BUNDLE)[i]=((const unsigned char __far *)bundle)[i];
  }
 #endif
@@ -157,6 +179,9 @@ failed:
 void __far __cdecl terminal_directory_resources_release(void)
 {
  if(cookie!=0xd841)return;
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+ terminal_directory_adopt_requested=0;
+#endif
  if(terminal_directory_resources.state==DRO_QUEUED || terminal_directory_resources.state==DRO_READY ||
   terminal_directory_resources.state==DRO_FAILED)terminal_directory_resources.state=DRO_IDLE;
 }

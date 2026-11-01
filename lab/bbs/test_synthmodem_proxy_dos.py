@@ -70,10 +70,11 @@ def main():
             assert keys.count(marker)==1
             resource_owner=bool(json.loads((binary.parent/'manifest.json').read_text()).get('experimental_directory_resource_owner'))
             compile_owner=bool(json.loads((binary.parent/'manifest.json').read_text()).get('experimental_directory_compile'))
-            keys=keys.replace(marker,marker+('a-d p600 enter p3500 enter p1800 '+(('c p700 ' if compile_owner else 'r p700 ') if resource_owner else '')+'escape p500 end p3500 escape p500 ' if args.directory_preview_overlay else 'a-d p600 enter p3500 end p3500 escape p500 '))
+            adopt_owner=bool(json.loads((binary.parent/'manifest.json').read_text()).get('experimental_directory_adopt'))
+            keys=keys.replace(marker,marker+('a-d p600 enter p3500 enter p1800 '+(('a p700 ' if adopt_owner else 'c p700 ' if compile_owner else 'r p700 ') if resource_owner else '')+'escape p500 end p3500 escape p500 ' if args.directory_preview_overlay else 'a-d p600 enter p3500 end p3500 escape p500 '))
             observer=base/(args.label+'-observer.COM')
             assert not observer.exists()
-            subprocess.run(['nasm','-fbin',*(['-DDIRECTORY_PREVIEW']if args.directory_preview_overlay else[]),*(['-DDIRECTORY_RESOURCE_OWNER']if resource_owner and args.directory_preview_overlay else[]),str(ROOT/'standalone/directory_view_watch.asm'),'-o',str(observer)],check=True)
+            subprocess.run(['nasm','-fbin',*(['-DDIRECTORY_ADOPT']if adopt_owner else[]),*(['-DDIRECTORY_PREVIEW']if args.directory_preview_overlay else[]),*(['-DDIRECTORY_RESOURCE_OWNER']if resource_owner and args.directory_preview_overlay else[]),str(ROOT/'standalone/directory_view_watch.asm'),'-o',str(observer)],check=True)
         exit_wait='2'
         if args.directory_preview_overlay and resource_owner:
             # Preserve the recipe's3-second final pause and one ordinary Alt-X,
@@ -130,7 +131,8 @@ def main():
                     if compile_owner:
                         assert wire.count(b'KEYTEST\r')==1
                         checks['online_compile_request_refused']=checks['online_resource_check_refused']
-                        checks['resource_check_key_stayed_local']=b'c' not in wire.split(b'KEYTEST\r',1)[1]
+                        checks['resource_check_key_stayed_local']=(b'a' if adopt_owner else b'c') not in wire.split(b'KEYTEST\r',1)[1]
+                        if adopt_owner:checks['online_selection_adoption_refused']=checks['online_resource_check_refused']
                     else:checks['resource_check_key_stayed_local']=b'r' not in wire
             observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'DIRVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
         result = dict(passed=all(checks.values()), checks=checks,

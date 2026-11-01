@@ -6,7 +6,7 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None):
+def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False):
  assert cpu in ('8086','286','386','486')
  assert irq is None or irq in (3,4,5,7)
  assert working_drive in ("c","d")
@@ -36,6 +36,14 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
  (out/'sampler.asm').write_text(sampler)
  subprocess.run(['nasm','-f','bin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
  server=socket.socket();server.bind(('127.0.0.1',0));server.listen(1);server.settimeout(5)
+ if emulated_modem:
+  server.settimeout(timeout)
+  assert directory is not None and directory_expected is None
+  target=('127.0.0.1:'+str(server.getsockname()[1])).encode()
+  staged=bytearray(directory);at=250+(directory_entry-1)*114+25
+  assert len(target)<=20;staged[at:at+21]=target.ljust(21,b'\0');directory=bytes(staged)
+  (out/'TEST.DIR').write_bytes(directory)
+
  wire=bytearray();commands=[];errors=[];stop=threading.Event();checks={};attempts=0;triggered=0;trigger_chunks_expected=0;trigger_chunks_sent=0
  def peer():
   nonlocal attempts,triggered,trigger_chunks_expected,trigger_chunks_sent
@@ -43,6 +51,9 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
    conn,_=server.accept()
    with conn:
     conn.settimeout(.05);line=bytearray();online=False;probe=bytearray();next_probe=0;online_at=0;update_at=0;scheduled=[]
+    if emulated_modem:
+     checks['emulated_modem_connected_to_selected_endpoint']=True;online=True;online_at=time.monotonic()
+     conn.sendall(banner if banner is not None else b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c')
     while not stop.is_set():
      while scheduled and time.monotonic()>=scheduled[0][0]:
       _,chunk=scheduled.pop(0);conn.sendall(chunk);trigger_chunks_sent+=1
@@ -52,7 +63,9 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
       conn.sendall(b'\x1b[5n');next_probe=time.monotonic()+.25
      try:block=conn.recv(4096)
      except socket.timeout:continue
-     if not block:break
+     if not block:
+      if emulated_modem:checks['emulated_modem_disconnected_peer']=True
+      break
      wire.extend(block)
      if mode=='direct' and not online:
       probe.extend(block)
@@ -97,6 +110,7 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
   except (OSError,AssertionError) as error:errors.append(str(error))
  thread=threading.Thread(target=peer,daemon=True);thread.start()
  serial='\n'.join(f'serial{i}='+ (f'nullmodem server:127.0.0.1 port:{server.getsockname()[1]} transparent:1 rxdelay:200 txdelay:1' if i==com else 'disabled') for i in range(1,5))
+ if emulated_modem:serial='\n'.join(f'serial{i}='+('modem listenport:0' if i==com else 'disabled') for i in range(1,5))
  arguments=arguments or '@D:\\TEST.PRM /D:CaseTest:23'
  branch=(f'if errorlevel {expected+1} goto failed\nif errorlevel {expected} goto expected\ngoto failed' if expected else 'if errorlevel 1 goto failed\ngoto expected')
  cfg=f'''[sdl]
@@ -133,15 +147,20 @@ exit
 '''
  if irq is not None:
   cfg=cfg.replace('transparent:1 rxdelay:200 txdelay:1','transparent:1 irq:'+str(irq)+' rxdelay:200 txdelay:1')
+  if emulated_modem:cfg=cfg.replace('modem listenport:0','modem listenport:0 irq:'+str(irq))
   assert cfg.count('irq:')==1
  # Retain the literal default for the existing source-inspecting adapters.
  if cpu!='386':cfg=cfg.replace('cputype=386','cputype='+cpu)
  configured_cpu=next(line.split('=',1)[1] for line in cfg.splitlines() if line.startswith('cputype='))
  (out/'dosbox.conf').write_text(cfg)
  digest=hashlib.sha256(BINARY.read_bytes()).hexdigest();started=time.monotonic()
- with (out/'dosbox.log').open('w') as log:
-  result=subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')],cwd=out,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log,timeout=20)
- stop.set();server.close();thread.join(1)
+ try:
+  with (out/'dosbox.log').open('w') as log:
+   result=subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')],cwd=out,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log,timeout=timeout)
+ finally:
+  stop.set();server.close();thread.join(1)
+  (out/'serial.bin').write_bytes(wire)
+  (out/'peer-state.json').write_text(json.dumps(dict(commands=commands,checks=checks,errors=errors,emulated_modem=emulated_modem),indent=2)+'\n')
  before=(out/'BEFORE.BIN').read_bytes() if (out/'BEFORE.BIN').exists() else b''
  after=(out/'AFTER.BIN').read_bytes() if (out/'AFTER.BIN').exists() else b''
  screen=(out/'SCREEN.BIN').read_bytes() if (out/'SCREEN.BIN').exists() else b''
@@ -152,19 +171,19 @@ exit
  if recovery_conflict:checks['recovery_file_preserved']=(out/'PCPBAK.$$$').read_bytes()==b'SYNTHETIC RECOVERY CONFLICT'
  for filename,data in (files or {}).items():checks['fixture_unchanged_'+filename]=(out/filename).read_bytes()==data
  if mode in ('direct','reject','cancel'):checks['no_modem_commands']=not commands and (not wire if mode!='direct' else b'ATD' not in wire and b'ATZ' not in wire)
- else:checks['actual_init_and_dial']=commands[:2]==['ATZ',('ATD'+target.decode('ascii'))]
+ else:checks['actual_init_and_dial']=bool(checks.get('emulated_modem_connected_to_selected_endpoint')) if emulated_modem else commands[:2]==['ATZ',('ATD'+target.decode('ascii'))]
  if mode in ('success','hangup','redial','direct'):
   checks['actual_DOS_CPR']=b'\x1b[1;16R' in wire
   checks['actual_DOS_DA']=(b'\x1b[?62;2c' if profile==4 else b'\x1b[?1;2c') in wire
   checks['immediate_banner_not_dropped']=len(screen)==4000 and screen[:30:2]==b'FIRST BYTE SAFE'
  if mode=='redial':checks['second_configured_attempt']=commands==['ATZ','ATDCaseTest:23','ATZ','ATDCaseTest:23']
- if mode=='hangup':checks['configured_hangup_reached_wire']=bool(checks.get('configured_hangup_reached_wire'))
+ if mode=='hangup':checks['configured_hangup_reached_wire']=bool(checks.get('emulated_modem_disconnected_peer' if emulated_modem else 'configured_hangup_reached_wire'))
  if mode in ('busy','silence'):checks['configured_abort_reached_wire']=bool(checks.get('configured_abort_reached_wire'))
  (out/'serial.bin').write_bytes(wire)
  (out/'screen.txt').write_text('\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25))+'\n')
  if online_triggers:checks['online_triggers_sent']=triggered==len(online_triggers)
  if trigger_chunks_expected:checks['online_trigger_chunks_sent']=trigger_chunks_sent==trigger_chunks_expected
- proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'environment':environment or {},'cpu':configured_cpu,'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
+ proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'environment':environment or {},'cpu':configured_cpu,'emulated_modem':emulated_modem,'target':target.decode(),'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}
  if irq is not None:proof['serial_irq']=irq
  (out/'result.json').write_text(json.dumps(proof,indent=2)+'\n');print(name,'PASS' if proof['passed'] else json.dumps(proof),flush=True);return proof
 def main():

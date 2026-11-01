@@ -1,5 +1,8 @@
 #include "directory_preview.h"
 #include "session_baseline.h"
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+#include "directory_identity.h"
+#endif
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
 #include "directory_resource_owner.h"
 #ifdef DIRECTORY_TRANSLATION_RESOURCES
@@ -16,6 +19,9 @@ unsigned __far __cdecl directory_preview_stage(const directory_dos_page_data __f
  unsigned entry,const char *path,directory_selection_proposal __far *proposal)
 {
  prm_dos_image baseline;
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+ char canonical[64];
+#endif
  live_configuration_plan active;
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
  transfer_import_settings current_transfer;
@@ -31,6 +37,10 @@ unsigned __far __cdecl directory_preview_stage(const directory_dos_page_data __f
 #endif
  if(status)return 0x2000U|status;
  result.status=result.source_status=result.detail=0;
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+ status=directory_identity_path(path,canonical);if(status)return 0x4000U|DRO_CONTEXT;
+ path=canonical;
+#endif
  status=directory_selection_stage(&baseline,page,entry,terminal_directory_codes,
   terminal_option_mask&15,&active,terminal_config_path,path,proposal,&result);
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER

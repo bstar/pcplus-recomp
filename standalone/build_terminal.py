@@ -29,6 +29,7 @@ parser.add_argument('--directory-view',action='store_true',help='Serviced read-o
 parser.add_argument('--directory-preview',action='store_true',help='Validate and preview an Alt-D selection; implies --directory-view; adoption remains pending')
 parser.add_argument('--directory-storage',action='store_true',help='Shared directory persistence claims and EXEC recovery gate; implies --directory-preview')
 parser.add_argument('--directory-resource-cli',action='store_true',help='Bind original CLI keyboard resource identities before directory startup; implies --directory-storage')
+parser.add_argument('--directory-adopt',action='store_true',help='Preview A applies a staged selection through the foreground PROGRAM owner; implies --directory-compile')
 parser.add_argument('--directory-compile',action='store_true',help='Explicit preview C compiles ASP without executing the script; implies --directory-scripts')
 parser.add_argument('--directory-scripts',action='store_true',help='Resolve and fingerprint directory ASX/ASP resources; implies --directory-translation')
 parser.add_argument('--directory-translation',action='store_true',help='Stage translation with KEY/KBD before selection adoption; implies --directory-retirement')
@@ -41,6 +42,9 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.directory_adopt:
+ assert args.hook_apply
+ args.directory_compile=True
 if args.directory_compile:args.directory_scripts=True
 if args.directory_scripts:args.directory_translation=True
 if args.directory_translation:args.directory_retirement=True
@@ -129,6 +133,7 @@ if args.directory_retirement:out_name='terminal-directory-retirement-'+hashlib.s
 if args.directory_translation:out_name='terminal-directory-translation-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_scripts:out_name='terminal-directory-scripts-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_compile:out_name='terminal-directory-compile-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
+if args.directory_adopt:out_name='terminal-directory-adopt-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
 if args.native_reset_transaction:out_name+='-transaction'
@@ -244,6 +249,7 @@ for index,source in enumerate(sources):
  if args.directory_translation:options+=['-DDIRECTORY_TRANSLATION_RESOURCES']
  if args.directory_scripts:options+=['-DDIRECTORY_SCRIPT_RESOURCES']
  if args.directory_compile:options+=['-DDIRECTORY_SCRIPT_COMPILE']
+ if args.directory_adopt:options+=['-DDIRECTORY_RESOURCE_ADOPTION']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
@@ -335,6 +341,7 @@ if args.hook_modem:hook_sources.add(ROOT/'src/config/hook_modem.c')
 if args.hook_input:hook_sources.add(ROOT/'src/config/hook_input.c')
 if args.hook_apply:hook_sources.update({ROOT/'src/config/hook_apply.c',ROOT/'src/terminal/hook_launch.c'})
 if args.hook_lookup:hook_sources.add(ROOT/'src/process/hook_lookup.c')
+if args.directory_adopt:hook_sources.add(ROOT/'src/terminal/directory_adopt.c')
 if args.hook_probe:hook_sources.add(ROOT/'standalone/hook_transaction_probe.c')
 if args.input_probe:hook_sources.add(ROOT/'standalone/hook_input_probe.c')
 c_sources+=sorted(hook_sources)
@@ -411,6 +418,7 @@ for source in c_sources:
   options+=['-os']
  if (args.directory_resource_owner and source.name in ('directory_resources.c','directory_resource_owner.c')) or (args.directory_retirement and source.name=='directory_retirement.c') or (args.directory_scripts and source.name=='directory_script.c') or (args.directory_compile and source.name=='directory_compile.c'):
   options+=['-os']
+ if args.directory_adopt and source.name in ('live_setup_owner.c','xlt_live.c'):options+=['-os']
  if source==ROOT/'src/redisplay/command_reference.c':options=['-nt=REFERENCE_CODE','-nc=FARCODE']
  if args.original_reference and source==ROOT/'src/redisplay/command_menu.c':
   # The foreground owner remains in CONFIG_CODE. Its explicitly far cdecl
@@ -438,6 +446,7 @@ for source in c_sources:
  if args.directory_translation:options+=['-dDIRECTORY_TRANSLATION_RESOURCES']
  if args.directory_scripts:options+=['-dDIRECTORY_SCRIPT_RESOURCES']
  if args.directory_compile:options+=['-dDIRECTORY_SCRIPT_COMPILE']
+ if args.directory_adopt:options+=['-dDIRECTORY_RESOURCE_ADOPTION']
  if args.directory_resource_owner and source.name in ('directory_resources.c','keymap_dos.c','key_actions_dos.c'):options+=['-dKEY_RESOURCE_PRIVATE_READS']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
@@ -548,18 +557,20 @@ manifest['experimental_directory_retirement']=args.directory_retirement
 manifest['experimental_directory_translation']=args.directory_translation
 manifest['experimental_directory_scripts']=args.directory_scripts
 manifest['experimental_directory_compile']=args.directory_compile
+manifest['experimental_directory_adopt']=args.directory_adopt
+if args.directory_adopt:manifest['limitations'].insert(0,'Preview A applies the staged selection/resources through the quiesced PROGRAM owner; the Connection menu dials the accepted target. Canonical automatic scripts are checked before ASPECT execution. Full application, exhaustive stack/port-race, complete rendering and physical/card acceptance remain open.')
 if args.directory_compile:manifest['limitations'].append('Preview C stages resources privately and compiles a SOURCE with direct ASPCOMP under canonical source/output/helper/scratch claims, retaining independent far recovery state. No script execution, selection adoption or dialing.')
 if args.directory_scripts:manifest['limitations'].append('Directory script preflight resolves ASX before ASP and streams a32-bit length/CRC32 fingerprint. Header validation is not full bytecode validation. Source candidates still require compilation before adoption; no script is executed or applied by preflight.')
 if args.directory_translation:manifest['limitations'].append('Preview R stages XLT with KEY/KBD as one far bundle, retaining original CLI /X identity. No active translation, selected entry, script or dialing is published.')
-if args.directory_retirement:manifest['limitations'].append('Offline pending accounting queues one PROGRAM kind7 attempt per connected event, with no child or acknowledgement prompt. Installed statistics reconcile the frozen logical/setup contexts. Refusals preserve pending counts for shutdown; file recovery is never retried. Selected entry adoption and dialing remain pending.')
-if args.directory_resource_owner:manifest['limitations'].append('Preview R checks KEY/KBD resources through PROGRAM kind6 under UART quiescence. Pending/active guards pin the proposal/bundle until restore. This preflight does not adopt settings/target/accounting or dial; translation/script staging and full live selection remain pending.')
-if args.directory_resource_cli:manifest['limitations'].append('Original CLI KEY/KBD identities are bound before directory startup; staged live resources, lease/UART adoption and dialing remain pending. This experimental build retains the LoC.6 splash version.')
-if args.directory_storage:
+if args.directory_retirement and not args.directory_adopt:manifest['limitations'].append('Offline pending accounting queues one PROGRAM kind7 attempt per connected event, with no child or acknowledgement prompt. Installed statistics reconcile the frozen logical/setup contexts. Refusals preserve pending counts for shutdown; file recovery is never retried. Selected entry adoption and dialing remain pending.')
+if args.directory_resource_owner and not args.directory_adopt:manifest['limitations'].append('Preview R checks KEY/KBD resources through PROGRAM kind6 under UART quiescence. Pending/active guards pin the proposal/bundle until restore. This preflight does not adopt settings/target/accounting or dial; translation/script staging and full live selection remain pending.')
+if args.directory_resource_cli and not args.directory_adopt:manifest['limitations'].append('Original CLI KEY/KBD identities are bound before directory startup; staged live resources, lease/UART adoption and dialing remain pending. This experimental build retains the LoC.6 splash version.')
+if args.directory_storage and not args.directory_adopt:
  manifest['limitations'].append('LoC.6: record/accounting saves use a banked canonical three-name shared file claim. Close/rollback/recovery-file/release uncertainty holds the owner and the shared DOS EXEC boundary refuses child launch. A refused retry returns no stale installed flag. No force recovery/reset, live selection adoption or new UART handoff is implemented.')
-if args.directory_preview:
+if args.directory_preview and not args.directory_adopt:
  manifest['limitations'].append('LoC.5: Enter in a published Alt-D page stages and previews a selection from the accepted in-memory PRM and actual session capture. Pure preparation runs on a foreground idle turn. The existing empty command snapshot lends1190 more far bytes after its2788-byte page lease. No active target/settings/resource/accounting changes occur; validated adoption and dialing remain pending. Paths retain spellings, not canonical claims; preview success does not prove resource availability or physical compatibility.')
 manifest['directory_filesystem_import_adapters']=directory_fs_adapters
-if args.directory_view:
+if args.directory_view and not args.directory_adopt:
  manifest['limitations'].append('LoC.4: Alt-D opens a serviced read-only directory view. Explicit path, bounded incremental IO and separate far staging publish pages only after complete read/probe/close. Arrows/page/Home/End browse; F2 changes file and F5 reloads. Current target/configuration/connection and deferred accounting identity stay unchanged. This is the view component; live dialing/profile/key/script/translation/accounting adoption remains unfinished. Borrowed startup scratch and empty command snapshot are mutually exclusive with their other owners. Driver call-time and physical serial integrity remain unverified.')
 if args.original_reference:
  manifest['limitations']=[s.replace('Alt-F8/menu launches sibling XLTEDIT','Alt-W/browser launches sibling XLTEDIT') for s in manifest['limitations']]

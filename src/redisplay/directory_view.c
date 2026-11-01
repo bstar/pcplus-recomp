@@ -79,7 +79,11 @@ TEXT(on_label,"ON");
 TEXT(off_label,"OFF");
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
 #ifdef DIRECTORY_SCRIPT_COMPILE
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+TEXT(preview_keys,"A: apply selection  R: check  C: compile script  Esc: directory");
+#else
 TEXT(preview_keys,"R: check  C: compile script  Esc: directory. Settings unchanged.");
+#endif
 #else
 #ifdef DIRECTORY_SCRIPT_RESOURCES
 TEXT(preview_keys,"R: check resources/script  Esc: directory. Settings unchanged.");
@@ -266,6 +270,13 @@ unsigned __far __cdecl directory_view_event(word event,word key,word __far *fram
 #ifdef TERMINAL_DIRECTORY_PREVIEW
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
 #ifdef DIRECTORY_SCRIPT_COMPILE
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+ if(phase==PREVIEW && (c=='a' || c=='A')){
+  resource_notice=terminal_directory_adopt_queue(PROPOSAL);
+  if(!resource_notice){active=0;return 0;}
+  draw();return 1;
+ }
+#endif
  if(phase==PREVIEW && (c=='c' || c=='C')){
   resource_notice=terminal_directory_compile_queue(PROPOSAL);
   if(!resource_notice){active=0;return 0;}

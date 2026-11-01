@@ -26,10 +26,16 @@ ORG 100h
 %ifndef COMPILER_STATE_BYTES
 %define COMPILER_STATE_BYTES 0
 %endif
+%ifndef PREVIEW_KEY
+%define PREVIEW_KEY 'R'
+%endif
 %define CAPTURE_SIZE (14+2*FIELD_BYTES+1190+2*BUNDLE_BYTES+14+RESOURCE_BYTES+4000+14+COMPILER_STATE_BYTES)
 %if COMPILER_STATE_BYTES
 %undef CAPTURE_SIZE
 %define CAPTURE_SIZE (14+2*FIELD_BYTES+1190+2*BUNDLE_BYTES+14+RESOURCE_BYTES+4000+14+258)
+%endif
+%ifdef ADOPT_SCRIPT_RELATIVE
+%assign CAPTURE_SIZE CAPTURE_SIZE+FIELD_BYTES+82
 %endif
 jmp start
 old_tick: dw 0,0
@@ -51,6 +57,11 @@ released_owner: times 14 db 0
 %if COMPILER_STATE_BYTES
 compiler_state: times 256 db 0
 compiler_execs: dw 0
+%endif
+%ifdef ADOPT_SCRIPT_RELATIVE
+final_fields: times FIELD_BYTES db 0
+script_binding: times 80 db 0
+minimum_sp: dw 65535
 %endif
 parent_irq: dw 0,0
 parent_ier: db 0
@@ -225,6 +236,16 @@ tick_handler:
  push ds
  push es
  inc word [cs:sample+4]
+%ifdef ADOPT_SCRIPT_RELATIVE
+ mov ax,ss
+ cmp ax,[cs:sample+12]
+ jne .not_parent_stack
+ mov ax,sp
+ cmp ax,[cs:minimum_sp]
+ jae .not_parent_stack
+ mov [cs:minimum_sp],ax
+.not_parent_stack:
+%endif
  mov ax,[cs:sample+12]
  or ax,ax
  jz .done
@@ -239,7 +260,7 @@ tick_handler:
  mov es,ax
  cmp word [es:484],1f53h ; SELECTED ENTRY, complete preview footer starts R.
  jne .done
- cmp word [es:3842],1f52h
+ cmp word [es:3842],1f00h+PREVIEW_KEY
  jne .done
  mov dx,3e9h
  in al,dx
@@ -389,6 +410,19 @@ tick_handler:
  mov di,released_owner
  mov cx,14
  rep movsb
+%ifdef ADOPT_SCRIPT_RELATIVE
+ mov di,final_fields
+ call fields
+ push ds
+ mov ax,ds
+ add ax,ADOPT_SCRIPT_RELATIVE
+ mov ds,ax
+ mov si,ADOPT_SCRIPT_OFFSET
+ mov di,script_binding
+ mov cx,80
+ rep movsb
+ pop ds
+%endif
  or word [cs:sample+2],4
 .done:
  pop es

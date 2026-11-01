@@ -586,6 +586,14 @@ terminal_program_poll:
  xor bh,bh
  mov ah,2
  int 0x10
+%ifdef DIRECTORY_RESOURCE_ADOPTION
+ extern _terminal_directory_adopt_requested
+ cmp word [_terminal_directory_adopt_requested],2
+ jne .directory_profile_done
+ call terminal_setup_profile_finish
+ jmp .restore_port
+.directory_profile_done:
+%endif
 %ifdef TERMINAL_HOOK_APPLY
  cmp word [terminal_program_kind],5
  jne .ordinary_profile

@@ -50,6 +50,8 @@ unsigned __cdecl xlt_live_editor(unsigned psp,char *executable,char *tail);
  * Failure preserves both the active destination and all internal bindings. No IO,
  * mode/enabled/RX-mask mutation, authentication or external-writer exclusion.
  */
+/* Same validation, without any publication. */
+unsigned __cdecl xlt_live_resource_check(unsigned mode,const char *,const unsigned char *,unsigned char *);
 unsigned __cdecl xlt_live_resource_adopt(unsigned mode,const char *canonical_path,
  const unsigned char *selected_table,unsigned char *active_table);
 #endif

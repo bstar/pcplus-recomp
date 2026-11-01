@@ -66,7 +66,8 @@ def main():
                         *(['--directory-retirement']if manifest.get('experimental_directory_retirement')else[]),
                         *(['--directory-translation']if manifest.get('experimental_directory_translation')else[]),
                         *(['--directory-scripts']if manifest.get('experimental_directory_scripts')else[]),
-                        *(['--directory-compile']if manifest.get('experimental_directory_compile')else[])], cwd=fresh, check=True,
+                        *(['--directory-compile']if manifest.get('experimental_directory_compile')else[]),
+                        *(['--directory-adopt']if manifest.get('experimental_directory_adopt')else[])], cwd=fresh, check=True,
                        stdout=log, stderr=log, timeout=300,env=environment)
     rebuilt = json.loads((fresh / 'build/package/manifest.json').read_text())
     assert rebuilt['files'] == manifest['files']

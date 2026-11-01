@@ -20,13 +20,14 @@ NAMES=['valid-directory-pair-profile6','invalid-KBD-no-publication','invalid-KEY
  'actual-transfer-changed-after-queue-before-resource-read','actual-DTE-changed-after-queue-before-resource-read']
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--case',action='append',help='Run only named workflows');args=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--target-profile',type=int,choices=[4,6],default=6);p.add_argument('--adopt',action='store_true',help='Exercise preview A and exact applied state');p.add_argument('--case',action='append',help='Run only named workflows');args=p.parse_args()
  binary=args.terminal.resolve();manifest=json.loads((binary.parent/'manifest.json').read_text())
  assert manifest['experimental_directory_resource_owner'] and sha(binary)==manifest['binary_sha256']
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
  translation=bool(manifest.get('experimental_directory_translation'));scripts=bool(manifest.get('experimental_directory_scripts'));compiling=bool(manifest.get('experimental_directory_compile'))
  fields=FIELDS+([('terminal_translation_enabled',2),('terminal_translation_mode',2),('terminal_translation_path',64),('_directory_resource_cli',202)] if translation else [])
  if scripts:fields += [('terminal_sink_398a_enabled',2),('_capture_file_result',96)]
+ if args.adopt:fields += [('csi_terminal_id',2),('terminal_setup_profile_ready',2),('terminal_setup_profile_status',2),('terminal_translation_mode',2),('terminal_translation_enabled',2),('uart_rx_mask',2)]
  names=NAMES+(['XLT-current-default','XLT-PCPLUS-default','XLT-original-CLI-overrides-mode2','XLT-missing-required','XLT-truncated','XLT-suffixed','XLT-invalid-current-no-fallback','XLT-directory-no-fallback','XLT-mode2-no-read','XLT-mode0-no-read'] if translation else [])
  if scripts:names+=['script-current-ASX','script-environment-ASX-before-current-ASP','script-current-ASP-needs-compiler','script-environment-ASP-needs-compiler','script-bad-header-no-fallback','script-over64KiB','script-missing','script-qualified','script-empty-ASX','script-empty-ASP-needs-compiler','script-blank','script-directory-no-fallback','script-capture-preserved','script-capture-conflict']
  if compiling:names+=['compile-current-ASP','compile-environment-ASP','compile-syntax-error','compile-empty-source','compile-already-ASX','compile-no-script','compile-missing-helper','compile-capture-policy','compile-long-source-path']
@@ -35,6 +36,8 @@ def main():
  out=args.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
  syms={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',(binary.parent/'terminal.map').read_text(),re.M|re.I)}
  ds=syms['terminal_stack_top'][0];field_bytes=sum(n for _,n in fields)
+ if args.adopt:assert manifest.get('experimental_directory_adopt')
+
  assert all(syms[n][0]==ds for n,_ in fields)
  definitions={'BUNDLE_BYTES':bundle_bytes,'RESOURCE_BYTES':resource_bytes,
  'TRANSFER':syms['_terminal_transfer_preferences'][1],'ACTUAL_BAUD':syms['terminal_baud_low'][1],
@@ -44,6 +47,8 @@ def main():
  'REDISPLAY_ACTIVE':syms['_redisplay_active'][1],'COMMAND_ACTIVE':syms['_command_menu_active'][1],
  'CONNECTION':syms['connection_state'][1],'FIELD_BYTES':field_bytes,'FIELD_COUNT':len(fields),
  'FROZEN_RELATIVE':syms['redisplay_snapshot'][0]-ds,'FROZEN_OFFSET':syms['redisplay_snapshot'][1]}
+ if manifest.get('experimental_directory_adopt'):definitions['PREVIEW_KEY']=ord('A')
+ if args.adopt:definitions.update(RESOURCE_KIND=8,ADOPT_SCRIPT_RELATIVE=syms['directory_adopt_script_storage'][0]-ds,ADOPT_SCRIPT_OFFSET=syms['directory_adopt_script_storage'][1])
  (out/'owner-watch.inc').write_text(''.join(f'%define {n} {v}\n' for n,v in definitions.items()))
  (out/'owner-fields.inc').write_text(''.join(f'dw {syms[n][1]},{size}\n' for n,size in fields))
  subprocess.run(['nasm','-fbin','-I'+str(out)+'/',str(ROOT/'standalone/directory_resource_owner_watch.asm'),'-o',str(out/'WATCH.COM')],check=True)
@@ -75,6 +80,7 @@ def main():
   data=bytearray(directory());data[250+0x56:250+0x68]=bytes(18)
   data[250+0x56:250+0x5c]=b'BOARD\0';data[250+0x5f:250+0x65]=b'BOARD\0'
   if scripts:data[250+0x34:250+0x3d]=bytes(9)
+  if args.adopt:data[250+0x49]=args.target_profile
   selected_script=None
   xlt_mode=2 if mode in (11,17) else 1 if 9<=mode<=16 else 0
   struct.pack_into('<H',settings,0x1e0,xlt_mode)
@@ -130,7 +136,7 @@ def main():
   if mode in (31,32,40):child_keys+='a-f1 p500 '+('G O . A S X' if mode==32 else 'C A P . L O G')+' enter p700 '
   entry_keys='a-z p400 a-d' if mode==4 else '` p400 tab p300 l' if mode==5 else 'a-d'
   resource_wait='p7500' if mode==24 or compile_case else 'p1800'
-  resource_key='c' if compile_case else 'r'
+  resource_key='a' if args.adopt else 'c' if compile_case else 'r'
   pcplus='C:'+chr(92)+str(Path(script_path).parent).replace('/',chr(92)) if mode==41 else 'C:'+chr(92)+'ENV' if mode in (10,15,16,20,22,34) else ''
   config=f'''[sdl]
 output=surface
@@ -177,7 +183,7 @@ exit
   assert run.returncode==0 and (case/'PASS.TXT').exists() and not (case/'FAIL.TXT').exists(),name
   assert (case/'BEFORE.BIN').read_bytes()==(case/'AFTER.BIN').read_bytes() and len((case/'BEFORE.BIN').read_bytes())==42,name
   assert len((case/'STRATB.BIN').read_bytes())==2 and (case/'STRATB.BIN').read_bytes()==(case/'STRATA.BIN').read_bytes(),name
-  observed=(case/'OWNER.BIN').read_bytes();assert len(observed)==14+2*field_bytes+1190+2*bundle_bytes+14+resource_bytes+4000+14+(258 if compile_case else 0)
+  observed=(case/'OWNER.BIN').read_bytes();assert len(observed)==14+2*field_bytes+1190+2*bundle_bytes+14+resource_bytes+4000+14+(258 if compile_case else 0)+(field_bytes+82 if args.adopt else 0)
   magic,flags,ticks,io_calls,opens,violations,app_ds=struct.unpack_from('<7H',observed)
   assert magic==0x524f and flags==(15 if 6<=mode<=8 else 7) and ticks>20 and not violations and app_ds,(name,magic,flags,ticks,io_calls,opens,violations)
   expected_fields=bytearray(observed[14:14+field_bytes])
@@ -190,7 +196,7 @@ exit
    sink=sum(size for field,size in fields[:next(i for i,(field,size) in enumerate(fields) if field=='terminal_sink_398a_enabled')]);cap=sink+2
    expected_fields[sink:sink+2]=bytes(2);struct.pack_into('<H',expected_fields,cap,2);struct.pack_into('<H',expected_fields,cap+10,0)
    struct.pack_into('<H',expected_fields,cap+16,struct.unpack_from('<H',expected_fields,cap+16)[0]+1)
-  assert expected_fields==observed[14+field_bytes:14+2*field_bytes],name
+  if not args.adopt:assert expected_fields==observed[14+field_bytes:14+2*field_bytes],name
   pos=14+2*field_bytes;proposed=observed[pos:pos+1190];pos+=1190
   before=observed[pos:pos+bundle_bytes];pos+=bundle_bytes;bundle=observed[pos:pos+bundle_bytes];pos+=bundle_bytes
   owner=struct.unpack_from('<7H',observed,pos);pos+=14;resource=observed[pos:pos+resource_bytes];pos+=resource_bytes
@@ -202,9 +208,9 @@ exit
   assert (io_calls==0 if 6<=mode<=8 else io_calls>0),name
   if success:
    loaded=mode in (0,4,5,9,10,11,17,18) or mode>=19
-   expected=struct.pack('<4H',6,(4608 if loaded else 0)|(16384 if mode in (9,10,11) else 0),2 if loaded else 0,1 if mode>=9 else 2 if loaded else 0)
+   expected=struct.pack('<4H',args.target_profile if args.adopt else 6,(4608 if loaded else 0)|(16384 if mode in (9,10,11) else 0),2 if loaded else 0,1 if mode>=9 else 2 if loaded else 0)
    expected+=(b'C:\\OTHER\\BOARD.KBD' if mode>=9 else b'C:\\BOARD.KBD' if loaded else b'').ljust(64,b'\0')+(b'C:\\START.KEY' if mode>=9 else b'C:\\BOARD.KEY' if loaded else b'').ljust(64,b'\0')
-   expected+=keyboard('N')[6*948:7*948]+(launch_actions(b'C:\\CHDIR.ASX',0) if mode>=9 else actions('N')) if loaded else bytes(default)+DISABLED
+   expected+=keyboard('N')[(args.target_profile if args.adopt else 6)*948:((args.target_profile if args.adopt else 6)+1)*948]+(launch_actions(b'C:\\CHDIR.ASX',0) if mode>=9 else actions('N')) if loaded else bytes(default)+DISABLED
    if translation:
     enabled=mode in (9,10,11)
     path=(b'C:\\CLI.XLT' if mode==11 else b'C:\\ENV\\PCPLUS.XLT' if mode==10 else b'C:\\OTHER\\PCPLUS.XLT') if enabled else b''
@@ -218,9 +224,51 @@ exit
      if mode in (33,34,40,41):path=path[:-1]+'X';kind=1;raw=compiled_bytes
      expected+=('C:'+chr(92)+path.replace('/',chr(92))).encode().ljust(64,b'\0')+struct.pack('<HHII',kind,raw[0] if kind==1 else 0,len(raw),zlib.crc32(raw))
    assert bundle==expected,name
-   assert (b'Resources checked. Scripts are not executed.' if scripts else b'KEY/KBD/XLT resources checked.' if translation else b'KEY/KBD resources checked.') in prompt[::2],name
+   assert (b'Selection/resources ready.' if manifest.get('experimental_directory_adopt') else b'Resources checked. Scripts are not executed.' if scripts else b'KEY/KBD/XLT resources checked.' if translation else b'KEY/KBD resources checked.') in prompt[::2],name
   else:
    assert bundle==before and (b'Could not prepare resources/script.' if scripts else b'Could not prepare KEY/KBD/XLT resources.' if translation else b'Could not prepare KEY/KBD resources.') in prompt[::2],name
+  adoption_report={}
+  if args.adopt:
+   offsets={};at=0
+   for field,size in fields:offsets[field]=(at,size);at+=size
+   def replace(field,value):
+    pos,size=offsets[field];assert len(value)==size,field;expected_fields[pos:pos+size]=value
+   if success:
+    from check_directory_live import serial_expected,plan_expected
+    from check_modem_import import expected as modem_expected
+    record=bytes(data[250:364]);serial=serial_expected(bytes(settings),record)
+    if mode==11:serial=serial[:40]+struct.pack('<H',1)+serial[42:]
+    replace('terminal_option_mask',struct.pack('<H',(struct.unpack_from('<H',expected_fields)[0]&~4608)|struct.unpack_from('<H',bundle,2)[0]&4608|64))
+    replace('terminal_dial_target',b'555'.ljust(64,b'\0'))
+    replace('terminal_directory_entry',struct.pack('<H',1))
+    canonical=b'C:\\OTHER\\PCPLUS.DIR' if mode>=9 else b'C:\\PCPLUS.DIR'
+    replace('terminal_directory_path',canonical.ljust(64,b'\0'))
+    replace('terminal_configuration_values',serial)
+    replace('terminal_modem_settings',modem_expected(bytes(settings)))
+    replace('terminal_directory_plan',plan_expected(1,record,0,b'555'))
+    replace('terminal_directory_context',struct.pack('<H',1)+bytes(data[:250])+record+bytes(2)+b'TEST.PRM'.ljust(64,b'\0')+canonical.ljust(64,b'\0'))
+    replace('terminal_directory_context_valid',struct.pack('<H',1))
+    profile_changed=struct.unpack_from('<H',serial,16)[0]!=struct.unpack_from('<H',expected_fields,offsets['csi_terminal_id'][0])[0]
+    if not profile_changed:replace('terminal_keymap',bundle[136:1084])
+    replace('terminal_setup_profile_ready',struct.pack('<H',int(profile_changed)))
+    replace('terminal_setup_profile_status',struct.pack('<H',int(profile_changed)))
+    replace('terminal_translation_mode',serial[40:42]);replace('terminal_translation_enabled',struct.pack('<H',int(struct.unpack_from('<H',serial,40)[0]==1)))
+    replace('uart_rx_mask',struct.pack('<H',127 if struct.unpack_from('<H',serial,40)[0]==2 else 255))
+    replace('terminal_action_definitions',bundle[1084:1624])
+    replace('terminal_keyboard_path',bundle[8:72]);replace('terminal_actions_path',bundle[72:136])
+    replace('_terminal_transfer_preferences',proposed[1124:1190])
+    if struct.unpack_from('<H',bundle,1624)[0]==1:replace('terminal_translation_table',bundle[1692:1948])
+    replace('terminal_baud_low',serial[2:4])
+   assert expected_fields==observed[14+field_bytes:14+2*field_bytes],(name,'applied prompt fields')
+   extra_at=pos+4000+14+(258 if compile_case else 0)
+   final_fields=observed[extra_at:extra_at+field_bytes];binding=observed[extra_at+field_bytes:extra_at+field_bytes+80]
+   minimum_sp=struct.unpack_from('<H',observed,extra_at+field_bytes+80)[0]
+   if success:
+    replace('terminal_keymap',bundle[136:1084]);replace('csi_terminal_id',serial[16:18]);replace('terminal_setup_profile_ready',bytes(2))
+   assert final_fields==expected_fields,(name,'final applied fields')
+   assert syms['terminal_stack_top'][1]-8192<=minimum_sp<syms['terminal_stack_top'][1],(name,minimum_sp)
+   assert binding==(struct.pack('<HH',1,0)+bundle[1948:2024] if success else bytes(80)),name
+   adoption_report=dict(applied=success,final_fields_verified=True,canonical_script_binding_verified=True,sampled_stack_bytes=syms['terminal_stack_top'][1]-minimum_sp)
   compiler_report={}
   if compile_case:
    state_at=pos+4000+14;state=observed[state_at:state_at+256];execs=struct.unpack_from('<H',observed,state_at+256)[0]
@@ -244,11 +292,11 @@ exit
    assert before_fields[sink:sink+2]==after_fields[sink:sink+2]==b'\x01\x00' and struct.unpack_from('<H',after_fields,cap)[0]==1 and struct.unpack_from('<H',after_fields,cap+10)[0]==1,name
    if mode==31:assert (case/'OTHER/CAP.LOG').is_file(),name
   for leaf,original in originals.items():assert (case/leaf).read_bytes()==original,(name,leaf)
-  reports.append(dict(case=name,passed=True,compiler=compiler_report,observer_ticks=ticks,DOS_operations_under_quiescence=io_calls,content_opens=opens,ownership_violations=violations,owner_state=owner,resource_state=struct.unpack_from('<7H',resource),active_state_unchanged=mode not in (7,8),declared_session_fault_only=mode in (7,8),hardware_restored=True))
+  reports.append(dict(case=name,passed=True,adoption=adoption_report,compiler=compiler_report,observer_ticks=ticks,DOS_operations_under_quiescence=io_calls,content_opens=opens,ownership_violations=violations,owner_state=owner,resource_state=struct.unpack_from('<7H',resource),active_state_unchanged=not args.adopt and mode not in (7,8),declared_session_fault_only=mode in (7,8),hardware_restored=True))
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
- result=dict(passed=True,binary_sha256=sha(binary),cases=reports,case_count=len(reports),translation=translation,scripts=scripts,source_resources_unchanged=True,
+ result=dict(passed=True,binary_sha256=sha(binary),cases=reports,case_count=len(reports),translation=translation,scripts=scripts,adoption=args.adopt,source_resources_unchanged=True,
   sources={n:sha(ROOT/n) for n in ['standalone/test_directory_resource_owner_dos.py','standalone/directory_resource_owner_watch.asm','standalone/dos_strategy_sample.asm','standalone/test_terminal.py','standalone/modem_fixtures.py','standalone/directory_view_fixture.py','standalone/test_directory_resources_dos.py','standalone/test_directory_key_bindings_dos.py','src/aspect/compiler.py']},
   artifacts={str(p.relative_to(out)):sha(p) for p in out.rglob('*') if p.is_file()},
-  scope='Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. No selected settings/target applied; no live modem/SIP/analog claim.')
+  scope='Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. '+('Preview A applies selected settings/resources/target; exact fields before prompt and after return verified.' if args.adopt else 'Read-only/compile workflow; active settings unchanged.')+' Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS',len(reports),'actual DOS resource owner workflows')
 if __name__=='__main__':main()

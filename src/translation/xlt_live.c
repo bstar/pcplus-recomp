@@ -181,7 +181,7 @@ unsigned __cdecl xlt_live_editor(unsigned psp,char *executable,char *tail)
 }
 
 #ifdef DIRECTORY_RESOURCE_ADOPTION
-unsigned __cdecl xlt_live_resource_adopt(unsigned mode,const char *path,
+unsigned __cdecl xlt_live_resource_check(unsigned mode,const char *path,
  const unsigned char *selected,unsigned char *table)
 {
  unsigned n,c;
@@ -197,6 +197,14 @@ unsigned __cdecl xlt_live_resource_adopt(unsigned mode,const char *path,
  /* Serialized guards take precedence over potentially dirty initial BSS. */
  if(resource_held || (bound!=1 && bound!=2) || (active_bound!=1 && active_bound!=2) ||
   (bound==1 && owner.ready))return XLT_LIVE_STATE;
+ return XLT_DOS_OK;
+}
+unsigned __cdecl xlt_live_resource_adopt(unsigned mode,const char *path,
+ const unsigned char *selected,unsigned char *table)
+{
+ unsigned n,status=xlt_live_resource_check(mode,path,selected,table);
+ if(status)return status;
+ for(n=0;n<64 && path[n];++n){}
  if(mode==1)memcpy(table,selected,256);
  memset(active_path,0,sizeof(active_path));if(mode==1)memcpy(active_path,path,n);
  memset(&owner,0,sizeof(owner));bound=active_bound=1;

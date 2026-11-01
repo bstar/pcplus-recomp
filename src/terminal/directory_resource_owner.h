@@ -1,6 +1,9 @@
 #ifndef PCPLUS_DIRECTORY_RESOURCE_OWNER_H
 #define PCPLUS_DIRECTORY_RESOURCE_OWNER_H
 #include "../directory/directory_selection.h"
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+#include "../directory/directory_resources.h"
+#endif
 enum { DRO_IDLE=0,DRO_QUEUED,DRO_RUNNING,DRO_READY,DRO_FAILED };
 enum { DRO_OK=0,DRO_BUSY,DRO_ARGUMENT,DRO_BASELINE,DRO_CHANGED,DRO_REQUEST,DRO_DEFAULTS,DRO_RESOURCES,DRO_CONTEXT };
 typedef struct directory_resource_owner_snapshot {
@@ -25,6 +28,11 @@ unsigned __far __cdecl terminal_directory_resources_queued(void);
 #ifdef DIRECTORY_SCRIPT_COMPILE
 /* Explicit preview C action. Same immutable admission as R, PROGRAM kind8. */
 unsigned __far __cdecl terminal_directory_compile_queue(const directory_selection_proposal __far *);
+#endif
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+extern unsigned terminal_directory_adopt_requested;
+unsigned __far __cdecl terminal_directory_adopt_queue(const directory_selection_proposal __far *);
+unsigned __far __cdecl terminal_directory_adopt(const directory_selection_proposal __far *,const directory_resource_bundle __far *);
 #endif
 /* Called only with PROGRAM active/kind6/status2, popup released, disconnected,
  * hardware IRQ masked/IER0/RTS low/vector released by the actual ASM owner.

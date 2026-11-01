@@ -44,6 +44,12 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
  unsigned long register_descriptor;
 #endif
  if(!span(executable,64)||!span(tail,96)||!apart(executable,64,tail,96)||tail[0]!=' ')return 1;
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+ {
+  extern unsigned __far __cdecl directory_adopt_script_check(const char *);
+  if(directory_adopt_script_check(tail+1))return 4;
+ }
+#endif
  /* Optional drive and root; every following component is a strict DOS83 name.
   * Reject shell syntax, whitespace, traversal and device aliases even though
   * direct EXEC does not invoke a command interpreter. */

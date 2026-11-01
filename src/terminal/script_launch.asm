@@ -36,6 +36,17 @@ terminal_directory_script_connected:
  or ax,[_command_menu_active]
  or ax,[_redisplay_active]
  jnz .done
+%ifdef DIRECTORY_RESOURCE_ADOPTION
+ extern _directory_adopt_script_name
+ call far _directory_adopt_script_name
+ or ax,ax
+ jz .startup_script
+ cmp ax,2
+ jne .done
+ call terminal_script_start
+ jmp .done
+.startup_script:
+%endif
  mov si,terminal_directory_context+DLC_RECORD+0x34
  cmp byte [si],0
  je .done

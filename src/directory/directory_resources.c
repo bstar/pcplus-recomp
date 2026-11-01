@@ -56,6 +56,10 @@ unsigned __cdecl directory_resources_initialize(void)
 }
 unsigned __far __cdecl directory_resources_exec_allowed(void)
 {
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+ extern unsigned __far __cdecl directory_adopt_exec_allowed(void);
+ if(!directory_adopt_exec_allowed())return 0;
+#endif
 #ifdef DIRECTORY_SCRIPT_COMPILE
  if(!directory_compile_exec_allowed())return 0;
 #endif

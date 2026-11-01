@@ -1,5 +1,10 @@
 # Complete DOS rebuild plan
 
+[Application directory adoption](docs/DIRECTORY_ADOPTION.md) adds preview A to
+the quiesced PROGRAM owner, applying selected settings/resources/target and
+retaining canonical script identity for checked automatic execution. Software
+dial/script workflows pass; full application/rendering/physical acceptance remains open.
+
 [Frozen settings selection handoff](docs/SETUP_SELECTION_HANDOFF.md) validates
 an exact expected-old context, refuses pending accounting/setup work, and
 retains the new saved source rate separately from negotiated transport. This
