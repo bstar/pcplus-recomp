@@ -9,8 +9,9 @@ NIC's existing boot-ROM enable, address and size.
 
 Select **Network management (Ethernet / FTP)** in the DOS startup menu.
 The default remains EM (Expanded memory + Mouse), with its ten-second timeout.
-The management entry uses HIMEM, branches before UNISOUND initialization, and
-loads the normal COM1 mouse driver and skips the game shell. `C:\NET\NETMGR.BAT` loads the packet driver,
+The management entry uses HIMEM and EMM386 NOEMS, branches before UNISOUND
+initialization, loads CuteMouse on COM1/IRQ4 and skips the game shell.
+`C:\NET\NETMGR.BAT` loads the packet driver,
 runs DHCP, then starts the foreground FTP server only after successful DHCP.
 Failures stop at the DOS prompt with the diagnostic visible.
 
@@ -60,6 +61,37 @@ subsequent updates, back up the current application, upload/verify new files,
 and use checked renames; mTCP FTP does not overwrite existing files directly.
 Preserve PRM, directory, key/translation files and the evolving PCPLUS.FON call
 log. Full file access is available only while the foreground server runs.
+
+## Mouse and upper memory
+
+The network profile now uses `C:\NET\CTMOUSE.EXE` (CuteMouse 2.1 beta4),
+loaded with `LH` and `/S14` to select COM1/IRQ4 explicitly. This replaces
+only the network entry's mouse command; normal game boot entries and their
+existing drivers remain unchanged. The previous network profile provided
+HIMEM alone, so it did not create upper memory blocks for `LH`.
+
+The added network-only line is:
+
+```dos
+DEVICE=C:\DOS\EMM386.EXE NOEMS X=D800-DBFF
+```
+
+The exclusion keeps the XTIDE ROM's D8000h–DBFFFh range outside EMM386's UMB
+allocation. NIC EEPROM and ROM contents are unchanged. Startup saves mouse
+messages to `C:\NET\MOUSE.LOG` and a `MEM /C` report to
+`C:\NET\MEMBOOT.TXT`. Read these after the next boot to establish successful
+mouse detection and actual high-memory placement; file read-back alone cannot
+prove either. The prior manual driver worked, but the cause of its failed
+boot-time detection was not established.
+
+Pre-change CONFIG.SYS/AUTOEXEC.BAT are in `C:\NET\MOUSEBK`. The driver and
+its license/documentation were copied from the
+[FreeDOS archive](https://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/dos/cutemouse/2.1beta4/ctm21b4.zip),
+leaving the card's old CuteMouse 2.0 alpha4 at `C:\DRIVERS\CTMOUSE.EXE` intact.
+Private source hashes, installation verification and original boot copies are
+in `build/network-boot-01/cutemouse-install.json` and adjacent ignored files.
+The driver documentation describes serial-port selection and the small
+resident memory footprint; measured placement on this machine awaits reboot.
 
 ## Sources and installation record
 
