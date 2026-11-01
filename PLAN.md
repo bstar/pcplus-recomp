@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Logging with stock BBS editors](docs/PHONE_LOG_STOCK_BBS.md) now passes ENiGMA's
+multiline Page Up/edit/Page Down workflow and Synchronet's actual ASPECT login/
+editor workflow. Each has one exact call pair and all 1,920 final cells/cursor
+matching the reference, plus 14 combined screen controls. The optional coherent
+24-row logger reproduces from public source and passes 42 logging regressions;
+a runtime reset/scroll oracle accepts it and rejects the old 25-row control.
+Carrier loss, remaining scripts/transfers/full-feature/rendering and physical/
+card acceptance remain open. The published package and card are unchanged.
+
 [Driver watermark ownership](docs/PHONE_LOG_WATERMARK.md) now passes three larger-burst
 workflows: SOFT/BOTH queue driver XOFF, while HARD retains driver-owned RTS
 through logger completion. The ring reaches 3,576 bytes without drops; sampled

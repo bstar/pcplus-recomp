@@ -1,0 +1,907 @@
+{
+  "passed": true,
+  "source_commit": "e3f6645dfd84aaf25d05c25abc632cf11c021ce8",
+  "geometry_test_commit": "f3b021e4aff487a1f5a557ac2ee11b0183c6eae5",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/terminal-phone-log-bank-d882144fee4f/TERMINAL.EXE",
+    "sha256": "003bc6b7a0529c737b697c1149d2cfecfef930b5e96406df9dba31d9c137380f",
+    "memory": {
+      "near_bytes": 64752,
+      "near_spare_bytes": 784,
+      "near_relative_segment": 12706,
+      "far_relative_segment": 21597,
+      "shadow_offset": 0,
+      "history_offset": 0,
+      "far_bytes": 71192,
+      "history_relative_segment": 22109,
+      "history_bytes": 63000,
+      "far_end_linear": 416744,
+      "stack_end_linear": 268048,
+      "loaded_module_bytes": 236313,
+      "minimum_allocated_module_bytes": 416768,
+      "retained_parent_paragraphs": 26063,
+      "far_pointer_relocations_verified": true,
+      "initial_terminal_rows": 24,
+      "initial_terminal_columns": 80,
+      "initial_geometry_coherent": true,
+      "native_reset_bank_bytes": 58880,
+      "native_reset_bank_start": 280048,
+      "native_reset_bank_end": 338928,
+      "native_reset_image_offset": 0,
+      "native_reset_private_stack_bytes": 4096,
+      "native_reset_shadow_bytes": 6600,
+      "native_reset_shadow_end": 345528,
+      "native_reset_namespace_symbols": 423,
+      "native_reset_code_segment": 11353,
+      "native_reset_overlay": true,
+      "native_reset_additional_storage_bytes": 0,
+      "native_reset_workspace_end": 345552,
+      "native_reset_workspace_bytes": 65504,
+      "snapshot_relative_segment": 17503,
+      "snapshot_image_offset": 63504,
+      "snapshot_bytes": 2000,
+      "snapshot_end_linear": 345552,
+      "ui_screen_buffers": {
+        "browser_screen": {
+          "relative_segment": 16753,
+          "offset": 0,
+          "bytes": 4000,
+          "start_linear": 268048,
+          "end_linear": 272048
+        },
+        "ed_screen": {
+          "relative_segment": 16753,
+          "offset": 4000,
+          "bytes": 4000,
+          "start_linear": 272048,
+          "end_linear": 276048
+        },
+        "program_screen": {
+          "relative_segment": 16753,
+          "offset": 0,
+          "bytes": 4000,
+          "start_linear": 268048,
+          "end_linear": 272048
+        },
+        "redisplay_live": {
+          "relative_segment": 16753,
+          "offset": 4000,
+          "bytes": 4000,
+          "start_linear": 272048,
+          "end_linear": 276048
+        },
+        "redisplay_view": {
+          "relative_segment": 16753,
+          "offset": 8000,
+          "bytes": 4000,
+          "start_linear": 276048,
+          "end_linear": 280048
+        }
+      },
+      "far_ui_storage_bytes": 12000,
+      "program_browser_screen_overlay": true,
+      "editor_viewer_screen_overlay": true,
+      "redisplay_snapshot_bytes": 63000,
+      "redisplay_snapshot_end_linear": 343048,
+      "redisplay_row_index_bytes": 494,
+      "redisplay_row_index_relative_segment": 17503,
+      "redisplay_row_index_offset": 63000,
+      "redisplay_row_index_end_linear": 343542,
+      "resident_CS_extent_bytes": 65530,
+      "resident_CS_spare_bytes": 6,
+      "substitute_native_bytes_verified": 53,
+      "substitute_native_dependencies_verified": 4,
+      "substitute_state_words_verified": 4,
+      "far_usage_bytes": 1493,
+      "far_usage_segment": 10932,
+      "far_usage_DS_restore_verified": true,
+      "phone_log_bank_bytes": 13244,
+      "phone_log_far_queue_bytes": 666,
+      "phone_log_far_queue_start": 202624,
+      "phone_log_far_queue_end": 203290,
+      "phone_log_entry_pairs_verified": 10,
+      "phone_log_callback_pairs_verified": 18,
+      "phone_log_callback_sites": [
+        189537,
+        189543,
+        189549,
+        189555,
+        189561,
+        189567,
+        189573,
+        189579,
+        189587,
+        189593,
+        189599,
+        189605,
+        189611,
+        189617,
+        189623,
+        189629,
+        189635,
+        189641
+      ],
+      "phone_log_DOS_write_spill_verified": true,
+      "phone_log_lifecycle_entries_verified": 5,
+      "phone_log_lifecycle_owner_bytes": 38,
+      "phone_log_lifecycle_owner_offset": 31062,
+      "phone_log_event_entries_verified": 4,
+      "phone_log_event_call_sites_verified": 7,
+      "phone_log_event_call_sites": {
+        "terminal_phone_log_ready_site": 172216,
+        "terminal_phone_log_direct_connected_site": 172274,
+        "terminal_phone_log_modem_connected_site": 172923,
+        "terminal_phone_log_carrier_end_site": 173020,
+        "terminal_phone_log_retire_end_site": 173266,
+        "terminal_phone_log_direct_end_site": 173409,
+        "terminal_phone_log_shutdown_site": 23994
+      },
+      "phone_log_disk_entries_verified": 2,
+      "phone_log_disk_call_sites_verified": 2,
+      "phone_log_disk_existing_notice_callback_verified": true,
+      "phone_log_controls_entry_words_verified": 4,
+      "phone_log_controls_menu_calls_verified": 4,
+      "phone_log_controls_menu_call_sites": [
+        141043,
+        141950,
+        142028,
+        143432
+      ],
+      "phone_log_startup_entry_verified": true,
+      "phone_log_startup_call_bytes": 15,
+      "process_bank_bytes": 661,
+      "process_bridge_pairs_verified": 1,
+      "process_near_entry_bytes": 22,
+      "controller_bridge_pairs_verified": 22,
+      "modem_bridge_pairs_verified": 23,
+      "recording_matcher_lead_site": 38610,
+      "recording_rx_far_call_sites": [
+        38613,
+        15124
+      ],
+      "recording_rx_callback_site": 109005,
+      "recording_actor_guard_sites": [
+        15124,
+        15536,
+        25219,
+        29270,
+        36412,
+        38939,
+        172152,
+        173304,
+        176424
+      ],
+      "recording_UI_boundary_sites": [
+        140354,
+        143180,
+        108959
+      ],
+      "recording_UI_optimized_sites": [
+        140354,
+        143180
+      ],
+      "recording_tx_origin_bytes": 128,
+      "recording_tx_origin_start": 111191,
+      "recording_tx_far_call_sites": [
+        39409,
+        36729,
+        40239,
+        24736
+      ],
+      "recording_tx_callback_site": 111182,
+      "recording_terminal_state_bytes": 392,
+      "recording_terminal_bank_functions_verified": 9,
+      "recording_terminal_far_call_sites": [
+        23178,
+        24122
+      ],
+      "recorder_code_literal_bytes_verified": 223,
+      "recorder_code_literal_sites": [
+        165194,
+        165211,
+        165225,
+        165245,
+        165265,
+        165271,
+        165291,
+        165322,
+        165407
+      ],
+      "recording_bank_functions_verified": 14,
+      "recording_resident_callbacks_verified": 9,
+      "recording_adapter_far_call_sites": [
+        60619,
+        60643,
+        60667
+      ],
+      "capture_reservation_far_bindings_verified": 3,
+      "capture_reservation_far_call_sites": [
+        58494,
+        163899,
+        164298
+      ],
+      "capture_reservation_initialized_bytes": 74,
+      "phone_log_claim_far_calls_verified": 2,
+      "phone_log_claim_far_call_sites": [
+        190260,
+        190540
+      ],
+      "command_menu_code_segment": 6680,
+      "command_menu_far_code_verified": true,
+      "ymodem_far_code_verified": true,
+      "zmodem_far_callbacks_verified": 10,
+      "configuration_bridge_pairs_verified": 94,
+      "transfer_ui_far_entries_verified": 4,
+      "transfer_ui_resident_callbacks_verified": 3,
+      "redisplay_bridge_pairs_verified": 4,
+      "viewer_live_plane_admission_verified": true,
+      "scroll_field_bridge_pairs_verified": 3,
+      "line_preflight_far_calls_verified": 2,
+      "wide_character_far_calls_verified": 2,
+      "wide_character_prepare_far_calls_verified": 1,
+      "script_window_keyboard_far_adapters_verified": true,
+      "aspect_command_preflight_verified": true,
+      "aspect_viewport_lease_words_verified": 3,
+      "protected_erase_far_bridge_verified": true,
+      "protected_erase_native_dependencies_verified": 4,
+      "erase_after_projection_initially_idle": true,
+      "wide_clear_rectangle_route_verified": true,
+      "alternate_output_far_bridge_verified": true,
+      "alternate_output_native_dependencies_verified": 4,
+      "source_owned_output_table_bytes": 256,
+      "aspect_far_services_verified": 17,
+      "aspect_resident_far_references_verified": 21,
+      "aspect_controller_read_references_verified": 1,
+      "aspect_emit_cdecl_bridge_verified": true,
+      "aspect_handoff_bytes": 50,
+      "aspect_renderer_state_bytes": 4,
+      "line_attribute_far_entries_verified": 2,
+      "line_attribute_controller_references_verified": 5,
+      "line_attribute_video_callbacks_verified": 2,
+      "line_controller_entry_pairs_verified": 4,
+      "line_controller_register_callbacks_verified": 3,
+      "line_controller_code_bytes": 421,
+      "status_far_bridge_pairs_verified": 5,
+      "status_script_label_bytes": 15,
+      "mouse_bridge_pairs_verified": 10,
+      "mouse_code_bytes": 2896,
+      "mouse_shared_native_state_bytes": 28,
+      "native_reset_projection_fields_verified": 37,
+      "native_reset_field_repair_verified": true,
+      "native_reset_transaction": true,
+      "native_reset_backup_start": 268048,
+      "native_reset_backup_bytes": 4000,
+      "native_reset_transaction_bridge_verified": true,
+      "peer_width_mode_bridge_verified": true,
+      "native_reset_ASPECT_backup_start": 272048,
+      "resident_code_bytes": 65530,
+      "resident_code_spare_bytes": 6,
+      "code_segments": [
+        {
+          "name": "_TEXT",
+          "kind": "CODE",
+          "relative_segment": 0,
+          "offset": 0,
+          "bytes": 65530
+        },
+        {
+          "name": "SPLASH_CODE",
+          "kind": "CODE",
+          "relative_segment": 4095,
+          "offset": 10,
+          "bytes": 377
+        },
+        {
+          "name": "ASPECT_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 4120,
+          "offset": 0,
+          "bytes": 12972
+        },
+        {
+          "name": "PROCESS_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 4931,
+          "offset": 0,
+          "bytes": 661
+        },
+        {
+          "name": "HOOK_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 4973,
+          "offset": 0,
+          "bytes": 27302
+        },
+        {
+          "name": "CONFIG_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 6680,
+          "offset": 0,
+          "bytes": 65029
+        },
+        {
+          "name": "MODEM_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 10745,
+          "offset": 0,
+          "bytes": 2980
+        },
+        {
+          "name": "USAGE_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 10932,
+          "offset": 0,
+          "bytes": 1493
+        },
+        {
+          "name": "PRINT_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 11026,
+          "offset": 0,
+          "bytes": 1461
+        },
+        {
+          "name": "TRAP_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 11118,
+          "offset": 0,
+          "bytes": 864
+        },
+        {
+          "name": "MOUSE_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 11172,
+          "offset": 0,
+          "bytes": 2896
+        },
+        {
+          "name": "RESET_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 11353,
+          "offset": 0,
+          "bytes": 7718
+        },
+        {
+          "name": "PHONE_LOG_CODE",
+          "kind": "FARCODE",
+          "relative_segment": 11836,
+          "offset": 0,
+          "bytes": 13244
+        }
+      ],
+      "far_code_bridge_pairs_verified": 161
+    }
+  },
+  "default25_control": {
+    "path": "build/terminal-phone-log-bank-3d164fda0202/TERMINAL.EXE",
+    "sha256": "2c5f5fc4dd4b9948b897db6499e920f694f30fbbbcdf3d1fb0596cbc921027f7",
+    "byte_identical_to_prior_checkpoint": true
+  },
+  "geometry_changes": [
+    {
+      "symbol": "csi_last_row",
+      "offset": 218622,
+      "before": 24,
+      "after": 23
+    },
+    {
+      "symbol": "csi_row_count",
+      "offset": 218624,
+      "before": 25,
+      "after": 24
+    },
+    {
+      "symbol": "screen_last_row",
+      "offset": 218726,
+      "before": 24,
+      "after": 23
+    },
+    {
+      "symbol": "csi_origin_bottom",
+      "offset": 218734,
+      "before": 24,
+      "after": 23
+    },
+    {
+      "symbol": "erase_cell_count",
+      "offset": 218879,
+      "before": 2000,
+      "after": 1920
+    }
+  ],
+  "exact_changed_byte_offsets": [
+    218622,
+    218624,
+    218726,
+    218734,
+    218879
+  ],
+  "other_image_bytes_identical": true,
+  "geometry_runtime": {
+    "path": "build/status-geometry-terminal/status-native-final-01/result.json",
+    "sha256": "1928afe57151a576c82a3695dc32cd6172168fe6481a687901ee2c875e72ec8d",
+    "result": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "candidate",
+          "passed": true,
+          "checks": {
+            "native_passed": true,
+            "expected_acceptance": true,
+            "binary_unchanged": true
+          },
+          "matched24": true,
+          "different_cells": 0,
+          "cursor_replies": "[b'\\x1b[1;16R', b'\\x1b[24;1R', b'\\x1b[24;1R', b'\\x1b[1;16R']",
+          "native": {
+            "case": "status-native-final-01-candidate",
+            "passed": true,
+            "checks": {
+              "configured_hangup_reached_wire": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "immediate_banner_not_dropped": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 6.425,
+            "binary_sha256": "003bc6b7a0529c737b697c1149d2cfecfef930b5e96406df9dba31d9c137380f",
+            "command": "@D:\\TEST.PRM /D:CaseTest:23",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "cpu": "8086",
+            "emulated_modem": false,
+            "target": "CaseTest:23",
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+          },
+          "binary_sha256": "003bc6b7a0529c737b697c1149d2cfecfef930b5e96406df9dba31d9c137380f",
+          "screen_sha256": "69f17b64dee91102a4201df7ae4a91b11a7d25e99edc999ab8b8f2874f7b6e98"
+        },
+        {
+          "case": "old25",
+          "passed": true,
+          "checks": {
+            "native_passed": true,
+            "expected_acceptance": true,
+            "binary_unchanged": true
+          },
+          "matched24": false,
+          "different_cells": 27,
+          "cursor_replies": "[b'\\x1b[1;16R', b'\\x1b[25;1R', b'\\x1b[25;1R', b'\\x1b[1;16R']",
+          "native": {
+            "case": "status-native-final-01-old25",
+            "passed": true,
+            "checks": {
+              "configured_hangup_reached_wire": true,
+              "DOS_expected_exit": true,
+              "hardware_restored": true,
+              "PRM_unchanged": true,
+              "binary_unchanged": true,
+              "no_peer_errors": true,
+              "no_unexpected_commands": true,
+              "actual_init_and_dial": true,
+              "actual_DOS_CPR": true,
+              "actual_DOS_DA": true,
+              "immediate_banner_not_dropped": true
+            },
+            "commands": [
+              "ATZ",
+              "ATDCaseTest:23"
+            ],
+            "errors": [],
+            "seconds": 6.425,
+            "binary_sha256": "2c5f5fc4dd4b9948b897db6499e920f694f30fbbbcdf3d1fb0596cbc921027f7",
+            "command": "@D:\\TEST.PRM /D:CaseTest:23",
+            "expected_exit": 0,
+            "working_drive": "d",
+            "environment": {},
+            "cpu": "8086",
+            "emulated_modem": false,
+            "target": "CaseTest:23",
+            "scope": "Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented."
+          },
+          "binary_sha256": "2c5f5fc4dd4b9948b897db6499e920f694f30fbbbcdf3d1fb0596cbc921027f7",
+          "screen_sha256": "fd448a88c3d262ec5ea378c1cfbfcacc4be012f961bf25f72a81bec3d43c5f37"
+        }
+      ],
+      "reference_sha256": "8fccec07f16a7bb9f54e8c7928497c853bc26c6da25c2a3ec195e81690ff45eb",
+      "sources": {
+        "standalone/test_status_geometry_terminal.py": "b1e51bf57e525ec48219a8ec81395b760b20e2b6158a20b9fc646225867900a7",
+        "standalone/test_connection_dos.py": "32cd4738dee53fa270946e6a66b20f9b2dd300c5d0bcd3476c09cb18cf4d1cbd",
+        "standalone/test_ansi_reference_dos.py": "1729658c9c37a0d8b5547421009d4f79add82688143a9a5d5930a9ae90bf342d"
+      },
+      "scope": "Compare real DOS cursor/scroll/RIS behavior with an independent24-row screen. Actual source-built candidate and old25-row control, real UART replies and hardware restoration; no product writes or synthetic replies. Selected reset/scroll boundary only."
+    }
+  },
+  "ASPECT": {
+    "path": "build/aspect-register-parent-custom-irq/ASPECT.EXE",
+    "sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "byte_identical_to_prior_checkpoint": true
+  },
+  "public_source_proof": {
+    "path": "build/phone-log-bbs-geometry-public-01/result.json",
+    "sha256": "183b5ef3a8a2118a022681177bb55f359b8e91d1ccbae6df9b90afd6d7808dfa",
+    "source_count": 1745,
+    "repeated_cases": 42,
+    "reports": {
+      "public-existing": {
+        "path": "build/phone-log-bbs-geometry-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+        "sha256": "ec87c68e4fc39323e8df88f829b9a9491c06593f672a4b6e3c4419f509418e53",
+        "cases": 5
+      },
+      "public-controls": {
+        "path": "build/phone-log-bbs-geometry-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+        "sha256": "7462b18d174d7983adec262bd4de7da865fec9c73148520267e7d74e8fe79132",
+        "cases": 19
+      },
+      "public-preexisting": {
+        "path": "build/phone-log-bbs-geometry-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+        "sha256": "99f172c9223e5eccbb1161af4dee5f8c2f096a0d6c08d8acc4bc15619d472848",
+        "cases": 5
+      },
+      "public-io-failures": {
+        "path": "build/phone-log-bbs-geometry-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+        "sha256": "02833553d3e4ff84c43d1b436f91339837341a919019edff5b6a3fbe033eeb09",
+        "cases": 3
+      },
+      "public-permissions": {
+        "path": "build/phone-log-bbs-geometry-public-01/source/build/phone-log-events-terminal/public-permissions/result.json",
+        "sha256": "f875a501de6d28058517f3f105179abb862c239efec13c9701aa6f221f4c5a98",
+        "cases": 2
+      },
+      "public-readonly": {
+        "path": "build/phone-log-bbs-geometry-public-01/source/build/phone-log-startup-terminal/public-readonly/result.json",
+        "sha256": "0a9f9ab1ac78efb7c2e4a8116df30ba474112e9674961b19d9eae70efcd1e259",
+        "cases": 2
+      },
+      "public-slow": {
+        "path": "build/phone-log-bbs-geometry-public-01/source/build/phone-log-slow-terminal/public-slow/result.json",
+        "sha256": "cac9a0d56d9d64db31d9d0eeacd229f3b36417036fdac8de2edcecb5b7fba07e",
+        "cases": 3
+      },
+      "public-watermark": {
+        "path": "build/phone-log-bbs-geometry-public-01/source/build/phone-log-slow-terminal/public-watermark/result.json",
+        "sha256": "9eb4b2c18bba7478cbf73b25cc34da65143e03922096d3188ed7300048eeddfe",
+        "cases": 3
+      }
+    }
+  },
+  "stock_BBS_sessions": {
+    "enigma": {
+      "producer_path": "build/bbs-lab/results/enigma/log-enigma-page-down-probe-01/proxy-integration.json",
+      "producer_sha256": "8b39387491967a005995d27449e40c73c4216f1838e4f29f5eed3307a5caa779",
+      "producer_checks": {
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "actual_call_log": true,
+        "reference_freeze_completed": true,
+        "compiled_geometry_advertised": true
+      },
+      "phone_log": {
+        "passed": true,
+        "checks": {
+          "final_kind": true,
+          "startup_ok": true,
+          "lifecycle_idle": true,
+          "generation": true,
+          "queue_flags": true,
+          "queue_generations": true,
+          "final_status": true,
+          "heading_and_size": true,
+          "exact_event_records": true,
+          "observer_final": true,
+          "actual_parent_segments": true,
+          "exact_append_attempts": true,
+          "START_saved_online": true,
+          "only_owned_log_created": true
+        },
+        "records": [
+          {
+            "generation": 1,
+            "start": "\r\nMODEM                       lab.local:38643 11/01/26 03:09:24 ",
+            "end": "03:11:28 00:02:04",
+            "valid": true
+          }
+        ],
+        "observer_header": [
+          19525,
+          2327,
+          3,
+          1,
+          2968,
+          15674,
+          15632,
+          6,
+          0,
+          0
+        ],
+        "log_sha256": "c17a628ae3997e79df434ee7eb48b2a51f6f85b75426b176faf83c26cca9a0f6",
+        "observer_sha256": "883789299c33680f226fe838bfb1fe1f20bb1e5ef8a9a15e8997db5d79fb61b3",
+        "snapshot_sha256": "cd854c36326822398483e807188e303a925ed89e7d7d7af9dec2d8c5a9cb7cc2",
+        "scope": "Actual owned stock BBS, parent event/file owners and passive 8086 COM3/IRQ5 snapshots. One normal call pair; not physical DCD/SIP or complete logging composition."
+      },
+      "screen_audit_path": "build/bbs-lab/results/enigma/log-enigma-page-down-probe-01/screen-reference-audit.json",
+      "screen_audit_sha256": "e1d8eb132e2e56b69264ff37b24fa5a23a6dddc85f4985d232ac167cc1b25190",
+      "screen_checks": {
+        "producer_passed": true,
+        "runtime_unchanged": true,
+        "exact_delivered_prefix": true,
+        "real_single_CPR_boundary": true,
+        "cursor_matches_reference": true,
+        "all_1920_cells_match": true,
+        "hardware_restored": true,
+        "status_visible": true,
+        "font_probe_projection_explicit": true,
+        "held_output_exact": true
+      },
+      "screen_reference": {
+        "enabled": true,
+        "terminalRows": 24,
+        "trigger": "UNSAVED",
+        "quietMs": 750,
+        "reply": [
+          22,
+          8
+        ],
+        "probeReplyConsumed": true,
+        "prefixBytes": 88157,
+        "prefixSha256": "33ee5566b7e7ef3b939873ba92bf03979ea71d46ce6c83ab5e68ac5fdfb02b67",
+        "probeReplyHex": "1b5b32323b3852",
+        "armed": true,
+        "frozen": true,
+        "heldBytes": 2819
+      },
+      "screen_controls_path": "build/phone-log-enigma-reference-controls-01/result.json",
+      "screen_controls_sha256": "babe7b1fe01cf2d8b4ba1e10503e4b35d1a5dc992e757f719fba576dc386ac05",
+      "screen_control_cases": [
+        {
+          "case": "unchanged",
+          "passed": true,
+          "rejected": false,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "character",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "attribute",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "cursor",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "prefix-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Snapshot must pair with exactly the delivered prefix",
+          "different_cells": null
+        },
+        {
+          "case": "unsupported-font",
+          "passed": true,
+          "rejected": true,
+          "error": "('Unsupported reference intermediate', 491, '1b5b303b312044')",
+          "different_cells": null
+        },
+        {
+          "case": "proxy-input-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Only the fixture query reply may be removed before the actual proxy; preserve all other TX",
+          "different_cells": null
+        }
+      ],
+      "bridge_closed_sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+    },
+    "synchronet": {
+      "producer_path": "build/bbs-lab/results/synchronet/log-synchronet-probe-01/proxy-integration.json",
+      "producer_sha256": "c275a62d326a71c60bc56c9b82254cf4ddfdfdcb87d8c04705fb1d783e768d9d",
+      "producer_checks": {
+        "harness": true,
+        "runtime_unchanged": true,
+        "server_static_inputs_unchanged": true,
+        "message_bodies_unchanged": true,
+        "no_message_mail_or_transfer_writes": true,
+        "actual_ASPECT_login": true,
+        "staged_inputs_unchanged": true,
+        "frozen_editor_frame": true,
+        "actual_CPR_boundary": true,
+        "fixture_CPR_consumed": true,
+        "compiled_geometry_advertised": true,
+        "source_inputs_unchanged": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true,
+        "actual_call_log": true
+      },
+      "phone_log": {
+        "passed": true,
+        "checks": {
+          "final_kind": true,
+          "startup_ok": true,
+          "lifecycle_idle": true,
+          "generation": true,
+          "queue_flags": true,
+          "queue_generations": true,
+          "final_status": true,
+          "heading_and_size": true,
+          "exact_event_records": true,
+          "observer_final": true,
+          "actual_parent_segments": true,
+          "exact_append_attempts": true,
+          "START_saved_online": true,
+          "only_owned_log_created": true
+        },
+        "records": [
+          {
+            "generation": 1,
+            "start": "\r\nLAB NODE 003                lab.local:38163 11/01/26 03:13:59 ",
+            "end": "03:14:50 00:00:51",
+            "valid": true
+          }
+        ],
+        "observer_header": [
+          19525,
+          999,
+          3,
+          1,
+          2958,
+          15664,
+          15622,
+          6,
+          0,
+          0
+        ],
+        "log_sha256": "c931feab860c9f99bbe4ff2be2b85cf9b5a57757703097e9c1acab974bd37d76",
+        "observer_sha256": "883789299c33680f226fe838bfb1fe1f20bb1e5ef8a9a15e8997db5d79fb61b3",
+        "snapshot_sha256": "284ba22aedeea1178c2c636c583fee1a534f3d3dc293c70452fd2c1ba2b3004a",
+        "scope": "Actual owned stock BBS, parent event/file owners and passive 8086 COM3/IRQ5 snapshots. One normal call pair; not physical DCD/SIP or complete logging composition."
+      },
+      "screen_audit_path": "build/bbs-lab/results/synchronet/log-synchronet-probe-01/screen-reference-audit.json",
+      "screen_audit_sha256": "bd0d071f9e0564bffbade3ad481233a4b0bd2efd81a8480a2624aa77b36528c4",
+      "screen_checks": {
+        "producer_passed": true,
+        "runtime_unchanged": true,
+        "exact_delivered_prefix": true,
+        "real_single_CPR_boundary": true,
+        "cursor_matches_reference": true,
+        "all_1920_cells_match": true,
+        "hardware_restored": true,
+        "status_visible": true,
+        "font_probe_projection_explicit": true,
+        "held_output_exact": true
+      },
+      "screen_reference": {
+        "enabled": true,
+        "terminalRows": 24,
+        "trigger": "UNSAVED",
+        "quietMs": 150,
+        "reply": [
+          5,
+          8
+        ],
+        "probeReplyConsumed": true,
+        "prefixBytes": 22689,
+        "prefixSha256": "425a8e3f39d1bd7ee239ce8657d3f30c3447054982a61875bc3d4ad5037ec832",
+        "probeReplyHex": "1b5b353b3852",
+        "armed": true,
+        "frozen": true,
+        "heldBytes": 13988
+      },
+      "screen_controls_path": "build/phone-log-synchronet-reference-controls-01/result.json",
+      "screen_controls_sha256": "80659b89bfcf13d5dd3bad4ae0706e28c67e308d247d45b8ceb5f46e4a76a6d5",
+      "screen_control_cases": [
+        {
+          "case": "unchanged",
+          "passed": true,
+          "rejected": false,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "character",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "attribute",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "cursor",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "prefix-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Snapshot must pair with exactly the delivered prefix",
+          "different_cells": null
+        },
+        {
+          "case": "unsupported-font",
+          "passed": true,
+          "rejected": true,
+          "error": "('Unsupported reference intermediate', 22685, '1b5b303b312044')",
+          "different_cells": null
+        },
+        {
+          "case": "proxy-input-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Only the fixture query reply may be removed before the actual proxy; preserve all other TX",
+          "different_cells": null
+        }
+      ],
+      "bridge_closed_sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+    }
+  },
+  "screen_controls": 14,
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Selected stock owned ENiGMA multiline and Synchronet ASPECT/editor workflows, with normal unsaved disconnect/abort; not every menu/frame/profile or all ASPECT owners.",
+    "Actual installed proxy code through synthetic Hayes/nullmodem and paced250ms/20ms transport; no unframed, SIP/DSP/analog or physical DCD/CTS acceptance.",
+    "Original five geometry words changed only under explicit status option. Old25 control deliberately rejects the independent24-row runtime contract.",
+    "Initial NASM preprocessor and missing mouse-scale native-oracle attempts excluded; accepted final build/runtime cases and recorded BBS runs only.",
+    "Carrier loss/reconnect while logging, long transfers, full menu/feature composition, full F01-F16, physical Boca/SPA2102 and card deployment remain open.",
+    "Published package/card, live BBS, installed bridge service, ATA and host network config unchanged."
+  ]
+}
