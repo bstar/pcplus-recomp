@@ -6,6 +6,8 @@ C:\NET\3C509.COM 0x60
 IF ERRORLEVEL 1 GOTO DRIVER
 C:\NET\DHCP.EXE
 IF ERRORLEVEL 1 GOTO DHCPERR
+CALL C:\NET\AFTERUP.BAT
+C:\DOS\MEM.EXE /C > C:\NET\MEMNET.TXT
 ECHO Note the assigned IP address for workstation file updates.
 ECHO Starting FTP. Account: bstar. Alt-X exits the server.
 C:\NET\FTPSRV.EXE

@@ -125,6 +125,24 @@ in `build/network-boot-01/cutemouse-install.json` and adjacent ignored files.
 The driver documentation describes serial-port selection and the small
 resident memory footprint; measured placement on this machine awaits reboot.
 
+## After Dark in network mode
+
+Network management now calls `C:\NET\AFTERUP.BAT` after the mouse, packet
+driver and successful DHCP, immediately before the foreground FTP server.
+The helper sets ADPATH to C:\ADDOS and runs `LH C:\ADDOS\ADTSR.EXE` from
+the application directory, returning to the C:\ root afterward. This follows
+the installed After Dark README requirement to load ADTSR after every other
+TSR. It does not open ADPANEL or run ADRUN as a foreground demo.
+
+The existing ADDOS.CFG already selects FLYING.ADD. ADDOS.CFG, MODULES.CFG and
+ADTSR.CFG were preserved byte for byte, retaining the user's module settings,
+timeout and other preferences. Startup output goes to C:\NET\ADBOOT.LOG;
+the subsequent MEM /C snapshot goes to C:\NET\MEMNET.TXT, including both
+network and screen-saver residents. The previous NETMGR.BAT is backed up in
+C:\NET\ADBK01. FTP read-back verified installation; actual TSR loading,
+Flying Toasters activation and FTP operation while the saver runs await the
+next physical boot test.
+
 ## Sources and installation record
 
 The [packet-driver project](https://github.com/hackerb9/3C509B-nestor) provides
