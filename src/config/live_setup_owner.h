@@ -62,5 +62,21 @@ unsigned __cdecl live_setup_reconcile_accounting(const directory_live_context *,
 /* Build a bounded explicit tail for the frozen canonical PRM. No IO or state
  * mutation. The settings launcher uses this same identity as finish(). */
 unsigned __cdecl live_setup_frozen_command(char *);
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+/* Compare-and-publish the frozen logical selection after old accounting is
+ * retired. action0 checks,1 publishes; no IO/UART/active-terminal changes.
+ * Expected496 (NULL only when no old context), next496 and accepted PRM1264
+ * are disjoint external near allocations, DS=SS. Expected must match exactly,
+ * including accounting bytes. New PRM request spelling must match the bound
+ * request; new directory identity must be absolute uppercase DOS83. Re-decode
+ * the selection without CLI overrides to retain SOURCE baud/clipboard values
+ * for later settings/autobaud comparison. Pending setup offers or actual
+ * directory pending/count flags refuse. Every failure preserves the owner.
+ * Caller must separately validate baseline/proposal freshness, selected file
+ * provenance and perform the remaining atomic terminal/resource/UART commit.
+ */
+unsigned __cdecl live_setup_select(const directory_live_context *expected,
+ const directory_live_context *next,const prm_dos_image *accepted,unsigned action);
+#endif
 #endif
 #endif

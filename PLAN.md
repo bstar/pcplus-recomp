@@ -1,5 +1,10 @@
 # Complete DOS rebuild plan
 
+[Frozen settings selection handoff](docs/SETUP_SELECTION_HANDOFF.md) validates
+an exact expected-old context, refuses pending accounting/setup work, and
+retains the new saved source rate separately from negotiated transport. This
+component still needs the application selection/resource/UART commit and dialing.
+
 [Translation resource publication](docs/XLT_RESOURCE_ADOPTION.md) adds a checked
 component handoff of selected bytes and the Reload/Edit canonical identity.
 Pending offers and close uncertainty are preserved. This prerequisite is not

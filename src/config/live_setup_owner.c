@@ -256,4 +256,43 @@ unsigned __cdecl live_setup_reconcile_accounting(const directory_live_context *c
  if(action)memcpy(owner.context.selection.record+61,context->selection.record+61,11);
  return LIVE_SETUP_OK;
 }
+#ifdef DIRECTORY_RESOURCE_ADOPTION
+extern unsigned char directory_pending;
+extern unsigned directory_pending_count;
+#pragma aux directory_pending "directory_pending";
+#pragma aux directory_pending_count "directory_pending_count";
+static unsigned selection_identity(const char *path)
+{
+ unsigned n,c;
+ for(n=0;n<64 && path[n];++n){
+  c=(unsigned char)path[n];if((c>='a' && c<='z') || c=='/')return 0;
+ }
+ return n && n<64 && path[0]>='A' && path[0]<='Z' && path[1]==':' && path[2]=='\\' &&
+  capture_file_validate_path(path,0);
+}
+unsigned __cdecl live_setup_select(const directory_live_context *expected,
+ const directory_live_context *next,const prm_dos_image *accepted,unsigned action)
+{
+ live_configuration_plan source;live_configuration_result decoded;
+ transfer_import_settings transfer;
+ if(action>1 || !external(next,sizeof(*next)) || !external(accepted,sizeof(*accepted)) ||
+  !separate(next,sizeof(*next),accepted,sizeof(*accepted)) || (expected &&
+   (!external(expected,sizeof(*expected)) || !separate(expected,sizeof(*expected),next,sizeof(*next)) ||
+    !separate(expected,sizeof(*expected),accepted,sizeof(*accepted)))))return LIVE_SETUP_ARGUMENT;
+ if(owner.bound!=1)return LIVE_SETUP_UNBOUND;
+ if(owner.pending || owner.offered_mask || owner.transfer_ready || directory_pending || directory_pending_count)return LIVE_SETUP_STATE;
+ if(owner.has_context!=(expected!=0) || (expected && memcmp(expected,&owner.context,sizeof(*expected))) ||
+  string_size(next->prm_path,64)<2 || !same(next->prm_path,owner.path,64) ||
+  !selection_identity(next->directory_path) || !selection_identity(owner.canonical) ||
+  !next->selection.entry_number || next->selection.entry_number>200 || next->codes>1)return LIVE_SETUP_IDENTITY;
+ if(live_configuration_decode(accepted,&next->selection,next->codes,0,0,&source,&decoded) ||
+  transfer_import_decode(accepted,&transfer))return LIVE_SETUP_DECODE;
+ if(action){
+  memcpy(&owner.context,next,sizeof(*next));owner.has_context=1;
+  owner.source_baud_low=source.serial.baud_low;owner.source_baud_high=source.serial.baud_high;
+  owner.source_clipboard_separator=owner.offered_clipboard_separator=source.serial.clipboard_separator;
+ }
+ return LIVE_SETUP_OK;
+}
+#endif
 #endif
