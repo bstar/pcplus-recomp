@@ -6,6 +6,11 @@ sites and acceptance requirements; it is not evidence that event hooks or disk
 polling are implemented. The source excerpts and hashes are retained in the
 [audit record](validation/phone-log-lifecycle-audit.json).
 
+The later [retained-event component](PHONE_LOG_LIFECYCLE.md) implements the
+admission/timestamp owner described here. Terminal hooks, child observation
+and the disk scheduler remain unfinished; this audit retains its earlier source
+boundary rather than claiming those paths are implemented.
+
 ## Connection boundaries
 
 | Path | Current owner | Required logger behavior |

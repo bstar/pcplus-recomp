@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Retained connection events](docs/PHONE_LOG_LIFECYCLE.md) now implement
+single-producer call-pair admission, nonzero generation ownership and a retained
+original END timestamp across queue refusal. Twelve native DOS cases/550
+assertions and their 18-source committed rebuild repeats pass; both executables
+are byte-exact. The producer remains a component: bank placement, actual
+transition/admission hooks, child observations, UART-aware disk scheduling and
+visible recovery remain open, together with every full application/physical/card
+gate. The published BBS package is unchanged.
+
 [The call-log lifecycle audit](docs/PHONE_LOG_LIFECYCLE_PLAN.md) now identifies
 actual MODEM/DIRECT success, carrier-loss, hangup, child-handoff and exceptional
 shutdown boundaries. State sampling alone can miss transitions; the queue can

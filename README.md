@@ -1,5 +1,10 @@
 # PCPlus DOS reconstruction
 
+The [retained-event producer](docs/PHONE_LOG_LIFECYCLE.md) now gates new call-log
+admission and preserves an END timestamp if the queue refuses it. Twelve DOS
+cases/550 assertions pass and repeat from committed public sources. It is not
+yet banked or hooked into the terminal; live call logging remains unfinished.
+
 The optional [startup-owned call-log path](docs/PHONE_LOG_RESERVATION.md) now
 combines saved settings, canonical path selection and queue-held file claims.
 Capture to the claimed log is refused; capture to another file still works.

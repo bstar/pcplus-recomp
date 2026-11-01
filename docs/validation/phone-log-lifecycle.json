@@ -1,0 +1,540 @@
+{
+  "passed": true,
+  "source_commit": "aa6969e617f769d991bed7dfafc8e9388db6ac30",
+  "original_inputs": [],
+  "native_workflows": 12,
+  "repeated_native_workflows": 12,
+  "native_assertions": 550,
+  "source_count": 18,
+  "sources": {
+    "src/directory/phone_log_lifecycle.c": "6af897a67fce2e28485a7c204dd074d7bd9d4b252e2344d565a88131b19a5010",
+    "src/directory/phone_log_queue.c": "b978fdbaf96e06bba0d903d974b2f53ecddfc8a3a043f76ecee2bbb2a8b44de9",
+    "src/directory/phone_log_format.c": "b73827cab4a738c8e6b84da800f5f784892fab1125dfe56ede925b406c0c63da",
+    "src/directory/phone_log_clock.c": "540b643652f23a7894767dabd8219b7aade3da0517c3175d1f5452399b4747a2",
+    "src/directory/phone_log_file.c": "0eef8e0216170cc7b9453214b378e4c7f7ca00393e944e52f4818cdc917fee10",
+    "src/directory/phone_log_fs.c": "b6f5ea0456ee5348868e0dd3d4463a6f8fc8cca15a599f106949d342627b3e43",
+    "src/capture/capture_fs.c": "51b17907493fbe6ab11b82b7e5b2fdae4a1db47b8d5a843b9d839878ae84f5f8",
+    "src/directory/phone_log_lifecycle.h": "343779fcb7b55431ad60d1418c173991011ed0abd20046f641cb89f8cda35fe1",
+    "src/directory/phone_log_queue.h": "374833a9da35dc5a8522707767fe0f30c1687d438dabd1dc3ddb04cdf2cb393c",
+    "src/directory/phone_log_format.h": "f864eeac7530d5fb7d1258e2c678bdb331f468071d79a9485eb02fc1d3ad2e62",
+    "src/directory/phone_log_clock.h": "6369f15694dfb8aa7c0dbd84c9a2bfad0f76ee98ba4cbdfb63c200a41374e703",
+    "src/directory/phone_log_file.h": "31586f61365fe00164b26623826cbc54d92f7336be5fd2155ac08361f0a6e796",
+    "src/directory/phone_log_fs.h": "56f622bc34c24f244993cb46ec5f015ff0d06acefb25b966da99af9910fe4329",
+    "src/capture/capture_fs.h": "806b050d4b9ebc1dd66c4d4d30d9b08e2e5256043eb51e7f07aba69524512155",
+    "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
+    "standalone/phone_log_lifecycle_diagnostic.c": "4a7de35b8e2dcbd0200d8f653ffa725761bfc52946ccfeb571811c65c6983338",
+    "standalone/test_phone_log_lifecycle_dos.py": "eff7a77c115091aa08a2bfd29e2e58a635eb1f3b82775628c8754cce3054d5e5",
+    "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2"
+  },
+  "original": {
+    "path": "build/phone-log-lifecycle-dos-03/result.json",
+    "sha256": "c97320c778123a0467cde2b5a3bbf247170ef2e6eb5f7d82a66f6bde22848e71",
+    "checks": {
+      "all_variants": true,
+      "sources_unchanged": true
+    },
+    "variants": {
+      "near": {
+        "passed": true,
+        "checks": {
+          "DOS_exit": true,
+          "all_cases": true,
+          "hardware_restored": true
+        },
+        "cases": {
+          "0": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 46,
+            "stdout": "LIFECYCLE 46 checks 0 failures\r\n"
+          },
+          "1": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 58,
+            "stdout": "LIFECYCLE 58 checks 0 failures\r\n"
+          },
+          "2": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 49,
+            "stdout": "LIFECYCLE 49 checks 0 failures\r\n"
+          },
+          "3": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 50,
+            "stdout": "LIFECYCLE 50 checks 0 failures\r\n"
+          },
+          "4": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 41,
+            "stdout": "LIFECYCLE 41 checks 0 failures\r\n"
+          },
+          "5": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 31,
+            "stdout": "LIFECYCLE 31 checks 0 failures\r\n"
+          }
+        },
+        "binary_sha256": "4be0f779d1540cd1baa597ffb24c22b28d82ceb12eb4ab07da6a69e116327c04"
+      },
+      "far": {
+        "passed": true,
+        "checks": {
+          "DOS_exit": true,
+          "all_cases": true,
+          "hardware_restored": true
+        },
+        "cases": {
+          "0": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 46,
+            "stdout": "LIFECYCLE 46 checks 0 failures\r\n"
+          },
+          "1": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 58,
+            "stdout": "LIFECYCLE 58 checks 0 failures\r\n"
+          },
+          "2": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 49,
+            "stdout": "LIFECYCLE 49 checks 0 failures\r\n"
+          },
+          "3": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 50,
+            "stdout": "LIFECYCLE 50 checks 0 failures\r\n"
+          },
+          "4": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 41,
+            "stdout": "LIFECYCLE 41 checks 0 failures\r\n"
+          },
+          "5": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 31,
+            "stdout": "LIFECYCLE 31 checks 0 failures\r\n"
+          }
+        },
+        "binary_sha256": "2ae78d362af043a468032be0b0b39f2f85248eb5a84e5e8ef1f7652d0e66bc0e"
+      }
+    }
+  },
+  "public_repeat": {
+    "path": "build/phone-log-lifecycle-public-01/source/build/repeated/result.json",
+    "sha256": "17772d4b003a8bf6f53cbf777cd9b8c8710d35320c44843d5c6b341f22fd00f7",
+    "checks": {
+      "all_variants": true,
+      "sources_unchanged": true
+    },
+    "variants": {
+      "near": {
+        "passed": true,
+        "checks": {
+          "DOS_exit": true,
+          "all_cases": true,
+          "hardware_restored": true
+        },
+        "cases": {
+          "0": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 46,
+            "stdout": "LIFECYCLE 46 checks 0 failures\r\n"
+          },
+          "1": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 58,
+            "stdout": "LIFECYCLE 58 checks 0 failures\r\n"
+          },
+          "2": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 49,
+            "stdout": "LIFECYCLE 49 checks 0 failures\r\n"
+          },
+          "3": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 50,
+            "stdout": "LIFECYCLE 50 checks 0 failures\r\n"
+          },
+          "4": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 41,
+            "stdout": "LIFECYCLE 41 checks 0 failures\r\n"
+          },
+          "5": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 31,
+            "stdout": "LIFECYCLE 31 checks 0 failures\r\n"
+          }
+        },
+        "binary_sha256": "4be0f779d1540cd1baa597ffb24c22b28d82ceb12eb4ab07da6a69e116327c04"
+      },
+      "far": {
+        "passed": true,
+        "checks": {
+          "DOS_exit": true,
+          "all_cases": true,
+          "hardware_restored": true
+        },
+        "cases": {
+          "0": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 46,
+            "stdout": "LIFECYCLE 46 checks 0 failures\r\n"
+          },
+          "1": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 58,
+            "stdout": "LIFECYCLE 58 checks 0 failures\r\n"
+          },
+          "2": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 49,
+            "stdout": "LIFECYCLE 49 checks 0 failures\r\n"
+          },
+          "3": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 50,
+            "stdout": "LIFECYCLE 50 checks 0 failures\r\n"
+          },
+          "4": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 41,
+            "stdout": "LIFECYCLE 41 checks 0 failures\r\n"
+          },
+          "5": {
+            "passed": true,
+            "checks": {
+              "DOS_assertions": true,
+              "exact_log": true,
+              "DS_equals_SS": true
+            },
+            "assertions": 31,
+            "stdout": "LIFECYCLE 31 checks 0 failures\r\n"
+          }
+        },
+        "binary_sha256": "2ae78d362af043a468032be0b0b39f2f85248eb5a84e5e8ef1f7652d0e66bc0e"
+      }
+    }
+  },
+  "export": {
+    "path": "build/phone-log-lifecycle-public-01/export.json",
+    "sha256": "ed0ba8df035900720198fab77d8551df7bdf851ec4e1d4284caddbcbbf0e1cee"
+  },
+  "artifacts": {
+    "build/phone-log-lifecycle-dos-03/result.json": "c97320c778123a0467cde2b5a3bbf247170ef2e6eb5f7d82a66f6bde22848e71",
+    "build/phone-log-lifecycle-dos-03/near/phone_log_lifecycle.obj": "f6ec0e372dfacd065c3df250897aced1dbfbdaf463542667a2e9b89bc8824958",
+    "build/phone-log-lifecycle-dos-03/near/phone_log_queue.obj": "68f72586ac495cece18bc69690a5163eaf50e501bbdaa9318f4b5a4c38267252",
+    "build/phone-log-lifecycle-dos-03/near/phone_log_format.obj": "5161aa884ae439e6977648a16521d2d08d8d15abf8e545633794b2b9375b72c2",
+    "build/phone-log-lifecycle-dos-03/near/phone_log_clock.obj": "40ac85edfb3edc275bc68c5f5c043210cdde84ed9645b7ad127ad74240897ffe",
+    "build/phone-log-lifecycle-dos-03/near/phone_log_file.obj": "7e03ec5196672ec5d7ff43162154166cae8bc9ef684552cc360588270d71a4be",
+    "build/phone-log-lifecycle-dos-03/near/phone_log_fs.obj": "0d6cc8d88ffec7a7973530da4a282218445c7ae56d8823284fca4d75f8a8b8a2",
+    "build/phone-log-lifecycle-dos-03/near/capture_fs.obj": "1a0774f5456a7b1e1939a3a35863e555613e94b537dc605914ea7ca18f2b54b8",
+    "build/phone-log-lifecycle-dos-03/near/phone_log_lifecycle_diagnostic.o": "3069fbf67095e916a2d24c1a040338b34758da00f40b7682dfb38a13c42a19ba",
+    "build/phone-log-lifecycle-dos-03/near/LIFE.map": "57cd08c4fc090551c4c13aa9c0758c99a51e9cb19638f7edbc7bc6c9eee3f5ff",
+    "build/phone-log-lifecycle-dos-03/near/LIFE.EXE": "4be0f779d1540cd1baa597ffb24c22b28d82ceb12eb4ab07da6a69e116327c04",
+    "build/phone-log-lifecycle-dos-03/near/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/phone-log-lifecycle-dos-03/near/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/phone-log-lifecycle-dos-03/near/dosbox.conf": "5aacd3f9b047af80600e62cde6f08317f48159d92f2898e3251c51f830c75a8d",
+    "build/phone-log-lifecycle-dos-03/near/dosbox.log": "998ea0df2e6db7da1ebdb737dfbf77250cf10ff2b8083210a198cfbd1f6b4885",
+    "build/phone-log-lifecycle-dos-03/near/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/phone-log-lifecycle-dos-03/near/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/phone-log-lifecycle-dos-03/near/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/phone-log-lifecycle-dos-03/far/phone_log_lifecycle.obj": "f6ec0e372dfacd065c3df250897aced1dbfbdaf463542667a2e9b89bc8824958",
+    "build/phone-log-lifecycle-dos-03/far/phone_log_queue.obj": "7c7ed04a85fb90219fa7f05da262e15d71bf259e122f3422c5843ae8cb8b701d",
+    "build/phone-log-lifecycle-dos-03/far/phone_log_format.obj": "5161aa884ae439e6977648a16521d2d08d8d15abf8e545633794b2b9375b72c2",
+    "build/phone-log-lifecycle-dos-03/far/phone_log_clock.obj": "40ac85edfb3edc275bc68c5f5c043210cdde84ed9645b7ad127ad74240897ffe",
+    "build/phone-log-lifecycle-dos-03/far/phone_log_file.obj": "7e03ec5196672ec5d7ff43162154166cae8bc9ef684552cc360588270d71a4be",
+    "build/phone-log-lifecycle-dos-03/far/phone_log_fs.obj": "0d6cc8d88ffec7a7973530da4a282218445c7ae56d8823284fca4d75f8a8b8a2",
+    "build/phone-log-lifecycle-dos-03/far/capture_fs.obj": "1a0774f5456a7b1e1939a3a35863e555613e94b537dc605914ea7ca18f2b54b8",
+    "build/phone-log-lifecycle-dos-03/far/phone_log_lifecycle_diagnostic.o": "3069fbf67095e916a2d24c1a040338b34758da00f40b7682dfb38a13c42a19ba",
+    "build/phone-log-lifecycle-dos-03/far/LIFE.map": "e388fb3bb2b1ed9be1a900b0dbd7314867f89abeb59f70e1eebdfe4b5d5bd772",
+    "build/phone-log-lifecycle-dos-03/far/LIFE.EXE": "2ae78d362af043a468032be0b0b39f2f85248eb5a84e5e8ef1f7652d0e66bc0e",
+    "build/phone-log-lifecycle-dos-03/far/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/phone-log-lifecycle-dos-03/far/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/phone-log-lifecycle-dos-03/far/dosbox.conf": "35053653870f6bb80a23da3fe459ac3ce2ab7e2450471ff6d1e77459afec095d",
+    "build/phone-log-lifecycle-dos-03/far/dosbox.log": "fe37d0db649752b50f61be00a3a78e2d554dc4742de370823d35a5270e9bb869",
+    "build/phone-log-lifecycle-dos-03/far/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/phone-log-lifecycle-dos-03/far/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/phone-log-lifecycle-dos-03/far/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/phone-log-lifecycle-dos-03/far/T000/RESULT.TXT": "d9f88b1166f6a4cb485990424a35ca7e25af85acbd9f9013d2e839f12cd1f7f4",
+    "build/phone-log-lifecycle-dos-03/far/T000/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-dos-03/far/T000/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-dos-03/far/T001/RESULT.TXT": "ccc847ca8815774366198368bc35ecea67bad8bf78df137eff83a70356fd08bd",
+    "build/phone-log-lifecycle-dos-03/far/T001/CALLS.FON": "b10c920a41989ddc93f6c9294709d2f6d07a616603aef7b366772726d1157598",
+    "build/phone-log-lifecycle-dos-03/far/T001/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-dos-03/far/T002/RESULT.TXT": "1b0d0feb00ec20625706986e1fc0dd1615b82bcb0d0f63b104e2d55a58c42b14",
+    "build/phone-log-lifecycle-dos-03/far/T002/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-dos-03/far/T002/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-dos-03/far/T003/RESULT.TXT": "ea65a26337a1df05501b5e5c04a34c7df1413300a173a4c2084613c3e30c1f8c",
+    "build/phone-log-lifecycle-dos-03/far/T003/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-dos-03/far/T003/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-dos-03/far/T004/RESULT.TXT": "3dd1b4096893290cf593e16fde55f1006a532439fc997f43217c53703dc95466",
+    "build/phone-log-lifecycle-dos-03/far/T004/CALLS.FON": "f82b3f989cb182e43904699f50cf33bf41c0b66cd7efca4a9d43510527801356",
+    "build/phone-log-lifecycle-dos-03/far/T004/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-dos-03/far/T005/RESULT.TXT": "b2132f1bd99a3da94e2413f0115b40502db5bdf5b3a22964993de0b6885b2872",
+    "build/phone-log-lifecycle-dos-03/far/T005/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-dos-03/near/T000/RESULT.TXT": "d9f88b1166f6a4cb485990424a35ca7e25af85acbd9f9013d2e839f12cd1f7f4",
+    "build/phone-log-lifecycle-dos-03/near/T000/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-dos-03/near/T000/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-dos-03/near/T001/RESULT.TXT": "ccc847ca8815774366198368bc35ecea67bad8bf78df137eff83a70356fd08bd",
+    "build/phone-log-lifecycle-dos-03/near/T001/CALLS.FON": "b10c920a41989ddc93f6c9294709d2f6d07a616603aef7b366772726d1157598",
+    "build/phone-log-lifecycle-dos-03/near/T001/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-dos-03/near/T002/RESULT.TXT": "1b0d0feb00ec20625706986e1fc0dd1615b82bcb0d0f63b104e2d55a58c42b14",
+    "build/phone-log-lifecycle-dos-03/near/T002/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-dos-03/near/T002/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-dos-03/near/T003/RESULT.TXT": "ea65a26337a1df05501b5e5c04a34c7df1413300a173a4c2084613c3e30c1f8c",
+    "build/phone-log-lifecycle-dos-03/near/T003/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-dos-03/near/T003/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-dos-03/near/T004/RESULT.TXT": "3dd1b4096893290cf593e16fde55f1006a532439fc997f43217c53703dc95466",
+    "build/phone-log-lifecycle-dos-03/near/T004/CALLS.FON": "f82b3f989cb182e43904699f50cf33bf41c0b66cd7efca4a9d43510527801356",
+    "build/phone-log-lifecycle-dos-03/near/T004/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-dos-03/near/T005/RESULT.TXT": "b2132f1bd99a3da94e2413f0115b40502db5bdf5b3a22964993de0b6885b2872",
+    "build/phone-log-lifecycle-dos-03/near/T005/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-dos-03/source/standalone/phone_log_lifecycle_diagnostic.c": "4a7de35b8e2dcbd0200d8f653ffa725761bfc52946ccfeb571811c65c6983338",
+    "build/phone-log-lifecycle-dos-03/source/standalone/test_phone_log_lifecycle_dos.py": "eff7a77c115091aa08a2bfd29e2e58a635eb1f3b82775628c8754cce3054d5e5",
+    "build/phone-log-lifecycle-dos-03/source/standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_lifecycle.c": "6af897a67fce2e28485a7c204dd074d7bd9d4b252e2344d565a88131b19a5010",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_queue.c": "b978fdbaf96e06bba0d903d974b2f53ecddfc8a3a043f76ecee2bbb2a8b44de9",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_format.c": "b73827cab4a738c8e6b84da800f5f784892fab1125dfe56ede925b406c0c63da",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_clock.c": "540b643652f23a7894767dabd8219b7aade3da0517c3175d1f5452399b4747a2",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_file.c": "0eef8e0216170cc7b9453214b378e4c7f7ca00393e944e52f4818cdc917fee10",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_fs.c": "b6f5ea0456ee5348868e0dd3d4463a6f8fc8cca15a599f106949d342627b3e43",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_lifecycle.h": "343779fcb7b55431ad60d1418c173991011ed0abd20046f641cb89f8cda35fe1",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_queue.h": "374833a9da35dc5a8522707767fe0f30c1687d438dabd1dc3ddb04cdf2cb393c",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_format.h": "f864eeac7530d5fb7d1258e2c678bdb331f468071d79a9485eb02fc1d3ad2e62",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_clock.h": "6369f15694dfb8aa7c0dbd84c9a2bfad0f76ee98ba4cbdfb63c200a41374e703",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_file.h": "31586f61365fe00164b26623826cbc54d92f7336be5fd2155ac08361f0a6e796",
+    "build/phone-log-lifecycle-dos-03/source/src/directory/phone_log_fs.h": "56f622bc34c24f244993cb46ec5f015ff0d06acefb25b966da99af9910fe4329",
+    "build/phone-log-lifecycle-dos-03/source/src/capture/capture_fs.c": "51b17907493fbe6ab11b82b7e5b2fdae4a1db47b8d5a843b9d839878ae84f5f8",
+    "build/phone-log-lifecycle-dos-03/source/src/capture/capture_fs.h": "806b050d4b9ebc1dd66c4d4d30d9b08e2e5256043eb51e7f07aba69524512155",
+    "build/phone-log-lifecycle-dos-03/source/src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/result.json": "17772d4b003a8bf6f53cbf777cd9b8c8710d35320c44843d5c6b341f22fd00f7",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/phone_log_lifecycle.obj": "b72c7eb0683a60cd6830322291f739b704a53525b3eb62507c6ac2345835b817",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/phone_log_queue.obj": "18823d0cc388df29d6116633d7ee9713ff2bf454e58403e38ae07a79207e56c4",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/phone_log_format.obj": "320f39df98937415c747e7a6ccb45480db29d3a68c9b3680038aef3e5022b755",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/phone_log_clock.obj": "d188ad5bb1be70baa92a49210405ae48803e9b36460ac13dd78beca36d6c0241",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/phone_log_file.obj": "4f75c7f8a75538c02b6ac1a60ccefae7c2d9f24c19387e6628c014c472b4a6b1",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/phone_log_fs.obj": "981430f61ed7beebf4d41ced7dd74f263e0846183aa995638d679486d3db537b",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/capture_fs.obj": "259b56354d1595b90b338d01ddd1adce54fe2c24bf8b0108319134350d67b0b2",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/phone_log_lifecycle_diagnostic.o": "591744c2012dd3fbb165755113c701bbf861989b040ef14957d59e3cca28b9fe",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/LIFE.map": "f9d55f7ea41f84c0a30a0f99c4eb01cd9a5694530bafcfbb2e3b9f72f0900e7d",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/LIFE.EXE": "4be0f779d1540cd1baa597ffb24c22b28d82ceb12eb4ab07da6a69e116327c04",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/dosbox.conf": "a25da789aaed5fe302cd39d6fb79efed01fc14e8f7b066c8a94df177e893f24e",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/dosbox.log": "8e93f56fa8d68d2b3077f87d39ff9fe67f8ec348c38c5add002ea9ad65ebd329",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/phone_log_lifecycle.obj": "b72c7eb0683a60cd6830322291f739b704a53525b3eb62507c6ac2345835b817",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/phone_log_queue.obj": "02b820cbd6a1f502bab8b2786acf89d2ffb7ed8f629c86bd801af746de381d97",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/phone_log_format.obj": "320f39df98937415c747e7a6ccb45480db29d3a68c9b3680038aef3e5022b755",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/phone_log_clock.obj": "d188ad5bb1be70baa92a49210405ae48803e9b36460ac13dd78beca36d6c0241",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/phone_log_file.obj": "4f75c7f8a75538c02b6ac1a60ccefae7c2d9f24c19387e6628c014c472b4a6b1",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/phone_log_fs.obj": "981430f61ed7beebf4d41ced7dd74f263e0846183aa995638d679486d3db537b",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/capture_fs.obj": "259b56354d1595b90b338d01ddd1adce54fe2c24bf8b0108319134350d67b0b2",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/phone_log_lifecycle_diagnostic.o": "591744c2012dd3fbb165755113c701bbf861989b040ef14957d59e3cca28b9fe",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/LIFE.map": "c95adf796b737222ecdf22d6655adaf88ce9c8d5baacec5342200675cc96dd3e",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/LIFE.EXE": "2ae78d362af043a468032be0b0b39f2f85248eb5a84e5e8ef1f7652d0e66bc0e",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/sampler.asm": "8775b264f83947e0499082b4047f14765a1633dabfc876be79a51eb4a4741625",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/SNAP.COM": "926c4c7b7555c4db9b14022edbebf78fcfb3956e42da405f6b5468ad5d3a6516",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/dosbox.conf": "bd94c9c93b921ccd76b74e9769588de09ee8bd00156ce3665e43846d0dc7cfff",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/dosbox.log": "cab60303a054cb9fdc53c7098617c31443eacdab387310c1b6e1364bab81bb3f",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T000/RESULT.TXT": "d9f88b1166f6a4cb485990424a35ca7e25af85acbd9f9013d2e839f12cd1f7f4",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T000/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T000/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T001/RESULT.TXT": "ccc847ca8815774366198368bc35ecea67bad8bf78df137eff83a70356fd08bd",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T001/CALLS.FON": "b10c920a41989ddc93f6c9294709d2f6d07a616603aef7b366772726d1157598",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T001/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T002/RESULT.TXT": "1b0d0feb00ec20625706986e1fc0dd1615b82bcb0d0f63b104e2d55a58c42b14",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T002/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T002/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T003/RESULT.TXT": "ea65a26337a1df05501b5e5c04a34c7df1413300a173a4c2084613c3e30c1f8c",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T003/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T003/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T004/RESULT.TXT": "3dd1b4096893290cf593e16fde55f1006a532439fc997f43217c53703dc95466",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T004/CALLS.FON": "f82b3f989cb182e43904699f50cf33bf41c0b66cd7efca4a9d43510527801356",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T004/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T005/RESULT.TXT": "b2132f1bd99a3da94e2413f0115b40502db5bdf5b3a22964993de0b6885b2872",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/far/T005/CONTEXT.BIN": "8a501aeb92c624984f1881216bcc7d75ee9dc2720060ecaf082e7ed970867462",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T000/RESULT.TXT": "d9f88b1166f6a4cb485990424a35ca7e25af85acbd9f9013d2e839f12cd1f7f4",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T000/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T000/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T001/RESULT.TXT": "ccc847ca8815774366198368bc35ecea67bad8bf78df137eff83a70356fd08bd",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T001/CALLS.FON": "b10c920a41989ddc93f6c9294709d2f6d07a616603aef7b366772726d1157598",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T001/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T002/RESULT.TXT": "1b0d0feb00ec20625706986e1fc0dd1615b82bcb0d0f63b104e2d55a58c42b14",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T002/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T002/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T003/RESULT.TXT": "ea65a26337a1df05501b5e5c04a34c7df1413300a173a4c2084613c3e30c1f8c",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T003/CALLS.FON": "5d409f5b5a5f5f64f5174421fb1448dde298ebbc529d8956c4e9b824c2964edc",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T003/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T004/RESULT.TXT": "3dd1b4096893290cf593e16fde55f1006a532439fc997f43217c53703dc95466",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T004/CALLS.FON": "f82b3f989cb182e43904699f50cf33bf41c0b66cd7efca4a9d43510527801356",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T004/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T005/RESULT.TXT": "b2132f1bd99a3da94e2413f0115b40502db5bdf5b3a22964993de0b6885b2872",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/near/T005/CONTEXT.BIN": "78d1525a1d03415e4c01218850b8481e656357b2455e324ab95f9ac702d94395",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/standalone/phone_log_lifecycle_diagnostic.c": "4a7de35b8e2dcbd0200d8f653ffa725761bfc52946ccfeb571811c65c6983338",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/standalone/test_phone_log_lifecycle_dos.py": "eff7a77c115091aa08a2bfd29e2e58a635eb1f3b82775628c8754cce3054d5e5",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_lifecycle.c": "6af897a67fce2e28485a7c204dd074d7bd9d4b252e2344d565a88131b19a5010",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_queue.c": "b978fdbaf96e06bba0d903d974b2f53ecddfc8a3a043f76ecee2bbb2a8b44de9",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_format.c": "b73827cab4a738c8e6b84da800f5f784892fab1125dfe56ede925b406c0c63da",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_clock.c": "540b643652f23a7894767dabd8219b7aade3da0517c3175d1f5452399b4747a2",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_file.c": "0eef8e0216170cc7b9453214b378e4c7f7ca00393e944e52f4818cdc917fee10",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_fs.c": "b6f5ea0456ee5348868e0dd3d4463a6f8fc8cca15a599f106949d342627b3e43",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_lifecycle.h": "343779fcb7b55431ad60d1418c173991011ed0abd20046f641cb89f8cda35fe1",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_queue.h": "374833a9da35dc5a8522707767fe0f30c1687d438dabd1dc3ddb04cdf2cb393c",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_format.h": "f864eeac7530d5fb7d1258e2c678bdb331f468071d79a9485eb02fc1d3ad2e62",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_clock.h": "6369f15694dfb8aa7c0dbd84c9a2bfad0f76ee98ba4cbdfb63c200a41374e703",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_file.h": "31586f61365fe00164b26623826cbc54d92f7336be5fd2155ac08361f0a6e796",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/directory/phone_log_fs.h": "56f622bc34c24f244993cb46ec5f015ff0d06acefb25b966da99af9910fe4329",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/capture/capture_fs.c": "51b17907493fbe6ab11b82b7e5b2fdae4a1db47b8d5a843b9d839878ae84f5f8",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/capture/capture_fs.h": "806b050d4b9ebc1dd66c4d4d30d9b08e2e5256043eb51e7f07aba69524512155",
+    "build/phone-log-lifecycle-public-01/source/build/repeated/source/src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c"
+  },
+  "owner_bytes": 38,
+  "snapshot_bytes": 10,
+  "terminal_hooks_wired": false,
+  "disk_polling_wired": false,
+  "published_package_unchanged": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Component producer; not yet banked or hooked into the terminal.",
+    "END refusal is an explicit wrapper fault; actual queue saturation tests exercise admission.",
+    "Ambiguous close is modeled after actual DOS close. Generation wrap, child clock/handoff and physical transport are not covered.",
+    "No whole application, F07/F10, child ownership, physical-modem or card acceptance.",
+    "The prior link-ABI and stdout-newline attempts are excluded; only the successful -03 run and its committed-source repeat are accepted."
+  ]
+}
