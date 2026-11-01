@@ -10,7 +10,7 @@ NIC's existing boot-ROM enable, address and size.
 Select **Network management (Ethernet / FTP)** in the DOS startup menu.
 The default remains EM (Expanded memory + Mouse), with its ten-second timeout.
 The management entry uses HIMEM, branches before UNISOUND initialization, and
-skips the mouse and game shell. `C:\NET\NETMGR.BAT` loads the packet driver,
+loads the normal COM1 mouse driver and skips the game shell. `C:\NET\NETMGR.BAT` loads the packet driver,
 runs DHCP, then starts the foreground FTP server only after successful DHCP.
 Failures stop at the DOS prompt with the diagnostic visible.
 
@@ -42,6 +42,7 @@ card's existing mTCP2020 DHCP, FTP server/client, Ping, packet utility and HTTP
 client. `C:\UTILS\NET` is unchanged. MTCP.CFG uses hostname LOC386, MTU576,
 packet interrupt60h and one FTP client. Boot files were backed up on the card
 at `C:\NET\BOOTBK01` and locally in ignored `build/network-boot-01`.
+The mouse addition has a separate startup backup at `C:\NET\NETMOUSE.BAK`.
 To restore the previous boot menu and startup:
 
 ```dos
