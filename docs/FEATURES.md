@@ -1,7 +1,15 @@
 # Full application reconstruction checklist
 
+[Log startup and failed rollback](PHONE_LOG_STARTUP_IO.md) now pass five workflows
+with writable logs present before startup and three commit/rollback failure
+workflows. Successful rollback allows confirmed retry; failed truncation or
+rollback commit preserves recovery and refuses retry/PROGRAM handoff. A clean
+public-source rebuild repeats these eight cases and 24 earlier application
+cases with the exact unchanged image. Permissions, slow I/O, wider transport/
+feature/rendering and physical/card acceptance remain open.
+
 [Existing call logs and rollback](PHONE_LOG_EXISTING.md) now have five additional
-full-terminal DOS cases: empty/prior-record/over64KB appends and real partial
+full-terminal DOS cases: empty/prior-record/over 64KB appends and real partial
 writes followed by short-count or explicit-error returns. Both fault cases
 restore the original file before confirmed retry and save the original START
 once. The unchanged application reproduces from committed public sources;
@@ -748,7 +756,7 @@ owner/controller and explicit near-platform adapters. The fault VM now fits
 with1019 near-code bytes spare and passes93 VM fault/control routes with3451
 checks. A forced-bank component passes all eight serial
 routes, including successful WAIT return; fresh source trees reproduce22
-component and24 VM/terminal products. Full application publication, parent
+component and 24 VM/terminal products. Full application publication, parent
 lifetime and every F01–F16 gate remain open; CLI retention is covered above.
 
 The [guarded PROGRAM binding](validation/program-break-owner.json) passes eight
@@ -1501,7 +1509,7 @@ all whole-application gates remain open.
 
 F13 now includes GETFDATE/GETFTIME/SETFDATE/SETFTIME through a native-prefix stream
 adapter. [Timestamp evidence](ASPECT_FILE_TIMES.md) binds390 exact+87 reused bytes,
-507 component/original cases,108 original compiler outcomes and248 real DOS VM
+507 component/original cases,108 original compiler outcomes and 248 real DOS VM
 invocations. A native control separates lost-global/destructive-input behavior
 from maintained writeback/input-copy corrections. That checkpoint supported100
 slots and rejected115; every whole-application gate remains open.

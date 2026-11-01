@@ -1,7 +1,15 @@
 # Complete DOS rebuild plan
 
+[Log startup and failed rollback](docs/PHONE_LOG_STARTUP_IO.md) now pass five workflows
+with writable logs present before startup and three commit/rollback failure
+workflows. Successful rollback allows confirmed retry; failed truncation or
+rollback commit preserves recovery and refuses retry/PROGRAM handoff. A clean
+public-source rebuild repeats these eight cases and 24 earlier application
+cases with the exact unchanged image. Permissions, slow I/O, wider transport/
+feature/rendering and physical/card acceptance remain open.
+
 [Existing call logs and rollback](docs/PHONE_LOG_EXISTING.md) now have five additional
-full-terminal DOS cases: empty/prior-record/over64KB appends and real partial
+full-terminal DOS cases: empty/prior-record/over 64KB appends and real partial
 writes followed by short-count or explicit-error returns. Both fault cases
 restore the original file before confirmed retry and save the original START
 once. The unchanged application reproduces from committed public sources;
@@ -2302,7 +2310,7 @@ CRC-framed completed-file retransmissions silently, without another write or
 ACK/NAK, and consumes bounded valid closing headers before literal OO. Three
 linked counterexamples become21 passing checks with one file install, confirmed
 success and an intact application tail. Thirteen error/bound tests,92 component
-cases and24 independent helper sessions pass. All78 linked workflows, five
+cases and 24 independent helper sessions pass. All78 linked workflows, five
 cancellation cases, three ABI groups, the slow-carrier recheck and14 actual DOS
 automatic-transfer checks also pass on the corrected executable.
 
@@ -3526,7 +3534,7 @@ Serial BREAK now executes through native opcode0D, SET09 and FETCH37, with
 ASIOv4 capability6 inheriting the raw configured word and owning the actual
 native notice/cursor bracket. Five actual DOS product cases cover configured
 350/1000, raw65535, zero and in-pulse Escape cleanup. The expanded1146-case DOS
-suite checks all twelve FETCH getters and244 unsupported selectors. The parent
+suite checks all twelve FETCH getters and 244 unsupported selectors. The parent
 Alt-B timing policy remains separate. See `docs/ASPECT_BREAK_RUNTIME.md` and its
 native/transport evidence. Complete scripting, keyboard/UI and recorder remain
 part of the full goal; no whole-application gate closes.

@@ -1,5 +1,9 @@
 # Existing call logs and rollback in the terminal
 
+The later [startup and I/O checkpoint](PHONE_LOG_STARTUP_IO.md) adds existing
+writable files before startup, commit retry and protected failed rollback.
+This page retains its original after-startup seed boundary.
+
 The optional call-log controls image now has application-level tests for
 appending to an empty file, preserving earlier call rows, and seeking beyond
 64KB. Two additional cases perform real partial DOS writes and verify rollback

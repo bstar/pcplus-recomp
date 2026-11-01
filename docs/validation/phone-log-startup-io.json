@@ -1,0 +1,912 @@
+{
+  "passed": true,
+  "source_commit": "97a4e92eef09ce1d33c2f3b9391fffe53e4aa30a",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/terminal-phone-log-bank-3d164fda0202/TERMINAL.EXE",
+    "sha256": "2c5f5fc4dd4b9948b897db6499e920f694f30fbbbcdf3d1fb0596cbc921027f7",
+    "unchanged_from_existing_checkpoint": true
+  },
+  "original_preexisting_cases": 5,
+  "original_io_failure_cases": 3,
+  "public_cases": 32,
+  "public_source_proof": {
+    "path": "build/phone-log-startup-io-public-01/result.json",
+    "sha256": "abc65280bae67b0ddd7ce543363f9d414a7e684995a44bd955fa7e686fae4846",
+    "source_count": 1739,
+    "build_log_sha256": "1af3286f06e0edee4bc267ab8576a9517f7b8554940295b23b605438893036c6"
+  },
+  "evidence": {
+    "native_preexisting": {
+      "path": "build/phone-log-events-terminal/preexisting-final-01/result.json",
+      "sha256": "821379f82c8255dac538d84cb4c60aa45e4336056f78ee7651000906cd86efe6",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true
+          }
+        },
+        {
+          "case": "existing-records",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true
+          }
+        },
+        {
+          "case": "existing-large",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true
+          }
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "first_data_write_observed": true,
+            "rollback_truncate_and_commit": true,
+            "rollback_verified_before_retry": true,
+            "original_timestamp_not_replaced": true,
+            "retained_START_saved_exactly": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmed_ack_visible": true,
+            "ack_enqueued_no_disk_IO": true,
+            "repaired_original_timestamp_saved": true
+          }
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "first_data_write_observed": true,
+            "rollback_truncate_and_commit": true,
+            "rollback_verified_before_retry": true,
+            "original_timestamp_not_replaced": true,
+            "retained_START_saved_exactly": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmed_ack_visible": true,
+            "ack_enqueued_no_disk_IO": true,
+            "repaired_original_timestamp_saved": true
+          }
+        }
+      ],
+      "verified_artifacts": 86,
+      "existing_files_before_startup": true,
+      "io_failure_matrix": false
+    },
+    "native_io_failures": {
+      "path": "build/phone-log-events-terminal/io-failures-final-01/result.json",
+      "sha256": "1fc94ad84694a2bf58d2505198ed98bdb7a9cb8cb28c0971b3d6fcfdcc2c714c",
+      "cases": [
+        {
+          "case": "ui-commit-retry",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "first_data_write_observed": true,
+            "rollback_truncate_and_commit": true,
+            "rollback_verified_before_retry": true,
+            "original_timestamp_not_replaced": true,
+            "retained_START_saved_exactly": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmed_ack_visible": true,
+            "ack_enqueued_no_disk_IO": true,
+            "repaired_original_timestamp_saved": true
+          }
+        },
+        {
+          "case": "ui-rollback-truncate",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "actual_recovery": true,
+            "no_blind_retry": true,
+            "queue_recovery_preserved": true,
+            "original_generation_preserved": true,
+            "retained_END": true,
+            "partial_file_exact": true,
+            "uncertain_handle_blocks_child": true,
+            "real_partial_write_then_failed_rollback": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "recovery_retry_refused": true
+          }
+        },
+        {
+          "case": "ui-rollback-commit",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "actual_recovery": true,
+            "no_blind_retry": true,
+            "queue_recovery_preserved": true,
+            "original_generation_preserved": true,
+            "retained_END": true,
+            "partial_file_exact": true,
+            "uncertain_handle_blocks_child": true,
+            "real_partial_write_then_failed_rollback": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "recovery_retry_refused": true
+          }
+        }
+      ],
+      "verified_artifacts": 61,
+      "existing_files_before_startup": true,
+      "io_failure_matrix": true
+    },
+    "public-existing": {
+      "path": "build/phone-log-startup-io-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "f440e79250f4b9be9fa94c6d1c54c057e8873c557bdb8062ac7c397216a35f26",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86,
+      "existing_files_before_startup": false,
+      "io_failure_matrix": false
+    },
+    "public-controls": {
+      "path": "build/phone-log-startup-io-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "8796a11f8064e2c2201bf7f9fbe0cbedf9792b22b2c782419d1f9eaeb356de02",
+      "cases": [
+        {
+          "case": "success",
+          "passed": true
+        },
+        {
+          "case": "hangup",
+          "passed": true
+        },
+        {
+          "case": "busy",
+          "passed": true
+        },
+        {
+          "case": "silence",
+          "passed": true
+        },
+        {
+          "case": "redial",
+          "passed": true
+        },
+        {
+          "case": "disabled",
+          "passed": true
+        },
+        {
+          "case": "direct",
+          "passed": true
+        },
+        {
+          "case": "capacity",
+          "passed": true
+        },
+        {
+          "case": "soft",
+          "passed": true
+        },
+        {
+          "case": "both",
+          "passed": true
+        },
+        {
+          "case": "none",
+          "passed": true
+        },
+        {
+          "case": "fs-failure",
+          "passed": true
+        },
+        {
+          "case": "program",
+          "passed": true
+        },
+        {
+          "case": "ui-ready",
+          "passed": true
+        },
+        {
+          "case": "ui-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-unrepaired",
+          "passed": true
+        },
+        {
+          "case": "ui-recovery",
+          "passed": true
+        },
+        {
+          "case": "ui-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 316,
+      "existing_files_before_startup": false,
+      "io_failure_matrix": false
+    },
+    "public-preexisting": {
+      "path": "build/phone-log-startup-io-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+      "sha256": "c312088318d36bba0671712393564f74ab9e15320cbe7be75b549584fa99e049",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true
+          }
+        },
+        {
+          "case": "existing-records",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true
+          }
+        },
+        {
+          "case": "existing-large",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true
+          }
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "first_data_write_observed": true,
+            "rollback_truncate_and_commit": true,
+            "rollback_verified_before_retry": true,
+            "original_timestamp_not_replaced": true,
+            "retained_START_saved_exactly": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmed_ack_visible": true,
+            "ack_enqueued_no_disk_IO": true,
+            "repaired_original_timestamp_saved": true
+          }
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "first_data_write_observed": true,
+            "rollback_truncate_and_commit": true,
+            "rollback_verified_before_retry": true,
+            "original_timestamp_not_replaced": true,
+            "retained_START_saved_exactly": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmed_ack_visible": true,
+            "ack_enqueued_no_disk_IO": true,
+            "repaired_original_timestamp_saved": true
+          }
+        }
+      ],
+      "verified_artifacts": 86,
+      "existing_files_before_startup": true,
+      "io_failure_matrix": false
+    },
+    "public-io-failures": {
+      "path": "build/phone-log-startup-io-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+      "sha256": "96d07e9c3647f64afd12aa427d9921b50d81e55177afc19c4af355f8bcc0f074",
+      "cases": [
+        {
+          "case": "ui-commit-retry",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "first_data_write_observed": true,
+            "rollback_truncate_and_commit": true,
+            "rollback_verified_before_retry": true,
+            "original_timestamp_not_replaced": true,
+            "retained_START_saved_exactly": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmed_ack_visible": true,
+            "ack_enqueued_no_disk_IO": true,
+            "repaired_original_timestamp_saved": true
+          }
+        },
+        {
+          "case": "ui-rollback-truncate",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "actual_recovery": true,
+            "no_blind_retry": true,
+            "queue_recovery_preserved": true,
+            "original_generation_preserved": true,
+            "retained_END": true,
+            "partial_file_exact": true,
+            "uncertain_handle_blocks_child": true,
+            "real_partial_write_then_failed_rollback": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "recovery_retry_refused": true
+          }
+        },
+        {
+          "case": "ui-rollback-commit",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "actual_recovery": true,
+            "no_blind_retry": true,
+            "queue_recovery_preserved": true,
+            "original_generation_preserved": true,
+            "retained_END": true,
+            "partial_file_exact": true,
+            "uncertain_handle_blocks_child": true,
+            "real_partial_write_then_failed_rollback": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "recovery_retry_refused": true
+          }
+        }
+      ],
+      "verified_artifacts": 61,
+      "existing_files_before_startup": true,
+      "io_failure_matrix": true
+    }
+  },
+  "physical_file_and_fault_snapshots": [
+    {
+      "run": "native_preexisting",
+      "case": "existing-empty",
+      "physical_file_bytes": 161,
+      "sha256": "fa0568d39a6772ac0df4f08117b482ca246ac0ac3007569ee9fa26892d395915"
+    },
+    {
+      "run": "native_preexisting",
+      "case": "existing-records",
+      "physical_file_bytes": 242,
+      "sha256": "b4154f033b494333ab4959238a6d895512f1396e732083576cc21147502b6190"
+    },
+    {
+      "run": "native_preexisting",
+      "case": "existing-large",
+      "physical_file_bytes": 73061,
+      "sha256": "9cd0d129466dd2e6c3c528218a1c02ad189c3780a7d8c7470fd6d621bdd241e1"
+    },
+    {
+      "run": "native_preexisting",
+      "case": "ui-short-retry",
+      "physical_file_bytes": 242,
+      "sha256": "8124c5ce6187b64d3dfd12547287fb561a63f4368dcd8cfa3093f20d25dec9d2",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        7,
+        61462,
+        65535,
+        3,
+        1,
+        3
+      ]
+    },
+    {
+      "run": "native_preexisting",
+      "case": "ui-write-error-retry",
+      "physical_file_bytes": 73061,
+      "sha256": "12702b90b2eb4ba99d3cc8232889ef7f8ef38acb64282dfe70e76e57422fcf4e",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        7,
+        61462,
+        65535,
+        3,
+        1,
+        3
+      ]
+    },
+    {
+      "run": "native_io_failures",
+      "case": "ui-commit-retry",
+      "physical_file_bytes": 73061,
+      "sha256": "605af87f3da4e05acf6846472127b6e60c63904f5adca4c06524508e23537ca6",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        64,
+        61462,
+        65535,
+        3,
+        1,
+        4
+      ]
+    },
+    {
+      "run": "native_io_failures",
+      "case": "ui-rollback-truncate",
+      "physical_file_bytes": 72987,
+      "sha256": "23e876f060ce616b0919a6ba7cbc21144adfe3d2955630d57c16d86b7948c606",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        7,
+        61462,
+        65535,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "run": "native_io_failures",
+      "case": "ui-rollback-commit",
+      "physical_file_bytes": 72980,
+      "sha256": "8104f06b3b0c9892361b37131a31d901181556c06eb3c2d9a8c3712eb89bf87c",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        7,
+        61462,
+        65535,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "run": "public-preexisting",
+      "case": "existing-empty",
+      "physical_file_bytes": 161,
+      "sha256": "b36c38591094ffe7ef97341344e1b6c4565356f345f7cea8c097f0c6d2604124"
+    },
+    {
+      "run": "public-preexisting",
+      "case": "existing-records",
+      "physical_file_bytes": 242,
+      "sha256": "98c694db6674e4349f2a6d5eef4b00770f191ec2318af4c6d55e088b02ae9fb7"
+    },
+    {
+      "run": "public-preexisting",
+      "case": "existing-large",
+      "physical_file_bytes": 73061,
+      "sha256": "bc6011273fb6ae81d9cb0156198258fb5ee9619372b4aeb9fe7cf297433dd157"
+    },
+    {
+      "run": "public-preexisting",
+      "case": "ui-short-retry",
+      "physical_file_bytes": 242,
+      "sha256": "4c1cc441dce809170a93c61c025fcd93cd4e0b8625f4bb978abd451e6bf346f7",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        7,
+        61462,
+        65535,
+        3,
+        1,
+        3
+      ]
+    },
+    {
+      "run": "public-preexisting",
+      "case": "ui-write-error-retry",
+      "physical_file_bytes": 73061,
+      "sha256": "c7b1e8680bfec835b1308d0f70c7cb88572aba25e667727cf0c8b76519772688",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        7,
+        61462,
+        65535,
+        3,
+        1,
+        3
+      ]
+    },
+    {
+      "run": "public-io-failures",
+      "case": "ui-commit-retry",
+      "physical_file_bytes": 73061,
+      "sha256": "307a4f874afd126b832e718723757d61a04a6678bbf96199999b75be565e2a9c",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        64,
+        61462,
+        65535,
+        3,
+        1,
+        4
+      ]
+    },
+    {
+      "run": "public-io-failures",
+      "case": "ui-rollback-truncate",
+      "physical_file_bytes": 72987,
+      "sha256": "23e876f060ce616b0919a6ba7cbc21144adfe3d2955630d57c16d86b7948c606",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        7,
+        61462,
+        65535,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "run": "public-io-failures",
+      "case": "ui-rollback-commit",
+      "physical_file_bytes": 72980,
+      "sha256": "8104f06b3b0c9892361b37131a31d901181556c06eb3c2d9a8c3712eb89bf87c",
+      "write_fault_snapshot": [
+        22342,
+        1,
+        64,
+        7,
+        61462,
+        65535,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "unchanged_default_write_fixtures": [
+    {
+      "name": "SHORT.COM",
+      "sha256": "e46c655ef6dce7c0fb6d930ceeb4f67e0d500f50498ed679644d3a9896abe1ad"
+    },
+    {
+      "name": "WRERR.COM",
+      "sha256": "74990797156e7d61ddfabf03251d91be83e2511e14832f2cc4e8b84216e4f803"
+    }
+  ],
+  "source_files": {
+    "standalone/test_phone_log_events_terminal.py": "1fb81a843277187e07a69a71494bb18c9fa58e0063ef4bc716810e26de82d733",
+    "standalone/prove_phone_log_existing_terminal.py": "1e9aba9772826344c59c0bc126d38ddda3886c16205dab7b4a61ff8d543c1575",
+    "standalone/phone_log_write_fault.asm": "3b8a9725d5a0e4d795608e153c73a068ae9b62b08f51aa09eb888057d9d1f325"
+  },
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Writable regular files present before application startup; no read-only/sharing/concurrent-writer acceptance.",
+    "Explicit DOS-call fixture: real data writes and successful rollback operations; failed commit/truncate requests return error5 without performing the operation. Not physical media failure.",
+    "Native probes excluded; accepted final native matrices and committed-source replay only.",
+    "Earlier disabled-variant receipt keeps separate acceptance boundary; no fresh all-feature-combinations run.",
+    "No automatic reconciliation of uncertain files, slow-I/O/sustained-transport, full F01-F16, every-frame rendering, physical Boca/SPA2102 or card-deployment closure.",
+    "No live BBS, installed bridge, ATA, network, published package or card changed."
+  ]
+}
