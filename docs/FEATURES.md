@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[ASPECT carrier loss and logged redial](PHONE_LOG_ASPECT_CARRIER.md) now pass WAITFOR and
+WHEN DISCONNECT, each with and without the real cooperative Alt-Z window.
+Four native cases and a clean public-source replay of all 49 logging workflows
+pass with exact unchanged TERMINAL/ASPECT images. Script return, two call pairs,
+original START stamps, second-call keyboard/query responses and hardware restore
+are checked. Transfer/generic-child/fault loss, broad feature/rendering and
+physical/card acceptance remain open; the published package is unchanged.
+
 [Carrier loss and logged redial](PHONE_LOG_CARRIER.md) now pass ordinary HARD loss
 and loss during HARD/SOFT writes using actual virtual modem DCD. Each original
 DOS parent redials, resumes input and saves two exact call pairs, preserving

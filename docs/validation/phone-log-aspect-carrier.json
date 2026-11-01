@@ -1,0 +1,1281 @@
+{
+  "passed": true,
+  "source_commit": "9b0a537b317a9db0b420df39e27582ac56762f94",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/terminal-phone-log-bank-d882144fee4f/TERMINAL.EXE",
+    "sha256": "003bc6b7a0529c737b697c1149d2cfecfef930b5e96406df9dba31d9c137380f",
+    "unchanged_from_stock_BBS_checkpoint": true
+  },
+  "runner": {
+    "path": "build/aspect-register-parent-custom-irq/ASPECT.EXE",
+    "sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+  },
+  "native_aspect_cases": 4,
+  "public_cases": 49,
+  "public_source_proof": {
+    "path": "build/phone-log-aspect-carrier-public-01/result.json",
+    "sha256": "1c4a2e5284d777913dd7ef4570c850005094c2b26117da15e08c4224fad16018",
+    "source_count": 1983,
+    "build_log_sha256": "33215a26fd5ab7d2743a4f07a427eaf415df249b767e5eb2254161fc4bf11c4b"
+  },
+  "evidence": {
+    "native_aspect_carrier": {
+      "path": "build/phone-log-carrier-terminal/aspect-carrier-final-02/result.json",
+      "sha256": "116d83efa5e30a0da45306214ee5ed841cb8424021f93aa1ea9aed1047b2d870",
+      "cases": [
+        {
+          "case": "aspect-wait",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_ASPECT_progress": true,
+            "actual_live_child": true,
+            "actual_disconnect_policy": true,
+            "actual_window_visibility": true,
+            "child_error_free": true,
+            "child_wait_service": true,
+            "actual_child_exit": true
+          },
+          "aspect": {
+            "handler": false,
+            "window": false,
+            "observer": [
+              94,
+              0,
+              0,
+              34352,
+              34352,
+              49,
+              0,
+              54,
+              1
+            ],
+            "marker": "START|RETURN|",
+            "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:37477 11/01/26 04:11:58 ",
+              "end": "04:12:04 00:00:06",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:37477 11/01/26 04:12:10 ",
+              "end": "04:12:17 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3485
+                },
+                {
+                  "kind": "partial-CSI",
+                  "seconds": 5.7948
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.9952
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.9952
+                }
+              ],
+              "errors": [],
+              "dropped": true
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 14.8722
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 18.0157
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 20.7539
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "6979665f5bb13f667652874bf6cc2055094565f56450abf87017311b7b0d228c",
+          "snapshot_sha256": "a613760300eca5d04ea075d4e8b8e11e1601b822cf766b3251477b9801d81b96"
+        },
+        {
+          "case": "aspect-when",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_ASPECT_progress": true,
+            "actual_live_child": true,
+            "actual_disconnect_policy": true,
+            "actual_window_visibility": true,
+            "child_error_free": true,
+            "child_wait_service": true,
+            "actual_child_exit": true
+          },
+          "aspect": {
+            "handler": true,
+            "window": false,
+            "observer": [
+              94,
+              45,
+              0,
+              34352,
+              34352,
+              49,
+              0,
+              54,
+              1
+            ],
+            "marker": "START|LOST|",
+            "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36611 11/01/26 04:12:20 ",
+              "end": "04:12:26 00:00:06",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36611 11/01/26 04:12:32 ",
+              "end": "04:12:39 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3648
+                },
+                {
+                  "kind": "partial-CSI",
+                  "seconds": 5.8106
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 6.0109
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 6.011
+                }
+              ],
+              "errors": [],
+              "dropped": true
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 14.8873
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 18.0314
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 20.7688
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "2ff029c98d19cf0e8c9385a609e2bfbefca6a0c6aaafa5715fe79a1c78bd1118",
+          "snapshot_sha256": "443467abd5fce124dcf1ace286deb5232927cc52cae9b4e34f3edcea45a2c84f"
+        },
+        {
+          "case": "aspect-wait-window",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_ASPECT_progress": true,
+            "actual_live_child": true,
+            "actual_disconnect_policy": true,
+            "actual_window_visibility": true,
+            "child_error_free": true,
+            "child_wait_service": true,
+            "actual_child_exit": true
+          },
+          "aspect": {
+            "handler": false,
+            "window": true,
+            "observer": [
+              95,
+              0,
+              80,
+              34352,
+              34352,
+              50,
+              0,
+              54,
+              1
+            ],
+            "marker": "START|RETURN|",
+            "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:40757 11/01/26 04:12:41 ",
+              "end": "04:12:47 00:00:06",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:40757 11/01/26 04:12:54 ",
+              "end": "04:13:01 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3435
+                },
+                {
+                  "kind": "partial-CSI",
+                  "seconds": 5.79
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.9901
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.9902
+                }
+              ],
+              "errors": [],
+              "dropped": true
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 15.47
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 18.6139
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 21.3528
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "0df732c93f63d52fbeaf2939478e15b6e8b5e6dc3b1d4f49f14d572b840b3bad",
+          "snapshot_sha256": "2ccf3ef6c2b56f0a59ca8a64ef034a6e6778d39994574d5c0d220f501d922161"
+        },
+        {
+          "case": "aspect-when-window",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_ASPECT_progress": true,
+            "actual_live_child": true,
+            "actual_disconnect_policy": true,
+            "actual_window_visibility": true,
+            "child_error_free": true,
+            "child_wait_service": true,
+            "actual_child_exit": true
+          },
+          "aspect": {
+            "handler": true,
+            "window": true,
+            "observer": [
+              95,
+              45,
+              80,
+              34352,
+              34352,
+              50,
+              0,
+              54,
+              1
+            ],
+            "marker": "START|LOST|",
+            "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:46011 11/01/26 04:13:04 ",
+              "end": "04:13:10 00:00:06",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:46011 11/01/26 04:13:17 ",
+              "end": "04:13:24 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3543
+                },
+                {
+                  "kind": "partial-CSI",
+                  "seconds": 5.8021
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 6.0024
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 6.0025
+                }
+              ],
+              "errors": [],
+              "dropped": true
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 15.4819
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 18.6262
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 21.3634
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "e68d37b8edee4723761304a47aa193ce84f544d8db833c543069dc6fc5574a4c",
+          "snapshot_sha256": "a8cc8d4a2bea2d1045dfc23e31be71cde738a8671609cd86fda2616851eef795"
+        }
+      ],
+      "verified_artifacts": 92
+    },
+    "public-existing": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "71038c2fa7642469205fcdaf39aec8e7178f8c01267e7b7fefa85090accc4ad2",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-controls": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "ff973ab84edf0b17a7cc3ed387906c34207a7b4329a2e7399e2d71128cdc6a47",
+      "cases": [
+        {
+          "case": "success",
+          "passed": true
+        },
+        {
+          "case": "hangup",
+          "passed": true
+        },
+        {
+          "case": "busy",
+          "passed": true
+        },
+        {
+          "case": "silence",
+          "passed": true
+        },
+        {
+          "case": "redial",
+          "passed": true
+        },
+        {
+          "case": "disabled",
+          "passed": true
+        },
+        {
+          "case": "direct",
+          "passed": true
+        },
+        {
+          "case": "capacity",
+          "passed": true
+        },
+        {
+          "case": "soft",
+          "passed": true
+        },
+        {
+          "case": "both",
+          "passed": true
+        },
+        {
+          "case": "none",
+          "passed": true
+        },
+        {
+          "case": "fs-failure",
+          "passed": true
+        },
+        {
+          "case": "program",
+          "passed": true
+        },
+        {
+          "case": "ui-ready",
+          "passed": true
+        },
+        {
+          "case": "ui-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-unrepaired",
+          "passed": true
+        },
+        {
+          "case": "ui-recovery",
+          "passed": true
+        },
+        {
+          "case": "ui-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 316
+    },
+    "public-preexisting": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+      "sha256": "da49ded1d3ae9d77e55368c3c04d1c6ac6fe1ffc9e859c877026e4f719e8f271",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-io-failures": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+      "sha256": "f24191e652f4943b186a6bb6e59f89b8fb52a786100e9c97be82513935afdb6f",
+      "cases": [
+        {
+          "case": "ui-commit-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-truncate",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-commit",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 61
+    },
+    "public-permissions": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-events-terminal/public-permissions/result.json",
+      "sha256": "090ddd93f2192969452c3e3e908b4481a76de8335f7dff26108755fd15f68f67",
+      "cases": [
+        {
+          "case": "ui-readonly-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-readonly-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 42
+    },
+    "public-readonly": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-startup-terminal/public-readonly/result.json",
+      "sha256": "d861fc2a701c96652bca7503ff209befe59b8d8cc5c517b2ebb68412ef47ce47",
+      "cases": [
+        {
+          "case": "readonly",
+          "passed": true
+        },
+        {
+          "case": "readonly-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 36
+    },
+    "public-slow": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-slow-terminal/public-slow/result.json",
+      "sha256": "44bbb58dc2c290fa5eae5ceabb352196efdc860b82547784ad8eaa9555734d62",
+      "cases": [
+        {
+          "case": "soft-9",
+          "passed": true
+        },
+        {
+          "case": "both-36",
+          "passed": true
+        },
+        {
+          "case": "none-36",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-watermark": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-slow-terminal/public-watermark/result.json",
+      "sha256": "35d57eaea40061786333164f5af59ea0ef7982b4cd9622c458ad1cef8f5d0dba",
+      "cases": [
+        {
+          "case": "soft-watermark",
+          "passed": true
+        },
+        {
+          "case": "both-watermark",
+          "passed": true
+        },
+        {
+          "case": "hard-watermark",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-carrier": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-carrier-terminal/public-carrier/result.json",
+      "sha256": "e44ebea54842abeeb3df5ebb73db03a73a1fe59fe8553fc6c3ef697fdb3cd336",
+      "cases": [
+        {
+          "case": "idle-hard",
+          "passed": true
+        },
+        {
+          "case": "write-hard",
+          "passed": true
+        },
+        {
+          "case": "write-soft",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 51
+    },
+    "public-aspect-carrier": {
+      "path": "build/phone-log-aspect-carrier-public-01/source/build/phone-log-carrier-terminal/public-aspect-carrier/result.json",
+      "sha256": "94310494f1debb183fd7bbee7a7e1deb126b433603b28ba5722fc7cbb0fc795e",
+      "cases": [
+        {
+          "case": "aspect-wait",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_ASPECT_progress": true,
+            "actual_live_child": true,
+            "actual_disconnect_policy": true,
+            "actual_window_visibility": true,
+            "child_error_free": true,
+            "child_wait_service": true,
+            "actual_child_exit": true
+          },
+          "aspect": {
+            "handler": false,
+            "window": false,
+            "observer": [
+              94,
+              0,
+              0,
+              34352,
+              34352,
+              49,
+              0,
+              54,
+              1
+            ],
+            "marker": "START|RETURN|",
+            "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45207 11/01/26 04:18:59 ",
+              "end": "04:19:05 00:00:06",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45207 11/01/26 04:19:11 ",
+              "end": "04:19:18 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3355
+                },
+                {
+                  "kind": "partial-CSI",
+                  "seconds": 5.7815
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.9819
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.982
+                }
+              ],
+              "errors": [],
+              "dropped": true
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 14.8578
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 18.0021
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 20.7403
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "b83e50e206a251a7fbfdf4d92433fff5d9371e6625d283003980e30d9c872873",
+          "snapshot_sha256": "679846f79c6d52916346df156b26c46cddfb0080c807781e2ec6b604c1fe7bc8"
+        },
+        {
+          "case": "aspect-when",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_ASPECT_progress": true,
+            "actual_live_child": true,
+            "actual_disconnect_policy": true,
+            "actual_window_visibility": true,
+            "child_error_free": true,
+            "child_wait_service": true,
+            "actual_child_exit": true
+          },
+          "aspect": {
+            "handler": true,
+            "window": false,
+            "observer": [
+              94,
+              45,
+              0,
+              34352,
+              34352,
+              49,
+              0,
+              54,
+              1
+            ],
+            "marker": "START|LOST|",
+            "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:42991 11/01/26 04:19:21 ",
+              "end": "04:19:27 00:00:06",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:42991 11/01/26 04:19:33 ",
+              "end": "04:19:40 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3427
+                },
+                {
+                  "kind": "partial-CSI",
+                  "seconds": 5.7895
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.9898
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.9899
+                }
+              ],
+              "errors": [],
+              "dropped": true
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 14.8659
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 18.0097
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 20.7485
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "63a82e0315dbb91b18cbb1e7ac03b86ff45b224b50830132f3c0fe24b67fdbb5",
+          "snapshot_sha256": "ab351e6b67cc782a0c49deff752b76dc4a25be61ba1cd76a2abac1dd1207b7d3"
+        },
+        {
+          "case": "aspect-wait-window",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_ASPECT_progress": true,
+            "actual_live_child": true,
+            "actual_disconnect_policy": true,
+            "actual_window_visibility": true,
+            "child_error_free": true,
+            "child_wait_service": true,
+            "actual_child_exit": true
+          },
+          "aspect": {
+            "handler": false,
+            "window": true,
+            "observer": [
+              95,
+              0,
+              80,
+              34352,
+              34352,
+              50,
+              0,
+              54,
+              1
+            ],
+            "marker": "START|RETURN|",
+            "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36931 11/01/26 04:19:43 ",
+              "end": "04:19:49 00:00:06",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36931 11/01/26 04:19:56 ",
+              "end": "04:20:03 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3625
+                },
+                {
+                  "kind": "partial-CSI",
+                  "seconds": 5.8088
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 6.0092
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 6.0093
+                }
+              ],
+              "errors": [],
+              "dropped": true
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 15.4891
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 18.6326
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 21.3716
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "f58f0754a6b4c93a1f883ed10fb074a77171cfc3642ab007614dcfcb38ffa436",
+          "snapshot_sha256": "cb58fc08803f402c58b01369ef47544d74488a5ce422b92d10aecbbbe356b90a"
+        },
+        {
+          "case": "aspect-when-window",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_ASPECT_progress": true,
+            "actual_live_child": true,
+            "actual_disconnect_policy": true,
+            "actual_window_visibility": true,
+            "child_error_free": true,
+            "child_wait_service": true,
+            "actual_child_exit": true
+          },
+          "aspect": {
+            "handler": true,
+            "window": true,
+            "observer": [
+              95,
+              45,
+              80,
+              34352,
+              34352,
+              50,
+              0,
+              54,
+              1
+            ],
+            "marker": "START|LOST|",
+            "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34993 11/01/26 04:20:05 ",
+              "end": "04:20:11 00:00:06",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34993 11/01/26 04:20:18 ",
+              "end": "04:20:25 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3471
+                },
+                {
+                  "kind": "partial-CSI",
+                  "seconds": 5.7937
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.9941
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.9942
+                }
+              ],
+              "errors": [],
+              "dropped": true
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 15.4739
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 18.6173
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 21.3557
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "7478cdb4717165a186772c3956ba232f2cdfb53ee894d9631595304fff46ed94",
+          "snapshot_sha256": "b81e2f7b155b738b692b48ae29a0bad553fee6662b14d0f526eeae64e9117f25"
+        }
+      ],
+      "verified_artifacts": 92
+    }
+  },
+  "unchanged_default_observers": [
+    {
+      "path": "build/phone-log-carrier-terminal/public-carrier/idle-hard/PLWATCH.COM",
+      "sha256": "883789299c33680f226fe838bfb1fe1f20bb1e5ef8a9a15e8997db5d79fb61b3"
+    },
+    {
+      "path": "build/phone-log-carrier-terminal/public-carrier/write-hard/PLWATCH.COM",
+      "sha256": "883789299c33680f226fe838bfb1fe1f20bb1e5ef8a9a15e8997db5d79fb61b3"
+    },
+    {
+      "path": "build/phone-log-carrier-terminal/public-carrier/write-soft/PLWATCH.COM",
+      "sha256": "883789299c33680f226fe838bfb1fe1f20bb1e5ef8a9a15e8997db5d79fb61b3"
+    }
+  ],
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Actual DOSBox virtual modem DCD, not physical Boca/SPA2102/SIP/DSP/analog acceptance.",
+    "Observer identifies child by exact live IRQ and tracks its DS until verified DOS exit; parent remains allocated during EXEC. No product-memory or UART-output writes.",
+    "MSR reads clear delta bits. Application connection policy uses carrier level; no claim of electrically passive physical instrumentation.",
+    "Selected WAITFOR/WHEN DISCONNECT and cooperative script-window loss, ordinary return and same-parent redial only; no transfer/generic-child/fault or all script compositions.",
+    "Last sampled child runtime error is zero; exact expected marker and verified child exit are required, not a claim of continuous error-state sampling.",
+    "Earlier render-lease/window-witness and AX-clobber probes excluded; final four-case matrix and public repeat only.",
+    "No new stock-BBS rendering sessions. Previous stock-BBS receipt applies to unchanged terminal bytes; broad rendering/full F01-F16/deployment remain open.",
+    "Published package/card, live BBS, bridge service, ATA and host network unchanged."
+  ]
+}
