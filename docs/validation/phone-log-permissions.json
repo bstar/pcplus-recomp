@@ -1,0 +1,582 @@
+{
+  "passed": true,
+  "source_commit": "2f1259c4a09aa9aa7ecbc9fb360c52877255c602",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/terminal-phone-log-bank-3d164fda0202/TERMINAL.EXE",
+    "sha256": "2c5f5fc4dd4b9948b897db6499e920f694f30fbbbcdf3d1fb0596cbc921027f7",
+    "unchanged_from_startup_io_checkpoint": true
+  },
+  "original_readonly_cases": 2,
+  "original_runtime_permission_cases": 2,
+  "public_cases": 36,
+  "public_source_proof": {
+    "path": "build/phone-log-permissions-public-01/result.json",
+    "sha256": "608246df787cf886d4d28c64ee6de0aa7b32bd6cbf8bcd53cd403c314dfaf2a1",
+    "source_count": 1742,
+    "build_log_sha256": "3ac766de742cc6a3fd379b64ecbc02c9b031987c33f3678595545cef50331cd5"
+  },
+  "evidence": {
+    "native_readonly": {
+      "path": "build/phone-log-startup-terminal/readonly-final-01/result.json",
+      "sha256": "e55154e0b712190d738f7a45d04dad0f28fc26547a7a2caf156b5dd7cb977e70",
+      "cases": [
+        {
+          "case": "readonly",
+          "passed": true,
+          "checks": {
+            "normal_terminal": true,
+            "observer_magic": true,
+            "no_log_creation": true,
+            "real_readonly_preserved": true,
+            "no_modem_commands_if_refused": true,
+            "refused_before_UART_ownership": true,
+            "accurate_log_setup_notice": true
+          }
+        },
+        {
+          "case": "readonly-disabled",
+          "passed": true,
+          "checks": {
+            "normal_terminal": true,
+            "observer_magic": true,
+            "no_log_creation": true,
+            "real_readonly_preserved": true,
+            "no_modem_commands_if_refused": true,
+            "actual_live_capture": true,
+            "startup_status": true,
+            "private_far_queue": true,
+            "queue_flags": true,
+            "retained_path": true,
+            "claim_not_busy": true,
+            "claim_owner": true,
+            "claim_identity": true
+          }
+        }
+      ],
+      "verified_artifacts": 36
+    },
+    "native_permissions": {
+      "path": "build/phone-log-events-terminal/permissions-final-01/result.json",
+      "sha256": "e2e9554123d3b2ca9ce4595a0ac136211c1ca0ab09b6ce74c90c8376db8ada82",
+      "cases": [
+        {
+          "case": "ui-readonly-cancel",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "exact_event_records": true,
+            "bounded_failed_polls": true,
+            "namespace_preserved": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "real_readonly_change": true,
+            "final_access_observed": true,
+            "retry_notice_observed": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmation_cancelled": true
+          }
+        },
+        {
+          "case": "ui-readonly-retry",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "real_readonly_change": true,
+            "final_access_observed": true,
+            "retry_notice_observed": true,
+            "real_DOS_child_cleared_readonly": true,
+            "original_file_verified_before_ack": true,
+            "original_timestamp_not_replaced": true,
+            "retained_START_saved_exactly": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmed_ack_visible": true,
+            "ack_enqueued_no_disk_IO": true,
+            "repaired_original_timestamp_saved": true
+          }
+        }
+      ],
+      "verified_artifacts": 42
+    },
+    "public-existing": {
+      "path": "build/phone-log-permissions-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "2813dda880a7f6c25890d1f038860def6fe734cfeec75b986a0a3e372aedcd09",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-controls": {
+      "path": "build/phone-log-permissions-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "0c41f220395961ebd56465522f9ca1ae7630f62bb5031c25028545bc136fc209",
+      "cases": [
+        {
+          "case": "success",
+          "passed": true
+        },
+        {
+          "case": "hangup",
+          "passed": true
+        },
+        {
+          "case": "busy",
+          "passed": true
+        },
+        {
+          "case": "silence",
+          "passed": true
+        },
+        {
+          "case": "redial",
+          "passed": true
+        },
+        {
+          "case": "disabled",
+          "passed": true
+        },
+        {
+          "case": "direct",
+          "passed": true
+        },
+        {
+          "case": "capacity",
+          "passed": true
+        },
+        {
+          "case": "soft",
+          "passed": true
+        },
+        {
+          "case": "both",
+          "passed": true
+        },
+        {
+          "case": "none",
+          "passed": true
+        },
+        {
+          "case": "fs-failure",
+          "passed": true
+        },
+        {
+          "case": "program",
+          "passed": true
+        },
+        {
+          "case": "ui-ready",
+          "passed": true
+        },
+        {
+          "case": "ui-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-unrepaired",
+          "passed": true
+        },
+        {
+          "case": "ui-recovery",
+          "passed": true
+        },
+        {
+          "case": "ui-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 316
+    },
+    "public-preexisting": {
+      "path": "build/phone-log-permissions-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+      "sha256": "f807bd7442df2c38cf72ebb6da2eef0dbe71b684629463a9421308daa61329c9",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-io-failures": {
+      "path": "build/phone-log-permissions-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+      "sha256": "a36fbd67186b38943a2f4f4a9847a1e9f491c3bdff828d209339715ff75bde0f",
+      "cases": [
+        {
+          "case": "ui-commit-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-truncate",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-commit",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 61
+    },
+    "public-permissions": {
+      "path": "build/phone-log-permissions-public-01/source/build/phone-log-events-terminal/public-permissions/result.json",
+      "sha256": "e73705591f4f8a0224affd5c11c80987be16ddfc48f65e9b962011f4c6571381",
+      "cases": [
+        {
+          "case": "ui-readonly-cancel",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "exact_event_records": true,
+            "bounded_failed_polls": true,
+            "namespace_preserved": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "real_readonly_change": true,
+            "final_access_observed": true,
+            "retry_notice_observed": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmation_cancelled": true
+          }
+        },
+        {
+          "case": "ui-readonly-retry",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "one_poll_per_record": true,
+            "existing_prefix_preserved": true,
+            "exact_physical_append": true,
+            "heading_not_duplicated": true,
+            "foreground_append_while_online": true,
+            "normal_terminal": true,
+            "observer_final": true,
+            "actual_live_segments": true,
+            "actual_exit": true,
+            "expected_log_files": true,
+            "unsaved_notice": true,
+            "real_readonly_change": true,
+            "final_access_observed": true,
+            "retry_notice_observed": true,
+            "real_DOS_child_cleared_readonly": true,
+            "original_file_verified_before_ack": true,
+            "original_timestamp_not_replaced": true,
+            "retained_START_saved_exactly": true,
+            "explicit_retry_acks": true,
+            "actual_control_pane": true,
+            "fixed_destination_visible": true,
+            "local_menu_keys_not_sent": true,
+            "confirmed_ack_visible": true,
+            "ack_enqueued_no_disk_IO": true,
+            "repaired_original_timestamp_saved": true
+          }
+        }
+      ],
+      "verified_artifacts": 42
+    },
+    "public-readonly": {
+      "path": "build/phone-log-permissions-public-01/source/build/phone-log-startup-terminal/public-readonly/result.json",
+      "sha256": "e846783fd77066021c561a1031e2247251b71a076d0c9e7e6a151c3e6207c3e3",
+      "cases": [
+        {
+          "case": "readonly",
+          "passed": true,
+          "checks": {
+            "normal_terminal": true,
+            "observer_magic": true,
+            "no_log_creation": true,
+            "real_readonly_preserved": true,
+            "no_modem_commands_if_refused": true,
+            "refused_before_UART_ownership": true,
+            "accurate_log_setup_notice": true
+          }
+        },
+        {
+          "case": "readonly-disabled",
+          "passed": true,
+          "checks": {
+            "normal_terminal": true,
+            "observer_magic": true,
+            "no_log_creation": true,
+            "real_readonly_preserved": true,
+            "no_modem_commands_if_refused": true,
+            "actual_live_capture": true,
+            "startup_status": true,
+            "private_far_queue": true,
+            "queue_flags": true,
+            "retained_path": true,
+            "claim_not_busy": true,
+            "claim_owner": true,
+            "claim_identity": true
+          }
+        }
+      ],
+      "verified_artifacts": 36
+    }
+  },
+  "real_DOS_attribute_records": [
+    {
+      "run": "native_readonly",
+      "case": "readonly",
+      "DOS_attribute_snapshot": [
+        16716,
+        1,
+        1,
+        1,
+        32,
+        33,
+        0,
+        33
+      ],
+      "physical_file_bytes": 13,
+      "file_sha256": "c648e19e87e990eb5c319295b51676a496c545b279fbf370546a3dc4ba2a2fcf"
+    },
+    {
+      "run": "native_readonly",
+      "case": "readonly-disabled",
+      "DOS_attribute_snapshot": [
+        16716,
+        1,
+        0,
+        1,
+        32,
+        33,
+        0,
+        33
+      ],
+      "physical_file_bytes": 13,
+      "file_sha256": "c648e19e87e990eb5c319295b51676a496c545b279fbf370546a3dc4ba2a2fcf"
+    },
+    {
+      "run": "native_permissions",
+      "case": "ui-readonly-cancel",
+      "DOS_attribute_snapshot": [
+        16716,
+        0,
+        2,
+        1,
+        32,
+        33,
+        0,
+        33
+      ],
+      "physical_file_bytes": 161,
+      "file_sha256": "93ee894d427eabeea866821fc272ff9fa02e231b155da565676db09f5ceda9d0"
+    },
+    {
+      "run": "native_permissions",
+      "case": "ui-readonly-retry",
+      "DOS_attribute_snapshot": [
+        16716,
+        0,
+        6,
+        1,
+        32,
+        33,
+        0,
+        32
+      ],
+      "physical_file_bytes": 242,
+      "file_sha256": "0e65d983d5ab3c61cfef8c71f4ece7b659f871d7786ad7d1c28d7cdfcaf7f99e",
+      "child_clear_snapshot": [
+        16707,
+        33,
+        32
+      ],
+      "only_readonly_cleared": true
+    },
+    {
+      "run": "public-permissions",
+      "case": "ui-readonly-cancel",
+      "DOS_attribute_snapshot": [
+        16716,
+        0,
+        2,
+        1,
+        32,
+        33,
+        0,
+        33
+      ],
+      "physical_file_bytes": 161,
+      "file_sha256": "93ee894d427eabeea866821fc272ff9fa02e231b155da565676db09f5ceda9d0"
+    },
+    {
+      "run": "public-permissions",
+      "case": "ui-readonly-retry",
+      "DOS_attribute_snapshot": [
+        16716,
+        0,
+        6,
+        1,
+        32,
+        33,
+        0,
+        32
+      ],
+      "physical_file_bytes": 242,
+      "file_sha256": "4fb3b29887076ef418d20a5cf006b21920c73fa15eeecbb4d5b19883a61df5ba",
+      "child_clear_snapshot": [
+        16707,
+        33,
+        32
+      ],
+      "only_readonly_cleared": true
+    },
+    {
+      "run": "public-readonly",
+      "case": "readonly",
+      "DOS_attribute_snapshot": [
+        16716,
+        1,
+        1,
+        1,
+        32,
+        33,
+        0,
+        33
+      ],
+      "physical_file_bytes": 13,
+      "file_sha256": "c648e19e87e990eb5c319295b51676a496c545b279fbf370546a3dc4ba2a2fcf"
+    },
+    {
+      "run": "public-readonly",
+      "case": "readonly-disabled",
+      "DOS_attribute_snapshot": [
+        16716,
+        1,
+        0,
+        1,
+        32,
+        33,
+        0,
+        33
+      ],
+      "physical_file_bytes": 13,
+      "file_sha256": "c648e19e87e990eb5c319295b51676a496c545b279fbf370546a3dc4ba2a2fcf"
+    }
+  ],
+  "source_files": {
+    "standalone/test_phone_log_events_terminal.py": "5009ca89fb9dd1670666dc18f5280dc99c0c8e9352bb94acff710cd77c232f22",
+    "standalone/test_phone_log_startup_terminal.py": "54c3c130d79b48c552e104c19940a363f2060fb307f57897d1da61f2d5679b8e",
+    "standalone/prove_phone_log_existing_terminal.py": "b0052fdd1fdabce7e147fa021ac7968a9a6f488664ecc80cb47fcfd9d1ccc7ce",
+    "standalone/phone_log_attributes.asm": "437e9566335420b8e27b33f5fcb0470b58ece303c79fb14cf6ac76086758963a",
+    "standalone/phone_log_clear_attributes.asm": "92e6d32322254c996320675bedca760d8fb01a0f152163654a39b089cbbf5765"
+  },
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Genuine DOS read-only attributes on owned synthetic files, not every permission/sharing mode or concurrent external writer/replacement acceptance.",
+    "Attribute fixture changes real DOS metadata; collector restores original fixture attributes. No product variable/executable patches or synthetic filesystem return for these four cases.",
+    "First probes mistimed the transition by missing the relative startup spelling. Only final native matrices and committed-source repeats are accepted.",
+    "Earlier write-failure and disabled-variant receipts retain their own acceptance boundaries; not a new all-feature-variants run.",
+    "No slow-I/O/sustained-transport, full F01-F16, every-frame rendering, physical Boca/SPA2102 or card-deployment closure.",
+    "No published package, card, live BBS, installed bridge, ATA or host network change."
+  ]
+}

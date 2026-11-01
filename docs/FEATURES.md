@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[DOS log access and repair](PHONE_LOG_PERMISSIONS.md) now pass four additional native
+workflows using genuine read-only attributes. Enabled logging refuses a
+read-only file before UART ownership; disabled logging ignores it. Runtime
+access failure retains records, and a real DOS child can repair access before
+confirmed retry saves the original call. A public-source rebuild repeats
+all four and 32 earlier cases with the unchanged application. Sharing, other
+permissions, slow I/O and wider application/physical/card gates remain open.
+
 [Log startup and failed rollback](PHONE_LOG_STARTUP_IO.md) now pass five workflows
 with writable logs present before startup and three commit/rollback failure
 workflows. Successful rollback allows confirmed retry; failed truncation or

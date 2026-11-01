@@ -1,5 +1,9 @@
 # Log startup and failed rollback in the terminal
 
+The later [DOS access checkpoint](PHONE_LOG_PERMISSIONS.md) adds genuine
+read-only startup refusal, disabled logging and runtime access repair through
+a real child. This page retains its original writable-file and I/O-fault scope.
+
 The optional call-log controls image now has five startup workflows with
 existing writable logs and three commit/rollback failure workflows. The image
 is unchanged. These tests extend the earlier
