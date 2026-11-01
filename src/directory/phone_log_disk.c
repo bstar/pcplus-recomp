@@ -164,3 +164,28 @@ unsigned __cdecl phone_log_disk_before_program(void)
  }
  return capture_before_program();
 }
+
+#ifdef PHONE_LOG_CONTROLS
+unsigned terminal_phone_log_retry_acks=0;
+unsigned __cdecl phone_log_disk_retry(void)
+{
+ phone_log_queue_snapshot queue;unsigned status,file;
+ if(busy || !(read_flags()&0x200U) || terminal_quit || terminal_aspect_active ||
+    terminal_program_active || terminal_program_pending || process_busy || terminal_parser_active ||
+    terminal_transfer_pending || terminal_transfer_active || terminal_controller_active || terminal_monitor_active ||
+    terminal_macro_active || terminal_ansi_wait_active || uart_break_hold)return PLQ_BUSY;
+ busy=1;
+ status=phone_log_queue_inspect(&queue);
+ if(status){busy=0;return status;}
+ file=phone_log_file_initialize();
+ if(queue.recovery_required || file==PLF_RECOVERY || phone_log_file_result.handle_uncertain || phone_log_file_result.recovery_required){busy=0;return PLQ_RECOVERY;}
+ if(file){busy=0;return PLQ_BUSY;}
+ if(!queue.enabled){busy=0;return PLQ_DISABLED;}
+ if(phone_log_event_fault()){busy=0;return PLQ_CLOCK;}
+ if(!queue.retry_required && !terminal_phone_log_disk_status){busy=0;return PLQ_STATE;}
+ if(queue.retry_required){status=phone_log_queue_retry();if(status){busy=0;return status;}}
+ terminal_phone_log_disk_status=last_notice=0;
+ terminal_phone_log_event_status=0;++terminal_phone_log_retry_acks;
+ busy=0;++terminal_phone_log_event_epoch;return PLQ_OK;
+}
+#endif

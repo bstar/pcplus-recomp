@@ -6,11 +6,14 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False,dial_action=None):
+def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False,dial_action=None,online_actions=(),auxiliary=()):
  assert cpu in ('8086','286','386','486')
  assert irq is None or irq in (3,4,5,7)
  assert working_drive in ("c","d")
  assert observer is None or (observer.isalnum() and observer.isupper() and len(observer)<=8 and observer+'.COM' in (files or {}))
+ for helper in auxiliary:assert helper.isalnum() and helper.isupper() and len(helper)<=8 and helper+'.COM' in (files or {})
+ auxiliary_start='\n'.join('D:\\'+helper+' T' for helper in auxiliary)
+ auxiliary_stop='\n'.join('D:\\'+helper for helper in reversed(auxiliary))
  observer_start=('D:\\'+observer+' T') if observer else ''
  observer_stop=('D:\\'+observer) if observer else ''
  out=ROOT/'build/connection-dos'/name;out.mkdir(parents=True,exist_ok=True)
@@ -44,9 +47,9 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
   assert len(target)<=20;staged[at:at+21]=target.ljust(21,b'\0');directory=bytes(staged)
   (out/'TEST.DIR').write_bytes(directory)
 
- wire=bytearray();commands=[];errors=[];stop=threading.Event();checks={};attempts=0;triggered=0;trigger_chunks_expected=0;trigger_chunks_sent=0
+ wire=bytearray();commands=[];errors=[];stop=threading.Event();checks={};attempts=0;triggered=0;trigger_chunks_expected=0;trigger_chunks_sent=0;actions_run=0
  def peer():
-  nonlocal attempts,triggered,trigger_chunks_expected,trigger_chunks_sent
+  nonlocal attempts,triggered,trigger_chunks_expected,trigger_chunks_sent,actions_run
   try:
    conn,_=server.accept()
    with conn:
@@ -76,6 +79,8 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
      for byte in block:
       if online:
        line.append(byte)
+       if actions_run<len(online_actions) and line.endswith(online_actions[actions_run][0]):
+        online_actions[actions_run][1](out);actions_run+=1
        if triggered<len(online_triggers) and line.endswith(online_triggers[triggered][0]):
         response=online_triggers[triggered][1];triggered+=1
         if isinstance(response,bytes):conn.sendall(response)
@@ -132,6 +137,7 @@ mount d "{out}"
 {working_drive}:
 {environment_commands}
 D:\\SNAP B
+{auxiliary_start}
 {observer_start}
 ADDKEY {keys}
 C:\\TERMINAL {arguments}
@@ -144,6 +150,7 @@ echo FAIL>D:\\FAIL.TXT
 :capture
 D:\\SNAP S
 {observer_stop}
+{auxiliary_stop}
 D:\\SNAP A
 exit
 '''
@@ -183,6 +190,7 @@ exit
  if mode in ('busy','silence'):checks['configured_abort_reached_wire']=bool(checks.get('configured_abort_reached_wire'))
  (out/'serial.bin').write_bytes(wire)
  (out/'screen.txt').write_text('\n'.join(screen[i*160:i*160+160:2].decode('cp437') for i in range(25))+'\n')
+ if online_actions:checks['owned_online_actions_run']=actions_run==len(online_actions)
  if online_triggers:checks['online_triggers_sent']=triggered==len(online_triggers)
  if trigger_chunks_expected:checks['online_trigger_chunks_sent']=trigger_chunks_sent==trigger_chunks_expected
  proof={'case':name,'passed':all(checks.values()),'checks':checks,'commands':commands,'errors':errors,'seconds':round(time.monotonic()-started,3),'binary_sha256':digest,'command':arguments,'expected_exit':expected,'working_drive':working_drive,'environment':environment or {},'cpu':configured_cpu,'emulated_modem':emulated_modem,'target':target.decode(),'scope':'Actual DOS main/controller/sender/UART/keyboard/ANSI replies and video, synthetic serial modem. Same-write CONNECT+banner, no injected terminal replies. Physical DCD/CTS not represented.'}

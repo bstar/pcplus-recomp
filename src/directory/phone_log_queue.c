@@ -230,3 +230,14 @@ unsigned __cdecl phone_log_queue_inspect(phone_log_queue_snapshot *out)
  out->last_started=owner.last_started;out->last_ended=owner.last_ended;out->committed_events=owner.committed;
  return PLQ_OK;
 }
+
+#ifdef PHONE_LOG_CONTROLS
+unsigned __cdecl phone_log_queue_destination(char *out,unsigned capacity)
+{
+ unsigned status=bootstrap(),i;
+ if(status)return status;
+ if(capacity!=64 || !safe(out,64))return PLQ_ARGUMENT;
+ for(i=0;i<64;++i){out[i]=owner.enabled?owner.path[i]:0;if(!out[i])return PLQ_OK;}
+ return PLQ_STATE;
+}
+#endif

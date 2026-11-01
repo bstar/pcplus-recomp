@@ -10,7 +10,7 @@ import sys
 from build_phone_log_queue import ROOT, sha
 
 
-def flags(manifest, startup, event_hooks=True, disk=True):
+def flags(manifest, startup, event_hooks=True, disk=True, controls=True):
     fields = {'experimental_external_render': 'external-render', 'experimental_mouse': 'mouse',
         'experimental_notice_input': 'notice-input', 'experimental_aspect_keys': 'aspect-keys',
         'experimental_directory_keys': 'directory-keys', 'terminal_exit_guard': 'exit-guard',
@@ -29,6 +29,8 @@ def flags(manifest, startup, event_hooks=True, disk=True):
         result += ['--native-reset-static']
     if not startup:
         return result + ['--phone-log-bank']
+    if manifest.get('experimental_phone_log_controls') and event_hooks and disk and controls:
+        return result + ['--phone-log-controls']
     if manifest.get('experimental_phone_log_disk') and event_hooks and disk:
         return result + ['--phone-log-disk']
     if manifest.get('experimental_phone_log_events') and event_hooks:
@@ -57,6 +59,8 @@ def main():
     if reservations:
         names |= {'standalone/phone_log_claim_watch.asm', 'standalone/phone_log_reservation_diagnostic.c',
                   'standalone/phone_log_bank_client.asm'}
+    controls=bool(manifest.get('experimental_phone_log_controls'))
+    if controls:names |= {'standalone/phone_log_close_fault.asm'}
     disk=bool(manifest.get('experimental_phone_log_disk'))
     events=bool(manifest.get('experimental_phone_log_events'))
     if events:names |= {'standalone/phone_log_events_watch.asm'}
@@ -98,6 +102,21 @@ def main():
         if events:
             subprocess.run([sys.executable, 'standalone/test_phone_log_events_terminal.py',
                 '--terminal', str(rebuilt), '--label', 'public-events'], cwd=fresh, stdout=log, stderr=log, check=True)
+            if controls:
+                for folder in (fresh,output/'baseline'):
+                    subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, True, True, True, False)],
+                        cwd=folder, stdout=log, stderr=log, check=True)
+                def disk_control(folder):
+                    products=[p for p in (folder/'build').glob('terminal-phone-log-bank-*/manifest.json')
+                        if json.loads(p.read_text()).get('experimental_phone_log_disk') and
+                        not json.loads(p.read_text()).get('experimental_phone_log_controls')]
+                    assert len(products)==1
+                    return products[0].parent
+                disk_target=disk_control(fresh)
+                assert sha(disk_target/'TERMINAL.EXE')==sha(disk_control(output/'baseline')/'TERMINAL.EXE')
+                subprocess.run([sys.executable, 'standalone/test_phone_log_events_terminal.py',
+                    '--terminal', str(disk_target), '--label', 'public-disk-controls-off'],
+                    cwd=fresh, stdout=log, stderr=log, check=True)
             if disk:
                 for folder in (fresh,output/'baseline'):
                     subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, True, True, False)],
@@ -127,6 +146,7 @@ def main():
             assert sha(startup_target/'TERMINAL.EXE')==sha(baseline_lifecycle/'TERMINAL.EXE')
             event_control=dict(unchanged_event_off_control_sha256=sha(startup_target/'TERMINAL.EXE'))
             if disk:event_control['unchanged_disk_off_control_sha256']=sha(ram_target/'TERMINAL.EXE')
+            if controls:event_control['unchanged_controls_off_control_sha256']=sha(disk_target/'TERMINAL.EXE')
         subprocess.run([sys.executable, 'standalone/test_phone_log_startup_terminal.py',
             '--terminal', str(startup_target), '--label', 'public-startup'], cwd=fresh, stdout=log, stderr=log, check=True)
         if reservations:
@@ -169,15 +189,23 @@ def main():
     if events:
         events_path=fresh/'build/phone-log-events-terminal/public-events/result.json'
         event_report=json.loads(events_path.read_text())
-        assert event_report['passed'] and all(event_report['checks'].values()) and len(event_report['cases'])==(13 if disk else 8)
+        assert event_report['passed'] and all(event_report['checks'].values()) and len(event_report['cases'])==(19 if controls else 13 if disk else 8)
         assert event_report['terminal_sha256']==manifest['binary_sha256']
         if disk:
             ram_path=fresh/'build/phone-log-events-terminal/public-ram-events/result.json'
             ram_report=json.loads(ram_path.read_text())
             assert ram_report['passed'] and len(ram_report['cases'])==8 and all(ram_report['checks'].values())
             assert ram_report['terminal_sha256']==event_control['unchanged_disk_off_control_sha256']
-            composition.update(repeated_disk_cases=13,repeated_disk_sha256=sha(events_path),
-                repeated_event_cases=8,repeated_event_sha256=sha(ram_path))
+            if controls:
+                controls_off=fresh/'build/phone-log-events-terminal/public-disk-controls-off/result.json'
+                off_report=json.loads(controls_off.read_text())
+                assert off_report['passed'] and len(off_report['cases'])==13 and all(off_report['checks'].values())
+                assert off_report['terminal_sha256']==event_control['unchanged_controls_off_control_sha256']
+                composition.update(repeated_controls_cases=19,repeated_controls_sha256=sha(events_path),
+                    repeated_disk_cases=13,repeated_disk_sha256=sha(controls_off))
+            else:
+                composition.update(repeated_disk_cases=13,repeated_disk_sha256=sha(events_path))
+            composition.update(repeated_event_cases=8,repeated_event_sha256=sha(ram_path))
         else:
             composition.update(repeated_event_cases=8,repeated_event_sha256=sha(events_path))
     assert all(sha(fresh / name) == digest for name, digest in sources.items())

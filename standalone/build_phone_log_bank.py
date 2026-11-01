@@ -36,13 +36,14 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def build_bank(out, reservations=False, startup=False, lifecycle=False, events=False, disk=False):
+def build_bank(out, reservations=False, startup=False, lifecycle=False, events=False, disk=False, controls=False):
     OUT = Path(out)
     OUT.mkdir(parents=True, exist_ok=True)
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
     if reservations:
         flags += ['-dPHONE_LOG_QUEUE_RESERVATION', '-dCAPTURE_FIXED_RESERVATION']
     if disk:flags += ['-dPHONE_LOG_DISK']
+    if controls:flags += ['-dPHONE_LOG_CONTROLS']
     sources = ['src/directory/' + name + '.c' for name in
                ['phone_log_queue', 'phone_log_format', 'phone_log_clock', 'phone_log_file', 'phone_log_fs']]
     aliases = dict(ALIASES)
@@ -60,6 +61,10 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False, events=F
         sources += ['src/directory/phone_log_disk.c']
         aliases['terminal_phone_log_disk_poll']='terminal_phone_log_disk_poll_impl'
         aliases['phone_log_disk_before_program']='phone_log_disk_before_program_impl'
+    if controls:
+        assert disk
+        sources += ['src/directory/phone_log_controls.c']
+        aliases['phone_log_controls_event']='phone_log_controls_event_impl'
     if startup:
         sources += ['src/directory/phone_log_startup.c', 'src/directory/phone_log_startup_owner.c', 'src/config/resource_path.c']
         aliases.update(phone_log_startup_owner='phone_log_startup_owner_impl',
@@ -89,6 +94,7 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False, events=F
     if lifecycle:asm_sources.insert(-1, 'src/terminal/phone_log_lifecycle_bank.asm')
     if events:asm_sources.insert(-1, 'src/terminal/phone_log_events_bank.asm')
     if disk:asm_sources.insert(-1, 'src/terminal/phone_log_disk_bank.asm')
+    if controls:asm_sources.insert(-1, 'src/terminal/phone_log_controls_bank.asm')
     if startup:asm_sources.insert(-1, 'src/terminal/phone_log_startup_bank.asm')
     for source in asm_sources:
         obj = OUT / (('phone_resource_path' if source == 'src/config/resource_path.c' else Path(source).stem) + '.obj')
@@ -101,6 +107,7 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False, events=F
         'src/capture/capture_fs.h', 'src/config/prm_dos.h', 'src/terminal/phone_log_abi.inc',
         'src/terminal/far_bridge.inc', 'standalone/build_phone_log_bank.py',
         'standalone/build_phone_log_file.py', 'standalone/omf_imports.py']
+    if controls:names += ['src/directory/phone_log_controls.h']
     if disk:names += ['src/directory/phone_log_disk.h']
     if events:
         names += ['src/directory/phone_log_events.h']

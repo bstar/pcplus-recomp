@@ -88,3 +88,7 @@ unsigned __cdecl terminal_phone_log_events_shutdown(void)
  }
  return publish(status);
 }
+
+#ifdef PHONE_LOG_CONTROLS
+unsigned __cdecl phone_log_event_fault(void){return event_fault;}
+#endif

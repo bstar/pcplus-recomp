@@ -33,4 +33,7 @@ unsigned __cdecl phone_log_queue_poll(void);
 unsigned __cdecl phone_log_queue_retry(void);
 /* No names, numbers or record payloads in the inspect snapshot. */
 unsigned __cdecl phone_log_queue_inspect(phone_log_queue_snapshot *);
+#ifdef PHONE_LOG_CONTROLS
+unsigned __cdecl phone_log_queue_destination(char *,unsigned);
+#endif
 #endif

@@ -8,4 +8,7 @@ unsigned __cdecl terminal_phone_log_events_ready(void);
 unsigned __cdecl terminal_phone_log_events_connected(void);
 unsigned __cdecl terminal_phone_log_events_disconnected(void);
 unsigned __cdecl terminal_phone_log_events_shutdown(void);
+#ifdef PHONE_LOG_CONTROLS
+unsigned __cdecl phone_log_event_fault(void);
+#endif
 #endif

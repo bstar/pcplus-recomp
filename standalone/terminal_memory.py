@@ -419,6 +419,20 @@ def inspect_terminal_memory(binary,map_path):
    assert symbols[name][0]==ds and word(name)==0
   extra.update(phone_log_disk_entries_verified=2,phone_log_disk_call_sites_verified=2,
       phone_log_disk_existing_notice_callback_verified=True)
+ if '_phone_log_controls_event_far' in symbols:
+  entry='_phone_log_controls_event'
+  assert symbols[entry+'_far'][0]==symbols[entry+'_impl'][0]==bank_seg
+  prefix=b'\x55\x89\xe5'+b''.join(b'\xff\x76'+bytes([6+2*i])for i in reversed(range(4)))
+  near_call(entry+'_far',entry+'_impl',prefix=prefix,suffix=b'\x8d\x66\x00\x5d\xcb')
+  caller_seg=symbols['_command_menu_event'][0]
+  caller=next(c for c in code_segments if c['relative_segment']==caller_seg)
+  pattern=b'\x9a'+struct.pack('<HH',symbols[entry+'_far'][1],symbols[entry+'_far'][0])
+  code=image[start+caller_seg*16:start+caller_seg*16+caller['bytes']]
+  calls=[caller_seg*16+i for i in range(len(code)-4) if code[i:i+5]==pattern]
+  assert len(calls)==4 and all(at+3 in relocations for at in calls)
+  assert symbols['_terminal_phone_log_retry_acks'][0]==ds and word('_terminal_phone_log_retry_acks')==0
+  extra.update(phone_log_controls_entry_words_verified=4,phone_log_controls_menu_calls_verified=4,
+      phone_log_controls_menu_call_sites=calls)
  if '_phone_log_startup_owner_far' in symbols:
   assert symbols['_phone_log_startup_owner_far'][0]==symbols['_phone_log_startup_owner_impl'][0]==bank_seg
   near_call('_phone_log_startup_owner_far','_phone_log_startup_owner_impl',prefix=b'\x55\x89\xe5',suffix=b'\x8d\x66\x00\x5d\xcb')

@@ -7,4 +7,8 @@ unsigned __cdecl terminal_phone_log_disk_poll(void);
 /* UART already restored. Bounded checked drain; no automatic disk retry. */
 unsigned __cdecl phone_log_shutdown_drain(void);
 unsigned __cdecl phone_log_disk_before_program(void);
+#ifdef PHONE_LOG_CONTROLS
+extern unsigned terminal_phone_log_retry_acks;
+unsigned __cdecl phone_log_disk_retry(void);
+#endif
 #endif

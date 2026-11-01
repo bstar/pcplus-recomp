@@ -2,6 +2,10 @@
  * Code-segment constants keep UI prose outside the small-model DGROUP and
  * ahead of uninitialized far buffers. See Watcom's segment-constant objects. */
 #include "command_menu.h"
+#ifdef PHONE_LOG_CONTROLS
+extern unsigned __far __cdecl phone_log_controls_event(unsigned,unsigned,unsigned short __far *);
+#pragma aux phone_log_controls_event "_phone_log_controls_event_far";
+#endif
 #ifdef TERMINAL_REFERENCE
 #include "command_reference.h"
 static unsigned reference_origin;
@@ -185,6 +189,10 @@ ENTRY(directory,"Browse dialing directory       Alt-D",
  "browse; F2 changes the path; F5 reloads. Escape returns to the session.\n"
  "Dialing and profile adoption from this view remain under development.");
 #endif
+#ifdef PHONE_LOG_CONTROLS
+ENTRY(call_log,"Call log status / retry",
+ "Inspect retained calls. R requests a safe retry; uncertain files stay protected.");
+#endif
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
@@ -195,6 +203,9 @@ static const item MENU_TEXT items[]={
  ROW(record,0,0xfd00,'C'),ROW(cancel_record,0,0xfc00,'D'),ROW(record_files,0,0xfb00,'F')
 #ifdef TERMINAL_DIRECTORY_VIEW
  ,ROW(directory,1,0xf500,'L')
+#endif
+#ifdef PHONE_LOG_CONTROLS
+ ,ROW(call_log,0,0xf400,'L')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))
@@ -284,6 +295,9 @@ static void record_view(void)
 static void draw(void)
 {
  word i,n=0,at;
+#ifdef PHONE_LOG_CONTROLS
+ if(phase==11){phone_log_controls_event(2,0,view);return;}
+#endif
 #ifdef TERMINAL_DIRECTORY_VIEW
  if(phase==10){directory_view_event(2,0,view);return;}
 #endif
@@ -353,6 +367,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   draw();return 1;}
  if(event==4){
+#ifdef PHONE_LOG_CONTROLS
+  if(phase==11)phone_log_controls_event(4,0,view);
+#endif
 #ifdef TERMINAL_DIRECTORY_VIEW
   if(phase==10)directory_view_event(4,0,view);
 #endif
@@ -372,6 +389,17 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
  if(event!=1)return 1;
  if(key==0x2d00){command_menu_action=key;command_menu_active=0;return 0;}
+#ifdef PHONE_LOG_CONTROLS
+ if(phase==11){
+  if(phone_log_controls_event(1,key,view))return 1;
+#ifdef TERMINAL_REFERENCE
+  phase=reference_origin?9:0;
+#else
+  phase=0;
+#endif
+  notice=0;draw();return 1;
+ }
+#endif
  if(c==27){
 #ifdef TERMINAL_REFERENCE
   if(phase==9){command_menu_active=0;return 0;}
@@ -447,6 +475,9 @@ activate:
    phase=r && (r->state==RF_RECORDING || (r->claimed && !r->published))?7:6;notice=r?r->status:RF_STATE;}
   else if(items[selected].key==0xfb00){const recording_file *r=recording_terminal_inspect();
    phase=6;notice=r?r->status:RF_STATE;if(notice==RF_CANCELLED)notice=102;}
+#ifdef PHONE_LOG_CONTROLS
+  else if(items[selected].key==0xf400){phase=11;phone_log_controls_event(0,0,view);return 1;}
+#endif
   else if(items[selected].key==0xfe00){phase=3;query_size=0;query[0]=0;}
 #ifdef TERMINAL_DIRECTORY_VIEW
   else if(items[selected].key==0xf500){directory_parent=reference_origin?1:2;phase=10;directory_view_event(0,0,view);return 1;}

@@ -4,13 +4,17 @@
 BITS 16
 CPU 8086
 ORG 100h
-%ifdef DISK_ATTEMPTS_OFFSET
+%ifdef CONTROL_ACK_OFFSET
+%define RECORD_BYTES 722
+%elifdef DISK_ATTEMPTS_OFFSET
 %define RECORD_BYTES 720
 %else
 %define RECORD_BYTES 716
 %endif
 %define RECORD_LIMIT 8
-%ifdef DISK_ATTEMPTS_OFFSET
+%ifdef CONTROL_ACK_OFFSET
+%define SAMPLE_BYTES (4022+RECORD_BYTES*RECORD_LIMIT)
+%elifdef DISK_ATTEMPTS_OFFSET
 %define SAMPLE_BYTES (22+RECORD_BYTES*RECORD_LIMIT)
 %else
 %define SAMPLE_BYTES (20+RECORD_BYTES*RECORD_LIMIT)
@@ -23,6 +27,16 @@ sample: dw 0x4c45,0,0,0,0,0,0,0,0,0
 records: times RECORD_BYTES*RECORD_LIMIT db 0
 %ifdef DISK_ATTEMPTS_OFFSET
 retry_notice: dw 0
+%ifdef CONTROL_ACK_OFFSET
+control_frame: times 4000 db 0
+ui_title: db 'Telephone call log',0
+ui_confirm: db 'Retry retained records? Y/N',0
+ui_accepted: db 'Retry acknowledged; close to resume',0
+ui_cancelled: db 'Retry canceled',0
+ui_none: db 'No retry is pending',0
+ui_recovery: db 'Recovery required: exit and inspect the log.',0
+ui_footer: db 'R: retry   F5: refresh',0
+%endif
 retry_text: db 'Call log retry required',0
 %endif
 %macro save 0
@@ -180,6 +194,10 @@ capture:
  mov [di],ax
  mov ax,[es:DISK_STATUS_OFFSET]
  mov [di+2],ax
+%ifdef CONTROL_ACK_OFFSET
+ mov ax,[es:CONTROL_ACK_OFFSET]
+ mov [di+4],ax
+%endif
 %endif
  cmp word [sample+4],RECORD_LIMIT
  jae .counted
@@ -194,6 +212,94 @@ capture:
 ; Actual bottom-row text is observed throughout the call; transport notices
 ; may legitimately replace this warning before the final shutdown frame.
 scan_retry_notice:
+%ifdef CONTROL_ACK_OFFSET
+ mov ax,0xb800
+ mov es,ax
+ mov si,retry_text
+ mov di,3840
+ mov dx,1
+ call find_text
+ mov si,ui_title
+ mov di,0
+ mov dx,2
+ call find_text
+ jnc .not_pane
+ mov si,ui_footer
+ mov di,3840
+ mov dx,0
+ call find_text
+ jnc .not_pane
+ xor si,si
+ mov di,control_frame
+ mov cx,4000
+.copy_frame:
+ mov al,[es:si]
+ mov [di],al
+ inc si
+ inc di
+ loop .copy_frame
+.not_pane:
+ mov si,ui_confirm
+ mov di,2560
+ mov dx,4
+ call find_text
+ mov si,ui_accepted
+ mov di,2560
+ mov dx,8
+ call find_text
+ mov si,ui_cancelled
+ mov di,2560
+ mov dx,16
+ call find_text
+ mov si,ui_none
+ mov di,2560
+ mov dx,32
+ call find_text
+ mov si,ui_recovery
+ mov di,2560
+ mov dx,64
+ call find_text
+ ret
+; SI text, DI row start, DX latch bit (zero only probes), ES real video.
+find_text:
+ mov bp,si
+.next:
+ mov bx,di
+ mov si,bp
+.match:
+ mov al,[si]
+ or al,al
+ jz .found
+ cmp al,[es:bx]
+ jne .advance
+ inc si
+ add bx,2
+ cmp bx,4000
+ jb .match
+.advance:
+ add di,2
+ mov ax,di
+ ; All callers search exactly the supplied80-column row.
+ cmp dx,2
+ je .title_end
+ cmp di,2720
+ jb .next
+ cmp di,3840
+ jb .missing
+ cmp di,4000
+ jb .next
+ jmp .missing
+.title_end:
+ cmp di,160
+ jb .next
+.missing:
+ clc
+ ret
+.found:
+ or [retry_notice],dx
+ stc
+ ret
+%else
  cmp word [retry_notice],0
  jne .done
  mov ax,0xb800
@@ -221,6 +327,7 @@ scan_retry_notice:
  mov word [retry_notice],1
 .done:
  ret
+%endif
 %endif
 resident_end:
 start:
