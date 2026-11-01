@@ -1,0 +1,3168 @@
+{
+  "passed": true,
+  "source_commit": "9448e9585476bfed6aede786ac4c8aa5695e73aa",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/midframe-carrier-fixed-source-01/build/terminal-phone-log-bank-d882144fee4f/TERMINAL.EXE",
+    "sha256": "a6f8a847b6b0161693efeb5bee80d9c7d33685e85d8886ec7eb0553254a33f25",
+    "manifest_sha256": "8e0aa4d7c3e91bb75b24f9b798fc027c361928bbf3aea0efc5e8f1543a382e07",
+    "near_bytes": 64752,
+    "near_spare_bytes": 784,
+    "resident_CS_bytes": 65534,
+    "resident_CS_spare_bytes": 2
+  },
+  "changed_application_sources": [
+    "src/terminal/connection.asm"
+  ],
+  "original_menu_composition_probe": {
+    "path": "build/midframe-original-menu-composition-02.log",
+    "sha256": "2ab0514040ce5b05f3ba83d1c7543e37c101da00c89908280918b2962f8f1b7c",
+    "extra_build_option": "--original-reference",
+    "link_failure_bytes_over_64KiB": 50,
+    "additional_sources": {
+      "src/redisplay/command_reference.c": "9693c2f23183609bfe6d01d2d7bf46bddd1544c42a02fb546cb49c7ae9e23809",
+      "src/redisplay/command_reference.h": "7425260eda0388adea975ffef7f68280c6cb288dadddae2b5a975203ee460829"
+    },
+    "accepted_application_build": false,
+    "published_or_validated_image_overwritten": false
+  },
+  "negative_control": {
+    "path": "build/phone-log-carrier-terminal/fragment-carrier-baseline-02/result.json",
+    "sha256": "b5c1450ee28b181e9608d1f3aa9fce42c1de905330566243983eb7fcf9b8421b",
+    "terminal_sha256": "512f782e9befeef39db1f8dfe03b6b786e89d44910cc99bb0ea4f7d83bbb3eba",
+    "sources_unchanged_during_run": true,
+    "binary_unchanged_during_run": true,
+    "cases": [
+      {
+        "case": "ymodem-fragment-legacy",
+        "failed_checks": [
+          "two_real_initializations"
+        ],
+        "transfer": {
+          "protocol": 1,
+          "upload": true,
+          "partial": false,
+          "retained": false,
+          "fragment": true,
+          "strict": false,
+          "batch_observer": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            0,
+            0,
+            0,
+            2,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "observer": [
+            12,
+            0,
+            4,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            4096,
+            0,
+            0,
+            0
+          ]
+        },
+        "sessions": [
+          {
+            "index": 1,
+            "events": [
+              {
+                "kind": "connected",
+                "seconds": 2.3352
+              },
+              {
+                "kind": "terminal-ready",
+                "seconds": 2.4036
+              },
+              {
+                "kind": "batch-upload-header-fragment",
+                "seconds": 4.1208
+              },
+              {
+                "kind": "carrier-drop",
+                "seconds": 4.1208
+              },
+              {
+                "kind": "closed",
+                "seconds": 4.1209
+              }
+            ],
+            "errors": [],
+            "batch": {
+              "protocol": 1,
+              "metadata": false,
+              "data_frames": 0,
+              "ACKed_data_frames": 0,
+              "retained_file": false,
+              "metadata_prefix": {
+                "hex": "0100ff53454e442e42494e0034303936",
+                "bytes": 16,
+                "complete": false
+              }
+            }
+          },
+          {
+            "index": 2,
+            "events": [
+              {
+                "kind": "connected",
+                "seconds": 19.8028
+              },
+              {
+                "kind": "keyboard-after-redial",
+                "seconds": 22.9457
+              },
+              {
+                "kind": "closed",
+                "seconds": 25.6832
+              }
+            ],
+            "errors": [],
+            "keyboard": true
+          }
+        ],
+        "modem_commands_hex": [
+          "4154264b33",
+          "4154443132372e302e302e313a3332383131",
+          "",
+          "4154443132372e302e302e313a3332383131"
+        ],
+        "modem_log_sha256": "1ce527f46bc9b19f4021d8e8fec3cc206dec514aeac2beb549def6c7bb811d91",
+        "checks_sha256": "ba645d007354817568202bd3d829a278e1e7688d551676c7dedfc2daad2ecac6"
+      },
+      {
+        "case": "ymodem-fragment-strict",
+        "failed_checks": [
+          "generation",
+          "queue_flags",
+          "queue_generations",
+          "heading_and_size",
+          "exact_event_records",
+          "two_actual_connections",
+          "actual_redial_replies",
+          "keyboard_after_redial",
+          "two_real_initializations",
+          "original_file_prefix",
+          "exact_file_attempts",
+          "directory_updated_twice",
+          "original_START_stamps_preserved"
+        ],
+        "transfer": {
+          "protocol": 1,
+          "upload": true,
+          "partial": false,
+          "retained": false,
+          "fragment": true,
+          "strict": true,
+          "batch_observer": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            0,
+            0,
+            0,
+            2,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "observer": [
+            12,
+            0,
+            4,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            4096,
+            0,
+            0,
+            0
+          ]
+        },
+        "sessions": [
+          {
+            "index": 1,
+            "events": [
+              {
+                "kind": "connected",
+                "seconds": 2.334
+              },
+              {
+                "kind": "terminal-ready",
+                "seconds": 2.4024
+              },
+              {
+                "kind": "batch-upload-header-fragment",
+                "seconds": 4.1155
+              },
+              {
+                "kind": "carrier-drop",
+                "seconds": 4.1155
+              },
+              {
+                "kind": "closed",
+                "seconds": 4.1156
+              }
+            ],
+            "errors": [],
+            "batch": {
+              "protocol": 1,
+              "metadata": false,
+              "data_frames": 0,
+              "ACKed_data_frames": 0,
+              "retained_file": false,
+              "metadata_prefix": {
+                "hex": "0100ff53454e442e42494e0034303936",
+                "bytes": 16,
+                "complete": false
+              }
+            }
+          }
+        ],
+        "modem_commands_hex": [
+          "4154264b33",
+          "4154443132372e302e302e313a3339333339",
+          ""
+        ],
+        "modem_log_sha256": "3f7be239440457a08b4338014a61b7e54b90f477d42441a6f334f4e5a9554b42",
+        "checks_sha256": "1eca1827952666cc0102f495291665900457f9c61c1cad3b3e085c37c899eb44"
+      },
+      {
+        "case": "zmodem-fragment-legacy",
+        "failed_checks": [
+          "two_real_initializations"
+        ],
+        "transfer": {
+          "protocol": 2,
+          "upload": true,
+          "partial": false,
+          "retained": false,
+          "fragment": true,
+          "strict": false,
+          "batch_observer": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "observer": [
+            11,
+            0,
+            4,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            4096,
+            0,
+            0,
+            0
+          ]
+        },
+        "sessions": [
+          {
+            "index": 1,
+            "events": [
+              {
+                "kind": "connected",
+                "seconds": 2.3441
+              },
+              {
+                "kind": "terminal-ready",
+                "seconds": 2.4124
+              },
+              {
+                "kind": "batch-upload-header-fragment",
+                "seconds": 4.0954
+              },
+              {
+                "kind": "carrier-drop",
+                "seconds": 4.0954
+              },
+              {
+                "kind": "closed",
+                "seconds": 4.0955
+              }
+            ],
+            "errors": [],
+            "batch": {
+              "protocol": 2,
+              "metadata": false,
+              "data_frames": 0,
+              "ACKed_data_frames": 0,
+              "retained_file": false,
+              "metadata_prefix": {
+                "hex": "2a184304000000014b61a54453454e44",
+                "bytes": 16,
+                "complete": false
+              }
+            }
+          },
+          {
+            "index": 2,
+            "events": [
+              {
+                "kind": "connected",
+                "seconds": 19.9205
+              },
+              {
+                "kind": "keyboard-after-redial",
+                "seconds": 23.0561
+              },
+              {
+                "kind": "closed",
+                "seconds": 25.7472
+              }
+            ],
+            "errors": [],
+            "keyboard": true
+          }
+        ],
+        "modem_commands_hex": [
+          "4154264b33",
+          "4154443132372e302e302e313a3430343035",
+          "4e",
+          "4154443132372e302e302e313a3430343035"
+        ],
+        "modem_log_sha256": "028fb9fb9877723edd798ee4edd0d99f602ee7009631b05d2460d96754069314",
+        "checks_sha256": "15973c2ff3842c88c7903aa791e87e843b156263f0bd3d4ec5bdc31793c1bbac"
+      },
+      {
+        "case": "zmodem-fragment-strict",
+        "failed_checks": [
+          "generation",
+          "queue_flags",
+          "queue_generations",
+          "heading_and_size",
+          "exact_event_records",
+          "two_actual_connections",
+          "actual_redial_replies",
+          "keyboard_after_redial",
+          "two_real_initializations",
+          "original_file_prefix",
+          "exact_file_attempts",
+          "directory_updated_twice",
+          "original_START_stamps_preserved"
+        ],
+        "transfer": {
+          "protocol": 2,
+          "upload": true,
+          "partial": false,
+          "retained": false,
+          "fragment": true,
+          "strict": true,
+          "batch_observer": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "observer": [
+            11,
+            0,
+            4,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            4096,
+            0,
+            0,
+            0
+          ]
+        },
+        "sessions": [
+          {
+            "index": 1,
+            "events": [
+              {
+                "kind": "connected",
+                "seconds": 2.3385
+              },
+              {
+                "kind": "terminal-ready",
+                "seconds": 2.4073
+              },
+              {
+                "kind": "batch-upload-header-fragment",
+                "seconds": 4.0908
+              },
+              {
+                "kind": "carrier-drop",
+                "seconds": 4.0908
+              },
+              {
+                "kind": "closed",
+                "seconds": 4.0909
+              }
+            ],
+            "errors": [],
+            "batch": {
+              "protocol": 2,
+              "metadata": false,
+              "data_frames": 0,
+              "ACKed_data_frames": 0,
+              "retained_file": false,
+              "metadata_prefix": {
+                "hex": "2a184304000000014b61a54453454e44",
+                "bytes": 16,
+                "complete": false
+              }
+            }
+          }
+        ],
+        "modem_commands_hex": [
+          "4154264b33",
+          "4154443132372e302e302e313a3436343837",
+          "4e"
+        ],
+        "modem_log_sha256": "150a13727f86280b6c29944164ead17ee9f0a8934094d24156cd04d8733edd17",
+        "checks_sha256": "35ab4d40ce3e732b9d9a41deeaa407a1381ad329643f51d92b64b2fafc028fb6"
+      }
+    ]
+  },
+  "native_fragment_cases": 4,
+  "public_cases": 67,
+  "public_source_proof": {
+    "path": "build/phone-log-midframe-carrier-public-01/result.json",
+    "sha256": "c5d761f992723761092d4b6ecffe292099176be91a39212a6edff76666c0152b",
+    "source_count": 1984,
+    "build_log_sha256": "368299d644493cd8334f960e2fea7ca59c3bd3838a866c7141ece56202f43c4c",
+    "runner_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7"
+  },
+  "evidence": {
+    "native_fragment": {
+      "path": "build/phone-log-carrier-terminal/fragment-carrier-final-01/result.json",
+      "sha256": "a7c7a8c2e3d69aa74bf1e45ff92078aba7e470cf56fe157e7bac95fd231e5c0c",
+      "cases": [
+        {
+          "case": "ymodem-fragment-legacy",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "deliberate_mid_frame_loss": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "fragment": true,
+            "strict": false,
+            "batch_observer": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              2,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              12,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44023 11/01/26 05:04:12 ",
+              "end": "05:04:13 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44023 11/01/26 05:04:29 ",
+              "end": "05:04:36 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3393
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4079
+                },
+                {
+                  "kind": "batch-upload-header-fragment",
+                  "seconds": 4.125
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.125
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.1251
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": false,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false,
+                "metadata_prefix": {
+                  "hex": "0100ff53454e442e42494e0034303936",
+                  "bytes": 16,
+                  "complete": false
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8617
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9502
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6874
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "modem_commands_hex": [
+            "4154264b33",
+            "4154443132372e302e302e313a3434303233",
+            "",
+            "4154264b33",
+            "4154443132372e302e302e313a3434303233"
+          ],
+          "initialization_responses": [
+            "OK",
+            "OK"
+          ],
+          "log_sha256": "d7e99cdfaa29f43765999e4daf2c5eb214cfafb90a09ddb4d8dc554eca2d830f",
+          "modem_log_sha256": "6eac11498ddece74c8e5bafb64a4b950d3f9d4c8fcb0070acf06eb8eb10957d2"
+        },
+        {
+          "case": "ymodem-fragment-strict",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "deliberate_mid_frame_loss": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "fragment": true,
+            "strict": true,
+            "batch_observer": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              2,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              12,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36929 11/01/26 05:04:39 ",
+              "end": "05:04:40 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36929 11/01/26 05:04:57 ",
+              "end": "05:05:03 00:00:06",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.341
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4092
+                },
+                {
+                  "kind": "batch-upload-header-fragment",
+                  "seconds": 4.1222
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.1222
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.1222
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": false,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false,
+                "metadata_prefix": {
+                  "hex": "0100ff53454e442e42494e0034303936",
+                  "bytes": 16,
+                  "complete": false
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 20.9062
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9519
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6893
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "modem_commands_hex": [
+            "4154264b33",
+            "4154443132372e302e302e313a3336393239",
+            "",
+            "4154264b33",
+            "4154443132372e302e302e313a3336393239"
+          ],
+          "initialization_responses": [
+            "OK",
+            "OK"
+          ],
+          "log_sha256": "3c630735352e751cdffbf70b6843e8cc22a55ca8f4df6442e9dbd6e72a2156c4",
+          "modem_log_sha256": "f4ca53308bb3cde8d3dcd591e6a371494e19d5ef95f0d489279c545fc5d56e00"
+        },
+        {
+          "case": "zmodem-fragment-legacy",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "deliberate_mid_frame_loss": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "fragment": true,
+            "strict": false,
+            "batch_observer": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              11,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:40569 11/01/26 05:05:06 ",
+              "end": "05:05:07 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:40569 11/01/26 05:05:23 ",
+              "end": "05:05:30 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3463
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4154
+                },
+                {
+                  "kind": "batch-upload-header-fragment",
+                  "seconds": 4.0985
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.0986
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.0986
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": false,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false,
+                "metadata_prefix": {
+                  "hex": "2a184304000000014b61a54453454e44",
+                  "bytes": 16,
+                  "complete": false
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.9782
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0596
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7501
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "modem_commands_hex": [
+            "4154264b33",
+            "4154443132372e302e302e313a3430353639",
+            "4e",
+            "4154264b33",
+            "4154443132372e302e302e313a3430353639"
+          ],
+          "initialization_responses": [
+            "OK",
+            "OK"
+          ],
+          "log_sha256": "b2f0ca419d08c28c80e5f2b9efb096fd5f24c0f8e31d4ae7de968bc8036ab3a0",
+          "modem_log_sha256": "d81f9ce3cd1d05042c07639382217a05332261e1b05f8b3129633df168e67d18"
+        },
+        {
+          "case": "zmodem-fragment-strict",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "deliberate_mid_frame_loss": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "fragment": true,
+            "strict": true,
+            "batch_observer": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              11,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45105 11/01/26 05:05:33 ",
+              "end": "05:05:34 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:45105 11/01/26 05:05:51 ",
+              "end": "05:05:57 00:00:06",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3423
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4109
+                },
+                {
+                  "kind": "batch-upload-header-fragment",
+                  "seconds": 4.0931
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.0931
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.0932
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": false,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false,
+                "metadata_prefix": {
+                  "hex": "2a184304000000014b61a54453454e44",
+                  "bytes": 16,
+                  "complete": false
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 21.017
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0546
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7449
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "modem_commands_hex": [
+            "4154264b33",
+            "4154443132372e302e302e313a3435313035",
+            "4e",
+            "4154264b33",
+            "4154443132372e302e302e313a3435313035"
+          ],
+          "initialization_responses": [
+            "OK",
+            "OK"
+          ],
+          "log_sha256": "679a8059a225852db7abb78dff2adea1f1bb124c313dc03c84edb1719ab83ef4",
+          "modem_log_sha256": "6a89a41326a90be1e8f46a64f0a9ccdcc2e423b8e82f5c72939e814e4c8f7785"
+        }
+      ],
+      "verified_artifacts": 72
+    },
+    "public-existing": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "6bf4f6cf9674e6bbd221008d7b826756829c3b2ae2a1127a4d75a124e6398f02",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-controls": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "d8fab78a5ee9a9eb82e5cbc27c4d34ac89bcd5f91e8bca8740b62527ae5549d5",
+      "cases": [
+        {
+          "case": "success",
+          "passed": true
+        },
+        {
+          "case": "hangup",
+          "passed": true
+        },
+        {
+          "case": "busy",
+          "passed": true
+        },
+        {
+          "case": "silence",
+          "passed": true
+        },
+        {
+          "case": "redial",
+          "passed": true
+        },
+        {
+          "case": "disabled",
+          "passed": true
+        },
+        {
+          "case": "direct",
+          "passed": true
+        },
+        {
+          "case": "capacity",
+          "passed": true
+        },
+        {
+          "case": "soft",
+          "passed": true
+        },
+        {
+          "case": "both",
+          "passed": true
+        },
+        {
+          "case": "none",
+          "passed": true
+        },
+        {
+          "case": "fs-failure",
+          "passed": true
+        },
+        {
+          "case": "program",
+          "passed": true
+        },
+        {
+          "case": "ui-ready",
+          "passed": true
+        },
+        {
+          "case": "ui-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-unrepaired",
+          "passed": true
+        },
+        {
+          "case": "ui-recovery",
+          "passed": true
+        },
+        {
+          "case": "ui-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 316
+    },
+    "public-preexisting": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+      "sha256": "08cc73d2272651e364dd441df236a300513be934ed36bfcb323aa1efba11fdc4",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-io-failures": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+      "sha256": "32f3b03bfe3219b8e4bc369e899ee5f533727f8f4caaf048d6aa4c3a829597b8",
+      "cases": [
+        {
+          "case": "ui-commit-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-truncate",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-commit",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 61
+    },
+    "public-permissions": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-events-terminal/public-permissions/result.json",
+      "sha256": "52cd9809a223f20f828d1c8ad3bb1aad6aea524b9c9115c85221a69e2f3f7add",
+      "cases": [
+        {
+          "case": "ui-readonly-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-readonly-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 42
+    },
+    "public-readonly": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-startup-terminal/public-readonly/result.json",
+      "sha256": "37c1ce759237148d0f1df2e53e317292ddeee7b48ade04a781fe52e0afaa12c5",
+      "cases": [
+        {
+          "case": "readonly",
+          "passed": true
+        },
+        {
+          "case": "readonly-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 36
+    },
+    "public-slow": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-slow-terminal/public-slow/result.json",
+      "sha256": "41299b432ccc45ac39c49b14c7c9fb98b8b671160b8149429d8b0650a0cbd7e2",
+      "cases": [
+        {
+          "case": "soft-9",
+          "passed": true
+        },
+        {
+          "case": "both-36",
+          "passed": true
+        },
+        {
+          "case": "none-36",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-watermark": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-slow-terminal/public-watermark/result.json",
+      "sha256": "470ff46088417a1d14e80b54b643940a29e9bc09640caf95d11397b50b857d00",
+      "cases": [
+        {
+          "case": "soft-watermark",
+          "passed": true
+        },
+        {
+          "case": "both-watermark",
+          "passed": true
+        },
+        {
+          "case": "hard-watermark",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-carrier": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-carrier-terminal/public-carrier/result.json",
+      "sha256": "ecaf11d95a8696790d157900ffcb11abe809b8889adcb3ff76e71b0494dd2bb1",
+      "cases": [
+        {
+          "case": "idle-hard",
+          "passed": true
+        },
+        {
+          "case": "write-hard",
+          "passed": true
+        },
+        {
+          "case": "write-soft",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 51
+    },
+    "public-aspect-carrier": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-carrier-terminal/public-aspect-carrier/result.json",
+      "sha256": "df67aa96f1a464cd9d6ae69340f8be1f2920dff299d51399ab7ecb5783296771",
+      "cases": [
+        {
+          "case": "aspect-wait",
+          "passed": true
+        },
+        {
+          "case": "aspect-when",
+          "passed": true
+        },
+        {
+          "case": "aspect-wait-window",
+          "passed": true
+        },
+        {
+          "case": "aspect-when-window",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 92
+    },
+    "public-transfer-carrier": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-carrier-terminal/public-transfer-carrier/result.json",
+      "sha256": "14f94e8d0e807bdb172aa3c6c404ed35de3e01c264210ed684f0c049dde5890e",
+      "cases": [
+        {
+          "case": "receive-negotiation",
+          "passed": true
+        },
+        {
+          "case": "receive-partial",
+          "passed": true
+        },
+        {
+          "case": "upload-unacked",
+          "passed": true
+        },
+        {
+          "case": "upload-partial",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 70
+    },
+    "public-batch-carrier": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-carrier-terminal/public-batch-carrier/result.json",
+      "sha256": "9a301d531cffc3ca26a8d9cdabd75c990c4dcb1b700f6bdb00db6549d7ce47a0",
+      "cases": [
+        {
+          "case": "ymodem-receive-metadata",
+          "passed": true
+        },
+        {
+          "case": "ymodem-receive-partial",
+          "passed": true
+        },
+        {
+          "case": "ymodem-receive-retained",
+          "passed": true
+        },
+        {
+          "case": "ymodem-upload-metadata",
+          "passed": true
+        },
+        {
+          "case": "ymodem-upload-partial",
+          "passed": true
+        },
+        {
+          "case": "zmodem-receive-metadata",
+          "passed": true
+        },
+        {
+          "case": "zmodem-receive-partial",
+          "passed": true
+        },
+        {
+          "case": "zmodem-receive-retained",
+          "passed": true
+        },
+        {
+          "case": "zmodem-upload-metadata",
+          "passed": true
+        },
+        {
+          "case": "zmodem-upload-partial",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 176
+    },
+    "public-fragment-carrier": {
+      "path": "build/phone-log-midframe-carrier-public-01/source/build/phone-log-carrier-terminal/public-fragment-carrier/result.json",
+      "sha256": "6599be2a1878e258097e55fd58eccfc34031422c6a4b5c271c230c6f8a565ac8",
+      "cases": [
+        {
+          "case": "ymodem-fragment-legacy",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "deliberate_mid_frame_loss": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "fragment": true,
+            "strict": false,
+            "batch_observer": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              2,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              12,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44139 11/01/26 05:20:16 ",
+              "end": "05:20:17 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44139 11/01/26 05:20:33 ",
+              "end": "05:20:40 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3968
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4661
+                },
+                {
+                  "kind": "batch-upload-header-fragment",
+                  "seconds": 4.1832
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.1832
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.1833
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": false,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false,
+                "metadata_prefix": {
+                  "hex": "0100ff53454e442e42494e0034303936",
+                  "bytes": 16,
+                  "complete": false
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.92
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.008
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7447
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "modem_commands_hex": [
+            "4154264b33",
+            "4154443132372e302e302e313a3434313339",
+            "",
+            "4154264b33",
+            "4154443132372e302e302e313a3434313339"
+          ],
+          "initialization_responses": [
+            "OK",
+            "OK"
+          ],
+          "log_sha256": "a341a13fcace651c28ec53278065ae137578656f4d948785e8990682331b89fc",
+          "modem_log_sha256": "1bf3fa8ff414110661840c21e6e9a5dea4a2b154c4123ecdfaba3ac9400dabde"
+        },
+        {
+          "case": "ymodem-fragment-strict",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "deliberate_mid_frame_loss": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "fragment": true,
+            "strict": true,
+            "batch_observer": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              2,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              12,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:38201 11/01/26 05:20:43 ",
+              "end": "05:20:44 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:38201 11/01/26 05:21:01 ",
+              "end": "05:21:07 00:00:06",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3955
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4643
+                },
+                {
+                  "kind": "batch-upload-header-fragment",
+                  "seconds": 4.178
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.178
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.178
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": false,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false,
+                "metadata_prefix": {
+                  "hex": "0100ff53454e442e42494e0034303936",
+                  "bytes": 16,
+                  "complete": false
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 20.9616
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0068
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7444
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "modem_commands_hex": [
+            "4154264b33",
+            "4154443132372e302e302e313a3338323031",
+            "",
+            "4154264b33",
+            "4154443132372e302e302e313a3338323031"
+          ],
+          "initialization_responses": [
+            "OK",
+            "OK"
+          ],
+          "log_sha256": "69373ac95b5cba488c5783c0aada3307415109015358dbb5f1bcfc9cfac6fc9f",
+          "modem_log_sha256": "3e0a5eb93c5d720b098c4d865a0d1241f3645b5e7f59a2e1d1dc880f1e243ad8"
+        },
+        {
+          "case": "zmodem-fragment-legacy",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "deliberate_mid_frame_loss": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "fragment": true,
+            "strict": false,
+            "batch_observer": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              11,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:42553 11/01/26 05:21:10 ",
+              "end": "05:21:11 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:42553 11/01/26 05:21:27 ",
+              "end": "05:21:34 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.4026
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4712
+                },
+                {
+                  "kind": "batch-upload-header-fragment",
+                  "seconds": 4.1542
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.1542
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.1543
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": false,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false,
+                "metadata_prefix": {
+                  "hex": "2a184304000000014b61a54453454e44",
+                  "bytes": 16,
+                  "complete": false
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 20.0345
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.1153
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.8063
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "modem_commands_hex": [
+            "4154264b33",
+            "4154443132372e302e302e313a3432353533",
+            "4e",
+            "4154264b33",
+            "4154443132372e302e302e313a3432353533"
+          ],
+          "initialization_responses": [
+            "OK",
+            "OK"
+          ],
+          "log_sha256": "485d79527a9fe8691d3ed67e58392ae163f4befc2d7119abf1047df8a39abad8",
+          "modem_log_sha256": "59fbc7619395d400facb52cbb94527f079d20cd83fc24f55981705f4ae626d34"
+        },
+        {
+          "case": "zmodem-fragment-strict",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "deliberate_mid_frame_loss": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "fragment": true,
+            "strict": true,
+            "batch_observer": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              11,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36977 11/01/26 05:21:36 ",
+              "end": "05:21:37 00:00:01",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:36977 11/01/26 05:21:54 ",
+              "end": "05:22:00 00:00:06",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.4007
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4684
+                },
+                {
+                  "kind": "batch-upload-header-fragment",
+                  "seconds": 4.1521
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.1521
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.1521
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": false,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false,
+                "metadata_prefix": {
+                  "hex": "2a184304000000014b61a54453454e44",
+                  "bytes": 16,
+                  "complete": false
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 21.0759
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.1137
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.8035
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "modem_commands_hex": [
+            "4154264b33",
+            "4154443132372e302e302e313a3336393737",
+            "4e",
+            "4154264b33",
+            "4154443132372e302e302e313a3336393737"
+          ],
+          "initialization_responses": [
+            "OK",
+            "OK"
+          ],
+          "log_sha256": "375a3516aab14ef8718eda9b335c6787b02c1c68ee28896223cdf8d6409a21e3",
+          "modem_log_sha256": "db7e02c9f022dec832b8300d794fe5c3b0bb410fe5e01b0ebd8cb69ef7199736"
+        }
+      ],
+      "verified_artifacts": 72
+    }
+  },
+  "linked_initialization_policy": {
+    "path": "build/midframe-init-policy-02/checks.json",
+    "sha256": "b1e5cdaa978f1c2909e1a07d09b3fb13d5403db1571e04ae605b0a8f18c059e4",
+    "cases": [
+      {
+        "case": "CLI-range-duplicate-mask-independence-atomicity-default-reset",
+        "passed": true,
+        "inputs": 20
+      },
+      {
+        "case": "early-result-before-final-pacing",
+        "passed": true,
+        "answer_hex": "4f4b0d"
+      },
+      {
+        "case": "early-result-before-final-pacing",
+        "passed": true,
+        "answer_hex": "300d"
+      },
+      {
+        "case": "early-result-before-final-pacing",
+        "passed": true,
+        "answer_hex": "0d0a206f6b200d0a"
+      },
+      {
+        "case": "explicit-initialization-error-no-dial",
+        "passed": true,
+        "answer_hex": "4552524f520d"
+      },
+      {
+        "case": "explicit-initialization-error-no-dial",
+        "passed": true,
+        "answer_hex": "340d"
+      },
+      {
+        "case": "explicit-initialization-error-no-dial",
+        "passed": true,
+        "answer_hex": "206572726f72200a"
+      },
+      {
+        "case": "echo-unknown-lines-fragmentation-and-bounded-overflow",
+        "passed": true,
+        "unknown_hex": "41545a0d424f4f4b0d4f4b41590d4552524f52530d"
+      },
+      {
+        "case": "echo-unknown-lines-fragmentation-and-bounded-overflow",
+        "passed": true,
+        "unknown_hex": "4f204b0d"
+      },
+      {
+        "case": "echo-unknown-lines-fragmentation-and-bounded-overflow",
+        "passed": true,
+        "unknown_hex": "58585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858580d"
+      },
+      {
+        "case": "multiple-command-ACKs-before-dial-and-CRLF",
+        "passed": true,
+        "source_hex": "41545a5e4d415445305e4d"
+      },
+      {
+        "case": "multiple-command-ACKs-before-dial-and-CRLF",
+        "passed": true,
+        "source_hex": "41545a5e4d5e4a415445305e4d5e4a"
+      },
+      {
+        "case": "second-command-error-prevents-dial",
+        "passed": true
+      },
+      {
+        "case": "empty-and-pause-only-trailer",
+        "passed": true,
+        "source_hex": ""
+      },
+      {
+        "case": "empty-and-pause-only-trailer",
+        "passed": true,
+        "source_hex": "7e"
+      },
+      {
+        "case": "empty-and-pause-only-trailer",
+        "passed": true,
+        "source_hex": "41547e5a5e4d7e"
+      },
+      {
+        "case": "incomplete-or-embedded-LF-rejected-before-UART",
+        "passed": true,
+        "source_hex": "41545a"
+      },
+      {
+        "case": "incomplete-or-embedded-LF-rejected-before-UART",
+        "passed": true,
+        "source_hex": "41545a5e4d41544530"
+      },
+      {
+        "case": "incomplete-or-embedded-LF-rejected-before-UART",
+        "passed": true,
+        "source_hex": "41545e4a5a5e4d"
+      },
+      {
+        "case": "bounded-initialization-transmit-stall",
+        "passed": true,
+        "blocker": "CTS"
+      },
+      {
+        "case": "bounded-initialization-transmit-stall",
+        "passed": true,
+        "blocker": "THRE"
+      },
+      {
+        "case": "bounded-initialization-transmit-stall",
+        "passed": true,
+        "blocker": "XOFF"
+      },
+      {
+        "case": "strict-silent-response-timeout-no-dial",
+        "passed": true
+      },
+      {
+        "case": "response-wait-keyboard-cancellation",
+        "passed": true,
+        "action": "Escape"
+      },
+      {
+        "case": "response-wait-keyboard-cancellation",
+        "passed": true,
+        "action": "AltX"
+      },
+      {
+        "case": "retry-separator-result-drain-before-new-init",
+        "passed": true,
+        "reply_hex": ""
+      },
+      {
+        "case": "retry-separator-result-drain-before-new-init",
+        "passed": true,
+        "reply_hex": "4552524f520d"
+      },
+      {
+        "case": "retry-separator-result-drain-before-new-init",
+        "passed": true,
+        "reply_hex": "4f4b0d"
+      },
+      {
+        "case": "retry-separator-result-drain-before-new-init",
+        "passed": true,
+        "reply_hex": "455252"
+      },
+      {
+        "case": "empty-command-bounded-drain",
+        "passed": true
+      },
+      {
+        "case": "short-command-echo-cannot-be-own-result",
+        "passed": true,
+        "source_hex": "4f4b5e4d"
+      },
+      {
+        "case": "short-command-echo-cannot-be-own-result",
+        "passed": true,
+        "source_hex": "4552524f525e4d"
+      },
+      {
+        "case": "short-command-echo-cannot-be-own-result",
+        "passed": true,
+        "source_hex": "305e4d"
+      },
+      {
+        "case": "short-command-echo-cannot-be-own-result",
+        "passed": true,
+        "source_hex": "345e4d"
+      },
+      {
+        "case": "initial-high-carrier-skip-preserved",
+        "passed": true
+      },
+      {
+        "case": "direct-line-preserved",
+        "passed": true
+      },
+      {
+        "case": "default-quiet-no-wait-preserved",
+        "passed": true
+      },
+      {
+        "case": "ordinary-DCD-loss-resync-before-reinitialization",
+        "passed": true,
+        "initialization_wait": 0
+      },
+      {
+        "case": "ordinary-DCD-loss-resync-before-reinitialization",
+        "passed": true,
+        "initialization_wait": 1
+      },
+      {
+        "case": "ordinary-DCD-loss-resync-before-reinitialization",
+        "passed": true,
+        "initialization_wait": 3
+      }
+    ],
+    "verified_sources": 525,
+    "new_DCD_cases": [
+      {
+        "case": "ordinary-DCD-loss-resync-before-reinitialization",
+        "passed": true,
+        "initialization_wait": 0
+      },
+      {
+        "case": "ordinary-DCD-loss-resync-before-reinitialization",
+        "passed": true,
+        "initialization_wait": 1
+      },
+      {
+        "case": "ordinary-DCD-loss-resync-before-reinitialization",
+        "passed": true,
+        "initialization_wait": 3
+      }
+    ]
+  },
+  "linked_connection_controller": {
+    "path": "build/midframe-carrier-fixed-source-01/build/terminal/connection-checks.json",
+    "sha256": "f33b674fae98e4017850bdcb4a070b977229e2e6dea556360b0994b7e83eaa76",
+    "cases": [
+      {
+        "case": "actual-port-command-wire-partial-connect-and-DCD-transition",
+        "passed": true,
+        "inputs": 2
+      },
+      {
+        "case": "four-failure-responses-timeout-and-CTS-stalled-bounded-cleanup",
+        "passed": true,
+        "inputs": 6
+      },
+      {
+        "case": "actual-BIOS-Escape-AltX-AltH-AltD-through-stalled-sender-and-hangup",
+        "passed": true,
+        "inputs": 8
+      },
+      {
+        "case": "original-response-autobaud-policy-and-actual-UART-divisor-setter",
+        "passed": true,
+        "inputs": 15
+      },
+      {
+        "case": "TX-ownership-and-real-recovered-XOFF-CTS-backpressure",
+        "passed": true,
+        "inputs": 4
+      },
+      {
+        "case": "live-pause-sentinel-expanded-zero-and-THRE-deadline",
+        "passed": true,
+        "inputs": 4
+      },
+      {
+        "case": "full-32bit-PIT-derived-deadlines-and-low-tick-wrap",
+        "passed": true,
+        "inputs": 6
+      },
+      {
+        "case": "notice-exact-cell-restore-and-partial-parser-yields-modem-RX",
+        "passed": true,
+        "inputs": 1
+      }
+    ],
+    "inputs": 46
+  },
+  "stock_BBS_sessions": {
+    "enigma": {
+      "producer_path": "build/bbs-lab/results/enigma/midframe-fix-enigma-01/proxy-integration.json",
+      "producer_sha256": "691b62a282bdfec05d792c1b048770a01f66f8de8fe8e7d25e3fd26450c407d2",
+      "producer_checks": {
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "actual_call_log": true,
+        "reference_freeze_completed": true,
+        "compiled_geometry_advertised": true
+      },
+      "phone_log": {
+        "passed": true,
+        "checks": {
+          "final_kind": true,
+          "startup_ok": true,
+          "lifecycle_idle": true,
+          "generation": true,
+          "queue_flags": true,
+          "queue_generations": true,
+          "final_status": true,
+          "heading_and_size": true,
+          "exact_event_records": true,
+          "observer_final": true,
+          "actual_parent_segments": true,
+          "exact_append_attempts": true,
+          "START_saved_online": true,
+          "only_owned_log_created": true
+        },
+        "records": [
+          {
+            "generation": 1,
+            "start": "\r\nMODEM                       lab.local:41077 11/01/26 05:05:50 ",
+            "end": "05:07:54 00:02:04",
+            "valid": true
+          }
+        ],
+        "observer_header": [
+          19525,
+          2327,
+          3,
+          1,
+          2968,
+          15674,
+          15632,
+          6,
+          0,
+          0
+        ],
+        "log_sha256": "819e0c3b08dc2e274860f4b8affc5a6b7028a671e812dcfc69f1b3576a68aea6",
+        "observer_sha256": "883789299c33680f226fe838bfb1fe1f20bb1e5ef8a9a15e8997db5d79fb61b3",
+        "snapshot_sha256": "fd32e9e268e416c32b51253188c4afe52d33a067fd3bca658d8d7b36b9c503d3",
+        "scope": "Actual owned stock BBS, parent event/file owners and passive 8086 COM3/IRQ5 snapshots. One normal call pair; not physical DCD/SIP or complete logging composition."
+      },
+      "screen_audit_path": "build/bbs-lab/results/enigma/midframe-fix-enigma-01/screen-reference-audit.json",
+      "screen_audit_sha256": "6142926fab8eb6a1fd832aabd9354a6669e4b85005db1ab385489b0db240fd09",
+      "screen_checks": {
+        "producer_passed": true,
+        "runtime_unchanged": true,
+        "exact_delivered_prefix": true,
+        "real_single_CPR_boundary": true,
+        "cursor_matches_reference": true,
+        "all_1920_cells_match": true,
+        "hardware_restored": true,
+        "status_visible": true,
+        "font_probe_projection_explicit": true,
+        "held_output_exact": true
+      },
+      "screen_reference": {
+        "enabled": true,
+        "terminalRows": 24,
+        "trigger": "UNSAVED",
+        "quietMs": 750,
+        "reply": [
+          22,
+          8
+        ],
+        "probeReplyConsumed": true,
+        "prefixBytes": 88155,
+        "prefixSha256": "04ac4b8a94aead87d907f49a401ca9c2b585449922c26fd3444db68b1a4f07b9",
+        "probeReplyHex": "1b5b32323b3852",
+        "armed": true,
+        "frozen": true,
+        "heldBytes": 2819
+      },
+      "bridge_closed_sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+    },
+    "synchronet": {
+      "producer_path": "build/bbs-lab/results/synchronet/midframe-fix-synchronet-01/proxy-integration.json",
+      "producer_sha256": "cb548f0740f577c355103aab15685470fa8ddffb925d19ea81a4821ece061563",
+      "producer_checks": {
+        "harness": true,
+        "runtime_unchanged": true,
+        "server_static_inputs_unchanged": true,
+        "message_bodies_unchanged": true,
+        "no_message_mail_or_transfer_writes": true,
+        "actual_ASPECT_login": true,
+        "staged_inputs_unchanged": true,
+        "frozen_editor_frame": true,
+        "actual_CPR_boundary": true,
+        "fixture_CPR_consumed": true,
+        "compiled_geometry_advertised": true,
+        "source_inputs_unchanged": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true,
+        "actual_call_log": true
+      },
+      "phone_log": {
+        "passed": true,
+        "checks": {
+          "final_kind": true,
+          "startup_ok": true,
+          "lifecycle_idle": true,
+          "generation": true,
+          "queue_flags": true,
+          "queue_generations": true,
+          "final_status": true,
+          "heading_and_size": true,
+          "exact_event_records": true,
+          "observer_final": true,
+          "actual_parent_segments": true,
+          "exact_append_attempts": true,
+          "START_saved_online": true,
+          "only_owned_log_created": true
+        },
+        "records": [
+          {
+            "generation": 1,
+            "start": "\r\nLAB NODE 003                lab.local:38557 11/01/26 05:09:41 ",
+            "end": "05:10:32 00:00:51",
+            "valid": true
+          }
+        ],
+        "observer_header": [
+          19525,
+          989,
+          3,
+          1,
+          2958,
+          15664,
+          15622,
+          6,
+          0,
+          0
+        ],
+        "log_sha256": "b87d528e534d93fa73a27f48e1b829d164d71758056f96f65ca0cdfc18763bb9",
+        "observer_sha256": "883789299c33680f226fe838bfb1fe1f20bb1e5ef8a9a15e8997db5d79fb61b3",
+        "snapshot_sha256": "f1c45b2290293525d44bcdee8754f505af8ef7c66b62f8bd463284e3762e5900",
+        "scope": "Actual owned stock BBS, parent event/file owners and passive 8086 COM3/IRQ5 snapshots. One normal call pair; not physical DCD/SIP or complete logging composition."
+      },
+      "screen_audit_path": "build/bbs-lab/results/synchronet/midframe-fix-synchronet-01/screen-reference-audit.json",
+      "screen_audit_sha256": "fcef46879cce1c9c3d5693a2b43a3bfab3fbb7ab6aa540e7113d94979cd3d653",
+      "screen_checks": {
+        "producer_passed": true,
+        "runtime_unchanged": true,
+        "exact_delivered_prefix": true,
+        "real_single_CPR_boundary": true,
+        "cursor_matches_reference": true,
+        "all_1920_cells_match": true,
+        "hardware_restored": true,
+        "status_visible": true,
+        "font_probe_projection_explicit": true,
+        "held_output_exact": true
+      },
+      "screen_reference": {
+        "enabled": true,
+        "terminalRows": 24,
+        "trigger": "UNSAVED",
+        "quietMs": 150,
+        "reply": [
+          5,
+          8
+        ],
+        "probeReplyConsumed": true,
+        "prefixBytes": 21710,
+        "prefixSha256": "2667e97a73f6b3f05d73c12082f4dadcbb1608d775aecec583987d59d785ecc7",
+        "probeReplyHex": "1b5b353b3852",
+        "armed": true,
+        "frozen": true,
+        "heldBytes": 13988
+      },
+      "bridge_closed_sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+    }
+  },
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Actual DOSBox modem/virtual DCD, not physical Boca/SPA2102/SIP/DSP/audio or electrical timing.",
+    "Four deliberate16-byte metadata cuts, YMODEM and ZMODEM with legacy and /I:1 initialization; not every data-frame offset,CRC,window,serial-flow or profile.",
+    "Only a previously observed carrier falling requests resync. Legacy separator has existing pacing; strict guard uses the configured interval. Replies later than that interval cannot be correlated generically.",
+    "40 linked policy cases model BIOS/UART; four native cuts use actual DOSBox modem. No injected product variables or supplied modem-result strings.",
+    "Initial incomplete-timestamp reporter and private-symbol linked probes excluded; accepted old four, fixed four,40-case linked suite,67-case public repeat and fresh BBS runs only.",
+    "Selected stock ENiGMA multiline/Synchronet ASPECT editor workflows match1920 cells/cursor; no all-frame/all-emulation rendering guarantee.",
+    "Broader generic-child/fault, full original UI/F01-F16, physical modem and card deployment remain open. Resident code still has two spare bytes.",
+    "Prior images,published package/card,live BBS,installed bridge,ATA and host network unchanged."
+  ]
+}

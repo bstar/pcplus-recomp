@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Mid-frame modem recovery](MIDFRAME_MODEM_RECOVERY.md) now reuses the retry separator after
+confirmed carrier loss, preventing in-flight upload bytes from corrupting the
+next initialization. Four old-image cases fail; four fixed YMODEM/ZMODEM cases
+pass in legacy and acknowledged modes. The fixed image passes 40 linked init
+cases, a 67-workflow public rebuild and fresh stock-BBS screen/log checks.
+The change uses MODEM_CODE; resident CS still has two spare bytes. Broader
+protocol/feature, full original UI and physical/card gates remain open.
+
 [Batch carrier recovery](BATCH_CARRIER_RECOVERY.md) now covers ten actual YMODEM/ZMODEM
 metadata/data/retained-file disconnect workflows. Each cleans the unfinished
 file/source owner, preserves earlier completed files where applicable, redials
