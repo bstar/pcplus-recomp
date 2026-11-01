@@ -1,5 +1,10 @@
 # New PCPlus: ready for a hardware connection test
 
+Follow-up: the first hardware startup exposed the BIOS enumeration gate.
+The [BIOS-omitted UART fix](BIOS_OMITTED_UART.md) is now installed at `C:\PCPLUS`
+with configuration matching `C:\UTILS\PCPLUS`. The package/evidence below is
+the preceding readiness checkpoint; the follow-up has its own scoped receipt.
+
 The current goal is maximum compatibility through the real Boca → SPA2102 →
 SynthModem → LoSs oF CoNtRoL Enigma path. Software/package readiness is verified;
 the user-operated physical connection and real-account login are still pending.
