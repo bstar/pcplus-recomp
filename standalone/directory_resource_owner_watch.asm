@@ -200,7 +200,21 @@ dos_handler:
  test al,2
  jnz .bad
  in al,21h
+%ifdef TARGET_IRQ
+ ; The real handoff uses DOS vector services after switching IRQ identity.
+ ; The released old IRQ may be unmasked; require the current IRQ quiesced.
+ cmp word [UART_IRQ],5
+ je .source_pic
+ cmp word [UART_IRQ],TARGET_IRQ
+ jne .bad
+ test al,(1 << TARGET_IRQ)
+ jmp .pic_checked
+.source_pic:
+%endif
  test al,20h
+%ifdef TARGET_IRQ
+.pic_checked:
+%endif
  jz .bad
  xor ax,ax
  mov es,ax

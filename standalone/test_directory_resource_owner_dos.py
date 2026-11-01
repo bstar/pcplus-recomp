@@ -20,7 +20,7 @@ NAMES=['valid-directory-pair-profile6','invalid-KBD-no-publication','invalid-KEY
  'actual-transfer-changed-after-queue-before-resource-read','actual-DTE-changed-after-queue-before-resource-read']
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--target-port',type=int,choices=[0,1,2,3,4],default=0);p.add_argument('--missing-target',action='store_true');p.add_argument('--target-profile',type=int,choices=[4,6],default=6);p.add_argument('--adopt',action='store_true',help='Exercise preview A and exact applied state');p.add_argument('--case',action='append',help='Run only named workflows');args=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--target-port',type=int,choices=[0,1,2,3,4],default=0);p.add_argument('--missing-target',action='store_true');p.add_argument('--target-irq',type=int,choices=[0,3,4,7],default=0,help='Apply an IRQ-only change after PRMEDIT saves it and the immediate hardware offer is declined');p.add_argument('--target-profile',type=int,choices=[4,6],default=6);p.add_argument('--adopt',action='store_true',help='Exercise preview A and exact applied state');p.add_argument('--case',action='append',help='Run only named workflows');args=p.parse_args()
  binary=args.terminal.resolve();manifest=json.loads((binary.parent/'manifest.json').read_text())
  assert manifest['experimental_directory_resource_owner'] and sha(binary)==manifest['binary_sha256']
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
@@ -39,6 +39,12 @@ def main():
  if args.adopt:assert manifest.get('experimental_directory_adopt')
  if args.target_port:assert args.adopt and args.target_port!=3,'Native source remains COM3/IRQ5; use another target here'
  if args.missing_target:assert args.target_port==4
+ if args.target_irq:
+  assert args.adopt and not args.target_port and args.case==[NAMES[0]],'IRQ-only test uses the valid pair workflow and source COM3/IRQ5'
+  editor=ROOT/'build/setup-mouse-notice-sound-custom-irq/PRMEDIT.EXE'
+  editor_manifest=json.loads((editor.parent/'manifest.json').read_text())
+  assert sha(editor)==editor_manifest['binary_sha256']
+  for n,h in editor_manifest['sources'].items():assert sha(ROOT/n)==h,n
 
  assert all(syms[n][0]==ds for n,_ in fields)
  definitions={'BUNDLE_BYTES':bundle_bytes,'RESOURCE_BYTES':resource_bytes,
@@ -50,17 +56,28 @@ def main():
  'CONNECTION':syms['connection_state'][1],'FIELD_BYTES':field_bytes,'FIELD_COUNT':len(fields),
  'FROZEN_RELATIVE':syms['redisplay_snapshot'][0]-ds,'FROZEN_OFFSET':syms['redisplay_snapshot'][1]}
  if manifest.get('experimental_directory_adopt'):definitions['PREVIEW_KEY']=ord('A')
- if args.target_port:definitions['ALLOW_PORT_MOVE']=1
+ if args.target_port or args.target_irq:definitions['ALLOW_PORT_MOVE']=1
+ if args.target_irq:definitions.update(TARGET_IRQ=args.target_irq,UART_IRQ=syms['uart_irq_indices'][1])
  if args.adopt:definitions.update(RESOURCE_KIND=8,ADOPT_SCRIPT_RELATIVE=syms['directory_adopt_script_storage'][0]-ds,ADOPT_SCRIPT_OFFSET=syms['directory_adopt_script_storage'][1])
  (out/'owner-watch.inc').write_text(''.join(f'%define {n} {v}\n' for n,v in definitions.items()))
  (out/'owner-fields.inc').write_text(''.join(f'dw {syms[n][1]},{size}\n' for n,size in fields))
  subprocess.run(['nasm','-fbin','-I'+str(out)+'/',str(ROOT/'standalone/directory_resource_owner_watch.asm'),'-o',str(out/'WATCH.COM')],check=True)
- if args.target_port:
+ if args.target_port or args.target_irq:
   subprocess.run(['nasm','-fbin',str(ROOT/'standalone/port_watch.asm'),'-o',str(out/'MSTAT.COM')],check=True)
   for port,base in enumerate((0x3f8,0x2f8,0x3e8,0x2e8),1):
    sampler=SAMPLER.replace('BEFORE.BIN',f'BEFORE{port}.BIN').replace('AFTER.BIN',f'AFTER{port}.BIN')
    for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(base+off))
    (out/f'snap{port}.asm').write_text(sampler);subprocess.run(['nasm','-fbin',str(out/f'snap{port}.asm'),'-o',str(out/f'SNAP{port}.COM')],check=True)
+
+
+ if args.target_irq:
+  from test_adoption_irq_restore_dos import INITIAL,OBSERVER
+  initial=INITIAL.replace('or al,80h','or al,'+hex(1<<args.target_irq))
+  observer=OBSERVER.replace('cmp word [PORT],1','cmp word [PORT],3').replace('cmp word [BASE],3f8h','cmp word [BASE],3e8h').replace('test al,80h','test al,'+hex(1<<args.target_irq))
+  macro_names=[('PORT','terminal_port_number'),('BASE','uart_port_rbr'),('BIND','terminal_setup_binding_status'),('SETUP','terminal_setup_status'),('KIND','terminal_program_kind'),('STATUS','terminal_program_status'),('OPTIONS','terminal_option_mask'),('IRQ','uart_irq_indices'),('APPLY','terminal_setup_apply_status'),('RESULT','terminal_program_result')]
+  observer=''.join('%define '+key+' '+str(syms[value][1])+'\n' for key,value in macro_names)+observer
+  for leaf,source in [('PICINIT',initial),('IRQWATCH',observer)]:
+   (out/(leaf+'.asm')).write_text(source);subprocess.run(['nasm','-fbin',str(out/(leaf+'.asm')),'-o',str(out/(leaf+'.COM'))],check=True)
 
  sampler=SAMPLER
  for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(0x3e8+off))
@@ -137,7 +154,11 @@ def main():
    elif mode not in (25,29,38):(case/script_path).write_bytes(raw_script)
    if mode not in (29,38):data[250+0x34:250+0x3d]=script_name.ljust(9,b'\0')
    if mode not in (25,29,30,38):selected_script=(script_path,script_kind,raw_script)
+  if args.target_irq:struct.pack_into('<HH',settings,0x4e4,8,4)
   (case/'TEST.PRM').write_bytes(settings);(case/'PCPLUS.DIR').write_bytes(data)
+  if args.target_irq:
+   settings=bytearray(settings);struct.pack_into('<H',settings,0x188,args.target_irq)
+   shutil.copyfile(editor,case/'PRMEDIT.EXE')
   if mode!=3:
    kbd=bytearray(keyboard('N'))
    if mode==1:kbd[6*948:6*948+12]=b'X'*12
@@ -147,7 +168,7 @@ def main():
   if mode>=9:
    for leaf in ('PCPLUS.DIR','BOARD.KBD','BOARD.KEY'):shutil.copyfile(case/leaf,case/'OTHER'/leaf)
   originals={str(f.relative_to(case)):f.read_bytes() for f in case.rglob('*') if f.is_file() and f.suffix in ('.PRM','.DIR','.KBD','.KEY','.XLT','.ASX','.ASP','.EXE')}
-  child_keys='a-1 p6500 ' if mode>=9 else ''
+  child_keys='a-1 p6500 ' if mode>=9 else ('a-s p1800 '+'tab '*8+f'home del {args.target_irq} f10 p500 escape p900 n p900 ') if args.target_irq else ''
   if mode in (31,32,40):child_keys+='a-f1 p500 '+('G O . A S X' if mode==32 else 'C A P . L O G')+' enter p700 '
   entry_keys='a-z p400 a-d' if mode==4 else '` p400 tab p300 l' if mode==5 else 'a-d'
   resource_wait='p7500' if mode==24 or compile_case else 'p1800'
@@ -194,11 +215,15 @@ echo FAIL>FAIL.TXT
 exit
 '''
 
-  if args.target_port:
+  if args.target_port or args.target_irq:
    for leaf in ['MSTAT.COM',*[f'SNAP{i}.COM' for i in range(1,5)]]:shutil.copyfile(out/leaf,case/leaf)
-   if not args.missing_target:config=config.replace(f'serial{args.target_port}=disabled',f'serial{args.target_port}=dummy irq:{(4,3,5,3)[args.target_port-1]}')
+   if args.target_port and not args.missing_target:config=config.replace(f'serial{args.target_port}=disabled',f'serial{args.target_port}=dummy irq:{(4,3,5,3)[args.target_port-1]}')
    config=config.replace('SNAP B\nWATCH T','SNAP B\n'+'\n'.join(f'SNAP{i} B' for i in range(1,5))+'\nMSTAT T\nWATCH T',1)
    config=config.replace('WATCH\nSTRAT A','WATCH\nMSTAT\n'+'\n'.join(f'SNAP{i} A' for i in range(1,5))+'\nSTRAT A',1)
+  if args.target_irq:
+   for leaf in ['PICINIT.COM','IRQWATCH.COM']:shutil.copyfile(out/leaf,case/leaf)
+   config=config.replace('serial3=dummy irq:5',f'serial3=dummy irq:{args.target_irq}')
+   config=config.replace('SNAP B\n','PICINIT\nSNAP B\n',1).replace('MSTAT T\n','IRQWATCH T\nMSTAT T\n',1).replace('MSTAT\n','MSTAT\nIRQWATCH\n',1).replace('TERMINAL @TEST.PRM','C:\\TERMINAL.EXE @TEST.PRM',1)
   (case/'dosbox.conf').write_text(config)
   with (case/'dosbox.log').open('w') as log:run=subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(case/'dosbox.conf')],env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log,timeout=45)
   assert run.returncode==0 and (case/'PASS.TXT').exists() and not (case/'FAIL.TXT').exists(),name
@@ -253,6 +278,8 @@ exit
   if args.adopt:
    offsets={};at=0
    for field,size in fields:offsets[field]=(at,size);at+=size
+   if args.target_irq:
+    assert struct.unpack_from('<H',expected_fields,offsets['uart_irq_indices'][0])[0]==5,'PRMEDIT must defer the hardware change until preview A'
    def replace(field,value):
     pos,size=offsets[field];assert len(value)==size,field;expected_fields[pos:pos+size]=value
    if success:
@@ -293,13 +320,19 @@ exit
    assert binding==(struct.pack('<HH',1,0)+bundle[1948:2024] if success else bytes(80)),name
    adoption_report=dict(applied=success,final_fields_verified=True,canonical_script_binding_verified=True,sampled_stack_bytes=syms['terminal_stack_top'][1]-minimum_sp)
 
-  if args.target_port:
+  if args.target_port or args.target_irq:
    assert all((case/f'BEFORE{i}.BIN').read_bytes()==(case/f'AFTER{i}.BIN').read_bytes() and len((case/f'BEFORE{i}.BIN').read_bytes())==42 for i in range(1,5)),name
    samples=struct.unpack('<18H',(case/'WATCH.BIN').read_bytes());assert samples[0]==0x5043 and samples[1]>0
    active=[samples[2+i*4] for i in range(4)]
-   assert active[2]>0 and (active[args.target_port-1]>0 if success else active[args.target_port-1]==0),(name,active)
-   if success:assert samples[3+(args.target_port-1)*4]==4 and samples[5+(args.target_port-1)*4]==1,(name,samples)
+   assert active[2]>0
+   if args.target_port:assert (active[args.target_port-1]>0 if success else active[args.target_port-1]==0),(name,active)
+   if success and args.target_port:assert samples[3+(args.target_port-1)*4]==4 and samples[5+(args.target_port-1)*4]==1,(name,samples)
    adoption_report.update(target_port=args.target_port,missing_target=args.missing_target,all_four_hardware_snapshots_restored=True,active_port_ticks=active)
+  if args.target_irq:
+   magic,ticks_irq,new_irq_samples,wrong_old_mask=struct.unpack('<4H',(case/'IRQMASK.BIN').read_bytes()[:8])
+   assert magic==0x4951 and ticks_irq>0 and new_irq_samples>0 and wrong_old_mask==0,(magic,ticks_irq,new_irq_samples,wrong_old_mask)
+   adoption_report.update(source_IRQ=5,target_IRQ=args.target_irq,new_IRQ_active_samples=new_irq_samples,old_IRQ_mask_violations=wrong_old_mask,actual_PRMEDIT_saved_IRQ=(case/'TEST.PRM').read_bytes()==bytes(settings),editor_sha256=sha(editor),saved_IRQ_deferred_until_preview=True)
+   assert adoption_report['actual_PRMEDIT_saved_IRQ']
   compiler_report={}
   if compile_case:
    state_at=pos+4000+14;state=observed[state_at:state_at+256];execs=struct.unpack_from('<H',observed,state_at+256)[0]
@@ -322,11 +355,11 @@ exit
    sink=sum(size for field,size in fields[:next(i for i,(field,size) in enumerate(fields) if field=='terminal_sink_398a_enabled')]);cap=sink+2
    assert before_fields[sink:sink+2]==after_fields[sink:sink+2]==b'\x01\x00' and struct.unpack_from('<H',after_fields,cap)[0]==1 and struct.unpack_from('<H',after_fields,cap+10)[0]==1,name
    if mode==31:assert (case/'OTHER/CAP.LOG').is_file(),name
-  for leaf,original in originals.items():assert (case/leaf).read_bytes()==original,(name,leaf)
+  for leaf,original in originals.items():assert (case/leaf).read_bytes()==(bytes(settings) if args.target_irq and leaf=='TEST.PRM' else original),(name,leaf)
   reports.append(dict(case=name,passed=True,adoption=adoption_report,compiler=compiler_report,observer_ticks=ticks,DOS_operations_under_quiescence=io_calls,content_opens=opens,ownership_violations=violations,owner_state=owner,resource_state=struct.unpack_from('<7H',resource),active_state_unchanged=not args.adopt and mode not in (7,8),declared_session_fault_only=mode in (7,8),hardware_restored=True))
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
- result=dict(passed=True,binary_sha256=sha(binary),cases=reports,case_count=len(reports),translation=translation,scripts=scripts,adoption=args.adopt,source_resources_unchanged=True,
-  sources={n:sha(ROOT/n) for n in ['standalone/test_directory_resource_owner_dos.py','standalone/directory_resource_owner_watch.asm','standalone/dos_strategy_sample.asm','standalone/test_terminal.py','standalone/modem_fixtures.py','standalone/directory_view_fixture.py','standalone/test_directory_resources_dos.py','standalone/test_directory_key_bindings_dos.py','src/aspect/compiler.py']},
+ result=dict(passed=True,binary_sha256=sha(binary),cases=reports,case_count=len(reports),translation=translation,scripts=scripts,adoption=args.adopt,source_resources_unchanged=not args.target_irq,declared_PRMEDIT_save_only=bool(args.target_irq),
+  sources={n:sha(ROOT/n) for n in ['standalone/test_directory_resource_owner_dos.py','standalone/test_adoption_irq_restore_dos.py','standalone/directory_resource_owner_watch.asm','standalone/dos_strategy_sample.asm','standalone/test_terminal.py','standalone/modem_fixtures.py','standalone/directory_view_fixture.py','standalone/test_directory_resources_dos.py','standalone/test_directory_key_bindings_dos.py','src/aspect/compiler.py']},
   artifacts={str(p.relative_to(out)):sha(p) for p in out.rglob('*') if p.is_file()},
   scope='Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. '+('Preview A applies selected settings/resources/target; exact fields before prompt and after return verified.' if args.adopt else 'Read-only/compile workflow; active settings unchanged.')+' Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS',len(reports),'actual DOS resource owner workflows')

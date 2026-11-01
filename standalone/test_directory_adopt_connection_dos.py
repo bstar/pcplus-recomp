@@ -12,7 +12,7 @@ def action(command):
  for i in range(10):struct.pack_into('<H',raw,i*54,3)
  struct.pack_into('<H',raw,0,1);raw[2:2+len(command)]=command;return bytes(raw)
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--package',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--case',choices=['canonical-ASX','compiled-ASP','changed-ASX-refused']);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--package',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--case',choices=['canonical-ASX','compiled-ASP','changed-ASX-refused','settings-after-CWD','settings-cancel-after-CWD']);a=p.parse_args()
  package=a.package.resolve();m=json.loads((package/'manifest.json').read_text());assert m.get('experimental_directory_adopt')
  for n,h in m['files'].items():assert sha(package/'PCPLUSSE'/n)==h,n
  for n,h in m['sources'].items():assert sha(ROOT/n)==h,n
@@ -27,22 +27,41 @@ def main():
 
  good_source='proc main\nfopen 0 "D:\\CANON.OK" "wb"\nfputs 0 "CANONICAL"\nfclose 0\nendproc\n';good=compile_source(good_source)
  bad=compile_source('proc main\nfopen 0 "D:\\EVIL.OK" "wb"\nfputs 0 "WRONG FILE"\nfclose 0\nendproc\n')
- for name in ([a.case] if a.case else ['canonical-ASX','compiled-ASP','changed-ASX-refused']):
+ for name in ([a.case] if a.case else ['canonical-ASX','compiled-ASP','changed-ASX-refused','settings-after-CWD','settings-cancel-after-CWD']):
+  settings_case=name in ('settings-after-CWD','settings-cancel-after-CWD')
   raw=bytearray(directory(port=3,baud=5));raw[250+0x34:250+0x3d]=b'GO'.ljust(9,b'\0');raw[250+0x56:250+0x5f]=b'DOIT'.ljust(9,b'\0')
   settings=bytearray(prm(port=3,baud=5));struct.pack_into('<H',settings,0x188,5);struct.pack_into('<HH',settings,0x4e4,8,4)
-  source=name!='canonical-ASX';command=b'COPY /B /Y D:\\BAD.ASX D:\\GO.ASX' if name=='changed-ASX-refused' else b'CD D:\\OTHER'
+  source=name in ('compiled-ASP','changed-ASX-refused');command=b'COPY /B /Y D:\\BAD.ASX D:\\GO.ASX' if name=='changed-ASX-refused' else b'CD D:\\OTHER'
   files={'WATCH.COM':(out/'WATCH.COM').read_bytes(),'DOIT.KEY':action(command),'OTHER/GO.ASX':bad,'OTHER/KEEP.BIN':b'UNTOUCHED'}
   files['GO.ASP' if source else 'GO.ASX']=good_source.encode() if source else good
   if name=='changed-ASX-refused':files['BAD.ASX']=bad
+  if settings_case:
+   struct.pack_into('<H',settings,0x194,4)
+   decoy=bytearray(settings);decoy[0x400:0x408]=b'DECOYPRM'
+   files['OTHER/TEST.PRM']=bytes(decoy)
+   wanted=bytearray(settings)
+   if name=='settings-after-CWD':struct.pack_into('<H',wanted,0x1ae,0x1e)
+  else:wanted=None
   path_keys=' '.join(['bs']*10)+' T E S T . D I R'
   keys='p900 enter p900 a-d p400 '+path_keys+' enter p6500 enter p1800 a p6500 space p800 a-1 p1800 space p600 ` p300 tab p300 d p4500 '+('space p500 ' if name=='changed-ASX-refused' else '')+'a-h p1700 a-x'
+  if settings_case:
+   # Selected profile6 must survive editing a source PRM configured for4.
+   edit='a-s p1800 pgdown tab tab tab home del del 1 e '+('f10 p500 escape' if name=='settings-after-CWD' else 'escape p300 y')+' p1800 space p600 '
+   keys=keys.replace('space p600 `','space p600 '+edit+'`',1)
   cohort=out.name+'-'+name;assert not (ROOT/'build/connection-dos'/cohort).exists()
-  proof=harness.run(cohort,'hangup',keys,directory=bytes(raw),prm=bytes(settings),arguments='@D:\\TEST.PRM',com=3,irq=5,cpu='8086',working_drive='d',files=files,accounting_delta=1,timeout=45,emulated_modem=True,observer='WATCH')
+  proof=harness.run(cohort,'hangup',keys,directory=bytes(raw),prm=bytes(settings),prm_expected=bytes(wanted) if wanted is not None else None,arguments='@D:\\TEST.PRM',com=3,irq=5,cpu='8086',working_drive='d',files=files,accounting_delta=1,timeout=55 if settings_case else 45,emulated_modem=True,observer='WATCH')
   drive=ROOT/'build/connection-dos'/cohort
   observed=(drive/('OWNER.BIN' if (drive/'OWNER.BIN').exists() else 'OTHER/OWNER.BIN')).read_bytes();print(name,'observer',struct.unpack_from('<7H',observed),flush=True);assert struct.unpack_from('<7H',observed)[1]==7 and not struct.unpack_from('<7H',observed)[5],name
   checks=dict(proof['checks']);checks.update(selected_target_dialed=bool(proof['checks'].get('emulated_modem_connected_to_selected_endpoint')),wrong_script_never_executed=not (drive/'EVIL.OK').exists())
   if name=='changed-ASX-refused':checks.update(changed_compiled_script_not_executed=not (drive/'CANON.OK').exists(),actual_PROGRAM_replaced_ASX=(drive/'GO.ASX').read_bytes()==bad)
   else:checks.update(canonical_script_executed=(drive/'CANON.OK').is_file() and (drive/'CANON.OK').read_bytes()==b'CANONICAL',CWD_decoy_ignored=not (drive/'EVIL.OK').exists())
+  if settings_case:
+   screen=(drive/'SCREEN.BIN').read_bytes()
+   checks.update(saved_canonical_PRM=(drive/'TEST.PRM').read_bytes()==wanted,
+    CWD_PRM_decoy_unchanged=(drive/'OTHER/TEST.PRM').read_bytes()==bytes(decoy),
+    source_profile4_preserved_in_file=struct.unpack_from('<H',(drive/'TEST.PRM').read_bytes(),0x194)[0]==4,
+    active_selected_profile6_retained=bool(proof['checks'].get('actual_DOS_DA')),
+    expected_normal_attribute_visible=screen[1:29:2]==bytes([0x1e if name=='settings-after-CWD' else 7])*14)
   if source and name!='changed-ASX-refused':checks['actual_ASPCOMP_produced_exact_ASX']=(drive/'GO.ASX').read_bytes()==good
   report=dict(case=name,passed=all(checks.values()),checks=checks,cohort=str(drive.relative_to(ROOT)),binary_sha256=proof['binary_sha256'],artifacts={str(q.relative_to(drive)):sha(q) for q in drive.rglob('*') if q.is_file()});assert report['passed'],report
   reports.append(report)
