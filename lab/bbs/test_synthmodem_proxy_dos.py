@@ -31,10 +31,13 @@ def main():
     p.add_argument('--directory-overlay', action='store_true', help='Observe read-only Alt-D loading/pages during the stock editor workflow')
     p.add_argument('--directory-preview-overlay', action='store_true', help='Observe validated Alt-D preview inside the stock editor workflow')
     p.add_argument('--screen-reference', action='store_true', help='Match compiled geometry and freeze incoming bytes after a real final CPR probe')
+    p.add_argument('--multiline-editor', choices=['page-up','page-down'], help='Native BIOS input enters24 lines and exercises actual editor page navigation')
     args = p.parse_args()
     if args.directory_preview_overlay:args.directory_overlay=True
     assert re.fullmatch('[A-Za-z0-9_-]+', args.label)
     assert not (args.reference_overlay and args.directory_overlay)
+    if args.multiline_editor:
+        assert args.screen_reference and not args.reference_overlay and not args.directory_overlay
     assert process_pid(), 'Start the owned stock ENiGMA fixture first'
     # One synthetic account/server log is shared by these runs. Keep its
     # authentication/menu audit unambiguous; independent DOS fixtures may run
@@ -46,6 +49,8 @@ def main():
     from terminal_geometry import terminal_geometry
     geometry=terminal_geometry(binary)
     sources += [binary.parent/'terminal.map',ROOT/'lab/bbs/terminal_geometry.py']
+    if args.multiline_editor:
+        sources += [ROOT/'lab/bbs/test_synthmodem_proxy_dos.py',ROOT/'lab/bbs/audio_synchronet_editor_keys.asm',ROOT/'lab/bbs/test_dos.py',ROOT/'lab/bbs/editor-recipes.json',ROOT/'lab/bbs/check_editor_dos.py',ROOT/'lab/bbs/enigma_multiline.py']
     reference_args=['--terminal-rows',str(geometry['rows'])]+(['--screen-reference'] if args.screen_reference else [])
     before = {str(f.relative_to(ROOT)): sha(f) for f in sources}
     base = ROOT/'build/bbs-lab'
@@ -88,6 +93,31 @@ def main():
             assert not observer.exists()
             subprocess.run(['nasm','-fbin',*(['-DDIRECTORY_ADOPT']if adopt_owner else[]),*(['-DDIRECTORY_PREVIEW']if args.directory_preview_overlay else[]),*(['-DDIRECTORY_RESOURCE_OWNER']if resource_owner and args.directory_preview_overlay else[]),str(ROOT/'standalone/directory_view_watch.asm'),'-o',str(observer)],check=True)
         exit_wait='2'
+        keyboard_helper=None
+        if args.multiline_editor:
+            # Keep the measured owned login/subject recipe, then wait for both
+            # actual editor markers before a separate native BIOS key producer.
+            marker='K E Y T E S T enter p1800 '
+            assert keys.count(marker)==1
+            keys=keys[:keys.index(marker)+len(marker)]
+            folder=base/(args.label+'-keys');folder.mkdir()
+            scans=dict(R=0x13,U=0x16,P=0x19,M=0x32,A=0x1e,K=0x25,N=0x31,
+                       S=0x1f,V=0x2f,E=0x12,D=0x20)
+            scans.update({str(n):n+1 if n else 11 for n in range(10)})
+            def words(text):return [(scans[c]<<8)|ord(c) for c in text]
+            sequence=[0x1519]
+            for n in range(1,25):sequence+=words(f'R{n:02}')+[0x1c0d]
+            sequence += [0x4900]+words('UPMARK')
+            if args.multiline_editor=='page-down':sequence += [0x5100]
+            sequence += words('UNSAVED')+[0x2d00,0]
+            (folder/'multiline_keys.inc').write_text('dw '+','.join(hex(word) for word in sequence)+'\n')
+            keyboard_helper=folder/'MULTKEY.COM'
+            subprocess.run(['nasm','-fbin','-DENIGMA_MULTILINE','-DSCREEN_REFERENCE_FREEZE',
+                '-DAUDIO_SYNC_EDITOR_SETTLE=72','-DAUDIO_SYNC_EDITOR_KEY_WAIT=6',
+                '-DAUDIO_SYNC_EDITOR_FINAL_WAIT=90','-DAUDIO_SYNC_EDITOR_WATCHDOG_TICKS=2520',
+                '-I'+str(folder)+'/',str(ROOT/'lab/bbs/audio_synchronet_editor_keys.asm'),
+                '-o',str(keyboard_helper)],check=True)
+            exit_wait='65'
         if args.directory_preview_overlay and resource_owner:
             # Preserve the recipe's3-second final pause and one ordinary Alt-X,
             # supplied by the adapter. Its redundant second exit would push
@@ -102,12 +132,13 @@ def main():
             '--irq', '5', '--mouse-scales', '8', '4', '--cpu', '8086',
             '--timeout', '160', '--wait', exit_wait, '--raw-upstream', '--keys', keys]
         if observer:command+=['--video-observer',str(observer)]
+        if keyboard_helper:command+=['--keyboard-helper',str(keyboard_helper)]
         if args.directory_overlay:command+=['--directory-view-fixture']
         with log_path.open('w') as log:
             run = subprocess.run(command, cwd=ROOT, stdout=log, stderr=log, timeout=175)
         # Audit even a failed harness when artifacts exist. A normal DOS return
         # cannot substitute for actual authentication and editor semantics.
-        semantic = audit('enigma', args.label, disconnect=True)
+        semantic = audit('enigma', args.label, disconnect=True,keyboard_profile='enigma-multiline' if args.multiline_editor else 'network',multiline_mode=args.multiline_editor)
         closed = json.loads((bridge/'1-closed.json').read_text())
         video = (output/'SCREEN.BIN').read_bytes()
         text = '\n'.join(video[i:i+160:2].decode('cp437') for i in range(0,4000,160))
@@ -115,6 +146,12 @@ def main():
             exact_screen=len(video)==4000 and 'UNSAVED' in text and 'OVR 01,08' in text,
             proxy_source_unchanged=closed['source_unchanged'],
             product_source_unchanged=all(sha(ROOT/n)==h for n,h in before.items()))
+        multiline={}
+        if args.multiline_editor:
+            report=json.loads((output/'semantic-audit.json').read_text())
+            checks['exact_screen']=len(video)==4000 and 'UNSAVED' in text
+            multiline=report['authority']['multiline']
+            multiline.update(helper_sha256=sha(keyboard_helper),key_source_sha256=sha(keyboard_helper.parent/'multiline_keys.inc'))
         observed={}
         if args.reference_overlay:
             capture=(output/'REFVIEW.BIN').read_bytes();assert len(capture)==12006
@@ -155,6 +192,7 @@ def main():
             scope='Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, '
                   'actual SynthModem proxy and stock loopback ENiGMA. '
                   'Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.')
+        if args.multiline_editor:result['multiline_editor']=multiline
         if args.screen_reference:
             proof=json.loads((bridge/'1-screen-reference.json').read_text())
             checks.update(reference_freeze_completed=proof['armed'] and proof['frozen'] and proof['reply'] is not None,

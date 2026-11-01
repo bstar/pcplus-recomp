@@ -26,12 +26,21 @@ watchdog: dw AUDIO_SYNC_EDITOR_WATCHDOG_TICKS
 ticks: dw 0
 key_at: dw keys
 prompt: db 'KEYTEST',0
+%ifdef ENIGMA_MULTILINE
+footer: db 'INS 01,01',0
+%else
 footer: db 'Insert Mode',0
+%endif
 main_prompt: db 'Read/Post Messages',0
 main_footer: db 'Local [',0
+%ifdef ENIGMA_MULTILINE
+keys:
+%include "multiline_keys.inc"
+%else
 keys: dw 1519h,1e41h,3042h,2e43h,2044h,1245h,4700h,2348h,4f00h,1245h
       dw 4b00h,5300h,5200h,2c5ah,0f09h,1454h,4900h,5100h,1519h
       dw 1655h,314eh,1f53h,1e41h,2f56h,1245h,2044h,1011h,3920h,2d00h,0
+%endif
 handler:
  pushf
  push ax

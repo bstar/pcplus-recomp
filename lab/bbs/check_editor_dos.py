@@ -4,11 +4,16 @@ import argparse,hashlib,json,re
 from datetime import datetime
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='network'):
+def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='network',multiline_mode=None):
  out=ROOT/'build/bbs-lab/results'/name/label
  result=json.loads((out/'result.json').read_text());tx=(out/'serial-received.bin').read_bytes();display=(out/'display.bin').read_bytes()
  clean=re.sub(rb'\x1b\[[0-?]*[ -/]*[@-~]',b'',display).decode('cp437',errors='replace')
  keys={'home':[b'\x1b[1~',b'\x1b[H',b'\x1bOH'],'end':[b'\x1b[4~',b'\x1b[F',b'\x1bOF'],'insert':[b'\x1b[2~'],'delete':[b'\x1b[3~'],'page_up':[b'\x1b[5~'],'page_down':[b'\x1b[6~'],'tab':[b'\t'],'delete_line_ctrl_y':[b'\x19']}
+ multiline=keyboard_profile=='enigma-multiline'
+ if multiline:
+  assert name=='enigma' and multiline_mode in ('page-up','page-down')
+  keys={'page_up':[b'\x1b[5~'],'delete_line_ctrl_y':[b'\x19']}
+  if multiline_mode=='page-down':keys['page_down']=[b'\x1b[6~']
  if keyboard_profile=='enigma-editor':
   assert name=='enigma' and result.get('keyboard_profile'),'Explicit ENiGMA KBD run required'
   kbd=(out/'BOARD.KBD').read_bytes()
@@ -20,7 +25,7 @@ def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='ne
   assert b'ABCDE' in tx,'No measured editor body'
   tx=tx[tx.index(b'ABCDE'):]
  observed={key:any(s in tx for s in options) for key,options in keys.items()}
- checks={'DOS_harness':result['passed'],'typed_draft_sent':b'ABCDE' in tx,'all_exercised_keys_emitted':all(value for key,value in observed.items() if expect_page_down or key!='page_down')}
+ checks={'DOS_harness':result['passed'],'typed_draft_sent':b'R01\r' in tx if multiline else b'ABCDE' in tx,'all_exercised_keys_emitted':all(value for key,value in observed.items() if expect_page_down or key!='page_down')}
  authority={}
  if name=='enigma':
   boundary=json.loads((out/'server-log-start.json').read_text());start=boundary['byte_offset']
@@ -38,12 +43,18 @@ def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='ne
   session=sessions.pop();rows=[r for r in rows if r.get('sessionId')==session];menus=[r['menuName'] for r in rows if r.get('menuName')]
   entered='messageBaseNewPost' in menus;left=entered and 'messageBaseMainMenu' in menus[menus.index('messageBaseNewPost')+1:]
   checks['stock_editor_entered' if stock_server else 'experimental_editor_entered']=entered
-  checks.update(no_post_saved=not any('posted message to' in r.get('msg','') for r in rows),insert_toggled_overtype='OVR ' in clean)
+  checks.update(no_post_saved=not any('posted message to' in r.get('msg','') for r in rows))
   body=clean[clean.find('KEYTEST'):]
   positions=[(int(row),int(col)) for row,col in re.findall(r'(?:INS|OVR) (\d+),(\d+)',body)]
-  checks['home_moves_before_marker']=positions[:7]==[(1,2),(1,3),(1,4),(1,5),(1,6),(1,1),(1,2)]
+  if multiline:
+   from enigma_multiline import editor_checks
+   extra,detail=editor_checks(out,tx,display,multiline_mode);checks.update(extra)
+  else:
+   checks['insert_toggled_overtype']='OVR ' in clean
+   checks['home_moves_before_marker']=positions[:7]==[(1,2),(1,3),(1,4),(1,5),(1,6),(1,1),(1,2)]
   if not disconnect:checks['discard_returned_message_menu']=left
   authority={'server_log':str(log),'stock_server':stock_server,'session_id':session,'menus':menus,'first_body_cursor_positions':positions[:20]};(out/'server-session.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
+  if multiline:authority['multiline']=detail
  else:
   csi=rb'\x1b\[[0-?]*[ -/]*[@-~]'
   checks.update(stock_editor_entered='FSEditor v1.105' in clean,draft_aborted='Aborted.' in clean,insert_toggled_overtype='Overwrite Mode' in clean,
@@ -55,7 +66,8 @@ def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='ne
  audit={'passed':all(checks.values()),'checks':checks,'observed_key_wire':observed,'binary_sha256':result['binary_sha256'],'serial':result['serial'],'authority':authority,'scope':'Actual loopback editor draft and captured DOS keyboard wire. Server identity is recorded separately. Draft discard/abort attempted; inspect no_post_saved or draft_aborted before claiming successful cancellation. One-line page keys test wire emission and boundary handling only; no multiline scrolling or physical UART claim.','exit_mode':'close_unsaved_connection' if disconnect else 'editor_discard_or_abort','unexercised_keys':[] if expect_page_down else ['page_down (invalid ADDKEY pgdn alias; rerun with pgdown)']}
  audit['modem_packet_delay_ms']=result.get('modem_packet_delay_ms',0)
  audit['keyboard_profile']=keyboard_profile
+ if multiline:audit['scope']='Actual stock loopback ENiGMA24-line editor draft with native DOS BIOS input. Validate authentication, unsaved disconnect, exact numbered viewport, document-coordinate page transitions and actual key wire. Whole-cell reference is separate; no all-profile, audio, physical or published-post acceptance.'
  if audit['modem_packet_delay_ms']:audit['scope']+=' Explicit modem buffering experiment; does not replace immediate-bridge failures or prove physical firmware compatibility.'
  (out/'semantic-audit.json').write_text(json.dumps(audit,indent=2)+'\n');print(json.dumps(audit,indent=2));return audit['passed']
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=['enigma','synchronet']);p.add_argument('--label',required=True);p.add_argument('--page-down-not-exercised',action='store_true');p.add_argument('--disconnect-unsaved',action='store_true');p.add_argument('--keyboard-profile',choices=['network','enigma-editor'],default='network');a=p.parse_args();raise SystemExit(0 if audit(a.name,a.label,not a.page_down_not_exercised,a.disconnect_unsaved,a.keyboard_profile) else 1)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=['enigma','synchronet']);p.add_argument('--label',required=True);p.add_argument('--page-down-not-exercised',action='store_true');p.add_argument('--disconnect-unsaved',action='store_true');p.add_argument('--keyboard-profile',choices=['network','enigma-editor','enigma-multiline'],default='network');p.add_argument('--multiline-mode',choices=['page-up','page-down']);a=p.parse_args();raise SystemExit(0 if audit(a.name,a.label,not a.page_down_not_exercised,a.disconnect_unsaved,a.keyboard_profile,a.multiline_mode) else 1)
