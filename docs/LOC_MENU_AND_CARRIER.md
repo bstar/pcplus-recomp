@@ -52,7 +52,8 @@ policy. Actual DOS package execution and a clean five-executable rebuild pass.
 Relevant genuine-loss/redial, script and transfer DOS outcomes are bound in the
 validation receipt, separately from the earlier broad application checkpoint.
 
-The candidate is staged under `build/connection-test-package-carrier-01`.
-It has **not been installed on the DOS card**. Preserve the exact active
-configuration from `C:\UTILS\PCPLUS` during the next application update.
-Physical validation of the notice fix remains pending.
+The initial candidate was staged under `build/connection-test-package-carrier-01`.
+The subsequent [connection-alert package](CONNECT_ALERT.md) includes this fix
+and is now installed at `C:\PCPLUS`. Its active configuration still matches
+`C:\UTILS\PCPLUS`; the newer call-log entry is preserved. Physical validation
+of the notice fix remains pending.

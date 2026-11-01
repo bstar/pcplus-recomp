@@ -7,15 +7,20 @@ The BIOS-omitted UART fix was installed at `C:\PCPLUS` with resources/config
 matching `C:\UTILS\PCPLUS` exactly. bstar reports working Enigma interaction
 with much better compatibility; the live bridge confirms V.32bis at 9600 bps.
 The [custom menu and carrier follow-up](docs/LOC_MENU_AND_CARRIER.md) addresses
-the remaining display/notice reports. Its new carrier candidate is not on the
-card yet, and the saved Enigma menu fix awaits a safe approved restart.
+the remaining display/notice reports. The carrier/alert candidate is now on the
+card, and the saved Enigma menu fix awaits a safe approved restart.
 
 The [paired connection alert](docs/CONNECT_ALERT.md) is implemented and validated
 in the next application package, together with the carrier qualifier. It uses
 the saved enable/countdown fields, services UART input throughout, cancels
 without consuming a BBS key, and cleans up for program handoff and exit. The
 current update payload is `build/connection-test-package-alert-01/PCPLUS`;
-installation on the card and a real audible test remain pending.
+it is installed at `C:\PCPLUS`, with the real audible test still pending.
+
+[DOS network updates](docs/DOS_NETWORK_UPDATES.md) are the next integration step.
+The NIC photo identifies a 3C509-TP with an installed XTIDE ROM. Its diagnostic,
+packet driver and existing mTCP are staged at `C:\NET`, without boot/ROM changes.
+Resource inspection, DHCP and a verified FTP round trip await the DOS machine.
 
 On November 1, bstar replaced the broad remaining-work objective with this
 milestone: prepare the new PCPlus build for a real connection through the Boca

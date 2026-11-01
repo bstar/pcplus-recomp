@@ -24,8 +24,9 @@ timing depends on the original calibrated routines and was not measured here.
 The local original-profile copies inspected have sound enabled and countdown5:
 approximately a five-second alert, not a fixed five pairs. Those files do not hash
 identically to the active `C:\UTILS\PCPLUS` profile, so this does not establish
-the current card's countdown. Preserve and read the active field at the next
-card access instead of imposing a guessed value.
+the current card's countdown by themselves. At the subsequent network-tool
+installation, the active card profile was checked: sound enabled, countdown5.
+Those fields and the rest of the active profile were preserved.
 
 The implementation uses the existing maintained speaker owner, with no DOS,
 keyboard read, UART access or calibrated busy wait in the sequencer. Native
@@ -41,9 +42,9 @@ active speaker is not stolen or silenced. Failed calls do not start the alert.
 The saved duration is imported at startup and refreshed by accepted setup reload;
 the existing sound field controls both notices and the connect alert.
 
-Physical audible output remains unverified until the updated executable is put
-on the DOS card and exercised. This is PC speaker audio, separate from analog
-handshake audio.
+The tested executable is now installed at `C:\PCPLUS`, alongside the network
+bootstrap tools. Physical audible output remains unverified until exercised
+on the machine. This is PC speaker audio, separate from analog handshake audio.
 
 [Validation receipt](validation/connect-alert.json): 23 linked timing/ownership
 cases; four actual DOS8086 cases for quiet mode, expiry, key cancellation and
