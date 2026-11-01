@@ -9,6 +9,12 @@ old_vector: dd 0
 old_irq_segment: dw 0
 sample: dw 0x4c53,0,0,0,0,0,0
 queue: times 666 db 0
+%ifdef CLAIM_OFFSET
+claim: times 74 db 0
+%define SAMPLE_BYTES 754
+%else
+%define SAMPLE_BYTES 680
+%endif
 handler:
  pushf
  push ax
@@ -56,6 +62,19 @@ handler:
  inc si
  inc di
  loop .copy
+%ifdef CLAIM_OFFSET
+ mov ax,[sample+10]
+ mov es,ax
+ mov si,CLAIM_OFFSET
+ mov di,claim
+ mov cx,74
+.copy_claim:
+ mov al,[es:si]
+ mov [di],al
+ inc si
+ inc di
+ loop .copy_claim
+%endif
  mov word [sample+2],1
 .done:
  pop es
@@ -95,7 +114,7 @@ collect:
  cli
  mov si,sample
  mov di,buffer
- mov cx,680
+ mov cx,SAMPLE_BYTES
 .copy:
  mov al,[es:si]
  mov [di],al
@@ -117,11 +136,11 @@ collect:
  jc failed
  mov bx,ax
  mov dx,buffer
- mov cx,680
+ mov cx,SAMPLE_BYTES
  mov ah,40h
  int 21h
  jc .close_failed
- cmp ax,680
+ cmp ax,SAMPLE_BYTES
  jne .close_failed
  mov ah,3eh
  int 21h
@@ -135,4 +154,4 @@ failed:
  mov ax,4c01h
  int 21h
 filename: db 'D:\PLSTART.BIN',0
-buffer: times 680 db 0
+buffer: times SAMPLE_BYTES db 0

@@ -37,6 +37,7 @@ parser.add_argument('--directory-retirement',action='store_true',help='Save pend
 parser.add_argument('--directory-resource-owner',action='store_true',help='Quiesced KEY/KBD preflight from directory preview R; implies --directory-resource-cli')
 parser.add_argument('--phone-log-bank',action='store_true',help='Link the checked logger code bank; event/startup integration remains disabled')
 parser.add_argument('--phone-log-startup',action='store_true',help='Configure the call-log queue from accepted settings before UART startup; requires --session-baseline')
+parser.add_argument('--phone-log-reservations',action='store_true',help='Experimental logger queue with fixed file claims; implies --phone-log-bank')
 parser.add_argument('--native-reset-bank',action='store_true',help='Link the experimental namespaced native bank; peer width ownership remains disabled')
 parser.add_argument('--native-reset-static',action='store_true',help='Retain the larger static bank as a memory regression control')
 parser.add_argument('--native-reset-transaction',action='store_true',help='Experimental checked live display transaction; peer requests remain disabled')
@@ -60,8 +61,10 @@ if args.directory_preview:
  assert args.session_baseline and args.session_capture
 if args.directory_view:args.original_reference=True
 if args.original_reference:args.original_keys=True
+if args.phone_log_reservations:args.phone_log_bank=True
 if args.phone_log_startup:
  args.phone_log_bank=True
+ args.phone_log_reservations=True
  assert args.session_baseline
 if args.session_capture:assert args.directory_keys and args.process_bank
 if args.session_projection:assert args.session_capture
@@ -141,6 +144,7 @@ if args.directory_adopt:out_name='terminal-directory-adopt-'+hashlib.sha256(out_
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
 if args.native_reset_transaction:out_name+='-transaction'
+if args.phone_log_reservations:out_name+='-log-claims'
 if args.phone_log_startup:out_name+='-log-startup'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
@@ -506,7 +510,7 @@ if args.native_reset_bank:
 phone_log_bank=None
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
- phone_log_bank=build_bank(OUT,startup=args.phone_log_startup)
+ phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup)
  objects+=list(map(str,phone_log_bank['objects']));sources+=phone_log_bank['sources']
 ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
 if args.directory_resource_owner:ordering+=['FAR_DATA','FROZEN_DATA']
@@ -514,6 +518,7 @@ subprocess.run(['wlink','system','dos','order',*[value for kind in ordering for 
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
 assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64KiB'
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
+if args.phone_log_reservations:assert memory['phone_log_claim_far_calls_verified']==2
 inputs=sources+c_sources+[ROOT/'src/config/prm_dos.h',ROOT/'src/config/terminal_import.h',ROOT/'src/config/terminal_import.inc',ROOT/'src/config/modem_import.h',ROOT/'src/config/modem_import.inc',ROOT/'src/config/startup_import.h',ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc']
 inputs += [ROOT/'src/config/live_configuration.h',ROOT/'src/aspect/resident_render.h',ROOT/'src/aspect/resident_bridge.inc',ROOT/'src/aspect/renderer_policy.h',ROOT/'src/aspect/serial_handoff.h']
 inputs += [protected_provenance,alternate_provenance,substitute_provenance]
@@ -621,7 +626,9 @@ if args.phone_log_bank:
  manifest['experimental_phone_log_bank']=True
  if args.phone_log_startup:manifest['experimental_phone_log_startup']=True
  manifest['phone_log_compiler_adapters']=phone_log_bank['adapters']
- manifest['limitations'].append('Checked call-log code bank linked with retained far event storage and explicit DOS/CRT callbacks. No modem events, startup PRM/path adoption, shared file reservations or poll scheduling are wired yet; this build does not produce a live telephone log.')
+ manifest['limitations'].append('Checked call-log code bank linked with retained far event storage and explicit DOS/CRT callbacks. No modem events, startup PRM/path adoption or poll scheduling are wired yet; this build does not produce a live telephone log.')
+ if args.phone_log_reservations:manifest['experimental_phone_log_reservations']=True
+ else:manifest['limitations'].append('The queue does not yet acquire shared file reservations in this variant.')
 if args.native_reset_bank:
  manifest['experimental_native_reset_bank']=True
  manifest['native_reset_overlay']=not args.native_reset_static

@@ -1,5 +1,11 @@
 #include "phone_log_queue.h"
 #include "phone_log_file.h"
+#ifdef PHONE_LOG_QUEUE_RESERVATION
+#include "../capture/capture_file.h"
+#ifndef CAPTURE_FIXED_RESERVATION
+#error PHONE_LOG_QUEUE_RESERVATION requires CAPTURE_FIXED_RESERVATION
+#endif
+#endif
 #if defined(PHONE_LOG_HOST)
 #include <stdint.h>
 #define QFAR
@@ -92,6 +98,16 @@ static unsigned copy_path(const char *path,char *out)
  }
  return 0;
 }
+#ifdef PHONE_LOG_QUEUE_RESERVATION
+/* The existing near file snapshot supplies a stable opaque token even when
+ * the retained queue lives in a separate far segment. No new DS allocation.
+ * Callers hold the queue guard across external recorder probes. */
+static unsigned claim_path(const char *path)
+{
+ unsigned status=capture_file_claim(path,&phone_log_file_result);
+ return status==CF_OK?PLQ_OK:status==CF_BUSY?PLQ_BUSY:PLQ_STATE;
+}
+#endif
 unsigned __cdecl phone_log_queue_configure(unsigned enabled,const char *path)
 {
  char candidate[64];unsigned i,status,same=1;
@@ -99,8 +115,24 @@ unsigned __cdecl phone_log_queue_configure(unsigned enabled,const char *path)
  if(enabled){if(!copy_path(path,candidate)||!phone_log_file_validate_path(candidate))return PLQ_ARGUMENT;}
  else candidate[0]=0;
  for(i=0;i<64;++i){if(owner.path[i]!=candidate[i]){same=0;break;}if(!candidate[i])break;}
+#ifdef PHONE_LOG_QUEUE_RESERVATION
+ if(owner.active||owner.count){
+  if(owner.enabled!=enabled||!same)return PLQ_BUSY;
+  owner.busy=1;status=claim_path(candidate);owner.busy=0;return status;
+ }
+#else
  if(owner.active||owner.count)return owner.enabled==enabled&&same?PLQ_OK:PLQ_BUSY;
+#endif
  status=phone_log_file_initialize();if(status){owner.file_status=status;return status==PLF_RECOVERY?PLQ_RECOVERY:PLQ_FILE;}
+#ifdef PHONE_LOG_QUEUE_RESERVATION
+ owner.busy=1;
+ if(enabled)status=claim_path(candidate);
+ else if(owner.enabled){
+  status=capture_file_unclaim(&phone_log_file_result);
+  status=status==CF_OK?PLQ_OK:status==CF_BUSY?PLQ_BUSY:PLQ_STATE;
+ }else status=PLQ_OK;
+ owner.busy=0;if(status)return status;
+#endif
  for(i=0;i<64;++i){owner.path[i]=candidate[i];if(!candidate[i])break;}
  owner.enabled=enabled;return PLQ_OK;
 }
@@ -163,6 +195,10 @@ unsigned __cdecl phone_log_queue_poll(void)
  owner.busy=1;record=&owner.records[owner.head];count=record->count;
  for(i=0;i<64;++i){path[i]=owner.path[i];if(!path[i])break;}
  for(i=0;i<count;++i)text[i]=record->text[i];
+#ifdef PHONE_LOG_QUEUE_RESERVATION
+ status=claim_path(path);
+ if(status){owner.busy=0;return status;}
+#endif
  status=phone_log_file_append(path,phone_log_heading,phone_log_heading_count,text,count);
  owner.file_status=status;
  if(!status&&phone_log_file_result.committed){

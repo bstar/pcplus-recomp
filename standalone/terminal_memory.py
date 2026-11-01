@@ -634,6 +634,23 @@ def inspect_terminal_memory(binary,map_path):
    extra['capture_reservation_far_bindings_verified']=len(sites)
    extra['capture_reservation_far_call_sites']=sites
    extra['capture_reservation_initialized_bytes']=reservation_bytes
+   if reservation_bytes==74 and 'terminal_phone_log_code_start' in symbols:
+    phone=next(c for c in code_segments if c['name']=='PHONE_LOG_CODE')
+    lo=phone['relative_segment']*16
+    body=image[start+lo:start+lo+phone['bytes']]
+    calls=[]
+    for target in ('_capture_file_claim','_capture_file_unclaim'):
+     pattern=b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0])
+     count=body.count(pattern)
+     if count:
+      assert count==1,(target,'missing/duplicated logger claim call')
+      site=lo+body.index(pattern)
+      assert site+3 in relocations,(target,'logger claim missing far relocation')
+      calls.append(site)
+    if calls:
+     assert len(calls)==2,'Logger claim acquisition/release must be linked together'
+     extra['phone_log_claim_far_calls_verified']=2
+     extra['phone_log_claim_far_call_sites']=calls
   if '_command_menu_event' in symbols:
    menu_seg=symbols['_command_menu_event'][0]
    if menu_seg!=config_seg:

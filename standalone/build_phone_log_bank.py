@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build the retained queue in a dedicated code bank with actual DOS callbacks."""
+import argparse
 import hashlib
 import json
 import os
@@ -32,10 +33,12 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def build_bank(out, startup=False):
+def build_bank(out, reservations=False, startup=False):
     OUT = Path(out)
     OUT.mkdir(parents=True, exist_ok=True)
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
+    if reservations:
+        flags += ['-dPHONE_LOG_QUEUE_RESERVATION', '-dCAPTURE_FIXED_RESERVATION']
     sources = ['src/directory/' + name + '.c' for name in
                ['phone_log_queue', 'phone_log_format', 'phone_log_clock', 'phone_log_file', 'phone_log_fs']]
     aliases = dict(ALIASES)
@@ -76,6 +79,8 @@ def build_bank(out, startup=False):
         'src/capture/capture_fs.h', 'src/config/prm_dos.h', 'src/terminal/phone_log_abi.inc',
         'src/terminal/far_bridge.inc', 'standalone/build_phone_log_bank.py',
         'standalone/build_phone_log_file.py', 'standalone/omf_imports.py']
+    if reservations:
+        names += ['src/capture/capture_file.h']
     if startup:
         names += ['src/directory/phone_log_startup.h', 'src/config/resource_path.h',
                   'src/terminal/session_baseline.h']
@@ -86,32 +91,50 @@ def build_bank(out, startup=False):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path, default=OUT)
+    parser.add_argument('--reservations', action='store_true')
+    args = parser.parse_args()
+    out = args.output.resolve()
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
-    result = build_bank(OUT)
+    if args.reservations:
+        flags += ['-dPHONE_LOG_QUEUE_RESERVATION', '-dCAPTURE_FIXED_RESERVATION']
+    result = build_bank(out, reservations=args.reservations)
     objects = [path.name for path in result['objects']]
     client = 'standalone/phone_log_bank_client.asm'
     subprocess.run(['nasm', '-fobj', '-I' + str(ROOT / 'src/terminal') + '/',
-                    client, '-o', str(OUT / 'phone_log_bank_client.obj')], cwd=ROOT, check=True)
+                    client, '-o', str(out / 'phone_log_bank_client.obj')], cwd=ROOT, check=True)
     objects.append('phone_log_bank_client.obj')
     # Existing real capture backend remains resident, with the same diagnostic
     # prefix-write/ambiguous-close interception as the near/far-data tests.
     source = 'src/capture/capture_fs.c'
     subprocess.run(['wcl', '-c', *flags, '-dcapture_fs_write=phone_real_write',
                     '-dcapture_fs_close=phone_real_close', '-fo=capture_fs.obj',
-                    os.path.relpath(ROOT / source, OUT)], cwd=OUT, check=True)
-    stable_header(OUT / 'capture_fs.obj', source)
+                    os.path.relpath(ROOT / source, out)], cwd=out, check=True)
+    stable_header(out / 'capture_fs.obj', source)
     objects.append('capture_fs.obj')
+    extra_sources = []
+    if args.reservations:
+        extra_sources = ['src/capture/capture_file.c', 'src/capture/capture_reservation.c']
+        for extra in extra_sources:
+            name = Path(extra).stem + '.obj'
+            subprocess.run(['wcl', '-c', *flags, '-fo=' + name,
+                            os.path.relpath(ROOT / extra, out)], cwd=out, check=True)
+            stable_header(out / name, extra)
+            objects.append(name)
+    diagnostic = 'standalone/phone_log_reservation_diagnostic.c' if args.reservations else 'standalone/phone_log_queue_diagnostic.c'
     subprocess.run(['wcl', *flags, '-dPHONE_LOG_QUEUE_FAR', '-k8192', '-fm=QUEUE.map', '-fe=QUEUE.EXE',
-                    os.path.relpath(ROOT / 'standalone/phone_log_queue_diagnostic.c', OUT), *objects],
-                   cwd=OUT, check=True)
+                    os.path.relpath(ROOT / diagnostic, out), *objects], cwd=out, check=True)
     names = [str(path.relative_to(ROOT)) for path in result['sources']] + [source, client,
-             'standalone/phone_log_queue_diagnostic.c']
+             diagnostic] + extra_sources
+    if args.reservations:
+        names += ['src/capture/capture_reservation.h']
     manifest = dict(original_inputs=[], sources={name: sha(ROOT / name) for name in names},
-                    entries=ENTRIES, adapters=result['adapters'], outputs=dict(bank=dict(binary_sha256=sha(OUT / 'QUEUE.EXE'),
-                    objects={name: sha(OUT / name) for name in objects})),
+                    entries=ENTRIES, adapters=result['adapters'], outputs=dict(bank=dict(binary_sha256=sha(out / 'QUEUE.EXE'),
+                    objects={name: sha(out / name) for name in objects})),
                     limitations=['Dedicated code/far-data diagnostic with actual DOS callbacks; not yet linked into terminal.',
                                  'Diagnostic-only near client/CONFIG callback substitutes must not enter the application.'])
-    (OUT / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+    (out / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     print('Built dedicated phone-log code bank and eight resident callback adapters')
 
 

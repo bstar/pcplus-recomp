@@ -15,6 +15,11 @@ unsigned __cdecl phone_log_queue_initialize(void);
  * caller's native current/PCPLUS resolution. Delayed events cannot follow CWD
  * changes. Disabled accepts a null path. Configuration cannot discard active/pending
  * events or file ambiguity. Same enabled/path configuration is idempotent. */
+/* PHONE_LOG_QUEUE_RESERVATION additionally claims the caller-resolved canonical
+ * identity alongside the recorder. Enabled configuration retains it while
+ * idle, active, queued, retrying or uncertain; only a successful idle disable
+ * or retarget releases the old identity. Refresh conflicts return PLQ_BUSY without IO or
+ * publishing another path. Recorder callbacks cannot reenter the queue. */
 unsigned __cdecl phone_log_queue_configure(unsigned,const char *);
 /* Caller supplies a nonzero32-bit connection generation and captured timestamp.
  * Repeated same-generation events never enqueue twice. Generations follow

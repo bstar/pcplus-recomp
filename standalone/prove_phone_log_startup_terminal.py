@@ -40,13 +40,17 @@ def main():
     parent, output = args.terminal.resolve(), args.output.resolve()
     assert parent.is_relative_to(ROOT / 'build') and output.is_relative_to(ROOT / 'build') and not output.exists()
     manifest = json.loads((parent / 'manifest.json').read_text())
-    assert manifest['experimental_phone_log_startup'] and not manifest.get('experimental_phone_log_reservations')
+    assert manifest['experimental_phone_log_startup']
     assert sha(parent / 'TERMINAL.EXE') == manifest['binary_sha256']
     commit = subprocess.check_output(['git', 'rev-parse', args.commit + '^{commit}'], text=True).strip()
     baseline = subprocess.check_output(['git', 'rev-parse', args.baseline_commit + '^{commit}'], text=True).strip()
     tracked = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', commit], text=True).splitlines()
     names = set(manifest['sources']) | {name for name in tracked if name.startswith('standalone/') and name.endswith('.py')}
     names |= {'standalone/phone_log_startup_watch.asm', 'nix/flake.nix', 'nix/flake.lock', 'tools/dev'}
+    reservations=bool(manifest.get('experimental_phone_log_reservations'))
+    if reservations:
+        names |= {'standalone/phone_log_claim_watch.asm', 'standalone/phone_log_reservation_diagnostic.c',
+                  'standalone/phone_log_bank_client.asm'}
     output.mkdir(parents=True)
     sources, differences = {}, {}
     allowed = {'src/directory/phone_log_queue.c', 'src/directory/phone_log_queue.h',
@@ -78,6 +82,11 @@ def main():
         assert sha(rebuilt / 'TERMINAL.EXE') == manifest['binary_sha256']
         subprocess.run([sys.executable, 'standalone/test_phone_log_startup_terminal.py',
             '--terminal', str(rebuilt), '--label', 'public-startup'], cwd=fresh, stdout=log, stderr=log, check=True)
+        if reservations:
+            subprocess.run([sys.executable, 'standalone/test_phone_log_claim_terminal.py',
+                '--terminal', str(rebuilt), '--label', 'public-claims'], cwd=fresh, stdout=log, stderr=log, check=True)
+            subprocess.run([sys.executable, 'standalone/test_phone_log_reservation_dos.py',
+                '--output', 'build/public-queue-claims'], cwd=fresh, stdout=log, stderr=log, check=True)
         subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, False)], cwd=fresh, stdout=log, stderr=log, check=True)
         subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, False)], cwd=output / 'baseline', stdout=log, stderr=log, check=True)
     def control(folder):
@@ -89,12 +98,22 @@ def main():
     native_path = fresh / 'build/phone-log-startup-terminal/public-startup/result.json'
     native = json.loads(native_path.read_text())
     assert native['passed'] and len(native['cases']) == 7
+    composition={}
+    if reservations:
+        capture_path=fresh/'build/phone-log-claim-terminal/public-claims/result.json'
+        queue_path=fresh/'build/public-queue-claims/result.json'
+        capture=json.loads(capture_path.read_text());queue=json.loads(queue_path.read_text())
+        assert capture['passed'] and len(capture['cases'])==3 and all(capture['checks'].values())
+        assert queue['passed'] and all(queue['checks'].values())
+        assert sum(len(v['cases']) for v in queue['variants'].values())==15
+        composition=dict(repeated_capture_cases=3,repeated_queue_claim_cases=15,
+            repeated_capture_sha256=sha(capture_path),repeated_queue_claim_sha256=sha(queue_path))
     assert all(sha(fresh / name) == digest for name, digest in sources.items())
     result = dict(passed=True, source_commit=commit, baseline_commit=baseline, source_count=len(sources), sources=sources,
         declared_uncommitted_reservation_source_differences=differences, original_inputs=[],
         terminal_sha256=sha(rebuilt / 'TERMINAL.EXE'), repeated_native_cases=7,
         repeated_native_sha256=sha(native_path), unchanged_bank_control_sha256=sha(control(fresh)),
-        build_log_sha256=sha(output / 'build.log'),
+        build_log_sha256=sha(output / 'build.log'),**composition,
         scope=__doc__ + ' Public Git source only; no Git metadata, originals, previous objects or installed files copied. '
             'Require exact full executable despite declared pending-source differences. Compare disabled-feature '
             'control against the pre-feature public commit. This remains an optional startup-only parent, not event logging or deployment.')

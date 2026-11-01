@@ -30,6 +30,8 @@ def main():
         ISR_OFFSET=symbols['uart_receive_interrupt'][1], DATA_SEGMENT=symbols['_terminal_phone_log_startup_status'][0],
         STATUS_OFFSET=symbols['_terminal_phone_log_startup_status'][1],
         QUEUE_SEGMENT=symbols['_phone_log_queue_store'][0], QUEUE_OFFSET=symbols['_phone_log_queue_store'][1])
+    reserved=bool(manifest.get('experimental_phone_log_reservations'))
+    if reserved:defines['CLAIM_OFFSET']=symbols['_capture_reservation'][1]
     output = ROOT / 'build/phone-log-startup-terminal' / args.label
     assert not output.exists()
     output.mkdir(parents=True)
@@ -62,9 +64,9 @@ def main():
             arguments='COM1 19200 HARD' if name == 'unconfigured' else None,
             working_drive='d', environment={'PCPLUS': env}, expected=7 if error else 0, cpu='8086')
         captured = (folder / 'PLSTART.BIN').read_bytes()
-        assert len(captured) == 680
+        assert len(captured) == (754 if reserved else 680)
         header = struct.unpack_from('<7H', captured)
-        queue = captured[14:]
+        queue = captured[14:680]
         checks = dict(normal_terminal=run['passed'], observer_magic=header[0] == 0x4c53,
             no_log_creation=set(p.relative_to(folder).as_posix() for p in folder.rglob('*.FON') if p.is_file()) == ({'PCPLUS.FON'} if name == 'precedence' else set()))
         if error:
@@ -76,6 +78,11 @@ def main():
                 startup_status=header[4] == 0, private_far_queue=header[5] != header[6],
                 queue_flags=struct.unpack_from('<9H', queue) == (0x514d, 0, int(bool(enabled)), 0, 0, 0, 0, 0, 0),
                 retained_path=retained == expected_path)
+            if reserved:
+                claim=captured[680:]
+                checks.update(claim_not_busy=struct.unpack_from('<H',claim,6)[0]==0,
+                    claim_owner=struct.unpack_from('<H',claim,8)[0]==(symbols['_phone_log_file_result'][1] if enabled else 0),
+                    claim_identity=claim[10:74].split(b'\0',1)[0]==expected_path)
         results.append(dict(case=name, passed=all(checks.values()), checks=checks, native=run,
             observer_header=header, expected_path=expected_path.decode() if expected_path is not None else None))
     checks = dict(all_cases=all(r['passed'] for r in results),
