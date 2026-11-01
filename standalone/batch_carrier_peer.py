@@ -41,10 +41,13 @@ async def run(reader,writer,item,event,folder,mode,upload_body):
     detail=item['batch']
     if upload:
         if protocol==1:
-            # Receiver C can precede local startup; repeat only until its header.
+            # Let the scheduled BIOS dialog/filename complete before negotiation.
+            # An early C can be retained during UI entry and provoke a second
+            # header once the real sender starts. Never queue speculative C's.
+            await asyncio.sleep(1.7)
             while not pending or pending[0] not in (1,2):
                 await send(b'C')
-                try:await asyncio.wait_for(receive(),.25)
+                try:await asyncio.wait_for(receive(),1.0)
                 except asyncio.TimeoutError:continue
                 while pending and pending[0] not in (1,2):del pending[0]
             sequence,body=await ypacket();assert sequence==0
