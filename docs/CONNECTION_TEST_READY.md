@@ -5,6 +5,9 @@ SynthModem → LoSs oF CoNtRoL Enigma path. Software/package readiness is verifi
 the user-operated physical connection and real-account login are still pending.
 This is not a claim of complete original PCPlus feature parity.
 
+Use the [hardware acceptance record](HARDWARE_CONNECTION_TEST.md) for the real
+session; its outcomes start as not tested and must come from actual observations.
+
 ## Package and setup
 
 The local archive is
