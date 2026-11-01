@@ -6,6 +6,7 @@ All credentials and posts belong to that synthetic fixture. No live service
 configuration is imported, changed or restarted.
 """
 import argparse
+import fcntl
 import json
 from pathlib import Path
 import re
@@ -29,12 +30,23 @@ def main():
     p.add_argument('--reference-overlay', action='store_true', help='Observe Alt-Z/refusal during the stock BBS editor workflow')
     p.add_argument('--directory-overlay', action='store_true', help='Observe read-only Alt-D loading/pages during the stock editor workflow')
     p.add_argument('--directory-preview-overlay', action='store_true', help='Observe validated Alt-D preview inside the stock editor workflow')
+    p.add_argument('--screen-reference', action='store_true', help='Match compiled geometry and freeze incoming bytes after a real final CPR probe')
     args = p.parse_args()
     if args.directory_preview_overlay:args.directory_overlay=True
     assert re.fullmatch('[A-Za-z0-9_-]+', args.label)
     assert not (args.reference_overlay and args.directory_overlay)
     assert process_pid(), 'Start the owned stock ENiGMA fixture first'
+    # One synthetic account/server log is shared by these runs. Keep its
+    # authentication/menu audit unambiguous; independent DOS fixtures may run
+    # concurrently, but two sessions against this fixture may not.
+    fixture_lock=(ROOT/'build/bbs-lab/enigma/.dos-integration.lock').open('a')
+    try:fcntl.flock(fixture_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    except BlockingIOError:raise RuntimeError('Another owned ENiGMA DOS integration is active; wait for it to finish')
     binary, sources = select_product(args.terminal, 'TERMINAL.EXE')
+    from terminal_geometry import terminal_geometry
+    geometry=terminal_geometry(binary)
+    sources += [binary.parent/'terminal.map',ROOT/'lab/bbs/terminal_geometry.py']
+    reference_args=['--terminal-rows',str(geometry['rows'])]+(['--screen-reference'] if args.screen_reference else [])
     before = {str(f.relative_to(ROOT)): sha(f) for f in sources}
     base = ROOT/'build/bbs-lab'
     bridge = base/(args.label+'-proxy')
@@ -44,7 +56,7 @@ def main():
     assert not log_path.exists()
     proc = subprocess.Popen(['node', str(ROOT/'lab/bbs/synthmodem_proxy_serial.js'),
         '--runtime', str(args.runtime.resolve()), '--output', str(bridge),
-        '--framing-ms', str(args.framing_ms), '--byte-delay-ms', str(args.byte_delay_ms)],
+        '--framing-ms', str(args.framing_ms), '--byte-delay-ms', str(args.byte_delay_ms),*reference_args],
         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
     try:
         deadline = time.monotonic()+15
@@ -136,12 +148,18 @@ def main():
                     else:checks['resource_check_key_stayed_local']=b'r' not in wire
             observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'DIRVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
         result = dict(passed=all(checks.values()), checks=checks,
+            terminal_geometry=geometry,
             bridge=ready, command=command, binary_sha256=sha(binary),
             screen_sha256=sha(output/'SCREEN.BIN'), product_inputs=before,
             reference_observer=observed,
             scope='Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, '
                   'actual SynthModem proxy and stock loopback ENiGMA. '
                   'Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.')
+        if args.screen_reference:
+            proof=json.loads((bridge/'1-screen-reference.json').read_text())
+            checks.update(reference_freeze_completed=proof['armed'] and proof['frozen'] and proof['reply'] is not None,
+                          compiled_geometry_advertised=ready['terminalRows']==geometry['rows'])
+            result.update(passed=all(checks.values()),terminal_geometry=geometry,screen_reference=proof)
         (output/'proxy-integration.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result,indent=2))
         return 0 if result['passed'] else 1

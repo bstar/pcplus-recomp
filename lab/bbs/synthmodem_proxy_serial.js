@@ -10,6 +10,8 @@ const {values} = parseArgs({options: {
   'bbs-port': {type: 'string', default: '23233'},
   'framing-ms': {type: 'string', default: '0'},
   'byte-delay-ms': {type: 'string', default: '0'},
+  'terminal-rows': {type: 'string', default: '25'},
+  'screen-reference': {type: 'boolean', default: false},
 }});
 if (!values.runtime || !values.output) throw new Error('--runtime and --output required');
 const runtime = fs.realpathSync(values.runtime), output = path.resolve(values.output);
@@ -17,6 +19,8 @@ const root = path.resolve(__dirname, '../..');
 if (!output.startsWith(root + '/build/')) throw new Error('Output must be inside ignored build/');
 const port = Number(values['bbs-port']), timeout = Number(values['framing-ms']);
 const delay = Number(values['byte-delay-ms']);
+const rows = Number(values['terminal-rows']);
+if (![24,25].includes(rows)) throw new Error('Only 24/25 terminal rows supported');
 if (![23233, 23234].includes(port)) throw new Error('Only isolated ENiGMA lab ports allowed');
 if (![0, 250].includes(timeout) || !Number.isInteger(delay) || delay < 0 || delay > 20) {
   throw new Error('Invalid framing/delivery settings');
@@ -24,7 +28,7 @@ if (![0, 250].includes(timeout) || !Number.isInteger(delay) || delay < 0 || dela
 fs.mkdirSync(output, {recursive: false});
 const config = require(path.join(runtime, 'config.js'));
 config.logging.level = 'error';
-Object.assign(config.telnet, {terminalType: 'ANSI', terminalCols: 80, terminalRows: 25,
+Object.assign(config.telnet, {terminalType: 'ANSI', terminalCols: 80, terminalRows: rows,
   inputSequenceTimeoutMs: timeout, idleTimeoutMs: 0, menuIdleHeartbeatMs: 0,
   allowedHosts: ['127.0.0.1'], blockedHosts: [], proxyEscapeByte: null});
 config.terminal.aliases = {loc: `127.0.0.1:${port}`, '1': `127.0.0.1:${port}`};
@@ -37,32 +41,76 @@ const sessions = new Set(); let count = 0;
 const server = net.createServer(socket => {
   const id = ++count, proxy = new TelnetProxy(), sent = [], received = [];
   let chain = Promise.resolve(), closed = false;
+  let armed = false, frozen = false, timer = null, prefix = null;
+  const held = [], passed = [], replyWire = [];
+  const oracle = {enabled: values['screen-reference'], terminalRows: rows,
+    trigger: 'UNSAVED', quietMs: 750, reply: null};
+  function freeze() {
+    if (!armed || frozen || closed) return;
+    frozen = true;
+    const query = Buffer.from('\x1b[6n');
+    received.push(query); socket.write(query);
+    prefix = Buffer.concat(received);
+    oracle.prefixBytes = prefix.length;
+    oracle.prefixSha256 = crypto.createHash('sha256').update(prefix).digest('hex');
+  }
+  function schedule() {
+    if (!values['screen-reference'] || !armed || frozen || closed) return;
+    clearTimeout(timer); timer = setTimeout(freeze, oracle.quietMs);
+  }
+  function inputPassed(data) {
+    if (!values['screen-reference'] || armed) return;
+    passed.push(...data);
+    if (Buffer.from(passed).includes(Buffer.from('UNSAVED'))) {
+      armed = true; schedule();
+    }
+  }
   sessions.add(socket);
-  proxy.attach(data => {if (!closed) {received.push(Buffer.from(data)); socket.write(data);}});
+  proxy.attach(data => {
+    if (closed) return;
+    if (frozen) {held.push(Buffer.from(data)); return;}
+    received.push(Buffer.from(data)); socket.write(data); schedule();
+  });
   socket.on('data', data => {
     sent.push(Buffer.from(data));
+    if (frozen) {
+      replyWire.push(Buffer.from(data));
+      const match = /\x1b\[(\d+);(\d+)R/.exec(Buffer.concat(replyWire).toString('latin1'));
+      if (match && !oracle.reply) oracle.reply = [Number(match[1]),Number(match[2])];
+    }
     chain = chain.then(async () => {
-      if (!delay) {if (!closed) proxy.receive(data); return;}
+      if (!delay) {if (!closed) {proxy.receive(data); inputPassed(data);} return;}
       for (const byte of data) {
         if (closed) break;
         proxy.receive(Buffer.from([byte]));
+        inputPassed(Buffer.from([byte]));
         await new Promise(resolve => setTimeout(resolve, delay));
       }
     }).catch(error => {console.error(error); socket.destroy(); process.exitCode = 1;});
   });
   socket.on('error', error => {console.error(error.message); process.exitCode = 1;});
   socket.on('close', () => {
+    clearTimeout(timer);
     closed = true; proxy.disconnect(); sessions.delete(socket);
     fs.writeFileSync(path.join(output, `${id}-serial-input.bin`), Buffer.concat(sent));
     fs.writeFileSync(path.join(output, `${id}-serial-output.bin`), Buffer.concat(received));
     fs.writeFileSync(path.join(output, `${id}-closed.json`), JSON.stringify({closed: true,
       source_unchanged: sources.every(f => hash(path.join(runtime, f)) === identities[f])}, null, 2));
+    if (values['screen-reference']) {
+      oracle.armed = armed; oracle.frozen = frozen;
+      oracle.heldBytes = Buffer.concat(held).length;
+      fs.writeFileSync(path.join(output, `${id}-screen-prefix.bin`), prefix || Buffer.alloc(0));
+      fs.writeFileSync(path.join(output, `${id}-held-output.bin`), Buffer.concat(held));
+      fs.writeFileSync(path.join(output, `${id}-probe-input.bin`), Buffer.concat(replyWire));
+      fs.writeFileSync(path.join(output, `${id}-screen-reference.json`), JSON.stringify(oracle,null,2));
+    }
   });
 });
 server.listen(0, '127.0.0.1', () => {
   fs.writeFileSync(path.join(output, 'ready.json'), JSON.stringify({pid: process.pid,
     endpoint: server.address(), bbsPort: port, inputSequenceTimeoutMs: timeout,
     inputByteDelayMs: delay, installed_sources: identities,
+    terminalRows: rows, screenReference: values['screen-reference'],
     scope: 'Actual SynthModem proxy with loopback-only configuration overrides; no DSP/audio or hardware.'}, null, 2));
 });
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => {
