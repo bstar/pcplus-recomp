@@ -6,7 +6,7 @@ sys.path.insert(0,str(ROOT/'standalone'))
 from test_phone_log_events_terminal import inspect_disk_record
 
 
-def build_observer(binary,output,irq=5):
+def build_observer(binary,output,irq=5,extra=None):
     binary=Path(binary);parent=binary.parent;manifest=json.loads((parent/'manifest.json').read_text())
     assert manifest['experimental_phone_log_controls']
     symbols={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',(parent/'terminal.map').read_text(),re.M|re.I)}
@@ -18,6 +18,7 @@ def build_observer(binary,output,irq=5):
         'STARTUP_STATUS_OFFSET':('_terminal_phone_log_startup_status',1),'DISK_ATTEMPTS_OFFSET':('_terminal_phone_log_disk_attempts',1),
         'DISK_STATUS_OFFSET':('_terminal_phone_log_disk_status',1),'CONTROL_ACK_OFFSET':('_terminal_phone_log_retry_acks',1)}
     defines={key:symbols[name][index] for key,(name,index) in fields.items()};defines['IRQ_VECTOR']=irq+8
+    if extra:defines.update(extra)
     subprocess.run(['nasm','-fbin',*[f'-D{k}={v}' for k,v in defines.items()],str(ROOT/'standalone/phone_log_events_watch.asm'),'-o',str(output)],check=True)
     return output
 

@@ -19,6 +19,9 @@ ORG 100h
 %else
 %define SAMPLE_BYTES (20+RECORD_BYTES*RECORD_LIMIT)
 %endif
+%ifdef ASPECT_CHILD
+%assign SAMPLE_BYTES SAMPLE_BYTES+18
+%endif
 jmp start
 old_timer: dd 0
 old_dos: dd 0
@@ -29,6 +32,9 @@ records: times RECORD_BYTES*RECORD_LIMIT db 0
 retry_notice: dw 0
 %ifdef CONTROL_ACK_OFFSET
 control_frame: times 4000 db 0
+%ifdef ASPECT_CHILD
+child_watch: times 9 dw 0
+%endif
 ui_title: db 'Telephone call log',0
 ui_confirm: db 'Retry retained records? Y/N',0
 ui_accepted: db 'Retry acknowledged; close to resume',0
@@ -38,6 +44,9 @@ ui_recovery: db 'Recovery required: exit and inspect the log.',0
 ui_footer: db 'R: retry   F5: refresh',0
 %endif
 retry_text: db 'Call log retry required',0
+%endif
+%ifdef ASPECT_CHILD
+child_stopped: dw 0
 %endif
 %macro save 0
  pushf
@@ -70,6 +79,9 @@ retry_text: db 'Call log retry required',0
 timer_handler:
  save
  inc word [sample+2]
+%ifdef ASPECT_CHILD
+ call capture_child
+%endif
  xor ax,ax
  mov es,ax
  cmp word [es:IRQ_VECTOR*4],ISR_OFFSET
@@ -103,6 +115,20 @@ dos_handler:
  save
  cmp ah,4ch
  jne .done
+%ifdef ASPECT_CHILD
+ mov bx,[child_watch+6]
+ or bx,bx
+ jz .parent
+ mov dx,ss
+ cmp dx,bx
+ jne .parent
+ sub bx,CHILD_DATA_SEG
+ add bx,CHILD_EXIT_SEG
+ cmp bx,[ss:bp+6]
+ jne .parent
+ mov word [child_watch+16],1
+.parent:
+%endif
  cmp word [sample+8],0
  je .done
  ; Extra PUSHF/saved BP put interrupt return CS at BP+6.
@@ -114,11 +140,83 @@ dos_handler:
  jne .done
  and ax,255
  mov [sample+18],ax
+%ifdef ASPECT_CHILD
+ mov word [child_stopped],1
+%endif
  mov dx,2
  call capture
 .done:
  restore
  jmp far [cs:old_dos]
+%ifdef ASPECT_CHILD
+; Parent is retained during EXEC. Identify the child by its exact live IRQ,
+; then retain its DS until its verified DOS exit. Render RPC leases are brief
+; and must not restrict observation of the cooperative script window.
+; The parent-exit witness stops reads before DOS can free the parent image.
+capture_child:
+ cmp word [child_stopped],0
+ jne .done
+ cmp word [child_watch+16],0
+ jne .done
+ cmp word [sample+8],0
+ je .done
+ mov ax,[sample+8]
+ add ax,PARENT_ASPECT_SEG
+ mov es,ax
+ mov bx,[es:PARENT_CHILD_DS]
+ or bx,bx
+ jz .done
+ mov di,es
+ cmp word [child_watch+6],0
+ je .identify
+ cmp bx,[child_watch+6]
+ jne .done
+ jmp .live
+.identify:
+ xor ax,ax
+ mov es,ax
+ cmp word [es:IRQ_VECTOR*4],CHILD_ISR_OFFSET
+ jne .done
+ mov ax,bx
+ sub ax,CHILD_DATA_SEG
+ add ax,CHILD_ISR_SEG
+ cmp ax,[es:IRQ_VECTOR*4+2]
+ jne .done
+.live:
+ mov es,bx
+ inc word [child_watch]
+ cmp word [child_watch+6],0
+ jne .known
+ mov [child_watch+6],bx
+.known:
+ mov [child_watch+8],bx
+ cmp word [es:CHILD_ARMED],0
+ je .window
+ inc word [child_watch+2]
+.window:
+ mov ax,di
+ mov es,ax
+ cmp word [es:PARENT_WINDOW_ACTIVE],1
+ jne .runtime
+ cmp word [es:PARENT_WINDOW_VISIBLE],1
+ jne .runtime
+ inc word [child_watch+4]
+.runtime:
+ mov es,bx
+ mov ax,[es:CHILD_ERROR]
+ mov [child_watch+12],ax
+ cmp word [es:CHILD_OPCODE],0d4h
+ jne .carrier
+ inc word [child_watch+14]
+.carrier:
+ mov dx,[es:CHILD_MSR_PORT]
+ in al,dx
+ test al,80h
+ jnz .done
+ inc word [child_watch+10]
+.done:
+ ret
+%endif
 ; DX1 timer, DX2 final. All scratch registers belong to handler's saved frame.
 capture:
  mov ax,[sample+10]
