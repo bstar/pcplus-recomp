@@ -84,6 +84,17 @@ mouse detection and actual high-memory placement; file read-back alone cannot
 prove either. The prior manual driver worked, but the cause of its failed
 boot-time detection was not established.
 
+The first physical reboot reported CuteMouse `Error: device not found`.
+MEM confirmed EMM386 and 139 KiB of free upper memory, with no mouse resident.
+A manual `LH MOUSE.COM` launched from `C:\UTILS` reported successful Microsoft
+Mouse 8.20 installation; the accompanying MEMLIVE.TXT was empty, so its actual
+high-memory placement remains unverified. Startup now calls
+`C:\NET\MOUSEUP.BAT`: try CuteMouse first, and on errorlevel5 run Microsoft
+Mouse with LH from C:\UTILS, then return to C:\ before network initialization.
+The fallback output is saved as MSMOUSE.LOG; MEMBOOT.TXT remains the next-boot
+placement check. The fallback startup has been installed and read back over
+FTP, but has not yet been exercised by a reboot.
+
 Pre-change CONFIG.SYS/AUTOEXEC.BAT are in `C:\NET\MOUSEBK`. The driver and
 its license/documentation were copied from the
 [FreeDOS archive](https://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/dos/cutemouse/2.1beta4/ctm21b4.zip),
