@@ -1,0 +1,668 @@
+{
+  "kind": "source-integration-audit-not-runtime-acceptance",
+  "source_commit": "898d702a88ec35ea45acc704390fa58d46284da8",
+  "sources": {
+    "src/terminal/connection.asm": {
+      "sha256": "922481d8edf82b2b3649e118de3dcaab67327494e265d0080ae25b9240e3e5b5",
+      "anchors": [
+        {
+          "anchor": "terminal_connection_start_impl:",
+          "matches": [
+            {
+              "line": 146,
+              "text": "terminal_connection_start_impl:"
+            }
+          ]
+        },
+        {
+          "anchor": "terminal_connection_poll_impl:",
+          "matches": [
+            {
+              "line": 321,
+              "text": "terminal_connection_poll_impl:"
+            }
+          ]
+        },
+        {
+          "anchor": ".connected:",
+          "matches": [
+            {
+              "line": 423,
+              "text": ".connected:"
+            }
+          ]
+        },
+        {
+          "anchor": ".carrier_low:",
+          "matches": [
+            {
+              "line": 437,
+              "text": ".carrier_low:"
+            }
+          ]
+        },
+        {
+          "anchor": ".finished:",
+          "matches": [
+            {
+              "line": 515,
+              "text": ".finished:"
+            }
+          ]
+        },
+        {
+          "anchor": ".retire:",
+          "matches": [
+            {
+              "line": 535,
+              "text": ".retire:"
+            }
+          ]
+        },
+        {
+          "anchor": "terminal_connection_cancel_impl:",
+          "matches": [
+            {
+              "line": 559,
+              "text": "terminal_connection_cancel_impl:"
+            }
+          ]
+        },
+        {
+          "anchor": "terminal_connection_exit_impl:",
+          "matches": [
+            {
+              "line": 612,
+              "text": "terminal_connection_exit_impl:"
+            }
+          ]
+        }
+      ]
+    },
+    "src/terminal/directory_accounting.asm": {
+      "sha256": "4cdc9365c87f6862f50cf008b91160f4c9ed9d77050e3233309f658d9f191469",
+      "anchors": [
+        {
+          "anchor": "terminal_directory_note_connected:",
+          "matches": [
+            {
+              "line": 37,
+              "text": "terminal_directory_note_connected:"
+            }
+          ]
+        },
+        {
+          "anchor": "test word [terminal_option_mask],64",
+          "matches": [
+            {
+              "line": 40,
+              "text": " test word [terminal_option_mask],64"
+            }
+          ]
+        }
+      ]
+    },
+    "src/terminal/transport.asm": {
+      "sha256": "6fcba354a564ec89d38590b63ea91c0d22eaa6935e4b7feb6bce91753fd37054",
+      "anchors": [
+        {
+          "anchor": "terminal_poll_io:",
+          "matches": [
+            {
+              "line": 209,
+              "text": "terminal_poll_io:"
+            }
+          ]
+        },
+        {
+          "anchor": ".redial:",
+          "matches": [
+            {
+              "line": 453,
+              "text": ".redial:"
+            }
+          ]
+        },
+        {
+          "anchor": "terminal_poll_serial:",
+          "matches": [
+            {
+              "line": 502,
+              "text": "terminal_poll_serial:"
+            }
+          ]
+        }
+      ]
+    },
+    "src/terminal/main.asm": {
+      "sha256": "bab72b22c0161792ea85e7f464fb2bf38251227658835ea1199c03ccc64b567b",
+      "anchors": [
+        {
+          "anchor": "terminal_shutdown:",
+          "matches": [
+            {
+              "line": 395,
+              "text": "terminal_shutdown:"
+            }
+          ]
+        },
+        {
+          "anchor": "call uart_restore_hardware_state",
+          "matches": [
+            {
+              "line": 435,
+              "text": " call uart_restore_hardware_state"
+            }
+          ]
+        },
+        {
+          "anchor": "call terminal_poll_io",
+          "matches": [
+            {
+              "line": 288,
+              "text": " call terminal_poll_io"
+            }
+          ]
+        }
+      ]
+    },
+    "src/terminal/aspect_renderer.asm": {
+      "sha256": "4f577e231c5ff5b79bcd8b0c3b03fb05055b646d4129626a77bf5bba126e1fe4",
+      "anchors": [
+        {
+          "anchor": "render_rpc:",
+          "matches": [
+            {
+              "line": 751,
+              "text": "render_rpc:"
+            }
+          ]
+        },
+        {
+          "anchor": "terminal_render_poll:",
+          "matches": [
+            {
+              "line": 830,
+              "text": "terminal_render_poll:"
+            }
+          ]
+        }
+      ]
+    },
+    "src/terminal/program_actions.asm": {
+      "sha256": "ba27ccb991a48bcdfeb47f32a7246834b10faf88efb3ad312d12e883f1c9dd30",
+      "anchors": [
+        {
+          "anchor": "call far terminal_connection_flow_alive",
+          "matches": [
+            {
+              "line": 267,
+              "text": " call far terminal_connection_flow_alive"
+            },
+            {
+              "line": 883,
+              "text": " call far terminal_connection_flow_alive"
+            }
+          ]
+        }
+      ]
+    },
+    "src/terminal/script_launch.c": {
+      "sha256": "3e8878abb7148fc5101caee446daf109143c9afb4d46355b5d49f4df3875c87a",
+      "anchors": [
+        {
+          "anchor": "script_handoff.version=ASIO_VERSION_CARRIER",
+          "matches": [
+            {
+              "line": 75,
+              "text": "    script_handoff.magic=ASIO_MAGIC;script_handoff.version=ASIO_VERSION_CARRIER;script_handoff.size=ASIO_V6_SIZE;"
+            }
+          ]
+        }
+      ]
+    },
+    "src/directory/phone_log_clock.c": {
+      "sha256": "540b643652f23a7894767dabd8219b7aade3da0517c3175d1f5452399b4747a2",
+      "anchors": [
+        {
+          "anchor": "in.h.ah=0x2a",
+          "matches": [
+            {
+              "line": 5,
+              "text": " union REGS in,out;in.h.ah=0x2a;intdos(&in,&out);"
+            }
+          ]
+        },
+        {
+          "anchor": "in.h.ah=0x2c",
+          "matches": [
+            {
+              "line": 10,
+              "text": " union REGS in,out;in.h.ah=0x2c;intdos(&in,&out);"
+            }
+          ]
+        }
+      ]
+    },
+    "src/directory/phone_log_queue.c": {
+      "sha256": "b978fdbaf96e06bba0d903d974b2f53ecddfc8a3a043f76ecee2bbb2a8b44de9",
+      "anchors": [
+        {
+          "anchor": "if(owner.count==PHONE_LOG_QUEUE_CAPACITY)return PLQ_FULL;",
+          "matches": [
+            {
+              "line": 143,
+              "text": " if(owner.count==PHONE_LOG_QUEUE_CAPACITY)return PLQ_FULL;"
+            }
+          ]
+        },
+        {
+          "anchor": "unsigned __cdecl phone_log_queue_start",
+          "matches": [
+            {
+              "line": 154,
+              "text": "unsigned __cdecl phone_log_queue_start(unsigned long generation,const char *name,const char *number,const phone_log_stamp *stamp)"
+            }
+          ]
+        },
+        {
+          "anchor": "unsigned __cdecl phone_log_queue_end",
+          "matches": [
+            {
+              "line": 173,
+              "text": "unsigned __cdecl phone_log_queue_end(unsigned long generation,const phone_log_stamp *stamp)"
+            }
+          ]
+        }
+      ]
+    },
+    "src/directory/directory_live.inc": {
+      "sha256": "22e87c313a86c1f13c5f335bc246e87c83505067619313b9fcae25bee9243448",
+      "anchors": [
+        {
+          "anchor": "%define DL_NAME 10",
+          "matches": [
+            {
+              "line": 6,
+              "text": "%define DL_NAME 10"
+            }
+          ]
+        },
+        {
+          "anchor": "%define DL_TARGET 35",
+          "matches": [
+            {
+              "line": 7,
+              "text": "%define DL_TARGET 35"
+            }
+          ]
+        }
+      ]
+    },
+    "standalone/phone_log_queue_diagnostic.c": {
+      "sha256": "51c9d53aa0b8ddf2cdde2361aa0d439a03619135005ee10699ce708525f95526",
+      "anchors": [
+        {
+          "anchor": "phone_log_queue_end(102,&finish)==PLQ_FULL",
+          "matches": [
+            {
+              "line": 110,
+              "text": "  CHECK(phone_log_queue_end(102,&finish)==PLQ_FULL);"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "terminal_manifest": {
+    "path": "build/terminal-phone-log-bank-d3b6a7ea3e53/manifest.json",
+    "sha256": "edb08d3e3cb0fb99980695729b18eceac44133dc6e20a6d44a550468dc672f33",
+    "terminal_sha256": "8b8847783d95a4e1e1892187995d44f8161d81d86108c77d9ee62ead38830522"
+  },
+  "memory": {
+    "near_bytes": 64560,
+    "near_spare_bytes": 976,
+    "near_relative_segment": 12388,
+    "far_relative_segment": 21267,
+    "shadow_offset": 0,
+    "history_offset": 0,
+    "far_bytes": 71192,
+    "history_relative_segment": 21779,
+    "history_bytes": 63000,
+    "far_end_linear": 411464,
+    "stack_end_linear": 262768,
+    "loaded_module_bytes": 231025,
+    "minimum_allocated_module_bytes": 411488,
+    "retained_parent_paragraphs": 25733,
+    "far_pointer_relocations_verified": true,
+    "native_reset_bank_bytes": 58880,
+    "native_reset_bank_start": 274768,
+    "native_reset_bank_end": 333648,
+    "native_reset_image_offset": 0,
+    "native_reset_private_stack_bytes": 4096,
+    "native_reset_shadow_bytes": 6600,
+    "native_reset_shadow_end": 340248,
+    "native_reset_namespace_symbols": 423,
+    "native_reset_code_segment": 11332,
+    "native_reset_overlay": true,
+    "native_reset_additional_storage_bytes": 0,
+    "native_reset_workspace_end": 340272,
+    "native_reset_workspace_bytes": 65504,
+    "snapshot_relative_segment": 17173,
+    "snapshot_image_offset": 63504,
+    "snapshot_bytes": 2000,
+    "snapshot_end_linear": 340272,
+    "ui_screen_buffers": {
+      "browser_screen": {
+        "relative_segment": 16423,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 262768,
+        "end_linear": 266768
+      },
+      "ed_screen": {
+        "relative_segment": 16423,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 266768,
+        "end_linear": 270768
+      },
+      "program_screen": {
+        "relative_segment": 16423,
+        "offset": 0,
+        "bytes": 4000,
+        "start_linear": 262768,
+        "end_linear": 266768
+      },
+      "redisplay_live": {
+        "relative_segment": 16423,
+        "offset": 4000,
+        "bytes": 4000,
+        "start_linear": 266768,
+        "end_linear": 270768
+      },
+      "redisplay_view": {
+        "relative_segment": 16423,
+        "offset": 8000,
+        "bytes": 4000,
+        "start_linear": 270768,
+        "end_linear": 274768
+      }
+    },
+    "far_ui_storage_bytes": 12000,
+    "program_browser_screen_overlay": true,
+    "editor_viewer_screen_overlay": true,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_snapshot_end_linear": 337768,
+    "redisplay_row_index_bytes": 494,
+    "redisplay_row_index_relative_segment": 17173,
+    "redisplay_row_index_offset": 63000,
+    "redisplay_row_index_end_linear": 338262,
+    "resident_CS_extent_bytes": 65514,
+    "resident_CS_spare_bytes": 22,
+    "substitute_native_bytes_verified": 53,
+    "substitute_native_dependencies_verified": 4,
+    "substitute_state_words_verified": 4,
+    "far_usage_bytes": 1493,
+    "far_usage_segment": 10911,
+    "far_usage_DS_restore_verified": true,
+    "phone_log_bank_bytes": 8493,
+    "phone_log_far_queue_bytes": 666,
+    "phone_log_far_queue_start": 197536,
+    "phone_log_far_queue_end": 198202,
+    "phone_log_entry_pairs_verified": 10,
+    "phone_log_callback_pairs_verified": 18,
+    "phone_log_callback_sites": [
+      189201,
+      189207,
+      189213,
+      189219,
+      189225,
+      189231,
+      189237,
+      189243,
+      189251,
+      189257,
+      189263,
+      189269,
+      189275,
+      189281,
+      189287,
+      189293,
+      189299,
+      189305
+    ],
+    "phone_log_DOS_write_spill_verified": true,
+    "phone_log_startup_entry_verified": true,
+    "phone_log_startup_call_bytes": 15,
+    "process_bank_bytes": 661,
+    "process_bridge_pairs_verified": 1,
+    "process_near_entry_bytes": 22,
+    "controller_bridge_pairs_verified": 22,
+    "modem_bridge_pairs_verified": 23,
+    "recording_matcher_lead_site": 38598,
+    "recording_rx_far_call_sites": [
+      38601,
+      15124
+    ],
+    "recording_rx_callback_site": 108989,
+    "recording_actor_guard_sites": [
+      15124,
+      15536,
+      25209,
+      29260,
+      36400,
+      38927,
+      171896,
+      172997,
+      176088
+    ],
+    "recording_UI_boundary_sites": [
+      140219,
+      142957,
+      108943
+    ],
+    "recording_UI_optimized_sites": [
+      140219,
+      142957
+    ],
+    "recording_tx_origin_bytes": 128,
+    "recording_tx_origin_start": 111175,
+    "recording_tx_far_call_sites": [
+      39397,
+      36717,
+      40227,
+      24726
+    ],
+    "recording_tx_callback_site": 111166,
+    "recording_terminal_state_bytes": 392,
+    "recording_terminal_bank_functions_verified": 9,
+    "recording_terminal_far_call_sites": [
+      23178,
+      24112
+    ],
+    "recorder_code_literal_bytes_verified": 223,
+    "recorder_code_literal_sites": [
+      164938,
+      164955,
+      164969,
+      164989,
+      165009,
+      165015,
+      165035,
+      165066,
+      165151
+    ],
+    "recording_bank_functions_verified": 14,
+    "recording_resident_callbacks_verified": 9,
+    "recording_adapter_far_call_sites": [
+      60607,
+      60631,
+      60655
+    ],
+    "capture_reservation_far_bindings_verified": 3,
+    "capture_reservation_far_call_sites": [
+      58482,
+      163643,
+      164042
+    ],
+    "capture_reservation_initialized_bytes": 74,
+    "phone_log_claim_far_calls_verified": 2,
+    "phone_log_claim_far_call_sites": [
+      189924,
+      190204
+    ],
+    "command_menu_code_segment": 6679,
+    "command_menu_far_code_verified": true,
+    "ymodem_far_code_verified": true,
+    "zmodem_far_callbacks_verified": 10,
+    "configuration_bridge_pairs_verified": 94,
+    "transfer_ui_far_entries_verified": 4,
+    "transfer_ui_resident_callbacks_verified": 3,
+    "redisplay_bridge_pairs_verified": 4,
+    "viewer_live_plane_admission_verified": true,
+    "scroll_field_bridge_pairs_verified": 3,
+    "line_preflight_far_calls_verified": 2,
+    "wide_character_far_calls_verified": 2,
+    "wide_character_prepare_far_calls_verified": 1,
+    "script_window_keyboard_far_adapters_verified": true,
+    "aspect_command_preflight_verified": true,
+    "aspect_viewport_lease_words_verified": 3,
+    "protected_erase_far_bridge_verified": true,
+    "protected_erase_native_dependencies_verified": 4,
+    "erase_after_projection_initially_idle": true,
+    "wide_clear_rectangle_route_verified": true,
+    "alternate_output_far_bridge_verified": true,
+    "alternate_output_native_dependencies_verified": 4,
+    "source_owned_output_table_bytes": 256,
+    "aspect_far_services_verified": 17,
+    "aspect_resident_far_references_verified": 21,
+    "aspect_controller_read_references_verified": 1,
+    "aspect_emit_cdecl_bridge_verified": true,
+    "aspect_handoff_bytes": 50,
+    "aspect_renderer_state_bytes": 4,
+    "line_attribute_far_entries_verified": 2,
+    "line_attribute_controller_references_verified": 5,
+    "line_attribute_video_callbacks_verified": 2,
+    "line_controller_entry_pairs_verified": 4,
+    "line_controller_register_callbacks_verified": 3,
+    "line_controller_code_bytes": 421,
+    "status_far_bridge_pairs_verified": 5,
+    "status_script_label_bytes": 15,
+    "mouse_bridge_pairs_verified": 10,
+    "mouse_code_bytes": 2896,
+    "mouse_shared_native_state_bytes": 28,
+    "native_reset_projection_fields_verified": 37,
+    "native_reset_field_repair_verified": true,
+    "native_reset_transaction": true,
+    "native_reset_backup_start": 262768,
+    "native_reset_backup_bytes": 4000,
+    "native_reset_transaction_bridge_verified": true,
+    "peer_width_mode_bridge_verified": true,
+    "native_reset_ASPECT_backup_start": 266768,
+    "resident_code_bytes": 65514,
+    "resident_code_spare_bytes": 22,
+    "code_segments": [
+      {
+        "name": "_TEXT",
+        "kind": "CODE",
+        "relative_segment": 0,
+        "offset": 0,
+        "bytes": 65514
+      },
+      {
+        "name": "SPLASH_CODE",
+        "kind": "CODE",
+        "relative_segment": 4094,
+        "offset": 10,
+        "bytes": 377
+      },
+      {
+        "name": "ASPECT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4119,
+        "offset": 0,
+        "bytes": 12972
+      },
+      {
+        "name": "PROCESS_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4930,
+        "offset": 0,
+        "bytes": 661
+      },
+      {
+        "name": "HOOK_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 4972,
+        "offset": 0,
+        "bytes": 27302
+      },
+      {
+        "name": "CONFIG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 6679,
+        "offset": 0,
+        "bytes": 64789
+      },
+      {
+        "name": "MODEM_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10729,
+        "offset": 0,
+        "bytes": 2900
+      },
+      {
+        "name": "USAGE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 10911,
+        "offset": 0,
+        "bytes": 1493
+      },
+      {
+        "name": "PRINT_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11005,
+        "offset": 0,
+        "bytes": 1461
+      },
+      {
+        "name": "TRAP_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11097,
+        "offset": 0,
+        "bytes": 864
+      },
+      {
+        "name": "MOUSE_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11151,
+        "offset": 0,
+        "bytes": 2896
+      },
+      {
+        "name": "RESET_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11332,
+        "offset": 0,
+        "bytes": 7718
+      },
+      {
+        "name": "PHONE_LOG_CODE",
+        "kind": "FARCODE",
+        "relative_segment": 11815,
+        "offset": 0,
+        "bytes": 8493
+      }
+    ],
+    "far_code_bridge_pairs_verified": 161
+  },
+  "events_implemented": false,
+  "polling_implemented": false,
+  "next_action": "Implement admission and retained transition timestamps before adding foreground disk polling.",
+  "limitations": [
+    "Source anchors establish current control flow, not runtime coverage.",
+    "Existing queue saturation diagnostic is inspected source evidence here; this audit does not claim a new DOS run.",
+    "Child disconnect observation and DOS reentrancy require explicit design and native validation."
+  ]
+}

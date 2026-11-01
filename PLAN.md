@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[The call-log lifecycle audit](docs/PHONE_LOG_LIFECYCLE_PLAN.md) now identifies
+actual MODEM/DIRECT success, carrier-loss, hangup, child-handoff and exceptional
+shutdown boundaries. State sampling alone can miss transitions; the queue can
+refuse END after accepting START, so admission and original-timestamp retention
+must precede scheduler integration. Child UART ownership and nested polling
+remain explicit acceptance requirements. This is source evidence and an
+implementation plan, not completed event/polling functionality.
+
 [Startup-owned call-log identity](docs/PHONE_LOG_RESERVATION.md) now combines
 accepted PRM/path selection with the retained queue and fixed file claim in
 the experimental logger-bank application. All 25 native DOS cases and their
