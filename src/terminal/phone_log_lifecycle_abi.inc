@@ -1,0 +1,6 @@
+; Optional lifecycle entries; independent of the unchanged queue/DOS ABI.
+PHONE_LIFECYCLE_ENTRY _phone_log_lifecycle_ready,0
+PHONE_LIFECYCLE_ENTRY _phone_log_lifecycle_begin,3
+PHONE_LIFECYCLE_ENTRY _phone_log_lifecycle_end,1
+PHONE_LIFECYCLE_ENTRY _phone_log_lifecycle_service,0
+PHONE_LIFECYCLE_ENTRY _phone_log_lifecycle_inspect,1

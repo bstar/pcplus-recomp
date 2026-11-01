@@ -365,6 +365,20 @@ def inspect_terminal_memory(binary,map_path):
                phone_log_far_queue_start=queue,phone_log_far_queue_end=queue_end,
                phone_log_entry_pairs_verified=10,phone_log_callback_pairs_verified=18,
                phone_log_callback_sites=sites,phone_log_DOS_write_spill_verified=True)
+ if '_phone_log_lifecycle_ready_far' in symbols:
+  abi=Path(__file__).resolve().parents[1]/'src/terminal/phone_log_lifecycle_abi.inc'
+  pairs=0
+  for name,count in re.findall(r'^PHONE_LIFECYCLE_ENTRY (\w+),(\d+)$',abi.read_text(),re.M):
+   count=int(count);assert symbols[name+'_far'][0]==symbols[name+'_impl'][0]==bank_seg
+   prefix=b'\x55\x89\xe5'+b''.join(b'\xff\x76'+bytes([6+2*i])for i in reversed(range(count)))
+   near_call(name+'_far',name+'_impl',prefix=prefix,suffix=b'\x8d\x66\x00\x5d\xcb')
+   pairs+=1
+  assert pairs==5,'Incomplete lifecycle entry ABI'
+  assert symbols['_phone_log_lifecycle_store'][0]==ds
+  assert symbols['_phone_log_lifecycle_store'][1]+38<=65536
+  assert raw('_phone_log_lifecycle_store',38)==b'\x45\x4c'+bytes(36)
+  extra.update(phone_log_lifecycle_entries_verified=pairs,phone_log_lifecycle_owner_bytes=38,
+               phone_log_lifecycle_owner_offset=symbols['_phone_log_lifecycle_store'][1])
  if '_phone_log_startup_owner_far' in symbols:
   assert symbols['_phone_log_startup_owner_far'][0]==symbols['_phone_log_startup_owner_impl'][0]==bank_seg
   near_call('_phone_log_startup_owner_far','_phone_log_startup_owner_impl',prefix=b'\x55\x89\xe5',suffix=b'\x8d\x66\x00\x5d\xcb')

@@ -16,6 +16,9 @@ ENTRIES = dict(phone_log_queue_initialize=0, phone_log_queue_configure=2,
                phone_log_queue_start=5, phone_log_queue_end=3, phone_log_queue_poll=0,
                phone_log_queue_retry=0, phone_log_queue_inspect=1,
                phone_log_decode_enabled=3, phone_log_read_stamp=1, phone_log_stamp_seconds=2)
+LIFECYCLE_ENTRIES = dict(phone_log_lifecycle_ready=0, phone_log_lifecycle_begin=3,
+                         phone_log_lifecycle_end=1, phone_log_lifecycle_service=0,
+                         phone_log_lifecycle_inspect=1)
 ALIASES = {name: name + '_impl' for name in ENTRIES}
 ALIASES.update({name: 'phone_' + name + '_service' for name in
                 ['memcpy', 'memset', 'memcmp', 'strchr', 'strcmp', 'strcpy', 'memmove']})
@@ -33,7 +36,7 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def build_bank(out, reservations=False, startup=False):
+def build_bank(out, reservations=False, startup=False, lifecycle=False):
     OUT = Path(out)
     OUT.mkdir(parents=True, exist_ok=True)
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
@@ -42,6 +45,9 @@ def build_bank(out, reservations=False, startup=False):
     sources = ['src/directory/' + name + '.c' for name in
                ['phone_log_queue', 'phone_log_format', 'phone_log_clock', 'phone_log_file', 'phone_log_fs']]
     aliases = dict(ALIASES)
+    if lifecycle:
+        sources += ['src/directory/phone_log_lifecycle.c']
+        aliases.update({name: name + '_impl' for name in LIFECYCLE_ENTRIES})
     if startup:
         sources += ['src/directory/phone_log_startup.c', 'src/directory/phone_log_startup_owner.c', 'src/config/resource_path.c']
         aliases.update(phone_log_startup_owner='phone_log_startup_owner_impl',
@@ -67,6 +73,7 @@ def build_bank(out, reservations=False, startup=False):
         objects.append(obj.name)
     asm_sources = ['src/terminal/phone_log_bank.asm', 'src/terminal/phone_log_resident.asm',
                    'src/terminal/phone_log_storage.asm', 'src/terminal/phone_log_end.asm']
+    if lifecycle:asm_sources.insert(-1, 'src/terminal/phone_log_lifecycle_bank.asm')
     if startup:asm_sources.insert(-1, 'src/terminal/phone_log_startup_bank.asm')
     for source in asm_sources:
         obj = OUT / (('phone_resource_path' if source == 'src/config/resource_path.c' else Path(source).stem) + '.obj')
@@ -79,6 +86,8 @@ def build_bank(out, reservations=False, startup=False):
         'src/capture/capture_fs.h', 'src/config/prm_dos.h', 'src/terminal/phone_log_abi.inc',
         'src/terminal/far_bridge.inc', 'standalone/build_phone_log_bank.py',
         'standalone/build_phone_log_file.py', 'standalone/omf_imports.py']
+    if lifecycle:
+        names += ['src/directory/phone_log_lifecycle.h', 'src/terminal/phone_log_lifecycle_abi.inc']
     if reservations:
         names += ['src/capture/capture_file.h']
     if startup:
@@ -94,17 +103,36 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=OUT)
     parser.add_argument('--reservations', action='store_true')
+    parser.add_argument('--lifecycle', action='store_true')
     args = parser.parse_args()
     out = args.output.resolve()
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
     if args.reservations:
         flags += ['-dPHONE_LOG_QUEUE_RESERVATION', '-dCAPTURE_FIXED_RESERVATION']
-    result = build_bank(out, reservations=args.reservations)
+    result = build_bank(out, reservations=args.reservations, lifecycle=args.lifecycle)
     objects = [path.name for path in result['objects']]
     client = 'standalone/phone_log_bank_client.asm'
     subprocess.run(['nasm', '-fobj', '-I' + str(ROOT / 'src/terminal') + '/',
                     client, '-o', str(out / 'phone_log_bank_client.obj')], cwd=ROOT, check=True)
     objects.append('phone_log_bank_client.obj')
+    lifecycle_sources = []
+    fault_adapter = None
+    if args.lifecycle:
+        # Diagnostic-only END-refusal callback; production build_bank never
+        # rewrites this import. Actual near/stack/far ABI is retained.
+        obj = out / 'phone_log_lifecycle.obj'
+        original = obj.read_bytes()
+        changed, counts = rename_imports(original, {'_phone_log_queue_end_impl': '_lifecycle_queue_end_service'})
+        assert counts == {'_phone_log_queue_end_impl': 1}, counts
+        obj.with_suffix('.production.obj').write_bytes(original)
+        obj.write_bytes(changed)
+        fault_adapter = dict(import_counts=counts, production_sha256=hashlib.sha256(original).hexdigest(),
+                             diagnostic_sha256=sha(obj))
+        client_lifecycle = 'standalone/phone_log_lifecycle_client.asm'
+        subprocess.run(['nasm', '-fobj', '-I' + str(ROOT / 'src/terminal') + '/',
+                        client_lifecycle, '-o', str(out / 'phone_log_lifecycle_client.obj')], cwd=ROOT, check=True)
+        objects.append('phone_log_lifecycle_client.obj')
+        lifecycle_sources.append(client_lifecycle)
     # Existing real capture backend remains resident, with the same diagnostic
     # prefix-write/ambiguous-close interception as the near/far-data tests.
     source = 'src/capture/capture_fs.c'
@@ -122,11 +150,13 @@ def main():
                             os.path.relpath(ROOT / extra, out)], cwd=out, check=True)
             stable_header(out / name, extra)
             objects.append(name)
-    diagnostic = 'standalone/phone_log_reservation_diagnostic.c' if args.reservations else 'standalone/phone_log_queue_diagnostic.c'
+    diagnostic = ('standalone/phone_log_lifecycle_diagnostic.c' if args.lifecycle else
+                  'standalone/phone_log_reservation_diagnostic.c' if args.reservations else 'standalone/phone_log_queue_diagnostic.c')
+    if args.lifecycle:flags += ['-dPHONE_LOG_LIFECYCLE_BANK']
     subprocess.run(['wcl', *flags, '-dPHONE_LOG_QUEUE_FAR', '-k8192', '-fm=QUEUE.map', '-fe=QUEUE.EXE',
                     os.path.relpath(ROOT / diagnostic, out), *objects], cwd=out, check=True)
     names = [str(path.relative_to(ROOT)) for path in result['sources']] + [source, client,
-             diagnostic] + extra_sources
+             diagnostic] + extra_sources + lifecycle_sources
     if args.reservations:
         names += ['src/capture/capture_reservation.h']
     manifest = dict(original_inputs=[], sources={name: sha(ROOT / name) for name in names},
@@ -134,6 +164,9 @@ def main():
                     objects={name: sha(out / name) for name in objects})),
                     limitations=['Dedicated code/far-data diagnostic with actual DOS callbacks; not yet linked into terminal.',
                                  'Diagnostic-only near client/CONFIG callback substitutes must not enter the application.'])
+    if args.lifecycle:
+        manifest['lifecycle_entries'] = LIFECYCLE_ENTRIES
+        manifest['diagnostic_end_refusal_adapter'] = fault_adapter
     (out / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     print('Built dedicated phone-log code bank and eight resident callback adapters')
 

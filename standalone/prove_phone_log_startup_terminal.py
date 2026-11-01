@@ -27,7 +27,7 @@ def flags(manifest, startup):
         result += ['--notice-sound']
     if manifest.get('experimental_native_reset_bank') and not manifest.get('native_reset_overlay'):
         result += ['--native-reset-static']
-    return result + ['--phone-log-startup' if startup else '--phone-log-bank']
+    return result + [('--phone-log-lifecycle' if manifest.get('experimental_phone_log_lifecycle') else '--phone-log-startup') if startup else '--phone-log-bank']
 
 
 def main():
@@ -51,6 +51,9 @@ def main():
     if reservations:
         names |= {'standalone/phone_log_claim_watch.asm', 'standalone/phone_log_reservation_diagnostic.c',
                   'standalone/phone_log_bank_client.asm'}
+    lifecycle=bool(manifest.get('experimental_phone_log_lifecycle'))
+    if lifecycle:
+        names |= {'standalone/phone_log_lifecycle_diagnostic.c', 'standalone/phone_log_lifecycle_client.asm'}
     output.mkdir(parents=True)
     sources, differences = {}, {}
     allowed = {'src/directory/phone_log_queue.c', 'src/directory/phone_log_queue.h',
@@ -87,6 +90,9 @@ def main():
                 '--terminal', str(rebuilt), '--label', 'public-claims'], cwd=fresh, stdout=log, stderr=log, check=True)
             subprocess.run([sys.executable, 'standalone/test_phone_log_reservation_dos.py',
                 '--output', 'build/public-queue-claims'], cwd=fresh, stdout=log, stderr=log, check=True)
+        if lifecycle:
+            subprocess.run([sys.executable, 'standalone/test_phone_log_lifecycle_dos.py',
+                '--bank', '--output', 'build/public-lifecycle'], cwd=fresh, stdout=log, stderr=log, check=True)
         subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, False)], cwd=fresh, stdout=log, stderr=log, check=True)
         subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, False)], cwd=output / 'baseline', stdout=log, stderr=log, check=True)
     def control(folder):
@@ -108,6 +114,14 @@ def main():
         assert sum(len(v['cases']) for v in queue['variants'].values())==15
         composition=dict(repeated_capture_cases=3,repeated_queue_claim_cases=15,
             repeated_capture_sha256=sha(capture_path),repeated_queue_claim_sha256=sha(queue_path))
+    if lifecycle:
+        lifecycle_path=fresh/'build/public-lifecycle/result.json'
+        life=json.loads(lifecycle_path.read_text())
+        assert life['passed'] and all(life['checks'].values())
+        assert sum(len(v['cases']) for v in life['variants'].values())==21
+        assertions=sum(row['assertions'] for v in life['variants'].values() for row in v['cases'].values())
+        composition.update(repeated_lifecycle_cases=21,repeated_lifecycle_assertions=assertions,
+            repeated_lifecycle_sha256=sha(lifecycle_path))
     assert all(sha(fresh / name) == digest for name, digest in sources.items())
     result = dict(passed=True, source_commit=commit, baseline_commit=baseline, source_count=len(sources), sources=sources,
         declared_uncommitted_reservation_source_differences=differences, original_inputs=[],
@@ -116,7 +130,7 @@ def main():
         build_log_sha256=sha(output / 'build.log'),**composition,
         scope=__doc__ + ' Public Git source only; no Git metadata, originals, previous objects or installed files copied. '
             'Require exact full executable despite declared pending-source differences. Compare disabled-feature '
-            'control against the pre-feature public commit. This remains an optional startup-only parent, not event logging or deployment.')
+            'control against the pre-feature public commit. This remains an optional startup/producer parent without event hooks, live disk polling or deployment.')
     (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print('PASS public parent:', len(sources), 'sources; seven native startup cases; exact disabled-feature control')
 

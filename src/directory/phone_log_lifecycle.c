@@ -6,7 +6,8 @@ typedef struct lifecycle_owner {
  phone_log_stamp started,ended;
 } lifecycle_owner;
 /* Explicit initialized DATA; no DOS BSS-zero assumption. */
-static lifecycle_owner owner={0x4c45};
+lifecycle_owner phone_log_lifecycle_store={0x4c45};
+#define owner phone_log_lifecycle_store
 typedef char lifecycle_owner38[sizeof(lifecycle_owner)==38?1:-1];
 typedef char lifecycle_snapshot10[sizeof(phone_log_lifecycle_snapshot)==10?1:-1];
 static unsigned safe(const void *p,unsigned n)

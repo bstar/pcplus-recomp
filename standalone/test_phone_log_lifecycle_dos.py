@@ -9,6 +9,7 @@ import re
 import shutil
 import struct
 import subprocess
+import sys
 from test_terminal import SAMPLER
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,6 +24,7 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--bank', action='store_true', help='Also exercise actual far entries and DOS callbacks')
     args = parser.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
@@ -33,6 +35,13 @@ def main():
     names = sources + [n.replace('.c', '.h') for n in sources] + [
         'src/config/prm_dos.h', 'standalone/phone_log_lifecycle_diagnostic.c',
         'standalone/test_phone_log_lifecycle_dos.py', 'standalone/test_terminal.py']
+    if args.bank:
+        names += ['standalone/build_phone_log_bank.py', 'standalone/build_phone_log_file.py',
+            'standalone/omf_imports.py', 'standalone/phone_log_bank_client.asm',
+            'standalone/phone_log_lifecycle_client.asm']
+        names += ['src/terminal/' + n for n in ('phone_log_bank.asm', 'phone_log_resident.asm',
+            'phone_log_storage.asm', 'phone_log_end.asm', 'phone_log_abi.inc',
+            'phone_log_lifecycle_bank.asm', 'phone_log_lifecycle_abi.inc', 'far_bridge.inc')]
     inputs = {name: sha(ROOT / name) for name in names}
     source = out / 'source'
     for name in names:
@@ -40,30 +49,35 @@ def main():
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / name, target)
     variants = {}
-    for variant in ('near', 'far'):
+    for variant in (('near', 'far', 'bank') if args.bank else ('near', 'far')):
         folder = out / variant
         folder.mkdir()
         flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
         if variant == 'far':
             flags += ['-dPHONE_LOG_QUEUE_FAR']
-        objects = []
-        for name in sources:
-            obj = Path(name).stem + '.obj'
-            aliases = []
-            if name.endswith('/phone_log_queue.c'):
-                aliases = ['-dphone_log_queue_end=lifecycle_real_queue_end']
-            if name.endswith('/capture_fs.c'):
-                aliases = ['-dcapture_fs_write=phone_real_write', '-dcapture_fs_close=phone_real_close']
-            subprocess.run(['wcl', '-c', *flags, *aliases, '-fo=' + obj,
-                            str(source / name)], cwd=folder, check=True)
-            objects.append(obj)
-        subprocess.run(['wcl', *flags, '-k8192', '-fm=LIFE.map', '-fe=LIFE.EXE',
-                        str(source / 'standalone/phone_log_lifecycle_diagnostic.c'), *objects],
-                       cwd=folder, check=True)
+        if variant == 'bank':
+            subprocess.run([sys.executable, str(source / 'standalone/build_phone_log_bank.py'),
+                            '--lifecycle', '--output', str(folder)], cwd=source, check=True)
+            shutil.copyfile(folder / 'QUEUE.EXE', folder / 'LIFE.EXE')
+        else:
+            objects = []
+            for name in sources:
+                obj = Path(name).stem + '.obj'
+                aliases = []
+                if name.endswith('/phone_log_queue.c'):
+                    aliases = ['-dphone_log_queue_end=lifecycle_real_queue_end']
+                if name.endswith('/capture_fs.c'):
+                    aliases = ['-dcapture_fs_write=phone_real_write', '-dcapture_fs_close=phone_real_close']
+                subprocess.run(['wcl', '-c', *flags, *aliases, '-fo=' + obj,
+                                str(source / name)], cwd=folder, check=True)
+                objects.append(obj)
+            subprocess.run(['wcl', *flags, '-k8192', '-fm=LIFE.map', '-fe=LIFE.EXE',
+                            str(source / 'standalone/phone_log_lifecycle_diagnostic.c'), *objects],
+                           cwd=folder, check=True)
         (folder / 'sampler.asm').write_text(SAMPLER)
         subprocess.run(['nasm', '-fbin', str(folder / 'sampler.asm'), '-o', str(folder / 'SNAP.COM')], check=True)
         commands = []
-        for case in range(6):
+        for case in range(7):
             (folder / f'T{case:03}').mkdir()
             commands += [f'cd \\T{case:03}', f'..\\LIFE {case} >RESULT.TXT', 'if errorlevel 1 goto failed']
         commands += ['cd \\', 'echo PASS>PASS.TXT', 'goto capture', ':failed', 'cd \\',
@@ -91,18 +105,22 @@ SNAP B
                 stdout=log, stderr=log, timeout=45,
                 env=dict(os.environ, SDL_VIDEODRIVER='dummy', SDL_AUDIODRIVER='dummy'))
         cases = {}
-        for case in range(6):
+        for case in range(7):
             location = folder / f'T{case:03}'
             read = lambda n: (location / n).read_bytes() if (location / n).exists() else b''
             stdout = read('RESULT.TXT')
             match = re.fullmatch(rb'LIFECYCLE (\d+) checks 0 failures\r\n', stdout)
-            names_expected = [b'LoC LAB', b'TWO', b'THREE'] if case == 1 else [b'LoC LAB']
+            names_expected = ([b'LoC LAB', b'TWO', b'THREE'] if case == 1 else
+                              [b'LoC LAB', b'WRAP'] if case == 6 else [b'LoC LAB'])
             expected = HEADING + b''.join(b'\r\n' + name.ljust(22) + b' ' + b'5550100'.rjust(20)
                 + b' 12/31/99 23:59:58 ' + (b'' if case == 4 else END) for name in names_expected)
             context = read('CONTEXT.BIN')
+            fields = struct.unpack('<6H', context) if len(context) == 12 else ()
             checks = dict(DOS_assertions=bool(match) and int(match[1]) >= 30,
                 exact_log=not (location / 'CALLS.FON').exists() if case == 5 else read('CALLS.FON') == expected,
-                DS_equals_SS=len(context) == 4 and struct.unpack('<2H', context)[0] == struct.unpack('<2H', context)[1])
+                DS_equals_SS=bool(fields) and fields[0] == fields[1] == fields[3],
+                storage_placement=bool(fields) and (fields[2] != fields[0]) == (variant != 'near'),
+                owner_layout=bool(fields) and fields[4:] == (38, 10))
             cases[str(case)] = dict(passed=all(checks.values()), checks=checks,
                 assertions=int(match[1]) if match else 0, stdout=stdout.decode('ascii', errors='replace'))
         read = lambda n: (folder / n).read_bytes() if (folder / n).exists() else b''
@@ -114,9 +132,9 @@ SNAP B
     checks = dict(all_variants=all(v['passed'] for v in variants.values()),
         sources_unchanged=all(sha(ROOT / n) == d and sha(source / n) == d for n, d in inputs.items()))
     report = dict(passed=all(checks.values()), checks=checks, variants=variants, inputs=inputs,
-        original_inputs=[], limitations=['Component producer; not yet banked or hooked into the terminal.',
+        original_inputs=[], limitations=['Producer with optional real bank entries; terminal transition hooks and scheduling remain absent.',
         'END refusal is an explicit wrapper fault; actual queue saturation tests exercise admission.',
-        'Ambiguous close is modeled after actual DOS close. Generation wrap, child clock/handoff and physical transport are not covered.'],
+        'Ambiguous close is modeled after actual DOS close. Wrap uses an explicit idle-owner fixture; child clock/handoff and physical transport are not covered.'],
         artifacts={str(p.relative_to(ROOT)): sha(p) for p in out.rglob('*') if p.is_file()})
     (out / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps({k: v for k, v in report.items() if k != 'artifacts'}, indent=2))
