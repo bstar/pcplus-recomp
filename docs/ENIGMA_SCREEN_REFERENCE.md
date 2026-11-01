@@ -82,3 +82,8 @@ BBS, SynthModem service, ATA, host network or removable card was changed.
 Full rendering across peers/profiles/screens, font pixels, sustained traffic,
 transfers, unframed/SIP/DSP paths and physical Boca/SPA2102/card acceptance
 remain open.
+
+A later [paired Synchronet/ENiGMA checkpoint](SYNCHRONET_SCREEN_REFERENCE.md)
+repeats this comparison with the fixture cursor reply consumed locally and
+all other outgoing bytes checked exactly. Its receipt records fresh captures
+and seven mutation controls per peer; this earlier receipt remains historical.

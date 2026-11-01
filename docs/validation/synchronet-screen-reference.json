@@ -1,0 +1,569 @@
+{
+  "passed": true,
+  "test_source_commit": "17db6c11eaddbbaf45abf36febabf5e754ab0d50",
+  "application_and_package_unchanged": true,
+  "original_inputs": [],
+  "peers": {
+    "synchronet": {
+      "producer": {
+        "path": "build/bbs-lab/results/synchronet/screen-reference-synchronet-final-20261031/proxy-integration.json",
+        "sha256": "28b7d867244fe4c17d2533e59f2e68a62449662aa4fae129c1647f819701a496",
+        "passed": true,
+        "checks": {
+          "harness": true,
+          "runtime_unchanged": true,
+          "server_static_inputs_unchanged": true,
+          "message_bodies_unchanged": true,
+          "no_message_mail_or_transfer_writes": true,
+          "actual_ASPECT_login": true,
+          "staged_inputs_unchanged": true,
+          "frozen_editor_frame": true,
+          "actual_CPR_boundary": true,
+          "fixture_CPR_consumed": true,
+          "compiled_geometry_advertised": true,
+          "source_inputs_unchanged": true,
+          "stock_editor_entered": true,
+          "draft_aborted": true,
+          "insert_toggled_overtype": true,
+          "home_marker_at_line_start": true,
+          "end_marker_at_line_end": true,
+          "delete_erases_final_character": true,
+          "tab_advances_to_next_stop": true,
+          "page_keys_report_document_boundaries": true,
+          "ctrl_y_delete_line_response": true
+        },
+        "server": "Synchronet",
+        "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+        "interpreter_sha256": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+        "stages": "BRIDGE|LOGIN|PASSWORD|WELCOME|BULLETINS|SCAN|MAIN|GENERAL|SUBJECT|EDITOR|",
+        "screen_sha256": "2e420a7c3b038351497820aa44902f6c1405f9ec2918040df87df5941c28f5b6",
+        "terminal_geometry": {
+          "columns": 80,
+          "rows": 24,
+          "values": {
+            "csi_column_count": 80,
+            "csi_row_count": 24,
+            "csi_last_row": 23,
+            "screen_first_row": 0,
+            "screen_last_row": 23,
+            "csi_origin_bottom": 23,
+            "erase_cell_count": 1920,
+            "ui_flow_video_base": 3840,
+            "ui_flow_suppressed": 0
+          },
+          "file_offsets": {
+            "csi_column_count": 223124,
+            "csi_row_count": 223136,
+            "csi_last_row": 223134,
+            "screen_first_row": 223234,
+            "screen_last_row": 223238,
+            "csi_origin_bottom": 223246,
+            "erase_cell_count": 223391,
+            "ui_flow_video_base": 223044,
+            "ui_flow_suppressed": 223048
+          },
+          "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+          "map_sha256": "098f2206c09aec32d7895e5bbd8f1484d738842f1581f7da7e685c2391199479"
+        },
+        "screen_reference": {
+          "enabled": true,
+          "terminalRows": 24,
+          "trigger": "UNSAVED",
+          "quietMs": 150,
+          "reply": [
+            5,
+            8
+          ],
+          "probeReplyConsumed": true,
+          "prefixBytes": 21028,
+          "prefixSha256": "4a07971108804e2610789ac9ec51b4512d7f59066930630268ebece3a3eb57e1",
+          "probeReplyHex": "1b5b353b3852",
+          "armed": true,
+          "frozen": true,
+          "heldBytes": 13988
+        },
+        "bridge": {
+          "pid": 737930,
+          "endpoint": {
+            "address": "127.0.0.1",
+            "family": "IPv4",
+            "port": 44225
+          },
+          "bbsPort": 23231,
+          "inputSequenceTimeoutMs": 250,
+          "inputByteDelayMs": 20,
+          "installed_sources": {
+            "config.js": "850939fd06f79b0115981c36f438d3c15332a7b9d37beaed36943befdc3dd43d",
+            "src/telnet/TelnetProxy.js": "8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628",
+            "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+            "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+            "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+          },
+          "terminalRows": 24,
+          "screenReference": true,
+          "scope": "Actual SynthModem proxy with loopback-only configuration overrides; no DSP/audio or hardware."
+        },
+        "scope": "Actual DOS8086 COM3/IRQ5 candidate and stock owned Synchronet FSEditor through the real SynthModem proxy.250ms key framing/20ms input pacing. Editor bytes freeze at a real CPR; held continuation independently checks normal Ctrl-Q abort and unchanged message bodies. No application patch, unframed/SIP/DSP/analog or physical acceptance."
+      },
+      "audit": {
+        "path": "build/bbs-lab/results/synchronet/screen-reference-synchronet-final-20261031/screen-reference-audit.json",
+        "sha256": "42f4282f54b677251c8dd394a0c06ed430378696bdda013cb2debb8899e68515",
+        "passed": true,
+        "checks": {
+          "producer_passed": true,
+          "runtime_unchanged": true,
+          "exact_delivered_prefix": true,
+          "real_single_CPR_boundary": true,
+          "cursor_matches_reference": true,
+          "all_1920_cells_match": true,
+          "hardware_restored": true,
+          "status_visible": true,
+          "font_probe_projection_explicit": true,
+          "held_output_exact": true
+        },
+        "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+        "different_cells": 0,
+        "first_differences": [],
+        "reference_cursor": [
+          5,
+          8
+        ],
+        "actual_CPR": [
+          5,
+          8
+        ],
+        "delivered_bytes": 21028,
+        "held_after_boundary": 13988,
+        "font_projections": [],
+        "pyte_version": "0.8.2",
+        "wcwidth_version": "0.8.2",
+        "captures": {
+          "build/bbs-lab/results/synchronet/screen-reference-synchronet-final-20261031/proxy-integration.json": "28b7d867244fe4c17d2533e59f2e68a62449662aa4fae129c1647f819701a496",
+          "build/bbs-lab/results/synchronet/screen-reference-synchronet-final-20261031/SCREEN.BIN": "2e420a7c3b038351497820aa44902f6c1405f9ec2918040df87df5941c28f5b6",
+          "build/bbs-lab/results/synchronet/screen-reference-synchronet-final-20261031/serial-sent.bin": "4a07971108804e2610789ac9ec51b4512d7f59066930630268ebece3a3eb57e1",
+          "build/bbs-lab/results/synchronet/screen-reference-synchronet-final-20261031/reference-input.bin": "4a07971108804e2610789ac9ec51b4512d7f59066930630268ebece3a3eb57e1",
+          "build/bbs-lab/results/synchronet/screen-reference-synchronet-final-20261031/reference-cells.bin": "8ae5466ae312d70c6d7904d9bf8ca1c4d7c85ad3e3e68973b187a0ae18d2a982",
+          "build/bbs-lab/screen-reference-synchronet-final-20261031-proxy/1-screen-reference.json": "3178595629a5953568c334bdc0465f20040bdcc50cd00b806d6aa300dbfc7d0b",
+          "build/bbs-lab/screen-reference-synchronet-final-20261031-proxy/1-screen-prefix.bin": "4a07971108804e2610789ac9ec51b4512d7f59066930630268ebece3a3eb57e1",
+          "build/bbs-lab/screen-reference-synchronet-final-20261031-proxy/1-held-output.bin": "ef19306c32e6c28c6aac3cfb0697def5e5007510eb9425985b726bd668260751",
+          "build/bbs-lab/screen-reference-synchronet-final-20261031-proxy/1-probe-input.bin": "d315b7443604619088aa13e3967f96e048cee7af3fdf76d5c8b0bfc6a9a27c37",
+          "build/bbs-lab/screen-reference-synchronet-final-20261031-proxy/1-serial-input.bin": "a339ba9084d87a333dcd18dc90b0e82642ca634f5d7519060416cac566fc8ca0",
+          "build/bbs-lab/screen-reference-synchronet-final-20261031-proxy/1-serial-output.bin": "4a07971108804e2610789ac9ec51b4512d7f59066930630268ebece3a3eb57e1",
+          "build/bbs-lab/screen-reference-synchronet-final-20261031-proxy/1-closed.json": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452",
+          "build/bbs-lab/screen-reference-synchronet-final-20261031-proxy/ready.json": "e7c73f6a2601f36020c84455fb8614e5bc84311ea15c7c8f76cfa780a0014ba2",
+          "build/bbs-lab/screen-reference-synchronet-final-20261031-proxy/1-proxy-input.bin": "d8a3ea66da61fc7e9de807b457ad217e1a8265e014a1a787d9b0defcb4083a02"
+        },
+        "sources": {
+          "lab/bbs/audit_screen_reference.py": "ab80905d952f662a5200bfe4070edffaa21c929ad8f6a3b34de2535a3f0b0bae",
+          "lab/bbs/terminal_geometry.py": "a09fe10ba3634c8eb6af6df5bf234ac9bcc0f29853b9ef82f1a837494de6902c",
+          "lab/bbs/synthmodem_proxy_serial.js": "54dc98d8231949b05f27e41e8bec39339a2f431a09e1c6ee8987156cff2dee19",
+          "lab/bbs/test_synthmodem_proxy_dos.py": "6668d809f679eebae6c24b699350f0bc2316829e19ed41c746403765551d3592",
+          "standalone/test_ansi_reference_dos.py": "1729658c9c37a0d8b5547421009d4f79add82688143a9a5d5930a9ae90bf342d",
+          "nix/flake.nix": "149e1fc48d9982833de247a70877d808d30e931b2816c35b2b9c459c0f8fddd4",
+          "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+        },
+        "scope": "One actual stock Synchronet editor snapshot after the complete delivered stream prefix, at compiled80x24 geometry. Independent pyte cell/cursor interpretation; only explicitly recorded default-font probes are projected out. A real final CPR proves ordered parser consumption; later BBS output is held by the owned fixture until DOS exits. No font-pixel, every-intermediate-frame, unframed/SIP/DSP/analog or physical acceptance.",
+        "reference_modules": {
+          "pyte.screens": "aa787bbcd5b59c195ff828a8fb9e876caffa80a49c7c45ffbd6e0c92093f9105",
+          "pyte.streams": "a8c667e0f288b20064c3d8600aaf792f562cdfa84b4a39bc852ce05acc04c14d",
+          "pyte.graphics": "6a38c4f4cdcbc8178097ec90ce1d7bce6b3b356d9f2e27d4b7e2d26d35fa898a",
+          "pyte.charsets": "9b9da43e3b5e8b7bfe4a1917e864063f6f54119f97bc9a9694e065ac7cdfc98b",
+          "pyte.modes": "ffc0ad1a8264ac7e500349d5f3a8084cc634b72cc782b8664d0841d5d24e2650",
+          "pyte.control": "dc799b2f4311d1d6457b9651be5471abcd081cebcc2db225e2a730fb7d54d2a2",
+          "pyte.escape": "6a150147f0120ca5cb993b9b43e191c1cfadf27a093a6e9a53439cdf1babcb48",
+          "wcwidth.wcwidth": "597eba94e3ed8a01ff6b1a9cbd4d0931315df79d23c55e0c1ab644047a06904b"
+        },
+        "known_non_cell_probes_passed_unchanged": [
+          {
+            "offset": 584,
+            "bytes_hex": "1b5b215f",
+            "reason": "Stock Synchronet RIP capability query"
+          }
+        ],
+        "fixture_CPR_consumed": true,
+        "proxy_input_bytes": 126,
+        "unforwarded_tail_bytes": 0
+      },
+      "copied_artifact_controls": {
+        "path": "build/screen-reference-synchronet-controls-strict-20261031/result.json",
+        "sha256": "fb748610611f9e6b9f560e97ff18654c7edfdca4e94fa28fd73f9df47cc7bbed",
+        "passed": true,
+        "cases": [
+          {
+            "case": "unchanged",
+            "passed": true,
+            "rejected": false,
+            "error": null,
+            "different_cells": 0
+          },
+          {
+            "case": "character",
+            "passed": true,
+            "rejected": true,
+            "error": null,
+            "different_cells": 1
+          },
+          {
+            "case": "attribute",
+            "passed": true,
+            "rejected": true,
+            "error": null,
+            "different_cells": 1
+          },
+          {
+            "case": "cursor",
+            "passed": true,
+            "rejected": true,
+            "error": null,
+            "different_cells": 0
+          },
+          {
+            "case": "prefix-truncated",
+            "passed": true,
+            "rejected": true,
+            "error": "Snapshot must pair with exactly the delivered prefix",
+            "different_cells": null
+          },
+          {
+            "case": "unsupported-font",
+            "passed": true,
+            "rejected": true,
+            "error": "('Unsupported reference intermediate', 21024, '1b5b303b312044')",
+            "different_cells": null
+          },
+          {
+            "case": "proxy-input-truncated",
+            "passed": true,
+            "rejected": true,
+            "error": "Only the fixture query reply may be removed before the actual proxy; preserve all other TX",
+            "different_cells": null
+          }
+        ],
+        "original_capture_sha256": "42f4282f54b677251c8dd394a0c06ed430378696bdda013cb2debb8899e68515",
+        "sources": {
+          "lab/bbs/check_screen_reference_controls.py": "ae2fdd13af39f41255886bbd21624ebb80a1981e8b959e498768b8b43147dd71",
+          "lab/bbs/audit_screen_reference.py": "ab80905d952f662a5200bfe4070edffaa21c929ad8f6a3b34de2535a3f0b0bae",
+          "standalone/test_ansi_reference_dos.py": "1729658c9c37a0d8b5547421009d4f79add82688143a9a5d5930a9ae90bf342d"
+        },
+        "scope": "Reject altered copies of a real screen-reference capture; never run DOS. Synthetic counterexamples are declared in copied metadata to exercise cell/cursor comparison beyond hash validation. The positive capture, binaries, fixture server and live services remain unchanged."
+      }
+    },
+    "enigma": {
+      "producer": {
+        "path": "build/bbs-lab/results/enigma/screen-reference-enigma-demux-final-20261031/proxy-integration.json",
+        "sha256": "767aa6c864c0215ee6a32f5bae36934a723f1e3b01d1a5489bcd929e59d1b0ac",
+        "passed": true,
+        "checks": {
+          "harness": true,
+          "semantic_audit": true,
+          "exact_screen": true,
+          "proxy_source_unchanged": true,
+          "product_source_unchanged": true,
+          "directory_prompt_and_loading": true,
+          "directory_first_and_last_pages": true,
+          "no_private_directory_fields": true,
+          "directory_preview_observed": true,
+          "preview_target_and_DTE": true,
+          "preview_privacy": true,
+          "online_resource_check_refused": true,
+          "online_compile_request_refused": true,
+          "resource_check_key_stayed_local": true,
+          "online_selection_adoption_refused": true,
+          "reference_freeze_completed": true,
+          "compiled_geometry_advertised": true
+        },
+        "terminal_geometry": {
+          "columns": 80,
+          "rows": 24,
+          "values": {
+            "csi_column_count": 80,
+            "csi_row_count": 24,
+            "csi_last_row": 23,
+            "screen_first_row": 0,
+            "screen_last_row": 23,
+            "csi_origin_bottom": 23,
+            "erase_cell_count": 1920,
+            "ui_flow_video_base": 3840,
+            "ui_flow_suppressed": 0
+          },
+          "file_offsets": {
+            "csi_column_count": 223124,
+            "csi_row_count": 223136,
+            "csi_last_row": 223134,
+            "screen_first_row": 223234,
+            "screen_last_row": 223238,
+            "csi_origin_bottom": 223246,
+            "erase_cell_count": 223391,
+            "ui_flow_video_base": 223044,
+            "ui_flow_suppressed": 223048
+          },
+          "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+          "map_sha256": "098f2206c09aec32d7895e5bbd8f1484d738842f1581f7da7e685c2391199479"
+        },
+        "bridge": {
+          "pid": 737916,
+          "endpoint": {
+            "address": "127.0.0.1",
+            "family": "IPv4",
+            "port": 41259
+          },
+          "bbsPort": 23233,
+          "inputSequenceTimeoutMs": 250,
+          "inputByteDelayMs": 20,
+          "installed_sources": {
+            "config.js": "850939fd06f79b0115981c36f438d3c15332a7b9d37beaed36943befdc3dd43d",
+            "src/telnet/TelnetProxy.js": "8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628",
+            "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+            "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+            "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+          },
+          "terminalRows": 24,
+          "screenReference": true,
+          "scope": "Actual SynthModem proxy with loopback-only configuration overrides; no DSP/audio or hardware."
+        },
+        "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+        "screen_sha256": "4615b38161a373e11333add117d17925d6049fa555e2eeb1cc58ac118c992f43",
+        "reference_observer": {
+          "flags": 63,
+          "ticks": 1888,
+          "capture_sha256": "91990f5174e6e466472dc804587d61b3c1528d52377a60b6c0765be568e58b58",
+          "font_sha256": "a8bad6fd78475a6bc2a05438c19207a9bb8c0f4f4099f60384e158cdc3eba580",
+          "observer_sha256": "4749e78e8f438843d6126360598db04b6c192fbe6a805018a2e63b94b22a6ac9"
+        },
+        "scope": "Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, actual SynthModem proxy and stock loopback ENiGMA. Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.",
+        "screen_reference": {
+          "enabled": true,
+          "terminalRows": 24,
+          "trigger": "UNSAVED",
+          "quietMs": 750,
+          "reply": [
+            9,
+            8
+          ],
+          "probeReplyConsumed": true,
+          "prefixBytes": 48638,
+          "prefixSha256": "ce17a402bd319ec3dbed867188290ee11f21a9286401cc3dd27fdecb560e65c0",
+          "probeReplyHex": "1b5b393b3852",
+          "armed": true,
+          "frozen": true,
+          "heldBytes": 919
+        }
+      },
+      "audit": {
+        "path": "build/bbs-lab/results/enigma/screen-reference-enigma-demux-final-20261031/screen-reference-audit.json",
+        "sha256": "9b68101b7db6a10d4328b7d27400c661cb87ecf60bddec0a1f06a8ec70ddd3bd",
+        "passed": true,
+        "checks": {
+          "producer_passed": true,
+          "runtime_unchanged": true,
+          "exact_delivered_prefix": true,
+          "real_single_CPR_boundary": true,
+          "cursor_matches_reference": true,
+          "all_1920_cells_match": true,
+          "hardware_restored": true,
+          "status_visible": true,
+          "font_probe_projection_explicit": true,
+          "held_output_exact": true
+        },
+        "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+        "different_cells": 0,
+        "first_differences": [],
+        "reference_cursor": [
+          9,
+          8
+        ],
+        "actual_CPR": [
+          9,
+          8
+        ],
+        "delivered_bytes": 48638,
+        "held_after_boundary": 919,
+        "font_projections": [
+          {
+            "offset": 491,
+            "bytes_hex": "1b5b303b302044",
+            "reason": "Default primary CP437 font selection; font pixels excluded"
+          }
+        ],
+        "pyte_version": "0.8.2",
+        "wcwidth_version": "0.8.2",
+        "captures": {
+          "build/bbs-lab/results/enigma/screen-reference-enigma-demux-final-20261031/proxy-integration.json": "767aa6c864c0215ee6a32f5bae36934a723f1e3b01d1a5489bcd929e59d1b0ac",
+          "build/bbs-lab/results/enigma/screen-reference-enigma-demux-final-20261031/SCREEN.BIN": "4615b38161a373e11333add117d17925d6049fa555e2eeb1cc58ac118c992f43",
+          "build/bbs-lab/results/enigma/screen-reference-enigma-demux-final-20261031/serial-sent.bin": "ce17a402bd319ec3dbed867188290ee11f21a9286401cc3dd27fdecb560e65c0",
+          "build/bbs-lab/results/enigma/screen-reference-enigma-demux-final-20261031/reference-input.bin": "ed990504ed419f00e318407dc0663aab1f5a854a48a5af561515e2ee6e87d66f",
+          "build/bbs-lab/results/enigma/screen-reference-enigma-demux-final-20261031/reference-cells.bin": "801f5f701a66f517e9e4f79940a3eefa30758fd65a4a2ec95e4e80f8cf1d556c",
+          "build/bbs-lab/screen-reference-enigma-demux-final-20261031-proxy/1-screen-reference.json": "07891a0f40a386627fe0d7368b114d5820a49d5aca79156087f96522c6330be8",
+          "build/bbs-lab/screen-reference-enigma-demux-final-20261031-proxy/1-screen-prefix.bin": "ce17a402bd319ec3dbed867188290ee11f21a9286401cc3dd27fdecb560e65c0",
+          "build/bbs-lab/screen-reference-enigma-demux-final-20261031-proxy/1-held-output.bin": "28f24bf5110479272d1aa2415406d3977322abfaee4480c264b133d1b3e3f22e",
+          "build/bbs-lab/screen-reference-enigma-demux-final-20261031-proxy/1-probe-input.bin": "456612626c492624cd739e14a83117b052332b09f3309b6e1178019bfffceef1",
+          "build/bbs-lab/screen-reference-enigma-demux-final-20261031-proxy/1-serial-input.bin": "fde8be208557a6dde30d4f56e1a6f93ab55fe48470eb882a448d90af2a32e3cb",
+          "build/bbs-lab/screen-reference-enigma-demux-final-20261031-proxy/1-serial-output.bin": "ce17a402bd319ec3dbed867188290ee11f21a9286401cc3dd27fdecb560e65c0",
+          "build/bbs-lab/screen-reference-enigma-demux-final-20261031-proxy/1-closed.json": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452",
+          "build/bbs-lab/screen-reference-enigma-demux-final-20261031-proxy/ready.json": "65b1d4e26fb941f89f59f4e5cf978896b0da989d10ec62293f7d21bc81c3d3e2",
+          "build/bbs-lab/screen-reference-enigma-demux-final-20261031-proxy/1-proxy-input.bin": "763a8f74b9d4038d3a0e110aab1b2c58feb3edafe7223889ab0945e87ebac152"
+        },
+        "sources": {
+          "lab/bbs/audit_screen_reference.py": "ab80905d952f662a5200bfe4070edffaa21c929ad8f6a3b34de2535a3f0b0bae",
+          "lab/bbs/terminal_geometry.py": "a09fe10ba3634c8eb6af6df5bf234ac9bcc0f29853b9ef82f1a837494de6902c",
+          "lab/bbs/synthmodem_proxy_serial.js": "54dc98d8231949b05f27e41e8bec39339a2f431a09e1c6ee8987156cff2dee19",
+          "lab/bbs/test_synthmodem_proxy_dos.py": "6668d809f679eebae6c24b699350f0bc2316829e19ed41c746403765551d3592",
+          "standalone/test_ansi_reference_dos.py": "1729658c9c37a0d8b5547421009d4f79add82688143a9a5d5930a9ae90bf342d",
+          "nix/flake.nix": "149e1fc48d9982833de247a70877d808d30e931b2816c35b2b9c459c0f8fddd4",
+          "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+        },
+        "scope": "One actual stock ENiGMA editor snapshot after the complete delivered stream prefix, at compiled80x24 geometry. Independent pyte cell/cursor interpretation; only explicitly recorded default-font probes are projected out. A real final CPR proves ordered parser consumption; later BBS output is held by the owned fixture until DOS exits. No font-pixel, every-intermediate-frame, unframed/SIP/DSP/analog or physical acceptance.",
+        "reference_modules": {
+          "pyte.screens": "aa787bbcd5b59c195ff828a8fb9e876caffa80a49c7c45ffbd6e0c92093f9105",
+          "pyte.streams": "a8c667e0f288b20064c3d8600aaf792f562cdfa84b4a39bc852ce05acc04c14d",
+          "pyte.graphics": "6a38c4f4cdcbc8178097ec90ce1d7bce6b3b356d9f2e27d4b7e2d26d35fa898a",
+          "pyte.charsets": "9b9da43e3b5e8b7bfe4a1917e864063f6f54119f97bc9a9694e065ac7cdfc98b",
+          "pyte.modes": "ffc0ad1a8264ac7e500349d5f3a8084cc634b72cc782b8664d0841d5d24e2650",
+          "pyte.control": "dc799b2f4311d1d6457b9651be5471abcd081cebcc2db225e2a730fb7d54d2a2",
+          "pyte.escape": "6a150147f0120ca5cb993b9b43e191c1cfadf27a093a6e9a53439cdf1babcb48",
+          "wcwidth.wcwidth": "597eba94e3ed8a01ff6b1a9cbd4d0931315df79d23c55e0c1ab644047a06904b"
+        },
+        "known_non_cell_probes_passed_unchanged": [],
+        "fixture_CPR_consumed": true,
+        "proxy_input_bytes": 115,
+        "unforwarded_tail_bytes": 0
+      },
+      "copied_artifact_controls": {
+        "path": "build/screen-reference-enigma-controls-strict-20261031/result.json",
+        "sha256": "84a7d2e1f38e3bdd52592478552028588140841a33aa4ede82c4bdc4803b6490",
+        "passed": true,
+        "cases": [
+          {
+            "case": "unchanged",
+            "passed": true,
+            "rejected": false,
+            "error": null,
+            "different_cells": 0
+          },
+          {
+            "case": "character",
+            "passed": true,
+            "rejected": true,
+            "error": null,
+            "different_cells": 1
+          },
+          {
+            "case": "attribute",
+            "passed": true,
+            "rejected": true,
+            "error": null,
+            "different_cells": 1
+          },
+          {
+            "case": "cursor",
+            "passed": true,
+            "rejected": true,
+            "error": null,
+            "different_cells": 0
+          },
+          {
+            "case": "prefix-truncated",
+            "passed": true,
+            "rejected": true,
+            "error": "Snapshot must pair with exactly the delivered prefix",
+            "different_cells": null
+          },
+          {
+            "case": "unsupported-font",
+            "passed": true,
+            "rejected": true,
+            "error": "('Unsupported reference intermediate', 491, '1b5b303b312044')",
+            "different_cells": null
+          },
+          {
+            "case": "proxy-input-truncated",
+            "passed": true,
+            "rejected": true,
+            "error": "Only the fixture query reply may be removed before the actual proxy; preserve all other TX",
+            "different_cells": null
+          }
+        ],
+        "original_capture_sha256": "9b68101b7db6a10d4328b7d27400c661cb87ecf60bddec0a1f06a8ec70ddd3bd",
+        "sources": {
+          "lab/bbs/check_screen_reference_controls.py": "ae2fdd13af39f41255886bbd21624ebb80a1981e8b959e498768b8b43147dd71",
+          "lab/bbs/audit_screen_reference.py": "ab80905d952f662a5200bfe4070edffaa21c929ad8f6a3b34de2535a3f0b0bae",
+          "standalone/test_ansi_reference_dos.py": "1729658c9c37a0d8b5547421009d4f79add82688143a9a5d5930a9ae90bf342d"
+        },
+        "scope": "Reject altered copies of a real screen-reference capture; never run DOS. Synthetic counterexamples are declared in copied metadata to exercise cell/cursor comparison beyond hash validation. The positive capture, binaries, fixture server and live services remain unchanged."
+      }
+    }
+  },
+  "synchronet_reference_input_is_complete_unmodified_prefix": true,
+  "default_helper_control": {
+    "path": "build/screen-reference-key-helper-controls-20261031/result.json",
+    "sha256": "7f5c6249a024e3ef1c8a4b2b8c7fae653234564515cf2535688fd69c21bf93e1",
+    "passed": true,
+    "default_helper_byte_identical": true,
+    "bytes": 480,
+    "source_sha256": "1684df1a38dc891cc40696554d9b4160a1418cd169f13635236458810d712ed4",
+    "scope": "Default helper rebuilt before/after optional SCREEN_REFERENCE_FREEZE conditional; no DOS execution or product change."
+  },
+  "package": {
+    "path": "build/special-status-geometry-final-20261031/PCPLUSSE",
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "source_base_commit": "2673d203ce6695787ad51bdc4e3e35c5dbd75442",
+    "verified_files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "prior_committed_source_reproduction": {
+    "path": "build/status-geometry-source-proof-20261031/result.json",
+    "sha256": "2617864d8f58b1a3718b71124fd873f9f3aff5b25bd437dc043e056beb76fea4",
+    "passed": true,
+    "package_manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "source_files": 778,
+    "original_inputs": [],
+    "build_log_sha256": "a381c990fd3b1257f520835dddcafee86da97d367a4b3ec7ae4adbfd2d1b2277",
+    "source_base_commit": "2673d203ce6695787ad51bdc4e3e35c5dbd75442",
+    "ancestor_git_unavailable": true,
+    "exported_source_commit": "2673d203ce6695787ad51bdc4e3e35c5dbd75442",
+    "checker_sha256": "b68483803d3b5d8b10b79533894ef0062317274d917c5d9865024d352f2afe8a",
+    "scope": "Reproduce every package file in an empty tree of declared source inputs."
+  },
+  "synchronet_RIP_query_authority": {
+    "source": "build/bbs-lab/synchronet/source/src/sbbs3/answer.cpp",
+    "sha256": "068e5428041189fcb6d05c921889312f52974b504e9348ea726ce0cc06b6a756",
+    "source_commit": "9de2c48d0265b07e1a8406d8a55d31df4fad7ee8",
+    "url": "https://github.com/SynchronetBBS/sbbs/blob/9de2c48d0265b07e1a8406d8a55d31df4fad7ee8/src/sbbs3/answer.cpp"
+  },
+  "excluded_attempts": [
+    {
+      "label": "screen-reference-synchronet-20261031",
+      "reason": "Blind navigation did not reach editor; excluded."
+    },
+    {
+      "label": "screen-reference-synchronet-scan-fixed-20261031",
+      "reason": "Fixed delays still drifted; excluded."
+    },
+    {
+      "label": "screen-reference-synchronet-script-20261031",
+      "reason": "Real ASPECT login exposed incorrect pause assumption; excluded."
+    },
+    {
+      "label": "screen-reference-synchronet-script-scan-20261031",
+      "reason": "Stale pause assumption; excluded."
+    }
+  ],
+  "limitations": [
+    "One final editor frame per peer; no every-frame, all-profile or font-pixel acceptance.",
+    "250ms key framing and20ms serial pacing; no unframed/SIP/DSP/analog or physical CTS acceptance.",
+    "Page keys cover one-line document boundaries, not multiline scrolling.",
+    "Complete F01-F16 application, sustained protocols and physical Boca/SPA2102/card acceptance remain open.",
+    "No live BBS, installed bridge, ATA, host network or removable card changed."
+  ]
+}

@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Stock Synchronet and ENiGMA screen comparison](docs/SYNCHRONET_SCREEN_REFERENCE.md)
+now validates complete final editor frames against an independent reference.
+Synchronet uses real source-built ASPECT login and BIOS keyboard input; all
+1920 cells and the real cursor reply match for each peer. Fourteen copied
+artifact controls pass, and the bridge audit preserves every outgoing byte
+except its own measured cursor reply. Package bytes remain unchanged. Every
+intermediate frame, cross-profile rendering, sustained protocols and physical
+Boca/SPA2102/card/full-application acceptance remain open.
+
 [Stock ENiGMA screen reference](docs/ENIGMA_SCREEN_REFERENCE.md) now pairs
 a delivered incoming prefix with a real final CPR and native screen snapshot.
 All1920 cells/cursor match the independent reference; only the declared default
