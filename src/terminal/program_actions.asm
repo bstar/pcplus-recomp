@@ -222,6 +222,10 @@ terminal_program_poll:
  push es
  cmp word [terminal_program_pending],0
  je .done
+%ifdef TERMINAL_SOUND
+ extern terminal_connect_alert_stop
+ call far terminal_connect_alert_stop
+%endif
  cmp word [terminal_quit],0
  jne .cancel
  cmp word [connection_state],0

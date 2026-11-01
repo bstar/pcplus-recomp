@@ -1,10 +1,16 @@
 # Full application reconstruction checklist
 
-[The connection-test package is ready](CONNECTION_TEST_READY.md) for user-operated Boca/SPA2102
-testing through SynthModem to LoSs oF CoNtRoL. Five source-built executables and
-all ten package files reproduce exactly; COM3/IRQ5 package checks and the live
-LOC route pass. The bridge now advertises matching80x24 while retaining its
-backend/aliases. Physical login/interaction remains pending; in-app ASP compilation
+- [Connection alert](CONNECT_ALERT.md): paired 880-Hz PC-speaker tones on a
+  successful modem call, using the saved sound flag and alert countdown.
+  Nonblocking implementation passes linked timing/ownership checks and actual
+  DOS speaker-gate/UART checks. Card installation and audible hardware acceptance
+  remain pending.
+
+bstar confirms working Boca/SPA2102/SynthModem access to LoSs oF CoNtRoL with
+substantially improved Enigma compatibility. The bridge reports V.32bis at9600.
+The [initial connection checkpoint](CONNECTION_TEST_READY.md) and subsequent
+[menu/carrier fixes](LOC_MENU_AND_CARRIER.md) retain their scoped evidence.
+Broader physical editor/transfer acceptance remains open; in-app ASP compilation
 has a documented RAM limit with a validated DOS-precompile/ASX workflow.
 
 [Original menu and logging](ORIGINAL_MENU_LOGGING.md) now fit together through a typed

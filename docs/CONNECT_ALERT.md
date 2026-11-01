@@ -1,9 +1,9 @@
 # Original successful-connect speaker alert
 
-The successful-connect alert is missing from the reconstructed controller.
-`connection.asm` enters the connected state, captures DCD, records the call and
-restores the status notice, but does not start a speaker sequence. Existing
-PROGRAM notice sound support does not implement this separate event.
+The successful-connect alert is now implemented in the sound-enabled controller.
+Previously it entered the connected state, captured DCD, recorded the call and
+restored the status notice without starting a speaker sequence. Existing
+PROGRAM notice sound support was a separate event.
 
 REA/Ghidra inspection of genuine PCPlus2.01 (SHA256
 `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904`)
@@ -27,8 +27,20 @@ identically to the active `C:\UTILS\PCPLUS` profile, so this does not establish
 the current card's countdown. Preserve and read the active field at the next
 card access instead of imposing a guessed value.
 
-Implementation remains open. Use the saved sound flag and countdown, a maintained
-nonblocking speaker owner, UART/keyboard service between phases, cancellation,
-and cleanup on hangup/exit. Validate one event per successful connection and
-no alert for failed calls; do not block BBS input or reuse the unsafe calibrated
-busy wait. This is PC speaker audio, separate from analog handshake audio.
+The implementation uses the existing maintained speaker owner, with no DOS,
+keyboard read, UART access or calibrated busy wait in the sequencer. Native
+far entries preserve registers, flags and DS=SS. Each pair uses two 880-Hz,
+three-BIOS-tick tones with two ticks between them and seven ticks between pairs.
+The saved countdown determines the interval; expiry finishes the current pair.
+That approximates the native cadence without depending on CPU calibration.
+
+Any key cancels the alert while retaining that key for normal dispatch or BBS
+transmission. Hangup, confirmed carrier loss, program/transfer handoff, disabled
+sound, invalid time and exit release only its own speaker claim. An already
+active speaker is not stolen or silenced. Failed calls do not start the alert.
+The saved duration is imported at startup and refreshed by accepted setup reload;
+the existing sound field controls both notices and the connect alert.
+
+Physical audible output remains unverified until the updated executable is put
+on the DOS card and exercised. This is PC speaker audio, separate from analog
+handshake audio.

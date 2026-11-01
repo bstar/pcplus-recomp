@@ -188,6 +188,7 @@ if args.hook_execute:sources.append(ROOT/'src/process/hook_owner_dos.asm')
 if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
+if args.notice_sound:sources.append(ROOT/'src/ui/speaker_native.asm')
 # The dedicated call-log bank is built explicitly; never pull its callbacks or
 # end marker into established terminals through the assembly glob.
 sources = [p for p in sources if p.name not in
@@ -232,6 +233,7 @@ objects=[]
 if args.directory_view:sources.append(ROOT/'src/terminal/directory_reader_bank.asm')
 for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
+ if source==ROOT/'src/ui/speaker_native.asm':options+=['-D_TEXT=CONFIG_CODE','-DCODE=FARCODE']
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
  if source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_CHARACTER_PREFLIGHT','-DTERMINAL_LINE_PREFLIGHT','-DTERMINAL_RENDER_PREFLIGHT']
  if source==ROOT/'reconstruction/erase/display_after.asm':options+=['-Dcsi_service_d8b6=terminal_erase_after_native','-DTERMINAL_ERASE_PREFLIGHT']
@@ -332,6 +334,7 @@ c_sources += [ROOT/'src/key_mapping/key_actions_dos.c',ROOT/'src/process/program
 c_sources += [ROOT/'src/config/live_configuration.c']
 c_sources += [ROOT/'src/config/live_setup_owner.c']
 c_sources += [ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']]
+if args.notice_sound:c_sources += [ROOT/'src/ui/speaker.c',ROOT/'src/ui/connect_alert.c']
 c_sources += [ROOT/'src/translation/xlt_dos.c',ROOT/'src/translation/xlt_dos_fs.c']
 c_sources += [ROOT/'src/translation/xlt_default.c',ROOT/'src/config/resource_path.c']
 c_sources += [ROOT/'src/translation/xlt_live.c',ROOT/'src/redisplay/redisplay.c']
@@ -381,6 +384,7 @@ if args.directory_retirement:config_sources.add(ROOT/'src/terminal/directory_ret
 if args.directory_scripts:config_sources.add(ROOT/'src/directory/directory_script.c')
 if args.directory_compile:config_sources.add(ROOT/'src/directory/directory_compile.c')
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
+if args.notice_sound:config_sources.update({ROOT/'src/ui/speaker.c',ROOT/'src/ui/connect_alert.c'})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
 config_sources.add(ROOT/'src/translation/xlt_dos.c')
 config_sources.update({ROOT/'src/translation/xlt_default.c',ROOT/'src/config/resource_path.c'})
@@ -543,6 +547,7 @@ inputs += [ROOT/'src/config/live_configuration.h',ROOT/'src/aspect/resident_rend
 inputs += [protected_provenance,alternate_provenance,substitute_provenance]
 inputs += [ROOT/'src/status/status_state.inc',ROOT/'src/status/status_formatter.h']
 inputs += [ROOT/'src/config/live_setup_owner.h',ROOT/'src/config/terminal_preferences.h',ROOT/'src/config/transfer_import.h']
+if args.notice_sound:inputs.append(ROOT/'src/ui/speaker.h')
 inputs += [ROOT/'src/config/resource_path.h']
 if args.custom_irq:inputs.append(ROOT/'src/config/irq_policy.h')
 inputs += sorted((ROOT/'src/directory').glob('*.h'))+sorted((ROOT/'src/directory').glob('*.inc'))

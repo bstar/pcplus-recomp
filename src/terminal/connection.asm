@@ -24,6 +24,9 @@ extern terminal_quit,terminal_tx_count,terminal_tx_head,terminal_tx_tail
 global terminal_connection_prepare_impl,terminal_connection_start_impl
 global terminal_connection_poll_impl,terminal_connection_receive_impl,terminal_connection_cancel_impl
 global terminal_connection_exit_impl
+%ifdef TERMINAL_SOUND
+extern terminal_connect_alert_start,terminal_connect_alert_poll,terminal_connect_alert_stop
+%endif
 
 %ifdef TERMINAL_PHONE_LOG_EVENTS
 extern _terminal_phone_log_events_ready_far,_terminal_phone_log_events_connected_far
@@ -156,6 +159,9 @@ expand:
 terminal_connection_start_impl:
  extern terminal_recording_owned_far
  save
+%ifdef TERMINAL_SOUND
+ call far terminal_connect_alert_stop
+%endif
  push ax
  call far terminal_recording_owned_far
  or ax,ax
@@ -404,6 +410,9 @@ start_dial:
 
 terminal_connection_poll_impl:
  save
+%ifdef TERMINAL_SOUND
+ call far terminal_connect_alert_poll
+%endif
  cmp word [connection_state],0
  je .done
  cmp word [connection_state],6
@@ -518,6 +527,9 @@ terminal_connection_poll_impl:
  pop ax
  call connection_log_notice
 %endif
+%ifdef TERMINAL_SOUND
+ call far terminal_connect_alert_start
+%endif
  jmp .done
 .carrier:
 %ifdef TERMINAL_CUSTOM_IRQ
@@ -539,6 +551,9 @@ terminal_connection_poll_impl:
  cmp byte [connection_carrier_seen],0
  je .done
 .carrier_lost:
+%ifdef TERMINAL_SOUND
+ call far terminal_connect_alert_stop
+%endif
  ; A falling carrier can leave an already accepted transfer tail in the
  ; modem's command buffer. Reuse the bounded retry separator/guard before
  ; the next initialization, for both legacy and acknowledged policies.
@@ -678,6 +693,9 @@ terminal_connection_poll_impl:
 terminal_connection_cancel_impl:
  extern terminal_recording_owned_far
  save
+%ifdef TERMINAL_SOUND
+ call far terminal_connect_alert_stop
+%endif
  push ax
  call far terminal_recording_owned_far
  or ax,ax
@@ -733,6 +751,9 @@ terminal_connection_cancel_impl:
  restore
 
 terminal_connection_exit_impl:
+%ifdef TERMINAL_SOUND
+ call far terminal_connect_alert_stop
+%endif
  call connection_break_cancel_service
  cmp byte [connection_exit_pending],0
  jne .immediate

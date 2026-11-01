@@ -68,6 +68,10 @@ _small_code_:
 %endif
  push ax ;PSP segment remains the PROGRAM initializer input.
  call _terminal_autostart_initialize
+%ifdef TERMINAL_SOUND
+ extern terminal_connect_alert_initialize,terminal_connect_alert_stop
+ call far terminal_connect_alert_initialize
+%endif
  pop ax
  call terminal_program_initialize
  push ax
@@ -419,6 +423,9 @@ terminal_shutdown:
  mov sp,terminal_stack_top
  sti
  call _terminal_autostart_flush
+%ifdef TERMINAL_SOUND
+ call far terminal_connect_alert_stop
+%endif
  call terminal_redisplay_stop
  call terminal_break_cancel
  call terminal_macro_cancel

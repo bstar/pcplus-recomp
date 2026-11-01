@@ -9,6 +9,7 @@
 #ifdef TERMINAL_SOUND
 /* PRM DS1d40 relative to memory image DS1b84. Any nonzero word enables. */
 unsigned terminal_sound_enabled;
+unsigned terminal_connect_alert_seconds;
 static unsigned sound(const prm_dos_image *image)
 {return (image->bytes[0x1bc]|image->bytes[0x1bd])!=0;}
 #endif
@@ -52,6 +53,7 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
 #endif
 #ifdef TERMINAL_SOUND
  terminal_sound_enabled=sound(&image);
+ terminal_connect_alert_seconds=image.bytes[0x1be]|((unsigned)image.bytes[0x1bf]<<8);
 #endif
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_publish(&image,SESSION_BASELINE_STARTUP))return 16;
@@ -105,6 +107,7 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
 #endif
 #ifdef TERMINAL_SOUND
  terminal_sound_enabled=sound(&image);
+ terminal_connect_alert_seconds=image.bytes[0x1be]|((unsigned)image.bytes[0x1bf]<<8);
 #endif
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_publish(&image,SESSION_BASELINE_STARTUP)){result->status=16;return 16;}

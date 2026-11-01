@@ -238,6 +238,10 @@ terminal_poll_io:
  ; the private application queue is disabled and BIOS has one foreground reader.
  call terminal_read_key
 .key_ready:
+%ifdef TERMINAL_SOUND
+ extern terminal_connect_alert_stop
+ call far terminal_connect_alert_stop
+%endif
  cmp word [terminal_menu_pending],0
  je .dispatch_key
  cmp ax,0x2c00

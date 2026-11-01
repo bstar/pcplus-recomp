@@ -3,6 +3,7 @@
 extern transfer_import_settings terminal_transfer_preferences;
 #ifdef TERMINAL_SOUND
 extern unsigned terminal_sound_enabled;
+extern unsigned terminal_connect_alert_seconds;
 #endif
 #include <string.h>
 #ifdef TERMINAL_DIRECTORY_RETIREMENT
@@ -217,7 +218,10 @@ unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask)
 #endif
  if(committed_baud_mask){owner.source_baud_low=owner.offered_baud_low;owner.source_baud_high=owner.offered_baud_high;}
 #ifdef TERMINAL_SOUND
- if(owner.transfer_ready==1)terminal_sound_enabled=(owner.image.bytes[0x1bc]|owner.image.bytes[0x1bd])!=0;
+ if(owner.transfer_ready==1){
+  terminal_sound_enabled=(owner.image.bytes[0x1bc]|owner.image.bytes[0x1bd])!=0;
+  terminal_connect_alert_seconds=owner.image.bytes[0x1be]|((unsigned)owner.image.bytes[0x1bf]<<8);
+ }
 #endif
  owner.source_clipboard_separator=owner.offered_clipboard_separator;
  owner.offered_mask=owner.transfer_ready=0;return LIVE_SETUP_OK;
