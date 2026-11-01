@@ -2,6 +2,7 @@
 """Actual linked reference, command dispatch and serviced UI; hardware/DOS modeled."""
 import argparse,json,re,hashlib
 from pathlib import Path
+from unicorn import UC_HOOK_CODE
 import check_transport as transport
 
 
@@ -106,6 +107,19 @@ def main():
    assert not m.get('_command_menu_active') and not m.get('terminal_quit')
   return 6
  check('unavailable-key-refusal-respects-existing-exclusive-byte-owners',owners)
+ if manifest.get('experimental_phone_log_controls'):
+  def call_log_extension():
+   m=UI();open_ref(m);assert b'L:call log' in m.text()
+   m.key(ord('l'));assert b'Telephone call log' in m.text() and m.get('_command_menu_active')
+   m.key(27);assert b'COMMUNICATIONS' in m.text()
+   printer_entries=[];target=m.symbols['terminal_printer_toggle']
+   hook=m.uc.hook_add(UC_HOOK_CODE,lambda cpu,address,size,data:printer_entries.append(address),begin=target,end=target)
+   try:m.key(0x2600)
+   finally:m.uc.hook_del(hook)
+   assert not m.get('_command_menu_active') and printer_entries==[target]
+   assert b'Telephone call log' not in m.text()
+   return 5
+  check('plain-L-call-log-escape-to-reference-and-original-Alt-L-printer-dispatch',call_log_extension)
  result=dict(passed=True,cases=cases,inputs=sum(r['inputs'] for r in cases),binary_sha256=sha(binary),
   source_inputs={str(p.relative_to(transport.ROOT)):sha(p) for p in [Path(__file__).resolve(),
    transport.ROOT/'src/redisplay/command_reference.c',transport.ROOT/'reconstruction/command_reference/provenance.json']},

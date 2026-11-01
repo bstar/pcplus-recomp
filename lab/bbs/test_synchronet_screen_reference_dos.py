@@ -26,14 +26,14 @@ def login_script():
     return source+wait('FSEditor v1.105','EDITOR')+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--phone-log',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--phone-log',action='store_true');a=p.parse_args()
     assert re.fullmatch('[A-Za-z0-9_-]+',a.label)
     fixture_lock=(LAB/'.dos-integration.lock').open('a')
     try:fcntl.flock(fixture_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     except BlockingIOError:raise RuntimeError('Another owned Synchronet DOS integration is active')
     server=snapshot();bodies=message_bodies();stats=statistics()
     binary,sources=select_product(a.terminal,'TERMINAL.EXE');geometry=terminal_geometry(binary);assert geometry['rows']==24
-    child,child_sources=select_product(ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE','ASPECT.EXE');sources+=child_sources
+    child,child_sources=select_product(a.runner,'ASPECT.EXE');sources+=child_sources
     names=['lab/bbs/test_synchronet_screen_reference_dos.py','lab/bbs/synthmodem_proxy_serial.js','lab/bbs/terminal_geometry.py','lab/bbs/audio_synchronet_editor_keys.asm','lab/bbs/editor_dos_probe.py','lab/bbs/test_dos.py','lab/bbs/modem.py','lab/bbs/audio_synchronet.py','lab/bbs/audio_synchronet_editor.py','src/aspect/compiler.py']
     sources += [ROOT/n for n in names]+[binary.parent/'terminal.map']
     if a.phone_log:sources += [ROOT/n for n in ('lab/bbs/phone_log_evidence.py','standalone/phone_log_events_watch.asm','standalone/test_phone_log_events_terminal.py')]

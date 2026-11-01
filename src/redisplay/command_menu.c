@@ -408,6 +408,10 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(phase){phase=notice=0;draw();return 1;}command_menu_active=0;return 0;}
 #ifdef TERMINAL_REFERENCE
  if(phase==9){
+#ifdef PHONE_LOG_CONTROLS
+  /* Plain L is an extension; original Alt-L still selects printer copy. */
+  if(fold(c)=='L'){phase=11;phone_log_controls_event(0,0,view);return 1;}
+#endif
   n=command_reference_event(1,key,view);
   if(n==1){command_menu_active=0;return 0;}
   if(n==0x200){reference_origin=0;category=selected=phase=notice=0;draw();return 1;}

@@ -7,6 +7,8 @@ MODEM_ENTRY terminal_connection_cancel
 MODEM_ENTRY terminal_connection_exit
 MODEM_ENTRY terminal_modem_send_start
 MODEM_ENTRY terminal_modem_send_poll
+; Pure transfer deadline selection, no register or stack arguments.
+MODEM_ENTRY terminal_transfer_set_budget
 ; Namespaced register services; actual resident target remains explicit.
 MODEM_SERVICE connection_clock_ticks,terminal_clock_ticks
 MODEM_SERVICE connection_note_connected,terminal_directory_note_connected

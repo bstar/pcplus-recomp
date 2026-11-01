@@ -52,6 +52,7 @@ def main():
         assert not runner_manifest['original_inputs'] and sha(runner) == runner_manifest['binary_sha256']
         assert all(sha(ROOT/name) == digest for name,digest in runner_manifest['sources'].items())
         names |= set(runner_manifest['sources']) | {'src/aspect/compiler.py'}
+    if manifest.get('experimental_original_reference'):names |= {'standalone/reference_watch.asm','reconstruction/command_reference/provenance.json'}
     output.mkdir(parents=True)
     fresh, sources = output/'source', {}
     for name in sorted(names):
@@ -67,7 +68,7 @@ def main():
         os.utime(target, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
         sources[name] = sha(target)
         assert sha(ROOT/name) == sources[name], name
-    reports = {}
+    reports = {};linked_reports = {}
     with (output/'build.log').open('w') as log:
         subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, True)],
                        cwd=fresh, stdout=log, stderr=log, check=True)
@@ -80,6 +81,16 @@ def main():
                            cwd=fresh,stdout=log,stderr=log,check=True)
             rebuilt_runner = fresh/'build'/runner.parent.name/'ASPECT.EXE'
             assert sha(rebuilt_runner) == runner_manifest['binary_sha256']
+        if manifest.get('experimental_original_reference'):
+            for checker,leaf in [('check_command_reference.py','reference-checks.json'),('check_original_keys.py','original-key-checks.json')]:
+                subprocess.run([sys.executable,'standalone/'+checker,'--terminal',str(rebuilt/'TERMINAL.EXE')],cwd=fresh,stdout=log,stderr=log,check=True)
+                path=rebuilt/leaf;report=json.loads(path.read_text())
+                assert report['passed'] and all(row['passed'] for row in report['cases']) and report['binary_sha256']==manifest['binary_sha256']
+                linked_reports[checker]={'path':str(path.relative_to(ROOT)),'sha256':sha(path),'groups':len(report['cases']),'inputs':sum(row['inputs'] for row in report['cases'])}
+            subprocess.run([sys.executable,'standalone/test_command_reference_dos.py','--terminal',str(rebuilt/'TERMINAL.EXE'),'--label','public-original-reference'],cwd=fresh,stdout=log,stderr=log,check=True)
+            path=fresh/'build/reference-dos/public-original-reference/result.json';report=json.loads(path.read_text())
+            assert report['passed'] and all(report['checks'].values()) and report['binary_sha256']==manifest['binary_sha256']
+            reports['public-original-reference']={'path':str(path.relative_to(ROOT)),'sha256':sha(path),'cases':1}
         matrices = [('public-existing', ['--existing'], 5), ('public-controls', [], 19)]
         if args.extended:
             matrices += [('public-preexisting', ['--existing', '--preexisting'], 5),
@@ -180,7 +191,7 @@ def main():
             reports['public-fragment-carrier']={'path':str(path.relative_to(ROOT)),'sha256':sha(path),'cases':4}
     assert all(sha(fresh/name) == digest and sha(ROOT/name) == digest for name, digest in sources.items())
     result = dict(passed=True, source_commit=revision, source_count=len(sources), sources=sources,
-                  terminal_sha256=sha(rebuilt/'TERMINAL.EXE'), reports=reports, original_inputs=[],
+                  terminal_sha256=sha(rebuilt/'TERMINAL.EXE'), reports=reports, linked_reports=linked_reports, original_inputs=[],
                   build_log_sha256=sha(output/'build.log'),
                   scope=__doc__+' Exact unchanged application; separate real partial-write/error fixtures; '
                   'no original installs, previous objects or Git metadata exported. '

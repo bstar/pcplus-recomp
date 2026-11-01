@@ -273,6 +273,7 @@ def main():
             files[helper+'.COM'] = (output/(helper+'.COM')).read_bytes()
             options['auxiliary'] = (helper,)
         expected_exit = 12 if (calls and not disk) or recovery_case or name in ('fs-failure','ui-cancel','ui-unrepaired','ui-readonly-cancel') else 0
+        if manifest.get('experimental_original_reference'):keys=keys.replace('a-d','a-z ` right d')
         native = terminal.run(case, mode, 'p900 enter ' + keys, prm=bytes(settings),
             files=files, observer='PLWATCH', working_drive='d',
             expected=expected_exit, cpu='8086', **options)

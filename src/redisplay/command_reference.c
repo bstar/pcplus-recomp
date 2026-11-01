@@ -59,7 +59,11 @@ LABEL(title,"P R O C O M M   P L U S   C O M M A N D   M E N U");
 LABEL(communications,"COMMUNICATIONS");LABEL(setup_title,"SET UP");
 LABEL(other,"OTHER FUNCTIONS");LABEL(before," BEFORE ");
 LABEL(after," AFTER ");LABEL(during," DURING ");LABEL(other_group," OTHER ");
+#ifdef PHONE_LOG_CONTROLS
+LABEL(footer,"Arrows/Tab:select Enter:run F1:help L:call log `:browser Esc:return");
+#else
 LABEL(footer,"Arrows/Tab: select  Enter: run  F1: help  `: command browser  Esc: return");
+#endif
 LABEL(dim,"Dim commands are unavailable. Assigned BBS page keys remain unchanged.");
 LABEL(refused,"Not available in this build: ");
 static word selected,refusal;

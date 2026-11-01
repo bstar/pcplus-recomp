@@ -55,6 +55,11 @@ async def run_case(parent,out,name,ticks,soft,aspect=None,transfer=None):
             batch_names=dict(BATCH_PROTOCOL='terminal_transfer_protocol',BATCH_DOWNLOAD='_batch_download_result',BATCH_UPLOAD='_batch_upload_current',BATCH_YMODEM='_ymodem_current',BATCH_ZFILES='_terminal_zmodem_files')
             assert all(symbols[n][0]==symbols['terminal_transfer_active'][0] for n in batch_names.values())
             extra_observer.update(TRANSFER_BATCH=1,**{key:symbols[n][1] for key,n in batch_names.items()})
+    options=json.loads((parent/'manifest.json').read_text())
+    if options.get('experimental_original_keys') and transfer:
+        keys=keys.replace('a-r','a-z p100 pgdown' if options.get('experimental_original_reference') else 'pgdown')
+        keys=keys.replace('a-s','a-z p100 pgup' if options.get('experimental_original_reference') else 'pgup')
+    if options.get('experimental_original_reference'):keys=keys.replace('a-d','a-z ` right d')
     observer=build_observer(binary,out/'PLWATCH.COM',irq=5,extra=extra_observer)
     defines=dict(CARRIER=1,DELAY_TICKS=ticks,MCR_PORT=0x3ec,HARDWARE_ACTIVE_OFFSET=symbols['hardware_active'][1],
         RX_COUNT_OFFSET=symbols['uart_rx_count'][1],RX_DROPPED_OFFSET=symbols['uart_rx_dropped'][1],MSR_PORT_OFFSET=symbols['uart_port_msr'][1],

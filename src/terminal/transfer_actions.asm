@@ -866,53 +866,9 @@ terminal_transfer_filter:
  pop ax
  clc
  ret
-; Accepted-progress deadline, not an idle-byte timer. ZedZap can contain8192
-; payload bytes plus quoting before a verified packet exists. Allow the worst
-; quoted packet on a slow UART without treating unverified bytes as progress.
-; A connected modem's DTE baud is not a carrier-speed lower bound. The legacy
-; first-completion CONNECT matcher supplies no reliable DCE rate, so cover the
-; supported300bps floor for that context. Direct-directory/raw serial sessions
-; retain their UART-based budget. Per-read idle/retry and physical TX/flow stall
-; bounds remain independent; unverified input never refreshes this deadline.
-GLOBAL terminal_transfer_set_budget,transfer_progress_budget
-terminal_transfer_set_budget:
- cmp word [connection_state],6
- jne .uart_rate
- cmp word [terminal_directory_mode],1
- je .uart_rate
- mov word [transfer_progress_budget],2160
- cmp word [terminal_transfer_protocol],2
- jne .done
- mov word [transfer_progress_budget],17280
- ret
-.uart_rate:
- mov word [transfer_progress_budget],540
- cmp word [terminal_baud_high],0
- jne .done
- cmp word [terminal_transfer_protocol],2
- je .zmodem
- cmp word [terminal_baud_low],1200
- jae .done
- mov word [transfer_progress_budget],2160
- ret
-.zmodem:
- cmp word [terminal_baud_low],9600
- jae .done
- mov word [transfer_progress_budget],1080
- cmp word [terminal_baud_low],4800
- jae .done
- mov word [transfer_progress_budget],2160
- cmp word [terminal_baud_low],2400
- jae .done
- mov word [transfer_progress_budget],4320
- cmp word [terminal_baud_low],1200
- jae .done
- mov word [transfer_progress_budget],8640
- cmp word [terminal_baud_low],600
- jae .done
- mov word [transfer_progress_budget],17280
-.done:
- ret
+; Deadline selection retains its public near ABI through MODEM_CODE.
+extern terminal_transfer_set_budget
+GLOBAL transfer_progress_budget
 terminal_transfer_shutdown:
  call _terminal_transfer_cleanup
  push ax
