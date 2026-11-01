@@ -1,5 +1,14 @@
 # Complete DOS rebuild plan
 
+[Guarded log writes](docs/PHONE_LOG_DISK.md) now save queued records from the
+main loop and drain them after UART restoration at shutdown. Thirteen native
+DOS cases and their 1,739-source public rebuild repeats pass, with online START
+commit, exact final files, SOFT/BOTH/NONE policies, three-call reuse, a one-attempt
+namespace failure and healthy PROGRAM handoff. Another 54 scoped regressions
+pass, and all three older build controls remain byte-exact. Retry/recovery UI,
+slow/error IO, uncertain handles/existing-file app coverage, sustained traffic,
+carrier/child/exception and all full application/physical/card gates remain open.
+
 [RAM session events](docs/PHONE_LOG_EVENTS.md) now connect actual call
 admission, CONNECT/DIRECT success, observed disconnect/retirement and common
 shutdown to the retained producer. Eight full-terminal DOS cases and their

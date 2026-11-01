@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Guarded application log writes](PHONE_LOG_DISK.md) now run in the optional
+main-loop/shutdown variant. Thirteen native cases and public repeats pass;
+retry/recovery UI, sustained/error/physical transport, uncertain handles and
+existing-file application coverage remain open. This closes no complete
+F07/F10 or whole-application gate.
+
 [Actual session-event hooks](PHONE_LOG_EVENTS.md) now queue RAM records in the
 optional terminal. Eight native cases and committed-source repeats pass; durable
 logging remains unfinished and unsaved records explicitly fail shutdown. Disk

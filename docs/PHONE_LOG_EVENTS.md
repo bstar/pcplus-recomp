@@ -1,5 +1,9 @@
 # Session call-log events
 
+The later [disk option](PHONE_LOG_DISK.md) adds guarded foreground writes and
+shutdown draining. Selecting only `--phone-log-events` still uses the RAM-only
+behavior documented below; these eight-case witnesses retain that scope.
+
 The optional `--phone-log-events` terminal now calls the
 [banked producer](PHONE_LOG_LIFECYCLE_BANK.md) at actual session boundaries.
 It implies lifecycle/startup/claims. This is an experimental RAM-event build:
@@ -104,7 +108,7 @@ install, old object or Git metadata is copied into the export.
 
 ```sh
 ./tools/dev --command python3 standalone/test_phone_log_events_terminal.py \
-  --terminal build/terminal-phone-log-bank-2fbc7bc87592 --label YOUR-EVENTS
+  --terminal build/terminal-phone-log-bank-2fbc7bc87592 --label events-check-01
 ./tools/dev --command python3 standalone/prove_phone_log_startup_terminal.py \
   --terminal build/terminal-phone-log-bank-2fbc7bc87592 \
   --output build/YOUR-EVENT-PROOF --commit a4b605b --baseline-commit ca37434

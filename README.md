@@ -1,22 +1,28 @@
 # PCPlus DOS reconstruction
 
-The optional [session-event build](docs/PHONE_LOG_EVENTS.md) now records actual
+The optional [guarded log-write build](docs/PHONE_LOG_DISK.md) now saves call
+records during eligible foreground polls and at shutdown. Thirteen DOS cases
+repeat from 1,739 committed public sources, including flow settings, a latched
+file failure and PROGRAM handoff. Retry/recovery controls and wider transport
+acceptance remain unfinished; the published package and card are unchanged.
+
+The separate RAM-only [session-event build](docs/PHONE_LOG_EVENTS.md) now records actual
 call boundaries in RAM and gates new admission when the queue is full. Eight
-DOS event cases repeat from 1,735 committed public sources. Disk scheduling is
-unfinished: this experimental build explicitly reports unsaved records at exit.
+DOS event cases repeat from 1,735 committed public sources. That variant explicitly reports unsaved records at exit; the later disk option
+above supplies scheduling.
 
 The [banked event producer](docs/PHONE_LOG_LIFECYCLE_BANK.md) now fits in the
 optional full terminal with five checked far entries. Twenty-one DOS producer
 cases/1,041 assertions plus ten startup/capture cases pass; a 1,730-file public
-export reproduces the exact application and repeats them. The subsequent session-event checkpoint adds RAM hooks; live disk scheduling
-and durable call logging remain open.
+export reproduces the exact application and repeats them. The later options above add RAM hooks and disk scheduling; complete application
+logging acceptance remains open.
 
 The optional [startup-owned call-log path](docs/PHONE_LOG_RESERVATION.md) now
 combines saved settings, canonical path selection and queue-held file claims.
 Capture to the claimed log is refused; capture to another file still works.
 Twenty-five DOS workflows pass, and a 1,723-file public-source export reproduces
 the exact terminal and repeats them. The feature-disabled control remains exact.
-The later session-event build adds RAM hooks; disk polling and visible retry/recovery remain next;
+Later options add event hooks and disk polling; visible retry/recovery remains open;
 no card deployment or full F07/F10 acceptance is claimed.
 
 The earlier [fixed claim](docs/CAPTURE_FIXED_RESERVATION.md),
