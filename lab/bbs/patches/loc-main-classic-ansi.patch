@@ -1,0 +1,26 @@
+--- a/mods/loc_main_menu/loc_main_menu.js
++++ b/mods/loc_main_menu/loc_main_menu.js
+@@ -9,13 +9,21 @@
+  const r=value>>16,g=value>>8&255,b=value&255;
+  if(truecolor)return `\x1b[38;2;${r};${g};${b}m`;
+  const nearest=palette.reduce((best,[hex,code])=>{const c=parseInt(hex.slice(1),16),distance=(r-(c>>16))**2+(g-(c>>8&255))**2+(b-(c&255))**2;return distance<best.distance?{distance,code}:best;},{distance:Infinity,code:37});
+- return '\x1b['+nearest.code+'m';
++ // DOS ANSI uses intensity + the original eight foreground colors. The
++ // modern 90..97 shorthand is ignored by classic PCPlus and leaves the
++ // previous foreground (often black from padding) active.
++ return nearest.code>=90?'\x1b[0;40;1;'+(nearest.code-60)+'m':'\x1b[0;40;'+nearest.code+'m';
+ }
+ exports.getModule=class ClassicPillars extends Standard{
+  getLayout(){return this.menuConfig.config.layout==='dosDoors'?require('./dos-doors.json'):layout;}
+  initSequence(){
+-  const screen=this.getLayout();
++  let screen=this.getLayout();
+   const term=this.client.term,browser=term.termClient==='vtx';
++  if(term.termHeight===24&&screen.cells.length===25){
++   // Remove the blank separator beneath the logo, retaining every menu item,
++   // the footer and the prompt above a DOS terminal's reserved status row.
++   screen={...screen,cells:screen.cells.filter((row,y)=>y!==9),prompt:{...screen.prompt,row:screen.prompt.row-1}};
++  }
+   this.previousEncoding=term.outputEncoding;
+   // Keep CP437 for the block art and ordinary letters. VTX can select a
+   // separate CP850 font slot for Ð without reinterpreting the rest of the art.

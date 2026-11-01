@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "application_source_commit": "f1c1c2fbad94858387848b2b28f6575878e8aff6",
+  "files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+    "README.TXT": "3212b36bbf4488481462e523d5b460d18599c28ccb65a8bf6366c5cc61bd4b2c",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "49964ae68c79c4d0a170d63e5840c24d5e42fdb605336619fa8947ea1291253a",
+    "VERSION.TXT": "e6663c45ac982d1957c55dbb71fafc8dc459f52169765dcb82dce23f0947041c",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "evidence": {
+    "build/carrier-grace-linked-01/result.json": {
+      "passed": true,
+      "sha256": "11100917e12e4016facf3ee15459f678244718dd1ab8e9dbf43ff0f65aae6cd1"
+    },
+    "build/carrier-grace-package-dos-01/result.json": {
+      "passed": true,
+      "sha256": "1e0ee6e46770da6a882ad929aec7d53b99eff1edaad398b5de0e6cbd216072a9"
+    },
+    "build/carrier-grace-public-source-01/result.json": {
+      "passed": true,
+      "sha256": "8dafe57b5ce9ca395a58b3c627b5a15dc58a9c273ff7e22ae454a24535b76301"
+    },
+    "build/phone-log-carrier-terminal/carrier-grace-01/result.json": {
+      "passed": true,
+      "sha256": "322557cefc1ee798efcbb12b747865bdae0e39430abda2b61f5c90f1ddf78a14"
+    },
+    "build/phone-log-carrier-terminal/carrier-grace-aspect-01/result.json": {
+      "passed": true,
+      "sha256": "982f4588730f21c0690ed2963d4682ba142b3c92269328c08fb35a23e5a23149"
+    },
+    "build/phone-log-carrier-terminal/carrier-grace-transfer-01/result.json": {
+      "passed": true,
+      "sha256": "67f9aee807a4aaa4a7b66941ff398bcce43bc430110e96fae0a5ab1a04d4dc8e"
+    },
+    "build/loc-menu-ansi-compat-02/result.json": {
+      "passed": true,
+      "sha256": "215b6b22a8157de8c12f10a514d03d17a9aa01ff5c5fe3588ab3ea49a4759b73"
+    }
+  },
+  "deployment": {
+    "carrier_candidate_on_card": false,
+    "enigma_module_saved": true,
+    "enigma_live_restart": false
+  },
+  "scope": "Exact native menu render/browser invariance; transient/sustained parent DCD model; real DOS package and11 genuine-loss/redial/script/transfer cases; five-executable public reproduction. Actual Boca DCD transient cause and physical retest remain unverified; live restart and card install pending."
+}

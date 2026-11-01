@@ -2,9 +2,13 @@
 
 ## Active objective: ready the real SynthModem → Enigma connection test
 
-**Software/package readiness achieved; awaiting user-operated hardware test.**
-See [connection instructions](docs/CONNECTION_TEST_READY.md) and its validation
-receipt. The DOS card is not visible here and has not been updated.
+**Real hardware connection achieved; compatibility acceptance continues.**
+The BIOS-omitted UART fix was installed at `C:\PCPLUS` with resources/config
+matching `C:\UTILS\PCPLUS` exactly. bstar reports working Enigma interaction
+with much better compatibility; the live bridge confirms V.32bis at 9600 bps.
+The [custom menu and carrier follow-up](docs/LOC_MENU_AND_CARRIER.md) addresses
+the remaining display/notice reports. Its new carrier candidate is not on the
+card yet, and the saved Enigma menu fix awaits a safe approved restart.
 
 On November 1, bstar replaced the broad remaining-work objective with this
 milestone: prepare the new PCPlus build for a real connection through the Boca
