@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[The retained-event producer is now banked](PHONE_LOG_LIFECYCLE_BANK.md) in the
+optional full terminal. Five far entry ABIs, 21 native producer cases/1,041
+assertions, ten startup/capture cases and exact public source reproduction
+pass. Actual session hooks, live disk scheduling and visible recovery remain
+unfinished; full F07/F10 acceptance is still open.
+
 [Startup-owned log claims](PHONE_LOG_RESERVATION.md) now combine the accepted
 PRM image, canonical path and retained queue identity. Fifteen queue/claim DOS
 workflows (606 assertions), seven real startup cases and three capture-UI cases

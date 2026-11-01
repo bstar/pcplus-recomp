@@ -1,9 +1,13 @@
 # Retained connection events
 
-`src/directory/phone_log_lifecycle.c` now supplies the foreground producer
+The later [banked producer](PHONE_LOG_LIFECYCLE_BANK.md) supersedes this original
+component boundary, adding real far entries, segment/owner checks and an explicit
+native generation-wrap fixture. The 12-case evidence below remains historical.
+
+`src/directory/phone_log_lifecycle.c` supplies the foreground producer
 needed by the [connection integration plan](PHONE_LOG_LIFECYCLE_PLAN.md).
-It is a component, not yet linked into the terminal's logger bank or called by
-connection transitions. It performs no filesystem or clock operations.
+At this checkpoint it was a component, not yet linked into the terminal's
+logger bank or called by connection transitions. It performs no filesystem or clock operations.
 
 ## Admission and event lifetime
 

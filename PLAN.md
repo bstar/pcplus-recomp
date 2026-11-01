@@ -1,11 +1,21 @@
 # Complete DOS rebuild plan
 
+[The banked event producer](docs/PHONE_LOG_LIFECYCLE_BANK.md) now fits in the
+full optional terminal with five checked far entries and no new resident
+trampolines. Twenty-one native producer cases/1,041 assertions, seven startup
+cases and three capture-UI cases pass. A clean 1,730-file public export
+reproduces the full image and all three diagnostics, repeats those 31 cases
+and passes 15 queue-claim regressions. The feature-disabled control stays exact.
+Transition/admission hooks, child observations, UART-aware disk polls and visible
+recovery remain next; full application/physical/card gates stay open.
+
 [Retained connection events](docs/PHONE_LOG_LIFECYCLE.md) now implement
 single-producer call-pair admission, nonzero generation ownership and a retained
 original END timestamp across queue refusal. Twelve native DOS cases/550
 assertions and their 18-source committed rebuild repeats pass; both executables
-are byte-exact. The producer remains a component: bank placement, actual
-transition/admission hooks, child observations, UART-aware disk scheduling and
+are byte-exact. At that checkpoint the producer was a component; bank placement is supplied
+by the later checkpoint above. Actual transition/admission hooks, child
+observations, UART-aware disk scheduling and
 visible recovery remain open, together with every full application/physical/card
 gate. The published BBS package is unchanged.
 

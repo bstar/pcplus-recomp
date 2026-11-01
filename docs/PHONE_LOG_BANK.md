@@ -1,5 +1,10 @@
 # Telephone logger code bank
 
+The later [banked lifecycle producer](PHONE_LOG_LIFECYCLE_BANK.md) adds five
+far entries and a 38-byte near event owner. Its current measurements and
+public reproduction are recorded there; earlier bank-only and startup/claim
+measurements below retain their historical scope.
+
 The later [startup-owned claim composition](PHONE_LOG_RESERVATION.md) now
 connects accepted settings/path selection and queue-held reservations in an
 optional full terminal. The sizes, hashes and bank-only limitations below are
