@@ -127,6 +127,14 @@ resident memory footprint; measured placement on this machine awaits reboot.
 
 ## After Dark in network mode
 
+**Physical test failed:** bstar reports After Dark activated and crashed the
+computer. FTP became unreachable. The local NETMGR.BAT now omits the automatic
+AFTERUP call; deployment to the machine awaits restored access. The underlying
+cause is unconfirmed. Boot with F5 to bypass startup, then run NETUP and NETFTP
+directly to regain management access without the saver. Preserve the configured
+two-minute timeout and Flying Toasters preferences while isolating the failure.
+The remainder records how the candidate was installed, not proven stability.
+
 Network management now calls `C:\NET\AFTERUP.BAT` after the mouse, packet
 driver and successful DHCP, immediately before the foreground FTP server.
 The helper sets ADPATH to C:\ADDOS and runs `C:\ADDOS\ADTSR.EXE` from
