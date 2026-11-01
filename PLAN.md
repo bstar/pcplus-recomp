@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Call-log status and confirmed retry](docs/PHONE_LOG_CONTROLS.md) now provide an optional
+Alt-Z/File pane. Nineteen native DOS cases and their 1,743-source public rebuild
+repeats pass, plus 67 scoped regressions. Confirmed retry preserves original
+records/timestamps; uncertain close refuses retry and PROGRAM handoff. Four
+older variants remain byte-exact. Existing-file/error-latency, sustained
+transport, broader feature/rendering and physical/card gates remain open.
+The published BBS package and card are unchanged.
+
 [Guarded log writes](docs/PHONE_LOG_DISK.md) now save queued records from the
 main loop and drain them after UART restoration at shutdown. Thirteen native
 DOS cases and their 1,739-source public rebuild repeats pass, with online START

@@ -1,5 +1,9 @@
 # Guarded call-log writes
 
+The later [call-log controls checkpoint](PHONE_LOG_CONTROLS.md) adds confirmed
+retry and application-level uncertain-close refusal. This page retains the
+original disk-only image and its 13-case validation boundary.
+
 The optional `--phone-log-disk` terminal now schedules the checked append
 backend from its main loop and drains retained records after UART restoration
 at shutdown. It implies the existing event/lifecycle/startup/claim options.

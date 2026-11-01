@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Call-log status and confirmed retry](PHONE_LOG_CONTROLS.md) now provide an optional
+Alt-Z/File pane. Nineteen native DOS cases and their 1,743-source public rebuild
+repeats pass, plus 67 scoped regressions. Confirmed retry preserves original
+records/timestamps; uncertain close refuses retry and PROGRAM handoff. Four
+older variants remain byte-exact. Existing-file/error-latency, sustained
+transport, broader feature/rendering and physical/card gates remain open.
+The published BBS package and card are unchanged.
+
 [Guarded application log writes](PHONE_LOG_DISK.md) now run in the optional
 main-loop/shutdown variant. Thirteen native cases and public repeats pass;
 retry/recovery UI, sustained/error/physical transport, uncertain handles and
