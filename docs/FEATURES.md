@@ -1,13 +1,22 @@
 # Full application reconstruction checklist
 
+[Startup-owned log claims](PHONE_LOG_RESERVATION.md) now combine the accepted
+PRM image, canonical path and retained queue identity. Fifteen queue/claim DOS
+workflows (606 assertions), seven real startup cases and three capture-UI cases
+pass; 1,723 public sources reproduce the exact parent and repeat all 25 cases.
+Connection-event production, foreground disk polls and visible recovery remain
+open; F07/F10 and whole-application acceptance are not closed.
+
 [A fixed log-path claim](CAPTURE_FIXED_RESERVATION.md) now coexists with the
 dynamic recorder reservation in the experimental logger terminal. Actual DOS
-near/far conflict and ambiguity checks pass; queue claim lifetime is not wired.
+near/far conflict and ambiguity checks pass. Its original bank-only variant
+lacks queue lifetime binding; the optional queue-owned variant above adds it.
 
 [The logger code bank](PHONE_LOG_BANK.md) now links the checked logger into an
 experimental full terminal, with exact ABI/memory inspection and selected8086
-connect/redial regressions. It still lacks live event/startup/reservation/poll
-integration and closes no whole-application gate.
+connect/redial regressions. Its original bank-only variant lacks startup/event/poll
+integration; the later startup composition above adds settings/path claims,
+without closing a gate.
 
 [Checked telephone-log persistence](PHONE_LOG_FILE.md) adds a maintained
 append backend with same-handle rollback and explicit recovery-required states.

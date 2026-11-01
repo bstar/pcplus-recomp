@@ -1,5 +1,11 @@
 # Terminal call-log startup binding
 
+The later [startup-owned claim composition](PHONE_LOG_RESERVATION.md) now
+supersedes this startup-only variant. Current `--phone-log-startup` implies
+queue reservations. The commands and binary below describe commit `58339e8`;
+use that checkout to repeat this earlier boundary. The later page has current
+reproduction commands and the combined tests.
+
 The optional `--phone-log-startup` application now invokes the checked
 [startup policy](PHONE_LOG_STARTUP.md) after successful configuration loading
 and setup binding, before the splash, mouse/UART acquisition or modem commands.
@@ -72,9 +78,9 @@ checks. The first link had a resolver object-name collision; the first native
 attempt exposed incorrect error classification. Those attempts remain excluded.
 
 This initializes the actual application's queue; it does **not** yet generate
-connection events or run disk polls. The separate fixed-claim work must be
-composed before live log writes, followed by full connection lifetimes,
-UART-aware scheduling and visible full/retry/recovery handling. Full F07/F10,
+connection events or run disk polls. The subsequent [claim composition](PHONE_LOG_RESERVATION.md) supplies the fixed
+identity binding. Full connection lifetimes, UART-aware scheduling and visible
+full/retry/recovery handling remain unfinished. Full F07/F10,
 the complete application, all feature combinations, physical Boca/SPA2102 and
 card/deployment gates remain open. The published BBS package and card are
 unchanged; no live BBS, bridge, ATA or host network was changed.

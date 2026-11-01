@@ -1,31 +1,24 @@
 # PCPlus DOS reconstruction
 
-The experimental terminal now has a [fixed log-path claim](docs/CAPTURE_FIXED_RESERVATION.md)
-alongside recorder reservations. Four DOS cases pass446 assertions, and all
-six legacy reservation runs still pass. The queue does not acquire the claim
-yet; event/startup/poll integration and card deployment remain open.
+The optional [startup-owned call-log path](docs/PHONE_LOG_RESERVATION.md) now
+combines saved settings, canonical path selection and queue-held file claims.
+Capture to the claimed log is refused; capture to another file still works.
+Twenty-five DOS workflows pass, and a 1,723-file public-source export reproduces
+the exact terminal and repeats them. The feature-disabled control remains exact.
+Connection-event hooks, disk polling and visible retry/recovery remain next;
+no card deployment or full F07/F10 acceptance is claimed.
 
-The [telephone-log code bank](docs/PHONE_LOG_BANK.md) now fits in an experimental
-full Special Edition terminal without reducing stacks or limits. Nine banked
-DOS workflows, exact clean-source reproduction and selected8086 connect/redial
-tests pass. The standard terminal remains byte-identical. Logger startup/event
-hooks, shared file reservations and scheduling remain unfinished.
+The earlier [fixed claim](docs/CAPTURE_FIXED_RESERVATION.md),
+[logger bank](docs/PHONE_LOG_BANK.md), [event queue/clock](docs/PHONE_LOG_QUEUE.md)
+and [checked append backend](docs/PHONE_LOG_FILE.md) retain their own component
+checks and historical identities. The current startup composition links those
+pieces without reducing histories, stacks or limits; it does not yet write
+call records from live connection events.
 
-The [call-log event layer](docs/PHONE_LOG_QUEUE.md) now preserves queued
-timestamps through safe failures and explicit retry, formats the native log
-layout, reads the DOS clock and decodes the saved PRM enable flag. Eighteen
-near/far-storage DOS workflows and exact source-only rebuilds pass. Terminal
-event hooks, file reservations and application code placement remain open.
-
-The [checked call-log backend](docs/PHONE_LOG_FILE.md) now handles partial
-appends, same-handle rollback and ambiguous close without blind retries.
-Eighteen DOS workflows and a clean executable/object rebuild pass; terminal
-event and file-reservation integration remain unfinished.
-
-The [native telephone-log component](docs/PHONE_LOG.md) now reproduces258
-original instruction bytes and passes CPU/DOS/source-rebuild checks.
-`PCPLUS.FON` is a call log; the prior font-resource inference is corrected.
-Terminal logging integration and reliable persistence remain unfinished.
+The [native telephone-log component](docs/PHONE_LOG.md) reproduces 258 original
+instruction bytes and passes CPU/DOS/source-rebuild checks. `PCPLUS.FON` is a
+call log; the earlier font-resource inference is corrected. Native font support
+and complete terminal logging remain separate open requirements.
 
 The [SUB and interrupted-request checkpoint](docs/SUBSTITUTE_CONTROL.md) fixes
 the missing native profile 4 provider and preserves profile 6 control-glyph

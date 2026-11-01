@@ -1,11 +1,18 @@
 # Telephone logger code bank
 
+The later [startup-owned claim composition](PHONE_LOG_RESERVATION.md) now
+connects accepted settings/path selection and queue-held reservations in an
+optional full terminal. The sizes, hashes and bank-only limitations below are
+historical. Live connection events and disk polling remain unconnected.
+
 The [event queue](PHONE_LOG_QUEUE.md), formatter, clock and checked append
 backend now have a dedicated `PHONE_LOG_CODE` bank. The experimental terminal
 builder can link it without reducing compiler/VM stacks, protocol limits or
 screen buffers. It does not yet produce a live telephone log: startup settings,
 path selection, modem events, shared file reservations and poll scheduling
-remain unconnected.
+remain unconnected in the original bank variant. The later optional
+[queue-owned claim](PHONE_LOG_RESERVATION.md) connects file reservations without
+enabling startup, event or poll hooks.
 
 The standard full terminal still rebuilds to SHA256
 `2978657cb75ac29067796c98d81ff253b91eee96b995924d266d05bdfbae471c`.
@@ -87,6 +94,7 @@ Next, bind saved PRM enable/path selection, capture all connection lifetimes
 including nested ASPECT paths, and schedule accepted events with UART service.
 The new [fixed identity claim](CAPTURE_FIXED_RESERVATION.md) coexists with the
 recorder slot and excludes conflicting capture/history/recorder paths. The
-queue must still acquire and retain it across its configured lifetime and any
-pending/recovery state. Queue-full, retry and recovery outcomes
+original bank variant still lacks lifetime binding; the optional
+[queue-owned build](PHONE_LOG_RESERVATION.md) retains it through configuration
+and pending/recovery state. Queue-full, retry and recovery outcomes
 need visible application handling before BBS/load/modem/card acceptance.

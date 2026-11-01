@@ -1,14 +1,16 @@
 # Complete DOS rebuild plan
 
-[Application call-log startup](docs/PHONE_LOG_STARTUP_TERMINAL.md) now
-initializes the real queue from the sealed accepted image in the optional
-logger-bank parent, before UART ownership. Seven native startup/direct/modem
-cases and their public-source repeats pass;1716 exported sources reproduce
-the exact parent and an unchanged feature-disabled control. Proper log-setup
-notices replace accidental serial/profile errors. Existing component images
-remain exact. Event generation, fixed-claim composition, UART-aware polling,
-visible full/retry/recovery and full application/physical/card gates remain
-open. The separate published directory-adoption BBS package is unchanged.
+[Startup-owned call-log identity](docs/PHONE_LOG_RESERVATION.md) now combines
+accepted PRM/path selection with the retained queue and fixed file claim in
+the experimental logger-bank application. All 25 native DOS cases and their
+25 public-source repeats pass: 15 queue workflows/606 assertions, seven
+startup cases and three real capture-UI cases. A clean export of 1,723
+committed public files reproduces the full image and preserves the exact
+feature-disabled control. Capture refuses the enabled log identity, preserves
+an existing log and continues to work on unrelated files; disabled logging
+releases the filename. Connection events, UART-aware disk polling, visible
+full/retry/recovery, complete feature composition and physical/card gates
+remain open. The published directory-adoption BBS package is unchanged.
 
 [Saved call-log startup policy](docs/PHONE_LOG_STARTUP.md) now decodes
 the accepted enable word, selects current/PCPLUS precedence, validates the
@@ -261,6 +263,14 @@ original command/help/hotkey behavior, complete telephone-log startup/events and
 UART-aware polling, and close every remaining requirement in the full
 [F01–F16 matrix](docs/FEATURES.md). The existing plan and complete application,
 protocol/emulation, scripting, Host, source-build and hardware scope remain intact.
+
+[Queue-owned log claims](docs/PHONE_LOG_RESERVATION.md) retain ownership
+across pending events, retry and recovery without enlarging the 666-byte queue
+or reducing stacks/limits. The current startup/claim composition and public
+reproduction are recorded above; earlier queue-only draft measurements remain
+archived locally and are excluded from current acceptance. Connection events
+and UART-aware polling remain next; no full F07/F10, hardware or deployment
+gate closes.
 
 [Checked telephone-log appends](docs/PHONE_LOG_FILE.md) now pass138 model
 cases/7239 assertions,18 actual DOS workflows/499 native assertions and an

@@ -3,8 +3,9 @@
 The experimental telephone-log terminal now includes a second reservation
 mechanism for one fixed canonical path. It coexists with the recorder's
 existing dynamic target/scratch/backup probe. This supplies the shared file
-service needed by the logger; the logger does **not acquire it yet**. Queue
-lifetime and terminal event integration remain open.
+service needed by the logger. The original `--phone-log-bank` variant does not
+acquire it; the later optional [queue-owned claim](PHONE_LOG_RESERVATION.md)
+binds its lifetime. Terminal event integration remains open.
 
 `CAPTURE_FIXED_RESERVATION` enables the extension in `capture_file.c` and
 `capture_reservation.c`. The standard terminal omits it and still rebuilds to
@@ -73,7 +74,7 @@ connect/redial runs pass on the changed experimental product.
 ./tools/build test-capture-fixed-reservation
 ```
 
-Next, bind claim acquisition/refresh/release to logger configuration, retain it
-while events are pending or a close is ambiguous, and exercise the queue and
-recorder together. Then wire startup PRM/path selection and connection/poll
-hooks. No whole-application gate or physical modem/card acceptance closes here.
+The later [queue-owned checkpoint](PHONE_LOG_RESERVATION.md) binds configuration,
+pending/recovery retention, queue/recorder composition and actual startup
+PRM/path selection. Connection/poll hooks remain next. No whole-application gate or
+physical modem/card acceptance closes here.
