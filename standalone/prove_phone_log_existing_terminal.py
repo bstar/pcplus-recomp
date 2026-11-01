@@ -18,6 +18,7 @@ def main():
     parser.add_argument('--extended', action='store_true', help='Also repeat preexisting-startup and failed-rollback cases')
     parser.add_argument('--permissions', action='store_true', help='Repeat real DOS read-only startup/runtime cases')
     parser.add_argument('--slow', action='store_true', help='Repeat delayed-write and paced traffic cases')
+    parser.add_argument('--watermark', action='store_true', help='Repeat driver high-watermark handoff cases')
     args = parser.parse_args()
     parent, output = args.terminal.resolve(), args.output.resolve()
     assert parent.is_relative_to(ROOT/'build') and output.is_relative_to(ROOT/'build')
@@ -34,7 +35,7 @@ def main():
     if args.permissions:
         names |= {'standalone/phone_log_attributes.asm','standalone/phone_log_clear_attributes.asm',
                   'standalone/phone_log_startup_watch.asm'}
-    if args.slow:names |= {'standalone/phone_log_slow_write.asm'}
+    if args.slow or args.watermark:names |= {'standalone/phone_log_slow_write.asm'}
     output.mkdir(parents=True)
     fresh, sources = output/'source', {}
     for name in sorted(names):
@@ -92,6 +93,16 @@ def main():
             assert all(row['passed'] and all(row['checks'].values()) for row in report['cases'])
             assert report['terminal_sha256']==manifest['binary_sha256']
             reports['public-slow']={'path':str(path.relative_to(ROOT)),'sha256':sha(path),'cases':3}
+        if args.watermark:
+            subprocess.run([sys.executable,'standalone/test_phone_log_slow_terminal.py',
+                            '--terminal',str(rebuilt),'--label','public-watermark','--watermark'],
+                           cwd=fresh,stdout=log,stderr=log,check=True)
+            path=fresh/'build/phone-log-slow-terminal/public-watermark/result.json'
+            report=json.loads(path.read_text())
+            assert report['passed'] and report['watermark_matrix'] and len(report['cases'])==3
+            assert all(report['checks'].values()) and all(row['passed'] and all(row['checks'].values()) for row in report['cases'])
+            assert report['terminal_sha256']==manifest['binary_sha256']
+            reports['public-watermark']={'path':str(path.relative_to(ROOT)),'sha256':sha(path),'cases':3}
     assert all(sha(fresh/name) == digest and sha(ROOT/name) == digest for name, digest in sources.items())
     result = dict(passed=True, source_commit=revision, source_count=len(sources), sources=sources,
                   terminal_sha256=sha(rebuilt/'TERMINAL.EXE'), reports=reports, original_inputs=[],

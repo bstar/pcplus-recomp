@@ -12,7 +12,8 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--terminal',type=Path,required=True)
     parser.add_argument('--label',required=True)
-    parser.add_argument('--case',choices=['soft-9','both-36','none-36'])
+    parser.add_argument('--watermark',action='store_true',help='Exercise driver high-watermark ownership with a larger burst')
+    parser.add_argument('--case',choices=['soft-9','both-36','none-36','soft-watermark','both-watermark','hard-watermark'])
     args=parser.parse_args();assert re.fullmatch('[a-z0-9-]+',args.label)
     parent=args.terminal.resolve();manifest=json.loads((parent/'manifest.json').read_text())
     assert manifest['experimental_phone_log_controls']
@@ -29,6 +30,11 @@ def main():
         CONTROL_ACK_OFFSET=symbols['_terminal_phone_log_retry_acks'][1])
     slow_defines=dict(HARDWARE_ACTIVE_OFFSET=symbols['hardware_active'][1],RX_COUNT_OFFSET=symbols['uart_rx_count'][1],
                       RX_DROPPED_OFFSET=symbols['uart_rx_dropped'][1])
+    if args.watermark:
+        slow_defines.update(WATERMARK=1,FLOW_PENDING_OFFSET=symbols['uart_flow_pending'][1],
+            XOFF_SENT_OFFSET=symbols['uart_xoff_sent'][1],RTS_LOWERED_OFFSET=symbols['uart_rts_lowered'][1],
+            EVENT_EPOCH_OFFSET=defines['EPOCH_OFFSET'],DATA_SEGMENT=defines['DATA_SEGMENT'],
+            ISR_SEGMENT=defines['ISR_SEGMENT'],ISR_OFFSET=defines['ISR_OFFSET'])
     assert all(symbols[n][0]==defines['DATA_SEGMENT'] for n in ('hardware_active','uart_rx_count','uart_rx_dropped'))
     output=ROOT/'build/phone-log-slow-terminal'/args.label;assert not output.exists();output.mkdir(parents=True)
     observer=output/'PLWATCH.COM'
@@ -47,7 +53,10 @@ def main():
     expected_screen=bytearray(b' '*1920);expected_screen[:15]=b'FIRST BYTE SAFE'
     for row,text in last_rows.items():expected_screen[(row-1)*80:(row-1)*80+79]=text
     results=[];artifacts={}
-    for name,ticks,soft,hard in [('soft-9',9,1,0),('both-36',36,1,1),('none-36',36,0,0)]:
+    cases=[('soft-9',9,1,0),('both-36',36,1,1),('none-36',36,0,0)]
+    if args.watermark:cases=[('soft-watermark',72,1,0),('both-watermark',72,1,1),('hard-watermark',72,0,1)]
+    assert not args.case or any(row[0]==args.case for row in cases)
+    for name,ticks,soft,hard in cases:
         if args.case and name!=args.case:continue
         helper=output/(name+'.com')
         subprocess.run(['nasm','-fbin',f'-DDELAY_TICKS={ticks}',*[f'-D{k}={v}' for k,v in slow_defines.items()],
@@ -56,17 +65,21 @@ def main():
         seed=HEADING+OLD_CALL;(folder/'PCPLUS.FON').write_bytes(seed)
         settings=bytearray(fixture(timeout=5));struct.pack_into('<HH',settings,0x4e4,8,4)
         struct.pack_into('<H',settings,0x1e6,1);struct.pack_into('<HH',settings,0x198,soft,hard)
-        inflight=b''.join(chunks[:4]) if soft else b''
-        scheduled=chunks[4:] if soft else chunks
+        burst_chunks=40 if args.watermark else 4
+        inflight=b''.join(chunks[:burst_chunks]) if soft else b''
+        scheduled=chunks[burst_chunks:] if soft else chunks
+        updates=tuple((.3+i*.07,chunk) for i,chunk in enumerate(scheduled))
+        if args.watermark and not soft:
+            updates=tuple((.3 if i<burst_chunks else 5.3+(i-burst_chunks)*.07,chunk) for i,chunk in enumerate(scheduled))
         native=terminal.run(args.label+'-'+name,'success','p900 enter p11000 w o r k enter p700 a-x',
             prm=bytes(settings),files={'PLWATCH.COM':observer.read_bytes(),'SLOWLOG.COM':helper.read_bytes()},
             observer='PLWATCH',auxiliary=('SLOWLOG',),working_drive='d',cpu='8086',timeout=22,
-            flow_updates=tuple((.3+i*.07,chunk) for i,chunk in enumerate(scheduled)),flow_inflight=inflight)
+            flow_updates=updates,flow_inflight=inflight)
         captured=(folder/'PLSTATE.BIN').read_bytes();assert len(captured)==9798
         header=struct.unpack_from('<10H',captured);final=captured[20+(header[2]-1)*722:20+header[2]*722]
         data=(folder/'PCPLUS.FON').read_bytes()
         checks,records=inspect_disk_record(final,1,1,b'MODEM',b'CaseTest:23',HEADING+data[len(seed):])
-        delay=struct.unpack('<16H',(folder/'SLOW.BIN').read_bytes())
+        delay=struct.unpack('<24H' if args.watermark else '<16H',(folder/'SLOW.BIN').read_bytes())
         attempts,status,acks=struct.unpack_from('<3H',final,716)
         flow=json.loads((folder/'flow-state.json').read_text())
         wire=(folder/'serial.bin').read_bytes();clean=wire.replace(b'\x11',b'').replace(b'\x13',b'')
@@ -76,8 +89,8 @@ def main():
             delayed_real_write=delay[0:3]==(0x534c,1,ticks) and delay[3]>=ticks and delay[10]==64 and not(delay[11]&1),
             interrupts_enabled=bool(delay[4]&0x200) and bool(delay[14]&0x200),
             no_receive_drops=delay[8]==delay[9]==0,real_parent_DS=delay[15]==header[5],
-            intended_UART_ownership=delay[5]==int(bool(soft)),
-            in_flight_received_during_write=delay[7]>delay[6] if soft else delay[7]==0,
+            intended_UART_ownership=delay[5]==int(bool(soft or hard)),
+            in_flight_received_during_write=delay[7]>delay[6] if soft or hard else delay[7]==0,
             RTS_low_during_BOTH=not(delay[13]&2) if hard else True,
             exact_ANSI_glyphs=(folder/'SCREEN.BIN').read_bytes()[:3840:2]==expected_screen,
             exact_ANSI_attributes=(folder/'SCREEN.BIN').read_bytes()[1:3840:2]==bytes([7])*1920,
@@ -87,17 +100,25 @@ def main():
             independent_pause_intervals=all(not [e for e in flow['events'] if e['at']<=s['at']]
                 or [e for e in flow['events'] if e['at']<=s['at']][-1]['byte']==0x11
                 for s in flow['sends'] if s['kind']=='scheduled'),
-            balanced_flow=wire.count(b'\x13')==wire.count(b'\x11') and (wire.count(b'\x13')>=1)==bool(soft),
+            balanced_flow=(wire.count(b'\x13')>=1 and wire.count(b'\x11')==1 and flow['events'][-1]['byte']==0x11
+                if args.watermark and soft else wire.count(b'\x13')==wire.count(b'\x11') and (wire.count(b'\x13')>=1)==bool(soft)),
             no_automatic_retries=(attempts,status,acks)==(2,0,0),
-            observed_commit_policy=any(n>=1 for n in online) if soft else bool(online) and all(n==0 for n in online),
+            observed_commit_policy=any(n>=1 for n in online) if soft or hard else bool(online) and all(n==0 for n in online),
             observer_final=header[0]==0x4c45 and header[3]==1 and header[9]==0)
+        if args.watermark:
+            checks.update(high_watermark_reached=3072<delay[7]<4096,
+                actual_driver_ownership=delay[17]==int(bool(soft)) and delay[18]==int(not soft),
+                actual_pending_driver_XOFF=delay[16]==(0x13 if soft else 0),
+                post_logger_owner_samples=delay[19]>0,
+                no_sampled_RTS_override=delay[20]==0,
+                driver_released_after_drain=delay[22]==1)
         results.append(dict(case=name,passed=all(checks.values()),checks=checks,native=native,slow_snapshot=list(delay),
                             observer_header=list(header),records=records,flow=flow))
         artifacts.update({str(p.relative_to(ROOT)):sha(p) for p in folder.rglob('*') if p.is_file()})
         print(name,'PASS' if results[-1]['passed'] else 'FAIL',flush=True)
     checks=dict(all_cases=bool(results) and all(r['passed'] for r in results),sources_unchanged=all(sha(ROOT/n)==h for n,h in sources.items()),
                 binary_unchanged=sha(binary)==manifest['binary_sha256'])
-    report=dict(passed=all(checks.values()),checks=checks,cases=results,sources=sources,artifacts=artifacts,terminal_sha256=sha(binary),
+    report=dict(passed=all(checks.values()),checks=checks,cases=results,sources=sources,artifacts=artifacts,terminal_sha256=sha(binary),watermark_matrix=args.watermark,
                 original_inputs=[],scope=__doc__+' Real DOS write delayed by an active fixture; no product RAM patches or synthesized terminal replies. '
                 'Paced synthetic serial peer, bounded in-flight burst and selected final screen; not physical RTS, arbitrary disk latency, every ANSI frame or file-transfer acceptance.')
     (output/'result.json').write_text(json.dumps(report,indent=2)+'\n')

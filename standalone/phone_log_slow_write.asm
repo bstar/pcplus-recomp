@@ -6,9 +6,29 @@ ORG 100h
 %ifndef DELAY_TICKS
 %define DELAY_TICKS 9
 %endif
+%ifdef WATERMARK
+%define SAMPLE_BYTES 48
+%else
+%define SAMPLE_BYTES 32
+%endif
 jmp start
 old_dos: dd 0
+%ifdef WATERMARK
+old_timer: dd 0
+resident_segment: dw 0
+%endif
 sample: dw 0x534c,0,DELAY_TICKS,0,0,0,0,0,0,0,0,0,0xffff,0,0,0
+%ifdef WATERMARK
+ dw 0,0,0,0,0,0,0,0
+%define PENDING_SEEN (sample+32)
+%define XOFF_SEEN (sample+34)
+%define RTS_SEEN (sample+36)
+%define POST_SAMPLES (sample+38)
+%define BAD_RTS (sample+40)
+%define POST_PENDING (sample+42)
+%define DRIVER_RELEASED (sample+44)
+%define ENTRY_EPOCH (sample+46)
+%endif
 %define FIRED (sample+2)
 %define ELAPSED (sample+6)
 %define ENTRY_FLAGS (sample+8)
@@ -85,6 +105,10 @@ hold:
  push es
  mov ax,ds
  mov [cs:PARENT_DS],ax
+%ifdef WATERMARK
+ mov ax,[EVENT_EPOCH_OFFSET]
+ mov [cs:ENTRY_EPOCH],ax
+%endif
  xor ax,ax
  mov al,[HARDWARE_ACTIVE_OFFSET]
  mov [cs:ACTIVE],ax
@@ -111,6 +135,9 @@ hold:
  jbe .tick
  mov [cs:RX_PEAK],ax
 .tick:
+%ifdef WATERMARK
+ call read_driver
+%endif
  pushf
  pop ax
  mov [cs:WAIT_FLAGS],ax
@@ -137,6 +164,73 @@ hold:
  pop ax
  popf
  ret
+%ifdef WATERMARK
+read_driver:
+ xor ax,ax
+ mov al,[FLOW_PENDING_OFFSET]
+ or [cs:PENDING_SEEN],ax
+ mov al,[XOFF_SENT_OFFSET]
+ or [cs:XOFF_SEEN],ax
+ mov al,[RTS_LOWERED_OFFSET]
+ or [cs:RTS_SEEN],ax
+ ret
+timer_handler:
+ pushf
+ push ax
+ push bx
+ push dx
+ push es
+ cmp word [cs:FIRED],1
+ jne .done
+ cmp word [cs:REAL_AX],64
+ jne .done
+ xor ax,ax
+ mov es,ax
+ cmp word [es:12*4],ISR_OFFSET
+ jne .done
+ mov ax,[cs:PARENT_DS]
+ sub ax,DATA_SEGMENT
+ add ax,ISR_SEGMENT
+ cmp ax,[es:12*4+2]
+ jne .done
+ mov ax,[cs:PARENT_DS]
+ mov es,ax
+ cmp byte [es:HARDWARE_ACTIVE_OFFSET],1
+ jne .done
+ mov ax,[es:EVENT_EPOCH_OFFSET]
+ cmp ax,[cs:ENTRY_EPOCH]
+ je .done
+ xor bx,bx
+ mov bl,[es:FLOW_PENDING_OFFSET]
+ or [cs:POST_PENDING],bx
+ cmp word [es:RX_COUNT_OFFSET],128
+ jbe .released
+ mov bl,[es:XOFF_SENT_OFFSET]
+ or bl,[es:RTS_LOWERED_OFFSET]
+ jz .done
+ inc word [cs:POST_SAMPLES]
+ cmp byte [es:RTS_LOWERED_OFFSET],1
+ jne .done
+ mov dx,3fch
+ in al,dx
+ test al,2
+ jz .done
+ inc word [cs:BAD_RTS]
+ jmp .done
+.released:
+ cmp byte [es:XOFF_SENT_OFFSET],0
+ jne .done
+ cmp byte [es:RTS_LOWERED_OFFSET],0
+ jne .done
+ mov word [cs:DRIVER_RELEASED],1
+.done:
+ pop es
+ pop dx
+ pop bx
+ pop ax
+ popf
+ jmp far [cs:old_timer]
+%endif
 matches:
  push ax
  push bx
@@ -176,6 +270,15 @@ start:
  jne collect
  mov [old_dos],bx
  mov [old_dos+2],es
+%ifdef WATERMARK
+ mov ax,351ch
+ int 21h
+ mov [old_timer],bx
+ mov [old_timer+2],es
+ mov dx,timer_handler
+ mov ax,251ch
+ int 21h
+%endif
  mov dx,handler
  mov ax,2521h
  int 21h
@@ -187,15 +290,25 @@ collect:
  jne failed
  cmp word [es:sample],0x534c
  jne failed
+%ifdef WATERMARK
+ mov ax,es
+ mov [resident_segment],ax
+%endif
  mov si,sample
  mov di,buffer
- mov cx,32
+ mov cx,SAMPLE_BYTES
 .copy:
  mov al,[es:si]
  mov [di],al
  inc si
  inc di
  loop .copy
+%ifdef WATERMARK
+ mov ax,[es:old_timer]
+ mov [old_timer],ax
+ mov ax,[es:old_timer+2]
+ mov [old_timer+2],ax
+%endif
  mov dx,[es:old_dos]
  mov ax,[es:old_dos+2]
  mov [old_dos],dx
@@ -212,6 +325,31 @@ collect:
  mov ax,es
  cmp ax,[old_dos+2]
  jne failed
+%ifdef WATERMARK
+ mov ax,351ch
+ int 21h
+ cmp bx,timer_handler
+ jne failed
+ ; The timer must still belong to the same resident owner as INT21 did.
+ mov ax,es
+ cmp ax,[resident_segment]
+ jne failed
+ cmp word [es:sample],0x534c
+ jne failed
+ push ds
+ mov dx,[old_timer]
+ mov ds,[old_timer+2]
+ mov ax,251ch
+ int 21h
+ pop ds
+ mov ax,351ch
+ int 21h
+ cmp bx,[old_timer]
+ jne failed
+ mov ax,es
+ cmp ax,[old_timer+2]
+ jne failed
+%endif
  mov dx,filename
  xor cx,cx
  mov ah,3ch
@@ -219,11 +357,11 @@ collect:
  jc failed
  mov bx,ax
  mov dx,buffer
- mov cx,32
+ mov cx,SAMPLE_BYTES
  mov ah,40h
  int 21h
  jc .close_failed
- cmp ax,32
+ cmp ax,SAMPLE_BYTES
  jne .close_failed
  mov ah,3eh
  int 21h
@@ -237,4 +375,4 @@ failed:
  mov ax,4c01h
  int 21h
 filename: db 'D:\SLOW.BIN',0
-buffer: times 32 db 0
+buffer: times SAMPLE_BYTES db 0
