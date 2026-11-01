@@ -47,7 +47,7 @@ bytes spare and an8,331-byte logger bank. This is the existing full native-reset
 bank variant, not the separately packaged directory-adoption BBS candidate.
 No histories, stack or feature limits were reduced to fit it.
 
-A1,716-file public-commit source export reproduces that exact executable and repeats
+A source export containing 1,716 public files reproduces that exact executable and repeats
 all seven native cases. It also builds the same feature-disabled terminal
 from both the new and pre-feature public commits: both yield
 `3fbb1acf887cb03d243dca35c758c79d05007e09a121ec602e94db9de888be15`.
