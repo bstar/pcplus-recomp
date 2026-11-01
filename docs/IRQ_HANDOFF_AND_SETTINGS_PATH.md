@@ -37,9 +37,9 @@ Validation is recorded in
   old PIC bit released during new IRQ ownership, and a late loopback peer
   verifies DSR/DA/CPR, keyboard output and continued duplex input. This covers
   the shared assembly handoff through SETUP, not preview-A IRQ-only adoption.
-- Native editor path tests exercise leaf/root/same-drive/cross-drive saves,
+- Fourteen native editor path tests exercise leaf/root/same-drive/cross-drive saves,
   invalid and missing paths, decoys, recovery conflicts, and drive/directory
-  restoration. Existing editor UI/document/recovery tests cover leaf behavior.
+  restoration. Twelve existing editor UI/document/recovery tests cover leaf behavior.
 - Adoption guards and seven earlier executable controls remain accepted.
   A committed-source package rebuild must reproduce all ten package files.
 

@@ -1,5 +1,11 @@
 # Apply a directory selection
 
+The later [IRQ/settings-path checkpoint](IRQ_HANDOFF_AND_SETTINGS_PATH.md)
+fixes immediate old-IRQ PIC restoration and PRMEDIT's acceptance of the saved
+absolute filename. Its receipt records the new application/editor identities
+and the narrower regression scope; the evidence below retains its original
+binary identity.
+
 The opt-in `--directory-adopt` application adds **A: apply selection** to the
 Alt-D preview. R checks resources and C compiles without applying them. A stages
 the selected KEY/KBD/XLT/script resources, compiles an ASP when needed, and

@@ -1,0 +1,166 @@
+{
+  "passed": true,
+  "source_commit": "8e32c71d46528e63b688f10579a9adc595efc3e8",
+  "original_inputs": [],
+  "package": "build/special-adoption-irq-path-final-20261031/PCPLUSSE",
+  "package_manifest_sha256": "6cd36218742ff35d427441c12bfaa1a23c79a92d3c5e07484a7a379d5f3b139c",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+    "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "da09b00dde9ee9008295e53c96aaa8630b9a4e19f1a78dc683e89e4b3186f650",
+    "VERSION.TXT": "679c001e0ccafad45bcf7c66ea23ab8506894624eddb2513616ac2d1c71c5b98",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "binary_sha256": "da09b00dde9ee9008295e53c96aaa8630b9a4e19f1a78dc683e89e4b3186f650",
+  "editor_sha256": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+  "evidence": {
+    "linked_port_irq_matrix": {
+      "path": "build/directory-adopt-ports-matrix-20261031/result.json",
+      "sha256": "c3741e0e952f311bb10f456f60ee8368e74f4725da20e6130703c694a429ae8a",
+      "passed": true,
+      "scope": "Run the linked adoption handoff on independent UART/PIC/vector fixtures.\n\nActual snapshot, handoff, restoration, IRQ and byte IO instructions execute.\nOnly hardware and DOS/BIOS boundaries are modeled; no product function is\npatched, skipped or completed by this checker. Full C/UI adoption is separate.\n This executes the acquisition/resumption portion under PROGRAM kind8/status2/requested1; it does not simulate successful full C/resource adoption or physical serial hardware.",
+      "inputs": 492,
+      "cases": 492
+    },
+    "native_apply_COM1": {
+      "path": "build/adoption-port-COM1-native-20261031/result.json",
+      "sha256": "1db0b84a4d1c30adc8a8bf148e26111dfaec8c95ed3d3ccfe92ea2df68def368",
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Preview A applies selected settings/resources/target; exact fields before prompt and after return verified. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim.",
+      "cases": 1
+    },
+    "native_apply_COM2": {
+      "path": "build/adoption-port-COM2-native-20261031/result.json",
+      "sha256": "b05b93318f71431462ea4c4e1fe91617db25fc2549940bc4b363fae0d78903cf",
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Preview A applies selected settings/resources/target; exact fields before prompt and after return verified. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim.",
+      "cases": 1
+    },
+    "native_missing_COM4": {
+      "path": "build/adoption-port-missing-native-20261031/result.json",
+      "sha256": "6982f5cd6b8f1a0905871ddee5c0eecbcdb74357e311101f25463b6869a000b7",
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Preview A applies selected settings/resources/target; exact fields before prompt and after return verified. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim.",
+      "cases": 1
+    },
+    "native_editor_IRQ5_to_IRQ7": {
+      "path": "build/adoption-irq-release-native-final-20261031/result.json",
+      "sha256": "61159bb131a7daef002555e55c79db496e00be8a67468cbebf03cff02db292b0",
+      "passed": true,
+      "scope": "Observe release of the old PIC bit during a real editor IRQ-only handoff. Actual DOS8086 PRMEDIT confirmation, shared handoff/native snapshot/IRQ/transport code and late loopback peer traffic. Fixture starts IRQ5 unmasked; passive observer requires it released while IRQ7 is active. This covers the shared branch through SETUP kind1, not full preview-A IRQ-only adoption or physical hardware.",
+      "timer_ticks": 438,
+      "new_IRQ7_active_samples": 196,
+      "old_IRQ5_mask_violations": 0,
+      "final_setup_observation": {
+        "binding": 0,
+        "setup": 0,
+        "kind": 1,
+        "program_status": 4,
+        "option_mask": 16,
+        "irq": 7,
+        "apply": 0,
+        "process_status": 0,
+        "DOS_error": 0,
+        "child_exit": 0
+      }
+    },
+    "native_editor_paths": {
+      "path": "build/setup-paths-native-final-20261031/result.json",
+      "sha256": "0289db528f9ca724a64ed09ab71b82a0bf3938fbeaafe558dac5b42d7aa84355",
+      "passed": true,
+      "scope": "Exercise PRMEDIT absolute identities, decoys and drive/CWD restoration in DOS. Synthetic PRM images, actual editor UI save, invalid paths refuse. No physical hardware claim.",
+      "cases": 14
+    },
+    "native_editor_leaf_regressions": {
+      "path": "build/setup-leaf-regression-20261031/checks.json",
+      "sha256": "db0c068a0e7836d01fe00b66bd9b7a16d1651201a7a4a0640dfd8cd28f0bdf7e",
+      "passed": true,
+      "scope": "Actual DOSBox-X filesystem and BIOS keyboard/video, synthetic settings only. UI host links identical UI source with renamed main to independently verify restoration; exact production EXE separately saves. No original PCSETUP, UART or physical hardware tests.",
+      "cases": 12
+    },
+    "adoption_guards": {
+      "path": "build/adoption-irq-guards-20261031/result.json",
+      "sha256": "2f808607ec472efcaaa548a9a4a06ed6b0f8bba793f04f0d21d2a49a52a513f0",
+      "passed": true,
+      "scope": "Check linked adoption adapters, persistent storage and actual refusal guards. Actual linked guards and four-word adapters execute or are inspected; only canonicalization would be modeled, and these cases perform none. Five damaged executables are inspected only. This is not a successful adoption, complete stack high-water, UART/connection or file-transfer proof; native application tests are separate.",
+      "inputs": 20,
+      "cases": 20,
+      "damaged_controls": [
+        {
+          "case": "directory_adopt_setup-wrong-caller-word",
+          "rejected": true,
+          "sha256": "35ad40a76a9086122a433e5a961fd2add1a436c7c69575e1365c809284bc5cf4"
+        },
+        {
+          "case": "directory_adopt_xlt_check-wrong-caller-word",
+          "rejected": true,
+          "sha256": "adf5ce3cf437cd6bbac1580dca59772317dc581c22015a49b3aad57deeee16d5"
+        },
+        {
+          "case": "directory_adopt_xlt_publish-wrong-caller-word",
+          "rejected": true,
+          "sha256": "a2d5313baf726c33d3ee7f4d4e82650c54ea9735b1f12bc3270a024867c12964"
+        },
+        {
+          "case": "directory_adopt_script_read-wrong-caller-word",
+          "rejected": true,
+          "sha256": "a03f511f7e1f4c9a39a40588169cbe931f55ce0c58ba14c48e76b60433b06627"
+        },
+        {
+          "case": "dirty-initial-script-owner",
+          "rejected": true,
+          "sha256": "fbb0781e6f17522f199b3cec3636ed6f9b5130e3e789e216f4303a969efa39d0"
+        }
+      ]
+    },
+    "earlier_terminal_controls": {
+      "path": "build/adoption-irq-controls-20261031/result.json",
+      "sha256": "9ddb6e416fd44a608e2ec120f3656c2353eb82ad4a8407276f9db5df8617c1f9",
+      "passed": true,
+      "controls": 7
+    },
+    "native_selection_dial_script": {
+      "path": "build/adoption-irq-path-connection-20261031/result.json",
+      "sha256": "277cf0c64044b6b169f6244c5b81df3ef7be8db71bde804682786860a02a7ed7",
+      "passed": true,
+      "scope": "Apply a directory selection, change CWD, then dial and run its canonical script. Actual DOS8086 COM3/IRQ5 parent, compiler/ASPECT, real PROGRAM CD/COPY and DOSBox modem carrier model and a TCP BBS peer. Same-write CONNECT/banner and actual ANSI replies. No live BBS/SIP/DSP/analog/card acceptance.",
+      "cases": 3
+    },
+    "committed_source_package": {
+      "path": "build/adoption-irq-path-source-proof-20261031/result.json",
+      "sha256": "1321557f198a10072a109b9800234d5373cf87155a406c7c61f9be8f5f65fe24",
+      "passed": true,
+      "scope": "Reproduce every package file in an empty tree of declared source inputs.",
+      "source_files": 778,
+      "exported_source_commit": "8e32c71d46528e63b688f10579a9adc595efc3e8"
+    }
+  },
+  "sources": {
+    "src/terminal/port_handoff.asm": "caaebc0af6ca148e0099d76b355e98b3830031a2e485baa444b899bab9685aaa",
+    "src/config/setup_main.c": "ecb5b3a1fc49a8a4eb6ae2186051955ea5fb6e4e058f1444f6d4f4e69da59092",
+    "standalone/build_setup.py": "294edf48f9e8a6b2fd4d091161f97761875df30271631fe3acf2d0464a207c36",
+    "standalone/check_directory_adopt_ports.py": "d1f43f9374a12feff87d4c82afa85784e48546e7e465e15c01a4559a82498cea",
+    "standalone/test_setup_port_dos.py": "4d60bb6ff22467d1fb63fac3f54aeffcb78a0a3686171570c4dc0ad7b34b4183",
+    "standalone/test_adoption_irq_restore_dos.py": "bfa953da2b38f53460ebd485601773d41e4cfe7d9e33c9c2eac27c6166cee186",
+    "standalone/test_setup_paths_dos.py": "c70113d1782377b7a10645bb3b2727cf66a6e53557e4964032864aebb98add5e",
+    "standalone/test_directory_resource_owner_dos.py": "579dc4da1f5f3eac935d94dc5caa0e5ecb2bae5b34094e78c3f4601701c4a53e",
+    "standalone/directory_resource_owner_watch.asm": "8d596c69951b381d181249493764ac2ba6563ff33be8fb8e3ce0a9f53a90c663"
+  },
+  "before_fix_failure": {
+    "path": "build/directory-adopt-ports-before-fix-20261031.log",
+    "sha256": "54036bad107da68bada4db1ee3effb015aaba85b792ef5d6cc1a63fe67908fcb",
+    "observation": "Old IRQ bit remained masked during an IRQ-only move; linked regression refused old binary."
+  },
+  "limitations": [
+    "Linked hardware fixtures are not physical serial acceptance.",
+    "Native IRQ-only evidence uses SETUP kind1, not full preview-A IRQ-only selection.",
+    "Previous complete directory-adoption receipt retains its older binary identity.",
+    "Full application/rendering, sustained synchronous-script traffic, transfers and Boca/SPA2102/card acceptance remain open.",
+    "No live BBS, bridge, ATA, network or card changed."
+  ]
+}

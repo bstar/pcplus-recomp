@@ -1,5 +1,12 @@
 # Complete DOS rebuild plan
 
+[IRQ release and saved settings paths](docs/IRQ_HANDOFF_AND_SETTINGS_PATH.md)
+restores the old PIC bit immediately on an IRQ-only handoff and lets PRMEDIT
+open the parent's absolute PRM identity while preserving DOS drive/directories.
+Linked port/IRQ coverage, native Apply/SETUP, path and leaf regressions and
+committed-source package reproduction pass. Full rendering/application and
+physical/card acceptance remain open. Earlier checkpoint scopes are historical.
+
 [Application directory adoption](docs/DIRECTORY_ADOPTION.md) adds preview A to
 the quiesced PROGRAM owner, applying selected settings/resources/target and
 retaining canonical script identity for checked automatic execution. Software
