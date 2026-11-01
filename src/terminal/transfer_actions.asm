@@ -234,6 +234,10 @@ terminal_transfer_poll:
  mov si,transfer_note_success
  jmp .notice
 .failed:
+ ; A carrier-loss failure has already returned the modem to command mode.
+ ; Cancellation bytes here would prefix and corrupt its next AT command.
+ cmp word [terminal_transfer_fault],4
+ je .finish
  cmp word [transfer_protocol_started],0
  je .finish
  cmp word [terminal_transfer_protocol],2
@@ -257,8 +261,7 @@ terminal_transfer_poll:
  ; Best-effort bounded CAN pair; never unwind through a dead native frame.
  mov al,0x18
  call transfer_emit_cancel
- mov al,0x18
- call transfer_emit_cancel
+ call transfer_emit_cancel ;callee preserves AX, so send the same CAN again
 .finish:
  mov si,transfer_note_cancel
  cmp word [terminal_transfer_cleanup_status],0

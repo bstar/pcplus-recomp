@@ -22,6 +22,9 @@ ORG 100h
 %ifdef ASPECT_CHILD
 %assign SAMPLE_BYTES SAMPLE_BYTES+18
 %endif
+%ifdef TRANSFER_WATCH
+%assign SAMPLE_BYTES SAMPLE_BYTES+64
+%endif
 jmp start
 old_timer: dd 0
 old_dos: dd 0
@@ -35,6 +38,9 @@ control_frame: times 4000 db 0
 %ifdef ASPECT_CHILD
 child_watch: times 9 dw 0
 %endif
+%ifdef TRANSFER_WATCH
+transfer_watch: times 32 dw 0
+%endif
 ui_title: db 'Telephone call log',0
 ui_confirm: db 'Retry retained records? Y/N',0
 ui_accepted: db 'Retry acknowledged; close to resume',0
@@ -47,6 +53,9 @@ retry_text: db 'Call log retry required',0
 %endif
 %ifdef ASPECT_CHILD
 child_stopped: dw 0
+%endif
+%ifdef TRANSFER_WATCH
+transfer_stopped: dw 0
 %endif
 %macro save 0
  pushf
@@ -81,6 +90,9 @@ timer_handler:
  inc word [sample+2]
 %ifdef ASPECT_CHILD
  call capture_child
+%endif
+%ifdef TRANSFER_WATCH
+ call capture_transfer
 %endif
  xor ax,ax
  mov es,ax
@@ -140,6 +152,10 @@ dos_handler:
  jne .done
  and ax,255
  mov [sample+18],ax
+%ifdef TRANSFER_WATCH
+ call capture_transfer
+ mov word [transfer_stopped],1
+%endif
 %ifdef ASPECT_CHILD
  mov word [child_stopped],1
 %endif
@@ -214,6 +230,57 @@ capture_child:
  test al,80h
  jnz .done
  inc word [child_watch+10]
+.done:
+ ret
+%endif
+%ifdef TRANSFER_WATCH
+; Read-only parent/near storage snapshots while its DOS image is retained.
+; Sample again at verified parent exit; never read after DOS frees it.
+capture_transfer:
+ cmp word [transfer_stopped],0
+ jne .done
+ mov ax,[sample+10]
+ or ax,ax
+ jz .done
+ mov es,ax
+ cmp word [es:TRANSFER_ACTIVE],0
+ je .state
+ inc word [transfer_watch]
+ mov dx,[es:TRANSFER_MSR_PORT]
+ in al,dx
+ test al,80h
+ jnz .state
+ inc word [transfer_watch+2]
+.state:
+ mov ax,[es:TRANSFER_FAULT]
+ mov [transfer_watch+4],ax
+ mov ax,[es:TRANSFER_CLEANUP]
+ mov [transfer_watch+6],ax
+ mov ax,[es:TRANSFER_ACTIVE]
+ mov [transfer_watch+8],ax
+ mov ax,[es:TRANSFER_DIRECTION]
+ mov [transfer_watch+10],ax
+ mov ax,[es:TRANSFER_RX_DROPPED]
+ mov [transfer_watch+12],ax
+ mov ax,[es:TRANSFER_PENDING]
+ mov [transfer_watch+14],ax
+ mov bx,TRANSFER_DOWNLOAD
+ mov di,transfer_watch+16
+ mov cx,10
+.download:
+ mov ax,[es:bx]
+ mov [di],ax
+ add bx,2
+ add di,2
+ loop .download
+ mov bx,TRANSFER_UPLOAD
+ mov cx,14
+.upload:
+ mov ax,[es:bx]
+ mov [di],ax
+ add bx,2
+ add di,2
+ loop .upload
 .done:
  ret
 %endif

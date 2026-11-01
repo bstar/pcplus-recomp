@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Real emulated DCD loss and same-parent redial with checked call logging."""
-import argparse,asyncio,datetime as dt,json,os,re,shutil,struct,subprocess,sys,time
+import argparse,asyncio,binascii,datetime as dt,json,os,re,shutil,struct,subprocess,sys,time
 from pathlib import Path
 from build_phone_log_queue import ROOT,sha
 from directory_fixtures import directory,prm
@@ -11,7 +11,7 @@ sys.path.insert(0,str(ROOT/'lab/bbs'))
 from phone_log_evidence import build_observer
 
 
-async def run_case(parent,out,name,ticks,soft,aspect=None):
+async def run_case(parent,out,name,ticks,soft,aspect=None,transfer=None):
     out.mkdir(parents=True);binary=parent/'TERMINAL.EXE'
     symbols={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',(parent/'terminal.map').read_text(),re.M|re.I)}
     stage=parent;extra_command='';keys='p900 enter p6000 a-d p4500 r e a d y p1800 a-x';extra_observer={};aspect_inputs=[]
@@ -39,6 +39,16 @@ async def run_case(parent,out,name,ticks,soft,aspect=None):
             CHILD_ARMED=child['_runtime_when_disconnect_armed'][1],CHILD_ERROR=child['_runtime_error'][1],
             CHILD_OPCODE=child['_runtime_last_opcode'][1],CHILD_MSR_PORT=child['uart_port_msr'][1])
         assert all(symbols[n][0]==extra_observer['PARENT_ASPECT_SEG'] for n in ('terminal_script_window_active','terminal_script_overlay_visible'))
+    upload_body=bytes(65+i%26 for i in range(4096))
+    if transfer:
+        upload=transfer['upload']
+        keys='p900 enter p2500 '+('a-s' if upload else 'a-r')+' p300 '+ ' '.join('D:\\SEND.BIN' if upload else 'D:\\RECV.BIN')+' enter p14500 a-d p4500 r e a d y p1800 a-x'
+        if upload:(out/'SEND.BIN').write_bytes(upload_body);aspect_inputs.append(out/'SEND.BIN')
+        names=dict(TRANSFER_ACTIVE='terminal_transfer_active',TRANSFER_FAULT='terminal_transfer_fault',TRANSFER_CLEANUP='terminal_transfer_cleanup_status',
+            TRANSFER_DIRECTION='terminal_transfer_direction',TRANSFER_RX_DROPPED='uart_rx_dropped',TRANSFER_PENDING='terminal_transfer_pending',
+            TRANSFER_DOWNLOAD='_transfer_download_result',TRANSFER_UPLOAD='_upload_source_result',TRANSFER_MSR_PORT='uart_port_msr')
+        assert all(symbols[n][0]==symbols['terminal_transfer_active'][0] for n in names.values())
+        extra_observer=dict(TRANSFER_WATCH=1,**{key:symbols[n][1] for key,n in names.items()})
     observer=build_observer(binary,out/'PLWATCH.COM',irq=5,extra=extra_observer)
     defines=dict(CARRIER=1,DELAY_TICKS=ticks,MCR_PORT=0x3ec,HARDWARE_ACTIVE_OFFSET=symbols['hardware_active'][1],
         RX_COUNT_OFFSET=symbols['uart_rx_count'][1],RX_DROPPED_OFFSET=symbols['uart_rx_dropped'][1],MSR_PORT_OFFSET=symbols['uart_port_msr'][1],
@@ -59,6 +69,61 @@ async def run_case(parent,out,name,ticks,soft,aspect=None):
             banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c'
             if item['index']==2:banner+=b'\x1b[2;1HREDIAL OK\x1b[6n'
             writer.write(banner);await writer.drain()
+            if transfer and item['index']==1:
+                # Retain ordinary terminal replies before entering the protocol.
+                while b'\x1b[1;16R' not in item['received'] or b'\x1b[?1;2c' not in item['received']:
+                    data=await reader.read(4096)
+                    if not data:raise ConnectionError('Lost before terminal replies')
+                    item['received'].extend(data)
+                event('terminal-ready')
+                protocol=bytearray()
+                if transfer['upload']:
+                    # Genuine receiver negotiation until the real sender starts.
+                    while not protocol or protocol[0] not in (1,2):
+                        writer.write(b'C');await writer.drain()
+                        try:data=await asyncio.wait_for(reader.read(4096),.25)
+                        except asyncio.TimeoutError:continue
+                        if not data:raise ConnectionError('Lost before upload')
+                        item['received'].extend(data);protocol.extend(data)
+                        while protocol and protocol[0] not in (1,2):del protocol[0]
+                    for number in range(1,3 if transfer['partial'] else 2):
+                        while not protocol or protocol[0] not in (1,2):
+                            data=await reader.read(4096)
+                            if not data:raise ConnectionError('Lost before next frame')
+                            item['received'].extend(data);protocol.extend(data)
+                        size=128 if protocol[0]==1 else 1024
+                        while len(protocol)<size+5:
+                            data=await reader.read(4096)
+                            if not data:raise ConnectionError('Lost inside frame')
+                            item['received'].extend(data);protocol.extend(data)
+                        block=bytes(protocol[:size+5]);del protocol[:size+5]
+                        offset=(number-1)*size
+                        assert block[1:3]==bytes((number,255-number)) and block[3:3+size]==upload_body[offset:offset+size]
+                        assert int.from_bytes(block[-2:],'big')==binascii.crc_hqx(block[3:-2],0)
+                        event('upload-frame-'+str(number));item.setdefault('frames',[]).append(block.hex())
+                        if transfer['partial'] and number==1:
+                            writer.write(b'\x06');await writer.drain();event('upload-ACK-1')
+                else:
+                    while b'C' not in protocol:
+                        data=await reader.read(4096)
+                        if not data:raise ConnectionError('Lost before download negotiation')
+                        item['received'].extend(data);protocol.extend(data)
+                    event('download-CRC-request')
+                    if transfer['partial']:
+                        received_body=bytes(65+i%26 for i in range(11264))
+                        for number in range(1,12):
+                            body=received_body[(number-1)*1024:number*1024]
+                            frame=bytes((2,number,255-number))+body+binascii.crc_hqx(body,0).to_bytes(2,'big')
+                            writer.write(frame);await writer.drain();event('download-frame-'+str(number))
+                            protocol.clear()
+                            while b'\x06' not in protocol:
+                                data=await reader.read(4096)
+                                if not data:raise ConnectionError('Lost before download ACK')
+                                item['received'].extend(data);protocol.extend(data)
+                            event('download-ACK-'+str(number))
+                        stage_data=(out/'PCRX.$$$').read_bytes()
+                        item['stage_before_drop']={'bytes':len(stage_data),'exact':stage_data==received_body[:len(stage_data)]}
+                await asyncio.sleep(.25);event('carrier-drop');writer.transport.abort();return
             while data:=await reader.read(4096):
                 item['received'].extend(data)
                 drop_ready=b'SCRIPTREADY\r' in item['received'] if aspect else b'\x1b[1;16R' in item['received'] and b'\x1b[?1;2c' in item['received']
@@ -124,7 +189,7 @@ exit
         with (out/'dosbox.log').open('w') as log:
             process=await asyncio.create_subprocess_exec('dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf'),cwd=out,
                 env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log)
-            try:code=await asyncio.wait_for(process.wait(),32 if aspect else 23)
+            try:code=await asyncio.wait_for(process.wait(),32 if aspect else 28 if transfer else 23)
             except asyncio.TimeoutError:
                 process.terminate()
                 try:await asyncio.wait_for(process.wait(),3)
@@ -138,7 +203,7 @@ exit
         await asyncio.wait_for(server.wait_closed(),3)
     for item in sessions:
         (out/f"connection-{item['index']}.bin").write_bytes(item.pop('received'))
-    captured=(out/'PLSTATE.BIN').read_bytes();assert len(captured)==9798+(18 if aspect else 0)
+    captured=(out/'PLSTATE.BIN').read_bytes();assert len(captured)==9798+(18 if aspect else 64 if transfer else 0)
     header=struct.unpack_from('<10H',captured);samples=[captured[20+i*722:20+(i+1)*722] for i in range(header[2])];final=samples[-1]
     logdata=(out/'PCPLUS.FON').read_bytes()
     checks,records=inspect_disk_record(final,2,1,b'LAB NODE 001',target,HEADING+logdata[len(seed):])
@@ -178,7 +243,25 @@ exit
             actual_window_visibility=(child[2]>0)==aspect['window'],
             child_error_free=child[6]==0,child_wait_service=child[7]>0,actual_child_exit=child[8]==1)
         aspect_detail=dict(handler=aspect['handler'],window=aspect['window'],observer=list(child),marker=marker.decode('ascii'),runner_sha256=sha(aspect['runner']))
-    result=dict(case=name,passed=all(checks.values()),checks=checks,records=records,slow_snapshot=list(delay),observer_header=list(header),sessions=sessions,aspect=aspect_detail,
+    transfer_detail={}
+    if transfer:
+        watch=struct.unpack('<32H',captured[9798:]);download=watch[8:18];upload_state=watch[18:32]
+        checks.update(actual_transfer=watch[0]>0,carrier_fault=watch[2]==4,transfer_resolved=watch[3:5]==(0,0) and watch[7]==0,
+            correct_direction=watch[5]==int(transfer['upload']),no_transfer_RX_drops=watch[6]==0,
+            no_download_stage=not (out/'PCRX.$$$').exists() and not (out/'RECV.BIN').exists(),
+            receive_handle_closed=download[5:8]==(0,0,0),upload_handle_closed=upload_state[4:8]==(0,0,0,0))
+        events=[e['kind'] for e in sessions[0]['events']] if sessions else []
+        if transfer['upload']:
+            checks.update(actual_upload_frame='upload-frame-1' in events,
+                actual_upload_progress=('upload-ACK-1' in events and 'upload-frame-2' in events) if transfer['partial'] else 'upload-ACK-1' not in events,
+                upload_aborted=upload_state[0]==6,source_unchanged=(out/'SEND.BIN').read_bytes()==upload_body)
+        else:
+            checks.update(actual_download_negotiation='download-CRC-request' in events,
+                actual_download_progress=('download-ACK-11' in events)==transfer['partial'],
+                real_staged_file=(8192<=sessions[0].get('stage_before_drop',{}).get('bytes',0)<=10240 and sessions[0]['stage_before_drop']['exact']) if transfer['partial'] else 'stage_before_drop' not in sessions[0],
+                download_aborted=download[0]==4,exact_received_bytes=(download[8]|download[9]<<16)==(10240 if transfer['partial'] else 0))
+        transfer_detail=dict(upload=transfer['upload'],partial=transfer['partial'],observer=list(watch))
+    result=dict(case=name,passed=all(checks.values()),checks=checks,records=records,slow_snapshot=list(delay),observer_header=list(header),sessions=sessions,aspect=aspect_detail,transfer=transfer_detail,
         artifacts={str(p.relative_to(ROOT)):sha(p) for p in out.rglob('*') if p.is_file()})
     (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
     print(name,'PASS' if result['passed'] else json.dumps({k:v for k,v in checks.items() if not v}),flush=True)
@@ -187,8 +270,8 @@ exit
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--label',required=True)
-    p.add_argument('--aspect',action='store_true');p.add_argument('--runner',type=Path)
-    p.add_argument('--case',choices=['idle-hard','write-hard','write-soft','aspect-wait','aspect-when','aspect-wait-window','aspect-when-window']);a=p.parse_args();assert re.fullmatch('[a-z0-9-]+',a.label)
+    p.add_argument('--transfer',action='store_true');p.add_argument('--aspect',action='store_true');p.add_argument('--runner',type=Path)
+    p.add_argument('--case',choices=['idle-hard','write-hard','write-soft','aspect-wait','aspect-when','aspect-wait-window','aspect-when-window','receive-negotiation','receive-partial','upload-unacked','upload-partial']);a=p.parse_args();assert not(a.aspect and a.transfer);assert re.fullmatch('[a-z0-9-]+',a.label)
     parent=a.terminal.resolve();manifest=json.loads((parent/'manifest.json').read_text());assert manifest['experimental_phone_log_controls']
     original=sha(parent/'TERMINAL.EXE');assert original==manifest['binary_sha256']
     out=ROOT/'build/phone-log-carrier-terminal'/a.label;assert not out.exists();out.mkdir(parents=True)
@@ -212,15 +295,17 @@ def main():
     rows=[]
     cases=[('idle-hard',0,0),('write-hard',36,0),('write-soft',36,1)]
     if a.aspect:cases=[(name,0,0) for name in ('aspect-wait','aspect-when','aspect-wait-window','aspect-when-window')]
+    if a.transfer:cases=[(name,0,0) for name in ('receive-negotiation','receive-partial','upload-unacked','upload-partial')]
     assert not a.case or any(row[0]==a.case for row in cases)
     for name,ticks,soft in cases:
         if a.case and a.case!=name:continue
         aspect=dict(runner=runner,handler='when' in name,window=name.endswith('window')) if a.aspect else None
-        rows.append(asyncio.run(run_case(parent,out/name,name,ticks,soft,aspect)))
+        transfer=dict(upload=name.startswith('upload'),partial=name.endswith('partial')) if a.transfer else None
+        rows.append(asyncio.run(run_case(parent,out/name,name,ticks,soft,aspect,transfer)))
     checks=dict(all_cases=bool(rows) and all(r['passed'] for r in rows),sources_unchanged=all(sha(ROOT/n)==h for n,h in sources.items()),binary_unchanged=sha(parent/'TERMINAL.EXE')==original)
     result=dict(passed=all(checks.values()),checks=checks,cases=rows,sources=sources,
-        artifacts={p:h for row in rows for p,h in row['artifacts'].items()},terminal_sha256=original,original_inputs=[],aspect_matrix=a.aspect,
-        scope=__doc__+' Built-in DOSBox modem generates CONNECT/NO CARRIER and actual virtual DCD. Peer only sends ANSI and closes TCP; no injected modem replies or product variables. MSR reads clear delta bits; native policy uses carrier level. Not physical carrier/SIP/analog or all child/transfer acceptance.')
+        artifacts={p:h for row in rows for p,h in row['artifacts'].items()},terminal_sha256=original,original_inputs=[],aspect_matrix=a.aspect,transfer_matrix=a.transfer,
+        scope=__doc__+' Built-in DOSBox modem generates CONNECT/NO CARRIER and actual virtual DCD. Peer only sends ANSI/protocol bytes and closes TCP; no injected modem replies or product variables. MSR reads clear delta bits; native policy uses carrier level. Not physical carrier/SIP/analog or all child/transfer acceptance.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(checks));assert result['passed']
 
 if __name__=='__main__':main()

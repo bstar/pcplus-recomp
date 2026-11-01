@@ -20,6 +20,7 @@ def main():
     parser.add_argument('--slow', action='store_true', help='Repeat delayed-write and paced traffic cases')
     parser.add_argument('--watermark', action='store_true', help='Repeat driver high-watermark handoff cases')
     parser.add_argument('--carrier', action='store_true', help='Repeat actual emulated DCD loss and same-parent redial')
+    parser.add_argument('--transfer-carrier', action='store_true', help='Repeat receive/upload loss, cleanup and logged redial')
     parser.add_argument('--aspect-carrier', action='store_true', help='Rebuild ASPECT and repeat script/window carrier-loss cases')
     parser.add_argument('--runner', type=Path)
     args = parser.parse_args()
@@ -38,8 +39,8 @@ def main():
     if args.permissions:
         names |= {'standalone/phone_log_attributes.asm','standalone/phone_log_clear_attributes.asm',
                   'standalone/phone_log_startup_watch.asm'}
-    if args.slow or args.watermark or args.carrier or args.aspect_carrier:names |= {'standalone/phone_log_slow_write.asm'}
-    if args.carrier or args.aspect_carrier:names |= {'lab/bbs/phone_log_evidence.py','lab/bbs/product_inputs.py'}
+    if args.slow or args.watermark or args.carrier or args.aspect_carrier or args.transfer_carrier:names |= {'standalone/phone_log_slow_write.asm'}
+    if args.carrier or args.aspect_carrier or args.transfer_carrier:names |= {'lab/bbs/phone_log_evidence.py','lab/bbs/product_inputs.py'}
     runner_manifest = None
     if args.aspect_carrier:
         assert args.runner
@@ -145,6 +146,16 @@ def main():
             assert report['terminal_sha256']==manifest['binary_sha256']
             assert all(row['aspect']['runner_sha256']==runner_manifest['binary_sha256'] for row in report['cases'])
             reports['public-aspect-carrier']={'path':str(path.relative_to(ROOT)),'sha256':sha(path),'cases':4}
+        if args.transfer_carrier:
+            subprocess.run([sys.executable,'standalone/test_phone_log_carrier_terminal.py',
+                            '--terminal',str(rebuilt),'--label','public-transfer-carrier','--transfer'],
+                           cwd=fresh,stdout=log,stderr=log,check=True)
+            path=fresh/'build/phone-log-carrier-terminal/public-transfer-carrier/result.json'
+            report=json.loads(path.read_text())
+            assert report['passed'] and report['transfer_matrix'] and len(report['cases'])==4
+            assert all(report['checks'].values()) and all(row['passed'] and all(row['checks'].values()) for row in report['cases'])
+            assert report['terminal_sha256']==manifest['binary_sha256']
+            reports['public-transfer-carrier']={'path':str(path.relative_to(ROOT)),'sha256':sha(path),'cases':4}
     assert all(sha(fresh/name) == digest and sha(ROOT/name) == digest for name, digest in sources.items())
     result = dict(passed=True, source_commit=revision, source_count=len(sources), sources=sources,
                   terminal_sha256=sha(rebuilt/'TERMINAL.EXE'), reports=reports, original_inputs=[],
