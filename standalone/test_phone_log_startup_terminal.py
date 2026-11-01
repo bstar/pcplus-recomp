@@ -43,6 +43,7 @@ def main():
         sources[name] = sha(ROOT / name)
     results = []
     for name, enabled, env, files, error, expected_path in [
+        ('unconfigured', 0, 'BAD;DIR', {}, 0, b''),
         ('disabled', 0, 'BAD;DIR', {}, 0, b''),
         ('current', 1, '', {}, 0, b'D:\\PCPLUS.FON'),
         ('fallback', 256, 'D:\\ENV', {'ENV/KEEP.TXT': b'KEEP'}, 0, b'D:\\ENV\\PCPLUS.FON'),
@@ -56,8 +57,9 @@ def main():
         case = args.label + '-' + name
         folder = ROOT / 'build/connection-dos' / case
         assert not folder.exists()
-        run = terminal.run(case, 'reject' if error else 'success', 'p900 enter p4000 a-x',
+        run = terminal.run(case, 'reject' if error else 'direct' if name == 'unconfigured' else 'success', 'p900 enter p4000 a-x',
             prm=bytes(settings), files={**files, 'PLWATCH.COM': observer.read_bytes()}, observer='PLWATCH',
+            arguments='COM1 19200 HARD' if name == 'unconfigured' else None,
             working_drive='d', environment={'PCPLUS': env}, expected=7 if error else 0, cpu='8086')
         captured = (folder / 'PLSTART.BIN').read_bytes()
         assert len(captured) == 680

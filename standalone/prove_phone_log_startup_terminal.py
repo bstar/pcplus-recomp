@@ -88,18 +88,18 @@ def main():
     assert sha(control(fresh)) == sha(control(output / 'baseline'))
     native_path = fresh / 'build/phone-log-startup-terminal/public-startup/result.json'
     native = json.loads(native_path.read_text())
-    assert native['passed'] and len(native['cases']) == 6
+    assert native['passed'] and len(native['cases']) == 7
     assert all(sha(fresh / name) == digest for name, digest in sources.items())
     result = dict(passed=True, source_commit=commit, baseline_commit=baseline, source_count=len(sources), sources=sources,
         declared_uncommitted_reservation_source_differences=differences, original_inputs=[],
-        terminal_sha256=sha(rebuilt / 'TERMINAL.EXE'), repeated_native_cases=6,
+        terminal_sha256=sha(rebuilt / 'TERMINAL.EXE'), repeated_native_cases=7,
         repeated_native_sha256=sha(native_path), unchanged_bank_control_sha256=sha(control(fresh)),
         build_log_sha256=sha(output / 'build.log'),
         scope=__doc__ + ' Public Git source only; no Git metadata, originals, previous objects or installed files copied. '
             'Require exact full executable despite declared pending-source differences. Compare disabled-feature '
             'control against the pre-feature public commit. This remains an optional startup-only parent, not event logging or deployment.')
     (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
-    print('PASS public parent:', len(sources), 'sources; six native startup cases; exact disabled-feature control')
+    print('PASS public parent:', len(sources), 'sources; seven native startup cases; exact disabled-feature control')
 
 
 if __name__ == '__main__':
