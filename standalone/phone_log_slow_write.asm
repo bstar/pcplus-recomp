@@ -8,8 +8,13 @@ ORG 100h
 %endif
 %ifdef WATERMARK
 %define SAMPLE_BYTES 48
+%elifdef CARRIER
+%define SAMPLE_BYTES 52
 %else
 %define SAMPLE_BYTES 32
+%endif
+%ifndef MCR_PORT
+%define MCR_PORT 3fch
 %endif
 jmp start
 old_dos: dd 0
@@ -28,6 +33,15 @@ sample: dw 0x534c,0,DELAY_TICKS,0,0,0,0,0,0,0,0,0,0xffff,0,0,0
 %define POST_PENDING (sample+42)
 %define DRIVER_RELEASED (sample+44)
 %define ENTRY_EPOCH (sample+46)
+%endif
+%ifdef CARRIER
+ dw 0,0,0,0
+ times 6 dw 0
+%define ENTRY_MSR (sample+32)
+%define LAST_MSR (sample+34)
+%define LOST_DURING_HOLD (sample+36)
+%define HIGH_DURING_HOLD (sample+38)
+%define ORIGINAL_STAMP (sample+40)
 %endif
 %define FIRED (sample+2)
 %define ELAPSED (sample+6)
@@ -117,10 +131,22 @@ hold:
  mov [cs:RX_PEAK],ax
  mov ax,[RX_DROPPED_OFFSET]
  mov [cs:DROP_BEFORE],ax
- mov dx,3fch
+ mov dx,MCR_PORT
  in al,dx
  xor ah,ah
  mov [cs:MCR],ax
+%ifdef CARRIER
+ mov dx,[MSR_PORT_OFFSET]
+ in al,dx
+ xor ah,ah
+ mov [cs:ENTRY_MSR],ax
+%assign stamp_word 0
+%rep 6
+ mov ax,[LIFECYCLE_OFFSET+14+stamp_word*2]
+ mov [cs:ORIGINAL_STAMP+stamp_word*2],ax
+%assign stamp_word stamp_word+1
+%endrep
+%endif
  test word [cs:ENTRY_FLAGS],200h
  jz .done
  mov ax,40h
@@ -137,6 +163,19 @@ hold:
 .tick:
 %ifdef WATERMARK
  call read_driver
+%endif
+%ifdef CARRIER
+ mov dx,[MSR_PORT_OFFSET]
+ in al,dx
+ xor ah,ah
+ mov [cs:LAST_MSR],ax
+ test al,80h
+ jnz .carrier_high
+ mov word [cs:LOST_DURING_HOLD],1
+ jmp .carrier_done
+.carrier_high:
+ mov word [cs:HIGH_DURING_HOLD],1
+.carrier_done:
 %endif
  pushf
  pop ax
