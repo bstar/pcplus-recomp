@@ -1,5 +1,13 @@
 # PCPlus DOS reconstruction
 
+[Batch carrier recovery](docs/BATCH_CARRIER_RECOVERY.md) now covers ten actual YMODEM/ZMODEM
+metadata/data/retained-file disconnect workflows. Each cleans the unfinished
+file/source owner, preserves earlier completed files where applicable, redials
+in the same DOS process and saves two exact call pairs. A clean public-source
+rebuild repeats 38 workflows; the prior 53-workflow/BBS checkpoint applies to
+the exact unchanged image (63 distinct workflows across both checkpoints).
+Broader protocols/profiles, original UI/feature and physical/card gates stay open.
+
 [Transfer carrier recovery](docs/TRANSFER_CARRIER_RECOVERY.md) fixes cancellation bytes corrupting
 the next modem initialization after a lost file-transfer carrier. A retained
 old-image case fails; four native receive/upload loss workflows pass with clean

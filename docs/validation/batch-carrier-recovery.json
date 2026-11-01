@@ -1,0 +1,4525 @@
+{
+  "passed": true,
+  "source_commit": "52c667190e8e4581ef6d4ba05f24676d09203d0b",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/transfer-carrier-fixed-source-01/build/terminal-phone-log-bank-d882144fee4f/TERMINAL.EXE",
+    "sha256": "512f782e9befeef39db1f8dfe03b6b786e89d44910cc99bb0ea4f7d83bbb3eba",
+    "unchanged_from_transfer_and_stock_BBS_checkpoint": true
+  },
+  "native_batch_cases": 10,
+  "public_cases_this_checkpoint": 38,
+  "distinct_workflows_across_two_public_checkpoints": 63,
+  "public_source_proof": {
+    "path": "build/phone-log-batch-carrier-public-02/result.json",
+    "sha256": "6221c8e29a3e69e6fa71d5c20e70b82a05b300529c6dc27a0078e5acce25d3cb",
+    "source_count": 1747,
+    "build_log_sha256": "8d213ba61ec352871926169637bfe15c028331823960aae9110ab9dfcd93d7be"
+  },
+  "evidence": {
+    "native_batch": {
+      "path": "build/phone-log-carrier-terminal/batch-carrier-final-02/result.json",
+      "sha256": "01c95e758aae7c82301c6fbf5c0c86afe6f9045b6e5295c150aac9185977b9b0",
+      "cases": [
+        {
+          "case": "ymodem-receive-metadata",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": false,
+            "partial": false,
+            "retained": false,
+            "batch_observer": [
+              1,
+              4,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12288,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              15,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:43399 11/01/26 04:48:32 ",
+              "end": "04:48:34 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:43399 11/01/26 04:48:49 ",
+              "end": "04:48:56 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3304
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.399
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.0542
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.3046
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.3046
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.7435
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9295
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6238
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "1b26b38c47fc008ecb845f404f08e69000bc34d5c23886216dc294b6a10946b3",
+          "snapshot_sha256": "599f09cd3366b3f432551785f1b2ca4b323a7ef5fe951fb14b0defd2f4b04f5f"
+        },
+        {
+          "case": "ymodem-receive-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": false,
+            "partial": true,
+            "retained": false,
+            "batch_observer": [
+              1,
+              4,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12288,
+              0,
+              9216,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              2,
+              9,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              186,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41857 11/01/26 04:48:59 ",
+              "end": "04:49:10 00:00:11",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41857 11/01/26 04:49:16 ",
+              "end": "04:49:23 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3395
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4082
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.0646
+                },
+                {
+                  "kind": "batch-download-ACK-1",
+                  "seconds": 5.1055
+                },
+                {
+                  "kind": "batch-download-ACK-2",
+                  "seconds": 6.1492
+                },
+                {
+                  "kind": "batch-download-ACK-3",
+                  "seconds": 7.19
+                },
+                {
+                  "kind": "batch-download-ACK-4",
+                  "seconds": 8.2306
+                },
+                {
+                  "kind": "batch-download-ACK-5",
+                  "seconds": 9.2755
+                },
+                {
+                  "kind": "batch-download-ACK-6",
+                  "seconds": 10.3141
+                },
+                {
+                  "kind": "batch-download-ACK-7",
+                  "seconds": 11.3592
+                },
+                {
+                  "kind": "batch-download-ACK-8",
+                  "seconds": 12.3994
+                },
+                {
+                  "kind": "batch-download-ACK-9",
+                  "seconds": 13.4412
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 13.6917
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 13.6917
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 9,
+                "ACKed_data_frames": 9,
+                "retained_file": false,
+                "stage_before_drop": {
+                  "bytes": 8192,
+                  "exact": true
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.7513
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.938
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6325
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "4cd65effc8bfd5218f94b14bceec33c0b7400d1e8a2ffc407ab07608ab5485b6",
+          "snapshot_sha256": "5a4e680dd19c9bc31a2592bb1294e8ccecaf3149585972f45ee22aa1574bc2a0"
+        },
+        {
+          "case": "ymodem-receive-retained",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": false,
+            "partial": true,
+            "retained": true,
+            "batch_observer": [
+              1,
+              4,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12288,
+              0,
+              9216,
+              0,
+              9216,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              2,
+              10,
+              0,
+              1,
+              0,
+              9237,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              191,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:33551 11/01/26 04:49:25 ",
+              "end": "04:49:36 00:00:11",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:33551 11/01/26 04:49:42 ",
+              "end": "04:49:49 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3386
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4073
+                },
+                {
+                  "kind": "first-file-installed",
+                  "seconds": 4.2055
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.3422
+                },
+                {
+                  "kind": "batch-download-ACK-1",
+                  "seconds": 5.385
+                },
+                {
+                  "kind": "batch-download-ACK-2",
+                  "seconds": 6.4258
+                },
+                {
+                  "kind": "batch-download-ACK-3",
+                  "seconds": 7.4676
+                },
+                {
+                  "kind": "batch-download-ACK-4",
+                  "seconds": 8.5114
+                },
+                {
+                  "kind": "batch-download-ACK-5",
+                  "seconds": 9.5514
+                },
+                {
+                  "kind": "batch-download-ACK-6",
+                  "seconds": 10.5946
+                },
+                {
+                  "kind": "batch-download-ACK-7",
+                  "seconds": 11.6353
+                },
+                {
+                  "kind": "batch-download-ACK-8",
+                  "seconds": 12.6778
+                },
+                {
+                  "kind": "batch-download-ACK-9",
+                  "seconds": 13.7203
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 13.9708
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 13.9709
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 9,
+                "ACKed_data_frames": 9,
+                "retained_file": true,
+                "retained_sha256": "2f820fa8ae5125fe41423a85b0286eec769f35095750492f9a2972aa4586bcd1",
+                "stage_before_drop": {
+                  "bytes": 8192,
+                  "exact": true
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.7507
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9376
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6309
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "ee7637bd6b44000c71d6a6093f6f205fe7679acd266986cd165df7d9aed71e60",
+          "snapshot_sha256": "6a5adb0149b07c436e51938debf714a130685931b9cdcca90631b269174dd837"
+        },
+        {
+          "case": "ymodem-upload-metadata",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "batch_observer": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              2,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              18,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34735 11/01/26 04:49:52 ",
+              "end": "04:49:54 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34735 11/01/26 04:50:09 ",
+              "end": "04:50:16 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3378
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4064
+                },
+                {
+                  "kind": "batch-upload-metadata",
+                  "seconds": 4.1824
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.4327
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.4328
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8049
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.948
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6856
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "541db5ed2cdcddf8ce52d0cb347abc35d1d663567c2006014a363c66ffb09c0d",
+          "snapshot_sha256": "c1301cb82e329d7d9f80b7d736c5062b149394c5b3b1a8981802749a966ecd83"
+        },
+        {
+          "case": "ymodem-upload-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": true,
+            "partial": true,
+            "retained": false,
+            "batch_observer": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              2,
+              1,
+              2,
+              1,
+              0,
+              0,
+              0,
+              1024,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              38,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              1,
+              4096,
+              0,
+              2048,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:35061 11/01/26 04:50:19 ",
+              "end": "04:50:22 00:00:03",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:35061 11/01/26 04:50:36 ",
+              "end": "04:50:43 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3401
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4089
+                },
+                {
+                  "kind": "batch-upload-metadata",
+                  "seconds": 4.1843
+                },
+                {
+                  "kind": "batch-upload-frame-1",
+                  "seconds": 4.7356
+                },
+                {
+                  "kind": "batch-upload-ACK-1",
+                  "seconds": 4.7356
+                },
+                {
+                  "kind": "batch-upload-frame-2",
+                  "seconds": 5.2853
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.5357
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.5357
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 2,
+                "ACKed_data_frames": 1,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8074
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9512
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6883
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "1688b4ebd02a08b464459a864b182f083d06a438cab10d4f187c69888f46d8f8",
+          "snapshot_sha256": "223b3885dbd3d548303bd2fb793108a500f1d250dd4d3252449df94aa233d5bc"
+        },
+        {
+          "case": "zmodem-receive-metadata",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": false,
+            "partial": false,
+            "retained": false,
+            "batch_observer": [
+              2,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              16,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:35135 11/01/26 04:50:45 ",
+              "end": "04:50:47 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:35135 11/01/26 04:51:02 ",
+              "end": "04:51:09 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3394
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.408
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.0853
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.3357
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.3357
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8615
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0401
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7423
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "d901487e0e4c6c4fb5f3ecf0613f07af442e46b9cfa16fb9a9a3b9a6ec4c90be",
+          "snapshot_sha256": "88af069d5e8cd69231d68d0fca2d6c3ec5bcd0ba3ccfabe5eacfff02d6797f0c"
+        },
+        {
+          "case": "zmodem-receive-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": false,
+            "partial": true,
+            "retained": false,
+            "batch_observer": [
+              2,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              190,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34535 11/01/26 04:51:12 ",
+              "end": "04:51:23 00:00:11",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:34535 11/01/26 04:51:29 ",
+              "end": "04:51:36 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3442
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4129
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.0908
+                },
+                {
+                  "kind": "batch-download-ACK-1",
+                  "seconds": 5.1507
+                },
+                {
+                  "kind": "batch-download-ACK-2",
+                  "seconds": 6.215
+                },
+                {
+                  "kind": "batch-download-ACK-3",
+                  "seconds": 7.2759
+                },
+                {
+                  "kind": "batch-download-ACK-4",
+                  "seconds": 8.3387
+                },
+                {
+                  "kind": "batch-download-ACK-5",
+                  "seconds": 9.4039
+                },
+                {
+                  "kind": "batch-download-ACK-6",
+                  "seconds": 10.465
+                },
+                {
+                  "kind": "batch-download-ACK-7",
+                  "seconds": 11.5309
+                },
+                {
+                  "kind": "batch-download-ACK-8",
+                  "seconds": 12.5911
+                },
+                {
+                  "kind": "batch-download-ACK-9",
+                  "seconds": 13.656
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 13.9065
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 13.9065
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 9,
+                "ACKed_data_frames": 9,
+                "retained_file": false,
+                "stage_before_drop": {
+                  "bytes": 8192,
+                  "exact": true
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8664
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0449
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.747
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "4c705457a76e6f2e02f0853b58f45c9b2a65580632f6e2992fe58bf86794c29e",
+          "snapshot_sha256": "d3b72d7124c9cecd739f883818a24390bce21901f06c9ad00a8f376bf3a3526b"
+        },
+        {
+          "case": "zmodem-receive-retained",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": false,
+            "partial": true,
+            "retained": true,
+            "batch_observer": [
+              2,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              9216,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "observer": [
+              192,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:37893 11/01/26 04:51:39 ",
+              "end": "04:51:50 00:00:11",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:37893 11/01/26 04:51:56 ",
+              "end": "04:52:03 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3378
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4061
+                },
+                {
+                  "kind": "first-file-installed",
+                  "seconds": 4.1619
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.2114
+                },
+                {
+                  "kind": "batch-download-ACK-1",
+                  "seconds": 5.2721
+                },
+                {
+                  "kind": "batch-download-ACK-2",
+                  "seconds": 6.3358
+                },
+                {
+                  "kind": "batch-download-ACK-3",
+                  "seconds": 7.3951
+                },
+                {
+                  "kind": "batch-download-ACK-4",
+                  "seconds": 8.4603
+                },
+                {
+                  "kind": "batch-download-ACK-5",
+                  "seconds": 9.5232
+                },
+                {
+                  "kind": "batch-download-ACK-6",
+                  "seconds": 10.5871
+                },
+                {
+                  "kind": "batch-download-ACK-7",
+                  "seconds": 11.6508
+                },
+                {
+                  "kind": "batch-download-ACK-8",
+                  "seconds": 12.7124
+                },
+                {
+                  "kind": "batch-download-ACK-9",
+                  "seconds": 13.7746
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 14.0251
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 14.0251
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 9,
+                "ACKed_data_frames": 9,
+                "retained_file": true,
+                "retained_sha256": "2f820fa8ae5125fe41423a85b0286eec769f35095750492f9a2972aa4586bcd1",
+                "stage_before_drop": {
+                  "bytes": 8192,
+                  "exact": true
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8597
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.039
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7406
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "66ea62d247388c385a54d26717df58cbd09ce421a81886bd74b6db792075d708",
+          "snapshot_sha256": "4de0bdc51bab447ba2f25c97dce889b807c5f564acb9c282660a968aba13824d"
+        },
+        {
+          "case": "zmodem-upload-metadata",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "batch_observer": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              17,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41039 11/01/26 04:52:06 ",
+              "end": "04:52:08 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41039 11/01/26 04:52:23 ",
+              "end": "04:52:30 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3327
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4005
+                },
+                {
+                  "kind": "batch-upload-metadata",
+                  "seconds": 4.1536
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.404
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.404
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.9091
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0451
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7353
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "fac26ee291fc1bd22bb8404caef3969e5ed58ec2a3f18eb0a5cfa82c654c3962",
+          "snapshot_sha256": "f501521a6de18fc7a486994dbee4e0d984bb8c07c2b02512ba4aa156d144876c"
+        },
+        {
+          "case": "zmodem-upload-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": true,
+            "partial": true,
+            "retained": false,
+            "batch_observer": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              41,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              1,
+              4096,
+              0,
+              2048,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41861 11/01/26 04:52:33 ",
+              "end": "04:52:36 00:00:03",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41861 11/01/26 04:52:50 ",
+              "end": "04:52:57 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3383
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4069
+                },
+                {
+                  "kind": "batch-upload-metadata",
+                  "seconds": 4.1584
+                },
+                {
+                  "kind": "batch-upload-frame-1",
+                  "seconds": 4.8056
+                },
+                {
+                  "kind": "batch-upload-ACK-1",
+                  "seconds": 4.8057
+                },
+                {
+                  "kind": "batch-upload-frame-2",
+                  "seconds": 5.4515
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.7019
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.702
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 2,
+                "ACKed_data_frames": 1,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.9139
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0507
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7402
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "02be986824f9c945ea40cd9690bcc0ca8ebbd9488e7a63acaf78ca2fe204abd9",
+          "snapshot_sha256": "e2652a26ee418abd13b4b0a612f549c19f3e38b1ef15542b322d3aecc64a2d26"
+        }
+      ],
+      "verified_artifacts": 176
+    },
+    "public-existing": {
+      "path": "build/phone-log-batch-carrier-public-02/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "bd0ab3b89588c02c403c3fe5d80bf695344dc67eb74eee0b0e10cd2f5fa97b30",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-controls": {
+      "path": "build/phone-log-batch-carrier-public-02/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "b4ffaae73bde2a0704ab10aa99ed7fa72007a9f3531f4282fef7380b73ba2cb8",
+      "cases": [
+        {
+          "case": "success",
+          "passed": true
+        },
+        {
+          "case": "hangup",
+          "passed": true
+        },
+        {
+          "case": "busy",
+          "passed": true
+        },
+        {
+          "case": "silence",
+          "passed": true
+        },
+        {
+          "case": "redial",
+          "passed": true
+        },
+        {
+          "case": "disabled",
+          "passed": true
+        },
+        {
+          "case": "direct",
+          "passed": true
+        },
+        {
+          "case": "capacity",
+          "passed": true
+        },
+        {
+          "case": "soft",
+          "passed": true
+        },
+        {
+          "case": "both",
+          "passed": true
+        },
+        {
+          "case": "none",
+          "passed": true
+        },
+        {
+          "case": "fs-failure",
+          "passed": true
+        },
+        {
+          "case": "program",
+          "passed": true
+        },
+        {
+          "case": "ui-ready",
+          "passed": true
+        },
+        {
+          "case": "ui-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-unrepaired",
+          "passed": true
+        },
+        {
+          "case": "ui-recovery",
+          "passed": true
+        },
+        {
+          "case": "ui-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 316
+    },
+    "public-transfer-carrier": {
+      "path": "build/phone-log-batch-carrier-public-02/source/build/phone-log-carrier-terminal/public-transfer-carrier/result.json",
+      "sha256": "00dd7a8246afaddabc13abf3d1a7cfb35cff6cd406fa89f1ee808681df600843",
+      "cases": [
+        {
+          "case": "receive-negotiation",
+          "passed": true
+        },
+        {
+          "case": "receive-partial",
+          "passed": true
+        },
+        {
+          "case": "upload-unacked",
+          "passed": true
+        },
+        {
+          "case": "upload-partial",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 70
+    },
+    "public-batch-carrier": {
+      "path": "build/phone-log-batch-carrier-public-02/source/build/phone-log-carrier-terminal/public-batch-carrier/result.json",
+      "sha256": "f81668145269c5ec8074d5588d0fe5f3df745738d689ec7b8b898b529bfdb082",
+      "cases": [
+        {
+          "case": "ymodem-receive-metadata",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": false,
+            "partial": false,
+            "retained": false,
+            "batch_observer": [
+              1,
+              4,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12288,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              16,
+              1,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:33461 11/01/26 04:53:14 ",
+              "end": "04:53:16 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:33461 11/01/26 04:53:31 ",
+              "end": "04:53:38 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3332
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4007
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.056
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.3065
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.3066
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.7446
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9312
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6251
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "92bb25ad5c86c5db1d8b23cdd7bbdb879d738fddd02d6bc9b34026373289554b",
+          "snapshot_sha256": "ca5d3ba86c127079fd2435d0db561041c856a570b2e76d6c385e82f1ba004945"
+        },
+        {
+          "case": "ymodem-receive-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": false,
+            "partial": true,
+            "retained": false,
+            "batch_observer": [
+              1,
+              4,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12288,
+              0,
+              9216,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              2,
+              9,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              186,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41347 11/01/26 04:53:41 ",
+              "end": "04:53:52 00:00:11",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41347 11/01/26 04:53:58 ",
+              "end": "04:54:05 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.343
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4114
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.0667
+                },
+                {
+                  "kind": "batch-download-ACK-1",
+                  "seconds": 5.1074
+                },
+                {
+                  "kind": "batch-download-ACK-2",
+                  "seconds": 6.1506
+                },
+                {
+                  "kind": "batch-download-ACK-3",
+                  "seconds": 7.1926
+                },
+                {
+                  "kind": "batch-download-ACK-4",
+                  "seconds": 8.2341
+                },
+                {
+                  "kind": "batch-download-ACK-5",
+                  "seconds": 9.2781
+                },
+                {
+                  "kind": "batch-download-ACK-6",
+                  "seconds": 10.3173
+                },
+                {
+                  "kind": "batch-download-ACK-7",
+                  "seconds": 11.3621
+                },
+                {
+                  "kind": "batch-download-ACK-8",
+                  "seconds": 12.4019
+                },
+                {
+                  "kind": "batch-download-ACK-9",
+                  "seconds": 13.4441
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 13.6946
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 13.6947
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 9,
+                "ACKed_data_frames": 9,
+                "retained_file": false,
+                "stage_before_drop": {
+                  "bytes": 8192,
+                  "exact": true
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.7551
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9417
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6359
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "8490e0b25a1768cb7b9706aa8696cf86f812fc387ef37a3bc6a149af717fa281",
+          "snapshot_sha256": "f6264af29f25f987eb7cb76a0b3a8304cf2dc82ea05631444c32ccc254f82de7"
+        },
+        {
+          "case": "ymodem-receive-retained",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": false,
+            "partial": true,
+            "retained": true,
+            "batch_observer": [
+              1,
+              4,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12288,
+              0,
+              9216,
+              0,
+              9216,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              2,
+              10,
+              0,
+              1,
+              0,
+              9237,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              191,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:46541 11/01/26 04:54:07 ",
+              "end": "04:54:18 00:00:11",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:46541 11/01/26 04:54:24 ",
+              "end": "04:54:31 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3462
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4148
+                },
+                {
+                  "kind": "first-file-installed",
+                  "seconds": 4.2147
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.3521
+                },
+                {
+                  "kind": "batch-download-ACK-1",
+                  "seconds": 5.395
+                },
+                {
+                  "kind": "batch-download-ACK-2",
+                  "seconds": 6.4368
+                },
+                {
+                  "kind": "batch-download-ACK-3",
+                  "seconds": 7.4787
+                },
+                {
+                  "kind": "batch-download-ACK-4",
+                  "seconds": 8.5222
+                },
+                {
+                  "kind": "batch-download-ACK-5",
+                  "seconds": 9.5628
+                },
+                {
+                  "kind": "batch-download-ACK-6",
+                  "seconds": 10.6067
+                },
+                {
+                  "kind": "batch-download-ACK-7",
+                  "seconds": 11.6475
+                },
+                {
+                  "kind": "batch-download-ACK-8",
+                  "seconds": 12.6895
+                },
+                {
+                  "kind": "batch-download-ACK-9",
+                  "seconds": 13.7312
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 13.9818
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 13.9818
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 9,
+                "ACKed_data_frames": 9,
+                "retained_file": true,
+                "retained_sha256": "2f820fa8ae5125fe41423a85b0286eec769f35095750492f9a2972aa4586bcd1",
+                "stage_before_drop": {
+                  "bytes": 8192,
+                  "exact": true
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.7589
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9451
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6398
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "613a4d4007a39f038c0504137171f496a85caad28960a4843f59244738dec297",
+          "snapshot_sha256": "78e35cd183df768a614add00af2fae529aa107710c04393b439db3e1bf2f1d31"
+        },
+        {
+          "case": "ymodem-upload-metadata",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "batch_observer": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              2,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              18,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44363 11/01/26 04:54:34 ",
+              "end": "04:54:36 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44363 11/01/26 04:54:51 ",
+              "end": "04:54:58 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.348
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4165
+                },
+                {
+                  "kind": "batch-upload-metadata",
+                  "seconds": 4.192
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.4423
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.4423
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.815
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9592
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6957
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "3e55e622ee58f94b60ccd33ba947dfb8f95f45a849d2c45ae4717e847c461010",
+          "snapshot_sha256": "69734b077dd93662aa801e9bc5aeec76dae4d3652eb4bba412ac975c3a2625ed"
+        },
+        {
+          "case": "ymodem-upload-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 1,
+            "upload": true,
+            "partial": true,
+            "retained": false,
+            "batch_observer": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              2,
+              1,
+              2,
+              1,
+              0,
+              0,
+              0,
+              1024,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              38,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              1,
+              4096,
+              0,
+              2048,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:38355 11/01/26 04:55:01 ",
+              "end": "04:55:04 00:00:03",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:38355 11/01/26 04:55:18 ",
+              "end": "04:55:25 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3439
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4119
+                },
+                {
+                  "kind": "batch-upload-metadata",
+                  "seconds": 4.1877
+                },
+                {
+                  "kind": "batch-upload-frame-1",
+                  "seconds": 4.7395
+                },
+                {
+                  "kind": "batch-upload-ACK-1",
+                  "seconds": 4.7395
+                },
+                {
+                  "kind": "batch-upload-frame-2",
+                  "seconds": 5.2896
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.54
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.5401
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 1,
+                "metadata": true,
+                "data_frames": 2,
+                "ACKed_data_frames": 1,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8113
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 22.9546
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.6917
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "c200385ea9ac22c8a6e0b1bfbd714e7448a973e8f68344f4f990dabc2441900c",
+          "snapshot_sha256": "3ca44904476d2c414d2288122b5107ba7152fdd89a1b16806db2175bb7865037"
+        },
+        {
+          "case": "zmodem-receive-metadata",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": false,
+            "partial": false,
+            "retained": false,
+            "batch_observer": [
+              2,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              16,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:37319 11/01/26 04:55:28 ",
+              "end": "04:55:30 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:37319 11/01/26 04:55:45 ",
+              "end": "04:55:52 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.34
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.408
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.0857
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.3361
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.3362
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8616
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.04
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7423
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "3a6ea16fc5cb13d349b66d7fde0563dac5db0728cf60c1a8b157174cc2494718",
+          "snapshot_sha256": "8c1e19684ea134b0422a9dbea8e98f27f8f5a5daf08ebaced4a010d9fce0d8c8"
+        },
+        {
+          "case": "zmodem-receive-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": false,
+            "partial": true,
+            "retained": false,
+            "batch_observer": [
+              2,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              190,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:39377 11/01/26 04:55:54 ",
+              "end": "04:56:05 00:00:11",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:39377 11/01/26 04:56:11 ",
+              "end": "04:56:18 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3354
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4049
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.0826
+                },
+                {
+                  "kind": "batch-download-ACK-1",
+                  "seconds": 5.1425
+                },
+                {
+                  "kind": "batch-download-ACK-2",
+                  "seconds": 6.2062
+                },
+                {
+                  "kind": "batch-download-ACK-3",
+                  "seconds": 7.266
+                },
+                {
+                  "kind": "batch-download-ACK-4",
+                  "seconds": 8.3282
+                },
+                {
+                  "kind": "batch-download-ACK-5",
+                  "seconds": 9.394
+                },
+                {
+                  "kind": "batch-download-ACK-6",
+                  "seconds": 10.4559
+                },
+                {
+                  "kind": "batch-download-ACK-7",
+                  "seconds": 11.522
+                },
+                {
+                  "kind": "batch-download-ACK-8",
+                  "seconds": 12.5829
+                },
+                {
+                  "kind": "batch-download-ACK-9",
+                  "seconds": 13.6469
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 13.8974
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 13.8974
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 9,
+                "ACKed_data_frames": 9,
+                "retained_file": false,
+                "stage_before_drop": {
+                  "bytes": 8192,
+                  "exact": true
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8584
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0367
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7385
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "57e1c21e6ca8b423136edee2f153b6ca6400b763fec92b12fceda0ba824423b9",
+          "snapshot_sha256": "5c2ec8b2079a27c36bcc41d3e950200b37d8b61213d63986be0061ae7bd2c2be"
+        },
+        {
+          "case": "zmodem-receive-retained",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_download_aborted": true,
+            "download_aborted": true,
+            "exact_received_bytes": true,
+            "prior_file_count": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": false,
+            "partial": true,
+            "retained": true,
+            "batch_observer": [
+              2,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              9216,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "observer": [
+              192,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9216,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:35151 11/01/26 04:56:21 ",
+              "end": "04:56:32 00:00:11",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:35151 11/01/26 04:56:38 ",
+              "end": "04:56:45 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3376
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4063
+                },
+                {
+                  "kind": "first-file-installed",
+                  "seconds": 4.161
+                },
+                {
+                  "kind": "batch-receive-metadata",
+                  "seconds": 4.2085
+                },
+                {
+                  "kind": "batch-download-ACK-1",
+                  "seconds": 5.2701
+                },
+                {
+                  "kind": "batch-download-ACK-2",
+                  "seconds": 6.3327
+                },
+                {
+                  "kind": "batch-download-ACK-3",
+                  "seconds": 7.394
+                },
+                {
+                  "kind": "batch-download-ACK-4",
+                  "seconds": 8.459
+                },
+                {
+                  "kind": "batch-download-ACK-5",
+                  "seconds": 9.5216
+                },
+                {
+                  "kind": "batch-download-ACK-6",
+                  "seconds": 10.586
+                },
+                {
+                  "kind": "batch-download-ACK-7",
+                  "seconds": 11.649
+                },
+                {
+                  "kind": "batch-download-ACK-8",
+                  "seconds": 12.7112
+                },
+                {
+                  "kind": "batch-download-ACK-9",
+                  "seconds": 13.7734
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 14.024
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 14.024
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 9,
+                "ACKed_data_frames": 9,
+                "retained_file": true,
+                "retained_sha256": "2f820fa8ae5125fe41423a85b0286eec769f35095750492f9a2972aa4586bcd1",
+                "stage_before_drop": {
+                  "bytes": 8192,
+                  "exact": true
+                }
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.8592
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0376
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7397
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "299d0eaab9ef596dea7e1c8cb84ec2c14af55704f230f24a039625cbca0bacdd",
+          "snapshot_sha256": "3f8287d6b420e2cfd628eaaefbc3bde551f9bbc1a4045d972a2540edbd720db7"
+        },
+        {
+          "case": "zmodem-upload-metadata",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": true,
+            "partial": false,
+            "retained": false,
+            "batch_observer": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              17,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              4096,
+              0,
+              0,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44777 11/01/26 04:56:48 ",
+              "end": "04:56:50 00:00:02",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:44777 11/01/26 04:57:05 ",
+              "end": "04:57:12 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3357
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4047
+                },
+                {
+                  "kind": "batch-upload-metadata",
+                  "seconds": 4.1566
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 4.407
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 4.4071
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 0,
+                "ACKed_data_frames": 0,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.9124
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0488
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7388
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "df6af7758f3fa85bed94945fc97f09760e170641e40a0cdc79400dc0cbf1d8d1",
+          "snapshot_sha256": "0e39344da0d4adafa9259ca28b5f1015a14eaa55f64ce79b9d5c7ecf185a94a0"
+        },
+        {
+          "case": "zmodem-upload-partial",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "normal_exit": true,
+            "hardware_restored": true,
+            "two_actual_connections": true,
+            "actual_first_reply": true,
+            "actual_redial_replies": true,
+            "keyboard_after_redial": true,
+            "real_modem_loss": true,
+            "two_real_initializations": true,
+            "original_file_prefix": true,
+            "exact_file_attempts": true,
+            "observer_final": true,
+            "held_real_write": true,
+            "DCD_high_at_entry": true,
+            "actual_loss_during_hold": true,
+            "high_DCD_observed": true,
+            "IRQs_and_no_RX_loss": true,
+            "directory_updated_twice": true,
+            "original_START_stamps_preserved": true,
+            "fixture_executables_unchanged": true,
+            "PRM_unchanged": true,
+            "peer_errors_absent": true,
+            "actual_transfer": true,
+            "carrier_fault": true,
+            "transfer_resolved": true,
+            "correct_direction": true,
+            "no_transfer_RX_drops": true,
+            "no_download_stage": true,
+            "receive_handle_closed": true,
+            "upload_handle_closed": true,
+            "actual_batch_protocol": true,
+            "actual_batch_metadata": true,
+            "actual_batch_data": true,
+            "actual_batch_ACKs": true,
+            "exact_receive_tree": true,
+            "retained_first_file": true,
+            "batch_upload_aborted": true,
+            "upload_aborted": true,
+            "source_unchanged": true
+          },
+          "transfer": {
+            "protocol": 2,
+            "upload": true,
+            "partial": true,
+            "retained": false,
+            "batch_observer": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "observer": [
+              41,
+              0,
+              4,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              1,
+              4096,
+              0,
+              2048,
+              0
+            ]
+          },
+          "records": [
+            {
+              "generation": 1,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41633 11/01/26 04:57:15 ",
+              "end": "04:57:18 00:00:03",
+              "valid": true
+            },
+            {
+              "generation": 2,
+              "start": "\r\nLAB NODE 001                127.0.0.1:41633 11/01/26 04:57:32 ",
+              "end": "04:57:39 00:00:07",
+              "valid": true
+            }
+          ],
+          "sessions": [
+            {
+              "index": 1,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 2.3356
+                },
+                {
+                  "kind": "terminal-ready",
+                  "seconds": 2.4045
+                },
+                {
+                  "kind": "batch-upload-metadata",
+                  "seconds": 4.1559
+                },
+                {
+                  "kind": "batch-upload-frame-1",
+                  "seconds": 4.8028
+                },
+                {
+                  "kind": "batch-upload-ACK-1",
+                  "seconds": 4.8029
+                },
+                {
+                  "kind": "batch-upload-frame-2",
+                  "seconds": 5.4492
+                },
+                {
+                  "kind": "carrier-drop",
+                  "seconds": 5.6996
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 5.6997
+                }
+              ],
+              "errors": [],
+              "batch": {
+                "protocol": 2,
+                "metadata": true,
+                "data_frames": 2,
+                "ACKed_data_frames": 1,
+                "retained_file": false
+              }
+            },
+            {
+              "index": 2,
+              "events": [
+                {
+                  "kind": "connected",
+                  "seconds": 19.9119
+                },
+                {
+                  "kind": "keyboard-after-redial",
+                  "seconds": 23.0484
+                },
+                {
+                  "kind": "closed",
+                  "seconds": 25.7382
+                }
+              ],
+              "errors": [],
+              "keyboard": true
+            }
+          ],
+          "log_sha256": "47228262452e798a6402a40de8a47a64abb76e48b2817303de3008ba0ff44abd",
+          "snapshot_sha256": "884723875fc61b6efb7a56272f734cc9481428a9a028581d0e0a877dfef719f7"
+        }
+      ],
+      "verified_artifacts": 176
+    }
+  },
+  "unchanged_observer_controls": [
+    {
+      "path": "build/connection-dos/public-controls-success/PLWATCH.COM",
+      "sha256": "484b9ab49813e6f58731f0050fef6e2373b32b9fc34fc7fe9dac53ca2b7f68fb"
+    },
+    {
+      "path": "build/phone-log-carrier-terminal/public-transfer-carrier/receive-negotiation/PLWATCH.COM",
+      "sha256": "e04bab2be72b7ed91725c4db38ad04c911da399af76084f4a162fe2c8d466fb3"
+    },
+    {
+      "path": "build/phone-log-carrier-terminal/public-transfer-carrier/receive-partial/PLWATCH.COM",
+      "sha256": "e04bab2be72b7ed91725c4db38ad04c911da399af76084f4a162fe2c8d466fb3"
+    },
+    {
+      "path": "build/phone-log-carrier-terminal/public-transfer-carrier/upload-unacked/PLWATCH.COM",
+      "sha256": "e04bab2be72b7ed91725c4db38ad04c911da399af76084f4a162fe2c8d466fb3"
+    },
+    {
+      "path": "build/phone-log-carrier-terminal/public-transfer-carrier/upload-partial/PLWATCH.COM",
+      "sha256": "e04bab2be72b7ed91725c4db38ad04c911da399af76084f4a162fe2c8d466fb3"
+    }
+  ],
+  "prior_53_workflow_and_BBS_checkpoint": {
+    "path": "docs/validation/transfer-carrier-recovery.json",
+    "sha256": "2c573134910468538b4187c45fb12e3eaae2508fa4a8ddde01c6e3c81f6e3b7f",
+    "same_terminal_bytes": true,
+    "prior_result_and_artifact_integrity_verified": true,
+    "new_BBS_sessions": false
+  },
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Actual virtual DCD, not physical Boca/SPA2102/SIP/DSP/audio or electrical timing.",
+    "Five workflows per protocol: receive metadata/data/retained first file and upload metadata/partial; selected HARD,19200,8N1,8086,COM3/IRQ5 only.",
+    "Independent YMODEM CRC16 and ZMODEM CRC32 stop/wait peers; not every window,streaming,CRC,credit,profile or serial-flow combination.",
+    "Metadata-only receive writes zero data; data cases require9216 successful DOS bytes and at least8192 independently visible exact stage bytes before loss. No physical durable-write claim.",
+    "Observer reads state/MSR, never product variables or UART outputs; MSR reads clear delta bits, application carrier policy uses level.",
+    "Exploratory probes, the first matrix with speculative YMODEM CRC requests and its stopped public replay are excluded; final native ten and committed public repeat only.",
+    "An unintended drop during a retransmitted YMODEM header left command-prefix bytes before the next initialization. A deliberate mid-frame loss control and robust recovery remain open.",
+    "Previous53 and stock-BBS evidence applies to exact unchanged application bytes; only38 workflows rerun here, not a new63-case single replay or new BBS session.",
+    "Carrier falling during another cancellation reason, generic-child/fault exits, broad rendering, full original UI/F01-F16 and physical/card deployment stay open.",
+    "Published package/card, live BBS, installed bridge service, ATA and host network unchanged."
+  ]
+}
