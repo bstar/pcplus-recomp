@@ -1,8 +1,9 @@
 # Saved call-log startup policy
 
 `phone_log_startup_configure` now connects the accepted PRM enable word to the
-checked queue's fixed absolute destination. It is a source-built DOS service;
-it is **not yet called by the terminal application**. Parent banking/startup,
+checked queue's fixed absolute destination. The later optional
+[terminal startup binding](PHONE_LOG_STARTUP_TERMINAL.md) now calls it from the
+actual application. This page records the earlier component checkpoint;
 connection events, foreground polling and visible error/retry handling remain
 required before this becomes a working application call log.
 
@@ -82,6 +83,6 @@ corrections.
 
 The application, its package and card are unchanged. This closes the selected
 startup service's component checks, not F07/F10 or whole-application acceptance.
-Next place the service in the logger bank and call it from the real startup
-owner using the accepted image; then integrate complete connection lifetimes,
-UART-aware polls and user-visible failures before physical/card deployment.
+The later optional [bank/startup owner](PHONE_LOG_STARTUP_TERMINAL.md) supplies
+the accepted-image application binding. Complete connection lifetimes,
+UART-aware polls and user-visible failures remain before physical/card deployment.

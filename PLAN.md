@@ -1,11 +1,21 @@
 # Complete DOS rebuild plan
 
+[Application call-log startup](docs/PHONE_LOG_STARTUP_TERMINAL.md) now
+initializes the real queue from the sealed accepted image in the optional
+logger-bank parent, before UART ownership. Seven native startup/direct/modem
+cases and their public-source repeats pass;1716 exported sources reproduce
+the exact parent and an unchanged feature-disabled control. Proper log-setup
+notices replace accidental serial/profile errors. Existing component images
+remain exact. Event generation, fixed-claim composition, UART-aware polling,
+visible full/retry/recovery and full application/physical/card gates remain
+open. The separate published directory-adoption BBS package is unchanged.
+
 [Saved call-log startup policy](docs/PHONE_LOG_STARTUP.md) now decodes
 the accepted enable word, selects current/PCPLUS precedence, validates the
 parent and binds a canonical queue destination without creating a file.
 Thirty-two DOS workflows/1150 assertions preserve active events across rejected
 disable/retarget/invalid settings;24 public sources reproduce both executables
-and all16 objects, then repeat32 workflows. This service is not yet wired
+and all16 objects, then repeat32 workflows. At that component checkpoint it was not yet wired
 into the terminal. Logger-bank/startup placement, connection lifetimes,
 UART-aware polling and visible errors remain next; F07/F10 and all wider
 application/physical/card gates remain open.
