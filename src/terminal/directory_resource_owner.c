@@ -1,5 +1,9 @@
 #include "directory_resource_owner.h"
 #include "session_baseline.h"
+#ifdef DIRECTORY_SCRIPT_COMPILE
+#include "../directory/directory_compile.h"
+#define COMPILE_STAGE ((directory_resource_bundle __far *)(redisplay_snapshot+6700))
+#endif
 #include "../directory/directory_resource_cli.h"
 #include <dos.h>
 #include <string.h>
@@ -88,14 +92,30 @@ unsigned __far __cdecl terminal_directory_resources_queue(const directory_select
  if(status){terminal_directory_resources.status=DRO_BUSY;terminal_directory_resources.detail=status;return DRO_BUSY;}
  terminal_directory_resources.state=DRO_QUEUED;return 0;
 }
+#ifdef DIRECTORY_SCRIPT_COMPILE
+unsigned __far __cdecl terminal_directory_compile_queue(const directory_selection_proposal __far *proposal)
+{
+ unsigned status=directory_compile_initialize();if(status)return DRO_CONTEXT;
+ status=terminal_directory_resources_queue(proposal);
+ if(!status)terminal_program_kind=8;
+ return status;
+}
+#endif
 unsigned __far __cdecl terminal_directory_resources_run(void)
 {
  directory_resource_request request;
+#ifdef DIRECTORY_SCRIPT_COMPILE
+ directory_resource_bundle __far *bundle=terminal_program_kind==8?COMPILE_STAGE:BUNDLE;
+#endif
  unsigned char record[114],defaults[948];
  unsigned status,baseline,i;
  directory_resource_owner_snapshot *r=&terminal_directory_resources;
  if(cookie!=0xd841 || r->state!=DRO_QUEUED || terminal_program_pending || terminal_program_active!=1 ||
-  terminal_program_kind!=6 || terminal_program_status!=2 || redisplay_active || command_menu_active ||
+  (terminal_program_kind!=6
+#ifdef DIRECTORY_SCRIPT_COMPILE
+   && terminal_program_kind!=8
+#endif
+  ) || terminal_program_status!=2 || redisplay_active || command_menu_active ||
   connection_state || terminal_parser_active || terminal_tx_count)return DRO_CONTEXT;
  r->state=DRO_RUNNING;++r->attempts;
  if(seal((const unsigned char __far *)PROPOSAL,sizeof(*PROPOSAL))!=r->proposal_seal){r->status=DRO_CHANGED;goto failed;}
@@ -112,8 +132,24 @@ unsigned __far __cdecl terminal_directory_resources_run(void)
 #endif
  status=directory_resources_defaults(defaults);
  if(status){r->status=DRO_DEFAULTS;r->detail=status;goto failed;}
+#ifdef DIRECTORY_SCRIPT_COMPILE
+ status=directory_resources_stage(&request,defaults,bundle);
+#else
  status=directory_resources_stage(&request,defaults,BUNDLE);
+#endif
  if(status){r->status=DRO_RESOURCES;r->detail=status;goto failed;}
+#ifdef DIRECTORY_SCRIPT_COMPILE
+ if(terminal_program_kind==8){
+  if(bundle->script.kind==DSCRIPT_SOURCE){
+   status=directory_compile_run(process_psp,bundle);
+   if(status){r->status=DRO_RESOURCES;r->detail=status;goto failed;}
+  }
+  status=accepted(&baseline);if(status){r->status=DRO_BASELINE;r->detail=status;goto failed;}
+  if(baseline!=r->baseline_seal || seal((const unsigned char __far *)PROPOSAL,sizeof(*PROPOSAL))!=r->proposal_seal){r->status=DRO_CHANGED;goto failed;}
+  status=current();if(status){r->status=status;goto failed;}
+  for(i=0;i<sizeof(*bundle);++i)((unsigned char __far *)BUNDLE)[i]=((const unsigned char __far *)bundle)[i];
+ }
+#endif
  r->mask=BUNDLE->mask;r->state=DRO_READY;return 0;
 failed:
  r->state=DRO_FAILED;return r->status;

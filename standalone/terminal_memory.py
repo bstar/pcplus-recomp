@@ -229,6 +229,12 @@ def inspect_terminal_memory(binary,map_path):
   if '_directory_script_read' in symbols:
    assert symbols['_directory_script_read'][0]==next(c for c in code_segments if c['name']=='CONFIG_CODE')['relative_segment'],'Script reader escaped CONFIG_CODE'
    extra['directory_script_fingerprint_bytes']=12
+   if '_directory_compile_run' in symbols:
+    lo=address('directory_compile_storage');hi=address('directory_compile_storage_end')
+    assert hi-lo==256 and lo==shadow+8192 and hi<=history,'Persistent compiler owner must follow shadow outside every history/near loan'
+    assert symbols['_directory_compile_run'][0]==symbols['_directory_script_read'][0],'Compiler must retain CONFIG_CODE ABI'
+    assert 8724<=63000
+    extra.update(directory_compile_owner_bytes=256,directory_compile_candidate_bytes=2024,directory_compile_lease_end=8724)
  if '_terminal_resource_cli_bind' in symbols:
   config=next(c for c in code_segments if c['name']=='CONFIG_CODE')
   for name in ('_terminal_resource_cli_bind','_directory_resource_cli_initialize','_directory_resource_cli_bind','_directory_resource_cli_request'):

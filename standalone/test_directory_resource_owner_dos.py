@@ -24,11 +24,12 @@ def main():
  binary=args.terminal.resolve();manifest=json.loads((binary.parent/'manifest.json').read_text())
  assert manifest['experimental_directory_resource_owner'] and sha(binary)==manifest['binary_sha256']
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
- translation=bool(manifest.get('experimental_directory_translation'));scripts=bool(manifest.get('experimental_directory_scripts'))
+ translation=bool(manifest.get('experimental_directory_translation'));scripts=bool(manifest.get('experimental_directory_scripts'));compiling=bool(manifest.get('experimental_directory_compile'))
  fields=FIELDS+([('terminal_translation_enabled',2),('terminal_translation_mode',2),('terminal_translation_path',64),('_directory_resource_cli',202)] if translation else [])
  if scripts:fields += [('terminal_sink_398a_enabled',2),('_capture_file_result',96)]
  names=NAMES+(['XLT-current-default','XLT-PCPLUS-default','XLT-original-CLI-overrides-mode2','XLT-missing-required','XLT-truncated','XLT-suffixed','XLT-invalid-current-no-fallback','XLT-directory-no-fallback','XLT-mode2-no-read','XLT-mode0-no-read'] if translation else [])
  if scripts:names+=['script-current-ASX','script-environment-ASX-before-current-ASP','script-current-ASP-needs-compiler','script-environment-ASP-needs-compiler','script-bad-header-no-fallback','script-over64KiB','script-missing','script-qualified','script-empty-ASX','script-empty-ASP-needs-compiler','script-blank','script-directory-no-fallback','script-capture-preserved','script-capture-conflict']
+ if compiling:names+=['compile-current-ASP','compile-environment-ASP','compile-syntax-error','compile-empty-source','compile-already-ASX','compile-no-script','compile-missing-helper','compile-capture-policy','compile-long-source-path']
  assert not args.case or set(args.case)<=set(names),'Unknown workflow name'
  bundle_bytes=2024 if scripts else 1948 if translation else 1624;resource_bytes=272 if scripts else 206 if translation else 142
  out=args.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
@@ -62,6 +63,11 @@ def main():
   if args.case and name not in args.case:continue
   case=out/f'T{mode:03}';case.mkdir();shutil.copyfile(binary,case/'TERMINAL.EXE')
   for leaf in ['WATCH.COM','SNAP.COM']:shutil.copyfile(out/leaf,case/leaf)
+  compile_case=mode>=33
+  if compile_case:
+   subprocess.run(['nasm','-fbin','-DRESOURCE_KIND=8','-DCOMPILER_STATE_BYTES=256',
+    '-DCOMPILER_RELATIVE='+str(syms['directory_compile_storage'][0]-ds),'-DCOMPILER_OFFSET='+str(syms['directory_compile_storage'][1]),
+    '-I'+str(out)+'/',str(ROOT/'standalone/directory_resource_owner_watch.asm'),'-o',str(case/'WATCH.COM')],check=True)
   if 6<=mode<=8:subprocess.run(['nasm','-fbin',{6:'-DCORRUPT_PROPOSAL',7:'-DCORRUPT_SESSION',8:'-DCORRUPT_BAUD'}[mode],'-I'+str(out)+'/',str(ROOT/'standalone/directory_resource_owner_watch.asm'),'-o',str(case/'WATCH.COM')],check=True)
   subprocess.run(['nasm','-fbin',str(ROOT/'standalone/dos_strategy_sample.asm'),'-o',str(case/'STRAT.COM')],check=True)
   settings=bytearray(prm(timeout=5));struct.pack_into('<HH',settings,0,2,5)
@@ -83,6 +89,8 @@ def main():
    (case/'CHDIR.ASX').write_bytes(compile_source('proc main\nchdir "C:\\OTHER"\nmkdir "WITNESS"\nendproc\n'))
    (case/'START.KEY').write_bytes(launch_actions(b'C:\\CHDIR.ASX',0))
    shutil.copyfile(ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE',case/'ASPECT.EXE')
+  compile_source_bytes=b'proc main\nfopen 0 \"RAN\" \"wb\"\nfputs 0 \"UNEXPECTED\"\nfclose 0\nendproc\n'
+  compiled_bytes=compile_source(compile_source_bytes.decode())
   if mode>=19:
    raw_script=compile_source('proc main\nfopen 0 "RAN" "wb"\nfputs 0 "UNEXPECTED"\nfclose 0\nendproc\n')
    script_name=b'GO';script_path='OTHER/GO.ASX';script_kind=1
@@ -94,10 +102,20 @@ def main():
    if mode==26:(case/'OTHER/A').mkdir();script_path='OTHER/A/GO.ASX';script_name=b'A\\GO'
    if mode==27:raw_script=b''
    if mode==28:script_path='OTHER/GO.ASP';script_kind=2;raw_script=b''
+   if compile_case:
+    if mode!=39:shutil.copyfile(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE',case/'ASPCOMP.EXE')
+    if mode not in (37,38):script_path='ENV/GO.ASP' if mode==34 else 'OTHER/GO.ASP';script_kind=2;raw_script=compile_source_bytes
+    if mode==41:
+     folder=Path('ENV')
+     for part in ['ABCDEFGH','IJKLMNOP','QRSTUVWX','YZABCDEF','GHIJKLMN','ABCD']:folder/=part
+     (case/folder).mkdir(parents=True);script_path=str(folder/'GO.ASP');script_kind=2;raw_script=compile_source_bytes
+     assert len('C:'+chr(92)+script_path.replace('/',chr(92)))==63
+    if mode==35:raw_script=b'proc main\nTHIS IS NOT VALID\nendproc\n'
+    if mode==36:raw_script=b''
    if mode==30:(case/script_path).mkdir();(case/'OTHER/GO.ASP').write_bytes(b'proc main\nendproc\n')
-   elif mode not in (25,29):(case/script_path).write_bytes(raw_script)
-   if mode!=29:data[250+0x34:250+0x3d]=script_name.ljust(9,b'\0')
-   if mode not in (25,29,30):selected_script=(script_path,script_kind,raw_script)
+   elif mode not in (25,29,38):(case/script_path).write_bytes(raw_script)
+   if mode not in (29,38):data[250+0x34:250+0x3d]=script_name.ljust(9,b'\0')
+   if mode not in (25,29,30,38):selected_script=(script_path,script_kind,raw_script)
   (case/'TEST.PRM').write_bytes(settings);(case/'PCPLUS.DIR').write_bytes(data)
   if mode!=3:
    kbd=bytearray(keyboard('N'))
@@ -109,9 +127,11 @@ def main():
    for leaf in ('PCPLUS.DIR','BOARD.KBD','BOARD.KEY'):shutil.copyfile(case/leaf,case/'OTHER'/leaf)
   originals={str(f.relative_to(case)):f.read_bytes() for f in case.rglob('*') if f.is_file() and f.suffix in ('.PRM','.DIR','.KBD','.KEY','.XLT','.ASX','.ASP','.EXE')}
   child_keys='a-1 p6500 ' if mode>=9 else ''
-  if mode in (31,32):child_keys+='a-f1 p500 '+('G O . A S X' if mode==32 else 'C A P . L O G')+' enter p700 '
+  if mode in (31,32,40):child_keys+='a-f1 p500 '+('G O . A S X' if mode==32 else 'C A P . L O G')+' enter p700 '
   entry_keys='a-z p400 a-d' if mode==4 else '` p400 tab p300 l' if mode==5 else 'a-d'
-  resource_wait='p7500' if mode==24 else 'p1800'
+  resource_wait='p7500' if mode==24 or compile_case else 'p1800'
+  resource_key='c' if compile_case else 'r'
+  pcplus='C:'+chr(92)+str(Path(script_path).parent).replace('/',chr(92)) if mode==41 else 'C:'+chr(92)+'ENV' if mode in (10,15,16,20,22,34) else ''
   config=f'''[sdl]
 output=surface
 [cpu]
@@ -130,11 +150,11 @@ serial4=disabled
 mount c "{case}"
 mount d "{case}"
 c:
-set PCPLUS={r'C:\ENV' if mode in (10,15,16,20,22) else ''}
+set PCPLUS={pcplus}
 STRAT B
 SNAP B
 WATCH T
-ADDKEY p900 enter p1100 {child_keys}{entry_keys} p500 enter p3000 enter p1200 r {resource_wait} space p900 a-x
+ADDKEY p900 enter p1100 {child_keys}{entry_keys} p500 enter p3000 enter p1200 {resource_key} {resource_wait} space p900 a-x
 TERMINAL @TEST.PRM {'/T:START.KEY' if mode>=9 else ''} {'/X:CLI.XLT' if mode==11 else ''}
 if errorlevel 1 goto failed
 cd \\
@@ -157,7 +177,7 @@ exit
   assert run.returncode==0 and (case/'PASS.TXT').exists() and not (case/'FAIL.TXT').exists(),name
   assert (case/'BEFORE.BIN').read_bytes()==(case/'AFTER.BIN').read_bytes() and len((case/'BEFORE.BIN').read_bytes())==42,name
   assert len((case/'STRATB.BIN').read_bytes())==2 and (case/'STRATB.BIN').read_bytes()==(case/'STRATA.BIN').read_bytes(),name
-  observed=(case/'OWNER.BIN').read_bytes();assert len(observed)==14+2*field_bytes+1190+2*bundle_bytes+14+resource_bytes+4000+14
+  observed=(case/'OWNER.BIN').read_bytes();assert len(observed)==14+2*field_bytes+1190+2*bundle_bytes+14+resource_bytes+4000+14+(258 if compile_case else 0)
   magic,flags,ticks,io_calls,opens,violations,app_ds=struct.unpack_from('<7H',observed)
   assert magic==0x524f and flags==(15 if 6<=mode<=8 else 7) and ticks>20 and not violations and app_ds,(name,magic,flags,ticks,io_calls,opens,violations)
   expected_fields=bytearray(observed[14:14+field_bytes])
@@ -166,15 +186,19 @@ exit
    expected_fields[transfer_at]^=1
   if mode==8:
    baud_at=sum(size for field,size in fields[:next(i for i,(field,size) in enumerate(fields) if field=='terminal_baud_low')]);expected_fields[baud_at:baud_at+2]=struct.pack('<H',38400)
+  if mode==40:
+   sink=sum(size for field,size in fields[:next(i for i,(field,size) in enumerate(fields) if field=='terminal_sink_398a_enabled')]);cap=sink+2
+   expected_fields[sink:sink+2]=bytes(2);struct.pack_into('<H',expected_fields,cap,2);struct.pack_into('<H',expected_fields,cap+10,0)
+   struct.pack_into('<H',expected_fields,cap+16,struct.unpack_from('<H',expected_fields,cap+16)[0]+1)
   assert expected_fields==observed[14+field_bytes:14+2*field_bytes],name
   pos=14+2*field_bytes;proposed=observed[pos:pos+1190];pos+=1190
   before=observed[pos:pos+bundle_bytes];pos+=bundle_bytes;bundle=observed[pos:pos+bundle_bytes];pos+=bundle_bytes
   owner=struct.unpack_from('<7H',observed,pos);pos+=14;resource=observed[pos:pos+resource_bytes];pos+=resource_bytes
-  prompt=observed[pos:pos+4000];success=mode in (0,3,4,5,9,10,11,17,18,19,20,21,22,24,26,28,29,31)
+  prompt=observed[pos:pos+4000];success=mode in (0,3,4,5,9,10,11,17,18,19,20,21,22,24,26,28,29,31,33,34,37,38,40,41)
   released=struct.unpack_from('<7H',observed,pos+4000)
   assert released[0]==0 and released[1:]==owner[1:],(name,released,owner)
   assert owner[0]==(3 if success else 4) and owner[1]==(0 if success else 4 if 6<=mode<=8 else 7) and owner[6]==1,(name,owner)
-  assert opens==((0 if mode in (25,30,32) else 2 if mode==29 else 3) if mode>=19 else 3 if mode in (9,10,11,13,14,15) else 2 if mode in (0,2,4,5,17,18) else 1 if mode==1 else 0),(name,opens)
+  assert opens==((6 if mode in (33,34,40,41) else 4 if mode in (35,36,39) else 3 if mode==37 else 2) if compile_case else (0 if mode in (25,30,32) else 2 if mode==29 else 3) if mode>=19 else 3 if mode in (9,10,11,13,14,15) else 2 if mode in (0,2,4,5,17,18) else 1 if mode==1 else 0),(name,opens)
   assert (io_calls==0 if 6<=mode<=8 else io_calls>0),name
   if success:
    loaded=mode in (0,4,5,9,10,11,17,18) or mode>=19
@@ -191,11 +215,27 @@ exit
     if selected_script is None:expected+=bytes(76)
     else:
      path,kind,raw=selected_script
+     if mode in (33,34,40,41):path=path[:-1]+'X';kind=1;raw=compiled_bytes
      expected+=('C:'+chr(92)+path.replace('/',chr(92))).encode().ljust(64,b'\0')+struct.pack('<HHII',kind,raw[0] if kind==1 else 0,len(raw),zlib.crc32(raw))
    assert bundle==expected,name
    assert (b'Resources checked. Scripts are not executed.' if scripts else b'KEY/KBD/XLT resources checked.' if translation else b'KEY/KBD resources checked.') in prompt[::2],name
   else:
    assert bundle==before and (b'Could not prepare resources/script.' if scripts else b'Could not prepare KEY/KBD/XLT resources.' if translation else b'Could not prepare KEY/KBD resources.') in prompt[::2],name
+  compiler_report={}
+  if compile_case:
+   state_at=pos+4000+14;state=observed[state_at:state_at+256];execs=struct.unpack_from('<H',observed,state_at+256)[0]
+   assert execs==(0 if mode in (37,38) else 1),name
+   header=struct.unpack_from('<8H',state);child=struct.unpack_from('<4H',state,16)
+   if mode in (33,34,40,41):
+    assert header==(3,0,0,0,0,0,1,1) and child[0:3]==(0,0,0) and child[3]>16,(name,header,child)
+    target=case/(selected_script[0][:-1]+'X');assert target.read_bytes()==compiled_bytes,name
+   elif mode in (35,36,39):
+    assert header[0:2]==(4,8) and header[6:8]==(1,0),(name,header,child)
+    assert not (case/'OTHER/GO.ASX').exists(),name
+    if mode==39:assert child[0:2]==(3,2),name
+    else:assert child[0]==0 and child[2]!=0,name
+   else:assert header==(0,)*8 and child==(0,)*4,name
+   compiler_report=dict(EXEC_requests=execs,owner=header,child=child)
   if mode>=9:assert (case/'OTHER/WITNESS').is_dir(),name
   assert not list(case.rglob('RAN')),name
   if mode in (31,32):
@@ -204,7 +244,7 @@ exit
    assert before_fields[sink:sink+2]==after_fields[sink:sink+2]==b'\x01\x00' and struct.unpack_from('<H',after_fields,cap)[0]==1 and struct.unpack_from('<H',after_fields,cap+10)[0]==1,name
    if mode==31:assert (case/'OTHER/CAP.LOG').is_file(),name
   for leaf,original in originals.items():assert (case/leaf).read_bytes()==original,(name,leaf)
-  reports.append(dict(case=name,passed=True,observer_ticks=ticks,DOS_operations_under_quiescence=io_calls,content_opens=opens,ownership_violations=violations,owner_state=owner,resource_state=struct.unpack_from('<7H',resource),active_state_unchanged=mode not in (7,8),declared_session_fault_only=mode in (7,8),hardware_restored=True))
+  reports.append(dict(case=name,passed=True,compiler=compiler_report,observer_ticks=ticks,DOS_operations_under_quiescence=io_calls,content_opens=opens,ownership_violations=violations,owner_state=owner,resource_state=struct.unpack_from('<7H',resource),active_state_unchanged=mode not in (7,8),declared_session_fault_only=mode in (7,8),hardware_restored=True))
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
  result=dict(passed=True,binary_sha256=sha(binary),cases=reports,case_count=len(reports),translation=translation,scripts=scripts,source_resources_unchanged=True,
   sources={n:sha(ROOT/n) for n in ['standalone/test_directory_resource_owner_dos.py','standalone/directory_resource_owner_watch.asm','standalone/dos_strategy_sample.asm','standalone/test_terminal.py','standalone/modem_fixtures.py','standalone/directory_view_fixture.py','standalone/test_directory_resources_dos.py','standalone/test_directory_key_bindings_dos.py','src/aspect/compiler.py']},

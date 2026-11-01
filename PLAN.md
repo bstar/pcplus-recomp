@@ -1,5 +1,11 @@
 # Complete DOS rebuild plan
 
+[Directory source compilation](docs/DIRECTORY_SCRIPT_COMPILE.md) adds explicit
+preview C, private resource staging and direct ASPCOMP without script execution.
+Canonical source/output/helper/scratch claims and independent far recovery state
+protect the transaction. Selected-state/resource adoption, dialing and complete
+application/physical acceptance remain open.
+
 [Directory script preflight](docs/DIRECTORY_SCRIPT_RESOURCES.md) adds ASX/ASP lookup
 and whole-file32-bit length/CRC32 fingerprints to the KEY/KBD/XLT transaction.
 Source candidates remain explicit and require compilation before adoption.

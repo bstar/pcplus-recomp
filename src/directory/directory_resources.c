@@ -1,4 +1,7 @@
 #include "directory_resources.h"
+#ifdef DIRECTORY_SCRIPT_COMPILE
+#include "directory_compile.h"
+#endif
 #include "directory_live.h"
 #include "../config/resource_path.h"
 #include "../capture/capture_file.h"
@@ -52,7 +55,11 @@ unsigned __cdecl directory_resources_initialize(void)
  return available();
 }
 unsigned __far __cdecl directory_resources_exec_allowed(void)
-{return cookie==0xd620 || (cookie==0xd621 && (directory_resource_result.state==DR_IDLE || directory_resource_result.state==DR_RESOLVED));}
+{
+#ifdef DIRECTORY_SCRIPT_COMPILE
+ if(!directory_compile_exec_allowed())return 0;
+#endif
+ return cookie==0xd620 || (cookie==0xd621 && (directory_resource_result.state==DR_IDLE || directory_resource_result.state==DR_RESOLVED));}
 static unsigned absolute(const char *p)
 {return capture_file_validate_path(p,0) && p[0]>='A' && p[0]<='Z' && p[1]==':' && p[2]=='\\';}
 static unsigned canonical(const char *path,char *out)

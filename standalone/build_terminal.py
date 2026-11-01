@@ -29,6 +29,7 @@ parser.add_argument('--directory-view',action='store_true',help='Serviced read-o
 parser.add_argument('--directory-preview',action='store_true',help='Validate and preview an Alt-D selection; implies --directory-view; adoption remains pending')
 parser.add_argument('--directory-storage',action='store_true',help='Shared directory persistence claims and EXEC recovery gate; implies --directory-preview')
 parser.add_argument('--directory-resource-cli',action='store_true',help='Bind original CLI keyboard resource identities before directory startup; implies --directory-storage')
+parser.add_argument('--directory-compile',action='store_true',help='Explicit preview C compiles ASP without executing the script; implies --directory-scripts')
 parser.add_argument('--directory-scripts',action='store_true',help='Resolve and fingerprint directory ASX/ASP resources; implies --directory-translation')
 parser.add_argument('--directory-translation',action='store_true',help='Stage translation with KEY/KBD before selection adoption; implies --directory-retirement')
 parser.add_argument('--directory-retirement',action='store_true',help='Save pending statistics through a quiesced PROGRAM owner after disconnect; implies --directory-resource-owner')
@@ -40,6 +41,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.directory_compile:args.directory_scripts=True
 if args.directory_scripts:args.directory_translation=True
 if args.directory_translation:args.directory_retirement=True
 if args.directory_retirement:args.directory_resource_owner=True
@@ -126,6 +128,7 @@ if args.directory_resource_owner:out_name='terminal-resource-owner-'+hashlib.sha
 if args.directory_retirement:out_name='terminal-directory-retirement-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_translation:out_name='terminal-directory-translation-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.directory_scripts:out_name='terminal-directory-scripts-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
+if args.directory_compile:out_name='terminal-directory-compile-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
 if args.native_reset_bank:out_name+='-native-bank'
 if args.native_reset_static:out_name+='-static'
 if args.native_reset_transaction:out_name+='-transaction'
@@ -240,6 +243,7 @@ for index,source in enumerate(sources):
  if args.directory_retirement:options+=['-DTERMINAL_DIRECTORY_RETIREMENT']
  if args.directory_translation:options+=['-DDIRECTORY_TRANSLATION_RESOURCES']
  if args.directory_scripts:options+=['-DDIRECTORY_SCRIPT_RESOURCES']
+ if args.directory_compile:options+=['-DDIRECTORY_SCRIPT_COMPILE']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
@@ -307,6 +311,7 @@ if args.directory_resource_cli:c_sources += [ROOT/'src/directory/directory_resou
 if args.directory_resource_owner:c_sources += [ROOT/'src/directory/directory_resources.c',ROOT/'src/terminal/directory_resource_owner.c',ROOT/'src/terminal/directory_identity.c']
 if args.directory_retirement:c_sources.append(ROOT/'src/terminal/directory_retirement.c')
 if args.directory_scripts:c_sources.append(ROOT/'src/directory/directory_script.c')
+if args.directory_compile:c_sources.append(ROOT/'src/directory/directory_compile.c')
 c_sources += sorted((ROOT/'src/clipboard').glob('*.c'))
 c_sources += [ROOT/'src/transfer'/name for name in ['download_file.c','download_fs.c','native_file_bridge.c','terminal_receive.c']]
 c_sources += [ROOT/'src/transfer/download_compare.c']
@@ -340,6 +345,7 @@ if args.directory_resource_cli:config_sources.update({ROOT/'src/directory/direct
 if args.directory_resource_owner:config_sources.update({ROOT/'src/directory/directory_resources.c',ROOT/'src/terminal/directory_resource_owner.c',ROOT/'src/terminal/directory_identity.c'})
 if args.directory_retirement:config_sources.add(ROOT/'src/terminal/directory_retirement.c')
 if args.directory_scripts:config_sources.add(ROOT/'src/directory/directory_script.c')
+if args.directory_compile:config_sources.add(ROOT/'src/directory/directory_compile.c')
 config_sources.update({ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']})
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
 config_sources.add(ROOT/'src/translation/xlt_dos.c')
@@ -403,7 +409,7 @@ for source in c_sources:
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
  if args.directory_storage and source in (ROOT/'src/directory/directory_actions.c',ROOT/'src/directory/directory_storage.c'):
   options+=['-os']
- if (args.directory_resource_owner and source.name in ('directory_resources.c','directory_resource_owner.c')) or (args.directory_retirement and source.name=='directory_retirement.c') or (args.directory_scripts and source.name=='directory_script.c'):
+ if (args.directory_resource_owner and source.name in ('directory_resources.c','directory_resource_owner.c')) or (args.directory_retirement and source.name=='directory_retirement.c') or (args.directory_scripts and source.name=='directory_script.c') or (args.directory_compile and source.name=='directory_compile.c'):
   options+=['-os']
  if source==ROOT/'src/redisplay/command_reference.c':options=['-nt=REFERENCE_CODE','-nc=FARCODE']
  if args.original_reference and source==ROOT/'src/redisplay/command_menu.c':
@@ -431,6 +437,7 @@ for source in c_sources:
  if args.directory_retirement:options+=['-dTERMINAL_DIRECTORY_RETIREMENT']
  if args.directory_translation:options+=['-dDIRECTORY_TRANSLATION_RESOURCES']
  if args.directory_scripts:options+=['-dDIRECTORY_SCRIPT_RESOURCES']
+ if args.directory_compile:options+=['-dDIRECTORY_SCRIPT_COMPILE']
  if args.directory_resource_owner and source.name in ('directory_resources.c','keymap_dos.c','key_actions_dos.c'):options+=['-dKEY_RESOURCE_PRIVATE_READS']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
@@ -540,6 +547,8 @@ manifest['experimental_directory_resource_owner']=args.directory_resource_owner
 manifest['experimental_directory_retirement']=args.directory_retirement
 manifest['experimental_directory_translation']=args.directory_translation
 manifest['experimental_directory_scripts']=args.directory_scripts
+manifest['experimental_directory_compile']=args.directory_compile
+if args.directory_compile:manifest['limitations'].append('Preview C stages resources privately and compiles a SOURCE with direct ASPCOMP under canonical source/output/helper/scratch claims, retaining independent far recovery state. No script execution, selection adoption or dialing.')
 if args.directory_scripts:manifest['limitations'].append('Directory script preflight resolves ASX before ASP and streams a32-bit length/CRC32 fingerprint. Header validation is not full bytecode validation. Source candidates still require compilation before adoption; no script is executed or applied by preflight.')
 if args.directory_translation:manifest['limitations'].append('Preview R stages XLT with KEY/KBD as one far bundle, retaining original CLI /X identity. No active translation, selected entry, script or dialing is published.')
 if args.directory_retirement:manifest['limitations'].append('Offline pending accounting queues one PROGRAM kind7 attempt per connected event, with no child or acknowledgement prompt. Installed statistics reconcile the frozen logical/setup contexts. Refusals preserve pending counts for shutdown; file recovery is never retried. Selected entry adoption and dialing remain pending.')

@@ -20,7 +20,17 @@ ORG 100h
 %ifndef RESOURCE_BYTES
 %define RESOURCE_BYTES 142
 %endif
-%define CAPTURE_SIZE (14+2*FIELD_BYTES+1190+2*BUNDLE_BYTES+14+RESOURCE_BYTES+4000+14)
+%ifndef RESOURCE_KIND
+%define RESOURCE_KIND 6
+%endif
+%ifndef COMPILER_STATE_BYTES
+%define COMPILER_STATE_BYTES 0
+%endif
+%define CAPTURE_SIZE (14+2*FIELD_BYTES+1190+2*BUNDLE_BYTES+14+RESOURCE_BYTES+4000+14+COMPILER_STATE_BYTES)
+%if COMPILER_STATE_BYTES
+%undef CAPTURE_SIZE
+%define CAPTURE_SIZE (14+2*FIELD_BYTES+1190+2*BUNDLE_BYTES+14+RESOURCE_BYTES+4000+14+258)
+%endif
 jmp start
 old_tick: dw 0,0
 old_dos: dw 0,0
@@ -38,12 +48,19 @@ owner_state: times 14 db 0
 resource_state: times RESOURCE_BYTES db 0
 prompt_frame: times 4000 db 0
 released_owner: times 14 db 0
+%if COMPILER_STATE_BYTES
+compiler_state: times 256 db 0
+compiler_execs: dw 0
+%endif
 parent_irq: dw 0,0
 parent_ier: db 0
 parent_mcr: db 0
 parent_pic: db 0
 directory_name: db 'PCPLUS.DIR',0
 prompt_text: db 'Press any key.',0
+%if COMPILER_STATE_BYTES
+compiler_name: db 'C:\ASPCOMP.EXE',0
+%endif
 %ifdef CORRUPT_OWNER
 mouse_handler:
  pushf
@@ -59,7 +76,7 @@ mouse_handler:
  jne .done
  cmp word [es:PROGRAM_PENDING],1
  jne .done
- cmp word [es:PROGRAM_KIND],6
+ cmp word [es:PROGRAM_KIND],RESOURCE_KIND
  jne .done
 %ifdef CORRUPT_SESSION
  xor byte [es:TRANSFER],1
@@ -110,6 +127,36 @@ dos_handler:
  jne .done
  cmp word [OWNER],2 ; RUNNING: inspect every actual DOS boundary in this owner.
  jne .done
+%if COMPILER_STATE_BYTES
+ cmp ah,4bh
+ jne .not_compiler_exec
+ cmp al,0
+ jne .bad
+ inc word [cs:compiler_execs]
+ mov si,dx
+ mov di,compiler_name
+ mov cx,15
+.compiler_path:
+ lodsb
+ cmp al,[cs:di]
+ jne .bad
+ inc di
+ loop .compiler_path
+ push es
+ mov ax,ds
+ add ax,COMPILER_RELATIVE
+ mov es,ax
+ cmp word [es:COMPILER_OFFSET],1
+ jne .compiler_owner_bad
+ cmp byte [es:COMPILER_OFFSET+240],1
+ je .compiler_owner_ok
+.compiler_owner_bad:
+ pop es
+ jmp .bad
+.compiler_owner_ok:
+ pop es
+.not_compiler_exec:
+%endif
  inc word [cs:sample+6]
  cmp ah,3dh
  jne .gates
@@ -125,7 +172,7 @@ dos_handler:
  jne .bad
  cmp word [PROGRAM_ACTIVE],1
  jne .bad
- cmp word [PROGRAM_KIND],6
+ cmp word [PROGRAM_KIND],RESOURCE_KIND
  jne .bad
  cmp word [PROGRAM_STATUS],2
  jne .bad
@@ -231,7 +278,7 @@ tick_handler:
  jnz .released
  cmp word [PROGRAM_ACTIVE],1
  jne .done
- cmp word [PROGRAM_KIND],6
+ cmp word [PROGRAM_KIND],RESOURCE_KIND
  jne .done
  cmp word [PROGRAM_STATUS],4
  je .ready
@@ -276,6 +323,17 @@ tick_handler:
  mov di,resource_state
  mov cx,RESOURCE_BYTES
  rep movsb
+%if COMPILER_STATE_BYTES
+ push ds
+ mov ax,ds
+ add ax,COMPILER_RELATIVE
+ mov ds,ax
+ mov si,COMPILER_OFFSET
+ mov di,compiler_state
+ mov cx,256
+ rep movsb
+ pop ds
+%endif
  mov ax,ds
  add ax,FROZEN_RELATIVE
  mov ds,ax

@@ -302,6 +302,11 @@ erase_attribute_values: resb 4096
 SEGMENT FAR_STORAGE public align=16 class=FAR_DATA use16
 global erase_shadow_cells,terminal_history_buffer,terminal_far_storage_end
 erase_shadow_cells: resb 8192
+%ifdef DIRECTORY_SCRIPT_COMPILE
+global directory_compile_storage,directory_compile_storage_end
+directory_compile_storage: resb 256
+directory_compile_storage_end:
+%endif
 SEGMENT HISTORY_STORAGE public align=16 class=FAR_DATA use16
 terminal_history_buffer: resb 63000
 terminal_far_storage_end:

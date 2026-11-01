@@ -362,8 +362,15 @@ terminal_program_poll:
  jmp .record_status
 .not_retirement:
 %endif
+%ifdef DIRECTORY_SCRIPT_COMPILE
+ cmp word [terminal_program_kind],8
+ je .resource_operation
+%endif
  cmp word [terminal_program_kind],6
  jne .ordinary_operation
+%ifdef DIRECTORY_SCRIPT_COMPILE
+.resource_operation:
+%endif
  extern _terminal_directory_resources_run
  call far _terminal_directory_resources_run
  jmp .record_status
@@ -507,8 +514,15 @@ terminal_program_poll:
  je .restore_screen
 .ordinary_prompt:
 %ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+%ifdef DIRECTORY_SCRIPT_COMPILE
+ cmp word [terminal_program_kind],8
+ je .resource_compile_prompt
+%endif
  cmp word [terminal_program_kind],6
  jne .ordinary_program_prompt
+%ifdef DIRECTORY_SCRIPT_COMPILE
+.resource_compile_prompt:
+%endif
  extern directory_resources_ready_notice,directory_resources_failed_notice
  mov si,directory_resources_ready_notice
  cmp word [terminal_program_status],4
@@ -615,8 +629,15 @@ terminal_program_poll:
 .mouse_ready:
 %endif
 %ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+%ifdef DIRECTORY_SCRIPT_COMPILE
+ cmp word [terminal_program_kind],8
+ je .release_resource_owner
+%endif
  cmp word [terminal_program_kind],6
  jne .resource_owner_finished
+%ifdef DIRECTORY_SCRIPT_COMPILE
+.release_resource_owner:
+%endif
  extern _terminal_directory_resources_release
  call far _terminal_directory_resources_release
 .resource_owner_finished:
@@ -887,8 +908,15 @@ terminal_program_cancel:
 .retirement_canceled:
 %endif
 %ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+%ifdef DIRECTORY_SCRIPT_COMPILE
+ cmp word [terminal_program_kind],8
+ je .cancel_resource_owner
+%endif
  cmp word [terminal_program_kind],6
  jne .resource_owner_canceled
+%ifdef DIRECTORY_SCRIPT_COMPILE
+.cancel_resource_owner:
+%endif
  call far _terminal_directory_resources_release
 .resource_owner_canceled:
 %endif

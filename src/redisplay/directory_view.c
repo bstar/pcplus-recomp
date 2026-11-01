@@ -78,6 +78,9 @@ TEXT(auto_label,"Automatic download: ");
 TEXT(on_label,"ON");
 TEXT(off_label,"OFF");
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+#ifdef DIRECTORY_SCRIPT_COMPILE
+TEXT(preview_keys,"R: check  C: compile script  Esc: directory. Settings unchanged.");
+#else
 #ifdef DIRECTORY_SCRIPT_RESOURCES
 TEXT(preview_keys,"R: check resources/script  Esc: directory. Settings unchanged.");
 #else
@@ -85,6 +88,7 @@ TEXT(preview_keys,"R: check resources/script  Esc: directory. Settings unchanged
 TEXT(preview_keys,"R: check KEY/KBD/XLT resources  Esc: directory. Settings have not been applied.");
 #else
 TEXT(preview_keys,"R: check KEY/KBD resources  Esc: directory. Settings have not been applied.");
+#endif
 #endif
 #endif
 TEXT(resource_busy,"Resource check unavailable. Disconnect first or release other owners.");
@@ -261,6 +265,13 @@ unsigned __far __cdecl directory_view_event(word event,word key,word __far *fram
  if(phase==ERROR)return 1;
 #ifdef TERMINAL_DIRECTORY_PREVIEW
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+#ifdef DIRECTORY_SCRIPT_COMPILE
+ if(phase==PREVIEW && (c=='c' || c=='C')){
+  resource_notice=terminal_directory_compile_queue(PROPOSAL);
+  if(!resource_notice){active=0;return 0;}
+  draw();return 1;
+ }
+#endif
  if(phase==PREVIEW && (c=='r' || c=='R')){
   resource_notice=terminal_directory_resources_queue(PROPOSAL);
   if(!resource_notice){active=0;return 0;}

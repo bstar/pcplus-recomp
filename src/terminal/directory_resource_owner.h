@@ -22,6 +22,10 @@ unsigned __far __cdecl directory_resource_capture(live_configuration_plan *,tran
  * No file IO, settings adoption or transmitted bytes at this boundary. */
 unsigned __far __cdecl terminal_directory_resources_queue(const directory_selection_proposal __far *);
 unsigned __far __cdecl terminal_directory_resources_queued(void);
+#ifdef DIRECTORY_SCRIPT_COMPILE
+/* Explicit preview C action. Same immutable admission as R, PROGRAM kind8. */
+unsigned __far __cdecl terminal_directory_compile_queue(const directory_selection_proposal __far *);
+#endif
 /* Called only with PROGRAM active/kind6/status2, popup released, disconnected,
  * hardware IRQ masked/IER0/RTS low/vector released by the actual ASM owner.
  * Check seals, then stage resources at frozen-history+3978. No selected entry,
