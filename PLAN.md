@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Saved call-log startup policy](docs/PHONE_LOG_STARTUP.md) now decodes
+the accepted enable word, selects current/PCPLUS precedence, validates the
+parent and binds a canonical queue destination without creating a file.
+Thirty-two DOS workflows/1150 assertions preserve active events across rejected
+disable/retarget/invalid settings;24 public sources reproduce both executables
+and all16 objects, then repeat32 workflows. This service is not yet wired
+into the terminal. Logger-bank/startup placement, connection lifetimes,
+UART-aware polling and visible errors remain next; F07/F10 and all wider
+application/physical/card gates remain open.
+
 [Stock ENiGMA multiline editing](docs/ENIGMA_MULTILINE_EDITOR.md) now
 passes actual24-line DOS keyboard workflows with Page Up, an inserted edit,
 and Page Down. Both measured windows match all1920 cells and the real cursor

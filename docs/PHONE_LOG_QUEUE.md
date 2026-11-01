@@ -119,3 +119,8 @@ bridges and retained far storage into an experimental terminal. It has only
 stacks or limits to make them fit. Schedule filesystem polling safely with UART traffic and
 test BBS sessions before physical modem and card acceptance. SynthModem/SPA2102
 and Boca handshake compatibility remain separate unverified hardware work.
+
+The later [saved startup policy](PHONE_LOG_STARTUP.md) connects the accepted
+PRM enable word to current/PCPLUS path selection and canonical queue binding
+as a separately tested DOS service. It does not yet install the parent
+startup/event/poll hooks or close application logging acceptance.
