@@ -20,14 +20,14 @@ NAMES=['valid-directory-pair-profile6','invalid-KBD-no-publication','invalid-KEY
  'actual-transfer-changed-after-queue-before-resource-read','actual-DTE-changed-after-queue-before-resource-read']
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--target-profile',type=int,choices=[4,6],default=6);p.add_argument('--adopt',action='store_true',help='Exercise preview A and exact applied state');p.add_argument('--case',action='append',help='Run only named workflows');args=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--target-port',type=int,choices=[0,1,2,3,4],default=0);p.add_argument('--missing-target',action='store_true');p.add_argument('--target-profile',type=int,choices=[4,6],default=6);p.add_argument('--adopt',action='store_true',help='Exercise preview A and exact applied state');p.add_argument('--case',action='append',help='Run only named workflows');args=p.parse_args()
  binary=args.terminal.resolve();manifest=json.loads((binary.parent/'manifest.json').read_text())
  assert manifest['experimental_directory_resource_owner'] and sha(binary)==manifest['binary_sha256']
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
  translation=bool(manifest.get('experimental_directory_translation'));scripts=bool(manifest.get('experimental_directory_scripts'));compiling=bool(manifest.get('experimental_directory_compile'))
  fields=FIELDS+([('terminal_translation_enabled',2),('terminal_translation_mode',2),('terminal_translation_path',64),('_directory_resource_cli',202)] if translation else [])
  if scripts:fields += [('terminal_sink_398a_enabled',2),('_capture_file_result',96)]
- if args.adopt:fields += [('csi_terminal_id',2),('terminal_setup_profile_ready',2),('terminal_setup_profile_status',2),('terminal_translation_mode',2),('terminal_translation_enabled',2),('uart_rx_mask',2)]
+ if args.adopt:fields += [('csi_terminal_id',2),('terminal_setup_profile_ready',2),('terminal_setup_profile_status',2),('terminal_translation_mode',2),('terminal_translation_enabled',2),('uart_rx_mask',2),('terminal_port_number',2),('uart_irq_indices',2),('uart_port_rbr',2)]
  names=NAMES+(['XLT-current-default','XLT-PCPLUS-default','XLT-original-CLI-overrides-mode2','XLT-missing-required','XLT-truncated','XLT-suffixed','XLT-invalid-current-no-fallback','XLT-directory-no-fallback','XLT-mode2-no-read','XLT-mode0-no-read'] if translation else [])
  if scripts:names+=['script-current-ASX','script-environment-ASX-before-current-ASP','script-current-ASP-needs-compiler','script-environment-ASP-needs-compiler','script-bad-header-no-fallback','script-over64KiB','script-missing','script-qualified','script-empty-ASX','script-empty-ASP-needs-compiler','script-blank','script-directory-no-fallback','script-capture-preserved','script-capture-conflict']
  if compiling:names+=['compile-current-ASP','compile-environment-ASP','compile-syntax-error','compile-empty-source','compile-already-ASX','compile-no-script','compile-missing-helper','compile-capture-policy','compile-long-source-path']
@@ -37,6 +37,8 @@ def main():
  syms={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',(binary.parent/'terminal.map').read_text(),re.M|re.I)}
  ds=syms['terminal_stack_top'][0];field_bytes=sum(n for _,n in fields)
  if args.adopt:assert manifest.get('experimental_directory_adopt')
+ if args.target_port:assert args.adopt and args.target_port!=3,'Native source remains COM3/IRQ5; use another target here'
+ if args.missing_target:assert args.target_port==4
 
  assert all(syms[n][0]==ds for n,_ in fields)
  definitions={'BUNDLE_BYTES':bundle_bytes,'RESOURCE_BYTES':resource_bytes,
@@ -48,10 +50,18 @@ def main():
  'CONNECTION':syms['connection_state'][1],'FIELD_BYTES':field_bytes,'FIELD_COUNT':len(fields),
  'FROZEN_RELATIVE':syms['redisplay_snapshot'][0]-ds,'FROZEN_OFFSET':syms['redisplay_snapshot'][1]}
  if manifest.get('experimental_directory_adopt'):definitions['PREVIEW_KEY']=ord('A')
+ if args.target_port:definitions['ALLOW_PORT_MOVE']=1
  if args.adopt:definitions.update(RESOURCE_KIND=8,ADOPT_SCRIPT_RELATIVE=syms['directory_adopt_script_storage'][0]-ds,ADOPT_SCRIPT_OFFSET=syms['directory_adopt_script_storage'][1])
  (out/'owner-watch.inc').write_text(''.join(f'%define {n} {v}\n' for n,v in definitions.items()))
  (out/'owner-fields.inc').write_text(''.join(f'dw {syms[n][1]},{size}\n' for n,size in fields))
  subprocess.run(['nasm','-fbin','-I'+str(out)+'/',str(ROOT/'standalone/directory_resource_owner_watch.asm'),'-o',str(out/'WATCH.COM')],check=True)
+ if args.target_port:
+  subprocess.run(['nasm','-fbin',str(ROOT/'standalone/port_watch.asm'),'-o',str(out/'MSTAT.COM')],check=True)
+  for port,base in enumerate((0x3f8,0x2f8,0x3e8,0x2e8),1):
+   sampler=SAMPLER.replace('BEFORE.BIN',f'BEFORE{port}.BIN').replace('AFTER.BIN',f'AFTER{port}.BIN')
+   for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(base+off))
+   (out/f'snap{port}.asm').write_text(sampler);subprocess.run(['nasm','-fbin',str(out/f'snap{port}.asm'),'-o',str(out/f'SNAP{port}.COM')],check=True)
+
  sampler=SAMPLER
  for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(0x3e8+off))
  (out/'sampler.asm').write_text(sampler);subprocess.run(['nasm','-fbin',str(out/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
@@ -81,6 +91,11 @@ def main():
   data[250+0x56:250+0x5c]=b'BOARD\0';data[250+0x5f:250+0x65]=b'BOARD\0'
   if scripts:data[250+0x34:250+0x3d]=bytes(9)
   if args.adopt:data[250+0x49]=args.target_profile
+  if args.target_port:
+   data[250+0x68]=args.target_port
+   struct.pack_into('<H',settings,0x174+(args.target_port-1)*2,(0x3f8,0x2f8,0x3e8,0x2e8)[args.target_port-1])
+   struct.pack_into('<H',settings,0x184+(args.target_port-1)*2,(4,3,5,3)[args.target_port-1])
+
   selected_script=None
   xlt_mode=2 if mode in (11,17) else 1 if 9<=mode<=16 else 0
   struct.pack_into('<H',settings,0x1e0,xlt_mode)
@@ -178,6 +193,12 @@ SNAP S
 echo FAIL>FAIL.TXT
 exit
 '''
+
+  if args.target_port:
+   for leaf in ['MSTAT.COM',*[f'SNAP{i}.COM' for i in range(1,5)]]:shutil.copyfile(out/leaf,case/leaf)
+   if not args.missing_target:config=config.replace(f'serial{args.target_port}=disabled',f'serial{args.target_port}=dummy irq:{(4,3,5,3)[args.target_port-1]}')
+   config=config.replace('SNAP B\nWATCH T','SNAP B\n'+'\n'.join(f'SNAP{i} B' for i in range(1,5))+'\nMSTAT T\nWATCH T',1)
+   config=config.replace('WATCH\nSTRAT A','WATCH\nMSTAT\n'+'\n'.join(f'SNAP{i} A' for i in range(1,5))+'\nSTRAT A',1)
   (case/'dosbox.conf').write_text(config)
   with (case/'dosbox.log').open('w') as log:run=subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(case/'dosbox.conf')],env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log,timeout=45)
   assert run.returncode==0 and (case/'PASS.TXT').exists() and not (case/'FAIL.TXT').exists(),name
@@ -201,6 +222,7 @@ exit
   before=observed[pos:pos+bundle_bytes];pos+=bundle_bytes;bundle=observed[pos:pos+bundle_bytes];pos+=bundle_bytes
   owner=struct.unpack_from('<7H',observed,pos);pos+=14;resource=observed[pos:pos+resource_bytes];pos+=resource_bytes
   prompt=observed[pos:pos+4000];success=mode in (0,3,4,5,9,10,11,17,18,19,20,21,22,24,26,28,29,31,33,34,37,38,40,41)
+  if args.missing_target:success=False
   released=struct.unpack_from('<7H',observed,pos+4000)
   assert released[0]==0 and released[1:]==owner[1:],(name,released,owner)
   assert owner[0]==(3 if success else 4) and owner[1]==(0 if success else 4 if 6<=mode<=8 else 7) and owner[6]==1,(name,owner)
@@ -259,6 +281,7 @@ exit
     replace('_terminal_transfer_preferences',proposed[1124:1190])
     if struct.unpack_from('<H',bundle,1624)[0]==1:replace('terminal_translation_table',bundle[1692:1948])
     replace('terminal_baud_low',serial[2:4])
+    replace('terminal_port_number',serial[:2]);replace('uart_irq_indices',serial[34:36]);replace('uart_port_rbr',serial[32:34])
    assert expected_fields==observed[14+field_bytes:14+2*field_bytes],(name,'applied prompt fields')
    extra_at=pos+4000+14+(258 if compile_case else 0)
    final_fields=observed[extra_at:extra_at+field_bytes];binding=observed[extra_at+field_bytes:extra_at+field_bytes+80]
@@ -269,6 +292,14 @@ exit
    assert syms['terminal_stack_top'][1]-8192<=minimum_sp<syms['terminal_stack_top'][1],(name,minimum_sp)
    assert binding==(struct.pack('<HH',1,0)+bundle[1948:2024] if success else bytes(80)),name
    adoption_report=dict(applied=success,final_fields_verified=True,canonical_script_binding_verified=True,sampled_stack_bytes=syms['terminal_stack_top'][1]-minimum_sp)
+
+  if args.target_port:
+   assert all((case/f'BEFORE{i}.BIN').read_bytes()==(case/f'AFTER{i}.BIN').read_bytes() and len((case/f'BEFORE{i}.BIN').read_bytes())==42 for i in range(1,5)),name
+   samples=struct.unpack('<18H',(case/'WATCH.BIN').read_bytes());assert samples[0]==0x5043 and samples[1]>0
+   active=[samples[2+i*4] for i in range(4)]
+   assert active[2]>0 and (active[args.target_port-1]>0 if success else active[args.target_port-1]==0),(name,active)
+   if success:assert samples[3+(args.target_port-1)*4]==4 and samples[5+(args.target_port-1)*4]==1,(name,samples)
+   adoption_report.update(target_port=args.target_port,missing_target=args.missing_target,all_four_hardware_snapshots_restored=True,active_port_ticks=active)
   compiler_report={}
   if compile_case:
    state_at=pos+4000+14;state=observed[state_at:state_at+256];execs=struct.unpack_from('<H',observed,state_at+256)[0]

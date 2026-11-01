@@ -381,6 +381,9 @@ tick_handler:
  jnz .done
  cmp word [OWNER+12],1
  jne .done
+%ifdef ALLOW_PORT_MOVE
+ jmp .restored
+%endif
  mov dx,3e9h
  in al,dx
  cmp al,[cs:parent_ier]

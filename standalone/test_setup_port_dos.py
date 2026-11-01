@@ -9,7 +9,7 @@ ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/setup-port-dos'
 BINARY=ROOT/'build/terminal/TERMINAL.EXE';EDITOR=ROOT/'build/setup/PRMEDIT.EXE'
 BASES=[0x3f8,0x2f8,0x3e8,0x2e8]
 
-def run(name,source,target,*,accept=True,missing=False,combined=False,source_irq=None,target_irq=None):
+def run(name,source,target,*,accept=True,missing=False,combined=False,source_irq=None,target_irq=None,keyboard=None,peer_delay=9,timeout=25):
  folder=OUT/name
  if folder.exists():shutil.rmtree(folder)
  folder.mkdir(parents=True)
@@ -39,6 +39,7 @@ def run(name,source,target,*,accept=True,missing=False,combined=False,source_irq
   wanted=word(word(wanted,2,5),0x194,6)
  keys+=' f10 escape '+('y' if accept else 'n')+(' y' if combined else '')+(' space' if missing else '')
  keys+=' p6500 r e a d y p1800 a-x'
+ if keyboard is not None:keys=keyboard
  schedule='ADDKEY p750 '+' p120 '.join(keys.split())
  serial='\n'.join(f'serial{i}='+ (f'nullmodem port:{ports[i-1]} transparent:1 nonlocal:0 rxdelay:200 txdelay:1' if i<=3 else 'disabled') for i in range(1,5))
  if source_irq is not None:
@@ -82,7 +83,7 @@ exit
  def peer():
   # No TCP carrier during the settings choices. Establish it only after the
   # expected handoff, then prove the actual enabled UART through DSR/CPR/DA.
-  if stop.wait(9):return
+  if stop.wait(peer_delay):return
   try:
    with socket.create_connection(('127.0.0.1',ports[selected-1]),timeout=1) as conn:
     conn.settimeout(.05);next_probe=0;banner=False;post=False
@@ -107,7 +108,7 @@ exit
  thread.start()
  try:
   with (folder/'dosbox.log').open('w') as log:
-   proc=subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(folder/'dosbox.conf')],cwd=folder,stdout=log,stderr=log,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),timeout=25)
+   proc=subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(folder/'dosbox.conf')],cwd=folder,stdout=log,stderr=log,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),timeout=timeout)
  finally:stop.set();thread.join(1)
  (folder/'serial.bin').write_bytes(wire)
  checks['DOS_exit_success']=proc.returncode==0 and (folder/'PASS.TXT').exists() and not (folder/'FAIL.TXT').exists()

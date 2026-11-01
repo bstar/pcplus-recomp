@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <direct.h>
 static setup_document document;
 static setup_document_result result;
 static unsigned saved_screen[2000];
@@ -145,15 +146,56 @@ static unsigned run(void)
   }
  }
 }
-int main(int argc,char **argv)
+static int edit_file(const char *filename)
 {
  unsigned status;
- if(argc!=2){puts("Usage: PRMEDIT filename.PRM\nRun in the settings directory. Existing 2.01 files only.");return 1;}
  /* argv strings need only their real extent; copy into the bounded API buffer. */
- if(strlen(argv[1])>12){puts("Use an 8.3 leaf filename in the current directory.");return 1;}
- memset(edit,0,sizeof(edit));strcpy(edit,argv[1]);
+ if(strlen(filename)>12){puts("Use an 8.3 filename.");return 1;}
+ memset(edit,0,sizeof(edit));strcpy(edit,filename);
  status=setup_document_open(edit,&document,&result);
  if(status!=SETUP_DOCUMENT_OK){printf("Cannot open settings: status %u, DOS error %u.\n",status,result.io.dos_error);return 2;}
  if(!screen_start()){puts("PRMEDIT requires an 80-column text screen (mode 2, 3 or 7).");return 3;}
  status=run();screen_end();return (int)status;
+}
+
+/* Frozen parent identities use drive-absolute 8.3 paths. Keep the document's
+ * leaf-only replacement transaction: enter its directory in this child, then
+ * restore that drive's old directory and the original active drive on exit.
+ * Relative paths with directories, dot traversal, wildcards and long names
+ * remain invalid. No shell, PATH search or parent-pointer protocol is used. */
+int main(int argc,char **argv)
+{
+ char path[64],saved[68],*leaf,*p;
+ unsigned original_drive,target_drive,active,total,base,extension,dot;
+ int status,restore;
+ if(argc!=2){puts("Usage: PRMEDIT filename.PRM or X:\\DIR\\filename.PRM\nExisting 2.01 files only.");return 1;}
+ if(strlen(argv[1])>=sizeof(path))return 1;
+ strcpy(path,argv[1]);
+ if(!strchr(path,'\\') && !strchr(path,':'))return edit_file(path);
+ if(path[0]>='a' && path[0]<='z')path[0]-=32;
+ if(path[0]<'A' || path[0]>'Z' || path[1]!=':' || path[2]!='\\')return 1;
+ base=extension=dot=0;leaf=path+3;
+ for(p=leaf;*p;++p){
+  if(*p=='\\'){
+   if(!base || (dot && !extension))return 1;
+   base=extension=dot=0;leaf=p+1;continue;
+  }
+  if(*p=='.'){if(!base || dot)return 1;dot=1;continue;}
+  if(!((*p>='A' && *p<='Z') || (*p>='a' && *p<='z') ||
+       (*p>='0' && *p<='9') || *p=='_' || *p=='-'))return 1;
+  if(dot){if(++extension>3)return 1;}else if(++base>8)return 1;
+ }
+ if(!base || (dot && !extension))return 1;
+ target_drive=path[0]-'A'+1;
+ _dos_getdrive(&original_drive);
+ if(!_getdcwd(target_drive,saved,sizeof(saved)))return 1;
+ /* Retain the root backslash for a file directly in X:\. */
+ if(leaf==path+3)path[3]=0;else leaf[-1]=0;
+ _dos_setdrive(target_drive,&total);_dos_getdrive(&active);
+ status=1;
+ if(active==target_drive && !chdir(path))status=edit_file(argv[1]+(leaf-path));
+ restore=chdir(saved);
+ _dos_setdrive(original_drive,&total);_dos_getdrive(&active);
+ if(restore || active!=original_drive){puts("Could not restore the original DOS directory.");return 4;}
+ return status;
 }

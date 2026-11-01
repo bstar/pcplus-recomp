@@ -182,6 +182,23 @@ port_enter:
  cmp ax,[uart_port_rbr]
  jne .restore_old_hardware
  inc di
+%ifdef DIRECTORY_RESOURCE_ADOPTION
+ ; The UART snapshot must survive an IRQ-only move without pulsing DTR.
+ ; Its previous IRQ is nevertheless released now: restore just that PIC bit
+ ; after its original vector, retaining every unrelated interrupt mask.
+ extern uart_saved_pic
+ pushf
+ cli
+ mov bx,[uart_irq_indices]
+ shl bx,1
+ in al,0x21
+ mov ah,[uart_saved_pic]
+ xor ah,al
+ and ah,[uart_irq_disable_masks+bx]
+ xor al,ah
+ out 0x21,al
+ popf
+%endif
  jmp .hardware_released
 .restore_old_hardware:
 %endif
