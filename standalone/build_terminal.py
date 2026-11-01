@@ -36,6 +36,7 @@ parser.add_argument('--directory-translation',action='store_true',help='Stage tr
 parser.add_argument('--directory-retirement',action='store_true',help='Save pending statistics through a quiesced PROGRAM owner after disconnect; implies --directory-resource-owner')
 parser.add_argument('--directory-resource-owner',action='store_true',help='Quiesced KEY/KBD preflight from directory preview R; implies --directory-resource-cli')
 parser.add_argument('--phone-log-bank',action='store_true',help='Link the checked logger code bank; event/startup integration remains disabled')
+parser.add_argument('--phone-log-disk',action='store_true',help='Experimental guarded foreground append and shutdown drain; implies events')
 parser.add_argument('--phone-log-events',action='store_true',help='Experimental RAM session hooks; implies lifecycle; no live disk scheduler yet')
 parser.add_argument('--phone-log-lifecycle',action='store_true',help='Link the retained-event producer; implies startup/claims, transition hooks remain disabled')
 parser.add_argument('--phone-log-startup',action='store_true',help='Configure the call-log queue from accepted settings before UART startup; requires --session-baseline')
@@ -64,6 +65,7 @@ if args.directory_preview:
 if args.directory_view:args.original_reference=True
 if args.original_reference:args.original_keys=True
 if args.phone_log_reservations:args.phone_log_bank=True
+if args.phone_log_disk:args.phone_log_events=True
 if args.phone_log_events:args.phone_log_lifecycle=True
 if args.phone_log_lifecycle:args.phone_log_startup=True
 if args.phone_log_startup:
@@ -152,6 +154,7 @@ if args.phone_log_reservations:out_name+='-log-claims'
 if args.phone_log_startup:out_name+='-log-startup'
 if args.phone_log_lifecycle:out_name+='-log-lifecycle'
 if args.phone_log_events:out_name+='-log-events'
+if args.phone_log_disk:out_name+='-log-disk'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
  # buffers as the existing feature suffix chain grows.
@@ -183,7 +186,7 @@ sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 # The dedicated call-log bank is built explicitly; never pull its callbacks or
 # end marker into established terminals through the assembly glob.
 sources = [p for p in sources if p.name not in
- ('phone_log_bank.asm','phone_log_resident.asm','phone_log_storage.asm','phone_log_end.asm','phone_log_startup_bank.asm','phone_log_lifecycle_bank.asm','phone_log_events_bank.asm','directory_reader_bank.asm')]
+ ('phone_log_bank.asm','phone_log_resident.asm','phone_log_storage.asm','phone_log_end.asm','phone_log_startup_bank.asm','phone_log_lifecycle_bank.asm','phone_log_events_bank.asm','phone_log_disk_bank.asm','directory_reader_bank.asm')]
 if args.projection_probe:sources.append(ROOT/'standalone/session_projection_probe.asm')
 if args.hook_probe:sources.append(ROOT/'standalone/hook_transaction_probe.asm')
 if args.input_probe:sources += [ROOT/'standalone/hook_transaction_probe.asm',ROOT/'standalone/hook_input_probe.asm']
@@ -284,6 +287,7 @@ for index,source in enumerate(sources):
  if args.hook_lookup:options+=['-DTERMINAL_HOOK_LOOKUP']
  if args.phone_log_startup:options+=['-DTERMINAL_PHONE_LOG_STARTUP']
  if args.phone_log_events:options+=['-DTERMINAL_PHONE_LOG_EVENTS']
+ if args.phone_log_disk:options+=['-DTERMINAL_PHONE_LOG_DISK']
  if args.custom_irq:options+=['-DTERMINAL_CUSTOM_IRQ']
  if args.special_edition:options+=['-DTERMINAL_SPECIAL_EDITION']
  if args.native_reset_bank:options+=['-DTERMINAL_NATIVE_RESET_BANK']
@@ -517,7 +521,7 @@ if args.native_reset_bank:
 phone_log_bank=None
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
- phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup,lifecycle=args.phone_log_lifecycle,events=args.phone_log_events)
+ phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup,lifecycle=args.phone_log_lifecycle,events=args.phone_log_events,disk=args.phone_log_disk)
  objects+=list(map(str,phone_log_bank['objects']));sources+=phone_log_bank['sources']
 ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
 if args.directory_resource_owner:ordering+=['FAR_DATA','FROZEN_DATA']
@@ -634,8 +638,11 @@ if args.phone_log_bank:
  if args.phone_log_startup:manifest['experimental_phone_log_startup']=True
  if args.phone_log_lifecycle:manifest['experimental_phone_log_lifecycle']=True
  if args.phone_log_events:manifest['experimental_phone_log_events']=True
+ if args.phone_log_disk:manifest['experimental_phone_log_disk']=True
  manifest['phone_log_compiler_adapters']=phone_log_bank['adapters']
- if args.phone_log_events:
+ if args.phone_log_disk:
+  manifest['limitations'].append('Guarded main-loop one-record append and bounded shutdown draining. Online NONE flow defers to idle/offline/shutdown. No retry/recovery UI or complete sustained/physical/child acceptance yet.')
+ elif args.phone_log_events:
   manifest['limitations'].append('RAM session admission/CONNECT/disconnect/shutdown hooks are wired. No live disk scheduler; queued records explicitly fail shutdown with error12 and an unsaved notice. Physical carrier/child-clock acceptance remains open.')
  else:
   manifest['limitations'].append('Checked call-log code bank linked with retained far event storage and explicit DOS/CRT callbacks. No modem events or poll scheduling are wired yet; startup PRM/path adoption is optional; this build does not produce a live telephone log.')

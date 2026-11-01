@@ -2,6 +2,9 @@
  * Shutdown reports retained RAM records until the disk scheduler is supplied. */
 #include "phone_log_lifecycle.h"
 #include "phone_log_events.h"
+#ifdef PHONE_LOG_DISK
+#include "phone_log_disk.h"
+#endif
 #include "directory_live.h"
 #include <dos.h>
 extern unsigned terminal_option_mask,terminal_directory_mode,terminal_exit_code;
@@ -22,7 +25,11 @@ static unsigned publish(unsigned status)
 }
 unsigned __cdecl terminal_phone_log_events_ready(void)
 {
- unsigned status=phone_log_lifecycle_service();
+ unsigned status;
+#ifdef PHONE_LOG_DISK
+ if(terminal_phone_log_disk_status)return publish(terminal_phone_log_disk_status);
+#endif
+ status=phone_log_lifecycle_service();
  if(!status)status=phone_log_lifecycle_ready();
  return publish(status==PLQ_DISABLED?PLQ_OK:status);
 }
@@ -65,6 +72,10 @@ unsigned __cdecl terminal_phone_log_events_shutdown(void)
 {
  phone_log_queue_snapshot queue;phone_log_lifecycle_snapshot state;
  union REGS in,out;unsigned status=terminal_phone_log_events_disconnected();
+#ifdef PHONE_LOG_DISK
+ if(status==PLL_PENDING)status=PLQ_OK;
+ if(!status)status=phone_log_shutdown_drain();
+#endif
  if(!status)status=phone_log_lifecycle_inspect(&state);
  if(!status&&(state.active||state.pending))status=PLL_PENDING;
  if(!status)status=phone_log_queue_inspect(&queue);

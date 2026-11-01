@@ -59,16 +59,54 @@ def inspect_record(raw, calls, enabled, name, target):
     return checks, rows
 
 
+def inspect_disk_record(raw, calls, enabled, name, target, data):
+    meta = struct.unpack_from('<6H', raw)
+    life, queue = raw[12:50], raw[50:]
+    checks = dict(final_kind=meta[0] == 2, startup_ok=meta[5] == 0,
+        lifecycle_idle=struct.unpack_from('<H', life)[0] == 0x4c45 and struct.unpack_from('<4H', life, 6) == (0, 0, 0, 0),
+        generation=struct.unpack_from('<I', life, 2)[0] == calls,
+        queue_flags=struct.unpack_from('<9H', queue) == (0x514d, 0, enabled, calls * 2 % 4, 0, 0, 0, 0, 0),
+        queue_generations=struct.unpack_from('<3I', queue, 18) == (calls, calls, calls * 2),
+        final_status=meta[2] == 0)
+    heading = b'\r\nNAME                                NUMBER    DATE    ONLINE  OFFLINE  ELAPSED'
+    prefix = b'\r\n' + name[:22].ljust(22) + b' ' + target.rjust(20) + b' '
+    rows = []
+    checks['heading_and_size'] = (data.startswith(heading) and data.count(heading) == 1 and len(data) == len(heading) + calls * 81) if calls else data is None
+    if calls and data is not None:
+        for i in range(calls):
+            start = data[len(heading) + i * 81:len(heading) + i * 81 + 64]
+            end = data[len(heading) + i * 81 + 64:len(heading) + (i + 1) * 81]
+            valid = start.startswith(prefix)
+            try:
+                stamp = dt.datetime.strptime(start[len(prefix):].decode('ascii'), '%m/%d/%y %H:%M:%S ')
+                match = re.fullmatch(rb'(\d\d):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)', end)
+                valid &= bool(match)
+                if match:
+                    h, m, sec, eh, em, es = map(int, match.groups())
+                    elapsed = eh * 3600 + em * 60 + es
+                    finish = stamp + dt.timedelta(seconds=elapsed)
+                    valid &= em < 60 and es < 60 and elapsed < 30 and (finish.hour, finish.minute, finish.second) == (h, m, sec)
+                if i == calls - 1:
+                    captured = struct.unpack_from('<6H', life, 14)
+                    valid &= captured[0] % 100 == stamp.year % 100 and captured[1:] == (stamp.month, stamp.day, stamp.hour, stamp.minute, stamp.second)
+            except (ValueError, UnicodeError):
+                valid = False
+            rows.append(dict(generation=i + 1, start=start.decode('cp437'), end=end.decode('cp437'), valid=bool(valid)))
+    checks['exact_event_records'] = len(rows) == calls and all(r['valid'] for r in rows)
+    return checks, rows
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--terminal', type=Path, required=True)
     parser.add_argument('--label', required=True)
-    parser.add_argument('--case', choices=['success', 'hangup', 'busy', 'silence', 'redial', 'disabled', 'direct', 'capacity'])
+    parser.add_argument('--case', choices=['success', 'hangup', 'busy', 'silence', 'redial', 'disabled', 'direct', 'capacity', 'soft', 'both', 'none', 'fs-failure', 'program'])
     args = parser.parse_args()
     assert re.fullmatch('[a-z0-9-]+', args.label)
     parent = args.terminal.resolve()
     manifest = json.loads((parent / 'manifest.json').read_text())
     assert manifest['experimental_phone_log_events']
+    disk = bool(manifest.get('experimental_phone_log_disk'))
     binary = parent / 'TERMINAL.EXE'
     assert sha(binary) == manifest['binary_sha256']
     terminal.BINARY = binary
@@ -80,13 +118,21 @@ def main():
         LIFECYCLE_OFFSET=symbols['_phone_log_lifecycle_store'][1], QUEUE_SEGMENT=symbols['_phone_log_queue_store'][0],
         QUEUE_OFFSET=symbols['_phone_log_queue_store'][1], CONNECTION_STATE_OFFSET=symbols['connection_state'][1],
         CONNECTION_STATUS_OFFSET=symbols['connection_status'][1], STARTUP_STATUS_OFFSET=symbols['_terminal_phone_log_startup_status'][1])
+    if disk:
+        defines.update(DISK_ATTEMPTS_OFFSET=symbols['_terminal_phone_log_disk_attempts'][1],
+                       DISK_STATUS_OFFSET=symbols['_terminal_phone_log_disk_status'][1])
+    record_bytes = 720 if disk else 716
     output = ROOT / 'build/phone-log-events-terminal' / args.label
     assert not output.exists()
     output.mkdir(parents=True)
     observer = output / 'PLWATCH.COM'
     subprocess.run(['nasm', '-fbin', *[f'-D{k}={v}' for k, v in defines.items()],
         str(ROOT / 'standalone/phone_log_events_watch.asm'), '-o', str(observer)], check=True)
+    if disk:
+        child=output/'CHILD.COM'
+        subprocess.run(['nasm','-fbin',str(ROOT/'standalone/program_handoff_child.asm'),'-o',str(child)],check=True)
     sources = dict(manifest['sources'])
+    if disk:sources['standalone/program_handoff_child.asm']=sha(ROOT/'standalone/program_handoff_child.asm')
     for name in ('standalone/test_phone_log_events_terminal.py', 'standalone/phone_log_events_watch.asm',
         'standalone/test_connection_dos.py', 'standalone/modem_fixtures.py', 'standalone/directory_fixtures.py',
         'standalone/terminal_config_fixtures.py', 'standalone/directory_test_support.py', 'standalone/test_terminal.py'):
@@ -99,45 +145,96 @@ def main():
         ('disabled', 'success', 'p3500 a-x', 0, 0),
         ('direct', 'direct', 'p3500 a-x', 1, 1),
         ('capacity', 'direct', 'p2000 a-h p300 a-d p500 a-h p300 a-d p500 a-x', 1, 2)]
+    if disk:
+        cases += [(n, 'success', 'p3500 a-x', 1, 1) for n in ('soft', 'both', 'none', 'fs-failure')]
+        cases += [('program','success','p2500 a-1 p1500 space p700 r e a d y p800 a-x',1,1)]
+    assert not args.case or any(row[0] == args.case for row in cases)
     results, artifacts = [], {}
     for name, mode, keys, enabled, calls in cases:
+        if disk and name == 'capacity':calls=3
         if args.case and args.case != name:
             continue
         settings = bytearray(fixture(timeout=2 if mode == 'silence' else 5))
         struct.pack_into('<HH', settings, 0x4e4, 8, 4)
         struct.pack_into('<H', settings, 0x1e6, enabled)
+        if name in ('soft', 'both', 'none', 'fs-failure'):
+            struct.pack_into('<HH', settings, 0x198, int(name != 'none'), int(name == 'both'))
         selected = directory(direct=1) if mode == 'direct' else None
         options = dict(directory=selected, arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1', accounting_delta=calls) if selected else {}
         case = args.label + '-' + name
         folder = ROOT / 'build/connection-dos' / case
         assert not folder.exists()
+        if name == 'fs-failure':
+            def namespace_fault(owned):
+                assert owned == folder and not (owned/'PCPLUS.FON').exists()
+                (owned/'PCPLUS.FON').mkdir()
+                (owned/'PCPLUS.FON'/'KEEP.BIN').write_bytes(b'OWNED NAMESPACE FAULT')
+            options['dial_action'] = namespace_fault
+        files={'PLWATCH.COM':observer.read_bytes()}
+        if name == 'program':
+            keymap=bytearray(540)
+            for i in range(10):struct.pack_into('<H',keymap,i*54,3)
+            command=b'D:\\CHILD.COM /OWNED'
+            struct.pack_into('<H',keymap,0,1);keymap[2:2+len(command)]=command
+            files.update({'CHILD.COM':child.read_bytes(),'TEST.KEY':bytes(keymap)})
+            options['arguments']='@D:\\TEST.PRM /D:CaseTest:23 /T:D:\\TEST.KEY'
+        expected_exit = 12 if (calls and not disk) or name == 'fs-failure' else 0
         native = terminal.run(case, mode, 'p900 enter ' + keys, prm=bytes(settings),
-            files={'PLWATCH.COM': observer.read_bytes()}, observer='PLWATCH', working_drive='d',
-            expected=12 if calls else 0, cpu='8086', **options)
+            files=files, observer='PLWATCH', working_drive='d',
+            expected=expected_exit, cpu='8086', **options)
         captured = (folder / 'PLSTATE.BIN').read_bytes()
-        assert len(captured) == 5748
+        assert len(captured) == 20+8*record_bytes+(2 if disk else 0)
         header = struct.unpack_from('<10H', captured)
-        final = captured[20 + (header[2] - 1) * 716:20 + header[2] * 716]
-        checks, rows = inspect_record(final, calls, enabled, b'LAB NODE 001' if selected else b'MODEM', b'' if selected else b'CaseTest:23')
+        final = captured[20 + (header[2] - 1) * record_bytes:20 + header[2] * record_bytes]
+        identity, number = (b'LAB NODE 001', b'') if selected else (b'MODEM', b'CaseTest:23')
+        if disk:
+            attempts, disk_status = struct.unpack_from('<2H', final, 716)
+            samples=[captured[20+i*record_bytes:20+(i+1)*record_bytes] for i in range(header[2])]
+            if name == 'fs-failure':
+                checks, rows = inspect_record(final, calls, enabled, identity, number)
+                checks.update(queue_flags=struct.unpack_from('<9H',final,50)==(0x514d,0,1,0,2,0,1,0,4),
+                    final_status=struct.unpack_from('<H',final,4)[0]==9,
+                    one_failed_poll=attempts==1 and disk_status==9,
+                    namespace_preserved=(folder/'PCPLUS.FON').is_dir() and (folder/'PCPLUS.FON'/'KEEP.BIN').read_bytes()==b'OWNED NAMESPACE FAULT')
+            else:
+                data=(folder/'PCPLUS.FON').read_bytes() if (folder/'PCPLUS.FON').is_file() else None
+                checks, rows = inspect_disk_record(final, calls, enabled, identity, number, data)
+                checks['one_poll_per_record']=attempts==calls*2 and disk_status==0
+                online_commits=[struct.unpack_from('<I',r,76)[0] for r in samples if struct.unpack_from('<H',r,18)[0]==1]
+                if calls and name not in ('capacity','none'):
+                    checks['foreground_append_while_online']=any(n>=1 for n in online_commits)
+                if name == 'none':checks['online_NONE_deferred']=bool(online_commits) and all(n==0 for n in online_commits)
+            if name in ('soft','both','fs-failure'):
+                wire=(folder/'serial.bin').read_bytes()
+                checks['software_pause_resumed']=wire.count(b'\x13')>=1 and wire.count(b'\x13')==wire.count(b'\x11')
+        else:
+            checks, rows = inspect_record(final, calls, enabled, identity, number)
         screen = (folder / 'SCREEN.BIN').read_bytes()[::2]
         checks.update(normal_terminal=native['passed'], observer_final=header[0] == 0x4c45 and header[1] > 0 and 0 < header[2] <= 8 and header[3] == 1,
             actual_live_segments=header[4] > 0 and header[5] != header[6],
-            actual_exit=header[9] == (12 if calls else 0),
-            no_log_disk_write=not any(folder.rglob('*.FON')),
-            unsaved_notice=(b'Call log pending; records were not saved.' in screen) == bool(calls))
+            actual_exit=header[9] == expected_exit,
+            expected_log_files=set(p.relative_to(folder).as_posix() for p in folder.rglob('*.FON')) == ({'PCPLUS.FON'} if calls and disk else set()),
+            unsaved_notice=(b'Call log pending; records were not saved.' in screen) == bool(expected_exit==12))
+        if name == 'program':
+            handoff=(folder/'HANDOFF.BIN').read_bytes() if (folder/'HANDOFF.BIN').exists() else b''
+            before=(folder/'BEFORE.BIN').read_bytes()
+            checks.update(child_with_released_UART=len(handoff)==10 and handoff[:4]==before[16:20] and handoff[5]==0 and handoff[6]&3==1,
+                child_arguments=(folder/'HANDARG.BIN').is_file() and (folder/'HANDARG.BIN').read_bytes()==b'\x07 /OWNED\r',
+                child_returned_to_same_call=b'ready' in (folder/'serial.bin').read_bytes())
+        if name == 'fs-failure':checks['retry_notice_observed']=struct.unpack_from('<H',captured,len(captured)-2)[0]==1
         if name == 'capacity':
-            checks['capacity_refusal_visible'] = b'Call log blocked' in screen
+            checks['capacity_refusal_visible'] = (b'Call log blocked' in screen) == (not disk)
         results.append(dict(case=name, passed=all(checks.values()), checks=checks,
             observer_header=header, final_metadata=list(struct.unpack_from('<6H', final)), records=rows, native=native))
         artifacts.update({str(p.relative_to(ROOT)): sha(p) for p in folder.rglob('*') if p.is_file()})
         print(name, 'PASS' if results[-1]['passed'] else 'FAIL', flush=True)
-    checks = dict(all_cases=all(r['passed'] for r in results), sources_unchanged=all(sha(ROOT / n) == d for n, d in sources.items()),
+    checks = dict(all_cases=bool(results) and all(r['passed'] for r in results), sources_unchanged=all(sha(ROOT / n) == d for n, d in sources.items()),
         binary_unchanged=sha(binary) == manifest['binary_sha256'])
-    result = dict(passed=all(checks.values()), checks=checks, cases=results, sources=sources,
+    result = dict(passed=all(checks.values()), disk_scheduling=disk, checks=checks, cases=results, sources=sources,
         terminal_sha256=sha(binary), observer_defines=defines, artifacts=artifacts, original_inputs=[],
         scope=__doc__ + ' Stable timer snapshots and parent INT21/4C before deallocation; no product RAM writes or synthesized terminal replies. '
-        'RAM events only: nonempty logs deliberately fail shutdown with error12 until a disk scheduler is added. '
-        'These cases do not prove physical DCD, failed-hangup continuity, child-clock ownership or durable log persistence.')
+        + ('Checked log persistence with foreground/shutdown composition. ' if disk else 'RAM events only: nonempty logs deliberately fail shutdown with error12 until a disk scheduler is added. ')
+        + 'These cases do not prove physical DCD, failed-hangup continuity, child-clock ownership, power-loss durability or sustained transport.')
     (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(dict(passed=result['passed'], checks=checks, failed=[r for r in results if not r['passed']]), indent=2))
     assert result['passed']

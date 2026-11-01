@@ -288,7 +288,14 @@ terminal_program_poll:
  cmp word [terminal_program_kind],7
  je .retirement_capture_ready
 %endif
+%ifdef TERMINAL_PHONE_LOG_DISK
+ extern _phone_log_disk_before_program_far
+ global terminal_phone_log_program_gate_site
+ terminal_phone_log_program_gate_site equ $
+ call far _phone_log_disk_before_program_far
+%else
  call terminal_capture_before_program
+%endif
  cmp ax,2
  je .printer_wait
  or ax,ax

@@ -10,7 +10,7 @@ import sys
 from build_phone_log_queue import ROOT, sha
 
 
-def flags(manifest, startup, event_hooks=True):
+def flags(manifest, startup, event_hooks=True, disk=True):
     fields = {'experimental_external_render': 'external-render', 'experimental_mouse': 'mouse',
         'experimental_notice_input': 'notice-input', 'experimental_aspect_keys': 'aspect-keys',
         'experimental_directory_keys': 'directory-keys', 'terminal_exit_guard': 'exit-guard',
@@ -29,6 +29,8 @@ def flags(manifest, startup, event_hooks=True):
         result += ['--native-reset-static']
     if not startup:
         return result + ['--phone-log-bank']
+    if manifest.get('experimental_phone_log_disk') and event_hooks and disk:
+        return result + ['--phone-log-disk']
     if manifest.get('experimental_phone_log_events') and event_hooks:
         return result + ['--phone-log-events']
     return result + ['--phone-log-lifecycle' if manifest.get('experimental_phone_log_lifecycle') else '--phone-log-startup']
@@ -55,8 +57,10 @@ def main():
     if reservations:
         names |= {'standalone/phone_log_claim_watch.asm', 'standalone/phone_log_reservation_diagnostic.c',
                   'standalone/phone_log_bank_client.asm'}
+    disk=bool(manifest.get('experimental_phone_log_disk'))
     events=bool(manifest.get('experimental_phone_log_events'))
     if events:names |= {'standalone/phone_log_events_watch.asm'}
+    if disk:names |= {'standalone/program_handoff_child.asm'}
     lifecycle=bool(manifest.get('experimental_phone_log_lifecycle'))
     if lifecycle:
         names |= {'standalone/phone_log_lifecycle_diagnostic.c', 'standalone/phone_log_lifecycle_client.asm'}
@@ -94,6 +98,21 @@ def main():
         if events:
             subprocess.run([sys.executable, 'standalone/test_phone_log_events_terminal.py',
                 '--terminal', str(rebuilt), '--label', 'public-events'], cwd=fresh, stdout=log, stderr=log, check=True)
+            if disk:
+                for folder in (fresh,output/'baseline'):
+                    subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, True, True, False)],
+                        cwd=folder, stdout=log, stderr=log, check=True)
+                def ram_control(folder):
+                    products=[p for p in (folder/'build').glob('terminal-phone-log-bank-*/manifest.json')
+                        if json.loads(p.read_text()).get('experimental_phone_log_events') and
+                        not json.loads(p.read_text()).get('experimental_phone_log_disk')]
+                    assert len(products)==1
+                    return products[0].parent
+                ram_target=ram_control(fresh)
+                assert sha(ram_target/'TERMINAL.EXE')==sha(ram_control(output/'baseline')/'TERMINAL.EXE')
+                subprocess.run([sys.executable, 'standalone/test_phone_log_events_terminal.py',
+                    '--terminal', str(ram_target), '--label', 'public-ram-events'],
+                    cwd=fresh, stdout=log, stderr=log, check=True)
             for folder in (fresh,output/'baseline'):
                 subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, True, False)],
                     cwd=folder, stdout=log, stderr=log, check=True)
@@ -107,6 +126,7 @@ def main():
             baseline_lifecycle=lifecycle_control(output/'baseline')
             assert sha(startup_target/'TERMINAL.EXE')==sha(baseline_lifecycle/'TERMINAL.EXE')
             event_control=dict(unchanged_event_off_control_sha256=sha(startup_target/'TERMINAL.EXE'))
+            if disk:event_control['unchanged_disk_off_control_sha256']=sha(ram_target/'TERMINAL.EXE')
         subprocess.run([sys.executable, 'standalone/test_phone_log_startup_terminal.py',
             '--terminal', str(startup_target), '--label', 'public-startup'], cwd=fresh, stdout=log, stderr=log, check=True)
         if reservations:
@@ -149,9 +169,17 @@ def main():
     if events:
         events_path=fresh/'build/phone-log-events-terminal/public-events/result.json'
         event_report=json.loads(events_path.read_text())
-        assert event_report['passed'] and all(event_report['checks'].values()) and len(event_report['cases'])==8
+        assert event_report['passed'] and all(event_report['checks'].values()) and len(event_report['cases'])==(13 if disk else 8)
         assert event_report['terminal_sha256']==manifest['binary_sha256']
-        composition.update(repeated_event_cases=8,repeated_event_sha256=sha(events_path))
+        if disk:
+            ram_path=fresh/'build/phone-log-events-terminal/public-ram-events/result.json'
+            ram_report=json.loads(ram_path.read_text())
+            assert ram_report['passed'] and len(ram_report['cases'])==8 and all(ram_report['checks'].values())
+            assert ram_report['terminal_sha256']==event_control['unchanged_disk_off_control_sha256']
+            composition.update(repeated_disk_cases=13,repeated_disk_sha256=sha(events_path),
+                repeated_event_cases=8,repeated_event_sha256=sha(ram_path))
+        else:
+            composition.update(repeated_event_cases=8,repeated_event_sha256=sha(events_path))
     assert all(sha(fresh / name) == digest for name, digest in sources.items())
     result = dict(passed=True, source_commit=commit, baseline_commit=baseline, source_count=len(sources), sources=sources,
         declared_uncommitted_reservation_source_differences=differences, original_inputs=[],
@@ -160,7 +188,7 @@ def main():
         build_log_sha256=sha(output / 'build.log'),**composition,
         scope=__doc__ + ' Public Git source only; no Git metadata, originals, previous objects or installed files copied. '
             'Require exact full executable despite declared pending-source differences. Compare disabled-feature '
-            'control against the pre-feature public commit. Optional RAM-event hooks when selected; startup/capture regressions use the independently compared event-off control. No live disk polling or deployment.')
+            'control against the pre-feature public commit. Optional RAM-event hooks when selected; startup/capture regressions use the independently compared event-off control. Guarded disk polling only when selected; no complete transport, recovery UI, physical or deployment acceptance.')
     (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print('PASS public parent:', len(sources), 'sources; seven native startup cases; exact disabled-feature control')
 

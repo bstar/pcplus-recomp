@@ -304,6 +304,12 @@ terminal_phone_log_startup_done equ $
  call terminal_program_poll
  cmp word [terminal_quit],0
  jne terminal_shutdown
+%ifdef TERMINAL_PHONE_LOG_DISK
+ extern _terminal_phone_log_disk_poll_far
+ global terminal_phone_log_disk_poll_site
+ terminal_phone_log_disk_poll_site equ $
+ call far _terminal_phone_log_disk_poll_far
+%endif
  cmp word [terminal_program_pending],0
  jne .idle
  call far terminal_status_poll

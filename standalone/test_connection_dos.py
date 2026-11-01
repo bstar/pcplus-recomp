@@ -6,7 +6,7 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False):
+def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False,dial_action=None):
  assert cpu in ('8086','286','386','486')
  assert irq is None or irq in (3,4,5,7)
  assert working_drive in ("c","d")
@@ -100,6 +100,8 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
       if command==b'ATZ':conn.sendall(b'\r\nOK\r\n')
       elif command==b'ATD'+target:
        attempts+=1
+       if attempts==1 and dial_action is not None:
+        dial_action(out);checks['dial_action_called']=True
        if mode=='silence':continue
        if mode=='busy' or (mode=='redial' and attempts==1):conn.sendall(b'\r\nBUSY\r\n');continue
        online=True;online_at=time.monotonic()

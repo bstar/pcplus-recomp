@@ -401,6 +401,24 @@ def inspect_terminal_memory(binary,map_path):
    assert symbols[name][0]==ds and word(name)==0
   extra.update(phone_log_event_entries_verified=4,phone_log_event_call_sites_verified=7,
       phone_log_event_call_sites={name:address(name) for name in callsites})
+ if '_terminal_phone_log_disk_poll_far' in symbols:
+  for entry in ('_terminal_phone_log_disk_poll','_phone_log_disk_before_program'):
+   assert symbols[entry+'_far'][0]==symbols[entry+'_impl'][0]==bank_seg
+   near_call(entry+'_far',entry+'_impl',prefix=b'\x55\x89\xe5',suffix=b'\x8d\x66\x00\x5d\xcb')
+  for site,dest in (('terminal_phone_log_disk_poll_site','_terminal_phone_log_disk_poll_far'),
+                    ('terminal_phone_log_program_gate_site','_phone_log_disk_before_program_far')):
+   assert raw(site,5)==b'\x9a'+struct.pack('<HH',symbols[dest][1],symbols[dest][0])
+   assert address(site)+3 in relocations and symbols[site][0]==near_code['relative_segment']
+  near_call('phone_capture_before_program_resident','terminal_capture_before_program')
+  notify=raw('_phone_log_disk_notify',15)
+  assert notify[:7]==b'\x55\x89\xe5\x56\x8b\x76\x04'
+  assert notify[7:12]==b'\x9a'+struct.pack('<HH',symbols['connection_notice_resident'][1],symbols['connection_notice_resident'][0])
+  assert notify[12:]==b'\x5e\x5d\xc3'
+  assert address('_phone_log_disk_notify')+10 in relocations
+  for name in ('_terminal_phone_log_disk_attempts','_terminal_phone_log_disk_status'):
+   assert symbols[name][0]==ds and word(name)==0
+  extra.update(phone_log_disk_entries_verified=2,phone_log_disk_call_sites_verified=2,
+      phone_log_disk_existing_notice_callback_verified=True)
  if '_phone_log_startup_owner_far' in symbols:
   assert symbols['_phone_log_startup_owner_far'][0]==symbols['_phone_log_startup_owner_impl'][0]==bank_seg
   near_call('_phone_log_startup_owner_far','_phone_log_startup_owner_impl',prefix=b'\x55\x89\xe5',suffix=b'\x8d\x66\x00\x5d\xcb')

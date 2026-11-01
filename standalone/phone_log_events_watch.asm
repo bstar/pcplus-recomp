@@ -4,15 +4,27 @@
 BITS 16
 CPU 8086
 ORG 100h
+%ifdef DISK_ATTEMPTS_OFFSET
+%define RECORD_BYTES 720
+%else
 %define RECORD_BYTES 716
+%endif
 %define RECORD_LIMIT 8
+%ifdef DISK_ATTEMPTS_OFFSET
+%define SAMPLE_BYTES (22+RECORD_BYTES*RECORD_LIMIT)
+%else
 %define SAMPLE_BYTES (20+RECORD_BYTES*RECORD_LIMIT)
+%endif
 jmp start
 old_timer: dd 0
 old_dos: dd 0
 old_irq_segment: dw 0
 sample: dw 0x4c45,0,0,0,0,0,0,0,0,0
 records: times RECORD_BYTES*RECORD_LIMIT db 0
+%ifdef DISK_ATTEMPTS_OFFSET
+retry_notice: dw 0
+retry_text: db 'Call log retry required',0
+%endif
 %macro save 0
  pushf
  push bp
@@ -65,6 +77,9 @@ timer_handler:
 .known:
  cmp bx,[sample+8]
  jne .done
+%ifdef DISK_ATTEMPTS_OFFSET
+ call scan_retry_notice
+%endif
  mov dx,1
  call capture
 .done:
@@ -158,6 +173,14 @@ capture:
  inc si
  inc di
  loop .queue
+%ifdef DISK_ATTEMPTS_OFFSET
+ mov ax,[sample+10]
+ mov es,ax
+ mov ax,[es:DISK_ATTEMPTS_OFFSET]
+ mov [di],ax
+ mov ax,[es:DISK_STATUS_OFFSET]
+ mov [di+2],ax
+%endif
  cmp word [sample+4],RECORD_LIMIT
  jae .counted
  inc word [sample+4]
@@ -167,6 +190,38 @@ capture:
  mov word [sample+6],1
 .done:
  ret
+%ifdef DISK_ATTEMPTS_OFFSET
+; Actual bottom-row text is observed throughout the call; transport notices
+; may legitimately replace this warning before the final shutdown frame.
+scan_retry_notice:
+ cmp word [retry_notice],0
+ jne .done
+ mov ax,0xb800
+ mov es,ax
+ mov di,3840
+.next:
+ mov bx,di
+ mov si,retry_text
+.match:
+ mov al,[si]
+ or al,al
+ jz .found
+ cmp al,[es:bx]
+ jne .advance
+ inc si
+ add bx,2
+ cmp bx,4000
+ jb .match
+.advance:
+ add di,2
+ cmp di,4000
+ jb .next
+ ret
+.found:
+ mov word [retry_notice],1
+.done:
+ ret
+%endif
 resident_end:
 start:
  mov ax,351ch
