@@ -1,5 +1,20 @@
 # PCPlus DOS reconstruction
 
+[The connection-test package is ready](docs/CONNECTION_TEST_READY.md) for user-operated Boca/SPA2102
+testing through SynthModem to LoSs oF CoNtRoL. Five source-built executables and
+all ten package files reproduce exactly; COM3/IRQ5 package checks and the live
+LOC route pass. The bridge now advertises matching80x24 while retaining its
+backend/aliases. Physical login/interaction remains pending; in-app ASP compilation
+has a documented RAM limit with a validated DOS-precompile/ASX workflow.
+
+[Original menu and logging](docs/ORIGINAL_MENU_LOGGING.md) now fit together through a typed
+banked deadline selector. Its140 instruction bytes and1,620 executions match
+the accepted resident implementation. The combined build preserves39 original
+labels/shortcuts and adds a plain-L log pane while retaining Alt-L printing.
+An actual DOS reference capture,68-workflow public replay and fresh BBS checks
+pass; unavailable commands/full UI, matched package and physical/card gates
+remain open. The combined variant has84 resident bytes spare.
+
 [Mid-frame modem recovery](docs/MIDFRAME_MODEM_RECOVERY.md) now reuses the retry separator after
 confirmed carrier loss, preventing in-flight upload bytes from corrupting the
 next initialization. Four old-image cases fail; four fixed YMODEM/ZMODEM cases

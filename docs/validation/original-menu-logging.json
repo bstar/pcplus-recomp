@@ -1,0 +1,251 @@
+{
+  "passed": true,
+  "source_commit": "1561c0ec3933254b9c72cf31fe24eff9dadd8d01",
+  "terminal_sha256": "99f0a1ac69b851082bf601d3daaa568b8588cc8dfec6f6aceaaabfc4dc775744",
+  "public_workflows": 68,
+  "public_source_count": 1988,
+  "public_proof_path": "build/combined-original-menu-public-01/result.json",
+  "public_proof_sha256": "93dbf90eb10f3d7a04fa31d18c6fc57260cd5e3b9902a635d3761f21e9760310",
+  "public_matrices": {
+    "public-original-reference": {
+      "path": "build/combined-original-menu-public-01/source/build/reference-dos/public-original-reference/result.json",
+      "sha256": "e7b8395d327f9449ac1da7d9051a00597bdf966bee286dd9d274067addc26d1f",
+      "cases": 1
+    },
+    "public-existing": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "10f2a2cc6b28b46417ab4d781d099f957036c955e1fd29fc0f59103d7033bd74",
+      "cases": 5
+    },
+    "public-controls": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "c72a4e2b05b22d7e64e856f3887982df5bc41f9a9681d986e1a2b53f0bb6e1b4",
+      "cases": 19
+    },
+    "public-preexisting": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+      "sha256": "68eb778bc0d75926d0870fb65925209e88e079945262cf180fcad7fbeebe7292",
+      "cases": 5
+    },
+    "public-io-failures": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+      "sha256": "7c9024cae1367d4c91ac4f31d2d588d4d40db02c12e65d39867c8b32b440ef59",
+      "cases": 3
+    },
+    "public-permissions": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-events-terminal/public-permissions/result.json",
+      "sha256": "0b1bfce96ad79eeca8e30a06c7eda2a043502c2b828970ed6f0fb1514baaa182",
+      "cases": 2
+    },
+    "public-readonly": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-startup-terminal/public-readonly/result.json",
+      "sha256": "cc3bf41b374eb76d310f869cad84d54ce02c412fbcb8cb371d2ac3c68b6a17e6",
+      "cases": 2
+    },
+    "public-slow": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-slow-terminal/public-slow/result.json",
+      "sha256": "ceac8e3726eeb62c233c79d0dffda58099e2bb592d3a71fe340ed0723241c57b",
+      "cases": 3
+    },
+    "public-watermark": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-slow-terminal/public-watermark/result.json",
+      "sha256": "4b5cde735ebc309311aadbee9d82fa6116b75d651915d614d97a0bdcfac9507d",
+      "cases": 3
+    },
+    "public-carrier": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-carrier-terminal/public-carrier/result.json",
+      "sha256": "c9e4d376789fe6f00eb5e3b2e150ea2b7605d14e8457f32632d8f7e94c8423b1",
+      "cases": 3
+    },
+    "public-aspect-carrier": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-carrier-terminal/public-aspect-carrier/result.json",
+      "sha256": "341ecfcc1185745f998ea7bd3f5cf3e3f7d607e9d7f367503dd3c763d3efea68",
+      "cases": 4
+    },
+    "public-transfer-carrier": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-carrier-terminal/public-transfer-carrier/result.json",
+      "sha256": "46090d1a6897fb60e6dd8c7b7d3e4ff30dbdcee4947c44ad30a4c6c9daf36855",
+      "cases": 4
+    },
+    "public-batch-carrier": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-carrier-terminal/public-batch-carrier/result.json",
+      "sha256": "a817369095f15dd86a0759944b66e183d0903380ca671a154165231440d77682",
+      "cases": 10
+    },
+    "public-fragment-carrier": {
+      "path": "build/combined-original-menu-public-01/source/build/phone-log-carrier-terminal/public-fragment-carrier/result.json",
+      "sha256": "630d57ff648dc4bde9aa0ed6a314209fdbaa53be3eef0f126773a2bb06ac9dac",
+      "cases": 4
+    }
+  },
+  "linked_menu_reports": {
+    "check_command_reference.py": {
+      "path": "build/combined-original-menu-public-01/source/build/terminal-phone-log-bank-c0238634b651/reference-checks.json",
+      "sha256": "4640fc50637a0d7430dcb97d5bf51755d7dd13ea769330b0c4ea4cfa4308889c",
+      "groups": 9,
+      "inputs": 90
+    },
+    "check_original_keys.py": {
+      "path": "build/combined-original-menu-public-01/source/build/terminal-phone-log-bank-c0238634b651/original-key-checks.json",
+      "sha256": "c857a746575a7fa949542c90ce64aa67548046d624b098d5ec849e18456c0f55",
+      "groups": 7,
+      "inputs": 29
+    }
+  },
+  "budget_bank": {
+    "path": "build/transfer-budget-bank-checks-02/result.json",
+    "sha256": "7c6242d235b12d374f85c011a63f7c1d6e8e8eaa32c9e48ae9efc7bf49532f4e",
+    "body_bytes": 140,
+    "configurations": 324,
+    "executions": 1620
+  },
+  "native_reference": {
+    "path": "build/reference-dos/combined-log-menu-01/result.json",
+    "sha256": "c5865052ab3a711de3845b72a973decabc52d36a4f732d8b66e424ed4ad8430e",
+    "checks": {
+      "base_harness": true,
+      "independent_reference_capture": true,
+      "all_39_commands_visible": true,
+      "direct_AltD_refusal_observed": true,
+      "source_help_observed": true,
+      "backtick_browser_observed": true,
+      "no_hidden_redial": true,
+      "background_cursor_reply": true,
+      "post_reference_keyboard": true,
+      "UI_keys_not_forwarded": true,
+      "updated_live_video_restored": true,
+      "captured_ROM_font_nonempty": true
+    }
+  },
+  "BBS_sessions": {
+    "enigma": {
+      "producer_path": "build/bbs-lab/results/enigma/combined-menu-enigma-01/proxy-integration.json",
+      "producer_sha256": "fb0c07af5e47250d6c1be44d5314cc2323dfa2107e8bf99d8150eb70c5ee5410",
+      "screen_audit_sha256": "6f0f2b8e3f80972a30f1643fe96460ad7307b87fe736683b1ce8b3d94a522623",
+      "screen_checks": {
+        "producer_passed": true,
+        "runtime_unchanged": true,
+        "exact_delivered_prefix": true,
+        "real_single_CPR_boundary": true,
+        "cursor_matches_reference": true,
+        "all_1920_cells_match": true,
+        "hardware_restored": true,
+        "status_visible": true,
+        "font_probe_projection_explicit": true,
+        "held_output_exact": true
+      },
+      "phone_log": {
+        "passed": true,
+        "checks": {
+          "final_kind": true,
+          "startup_ok": true,
+          "lifecycle_idle": true,
+          "generation": true,
+          "queue_flags": true,
+          "queue_generations": true,
+          "final_status": true,
+          "heading_and_size": true,
+          "exact_event_records": true,
+          "observer_final": true,
+          "actual_parent_segments": true,
+          "exact_append_attempts": true,
+          "START_saved_online": true,
+          "only_owned_log_created": true
+        },
+        "records": [
+          {
+            "generation": 1,
+            "start": "\r\nMODEM                       lab.local:36833 11/01/26 05:39:27 ",
+            "end": "05:41:31 00:02:04",
+            "valid": true
+          }
+        ],
+        "observer_header": [
+          19525,
+          2327,
+          3,
+          1,
+          2968,
+          15938,
+          15896,
+          6,
+          0,
+          0
+        ],
+        "log_sha256": "b178bd98ef563cfbbbf1752f218191d7f2c4517f510f00d4acc07aac5c99e19e",
+        "observer_sha256": "960f089f8ee7f9d2fb36377273acdacff1981e66e6f3de12ac429d3d42cacaab",
+        "snapshot_sha256": "fd9e7611ffc7f2d1523c4617dae7426193949fc9ec475408d634661f0e6db96f",
+        "scope": "Actual owned stock BBS, parent event/file owners and passive 8086 COM3/IRQ5 snapshots. One normal call pair; not physical DCD/SIP or complete logging composition."
+      }
+    },
+    "synchronet": {
+      "producer_path": "build/bbs-lab/results/synchronet/combined-menu-synchronet-01/proxy-integration.json",
+      "producer_sha256": "97a905d0d480233f115086d591f32f5672556203580795a22e166370611aa148",
+      "screen_audit_sha256": "de729aa713ac1160ef609ee6b54a04eda5ea0fd4f6d9a6d1d3411bc523787db3",
+      "screen_checks": {
+        "producer_passed": true,
+        "runtime_unchanged": true,
+        "exact_delivered_prefix": true,
+        "real_single_CPR_boundary": true,
+        "cursor_matches_reference": true,
+        "all_1920_cells_match": true,
+        "hardware_restored": true,
+        "status_visible": true,
+        "font_probe_projection_explicit": true,
+        "held_output_exact": true
+      },
+      "phone_log": {
+        "passed": true,
+        "checks": {
+          "final_kind": true,
+          "startup_ok": true,
+          "lifecycle_idle": true,
+          "generation": true,
+          "queue_flags": true,
+          "queue_generations": true,
+          "final_status": true,
+          "heading_and_size": true,
+          "exact_event_records": true,
+          "observer_final": true,
+          "actual_parent_segments": true,
+          "exact_append_attempts": true,
+          "START_saved_online": true,
+          "only_owned_log_created": true
+        },
+        "records": [
+          {
+            "generation": 1,
+            "start": "\r\nLAB NODE 003                lab.local:33307 11/01/26 05:54:36 ",
+            "end": "05:55:27 00:00:51",
+            "valid": true
+          }
+        ],
+        "observer_header": [
+          19525,
+          997,
+          3,
+          1,
+          2958,
+          15928,
+          15886,
+          6,
+          0,
+          0
+        ],
+        "log_sha256": "7012d366d3c0f8f1ff6aa6d2e5a7e5b1c479431e2c15382c884064db3c145b91",
+        "observer_sha256": "960f089f8ee7f9d2fb36377273acdacff1981e66e6f3de12ac429d3d42cacaab",
+        "snapshot_sha256": "1a1282fd14daa8ab0a0c360ea516ca4e9820d5d18fcefe4e696a7749fd98e46c",
+        "scope": "Actual owned stock BBS, parent event/file owners and passive 8086 COM3/IRQ5 snapshots. One normal call pair; not physical DCD/SIP or complete logging composition."
+      }
+    }
+  },
+  "followup_fixture_changes_after_public_replay": [
+    "standalone/test_special_package_dos.py"
+  ],
+  "original_inputs": [],
+  "limitations": [
+    "Original39 labels/key layout retained; dim/unavailable commands and full original parity remain open.",
+    "Matched package/physical connection acceptance is separate. Live bridge geometry changed25->24 while idle; backend/routes/network unchanged.",
+    "In-app ASP compilation exceeds conventional-memory budget in this candidate; DOS precompile/ASX workflow is validated separately."
+  ]
+}

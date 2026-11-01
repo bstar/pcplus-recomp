@@ -1,5 +1,45 @@
 # Complete DOS rebuild plan
 
+## Active objective: ready the real SynthModem → Enigma connection test
+
+**Software/package readiness achieved; awaiting user-operated hardware test.**
+See [connection instructions](docs/CONNECTION_TEST_READY.md) and its validation
+receipt. The DOS card is not visible here and has not been updated.
+
+On November 1, bstar replaced the broad remaining-work objective with this
+milestone: prepare the new PCPlus build for a real connection through the Boca
+ISA modem and SPA2102 to SynthModem, then LoSs oF CoNtRoL on Enigma. Notify bstar
+when the hardware connection test is ready.
+
+Compatibility is the primary acceptance criterion, per bstar's explicit
+instruction. Preserve 8086-compatible DOS execution, existing PRM/serial
+configuration and original shortcuts. Validate login/input, ANSI/CP437 and
+editor navigation, flow control and sustained data, disconnect/reconnect and
+file-transfer integrity across the actual SynthModem/Enigma route. A successful
+dial or banner alone is insufficient; keep software checks and physical
+observations separate and report unresolved compatibility gaps explicitly.
+
+Readiness requires a matching, source-built DOS package; verified relevant
+login/keyboard/display behavior; a checked workstation SynthModem/server route;
+and concrete launch/configuration steps for the actual machine. Distinguish
+workstation/emulated checks from the user-operated Boca/SPA2102 test. Keep modem
+commands configurable and preserve the established COM/IRQ settings. Do not
+change the host network or disrupt the installed bridge/live BBS to stage a build.
+
+The original-menu/logging validation already in progress supports this goal.
+Prioritize package staging and the bridge route next. Broader F01–F16, unavailable
+original commands and unrelated feature completion are deferred, not claimed
+complete. The automation goal API rejected replacing its unfinished older goal;
+this section records the user's current objective for ongoing work.
+
+[Original menu and logging](docs/ORIGINAL_MENU_LOGGING.md) now fit together through a typed
+banked deadline selector. Its140 instruction bytes and1,620 executions match
+the accepted resident implementation. The combined build preserves39 original
+labels/shortcuts and adds a plain-L log pane while retaining Alt-L printing.
+An actual DOS reference capture,68-workflow public replay and fresh BBS checks
+pass; unavailable commands/full UI, matched package and physical/card gates
+remain open. The combined variant has84 resident bytes spare.
+
 [Mid-frame modem recovery](docs/MIDFRAME_MODEM_RECOVERY.md) now reuses the retry separator after
 confirmed carrier loss, preventing in-flight upload bytes from corrupting the
 next initialization. Four old-image cases fail; four fixed YMODEM/ZMODEM cases

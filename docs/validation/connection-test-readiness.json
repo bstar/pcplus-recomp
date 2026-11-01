@@ -1,0 +1,114 @@
+{
+  "ready_for_user_operated_hardware_test": true,
+  "hardware_test_passed": false,
+  "priority": "maximum compatibility",
+  "package_path": "build/connection-test-package-02",
+  "archive_path": "build/connection-test-package-02/PCPLUSSE-CONNECT.zip",
+  "archive_sha256": "aec45524db64c276895ce3dc09679c5607550271a318ff57cae4ec7f9ad15c1d",
+  "files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+    "README.TXT": "3212b36bbf4488481462e523d5b460d18599c28ccb65a8bf6366c5cc61bd4b2c",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "99f0a1ac69b851082bf601d3daaa568b8588cc8dfec6f6aceaaabfc4dc775744",
+    "VERSION.TXT": "943f744fd92191c23d139b9a7eec15c34e2c495282d92bc03bd067695a54bf56",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "source_proof": {
+    "path": "build/connection-test-package-source-01/result.json",
+    "sha256": "b5842b860db71fdfd126a9243cc77391030f56d01a1afab627dc61b2b05e4733",
+    "source_count": 2006,
+    "exact_executables": 5,
+    "exact_files": 10
+  },
+  "DOS_package_runs": {
+    "script": {
+      "path": "build/connection-package-final-script-01/result.json",
+      "sha256": "15a551d029b4d5562a9335c27bdd098566c4d1ae67b8b3cff77f7803159547e2",
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "DOS precompilation produces exact ASX",
+        "script writes expected result"
+      ]
+    },
+    "setup": {
+      "path": "build/connection-package-final-setup-01/result.json",
+      "sha256": "0a1cdc3873dec35099577304878ecb5273acfc3e790db81328bded0f3a4e642c",
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ]
+    },
+    "splash": {
+      "path": "build/connection-package-final-splash-01/result.json",
+      "sha256": "c96515b8c14624fe8dba1b29d07766ded566175b74d07c1d961b83e96008bf21",
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ]
+    }
+  },
+  "combined_app_validation_sha256": "030afec80556040bad44937581448ccd4fe423e94654bf4069acfe9ec8077e49",
+  "live_route": {
+    "passed": true,
+    "prompt_seen": true,
+    "alias": "LOC",
+    "connected": true,
+    "server_bytes": 367,
+    "server_ANSI": true,
+    "server_wire_sha256": "ae0ff10a07ee789809b1cf334be23aed73afdc78a0630221b61cc43f4bc802f6",
+    "terminal_bytes": 836,
+    "settings": {
+      "type": "ANSI",
+      "cols": 80,
+      "rows": 24,
+      "input_sequence_ms": 250,
+      "backend": "slmodemd-pjsip"
+    },
+    "scope": "Actual installed TelnetProxy/config and real live BBS TCP/Telnet negotiation. Serial output collected, no login or SIP/audio/physical-modem acceptance."
+  },
+  "bridge_change": {
+    "only_change": "terminalRows 25 -> 24",
+    "idle_verified": true,
+    "restart_active": true,
+    "backend_and_aliases_unchanged": true
+  },
+  "known_limitations": [
+    {
+      "issue": "Automatic ASP compilation while terminal/interpreter are retained runs out of conventional RAM.",
+      "evidence_screen_sha256": "74aec8bbc312c7bd48eaf33e89313bfe577d208c9dde3ed51695285c02b2c535",
+      "supported_workflow": "ASPCOMP at DOS prompt before START; execute compiled ASX."
+    },
+    {
+      "issue": "Physical Boca/SPA2102/SIP/audio and real-account login still require user-operated test."
+    },
+    {
+      "issue": "Original unsupported commands remain dim/guarded; full application parity is not claimed."
+    }
+  ],
+  "card_written": false,
+  "private_configuration_packaged": false,
+  "network_configuration_changed": false,
+  "live_BBS_configuration_changed": false,
+  "final_service_check": {
+    "SynthModem_active": true,
+    "Enigma_active": true,
+    "fresh_monitor_PID_matches_service": true,
+    "callActive": false
+  }
+}
