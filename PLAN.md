@@ -1,5 +1,15 @@
 # Complete DOS rebuild plan
 
+[Multiline ANSI reference measurements](docs/ANSI_MULTILINE_REFERENCE.md)
+now retain22 native prefix checkpoints with seven-byte/byte-at-a-time input.
+Twenty captures match pyte exactly; the final colored-wrap prefix differs in
+79 blank foreground attributes and the cursor. Independent libvterm agrees
+with every actual cursor and all glyphs/backgrounds, while retaining raw
+attribute differences. The original DECSTBM definition supports native homing.
+No product change or rendering closure is claimed; the reports preserve the
+reference limitations and remaining attribute question. All wider application,
+protocol, physical Boca/SPA2102 and card requirements remain open.
+
 [Stock Synchronet and ENiGMA screen comparison](docs/SYNCHRONET_SCREEN_REFERENCE.md)
 now validates complete final editor frames against an independent reference.
 Synchronet uses real source-built ASPECT login and BIOS keyboard input; all

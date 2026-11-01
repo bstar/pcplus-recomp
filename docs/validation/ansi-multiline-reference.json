@@ -1,0 +1,864 @@
+{
+  "evidence_valid": true,
+  "rendering_acceptance_closed": false,
+  "exact_reference_agreement": false,
+  "test_source_commit": "92b1e538360c55d5f39c1dd75a2158138c57f86f",
+  "original_inputs": [],
+  "application_and_package_unchanged": true,
+  "native_checkpoints": 22,
+  "native_compared_cell_pairs": 42240,
+  "comparison_cell_pairs_across_two_references": 84480,
+  "evidence": {
+    "ansi-multiline-colored-final-20261031": {
+      "path": "build/ansi-multiline-colored-final-20261031/result.json",
+      "sha256": "b64b78cfeed8701a00676a53bdea57d75911a282d57a4bef9642af012c3b93d0",
+      "passed": false,
+      "checks": {
+        "all_checkpoints": false,
+        "sources_unchanged": true,
+        "manifest_unchanged": true,
+        "package_unchanged": true
+      },
+      "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "fragment_bytes": 7,
+      "source_changes_after_capture": {
+        "nix/flake.nix": {
+          "captured": "149e1fc48d9982833de247a70877d808d30e931b2816c35b2b9c459c0f8fddd4",
+          "current": "1bed287bbe29de9ee1108e16ded622ad7f71736278098dad0fba741c540652fa"
+        }
+      },
+      "source_change_reason": "Added the second independent reference library to the same pinned Nix shell after the native captures; application and original reference modules unchanged.",
+      "reference_modules": {
+        "pyte.screens": "aa787bbcd5b59c195ff828a8fb9e876caffa80a49c7c45ffbd6e0c92093f9105",
+        "pyte.streams": "a8c667e0f288b20064c3d8600aaf792f562cdfa84b4a39bc852ce05acc04c14d",
+        "pyte.graphics": "6a38c4f4cdcbc8178097ec90ce1d7bce6b3b356d9f2e27d4b7e2d26d35fa898a",
+        "pyte.charsets": "9b9da43e3b5e8b7bfe4a1917e864063f6f54119f97bc9a9694e065ac7cdfc98b",
+        "pyte.modes": "ffc0ad1a8264ac7e500349d5f3a8084cc634b72cc782b8664d0841d5d24e2650",
+        "pyte.control": "dc799b2f4311d1d6457b9651be5471abcd081cebcc2db225e2a730fb7d54d2a2",
+        "pyte.escape": "6a150147f0120ca5cb993b9b43e191c1cfadf27a093a6e9a53439cdf1babcb48",
+        "wcwidth.wcwidth": "597eba94e3ed8a01ff6b1a9cbd4d0931315df79d23c55e0c1ab644047a06904b"
+      }
+    },
+    "ansi-multiline-colored-byte-final-20261031": {
+      "path": "build/ansi-multiline-colored-byte-final-20261031/result.json",
+      "sha256": "5f7643a6ad4c09b1df0cb5a0d68b9f3fc51d7be91c15d8076c9d72a370a35758",
+      "passed": false,
+      "checks": {
+        "all_checkpoints": false,
+        "sources_unchanged": true,
+        "manifest_unchanged": true,
+        "package_unchanged": true
+      },
+      "binary_sha256": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "fragment_bytes": 1,
+      "source_changes_after_capture": {
+        "nix/flake.nix": {
+          "captured": "149e1fc48d9982833de247a70877d808d30e931b2816c35b2b9c459c0f8fddd4",
+          "current": "1bed287bbe29de9ee1108e16ded622ad7f71736278098dad0fba741c540652fa"
+        }
+      },
+      "source_change_reason": "Added the second independent reference library to the same pinned Nix shell after the native captures; application and original reference modules unchanged.",
+      "reference_modules": {
+        "pyte.screens": "aa787bbcd5b59c195ff828a8fb9e876caffa80a49c7c45ffbd6e0c92093f9105",
+        "pyte.streams": "a8c667e0f288b20064c3d8600aaf792f562cdfa84b4a39bc852ce05acc04c14d",
+        "pyte.graphics": "6a38c4f4cdcbc8178097ec90ce1d7bce6b3b356d9f2e27d4b7e2d26d35fa898a",
+        "pyte.charsets": "9b9da43e3b5e8b7bfe4a1917e864063f6f54119f97bc9a9694e065ac7cdfc98b",
+        "pyte.modes": "ffc0ad1a8264ac7e500349d5f3a8084cc634b72cc782b8664d0841d5d24e2650",
+        "pyte.control": "dc799b2f4311d1d6457b9651be5471abcd081cebcc2db225e2a730fb7d54d2a2",
+        "pyte.escape": "6a150147f0120ca5cb993b9b43e191c1cfadf27a093a6e9a53439cdf1babcb48",
+        "wcwidth.wcwidth": "597eba94e3ed8a01ff6b1a9cbd4d0931315df79d23c55e0c1ab644047a06904b"
+      }
+    },
+    "independent_audit": {
+      "path": "build/ansi-multiline-two-references-20261031/result.json",
+      "sha256": "dfdc3e5d370d90a7de83d4039be33c9aa2689dc677c9d7af8b7070dca6da53b5",
+      "bound_capture_files": 200,
+      "reference_library": {
+        "path": "/nix/store/k6sfdy8v8vbk3xrkm3rc32wsb8v5bf5w-libvterm-neovim-0.3.3/lib/libvterm.so",
+        "sha256": "dcc2c474e4ce118dd34f9a660764e8e3008d6bb1b0eac91bfe2d506f378b2155",
+        "header_sha256": "07f78f27bc043e3791ede1fb61891400f06fd64c5c7cf38a92a02712fb18fe6b",
+        "version": "0.3.3"
+      },
+      "adapter_sha256": "c725abc981aa56712adf4aee7afbd93690fb1c65cb01cf130c969c8d4a4e27f0",
+      "sources": {
+        "standalone/audit_ansi_multiline_references.py": "113559647b396c03be83ceb0f48be3496116e94b9682b8fd0132ccd09067b971",
+        "standalone/ansi_libvterm_reference.c": "a75d9fcda684332ddf539c07ddef25192db88c6dce43e8df352410736568aa82",
+        "standalone/test_ansi_multiline_dos.py": "c7462f074f83fe01409ce4bf53321334852d482ffffa39ab8d3446489d03ae5c",
+        "standalone/test_ansi_reference_dos.py": "1729658c9c37a0d8b5547421009d4f79add82688143a9a5d5930a9ae90bf342d",
+        "nix/flake.nix": "1bed287bbe29de9ee1108e16ded622ad7f71736278098dad0fba741c540652fa",
+        "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+      },
+      "exact_reference_agreement": false
+    },
+    "adapter_controls": {
+      "path": "build/ansi-multiline-adapter-controls-20261031/result.json",
+      "sha256": "cc4649a3ac112446b581c9ed47a9aff5c930d26c37480e15d6d5e6f9afd81920",
+      "passed": true,
+      "cases": [
+        {
+          "case": "ASCII",
+          "passed": true,
+          "accepted": true,
+          "stderr": ""
+        },
+        {
+          "case": "bold-color",
+          "passed": true,
+          "accepted": true,
+          "stderr": ""
+        },
+        {
+          "case": "high-CP437",
+          "passed": true,
+          "accepted": false,
+          "stderr": "ASCII-only reference; high CP437 bytes require another adapter"
+        },
+        {
+          "case": "underline",
+          "passed": true,
+          "accepted": false,
+          "stderr": "unsupported cell attributes"
+        },
+        {
+          "case": "RGB",
+          "passed": true,
+          "accepted": false,
+          "stderr": "RGB color outside reference projection"
+        },
+        {
+          "case": "bright-background",
+          "passed": true,
+          "accepted": false,
+          "stderr": "bright background needs separate VGA blink-mode policy"
+        }
+      ],
+      "adapter_sha256": "c725abc981aa56712adf4aee7afbd93690fb1c65cb01cf130c969c8d4a4e27f0",
+      "scope": "Linux reference projection controls only; no DOS or application acceptance."
+    }
+  },
+  "checkpoints": [
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "numbered-document",
+      "prefix_bytes": 1826,
+      "actual_cursor": [
+        24,
+        70
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            70
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            70
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "editor-margins",
+      "prefix_bytes": 1840,
+      "actual_cursor": [
+        20,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "forward-scroll",
+      "prefix_bytes": 3046,
+      "actual_cursor": [
+        20,
+        66
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            66
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            66
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "reverse-scroll",
+      "prefix_bytes": 3130,
+      "actual_cursor": [
+        5,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            5,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            5,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "insert-delete-lines",
+      "prefix_bytes": 3170,
+      "actual_cursor": [
+        16,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            16,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            16,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "multiline-character-edits",
+      "prefix_bytes": 3238,
+      "actual_cursor": [
+        20,
+        5
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            5
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            5
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "origin-relative-edit",
+      "prefix_bytes": 3284,
+      "actual_cursor": [
+        1,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            1,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            1,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "restore-full-screen",
+      "prefix_bytes": 3342,
+      "actual_cursor": [
+        24,
+        3
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            3
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            3
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "colored-document",
+      "prefix_bytes": 5412,
+      "actual_cursor": [
+        24,
+        72
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            72
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            72
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "colored-scroll-and-lines",
+      "prefix_bytes": 5851,
+      "actual_cursor": [
+        14,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            14,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            14,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-final-20261031",
+      "checkpoint": "colored-reverse-and-wrap",
+      "prefix_bytes": 5893,
+      "actual_cursor": [
+        1,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 79,
+          "cursor": [
+            19,
+            2
+          ],
+          "cursor_matches": false,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 79,
+          "cursor": [
+            1,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "numbered-document",
+      "prefix_bytes": 1826,
+      "actual_cursor": [
+        24,
+        70
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            70
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            70
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "editor-margins",
+      "prefix_bytes": 1840,
+      "actual_cursor": [
+        20,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "forward-scroll",
+      "prefix_bytes": 3046,
+      "actual_cursor": [
+        20,
+        66
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            66
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            66
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "reverse-scroll",
+      "prefix_bytes": 3130,
+      "actual_cursor": [
+        5,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            5,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            5,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "insert-delete-lines",
+      "prefix_bytes": 3170,
+      "actual_cursor": [
+        16,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            16,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            16,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "multiline-character-edits",
+      "prefix_bytes": 3238,
+      "actual_cursor": [
+        20,
+        5
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            5
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            20,
+            5
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "origin-relative-edit",
+      "prefix_bytes": 3284,
+      "actual_cursor": [
+        1,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            1,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            1,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "restore-full-screen",
+      "prefix_bytes": 3342,
+      "actual_cursor": [
+        24,
+        3
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            3
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            3
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "colored-document",
+      "prefix_bytes": 5412,
+      "actual_cursor": [
+        24,
+        72
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            72
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            24,
+            72
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "colored-scroll-and-lines",
+      "prefix_bytes": 5851,
+      "actual_cursor": [
+        14,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 0,
+          "cursor": [
+            14,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 0,
+          "cursor": [
+            14,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    },
+    {
+      "capture": "ansi-multiline-colored-byte-final-20261031",
+      "checkpoint": "colored-reverse-and-wrap",
+      "prefix_bytes": 5893,
+      "actual_cursor": [
+        1,
+        1
+      ],
+      "references": {
+        "pyte": {
+          "different_cells": 79,
+          "cursor": [
+            19,
+            2
+          ],
+          "cursor_matches": false,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        },
+        "libvterm": {
+          "different_cells": 79,
+          "cursor": [
+            1,
+            1
+          ],
+          "cursor_matches": true,
+          "glyphs_and_backgrounds_match": true,
+          "all_differences_are_blank_foregrounds": true
+        }
+      }
+    }
+  ],
+  "package": {
+    "path": "build/special-status-geometry-final-20261031/PCPLUSSE",
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "source_base_commit": "2673d203ce6695787ad51bdc4e3e35c5dbd75442",
+    "card_written": false
+  },
+  "interpretation": {
+    "pyte_cursor": "No-parameter margin reset leaves the reference cursor in place. Actual DOS and libvterm both home; original DECSTBM documentation specifies home.",
+    "blank_foreground_attributes": {
+      "affected_cells_per_final_capture": 79,
+      "actual_VGA_attribute": "0d",
+      "libvterm": "05",
+      "pyte": "07",
+      "glyph": "space",
+      "backgrounds_agree": true,
+      "exact_attributes_agree": false
+    },
+    "product_change": "None. Foreground attributes on blank cells differ; no visible defect established, and exact attribute acceptance remains open.",
+    "DECSTBM_authority": "https://vt100.net/docs/vt510-rm/DECSTBM.html",
+    "libvterm_authority": "https://www.leonerd.org.uk/code/libvterm/"
+  },
+  "limitations": [
+    "Complete-prefix replay in fresh processes, not every frame of a continuous session.",
+    "Only profile6 ANSI and enumerated inputs; no all-emulation or every-fragment/timing acceptance.",
+    "Linux libvterm adapter refuses high CP437 bytes, unsupported styles, RGB/extended palettes and bright backgrounds.",
+    "Glyph/background agreement is an observation, not a substitute for exact raw-cell agreement.",
+    "No full BBS multiline navigation, font-pixel, sustained transfer or physical Boca/SPA2102/card acceptance.",
+    "No live BBS, installed SynthModem, ATA, host network or removable card changed."
+  ]
+}

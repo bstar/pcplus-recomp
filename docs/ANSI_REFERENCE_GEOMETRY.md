@@ -1,5 +1,10 @@
 # Independent ANSI comparison and status geometry
 
+The later [multiline checkpoint audit](ANSI_MULTILINE_REFERENCE.md) adds22
+complete-prefix measurements and a second independent reference. It retains
+raw blank-foreground disagreements and a pyte margin-reset cursor limitation;
+its glyph/background agreement does not establish exact raw-cell acceptance.
+
 The later [stock ENiGMA frame checkpoint](ENIGMA_SCREEN_REFERENCE.md) pairs a
 complete delivered stream prefix with a final native screen through an actual
 CPR boundary. It adds a whole-frame BBS comparison for the unchanged candidate;
