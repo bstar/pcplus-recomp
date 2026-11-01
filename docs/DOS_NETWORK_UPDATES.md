@@ -128,8 +128,11 @@ resident memory footprint; measured placement on this machine awaits reboot.
 ## After Dark in network mode
 
 **Physical test failed:** bstar reports After Dark activated and crashed the
-computer. FTP became unreachable. The local NETMGR.BAT now omits the automatic
-AFTERUP call; deployment to the machine awaits restored access. The underlying
+computer. FTP became unreachable. NETMGR.BAT now omits the automatic
+AFTERUP call both locally and on the remote machine, verified by FTP read-back
+after bstar restored access. Recovered MEMNET.TXT confirms ADTSR had loaded
+in conventional memory (16,752 bytes), after the network driver, with MMOUSE
+in upper memory and 608,624 conventional bytes free before FTP started. The underlying
 cause is unconfirmed. Boot with F5 to bypass startup, then run NETUP and NETFTP
 directly to regain management access without the saver. Preserve the configured
 two-minute timeout and Flying Toasters preferences while isolating the failure.
