@@ -17,12 +17,12 @@ def yf(data,number):
 
 async def run(reader,writer,item,event,folder,mode,upload_body):
     pending=bytearray()
-    async def receive():
-        data=await reader.read(4096)
+    async def receive(count=4096):
+        data=await reader.read(count)
         if not data:raise ConnectionError('Carrier lost before planned batch boundary')
         item['received'].extend(data);pending.extend(data)
     async def expect(want):
-        while len(pending)<len(want):await receive()
+        while len(pending)<len(want):await receive(len(want)-len(pending) if mode.get('fragment') else 4096)
         actual=bytes(pending[:len(want)]);del pending[:len(want)]
         assert actual==want,('Unexpected batch wire',actual.hex(),want.hex())
     async def send(data):
@@ -47,16 +47,26 @@ async def run(reader,writer,item,event,folder,mode,upload_body):
             await asyncio.sleep(1.7)
             while not pending or pending[0] not in (1,2):
                 await send(b'C')
-                try:await asyncio.wait_for(receive(),1.0)
+                try:await asyncio.wait_for(receive(1 if mode.get('fragment') else 4096),1.0)
                 except asyncio.TimeoutError:continue
                 while pending and pending[0] not in (1,2):del pending[0]
+            if mode.get('fragment'):
+                prefix=bytes((1,0,255))+b'SEND.BIN\0'+str(len(upload_body)).encode()
+                await expect(prefix)
+                detail['metadata_prefix']={'hex':prefix.hex(),'bytes':len(prefix),'complete':False}
+                event('batch-upload-header-fragment');return
             sequence,body=await ypacket();assert sequence==0
             name,metadata=body.split(b'\0',1)
             assert name==b'SEND.BIN' and int(metadata.split(b'\0',1)[0].split()[0])==len(upload_body)
         else:
             await expect(zh(0));await send(zh(1,0x22000000))
             metadata=(b'SEND.BIN\0'+str(len(upload_body)).encode()+b' 0\0').ljust(128,b'\0')
-            await expect(zh(4,0x01000000,fmt)+z_packet(metadata,fmt,107,0))
+            wire=zh(4,0x01000000,fmt)+z_packet(metadata,fmt,107,0)
+            if mode.get('fragment'):
+                await expect(wire[:16])
+                detail['metadata_prefix']={'hex':wire[:16].hex(),'bytes':16,'complete':False}
+                event('batch-upload-header-fragment');return
+            await expect(wire)
         detail['metadata']=True;event('batch-upload-metadata')
         if partial:
             await send(b'\x06C' if protocol==1 else zh(9))

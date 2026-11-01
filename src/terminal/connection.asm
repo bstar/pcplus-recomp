@@ -471,6 +471,10 @@ terminal_connection_poll_impl:
 .carrier_low:
  cmp byte [connection_carrier_seen],0
  je .done
+ ; A falling carrier can leave an already accepted transfer tail in the
+ ; modem's command buffer. Reuse the bounded retry separator/guard before
+ ; the next initialization, for both legacy and acknowledged policies.
+ mov byte [connection_resync],1
  call connection_flow_retire
  call connection_break_cancel_service
  call connection_macro_cancel_service

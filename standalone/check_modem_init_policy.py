@@ -107,6 +107,18 @@ def main():
     m=model(initialize=0);m.start();m.waiting();assert bytes(m.tx)==dial;done('initial-high-carrier-skip-preserved')
     m=model();m.put('terminal_directory_mode',1);m.start();assert m.state()==6 and not m.tx;done('direct-line-preserved')
     m=model(seconds=0);m.start();m.waiting();assert bytes(m.tx)==b'ATZ\r'+dial;done('default-quiet-no-wait-preserved')
+    for seconds in (0,1,3):
+        m=model(seconds=seconds);m.start()
+        if seconds:command(m,b'ATZ\r');m.receive(b'OK\r')
+        m.waiting();m.receive(b'CONNECT');m.poll();assert m.state()==6
+        first=bytes(m.tx);m.carrier=False;m.poll();assert m.state()==0
+        m.start();until(m,lambda:bytes(m.tx)==first+b'\r')
+        if seconds:
+            m.receive(b'ERROR\r');m.poll(seconds*18-2)
+            assert bytes(m.tx)==first+b'\r'
+            until(m,lambda:bytes(m.tx)==first+b'\rATZ\r');m.receive(b'OK\r')
+        m.waiting();assert bytes(m.tx)==first+b'\rATZ\r'+dial
+        done('ordinary-DCD-loss-resync-before-reinitialization',initialization_wait=seconds)
     manifest=json.loads((product/'manifest.json').read_text());inputs=dict(manifest['sources'])
     for path in (Path(__file__),ROOT/'standalone/check_connection.py',ROOT/'standalone/check_transport.py',ROOT/'standalone/check_terminal_options.py',ROOT/'standalone/dos_image.py'):inputs[str(path.relative_to(ROOT))]=sha(path)
     for name,digest in inputs.items():

@@ -41,6 +41,7 @@ async def run_case(parent,out,name,ticks,soft,aspect=None,transfer=None):
         assert all(symbols[n][0]==extra_observer['PARENT_ASPECT_SEG'] for n in ('terminal_script_window_active','terminal_script_overlay_visible'))
     upload_body=bytes(65+i%26 for i in range(4096))
     if transfer:
+        if transfer.get('strict'):extra_command+=' /I:1'
         upload=transfer['upload'];batch=transfer.get('protocol',0)
         if batch:(out/'RECV').mkdir()
         keys='p900 enter p2500 '+('a-s' if upload else 'a-r')+' p300 '+ ('f2 p100 '*batch)+ ' '.join('D:\\SEND.BIN' if upload else 'D:\\RECV\\' if batch else 'D:\\RECV.BIN')+' enter p14500 a-d p4500 r e a d y p1800 a-x'
@@ -131,7 +132,8 @@ async def run_case(parent,out,name,ticks,soft,aspect=None,transfer=None):
                             event('download-ACK-'+str(number))
                         stage_data=(out/'PCRX.$$$').read_bytes()
                         item['stage_before_drop']={'bytes':len(stage_data),'exact':stage_data==received_body[:len(stage_data)]}
-                await asyncio.sleep(.25);event('carrier-drop');writer.transport.abort();return
+                if not transfer.get('fragment'):await asyncio.sleep(.25)
+                event('carrier-drop');writer.transport.abort();return
             while data:=await reader.read(4096):
                 item['received'].extend(data)
                 drop_ready=b'SCRIPTREADY\r' in item['received'] if aspect else b'\x1b[1;16R' in item['received'] and b'\x1b[?1;2c' in item['received']
@@ -222,7 +224,9 @@ exit
     for generation,row in enumerate(records,1):
         observed=[r[26:38] for r in samples if struct.unpack_from('<I',r,14)[0]==generation and struct.unpack_from('<H',r,18)[0]==1]
         if generation==1:observed=[struct.pack('<6H',*delay[20:26])]
-        stamp=dt.datetime.strptime(row['start'][-18:],'%m/%d/%y %H:%M:%S ')
+        try:stamp=dt.datetime.strptime(row['start'][-18:],'%m/%d/%y %H:%M:%S ')
+        except ValueError:
+            stamp_checks.append(False);continue
         stamp_checks.append(bool(observed) and all(tuple([struct.unpack('<6H',raw)[0]%100,*struct.unpack('<6H',raw)[1:]])==
             (stamp.year%100,stamp.month,stamp.day,stamp.hour,stamp.minute,stamp.second) for raw in observed))
     checks.update(normal_exit=code==0 and (out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),
@@ -263,7 +267,8 @@ exit
             batch_state=struct.unpack('<30H',captured[9862:]);detail=sessions[0].get('batch',{}) if sessions else {}
             expected_files={'FIRST.BIN':b'FIRST COMPLETE FILE\r\n'} if transfer.get('retained') else {}
             checks.update(actual_batch_protocol=batch_state[0]==transfer['protocol'],
-                actual_batch_metadata=detail.get('metadata',False),
+                actual_batch_metadata=bool(detail.get('metadata_prefix')) if transfer.get('fragment') else detail.get('metadata',False),
+                deliberate_mid_frame_loss=detail.get('metadata_prefix',{}).get('bytes')==16 and not detail.get('metadata',False) if transfer.get('fragment') else 'metadata_prefix' not in detail,
                 actual_batch_data=detail.get('data_frames')==(2 if transfer['upload'] else 9) if transfer['partial'] else detail.get('data_frames')==0,
                 actual_batch_ACKs=detail.get('ACKed_data_frames')==(1 if transfer['upload'] else 9) if transfer['partial'] else detail.get('ACKed_data_frames')==0,
                 exact_receive_tree={p.name:p.read_bytes() for p in (out/'RECV').iterdir()}==expected_files,
@@ -295,8 +300,8 @@ exit
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--label',required=True)
-    p.add_argument('--batch',action='store_true');p.add_argument('--transfer',action='store_true');p.add_argument('--aspect',action='store_true');p.add_argument('--runner',type=Path)
-    p.add_argument('--case',choices=['idle-hard','write-hard','write-soft','aspect-wait','aspect-when','aspect-wait-window','aspect-when-window','receive-negotiation','receive-partial','upload-unacked','upload-partial',*[f'{protocol}-{kind}' for protocol in ('ymodem','zmodem') for kind in ('receive-metadata','receive-partial','receive-retained','upload-metadata','upload-partial')]]);a=p.parse_args();assert sum((a.aspect,a.transfer,a.batch))<=1;assert re.fullmatch('[a-z0-9-]+',a.label)
+    p.add_argument('--fragment',action='store_true');p.add_argument('--batch',action='store_true');p.add_argument('--transfer',action='store_true');p.add_argument('--aspect',action='store_true');p.add_argument('--runner',type=Path)
+    p.add_argument('--case',choices=['idle-hard','write-hard','write-soft','aspect-wait','aspect-when','aspect-wait-window','aspect-when-window','receive-negotiation','receive-partial','upload-unacked','upload-partial',*[f'{protocol}-{kind}' for protocol in ('ymodem','zmodem') for kind in ('receive-metadata','receive-partial','receive-retained','upload-metadata','upload-partial')],*[f'{protocol}-fragment-{policy}' for protocol in ('ymodem','zmodem') for policy in ('legacy','strict')]]);a=p.parse_args();assert sum((a.aspect,a.transfer,a.batch,a.fragment))<=1;assert re.fullmatch('[a-z0-9-]+',a.label)
     parent=a.terminal.resolve();manifest=json.loads((parent/'manifest.json').read_text());assert manifest['experimental_phone_log_controls']
     original=sha(parent/'TERMINAL.EXE');assert original==manifest['binary_sha256']
     out=ROOT/'build/phone-log-carrier-terminal'/a.label;assert not out.exists();out.mkdir(parents=True)
@@ -317,23 +322,25 @@ def main():
               'standalone/directory_fixtures.py','standalone/directory_test_support.py','standalone/modem_fixtures.py','standalone/terminal_config_fixtures.py',
               'standalone/test_terminal.py','standalone/phone_log_events_watch.asm','lab/bbs/phone_log_evidence.py','lab/bbs/product_inputs.py']:
         sources[n]=sha(ROOT/n)
-    if a.batch:
+    if a.batch or a.fragment:
         for n in ('standalone/batch_carrier_peer.py','standalone/check_zmodem_wire.py'):sources[n]=sha(ROOT/n)
     rows=[]
     cases=[('idle-hard',0,0),('write-hard',36,0),('write-soft',36,1)]
     if a.aspect:cases=[(name,0,0) for name in ('aspect-wait','aspect-when','aspect-wait-window','aspect-when-window')]
     if a.transfer:cases=[(name,0,0) for name in ('receive-negotiation','receive-partial','upload-unacked','upload-partial')]
     if a.batch:cases=[(f'{protocol}-{kind}',0,0) for protocol in ('ymodem','zmodem') for kind in ('receive-metadata','receive-partial','receive-retained','upload-metadata','upload-partial')]
+    if a.fragment:cases=[(f'{protocol}-fragment-{policy}',0,0) for protocol in ('ymodem','zmodem') for policy in ('legacy','strict')]
     assert not a.case or any(row[0]==a.case for row in cases)
     for name,ticks,soft in cases:
         if a.case and a.case!=name:continue
         aspect=dict(runner=runner,handler='when' in name,window=name.endswith('window')) if a.aspect else None
         transfer=dict(upload=name.startswith('upload'),partial=name.endswith('partial')) if a.transfer else None
         if a.batch:transfer=dict(protocol=1 if name.startswith('ymodem') else 2,upload='upload' in name,partial=name.endswith(('partial','retained')),retained=name.endswith('retained'))
+        if a.fragment:transfer=dict(protocol=1 if name.startswith('ymodem') else 2,upload=True,partial=False,retained=False,fragment=True,strict=name.endswith('strict'))
         rows.append(asyncio.run(run_case(parent,out/name,name,ticks,soft,aspect,transfer)))
     checks=dict(all_cases=bool(rows) and all(r['passed'] for r in rows),sources_unchanged=all(sha(ROOT/n)==h for n,h in sources.items()),binary_unchanged=sha(parent/'TERMINAL.EXE')==original)
     result=dict(passed=all(checks.values()),checks=checks,cases=rows,sources=sources,
-        artifacts={p:h for row in rows for p,h in row['artifacts'].items()},terminal_sha256=original,original_inputs=[],aspect_matrix=a.aspect,transfer_matrix=a.transfer,batch_matrix=a.batch,
+        artifacts={p:h for row in rows for p,h in row['artifacts'].items()},terminal_sha256=original,original_inputs=[],aspect_matrix=a.aspect,transfer_matrix=a.transfer,batch_matrix=a.batch,fragment_matrix=a.fragment,
         scope=__doc__+' Built-in DOSBox modem generates CONNECT/NO CARRIER and actual virtual DCD. Peer only sends ANSI/protocol bytes and closes TCP; no injected modem replies or product variables. MSR reads clear delta bits; native policy uses carrier level. Not physical carrier/SIP/analog or all child/transfer acceptance.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(checks));assert result['passed']
 
