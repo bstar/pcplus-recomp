@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False):
+def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False):
     assert not precompile or not (setup or splash_only or after_child_view)
     manifest = json.loads((package / 'manifest.json').read_text())
     assert manifest['card_written'] is False
@@ -55,6 +55,14 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         sampler = sampler.replace(hex(0x3f8 + offset), hex(base + offset))
     (drive / 'sample.asm').write_text(sampler)
     subprocess.run(['nasm', '-fbin', str(drive / 'sample.asm'), '-o', str(drive / 'SNAP.COM')], check=True)
+    if bios_absent:
+        assert manifest.get('experimental_custom_irq')
+        # Test-only DOS utility: emulate a BIOS omitting the configured UART.
+        # Leave the real emulated UART intact; never alter product instructions.
+        (drive/'unlist.asm').write_text('BITS 16\nCPU 8086\nORG 0x100\n'
+            'mov ax,0x40\nmov es,ax\nmov word [es:'+str((com-1)*2)+'],0\n'
+            'mov ax,0x4c00\nint 0x21\n')
+        subprocess.run(['nasm','-fbin',str(drive/'unlist.asm'),'-o',str(drive/'UNLIST.COM')],check=True)
     subprocess.run(['nasm', '-fbin', str(ROOT / 'standalone/special_watch.asm'),
                     '-o', str(drive / 'WATCH.COM')], check=True)
     strategy = manifest.get('experimental_directory_resource_owner',False)
@@ -76,7 +84,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
                       for n in range(1,5))+
               '[mixer]\nnosound=true\n[autoexec]\n@echo off\n'
               'mount c "' + str(drive) + '"\nc:\nset PCPLUS=C:\\ORIGINAL\n' +
-              ('WATCH T\n' if observe else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+'SNAP B\n'+
+              ('WATCH T\n' if observe else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+('UNLIST\n' if bios_absent else '')+'SNAP B\n'+
               ('CD \\PCPLUSSE\nASPCOMP TEST.ASP\nIF ERRORLEVEL 1 GOTO failed\nCD \\\n' if precompile else '')+
               'ADDKEY ' + keys + '\n'
               'CALL C:\\PCPLUSSE\\' + launcher + '.BAT /T:ACTIONS.KEY\n'+
@@ -114,7 +122,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     for leaf in PRODUCTS:
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, cpu='8086', port=com, io_base=base, resident_observer=observe,
-                  irq=irq, precompiled_before_terminal=precompile,
+                  irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,
                   package_manifest_sha256=sha(package / 'manifest.json'),
                   package_files=manifest['files'],
                   checks=['launcher returns to DOS', 'PCPLUS environment restored',
@@ -141,11 +149,12 @@ def main():
     p.add_argument('--irq',type=int,choices=[3,4,5,7])
     p.add_argument('--com',type=int,choices=[1,2,3,4],default=2)
     p.add_argument('--precompile',action='store_true',help='Compile at the DOS prompt before retaining the terminal/interpreter')
+    p.add_argument('--bios-absent',action='store_true',help='Clear the selected BIOS UART entry before launch; keep actual UART present')
     args = p.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     assert not (args.setup and args.splash_only)
-    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile)
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent)
 
 
 if __name__ == '__main__':

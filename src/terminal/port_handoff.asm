@@ -105,8 +105,13 @@ port_enter:
 %endif
  mov ax,0x40
  mov es,ax
+%ifdef TERMINAL_CUSTOM_IRQ
+ cmp word [es:bx],0
+ je .bios_available ;Explicit validated port omitted by an older BIOS.
+%endif
  cmp dx,[es:bx]
- jne .invalid ;Do not probe ports absent from the BIOS table.
+ jne .invalid ;A conflicting nonzero BIOS entry remains invalid.
+.bios_available:
  cmp word [connection_state],0
  jne .busy
  cmp word [terminal_parser_active],0

@@ -61,6 +61,12 @@ _aspect_serial_backend_open:
  mov es,ax
  mov ax,[es:bx]
  pop ds
+%ifdef ASPECT_CUSTOM_IRQ
+ or ax,ax
+ jnz .bios_present
+ mov ax,[serial_bases+bx] ;Explicit port index/IRQ were validated above.
+.bios_present:
+%endif
  cmp ax,[serial_bases+bx]
  jne .absent
  mov [uart_port_index],bx ;temporary; real index restored below.

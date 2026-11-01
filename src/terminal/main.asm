@@ -206,17 +206,24 @@ terminal_phone_log_startup_done equ $
  cmp word [terminal_quit],0
  jne terminal_shutdown
 %endif
- ; Require a standard BIOS-listed serial port before changing its registers.
+ ; Legacy builds require a BIOS-listed port. The explicit custom-IRQ build
+ ; also accepts an omitted slot: older BIOSes often enumerate only COM1/2.
+ ; Configuration already validated the selected standard base and IRQ.
  mov bx,[terminal_port_number]
  dec bx
  shl bx,1
  mov ax,0x40
  mov es,ax
  mov ax,[es:bx]
+%ifdef TERMINAL_CUSTOM_IRQ
+ or ax,ax
+ jz .port_available
+%endif
  cmp ax,[uart_port_rbr]
  jne .missing_port
  or ax,ax
  jz .missing_port
+.port_available:
  call uart_save_hardware_state
  mov byte [hardware_active],1
  call uart_disable
