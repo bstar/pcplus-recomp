@@ -1,5 +1,9 @@
 # Apply a directory selection
 
+[Selection/settings workflow coverage](DIRECTORY_ADOPTION_SETTINGS.md) now
+includes native preview-A IRQ-only changes after a deferred PRMEDIT save,
+and settings save/cancel after selection and a child directory change.
+
 The later [IRQ/settings-path checkpoint](IRQ_HANDOFF_AND_SETTINGS_PATH.md)
 fixes immediate old-IRQ PIC restoration and PRMEDIT's acceptance of the saved
 absolute filename. Its receipt records the new application/editor identities

@@ -36,7 +36,7 @@ different valid `TEST.PRM` exists. Alt-S then opens the original canonical PRM:
   profile remains6, and subsequent BBS text retains attribute `07`.
 
 Both workflows then dial the selected endpoint through DOSBox's modem model,
-answer the peer's real DSR/DA/CPR queries, and execute the selected canonical
+answer the peer's real DA/CPR queries, and execute the selected canonical
 script rather than the CWD decoy. The profile claim is checked by the terminal's
 actual DA response, independently of the saved source PRM. Ordinary read-only
 resource checks and the default Apply workflow also pass unchanged.

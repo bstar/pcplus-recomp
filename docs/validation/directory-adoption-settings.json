@@ -1,0 +1,388 @@
+{
+  "passed": true,
+  "test_source_commit": "6b9d3a860c0cb855035cebcc97a092c7f0224dc6",
+  "package_source_commit": "8e32c71d46528e63b688f10579a9adc595efc3e8",
+  "package": "build/special-adoption-irq-path-final-20261031/PCPLUSSE",
+  "package_manifest_sha256": "6cd36218742ff35d427441c12bfaa1a23c79a92d3c5e07484a7a379d5f3b139c",
+  "binary_sha256": "da09b00dde9ee9008295e53c96aaa8630b9a4e19f1a78dc683e89e4b3186f650",
+  "editor_sha256": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+  "application_and_editor_unchanged": true,
+  "original_inputs": [],
+  "evidence": [
+    {
+      "path": "build/adoption-IRQ3-native-final-20261031/result.json",
+      "sha256": "3ea7ffb982ced43e6e80ad6bb8495af59e80060bac0ade2ba72188c6b66037ac",
+      "cases": [
+        {
+          "case": "valid-directory-pair-profile6",
+          "passed": true,
+          "adoption": {
+            "applied": true,
+            "final_fields_verified": true,
+            "canonical_script_binding_verified": true,
+            "sampled_stack_bytes": 1440,
+            "target_port": 0,
+            "missing_target": false,
+            "all_four_hardware_snapshots_restored": true,
+            "active_port_ticks": [
+              0,
+              0,
+              138,
+              0
+            ],
+            "source_IRQ": 5,
+            "target_IRQ": 3,
+            "new_IRQ_active_samples": 16,
+            "old_IRQ_mask_violations": 0,
+            "actual_PRMEDIT_saved_IRQ": true,
+            "editor_sha256": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+            "saved_IRQ_deferred_until_preview": true
+          },
+          "compiler": {},
+          "observer_ticks": 246,
+          "DOS_operations_under_quiescence": 14,
+          "content_opens": 2,
+          "ownership_violations": 0,
+          "owner_state": [
+            3,
+            0,
+            0,
+            44826,
+            55531,
+            4608,
+            1
+          ],
+          "resource_state": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "active_state_unchanged": false,
+          "declared_session_fault_only": false,
+          "hardware_restored": true
+        }
+      ],
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Preview A applies selected settings/resources/target; exact fields before prompt and after return verified. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim."
+    },
+    {
+      "path": "build/adoption-IRQ4-native-final-20261031/result.json",
+      "sha256": "677bcb72806ce51b26167103ecca728cdb68f1d7641a04634d2829f7cedf0260",
+      "cases": [
+        {
+          "case": "valid-directory-pair-profile6",
+          "passed": true,
+          "adoption": {
+            "applied": true,
+            "final_fields_verified": true,
+            "canonical_script_binding_verified": true,
+            "sampled_stack_bytes": 1440,
+            "target_port": 0,
+            "missing_target": false,
+            "all_four_hardware_snapshots_restored": true,
+            "active_port_ticks": [
+              0,
+              0,
+              138,
+              0
+            ],
+            "source_IRQ": 5,
+            "target_IRQ": 4,
+            "new_IRQ_active_samples": 16,
+            "old_IRQ_mask_violations": 0,
+            "actual_PRMEDIT_saved_IRQ": true,
+            "editor_sha256": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+            "saved_IRQ_deferred_until_preview": true
+          },
+          "compiler": {},
+          "observer_ticks": 246,
+          "DOS_operations_under_quiescence": 14,
+          "content_opens": 2,
+          "ownership_violations": 0,
+          "owner_state": [
+            3,
+            0,
+            0,
+            36832,
+            56171,
+            4608,
+            1
+          ],
+          "resource_state": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "active_state_unchanged": false,
+          "declared_session_fault_only": false,
+          "hardware_restored": true
+        }
+      ],
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Preview A applies selected settings/resources/target; exact fields before prompt and after return verified. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim."
+    },
+    {
+      "path": "build/adoption-IRQ7-native-final-20261031/result.json",
+      "sha256": "ff2b0b1a48d84a33903afaddc948572822247095c0d6eb84f1ef4d5231f6572e",
+      "cases": [
+        {
+          "case": "valid-directory-pair-profile6",
+          "passed": true,
+          "adoption": {
+            "applied": true,
+            "final_fields_verified": true,
+            "canonical_script_binding_verified": true,
+            "sampled_stack_bytes": 1440,
+            "target_port": 0,
+            "missing_target": false,
+            "all_four_hardware_snapshots_restored": true,
+            "active_port_ticks": [
+              0,
+              0,
+              138,
+              0
+            ],
+            "source_IRQ": 5,
+            "target_IRQ": 7,
+            "new_IRQ_active_samples": 16,
+            "old_IRQ_mask_violations": 0,
+            "actual_PRMEDIT_saved_IRQ": true,
+            "editor_sha256": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+            "saved_IRQ_deferred_until_preview": true
+          },
+          "compiler": {},
+          "observer_ticks": 246,
+          "DOS_operations_under_quiescence": 14,
+          "content_opens": 2,
+          "ownership_violations": 0,
+          "owner_state": [
+            3,
+            0,
+            0,
+            36856,
+            56043,
+            4608,
+            1
+          ],
+          "resource_state": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "active_state_unchanged": false,
+          "declared_session_fault_only": false,
+          "hardware_restored": true
+        }
+      ],
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Preview A applies selected settings/resources/target; exact fields before prompt and after return verified. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim."
+    },
+    {
+      "path": "build/adoption-setup-after-CWD-final-20261031/result.json",
+      "sha256": "b6bb3ca812088db63aabc9c2cdca32a51334834cd7c298b4b44debf6fc19413b",
+      "cases": [
+        {
+          "case": "settings-after-CWD",
+          "passed": true,
+          "checks": {
+            "emulated_modem_connected_to_selected_endpoint": true,
+            "configured_hangup_reached_wire": true,
+            "emulated_modem_disconnected_peer": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_expected_bytes": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_WATCH.COM": true,
+            "fixture_unchanged_DOIT.KEY": true,
+            "fixture_unchanged_OTHER/GO.ASX": true,
+            "fixture_unchanged_OTHER/KEEP.BIN": true,
+            "fixture_unchanged_GO.ASX": true,
+            "fixture_unchanged_OTHER/TEST.PRM": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "selected_target_dialed": true,
+            "wrong_script_never_executed": true,
+            "canonical_script_executed": true,
+            "CWD_decoy_ignored": true,
+            "saved_canonical_PRM": true,
+            "CWD_PRM_decoy_unchanged": true,
+            "source_profile4_preserved_in_file": true,
+            "active_selected_profile6_retained": true,
+            "expected_normal_attribute_visible": true
+          },
+          "cohort": "build/connection-dos/adoption-setup-after-CWD-final-20261031-settings-after-CWD",
+          "binary_sha256": "da09b00dde9ee9008295e53c96aaa8630b9a4e19f1a78dc683e89e4b3186f650"
+        }
+      ],
+      "passed": true,
+      "scope": "Apply a directory selection, change CWD, then dial and run its canonical script. Actual DOS8086 COM3/IRQ5 parent, compiler/ASPECT, real PROGRAM CD/COPY and DOSBox modem carrier model and a TCP BBS peer. Same-write CONNECT/banner and actual ANSI replies. No live BBS/SIP/DSP/analog/card acceptance."
+    },
+    {
+      "path": "build/adoption-setup-cancel-after-CWD-20261031/result.json",
+      "sha256": "d8c6322ba62bb9c755dc9d17e125d643dae4d66fde934ba55fefcbb16028b75b",
+      "cases": [
+        {
+          "case": "settings-cancel-after-CWD",
+          "passed": true,
+          "checks": {
+            "emulated_modem_connected_to_selected_endpoint": true,
+            "configured_hangup_reached_wire": true,
+            "emulated_modem_disconnected_peer": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_expected_bytes": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_WATCH.COM": true,
+            "fixture_unchanged_DOIT.KEY": true,
+            "fixture_unchanged_OTHER/GO.ASX": true,
+            "fixture_unchanged_OTHER/KEEP.BIN": true,
+            "fixture_unchanged_GO.ASX": true,
+            "fixture_unchanged_OTHER/TEST.PRM": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "selected_target_dialed": true,
+            "wrong_script_never_executed": true,
+            "canonical_script_executed": true,
+            "CWD_decoy_ignored": true,
+            "saved_canonical_PRM": true,
+            "CWD_PRM_decoy_unchanged": true,
+            "source_profile4_preserved_in_file": true,
+            "active_selected_profile6_retained": true,
+            "expected_normal_attribute_visible": true
+          },
+          "cohort": "build/connection-dos/adoption-setup-cancel-after-CWD-20261031-settings-cancel-after-CWD",
+          "binary_sha256": "da09b00dde9ee9008295e53c96aaa8630b9a4e19f1a78dc683e89e4b3186f650"
+        }
+      ],
+      "passed": true,
+      "scope": "Apply a directory selection, change CWD, then dial and run its canonical script. Actual DOS8086 COM3/IRQ5 parent, compiler/ASPECT, real PROGRAM CD/COPY and DOSBox modem carrier model and a TCP BBS peer. Same-write CONNECT/banner and actual ANSI replies. No live BBS/SIP/DSP/analog/card acceptance."
+    },
+    {
+      "path": "build/adoption-IRQ-default-apply-20261031/result.json",
+      "sha256": "6cccac79539aebf19883aca85d707f128523e6ff6d6ef5a0594ec04619e43ba1",
+      "cases": [
+        {
+          "case": "valid-directory-pair-profile6",
+          "passed": true,
+          "adoption": {
+            "applied": true,
+            "final_fields_verified": true,
+            "canonical_script_binding_verified": true,
+            "sampled_stack_bytes": 66
+          },
+          "compiler": {},
+          "observer_ticks": 171,
+          "DOS_operations_under_quiescence": 13,
+          "content_opens": 2,
+          "ownership_violations": 0,
+          "owner_state": [
+            3,
+            0,
+            0,
+            36832,
+            56299,
+            4608,
+            1
+          ],
+          "resource_state": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "active_state_unchanged": false,
+          "declared_session_fault_only": false,
+          "hardware_restored": true
+        }
+      ],
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Preview A applies selected settings/resources/target; exact fields before prompt and after return verified. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim."
+    },
+    {
+      "path": "build/adoption-IRQ-default-read-20261031/result.json",
+      "sha256": "de3dd511d08fc01a295ed2a5418f5d78efa2316616d52fbe334bdaae7d27ea49",
+      "cases": [
+        {
+          "case": "valid-directory-pair-profile6",
+          "passed": true,
+          "adoption": {},
+          "compiler": {},
+          "observer_ticks": 171,
+          "DOS_operations_under_quiescence": 13,
+          "content_opens": 2,
+          "ownership_violations": 0,
+          "owner_state": [
+            3,
+            0,
+            0,
+            36832,
+            56299,
+            4608,
+            1
+          ],
+          "resource_state": [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "active_state_unchanged": true,
+          "declared_session_fault_only": false,
+          "hardware_restored": true
+        }
+      ],
+      "passed": true,
+      "scope": "Actual DOS8086 COM3/IRQ5 dummy UART, real popup/PROGRAM/kernel reads and passive DOS/INT1C observer. Read-only/compile workflow; active settings unchanged. Timer stack samples are observations, not an exhaustive high-water proof. No live modem/SIP/analog claim."
+    }
+  ],
+  "sources": {
+    "standalone/test_directory_resource_owner_dos.py": "16174842f043e619df19b1fa1755dffc13f26e6834d76dc563fa33b8f75314a1",
+    "standalone/directory_resource_owner_watch.asm": "28e1a75e8423118c280e7cbd49538f8d224f6a0c057b95443cb89985467bac94",
+    "standalone/test_directory_adopt_connection_dos.py": "fe86bf38796716879fe5fb16a2ed34bac57238c9cf8ab6aff7e19d9f4d8ed9d9",
+    "standalone/test_adoption_irq_restore_dos.py": "bfa953da2b38f53460ebd485601773d41e4cfe7d9e33c9c2eac27c6166cee186",
+    "standalone/directory_adopt_connection_watch.asm": "dec8591a989f110970716f09f587c816d4d517d1bea44fd2d07d8f02d302e370"
+  },
+  "prior_package_reproduction": {
+    "path": "build/adoption-irq-path-source-proof-20261031/result.json",
+    "sha256": "1321557f198a10072a109b9800234d5373cf87155a406c7c61f9be8f5f65fe24",
+    "files": 10,
+    "sources": 778,
+    "exported_source_commit": "8e32c71d46528e63b688f10579a9adc595efc3e8"
+  },
+  "scope": "Three actual DOS8086 COM3/IRQ5 -> IRQ3/4/7 deferred PRMEDIT-save/preview-A workflows, two selected-context settings save/cancel after PROGRAM CD followed by actual modem-model dialing/canonical script execution, plus default Apply/read-only controls. No product instruction or RAM patch. Current-IRQ quiescence is checked at DOS vector boundaries; passive timer verifies old IRQ mask release.",
+  "limitations": [
+    "IRQ-only fixtures use dummy UARTs, not physical serial hardware.",
+    "Connection fixtures use DOSBox modem carrier and a loopback TCP peer, not live ENiGMA/SIP/DSP/analog.",
+    "Visible attribute and DA/CPR checks are not a complete independent rendering oracle.",
+    "Sustained data/transfer, complete application and physical card/Boca/SPA2102 acceptance remain open.",
+    "No live BBS, bridge, ATA, network or card was changed."
+  ]
+}

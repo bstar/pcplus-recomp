@@ -1,5 +1,13 @@
 # Complete DOS rebuild plan
 
+[Selection and settings workflows](docs/DIRECTORY_ADOPTION_SETTINGS.md)
+now verify preview-A IRQ-only changes after deferred PRMEDIT saves to IRQ3/4/7,
+plus selected-context settings save/cancel after PROGRAM changes directory.
+Canonical PRM/script identities, selected profile, visible attributes, real
+DA/CPR replies, exact publication and hardware restoration pass in DOSBox.
+Application/editor bytes are unchanged; full rendering/application and physical
+Boca/SPA2102/card acceptance remain open.
+
 [IRQ release and saved settings paths](docs/IRQ_HANDOFF_AND_SETTINGS_PATH.md)
 restores the old PIC bit immediately on an IRQ-only handoff and lets PRMEDIT
 open the parent's absolute PRM identity while preserving DOS drive/directories.
