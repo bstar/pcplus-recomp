@@ -1,5 +1,9 @@
 # Delayed log writes and paced serial traffic
 
+The later [watermark checkpoint](PHONE_LOG_WATERMARK.md) adds larger bursts
+and sampled driver-ownership handoff, including a rejected early-RTS source
+mutant. This page retains its original below-watermark scope.
+
 The optional call-log controls image now has three delayed-write workflows
 with a real UART, actual DOS file writes and a flow-aware synthetic peer.
 The application image is unchanged. These checks extend selected logging and

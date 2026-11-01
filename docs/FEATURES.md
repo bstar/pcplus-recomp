@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Driver watermark ownership](PHONE_LOG_WATERMARK.md) now passes three larger-burst
+workflows: SOFT/BOTH queue driver XOFF, while HARD retains driver-owned RTS
+through logger completion. The ring reaches 3,576 bytes without drops; sampled
+ownership, later release, every query, final cells and exact logs pass. A clean
+source replay repeats 42 workflows; an isolated early-RTS source mutant is
+rejected by the HARD test. Stock-BBS deadline/composition, sustained protocols,
+full rendering, physical and card gates remain open. Production bytes are unchanged.
+
 [Delayed writes and paced traffic](PHONE_LOG_SLOW_IO.md) now pass three native
 workflows with delays of nine and 36 BIOS ticks, actual UART input and DOS writes.
 SOFT/BOTH preserve a bounded in-flight burst and resume flow; NONE defers online

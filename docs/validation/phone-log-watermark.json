@@ -1,0 +1,847 @@
+{
+  "passed": true,
+  "source_commit": "08c42dc5b22d83cf7fbff88ba3421684157a7543",
+  "original_inputs": [],
+  "terminal": {
+    "path": "build/terminal-phone-log-bank-3d164fda0202/TERMINAL.EXE",
+    "sha256": "2c5f5fc4dd4b9948b897db6499e920f694f30fbbbcdf3d1fb0596cbc921027f7",
+    "unchanged_from_slow_checkpoint": true
+  },
+  "original_watermark_cases": 3,
+  "public_cases": 42,
+  "public_source_proof": {
+    "path": "build/phone-log-watermark-public-01/result.json",
+    "sha256": "77f26be3443567eb375735529f63eb0548480dafa742d4e1919e8c56dff258cb",
+    "source_count": 1745,
+    "declared_later_orchestration_only_differences": {
+      "standalone/prove_phone_log_watermark_mutant.py": {
+        "positive_proof_sha256": "7de4bdca22acc31591b9a86931d2eb91c7c0368cb723327dbb0f5cf8153237be",
+        "current_sha256": "9f897aa7697b3f0a7de9e750edf6140c66a2ab23cd78ad53a344eec9c3092d24",
+        "reason": "source-copy orchestration excludes generated __pycache__ directories; no application/build/runtime change"
+      }
+    }
+  },
+  "evidence": {
+    "native_watermark": {
+      "path": "build/phone-log-slow-terminal/watermark-final-01/result.json",
+      "sha256": "0330be90d962f05ef9af5e2f4b798d3e6ecb2c5080f58b7e6bb25b21f3ddc514",
+      "cases": [
+        {
+          "case": "soft-watermark",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true,
+            "high_watermark_reached": true,
+            "actual_driver_ownership": true,
+            "actual_pending_driver_XOFF": true,
+            "post_logger_owner_samples": true,
+            "no_sampled_RTS_override": true,
+            "driver_released_after_drain": true
+          }
+        },
+        {
+          "case": "both-watermark",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true,
+            "high_watermark_reached": true,
+            "actual_driver_ownership": true,
+            "actual_pending_driver_XOFF": true,
+            "post_logger_owner_samples": true,
+            "no_sampled_RTS_override": true,
+            "driver_released_after_drain": true
+          }
+        },
+        {
+          "case": "hard-watermark",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true,
+            "high_watermark_reached": true,
+            "actual_driver_ownership": true,
+            "actual_pending_driver_XOFF": true,
+            "post_logger_owner_samples": true,
+            "no_sampled_RTS_override": true,
+            "driver_released_after_drain": true
+          }
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-existing": {
+      "path": "build/phone-log-watermark-public-01/source/build/phone-log-events-terminal/public-existing/result.json",
+      "sha256": "8e0389eec092a182b5c65b75d91c30233a3c94f3eb4ad46f4770730491086f2b",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-controls": {
+      "path": "build/phone-log-watermark-public-01/source/build/phone-log-events-terminal/public-controls/result.json",
+      "sha256": "01f4fcd823947efde1728c7f274c4d9875721d9239b55d5bdc33513639d05b6f",
+      "cases": [
+        {
+          "case": "success",
+          "passed": true
+        },
+        {
+          "case": "hangup",
+          "passed": true
+        },
+        {
+          "case": "busy",
+          "passed": true
+        },
+        {
+          "case": "silence",
+          "passed": true
+        },
+        {
+          "case": "redial",
+          "passed": true
+        },
+        {
+          "case": "disabled",
+          "passed": true
+        },
+        {
+          "case": "direct",
+          "passed": true
+        },
+        {
+          "case": "capacity",
+          "passed": true
+        },
+        {
+          "case": "soft",
+          "passed": true
+        },
+        {
+          "case": "both",
+          "passed": true
+        },
+        {
+          "case": "none",
+          "passed": true
+        },
+        {
+          "case": "fs-failure",
+          "passed": true
+        },
+        {
+          "case": "program",
+          "passed": true
+        },
+        {
+          "case": "ui-ready",
+          "passed": true
+        },
+        {
+          "case": "ui-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-unrepaired",
+          "passed": true
+        },
+        {
+          "case": "ui-recovery",
+          "passed": true
+        },
+        {
+          "case": "ui-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 316
+    },
+    "public-preexisting": {
+      "path": "build/phone-log-watermark-public-01/source/build/phone-log-events-terminal/public-preexisting/result.json",
+      "sha256": "cebf593a8b4f16e97c73a30b6c727fedb280d4394d6f85883b51bf3e922ff402",
+      "cases": [
+        {
+          "case": "existing-empty",
+          "passed": true
+        },
+        {
+          "case": "existing-records",
+          "passed": true
+        },
+        {
+          "case": "existing-large",
+          "passed": true
+        },
+        {
+          "case": "ui-short-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-write-error-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 86
+    },
+    "public-io-failures": {
+      "path": "build/phone-log-watermark-public-01/source/build/phone-log-events-terminal/public-io-failures/result.json",
+      "sha256": "de11b98705f6c41da5e720a70571f7d60af75d00339f89f7166fe06d9e190960",
+      "cases": [
+        {
+          "case": "ui-commit-retry",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-truncate",
+          "passed": true
+        },
+        {
+          "case": "ui-rollback-commit",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 61
+    },
+    "public-permissions": {
+      "path": "build/phone-log-watermark-public-01/source/build/phone-log-events-terminal/public-permissions/result.json",
+      "sha256": "52cc7e512b86354478f0d61743ad7484dd11ae299e6250c7987667c312b40bbe",
+      "cases": [
+        {
+          "case": "ui-readonly-cancel",
+          "passed": true
+        },
+        {
+          "case": "ui-readonly-retry",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 42
+    },
+    "public-readonly": {
+      "path": "build/phone-log-watermark-public-01/source/build/phone-log-startup-terminal/public-readonly/result.json",
+      "sha256": "ffce2aa4f715150df5d378d1eac60af3fb50c346ed7c27bf6397068f274af731",
+      "cases": [
+        {
+          "case": "readonly",
+          "passed": true
+        },
+        {
+          "case": "readonly-disabled",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 36
+    },
+    "public-slow": {
+      "path": "build/phone-log-watermark-public-01/source/build/phone-log-slow-terminal/public-slow/result.json",
+      "sha256": "c9ee45811639c4f4e7081f530252a4eb044633c61fea3cb3692cee2434358637",
+      "cases": [
+        {
+          "case": "soft-9",
+          "passed": true
+        },
+        {
+          "case": "both-36",
+          "passed": true
+        },
+        {
+          "case": "none-36",
+          "passed": true
+        }
+      ],
+      "verified_artifacts": 60
+    },
+    "public-watermark": {
+      "path": "build/phone-log-watermark-public-01/source/build/phone-log-slow-terminal/public-watermark/result.json",
+      "sha256": "b9eab1384281c2cd73e4eb71b4894f444e10d7395af28c26082ea3574c0c1781",
+      "cases": [
+        {
+          "case": "soft-watermark",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true,
+            "high_watermark_reached": true,
+            "actual_driver_ownership": true,
+            "actual_pending_driver_XOFF": true,
+            "post_logger_owner_samples": true,
+            "no_sampled_RTS_override": true,
+            "driver_released_after_drain": true
+          }
+        },
+        {
+          "case": "both-watermark",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true,
+            "high_watermark_reached": true,
+            "actual_driver_ownership": true,
+            "actual_pending_driver_XOFF": true,
+            "post_logger_owner_samples": true,
+            "no_sampled_RTS_override": true,
+            "driver_released_after_drain": true
+          }
+        },
+        {
+          "case": "hard-watermark",
+          "passed": true,
+          "checks": {
+            "final_kind": true,
+            "startup_ok": true,
+            "lifecycle_idle": true,
+            "generation": true,
+            "queue_flags": true,
+            "queue_generations": true,
+            "final_status": true,
+            "heading_and_size": true,
+            "exact_event_records": true,
+            "native_terminal": true,
+            "existing_prefix_preserved": true,
+            "delayed_real_write": true,
+            "interrupts_enabled": true,
+            "no_receive_drops": true,
+            "real_parent_DS": true,
+            "intended_UART_ownership": true,
+            "in_flight_received_during_write": true,
+            "RTS_low_during_BOTH": true,
+            "exact_ANSI_glyphs": true,
+            "exact_ANSI_attributes": true,
+            "exact_every_cursor_reply_and_keyboard": true,
+            "all_sent_bytes_exact": true,
+            "bounded_burst_sent_during_pause": true,
+            "independent_pause_intervals": true,
+            "balanced_flow": true,
+            "no_automatic_retries": true,
+            "observed_commit_policy": true,
+            "observer_final": true,
+            "high_watermark_reached": true,
+            "actual_driver_ownership": true,
+            "actual_pending_driver_XOFF": true,
+            "post_logger_owner_samples": true,
+            "no_sampled_RTS_override": true,
+            "driver_released_after_drain": true
+          }
+        }
+      ],
+      "verified_artifacts": 60
+    }
+  },
+  "driver_ownership_observations": [
+    {
+      "run": "native_watermark",
+      "case": "soft-watermark",
+      "delay_driver_snapshot": [
+        21324,
+        1,
+        72,
+        72,
+        61954,
+        1,
+        0,
+        3576,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        11,
+        62022,
+        15675,
+        19,
+        1,
+        0,
+        9,
+        0,
+        0,
+        1,
+        2
+      ],
+      "flow_events": [
+        {
+          "byte": 19,
+          "at": 0.06246947799809277
+        },
+        {
+          "byte": 19,
+          "at": 4.009356187998492
+        },
+        {
+          "byte": 17,
+          "at": 4.536264447997382
+        }
+      ],
+      "peer_payload_bytes": 4296,
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_cells": 1920
+    },
+    {
+      "run": "native_watermark",
+      "case": "both-watermark",
+      "delay_driver_snapshot": [
+        21324,
+        1,
+        72,
+        72,
+        61954,
+        1,
+        0,
+        3576,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        62022,
+        15675,
+        19,
+        1,
+        0,
+        9,
+        0,
+        0,
+        1,
+        2
+      ],
+      "flow_events": [
+        {
+          "byte": 19,
+          "at": 0.06313265700009651
+        },
+        {
+          "byte": 19,
+          "at": 4.009569597001246
+        },
+        {
+          "byte": 17,
+          "at": 4.538148886000272
+        }
+      ],
+      "peer_payload_bytes": 4296,
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_cells": 1920
+    },
+    {
+      "run": "native_watermark",
+      "case": "hard-watermark",
+      "delay_driver_snapshot": [
+        21324,
+        1,
+        72,
+        72,
+        61954,
+        1,
+        0,
+        3576,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        61954,
+        15675,
+        0,
+        0,
+        1,
+        9,
+        0,
+        0,
+        1,
+        2
+      ],
+      "flow_events": [],
+      "peer_payload_bytes": 4296,
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_cells": 1920
+    },
+    {
+      "run": "public-watermark",
+      "case": "soft-watermark",
+      "delay_driver_snapshot": [
+        21324,
+        1,
+        72,
+        72,
+        61954,
+        1,
+        0,
+        3576,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        11,
+        62022,
+        15675,
+        19,
+        1,
+        0,
+        9,
+        0,
+        0,
+        1,
+        2
+      ],
+      "flow_events": [
+        {
+          "byte": 19,
+          "at": 0.06270424000103958
+        },
+        {
+          "byte": 19,
+          "at": 4.009851954004262
+        },
+        {
+          "byte": 17,
+          "at": 4.537381895999715
+        }
+      ],
+      "peer_payload_bytes": 4296,
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_cells": 1920
+    },
+    {
+      "run": "public-watermark",
+      "case": "both-watermark",
+      "delay_driver_snapshot": [
+        21324,
+        1,
+        72,
+        72,
+        61954,
+        1,
+        0,
+        3576,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        62022,
+        15675,
+        19,
+        1,
+        0,
+        9,
+        0,
+        0,
+        1,
+        2
+      ],
+      "flow_events": [
+        {
+          "byte": 19,
+          "at": 0.06235118599579437
+        },
+        {
+          "byte": 19,
+          "at": 4.01026891899528
+        },
+        {
+          "byte": 17,
+          "at": 4.537936772001558
+        }
+      ],
+      "peer_payload_bytes": 4296,
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_cells": 1920
+    },
+    {
+      "run": "public-watermark",
+      "case": "hard-watermark",
+      "delay_driver_snapshot": [
+        21324,
+        1,
+        72,
+        72,
+        61954,
+        1,
+        0,
+        3576,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        61954,
+        15675,
+        0,
+        0,
+        1,
+        9,
+        0,
+        0,
+        1,
+        2
+      ],
+      "flow_events": [],
+      "peer_payload_bytes": 4296,
+      "screen_sha256": "4b724fa6e6ae93be9fa5f3a2b56687317b1aa46b24d9010197d4dbe0479e518b",
+      "exact_cursor_queries": 48,
+      "exact_final_cells": 1920
+    }
+  ],
+  "unchanged_default_delay_fixtures": [
+    {
+      "case": "soft-9",
+      "sha256": "aa0f38a7edda88bff8bd0efb4c869d31168021c76123a9c9efc033251efa2949"
+    },
+    {
+      "case": "both-36",
+      "sha256": "7148b1d93b23ac00aa3d50751e0bc7fefdb3a3cb6c3a082577a84e1d0b6d515b"
+    },
+    {
+      "case": "none-36",
+      "sha256": "7148b1d93b23ac00aa3d50751e0bc7fefdb3a3cb6c3a082577a84e1d0b6d515b"
+    }
+  ],
+  "negative_control": {
+    "path": "build/phone-log-watermark-mutant-final-01/result.json",
+    "sha256": "a0c219bc8247aea11a13c7b6d2db882c06a1a570a93ca20019efaf0e3f5046ed",
+    "result": {
+      "passed": true,
+      "source_commit": "08c42dc5b22d83cf7fbff88ba3421684157a7543",
+      "source_count": 1745,
+      "original_inputs": [],
+      "all_copied_inputs_matched_public_commit": true,
+      "source_mutation": {
+        "path": "src/directory/phone_log_disk.c",
+        "before_sha256": "5c45d4fe67d50d778b1ecf684101594efe02ef1fc2c421f6d3e07ae485224da9",
+        "after_sha256": "461231552e61f9c218121ede32cb58879b6c78b10d7e617f1d44132e51b6cf23",
+        "before": "if(hard && !uart_rts_lowered)",
+        "after": "if(hard)"
+      },
+      "production_terminal_sha256": "2c5f5fc4dd4b9948b897db6499e920f694f30fbbbcdf3d1fb0596cbc921027f7",
+      "production_source_unchanged": true,
+      "mutant_terminal_sha256": "0224753fa246990b3cfa712539b46df7b53007340ad3d298af588491a83ebfb8",
+      "native_report": {
+        "path": "build/phone-log-watermark-mutant-final-01/source/build/phone-log-slow-terminal/early-rts/result.json",
+        "sha256": "284c4d76cd0db1036a1e275fa706a41fd6a39c9810c7388945a983e3090c60e1"
+      },
+      "expected_failed_checks": [
+        "no_sampled_RTS_override"
+      ],
+      "post_logger_samples": 9,
+      "bad_RTS_samples": 9,
+      "slow_snapshot": [
+        21324,
+        1,
+        72,
+        72,
+        61954,
+        1,
+        0,
+        3576,
+        0,
+        0,
+        64,
+        61442,
+        5,
+        9,
+        61954,
+        15675,
+        0,
+        0,
+        1,
+        9,
+        9,
+        0,
+        1,
+        2
+      ],
+      "build_log_sha256": "290e703a1a2c9eb9273cd166bbf2256275f100f5d8d3983535c7b4e887e839d4",
+      "scope": "Require the real HARD watermark test to reject a source-built early-RTS mutant. Separate ignored public-source copy; exactly one source guard removed. No production source, executable, product RAM, installed files, card or live service patched."
+    },
+    "orchestrator_commit": "2acd36f43ea2d1b89d125fa3cce9c0f5baf4ed37",
+    "orchestrator_sha256": "9f897aa7697b3f0a7de9e750edf6140c66a2ab23cd78ad53a344eec9c3092d24"
+  },
+  "unchanged_published_BBS_package": {
+    "manifest_sha256": "593fe32a0070d92104283389736498da3c77e886d942ac16b0284fccf796ecbe",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "495d4852275bb7f14c897c8ea9fcaee4620c939690402898fd0c3c6e64723dd7",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "9cc71319162e7e7ff1a242081c6f1b4af124e521a342e1c01e5409bdffd3f977",
+      "README.TXT": "29f291de7446ed9624d06b5276c23c399d6e6a8d1393d50ea979db8377f90e26",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "c41df22fcc928bef5d0ab220a58e39eff69c2d68520d0578c7428d25fab442b6",
+      "VERSION.TXT": "90b052b73bb28b3789bc5193c9f91e72711e315fa08ae92bffa31970b452d044",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  },
+  "limitations": [
+    "Bounded 3576-byte burst below 4096-byte capacity, not overflow or unlimited incoming data acceptance.",
+    "Discrete post-logger timer samples with live-vector/epoch guards; not every-instruction race acceptance.",
+    "SOFT/BOTH peer follows software flow; HARD uses bounded timed input. No physical RTS propagation or real modem validation.",
+    "IRQ-friendly delay before a real DOS write; not a physical disk driver masking interrupts, stock-BBS deadline, long-transfer or every-frame rendering acceptance.",
+    "Initial source-copy cache rejection and patched in-memory probe excluded; negative control uses the corrected committed helper and exact public application inputs.",
+    "No full F01-F16, broad variants, physical Boca/SPA2102 or card-deployment closure. Production source/image, published package, card, live services and network unchanged."
+  ]
+}
