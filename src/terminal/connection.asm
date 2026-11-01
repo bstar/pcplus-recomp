@@ -25,6 +25,16 @@ global terminal_connection_prepare_impl,terminal_connection_start_impl
 global terminal_connection_poll_impl,terminal_connection_receive_impl,terminal_connection_cancel_impl
 global terminal_connection_exit_impl
 
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+extern _terminal_phone_log_events_ready_far,_terminal_phone_log_events_connected_far
+extern _terminal_phone_log_events_disconnected_far
+%macro LOG_EVENT 2
+ global %2
+ %2 equ $
+ call far %1
+%endmacro
+%endif
+
 %macro save 0
  push bp
  push si
@@ -171,6 +181,14 @@ terminal_connection_start_impl:
  call connection_program_cancel_service
  cmp byte [connection_enabled],0
  je .done
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+ LOG_EVENT _terminal_phone_log_events_ready_far,terminal_phone_log_ready_site
+ or ax,ax
+ jz .log_admitted
+ call connection_log_notice
+ jmp .done
+.log_admitted:
+%endif
  call connection_clipboard_abort_service
  mov word [terminal_tx_count],0
  mov word [terminal_tx_head],0
@@ -180,8 +198,16 @@ terminal_connection_start_impl:
  mov word [connection_state],6
  mov word [connection_status],1
  call connection_capture_carrier
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+ LOG_EVENT _terminal_phone_log_events_connected_far,terminal_phone_log_direct_connected_site
+ push ax
+%endif
  call connection_note_connected_service
  call connection_notice_restore_service
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+ pop ax
+ call connection_log_notice
+%endif
  jmp .done
 .modem:
  call connection_uart_clear_service
@@ -424,8 +450,16 @@ terminal_connection_poll_impl:
  mov word [connection_state],6
  mov word [connection_status],1
  call connection_capture_carrier
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+ LOG_EVENT _terminal_phone_log_events_connected_far,terminal_phone_log_modem_connected_site
+ push ax
+%endif
  call connection_note_connected_service
  call connection_notice_restore_service
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+ pop ax
+ call connection_log_notice
+%endif
  jmp .done
 .carrier:
  mov dx,[uart_port_msr]
@@ -449,6 +483,10 @@ terminal_connection_poll_impl:
  mov word [terminal_tx_tail],0
  mov si,message_offline
  call connection_notice_service
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+ LOG_EVENT _terminal_phone_log_events_disconnected_far,terminal_phone_log_carrier_end_site
+ call connection_log_notice
+%endif
  jmp .done
 .timeout:
  ; A failed online hangup must not inject a dial-abort byte into live data.
@@ -543,9 +581,18 @@ terminal_connection_poll_impl:
  popf
  mov word [connection_state],0
  cmp word [connection_status],5
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+ jne .log_retired
+%else
  jne .done
+%endif
  mov si,message_disconnected
  call connection_notice_service
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+.log_retired:
+ LOG_EVENT _terminal_phone_log_events_disconnected_far,terminal_phone_log_retire_end_site
+ call connection_log_notice
+%endif
 .done:
  cmp byte [connection_exit_pending],0
  je .return
@@ -585,6 +632,10 @@ terminal_connection_cancel_impl:
  mov word [connection_status],5
  mov si,message_disconnected
  call connection_notice_service
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+ LOG_EVENT _terminal_phone_log_events_disconnected_far,terminal_phone_log_direct_end_site
+ call connection_log_notice
+%endif
  jmp .done
 .modem:
  mov word [connection_status],4
@@ -687,6 +738,17 @@ terminal_connection_receive_impl:
 %define MODEM_CDECL_SERVICE FAR_CDECL_SERVICE
 %include "modem_abi.inc"
 
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+; Logger errors do not alter the transport's state/status or its hangup policy.
+connection_log_notice:
+ or ax,ax
+ jz .done
+ mov si,message_log_blocked
+ call connection_notice_service
+.done:
+ ret
+%endif
+
 SEGMENT _DATA public class=DATA use16
 global terminal_modem_pause,connection_state,connection_status,connection_result
 global connection_enabled,connection_baud_index,connection_elapsed,connection_deadline
@@ -726,3 +788,7 @@ message_disconnected: db 'Disconnected',0
 
 message_hangup_failed: db 'Hangup failed',0
 message_init_failed: db 'Init failed',0
+
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+message_log_blocked: db 'Call log blocked',0
+%endif

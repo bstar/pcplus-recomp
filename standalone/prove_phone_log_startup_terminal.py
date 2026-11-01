@@ -10,7 +10,7 @@ import sys
 from build_phone_log_queue import ROOT, sha
 
 
-def flags(manifest, startup):
+def flags(manifest, startup, event_hooks=True):
     fields = {'experimental_external_render': 'external-render', 'experimental_mouse': 'mouse',
         'experimental_notice_input': 'notice-input', 'experimental_aspect_keys': 'aspect-keys',
         'experimental_directory_keys': 'directory-keys', 'terminal_exit_guard': 'exit-guard',
@@ -27,7 +27,11 @@ def flags(manifest, startup):
         result += ['--notice-sound']
     if manifest.get('experimental_native_reset_bank') and not manifest.get('native_reset_overlay'):
         result += ['--native-reset-static']
-    return result + [('--phone-log-lifecycle' if manifest.get('experimental_phone_log_lifecycle') else '--phone-log-startup') if startup else '--phone-log-bank']
+    if not startup:
+        return result + ['--phone-log-bank']
+    if manifest.get('experimental_phone_log_events') and event_hooks:
+        return result + ['--phone-log-events']
+    return result + ['--phone-log-lifecycle' if manifest.get('experimental_phone_log_lifecycle') else '--phone-log-startup']
 
 
 def main():
@@ -51,6 +55,8 @@ def main():
     if reservations:
         names |= {'standalone/phone_log_claim_watch.asm', 'standalone/phone_log_reservation_diagnostic.c',
                   'standalone/phone_log_bank_client.asm'}
+    events=bool(manifest.get('experimental_phone_log_events'))
+    if events:names |= {'standalone/phone_log_events_watch.asm'}
     lifecycle=bool(manifest.get('experimental_phone_log_lifecycle'))
     if lifecycle:
         names |= {'standalone/phone_log_lifecycle_diagnostic.c', 'standalone/phone_log_lifecycle_client.asm'}
@@ -83,11 +89,29 @@ def main():
         subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, True)], cwd=fresh, stdout=log, stderr=log, check=True)
         rebuilt = fresh / 'build' / parent.name
         assert sha(rebuilt / 'TERMINAL.EXE') == manifest['binary_sha256']
+        startup_target=rebuilt
+        event_control={}
+        if events:
+            subprocess.run([sys.executable, 'standalone/test_phone_log_events_terminal.py',
+                '--terminal', str(rebuilt), '--label', 'public-events'], cwd=fresh, stdout=log, stderr=log, check=True)
+            for folder in (fresh,output/'baseline'):
+                subprocess.run([sys.executable, 'standalone/build_terminal.py', *flags(manifest, True, False)],
+                    cwd=folder, stdout=log, stderr=log, check=True)
+            def lifecycle_control(folder):
+                products=[p for p in (folder/'build').glob('terminal-phone-log-bank-*/manifest.json')
+                    if json.loads(p.read_text()).get('experimental_phone_log_lifecycle') and
+                    not json.loads(p.read_text()).get('experimental_phone_log_events')]
+                assert len(products)==1
+                return products[0].parent
+            startup_target=lifecycle_control(fresh)
+            baseline_lifecycle=lifecycle_control(output/'baseline')
+            assert sha(startup_target/'TERMINAL.EXE')==sha(baseline_lifecycle/'TERMINAL.EXE')
+            event_control=dict(unchanged_event_off_control_sha256=sha(startup_target/'TERMINAL.EXE'))
         subprocess.run([sys.executable, 'standalone/test_phone_log_startup_terminal.py',
-            '--terminal', str(rebuilt), '--label', 'public-startup'], cwd=fresh, stdout=log, stderr=log, check=True)
+            '--terminal', str(startup_target), '--label', 'public-startup'], cwd=fresh, stdout=log, stderr=log, check=True)
         if reservations:
             subprocess.run([sys.executable, 'standalone/test_phone_log_claim_terminal.py',
-                '--terminal', str(rebuilt), '--label', 'public-claims'], cwd=fresh, stdout=log, stderr=log, check=True)
+                '--terminal', str(startup_target), '--label', 'public-claims'], cwd=fresh, stdout=log, stderr=log, check=True)
             subprocess.run([sys.executable, 'standalone/test_phone_log_reservation_dos.py',
                 '--output', 'build/public-queue-claims'], cwd=fresh, stdout=log, stderr=log, check=True)
         if lifecycle:
@@ -104,7 +128,7 @@ def main():
     native_path = fresh / 'build/phone-log-startup-terminal/public-startup/result.json'
     native = json.loads(native_path.read_text())
     assert native['passed'] and len(native['cases']) == 7
-    composition={}
+    composition=dict(startup_capture_target_sha256=sha(startup_target/'TERMINAL.EXE'),**event_control)
     if reservations:
         capture_path=fresh/'build/phone-log-claim-terminal/public-claims/result.json'
         queue_path=fresh/'build/public-queue-claims/result.json'
@@ -112,7 +136,7 @@ def main():
         assert capture['passed'] and len(capture['cases'])==3 and all(capture['checks'].values())
         assert queue['passed'] and all(queue['checks'].values())
         assert sum(len(v['cases']) for v in queue['variants'].values())==15
-        composition=dict(repeated_capture_cases=3,repeated_queue_claim_cases=15,
+        composition.update(repeated_capture_cases=3,repeated_queue_claim_cases=15,
             repeated_capture_sha256=sha(capture_path),repeated_queue_claim_sha256=sha(queue_path))
     if lifecycle:
         lifecycle_path=fresh/'build/public-lifecycle/result.json'
@@ -122,6 +146,12 @@ def main():
         assertions=sum(row['assertions'] for v in life['variants'].values() for row in v['cases'].values())
         composition.update(repeated_lifecycle_cases=21,repeated_lifecycle_assertions=assertions,
             repeated_lifecycle_sha256=sha(lifecycle_path))
+    if events:
+        events_path=fresh/'build/phone-log-events-terminal/public-events/result.json'
+        event_report=json.loads(events_path.read_text())
+        assert event_report['passed'] and all(event_report['checks'].values()) and len(event_report['cases'])==8
+        assert event_report['terminal_sha256']==manifest['binary_sha256']
+        composition.update(repeated_event_cases=8,repeated_event_sha256=sha(events_path))
     assert all(sha(fresh / name) == digest for name, digest in sources.items())
     result = dict(passed=True, source_commit=commit, baseline_commit=baseline, source_count=len(sources), sources=sources,
         declared_uncommitted_reservation_source_differences=differences, original_inputs=[],
@@ -130,7 +160,7 @@ def main():
         build_log_sha256=sha(output / 'build.log'),**composition,
         scope=__doc__ + ' Public Git source only; no Git metadata, originals, previous objects or installed files copied. '
             'Require exact full executable despite declared pending-source differences. Compare disabled-feature '
-            'control against the pre-feature public commit. This remains an optional startup/producer parent without event hooks, live disk polling or deployment.')
+            'control against the pre-feature public commit. Optional RAM-event hooks when selected; startup/capture regressions use the independently compared event-off control. No live disk polling or deployment.')
     (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print('PASS public parent:', len(sources), 'sources; seven native startup cases; exact disabled-feature control')
 

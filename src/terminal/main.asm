@@ -435,6 +435,12 @@ terminal_shutdown:
  call uart_restore_hardware_state
  mov byte [hardware_active],0
 .exit:
+%ifdef TERMINAL_PHONE_LOG_EVENTS
+ extern _terminal_phone_log_events_shutdown_far
+ global terminal_phone_log_shutdown_site
+ terminal_phone_log_shutdown_site equ $
+ call far _terminal_phone_log_events_shutdown_far
+%endif
  call terminal_transfer_shutdown
  call terminal_monitor_shutdown
  or ax,ax

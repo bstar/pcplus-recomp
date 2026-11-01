@@ -36,7 +36,7 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def build_bank(out, reservations=False, startup=False, lifecycle=False):
+def build_bank(out, reservations=False, startup=False, lifecycle=False, events=False):
     OUT = Path(out)
     OUT.mkdir(parents=True, exist_ok=True)
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
@@ -48,6 +48,12 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False):
     if lifecycle:
         sources += ['src/directory/phone_log_lifecycle.c']
         aliases.update({name: name + '_impl' for name in LIFECYCLE_ENTRIES})
+    if events:
+        assert lifecycle and startup and reservations
+        sources += ['src/directory/phone_log_events.c']
+        aliases.update({name: name + '_impl' for name in ('terminal_phone_log_events_ready',
+            'terminal_phone_log_events_connected', 'terminal_phone_log_events_disconnected',
+            'terminal_phone_log_events_shutdown')})
     if startup:
         sources += ['src/directory/phone_log_startup.c', 'src/directory/phone_log_startup_owner.c', 'src/config/resource_path.c']
         aliases.update(phone_log_startup_owner='phone_log_startup_owner_impl',
@@ -56,7 +62,8 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False):
     adapters = {}
     for source in sources:
         obj = OUT / (('phone_resource_path' if source == 'src/config/resource_path.c' else Path(source).stem) + '.obj')
-        subprocess.run(['wcl', '-c', *flags, '-dPHONE_LOG_QUEUE_FAR', '-dPHONE_LOG_QUEUE_EXTERNAL', '-nt=PHONE_LOG_CODE', '-nc=FARCODE',
+        includes = ['-i=' + str(ROOT / 'src/config')] if source.endswith('/phone_log_events.c') else []
+        subprocess.run(['wcl', '-c', *flags, *includes, '-dPHONE_LOG_QUEUE_FAR', '-dPHONE_LOG_QUEUE_EXTERNAL', '-nt=PHONE_LOG_CODE', '-nc=FARCODE',
                         *['-d' + name + '=' + value for name, value in aliases.items()],
                         '-fo=' + obj.name, os.path.relpath(ROOT / source, OUT)], cwd=OUT, check=True)
         stable_header(obj, source)
@@ -74,6 +81,7 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False):
     asm_sources = ['src/terminal/phone_log_bank.asm', 'src/terminal/phone_log_resident.asm',
                    'src/terminal/phone_log_storage.asm', 'src/terminal/phone_log_end.asm']
     if lifecycle:asm_sources.insert(-1, 'src/terminal/phone_log_lifecycle_bank.asm')
+    if events:asm_sources.insert(-1, 'src/terminal/phone_log_events_bank.asm')
     if startup:asm_sources.insert(-1, 'src/terminal/phone_log_startup_bank.asm')
     for source in asm_sources:
         obj = OUT / (('phone_resource_path' if source == 'src/config/resource_path.c' else Path(source).stem) + '.obj')
@@ -86,6 +94,8 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False):
         'src/capture/capture_fs.h', 'src/config/prm_dos.h', 'src/terminal/phone_log_abi.inc',
         'src/terminal/far_bridge.inc', 'standalone/build_phone_log_bank.py',
         'standalone/build_phone_log_file.py', 'standalone/omf_imports.py']
+    if events:
+        names += ['src/directory/phone_log_events.h']
     if lifecycle:
         names += ['src/directory/phone_log_lifecycle.h', 'src/terminal/phone_log_lifecycle_abi.inc']
     if reservations:

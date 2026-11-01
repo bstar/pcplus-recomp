@@ -379,6 +379,28 @@ def inspect_terminal_memory(binary,map_path):
   assert raw('_phone_log_lifecycle_store',38)==b'\x45\x4c'+bytes(36)
   extra.update(phone_log_lifecycle_entries_verified=pairs,phone_log_lifecycle_owner_bytes=38,
                phone_log_lifecycle_owner_offset=symbols['_phone_log_lifecycle_store'][1])
+ if '_terminal_phone_log_events_ready_far' in symbols:
+  entries=('ready','connected','disconnected','shutdown')
+  for name in entries:
+   entry='_terminal_phone_log_events_'+name
+   assert symbols[entry+'_far'][0]==symbols[entry+'_impl'][0]==bank_seg
+   near_call(entry+'_far',entry+'_impl',prefix=b'\x55\x89\xe5',suffix=b'\x8d\x66\x00\x5d\xcb')
+  callsites={'terminal_phone_log_ready_site':'ready',
+      'terminal_phone_log_direct_connected_site':'connected',
+      'terminal_phone_log_modem_connected_site':'connected',
+      'terminal_phone_log_carrier_end_site':'disconnected',
+      'terminal_phone_log_retire_end_site':'disconnected',
+      'terminal_phone_log_direct_end_site':'disconnected',
+      'terminal_phone_log_shutdown_site':'shutdown'}
+  for site,target in callsites.items():
+   dest='_terminal_phone_log_events_'+target+'_far'
+   assert raw(site,5)==b'\x9a'+struct.pack('<HH',symbols[dest][1],symbols[dest][0])
+   assert address(site)+3 in relocations
+   assert symbols[site][0]==(near_code['relative_segment'] if target=='shutdown' else symbols['terminal_modem_code_start'][0])
+  for name in ('_terminal_phone_log_event_status','_terminal_phone_log_event_epoch'):
+   assert symbols[name][0]==ds and word(name)==0
+  extra.update(phone_log_event_entries_verified=4,phone_log_event_call_sites_verified=7,
+      phone_log_event_call_sites={name:address(name) for name in callsites})
  if '_phone_log_startup_owner_far' in symbols:
   assert symbols['_phone_log_startup_owner_far'][0]==symbols['_phone_log_startup_owner_impl'][0]==bank_seg
   near_call('_phone_log_startup_owner_far','_phone_log_startup_owner_impl',prefix=b'\x55\x89\xe5',suffix=b'\x8d\x66\x00\x5d\xcb')
