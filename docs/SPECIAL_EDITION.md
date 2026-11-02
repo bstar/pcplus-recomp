@@ -18,6 +18,13 @@ reproduces a selected terminal from declared inputs in a Git-free tree with no
 original executables. `--output-dir` on the terminal builder selects a new
 isolated build directory without replacing historical products.
 
+The tested candidate was installed at C:\PCPLUS by release R7F01D62, replacing
+only TERMINAL.EXE and VERSION.TXT. Read-back verification passed; all15 selected
+configuration, launcher and call-log hashes remained unchanged. Restart PCPlus
+to load it, and reboot out of Network management before using the IRQ5 modem.
+The current [validation receipt](validation/original-startup-layout.json) records
+software checks, independently from physical display acceptance.
+
 The historical description below applies to the earlier reconstructed layout,
 not the restored candidate. Physical display acceptance remains separate.
 

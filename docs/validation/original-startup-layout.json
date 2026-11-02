@@ -44,7 +44,22 @@
     "build/bbs-lab/results/synchronet/originalsplash-synchronet-20261102/screen-reference-audit.json": {
       "passed": true,
       "sha256": "fa1b934d69d59d3bd210da56415c3ac283d3f7db78e3cbbc39d91acd8b6f44cb"
+    },
+    "build/phone-log-carrier-terminal/original-splash-carrier-20261102/result.json": {
+      "passed": true,
+      "sha256": "0f00142eba342c9afb1221d498996f9299f21819b3843bac8a704d4ade6bc784"
+    },
+    "build/phone-log-carrier-terminal/original-splash-transfer-20261102/result.json": {
+      "passed": true,
+      "sha256": "9d01532f3181083446f86242e66d10d228fd83ad447db74c32b11dbc166d9217"
     }
   },
-  "scope": "Source-built original startup layout with edition substitutions. Linked original logo/tagline/layout oracle; actual DOS COM3/IRQ5 startup, speaker and scripted connection checks; source-only exact rebuild; actual DOS Enigma multiline editor and exact final screen/cursor. Physical splash and full original-feature acceptance remain pending."
+  "scope": "Source-built original startup layout with edition substitutions. Linked original logo/tagline/layout oracle; actual DOS COM3/IRQ5 startup, speaker and scripted connection checks; source-only exact rebuild; actual DOS Enigma multiline editor and exact final screen/cursor. Physical splash and full original-feature acceptance remain pending.",
+  "deployment": {
+    "target": "C:\\PCPLUS",
+    "release_id": "R7F01D62",
+    "read_back_verified": true,
+    "preserved_settings_launchers_log_files": 15,
+    "physical_display_acceptance": false
+  }
 }

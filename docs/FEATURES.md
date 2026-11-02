@@ -3,8 +3,8 @@
 - [Connection alert](CONNECT_ALERT.md): paired 880-Hz PC-speaker tones on a
   successful modem call, using the saved sound flag and alert countdown.
   Nonblocking implementation passes linked timing/ownership checks and actual
-  DOS speaker-gate/UART checks. Card installation and audible hardware acceptance
-  remain pending.
+  DOS speaker-gate/UART checks. The current package is installed via network management; audible hardware
+  acceptance remains pending.
 
 bstar confirms working Boca/SPA2102/SynthModem access to LoSs oF CoNtRoL with
 substantially improved Enigma compatibility. The bridge reports V.32bis at9600.

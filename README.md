@@ -1,10 +1,18 @@
 # PCPlus DOS reconstruction
 
+[The original startup layout](docs/SPECIAL_EDITION.md) is restored with the LoC
+version annotation and installed at `C:\PCPLUS`. Its matched build passes
+source-only reproduction, original-layout checks, DOS startup/connection tests
+and exact-screen Enigma/Synchronet editor checks. The
+[reliability milestone](docs/RELIABILITY_MILESTONE.md) keeps physical acceptance
+and remaining original commands separate.
+
 [The connection-test package is ready](docs/CONNECTION_TEST_READY.md) for user-operated Boca/SPA2102
 testing through SynthModem to LoSs oF CoNtRoL. Five source-built executables and
 all ten package files reproduce exactly; COM3/IRQ5 package checks and the live
 LOC route pass. The bridge now advertises matching80x24 while retaining its
-backend/aliases. Physical login/interaction remains pending; in-app ASP compilation
+backend/aliases. bstar has confirmed real Enigma connections with improved interaction; broader
+physical display/editor/transfer acceptance remains open. In-app ASP compilation
 has a documented RAM limit with a validated DOS-precompile/ASX workflow.
 
 [Original menu and logging](docs/ORIGINAL_MENU_LOGGING.md) now fit together through a typed
