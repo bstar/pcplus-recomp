@@ -27,9 +27,15 @@ and runs it through linked PCPlus parser/render instructions. It independently
 compares all 1920 glyph/attribute cells with the source layout and palette.
 It models BIOS/UART boundaries; it does not log into or restart the live BBS.
 
-The change is saved in the local Enigma module but **not loaded into the live
-process yet**. Restarting Enigma disconnects the active call; wait for bstar's
-restart approval or a confirmed idle maintenance opportunity.
+The fix was activated on the local BBS on 2026-11-02 at 09:36:38 EST by
+restarting `black-flag-bbs.service` after the user requested the Enigma update.
+The previous process started on October 31 and predated the fixed module.
+Fresh replay evidence in ignored `build/loc-menu-ansi-live-20261102` again
+matches all 1920 DOS glyph/attribute cells and preserves browser output exactly.
+The restarted service accepts Telnet connections on its configured LAN address.
+A fresh FTP read-back also confirmed every selected connection-alert package
+file in C:\PCPLUS matches the current payload. No PCPlus/config replacement
+was necessary. Physical main-screen confirmation after reconnect is pending.
 
 ## Carrier-lost notice
 
