@@ -9,7 +9,7 @@ from terminal_memory import inspect_terminal_memory
 from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
-parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
 parser.add_argument('--session-projection',action='store_true')
 parser.add_argument('--projection-probe',action='store_true')
 parser.add_argument('--session-baseline',action='store_true')
@@ -164,7 +164,11 @@ if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
  # buffers as the existing feature suffix chain grows.
  out_name='terminal-phone-log-bank-'+hashlib.sha256(out_name.encode('ascii')).hexdigest()[:12]
-OUT=ROOT/'build'/out_name;OUT.mkdir(parents=True,exist_ok=True)
+OUT=ROOT/'build'/out_name
+if args.output_dir:
+ OUT=args.output_dir.resolve()
+ assert OUT.is_relative_to(ROOT/'build') and not OUT.exists(),'Choose a new build/ output directory'
+OUT.mkdir(parents=True,exist_ok=True)
 modules=['ansi','attributes','screen','erase','scroll','terminal_services','cursor_shape','cursor_state','modes','reports','input_dispatch','input_controls','render','text','ui_windows','modem_commands','modem_responses']
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
 modules += ['viewport','protected_erase','alternate_output','substitute_control']

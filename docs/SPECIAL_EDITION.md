@@ -1,3 +1,26 @@
+# Original startup layout restoration — 2026-11-02
+
+The current source restores the original color startup layout recovered from
+2.01 overlay3:D7A6: magenta background, alternating upper half-block rows,
+logo at column22/rows10–12 and tagline at column31/row14 (zero-based).
+The version and LoC Special Edition/sysop lines replace the company-information
+area below the logo. The original key-to-continue interaction remains.
+
+The startup-only code now has its own paragraph-aligned SPLASH_GROUP; an explicit
+REFERENCE_GROUP also prevents linker packing from shifting the reference bank's
+near pointers. The memory/relocation verifier continues to enforce bank ownership.
+No modem, parser, IRQ or screen geometry settings change.
+
+`standalone/check_original_splash.py` executes the linked startup instructions
+with modeled BIOS and optionally compares logo/tagline cells directly with the
+verified original's display table. `standalone/prove_terminal_manifest.py`
+reproduces a selected terminal from declared inputs in a Git-free tree with no
+original executables. `--output-dir` on the terminal builder selects a new
+isolated build directory without replacing historical products.
+
+The historical description below applies to the earlier reconstructed layout,
+not the restored candidate. Physical display acceptance remains separate.
+
 # LoC Special Edition
 
 The `--special-edition` terminal build displays the original 2.01 three-line

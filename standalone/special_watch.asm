@@ -34,7 +34,7 @@ handler:
  jne .done
  mov ax,0xb800
  mov es,ax
- mov di,(9*80+27)*2
+ mov di,(18*80+36)*2
  mov si,edition
  mov cx,19
 .match:

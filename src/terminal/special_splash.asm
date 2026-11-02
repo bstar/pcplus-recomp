@@ -2,13 +2,9 @@
 BITS 16
 CPU 8086
 %ifdef TERMINAL_SPECIAL_EDITION
-%ifdef TERMINAL_DIRECTORY_RESOURCE_CLI
-; The existing FAR entry and CS-relative text are self-contained. Keep the
-; startup-only image out of the almost-full resident CS in this new variant.
+ ; Startup-only display has its own code segment, independent of resident CS.
 SEGMENT SPLASH_CODE public align=16 class=FARCODE use16
-%else
-SEGMENT SPLASH_CODE public class=CODE use16
-%endif
+GROUP SPLASH_GROUP SPLASH_CODE
 global terminal_special_splash
 terminal_special_splash:
  push ax
@@ -28,28 +24,50 @@ terminal_special_splash:
  xor cx,cx
  mov dx,0x184f
  int 0x10
+ ; Original color startup background: alternating half-block rows along
+ ; the upper edge. Overlay3:D887-D8BA uses columns6..79, rows0/2/4/6/8.
+ mov ax,0xb800
+ mov es,ax
+ xor dx,dx
+.stripe_row:
+ mov di,dx
+ mov cx,6
+ add di,12
+ mov ax,0x5fdf
+ rep stosw
+ mov cx,68
+ mov ah,0x0f
+ rep stosw
+ add dx,320
+ cmp dx,1600
+ jb .stripe_row
  push cs
  pop ds
+ mov bp,0x000d
  mov si,logo_top
- mov dx,0x0410
+ mov dx,0x0a16
  call line
  mov si,logo_middle
- mov dx,0x0510
+ mov dx,0x0b16
  call line
  mov si,logo_bottom
- mov dx,0x0610
+ mov dx,0x0c16
  call line
+ mov si,tagline
+ mov dx,0x0e1f
+ call line
+ mov bp,0x000f
  mov si,version
- mov dx,0x081f
+ mov dx,0x1124
  call line
  mov si,edition
- mov dx,0x091b
+ mov dx,0x1224
  call line
  mov si,credit
- mov dx,0x0b1a
+ mov dx,0x131f
  call line
  mov si,prompt
- mov dx,0x101d
+ mov dx,0x1622
  call line
  xor ax,ax
  int 0x16
@@ -72,7 +90,7 @@ line:
  or al,al
  jz .done
  mov ah,9
- mov bx,0x005f
+ mov bx,bp
  mov cx,1
  int 0x10
  inc dl
@@ -98,7 +116,14 @@ version: db 'Version 2.01-LoC.2',0
 %else
 version: db 'Version 2.01-LoC.1',0
 %endif
+tagline: db 'Intuitive Communications (r)',0
 edition: db 'LoC SPECIAL EDITION',0
 credit: db 'LoSs oF CoNtRoL / Sysop: bstar',0
 prompt: db 'Press any key to begin',0
+; Keep following far C banks paragraph-aligned.
+align 16, db 0
+%ifdef TERMINAL_REFERENCE
+SEGMENT REFERENCE_CODE public align=16 class=FARCODE use16
+GROUP REFERENCE_GROUP REFERENCE_CODE
+%endif
 %endif

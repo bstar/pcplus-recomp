@@ -1,6 +1,11 @@
 # Boca / SPA2102 / SynthModem / Enigma acceptance record
 
-Status: **not run on physical hardware**. Software readiness is recorded in
+Status: **partial physical acceptance**. bstar has confirmed that the new build
+connects to Enigma through the Boca/SPA2102/SynthModem path with substantially
+better interaction. This confirms connection/login use, not every row below.
+The current installed package is selected by the private
+`build/connection-test-current.json`; historical hashes below are retained as
+the initial candidate identity. Software readiness is recorded in
 [CONNECTION_TEST_READY.md](CONNECTION_TEST_READY.md). This record does not turn
 emulator results into physical acceptance. Fill it from observations during the
 real connection, keeping account passwords out of notes and captures.
@@ -37,8 +42,8 @@ Change one setting at a time, recording both its old and new values.
 
 | Check | Required observation | Outcome |
 | --- | --- | --- |
-| Initialize and dial | Commands receive responses, UI remains responsive, carrier is established | Not tested |
-| Select LoSs oF CoNtRoL | CONNECT prompt accepts LOC and reaches the intended Enigma instance | Not tested |
+| Initialize and dial | Commands receive responses, UI remains responsive, carrier is established | User-confirmed connection; detailed stress check pending |
+| Select LoSs oF CoNtRoL | CONNECT prompt accepts LOC and reaches the intended Enigma instance | User confirmed reaching Enigma |
 | Login focus | Existing account can enter username and password, use backspace, and submit without a missing input field or extra focus keystrokes | Not tested |
 | ANSI and CP437 | Frames, extended glyphs, colors and cursor placement render correctly; no stray control sequences | Not tested |
 | Screen geometry | Bottom row, status line, clears, scrolling and redraws do not overwrite BBS content or leave stale text | Not tested |
@@ -80,7 +85,7 @@ Neither limitation is waived by a passing connection test.
 
 ## Acceptance
 
-Physical connection compatibility remains **unverified** until the required
+Complete physical connection compatibility remains **unverified** until the required
 rows have observed outcomes and every failure affecting normal use is resolved
 or explicitly accepted by bstar. Broader original PCPlus feature parity remains
 a separate, unfinished requirement.

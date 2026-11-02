@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "terminal_sha256": "9f2a37e73582691656058513ea08e2197a1ecd1bc861890c3389ce71db0807f6",
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "original_startup": "overlay3:D7A6",
+  "display_table": "DS:5F36",
+  "evidence": {
+    "build/original-splash-matched-oracle-20261102/result.json": {
+      "sha256": "ccd08f8f3c5882be7c265bccc339693f774ba9653e228cc1d4258d49a6d5e83d",
+      "passed": true
+    },
+    "build/original-splash-source-proof-20261102/result.json": {
+      "sha256": "1d5746b004e005b4f730724aee6eed63bc86a3a33c6253651b309a4103b5d139",
+      "passed": true
+    },
+    "build/original-splash-package-dos-20261102/result.json": {
+      "sha256": "a1d1a80d134af2df870f4a84b07a98febca7c2189fd777ad8369c568f0b53681",
+      "passed": true
+    },
+    "build/splash-connect-alert-20261102/result.json": {
+      "sha256": "aea98d36ae8cf3109a71045915958262036fb7856ee47a98886ab55ad1984c16",
+      "passed": true
+    },
+    "build/connect-alert-dos-originalsplash20261102/result.json": {
+      "sha256": "8503b8ebd96ee1cbc4edb3e19ef45b0477819a39497e1ed456ed35d669a0d6c7",
+      "passed": true
+    },
+    "build/splash-loc-menu-20261102/result.json": {
+      "sha256": "44cc7d98e3d6c2bf558454c2dfce9e72e2d314d1ce4738b4db86e7ab6a9f1416",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/originalsplash-enigma-20261102/result.json": {
+      "sha256": "502d41c69878d65867ea2f39d50a99025f9b1f20c883d241b7d97ed1a8b25ff3",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/originalsplash-enigma-20261102/screen-reference-audit.json": {
+      "sha256": "13e1f4bd9662e1749afa282a1d32f05a6425215a85abd8c9fb3b98fdf81e2184",
+      "passed": true
+    },
+    "build/bbs-lab/results/synchronet/originalsplash-synchronet-20261102/proxy-integration.json": {
+      "passed": true,
+      "sha256": "5510fd0e367a34be90f891cb558d9350b0804a5d696fb84dc8241c819a3a0026"
+    },
+    "build/bbs-lab/results/synchronet/originalsplash-synchronet-20261102/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "fa1b934d69d59d3bd210da56415c3ac283d3f7db78e3cbbc39d91acd8b6f44cb"
+    }
+  },
+  "scope": "Source-built original startup layout with edition substitutions. Linked original logo/tagline/layout oracle; actual DOS COM3/IRQ5 startup, speaker and scripted connection checks; source-only exact rebuild; actual DOS Enigma multiline editor and exact final screen/cursor. Physical splash and full original-feature acceptance remain pending."
+}

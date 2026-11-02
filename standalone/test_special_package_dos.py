@@ -100,9 +100,9 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     if observe:
         video = (drive / 'SPLASH.BIN').read_bytes()
         assert len(video) == 8000
-        at = (9 * 80 + 27) * 2
+        at = (18 * 80 + 36) * 2
         assert video[at:at + 38:2] == b'LoC SPECIAL EDITION'
-        assert video[at + 1:at + 38:2] == b'\x5f' * 19
+        assert video[at + 1:at + 38:2] == b'\x0f' * 19
     assert (drive / 'BEFORE.BIN').read_bytes() == (drive / 'AFTER.BIN').read_bytes()
     if strategy:
         assert len((drive/'STRATB.BIN').read_bytes())==2 and (drive/'STRATB.BIN').read_bytes()==(drive/'STRATA.BIN').read_bytes()
