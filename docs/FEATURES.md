@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Startup layouts through the staged proxy](MENU_SIZE_LAYOUTS.md) now pass actual
+DOS→CSI18t→Telnet NAWS at25/28/43/50 physical rows with status visible/hidden.
+Independent raw wire/BIOS/font/full-video audits verify eight layouts using the
+current parent;17 bridge groups and the default harness control also pass. This
+establishes the pre-session handoff, not BBS editor reflow or physical acceptance.
+Application bytes and installed services remain unchanged. Owned BBS composition,
+live adoption/NAWS, broader parity and deployment stay open.
+
 [Original Toggle Lines](LINE_CONTROL.md) now optionally binds Ctrl-minus and both
 menus to the admitted selector transaction after frame release. It preserves live
 status visibility and saved preferences, cycles from accepted fallback, and

@@ -24,7 +24,7 @@ function parseTcp(data){
    if(b===255){sub.push(b);state='sub';}
    else if(b===240){
     if(sub[0]===31){assert.equal(sub.length,5);records.dimensions.push({cols:sub[1]*256+sub[2],rows:sub[3]*256+sub[4]});
-     bbsSocket.write(Buffer.from('\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c'));
+     bbsSocket.write(Buffer.from('\x1b[2J\x1b[99;1HBRIDGE-AREA\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c'));
     }state='data';
    }else throw new Error('bad subnegotiation');
   }

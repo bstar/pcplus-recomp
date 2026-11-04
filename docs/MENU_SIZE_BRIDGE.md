@@ -75,3 +75,8 @@ need their own session synchronization and are not enabled here. SIP/DSP/analog,
 physical modem acceptance, binary-transfer routes and verified deployment remain
 separate gates. These results do not establish full PCPlus feature parity; the13
 unavailable reference commands and the broader inventory remain open.
+
+The later [startup-layout matrix](MENU_SIZE_LAYOUTS.md) repeats the actual handoff
+with the current parent at all four accepted heights and both status states.
+That checkpoint retains the same staged proxy bytes and installed-service
+isolation. Its broader geometry evidence does not establish BBS/editor acceptance.
