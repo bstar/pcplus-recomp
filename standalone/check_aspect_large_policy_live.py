@@ -66,6 +66,22 @@ def main():
    for physical in [26,27,29,42,44,49,51,255]:
     m=Render().ready(rows,0);m.uc.mem_write(0x484,bytes([physical-1]));assert m.policy()==3,(rows,physical);n+=1
   done('incoherent-height-status-stride-cell-capacity-offset-and-BIOS-refusals',n)
+ if enabled:
+  n=0
+  for rows in [25,28,43,50]:
+   for hidden in [0,1]:
+    for profile in [4,6]:
+     for setting,mode in [(1,3),(0,3),(1,12)]:
+      m=Render().ready(rows,hidden)
+      for name,value in {'csi_terminal_id':profile,'terminal_aspect_active':1,'terminal_parser_active':1,'terminal_peer_width_available':1,'ansi_private':1,'ansi_parameter_count':2}.items():m.put(name,value)
+      m.put('render_attached',1);m.put('resident_bridge_busy',1)
+      m.uc.mem_write(m.symbols['ansi_parameters'],struct.pack('<2H',6,mode));before=m.full()
+      expected=0 if rows==25 and mode==3 else 3
+      assert m.policy('_aspect_render_preflight_modes',[setting])==expected,(rows,hidden,profile,setting,mode)
+      after=m.full()
+      for key in ['words','bytes','defaults','planes','video','ui']:assert after[key]==before[key],key
+      n+=1
+  done('whole-mode-list-preflight-preserves-state-and-retains-supported25-row-width-requests',n)
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
  sources=['standalone/check_aspect_large_policy_live.py','standalone/program_display_model.py','standalone/check_row_geometry_live.py']
  report=dict(passed=True,terminal_sha256=sha(binary),manifest_sha256=sha(binary.parent/'manifest.json'),enabled=enabled,inputs=sum(c['inputs'] for c in cases),cases=cases,no_nonstack_policy_writes=True,sources={n:sha(ROOT/n) for n in sources},scope=__doc__)

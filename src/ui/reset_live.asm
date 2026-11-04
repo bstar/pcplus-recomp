@@ -225,20 +225,88 @@ terminal_native_width_far:
  retf
 
 live_admit:
+ call live_admit_check
+ jc .done
+ mov word [cs:live_backup_offset],program_screen
+ mov word [cs:live_backup_segment],seg program_screen
+ cmp word [terminal_program_active],0
+ je .rows
+ mov word [cs:live_backup_offset],redisplay_live
+ mov word [cs:live_backup_segment],seg redisplay_live
+.rows:
+ mov dx,[csi_row_count]
+ cmp word [ui_flow_suppressed],0
+ jne .store
+ cmp dx,25
+ jne .store
+ cmp word [screen_attribute_row_bytes],80
+ jne .store
+ dec dx
+.store:
+ mov [cs:live_rows],dx
+ mov ax,80
+ mul dx
+ mov [cs:live_cells],ax
+ mov ax,132
+ mul word [cs:live_rows]
+ mov [cs:live_shadow_words],ax
+ clc
+.done:
+ ret
+
+; Pure far C boundary. Reuse the real admission checks without preparing
+; backup pointers/counts or touching any nonstack storage. No BIOS/DOS/port IO.
+global _terminal_native_width_preflight
+_terminal_native_width_preflight:
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push bp
+ push es
+ mov dx,ds
+ mov cx,ss
+ cmp dx,cx
+ jne .bad
+ cmp dx,DGROUP
+ jne .bad
+ pushf
+ pop ax
+ and ax,0x600
+ cmp ax,0x200
+ jne .bad
+ cmp word [cs:reset_live_active],0
+ jne .bad
+ cmp word [cs:reset_bank_busy],0
+ jne .bad
+ call live_admit_check
+ jc .bad
+ xor ax,ax
+ jmp .done
+.bad:
+ mov ax,3
+.done:
+ pop es
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ retf
+
+live_admit_check:
  cmp byte [terminal_browser_screen_owned],0
  jne .bad_owner
  cmp byte [terminal_editor_screen_owned],0
  jne .bad_owner
  cmp word [_redisplay_live_ready],0
  jne .bad_owner
- mov word [cs:live_backup_offset],program_screen
- mov word [cs:live_backup_segment],seg program_screen
  cmp word [terminal_program_active],0
  je .foreground_owner
  call far terminal_width_aspect_owner_far
  jc .bad_owner
- mov word [cs:live_backup_offset],redisplay_live
- mov word [cs:live_backup_segment],seg redisplay_live
  jmp .other_owners
 .foreground_owner:
  cmp word [terminal_aspect_active],0
@@ -321,13 +389,6 @@ live_admit:
  stc
  ret
 .rows:
- mov [cs:live_rows],dx
- mov ax,80
- mul dx
- mov [cs:live_cells],ax
- mov ax,132
- mul word [cs:live_rows]
- mov [cs:live_shadow_words],ax
  mov ax,[screen_attribute_row_bytes]
  mul word [csi_row_count]
  cmp ax,[erase_cell_count]

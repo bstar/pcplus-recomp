@@ -9,6 +9,7 @@ SEGMENT _TEXT public class=CODE use16
 global ansi_escape_entry
 extern ansi_next_byte, ansi_unread_byte, ansi_read_parameter, ansi_parameter_transition, ansi_dispatch_command, ansi_escape_service_e0f8, ansi_escape_service_dd74, ansi_escape_service_ddbc, ansi_escape_service_da46, ansi_escape_service_12c8, ansi_escape_service_dac6, ansi_escape_service_da84, ansi_escape_service_ec94, ansi_escape_service_dd58, ansi_escape_service_20a4
 extern ansi_parameter_count, ansi_parameters, ansi_private, ansi_secondary, ansi_charset_g0_flag_a, ansi_charset_g0_flag_graphics, ansi_charset_g1_flag_a, ansi_charset_g1_flag_graphics
+extern ansi_parse_error
 %else
 ORG 0xecd2
 %define ansi_next_byte 0x5ca0
@@ -136,6 +137,11 @@ L_edb0: call ansi_escape_service_e0f8
 L_edb3: jmp near L_eeaa
 L_edb6: call ansi_next_byte
 L_edb9: sub_load ax, ax
+%ifdef ANSI_OMF
+ ; A failed/timed-out CSI belongs to its own sequence. Preserve the recorded
+ ; error until the next CSI begins, then admit fresh parameters normally.
+ mov [ansi_parse_error],ax
+%endif
 L_edbb: mov [ansi_parameter_count], ax
 L_edbe: mov [ansi_parameters], ax
 L_edc1: mov [ansi_private], ax

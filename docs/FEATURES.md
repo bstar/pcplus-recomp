@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[ASPECT parser and mode-list recovery](ASPECT_LARGE_RECOVERY.md) now retires a
+previous CSI error at the next CSI start and shares the actual width owner's
+read-only admission before any mode-list mutation. Larger-height timeout,
+unsupported-mode/media-copy and parser-cancellation composition are covered by
+the linked and actual DOS evidence in its receipt. Carrier/reconnect, in-flight
+transfers, normal line controls, broader parity and BBS/physical acceptance stay
+open; no candidate was deployed.
+
 [Connection notices on accepted status rows](ROW_CONNECTION_NOTICES.md) now
 support25/28/43/50-row placement with captured-row leases and safe stale-row
 retirement.72 linked inputs, existing notice regressions,24 actual DOS sessions

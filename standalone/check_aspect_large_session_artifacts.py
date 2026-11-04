@@ -12,19 +12,44 @@ def main():
  records=[];identities=[]
  for run in a.run:
   run=run.resolve();assert run.is_relative_to(ROOT/'build');rp=run/'result.json';report=json.loads(rp.read_text());assert report['passed'] and report['diagnostic_package_rejected']
-  assert (len(report['cases'])==3 and {c['kind'] for c in report['cases']}=={'queries','RIS','window'}) or (len(report['cases'])==1 and report['cases'][0].get('nested') in ('save','noclear-text','noclear-graphics'))
+  assert (len(report['cases'])==3 and {c['kind'] for c in report['cases']}=={'queries','RIS','window'}) or (len(report['cases'])==2 and {c['kind'] for c in report['cases']}=={'RIS','window'}) or (len(report['cases'])==1 and (report['cases'][0].get('nested') in ('save','noclear-text','noclear-graphics') or report['cases'][0].get('fault') in ('timeout','mode-list','width-list','media-copy','escape')))
   for n,h in report['sources'].items():assert sha(ROOT/n)==h,n
   for case in report['cases']:
-   rows,profile,kind=case['physical_rows'],case['profile'],case['kind'];nested=case.get('nested');folder=run/(f'{rows}-{profile}-{kind}'+('-'+nested if nested else ''))/'run'
+   rows,profile,kind=case['physical_rows'],case['profile'],case['kind'];nested=case.get('nested');fault=case.get('fault');folder=run/(f'{rows}-{profile}-{kind}'+('-'+nested if nested else '')+('-'+fault if fault else ''))/'run'
    for n,h in case['artifacts'].items():assert sha(folder/n)==h,n
-   raw=(folder/'RENDER.BIN').read_bytes();header=struct.unpack_from('<7H',raw);assert header[:4]==(0x524e,1,1,1) and header[6]==0
+   raw=(folder/'RENDER.BIN').read_bytes();header=struct.unpack_from('<7H',raw)
+   child_exit=0 if not fault or fault=='timeout' else 13 if fault=='escape' else 3
+   assert header[:4]==(0x524e,1,1,1) and header[6]==child_exit
    history=[raw[history_at+i*72:history_at+(i+1)*72] for i in range(3)];states=[struct.unpack_from('<4H',h) for h in history]
    assert all(len(h)==72 for h in history) and history[1]==history[2] and history[0]!=history[1]
    image=report['images'][str(rows)];binary=ROOT/image['path'];manifest=json.loads((binary.parent/'manifest.json').read_text())
    expected_segment=header[5]+16+manifest['memory_layout']['history_relative_segment']
    assert all(start<=pointer<end and end-start==63000 and segment==expected_segment for start,end,pointer,segment in states)
-   state=struct.unpack_from('<10H',raw,886);assert state[5]==profile and state[6:8]==((rows-2,10) if kind=='window' else (0,21)),state
-   if nested:
+   state=struct.unpack_from('<10H',raw,886)
+   cursor=((0,15) if fault=='timeout' else (2,0) if fault=='media-copy' else (1,0)) if fault else ((rows-2,10) if kind=='window' else (0,21))
+   assert state[5]==profile and state[6:8]==cursor,state
+   if fault:
+    assert kind=='queries' and not nested and not(fault=='width-list' and rows==25)
+    assert state[0]==state[2]==0 and state[8:]==(0,0)
+    assert struct.unpack('<11H',raw[-22:])==(1,0,0,0,0,rows,0,rows-1,0,rows,14 if rows==28 else 8 if rows in (43,50) else 16)
+    logical=rows-1;expected=bytearray(b' \x07'*(logical*80))
+    top=b'FIRST BYTE SAFE'
+    if fault!='timeout':
+     error=b'cancelled (error 13' if fault=='escape' else b'unsupported command or service (error 3'
+     diagnostic=b'ASPECT: '+error+b', opcode D4, step 2)'
+     # A successful scroll-region command homes the cursor before the rejected
+     # mode list. Other failures print after the existing fifteen characters.
+     top=(b'' if fault in ('mode-list','width-list') else top)+diagnostic
+     message=b'ASPECT returned an error.'
+     parent_row=3 if fault=='media-copy' else 2
+     for i,value in enumerate(message):expected[parent_row*160+2*i]=value
+    for offset,text in [(0,top),((logical-1)*160,('LOWER-'+str(rows)).encode())]:
+     for i,value in enumerate(text):expected[offset+2*i]=value
+    assert (folder/'SCREEN.BIN').read_bytes()[:logical*160]==expected,(rows,profile,fault,'complete logical frame')
+    wire=(folder/'serial.bin').read_bytes();reply=b'\x1b'+(b'[1;16R' if fault=='timeout' else b'[5;1R' if fault=='media-copy' else b'[4;1R')
+    ready=wire.index(b'ready');assert wire.find(reply,ready)>ready and wire.find(b'\x1b'+f'[8;{logical};80t'.encode(),ready)>ready
+    assert b'Synth42\r' not in wire
+   elif nested:
     logical=rows-1;expected=bytearray(b' \x07'*(logical*80))
     if nested!='noclear-graphics':
      for offset,text in [(0,b'FIRST BYTE SAFELOGIN:'),((logical-1)*160,('LOWER-'+str(rows)).encode())]:
@@ -38,7 +63,7 @@ def main():
      for i,value in enumerate(text):expected[offset+2*i]=value
     assert (folder/'SCREEN.BIN').read_bytes()[:logical*160]==expected,(rows,profile,kind,'complete logical frame')
    assert case['cpu']=='8086' and case['serial_irq']==5 and all(case['checks'].values())
-   records.append(dict(rows=rows,profile=profile,kind=kind,nested=nested,child_exit=0,far_history_retained=True,far_history_segment=expected_segment,history_states=states,exit_cursor=state[6:8],result_sha256=sha(folder/'result.json'),observer_capture_sha256=sha(folder/'RENDER.BIN')))
+   records.append(dict(rows=rows,profile=profile,kind=kind,nested=nested,fault=fault,child_exit=child_exit,far_history_retained=True,far_history_segment=expected_segment,history_states=states,exit_cursor=state[6:8],result_sha256=sha(folder/'result.json'),observer_capture_sha256=sha(folder/'RENDER.BIN')))
   identities.append(dict(path=str(rp.relative_to(ROOT)),sha256=sha(rp)))
  result=dict(passed=True,cases=records,actual_DOS_cases=len(records),reports=identities,checker_sha256=sha(Path(__file__)),policy_header_sha256=sha(ROOT/'src/aspect/renderer_policy.h'),scope=__doc__+' Checks immutable actual parent/ASPECT captures, real child exit, cursor and independent far-history relocation/bounds/content across EXEC. No new runtime, original executable or physical acceptance.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS independent session artifacts',len(records),'actual DOS cases')

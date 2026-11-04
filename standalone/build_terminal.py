@@ -615,6 +615,7 @@ for source in c_sources:
  if args.large_view_frames:options+=['-dTERMINAL_LARGE_VIEW_FRAMES']
  if args.aspect_admission_probe:options+=['-dTERMINAL_ASPECT_ADMISSION_PROBE']
  if args.aspect_row_owner:options+=['-dTERMINAL_ASPECT_ROWS']
+ if args.native_reset_transaction:options+=['-dASPECT_WIDTH_PREFLIGHT']
  if args.program_display_owner:options+=['-dTERMINAL_PROGRAM_DISPLAY']
  if args.xlt_display_probe:options+=['-dTERMINAL_XLT_DISPLAY_PROBE']
  if args.profile_display_probe:options+=['-dTERMINAL_PROFILE_DISPLAY_PROBE']

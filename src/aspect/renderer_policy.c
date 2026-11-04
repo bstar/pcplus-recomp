@@ -4,6 +4,9 @@
  */
 #include <dos.h>
 #include "renderer_policy.h"
+#ifdef ASPECT_WIDTH_PREFLIGHT
+extern unsigned __far __cdecl terminal_native_width_preflight(void);
+#endif
 #ifdef TERMINAL_ASPECT_ROWS
 #include "../terminal/row_geometry.h"
 extern unsigned ui_window_rows;
@@ -140,6 +143,11 @@ unsigned __cdecl aspect_render_preflight_modes(unsigned setting)
   value=ansi_parameters[i];
   if(ansi_private && value==3 &&
      (terminal_peer_width_available!=1 || render_live_state(1)))return 3;
+#ifdef ASPECT_WIDTH_PREFLIGHT
+  /* Share the actual width owner's pure admission, before any earlier
+   * mode in this list can mutate parent state. */
+  if(ansi_private && value==3 && terminal_native_width_preflight())return 3;
+#endif
   if((!ansi_private && value==4) ||
      (value==12 && (setting || !ansi_private)) ||
      (!setting && ansi_private && value==2))return 3;
