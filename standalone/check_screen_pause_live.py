@@ -139,7 +139,8 @@ def carrier_notice():
     m.key(0x3100)
     m.uc.hook_del(hook)
     assert m.get('connection_state') == 0 and m.get('connection_status') == 6
-    assert b'Screen paused.' not in m.text() and bytes(m.tx) == b'\x13\x11'
+    expected = b'\x13' if 'terminal_pause_control' in m.symbols else b'\x13\x11'
+    assert b'Screen paused.' not in m.text() and bytes(m.tx) == expected
     assert bytes(m.uc.mem_read(0xb8000, 3840)) == before[:3840]
     m.call('terminal_connection_notice_restore')
     assert bytes(m.uc.mem_read(0xb8000, 4000)) == before, 'Pause prompt contaminated the notice underlay'

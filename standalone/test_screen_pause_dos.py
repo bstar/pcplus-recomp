@@ -14,14 +14,20 @@ ROOT = Path(__file__).resolve().parents[1]
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--terminal', type=Path, required=True)
 p.add_argument('--label', required=True)
+p.add_argument('--rows', type=int, choices=[25,28,43,50], default=25)
 a = p.parse_args()
 assert re.fullmatch('[a-z0-9-]+', a.label)
 binary = a.terminal.resolve()
 assert binary.is_relative_to(ROOT / 'build')
+manifest = json.loads((binary.parent/'manifest.json').read_text())
+assert hashlib.sha256(binary.read_bytes()).hexdigest() == manifest['binary_sha256']
+assert (manifest.get('diagnostic_session_rows_probe') or 25) == a.rows
+for name, digest in manifest['sources'].items():
+    assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest() == digest, name
 out = ROOT / 'build/screen-pause-dos' / a.label
 out.mkdir(parents=True, exist_ok=False)
 watcher = out / 'PAUSEW.COM'
-subprocess.run(['nasm', '-fbin', str(ROOT / 'standalone/pause_watch.asm'), '-o', str(watcher)], check=True)
+subprocess.run(['nasm', '-fbin', '-DPAUSE_ROWS='+str(a.rows), str(ROOT / 'standalone/pause_watch.asm'), '-o', str(watcher)], check=True)
 harness.BINARY = binary
 raw = bytearray(fixture(timeout=5))
 struct.pack_into('<HH', raw, 0, 2, 5)
@@ -31,6 +37,8 @@ struct.pack_into('<HH', raw, 0x4e4, 8, 4)
 struct.pack_into('<HH', raw, 0x1bc, 0, 0)
 struct.pack_into('<H', raw, 0x1e6, 0)
 banner = b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c'
+lower = b'\x1b'+f'[{a.rows-1};1HLOWER-{a.rows}'.encode()+b'\x1b[6n\x1b[H'
+banner += lower
 cases = []
 for mode, resume in (('direct', 'x'), ('reference', 'a-x'), ('partial-parser', 'escape')):
     name = a.label + '-' + mode
@@ -45,22 +53,27 @@ for mode, resume in (('direct', 'x'), ('reference', 'a-x'), ('partial-parser', '
     keys = prefix + pause + ' p2500 ' + resume + ' p1500 r e a d y enter p2000 a-x'
     result = harness.run(name, 'success', keys, prm=bytes(raw), com=3, irq=5, cpu='8086', working_drive='d',
                          arguments='@D:\\TEST.PRM /D:CaseTest:23 /I:3', timeout=35,
-                         files={'PAUSEW.COM': watcher.read_bytes()}, observer='PAUSEW',
+                         files={'PAUSEW.COM': watcher.read_bytes()}, observer='PAUSEW', banner=banner,
                          online_triggers=tuple(triggers))
     assert result['passed'], result
     folder = ROOT / 'build/connection-dos' / name
     frames = (folder / 'PAUSE.BIN').read_bytes()
-    assert len(frames) == 8000 and frames[:4000] == frames[4000:]
-    assert b'Screen paused.' in frames[3840:4000:2]
+    size = a.rows*160
+    assert len(frames) == size*2 and frames[:size] == frames[size:]
+    assert b'Screen paused.' in frames[size-160:size:2]
+    assert f'LOWER-{a.rows}'.encode() in frames[(a.rows-2)*160:(a.rows-1)*160:2]
     assert b'QUEUED' not in frames[::2], 'Incoming text rendered before resume'
     wire = (folder / 'serial.bin').read_bytes()
     assert wire.count(b'\x13') == wire.count(b'\x11') == 1
-    assert re.findall(rb'\x1b\[\d+;\d+R', wire) == [b'\x1b[1;16R', b'\x1b[8;7R', b'\x1b[1;16R']
+    lower_reply = b'\x1b'+f'[{a.rows-1};9R'.encode()
+    assert re.findall(rb'\x1b\[\d+;\d+R', wire) == [b'\x1b[1;16R', lower_reply, b'\x1b[8;7R', b'\x1b[1;16R', lower_reply]
     assert wire.index(b'\x11') < wire.index(b'\x1b[8;7R') and wire.count(b'ready\r') == 1
     assert b'x' not in wire, 'Resume key escaped to the wire'
     cases.append(dict(case=mode, passed=True, result=str((folder / 'result.json').relative_to(ROOT)),
                       observed_video_sha256=hashlib.sha256(frames).hexdigest()))
-report = dict(passed=True, terminal_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(), cases=cases,
+for name, digest in manifest['sources'].items():
+    assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest() == digest, name
+report = dict(passed=True, terminal_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(), rows=a.rows, cases=cases,
               scope=__doc__ + ' Synthetic Hayes/UART peer on COM3/IRQ5; no SIP/DSP/analog or physical throughput acceptance.')
 (out / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
 print('PASS actual DOS Screen Pause:', len(cases), 'workflows')

@@ -3,13 +3,20 @@
 BITS 16
 CPU 8086
 ORG 0x100
+%ifndef PAUSE_ROWS
+%define PAUSE_ROWS 25
+%endif
+%if PAUSE_ROWS != 25 && PAUSE_ROWS != 28 && PAUSE_ROWS != 43 && PAUSE_ROWS != 50
+%error Unsupported owned pause observation height
+%endif
+%define PAUSE_BYTES (PAUSE_ROWS*160)
 jmp start
 old_vector: dw 0,0
 observed: dw 0
 pause_ticks: dw 0
 message: db 'Screen paused.  Press any key to continue...'
-screen: times 4000 db 0
-later: times 4000 db 0
+screen: times PAUSE_BYTES db 0
+later: times PAUSE_BYTES db 0
 handler:
  pushf
  push ax
@@ -22,7 +29,7 @@ handler:
  je .done
  mov ax,0xb800
  mov es,ax
- mov di,3840+18*2
+ mov di,(PAUSE_ROWS-1)*160+18*2
  mov si,message
  mov cx,44
 .match:
@@ -50,7 +57,7 @@ handler:
  push cs
  pop es
  xor si,si
- mov cx,2000
+ mov cx,PAUSE_BYTES/2
  rep movsw
 .done:
  pop es
@@ -97,12 +104,12 @@ collect:
  push es
  pop ds
  mov dx,screen
- mov cx,8000
+ mov cx,PAUSE_BYTES*2
  mov ah,0x40
  int 0x21
  pop ds
  jc failed
- cmp ax,8000
+ cmp ax,PAUSE_BYTES*2
  jne failed
  mov ah,0x3e
  int 0x21

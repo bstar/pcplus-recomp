@@ -1,5 +1,9 @@
 # Original Screen Pause and live integration
 
+The later [accepted-height integration](LARGE_SCREEN_PAUSE.md) adds row leases
+for25/28/43/50-row composed builds and carrier-aware Pause flow control. This
+page records the original recovery and initial fixed-height checkpoint.
+
 `--screen-pause`, with `--original-reference --local-controls`, enables Alt-N
 through the keyboard, original Alt-Z reference and View command browser. The
 command sends XOFF, hides the cursor, saves the message row and displays

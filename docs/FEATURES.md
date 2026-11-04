@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Screen Pause on accepted heights](LARGE_SCREEN_PAUSE.md) now binds its saved row
+to admitted25/28/43/50-row geometry and rejects stale replay. Carrier-aware
+control ownership retains transient resume requests and suppresses output after
+qualified loss. Linked full-frame/ABI/fault checks, actual DOS Pause and logged
+same-parent virtual-modem redial, independent captures and exact source rebuilds
+bind the change. Auto Answer, normal line controls/startup, broader parity and
+BBS/physical acceptance remain open. Nothing was deployed.
+
 [Larger-height transfer carrier recovery](LARGE_TRANSFER_CARRIER.md) composes
 X/Y/ZMODEM loss at negotiation/metadata/data/retained-file and partial-header
 boundaries with exact cleanup, logged same-parent redial and parser/input return.
