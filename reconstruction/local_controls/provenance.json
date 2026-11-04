@@ -1,0 +1,41 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_only_build": true,
+  "units": [
+    {
+      "name": "reset",
+      "entry": "0x1368",
+      "bytes": 11,
+      "sha256": "1ff2467d755503326507e895286e6bd32fb4abfadc95269637d5bdfe7b66d591",
+      "cases": 1,
+      "source": "reconstruction/local_controls/reset.asm",
+      "original_file_offset": "0x2568"
+    },
+    {
+      "name": "duplex",
+      "entry": "0x3316",
+      "bytes": 13,
+      "sha256": "9049d97269f1e1ecefb42ea6fcca7b918ed7a99291cae2be4d7bd528f6651405",
+      "cases": 260,
+      "source": "reconstruction/local_controls/duplex.asm",
+      "original_file_offset": "0x4516"
+    }
+  ],
+  "dispatch": {
+    "table_DS": "44E0",
+    "Clear Screen": {
+      "scan": "2E",
+      "handler_CS": "24E2",
+      "status": "existing recovered clear routine; local UI binding pending"
+    },
+    "Reset Terminal": {
+      "scan": "16",
+      "handler_CS": "1368"
+    },
+    "Duplex Toggle": {
+      "scan": "12",
+      "handler_CS": "3316"
+    }
+  },
+  "scope": "Native entry component recovery only. No new command enabled, no reset-callee equivalence or full UI/hardware acceptance claim."
+}

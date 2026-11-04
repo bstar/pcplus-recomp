@@ -39,3 +39,27 @@ file/DOS actions, directory/key tools and Chat/UI polish. Trace each original
 contract, reuse the existing component, verify serial/display/child lifetimes,
 add a DOS regression, then enable its reference entry. Preserve explicit refusal
 for Host/Kermit and every other command whose real action remains incomplete.
+
+## November3 recovery and sustained-input checkpoint
+
+The installed splash candidate (9f2a37e7...) passed BUSY/exit, BUSY/successful
+retry and three successful calls with intervening hangups in one DOS process.
+The tests use the actual original-reference browser action for redial, emulated
+COM3/IRQ5 and8086, and verify parser replies, keyboard input, PRM preservation
+and restored hardware. The physical BUSY report remains unresolved: its exact
+trigger and whether reboot cleared it have not been supplied. No modem or
+bridge configuration was changed to manufacture a pass.
+
+A300-second actual DOS stream processed601 paced ANSI frames, every cursor
+reply in order, exact delivered bytes, final glyphs/attributes, an Alt-Z window
+round-trip and keyboard input. BOTH flow was selected; this proves paced UART
+endurance, not saturation throughput, live-BBS endurance or analog timing.
+
+The initial retry fixture was rejected for invalid synthetic mouse scales;
+its corrected fixture then cancelled too early during a paced redial. A longer
+wait completed with exact commands. Failed attempts are retained in ignored
+build storage; neither was promoted to a reproduced product lockup.
+
+The [receipt](validation/reliability-recovery-20261103.json) binds the selected
+binary, source hashes and scoped results. The next terminal controls have
+[original entry evidence](LOCAL_CONTROLS_RECOVERY.md), with UI integration pending.

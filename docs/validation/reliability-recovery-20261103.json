@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "terminal_sha256": "9f2a37e73582691656058513ea08e2197a1ecd1bc861890c3389ce71db0807f6",
+  "evidence": {
+    "build/busy-retry-dos/busy-reconnect-20261103/result.json": {
+      "sha256": "df5bce1d9530a7390c32593f04eedd721e5337b9d234aaf8377a4049971640df",
+      "passed": true
+    },
+    "build/terminal-endurance/endurance-300s-20261103/result.json": {
+      "sha256": "eff4bed56bf00f14442474f987d04f3f0e6abe7152be98f8d075d760bdeb25fc",
+      "passed": true
+    },
+    "build/local-control-entries-source-20261103/result.json": {
+      "sha256": "224e2cee630e893ed20aaa25ef696b66b3cf26a6f21411759a196a0c158e1137",
+      "passed": true
+    },
+    "build/local-control-entries-original-20261103/result.json": {
+      "sha256": "f11ffb23c8f5bb984d7332751b6a7b69c462c01e7d83b38931696c510ab4be50",
+      "passed": true
+    }
+  },
+  "sources": {
+    "standalone/test_busy_retry_dos.py": "c55a71aaa7b6f812cca596af61c7e435fb390d36a7d74075bcabf97ac56e5d53",
+    "standalone/test_terminal_endurance_dos.py": "d720a5c6a2aefe5b3563cd9f0f902addc6cc7da30af6b89f0d00502b1cb85a4b",
+    "standalone/check_local_control_entries.py": "c5918e4cd11171eba2d198f9105634909903e078d04c9c317e94107e5c7ff816",
+    "standalone/test_connection_dos.py": "32cd4738dee53fa270946e6a66b20f9b2dd300c5d0bcd3476c09cb18cf4d1cbd",
+    "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+    "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+    "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+    "reconstruction/local_controls/reset.asm": "09768a6a88330a10ccd32f11151ce1b781e658750d2497c57cd483ddb6a921d7",
+    "reconstruction/local_controls/duplex.asm": "cbb4583cda3edb67c364e864d2542dd6ced88f9d7ccb2caca0d7c09799335600",
+    "reconstruction/local_controls/provenance.json": "e7efeea047382a0952628c6e070110bbf958954b3270a4472de5a8f4eb18a7f4"
+  },
+  "observations": {
+    "busy_exit": true,
+    "busy_same_process_retry": true,
+    "three_successful_calls_one_process": true,
+    "endurance_seconds": 300,
+    "endurance_frames": 601,
+    "physical_BUSY_lockup_reproduced": false,
+    "physical_reboot_outcome": "awaiting user observation",
+    "application_or_live_services_changed": false
+  },
+  "scope": "Selected installed terminal under actual DOS8086 with synthetic Hayes/UART peers. Five-minute exact stream/replies/final glyphs+attributes, modal return and hardware restoration; same-process dialing recovery. Reset/Duplex are separate24-byte native entry components with261 CPU cases and original-byte comparison, not enabled commands. Not live-BBS endurance, physical modem or full parity acceptance."
+}
