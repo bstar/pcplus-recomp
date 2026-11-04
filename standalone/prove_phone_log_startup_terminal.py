@@ -11,7 +11,7 @@ from build_phone_log_queue import ROOT, sha
 
 
 def flags(manifest, startup, event_hooks=True, disk=True, controls=True):
-    fields = {'experimental_call_timer':'call-timer', 'experimental_elapsed_view':'elapsed-view', 'experimental_screen_pause':'screen-pause', 'experimental_keyboard_bank':'keyboard-bank', 'experimental_local_controls':'local-controls', 'experimental_external_render': 'external-render', 'experimental_mouse': 'mouse',
+    fields = {'experimental_manual_init_owner':'manual-init-owner', 'experimental_call_timer':'call-timer', 'experimental_elapsed_view':'elapsed-view', 'experimental_screen_pause':'screen-pause', 'experimental_keyboard_bank':'keyboard-bank', 'experimental_local_controls':'local-controls', 'experimental_external_render': 'external-render', 'experimental_mouse': 'mouse',
         'experimental_notice_input': 'notice-input', 'experimental_aspect_keys': 'aspect-keys',
         'experimental_directory_keys': 'directory-keys', 'terminal_exit_guard': 'exit-guard',
         'banked_process': 'process-bank', 'experimental_session_capture': 'session-capture',

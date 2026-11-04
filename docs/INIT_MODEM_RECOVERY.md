@@ -59,6 +59,10 @@ nonblocking live ownership, active-call safety, BBS or physical acceptance proof
 
 ## Live integration still required
 
+An isolated [bounded live sender component](MANUAL_INIT_OWNER.md) now builds
+and passes linked CPU checks. It has no dispatcher/key/menu binding; the
+integration requirements below still gate making Alt-J available.
+
 Keep this a send-initialization operation, distinct from initialization/dial and
 optional ACK policy. Reusing the startup state machine as-is would dial or
 consume replies, contradicting the original command. Do not turn a manual Init

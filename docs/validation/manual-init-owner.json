@@ -1,0 +1,170 @@
+{
+  "passed": true,
+  "component_only": true,
+  "live_command_enabled": false,
+  "installed": false,
+  "terminal_sha256": "90e23558aa0c21b3ee70f307cb866248aa7eaa4d743b0c80fdc5a5bcc6ccb46f",
+  "evidence": {
+    "build/manual-init-owner-live-accepted-20261103/result.json": {
+      "sha256": "8d77453e2ca8616c707b2c7b11f108d39de9f052e43a9c0e0c2be1f50c02065f",
+      "passed": true,
+      "cases": [
+        {
+          "case": "native-command-wire-idle-and-connected",
+          "inputs": 80,
+          "passed": true
+        },
+        {
+          "case": "ordinary-pause-and-FF-pacing",
+          "inputs": 1,
+          "passed": true
+        },
+        {
+          "case": "bounded-validation-and-busy-refusals",
+          "inputs": 15,
+          "passed": true
+        },
+        {
+          "case": "flow-stalls-budget-and-clock-wrap",
+          "inputs": 7,
+          "passed": true
+        },
+        {
+          "case": "cancel-loss-exit-and-partial-line-debt",
+          "inputs": 11,
+          "passed": true
+        },
+        {
+          "case": "private-copy-of-expanded-input",
+          "inputs": 1,
+          "passed": true
+        },
+        {
+          "case": "real-receive-parser-and-deferred-CPR",
+          "inputs": 1,
+          "passed": true
+        },
+        {
+          "case": "subsequent-dial-carrier-loss-and-redial",
+          "inputs": 1,
+          "passed": true
+        }
+      ]
+    },
+    "build/manual-init-owner-source-proof-20261103/result.json": {
+      "sha256": "25cfffbcff7ef452456649e88136beb62c101ccf50df06603479e5056682ef5b",
+      "passed": true,
+      "source_files": 538
+    },
+    "build/manual-init-owner-elapsed-regression-20261103/result.json": {
+      "sha256": "b18f0669289a7d4cc52ec590d1b51428e53fb92b9828922d6082227e671529ba",
+      "passed": true,
+      "cases": [
+        {
+          "case": "one-local-dismiss-0x78-menu-False",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x1b-menu-False",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x2d00-menu-False",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x4800-menu-False",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x2e00-menu-False",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x1400-menu-False",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x78-menu-True",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x1b-menu-True",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x2d00-menu-True",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x4800-menu-True",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x2e00-menu-True",
+          "passed": true
+        },
+        {
+          "case": "one-local-dismiss-0x1400-menu-True",
+          "passed": true
+        },
+        {
+          "case": "incoming-parser-CPR-updates-live-underlay-with-window-visible",
+          "passed": true
+        },
+        {
+          "case": "idle-refresh-is-bounded-to18-BIOS-ticks",
+          "passed": true
+        },
+        {
+          "case": "carrier-loss-freezes-timer-and-defers-notice-until-underlay-release",
+          "passed": true
+        },
+        {
+          "case": "partial-parser-defers-one-open-until-owner-release",
+          "passed": true
+        },
+        {
+          "case": "command-browser-search-selection-opens-same-serviced-window",
+          "passed": true
+        },
+        {
+          "case": "refuse-unsupported-BIOS-mode",
+          "passed": true
+        },
+        {
+          "case": "refuse-unsupported-BIOS-columns",
+          "passed": true
+        },
+        {
+          "case": "refuse-unsupported-BIOS-page",
+          "passed": true
+        },
+        {
+          "case": "refuse-unsupported-BIOS-height",
+          "passed": true
+        },
+        {
+          "case": "external-view-stop-releases-clock-window-and-underlay",
+          "passed": true
+        }
+      ]
+    }
+  },
+  "memory": {
+    "near_bytes": 65008,
+    "near_spare_bytes": 528,
+    "resident_CS_extent_bytes": 65194,
+    "resident_CS_spare_bytes": 342
+  },
+  "sources": {
+    "standalone/check_manual_init_owner_live.py": "7d13b46ab5b6452ef73382105a044d20f3e1151ad8f1b55bee3ba2caab05cb81",
+    "src/terminal/manual_init.asm": "3eaee9648452b3566fdb3a2ee135a3b6ea0d45e5703f9ae5bde98e216055e20c",
+    "src/terminal/modem_abi.inc": "f7fa7bd45cacec15b77856ffa147f2d5a7260ba214f271554c9118e536c25f03",
+    "src/terminal/transport.asm": "9f6dc884347081b71efe319d16cba1cae50ad513792028a5466c3029dc1ef534",
+    "reconstruction/modem_commands/bounded.asm": "40b83bce86b64c30c536a5cf3d85019064dfa5a70e543cd04600aeb9d8dd7719",
+    "src/config/prm.py": "01619cf74c1c9b0d3e5b29cd200b27192d81dca0e46ebe94c7f92e92072ac248"
+  },
+  "disabled_binary_sha256": "340cb4bac4394d946f0bcbb52adacd922d7f8d8fec9665e117ff1f9cd8b95f6d",
+  "scope": "Linked source-built send-only owner component. Harness supplies exclusive write grant and loss/exit cancellation; no automatic dispatcher/admission or physical proof. Actual UART/IRQ/expander/parser, BIOS/DOS/ports modeled. Exact source-only reproduction and unchanged disabled executable. Alt-J remains unavailable; active hardware-test package/installed files unchanged."
+}

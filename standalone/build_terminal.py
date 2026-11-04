@@ -26,6 +26,7 @@ parser.add_argument('--special-edition',action='store_true',help='Show the magen
 parser.add_argument('--status-geometry',action='store_true',help='Reserve physical row25 for status and advertise a coherent24-row terminal')
 parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchanged foreground keyboard dispatcher into a retained code bank')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
+parser.add_argument('--manual-init-owner',action='store_true',help='Link isolated bounded send-only Init Modem owner; no keyboard/menu binding')
 parser.add_argument('--elapsed-view',action='store_true',help='Enable serviced original Alt-T/Alt-Z elapsed-time window; requires call timer and local controls')
 parser.add_argument('--call-timer',action='store_true',help='Bind the recovered call timer to confirmed connection transitions; Alt-T view remains separate')
 parser.add_argument('--screen-pause',action='store_true',help='Enable guarded original Alt-N Screen Pause semantics')
@@ -71,6 +72,7 @@ if args.directory_preview:
  assert args.session_baseline and args.session_capture
 if args.directory_view:args.original_reference=True
 if args.local_controls:assert args.original_reference,'Local controls require the original reference interface'
+if args.manual_init_owner:assert args.original_reference,'Manual Init owner requires original-reference candidate'
 if args.elapsed_view:assert args.call_timer and args.local_controls,'Elapsed view requires call timer and local controls'
 if args.call_timer:assert args.original_reference,'Call timer requires original-reference candidate'
 if args.screen_pause:assert args.local_controls,'Screen Pause requires the shared local-controls owner'
@@ -173,6 +175,7 @@ if args.local_controls:out_name+='-local-controls'
 if args.screen_pause:out_name+='-screen-pause'
 if args.call_timer:out_name+='-call-timer'
 if args.elapsed_view:out_name+='-elapsed-view'
+if args.manual_init_owner:out_name+='-manual-init-owner'
 if args.keyboard_bank:out_name+='-keyboard-bank'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
@@ -207,6 +210,7 @@ if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 if not args.local_controls:sources=[p for p in sources if p.name!='local_controls.asm']
+if not args.manual_init_owner:sources=[p for p in sources if p.name!='manual_init.asm']
 if not args.call_timer:sources=[p for p in sources if p.name!='call_timer.asm']
 if args.call_timer:sources += [ROOT/'reconstruction/local_controls'/('timer_'+name+'.asm') for name in ('start','seconds','update')]
 if not args.screen_pause:sources=[p for p in sources if p.name!='screen_pause.asm']
@@ -291,6 +295,7 @@ for index,source in enumerate(sources):
  if args.screen_pause:options+=['-DTERMINAL_SCREEN_PAUSE']
  if args.call_timer:options+=['-DTERMINAL_CALL_TIMER']
  if args.elapsed_view:options+=['-DTERMINAL_ELAPSED_VIEW']
+ if args.manual_init_owner:options+=['-DTERMINAL_MANUAL_INIT_OWNER']
  if args.original_keys:options+=['-DTERMINAL_ORIGINAL_KEYS']
  if args.original_reference:options+=['-DTERMINAL_REFERENCE']
  if args.directory_view:options+=['-DTERMINAL_DIRECTORY_VIEW']
@@ -621,6 +626,7 @@ manifest['experimental_local_controls']=args.local_controls
 manifest['experimental_screen_pause']=args.screen_pause
 manifest['experimental_call_timer']=args.call_timer
 manifest['experimental_elapsed_view']=args.elapsed_view
+manifest['experimental_manual_init_owner']=args.manual_init_owner
 manifest['experimental_original_keys']=args.original_keys
 manifest['experimental_status_geometry']=args.status_geometry
 manifest['experimental_original_reference']=args.original_reference
@@ -711,5 +717,7 @@ if args.native_reset_bank:
  manifest['native_reset_namespace']=reset_bank['namespace']
  manifest['native_reset_transaction']=args.native_reset_transaction
  manifest['limitations'].append(reset_bank['scope'])
+if args.manual_init_owner:
+ manifest['limitations'].append('Isolated manual Init send owner is linked for component verification only. No Alt-J/menu binding, dispatcher output exclusion or automatic carrier-loss cancellation. Caller supplies an exclusive physical-write grant and cancel/loss/exit notification. Native bounded expansion and send-only bytes are retained; maintained ordinary pacing is one BIOS tick and pauses ten ticks, not calibrated-native timing equivalence. Partial physical command debt is reported without inserting recovery bytes or retiring the call. Do not deploy this component candidate as an enabled manual-init release.')
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Built',str((OUT/'TERMINAL.EXE').relative_to(ROOT)),manifest['binary_sha256'],'DS/SS bytes',manifest['data_stack_bytes'])
