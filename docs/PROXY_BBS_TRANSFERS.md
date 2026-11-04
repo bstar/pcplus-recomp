@@ -1,5 +1,10 @@
 # Current release transfers through the actual SynthModem proxy
 
+The later [size-probed transfer matrix](PROXY_SIZE_TRANSFERS.md) verifies the
+current application through the staged startup-size proxy, including 65,539-byte
+upload/download pairs at 25-visible and 50-hidden layouts. The evidence below
+retains its historical executable and installed-proxy scope.
+
 This checkpoint uses the current Screen Pause candidate,
 SHA256 `501629c093d731be8f3324f185e128af76e00c2942e5ad3463c1ce7da54edb6e`,
 with the real installed SynthModem TelnetProxy and the stock owned ENiGMA file

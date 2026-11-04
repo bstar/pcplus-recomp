@@ -59,11 +59,20 @@ async def run(a):
    raw=bytearray(fixture);struct.pack_into('<HH',raw,0x4e4,sx,sy);fixture=bytes(raw)
   if a.irq is not None:
    raw=bytearray(fixture);struct.pack_into('<H',raw,0x184+(a.com-1)*2,a.irq);fixture=bytes(raw)
+  if a.display_rows is not None:
+   raw=bytearray(fixture)
+   for at,value in [(0x1c2,a.status_hidden),(0x1c8,2),(0x1ca,a.display_rows),(0x4ec,0)]:struct.pack_into('<H',raw,at,value)
+   fixture=bytes(raw)
   (output/'TEST.PRM').write_bytes(fixture);command='TERMINAL @D:\\TEST.PRM'
   if a.directory_fixture:command+=' /E:D:\\TEST.DIR'+('' if a.directory_browser else f' /N:{a.entry}')
   elif a.dial_fixture:command+=f' /D:lab.local:{a.port}'
  command='C:\\'+command
- sampler=SAMPLER;base=(0x3f8,0x2f8,0x3e8,0x2e8)[a.com-1]
+ sampler=SAMPLER;geometry_capture=''
+ if a.display_rows is not None:
+  sampler=sampler.replace('mov cx,4000','mov cx,8000')
+  subprocess.run(['nasm','-fbin',str(ROOT/'standalone/display_startup_geometry.asm'),'-o',str(output/'GEOM.COM')],check=True)
+  geometry_capture='D:\\GEOM'
+ base=(0x3f8,0x2f8,0x3e8,0x2e8)[a.com-1]
  for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(base+off))
  (output/'sampler.asm').write_text(sampler);subprocess.run(['nasm','-fbin',str(output/'sampler.asm'),'-o',str(output/'SNAP.COM')],check=True)
  upstream=getattr(a,'upstream_port',None)
@@ -104,6 +113,7 @@ goto capture
 :failed
 echo FAIL>D:\\FAIL.TXT
 :capture
+{geometry_capture}
 D:\\SNAP S
 D:\\SNAP A
 exit
@@ -137,7 +147,7 @@ exit
  except asyncio.TimeoutError:pass
  modem.save();(output/'trace.json').write_text(json.dumps(modem.trace,indent=2)+'\n')
  before=(output/'BEFORE.BIN').read_bytes() if (output/'BEFORE.BIN').exists() else b'';after=(output/'AFTER.BIN').read_bytes() if (output/'AFTER.BIN').exists() else b'';screen=(output/'SCREEN.BIN').read_bytes() if (output/'SCREEN.BIN').exists() else b''
- checks=dict(DOS_normal_exit=code==0 and (output/'PASS.TXT').exists() and not (output/'FAIL.TXT').exists(),hardware_restored=len(before)==42 and before==after,screen_captured=len(screen)==4000,bbs_connected=any(e['kind']=='bbs-connected' for e in modem.events),binary_unchanged=hashlib.sha256(BINARY.read_bytes()).hexdigest()==a.sha256,payload_fixture_unchanged=all(path.read_bytes()==expected[name] for name,path in fixtures.items()),observed_decoded_offsets_match=modem.bbs_offset==len(modem.display) and modem.dos_offset==len(modem.keyboard))
+ checks=dict(DOS_normal_exit=code==0 and (output/'PASS.TXT').exists() and not (output/'FAIL.TXT').exists(),hardware_restored=len(before)==42 and before==after,screen_captured=len(screen)==(8000 if a.display_rows is not None else 4000),bbs_connected=any(e['kind']=='bbs-connected' for e in modem.events),binary_unchanged=hashlib.sha256(BINARY.read_bytes()).hexdigest()==a.sha256,payload_fixture_unchanged=all(path.read_bytes()==expected[name] for name,path in fixtures.items()),observed_decoded_offsets_match=modem.bbs_offset==len(modem.display) and modem.dos_offset==len(modem.keyboard))
  if fixture is not None:checks['configuration_unchanged']=(output/'TEST.PRM').read_bytes()==fixture
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),a.entry)
  errors=[];audit=None
@@ -199,7 +209,7 @@ exit
     checks['discard_menu_used']=b'discard' in bytes(modem.display).lower()
   except Exception as error:errors.append('Server session audit: '+str(error));checks['unique_server_session_and_ordered_menus']=False
  checks['no_leftover_staging']=not list(output.rglob('PCRX.$$$'))
- (output/'screen.txt').write_text('\n'.join(screen[r*160:r*160+160:2].decode('cp437') for r in range(25))+'\n')
+ (output/'screen.txt').write_text('\n'.join(screen[r*160:r*160+160:2].decode('cp437') for r in range(a.display_rows or 25))+'\n')
  if audit:
   # A failed acknowledgement/menu check can leave the raw payload attached.
   # Retain the failed audit without letting bytes serialization hide result.json.
@@ -208,6 +218,7 @@ exit
  confirmed=bool(audit and audit.get('controls') and audit.get('finish'))
  result=dict(passed=all(checks.values()),standard_completion=confirmed,name=a.name,label=a.label,mode=a.mode,binary_sha256=a.sha256,payload_sha256=payload_hash,checks=checks,errors=errors,seconds=round(time.monotonic()-start,3),keys=keys,command=command,serial=dict(com=a.com,baud=a.baud,flow=a.flow),scope='Actual local BBS ZMODEM via unchanged observed Hayes/Telnet bridge and production DOS F2/AltR/AltS/UART/files. Independent passive header/data CRC, verified offsets, ZEOF and ZFIN/OO, opposite headers and post-transfer menu input/response. Synthetic media, no injected protocol replies or physical modem claim.')
  result['server_endpoint']={'address':'127.0.0.1','port':a.port}
+ result['display_layout']=dict(physical_rows=a.display_rows,logical_rows=a.display_rows-(not a.status_hidden),status_hidden=a.status_hidden) if a.display_rows is not None else None
  result['raw_upstream']=bool(upstream)
  result['serial_upstream_port']=upstream
  result['cpu']=a.cpu
@@ -239,6 +250,8 @@ def main():
  p.add_argument('--flow',choices=['HARD','NONE'],default='HARD')
  p.add_argument('--auto-download',action='store_true');p.add_argument('--config-fixture',action='store_true');p.add_argument('--dial-fixture',action='store_true')
  p.add_argument('--directory-fixture',action='store_true');p.add_argument('--directory-browser',action='store_true')
+ p.add_argument('--display-rows',type=int,choices=[25,28,43,50])
+ p.add_argument('--status-hidden',type=int,choices=[0,1],default=0)
  p.add_argument('--entry',type=int,choices=range(1,201),default=3);a=p.parse_args()
  if a.binary:
   from product_inputs import select_product

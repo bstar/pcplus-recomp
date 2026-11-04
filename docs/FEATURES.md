@@ -1,5 +1,16 @@
 # Full application reconstruction checklist
 
+[Size-probed proxy transfers](PROXY_SIZE_TRANSFERS.md) now verify the current
+parent through the staged SynthModem proxy and stock Enigma file helper at
+25-visible and 50-hidden layouts. Four separate DOS processes transfer 262,156
+payload bytes in two exact upload/download pairs. Independent raw-wire/NAWS,
+BIOS/font, CRC/finish/control, official metadata and destination audits pass,
+alongside nine copied-capture controls. Binary size-reply lookalikes survive.
+The test navigation accounts for earned-achievement pauses without suppressing
+them; failed and aborted attempts remain excluded. Application bytes, installed
+services and deployment selection are unchanged. Cancellation, real DCD loss,
+same-process reconnect/retry, physical acceptance and original parity stay open.
+
 [Authenticated LoC main-menu checks](LOC_MAIN_AUTHENTICATED.md) now verify the
 current copied module/form/art through actual DOS login, native Alt-Z observation,
 M/Q menu return and focused input at all four heights/both status states. Eight

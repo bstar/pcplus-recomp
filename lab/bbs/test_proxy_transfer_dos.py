@@ -52,6 +52,8 @@ def main(a):
     binary, sources = select_product(a.terminal, 'TERMINAL.EXE')
     from terminal_geometry import terminal_geometry
     geometry = terminal_geometry(binary)
+    logical=a.rows-(not a.hidden) if a.size_probe else geometry['rows']
+    assert a.size_probe or (a.rows,a.hidden)==(25,0)
     manifest = json.loads((binary.parent / 'manifest.json').read_text())
     assert manifest['experimental_original_reference'] and manifest['special_edition']
     base = ROOT / 'build/bbs-lab'
@@ -62,27 +64,35 @@ def main(a):
     bridge = base / (a.label + '-proxy')
     sources += [ROOT / n for n in ('lab/bbs/test_proxy_transfer_dos.py', 'lab/bbs/test_zmodem_dos.py',
                 'lab/bbs/test_transfer_dos.py', 'lab/bbs/modem.py', 'lab/bbs/synthmodem_proxy_serial.js',
-                'lab/bbs/audit_zmodem.py', 'lab/bbs/editor-recipes.json', 'lab/bbs/terminal_geometry.py')]
+                'lab/bbs/audit_zmodem.py', 'lab/bbs/editor-recipes.json', 'lab/bbs/terminal_geometry.py','standalone/display_startup_geometry.asm')]
     before = {str(p.relative_to(ROOT)): sha(p) for p in sources}
     server_paths = [SOURCE / n for n in ('main.js', 'core/client.js', 'core/file_transfer.js',
                     'core/file_entry.js', 'core/file_transfer_protocol_select.js', 'core/upload.js',
                     'core/file_base_area.js', 'core/multi_line_edit_text_view.js', 'core/view_controller.js',
-                    'config/menus/loc-file_base.hjson', 'config/config.hjson', 'package-lock.json')]
+                    'config/menus/loc-file_base.hjson', 'config/config.hjson', 'package-lock.json','core/string_util.js',
+                    'core/user_interrupt_queue.js','core/menu_module.js')]
     server_paths.append(SOURCE.parent / 'helpers/sexyz')
     server_before = {str(p.relative_to(ROOT)): sha(p) for p in server_paths}
     posts = post_count()
-    name = 'PCXTEST.BIN'
+    name = a.download_name
+    assert name=='PCXTEST.BIN' or re.fullmatch(r'P[A-F0-9]{6}\.BIN',name)
     fixture = SOURCE / 'file_base/pcplus_transfer' / name
     if a.mode == 'upload':
         name = 'P' + hashlib.sha256(a.label.encode()).hexdigest()[:6].upper() + '.BIN'
         fixture = wrapper / name
-        fixture.write_bytes(bytes(range(256)) * 4 + hashlib.sha256(a.label.encode()).digest())
+        payload=bytes(range(256))*4+hashlib.sha256(a.label.encode()).digest()
+        if a.upload_bytes!=len(payload):
+            pattern=bytes(range(256))+b'\x1b[8;50;80t\xff\xfb\x1f\xff\xfa\x1f'+hashlib.sha256(a.label.encode()).digest()
+            payload=(pattern*((a.upload_bytes+len(pattern)-1)//len(pattern)))[:a.upload_bytes]
+        fixture.write_bytes(payload)
         assert not (SOURCE / 'file_base/pcplus_transfer' / name).exists()
+    if a.size_probe:assert manifest['experimental_display_startup']
     assert fixture.is_file()
     fixture_sha = sha(fixture)
     prefix = json.loads((ROOT / 'lab/bbs/editor-recipes.json').read_text())['enigma_unsaved']['keyboard_input']
     prefix = prefix[:prefix.index('M enter')].replace('n p6000 n p3000 enter', 'n p6000 enter')
     prefix = 'p900 enter p2500 l o c enter ' + prefix + 'c-y p2000 F enter p2000 '
+    if a.post_menu_reset:assert re.fullmatch(r'P[A-F0-9]{6}\.BIN',name)
     filename = ' '.join(name)
     if a.mode == 'download':
         keys = prefix + ('S enter p2000 ' + filename + ' enter p1500 enter p2000 t p1500 q p1500 escape '
@@ -91,7 +101,17 @@ def main(a):
                          'p30000 enter p2000 S enter p1500 ' + filename + ' enter p1500 enter')
         start = b'D\r'
         post = b'S\r'
-        menus = [name + ' ', '11.25 ', 'KB ']
+        if a.post_menu_reset:
+            # An earned achievement can pause the first list transition.
+            # Escape dismisses that pause, then exits the list; another Escape
+            # is harmless at File Base. Reopen the current filter before the
+            # final checks. The full original search remains before download.
+            old='p2000 S enter p1500 '+filename+' enter p1500 enter'
+            assert keys.count(old)==1
+            keys=keys.replace(old,'p2000 L enter p1500 escape p1500 escape p1500 L enter p1500')
+            post=b'\x1b\x1bL\r'
+        size_text=subprocess.check_output(['node','-e','process.stdout.write(require(process.argv[1]).formatByteSize(Number(process.argv[2])))',str(SOURCE/'core/string_util.js'),str(fixture.stat().st_size)],text=True)
+        menus = [name + ' ', size_text+' ', 'KB ']
     else:
         # BIN scanning supplies a filename description (file_base_area.js), so
         # upload.js starts details at tags: tags -> year -> Continue (two Tabs).
@@ -102,10 +122,16 @@ def main(a):
         start = b'U\r'
         post = b'L\r'
         menus = [name]
+        if a.post_menu_reset:
+            old='p2000 L enter p5000'
+            assert keys.count(old)==1
+            keys=keys.replace(old,'p2000 L enter p1500 escape p1500 escape p1500 L enter p5000')
+            post=b'\x1b\x1bL\r'
+    keys=keys.replace('p30000','p'+str(a.transfer_wait_ms))
     assert len('ADDKEY p1000 ' + keys + ' p3000 a-x') < 500
     proxy = subprocess.Popen(['node', str(ROOT / 'lab/bbs/synthmodem_proxy_serial.js'), '--runtime', str(a.runtime.resolve()),
                              '--output', str(bridge), '--bbs-port', '23233', '--framing-ms', '250',
-                             '--byte-delay-ms', '0', '--terminal-rows', str(geometry['rows'])],
+                             '--byte-delay-ms', '0', '--terminal-rows', str(logical),*(['--probe-terminal-size'] if a.size_probe else [])],
                              stdout=subprocess.DEVNULL, stderr=(wrapper / 'proxy.log').open('w'))
     try:
         deadline = time.monotonic() + 15
@@ -119,7 +145,8 @@ def main(a):
                    '--dial-fixture', '--com', '3', '--irq', '5', '--cpu', '8086', '--mouse-scales', '8', '4',
                    '--hangup-guard-ms', '500',
                    '--keys', keys, '--start-input-hex', start.hex(), '--post-input-hex', post.hex(),
-                   '--timeout', '180', '--wait', '8']
+                   '--timeout', '260', '--wait', '8']
+        if a.size_probe:command+=['--display-rows',str(a.rows),'--status-hidden',str(a.hidden)]
         for menu in menus:
             command += ['--post-menu', menu]
         if a.mode == 'upload':
@@ -145,7 +172,7 @@ def main(a):
                       modeled_guarded_hangup=len([e for e in model['events'] if e['kind']=='guarded-hangup'])==1,
                       same_proxy_input=(bridge / '1-serial-input.bin').read_bytes() == (output / 'bbs-sent.bin').read_bytes(),
                       same_proxy_output=(bridge / '1-serial-output.bin').read_bytes() == (output / 'display.bin').read_bytes())
-        report = dict(passed=all(checks.values()), checks=checks, mode=a.mode, terminal_sha256=sha(binary),
+        report = dict(passed=all(checks.values()),display_layout=dict(physical_rows=a.rows,logical_rows=logical,status_hidden=a.hidden) if a.size_probe else None, checks=checks, mode=a.mode, terminal_sha256=sha(binary),
                       product_inputs=before, server_inputs=server_before, server_commit=COMMIT, proxy=ready,
                       protocol_checks=result.get('checks'), protocol_errors=result.get('errors'),
                       fixture=dict(name=name, bytes=fixture.stat().st_size, sha256=fixture_sha),
@@ -167,6 +194,13 @@ if __name__ == '__main__':
     p.add_argument('--runtime', type=Path)
     p.add_argument('--terminal', type=Path)
     p.add_argument('--label')
+    p.add_argument('--size-probe',action='store_true')
+    p.add_argument('--rows',type=int,choices=[25,28,43,50],default=25)
+    p.add_argument('--hidden',type=int,choices=[0,1],default=0)
+    p.add_argument('--download-name',default='PCXTEST.BIN')
+    p.add_argument('--post-menu-reset',action='store_true',help='Dismiss a queued achievement/list before reopening the post-transfer file list')
+    p.add_argument('--upload-bytes',type=int,choices=[1056,65539],default=1056)
+    p.add_argument('--transfer-wait-ms',type=int,choices=[30000,60000,90000],default=30000)
     p.add_argument('--mode', choices=['download', 'upload'])
     p.add_argument('--audit-name')
     p.add_argument('--expected', type=Path)

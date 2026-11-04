@@ -1,0 +1,231 @@
+{
+  "passed": true,
+  "component": "Current size-probed serial-side SynthModem/stock ENiGMA binary transfer composition",
+  "image": {
+    "path": "build/aspect-size-report-20261104/ordinary/TERMINAL.EXE",
+    "sha256": "a2fd6a3fcdcc30138426d747d8cde400d9fc6eb9ca5fca84d1656aeaf17caa77",
+    "manifest_sha256": "5adaf70c9110102da6adfb7246f92de5b66d277ec143b1fc0aa60984e7801ecd",
+    "source_files": 569,
+    "original_inputs": [],
+    "source_only_rebuild": {
+      "path": "build/aspect-size-report-proof-20261104/result.json",
+      "sha256": "7e53c28074362339558ffc09e5fdf4f98093f8bdf7151233834ac942f962f2a6"
+    }
+  },
+  "matrix": {
+    "path": "build/size-proxy-roundtrips-validation-20261104/result.json",
+    "sha256": "e25d2c5b1c7064a9ac6d35124b8142251cdd78d2e599f3d105bdc8aa3efb8782"
+  },
+  "independent_matrix": {
+    "path": "build/size-proxy-roundtrips-independent-validation-20261104/result.json",
+    "sha256": "6ae41d5c08beebb40e3c077abe93fc6eec8e02d05b1a77f2764c3a5fcf485581"
+  },
+  "cases": [
+    {
+      "label": "size-proxy-roundtrips-validation-20261104-upload-25",
+      "mode": "upload",
+      "physical_rows": 25,
+      "status_hidden": 0,
+      "name": "P795C1C.BIN",
+      "payload_sha256": "f201ab45fad25b0754e27439cc3e610017f45c60db10e4323899c77bdbe1e761",
+      "payload_bytes": 65539,
+      "audit_path": "build/size-proxy-roundtrips-validation-20261104/size-proxy-roundtrips-validation-20261104-upload-25-audit/result.json",
+      "audit_sha256": "251bb3b973aac4268f3556988c3c4b1e8eb009c21f0becc31bf96ea7794d6d4f",
+      "passed": true,
+      "producer": {
+        "path": "build/bbs-lab/size-proxy-roundtrips-validation-20261104-upload-25-transfer/result.json",
+        "sha256": "9677d7a9f2f94d26158cabfee04026148b10e217d421617930e1b28dc79e3296"
+      },
+      "independent_audit": {
+        "path": "build/size-proxy-roundtrips-validation-20261104/size-proxy-roundtrips-validation-20261104-upload-25-audit/result.json",
+        "sha256": "251bb3b973aac4268f3556988c3c4b1e8eb009c21f0becc31bf96ea7794d6d4f"
+      },
+      "NAWS": [
+        [
+          80,
+          24
+        ]
+      ],
+      "size_reply_lookalikes": 215,
+      "client_application_bytes": 68818,
+      "server_application_bytes": 74027
+    },
+    {
+      "label": "size-proxy-roundtrips-validation-20261104-download-25",
+      "mode": "download",
+      "physical_rows": 25,
+      "status_hidden": 0,
+      "name": "P795C1C.BIN",
+      "payload_sha256": "f201ab45fad25b0754e27439cc3e610017f45c60db10e4323899c77bdbe1e761",
+      "payload_bytes": 65539,
+      "audit_path": "build/size-proxy-roundtrips-validation-20261104/size-proxy-roundtrips-validation-20261104-download-25-audit/result.json",
+      "audit_sha256": "5a26b239f767e0a48b154eb2b4cbeec66c389af82c6ad736e1ad0f46faaffa4f",
+      "passed": true,
+      "producer": {
+        "path": "build/bbs-lab/size-proxy-roundtrips-validation-20261104-download-25-transfer/result.json",
+        "sha256": "90dc54f6d8b99970047f398a840b63b67ad02decd5a4cc460e4959339ff36f0d"
+      },
+      "independent_audit": {
+        "path": "build/size-proxy-roundtrips-validation-20261104/size-proxy-roundtrips-validation-20261104-download-25-audit/result.json",
+        "sha256": "5a26b239f767e0a48b154eb2b4cbeec66c389af82c6ad736e1ad0f46faaffa4f"
+      },
+      "NAWS": [
+        [
+          80,
+          24
+        ]
+      ],
+      "size_reply_lookalikes": 215,
+      "client_application_bytes": 343,
+      "server_application_bytes": 142917
+    },
+    {
+      "label": "size-proxy-roundtrips-validation-20261104-upload-50",
+      "mode": "upload",
+      "physical_rows": 50,
+      "status_hidden": 1,
+      "name": "P1DF221.BIN",
+      "payload_sha256": "bbbd96ec651e8fc754f7c3e71d7d348454741c62fdfe2cb0d720a82a4caf1a33",
+      "payload_bytes": 65539,
+      "audit_path": "build/size-proxy-roundtrips-validation-20261104/size-proxy-roundtrips-validation-20261104-upload-50-audit/result.json",
+      "audit_sha256": "502058e42bcdfbb907369909cf00d7b252f8b185bedb0b44029663b2f9a3d0bb",
+      "passed": true,
+      "producer": {
+        "path": "build/bbs-lab/size-proxy-roundtrips-validation-20261104-upload-50-transfer/result.json",
+        "sha256": "d65eb7113fcea38df9d518895e649485b2fc5690c95633ae0cc9dfeaf98fc1d5"
+      },
+      "independent_audit": {
+        "path": "build/size-proxy-roundtrips-validation-20261104/size-proxy-roundtrips-validation-20261104-upload-50-audit/result.json",
+        "sha256": "502058e42bcdfbb907369909cf00d7b252f8b185bedb0b44029663b2f9a3d0bb"
+      },
+      "NAWS": [
+        [
+          80,
+          50
+        ]
+      ],
+      "size_reply_lookalikes": 215,
+      "client_application_bytes": 68600,
+      "server_application_bytes": 73489
+    },
+    {
+      "label": "size-proxy-roundtrips-validation-20261104-download-50",
+      "mode": "download",
+      "physical_rows": 50,
+      "status_hidden": 1,
+      "name": "P1DF221.BIN",
+      "payload_sha256": "bbbd96ec651e8fc754f7c3e71d7d348454741c62fdfe2cb0d720a82a4caf1a33",
+      "payload_bytes": 65539,
+      "audit_path": "build/size-proxy-roundtrips-validation-20261104/size-proxy-roundtrips-validation-20261104-download-50-audit/result.json",
+      "audit_sha256": "f038c5623e02c2c34c4bd3646938514798a9c1b658cebc1914886ca8b52dbb85",
+      "passed": true,
+      "producer": {
+        "path": "build/bbs-lab/size-proxy-roundtrips-validation-20261104-download-50-transfer/result.json",
+        "sha256": "f3f62f955bd636846c6422f7d8e4017df97baa8ad8ad5981d946701475e0b40e"
+      },
+      "independent_audit": {
+        "path": "build/size-proxy-roundtrips-validation-20261104/size-proxy-roundtrips-validation-20261104-download-50-audit/result.json",
+        "sha256": "f038c5623e02c2c34c4bd3646938514798a9c1b658cebc1914886ca8b52dbb85"
+      },
+      "NAWS": [
+        [
+          80,
+          50
+        ]
+      ],
+      "size_reply_lookalikes": 215,
+      "client_application_bytes": 343,
+      "server_application_bytes": 143474
+    }
+  ],
+  "counts": {
+    "DOS_workflows": 4,
+    "payload_bytes_each": 65539,
+    "unique_fixture_payload_bytes": 131078,
+    "transferred_payload_bytes": 262156,
+    "size_reply_lookalikes_each": 215,
+    "all_256_values_each": true,
+    "copied_capture_controls": 9,
+    "accepted_unchanged_controls": 1,
+    "rejected_mutations": 8
+  },
+  "controls": {
+    "path": "build/size-proxy-controls-validation-20261104/result.json",
+    "sha256": "da70f8ccbc121a09514226a7209216d47efcb83813bdb6e7c0ab770e8b64101a"
+  },
+  "sources": {
+    "lab/bbs/test_proxy_size_roundtrips.py": "b817d75daab12c4e2ff6398e8a66cb0739535f3d72186a11bbe1bb91a83375f2",
+    "lab/bbs/check_proxy_size_roundtrips.py": "ae41164b71287234166f71b8aad9312ab33a7a8e885a8b12be387920576cef42",
+    "lab/bbs/audit_proxy_size_transfer.py": "246487488b68f092170913357b4296fe5db3c1755a70a2234f92e73e57b68718",
+    "lab/bbs/check_proxy_size_transfer_controls.py": "df8014385cb917558521a7e26623051bdb7552771cd72a40d5c85a95187b410d",
+    "lab/bbs/test_proxy_transfer_dos.py": "05d1993fb4132a88da4d7c709df316d1b32eb5aaacf990d5f5e46db5619f665a",
+    "lab/bbs/test_zmodem_dos.py": "cf6eadf3697568a477f414ccd6e6f7a75f9a88264b61491dca06b79531180e2a",
+    "lab/bbs/audit_zmodem.py": "21915f685657722a5ea4b0149c5c8a8492bb79c311b8ec319000b6e47d966452",
+    "lab/bbs/audit_size_probe_screen.py": "0b6da43fad5632ba3dd2c6ed7cda76f812940e0a680c509b5d7c82d3e81b33fb",
+    "lab/bbs/product_inputs.py": "f4b94653d54bf91234359f1683dbce11a4201c5e1702018f16ed7af757e31f73",
+    "lab/bbs/test_transfer_dos.py": "d035c1ebd63a23afe8bec8bf2af52a397019760d8c3ed2f4d1c9ce4226286ac7",
+    "lab/bbs/modem.py": "0adc0a19f3405f66427bb1bf9752bf83068b1555905a0555bd414e06c4d1bf0f",
+    "lab/bbs/synthmodem_proxy_serial.js": "f66b551def1ee7fc99850a117eefe2414c4a35fcee6d2990393b0c0d50b56081",
+    "standalone/display_startup_geometry.asm": "972046bd430f77c73509e35bf633f7356a208f1497ea6f2acdf5c62cad476052",
+    "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+    "lab/bbs/editor-recipes.json": "72777d66ae84bd488f551cdb367deadbb47d4a4405f921f0d1ab0d578b1a3649",
+    "nix/flake.nix": "1bed287bbe29de9ee1108e16ded622ad7f71736278098dad0fba741c540652fa",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/dev": "abbf4bd3a4d6cb91b5f7eecc3919ccbccd15e472bc49463e9d2669adc67e0bca"
+  },
+  "retained_failed_cases": [
+    {
+      "label": "size-proxy-download25-large-20261104",
+      "report": {
+        "path": "build/bbs-lab/size-proxy-download25-large-20261104-transfer/result.json",
+        "sha256": "9759ff0ca4d932f5ccbfd2f6787844c14344576206084f036729d15258a76518"
+      },
+      "reason": "Exact protocol/file; obsolete64.00 size expectation",
+      "accepted": false
+    },
+    {
+      "label": "size-proxy-roundtrips-20261104-download-25",
+      "report": {
+        "path": "build/bbs-lab/size-proxy-roundtrips-20261104-download-25-transfer/result.json",
+        "sha256": "8d51380e4bb3f451adba754bde28d25d27371cd9f105eabb2ed87b4bf86bb485"
+      },
+      "reason": "Exact protocol/file; cumulative640K achievement consumed search character",
+      "accepted": false
+    },
+    {
+      "label": "size-proxy-roundtrips-accepted-20261104-download-25",
+      "report": {
+        "path": "build/bbs-lab/size-proxy-roundtrips-accepted-20261104-download-25-transfer/result.json",
+        "sha256": "a1145b84160f9c911cf876c27aecb4d8b61167a9dfe8bb223daa70afccfffd54"
+      },
+      "reason": "Abbreviated search returned no entries; no source-matching ZFILE",
+      "accepted": false
+    },
+    {
+      "label": "size-proxy-roundtrips-verified-20261104-upload-25",
+      "report": {
+        "path": "build/bbs-lab/size-proxy-roundtrips-verified-20261104-upload-25-transfer/result.json",
+        "sha256": "380658091ae6291538df5963253a14d2adf6d6078a7b999c9f9b650a351b3613"
+      },
+      "reason": "Exact protocol/file/metadata;512KB achievement consumed list command",
+      "accepted": false
+    }
+  ],
+  "other_excluded_attempts": [
+    {
+      "run": "build/size-proxy-roundtrips-reset-20261104",
+      "reason": "Upload passed; reset download rejected before DOS by ADDKEY length bound",
+      "accepted": false
+    },
+    {
+      "run": "build/size-proxy-roundtrips-final-20261104",
+      "reason": "Premature owned test tree explicitly terminated after preflight still exceeded command bound; no matrix receipt",
+      "accepted": false
+    }
+  ],
+  "application_bytes_changed": false,
+  "installed_services_changed": false,
+  "physical_machine_changed": false,
+  "deployment_selection_changed": false,
+  "scope": "Four separate DOS8086 processes,COM3/IRQ5,19200/HARD,25-visible and50-hidden startup preferences. Actual staged proxy CSI18t/NAWS,stock loopback Enigma helper and official FileEntry API,independent raw application equality and CRC/control/finish/destination audits. Synthetic500ms guarded Hayes; framing250ms,no per-byte delay. No cancellation,real DCD loss,same-process reconnect/retry,every-layout/protocol,unframed transport,SIP/DSP/analog/physical or full original parity acceptance."
+}
