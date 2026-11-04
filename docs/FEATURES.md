@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Current candidate proxy transfers](PROXY_BBS_TRANSFERS.md) now exercise the
+source-built DOS candidate through the installed SynthModem TelnetProxy and
+owned Enigma's actual SE/X/Y/Z helper. Strict binary upload/download,
+CRC/completion, server metadata, post-transfer navigation and exact proxy stream
+checks are recorded separately from the synthetic-peer/carrier-loss matrix.
+The physical Boca/SPA2102 path and remaining full parity stay open.
+
 The optional [original local controls](LOCAL_CONTROLS_LIVE.md) now integrate
 Alt-C Clear, Alt-U Reset and Alt-E Duplex through direct keys and Alt-Z, with
 serial/parser/view ownership checks. Actual DOS, clean-source reproduction,

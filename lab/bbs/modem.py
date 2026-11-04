@@ -80,8 +80,39 @@ class Telnet:
  @staticmethod
  def encode(data):return data.replace(b'\xff',b'\xff\xff')
 
+class GuardedHangup:
+ """Optional fixture model for the configured guarded +++/ATH sequence.
+
+ It is not a complete Hayes escape/command interpreter. Without both quiet
+ guards, all bytes pass unchanged. Partial candidates are bounded and flushed.
+ """
+ def __init__(self,guard,now):
+  if not .1<=guard<=2:raise ValueError('Fixture guard must be .1..2 seconds')
+  self.guard=guard;self.last=now;self.pending=bytearray()
+ def expire(self,now):
+  limit=self.guard if len(self.pending)<3 else 2
+  if self.pending and now-self.last>=limit:
+   data=bytes(self.pending);self.pending.clear();self.last=now;return data
+  return b''
+ def feed(self,data,now):
+  output=bytearray(self.expire(now));matched=False
+  for byte in data:
+   quiet=now-self.last
+   if not self.pending:
+    if byte==43 and quiet>=self.guard:self.pending.append(byte)
+    else:output.append(byte)
+   else:
+    n=len(self.pending);expected=b'+++ATH\r'[n]
+    valid=byte==expected and (n!=3 or quiet>=self.guard)
+    if valid:
+     self.pending.append(byte)
+     if len(self.pending)==7:self.pending.clear();matched=True
+    else:output.extend(self.pending);output.append(byte);self.pending.clear()
+   self.last=now
+  return bytes(output),matched
+
 class Modem:
- def __init__(self,host,port,output,*,soft=False,baud=38400,raw=False,packet_delay_ms=0):
+ def __init__(self,host,port,output,*,soft=False,baud=38400,raw=False,packet_delay_ms=0,guarded_hangup_seconds=None):
   assert host in ('127.0.0.1','localhost','::1'),'Lab endpoints must be loopback'
   if not 0<=packet_delay_ms<=100:raise ValueError('Packet delay must be0..100 milliseconds')
   if soft and packet_delay_ms:raise ValueError('Buffering experiment requires NONE/HARD; software flow remains immediate')
@@ -90,10 +121,26 @@ class Modem:
   self.output.mkdir(parents=True,exist_ok=True);self.ready=asyncio.Event();self.done=asyncio.Event();self.events=[];self.codec=Telnet(baud)
   self.display=bytearray();self.keyboard=bytearray();self.wire_in=bytearray();self.wire_out=bytearray();self.serial_out=bytearray()
   self.pause=asyncio.Event();self.pause.set();self.start=time.monotonic();self.connected=False
+  self.hangup_guard=GuardedHangup(guarded_hangup_seconds,self.start) if guarded_hangup_seconds is not None else None
  def event(self,kind,**values):self.events.append({'seconds':round(time.monotonic()-self.start,3),'kind':kind,**values})
  async def accept(self,reader,writer):
   if self.connected:writer.close();return
-  self.connected=True;self.event('serial-connected');self.ready.set();line=bytearray();up_reader=up_writer=None;task=None
+  self.connected=True;self.event('serial-connected');self.ready.set();line=bytearray();up_reader=up_writer=None;task=None;guard_task=None
+  async def forward(data):
+   forward=bytearray()
+   for value in data:
+    if self.soft and value in (17,19):
+     self.pause.set() if value==17 else self.pause.clear();self.event('serial-flow',value=value)
+    else:forward.append(value)
+   if forward and up_writer is not None:
+    packet=bytes(forward) if self.raw else self.codec.encode(bytes(forward))
+    if self.packet_delay_ms:self.event('buffered-serial-write',wire_offset=len(self.wire_out),wire_bytes=len(packet),serial_bytes=len(forward))
+    self.wire_out.extend(packet);up_writer.write(packet);await up_writer.drain()
+  async def expire_guard():
+   while True:
+    await asyncio.sleep(.01)
+    if up_writer is not None:await forward(self.hangup_guard.expire(time.monotonic()))
+  if self.hangup_guard:guard_task=asyncio.create_task(expire_guard())
   try:
    async for data in serial_packets(reader,self.packet_delay_ms):
     self.keyboard.extend(data)
@@ -108,23 +155,24 @@ class Modem:
         up_reader,up_writer=await asyncio.open_connection(self.host,self.port)
         writer.write(f'\r\nCONNECT {self.baud}\r\n'.encode('ascii'));await writer.drain();self.event('bbs-connected')
         task=asyncio.create_task(self.downstream(up_reader,up_writer,writer))
+        if self.hangup_guard:self.hangup_guard.last=time.monotonic();self.hangup_guard.pending.clear()
        elif command in (b'AT',b'ATZ',b'ATE1',b'ATE0'):writer.write(b'\r\nOK\r\n')
        else:writer.write(b'\r\nERROR\r\n')
       else:line.append(value)
      await writer.drain()
     else:
-     forward=bytearray()
-     for value in data:
-      if self.soft and value in (17,19):
-       self.pause.set() if value==17 else self.pause.clear();self.event('serial-flow',value=value)
-      else:forward.append(value)
-     if forward:
-      packet=bytes(forward) if self.raw else self.codec.encode(bytes(forward))
-      if self.packet_delay_ms:self.event('buffered-serial-write',wire_offset=len(self.wire_out),wire_bytes=len(packet),serial_bytes=len(forward))
-      self.wire_out.extend(packet);up_writer.write(packet);await up_writer.drain()
+     matched=False
+     if self.hangup_guard:data,matched=self.hangup_guard.feed(data,time.monotonic())
+     await forward(data)
+     if matched:
+      self.event('guarded-hangup',guard_seconds=self.hangup_guard.guard)
+      if task:task.cancel();await asyncio.gather(task,return_exceptions=True);task=None
+      up_writer.close();up_writer=None
+      writer.write(b'\r\nOK\r\n');await writer.drain()
    self.event('serial-eof')
   except (OSError,ConnectionError,asyncio.IncompleteReadError) as error:self.event('error',message=str(error))
   finally:
+   if guard_task:guard_task.cancel();await asyncio.gather(guard_task,return_exceptions=True)
    if task:task.cancel();await asyncio.gather(task,return_exceptions=True)
    if up_writer:up_writer.close()
    writer.close();self.done.set();self.save()
@@ -142,4 +190,4 @@ class Modem:
  def save(self):
   for name,data in [('bbs-wire.bin',self.wire_in),('bbs-sent.bin',self.wire_out),('display.bin',self.display),('serial-received.bin',self.keyboard),('serial-sent.bin',self.serial_out)]:
    (self.output/name).write_bytes(data)
-  (self.output/'modem.json').write_text(json.dumps({'events':self.events,'telnet':self.codec.events,'flow_mode':'software' if self.soft else 'none','raw':self.raw,'baud':self.baud,'packet_delay_ms':self.packet_delay_ms,'packet_limit_bytes':256 if self.packet_delay_ms else None,'limitations':['Test modem model, not physical Wi-Fi modem firmware.','Telnet option replies handled by modem; all ANSI replies come from actual DOS executable.','ATD connects only configured loopback test BBS.','Optional buffering groups serial bytes without parsing them; TCP receive boundaries remain uncontrolled.']},indent=2)+'\n')
+  (self.output/'modem.json').write_text(json.dumps({'events':self.events,'telnet':self.codec.events,'flow_mode':'software' if self.soft else 'none','raw':self.raw,'baud':self.baud,'guarded_hangup_seconds':self.hangup_guard.guard if self.hangup_guard else None,'packet_delay_ms':self.packet_delay_ms,'packet_limit_bytes':256 if self.packet_delay_ms else None,'limitations':['Test modem model, not physical Wi-Fi modem firmware.','Telnet belongs to the explicit raw upstream when selected; all ANSI replies come from actual DOS.','ATD connects only configured loopback test BBS.','Optional guarded +++/ATH model matches the declared fixture guard; it is not a complete Hayes interpreter.','Optional buffering groups serial bytes without parsing them; TCP receive boundaries remain uncontrolled.']},indent=2)+'\n')

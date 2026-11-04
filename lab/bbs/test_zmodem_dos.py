@@ -66,7 +66,9 @@ async def run(a):
  sampler=SAMPLER;base=(0x3f8,0x2f8,0x3e8,0x2e8)[a.com-1]
  for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(base+off))
  (output/'sampler.asm').write_text(sampler);subprocess.run(['nasm','-fbin',str(output/'sampler.asm'),'-o',str(output/'SNAP.COM')],check=True)
- modem=ObservedModem('127.0.0.1',a.port,output,soft=False,baud=a.baud);server=await asyncio.start_server(modem.accept,'127.0.0.1',0);port=server.sockets[0].getsockname()[1]
+ upstream=getattr(a,'upstream_port',None)
+ guard=getattr(a,'hangup_guard_ms',None)
+ modem=ObservedModem('127.0.0.1',upstream or a.port,output,soft=False,baud=a.baud,raw=bool(upstream),guarded_hangup_seconds=guard/1000 if guard else None);server=await asyncio.start_server(modem.accept,'127.0.0.1',0);port=server.sockets[0].getsockname()[1]
  prefix='p1000 ' if automatic else 'p1000 a t d enter '
  if a.directory_browser:
   assert a.directory_fixture and a.entry<=10;prefix='p500 '+('down p100 '*(a.entry-1))+'enter p1000 '
@@ -206,6 +208,8 @@ exit
  confirmed=bool(audit and audit.get('controls') and audit.get('finish'))
  result=dict(passed=all(checks.values()),standard_completion=confirmed,name=a.name,label=a.label,mode=a.mode,binary_sha256=a.sha256,payload_sha256=payload_hash,checks=checks,errors=errors,seconds=round(time.monotonic()-start,3),keys=keys,command=command,serial=dict(com=a.com,baud=a.baud,flow=a.flow),scope='Actual local BBS ZMODEM via unchanged observed Hayes/Telnet bridge and production DOS F2/AltR/AltS/UART/files. Independent passive header/data CRC, verified offsets, ZEOF and ZFIN/OO, opposite headers and post-transfer menu input/response. Synthetic media, no injected protocol replies or physical modem claim.')
  result['server_endpoint']={'address':'127.0.0.1','port':a.port}
+ result['raw_upstream']=bool(upstream)
+ result['serial_upstream_port']=upstream
  result['cpu']=a.cpu
  if a.irq is not None:result['serial']['irq']=a.irq
  result['experimental_server_instance']=str(a.server_instance) if a.server_instance else None
@@ -219,6 +223,8 @@ def main():
  p.add_argument('--label',required=True);p.add_argument('--sha256',required=True)
  p.add_argument('--binary',type=Path,help='Explicit source-built TERMINAL.EXE; manifest/source closure checked before use')
  p.add_argument('--irq',type=int,choices=[3,4,5,7])
+ p.add_argument('--upstream-port',type=int,help='Explicit owned loopback serial proxy; the BBS port still selects server/audit identity')
+ p.add_argument('--hangup-guard-ms',type=int,choices=[500],help='Explicit modeled guard for the configured synthetic +++/ATH hangup')
  p.add_argument('--cpu',choices=['8086','286','386','486'],default='386')
  p.add_argument('--mouse-scales',type=int,nargs=2)
  p.add_argument('--mode',choices=['upload','download'],required=True)
@@ -237,6 +243,7 @@ def main():
  if a.binary:
   from product_inputs import select_product
   BINARY,_=select_product(a.binary,'TERMINAL.EXE')
+ if a.upstream_port is not None:assert 1024<=a.upstream_port<=65535,'Explicit unprivileged local serial proxy port required'
  assert bytes.fromhex(a.start_input_hex) and bytes.fromhex(a.post_input_hex)
  a.experimental_server_log=None
  if a.server_instance:

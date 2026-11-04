@@ -1,0 +1,254 @@
+{
+  "passed": true,
+  "terminal_sha256": "501629c093d731be8f3324f185e128af76e00c2942e5ad3463c1ce7da54edb6e",
+  "application_source_commit": "61b78052b8c8c72dfa800230bb3ae460d6a5c76e",
+  "product_unchanged": true,
+  "original_inputs": [],
+  "sessions": [
+    {
+      "mode": "upload",
+      "terminal_sha256": "501629c093d731be8f3324f185e128af76e00c2942e5ad3463c1ce7da54edb6e",
+      "checks": {
+        "harness": true,
+        "source_unchanged": true,
+        "server_inputs_unchanged": true,
+        "proxy_source_unchanged": true,
+        "no_post_saved": true,
+        "fixture_unchanged": true,
+        "raw_upstream": true,
+        "modeled_guarded_hangup": true,
+        "same_proxy_input": true,
+        "same_proxy_output": true
+      },
+      "protocol_checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_immutable_P408B5C.BIN": true,
+        "server_exact_length_P408B5C.BIN": true,
+        "server_metadata_audit": true,
+        "unique_server_session_and_ordered_menus": true,
+        "no_leftover_staging": true
+      },
+      "fixture": {
+        "name": "P408B5C.BIN",
+        "bytes": 1056,
+        "sha256": "e1dcd08296372841efb607b8236fab4c344e8ae197c8c0e8a1d5fee72bfc3d0e"
+      },
+      "server_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+      "server_inputs": {
+        "build/bbs-lab/enigma/source/main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+        "build/bbs-lab/enigma/source/core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+        "build/bbs-lab/enigma/source/core/file_transfer.js": "a6e1e8b02947b9c2ac6eb7adff695f2633f445d749aedb874ffb5242f1aaba8e",
+        "build/bbs-lab/enigma/source/core/file_entry.js": "618516d4c7db0fa6b26edf241ac0313e46eb8839f18a472af136ff56e11e0aa0",
+        "build/bbs-lab/enigma/source/core/file_transfer_protocol_select.js": "5dcfa68335915d8260950ed414f363db8aeb4fff65a3f017177e17931fc7cacd",
+        "build/bbs-lab/enigma/source/core/upload.js": "3b9289a322b482950a5c4b5680e62bf646dc2f863e220f583babcf29bd996ffe",
+        "build/bbs-lab/enigma/source/core/file_base_area.js": "e04901527df27e4e73006d28cfc66666383b773dbb5e978411e5e0bd01656a26",
+        "build/bbs-lab/enigma/source/core/multi_line_edit_text_view.js": "687eb7ae3355cea0e91a30f80134a87b9060bc26f11f1661c7c4f7cfb0d47ce7",
+        "build/bbs-lab/enigma/source/core/view_controller.js": "1e6a626ea891d0ded98e56a19f226411a65a83207cb64a0c26f58e2cc7e9ac85",
+        "build/bbs-lab/enigma/source/config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+        "build/bbs-lab/enigma/source/config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+        "build/bbs-lab/enigma/source/package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+        "build/bbs-lab/enigma/helpers/sexyz": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd"
+      },
+      "product_input_count": 541,
+      "product_input_map_sha256": "33bb04825524506192f5ab8978d9cd160d18517ad1163d11ee1babbaa4cdfe3c",
+      "proxy": {
+        "bbsPort": 23233,
+        "inputSequenceTimeoutMs": 250,
+        "inputByteDelayMs": 0,
+        "installed_sources": {
+          "config.js": "850939fd06f79b0115981c36f438d3c15332a7b9d37beaed36943befdc3dd43d",
+          "src/telnet/TelnetProxy.js": "8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628",
+          "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+          "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+          "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+        },
+        "terminalRows": 24,
+        "screenReference": false,
+        "scope": "Actual SynthModem proxy with loopback-only configuration overrides; no DSP/audio or hardware."
+      }
+    },
+    {
+      "mode": "download",
+      "terminal_sha256": "501629c093d731be8f3324f185e128af76e00c2942e5ad3463c1ce7da54edb6e",
+      "checks": {
+        "harness": true,
+        "source_unchanged": true,
+        "server_inputs_unchanged": true,
+        "proxy_source_unchanged": true,
+        "no_post_saved": true,
+        "fixture_unchanged": true,
+        "raw_upstream": true,
+        "modeled_guarded_hangup": true,
+        "same_proxy_input": true,
+        "same_proxy_output": true
+      },
+      "protocol_checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_exact_length_PCXTEST.BIN": true,
+        "only_expected_received_files": true,
+        "unique_server_session_and_ordered_menus": true,
+        "no_leftover_staging": true
+      },
+      "fixture": {
+        "name": "PCXTEST.BIN",
+        "bytes": 11521,
+        "sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6"
+      },
+      "server_commit": "6c25317168b762f7d9088a54d3f8295438827a0e",
+      "server_inputs": {
+        "build/bbs-lab/enigma/source/main.js": "1b2f4c9747380dbd77ddfbc918d24c4ce225c7dd51331e75d8c2102d852bfda9",
+        "build/bbs-lab/enigma/source/core/client.js": "d66207f46af13ae4acb0ac430b1d0f2572a03722c79f4bcb7125dcd01e98e788",
+        "build/bbs-lab/enigma/source/core/file_transfer.js": "a6e1e8b02947b9c2ac6eb7adff695f2633f445d749aedb874ffb5242f1aaba8e",
+        "build/bbs-lab/enigma/source/core/file_entry.js": "618516d4c7db0fa6b26edf241ac0313e46eb8839f18a472af136ff56e11e0aa0",
+        "build/bbs-lab/enigma/source/core/file_transfer_protocol_select.js": "5dcfa68335915d8260950ed414f363db8aeb4fff65a3f017177e17931fc7cacd",
+        "build/bbs-lab/enigma/source/core/upload.js": "3b9289a322b482950a5c4b5680e62bf646dc2f863e220f583babcf29bd996ffe",
+        "build/bbs-lab/enigma/source/core/file_base_area.js": "e04901527df27e4e73006d28cfc66666383b773dbb5e978411e5e0bd01656a26",
+        "build/bbs-lab/enigma/source/core/multi_line_edit_text_view.js": "687eb7ae3355cea0e91a30f80134a87b9060bc26f11f1661c7c4f7cfb0d47ce7",
+        "build/bbs-lab/enigma/source/core/view_controller.js": "1e6a626ea891d0ded98e56a19f226411a65a83207cb64a0c26f58e2cc7e9ac85",
+        "build/bbs-lab/enigma/source/config/menus/loc-file_base.hjson": "9d9a02672bcd18b122827e6112ecfd99a4e7ff2916052847de26a87c6808f6c2",
+        "build/bbs-lab/enigma/source/config/config.hjson": "daae39792955eaf7b99c45fc936d54b153f62ea0d3f77672f45a8ace756a7dbc",
+        "build/bbs-lab/enigma/source/package-lock.json": "8fcaecda3a4b1756ad295be95486cbdd5b9afea005949ac3da8822224c822d56",
+        "build/bbs-lab/enigma/helpers/sexyz": "d1aeb1347fee332be75dd638dd4cb10a1bf7c418d96d0ebb79ca90470b0ed4bd"
+      },
+      "product_input_count": 541,
+      "product_input_map_sha256": "33bb04825524506192f5ab8978d9cd160d18517ad1163d11ee1babbaa4cdfe3c",
+      "proxy": {
+        "bbsPort": 23233,
+        "inputSequenceTimeoutMs": 250,
+        "inputByteDelayMs": 0,
+        "installed_sources": {
+          "config.js": "850939fd06f79b0115981c36f438d3c15332a7b9d37beaed36943befdc3dd43d",
+          "src/telnet/TelnetProxy.js": "8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628",
+          "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+          "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+          "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5"
+        },
+        "terminalRows": 24,
+        "screenReference": false,
+        "scope": "Actual SynthModem proxy with loopback-only configuration overrides; no DSP/audio or hardware."
+      }
+    }
+  ],
+  "evidence": {
+    "build/bbs-lab/current-proxy-upload-focus-20261103-transfer/result.json": {
+      "sha256": "b79e63e46ec07a352bcacec0b21053bfe2cc419b63b488e0c915207571b7205b",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/current-proxy-upload-focus-20261103/result.json": {
+      "sha256": "8fc72283c817054ef480e6bc1f04bbb7987297e87754486198b093dc7e2df12f",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/current-proxy-upload-focus-20261103/server-session-audit.json": {
+      "sha256": "8c172ec6c92a6c255e7919841666c28c6e9f4208a649ba820445c7ec0f3ca053",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/current-proxy-upload-focus-20261103/protocol.json": {
+      "sha256": "e72ae1ff82bf64acd9462b4fc8087d1d140ffa6966278d730a15b072f61d8603",
+      "scope": "CRC/header/data/opposite-control and ZFIN/OO audit; gated by session result"
+    },
+    "build/bbs-lab/results/enigma/current-proxy-upload-focus-20261103/server-audit.stdout": {
+      "sha256": "b0aab8f519a6266b9941df1453de29b1648d67e338adec11d7a88458afc0f4c5",
+      "passed": true
+    },
+    "build/bbs-lab/current-proxy-download-focus-20261103-transfer/result.json": {
+      "sha256": "346fec7c0cff5f0a90671de9ee327e96dddaa140fa6fc8a481e098fc8cce2802",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/current-proxy-download-focus-20261103/result.json": {
+      "sha256": "33d1256c03f35383038d5e1fa47dfb4d441a97e4c7c1eef93b7570a24f2354f3",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/current-proxy-download-focus-20261103/server-session-audit.json": {
+      "sha256": "a6122d1f9e8685f1d02673f4813148e963a555afc9f37dddbfe6dce3368ff979",
+      "passed": true
+    },
+    "build/bbs-lab/results/enigma/current-proxy-download-focus-20261103/protocol.json": {
+      "sha256": "c243dcee1e7729549f512d5554bf8ed090a2c4fad74260c88ee7cb4c9cffc9c7",
+      "scope": "CRC/header/data/opposite-control and ZFIN/OO audit; gated by session result"
+    },
+    "build/current-proxy-observer-final-20261103/result.json": {
+      "sha256": "b81b24641741773cc67ee779e2584d4f80f67585724de1e64d04095b128d3641",
+      "passed": true
+    },
+    "build/current-proxy-guard-20261103/result.json": {
+      "sha256": "3c37489c1ef12512edbd5150c495cdbba7f0ea5ca538e783c87a833d6a4eba7f",
+      "passed": true
+    },
+    "build/current-proxy-model-regression-20261103/result.json": {
+      "sha256": "6337c23d5dd58474b0e03fb718979f8f705caa1d8a694c4828ed0543f7f08632",
+      "passed": true
+    },
+    "build/current-proxy-packet-regression-20261103/result.json": {
+      "sha256": "299824a2da10e2d65ef6d05f8b83456554764f265fc14bc267334124bba2c4f2",
+      "passed": true
+    },
+    "build/bbs-lab/results/synchronet/current-proxy-transfer-sync-20261103/proxy-integration.json": {
+      "sha256": "22f42c606e2db3e923f28645ce2c385794cd4136ed8c198665c902701e7a42e4",
+      "passed": true
+    },
+    "build/bbs-lab/results/synchronet/current-proxy-transfer-sync-20261103/screen-reference-audit.json": {
+      "sha256": "c13be8e166fcd0d2e2fcca9967b8ced82ce58de84850ceec3b7f2f3a42a2f405",
+      "passed": true
+    }
+  },
+  "retained_failed_evidence": {
+    "build/bbs-lab/current-proxy-upload-20261103-transfer/result.json": {
+      "sha256": "ed532975c52080c0cefed2b7372077c6f504bebe6328fdf31e64eee24d87b05a",
+      "passed": false,
+      "failed_checks": [
+        "same_proxy_output"
+      ],
+      "protocol_errors": []
+    },
+    "build/bbs-lab/current-proxy-upload-final-20261103-transfer/result.json": {
+      "sha256": "beea2576946f13e5bc73f0100eea4c35418a289f7c8d4db91bba7892a8253b0a",
+      "passed": false,
+      "failed_checks": [
+        "same_proxy_output"
+      ],
+      "protocol_errors": []
+    },
+    "build/bbs-lab/current-proxy-upload-guarded-20261103-transfer/result.json": {
+      "sha256": "ed88ca4e9b8f3b791f05365ee9a583101827d652432fc9f9f2f7f5d4b4d6616d",
+      "passed": false,
+      "failed_checks": [
+        "harness"
+      ],
+      "protocol_errors": [
+        "('Missing ordered postbatch response', 'PA7E14F.BIN')"
+      ]
+    }
+  },
+  "regressions": {
+    "observer_encoded_partitions": 269,
+    "observer_raw_partitions": 263,
+    "guard_cases": 294,
+    "default_modem_groups": 7,
+    "default_packetization_groups": 6,
+    "synchronet_screen_cells": 1920,
+    "synchronet_different_cells": 0
+  },
+  "installed": false,
+  "installed_selection_sha256": "93a9db94c1164e7ba004a637b02484e548791713385c3f5a24e8c48c8a364b2c",
+  "scope": "Actual DOS8086 COM3/3E8/IRQ5 19200 HARD through installed SynthModem TelnetProxy to owned ENiGMA real SE/X/Y/Z ZMODEM helper. Synthetic Hayes shim with declared 500ms guarded +++/ATH; no SIP/DSP/analog, physical IRQ/carrier/flow acceptance, public remote BBS or full original-feature parity. Live runtime/BBS and physical deployment unchanged."
+}

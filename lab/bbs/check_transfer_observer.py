@@ -28,8 +28,23 @@ def main():
             end+=event['size']
         assert end==len(payload)
         for offset in range(len(payload)):assert timestamp(modem.trace,'bbs',offset)>=0
+    # A real serial-side proxy has already decoded Telnet. Literal FF, FF-FF
+    # and FF-FB bytes are binary payload here and must never be decoded again.
+    raw_payload=payload+b'\xff\xff\xff\xfb\x01'
+    raw_vectors=[[raw_payload[:i],raw_payload[i:]]for i in range(len(raw_payload)+1)]
+    raw_vectors.append([bytes([byte])for byte in raw_payload])
+    for chunks in raw_vectors:
+        modem=ObservedModem('127.0.0.1',1,out/'unused',raw=True)
+        for chunk in chunks:modem.observe_bbs(chunk)
+        assert modem.bbs_offset==len(raw_payload) and not modem.audit_codec.events
+        end=0
+        for event in modem.trace:
+            assert event['offset']==end and event['size']>0
+            end+=event['size']
+        assert end==len(raw_payload)
+        for offset in range(len(raw_payload)):assert timestamp(modem.trace,'bbs',offset)>=0
     def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
-    result=dict(passed=True,cases=len(vectors),all_byte_offsets=len(payload),sources={str(path.relative_to(ROOT)):sha(path)
+    result=dict(passed=True,cases=len(vectors),raw_cases=len(raw_vectors),raw_byte_offsets=len(raw_payload),all_byte_offsets=len(payload),sources={str(path.relative_to(ROOT)):sha(path)
                 for path in [Path(__file__).resolve(),ROOT/'lab/bbs/test_transfer_dos.py',ROOT/'lab/bbs/modem.py']},scope=__doc__)
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     print('PASS decoded observer:',len(vectors),'partitions and all256 byte offsets')

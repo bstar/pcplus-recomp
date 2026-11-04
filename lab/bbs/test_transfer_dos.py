@@ -30,7 +30,9 @@ class ObservedModem(Modem):
  def observe_dos(self,data):
   self.trace.append(dict(seconds=time.monotonic()-self.start,direction='dos',offset=self.dos_offset,size=len(data)));self.dos_offset+=len(data)
  def observe_bbs(self,data):
-  decoded,_=self.audit_codec.feed(data)
+  # An explicit serial-side proxy already owns Telnet/IAC decoding. Observe
+  # those application bytes directly, including literal FF in binary files.
+  decoded=data if self.raw else self.audit_codec.feed(data)[0]
   # This trace addresses decoded application bytes. Negotiation-only chunks
   # remain in the raw modem capture but own no byte range in this timeline.
   if decoded:self.trace.append(dict(seconds=time.monotonic()-self.start,direction='bbs',offset=self.bbs_offset,size=len(decoded)))
