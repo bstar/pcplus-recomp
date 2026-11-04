@@ -103,6 +103,14 @@
     "build/screen-pause-package-setup-20261103/result.json": {
       "passed": true,
       "sha256": "59bfea617e0b3075218c1fe29f586b1b2b7e686526c4410cc09e451766f5e2ce"
+    },
+    "build/screen-pause-committed-start-20261103/result.json": {
+      "passed": true,
+      "sha256": "ad6948dcdd472cda6ec1a66df70a5c39e29248ad0458a51a7de65897a7333673"
+    },
+    "build/screen-pause-committed-setup-20261103/result.json": {
+      "passed": true,
+      "sha256": "600db6448e12e7130dab70b86efa1c1dcf79112b910de9290a7a624a7f1e648f"
     }
   },
   "verification_sources": {
@@ -113,5 +121,23 @@
     "standalone/pause_watch.asm": "33a327cb7d5d9cdbff62317a7af8d474d31fb55668e58d35ae19843bb97c917d"
   },
   "installed": false,
-  "scope": "Optional guarded Alt-N Screen Pause integration, original native body proof and maintained bounded UART/UI owner. Actual DOS8086 synthetic peers and paced owned BBS labs; not SIP/DSP/analog/physical acceptance or full original-feature parity. Physical BUSY diagnosis remains unresolved; no live machine or BBS/bridge changes."
+  "scope": "Optional guarded Alt-N Screen Pause integration, original native body proof and maintained bounded UART/UI owner. Actual DOS8086 synthetic peers and paced owned BBS labs; not SIP/DSP/analog/physical acceptance or full original-feature parity. Physical BUSY diagnosis remains unresolved; no live machine or BBS/bridge changes.",
+  "committed_package": {
+    "source_base_commit": "61b78052b8c8c72dfa800230bb3ae460d6a5c76e",
+    "manifest_sha256": "e488c83116ab0fae0e45e5e089ee727bb249ada91ba881fbdf95936aa37cd34a",
+    "archive_sha256": "9204614ba234d1bfdfdcc569af8b2312661b15837484b35b2c3b876760c77fa7",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+      "README.TXT": "3212b36bbf4488481462e523d5b460d18599c28ccb65a8bf6366c5cc61bd4b2c",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "501629c093d731be8f3324f185e128af76e00c2942e5ad3463c1ce7da54edb6e",
+      "VERSION.TXT": "95878b49f3ce3a6d7130df84458a1f515aaafdd734f91f2293e23d672ac1a98e",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  }
 }
