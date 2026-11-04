@@ -1,0 +1,47 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_only_build": true,
+  "units": [
+    {
+      "name": "init",
+      "entry": "0x3a25",
+      "bytes": 48,
+      "original_file_offset": "0x4c25",
+      "source": "reconstruction/local_controls/init_modem.asm",
+      "sha256": "1a348a267f2ed7ae39340f19cc86f395f2539b2ab2244b6fc61311ae064c9e3b"
+    },
+    {
+      "name": "send",
+      "entry": "0x48cc",
+      "bytes": 104,
+      "original_file_offset": "0x5acc",
+      "source": "reconstruction/modem_send/send.asm",
+      "sha256": "e007929f4330589b441dd73a6e2c1356e470a269d9a1f1c7dd2650620deb1fbb"
+    },
+    {
+      "name": "expand",
+      "entry": "0x4934",
+      "bytes": 87,
+      "original_file_offset": "0x5b34",
+      "source": "reconstruction/modem_commands/expand.asm",
+      "sha256": "008b9051520b45049c2a7c95767686eb48fa3951da532a8abc18de9ead0f9b43"
+    }
+  ],
+  "dispatch": {
+    "BIOS_key": "2400",
+    "scan_table_DS": "44E0",
+    "scan": "24",
+    "handler_CS": "3A25"
+  },
+  "state": {
+    "1D1A": "local echo WORD, temporarily zero and exactly restored",
+    "1D68": "character pacing WORD, signed minimum30 while sending and exactly restored",
+    "1B9C": "configured initialization string; unchanged"
+  },
+  "evidence": {
+    "wrapper_bytes": "ev_63c75f97423f6a94b44eaf6a4e4d6239482b070fc467c03a0d5d971cd24db928",
+    "sender_assembly": "ev_09900f7c894d9ba645828379964b02da759d4881a85e2c4bd83c519ef5f31c27"
+  },
+  "boundary": "First RET3A54, next prologue3A55 and caller/dispatch; no auto-created Ghidra3A25 function.",
+  "scope": "Exact48-byte wrapper plus previously recovered104-byte sender/87-byte expansion. UART and timing boundaries modeled; no live Alt-J, active-call or physical acceptance, no application/package/deployment change."
+}

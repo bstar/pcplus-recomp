@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "native_wrapper_bytes": 48,
+  "composed_native_bytes": 239,
+  "evidence": {
+    "build/init-modem-native-source-accepted-20261103/result.json": {
+      "passed": true,
+      "sha256": "66d95c4a6a83f9ded9570c59d06a4d8cd9f3ad00c42c4a8d0da4e42c4600df5f",
+      "original_compared": false,
+      "cases": {
+        "all_pacing_words": 65536,
+        "composed_send_expand": 1344
+      }
+    },
+    "build/init-modem-native-original-20261103/result.json": {
+      "passed": true,
+      "sha256": "a5107a9404284b86430c4a72d52b407d517937a109cd2eb2f15f16bb6d8e9fac",
+      "original_compared": true,
+      "cases": {
+        "all_pacing_words": 65536,
+        "composed_send_expand": 1344
+      }
+    }
+  },
+  "sources": {
+    "standalone/check_init_modem_native.py": "46819ea8ef71ae5c4ea2aa1e2743c1a58d0b05bb6a418bf173f8c4658d2a010e",
+    "reconstruction/local_controls/init_modem.asm": "8acc3962f68d8459de41ff813015e290af80ded53ff174499eb85c521a7bd282",
+    "reconstruction/local_controls/init-modem-provenance.json": "fa38266081cfe63b79993e1aa717e50c56b45d89df8026ff2db3db9ed398dbc1",
+    "reconstruction/modem_send/send.asm": "43d85bd97ffb134b9a401cc572a52ba653bebf69910c4ef9ecabfeb5e78f6f42",
+    "reconstruction/modem_commands/expand.asm": "834312f07d08f562a2982a0117c78eb377406d39eba0e31024b40d2bcc83732f",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "src/config/prm.py": "01619cf74c1c9b0d3e5b29cd200b27192d81dca0e46ebe94c7f92e92072ac248"
+  },
+  "application_changed": false,
+  "live_command_enabled": false,
+  "installed": false,
+  "scope": "Exact48-byte wrapper plus previously recovered104-byte sender/87-byte expansion. UART and timing boundaries modeled; no live Alt-J, active-call or physical acceptance, no application/package/deployment change."
+}

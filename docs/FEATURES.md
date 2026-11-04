@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Original Init Modem recovery](INIT_MODEM_RECOVERY.md) adds the exact48-byte
+Alt-J handler. All65536 pacing words and1344 compositions with the original
+sender/expander pass, plus genuine-original comparison. It sends initialization
+without dialing/ACK handling, suppresses local echo and restores saved settings.
+Live serviced ownership remains required; Alt-J is still unavailable and no
+application/package or installed files change at this native boundary.
+
 The [Elapsed Time package](ELAPSED_VIEW_PACKAGE.md) now reproduces all five
 programs and ten package files from2044 public sources with ancestor Git
 unavailable. Four DOS START/SETUP/splash/BIOS-omitted workflows pass on the
