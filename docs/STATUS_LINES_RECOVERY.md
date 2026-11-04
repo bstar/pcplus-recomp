@@ -83,7 +83,8 @@ follows from these results.
 These are geometry operations, not cosmetic visibility flags. Establish the
 maintained runtime display/BIOS row service and bounded safe selector policy
 using the recovered native chain, then reconcile
-canonical suppression, CSI bounds, scroll margins, cursor, RIS/reset baselines,
+canonical suppression, CSI bounds, scroll margins, cursor, RIS/reset baselines
+(the optional [captured-row helper](RESET_ROW_DEFAULTS.md) is now separately checked),
 history, frames and child screen loans. The maintained status renderer currently
 copies canonical suppression into a native snapshot; changing that snapshot
 alone would be overwritten on refresh.

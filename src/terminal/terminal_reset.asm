@@ -310,6 +310,9 @@ csi_reset_terminal:
 SEGMENT _DATA public align=16 class=DATA use16
 global reset_ready
 reset_ready: dw 0
+; The optional row-default owner stages checked changes against this table.
+; It never captures peer cursor/mode state as a new RIS profile.
+global reset_word_addresses,reset_word_addresses_end,reset_words
 reset_word_addresses:
  dw csi_terminal_id
  dw csi_previous_terminal_id
@@ -410,6 +413,7 @@ reset_word_addresses:
  dw terminal_newline_mode_9020
  dw terminal_control_mode_9026
  dw terminal_control_mode_1fb0
+reset_word_addresses_end:
 RESET_WORD_COUNT equ ($-reset_word_addresses)/2
 reset_byte_addresses:
  dw attributes_reverse_active

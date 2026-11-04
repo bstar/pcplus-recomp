@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "component_terminal_sha256": "30d680b1c1572e7c2aa9b71062a17e6762c4b34c96e6fc6279f4575e3a2b123e",
+  "component_manifest_sha256": "389917a931fde084fdff1bfca48a0176051ac9672052846c1253da66ded89e08",
+  "disabled_terminal_sha256": "7df99c1f72f8dc3f076cfa6a3c5f6d1f1f5f03872fe98d479ce2348b9227f1ce",
+  "disabled_manifest_sha256": "cd0d8f8770cb1673a5861944436c095b170c9e4d13cdd542982c15ba0c654f9b",
+  "disabled_binary_identical_to_accepted_package": true,
+  "status_line_commands_enabled": false,
+  "installed": false,
+  "packaged": false,
+  "evidence": {
+    "build/reset-rows-live-accepted-20261104/result.json": {
+      "passed": true,
+      "sha256": "9915e0bb57196f0c11e581271eec60295739576c87ba047792bed271d63cb8df",
+      "terminal_sha256": "30d680b1c1572e7c2aa9b71062a17e6762c4b34c96e6fc6279f4575e3a2b123e",
+      "cases": [
+        {
+          "case": "captured-only-rows-margins-cursors-offsets-and-capacity",
+          "inputs": 216,
+          "passed": true
+        },
+        {
+          "case": "invalid-request-baseline-ABI-and-late-failure-atomicity",
+          "inputs": 29,
+          "passed": true
+        },
+        {
+          "case": "real-RIS-uses-row-defaults-without-capturing-peer-state",
+          "inputs": 3,
+          "passed": true
+        }
+      ]
+    },
+    "build/reset-rows-component-source-proof-20261104/result.json": {
+      "passed": true,
+      "sha256": "d82bed8be5c42cf30386708a8bd4844ec4e6656c10163ae205dc72c8ff3c0554",
+      "terminal_sha256": "30d680b1c1572e7c2aa9b71062a17e6762c4b34c96e6fc6279f4575e3a2b123e",
+      "source_files": 541
+    },
+    "build/reset-rows-disabled-source-proof-20261104/result.json": {
+      "passed": true,
+      "sha256": "09bc8926a27a19805c662343c6cde2aab0cb97510f05b0056684edc2910580f9",
+      "terminal_sha256": "7df99c1f72f8dc3f076cfa6a3c5f6d1f1f5f03872fe98d479ce2348b9227f1ce",
+      "source_files": 540
+    }
+  },
+  "sources": {
+    "src/terminal/reset_rows.asm": "806035130ba1eb8e4497e6ef57042d2e0970c52d15b63d14787f5efafb00c8dd",
+    "src/terminal/terminal_reset.asm": "86ec1e96a93876647ce5f9f49b039e29c5168d3edab71867a9ac7f5971e59add",
+    "standalone/build_terminal.py": "7a782a8c6746ee87f3f7f09134c76e561d188ac412e2ae3d7a49a73979fc2a0e",
+    "standalone/prove_phone_log_startup_terminal.py": "2da9108b5d9655a69c9cf979293549433360035f2015412cf5d97813f4736f5b",
+    "standalone/check_reset_rows_live.py": "7effa27bb28f975f98e04dbbcaf283311970384766a72bdc274a0b2bc21e163e",
+    "standalone/prove_terminal_manifest.py": "65f703a2584fc73fe4312745e14859ca1812292bb8b3db62fa2c0d2098fb432a"
+  },
+  "component_declared_sources": 541,
+  "disabled_declared_sources": 540,
+  "memory": {
+    "component_CONFIG_bytes": 56698,
+    "added_CONFIG_bytes": 752,
+    "resident_bytes": 65334,
+    "resident_spare_bytes": 202,
+    "additional_persistent_bytes": 0
+  },
+  "scope": "Optional staged captured-RIS row-default component. Actual linked far API, baseline lookup/write staging and RIS consumption;216 compositions,29 refusal/zero-write cases and3 actual linked RIS restores. Write whitelist, DS=SS, stack/register/IF/DF checks. Exact empty Git-free source rebuilds enabled and disabled; disabled matches accepted7df99c1f. No live geometry transaction/key/menu activation, physical BIOS mode/frame/history/bridge-size proof, actual DOS/BBS/package/physical acceptance or deployment of the component."
+}
