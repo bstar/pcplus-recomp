@@ -37,6 +37,7 @@ def stage(output,products,source_base_commit=None):
     (payload/'README.TXT').write_bytes(dos_text(
         'PROCOMM PLUS / LoC SPECIAL EDITION - CONNECTION TEST\n\n'
         'Keep your existing PCPLUS.PRM, PCPLUS.DIR, PCPLUS.XLT and key files.\n'
+        'Preserve PCPLUS.FON call history, KEY/KBD and your custom files too.\n'
         'This package contains no private configuration or dialing directory.\n'
         'Back up an existing C:\\PCPLUSSE before replacing application files.\n'
         'Before START, place a copy of your known working PCPLUS.PRM here.\n'
@@ -54,7 +55,8 @@ def stage(output,products,source_base_commit=None):
         'Alt-L: printer. Alt-R: record. Alt-S/Alt-P: setup. Alt-X: exit.\n'
         'Use Alt-Z then PgUp/PgDn for send/receive without changing BBS bindings.\n'
         'Backtick opens the browser; Connection/Redial repeats the target.\n'
-        'Dim commands remain unavailable. This is a test candidate.\n\n'
+        + ('Alt-T: serviced elapsed-time window; any dismissal key stays local.\n' if terminal.get('experimental_elapsed_view') else '')
+        + 'Dim commands remain unavailable. This is a test candidate.\n\n'
         'Check login/input, ANSI/CP437, editor navigation and reconnect first.\n'
         'Then use owned small files to verify transfers in both directions.\n\n'
         'For source scripts, compile at the DOS prompt before starting PCPlus:\n'
@@ -71,6 +73,8 @@ def stage(output,products,source_base_commit=None):
         'experimental_local_controls':bool(terminal.get('experimental_local_controls')),
         'experimental_keyboard_bank':bool(terminal.get('experimental_keyboard_bank')),
         'experimental_screen_pause':bool(terminal.get('experimental_screen_pause')),
+        'experimental_call_timer':bool(terminal.get('experimental_call_timer')),
+        'experimental_elapsed_view':bool(terminal.get('experimental_elapsed_view')),
         'experimental_directory_resource_owner':False,'experimental_phone_log_controls':True,'experimental_status_geometry':True,
         'authored_help_sha256':help_record['sha256'],'card_written':False,'validation':'Staged only; requires separate DOS/package and hardware acceptance.'}
     (output/'manifest.json').write_text(json.dumps(record,indent=2)+'\n');return record
