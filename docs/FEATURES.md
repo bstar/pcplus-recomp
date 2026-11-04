@@ -6,7 +6,10 @@ DOS8086 workflows and exact source reproduction pass. The command owns ordinary
 outgoing payload while RX/parser/flow/carrier remain serviced, preserves settings
 and call-clock ownership, and hands partial-line debt to existing startup retry.
 Fourteen original reference entries remain unavailable. Separate BBS/package/
-physical gates and the installed selection remain unchanged.
+physical evidence is required. [BBS/package gates](MANUAL_INIT_PACKAGE.md) now
+pass for this image: zero differing Enigma/Synchronet cells, five executables/
+ten files reproduced from2050 committed sources, and four DOS package workflows.
+The installed selection and physical acceptance remain unchanged.
 
 [Original Init Modem recovery](INIT_MODEM_RECOVERY.md) adds the exact48-byte
 Alt-J handler. All65536 pacing words and1344 compositions with the original

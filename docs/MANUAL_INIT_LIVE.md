@@ -63,8 +63,8 @@ remains65008 bytes (528 spare); resident CS is65234 bytes (302 spare).
 Original native evidence and the component API remain in
 [native recovery](INIT_MODEM_RECOVERY.md) and [owner component](MANUAL_INIT_OWNER.md).
 
-Enigma/Synchronet, exact screen/cursor, source-matched package/START/SETUP and
-physical gates require their own scoped evidence. No full original-feature or
+[Enigma/Synchronet and package gates](MANUAL_INIT_PACKAGE.md) now have separate
+scoped evidence for this same image. Physical gates remain open. No full original-feature or
 analog/SIP acceptance follows from these results. The installed application,
 private PRM/DIR/KEY/KBD/XLT/FON, bridge/BBS services and card are untouched.
 Hardware-test candidate340cb4ba/ZIP04b6ce69, active selection93a9db94 and installed

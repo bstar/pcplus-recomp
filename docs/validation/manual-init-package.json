@@ -1,0 +1,89 @@
+{
+  "passed": true,
+  "source_commit": "551ab44c2bf26449a1b7bf88ac08c1b2b916e805",
+  "terminal_sha256": "8f76cc4fd7843c3ca203d6ce241e3272cac1c82d8230f8b50634c4cd5dda3ad8",
+  "archive_sha256": "ce1a32650a65f9c6da0e30d5401d7010891845c988d952cfc81501e3f70ce7e3",
+  "archive_bytes": 261510,
+  "files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "f69fecf61401056512c1303f4a5d2a8ffbfce74466cd30f9828f67425955b589",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "8f76cc4fd7843c3ca203d6ce241e3272cac1c82d8230f8b50634c4cd5dda3ad8",
+    "VERSION.TXT": "9df42832c284864b23a22b0f71422542003f7fddbc063e01f1ab850be439b9d6",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "evidence": {
+    "build/manual-init-package-source-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "069f016721e7988eaf693d97f9c6d0fc9bfb67f50638e68f916b91ae62545bbf",
+      "source_count": 2050
+    },
+    "build/manual-init-package-accepted-start-20261103/result.json": {
+      "passed": true,
+      "sha256": "b09133dbace4443fb4a77239bbc882ca38f6729af2c7af7a1c25596a151408f6"
+    },
+    "build/manual-init-package-accepted-setup-20261103/result.json": {
+      "passed": true,
+      "sha256": "46d82eeb15ce55b2ea19944bd835e19ba5a56b8fc897aabdc6b3bb7f1df888d1"
+    },
+    "build/manual-init-package-accepted-splash-20261103/result.json": {
+      "passed": true,
+      "sha256": "e00d31287125a4d872608456108a92e7edb387650437e811b08f0c8d7c94b7a2"
+    },
+    "build/manual-init-package-accepted-bios-absent-20261103/result.json": {
+      "passed": true,
+      "sha256": "a79eb29f401c621254ae182379c1260ee120cd1e8ca2270e6cc52ed2b5b91942"
+    },
+    "build/terminal-manual-init-runtime-disabled-20261103/disabled-check.json": {
+      "passed": true,
+      "sha256": "3c8bf6e1781542b9cca1a025d97a331ab6151e801490c24c71370eae7937325f"
+    },
+    "build/bbs-lab/results/enigma/manual-init-enigma-framed-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "6812c04d84c80319c100011a2a6df467c1a23592e8d5d0030f537b2d76ada1b3"
+    },
+    "build/bbs-lab/results/enigma/manual-init-enigma-framed-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "67e2e4bce780746948a57efaa31d1fbde367d0c33cebf7c6692f87e88a0cc5e0",
+      "different_cells": 0,
+      "reference_cursor": [
+        22,
+        14
+      ],
+      "delivered_bytes": 86625
+    },
+    "build/bbs-lab/results/synchronet/manual-init-sync-final-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "9b2cbc8c2a018e0d3c1ec220d33cde283286e9cfa4d0d8d1f9c40556d8543a2b"
+    },
+    "build/bbs-lab/results/synchronet/manual-init-sync-final-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "f4eb37b31c9b19a62bc0e15e61d30876cb815e247a0a7937402ea542dbb06146",
+      "different_cells": 0,
+      "reference_cursor": [
+        5,
+        8
+      ],
+      "delivered_bytes": 24033
+    },
+    "build/phone-log-carrier-terminal/manual-init-transfer-carrier-20261103/result.json": {
+      "passed": true,
+      "sha256": "4c0545eb2ca0f262bbaa7d82fee88edd71c3397587a8a386deb1f6b79c8c6bc8",
+      "cases": 4,
+      "scope": "Real emulated DCD loss and same-parent redial with checked call logging. Built-in DOSBox modem generates CONNECT/NO CARRIER and actual virtual DCD. Peer only sends ANSI/protocol bytes and closes TCP; no injected modem replies or product variables. MSR reads clear delta bits; native policy uses carrier level. Not physical carrier/SIP/analog or all child/transfer acceptance."
+    }
+  },
+  "installed": false,
+  "scope": "Exact five executable/ten file reproduction from2050 committed sources with ancestor Git unavailable; four actual DOS START/SETUP/splash/BIOS-absent COM3/IRQ5 package workflows; feature-disabled exact340cb4ba reproduction. Actual owned Enigma multiline/discard and Synchronet ASPECT/editor through installed SynthModem TelnetProxy with250ms framing/20ms byte delivery, actual call logs and independent full24row cell/cursor audits. No manual AT command injected into BBS sessions; that operation has separate synthetic-modem DOS evidence. No SIP/DSP/analog/full feature parity or physical BUSY/flow acceptance or deployment. Four actual DOS virtual-carrier transfer regressions also pass: receive negotiation/partial payload and upload unacknowledged/partial frame, including existing cleanup and redial checks.",
+  "failed_intermediate_trial": {
+    "terminal_sha256": "71a58438aacfe8bb6192bf9e9bf52f9e3769f7bb93a1f28bd335fcf3f04b4f7e",
+    "path": "build/bbs-lab/results/enigma/manual-init-enigma-20261103/proxy-integration.json",
+    "sha256": "9f240b9d80ddac4b9b6a48ba71fedd79941b3348fd4b8111adea0a937fe7e22f",
+    "passed": false,
+    "scope": "Wrong harness default: framing0/byte delay2, unlike established250/20. Editor/page/draft semantics failed and synthetic fixture message was posted. Product sources also changed during this discarded intermediate run. No accepted rendering/compatibility evidence; no live BBS changes."
+  }
+}
