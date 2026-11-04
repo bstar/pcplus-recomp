@@ -86,8 +86,10 @@ is65334 bytes with202 bytes spare; no persistent data is added. The feature set
 and540 declared product-input set are retained; three assembly inputs change.
 
 These results do not transfer the earlier Enigma/Synchronet screen evidence to
-this different binary. New BBS/package/physical acceptance remains open, as do
-the canonical geometry transaction, reset defaults, history/frames, child loans
-and Linux bridge size policy. Status/line controls remain unavailable. The
+this different binary. The subsequent [package acceptance](STATUS_OWNERS_PACKAGE.md) now binds the
+BBS and package checks to this exact binary. Physical acceptance remains open,
+as do the canonical geometry transaction, reset defaults, history/frames, child
+loans and Linux bridge size policy. Status/line controls remain unavailable. The
 separate ignored pointer is `build/status-owners-current-candidate.json`; no
-package selection, installed file, private setting or live service was changed.
+active installation selection, installed file, private setting or live service
+was changed.

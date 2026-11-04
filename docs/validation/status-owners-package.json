@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "source_commit": "4844171d90904befabe77216d23450daf8efa13d",
+  "terminal_sha256": "7df99c1f72f8dc3f076cfa6a3c5f6d1f1f5f03872fe98d479ce2348b9227f1ce",
+  "files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "4cc597d3e8f992ed4262e8544b4d3776b1780d76005f5dccef62f05aa9323335",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "7df99c1f72f8dc3f076cfa6a3c5f6d1f1f5f03872fe98d479ce2348b9227f1ce",
+    "VERSION.TXT": "a43bc4f7b9e4ffc4f1181a31b08ff491bddda33f5461ab8ee33d0d6902b0971a",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "archive_sha256": "ad1f669e614ace2fa63ea5fad1ed42d721b3e645175d546f1db8389d2e3da8ba",
+  "archive_bytes": 262026,
+  "evidence": {
+    "build/status-owners-package-source-proof-20261104/result.json": {
+      "passed": true,
+      "sha256": "dc7a78098ae6a933c1f15e79e5f034f3aceb53d051b68a8906fcc0a8acbefc7b",
+      "source_count": 2058
+    },
+    "build/status-owners-package-start-20261104/result.json": {
+      "passed": true,
+      "sha256": "35fa8ac42a89bc61ac187972d4513f55d0f7bdc9eb732314d6bf01e3e363bda4"
+    },
+    "build/status-owners-package-setup-20261104/result.json": {
+      "passed": true,
+      "sha256": "1c01ee05f0e9936422c6b5d0f43eda3c281fe7db5c363fe4a587607fceb6a1c0"
+    },
+    "build/status-owners-package-splash-20261104/result.json": {
+      "passed": true,
+      "sha256": "1d8f8e7caeef7dac16395719e6f7de3fb7f01804d4ffd957731c782deb7e5d9a"
+    },
+    "build/status-owners-package-bios-absent-20261104/result.json": {
+      "passed": true,
+      "sha256": "916290dd4bd17de9bf6a540b8eadced62c21a0e84551ee1f4fea4b7110df2d89"
+    },
+    "build/bbs-lab/results/enigma/status-owners-enigma-20261104/proxy-integration.json": {
+      "passed": true,
+      "sha256": "e7b965f435ef3270a052a6d8218dbc51f7f3e171e26aba8489d27ddc421106db"
+    },
+    "build/bbs-lab/results/enigma/status-owners-enigma-20261104/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "7ca3b70bbc34b9fddc74924f17bf2107cac0129cb2302e3939cf7c2b167f6f92",
+      "different_cells": 0,
+      "delivered_bytes": 87171,
+      "reference_cursor": [
+        22,
+        14
+      ]
+    },
+    "build/bbs-lab/results/synchronet/status-owners-sync-20261104/proxy-integration.json": {
+      "passed": true,
+      "sha256": "657ed153d46be9ebbc082bc5f739294fe0148de6479ba0081e667d7c86dbd23c"
+    },
+    "build/bbs-lab/results/synchronet/status-owners-sync-20261104/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "752bddaddb78d44fda55bf915e7864ed1b73e93b5b5b429024129f35a79b4e45",
+      "different_cells": 0,
+      "delivered_bytes": 21771,
+      "reference_cursor": [
+        5,
+        8
+      ]
+    },
+    "build/phone-log-carrier-terminal/status-owners-transfer-carrier-20261104/result.json": {
+      "passed": true,
+      "sha256": "c68fa8675e70f093cfc19d759d5d9f5b11ee23142f7051e08303981e4bb5356d",
+      "cases": 4,
+      "scope": "Real emulated DCD loss and same-parent redial with checked call logging. Built-in DOSBox modem generates CONNECT/NO CARRIER and actual virtual DCD. Peer only sends ANSI/protocol bytes and closes TCP; no injected modem replies or product variables. MSR reads clear delta bits; native policy uses carrier level. Not physical carrier/SIP/analog or all child/transfer acceptance."
+    }
+  },
+  "installed": false,
+  "scope": "Five executables and10 public files exactly reproduced from2058 committed sources without ancestor Git; four actual DOS8086 COM3/IRQ5 START/SETUP/splash/BIOS-absent workflows; exact candidate owned Enigma multiline/page-up/edit/discard and Synchronet ASPECT/editor/abort via installed SynthModem TelnetProxy with250ms framing/20ms input delivery, actual call logs and zero-difference24-row cell/cursor audits. Four actual DOS virtual-DCD XMODEM receive-negotiation/partial and upload-unacked/partial carrier-loss/cleanup/flow/log/redial cases pass. Not physical analog/SIP/DSP/CTS, all pages/fonts/protocols, complete original parity or deployment; nested compiler memory limit and partial PRM duplex import remain."
+}
