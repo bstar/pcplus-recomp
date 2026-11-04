@@ -47,8 +47,9 @@ not linked into the current application and no installed file is changed.
 
 ## Required integration
 
-Recover and validate the original timer start/update and midnight rollover
-policy; retain THIS CALL/LAST CALL even when call-file logging is disabled.
+The [original timer services](ELAPSED_TIME_TIMER.md) now rebuild exactly and
+pass their boundary-model suite. Live binding must retain THIS CALL/LAST CALL
+even when call-file logging is disabled.
 The existing modem negotiation timeout counter must not be reused as call
 elapsed time, because initialization, retries and hangup reset it independently.
 Bind Alt-T and its original Alt-Z entry to the guarded foreground local-control

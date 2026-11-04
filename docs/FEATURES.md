@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Original call timer recovery](ELAPSED_TIME_TIMER.md) adds220 exact resident
+bytes for start, seconds conversion and elapsed update. All86400 legal clock
+values,2788 elapsed pairs,14 split-read start cases and a reconnect sequence
+pass with explicit DOS/C-runtime boundaries, plus genuine-original comparison.
+One-day wrap and logging independence are established at this native boundary;
+live call-state/modal integration and application/hardware gates remain open.
+
 [Original Elapsed Time recovery](ELAPSED_TIME_RECOVERY.md) now reproduces the
 149-byte Alt-T overlay handler exactly, with144 boundary-modeled CPU cases and
 a separate genuine-original comparison. THIS CALL/LAST CALL, conditional timer

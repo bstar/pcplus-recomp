@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "native_bytes": 220,
+  "units": [
+    {
+      "name": "start",
+      "entry": "0x3f61",
+      "bytes": 18,
+      "sha256": "d5e45c8167791b38c96f5b7607f84ec53e1c0a7126c898a473cb6e050d8687df"
+    },
+    {
+      "name": "seconds",
+      "entry": "0x3f73",
+      "bytes": 41,
+      "sha256": "6b5c5458529eff6cddc91a1f791184083e5eb8a7345467e45ff2e13e8ce13b5f"
+    },
+    {
+      "name": "update",
+      "entry": "0x37a5",
+      "bytes": 161,
+      "sha256": "095bab1e4378dc54a6c09f2bb59c6d6e5b28867faa842a1ee1c0ce5c9b010970"
+    }
+  ],
+  "evidence": {
+    "build/elapsed-timer-source-20261103/result.json": {
+      "passed": true,
+      "sha256": "2204753d26fb2f203ba3685079705727217faeb574338b5b388a24b163f49342",
+      "original_compared": false,
+      "cases": {
+        "seconds_conversion": 86400,
+        "start_read_boundaries": 14,
+        "elapsed_update": 2788,
+        "start_update_reconnect_sequences": 1
+      },
+      "coverage_sha256": "2d95c4422ddde8d2e984a27a06b245b37d683fe98a32b008f323ade7c00e0e07"
+    },
+    "build/elapsed-timer-original-20261103/result.json": {
+      "passed": true,
+      "sha256": "1b7b7456c1fa2119fd5215de650db33bd150c2bd00a44c4ce970a8e4368db2b4",
+      "original_compared": true,
+      "cases": {
+        "seconds_conversion": 86400,
+        "start_read_boundaries": 14,
+        "elapsed_update": 2788,
+        "start_update_reconnect_sequences": 1
+      },
+      "coverage_sha256": "2d95c4422ddde8d2e984a27a06b245b37d683fe98a32b008f323ade7c00e0e07"
+    }
+  },
+  "sources": {
+    "standalone/check_elapsed_timer_native.py": "9c2663c6cea7d61ff8f02b9205b8e59eaf5af75c94db77741507fea369539b5d",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/local_controls/timer-provenance.json": "d94fc968a4bfa189d3b2abb95872086341e9c0cd3ab14a4c127b029659ecbcbc",
+    "reconstruction/local_controls/timer_start.asm": "35097f571b058a507b29b0d3488f485c327963ddd9b231a0da9b28106fb7a301",
+    "reconstruction/local_controls/timer_seconds.asm": "2490f7cc72c74fac2a1a6806b57b6f7b188ec63f23e6cb44a0fe6576a8d04825",
+    "reconstruction/local_controls/timer_update.asm": "fdfd3d3b26b34ec5c663b756d150b26b9d0362bd6b0f08b266e9de7058ce81c7"
+  },
+  "application_changed": false,
+  "installed": false,
+  "live_command_enabled": false,
+  "scope": "Exact220 original resident bytes. Start entry is verified by byte read, caller and terminal RET, rather than an auto-created Ghidra function. Original DOS time and C-library services are explicit boundaries. Not enabled/linked in live application; no physical/BBS acceptance."
+}

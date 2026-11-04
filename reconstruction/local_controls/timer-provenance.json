@@ -1,0 +1,52 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_only_build": true,
+  "units": [
+    {
+      "name": "start",
+      "entry": "0x3f61",
+      "bytes": 18,
+      "original_file_offset": "0x5161",
+      "sha256": "d5e45c8167791b38c96f5b7607f84ec53e1c0a7126c898a473cb6e050d8687df",
+      "source": "reconstruction/local_controls/timer_start.asm",
+      "assembly_evidence": null,
+      "byte_evidence": "ev_dc068807a47c4ae5db785b3003aeefaa263f76f2c5705a033f8e646c49d48ef4"
+    },
+    {
+      "name": "seconds",
+      "entry": "0x3f73",
+      "bytes": 41,
+      "original_file_offset": "0x5173",
+      "sha256": "6b5c5458529eff6cddc91a1f791184083e5eb8a7345467e45ff2e13e8ce13b5f",
+      "source": "reconstruction/local_controls/timer_seconds.asm",
+      "assembly_evidence": "ev_bf3850b87bdcc23f1c9ba31ad7548630966d7132e78b1f1227e584d01d44fe48",
+      "byte_evidence": "ev_05cd9ab816217278ec7c5312fbda011e7cf56a72f098ec3c4610a5f65a40bfed"
+    },
+    {
+      "name": "update",
+      "entry": "0x37a5",
+      "bytes": 161,
+      "original_file_offset": "0x49a5",
+      "sha256": "095bab1e4378dc54a6c09f2bb59c6d6e5b28867faa842a1ee1c0ce5c9b010970",
+      "source": "reconstruction/local_controls/timer_update.asm",
+      "assembly_evidence": "ev_caffd24f70912ce218ec4d5271095aeab74c2ed12427a79ee76b9c3497880101",
+      "byte_evidence": "ev_3895c30e3700922383e7b2c9ca41831766d0433158dad420fa8adf3f0d65ef61"
+    }
+  ],
+  "state": {
+    "CD8E": "32-bit elapsed anchor, seconds since midnight",
+    "CFF2": "four-word saved start stamp, hundredths/hour/minute/second",
+    "CFEC": "elapsed hours",
+    "CFEE": "elapsed minutes",
+    "CFF0": "elapsed seconds",
+    "2C7C": "formatted elapsed string",
+    "473B": "%2.2d:%2.2d:%2.2d"
+  },
+  "services": {
+    "778C": "modeled callee-cleaned DOS time-structure service",
+    "8D48": "modeled callee-cleaned long division",
+    "8DA8": "modeled callee-cleaned long remainder",
+    "82B6": "modeled cdecl sprintf"
+  },
+  "scope": "Exact220 original resident bytes. Start entry is verified by byte read, caller and terminal RET, rather than an auto-created Ghidra function. Original DOS time and C-library services are explicit boundaries. Not enabled/linked in live application; no physical/BBS acceptance."
+}
