@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Transfer row leases](TRANSFER_ROW_LEASES.md) place prompt/progress/input on the
+bottom two accepted physical rows and verify the captured layout before replay.
+Linked geometry/owner checks, actual X/Y/ZMODEM workflows with independent BIOS
+underlay witnesses, ordinary transfer regressions and exact source rebuilds are
+bound in its receipt. Actual transfer-time modem loss/redial, broader modal and
+line-control composition, original application parity and BBS/physical acceptance
+remain open. No candidate was deployed.
+
 [Carrier flow readiness](CARRIER_FLOW_READY.md) now separates immediate control
 output from retained connection lifetime during the existing four-tick DCD grace.
 The composed application no longer prefixes the next modem command with XON/XOFF
