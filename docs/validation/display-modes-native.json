@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "new_native_bytes": 608,
+  "commands_enabled": false,
+  "application_changed": false,
+  "installed": false,
+  "evidence": {
+    "build/display-modes-native-source-final-20261104/result.json": {
+      "passed": true,
+      "sha256": "c657d77d07658e8b18c4eef430073340111fb4e14365ed6bdef9057a70f6f330",
+      "original_compared": false,
+      "cases": {
+        "composed": 1440,
+        "invalid_selectors": 65531,
+        "row_lowbyte_aliases": 512,
+        "mode_boundaries": 5,
+        "noncanonical_hidden": 4,
+        "bios_refusal": 60,
+        "vendor_mode": 2,
+        "direct_rows": 96,
+        "bda_scanline_combinations": 768,
+        "monochrome_baseline": 48
+      }
+    },
+    "build/display-modes-native-original-final-20261104/result.json": {
+      "passed": true,
+      "sha256": "542f03e1229758e95297bf7a204161884874cf962738dc8ab25267ce0e0cb594",
+      "original_compared": true,
+      "cases": {
+        "composed": 1440,
+        "invalid_selectors": 65531,
+        "row_lowbyte_aliases": 512,
+        "mode_boundaries": 5,
+        "noncanonical_hidden": 4,
+        "bios_refusal": 60,
+        "vendor_mode": 2,
+        "direct_rows": 96,
+        "bda_scanline_combinations": 768,
+        "monochrome_baseline": 48
+      }
+    }
+  },
+  "sources": {
+    "standalone/check_display_modes_native.py": "c2595c0b950b98ce3ad5763cfcfe6098403723ad79464e9fde024393d4cd615a",
+    "reconstruction/display_modes/provenance.json": "8e524dc63d323bc3b7dbcb40779619e92ee932d91019c8aa39fef6e25a0ff3a1",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/display_modes/dispatch.asm": "c87fdff11f9a5f0c71550a78faf8f82fcc227ff5cb6cc81dfd836d34cf09153c",
+    "reconstruction/display_modes/commit.asm": "979135c8b62393fbd390b12fabe48455682060f828f3c927210d00c2b33cd062",
+    "reconstruction/display_modes/policy.asm": "a38b60289c1079f83b4f758c0169318fd9dda8c5944fac014b3b7dcf4b9b5f04",
+    "reconstruction/display_modes/reflow.asm": "2128587341e26593c04e1c42d3271d4bac5fadfadebe6d08d2eae74a211e4cfc",
+    "reconstruction/display_modes/rows.asm": "370996d14ea852490f7baa8081e61b5a6b460b4af5b441ae39ad59fa88b15015",
+    "reconstruction/display_modes/baseline.asm": "7d3e853e1344a77d479e52f0f35b52070f27b6af91116c984b2b55026794cfc1",
+    "reconstruction/display_modes/fonts.asm": "bb088cc6c77d7f6ce7ef69c6eb83bfadd2152332e10419c30d22c3e974dd3d98",
+    "reconstruction/display_modes/font_reset.asm": "47bdce5ff1baf8bdbab99ac03919beef00d97cafcb9b2040e42e0c6a0e0e3352",
+    "reconstruction/program_ui/mode.asm": "eeccbc12dc1bafd827c816a590582dc1abf79efadaeaa492f862abaf41e6670d",
+    "reconstruction/program_ui/scanlines.asm": "69874e0454dff22bb02e752e0baafcb3e2333443c8b2f226c52e33928b202e53",
+    "reconstruction/program_ui/cursor_eight.asm": "0b418dd1ac6019a6b90aa742340d19d30d458d2786bbffcf2df4c704e63436ec",
+    "reconstruction/program_display/geometry.asm": "c6c57bcfc5779d770ee85ba5bcd1414455ef35891f0703b8a6564e70dd199f85",
+    "reconstruction/local_controls/status_toggle.asm": "013fd6fee1b4b08e3a36d68431c903454527b11b17640bb0b321c75c7bda9ab1",
+    "reconstruction/local_controls/status_clear.asm": "3682af1623011b735db551c026d2a652e652b9120c26aab5242b901822a860a8"
+  },
+  "unchanged_candidate": {
+    "terminal_sha256": "d9eae89d8bdfa5156b5d50e31e542bbe0c1851bc10a4b03d9fc826954ec84b03",
+    "archive_sha256": "4950ab9964e2666f0a434d2edf0490ce79b73fff0a90c45a23f17d754731fb81",
+    "declared_sources_verified": 540
+  },
+  "scope": "Execute recovered display modes against modeled BIOS/BDA and terminal UI boundaries. Actual recovered dispatcher, mode/font/scanline/geometry/status services execute; BIOS INT10 effects, terminal reset, cursor/scroll/status/rectangle rendering are modeled. No maintained-terminal integration, raw key normalization, pixels, BBS/NAWS or physical hardware acceptance; no deployed payload change."
+}

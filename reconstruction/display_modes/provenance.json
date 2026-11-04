@@ -1,0 +1,79 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_only_build": true,
+  "units": [
+    {
+      "name": "dispatch",
+      "entry": "0x2eaa",
+      "bytes": 108,
+      "file_offset": "0x40aa",
+      "source": "reconstruction/display_modes/dispatch.asm",
+      "sha256": "23d9265ce0ab97490ae7bdec3752f1dda634b872e08f4154b4e7e561d1185ed7"
+    },
+    {
+      "name": "commit",
+      "entry": "0x2f16",
+      "bytes": 66,
+      "file_offset": "0x4116",
+      "source": "reconstruction/display_modes/commit.asm",
+      "sha256": "f44c846643341aec534c8762a72d6d2764527b81ddc1e7a6d4f16934d11457b3"
+    },
+    {
+      "name": "policy",
+      "entry": "0x2f58",
+      "bytes": 32,
+      "file_offset": "0x4158",
+      "source": "reconstruction/display_modes/policy.asm",
+      "sha256": "949095af0bb923f09c7e3188ebc44e71ab0276dcf692e75246f8e7ecc37b9296"
+    },
+    {
+      "name": "reflow",
+      "entry": "0x476a",
+      "bytes": 43,
+      "file_offset": "0x596a",
+      "source": "reconstruction/display_modes/reflow.asm",
+      "sha256": "fc64aa064849fac95143c358145c1ac78e015e9056eee0e08290d2ed7830904a"
+    },
+    {
+      "name": "rows",
+      "entry": "0x6ef6",
+      "bytes": 71,
+      "file_offset": "0x80f6",
+      "source": "reconstruction/display_modes/rows.asm",
+      "sha256": "71fc8aa19318210a0fd505eb407a57dde5e7872848c5abfb4ef64f5108d68c8f"
+    },
+    {
+      "name": "baseline",
+      "entry": "0x6f76",
+      "bytes": 42,
+      "file_offset": "0x8176",
+      "source": "reconstruction/display_modes/baseline.asm",
+      "sha256": "0afc28d43e4f465b76c18a0e9b2409f1a1c265bd651aace1d50fbeaf04c2a079"
+    },
+    {
+      "name": "fonts",
+      "entry": "0x7e72",
+      "bytes": 118,
+      "file_offset": "0x9072",
+      "source": "reconstruction/display_modes/fonts.asm",
+      "sha256": "35516acead7228cc8cc37438bda827482eb0e8b8df7f9809b6bbe8081979978b"
+    },
+    {
+      "name": "font_reset",
+      "entry": "0x7f0f",
+      "bytes": 28,
+      "file_offset": "0x910f",
+      "source": "reconstruction/display_modes/font_reset.asm",
+      "sha256": "05f74dd4c826c02e53f7124afb1d0233dd8bd9bcdb179615b9d2687d4441ad40"
+    }
+  ],
+  "evidence": {
+    "dispatch_commit_policy": "ev_bf0677aa0ec2e7afa4a0f48c06726f2ebc04837a3652714206ac84cefb0fd6d4",
+    "reflow": "ev_0623d78017ec512ac98acf417aa8ca64c5aed3b2b8bde72d58ad49f8f18cdb5c",
+    "rows": "ev_2704f248a89fa532accf7289b40745fba90eee6ccc5fb185c03a66adf67f4949",
+    "baseline": "ev_f0c69267ff237648f54738d7a10040340a5ad9e5aa0e042af5f813c74d044f2c",
+    "fonts": "ev_6bc642000eef93cb5a952ad5ea73ee7dc571a861280389a7992ff169339700fb",
+    "font_reset": "ev_6701234fcaf40a3c6c863ca2369894f1de8cab52ce5318e68ec363bfaf1f115e"
+  },
+  "scope": "Native display dispatcher, commit, temporary reset policy, reflow, row selection and BIOS font/mode services. BIOS interrupt behavior and terminal reset remain separate acceptance boundaries; not enabled in maintained terminal."
+}

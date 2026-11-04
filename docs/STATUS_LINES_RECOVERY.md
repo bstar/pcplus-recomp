@@ -32,7 +32,7 @@ not proof those BIOS modes work on the physical card.
 
 ## Line-selector contract
 
-Ctrl-minus uses a **two-selector cycle for adapter WORD2070 zero**, or four
+Ctrl-minus uses a **two-selector cycle for configured video-mode WORD2070 zero**, or four
 selectors for **every nonzero WORD**, including8000h..FFFFh. Current modeCEE6 is
 interpreted as signed16-bit for IDIV. The requested selector is signed remainder
 plus1. For legal nonnegative modes, it cycles1..2 or1..4. Corrupted negative
@@ -42,8 +42,10 @@ by this native proof.
 The caller passes that selector, saved WORD1D4E and zero to DISPLAY2EAA. After
 DISPLAY returns, it copies the **accepted** mode3252 back to currentCEE6. The
 returned AX is not used as the committed mode. This distinction matters when
-the display service falls back. We have not established the complete downstream
-BIOS/font/row mapping for each selector in this recovery.
+the display service falls back. The subsequent
+[display-mode recovery](DISPLAY_MODES_RECOVERY.md) establishes the downstream
+dispatch/font/row decisions using modeled BIOS effects. This earlier suite still
+models DISPLAY at its boundary; it does not exercise that deeper implementation.
 
 ## Evidence
 
@@ -79,7 +81,8 @@ follows from these results.
 ## Integration still required
 
 These are geometry operations, not cosmetic visibility flags. Establish the
-runtime display/BIOS row service and bounded safe selector policy, then reconcile
+maintained runtime display/BIOS row service and bounded safe selector policy
+using the recovered native chain, then reconcile
 canonical suppression, CSI bounds, scroll margins, cursor, RIS/reset baselines,
 history, frames and child screen loans. The maintained status renderer currently
 copies canonical suppression into a native snapshot; changing that snapshot
