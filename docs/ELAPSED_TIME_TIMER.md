@@ -3,8 +3,9 @@
 The three original timer routines now rebuild exactly from source: start at
 CS:3F61(18bytes), seconds-since-midnight at3F73(41bytes), and elapsed update at
 37A5(161bytes). Flat binaries match all220 genuine original bytes. Relocatable
-OMF forms also assemble. They remain separate from the live terminal until its
-call-state and modal-service binding is validated.
+OMF forms also assemble. The optional [live call-clock owner](CALL_TIMER_LIVE.md)
+now binds them to confirmed connection transitions. The serviced Alt-T window
+remains a separate unfinished integration.
 
 ## Original policy
 

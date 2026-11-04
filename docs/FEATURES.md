@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Live call-clock lifecycle](CALL_TIMER_LIVE.md) now uses the220 recovered timer
+bytes in an optional retained bank. Confirmed connect/disconnect, failed hangup,
+BUSY/timeout/cancel, midnight, reconnect and logging-disabled behavior pass
+linked checks with actual connection callbacks. The Alt-T modal view remains
+unavailable, and no installed build or deployment selection changes here.
+
 [Original call timer recovery](ELAPSED_TIME_TIMER.md) adds220 exact resident
 bytes for start, seconds conversion and elapsed update. All86400 legal clock
 values,2788 elapsed pairs,14 split-read start cases and a reconnect sequence

@@ -28,6 +28,10 @@ global terminal_connection_exit_impl
 extern terminal_connect_alert_start,terminal_connect_alert_poll,terminal_connect_alert_stop
 %endif
 
+%ifdef TERMINAL_CALL_TIMER
+extern terminal_call_timer_start_far,terminal_call_timer_stop_far
+%endif
+
 %ifdef TERMINAL_PHONE_LOG_EVENTS
 extern _terminal_phone_log_events_ready_far,_terminal_phone_log_events_connected_far
 extern _terminal_phone_log_events_disconnected_far
@@ -204,6 +208,11 @@ terminal_connection_start_impl:
  mov word [connection_state],6
  mov word [connection_status],1
  call connection_capture_carrier
+%ifdef TERMINAL_CALL_TIMER
+ global terminal_call_timer_direct_connected_site
+ terminal_call_timer_direct_connected_site equ $
+ call far terminal_call_timer_start_far
+%endif
 %ifdef TERMINAL_PHONE_LOG_EVENTS
  LOG_EVENT _terminal_phone_log_events_connected_far,terminal_phone_log_direct_connected_site
  push ax
@@ -517,6 +526,11 @@ terminal_connection_poll_impl:
  mov word [connection_state],6
  mov word [connection_status],1
  call connection_capture_carrier
+%ifdef TERMINAL_CALL_TIMER
+ global terminal_call_timer_modem_connected_site
+ terminal_call_timer_modem_connected_site equ $
+ call far terminal_call_timer_start_far
+%endif
 %ifdef TERMINAL_PHONE_LOG_EVENTS
  LOG_EVENT _terminal_phone_log_events_connected_far,terminal_phone_log_modem_connected_site
  push ax
@@ -570,6 +584,11 @@ terminal_connection_poll_impl:
  mov word [terminal_tx_tail],0
  mov si,message_offline
  call connection_notice_service
+%ifdef TERMINAL_CALL_TIMER
+ global terminal_call_timer_carrier_end_site
+ terminal_call_timer_carrier_end_site equ $
+ call far terminal_call_timer_stop_far
+%endif
 %ifdef TERMINAL_PHONE_LOG_EVENTS
  LOG_EVENT _terminal_phone_log_events_disconnected_far,terminal_phone_log_carrier_end_site
  call connection_log_notice
@@ -667,6 +686,11 @@ terminal_connection_poll_impl:
  call connection_flow_retire
  popf
  mov word [connection_state],0
+%ifdef TERMINAL_CALL_TIMER
+ global terminal_call_timer_retire_end_site
+ terminal_call_timer_retire_end_site equ $
+ call far terminal_call_timer_stop_far
+%endif
  cmp word [connection_status],5
 %ifdef TERMINAL_PHONE_LOG_EVENTS
  jne .log_retired
@@ -722,6 +746,11 @@ terminal_connection_cancel_impl:
  mov word [connection_status],5
  mov si,message_disconnected
  call connection_notice_service
+%ifdef TERMINAL_CALL_TIMER
+ global terminal_call_timer_direct_end_site
+ terminal_call_timer_direct_end_site equ $
+ call far terminal_call_timer_stop_far
+%endif
 %ifdef TERMINAL_PHONE_LOG_EVENTS
  LOG_EVENT _terminal_phone_log_events_disconnected_far,terminal_phone_log_direct_end_site
  call connection_log_notice

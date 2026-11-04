@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "terminal_sha256": "2192f454f46c6ecec0c84ea43d3714a5e2e2ab1d89b5220c6d24b7967afc4c9d",
+  "feature_disabled_sha256": "501629c093d731be8f3324f185e128af76e00c2942e5ad3463c1ce7da54edb6e",
+  "feature_disabled_matches_previous_candidate": true,
+  "native_recovered_bytes": 220,
+  "near_data_stack_bytes": 64848,
+  "resident_code_bytes": 65176,
+  "resident_code_spare_bytes": 360,
+  "timer_code_bank_bytes": 499,
+  "product_input_count": 535,
+  "product_input_map_sha256": "6ae3e2c5ef0d827dee334a453852ba7c64fd2f6e583df5643ce9bcaf12f74b7c",
+  "manifest_sha256": "37595f0e5a86f591237deb85dc551ee985cdf7895cee36ec014c2c9a4ae94f4b",
+  "evidence": {
+    "build/call-timer-live-complete-20261103/result.json": {
+      "passed": true,
+      "sha256": "7897802a7f7626af26a2a97f77e8fb8efe73609e98ea16110c57463d5c2a44db",
+      "cases": 6
+    },
+    "build/call-timer-layout-20261103/result.json": {
+      "passed": true,
+      "sha256": "6a506a1ee435723126c33661e81ee8408fd8dc6ce60da9ef9df4168d121767ec"
+    },
+    "build/call-timer-pause-regression-20261103/result.json": {
+      "passed": true,
+      "sha256": "1ad528cc62faffa5787a7eb8c1ea1df84e91a6f8178baf77d8c8268506d83d24",
+      "cases": 41
+    },
+    "build/phone-log-carrier-terminal/call-timer-carrier-20261103/result.json": {
+      "passed": true,
+      "sha256": "398264a62faebf66e8e3a22b54f228413b2509491ba14400b651a0b7ee0339b6",
+      "cases": 3
+    },
+    "build/phone-log-carrier-terminal/call-timer-aspect-20261103/result.json": {
+      "passed": true,
+      "sha256": "e180d55bd6cc6f7df5f2f0173ffe349e3c4a9bc936c77f9b17ccbcde00786195",
+      "cases": 4
+    },
+    "build/bbs-lab/results/enigma/call-timer-enigma-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "5a487171952762c8ee83f64b5027d8163947c22338e332a35264684fa766ef6d"
+    },
+    "build/bbs-lab/results/enigma/call-timer-enigma-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "1288107e7ed7f799801575d9e1668ee0ce9aa1a333dfc26cf0194d4c74052eae",
+      "different_cells": 0,
+      "delivered_bytes": 87169,
+      "cursor": [
+        22,
+        14
+      ]
+    },
+    "build/bbs-lab/results/synchronet/call-timer-synchronet-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "b4d1d36e471168137dea41d90940913e237180f18acaf812f12ee9aad32c46da"
+    },
+    "build/bbs-lab/results/synchronet/call-timer-synchronet-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "5fe4d077be068ebb4de89baec478450efa1c6eca1576c1f66475c9867381887d",
+      "different_cells": 0,
+      "delivered_bytes": 23679,
+      "cursor": [
+        5,
+        8
+      ]
+    }
+  },
+  "sources": {
+    "src/terminal/call_timer.asm": "c239b4c4d7d61420cad5567c8578e93a509e3b37fe8e42b557eb534ea0596570",
+    "src/terminal/connection.asm": "c1beb020900249fa8de1da2a993cedb1028571f58c3a1e54b3eb574195459964",
+    "standalone/build_terminal.py": "1d0eaf5759bcfc699950903324306f06a62bf7d47722f7e820175968bf8361cd",
+    "standalone/check_call_timer_live.py": "0b4806085c924ea7d788011d15b8754e90e090d01b14d3860d5b8846c1fa8e9b",
+    "standalone/check_call_timer_layout.py": "edaed309b3a69b6a401fd838c5931c7fe60fd7bf6f6b7cd62cf8f00d9fc582bf",
+    "reconstruction/local_controls/timer_start.asm": "35097f571b058a507b29b0d3488f485c327963ddd9b231a0da9b28106fb7a301",
+    "reconstruction/local_controls/timer_seconds.asm": "2490f7cc72c74fac2a1a6806b57b6f7b188ec63f23e6cb44a0fe6576a8d04825",
+    "reconstruction/local_controls/timer_update.asm": "fdfd3d3b26b34ec5c663b756d150b26b9d0362bd6b0f08b266e9de7058ce81c7"
+  },
+  "original_inputs": [],
+  "live_clock_enabled": true,
+  "live_AltT_window_enabled": false,
+  "installed": false,
+  "installed_selection_sha256": "93a9db94c1164e7ba004a637b02484e548791713385c3f5a24e8c48c8a364b2c",
+  "scope": "Actual linked recovered220-byte timer, maintained narrow runtime adapters and confirmed connection callbacks. CPU checks model DOS/BIOS/UART; native DOS carrier/log and ASPECT regressions exercise actual virtual DCD and DOS time calls. Independent owned Enigma/Synchronet final-cell/cursor and call-log audits. No direct physical timer observation, SIP/DSP/analog acceptance, Alt-T view, whole feature parity or deployment change."
+}
