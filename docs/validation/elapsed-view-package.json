@@ -1,0 +1,84 @@
+{
+  "passed": true,
+  "application_source_commit": "f4191e3aac96dd9a36e85af2b4ca2f7f7ee43bbe",
+  "package_source_commit": "ec4a4d1913670cc006f06f30d0a4594ca221ac0f",
+  "terminal_sha256": "340cb4bac4394d946f0bcbb52adacd922d7f8d8fec9665e117ff1f9cd8b95f6d",
+  "package_manifest_sha256": "1ffaef2b619613ea593fd6c745535f7c3d86c59d5885140bf2923c0ac5282b51",
+  "package_files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "148cab0a4019c6f0617817c3eca36944b5841c511b206899fa4ca7d6a372bad5",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "340cb4bac4394d946f0bcbb52adacd922d7f8d8fec9665e117ff1f9cd8b95f6d",
+    "VERSION.TXT": "7d9881aa15195481a094e427c6ed96bc62b49b44c41e50c207b91bec3a871f94",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "archive": {
+    "path": "build/connection-elapsed-view-committed-20261103/pcplus-elapsed-view-test.zip",
+    "bytes": 260695,
+    "sha256": "04b6ce6959dc3b36b27010058071ccb4532fc47ece6a774721384ddfb0a75e1b",
+    "members": 10
+  },
+  "evidence": {
+    "build/elapsed-view-source-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "74e65fe7fdd223e05e01b0d509d98b81c98edd8d4ed602e09b4c0e633bf345d9",
+      "ancestor_git_unavailable": true,
+      "source_files": 537
+    },
+    "build/elapsed-view-package-source-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "9e5fde0972c19aa9821430688eab446df6417505a1131946ad44c1d17a888ea7",
+      "ancestor_git_unavailable": true,
+      "source_count": 2044
+    },
+    "build/elapsed-view-splash-20261103/result.json": {
+      "passed": true,
+      "sha256": "aaa5f8d02c1fa14d611b1c3539f0b42eb93943322c32f75271342ab686482a39",
+      "original_layout_compared": true
+    },
+    "build/elapsed-view-package-start-20261103/result.json": {
+      "passed": true,
+      "sha256": "6cec07adaddcabecf0261fac2f8c3c06a8c29e847a2581cc612b36dd1a220029",
+      "launcher": "START",
+      "precompiled_before_terminal": true,
+      "bios_port_omitted": false
+    },
+    "build/elapsed-view-package-setup-20261103/result.json": {
+      "passed": true,
+      "sha256": "e0eb7e423a1a24db0e1ec46385bece3fb813c1704e50d8e5dc960f85a8624dd7",
+      "launcher": "SETUP",
+      "precompiled_before_terminal": false,
+      "bios_port_omitted": false
+    },
+    "build/elapsed-view-package-splash-20261103/result.json": {
+      "passed": true,
+      "sha256": "36a9a7b2f4ca063385224da0710023098ea3a5c6741a5d9c2dbb3785d2345006",
+      "launcher": "START",
+      "precompiled_before_terminal": false,
+      "bios_port_omitted": false
+    },
+    "build/elapsed-view-package-bios-absent-20261103/result.json": {
+      "passed": true,
+      "sha256": "b0abfb877d12e0353f9bb54f683189c16009c1f0bf79ce11eeaaca48d86f127a",
+      "launcher": "START",
+      "precompiled_before_terminal": true,
+      "bios_port_omitted": true
+    }
+  },
+  "sources": {
+    "standalone/package_connection_test.py": "547b0e36d5f06b193c637f4299ac214995c8263abf7edefd31951c71725771f3",
+    "standalone/prove_connection_test_package.py": "26a4b0ed0dcc7c83c9a0e33b65abb5ead0d8fe358d11b528d1cf575a4695450c",
+    "standalone/prove_phone_log_startup_terminal.py": "297745fe6a3cc2e64a0a300b36c3a1912e5d6a36fdf94f8662ae25209b95db2c",
+    "standalone/prove_terminal_manifest.py": "65f703a2584fc73fe4312745e14859ca1812292bb8b3db62fa2c0d2098fb432a",
+    "standalone/test_special_package_dos.py": "7fc1bbbb2f33e8157171971f5a762527e120c1a9afd87df3adc898ca2870c521"
+  },
+  "original_inputs": [],
+  "application_unchanged": true,
+  "installed": false,
+  "installed_selection_sha256": "93a9db94c1164e7ba004a637b02484e548791713385c3f5a24e8c48c8a364b2c",
+  "scope": "Exact Git-free terminal and full package reproduction from committed public sources, no original application inputs. Original data used only by a separate splash comparison. Four DOS8086 dummy-COM3/IRQ5 START/SETUP/splash/BIOS-omitted workflows preserve synthetic PRM/DIR/XLT, environment and hardware. No physical/private-call-history readback, SIP/DSP/analog, modem/BBS acceptance, general nested source-compilation support or whole-feature parity. Ten-file ZIP is verified; no deployment selection or machine files changed."
+}

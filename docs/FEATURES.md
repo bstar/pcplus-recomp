@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The [Elapsed Time package](ELAPSED_VIEW_PACKAGE.md) now reproduces all five
+programs and ten package files from2044 public sources with ancestor Git
+unavailable. Four DOS START/SETUP/splash/BIOS-omitted workflows pass on the
+unchanged340cb4ba terminal. The verified ZIP is staged; installed selection,
+private configuration/call history and physical acceptance remain unchanged.
+
 [Serviced Elapsed Time](ELAPSED_VIEW_LIVE.md) now enables original Alt-T and
 Alt-Z/browser selection, using the live recovered timer and existing screen
 frames.22 linked cases and four DOS workflows cover local dismissal, hidden

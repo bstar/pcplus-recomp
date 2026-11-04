@@ -70,8 +70,9 @@ caption characters. Failed intermediate builds/results are retained; no gate
 was relaxed to accept missing labels, data, replies or restoration.
 
 No live bridge/BBS service is restarted, no package is selected for installation,
-and no physical DOS file is changed. Source reproduction/package/SETUP gates and
-physical BUSY/reboot, Boca/SPA2102/SIP/audio/flow acceptance remain open. Other
+and no physical DOS file is changed. [Clean-source/package/SETUP gates](ELAPSED_VIEW_PACKAGE.md) now pass on the
+same image. Physical BUSY/reboot and Boca/SPA2102/SIP/audio/flow acceptance
+remain open. Other
 terminal controls, file/DOS, directory/key tools, Chat, emulations/protocols,
 Host and the full original-feature inventory remain in scope.
 
