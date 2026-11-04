@@ -52,7 +52,9 @@ def main():
   "checks['immediate_banner_not_dropped']=len(screen)==4000 and screen[:30:2]==b'FIRST BYTE SAFE'":"checks['actual_screen_snapshot']=len(screen)==4000",
   r'C:\\TERMINAL {arguments}':r'D:\\CANCEL {CANCEL_TARGET} {arguments}'}
  for old,new in changes.items():assert source.count(old)==1;source=source.replace(old,new)
- old='if online:\n       line.append(byte)'
+ # Flow handling can precede line aggregation inside the online branch.
+ # Inject after the unique aggregation statement, preserving that handling.
+ old='       line.append(byte)'
  assert source.count(old)==1
  source=source.replace(old,old+'''\n       if CANCEL_PARTIAL and byte==ord('C') and not checks.get('partial_frame_sent'):
         conn.sendall(PARTIAL_FRAME);checks['partial_frame_sent']=True''')
@@ -60,10 +62,19 @@ def main():
  exec(compile(source,harness.__file__,'exec'),harness.__dict__);results=[]
  for name in args.case or CASES:
   marker,keys,updates=CASES[name];folder=out/name;folder.mkdir();shutil.copyfile(binary,folder/'TERMINAL.EXE')
+  if manifest.get('experimental_original_reference'):
+   if name in ('download','receive','receive-partial'):keys=keys.replace('a-r','a-z pgdown')
+   if name in ('upload','send'):keys=keys.replace('a-s','a-z pgup')
+  if manifest.get('special_edition'):keys='p900 enter '+keys
   harness.BINARY=folder/'TERMINAL.EXE';harness.CANCEL_TARGET=marker
   harness.CANCEL_PARTIAL=name=='receive-partial'
   payload=bytes(range(128));harness.PARTIAL_FRAME=b'\x01\x01\xfe'+payload+binascii.crc_hqx(payload,0).to_bytes(2,'big')
   settings=bytearray(fixture(timeout=5));struct.pack_into('<HH',settings,0x4e4,8,4)
+  if manifest.get('experimental_display_startup'):
+   # The generic old fixture's opaque display words are not admitted VGA
+   # settings. Use the real25-row/status-visible selector before startup.
+   for offset,value in ((0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0)):
+    struct.pack_into('<H',settings,offset,value)
   if name=='reload':
    struct.pack_into('<H',settings,0x1e0,1);files_table=bytes(range(256))
   files={'CANCEL.EXE':(build/'CANCEL.EXE').read_bytes()};expected=bytearray(settings)
