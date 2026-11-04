@@ -1,9 +1,11 @@
 # Full application reconstruction checklist
 
-The [carrier/C0 connection-test package](CONNECTION_CARRIER_C0_PACKAGE.md) is now
-staged with five exactly reproduced executables, ten verified archive files and
-fresh DOS launcher/setup/script/splash checks. It is not deployed; the selected
-installed package remains unchanged.
+The [carrier/C0 connection-test package](CONNECTION_CARRIER_C0_PACKAGE.md) now
+supports a recorded DOS installation directory. Fresh `C:\PCPLUS` source-only
+reproduction and native launcher/setup/script/splash checks pass; the default
+`PCPLUSSE` payload remains byte-identical. The five application executables are
+unchanged. Private machine records track installation and physical acceptance
+separately from these package proofs.
 
 [Carrier loss, redial and exact retry](TRANSFER_LOSS_DRAIN.md) now pass through
 the staged size-probed SynthModem proxy and stock Enigma in one DOS 8086 parent.

@@ -1,8 +1,9 @@
 # Carrier-loss and default C0 connection-test package
 
 The [package receipt](validation/connection-carrier-c0-package.json) identifies
-the next staged hardware-test candidate. It has not replaced an installed
-application or changed the deployment selection.
+the original staged checkpoint below. At that checkpoint it had not replaced
+an installed application or changed the deployment selection. Later installation
+state and private configuration belong to the machine-management record.
 
 - Folder: `build/connection-test-carrier-c0-final-20261104/PCPLUSSE`.
 - Archive: `build/connection-test-carrier-c0-final-20261104.zip`.
@@ -49,3 +50,25 @@ escape-guard command is not a physical configuration recommendation. Compile
 source scripts before starting the terminal to avoid nested compiler memory
 pressure. Physical deployment, the reported BUSY behavior and full parity remain
 open acceptance gates. Resident CS has only two bytes spare.
+
+## Select the installation directory
+
+`standalone/package_connection_test.py` now accepts `--dos-directory PCPLUS`
+for an existing `C:\PCPLUS` installation. The default remains `PCPLUSSE`.
+The choice is a single drive-C root directory name of one to eight ASCII letters,
+digits or underscores; case is normalized and DOS device names or traversal
+are rejected. It is not a drive or arbitrary nested-path option.
+
+The packager records `dos_directory`, creates that payload folder, and uses it
+in both launchers and the README. The source-only package proof and actual DOS
+launcher/script/setup/splash tests use the same recorded folder. This prevents
+installing a package into one directory while its launchers enter another.
+
+The [directory validation receipt](validation/connection-package-directory.json)
+binds a reproduced `PCPLUS` package and all three native workflows. All five
+executables remain identical to the carrier/C0 checkpoint; the terminal SHA256
+above is unchanged. A default-path control with the same source-base metadata
+retains all ten original payload files byte-for-byte. The directory-specific
+archive is `build/connection-test-pcplus-carrier-c0-20261104/PCPLUS-UPD.zip`.
+No PRM, directory, key mapping, translation settings or call history is packaged.
+Application installation checks and physical modem acceptance remain distinct.

@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "component": "Exact source-built connection packages for a selected DOS8.3 directory",
+  "package": {
+    "path": "build/connection-test-pcplus-carrier-c0-20261104/manifest.json",
+    "sha256": "11de5dda65a0ad8177bc063c208a8e31db1df000c8123e7d56420bd23f7dd483"
+  },
+  "dos_directory": "PCPLUS",
+  "package_source_commit": "f7c16a2dda9c3e2b6a924cd65a202a99fa3428ff",
+  "archive": {
+    "path": "build/connection-test-pcplus-carrier-c0-20261104/PCPLUS-UPD.zip",
+    "sha256": "d064489f21ee65c724360062682ae9b49f8734e14dce01c48337051433d39887"
+  },
+  "files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "fde9ceb40d1b92c1916423b00fd1adee17570730fdf6efe05a7447c82c7c80f3",
+    "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+    "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+    "TERMINAL.EXE": "e2e1f7ec210da06c36be2f8129a622c70788179daf5ab10c4dac22981cc98059",
+    "VERSION.TXT": "0ad1b34b475bb7717ce57bd7498a514190552ec06d493570802dd4d8ef77df1a",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "checks": {
+    "proof": {
+      "path": "build/connection-test-pcplus-carrier-c0-proof-20261104/result.json",
+      "sha256": "debdbbb2f47cb1a1f3360b58aa3ac6d113aa2ccad6ce6a21a3a59427b487783f"
+    },
+    "splash": {
+      "path": "build/connection-test-pcplus-carrier-c0-splash-20261104/result.json",
+      "sha256": "7ba7668e21b02c1320e429bd707d2f97f80478260483a925a68a4e75cf2acaad"
+    },
+    "script": {
+      "path": "build/connection-test-pcplus-carrier-c0-script-20261104/result.json",
+      "sha256": "097c5ca561cad6b7c631a9fd6e67469370d529251520a7dc41875745b465fb86"
+    },
+    "setup": {
+      "path": "build/connection-test-pcplus-carrier-c0-setup-20261104/result.json",
+      "sha256": "df0d3790f024d833b4db1a12148aa948facbb5a460efd748d6ccd6ecb03c0897"
+    }
+  },
+  "directory_controls": [
+    {
+      "input": "PCPLUS",
+      "accepted_as": "PCPLUS"
+    },
+    {
+      "input": "pcplus",
+      "accepted_as": "PCPLUS"
+    },
+    {
+      "input": "PCPLUSSE",
+      "accepted_as": "PCPLUSSE"
+    },
+    {
+      "input": "../PCPLUS",
+      "rejected": true
+    },
+    {
+      "input": "CON",
+      "rejected": true
+    },
+    {
+      "input": "COM1",
+      "rejected": true
+    },
+    {
+      "input": "LPT9",
+      "rejected": true
+    },
+    {
+      "input": "TOOLONG123",
+      "rejected": true
+    },
+    {
+      "input": "PCPLUS\\X",
+      "rejected": true
+    },
+    {
+      "input": "",
+      "rejected": true
+    }
+  ],
+  "default_payload_control": {
+    "path": "build/connection-test-default-path-control-20261104/manifest.json",
+    "sha256": "33e8854d97e62580c8f92100a502f96925c74569950c8ad8d34418be694a1515"
+  },
+  "default_payload_baseline": {
+    "path": "build/connection-test-carrier-c0-final-20261104/manifest.json",
+    "sha256": "43b18f27449efc1080591df380c24a54e56efc8abbcaa83cf9794cf129bf3b1c"
+  },
+  "all_ten_default_payload_files_unchanged": true,
+  "sources": {
+    "standalone/package_connection_test.py": "42887ecbe630190ee20167352fc93a981e67cad291d3730ce789692e33d89bfd",
+    "standalone/prove_connection_test_package.py": "58cf46ef7e9875b3ef5b13ad066ce9571a8a986c781bf2271bad8c01136f81fd",
+    "standalone/test_special_package_dos.py": "983c2586b0c854b6d218719089b17be5295b06f8eeaa0a3bc9970a110c39edaa"
+  },
+  "scope": "Directory selection changes payload folder, launchers and README paths. Default PCPLUSSE payload remains identical when the same explicit source-base text is supplied. Fresh PCPLUS export reproduces all five executables/ten files without originals or ancestor Git; actual8086 START/SETUP/precompiled script/splash with omitted BIOS UART entry passes. Native machine deployment and private configuration are tracked separately; this receipt contains no private configuration or management recipes."
+}
