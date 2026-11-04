@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "native_sha256": "ac8abc402f07e3ea9a402bc19c9e95216321800645e716d1eaefd1aa7353243d",
+  "native_bytes": 149,
+  "evidence": {
+    "build/elapsed-native-source-final-20261103/result.json": {
+      "sha256": "b0731e7d236bf14e1b90216fb42b9750ad4da1ed856acc7c0f3bac6c7521d8f9",
+      "passed": true,
+      "cases": 144,
+      "original_compared": false
+    },
+    "build/elapsed-native-original-final-20261103/result.json": {
+      "sha256": "edb67e169a519542558050a55a4d304846a9cb9f14ef23aba14611dd49ca46cf",
+      "passed": true,
+      "cases": 144,
+      "original_compared": true
+    }
+  },
+  "sources": {
+    "reconstruction/local_controls/elapsed.asm": "f68fc1935cc37f7a785dfd7c30c5305dfe595fcfbcaf43425293cd73f7330b06",
+    "reconstruction/local_controls/elapsed-provenance.json": "373ee85367b12ed0ab10a799dd9547b922102278d8b24015b7ad4abccc923889",
+    "standalone/check_elapsed_native.py": "8371fbdc10469349014902d4d66367b2e471daeb2ce5446d0380574f15277eb7"
+  },
+  "application_changed": false,
+  "installed": false,
+  "live_command_enabled": false,
+  "scope": "Exact original body, source-only flat/OMF assembly and boundary-modeled CPU recovery. Synthetic overlay analysis MZ never executed. External timer/window/keyboard services remain modeled; not linked or enabled in the live terminal."
+}

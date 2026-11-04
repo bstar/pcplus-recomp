@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Original Elapsed Time recovery](ELAPSED_TIME_RECOVERY.md) now reproduces the
+149-byte Alt-T overlay handler exactly, with144 boundary-modeled CPU cases and
+a separate genuine-original comparison. THIS CALL/LAST CALL, conditional timer
+updates, one consumed dismissal key and saved-window handle are recovered.
+Timer-service recovery and live modal/UART integration remain required; the
+command is not enabled and no application/deployment bytes change here.
+
 [Current candidate proxy transfers](PROXY_BBS_TRANSFERS.md) now exercise the
 source-built DOS candidate through the installed SynthModem TelnetProxy and
 owned Enigma's actual SE/X/Y/Z helper. Strict binary upload/download,

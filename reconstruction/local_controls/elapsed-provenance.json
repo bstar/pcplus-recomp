@@ -1,0 +1,25 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 3,
+  "overlay_sha256": "c22d54d5af84a7990f49f724bee3afe3ff925b8032f49c20b0b7678cd22de551",
+  "native_entry": "DB04",
+  "native_bytes": 149,
+  "original_file_offset": "0xf184",
+  "native_sha256": "ac8abc402f07e3ea9a402bc19c9e95216321800645e716d1eaefd1aa7353243d",
+  "source": "reconstruction/local_controls/elapsed.asm",
+  "source_only_build": true,
+  "dispatch": {
+    "BIOS_key": "1400",
+    "scan_table_DS": "44E0",
+    "resident_thunk": "BA1B",
+    "target": "overlay3:DB04"
+  },
+  "evidence": {
+    "thunk": "ev_0c36ae18bc599d0422bcecbd2580e59e2ec288d0e0c3cf02ea27753eda145242",
+    "overlay_assembly": "ev_8162557c031b1b6b5dfb7d21e2fcadf0c2e9808010ef693a12cff0fa18e6ace5",
+    "function_boundary": "ev_f2d0f28c7e0dfd06c7dde17583ed6c8d3a56408b307a3faddfaa0a9bc6de9d3d",
+    "body_bytes": "ev_78185ae47ab4378e2df7d7d9d272817681a25d4c4622eae60e5b67b943f017fe",
+    "overlay_analysis_image_sha256": "25d844c3a2c76db3fef8d132b3acef4aaded33eaf2c540b5b0aed43fd35d94a1"
+  },
+  "scope": "Exact original body, source-only flat/OMF assembly and boundary-modeled CPU recovery. Synthetic overlay analysis MZ never executed. External timer/window/keyboard services remain modeled; not linked or enabled in the live terminal."
+}
