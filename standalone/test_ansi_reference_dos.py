@@ -41,11 +41,12 @@ COLORS = dict(black=0, red=4, green=2, brown=6, blue=1, magenta=5, cyan=3, white
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
-def reference(payload):
-    screen = pyte.Screen(80,24)
+def reference(payload, rows=24):
+    assert rows in (24,25,27,28,42,43,49,50)
+    screen = pyte.Screen(80,rows)
     pyte.Stream(screen).feed(payload.decode('cp437'))
     cells = bytearray()
-    for row in range(24):
+    for row in range(rows):
         for col in range(80):
             c = screen.buffer[row][col]
             assert not c.italics and not c.underscore and not c.strikethrough

@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Authenticated editor layouts](BBS_SIZE_LAYOUT_EDITORS.md) now have complete
+25/28/43/50 physical, visible/hidden-status coverage on stock Enigma and Synchronet.
+Sixteen actual DOS workflows match all46,080 logical cells/cursors and real NAWS;
+independent BIOS/font/full-video/report hashes and36 copied-capture controls bind
+the evidence. The test helper now searches the explicit physical frame while
+its default bytes remain identical. A failed probe's synthetic draft was preserved
+and the clean Synchronet rerun is explicit. Application bytes are unchanged;
+custom LoC main screens, broader modal/transfer/carrier/physical and parity remain.
+
 [ASPECT size probes and authenticated editors](ASPECT_SIZE_PROBE_BBS.md) resolve
 an actual scripted pre-session login deadlock. Checked attached replies now use
 the child's existing serial callbacks, retaining ordinary queue reservation.

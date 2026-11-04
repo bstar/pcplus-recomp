@@ -32,6 +32,8 @@ def main():
     p.add_argument('--directory-preview-overlay', action='store_true', help='Observe validated Alt-D preview inside the stock editor workflow')
     p.add_argument('--screen-reference', action='store_true', help='Match compiled geometry and freeze incoming bytes after a real final CPR probe')
     p.add_argument('--multiline-editor', choices=['page-up','page-down'], help='Native BIOS input enters24 lines and exercises actual editor page navigation')
+    p.add_argument('--display-rows', type=int, choices=[25,28,43,50], default=25)
+    p.add_argument('--status-hidden', type=int, choices=[0,1], default=0)
     p.add_argument('--size-probe', action='store_true', help='Use staged pre-session size owner and valid owned startup preferences')
     p.add_argument('--phone-log', action='store_true', help='Enable and passively audit the call log during the real BBS workflow')
     args = p.parse_args()
@@ -51,15 +53,18 @@ def main():
     binary, sources = select_product(args.terminal, 'TERMINAL.EXE')
     from terminal_geometry import terminal_geometry
     geometry=terminal_geometry(binary)
+    assert args.size_probe or (args.display_rows,args.status_hidden)==(25,0)
+    layout=dict(physical_rows=args.display_rows,logical_rows=args.display_rows-(not args.status_hidden),status_hidden=args.status_hidden) if args.size_probe else None
+    expected_rows=layout['logical_rows'] if layout else geometry['rows']
     sources += [binary.parent/'terminal.map',ROOT/'lab/bbs/terminal_geometry.py']
     if args.size_probe:
         assert json.loads((binary.parent/'manifest.json').read_text())['experimental_display_startup']
-        sources += [ROOT/n for n in ('lab/bbs/test_synthmodem_proxy_dos.py','lab/bbs/synthmodem_proxy_serial.js','lab/bbs/test_dos.py','lab/bbs/editor_dos_probe.py','lab/bbs/modem.py')]
+        sources += [ROOT/n for n in ('lab/bbs/test_synthmodem_proxy_dos.py','lab/bbs/synthmodem_proxy_serial.js','lab/bbs/test_dos.py','lab/bbs/editor_dos_probe.py','lab/bbs/modem.py','standalone/display_startup_geometry.asm')]
     if args.phone_log:
         sources += [ROOT/n for n in ('lab/bbs/phone_log_evidence.py','standalone/phone_log_events_watch.asm','standalone/test_phone_log_events_terminal.py')]
     if args.multiline_editor:
         sources += [ROOT/'lab/bbs/test_synthmodem_proxy_dos.py',ROOT/'lab/bbs/audio_synchronet_editor_keys.asm',ROOT/'lab/bbs/test_dos.py',ROOT/'lab/bbs/editor-recipes.json',ROOT/'lab/bbs/check_editor_dos.py',ROOT/'lab/bbs/enigma_multiline.py']
-    reference_args=(['--probe-terminal-size'] if args.size_probe else [])+['--terminal-rows',str(geometry['rows'])]+(['--screen-reference'] if args.screen_reference else [])
+    reference_args=(['--probe-terminal-size'] if args.size_probe else [])+['--terminal-rows',str(expected_rows)]+(['--screen-reference'] if args.screen_reference else [])
     before = {str(f.relative_to(ROOT)): sha(f) for f in sources}
     base = ROOT/'build/bbs-lab'
     bridge = base/(args.label+'-proxy')
@@ -124,6 +129,7 @@ def main():
             (folder/'multiline_keys.inc').write_text('dw '+','.join(hex(word) for word in sequence)+'\n')
             keyboard_helper=folder/'MULTKEY.COM'
             subprocess.run(['nasm','-fbin','-DENIGMA_MULTILINE','-DSCREEN_REFERENCE_FREEZE',
+                '-DAUDIO_SYNC_EDITOR_SCREEN_BYTES='+str((layout['physical_rows'] if layout else 25)*160),
                 '-DAUDIO_SYNC_EDITOR_SETTLE=72','-DAUDIO_SYNC_EDITOR_KEY_WAIT=6',
                 '-DAUDIO_SYNC_EDITOR_FINAL_WAIT=90','-DAUDIO_SYNC_EDITOR_WATCHDOG_TICKS=2520',
                 '-I'+str(folder)+'/',str(ROOT/'lab/bbs/audio_synchronet_editor_keys.asm'),
@@ -142,7 +148,7 @@ def main():
             '--com', '3', '--baud', '19200', '--flow', 'HARD', '--dial-fixture',
             '--irq', '5', '--mouse-scales', '8', '4', '--cpu', '8086',
             '--timeout', '160', '--wait', exit_wait, '--raw-upstream', '--keys', keys]
-        if args.size_probe:command+=['--display-rows','25','--status-hidden','0']
+        if args.size_probe:command+=['--display-rows',str(args.display_rows),'--status-hidden',str(args.status_hidden)]
         if observer:command+=['--video-observer',str(observer)]
         if args.phone_log:command+=['--phone-log']
         if keyboard_helper:command+=['--keyboard-helper',str(keyboard_helper)]
@@ -154,15 +160,15 @@ def main():
         semantic = audit('enigma', args.label, disconnect=True,keyboard_profile='enigma-multiline' if args.multiline_editor else 'network',multiline_mode=args.multiline_editor)
         closed = json.loads((bridge/'1-closed.json').read_text())
         video = (output/'SCREEN.BIN').read_bytes()
-        text = '\n'.join(video[i:i+160:2].decode('cp437') for i in range(0,4000,160))
+        text = '\n'.join(video[i:i+160:2].decode('cp437') for i in range(0,expected_rows*160,160))
         checks = dict(size_probe_requested=not args.size_probe or ready['terminalSizeProbe'],harness=run.returncode == 0, semantic_audit=semantic,
-            exact_screen=len(video)==4000 and 'UNSAVED' in text and 'OVR 01,08' in text,
+            exact_screen=len(video)==(8000 if layout else 4000) and 'UNSAVED' in text and 'OVR 01,08' in text,
             proxy_source_unchanged=closed['source_unchanged'],
             product_source_unchanged=all(sha(ROOT/n)==h for n,h in before.items()))
         multiline={}
         if args.multiline_editor:
             report=json.loads((output/'semantic-audit.json').read_text())
-            checks['exact_screen']=len(video)==4000 and 'UNSAVED' in text
+            checks['exact_screen']=len(video)==(8000 if layout else 4000) and 'UNSAVED' in text
             multiline=report['authority']['multiline']
             multiline.update(helper_sha256=sha(keyboard_helper),key_source_sha256=sha(keyboard_helper.parent/'multiline_keys.inc'))
         observed={}
@@ -198,7 +204,7 @@ def main():
                     else:checks['resource_check_key_stayed_local']=b'r' not in wire
             observed=dict(flags=flags,ticks=ticks,capture_sha256=sha(output/'DIRVIEW.BIN'),font_sha256=sha(output/'VGA16.BIN'),observer_sha256=sha(observer))
         result = dict(passed=all(checks.values()), checks=checks,
-            terminal_geometry=geometry,
+            terminal_geometry=geometry,display_layout=layout,
             bridge=ready, command=command, binary_sha256=sha(binary),
             screen_sha256=sha(output/'SCREEN.BIN'), product_inputs=before,
             reference_observer=observed,
@@ -214,8 +220,8 @@ def main():
         if args.screen_reference:
             proof=json.loads((bridge/'1-screen-reference.json').read_text())
             checks.update(reference_freeze_completed=proof['armed'] and proof['frozen'] and proof['reply'] is not None,
-                          compiled_geometry_advertised=ready['terminalRows']==geometry['rows'])
-            result.update(passed=all(checks.values()),terminal_geometry=geometry,screen_reference=proof)
+                          expected_geometry_advertised=ready['terminalRows']==expected_rows)
+            result.update(passed=all(checks.values()),terminal_geometry=geometry,display_layout=layout,screen_reference=proof)
         (output/'proxy-integration.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result,indent=2))
         return 0 if result['passed'] else 1

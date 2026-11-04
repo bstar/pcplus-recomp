@@ -23,7 +23,7 @@ const port = Number(values['bbs-port']), timeout = Number(values['framing-ms']);
 const delay = Number(values['byte-delay-ms']);
 const rows = Number(values['terminal-rows']);
 const quietMs = Number(values['screen-quiet-ms']);
-if (![24,25].includes(rows)) throw new Error('Only 24/25 terminal rows supported');
+if (![24,25,27,28,42,43,49,50].includes(rows)) throw new Error('Unsupported owned terminal row count');
 if (![150,750].includes(quietMs)) throw new Error('Only measured screen capture intervals supported');
 if (![23231,23233,23234].includes(port)) throw new Error('Only owned loopback BBS ports allowed');
 if (![0, 250].includes(timeout) || !Number.isInteger(delay) || delay < 0 || delay > 20) {

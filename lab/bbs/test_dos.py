@@ -106,6 +106,11 @@ async def run(args):
   command+=' /T:D:\\ACTIONS.KEY'
  base=[0x3f8,0x2f8,0x3e8,0x2e8][args.com-1]
  sampler=SAMPLER
+ geometry_capture=''
+ if display_rows is not None:
+  sampler=sampler.replace('mov cx,4000','mov cx,8000')
+  subprocess.run(['nasm','-fbin',str(ROOT/'standalone/display_startup_geometry.asm'),'-o',str(output/'GEOM.COM')],check=True)
+  geometry_capture='D:\\GEOM'
  for offset in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+offset),hex(base+offset))
  (output/'sampler.asm').write_text(sampler)
  subprocess.run(['nasm','-f','bin',str(output/'sampler.asm'),'-o',str(output/'SNAP.COM')],check=True)
@@ -159,6 +164,7 @@ goto capture
 :failed
 echo FAIL>D:\\FAIL.TXT
 :capture
+{geometry_capture}
 D:\\SNAP S
 {observer_stop}
 D:\\SNAP A
@@ -197,11 +203,12 @@ exit
  except asyncio.TimeoutError:pass
  modem.save()
  screen=(output/'SCREEN.BIN').read_bytes() if (output/'SCREEN.BIN').exists() else b''
- text='\n'.join(screen[row*160:row*160+160:2].decode('cp437') for row in range(25)) if len(screen)==4000 else ''
+ snapshot_bytes=8000 if display_rows is not None else 4000
+ text='\n'.join(screen[row*160:row*160+160:2].decode('cp437') for row in range(display_rows or 25)) if len(screen)==snapshot_bytes else ''
  (output/'screen.txt').write_text(text+'\n')
  before=(output/'BEFORE.BIN').read_bytes() if (output/'BEFORE.BIN').exists() else b''
  after=(output/'AFTER.BIN').read_bytes() if (output/'AFTER.BIN').exists() else b''
- checks={'dos_normal_exit':code==0 and (output/'PASS.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'screen_captured':len(screen)==4000,'bbs_connected':any(e['kind']=='bbs-connected' for e in modem.events),'bbs_display_received':bool(modem.display)}
+ checks={'dos_normal_exit':code==0 and (output/'PASS.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'screen_captured':len(screen)==snapshot_bytes,'bbs_connected':any(e['kind']=='bbs-connected' for e in modem.events),'bbs_display_received':bool(modem.display)}
  if fixture is not None:checks['configuration_unchanged']=(output/'TEST.PRM').read_bytes()==fixture
  if meta is not None:checks['meta_actions_unchanged']=(output/'ACTIONS.KEY').read_bytes()==meta
  if keymap is not None:checks['keyboard_profile_unchanged']=(output/'BOARD.KBD').read_bytes()==keymap

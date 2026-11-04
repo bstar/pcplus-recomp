@@ -15,6 +15,13 @@ jmp install
 %ifndef AUDIO_SYNC_EDITOR_FINAL_WAIT
 %define AUDIO_SYNC_EDITOR_FINAL_WAIT 180
 %endif
+; Explicit owned-layout variant; the default retains its original25-row bytes.
+%ifndef AUDIO_SYNC_EDITOR_SCREEN_BYTES
+%define AUDIO_SYNC_EDITOR_SCREEN_BYTES 4000
+%endif
+%if AUDIO_SYNC_EDITOR_SCREEN_BYTES != 4000 && AUDIO_SYNC_EDITOR_SCREEN_BYTES != 4480 && AUDIO_SYNC_EDITOR_SCREEN_BYTES != 6880 && AUDIO_SYNC_EDITOR_SCREEN_BYTES != 8000
+%error Unsupported owned text-screen extent
+%endif
 old_vector: dd 0
 state: db 0
 ; Bound failed prerequisites too: return via the product's actual Alt-X path
@@ -151,7 +158,7 @@ visible:
  lodsb
  or al,al
  jz .found
- cmp di,4000
+ cmp di,AUDIO_SYNC_EDITOR_SCREEN_BYTES
  jae .miss
  cmp al,[es:di]
  jne .miss
@@ -160,7 +167,7 @@ visible:
 .miss:
  pop di
  add di,2
- cmp di,4000
+ cmp di,AUDIO_SYNC_EDITOR_SCREEN_BYTES
  jb .search
  pop si
  clc

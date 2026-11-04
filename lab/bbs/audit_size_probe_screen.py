@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Audit actual DOS size probe, captured BBS NAWS and CPR-bounded editor cells.
 
-Owned80x24 loopback editor scope; no physical/SIP/DSP or all-screen acceptance.
+Owned admitted-height loopback editor scope; no physical/SIP/DSP or all-screen acceptance.
 """
 import argparse
 import json
@@ -67,22 +67,25 @@ def main():
     for name, digest in producer['product_inputs'].items():
         assert sha(ROOT / name) == digest, name
     ready = json.loads((bridge / 'ready.json').read_text())
-    assert ready['terminalSizeProbe'] and ready['terminalRows'] == 24
+    assert ready['terminalSizeProbe']
     # Reuse the independently bounded ANSI/cell oracle and exact delivered-prefix
     # checks. NAWS is separately derived here, not inferred from ready metadata.
     cells = audit(out, bridge)
     assert cells['passed'] and cells['different_cells'] == 0
     prm = (out / 'TEST.PRM').read_bytes()
     words = [struct.unpack_from('<H', prm, at)[0] for at in (0x1c2, 0x1c8, 0x1ca, 0x4ec)]
-    assert words == [0, 2, 25, 0]
+    hidden,selector,physical,mode=words
+    assert hidden in (0,1) and physical in (25,28,43,50) and (selector,mode)==(2,0)
+    logical=physical-(not hidden)
+    assert ready['terminalRows']==logical
     raw = (bridge / '1-telnet-input.bin').read_bytes()
     application, subs, options = telnet(raw)
     sizes = [struct.unpack('>HH', sub[1:]) for sub in subs if sub[0] == 31 and len(sub) == 5]
-    assert sizes == [(80, 24)]
+    assert sizes == [(80, logical)]
     assert all(sub[0] != 31 or len(sub) == 5 for sub in subs)
     wire = (bridge / '1-serial-input.bin').read_bytes()
     serial_output = (bridge / '1-serial-output.bin').read_bytes()
-    report = b'\x1b[8;24;80t'
+    report = b'\x1b'+f'[8;{logical};80t'.encode()
     assert serial_output.count(b'\x1b[18t') == 1
     assert wire.count(report) == 1 and report not in application
     assert b'UNSAVED' in application
@@ -93,13 +96,14 @@ def main():
         rows = [json.loads(line) for line in (out / 'server-session.jsonl').read_text().splitlines()]
         assert rows and all(r.get('sessionId') == authority['session_id'] for r in rows)
         server_sizes = [[r['width'], r['height']] for r in rows if r.get('source') == 'NAWS' and r.get('msg') == 'Telnet: Windows size updated']
-        assert server_sizes == [[80, 24]]
+        assert server_sizes == [[80, logical]]
     paths = [out / 'proxy-integration.json', out / 'TEST.PRM', out / 'screen-reference-audit.json',
              bridge / 'ready.json', bridge / '1-telnet-input.bin', bridge / '1-telnet-output.bin',
              bridge / '1-serial-input.bin', bridge / '1-serial-output.bin']
     result = dict(passed=True, server=producer.get('server', 'ENiGMA'),
                   binary_sha256=producer['binary_sha256'], NAWS=sizes,
-                  different_cells=cells['different_cells'], actual_CPR=cells['actual_CPR'],
+                  different_cells=cells['different_cells'], matched_cells=cells['matched_cells'],
+                  physical_rows=physical,logical_rows=logical,status_hidden=hidden,actual_CPR=cells['actual_CPR'],
                   delivered_bytes=cells['delivered_bytes'], actual_query_count=1,
                   size_metadata_not_forwarded=True,
                   subnegotiations_hex=[sub.hex() for sub in subs],

@@ -1,0 +1,377 @@
+{
+  "passed": true,
+  "component": "Paired authenticated stock BBS startup-size/editor references",
+  "image": {
+    "path": "build/aspect-size-report-20261104/ordinary/TERMINAL.EXE",
+    "sha256": "a2fd6a3fcdcc30138426d747d8cde400d9fc6eb9ca5fca84d1656aeaf17caa77",
+    "manifest_sha256": "5adaf70c9110102da6adfb7246f92de5b66d277ec143b1fc0aa60984e7801ecd",
+    "source_files": 569,
+    "near_bytes": 65120,
+    "resident_CS_bytes": 65514,
+    "resident_CS_spare_bytes": 22,
+    "source_rebuild": {
+      "path": "build/aspect-size-report-proof-20261104/result.json",
+      "sha256": "7e53c28074362339558ffc09e5fdf4f98093f8bdf7151233834ac942f962f2a6"
+    }
+  },
+  "child": {
+    "path": "build/line-control-child-20261104/source/build/child/ASPECT.EXE",
+    "sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+    "manifest_sha256": "d1db7a66b3f188326b001a17affc9a0ad8805b1ade1a089dbd92385340f3b241",
+    "source_files": 288,
+    "bytes_unchanged": true
+  },
+  "matrix": {
+    "path": "build/bbs-size-layout-combined-20261104/result.json",
+    "sha256": "fe20be42f9d3d55bcf245c86a47d3213358856ff67b76e4061a083d4dd51ae68"
+  },
+  "independent_matrix": {
+    "path": "build/bbs-size-layout-independent-20261104/result.json",
+    "sha256": "43ee1b041b8f1e55a0aaa35288fd50849d3207618b33334628a7c4e3212a633d"
+  },
+  "cases": [
+    {
+      "peer": "enigma",
+      "physical_rows": 25,
+      "status_hidden": 0,
+      "logical_rows": 24,
+      "matched_cells": 1920,
+      "delivered_bytes": 48367,
+      "actual_CPR": [
+        9,
+        8
+      ],
+      "capture": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-25-0",
+      "bridge": "build/bbs-lab/bbs-size-layout-accepted-20261104-enigma-25-0-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-25-0/size-probe-screen-audit.json",
+      "audit_sha256": "dab2a3c3934f2e655e7412d39fbb496da4ef5445345bd5934c907b204bc73503",
+      "passed": true
+    },
+    {
+      "peer": "enigma",
+      "physical_rows": 25,
+      "status_hidden": 1,
+      "logical_rows": 25,
+      "matched_cells": 2000,
+      "delivered_bytes": 47883,
+      "actual_CPR": [
+        10,
+        8
+      ],
+      "capture": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-25-1",
+      "bridge": "build/bbs-lab/bbs-size-layout-accepted-20261104-enigma-25-1-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-25-1/size-probe-screen-audit.json",
+      "audit_sha256": "2e1eed67d81acac4a4d567a3b01e3dd8184d4e3e89f18f0dd2aa9d808209485c",
+      "passed": true
+    },
+    {
+      "peer": "enigma",
+      "physical_rows": 28,
+      "status_hidden": 0,
+      "logical_rows": 27,
+      "matched_cells": 2160,
+      "delivered_bytes": 47883,
+      "actual_CPR": [
+        10,
+        8
+      ],
+      "capture": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-28-0",
+      "bridge": "build/bbs-lab/bbs-size-layout-accepted-20261104-enigma-28-0-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-28-0/size-probe-screen-audit.json",
+      "audit_sha256": "911a76079c8ff9ef5ad3f94c163ee9dc34456c727f4600b012cf605d3f3315c9",
+      "passed": true
+    },
+    {
+      "peer": "enigma",
+      "physical_rows": 28,
+      "status_hidden": 1,
+      "logical_rows": 28,
+      "matched_cells": 2240,
+      "delivered_bytes": 48429,
+      "actual_CPR": [
+        10,
+        8
+      ],
+      "capture": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-28-1",
+      "bridge": "build/bbs-lab/bbs-size-layout-accepted-20261104-enigma-28-1-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-28-1/size-probe-screen-audit.json",
+      "audit_sha256": "24c1ef2b8813edf19e1c32887c830b474ad4b7025e7414065b7066009cc160ec",
+      "passed": true
+    },
+    {
+      "peer": "enigma",
+      "physical_rows": 43,
+      "status_hidden": 0,
+      "logical_rows": 42,
+      "matched_cells": 3360,
+      "delivered_bytes": 47883,
+      "actual_CPR": [
+        10,
+        8
+      ],
+      "capture": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-43-0",
+      "bridge": "build/bbs-lab/bbs-size-layout-accepted-20261104-enigma-43-0-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-43-0/size-probe-screen-audit.json",
+      "audit_sha256": "df85c975740c8fea7415276cfb456b0a114af791a288dd7dce23945fb1c0394e",
+      "passed": true
+    },
+    {
+      "peer": "enigma",
+      "physical_rows": 43,
+      "status_hidden": 1,
+      "logical_rows": 43,
+      "matched_cells": 3440,
+      "delivered_bytes": 47883,
+      "actual_CPR": [
+        10,
+        8
+      ],
+      "capture": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-43-1",
+      "bridge": "build/bbs-lab/bbs-size-layout-accepted-20261104-enigma-43-1-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-43-1/size-probe-screen-audit.json",
+      "audit_sha256": "0ed64093c9338847c4e79c77ecad3eb1aad6614097094d079ec7781a0c535e33",
+      "passed": true
+    },
+    {
+      "peer": "enigma",
+      "physical_rows": 50,
+      "status_hidden": 0,
+      "logical_rows": 49,
+      "matched_cells": 3920,
+      "delivered_bytes": 48429,
+      "actual_CPR": [
+        10,
+        8
+      ],
+      "capture": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-50-0",
+      "bridge": "build/bbs-lab/bbs-size-layout-accepted-20261104-enigma-50-0-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-50-0/size-probe-screen-audit.json",
+      "audit_sha256": "d89bc4de6011ce595c75df9e1bb678f18a5b8dd9ede678b86d35aa5216e313b9",
+      "passed": true
+    },
+    {
+      "peer": "enigma",
+      "physical_rows": 50,
+      "status_hidden": 1,
+      "logical_rows": 50,
+      "matched_cells": 4000,
+      "delivered_bytes": 47883,
+      "actual_CPR": [
+        10,
+        8
+      ],
+      "capture": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-50-1",
+      "bridge": "build/bbs-lab/bbs-size-layout-accepted-20261104-enigma-50-1-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/bbs-size-layout-accepted-20261104-enigma-50-1/size-probe-screen-audit.json",
+      "audit_sha256": "f505ffc12f573ba54395947646217bde1f35dfa164335033406f03dc6294f7b8",
+      "passed": true
+    },
+    {
+      "peer": "synchronet",
+      "physical_rows": 25,
+      "status_hidden": 0,
+      "logical_rows": 24,
+      "matched_cells": 1920,
+      "delivered_bytes": 21805,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "capture": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-25-0",
+      "bridge": "build/bbs-lab/bbs-size-layout-sync-recovery-20261104-synchronet-25-0-proxy",
+      "audit_path": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-25-0/size-probe-screen-audit.json",
+      "audit_sha256": "2d4b11a6a8a69a00bb8fc06e8a713e073026ba79c23dbac2776f59b06d9f2847",
+      "passed": true
+    },
+    {
+      "peer": "synchronet",
+      "physical_rows": 25,
+      "status_hidden": 1,
+      "logical_rows": 25,
+      "matched_cells": 2000,
+      "delivered_bytes": 23867,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "capture": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-25-1",
+      "bridge": "build/bbs-lab/bbs-size-layout-sync-recovery-20261104-synchronet-25-1-proxy",
+      "audit_path": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-25-1/size-probe-screen-audit.json",
+      "audit_sha256": "945d8cd47b7b8a990713c96280387d10d4f04ccef5094d7e5f6fca8ad38715ea",
+      "passed": true
+    },
+    {
+      "peer": "synchronet",
+      "physical_rows": 28,
+      "status_hidden": 0,
+      "logical_rows": 27,
+      "matched_cells": 2160,
+      "delivered_bytes": 22850,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "capture": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-28-0",
+      "bridge": "build/bbs-lab/bbs-size-layout-sync-recovery-20261104-synchronet-28-0-proxy",
+      "audit_path": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-28-0/size-probe-screen-audit.json",
+      "audit_sha256": "08692b7b2a6b1cb301c607dd827bc18f7fb3e7e95ae49e0272a88892fd26217e",
+      "passed": true
+    },
+    {
+      "peer": "synchronet",
+      "physical_rows": 28,
+      "status_hidden": 1,
+      "logical_rows": 28,
+      "matched_cells": 2240,
+      "delivered_bytes": 22860,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "capture": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-28-1",
+      "bridge": "build/bbs-lab/bbs-size-layout-sync-recovery-20261104-synchronet-28-1-proxy",
+      "audit_path": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-28-1/size-probe-screen-audit.json",
+      "audit_sha256": "9e7abf823640d45d22d2a91faf464b5f2075b7c8b9383de12d0e23bc225346f3",
+      "passed": true
+    },
+    {
+      "peer": "synchronet",
+      "physical_rows": 43,
+      "status_hidden": 0,
+      "logical_rows": 42,
+      "matched_cells": 3360,
+      "delivered_bytes": 31219,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "capture": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-43-0",
+      "bridge": "build/bbs-lab/bbs-size-layout-sync-recovery-20261104-synchronet-43-0-proxy",
+      "audit_path": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-43-0/size-probe-screen-audit.json",
+      "audit_sha256": "c9f0fcecd1aaa5e5cb068d791fc3c6e78efc99891109b107888e1b2967a18c22",
+      "passed": true
+    },
+    {
+      "peer": "synchronet",
+      "physical_rows": 43,
+      "status_hidden": 1,
+      "logical_rows": 43,
+      "matched_cells": 3440,
+      "delivered_bytes": 21764,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "capture": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-43-1",
+      "bridge": "build/bbs-lab/bbs-size-layout-sync-recovery-20261104-synchronet-43-1-proxy",
+      "audit_path": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-43-1/size-probe-screen-audit.json",
+      "audit_sha256": "d0a222b7d1fe9bdd5410b370bb348c434df9e7e80c9160951232a569d3ac3a88",
+      "passed": true
+    },
+    {
+      "peer": "synchronet",
+      "physical_rows": 50,
+      "status_hidden": 0,
+      "logical_rows": 49,
+      "matched_cells": 3920,
+      "delivered_bytes": 24834,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "capture": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-50-0",
+      "bridge": "build/bbs-lab/bbs-size-layout-sync-recovery-20261104-synchronet-50-0-proxy",
+      "audit_path": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-50-0/size-probe-screen-audit.json",
+      "audit_sha256": "8395f7c4656ec3a08f8b1bafcae48cb7749484fae8c6104f7482ad016770b320",
+      "passed": true
+    },
+    {
+      "peer": "synchronet",
+      "physical_rows": 50,
+      "status_hidden": 1,
+      "logical_rows": 50,
+      "matched_cells": 4000,
+      "delivered_bytes": 22398,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "capture": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-50-1",
+      "bridge": "build/bbs-lab/bbs-size-layout-sync-recovery-20261104-synchronet-50-1-proxy",
+      "audit_path": "build/bbs-lab/results/synchronet/bbs-size-layout-sync-recovery-20261104-synchronet-50-1/size-probe-screen-audit.json",
+      "audit_sha256": "a96f76c3afc2e0ca3ecd3b46b1f109acf3a557b83c5a6c50477829389c7e2511",
+      "passed": true
+    }
+  ],
+  "DOS_workflows": 16,
+  "matched_logical_cells": 46080,
+  "different_cells": 0,
+  "copied_capture_controls": {
+    "enigma-43-visible": {
+      "path": "build/bbs-size-controls-enigma-43-visible-20261104/result.json",
+      "sha256": "e4253cc2fd0a4818c298a57a6a8861b140b33cb79b9e838cb1d4f134624b9290"
+    },
+    "sync-43-visible": {
+      "path": "build/bbs-size-controls-sync-43-visible-20261104/result.json",
+      "sha256": "b6ca1fc9c1b7702c637400c6bacd294a7693478e68a9e399937517e4cfc179b6"
+    },
+    "enigma-50-hidden": {
+      "path": "build/bbs-size-controls-enigma-50-hidden-20261104/result.json",
+      "sha256": "0fb76884f38dfbc1b8ae4cfb12b3e12039d0b53724ca672b9f9f5b2c4b4f5b98"
+    },
+    "sync-50-hidden": {
+      "path": "build/bbs-size-controls-sync-50-hidden-20261104/result.json",
+      "sha256": "06cffe0b52dfef9932a06874ddba459bade0f680cb934318d6ea2f577a32c5cd"
+    }
+  },
+  "copied_capture_control_cases": 36,
+  "unchanged_capture_controls": 4,
+  "rejected_capture_mutations": 32,
+  "default_oracle_control": {
+    "path": "build/bbs-size-layout-oracle-control-20261104/result.json",
+    "sha256": "3b11108a4236bb01918f1dc559ec6eba40051c10e968d18bd881d0bfc07e285f"
+  },
+  "default_helper_control": {
+    "path": "build/bbs-size-layout-helper-20261104/result.json",
+    "sha256": "94d17387d9ead5a3437a1d490fee24035e7cd63d276298f755dbb299b64aa2eb"
+  },
+  "draft_recovery": {
+    "path": "build/bbs-size-layout-draft-recovery-20261104/result.json",
+    "sha256": "851d6c530cba5ed150b6e3a4486dbb89b7ba333e85b6857821efe3a584faa2e9"
+  },
+  "recovery_orchestration": {
+    "path": "build/bbs-size-layout-sync-recovery-20261104/result.json",
+    "sha256": "17c8f3a0083b2d4649326b1654c13beca367c37d117403115b752466a0acfb1d"
+  },
+  "excluded_attempts": [
+    {
+      "path": "build/bbs-lab/results/synchronet/bbs-size-layout-probes-20261104-synchronet-50-1/proxy-integration.json",
+      "sha256": "677a4a5ea31609247235cafcb3192f281070ef2742fd5dd1bec0100eb9cdfe53",
+      "reason": "Keyboard helper searched4000bytes; real FSEditor footer was on physicalrow50; no measured key sequence."
+    },
+    {
+      "path": "build/bbs-lab/results/synchronet/bbs-size-layout-accepted-20261104-synchronet-25-0/proxy-integration.json",
+      "sha256": "a4416d19eeaf03e0e442ea4d121dbbe7a4eea574d2271f765b4c115e339dbd61",
+      "reason": "Original suite remains failed. Owned probe draft+++ATH caused resume prompt; eight accepted Enigma cases retained and clean Synchronet cases selected separately."
+    }
+  ],
+  "sources": {
+    "lab/bbs/audio_synchronet_editor_keys.asm": "2bbf5a86b41a0c5c5ae9e7962fc97bed58b0c5d313b43f4b12d6af365e566d19",
+    "lab/bbs/audit_screen_reference.py": "82ea451cd4a5bc24a5194fcfa183e9d51ebf6b2c33bfd9c41ac8d99c34071d22",
+    "lab/bbs/audit_size_probe_screen.py": "0b6da43fad5632ba3dd2c6ed7cda76f812940e0a680c509b5d7c82d3e81b33fb",
+    "lab/bbs/check_screen_reference_controls.py": "bf57da00323592bb5f59d2870112469f502c3144fbbe8317f5b415f643613969",
+    "lab/bbs/synthmodem_proxy_serial.js": "6751c8bdb20e720d2265b1b46a493872fdce4e0d8aeb00baabf1d964049d1b6b",
+    "lab/bbs/test_dos.py": "fc3436cbc67c10873ba4c007ad4aa929db9066df7246f30338351c26405ce750",
+    "lab/bbs/test_synchronet_screen_reference_dos.py": "73d17cdc8ab302a69185b69a9d45ae8065c84d381e306cfa8702ce60d4522101",
+    "lab/bbs/test_synthmodem_proxy_dos.py": "a06e6c5d5346bf4bbd993a61b13af0e4c94125c081f506be9357cd9822b1327c",
+    "standalone/test_ansi_reference_dos.py": "bd89a1b58792c7d4d4a5719263ef8868f4bb62d5defe8ee5af3c8532df2c0dde",
+    "lab/bbs/test_size_layout_editors.py": "51e181ee2a1dda1acdd2fd6b1a8caf39d0d128fb94a1798faed9ba0a914ddeca",
+    "lab/bbs/collect_size_layout_editor_matrix.py": "745e224d6b2c0a6c2e142d27265ead05d3743e27f0fe03493c586dd50aa8e194",
+    "lab/bbs/check_size_layout_editor_matrix.py": "6925dc2eda559d6034a6fc6466ca4ca321a46de158dd45baf3ff23a079d886ad"
+  },
+  "application_bytes_changed": false,
+  "physical_acceptance": false,
+  "deployment_changed": false,
+  "installed_service_or_network_changed": false,
+  "scope": "Actual paced8086 DOS startup and staged pre-session size probe to stock Enigma/Synchronet at25/28/43/50 physical rows, visible/hidden status. Raw PRM/BIOS/font/full8000-byte video, actual NAWS, authenticated one-line editor semantics and all logical cells/cursor independently checked across16 workflows. Failed suite/probe preserved; per-case collection verified complete/current. No custom LoC, every-intermediate-frame, multiline reflow, sustained full-route transfer/carrier/reconnect or physical/full-parity acceptance."
+}

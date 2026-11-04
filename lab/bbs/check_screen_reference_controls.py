@@ -16,15 +16,18 @@ def main():
     assert out.is_relative_to(ROOT/'build') and not out.exists()
     accepted=json.loads((source/'screen-reference-audit.json').read_text());assert accepted['passed']
     out.mkdir(parents=True);reports=[]
-    kinds=['unchanged','character','attribute','cursor','prefix-truncated','unsupported-font']
+    kinds=['unchanged','character','attribute','bottom-character','bottom-attribute','cursor','prefix-truncated','unsupported-font']
     if (bridge/'1-proxy-input.bin').exists():kinds.append('proxy-input-truncated')
     for kind in kinds:
         folder=out/kind;capture=folder/'capture';peer=folder/'bridge'
         shutil.copytree(source,capture);shutil.copytree(bridge,peer)
         producer=json.loads((capture/'proxy-integration.json').read_text())
         proof=json.loads((peer/'1-screen-reference.json').read_text())
-        if kind in ('character','attribute'):
-            path=capture/'SCREEN.BIN';data=bytearray(path.read_bytes());data[0 if kind=='character' else 1]^=1
+        if kind in ('character','attribute','bottom-character','bottom-attribute'):
+            path=capture/'SCREEN.BIN';data=bytearray(path.read_bytes())
+            position=(accepted.get('logical_rows',24)*80-1)*2 if kind.startswith('bottom-') else 0
+            if kind.endswith('attribute'):position+=1
+            data[position]^=1
             path.write_bytes(data);producer['screen_sha256']=sha(path)
         elif kind=='cursor':
             old=proof['reply'];new=[old[0],old[1]%80+1];proof['reply']=new
@@ -57,8 +60,8 @@ def main():
         except AssertionError as e:error=str(e)
         rejected=error is not None or not result['passed']
         assert rejected==(kind!='unchanged'),kind
-        if kind in ('character','attribute'):
-            assert result['different_cells']==1 and not result['checks']['all_1920_cells_match']
+        if kind in ('character','attribute','bottom-character','bottom-attribute'):
+            assert result['different_cells']==1 and not result['checks']['all_cells_match']
         if kind=='cursor':assert result['different_cells']==0 and not result['checks']['cursor_matches_reference']
         reports.append(dict(case=kind,passed=True,rejected=rejected,error=error,different_cells=result['different_cells'] if result else None))
         print('PASS',kind,'rejected' if rejected else 'accepted',flush=True)
