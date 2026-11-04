@@ -41,8 +41,17 @@ class SlowCarrier(LiveZmodem):
 
 
 def main():
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--counterexample',action='store_true');a=parser.parse_args()
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--counterexample',action='store_true')
+ parser.add_argument('--terminal',type=Path,help='Explicit source-built release image instead of the historical default')
+ parser.add_argument('--output',type=Path,help='Fresh ignored JSON output path')
+ a=parser.parse_args()
  import check_transport
+ if a.terminal:
+  assert not a.counterexample,'The retained counterexample has its own selected image'
+  binary=a.terminal.resolve();assert binary.is_relative_to(ROOT/'build') and binary.name=='TERMINAL.EXE'
+  manifest=json.loads((binary.parent/'manifest.json').read_text())
+  assert hashlib.sha256(binary.read_bytes()).hexdigest()==manifest['binary_sha256'] and not manifest.get('original_inputs')
+  check_transport.BINARY=binary;check_transport.MAP=binary.parent/'terminal.map'
  if a.counterexample:
   check_transport.BINARY=ROOT/'build/terminal/carrier-deadline-baseline/TERMINAL.EXE'
   check_transport.MAP=ROOT/'build/terminal/carrier-deadline-baseline/terminal.map'
@@ -78,6 +87,9 @@ def main():
   checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
   scope='Linked production receiver, watchdog, UART ISR and storage. Hardware/kernel boundaries modeled. Quantized1200/300-bps wire time plus idle clock, not audio or physical acceptance. Fixed DTE remains unchanged; unknown modem carrier uses bounded300bps packet allowance, direct sessions retain UART allowance. Historical failure retained separately.')
  out=ROOT/'build/terminal'/('carrier-transfer-deadline-counterexample.json' if a.counterexample else 'carrier-transfer-deadline-checks.json')
+ if a.output:
+  out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
+  out.parent.mkdir(parents=True,exist_ok=True)
  out.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 
 

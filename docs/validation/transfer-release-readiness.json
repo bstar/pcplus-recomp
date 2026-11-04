@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "terminal_sha256": "501629c093d731be8f3324f185e128af76e00c2942e5ad3463c1ce7da54edb6e",
+  "application_source_commit": "61b78052b8c8c72dfa800230bb3ae460d6a5c76e",
+  "product_unchanged": true,
+  "original_inputs": [],
+  "evidence": {
+    "build/release-transfers-dos/pause-transfer-final-20261103/result.json": {
+      "passed": true,
+      "sha256": "bc71f809bcff409ee04ba3b53a2a30c4228b18c821b57f191b9289a523a629cc",
+      "cases": 16
+    },
+    "build/phone-log-carrier-terminal/pause-reliability-transfer-20261103/result.json": {
+      "passed": true,
+      "sha256": "978aaf0c21cf659c6b62538552f06a45450d4c3777fc07eca0c937ea470718fa",
+      "cases": 4
+    },
+    "build/phone-log-carrier-terminal/pause-reliability-batch-20261103/result.json": {
+      "passed": true,
+      "sha256": "2a2b2a994cfd6d7d5f21bde062ab94bb48469af358e073b656557e21a18177bd",
+      "cases": 10
+    },
+    "build/phone-log-carrier-terminal/pause-reliability-fragment-20261103/result.json": {
+      "passed": true,
+      "sha256": "a3c6efcd58b63e83a40e22cdfb0c5d2796940f74b730a8d0a9e235af66bfd866",
+      "cases": 4
+    },
+    "build/phone-log-carrier-terminal/pause-reliability-aspect-20261103/result.json": {
+      "passed": true,
+      "sha256": "0b8d0ec94ccaa2874fee5dee01b508b5b46e4db3acac6cd57e6b2b8f851e9808",
+      "cases": 4
+    },
+    "build/pause-reliability-deadlines-20261103/result.json": {
+      "passed": true,
+      "sha256": "8ff3062f513aa023cca5bd6f74625aa1f067d644845bcb10ba28638bd56f65e2",
+      "cases": 4
+    }
+  },
+  "independent_peer_executables": {
+    "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz": "582f46dbbc401d98ef7bc0af8ff34e7ef33f159699d6b73def7434c04297e34d",
+    "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/rz": "b494265acac463036658b11552e0be35fff29b919e6fa036fae57a6ba44afbd2"
+  },
+  "source_inputs": {
+    "standalone/test_release_transfers_dos.py": "edaca863579ab1b9b4e11e20d5d4f2f2b3e5d4138d993d185623264b4fe615dd",
+    "standalone/check_carrier_transfer_deadline.py": "764aa3faf3d2bae3023cc67d38cc0db978fd76d655dae5853abfae5162c3d89f",
+    "nix/flake.nix": "1bed287bbe29de9ee1108e16ded622ad7f71736278098dad0fba741c540652fa",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26",
+    "tools/dev": "abbf4bd3a4d6cb91b5f7eecc3919ccbccd15e472bc49463e9d2669adc67e0bca"
+  },
+  "cases": {
+    "binary_roundtrip_retry_cancellation": 16,
+    "carrier_loss_transfer": 18,
+    "aspect_disconnect_return": 4,
+    "modeled_carrier_deadline_groups": 4
+  },
+  "installed": false,
+  "scope": "Actual DOS8086 synthetic COM3/IRQ5 X/Y/ZMODEM peers and emulated Hayes/DCD loss, plus linked modeled slow-carrier deadlines. Same source-built candidate. No actual BBS file-area, SIP/DSP/analog, physical IRQ/flow acceptance or whole original-feature parity. Management endpoint timed out; installed selection and private configuration unchanged."
+}

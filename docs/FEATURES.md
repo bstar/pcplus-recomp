@@ -1683,3 +1683,11 @@ cursor/row restoration and deferred connection notices. Its actual DOS observer
 and CPU/ABI evidence are scoped separately from physical acceptance. Elapsed
 time, other terminal controls, file/DOS, directory/key and Chat work remain open;
 additional geometry and full application gates do not close.
+
+The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
+16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
+emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A
+cancelled YMODEM attempt is retried successfully in the same process/connection.
+The selected-image deadline checker covers fixed DTE versus slow modeled wire
+rates. These scoped software checks do not close analog/BBS-file-area, other
+protocol or full original-feature acceptance gates.

@@ -88,3 +88,8 @@ notices until the paused status row is restored, preventing notice-underlay
 contamination on qualified DCD loss. The public receipt keeps the exact native
 body proof, maintained integration, DOS observers and BBS results distinct.
 Physical BUSY and the remaining command/parity inventory stay open.
+
+The [current transfer-readiness checkpoint](TRANSFER_RELEASE_READINESS.md)
+binds successful binary X/Y/ZMODEM, cancellation/retry, real emulated carrier
+loss and ASPECT return checks to that same candidate. It preserves a separate
+physical acceptance gate and does not imply BBS file-area or analog testing.
