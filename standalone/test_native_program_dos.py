@@ -63,7 +63,7 @@ exit
     (folder/'wire.bin').write_bytes(wire)
     text=(folder/'CHECKS.TXT').read_text() if (folder/'CHECKS.TXT').exists() else ''
     match=re.search(r'PROGRAM COM(\d) ([NSHB]) (\d+) checks (\d+) failures',text)
-    expected=(b'\x11D\x13\x11R'+b'\x13\x11'*14+b'F\x13' if flow in 'SB' else b'DRF')
+    expected=(b'\x11D\x13\x11R'+b'\x13\x11'*15+b'F\x13' if flow in 'SB' else b'DRF')
     checks=dict(DOS_pass=not timeout and (folder/'RESULT.TXT').exists() and (folder/'RESULT.TXT').read_text().strip()=='PASS',
         assertions=bool(match) and match[1]==str(port) and match[2]==flow and int(match[4])==0,
         exact_wire=bytes(wire)==expected,peer_stages=sent==['initial','after','finished'],peer_no_error=not errors,

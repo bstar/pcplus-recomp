@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Native PROGRAM28-row restoration](NATIVE_PROGRAM_28_ROWS.md) now selects the
+400-line/14-pixel ROM view and verifies it before saved-frame replay. Native
+COM1/2 × all four flow policies,13 linked admission cases and24 attached ASPECT
+SAVE/NOCLEAR workflows cover standard25/28/43/50-row returns. Independent DOS
+geometry and far-history/cursor captures, exact wire checks and isolated builds
+bind the change. Larger connection notices, negative/carrier/transfer composition,
+normal line controls, broader parity and BBS/physical acceptance remain open.
+
 [Actual larger-height ASPECT sessions](ASPECT_LARGE_SESSIONS.md) now cover24 DOS
 parent/child workflows: profiles4/6 at25/28/43/50 physical rows, queries and return,
 RIS, and cooperative windows with lower-row updates. Full frame/reply/owner and

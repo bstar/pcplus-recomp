@@ -12,10 +12,10 @@ def main():
  records=[];identities=[]
  for run in a.run:
   run=run.resolve();assert run.is_relative_to(ROOT/'build');rp=run/'result.json';report=json.loads(rp.read_text());assert report['passed'] and report['diagnostic_package_rejected']
-  assert len(report['cases'])==3 and {c['kind'] for c in report['cases']}=={'queries','RIS','window'}
+  assert (len(report['cases'])==3 and {c['kind'] for c in report['cases']}=={'queries','RIS','window'}) or (len(report['cases'])==1 and report['cases'][0].get('nested') in ('save','noclear-text','noclear-graphics'))
   for n,h in report['sources'].items():assert sha(ROOT/n)==h,n
   for case in report['cases']:
-   rows,profile,kind=case['physical_rows'],case['profile'],case['kind'];folder=run/f'{rows}-{profile}-{kind}'/'run'
+   rows,profile,kind=case['physical_rows'],case['profile'],case['kind'];nested=case.get('nested');folder=run/(f'{rows}-{profile}-{kind}'+('-'+nested if nested else ''))/'run'
    for n,h in case['artifacts'].items():assert sha(folder/n)==h,n
    raw=(folder/'RENDER.BIN').read_bytes();header=struct.unpack_from('<7H',raw);assert header[:4]==(0x524e,1,1,1) and header[6]==0
    history=[raw[history_at+i*72:history_at+(i+1)*72] for i in range(3)];states=[struct.unpack_from('<4H',h) for h in history]
@@ -24,8 +24,15 @@ def main():
    expected_segment=header[5]+16+manifest['memory_layout']['history_relative_segment']
    assert all(start<=pointer<end and end-start==63000 and segment==expected_segment for start,end,pointer,segment in states)
    state=struct.unpack_from('<10H',raw,886);assert state[5]==profile and state[6:8]==((rows-2,10) if kind=='window' else (0,21)),state
+   if nested:
+    logical=rows-1;expected=bytearray(b' \x07'*(logical*80))
+    if nested!='noclear-graphics':
+     for offset,text in [(0,b'FIRST BYTE SAFELOGIN:'),((logical-1)*160,('LOWER-'+str(rows)).encode())]:
+      for i,value in enumerate(text):expected[offset+2*i]=value
+    if nested=='noclear-text':expected[20*160:20*160+2]=b'C\x4f'
+    assert (folder/'SCREEN.BIN').read_bytes()[:logical*160]==expected,(rows,profile,nested,'complete logical frame')
    assert case['cpu']=='8086' and case['serial_irq']==5 and all(case['checks'].values())
-   records.append(dict(rows=rows,profile=profile,kind=kind,child_exit=0,far_history_retained=True,far_history_segment=expected_segment,history_states=states,exit_cursor=state[6:8],result_sha256=sha(folder/'result.json'),observer_capture_sha256=sha(folder/'RENDER.BIN')))
+   records.append(dict(rows=rows,profile=profile,kind=kind,nested=nested,child_exit=0,far_history_retained=True,far_history_segment=expected_segment,history_states=states,exit_cursor=state[6:8],result_sha256=sha(folder/'result.json'),observer_capture_sha256=sha(folder/'RENDER.BIN')))
   identities.append(dict(path=str(rp.relative_to(ROOT)),sha256=sha(rp)))
  result=dict(passed=True,cases=records,actual_DOS_cases=len(records),reports=identities,checker_sha256=sha(Path(__file__)),policy_header_sha256=sha(ROOT/'src/aspect/renderer_policy.h'),scope=__doc__+' Checks immutable actual parent/ASPECT captures, real child exit, cursor and independent far-history relocation/bounds/content across EXEC. No new runtime, original executable or physical acceptance.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS independent session artifacts',len(records),'actual DOS cases')

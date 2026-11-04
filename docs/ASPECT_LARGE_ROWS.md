@@ -71,11 +71,11 @@ Output directories must be new; exact flags and input hashes are in the receipt.
 The [actual session checkpoint](ASPECT_LARGE_SESSIONS.md) now covers profiles4/6
 queries, RIS, cooperative windows/lower updates and parent return at all four
 heights. Extend this to partial CSI, errors and carrier loss.
-The cooperative script window still saves/paints/restores a25-row prefix; prove
-that it preserves and refreshes the exposed lower live background. Nested native
-PROGRAM currently admits25/43/50 ROM heights and explicitly excludes28; extend
-and verify its14-pixel font restoration, SAVE/NOCLEAR/return paths before claiming
-all larger-height script workflows. No child admission or renderer output follows
+The cooperative window's25-row prefix preserves the tested lower live updates.
+The [native PROGRAM28-row checkpoint](NATIVE_PROGRAM_28_ROWS.md) adds standard
+14-pixel font restoration and attached SAVE/NOCLEAR return coverage. Broader
+negative/streaming/transfer composition is still required before claiming all
+larger-height script workflows. No child admission or renderer output follows
 from a pure policy check alone.
 
 Normal line switching/startup preferences, other fixed-height modal owners,

@@ -98,7 +98,7 @@ static void text_case(const char *child,unsigned value,unsigned rows)
  if(rows==43)program_ui_scanlines(1);
  else program_ui_scanlines(2);
  mode(value);
- if(rows!=25){in.x.ax=0x1112;in.x.bx=0;int86(0x10,&in,&out);}
+ if(rows!=25){in.x.ax=rows==28?0x1111:0x1112;in.x.bx=0;int86(0x10,&in,&out);}
  CHECK(native_display_probe()==0&&native_display_rows==rows);
  count=native_display_bytes/2;segment=native_display_segment;
  height=*(unsigned __far *)MK_FP(0x40,0x85);video=MK_FP(segment,0);
@@ -151,7 +151,7 @@ int main(int argc,char **argv)
  in.h.ah=0;int86(0x16,&in,&out);CHECK(out.x.ax==0x2c7a);
  prepare();CHECK(native_program_execute(child,"G",0,0,0,&result)==0);CHECK(result.process.child_status==37&&result.view_reset==1);
  CHECK(native_display_probe()==0&&native_display_rows==25);
- text_case(child,1,25);text_case(child,2,25);text_case(child,7,25);text_case(child,3,43);text_case(child,3,50);
+ text_case(child,1,25);text_case(child,2,25);text_case(child,7,25);text_case(child,3,28);text_case(child,3,43);text_case(child,3,50);
  prepare();CHECK(native_program_execute("NO-SUCH.COM",0,0,0,1,&result)==NATIVE_PROGRAM_PROCESS);
  CHECK(result.process.status==NATIVE_PROCESS_EXEC);restored();
  prepare();native_display_fail_alloc=1;

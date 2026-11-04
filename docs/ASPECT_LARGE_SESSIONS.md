@@ -90,9 +90,9 @@ commands/inputs are recorded separately in the receipt.
 
 ## Remaining acceptance
 
-Nested native PROGRAM still excludes28-row14-pixel ROM font restoration. Verify
-that path and SAVE/NOCLEAR/return adoption before claiming all larger-height script
-workflows. Larger-height connection-notice placement also needs integration;
+The [nested PROGRAM checkpoint](NATIVE_PROGRAM_28_ROWS.md) now covers standard
+28-row/14-pixel font restoration and SAVE/NOCLEAR return adoption. Larger-height
+connection-notice placement still needs integration;
 connection_ui.asm still deliberately refuses non-row25 notice leases. Partial CSI,
 errors, cancellation, carrier-loss/reconnect and full transfer interactions at these
 heights need their own session coverage, alongside other fixed-height modal owners.

@@ -63,9 +63,9 @@ static unsigned restore_mode(unsigned mode,unsigned rows,unsigned height)
  union REGS in,out;
  /* Native7ee8 selects vertical scan lines before the native6f3e mode reset.
   * Standard ROM font selection follows the original application's policy. */
- program_ui_scanlines(rows==43||height==14?1:height==16||rows==50?2:0);
+ program_ui_scanlines(rows==28?2:rows==43||height==14?1:height==16||rows==50?2:0);
  program_ui_mode(mode);
- if(rows!=25){in.x.ax=0x1112;in.x.bx=0;int86(0x10,&in,&out);}
+ if(rows!=25){in.x.ax=rows==28?0x1111:0x1112;in.x.bx=0;int86(0x10,&in,&out);}
  if(native_display_probe()||native_display_mode!=mode||native_display_rows!=rows||
     *(unsigned __far *)MK_FP(0x40,0x85)!=height)return NATIVE_DISPLAY_STATE;
  return 0;
@@ -99,12 +99,12 @@ unsigned NATIVE_PROGRAM_CODE __cdecl native_program_execute(const char *program,
  status=native_display_probe();if(status)goto display_rejected;
  mode=native_display_mode;rows=native_display_rows;columns=native_display_columns;
  height=*(unsigned __far *)MK_FP(0x40,0x85);
- /* Production renderer currently admits80x25 only. The composed diagnostic
-  * also verifies native40-column and43/50-row standard ROM views. Arbitrary
+ /* Standard ROM views include400-line/14-pixel28 rows,350-line/8-pixel43
+  * and400-line/8-pixel50. Arbitrary
   * downloadable fonts/adapters are not silently claimed as restored. */
  if((mode!=1&&mode!=2&&mode!=3&&mode!=7)||
     !((rows==25&&(height==8||height==14||height==16))||
-      ((rows==43||rows==50)&&height==8))){status=NATIVE_DISPLAY_STATE;goto display_rejected;}
+      (rows==28&&height==14)||((rows==43||rows==50)&&height==8))){status=NATIVE_DISPLAY_STATE;goto display_rejected;}
  in.h.ah=3;in.h.bh=0;int86(0x10,&in,&out);cursor=out.x.dx;shape=out.x.cx;
 #if defined(ASPECT_EXTERNAL_UNWIND)
  held.mode=mode;held.rows=rows;held.columns=columns;held.height=height;

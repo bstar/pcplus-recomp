@@ -1,0 +1,261 @@
+{
+  "passed": true,
+  "images": {
+    "child": {
+      "path": "build/native-28-work-20261104/source/build/child/ASPECT.EXE",
+      "sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+      "manifest_sha256": "7481d057e4ee19d8ae8861a9058dfb7213e057044dc467d8cdccb05fa650d012",
+      "source_files": 288,
+      "source_proof": "build/native-28-proof-20261104/result.json",
+      "source_proof_sha256": "c780b5f1d74a9c08e8fab6e65bd8a5d3fb04254d5a878accbb9304f6ce6f0d6d"
+    },
+    "native_component": {
+      "path": "build/native-28-work-20261104/source/build/native-program/PROGRAM.EXE",
+      "sha256": "d719cd6be9ce1dc4c66324c00805c59a0c481124ca1540b050050257464c1cf0",
+      "manifest_sha256": "057fb7b25822832b3d4ddd7352d213ffee0074b571a1a19b1c3a76e82caf3458",
+      "source_files": 80,
+      "source_proof": "build/native-28-proof-20261104/result.json",
+      "source_proof_sha256": "c780b5f1d74a9c08e8fab6e65bd8a5d3fb04254d5a878accbb9304f6ce6f0d6d"
+    }
+  },
+  "checks": {
+    "native_COM_flow": {
+      "path": "build/native-28-work-20261104/source/build/native-program/runs/native28-all/result.json",
+      "sha256": "f77264f0a63bd696bd7377ef1e81d3c054a56e69a61c056fa5b22b69d6504f77",
+      "cases": 8,
+      "assertions": 399304
+    },
+    "linked_admission": {
+      "path": "build/native-28-work-20261104/source/build/native-program/admission.json",
+      "sha256": "eee89872fa133066200c272736a207a2ec0e4034d425c531ce85d68f1446c57a",
+      "cases": 13
+    },
+    "attached_sessions": [
+      {
+        "path": "build/native28-final-25-p4-save-20261104/result.json",
+        "sha256": "4804e01bbb4cc49ec99159a3dc86b606faf38bbff7e76a48b2d0f5c3ae35fd6c",
+        "rows": 25,
+        "profile": 4,
+        "nested": "save"
+      },
+      {
+        "path": "build/native28-final-25-p4-noclear-graphics-20261104/result.json",
+        "sha256": "b943a14a9be294f45ce9e4eb35db9714e0b055448f314b96a8b496029c72b156",
+        "rows": 25,
+        "profile": 4,
+        "nested": "noclear-graphics"
+      },
+      {
+        "path": "build/native28-final-25-p4-noclear-text-20261104/result.json",
+        "sha256": "14cf31ea9f73c10322f191154e25ab377e72a891c29b039f45e0681d0fd2f1e7",
+        "rows": 25,
+        "profile": 4,
+        "nested": "noclear-text"
+      },
+      {
+        "path": "build/native28-final-25-p6-save-20261104/result.json",
+        "sha256": "ff547d484c63a5737003e63ea020e620a92ac6216fbfe4bfa28b899e72361d6e",
+        "rows": 25,
+        "profile": 6,
+        "nested": "save"
+      },
+      {
+        "path": "build/native28-final-25-p6-noclear-graphics-20261104/result.json",
+        "sha256": "826c4af91bfccbe7d45036d543904b9500efb094c327a3f7f7eb2d90062bbada",
+        "rows": 25,
+        "profile": 6,
+        "nested": "noclear-graphics"
+      },
+      {
+        "path": "build/native28-final-25-p6-noclear-text-20261104/result.json",
+        "sha256": "a0a303e15d221b5281400d6442ff1658dcac79b28ada7307d372bc3d2c792bc1",
+        "rows": 25,
+        "profile": 6,
+        "nested": "noclear-text"
+      },
+      {
+        "path": "build/native28-final-28-p4-save-20261104/result.json",
+        "sha256": "b96bc7865904ee6b29c330a34ea3144f6f0881a11f7543df538646b82f01b539",
+        "rows": 28,
+        "profile": 4,
+        "nested": "save"
+      },
+      {
+        "path": "build/native28-final-28-p4-noclear-graphics-20261104/result.json",
+        "sha256": "1b7950ff5ecad508546ae0706148b8ac9aa07a869706b1c11936be5353856327",
+        "rows": 28,
+        "profile": 4,
+        "nested": "noclear-graphics"
+      },
+      {
+        "path": "build/native28-final-28-p4-noclear-text-20261104/result.json",
+        "sha256": "14dc472013198c3c01dd8da936d7fa3c79de16322fc42c150a9fe86a1c94dd3a",
+        "rows": 28,
+        "profile": 4,
+        "nested": "noclear-text"
+      },
+      {
+        "path": "build/native28-final-28-p6-save-20261104/result.json",
+        "sha256": "d56c038966e9431a343c3c0424e277d0bec55d645e41e99066ba1bb6d0b382c6",
+        "rows": 28,
+        "profile": 6,
+        "nested": "save"
+      },
+      {
+        "path": "build/native28-final-28-p6-noclear-graphics-20261104/result.json",
+        "sha256": "4885acf9eab06b34fd59cbfcc758a3415ead0be64f44cf12df8616fe2f89d07d",
+        "rows": 28,
+        "profile": 6,
+        "nested": "noclear-graphics"
+      },
+      {
+        "path": "build/native28-final-28-p6-noclear-text-20261104/result.json",
+        "sha256": "cb704b3444d3a14d9c9638aa577c03a10a33a30d6ecc5fa9a5780724f7370d27",
+        "rows": 28,
+        "profile": 6,
+        "nested": "noclear-text"
+      },
+      {
+        "path": "build/native28-final-43-p4-save-20261104/result.json",
+        "sha256": "9884371984ef5edc89d23aa3ad08810c49738a767fcd6faf15317767350b715f",
+        "rows": 43,
+        "profile": 4,
+        "nested": "save"
+      },
+      {
+        "path": "build/native28-final-43-p4-noclear-graphics-20261104/result.json",
+        "sha256": "3a9c5d24467873617c5d5e867c82c4e4a8ce56e309ed11c757421e93953a2cb1",
+        "rows": 43,
+        "profile": 4,
+        "nested": "noclear-graphics"
+      },
+      {
+        "path": "build/native28-final-43-p4-noclear-text-20261104/result.json",
+        "sha256": "c1cba84c383f1dd5f5e499838a7e9e08f641cda62219e5712120de1d9ebea1c6",
+        "rows": 43,
+        "profile": 4,
+        "nested": "noclear-text"
+      },
+      {
+        "path": "build/native28-final-43-p6-save-20261104/result.json",
+        "sha256": "c150c60e6935337f549cfc0609bc0574b3f4237408dc7d0868496564768fee01",
+        "rows": 43,
+        "profile": 6,
+        "nested": "save"
+      },
+      {
+        "path": "build/native28-final-43-p6-noclear-graphics-20261104/result.json",
+        "sha256": "8581e3f1a61ae1b358ef3474c08d02dfb5c55d3ea2df153e0e23278729948dbc",
+        "rows": 43,
+        "profile": 6,
+        "nested": "noclear-graphics"
+      },
+      {
+        "path": "build/native28-final-43-p6-noclear-text-20261104/result.json",
+        "sha256": "b0d1dc083317f130363220535ddc6423880853f84c2a7c89e927dd492237bf99",
+        "rows": 43,
+        "profile": 6,
+        "nested": "noclear-text"
+      },
+      {
+        "path": "build/native28-final-50-p4-save-20261104/result.json",
+        "sha256": "e7a13cd836b363ee57340a5b842d1ab1efbac0d2fb6bb6d821f240f71135eb90",
+        "rows": 50,
+        "profile": 4,
+        "nested": "save"
+      },
+      {
+        "path": "build/native28-final-50-p4-noclear-graphics-20261104/result.json",
+        "sha256": "87a2eaa561e2800d3bf82edf1918b596d34b31b3485c1cb34348f30a1911e04f",
+        "rows": 50,
+        "profile": 4,
+        "nested": "noclear-graphics"
+      },
+      {
+        "path": "build/native28-final-50-p4-noclear-text-20261104/result.json",
+        "sha256": "e5a3d6f9615122fd0301ce24ebba105780aa0dcc187ed8c8636d20b26ddaf8c6",
+        "rows": 50,
+        "profile": 4,
+        "nested": "noclear-text"
+      },
+      {
+        "path": "build/native28-final-50-p6-save-20261104/result.json",
+        "sha256": "546d61a82142530a130479013f100b3daf6ad851fa55dac71788dd931af870b9",
+        "rows": 50,
+        "profile": 6,
+        "nested": "save"
+      },
+      {
+        "path": "build/native28-final-50-p6-noclear-graphics-20261104/result.json",
+        "sha256": "02981fd8469101b2fa7f0ae4134501480d633048139e946c73d453594c340138",
+        "rows": 50,
+        "profile": 6,
+        "nested": "noclear-graphics"
+      },
+      {
+        "path": "build/native28-final-50-p6-noclear-text-20261104/result.json",
+        "sha256": "3d1264f646881c496157374cd8c53348212cf660dc6e40069729bd951e5b73dc",
+        "rows": 50,
+        "profile": 6,
+        "nested": "noclear-text"
+      }
+    ],
+    "independent_artifacts": {
+      "path": "build/native28-artifact-final-20261104/result.json",
+      "sha256": "3357e6d17c9508be351705e0ebf29b78da7cabeb595234170be9e1f54116cc78",
+      "cases": 24,
+      "complete_logical_frames_checked": true
+    }
+  },
+  "deployment_changed": false,
+  "actual_nested_sessions": 24,
+  "limitations": [
+    "Standard ROM VGA views only; no arbitrary downloadable fonts.",
+    "Synthetic DOS/emulated UART/BIOS keys; no live BBS/SIP/analog or physical CTS/DCD acceptance.",
+    "Larger connection notices, negative/carrier/transfer composition, normal line controls and complete original parity remain open."
+  ],
+  "child_build_command": [
+    "python",
+    "-c",
+    "import sys; from pathlib import Path; sys.path.insert(0,'standalone'); import build_aspect_process as b; b.main(parent_render=True,output=Path.cwd()/'build/child',notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True)"
+  ],
+  "parent_images_reference": "docs/validation/aspect-large-sessions.json",
+  "parent_images": {
+    "ordinary": {
+      "path": "build/aspect-session-20261104/ordinary/TERMINAL.EXE",
+      "sha256": "644c76d66e3a07118e278c00ddb94dccb26f02e1466645d7e18b8ef715f111bf",
+      "manifest_sha256": "d9410a1b2ac75e95b4e3c556af03a2e186899fa6890b90e9c297564c70b21b3b"
+    },
+    "25": {
+      "path": "build/aspect-session-20261104/25/TERMINAL.EXE",
+      "sha256": "e1af944ce9c188a818e2afc68cb329771c34385848fda25d930835348c614eac",
+      "manifest_sha256": "f3d04c4221845ae73efe4cc81ecd609586dcba0f6ee4a2d7d832993c32859b4e"
+    },
+    "28": {
+      "path": "build/aspect-session-20261104/28/TERMINAL.EXE",
+      "sha256": "8cd99fd4a4cfaca92df32d4d9a091ade90fe854d7f75a7f6d6b6308fd0bcac44",
+      "manifest_sha256": "5296b74bf5b20de68ed6995bbfb59dca28fe2d16bebc3b355a9f47a3e6476d24"
+    },
+    "43": {
+      "path": "build/aspect-session-20261104/43/TERMINAL.EXE",
+      "sha256": "fd71e72cfaf206ea47e97cd77245e113fc8de7b31ef1b996279683a1d682cd1c",
+      "manifest_sha256": "5508c67dd80c1c0a6b8cacd069f91739607439d21838f9815b3ce316c94cd954"
+    },
+    "50": {
+      "path": "build/aspect-session-20261104/50/TERMINAL.EXE",
+      "sha256": "40770b309fbbb7cf187969b290b62aac64ebdce839e519a77cdb95914e814698",
+      "manifest_sha256": "c94bcde6ee0ad95bfb54b36a7fb0002190e4c04e725d279b709087ad6dc0f876"
+    }
+  },
+  "source_inputs": {
+    "src/process/native_program.c": "92d55e58695892350da9fc67cc5a6997bebc4be49958d8d3e54d5d828b2845c0",
+    "standalone/native_program_diagnostic.c": "6a5924e609584c3703c85d12ecd8cad2c9a406cf7c22d6057933cf3df81e2589",
+    "standalone/test_native_program_dos.py": "b4c7926fb227d5b186482e87f71fa769ffbd230b8e26c6f771e41a330c266b99",
+    "standalone/check_native_program_admission.py": "b01036395e197fe7e5ff358bc01c76da9e1018ae9a0ba987689dbdd1e818929e",
+    "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+    "standalone/test_aspect_large_session_dos.py": "df4bc33653efdc16958955f9b514c0968ff7210c1ed882fe45d0ba0eac64b5d4",
+    "standalone/check_aspect_large_session_artifacts.py": "c01aaac723d026cbaf007b8164f0f29870958cea24747de555352399f0bdd5ae",
+    "standalone/aspect_parent_child.asm": "3ae598dfd0fc135fe1c6237de70ae37388bb34f9894232f8430da9edbe29d105",
+    "standalone/text_geometry_child.asm": "2cf20e95b3e44798f8316a1406ac71c9a0ced4cf54e58c207846a153acdbca5f"
+  }
+}
