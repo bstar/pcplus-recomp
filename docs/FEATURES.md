@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+The [carrier/C0 connection-test package](CONNECTION_CARRIER_C0_PACKAGE.md) is now
+staged with five exactly reproduced executables, ten verified archive files and
+fresh DOS launcher/setup/script/splash checks. It is not deployed; the selected
+installed package remains unchanged.
+
 [Carrier loss, redial and exact retry](TRANSFER_LOSS_DRAIN.md) now pass through
 the staged size-probed SynthModem proxy and stock Enigma in one DOS 8086 parent.
 The built-in modem owns real emulated DCD: a forced drop after a 4096-byte disk

@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "component": "Reproduced source-built carrier/C0 connection-test package; staged only",
+  "application_commit": "dc3b638f06fda48119bc618046a1b324aebe9031",
+  "package_source_base_commit": "dba968d06dd0765c5de24151499ed692226b85bd",
+  "package": {
+    "path": "build/connection-test-carrier-c0-final-20261104/manifest.json",
+    "sha256": "43b18f27449efc1080591df380c24a54e56efc8abbcaa83cf9794cf129bf3b1c"
+  },
+  "archive": {
+    "path": "build/connection-test-carrier-c0-final-20261104.zip",
+    "sha256": "500598b3ad0347d0dc1b68283eb42ff2c87bf485401517790032375ad95042fe"
+  },
+  "archive_files": 10,
+  "source_only_proof": {
+    "path": "build/connection-test-carrier-c0-final-proof-20261104/result.json",
+    "sha256": "d762c98842a7d4a86496972fe440e896967c173d66d31ea2516228435cac6f86"
+  },
+  "public_export_sources": 2142,
+  "exact_executables": {
+    "TERMINAL.EXE": "e2e1f7ec210da06c36be2f8129a622c70788179daf5ab10c4dac22981cc98059",
+    "ASPECT.EXE": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "4cc597d3e8f992ed4262e8544b4d3776b1780d76005f5dccef62f05aa9323335",
+    "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+    "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+    "TERMINAL.EXE": "e2e1f7ec210da06c36be2f8129a622c70788179daf5ab10c4dac22981cc98059",
+    "VERSION.TXT": "3632354b910a264df050d7fc61bfd32ffe150ddc42eafde905b047e1ed20f24f",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "DOS_tests": {
+    "splash": {
+      "path": "build/connection-test-carrier-c0-final-splash-20261104/result.json",
+      "sha256": "8c839e1413a20bbbf1d735c7b0687256e8eddc52aeb93326ec2befbbf9705f74"
+    },
+    "script": {
+      "path": "build/connection-test-carrier-c0-final-script-20261104/result.json",
+      "sha256": "4fd0ae00bf6aeca8c9a728e14f7d523e24533c3015126611f087fc3df949395b"
+    },
+    "setup": {
+      "path": "build/connection-test-carrier-c0-final-setup-20261104/result.json",
+      "sha256": "5ca9a60c6eae24b3523f971e150c106a41d91deb6fca565fb4c95254d2b95683"
+    }
+  },
+  "carrier_validation": {
+    "path": "docs/validation/transfer-loss-drain.json",
+    "sha256": "5c5b9d8f85bce32a9b4ef64e7262ad6e1aeb5015fcc38ebe790f2a8c321a90e9"
+  },
+  "c0_validation": {
+    "path": "docs/validation/c0-controls.json",
+    "sha256": "89b7e9b5441ed8d487cc866475bab3359bb1924253d7b2cd90ebeabb8b1adb76"
+  },
+  "retained_failed_package_proof": {
+    "path": "build/connection-test-carrier-c0-proof-20261104",
+    "reason": "Older flag converter omitted seven admitted display options; rebuilt terminal differed and was rejected"
+  },
+  "retained_failed_script_fixture": {
+    "path": "build/connection-test-carrier-c0-script-20261104",
+    "reason": "Old opaque editor fixture supplied invalid display preferences to startup; parent stopped and script output was absent"
+  },
+  "selection_at_recording": {
+    "path": "build/connection-test-current.json",
+    "sha256": "93a9db94c1164e7ba004a637b02484e548791713385c3f5a24e8c48c8a364b2c",
+    "package": "build/connection-test-package-splash-20261102"
+  },
+  "deployment_selection_changed": false,
+  "card_written": false,
+  "original_inputs": [],
+  "scope": "Five byte-identical executables and ten exact public package files rebuilt from exported source without ancestor Git, originals or private configuration. Actual8086 launch/setup/precompiled-script and splash captures with BIOS UART entry omitted, dummy COM3/IRQ5 and restored hardware/environment/config. Archive decoded and all ten payload hashes checked. Not an installed release or Boca/SPA2102/SIP/DSP/analog acceptance."
+}
