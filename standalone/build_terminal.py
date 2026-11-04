@@ -28,6 +28,7 @@ parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchang
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
 parser.add_argument('--manual-init',action='store_true',help='Integrate guarded manual Init key/menu and exclusive foreground UART scheduling')
 parser.add_argument('--manual-init-owner',action='store_true',help='Link isolated bounded send-only Init Modem owner; no keyboard/menu binding')
+parser.add_argument('--auto-answer',action='store_true',help='Enable guarded Alt-Y/reference/browser with configured answer-on, notice and sound')
 parser.add_argument('--auto-answer-owner',action='store_true',help='Link typed answer-on and acceptance-qualified echo component; no Alt-Y/UI binding')
 parser.add_argument('--elapsed-view',action='store_true',help='Enable serviced original Alt-T/Alt-Z elapsed-time window; requires call timer and local controls')
 parser.add_argument('--call-timer',action='store_true',help='Bind the recovered call timer to confirmed connection transitions; Alt-T view remains separate')
@@ -74,6 +75,10 @@ if args.directory_preview:
  assert args.session_baseline and args.session_capture
 if args.directory_view:args.original_reference=True
 if args.local_controls:assert args.original_reference,'Local controls require the original reference interface'
+if args.auto_answer:
+ args.auto_answer_owner=True
+ args.manual_init=True
+ assert args.notice_sound and args.status_geometry,'Auto Answer requires the sound owner and reserved status row'
 if args.auto_answer_owner:args.manual_init_owner=True
 if args.manual_init:
  args.manual_init_owner=True
@@ -184,6 +189,7 @@ if args.elapsed_view:out_name+='-elapsed-view'
 if args.manual_init_owner:out_name+='-manual-init-owner'
 if args.manual_init:out_name+='-manual-init'
 if args.auto_answer_owner:out_name+='-auto-answer-owner'
+if args.auto_answer:out_name+='-auto-answer'
 if args.keyboard_bank:out_name+='-keyboard-bank'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
@@ -220,6 +226,7 @@ sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 if not args.local_controls:sources=[p for p in sources if p.name!='local_controls.asm']
 if not args.manual_init_owner:sources=[p for p in sources if p.name!='manual_init.asm']
 if not args.manual_init:sources=[p for p in sources if p.name!='manual_init_dispatch.asm']
+if not args.auto_answer:sources=[p for p in sources if p.name!='modem_answer_ui.asm']
 if not args.call_timer:sources=[p for p in sources if p.name!='call_timer.asm']
 if args.call_timer:sources += [ROOT/'reconstruction/local_controls'/('timer_'+name+'.asm') for name in ('start','seconds','update')]
 if not args.screen_pause:sources=[p for p in sources if p.name!='screen_pause.asm']
@@ -306,6 +313,7 @@ for index,source in enumerate(sources):
  if args.elapsed_view:options+=['-DTERMINAL_ELAPSED_VIEW']
  if args.manual_init_owner:options+=['-DTERMINAL_MANUAL_INIT_OWNER']
  if args.auto_answer_owner:options+=['-DTERMINAL_AUTO_ANSWER_OWNER']
+ if args.auto_answer:options+=['-DTERMINAL_AUTO_ANSWER']
  if args.manual_init:options+=['-DTERMINAL_MANUAL_INIT']
  if args.original_keys:options+=['-DTERMINAL_ORIGINAL_KEYS']
  if args.original_reference:options+=['-DTERMINAL_REFERENCE']
@@ -518,6 +526,7 @@ for source in c_sources:
  if args.screen_pause:options+=['-dTERMINAL_SCREEN_PAUSE']
  if args.elapsed_view:options+=['-dTERMINAL_ELAPSED_VIEW']
  if args.manual_init:options+=['-dTERMINAL_MANUAL_INIT']
+ if args.auto_answer:options+=['-dTERMINAL_AUTO_ANSWER']
  if args.original_keys:options+=['-dTERMINAL_ORIGINAL_KEYS']
  if args.original_reference:options+=['-dTERMINAL_REFERENCE']
  if args.directory_view:options+=['-dTERMINAL_DIRECTORY_VIEW']
@@ -641,6 +650,7 @@ manifest['experimental_elapsed_view']=args.elapsed_view
 manifest['experimental_manual_init_owner']=args.manual_init_owner
 manifest['experimental_manual_init']=args.manual_init
 manifest['experimental_auto_answer_owner']=args.auto_answer_owner
+manifest['experimental_auto_answer']=args.auto_answer
 manifest['experimental_original_keys']=args.original_keys
 manifest['experimental_status_geometry']=args.status_geometry
 manifest['experimental_original_reference']=args.original_reference
@@ -731,7 +741,9 @@ if args.native_reset_bank:
  manifest['native_reset_namespace']=reset_bank['namespace']
  manifest['native_reset_transaction']=args.native_reset_transaction
  manifest['limitations'].append(reset_bank['scope'])
-if args.auto_answer_owner:
+if args.auto_answer:
+ manifest['limitations'].append('Experimental Alt-Y/reference/browser sends the configured answer-on field with guarded ownership, captured duplex and physically accepted ordinary-byte echo. Configured information sound uses a nonblocking440Hz/four-BIOS-tick generation-owned tone and serviced status-row notice. Requires reserved24-row terminal inside BIOS80x25 color text/page0. This is not a toggle, ACK/dial operation, online escape or original calibrated timing/pixel equivalence. Source/DOS/BBS/package/physical acceptance require scoped evidence for this image.')
+if args.auto_answer_owner and not args.auto_answer:
  manifest['limitations'].append('Typed answer-on component links the bounded send owner with captured local echo after physical acceptance and a renderer reentrancy guard. No Alt-Y/reference/browser/configured answer-on binding or sound/notice UI. Existing Init remains no-echo. No automatic toggle, answer-off selection, dial, ACK, escape prefix or call event. Native pre-write echo/calibrated pacing equivalence and actual DOS/BBS/physical acceptance are not established by this component build.')
 if args.manual_init_owner and not args.manual_init:
  manifest['limitations'].append('Isolated manual Init send owner is linked for component verification only. No Alt-J/menu binding, dispatcher output exclusion or automatic carrier-loss cancellation. Caller supplies an exclusive physical-write grant and cancel/loss/exit notification. Native bounded expansion and send-only bytes are retained; maintained ordinary pacing is one BIOS tick and pauses ten ticks, not calibrated-native timing equivalence. Partial physical command debt is reported without inserting recovery bytes or retiring the call. Do not deploy this component candidate as an enabled manual-init release.')

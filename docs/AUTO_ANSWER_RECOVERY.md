@@ -56,6 +56,11 @@ checks do not establish actual DOS/BBS/SIP/analog or physical behavior.
 
 ## Live integration required
 
+The separate [guarded Auto Answer integration](AUTO_ANSWER_LIVE.md) now implements
+configured selection, notice/sound and keyboard/menu admission. The native and
+component proofs below retain their scopes; application/physical acceptance
+requires its own evidence.
+
 A [typed bounded sender component](AUTO_ANSWER_OWNER.md) now implements the
 answer-on identity, captured duplex and acceptance-qualified native echo with
 renderer reentrancy protection. Its flag has no Alt-Y/configured command/UI

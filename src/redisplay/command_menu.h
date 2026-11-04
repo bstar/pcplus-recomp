@@ -37,5 +37,6 @@ unsigned COMMAND_MENU_CALL command_menu_event(unsigned short event,unsigned shor
 #else
 #define MANUAL_INIT_CONTROL_ACTION ELAPSED_CONTROL_ACTION
 #endif
+#define AUTO_ANSWER_CONTROL_ACTION (MANUAL_INIT_CONTROL_ACTION+1)
 #endif
 #endif

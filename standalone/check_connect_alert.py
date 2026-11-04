@@ -10,6 +10,18 @@ ROOT=Path(__file__).resolve().parents[1]
 DAY=0x1800b0
 
 class Alert(Connection):
+    def interrupt(self,u,number,data):
+        # Full candidates also bind the recovered call clock at CONNECT.
+        # Model its DOS date/time boundary; speaker/controller code still executes.
+        ah=u.reg_read(UC_X86_REG_AX)>>8
+        if number==0x21 and ah==0x2c:
+            seconds=(self.tick*65536//1193182)%86400
+            u.reg_write(UC_X86_REG_CX,(seconds//3600)<<8|seconds//60%60)
+            u.reg_write(UC_X86_REG_DX,(seconds%60)<<8);return
+        if number==0x21 and ah==0x2a:
+            u.reg_write(UC_X86_REG_CX,2026);u.reg_write(UC_X86_REG_DX,0x0b03)
+            u.reg_write(UC_X86_REG_AX,0x2a02);return
+        super().interrupt(u,number,data)
     def __init__(self,seconds=5,enabled=1,port=0xa0,**kw):
         self.speaker=port;self.sounds=[]
         super().__init__(**kw)

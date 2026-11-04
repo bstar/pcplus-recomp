@@ -1,5 +1,9 @@
 # Typed answer-on sender component
 
+The separate [guarded Auto Answer integration](AUTO_ANSWER_LIVE.md) now binds
+the configured field, notice/sound and direct/reference/browser actions. The
+component-only flag and evidence below retain their narrower scope.
+
 The optional `--auto-answer-owner` build extends the shared bounded modem-command
 owner with a typed answer-on entry and local echo. It implies
 `--manual-init-owner`, requires original-reference and can coexist with the

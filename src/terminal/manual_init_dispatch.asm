@@ -12,11 +12,28 @@ extern terminal_modem_settings,connection_resync
 extern terminal_control_defer_far
 
 global terminal_manual_init_configured_far
+%ifdef TERMINAL_AUTO_ANSWER
+extern terminal_auto_answer_begin_far,terminal_auto_answer_ui_start_far,terminal_auto_answer_ui_stop_far
+global terminal_auto_answer_configured_far
+terminal_auto_answer_configured_far:
+ push ax
+ push cx
+ push dx
+ push si
+ push di
+ mov di,1
+ jmp configured_budget
+%endif
 terminal_manual_init_configured_far:
  push ax
  push cx
  push dx
  push si
+%ifdef TERMINAL_AUTO_ANSWER
+ push di
+ xor di,di
+configured_budget:
+%endif
  ; ceil(seconds *1193182/65536), saturating to owner's WORD tick budget.
  mov si,[terminal_modem_settings+MI_TIMEOUT]
  mov ax,si
@@ -44,11 +61,33 @@ terminal_manual_init_configured_far:
  inc cx
 .budget:
  mov ax,cx
+%ifdef TERMINAL_AUTO_ANSWER
+ or di,di
+ jnz .answer
+%endif
  mov si,terminal_modem_settings+MI_INITIALIZATION
  mov cx,MI_INITIALIZATION_SIZE
  mov dl,[terminal_modem_settings+MI_PAUSE_CHARACTER]
  call far terminal_manual_init_begin_far
+%ifdef TERMINAL_AUTO_ANSWER
+ jmp .begun
+.answer:
+ mov si,terminal_modem_settings+MI_ANSWER_ON
+ mov cx,MI_COMMAND_SIZE
+ mov dl,[terminal_modem_settings+MI_PAUSE_CHARACTER]
+ call far terminal_auto_answer_begin_far
+ cmp ax,1
+ je .answer_ui
+ cmp ax,2
+ jne .begun
+.answer_ui:
+ call far terminal_auto_answer_ui_start_far
+.begun:
+%endif
  call far terminal_manual_init_sync_far
+%ifdef TERMINAL_AUTO_ANSWER
+ pop di
+%endif
  pop si
  pop dx
  pop cx
@@ -72,6 +111,9 @@ global terminal_manual_init_stop_far
 terminal_manual_init_stop_far:
  pushf
  push ax
+%ifdef TERMINAL_AUTO_ANSWER
+ call far terminal_auto_answer_ui_stop_far
+%endif
  call far terminal_manual_init_cancel_far
  call far terminal_manual_init_sync_far
  pop ax
@@ -86,6 +128,10 @@ terminal_manual_init_key_far:
  je .pass
  cmp ax,0x2400
  je .consumed ; repeated Alt-J never replaces or queues another initialization
+%ifdef TERMINAL_AUTO_ANSWER
+ cmp ax,0x1500
+ je .consumed
+%endif
  cmp ax,0x2d00
  je .exit
  cmp ax,0x2300

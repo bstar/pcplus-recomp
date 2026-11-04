@@ -665,6 +665,10 @@ terminal_poll_serial:
  cmp word [terminal_quit],0
  jne .done
  call terminal_connection_poll
+%ifdef TERMINAL_AUTO_ANSWER
+ extern terminal_auto_answer_ui_poll_far
+ call far terminal_auto_answer_ui_poll_far
+%endif
  cmp word [terminal_quit],0
  jne .done
  call terminal_break_poll

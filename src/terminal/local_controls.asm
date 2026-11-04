@@ -51,6 +51,10 @@ terminal_local_control_key:
 %ifdef TERMINAL_MANUAL_INIT
  cmp ax,0x2400
  je .selected
+%ifdef TERMINAL_AUTO_ANSWER
+ cmp ax,0x1500
+ je .selected
+%endif
 %endif
  cmp ax,0x1600
  je .selected
@@ -102,6 +106,10 @@ terminal_local_control_key:
 %ifdef TERMINAL_MANUAL_INIT
  cmp ax,0x2400
  je .initialize
+%ifdef TERMINAL_AUTO_ANSWER
+ cmp ax,0x1500
+ je .initialize
+%endif
 %endif
 %ifdef TERMINAL_ELAPSED_VIEW
  cmp ax,0x1400
@@ -144,6 +152,17 @@ terminal_local_control_key:
  or bx,[terminal_tx_count]
  or bx,[terminal_menu_pending]
  jnz .defer
+%ifdef TERMINAL_AUTO_ANSWER
+ cmp ax,0x1500
+ jne .init_only
+ extern terminal_auto_answer_admit_far,terminal_auto_answer_configured_far
+ call far terminal_auto_answer_admit_far
+ or ax,ax
+ jnz .not_ready
+ call far terminal_auto_answer_configured_far
+ jmp .done
+.init_only:
+%endif
  call far terminal_manual_init_configured_far
  jmp .done
 %endif

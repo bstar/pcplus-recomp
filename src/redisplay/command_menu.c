@@ -218,6 +218,12 @@ ENTRY(elapsed,"Elapsed Time                   Alt-T",
  "Incoming data continues beneath the window. Any key returns to the\n"
  "session; Escape and Alt-X are consumed locally. No clock is reset.");
 #endif
+#ifdef TERMINAL_AUTO_ANSWER
+ENTRY(auto_answer,"Auto Answer                    Alt-Y",
+ "Send the configured answer-on command without dialing or waiting for OK.\n"
+ "Local echo follows the captured duplex setting. Escape cancels locally.\n"
+ "This does not toggle answer mode or insert an online escape sequence.");
+#endif
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
 #ifdef TERMINAL_MANUAL_INIT
 ENTRY(manual_init,"Init Modem                     Alt-J",
@@ -250,6 +256,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_MANUAL_INIT
  ,ROW(manual_init,1,0x2400,'I')
+#endif
+#ifdef TERMINAL_AUTO_ANSWER
+ ,ROW(auto_answer,1,0x1500,'A')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))

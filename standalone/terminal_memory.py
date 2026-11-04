@@ -233,6 +233,15 @@ def inspect_terminal_memory(binary,map_path):
    assert len(sites)==count and all(i+3 in relocations for i in sites),(name,'manual Init far fixups')
    assert all(any(c['relative_segment'] in callers and c['relative_segment']*16<=i<c['relative_segment']*16+c['bytes'] for c in code_segments) for i in sites),(name,'manual Init caller ownership')
   extra['manual_init_cross_bank_calls_verified']=16
+ if 'terminal_auto_answer_ui_code_start' in symbols:
+  seg,begin=symbols['terminal_auto_answer_ui_code_start'];end_seg,end=symbols['terminal_auto_answer_ui_code_end']
+  assert seg==end_seg==next(c['relative_segment'] for c in code_segments if c['name']=='CONFIG_CODE')
+  body=raw('terminal_auto_answer_ui_code_start',end-begin)
+  for name,count in [('_speaker_start',1),('_speaker_poll',1),('_speaker_stop',1),('_speaker_active',1),('_speaker_generation',2)]:
+   target_seg,target_off=symbols[name];assert target_seg==seg,(name,'speaker near ABI bank')
+   sites=[i for i in range(len(body)-2) if body[i]==0xe8 and (begin+i+3+struct.unpack_from('<h',body,i+1)[0])&65535==target_off]
+   assert len(sites)==count,(name,'speaker near cdecl calls')
+  extra['auto_answer_speaker_near_calls_verified']=6
  if 'terminal_keyboard_dispatch_far' in symbols:
   keyboard=next(c for c in code_segments if c['name']=='KEYBOARD_CODE')
   entry=symbols['terminal_keyboard_dispatch_far'];end=symbols['terminal_keyboard_dispatch_end']

@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Guarded Auto Answer](AUTO_ANSWER_LIVE.md) now enables configured Alt-Y and both
+menus in the experimental91c1d13f candidate.26 linked lifecycle/UI/sound cases,
+typed/Init/dispatcher/elapsed/connect-alert regressions, exact clean-source
+reproduction and two DOS8086 workflows pass. Notice and generation-owned short
+tone remain serviced; captured local echo follows physical acceptance. Thirteen
+reference entries remain unavailable. Saved-duplex PRM import is still a gap;
+the DOS echo case sets live duplex with Alt-E. BBS/package/physical gates and
+deployment are separate.
+
 [Typed answer-on owner](AUTO_ANSWER_OWNER.md) adds a shared bounded command
 identity and acceptance-qualified local echo with renderer reentrancy protection.
 262 linked inputs,117 Init/31 dispatcher/22 elapsed regressions and exact clean

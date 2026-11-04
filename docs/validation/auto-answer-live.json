@@ -1,0 +1,99 @@
+{
+  "passed": true,
+  "terminal_sha256": "91c1d13f10e07743c744b220f36a96656aeb03b445c884e567201c6f9cfc0bc8",
+  "AltY_enabled": true,
+  "installed": false,
+  "evidence": {
+    "build/auto-answer-live-final-checks-20261103/result.json": {
+      "passed": true,
+      "sha256": "4903bb6bc728212b40d68814debbdbe00eb01809a2862b6463e776aa569823c3",
+      "groups": 10,
+      "inputs": 26
+    },
+    "build/auto-answer-live-owner-20261103/result.json": {
+      "passed": true,
+      "sha256": "f863833c4a4df6ca93c824d9ac2eaebca15e7703d9f5eed08420c3da11a7760e",
+      "groups": 8,
+      "inputs": 262
+    },
+    "build/auto-answer-live-init-20261103/result.json": {
+      "passed": true,
+      "sha256": "3c898075dde702aa0adc270818683f3b926d90eac5931af5567593388416a13b",
+      "groups": 8,
+      "inputs": 117
+    },
+    "build/auto-answer-live-dispatch-20261103/result.json": {
+      "passed": true,
+      "sha256": "4a9d74c5dc47b86b4375520dfc522211a4c818538545b5c56982fe06fb0c3018",
+      "groups": 10,
+      "inputs": 31
+    },
+    "build/auto-answer-live-elapsed-20261103/result.json": {
+      "passed": true,
+      "sha256": "df5f7f74db4613d9709910834001241bcc1cd8cb759aa3a6d67cc66ec080352a",
+      "groups": 22,
+      "inputs": 22
+    },
+    "build/auto-answer-live-connect-alert-clock-20261103/result.json": {
+      "passed": true,
+      "sha256": "f55d95890f639146ab7a8864618802835aa7a09cee20b66a89508184b4f080a4",
+      "groups": 23,
+      "inputs": 23
+    },
+    "build/auto-answer-live-source-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "82b373fbad37a2eab38ffde8f606d6995a469438babe21dc1e0fb6e3c60db6c9",
+      "source_files": 540
+    },
+    "build/auto-answer-dos/auto-answer-live-duplex-20261103/result.json": {
+      "passed": true,
+      "sha256": "fa554d957dc4e8c789119cf243cc84666090ccc848aef32c2842b9538e906bd6",
+      "groups": 2,
+      "inputs": 2
+    },
+    "build/terminal-auto-answer-live-final-20261103/reference-checks.json": {
+      "passed": true,
+      "sha256": "495ad54a9bfcccad840cf3cc8c01497da308ff3778c855b87da5fb23fefb698e",
+      "groups": 9,
+      "inputs": 83
+    },
+    "build/terminal-auto-answer-live-disabled-20261103/disabled-check.json": {
+      "passed": true,
+      "sha256": "ff88d0925cc9d0b53de4b481e110f6fe0f70007d085975b8fa82cb7f7c9dfb0d"
+    }
+  },
+  "memory": {
+    "near_bytes": 65024,
+    "near_spare_bytes": 512,
+    "resident_CS_extent_bytes": 65240,
+    "resident_CS_spare_bytes": 296,
+    "auto_answer_speaker_near_calls_verified": 6
+  },
+  "sources": {
+    "standalone/check_auto_answer_live.py": "30818e3669f825ea93631b20aba7d1ae6374a3280d652a7aca6f42157ab283ea",
+    "src/terminal/modem_answer_ui.asm": "d411e4c90f62a5e2674ab90e778f9d740d3bad59f0d350f20347455c7d98c3af",
+    "src/terminal/manual_init_dispatch.asm": "4eb400126de7bec9516da9c451848c7092f75ce1d4552d2d8e2966f24677fbe8",
+    "src/terminal/local_controls.asm": "3fd82d09e29d9cb0309d3e23c31e7338c603c77a2c4130b46e3f2ce09d0f35ea",
+    "src/terminal/transport.asm": "13f82c5faff0470cef2193962ebf546db58f4cb928f42473e1139126bbbd66e7",
+    "standalone/build_terminal.py": "8cb1b83c79eb0a31ed92fcf468f24be05388704a52b9995553632ad021cbf815",
+    "standalone/terminal_memory.py": "64452a9cdc1ed234f397c737ee6a31586a1ae8614c5d61f7e5bc21d2f5a3e723",
+    "standalone/test_auto_answer_dos.py": "63989870b284ada2cbd244f9486dc41eb7f22925732f2e7bd59585effd34007b",
+    "standalone/check_connect_alert.py": "25cc78af238afd4eb5449a01316f0c1787b8d8aa31aa515a5ababe95ceff24d8"
+  },
+  "unavailable_original_commands": [
+    "directory",
+    "meta",
+    "chat",
+    "host",
+    "kermit",
+    "mapping",
+    "files",
+    "cwd",
+    "viewfile",
+    "editor",
+    "dos",
+    "status",
+    "lines"
+  ],
+  "scope": "Experimental guarded configured Alt-Y/reference/browser.26 UI/lifecycle/geometry/flow/sound inputs;262 typed owner/117 Init/31 dispatcher/22 elapsed/23 connect-alert regressions, all39 reference labels/13 unavailable, exact source-only and disabled8f76cc4f reproduction; two actual DOS8086 COM3/IRQ5 quiet and Alt-E-enabled echo+sound workflows. Speaker440Hz/four-BIOS-tick tone and status-row notice are maintained, not original calibrated timing/pixels. Partial PRM importer does not adopt duplex; DOS echo explicitly uses live Alt-E. Separate BBS/package/physical acceptance remains required; installed/private files unchanged."
+}
