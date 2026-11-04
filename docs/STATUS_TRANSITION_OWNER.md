@@ -104,3 +104,10 @@ The subsequent [staged Linux NAWS candidate](../lab/bbs/patches/synthmodem-windo
 now has codec and owned Enigma size-update checks. It introduces no serial-side
 control path and is not installed. It does not lift the connected-state refusal
 or establish an atomic DOS/bridge geometry transaction or editor reflow.
+
+The subsequent [actual ENiGMA editor comparison](TELNET_EDITOR_RESIZE.md) checks
+an unsaved30-line draft across80x24→80x25→80x24 updates. Editing, paging and
+discard retain the fixed24 behavior; the active art-backed editor emits no
+resize redraw in the observation windows and still pages14 document lines.
+This adds scoped remote-editor continuity evidence, not DOS/bridge integration
+or dynamic layout acceptance. The connected-state refusal remains required.

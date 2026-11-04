@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Remote-editor resize continuity](TELNET_EDITOR_RESIZE.md) now compares actual
+owned ENiGMA unsaved30-line drafts with fixed80x24 versus80x24→80x25→80x24 NAWS.
+Editing, paging and discard preserve exact editor bytes; the active art-backed
+editor retains its14-line paging and sends no resize redraw in the measured
+windows. This does not establish reflow or DOS/bridge integration. Online
+status controls remain guarded and no installed package or live bridge changes.
+
 [Original status/line controls](STATUS_LINES_RECOVERY.md) adds156 exact native
 status-toggle/clear bytes and verifies both normalized-key paths through the
 existing keyboard code. All status/adapter/current-mode WORDs and targeted

@@ -46,3 +46,10 @@ rollback across both endpoints, negotiation refusal and disconnect recovery,
 active-editor behavior, binary transfers through the full route and actual
 modem/SIP/physical acceptance remain open. No in-band command recognizer should
 be added to the opaque proxied data stream as a shortcut around those gates.
+
+A separate [authenticated editor comparison](../../../../docs/TELNET_EDITOR_RESIZE.md)
+now preserves a30-line unsaved draft, focus, paging and discard across24→25→24
+updates against a fixed24 control. The active editor retains its existing
+14-line page behavior and emits no immediate redraw in the measured windows.
+This is scoped editor continuity, not evidence of dynamic reflow or DOS/bridge
+geometry integration; all other integration limits above still apply.

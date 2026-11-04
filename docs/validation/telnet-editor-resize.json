@@ -1,0 +1,155 @@
+{
+  "passed": true,
+  "installed": false,
+  "PCPlus_online_enabled": false,
+  "installed_codec_sha256": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+  "installed_codec_unchanged": true,
+  "evidence": {
+    "build/telnet-resize-editor-clock-20261104/result.json": {
+      "sha256": "c90af46a75dcee75465c02c9229984d8a42d7dcbbede648b569da8550191cca1",
+      "passed": true
+    }
+  },
+  "sources": {
+    "build/telnet-resize-checked-20261104/src/telnet/TelnetCodec.js": "a572c2182fbe4474ccb7dbecb42d5aad36dcdf045906d6ab188f59da26c86fa7",
+    "lab/bbs/telnet_resize_editor_probe.js": "75dcd1f594dfff64327d889f040790ace7d1afdcad1d8f71600e6bf90dade7f0",
+    "lab/bbs/test_telnet_resize_editor.py": "8ebc9be2490959f998ee64f87c96448a0ac85ff899d66a08a3dfc6b2f96e3aec",
+    "build/bbs-lab/enigma/source/core/fse.js": "e405f5205ecd9672d992c5ecc6e3e3f282debb1ccb5076ab550e50a6eefd1ec4",
+    "build/bbs-lab/enigma/source/core/multi_line_edit_text_view.js": "687eb7ae3355cea0e91a30f80134a87b9060bc26f11f1661c7c4f7cfb0d47ce7",
+    "build/bbs-lab/enigma/source/core/servers/login/telnet.js": "7a7ec49cb114f3711510a70359a9bb3f6a4fae3bc528d19786c9686b9f7d3b1f",
+    "build/bbs-lab/enigma/source/core/client_term.js": "d245fcf9443a7f645e46fc0a48f5e6d7b1fd5bfe27d88ad9090d67f47d89ffd1"
+  },
+  "comparisons": {
+    "seed": {
+      "equal": true,
+      "control_sha256": "a5276df0ece59a5338361b720dfa4d873ab2ee34bdddcedb62a2eed1ad5e6807",
+      "resize_sha256": "a5276df0ece59a5338361b720dfa4d873ab2ee34bdddcedb62a2eed1ad5e6807",
+      "control_bytes": 79454,
+      "resize_bytes": 79454
+    },
+    "after-grow-marker": {
+      "equal": true,
+      "control_sha256": "c4139f41bce41e912ca4ce2a4b9b004bafe93d4a5ca7dbb8ff12726b9e0dc947",
+      "resize_sha256": "c4139f41bce41e912ca4ce2a4b9b004bafe93d4a5ca7dbb8ff12726b9e0dc947",
+      "control_bytes": 193,
+      "resize_bytes": 193
+    },
+    "after-grow-pageup": {
+      "equal": true,
+      "control_sha256": "4a7f155f494f6ef7b2fed7cf08c62a6db4187062ce91b314b6a2c12b75142ffb",
+      "resize_sha256": "4a7f155f494f6ef7b2fed7cf08c62a6db4187062ce91b314b6a2c12b75142ffb",
+      "control_bytes": 1498,
+      "resize_bytes": 1498
+    },
+    "after-grow-pagedown": {
+      "equal": true,
+      "control_sha256": "8fe7c7346e720cc88a510f017a30321476b84e3b71f59c6d702a753628629317",
+      "resize_sha256": "8fe7c7346e720cc88a510f017a30321476b84e3b71f59c6d702a753628629317",
+      "control_bytes": 1498,
+      "resize_bytes": 1498
+    },
+    "after-shrink-marker": {
+      "equal": true,
+      "control_sha256": "5288931cf02c33d138d5cbc8855b9008e451fb4eb19af15db8c7475f4b85c5b1",
+      "resize_sha256": "5288931cf02c33d138d5cbc8855b9008e451fb4eb19af15db8c7475f4b85c5b1",
+      "control_bytes": 192,
+      "resize_bytes": 192
+    },
+    "after-shrink-pageup": {
+      "equal": true,
+      "control_sha256": "de0d11667a2a4d9423d99da19ab6801b3ea357e88f84ca4fb69d794a91923e9c",
+      "resize_sha256": "de0d11667a2a4d9423d99da19ab6801b3ea357e88f84ca4fb69d794a91923e9c",
+      "control_bytes": 1498,
+      "resize_bytes": 1498
+    },
+    "after-shrink-pagedown": {
+      "equal": true,
+      "control_sha256": "cbace2c85854bf21efe3e85c7d20e58cc4d87989374ff0d214ba2daf9b116099",
+      "resize_sha256": "cbace2c85854bf21efe3e85c7d20e58cc4d87989374ff0d214ba2daf9b116099",
+      "control_bytes": 1498,
+      "resize_bytes": 1498
+    },
+    "editor-menu": {
+      "equal": true,
+      "control_sha256": "baf5768ed333aa96e8b3a4e3ca6b2abf4a137d66f6568d1fc654bde43dddae28",
+      "resize_sha256": "baf5768ed333aa96e8b3a4e3ca6b2abf4a137d66f6568d1fc654bde43dddae28",
+      "control_bytes": 691,
+      "resize_bytes": 691
+    },
+    "discard-select": {
+      "equal": true,
+      "control_sha256": "9d5d3b91719e96d6972221b6810e362fa30effd5e0aa21fb5c9d4d77c2106b6b",
+      "resize_sha256": "9d5d3b91719e96d6972221b6810e362fa30effd5e0aa21fb5c9d4d77c2106b6b",
+      "control_bytes": 102,
+      "resize_bytes": 102
+    },
+    "discard": {
+      "equal": true,
+      "control_sha256": "9b8f7683b19dc7f6557920c9e6a7d9c6a6f1e41f9d2a4b8157961fb869f40cf3",
+      "resize_sha256": "9b8f7683b19dc7f6557920c9e6a7d9c6a6f1e41f9d2a4b8157961fb869f40cf3",
+      "control_bytes": 4458,
+      "resize_bytes": 4458,
+      "clock_only_equal": true,
+      "control_clock": "1:41 am",
+      "resize_clock": "1:41 am"
+    }
+  },
+  "observed_positions": {
+    "after-grow-marker": [
+      31,
+      2
+    ],
+    "after-grow-pageup": [
+      17,
+      2
+    ],
+    "after-grow-pagedown": [
+      31,
+      2
+    ],
+    "after-shrink-marker": [
+      31,
+      3
+    ],
+    "after-shrink-pageup": [
+      17,
+      3
+    ],
+    "after-shrink-pagedown": [
+      31,
+      3
+    ]
+  },
+  "results": {
+    "control": {
+      "path": "build/telnet-resize-editor-clock-20261104/control/node-result.json",
+      "sha256": "34b92764a4e1b26ba315d893f2c1001422c2a4832f97cde53fe16518a2b2389a",
+      "sizes": [
+        [
+          80,
+          24
+        ]
+      ]
+    },
+    "resize": {
+      "path": "build/telnet-resize-editor-clock-20261104/resize/node-result.json",
+      "sha256": "6232ea8317c0acba1c500b948d6e84627a084d531e094580e6d541766ef2babd",
+      "sizes": [
+        [
+          80,
+          24
+        ],
+        [
+          80,
+          25
+        ],
+        [
+          80,
+          24
+        ]
+      ]
+    }
+  },
+  "finding": "For this art-backed active editor, both NAWS updates are logged but emit no redraw in the500ms observation windows. Subsequent edit/page/discard bytes are identical to fixed24; paging remains14 document lines. This proves scoped draft/focus continuity, not dynamic editor reflow or DOS viewport coherence.",
+  "scope": "Actual staged Telnet codec and owned loopback ENiGMA unsaved multiline editor. Independent fixed24 control versus24->25->24 updates during draft. Captures compare actual editing/paging/discard output and independent server NAWS events; no PCPlus/DOS renderer, full-route binary transfer, live bridge change, SIP or physical acceptance."
+}
