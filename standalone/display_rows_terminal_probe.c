@@ -303,6 +303,25 @@ static word xlt_frame_images(void)
  return rows_probe_write(leaf,records,sizeof(records));
 }
 #endif
+#ifdef TERMINAL_ASPECT_ADMISSION_PROBE
+extern word __far __cdecl rows_aspect_admission(word operation);
+static word aspect_admission_images(void)
+{
+ static const word TEXT heights[]={25,28,43,50};
+ char leaf[13]={'A','R','R','O','W','S','.', 'B','I','N',0};
+ native_display_rows_info actual;word records[3+4*7],r,n=3,a,b,c;
+ records[0]=0x4152;records[1]=1;records[2]=4;
+ for(r=0;r<4;++r){
+  if(terminal_row_geometry_set(heights[r]) || native_display_rows_probe(&actual))return 1;
+  a=rows_aspect_admission(0);b=rows_aspect_admission(1);c=rows_aspect_admission(2);
+  records[n++]=heights[r];records[n++]=actual.rows;records[n++]=csi_row_count;
+  records[n++]=ui_flow_suppressed;records[n++]=a;records[n++]=b;records[n++]=c;
+  if(actual.rows!=heights[r] || csi_row_count!=heights[r]-1 || ui_flow_suppressed || a || b || c)return 1;
+ }
+ if(terminal_row_geometry_set(25))return 1;
+ return rows_probe_write(leaf,records,sizeof(records));
+}
+#endif
 static void capture(word *r,word request,word status,native_display_rows_info *p)
 {
  word axword=0,bxword=0;
@@ -347,6 +366,9 @@ unsigned __far __cdecl terminal_display_rows_probe(void)
 #endif
 #ifdef TERMINAL_XLT_DISPLAY_PROBE
  if(xlt_frame_images())return 32;
+#endif
+#ifdef TERMINAL_ASPECT_ADMISSION_PROBE
+ if(aspect_admission_images())return 33;
 #endif
  status=native_display_rows_probe(&info);if(status)return 20;
  capture(records+3,0,status,&info);

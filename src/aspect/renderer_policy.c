@@ -4,6 +4,11 @@
  */
 #include <dos.h>
 #include "renderer_policy.h"
+#ifdef TERMINAL_ASPECT_ROWS
+#include "../terminal/row_geometry.h"
+extern unsigned ui_window_rows;
+#pragma aux ui_window_rows "ui_window_rows";
+#endif
 #include "../capture/capture_file.h"
 #include "../capture/capture_session.h"
 #include "../printer/printer_device.h"
@@ -21,6 +26,9 @@ static unsigned capture_closed(const capture_file_snapshot *owner)
 static unsigned render_live_state(unsigned scoped)
 {
  unsigned cell,start,end,segment,width,rows,visible;
+#ifdef TERMINAL_ASPECT_ROWS
+ unsigned physical;
+#endif
  volatile unsigned char __far *bda=(volatile unsigned char __far *)MK_FP(0x40,0);
  if(terminal_program_active!=1 || terminal_program_kind!=4 || terminal_program_pending ||
     terminal_ansi_wait_active || terminal_monitor_active ||
@@ -44,11 +52,25 @@ static unsigned render_live_state(unsigned scoped)
  if(terminal_sink_3988_enabled || terminal_sink_398a_enabled || terminal_sink_398c_disabled ||
     terminal_printer_count || terminal_printer_closing || csi_printer_ready ||
     capture_session_buffered)return 3;
- if(bda[0x49]!=3 || *(volatile unsigned __far *)(bda+0x4a)!=80 || bda[0x62] ||
-    (bda[0x84] && bda[0x84]!=24))return 3;
+ if(bda[0x49]!=3 || *(volatile unsigned __far *)(bda+0x4a)!=80 || bda[0x62])return 3;
+#ifdef TERMINAL_ASPECT_ROWS
+ physical=bda[0x84]?bda[0x84]+1U:25;
+ if((physical!=25 && physical!=28 && physical!=43 && physical!=50) || ui_window_rows!=physical)return 3;
+ /* Keep the existing logical-wide25-row contract. Larger physical frames
+  * require the canonical narrow/status layout and fit both4096-cell planes. */
+ if(physical!=25 && (screen_attribute_row_bytes!=80 || terminal_row_status_layout()))return 3;
+#else
+ if(bda[0x84] && bda[0x84]!=24)return 3;
+#endif
  width=screen_attribute_row_bytes;rows=csi_row_count;
  if(screen_columns!=80 || screen_video_row_bytes!=160 || (width!=80 && width!=132) ||
-    csi_last_column!=width-1 || csi_column_count!=width || !rows || rows>25 || csi_last_row!=rows-1 ||
+    csi_last_column!=width-1 || csi_column_count!=width || !rows ||
+#ifdef TERMINAL_ASPECT_ROWS
+    rows>physical || width*rows>4096U ||
+#else
+    rows>25 ||
+#endif
+    csi_last_row!=rows-1 ||
     text_video_segment!=0xb800 || text_cga_status_port || screen_viewport_active>1 ||
     screen_attribute_checks>1 || screen_cursor_wrap>1 || erase_protection_mode>1 ||
     screen_vertical_attribute_check || screen_reverse_wrap_blocked ||

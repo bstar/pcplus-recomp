@@ -246,3 +246,58 @@ _rows_xlt_run:
  pop bp
  retf
 %endif
+
+%ifdef TERMINAL_ASPECT_ADMISSION_PROBE
+SEGMENT ASPECT_CODE public class=FARCODE use16
+extern _aspect_render_admit,_aspect_render_preflight_control,_aspect_render_preflight_command
+extern terminal_aspect_active,terminal_parser_active,terminal_program_kind
+; Diagnostic far cdecl(op): borrow then restore suspended-script state. The real
+; parent policy and canonical row/status helper execute without substitution.
+global _rows_aspect_admission
+_rows_aspect_admission:
+ push bp
+ mov bp,sp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ push word [terminal_program_active]
+ push word [terminal_program_kind]
+ push word [terminal_aspect_active]
+ push word [terminal_parser_active]
+ mov word [terminal_program_active],1
+ mov word [terminal_program_kind],4
+ mov word [terminal_aspect_active],0
+ mov word [terminal_parser_active],0
+ cmp word [bp+6],0
+ je .admit
+ mov word [terminal_aspect_active],1
+ mov word [terminal_parser_active],1
+ cmp word [bp+6],1
+ jne .command
+ mov ax,65
+ push ax
+ call _aspect_render_preflight_control
+ add sp,2
+ jmp .done
+.command:
+ call _aspect_render_preflight_command
+ jmp .done
+.admit:
+ call _aspect_render_admit
+.done:
+ pop word [terminal_parser_active]
+ pop word [terminal_aspect_active]
+ pop word [terminal_program_kind]
+ pop word [terminal_program_active]
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ retf
+%endif

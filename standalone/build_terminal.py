@@ -26,6 +26,8 @@ parser.add_argument('--special-edition',action='store_true',help='Show the magen
 parser.add_argument('--status-geometry',action='store_true',help='Reserve physical row25 for status and advertise a coherent24-row terminal')
 parser.add_argument('--reset-row-owner',action='store_true',help='Link staged RIS row-default component; no status/line key binding')
 parser.add_argument('--status-owner',action='store_true',help='Link offline live status transaction; no key/menu binding or online size negotiation')
+parser.add_argument('--aspect-admission-probe',action='store_true',help='Diagnostic only: ASPECT admission at each BIOS text height')
+parser.add_argument('--aspect-row-owner',action='store_true',help='Admit coherent full-height narrow ASPECT renderer frames')
 parser.add_argument('--xlt-display-probe',action='store_true',help='Diagnostic only: real XLTEDIT changes at each text height')
 parser.add_argument('--profile-display-probe',action='store_true',help='Diagnostic only: real PRMEDIT profile changes at each text height')
 parser.add_argument('--program-display-owner',action='store_true',help='Save and verify full-height PROGRAM display restoration around DOS children')
@@ -97,6 +99,10 @@ if args.xlt_display_probe:
 if args.profile_display_probe:
  assert args.program_display_owner,'Profile diagnostic requires the full-height PROGRAM owner'
  args.display_row_probe=True
+if args.aspect_admission_probe:
+ assert args.aspect_row_owner and not args.profile_display_probe and not args.xlt_display_probe,'ASPECT diagnostic requires row owner and excludes editor probes'
+ args.display_row_probe=True
+if args.aspect_row_owner:assert args.program_display_owner and args.external_render,'ASPECT rows require full-height PROGRAM and external renderer'
 if args.program_display_owner:assert args.large_view_frames,'PROGRAM display owner requires full-height shared frames'
 if args.large_view_frames:assert args.row_geometry_owner,'Large view frames require the canonical row geometry component'
 if args.status_control:assert args.status_owner and args.local_controls,'Status control requires the tested status and local-control owners'
@@ -218,6 +224,8 @@ if args.reset_row_owner:out_name+='-reset-rows'
 if args.status_owner:out_name+='-status-owner'
 if args.status_control:out_name+='-status-control'
 if args.large_view_frames:out_name+='-large-view-frames'
+if args.aspect_admission_probe:out_name+='-aspect-admission-probe'
+if args.aspect_row_owner:out_name+='-aspect-row-owner'
 if args.program_display_owner:out_name+='-program-display-owner'
 if args.xlt_display_probe:out_name+='-xlt-display-probe'
 if args.profile_display_probe:out_name+='-profile-display-probe'
@@ -362,6 +370,8 @@ for index,source in enumerate(sources):
  if args.status_owner:options+=['-DTERMINAL_STATUS_OWNER']
  if args.status_control:options+=['-DTERMINAL_STATUS_CONTROL']
  if args.large_view_frames:options+=['-DTERMINAL_LARGE_VIEW_FRAMES']
+ if args.aspect_admission_probe:options+=['-DTERMINAL_ASPECT_ADMISSION_PROBE']
+ if args.aspect_row_owner:options+=['-DTERMINAL_ASPECT_ROWS']
  if args.program_display_owner:options+=['-DTERMINAL_PROGRAM_DISPLAY']
  if args.xlt_display_probe:options+=['-DTERMINAL_XLT_DISPLAY_PROBE']
  if args.profile_display_probe:options+=['-DTERMINAL_PROFILE_DISPLAY_PROBE']
@@ -594,6 +604,8 @@ for source in c_sources:
  if args.local_controls:options+=['-dTERMINAL_LOCAL_CONTROLS']
  if args.status_control:options+=['-dTERMINAL_STATUS_CONTROL']
  if args.large_view_frames:options+=['-dTERMINAL_LARGE_VIEW_FRAMES']
+ if args.aspect_admission_probe:options+=['-dTERMINAL_ASPECT_ADMISSION_PROBE']
+ if args.aspect_row_owner:options+=['-dTERMINAL_ASPECT_ROWS']
  if args.program_display_owner:options+=['-dTERMINAL_PROGRAM_DISPLAY']
  if args.xlt_display_probe:options+=['-dTERMINAL_XLT_DISPLAY_PROBE']
  if args.profile_display_probe:options+=['-dTERMINAL_PROFILE_DISPLAY_PROBE']
@@ -735,6 +747,8 @@ manifest['experimental_reset_row_owner']=args.reset_row_owner
 manifest['experimental_status_owner']=args.status_owner
 manifest['diagnostic_xlt_display_probe']=args.xlt_display_probe
 manifest['diagnostic_profile_display_probe']=args.profile_display_probe
+manifest['diagnostic_aspect_admission_probe']=args.aspect_admission_probe
+manifest['experimental_aspect_row_owner']=args.aspect_row_owner
 manifest['experimental_program_display_owner']=args.program_display_owner
 if args.program_display_owner:manifest['limitations'].append('PROGRAM saves/restores verified25/28/43/50-row text frames and cursor around ordinary DOS children, without changing parent canonical state. Child UART is quieted after DS/SS/SP restoration and before trap resume. Unverified display restoration requests fatal exit2/service6EF7 and skips mouse/flow resume. Inline adopted views keep their existing separate contract. No normal Ctrl--/startup preference integration, arbitrary fonts/VGA-state equivalence, full larger-profile/ASPECT composition or physical acceptance.')
 manifest['experimental_large_view_frames']=args.large_view_frames

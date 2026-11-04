@@ -155,6 +155,9 @@ exit
      assert (drive/f'XK{r}{t}.BIN').read_bytes()==table
    assert (drive/'TEST.XLT').read_bytes()==bytes(range(256))
    assert not list(drive.glob('XLTEDIT.BAK')) and not list(drive.glob('XLTEDIT.$$$'))
+  if m.get('diagnostic_aspect_admission_probe'):
+   aspectrows=struct.unpack('<31H',(drive/'ARROWS.BIN').read_bytes());assert aspectrows[:3]==(0x4152,1,4)
+   for i,rows in enumerate((25,28,43,50)):assert aspectrows[3+i*7:3+(i+1)*7]==(rows,rows,rows-1,0,0,0,0)
   observed=(drive/leaf).read_bytes()
   if label=='exclusive':assert observed==sentinel
   else:
@@ -206,5 +209,8 @@ exit
   record['xlt_observations']=16
   record['editor_sha256']=sha(xlt_editor);record['editor_manifest_sha256']=sha(xlt_editor.parent/'manifest.json')
   record['scope']+=' Additionally sixteen actual DOS source-built XLTEDIT/EXEC/save/confirmation round trips at25/28/43/50 physical rows with visible status and an explicit synthetic table change byte0 to88 then0. Full before/after frames, canonical/physical height, child exit, selected256-byte active table, final disk identity and absence of recovery remnants are checked. Parent UART ownership is restored but peer sends no data; post-return RX/TX is covered separately by the boundary-modeled CPU checker.'
+ if m.get('diagnostic_aspect_admission_probe'):
+  record['aspect_admission_observations']=8
+  record['scope']+=' Additionally eight actual DOS BIOS-established visible-status geometry records each run the real ASPECT admission/control/command preflight via a far diagnostic adapter borrowing suspended-script state. No ASPECT child, renderer output, nested PROGRAM or script-window composition is claimed from those records.'
  (out/'result.json').write_text(json.dumps(record,indent=2)+'\n');print('PASS linked DOS rows:6 observations, exclusive create refusal, hardware restore, diagnostic package rejection; canonical transaction',geometry)
 if __name__=='__main__':main()

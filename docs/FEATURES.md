@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[ASPECT larger-row admission](ASPECT_LARGE_ROWS.md) adds a selectable read-only
+parent policy component for coherent narrow28/43/50-row layouts.223 enabled and
+160 disabled linked cases,8 actual DOS geometry observations and3 exact source
+rebuilds pass. The disabled image retains the previous executable exactly.
+Actual larger script rendering/input, windows, nested PROGRAM and return adoption
+remain open before normal line controls or BBS/physical acceptance.
+
 [Large-screen XLT return](LARGE_XLT_RETURN.md) adds116 linked editor/reload cases
 and16 actual DOS source-built XLTEDIT observations across25/28/43/50-row frames.
 Accept/decline/failure preserves the full parent, selected table adoption affects
