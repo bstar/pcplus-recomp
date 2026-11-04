@@ -42,8 +42,9 @@ complete body and scan/thunk against the genuine original. The
 
 These are native-control recovery tests. They do not establish the behavior of
 the external timer/window services, an enabled live Alt-T command, actual DOS
-modal/UART coexistence, BBS behavior or physical acceptance. The149-byte body is
-not linked into the current application and no installed file is changed.
+modal/UART coexistence, BBS behavior or physical acceptance. The149-byte body is not linked into the application; the later
+[serviced integration](ELAPSED_VIEW_LIVE.md) preserves its display contract using
+the existing frame owner. No installed file is changed.
 
 ## Required integration
 

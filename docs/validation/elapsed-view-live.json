@@ -1,0 +1,108 @@
+{
+  "passed": true,
+  "terminal_sha256": "340cb4bac4394d946f0bcbb52adacd922d7f8d8fec9665e117ff1f9cd8b95f6d",
+  "feature_disabled_sha256": "2192f454f46c6ecec0c84ea43d3714a5e2e2ab1d89b5220c6d24b7967afc4c9d",
+  "feature_disabled_matches_prior_candidate": true,
+  "interpreter_sha256": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+  "native_timer_bytes": 220,
+  "near_data_stack_bytes": 64864,
+  "resident_code_bytes": 65194,
+  "resident_code_spare_bytes": 342,
+  "product_input_count": 537,
+  "product_input_map_sha256": "eaa8f0506bd62f093698b1a9d1d423b466311a8b7bd2d39c835de68bfc2798f9",
+  "manifest_sha256": "cec2ced827fa8f623d01688db6c9c16801d0bec53e720b52807f4524a000b160",
+  "evidence": {
+    "build/elapsed-view-live-accepted-20261103/result.json": {
+      "passed": true,
+      "sha256": "120bd9edb35ac5ee7756cf3e2e760d54d86c52b1d2c1b4d6a97d33618faab5ab",
+      "cases": 22
+    },
+    "build/elapsed-view-dos/elapsed-view-native-final-20261103/result.json": {
+      "passed": true,
+      "sha256": "a3152fee23e37198c19342d0b77cd7ec49a2e7e2cd2926de887bca2080780fd1",
+      "cases": 4
+    },
+    "build/elapsed-view-timer-regression-20261103/result.json": {
+      "passed": true,
+      "sha256": "cc045d144d81671273acd363fad40a6b2ad048c88795ef079961edb30fb55b1c",
+      "cases": 6
+    },
+    "build/elapsed-view-pause-regression-20261103/result.json": {
+      "passed": true,
+      "sha256": "17c94a7587d067e1c008c49874d4016063994bf49873c8c7c4c2f0bfcec3496c",
+      "cases": 41
+    },
+    "build/elapsed-view-timer-layout-20261103/result.json": {
+      "passed": true,
+      "sha256": "36c55a629c54737e81a383c97f8679f000b065c1d03f6467603046ca8ecb9e63"
+    },
+    "build/bbs-lab/results/enigma/elapsed-view-enigma-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "9768d88bfa0ac7fa5ca468f3feb6846d7e8631bdb3f615e81ce56abacc6a82d6"
+    },
+    "build/bbs-lab/results/enigma/elapsed-view-enigma-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "6035c6183ad74435cc7c9d407d1cc8dcba20193461130e4850511a8d91dc0f46",
+      "different_cells": 0,
+      "delivered_bytes": 87171,
+      "cursor": [
+        22,
+        14
+      ]
+    },
+    "build/bbs-lab/results/synchronet/elapsed-view-sync-matched-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "91cfd159116b94b3c7ee2449389fe7e79757cfd36a2b85128f5657a1644a81ec"
+    },
+    "build/bbs-lab/results/synchronet/elapsed-view-sync-matched-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "afd8933ec9ce90355222c2bb87f301f8b4a0ae29082417cdb9b7ef7b9b5e9037",
+      "different_cells": 0,
+      "delivered_bytes": 23079,
+      "cursor": [
+        5,
+        8
+      ]
+    }
+  },
+  "sources": {
+    "standalone/build_terminal.py": "fbb2c8e199c17444c66fe587213d8590c6d575c115451538867cef84d04e67eb",
+    "standalone/check_call_timer_live.py": "eca949f00e03dd55032d9672ddb16752d7642e8114e354b1f61f98eb68eac220",
+    "standalone/check_elapsed_view_live.py": "b57fc14cd47ee53b175784a34630243d7eee778439b630d8ec503b5e89ea76f5",
+    "standalone/test_elapsed_view_dos.py": "3bedef777700ec833d58f24482c58f1c97b89651a6497be6ba84a38746331e3e",
+    "standalone/elapsed_watch.asm": "ad2ea8b17a63add003c26c5c3859b1232a0f3cccd304c68e233f8223353b4888",
+    "src/redisplay/elapsed_view.c": "02315d51cd0a7b61c8d2c5524dbea63306ca852469afe0660ff31e667c433f31",
+    "src/redisplay/elapsed_view.h": "6a2757682e7a3b2c69e87c184f1633a2e93084857694da174e1e103838933e17",
+    "src/redisplay/redisplay.c": "2f1af44c2498e540a3ba829007c0dbeefe02e9621adb93b768c1996168eb5dde",
+    "src/redisplay/command_reference.c": "5d738f75d4721ad95c7f3abef8448814c6a8297621e3138773de75c8c16a9c89",
+    "src/redisplay/command_menu.c": "cb4997a786bbe76c84dd036513ee3cb08d2deb6e74e79e0388ee81af96e89b56",
+    "src/redisplay/command_menu.h": "0ff54b059e6136c9e10f9116608e9e3f4cb556ccc5d82799438f40a32aa79836",
+    "src/terminal/connection_ui.asm": "cced00387b7050ec459ca04cb0f78e6ddcab0b2bcf0ad7cfb782fb062df761db",
+    "src/terminal/redisplay.asm": "a610fa8bdd9885e3a1171ed0d9ee1bc94ed160dae05f36f908d1cc0e41371720",
+    "src/terminal/local_controls.asm": "7ad75388b5c6a26f1318acdaaf18803d99c399909132f1a5a454e0ecf781acfd",
+    "reconstruction/local_controls/elapsed-window-layout.json": "71bf0968daed519cf93977b61f3d8858c7269e814cfbcae8061e68de9b5dc477"
+  },
+  "original_inputs": [],
+  "live_AltT_window_enabled": true,
+  "installed": false,
+  "installed_selection_sha256": "93a9db94c1164e7ba004a637b02484e548791713385c3f5a24e8c48c8a364b2c",
+  "scope": "Serviced maintained integration of original Alt-T geometry/control contract, reusing live/view frames and actual220-byte recovered timer.22 boundary-modeled linked cases; four DOS8086 COM3/IRQ5 workflows with passive video and64 paced queries; timer/Pause/layout regressions; actual owned Enigma/Synchronet proxy/editor final-cell/cursor audits. No exact original pixel/animation/international-format equivalence, every geometry, source-package/SETUP/physical BUSY/SIP/DSP/analog or full feature parity claim. No deployment change.",
+  "original_reference_commands": 39,
+  "unavailable_original_commands": [
+    "directory",
+    "meta",
+    "chat",
+    "host",
+    "answer",
+    "initialize",
+    "kermit",
+    "mapping",
+    "files",
+    "cwd",
+    "viewfile",
+    "editor",
+    "dos",
+    "status",
+    "lines"
+  ]
+}

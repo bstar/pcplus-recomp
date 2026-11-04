@@ -212,6 +212,12 @@ ENTRY(screen_pause,"Screen Pause                   Alt-N",
  "still fill the receive buffer. No file or settings are changed.");
 #endif
 #endif
+#ifdef TERMINAL_ELAPSED_VIEW
+ENTRY(elapsed,"Elapsed Time                   Alt-T",
+ "Show wall time, date and elapsed time for this call or the last call.\n"
+ "Incoming data continues beneath the window. Any key returns to the\n"
+ "session; Escape and Alt-X are consumed locally. No clock is reset.");
+#endif
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
@@ -231,6 +237,9 @@ static const item MENU_TEXT items[]={
 #ifdef TERMINAL_SCREEN_PAUSE
  ,ROW(screen_pause,2,0x3100,'N')
 #endif
+#endif
+#ifdef TERMINAL_ELAPSED_VIEW
+ ,ROW(elapsed,2,0x1400,'E')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))

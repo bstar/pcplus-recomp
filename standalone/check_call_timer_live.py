@@ -10,10 +10,9 @@ from dos_image import DosImage
 from modem_fixtures import fixture
 
 ROOT=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
-transport.BINARY=a.terminal.resolve();transport.MAP=a.terminal.parent/'terminal.map'
-manifest=json.loads((a.terminal.parent/'manifest.json').read_text());assert manifest['experimental_call_timer']
-out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
+def configure(terminal):
+ transport.BINARY=terminal.resolve();transport.MAP=terminal.parent/'terminal.map'
+ manifest=json.loads((terminal.parent/'manifest.json').read_text());assert manifest['experimental_call_timer']
 
 class Clock(UI):
  def __init__(self,logging=False,**settings):
@@ -85,19 +84,15 @@ def lifecycle(logging):
  assert not m.get('terminal_call_timer_running') and m.duration()=='00:00:08' and m.get('terminal_call_timer_epoch')==1
  m.now=86420;m.connect(b'CONNECT\r\n');m.now=86422;m.timer('refresh');assert m.duration()=='00:00:02' and m.get('terminal_call_timer_epoch')==2
  m.carrier=False;m.poll(8);assert m.state()==0 and m.duration()=='00:00:02'
-check('modem-midnight-loss-BUSY-redial-logging-disabled',lambda:lifecycle(False))
-check('modem-midnight-loss-BUSY-redial-logging-enabled',lambda:lifecycle(True))
 def direct():
  m=Clock();m.put('terminal_directory_mode',1);m.now=100;m.start();assert m.state()==6 and m.get('terminal_call_timer_running')
  m.now=125;m.call('terminal_connection_cancel',ax=1);assert m.state()==0 and m.duration()=='00:00:25' and not m.get('terminal_call_timer_running')
-check('direct-confirmed-start-and-direct-hangup-freeze',direct)
 def clock_boundaries():
  m=Clock()
  for start,now in [(0,0),(65535,65536),(3600,3599),(86399,0),(32767,32768),(0,86399)]:
   m.now=start;m.timer('start');m.now=now;m.timer('refresh')
   delta=(now-start)%86400;assert m.duration()=='%02d:%02d:%02d'%(delta//3600,delta//60%60,delta%60)
   m.timer('stop');before=m.duration();reads=m.time_reads;m.now=now+100;m.timer('refresh');assert m.duration()==before and reads==m.time_reads
-check('actual-linked-adapters-rollback-carry-and-idempotent-freeze',clock_boundaries)
 def failed_attempts():
  m=Clock();m.now=100;m.connect(b'CONNECT\r\n');m.now=105;m.carrier=False;m.poll(8)
  assert m.state()==0 and m.duration()=='00:00:05'
@@ -106,7 +101,6 @@ def failed_attempts():
  m.start();m.waiting();m.call('terminal_connection_cancel',ax=0);m.poll(1000)
  assert m.state()==0 and m.duration()=='00:00:05' and m.time_reads==reads
  assert m.get('terminal_call_timer_epoch')==1 and m.get('elapsed_start_seconds',4)==100
-check('timeout-and-cancel-before-CONNECT-preserve-last-call',failed_attempts)
 def failed_hangup():
  m=Clock(drop=0);m.now=10;m.connect(b'CONNECT\r\n');m.now=20;m.thre=False;m.cts=False;m.call('terminal_connection_cancel',ax=1)
  for _ in range(1000):
@@ -115,6 +109,17 @@ def failed_hangup():
  assert m.state()==6 and m.get('connection_status')==8 and m.get('terminal_call_timer_running')
  m.now=30;m.timer('refresh');assert m.duration()=='00:00:20'
  m.carrier=False;m.poll(8);assert m.state()==0 and m.duration()=='00:00:20' and not m.get('terminal_call_timer_running')
-check('failed-online-hangup-retains-clock-until-qualified-carrier-loss',failed_hangup)
-result=dict(passed=True,cases=cases,binary_sha256=hashlib.sha256(a.terminal.read_bytes()).hexdigest(),sources={str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest() for path in [Path(__file__).resolve(),ROOT/'src/terminal/call_timer.asm',ROOT/'src/terminal/connection.asm']},scope=__doc__+' Actual linked220 recovered bytes plus real DOS-time adapter, narrow division/formatter and confirmed connection callbacks. Kernel time/date, BIOS, UART/PIC and filesystem boundaries modeled. No Alt-T view, actual DOS/SIP/analog/physical acceptance or deployment.')
-(out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS live call timer:',len(cases),'groups')
+def main():
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ configure(a.terminal)
+ out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
+ check('modem-midnight-loss-BUSY-redial-logging-disabled',lambda:lifecycle(False))
+ check('modem-midnight-loss-BUSY-redial-logging-enabled',lambda:lifecycle(True))
+ check('direct-confirmed-start-and-direct-hangup-freeze',direct)
+ check('actual-linked-adapters-rollback-carry-and-idempotent-freeze',clock_boundaries)
+ check('timeout-and-cancel-before-CONNECT-preserve-last-call',failed_attempts)
+ check('failed-online-hangup-retains-clock-until-qualified-carrier-loss',failed_hangup)
+ result=dict(passed=True,cases=cases,binary_sha256=hashlib.sha256(a.terminal.read_bytes()).hexdigest(),sources={str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest() for path in [Path(__file__).resolve(),ROOT/'src/terminal/call_timer.asm',ROOT/'src/terminal/connection.asm']},scope=__doc__+' Actual linked220 recovered bytes plus real DOS-time adapter, narrow division/formatter and confirmed connection callbacks. Kernel time/date, BIOS, UART/PIC and filesystem boundaries modeled. No Alt-T view, actual DOS/SIP/analog/physical acceptance or deployment.')
+ (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS live call timer:',len(cases),'groups')
+
+if __name__=='__main__':main()

@@ -1,0 +1,33 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "descriptor_DS": "3294",
+  "original_file_offset": "0x28be4",
+  "native_descriptor_words": [
+    8,
+    25,
+    14,
+    60,
+    8060
+  ],
+  "field_positions": {
+    "time": [
+      10,
+      30
+    ],
+    "date": [
+      10,
+      47
+    ],
+    "caption": [
+      12,
+      27
+    ],
+    "elapsed": [
+      12,
+      51
+    ]
+  },
+  "evidence": "ev_647951e8636fc4ce62d3314f1c35de7ed73c58efafbdc5f91c54ea60f1889053",
+  "source_only_application": true,
+  "scope": "Native geometry and positions from genuine original data/control body. Maintained blue/CP437 frame and shadow are a declared projection, not verified original pixel/animation equivalence; the149-byte blocking UI body is not linked."
+}

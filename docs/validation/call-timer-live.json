@@ -7,7 +7,7 @@
   "near_data_stack_bytes": 64848,
   "resident_code_bytes": 65176,
   "resident_code_spare_bytes": 360,
-  "timer_code_bank_bytes": 499,
+  "timer_code_bank_bytes": 497,
   "product_input_count": 535,
   "product_input_map_sha256": "6ae3e2c5ef0d827dee334a453852ba7c64fd2f6e583df5643ce9bcaf12f74b7c",
   "manifest_sha256": "37595f0e5a86f591237deb85dc551ee985cdf7895cee36ec014c2c9a4ae94f4b",
@@ -80,5 +80,8 @@
   "live_AltT_window_enabled": false,
   "installed": false,
   "installed_selection_sha256": "93a9db94c1164e7ba004a637b02484e548791713385c3f5a24e8c48c8a364b2c",
-  "scope": "Actual linked recovered220-byte timer, maintained narrow runtime adapters and confirmed connection callbacks. CPU checks model DOS/BIOS/UART; native DOS carrier/log and ASPECT regressions exercise actual virtual DCD and DOS time calls. Independent owned Enigma/Synchronet final-cell/cursor and call-log audits. No direct physical timer observation, SIP/DSP/analog acceptance, Alt-T view, whole feature parity or deployment change."
+  "scope": "Actual linked recovered220-byte timer, maintained narrow runtime adapters and confirmed connection callbacks. CPU checks model DOS/BIOS/UART; native DOS carrier/log and ASPECT regressions exercise actual virtual DCD and DOS time calls. Independent owned Enigma/Synchronet final-cell/cursor and call-log audits. No direct physical timer observation, SIP/DSP/analog acceptance, Alt-T view, whole feature parity or deployment change.",
+  "errata": [
+    "Timer-bank size corrected from499 to497 bytes (0x1f1). Application bytes and original test evidence are unchanged."
+  ]
 }

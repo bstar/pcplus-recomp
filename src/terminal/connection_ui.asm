@@ -9,7 +9,14 @@ extern terminal_redisplay_stop
 global terminal_connection_notice,terminal_connection_notice_restore
 extern terminal_status_live
 %ifdef TERMINAL_SCREEN_PAUSE
+%define TERMINAL_MODAL_NOTICE
 extern terminal_screen_pause_active
+%endif
+%ifdef TERMINAL_ELAPSED_VIEW
+%define TERMINAL_MODAL_NOTICE
+extern _terminal_elapsed_view_active
+%endif
+%ifdef TERMINAL_MODAL_NOTICE
 global terminal_pause_notice_flush_far
 %endif
 global terminal_status_notice_refresh
@@ -36,9 +43,20 @@ global terminal_status_notice_refresh
 %endmacro
 terminal_connection_notice:
  save
+%ifdef TERMINAL_MODAL_NOTICE
+%ifdef TERMINAL_ELAPSED_VIEW
 %ifdef TERMINAL_SCREEN_PAUSE
  cmp word [terminal_screen_pause_active],0
+ jne .deferred
+%endif
+ cmp word [_terminal_elapsed_view_active],0
+ jne .deferred
+ jmp .not_paused
+.deferred:
+%else
+ cmp word [terminal_screen_pause_active],0
  je .not_paused
+%endif
  mov [pause_notice_text],si
  mov word [pause_notice_action],1
  jmp .done
@@ -66,9 +84,20 @@ terminal_connection_notice:
  restore
 terminal_connection_notice_restore:
  save
+%ifdef TERMINAL_MODAL_NOTICE
+%ifdef TERMINAL_ELAPSED_VIEW
 %ifdef TERMINAL_SCREEN_PAUSE
  cmp word [terminal_screen_pause_active],0
+ jne .deferred
+%endif
+ cmp word [_terminal_elapsed_view_active],0
+ jne .deferred
+ jmp .not_paused
+.deferred:
+%else
+ cmp word [terminal_screen_pause_active],0
  je .not_paused
+%endif
  mov word [pause_notice_action],2
  jmp .done
 .not_paused:
@@ -86,7 +115,7 @@ terminal_connection_notice_restore:
 .done:
  restore
 
-%ifdef TERMINAL_SCREEN_PAUSE
+%ifdef TERMINAL_MODAL_NOTICE
 ; Pause owns the full status row. Preserve the latest real notice/restore
 ; transition without capturing its prompt as the connection notice underlay.
 ; Called only after Pause restores that row and releases its ownership flag.
@@ -167,7 +196,7 @@ terminal_status_notice_refresh:
 SEGMENT _DATA public class=DATA use16
 notice_active: db 0
 notice_cells: times 30 db 0
-%ifdef TERMINAL_SCREEN_PAUSE
+%ifdef TERMINAL_MODAL_NOTICE
 pause_notice_text: dw 0
 pause_notice_action: dw 0
 %endif

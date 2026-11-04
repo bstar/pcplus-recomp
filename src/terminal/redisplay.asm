@@ -57,6 +57,20 @@ terminal_redisplay_key_impl:
  je .open
 %endif
 %endif
+%ifdef TERMINAL_ELAPSED_VIEW
+ cmp ax,0x1400 ; Guard/defer before the serviced viewer consumes this key.
+ jne .not_elapsed
+ extern terminal_local_control_key
+ push ax
+ call far terminal_local_control_key
+ pop ax
+ jc .elapsed_consumed
+ jmp .open
+.elapsed_consumed:
+ stc
+ ret
+.not_elapsed:
+%endif
  cmp ax,0x2c00 ; Alt-Z, maintained command menu and contextual help.
  je .open
 %ifdef TERMINAL_ORIGINAL_KEYS

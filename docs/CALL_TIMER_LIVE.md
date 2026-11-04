@@ -26,7 +26,7 @@ These adapters are not general C-runtime replacements.
 The application candidate is SHA256
 `2192f454f46c6ecec0c84ea43d3714a5e2e2ab1d89b5220c6d24b7967afc4c9d`.
 It has64848 near data/stack bytes,48 more than the prior candidate, and still
-65176 resident code bytes with360 spare. The new retained code bank is499 bytes.
+65176 resident code bytes with360 spare. The new retained code bank is497 bytes.
 With the feature disabled, a full same-option build reproduces the prior
 `501629c093d731be8f3324f185e128af76e00c2942e5ad3463c1ce7da54edb6e`
 image exactly. Ordinary builds exclude all new timer objects.
@@ -55,8 +55,8 @@ final-cell/cursor audits, call-log and draft-discard checks. The scoped
 [receipt](validation/call-timer-live.json) binds actual results and source/input
 identities. The source-only native recovery proof remains a separate scope.
 
-The Alt-T/Alt-Z Elapsed Time window remains unavailable. This checkpoint adds
-its underlying live clock, not the serviced modal view. That view must keep
+At this checkpoint the Alt-T/Alt-Z window was unavailable. The later
+[serviced window](ELAPSED_VIEW_LIVE.md) now enables it separately. Its owner must keep
 serial/parser/flow/carrier service active, defer underlay notices, consume one
 local dismissal key and restore cells/cursor before being enabled. Whole
 original feature parity, physical BUSY/reboot diagnosis and Boca/SPA2102/SIP/

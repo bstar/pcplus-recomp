@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Serviced Elapsed Time](ELAPSED_VIEW_LIVE.md) now enables original Alt-T and
+Alt-Z/browser selection, using the live recovered timer and existing screen
+frames.22 linked cases and four DOS workflows cover local dismissal, hidden
+incoming text/CPR,64 sustained replies, parser deferral and carrier-loss notices.
+BBS screen audits remain separate; package/physical/full-parity gates stay open.
+
 [Live call-clock lifecycle](CALL_TIMER_LIVE.md) now uses the220 recovered timer
 bytes in an optional retained bank. Confirmed connect/disconnect, failed hangup,
 BUSY/timeout/cancel, midnight, reconnect and logging-disabled behavior pass
@@ -1707,8 +1713,9 @@ through the shared guarded owner and reference/browser actions. A74-byte native
 body has exact original-file provenance and120 boundary-modeled CPU cases; the
 maintained live owner adds bounded flow delivery, UART buffering, any-key resume,
 cursor/row restoration and deferred connection notices. Its actual DOS observer
-and CPU/ABI evidence are scoped separately from physical acceptance. Elapsed
-time, other terminal controls, file/DOS, directory/key and Chat work remain open;
+and CPU/ABI evidence are scoped separately from physical acceptance. The later
+[Elapsed Time window](ELAPSED_VIEW_LIVE.md) adds Alt-T; other terminal controls,
+file/DOS, directory/key and Chat work remain open;
 additional geometry and full application gates do not close.
 
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):

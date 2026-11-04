@@ -27,5 +27,10 @@ unsigned COMMAND_MENU_CALL command_menu_event(unsigned short event,unsigned shor
 #define LOCAL_CONTROL_LOG_COUNT 0
 #endif
 #define LOCAL_CONTROL_BASE (24+LOCAL_CONTROL_DIRECTORY_COUNT+LOCAL_CONTROL_LOG_COUNT)
+#ifdef TERMINAL_SCREEN_PAUSE
+#define ELAPSED_CONTROL_ACTION (LOCAL_CONTROL_BASE+4)
+#else
+#define ELAPSED_CONTROL_ACTION (LOCAL_CONTROL_BASE+3)
+#endif
 #endif
 #endif

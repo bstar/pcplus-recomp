@@ -29,10 +29,23 @@ extern terminal_browser_screen_owned,terminal_editor_screen_owned
 %ifdef TERMINAL_SCREEN_PAUSE
 extern terminal_screen_pause,terminal_screen_pause_active
 %endif
+%ifdef TERMINAL_ELAPSED_VIEW
+extern _terminal_elapsed_view_active
+%endif
 global terminal_local_control_key
 ; AX normalized BIOS key. CF1 consumed/deferred; CF0 unrelated, AX unchanged.
 ; Existing FIFO preserves key order while parsing/other owners are active.
 terminal_local_control_key:
+%ifdef TERMINAL_ELAPSED_VIEW
+ ; A visible elapsed window consumes every dismissal key in its own owner.
+ cmp word [_terminal_elapsed_view_active],0
+ je .classify
+ clc
+ retf
+.classify:
+ cmp ax,0x1400
+ je .selected
+%endif
  cmp ax,0x2e00
  je .selected
  cmp ax,0x1600
@@ -82,6 +95,10 @@ terminal_local_control_key:
  jne .defer
 .admitted:
  mov word [terminal_local_control_status],0
+%ifdef TERMINAL_ELAPSED_VIEW
+ cmp ax,0x1400
+ je .view_admitted
+%endif
 %ifdef TERMINAL_SCREEN_PAUSE
  cmp ax,0x3100
  je .pause
@@ -111,6 +128,22 @@ terminal_local_control_key:
 .defer:
  mov word [terminal_local_control_status],1
  call far terminal_control_defer_far
+%ifdef TERMINAL_ELAPSED_VIEW
+ jmp .done
+%endif
+%ifdef TERMINAL_ELAPSED_VIEW
+.view_admitted:
+ pop es
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ clc
+ retf
+%endif
 .done:
  pop es
  pop bp

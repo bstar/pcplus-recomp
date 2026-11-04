@@ -4,8 +4,8 @@ The three original timer routines now rebuild exactly from source: start at
 CS:3F61(18bytes), seconds-since-midnight at3F73(41bytes), and elapsed update at
 37A5(161bytes). Flat binaries match all220 genuine original bytes. Relocatable
 OMF forms also assemble. The optional [live call-clock owner](CALL_TIMER_LIVE.md)
-now binds them to confirmed connection transitions. The serviced Alt-T window
-remains a separate unfinished integration.
+now binds them to confirmed connection transitions. The [serviced Alt-T window](ELAPSED_VIEW_LIVE.md) is enabled in a subsequent
+optional candidate, with physical and full-parity gates still separate.
 
 ## Original policy
 
