@@ -1666,3 +1666,11 @@ the prior27 application binaries.31 products reproduce from fresh source. The
 new parent repeats92 actual fault cases and the isolated ENiGMA route passes20
 checks. Startup-directory/return-prompt input, ASPECT mouse services, physical
 input and the full application gates remain open.
+
+The optional [retained keyboard dispatcher bank](KEYBOARD_BANK.md) preserves
+the original-reference/local-control candidate's behavior while freeing450
+resident code bytes for subsequent commands. The same source body serves both
+variants, with29 checked near/far service adapters and39 relocated call sites.
+Its551 linked keyboard comparisons,31 negative ABI cases and source-only exact
+rebuild are distinct from DOS/BBS and physical evidence. No command-availability
+or full-parity gate closes from this refactor.

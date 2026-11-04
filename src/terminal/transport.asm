@@ -218,9 +218,58 @@ terminal_poll_io:
  push es
  call terminal_poll_serial
  cmp word [terminal_quit],0
+%ifdef TERMINAL_KEYBOARD_BANK
+ jne terminal_poll_io_return
+%else
  jne .done
+%endif
  ; Keep request service distinct from every possible BIOS key, including AX0.
  call terminal_menu_pending_poll
+%ifdef TERMINAL_KEYBOARD_BANK
+ ; Retained dispatcher bank, not an overlay or a second keyboard owner. Keep
+ ; the original saved-register frame here; the bank releases only its own
+ ; far return. All near services below use register/no-argument contracts.
+ call far terminal_keyboard_dispatch_far
+terminal_poll_io_return:
+ pop es
+ pop di
+ pop si
+ pop bp
+ ret
+SEGMENT KEYBOARD_CODE public align=16 class=FARCODE use16
+GROUP KEYBOARD_GROUP KEYBOARD_CODE
+global terminal_keyboard_dispatch_far,terminal_keyboard_dispatch_end
+terminal_keyboard_dispatch_far:
+%define _terminal_autostart_flush far keyboard_bank__terminal_autostart_flush
+%define keyboard_poll far keyboard_bank_keyboard_poll
+%define menu_pending_cancel far keyboard_bank_menu_pending_cancel
+%define terminal_break_cancel far keyboard_bank_terminal_break_cancel
+%define terminal_break_start far keyboard_bank_terminal_break_start
+%define terminal_capture_crlf far keyboard_bank_terminal_capture_crlf
+%define terminal_capture_flush far keyboard_bank_terminal_capture_flush
+%define terminal_capture_pause far keyboard_bank_terminal_capture_pause
+%define terminal_capture_toggle far keyboard_bank_terminal_capture_toggle
+%define terminal_connection_cancel far keyboard_bank_terminal_connection_cancel
+%define terminal_connection_exit far keyboard_bank_terminal_connection_exit
+%define terminal_connection_start far keyboard_bank_terminal_connection_start
+%define terminal_controller_key far keyboard_bank_terminal_controller_key
+%define terminal_defer_key far keyboard_bank_terminal_defer_key
+%define terminal_macro_cancel far keyboard_bank_terminal_macro_cancel
+%define terminal_macro_start far keyboard_bank_terminal_macro_start
+%define terminal_monitor_key far keyboard_bank_terminal_monitor_key
+%define terminal_printer_toggle far keyboard_bank_terminal_printer_toggle
+%define terminal_program_cancel far keyboard_bank_terminal_program_cancel
+%define terminal_read_key far keyboard_bank_terminal_read_key
+%define terminal_redisplay_key far keyboard_bank_terminal_redisplay_key
+%define terminal_script_start far keyboard_bank_terminal_script_start
+%define terminal_setup_start far keyboard_bank_terminal_setup_start
+%define terminal_snapshot_start far keyboard_bank_terminal_snapshot_start
+%define terminal_take_deferred_key far keyboard_bank_terminal_take_deferred_key
+%define terminal_transfer_start far keyboard_bank_terminal_transfer_start
+%define terminal_translation_edit_start far keyboard_bank_terminal_translation_edit_start
+%define terminal_translation_reload_start far keyboard_bank_terminal_translation_reload_start
+%define terminal_upload_start far keyboard_bank_terminal_upload_start
+%endif
 .keyboard:
  cmp word [terminal_menu_pending],0
  jne .bios_key
@@ -469,11 +518,84 @@ terminal_poll_io:
  je .done
  call terminal_connection_start
 .done:
+%ifdef TERMINAL_KEYBOARD_BANK
+ retf
+terminal_keyboard_dispatch_end:
+%undef _terminal_autostart_flush
+%undef keyboard_poll
+%undef menu_pending_cancel
+%undef terminal_break_cancel
+%undef terminal_break_start
+%undef terminal_capture_crlf
+%undef terminal_capture_flush
+%undef terminal_capture_pause
+%undef terminal_capture_toggle
+%undef terminal_connection_cancel
+%undef terminal_connection_exit
+%undef terminal_connection_start
+%undef terminal_controller_key
+%undef terminal_defer_key
+%undef terminal_macro_cancel
+%undef terminal_macro_start
+%undef terminal_monitor_key
+%undef terminal_printer_toggle
+%undef terminal_program_cancel
+%undef terminal_read_key
+%undef terminal_redisplay_key
+%undef terminal_script_start
+%undef terminal_setup_start
+%undef terminal_snapshot_start
+%undef terminal_take_deferred_key
+%undef terminal_transfer_start
+%undef terminal_translation_edit_start
+%undef terminal_translation_reload_start
+%undef terminal_upload_start
+SEGMENT _TEXT
+global menu_pending_cancel
+%macro KEYBOARD_BRIDGE 1
+ global keyboard_bank_%1
+ keyboard_bank_%1:
+ ; CALL/RETF preserve the callee's result registers and flags. No arguments
+ ; live above the return address, and DS=SS is unchanged across the bank.
+ call %1
+ retf
+%endmacro
+KEYBOARD_BRIDGE _terminal_autostart_flush
+KEYBOARD_BRIDGE keyboard_poll
+KEYBOARD_BRIDGE menu_pending_cancel
+KEYBOARD_BRIDGE terminal_break_cancel
+KEYBOARD_BRIDGE terminal_break_start
+KEYBOARD_BRIDGE terminal_capture_crlf
+KEYBOARD_BRIDGE terminal_capture_flush
+KEYBOARD_BRIDGE terminal_capture_pause
+KEYBOARD_BRIDGE terminal_capture_toggle
+KEYBOARD_BRIDGE terminal_connection_cancel
+KEYBOARD_BRIDGE terminal_connection_exit
+KEYBOARD_BRIDGE terminal_connection_start
+KEYBOARD_BRIDGE terminal_controller_key
+KEYBOARD_BRIDGE terminal_defer_key
+KEYBOARD_BRIDGE terminal_macro_cancel
+KEYBOARD_BRIDGE terminal_macro_start
+KEYBOARD_BRIDGE terminal_monitor_key
+KEYBOARD_BRIDGE terminal_printer_toggle
+KEYBOARD_BRIDGE terminal_program_cancel
+KEYBOARD_BRIDGE terminal_read_key
+KEYBOARD_BRIDGE terminal_redisplay_key
+KEYBOARD_BRIDGE terminal_script_start
+KEYBOARD_BRIDGE terminal_setup_start
+KEYBOARD_BRIDGE terminal_snapshot_start
+KEYBOARD_BRIDGE terminal_take_deferred_key
+KEYBOARD_BRIDGE terminal_transfer_start
+KEYBOARD_BRIDGE terminal_translation_edit_start
+KEYBOARD_BRIDGE terminal_translation_reload_start
+KEYBOARD_BRIDGE terminal_upload_start
+%else
  pop es
  pop di
  pop si
  pop bp
  ret
+%endif
 
 ; No macro execution state is changed: only the pending menu's typeahead is
 ; discarded. Escape remains local; Alt-X/Alt-H continue through normal dispatch.

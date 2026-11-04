@@ -1,0 +1,88 @@
+{
+  "passed": true,
+  "terminal_sha256": "854e8add51fe3311fa2fbb829dc4eb1bb4bc588a711639e3a4f072df826f9651",
+  "terminal_manifest_sha256": "5235bd0f63e027f57476c17f948973a5bb7bd0e13313c72b009fb9339c84d0c1",
+  "original_inputs": [],
+  "feature_disabled_sha256": "e69a8050ea5d31793f07490e325052db8b37382475dafc3d437b2c806c08c5fb",
+  "minimal_variant_sha256": "904ecf8e06e5535beb532144eb688f04a6001590bb2415e61fd56f1e7b2b03fb",
+  "memory": {
+    "resident_code_bytes": 65082,
+    "resident_code_spare_bytes": 454,
+    "keyboard_bank_bytes": 649,
+    "keyboard_bank_far_call_sites": 39,
+    "keyboard_bank_bridge_pairs_verified": 29,
+    "keyboard_bank_dispatch_calls_verified": 1
+  },
+  "data_stack_bytes": 64800,
+  "evidence": {
+    "build/keyboard-bank-comparison-release-20261103/result.json": {
+      "passed": true,
+      "sha256": "a3a5a7447e6c45312c9c2be32653586fd40b0b702199126dcc02af242255a267"
+    },
+    "build/keyboard-bank-release-abi-20261103/result.json": {
+      "passed": true,
+      "sha256": "1d5d4e6ddfa44b14cea8b2c57f68b54f386479766d37598e907744b65c45b4f5"
+    },
+    "build/keyboard-bank-final-source-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "4dcb9d2e5d3fafc7a3ba9fbdadc9faa65b1cf7fb321f10a31e16ac08dfe166fd"
+    },
+    "build/keyboard-bank-local-live-20261103/result.json": {
+      "passed": true,
+      "sha256": "3de8eac191158ab3b703ae0f2d803449823e9feaaaa338c1d5ca7c753acbe8f2"
+    },
+    "build/terminal-keyboard-bank-final-20261103/reference-checks.json": {
+      "passed": true,
+      "sha256": "d198e96030b3236d0abb30f368563a87bd5ce0cf8db1e816b7f0919dca9fcd8d"
+    },
+    "build/local-controls-dos/keyboard-bank-20261103/result.json": {
+      "passed": true,
+      "sha256": "e7c4d31d66693002deddbd79f26b585453582a7108593bd7fae354bd9dac55b3"
+    },
+    "build/busy-retry-dos/keyboard-bank-20261103/result.json": {
+      "passed": true,
+      "sha256": "89a3a4f0572fc124341fb6f637843aa4f6a4fd3e69b8483d1e8a695372772806"
+    },
+    "build/terminal-endurance/keyboard-bank-20261103/result.json": {
+      "passed": true,
+      "sha256": "81e596e21461b7d21c11f9cccab10cd382fe0d486499cdee0fbc29868217fcfe"
+    },
+    "build/bbs-lab/results/enigma/keyboard-bank-enigma-final-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "46683f281b182b16fd2c827c9f96b62dc7b1b484aaaf88e4870b8d354fd399ee"
+    },
+    "build/bbs-lab/results/enigma/keyboard-bank-enigma-final-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "89d0cd4dd25e089818eb9cfbe2dc4813b4beeb8118acb99314d6360cf57e6f7d"
+    },
+    "build/bbs-lab/results/synchronet/keyboard-bank-sync-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "a95acca0190a5d4198b5a056eaba1a76c73b66ef5d38bd8a17c6b998117d17ab"
+    },
+    "build/bbs-lab/results/synchronet/keyboard-bank-sync-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "c9555c510897e3024c516de3b14f45d02a1c176be74c41e4322543b6067097ca"
+    },
+    "build/keyboard-bank-package-splash-20261103/result.json": {
+      "passed": true,
+      "sha256": "36fbec764cb76c97f71159c9bfa3940b6ddde8953cbdf30551ae106265b41dc9"
+    },
+    "build/keyboard-bank-package-setup-20261103/result.json": {
+      "passed": true,
+      "sha256": "be9d888670bb4cf0da0dcd1fcea126128fa72df9b58206640f47a43cef86238e"
+    }
+  },
+  "verification_sources": {
+    "standalone/check_keyboard_bank_live.py": "a70989c7c26c0645ffbac5bcc2b1baac74dc975b129d8bb2ef3250f919c226d3",
+    "standalone/check_keyboard_bank_abi.py": "3ecd3291408c153b192c987c078acce7793cb7ec2e0b2dd3d277e04bcb2c1495",
+    "standalone/terminal_memory.py": "8b4efcce3918b5645f8ba099373206965bf2ea7a083aaca81216fee019e27e19",
+    "src/terminal/keyboard_bank_targets.json": "5cbd72f3fd1d7607e54b7a5e7f1c3ad1e1ed8f19dbc688a4e9db0a470ab52755"
+  },
+  "rejected_run": {
+    "path": "build/bbs-lab/results/enigma/keyboard-bank-20261103/proxy-integration.json",
+    "passed": false,
+    "reason": "Source freeze failed after comment/validator edits during runtime; final frozen-source run supersedes it."
+  },
+  "installed": false,
+  "scope": "Optional retained dispatcher bank, unchanged keyboard body and command set. CPU, actual DOS8086 and owned paced Enigma/Synchronet proxy lab checks only. No SIP/DSP/analog/physical acceptance; physical BUSY remains unresolved. No live service or machine configuration changed."
+}

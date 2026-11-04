@@ -72,3 +72,12 @@ retains separate source/package identity; the selected physical installation is
 unchanged. Further terminal controls and file/DOS/directory/key/Chat work remain
 open. Physical BUSY diagnosis is still pending rather than waived by emulator
 results.
+
+## Space for subsequent terminal controls
+
+The optional [retained keyboard bank](KEYBOARD_BANK.md) moves the same keyboard
+dispatcher out of resident CS, increasing spare resident space from4 to454 bytes.
+It preserves the existing command set and foreground ownership. Source-only
+reproduction, differential execution and DOS/BBS checks are recorded separately
+for its854e8add candidate. It is staged rather than installed; physical BUSY
+diagnosis, remaining command recovery and full-parity gates remain open.

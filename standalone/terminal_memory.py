@@ -1,6 +1,6 @@
 """Validate small-model near ABI and all retained static far extents from MZ/map."""
 from pathlib import Path
-import hashlib,re,struct
+import hashlib,re,struct,json
 
 def inspect_terminal_memory(binary,map_path):
  image=Path(binary).read_bytes();header=struct.unpack_from('<14H',image)
@@ -208,10 +208,34 @@ def inspect_terminal_memory(binary,map_path):
   assert mode[0]==ds and duplex==b'\x83\x3e'+struct.pack('<H',mode[1])+b'\x01\x1b\xc0\xf7\xd8\xa3'+struct.pack('<H',mode[1])+b'\xc3'
   assert symbols['terminal_local_control_status'][0]==ds
   key=symbols['terminal_local_control_key'];pattern=b'\x9a'+struct.pack('<HH',key[1],key[0])
-  root=image[start+near_code['relative_segment']*16:start+near_code['relative_segment']*16+near_code['bytes']]
-  sites=[near_code['relative_segment']*16+i for i in range(len(root)-4) if root[i:i+5]==pattern]
+  owner=next(c for c in code_segments if c['name']=='KEYBOARD_CODE') if 'terminal_keyboard_dispatch_far' in symbols else near_code
+  root=image[start+owner['relative_segment']*16:start+owner['relative_segment']*16+owner['bytes']]
+  sites=[owner['relative_segment']*16+i for i in range(len(root)-4) if root[i:i+5]==pattern]
   assert len(sites)==1 and sites[0]+3 in relocations,'One live-dispatch local-control far entry'
   extra.update(local_controls_bridge_pairs_verified=4,local_controls_native_entry_bytes=24,local_controls_dispatch_calls_verified=1)
+ if 'terminal_keyboard_dispatch_far' in symbols:
+  keyboard=next(c for c in code_segments if c['name']=='KEYBOARD_CODE')
+  entry=symbols['terminal_keyboard_dispatch_far'];end=symbols['terminal_keyboard_dispatch_end']
+  assert keyboard['kind']=='FARCODE' and keyboard['offset']==0 and entry==(keyboard['relative_segment'],0)
+  assert end[0]==entry[0] and end[1]==keyboard['bytes']
+  targets=json.loads((Path(__file__).resolve().parents[1]/'src/terminal/keyboard_bank_targets.json').read_text())['targets']
+  assert len(targets)==len(set(targets))==29
+  body=raw('terminal_keyboard_dispatch_far',keyboard['bytes'])
+  assert body[-1:]==b'\xcb','Keyboard bank must release its far return frame'
+  calls=[]
+  for target in targets:
+   bridge='keyboard_bank_'+target
+   assert symbols[bridge][0]==near_code['relative_segment']
+   near_call(bridge,target)
+   pattern=b'\x9a'+struct.pack('<HH',symbols[bridge][1],symbols[bridge][0])
+   sites=[entry[0]*16+i for i in range(len(body)-4) if body[i:i+5]==pattern]
+   assert sites and all(at+3 in relocations for at in sites),(target,'keyboard bank far calls/relocations')
+   calls+=sites
+  root=image[start+near_code['relative_segment']*16:start+near_code['relative_segment']*16+near_code['bytes']]
+  pattern=b'\x9a'+struct.pack('<HH',entry[1],entry[0])
+  sites=[near_code['relative_segment']*16+i for i in range(len(root)-4) if root[i:i+5]==pattern]
+  assert len(sites)==1 and sites[0]+3 in relocations,'One resident keyboard-bank dispatch entry'
+  extra.update(keyboard_bank_bridge_pairs_verified=29,keyboard_bank_far_call_sites=len(calls),keyboard_bank_dispatch_calls_verified=1,keyboard_bank_bytes=keyboard['bytes'])
  if '_directory_view_event' in symbols:
   directory=next(c for c in code_segments if c['name']=='DIRECTORY_CODE')
   directory_seg=directory['relative_segment']
