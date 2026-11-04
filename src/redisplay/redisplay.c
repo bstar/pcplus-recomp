@@ -59,8 +59,31 @@ static word export_step(void)
  if(status){export_close(3);return 1;}
  return 0;
 }
+#ifdef TERMINAL_LARGE_VIEW_FRAMES
+#include "../terminal/row_geometry.h"
+extern word ui_window_rows;
+#pragma aux ui_window_rows "ui_window_rows";
+extern word __far redisplay_live[];
+extern word __far redisplay_live_end[];
+extern word __far redisplay_view[];
+extern word __far redisplay_view_end[];
+#pragma aux redisplay_live "redisplay_live";
+#pragma aux redisplay_live_end "redisplay_live_end";
+#pragma aux redisplay_view "redisplay_view";
+#pragma aux redisplay_view_end "redisplay_view_end";
+static word frame_rows=25,frame_cells=2000;
+#define FRAME_ROWS frame_rows
+#define FRAME_CELLS frame_cells
+/* Menus retain their25-row layout. Refresh the exposed lower background only;
+ * history itself uses the whole accepted frame. No metadata/parser mutation. */
+static void refresh_tail(void)
+{word i;if(direct_clipboard)for(i=2000;i<frame_cells;++i)view[i]=live[i];}
+#else
+#define FRAME_ROWS 25
+#define FRAME_CELLS 2000
+#endif
 static void copy(word __far *to,const word __far *from)
-{word i;for(i=0;i<2000;++i)to[i]=from[i];}
+{word i;for(i=0;i<FRAME_CELLS;++i)to[i]=from[i];}
 static void cursor_get(void)
 {
  word p=0,s=0;
@@ -122,7 +145,7 @@ static word previous(word at)
 }
 static void bottom(void)
 {
- word i;top=line_at(length?length-1:0);for(i=1;i<23;++i)top=previous(top);
+ word i;top=line_at(length?length-1:0);for(i=1;i<FRAME_ROWS-2;++i)top=previous(top);
 }
 /* Keep fixed UI prose with CONFIG code, following command_menu.c. */
 #define REDISPLAY_TEXT __based(__segname("_CODE"))
@@ -141,14 +164,14 @@ static const char REDISPLAY_TEXT redisplay_text_11[]="History is empty. Incoming
 static const char REDISPLAY_TEXT redisplay_text_12[]="No match. / changes search; F3 repeats. Incoming data continues.";
 static const char REDISPLAY_TEXT redisplay_text_13[]="Frozen history; incoming data continues. / searches; Esc returns to live screen.";
 static void label(word at,const char __far *s,word attribute)
-{while(*s && at<2000)view[at++]=attribute|(byte)*s++;}
+{while(*s && at<FRAME_CELLS)view[at++]=attribute|(byte)*s++;}
 static void draw(void)
 {
  word i,p=top,row,col;byte b;
- for(i=0;i<2000;++i)view[i]=0x0720;
- for(i=0;i<80;++i)view[i]=view[1920+i]=0x1f20;
+ for(i=0;i<FRAME_CELLS;++i)view[i]=0x0720;
+ for(i=0;i<80;++i)view[i]=view[(FRAME_ROWS-1)*80+i]=0x1f20;
  label(1,redisplay_text_0,0x1f00);
- for(row=1;row<24 && p<length;++row){col=0;
+ for(row=1;row<FRAME_ROWS-1 && p<length;++row){col=0;
   while(p<length){b=snapshot[p++];if(b==13)break;
    if(b==9){col+=8-(col&7);}else{
     if(col<80)view[row*80+col]=0x0700|(b<32?'.':b);++col;
@@ -157,22 +180,22 @@ static void draw(void)
   }
  }
  if(export_edit){
-  for(i=1840;i<1920;++i)view[i]=0x1f20;
-  label(1841,redisplay_text_1,0x1f00);label(1847,export_path,0x1f00);
-  label(1921,redisplay_text_2,0x1f00);
+  for(i=(FRAME_ROWS-2)*80;i<(FRAME_ROWS-1)*80;++i)view[i]=0x1f20;
+  label((FRAME_ROWS-2)*80+1,redisplay_text_1,0x1f00);label((FRAME_ROWS-2)*80+7,export_path,0x1f00);
+  label((FRAME_ROWS-1)*80+1,redisplay_text_2,0x1f00);
  }
- else if(redisplay_export_pending)label(1921,redisplay_text_3,0x1f00);
- else if(export_notice==1)label(1921,redisplay_text_4,0x1f00);
- else if(export_notice==2)label(1921,redisplay_text_5,0x1f00);
- else if(export_notice==3)label(1921,redisplay_text_6,0x1f00);
- else if(export_notice==4)label(1921,redisplay_text_7,0x1f00);
- else if(export_notice==5)label(1921,redisplay_text_8,0x1f00);
- else if(query_edit)label(1921,redisplay_text_9,0x1f00);
- else if(redisplay_search_pending)label(1921,redisplay_text_10,0x1f00);
- else if(!length)label(1921,redisplay_text_11,0x1f00);
- else if(!found)label(1921,redisplay_text_12,0x1f00);
- else label(1921,redisplay_text_13,0x1f00);
- if(query_edit && !export_edit && !redisplay_export_pending)label(1929,query,0x1f00);
+ else if(redisplay_export_pending)label((FRAME_ROWS-1)*80+1,redisplay_text_3,0x1f00);
+ else if(export_notice==1)label((FRAME_ROWS-1)*80+1,redisplay_text_4,0x1f00);
+ else if(export_notice==2)label((FRAME_ROWS-1)*80+1,redisplay_text_5,0x1f00);
+ else if(export_notice==3)label((FRAME_ROWS-1)*80+1,redisplay_text_6,0x1f00);
+ else if(export_notice==4)label((FRAME_ROWS-1)*80+1,redisplay_text_7,0x1f00);
+ else if(export_notice==5)label((FRAME_ROWS-1)*80+1,redisplay_text_8,0x1f00);
+ else if(query_edit)label((FRAME_ROWS-1)*80+1,redisplay_text_9,0x1f00);
+ else if(redisplay_search_pending)label((FRAME_ROWS-1)*80+1,redisplay_text_10,0x1f00);
+ else if(!length)label((FRAME_ROWS-1)*80+1,redisplay_text_11,0x1f00);
+ else if(!found)label((FRAME_ROWS-1)*80+1,redisplay_text_12,0x1f00);
+ else label((FRAME_ROWS-1)*80+1,redisplay_text_13,0x1f00);
+ if(query_edit && !export_edit && !redisplay_export_pending)label((FRAME_ROWS-1)*80+9,query,0x1f00);
  if(visible){copy((word __far *)MK_FP(0xb800,0),view);hide();}
 }
 static void search(void)
@@ -213,7 +236,21 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
 }
   if((mode&255)!=3 || mode>>8!=80 || p>>8 || c->end<=c->start ||
    c->end-c->start!=63000U || c->head<c->start || c->head>=c->end || c->wrapped>1)return 1;
+#ifdef TERMINAL_LARGE_VIEW_FRAMES
+  i=*(byte __far *)MK_FP(0x40,0x84);i=i?i+1:25;
+  if(i!=25 && i!=28 && i!=43 && i!=50)return 1;
+  if(ui_window_rows!=i || (i!=25 && terminal_row_status_layout()))return 1;
+  if(c->live_seg!=FP_SEG(redisplay_live) || c->live_off!=FP_OFF(redisplay_live) ||
+   c->view_seg!=FP_SEG(redisplay_view) || c->view_off!=FP_OFF(redisplay_view))return 1;
+  if(FP_SEG(redisplay_live_end)!=c->live_seg || FP_SEG(redisplay_view_end)!=c->view_seg ||
+   FP_OFF(redisplay_live_end)-c->live_off!=8000U || FP_OFF(redisplay_view_end)-c->view_off!=8000U)return 1;
+  /* The caller supplies the statically verified frame identities. Check the
+   * near-offset capacity before forming far pointers, even for malformed input. */
+  if(c->live_off>65535U-i*160 || c->view_off>65535U-i*160)return 1;
+  frame_rows=i;frame_cells=i*80;
+#else
   if(*(byte __far *)MK_FP(0x40,0x84)!=0 && *(byte __far *)MK_FP(0x40,0x84)!=24)return 1;
+#endif
   source=(byte __far *)MK_FP(c->source_seg,0);
   snapshot=(byte __far *)MK_FP(c->snapshot_seg,c->snapshot_off);
   live=(word __far *)MK_FP(c->live_seg,c->live_off);
@@ -236,6 +273,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   length=direct_clipboard?0:(c->wrapped?63000U:c->head-c->start);p=c->wrapped?c->head:c->start;
   for(i=0;i<length;++i){snapshot[i]=source[p];if(++p==c->end)p=c->start;}
   cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
+#ifdef TERMINAL_LARGE_VIEW_FRAMES
+  copy(view,live);
+#endif
   redisplay_search_pending=redisplay_export_pending=0;export_edit=export_notice=0;oldest_skip=c->wrapped && length && snapshot[0]==13;query_size=query_edit=0;query[0]=0;found=1;last_match=65535U;visible=1;redisplay_live_ready=0;clipboard_ui_visible=1;redisplay_active=1;index_rows();bottom();
 #ifdef TERMINAL_ELAPSED_VIEW
   if(direct_clipboard==3){
@@ -264,6 +304,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
  if(terminal_elapsed_view_active && event==3){
   word paint=elapsed_view_poll();
   if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
+#ifdef TERMINAL_LARGE_VIEW_FRAMES
+   refresh_tail();
+#endif
    redisplay_live_ready=0;visible=1;paint=1;}
   if(paint){copy(view,live);elapsed_view_draw(view);
    copy((word __far *)MK_FP(0xb800,0),view);hide();}
@@ -292,7 +335,11 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   export_edit=0;redisplay_search_pending=0;redisplay_active=visible=redisplay_live_ready=clipboard_ui_visible=0;return key==0x2d00?0:1;
  }
  if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;redisplay_live_ready=1;clipboard_ui_visible=0;if(clipboard_ui_active)clipboard_ui_event(2,0,view);}return 0;}
- if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));redisplay_live_ready=0;visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}
+ if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
+#ifdef TERMINAL_LARGE_VIEW_FRAMES
+   refresh_tail();
+#endif
+   redisplay_live_ready=0;visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}
 #ifdef TERMINAL_DIRECTORY_VIEW
   if(command_menu_active){
    if(!command_menu_event(3,0,view)){
@@ -321,8 +368,8 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   switch(key){
   case 0x4800:case 0x48e0:top=previous(top);break;
   case 0x5000:case 0x50e0:if(next(top)<length)top=next(top);break;
-  case 0x4900:case 0x49e0:for(i=0;i<23;++i)top=previous(top);break;
-  case 0x5100:case 0x51e0:for(i=0;i<23 && next(top)<length;++i)top=next(top);break;
+  case 0x4900:case 0x49e0:for(i=0;i<FRAME_ROWS-2;++i)top=previous(top);break;
+  case 0x5100:case 0x51e0:for(i=0;i<FRAME_ROWS-2 && next(top)<length;++i)top=next(top);break;
   case 0x4700:case 0x47e0:top=0;break;
   case 0x4f00:case 0x4fe0:bottom();break;
   case 'c':case 'C':clipboard_ui_event(0,0,view);return 1;

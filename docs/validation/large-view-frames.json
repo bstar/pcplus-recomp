@@ -1,0 +1,418 @@
+{
+  "passed": true,
+  "images": {
+    "ordinary": {
+      "terminal": "build/large-view-accepted-20261104/ordinary/TERMINAL.EXE",
+      "sha256": "ecc0c92ff7c6faa3e6a7794fc64a8bfde78485107a6a9220b84aa8777af7af90",
+      "manifest_sha256": "19e5f3766f62829b9b276b8ac922fbc136942f36edbcdf62e624ffc33f56986c",
+      "data_stack_bytes": 65104,
+      "resident_CS_extent_bytes": 65418,
+      "resident_CS_spare_bytes": 118,
+      "far_ui_storage_bytes": 20000,
+      "ui_screen_buffers": {
+        "browser_screen": {
+          "relative_segment": 18032,
+          "offset": 0,
+          "bytes": 4000,
+          "start_linear": 288512,
+          "end_linear": 292512
+        },
+        "ed_screen": {
+          "relative_segment": 18032,
+          "offset": 4000,
+          "bytes": 4000,
+          "start_linear": 292512,
+          "end_linear": 296512
+        },
+        "program_screen": {
+          "relative_segment": 18032,
+          "offset": 0,
+          "bytes": 4000,
+          "start_linear": 288512,
+          "end_linear": 292512
+        },
+        "redisplay_live": {
+          "relative_segment": 18032,
+          "offset": 4000,
+          "bytes": 8000,
+          "start_linear": 292512,
+          "end_linear": 300512
+        },
+        "redisplay_view": {
+          "relative_segment": 18032,
+          "offset": 12000,
+          "bytes": 8000,
+          "start_linear": 300512,
+          "end_linear": 308512
+        }
+      },
+      "source_files": 567,
+      "proof": "build/large-view-proof-ordinary-20261104/result.json",
+      "proof_sha256": "69bd59e0d97b4aa85cd8a16c99f5413ea48549d357c806835924969dc6904961",
+      "build_flags": [
+        "--directory-keys",
+        "--aspect-keys",
+        "--keyboard-bank",
+        "--reset-row-owner",
+        "--status-owner",
+        "--display-row-owner",
+        "--row-geometry-owner",
+        "--display-preferences",
+        "--window-size-report",
+        "--local-controls",
+        "--screen-pause",
+        "--call-timer",
+        "--elapsed-view",
+        "--manual-init-owner",
+        "--manual-init",
+        "--auto-answer-owner",
+        "--auto-answer",
+        "--original-keys",
+        "--status-geometry",
+        "--original-reference",
+        "--external-render",
+        "--mouse",
+        "--notice-input",
+        "--exit-guard",
+        "--process-bank",
+        "--session-capture",
+        "--session-projection",
+        "--session-baseline",
+        "--register-handoff",
+        "--session-controls",
+        "--hook-return",
+        "--hook-execute",
+        "--hook-modem",
+        "--hook-input",
+        "--hook-apply",
+        "--hook-lookup",
+        "--traps",
+        "--custom-irq",
+        "--special-edition",
+        "--phone-log-bank",
+        "--phone-log-startup",
+        "--phone-log-lifecycle",
+        "--phone-log-events",
+        "--phone-log-disk",
+        "--phone-log-controls",
+        "--phone-log-reservations",
+        "--native-reset-bank",
+        "--native-reset-transaction",
+        "--status-control",
+        "--notice-sound",
+        "--large-view-frames"
+      ]
+    },
+    "diagnostic": {
+      "terminal": "build/large-view-accepted-20261104/diagnostic-final/TERMINAL.EXE",
+      "sha256": "7f27e6a79828da17d84e5ea184cc764ea402be5db5b33630d21041eed3b1546d",
+      "manifest_sha256": "76c41a324462d916886d9053a01d8774db1a890ae6eb43641cab193174b8455a",
+      "data_stack_bytes": 65168,
+      "resident_CS_extent_bytes": 65428,
+      "resident_CS_spare_bytes": 108,
+      "far_ui_storage_bytes": 20000,
+      "ui_screen_buffers": {
+        "browser_screen": {
+          "relative_segment": 18178,
+          "offset": 0,
+          "bytes": 4000,
+          "start_linear": 290848,
+          "end_linear": 294848
+        },
+        "ed_screen": {
+          "relative_segment": 18178,
+          "offset": 4000,
+          "bytes": 4000,
+          "start_linear": 294848,
+          "end_linear": 298848
+        },
+        "program_screen": {
+          "relative_segment": 18178,
+          "offset": 0,
+          "bytes": 4000,
+          "start_linear": 290848,
+          "end_linear": 294848
+        },
+        "redisplay_live": {
+          "relative_segment": 18178,
+          "offset": 4000,
+          "bytes": 8000,
+          "start_linear": 294848,
+          "end_linear": 302848
+        },
+        "redisplay_view": {
+          "relative_segment": 18178,
+          "offset": 12000,
+          "bytes": 8000,
+          "start_linear": 302848,
+          "end_linear": 310848
+        }
+      },
+      "source_files": 569,
+      "proof": "build/large-view-proof-diagnostic-20261104/result.json",
+      "proof_sha256": "96591d24925ee0aeab168299e3dc26ee41ea04b2208ce96b2363aa18aa2a735e",
+      "build_flags": [
+        "--directory-keys",
+        "--aspect-keys",
+        "--keyboard-bank",
+        "--reset-row-owner",
+        "--status-owner",
+        "--display-row-owner",
+        "--row-geometry-owner",
+        "--display-preferences",
+        "--window-size-report",
+        "--local-controls",
+        "--screen-pause",
+        "--call-timer",
+        "--elapsed-view",
+        "--manual-init-owner",
+        "--manual-init",
+        "--auto-answer-owner",
+        "--auto-answer",
+        "--original-keys",
+        "--status-geometry",
+        "--original-reference",
+        "--external-render",
+        "--mouse",
+        "--notice-input",
+        "--exit-guard",
+        "--process-bank",
+        "--session-capture",
+        "--session-projection",
+        "--session-baseline",
+        "--register-handoff",
+        "--session-controls",
+        "--hook-return",
+        "--hook-execute",
+        "--hook-modem",
+        "--hook-input",
+        "--hook-apply",
+        "--hook-lookup",
+        "--traps",
+        "--custom-irq",
+        "--special-edition",
+        "--phone-log-bank",
+        "--phone-log-startup",
+        "--phone-log-lifecycle",
+        "--phone-log-events",
+        "--phone-log-disk",
+        "--phone-log-controls",
+        "--phone-log-reservations",
+        "--native-reset-bank",
+        "--native-reset-transaction",
+        "--status-control",
+        "--notice-sound",
+        "--large-view-frames",
+        "--display-row-probe"
+      ]
+    },
+    "disabled": {
+      "terminal": "build/large-view-accepted-20261104/disabled/TERMINAL.EXE",
+      "sha256": "ee0bd6cd00295643f9500aed5ca4dd8b8552a102574f5d09a45affe739d7308f",
+      "manifest_sha256": "8665ec30a7c0eac5153a5744c546d022a75ebbaeb08c005a87f96e3fe174bcf2",
+      "data_stack_bytes": 65088,
+      "resident_CS_extent_bytes": 65418,
+      "resident_CS_spare_bytes": 118,
+      "far_ui_storage_bytes": 12000,
+      "ui_screen_buffers": {
+        "browser_screen": {
+          "relative_segment": 18004,
+          "offset": 0,
+          "bytes": 4000,
+          "start_linear": 288064,
+          "end_linear": 292064
+        },
+        "ed_screen": {
+          "relative_segment": 18004,
+          "offset": 4000,
+          "bytes": 4000,
+          "start_linear": 292064,
+          "end_linear": 296064
+        },
+        "program_screen": {
+          "relative_segment": 18004,
+          "offset": 0,
+          "bytes": 4000,
+          "start_linear": 288064,
+          "end_linear": 292064
+        },
+        "redisplay_live": {
+          "relative_segment": 18004,
+          "offset": 4000,
+          "bytes": 4000,
+          "start_linear": 292064,
+          "end_linear": 296064
+        },
+        "redisplay_view": {
+          "relative_segment": 18004,
+          "offset": 8000,
+          "bytes": 4000,
+          "start_linear": 296064,
+          "end_linear": 300064
+        }
+      },
+      "source_files": 567,
+      "proof": "build/large-view-proof-disabled-20261104/result.json",
+      "proof_sha256": "4b1ed238fdfa3b86e9740cf774472bd55bd7c2590a4bc30aa6677322e683f261",
+      "build_flags": [
+        "--directory-keys",
+        "--aspect-keys",
+        "--keyboard-bank",
+        "--reset-row-owner",
+        "--status-owner",
+        "--display-row-owner",
+        "--row-geometry-owner",
+        "--display-preferences",
+        "--window-size-report",
+        "--local-controls",
+        "--screen-pause",
+        "--call-timer",
+        "--elapsed-view",
+        "--manual-init-owner",
+        "--manual-init",
+        "--auto-answer-owner",
+        "--auto-answer",
+        "--original-keys",
+        "--status-geometry",
+        "--original-reference",
+        "--external-render",
+        "--mouse",
+        "--notice-input",
+        "--exit-guard",
+        "--process-bank",
+        "--session-capture",
+        "--session-projection",
+        "--session-baseline",
+        "--register-handoff",
+        "--session-controls",
+        "--hook-return",
+        "--hook-execute",
+        "--hook-modem",
+        "--hook-input",
+        "--hook-apply",
+        "--hook-lookup",
+        "--traps",
+        "--custom-irq",
+        "--special-edition",
+        "--phone-log-bank",
+        "--phone-log-startup",
+        "--phone-log-lifecycle",
+        "--phone-log-events",
+        "--phone-log-disk",
+        "--phone-log-controls",
+        "--phone-log-reservations",
+        "--native-reset-bank",
+        "--native-reset-transaction",
+        "--status-control",
+        "--notice-sound"
+      ]
+    }
+  },
+  "checks": {
+    "large_view": {
+      "passed": true,
+      "inputs": 108,
+      "result": "build/large-view-regress-20261104/large_view/result.json",
+      "result_sha256": "fc1894740c35398124f3401116262c4a0a5b5ef7de5cd37f11dc8c1dc181e686",
+      "scope": "Execute full-height shared views with real selector, key, IRQ and parser code.\nBIOS/UART/DOS boundaries modeled; not physical timing or complete modal parity.\n"
+    },
+    "status_control": {
+      "passed": true,
+      "inputs": 36,
+      "result": "build/large-view-regress-20261104/status_control/result.json",
+      "result_sha256": "3ba558caca0e5d1d4ae5046e12671c3176d8e1699b2f045b6a1d144948eb2004",
+      "scope": "Actual keyboard/menu Ctrl-] dispatch and offline status transaction.\nLinked instructions execute; BIOS/UART/DOS boundaries modeled, no physical claim.\n"
+    },
+    "status_transition": {
+      "passed": true,
+      "inputs": 76,
+      "result": "build/large-view-regress-20261104/status_transition/result.json",
+      "result_sha256": "abd4f872691d93b0aab9aa054777c1aac3a957b71309d7187aa907a671b38c3e",
+      "scope": "Execute optional offline status transaction, actual parser/RIS and rollback.\nActual C/ASM parent helpers; BIOS/UART boundaries modeled. No online size policy.\n Offline fixed80x25 narrow/unprotected component; actual frame/metadata/default rollback, native scroll/cursor/status and parser/CPR/RIS execute. Late fault changes a configuration input at renderer entry; no product function replaced. No key/menu binding, online resize/NAWS, larger/wide mode, actual DOS/BBS/physical or deployment acceptance."
+    },
+    "row_geometry": {
+      "passed": true,
+      "inputs": 102,
+      "result": "build/large-view-regress-20261104/row_geometry/result.json",
+      "result_sha256": "f423dce253d1a5a957068593aa2a70a7313e3bf87caae25e73aa8ed8ce51d29a",
+      "scope": "Execute actual BIOS/canonical/RIS owner; BIOS/UART boundaries are modeled. Actual linked C/ASM/native BIOS request chains, full rollback, RIS/status/parser and UART IRQ code execute. BIOS effects, DOS allocations, INT33 driver/vector boundaries and failure responses modeled; mouse arrival seeds native pending data at the pause boundary, not physical IRQ timing. Renderer fault changes an input at real boundary. No function/instruction/return patch, ordinary key binding, online/BBS or physical acceptance."
+    },
+    "reset_rows": {
+      "passed": true,
+      "inputs": 250,
+      "result": "build/large-view-regress-20261104/reset_rows/result.json",
+      "result_sha256": "3cc94e709c2701b7d1a199c0ead0e0372ebcc1952fdd5599cbd77f77ba098033",
+      "scope": "Execute staged captured-RIS row updates. No complete live geometry transaction.\nThe linked component changes captured defaults only; BIOS/UART inputs modeled.\n Actual far API, captured table and RIS instructions; staged failure atomicity, DS=SS, register/flag/stack guards. No live geometry commit, key/menu binding, BIOS resize, full frame/history/bridge-size transaction, DOS/BBS/package/physical acceptance or deployment."
+    },
+    "display_preferences": {
+      "passed": true,
+      "inputs": 181,
+      "result": "build/large-view-regress-20261104/display_preferences/result.json",
+      "result_sha256": "9a36b59eef506e3738e48265159cce308f5503bdcbb0c333ca77364f2a1a3884",
+      "scope": "Execute linked one-read startup display capture; DOS/file effects modeled.\nRaw preferences remain separate from BIOS, canonical geometry and live selection.\n Actual C/ASM public startup readers, decoder/validators, mouse staging and baseline publication execute. File/DOS effects modeled; late publish fault clears IF at its real boundary. No function/instruction replacement, geometry apply, normal keys, online/BBS/physical or deployment acceptance."
+    },
+    "display_select": {
+      "passed": true,
+      "inputs": 95,
+      "result": "build/large-view-regress-20261104/display_select/result.json",
+      "result_sha256": "6b029054b88b2ec7d7109a162471ec28824ae37f2cdd52cd07cf908f49ad9924",
+      "scope": "Execute banked selector/BIOS owner; BIOS effects modeled, no canonical UI commit. Actual C/ASM mode/geometry/font/capability chains execute, including recovered vendor branch. BIOS effects/refusal modeled. Raw destructive physical service only; no screen rollback, canonical/RIS/UI/bridge commit, normal key, online/BBS or physical acceptance."
+    },
+    "display_transaction": {
+      "passed": true,
+      "inputs": 51,
+      "result": "build/large-view-regress-20261104/display_transaction/result.json",
+      "result_sha256": "f912133285ce95f844bd69b88469cb3656592b24a3a08af1f7f793d3f8d2692b",
+      "scope": "Execute composed offline selector/BIOS/canonical/RIS transaction.\nBIOS, DOS allocation and mouse driver boundaries modeled; no normal UI/online claim.\n Actual selector and canonical owner, RIS/parser/status/shadow/rollback, UART ISR and mouse owner execute. BIOS/DOS/INT33 effects modeled; faults change real-boundary inputs. No instruction/function replacement, normal command, online/BBS/physical or deployment acceptance."
+    },
+    "window_size_report": {
+      "passed": true,
+      "inputs": 44,
+      "result": "build/large-view-regress-20261104/window_size_report/result.json",
+      "result_sha256": "7159e125a58cc295f0944acf2412a588bc87168350076b0283b1cd79dd7b0d64",
+      "scope": "Execute ordinary CSI18t through actual parser and whole-packet UART queue.\nBIOS/UART effects modeled; no bridge proxy or physical acceptance.\n Actual parser/report/queue/origin/UART instructions execute. CSI temporary parsing fields can change; cursor/modes/attributes/save bank/history/video/shadow/selection remain unchanged. No staged SynthModem probe, live BBS/transfer/analog/physical or deployment acceptance."
+    },
+    "local_controls": {
+      "passed": true,
+      "inputs": 26,
+      "result": "build/large-view-regress-20261104/local_controls/result.json",
+      "result_sha256": "21c1e7e81972453bae1efe311f6fa20b5e5a9ab6d5a27fb674f68ca0d86e3fd6",
+      "scope": "Actual linked parent keyboard/menu/control/renderer/deferred FIFO code. Only BIOS/UART/DOS boundaries modeled. Not actual DOS/hardware acceptance."
+    },
+    "reference": {
+      "passed": true,
+      "inputs": 82,
+      "result": "build/large-view-accepted-20261104/ordinary/reference-checks.json",
+      "result_sha256": "cbac8d86b20520e8ac52cb4d7ebc28a61781758d7421ffec3467e6f569dca051",
+      "scope": "Actual linked reference, command dispatch and serviced UI; hardware/DOS modeled. Functional names/static grouping follow original file data. Navigation/refusal is maintained; no original runtime/pixel equivalence or physical hardware claim."
+    }
+  },
+  "total_linked_inputs": 1051,
+  "new_view_inputs": 108,
+  "DOS": {
+    "result": "build/large-view-dos-20261104/result.json",
+    "sha256": "2becc9beeed16276eda16c92f1184a83d3d00cb24908f361822edcb93a3580b9",
+    "observations": 32,
+    "diagnostic_package_rejected": true,
+    "scope": "Actual DOS shared-key-owner/full-frame diagnostic at25/28/43/50 rows.\nNormalized keys supplied by a diagnostic adapter, not BIOS typing. No live serial,\nBBS, SIP/DSP/analog or physical acceptance; diagnostic must never be packaged.\n"
+  },
+  "source_inputs": {
+    "src/redisplay/redisplay.c": "9d6cc88a5afb9c20baebc859ce1d0928a2fec14f264a0fe0c3cf18ba8167a2ce",
+    "src/terminal/redisplay.asm": "db53cad1e607f4cf060ba722dc940be6558e8c17734f9b68e19adb1bd641cf83",
+    "standalone/build_terminal.py": "0af58f0a3aeb540007ee6251fb01cda06e068184537639065c2cbc8051fb3ead",
+    "standalone/terminal_memory.py": "7f4411a773316bad2e66160d22938133b43e85ce4bef482d4d710389421d1f82",
+    "standalone/display_rows_terminal_probe.c": "d7993447ad1dfaf76f7382afebfb2927624f31633f98f1e87f6709591457d8dc",
+    "standalone/display_rows_terminal_probe.asm": "2751339486a228537d1b6fb67ba7d2e53cb11699a254cd7547c63a1277ca3526",
+    "standalone/check_large_view_live.py": "191e447e02625025d384e2f26f739d4efed7ff0383083c61ea90bb19c69992e1",
+    "standalone/test_large_view_dos.py": "f1ec228267f4ce832c4cfe6976dc2c5a425fde234d380f7bb20b5a39ea287c73"
+  },
+  "not_installed": true,
+  "unavailable_reference_commands": 12,
+  "remaining": [
+    "DOS child full-height save/restore and other fixed25-row modal contracts",
+    "normal Ctrl-- binding and startup preferences",
+    "online resizing and bridge/session acknowledgment",
+    "owned Enigma/Synchronet layouts and physical route acceptance",
+    "full original parity inventory and deployment"
+  ]
+}

@@ -26,6 +26,7 @@ parser.add_argument('--special-edition',action='store_true',help='Show the magen
 parser.add_argument('--status-geometry',action='store_true',help='Reserve physical row25 for status and advertise a coherent24-row terminal')
 parser.add_argument('--reset-row-owner',action='store_true',help='Link staged RIS row-default component; no status/line key binding')
 parser.add_argument('--status-owner',action='store_true',help='Link offline live status transaction; no key/menu binding or online size negotiation')
+parser.add_argument('--large-view-frames',action='store_true',help='Retain50-row shared view frames and admit verified25/28/43/50-row geometry')
 parser.add_argument('--status-control',action='store_true',help='Enable guarded offline Ctrl-] and menu status toggle at physical25 rows')
 parser.add_argument('--status-probe',action='store_true',help='Diagnostic only: run offline status transactions at foreground startup, then exit')
 parser.add_argument('--display-row-owner',action='store_true',help='Link namespaced low-level BIOS row bank; no canonical geometry or key binding')
@@ -87,6 +88,7 @@ if args.local_controls:assert args.original_reference,'Local controls require th
 if args.status_owner:
  args.reset_row_owner=True
  assert args.native_reset_bank and args.screen_pause and args.elapsed_view and args.auto_answer,'Status transaction requires the current banked modal-owner candidate'
+if args.large_view_frames:assert args.row_geometry_owner,'Large view frames require the canonical row geometry component'
 if args.status_control:assert args.status_owner and args.local_controls,'Status control requires the tested status and local-control owners'
 if args.status_probe:assert args.status_owner and not args.hook_probe and not args.input_probe and not args.projection_probe,'Status probe requires the isolated status-owner build'
 if args.display_row_owner:assert args.status_owner,'Display row bank requires the current status-owner component'
@@ -205,6 +207,7 @@ if args.status_geometry:out_name+='-status-geometry'
 if args.reset_row_owner:out_name+='-reset-rows'
 if args.status_owner:out_name+='-status-owner'
 if args.status_control:out_name+='-status-control'
+if args.large_view_frames:out_name+='-large-view-frames'
 if args.status_probe:out_name+='-status-probe'
 if args.display_row_owner:out_name+='-display-row-owner'
 if args.row_geometry_owner:out_name+='-row-geometry-owner'
@@ -345,6 +348,7 @@ for index,source in enumerate(sources):
  if args.local_controls:options+=['-DTERMINAL_LOCAL_CONTROLS']
  if args.status_owner:options+=['-DTERMINAL_STATUS_OWNER']
  if args.status_control:options+=['-DTERMINAL_STATUS_CONTROL']
+ if args.large_view_frames:options+=['-DTERMINAL_LARGE_VIEW_FRAMES']
  if args.status_probe:options+=['-DTERMINAL_STATUS_PROBE']
  if args.display_row_probe:options+=['-DTERMINAL_DISPLAY_ROW_PROBE']
  if args.row_geometry_owner:options+=['-DTERMINAL_ROW_GEOMETRY']
@@ -573,6 +577,7 @@ for source in c_sources:
  if args.phone_log_controls:options+=['-dPHONE_LOG_CONTROLS']
  if args.local_controls:options+=['-dTERMINAL_LOCAL_CONTROLS']
  if args.status_control:options+=['-dTERMINAL_STATUS_CONTROL']
+ if args.large_view_frames:options+=['-dTERMINAL_LARGE_VIEW_FRAMES']
  if args.screen_pause:options+=['-dTERMINAL_SCREEN_PAUSE']
  if args.elapsed_view:options+=['-dTERMINAL_ELAPSED_VIEW']
  if args.manual_init:options+=['-dTERMINAL_MANUAL_INIT']
@@ -709,6 +714,8 @@ manifest={'experimental_directory_keys':args.directory_keys,'experimental_aspect
 manifest['experimental_keyboard_bank']=args.keyboard_bank
 manifest['experimental_reset_row_owner']=args.reset_row_owner
 manifest['experimental_status_owner']=args.status_owner
+manifest['experimental_large_view_frames']=args.large_view_frames
+if args.large_view_frames:manifest['limitations'].append('Shared redisplay/reference/browser/clipboard/elapsed frames retain verified25/28/43/50 physical rows. Full history capacity retained; two8000-byte far frames add8000 retained bytes. Other fixed25-row owners, startup display application, normal line binding, online changes and physical acceptance remain separate gates.')
 manifest['experimental_status_control']=args.status_control
 if args.status_control:manifest['limitations'].append('Ctrl-] and reference/browser Toggle Status dispatch through the guarded offline status owner after modal-frame release. Physical80x25 narrow profile4/6 only; online changes and unsupported geometry refuse. Captured RIS defaults and parser area follow24/25 rows. No saved preference rewrite, automatic startup display apply, Ctrl-- lines, bridge deployment or physical acceptance.')
 manifest['diagnostic_status_probe']=args.status_probe

@@ -245,16 +245,23 @@ global terminal_menu_pending
 terminal_menu_pending: dw 0
 SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
 global redisplay_live,redisplay_live_end,redisplay_view,redisplay_view_end
-redisplay_live: resb 4000
+%ifdef TERMINAL_LARGE_VIEW_FRAMES
+global terminal_large_view_frames
+terminal_large_view_frames equ 1
+%define VIEW_FRAME_BYTES 8000
+%else
+%define VIEW_FRAME_BYTES 4000
+%endif
+redisplay_live: resb VIEW_FRAME_BYTES
 redisplay_live_end:
 %ifdef TERMINAL_UI_SCREEN_OVERLAY
 ; Directory editing is synchronous inside the chooser. Bidirectional owner
 ; checks prevent it and the serviced viewer from borrowing this frame at once.
 global ed_screen,ed_screen_end
 ed_screen equ redisplay_live
-ed_screen_end equ redisplay_live_end
+ed_screen_end equ redisplay_live+4000 ; Synchronous editor retains its25-row contract.
 %endif
-redisplay_view: resb 4000
+redisplay_view: resb VIEW_FRAME_BYTES
 redisplay_view_end:
 %ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
 ; Last allocation in this variant. A quiesced child may borrow only this

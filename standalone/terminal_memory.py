@@ -92,25 +92,29 @@ def inspect_terminal_memory(binary,map_path):
  for name in ('browser_screen','ed_screen','program_screen','redisplay_live','redisplay_view'):
   if name not in symbols:continue
   lo=address(name);hi=address(name+'_end');seg,off=symbols[name]
-  assert hi-lo==4000 and off+4000<=65536,(name,'invalid UI screen extent')
+  capacity=8000 if 'terminal_large_view_frames' in symbols and name in ('redisplay_live','redisplay_view') else 4000
+  assert hi-lo==capacity and off+capacity<=65536,(name,'invalid UI screen extent')
   assert hi<=near_start or lo>=near_start+near_size,(name,'UI screen overlapsDGROUP')
   assert hi<=shadow or lo>=far_end,(name,'UI screen overlaps native far storage')
   if 'terminal_snapshot_image' in symbols:assert hi<=frozen or lo>=frozen_end,(name,'UI screen overlaps frozen screen')
   for other_name,other in ui_buffers.items():
    shared=(screen_overlay and (name=='program_screen'and other_name=='browser_screen' or name=='redisplay_live'and other_name=='ed_screen'))
-   if shared:assert(lo,hi)==(other['start_linear'],other['end_linear'])
+   if shared:
+    assert lo==other['start_linear'] and (hi==other['end_linear'] or name=='redisplay_live' and hi-lo==8000 and other['end_linear']-lo==4000),(name,'invalid shared prefix')
    else:assert hi<=other['start_linear'] or lo>=other['end_linear'],(name,'nested owners alias')
   assert lo>=module_bytes,(name,'UI buffer unexpectedly serialized in MZ')
   assert word(name+'_segment')==seg and address(name+'_segment') in relocations,(name,'invalid relocated segment pointer')
-  ui_buffers[name]=dict(relative_segment=seg,offset=off,bytes=4000,start_linear=lo,end_linear=hi)
+  ui_buffers[name]=dict(relative_segment=seg,offset=off,bytes=capacity,start_linear=lo,end_linear=hi)
   static_end=max(static_end,hi)
  if ui_buffers:
   assert len(ui_buffers)==5,'Incomplete terminal UI screen ownership'
   assert len({b['relative_segment'] for b in ui_buffers.values()})==1
   overlay=screen_overlay
-  extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=12000 if overlay else 20000,program_browser_screen_overlay=overlay,editor_viewer_screen_overlay=overlay)
+  unique={}
+  for buffer in ui_buffers.values():unique[buffer['start_linear']]=max(unique.get(buffer['start_linear'],0),buffer['bytes'])
+  extra.update(ui_screen_buffers=ui_buffers,far_ui_storage_bytes=sum(unique.values()),program_browser_screen_overlay=overlay,editor_viewer_screen_overlay=overlay)
   if overlay:assert symbols['program_screen']==symbols['browser_screen']and symbols['program_screen_end']==symbols['browser_screen_end']
-  if overlay:assert symbols['ed_screen']==symbols['redisplay_live']and symbols['ed_screen_end']==symbols['redisplay_live_end']
+  if overlay:assert symbols['ed_screen']==symbols['redisplay_live'] and address('ed_screen_end')==address('redisplay_live')+4000
  # Frozen redisplay bytes are independent of the live history writer.
  snap_lo=address('redisplay_snapshot');snap_hi=address('redisplay_snapshot_end')
  snap_seg,snap_off=symbols['redisplay_snapshot']

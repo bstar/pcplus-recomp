@@ -94,3 +94,33 @@ _rows_probe_far:
  pop bp
  retf
 %endif
+
+%ifdef TERMINAL_LARGE_VIEW_FRAMES
+%ifdef TERMINAL_ROW_GEOMETRY_PROBE
+SEGMENT CONFIG_CODE public class=FARCODE use16
+extern terminal_redisplay_key_far
+global _rows_view_key
+_rows_view_key:
+ push bp
+ mov bp,sp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ mov ax,[bp+6]
+ call far terminal_redisplay_key_far
+ mov ax,0
+ adc ax,0
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ retf
+%endif
+
+%endif

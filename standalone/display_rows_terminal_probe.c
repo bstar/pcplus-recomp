@@ -90,6 +90,39 @@ static word preferences_image(void)
  return rows_probe_write(name,values,sizeof(values));
 }
 #endif
+#if defined(TERMINAL_LARGE_VIEW_FRAMES) && defined(TERMINAL_ROW_GEOMETRY_PROBE)
+extern word __far __cdecl rows_view_key(word key);
+extern word redisplay_active;
+/* Diagnostic key adapter enters the genuine far owner. It supplies a normalized
+ * key explicitly, not a BIOS keystroke or a remote terminal response. */
+static word view_frame_images(void)
+{
+ static const word TEXT heights[]={25,28,43,50};
+ static const word TEXT keys[]={0x2c00,0x8400,0x8300,0x1400};
+ word records[3+16*7],r,v,i,n=3,opened,open_active,closed,restored;
+ word __far *video=(word __far *)MK_FP(0xb800,0);
+ char name[9]={'L','V','0','0','.', 'B','I','N',0};
+ char leaf[12]={'V','F','R','A','M','E','S','.', 'B','I','N',0};
+ records[0]=0x5646;records[1]=1;records[2]=16;
+ for(r=0;r<4;++r){
+  if(terminal_row_geometry_set(heights[r]))return 1;
+  for(v=0;v<4;++v){
+   for(i=0;i<4000;++i)video[i]=i<heights[r]*80?0x0700+65+i%26:0x5a5a;
+   opened=rows_view_key(keys[v]);open_active=redisplay_active;
+   name[1]='V';name[2]='0'+r;name[3]='0'+v;
+   if(rows_probe_far(name,video,8000))return 1;
+   closed=rows_view_key(27);restored=1;
+   for(i=0;i<4000;++i)if(video[i]!=(i<heights[r]*80?0x0700+65+i%26:0x5a5a))restored=0;
+   records[n++]=heights[r];records[n++]=keys[v];records[n++]=opened;
+   records[n++]=open_active;records[n++]=closed;records[n++]=redisplay_active;records[n++]=restored;
+   name[1]='A';if(rows_probe_far(name,video,8000))return 1;
+   if(opened!=1 || open_active!=1 || closed!=1 || redisplay_active || !restored)return 1;
+  }
+ }
+ if(terminal_row_geometry_set(25))return 1;
+ return rows_probe_write(leaf,records,sizeof(records));
+}
+#endif
 static void capture(word *r,word request,word status,native_display_rows_info *p)
 {
  word axword=0,bxword=0;
@@ -122,6 +155,9 @@ unsigned __far __cdecl terminal_display_rows_probe(void)
  if(preferences_image())return 26;
  if(selector_images())return 27;
  if(selector_transaction_images())return 28;
+#endif
+#if defined(TERMINAL_LARGE_VIEW_FRAMES) && defined(TERMINAL_ROW_GEOMETRY_PROBE)
+ if(view_frame_images())return 29;
 #endif
  status=native_display_rows_probe(&info);if(status)return 20;
  capture(records+3,0,status,&info);

@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Full-height shared view frames](LARGE_VIEW_FRAMES.md) now retain verified
+25/28/43/50-row underlays for menu/history/clipboard/elapsed owners.108 new linked
+inputs plus943 regressions,32 actual DOS diagnostic captures/restores and three
+exact source rebuilds pass. Two8000-byte far frames add8000 retained bytes; the
+full history ring remains intact. Normal line controls/startup, DOS-child and
+other fixed25-row modal contracts, online/BBS/physical acceptance and deployment
+remain open. The disabled control retains the preceding image exactly; reference
+availability remains12 unavailable commands in this candidate.
+
 [Normal status control](STATUS_CONTROL.md) now enables Ctrl-] and Toggle Status
 through both menus in the optional status-control variant.36 linked control
 inputs,799 display regressions,82 reference inputs, actual8086 DOS24→25→24
