@@ -185,7 +185,10 @@ for field in ('terminal_parser_active', 'terminal_macro_active', 'terminal_progr
     check('defer-for-' + field, deferred_only)
 
 
-for field, value in (('text_video_segment', 0xb000), ('screen_video_row_bytes', 264), ('screen_attribute_row_bytes', 132), ('screen_viewport_enabled', 1)):
+for field, value in (('text_video_segment', 0xb000), ('screen_video_row_bytes', 264), ('screen_attribute_row_bytes', 132), ('screen_viewport_enabled', 1),
+                     ('ui_flow_suppressed', 1), ('ui_flow_suppressed', 65535),
+                     ('ui_flow_region_cells', 79), ('ui_flow_video_base', 3680),
+                     ('ui_flow_coordinate_base', 0x1700), ('screen_columns', 40)):
     def unsupported(field=field, value=value):
         m = UI()
         m.put(field, value)

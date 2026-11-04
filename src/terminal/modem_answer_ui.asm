@@ -12,6 +12,7 @@ extern _terminal_sound_enabled
 extern _speaker_start,_speaker_poll,_speaker_stop,_speaker_active,_speaker_generation
 extern connection_notice_resident,connection_notice_restore_resident
 extern text_video_segment,screen_columns,screen_last_row,screen_video_row_bytes
+extern terminal_status_row_admit_far
 %macro ui_save 0
  pushf
  push ax
@@ -40,6 +41,8 @@ global terminal_auto_answer_admit_far
 terminal_auto_answer_admit_far:
  push bx
  push es
+ call far terminal_status_row_admit_far
+ jc .bad
  mov ah,0x0f
  int 0x10
  cmp ah,80

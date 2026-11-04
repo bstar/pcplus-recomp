@@ -29,7 +29,7 @@ unchanged. Do not use them as a substitute for transition/underlay ownership.
 
 ## Validation
 
-The full candidate retains all prior feature flags and540 declared product
+The notice-fix candidate0444e7bc retains all prior feature flags and540 declared product
 inputs; only `connection_ui.asm` changes. Its resident code is65330 bytes,
 leaving206 bytes before the64KiB segment boundary. New instructions add90 bytes;
 no persistent data allocation is added.
@@ -62,3 +62,32 @@ integration and physical acceptance are still open.
 ./tools/dev --command python standalone/check_notice_row_live.py \
   --terminal build/CANDIDATE/TERMINAL.EXE --output build/NEW-notice-checks
 ```
+
+## Shared modal admission
+
+Candidate7df99c1f extends the same read-only gate through a far-call entry used
+by Screen Pause and Auto Answer. Each still retains its existing BIOS and owner
+checks. Refusal occurs before Pause acquires its row or sends flow control, and
+before Auto Answer starts a notice, tone or answer sender. This is deliberate
+maintained admission, separate from the unchanged original native send routine.
+
+A custom scroll bottom23 does not prove the physical bottom row is reserved.
+The previous0444e7bc candidate started Auto Answer and its PIT tone with hidden
+status,25 effective rows and that custom bottom. The new candidate refuses this
+case, noncanonical hidden WORDs and altered status-layout fields without video,
+serial or speaker effects.
+
+The [modal receipt](validation/status-modal-admission.json) binds34 linked Auto
+Answer inputs,47 Pause cases, the notice suite and32 carrier/status groups to
+the new executable. Five actual DOS8086 COM3/IRQ5 synthetic-modem workflows also
+pass: two Auto Answer quiet/reference echo+sound operations with continued ANSI
+RX, and three Pause direct/reference/partial-parser resume cases. Resident code
+is65334 bytes with202 bytes spare; no persistent data is added. The feature set
+and540 declared product-input set are retained; three assembly inputs change.
+
+These results do not transfer the earlier Enigma/Synchronet screen evidence to
+this different binary. New BBS/package/physical acceptance remains open, as do
+the canonical geometry transaction, reset defaults, history/frames, child loans
+and Linux bridge size policy. Status/line controls remain unavailable. The
+separate ignored pointer is `build/status-owners-current-candidate.json`; no
+package selection, installed file, private setting or live service was changed.

@@ -237,6 +237,12 @@ notice_row_admit:
 .bad:
  stc
  ret
+; Shared read-only gate for owners which require the reserved status row.
+; Geometry/BIOS and all other owner checks remain at the requesting service.
+global terminal_status_row_admit_far
+terminal_status_row_admit_far:
+ call notice_row_admit
+ retf
 SEGMENT _DATA public class=DATA use16
 notice_active: db 0
 notice_cells: times 30 db 0

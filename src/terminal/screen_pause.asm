@@ -25,6 +25,7 @@ SEGMENT CONFIG_CODE public align=16 class=FARCODE use16
 GROUP CONFIG_GROUP CONFIG_CODE
 extern terminal_quit,terminal_deferred_count
 extern terminal_pause_notice_flush_far
+extern terminal_status_row_admit_far
 extern text_video_segment,screen_video_row_bytes,screen_attribute_row_bytes,screen_viewport_enabled
 extern terminal_local_control_status
 global terminal_screen_pause,terminal_screen_pause_end
@@ -38,6 +39,8 @@ terminal_screen_pause:
  push bp
  push es
  mov bp,sp
+ call far terminal_status_row_admit_far
+ jc .unsupported
  cmp word [text_video_segment],0xb800
  jne .unsupported
  cmp word [screen_video_row_bytes],160

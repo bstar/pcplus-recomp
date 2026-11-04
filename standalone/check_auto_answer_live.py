@@ -176,6 +176,18 @@ def admission():
         before=m.text();m.key(0x1500)
         assert not m.active() and not m.notice() and not m.tx and not m.sounds and m.text()==before
         count+=1
+    for field,value in (('ui_flow_suppressed',1),('ui_flow_suppressed',65535),
+                        ('ui_flow_region_cells',79),('ui_flow_video_base',3680),
+                        ('ui_flow_coordinate_base',0x1700),('screen_columns',40)):
+        m=Answer(enabled=1);m.put(field,value);before=m.text();m.key(0x1500)
+        assert not m.active() and not m.notice() and not m.tx and not m.sounds and m.text()==before
+        count+=1
+    # Hidden status can coexist with a custom scroll bottom23. Checking only
+    # screen_last_row therefore cannot prove the physical row is reserved.
+    m=Answer(enabled=1);m.put('ui_flow_suppressed',1);m.put('csi_row_count',25);m.put('csi_last_row',24)
+    m.put('screen_last_row',23);before=m.text();m.key(0x1500)
+    assert not m.active() and not m.notice() and not m.tx and not m.sounds and m.text()==before
+    count+=1
     return count
 
 def main():

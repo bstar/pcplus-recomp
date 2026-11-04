@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "terminal_sha256": "7df99c1f72f8dc3f076cfa6a3c5f6d1f1f5f03872fe98d479ce2348b9227f1ce",
+  "manifest_sha256": "bee48b71c2ad598e44cd2fd026fd3dd0059fd889a217a4cb2a863d32950da094",
+  "map_sha256": "385b7f9b800d02796eb2d7325199510e939e8a46c6163cbee208d9cab3af5cae",
+  "installed": false,
+  "packaged": false,
+  "status_line_controls_enabled": false,
+  "same_feature_flags": true,
+  "product_inputs_verified": 540,
+  "changed_product_inputs": [
+    "src/terminal/connection_ui.asm",
+    "src/terminal/modem_answer_ui.asm",
+    "src/terminal/screen_pause.asm"
+  ],
+  "sources": {
+    "src/terminal/connection_ui.asm": "a5ef9c095ecfac43ed1b119e1d74f7894f1d927cd68a030ef8bbdcd4076c8807",
+    "src/terminal/modem_answer_ui.asm": "d3b8e4b7007d6b07ce3e597a8b3218b4dab0fbb03ae9915ae72ba7e88348170f",
+    "src/terminal/screen_pause.asm": "a30b9c76cf6b25ad6771d729856e904e89c207afaa7edcb2bdd8b42b68bc5cef",
+    "standalone/check_auto_answer_live.py": "6726706189bae0cea219b9b781932c9fc0472890385db71eb4ecf2c098590c0d",
+    "standalone/check_screen_pause_live.py": "5a56733c405471cf4c5fb85048199965a1823d4f5ae62850ca175436f596a3d4",
+    "standalone/check_notice_row_live.py": "51aefb4b5b1bc69636aa35d8ed41c34e7c8e6b0dff5d5a3b9f91cc8249d21271",
+    "standalone/check_parent_carrier_status.py": "e03e4df58133b92eb5d365b57ec41962422b8700cf639017e617e58ff4b91fb7"
+  },
+  "evidence": {
+    "build/status-owners-answer-20261104/result.json": {
+      "passed": true,
+      "sha256": "a13d9029c557a1bf26614fb75db288a6a5fed12adde91234f14f1c340558b5c6",
+      "cases": 11,
+      "inputs": 34
+    },
+    "build/status-owners-pause-20261104/result.json": {
+      "passed": true,
+      "sha256": "10c84efeb59c6bff9011d5c718b3b6303cc821d6cc3b16c278257a63aee39756",
+      "cases": 47
+    },
+    "build/status-owners-notice-20261104/result.json": {
+      "passed": true,
+      "sha256": "42067e5e2ffcdf7f2be425d917c58a793b29080e81d60edb99bb3825694f0634",
+      "cases": 6
+    },
+    "build/status-owners-carrier-20261104/checks.json": {
+      "passed": true,
+      "sha256": "134d79eff47728e7696c09c81a975a0f640c768f93101548701411eeb8aa9668",
+      "cases": 32
+    },
+    "build/auto-answer-dos/status-owners-answer-dos-20261104/result.json": {
+      "passed": true,
+      "sha256": "d06075d950f077a048d9a4a8e17f1f57184c1dd7fd6b7058b3acd1976a58501e",
+      "cases": 2
+    },
+    "build/screen-pause-dos/status-owners-pause-dos-20261104/result.json": {
+      "passed": true,
+      "sha256": "85a1ac44d973fbf28986223fd0ddc6a9220d9004337bea58a41f403e0b365289",
+      "cases": 3
+    }
+  },
+  "counterexample": {
+    "previous_terminal_sha256": "0444e7bcce7c20c831afad3ccc031a02fac9dc3afe999ba730e40e060065cc10",
+    "canonical_status_hidden": 1,
+    "effective_rows": 25,
+    "custom_scroll_last_row": 23,
+    "previous_answer_and_tone_started": true,
+    "new_operation_refused_before_side_effects": true
+  },
+  "memory": {
+    "resident_code_bytes": 65334,
+    "resident_code_spare_bytes": 202,
+    "additional_persistent_data_bytes": 0
+  },
+  "scope": "Maintained shared reserved-row admission before Screen Pause and Auto Answer. Actual linked instructions and five actual DOS8086 COM3/IRQ5 synthetic-modem workflows pass, including continued ANSI RX, modal resume, quiet and echo/sound modes. Existing native sender bytes unchanged. Not original native guard equivalence, actual physical modem/audio/SIP/DSP, current-candidate owned BBS regression, full geometry/reset/NAWS integration, package reproduction or deployment acceptance."
+}
