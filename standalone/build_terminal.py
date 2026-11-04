@@ -26,6 +26,7 @@ parser.add_argument('--special-edition',action='store_true',help='Show the magen
 parser.add_argument('--status-geometry',action='store_true',help='Reserve physical row25 for status and advertise a coherent24-row terminal')
 parser.add_argument('--reset-row-owner',action='store_true',help='Link staged RIS row-default component; no status/line key binding')
 parser.add_argument('--status-owner',action='store_true',help='Link offline live status transaction; no key/menu binding or online size negotiation')
+parser.add_argument('--row-notices',action='store_true',help='Bind connection notices to coherent dynamic status rows')
 parser.add_argument('--session-rows-probe',type=int,choices=(25,28,43,50),help='Diagnostic only: establish canonical rows then run the normal serial session')
 parser.add_argument('--aspect-admission-probe',action='store_true',help='Diagnostic only: ASPECT admission at each BIOS text height')
 parser.add_argument('--aspect-row-owner',action='store_true',help='Admit coherent full-height narrow ASPECT renderer frames')
@@ -100,6 +101,7 @@ if args.xlt_display_probe:
 if args.profile_display_probe:
  assert args.program_display_owner,'Profile diagnostic requires the full-height PROGRAM owner'
  args.display_row_probe=True
+if args.row_notices:assert args.row_geometry_owner and args.program_display_owner and args.status_owner,'Row notices require composed geometry/PROGRAM/status owners'
 if args.session_rows_probe is not None:
  assert args.aspect_row_owner and not args.display_row_probe and not args.status_probe and not args.aspect_admission_probe and not args.profile_display_probe and not args.xlt_display_probe,'Session row diagnostic requires ASPECT rows and excludes startup probes'
 if args.aspect_admission_probe:
@@ -227,6 +229,7 @@ if args.reset_row_owner:out_name+='-reset-rows'
 if args.status_owner:out_name+='-status-owner'
 if args.status_control:out_name+='-status-control'
 if args.large_view_frames:out_name+='-large-view-frames'
+if args.row_notices:out_name+='-row-notices'
 if args.session_rows_probe is not None:out_name+='-session-rows-'+str(args.session_rows_probe)
 if args.aspect_admission_probe:out_name+='-aspect-admission-probe'
 if args.aspect_row_owner:out_name+='-aspect-row-owner'
@@ -374,6 +377,7 @@ for index,source in enumerate(sources):
  if args.status_owner:options+=['-DTERMINAL_STATUS_OWNER']
  if args.status_control:options+=['-DTERMINAL_STATUS_CONTROL']
  if args.large_view_frames:options+=['-DTERMINAL_LARGE_VIEW_FRAMES']
+ if args.row_notices:options+=['-DTERMINAL_ROW_NOTICES']
  if args.session_rows_probe is not None:options+=['-DTERMINAL_SESSION_ROWS_PROBE='+str(args.session_rows_probe)]
  if args.aspect_admission_probe:options+=['-DTERMINAL_ASPECT_ADMISSION_PROBE']
  if args.aspect_row_owner:options+=['-DTERMINAL_ASPECT_ROWS']
@@ -752,6 +756,7 @@ manifest['experimental_reset_row_owner']=args.reset_row_owner
 manifest['experimental_status_owner']=args.status_owner
 manifest['diagnostic_xlt_display_probe']=args.xlt_display_probe
 manifest['diagnostic_profile_display_probe']=args.profile_display_probe
+manifest['experimental_row_notices']=args.row_notices
 manifest['diagnostic_session_rows_probe']=args.session_rows_probe
 manifest['diagnostic_aspect_admission_probe']=args.aspect_admission_probe
 manifest['experimental_aspect_row_owner']=args.aspect_row_owner

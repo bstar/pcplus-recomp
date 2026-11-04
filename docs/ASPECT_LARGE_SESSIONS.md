@@ -92,8 +92,8 @@ commands/inputs are recorded separately in the receipt.
 
 The [nested PROGRAM checkpoint](NATIVE_PROGRAM_28_ROWS.md) now covers standard
 28-row/14-pixel font restoration and SAVE/NOCLEAR return adoption. Larger-height
-connection-notice placement still needs integration;
-connection_ui.asm still deliberately refuses non-row25 notice leases. Partial CSI,
+connection notices now have a [separate dynamic-row component](ROW_CONNECTION_NOTICES.md).
+Its shared Pause/Auto Answer gate remains fixed25. Partial CSI,
 errors, cancellation, carrier-loss/reconnect and full transfer interactions at these
 heights need their own session coverage, alongside other fixed-height modal owners.
 

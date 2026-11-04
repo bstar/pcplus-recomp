@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Connection notices on accepted status rows](ROW_CONNECTION_NOTICES.md) now
+support25/28/43/50-row placement with captured-row leases and safe stale-row
+retirement.72 linked inputs, existing notice regressions,24 actual DOS sessions
+with complete logical-frame/history checks and6 exact source rebuilds pass.
+The shared Pause/Auto Answer gate remains fixed25; normal line controls,
+negative/carrier/transfer composition, broader parity and BBS/physical stay open.
+
 [Native PROGRAM28-row restoration](NATIVE_PROGRAM_28_ROWS.md) now selects the
 400-line/14-pixel ROM view and verifies it before saved-frame replay. Native
 COM1/2 × all four flow policies,13 linked admission cases and24 attached ASPECT

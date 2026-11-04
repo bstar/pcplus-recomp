@@ -43,6 +43,13 @@ global terminal_status_notice_refresh
  pop bp
  ret
 %endmacro
+%macro row_offset_ax 0
+%ifdef TERMINAL_ROW_NOTICES
+ mov ax,[ui_flow_video_base]
+%else
+ mov ax,3840
+%endif
+%endmacro
 terminal_connection_notice:
  save
 %ifdef TERMINAL_MODAL_NOTICE
@@ -71,10 +78,20 @@ terminal_connection_notice:
  ; Notices own the live screen, never a cached history-page underlay.
  call terminal_redisplay_stop
  cmp byte [notice_active],0
+%ifdef TERMINAL_ROW_NOTICES
+ je .capture
+ mov ax,[ui_flow_video_base]
+ cmp ax,[notice_offset]
+ je .draw
+.capture:
+ mov ax,[ui_flow_video_base]
+ mov [notice_offset],ax
+%else
  jne .draw
+%endif
  mov ax,notice_cells
  push ax
- mov ax,3840
+ row_offset_ax
  push ax
  mov ax,15
  push ax
@@ -117,9 +134,14 @@ terminal_connection_notice_restore:
  ; contract was missed, discard the stale lease rather than erase newer RX.
  call notice_row_admit
  jc .discard
+%ifdef TERMINAL_ROW_NOTICES
+ mov ax,[ui_flow_video_base]
+ cmp ax,[notice_offset]
+ jne .discard
+%endif
  mov ax,notice_cells
  push ax
- mov ax,3840
+ row_offset_ax
  push ax
  mov ax,15
  push ax
@@ -166,7 +188,7 @@ terminal_status_notice_refresh:
  push es
 %ifdef TERMINAL_ROW_GEOMETRY
  ; An idle notice lease can draw the dynamic native row directly. Active
- ; leases retain their existing fixed-row admission/save/restore contract.
+ ; leases use admitted geometry and validate their captured row below.
  cmp byte [notice_active],0
  je .draw
 %endif
@@ -178,9 +200,17 @@ terminal_status_notice_refresh:
 .admitted:
  cmp byte [notice_active],0
  je .draw
+%ifdef TERMINAL_ROW_NOTICES
+ mov ax,[ui_flow_video_base]
+ cmp ax,[notice_offset]
+ je .same_row
+ mov byte [notice_active],0
+ jmp .draw
+.same_row:
+%endif
  lea ax,[bp-30]
  push ax
- mov ax,3840
+ row_offset_ax
  push ax
  mov ax,15
  push ax
@@ -195,7 +225,7 @@ terminal_status_notice_refresh:
  jnz .restore_notice
  mov ax,notice_cells
  push ax
- mov ax,3840
+ row_offset_ax
  push ax
  mov ax,15
  push ax
@@ -203,7 +233,7 @@ terminal_status_notice_refresh:
 .restore_notice:
  lea ax,[bp-30]
  push ax
- mov ax,3840
+ row_offset_ax
  push ax
  mov ax,15
  push ax
@@ -220,10 +250,41 @@ terminal_status_notice_refresh:
  pop bp
  retf
 
-; Read-only admission for the existing fixed physical row25 lease. This does
-; not authorize a new geometry or probe BIOS; callers retain that responsibility.
+; Read-only connection-notice admission; it does not authorize geometry or
+; probe BIOS. The optional owner validates canonical rows, while the shared
+; Pause/Auto Answer gate below retains its fixed physical row25 contract.
 ; Keep AX and all other registers intact, returning only CF.
 notice_row_admit:
+%ifdef TERMINAL_ROW_NOTICES
+ extern _terminal_row_status_layout
+ push ax
+ push bx
+ push cx
+ push dx
+ push es
+ cmp word [ui_flow_suppressed],0
+ jne .dynamic_bad
+ call far _terminal_row_status_layout
+ or ax,ax
+ jnz .dynamic_bad
+ pop es
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ clc
+ ret
+.dynamic_bad:
+ pop es
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ stc
+ ret
+%endif
+; The shared Pause/Auto Answer gate retains its fixed-row contract.
+fixed_notice_row_admit:
  cmp word [ui_flow_suppressed],0
  jne .bad
  cmp word [ui_flow_region_cells],80
@@ -247,7 +308,7 @@ notice_row_admit:
 ; Geometry/BIOS and all other owner checks remain at the requesting service.
 global terminal_status_row_admit_far
 terminal_status_row_admit_far:
- call notice_row_admit
+ call fixed_notice_row_admit
  retf
 ; A geometry transaction may borrow frames only after all notice leases and
 ; deferred modal actions have been retired by their existing owner.
@@ -267,6 +328,9 @@ terminal_status_notice_idle_far:
 %endif
 SEGMENT _DATA public class=DATA use16
 notice_active: db 0
+%ifdef TERMINAL_ROW_NOTICES
+notice_offset: dw 3840
+%endif
 notice_cells: times 30 db 0
 %ifdef TERMINAL_MODAL_NOTICE
 pause_notice_text: dw 0

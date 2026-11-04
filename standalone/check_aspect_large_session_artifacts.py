@@ -31,6 +31,12 @@ def main():
       for i,value in enumerate(text):expected[offset+2*i]=value
     if nested=='noclear-text':expected[20*160:20*160+2]=b'C\x4f'
     assert (folder/'SCREEN.BIN').read_bytes()[:logical*160]==expected,(rows,profile,nested,'complete logical frame')
+   else:
+    logical=rows-1;expected=bytearray(b' \x07'*(logical*80))
+    bottom=b'UPDATEDEND' if kind=='window' else b'' if kind=='RIS' else ('LOWER-'+str(rows)).encode()
+    for offset,text in [(0,b'FIRST BYTE SAFELOGIN:'),((logical-1)*160,bottom)]:
+     for i,value in enumerate(text):expected[offset+2*i]=value
+    assert (folder/'SCREEN.BIN').read_bytes()[:logical*160]==expected,(rows,profile,kind,'complete logical frame')
    assert case['cpu']=='8086' and case['serial_irq']==5 and all(case['checks'].values())
    records.append(dict(rows=rows,profile=profile,kind=kind,nested=nested,child_exit=0,far_history_retained=True,far_history_segment=expected_segment,history_states=states,exit_cursor=state[6:8],result_sha256=sha(folder/'result.json'),observer_capture_sha256=sha(folder/'RENDER.BIN')))
   identities.append(dict(path=str(rp.relative_to(ROOT)),sha256=sha(rp)))

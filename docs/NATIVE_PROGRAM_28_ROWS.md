@@ -74,8 +74,8 @@ flags, commands and raw-result locations are in the receipt.
 
 ## Remaining work
 
-Larger-height connection-notice placement still needs integration before normal
-line switching/startup preferences. Partial CSI/errors/cancellation, carrier-loss
+The [dynamic-row notice component](ROW_CONNECTION_NOTICES.md) now covers normal
+connection notices. Normal line switching/startup preferences remain separate. Partial CSI/errors/cancellation, carrier-loss
 and reconnect, sustained in-flight data/flow stalls and transfer composition at
 larger heights remain separate session gates. Broader emulations, ASPECT/Host
 parity, owned Enigma/Synchronet and physical Boca/SPA2102/SynthModem acceptance

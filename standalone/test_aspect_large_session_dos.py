@@ -115,7 +115,7 @@ def main():
     accepted_logical_size=(ESC+f'[8;{logical};80t'.encode()) in wire,
     password_once=wire.count(b'Synth42\r')==1,
     bottom_content=screen[(logical-1)*160:(logical-1)*160+len(bottom)*2:2]==bottom,
-    actual_physical_status=screen[logical*160:(logical+1)*160:2].startswith(b' Disconnected' if physical==25 else b' Alt-Z FOR HELP'),
+    actual_physical_status=screen[logical*160:(logical+1)*160:2].startswith(b' Disconnected' if physical==25 or tm.get('experimental_row_notices') else b' Alt-Z FOR HELP'),
     frozen_inputs=sha(terminal)==tm['binary_sha256'] and sha(runner)==rm['binary_sha256'])
    if a.nested:
     checks.pop('fixture_unchanged_CHILD.LOG');checks['nested_child_executed_once']=(folder/'CHILD.LOG').read_bytes()==nested_code.encode()
