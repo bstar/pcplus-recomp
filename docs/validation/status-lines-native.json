@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "new_native_bytes": 156,
+  "existing_keyboard_bytes": 1771,
+  "application_changed": false,
+  "commands_enabled": false,
+  "installed": false,
+  "evidence": {
+    "build/status-lines-native-source-accepted-20261103/result.json": {
+      "passed": true,
+      "sha256": "186773c80cf579632be848f11d7a10c605325c3c9f4676d358378a79215e3c71",
+      "original_compared": false,
+      "cases": {
+        "all_status_words": 65536,
+        "status_keyboard": 384,
+        "status_rectangle": 48,
+        "direct_clear": 6,
+        "all_adapter_words": 65536,
+        "all_current_words": 131072,
+        "display_result": 448
+      }
+    },
+    "build/status-lines-native-original-accepted-20261103/result.json": {
+      "passed": true,
+      "sha256": "a806062a37570cde1f8c15ece5ae6ea6d595c8ad93e902d040aaaa46b5985a6d",
+      "original_compared": true,
+      "cases": {
+        "all_status_words": 65536,
+        "status_keyboard": 384,
+        "status_rectangle": 48,
+        "direct_clear": 6,
+        "all_adapter_words": 65536,
+        "all_current_words": 131072,
+        "display_result": 448
+      }
+    }
+  },
+  "sources": {
+    "standalone/check_status_lines_native.py": "78bea99b72f773778ca574256bf7d9169df000753f9b33b216157e858b0e4aba",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/local_controls/status_toggle.asm": "013fd6fee1b4b08e3a36d68431c903454527b11b17640bb0b321c75c7bda9ab1",
+    "reconstruction/local_controls/status_clear.asm": "3682af1623011b735db551c026d2a652e652b9120c26aab5242b901822a860a8",
+    "reconstruction/keyboard_mapping/dispatch.asm": "ba4008a382f4b29a68f25bc738e5792e2632455727290af94857fe8a066776ca",
+    "reconstruction/local_controls/status-lines-provenance.json": "bacc8df2d4d90d47c2d1968c4117a25713a3de620051aacb4f2d3c0abadca2d6"
+  },
+  "scope": "156 exact new native bytes plus existing1771-byte keyboard recovery. Normalized key branches, status geometry/margins/rectangle calls and signed line selector/display-result commit are executed. Scroll/cursor/status rendering/rectangle and DISPLAY deeper implementation are modeled boundaries. No raw BIOS normalization, full DISPLAY/BIOS row modes, maintained live geometry/ANSI/NAWS/owner integration, DOS/BBS/physical acceptance or deployment."
+}

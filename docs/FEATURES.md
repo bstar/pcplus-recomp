@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Original status/line controls](STATUS_LINES_RECOVERY.md) adds156 exact native
+status-toggle/clear bytes and verifies both normalized-key paths through the
+existing keyboard code. All status/adapter/current-mode WORDs and targeted
+margin/cursor/rectangle/fallback cases pass source-only and original comparison.
+Live geometry/ANSI/bridge-size and UI-owner integration remain required; both
+commands stay unavailable and no application/package/deployment changes occur.
+
 [Guarded Auto Answer](AUTO_ANSWER_LIVE.md) now enables configured Alt-Y and both
 menus in the experimentald9eae89d candidate.27 linked lifecycle/UI/sound cases,
 typed/Init/dispatcher/elapsed/connect-alert regressions, exact clean-source

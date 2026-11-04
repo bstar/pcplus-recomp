@@ -1,0 +1,64 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_only_build": true,
+  "units": [
+    {
+      "name": "status_toggle",
+      "entry": "0x46ba",
+      "end_exclusive": "0x4735",
+      "bytes": 123,
+      "file_offset": "0x58ba",
+      "source": "reconstruction/local_controls/status_toggle.asm",
+      "sha256": "cf297698247fc782264cfbfd3c5133d2af81dfd229a2a3538d5a179e13fb4198"
+    },
+    {
+      "name": "status_clear",
+      "entry": "0x4795",
+      "end_exclusive": "0x47b6",
+      "bytes": 33,
+      "file_offset": "0x5995",
+      "source": "reconstruction/local_controls/status_clear.asm",
+      "sha256": "0701086fdef896102811dfcb3006c25fad78e7b004b39b0708cfa21c7c458aec"
+    },
+    {
+      "name": "existing_keyboard_dispatch",
+      "entry": "0x138a",
+      "bytes": 1771,
+      "file_offset": "0x258a",
+      "source": "reconstruction/keyboard_mapping/dispatch.asm",
+      "sha256": "61af5884e3ca080b2fb221d74b63e0ae2a8be06fc35b77c777cc2e1b6024ae18"
+    }
+  ],
+  "dispatch": {
+    "normalized_Ctrl_status": "001D ->1930/1935 ->18FE ->46BA",
+    "normalized_Ctrl_lines": "001F ->1930/193A ->1904; DISPLAY2EAA; accepted3252 copied toCEE6"
+  },
+  "state": {
+    "1D46": "Status hidden WORD; zero becomes1, every nonzero becomes0",
+    "334A": "Effective CSI maximum row index",
+    "334C": "Effective row count",
+    "CE3A": "Screen last row, tracks resize only if equal to old334A",
+    "CEE4": "Bottom margin, tracks resize only if equal to old334A",
+    "7A74": "Runtime full row count used when hiding status",
+    "7A80": "Runtime status-visible row count",
+    "399C": "Cursor row, signed compared against new shown count",
+    "399E": "Cursor column passed after scroll when bringing status back",
+    "7A84": "Status rectangle coordinate base",
+    "CEAE": "Status rectangle width",
+    "D008": "Status clear attribute byte",
+    "2070": "Line-cycle adapter WORD; zero chooses divisor2, any nonzero divisor4",
+    "CEE6": "Current signed mode for remainder, then accepted result",
+    "1D4E": "Second DISPLAY argument forwarded unchanged",
+    "3252": "Mode accepted by DISPLAY, copied back after return"
+  },
+  "evidence": {
+    "status_body": "ev_2f94ce8bfabdc384eebb9adeba43b091c7c3a5b22e13ba82ee1540854710d559",
+    "status_tail": "ev_28962c32f0174abe03778607e35f09c9feb9592255b65899a43533bf95c62e78",
+    "status_clear": "ev_4975f0fb6ce248529200530cdaeda4d68ecd4da28b458ec7c5bba934bdb71f9b",
+    "status_call_site": "ev_239ee0448ff45593061b5c015fce120e50f1cf2af7491bf45a17c50b575f8f3d",
+    "control_branch": "ev_539e55a660fc93718e9e43e71f82eecb9574befd17ffc9a7bd2107180cbfd273",
+    "line_selector": "ev_539ffff285b2b9e61be90c030fd29c81165b10508e9b9ee957600e2744b4eefd",
+    "display_prefix_only": "ev_396b76eb50fb7ef4c83c6c5068f024fc52df7b69e50095835521487539d1968a"
+  },
+  "scope": "156 exact new native bytes plus existing1771-byte keyboard recovery. Normalized key branches, status geometry/margins/rectangle calls and signed line selector/display-result commit are executed. Scroll/cursor/status rendering/rectangle and DISPLAY deeper implementation are modeled boundaries. No raw BIOS normalization, full DISPLAY/BIOS row modes, maintained live geometry/ANSI/NAWS/owner integration, DOS/BBS/physical acceptance or deployment."
+}
