@@ -680,7 +680,7 @@ terminal_poll_serial:
  extern terminal_manual_init_poll_far,terminal_manual_init_sync_far
  cmp word [terminal_manual_init_active],0
  je .manual_idle
- mov ax,1
+ mov ax,bp ; Typed commands share the immediate carrier-ready physical grant.
  call far terminal_manual_init_poll_far
  call far terminal_manual_init_sync_far
  jmp .macro ; Never lend this same poll's physical-write grant to ordinary TX.

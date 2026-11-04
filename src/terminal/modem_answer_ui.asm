@@ -13,6 +13,10 @@ extern _speaker_start,_speaker_poll,_speaker_stop,_speaker_active,_speaker_gener
 extern connection_notice_resident,connection_notice_restore_resident
 extern text_video_segment,screen_columns,screen_last_row,screen_video_row_bytes
 extern terminal_status_row_admit_far
+%ifdef TERMINAL_ROW_GEOMETRY
+extern _terminal_row_status_layout,ui_window_rows,ui_flow_suppressed,csi_column_count,csi_row_count
+extern screen_attribute_row_bytes,screen_viewport_enabled,screen_first_row
+%endif
 %macro ui_save 0
  pushf
  push ax
@@ -40,9 +44,45 @@ extern terminal_status_row_admit_far
 global terminal_auto_answer_admit_far
 terminal_auto_answer_admit_far:
  push bx
+ push cx
+ push dx
+ push si
+ push di
+ push bp
  push es
+%ifdef TERMINAL_ROW_GEOMETRY
+ ; The reserved row must be outside canonical terminal addressing, with real
+ ; BIOS geometry agreeing. Do not start the command, notice or speaker first.
+ mov bx,ds
+ mov cx,ss
+ cmp bx,cx
+ jne .bad
+ pushf
+ pop ax
+ and ax,0x600
+ cmp ax,0x200
+ jne .bad
+ cmp word [ui_flow_suppressed],0
+ jne .bad
+ call far _terminal_row_status_layout
+ or ax,ax
+ jnz .bad
+ cmp word [csi_column_count],80
+ jne .bad
+ cmp word [screen_attribute_row_bytes],80
+ jne .bad
+ cmp word [screen_viewport_enabled],0
+ jne .bad
+ mov ax,[screen_first_row]
+ cmp ax,[screen_last_row]
+ ja .bad
+ mov ax,[screen_last_row]
+ cmp ax,[csi_row_count]
+ jae .bad
+%else
  call far terminal_status_row_admit_far
  jc .bad
+%endif
  mov ah,0x0f
  int 0x10
  cmp ah,80
@@ -56,7 +96,18 @@ terminal_auto_answer_admit_far:
  jnz .bad
  mov ax,0x40
  mov es,ax
+%ifdef TERMINAL_ROW_GEOMETRY
+ xor ax,ax
+ mov al,[es:0x84]
+ or ax,ax
+ jnz .height
+ mov ax,24 ; Legacy BDA encodes the standard25-row display as zero.
+.height:
+ inc ax
+ cmp ax,[ui_window_rows]
+%else
  cmp byte [es:0x84],24
+%endif
  jne .bad
  cmp word [text_video_segment],0xb800
  jne .bad
@@ -64,14 +115,21 @@ terminal_auto_answer_admit_far:
  jne .bad
  cmp word [screen_video_row_bytes],160
  jne .bad
+%ifndef TERMINAL_ROW_GEOMETRY
  cmp word [screen_last_row],23
  jne .bad
+%endif
  xor ax,ax
  jmp .done
 .bad:
  mov ax,1
 .done:
  pop es
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
  pop bx
  retf
 

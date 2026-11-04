@@ -1,5 +1,9 @@
 # Guarded Auto Answer integration
 
+The later [accepted-height and carrier-readiness integration](LARGE_AUTO_ANSWER.md)
+extends composed builds to25/28/43/50 rows and fixes typed output grants during
+tracked DCD loss. This page records the initial fixed-height checkpoint.
+
 The experimental `--auto-answer` candidate enables Alt-Y, the original reference
 entry and browser search. It sends the saved answer-on field through the shared
 bounded command owner, displays `AUTO ANSWER...` and requests the configured

@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Auto Answer at accepted heights](LARGE_AUTO_ANSWER.md) now admits coherent
+visible25/28/43/50-row layouts before command/notice/tone effects. Manual Init
+and Auto Answer also share the foreground's immediate carrier-ready output grant;
+they no longer send during a tracked DCD-low grace interval. Differential,
+larger-row linked and actual DOS partial-command loss/redial evidence, independent
+captures and exact source rebuilds bind the change. Normal line controls/startup,
+broader parity and BBS/physical acceptance remain open. Nothing was deployed.
+
 [Screen Pause on accepted heights](LARGE_SCREEN_PAUSE.md) now binds its saved row
 to admitted25/28/43/50-row geometry and rejects stale replay. Carrier-aware
 control ownership retains transient resume requests and suppresses output after
