@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Larger-height transfer carrier recovery](LARGE_TRANSFER_CARRIER.md) composes
+X/Y/ZMODEM loss at negotiation/metadata/data/retained-file and partial-header
+boundaries with exact cleanup, logged same-parent redial and parser/input return.
+Full-byte peers, passive row/storage observers and independent artifact checks
+bind the evidence. A modeled cancel/close DCD race now suppresses late CAN while
+preserving the first diagnostic and existing cleanup. Other cancellation/carrier
+timings, flow/profile combinations, remaining terminal controls,
+broader parity and BBS/physical acceptance remain open. No deployment changed.
+
 [Transfer row leases](TRANSFER_ROW_LEASES.md) place prompt/progress/input on the
 bottom two accepted physical rows and verify the captured layout before replay.
 Linked geometry/owner checks, actual X/Y/ZMODEM workflows with independent BIOS

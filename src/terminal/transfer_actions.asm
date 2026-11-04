@@ -547,6 +547,16 @@ transfer_emit_cancel:
  mov [transfer_tx_tick],ax
  mov [transfer_tx_tick+2],dx
 .wait:
+ ; The first failure can be Escape/timeout while DCD falls during file
+ ; cleanup. Keep that diagnostic, but never send its CAN/backspace bytes
+ ; into a modem's command channel after a previously observed carrier falls.
+ cmp word [transfer_carrier_seen],0
+ je .flow
+ mov dx,[uart_port_msr]
+ in al,dx
+ test al,0x80
+ jz .done
+.flow:
  call uart_poll_flow
  mov al,bl
  call uart_try_write
