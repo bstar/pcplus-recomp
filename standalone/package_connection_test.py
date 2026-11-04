@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 """Stage a matching source-built connection-test package; never access a card."""
-import argparse,hashlib,json,shutil,subprocess
+import argparse,hashlib,json,re,shutil,subprocess
 from pathlib import Path
 from package_special_edition import ROOT,dos_text,launch
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
-def stage(output,products,source_base_commit=None):
+def validate_dos_directory(value):
+    reserved={'CON','PRN','AUX','NUL'}|{prefix+str(n) for prefix in ('COM','LPT') for n in range(1,10)}
+    if not value.isascii() or not re.fullmatch('[A-Za-z0-9_]{1,8}',value) or value.upper() in reserved:
+        raise ValueError('DOS directory must be a non-device root directory name of1..8 ASCII letters, digits or underscores')
+    return value.upper()
+
+def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
+    dos_directory=validate_dos_directory(dos_directory)
     assert output.is_relative_to(ROOT/'build') and not output.exists()
     sources={};identities={};manifests={}
     for leaf,binary in products.items():
@@ -28,10 +35,12 @@ def stage(output,products,source_base_commit=None):
     for n,h in help_record['sources'].items():
         p=Path(n);assert not p.is_absolute() and '..' not in p.parts and p.parts[0] not in ('build','analysis')
         assert sha(ROOT/p)==h and sources.get(n,h)==h;sources[n]=h
-    output.mkdir();payload=output/'PCPLUSSE';payload.mkdir()
+    output.mkdir();payload=output/dos_directory;payload.mkdir()
     for leaf,binary in products.items():shutil.copyfile(binary,payload/leaf)
     shutil.copyfile(help_base/'LOCHELP.HLP',payload/'LOCHELP.HLP')
-    (payload/'START.BAT').write_bytes(launch());(payload/'SETUP.BAT').write_bytes(launch(True))
+    for name,setup in [('START.BAT',False),('SETUP.BAT',True)]:
+        data=launch(setup);assert data.count(b'PCPLUSSE')==2
+        (payload/name).write_bytes(data.replace(b'PCPLUSSE',dos_directory.encode('ascii')))
     revision=source_base_commit or subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
     (payload/'VERSION.TXT').write_bytes(dos_text('LoC SPECIAL EDITION / CONNECTION TEST\nSysop: bstar\nSource base: '+revision+'\nTERMINAL SHA256: '+sha(products['TERMINAL.EXE'])+'\n'))
@@ -68,9 +77,9 @@ def stage(output,products,source_base_commit=None):
         'the terminal and interpreter are resident can run out of conventional\n'
         'RAM in this candidate. The standalone compiler remains included.\n'
         'Physical modem/SIP/audio and complete original feature acceptance\n'
-        'remain unverified. Building/staging does not update a card.\n'))
+        'remain unverified. Building/staging does not update a card.\n').replace(b'PCPLUSSE',dos_directory.encode('ascii')))
     for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
-    record={'kind':'source-built-special-edition-package','source_base_commit':revision,'products':identities,'sources':sources,
+    record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
         'experimental_custom_irq':True,'experimental_original_keys':True,'experimental_original_reference':True,
         'experimental_local_controls':bool(terminal.get('experimental_local_controls')),
@@ -87,7 +96,8 @@ def stage(output,products,source_base_commit=None):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--source-base-commit',help='Explicit source identity for isolated reproduction without Git metadata')
+    p.add_argument('--dos-directory',default='PCPLUSSE',help='DOS8.3 root directory on drive C:; default PCPLUSSE')
     for name in ('terminal','runner','compiler','setup','translation'):p.add_argument('--'+name,type=Path,required=True)
     a=p.parse_args();products=dict(zip(('TERMINAL.EXE','ASPECT.EXE','ASPCOMP.EXE','PRMEDIT.EXE','XLTEDIT.EXE'),(a.terminal,a.runner,a.compiler,a.setup,a.translation)))
-    r=stage(a.output.resolve(),products,a.source_base_commit);print('Staged',len(r['files']),'files; sources and shared inputs agree; no card/configuration writes.')
+    r=stage(a.output.resolve(),products,a.source_base_commit,a.dos_directory);print('Staged',len(r['files']),'files for C:\\'+r['dos_directory']+'; sources and shared inputs agree; no card/configuration writes.')
 if __name__=='__main__':main()

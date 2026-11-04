@@ -13,6 +13,7 @@ from package_special_edition import ROOT, PRODUCTS, sha
 from check_setup_model import image
 from test_directory_key_bindings_dos import actions
 from test_terminal import SAMPLER
+from package_connection_test import validate_dos_directory
 
 sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
@@ -21,16 +22,18 @@ from compiler import compile_source
 def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False):
     assert not precompile or not (setup or splash_only or after_child_view)
     manifest = json.loads((package / 'manifest.json').read_text())
+    dos_directory=validate_dos_directory(manifest.get('dos_directory','PCPLUSSE'))
+    dos_root='C:\\'+dos_directory
     assert manifest['card_written'] is False
     for name, digest in manifest['sources'].items():
         assert sha(ROOT / name) == digest, name
     for leaf, digest in manifest['files'].items():
-        assert sha(package / 'PCPLUSSE' / leaf) == digest, leaf
+        assert sha(package / dos_directory / leaf) == digest, leaf
     out.mkdir(parents=True, exist_ok=False)
     drive = out / 'drive'
     drive.mkdir()
-    app = drive / 'PCPLUSSE'
-    shutil.copytree(package / 'PCPLUSSE', app)
+    app = drive / dos_directory
+    shutil.copytree(package / dos_directory, app)
     raw = bytearray(image())
     # The editor fixture preserves arbitrary opaque bytes. The current parent
     # also applies saved display preferences at startup, so supply an admitted
@@ -54,7 +57,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
               '\nif value==37\nfopen 0 "RESULT.BIN" "wb"\n'
               'fputs 0 "SPECIAL-COMPILED"\nfclose 0\nendif\nendproc\n')
     (app / 'TEST.ASP').write_text(source, encoding='ascii')
-    (app / 'ACTIONS.KEY').write_bytes(actions(b'C:\\PCPLUSSE\\TEST.ASX' if precompile else b'C:\\PCPLUSSE\\TEST.ASP', 0))
+    (app / 'ACTIONS.KEY').write_bytes(actions((dos_root+('\\TEST.ASX' if precompile else '\\TEST.ASP')).encode('ascii'), 0))
     sampler = SAMPLER.replace('D:\\', 'C:\\')
     for offset in (0, 1, 3, 4):
         sampler = sampler.replace(hex(0x3f8 + offset), hex(base + offset))
@@ -90,9 +93,9 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
               '[mixer]\nnosound=true\n[autoexec]\n@echo off\n'
               'mount c "' + str(drive) + '"\nc:\nset PCPLUS=C:\\ORIGINAL\n' +
               ('WATCH T\n' if observe else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+('UNLIST\n' if bios_absent else '')+'SNAP B\n'+
-              ('CD \\PCPLUSSE\nASPCOMP TEST.ASP\nIF ERRORLEVEL 1 GOTO failed\nCD \\\n' if precompile else '')+
+              ('CD \\'+dos_directory+'\nASPCOMP TEST.ASP\nIF ERRORLEVEL 1 GOTO failed\nCD \\\n' if precompile else '')+
               'ADDKEY ' + keys + '\n'
-              'CALL C:\\PCPLUSSE\\' + launcher + '.BAT /T:ACTIONS.KEY\n'+
+              'CALL '+dos_root+'\\' + launcher + '.BAT /T:ACTIONS.KEY\n'+
               ('C:\\STRAT A\n' if strategy else '')+'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n'+('C:\\RVIEW\n' if after_child_view else '')+('C:\\WATCH\n' if observe else '')+
               'if errorlevel 1 goto failed\necho RETURNED>C:\\RETURN.TXT\nexit\n'
               ':failed\necho FAIL>C:\\FAIL.TXT\nexit\n')
@@ -127,7 +130,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert not (app / 'TEST.ASX').exists() and not (app / 'RESULT.BIN').exists()
     for leaf in PRODUCTS:
         assert sha(app / leaf) == manifest['files'][leaf]
-    result = dict(passed=True, launcher=launcher, cpu='8086', port=com, io_base=base, resident_observer=observe,
+    result = dict(passed=True, launcher=launcher, dos_directory=dos_directory,cpu='8086', port=com, io_base=base, resident_observer=observe,
                   irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,
                   package_manifest_sha256=sha(package / 'manifest.json'),
                   package_files=manifest['files'],
