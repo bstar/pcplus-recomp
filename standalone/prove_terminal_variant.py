@@ -7,7 +7,7 @@ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--flags-json',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
  terminal=a.terminal.resolve();out=a.output.resolve();assert terminal.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
- flags=json.loads(a.flags_json.read_text());assert isinstance(flags,list) and all(isinstance(f,str) and re.fullmatch('--[a-z-]+',f) and f!='--output-dir' for f in flags)
+ flags=json.loads(a.flags_json.read_text());assert isinstance(flags,list) and all(isinstance(f,str) and (re.fullmatch('--[a-z-]+',f) and f!='--output-dir' or f in ('25','28','43','50') and i>0 and flags[i-1]=='--session-rows-probe') for i,f in enumerate(flags))
  manifest=json.loads((terminal.parent/'manifest.json').read_text());assert sha(terminal)==manifest['binary_sha256']
  sources=manifest['sources'];fresh=out/'source'
  for name,digest in sources.items():

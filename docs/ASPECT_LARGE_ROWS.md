@@ -68,8 +68,9 @@ Output directories must be new; exact flags and input hashes are in the receipt.
 
 ## Remaining work
 
-Next execute actual larger-height ASPECT output/input, queries, status/modal
-windows and return adoption, including partial CSI, errors and carrier loss.
+The [actual session checkpoint](ASPECT_LARGE_SESSIONS.md) now covers profiles4/6
+queries, RIS, cooperative windows/lower updates and parent return at all four
+heights. Extend this to partial CSI, errors and carrier loss.
 The cooperative script window still saves/paints/restores a25-row prefix; prove
 that it preserves and refreshes the exposed lower live background. Nested native
 PROGRAM currently admits25/43/50 ROM heights and explicitly excludes28; extend

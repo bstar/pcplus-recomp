@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Actual larger-height ASPECT sessions](ASPECT_LARGE_SESSIONS.md) now cover24 DOS
+parent/child workflows: profiles4/6 at25/28/43/50 physical rows, queries and return,
+RIS, and cooperative windows with lower-row updates. Full frame/reply/owner and
+independent far-history/cursor checks pass. A current288-source child and five
+569-source parents build without originals; ordinary parent/child bytes remain
+unchanged. Nested PROGRAM28-row fonts, larger connection notices, negative and
+carrier/transfer routes, normal line controls and BBS/physical acceptance remain.
+
 [ASPECT larger-row admission](ASPECT_LARGE_ROWS.md) adds a selectable read-only
 parent policy component for coherent narrow28/43/50-row layouts.223 enabled and
 160 disabled linked cases,8 actual DOS geometry observations and3 exact source

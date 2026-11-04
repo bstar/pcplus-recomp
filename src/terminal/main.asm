@@ -289,6 +289,20 @@ terminal_phone_log_startup_done equ $
  mov ax,0x20a4
  jmp terminal_abort
 .reset_ready:
+%ifdef TERMINAL_SESSION_ROWS_PROBE
+ ; Diagnostic only: establish the canonical layout before enabling/dialing;
+ ; use the normal main loop/serial/ASPECT paths after this owned transaction.
+ extern _terminal_row_geometry_set
+ mov ax,TERMINAL_SESSION_ROWS_PROBE
+ push ax
+ call far _terminal_row_geometry_set
+ add sp,2
+ or ax,ax
+ jz .session_rows_ready
+ mov word [terminal_exit_code],34
+ jmp terminal_shutdown
+.session_rows_ready:
+%endif
 %ifdef TERMINAL_DISPLAY_ROW_PROBE
  ; Startup diagnostic only: no UART enable, parser polling, dial or ordinary
  ; command entry while BIOS row count differs from canonical terminal geometry.

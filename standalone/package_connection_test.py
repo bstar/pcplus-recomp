@@ -12,7 +12,7 @@ def stage(output,products,source_base_commit=None):
     for leaf,binary in products.items():
         binary=binary.resolve();assert binary.is_relative_to(ROOT/'build') and binary.name==leaf
         path=binary.parent/'manifest.json';m=json.loads(path.read_text())
-        assert not (m.get('diagnostic_status_probe') or m.get('diagnostic_display_row_probe')),'Startup diagnostic is not an application payload'
+        assert not (m.get('diagnostic_status_probe') or m.get('diagnostic_display_row_probe') or m.get('diagnostic_session_rows_probe')),'Startup diagnostic is not an application payload'
         assert not m.get('original_inputs') and sha(binary)==m['binary_sha256']
         for n,h in m['sources'].items():
             p=Path(n);assert not p.is_absolute() and '..' not in p.parts and p.parts[0] not in ('build','analysis','original','originals','install')
