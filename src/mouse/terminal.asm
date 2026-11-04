@@ -26,6 +26,67 @@ FAR_CDECL_ENTRY _terminal_mouse_bootstrap,0
 FAR_CDECL_ENTRY _terminal_mouse_start,0
 FAR_CDECL_ENTRY _terminal_mouse_pause,0
 FAR_CDECL_ENTRY _terminal_mouse_resume,0
+%ifdef TERMINAL_ROW_GEOMETRY
+extern _mouse_owner_phase_impl
+extern mouse_bind,mouse_button_pending,_terminal_mouse_resume_impl
+global terminal_rows_mouse_phase_far,terminal_rows_mouse_resume_far,terminal_rows_mouse_bind
+terminal_rows_mouse_phase_far:
+ call _mouse_owner_phase_impl
+ retf
+; The driver is suspended. Preserve only already-encoded native keyboard input;
+; fresh mickey baselines must remain reset for the driver's new video geometry.
+terminal_rows_mouse_resume_far:
+ push bx
+ push cx
+ push si
+ push di
+ mov si,mouse_button_pending
+ mov di,row_saved_pending
+ mov cx,3
+.save:
+ mov ax,[si]
+ mov [cs:di],ax
+ add si,2
+ add di,2
+ loop .save
+ mov word [cs:row_resume_pending],1
+ call _terminal_mouse_resume_impl
+ mov word [cs:row_resume_pending],0
+ pop di
+ pop si
+ pop cx
+ pop bx
+ retf
+; Used only as native INIT's bind target in this experimental geometry build.
+; Restore queued Enter/Escape/repeat input before the callback is installed.
+; No foreground store can then overwrite an event from the newly live callback.
+terminal_rows_mouse_bind:
+ pushf
+ cmp word [cs:row_resume_pending],0
+ je .bind
+ push ax
+ push cx
+ push si
+ push di
+ mov si,row_saved_pending
+ mov di,mouse_button_pending
+ mov cx,3
+.restore:
+ mov ax,[cs:si]
+ mov [di],ax
+ add si,2
+ add di,2
+ loop .restore
+ pop di
+ pop si
+ pop cx
+ pop ax
+.bind:
+ popf
+ jmp mouse_bind
+row_resume_pending: dw 0
+row_saved_pending: times 3 dw 0
+%endif
 FAR_CDECL_ENTRY _terminal_mouse_stage,2
 FAR_CDECL_ENTRY _terminal_mouse_offer,2
 FAR_CDECL_ENTRY _terminal_mouse_commit,0

@@ -12,6 +12,7 @@ def main():
  binary,out=a.terminal.resolve(),a.output.resolve();assert binary.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build')
  out.mkdir(parents=True,exist_ok=False);m=json.loads((binary.parent/'manifest.json').read_text())
  assert m['diagnostic_display_row_probe'] and m['experimental_display_row_owner'] and not m['diagnostic_status_probe']
+ geometry=bool(m.get('diagnostic_row_geometry_probe'));leaf='GROWS.BIN' if geometry else 'DROWS.BIN'
  assert sha(binary)==m['binary_sha256']
  for name,digest in m['sources'].items():assert sha(ROOT/name)==digest,name
  runs={};states=[]
@@ -22,7 +23,7 @@ def main():
   struct.pack_into('<H',raw,0x196,0);struct.pack_into('<H',raw,0x1e6,0)
   (drive/'TEST.PRM').write_bytes(raw)
   sentinel=b'Keep this existing diagnostic file.\x00\xff'
-  if label=='exclusive':(drive/'DROWS.BIN').write_bytes(sentinel)
+  if label=='exclusive':(drive/leaf).write_bytes(sentinel)
   sampler=SAMPLER
   for offset in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+offset),hex(0x3e8+offset))
   (drive/'SNAP.ASM').write_text(sampler);subprocess.run(['nasm','-fbin',str(drive/'SNAP.ASM'),'-o',str(drive/'SNAP.COM')],check=True)
@@ -87,17 +88,27 @@ exit
   before,after=(drive/'BEFORE.BIN').read_bytes(),(drive/'AFTER.BIN').read_bytes()
   assert len(before)==42 and before==after,'IRQ/UART/PIC restoration failed'
   assert (drive/'TEST.PRM').read_bytes()==raw
-  observed=(drive/'DROWS.BIN').read_bytes()
+  observed=(drive/leaf).read_bytes()
   if label=='exclusive':assert observed==sentinel
   else:
-   assert len(observed)==222
-   words=struct.unpack('<111H',observed);assert words[:3]==(0x4452,1,6)
-   states=[words[3+i*18:3+(i+1)*18] for i in range(6)]
-   for state,request,rows in zip(states,(0,25,28,43,50,25),(25,25,28,43,50,25)):
+   width=21 if geometry else 18;word_count=3+6*width
+   assert len(observed)==word_count*2
+   words=struct.unpack('<'+'H'*word_count,observed);assert words[:3]==(0x4452,2 if geometry else 1,6)
+   states=[words[3+i*width:3+(i+1)*width] for i in range(6)]
+   for phase,(state,request,rows) in enumerate(zip(states,(0,25,28,43,50,25),(25,25,28,43,50,25))):
     assert state[:5]==(request,0,3,80,rows),state
     assert state[5:10]==(0xb800,160,rows*80,1,1),state
     assert state[11]==0 and state[12]==0x5003 and state[13]>>8==0
-    assert state[14:]==(rows-1,24,23,0),'BIOS reporting or unchanged canonical geometry differs'
+    effective=rows-1 if geometry else 24
+    assert state[14:18]==(rows-1,effective,effective-1,0),'BIOS or canonical geometry differs'
+    if geometry:
+     assert state[19:]==((rows-1)*160,(rows-1)*256)
+     video=(drive/f'GV{phase}.BIN').read_bytes();shadow=(drive/f'GW{phase}.BIN').read_bytes()
+     assert len(video)==rows*160 and len(shadow)==8192
+     if phase:
+      assert video[:effective*160]==bytes([32,state[18]&255])*(effective*80)
+      assert b'Alt-Z FOR HELP' in video[effective*160::2]
+      assert shadow[:len(video)]==video and shadow[len(video):]==bytes(8192-len(video))
   runs[label]=dict(passed=True,expected_exit=23 if label=='exclusive' else 0,hardware_snapshot_bytes=42,
    connected_virtual_serial=True,serial_output_bytes=len(wire),artifacts={str(f.relative_to(run)):sha(f) for f in run.rglob('*') if f.is_file()})
  from package_connection_test import stage
@@ -109,7 +120,7 @@ exit
  for name,digest in m['sources'].items():assert sha(ROOT/name)==digest,name
  inputs={n:sha(ROOT/n) for n in ('standalone/test_display_rows_terminal_dos.py','standalone/modem_fixtures.py','standalone/test_terminal.py','standalone/package_connection_test.py')}
  record=dict(passed=True,terminal_sha256=m['binary_sha256'],manifest_sha256=sha(binary.parent/'manifest.json'),checker_inputs=inputs,
-  bank=m['display_row_bank'],states=states,runs=runs,diagnostic_package_rejected=True,
-  scope='Actual8086 DOS source-built parent calls the real DISPLAY_CODE far API at startup before UART enable. Six BIOS25/28/43/50/25 observations, canonical geometry remains24 intentionally, then normal shutdown. Exclusive output refusal returns23 and preserves existing file. Both COM3/IRQ5 virtual-UART/PIC/vector snapshots restore; zero serial commands. No live RX/parser, atomic canonical geometry, key/menu, modem/BBS/SIP or physical acceptance. Diagnostic cannot be packaged.')
- (out/'result.json').write_text(json.dumps(record,indent=2)+'\n');print('PASS linked DOS row bank:6 observations, exclusive create refusal, hardware restore, diagnostic package rejection')
+  bank=m['display_row_bank'],states=states,runs=runs,diagnostic_package_rejected=True,canonical_geometry_transaction=geometry,
+  scope=('Actual8086 DOS source-built parent calls real offline BIOS/canonical/RIS transaction at startup before UART enable; six BIOS/effective-row observations with actual video/full-shadow captures and native status at physical bottom.' if geometry else 'Actual8086 DOS source-built parent calls low-level DISPLAY_CODE API before UART enable; six BIOS observations with canonical geometry intentionally unchanged24.')+' Exclusive output refusal returns23 and preserves existing file. Both COM3/IRQ5 virtual-UART/PIC/vector snapshots restore; zero serial commands. No actual live RX/parser during transaction, hardware-fault injection in DOS, normal key/menu, online/BBS/SIP or physical acceptance. Diagnostic cannot be packaged.')
+ (out/'result.json').write_text(json.dumps(record,indent=2)+'\n');print('PASS linked DOS rows:6 observations, exclusive create refusal, hardware restore, diagnostic package rejection; canonical transaction',geometry)
 if __name__=='__main__':main()

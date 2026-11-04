@@ -1,14 +1,38 @@
-/* Diagnostic only: raw BIOS service at startup, before UART enable/parsing.
- * Canonical terminal geometry deliberately stays24; restore BIOS25 before IO. */
+/* Startup diagnostics before UART enable/parsing. Raw mode keeps canonical24;
+ * geometry mode runs the offline BIOS/canonical/RIS owner and captures pixels. */
 #include <dos.h>
 #include "native_display_rows.h"
 typedef unsigned short word;
+#ifdef TERMINAL_ROW_GEOMETRY_PROBE
+#include "../src/terminal/row_geometry.h"
+#define RECORD_WORDS 21
+#define RECORD_VERSION 2
+extern word attributes_current,ui_flow_video_base,ui_flow_coordinate_base;
+extern word __far erase_shadow_cells[];
+#pragma aux attributes_current "attributes_current";
+#pragma aux ui_flow_video_base "ui_flow_video_base";
+#pragma aux ui_flow_coordinate_base "ui_flow_coordinate_base";
+#pragma aux erase_shadow_cells "erase_shadow_cells";
+#else
+#define RECORD_WORDS 18
+#define RECORD_VERSION 1
+#endif
 #define TEXT __based(__segname("_CODE"))
 extern word csi_row_count,csi_last_row,ui_flow_suppressed;
 #pragma aux csi_row_count "csi_row_count";
 #pragma aux csi_last_row "csi_last_row";
 #pragma aux ui_flow_suppressed "ui_flow_suppressed";
 extern word __far __cdecl rows_probe_write(const char *,const void *,word);
+#ifdef TERMINAL_ROW_GEOMETRY_PROBE
+extern word __far __cdecl rows_probe_far(const char *,const void __far *,word);
+static word images(word phase,word rows)
+{
+ char name[8]={'G','V','0','.', 'B','I','N',0};
+ name[2]+=(char)phase;
+ if(rows_probe_far(name,MK_FP(0xb800,0),rows*160))return 1;
+ name[1]='W';return rows_probe_far(name,erase_shadow_cells,8192);
+}
+#endif
 static void capture(word *r,word request,word status,native_display_rows_info *p)
 {
  word axword=0,bxword=0;
@@ -23,18 +47,36 @@ static void capture(word *r,word request,word status,native_display_rows_info *p
  r[9]=p->scanline_capable;r[10]=p->extended_mode;r[11]=p->fallback;
  r[12]=axword;r[13]=bxword;r[14]=*(unsigned char __far *)MK_FP(0x40,0x84);
  r[15]=csi_row_count;r[16]=csi_last_row;r[17]=ui_flow_suppressed;
+#ifdef TERMINAL_ROW_GEOMETRY_PROBE
+ r[18]=attributes_current;r[19]=ui_flow_video_base;r[20]=ui_flow_coordinate_base;
+#endif
 }
 unsigned __far __cdecl terminal_display_rows_probe(void)
 {
+#ifdef TERMINAL_ROW_GEOMETRY_PROBE
+ static const char TEXT leaf[]="GROWS.BIN";
+#else
  static const char TEXT leaf[]="DROWS.BIN";
+#endif
  static const word TEXT requests[]={25,28,43,50,25};
- native_display_rows_info info;word records[3+6*18],i,status,failed=0;char name[10];
- records[0]=0x4452;records[1]=1;records[2]=6;
+ native_display_rows_info info;word records[3+6*RECORD_WORDS],i,status,failed=0;char name[10];
+ records[0]=0x4452;records[1]=RECORD_VERSION;records[2]=6;
  status=native_display_rows_probe(&info);if(status)return 20;
  capture(records+3,0,status,&info);
+#ifdef TERMINAL_ROW_GEOMETRY_PROBE
+ if(images(0,info.rows))return 24;
+#endif
  for(i=0;i<5;++i){
+#ifdef TERMINAL_ROW_GEOMETRY_PROBE
+  status=terminal_row_geometry_set(requests[i]);
+  if(native_display_rows_probe(&info))return 25;
+#else
   status=native_display_rows_set(requests[i],&info);
-  capture(records+3+(i+1)*18,requests[i],status,&info);
+#endif
+  capture(records+3+(i+1)*RECORD_WORDS,requests[i],status,&info);
+#ifdef TERMINAL_ROW_GEOMETRY_PROBE
+  if(images(i+1,info.rows))return 24;
+#endif
   if(status && status!=DISPLAY_ROWS_UNSUPPORTED)failed=21;
  }
  if(info.rows!=25 || status)failed=22;

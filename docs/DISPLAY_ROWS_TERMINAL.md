@@ -69,9 +69,9 @@ byte-identical3756c6d7. See [bound evidence](validation/display-rows-terminal.js
 
 ## Remaining integration
 
-No normal command invokes the raw BIOS service. A future foreground owner must
-preflight frame/history/shadow capacities, retire notices, coordinate all live
-and reset geometry, and commit or restore both BIOS and canonical state. Larger
+No normal command invokes the raw BIOS service. The optional [offline transaction](ROW_GEOMETRY_TRANSACTION.md) now coordinates
+BIOS/canonical/RIS state and mouse ownership behind a separate API. Normal
+command admission, larger
 screen loans, configured selector import/cycling, guarded UI, online size/refusal/
 disconnect coordination, BBS/package regressions and physical card/modem
 acceptance remain open. In particular the current offline status owner still

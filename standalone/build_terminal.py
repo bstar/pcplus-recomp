@@ -29,6 +29,7 @@ parser.add_argument('--status-owner',action='store_true',help='Link offline live
 parser.add_argument('--status-probe',action='store_true',help='Diagnostic only: run offline status transactions at foreground startup, then exit')
 parser.add_argument('--display-row-owner',action='store_true',help='Link namespaced low-level BIOS row bank; no canonical geometry or key binding')
 parser.add_argument('--display-row-probe',action='store_true',help='Diagnostic only: exercise BIOS row bank at startup before UART enable, then exit')
+parser.add_argument('--row-geometry-owner',action='store_true',help='Link offline BIOS/canonical/RIS commit and rollback owner; no key/menu binding')
 parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchanged foreground keyboard dispatcher into a retained code bank')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
 parser.add_argument('--manual-init',action='store_true',help='Integrate guarded manual Init key/menu and exclusive foreground UART scheduling')
@@ -85,6 +86,7 @@ if args.status_owner:
  assert args.native_reset_bank and args.screen_pause and args.elapsed_view and args.auto_answer,'Status transaction requires the current banked modal-owner candidate'
 if args.status_probe:assert args.status_owner and not args.hook_probe and not args.input_probe and not args.projection_probe,'Status probe requires the isolated status-owner build'
 if args.display_row_owner:assert args.status_owner,'Display row bank requires the current status-owner component'
+if args.row_geometry_owner:assert args.display_row_owner,'Row geometry owner requires the verified BIOS row bank'
 if args.display_row_probe:assert args.display_row_owner and not args.status_probe and not args.hook_probe and not args.input_probe and not args.projection_probe,'Display row probe requires the isolated row-bank build'
 if args.reset_row_owner:assert args.status_geometry and args.local_controls,'Row-default component requires the reserved-row local-controls candidate'
 if args.auto_answer:
@@ -198,6 +200,7 @@ if args.reset_row_owner:out_name+='-reset-rows'
 if args.status_owner:out_name+='-status-owner'
 if args.status_probe:out_name+='-status-probe'
 if args.display_row_owner:out_name+='-display-row-owner'
+if args.row_geometry_owner:out_name+='-row-geometry-owner'
 if args.display_row_probe:out_name+='-display-row-probe'
 if args.local_controls:out_name+='-local-controls'
 if args.screen_pause:out_name+='-screen-pause'
@@ -299,6 +302,7 @@ for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
  if source==ROOT/'src/ui/speaker_native.asm':options+=['-D_TEXT=CONFIG_CODE','-DCODE=FARCODE']
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
+ if args.row_geometry_owner and source==ROOT/'reconstruction/program_mouse/init.asm':options+=['-Dmouse_bind=terminal_rows_mouse_bind']
  if source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_CHARACTER_PREFLIGHT','-DTERMINAL_LINE_PREFLIGHT','-DTERMINAL_RENDER_PREFLIGHT']
  if source==ROOT/'reconstruction/erase/display_after.asm':options+=['-Dcsi_service_d8b6=terminal_erase_after_native','-DTERMINAL_ERASE_PREFLIGHT']
  if source==ROOT/'reconstruction/erase/rectangle.asm':options+=['-Dcsi_service_2530=terminal_rectangle_native']
@@ -332,6 +336,8 @@ for index,source in enumerate(sources):
  if args.status_owner:options+=['-DTERMINAL_STATUS_OWNER']
  if args.status_probe:options+=['-DTERMINAL_STATUS_PROBE']
  if args.display_row_probe:options+=['-DTERMINAL_DISPLAY_ROW_PROBE']
+ if args.row_geometry_owner:options+=['-DTERMINAL_ROW_GEOMETRY']
+ if args.row_geometry_owner and args.display_row_probe:options+=['-DTERMINAL_ROW_GEOMETRY_PROBE']
  if args.screen_pause:options+=['-DTERMINAL_SCREEN_PAUSE']
  if args.call_timer:options+=['-DTERMINAL_CALL_TIMER']
  if args.elapsed_view:options+=['-DTERMINAL_ELAPSED_VIEW']
@@ -590,6 +596,7 @@ for source in c_sources:
    if args.hook_apply:mouse_names+=['mouse_owner_reconfigure_check','mouse_owner_reconfigure_publish','terminal_mouse_check','terminal_mouse_publish']
    options+=['-nt=MOUSE_CODE','-nc=FARCODE','-ecc','-dMOUSE_DOS_PLATFORM',*['-d'+n+'='+n+'_impl' for n in mouse_names]]
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
+ if args.row_geometry_owner and args.display_row_probe and source==ROOT/'standalone/display_rows_terminal_probe.c':options+=['-dTERMINAL_ROW_GEOMETRY_PROBE']
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(source)],cwd=OUT,check=True)
  if args.directory_view and source.name=='directory_reader_fs.c':
   before=obj.read_bytes();normalized,counts=rename_imports(before,{
@@ -623,7 +630,7 @@ phone_log_bank=None
 display_rows_bank=None
 if args.display_row_owner:
  from process.display_rows_link import build_display_rows_bank
- display_rows_bank=build_display_rows_bank(ROOT,OUT)
+ display_rows_bank=build_display_rows_bank(ROOT,OUT,geometry=args.row_geometry_owner,mouse=args.mouse)
  objects+=list(map(str,display_rows_bank['objects']));sources+=display_rows_bank['inputs']
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
@@ -689,6 +696,8 @@ manifest['experimental_status_owner']=args.status_owner
 manifest['diagnostic_status_probe']=args.status_probe
 manifest['experimental_display_row_owner']=args.display_row_owner
 manifest['diagnostic_display_row_probe']=args.display_row_probe
+manifest['experimental_row_geometry_owner']=args.row_geometry_owner
+manifest['diagnostic_row_geometry_probe']=args.row_geometry_owner and args.display_row_probe
 if args.display_row_owner:
  manifest['display_row_bank']={k:display_rows_bank[k] for k in ('namespace','native_bytes','segment','offset','bytes','scope')}
  manifest['limitations'].append(display_rows_bank['scope'])

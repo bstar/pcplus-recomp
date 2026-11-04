@@ -45,3 +45,52 @@ _rows_probe_write:
  mov sp,bp
  pop bp
  retf
+%ifdef TERMINAL_ROW_GEOMETRY_PROBE
+global _rows_probe_far
+; Far cdecl(name near,buffer far,count). Caller has returned from transaction;
+; captured video/shadow IO is diagnostic work, not part of its critical owner.
+_rows_probe_far:
+ push bp
+ mov bp,sp
+ sub sp,2
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push ds
+ push es
+ mov word [bp-2],1
+ mov dx,[bp+6]
+ xor cx,cx
+ mov ax,0x5b00
+ int 0x21
+ jc .done
+ mov bx,ax
+ mov dx,[bp+8]
+ mov ds,[bp+10]
+ mov cx,[bp+12]
+ mov ah,0x40
+ int 0x21
+ jc .close
+ cmp ax,[bp+12]
+ jne .close
+ mov word [bp-2],0
+.close:
+ mov ah,0x3e
+ int 0x21
+ jnc .done
+ mov word [bp-2],1
+.done:
+ mov ax,[bp-2]
+ pop es
+ pop ds
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ mov sp,bp
+ pop bp
+ retf
+%endif

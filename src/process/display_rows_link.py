@@ -6,7 +6,7 @@ transaction may call it until the canonical screen/frame contract is integrated.
 import hashlib,json,re,subprocess
 from pathlib import Path
 
-def build_display_rows_bank(root,out):
+def build_display_rows_bank(root,out,geometry=False,mouse=False):
  root=Path(root);out=Path(out)/'display-rows-bank';out.mkdir(parents=True,exist_ok=False)
  groups=[('display_modes',('detect','virtual_buffer','rows','fonts','font_reset','baseline')),
          ('program_display',('geometry',)),('program_ui',('scanlines','cursor_eight'))]
@@ -45,5 +45,10 @@ def build_display_rows_bank(root,out):
  obj=out/'owner-c.obj';objects.append(obj)
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-nt=DISPLAY_CODE','-nc=FARCODE',
   '-i='+str(root/'src/process'),'-fo='+str(obj),str(owner)],check=True)
+ if geometry:
+  source=root/'src/terminal/row_geometry.c';inputs += [source,root/'src/terminal/row_geometry.h',root/'src/terminal/status_transition.h']
+  obj=out/'geometry-owner.obj';objects.append(obj)
+  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-nt=DISPLAY_CODE','-nc=FARCODE',
+   *(['-dTERMINAL_ROW_MOUSE'] if mouse else []),'-i='+str(root/'src/process'),'-fo='+str(obj),str(source)],check=True)
  return dict(objects=objects,inputs=inputs,namespace=namespace,native_bytes=sum(u['bytes'] for u in units),
-  scope='Optional low-level BIOS row bank only. Canonical terminal/RIS/frame/bridge transaction and key/menu bindings are not integrated; do not treat raw BIOS success as application geometry acceptance.')
+  scope=('Optional offline BIOS/canonical/RIS transaction with mouse suspension and rollback. No normal key/menu binding, online geometry, bridge coordination or physical acceptance.' if geometry else 'Optional low-level BIOS row bank only. Canonical terminal/RIS/frame/bridge transaction and key/menu bindings are not integrated; do not treat raw BIOS success as application geometry acceptance.'))

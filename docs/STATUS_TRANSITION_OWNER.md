@@ -1,5 +1,10 @@
 # Internal live status-row transaction
 
+A separate [offline BIOS/canonical row owner](ROW_GEOMETRY_TRANSACTION.md) now
+coordinates25/28/43/50 physical rows. The command and online/UI gates described
+here remain open; this does not expand the fixed25-row status-toggle contract.
+
+
 `--status-owner` links the maintained far-cdecl `terminal_status_toggle()`
 component. It performs a live24/25-row status transition with rollback, using
 recovered scroll/cursor/status services and the staged captured-default helper.

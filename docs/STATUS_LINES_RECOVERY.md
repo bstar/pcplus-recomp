@@ -1,5 +1,10 @@
 # Original status and line controls
 
+A separate [offline BIOS/canonical row owner](ROW_GEOMETRY_TRANSACTION.md) now
+coordinates25/28/43/50 physical rows. The command and online/UI gates described
+here remain open; this does not expand the fixed25-row status-toggle contract.
+
+
 The original normalized keyboard dispatcher routes Ctrl-] (WORD001D) to resident
 46BA and Ctrl-- (001F, the menu's Ctrl-minus shortcut) to its inline1904 selector.
 These paths belong to the existing1771-byte native keyboard recovery, not the

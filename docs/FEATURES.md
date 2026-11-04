@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Offline row transaction](ROW_GEOMETRY_TRANSACTION.md) now coordinates BIOS,
+canonical parser/RIS, native status, shadow and mouse ownership for25/28/43/50
+physical rows.102 linked inputs, actual DOS parent workflows,76 status/250
+default inputs and four exact source exports pass. Normal command/UI, online
+bridge coordination, larger-screen modal loans and physical acceptance remain
+open;13 unavailable commands and deployment selection are unchanged.
+
 [Banked BIOS row integration](DISPLAY_ROWS_TERMINAL.md) now links the recovered
 service in an independent1113-byte code bank, preserving150 resident code bytes
 spare. Actual DOS parent tests cover six geometries, exclusive-file refusal,

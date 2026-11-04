@@ -22,10 +22,17 @@ terminal_status_live:
 .parent:
  cmp word [ui_flow_region_cells],80
  jne .unsupported
+%ifdef TERMINAL_ROW_GEOMETRY
+ extern _terminal_row_status_layout
+ call far _terminal_row_status_layout
+ or ax,ax
+ jnz .unsupported
+%else
  cmp word [ui_flow_video_base],3840
  jne .unsupported
  cmp word [ui_flow_coordinate_base],0x1800
  jne .unsupported
+%endif
  cmp word [screen_columns],80
  jne .unsupported
  cmp word [csi_terminal_id],14
@@ -232,10 +239,16 @@ terminal_status_poll:
  jne .done
  cmp word [ui_flow_region_cells],80
  jne .done
+%ifdef TERMINAL_ROW_GEOMETRY
+ call far _terminal_row_status_layout
+ or ax,ax
+ jnz .done
+%else
  cmp word [ui_flow_video_base],3840
  jne .done
  cmp word [ui_flow_coordinate_base],0x1800
  jne .done
+%endif
  cmp word [csi_terminal_id],14
  ja .done
  mov ax,0x40

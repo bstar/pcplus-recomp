@@ -420,6 +420,8 @@ reset_byte_addresses:
  dw csi_erase_attribute
  dw terminal_backspace_erases
  dw render_translation_mask
+global reset_byte_addresses,reset_byte_addresses_end
+reset_byte_addresses_end:
 RESET_BYTE_COUNT equ ($-reset_byte_addresses)/2
 SEGMENT _BSS public align=16 class=BSS use16
 reset_words: resw RESET_WORD_COUNT

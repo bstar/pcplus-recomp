@@ -164,6 +164,12 @@ terminal_status_notice_refresh:
  push si
  push di
  push es
+%ifdef TERMINAL_ROW_GEOMETRY
+ ; An idle notice lease can draw the dynamic native row directly. Active
+ ; leases retain their existing fixed-row admission/save/restore contract.
+ cmp byte [notice_active],0
+ je .draw
+%endif
  call notice_row_admit
  jnc .admitted
  mov byte [notice_active],0
