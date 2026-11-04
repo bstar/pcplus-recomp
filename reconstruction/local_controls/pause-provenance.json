@@ -1,0 +1,22 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 3,
+  "overlay_sha256": "c22d54d5af84a7990f49f724bee3afe3ff925b8032f49c20b0b7678cd22de551",
+  "native_entry": "DD7E",
+  "native_bytes": 74,
+  "original_file_offset": "0xf3fe",
+  "native_sha256": "0f17a638de509720dd35dee87e26fadfd7eacd7bbf8846e8e54b2c528363c60e",
+  "source": "reconstruction/local_controls/pause.asm",
+  "source_only_build": true,
+  "dispatch": {
+    "BIOS_key": "3100",
+    "resident_thunk": "BA6F",
+    "target": "overlay3:DD7E"
+  },
+  "evidence": {
+    "thunk": "ev_4ba401fb9bf4cbe1676a1fa73fbae1de88a9914e9e24fb6c859c08a703f3a424",
+    "overlay_assembly": "ev_310fba49b133ef595c3e573cf2712cd283015f9f5e1913319c5fc5401960e043",
+    "overlay_analysis_image_sha256": "fff9700d3b5e76b8f0d76c3a9df7051bfa39f87c0891bd593a8f84f19c758b19"
+  },
+  "scope": "Exact original body and boundary-modeled CPU recovery. Overlay analysis image is synthetic, never executed; its 74 body bytes separately match the genuine overlay. Live owner is a maintained integration of this control sequence, not a claim of byte-equivalent UI/UART helpers."
+}

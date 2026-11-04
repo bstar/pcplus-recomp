@@ -70,6 +70,7 @@ def stage(output,products,source_base_commit=None):
         'experimental_custom_irq':True,'experimental_original_keys':True,'experimental_original_reference':True,
         'experimental_local_controls':bool(terminal.get('experimental_local_controls')),
         'experimental_keyboard_bank':bool(terminal.get('experimental_keyboard_bank')),
+        'experimental_screen_pause':bool(terminal.get('experimental_screen_pause')),
         'experimental_directory_resource_owner':False,'experimental_phone_log_controls':True,'experimental_status_geometry':True,
         'authored_help_sha256':help_record['sha256'],'card_written':False,'validation':'Staged only; requires separate DOS/package and hardware acceptance.'}
     (output/'manifest.json').write_text(json.dumps(record,indent=2)+'\n');return record

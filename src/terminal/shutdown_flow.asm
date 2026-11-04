@@ -10,6 +10,12 @@ terminal_release_flow:
  push si
  push di
  push es
+%ifdef TERMINAL_SCREEN_PAUSE
+ ; A manual Screen Pause sends control bytes even with SOFT flow disabled.
+ ; Do not leave its queued resume byte behind when restoring the DOS UART.
+ cmp byte [uart_flow_pending],0x11
+ je .resume
+%endif
  cmp word [uart_software_flow],0
  je .done
  cmp byte [uart_xoff_sent],0

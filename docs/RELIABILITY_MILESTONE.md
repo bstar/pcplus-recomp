@@ -81,3 +81,10 @@ It preserves the existing command set and foreground ownership. Source-only
 reproduction, differential execution and DOS/BBS checks are recorded separately
 for its854e8add candidate. It is staged rather than installed; physical BUSY
 diagnosis, remaining command recovery and full-parity gates remain open.
+
+The following [Screen Pause candidate](SCREEN_PAUSE.md) adds Alt-N with original
+any-key resume semantics and bounded UART integration. It also defers connection
+notices until the paused status row is restored, preventing notice-underlay
+contamination on qualified DCD loss. The public receipt keeps the exact native
+body proof, maintained integration, DOS observers and BBS results distinct.
+Physical BUSY and the remaining command/parity inventory stay open.

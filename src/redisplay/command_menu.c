@@ -203,6 +203,14 @@ ENTRY(local_reset,"Reset Terminal                 Alt-U",
 ENTRY(local_duplex,"Duplex Toggle                  Alt-E",
  "Toggle local echo between full and half duplex for ordinary input.\n"
  "BBS replies and serial framing are unaffected.");
+#ifdef TERMINAL_SCREEN_PAUSE
+ENTRY(screen_pause,"Screen Pause                   Alt-N",
+ "Send XOFF and pause terminal display processing until any key.\n"
+ "The resume key is consumed locally, including Escape and Alt-X.\n"
+ "Restore the message row and cursor, then send XON. UART receive\n"
+ "and bounded control delivery continue; an uncooperative peer can\n"
+ "still fill the receive buffer. No file or settings are changed.");
+#endif
 #endif
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
 static const item MENU_TEXT items[]={
@@ -220,6 +228,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_LOCAL_CONTROLS
  ,ROW(local_clear,2,0x2e00,'C'),ROW(local_reset,2,0x1600,'T'),ROW(local_duplex,1,0x1200,'E')
+#ifdef TERMINAL_SCREEN_PAUSE
+ ,ROW(screen_pause,2,0x3100,'N')
+#endif
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))

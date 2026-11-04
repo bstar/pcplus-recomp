@@ -236,6 +236,16 @@ def inspect_terminal_memory(binary,map_path):
   sites=[near_code['relative_segment']*16+i for i in range(len(root)-4) if root[i:i+5]==pattern]
   assert len(sites)==1 and sites[0]+3 in relocations,'One resident keyboard-bank dispatch entry'
   extra.update(keyboard_bank_bridge_pairs_verified=29,keyboard_bank_far_call_sites=len(calls),keyboard_bank_dispatch_calls_verified=1,keyboard_bank_bytes=keyboard['bytes'])
+ if 'terminal_screen_pause' in symbols:
+  config=next(c for c in code_segments if c['name']=='CONFIG_CODE')
+  assert symbols['terminal_screen_pause'][0]==symbols['terminal_screen_pause_end'][0]==config['relative_segment']
+  assert symbols['terminal_screen_pause_active'][0]==ds
+  for bridge,target in [('terminal_pause_poll_far','terminal_poll_serial'),('terminal_pause_peek_far','keyboard_poll'),('terminal_pause_read_far','terminal_read_key')]:
+   assert symbols[bridge][0]==near_code['relative_segment']
+   near_call(bridge,target)
+  assert symbols['terminal_pause_flow_far'][0]==near_code['relative_segment'] and symbols['uart_flow_pending'][0]==ds
+  near_call('terminal_pause_flow_far','uart_poll_flow',prefix=b'\xa2'+struct.pack('<H',symbols['uart_flow_pending'][1]))
+  extra.update(screen_pause_bridge_pairs_verified=4,screen_pause_near_state_bytes=2)
  if '_directory_view_event' in symbols:
   directory=next(c for c in code_segments if c['name']=='DIRECTORY_CODE')
   directory_seg=directory['relative_segment']

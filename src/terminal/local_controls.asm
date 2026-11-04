@@ -26,6 +26,9 @@ extern terminal_ansi_wait_active,terminal_snapshot_active,uart_break_hold,connec
 extern _redisplay_active,_command_menu_active,reset_ready
 extern terminal_monitor_active,terminal_controller_active
 extern terminal_browser_screen_owned,terminal_editor_screen_owned
+%ifdef TERMINAL_SCREEN_PAUSE
+extern terminal_screen_pause,terminal_screen_pause_active
+%endif
 global terminal_local_control_key
 ; AX normalized BIOS key. CF1 consumed/deferred; CF0 unrelated, AX unchanged.
 ; Existing FIFO preserves key order while parsing/other owners are active.
@@ -36,6 +39,10 @@ terminal_local_control_key:
  je .selected
  cmp ax,0x1200
  je .selected
+%ifdef TERMINAL_SCREEN_PAUSE
+ cmp ax,0x3100
+ je .selected
+%endif
  clc
  retf
 .selected:
@@ -61,6 +68,9 @@ terminal_local_control_key:
  or bx,[_command_menu_active]
  or bx,[terminal_monitor_active]
  or bx,[terminal_controller_active]
+%ifdef TERMINAL_SCREEN_PAUSE
+ or bx,[terminal_screen_pause_active]
+%endif
  jnz .defer
  cmp byte [terminal_browser_screen_owned],0
  jne .defer
@@ -72,6 +82,10 @@ terminal_local_control_key:
  jne .defer
 .admitted:
  mov word [terminal_local_control_status],0
+%ifdef TERMINAL_SCREEN_PAUSE
+ cmp ax,0x3100
+ je .pause
+%endif
  cmp ax,0x2e00
  jne .reset
  call far terminal_control_clear_far
@@ -86,6 +100,11 @@ terminal_local_control_key:
 .duplex:
  call far terminal_control_duplex_far
  jmp .done
+%ifdef TERMINAL_SCREEN_PAUSE
+.pause:
+ call terminal_screen_pause
+ jmp .done
+%endif
 .not_ready:
  mov word [terminal_local_control_status],2
  jmp .done

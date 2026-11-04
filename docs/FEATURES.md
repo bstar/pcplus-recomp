@@ -1674,3 +1674,12 @@ variants, with29 checked near/far service adapters and39 relocated call sites.
 Its551 linked keyboard comparisons,31 negative ABI cases and source-only exact
 rebuild are distinct from DOS/BBS and physical evidence. No command-availability
 or full-parity gate closes from this refactor.
+
+The optional [Screen Pause integration](SCREEN_PAUSE.md) enables original Alt-N
+through the shared guarded owner and reference/browser actions. A74-byte native
+body has exact original-file provenance and120 boundary-modeled CPU cases; the
+maintained live owner adds bounded flow delivery, UART buffering, any-key resume,
+cursor/row restoration and deferred connection notices. Its actual DOS observer
+and CPU/ABI evidence are scoped separately from physical acceptance. Elapsed
+time, other terminal controls, file/DOS, directory/key and Chat work remain open;
+additional geometry and full application gates do not close.

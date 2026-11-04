@@ -1,0 +1,117 @@
+{
+  "passed": true,
+  "terminal_sha256": "501629c093d731be8f3324f185e128af76e00c2942e5ad3463c1ce7da54edb6e",
+  "terminal_manifest_sha256": "cf47465a23259736d0f4e941b5b302b22b00029b72794a952e5f2786a6a63a9e",
+  "original_inputs": [],
+  "feature_disabled_sha256": "854e8add51fe3311fa2fbb829dc4eb1bb4bc588a711639e3a4f072df826f9651",
+  "native_body": {
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "overlay": 3,
+    "overlay_sha256": "c22d54d5af84a7990f49f724bee3afe3ff925b8032f49c20b0b7678cd22de551",
+    "native_entry": "DD7E",
+    "native_bytes": 74,
+    "original_file_offset": "0xf3fe",
+    "native_sha256": "0f17a638de509720dd35dee87e26fadfd7eacd7bbf8846e8e54b2c528363c60e",
+    "source": "reconstruction/local_controls/pause.asm",
+    "source_only_build": true,
+    "dispatch": {
+      "BIOS_key": "3100",
+      "resident_thunk": "BA6F",
+      "target": "overlay3:DD7E"
+    },
+    "evidence": {
+      "thunk": "ev_4ba401fb9bf4cbe1676a1fa73fbae1de88a9914e9e24fb6c859c08a703f3a424",
+      "overlay_assembly": "ev_310fba49b133ef595c3e573cf2712cd283015f9f5e1913319c5fc5401960e043",
+      "overlay_analysis_image_sha256": "fff9700d3b5e76b8f0d76c3a9df7051bfa39f87c0891bd593a8f84f19c758b19"
+    },
+    "scope": "Exact original body and boundary-modeled CPU recovery. Overlay analysis image is synthetic, never executed; its 74 body bytes separately match the genuine overlay. Live owner is a maintained integration of this control sequence, not a claim of byte-equivalent UI/UART helpers."
+  },
+  "memory": {
+    "resident_code_bytes": 65176,
+    "resident_code_spare_bytes": 360,
+    "screen_pause_bridge_pairs_verified": 4,
+    "screen_pause_near_state_bytes": 2
+  },
+  "data_stack_bytes": 64800,
+  "matching_interpreter_sha256": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+  "minimal_variant_sha256": "a1c07fc96713ba8eabe48029aea5437cdc8ec7502e86d04fa9a18101b99b0eae",
+  "evidence": {
+    "build/pause-native-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "5bb129d42eefb00ef3afa7880461cab78477e75cdf5ff6a9a1ec3a2c225c8717"
+    },
+    "build/pause-native-source-only-20261103/result.json": {
+      "passed": true,
+      "sha256": "9d2148e27bae28a6637acd066376b87a5b71d512b0e8dbba6af11d0397952cb4"
+    },
+    "build/screen-pause-notice-live-release-20261103/result.json": {
+      "passed": true,
+      "sha256": "09886da3aecfe79b3de8675201ba0c68b893c8ac96d78f2630065c64498e14f9"
+    },
+    "build/screen-pause-notice-abi-20261103/result.json": {
+      "passed": true,
+      "sha256": "9bee279b130178e3ff3847c0ea618881c7cc47815c27f44765271258482b7c63"
+    },
+    "build/screen-pause-notice-source-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "49a106db53d63ecc2eeeb22578cd21d687f262cee0728357ebf234781ef51f09"
+    },
+    "build/screen-pause-keyboard-abi-20261103/result.json": {
+      "passed": true,
+      "sha256": "bb7036c5756dea411c47d36ca5af0437de7663c3cf002709c6631fb32eb7d982"
+    },
+    "build/screen-pause-notice-existing-controls-20261103/result.json": {
+      "passed": true,
+      "sha256": "5adfff450b0039664a92cc7274b1e0de1093dabe5e138e03f325dbea3292a9b0"
+    },
+    "build/terminal-screen-pause-notice-20261103/reference-checks.json": {
+      "passed": true,
+      "sha256": "cfe06f9da727fa7c22f7dab021c59cf5b449806268cfb9de421c40cc93ee047c"
+    },
+    "build/screen-pause-dos/screen-pause-release-20261103/result.json": {
+      "passed": true,
+      "sha256": "98a3ccf98c5e581d76344bae1492022c94da372686c4d372b35ef04e043a2ace"
+    },
+    "build/busy-retry-dos/screen-pause-notice-20261103/result.json": {
+      "passed": true,
+      "sha256": "669eea718674f0c043678852ac9fb2d0251dcd42aeb78770a966ec0825318d45"
+    },
+    "build/terminal-endurance/screen-pause-notice-20261103/result.json": {
+      "passed": true,
+      "sha256": "beb66993c26cbda261fb2d3eb334f8f92c1f31bd8aa8138c6b7918c1dfe952e4"
+    },
+    "build/bbs-lab/results/enigma/screen-pause-notice-enigma-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "6f1c9dc80ec90ad06d31b8eb41864c52f575a702cfc275c2182ffb2c3c245af0"
+    },
+    "build/bbs-lab/results/enigma/screen-pause-notice-enigma-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "e7a3becace50063fc69454907b8b7add189a89c5203dfbed5e126d3b623513e0"
+    },
+    "build/bbs-lab/results/synchronet/screen-pause-notice-sync-20261103/proxy-integration.json": {
+      "passed": true,
+      "sha256": "fe2054ba222e2eabaf9634bf58731077c843ea8def029d130e31a1f54965175b"
+    },
+    "build/bbs-lab/results/synchronet/screen-pause-notice-sync-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "9d47aa2e7a2c5f6d7243a31cc819ccf6511083067b1598ba3ed85bde3f5e5308"
+    },
+    "build/screen-pause-package-start-20261103/result.json": {
+      "passed": true,
+      "sha256": "9d9ea37167351d3000b7479e67ee5dd4c0a13e35a075ffc6679d0216a691ce12"
+    },
+    "build/screen-pause-package-setup-20261103/result.json": {
+      "passed": true,
+      "sha256": "59bfea617e0b3075218c1fe29f586b1b2b7e686526c4410cc09e451766f5e2ce"
+    }
+  },
+  "verification_sources": {
+    "standalone/check_pause_native.py": "c8f23b5e24d18695061092043c9c0c70cc2987b5072d3f9bb46bd64f3fb87a62",
+    "standalone/check_screen_pause_live.py": "248a0795254c9fd76793d5558dd66b0bda96b061c5c173c91a6a6d92552c9714",
+    "standalone/check_screen_pause_abi.py": "41c52a6e5bc95b1f93d3f100d162de073d7bf724890673d07aea701f9fe5800a",
+    "standalone/test_screen_pause_dos.py": "2d15f4445c6519cea65f1b287e8b609e96b631b1a5ab32b8085b534ca2df287e",
+    "standalone/pause_watch.asm": "33a327cb7d5d9cdbff62317a7af8d474d31fb55668e58d35ae19843bb97c917d"
+  },
+  "installed": false,
+  "scope": "Optional guarded Alt-N Screen Pause integration, original native body proof and maintained bounded UART/UI owner. Actual DOS8086 synthetic peers and paced owned BBS labs; not SIP/DSP/analog/physical acceptance or full original-feature parity. Physical BUSY diagnosis remains unresolved; no live machine or BBS/bridge changes."
+}
