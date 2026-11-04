@@ -1,0 +1,24 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "name": "detect",
+      "entry": "0x6cd8",
+      "bytes": 66,
+      "file_offset": "0x7ed8",
+      "source": "reconstruction/display_modes/detect.asm",
+      "sha256": "ebaa4d86bc9c1d68f35719d38b416c44add92382553b08f8cd4619814c1d6bd4",
+      "rea_evidence_id": "ev_fde634b965c5eb3b32a953660ce1dc37eeddb80dbee6b8ce9da34976b198693e"
+    },
+    {
+      "name": "virtual_buffer",
+      "entry": "0x7e34",
+      "bytes": 36,
+      "file_offset": "0x9034",
+      "source": "reconstruction/display_modes/virtual_buffer.asm",
+      "sha256": "d97eb57f46dd383556d67bb27112e160cacdfc426d7a0080672f9e07b8720b30",
+      "rea_evidence_id": "ev_3f322a0e9ce8e0daa566615fcfaaa3b17884113f44e915da6ccdbb253ad4c580"
+    }
+  ],
+  "scope": "Static complete byte reads at measured original resident addresses. Detection increments capability words, probes legacy virtual buffer and tail-calls geometry. DS/SS, BIOS effects and capability initialization belong to callers; no original runtime or physical observation."
+}

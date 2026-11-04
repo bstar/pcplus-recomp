@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "binary_sha256": "d226171b203564f7a445195c67c4f058efa7e1654fdcdd2ea1dbf06b9fadbf04",
+  "native_bytes": 606,
+  "new_native_bytes": 102,
+  "owner_imports": [
+    "_display_rows_mode",
+    "_display_rows_columns",
+    "_display_rows_rows",
+    "_display_rows_segment",
+    "_display_rows_stride",
+    "_display_rows_cells",
+    "_display_rows_font_capable",
+    "_display_rows_scanline_capable",
+    "_display_rows_extended_mode",
+    "_display_rows_supported",
+    "_display_rows_legacy",
+    "_display_rows_geometry",
+    "_display_rows_detect",
+    "_native_display_rows_probe",
+    "_display_rows_baseline",
+    "_display_rows_select",
+    "_small_code_"
+  ],
+  "original_comparison": {
+    "sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "units": 9,
+    "all_flat_bytes_equal": true,
+    "scope": "Static exact bytes only; original executable not run or used by application/component build."
+  },
+  "evidence": {
+    "build/display-rows-fallback-20261104/manifest.json": "f8e26a0506cf1e423ceba40eac4105f617e6a767309ec22936f7a7f7a7a4c41a",
+    "build/display-rows-dos-fallback-20261104/result.json": "84152e22c6b3747d520fc20fdedd5356e180bb15e66eab64d9282328bdf51c33"
+  },
+  "models": {
+    "vga": {
+      "passed": true,
+      "checks": 97,
+      "machine": "svga_s3",
+      "argument": "",
+      "capability_matches": true
+    },
+    "vga-mono": {
+      "passed": true,
+      "checks": 96,
+      "machine": "svga_s3",
+      "argument": " /MONO",
+      "capability_matches": true
+    },
+    "ega": {
+      "passed": true,
+      "checks": 86,
+      "machine": "ega",
+      "argument": "",
+      "capability_matches": true
+    },
+    "cga": {
+      "passed": true,
+      "checks": 74,
+      "machine": "cga",
+      "argument": "",
+      "capability_matches": true
+    },
+    "hercules": {
+      "passed": true,
+      "checks": 73,
+      "machine": "hercules",
+      "argument": " /MONO",
+      "capability_matches": true
+    }
+  },
+  "sources": {
+    "standalone/build_display_rows.py": "80af560914bfef4e8880e7a1b89e07cfde07338faf22874c0f711ffb7eaa2cd1",
+    "standalone/omf_imports.py": "b831a013f7dcb19bd1250bb9a73bf56218d24f48a6fe22feb86b6fc677db7473",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/display_modes/provenance.json": "8e524dc63d323bc3b7dbcb40779619e92ee932d91019c8aa39fef6e25a0ff3a1",
+    "reconstruction/display_modes/capabilities-provenance.json": "748dc955d40e0df2bba3005f4223d6dfaa3edb9d558e8a773bccce99e490710b",
+    "reconstruction/display_modes/detect.asm": "813e54602be1c0896f2cdb8351c95a09558798c4ac8d4fdd651a6ce13c9714dd",
+    "reconstruction/display_modes/virtual_buffer.asm": "af1cc16a9b8769e2337cb65ce91e579f6131bd32994535e5bb2c75c758039491",
+    "reconstruction/display_modes/rows.asm": "370996d14ea852490f7baa8081e61b5a6b460b4af5b441ae39ad59fa88b15015",
+    "reconstruction/display_modes/fonts.asm": "bb088cc6c77d7f6ce7ef69c6eb83bfadd2152332e10419c30d22c3e974dd3d98",
+    "reconstruction/display_modes/font_reset.asm": "47bdce5ff1baf8bdbab99ac03919beef00d97cafcb9b2040e42e0c6a0e0e3352",
+    "reconstruction/display_modes/baseline.asm": "7d3e853e1344a77d479e52f0f35b52070f27b6af91116c984b2b55026794cfc1",
+    "reconstruction/program_display/provenance.json": "6b3a2f47120c20ba43cac11f074da5daf7ca85f388a1ba87739be0f3fe41cb27",
+    "reconstruction/program_display/geometry.asm": "c6c57bcfc5779d770ee85ba5bcd1414455ef35891f0703b8a6564e70dd199f85",
+    "reconstruction/program_ui/provenance.json": "ea7cf6e3e92da71a06921b9106514642458a361cd5c177f9bc90b348fa0aa790",
+    "reconstruction/program_ui/scanlines.asm": "69874e0454dff22bb02e752e0baafcb3e2333443c8b2f226c52e33928b202e53",
+    "reconstruction/program_ui/cursor_eight.asm": "0b418dd1ac6019a6b90aa742340d19d30d458d2786bbffcf2df4c704e63436ec",
+    "src/process/native_display_rows.asm": "7497cc8b815bf6179ac6dbd946a7bc3345bca557f4ce06332b8cbcb9ffac4f3b",
+    "standalone/display_rows_observer.asm": "2631a6b6b00bd4e09b81bf3a7fb8b11c04a8ed282b0d768ac67689c80a6bc3ce",
+    "src/process/native_display_rows.c": "a50dab3013aae1b33f3f300cbeb74800f9c6197412329817810e4590f8e5d590",
+    "standalone/display_rows_diagnostic.c": "380e24f5fef444f57a4893c8fb8329586ecf04a8e0712a2e722a90159df3c572",
+    "src/process/native_display_rows.h": "6b771207bb4aa7aebfa32ffd7e42b5878149352107f19b2b9f1d77a14f2b819a"
+  },
+  "checker_sha256": "7c7040710de844c3756860ef2a648f99a250cc8e251b541c5c109adc4cb95924",
+  "source_only_rebuild": true,
+  "source_rebuild_ancestor_git_absent": true,
+  "installed": false,
+  "terminal_integration": false,
+  "scope": "Actual8086 DOSBox BIOS execution on VGA(S3), EGA, CGA and Hercules models. Recovered detection/font/row/geometry code, maintained validation and verified fallback after diagnostic INT10 refusal. No function/instruction/return-address patches. No live terminal/parser/frame/reset/bridge, UART, BBS, real Cirrus card or physical acceptance."
+}

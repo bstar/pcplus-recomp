@@ -7,6 +7,12 @@ PCPlus2.01 original; each new unit also assembles as relocatable OMF. Normal
 build/test inputs are committed assembly and provenance, not an original EXE.
 These services are not yet enabled in the maintained terminal.
 
+The subsequent [actual DOS row component](DISPLAY_ROWS_DOS.md) now adds102
+recovered capability/buffer-probe bytes and executes the native BIOS row/font
+chain across five VGA/EGA/CGA/Hercules profiles. Its426 checks include verified
+fallback and explicit fallback failure. This is a standalone prerequisite;
+canonical terminal/bridge integration and physical acceptance remain open.
+
 ## Dispatch and fallback
 
 Every request first homes the cursor through1BBE, including invalid selectors.

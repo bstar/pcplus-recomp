@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Actual DOS row/font service](DISPLAY_ROWS_DOS.md) now adds102 exact native
+capability/buffer-probe bytes and a CRT-free bounded owner around606 recovered
+bytes. Five display profiles pass426 assertions, including refused requests,
+verified fallback, fallback failure and recovery. The component reproduces
+exactly outside Git without originals. It is not yet integrated into the
+terminal; Toggle Lines, larger frames, online geometry and physical gates remain
+open, with no deployment or command-availability change.
+
 [Remote-editor resize continuity](TELNET_EDITOR_RESIZE.md) now compares actual
 owned ENiGMA unsaved30-line drafts with fixed80x24 versus80x24→80x25→80x24 NAWS.
 Editing, paging and discard preserve exact editor bytes; the active art-backed
