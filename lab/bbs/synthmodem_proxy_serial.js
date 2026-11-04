@@ -14,6 +14,7 @@ const {values} = parseArgs({options: {
   'screen-reference': {type: 'boolean', default: false},
   'probe-terminal-size': {type: 'boolean', default: false},
   'screen-quiet-ms': {type: 'string', default: '750'},
+  'freeze-trigger': {type: 'string', default: 'UNSAVED'},
 }});
 if (!values.runtime || !values.output) throw new Error('--runtime and --output required');
 const runtime = fs.realpathSync(values.runtime), output = path.resolve(values.output);
@@ -23,9 +24,11 @@ const port = Number(values['bbs-port']), timeout = Number(values['framing-ms']);
 const delay = Number(values['byte-delay-ms']);
 const rows = Number(values['terminal-rows']);
 const quietMs = Number(values['screen-quiet-ms']);
+const trigger = values['freeze-trigger'];
+if (!/^[A-Z]{3,20}$/.test(trigger)) throw new Error('Invalid owned freeze trigger');
 if (![24,25,27,28,42,43,49,50].includes(rows)) throw new Error('Unsupported owned terminal row count');
 if (![150,750].includes(quietMs)) throw new Error('Only measured screen capture intervals supported');
-if (![23231,23233,23234].includes(port)) throw new Error('Only owned loopback BBS ports allowed');
+if (![23231,23233,23234,23239].includes(port)) throw new Error('Only owned loopback BBS ports allowed');
 if (![0, 250].includes(timeout) || !Number.isInteger(delay) || delay < 0 || delay > 20) {
   throw new Error('Invalid framing/delivery settings');
 }
@@ -73,7 +76,7 @@ const server = net.createServer(socket => {
   let probePending = false, probeBuffer = Buffer.alloc(0), probeTimer = null;
   const held = [], passed = [], replyWire = [], proxyInput = [];
   const oracle = {enabled: values['screen-reference'], terminalRows: rows,
-    trigger: 'UNSAVED', quietMs, reply: null, probeReplyConsumed: false};
+    trigger, quietMs, reply: null, probeReplyConsumed: false};
   function freeze() {
     if (!armed || frozen || closed) return;
     frozen = true;
@@ -95,7 +98,7 @@ const server = net.createServer(socket => {
   function inputPassed(data) {
     if (!values['screen-reference'] || armed) return;
     passed.push(...data);
-    if (Buffer.from(passed).includes(Buffer.from('UNSAVED'))) {
+    if (Buffer.from(passed).includes(Buffer.from(trigger))) {
       armed = true; schedule();
     }
   }

@@ -1,0 +1,249 @@
+{
+  "passed": true,
+  "component": "Authenticated selected LoC main module/form/art with native menu and focus return",
+  "image": {
+    "path": "build/aspect-size-report-20261104/ordinary/TERMINAL.EXE",
+    "sha256": "a2fd6a3fcdcc30138426d747d8cde400d9fc6eb9ca5fca84d1656aeaf17caa77",
+    "manifest_sha256": "5adaf70c9110102da6adfb7246f92de5b66d277ec143b1fc0aa60984e7801ecd",
+    "source_files": 569,
+    "near_bytes": 65120,
+    "resident_CS_bytes": 65514,
+    "resident_CS_spare_bytes": 22,
+    "source_only_rebuild": {
+      "path": "build/aspect-size-report-proof-20261104/result.json",
+      "sha256": "7e53c28074362339558ffc09e5fdf4f98093f8bdf7151233834ac942f962f2a6"
+    }
+  },
+  "fixture": {
+    "record": {
+      "path": "build/loc-main-fixture-20261104/loc-menu-instance.json",
+      "sha256": "050ec857e034b17b04c789d033b2729f6e535797bd9fa82beada89af83276903"
+    },
+    "source_module_sha256": "a3df046627dc3a7ed449e1d3f1d9792105548d894cba385d55bbaf70c2f06050",
+    "source_layout_sha256": "3bdec1cf782ecf82bb72c9e24f7e2b91c15ed83951d4d66cad8154dee3c741a5",
+    "source_prompt_menu_sha256": "8e701fbe979efbc5cf170aa5bbef571479ecf36b3d8e24fd0e90c83002905b95",
+    "synthetic_accounts_only": true,
+    "selected_actions": [
+      "M",
+      "F",
+      "G"
+    ]
+  },
+  "matrix": {
+    "path": "build/loc-main-matrix-20261104/result.json",
+    "sha256": "b08ceacab883116d4984d884ada1a1e2b5f9a0fe336f036a7084e4bbe112e1ef"
+  },
+  "independent_matrix": {
+    "path": "build/loc-main-independent-20261104/result.json",
+    "sha256": "10d25722a4a274792c0d8492651a82ef4d195bfecab50db1fd57d0bd62abc9f8"
+  },
+  "cases": [
+    {
+      "physical_rows": 25,
+      "status_hidden": 0,
+      "logical_rows": 24,
+      "reference_cells": 1920,
+      "source_model_cells": 1906,
+      "actual_CPR": [
+        24,
+        53
+      ],
+      "capture": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-25-0",
+      "bridge": "build/bbs-lab/loc-main-matrix-20261104-25-0-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-25-0/loc-main-audit.json",
+      "audit_sha256": "d4651ccc8570946df7cf5e4d0d0bcdeb7b736329fadc24ec686e9b8f01a69ba1",
+      "passed": true
+    },
+    {
+      "physical_rows": 25,
+      "status_hidden": 1,
+      "logical_rows": 25,
+      "reference_cells": 2000,
+      "source_model_cells": 1986,
+      "actual_CPR": [
+        25,
+        53
+      ],
+      "capture": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-25-1",
+      "bridge": "build/bbs-lab/loc-main-matrix-20261104-25-1-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-25-1/loc-main-audit.json",
+      "audit_sha256": "5cfa1af312969e69a678d178051c29f7cbc2304824fe22504f2b29fa07fbebad",
+      "passed": true
+    },
+    {
+      "physical_rows": 28,
+      "status_hidden": 0,
+      "logical_rows": 27,
+      "reference_cells": 2160,
+      "source_model_cells": 2146,
+      "actual_CPR": [
+        25,
+        53
+      ],
+      "capture": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-28-0",
+      "bridge": "build/bbs-lab/loc-main-matrix-20261104-28-0-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-28-0/loc-main-audit.json",
+      "audit_sha256": "244bfdfb46a06a5771d0abf54b0e405b5fc6e45662f070f5a3715f5f48e166e8",
+      "passed": true
+    },
+    {
+      "physical_rows": 28,
+      "status_hidden": 1,
+      "logical_rows": 28,
+      "reference_cells": 2240,
+      "source_model_cells": 2226,
+      "actual_CPR": [
+        25,
+        53
+      ],
+      "capture": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-28-1",
+      "bridge": "build/bbs-lab/loc-main-matrix-20261104-28-1-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-28-1/loc-main-audit.json",
+      "audit_sha256": "8d36c70d18fd641f747276597f96eef9ce6500e15248acc8bbb5c7357b03f544",
+      "passed": true
+    },
+    {
+      "physical_rows": 43,
+      "status_hidden": 0,
+      "logical_rows": 42,
+      "reference_cells": 3360,
+      "source_model_cells": 3346,
+      "actual_CPR": [
+        25,
+        53
+      ],
+      "capture": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-43-0",
+      "bridge": "build/bbs-lab/loc-main-matrix-20261104-43-0-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-43-0/loc-main-audit.json",
+      "audit_sha256": "f8d082e0813c18bb88549baafef1906625e0fa2db19cb4f23160d090e1c749c9",
+      "passed": true
+    },
+    {
+      "physical_rows": 43,
+      "status_hidden": 1,
+      "logical_rows": 43,
+      "reference_cells": 3440,
+      "source_model_cells": 3426,
+      "actual_CPR": [
+        25,
+        53
+      ],
+      "capture": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-43-1",
+      "bridge": "build/bbs-lab/loc-main-matrix-20261104-43-1-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-43-1/loc-main-audit.json",
+      "audit_sha256": "5d6c9502ae2fb96b1f94998705d97edd4af50ecbb3232462146645bd5911b744",
+      "passed": true
+    },
+    {
+      "physical_rows": 50,
+      "status_hidden": 0,
+      "logical_rows": 49,
+      "reference_cells": 3920,
+      "source_model_cells": 3906,
+      "actual_CPR": [
+        25,
+        53
+      ],
+      "capture": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-50-0",
+      "bridge": "build/bbs-lab/loc-main-matrix-20261104-50-0-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-50-0/loc-main-audit.json",
+      "audit_sha256": "863295a8460a01e54ecf5501b2c513f0b3cad3ba2b5f7c6ddfa3fa79f109df7d",
+      "passed": true
+    },
+    {
+      "physical_rows": 50,
+      "status_hidden": 1,
+      "logical_rows": 50,
+      "reference_cells": 4000,
+      "source_model_cells": 3986,
+      "actual_CPR": [
+        25,
+        53
+      ],
+      "capture": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-50-1",
+      "bridge": "build/bbs-lab/loc-main-matrix-20261104-50-1-proxy",
+      "audit_path": "build/bbs-lab/results/enigma/loc-main-matrix-20261104-50-1/loc-main-audit.json",
+      "audit_sha256": "128b40ccc0c3a80e282553f55345cd51ef9bb3d00466e82407ed11545a3db751",
+      "passed": true
+    }
+  ],
+  "DOS_workflows": 8,
+  "matched_reference_cells": 23040,
+  "matched_source_model_cells": 22928,
+  "live_field_cells": 112,
+  "native_39_label_witnesses": 8,
+  "message_menu_return_workflows": 8,
+  "copied_capture_controls": {
+    "25-visible": {
+      "path": "build/loc-main-controls-25-visible-20261104/result.json",
+      "sha256": "8267b0d1279bda53e65257b0e023dba61d9979dd520be7074533f60f7c71500b"
+    },
+    "50-hidden": {
+      "path": "build/loc-main-controls-50-hidden-20261104/result.json",
+      "sha256": "1789c305ffadc51d05b5919a5883355d936055258be2f92f0ae7f7579c1bd8ec"
+    }
+  },
+  "control_cases": 18,
+  "rejected_mutations": 16,
+  "unchanged_controls": 2,
+  "browser25_wire_control": {
+    "path": "build/loc-main-browser-control-20261104/result.json",
+    "sha256": "0d8965e3c772a628ca78bc137ec26b6a4750287361960e134054ee48b85929a4"
+  },
+  "default_trigger_stock_regressions": {
+    "enigma": {
+      "producer": {
+        "path": "build/bbs-lab/results/enigma/loc-main-enigma-default-regression-20261104/proxy-integration.json",
+        "sha256": "69379dd31745f276274a7fa53b026268a46c4b665fdb0de4c1d34a1c3d9ef43c"
+      },
+      "audit": {
+        "path": "build/bbs-lab/results/enigma/loc-main-enigma-default-regression-20261104/size-probe-screen-audit.json",
+        "sha256": "9fa3eb9cfef654888b6a31b427ca8890ad3e51ba4ea92880c65e01a70fcd52a8"
+      },
+      "delivered_bytes": 47821,
+      "actual_CPR": [
+        9,
+        8
+      ],
+      "different_cells": 0
+    },
+    "synchronet": {
+      "producer": {
+        "path": "build/bbs-lab/results/synchronet/loc-main-sync-default-regression-20261104/proxy-integration.json",
+        "sha256": "31c97790b40aad5c315a8e4b0b5dfa34c6872fa6faf3893988567ffafe223418"
+      },
+      "audit": {
+        "path": "build/bbs-lab/results/synchronet/loc-main-sync-default-regression-20261104/size-probe-screen-audit.json",
+        "sha256": "25818735cd2d94e1c1846f77355379739547e6a4f9c1d92338ddcced63b2c8c8"
+      },
+      "delivered_bytes": 32700,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "different_cells": 0
+    }
+  },
+  "owned_fixture_cleanup": {
+    "path": "build/loc-main-fixture-stop-20261104.json",
+    "sha256": "c4a42a70557c6f102a91e80e2c7c09ba1de4e3fe26d80319a850c59d2431bf2d"
+  },
+  "sources": {
+    "lab/bbs/enigma_loc_menu_fixture.py": "cca01ca57bd00d374cb6dcbc91ee483d3ff792696474b78ad320c51c68af65f0",
+    "lab/bbs/test_loc_main_dos.py": "f30c06fb487a3ece594553e1e679faacf9172851d71d84133bb862370e4524e4",
+    "lab/bbs/audit_loc_main_dos.py": "599f5e6d0d4325e7aa7415ae7cc76f8696deb688e1dc86674023736503a3812d",
+    "lab/bbs/test_loc_main_matrix.py": "cf37e676df2a012bc3bd95f2deb8d6d8a75266c6c6f13197a600377c9699bd9b",
+    "lab/bbs/check_loc_main_matrix.py": "28d17e7d401119016b01f3fca9edbf4233d892229268cac7fc53669aac97496a",
+    "lab/bbs/synthmodem_proxy_serial.js": "f66b551def1ee7fc99850a117eefe2414c4a35fcee6d2990393b0c0d50b56081",
+    "lab/bbs/loc_menu_snapshot.cjs": "1a60181682dbb69f3adcad2dab0064254c29802d70d29992dfc63b0cc4e37fb4",
+    "lab/bbs/audit_screen_reference.py": "82ea451cd4a5bc24a5194fcfa183e9d51ebf6b2c33bfd9c41ac8d99c34071d22",
+    "lab/bbs/check_screen_reference_controls.py": "bf57da00323592bb5f59d2870112469f502c3144fbbe8317f5b415f643613969",
+    "standalone/reference_watch.asm": "db65afa63e1982c1af0438563ea899d30bde74ea06835d968666fc0b262d4c89"
+  },
+  "application_bytes_changed": false,
+  "source_board_files_changed": false,
+  "installed_services_changed": false,
+  "deployment_changed": false,
+  "physical_acceptance": false,
+  "scope": "Current copied LoC module/prompt/layout with selected M/F/G routes on isolated pinned stock Enigma and synthetic DB. Actual paced8086 DOS startup,size probe,80-column NAWS,native Alt-Z witness,M/Q authenticated menu return and focused LOCSNAP. All logical cells/cursor match delivered ANSI; independent source-model nonfield/blank-extension cells plus live field checks. No font pixels, whole live board, other custom routes, unframed/SIP/DSP/analog/full-route transfer/carrier/reconnect or physical/full parity acceptance."
+}

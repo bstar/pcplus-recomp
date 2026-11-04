@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Authenticated LoC main-menu checks](LOC_MAIN_AUTHENTICATED.md) now verify the
+current copied module/form/art through actual DOS login, native Alt-Z observation,
+M/Q menu return and focused input at all four heights/both status states. Eight
+workflows match23,040 cells/cursors and22,928 independent source-model nonfield
+cells, with18 copied-capture controls, browser25 wire invariance and fresh stock
+Enigma/Synchronet default-trigger regressions. The owned fixture was stopped.
+Application bytes/installed services are unchanged; whole live-board, full-route
+transfers/carrier/reconnect, physical deployment and original parity remain open.
+
 [Authenticated editor layouts](BBS_SIZE_LAYOUT_EDITORS.md) now have complete
 25/28/43/50 physical, visible/hidden-status coverage on stock Enigma and Synchronet.
 Sixteen actual DOS workflows match all46,080 logical cells/cursors and real NAWS;
