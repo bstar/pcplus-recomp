@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Run actual linked parent STATUS staging/drawing; only MSR reads modeled."""
 import hashlib
+import argparse
 import json
 import struct
 from pathlib import Path
@@ -11,6 +12,7 @@ from dos_image import DosImage
 ROOT = Path(__file__).resolve().parents[1]
 BINARY = ROOT / 'build/terminal/TERMINAL.EXE'
 MAP = BINARY.parent / 'terminal.map'
+OUTPUT = None
 
 
 class Status(DosImage):
@@ -102,14 +104,34 @@ def main():
     for label in (b'\0',b'X'*64,b'C:\\THISLABELISTOOLONG.ASX\0'):
         m=Status();m.uc.mem_write(m.symbols['_command_menu_script'],label)
         done('reject-label-'+label.hex(),m,3)
-    m=Status();m.put('ui_flow_suppressed',1);done('hidden-status',m)
+    m=Status()
+    if '_terminal_row_status_layout' in m.symbols:
+        m.put('ui_flow_suppressed',1);done('reject-hidden-inconsistent-layout',m,3)
+    m=Status()
+    for name,value in dict(ui_flow_suppressed=1,csi_row_count=25,csi_last_row=24,
+                           screen_last_row=24,csi_origin_bottom=24,erase_cell_count=2000).items():
+        m.put(name,value)
+    done('hidden-status',m)
     assert bytes(m.uc.mem_read(0xb8000,4004))==b'\xcc'*4004 and not m.inputs
     sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
     report=dict(passed=True,binary_sha256=sha(BINARY),checker_sha256=sha(Path(__file__)),
         sources={name:sha(ROOT/name) for name in ('src/terminal/status_live.asm','src/status/status_state.inc')},
         cases=cases,scope='Actual linked parent far STATUS staging and complete native drawing. Authored parent fields and modeled MSR0/128 only; no product instruction skipped, no DOS/BIOS allowed. Covers profiles/rates/line fields, snapshot-only duplex overrides, bounds rejection before video/MSR, label basename and hidden state. Guarded child RPC and physical modem are separate proofs.')
-    (BINARY.parent/'status-live-checks.json').write_text(json.dumps(report,indent=2)+'\n')
+    if OUTPUT is not None:
+        OUTPUT.mkdir(parents=True,exist_ok=False)
+    destination=OUTPUT/'result.json' if OUTPUT is not None else BINARY.parent/'status-live-checks.json'
+    destination.write_text(json.dumps(report,indent=2)+'\n')
     print('Live STATUS:',len(cases),'linked cases PASS')
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--terminal',type=Path,default=BINARY)
+    p.add_argument('--output',type=Path)
+    args=p.parse_args();BINARY=args.terminal.resolve();MAP=BINARY.parent/'terminal.map'
+    OUTPUT=args.output.resolve() if args.output else None
+    manifest=json.loads((BINARY.parent/'manifest.json').read_text())
+    assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==manifest['binary_sha256']
+    for name,digest in manifest['sources'].items():
+        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==digest,name
+    main()

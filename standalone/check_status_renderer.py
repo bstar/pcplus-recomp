@@ -27,7 +27,7 @@ def main():
     half = normal.replace(b'FDX', b'HDX')
     def frame(text, emphasis=False):
         result = bytearray(b'\xcc' * 4004)
-        for i, char in enumerate(text):
+        for i, char in enumerate(text[:80]):
             result[3840+2*i] = char
             result[3841+2*i] = 0x1e if emphasis and 1 <= i <= 14 else 0x1f
         return bytes(result)
@@ -62,7 +62,7 @@ def main():
     report = dict(passed=True, original_inputs=[], binary_sha256=manifest['binary_sha256'],
                   manifest_sha256=sha(manifest_path), checker_sha256=sha(Path(__file__)),
                   predictions_sha256=sha(OUT / 'predictions.json'), cases=cases,
-                  scope='Actual8086DOS full recovered515B status body and175B helpers, maintained far bounded formatter, real native text/UI VRAM functions, actual CONFIG/resident RETN/cdecl bridges. Six successful status cases plus three typed formatter failures compare all4004bytes including native81st cell, eight distinct key-label fields and emphasis attributes. Rejected formats/overflow/argument exhaustion return3/7/10; native post-format emphasis writes remain explicit in failure expectations. DS=SS, SP/BP/SI/DI/IF/DF and stack guards checked in DOS. Carrier is explicit diagnostic word; parent RPC, production state staging, physical DCD/CGA and full application integration remain open.')
+                  scope='Actual8086DOS full recovered515B status body and175B helpers, maintained far bounded formatter and physical-column string adapter, real native text/UI VRAM functions, actual CONFIG/resident RETN/cdecl bridges. Six successful status cases plus three typed formatter failures compare all4004bytes including preserved canaries after the visible row; the81-byte formatter result remains unchanged while the write is clipped to80. Eight distinct key-label fields and emphasis attributes remain checked. Rejected formats/overflow/argument exhaustion return3/7/10; native post-format emphasis writes remain explicit in failure expectations. DS=SS, SP/BP/SI/DI/IF/DF and stack guards checked in DOS. Carrier is explicit diagnostic word; parent RPC, production state staging, physical DCD/CGA and full application integration remain open.')
     (OUT / 'checks.json').write_text(json.dumps(report, indent=2) + '\n')
     print('Full native status:', len(cases), 'actual8086DOS cases PASS')
 

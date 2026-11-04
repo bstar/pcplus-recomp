@@ -234,8 +234,8 @@ ENTRY(manual_init,"Init Modem                     Alt-J",
 #endif
 #ifdef TERMINAL_STATUS_CONTROL
 ENTRY(status_toggle,"Toggle Status                  Ctrl-]",
- "Hide or show the status line while disconnected in an80x25 view.\n"
- "The text area becomes25 or24 rows. Active connection, transfer,\n"
+ "Hide or show the reserved last row in a supported disconnected view.\n"
+ "The text area gains or loses one row. Active connection, transfer,\n"
  "recording and unsupported display states refuse the change.\n"
  "Serial settings and saved preferences are unchanged.");
 #endif

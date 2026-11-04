@@ -1119,8 +1119,10 @@ def inspect_terminal_memory(binary,map_path):
       ('status_text_packed','text_write_packed',2),('status_write_string','ui_write_string',3)):
    resident=source+'_resident'
    assert symbols[source][0]==status_seg and symbols[resident][0]==near_code['relative_segment']
-   assert raw(source,8)==b'\x9a'+struct.pack('<HH',symbols[resident][1],symbols[resident][0])+b'\xc2'+struct.pack('<H',count*2)
-   assert address(source)+3 in relocations
+   forward='status_write_string_forward' if source=='status_write_string' and 'status_write_string_forward' in symbols else source
+   assert symbols[forward][0]==status_seg
+   assert raw(forward,8)==b'\x9a'+struct.pack('<HH',symbols[resident][1],symbols[resident][0])+b'\xc2'+struct.pack('<H',count*2)
+   assert address(forward)+3 in relocations
    prefix=b'\x55\x89\xe5'+b''.join(bytes([0xff,0x76,8+2*i]) for i in reversed(range(count)))
    near_call(resident,target,prefix=prefix,suffix=b'\x8d\x66\x00\x5d\xcb')
   far_call('status_strlen','status_strlen_resident')

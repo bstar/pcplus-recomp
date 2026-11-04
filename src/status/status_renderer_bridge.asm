@@ -58,7 +58,63 @@ status_format_call:
 %endmacro
 status_far_service status_text_fill,3
 status_far_service status_text_packed,2
-status_far_service status_write_string,3
+; The recovered formatter can produce a trailing blank beyond column79.
+; Keep its native writer intact, but lend it a bounded near string so a status
+; draw cannot alter the next physical row/page (including on failed rollback).
+extern screen_columns,status_write_string_resident
+global status_write_string,status_write_string_forward
+status_write_string:
+ push bp
+ mov bp,sp
+ sub sp,134 ; Up to132 physical columns, terminator and alignment.
+ push bx
+ push cx
+ push si
+ push di
+ mov ax,ds
+ mov bx,ss
+ cmp ax,bx
+ jne .bad
+ mov cx,[screen_columns]
+ or cx,cx
+ jz .bad
+ cmp cx,132
+ ja .bad
+ mov bx,[bp+8]
+ xor bh,bh
+ cmp bx,cx
+ jae .bad
+ sub cx,bx
+ mov si,[bp+4]
+ lea di,[bp-134]
+.copy:
+ lodsb
+ or al,al
+ jz .terminated
+ mov [ss:di],al
+ inc di
+ loop .copy
+.terminated:
+ mov byte [ss:di],0
+ push word [bp+8]
+ push word [bp+6]
+ lea ax,[bp-134]
+ push ax
+ call status_write_string_forward
+ jmp .done
+.bad:
+ mov word [status_error],3
+.done:
+ pop di
+ pop si
+ pop cx
+ pop bx
+ mov sp,bp
+ pop bp
+ ret 6
+status_write_string_forward:
+ call far status_write_string_resident
+ ret 6
 extern status_strlen_resident,status_uart_resident
 global status_strlen,terminal_reset_uart_status
 status_strlen:

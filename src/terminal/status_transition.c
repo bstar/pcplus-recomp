@@ -1,5 +1,5 @@
 /* Maintained offline live row transaction around recovered cursor/scroll/status.
- * Fixed80x25 BIOS text, narrow unprotected profile only in this first owner.
+ * Narrow unprotected BIOS text; composed full-frame owners admit larger rows.
  * The caller retires notices first; active/pending leases cause a clean refusal.
  */
 #include <dos.h>
@@ -7,6 +7,9 @@
 typedef status_word word;
 typedef unsigned char byte;
 #define TEXT __based(__segname("_CODE"))
+#if defined(TERMINAL_LARGE_VIEW_FRAMES) && defined(TERMINAL_PROGRAM_DISPLAY)
+#define STATUS_LARGE_ROWS
+#endif
 unsigned terminal_status_toggle_active=0;
 extern unsigned __far __cdecl notice_idle(void);
 #pragma aux notice_idle "terminal_status_notice_idle_far";
@@ -92,12 +95,18 @@ static word preflight(void)
  if(terminal_browser_screen_owned || terminal_editor_screen_owned || reset_bank_busy || terminal_auto_answer_notice_active || terminal_script_overlay_visible)return 3;
  if(notice_idle() || recording_owned())return 3;
  if(csi_terminal_id!=4 && csi_terminal_id!=6)return 3;
- if(ui_flow_suppressed>1 || ui_window_rows!=25 || ui_flow_region_cells!=80 || ui_flow_video_base!=3840 || ui_flow_coordinate_base!=0x1800)return 3;
+ if(ui_flow_suppressed>1 || ui_flow_region_cells!=80)return 3;
+#ifdef STATUS_LARGE_ROWS
+ if(ui_window_rows!=25 && ui_window_rows!=28 && ui_window_rows!=43 && ui_window_rows!=50)return 3;
+#else
+ if(ui_window_rows!=25)return 3;
+#endif
+ if(ui_flow_video_base!=(ui_window_rows-1)*160 || ui_flow_coordinate_base!=(ui_window_rows-1)*256)return 3;
  if(screen_columns!=80 || screen_video_row_bytes!=160 || screen_attribute_row_bytes!=80 || screen_last_column!=79)return 3;
  if(screen_viewport_enabled || screen_viewport_active || screen_viewport_offset || screen_cursor_wrap || screen_attribute_checks || erase_protection_mode)return 3;
  if(text_video_segment!=0xb800 || text_cga_status_port || screen_attributes_base!=(word)screen_attribute_cells || erase_attribute_values_base!=(word)erase_attribute_values)return 3;
  if(erase_shadow_offset!=FP_OFF(erase_shadow_cells) || erase_shadow_segment!=FP_SEG(erase_shadow_cells))return 3;
- rows=ui_flow_suppressed?25:24;
+ rows=ui_window_rows-(ui_flow_suppressed?0:1);
  if(csi_row_count!=rows || csi_last_row!=rows-1 || erase_cell_count!=rows*80)return 3;
  if(screen_first_row>screen_last_row || screen_last_row>=rows || csi_origin_row>csi_origin_bottom || csi_origin_bottom>=rows)return 3;
  if(screen_cursor_row>=rows || screen_cursor_column>=80 || screen_visible_column!=screen_cursor_column)return 3;
@@ -107,15 +116,16 @@ static word preflight(void)
  for(i=0;i<9;++i)if(rates[i]==(((unsigned long)terminal_baud_high<<16)|terminal_baud_low))rate=1;
  if(!rate || mode_info())return 3;
  i=*(byte __far *)MK_FP(0x40,0x84);
- if(i && i!=24)return 3;
+ if((i?i+1:25)!=ui_window_rows)return 3;
  return 0;
 }
 unsigned __far __cdecl terminal_status_toggle(void)
 {
- word old[FIELD_COUNT],baseline[128],i,j,count,rows,last,oldlast,hw,rc,scroll,attribute;
+ word old[FIELD_COUNT],baseline[128],i,j,count,rows,last,oldlast,hw,rc,scroll,attribute,cells;
  byte lines[128];word __far *video=(word __far *)MK_FP(0xb800,0);
  rc=preflight();if(rc)return rc;
- rows=ui_flow_suppressed?24:25;last=rows-1;oldlast=csi_last_row;
+ cells=ui_window_rows*80;
+ rows=ui_window_rows-(ui_flow_suppressed?1:0);last=rows-1;oldlast=csi_last_row;
  /* Native toggle preserves custom margins. Refuse a contraction that would
   * invalidate one, instead of inventing a new custom scroll region. */
  if(screen_first_row>(screen_last_row==oldlast?last:screen_last_row) ||
@@ -127,9 +137,9 @@ unsigned __far __cdecl terminal_status_toggle(void)
  terminal_status_toggle_active=1;hw=cursor_get();
  for(i=0;i<128;++i)lines[i]=screen_line_flags[i];
  /* Quiescent exclusive loans: EXEC/live/view frames never overlap. */
- for(i=0;i<2000;++i){program_screen[i]=video[i];redisplay_live[i]=erase_shadow_cells[i];
+ for(i=0;i<cells;++i){program_screen[i]=video[i];redisplay_live[i]=erase_shadow_cells[i];
   redisplay_view[i]=screen_attribute_cells[i]|((word)erase_attribute_values[i]<<8);}
- scroll=rows==24 && screen_cursor_row>=24;
+ scroll=rows==ui_window_rows-1 && screen_cursor_row>=rows;
  attribute=(attributes_monochrome?attributes_current:attributes_normal_value)&255;
  if(scroll){
   /* Run the real helper while its old complete geometry is still admitted. */
@@ -141,7 +151,7 @@ unsigned __far __cdecl terminal_status_toggle(void)
   for(j=0;j<80;++j){screen_attribute_cells[screen_last_row*80+j]=0;erase_attribute_values[screen_last_row*80+j]=(byte)attribute;}
   screen_line_flags[screen_last_row]=0;
  }
- ui_flow_suppressed=rows==25;csi_row_count=rows;csi_last_row=last;erase_cell_count=rows*80;
+ ui_flow_suppressed=rows==ui_window_rows;csi_row_count=rows;csi_last_row=last;erase_cell_count=rows*80;
  if(screen_last_row==oldlast)screen_last_row=last;
  if(csi_origin_bottom==oldlast)csi_origin_bottom=last;
  if(screen_cursor_row>last)screen_cursor_row=last;
@@ -149,22 +159,22 @@ unsigned __far __cdecl terminal_status_toggle(void)
   * cache until native_cursor applies the signed delta to both offsets. */
  if(csi_saved_row>last)csi_saved_row=last;
  /* Keep a pending deferred wrap unless the real scroll helper cleared it. */
- if(rows==25){
+ if(rows==ui_window_rows){
   attribute=ui_flow_attribute&255;
-  for(i=1920;i<2000;++i){video[i]=(attribute<<8)|32;screen_attribute_cells[i]=0;erase_attribute_values[i]=(byte)attribute;}
-  screen_line_flags[24]=0;
+  for(i=cells-80;i<cells;++i){video[i]=(attribute<<8)|32;screen_attribute_cells[i]=0;erase_attribute_values[i]=(byte)attribute;}
+  screen_line_flags[ui_window_rows-1]=0;
  }else{
   rc=status_refresh();
   if(rc){
    for(i=0;i<FIELD_COUNT;++i)*fields[i]=old[i];
    for(i=0;i<count;++i)reset_words[i]=baseline[i];
-   for(i=0;i<2000;++i){video[i]=program_screen[i];erase_shadow_cells[i]=redisplay_live[i];screen_attribute_cells[i]=(byte)redisplay_view[i];erase_attribute_values[i]=(byte)(redisplay_view[i]>>8);}
+   for(i=0;i<cells;++i){video[i]=program_screen[i];erase_shadow_cells[i]=redisplay_live[i];screen_attribute_cells[i]=(byte)redisplay_view[i];erase_attribute_values[i]=(byte)(redisplay_view[i]>>8);}
    for(i=0;i<128;++i)screen_line_flags[i]=lines[i];
    cursor_restore(hw);terminal_status_toggle_active=0;return 4;
   }
  }
  /* Rebuild the narrow shadow from actual physical cells, not a stale pane. */
- for(i=0;i<2000;++i)erase_shadow_cells[i]=video[i];
+ for(i=0;i<cells;++i)erase_shadow_cells[i]=video[i];
  native_cursor(screen_cursor_row,screen_cursor_column);
  terminal_status_toggle_active=0;return 0;
 }

@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Full-height status controls](LARGE_STATUS_CONTROL.md) now use admitted physical
+height for frame loans, logical area, scroll/cursor/defaults and rollback. The
+small-frame image still refuses larger layouts. A maintained status-string bridge
+also clips an existing81st-cell overflow without changing recovered writer or
+formatter bytes. Full-frame CPU failures, normal DOS Ctrl-]/Alt-Z exposed-row
+witnesses, independent captures and six source rebuilds bind the change. Normal
+line controls/startup, online NAWS, broader parity and BBS/physical remain open.
+
 [Auto Answer at accepted heights](LARGE_AUTO_ANSWER.md) now admits coherent
 visible25/28/43/50-row layouts before command/notice/tone effects. Manual Init
 and Auto Answer also share the foreground's immediate carrier-ready output grant;

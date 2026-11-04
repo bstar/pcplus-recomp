@@ -1,5 +1,9 @@
 # Normal status control
 
+The later [full-height transaction](LARGE_STATUS_CONTROL.md) generalizes composed
+large-frame builds to25/28/43/50 rows and fixes a cross-row status-string write.
+This page records the initial25-row command-integration checkpoint.
+
 The optional `--status-control` build now connects Ctrl-] and Toggle Status in
 both command menus to the tested offline status transaction. It requires the
 existing status and local-control owners. The reference entry is enabled in this
