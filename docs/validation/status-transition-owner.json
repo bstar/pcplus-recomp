@@ -1,0 +1,133 @@
+{
+  "passed": true,
+  "component_terminal_sha256": "3756c6d7cc9d3ae2ef574c79f454568a33bbefacff197445bd0fa272bae39ae0",
+  "component_manifest_sha256": "cd09e5d82e131373123f94c0ad0442ea436bf2919f42ff44b69b9038a594213d",
+  "disabled_terminal_sha256": "7df99c1f72f8dc3f076cfa6a3c5f6d1f1f5f03872fe98d479ce2348b9227f1ce",
+  "disabled_manifest_sha256": "ed3914bafcc368ac49db7e386d8115e58ff04cf1a6df434b8f65ad06d7cb89ee",
+  "commands_enabled": false,
+  "offline_only": true,
+  "packaged": false,
+  "installed": false,
+  "evidence": {
+    "build/status-transition-accepted-20261104/result.json": {
+      "passed": true,
+      "sha256": "6a0a9937f09ea584c183c3b766b03a10e9fe2bef44a868ee714146969e3a5027",
+      "terminal_sha256": "3756c6d7cc9d3ae2ef574c79f454568a33bbefacff197445bd0fa272bae39ae0",
+      "cases": [
+        {
+          "case": "real-hide-show-bounds-plane-initialization-status-and-history",
+          "inputs": 1,
+          "passed": true
+        },
+        {
+          "case": "actual-parser-CPR-clamping-and-RIS-follow-both-effective-sizes",
+          "inputs": 1,
+          "passed": true
+        },
+        {
+          "case": "pending-deferred-wrap-survives-hide-and-nonscrolling-show",
+          "inputs": 2,
+          "passed": true
+        },
+        {
+          "case": "real-native-scroll-custom-margins-and-saved-cursor-clamp",
+          "inputs": 2,
+          "passed": true
+        },
+        {
+          "case": "quiescent-frame-owner-admission",
+          "inputs": 32,
+          "passed": true
+        },
+        {
+          "case": "invalid-geometry-profile-and-connected-size-refusals",
+          "inputs": 32,
+          "passed": true
+        },
+        {
+          "case": "invalid-baseline-and-unrepresentable-custom-margin-refuse-before-commit",
+          "inputs": 2,
+          "passed": true
+        },
+        {
+          "case": "notice-lease-must-be-retired-before-frame-acquisition",
+          "inputs": 1,
+          "passed": true
+        },
+        {
+          "case": "late-real-renderer-refusal-rolls-back-live-defaults-and-all-screen-planes",
+          "inputs": 1,
+          "passed": true
+        },
+        {
+          "case": "post-draw-failure-restores-scrolled-video-metadata-shadow-and-hardware-cursor",
+          "inputs": 1,
+          "passed": true
+        },
+        {
+          "case": "queued-native-UART-input-retained-for-parser-after-commit",
+          "inputs": 1,
+          "passed": true
+        }
+      ],
+      "inputs": 76
+    },
+    "build/status-transition-defaults-accepted-20261104/result.json": {
+      "passed": true,
+      "sha256": "e6bc9b2983ab3a7654ce4453e938890f23f24a2e5bb692d0c533a35cc854372f",
+      "terminal_sha256": "3756c6d7cc9d3ae2ef574c79f454568a33bbefacff197445bd0fa272bae39ae0",
+      "cases": [
+        {
+          "case": "captured-only-rows-margins-cursors-offsets-and-capacity",
+          "inputs": 216,
+          "passed": true
+        },
+        {
+          "case": "invalid-request-baseline-ABI-and-late-failure-atomicity",
+          "inputs": 31,
+          "passed": true
+        },
+        {
+          "case": "real-RIS-uses-row-defaults-without-capturing-peer-state",
+          "inputs": 3,
+          "passed": true
+        }
+      ],
+      "inputs": 250
+    },
+    "build/status-transition-source-proof-20261104/result.json": {
+      "passed": true,
+      "sha256": "254c50ff847d8290d92330e12a6988aaf259b89c27aa65ec92bf28f07416870e",
+      "terminal_sha256": "3756c6d7cc9d3ae2ef574c79f454568a33bbefacff197445bd0fa272bae39ae0",
+      "source_files": 544,
+      "ancestor_git_unavailable": true
+    },
+    "build/status-transition-disabled-proof-20261104/result.json": {
+      "passed": true,
+      "sha256": "09bc8926a27a19805c662343c6cde2aab0cb97510f05b0056684edc2910580f9",
+      "terminal_sha256": "7df99c1f72f8dc3f076cfa6a3c5f6d1f1f5f03872fe98d479ce2348b9227f1ce",
+      "source_files": 540,
+      "ancestor_git_unavailable": true
+    }
+  },
+  "sources": {
+    "src/terminal/status_transition.c": "3f7ec2870719bf49dc5f6b2a3efc5c868fc211e23a61cf8f207ea1acae69555d",
+    "src/terminal/status_transition.h": "bc70691615bfd674e0e3c90dc0efc0a12f9cbdf2c2747cd68f19f03510b64c1a",
+    "src/terminal/status_transition_glue.asm": "57e62a819ae406080420964f197fef196d2c7bf938ad61f1c4c1d1d61d15bcaf",
+    "src/terminal/connection_ui.asm": "a80c493cc9f2c688d7158a2ff3a66f3e399443b17d3c3dc17386f5a6926232e8",
+    "src/terminal/reset_rows.asm": "57f77a07391d2da24001c40a7a08fe14328cc6d39c85842791b83837c0f07292",
+    "standalone/build_terminal.py": "951e026f0e2886f47f73845b6d43324016d3fa23dd17061e3a29d9df39be4901",
+    "standalone/prove_phone_log_startup_terminal.py": "b95474a202d86c265d99500cfd34e8626ecf31783c13de81722f32130bb5d33a",
+    "standalone/check_status_transition_live.py": "e571a1d8cd5060b3d13ed2fa778d839f0982545dd5c36f7a7e0ba9b912b3818c",
+    "standalone/check_reset_rows_live.py": "2f096779926ca291abd6f12e8455907d5c91521d918e861062d4298e94ef0c61"
+  },
+  "memory": {
+    "resident_bytes": 65386,
+    "resident_spare_bytes": 150,
+    "CONFIG_bytes": 58522,
+    "DGROUP_bytes": 65024,
+    "new_persistent_owner_bytes": 2,
+    "new_far_frame_bytes": 0
+  },
+  "scope": "Internal offline fixed80x25 narrow/unprotected status transaction.76 actual linked transaction inputs and250 captured-default inputs; source-only exact Git-free enabled/disabled rebuilds. Real scroll/cursor/status/parser/CPR/RIS, pending wraps, cache offsets, queued UART and failure rollback execute. No key/menu binding, online size/NAWS, larger/wide mode, actual DOS/BBS/physical transaction, package or deployment acceptance. Disabled executable exactly matches accepted7df99c1f."
+}

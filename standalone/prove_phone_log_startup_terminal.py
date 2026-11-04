@@ -23,6 +23,7 @@ def flags(manifest, startup, event_hooks=True, disk=True, controls=True):
         'terminal_traps': 'traps', 'experimental_custom_irq': 'custom-irq', 'special_edition': 'special-edition',
         'experimental_status_geometry': 'status-geometry',
         'experimental_reset_row_owner': 'reset-row-owner',
+        'experimental_status_owner': 'status-owner',
         'experimental_original_keys': 'original-keys', 'experimental_original_reference': 'original-reference',
         'experimental_native_reset_bank': 'native-reset-bank', 'native_reset_transaction': 'native-reset-transaction'}
     result = ['--' + flag for field, flag in fields.items() if manifest.get(field)]

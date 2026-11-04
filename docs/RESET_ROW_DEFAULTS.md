@@ -58,7 +58,7 @@ BIOS resize or full frame tests. The three linked RIS tests use only24/25 rows
 and explicitly supply canonical visibility as a caller fixture. The helper
 itself does not commit live geometry or establish that larger modes are usable.
 
-The component adds752 bytes in CONFIG_CODE, no persistent data and no resident
+The component adds720 bytes in CONFIG_CODE, no persistent data and no resident
 code; CONFIG_CODE is56698 bytes and resident code remains65334 bytes. Without
 the flag, the source-built executable is exactly the software-accepted7df99c1f
 binary. Both builds reproduce exactly from their declared sources in empty
@@ -84,3 +84,8 @@ The tested package, active installation selection and installed application
 remain unchanged. The internal30d680b1 component executable is not a packaged
 hardware-test release and does not inherit7df99c1f's BBS/transfer acceptance.
 No remote/card/private file, live BBS or bridge configuration was changed.
+
+The subsequent [live status component](STATUS_TRANSITION_OWNER.md) also checks
+that the captured previous-row/column cache matches the captured cursor before
+resizing it. Its updated default suite has31 refusal cases. The older receipt
+above remains bound to the earlier helper executable and source checkpoint.

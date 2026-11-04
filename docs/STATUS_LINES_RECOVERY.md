@@ -104,6 +104,8 @@ because a flag changed. SIP/Telnet remains in Linux. Retain normal RX/CPR/flow,
 guarded key/reference/browser admission and call/timer/configuration ownership.
 Then repeat source/DOS/BBS/package and physical gates before enabling controls.
 
+The [internal offline status transaction](STATUS_TRANSITION_OWNER.md) now
+exercises the live commit/rollback path without binding either command.
 Both entries remain among13 unavailable reference commands. Applicationd9eae89d,
 ready archive4950ab99, active selection93a9db94 and installed9f2a37e7 are unchanged.
 The full feature inventory and physical acceptance remain open.

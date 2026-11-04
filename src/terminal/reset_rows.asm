@@ -10,7 +10,7 @@ extern csi_row_count,csi_last_row,erase_cell_count,screen_attribute_row_bytes
 extern screen_columns,screen_video_row_bytes,screen_last_column
 extern screen_first_row,screen_last_row,csi_origin_row,csi_origin_bottom
 extern screen_cursor_row,screen_cursor_column,screen_visible_column
-extern screen_previous_row,csi_saved_row,screen_video_offset,screen_attribute_offset
+extern screen_previous_row,screen_previous_column,csi_saved_row,screen_video_offset,screen_attribute_offset
 global terminal_reset_resize_rows_far
 
 ; Read one captured default: AX=root address -> DX=value,BX=default cell,CF0.
@@ -143,6 +143,13 @@ terminal_reset_resize_rows_far:
  cmp dx,[bp-4]
  ja .invalid
  mov [bp-12],dx
+ read_default screen_previous_row
+ cmp dx,[bp-12]
+ jne .invalid
+ read_default screen_previous_column
+ cmp dx,[bp-8]
+ jne .invalid
+ mov dx,[bp-12]
  mov ax,160
  mul dx
  mov cx,[bp-10]

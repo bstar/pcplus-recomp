@@ -29,7 +29,7 @@ class Defaults(UI):
   col,visible=(60,8) if stride==132 else (17,17)
   fields=dict(csi_row_count=rows,csi_last_row=rows-1,erase_cell_count=rows*stride,
     screen_attribute_row_bytes=stride,screen_last_column=stride-1,screen_columns=80,
-    screen_video_row_bytes=160,screen_cursor_column=col,screen_visible_column=visible,
+    screen_video_row_bytes=160,screen_cursor_column=col,screen_previous_column=col,screen_visible_column=visible,
     screen_cursor_row=cursor,screen_previous_row=cursor,csi_saved_row=cursor,
     screen_first_row=2 if custom else 0,screen_last_row=rows-3 if custom else rows-1,
     csi_origin_row=1 if custom else 0,csi_origin_bottom=rows-2 if custom else rows-1,
@@ -87,7 +87,7 @@ def main():
   composed+=1
  cases.append(dict(case='captured-only-rows-margins-cursors-offsets-and-capacity',inputs=composed,passed=True));print('PASS composed:',composed,flush=True)
  rejected=0
- for field,value in [('csi_row_count',0),('csi_row_count',51),('csi_last_row',99),('screen_columns',40),('screen_video_row_bytes',264),('screen_attribute_row_bytes',81),('screen_last_column',132),('erase_cell_count',0),('screen_cursor_column',80),('screen_visible_column',80),('screen_cursor_row',24),('screen_previous_row',24),('csi_saved_row',24),('screen_first_row',24),('csi_origin_row',24),('screen_video_offset',2),('screen_attribute_offset',1),('screen_first_row',23),('csi_origin_row',23)]:
+ for field,value in [('csi_row_count',0),('csi_row_count',51),('csi_last_row',99),('screen_columns',40),('screen_video_row_bytes',264),('screen_attribute_row_bytes',81),('screen_last_column',132),('erase_cell_count',0),('screen_cursor_column',80),('screen_visible_column',80),('screen_cursor_row',24),('screen_previous_row',24),('screen_previous_row',1),('screen_previous_column',0),('csi_saved_row',24),('screen_first_row',24),('csi_origin_row',24),('screen_video_offset',2),('screen_attribute_offset',1),('screen_first_row',23),('csi_origin_row',23)]:
   m=Defaults();m.profile()
   if field=='screen_first_row' and value==23:m.set_baseline('screen_last_row',10)
   if field=='csi_origin_row' and value==23:m.set_baseline('csi_origin_bottom',10)

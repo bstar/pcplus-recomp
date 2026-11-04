@@ -243,6 +243,22 @@ global terminal_status_row_admit_far
 terminal_status_row_admit_far:
  call notice_row_admit
  retf
+; A geometry transaction may borrow frames only after all notice leases and
+; deferred modal actions have been retired by their existing owner.
+%ifdef TERMINAL_STATUS_OWNER
+global terminal_status_notice_idle_far
+terminal_status_notice_idle_far:
+ mov ax,3
+ cmp byte [notice_active],0
+ jne .done
+%ifdef TERMINAL_MODAL_NOTICE
+ cmp word [pause_notice_action],0
+ jne .done
+%endif
+ xor ax,ax
+.done:
+ retf
+%endif
 SEGMENT _DATA public class=DATA use16
 notice_active: db 0
 notice_cells: times 30 db 0

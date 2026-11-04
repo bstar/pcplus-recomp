@@ -56,7 +56,7 @@
   "disabled_declared_sources": 540,
   "memory": {
     "component_CONFIG_bytes": 56698,
-    "added_CONFIG_bytes": 752,
+    "added_CONFIG_bytes": 720,
     "resident_bytes": 65334,
     "resident_spare_bytes": 202,
     "additional_persistent_bytes": 0
