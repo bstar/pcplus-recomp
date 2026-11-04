@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "component": "Admitted original ANSI6 EOT/ENQ/GS and explicit nondefault boundaries",
+  "image": {
+    "path": "build/carrier-c0-fit-20261104/ordinary/TERMINAL.EXE",
+    "sha256": "e2e1f7ec210da06c36be2f8129a622c70788179daf5ab10c4dac22981cc98059",
+    "source_files": 570,
+    "resident_CS_bytes": 65534,
+    "near_bytes": 65120,
+    "original_inputs": []
+  },
+  "source_only_rebuild": {
+    "path": "build/carrier-c0-source-proof-20261104/result.json",
+    "sha256": "4423d27dd6a465d0858fd3bf2828a99bc28e288a8e53887064dc12fcdf637917"
+  },
+  "linked_original_comparison": {
+    "path": "build/carrier-c0-linked-final-20261104/result.json",
+    "sha256": "e923cfc6acfc29619457c71960135549cd7ddbdf8fd64c38b7b7c2405770ae93"
+  },
+  "source_only_checks": {
+    "path": "build/carrier-c0-source-only-final-20261104/result.json",
+    "sha256": "c519880c9a49c493e505bcc6055f049f9264a01af6b9caedb8bf81dc5540b39a"
+  },
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "linked_cases": 45,
+  "original_video_state_register_comparisons": 18,
+  "captured_failing_noise": {
+    "path": "build/bbs-lab/carrier-tail-final-20261104-proxy/2-serial-output.bin",
+    "sha256": "3f64516da2a26aa09b6463655b62962362ea8d14eca655989ed614fc8a05c0d6",
+    "bytes": 87,
+    "passed": true
+  },
+  "private_REA_evidence": {
+    "path": "build/c0-recovery-20261104/rea-evidence.json",
+    "sha256": "967dd605d82b0d4fe8ba926cd041ca9a54f3119ed2433fd01218be1d11b4aba4"
+  },
+  "REA_observations": [
+    {
+      "evidence_id": "ev_d1a958da0dbbc714e947754f482b7c2f1a0cbfa85e7f23888b06df4f01a99641",
+      "resident_start": "0e7c",
+      "bytes": 98
+    },
+    {
+      "evidence_id": "ev_5085dd67e4a2d4e8bd3250d2a1a5d13e93c99f304e8206710cf04826a4ae0ee3",
+      "resident_start": "1292",
+      "bytes": 30
+    },
+    {
+      "evidence_id": "ev_9774307f997ad7aeb92c89cae82d801b6b9675a4159c3264e79532f7fe64d9c9",
+      "resident_start": "4cd7",
+      "bytes": 268,
+      "complete_function": false
+    }
+  ],
+  "sources": {
+    "src/terminal/c0_controls.asm": "cb34cd817b13ac52c21905de4ee9e323457f5fa94da7727bd39ef9baf35dfbc2",
+    "src/terminal/boundaries.asm": "3ebe2dc5f4f92382364b87d740a1b0afd008c6494963212be77e6727995ea1ea",
+    "src/terminal/attribute_boundary.asm": "97796fc63bf2ed3a1b8398f66a4224081fe87735acf3a638bab89cb5d256c2e7",
+    "standalone/check_terminal_c0.py": "6152df675990d0e256f1a59bbd54a13cc65be6da7ccf564ba657714c1a3a3ac3"
+  },
+  "scope": "Default ANSI6 paths, raw legacy ENQ coordinates, continued ESC, original controlled CPU replay and exact captured-noise replay. Kernel/hardware modeled. Nondefault answerback modes, enabled remote operation, legacy GS, other emulations, actual modem and full parity remain open. REA raw observations are not a successful function decompilation; private evidence/original bytes are not published."
+}

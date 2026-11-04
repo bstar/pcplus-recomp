@@ -13,6 +13,7 @@ const {values} = parseArgs({options: {
   'terminal-rows': {type: 'string', default: '25'},
   'screen-reference': {type: 'boolean', default: false},
   'probe-terminal-size': {type: 'boolean', default: false},
+  'disconnect-on-quit': {type: 'boolean', default: false},
   'screen-quiet-ms': {type: 'string', default: '750'},
   'freeze-trigger': {type: 'string', default: 'UNSAVED'},
 }});
@@ -103,6 +104,9 @@ const server = net.createServer(socket => {
     }
   }
   sessions.add(socket);
+  // Model the bridge's hangup request only when explicitly selected. Let the
+  // socket flush its output before FIN; no modem result or DCD is fabricated.
+  if (values['disconnect-on-quit']) proxy.on('disconnect', () => socket.end());
   proxy.attach(data => {
     if (closed) return;
     if (frozen) {held.push(Buffer.from(data)); return;}

@@ -1,0 +1,221 @@
+{
+  "passed": true,
+  "component": "Current source-built parent: observed DCD loss, binary drain, same-process redial, exact retry and stock Enigma logoff",
+  "image": {
+    "path": "build/carrier-c0-fit-20261104/ordinary/TERMINAL.EXE",
+    "sha256": "e2e1f7ec210da06c36be2f8129a622c70788179daf5ab10c4dac22981cc98059",
+    "source_files": 570,
+    "resident_CS_bytes": 65534,
+    "near_bytes": 65120,
+    "original_inputs": []
+  },
+  "products": {
+    "TERMINAL.EXE": {
+      "path": "build/carrier-c0-fit-20261104/ordinary/TERMINAL.EXE",
+      "sha256": "e2e1f7ec210da06c36be2f8129a622c70788179daf5ab10c4dac22981cc98059",
+      "source_files": 570
+    },
+    "ASPECT.EXE": {
+      "path": "build/line-control-child-20261104/source/build/child/ASPECT.EXE",
+      "sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+      "source_files": 288
+    },
+    "ASPCOMP.EXE": {
+      "path": "build/aspect-compiler-dos/ASPCOMP.EXE",
+      "sha256": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "source_files": 19
+    }
+  },
+  "source_only_rebuild": {
+    "path": "build/carrier-c0-source-proof-20261104/result.json",
+    "sha256": "4423d27dd6a465d0858fd3bf2828a99bc28e288a8e53887064dc12fcdf637917"
+  },
+  "producer": {
+    "path": "build/bbs-lab/results/enigma/carrier-c0-loss-retry-20261104/carrier-checks.json",
+    "sha256": "7990c003646d81ff67444aed8117df1e6a89a0b07793440cde8545e5a2aa1056"
+  },
+  "independent_audit": {
+    "path": "build/carrier-c0-independent-20261104/result.json",
+    "sha256": "76a2dcd9e8a6314c207f4a112159b754032c523d5f3bd5191cae72a507ec5acb"
+  },
+  "corrupted_copy_controls": {
+    "path": "build/carrier-c0-negative-controls-20261104/result.json",
+    "sha256": "03b45c34c350015a4c6044bca9ce8413aa191f099a31d8cbea12139fc6b23d50"
+  },
+  "raw_relay_checks": {
+    "path": "build/proxy-carrier-relay-eof-20261104/result.json",
+    "sha256": "7eb8ebe957df1c5bc64a3235c5f6cd65e79120b71c332b7373ea2d8a96c24bba"
+  },
+  "linked_regressions": {
+    "loss_drain": {
+      "path": "build/carrier-c0-loss-linked-20261104/result.json",
+      "sha256": "c956f04cbd39f86c4025631176fdafe0758a51078907d605987cb11376aad178"
+    },
+    "flow": {
+      "path": "build/carrier-c0-flow-linked-20261104/result.json",
+      "sha256": "350e09b28378008743f7590e0c7ad4638e2e98916e5fe3566423ed80a0cf0d58"
+    },
+    "cancel_race": {
+      "path": "build/carrier-c0-cancel-linked-20261104/result.json",
+      "sha256": "59fafdd9cdaf506467a84c02e8a83df58bac7965f1fd8fd21bc1c856b6b3e2b6"
+    }
+  },
+  "c0_component": {
+    "path": "docs/validation/c0-controls.json",
+    "sha256": "89b7e9b5441ed8d487cc866475bab3359bb1924253d7b2cd90ebeabb8b1adb76"
+  },
+  "current_local_cancel": {
+    "producer": {
+      "path": "build/bbs-lab/results/enigma/carrier-c0-local-cancel-20261104/cancel-checks.json",
+      "sha256": "cfc26ddf5e9260a8800f2b966649b615ad32882021ba3d99db86bca0d8282964"
+    },
+    "independent_audit": {
+      "path": "build/carrier-c0-local-cancel-audit-20261104/result.json",
+      "sha256": "8984a74e2d479f215e5cdd5f43f92459e525c4ea5de8fafb432c90ef25bf26be"
+    },
+    "controls": {
+      "path": "build/carrier-c0-local-cancel-controls-20261104/result.json",
+      "sha256": "1d26df269e74fc68b0304345e176078cde4b0dc5eaf5e4e30b70008bcc0559ef"
+    }
+  },
+  "current_Synchronet": {
+    "producer": {
+      "path": "build/bbs-lab/results/synchronet/carrier-c0-sync-20261104/proxy-integration.json",
+      "sha256": "4e96b273dd902393abc8763d1e9bc6f8549f50731b9cc29a132764fa69641cd0"
+    },
+    "independent_cells_NAWS": {
+      "path": "build/bbs-lab/results/synchronet/carrier-c0-sync-20261104/size-probe-screen-audit.json",
+      "sha256": "1d61dd395303e4ae91c79f3a644c7d932b7369405324e0d8fce320f555c572e4"
+    }
+  },
+  "observations": {
+    "DOS_processes": 1,
+    "authenticated_sessions": 2,
+    "directory_connections": 2,
+    "DOS_compiler_bytes": 473,
+    "partial_disk_bytes": 4096,
+    "retry_bytes": 65539,
+    "retry_sha256": "f201ab45fad25b0754e27439cc3e610017f45c60db10e4323899c77bdbe1e761",
+    "size_reply_lookalikes": 215,
+    "retry_packets": 30,
+    "wire_boundaries": [
+      {
+        "index": 1,
+        "serial_received": 148,
+        "serial_delivered": 71795,
+        "upstream_read": 72275,
+        "proxy_output": 74829,
+        "interrupted": true
+      },
+      {
+        "index": 2,
+        "serial_received": 420,
+        "serial_delivered": 156392,
+        "upstream_read": 156392,
+        "proxy_output": 156392,
+        "interrupted": false
+      }
+    ],
+    "NAWS": [
+      [
+        80,
+        24
+      ],
+      [
+        80,
+        24
+      ]
+    ],
+    "notices": [
+      " RX carrier los\u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE ",
+      " Carrier lost  \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE ",
+      " RX complete   \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE  ",
+      " RX complete   \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE ",
+      " Carrier lost  \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE "
+    ],
+    "linked_loss_flow_cancel_cases": 98,
+    "C0_linked_cases": 45,
+    "original_C0_comparisons": 18,
+    "carrier_controls": 10,
+    "rejected_carrier_mutations": 9,
+    "local_cancel_controls": 9,
+    "rejected_cancel_mutations": 8
+  },
+  "retained_failures": [
+    {
+      "report": {
+        "path": "build/bbs-lab/results/enigma/size-proxy-carrier-preflight-20261104/carrier-checks.json",
+        "sha256": "8974bbe1b0e12ade73c1e622834ea0a34074ca36bbba468cd31a283c20cf6143"
+      },
+      "reason": "Old parent stops when buffered binary escapes after first DCD loss; no second connection",
+      "accepted": false
+    },
+    {
+      "report": {
+        "path": "build/bbs-lab/results/enigma/size-proxy-carrier-witness2-20261104/carrier-checks.json",
+        "sha256": "ac942004334fdc0850bcfbb1e94261e26321c704d3a026e02030c5989d959197"
+      },
+      "reason": "Passive witness confirms old fault4, no RX drops and subsequent unsupported-function exit2",
+      "accepted": false
+    },
+    {
+      "report": {
+        "path": "build/bbs-lab/results/enigma/size-proxy-carrier-tail-fixed-20261104/carrier-checks.json",
+        "sha256": "ca0e942bb33a4d5fd9c525f6a0b2c87345dfc5fbb5483630280dcf3cd0d1d3dd"
+      },
+      "reason": "Drain survives loss/redial; timed navigation cancels retry before completion",
+      "accepted": false
+    },
+    {
+      "report": {
+        "path": "build/bbs-lab/results/enigma/size-proxy-carrier-retry-long-20261104/carrier-checks.json",
+        "sha256": "8e86426269c75a47eb80d6547f354cca034c9560e115635754d48eb41facd7e0"
+      },
+      "reason": "Exact retry; Hayes teardown leaks to BBS with output still buffered; strict raw/error checks fail",
+      "accepted": false
+    },
+    {
+      "report": {
+        "path": "build/bbs-lab/results/enigma/carrier-tail-logoff-20261104/carrier-checks.json",
+        "sha256": "8fc68fe738f832c31d67b43f10870d1d0126e4b8442f327f01bf83c68ad05b2d"
+      },
+      "reason": "Clean teardown and exact retry; old audit incorrectly treats bridge-local QUIT as BBS data",
+      "accepted": false
+    },
+    {
+      "report": {
+        "path": "build/bbs-lab/results/enigma/carrier-tail-final-20261104/carrier-checks.json",
+        "sha256": "31fecfc46c6489f9b86c3e15b866db3ad61f76a947ced5409e165b04f88a2bb7"
+      },
+      "reason": "Exact retry; actual random Enigma logoff ENQ reaches unrecovered C0 boundary and exits2",
+      "accepted": false
+    }
+  ],
+  "excluded_started_fixtures": [
+    "carrier-tail-verified-20261104: deliberately stopped after discovering invalid newline assertion; no acceptance report or hardware-restoration claim",
+    "size-proxy-carrier-witness-20261104: observer setup failure before DOS"
+  ],
+  "old_parent_witness": {
+    "path": "build/bbs-lab/results/enigma/size-proxy-carrier-witness2-20261104/PLSTATE.BIN",
+    "sha256": "8a0d59e6fa5159589317e625ef89873262bfea8f2f29056a233c2886a42a8196"
+  },
+  "sources": {
+    "src/terminal/transfer_actions.asm": "11963859ca7c33c8c00b6a205268d60d355cad9aaa82520086ef15cc572e43db",
+    "src/terminal/c0_controls.asm": "cb34cd817b13ac52c21905de4ee9e323457f5fa94da7727bd39ef9baf35dfbc2",
+    "src/terminal/boundaries.asm": "3ebe2dc5f4f92382364b87d740a1b0afd008c6494963212be77e6727995ea1ea",
+    "src/terminal/attribute_boundary.asm": "97796fc63bf2ed3a1b8398f66a4224081fe87735acf3a638bab89cb5d256c2e7",
+    "standalone/check_transfer_loss_drain.py": "e27ca11cf53aa7891466794525d0faf8785753d4d5e0f774d8e66a4d5bace887",
+    "standalone/check_terminal_c0.py": "6152df675990d0e256f1a59bbd54a13cc65be6da7ccf564ba657714c1a3a3ac3",
+    "lab/bbs/test_proxy_carrier_dos.py": "08cf239f31a60510c27dd486f2f190673a80886fa7ec57a8e44427e73f0bf8cd",
+    "lab/bbs/proxy_carrier_relay.py": "9aa9d7eea809b6ff2fbc7778834b98b08e8e22c3f54ce4a532aed0c3dd86b612",
+    "lab/bbs/check_proxy_carrier_relay.py": "1b966d242daa52ef01c759b9a7e4ce78d7732a6c33cca64000a5314bcf896a83",
+    "lab/bbs/carrier_fault_witness.py": "496fdb7ad81180b2115c5a5c89eed35227e65ea448587605359696680740926d",
+    "lab/bbs/audit_proxy_carrier.py": "a6261620bc5572ac4ae3d1f804032e41e34a10b92af2a214b6bb505ab43595d2",
+    "lab/bbs/check_proxy_carrier_controls.py": "4905414ef5eb8be3e7bb70f23697ac9ced18b479e06901bc1c03f9e5649e884c",
+    "lab/bbs/synthmodem_proxy_serial.js": "1ddf739793b94a3f3d592b534a6ca2b6c20ce72ad66cafeecc4b7a9511516fad"
+  },
+  "installed_services_changed": false,
+  "physical_machine_changed": false,
+  "deployment_selection_changed": false,
+  "scope": "Actual DOS8086 COM3/IRQ5,19200/HARD and25physical/24logical through staged actual SynthModem proxy, built-in modem Hayes/DCD and owned stock Enigma/helper. Raw relay does not synthesize replies; scoped socket abort follows source-prefix write. Independent exact wire/CRC/finish/controls/NAWS/compiler/source/hardware evidence, clean stage before second login and exact retry. Component hardware models and controlled original C0 comparisons are separate. No Boca/SPA2102/SIP/DSP/analog, all-layout/protocol or full original parity acceptance; physical BUSY and deployment remain open."
+}

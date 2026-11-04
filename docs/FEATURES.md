@@ -1,5 +1,27 @@
 # Full application reconstruction checklist
 
+[Carrier loss, redial and exact retry](TRANSFER_LOSS_DRAIN.md) now pass through
+the staged size-probed SynthModem proxy and stock Enigma in one DOS 8086 parent.
+The built-in modem owns real emulated DCD: a forced drop after a 4096-byte disk
+prefix is followed by cleanup, a second compiled ASPECT login, an exact 65,539-byte
+retry, target search and BBS logoff. Independent CRC/control/raw-wire/NAWS,
+hardware and source audits pass, with ten copied-capture controls. Buffered
+binary remains owned after loss; pending flow bytes are withheld when a previously
+observed carrier is low. Physical/SIP/DSP/Boca acceptance remains separate.
+Fresh same-image local cancellation/retry, independent replay and nine copied
+controls pass separately.
+
+[Default ANSI C0 services](C0_CONTROLS.md) resolve the next actual compatibility
+failure: Enigma deliberately sends random CP437 at logoff. EOT/ENQ glyph behavior,
+GS cursor-left and legacy ENQ coordinates now use verified admitted original
+branches. 45 linked cases, 18 original video/state/register comparisons and the
+actual failed-noise replay pass. Nondefault answerback/remote operations, legacy
+GS and other emulations remain explicit gaps. The combined parent is e2e1f7ec,
+reproduced from 570 public inputs; resident CS 65534 has only two bytes spare.
+Fresh Synchronet editor/reference/NAWS regression passes with zero cell differences.
+Nothing is deployed by these checks. Full original parity and the physical BUSY
+report remain open. Entries below retain their earlier checkpoint identities.
+
 [Proxy cancellation and retry](PROXY_CANCEL_RETRY.md) now pass on the current
 parent through the staged size-probe proxy and stock Enigma helper, in one DOS
 process/authenticated connection at 25-visible geometry. A source-prefix 4096-byte

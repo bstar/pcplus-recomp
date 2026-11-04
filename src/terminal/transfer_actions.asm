@@ -237,7 +237,9 @@ terminal_transfer_poll:
  ; A carrier-loss failure has already returned the modem to command mode.
  ; Cancellation bytes here would prefix and corrupt its next AT command.
  cmp word [terminal_transfer_fault],4
- je .finish
+ ; The modem can still deliver buffered binary after DCD falls. Retain the
+ ; exclusive owner until the existing bounded quiet drain finishes.
+ je .z_drain
  cmp word [transfer_protocol_started],0
  je .finish
  cmp word [terminal_transfer_protocol],2
@@ -255,6 +257,7 @@ terminal_transfer_poll:
  mov al,8
  call transfer_emit_cancel
  loop .z_backspace
+.z_drain:
  call transfer_cancel_drain
  jmp .finish
 .cancel_pair:
@@ -550,14 +553,8 @@ transfer_emit_cancel:
  ; The first failure can be Escape/timeout while DCD falls during file
  ; cleanup. Keep that diagnostic, but never send its CAN/backspace bytes
  ; into a modem's command channel after a previously observed carrier falls.
- cmp word [transfer_carrier_seen],0
- je .flow
- mov dx,[uart_port_msr]
- in al,dx
- test al,0x80
- jz .done
-.flow:
- call uart_poll_flow
+ call transfer_poll_flow_ready
+ jc .done
  mov al,bl
  call uart_try_write
  jnc .done
@@ -574,6 +571,24 @@ transfer_emit_cancel:
  pop ax
  ret
 
+; AX/DX/FLAGS scratch. CF1 means a previously observed carrier is low;
+; neither protocol nor pending XON/XOFF may enter the modem command channel.
+; Untracked and high-carrier behavior is the existing physical writer policy.
+GLOBAL transfer_poll_flow_ready
+transfer_poll_flow_ready:
+ cmp word [transfer_carrier_seen],0
+ je .flow
+ mov dx,[uart_port_msr]
+ in al,dx
+ shl al,1 ; DCD bit7 to carry, then CF1 means carrier is lost.
+ cmc
+ jc .done
+.flow:
+ call uart_poll_flow
+ clc
+.done:
+ ret
+
 ; Keep canceled binary data away from the ANSI parser while the peer stops.
 ; Nine quiet BIOS ticks tolerate delayed serial/modem delivery;180 total ticks
 ; bound a peer that never stops. Real receive consumption retains
@@ -588,7 +603,7 @@ transfer_cancel_drain:
  mov [transfer_delay_tick],ax
  mov [transfer_delay_tick+2],dx
 .wait:
- call uart_poll_flow
+ call transfer_poll_flow_ready
  cmp word [uart_rx_count],0
  je .bounds
  call terminal_transfer_flush_input
@@ -926,6 +941,7 @@ transfer_read_tick: dd 0
 transfer_delay_tick: dd 0
 transfer_progress_budget: dw 540
 transfer_last_blocks: dw 0
+GLOBAL transfer_carrier_seen
 transfer_carrier_seen: dw 0
 transfer_context_active: dw 0
 transfer_outer_context: times 10 db 0

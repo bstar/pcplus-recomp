@@ -95,12 +95,14 @@ terminal_control_0e70:
  jmp csi_unimplemented
 global terminal_control_4cd7
 terminal_control_4cd7:
- mov ax,0x4cd7
- jmp csi_unimplemented
+ extern terminal_c0_eot_far
+ call far terminal_c0_eot_far
+ ret
 global terminal_control_0e7c
 terminal_control_0e7c:
- mov ax,0xe7c
- jmp csi_unimplemented
+ extern terminal_c0_enquiry_far
+ call far terminal_c0_enquiry_far
+ ret
 global terminal_control_0ede
 terminal_control_0ede:
  mov ax,0xede
@@ -163,8 +165,9 @@ terminal_control_127e:
  jmp csi_unimplemented
 global terminal_control_1292
 terminal_control_1292:
- mov ax,0x1292
- jmp csi_unimplemented
+ extern terminal_c0_gs_far
+ call far terminal_c0_gs_far
+ ret
 global terminal_control_12b0
 terminal_control_12b0:
  mov ax,0x12b0
