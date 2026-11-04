@@ -1,5 +1,15 @@
 # Full application reconstruction checklist
 
+[Proxy cancellation and retry](PROXY_CANCEL_RETRY.md) now pass on the current
+parent through the staged size-probe proxy and stock Enigma helper, in one DOS
+process/authenticated connection at 25-visible geometry. A source-prefix 4096-byte
+stage is observed before BIOS Escape and removed before retry. The complete
+65,539-byte retry, CRC/finish/controls and target searches before/after it pass
+independent replay. Actual BIOS queue/threshold checks and nine copied-capture
+controls bind the observer evidence. Application bytes and deployment are
+unchanged. Real DCD loss/redial, broader layouts/protocols, physical acceptance
+and original parity remain open.
+
 [Size-probed proxy transfers](PROXY_SIZE_TRANSFERS.md) now verify the current
 parent through the staged SynthModem proxy and stock Enigma file helper at
 25-visible and 50-hidden layouts. Four separate DOS processes transfer 262,156

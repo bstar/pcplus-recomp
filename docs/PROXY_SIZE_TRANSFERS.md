@@ -86,6 +86,11 @@ its producer runs, and a new label is required for retries.
 
 ## Reproduction and remaining gates
 
+The later [cancel/retry check](PROXY_CANCEL_RETRY.md) adds one actual stock-helper
+local-cancel/data/cleanup/retry workflow in the same DOS process and connection
+at 25-visible geometry. It has separate BIOS and corrupted-capture evidence;
+the four separate-process successful transfers below retain their original scope.
+
 ```sh
 ./tools/dev --command python lab/bbs/test_proxy_size_roundtrips.py \
   --runtime build/STAGED_PROXY/candidate \
