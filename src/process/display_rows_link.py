@@ -6,10 +6,10 @@ transaction may call it until the canonical screen/frame contract is integrated.
 import hashlib,json,re,subprocess
 from pathlib import Path
 
-def build_display_rows_bank(root,out,geometry=False,mouse=False):
+def build_display_rows_bank(root,out,geometry=False,mouse=False,selectors=False):
  root=Path(root);out=Path(out)/'display-rows-bank';out.mkdir(parents=True,exist_ok=False)
  groups=[('display_modes',('detect','virtual_buffer','rows','fonts','font_reset','baseline')),
-         ('program_display',('geometry',)),('program_ui',('scanlines','cursor_eight'))]
+         ('program_display',('geometry',)),('program_ui',('scanlines','cursor_eight')+(('mode',) if selectors else ()))]
  inputs=[Path(__file__).resolve(),root/'src/process/native_display_rows.h',root/'reconstruction/uart/encodings.inc']
  selected=[];units=[]
  for group,names in groups:
@@ -41,14 +41,19 @@ def build_display_rows_bank(root,out,geometry=False,mouse=False):
   subprocess.run(['nasm','-fobj',include,'-D'+('DISPLAY_MODES_OMF' if group=='display_modes' else 'PROGRAM_DISPLAY_OMF'),
    '-D_TEXT=DISPLAY_CODE','-DCODE=FARCODE',*aliases,str(source),'-o',str(obj)],check=True);objects.append(obj)
  obj=out/'owner-glue.obj';objects.append(obj)
- subprocess.run(['nasm','-fobj','-DDISPLAY_ROWS_BANK','-D_TEXT=DISPLAY_CODE','-DCODE=FARCODE',*aliases,str(glue),'-o',str(obj)],check=True)
+ subprocess.run(['nasm','-fobj','-DDISPLAY_ROWS_BANK',*(['-DDISPLAY_ROWS_SELECTOR'] if selectors else []),'-D_TEXT=DISPLAY_CODE','-DCODE=FARCODE',*aliases,str(glue),'-o',str(obj)],check=True)
  obj=out/'owner-c.obj';objects.append(obj)
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-nt=DISPLAY_CODE','-nc=FARCODE',
   '-i='+str(root/'src/process'),'-fo='+str(obj),str(owner)],check=True)
+ if selectors:
+  source=root/'src/process/native_display_select.c';inputs.append(source)
+  obj=out/'selector-owner.obj';objects.append(obj)
+  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-nt=DISPLAY_CODE','-nc=FARCODE',
+   '-i='+str(root/'src/process'),'-fo='+str(obj),str(source)],check=True)
  if geometry:
   source=root/'src/terminal/row_geometry.c';inputs += [source,root/'src/terminal/row_geometry.h',root/'src/terminal/status_transition.h']
   obj=out/'geometry-owner.obj';objects.append(obj)
   subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-nt=DISPLAY_CODE','-nc=FARCODE',
    *(['-dTERMINAL_ROW_MOUSE'] if mouse else []),'-i='+str(root/'src/process'),'-fo='+str(obj),str(source)],check=True)
- return dict(objects=objects,inputs=inputs,namespace=namespace,native_bytes=sum(u['bytes'] for u in units),
+ return dict(objects=objects,inputs=inputs,namespace=namespace,native_bytes=sum(u['bytes'] for u in units),selector_service=selectors,
   scope=('Optional offline BIOS/canonical/RIS transaction with mouse suspension and rollback. No normal key/menu binding, online geometry, bridge coordination or physical acceptance.' if geometry else 'Optional low-level BIOS row bank only. Canonical terminal/RIS/frame/bridge transaction and key/menu bindings are not integrated; do not treat raw BIOS success as application geometry acceptance.'))

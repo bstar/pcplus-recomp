@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Physical display selectors](DISPLAY_SELECTOR_SERVICE.md) now use the recovered
+mode helper plus independent geometry verification and baseline recovery.95
+selector inputs,609 existing linked regressions, actual DOS selector/restore
+workflows and three exact source builds pass. Canonical/UI rollback composition,
+normal controls, online and physical acceptance remain open; nothing deployed.
+
 [Saved display startup capture](DISPLAY_PREFERENCES_STARTUP.md) now publishes
 the four raw saved words after successful existing one-read startup transactions.
 181 linked inputs, actual DOS capture/restore workflows, existing row/status/

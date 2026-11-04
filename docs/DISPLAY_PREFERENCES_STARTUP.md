@@ -66,9 +66,9 @@ original artifacts. With this option disabled the executable stays exactly
 ## Remaining integration
 
 Saved words now reach a checked startup capture; they are not applied to BIOS,
-canonical status visibility or runtime selector. A forthcoming application owner
-must reconcile saved selector, requested/custom mode and independently probed
-accepted geometry; implement configured-mode3/4 behavior and selector cycling;
+canonical status visibility or runtime selector. The [physical selector service](DISPLAY_SELECTOR_SERVICE.md) now handles
+configured-mode decisions and verified fallback in isolation. An application owner
+must reconcile saved selector with accepted BIOS/canonical state and implement selector cycling;
 and define live setup/HOOK updates. Larger-screen modal loans, normal command
 bindings and online DOS/bridge size agreement remain open. Do not silently apply
 an unsupported preference or advertise extra rows while the bridge remains24.

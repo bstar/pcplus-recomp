@@ -35,6 +35,14 @@ begin _display_rows_select
 begin _display_rows_baseline
  call display_baseline
  finish
+%ifdef DISPLAY_ROWS_SELECTOR
+extern display_set_mode
+global _display_rows_set_video_mode
+begin _display_rows_set_video_mode
+ push word [bp+4]
+ call display_set_mode
+ finish
+%endif
 begin _display_rows_supported
  mov ah,0x0f
  int 0x10

@@ -35,6 +35,22 @@ static word images(word phase,word rows)
 #endif
 #ifdef TERMINAL_DISPLAY_PREFERENCES
 #include "../src/config/display_preferences.h"
+/* Raw selector diagnostics deliberately leave canonical geometry24 while the
+ * UART/foreground mouse owner is not enabled; final selector restores BIOS25. */
+static word selector_images(void)
+{
+ static const word TEXT requests[8][3]={{1,50,0},{2,43,0},{0,50,3},{3,50,3},
+  {4,50,3},{3,50,0},{4,50,0},{3,50,0x12}};
+ char name[9]={'D','S','E','L','.','B','I','N',0};word records[3+8*16],i,j;
+ native_display_selection result;
+ records[0]=0x4453;records[1]=1;records[2]=8;
+ for(i=0;i<8;++i){
+  for(j=0;j<3;++j)records[3+i*16+j]=requests[i][j];
+  records[3+i*16+3]=native_display_select(requests[i][0],requests[i][1],requests[i][2],&result);
+  for(j=0;j<12;++j)records[3+i*16+4+j]=((word *)&result)[j];
+ }
+ return rows_probe_write(name,records,sizeof(records));
+}
 static word preferences_image(void)
 {
  char name[10]={'D','P','R','E','F','.','B','I','N',0};word values[5];
@@ -74,6 +90,7 @@ unsigned __far __cdecl terminal_display_rows_probe(void)
  records[0]=0x4452;records[1]=RECORD_VERSION;records[2]=6;
 #ifdef TERMINAL_DISPLAY_PREFERENCES
  if(preferences_image())return 26;
+ if(selector_images())return 27;
 #endif
  status=native_display_rows_probe(&info);if(status)return 20;
  capture(records+3,0,status,&info);

@@ -92,6 +92,12 @@ exit
   assert (drive/'TEST.PRM').read_bytes()==raw
   if m.get('experimental_display_preferences'):
    assert (drive/'DPREF.BIN').read_bytes()==struct.pack('<5H',1,0xffff,4,43,0x12)
+   selected=struct.unpack('<131H',(drive/'DSEL.BIN').read_bytes());assert selected[:3]==(0x4453,1,8)
+   for i,(selector,physical,status,accepted,fallback) in enumerate(((1,25,0,1,0),(2,43,0,2,0),(0,43,0,0,0),(3,25,0,3,0),(4,50,0,4,0),(3,25,0,1,1),(4,25,0,1,1),(3,25,3,1,1))):
+    rec=selected[3+i*16:3+(i+1)*16]
+    assert rec[0]==selector and rec[3]==status and rec[4:7]==(3,80,physical)
+    assert rec[7:10]==(0xb800,160,physical*80) and rec[13:]==(fallback,selector,accepted)
+
   observed=(drive/leaf).read_bytes()
   if label=='exclusive':assert observed==sentinel
   else:

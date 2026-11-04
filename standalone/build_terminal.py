@@ -635,7 +635,7 @@ phone_log_bank=None
 display_rows_bank=None
 if args.display_row_owner:
  from process.display_rows_link import build_display_rows_bank
- display_rows_bank=build_display_rows_bank(ROOT,OUT,geometry=args.row_geometry_owner,mouse=args.mouse)
+ display_rows_bank=build_display_rows_bank(ROOT,OUT,geometry=args.row_geometry_owner,mouse=args.mouse,selectors=args.display_preferences)
  objects+=list(map(str,display_rows_bank['objects']));sources+=display_rows_bank['inputs']
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
@@ -706,7 +706,7 @@ manifest['experimental_row_geometry_owner']=args.row_geometry_owner
 manifest['experimental_display_preferences']=args.display_preferences
 manifest['diagnostic_row_geometry_probe']=args.row_geometry_owner and args.display_row_probe
 if args.display_row_owner:
- manifest['display_row_bank']={k:display_rows_bank[k] for k in ('namespace','native_bytes','segment','offset','bytes','scope')}
+ manifest['display_row_bank']={k:display_rows_bank[k] for k in ('namespace','native_bytes','segment','offset','bytes','scope','selector_service')}
  manifest['limitations'].append(display_rows_bank['scope'])
 manifest['experimental_local_controls']=args.local_controls
 manifest['experimental_screen_pause']=args.screen_pause

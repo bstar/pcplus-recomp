@@ -73,9 +73,9 @@ with exact untouched-neighbor comparisons.
 ## Next integration gates
 
 The optional startup capture now stages these fields with the current
-configuration; applying them must distinguish saved selector from accepted BIOS state. The
-configured-mode3/4 path, selector cycling and original fallback policy still
-need application integration. Combine those with the existing
+configuration; applying them must distinguish saved selector from accepted BIOS state. The [physical selector service](DISPLAY_SELECTOR_SERVICE.md) now handles
+configured-mode decisions and verified fallback; selector cycling and the
+canonical transaction still need application integration. Combine those with the existing
 [offline BIOS/canonical transaction](ROW_GEOMETRY_TRANSACTION.md), larger modal
 screen loans, guarded commands and explicit online bridge coordination before
 advertising either line/status command. No key availability, application image,
