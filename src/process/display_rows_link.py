@@ -6,7 +6,7 @@ transaction may call it until the canonical screen/frame contract is integrated.
 import hashlib,json,re,subprocess
 from pathlib import Path
 
-def build_display_rows_bank(root,out,geometry=False,mouse=False,selectors=False,program_display=False):
+def build_display_rows_bank(root,out,geometry=False,mouse=False,selectors=False,program_display=False,startup=False):
  root=Path(root);out=Path(out)/'display-rows-bank';out.mkdir(parents=True,exist_ok=False)
  groups=[('display_modes',('detect','virtual_buffer','rows','fonts','font_reset','baseline')),
          ('program_display',('geometry',)),('program_ui',('scanlines','cursor_eight')+(('mode',) if selectors else ()))]
@@ -54,7 +54,7 @@ def build_display_rows_bank(root,out,geometry=False,mouse=False,selectors=False,
   source=root/'src/terminal/row_geometry.c';inputs += [source,root/'src/terminal/row_geometry.h',root/'src/terminal/status_transition.h']
   obj=out/'geometry-owner.obj';objects.append(obj)
   subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-nt=DISPLAY_CODE','-nc=FARCODE',
-   *(['-dTERMINAL_ROW_MOUSE'] if mouse else []),*(['-dTERMINAL_DISPLAY_SELECTOR'] if selectors else []),'-i='+str(root/'src/process'),'-fo='+str(obj),str(source)],check=True)
+   *(['-dTERMINAL_ROW_MOUSE'] if mouse else []),*(['-dTERMINAL_DISPLAY_SELECTOR'] if selectors else []),*(['-dTERMINAL_DISPLAY_STARTUP'] if startup else []),'-i='+str(root/'src/process'),'-fo='+str(obj),str(source)],check=True)
  if program_display:
   source=root/'src/terminal/program_display.c';inputs += [source,root/'src/terminal/program_display.h']
   obj=out/'program-display.obj';objects.append(obj)

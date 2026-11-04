@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Normal startup display application](DISPLAY_STARTUP.md) now optionally applies
+imported preferences before UART enable/dialing. Absent imports retain the
+baseline, verified fallback is explicit and refused selectors exit without data.
+Linked ownership,22 DOS layouts/refusals, independent BIOS/frame/wire captures
+and exact enabled/disabled source rebuilds bind it. Disabled bytes retain the
+preceding image. Line controls, live adoption/NAWS, BBS/physical and parity stay open.
+
 [Full-height status controls](LARGE_STATUS_CONTROL.md) now use admitted physical
 height for frame loans, logical area, scroll/cursor/defaults and rollback. The
 small-frame image still refuses larger layouts. A maintained status-string bridge

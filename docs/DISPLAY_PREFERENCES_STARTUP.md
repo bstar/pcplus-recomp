@@ -1,5 +1,9 @@
 # Startup capture of saved display preferences
 
+The later [normal startup application](DISPLAY_STARTUP.md) optionally applies
+this capture through the checked selector owner before UART enable. This page
+records the earlier capture-only checkpoint.
+
 `--display-preferences` adds a typed eight-byte capture to the current internal
 row-owner component. Both public startup readers capture the four
 [recovered saved words](DISPLAY_CONFIGURATION.md) from their existing single

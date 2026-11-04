@@ -289,6 +289,17 @@ terminal_phone_log_startup_done equ $
  mov ax,0x20a4
  jmp terminal_abort
 .reset_ready:
+%ifdef TERMINAL_DISPLAY_STARTUP
+ ; Use the real imported preference transaction after baseline capture and
+ ; before receiver enable, automatic dialing or an ordinary parser callback.
+ extern _terminal_display_startup
+ call far _terminal_display_startup
+ or ax,ax
+ jz .display_startup_ready
+ mov ax,0x2eaa
+ jmp terminal_abort
+.display_startup_ready:
+%endif
 %ifdef TERMINAL_SESSION_ROWS_PROBE
  ; Diagnostic only: establish the canonical layout before enabling/dialing;
  ; use the normal main loop/serial/ASPECT paths after this owned transaction.

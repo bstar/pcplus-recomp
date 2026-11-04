@@ -40,6 +40,7 @@ parser.add_argument('--display-row-owner',action='store_true',help='Link namespa
 parser.add_argument('--display-row-probe',action='store_true',help='Diagnostic only: exercise BIOS row bank at startup before UART enable, then exit')
 parser.add_argument('--row-geometry-owner',action='store_true',help='Link offline BIOS/canonical/RIS commit and rollback owner; no key/menu binding')
 parser.add_argument('--display-preferences',action='store_true',help='Capture raw saved display words after successful startup import; no BIOS or key binding')
+parser.add_argument('--display-startup',action='store_true',help='Apply imported display preferences through the checked owner before UART enable')
 parser.add_argument('--window-size-report',action='store_true',help='Reply to ordinary CSI18t with accepted logical text dimensions; no bridge deployment')
 parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchanged foreground keyboard dispatcher into a retained code bank')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
@@ -115,6 +116,9 @@ if args.status_probe:assert args.status_owner and not args.hook_probe and not ar
 if args.display_row_owner:assert args.status_owner,'Display row bank requires the current status-owner component'
 if args.row_geometry_owner:assert args.display_row_owner,'Row geometry owner requires the verified BIOS row bank'
 if args.display_preferences:assert args.row_geometry_owner,'Display preference capture requires the row geometry component'
+if args.display_startup:
+ assert args.display_preferences and args.aspect_row_owner and args.row_notices and args.status_control,'Display startup requires the composed display/frame/modal/status owners'
+ assert args.session_rows_probe is None and not args.display_row_probe and not args.status_probe,'Saved display startup excludes competing geometry initializers'
 if args.window_size_report:assert args.display_preferences,'Window size report requires the canonical display component'
 if args.display_row_probe:assert args.display_row_owner and not args.status_probe and not args.hook_probe and not args.input_probe and not args.projection_probe,'Display row probe requires the isolated row-bank build'
 if args.reset_row_owner:assert args.status_geometry and args.local_controls,'Row-default component requires the reserved-row local-controls candidate'
@@ -240,6 +244,7 @@ if args.status_probe:out_name+='-status-probe'
 if args.display_row_owner:out_name+='-display-row-owner'
 if args.row_geometry_owner:out_name+='-row-geometry-owner'
 if args.display_preferences:out_name+='-display-preferences'
+if args.display_startup:out_name+='-display-startup'
 if args.window_size_report:out_name+='-window-size-report'
 if args.display_row_probe:out_name+='-display-row-probe'
 if args.local_controls:out_name+='-local-controls'
@@ -388,6 +393,7 @@ for index,source in enumerate(sources):
  if args.display_row_probe:options+=['-DTERMINAL_DISPLAY_ROW_PROBE']
  if args.row_geometry_owner:options+=['-DTERMINAL_ROW_GEOMETRY']
  if args.display_preferences:options+=['-DTERMINAL_DISPLAY_PREFERENCES']
+ if args.display_startup:options+=['-DTERMINAL_DISPLAY_STARTUP']
  if args.window_size_report and source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_WINDOW_SIZE_REPORT']
  if args.row_geometry_owner and args.display_row_probe:options+=['-DTERMINAL_ROW_GEOMETRY_PROBE']
  if args.screen_pause:options+=['-DTERMINAL_SCREEN_PAUSE']
@@ -691,7 +697,7 @@ phone_log_bank=None
 display_rows_bank=None
 if args.display_row_owner:
  from process.display_rows_link import build_display_rows_bank
- display_rows_bank=build_display_rows_bank(ROOT,OUT,geometry=args.row_geometry_owner,mouse=args.mouse,selectors=args.display_preferences,program_display=args.program_display_owner)
+ display_rows_bank=build_display_rows_bank(ROOT,OUT,geometry=args.row_geometry_owner,mouse=args.mouse,selectors=args.display_preferences,program_display=args.program_display_owner,startup=args.display_startup)
  objects+=list(map(str,display_rows_bank['objects']));sources+=display_rows_bank['inputs']
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
@@ -762,16 +768,20 @@ manifest['diagnostic_session_rows_probe']=args.session_rows_probe
 manifest['diagnostic_aspect_admission_probe']=args.aspect_admission_probe
 manifest['experimental_aspect_row_owner']=args.aspect_row_owner
 manifest['experimental_program_display_owner']=args.program_display_owner
-if args.program_display_owner:manifest['limitations'].append('PROGRAM saves/restores verified25/28/43/50-row text frames and cursor around ordinary DOS children, without changing parent canonical state. Child UART is quieted after DS/SS/SP restoration and before trap resume. Unverified display restoration requests fatal exit2/service6EF7 and skips mouse/flow resume. Inline adopted views keep their existing separate contract. No normal Ctrl--/startup preference integration, arbitrary fonts/VGA-state equivalence, full larger-profile/ASPECT composition or physical acceptance.')
+if args.program_display_owner:manifest['limitations'].append('PROGRAM saves/restores verified25/28/43/50-row text frames and cursor around ordinary DOS children, without changing parent canonical state. Child UART is quieted after DS/SS/SP restoration and before trap resume. Unverified display restoration requests fatal exit2/service6EF7 and skips mouse/flow resume. Inline adopted views keep their existing separate contract. Normal Ctrl--, live preference adoption, arbitrary fonts/VGA-state equivalence, broader composition and physical acceptance remain separate gates.')
 manifest['experimental_large_view_frames']=args.large_view_frames
-if args.large_view_frames:manifest['limitations'].append('Shared redisplay/reference/browser/clipboard/elapsed frames retain verified25/28/43/50 physical rows. Full history capacity retained; two8000-byte far frames add8000 retained bytes. Other fixed25-row owners, startup display application, normal line binding, online changes and physical acceptance remain separate gates.')
+if args.large_view_frames:manifest['limitations'].append('Shared redisplay/reference/browser/clipboard/elapsed frames retain verified25/28/43/50 physical rows. Full history capacity retained; two8000-byte far frames add8000 retained bytes. Specialized owners, normal line binding, online changes and physical acceptance remain separate gates.')
 manifest['experimental_status_control']=args.status_control
-if args.status_control:manifest['limitations'].append('Ctrl-] and reference/browser Toggle Status dispatch through the guarded offline status owner after modal-frame release. Physical80x25 narrow profile4/6 only; online changes and unsupported geometry refuse. Captured RIS defaults and parser area follow24/25 rows. No saved preference rewrite, automatic startup display apply, Ctrl-- lines, bridge deployment or physical acceptance.')
+if args.status_control:
+ supported_rows='25/28/43/50' if args.large_view_frames and args.program_display_owner else '25'
+ manifest['limitations'].append('Ctrl-] and reference/browser Toggle Status dispatch through the guarded offline owner after modal-frame release. Narrow profiles4/6 at'+supported_rows+' physical rows; tracked-online and unsupported geometry refuse. Captured RIS defaults/parser bounds follow visibility. No saved preference rewrite, Ctrl--, bridge deployment or physical acceptance.')
 manifest['diagnostic_status_probe']=args.status_probe
 manifest['experimental_display_row_owner']=args.display_row_owner
 manifest['diagnostic_display_row_probe']=args.display_row_probe
 manifest['experimental_row_geometry_owner']=args.row_geometry_owner
 manifest['experimental_display_preferences']=args.display_preferences
+manifest['experimental_display_startup']=args.display_startup
+if args.display_startup:manifest['limitations'].append('Imported display preferences apply after baseline capture before UART enable/dialing; no import preserves the default baseline without inventing selector readiness. Verified fallback and fatal refusal retain hardware cleanup. Normal Toggle Lines, live adoption/NAWS and BBS/physical acceptance remain separate gates.')
 manifest['experimental_window_size_report']=args.window_size_report
 manifest['diagnostic_row_geometry_probe']=args.row_geometry_owner and args.display_row_probe
 if args.display_row_owner:

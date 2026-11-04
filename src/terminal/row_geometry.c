@@ -302,4 +302,13 @@ unsigned __far __cdecl terminal_display_cycle(void)
  return terminal_display_select(terminal_display_selector%choices+1,
   terminal_display_preferences.rows,terminal_display_preferences.video_mode);
 }
+#ifdef TERMINAL_DISPLAY_STARTUP
+unsigned __far __cdecl terminal_display_startup(void)
+{
+ /* No import means the admitted source-owned baseline remains in force.
+  * Do not manufacture saved preferences or selector readiness in that case. */
+ if(!terminal_display_preferences_ready)return 0;
+ return terminal_display_apply_saved();
+}
+#endif
 #endif

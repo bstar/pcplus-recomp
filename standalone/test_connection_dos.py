@@ -86,7 +86,7 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
       probe.extend(block)
       if b'\x1b[0n' in probe:
        checks['actual_direct_ready']=True;online=True
-       conn.sendall(b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c')
+       conn.sendall(banner if banner is not None else b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0c')
       continue
      for byte in block:
       if online:
