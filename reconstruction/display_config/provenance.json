@@ -1,0 +1,54 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_only_build": true,
+  "units": [
+    {
+      "name": "fields",
+      "overlay": 19,
+      "entry": "0xedd1",
+      "bytes": 82,
+      "file_offset": "0x1e2c1",
+      "source": "reconstruction/display_config/fields.asm",
+      "sha256": "0674a816f1cf1ff7e6618a42f34bb0f1ee86ad4e2b591c80ef163cd7643e3f76"
+    },
+    {
+      "name": "video_operand",
+      "overlay": 16,
+      "entry": "0xddee",
+      "bytes": 11,
+      "file_offset": "0x1b79e",
+      "source": "reconstruction/display_config/video_operand.asm",
+      "sha256": "bbe2aa1d942e1738e1acae902776320182582db54a5f6ae5aefcb08957c2bef3"
+    }
+  ],
+  "evidence": [
+    "ev_10e4272da2361a912c9abd8f23a9111a00e3f6f7666b090f35b9d9f1b22bce62",
+    "ev_8e5daa5453f123bb822d29973def72c5fe96980178413505448165b23969ddf0"
+  ],
+  "coordinate_scope": "REA synthetic non-runnable overlay19 with parent16; byte ranges independently compared with loader-derived original overlay offsets.",
+  "fields": {
+    "status_hidden": {
+      "ds": "0x1d46",
+      "prm_offset": "0x1c2",
+      "consumer": "reconstruction/local_controls/status_toggle.asm"
+    },
+    "display_selector": {
+      "ds": "0x1d4c",
+      "prm_offset": "0x1c8",
+      "consumer_evidence": "ev_35fd6900f0b9c8b11e600cec9a09c0b20f6bc028696e5ffd6ff6ae5b774a9c9e"
+    },
+    "display_rows": {
+      "ds": "0x1d4e",
+      "prm_offset": "0x1ca"
+    },
+    "preferred_video_mode": {
+      "ds": "0x2070",
+      "prm_offset": "0x4ec"
+    }
+  },
+  "limits": [
+    "Static reads do not observe execution. Synthetic analysis image never executed.",
+    "ASPECT field handlers are not setup UI routines. Integer reader/destination and error callbacks remain modeled in the focused checker.",
+    "Unknown PRM words remain lossless; field location is not application admission, a format signature or installed configuration evidence."
+  ]
+}

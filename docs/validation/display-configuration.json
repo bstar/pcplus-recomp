@@ -1,0 +1,100 @@
+{
+  "passed": true,
+  "reports": {
+    "source": {
+      "path": "build/display-config-native-20261104/result.json",
+      "sha256": "7e2ef96b4dc4acf87acfcef54c2e86b38a4e266ce46c603ee5c11768fe8c0594",
+      "result": {
+        "passed": true,
+        "source_only": true,
+        "original_compared": false,
+        "native_bytes": 93,
+        "cases": [
+          {
+            "case": "row-word-sweep-returning-error-boundary",
+            "error_flag": 0,
+            "inputs": 65536
+          },
+          {
+            "case": "row-word-sweep-returning-error-boundary",
+            "error_flag": 1,
+            "inputs": 65536
+          },
+          {
+            "case": "video-mode-bounded-operand-contract",
+            "inputs": 128
+          },
+          {
+            "case": "nonzero-query-mode-preserves-raw-word-and-uses-integer-destination",
+            "inputs": 88
+          },
+          {
+            "case": "nonreturning-error-boundary-prevents-invalid-store",
+            "inputs": 40
+          }
+        ],
+        "sources": {
+          "standalone/check_display_config_native.py": "05b2787351b60ff557c20fd960830f4bb899bfb769637e5b08ba40d1486c0abd",
+          "reconstruction/display_config/fields.asm": "08242a436f121027fe466fcbcde2b68fffea8cc6fec3297997b139784379ee34",
+          "reconstruction/display_config/video_operand.asm": "73be9414200e2ea1e61fec6499a22e951a108b0adabaa6caa231cfbbf606229b",
+          "reconstruction/display_config/provenance.json": "a7335d6178b18a3144be90e058e89f1a19ab4c304cbb56fcba22c624122c883e",
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+        },
+        "scope": "Recovered ASPECT display fields; operand, destination and error boundaries modeled.\nNo application key binding, actual PRM, DOS video, bridge or physical acceptance.\n Actual recovered handlers and0..127 operand wrapper execute. Bounded/raw integer readers, integer destination and error services are explicit modeled boundaries. Returning-error and stop-on-error cases are distinct; no complete ASPECT parser or production application behavior claimed."
+      }
+    },
+    "original": {
+      "path": "build/display-config-original-20261104/result.json",
+      "sha256": "3bc00d2d7c751fb4912446d7db2b17f792f6ca21c1792227639f9529a764cac1",
+      "result": {
+        "passed": true,
+        "source_only": false,
+        "original_compared": true,
+        "native_bytes": 93,
+        "cases": [
+          {
+            "case": "row-word-sweep-returning-error-boundary",
+            "error_flag": 0,
+            "inputs": 65536
+          },
+          {
+            "case": "row-word-sweep-returning-error-boundary",
+            "error_flag": 1,
+            "inputs": 65536
+          },
+          {
+            "case": "video-mode-bounded-operand-contract",
+            "inputs": 128
+          },
+          {
+            "case": "nonzero-query-mode-preserves-raw-word-and-uses-integer-destination",
+            "inputs": 88
+          },
+          {
+            "case": "nonreturning-error-boundary-prevents-invalid-store",
+            "inputs": 40
+          }
+        ],
+        "sources": {
+          "standalone/check_display_config_native.py": "05b2787351b60ff557c20fd960830f4bb899bfb769637e5b08ba40d1486c0abd",
+          "reconstruction/display_config/fields.asm": "08242a436f121027fe466fcbcde2b68fffea8cc6fec3297997b139784379ee34",
+          "reconstruction/display_config/video_operand.asm": "73be9414200e2ea1e61fec6499a22e951a108b0adabaa6caa231cfbbf606229b",
+          "reconstruction/display_config/provenance.json": "a7335d6178b18a3144be90e058e89f1a19ab4c304cbb56fcba22c624122c883e",
+          "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+        },
+        "scope": "Recovered ASPECT display fields; operand, destination and error boundaries modeled.\nNo application key binding, actual PRM, DOS video, bridge or physical acceptance.\n Actual recovered handlers and0..127 operand wrapper execute. Bounded/raw integer readers, integer destination and error services are explicit modeled boundaries. Returning-error and stop-on-error cases are distinct; no complete ASPECT parser or production application behavior claimed."
+      }
+    }
+  },
+  "codec": {
+    "command": "./tools/dev --command python -m unittest discover -s src/config -p test_prm.py",
+    "tests": 9,
+    "display_combinations": 56,
+    "sources": {
+      "src/config/prm.py": "f29e89c9f529811332c65040f6137a64a59062c91b31ed9f641dd9189743820a",
+      "src/config/test_prm.py": "f00d400a6fdc1dccfc02e6272c17250dbe9b5227761e008d69f2364b8f107a90"
+    }
+  },
+  "provenance_sha256": "a7335d6178b18a3144be90e058e89f1a19ab4c304cbb56fcba22c624122c883e",
+  "scope": "Native ASPECT display field/operand recovery and lossless PRM codec only. No original private data read, application startup publication, key/menu integration, DOS/BBS/physical acceptance, package or deployment change."
+}

@@ -34,8 +34,8 @@ Ctrl-minus cycle's unsigned zero/nonzero test: a high-bit2070 value selects the
 four-choice cycle but still fails this signed display admission test.
 
 2070 is a configured/preferred video-mode WORD passed to the mode service,
-not simply an adapter-class identifier. Its configuration/import mapping still
-needs recovery. Baseline uses BIOS mode3, or7 when the runtime mono WORD7A86 is
+not simply an adapter-class identifier. Its [PRM offsets and ASPECT field handlers](DISPLAY_CONFIGURATION.md) are now
+recovered; maintained startup publication and configured-mode integration remain open. Baseline uses BIOS mode3, or7 when the runtime mono WORD7A86 is
 nonzero. The existing vendor mode branch6F3E and scanline capability rules are
 composed in the tests rather than replaced by stubs.
 

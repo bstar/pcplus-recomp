@@ -42,6 +42,16 @@ class PrmTests(unittest.TestCase):
    self.assertEqual(output[0x4ec:],data[0x4ec:])
    self.assertEqual(LegacyPrm201(output).word('clipboard_separator'),value)
   self.assertEqual(prm.to_bytes(),data)
+ def test_display_words_preserve_raw_values_and_every_opaque_neighbor(self):
+  data=bytes((i*43+17)&255 for i in range(IMAGE_SIZE));prm=LegacyPrm201(data)
+  for field,offset in [('status_hidden',0x1c2),('display_selector',0x1c8),('display_rows',0x1ca),('preferred_video_mode',0x4ec)]:
+   for value in (0,1,2,3,4,25,28,43,50,127,128,0x7fff,0x8000,0xffff):
+    output=prm.with_word(field,value).to_bytes()
+    self.assertEqual(LegacyPrm201(output).word(field),value)
+    self.assertEqual(output[:offset],data[:offset])
+    self.assertEqual(output[offset:offset+2],struct.pack('<H',value))
+    self.assertEqual(output[offset+2:],data[offset+2:])
+  self.assertEqual(prm.to_bytes(),data)
  def test_transfer_locations_and_opaque_tail_preservation(self):
   data=bytes((i*37+5)&255 for i in range(IMAGE_SIZE));prm=LegacyPrm201(data)
   for value in (0,1,2,255,256,65535):

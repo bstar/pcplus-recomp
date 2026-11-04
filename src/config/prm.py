@@ -31,6 +31,10 @@ WORD_FIELDS={
  'mouse_scale_y':0x206a-ORIGINAL_DS_BASE,
  'clipboard_separator':0x206e-ORIGINAL_DS_BASE,
  'auto_download':0x1fb0-ORIGINAL_DS_BASE,
+ 'status_hidden':0x1d46-ORIGINAL_DS_BASE,
+ 'display_selector':0x1d4c-ORIGINAL_DS_BASE,
+ 'display_rows':0x1d4e-ORIGINAL_DS_BASE,
+ 'preferred_video_mode':0x2070-ORIGINAL_DS_BASE,
 }
 
 @dataclass(frozen=True)

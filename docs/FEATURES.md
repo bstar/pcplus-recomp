@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Saved display configuration](DISPLAY_CONFIGURATION.md) now maps the PRM status,
+selector, row and preferred-video words to recovered consumers.93 original
+ASPECT field/operand bytes match exactly; source/original suites each pass131328
+inputs and the lossless codec retains all opaque neighbors. Startup publication,
+selector/command integration and online/physical gates remain open.
+
 [Offline row transaction](ROW_GEOMETRY_TRANSACTION.md) now coordinates BIOS,
 canonical parser/RIS, native status, shadow and mouse ownership for25/28/43/50
 physical rows.102 linked inputs, actual DOS parent workflows,76 status/250

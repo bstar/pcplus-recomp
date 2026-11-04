@@ -1925,3 +1925,10 @@ test-aspect-serial-bank: aspect-serial-bank session-baseline aspect-compiler-dos
 	python3 standalone/check_aspect_serial_bank.py --output build/aspect-serial-bank/linked-make-$(shell date +%s%N)
 	python3 standalone/test_aspect_script_serial_dos.py --runner build/aspect-serial-bank-parent/ASPECT.EXE
 	python3 standalone/test_aspect_parent_process_dos.py --serial-bank --mouse --observer-high --label serial-bank-full-make-$(shell date +%s%N) --case full-1-B --case full-2-S
+
+.PHONY: test-display-config test-display-config-compat
+test-display-config:
+	python3 standalone/check_display_config_native.py --output build/display-config/$$(date +%Y%m%d-%H%M%S-%N)
+	python3 -m unittest discover -s src/config -p test_prm.py
+test-display-config-compat:
+	python3 standalone/check_display_config_native.py --output build/display-config-original/$$(date +%Y%m%d-%H%M%S-%N) --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE
