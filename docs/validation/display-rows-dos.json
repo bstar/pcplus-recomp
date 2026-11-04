@@ -29,8 +29,8 @@
     "scope": "Static exact bytes only; original executable not run or used by application/component build."
   },
   "evidence": {
-    "build/display-rows-fallback-20261104/manifest.json": "f8e26a0506cf1e423ceba40eac4105f617e6a767309ec22936f7a7f7a7a4c41a",
-    "build/display-rows-dos-fallback-20261104/result.json": "84152e22c6b3747d520fc20fdedd5356e180bb15e66eab64d9282328bdf51c33"
+    "build/display-rows-group-control-20261104/manifest.json": "036bad7cdaf3248c6bbd399c4627838f1f0eae1f28e23302045885583c6c6f36",
+    "build/display-rows-dos-group-control-20261104/result.json": "25993c724f3bc425b96181b2fab53cbd73fbd76d8bb467a0480a035d1de498f2"
   },
   "models": {
     "vga": {
@@ -86,7 +86,7 @@
     "reconstruction/program_ui/provenance.json": "ea7cf6e3e92da71a06921b9106514642458a361cd5c177f9bc90b348fa0aa790",
     "reconstruction/program_ui/scanlines.asm": "69874e0454dff22bb02e752e0baafcb3e2333443c8b2f226c52e33928b202e53",
     "reconstruction/program_ui/cursor_eight.asm": "0b418dd1ac6019a6b90aa742340d19d30d458d2786bbffcf2df4c704e63436ec",
-    "src/process/native_display_rows.asm": "7497cc8b815bf6179ac6dbd946a7bc3345bca557f4ce06332b8cbcb9ffac4f3b",
+    "src/process/native_display_rows.asm": "2f55124094944a71bdf1a897f2d79c6ea8db2f5259c0810698f2bf2366268925",
     "standalone/display_rows_observer.asm": "2631a6b6b00bd4e09b81bf3a7fb8b11c04a8ed282b0d768ac67689c80a6bc3ce",
     "src/process/native_display_rows.c": "a50dab3013aae1b33f3f300cbeb74800f9c6197412329817810e4590f8e5d590",
     "standalone/display_rows_diagnostic.c": "380e24f5fef444f57a4893c8fb8329586ecf04a8e0712a2e722a90159df3c572",

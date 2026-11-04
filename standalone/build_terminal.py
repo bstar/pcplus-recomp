@@ -27,6 +27,8 @@ parser.add_argument('--status-geometry',action='store_true',help='Reserve physic
 parser.add_argument('--reset-row-owner',action='store_true',help='Link staged RIS row-default component; no status/line key binding')
 parser.add_argument('--status-owner',action='store_true',help='Link offline live status transaction; no key/menu binding or online size negotiation')
 parser.add_argument('--status-probe',action='store_true',help='Diagnostic only: run offline status transactions at foreground startup, then exit')
+parser.add_argument('--display-row-owner',action='store_true',help='Link namespaced low-level BIOS row bank; no canonical geometry or key binding')
+parser.add_argument('--display-row-probe',action='store_true',help='Diagnostic only: exercise BIOS row bank at startup before UART enable, then exit')
 parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchanged foreground keyboard dispatcher into a retained code bank')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
 parser.add_argument('--manual-init',action='store_true',help='Integrate guarded manual Init key/menu and exclusive foreground UART scheduling')
@@ -82,6 +84,8 @@ if args.status_owner:
  args.reset_row_owner=True
  assert args.native_reset_bank and args.screen_pause and args.elapsed_view and args.auto_answer,'Status transaction requires the current banked modal-owner candidate'
 if args.status_probe:assert args.status_owner and not args.hook_probe and not args.input_probe and not args.projection_probe,'Status probe requires the isolated status-owner build'
+if args.display_row_owner:assert args.status_owner,'Display row bank requires the current status-owner component'
+if args.display_row_probe:assert args.display_row_owner and not args.status_probe and not args.hook_probe and not args.input_probe and not args.projection_probe,'Display row probe requires the isolated row-bank build'
 if args.reset_row_owner:assert args.status_geometry and args.local_controls,'Row-default component requires the reserved-row local-controls candidate'
 if args.auto_answer:
  args.auto_answer_owner=True
@@ -193,6 +197,8 @@ if args.status_geometry:out_name+='-status-geometry'
 if args.reset_row_owner:out_name+='-reset-rows'
 if args.status_owner:out_name+='-status-owner'
 if args.status_probe:out_name+='-status-probe'
+if args.display_row_owner:out_name+='-display-row-owner'
+if args.display_row_probe:out_name+='-display-row-probe'
 if args.local_controls:out_name+='-local-controls'
 if args.screen_pause:out_name+='-screen-pause'
 if args.call_timer:out_name+='-call-timer'
@@ -253,6 +259,7 @@ if args.projection_probe:sources.append(ROOT/'standalone/session_projection_prob
 if args.hook_probe:sources.append(ROOT/'standalone/hook_transaction_probe.asm')
 if args.input_probe:sources += [ROOT/'standalone/hook_transaction_probe.asm',ROOT/'standalone/hook_input_probe.asm']
 if args.status_probe:sources.append(ROOT/'standalone/status_transition_probe.asm')
+if args.display_row_probe:sources.append(ROOT/'standalone/display_rows_terminal_probe.asm')
 sources += [ROOT/'src/aspect/resident_bridge.asm']
 sources += [ROOT/'reconstruction/script_menu/window.asm']
 sources += [ROOT/'src/status/status_renderer_bridge.asm',ROOT/'src/status/status_helpers.asm',
@@ -324,6 +331,7 @@ for index,source in enumerate(sources):
  if args.local_controls:options+=['-DTERMINAL_LOCAL_CONTROLS']
  if args.status_owner:options+=['-DTERMINAL_STATUS_OWNER']
  if args.status_probe:options+=['-DTERMINAL_STATUS_PROBE']
+ if args.display_row_probe:options+=['-DTERMINAL_DISPLAY_ROW_PROBE']
  if args.screen_pause:options+=['-DTERMINAL_SCREEN_PAUSE']
  if args.call_timer:options+=['-DTERMINAL_CALL_TIMER']
  if args.elapsed_view:options+=['-DTERMINAL_ELAPSED_VIEW']
@@ -403,6 +411,7 @@ c_sources += [ROOT/'src/config/live_configuration.c']
 c_sources += [ROOT/'src/config/live_setup_owner.c']
 if args.status_owner:c_sources.append(ROOT/'src/terminal/status_transition.c')
 if args.status_probe:c_sources.append(ROOT/'standalone/status_transition_probe.c')
+if args.display_row_probe:c_sources.append(ROOT/'standalone/display_rows_terminal_probe.c')
 c_sources += [ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']]
 if args.notice_sound:c_sources += [ROOT/'src/ui/speaker.c',ROOT/'src/ui/connect_alert.c']
 c_sources += [ROOT/'src/translation/xlt_dos.c',ROOT/'src/translation/xlt_dos_fs.c']
@@ -448,6 +457,7 @@ c_sources+=sorted(hook_sources)
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
 if args.status_owner:config_sources.add(ROOT/'src/terminal/status_transition.c')
 if args.status_probe:config_sources.add(ROOT/'standalone/status_transition_probe.c')
+if args.display_row_probe:config_sources.add(ROOT/'standalone/display_rows_terminal_probe.c')
 if args.directory_preview:config_sources.update({ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c'})
 if args.directory_storage:config_sources.update({ROOT/'src/directory/directory_actions.c',ROOT/'src/directory/directory_storage.c'})
 if args.directory_resource_cli:config_sources.update({ROOT/'src/directory/directory_resource_cli.c',ROOT/'src/terminal/resource_cli_bind.c'})
@@ -610,6 +620,11 @@ if args.native_reset_bank:
  reset_bank=build_native_reset_bank(ROOT,OUT,overlay=not args.native_reset_static,transaction=args.native_reset_transaction)
  objects+=list(map(str,reset_bank['objects']));sources+=reset_bank['inputs']
 phone_log_bank=None
+display_rows_bank=None
+if args.display_row_owner:
+ from process.display_rows_link import build_display_rows_bank
+ display_rows_bank=build_display_rows_bank(ROOT,OUT)
+ objects+=list(map(str,display_rows_bank['objects']));sources+=display_rows_bank['inputs']
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
  phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup,lifecycle=args.phone_log_lifecycle,events=args.phone_log_events,disk=args.phone_log_disk,controls=args.phone_log_controls)
@@ -620,6 +635,11 @@ subprocess.run(['wlink','system','dos','order',*[value for kind in ordering for 
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
 assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64KiB'
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
+if args.display_row_owner:
+ bank=next((c for c in memory['code_segments'] if c['name']=='DISPLAY_CODE'),None)
+ assert bank and bank['offset']+bank['bytes']<=65536,'BIOS row bank exceeds its code segment'
+ assert all(c is bank or c['relative_segment']!=bank['relative_segment'] for c in memory['code_segments']),'BIOS row bank shares an executable CS'
+ display_rows_bank['segment']=bank['relative_segment'];display_rows_bank['offset']=bank['offset'];display_rows_bank['bytes']=bank['bytes']
 assert memory['initial_terminal_rows']==(24 if args.status_geometry or args.directory_adopt else 25)
 if args.phone_log_reservations:assert memory['phone_log_claim_far_calls_verified']==2
 inputs=sources+c_sources+[ROOT/'src/config/prm_dos.h',ROOT/'src/config/terminal_import.h',ROOT/'src/config/terminal_import.inc',ROOT/'src/config/modem_import.h',ROOT/'src/config/modem_import.inc',ROOT/'src/config/startup_import.h',ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc']
@@ -667,6 +687,11 @@ manifest['experimental_keyboard_bank']=args.keyboard_bank
 manifest['experimental_reset_row_owner']=args.reset_row_owner
 manifest['experimental_status_owner']=args.status_owner
 manifest['diagnostic_status_probe']=args.status_probe
+manifest['experimental_display_row_owner']=args.display_row_owner
+manifest['diagnostic_display_row_probe']=args.display_row_probe
+if args.display_row_owner:
+ manifest['display_row_bank']={k:display_rows_bank[k] for k in ('namespace','native_bytes','segment','offset','bytes','scope')}
+ manifest['limitations'].append(display_rows_bank['scope'])
 manifest['experimental_local_controls']=args.local_controls
 manifest['experimental_screen_pause']=args.screen_pause
 manifest['experimental_call_timer']=args.call_timer

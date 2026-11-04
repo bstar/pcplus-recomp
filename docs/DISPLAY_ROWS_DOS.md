@@ -2,8 +2,9 @@
 
 The standalone row component now runs the recovered capability, font, scanline
 and geometry services under actual8086 DOSBox-X BIOS implementations. It is a
-prerequisite for the unfinished original Toggle Lines command, and is not linked
-into the maintained terminal or included in a deployment package.
+prerequisite for the unfinished original Toggle Lines command. A subsequent
+[optional terminal bank](DISPLAY_ROWS_TERMINAL.md) now executes the same API in
+the DOS parent; normal command integration and deployment remain unfinished.
 
 Two newly recovered units contribute102 exact original bytes: detection6CD8
 (66) and the virtual-display-buffer probe7E34(36). The probe uses the original
@@ -77,7 +78,8 @@ original artifacts. Current diagnostic SHA is
   --component build/NEW-display-rows --output build/NEW-display-rows-dos
 ```
 
-Bank/namespace integration, preferred-video-mode import, canonical terminal/
+The optional bank/namespace integration is checked separately above.
+Preferred-video-mode import, canonical terminal/
 RIS/scroll geometry, larger shadow/frame/history loans, guarded key/menu entry,
 online DOS/bridge size coordination and application/package acceptance remain
 open. No BBS, UART, SIP, real Cirrus VGA or physical acceptance follows from this

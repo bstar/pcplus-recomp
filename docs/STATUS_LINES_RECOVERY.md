@@ -82,7 +82,8 @@ follows from these results.
 
 The [standalone BIOS row owner](DISPLAY_ROWS_DOS.md) now provides recovered
 capability/font/geometry services with actual DOS display-model checks and
-verified fallback handling. It is not yet banked or connected to these keys;
+verified fallback handling. A subsequent [optional bank](DISPLAY_ROWS_TERMINAL.md)
+executes that low-level service in the parent, without connecting these keys;
 larger canonical geometry, frame loans and online coordination remain required.
 
 These are geometry operations, not cosmetic visibility flags. Establish the

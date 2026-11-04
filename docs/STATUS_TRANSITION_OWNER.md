@@ -111,3 +111,9 @@ discard retain the fixed24 behavior; the active art-backed editor emits no
 resize redraw in the observation windows and still pages14 document lines.
 This adds scoped remote-editor continuity evidence, not DOS/bridge integration
 or dynamic layout acceptance. The connected-state refusal remains required.
+
+The separately optional [BIOS row bank](DISPLAY_ROWS_TERMINAL.md) now executes
+inside the DOS parent in a startup diagnostic. It is a low-level prerequisite,
+not a wider geometry transaction: this owner still requires BIOS80x25 and all
+existing quiescence/frame/online guards. No status/line key is enabled by linking
+the new bank.

@@ -1,0 +1,124 @@
+{
+  "passed": true,
+  "images": {
+    "ordinary": {
+      "terminal": "build/terminal-display-rows-linked-20261104/ordinary/TERMINAL.EXE",
+      "terminal_sha256": "a1c86342ce3d5abf3f2638e108a0b07bd8d7430aab6319e927b6f3f645ed165d",
+      "manifest_sha256": "830e3542bbe18458e9fb42588ea798e01562c5f6df1eba352793f20ce398db17",
+      "source_files": 561,
+      "resident_CS_extent_bytes": 65386,
+      "resident_CS_spare_bytes": 150,
+      "data_stack_bytes": 65072
+    },
+    "diagnostic": {
+      "terminal": "build/terminal-display-rows-probe-20261104/diagnostic/TERMINAL.EXE",
+      "terminal_sha256": "f302f57149dab0de284ef5552cec9edb98160420b39e34c5a47ac89377b747ac",
+      "manifest_sha256": "f313aa7f96eff28870148cb29644ec2de76d9513f87538ab7b8a6511a7e73a66",
+      "source_files": 563,
+      "resident_CS_extent_bytes": 65396,
+      "resident_CS_spare_bytes": 140,
+      "data_stack_bytes": 65072
+    },
+    "disabled": {
+      "terminal": "build/terminal-display-rows-controls-20261104/disabled/TERMINAL.EXE",
+      "terminal_sha256": "3756c6d7cc9d3ae2ef574c79f454568a33bbefacff197445bd0fa272bae39ae0",
+      "manifest_sha256": "6868565ec2de6270681a0ba49d1f98e465acb44d36400517fcfd6e9fcae09f22",
+      "source_files": 545,
+      "resident_CS_extent_bytes": 65386,
+      "resident_CS_spare_bytes": 150,
+      "data_stack_bytes": 65024
+    }
+  },
+  "bank": {
+    "namespace": {
+      "display_baseline": "drows_native_display_baseline",
+      "display_bytes": "drows_native_display_bytes",
+      "display_cells": "drows_native_display_cells",
+      "display_columns": "drows_native_display_columns",
+      "display_crt": "drows_native_display_crt",
+      "display_cursor_eight": "drows_native_display_cursor_eight",
+      "display_cursor_end": "drows_native_display_cursor_end",
+      "display_cursor_row": "drows_native_display_cursor_row",
+      "display_cursor_start": "drows_native_display_cursor_start",
+      "display_detect": "drows_native_display_detect",
+      "display_extended_mode": "drows_native_display_extended_mode",
+      "display_font_capable": "drows_native_display_font_capable",
+      "display_font_ega14": "drows_native_display_font_ega14",
+      "display_font_ega8": "drows_native_display_font_ega8",
+      "display_font_reset": "drows_native_display_font_reset",
+      "display_font_vga14": "drows_native_display_font_vga14",
+      "display_font_vga16": "drows_native_display_font_vga16",
+      "display_font_vga43": "drows_native_display_font_vga43",
+      "display_font_vga50": "drows_native_display_font_vga50",
+      "display_geometry": "drows_native_display_geometry",
+      "display_install_font": "drows_native_display_install_font",
+      "display_last_column": "drows_native_display_last_column",
+      "display_last_line": "drows_native_display_last_line",
+      "display_last_row": "drows_native_display_last_row",
+      "display_legacy": "drows_native_display_legacy",
+      "display_mode": "drows_native_display_mode",
+      "display_mono": "drows_native_display_mono",
+      "display_rows": "drows_native_display_rows",
+      "display_scanline_capable": "drows_native_display_scanline_capable",
+      "display_scanlines": "drows_native_display_scanlines",
+      "display_segment": "drows_native_display_segment",
+      "display_select_rows": "drows_native_display_select_rows",
+      "display_snow": "drows_native_display_snow",
+      "display_status_port": "drows_native_display_status_port",
+      "display_stride": "drows_native_display_stride",
+      "display_viewport": "drows_native_display_viewport",
+      "display_virtual_buffer": "drows_native_display_virtual_buffer"
+    },
+    "native_bytes": 606,
+    "segment": 12727,
+    "offset": 6,
+    "bytes": 1113,
+    "scope": "Optional low-level BIOS row bank only. Canonical terminal/RIS/frame/bridge transaction and key/menu bindings are not integrated; do not treat raw BIOS success as application geometry acceptance."
+  },
+  "evidence": {
+    "build/display-rows-parent-dos-20261104/result.json": {
+      "passed": true,
+      "sha256": "56bb907bdef5baa386430a22c507836d07ff00634519d8e6611ae2199bdeb714"
+    },
+    "build/display-rows-status-regression-20261104/result.json": {
+      "passed": true,
+      "sha256": "3d48174d7789ba856c09d2a634e4ecae38d1ea1e06636468e5a10e5de655fac5"
+    },
+    "build/display-rows-defaults-regression-20261104/result.json": {
+      "passed": true,
+      "sha256": "d53b0d5e5d95207adf08c6a36cc715bce06a85fc004e271556685becd61639cf"
+    },
+    "build/display-rows-disabled-source-proof-20261104/result.json": {
+      "passed": true,
+      "sha256": "fd7e83c82d433a4619edeffa010481a0999adfdb9a7527838ae8694ae7daeb04"
+    },
+    "build/display-rows-ordinary-source-proof-20261104/result.json": {
+      "passed": true,
+      "sha256": "9a8874b1d2401227642041f8254329492a636af33df4b36a1ec2662b9b7e7929"
+    },
+    "build/display-rows-diagnostic-source-proof-20261104/result.json": {
+      "passed": true,
+      "sha256": "2ccfb6544fdc5b80d3367831f19ebd8b9fb2062aa8c9dd97761601d02401ab2c"
+    },
+    "build/display-rows-dos-group-control-20261104/result.json": {
+      "passed": true,
+      "sha256": "25993c724f3bc425b96181b2fab53cbd73fbd76d8bb467a0480a035d1de498f2"
+    }
+  },
+  "sources": {
+    "src/process/native_display_rows.asm": "2f55124094944a71bdf1a897f2d79c6ea8db2f5259c0810698f2bf2366268925",
+    "src/process/display_rows_link.py": "3e55ee3f37392be09d9fb1a14bb8092c3c3246b2946b0959fa14d6b035d04d5e",
+    "src/terminal/main.asm": "781ee797133250797bdfcbc7d9964d009e93652cc42eeb6bb948774d70eed354",
+    "standalone/build_terminal.py": "3f45da4f3412d56a9113646f73f1c7e1b8fed825fd649cbdf949b725b49b745a",
+    "standalone/display_rows_terminal_probe.c": "4a4439cce6ea892cdc2f8dc3ffe06b6a35c5da3f18fcdbc0d0fde4f58e2d94cd",
+    "standalone/display_rows_terminal_probe.asm": "65f13113029ba1ca4fc36723de2dff536c0df716e43af5fac777cef720d4c462",
+    "standalone/test_display_rows_terminal_dos.py": "add104aa4b9b35633ddba8290fb273bf3000a48e6f45d5817065efb8dd1f3b8a",
+    "standalone/package_connection_test.py": "69a65b38753b6d8bef082b6f7f6100b1333bcf156f05beff303a559695a5074b",
+    "standalone/prove_phone_log_startup_terminal.py": "d3f1f1ee83ecb9c7f33c10e1510679401957649e9f0b10cb996bcc4298cf6b6d"
+  },
+  "installed": false,
+  "packaged": false,
+  "normal_UI_binding": false,
+  "canonical_row_transaction_enabled": false,
+  "scope": "Optional low-level BIOS row bank linked into source-built terminal; actual startup DOS calls before UART enable and unchanged canonical24-row geometry. Six BIOS observations, exclusive output refusal, zero serial bytes,42-byte hardware restoration and diagnostic package rejection;76/250 linked CPU regressions,426 standalone BIOS assertions, three exact public-source terminal reproductions. No normal key/menu, atomic geometry, online resize, BBS/full-route transfer or physical acceptance."
+}

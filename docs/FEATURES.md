@@ -1,11 +1,19 @@
 # Full application reconstruction checklist
 
+[Banked BIOS row integration](DISPLAY_ROWS_TERMINAL.md) now links the recovered
+service in an independent1113-byte code bank, preserving150 resident code bytes
+spare. Actual DOS parent tests cover six geometries, exclusive-file refusal,
+hardware restoration and diagnostic package rejection.76 status/250 reset
+inputs, the426-check standalone matrix and three exact source reproductions
+pass. Canonical geometry/UI/bridge integration, command availability, BBS and
+physical acceptance remain open; nothing is deployed.
+
 [Actual DOS row/font service](DISPLAY_ROWS_DOS.md) now adds102 exact native
 capability/buffer-probe bytes and a CRT-free bounded owner around606 recovered
 bytes. Five display profiles pass426 assertions, including refused requests,
 verified fallback, fallback failure and recovery. The component reproduces
-exactly outside Git without originals. It is not yet integrated into the
-terminal; Toggle Lines, larger frames, online geometry and physical gates remain
+exactly outside Git without originals. Normal terminal geometry/UI integration
+remains unfinished; Toggle Lines, larger frames, online geometry and physical gates remain
 open, with no deployment or command-availability change.
 
 [Remote-editor resize continuity](TELNET_EDITOR_RESIZE.md) now compares actual

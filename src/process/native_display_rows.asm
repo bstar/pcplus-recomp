@@ -1,6 +1,9 @@
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
+%ifdef DISPLAY_ROWS_BANK
+GROUP DISPLAY_GROUP DISPLAY_CODE
+%endif
 extern display_geometry,display_detect,display_select_rows,display_baseline
 global _display_rows_geometry,_display_rows_detect,_display_rows_select,_display_rows_baseline
 global _display_rows_supported
