@@ -1,0 +1,56 @@
+--- a/src/telnet/TelnetCodec.js
++++ b/src/telnet/TelnetCodec.js
+@@ -4,12 +4,17 @@
+ const IAC = 255, DO = 253, DONT = 254, WILL = 251, WONT = 252, SB = 250, SE = 240;
+ const BINARY = 0, ECHO = 1, SGA = 3, TTYPE = 24, NAWS = 31;
+ 
++function validateDimensions(cols, rows) {
++  // Retain the bridge's positive-dimensions policy; validate both before commit.
++  for (const n of [cols, rows]) {
++    if (!Number.isInteger(n) || n < 1 || n > 65535) throw new Error('Invalid dimensions');
++  }
++}
++
+ class TelnetCodec {
+   constructor({ send, display, terminalType = 'ANSI', terminalCols = 80, terminalRows = 25 }) {
+     if (!/^[\x20-\x7e]{1,64}$/.test(terminalType)) throw new Error('Invalid terminal type');
+-    for (const n of [terminalCols, terminalRows]) {
+-      if (!Number.isInteger(n) || n < 1 || n > 65535) throw new Error('Invalid dimensions');
+-    }
++    validateDimensions(terminalCols, terminalRows);
+     this.send = send;
+     this.display = display;
+     this.type = terminalType;
+@@ -61,13 +66,29 @@
+     enabled.add(option);
+     if (!wasPending) this.command(yes, option);
+     if (local && option === NAWS) {
+-      const size = Buffer.alloc(5);
+-      size[0] = NAWS; size.writeUInt16BE(this.cols, 1); size.writeUInt16BE(this.rows, 3);
+-      this.subneg(size);
++      this._sendDimensions();
+     }
+     if (!local && option === BINARY) this.rxCR = false;
+   }
+ 
++  // Trusted Linux-side control API. Never infer a resize from serial payload.
++  // advertised means a local NAWS write, not an acknowledgment by the BBS.
++  resize(cols, rows) {
++    validateDimensions(cols, rows);
++    if (cols === this.cols && rows === this.rows) return { changed: false, advertised: false };
++    this.cols = cols;
++    this.rows = rows;
++    return { changed: true, advertised: this._sendDimensions() };
++  }
++
++  _sendDimensions() {
++    if (!this.local.has(NAWS)) return false;
++    const size = Buffer.alloc(5);
++    size[0] = NAWS; size.writeUInt16BE(this.cols, 1); size.writeUInt16BE(this.rows, 3);
++    this.subneg(size);
++    return true;
++  }
++
+   finishSub() {
+     if (this.sub.length === 2 && this.sub[0] === TTYPE && this.sub[1] === 1 && this.local.has(TTYPE)) {
+       this.subneg(Buffer.concat([Buffer.from([TTYPE, 0]), Buffer.from(this.type, 'ascii')]));

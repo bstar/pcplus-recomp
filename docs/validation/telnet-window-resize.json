@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "installed_codec_sha256": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+  "installed_source_unchanged": true,
+  "staged_codec_sha256": "a572c2182fbe4474ccb7dbecb42d5aad36dcdf045906d6ab188f59da26c86fa7",
+  "sources": {
+    "lab/bbs/check_telnet_resize.py": "9b9df061448fe5f0c6e46da5891d3283152055697260cc9e91786baa9901a6e8",
+    "lab/bbs/check_telnet_resize.test.js": "ad3dbb6a6ab1357e506fe91054bf00b7ddccf4177bd62ee2ed6014d3a67834ba",
+    "lab/bbs/test_telnet_resize_enigma.py": "993150de9c7004b54c911a56f9d00889c4b11d0d34083033873fdc98d2bd7b7a",
+    "lab/bbs/patches/synthmodem-window-size/codec.patch": "d3fd2bfa4ab730ec033272b92b194bf1fd0a54bc372f4f9d1f86212e5eb4bba4"
+  },
+  "evidence": {
+    "build/telnet-resize-checked-20261104/result.json": {
+      "passed": true,
+      "sha256": "03aa083632aa1cd250d9e2849f8b9fd502430e2d5cd43a05ab43969fc1672034"
+    },
+    "build/telnet-resize-enigma-accepted-20261104/result.json": {
+      "passed": true,
+      "sha256": "b84e3b54bfb71676a3778e9a0d350992d3cd5ebba570e8ff92c6ebfda8c8004e",
+      "observed_sizes": [
+        {
+          "width": 80,
+          "height": 24,
+          "sessionId": "mkU0MEdAM1N"
+        },
+        {
+          "width": 80,
+          "height": 25,
+          "sessionId": "mkU0MEdAM1N"
+        },
+        {
+          "width": 80,
+          "height": 24,
+          "sessionId": "mkU0MEdAM1N"
+        }
+      ]
+    }
+  },
+  "installed": false,
+  "PCPlus_online_enabled": false,
+  "standard": "https://www.rfc-editor.org/rfc/rfc1073",
+  "scope": "Isolated actual Telnet codec resize API:10 Node groups,48 dimension-boundary pairs,48 invalid updates, default differential and binary/IAC/NVT regressions. Actual owned Enigma anonymous loopback Telnet session independently logs80x24->80x25->80x24. No serial scan, live bridge/config/service change, DOS/bridge control or active-editor reflow, full-route transfers/SIP/DSP/analog/physical acceptance. NAWS is advisory, not a remote application acknowledgment."
+}

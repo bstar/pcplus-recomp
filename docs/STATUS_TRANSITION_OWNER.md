@@ -99,3 +99,8 @@ has13 unavailable entries.
 ./tools/dev --command python standalone/prove_terminal_manifest.py \
   --terminal build/COMPONENT/TERMINAL.EXE --output build/NEW-source-proof
 ```
+
+The subsequent [staged Linux NAWS candidate](../lab/bbs/patches/synthmodem-window-size/README.md)
+now has codec and owned Enigma size-update checks. It introduces no serial-side
+control path and is not installed. It does not lift the connected-state refusal
+or establish an atomic DOS/bridge geometry transaction or editor reflow.
