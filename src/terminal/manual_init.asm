@@ -32,8 +32,23 @@ extern connection_state,terminal_tx_count
  retf
 %endmacro
 global terminal_manual_init_begin_far,terminal_manual_init_poll_far,terminal_manual_init_cancel_far
+%ifdef TERMINAL_AUTO_ANSWER_OWNER
+extern modes_value_1d1a,terminal_key_echo_far
+global terminal_auto_answer_begin_far
+; Same register API; answer-on source capacity1..25. Capture duplex, never loan it.
+terminal_auto_answer_begin_far:
+ save
+ mov di,1
+ jmp manual_begin_checked
+%endif
 terminal_manual_init_begin_far:
  save
+%ifdef TERMINAL_AUTO_ANSWER_OWNER
+ xor di,di
+manual_begin_checked:
+ cmp word [cs:echoing],0
+ jne .busy
+%endif
  cmp word [terminal_manual_init_active],0
  jne .busy
  or ax,ax
@@ -42,6 +57,13 @@ terminal_manual_init_begin_far:
  jb .invalid
  cmp cx,47
  ja .invalid
+%ifdef TERMINAL_AUTO_ANSWER_OWNER
+ or di,di
+ jz .capacity_valid
+ cmp cx,25
+ ja .invalid
+.capacity_valid:
+%endif
  cmp word [terminal_tx_count],0
  jne .busy
  cmp word [connection_state],0
@@ -63,6 +85,15 @@ terminal_manual_init_begin_far:
  add sp,8
  test dx,1
  jnz .invalid
+%ifdef TERMINAL_AUTO_ANSWER_OWNER
+ mov [terminal_manual_command_kind],di
+ mov word [cs:echo_enabled],0
+ or di,di
+ jz .echo_captured
+ mov ax,[modes_value_1d1a]
+ mov [cs:echo_enabled],ax
+.echo_captured:
+%endif
  mov word [cs:cursor],manual_payload
  mov word [cs:delay],0
  mov word [terminal_manual_init_accepted],0
@@ -97,6 +128,10 @@ terminal_manual_init_poll_far:
  je .result
  cmp di,1
  ja .invalid
+%ifdef TERMINAL_AUTO_ANSWER_OWNER
+ cmp word [cs:echoing],0
+ jne .result ; Echo's native renderer can service ANSI/keyboard recursively.
+%endif
  call now
  mov bx,started
  call elapsed
@@ -164,6 +199,9 @@ terminal_manual_init_poll_far:
  mov dx,[cs:clock+2]
  mov [cs:paused],ax
  mov [cs:paused+2],dx
+%ifdef TERMINAL_AUTO_ANSWER_OWNER
+ call answer_echo
+%endif
  jmp .result
 .complete:
  mov ax,2
@@ -210,6 +248,31 @@ terminal_manual_init_cancel_far:
 .done:
  restore
 
+%ifdef TERMINAL_AUTO_ANSWER_OWNER
+; Echo a physically accepted ordinary byte exactly once. This deliberately
+; differs from the original blocking sender's pre-write echo. Pause/FF never echo.
+answer_echo:
+ cmp word [terminal_manual_init_active],0
+ je .done
+ cmp word [cs:echo_enabled],0
+ je .done
+ mov bx,[cs:cursor]
+ dec bx
+ xor ax,ax
+ mov al,[bx]
+ cmp al,[cs:pause_marker]
+ je .done
+ cmp al,0xff
+ je .done
+ mov word [cs:echoing],1
+ call far terminal_key_echo_far
+ mov word [cs:echoing],0
+.done:
+ ret
+echo_enabled: dw 0
+echoing: dw 0
+%endif
+
 now:
  call connection_clock_ticks_service
  mov [cs:clock],ax
@@ -247,5 +310,9 @@ terminal_manual_init_active: dw 0
 terminal_manual_init_status: dw 0 ;0idle,1sending,2sent,3cancel,4timeout; start refuses5invalid/6busy.
 terminal_manual_init_accepted: dw 0
 terminal_manual_init_needs_resync: dw 0 ;Caller must reconcile partial modem line before retry.
+%ifdef TERMINAL_AUTO_ANSWER_OWNER
+global terminal_manual_command_kind
+terminal_manual_command_kind: dw 0 ;0manual Init,1answer-on; retained result identity.
+%endif
 manual_payload: times 129 db 0
 %endif

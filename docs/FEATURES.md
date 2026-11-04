@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Typed answer-on owner](AUTO_ANSWER_OWNER.md) adds a shared bounded command
+identity and acceptance-qualified local echo with renderer reentrancy protection.
+262 linked inputs,117 Init/31 dispatcher/22 elapsed regressions and exact clean
+source reproduction pass. Disabled builds retain8f76cc4f exactly. Configured
+answer-on selection, sound/notice and Alt-Y/menu binding remain required;14
+reference entries are still unavailable and no deployment/package changes occur.
+
 [Original Auto Answer recovery](AUTO_ANSWER_RECOVERY.md) adds44 exact native
 bytes for Alt-Y and its answer-on sender. Each source/original-comparison suite
 passes65536 saved pacing words,65536 sound words,3072 composed inputs and three

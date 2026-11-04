@@ -56,6 +56,11 @@ checks do not establish actual DOS/BBS/SIP/analog or physical behavior.
 
 ## Live integration required
 
+A [typed bounded sender component](AUTO_ANSWER_OWNER.md) now implements the
+answer-on identity, captured duplex and acceptance-qualified native echo with
+renderer reentrancy protection. Its flag has no Alt-Y/configured command/UI
+binding; the remaining integration and application gates below still apply.
+
 Reuse the maintained send owner only with an explicit command identity and
 answer-on plan. Preserve the sound setting and show the notice through a serviced
 foreground UI. Retain the original echo distinction without lending mutable

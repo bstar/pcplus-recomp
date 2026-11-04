@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "terminal_sha256": "344832bbe26e2974b6c071f45421b9f2770f69496a1293624a96c7cfc4829bda",
+  "component_only": true,
+  "AltY_enabled": false,
+  "installed": false,
+  "evidence": {
+    "build/auto-answer-owner-live-accepted-20261103/result.json": {
+      "passed": true,
+      "sha256": "fff6f677faa927062b8bc0c75b0bd521409d10845a24c0f025f7acf2d0841a3f",
+      "groups": 8,
+      "inputs": 262
+    },
+    "build/auto-answer-owner-init-regression-20261103/result.json": {
+      "passed": true,
+      "sha256": "64a379b3af653413e2df276ed55678ec1758e07b1e5b68517200ecb387530bd1",
+      "groups": 8,
+      "inputs": 117
+    },
+    "build/auto-answer-owner-dispatch-regression-20261103/result.json": {
+      "passed": true,
+      "sha256": "3558dc2b4f46f93e625b24549c1d442f4d839587d90f73ee42e8006cfec490e4",
+      "groups": 10,
+      "inputs": 31
+    },
+    "build/auto-answer-owner-elapsed-regression-20261103/result.json": {
+      "passed": true,
+      "sha256": "7003956b9f2b637b4ac5f64c0c155649113d26907fe50f03a1947d198a388eb7",
+      "groups": 22,
+      "inputs": 22
+    },
+    "build/auto-answer-owner-source-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "30457263a4370f271ce3c2a6e069b01e141f06c75d440689eb1db14d4021e26c",
+      "source_files": 539
+    },
+    "build/terminal-auto-answer-owner-disabled-20261103/disabled-check.json": {
+      "passed": true,
+      "sha256": "2000ca2df1e06bc64f893afbfd2bfb1e48cc449c690cfd6114aa290595d584ea"
+    }
+  },
+  "memory": {
+    "near_bytes": 65008,
+    "near_spare_bytes": 528,
+    "resident_CS_extent_bytes": 65234,
+    "resident_CS_spare_bytes": 302
+  },
+  "sources": {
+    "standalone/check_auto_answer_owner_live.py": "35f1f31ec17f1e72a6c74c20837eaaec86de35c381b791b8692b1068f23e87a9",
+    "src/terminal/manual_init.asm": "31b299ec4f1b6d4f3016547e5061c296ba31bcba2e12b914f2769606e12ac8ea",
+    "src/terminal/key_dispatch.asm": "b3dd70d9cb890295fcfd64a3cc477a816ff9e1e98cc1320c5974e1e5ef86e956",
+    "standalone/build_terminal.py": "353d7a03ee9011482bb91415daa7708d30ca9c617075d456c06ca702f3794b5c",
+    "standalone/prove_phone_log_startup_terminal.py": "cd0050a1f1f035a3d4db6c5f90484585db7c63688b847778979e4fe82d0618dd",
+    "standalone/check_manual_init_owner_live.py": "15ceaad3a43efd164b092e1fdbfce26df0aad2359a3cff336c9a6317a0c1bd2e"
+  },
+  "scope": "Typed answer-on send component with captured duplex, echo only after physically accepted ordinary bytes and native renderer recursion guard.262 linked answer inputs;117 Init/31 dispatcher/22 elapsed regressions; exact Git-free reproduction and feature-disabled8f76cc4f reproduction. Actual UART/IRQ/expander/native renderer/ANSI/key and connection hooks execute; BIOS/DOS/ports modeled. No configured answer-on selection, Alt-Y/reference/browser, sound/notice UI, DOS/BBS/physical acceptance or deployment. Maintained capture-on-begin/acceptance-qualified echo is distinct from original per-byte/pre-write echo."
+}

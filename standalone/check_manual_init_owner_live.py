@@ -19,8 +19,8 @@ from prm import expand_modem_command, modem_command_events
 DAY = 0x1800b0
 
 
-def invoke(m, operation, *, ax=0, si=0x5678, cx=0x3456, dx=0x4567):
-    name = 'terminal_manual_init_' + operation + '_far'
+def invoke(m, operation, *, ax=0, si=0x5678, cx=0x3456, dx=0x4567, answer=False):
+    name = 'terminal_' + ('auto_answer_' if answer else 'manual_init_') + operation + '_far'
     segment, offset = m.entries[name]
     regs = {UC_X86_REG_BX: 0x2345, UC_X86_REG_CX: cx, UC_X86_REG_DX: dx,
             UC_X86_REG_SI: si, UC_X86_REG_DI: 0x6789, UC_X86_REG_BP: 0xbabe,
