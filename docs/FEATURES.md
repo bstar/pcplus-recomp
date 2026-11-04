@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Original Auto Answer recovery](AUTO_ANSWER_RECOVERY.md) adds44 exact native
+bytes for Alt-Y and its answer-on sender. Each source/original-comparison suite
+passes65536 saved pacing words,65536 sound words,3072 composed inputs and three
+direct sends. It sends answer-on without toggling/dialing/ACKs, preserves local
+echo and uses50 native pacing units. Live integration remains required; no
+application/package/installation change and14 original entries remain unavailable.
+
 [Guarded manual Init](MANUAL_INIT_LIVE.md) now enables Alt-J/reference/browser
 in the experimental8f76cc4f candidate.117 sender/31 dispatcher inputs, two actual
 DOS8086 workflows and exact source reproduction pass. The command owns ordinary

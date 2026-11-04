@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "new_native_bytes": 44,
+  "composed_image_bytes": 265,
+  "application_changed": false,
+  "live_command_enabled": false,
+  "installed": false,
+  "evidence": {
+    "build/auto-answer-native-source-20261103/result.json": {
+      "passed": true,
+      "sha256": "9a1bfe142f2a5126d1c7bab7848707fbb01069c58fafb3c1dbb9570c1e537d53",
+      "original_compared": false,
+      "cases": {
+        "all_saved_pacing_words": 65536,
+        "all_sound_enable_words": 65536,
+        "composed": 3072,
+        "direct_send": 3
+      }
+    },
+    "build/auto-answer-native-original-20261103/result.json": {
+      "passed": true,
+      "sha256": "e1aa05c3d8e8d379f30d1cf0be1dfd56d54a4084eb47fdc10823dbba4f8cb578",
+      "original_compared": true,
+      "cases": {
+        "all_saved_pacing_words": 65536,
+        "all_sound_enable_words": 65536,
+        "composed": 3072,
+        "direct_send": 3
+      }
+    }
+  },
+  "sources": {
+    "standalone/check_auto_answer_native.py": "6a66a75dd8f6e6c9f841f42bec139d7fba4ef78ee8547dc818ea5c1b5e6028e7",
+    "src/config/prm.py": "01619cf74c1c9b0d3e5b29cd200b27192d81dca0e46ebe94c7f92e92072ac248",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/local_controls/auto_answer.asm": "cbd78338eb5c9936302dc3d5a732b8a99f8f06f1ddece0fd610f59e2612a7961",
+    "reconstruction/program_sound/switch.asm": "baaad7c6c95e1440f49521979631ba80d1bb412a05442bd9147bd6f1229c121e",
+    "reconstruction/modem_send/send.asm": "43d85bd97ffb134b9a401cc572a52ba653bebf69910c4ef9ecabfeb5e78f6f42",
+    "reconstruction/modem_commands/expand.asm": "834312f07d08f562a2982a0117c78eb377406d39eba0e31024b40d2bcc83732f",
+    "reconstruction/local_controls/auto-answer-provenance.json": "4d42c239f7e5c4bf347eeb0ce485bfea54c453ac7da08c6ed5711637c0f9ddfb"
+  },
+  "scope": "Native recovery component. No toggle, answer-off selection, ACK wait, dial, escape prefix or connection/call-timer event. No maintained Alt-Y/UI ownership, actual DOS/BBS/analog timing/physical acceptance or deployment. Tone and notice rendering, UART/calibrated/BIOS timing are explicit modeled boundaries.265 bytes include11 existing error-switch bytes not traversed. Separate source-only and original-comparison evidence retained."
+}

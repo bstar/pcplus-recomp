@@ -1,0 +1,59 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source_only_build": true,
+  "units": [
+    {
+      "name": "auto_answer_send_and_key",
+      "entry": "0x053a",
+      "key_entry": "0x0553",
+      "bytes": 44,
+      "original_file_offset": "0x173a",
+      "source": "reconstruction/local_controls/auto_answer.asm",
+      "sha256": "12116c329829b0d5028db647b00ea37ffb9bd3709825d8129c3a5442e76713af"
+    },
+    {
+      "name": "sound_switch",
+      "entry": "0x376d",
+      "information_entry": "0x3778",
+      "bytes": 30,
+      "source": "reconstruction/program_sound/switch.asm",
+      "sha256": "3f985dab01a32a339e5ba599626a8230c301e4a69fd333fe9d463bdf1ad7c9da"
+    },
+    {
+      "name": "send",
+      "entry": "0x48cc",
+      "bytes": 104,
+      "source": "reconstruction/modem_send/send.asm",
+      "sha256": "e007929f4330589b441dd73a6e2c1356e470a269d9a1f1c7dd2650620deb1fbb"
+    },
+    {
+      "name": "expand",
+      "entry": "0x4934",
+      "bytes": 87,
+      "source": "reconstruction/modem_commands/expand.asm",
+      "sha256": "008b9051520b45049c2a7c95767686eb48fa3951da532a8abc18de9ead0f9b43"
+    }
+  ],
+  "dispatch": {
+    "BIOS_key": "1500",
+    "scan_table_DS": "44E0",
+    "scan": "15",
+    "handler_CS": "0553",
+    "table_file_offset_base": 153936
+  },
+  "state": {
+    "1D68": "Saved pacing WORD, unconditionally50 during sending; exactly restored on normal return",
+    "1D1A": "Local echo WORD unchanged; ordinary nonzero expanded bytes echo before transmit when nonzero",
+    "1C16": "Configured answer-on string, unchanged",
+    "1C2F": "Answer-off string is not used or modified",
+    "2078": "Notice message pointer WORD (baseline001C -> AUTO ANSWER...)",
+    "1D40": "Sound-enable WORD, zero quiet, any nonzero information tone"
+  },
+  "evidence": {
+    "handler_and_sender_bytes": "ev_a7ef70db22c1b1b74d9213ae7e7955ddd9c4060cf25635f706660793183ed0e9",
+    "sound_switch_bytes": "ev_86a8b7db30021bd751396b715932797fd7e69d0ed343267445f822cc57b6ea72",
+    "undefined_entry_instruction": "ev_61ec9c108eb294fbd53695a4513b661104094af0fd9a1377a72287dd33f30cd1"
+  },
+  "boundary": "No auto-defined Ghidra0553 function/instruction. Read-byte Evidence, pinned ndisasm, native CPU execution and optional genuine-original comparison establish44-byte053A..0565 span: RET0552, key-entry tail JMP0563->053A and next prologue0566. Startup DS table/message data verified from original file separately, not claimed mapped by ordinary MZ analysis.",
+  "scope": "Native recovery component. No toggle, answer-off selection, ACK wait, dial, escape prefix or connection/call-timer event. No maintained Alt-Y/UI ownership, actual DOS/BBS/analog timing/physical acceptance or deployment."
+}
