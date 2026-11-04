@@ -78,7 +78,13 @@ SIP/analog or physical acceptance of the extension.
   --terminal build/ORDINARY/TERMINAL.EXE --output build/NEW-size-report
 ```
 
-## Bridge integration still required
+## Bridge integration status
+
+[The staged pre-session owner](MENU_SIZE_BRIDGE.md) now passes17 bridge test
+groups and actual8086 DOS UART → proxy → real TCP NAWS/CPR/DA/keyboard checks.
+It remains isolated from the installed bridge and physical deployment. The
+following contract is implemented in that candidate; full BBS/application and
+physical acceptance remain open.
 
 No SynthModem source, configuration or running service changes here. A bounded,
 explicit pre-session Linux owner must elicit/validate the reply while it owns

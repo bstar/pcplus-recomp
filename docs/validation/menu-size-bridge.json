@@ -1,0 +1,87 @@
+{
+  "passed": true,
+  "component": "Owned pre-TCP terminal-size handoff, staged SynthModem candidate only",
+  "bridge_tests": {
+    "passed": true,
+    "installed_sources_unchanged": true,
+    "baseline": {
+      "src/telnet/TelnetProxy.js": "8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628",
+      "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+      "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+      "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+      "COPYING": "0ed8b6028dc07428234531de5a5ec59c878ec622f599e4c353520a10be909cd9"
+    },
+    "sources": {
+      "lab/bbs/patches/synthmodem-menu-size/WindowSizeReply.js": "b7b4a58e37ccd3d124102559c932be9357686f71259d791be2fc2210ee9a25a6",
+      "lab/bbs/patches/synthmodem-menu-size/proxy.patch": "0d94ace226acd3dd6f4b04bb6fbb8f1f191a25007be5ee9cfdc4ef2dac37aa98",
+      "lab/bbs/patches/synthmodem-menu-size/check.py": "2a9bffd1c3dedc5cd910273f4a31feb67f518f2bbef72605e19397edb8016abe",
+      "lab/bbs/patches/synthmodem-menu-size/fixture-config.js": "130ce8b74a4eba86e2c6ba28a4e18ae2ad5035596d8832c47f668eea3daf470a",
+      "lab/bbs/patches/synthmodem-menu-size/check.test.js": "10a6eb958039d6aba1f421baccfaaf97240712bdc12bf9c4cfc23e02f074357a",
+      "lab/bbs/patches/synthmodem-menu-size/dos-peer.js": "0b23e00670a6be4bc535572a6b554e4824633efebedd27111d5819b61fbea370",
+      "lab/bbs/patches/synthmodem-menu-size/README.md": "f00b88653752ad3094026174ba1c5912a91245207750d885967d90d6f931f523"
+    },
+    "candidate": {
+      "src/telnet/TelnetProxy.js": "c88ccf3b407a91431f9b03b1c82142f506649f14116099c1e86e9dc7582dd618",
+      "src/telnet/WindowSizeReply.js": "b7b4a58e37ccd3d124102559c932be9357686f71259d791be2fc2210ee9a25a6"
+    },
+    "test_log_sha256": "9215765ceb71d8a09b8d7d07d9965d6727cd652af484d9f2165a2faaa312c4bb",
+    "node": "v24.18.1",
+    "scope": "Isolated actual patched proxy/reply collector and unchanged codec/framer. Deterministic socket/timer boundaries plus real loopback Telnet NAWS/data. Generic synthetic configuration only; no installed source/config/service, DOS/SIP/DSP/analog/BBS or physical acceptance."
+  },
+  "DOS_bridge_tests": {
+    "passed": true,
+    "checks": {
+      "DOS_exit": true,
+      "peer_exit": true,
+      "no_peer_errors": true,
+      "numeric_dial_only": true,
+      "one_owned_query": true,
+      "one_tcp_connection": true,
+      "actual_size_reply": true,
+      "accepted_NAWS": true,
+      "actual_CPR": true,
+      "actual_DA": true,
+      "typed_keyboard": true,
+      "metadata_consumed": true,
+      "immediate_banner": true,
+      "hardware_restored": true,
+      "PRM_unchanged": true,
+      "terminal_unchanged": true
+    },
+    "terminal_sha256": "f995e1a14dd8925a51aff8331aeefaac085f19c89b01989f9347d479ef3157b4",
+    "terminal_manifest_sha256": "3ba6d2958c245b8de80d96292e480ed300d4571e555272e8d2c8cfd4658b1f26",
+    "stage_receipt_sha256": "b6c8b8e5a52b1c137f001e73a03921458df017d127c7216bf5b6d7104d88ad62",
+    "sources": {
+      "standalone/test_menu_size_bridge_dos.py": "56bc3a04d18105c098fa00aa855be7a6b8be7fe7a50c29c212592026b1818853",
+      "lab/bbs/patches/synthmodem-menu-size/dos-peer.js": "0b23e00670a6be4bc535572a6b554e4824633efebedd27111d5819b61fbea370",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2"
+    },
+    "artifacts": {
+      "peer-result.json": "082c3e7981c5200f1226e6c21b1937a2830bc1af1544e12850eaa2da3356e2bd",
+      "serial-in.bin": "de3bbfd0ad3007a671d26ece5bd3bb35801015d6b1ae80945a42758f1e0e64df",
+      "serial-out.bin": "ee6cdbdf87df9c64b5fc16ea1aa88487e6ec7007900429a16ec35a5b5ea2046e",
+      "tcp-in.bin": "3eedb9cd590ec85aa3c98a02d8760e5ad2f4f6533a320320c182d8ea5e94504a",
+      "application-in.bin": "1734304e2ab4245f5bd7a8cf94388222ed5bfaf748fb39daf8cbccd40067326d",
+      "BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+      "SCREEN.BIN": "a955dfa94d35290cb5c9f055d4cb2769acf25d98134d473ac547539a7bacf828"
+    },
+    "scope": "Actual DOS UART size reply -> staged SynthModem proxy -> real loopback NAWS.\nNo installed configuration, service, SIP, DSP, analog modem or BBS acceptance.\n"
+  },
+  "evidence": {
+    "build/menu-size-accepted-20261104/result.json": "b6c8b8e5a52b1c137f001e73a03921458df017d127c7216bf5b6d7104d88ad62",
+    "build/menu-size-accepted-20261104/tests.tap": "9215765ceb71d8a09b8d7d07d9965d6727cd652af484d9f2165a2faaa312c4bb",
+    "build/menu-size-dos-accepted-20261104/result.json": "a9df3b5df6ece50e8cdaa37218b9ce421ef306ceadc152ec458ea70d21dba5b7"
+  },
+  "test_groups": 17,
+  "no_installed_change": true,
+  "remaining": [
+    "normal display key/menu and startup preference integration",
+    "owned Enigma and Synchronet application layout/editor regression through this handoff",
+    "live online resize and larger-screen modal ownership",
+    "SIP/DSP/analog and physical route acceptance",
+    "package and verified physical deployment",
+    "full PCPlus parity inventory"
+  ]
+}

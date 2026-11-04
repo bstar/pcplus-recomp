@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Owned pre-session size handoff](MENU_SIZE_BRIDGE.md) now stages a pinned
+SynthModem proxy query/NAWS owner.17 isolated test groups and an actual8086
+DOS UART → staged proxy → real loopback TCP workflow pass. Timeout, cancellation,
+reconnect, concurrent typing and opaque binary data are covered at the documented
+component boundaries. Installed bridge/config/service and DOS deployment are
+unchanged. Normal display controls/startup, owned BBS layout and physical
+acceptance remain open.
+
 [Accepted text-size reporting](WINDOW_SIZE_REPORT.md) now adds optional CSI18t
 replies without moving the cursor or altering its saved/display state.44 linked
 report inputs plus755 regressions, actual DOS delayed-serial queries and three

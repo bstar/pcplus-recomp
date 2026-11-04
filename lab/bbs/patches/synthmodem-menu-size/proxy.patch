@@ -1,0 +1,220 @@
+--- a/src/telnet/TelnetProxy.js
++++ b/src/telnet/TelnetProxy.js
+@@ -15,6 +15,7 @@
+ const { EventEmitter } = require('events');
+ const { TelnetCodec } = require('./TelnetCodec');
+ const { InputSequenceFramer } = require('./InputSequenceFramer');
++const { WindowSizeReply } = require('./WindowSizeReply');
+ const config         = require('../../config');
+ const { makeLogger } = require('../logger');
+ 
+@@ -38,6 +39,7 @@
+ 
+ // ─── Telnet proxy states ──────────────────────────────────────────────────────
+ const STATE = {
++  PROBING:    'PROBING',    // One owned size query before any BBS TCP connection
+   MENU:       'MENU',       // Showing menu, reading host:port
+   CONNECTING: 'CONNECTING', // TCP connect in progress
+   PROXYING:   'PROXYING',   // Bidirectional proxy active
+@@ -57,6 +59,11 @@
+     this._telnet = null;
+     this._inputFramer = null;
+     this._outputBlocked = false;
++    this._sizeProbe = null;
++    this._windowSize = null;
++    this._connectInput = null;
++    this._menuTerminatorCR = false;
++    this._skipProbeLF = false;
+ 
+     // Menu-idle heartbeat — see _scheduleMenuHeartbeat for rationale.
+     this._menuHeartbeat = null;
+@@ -94,6 +101,28 @@
+     // periods of NO data flow.
+     this._scheduleMenuHeartbeat();
+ 
++    if (this._state === STATE.PROBING) {
++      if (this._skipProbeLF && data.length) {
++        this._skipProbeLF = false;
++        if (data[0] === 10) data = data.subarray(1); // Menu CRLF may span chunks.
++      }
++      const probe = this._sizeProbe;
++      try {
++        if (probe.reply.feed(data)) this._finishSizeProbe(probe);
++      } catch (error) {
++        this._failSizeProbe(probe);
++      }
++      return;
++    }
++    if (this._state === STATE.CONNECTING && this._connectInput !== null) {
++      this._queueConnectInput(data);
++      return;
++    }
++
++    if (this._state === STATE.PROXYING && !this._telnet && this._connectInput !== null) {
++      this._queueConnectInput(data); // A synchronous send callback may type ahead.
++      return;
++    }
+     if (this._state === STATE.PROXYING) {
+       // Disabled by default: an in-band escape consumes valid binary bytes.
+       // An explicit opt-in is independent of receive chunk boundaries.
+@@ -113,7 +142,8 @@
+ 
+     if (this._state === STATE.MENU) {
+       // Accumulate into line buffer
+-      for (const byte of data) {
++      for (let at = 0; at < data.length; at++) {
++        const byte = data[at];
+         const ch = String.fromCharCode(byte);
+         if (byte === 0x08 || byte === 0x7F) {
+           // Backspace
+@@ -124,8 +154,17 @@
+         } else if (byte === 0x0D || byte === 0x0A) {
+           // Enter
+           if (tcfg.localEcho) this._send(Buffer.from(tcfg.lineEnding));
++          this._menuTerminatorCR = byte === 13;
+           this._handleInput(this._inputBuf.trim());
++          this._menuTerminatorCR = false;
+           this._inputBuf = '';
++          // Only the opted-in owner accepts typing ahead across this boundary.
++          if (this._state === STATE.PROBING || this._connectInput !== null || this._state === STATE.CLOSING) {
++            let tail = at + 1;
++            if (byte === 13 && data[tail] === 10) { tail++; this._skipProbeLF = false; }
++            if (tail < data.length) this.receive(data.subarray(tail));
++            return;
++          }
+         } else if (byte >= 0x20 && byte < 0x7F) {
+           this._inputBuf += ch;
+           if (tcfg.localEcho) this._send(Buffer.from(ch));
+@@ -291,9 +330,65 @@
+   // ─── TCP connection ───────────────────────────────────────────────────────────
+ 
+   _connect(host, port) {
++    if (this._state !== STATE.MENU) return;
++    const timeout = cfg.terminalSizeProbeTimeoutMs;
++    if (timeout === undefined || timeout === 0 || !this._checkAllowed(host)) {
++      this._connectTcp(host, port);
++      return;
++    }
++    if (!Number.isInteger(timeout) || timeout < 1 || timeout > 10000) {
++      this._failSizeProbe();
++      return;
++    }
++    this._cancelMenuHeartbeat();
++    this._state = STATE.PROBING;
++    this._skipProbeLF = this._menuTerminatorCR;
++    const probe = { host, port, reply: new WindowSizeReply(), timer: null };
++    this._sizeProbe = probe;
++    // Install owner/deadline before send: a terminal callback can reply inline.
++    probe.timer = setTimeout(() => this._failSizeProbe(probe), timeout);
++    this._send(Buffer.from('\x1b[18t', 'ascii'));
++  }
++
++  _cancelSizeProbe() {
++    const probe = this._sizeProbe;
++    this._sizeProbe = null;
++    this._skipProbeLF = false;
++    if (probe && probe.timer !== null) clearTimeout(probe.timer);
++  }
++
++  _finishSizeProbe(probe) {
++    if (this._sizeProbe !== probe || this._state !== STATE.PROBING) return;
++    const input = probe.reply.takeInput();
++    const dimensions = probe.reply.dimensions;
++    this._cancelSizeProbe();
++    this._windowSize = dimensions;
++    this._connectInput = input;
++    this._connectTcp(probe.host, probe.port);
++  }
++
++  _queueConnectInput(data) {
++    if (this._connectInput.length + data.length > 1024) {
++      this._failSizeProbe();
++      return;
++    }
++    this._connectInput = Buffer.concat([this._connectInput, data]);
++  }
++
++  _failSizeProbe(probe) {
++    if (this._state === STATE.CLOSING || (probe && this._sizeProbe !== probe)) return;
++    this._state = STATE.CLOSING;
++    this._cancelMenuHeartbeat();
++    this._closeConnection();
++    this._sendLine('Terminal size could not be confirmed. Reconnect and try again.');
++    this.emit('disconnect');
++  }
++
++  _connectTcp(host, port) {
+     this._cancelMenuHeartbeat();
+     this._state = STATE.CONNECTING;
+     this._sendLine(`Connecting to ${host}:${port}...`);
++    if (this._state !== STATE.CONNECTING) return; // Output callback may cancel.
+     log.info(`Connecting to ${host}:${port}`);
+ 
+     // Access control check
+@@ -303,10 +398,12 @@
+       return;
+     }
+ 
+-    this._connectTimer = setTimeout(() => {
++    const connectTimer = setTimeout(() => {
++      if (this._connectTimer !== connectTimer || this._state !== STATE.CONNECTING) return;
+       this._sendLine('Connection timed out.');
+       this._returnToMenu();
+     }, cfg.connectTimeoutMs);
++    this._connectTimer = connectTimer;
+ 
+     const socket = net.connect(port, host, () => {
+       if (this._tcpSocket !== socket) return;
+@@ -315,16 +412,19 @@
+       this._state = STATE.PROXYING;
+       log.info(`Connected to ${host}:${port}`);
+       this._sendLine(`Connected to ${host}:${port}.`);
++      if (this._tcpSocket !== socket || this._state !== STATE.PROXYING) return;
+       this._sendLine(this._escapeHelp());
++      if (this._tcpSocket !== socket || this._state !== STATE.PROXYING) return;
+       this._sendLine('');
++      if (this._tcpSocket !== socket || this._state !== STATE.PROXYING) return;
+       this._startIdleTimer();
+ 
+       this._telnet = new TelnetCodec({
+         send: data => { if (this._tcpSocket && !this._tcpSocket.destroyed) this._tcpSocket.write(data); },
+         display: data => this._send(data),
+         terminalType: cfg.terminalType,
+-        terminalCols: cfg.terminalCols,
+-        terminalRows: cfg.terminalRows,
++        terminalCols: this._windowSize ? this._windowSize.cols : cfg.terminalCols,
++        terminalRows: this._windowSize ? this._windowSize.rows : cfg.terminalRows,
+       });
+       // Opt-in assembly for servers whose input decoder loses fragmented ANSI keys.
+       const timeout = cfg.inputSequenceTimeoutMs;
+@@ -337,6 +437,9 @@
+       }
+       // Parsing is still required when unsolicited initial offers are disabled.
+       if (cfg.negotiateOptions) this._telnet.start();
++      const pending = this._connectInput;
++      this._connectInput = null;
++      if (pending && pending.length) this._forwardInput(pending);
+     });
+ 
+     this._tcpSocket = socket;
+@@ -484,14 +587,18 @@
+   // ─── Return to menu ───────────────────────────────────────────────────────────
+ 
+   _closeConnection() {
++    this._cancelSizeProbe();
++    this._windowSize = null;
++    this._connectInput = null;
+     this._inputFramer?.close();
+     this._inputFramer = null;
+     if (this._connectTimer) { clearTimeout(this._connectTimer); this._connectTimer = null; }
+     this._telnet = null;
+     if (this._idleTimer) { clearTimeout(this._idleTimer); this._idleTimer = null; }
+     if (this._tcpSocket) {
+-      this._tcpSocket.destroy();
+-      this._tcpSocket = null;
++      const socket = this._tcpSocket;
++      this._tcpSocket = null; // Detach identity before synchronous/stale events.
++      socket.destroy();
+     }
+   }
+ 
