@@ -60,6 +60,10 @@ _small_code_:
  mov sp,terminal_stack_top
  sti
  cld
+%ifdef TERMINAL_DISPLAY_PREFERENCES
+ extern _terminal_display_preferences_ready
+ mov word [_terminal_display_preferences_ready],0
+%endif
 %ifdef TERMINAL_MOUSE
  extern _terminal_mouse_bootstrap,_terminal_mouse_start,terminal_mouse_exit
  push ax

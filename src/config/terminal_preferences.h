@@ -8,6 +8,9 @@
  * DS=SS; no UART access. Optional modem selects serial-only startup.
  * Status14 means invalid transfer preferences; other statuses retain the
  * respective terminal/directory importer meanings. No defaults or writes.
+ * Optional display-preferences builds capture raw saved words only after every
+ * check/baseline publication succeeds; output extents must not alias that store.
+ * This does not apply geometry or update the capture after live setup/HOOK.
  */
 unsigned __cdecl terminal_preferences_read(const char *,terminal_import_settings *,
  modem_import_settings *,transfer_import_settings *,prm_dos_result *);

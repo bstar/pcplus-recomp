@@ -28,6 +28,7 @@ def flags(manifest, startup, event_hooks=True, disk=True, controls=True):
         'experimental_display_row_owner': 'display-row-owner',
         'diagnostic_display_row_probe': 'display-row-probe',
         'experimental_row_geometry_owner': 'row-geometry-owner',
+        'experimental_display_preferences': 'display-preferences',
         'experimental_original_keys': 'original-keys', 'experimental_original_reference': 'original-reference',
         'experimental_native_reset_bank': 'native-reset-bank', 'native_reset_transaction': 'native-reset-transaction'}
     result = ['--' + flag for field, flag in fields.items() if manifest.get(field)]

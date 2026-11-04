@@ -30,6 +30,7 @@ parser.add_argument('--status-probe',action='store_true',help='Diagnostic only: 
 parser.add_argument('--display-row-owner',action='store_true',help='Link namespaced low-level BIOS row bank; no canonical geometry or key binding')
 parser.add_argument('--display-row-probe',action='store_true',help='Diagnostic only: exercise BIOS row bank at startup before UART enable, then exit')
 parser.add_argument('--row-geometry-owner',action='store_true',help='Link offline BIOS/canonical/RIS commit and rollback owner; no key/menu binding')
+parser.add_argument('--display-preferences',action='store_true',help='Capture raw saved display words after successful startup import; no BIOS or key binding')
 parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchanged foreground keyboard dispatcher into a retained code bank')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
 parser.add_argument('--manual-init',action='store_true',help='Integrate guarded manual Init key/menu and exclusive foreground UART scheduling')
@@ -87,6 +88,7 @@ if args.status_owner:
 if args.status_probe:assert args.status_owner and not args.hook_probe and not args.input_probe and not args.projection_probe,'Status probe requires the isolated status-owner build'
 if args.display_row_owner:assert args.status_owner,'Display row bank requires the current status-owner component'
 if args.row_geometry_owner:assert args.display_row_owner,'Row geometry owner requires the verified BIOS row bank'
+if args.display_preferences:assert args.row_geometry_owner,'Display preference capture requires the row geometry component'
 if args.display_row_probe:assert args.display_row_owner and not args.status_probe and not args.hook_probe and not args.input_probe and not args.projection_probe,'Display row probe requires the isolated row-bank build'
 if args.reset_row_owner:assert args.status_geometry and args.local_controls,'Row-default component requires the reserved-row local-controls candidate'
 if args.auto_answer:
@@ -201,6 +203,7 @@ if args.status_owner:out_name+='-status-owner'
 if args.status_probe:out_name+='-status-probe'
 if args.display_row_owner:out_name+='-display-row-owner'
 if args.row_geometry_owner:out_name+='-row-geometry-owner'
+if args.display_preferences:out_name+='-display-preferences'
 if args.display_row_probe:out_name+='-display-row-probe'
 if args.local_controls:out_name+='-local-controls'
 if args.screen_pause:out_name+='-screen-pause'
@@ -337,6 +340,7 @@ for index,source in enumerate(sources):
  if args.status_probe:options+=['-DTERMINAL_STATUS_PROBE']
  if args.display_row_probe:options+=['-DTERMINAL_DISPLAY_ROW_PROBE']
  if args.row_geometry_owner:options+=['-DTERMINAL_ROW_GEOMETRY']
+ if args.display_preferences:options+=['-DTERMINAL_DISPLAY_PREFERENCES']
  if args.row_geometry_owner and args.display_row_probe:options+=['-DTERMINAL_ROW_GEOMETRY_PROBE']
  if args.screen_pause:options+=['-DTERMINAL_SCREEN_PAUSE']
  if args.call_timer:options+=['-DTERMINAL_CALL_TIMER']
@@ -578,6 +582,7 @@ for source in c_sources:
  if args.directory_resource_owner and source.name in ('directory_resources.c','keymap_dos.c','key_actions_dos.c'):options+=['-dKEY_RESOURCE_PRIVATE_READS']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
+ if args.display_preferences:options+=['-dTERMINAL_DISPLAY_PREFERENCES']
  if args.register_handoff:options+=['-dTERMINAL_REGISTER_HANDOFF']
  if args.custom_irq:options+=['-dTERMINAL_CUSTOM_IRQ']
  if args.session_controls:options+=['-dTERMINAL_SESSION_CONTROLS']
@@ -649,6 +654,7 @@ if args.display_row_owner:
  display_rows_bank['segment']=bank['relative_segment'];display_rows_bank['offset']=bank['offset'];display_rows_bank['bytes']=bank['bytes']
 assert memory['initial_terminal_rows']==(24 if args.status_geometry or args.directory_adopt else 25)
 if args.phone_log_reservations:assert memory['phone_log_claim_far_calls_verified']==2
+if args.display_preferences:sources.append(ROOT/'src/config/display_preferences.h')
 inputs=sources+c_sources+[ROOT/'src/config/prm_dos.h',ROOT/'src/config/terminal_import.h',ROOT/'src/config/terminal_import.inc',ROOT/'src/config/modem_import.h',ROOT/'src/config/modem_import.inc',ROOT/'src/config/startup_import.h',ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc']
 inputs += [ROOT/'src/config/live_configuration.h',ROOT/'src/aspect/resident_render.h',ROOT/'src/aspect/resident_bridge.inc',ROOT/'src/aspect/renderer_policy.h',ROOT/'src/aspect/serial_handoff.h']
 inputs += [protected_provenance,alternate_provenance,substitute_provenance]
@@ -697,6 +703,7 @@ manifest['diagnostic_status_probe']=args.status_probe
 manifest['experimental_display_row_owner']=args.display_row_owner
 manifest['diagnostic_display_row_probe']=args.display_row_probe
 manifest['experimental_row_geometry_owner']=args.row_geometry_owner
+manifest['experimental_display_preferences']=args.display_preferences
 manifest['diagnostic_row_geometry_probe']=args.row_geometry_owner and args.display_row_probe
 if args.display_row_owner:
  manifest['display_row_bank']={k:display_rows_bank[k] for k in ('namespace','native_bytes','segment','offset','bytes','scope')}

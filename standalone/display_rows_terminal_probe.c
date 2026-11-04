@@ -33,6 +33,17 @@ static word images(word phase,word rows)
  name[1]='W';return rows_probe_far(name,erase_shadow_cells,8192);
 }
 #endif
+#ifdef TERMINAL_DISPLAY_PREFERENCES
+#include "../src/config/display_preferences.h"
+static word preferences_image(void)
+{
+ char name[10]={'D','P','R','E','F','.','B','I','N',0};word values[5];
+ values[0]=terminal_display_preferences_ready;
+ values[1]=terminal_display_preferences.status_hidden;values[2]=terminal_display_preferences.selector;
+ values[3]=terminal_display_preferences.rows;values[4]=terminal_display_preferences.video_mode;
+ return rows_probe_write(name,values,sizeof(values));
+}
+#endif
 static void capture(word *r,word request,word status,native_display_rows_info *p)
 {
  word axword=0,bxword=0;
@@ -61,6 +72,9 @@ unsigned __far __cdecl terminal_display_rows_probe(void)
  static const word TEXT requests[]={25,28,43,50,25};
  native_display_rows_info info;word records[3+6*RECORD_WORDS],i,status,failed=0;char name[10];
  records[0]=0x4452;records[1]=RECORD_VERSION;records[2]=6;
+#ifdef TERMINAL_DISPLAY_PREFERENCES
+ if(preferences_image())return 26;
+#endif
  status=native_display_rows_probe(&info);if(status)return 20;
  capture(records+3,0,status,&info);
 #ifdef TERMINAL_ROW_GEOMETRY_PROBE

@@ -13,8 +13,8 @@ bytes; these fields are therefore inside the saved image:
 
 The lossless Python codec now names all four fields. It retains every16-bit
 value and every opaque neighbor; it does not validate a PRM's version, silently
-normalize saved data or write an installed file. These fields are not yet
-published into the maintained terminal's startup configuration.
+normalize saved data or write an installed file. The optional [startup capture](DISPLAY_PREFERENCES_STARTUP.md) now publishes
+these raw words after successful import, separately from live hardware geometry.
 
 ## Recovered SET/FETCH handlers
 
@@ -72,8 +72,8 @@ with exact untouched-neighbor comparisons.
 
 ## Next integration gates
 
-A maintained startup importer must stage these fields with the complete current
-configuration and distinguish saved selector from accepted BIOS state. The
+The optional startup capture now stages these fields with the current
+configuration; applying them must distinguish saved selector from accepted BIOS state. The
 configured-mode3/4 path, selector cycling and original fallback policy still
 need application integration. Combine those with the existing
 [offline BIOS/canonical transaction](ROW_GEOMETRY_TRANSACTION.md), larger modal

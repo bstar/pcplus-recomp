@@ -21,6 +21,8 @@ def main():
   struct.pack_into('<HH',raw,0,2,5);struct.pack_into('<H',raw,0x178,0x3e8);struct.pack_into('<H',raw,0x188,5)
   struct.pack_into('<HH',raw,0x4e4,8,4);struct.pack_into('<HH',raw,0x1bc,0,0)
   struct.pack_into('<H',raw,0x196,0);struct.pack_into('<H',raw,0x1e6,0)
+  if m.get('experimental_display_preferences'):
+   for at,value in ((0x1c2,0xffff),(0x1c8,4),(0x1ca,43),(0x4ec,0x12)):struct.pack_into('<H',raw,at,value)
   (drive/'TEST.PRM').write_bytes(raw)
   sentinel=b'Keep this existing diagnostic file.\x00\xff'
   if label=='exclusive':(drive/leaf).write_bytes(sentinel)
@@ -88,6 +90,8 @@ exit
   before,after=(drive/'BEFORE.BIN').read_bytes(),(drive/'AFTER.BIN').read_bytes()
   assert len(before)==42 and before==after,'IRQ/UART/PIC restoration failed'
   assert (drive/'TEST.PRM').read_bytes()==raw
+  if m.get('experimental_display_preferences'):
+   assert (drive/'DPREF.BIN').read_bytes()==struct.pack('<5H',1,0xffff,4,43,0x12)
   observed=(drive/leaf).read_bytes()
   if label=='exclusive':assert observed==sentinel
   else:
@@ -120,7 +124,7 @@ exit
  for name,digest in m['sources'].items():assert sha(ROOT/name)==digest,name
  inputs={n:sha(ROOT/n) for n in ('standalone/test_display_rows_terminal_dos.py','standalone/modem_fixtures.py','standalone/test_terminal.py','standalone/package_connection_test.py')}
  record=dict(passed=True,terminal_sha256=m['binary_sha256'],manifest_sha256=sha(binary.parent/'manifest.json'),checker_inputs=inputs,
-  bank=m['display_row_bank'],states=states,runs=runs,diagnostic_package_rejected=True,canonical_geometry_transaction=geometry,
+  bank=m['display_row_bank'],states=states,runs=runs,diagnostic_package_rejected=True,canonical_geometry_transaction=geometry,display_preferences_captured=bool(m.get('experimental_display_preferences')),
   scope=('Actual8086 DOS source-built parent calls real offline BIOS/canonical/RIS transaction at startup before UART enable; six BIOS/effective-row observations with actual video/full-shadow captures and native status at physical bottom.' if geometry else 'Actual8086 DOS source-built parent calls low-level DISPLAY_CODE API before UART enable; six BIOS observations with canonical geometry intentionally unchanged24.')+' Exclusive output refusal returns23 and preserves existing file. Both COM3/IRQ5 virtual-UART/PIC/vector snapshots restore; zero serial commands. No actual live RX/parser during transaction, hardware-fault injection in DOS, normal key/menu, online/BBS/SIP or physical acceptance. Diagnostic cannot be packaged.')
  (out/'result.json').write_text(json.dumps(record,indent=2)+'\n');print('PASS linked DOS rows:6 observations, exclusive create refusal, hardware restore, diagnostic package rejection; canonical transaction',geometry)
 if __name__=='__main__':main()

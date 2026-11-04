@@ -1,5 +1,20 @@
 #include "terminal_preferences.h"
 #include <string.h>
+#ifdef TERMINAL_DISPLAY_PREFERENCES
+#include "display_preferences.h"
+typedef char display_preferences_eight_bytes[sizeof(display_preferences)==8?1:-1];
+display_preferences terminal_display_preferences={0,0,0,0};
+unsigned terminal_display_preferences_ready=0;
+static unsigned display_word(const prm_dos_image *image,unsigned at)
+{return image->bytes[at]|((unsigned)image->bytes[at+1]<<8);}
+static void display_capture(const prm_dos_image *image)
+{
+ display_preferences stage;
+ stage.status_hidden=display_word(image,0x1c2);stage.selector=display_word(image,0x1c8);
+ stage.rows=display_word(image,0x1ca);stage.video_mode=display_word(image,0x4ec);
+ terminal_display_preferences=stage;terminal_display_preferences_ready=1;
+}
+#endif
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
 #include "../terminal/directory_identity.h"
 #endif
@@ -34,7 +49,11 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
 {
  prm_dos_image image;terminal_import_settings s;modem_import_settings m;
  transfer_import_settings t;unsigned n,status,count=0;
+ #ifdef TERMINAL_DISPLAY_PREFERENCES
+ const void *p[7];unsigned sizes[7];
+#else
  const void *p[5];unsigned sizes[5];
+#endif
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_invalidate())return 16;
 #endif
@@ -43,6 +62,10 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
  p[count]=transfer;sizes[count++]=sizeof(*transfer);
  if(modem){p[count]=modem;sizes[count++]=sizeof(*modem);}
  if(io){p[count]=io;sizes[count++]=sizeof(*io);}
+#ifdef TERMINAL_DISPLAY_PREFERENCES
+ p[count]=&terminal_display_preferences;sizes[count++]=sizeof(terminal_display_preferences);
+ p[count]=&terminal_display_preferences_ready;sizes[count++]=sizeof(terminal_display_preferences_ready);
+#endif
  if(!objects(p,sizes,count))return TERMINAL_IMPORT_ARGUMENT;
  if(prm_dos_load(path,&image,io))return TERMINAL_IMPORT_IO;
  status=terminal_import_decode(&image,&s);if(status)return status;
@@ -58,6 +81,9 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_publish(&image,SESSION_BASELINE_STARTUP))return 16;
 #endif
+#ifdef TERMINAL_DISPLAY_PREFERENCES
+ display_capture(&image);
+#endif
  memcpy(serial,&s,sizeof(s));if(modem)memcpy(modem,&m,sizeof(m));
  memcpy(transfer,&t,sizeof(t));return 0;
 }
@@ -69,7 +95,12 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
  prm_dos_image image;prm_dos_result io;directory_dos_result dio;
  terminal_import_settings s;modem_import_settings m;directory_live_plan d;
  directory_live_context c;transfer_import_settings t;directory_live_result decoded;
- unsigned a,b,status,count=0;const void *p[8];unsigned sizes[8];
+ unsigned a,b,status,count=0;
+#ifdef TERMINAL_DISPLAY_PREFERENCES
+ const void *p[10];unsigned sizes[10];
+#else
+ const void *p[8];unsigned sizes[8];
+#endif
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_invalidate())return 16;
 #endif
@@ -79,6 +110,10 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
  p[count]=serial;sizes[count++]=sizeof(*serial);p[count]=modem;sizes[count++]=sizeof(*modem);
  p[count]=plan;sizes[count++]=sizeof(*plan);p[count]=result;sizes[count++]=sizeof(*result);
  p[count]=context;sizes[count++]=sizeof(*context);p[count]=transfer;sizes[count++]=sizeof(*transfer);
+#ifdef TERMINAL_DISPLAY_PREFERENCES
+ p[count]=&terminal_display_preferences;sizes[count++]=sizeof(terminal_display_preferences);
+ p[count]=&terminal_display_preferences_ready;sizes[count++]=sizeof(terminal_display_preferences_ready);
+#endif
  if(!objects(p,sizes,count))return DIRECTORY_LIVE_ARGUMENT;
  memset(result,0,sizeof(*result));
  status=prm_dos_load(path,&image,&io);
@@ -111,6 +146,9 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
 #endif
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_publish(&image,SESSION_BASELINE_STARTUP)){result->status=16;return 16;}
+#endif
+#ifdef TERMINAL_DISPLAY_PREFERENCES
+ display_capture(&image);
 #endif
  memcpy(serial,&s,sizeof(s));memcpy(modem,&m,sizeof(m));memcpy(plan,&d,sizeof(d));
  memcpy(context,&c,sizeof(c));memcpy(transfer,&t,sizeof(t));return 0;

@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Saved display startup capture](DISPLAY_PREFERENCES_STARTUP.md) now publishes
+the four raw saved words after successful existing one-read startup transactions.
+181 linked inputs, actual DOS capture/restore workflows, existing row/status/
+default regressions and three exact source rebuilds pass. Capture is separate
+from hardware/live geometry; application apply, selector/UI, online and physical
+gates remain open. No deployment or command-availability change.
+
 [Saved display configuration](DISPLAY_CONFIGURATION.md) now maps the PRM status,
 selector, row and preferred-video words to recovered consumers.93 original
 ASPECT field/operand bytes match exactly; source/original suites each pass131328
