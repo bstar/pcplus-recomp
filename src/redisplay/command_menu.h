@@ -47,5 +47,8 @@ unsigned COMMAND_MENU_CALL command_menu_event(unsigned short event,unsigned shor
 #else
 #define STATUS_CONTROL_ACTION ELAPSED_CONTROL_ACTION
 #endif
+#ifdef TERMINAL_LINE_CONTROL
+#define LINE_CONTROL_ACTION (STATUS_CONTROL_ACTION+1)
+#endif
 #endif
 #endif

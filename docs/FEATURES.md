@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Original Toggle Lines](LINE_CONTROL.md) now optionally binds Ctrl-minus and both
+menus to the admitted selector transaction after frame release. It preserves live
+status visibility and saved preferences, cycles from accepted fallback, and
+retains guarded refusal/deferral.404 linked inputs,15 actual DOS workflows with56
+independently verified geometry/font/video stages and exact source-only rebuilds
+bind this checkpoint. Live adoption/NAWS, owned BBS/physical acceptance and full
+parity remain open. Nothing was deployed.
+
 [Normal startup display application](DISPLAY_STARTUP.md) now optionally applies
 imported preferences before UART enable/dialing. Absent imports retain the
 baseline, verified fallback is explicit and refused selectors exit without data.

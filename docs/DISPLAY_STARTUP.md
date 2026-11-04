@@ -6,7 +6,8 @@ enable, automatic dialing or ordinary parser input. It requires the composed
 geometry, full-frame, ASPECT-row, notice and status-control owners. Competing
 startup geometry diagnostics are rejected explicitly; they cannot silently
 override the saved display choice. This enables startup application only;
-normal Toggle Lines, live setup/HOOK adoption and tracked-online resize remain.
+normal Toggle Lines is a separate option, documented in [line controls](LINE_CONTROL.md).
+Live setup/HOOK adoption and tracked-online resize remain open.
 
 ## Startup behavior
 
@@ -97,7 +98,8 @@ the receipt. The pre-session Linux collector can query accepted logical size via
 CSI18t; startup application does not prove that collector's integration with
 installed SynthModem or owned BBS layouts.
 
-Normal Toggle Lines, live preference adoption, online NAWS, owned Enigma/
+The later [line-control checkpoint](LINE_CONTROL.md) adds normal bindings.
+Live preference adoption, online NAWS, owned Enigma/
 Synchronet and physical Cirrus/mouse/Boca/SPA2102/SIP/audio acceptance remain open.
 No physical DOS/card files, selected connection-test payload, private settings/
 call history, installed bridge/BBS/services or networking changed. The full

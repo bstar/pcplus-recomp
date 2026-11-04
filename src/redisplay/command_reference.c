@@ -79,6 +79,9 @@ static word action(word i)
 #ifdef TERMINAL_STATUS_CONTROL
  if(items[i].key==0x1b1d)return STATUS_CONTROL_ACTION;
 #endif
+#ifdef TERMINAL_LINE_CONTROL
+ if(items[i].key==0x0c1f)return LINE_CONTROL_ACTION;
+#endif
  if(items[i].key==0x2e00)return LOCAL_CONTROL_BASE;
  if(items[i].key==0x1600)return LOCAL_CONTROL_BASE+1;
  if(items[i].key==0x1200)return LOCAL_CONTROL_BASE+2;

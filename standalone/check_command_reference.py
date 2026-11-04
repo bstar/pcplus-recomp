@@ -32,6 +32,7 @@ def main():
    if item['id']=='initialize' and manifest.get('experimental_manual_init'):item['action']=next_action+int(bool(manifest.get('experimental_elapsed_view')))
    if item['id']=='answer' and manifest.get('experimental_auto_answer'):item['action']=next_action+int(bool(manifest.get('experimental_elapsed_view')))+1
    if item['id']=='status' and manifest.get('experimental_status_control'):item['action']=next_action+int(bool(manifest.get('experimental_elapsed_view')))+int(bool(manifest.get('experimental_manual_init')))+int(bool(manifest.get('experimental_auto_answer')))
+   if item['id']=='lines' and manifest.get('experimental_line_control'):item['action']=next_action+int(bool(manifest.get('experimental_elapsed_view')))+int(bool(manifest.get('experimental_manual_init')))+int(bool(manifest.get('experimental_auto_answer')))+1
  native=json.loads((transport.ROOT/'reconstruction/command_reference/provenance.json').read_text())
  assert [names[x['id']] for x in items]==[x['name'] for x in native['labels']]
  cases=[]

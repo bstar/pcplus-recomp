@@ -239,6 +239,13 @@ ENTRY(status_toggle,"Toggle Status                  Ctrl-]",
  "recording and unsupported display states refuse the change.\n"
  "Serial settings and saved preferences are unchanged.");
 #endif
+#ifdef TERMINAL_LINE_CONTROL
+ENTRY(line_toggle,"Toggle Lines                   Ctrl--",
+ "Cycle the configured display choices while disconnected.\n"
+ "Accepted BIOS geometry, text bounds and reset defaults change together.\n"
+ "Active connections and unsafe owners refuse or defer the request.\n"
+ "Imported display preferences are required and remain unchanged.");
+#endif
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
  ROW(script,0,0xfe00,'A'),ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
@@ -269,6 +276,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_STATUS_CONTROL
  ,ROW(status_toggle,2,0x1b1d,'S')
+#endif
+#ifdef TERMINAL_LINE_CONTROL
+ ,ROW(line_toggle,2,0x0c1f,'L')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))

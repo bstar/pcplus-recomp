@@ -50,6 +50,10 @@ terminal_local_control_key:
  cmp al,29 ; Normalize Ctrl-] by character, like the reference menu.
  je .selected
 %endif
+%ifdef TERMINAL_LINE_CONTROL
+ cmp al,31 ; Original Ctrl-minus uses the normalized character, not a scan.
+ je .selected
+%endif
  cmp ax,0x2e00
  je .selected
 %ifdef TERMINAL_MANUAL_INIT
@@ -107,6 +111,10 @@ terminal_local_control_key:
  jne .defer
 .admitted:
  mov word [terminal_local_control_status],0
+%ifdef TERMINAL_LINE_CONTROL
+ cmp al,31
+ je .lines
+%endif
 %ifdef TERMINAL_STATUS_CONTROL
  cmp al,29
  je .status
@@ -150,6 +158,13 @@ terminal_local_control_key:
 .status:
  extern _terminal_status_toggle
  call far _terminal_status_toggle
+ mov [terminal_local_control_status],ax
+ jmp .done
+%endif
+%ifdef TERMINAL_LINE_CONTROL
+.lines:
+ extern _terminal_display_cycle
+ call far _terminal_display_cycle
  mov [terminal_local_control_status],ax
  jmp .done
 %endif
