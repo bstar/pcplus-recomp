@@ -63,3 +63,12 @@ build storage; neither was promoted to a reproduced product lockup.
 The [receipt](validation/reliability-recovery-20261103.json) binds the selected
 binary, source hashes and scoped results. The next terminal controls have
 [original entry evidence](LOCAL_CONTROLS_RECOVERY.md), with UI integration pending.
+
+## First daily-use controls integrated in a separate candidate
+
+The [local-control candidate](LOCAL_CONTROLS_LIVE.md) adds original Clear, Reset
+and Duplex keys/reference actions with checked banking and owner deferral. It
+retains separate source/package identity; the selected physical installation is
+unchanged. Further terminal controls and file/DOS/directory/key/Chat work remain
+open. Physical BUSY diagnosis is still pending rather than waived by emulator
+results.

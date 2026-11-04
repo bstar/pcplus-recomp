@@ -15,4 +15,17 @@ extern unsigned command_menu_active,command_menu_action;
 #endif
 unsigned COMMAND_MENU_CALL command_menu_event(unsigned short event,unsigned short key,
  unsigned short __far *frame);
+#ifdef TERMINAL_LOCAL_CONTROLS
+#ifdef TERMINAL_DIRECTORY_VIEW
+#define LOCAL_CONTROL_DIRECTORY_COUNT 1
+#else
+#define LOCAL_CONTROL_DIRECTORY_COUNT 0
+#endif
+#ifdef PHONE_LOG_CONTROLS
+#define LOCAL_CONTROL_LOG_COUNT 1
+#else
+#define LOCAL_CONTROL_LOG_COUNT 0
+#endif
+#define LOCAL_CONTROL_BASE (24+LOCAL_CONTROL_DIRECTORY_COUNT+LOCAL_CONTROL_LOG_COUNT)
+#endif
 #endif

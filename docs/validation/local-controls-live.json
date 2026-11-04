@@ -1,0 +1,94 @@
+{
+  "passed": true,
+  "terminal_sha256": "e69a8050ea5d31793f07490e325052db8b37382475dafc3d437b2c806c08c5fb",
+  "terminal_manifest_sha256": "14ba7033dfd51145b96622278cb6b3dca615947ffc72bcf80730b0d538d5b61f",
+  "feature_disabled_sha256": "9f2a37e73582691656058513ea08e2197a1ecd1bc861890c3389ce71db0807f6",
+  "matching_interpreter_sha256": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+  "memory": {
+    "resident_CS_extent_bytes": 65532,
+    "resident_CS_spare_bytes": 4,
+    "local_controls_bridge_pairs_verified": 4,
+    "local_controls_native_entry_bytes": 24,
+    "local_controls_dispatch_calls_verified": 1
+  },
+  "evidence": {
+    "build/local-controls-live-final-20261103/result.json": {
+      "passed": true,
+      "sha256": "ff26772f63218ce5a4b73fd99f01363fdd42b2546656e6d0bbcc8bf6f165c7ec"
+    },
+    "build/local-controls-minimal-live-20261103/result.json": {
+      "passed": true,
+      "sha256": "333902f6913cb360460e54ca35ace2bcec9c7dd00b0cf4cba56a76b1e1cb2507"
+    },
+    "build/local-controls-abi-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "83b11506989f206d3d1471809ec149e4546c070f03595d5578c05617b52bc878"
+    },
+    "build/local-controls-release-source-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "a9826420a48c54fa55048d0c02731ae66d7c13f56861ded1e2eb6a6a33bcec3a"
+    },
+    "build/terminal-local-controls-abi-20261103/reference-checks.json": {
+      "passed": true,
+      "sha256": "1c878c09a3158f8f24cf01c962da372ece6c28636fef21e1bd5bfad11f151edb"
+    },
+    "build/local-controls-dos/local-controls-20261103/result.json": {
+      "passed": true,
+      "sha256": "9562e54b2aa3bb1f65933afb4a90ddf33dc04fe52fec28f72c20a7415c55d7cf"
+    },
+    "build/bbs-lab/results/enigma/local-controls-enigma-20261103/result.json": {
+      "passed": true,
+      "sha256": "ff7f265fcf6895f1a3915eac36009c39fe5997176cb23e5667aac7d600c5e96b"
+    },
+    "build/bbs-lab/results/enigma/local-controls-enigma-20261103/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "5d8b16cd94ec00421492f0bad771573a2d6928444af7ba93677fcb7c39ee7b3a"
+    },
+    "build/bbs-lab/results/synchronet/local-controls-synchronet-20261103-v2/proxy-integration.json": {
+      "passed": true,
+      "sha256": "1c96e1f5ac5a2226656a68e65229f499b4797cbc3e71784c32a98c5bbb47d4f0"
+    },
+    "build/bbs-lab/results/synchronet/local-controls-synchronet-20261103-v2/screen-reference-audit.json": {
+      "passed": true,
+      "sha256": "c43e896acbec761ea6045f60735e9c2ec6cf6dd2aedaaa87f8bf6e368544588b"
+    },
+    "build/busy-retry-dos/local-controls-reconnect-20261103/result.json": {
+      "passed": true,
+      "sha256": "47f61f9bdbc5245808134d7ad03e43e0973160ceddc87b4c2dad79c86452ca96"
+    },
+    "build/terminal-endurance/local-controls-endurance-20261103/result.json": {
+      "passed": true,
+      "sha256": "aef03b7f6331580859b901f7b1b19b445dd82cc0f9f0152856829e69c998a86f"
+    },
+    "build/local-controls-package-splash-20261103/result.json": {
+      "passed": true,
+      "sha256": "4916f36cac1319e3853845168c1da09acbd1cd2f22db7bfe5cc4208a7fdaf532"
+    },
+    "build/local-controls-package-setup-20261103/result.json": {
+      "passed": true,
+      "sha256": "17b7fef0b06ff878f71c82b79d1cc7e2c2030c76f92e3e7a053ef969be7eeee8"
+    }
+  },
+  "sources": {
+    "src/terminal/local_controls.asm": "ae7338660b748d3ff4ca46e0cb2d43fc0bb9323085caa00e5e009bf2558506a1",
+    "src/terminal/transport.asm": "00d58f80eac1d7dd6ee8a4f2df1ddb4e20cebb869b81c1ceae1fe49ef6185a08",
+    "src/redisplay/command_reference.c": "2422665ad0ed7d17bcbf1a3ddf4f5f010c51b772cb8fd2389c19b610f7b80de2",
+    "src/redisplay/command_menu.c": "85edea98b5d0a795f64f01633b782bd748dfce834f246420a841e274b6804111",
+    "src/redisplay/command_menu.h": "88d695c128e8afa203947edd9d463db9653078265718671a198e07bf3cae26b7",
+    "standalone/build_terminal.py": "d519d53b1e717b44b81acdae2b03ecaab76803ae7861a531742c19a1853ee9bc",
+    "standalone/terminal_memory.py": "cb73f83560b08482549194bfb149425616ac6a4baaff318df9182887c7e7a979",
+    "standalone/check_local_controls_live.py": "b7a119e963d4a2ebd69559ad3f1cbecb82d1c11f878964bb21adceee64991742",
+    "standalone/check_local_controls_abi.py": "2ece5d14a19188aaa7451549916a257a581bb7154505b8fae46aec5bf6618c91",
+    "standalone/test_local_controls_dos.py": "d3116b95e8ee6e6e9ae8a3d984fcee054b85487cb99aa736639fca0be98203d1",
+    "standalone/check_command_reference.py": "6ac9421483c93881dbeff18f2413afc700f30d1aae55f8fb83f085ff7d46e1cc",
+    "standalone/prove_phone_log_startup_terminal.py": "f9e3e355cbc760c113280c22a66087188583a39f83c08ca2f1573e7cf3a93da0",
+    "standalone/package_connection_test.py": "8ffffe8982d2d7c6a8e6ac997bf65c2c1eceb1be6e524bdfed893aa75c0039db"
+  },
+  "deployment": {
+    "staged": true,
+    "installed": false,
+    "physical_busy_outcome": "not confirmed",
+    "physical_acceptance": false
+  },
+  "scope": "Optional original-reference parent Clear/Reset/Duplex integration. Actual DOS8086 direct/menu/partial-CSI workflows, source-only byte-exact rebuild, scoped CPU/ABI refusals, owned Enigma/Synchronet screen/cursor audits, BUSY/three-call recovery and300s/601-frame paced UART endurance. ASPECT executable unchanged. Not physical modem/SIP/audio acceptance or full original feature parity."
+}

@@ -22,6 +22,10 @@ def main():
         re.findall(r'ITEM\((\w+),(0x[0-9a-f]+),(\d+),(\d+),(\d+)\)',source)]
  assert len(items)==39
  if manifest.get('experimental_directory_view'):items[0]['action']=24
+ if manifest.get('experimental_local_controls'):
+  base_action=24+int(bool(manifest.get('experimental_directory_view')))+int(bool(manifest.get('experimental_phone_log_controls')))
+  for item in items:
+   if item['id'] in ('clear','reset','duplex'):item['action']=base_action+('clear','reset','duplex').index(item['id'])
  native=json.loads((transport.ROOT/'reconstruction/command_reference/provenance.json').read_text())
  assert [names[x['id']] for x in items]==[x['name'] for x in native['labels']]
  cases=[]

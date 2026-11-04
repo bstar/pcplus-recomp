@@ -274,6 +274,11 @@ terminal_poll_io:
  jc .done
  call terminal_monitor_key
  jc .done
+%ifdef TERMINAL_LOCAL_CONTROLS
+ extern terminal_local_control_key
+ call far terminal_local_control_key
+ jc .done
+%endif
  cmp ax,0x2200 ;Native Alt-G screen-file snapshot
  je .snapshot
  cmp ax,0x2600 ;Native Alt-L processed printer copy

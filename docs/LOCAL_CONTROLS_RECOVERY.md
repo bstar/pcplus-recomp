@@ -30,4 +30,4 @@ foreground owner after view restoration. Defer controls during parser, macro,
 child or transfer ownership; verify saved reset-state behavior, status updates,
 continued serial input and no transmitted local-key bytes. Account for resident
 segment pressure through checked bank interfaces before enabling the commands.
-These components are not linked into the deployed application yet.
+The selectable parent integration is now described in [LOCAL_CONTROLS_LIVE.md](LOCAL_CONTROLS_LIVE.md). The installed hardware package remains unchanged until its acceptance/deployment step.

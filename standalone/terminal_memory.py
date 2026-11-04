@@ -193,6 +193,25 @@ def inspect_terminal_memory(binary,map_path):
   displacement=struct.unpack_from('<h',code,at+1)[0]
   assert symbols[source][0]==symbols[target][0]
   assert (symbols[source][1]+at+3+displacement)&65535==symbols[target][1],(source,'wrong near target')
+ if 'terminal_local_control_key' in symbols:
+  config=next(c for c in code_segments if c['name']=='CONFIG_CODE')
+  assert symbols['terminal_local_control_key'][0]==config['relative_segment']
+  for source,target in [('terminal_control_clear_far','terminal_clear_home'),('terminal_control_reset_far','local_reset_1368'),('terminal_control_duplex_far','local_duplex_3316'),('terminal_control_defer_far','terminal_defer_key')]:
+   assert symbols[source][0]==near_code['relative_segment']
+   near_call(source,target)
+   target_bytes=b'\x9a'+struct.pack('<HH',symbols[source][1],symbols[source][0])
+   body=image[start+config['relative_segment']*16:start+config['relative_segment']*16+config['bytes']]
+   sites=[config['relative_segment']*16+i for i in range(len(body)-4) if body[i:i+5]==target_bytes]
+   assert len(sites)==1 and sites[0]+3 in relocations,(source,'checked far bridge ownership')
+  near_call('local_reset_1368','ansi_escape_service_20a4',prefix=b'\xb8\x01\x00\x50',suffix=b'\x83\xc4\x02\xc3')
+  duplex=raw('local_duplex_3316',13);mode=symbols['modes_value_1d1a']
+  assert mode[0]==ds and duplex==b'\x83\x3e'+struct.pack('<H',mode[1])+b'\x01\x1b\xc0\xf7\xd8\xa3'+struct.pack('<H',mode[1])+b'\xc3'
+  assert symbols['terminal_local_control_status'][0]==ds
+  key=symbols['terminal_local_control_key'];pattern=b'\x9a'+struct.pack('<HH',key[1],key[0])
+  root=image[start+near_code['relative_segment']*16:start+near_code['relative_segment']*16+near_code['bytes']]
+  sites=[near_code['relative_segment']*16+i for i in range(len(root)-4) if root[i:i+5]==pattern]
+  assert len(sites)==1 and sites[0]+3 in relocations,'One live-dispatch local-control far entry'
+  extra.update(local_controls_bridge_pairs_verified=4,local_controls_native_entry_bytes=24,local_controls_dispatch_calls_verified=1)
  if '_directory_view_event' in symbols:
   directory=next(c for c in code_segments if c['name']=='DIRECTORY_CODE')
   directory_seg=directory['relative_segment']

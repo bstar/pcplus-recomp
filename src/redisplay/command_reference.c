@@ -2,6 +2,7 @@
  * follow the identified 2.01 reference data; navigation/refusal is maintained.
  * This entire module and its constants live in REFERENCE_CODE. */
 #include "command_reference.h"
+#include "command_menu.h"
 typedef unsigned short word;
 typedef unsigned char byte;
 typedef struct reference_item {
@@ -68,10 +69,17 @@ LABEL(dim,"Dim commands are unavailable. Assigned BBS page keys remain unchanged
 LABEL(refused,"Not available in this build: ");
 static word selected,refusal;
 static word __far *view;
-#ifdef TERMINAL_DIRECTORY_VIEW
+#if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS)
 static word action(word i)
 {
+#ifdef TERMINAL_DIRECTORY_VIEW
  if(i==0)return 24;
+#endif
+#ifdef TERMINAL_LOCAL_CONTROLS
+ if(items[i].key==0x2e00)return LOCAL_CONTROL_BASE;
+ if(items[i].key==0x1600)return LOCAL_CONTROL_BASE+1;
+ if(items[i].key==0x1200)return LOCAL_CONTROL_BASE+2;
+#endif
  return items[i].action;
 }
 #else

@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The optional [original local controls](LOCAL_CONTROLS_LIVE.md) now integrate
+Alt-C Clear, Alt-U Reset and Alt-E Duplex through direct keys and Alt-Z, with
+serial/parser/view ownership checks. Actual DOS, clean-source reproduction,
+Enigma/Synchronet, repeated-call and five-minute UART checks pass. The candidate
+is staged separately; physical BUSY diagnosis and full parity remain open.
+
 - [Connection alert](CONNECT_ALERT.md): paired 880-Hz PC-speaker tones on a
   successful modem call, using the saved sound flag and alert countdown.
   Nonblocking implementation passes linked timing/ownership checks and actual

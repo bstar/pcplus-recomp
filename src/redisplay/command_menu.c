@@ -193,6 +193,17 @@ ENTRY(directory,"Browse dialing directory       Alt-D",
 ENTRY(call_log,"Call log status / retry",
  "Inspect retained calls. R requests a safe retry; uncertain files stay protected.");
 #endif
+#ifdef TERMINAL_LOCAL_CONTROLS
+ENTRY(local_clear,"Clear Screen                   Alt-C",
+ "Clear the current terminal view and home the cursor. Incoming data,\n"
+ "capture and serial settings remain active. History is retained.");
+ENTRY(local_reset,"Reset Terminal                 Alt-U",
+ "Restore the captured terminal display/parser/key baseline and clear\n"
+ "the view. Serial settings and connection ownership are retained.");
+ENTRY(local_duplex,"Duplex Toggle                  Alt-E",
+ "Toggle local echo between full and half duplex for ordinary input.\n"
+ "BBS replies and serial framing are unaffected.");
+#endif
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
@@ -206,6 +217,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef PHONE_LOG_CONTROLS
  ,ROW(call_log,0,0xf400,'L')
+#endif
+#ifdef TERMINAL_LOCAL_CONTROLS
+ ,ROW(local_clear,2,0x2e00,'C'),ROW(local_reset,2,0x1600,'T'),ROW(local_duplex,1,0x1200,'E')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))
