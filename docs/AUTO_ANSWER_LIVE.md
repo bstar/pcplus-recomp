@@ -5,7 +5,7 @@ entry and browser search. It sends the saved answer-on field through the shared
 bounded command owner, displays `AUTO ANSWER...` and requests the configured
 information sound. It is not a toggle or an acknowledged initialization/dial
 operation. Source-only executable SHA256:
-`91c1d13f10e07743c744b220f36a96656aeb03b445c884e567201c6f9cfc0bc8`.
+`d9eae89d8bdfa5156b5d50e31e542bbe0c1851bc10a4b03d9fc826954ec84b03`.
 
 The flag includes manual Init and the typed answer owner. It requires the sound
 owner and reserved status row. Admission supports BIOS80x25 color text modes2/3,
@@ -43,14 +43,17 @@ stays outside terminal addressing/scrolling; the existing status refresh updates
 the underlay while the notice is visible. Completion/cancellation restores that
 row without overwriting incoming terminal-body cells. Carrier-loss cleanup
 releases Auto Answer's notice before the normal carrier-loss notice is drawn.
+Normal retirement also restores the notice in the serial service before deferred
+keys run, so it cannot later clear a newer command's notice. A dedicated
+completion-boundary regression checks this ordering.
 
 ## Validation and limits
 
-The [receipt](validation/auto-answer-live.json) binds26 linked UI/command inputs:
+The [receipt](validation/auto-answer-live.json) binds27 linked UI/command inputs:
 direct/reference/browser, quiet/nonzero sound/echo, normal RX/CPR/typeahead and
 new body text, cancel/hangup/exit/loss/redial, flow stalls, empty/invalid commands,
 foreign/replacement speaker generations, live mute, owner deferral and unsupported
-video. It also binds262 typed-owner,117 Init,31 dispatcher,22 elapsed-window and23
+video. It also binds272 typed-owner,117 Init,31 dispatcher,22 elapsed-window and23
 connect-alert regressions, all39 reference labels with13 unavailable entries,
 and an exact Git-free source-only rebuild. The disabled feature reproduces
 8f76cc4f. Near data/stack65024 (512 spare), resident CS65240 (296 spare); the

@@ -152,6 +152,14 @@ def mute_during_tone():
     m.finish();assert bytes(m.tx)==b'ATS0=1\r'
     return 1
 
+def completion_boundary():
+    m=Answer();m.key(0x1500)
+    for _ in range(30):
+        m.poll()
+        if not m.active():break
+    assert not m.active() and not m.notice(), 'notice must retire before deferred keys can start a new notice'
+    return 1
+
 def admission():
     count=0
     for field in ('terminal_parser_active','terminal_program_pending','terminal_transfer_pending','uart_break_hold'):
@@ -179,6 +187,7 @@ def main():
                     ('cancel-hangup-exit-qualified-loss-and-redial',lifecycle),('flow-stall-timeout-cleanup',stalls),
                     ('empty-and-invalid-configured-answer',empty_and_invalid),('foreign-speaker-and-generation-ownership',foreign_sound),
                     ('mute-stops-only-owned-tone-while-notice-remains',mute_during_tone),
+                    ('completion-releases-notice-before-key-dispatch',completion_boundary),
                     ('deferred-owners-and-unsupported-video',admission)]:
         count=fn();cases.append(dict(case=name,inputs=count,passed=True));print(name,count,'PASS',flush=True)
     paths=[Path(__file__).resolve(),ROOT/'src/terminal/modem_answer_ui.asm',ROOT/'src/terminal/manual_init_dispatch.asm',ROOT/'src/terminal/local_controls.asm',ROOT/'src/terminal/transport.asm']

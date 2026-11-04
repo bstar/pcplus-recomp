@@ -1,7 +1,7 @@
 # Full application reconstruction checklist
 
 [Guarded Auto Answer](AUTO_ANSWER_LIVE.md) now enables configured Alt-Y and both
-menus in the experimental91c1d13f candidate.26 linked lifecycle/UI/sound cases,
+menus in the experimentald9eae89d candidate.27 linked lifecycle/UI/sound cases,
 typed/Init/dispatcher/elapsed/connect-alert regressions, exact clean-source
 reproduction and two DOS8086 workflows pass. Notice and generation-owned short
 tone remain serviced; captured local echo follows physical acceptance. Thirteen
@@ -571,7 +571,7 @@ eight invalid ABI cases (45 total inputs);13 attached DOS PROGRAM cases retain
 parentd688f4a4. This remains selected software evidence; audio acceptance follows below.
 Sustained pressure and physical/full application gates remain open.
 
-[Receive pressure](UART_RECEIVE_PRESSURE.md) adds26 linked normal/mouse cases: twenty exact
+[Receive pressure](UART_RECEIVE_PRESSURE.md) adds27 linked normal/mouse cases: twenty exact
 65,536-byte streams plus six uncooperative-peer overflow cases. Reactive peer,
 registers and scheduling remain modeled; this is not DOS foreground or physical
 flow timing. Separate independently audited8086/386 DOS sessions each log65,536
@@ -1621,7 +1621,7 @@ application gate is closed.
 
 The7ff697c F03/F13 checkpoint added [scoped BREAK recovery and a child transport owner](ASPECT_BREAK_OWNER.md):
 249 exact native bytes, original compiler grammar for BREAK/SET BREAK/FETCH BREAK,
-626 linked UART ownership inputs and31 linked timing/cancellation/error cases.
+627 linked UART ownership inputs and31 linked timing/cancellation/error cases.
 The source-only proof reproduces132 outputs. Interpreter dispatch for these
 commands, parent duration inheritance, native notice/status integration, actual
 DOS pulse scheduling and physical UART timing remain open; supported runtime
