@@ -8,6 +8,8 @@ extern pcplus_screen_save,pcplus_screen_restore,pcplus_flow_message
 extern terminal_redisplay_stop
 global terminal_connection_notice,terminal_connection_notice_restore
 extern terminal_status_live
+extern ui_flow_suppressed,ui_flow_region_cells,ui_flow_video_base,ui_flow_coordinate_base
+extern screen_columns,screen_video_row_bytes,text_video_segment
 %ifdef TERMINAL_SCREEN_PAUSE
 %define TERMINAL_MODAL_NOTICE
 extern terminal_screen_pause_active
@@ -62,6 +64,10 @@ terminal_connection_notice:
  jmp .done
 .not_paused:
 %endif
+ ; Canonical suppression releases this row to terminal output. Never acquire
+ ; an underlay there, even if a previous notice is still marked active.
+ call notice_row_admit
+ jc .discard
  ; Notices own the live screen, never a cached history-page underlay.
  call terminal_redisplay_stop
  cmp byte [notice_active],0
@@ -80,6 +86,9 @@ terminal_connection_notice:
  push si
  call pcplus_flow_message
  add sp,4
+ jmp .done
+.discard:
+ mov byte [notice_active],0
 .done:
  restore
 terminal_connection_notice_restore:
@@ -104,6 +113,10 @@ terminal_connection_notice_restore:
 %endif
  cmp byte [notice_active],0
  je .done
+ ; A geometry owner must retire a notice before releasing its row. If that
+ ; contract was missed, discard the stale lease rather than erase newer RX.
+ call notice_row_admit
+ jc .discard
  mov ax,notice_cells
  push ax
  mov ax,3840
@@ -111,6 +124,7 @@ terminal_connection_notice_restore:
  mov ax,15
  push ax
  call pcplus_screen_restore
+.discard:
  mov byte [notice_active],0
 .done:
  restore
@@ -150,6 +164,12 @@ terminal_status_notice_refresh:
  push si
  push di
  push es
+ call notice_row_admit
+ jnc .admitted
+ mov byte [notice_active],0
+ mov word [bp-32],3 ; Same unsupported-geometry result as STATUS.
+ jmp .done
+.admitted:
  cmp byte [notice_active],0
  je .draw
  lea ax,[bp-30]
@@ -193,6 +213,30 @@ terminal_status_notice_refresh:
  mov sp,bp
  pop bp
  retf
+
+; Read-only admission for the existing fixed physical row25 lease. This does
+; not authorize a new geometry or probe BIOS; callers retain that responsibility.
+; Keep AX and all other registers intact, returning only CF.
+notice_row_admit:
+ cmp word [ui_flow_suppressed],0
+ jne .bad
+ cmp word [ui_flow_region_cells],80
+ jne .bad
+ cmp word [ui_flow_video_base],3840
+ jne .bad
+ cmp word [ui_flow_coordinate_base],0x1800
+ jne .bad
+ cmp word [screen_columns],80
+ jne .bad
+ cmp word [screen_video_row_bytes],160
+ jne .bad
+ cmp word [text_video_segment],0xb800
+ jne .bad
+ clc
+ ret
+.bad:
+ stc
+ ret
 SEGMENT _DATA public class=DATA use16
 notice_active: db 0
 notice_cells: times 30 db 0

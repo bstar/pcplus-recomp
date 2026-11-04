@@ -43,12 +43,24 @@ class Poll(Status):
 
 
 def main():
-    global BINARY,MAP
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--mouse',action='store_true');a=p.parse_args()
+    global BINARY,MAP,Connection
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--mouse',action='store_true');p.add_argument('--terminal',type=Path);a=p.parse_args()
+    assert not (a.mouse and a.terminal)
     if a.mouse:
         import check_status_live as status,check_transport as transport
         BINARY=ROOT/'build/terminal-mouse/TERMINAL.EXE';MAP=BINARY.parent/'terminal.map'
         status.BINARY=transport.BINARY=BINARY;status.MAP=transport.MAP=MAP
+    if a.terminal:
+        import check_status_live as status,check_transport as transport
+        BINARY=a.terminal.resolve();MAP=BINARY.parent/'terminal.map'
+        status.BINARY=transport.BINARY=BINARY;status.MAP=transport.MAP=MAP
+    manifest=json.loads((BINARY.parent/'manifest.json').read_text())
+    clock_harness=bool(manifest.get('experimental_call_timer'))
+    if clock_harness:
+        # The full application samples DOS time on connection transitions.
+        # Reuse its established clock/modem fixture; never replace product calls.
+        from check_call_timer_live import Clock,configure
+        configure(BINARY);Connection=Clock
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     rows=[]
     def done(name):rows.append(dict(case=name,passed=True))
@@ -60,10 +72,13 @@ def main():
             else:m.connect()
             seen=m.uc.mem_read(m.symbols['connection_enabled']+1,1)[0]
             assert bool(seen)==initial
-            m.carrier=False;m.poll()
+            # Modem sessions qualify a falling level over four BIOS ticks.
+            # Eight bounded foreground polls cover that existing policy; direct
+            # serial sessions retain their immediate-loss path.
+            m.carrier=False;m.poll(8)
             assert (m.state(),m.get('connection_status'))==((0,6) if initial else (6,1))
             if not initial:
-                m.carrier=True;m.poll();m.carrier=False;m.poll();assert (m.state(),m.get('connection_status'))==(0,6)
+                m.carrier=True;m.poll();m.carrier=False;m.poll(8);assert (m.state(),m.get('connection_status'))==(0,6)
             done('connect-snapshot-direct%d-initialDCD%d'%(direct,initial))
     for carrier in (0,128):
         for flags in (0x202,0x602):
@@ -114,8 +129,11 @@ def main():
     manifest=json.loads((BINARY.parent/'manifest.json').read_text())
     for name,digest in manifest['sources'].items():assert sha(ROOT/name)==digest,name
     inputs={name:sha(ROOT/name) for name in ('standalone/check_parent_carrier_status.py','standalone/check_status_live.py','standalone/check_connection.py','standalone/check_transport.py','standalone/dos_image.py')}
+    if clock_harness:
+        for name in ('standalone/check_call_timer_live.py','standalone/check_recording_ui_live.py','standalone/modem_fixtures.py'):
+            inputs[name]=sha(ROOT/name)
     result=dict(passed=True,cases=rows,parent_sha256=sha(BINARY),manifest_sha256=sha(BINARY.parent/'manifest.json'),
-                checker_sha256=sha(Path(__file__)),inputs=inputs,scope=__doc__+' Real near/far code, DS=SS stack copies, register/IF/DF retention and video bytes execute. Modem/BDA inputs are modeled. No actual DOS or physical timing claim.')
+                checker_sha256=sha(Path(__file__)),inputs=inputs,clock_harness=clock_harness,scope=__doc__+' Real near/far code, DS=SS stack copies, register/IF/DF retention and video bytes execute. Modem/BDA and optional DOS clock inputs are modeled. No actual DOS or physical timing claim.')
     (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(passed=True,groups=len(rows))))
 
 

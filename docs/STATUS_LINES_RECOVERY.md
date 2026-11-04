@@ -92,6 +92,8 @@ Hiding status can expose a25th terminal row. Existing notices, Auto Answer,
 redisplay and transfer owners must retain correct underlays or refuse unsupported
 geometry. In particular, Auto Answer currently requires a reserved status row.
 Do not restore saved notice cells over newer incoming data in an exposed row.
+The [notice admission fix](STATUS_NOTICE_OWNERSHIP.md) adds defensive retirement;
+the geometry transaction must still retire a valid underlay before exposing it.
 Larger BIOS line modes also need adequate frame/storage sizing and fallback.
 
 The current bridge/BBS acceptance uses fixed80x24 geometry. A native row change
