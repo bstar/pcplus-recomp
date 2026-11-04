@@ -70,6 +70,14 @@
     "build/keyboard-bank-package-setup-20261103/result.json": {
       "passed": true,
       "sha256": "be9d888670bb4cf0da0dcd1fcea126128fa72df9b58206640f47a43cef86238e"
+    },
+    "build/keyboard-bank-committed-start-20261103/result.json": {
+      "passed": true,
+      "sha256": "d693d1bc04d3c3d82b59bfd435f17b6c16d428ae2ac6c2a8f95b8512f2aea33f"
+    },
+    "build/keyboard-bank-committed-setup-20261103/result.json": {
+      "passed": true,
+      "sha256": "c065081eaad4a5803939c18ff0eb69c9bf6ec7b0c7e135523cc312bf0fa5f432"
     }
   },
   "verification_sources": {
@@ -84,5 +92,23 @@
     "reason": "Source freeze failed after comment/validator edits during runtime; final frozen-source run supersedes it."
   },
   "installed": false,
-  "scope": "Optional retained dispatcher bank, unchanged keyboard body and command set. CPU, actual DOS8086 and owned paced Enigma/Synchronet proxy lab checks only. No SIP/DSP/analog/physical acceptance; physical BUSY remains unresolved. No live service or machine configuration changed."
+  "scope": "Optional retained dispatcher bank, unchanged keyboard body and command set. CPU, actual DOS8086 and owned paced Enigma/Synchronet proxy lab checks only. No SIP/DSP/analog/physical acceptance; physical BUSY remains unresolved. No live service or machine configuration changed.",
+  "committed_package": {
+    "source_base_commit": "9754e1e1067e1cb36efab216c64cf00b22f929bf",
+    "manifest_sha256": "9fb9fe3c2592b7f8418abc434d777828d7bf514daacd2e9452449ccb4b45d095",
+    "archive_sha256": "048fad10e368e8bb25ccc0c6867f12f4126e9ce093048dbef5127ad6d8577dd5",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+      "README.TXT": "3212b36bbf4488481462e523d5b460d18599c28ccb65a8bf6366c5cc61bd4b2c",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "854e8add51fe3311fa2fbb829dc4eb1bb4bc588a711639e3a4f072df826f9651",
+      "VERSION.TXT": "f14412be0f02bd40994166a249990919c9276dd53a761fd0e5fd816e4b4091f1",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "card_written": false
+  }
 }
