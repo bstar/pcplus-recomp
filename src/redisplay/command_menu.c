@@ -232,6 +232,13 @@ ENTRY(manual_init,"Init Modem                     Alt-J",
  "Escape cancels; Alt-H hangs up and Alt-X exits through their usual path.\n"
  "No automatic escape sequence is inserted into an active connection.");
 #endif
+#ifdef TERMINAL_STATUS_CONTROL
+ENTRY(status_toggle,"Toggle Status                  Ctrl-]",
+ "Hide or show the status line while disconnected in an80x25 view.\n"
+ "The text area becomes25 or24 rows. Active connection, transfer,\n"
+ "recording and unsupported display states refuse the change.\n"
+ "Serial settings and saved preferences are unchanged.");
+#endif
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
  ROW(script,0,0xfe00,'A'),ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
@@ -259,6 +266,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_AUTO_ANSWER
  ,ROW(auto_answer,1,0x1500,'A')
+#endif
+#ifdef TERMINAL_STATUS_CONTROL
+ ,ROW(status_toggle,2,0x1b1d,'S')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))

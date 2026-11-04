@@ -1,0 +1,165 @@
+{
+  "passed": true,
+  "terminal": "build/status-control-accepted-20261104/ordinary/TERMINAL.EXE",
+  "terminal_sha256": "ee0bd6cd00295643f9500aed5ca4dd8b8552a102574f5d09a45affe739d7308f",
+  "manifest_sha256": "b63ac35d26d4a99bee476ab81a8c8ced3331052dc67237b50647b4f69351ee59",
+  "resident_CS_extent_bytes": 65418,
+  "resident_CS_spare_bytes": 118,
+  "data_stack_bytes": 65088,
+  "build_flags": [
+    "--directory-keys",
+    "--aspect-keys",
+    "--keyboard-bank",
+    "--reset-row-owner",
+    "--status-owner",
+    "--display-row-owner",
+    "--row-geometry-owner",
+    "--display-preferences",
+    "--window-size-report",
+    "--local-controls",
+    "--screen-pause",
+    "--call-timer",
+    "--elapsed-view",
+    "--manual-init-owner",
+    "--manual-init",
+    "--auto-answer-owner",
+    "--auto-answer",
+    "--original-keys",
+    "--status-geometry",
+    "--original-reference",
+    "--external-render",
+    "--mouse",
+    "--notice-input",
+    "--exit-guard",
+    "--process-bank",
+    "--session-capture",
+    "--session-projection",
+    "--session-baseline",
+    "--register-handoff",
+    "--session-controls",
+    "--hook-return",
+    "--hook-execute",
+    "--hook-modem",
+    "--hook-input",
+    "--hook-apply",
+    "--hook-lookup",
+    "--traps",
+    "--custom-irq",
+    "--special-edition",
+    "--phone-log-bank",
+    "--phone-log-startup",
+    "--phone-log-lifecycle",
+    "--phone-log-events",
+    "--phone-log-disk",
+    "--phone-log-controls",
+    "--phone-log-reservations",
+    "--native-reset-bank",
+    "--native-reset-transaction",
+    "--status-control",
+    "--notice-sound"
+  ],
+  "checks": {
+    "controls": {
+      "path": "build/status-control-keys-final-20261104/result.json",
+      "sha256": "032006baccb6dee006424e5317dd1e83ca5667de575a9ecc08660b91d3ebb6ab",
+      "passed": true,
+      "inputs": 36,
+      "scope": "Actual keyboard/menu Ctrl-] dispatch and offline status transaction.\nLinked instructions execute; BIOS/UART/DOS boundaries modeled, no physical claim.\n"
+    },
+    "reference": {
+      "path": "build/status-control-accepted-20261104/ordinary/reference-checks.json",
+      "sha256": "6c60c4f177724a98217cc37140c226cad12086f8ad376d8d3f0708da1a0534fa",
+      "passed": true,
+      "inputs": 82,
+      "scope": "Actual linked reference, command dispatch and serviced UI; hardware/DOS modeled. Functional names/static grouping follow original file data. Navigation/refusal is maintained; no original runtime/pixel equivalence or physical hardware claim."
+    },
+    "DOS": {
+      "path": "build/status-control-dos/status-control-accepted-20261104/result.json",
+      "sha256": "8930c1836775f237f741da134c366a614ae018dbecdabf57106d3e11f51d1a0d",
+      "passed": true,
+      "inputs": 0,
+      "scope": "Actual8086 DOS normal Ctrl-]/Alt-Z status controls and serial area reports.\nSynthetic loopback serial peer; no online resize, BBS, SIP or physical claim.\n"
+    },
+    "source_proof": {
+      "path": "build/status-control-proof-20261104/result.json",
+      "sha256": "573d7992e5989862f968acc33e115348a9317e2916414bb5bbd84d686e074266",
+      "passed": true,
+      "inputs": 0,
+      "scope": "Rebuild a terminal variant from its declared public sources in an empty tree. Requires caller pinned toolchain environment; byte identity, not runtime acceptance."
+    },
+    "status_transition": {
+      "path": "build/status-control-regress-accepted-20261104/status_transition/result.json",
+      "sha256": "e5643c4ba3be451df0e35fe851d539b27470b967c5b6f0f9cbcd94ff7a4d42a5",
+      "passed": true,
+      "inputs": 76,
+      "scope": "Execute optional offline status transaction, actual parser/RIS and rollback.\nActual C/ASM parent helpers; BIOS/UART boundaries modeled. No online size policy.\n Offline fixed80x25 narrow/unprotected component; actual frame/metadata/default rollback, native scroll/cursor/status and parser/CPR/RIS execute. Late fault changes a configuration input at renderer entry; no product function replaced. No key/menu binding, online resize/NAWS, larger/wide mode, actual DOS/BBS/physical or deployment acceptance."
+    },
+    "row_geometry": {
+      "path": "build/status-control-regress-accepted-20261104/row_geometry/result.json",
+      "sha256": "58e8960eb17a066babd21ea665216b58575d847087159876137d1253a91e2352",
+      "passed": true,
+      "inputs": 102,
+      "scope": "Execute actual BIOS/canonical/RIS owner; BIOS/UART boundaries are modeled. Actual linked C/ASM/native BIOS request chains, full rollback, RIS/status/parser and UART IRQ code execute. BIOS effects, DOS allocations, INT33 driver/vector boundaries and failure responses modeled; mouse arrival seeds native pending data at the pause boundary, not physical IRQ timing. Renderer fault changes an input at real boundary. No function/instruction/return patch, ordinary key binding, online/BBS or physical acceptance."
+    },
+    "reset_rows": {
+      "path": "build/status-control-regress-accepted-20261104/reset_rows/result.json",
+      "sha256": "e41a5b8bd702fc5b29d360cb6ce1d9f0dd564011cd29d41d5001221e59100edd",
+      "passed": true,
+      "inputs": 250,
+      "scope": "Execute staged captured-RIS row updates. No complete live geometry transaction.\nThe linked component changes captured defaults only; BIOS/UART inputs modeled.\n Actual far API, captured table and RIS instructions; staged failure atomicity, DS=SS, register/flag/stack guards. No live geometry commit, key/menu binding, BIOS resize, full frame/history/bridge-size transaction, DOS/BBS/package/physical acceptance or deployment."
+    },
+    "display_preferences": {
+      "path": "build/status-control-regress-accepted-20261104/display_preferences/result.json",
+      "sha256": "3bbce1efb5c4981db9e6e654d5372750a9613be18e5c78d262146031299ba620",
+      "passed": true,
+      "inputs": 181,
+      "scope": "Execute linked one-read startup display capture; DOS/file effects modeled.\nRaw preferences remain separate from BIOS, canonical geometry and live selection.\n Actual C/ASM public startup readers, decoder/validators, mouse staging and baseline publication execute. File/DOS effects modeled; late publish fault clears IF at its real boundary. No function/instruction replacement, geometry apply, normal keys, online/BBS/physical or deployment acceptance."
+    },
+    "display_select": {
+      "path": "build/status-control-regress-accepted-20261104/display_select/result.json",
+      "sha256": "0643e7149ef3155c7e1b6c59b7052b84cb8b5dac3b8ed8e314421c5d4ccddd5e",
+      "passed": true,
+      "inputs": 95,
+      "scope": "Execute banked selector/BIOS owner; BIOS effects modeled, no canonical UI commit. Actual C/ASM mode/geometry/font/capability chains execute, including recovered vendor branch. BIOS effects/refusal modeled. Raw destructive physical service only; no screen rollback, canonical/RIS/UI/bridge commit, normal key, online/BBS or physical acceptance."
+    },
+    "display_transaction": {
+      "path": "build/status-control-regress-accepted-20261104/display_transaction/result.json",
+      "sha256": "3319b66a7fdef9d3ca7cd44049d239658c72e468b61bedcf9bc2ff5c546a2b77",
+      "passed": true,
+      "inputs": 51,
+      "scope": "Execute composed offline selector/BIOS/canonical/RIS transaction.\nBIOS, DOS allocation and mouse driver boundaries modeled; no normal UI/online claim.\n Actual selector and canonical owner, RIS/parser/status/shadow/rollback, UART ISR and mouse owner execute. BIOS/DOS/INT33 effects modeled; faults change real-boundary inputs. No instruction/function replacement, normal command, online/BBS/physical or deployment acceptance."
+    },
+    "window_size_report": {
+      "path": "build/status-control-regress-accepted-20261104/window_size_report/result.json",
+      "sha256": "f8141d5ab3345bcd346357e19e2f8849590797999654fb5da31c23f8803e3919",
+      "passed": true,
+      "inputs": 44,
+      "scope": "Execute ordinary CSI18t through actual parser and whole-packet UART queue.\nBIOS/UART effects modeled; no bridge proxy or physical acceptance.\n Actual parser/report/queue/origin/UART instructions execute. CSI temporary parsing fields can change; cursor/modes/attributes/save bank/history/video/shadow/selection remain unchanged. No staged SynthModem probe, live BBS/transfer/analog/physical or deployment acceptance."
+    }
+  },
+  "source_inputs": {
+    "src/redisplay/command_menu.c": "18c7d96c973ca08ccac0a61b5e6d159cdc8b8d89188457dbfefc337e506b5023",
+    "src/redisplay/command_menu.h": "0d1a3fe8ca91c3d0da97b6df72603fcccdd010e763149efc20228e106c04ccd8",
+    "src/redisplay/command_reference.c": "af969c830c67c5ab8d4f0b21fd54ddea0577316e7ea385f887fbfb9a40ec21ad",
+    "src/redisplay/redisplay.c": "62a727e7ba88588efbb444ae2f1cada4099b15d1da322bdd5fd290311b82430d",
+    "src/terminal/local_controls.asm": "2cad8c1c9a057263814ba604cd98236c5d4a8f0e1a29eb474ce710014577be69",
+    "standalone/build_terminal.py": "9d16abf51be35b902834b21fc59c467179c299980b882632415da5a853b02588",
+    "standalone/check_command_reference.py": "b853e74baf65d63ae475dda62d64b6fed74ee14e13377709f3736fd6d0c4583a",
+    "standalone/check_status_control_live.py": "5622c5be8eebf90cdd1c48795b5da6e163b7a63d3822675dfbfefe2e9279f6cb",
+    "standalone/test_status_control_dos.py": "6b70fc26f98e987a36882eaf9af2dd45f7dc7caba51c70bdb33be520694808ff",
+    "standalone/prove_terminal_variant.py": "bcff28fc58758386a4dab29a814043a64eeeb1785a8b5fdc74c3bfacb0477216"
+  },
+  "normal_control_inputs": 36,
+  "display_regression_inputs": 799,
+  "reference_inputs": 82,
+  "unavailable_reference_commands_in_this_variant": 12,
+  "not_installed": true,
+  "remaining": [
+    "online status/size changes and application acknowledgment",
+    "normal Ctrl-- line controls and larger modal frames",
+    "automatic startup preference application",
+    "owned Enigma and Synchronet layout/editor/modal acceptance",
+    "physical modem/SIP/DSP route and package/deployment acceptance",
+    "remaining full-parity inventory"
+  ]
+}

@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Normal status control](STATUS_CONTROL.md) now enables Ctrl-] and Toggle Status
+through both menus in the optional status-control variant.36 linked control
+inputs,799 display regressions,82 reference inputs, actual8086 DOS24→25→24
+reports/CPR and exact source-only reproduction pass. Closing shared views now
+releases stale visibility ownership. This variant has12 unavailable reference
+commands; tracked-online changes, normal line controls, larger frames, startup
+preferences, BBS/physical acceptance and deployment remain open.
+
 [Owned pre-session size handoff](MENU_SIZE_BRIDGE.md) now stages a pinned
 SynthModem proxy query/NAWS owner.17 isolated test groups and an actual8086
 DOS UART → staged proxy → real loopback TCP workflow pass. Timeout, cancellation,

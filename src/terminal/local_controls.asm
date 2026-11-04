@@ -46,6 +46,10 @@ terminal_local_control_key:
  cmp ax,0x1400
  je .selected
 %endif
+%ifdef TERMINAL_STATUS_CONTROL
+ cmp al,29 ; Normalize Ctrl-] by character, like the reference menu.
+ je .selected
+%endif
  cmp ax,0x2e00
  je .selected
 %ifdef TERMINAL_MANUAL_INIT
@@ -103,6 +107,10 @@ terminal_local_control_key:
  jne .defer
 .admitted:
  mov word [terminal_local_control_status],0
+%ifdef TERMINAL_STATUS_CONTROL
+ cmp al,29
+ je .status
+%endif
 %ifdef TERMINAL_MANUAL_INIT
  cmp ax,0x2400
  je .initialize
@@ -136,6 +144,13 @@ terminal_local_control_key:
 %ifdef TERMINAL_SCREEN_PAUSE
 .pause:
  call terminal_screen_pause
+ jmp .done
+%endif
+%ifdef TERMINAL_STATUS_CONTROL
+.status:
+ extern _terminal_status_toggle
+ call far _terminal_status_toggle
+ mov [terminal_local_control_status],ax
  jmp .done
 %endif
 .not_ready:
@@ -198,7 +213,7 @@ terminal_local_control_key:
  retf
 SEGMENT _DATA public class=DATA use16
 global terminal_local_control_status
-terminal_local_control_status: dw 0 ;0 executed,1 deferred,2 reset baseline absent
+terminal_local_control_status: dw 0 ;0 executed,1 deferred,2 baseline absent; status owner3/4 refused/rollback
 %ifndef TERMINAL_SPECIAL_EDITION
 ; The Special Edition splash supplies this alignment anchor in that variant.
 ; Other reference builds need the same independent C near-pointer base.
