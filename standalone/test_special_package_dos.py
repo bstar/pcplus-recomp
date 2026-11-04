@@ -32,6 +32,11 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     app = drive / 'PCPLUSSE'
     shutil.copytree(package / 'PCPLUSSE', app)
     raw = bytearray(image())
+    # The editor fixture preserves arbitrary opaque bytes. The current parent
+    # also applies saved display preferences at startup, so supply an admitted
+    # VGA25/status-visible frame instead of opaque values for these four words.
+    for at,value in ((0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0)):
+        struct.pack_into('<H',raw,at,value)
     assert com in (1,2,3,4)
     base=(0x3f8,0x2f8,0x3e8,0x2e8)[com-1]
     struct.pack_into('<H', raw, 0, com-1)
@@ -104,6 +109,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert video[at:at + 38:2] == b'LoC SPECIAL EDITION'
         assert video[at + 1:at + 38:2] == b'\x0f' * 19
     assert (drive / 'BEFORE.BIN').read_bytes() == (drive / 'AFTER.BIN').read_bytes()
+    assert b'Unsupported terminal function' not in (drive/'SCREEN.BIN').read_bytes()[::2]
     if strategy:
         assert len((drive/'STRATB.BIN').read_bytes())==2 and (drive/'STRATB.BIN').read_bytes()==(drive/'STRATA.BIN').read_bytes()
     if after_child_view:
