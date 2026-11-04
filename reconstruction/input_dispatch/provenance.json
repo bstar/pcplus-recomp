@@ -165,6 +165,7 @@
     "Unsupported terminal-control families and enabled logging sinks remain explicit external dependencies."
   ],
   "maintained_changes": [
-    "OMF entry masks its word character argument to eight bits before control-table indexing; flat recovery remains exact."
+    "OMF entry masks its word character argument to eight bits before control-table indexing; flat recovery remains exact.",
+    "Optional OMF INPUT_TABLES_DATA stores the two near input dispatch tables in DGROUP and uses DS indexing; default OMF and exact flat recovery retain CS tables."
   ]
 }

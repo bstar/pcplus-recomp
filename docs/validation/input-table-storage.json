@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "component": "Optional input dispatch near-pointer storage adaptation; default executable unchanged",
+  "candidate": {
+    "path": "build/input-tables-data-20261104/data/TERMINAL.EXE",
+    "sha256": "055f56e6412ca8de4446d7af2a37a36e798e23fddd062ac68fccca9c95454b6a",
+    "source_files": 570,
+    "original_inputs": [],
+    "resident_CS_bytes": 65424,
+    "near_bytes": 65232
+  },
+  "default_control": {
+    "path": "build/input-tables-data-20261104/control/TERMINAL.EXE",
+    "sha256": "e2e1f7ec210da06c36be2f8129a622c70788179daf5ab10c4dac22981cc98059",
+    "matches_installed_image": true,
+    "resident_CS_bytes": 65534,
+    "near_bytes": 65120
+  },
+  "flat_dispatch": {
+    "path": "build/input_dispatch/dispatch.bin",
+    "sha256": "71c5f03454f7079c81daaec9a7ffdf980d4027fb1e75b2d1a4d1ce16f9fa65cc"
+  },
+  "source_reproduction": {
+    "path": "build/input-tables-data-source-proof-20261104/result.json",
+    "sha256": "d60dc3ff1e6648e9be3246a917fcbdc31d291c2fbae7bf40335870d16a6ce3b0"
+  },
+  "relocation": {
+    "path": "build/input-tables-data-relocation-final-20261104/result.json",
+    "sha256": "bb087e2e5ceb451e0faafec58807656179668bad6bb9c428edd795e9310c8924"
+  },
+  "linked": {
+    "C0": {
+      "path": "build/input-tables-data-c0-20261104/result.json",
+      "sha256": "242663023f18876bc225a43605129869176954710618f9fd6c90d3457b35c166"
+    },
+    "carrier_flow": {
+      "path": "build/input-tables-data-flow-20261104/result.json",
+      "sha256": "22db935efa7794e7a55935c516edcca381afa96f3e9b462d84ff79edb104741a"
+    },
+    "transfer_loss": {
+      "path": "build/input-tables-data-loss-20261104/result.json",
+      "sha256": "6bf82354e47b4ff16a2d1d152adb11645a9f6771accef05fbae2348138f108dd"
+    }
+  },
+  "BBS": {
+    "enigma": {
+      "producer": {
+        "path": "build/bbs-lab/results/enigma/input-tables-data-enigma-20261104/proxy-integration.json",
+        "sha256": "db252c0bf094bb2be1b8464d7a00457039102b593c44c9aada1fd157e57bfa67"
+      },
+      "independent_cells_NAWS": {
+        "path": "build/bbs-lab/results/enigma/input-tables-data-enigma-20261104/size-probe-screen-audit.json",
+        "sha256": "967be21cf4968e5c8c659ff263ad62a119ae419aac8957a9ed37ebc6c6429f8f"
+      }
+    },
+    "synchronet": {
+      "producer": {
+        "path": "build/bbs-lab/results/synchronet/input-tables-data-sync-20261104/proxy-integration.json",
+        "sha256": "8d04b4414cab1b645318adae9e116079ed3a8895275727235987df27a8ed074d"
+      },
+      "independent_cells_NAWS": {
+        "path": "build/bbs-lab/results/synchronet/input-tables-data-sync-20261104/size-probe-screen-audit.json",
+        "sha256": "6a371db9906cfb0254e7652076ed588e8b643bf6c86252d45ba4a7ef53ac97f8"
+      }
+    }
+  },
+  "limitations": [
+    "No deployment selection change; installed image remains the carrier/C0 build.",
+    "Physical acceptance and installed-image final remote readback remain private pending gates.",
+    "New storage variant needs broader transfer/reconnect and package admission; full parity remains open."
+  ],
+  "source_hashes": {
+    "reconstruction/input_dispatch/dispatch.asm": "a410eb489e0f9afaf8aaa47c9452a136d55e64acbf69be0931d8443e6a5acbaa",
+    "reconstruction/input_dispatch/recover.py": "b3eee8863f43156f4c351b918a8540a0644aed0e3f3da30939d37b46b26a6008",
+    "reconstruction/input_dispatch/provenance.json": "1c37a946d690e7ec25d92290ecd383a7a0a31e154a9224f30098407430d31d9f",
+    "standalone/build_terminal.py": "5aa8cbe4015045eadaa20cd886b3bbe7cebf90eebf1cabb8acac18b7706c5dcc",
+    "standalone/prove_phone_log_startup_terminal.py": "9c717cb77e635b6f6cb3f4513eb5d7e2135d216e86df1daf013b1e8e66595476",
+    "standalone/check_input_table_storage.py": "2d49b0d07ec232f73068f454a3d92c69c68e6e25194cfcf7d417f58784f35c94"
+  }
+}

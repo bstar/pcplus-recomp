@@ -2,6 +2,28 @@
 
 ## Active objective: ready the real SynthModem → Enigma connection test
 
+### November 4 checkpoint
+
+The full active goal continues beyond initial connection to reliable daily use
+and explicit original-feature parity. The carrier/C0 package has been installed
+with verified per-file transactions; a separate final remote readback and
+physical runtime acceptance remain pending in the private machine record.
+`build/connection-test-current.json` is the current deployment selection.
+Earlier package paths and installation statements below describe historical
+checkpoints rather than superseding that selector.
+
+The optional [input table storage adaptation](docs/INPUT_TABLE_STORAGE.md)
+creates 112 bytes of resident code headroom for continued command recovery.
+Its new variant is not yet selected for deployment. Complete its broader
+transfer/reconnect composition before package admission. Keep physical
+acceptance of the installed image distinct from this source development.
+
+Continue terminal controls first, then file/DOS operations, directory/key tools,
+Chat and UI polish. ASPECT, other emulations/protocols and Host mode retain
+explicit full-parity gaps; none is silently removed from the goal.
+
+### Earlier connection and network checkpoints
+
 **Real hardware connection achieved; compatibility acceptance continues.**
 The BIOS-omitted UART fix was installed at `C:\PCPLUS` with resources/config
 matching `C:\UTILS\PCPLUS` exactly. bstar reports working Enigma interaction

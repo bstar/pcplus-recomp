@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The optional [input table storage adaptation](INPUT_TABLE_STORAGE.md) frees
+110 resident code bytes for further command recovery, at a 112-byte near-data
+cost. The default executable remains byte-identical. The installed carrier/C0
+package stays selected; the storage candidate has separate admission evidence
+and is not a physical acceptance claim.
+
 The [carrier/C0 connection-test package](CONNECTION_CARRIER_C0_PACKAGE.md) now
 supports a recorded DOS installation directory. Fresh `C:\PCPLUS` source-only
 reproduction and native launcher/setup/script/splash checks pass; the default

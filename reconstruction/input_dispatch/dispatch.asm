@@ -1,6 +1,11 @@
 ; Recovered PCPlus 2.01 input/control instructions; see docs/INPUT_DISPATCH.md.
 BITS 16
 CPU 8086
+%ifdef INPUT_TABLES_DATA
+%ifndef INPUT_DISPATCH_OMF
+%error INPUT_TABLES_DATA requires INPUT_DISPATCH_OMF
+%endif
+%endif
 %ifdef INPUT_DISPATCH_OMF
 SEGMENT _TEXT public class=CODE use16
 global terminal_receive_character
@@ -60,8 +65,16 @@ L_063a: cmp ax,strict word 0x1d
 L_063d: ja short L_0684
 L_063f: shl ax,1
 L_0641: xchg ax,bx
-L_0642: jmp word near [cs:bx+terminal_low_control_table]
+L_0642:
+%ifdef INPUT_TABLES_DATA
+ jmp word near [bx+terminal_low_control_table]
+%else
+ jmp word near [cs:bx+terminal_low_control_table]
+%endif
 L_0647: nop
+%ifdef INPUT_TABLES_DATA
+SEGMENT _DATA public align=16 class=DATA use16
+%endif
 terminal_low_control_table:
  dw L_06a3
  dw L_0684
@@ -93,6 +106,9 @@ terminal_low_control_table:
  dw L_06a3
  dw L_0684
  dw L_06a3
+%ifdef INPUT_TABLES_DATA
+SEGMENT _TEXT public class=CODE use16
+%endif
 L_0684: push si
 L_0685: call render_character
 L_0688: jmp near L_0727
@@ -125,7 +141,15 @@ L_06cf: cmp ax,strict word 0x17
 L_06d2: ja short L_0718
 L_06d4: shl ax,1
 L_06d6: xchg ax,bx
-L_06d7: jmp word near [cs:bx+terminal_c1_table]
+L_06d7:
+%ifdef INPUT_TABLES_DATA
+ jmp word near [bx+terminal_c1_table]
+%else
+ jmp word near [cs:bx+terminal_c1_table]
+%endif
+%ifdef INPUT_TABLES_DATA
+SEGMENT _DATA public align=16 class=DATA use16
+%endif
 terminal_c1_table:
  dw L_070c
  dw L_070c
@@ -151,6 +175,9 @@ terminal_c1_table:
  dw L_0718
  dw L_0718
  dw L_070c
+%ifdef INPUT_TABLES_DATA
+SEGMENT _TEXT public class=CODE use16
+%endif
 L_070c: call ansi_unread_byte
 L_070f: call ansi_escape_entry
 L_0712: pop si

@@ -14,7 +14,7 @@ TABLES=[(0x648,0x684,'terminal_low_control_table'),(0x6dc,0x70c,'terminal_c1_tab
 
 def main():
  image=ORIGINAL.read_bytes();assert hashlib.sha256(image).hexdigest()==EXPECTED
- manifest={'source_sha256':EXPECTED,'units':[],'state':{f'{k:04x}':v for k,v in STATE.items()},'services':{f'{k:04x}':v for k,v in SERVICES.items()},'maintained_changes':['OMF entry masks its word character argument to eight bits before control-table indexing; flat recovery remains exact.'],'rea_evidence_id':'ev_d53d1c66282bc50e670ae82baf3d89c2e48f0e66887e64c4c498cb484047acbb','limitations':['State/service names are analyst annotations. DS372c meaning and serviceb9f7 semantics remain unresolved.','Unsupported terminal-control families and enabled logging sinks remain explicit external dependencies.']}
+ manifest={'source_sha256':EXPECTED,'units':[],'state':{f'{k:04x}':v for k,v in STATE.items()},'services':{f'{k:04x}':v for k,v in SERVICES.items()},'maintained_changes':['OMF entry masks its word character argument to eight bits before control-table indexing; flat recovery remains exact.','Optional OMF INPUT_TABLES_DATA stores the two near input dispatch tables in DGROUP and uses DS indexing; default OMF and exact flat recovery retain CS tables.'],'rea_evidence_id':'ev_d53d1c66282bc50e670ae82baf3d89c2e48f0e66887e64c4c498cb484047acbb','limitations':['State/service names are analyst annotations. DS372c meaning and serviceb9f7 semantics remain unresolved.','Unsupported terminal-control families and enabled logging sinks remain explicit external dependencies.']}
  with tempfile.TemporaryDirectory() as temp:
   work=Path(temp)
   def assemble(text,at):
@@ -61,12 +61,16 @@ def main():
    for k,v in external.items():header.append(f'%define {v} 0x{k:x}')
    for k,v in state_used.items():header.append(f'%define {v} 0x{k:x}')
    header+=['%endif','%include "encodings.inc"',FUNCTIONS[start]+':']
+   if name=='dispatch':
+    header[3:3]=['%ifdef INPUT_TABLES_DATA','%ifndef INPUT_DISPATCH_OMF','%error INPUT_TABLES_DATA requires INPUT_DISPATCH_OMF','%endif','%endif']
    for at,text in rows:
     if name=='dispatch':
      for lo,hi,label in TABLES:
       if at==hi:
        values=__import__('struct').unpack('<'+'H'*((hi-lo)//2),image[0x1200+lo:0x1200+hi])
+       header.extend(['%ifdef INPUT_TABLES_DATA','SEGMENT _DATA public align=16 class=DATA use16','%endif'])
        header.append(label+':');header.extend(f' dw L_{value:04x}' for value in values)
+       header.extend(['%ifdef INPUT_TABLES_DATA','SEGMENT _TEXT public class=CODE use16','%endif'])
       text=text.replace(f'0x{lo:x}',label)
     for k,v in state_used.items():text=re.sub(r'(?<![\da-f])0x'+f'{k:x}'+r'(?![\da-f])',v,text)
     branch=re.fullmatch(r'(j\w+|loop|call)\s+(?:(short|near)\s+)?(0x[0-9a-f]+)',text)
@@ -76,7 +80,10 @@ def main():
      text=branch[1]+' '+(branch[2]+' ' if branch[2] else '')+symbol
 
     if at in FUNCTIONS and at != start:header.append(FUNCTIONS[at]+':')
-    header.append(f'L_{at:04x}: '+text)
+    if name=='dispatch' and at in (0x0642,0x06d7):
+     assert '[cs:bx+' in text
+     header.extend([f'L_{at:04x}:','%ifdef INPUT_TABLES_DATA',' '+text.replace('[cs:bx+','[bx+'),'%else',' '+text,'%endif'])
+    else:header.append(f'L_{at:04x}: '+text)
     if at==0x0614:header.extend(['%ifdef INPUT_DISPATCH_OMF',' and si,0xff ; Maintained byte ABI: prevent negative word indices before control tables.','%endif'])
    path=SOURCE/(name+'.asm');path.write_text('\n'.join(header)+'\n')
    subprocess.run(['nasm','-f','bin','-I',str(ROOT/'reconstruction/uart')+'/',str(path),'-o',str(work/'whole.bin')],check=True)

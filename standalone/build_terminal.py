@@ -44,6 +44,7 @@ parser.add_argument('--display-startup',action='store_true',help='Apply imported
 parser.add_argument('--line-control',action='store_true',help='Enable guarded original Ctrl-minus/Toggle Lines using the accepted display selector')
 parser.add_argument('--window-size-report',action='store_true',help='Reply to ordinary CSI18t with accepted logical text dimensions; no bridge deployment')
 parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchanged foreground keyboard dispatcher into a retained code bank')
+parser.add_argument('--input-tables-data',action='store_true',help='Move two near input dispatch pointer tables from resident code into DGROUP')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
 parser.add_argument('--manual-init',action='store_true',help='Integrate guarded manual Init key/menu and exclusive foreground UART scheduling')
 parser.add_argument('--manual-init-owner',action='store_true',help='Link isolated bounded send-only Init Modem owner; no keyboard/menu binding')
@@ -259,6 +260,7 @@ if args.manual_init:out_name+='-manual-init'
 if args.auto_answer_owner:out_name+='-auto-answer-owner'
 if args.auto_answer:out_name+='-auto-answer'
 if args.keyboard_bank:out_name+='-keyboard-bank'
+if args.input_tables_data:out_name+='-input-tables-data'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
  # buffers as the existing feature suffix chain grows.
@@ -466,6 +468,7 @@ for index,source in enumerate(sources):
  if source==ROOT/'src/status/status_helpers.asm':
   options+=['-DSTATUS_HELPERS_CONFIG','-Dui_write_string=status_write_string','-Dprogram_strlen=status_strlen']
  if source==ROOT/'reconstruction/input_dispatch/dispatch.asm':options+=['-Dterminal_receive_character=terminal_receive_character_native']
+ if args.input_tables_data and source==ROOT/'reconstruction/input_dispatch/dispatch.asm':options+=['-DINPUT_TABLES_DATA']
  # Keep NASM's THEADR source name independent of the checkout location, so
  # recorded import-adapter object hashes also reproduce in a fresh tree.
  subprocess.run(['nasm','-f','obj',*options,'-I',str(ROOT/'reconstruction/uart')+'/', '-I',str(ROOT/'reconstruction/ansi')+'/', '-I',str(ROOT/'src/terminal')+'/', '-I',str(ROOT/'src/config')+'/', '-I',str(ROOT/'src/directory')+'/', '-I',str(ROOT/'src/aspect')+'/',str(source.relative_to(ROOT)),'-o',str(obj)],cwd=ROOT,check=True)
@@ -790,6 +793,7 @@ manifest['experimental_line_control']=args.line_control
 if args.line_control:manifest['limitations'].append('Ctrl-minus/Toggle Lines uses the accepted selector cycle after releasing menu frames. No imported/accepted preferences gives status7; tracked-online and busy/unsupported states retain guarded refusal/deferral. Saved preferences are not rewritten; live NAWS/BBS/physical acceptance remain separate gates.')
 if args.display_startup:manifest['limitations'].append('Imported display preferences apply after baseline capture before UART enable/dialing; no import preserves the default baseline without inventing selector readiness. Verified fallback and fatal refusal retain hardware cleanup. Live adoption/NAWS and BBS/physical acceptance remain separate gates; Toggle Lines is a separate option.')
 manifest['experimental_window_size_report']=args.window_size_report
+manifest['experimental_input_tables_data']=args.input_tables_data
 manifest['diagnostic_row_geometry_probe']=args.row_geometry_owner and args.display_row_probe
 if args.display_row_owner:
  manifest['display_row_bank']={k:display_rows_bank[k] for k in ('namespace','native_bytes','segment','offset','bytes','scope','selector_service','selector_transaction')}
