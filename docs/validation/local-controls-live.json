@@ -67,6 +67,14 @@
     "build/local-controls-package-setup-20261103/result.json": {
       "passed": true,
       "sha256": "17b7fef0b06ff878f71c82b79d1cc7e2c2030c76f92e3e7a053ef969be7eeee8"
+    },
+    "build/local-controls-committed-package-splash-20261103/result.json": {
+      "sha256": "49026c303f2f6405daa82965b646e53f0a3123073880d05c19b5cb422e7d9829",
+      "passed": true
+    },
+    "build/local-controls-committed-package-setup-20261103/result.json": {
+      "sha256": "bdbc269fc02196122d3b543fc858b6e9b978e74808107da4dff3ae47c8ac7b26",
+      "passed": true
     }
   },
   "sources": {
@@ -90,5 +98,23 @@
     "physical_busy_outcome": "not confirmed",
     "physical_acceptance": false
   },
-  "scope": "Optional original-reference parent Clear/Reset/Duplex integration. Actual DOS8086 direct/menu/partial-CSI workflows, source-only byte-exact rebuild, scoped CPU/ABI refusals, owned Enigma/Synchronet screen/cursor audits, BUSY/three-call recovery and300s/601-frame paced UART endurance. ASPECT executable unchanged. Not physical modem/SIP/audio acceptance or full original feature parity."
+  "scope": "Optional original-reference parent Clear/Reset/Duplex integration. Actual DOS8086 direct/menu/partial-CSI workflows, source-only byte-exact rebuild, scoped CPU/ABI refusals, owned Enigma/Synchronet screen/cursor audits, BUSY/three-call recovery and300s/601-frame paced UART endurance. ASPECT executable unchanged. Not physical modem/SIP/audio acceptance or full original feature parity.",
+  "package": {
+    "path": "build/connection-local-controls-committed-20261103",
+    "manifest_sha256": "e208431a35ad29e929530f7b77bbb2f7ccc04c1973b88230ef85736d2a8fb11f",
+    "source_base_commit": "a8554a44ab61c2c4f5f1b91f296f92e984f3b785",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "84160498dcd540a725508b8f1f2ade6b4c6c2c548391947795a3abd3e98b67d8",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+      "README.TXT": "3212b36bbf4488481462e523d5b460d18599c28ccb65a8bf6366c5cc61bd4b2c",
+      "SETUP.BAT": "9ace23aea63c0babd51acdb0adfff8abbc4e2ddb8f9a0f1fac6ca024a749d1f4",
+      "START.BAT": "1f45816d2cb204aa8cd4b64489987d993c799295489a9d13be2b1bdba5e151b1",
+      "TERMINAL.EXE": "e69a8050ea5d31793f07490e325052db8b37382475dafc3d437b2c806c08c5fb",
+      "VERSION.TXT": "d4a4a725f9de16d26c98bdf055651999b8fee5b8fa615f94aa59ad33976f4260",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    },
+    "private_configuration_included": false
+  }
 }
