@@ -6,7 +6,7 @@ transaction may call it until the canonical screen/frame contract is integrated.
 import hashlib,json,re,subprocess
 from pathlib import Path
 
-def build_display_rows_bank(root,out,geometry=False,mouse=False,selectors=False):
+def build_display_rows_bank(root,out,geometry=False,mouse=False,selectors=False,program_display=False):
  root=Path(root);out=Path(out)/'display-rows-bank';out.mkdir(parents=True,exist_ok=False)
  groups=[('display_modes',('detect','virtual_buffer','rows','fonts','font_reset','baseline')),
          ('program_display',('geometry',)),('program_ui',('scanlines','cursor_eight')+(('mode',) if selectors else ()))]
@@ -55,5 +55,10 @@ def build_display_rows_bank(root,out,geometry=False,mouse=False,selectors=False)
   obj=out/'geometry-owner.obj';objects.append(obj)
   subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-nt=DISPLAY_CODE','-nc=FARCODE',
    *(['-dTERMINAL_ROW_MOUSE'] if mouse else []),*(['-dTERMINAL_DISPLAY_SELECTOR'] if selectors else []),'-i='+str(root/'src/process'),'-fo='+str(obj),str(source)],check=True)
+ if program_display:
+  source=root/'src/terminal/program_display.c';inputs += [source,root/'src/terminal/program_display.h']
+  obj=out/'program-display.obj';objects.append(obj)
+  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-nt=DISPLAY_CODE','-nc=FARCODE',
+   '-i='+str(root/'src/process'),'-fo='+str(obj),str(source)],check=True)
  return dict(objects=objects,inputs=inputs,namespace=namespace,native_bytes=sum(u['bytes'] for u in units),selector_service=selectors,selector_transaction=selectors and geometry,
   scope=('Optional offline BIOS/canonical/RIS transaction with mouse suspension and rollback. No normal key/menu binding, online geometry, bridge coordination or physical acceptance.' if geometry else 'Optional low-level BIOS row bank only. Canonical terminal/RIS/frame/bridge transaction and key/menu bindings are not integrated; do not treat raw BIOS success as application geometry acceptance.'))

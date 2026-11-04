@@ -123,6 +123,38 @@ static word view_frame_images(void)
  return rows_probe_write(leaf,records,sizeof(records));
 }
 #endif
+#if defined(TERMINAL_PROGRAM_DISPLAY) && defined(TERMINAL_ROW_GEOMETRY_PROBE)
+#include "../src/terminal/program_display.h"
+extern word __far __cdecl rows_program_run(const char *command);
+extern word terminal_quit;
+#pragma aux terminal_quit "terminal_quit";
+extern word terminal_program_result[];
+#pragma aux terminal_program_result "terminal_program_result";
+static word program_frame_images(void)
+{
+ static const word TEXT heights[]={25,28,43,50};
+ word records[3+4*8],r,i,n=3,status;native_display_rows_info actual;
+ word __far *video=(word __far *)MK_FP(0xb800,0);
+ char name[8]={'P','B','0','.', 'B','I','N',0};
+ char leaf[10]={'P','R','O','W','S','.', 'B','I','N',0};
+ char command[11]={'P','C','H','I','L','D','.', 'C','O','M',0};
+ records[0]=0x5052;records[1]=2;records[2]=4;
+ for(r=0;r<4;++r){
+  if(terminal_row_geometry_set(heights[r]))return 1;
+  for(i=0;i<4000;++i)video[i]=0x0700+65+i%26;
+  name[1]='B';name[2]='0'+r;if(rows_probe_far(name,video,8000))return 1;
+  status=rows_program_run(command);
+  if(native_display_rows_probe(&actual))return 1;
+  records[n++]=heights[r];records[n++]=status;records[n++]=program_display_ready;
+  records[n++]=terminal_quit;records[n++]=actual.mode;records[n++]=actual.rows;records[n++]=csi_row_count;records[n++]=terminal_program_result[2];
+  name[1]='A';if(rows_probe_far(name,video,8000))return 1;
+  if(status!=4 || program_display_ready || terminal_quit || actual.mode!=3 || actual.rows!=heights[r] || terminal_program_result[2])return 1;
+  for(i=0;i<heights[r]*80;++i)if(video[i]!=0x0700+65+i%26)return 1;
+ }
+ if(terminal_row_geometry_set(25))return 1;
+ return rows_probe_write(leaf,records,sizeof(records));
+}
+#endif
 static void capture(word *r,word request,word status,native_display_rows_info *p)
 {
  word axword=0,bxword=0;
@@ -158,6 +190,9 @@ unsigned __far __cdecl terminal_display_rows_probe(void)
 #endif
 #if defined(TERMINAL_LARGE_VIEW_FRAMES) && defined(TERMINAL_ROW_GEOMETRY_PROBE)
  if(view_frame_images())return 29;
+#endif
+#if defined(TERMINAL_PROGRAM_DISPLAY) && defined(TERMINAL_ROW_GEOMETRY_PROBE)
+ if(program_frame_images())return 30;
 #endif
  status=native_display_rows_probe(&info);if(status)return 20;
  capture(records+3,0,status,&info);

@@ -435,7 +435,15 @@ browser_screen_segment: dw seg browser_screen
 SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
 GROUP UI_GROUP UI_STORAGE
 global browser_screen,browser_screen_end
+%ifdef TERMINAL_PROGRAM_DISPLAY
+%ifdef TERMINAL_UI_SCREEN_OVERLAY
+browser_screen: resb 8000
+%else
 browser_screen: resb 4000
+%endif
+%else
+browser_screen: resb 4000
+%endif
 browser_screen_end:
 
 %ifdef TERMINAL_UI_SCREEN_OVERLAY

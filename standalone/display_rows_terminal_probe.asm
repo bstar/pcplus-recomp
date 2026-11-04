@@ -124,3 +124,47 @@ _rows_view_key:
 %endif
 
 %endif
+
+%ifdef TERMINAL_PROGRAM_DISPLAY
+%ifdef TERMINAL_ROW_GEOMETRY_PROBE
+SEGMENT _TEXT public class=CODE use16
+extern terminal_program_start,terminal_program_poll
+extern terminal_program_pending,terminal_program_active,terminal_program_status,terminal_quit
+rows_program_run_resident:
+ call terminal_program_start
+ or ax,ax
+ jnz .done
+.poll:
+ call terminal_program_poll
+ cmp word [terminal_quit],0
+ jne .status
+ mov ax,[terminal_program_pending]
+ or ax,[terminal_program_active]
+ jnz .poll
+.status:
+ mov ax,[terminal_program_status]
+.done:
+ retf
+SEGMENT CONFIG_CODE public class=FARCODE use16
+global _rows_program_run
+_rows_program_run:
+ push bp
+ mov bp,sp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ mov ax,[bp+6]
+ call far rows_program_run_resident
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ retf
+%endif
+%endif

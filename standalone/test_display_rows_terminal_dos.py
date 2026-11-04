@@ -24,6 +24,8 @@ def main():
   if m.get('experimental_display_preferences'):
    for at,value in ((0x1c2,0xffff),(0x1c8,4),(0x1ca,43),(0x4ec,0x12)):struct.pack_into('<H',raw,at,value)
   (drive/'TEST.PRM').write_bytes(raw)
+  if m.get('experimental_program_display_owner'):
+   subprocess.run(['nasm','-fbin',str(ROOT/'standalone/program_display_child.asm'),'-o',str(drive/'PCHILD.COM')],check=True)
   sentinel=b'Keep this existing diagnostic file.\x00\xff'
   if label=='exclusive':(drive/leaf).write_bytes(sentinel)
   sampler=SAMPLER
@@ -49,6 +51,7 @@ def main():
     if connection is not None:connection.close()
   thread=threading.Thread(target=peer,daemon=True);thread.start()
   expected='if errorlevel 24 goto failed\nif errorlevel 23 goto passed\ngoto failed\n' if label=='exclusive' else 'if errorlevel 1 goto failed\ngoto passed\n'
+  keys='p900 enter'+(' enter enter enter enter' if m.get('experimental_program_display_owner') else '')
   config=f'''[sdl]
 output=surface
 [cpu]
@@ -69,7 +72,7 @@ mount d "{drive}"
 d:
 set PCPLUS=D:\\
 SNAP B
-ADDKEY p900 enter
+ADDKEY {keys}
 C:\\TERMINAL @D:\\TEST.PRM /D:Unused:23 /I:3
 {expected}:passed
 echo PASS>PASS.TXT
@@ -139,8 +142,10 @@ exit
  assert sha(binary)==m['binary_sha256']
  for name,digest in m['sources'].items():assert sha(ROOT/name)==digest,name
  inputs={n:sha(ROOT/n) for n in ('standalone/test_display_rows_terminal_dos.py','standalone/modem_fixtures.py','standalone/test_terminal.py','standalone/package_connection_test.py')}
+ if m.get('experimental_program_display_owner'):inputs['standalone/program_display_child.asm']=sha(ROOT/'standalone/program_display_child.asm')
  record=dict(passed=True,terminal_sha256=m['binary_sha256'],manifest_sha256=sha(binary.parent/'manifest.json'),checker_inputs=inputs,
   bank=m['display_row_bank'],states=states,runs=runs,diagnostic_package_rejected=True,canonical_geometry_transaction=geometry,display_preferences_captured=bool(m.get('experimental_display_preferences')),
   scope=('Actual8086 DOS source-built parent calls real offline BIOS/canonical/RIS transaction at startup before UART enable; six BIOS/effective-row observations with actual video/full-shadow captures and native status at physical bottom.' if geometry else 'Actual8086 DOS source-built parent calls low-level DISPLAY_CODE API before UART enable; six BIOS observations with canonical geometry intentionally unchanged24.')+' Exclusive output refusal returns23 and preserves existing file. Both COM3/IRQ5 virtual-UART/PIC/vector snapshots restore; zero serial commands. No actual live RX/parser during transaction, hardware-fault injection in DOS, normal key/menu, online/BBS/SIP or physical acceptance. Diagnostic cannot be packaged.')
+ if m.get('experimental_program_display_owner'):record['scope']='Actual8086 DOS startup diagnostic uses BIOS/canonical row owners, shared-view normalized-key adapter, and actual PROGRAM/COMSPEC/EXEC with BIOS return keys. PROGRAM reacquires the UART inside the diagnostic; the normal main loop is not entered and the peer sends no data. Geometry/video/shadow, exclusive output refusal, unchanged synthetic PRM/image, zero serial output,42-byte UART/PIC/vector restoration and diagnostic package rejection are checked. Larger-profile/ASPECT composition, live BBS/SIP/analog and physical acceptance remain separate.'
  (out/'result.json').write_text(json.dumps(record,indent=2)+'\n');print('PASS linked DOS rows:6 observations, exclusive create refusal, hardware restore, diagnostic package rejection; canonical transaction',geometry)
 if __name__=='__main__':main()

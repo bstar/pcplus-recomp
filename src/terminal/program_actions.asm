@@ -1,5 +1,10 @@
 ; Maintained PROGRAM scheduling, DOS child handoff and fixed80x25 restoration.
 ; Native433d/896a remain separately recovered; this is the small-model host policy.
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+%define TERMINAL_CHILD_UART_QUIET
+%elifdef TERMINAL_PROGRAM_DISPLAY
+%define TERMINAL_CHILD_UART_QUIET
+%endif
 BITS 16
 CPU 8086
 %include "trap_wait.inc"
@@ -60,6 +65,10 @@ terminal_program_initialize_far:
  push bx
  push cx
  push dx
+%ifdef TERMINAL_PROGRAM_DISPLAY
+ extern _program_display_ready
+ mov word [_program_display_ready],0
+%endif
  mov [process_psp],ax
  mov dx,ds
  mov bx,terminal_stack_top
@@ -308,6 +317,12 @@ terminal_program_poll:
 .retirement_capture_ready:
 %endif
  call terminal_connection_notice_restore
+%ifdef TERMINAL_PROGRAM_DISPLAY
+ extern _program_display_save,_program_display_restore
+ call far _program_display_save
+ or ax,ax
+ jnz .view
+%else
  ; The current live renderer is fixed80x25 mode3/page0. Reject other BIOS views.
  mov ah,0x0f
  int 0x10
@@ -335,6 +350,7 @@ terminal_program_poll:
  rep movsw
  pop es
  pop ds
+%endif
 %ifdef TERMINAL_MOUSE
  extern _terminal_mouse_pause,_terminal_mouse_resume
  call _terminal_mouse_pause
@@ -576,6 +592,11 @@ terminal_program_poll:
 .ordinary_return_key:
  TERMINAL_WAIT_KEY ax
 .restore_screen:
+%ifdef TERMINAL_PROGRAM_DISPLAY
+ call far _program_display_restore
+ or ax,ax
+ jnz .restore_port ; No profile work or parsing after unverified restoration.
+%else
  ; Recreate the supported video mode even if a child left graphics or new fonts.
  mov ax,3
  int 0x10
@@ -597,6 +618,7 @@ terminal_program_poll:
  xor bh,bh
  mov ah,2
  int 0x10
+%endif
 %ifdef DIRECTORY_RESOURCE_ADOPTION
  extern _terminal_directory_adopt_requested
  cmp word [_terminal_directory_adopt_requested],2
@@ -625,6 +647,10 @@ terminal_program_poll:
  jne .restore_port
  call terminal_setup_profile_finish
 .restore_port:
+%ifdef TERMINAL_PROGRAM_DISPLAY
+ ; An adopted inline view intentionally bypasses old-frame restoration.
+ mov word [_program_display_ready],0
+%endif
  cmp word [terminal_program_kind],4
  je .port_restored ;Script's serviced console already owns the parent ISR.
  call program_restore_uart
@@ -640,6 +666,10 @@ terminal_program_poll:
 .retirement_notice_done:
 %endif
 %ifdef TERMINAL_MOUSE
+%ifdef TERMINAL_PROGRAM_DISPLAY
+ cmp word [terminal_quit],0
+ jne .mouse_ready ; Failed display restoration remains quarantined until exit.
+%endif
  call _terminal_mouse_resume
  or ax,ax
  jz .mouse_ready
@@ -662,6 +692,10 @@ terminal_program_poll:
 .resource_owner_finished:
 %endif
  mov word [terminal_program_active],0
+%ifdef TERMINAL_PROGRAM_DISPLAY
+ cmp word [terminal_quit],0
+ jne .done
+%endif
  call program_resume_flow
  jmp .done
 .printer_wait:
@@ -719,7 +753,7 @@ program_quiet_uart:
  call uart_restore_interrupt
  add sp,2
  ret
-%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+%ifdef TERMINAL_CHILD_UART_QUIET
 ; Called with IF0 after DOS restored parent DS/SS/SP, before trap resume can
 ; enable interrupts or memory reacquisition invokes DOS. A misbehaving child
 ; must not leave an enabled UART pointing into its released executable.
@@ -987,6 +1021,7 @@ program_pause_sent: db 0
 global terminal_program_mcr
 terminal_program_mcr:
 program_mcr: db 0
+global program_cursor,program_shape
 program_cursor: dw 0
 program_shape: dw 0
 global program_screen_segment
@@ -1002,12 +1037,20 @@ program_setup_executable: db 'PRMEDIT.EXE',0
 program_busy_notice: db 'Program busy',0
 program_view_notice: db 'Program view',0
 
+%ifdef TERMINAL_PROGRAM_DISPLAY
+global terminal_program_display_owner
+terminal_program_display_owner equ 1
+%endif
 SEGMENT UI_STORAGE public align=16 class=FAR_DATA use16
 GROUP UI_GROUP UI_STORAGE
 %ifdef TERMINAL_UI_SCREEN_OVERLAY
 extern program_screen,program_screen_end
 %else
 global program_screen,program_screen_end
+%ifdef TERMINAL_PROGRAM_DISPLAY
+program_screen: resb 8000
+%else
 program_screen: resb 4000
+%endif
 program_screen_end:
 %endif

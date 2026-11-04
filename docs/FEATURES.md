@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Full-height PROGRAM restoration](PROGRAM_DISPLAY_OWNER.md) now retains and
+verifies25/28/43/50-row parent frames around ordinary DOS children.57 new linked
+inputs plus1051 regressions,8 real DOS graphics-child returns,32 shared-view
+observations and3 exact source rebuilds pass. Failed geometry recovery requests
+shutdown before normal parsing; UART quieting precedes trap resume. Remaining
+larger-profile/ASPECT/modal contracts, Ctrl--/startup integration, BBS/physical
+acceptance and deployment stay open. Reference availability remains12 unavailable.
+
 [Full-height shared view frames](LARGE_VIEW_FRAMES.md) now retain verified
 25/28/43/50-row underlays for menu/history/clipboard/elapsed owners.108 new linked
 inputs plus943 regressions,32 actual DOS diagnostic captures/restores and three

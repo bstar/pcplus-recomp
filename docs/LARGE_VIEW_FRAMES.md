@@ -82,12 +82,14 @@ three `build/large-view-proof-*-20261104/` directories.
 
 ## Remaining integration
 
-Before exposing normal line changes, complete or explicitly guard the remaining
-25-row modal contracts. In particular, the PROGRAM owner currently checks mode3,
-80 columns/page0 but saves/restores only2,000 cells; that check does not verify
-physical row count. Its DOS-child display/font restoration must be reconciled
-with a larger canonical parent. The synchronous directory editor still owns a
-25-row prefix. This component does not establish those paths at larger heights.
+[The optional PROGRAM display owner](PROGRAM_DISPLAY_OWNER.md) now saves and
+verifies full-height restoration around ordinary DOS children. Its real DOS
+scheduler/EXEC acceptance is recorded separately. The legacy branch still uses
+2,000 cells; enable the composed owner before exposing normal larger heights.
+Larger profile/SETUP/XLT/ASPECT composition and other modal contracts remain
+open. The synchronous directory editor still owns a25-row prefix, and the
+browser's own copy policy remains25 rows even when its aliased PROGRAM
+reservation grows. This shared-view component does not certify those paths.
 
 Then integrate normal Ctrl-- and startup preferences, test owned Enigma and
 Synchronet layouts/editor/modal return at accepted dimensions, and verify the

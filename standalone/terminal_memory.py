@@ -92,7 +92,7 @@ def inspect_terminal_memory(binary,map_path):
  for name in ('browser_screen','ed_screen','program_screen','redisplay_live','redisplay_view'):
   if name not in symbols:continue
   lo=address(name);hi=address(name+'_end');seg,off=symbols[name]
-  capacity=8000 if 'terminal_large_view_frames' in symbols and name in ('redisplay_live','redisplay_view') else 4000
+  capacity=8000 if ('terminal_large_view_frames' in symbols and name in ('redisplay_live','redisplay_view')) or ('terminal_program_display_owner' in symbols and (name=='program_screen' or name=='browser_screen' and screen_overlay)) else 4000
   assert hi-lo==capacity and off+capacity<=65536,(name,'invalid UI screen extent')
   assert hi<=near_start or lo>=near_start+near_size,(name,'UI screen overlapsDGROUP')
   assert hi<=shadow or lo>=far_end,(name,'UI screen overlaps native far storage')
@@ -188,6 +188,12 @@ def inspect_terminal_memory(binary,map_path):
   assert module[seg*16+end_off-1:seg*16+end_off]==b'$'
   extra.update(far_usage_bytes=usage['bytes'],far_usage_segment=seg,far_usage_DS_restore_verified=True)
  def raw(name,n):return image[start+address(name):start+address(name)+n]
+ if 'terminal_program_display_owner' in symbols:
+  for step,target in ((0,'terminal_process_quiet_uart'),(5,'terminal_trap_resume')):
+   target_seg,target_off=symbols[target]
+   assert raw('process_child_quiet_site',10)[step:step+5]==b'\x9a'+struct.pack('<HH',target_off,target_seg)
+   assert address('process_child_quiet_site')+step+3 in relocations
+  extra['program_display_child_quiet_verified']=True
  def far_call(source,target):
   assert raw(source,6)==b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0])+b'\xc3',(source,'far target/return')
   assert address(source)+3 in relocations,(source,'missing far-call relocation')
@@ -1215,7 +1221,7 @@ def inspect_terminal_memory(binary,map_path):
    assert symbols['nreset_erase_repair_attributes'][0]==symbols['nreset_terminal_reset_geometry_native'][0]==native_cs
    assert raw('nreset_erase_repair_attributes',6)==b'\x55\x8b\xec\x83\xec\x0e'
    extra['native_reset_field_repair_verified']=True
-   backup=ui_buffers['program_screen'];assert backup['bytes']==4000
+   backup=ui_buffers['program_screen'];assert backup['bytes']>=4000 # Native reset retains its existing prefix lease.
    extra.update(native_reset_transaction=True,native_reset_backup_start=backup['start_linear'],
                 native_reset_backup_bytes=4000,native_reset_transaction_bridge_verified=True,peer_width_mode_bridge_verified=True,
                 native_reset_ASPECT_backup_start=ui_buffers['redisplay_live']['start_linear'])

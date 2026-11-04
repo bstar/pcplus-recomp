@@ -1,5 +1,10 @@
 ; Maintained bounded DOS EXEC boundary. DS=SS; near caller removes6 bytes.
 ; The recovered vendor executor is separately retained in program_exec.
+%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+%define TERMINAL_CHILD_UART_QUIET
+%elifdef TERMINAL_PROGRAM_DISPLAY
+%define TERMINAL_CHILD_UART_QUIET
+%endif
 BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
@@ -223,7 +228,7 @@ _process_run:
  mov ss,[cs:process_saved_ss]
  mov sp,[cs:process_saved_sp]
  mov ds,[cs:process_saved_ds]
-%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
+%ifdef TERMINAL_CHILD_UART_QUIET
  extern terminal_process_quiet_uart
  global process_child_quiet_site
  process_child_quiet_site equ $
