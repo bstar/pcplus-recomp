@@ -226,6 +226,83 @@ static word profile_frame_images(void)
  return rows_probe_write(leaf,records,sizeof(records));
 }
 #endif
+#ifdef TERMINAL_XLT_DISPLAY_PROBE
+extern word __far __cdecl rows_xlt_run(void);
+extern word terminal_translation_edit_status,terminal_translation_reload_status;
+extern word terminal_translation_mode,terminal_translation_enabled,uart_rx_mask,ui_window_rows;
+extern unsigned char terminal_translation_table[];
+#pragma aux terminal_translation_edit_status "terminal_translation_edit_status";
+#pragma aux terminal_translation_reload_status "terminal_translation_reload_status";
+#pragma aux terminal_translation_mode "terminal_translation_mode";
+#pragma aux terminal_translation_enabled "terminal_translation_enabled";
+#pragma aux uart_rx_mask "uart_rx_mask";
+#pragma aux ui_window_rows "ui_window_rows";
+#pragma aux terminal_translation_table "terminal_translation_table";
+static word xlt_keys(word target)
+{
+ static const word TEXT keys[]={0x1c0d,0x4700,0x5300,0x5300,0,0x0938,0x1c0d,0x3b00,0x011b,0x1579};
+ word i,pending=0,key,status=0;
+ for(i=0;i<16;++i){
+  __asm { mov ah,1
+ push bp
+ int 16h
+ pop bp
+ mov pending,0
+ jz empty
+ mov pending,1
+ empty: }
+  if(!pending)break;
+  __asm { mov ah,0
+ push bp
+ int 16h
+ pop bp }
+ }
+ for(i=0;i<10;++i){
+  if(i==5 && !target)continue;
+  key=i==4?(target?0x0938:0x0b30):keys[i];
+  __asm { mov cx,key
+ mov ax,0500h
+ push bp
+ int 16h
+ pop bp
+ mov status,ax }
+  if(status&255)return 1;
+ }
+ return 0;
+}
+static word xlt_frame_images(void)
+{
+ static const word TEXT heights[]={25,28,43,50};
+ native_display_rows_info actual;word records[3+8*16],r,t,target,status,n=3;
+ char name[9]={'X','B','0','0','.', 'B','I','N',0};
+ char leaf[13]={'X','L','T','R','O','W','S','.', 'B','I','N',0};
+ records[0]=0x5854;records[1]=1;records[2]=8;
+ for(r=0;r<4;++r){
+  if(terminal_row_geometry_set(heights[r]))return 1;
+  for(t=0;t<2;++t){
+   target=t?0:88;
+   name[1]='B';name[2]='0'+r;name[3]='0'+t;
+   if(rows_probe_far(name,MK_FP(0xb800,0),heights[r]*160))return 1;
+   if(xlt_keys(target))return 1;
+   status=rows_xlt_run();if(native_display_rows_probe(&actual))return 1;
+   records[n++]=heights[r];records[n++]=target;records[n++]=status;
+   records[n++]=terminal_translation_edit_status;records[n++]=terminal_translation_reload_status;
+   records[n++]=actual.mode;records[n++]=actual.rows;records[n++]=csi_row_count;
+   records[n++]=ui_window_rows;records[n++]=ui_flow_suppressed;records[n++]=terminal_quit;
+   records[n++]=program_display_ready;records[n++]=terminal_program_result[2];
+   records[n++]=terminal_translation_table[0];records[n++]=terminal_translation_enabled;records[n++]=uart_rx_mask;
+   name[1]='V';if(rows_probe_far(name,MK_FP(0xb800,0),heights[r]*160))return 1;
+   name[1]='K';if(rows_probe_write(name,terminal_translation_table,256))return 1;
+   if(status!=4 || terminal_translation_edit_status!=2 || terminal_translation_reload_status!=2 ||
+    actual.mode!=3 || actual.rows!=heights[r] || csi_row_count!=heights[r]-1 || ui_window_rows!=heights[r] ||
+    ui_flow_suppressed || terminal_quit || program_display_ready || terminal_program_result[2] ||
+    terminal_translation_table[0]!=target || terminal_translation_mode!=1 || terminal_translation_enabled!=1 || uart_rx_mask!=255)return 1;
+  }
+ }
+ if(terminal_row_geometry_set(25))return 1;
+ return rows_probe_write(leaf,records,sizeof(records));
+}
+#endif
 static void capture(word *r,word request,word status,native_display_rows_info *p)
 {
  word axword=0,bxword=0;
@@ -267,6 +344,9 @@ unsigned __far __cdecl terminal_display_rows_probe(void)
 #endif
 #ifdef TERMINAL_PROFILE_DISPLAY_PROBE
  if(profile_frame_images())return 31;
+#endif
+#ifdef TERMINAL_XLT_DISPLAY_PROBE
+ if(xlt_frame_images())return 32;
 #endif
  status=native_display_rows_probe(&info);if(status)return 20;
  capture(records+3,0,status,&info);

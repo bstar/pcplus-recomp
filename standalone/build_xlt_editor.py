@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build the offline DOS table editor from source through the Nix toolchain."""
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -8,7 +9,14 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'build/xlt-editor'
 SOURCES = ['editor_main.c', 'editor_document.c', 'editor_fs.c', 'xlt_dos.c', 'xlt_dos_fs.c']
 def main():
-    OUT.mkdir(parents=True, exist_ok=True)
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output-dir',type=Path,help='New isolated output directory under build/')
+    args=parser.parse_args()
+    global OUT
+    if args.output_dir:
+        OUT=args.output_dir.resolve();assert OUT.is_relative_to(ROOT/'build')
+        OUT.mkdir(parents=True,exist_ok=False)
+    else:OUT.mkdir(parents=True,exist_ok=True)
     sources = [ROOT / 'src/translation' / name for name in SOURCES]
     subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192',
                     '-i='+str(ROOT/'src/translation'),'-fm=editor.map','-fe=XLTEDIT.EXE',

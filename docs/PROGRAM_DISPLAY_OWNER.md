@@ -111,7 +111,9 @@ PROGRAM reacquires the UART inside that diagnostic, and its peer sends no data.
 
 The [large profile return checks](LARGE_PROFILE_RETURN.md) now cover confirmed
 SETUP profile4/6 round trips with default/explicit keyboards and subsequent RIS.
-Complete XLT/ASPECT composition, broader profile coverage and the other fixed
+The [large XLT return checks](LARGE_XLT_RETURN.md) additionally cover editor/reload
+adoption and full frame restoration. Complete ASPECT composition, broader profile
+coverage and the other fixed
 modal contracts before enabling normal Ctrl-- and startup preference application.
 Then exercise owned Enigma/Synchronet layout/editor/modal return and the physical
 Boca→SPA2102→SynthModem route. Online resize, transfer/carrier-loss routes and

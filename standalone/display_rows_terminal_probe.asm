@@ -207,3 +207,42 @@ _rows_setup_run:
  pop bp
  retf
 %endif
+
+%ifdef TERMINAL_XLT_DISPLAY_PROBE
+SEGMENT _TEXT public class=CODE use16
+extern terminal_translation_edit_start
+rows_xlt_run_resident:
+ call terminal_translation_edit_start
+ or ax,ax
+ jnz .done
+.poll:
+ call terminal_program_poll
+ cmp word [terminal_quit],0
+ jne .status
+ mov ax,[terminal_program_pending]
+ or ax,[terminal_program_active]
+ jnz .poll
+.status:
+ mov ax,[terminal_program_status]
+.done:
+ retf
+SEGMENT CONFIG_CODE public class=FARCODE use16
+global _rows_xlt_run
+_rows_xlt_run:
+ push bp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ call far rows_xlt_run_resident
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ retf
+%endif

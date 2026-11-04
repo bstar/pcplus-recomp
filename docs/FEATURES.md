@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Large-screen XLT return](LARGE_XLT_RETURN.md) adds116 linked editor/reload cases
+and16 actual DOS source-built XLTEDIT observations across25/28/43/50-row frames.
+Accept/decline/failure preserves the full parent, selected table adoption affects
+subsequent receive rendering and leaves TX raw. Original-reference Alt-W is used
+for editor dispatch. The ordinary image remains byte-identical. ASPECT admission,
+other modal owners, normal line switching, BBS/physical and deployment stay open.
+
 [Large-screen settings/profile return](LARGE_PROFILE_RETURN.md) now has60 linked
 boundary-modeled inputs and16 actual DOS source-built PRMEDIT observations.
 Profile4/6 round trips preserve25/28/43/50-row geometry, visible status and explicit

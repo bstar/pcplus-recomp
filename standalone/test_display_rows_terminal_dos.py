@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--editor',type=Path);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--editor',type=Path);p.add_argument('--xlt-editor',type=Path);a=p.parse_args()
  binary,out=a.terminal.resolve(),a.output.resolve();assert binary.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build')
  out.mkdir(parents=True,exist_ok=False);m=json.loads((binary.parent/'manifest.json').read_text())
  assert m['diagnostic_display_row_probe'] and m['experimental_display_row_owner'] and not m['diagnostic_status_probe']
@@ -17,6 +17,11 @@ def main():
  if m.get('diagnostic_profile_display_probe'):
   assert editor is not None;em=json.loads((editor.parent/'manifest.json').read_text());assert sha(editor)==em['binary_sha256'] and em['experimental_mouse'] and em['experimental_custom_irq']
   for name,h in em['sources'].items():assert sha(ROOT/name)==h,name
+ xlt_editor=a.xlt_editor.resolve() if a.xlt_editor else None
+ if xlt_editor:assert m.get('diagnostic_xlt_display_probe'),'--xlt-editor requires XLT diagnostic'
+ if m.get('diagnostic_xlt_display_probe'):
+  assert xlt_editor is not None;xm=json.loads((xlt_editor.parent/'manifest.json').read_text());assert sha(xlt_editor)==xm['binary_sha256']
+  for name,h in xm['sources'].items():assert sha(ROOT/name)==h,name
  geometry=bool(m.get('diagnostic_row_geometry_probe'));leaf='GROWS.BIN' if geometry else 'DROWS.BIN'
  assert sha(binary)==m['binary_sha256']
  for name,digest in m['sources'].items():assert sha(ROOT/name)==digest,name
@@ -28,6 +33,7 @@ def main():
   struct.pack_into('<H',raw,0x196,0);struct.pack_into('<H',raw,0x1e6,0)
   if m.get('experimental_display_preferences'):
    for at,value in ((0x1c2,0xffff),(0x1c8,4),(0x1ca,43),(0x4ec,0x12)):struct.pack_into('<H',raw,at,value)
+  if m.get('diagnostic_xlt_display_probe'):struct.pack_into('<H',raw,0x1e0,1)
   (drive/'TEST.PRM').write_bytes(raw)
   if m.get('experimental_program_display_owner'):
    subprocess.run(['nasm','-fbin',str(ROOT/'standalone/program_display_child.asm'),'-o',str(drive/'PCHILD.COM')],check=True)
@@ -35,6 +41,10 @@ def main():
    import shutil
    shutil.copyfile(editor,drive/'PRMEDIT.EXE')
    (drive/'TEST.KBD').write_bytes(b''.join(b''.join(('P%d-%02d'%(profile,slot)).encode().ljust(12,b'\0') for slot in range(79)) for profile in range(7)))
+  if m.get('diagnostic_xlt_display_probe'):
+   import shutil
+   application=run/'application';application.mkdir();shutil.copyfile(binary,application/'TERMINAL.EXE');shutil.copyfile(xlt_editor,application/'XLTEDIT.EXE')
+   (drive/'TEST.XLT').write_bytes(bytes(range(256)))
   sentinel=b'Keep this existing diagnostic file.\x00\xff'
   if label=='exclusive':(drive/leaf).write_bytes(sentinel)
   sampler=SAMPLER
@@ -62,6 +72,7 @@ def main():
   expected='if errorlevel 24 goto failed\nif errorlevel 23 goto passed\ngoto failed\n' if label=='exclusive' else 'if errorlevel 1 goto failed\ngoto passed\n'
   keys='p900 enter'+(' enter enter enter enter' if m.get('experimental_program_display_owner') else '')
   arguments='@TEST.PRM /K:TEST.KBD /D:Unused:23 /I:3' if m.get('diagnostic_profile_display_probe') else '@D:\\TEST.PRM /D:Unused:23 /I:3'
+  if m.get('diagnostic_xlt_display_probe'):arguments='@TEST.PRM /X:TEST.XLT /D:Unused:23 /I:3'
   config=f'''[sdl]
 output=surface
 [cpu]
@@ -77,7 +88,7 @@ serial3=nullmodem server:127.0.0.1 port:{server.getsockname()[1]} transparent:1 
 serial4=disabled
 [autoexec]
 @echo off
-mount c "{binary.parent}"
+mount c "{application if m.get('diagnostic_xlt_display_probe') else binary.parent}"
 mount d "{drive}"
 d:
 set PCPLUS=D:\\
@@ -132,6 +143,18 @@ exit
      assert len(video)==rows*160 and video[:(rows-1)*160]==b' \x07'*((rows-1)*80)
      assert b'Alt-Z FOR HELP' in video[(rows-1)*160::2]
      assert (drive/f'PK{r}{t}.BIN').read_bytes()==(drive/'TEST.KBD').read_bytes()[target*948:(target+1)*948]
+  if m.get('diagnostic_xlt_display_probe'):
+   xltrows=struct.unpack('<131H',(drive/'XLTROWS.BIN').read_bytes());assert xltrows[:3]==(0x5854,1,8)
+   for r,rows in enumerate((25,28,43,50)):
+    for t,target in enumerate((88,0)):
+     i=r*2+t;rec=xltrows[3+i*16:3+(i+1)*16]
+     assert rec==(rows,target,4,2,2,3,rows,rows-1,rows,0,0,0,0,target,1,255),rec
+     before=(drive/f'XB{r}{t}.BIN').read_bytes();after=(drive/f'XV{r}{t}.BIN').read_bytes()
+     assert len(before)==rows*160 and before==after
+     table=bytearray(range(256));table[0]=target
+     assert (drive/f'XK{r}{t}.BIN').read_bytes()==table
+   assert (drive/'TEST.XLT').read_bytes()==bytes(range(256))
+   assert not list(drive.glob('XLTEDIT.BAK')) and not list(drive.glob('XLTEDIT.$$$'))
   observed=(drive/leaf).read_bytes()
   if label=='exclusive':assert observed==sentinel
   else:
@@ -166,6 +189,9 @@ exit
  if editor:
   assert sha(editor)==em['binary_sha256']
   for name,h in em['sources'].items():assert sha(ROOT/name)==h,name
+ if xlt_editor:
+  assert sha(xlt_editor)==xm['binary_sha256']
+  for name,h in xm['sources'].items():assert sha(ROOT/name)==h,name
  if m.get('experimental_program_display_owner'):inputs['standalone/program_display_child.asm']=sha(ROOT/'standalone/program_display_child.asm')
  record=dict(passed=True,terminal_sha256=m['binary_sha256'],manifest_sha256=sha(binary.parent/'manifest.json'),checker_inputs=inputs,
   bank=m['display_row_bank'],states=states,runs=runs,diagnostic_package_rejected=True,canonical_geometry_transaction=geometry,display_preferences_captured=bool(m.get('experimental_display_preferences')),
@@ -176,5 +202,9 @@ exit
   record['editor_sha256']=sha(editor)
   record['editor_manifest_sha256']=sha(editor.parent/'manifest.json')
   record['scope']+=' Additionally sixteen actual DOS source-built PRMEDIT round trips use BIOS-enqueued editing/save/close/parent-confirmation keys: profiles6→4→6 at25/28/43/50 physical rows, visible status, explicit synthetic keyboard. Each accepted profile, complete logical blank frame, retained physical status, keymap, child exit and released leases is checked. Hidden status and declines are separate modeled-boundary tests; full profile/ASPECT/BBS/physical acceptance remains open.'
+ if m.get('diagnostic_xlt_display_probe'):
+  record['xlt_observations']=16
+  record['editor_sha256']=sha(xlt_editor);record['editor_manifest_sha256']=sha(xlt_editor.parent/'manifest.json')
+  record['scope']+=' Additionally sixteen actual DOS source-built XLTEDIT/EXEC/save/confirmation round trips at25/28/43/50 physical rows with visible status and an explicit synthetic table change byte0 to88 then0. Full before/after frames, canonical/physical height, child exit, selected256-byte active table, final disk identity and absence of recovery remnants are checked. Parent UART ownership is restored but peer sends no data; post-return RX/TX is covered separately by the boundary-modeled CPU checker.'
  (out/'result.json').write_text(json.dumps(record,indent=2)+'\n');print('PASS linked DOS rows:6 observations, exclusive create refusal, hardware restore, diagnostic package rejection; canonical transaction',geometry)
 if __name__=='__main__':main()
