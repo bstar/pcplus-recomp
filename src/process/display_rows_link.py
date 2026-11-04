@@ -54,6 +54,6 @@ def build_display_rows_bank(root,out,geometry=False,mouse=False,selectors=False)
   source=root/'src/terminal/row_geometry.c';inputs += [source,root/'src/terminal/row_geometry.h',root/'src/terminal/status_transition.h']
   obj=out/'geometry-owner.obj';objects.append(obj)
   subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-nt=DISPLAY_CODE','-nc=FARCODE',
-   *(['-dTERMINAL_ROW_MOUSE'] if mouse else []),'-i='+str(root/'src/process'),'-fo='+str(obj),str(source)],check=True)
- return dict(objects=objects,inputs=inputs,namespace=namespace,native_bytes=sum(u['bytes'] for u in units),selector_service=selectors,
+   *(['-dTERMINAL_ROW_MOUSE'] if mouse else []),*(['-dTERMINAL_DISPLAY_SELECTOR'] if selectors else []),'-i='+str(root/'src/process'),'-fo='+str(obj),str(source)],check=True)
+ return dict(objects=objects,inputs=inputs,namespace=namespace,native_bytes=sum(u['bytes'] for u in units),selector_service=selectors,selector_transaction=selectors and geometry,
   scope=('Optional offline BIOS/canonical/RIS transaction with mouse suspension and rollback. No normal key/menu binding, online geometry, bridge coordination or physical acceptance.' if geometry else 'Optional low-level BIOS row bank only. Canonical terminal/RIS/frame/bridge transaction and key/menu bindings are not integrated; do not treat raw BIOS success as application geometry acceptance.'))

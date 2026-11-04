@@ -1,0 +1,1231 @@
+{
+  "passed": true,
+  "images": {
+    "ordinary": {
+      "terminal": "build/display-transaction-final-20261104/ordinary/TERMINAL.EXE",
+      "terminal_sha256": "ffd8db1951270bf7baac24ced9ab521b8c01cea933b03867a69e399cce0cec19",
+      "manifest_sha256": "f7782adf73a4929cdd0b14f3a43d44f2ef47c9128d0bb679310b4fe5f720615d",
+      "source_files": 566,
+      "resident_CS_extent_bytes": 65404,
+      "resident_CS_spare_bytes": 132,
+      "data_stack_bytes": 65088,
+      "display_bank": {
+        "namespace": {
+          "display_baseline": "drows_native_display_baseline",
+          "display_bytes": "drows_native_display_bytes",
+          "display_cells": "drows_native_display_cells",
+          "display_columns": "drows_native_display_columns",
+          "display_crt": "drows_native_display_crt",
+          "display_cursor_eight": "drows_native_display_cursor_eight",
+          "display_cursor_end": "drows_native_display_cursor_end",
+          "display_cursor_row": "drows_native_display_cursor_row",
+          "display_cursor_start": "drows_native_display_cursor_start",
+          "display_detect": "drows_native_display_detect",
+          "display_extended_mode": "drows_native_display_extended_mode",
+          "display_font_capable": "drows_native_display_font_capable",
+          "display_font_ega14": "drows_native_display_font_ega14",
+          "display_font_ega8": "drows_native_display_font_ega8",
+          "display_font_reset": "drows_native_display_font_reset",
+          "display_font_vga14": "drows_native_display_font_vga14",
+          "display_font_vga16": "drows_native_display_font_vga16",
+          "display_font_vga43": "drows_native_display_font_vga43",
+          "display_font_vga50": "drows_native_display_font_vga50",
+          "display_geometry": "drows_native_display_geometry",
+          "display_install_font": "drows_native_display_install_font",
+          "display_last_column": "drows_native_display_last_column",
+          "display_last_line": "drows_native_display_last_line",
+          "display_last_row": "drows_native_display_last_row",
+          "display_legacy": "drows_native_display_legacy",
+          "display_mode": "drows_native_display_mode",
+          "display_mono": "drows_native_display_mono",
+          "display_rows": "drows_native_display_rows",
+          "display_scanline_capable": "drows_native_display_scanline_capable",
+          "display_scanlines": "drows_native_display_scanlines",
+          "display_segment": "drows_native_display_segment",
+          "display_select_rows": "drows_native_display_select_rows",
+          "display_set_mode": "drows_native_display_set_mode",
+          "display_snow": "drows_native_display_snow",
+          "display_status_port": "drows_native_display_status_port",
+          "display_stride": "drows_native_display_stride",
+          "display_viewport": "drows_native_display_viewport",
+          "display_virtual_buffer": "drows_native_display_virtual_buffer"
+        },
+        "native_bytes": 639,
+        "segment": 12743,
+        "offset": 6,
+        "bytes": 4379,
+        "scope": "Optional offline BIOS/canonical/RIS transaction with mouse suspension and rollback. No normal key/menu binding, online geometry, bridge coordination or physical acceptance.",
+        "selector_service": true,
+        "selector_transaction": true
+      }
+    },
+    "diagnostic": {
+      "terminal": "build/display-transaction-final-20261104/diagnostic/TERMINAL.EXE",
+      "terminal_sha256": "35bba5bfb57b87b26236a1c21dd1ba118337ba16b0a75105077eaf78cba40825",
+      "manifest_sha256": "cb63d05d417d4f90e070cb9ea045cedd68c27008f3f75422edf4b85439ef36c3",
+      "source_files": 568,
+      "resident_CS_extent_bytes": 65416,
+      "resident_CS_spare_bytes": 120,
+      "data_stack_bytes": 65136,
+      "display_bank": {
+        "namespace": {
+          "display_baseline": "drows_native_display_baseline",
+          "display_bytes": "drows_native_display_bytes",
+          "display_cells": "drows_native_display_cells",
+          "display_columns": "drows_native_display_columns",
+          "display_crt": "drows_native_display_crt",
+          "display_cursor_eight": "drows_native_display_cursor_eight",
+          "display_cursor_end": "drows_native_display_cursor_end",
+          "display_cursor_row": "drows_native_display_cursor_row",
+          "display_cursor_start": "drows_native_display_cursor_start",
+          "display_detect": "drows_native_display_detect",
+          "display_extended_mode": "drows_native_display_extended_mode",
+          "display_font_capable": "drows_native_display_font_capable",
+          "display_font_ega14": "drows_native_display_font_ega14",
+          "display_font_ega8": "drows_native_display_font_ega8",
+          "display_font_reset": "drows_native_display_font_reset",
+          "display_font_vga14": "drows_native_display_font_vga14",
+          "display_font_vga16": "drows_native_display_font_vga16",
+          "display_font_vga43": "drows_native_display_font_vga43",
+          "display_font_vga50": "drows_native_display_font_vga50",
+          "display_geometry": "drows_native_display_geometry",
+          "display_install_font": "drows_native_display_install_font",
+          "display_last_column": "drows_native_display_last_column",
+          "display_last_line": "drows_native_display_last_line",
+          "display_last_row": "drows_native_display_last_row",
+          "display_legacy": "drows_native_display_legacy",
+          "display_mode": "drows_native_display_mode",
+          "display_mono": "drows_native_display_mono",
+          "display_rows": "drows_native_display_rows",
+          "display_scanline_capable": "drows_native_display_scanline_capable",
+          "display_scanlines": "drows_native_display_scanlines",
+          "display_segment": "drows_native_display_segment",
+          "display_select_rows": "drows_native_display_select_rows",
+          "display_set_mode": "drows_native_display_set_mode",
+          "display_snow": "drows_native_display_snow",
+          "display_status_port": "drows_native_display_status_port",
+          "display_stride": "drows_native_display_stride",
+          "display_viewport": "drows_native_display_viewport",
+          "display_virtual_buffer": "drows_native_display_virtual_buffer"
+        },
+        "native_bytes": 639,
+        "segment": 12846,
+        "offset": 6,
+        "bytes": 4379,
+        "scope": "Optional offline BIOS/canonical/RIS transaction with mouse suspension and rollback. No normal key/menu binding, online geometry, bridge coordination or physical acceptance.",
+        "selector_service": true,
+        "selector_transaction": true
+      }
+    },
+    "disabled": {
+      "terminal": "build/display-transaction-final-20261104/disabled/TERMINAL.EXE",
+      "terminal_sha256": "7e61a128201c53be9ed287c059df5372ee2217c0b51db6e93fc91d53e8175ca4",
+      "manifest_sha256": "6b903d04df99ae28f6a6cde3e0b37271b0edae690f182f141a879d1d06b1fe47",
+      "source_files": 563,
+      "resident_CS_extent_bytes": 65392,
+      "resident_CS_spare_bytes": 144,
+      "data_stack_bytes": 65072,
+      "display_bank": {
+        "namespace": {
+          "display_baseline": "drows_native_display_baseline",
+          "display_bytes": "drows_native_display_bytes",
+          "display_cells": "drows_native_display_cells",
+          "display_columns": "drows_native_display_columns",
+          "display_crt": "drows_native_display_crt",
+          "display_cursor_eight": "drows_native_display_cursor_eight",
+          "display_cursor_end": "drows_native_display_cursor_end",
+          "display_cursor_row": "drows_native_display_cursor_row",
+          "display_cursor_start": "drows_native_display_cursor_start",
+          "display_detect": "drows_native_display_detect",
+          "display_extended_mode": "drows_native_display_extended_mode",
+          "display_font_capable": "drows_native_display_font_capable",
+          "display_font_ega14": "drows_native_display_font_ega14",
+          "display_font_ega8": "drows_native_display_font_ega8",
+          "display_font_reset": "drows_native_display_font_reset",
+          "display_font_vga14": "drows_native_display_font_vga14",
+          "display_font_vga16": "drows_native_display_font_vga16",
+          "display_font_vga43": "drows_native_display_font_vga43",
+          "display_font_vga50": "drows_native_display_font_vga50",
+          "display_geometry": "drows_native_display_geometry",
+          "display_install_font": "drows_native_display_install_font",
+          "display_last_column": "drows_native_display_last_column",
+          "display_last_line": "drows_native_display_last_line",
+          "display_last_row": "drows_native_display_last_row",
+          "display_legacy": "drows_native_display_legacy",
+          "display_mode": "drows_native_display_mode",
+          "display_mono": "drows_native_display_mono",
+          "display_rows": "drows_native_display_rows",
+          "display_scanline_capable": "drows_native_display_scanline_capable",
+          "display_scanlines": "drows_native_display_scanlines",
+          "display_segment": "drows_native_display_segment",
+          "display_select_rows": "drows_native_display_select_rows",
+          "display_set_mode": "drows_native_display_set_mode",
+          "display_snow": "drows_native_display_snow",
+          "display_status_port": "drows_native_display_status_port",
+          "display_stride": "drows_native_display_stride",
+          "display_viewport": "drows_native_display_viewport",
+          "display_virtual_buffer": "drows_native_display_virtual_buffer"
+        },
+        "native_bytes": 606,
+        "segment": 12732,
+        "offset": 6,
+        "bytes": 3180,
+        "scope": "Optional offline BIOS/canonical/RIS transaction with mouse suspension and rollback. No normal key/menu binding, online geometry, bridge coordination or physical acceptance.",
+        "selector_service": false,
+        "selector_transaction": false
+      }
+    }
+  },
+  "reports": {
+    "transaction": {
+      "path": "build/display-transaction-final-cpu-20261104/result.json",
+      "sha256": "1b17ebccb47e7f48e4246145c1a00cbfd4cfd16d9427f5231c4a183da26d0260",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "ffd8db1951270bf7baac24ced9ab521b8c01cea933b03867a69e399cce0cec19",
+        "manifest_sha256": "f7782adf73a4929cdd0b14f3a43d44f2ef47c9128d0bb679310b4fe5f720615d",
+        "cases": [
+          {
+            "case": "visible-hidden-selector-commit-accepted-fallback-RIS-status-shadow-and-parser-CPR",
+            "inputs": 16,
+            "passed": true
+          },
+          {
+            "case": "saved-zero-nonzero-cycle-policy-uses-accepted-selector",
+            "inputs": 12,
+            "passed": true
+          },
+          {
+            "case": "missing-preferences-live-selector-and-invalid-saved-selection-refuse",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "public-selector-cannot-enter-internal-raw-row-sentinel-path",
+            "inputs": 3,
+            "passed": true
+          },
+          {
+            "case": "online-and-foreground-owner-refusals-preserve-selector-and-complete-owned-state",
+            "inputs": 6,
+            "passed": true
+          },
+          {
+            "case": "alternate-text-mode-restores-admitted-mode3-and-all-owned-planes",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "late-real-renderer-refusal-restores-BIOS-defaults-planes-and-live-selector",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "unverified-old-geometry-requests-existing-fatal-shutdown",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "BIOS-font-failure-commits-verified-fallback-and-metadata-together",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "actual-UART-ISR-arrival-waits-for-complete-new-canonical-geometry",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "real-mouse-owner-suspended-across-configured-mode-and-font-changes",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "post-commit-mouse-failure-keeps-coherent-selector-and-quarantined-shutdown",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "direct-physical-row-request-invalidates-derived-live-selector",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "actual-MZ-entry-clears-live-selector-readiness",
+            "inputs": 1,
+            "passed": true
+          }
+        ],
+        "checker_sha256": "4e200600fe6f045ccada3c2419149acb817f5011f983cd5ebf34348b2c0a2d29",
+        "scope": "Execute composed offline selector/BIOS/canonical/RIS transaction.\nBIOS, DOS allocation and mouse driver boundaries modeled; no normal UI/online claim.\n Actual selector and canonical owner, RIS/parser/status/shadow/rollback, UART ISR and mouse owner execute. BIOS/DOS/INT33 effects modeled; faults change real-boundary inputs. No instruction/function replacement, normal command, online/BBS/physical or deployment acceptance."
+      }
+    },
+    "selector": {
+      "path": "build/display-transaction-final-selectors-20261104/result.json",
+      "sha256": "99437da286571427d5a8c1bcf4f141d2aed34fdefee6746f9d80606be3a589e4",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "ffd8db1951270bf7baac24ced9ab521b8c01cea933b03867a69e399cce0cec19",
+        "manifest_sha256": "f7782adf73a4929cdd0b14f3a43d44f2ef47c9128d0bb679310b4fe5f720615d",
+        "cases": [
+          {
+            "case": "physical-selector-chain-preserves-independent-canonical-state",
+            "inputs": 8,
+            "passed": true
+          },
+          {
+            "case": "native-row-lowbyte-capabilities-and-mode-admission",
+            "inputs": 54,
+            "passed": true
+          },
+          {
+            "case": "signed-mode-admission-supported-text-and-verified-graphics-refusal-fallback",
+            "inputs": 20,
+            "passed": true
+          },
+          {
+            "case": "refused-font-request-returns-verified-baseline",
+            "inputs": 3,
+            "passed": true
+          },
+          {
+            "case": "unverified-baseline-recovery-remains-unusable",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "baseline-mode-is-verified-even-when-row-count-already-matches",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "actual-recovered-vendor-mode-branch-with-verified-fallback",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "invalid-selector-pointer-and-flags-refuse-before-BIOS-mutation",
+            "inputs": 6,
+            "passed": true
+          }
+        ],
+        "checker_sha256": "2901e3ce536afba2e6df3f2bb9aec4ae809a3801b925ed091c7d11b286328c09",
+        "scope": "Execute banked selector/BIOS owner; BIOS effects modeled, no canonical UI commit. Actual C/ASM mode/geometry/font/capability chains execute, including recovered vendor branch. BIOS effects/refusal modeled. Raw destructive physical service only; no screen rollback, canonical/RIS/UI/bridge commit, normal key, online/BBS or physical acceptance."
+      }
+    },
+    "capture": {
+      "path": "build/display-transaction-final-preferences-20261104/result.json",
+      "sha256": "6e92b43194de9117aa824393e5db1f014da321ba505182b9d6c22ff66619dcb0",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "ffd8db1951270bf7baac24ced9ab521b8c01cea933b03867a69e399cce0cec19",
+        "manifest_sha256": "f7782adf73a4929cdd0b14f3a43d44f2ef47c9128d0bb679310b4fe5f720615d",
+        "cases": [
+          {
+            "case": "single-PRM-serial-modem-and-directory-publication-after-baseline-with-raw-words",
+            "inputs": 132,
+            "passed": true
+          },
+          {
+            "case": "read-decode-mouse-and-late-baseline-refusals-retain-previous-display-capture",
+            "inputs": 12,
+            "passed": true
+          },
+          {
+            "case": "capture-and-readiness-aliases-refuse-before-IO",
+            "inputs": 36,
+            "passed": true
+          },
+          {
+            "case": "actual-MZ-entry-clears-readiness-before-startup-owners",
+            "inputs": 1,
+            "passed": true
+          }
+        ],
+        "checker_sha256": "8b12bd2cbd0f5548553daef142d237337fad2012c81216911a0724dff9d0ac58",
+        "scope": "Execute linked one-read startup display capture; DOS/file effects modeled.\nRaw preferences remain separate from BIOS, canonical geometry and live selection.\n Actual C/ASM public startup readers, decoder/validators, mouse staging and baseline publication execute. File/DOS effects modeled; late publish fault clears IF at its real boundary. No function/instruction replacement, geometry apply, normal keys, online/BBS/physical or deployment acceptance."
+      }
+    },
+    "geometry": {
+      "path": "build/display-transaction-final-geometry-20261104/result.json",
+      "sha256": "4a43b5d435b42d26c745e1704d563f46709ce8adecaf49143eb3a17e779554de",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "ffd8db1951270bf7baac24ced9ab521b8c01cea933b03867a69e399cce0cec19",
+        "manifest_sha256": "f7782adf73a4929cdd0b14f3a43d44f2ef47c9128d0bb679310b4fe5f720615d",
+        "cases": [
+          {
+            "case": "real-BIOS-chain-canonical-status-shadow-parser-CPR-and-RIS",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "hidden-status-retained-through-physical-row-resets",
+            "inputs": 4,
+            "passed": true
+          },
+          {
+            "case": "adapter-capability-admission-and-EGA-canonical-reset",
+            "inputs": 8,
+            "passed": true
+          },
+          {
+            "case": "invalid-requests-preserve-full-state",
+            "inputs": 6,
+            "passed": true
+          },
+          {
+            "case": "live-owner-and-online-refusals",
+            "inputs": 32,
+            "passed": true
+          },
+          {
+            "case": "invalid-layout-config-ABI-and-baseline-refuse-before-BIOS-change",
+            "inputs": 27,
+            "passed": true
+          },
+          {
+            "case": "generalized-status-retains-old-video-guards-and-repaints-real-bottom-row",
+            "inputs": 3,
+            "passed": true
+          },
+          {
+            "case": "real-RIS-restores-configured-profile-without-recapturing-peer-state",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "late-renderer-failure-restores-BIOS-all-live-defaults-full-planes-and-keys",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "post-draw-error-restores-every-owned-plane-and-BIOS-cursor",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "shared-workspace-reinitialized-by-width-and-reused-by-row-owner",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "BIOS-font-refusal-rolls-back-after-verified-baseline-fallback",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "unrestorable-hardware-requests-existing-fatal-shutdown",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "queued-UART-preserved-until-parser-consumes-new-geometry",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "actual-UART-ISR-arrival-during-BIOS-work-preserves-parser-and-HARD-watermarks",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "real-mouse-owner-suspends-callback-before-font-change-and-resumes-after",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "pending-mouse-input-and-foreign-suspended-owner-refuse",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "mouse-input-arriving-at-pause-boundary-survives-init-and-native-consumption",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "failed-mouse-pause-restores-defaults-and-requests-existing-quarantine-shutdown",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "failed-mouse-resume-keeps-coherent-geometry-and-quarantined-storage",
+            "inputs": 1,
+            "passed": true
+          }
+        ],
+        "checker_sha256": "36071ca1e36da877ec0e5540cec591ee92191fcdf716fef26552f66ddbf237f9",
+        "scope": "Execute actual BIOS/canonical/RIS owner; BIOS/UART boundaries are modeled. Actual linked C/ASM/native BIOS request chains, full rollback, RIS/status/parser and UART IRQ code execute. BIOS effects, DOS allocations, INT33 driver/vector boundaries and failure responses modeled; mouse arrival seeds native pending data at the pause boundary, not physical IRQ timing. Renderer fault changes an input at real boundary. No function/instruction/return patch, ordinary key binding, online/BBS or physical acceptance."
+      }
+    },
+    "status": {
+      "path": "build/display-transaction-final-status-20261104/result.json",
+      "sha256": "839fa991ddec1ff1abc62a8a3da29a4f7c953a20ffc94e3caff8a618d44c4639",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "ffd8db1951270bf7baac24ced9ab521b8c01cea933b03867a69e399cce0cec19",
+        "manifest_sha256": "f7782adf73a4929cdd0b14f3a43d44f2ef47c9128d0bb679310b4fe5f720615d",
+        "cases": [
+          {
+            "case": "real-hide-show-bounds-plane-initialization-status-and-history",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "actual-parser-CPR-clamping-and-RIS-follow-both-effective-sizes",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "pending-deferred-wrap-survives-hide-and-nonscrolling-show",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "real-native-scroll-custom-margins-and-saved-cursor-clamp",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "quiescent-frame-owner-admission",
+            "inputs": 32,
+            "passed": true
+          },
+          {
+            "case": "invalid-geometry-profile-and-connected-size-refusals",
+            "inputs": 32,
+            "passed": true
+          },
+          {
+            "case": "invalid-baseline-and-unrepresentable-custom-margin-refuse-before-commit",
+            "inputs": 2,
+            "passed": true
+          },
+          {
+            "case": "notice-lease-must-be-retired-before-frame-acquisition",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "late-real-renderer-refusal-rolls-back-live-defaults-and-all-screen-planes",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "post-draw-failure-restores-scrolled-video-metadata-shadow-and-hardware-cursor",
+            "inputs": 1,
+            "passed": true
+          },
+          {
+            "case": "queued-native-UART-input-retained-for-parser-after-commit",
+            "inputs": 1,
+            "passed": true
+          }
+        ],
+        "sources": {
+          "src/terminal/status_transition.c": "3f7ec2870719bf49dc5f6b2a3efc5c868fc211e23a61cf8f207ea1acae69555d",
+          "src/terminal/status_transition.h": "bc70691615bfd674e0e3c90dc0efc0a12f9cbdf2c2747cd68f19f03510b64c1a",
+          "src/terminal/status_transition_glue.asm": "57e62a819ae406080420964f197fef196d2c7bf938ad61f1c4c1d1d61d15bcaf",
+          "src/terminal/connection_ui.asm": "538bc0075c45262faca4cb29d8f3d1161b6590b04033dcc0b3375ba0f62eba70",
+          "standalone/check_status_transition_live.py": "e571a1d8cd5060b3d13ed2fa778d839f0982545dd5c36f7a7e0ba9b912b3818c"
+        },
+        "scope": "Execute optional offline status transaction, actual parser/RIS and rollback.\nActual C/ASM parent helpers; BIOS/UART boundaries modeled. No online size policy.\n Offline fixed80x25 narrow/unprotected component; actual frame/metadata/default rollback, native scroll/cursor/status and parser/CPR/RIS execute. Late fault changes a configuration input at renderer entry; no product function replaced. No key/menu binding, online resize/NAWS, larger/wide mode, actual DOS/BBS/physical or deployment acceptance."
+      }
+    },
+    "defaults": {
+      "path": "build/display-transaction-final-defaults-20261104/result.json",
+      "sha256": "147598f5e0825aaf2214a4d6e5db4252092f7e8a54596474863f924227b7fbc7",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "ffd8db1951270bf7baac24ced9ab521b8c01cea933b03867a69e399cce0cec19",
+        "manifest_sha256": "f7782adf73a4929cdd0b14f3a43d44f2ef47c9128d0bb679310b4fe5f720615d",
+        "cases": [
+          {
+            "case": "captured-only-rows-margins-cursors-offsets-and-capacity",
+            "inputs": 216,
+            "passed": true
+          },
+          {
+            "case": "invalid-request-baseline-ABI-and-late-failure-atomicity",
+            "inputs": 31,
+            "passed": true
+          },
+          {
+            "case": "real-RIS-uses-row-defaults-without-capturing-peer-state",
+            "inputs": 3,
+            "passed": true
+          }
+        ],
+        "sources_verified": 566,
+        "sources": {
+          "src/terminal/reset_rows.asm": "57f77a07391d2da24001c40a7a08fe14328cc6d39c85842791b83837c0f07292",
+          "src/terminal/terminal_reset.asm": "8fefd2e361db4741861c1788cc105fb9650f6c318cb8298d017234c1e2470ac1",
+          "standalone/build_terminal.py": "34a37d055088df46750cf731c8979e6cbfd1920797d76cf5a0b653bceb5c67b5",
+          "standalone/check_reset_rows_live.py": "2f096779926ca291abd6f12e8455907d5c91521d918e861062d4298e94ef0c61"
+        },
+        "scope": "Execute staged captured-RIS row updates. No complete live geometry transaction.\nThe linked component changes captured defaults only; BIOS/UART inputs modeled.\n Actual far API, captured table and RIS instructions; staged failure atomicity, DS=SS, register/flag/stack guards. No live geometry commit, key/menu binding, BIOS resize, full frame/history/bridge-size transaction, DOS/BBS/package/physical acceptance or deployment."
+      }
+    },
+    "dos": {
+      "path": "build/display-transaction-final-dos-20261104/result.json",
+      "sha256": "07f8e05318fa39c40f07f3b27c13821b3141491a8aaf54bb4ecfd7fe8f0057a6",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "35bba5bfb57b87b26236a1c21dd1ba118337ba16b0a75105077eaf78cba40825",
+        "manifest_sha256": "cb63d05d417d4f90e070cb9ea045cedd68c27008f3f75422edf4b85439ef36c3",
+        "checker_inputs": {
+          "standalone/test_display_rows_terminal_dos.py": "8e2be842cb1ecd91bd4282df019540d71d2189301b6b836ee4c6451035a7b69d",
+          "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+          "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+          "standalone/package_connection_test.py": "69a65b38753b6d8bef082b6f7f6100b1333bcf156f05beff303a559695a5074b"
+        },
+        "bank": {
+          "namespace": {
+            "display_baseline": "drows_native_display_baseline",
+            "display_bytes": "drows_native_display_bytes",
+            "display_cells": "drows_native_display_cells",
+            "display_columns": "drows_native_display_columns",
+            "display_crt": "drows_native_display_crt",
+            "display_cursor_eight": "drows_native_display_cursor_eight",
+            "display_cursor_end": "drows_native_display_cursor_end",
+            "display_cursor_row": "drows_native_display_cursor_row",
+            "display_cursor_start": "drows_native_display_cursor_start",
+            "display_detect": "drows_native_display_detect",
+            "display_extended_mode": "drows_native_display_extended_mode",
+            "display_font_capable": "drows_native_display_font_capable",
+            "display_font_ega14": "drows_native_display_font_ega14",
+            "display_font_ega8": "drows_native_display_font_ega8",
+            "display_font_reset": "drows_native_display_font_reset",
+            "display_font_vga14": "drows_native_display_font_vga14",
+            "display_font_vga16": "drows_native_display_font_vga16",
+            "display_font_vga43": "drows_native_display_font_vga43",
+            "display_font_vga50": "drows_native_display_font_vga50",
+            "display_geometry": "drows_native_display_geometry",
+            "display_install_font": "drows_native_display_install_font",
+            "display_last_column": "drows_native_display_last_column",
+            "display_last_line": "drows_native_display_last_line",
+            "display_last_row": "drows_native_display_last_row",
+            "display_legacy": "drows_native_display_legacy",
+            "display_mode": "drows_native_display_mode",
+            "display_mono": "drows_native_display_mono",
+            "display_rows": "drows_native_display_rows",
+            "display_scanline_capable": "drows_native_display_scanline_capable",
+            "display_scanlines": "drows_native_display_scanlines",
+            "display_segment": "drows_native_display_segment",
+            "display_select_rows": "drows_native_display_select_rows",
+            "display_set_mode": "drows_native_display_set_mode",
+            "display_snow": "drows_native_display_snow",
+            "display_status_port": "drows_native_display_status_port",
+            "display_stride": "drows_native_display_stride",
+            "display_viewport": "drows_native_display_viewport",
+            "display_virtual_buffer": "drows_native_display_virtual_buffer"
+          },
+          "native_bytes": 639,
+          "segment": 12846,
+          "offset": 6,
+          "bytes": 4379,
+          "scope": "Optional offline BIOS/canonical/RIS transaction with mouse suspension and rollback. No normal key/menu binding, online geometry, bridge coordination or physical acceptance.",
+          "selector_service": true,
+          "selector_transaction": true
+        },
+        "states": [
+          [
+            0,
+            0,
+            3,
+            80,
+            25,
+            47104,
+            160,
+            2000,
+            1,
+            1,
+            0,
+            0,
+            20483,
+            0,
+            24,
+            24,
+            23,
+            0,
+            7,
+            3840,
+            6144
+          ],
+          [
+            25,
+            0,
+            3,
+            80,
+            25,
+            47104,
+            160,
+            2000,
+            1,
+            1,
+            0,
+            0,
+            20483,
+            0,
+            24,
+            24,
+            23,
+            0,
+            7,
+            3840,
+            6144
+          ],
+          [
+            28,
+            0,
+            3,
+            80,
+            28,
+            47104,
+            160,
+            2240,
+            1,
+            1,
+            0,
+            0,
+            20483,
+            0,
+            27,
+            27,
+            26,
+            0,
+            7,
+            4320,
+            6912
+          ],
+          [
+            43,
+            0,
+            3,
+            80,
+            43,
+            47104,
+            160,
+            3440,
+            1,
+            1,
+            0,
+            0,
+            20483,
+            0,
+            42,
+            42,
+            41,
+            0,
+            7,
+            6720,
+            10752
+          ],
+          [
+            50,
+            0,
+            3,
+            80,
+            50,
+            47104,
+            160,
+            4000,
+            1,
+            1,
+            0,
+            0,
+            20483,
+            0,
+            49,
+            49,
+            48,
+            0,
+            7,
+            7840,
+            12544
+          ],
+          [
+            25,
+            0,
+            3,
+            80,
+            25,
+            47104,
+            160,
+            2000,
+            1,
+            1,
+            0,
+            0,
+            20483,
+            0,
+            24,
+            24,
+            23,
+            0,
+            7,
+            3840,
+            6144
+          ]
+        ],
+        "runs": {
+          "normal": {
+            "passed": true,
+            "expected_exit": 0,
+            "hardware_snapshot_bytes": 42,
+            "connected_virtual_serial": true,
+            "serial_output_bytes": 0,
+            "artifacts": {
+              "dosbox.conf": "97f8b114cb36e116fbb6f263dd567c53048187fa9b5d3f5dab1e78be7963b090",
+              "dosbox.log": "f6332056399ce47df6aef5ab8599bd6242d3e86899b98e4490d59b34b3512720",
+              "drive/TEST.PRM": "6f094e6243757641692f5030a1a996d50a3bd6604acd9caff83e289465c092fe",
+              "drive/SNAP.ASM": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+              "drive/SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+              "drive/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+              "drive/DPREF.BIN": "c035b96c532cb8d8910ec531e8616f104b2c0031052d5ca43e3f54c682bdb067",
+              "drive/DSEL.BIN": "2b2fc4a1131339eb645b253e306c638a787f9e7aec0a744f466e2b2ef4c42e19",
+              "drive/SV0.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW0.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV1.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+              "drive/SW1.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+              "drive/SV2.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+              "drive/SW2.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+              "drive/SV3.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW3.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV4.BIN": "f9f4787d689d0d775fce0cf8dfc4e2d587daf596848b2734c6ce6c4c73335220",
+              "drive/SW4.BIN": "ebf5c8e9919969e6eff54f97db9f4ad80eed3ad156e7b9a6777d2b82ce11b996",
+              "drive/SV5.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW5.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV6.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW6.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV7.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW7.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV8.BIN": "707ba8a5e9a7f27f639e55cbc1a4375c86392f810c2742dc6aa0218ddc1adfab",
+              "drive/SW8.BIN": "d7e8cc9a896bde44094ea092cf5f8d8b19169eb2dab25cda0941c63e63e035c8",
+              "drive/TSEL.BIN": "7d870f1a964d33698f7b498ef9d79a4cfb9adca8078c5b60febba59b3b12b00d",
+              "drive/GV0.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/GW0.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/GV1.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/GW1.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/GV2.BIN": "53b9d405c076422e9a516299a9e8d0e30f65d7eadd395049e5b15c47736e5413",
+              "drive/GW2.BIN": "13a49d4c8107a2e98c02771a8bbe4b2d51440fcb520ce7517a7a999511d29404",
+              "drive/GV3.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+              "drive/GW3.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+              "drive/GV4.BIN": "f9f4787d689d0d775fce0cf8dfc4e2d587daf596848b2734c6ce6c4c73335220",
+              "drive/GW4.BIN": "ebf5c8e9919969e6eff54f97db9f4ad80eed3ad156e7b9a6777d2b82ce11b996",
+              "drive/GV5.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/GW5.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/GROWS.BIN": "62d8ae2aa7ed07353f130fca07c7c645d12efbef84a0dfcdeaf369eb6e2b1c04",
+              "drive/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+              "drive/SCREEN.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+            }
+          },
+          "exclusive": {
+            "passed": true,
+            "expected_exit": 23,
+            "hardware_snapshot_bytes": 42,
+            "connected_virtual_serial": true,
+            "serial_output_bytes": 0,
+            "artifacts": {
+              "dosbox.conf": "73a4e91379f39d74c391d0836fb268b148e0765c1f479deca80bbb444c264d2a",
+              "dosbox.log": "be8f2e87db79dd5253ce7a158af19522dbca5c8a2b52dcac9c0bd561e9d62f04",
+              "drive/TEST.PRM": "6f094e6243757641692f5030a1a996d50a3bd6604acd9caff83e289465c092fe",
+              "drive/GROWS.BIN": "ea7e8ffa591df543fb4875db188450b2998aa8c40cc3c9f93745e8aadeda7736",
+              "drive/SNAP.ASM": "7b2e53e538d7e317a77b65940d4447f336fcf37290b2b50f6608cbe47e331e42",
+              "drive/SNAP.COM": "46e73095bdb068ad6b17c9cc838270efc60252f5b84dbb4632abb52eaa6a9a90",
+              "drive/BEFORE.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425",
+              "drive/DPREF.BIN": "c035b96c532cb8d8910ec531e8616f104b2c0031052d5ca43e3f54c682bdb067",
+              "drive/DSEL.BIN": "2b2fc4a1131339eb645b253e306c638a787f9e7aec0a744f466e2b2ef4c42e19",
+              "drive/SV0.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW0.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV1.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+              "drive/SW1.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+              "drive/SV2.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+              "drive/SW2.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+              "drive/SV3.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW3.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV4.BIN": "f9f4787d689d0d775fce0cf8dfc4e2d587daf596848b2734c6ce6c4c73335220",
+              "drive/SW4.BIN": "ebf5c8e9919969e6eff54f97db9f4ad80eed3ad156e7b9a6777d2b82ce11b996",
+              "drive/SV5.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW5.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV6.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW6.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV7.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/SW7.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/SV8.BIN": "707ba8a5e9a7f27f639e55cbc1a4375c86392f810c2742dc6aa0218ddc1adfab",
+              "drive/SW8.BIN": "d7e8cc9a896bde44094ea092cf5f8d8b19169eb2dab25cda0941c63e63e035c8",
+              "drive/TSEL.BIN": "7d870f1a964d33698f7b498ef9d79a4cfb9adca8078c5b60febba59b3b12b00d",
+              "drive/GV0.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/GW0.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/GV1.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/GW1.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/GV2.BIN": "53b9d405c076422e9a516299a9e8d0e30f65d7eadd395049e5b15c47736e5413",
+              "drive/GW2.BIN": "13a49d4c8107a2e98c02771a8bbe4b2d51440fcb520ce7517a7a999511d29404",
+              "drive/GV3.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+              "drive/GW3.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+              "drive/GV4.BIN": "f9f4787d689d0d775fce0cf8dfc4e2d587daf596848b2734c6ce6c4c73335220",
+              "drive/GW4.BIN": "ebf5c8e9919969e6eff54f97db9f4ad80eed3ad156e7b9a6777d2b82ce11b996",
+              "drive/GV5.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/GW5.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+              "drive/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+              "drive/SCREEN.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+              "drive/AFTER.BIN": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+            }
+          }
+        },
+        "diagnostic_package_rejected": true,
+        "canonical_geometry_transaction": true,
+        "display_preferences_captured": true,
+        "scope": "Actual8086 DOS source-built parent calls real offline BIOS/canonical/RIS transaction at startup before UART enable; six BIOS/effective-row observations with actual video/full-shadow captures and native status at physical bottom. Exclusive output refusal returns23 and preserves existing file. Both COM3/IRQ5 virtual-UART/PIC/vector snapshots restore; zero serial commands. No actual live RX/parser during transaction, hardware-fault injection in DOS, normal key/menu, online/BBS/SIP or physical acceptance. Diagnostic cannot be packaged."
+      }
+    },
+    "source-ordinary": {
+      "path": "build/display-transaction-proof-ordinary-20261104/result.json",
+      "sha256": "5764d49d8cad59d98a2eb26311709102850f5146a4065398b0e7fa04adde0013",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "ffd8db1951270bf7baac24ced9ab521b8c01cea933b03867a69e399cce0cec19",
+        "source_files": 566,
+        "original_inputs": [],
+        "ancestor_git_unavailable": true,
+        "scope": "Rebuild a selected terminal from declared sources in an empty, Git-free tree."
+      }
+    },
+    "source-diagnostic": {
+      "path": "build/display-transaction-proof-diagnostic-20261104/result.json",
+      "sha256": "54ce47135187081d485d708d8ade8fd799176ed865bc8d1ff296c31bc974201e",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "35bba5bfb57b87b26236a1c21dd1ba118337ba16b0a75105077eaf78cba40825",
+        "source_files": 568,
+        "original_inputs": [],
+        "ancestor_git_unavailable": true,
+        "scope": "Rebuild a selected terminal from declared sources in an empty, Git-free tree."
+      }
+    },
+    "source-disabled": {
+      "path": "build/display-transaction-proof-disabled-20261104/result.json",
+      "sha256": "55a67acb94f1771ce5690a645930e3dedc591aa573ab1279bfe4d08975017096",
+      "result": {
+        "passed": true,
+        "terminal_sha256": "7e61a128201c53be9ed287c059df5372ee2217c0b51db6e93fc91d53e8175ca4",
+        "source_files": 563,
+        "original_inputs": [],
+        "ancestor_git_unavailable": true,
+        "scope": "Rebuild a selected terminal from declared sources in an empty, Git-free tree."
+      }
+    }
+  },
+  "composed_dos_observations": {
+    "normal": {
+      "path": "build/display-transaction-final-dos-20261104/normal/drive/TSEL.BIN",
+      "sha256": "7d870f1a964d33698f7b498ef9d79a4cfb9adca8078c5b60febba59b3b12b00d",
+      "records": [
+        [
+          1,
+          50,
+          0,
+          0,
+          25,
+          24,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          43,
+          0,
+          0,
+          43,
+          42,
+          0,
+          2,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          50,
+          3,
+          0,
+          43,
+          42,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          3,
+          50,
+          3,
+          0,
+          25,
+          24,
+          0,
+          3,
+          1,
+          0,
+          0
+        ],
+        [
+          4,
+          50,
+          3,
+          0,
+          50,
+          49,
+          0,
+          4,
+          1,
+          0,
+          0
+        ],
+        [
+          3,
+          50,
+          0,
+          0,
+          25,
+          24,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          4,
+          50,
+          0,
+          0,
+          25,
+          24,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          3,
+          50,
+          18,
+          0,
+          25,
+          24,
+          0,
+          1,
+          1,
+          1,
+          3
+        ],
+        [
+          4,
+          43,
+          18,
+          0,
+          25,
+          25,
+          1,
+          1,
+          1,
+          1,
+          3
+        ]
+      ],
+      "captures": {
+        "SV0.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV1.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+        "SV2.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+        "SV3.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV4.BIN": "f9f4787d689d0d775fce0cf8dfc4e2d587daf596848b2734c6ce6c4c73335220",
+        "SV5.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV6.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV7.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV8.BIN": "707ba8a5e9a7f27f639e55cbc1a4375c86392f810c2742dc6aa0218ddc1adfab",
+        "SW0.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW1.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+        "SW2.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+        "SW3.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW4.BIN": "ebf5c8e9919969e6eff54f97db9f4ad80eed3ad156e7b9a6777d2b82ce11b996",
+        "SW5.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW6.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW7.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW8.BIN": "d7e8cc9a896bde44094ea092cf5f8d8b19169eb2dab25cda0941c63e63e035c8"
+      }
+    },
+    "exclusive": {
+      "path": "build/display-transaction-final-dos-20261104/exclusive/drive/TSEL.BIN",
+      "sha256": "7d870f1a964d33698f7b498ef9d79a4cfb9adca8078c5b60febba59b3b12b00d",
+      "records": [
+        [
+          1,
+          50,
+          0,
+          0,
+          25,
+          24,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          43,
+          0,
+          0,
+          43,
+          42,
+          0,
+          2,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          50,
+          3,
+          0,
+          43,
+          42,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          3,
+          50,
+          3,
+          0,
+          25,
+          24,
+          0,
+          3,
+          1,
+          0,
+          0
+        ],
+        [
+          4,
+          50,
+          3,
+          0,
+          50,
+          49,
+          0,
+          4,
+          1,
+          0,
+          0
+        ],
+        [
+          3,
+          50,
+          0,
+          0,
+          25,
+          24,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          4,
+          50,
+          0,
+          0,
+          25,
+          24,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          3,
+          50,
+          18,
+          0,
+          25,
+          24,
+          0,
+          1,
+          1,
+          1,
+          3
+        ],
+        [
+          4,
+          43,
+          18,
+          0,
+          25,
+          25,
+          1,
+          1,
+          1,
+          1,
+          3
+        ]
+      ],
+      "captures": {
+        "SV0.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV1.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+        "SV2.BIN": "c261a3f86bf8892aed56846de53f35d8828d879443f096cf2d9b7e2909e328d3",
+        "SV3.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV4.BIN": "f9f4787d689d0d775fce0cf8dfc4e2d587daf596848b2734c6ce6c4c73335220",
+        "SV5.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV6.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV7.BIN": "c31060a516b04f11c7de2b6423cf10a2bf0ece4433aab8cf4a17e618e5636315",
+        "SV8.BIN": "707ba8a5e9a7f27f639e55cbc1a4375c86392f810c2742dc6aa0218ddc1adfab",
+        "SW0.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW1.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+        "SW2.BIN": "a6150acb7cfc9ab2e3104907ca975663f735c17171d9e2b7db77a3149502f029",
+        "SW3.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW4.BIN": "ebf5c8e9919969e6eff54f97db9f4ad80eed3ad156e7b9a6777d2b82ce11b996",
+        "SW5.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW6.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW7.BIN": "ad502a8c0e24055b1e65f9f1692f90e1a21d1093a7014596a9b48cd565fd2aab",
+        "SW8.BIN": "d7e8cc9a896bde44094ea092cf5f8d8b19169eb2dab25cda0941c63e63e035c8"
+      }
+    }
+  },
+  "sources": {
+    "src/terminal/row_geometry.c": "f4347e0a8118b6ee4e033a89b926e554d645b61c66d0a8044560f83483ea16a6",
+    "src/terminal/row_geometry.h": "faeaadf8d2889e6fc00f78b6bcf872e69e78f09e9fc152d7b139944204c03b72",
+    "src/terminal/main.asm": "80b88d493179b87db8d242c88a147b06e52ef3481ddf84520013ddafc65ac90d",
+    "src/process/display_rows_link.py": "12ba0704cce4b8c25774bb036614802e6e6a4459194a67ecbb1a047b254b92f3",
+    "standalone/build_terminal.py": "34a37d055088df46750cf731c8979e6cbfd1920797d76cf5a0b653bceb5c67b5",
+    "standalone/display_rows_terminal_probe.c": "dbe826220c85717c66b026ae2159ff27aad7f1d6600f6225d0023d0e8b5d7137",
+    "standalone/test_display_rows_terminal_dos.py": "8e2be842cb1ecd91bd4282df019540d71d2189301b6b836ee4c6451035a7b69d",
+    "standalone/check_display_transaction_live.py": "4e200600fe6f045ccada3c2419149acb817f5011f983cd5ebf34348b2c0a2d29"
+  },
+  "state_contract": {
+    "saved_preferences_modified": false,
+    "selector_published_at_canonical_commit": true,
+    "post_commit_mouse_failure": "coherent selector/geometry retained; quarantined fatal exit14",
+    "direct_row_request_invalidates_live_selector": true,
+    "online_admitted": false,
+    "normal_command_binding": false,
+    "automatic_startup_apply": false,
+    "packaged": false,
+    "installed": false
+  },
+  "scope": "Composed offline BIOS/selector/canonical/RIS/status/shadow/mouse transaction, accepted-selector cycling and saved-application APIs. Foreground mode3/B800 only; other supported text modes restore old state. No normal UI/startup binding, online/bridge/BBS or physical/deployment acceptance."
+}

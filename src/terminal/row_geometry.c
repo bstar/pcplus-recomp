@@ -10,6 +10,13 @@ typedef unsigned short word;
 typedef unsigned char byte;
 #define TEXT __based(__segname("_CODE"))
 unsigned terminal_row_geometry_active=0;
+#ifdef TERMINAL_DISPLAY_SELECTOR
+#include "../config/display_preferences.h"
+unsigned terminal_display_selector=0xffff;
+unsigned terminal_display_selector_ready=0;
+unsigned terminal_display_fallback=0;
+unsigned terminal_display_physical_result=0;
+#endif
 extern byte __far redisplay_snapshot[];
 extern byte __far redisplay_snapshot_end[];
 #pragma aux redisplay_snapshot "redisplay_snapshot";
@@ -131,20 +138,48 @@ static word mouse_restore(void)
 #endif
  return 0;
 }
+#ifdef TERMINAL_DISPLAY_SELECTOR
+static unsigned geometry_request(word requested,word selector,word mode,word hidden)
+#else
 unsigned __far __cdecl terminal_row_geometry_set(unsigned requested)
+#endif
 {
  word values[128],baseline[128],ui[4],shape=0,xy=0,i,count,bytes,status,restore_status,old_physical;
  byte live_bytes[16];native_display_rows_info before,actual;
+#ifdef TERMINAL_DISPLAY_SELECTOR
+ native_display_selection selected,restored;word physical_status=0,preferred_rows=requested;
+#endif
  byte __far *video=(byte __far *)MK_FP(0xb800,0);
+#ifdef TERMINAL_DISPLAY_SELECTOR
+ if(selector!=0xffff && selector>4)return 1;
+ if(hidden>1)return 3;
+#endif
+#ifdef TERMINAL_DISPLAY_SELECTOR
+ if(selector==0xffff && !legal(requested))return 1;
+#else
  if(!legal(requested))return 1;
+#endif
  status=admit(&before);if(status)return status;
+#ifdef TERMINAL_DISPLAY_SELECTOR
+ if(selector!=0xffff){
+  if(selector==0)requested=before.rows;
+  else if(selector==1 || selector==3 || ((selector==4) && ((signed short)mode<=0 || !before.font_capable)))requested=25;
+  else if(!before.font_capable)requested=25;
+  else if(before.scanline_capable){requested&=255;if(requested!=28 && requested!=43 && requested!=50)requested=25;}
+  else requested=(requested&255)==43?43:25;
+ }
+#endif
  if(requested!=25 && (!before.font_capable || (!before.scanline_capable && requested!=43)))return 3;
  count=(word)(reset_word_addresses_end-reset_word_addresses);bytes=(word)(reset_byte_addresses_end-reset_byte_addresses);
  if(count>128 || bytes>16)return 3;
  for(i=0;i<count;++i){values[i]=*(word *)reset_word_addresses[i];baseline[i]=reset_words[i];}
  for(i=0;i<bytes;++i)live_bytes[i]=*(byte *)reset_byte_addresses[i];
  ui[0]=ui_window_rows;ui[1]=ui_flow_video_base;ui[2]=ui_flow_coordinate_base;ui[3]=ui_flow_suppressed;
+#ifdef TERMINAL_DISPLAY_SELECTOR
+ status=defaults_resize(requested-(hidden?0:1));if(status)return status;
+#else
  status=defaults_resize(requested-(ui[3]?0:1));if(status)return status;
+#endif
  terminal_row_geometry_active=1;old_physical=before.rows;
 #ifdef TERMINAL_ROW_MOUSE
  if(mouse_pause()){
@@ -164,20 +199,58 @@ unsigned __far __cdecl terminal_row_geometry_set(unsigned requested)
  save(FLAGS,screen_attribute_cells,4096);save(ATTRS,erase_attribute_values,4096);
  save(LINES,screen_line_flags,128);save(KEYS,terminal_keymap,948);
  save(TABS,terminal_tab_stops,30);save(PARAMS,ansi_parameters,32);
+#ifdef TERMINAL_DISPLAY_SELECTOR
+ if(selector!=0xffff){
+  selected.geometry=before;selected.accepted_selector=0xffff;
+  physical_status=native_display_select(selector,preferred_rows,mode,&selected);
+  actual=selected.geometry;
+  status=physical_status;
+  if((status==0 || (status==DISPLAY_ROWS_FAILED && actual.fallback==1 && selected.accepted_selector==1)) &&
+     actual.mode==3 && actual.segment==0xb800 && actual.columns==80 && actual.stride==160 && legal(actual.rows)){
+   requested=actual.rows;status=defaults_resize(requested-(hidden?0:1));
+  }else status=DISPLAY_ROWS_UNSUPPORTED;
+ }else status=native_display_rows_set(requested,&actual);
+#else
  status=native_display_rows_set(requested,&actual);
+#endif
  if(!status && actual.rows==requested){
+#ifdef TERMINAL_DISPLAY_SELECTOR
+  layout(requested,hidden);native_reset();
+#else
   layout(requested,ui[3]);native_reset();
+#endif
   status=status_refresh();
   if(!status){
    for(i=0;i<4096;++i)erase_shadow_cells[i]=i<requested*80?((word __far *)video)[i]:0;
    native_cursor(screen_cursor_row,screen_cursor_column);
+#ifdef TERMINAL_DISPLAY_SELECTOR
+   if(selector==0xffff)terminal_display_selector_ready=0;
+   else{
+     terminal_display_selector=selected.accepted_selector;
+     terminal_display_fallback=actual.fallback;
+     terminal_display_physical_result=physical_status;
+     terminal_display_selector_ready=1;
+   }
+#endif
    status=mouse_restore();terminal_row_geometry_active=0;return status;
   }
  }
  /* Restore BIOS first, then all canonical state/configured defaults and planes.
   * If hardware refuses the old geometry, request existing fatal shutdown;
   * never return to foreground parsing with a fabricated successful rollback. */
+#ifdef TERMINAL_DISPLAY_SELECTOR
+ /* A selected mono/alternate text mode cannot be repaired by a font request
+  * alone. Restore our admitted mode3/B800 first, then the old physical rows. */
+ restore_status=native_display_rows_probe(&actual);
+ if(!restore_status && (actual.mode!=3 || actual.segment!=0xb800)){
+  restored.geometry=actual;restored.accepted_selector=0xffff;
+  restore_status=native_display_select(3,25,3,&restored);actual=restored.geometry;
+ }
+ if(!restore_status && actual.mode==3 && actual.segment==0xb800)restore_status=native_display_rows_set(old_physical,&actual);
+ else restore_status=DISPLAY_ROWS_UNUSABLE;
+#else
  restore_status=native_display_rows_set(old_physical,&actual);
+#endif
  for(i=0;i<count;++i){*(word *)reset_word_addresses[i]=values[i];reset_words[i]=baseline[i];}
  for(i=0;i<bytes;++i)*(byte *)reset_byte_addresses[i]=live_bytes[i];
  ui_window_rows=ui[0];ui_flow_video_base=ui[1];ui_flow_coordinate_base=ui[2];ui_flow_suppressed=ui[3];
@@ -186,7 +259,11 @@ unsigned __far __cdecl terminal_row_geometry_set(unsigned requested)
  restore(FLAGS,screen_attribute_cells,4096);restore(ATTRS,erase_attribute_values,4096);
  restore(LINES,screen_line_flags,128);restore(KEYS,terminal_keymap,948);
  restore(TABS,terminal_tab_stops,30);restore(PARAMS,ansi_parameters,32);
- if((restore_status==0 || restore_status==DISPLAY_ROWS_FAILED) && actual.rows==old_physical){
+ if((restore_status==0 || restore_status==DISPLAY_ROWS_FAILED) && actual.rows==old_physical
+#ifdef TERMINAL_DISPLAY_SELECTOR
+    && actual.mode==3 && actual.segment==0xb800
+#endif
+ ){
   __asm {
   mov cx,shape
   mov ah,1
@@ -203,3 +280,26 @@ unsigned __far __cdecl terminal_row_geometry_set(unsigned requested)
  terminal_quit=1;terminal_exit_code=2;csi_unimplemented_service=0x6ef6;
  terminal_row_geometry_active=0;return 5;
 }
+
+#ifdef TERMINAL_DISPLAY_SELECTOR
+unsigned __far __cdecl terminal_row_geometry_set(unsigned rows)
+{return geometry_request(rows,0xffff,0,ui_flow_suppressed);}
+unsigned __far __cdecl terminal_display_select(unsigned selector,unsigned rows,unsigned mode)
+{if(selector>4)return 1;return geometry_request(rows,selector,mode,ui_flow_suppressed);}
+unsigned __far __cdecl terminal_display_apply_saved(void)
+{
+ if(terminal_display_preferences_ready!=1)return 7;
+ if(terminal_display_preferences.selector>4)return 1;
+ return geometry_request(terminal_display_preferences.rows,terminal_display_preferences.selector,
+  terminal_display_preferences.video_mode,terminal_display_preferences.status_hidden?1:0);
+}
+unsigned __far __cdecl terminal_display_cycle(void)
+{
+ word choices;
+ if(terminal_display_preferences_ready!=1 || terminal_display_selector_ready!=1)return 7;
+ if(terminal_display_selector>4)return 1;
+ choices=terminal_display_preferences.video_mode?4:2;
+ return terminal_display_select(terminal_display_selector%choices+1,
+  terminal_display_preferences.rows,terminal_display_preferences.video_mode);
+}
+#endif

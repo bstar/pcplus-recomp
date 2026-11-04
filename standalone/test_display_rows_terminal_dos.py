@@ -98,6 +98,16 @@ exit
     assert rec[0]==selector and rec[3]==status and rec[4:7]==(3,80,physical)
     assert rec[7:10]==(0xb800,160,physical*80) and rec[13:]==(fallback,selector,accepted)
 
+  if m.get('experimental_display_preferences'):
+   composed=struct.unpack('<102H',(drive/'TSEL.BIN').read_bytes());assert composed[:3]==(0x5453,1,9)
+   for i,(physical,selector,fallback,result,hidden) in enumerate(((25,1,0,0,0),(43,2,0,0,0),(43,0,0,0,0),(25,3,0,0,0),(50,4,0,0,0),(25,1,1,0,0),(25,1,1,0,0),(25,1,1,3,0),(25,1,1,3,1))):
+    rec=composed[3+i*11:3+(i+1)*11];effective=physical if hidden else physical-1
+    assert rec[3:]==(0,physical,effective,hidden,selector,1,fallback,result)
+    video=(drive/f'SV{i}.BIN').read_bytes();shadow=(drive/f'SW{i}.BIN').read_bytes()
+    assert len(video)==physical*160 and len(shadow)==8192
+    assert video[:effective*160]==b' \x07'*(effective*80)
+    if not hidden:assert b'Alt-Z FOR HELP' in video[effective*160::2]
+    assert shadow[:len(video)]==video and shadow[len(video):]==bytes(8192-len(video))
   observed=(drive/leaf).read_bytes()
   if label=='exclusive':assert observed==sentinel
   else:

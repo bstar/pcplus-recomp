@@ -83,7 +83,9 @@ raw diagnostic executables remain exactlya1c86342 andf302f571 respectively.
 
 ## Remaining integration
 
-Normal command selector/import/cycling, guarded larger-screen UI/frame loans,
+The [selector composition](DISPLAY_SELECTOR_TRANSACTION.md) now adds checked
+selector/cycle/saved-application APIs, separately from normal command binding.
+Guarded larger-screen UI/frame loans,
 online DOS/bridge size agreement and refusal/recovery policy remain open. There
 is no live BBS, SIP, physical Cirrus/mouse/modem acceptance or replacement-package
 claim here. All13 unavailable reference commands remain unavailable. The

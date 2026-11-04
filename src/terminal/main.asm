@@ -63,6 +63,8 @@ _small_code_:
 %ifdef TERMINAL_DISPLAY_PREFERENCES
  extern _terminal_display_preferences_ready
  mov word [_terminal_display_preferences_ready],0
+ extern _terminal_display_selector_ready
+ mov word [_terminal_display_selector_ready],0
 %endif
 %ifdef TERMINAL_MOUSE
  extern _terminal_mouse_bootstrap,_terminal_mouse_start,terminal_mouse_exit

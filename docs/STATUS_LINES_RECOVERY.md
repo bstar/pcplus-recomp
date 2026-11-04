@@ -1,7 +1,8 @@
 # Original status and line controls
 
 A separate [offline BIOS/canonical row owner](ROW_GEOMETRY_TRANSACTION.md) now
-coordinates25/28/43/50 physical rows. The command and online/UI gates described
+coordinates25/28/43/50 physical rows. Its [selector composition](DISPLAY_SELECTOR_TRANSACTION.md)
+now adds saved application/cycling APIs. The command and online/UI gates described
 here remain open; this does not expand the fixed25-row status-toggle contract.
 
 

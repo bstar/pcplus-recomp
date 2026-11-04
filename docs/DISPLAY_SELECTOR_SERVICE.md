@@ -92,8 +92,9 @@ physical system changes. The internal selector pointer is not a deployment sourc
 
 ## Next application work
 
-Compose selectors with the existing BIOS/canonical/RIS/mouse rollback transaction,
-including the accepted fallback geometry and saved selector distinction. The
+The [canonical selector transaction](DISPLAY_SELECTOR_TRANSACTION.md) now
+composes this service with BIOS/canonical/RIS/mouse rollback, accepted fallback
+geometry, saved application and selector cycling. Normal UI/online integration remains. The
 current foreground row owner admits mode3/B800 only; it cannot simply accept
 this service's mode2/7 results. Then apply captured startup preferences, define
 live setup/HOOK adoption and selector cycling, and finish larger-screen modal

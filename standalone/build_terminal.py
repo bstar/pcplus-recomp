@@ -706,7 +706,7 @@ manifest['experimental_row_geometry_owner']=args.row_geometry_owner
 manifest['experimental_display_preferences']=args.display_preferences
 manifest['diagnostic_row_geometry_probe']=args.row_geometry_owner and args.display_row_probe
 if args.display_row_owner:
- manifest['display_row_bank']={k:display_rows_bank[k] for k in ('namespace','native_bytes','segment','offset','bytes','scope','selector_service')}
+ manifest['display_row_bank']={k:display_rows_bank[k] for k in ('namespace','native_bytes','segment','offset','bytes','scope','selector_service','selector_transaction')}
  manifest['limitations'].append(display_rows_bank['scope'])
 manifest['experimental_local_controls']=args.local_controls
 manifest['experimental_screen_pause']=args.screen_pause

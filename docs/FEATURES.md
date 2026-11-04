@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Canonical display selectors](DISPLAY_SELECTOR_TRANSACTION.md) now compose
+physical selection/fallback, BIOS/canonical/RIS/status/shadow, mouse ownership,
+saved preferences and accepted-selector cycling.51 composed inputs plus704
+existing inputs, actual DOS nine-stage screen/shadow records and three exact
+source rebuilds pass. Normal UI/startup, online/bridge, larger-modal and physical
+gates remain open; no deployment or command-availability change.
+
 [Physical display selectors](DISPLAY_SELECTOR_SERVICE.md) now use the recovered
 mode helper plus independent geometry verification and baseline recovery.95
 selector inputs,609 existing linked regressions, actual DOS selector/restore

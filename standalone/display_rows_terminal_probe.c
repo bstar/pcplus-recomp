@@ -51,6 +51,36 @@ static word selector_images(void)
  }
  return rows_probe_write(name,records,sizeof(records));
 }
+#include "../src/terminal/status_transition.h"
+static word transaction_image(word *r,word phase,word selector,word rows,word mode,word status)
+{
+ native_display_rows_info info;char name[8]={'S','V','0','.','B','I','N',0};
+ if(native_display_rows_probe(&info))return 1;
+ r[0]=selector;r[1]=rows;r[2]=mode;r[3]=status;r[4]=info.rows;
+ r[5]=csi_row_count;r[6]=ui_flow_suppressed;r[7]=terminal_display_selector;
+ r[8]=terminal_display_selector_ready;r[9]=terminal_display_fallback;r[10]=terminal_display_physical_result;
+ name[2]+=(char)phase;
+ if(rows_probe_far(name,MK_FP(0xb800,0),info.rows*160))return 1;
+ name[1]='W';return rows_probe_far(name,erase_shadow_cells,8192);
+}
+static word selector_transaction_images(void)
+{
+ static const word TEXT requests[8][3]={{1,50,0},{2,43,0},{0,50,3},{3,50,3},
+  {4,50,3},{3,50,0},{4,50,0},{3,50,0x12}};
+ char name[9]={'T','S','E','L','.','B','I','N',0};word records[3+9*11],i,status;
+ records[0]=0x5453;records[1]=1;records[2]=9;
+ for(i=0;i<8;++i){
+  status=terminal_display_select(requests[i][0],requests[i][1],requests[i][2]);
+  if(transaction_image(records+3+i*11,i,requests[i][0],requests[i][1],requests[i][2],status))return 1;
+ }
+ status=terminal_display_apply_saved();
+ if(transaction_image(records+3+8*11,8,terminal_display_preferences.selector,
+   terminal_display_preferences.rows,terminal_display_preferences.video_mode,status))return 1;
+ /* Synthetic saved preferences hide status. Retire that state through the real
+  * owner so the existing canonical-row diagnostic still starts visible24. */
+ if(terminal_status_toggle())return 1;
+ return rows_probe_write(name,records,sizeof(records));
+}
 static word preferences_image(void)
 {
  char name[10]={'D','P','R','E','F','.','B','I','N',0};word values[5];
@@ -91,6 +121,7 @@ unsigned __far __cdecl terminal_display_rows_probe(void)
 #ifdef TERMINAL_DISPLAY_PREFERENCES
  if(preferences_image())return 26;
  if(selector_images())return 27;
+ if(selector_transaction_images())return 28;
 #endif
  status=native_display_rows_probe(&info);if(status)return 20;
  capture(records+3,0,status,&info);
