@@ -12,6 +12,25 @@ terminal_run_startup_setup:
  push es
  test word [terminal_option_mask],8192
  jz .success
+%ifdef TERMINAL_CWD_IDENTITIES
+ extern _terminal_cwd_setup_command,program_setup_executable,terminal_setup_tail
+ call far _terminal_cwd_setup_command
+ or ax,ax
+ jnz .failed
+ mov ax,setup_startup_result
+ push ax
+ mov ax,terminal_setup_tail
+ push ax
+ mov ax,program_setup_executable
+ push ax
+ call _process_run
+ add sp,6
+ or ax,ax
+ jnz .failed
+ cmp word [setup_startup_result+4],0
+ jne .failed
+ jmp .success
+%else
  ; /S requires @8.3 leaf, already validated atomically by options.asm.
  ; Copy the explicit argument into a separate bounded DOS tail. No COMSPEC,
  ; shell, PATH search, legacy marker or packed parent pointer is involved.
@@ -43,6 +62,7 @@ terminal_run_startup_setup:
  jnz .failed
  cmp word [setup_startup_result+4],0
  jne .failed
+%endif
 .success:
  xor ax,ax
  jmp .done

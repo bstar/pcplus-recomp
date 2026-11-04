@@ -32,6 +32,13 @@ original 58-byte path helper and tests a separate guarded owner, including
 rollback failures. It is not linked into the application. Recover the actual
 Alt-F7 UI/default-path contract and bind foreground/file ownership next;
 the standalone helper does not establish Gateway or full F15 parity.
+The [original dialog and identity follow-up](docs/CWD_IDENTITIES.md) now confirms
+six original DOS workflows and protects the candidate's startup resource
+namespace. Actual post-CWD setup/accounting and stock BBS editor checks pass;
+the disabled image fails the same identity probe. Connect the guarded path
+owner through a serviced Alt-F7 dialog and restore the original startup
+directory on final exit next. Only 48 near bytes remain in this variant, so
+retained dialog/startup-path storage needs an explicit far-storage design.
 
 ### Earlier connection and network checkpoints
 

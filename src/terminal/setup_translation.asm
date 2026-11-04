@@ -19,8 +19,10 @@ terminal_setup_translation_bind:
  mov word [terminal_setup_translation_io+2],0
  mov word [terminal_setup_translation_io+4],0
  mov word [terminal_setup_translation_io+6],0
+%ifndef TERMINAL_CWD_IDENTITIES
  test word [terminal_option_mask],16384
  jnz .done
+%endif
  push word [process_psp]
  call _xlt_live_bind
  add sp,2

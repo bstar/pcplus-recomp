@@ -15,6 +15,15 @@ static struct {
 static unsigned bound=2;
 static unsigned active_bound=2;
 static char active_path[64];
+#ifdef TERMINAL_CWD_IDENTITIES
+/* The settings staging owner is also reused by explicit reload. Keep the
+ * startup default namespace separately so reload cannot replace it. */
+static struct {
+ unsigned bound,current_error,fallback_error,fallback_kind;
+ char current[64],fallback[64];
+} defaults={2};
+typedef char defaults_word_abi[sizeof(defaults)==136?1:-1];
+#endif
 #ifdef DIRECTORY_RESOURCE_ADOPTION
 /* Never discard an uncertain reader close when another API resets staging. */
 static unsigned resource_held=0;
@@ -26,6 +35,9 @@ static unsigned separate(const void *a,unsigned an,const void *b,unsigned bn)
 static unsigned external(const void *p,unsigned n)
 {return extent(p,n) && separate(p,n,&owner,sizeof(owner)) && separate(p,n,&bound,sizeof(bound)) &&
  separate(p,n,&active_bound,sizeof(active_bound)) && separate(p,n,active_path,sizeof(active_path))
+#ifdef TERMINAL_CWD_IDENTITIES
+ && separate(p,n,&defaults,sizeof(defaults))
+#endif
 #ifdef DIRECTORY_RESOURCE_ADOPTION
  && separate(p,n,&resource_held,sizeof(resource_held))
 #endif
@@ -43,10 +55,23 @@ unsigned __cdecl xlt_live_bind(unsigned psp)
 {
  char path[64];unsigned lookup,current_valid;
  bound=2;memset(&owner,0,sizeof(owner));
+#ifdef TERMINAL_CWD_IDENTITIES
+ if(defaults.bound==1){
+  memcpy(owner.current,defaults.current,64);memcpy(owner.fallback,defaults.fallback,64);
+  owner.current_error=defaults.current_error;owner.fallback_error=defaults.fallback_error;
+  owner.fallback_kind=defaults.fallback_kind;
+  bound=1;return owner.current[0]?XLT_DOS_OK:XLT_DOS_RESOURCE;
+ }
+#endif
  current_valid=canonical("PCPLUS.XLT",owner.current,&owner.current_error);
  lookup=resource_pcplus_path(psp,"PCPLUS.XLT",path);
  owner.fallback_kind=lookup==RESOURCE_PATH_ABSENT?1:2;
  if(lookup==RESOURCE_PATH_OK && canonical(path,owner.fallback,&owner.fallback_error))owner.fallback_kind=0;
+#ifdef TERMINAL_CWD_IDENTITIES
+ memcpy(defaults.current,owner.current,64);memcpy(defaults.fallback,owner.fallback,64);
+ defaults.current_error=owner.current_error;defaults.fallback_error=owner.fallback_error;
+ defaults.fallback_kind=owner.fallback_kind;defaults.bound=1;
+#endif
  bound=1;return current_valid?XLT_DOS_OK:XLT_DOS_RESOURCE;
 }
 unsigned __cdecl xlt_live_stage(unsigned mode,xlt_dos_result *result)

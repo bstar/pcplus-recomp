@@ -1,5 +1,16 @@
 # Full application reconstruction checklist
 
+[Stable CWD resource identities](CWD_IDENTITIES.md) now protect startup
+PRM/DIR/KEY/KBD/XLT selectors, PRMEDIT lookup and default XLT provenance in an
+optional parent. Six original-runtime dialog observations, 12 linked identity
+cases, three real-CWD setup/accounting workflows and an unchanged-image failure
+control bind this checkpoint. The 573-input source-only rebuild and fresh
+Enigma/Synchronet 1,920-cell editor audits pass. A separate 31-check production
+PRMEDIT open/cancel workflow also selects the startup PRM after CWD changes.
+Alt-F7 itself, exit-directory
+restoration, foreground path ownership and physical acceptance remain open;
+the deployment selection is unchanged.
+
 The [file path foundation](FILE_PATH_OWNER.md) recovers the original 58-byte
 path/drive helper and adds a separate bounded owner with verified rollback
 reporting. 3,104 paired original CPU cases and 61 DOSBox built-in DOS assertions

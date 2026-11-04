@@ -153,6 +153,12 @@ _small_code_:
  mov word [terminal_exit_code],0
  jmp terminal_shutdown
 .load_configuration:
+%ifdef TERMINAL_CWD_IDENTITIES
+ extern _terminal_cwd_bind_startup
+ call far _terminal_cwd_bind_startup
+ or ax,ax
+ jnz .configuration_error
+%endif
  call terminal_run_startup_setup
  or ax,ax
  jnz .configuration_error
@@ -165,6 +171,11 @@ _small_code_:
  call terminal_load_actions
  or ax,ax
  jnz .configuration_error
+%ifdef TERMINAL_CWD_IDENTITIES
+ call far _terminal_cwd_bind_startup
+ or ax,ax
+ jnz .configuration_error
+%endif
  call terminal_load_translation
  or ax,ax
  jnz .configuration_error

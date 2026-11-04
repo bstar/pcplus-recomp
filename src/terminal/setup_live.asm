@@ -14,6 +14,30 @@ terminal_setup_start:
  call far _terminal_setup_frozen_start
  pop es
  ret
+%elifdef TERMINAL_CWD_IDENTITIES
+ extern _terminal_cwd_setup_command
+ push bp
+ push si
+ push di
+ push es
+ call far _terminal_cwd_setup_command
+ or ax,ax
+ jnz .cwd_done
+ mov ax,setup_schedule_command
+ call terminal_program_start
+ or ax,ax
+ jz .cwd_queued
+ mov ax,2
+ jmp .cwd_done
+.cwd_queued:
+ mov word [terminal_program_kind],1
+.cwd_done:
+ mov [terminal_setup_status],ax
+ pop es
+ pop di
+ pop si
+ pop bp
+ ret
 %else
  push bp
  push si
@@ -118,6 +142,9 @@ terminal_setup_start:
 SEGMENT _DATA public class=DATA use16
 global terminal_setup_tail,terminal_setup_status
 %ifdef TERMINAL_DIRECTORY_RETIREMENT
+terminal_setup_tail: times 68 db 0
+global setup_schedule_command
+%elifdef TERMINAL_CWD_IDENTITIES
 terminal_setup_tail: times 68 db 0
 global setup_schedule_command
 %else

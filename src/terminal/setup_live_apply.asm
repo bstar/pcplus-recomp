@@ -48,6 +48,9 @@ global terminal_setup_return_prompt
 %endmacro
 terminal_setup_bind:
  save
+%ifdef TERMINAL_CWD_IDENTITIES
+ call terminal_setup_translation_bind
+%endif
  mov word [terminal_setup_binding_status],2
  test word [terminal_option_mask],16
  jz .done

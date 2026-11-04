@@ -1032,6 +1032,9 @@ program_error_prompt: db 13,10,'Program could not run. Press a key to return.',0
 %ifdef TERMINAL_DIRECTORY_RETIREMENT
 global program_setup_executable
 program_setup_executable: times 64 db 0
+%elifdef TERMINAL_CWD_IDENTITIES
+global program_setup_executable
+program_setup_executable: times 64 db 0
 %else
 program_setup_executable: db 'PRMEDIT.EXE',0
 %endif
