@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "component": "Recovered original path/drive primitive and maintained guarded directory owner; no application/menu integration",
+  "native": {
+    "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "file": "reconstruction/file_path/change.asm",
+    "start": 30126,
+    "end": 30184,
+    "file_offset": 34734,
+    "bytes": 58,
+    "sha256": "f622d114ce594d1b179e1fbb705f1d14a6d6de8fab747a47c778b7d32857ca0b",
+    "REA_evidence": "ev_418f78f341cf374fa5856ee502614a4c9e6e101ff06b567d57c25d24988056f7",
+    "REA_context": "Header-entry-only derivative324b0d49; original code bytes unchanged. Never execute the analysis image.",
+    "limitations": [
+      "Native Boolean result discards DOS error and ignores drive-selection readback.",
+      "Native path routine expects DS=SS and callee-cleans one near pointer word.",
+      "AltF7 UI and original Gateway contracts are not established by this helper."
+    ]
+  },
+  "diagnostic": {
+    "path": "build/path-owner-final-20261104/PATH.EXE",
+    "sha256": "89d6f977cb384644f0d6792920dd2cc34a0942e744ccf5efdf6d2907e7642e7c",
+    "manifest_sha256": "c740364e446437360a3f92d950326fe022a6c9499eb5e378f8a4979162494b84"
+  },
+  "original_CPU": {
+    "path": "build/path-owner-original-20261104/result.json",
+    "sha256": "1cfd7a23cc3bcfb425a8d0df482e97628f78ce3413576ad898c05b1af10acd55"
+  },
+  "actual_DOS": {
+    "path": "build/path-owner-final-dos-20261104/result.json",
+    "sha256": "dc3299c3a55c9aead45044168c1fcdd742991492d65f77c5728b85601c6d14cc"
+  },
+  "source_only": {
+    "path": "build/path-owner-final-source-proof-20261104/result.json",
+    "sha256": "8cda13401fcb8426d1c77970f369cecd753051ee658f1331dca2644e3fc683e6"
+  },
+  "observations": {
+    "native_bytes": 58,
+    "original_paired_cases": 3104,
+    "DOS_assertions": 61,
+    "source_inputs": 8,
+    "DOS_kernel": "DOSBox-X built-in DOS",
+    "verification_faults": "Test-only wrappers at actual kernel boundary",
+    "installed_or_selected": false,
+    "AltF7_enabled": false,
+    "original_comparison_reused_exact_program_hash": true
+  },
+  "sources": {
+    "reconstruction/file_path/change.asm": "ad1864959db663c8a62f6f7dddb19dc2afae0c855da6aad3a99068cb08045208",
+    "reconstruction/file_path/provenance.json": "d99be806a6d095a26f941ad7190bbb4d122977cc64e92ebb3d545eab6b76a4d8",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "src/filesystem/path_owner.h": "96061afd1031904d7a4eef7852973371bdf01078d3e5ae1f3b3ebd269f409729",
+    "src/filesystem/path_owner.c": "c9e322612b119bcd138d06ad69c8e8ac9746cac57dc0b4438aea36c88a97db68",
+    "src/filesystem/path_kernel.asm": "4c59bfb4744e2218842f336e4f5dc77d64018507cfe0f49d793b5eeccefdf609",
+    "standalone/path_owner_diagnostic.c": "52f20462b685fbb7c97f4676ceac44447ae703fd3d89d74274a61bda3b9ed42d",
+    "standalone/build_path_owner.py": "87ed1d02432021dbc73bf2eabe6a833dfe373eff3702a350f4ee160a6aa100b4"
+  },
+  "validation_sources": {
+    "standalone/compare_file_path_original.py": "60bfa0e72f5f42c1cd2be74eaed6cddbf827ead3124ad8e7a5a77da135659169",
+    "standalone/test_path_owner_dos.py": "82aaf09ee122a6687e57beefa424591d094e0104acf9deeed1f6f915b8a5c19d",
+    "standalone/prove_path_owner.py": "d20bc660e3fc79a4285ef20d893958d8522871e45b759595ea2e0b8e1832d25d",
+    "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c"
+  },
+  "limitations": [
+    "Original AltF7 UI and Gateway semantics remain unresolved; static callers are not labeled Gateway.",
+    "Physical/MS-DOS6.22, absent-media/critical-error and network redirector coverage remain open.",
+    "Foreground modal/UART/file-claim/code-bank and resource-path integration are required before application entry.",
+    "Guarded owner explicitly corrects native invalid-drive false success; complete original behavior is not claimed.",
+    "No original binaries/private configs/REA databases are application-build inputs or public artifacts."
+  ]
+}

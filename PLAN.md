@@ -27,6 +27,11 @@ The next file/DOS recovery starts with Alt-F7 drive/path changes and Alt-F4
 Gateway ownership using the established PROGRAM handoff. Verify original
 contracts and invalid-path/drive/error/cancel behavior before enabling them;
 File Directory, View a File and editor integration also remain required.
+The [directory-change foundation](docs/FILE_PATH_OWNER.md) now recovers the
+original 58-byte path helper and tests a separate guarded owner, including
+rollback failures. It is not linked into the application. Recover the actual
+Alt-F7 UI/default-path contract and bind foreground/file ownership next;
+the standalone helper does not establish Gateway or full F15 parity.
 
 ### Earlier connection and network checkpoints
 

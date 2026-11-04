@@ -1,0 +1,16 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "file": "reconstruction/file_path/change.asm",
+  "start": 30126,
+  "end": 30184,
+  "file_offset": 34734,
+  "bytes": 58,
+  "sha256": "f622d114ce594d1b179e1fbb705f1d14a6d6de8fab747a47c778b7d32857ca0b",
+  "REA_evidence": "ev_418f78f341cf374fa5856ee502614a4c9e6e101ff06b567d57c25d24988056f7",
+  "REA_context": "Header-entry-only derivative324b0d49; original code bytes unchanged. Never execute the analysis image.",
+  "limitations": [
+    "Native Boolean result discards DOS error and ignores drive-selection readback.",
+    "Native path routine expects DS=SS and callee-cleans one near pointer word.",
+    "AltF7 UI and original Gateway contracts are not established by this helper."
+  ]
+}

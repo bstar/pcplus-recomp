@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [file path foundation](FILE_PATH_OWNER.md) recovers the original 58-byte
+path/drive helper and adds a separate bounded owner with verified rollback
+reporting. 3,104 paired original CPU cases and 61 DOSBox built-in DOS assertions
+pass; an eight-input source-only diagnostic reproduces exactly. Alt-F7 UI,
+Gateway, online/file ownership and Microsoft DOS 6.22 acceptance remain open.
+The application and physical deployment selection are unchanged.
+
 The optional [input table storage adaptation](INPUT_TABLE_STORAGE.md) frees
 110 resident code bytes for further command recovery, at a 112-byte near-data
 cost. The default executable remains byte-identical. The installed carrier/C0
