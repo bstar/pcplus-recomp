@@ -14,13 +14,19 @@ checkpoints rather than superseding that selector.
 
 The optional [input table storage adaptation](docs/INPUT_TABLE_STORAGE.md)
 creates 112 bytes of resident code headroom for continued command recovery.
-Its new variant is not yet selected for deployment. Complete its broader
-transfer/reconnect composition before package admission. Keep physical
-acceptance of the installed image distinct from this source development.
+Its new variant is not yet selected for deployment. The matched source package,
+same-process Enigma carrier-loss/redial/retry and native partial-receive
+cancellation now pass [separate integration checks](docs/INPUT_TABLE_ADMISSION.md).
+Keep broader combinations and physical acceptance of the installed image
+distinct from this source development.
 
 Continue terminal controls first, then file/DOS operations, directory/key tools,
 Chat and UI polish. ASPECT, other emulations/protocols and Host mode retain
 explicit full-parity gaps; none is silently removed from the goal.
+The next file/DOS recovery starts with Alt-F7 drive/path changes and Alt-F4
+Gateway ownership using the established PROGRAM handoff. Verify original
+contracts and invalid-path/drive/error/cancel behavior before enabling them;
+File Directory, View a File and editor integration also remain required.
 
 ### Earlier connection and network checkpoints
 

@@ -45,8 +45,10 @@ composition on this new image remain separate gates.
 The receipt at [validation/input-table-storage.json](validation/input-table-storage.json)
 binds these artifacts and the fresh BBS checks. CPU models and loopback DOS
 sessions do not establish physical Boca/SPA2102 timing or broad feature parity.
-The installed carrier/C0 package remains selected while the storage variant
-awaits complete transfer/reconnect composition and package admission.
+The [matched package and carrier/retry checks](INPUT_TABLE_ADMISSION.md) now
+cover the same-process Enigma route and native Ctrl-Break cancellation on this
+image. The installed carrier/C0 package remains selected; broader combinations
+and physical acceptance are still separate gates.
 
 Reproduce in the pinned toolchain with fresh output paths:
 

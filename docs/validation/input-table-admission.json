@@ -1,0 +1,146 @@
+{
+  "passed": true,
+  "component": "Input-table storage candidate: source package, same-process carrier-loss redial and exact retry, native Ctrl-Break cancellation",
+  "source_commit": "cd27d1c54bffffcaee8a3f9305fe350ffe6dc96c",
+  "parent_sha256": "055f56e6412ca8de4446d7af2a37a36e798e23fddd062ac68fccca9c95454b6a",
+  "package": {
+    "path": "build/connection-test-input-tables-20261104",
+    "manifest_sha256": "84077e543af0512c46156d70f449231120ad6bb759bf386db3e95aecf2ef990a",
+    "dos_directory": "PCPLUS",
+    "source_only_reproduction": {
+      "path": "build/connection-test-input-tables-proof-20261104/result.json",
+      "sha256": "3adae507641c8a57016c95ce41f1627dcbc342a55b429d0be78d3b3e6e8b9c05"
+    },
+    "archive": {
+      "passed": true,
+      "path": "build/connection-test-input-tables-20261104/PCPLUS-UPD.zip",
+      "sha256": "ce823a9022a57bba0c88d64cbe5eee0fec211825f1fe899aed55a3e6932d48a1",
+      "files": 10,
+      "bytes": 269367,
+      "selected_for_deployment": false
+    },
+    "native": {
+      "script": {
+        "path": "build/connection-test-input-tables-script-20261104/result.json",
+        "sha256": "c2a7429e03cf3e400e0f808ccd99a2271ef2719b7741400a994f7fadf1fb7594"
+      },
+      "setup": {
+        "path": "build/connection-test-input-tables-setup-20261104/result.json",
+        "sha256": "34930e2af57b2b48b914edbef3d141ce17874dd2750cce1b200aa80b69f6a346"
+      },
+      "splash": {
+        "path": "build/connection-test-input-tables-splash-20261104/result.json",
+        "sha256": "3fcdc4204a495765bac7bf197d1d6edf90d41cd68deb2747856b5096141cd52f"
+      }
+    }
+  },
+  "carrier": {
+    "producer": {
+      "path": "build/bbs-lab/results/enigma/input-tables-carrier-retry-20261104/carrier-checks.json",
+      "sha256": "232869f10112681f276b0272290a4ad06e9459d571aff407dc1e99a3548b0e26"
+    },
+    "independent": {
+      "path": "build/input-tables-carrier-audit-20261104/result.json",
+      "sha256": "e16b5042edb17d66aa5e6523c31de4cff94bf772b79a9ae2228997a984bc99a9"
+    },
+    "copied_controls": {
+      "path": "build/input-tables-carrier-controls-20261104/result.json",
+      "sha256": "f94dcf9594f508bba7ff5e422bafab2d6eccb5791268f58724eb8fa6400b5252"
+    },
+    "observations": {
+      "DOS_processes": 1,
+      "logins": 2,
+      "partial_bytes": 4096,
+      "retry_bytes": 65539,
+      "NAWS": [
+        80,
+        24
+      ],
+      "copied_controls": 10,
+      "mutations_rejected": 9
+    }
+  },
+  "native_cancel": {
+    "candidate": {
+      "path": "build/terminal-cancel-tests/input-tables-native-cancel-splash-20261104/result.json",
+      "sha256": "e0aa39d52ea581ad19bcd26c625e30691ce3742f894a0520fdc2d4bde6e04ee6"
+    },
+    "unchanged_default_control": {
+      "path": "build/terminal-cancel-tests/input-tables-native-cancel-control-20261104/result.json",
+      "sha256": "f7af86909d072dbf238ce65c1f771a7dcd445bab76f31499aafb5220fe192ecd"
+    },
+    "harness_source": {
+      "path": "standalone/test_terminal_cancel_dos.py",
+      "sha256": "1e3790dc4548996d2dfd8d76addaebd3d9c6dd9776046546ae1b2dcda4d57505",
+      "commit": "baa4fc2bf707582c1c6314b3841b532b830e5239"
+    },
+    "observations": {
+      "workflows": 2,
+      "checks_per_workflow": 22,
+      "accepted_blocks": 1,
+      "terminal_exit_code": 16,
+      "rescue_keys": 0,
+      "scope": "Owned INT1B while receiving, not physical keyboard break or actual modem cancellation."
+    }
+  },
+  "deployment_selected": false,
+  "physical_acceptance": false,
+  "limitations": [
+    "SIP/audio/DSP/Boca/SPA2102/physical RTS/CTS and reported physical BUSY behavior remain separate gates.",
+    "Broader display/protocol/profile and complete original feature parity remain open.",
+    "Live installed release is unchanged; its independent remote audit remains pending."
+  ],
+  "excluded_attempts": [
+    {
+      "log": "build/input-tables-data-20261104/native-cancel.log",
+      "sha256": "0533f042b10300f4f17a8565100d91bf70f7eda33ab70507b4a422c1063c7547",
+      "reason": "Mouse option omitted; preflight refused."
+    },
+    {
+      "log": "build/input-tables-data-20261104/native-cancel-mouse.log",
+      "sha256": "a48ac295330c68530c9a582dea9c952fb41f19d021c149dcf0355fb94d2b85c7",
+      "reason": "Stale contiguous online/aggregation anchor; preflight refused."
+    },
+    {
+      "log": "build/input-tables-data-20261104/native-cancel-fixed.log",
+      "sha256": "eb954f2ab1b06d8a4fc58a178600f8e68243e88ec95a74c96a6ce71f2ffadef3",
+      "reason": "Old fixture display words and shortcuts were not valid for the selected current startup."
+    },
+    {
+      "log": "build/input-tables-data-20261104/native-cancel-current.log",
+      "sha256": "92cb8a4028b185b6dc5e3d14435c36bdfa064bd0271bf932261bb64e1437bfad",
+      "reason": "Legacy recipe did not use the correct page-key token or acknowledge the branded splash; timed out."
+    },
+    {
+      "log": "build/input-tables-data-20261104/native-cancel-page.log",
+      "sha256": "1f0a5b35baa2dead1c0082d4240cf40744841fa91b4239e74fe1242d69430aa5",
+      "reason": "Recipe did not acknowledge branded splash; timed out."
+    }
+  ],
+  "local_cancel": {
+    "producer": {
+      "path": "build/bbs-lab/results/enigma/input-tables-local-cancel-20261104/cancel-checks.json",
+      "sha256": "e3465f35d406db37828e11cf0fab031ff827defa600ab3060d0e2c02383a65d7"
+    },
+    "independent": {
+      "path": "build/input-tables-local-cancel-audit-20261104/result.json",
+      "sha256": "ea98de6fab3e4121d54cea878ed4c6daa3964988fc5580238444d68c1f31ad5d"
+    },
+    "copied_controls": {
+      "path": "build/input-tables-local-cancel-controls-20261104/result.json",
+      "sha256": "565c9c9d8f67acc9d38bdf0347c446b4771c9bc213f83bd1014428ccd4ab8522"
+    },
+    "observations": {
+      "DOS_processes": 1,
+      "connections": 1,
+      "partial_bytes": 4096,
+      "retry_bytes": 65539,
+      "copied_controls": 9,
+      "mutations_rejected": 8,
+      "NAWS": [
+        80,
+        24
+      ]
+    }
+  }
+}

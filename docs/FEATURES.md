@@ -6,6 +6,15 @@ cost. The default executable remains byte-identical. The installed carrier/C0
 package stays selected; the storage candidate has separate admission evidence
 and is not a physical acceptance claim.
 
+The [matched input-storage package](INPUT_TABLE_ADMISSION.md) now reproduces
+five executables and ten files from 2,143 public inputs. Same-parent Enigma DCD
+loss, clean stage, second login, exact 65,539-byte retry and logoff pass independent
+audits/ten copied controls. Two native partial-receive Ctrl-Break workflows pass
+on the candidate and unchanged default control. Same-connection Enigma local
+cancel/clean-stage/exact retry also passes an independent audit/nine controls.
+Physical deployment selection
+is unchanged; broader compatibility and original parity gates remain open.
+
 The [carrier/C0 connection-test package](CONNECTION_CARRIER_C0_PACKAGE.md) now
 supports a recorded DOS installation directory. Fresh `C:\PCPLUS` source-only
 reproduction and native launcher/setup/script/splash checks pass; the default
