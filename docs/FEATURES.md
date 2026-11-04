@@ -6,8 +6,10 @@ typed/Init/dispatcher/elapsed/connect-alert regressions, exact clean-source
 reproduction and two DOS8086 workflows pass. Notice and generation-owned short
 tone remain serviced; captured local echo follows physical acceptance. Thirteen
 reference entries remain unavailable. Saved-duplex PRM import is still a gap;
-the DOS echo case sets live duplex with Alt-E. BBS/package/physical gates and
-deployment are separate.
+the DOS echo case sets live duplex with Alt-E. Separate [BBS/package gates](AUTO_ANSWER_PACKAGE.md)
+pass: zero differing Enigma/Synchronet cells, five executables/ten package files
+reproduced from2055 committed sources and four DOS package workflows. Physical
+acceptance and deployment remain open.
 
 [Typed answer-on owner](AUTO_ANSWER_OWNER.md) adds a shared bounded command
 identity and acceptance-qualified local echo with renderer reentrancy protection.

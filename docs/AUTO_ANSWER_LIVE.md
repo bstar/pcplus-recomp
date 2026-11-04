@@ -73,8 +73,9 @@ candidates. Its actual speaker/controller routines remain executed. Failed
 intermediate artifacts stay ignored and do not support acceptance claims.
 
 These CPU checks model BIOS/DOS/ports; the DOS workflows use a synthetic serial
-modem. BBS screen/cursor, package/START/SETUP and physical gates need their own
-scoped evidence. No original pixel/calibrated timing, full feature parity or
+modem. [BBS screen/cursor and package gates](AUTO_ANSWER_PACKAGE.md) now pass
+on this same image with separate scoped evidence. Physical gates remain open.
+No original pixel/calibrated timing, full feature parity or
 analog/SIP acceptance is claimed. No installed/private files, card or live
 bridge/BBS service has changed. The previous hardware-test package and active
 selection remain unchanged pending a separately verified package/deployment.
