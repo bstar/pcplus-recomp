@@ -26,6 +26,7 @@ parser.add_argument('--special-edition',action='store_true',help='Show the magen
 parser.add_argument('--status-geometry',action='store_true',help='Reserve physical row25 for status and advertise a coherent24-row terminal')
 parser.add_argument('--reset-row-owner',action='store_true',help='Link staged RIS row-default component; no status/line key binding')
 parser.add_argument('--status-owner',action='store_true',help='Link offline live status transaction; no key/menu binding or online size negotiation')
+parser.add_argument('--profile-display-probe',action='store_true',help='Diagnostic only: real PRMEDIT profile changes at each text height')
 parser.add_argument('--program-display-owner',action='store_true',help='Save and verify full-height PROGRAM display restoration around DOS children')
 parser.add_argument('--large-view-frames',action='store_true',help='Retain50-row shared view frames and admit verified25/28/43/50-row geometry')
 parser.add_argument('--status-control',action='store_true',help='Enable guarded offline Ctrl-] and menu status toggle at physical25 rows')
@@ -89,6 +90,9 @@ if args.local_controls:assert args.original_reference,'Local controls require th
 if args.status_owner:
  args.reset_row_owner=True
  assert args.native_reset_bank and args.screen_pause and args.elapsed_view and args.auto_answer,'Status transaction requires the current banked modal-owner candidate'
+if args.profile_display_probe:
+ assert args.program_display_owner,'Profile diagnostic requires the full-height PROGRAM owner'
+ args.display_row_probe=True
 if args.program_display_owner:assert args.large_view_frames,'PROGRAM display owner requires full-height shared frames'
 if args.large_view_frames:assert args.row_geometry_owner,'Large view frames require the canonical row geometry component'
 if args.status_control:assert args.status_owner and args.local_controls,'Status control requires the tested status and local-control owners'
@@ -211,6 +215,7 @@ if args.status_owner:out_name+='-status-owner'
 if args.status_control:out_name+='-status-control'
 if args.large_view_frames:out_name+='-large-view-frames'
 if args.program_display_owner:out_name+='-program-display-owner'
+if args.profile_display_probe:out_name+='-profile-display-probe'
 if args.status_probe:out_name+='-status-probe'
 if args.display_row_owner:out_name+='-display-row-owner'
 if args.row_geometry_owner:out_name+='-row-geometry-owner'
@@ -353,6 +358,7 @@ for index,source in enumerate(sources):
  if args.status_control:options+=['-DTERMINAL_STATUS_CONTROL']
  if args.large_view_frames:options+=['-DTERMINAL_LARGE_VIEW_FRAMES']
  if args.program_display_owner:options+=['-DTERMINAL_PROGRAM_DISPLAY']
+ if args.profile_display_probe:options+=['-DTERMINAL_PROFILE_DISPLAY_PROBE']
  if args.status_probe:options+=['-DTERMINAL_STATUS_PROBE']
  if args.display_row_probe:options+=['-DTERMINAL_DISPLAY_ROW_PROBE']
  if args.row_geometry_owner:options+=['-DTERMINAL_ROW_GEOMETRY']
@@ -583,6 +589,7 @@ for source in c_sources:
  if args.status_control:options+=['-dTERMINAL_STATUS_CONTROL']
  if args.large_view_frames:options+=['-dTERMINAL_LARGE_VIEW_FRAMES']
  if args.program_display_owner:options+=['-dTERMINAL_PROGRAM_DISPLAY']
+ if args.profile_display_probe:options+=['-dTERMINAL_PROFILE_DISPLAY_PROBE']
  if args.screen_pause:options+=['-dTERMINAL_SCREEN_PAUSE']
  if args.elapsed_view:options+=['-dTERMINAL_ELAPSED_VIEW']
  if args.manual_init:options+=['-dTERMINAL_MANUAL_INIT']
@@ -719,6 +726,7 @@ manifest={'experimental_directory_keys':args.directory_keys,'experimental_aspect
 manifest['experimental_keyboard_bank']=args.keyboard_bank
 manifest['experimental_reset_row_owner']=args.reset_row_owner
 manifest['experimental_status_owner']=args.status_owner
+manifest['diagnostic_profile_display_probe']=args.profile_display_probe
 manifest['experimental_program_display_owner']=args.program_display_owner
 if args.program_display_owner:manifest['limitations'].append('PROGRAM saves/restores verified25/28/43/50-row text frames and cursor around ordinary DOS children, without changing parent canonical state. Child UART is quieted after DS/SS/SP restoration and before trap resume. Unverified display restoration requests fatal exit2/service6EF7 and skips mouse/flow resume. Inline adopted views keep their existing separate contract. No normal Ctrl--/startup preference integration, arbitrary fonts/VGA-state equivalence, full larger-profile/ASPECT composition or physical acceptance.')
 manifest['experimental_large_view_frames']=args.large_view_frames

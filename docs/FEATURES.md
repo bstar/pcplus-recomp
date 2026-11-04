@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Large-screen settings/profile return](LARGE_PROFILE_RETURN.md) now has60 linked
+boundary-modeled inputs and16 actual DOS source-built PRMEDIT observations.
+Profile4/6 round trips preserve25/28/43/50-row geometry, visible status and explicit
+keyboard bindings; modeled checks additionally cover hidden status, default
+bindings, declines and subsequent RIS. The ordinary image is byte-identical to
+the PROGRAM checkpoint. XLT/ASPECT, broader profiles, normal line switching,
+BBS/physical acceptance and deployment remain open.
+
 [Full-height PROGRAM restoration](PROGRAM_DISPLAY_OWNER.md) now retains and
 verifies25/28/43/50-row parent frames around ordinary DOS children.57 new linked
 inputs plus1051 regressions,8 real DOS graphics-child returns,32 shared-view

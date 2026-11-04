@@ -3,8 +3,11 @@
 from pathlib import Path
 import argparse
 import hashlib,json,subprocess
-parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--mouse',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--custom-irq',action='store_true');args=parser.parse_args()
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/(('build/setup-mouse-notice-sound' if args.notice_sound and args.mouse else 'build/setup-notice-sound' if args.notice_sound else 'build/setup-mouse' if args.mouse else 'build/setup')+('-custom-irq' if args.custom_irq else ''));OUT.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated output directory under build/');parser.add_argument('--mouse',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--custom-irq',action='store_true');args=parser.parse_args()
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/(('build/setup-mouse-notice-sound' if args.notice_sound and args.mouse else 'build/setup-notice-sound' if args.notice_sound else 'build/setup-mouse' if args.mouse else 'build/setup')+('-custom-irq' if args.custom_irq else ''));
+if args.output_dir:
+ OUT=args.output_dir.resolve();assert OUT.is_relative_to(ROOT/'build');OUT.mkdir(parents=True,exist_ok=False)
+else:OUT.mkdir(parents=True,exist_ok=True)
 SOURCES=['setup_main.c','setup_document.c','setup_model.c','transfer_import.c','terminal_import.c','modem_import.c','prm_dos.c','prm_replace.c','prm_replace_fs.c']
 sources=[ROOT/'src/config'/p for p in SOURCES]
 subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k16384',*(['-dSETUP_MOUSE'] if args.mouse else []),*(['-dSETUP_SOUND'] if args.notice_sound else []),*(['-dTERMINAL_CUSTOM_IRQ'] if args.custom_irq else []),'-i='+str(ROOT/'src/config'),'-fm=setup.map','-fe=PRMEDIT.EXE',*map(str,sources)],cwd=OUT,check=True)

@@ -155,6 +155,77 @@ static word program_frame_images(void)
  return rows_probe_write(leaf,records,sizeof(records));
 }
 #endif
+#ifdef TERMINAL_PROFILE_DISPLAY_PROBE
+extern word __far __cdecl rows_setup_run(void);
+extern word terminal_setup_profile_status,terminal_setup_profile_ready,csi_terminal_id,ui_window_rows;
+#pragma aux terminal_setup_profile_status "terminal_setup_profile_status";
+#pragma aux terminal_setup_profile_ready "terminal_setup_profile_ready";
+#pragma aux csi_terminal_id "csi_terminal_id";
+#pragma aux ui_window_rows "ui_window_rows";
+extern word __far terminal_keymap[];
+#pragma aux terminal_keymap "terminal_keymap";
+static word profile_keys(word target)
+{
+ static const word TEXT keys[]={0x5100,0x4700,0x5300,0,0x4400,0x011b,0x1579,0x1c0d};
+ word i,pending=0,key,status=0;
+ for(i=0;i<16;++i){
+  __asm { mov ah,1
+ push bp
+ int 16h
+ pop bp
+ mov pending,0
+ jz empty
+ mov pending,1
+ empty: }
+  if(!pending)break;
+  __asm { mov ah,0
+ push bp
+ int 16h
+ pop bp }
+ }
+ for(i=0;i<8;++i){
+  key=i==3?(target==4?0x0534:0x0736):keys[i];
+  __asm { mov cx,key
+ mov ax,0500h
+ push bp
+ int 16h
+ pop bp
+ mov status,ax }
+  if(status&255)return 1;
+ }
+ return 0;
+}
+static word profile_frame_images(void)
+{
+ static const word TEXT heights[]={25,28,43,50};
+ native_display_rows_info actual;word records[3+8*16],r,t,target,status,n=3;
+ char name[9]={'P','V','0','0','.', 'B','I','N',0};
+ char leaf[13]={'P','R','O','F','I','L','E','S','.', 'B','I','N',0};
+ records[0]=0x5054;records[1]=1;records[2]=8;
+ for(r=0;r<4;++r){
+  if(terminal_row_geometry_set(heights[r]))return 1;
+  for(t=0;t<2;++t){
+   target=t?6:4;if(profile_keys(target))return 1;
+   status=rows_setup_run();if(native_display_rows_probe(&actual))return 1;
+   records[n++]=heights[r];records[n++]=target;records[n++]=status;
+   records[n++]=terminal_setup_profile_status;records[n++]=terminal_setup_profile_ready;
+   records[n++]=csi_terminal_id;records[n++]=csi_row_count;records[n++]=csi_last_row;
+   records[n++]=ui_window_rows;records[n++]=ui_flow_suppressed;records[n++]=terminal_quit;
+   records[n++]=terminal_program_result[2];records[n++]=actual.mode;records[n++]=actual.rows;
+   records[n++]=program_display_ready;records[n++]=attributes_current;
+   name[1]='V';name[2]='0'+r;name[3]='0'+t;
+   if(rows_probe_far(name,MK_FP(0xb800,0),heights[r]*160))return 1;
+   name[1]='K';if(rows_probe_far(name,terminal_keymap,948))return 1;
+   if(status!=4 || terminal_setup_profile_status!=1 || terminal_setup_profile_ready ||
+    csi_terminal_id!=target || csi_row_count!=heights[r]-1 || csi_last_row!=heights[r]-2 ||
+    ui_window_rows!=heights[r] || ui_flow_suppressed || terminal_quit || terminal_program_result[2] ||
+    actual.mode!=3 || actual.rows!=heights[r] || program_display_ready)return 1;
+  }
+ }
+ if(terminal_row_geometry_set(25))return 1;
+ return rows_probe_write(leaf,records,sizeof(records));
+}
+#endif
 static void capture(word *r,word request,word status,native_display_rows_info *p)
 {
  word axword=0,bxword=0;
@@ -193,6 +264,9 @@ unsigned __far __cdecl terminal_display_rows_probe(void)
 #endif
 #if defined(TERMINAL_PROGRAM_DISPLAY) && defined(TERMINAL_ROW_GEOMETRY_PROBE)
  if(program_frame_images())return 30;
+#endif
+#ifdef TERMINAL_PROFILE_DISPLAY_PROBE
+ if(profile_frame_images())return 31;
 #endif
  status=native_display_rows_probe(&info);if(status)return 20;
  capture(records+3,0,status,&info);
