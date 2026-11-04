@@ -82,8 +82,11 @@ With the option disabled the executable remains exactly7df99c1f, the existing
 software-accepted package. The internal component is3756c6d7 and is not packaged,
 installed or accepted for hardware tests.
 
-No actual DOS/BBS/physical execution of this new transaction follows from the
-CPU checks. It does not inherit the disabled package's acceptance. Online bridge
+The CPU checks alone establish no actual DOS/BBS/physical execution. A
+subsequent [separate foreground diagnostic](STATUS_TRANSITION_DOS.md) now adds
+actual DOS/virtual-UART evidence for six successful offline states, while the
+ordinary component identity remains unchanged. It does not inherit the disabled
+package's BBS/physical acceptance. Online bridge
 size/NAWS policy, wider/larger modes, real foreground bindings, DOS/BBS tests and
 physical modem acceptance remain open. The original39-command reference still
 has13 unavailable entries.

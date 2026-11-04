@@ -26,6 +26,7 @@ parser.add_argument('--special-edition',action='store_true',help='Show the magen
 parser.add_argument('--status-geometry',action='store_true',help='Reserve physical row25 for status and advertise a coherent24-row terminal')
 parser.add_argument('--reset-row-owner',action='store_true',help='Link staged RIS row-default component; no status/line key binding')
 parser.add_argument('--status-owner',action='store_true',help='Link offline live status transaction; no key/menu binding or online size negotiation')
+parser.add_argument('--status-probe',action='store_true',help='Diagnostic only: run offline status transactions at foreground startup, then exit')
 parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchanged foreground keyboard dispatcher into a retained code bank')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
 parser.add_argument('--manual-init',action='store_true',help='Integrate guarded manual Init key/menu and exclusive foreground UART scheduling')
@@ -80,6 +81,7 @@ if args.local_controls:assert args.original_reference,'Local controls require th
 if args.status_owner:
  args.reset_row_owner=True
  assert args.native_reset_bank and args.screen_pause and args.elapsed_view and args.auto_answer,'Status transaction requires the current banked modal-owner candidate'
+if args.status_probe:assert args.status_owner and not args.hook_probe and not args.input_probe and not args.projection_probe,'Status probe requires the isolated status-owner build'
 if args.reset_row_owner:assert args.status_geometry and args.local_controls,'Row-default component requires the reserved-row local-controls candidate'
 if args.auto_answer:
  args.auto_answer_owner=True
@@ -190,6 +192,7 @@ if args.phone_log_controls:out_name+='-log-controls'
 if args.status_geometry:out_name+='-status-geometry'
 if args.reset_row_owner:out_name+='-reset-rows'
 if args.status_owner:out_name+='-status-owner'
+if args.status_probe:out_name+='-status-probe'
 if args.local_controls:out_name+='-local-controls'
 if args.screen_pause:out_name+='-screen-pause'
 if args.call_timer:out_name+='-call-timer'
@@ -249,6 +252,7 @@ sources = [p for p in sources if p.name not in
 if args.projection_probe:sources.append(ROOT/'standalone/session_projection_probe.asm')
 if args.hook_probe:sources.append(ROOT/'standalone/hook_transaction_probe.asm')
 if args.input_probe:sources += [ROOT/'standalone/hook_transaction_probe.asm',ROOT/'standalone/hook_input_probe.asm']
+if args.status_probe:sources.append(ROOT/'standalone/status_transition_probe.asm')
 sources += [ROOT/'src/aspect/resident_bridge.asm']
 sources += [ROOT/'reconstruction/script_menu/window.asm']
 sources += [ROOT/'src/status/status_renderer_bridge.asm',ROOT/'src/status/status_helpers.asm',
@@ -319,6 +323,7 @@ for index,source in enumerate(sources):
  if args.keyboard_bank:options+=['-DTERMINAL_KEYBOARD_BANK']
  if args.local_controls:options+=['-DTERMINAL_LOCAL_CONTROLS']
  if args.status_owner:options+=['-DTERMINAL_STATUS_OWNER']
+ if args.status_probe:options+=['-DTERMINAL_STATUS_PROBE']
  if args.screen_pause:options+=['-DTERMINAL_SCREEN_PAUSE']
  if args.call_timer:options+=['-DTERMINAL_CALL_TIMER']
  if args.elapsed_view:options+=['-DTERMINAL_ELAPSED_VIEW']
@@ -397,6 +402,7 @@ c_sources += [ROOT/'src/key_mapping/key_actions_dos.c',ROOT/'src/process/program
 c_sources += [ROOT/'src/config/live_configuration.c']
 c_sources += [ROOT/'src/config/live_setup_owner.c']
 if args.status_owner:c_sources.append(ROOT/'src/terminal/status_transition.c')
+if args.status_probe:c_sources.append(ROOT/'standalone/status_transition_probe.c')
 c_sources += [ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']]
 if args.notice_sound:c_sources += [ROOT/'src/ui/speaker.c',ROOT/'src/ui/connect_alert.c']
 c_sources += [ROOT/'src/translation/xlt_dos.c',ROOT/'src/translation/xlt_dos_fs.c']
@@ -441,6 +447,7 @@ if args.input_probe:hook_sources.add(ROOT/'standalone/hook_input_probe.c')
 c_sources+=sorted(hook_sources)
 config_sources={ROOT/'src/directory/directory_live.c',ROOT/'src/config/live_configuration.c',ROOT/'src/config/live_setup_owner.c'}
 if args.status_owner:config_sources.add(ROOT/'src/terminal/status_transition.c')
+if args.status_probe:config_sources.add(ROOT/'standalone/status_transition_probe.c')
 if args.directory_preview:config_sources.update({ROOT/'src/directory/directory_selection.c',ROOT/'src/terminal/directory_preview.c'})
 if args.directory_storage:config_sources.update({ROOT/'src/directory/directory_actions.c',ROOT/'src/directory/directory_storage.c'})
 if args.directory_resource_cli:config_sources.update({ROOT/'src/directory/directory_resource_cli.c',ROOT/'src/terminal/resource_cli_bind.c'})
@@ -659,6 +666,7 @@ manifest={'experimental_directory_keys':args.directory_keys,'experimental_aspect
 manifest['experimental_keyboard_bank']=args.keyboard_bank
 manifest['experimental_reset_row_owner']=args.reset_row_owner
 manifest['experimental_status_owner']=args.status_owner
+manifest['diagnostic_status_probe']=args.status_probe
 manifest['experimental_local_controls']=args.local_controls
 manifest['experimental_screen_pause']=args.screen_pause
 manifest['experimental_call_timer']=args.call_timer

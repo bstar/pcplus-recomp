@@ -283,6 +283,15 @@ terminal_phone_log_startup_done equ $
  mov ax,0x20a4
  jmp terminal_abort
 .reset_ready:
+%ifdef TERMINAL_STATUS_PROBE
+ ; Diagnostic-only foreground entry with the real receiver enabled. No modem
+ ; command or normal key binding runs; ordinary shutdown restores hardware.
+ extern _terminal_status_probe
+ call uart_enable
+ call far _terminal_status_probe
+ mov [terminal_exit_code],ax
+ jmp terminal_shutdown
+%endif
  call uart_enable
  call terminal_connection_start
 .loop:
