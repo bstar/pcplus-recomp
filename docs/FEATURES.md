@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[ASPECT size probes and authenticated editors](ASPECT_SIZE_PROBE_BBS.md) resolve
+an actual scripted pre-session login deadlock. Checked attached replies now use
+the child's existing serial callbacks, retaining ordinary queue reservation.
+The new parent passes350 linked inputs and actual stock ENiGMA/Synchronet
+80×24 editor/NAWS/cell-reference checks, with zero differing cells and14 copied
+capture controls. Larger/custom screens, full-route transfers/reconnect,
+physical acceptance, deployment and full original parity remain open.
+
 [Startup layouts through the staged proxy](MENU_SIZE_LAYOUTS.md) now pass actual
 DOS→CSI18t→Telnet NAWS at25/28/43/50 physical rows with status visible/hidden.
 Independent raw wire/BIOS/font/full-video audits verify eight layouts using the

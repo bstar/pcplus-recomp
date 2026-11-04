@@ -12,6 +12,7 @@ const {values} = parseArgs({options: {
   'byte-delay-ms': {type: 'string', default: '0'},
   'terminal-rows': {type: 'string', default: '25'},
   'screen-reference': {type: 'boolean', default: false},
+  'probe-terminal-size': {type: 'boolean', default: false},
   'screen-quiet-ms': {type: 'string', default: '750'},
 }});
 if (!values.runtime || !values.output) throw new Error('--runtime and --output required');
@@ -40,6 +41,30 @@ const sources = ['config.js', 'src/telnet/TelnetProxy.js', 'src/telnet/TelnetCod
   'src/telnet/InputSequenceFramer.js', 'src/logger.js'];
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const identities = Object.fromEntries(sources.map(f => [f, hash(path.join(runtime, f))]));
+if (values['probe-terminal-size']) {
+  config.telnet.terminalSizeProbeTimeoutMs = 3000;
+  sources.push('src/telnet/WindowSizeReply.js', 'COPYING');
+  for (const f of sources) identities[f] = hash(path.join(runtime, f));
+}
+// Optional byte-transparent loopback relay captures what the real BBS receives.
+// It neither negotiates Telnet nor manufactures terminal replies.
+const relaySockets = new Set(); let relayCount = 0;
+const relay = values['probe-terminal-size'] ? net.createServer(client => {
+  const id = ++relayCount, sent = [], received = [];
+  const upstream = net.createConnection({host: '127.0.0.1', port});
+  relaySockets.add(client); relaySockets.add(upstream);
+  client.on('data', b => sent.push(Buffer.from(b)));
+  upstream.on('data', b => received.push(Buffer.from(b)));
+  client.pipe(upstream); upstream.pipe(client);
+  client.on('error', e => {console.error(e); upstream.destroy(); process.exitCode = 1;});
+  upstream.on('error', e => {console.error(e); client.destroy(); process.exitCode = 1;});
+  client.on('close', () => {
+    upstream.destroy(); relaySockets.delete(client);
+    fs.writeFileSync(path.join(output, `${id}-telnet-input.bin`), Buffer.concat(sent));
+    fs.writeFileSync(path.join(output, `${id}-telnet-output.bin`), Buffer.concat(received));
+  });
+  upstream.on('close', () => {client.end(); relaySockets.delete(upstream);});
+}) : null;
 const sessions = new Set(); let count = 0;
 const server = net.createServer(socket => {
   const id = ++count, proxy = new TelnetProxy(), sent = [], received = [];
@@ -136,14 +161,23 @@ const server = net.createServer(socket => {
     }
   });
 });
-server.listen(0, '127.0.0.1', () => {
+function listenSerial() {
+ server.listen(0, '127.0.0.1', () => {
   fs.writeFileSync(path.join(output, 'ready.json'), JSON.stringify({pid: process.pid,
     endpoint: server.address(), bbsPort: port, inputSequenceTimeoutMs: timeout,
     inputByteDelayMs: delay, installed_sources: identities,
     terminalRows: rows, screenReference: values['screen-reference'],
+    terminalSizeProbe: values['probe-terminal-size'],
     scope: 'Actual SynthModem proxy with loopback-only configuration overrides; no DSP/audio or hardware.'}, null, 2));
-});
+ });
+}
+if (relay) relay.listen(0, '127.0.0.1', () => {
+  config.terminal.aliases = {loc: `127.0.0.1:${relay.address().port}`, '1': `127.0.0.1:${relay.address().port}`};
+  listenSerial();
+}); else listenSerial();
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => {
   for (const socket of sessions) socket.destroy();
   server.close();
+  for (const socket of relaySockets) socket.destroy();
+  relay?.close();
 });

@@ -56,6 +56,13 @@ async def run(args):
    assert 1<=sx<=999 and 1<=sy<=999
    fixture=bytearray(fixture);struct.pack_into('<HH',fixture,0x4e4,sx,sy)
    fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
+ display_rows=getattr(args,'display_rows',None)
+ if display_rows is not None:
+  assert fixture is not None,'Display selection requires an explicit owned PRM'
+  import struct
+  fixture=bytearray(fixture)
+  for at,value in [(0x1c2,args.status_hidden),(0x1c8,2),(0x1ca,display_rows),(0x4ec,0)]:struct.pack_into('<H',fixture,at,value)
+  fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
  if getattr(args,'directory_view_fixture',False):
   from directory_view_fixture import fixture as view_image
   view_fixture=view_image();(output/'PCPLUS.DIR').write_bytes(view_fixture)
@@ -242,6 +249,8 @@ if __name__=='__main__':
  p.add_argument('--program-sound',type=int,choices=[0,1,65535],help='Set only the sound word in the explicit synthetic PRM fixture')
  p.add_argument('--config-fixture',action='store_true',help='Read synthetic PRM in DOS; no serial CLI overrides or private configuration')
  p.add_argument('--mouse-scales',type=int,nargs=2,metavar=('X','Y'),help='Explicit valid mouse scales in the synthetic PRM')
+ p.add_argument('--display-rows',type=int,choices=[25,28,43,50],help='Explicit owned imported selector2/video0 display preference')
+ p.add_argument('--status-hidden',type=int,choices=[0,1],default=0)
  p.add_argument('--cpu',choices=['8086','286','386','486'],default='386')
  p.add_argument('--irq',type=int,choices=[3,4,5,7],help='Explicit saved IRQ and emulated UART IRQ; requires a configuration fixture')
  p.add_argument('--com',type=int,choices=range(1,5),default=1);p.add_argument('--baud',type=int,choices=[300,1200,2400,4800,9600,19200,38400,57600,115200],default=38400);p.add_argument('--flow',choices=['NONE','SOFT','HARD'],default='SOFT')

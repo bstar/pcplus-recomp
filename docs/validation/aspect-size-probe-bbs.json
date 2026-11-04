@@ -1,0 +1,199 @@
+{
+  "passed": true,
+  "image": {
+    "path": "build/aspect-size-report-20261104/ordinary/TERMINAL.EXE",
+    "sha256": "a2fd6a3fcdcc30138426d747d8cde400d9fc6eb9ca5fca84d1656aeaf17caa77",
+    "manifest_sha256": "5adaf70c9110102da6adfb7246f92de5b66d277ec143b1fc0aa60984e7801ecd",
+    "source_files": 569,
+    "build_flags": [
+      "--directory-keys",
+      "--aspect-keys",
+      "--keyboard-bank",
+      "--reset-row-owner",
+      "--status-owner",
+      "--display-row-owner",
+      "--row-geometry-owner",
+      "--display-preferences",
+      "--window-size-report",
+      "--local-controls",
+      "--screen-pause",
+      "--call-timer",
+      "--elapsed-view",
+      "--manual-init-owner",
+      "--manual-init",
+      "--auto-answer-owner",
+      "--auto-answer",
+      "--original-keys",
+      "--status-geometry",
+      "--original-reference",
+      "--external-render",
+      "--mouse",
+      "--notice-input",
+      "--exit-guard",
+      "--process-bank",
+      "--session-capture",
+      "--session-projection",
+      "--session-baseline",
+      "--register-handoff",
+      "--session-controls",
+      "--hook-return",
+      "--hook-execute",
+      "--hook-modem",
+      "--hook-input",
+      "--hook-apply",
+      "--hook-lookup",
+      "--traps",
+      "--custom-irq",
+      "--special-edition",
+      "--phone-log-bank",
+      "--phone-log-startup",
+      "--phone-log-lifecycle",
+      "--phone-log-events",
+      "--phone-log-disk",
+      "--phone-log-controls",
+      "--phone-log-reservations",
+      "--native-reset-bank",
+      "--native-reset-transaction",
+      "--status-control",
+      "--notice-sound",
+      "--large-view-frames",
+      "--program-display-owner",
+      "--aspect-row-owner",
+      "--row-notices",
+      "--display-startup",
+      "--line-control"
+    ],
+    "near_bytes": 65120,
+    "resident_CS_bytes": 65514,
+    "resident_CS_spare_bytes": 22,
+    "DISPLAY_bytes": 5576
+  },
+  "checks": {
+    "attached_report": {
+      "path": "build/aspect-size-report-linked-20261104/result.json",
+      "sha256": "0cae1d35e30eba7db633925dcb68ba2da14d09438fa27b3e45279cc8d657ba5f"
+    },
+    "ordinary_report": {
+      "path": "build/aspect-size-report-regressions-20261104/report/result.json",
+      "sha256": "2e828a179285608071a028e14cf61ab39bf83c04d8db0d7e48768904b095e4d7"
+    },
+    "ASPECT_policy": {
+      "path": "build/aspect-size-report-regressions-20261104/policy/result.json",
+      "sha256": "40c17433eb056743f5b45d8d40a8bf076cc98962ce35d0462563ff6571874285"
+    },
+    "source_rebuild": {
+      "path": "build/aspect-size-report-proof-20261104/result.json",
+      "sha256": "7e53c28074362339558ffc09e5fdf4f98093f8bdf7151233834ac942f962f2a6"
+    }
+  },
+  "linked_inputs": {
+    "attached_report": 35,
+    "ordinary_report": 44,
+    "ASPECT_policy": 271
+  },
+  "total_linked_inputs": 350,
+  "peers": {
+    "enigma": {
+      "producer": {
+        "path": "build/bbs-lab/results/enigma/startup-size-enigma-fixed-20261104/proxy-integration.json",
+        "sha256": "382262a5a211690b8166bd62cf4726e21f58c6015e476bd9101c326f6283d6e9"
+      },
+      "size_and_cells": {
+        "path": "build/bbs-lab/results/enigma/startup-size-enigma-fixed-20261104/size-probe-screen-audit.json",
+        "sha256": "9cd8f4547e97a86fec49018932767c72d9c2c305bce9dbefcf0071972fc4d581"
+      },
+      "cells": {
+        "path": "build/bbs-lab/results/enigma/startup-size-enigma-fixed-20261104/screen-reference-audit.json",
+        "sha256": "edd7d3e3ca301be800451a025a5057fe6e2f17857e4ab278542028729d25b5ac"
+      },
+      "controls": {
+        "path": "build/startup-size-enigma-controls-20261104/result.json",
+        "sha256": "ce1ec8a5df5e44aea24589334bf2c783a933a56fa0ed50128d459cdac2d30511"
+      },
+      "delivered_bytes": 48367,
+      "actual_CPR": [
+        9,
+        8
+      ],
+      "different_cells": 0,
+      "matched_cells": 1920,
+      "NAWS": [
+        [
+          80,
+          24
+        ]
+      ]
+    },
+    "synchronet": {
+      "producer": {
+        "path": "build/bbs-lab/results/synchronet/startup-size-sync-fixed-20261104/proxy-integration.json",
+        "sha256": "a6551790f19f95900f5b520b766827a2d8995b84cf33bfee024dd5c98a1856c1"
+      },
+      "size_and_cells": {
+        "path": "build/bbs-lab/results/synchronet/startup-size-sync-fixed-20261104/size-probe-screen-audit.json",
+        "sha256": "6287e688e7dc75a67baf76bd47361b16bfc51292ac500b447278a9e0a7599436"
+      },
+      "cells": {
+        "path": "build/bbs-lab/results/synchronet/startup-size-sync-fixed-20261104/screen-reference-audit.json",
+        "sha256": "48dfb6aecf1c8bef24fdb4dfb328cd817f95fd3ca324f3da572943368a5f7788"
+      },
+      "controls": {
+        "path": "build/startup-size-sync-controls-20261104/result.json",
+        "sha256": "50153e3dd880bc0c4cca73a60088b74d42d1d042f656ef41a22e97a9c5d6cec7"
+      },
+      "delivered_bytes": 22138,
+      "actual_CPR": [
+        5,
+        8
+      ],
+      "different_cells": 0,
+      "matched_cells": 1920,
+      "NAWS": [
+        [
+          80,
+          24
+        ]
+      ]
+    }
+  },
+  "copied_capture_control_cases": 14,
+  "child": {
+    "path": "build/line-control-child-20261104/source/build/child/ASPECT.EXE",
+    "sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+    "manifest_sha256": "d1db7a66b3f188326b001a17affc9a0ad8805b1ade1a089dbd92385340f3b241",
+    "source_files": 288,
+    "bytes_unchanged": true
+  },
+  "negative_control": {
+    "path": "build/bbs-lab/results/synchronet/startup-size-synchronet-20261104/proxy-integration.json",
+    "sha256": "f85d66e891b516805dbb8c28eda9f97ef35e5297acf22ffa1b8b63f2544971ec",
+    "binary_sha256": "6f9148ccdbd5cd6d8260d1c7fb6dee6e70a6836a1bdd1926b1bc39d6fb4b31a9",
+    "passed": false,
+    "stage_trace": "BRIDGE|FAIL-LOGIN|",
+    "one_size_query_no_reply": true,
+    "old_source_commit": "d7744f8eb55e76aece8a2b62ce913e36f7f5385d",
+    "scope": "Historical pre-fix parent, unchanged scripted workflow; source hashes are its captured historical inputs, not asserted current."
+  },
+  "sources": {
+    "src/terminal/window_size_report.asm": "81b33afc8c1b39825b3bd096d8b59b90f71e120393e40bb082a79fec838904c5",
+    "lab/bbs/synthmodem_proxy_serial.js": "cac5bfcdf3c3f6520268d1185a60e10b6c07df9d4c52e65616a9343d04fc60fd",
+    "lab/bbs/test_dos.py": "5168777dda42a569cf58a65d4b172022d8ed32d496de6fc31c27a9c47d789bcb",
+    "lab/bbs/test_synthmodem_proxy_dos.py": "117ef47d4f53c807de56e6154d07892c9a5b6da211b953b0d51880b77344f415",
+    "lab/bbs/test_synchronet_screen_reference_dos.py": "1beed4b8dba38d9dbed3c9a9200e51dba7f5723672c45f6221370bdc51682548",
+    "lab/bbs/audit_size_probe_screen.py": "ad983d7ef99f9c4db8c4ee39ef502a3ac77dc6d9dc6386e02c93c3fca632ed28",
+    "standalone/check_aspect_size_report_live.py": "30f125784a06c8e0e2b3e5ea2ad1f2d224fe3e4ee5bfb829dd04a58e2b1a913b",
+    "standalone/size_report_callback_fixture.asm": "81db41845972ab8ad74b0b548d66c7cff9aaee29e4fdaf3fb5700775c752b800",
+    "standalone/check_window_size_report_live.py": "e9d860e5922ed5cb7749333d42375b68c16b4ed278a9fb2f2da2b232d4801872",
+    "standalone/check_aspect_large_policy_live.py": "0db0bf2ee221760131096e5d74a9d705e46e6b4e1e2366cbd34687b50513c6aa",
+    "lab/bbs/check_screen_reference_controls.py": "ae2fdd13af39f41255886bbd21624ebb80a1981e8b959e498768b8b43147dd71",
+    "lab/bbs/audit_screen_reference.py": "ab80905d952f662a5200bfe4070edffaa21c929ad8f6a3b34de2535a3f0b0bae"
+  },
+  "maintained_extension_changed": true,
+  "recovered_UART_changed": false,
+  "child_source_changed": false,
+  "static_near_data_changed": false,
+  "resident_CS_changed": false,
+  "deployment_changed": false,
+  "physical_acceptance": false,
+  "scope": "Checked attached ASPECT size reports use child serial callbacks after actual command preflight, resolving real pre-session/script-login deadlock.350 linked inputs; actual paced8086 DOS stock ENiGMA/Synchronet authenticated one-line editor workflows, real captured80x24 NAWS, zero differing final cells/cursor and14 copied-artifact controls. Source-only parent reproduction, current matching child. No larger/custom-screen, full-route transfer/reconnect, installed service/SIP/DSP/analog/physical or full application-parity acceptance."
+}

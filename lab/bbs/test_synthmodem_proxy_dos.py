@@ -32,6 +32,7 @@ def main():
     p.add_argument('--directory-preview-overlay', action='store_true', help='Observe validated Alt-D preview inside the stock editor workflow')
     p.add_argument('--screen-reference', action='store_true', help='Match compiled geometry and freeze incoming bytes after a real final CPR probe')
     p.add_argument('--multiline-editor', choices=['page-up','page-down'], help='Native BIOS input enters24 lines and exercises actual editor page navigation')
+    p.add_argument('--size-probe', action='store_true', help='Use staged pre-session size owner and valid owned startup preferences')
     p.add_argument('--phone-log', action='store_true', help='Enable and passively audit the call log during the real BBS workflow')
     args = p.parse_args()
     if args.directory_preview_overlay:args.directory_overlay=True
@@ -51,11 +52,14 @@ def main():
     from terminal_geometry import terminal_geometry
     geometry=terminal_geometry(binary)
     sources += [binary.parent/'terminal.map',ROOT/'lab/bbs/terminal_geometry.py']
+    if args.size_probe:
+        assert json.loads((binary.parent/'manifest.json').read_text())['experimental_display_startup']
+        sources += [ROOT/n for n in ('lab/bbs/test_synthmodem_proxy_dos.py','lab/bbs/synthmodem_proxy_serial.js','lab/bbs/test_dos.py','lab/bbs/editor_dos_probe.py','lab/bbs/modem.py')]
     if args.phone_log:
         sources += [ROOT/n for n in ('lab/bbs/phone_log_evidence.py','standalone/phone_log_events_watch.asm','standalone/test_phone_log_events_terminal.py')]
     if args.multiline_editor:
         sources += [ROOT/'lab/bbs/test_synthmodem_proxy_dos.py',ROOT/'lab/bbs/audio_synchronet_editor_keys.asm',ROOT/'lab/bbs/test_dos.py',ROOT/'lab/bbs/editor-recipes.json',ROOT/'lab/bbs/check_editor_dos.py',ROOT/'lab/bbs/enigma_multiline.py']
-    reference_args=['--terminal-rows',str(geometry['rows'])]+(['--screen-reference'] if args.screen_reference else [])
+    reference_args=(['--probe-terminal-size'] if args.size_probe else [])+['--terminal-rows',str(geometry['rows'])]+(['--screen-reference'] if args.screen_reference else [])
     before = {str(f.relative_to(ROOT)): sha(f) for f in sources}
     base = ROOT/'build/bbs-lab'
     bridge = base/(args.label+'-proxy')
@@ -138,6 +142,7 @@ def main():
             '--com', '3', '--baud', '19200', '--flow', 'HARD', '--dial-fixture',
             '--irq', '5', '--mouse-scales', '8', '4', '--cpu', '8086',
             '--timeout', '160', '--wait', exit_wait, '--raw-upstream', '--keys', keys]
+        if args.size_probe:command+=['--display-rows','25','--status-hidden','0']
         if observer:command+=['--video-observer',str(observer)]
         if args.phone_log:command+=['--phone-log']
         if keyboard_helper:command+=['--keyboard-helper',str(keyboard_helper)]
@@ -150,7 +155,7 @@ def main():
         closed = json.loads((bridge/'1-closed.json').read_text())
         video = (output/'SCREEN.BIN').read_bytes()
         text = '\n'.join(video[i:i+160:2].decode('cp437') for i in range(0,4000,160))
-        checks = dict(harness=run.returncode == 0, semantic_audit=semantic,
+        checks = dict(size_probe_requested=not args.size_probe or ready['terminalSizeProbe'],harness=run.returncode == 0, semantic_audit=semantic,
             exact_screen=len(video)==4000 and 'UNSAVED' in text and 'OVR 01,08' in text,
             proxy_source_unchanged=closed['source_unchanged'],
             product_source_unchanged=all(sha(ROOT/n)==h for n,h in before.items()))

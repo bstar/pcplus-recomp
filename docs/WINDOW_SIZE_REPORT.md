@@ -24,8 +24,9 @@ change display selection. Normal CSI temporary parsing fields still change.
 
 Admission requires a supported profile4/6 and coherent80-column video layout,
 B800 text storage, logical width80/132, positive rows up to50, agreeing bounds
-and a representable shadow extent. Active program/ASPECT/transfer/geometry or
-stopping owners do not emit a reply. It performs no BIOS/DOS or blocking UART
+and a representable shadow extent. Ordinary program/transfer/geometry or stopping owners do not emit a reply.
+A later [checked ASPECT callback path](ASPECT_SIZE_PROBE_BBS.md) admits attached
+receive scopes through their existing command preflight and child serial owner. It performs no BIOS/DOS or blocking UART
 operation. The ordinary foreground transport subsequently delivers queued bytes.
 
 The complete response is formatted in16 bytes of existing executable-bank
@@ -99,3 +100,8 @@ larger-screen UI loans and online resize remain guarded. No package or deploymen
 pointer changed. A read-only management doctor found the physical DOS PC
 unreachable (No route to host); no physical job or remote update was attempted.
 All13 unavailable reference commands and full application acceptance remain open.
+
+The later [authenticated BBS checkpoint](ASPECT_SIZE_PROBE_BBS.md) resolves an
+ASPECT/pre-session probe deadlock and independently verifies real DOS size/NAWS
+and80×24 editor cells on stock ENiGMA and Synchronet. It retains separate larger,
+custom-screen, full-route transfer and physical acceptance gates.

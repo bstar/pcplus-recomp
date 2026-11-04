@@ -26,13 +26,14 @@ def login_script():
     return source+wait('FSEditor v1.105','EDITOR')+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--phone-log',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--size-probe',action='store_true');p.add_argument('--phone-log',action='store_true');a=p.parse_args()
     assert re.fullmatch('[A-Za-z0-9_-]+',a.label)
     fixture_lock=(LAB/'.dos-integration.lock').open('a')
     try:fcntl.flock(fixture_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     except BlockingIOError:raise RuntimeError('Another owned Synchronet DOS integration is active')
     server=snapshot();bodies=message_bodies();stats=statistics()
     binary,sources=select_product(a.terminal,'TERMINAL.EXE');geometry=terminal_geometry(binary);assert geometry['rows']==24
+    if a.size_probe:assert json.loads((binary.parent/'manifest.json').read_text())['experimental_display_startup']
     child,child_sources=select_product(a.runner,'ASPECT.EXE');sources+=child_sources
     names=['lab/bbs/test_synchronet_screen_reference_dos.py','lab/bbs/synthmodem_proxy_serial.js','lab/bbs/terminal_geometry.py','lab/bbs/audio_synchronet_editor_keys.asm','lab/bbs/editor_dos_probe.py','lab/bbs/test_dos.py','lab/bbs/modem.py','lab/bbs/audio_synchronet.py','lab/bbs/audio_synchronet_editor.py','src/aspect/compiler.py']
     sources += [ROOT/n for n in names]+[binary.parent/'terminal.map']
@@ -52,7 +53,7 @@ def main():
         from phone_log_evidence import build_observer
         observer=build_observer(binary,out/'LOGWATCH.COM');generated_paths.append(observer)
     generated={str(p.relative_to(out)):sha(p) for p in generated_paths}
-    proc=subprocess.Popen(['node',str(ROOT/'lab/bbs/synthmodem_proxy_serial.js'),'--runtime',str(a.runtime.resolve()),'--output',str(bridge),'--bbs-port',str(PORT),'--terminal-rows','24','--framing-ms','250','--byte-delay-ms','20','--screen-reference','--screen-quiet-ms','150'],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,text=True)
+    proc=subprocess.Popen(['node',str(ROOT/'lab/bbs/synthmodem_proxy_serial.js'),'--runtime',str(a.runtime.resolve()),'--output',str(bridge),'--bbs-port',str(PORT),'--terminal-rows','24','--framing-ms','250','--byte-delay-ms','20','--screen-reference','--screen-quiet-ms','150',*(['--probe-terminal-size'] if a.size_probe else [])],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,text=True)
     try:
         deadline=time.monotonic()+15
         while not (bridge/'ready.json').exists():
@@ -60,6 +61,7 @@ def main():
             assert time.monotonic()<deadline,'Proxy readiness timeout';time.sleep(.05)
         ready=json.loads((bridge/'ready.json').read_text())
         command=[sys.executable,str(ROOT/'lab/bbs/editor_dos_probe.py'),str(stage/'TERMINAL.EXE'),'synchronet','--port',str(ready['endpoint']['port']),'--label',a.label,'--com','3','--baud','19200','--flow','HARD','--directory-fixture','--directory-script-fixture',str(stage/'SYNC.ASX'),'--keyboard-helper',str(helper),'--irq','5','--mouse-scales','8','4','--cpu','8086','--timeout','160','--wait','145','--raw-upstream','--keys','p900 enter']
+        if a.size_probe:command+=['--display-rows','25','--status-hidden','0']
         if a.phone_log:command+=['--phone-log','--video-observer',str(observer)]
         with (out/'harness.log').open('w') as log:code=subprocess.run(command,cwd=ROOT,stdout=log,stderr=log,timeout=175).returncode
         base_result=json.loads((out/'result.json').read_text())
@@ -72,7 +74,7 @@ def main():
         screen=(out/'SCREEN.BIN').read_bytes();text=screen[:3840:2].decode('cp437')
         stages=(out/'STAGES.LOG').read_text() if (out/'STAGES.LOG').exists() else ''
         after_stats=statistics()
-        checks=dict(harness=code==0 and base_result['passed'],runtime_unchanged=closed['source_unchanged'],
+        checks=dict(size_probe_requested=not a.size_probe or ready['terminalSizeProbe'],harness=code==0 and base_result['passed'],runtime_unchanged=closed['source_unchanged'],
                     server_static_inputs_unchanged=snapshot()==server,message_bodies_unchanged=message_bodies()==bodies,
                     no_message_mail_or_transfer_writes=all(stats['Total'][k]==after_stats['Total'][k] for k in ('posts','email','feedback','uploads','uploadb','dnloads','dnloadb')),
                     actual_ASPECT_login=stages=='BRIDGE|LOGIN|PASSWORD|WELCOME|BULLETINS|SCAN|MAIN|GENERAL|SUBJECT|EDITOR|' and (out/'SCRIPT.OK').read_bytes()==b'PASS',

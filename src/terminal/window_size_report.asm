@@ -9,6 +9,7 @@ extern ansi_parameter_count,ansi_parameters,ansi_private,ansi_secondary
 extern csi_row_count,csi_last_row,csi_column_count,screen_last_column,erase_cell_count
 extern screen_columns,screen_video_row_bytes,text_video_segment,csi_terminal_id
 extern terminal_quit,terminal_aspect_active,terminal_program_active,terminal_program_pending
+extern terminal_render_command,terminal_render_send
 extern terminal_transfer_active,terminal_transfer_pending,_terminal_row_geometry_active
 extern terminal_tx_count,terminal_tx_head,terminal_tx_tail,terminal_tx_buffer
 extern terminal_tx_origin_set_far
@@ -41,13 +42,25 @@ terminal_window_size_report:
  cmp word [ansi_parameters],18
  jne .unmatched
  mov ax,[terminal_quit]
- or ax,[terminal_aspect_active]
- or ax,[terminal_program_active]
- or ax,[terminal_program_pending]
  or ax,[terminal_transfer_active]
  or ax,[terminal_transfer_pending]
  or ax,[_terminal_row_geometry_active]
  jnz .handled
+ cmp word [terminal_aspect_active],0
+ je .foreground
+ cmp word [terminal_aspect_active],1
+ jne .handled
+ ; A checked attached receive scope owns the child's UART, not the parent
+ ; TX ring. Reuse the existing parser command admission and typed callback
+ ; path used by ordinary CPR/DA. Failed lease/context admission aborts through
+ ; the established ASPECT owner; do not write a dormant parent queue.
+ call far terminal_render_command
+ jmp short .geometry
+.foreground:
+ mov ax,[terminal_program_active]
+ or ax,[terminal_program_pending]
+ jnz .handled
+.geometry:
  mov ax,[csi_terminal_id]
  cmp ax,4
  je .profile
@@ -99,6 +112,8 @@ terminal_window_size_report:
  inc di
  mov bp,di
  sub bp,response
+ cmp word [terminal_aspect_active],1
+ je .attached
  ; Count and ring relation are validated before copying any report byte.
  mov ax,[terminal_tx_count]
  cmp ax,1024
@@ -132,6 +147,16 @@ terminal_window_size_report:
  loop .copy
  mov [terminal_tx_tail],bx
  add [terminal_tx_count],bp
+ jmp short .handled
+.attached:
+ mov si,response
+ mov cx,bp
+.attached_byte:
+ xor ax,ax
+ mov al,[cs:si]
+ call far terminal_render_send
+ inc si
+ loop .attached_byte
 .handled:
  restore
  stc
