@@ -202,7 +202,8 @@ def inspect_terminal_memory(binary,map_path):
    target_bytes=b'\x9a'+struct.pack('<HH',symbols[source][1],symbols[source][0])
    body=image[start+config['relative_segment']*16:start+config['relative_segment']*16+config['bytes']]
    sites=[config['relative_segment']*16+i for i in range(len(body)-4) if body[i:i+5]==target_bytes]
-   assert len(sites)==1 and sites[0]+3 in relocations,(source,'checked far bridge ownership')
+   count=2 if source=='terminal_control_defer_far' and 'terminal_manual_init_key_far' in symbols else 1
+   assert len(sites)==count and all(site+3 in relocations for site in sites),(source,'checked far bridge ownership')
   near_call('local_reset_1368','ansi_escape_service_20a4',prefix=b'\xb8\x01\x00\x50',suffix=b'\x83\xc4\x02\xc3')
   duplex=raw('local_duplex_3316',13);mode=symbols['modes_value_1d1a']
   assert mode[0]==ds and duplex==b'\x83\x3e'+struct.pack('<H',mode[1])+b'\x01\x1b\xc0\xf7\xd8\xa3'+struct.pack('<H',mode[1])+b'\xc3'
@@ -213,6 +214,25 @@ def inspect_terminal_memory(binary,map_path):
   sites=[owner['relative_segment']*16+i for i in range(len(root)-4) if root[i:i+5]==pattern]
   assert len(sites)==1 and sites[0]+3 in relocations,'One live-dispatch local-control far entry'
   extra.update(local_controls_bridge_pairs_verified=4,local_controls_native_entry_bytes=24,local_controls_dispatch_calls_verified=1)
+ if 'terminal_manual_init_key_far' in symbols:
+  config_seg=next(c['relative_segment'] for c in code_segments if c['name']=='CONFIG_CODE')
+  modem_seg=next(c['relative_segment'] for c in code_segments if c['name']=='MODEM_CODE')
+  key_seg=symbols['terminal_keyboard_dispatch_far'][0] if 'terminal_keyboard_dispatch_far' in symbols else near_code['relative_segment']
+  module=image[start:start+module_bytes]
+  for name,segment,count,callers in [
+   ('terminal_manual_init_begin_far',modem_seg,1,{config_seg}),
+   ('terminal_manual_init_poll_far',modem_seg,1,{near_code['relative_segment']}),
+   ('terminal_manual_init_cancel_far',modem_seg,1,{config_seg}),
+   ('terminal_manual_init_configured_far',config_seg,1,{config_seg}),
+   ('terminal_manual_init_key_far',config_seg,1,{key_seg}),
+   ('terminal_manual_init_sync_far',config_seg,3,{config_seg,near_code['relative_segment']}),
+   ('terminal_manual_init_stop_far',config_seg,8,{config_seg,modem_seg,near_code['relative_segment']})]:
+   assert symbols[name][0]==segment,(name,'manual Init bank')
+   pattern=b'\x9a'+struct.pack('<HH',symbols[name][1],segment)
+   sites=[i for i in range(len(module)-4) if module[i:i+5]==pattern]
+   assert len(sites)==count and all(i+3 in relocations for i in sites),(name,'manual Init far fixups')
+   assert all(any(c['relative_segment'] in callers and c['relative_segment']*16<=i<c['relative_segment']*16+c['bytes'] for c in code_segments) for i in sites),(name,'manual Init caller ownership')
+  extra['manual_init_cross_bank_calls_verified']=16
  if 'terminal_keyboard_dispatch_far' in symbols:
   keyboard=next(c for c in code_segments if c['name']=='KEYBOARD_CODE')
   entry=symbols['terminal_keyboard_dispatch_far'];end=symbols['terminal_keyboard_dispatch_end']

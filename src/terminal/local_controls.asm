@@ -48,6 +48,10 @@ terminal_local_control_key:
 %endif
  cmp ax,0x2e00
  je .selected
+%ifdef TERMINAL_MANUAL_INIT
+ cmp ax,0x2400
+ je .selected
+%endif
  cmp ax,0x1600
  je .selected
  cmp ax,0x1200
@@ -95,6 +99,10 @@ terminal_local_control_key:
  jne .defer
 .admitted:
  mov word [terminal_local_control_status],0
+%ifdef TERMINAL_MANUAL_INIT
+ cmp ax,0x2400
+ je .initialize
+%endif
 %ifdef TERMINAL_ELAPSED_VIEW
  cmp ax,0x1400
  je .view_admitted
@@ -125,6 +133,20 @@ terminal_local_control_key:
 .not_ready:
  mov word [terminal_local_control_status],2
  jmp .done
+%ifdef TERMINAL_MANUAL_INIT
+.initialize:
+ extern terminal_recording_owned_far,terminal_manual_init_configured_far
+ extern terminal_tx_count,terminal_menu_pending
+ push ax
+ call far terminal_recording_owned_far
+ mov bx,ax
+ pop ax
+ or bx,[terminal_tx_count]
+ or bx,[terminal_menu_pending]
+ jnz .defer
+ call far terminal_manual_init_configured_far
+ jmp .done
+%endif
 .defer:
  mov word [terminal_local_control_status],1
  call far terminal_control_defer_far

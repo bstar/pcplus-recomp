@@ -1,5 +1,9 @@
 # Manual Init send owner component
 
+The separate [guarded runtime integration](MANUAL_INIT_LIVE.md) now uses this
+component when `--manual-init` is selected. The component-only flag and evidence
+described below retain their narrower scope.
+
 The optional `--manual-init-owner` build now contains a bounded, send-only
 foreground component in the existing MODEM bank. This is the next implementation
 step after [native Alt-J recovery](INIT_MODEM_RECOVERY.md). It does **not** enable

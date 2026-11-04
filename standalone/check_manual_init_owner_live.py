@@ -208,7 +208,11 @@ def receive_and_queue():
     while m.get('uart_rx_count'):
         value=m.call('uart_receive_byte')
         m.call('terminal_receive_input',ax=value,limit=1000000)
-    assert b'Name?' in m.text() and m.get('terminal_tx_count')>0 and not m.tx
+    assert b'Name?' in m.text() and m.get('terminal_tx_count')>0
+    if 'terminal_manual_init_key_far' in m.symbols:
+        assert b'ATZ\r'.startswith(bytes(m.tx)) # Integrated parser polls service the owner.
+    else:
+        assert not m.tx
     assert finish(m)==2 and bytes(m.tx)==b'ATZ\r'
     assert snapshot(m)==before
     m.drain()

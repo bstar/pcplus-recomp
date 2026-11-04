@@ -32,5 +32,10 @@ unsigned COMMAND_MENU_CALL command_menu_event(unsigned short event,unsigned shor
 #else
 #define ELAPSED_CONTROL_ACTION (LOCAL_CONTROL_BASE+3)
 #endif
+#ifdef TERMINAL_ELAPSED_VIEW
+#define MANUAL_INIT_CONTROL_ACTION (ELAPSED_CONTROL_ACTION+1)
+#else
+#define MANUAL_INIT_CONTROL_ACTION ELAPSED_CONTROL_ACTION
+#endif
 #endif
 #endif

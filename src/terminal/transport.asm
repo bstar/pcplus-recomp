@@ -271,6 +271,20 @@ terminal_keyboard_dispatch_far:
 %define terminal_upload_start far keyboard_bank_terminal_upload_start
 %endif
 .keyboard:
+%ifdef TERMINAL_MANUAL_INIT
+ extern terminal_manual_init_active,terminal_manual_init_key_far
+ cmp word [terminal_manual_init_active],0
+ jne .bios_key
+ extern terminal_recording_owned_far
+ call far terminal_recording_owned_far
+ or ax,ax
+ jnz .bios_key ; A deferred Init must not starve the keys that stop recording.
+ cmp word [connection_state],0
+ je .manual_fifo_ready
+ cmp word [connection_state],6
+ jne .bios_key ; Dial/ACK waits still need their Escape/hangup/exit keys.
+.manual_fifo_ready:
+%endif
  cmp word [terminal_menu_pending],0
  jne .bios_key
  cmp word [terminal_macro_active],0
@@ -312,6 +326,10 @@ terminal_keyboard_dispatch_far:
  call menu_pending_cancel
  jmp .done
 .dispatch_key:
+%ifdef TERMINAL_MANUAL_INIT
+ call far terminal_manual_init_key_far
+ jc .done
+%endif
  push ax
  call _terminal_autostart_flush
  pop ax
@@ -652,6 +670,16 @@ terminal_poll_serial:
  call terminal_break_poll
  call uart_poll_flow
  mov word [terminal_macro_tx_allowed],0
+%ifdef TERMINAL_MANUAL_INIT
+ extern terminal_manual_init_poll_far,terminal_manual_init_sync_far
+ cmp word [terminal_manual_init_active],0
+ je .manual_idle
+ mov ax,1
+ call far terminal_manual_init_poll_far
+ call far terminal_manual_init_sync_far
+ jmp .macro ; Never lend this same poll's physical-write grant to ordinary TX.
+.manual_idle:
+%endif
  cmp word [connection_state],0
  je .transmit
  cmp word [connection_state],6

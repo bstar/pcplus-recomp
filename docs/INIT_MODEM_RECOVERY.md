@@ -59,9 +59,10 @@ nonblocking live ownership, active-call safety, BBS or physical acceptance proof
 
 ## Live integration still required
 
-An isolated [bounded live sender component](MANUAL_INIT_OWNER.md) now builds
-and passes linked CPU checks. It has no dispatcher/key/menu binding; the
-integration requirements below still gate making Alt-J available.
+The [bounded live sender component](MANUAL_INIT_OWNER.md) and separate
+[guarded runtime integration](MANUAL_INIT_LIVE.md) now implement this contract.
+The component-only build has no dispatcher/key/menu binding. The requirements
+below describe the integration contract; each layer retains scoped evidence.
 
 Keep this a send-initialization operation, distinct from initialization/dial and
 optional ACK policy. Reusing the startup state machine as-is would dial or
@@ -88,7 +89,8 @@ calibrated-native versus maintained pacing scope explicit. Repeat source,
 DOS, Enigma/Synchronet and package gates before marking Alt-J available.
 
 The candidate340cb4ba, ten-file package and installed9f2a37e7 remain unchanged.
-Alt-J still belongs to the15 unavailable original menu entries. Other controls,
+At this native recovery boundary Alt-J belonged to15 unavailable menu entries;
+the separate experimental runtime now enables it. Other controls,
 file/DOS, directory/key, Chat, full ASPECT/emulations/protocols/Host and physical
 BUSY/modem/SIP acceptance remain in the full goal.
 

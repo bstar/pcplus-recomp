@@ -1,11 +1,19 @@
 # Full application reconstruction checklist
 
+[Guarded manual Init](MANUAL_INIT_LIVE.md) now enables Alt-J/reference/browser
+in the experimental8f76cc4f candidate.117 sender/31 dispatcher inputs, two actual
+DOS8086 workflows and exact source reproduction pass. The command owns ordinary
+outgoing payload while RX/parser/flow/carrier remain serviced, preserves settings
+and call-clock ownership, and hands partial-line debt to existing startup retry.
+Fourteen original reference entries remain unavailable. Separate BBS/package/
+physical gates and the installed selection remain unchanged.
+
 [Original Init Modem recovery](INIT_MODEM_RECOVERY.md) adds the exact48-byte
 Alt-J handler. All65536 pacing words and1344 compositions with the original
 sender/expander pass, plus genuine-original comparison. It sends initialization
 without dialing/ACK handling, suppresses local echo and restores saved settings.
-Live serviced ownership remains required; Alt-J is still unavailable and no
-application/package or installed files change at this native boundary.
+At that native boundary Alt-J was unavailable; the experimental integration
+above is separate from the original-byte proof and installed application.
 
 The [Elapsed Time package](ELAPSED_VIEW_PACKAGE.md) now reproduces all five
 programs and ten package files from2044 public sources with ancestor Git

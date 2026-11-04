@@ -82,6 +82,9 @@ static word action(word i)
 #ifdef TERMINAL_ELAPSED_VIEW
  if(items[i].key==0x1400)return ELAPSED_CONTROL_ACTION;
 #endif
+#ifdef TERMINAL_MANUAL_INIT
+ if(items[i].key==0x2400)return MANUAL_INIT_CONTROL_ACTION;
+#endif
 #ifdef TERMINAL_SCREEN_PAUSE
  if(items[i].key==0x3100)return LOCAL_CONTROL_BASE+3;
 #endif

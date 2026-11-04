@@ -219,6 +219,13 @@ ENTRY(elapsed,"Elapsed Time                   Alt-T",
  "session; Escape and Alt-X are consumed locally. No clock is reset.");
 #endif
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
+#ifdef TERMINAL_MANUAL_INIT
+ENTRY(manual_init,"Init Modem                     Alt-J",
+ "Send the configured initialization without dialing or waiting for OK.\n"
+ "Incoming text continues. Keyboard output waits until sending finishes.\n"
+ "Escape cancels; Alt-H hangs up and Alt-X exits through their usual path.\n"
+ "No automatic escape sequence is inserted into an active connection.");
+#endif
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
  ROW(script,0,0xfe00,'A'),ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
@@ -240,6 +247,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_ELAPSED_VIEW
  ,ROW(elapsed,2,0x1400,'E')
+#endif
+#ifdef TERMINAL_MANUAL_INIT
+ ,ROW(manual_init,1,0x2400,'I')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))

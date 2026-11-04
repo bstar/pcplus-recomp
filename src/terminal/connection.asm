@@ -31,6 +31,9 @@ extern terminal_connect_alert_start,terminal_connect_alert_poll,terminal_connect
 %ifdef TERMINAL_CALL_TIMER
 extern terminal_call_timer_start_far,terminal_call_timer_stop_far
 %endif
+%ifdef TERMINAL_MANUAL_INIT
+extern terminal_manual_init_stop_far
+%endif
 
 %ifdef TERMINAL_PHONE_LOG_EVENTS
 extern _terminal_phone_log_events_ready_far,_terminal_phone_log_events_connected_far
@@ -186,6 +189,10 @@ terminal_connection_start_impl:
  call connection_notice_service
  jmp .done
 .retry_ready:
+%ifdef TERMINAL_MANUAL_INIT
+ mov ax,3
+ call far terminal_manual_init_stop_far
+%endif
  call connection_break_cancel_service
  call connection_macro_cancel_service
  call connection_program_cancel_service
@@ -565,6 +572,10 @@ terminal_connection_poll_impl:
  cmp byte [connection_carrier_seen],0
  je .done
 .carrier_lost:
+%ifdef TERMINAL_MANUAL_INIT
+ mov ax,7
+ call far terminal_manual_init_stop_far
+%endif
 %ifdef TERMINAL_SOUND
  call far terminal_connect_alert_stop
 %endif
@@ -725,6 +736,12 @@ terminal_connection_cancel_impl:
  or ax,ax
  pop ax
  jnz .done
+%ifdef TERMINAL_MANUAL_INIT
+ push ax
+ mov ax,3
+ call far terminal_manual_init_stop_far
+ pop ax
+%endif
  call connection_break_cancel_service
  call connection_macro_cancel_service
  call connection_program_cancel_service
@@ -780,6 +797,10 @@ terminal_connection_cancel_impl:
  restore
 
 terminal_connection_exit_impl:
+%ifdef TERMINAL_MANUAL_INIT
+ mov ax,8
+ call far terminal_manual_init_stop_far
+%endif
 %ifdef TERMINAL_SOUND
  call far terminal_connect_alert_stop
 %endif
@@ -931,6 +952,9 @@ connection_enabled: db 0
 connection_carrier_seen: db 0
 connection_mcr: db 0
 connection_exit_pending: db 0
+%ifdef TERMINAL_MANUAL_INIT
+global connection_resync
+%endif
 connection_resync: db 0
 connection_state: dw 0
 ; Status0idle/1online/2responsefailure/3timeout/4cancel/5hangup/6carrierlost/7internal/8hangupfailed.

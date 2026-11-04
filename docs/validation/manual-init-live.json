@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "experimental_manual_init_enabled": true,
+  "installed": false,
+  "terminal_sha256": "8f76cc4fd7843c3ca203d6ce241e3272cac1c82d8230f8b50634c4cd5dda3ad8",
+  "evidence": {
+    "build/manual-init-accepted-owner-20261103/result.json": {
+      "passed": true,
+      "sha256": "1f9deca86a2b91009151d4a66c8527f78f1eefd960b0125c2c23140d354f6001",
+      "cases": 8,
+      "inputs": 117
+    },
+    "build/manual-init-accepted-dispatch-20261103/result.json": {
+      "passed": true,
+      "sha256": "1ad50fac64751cb84909154dbdb8ac88fa464706adfae93d5e23d47d0dfad70e",
+      "cases": 10,
+      "inputs": 31
+    },
+    "build/manual-init-accepted-elapsed-20261103/result.json": {
+      "passed": true,
+      "sha256": "2564a64470203c17bb38b9fd5abce524f2a43419cd3c6e5845a88d229c64a409",
+      "cases": 22,
+      "inputs": 22
+    },
+    "build/manual-init-accepted-timer-20261103/result.json": {
+      "passed": true,
+      "sha256": "4a3ea67631fcedbd2b2fdcd3ed258586c310cabe21d811f83beac6e3a2fa1076",
+      "cases": 6,
+      "inputs": 6
+    },
+    "build/manual-init-accepted-pause-20261103/result.json": {
+      "passed": true,
+      "sha256": "357b626d81cd27002ac013b4d67b258d9e323681eb3cdbe1fcbcd8252d41eff8",
+      "cases": 41,
+      "inputs": 41
+    },
+    "build/manual-init-accepted-source-proof-20261103/result.json": {
+      "passed": true,
+      "sha256": "73c48a20c96b2abbc9ab1196a2ac9aa50d9f0067fb98cad3ecdc642efeb38c5d"
+    },
+    "build/manual-init-dos/manual-init-final-accepted-20261103/result.json": {
+      "passed": true,
+      "sha256": "e7d692f35cd75e7734a89a7f763c7fbed3c8e294b868cb26ef14d060d1a53d29",
+      "cases": 2,
+      "inputs": 2
+    },
+    "build/terminal-manual-init-cancel-accepted-20261103/reference-checks.json": {
+      "passed": true,
+      "sha256": "93ddd4fc291f46db668ba205b1a75d99959bfac0913531e90b85b0b9a7b11f8b",
+      "cases": 9,
+      "inputs": 84
+    }
+  },
+  "memory": {
+    "near_bytes": 65008,
+    "near_spare_bytes": 528,
+    "resident_CS_extent_bytes": 65234,
+    "resident_CS_spare_bytes": 302,
+    "manual_init_cross_bank_calls_verified": 16
+  },
+  "source_files": 539,
+  "source_inputs_sha256": "63c68ae045afaa4f42615f4ec5ccf850dac6d9bae55c9e9d6664b6b1764876d9",
+  "unavailable_original_commands": [
+    "directory",
+    "meta",
+    "chat",
+    "host",
+    "answer",
+    "kermit",
+    "mapping",
+    "files",
+    "cwd",
+    "viewfile",
+    "editor",
+    "dos",
+    "status",
+    "lines"
+  ],
+  "scope": "Experimental guarded Alt-J/reference/browser integration.117 linked owner inputs,31 dispatcher inputs,22 elapsed/6 clock/41 Pause cases, all39 reference labels/14 remaining refusals, source-only exact reproduction and two actual DOS8086 COM3/IRQ5 synthetic-modem workflows. BBS/package and physical acceptance require separate receipts. Installed/private files unchanged."
+}

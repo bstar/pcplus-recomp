@@ -27,6 +27,9 @@ def main():
   for item in items:
    if item['id'] in ('clear','reset','duplex'):item['action']=base_action+('clear','reset','duplex').index(item['id'])
    if item['id']=='pause' and manifest.get('experimental_screen_pause'):item['action']=base_action+3
+   next_action=base_action+3+int(bool(manifest.get('experimental_screen_pause')))
+   if item['id']=='elapsed' and manifest.get('experimental_elapsed_view'):item['action']=next_action
+   if item['id']=='initialize' and manifest.get('experimental_manual_init'):item['action']=next_action+int(bool(manifest.get('experimental_elapsed_view')))
  native=json.loads((transport.ROOT/'reconstruction/command_reference/provenance.json').read_text())
  assert [names[x['id']] for x in items]==[x['name'] for x in native['labels']]
  cases=[]

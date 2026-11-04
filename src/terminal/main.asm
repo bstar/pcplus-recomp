@@ -422,6 +422,11 @@ terminal_shutdown:
  mov ss,ax
  mov sp,terminal_stack_top
  sti
+%ifdef TERMINAL_MANUAL_INIT
+ extern terminal_manual_init_stop_far
+ mov ax,8
+ call far terminal_manual_init_stop_far
+%endif
  call _terminal_autostart_flush
 %ifdef TERMINAL_SOUND
  call far terminal_connect_alert_stop

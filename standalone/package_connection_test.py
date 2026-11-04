@@ -56,6 +56,7 @@ def stage(output,products,source_base_commit=None):
         'Use Alt-Z then PgUp/PgDn for send/receive without changing BBS bindings.\n'
         'Backtick opens the browser; Connection/Redial repeats the target.\n'
         + ('Alt-T: serviced elapsed-time window; any dismissal key stays local.\n' if terminal.get('experimental_elapsed_view') else '')
+        + ('Alt-J: send configured initialization only; Escape cancels.\n' if terminal.get('experimental_manual_init') else '')
         + 'Dim commands remain unavailable. This is a test candidate.\n\n'
         'Check login/input, ANSI/CP437, editor navigation and reconnect first.\n'
         'Then use owned small files to verify transfers in both directions.\n\n'
@@ -75,6 +76,7 @@ def stage(output,products,source_base_commit=None):
         'experimental_screen_pause':bool(terminal.get('experimental_screen_pause')),
         'experimental_call_timer':bool(terminal.get('experimental_call_timer')),
         'experimental_elapsed_view':bool(terminal.get('experimental_elapsed_view')),
+        'experimental_manual_init':bool(terminal.get('experimental_manual_init')),
         'experimental_directory_resource_owner':False,'experimental_phone_log_controls':True,'experimental_status_geometry':True,
         'authored_help_sha256':help_record['sha256'],'card_written':False,'validation':'Staged only; requires separate DOS/package and hardware acceptance.'}
     (output/'manifest.json').write_text(json.dumps(record,indent=2)+'\n');return record

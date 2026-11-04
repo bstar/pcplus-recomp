@@ -34,6 +34,11 @@ _terminal_auto_allowed:
  call far terminal_recording_owned_far
  or ax,ax
  jnz .no
+%ifdef TERMINAL_MANUAL_INIT
+ extern terminal_manual_init_active
+ cmp word [terminal_manual_init_active],0
+ jne .no
+%endif
  xor ax,ax
  cmp word [_terminal_transfer_preferences],0
  je .done
