@@ -318,6 +318,31 @@ terminal_connection_flow_alive:
  pop dx
  retf
 
+; A logically retained session may be inside the DCD debounce interval. Keep
+; its pending resume for a returning carrier, but do not send control bytes to
+; a modem that may already be interpreting commands. DIRECT/untracked policies
+; retain their existing meaning. Preserve all registers except AX and FLAGS.
+global terminal_connection_flow_ready
+terminal_connection_flow_ready:
+ push dx
+ call far terminal_connection_flow_alive
+ or ax,ax
+ jz .done
+ cmp byte [connection_enabled],0
+ je .done
+ cmp word [terminal_directory_mode],1
+ je .done
+ cmp byte [connection_carrier_seen],0
+ je .done
+ mov dx,[uart_port_msr]
+ in al,dx
+ and ax,0x80
+ jz .done
+ mov ax,1
+.done:
+ pop dx
+ retf
+
 %ifdef TERMINAL_CUSTOM_IRQ
 ; Physical MODEM sessions can briefly deassert DCD at the training/data-mode
 ; boundary. Confirm four BIOS ticks of continuous low before retiring them.

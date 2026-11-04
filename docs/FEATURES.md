@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Carrier flow readiness](CARRIER_FLOW_READY.md) now separates immediate control
+output from retained connection lifetime during the existing four-tick DCD grace.
+The composed application no longer prefixes the next modem command with XON/XOFF
+after carrier loss. Linked transient/shutdown/status regressions, actual DOS
+same-process two-connection workflows across accepted heights/profiles/flows and
+isolated rebuilds are bound in its receipt. In-flight transfers/cancellation,
+other modal composition, broader parity and BBS/physical acceptance remain open;
+no candidate was deployed.
+
 [ASPECT parser and mode-list recovery](ASPECT_LARGE_RECOVERY.md) now retires a
 previous CSI error at the next CSI start and shares the actual width owner's
 read-only admission before any mode-list mutation. Larger-height timeout,

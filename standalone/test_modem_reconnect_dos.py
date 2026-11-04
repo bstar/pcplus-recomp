@@ -15,7 +15,9 @@ ROOT=carrier.ROOT;sha=carrier.sha;ESC=b'\x1b'
 FIELDS=('parent_disconnected_ticks','parent_stale_pause_seen','parent_reconnected_ticks')
 
 
-def adapter(out,events,gap):
+def adapter(out,events,gap,snapshot_bytes=4000,cycles=6000):
+    assert snapshot_bytes in (4000,8000)
+    assert cycles in (6000,12000)
     text=inspect.getsource(carrier.connection.run).replace("out=ROOT/'build/connection-dos'/name",'out=CASE_OUT/name')
     start=text.index(' def peer():');end=text.index(' thread=threading.Thread',start)
     peer=r''' def event(kind,data=b'',session=0):
@@ -27,7 +29,7 @@ def adapter(out,events,gap):
    while not stop.is_set() and attempts<2:
     try:conn,_=server.accept()
     except socket.timeout:continue
-    attempts+=1;session=attempts;event('connected',session=session)
+    attempts+=1;session=attempts;event('connected',session=session);checks['emulated_modem_connected_to_selected_endpoint']=True
     with conn:
      conn.settimeout(.03);local=bytearray();ready=None;xoff=False;completed=None
      conn.sendall(banner);event('send',banner,session)
@@ -65,10 +67,13 @@ def adapter(out,events,gap):
     serial="f'nullmodem server:127.0.0.1 port:{server.getsockname()[1]} transparent:1 rxdelay:200 txdelay:1'"
     assert text.count(serial)==1;text=text.replace(serial,"'modem listenport:0'")
     text=text.replace("commands[:2]==['ATZ',('ATD'+target.decode('ascii'))]",'attempts==2')
-    text=text.replace("checks['immediate_banner_not_dropped']=len(screen)==4000 and screen[:30:2]==b'FIRST BYTE SAFE'","checks['screen_snapshot_complete']=len(screen)==4000")
+    text=text.replace("checks['immediate_banner_not_dropped']=len(screen)==4000 and screen[:30:2]==b'FIRST BYTE SAFE'",f"checks['screen_snapshot_complete']=len(screen)=={snapshot_bytes}")
     text=text.replace('timeout=20)','timeout=35)').replace('cputype=386','cputype=8086')
+    text=text.replace('cycles=fixed 6000','cycles=fixed '+str(cycles))
     module=types.ModuleType('reconnect_modem_peer');module.__dict__.update(carrier.connection.__dict__)
     module.__dict__.update(CASE_OUT=out,events=events,EXPECT_GAP=gap)
+    assert module.SAMPLER.count('mov cx,4000')==1
+    module.SAMPLER=module.SAMPLER.replace('mov cx,4000','mov cx,'+str(snapshot_bytes))
     exec(compile(text,__file__,'exec'),module.__dict__);return module
 
 

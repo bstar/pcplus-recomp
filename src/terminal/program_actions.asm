@@ -28,6 +28,7 @@ extern uart_port_index,uart_irq_indices,uart_irq_enable_masks
 extern uart_software_flow,uart_hardware_flow,uart_flow_pending,uart_xoff_sent
 extern uart_rts_lowered,uart_rx_count,uart_rx_dropped
 extern terminal_connection_flow_alive
+extern terminal_connection_flow_ready
 extern uart_mask_irq,uart_restore_interrupt,uart_install_interrupt
 extern uart_set_baud_divisor,uart_set_line_control
 extern terminal_irq_vector,terminal_baud_low,terminal_baud_high
@@ -277,7 +278,7 @@ terminal_program_poll:
  ; A local helper may be launched after the controller observed carrier loss.
  ; Do not introduce a new XOFF into MODEM command mode. The shared policy
  ; preserves online/DIRECT/untracked behavior and retires only known loss.
- call far terminal_connection_flow_alive
+ call far terminal_connection_flow_ready
  or ax,ax
  jz .launch
  cmp byte [uart_xoff_sent],0

@@ -4,6 +4,7 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern uart_software_flow,uart_xoff_sent,uart_flow_pending,uart_poll_flow
 extern terminal_clock_ticks,terminal_exit_code
+extern terminal_connection_flow_ready
 global terminal_release_flow
 terminal_release_flow:
  push bp
@@ -29,9 +30,15 @@ terminal_release_flow:
  mov si,ax
  mov bp,dx
 .poll:
+ call far terminal_connection_flow_ready
+ cmp byte [uart_flow_pending],0
+ je .done
+ or ax,ax
+ jz .waiting
  call uart_poll_flow
  cmp byte [uart_flow_pending],0
  je .done
+.waiting:
  call terminal_clock_ticks
  sub ax,si
  sbb dx,bp

@@ -11,6 +11,7 @@ extern keyboard_classify_raw,terminal_enqueue_key_slot
 extern terminal_ansi_wait_active,terminal_ansi_wait_cancel
 extern _terminal_autostart_flush
 extern terminal_connection_poll,terminal_connection_cancel,terminal_connection_start
+extern terminal_connection_flow_ready
 extern terminal_connection_exit,connection_state,connection_enabled
 extern terminal_macro_active,terminal_macro_start,terminal_macro_poll,terminal_macro_cancel
 extern terminal_macro_tx_allowed,terminal_macro_tx_epoch,terminal_defer_key,terminal_take_deferred_key
@@ -668,7 +669,12 @@ terminal_poll_serial:
  cmp word [terminal_quit],0
  jne .done
  call terminal_break_poll
+ call far terminal_connection_flow_ready
+ mov bp,ax ; Retain readiness across the register-preserving UART flow poll.
+ or ax,ax
+ jz .flow_deferred
  call uart_poll_flow
+.flow_deferred:
  mov word [terminal_macro_tx_allowed],0
 %ifdef TERMINAL_MANUAL_INIT
  extern terminal_manual_init_poll_far,terminal_manual_init_sync_far
@@ -684,6 +690,8 @@ terminal_poll_serial:
  je .transmit
  cmp word [connection_state],6
  jne .macro
+ or bp,bp
+ jz .macro ; Keep ordinary/macro bytes queued through a transient DCD drop.
 .transmit:
  cmp word [terminal_tx_count],0
  je .grant_macro

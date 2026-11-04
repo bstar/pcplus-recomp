@@ -39,6 +39,8 @@ extern volatile unsigned char hardware_active,uart_flow_pending,uart_xoff_sent,u
 #pragma aux uart_rts_lowered "uart_rts_lowered";
 extern unsigned __far __cdecl connection_alive(void);
 #pragma aux connection_alive "terminal_connection_flow_alive";
+extern unsigned __far __cdecl connection_ready(void);
+#pragma aux connection_ready "terminal_connection_flow_ready";
 extern void __cdecl phone_log_disk_notify(const char *);
 static unsigned read_flags(void);
 #pragma aux read_flags = "pushf" "pop ax" value [ax] modify exact [];
@@ -93,7 +95,7 @@ unsigned __cdecl terminal_phone_log_disk_poll(void)
   * shutdown can drain it; do not promise unbounded disk-latency protection. */
  if(connection_state==6 && !uart_hardware_flow && !uart_software_flow){busy=0;return PLQ_OK;}
  if(uart_flow_pending || uart_xoff_sent || uart_rts_lowered){busy=0;return PLQ_OK;}
- alive=connection_state==6?connection_alive():0;
+ alive=connection_state==6?connection_ready():0;
  mcr=input_port(uart_port_mcr);
  if(uart_hardware_flow && (mcr&2U)){
   output_port(uart_port_mcr,mcr&~2U);hard=1;
