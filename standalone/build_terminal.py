@@ -31,6 +31,7 @@ parser.add_argument('--display-row-owner',action='store_true',help='Link namespa
 parser.add_argument('--display-row-probe',action='store_true',help='Diagnostic only: exercise BIOS row bank at startup before UART enable, then exit')
 parser.add_argument('--row-geometry-owner',action='store_true',help='Link offline BIOS/canonical/RIS commit and rollback owner; no key/menu binding')
 parser.add_argument('--display-preferences',action='store_true',help='Capture raw saved display words after successful startup import; no BIOS or key binding')
+parser.add_argument('--window-size-report',action='store_true',help='Reply to ordinary CSI18t with accepted logical text dimensions; no bridge deployment')
 parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchanged foreground keyboard dispatcher into a retained code bank')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
 parser.add_argument('--manual-init',action='store_true',help='Integrate guarded manual Init key/menu and exclusive foreground UART scheduling')
@@ -89,6 +90,7 @@ if args.status_probe:assert args.status_owner and not args.hook_probe and not ar
 if args.display_row_owner:assert args.status_owner,'Display row bank requires the current status-owner component'
 if args.row_geometry_owner:assert args.display_row_owner,'Row geometry owner requires the verified BIOS row bank'
 if args.display_preferences:assert args.row_geometry_owner,'Display preference capture requires the row geometry component'
+if args.window_size_report:assert args.display_preferences,'Window size report requires the canonical display component'
 if args.display_row_probe:assert args.display_row_owner and not args.status_probe and not args.hook_probe and not args.input_probe and not args.projection_probe,'Display row probe requires the isolated row-bank build'
 if args.reset_row_owner:assert args.status_geometry and args.local_controls,'Row-default component requires the reserved-row local-controls candidate'
 if args.auto_answer:
@@ -204,6 +206,7 @@ if args.status_probe:out_name+='-status-probe'
 if args.display_row_owner:out_name+='-display-row-owner'
 if args.row_geometry_owner:out_name+='-row-geometry-owner'
 if args.display_preferences:out_name+='-display-preferences'
+if args.window_size_report:out_name+='-window-size-report'
 if args.display_row_probe:out_name+='-display-row-probe'
 if args.local_controls:out_name+='-local-controls'
 if args.screen_pause:out_name+='-screen-pause'
@@ -247,6 +250,7 @@ if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 if not args.local_controls:sources=[p for p in sources if p.name!='local_controls.asm']
+if not args.window_size_report:sources=[p for p in sources if p.name!='window_size_report.asm']
 if not args.reset_row_owner:sources=[p for p in sources if p.name!='reset_rows.asm']
 if not args.status_owner:sources=[p for p in sources if p.name!='status_transition_glue.asm']
 if not args.manual_init_owner:sources=[p for p in sources if p.name!='manual_init.asm']
@@ -341,6 +345,7 @@ for index,source in enumerate(sources):
  if args.display_row_probe:options+=['-DTERMINAL_DISPLAY_ROW_PROBE']
  if args.row_geometry_owner:options+=['-DTERMINAL_ROW_GEOMETRY']
  if args.display_preferences:options+=['-DTERMINAL_DISPLAY_PREFERENCES']
+ if args.window_size_report and source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_WINDOW_SIZE_REPORT']
  if args.row_geometry_owner and args.display_row_probe:options+=['-DTERMINAL_ROW_GEOMETRY_PROBE']
  if args.screen_pause:options+=['-DTERMINAL_SCREEN_PAUSE']
  if args.call_timer:options+=['-DTERMINAL_CALL_TIMER']
@@ -704,6 +709,7 @@ manifest['experimental_display_row_owner']=args.display_row_owner
 manifest['diagnostic_display_row_probe']=args.display_row_probe
 manifest['experimental_row_geometry_owner']=args.row_geometry_owner
 manifest['experimental_display_preferences']=args.display_preferences
+manifest['experimental_window_size_report']=args.window_size_report
 manifest['diagnostic_row_geometry_probe']=args.row_geometry_owner and args.display_row_probe
 if args.display_row_owner:
  manifest['display_row_bank']={k:display_rows_bank[k] for k in ('namespace','native_bytes','segment','offset','bytes','scope','selector_service','selector_transaction')}

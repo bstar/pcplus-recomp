@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Accepted text-size reporting](WINDOW_SIZE_REPORT.md) now adds optional CSI18t
+replies without moving the cursor or altering its saved/display state.44 linked
+report inputs plus755 regressions, actual DOS delayed-serial queries and three
+exact source rebuilds pass. Linux pre-session collection/NAWS, normal controls
+and physical acceptance remain open; bridge and deployment are unchanged.
+
 [Canonical display selectors](DISPLAY_SELECTOR_TRANSACTION.md) now compose
 physical selection/fallback, BIOS/canonical/RIS/status/shadow, mouse ownership,
 saved preferences and accepted-selector cycling.51 composed inputs plus704

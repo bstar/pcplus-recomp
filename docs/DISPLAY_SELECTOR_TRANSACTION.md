@@ -112,7 +112,9 @@ configuration, bridge, live BBS or physical machine changes here.
 
 ## Remaining application gates
 
-The APIs are internal, disconnected services. Automatic startup application and
+The APIs are internal, disconnected services. An optional
+[accepted text-size reply](WINDOW_SIZE_REPORT.md) now provides a nonmoving query
+endpoint; Linux collection/NAWS coordination is not integrated yet. Automatic startup application and
 normal command bindings still need guarded UI integration, larger-screen modal
 loans and explicit online DOS/bridge size agreement before a new connection can
 use changed geometry. Saved/live setup/HOOK adoption and foreground modes2/7 or

@@ -832,5 +832,16 @@ csi_command_table:
  dw L_ea8e
  dw L_e952
  dw L_ea32
+%ifdef TERMINAL_WINDOW_SIZE_REPORT
+ dw terminal_window_size_dispatch
+%else
  dw L_ea50
+%endif
  dw L_ea3c
+%ifdef TERMINAL_WINDOW_SIZE_REPORT
+extern terminal_window_size_report
+terminal_window_size_dispatch:
+ call far terminal_window_size_report
+ jc L_e9ce
+ jmp L_ea50
+%endif
