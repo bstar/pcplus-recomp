@@ -1,0 +1,254 @@
+{
+  "passed": true,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "cases": [
+    {
+      "case": "listing",
+      "checks": {
+        "normal_exit": true,
+        "original_unchanged": true,
+        "startup_frame_restored": true,
+        "heading": true,
+        "directories": true,
+        "exact_file_size_date_time": true,
+        "three_digit_year": true
+      },
+      "report": {
+        "path": "build/file-tools-original-final-20261105/listing/result.json",
+        "sha256": "493ee8cbba0f90c27b59700164ad8e96caf4e0dbc2d37d51855f39bfa83ff13f"
+      },
+      "frames": [
+        {
+          "path": "build/file-tools-original-final-20261105/listing/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/listing/frame-1.bin",
+          "sha256": "de5466ce37cdd27d6376f1c888b629446067ec370b42abf7599bf1c61f9b06a4"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/listing/frame-2.bin",
+          "sha256": "998938d72f5e96aff6384ec372393adae2b0de98618b94add259abbfb382c28d"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/listing/frame-3.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/listing/frame-4.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ],
+      "keys": "p750 enter p3250 a-f p1000 F I L E S \\ enter p1500 escape p700 a-x p500 y enter p600 a-x p500 y enter"
+    },
+    {
+      "case": "pages",
+      "checks": {
+        "normal_exit": true,
+        "original_unchanged": true,
+        "startup_frame_restored": true,
+        "heading": true,
+        "directories": true,
+        "exact_file_size_date_time": true,
+        "three_digit_year": true,
+        "fifteen_entries_first_page": true,
+        "next_page_continues": true
+      },
+      "report": {
+        "path": "build/file-tools-original-final-20261105/pages/result.json",
+        "sha256": "f91f1ff2e0a9b893012fafde67a8512cbe77c0caf4ae1a9fe67c8fbcd3186ab5"
+      },
+      "frames": [
+        {
+          "path": "build/file-tools-original-final-20261105/pages/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/pages/frame-1.bin",
+          "sha256": "de5466ce37cdd27d6376f1c888b629446067ec370b42abf7599bf1c61f9b06a4"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/pages/frame-2.bin",
+          "sha256": "c3aa9ead3fdae4f4585671ce15e645fc27631025ebf65f7f2eb99bdb67bbbb80"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/pages/frame-3.bin",
+          "sha256": "87d17a7fcf997c37d73bf2a6b6f8cbbc3e1969c5a8e50e3e7e46f126cc24b7ae"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/pages/frame-4.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/pages/frame-5.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ],
+      "keys": "p750 enter p3250 a-f p1000 F I L E S \\ enter p1500 space p1500 escape p700 a-x p500 y enter p600 a-x p500 y enter"
+    },
+    {
+      "case": "missing",
+      "checks": {
+        "normal_exit": true,
+        "original_unchanged": true,
+        "startup_frame_restored": true,
+        "not_found_message": true
+      },
+      "report": {
+        "path": "build/file-tools-original-final-20261105/missing/result.json",
+        "sha256": "5f1f5de597d031dc0469b8dfc35bdc8cbdc66c7cbc1e198ea5ca081ca4811daa"
+      },
+      "frames": [
+        {
+          "path": "build/file-tools-original-final-20261105/missing/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/missing/frame-1.bin",
+          "sha256": "de5466ce37cdd27d6376f1c888b629446067ec370b42abf7599bf1c61f9b06a4"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/missing/frame-2.bin",
+          "sha256": "8a2b921094f065d3132281f6b1b6cc018a7ab085840bcc53716652bcd40d5051"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/missing/frame-3.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/missing/frame-4.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ],
+      "keys": "p750 enter p3250 a-f p1000 N O F I L E . X X X enter p1200 escape p700 a-x p500 y enter p600 a-x p500 y enter"
+    },
+    {
+      "case": "viewer-fixed",
+      "checks": {
+        "normal_exit": true,
+        "original_unchanged": true,
+        "startup_frame_restored": true,
+        "first_page_24_lines": true,
+        "next_page": true,
+        "footer": true,
+        "page_up_returns_first": true
+      },
+      "report": {
+        "path": "build/file-tools-original-final-20261105/viewer-fixed/result.json",
+        "sha256": "a25eeeca31ffe51bafdaba965e8691b7f95eb2acc0e0e7d25614cabf86244f72"
+      },
+      "frames": [
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-fixed/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-fixed/frame-1.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-fixed/frame-2.bin",
+          "sha256": "9f581a6c56c89e93ab1f76b242ecd19bfa5cda097f27179a4a1a354b105f99c1"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-fixed/frame-3.bin",
+          "sha256": "d4858b2c99518c09bf5716a21a0ea0930e87f57bb530b7f753aba8349249ff13"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-fixed/frame-4.bin",
+          "sha256": "9f581a6c56c89e93ab1f76b242ecd19bfa5cda097f27179a4a1a354b105f99c1"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-fixed/frame-5.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-fixed/frame-6.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ],
+      "keys": "p750 enter p3250 a-v p1000 F I L E S \\ F 0 0 . T X T enter p1500 pgdown p1200 pgup p1200 home p1000 escape p700 a-x p500 y enter p600 a-x p500 y enter"
+    },
+    {
+      "case": "viewer-home",
+      "checks": {
+        "normal_exit": true,
+        "original_unchanged": true,
+        "startup_frame_restored": true,
+        "first_page_24_lines": true,
+        "next_page": true,
+        "footer": true,
+        "third_page": true,
+        "home_returns_first": true
+      },
+      "report": {
+        "path": "build/file-tools-original-final-20261105/viewer-home/result.json",
+        "sha256": "421e8bcc17237f1e004df457943bb768f78d1014fca151e3662fb6addb3cea11"
+      },
+      "frames": [
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-home/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-home/frame-1.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-home/frame-2.bin",
+          "sha256": "9f581a6c56c89e93ab1f76b242ecd19bfa5cda097f27179a4a1a354b105f99c1"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-home/frame-3.bin",
+          "sha256": "d4858b2c99518c09bf5716a21a0ea0930e87f57bb530b7f753aba8349249ff13"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-home/frame-4.bin",
+          "sha256": "bb6fa90e888b0e11a9295d1b1a999e0cd88a9edd4b65b767c8a09fdf256028e4"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-home/frame-5.bin",
+          "sha256": "9f581a6c56c89e93ab1f76b242ecd19bfa5cda097f27179a4a1a354b105f99c1"
+        },
+        {
+          "path": "build/file-tools-original-final-20261105/viewer-home/frame-6.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        }
+      ],
+      "keys": "p750 enter p3250 a-v p1000 F I L E S \\ F 0 0 . T X T enter p1500 pgdown p1200 pgdown p1200 home p1000 escape p700 a-x p500 y enter p600 a-x p500 y enter"
+    }
+  ],
+  "REA_bundle": {
+    "path": "analysis/file-tools-enumeration-20261105.json",
+    "sha256": "318264b551303e4db95878f5b6b45a5fd2f0dfc162fbdc8c6f4fe6188b7f1adb"
+  },
+  "REA_evidence_ids": {
+    "{'address': '0x15c1f', 'length': 80}": "ev_0cbf513712f8c49f82b51ad7dee92f1c9a7bc5662cf9215846a465e09e02c51f",
+    "{'address': '0x22e54', 'length': 32}": "ev_26c10448068f8031f9c1669128f6167a569e180754756d0e64d2cc19c1698a48",
+    "{'procedure': '0x15b71'}": "ev_3066a553b9d8605bc8bc9a18403bf752f30b41b1e2b408285a11aeb4346ceecc",
+    "{'address': '0x24514', 'length': 180}": "ev_5a149daf3d819014743e34e4de1d82c55cfbb6f999ae7a16f1107aed28820ec5",
+    "{'procedure': '0x1f08e'}": "ev_78aa2176e698a016a4aa0671097d187269c07d5bed6a8b2cda8e516f74ff1082",
+    "{'address': '0x15b9e', 'length': 129}": "ev_a7b8428d6f8d0a5a8da8e9c4d1595bcd7e9e02fcce03827937989300b12e550f",
+    "{'address': '0x258f7', 'length': 110}": "ev_c9179c73e1cfc6f2bb90c94fffebef4f1c4ab1fa16c7df35e9f8767b324c4fde"
+  },
+  "native_helper": {
+    "file_offset": 27988,
+    "bytes": 204,
+    "sha256": "b599dcd4fed2c02a98892c1f47911eb2d94a652de7773fca9470b84fd544f236"
+  },
+  "frozen_producer": {
+    "path": "build/file-tools-original-final-20261105/probe.py",
+    "sha256": "6517d0606af507a4e600e1e0803b83dc0a042e7c8c8bbe07584c1233c253107e"
+  },
+  "watcher": {
+    "path": "build/path-ui-original-followup-20261104/watch.asm",
+    "sha256": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2"
+  },
+  "scope": "Five offline unmodified-original DOS8086/FPU-off keyboard workflows with synthetic owned files and raw4000-byte screens. Synthetic analysis images never executed. No new terminal listing/viewer integration or physical/online acceptance.",
+  "limitations": [
+    "Passive timer uses additive frame checksum and two-tick stability; semantic checks examine the complete retained frame bytes, but this is not an exhaustive video-event trace.",
+    "Private reference settings/key resources stay local; only hashes/capture identities are public.",
+    "Earlier viewer recipe with invalid pgdn ADDKEY token timed out; fixed frozen recipes use pgdown. Failed first attempt is excluded from acceptance.",
+    "Complete wrapping/binary/tab/EOF/viewer error behavior, configured external viewer PRM binding and fault behavior remain open."
+  ]
+}

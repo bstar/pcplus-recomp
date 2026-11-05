@@ -4,6 +4,14 @@
 
 ### November 4 checkpoint
 
+The [file-search owner](docs/FILE_FIND_OWNER.md) is now a source-only FILE_CODE
+component with253actual DOS checks, an exact empty-source rebuild and a rejected
+missing-DTA-restoration control. Five fresh original runtime workflows establish
+listing paging/formatting/error acknowledgement and internal-viewer navigation;
+see [recovery follow-up](docs/FILE_TOOLS_RECOVERY.md). The component is not linked
+into TERMINAL. Implement the serviced listing frontend and explicit date/row
+clearing correction next; retain viewer/error/ownership and full-parity gates.
+
 The [Gateway release checkpoint](docs/GATEWAY_RELEASE.md) supersedes the older
 "Alt-F4 remains unbound" and "Alt-F7 next" development statements below for the
 enabled candidate. It binds the source-only matching package, three actual DOS

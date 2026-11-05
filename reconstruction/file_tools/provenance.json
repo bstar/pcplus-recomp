@@ -120,5 +120,10 @@
     "No runtime UI comparison, complete enumeration/formatting, configured-viewer PRM schema or file/DOS fault contract is established.",
     "Overlay20 requires existing entry-anchor analysis context; absence from default Ghidra discovery did not establish missing code.",
     "Native call/data meanings beyond directly inspected instructions remain provisional until further tracing/runtime checks."
-  ]
+  ],
+  "enumeration_runtime_followup": {
+    "report": "docs/validation/file-tools-original.json",
+    "sha256": "b0bc6ad275ff2f8736e210de539fb2f0938d25c9a3a9992b45aba9457022929a",
+    "scope": "Static enumeration layout/formatting plus five unmodified-original offline DOS UI workflows. Earlier limitations retain their original checkpoint scope; only evidenced follow-up observations supersede them."
+  }
 }

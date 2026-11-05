@@ -1,5 +1,57 @@
 # Original file-command recovery anchors
 
+The [runtime follow-up](validation/file-tools-original.json) now adds five
+unmodified-original DOS workflows, and the [private search owner](FILE_FIND_OWNER.md)
+provides a source-built enumeration prerequisite. This supersedes the earlier
+unknowns below only where the following observations supply direct evidence;
+neither File Directory nor View a File is enabled in TERMINAL yet.
+
+## Enumeration and original runtime follow-up
+
+Fresh REA evidence traces CS:5B71 through the DOS4E/4F carry result and shared
+43-byte DTA at DS:CEB4. Attributes are at DTA+21, time+22, date+24, size+26,
+and name+30. A zero caller argument copies the name; the listing's nonzero
+argument selects formatting. Exact attribute10h selects the directory format;
+the branch is an equality comparison, rather than a test of the directory bit.
+The recovered date fields are month/day/(DOS year+80), hour and minute.
+The format strings use a left-justified12-character filename and either
+`<DIR>` or a minimum6-character unsigned32-bit size. Month has minimum width2;
+day, year, hour and minute have minimum precision2. Those are minimum widths,
+not bounds: year2026 is rendered126 by the original.
+
+The original offline runtime, on owned synthetic files, confirms:
+
+- Alt-F prompts for a file specification; a trailing directory backslash
+  selects its contents. A small listing includes `.`, `..` and the subdirectory.
+- At25physical rows, the listing has15entry lines, its original heading/frame,
+  and a `- MORE -` acknowledgement when the page is full. Space continues the
+  next page; Escape returns to the byte-identical pre-dialog screen. The
+  observed enumeration order is the DOS-returned order of these fixtures;
+  no general filesystem sort-order guarantee is inferred.
+- A missing specification displays `File(s) not found` and acknowledges back
+  to the original terminal screen.
+- Alt-V with the reference settings opens the internal viewer. Its first page
+  displays lines1–24 with a footer. Page Down advances to25–48; Page Up restores
+  the complete first frame. A separate workflow advances through lines49–72,
+  then Home restores the exact first frame. Escape restores the terminal.
+
+The native three-digit year also leaves a trailing digit in reused listing
+rows when the next page contains shorter1993 dates. This is an observed native
+presentation defect, not a requirement to introduce stale characters into the
+maintained UI. The date/clearing policy needs an explicit documented correction
+when the frontend is integrated.
+
+All five accepted workflows use one frozen local producer script, the same
+original executable identity, passive timer/VGA capture and a dummy UART.
+Raw4000-byte screens and producer/resource identities are retained locally.
+The timer's additive checksum is not an exhaustive video-event trace; the
+receipt checks complete captured frame bytes and expected content. An earlier
+viewer attempt used invalid ADDKEY token `pgdn` and timed out; the accepted
+fresh recipes use `pgdown`. No synthetic analysis image was executed.
+
+Original wrapping, tabs/binary bytes, long-line/EOF behavior, detailed error
+paths and configured external-viewer PRM binding still require recovery.
+
 Fresh REA/Ghidra evidence identifies the original 2.01 Alt-F directory listing
 and both Alt-V viewer paths. This is a static recovery checkpoint; it does not
 enable either command in the maintained application.

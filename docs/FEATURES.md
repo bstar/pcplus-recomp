@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+The [private DOS search owner](FILE_FIND_OWNER.md) now preserves independent
+caller DTA state across listing enumeration. Its source-only diagnostic passes
+253actual DOS checks and a missing-restoration negative control. This is a
+component prerequisite; File Directory and the viewer commands remain unbound.
+
 The [Gateway release checkpoint](GATEWAY_RELEASE.md) now reproduces the complete
 five-executable/ten-file package from an original-free source export. Three DOS
 launcher runs and four independently audited stock Enigma ZMODEM transfers pass

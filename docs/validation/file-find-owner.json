@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "binary_sha256": "d6191a5a7892226f5b1d0926ababafe1855b800878abcae8f16b3c072aa97d8c",
+  "actual_DOS_checks": 253,
+  "cpu": "8086",
+  "FPU": false,
+  "manifest": {
+    "path": "build/find-owner-final-20261105/manifest.json",
+    "sha256": "bfcbb1d2a10b81949c5ad70f518fb6fb1e20ae47df9d70a48fbfff3c4c9f8089"
+  },
+  "runtime": {
+    "path": "build/find-owner-dos-final-20261105/result.json",
+    "sha256": "6e584ff3b1889ac1e2f934ebefaca74dab577f5403fece254051d218f52961b3"
+  },
+  "source_proof": {
+    "path": "build/find-owner-source-20261105/result.json",
+    "sha256": "e044f600c456fb4d9e9d419937d093ec299dfe4a9e5d603eae56d347cf26e868"
+  },
+  "negative_control": {
+    "path": "build/find-owner-no-restore-20261105/result.json",
+    "sha256": "22244e7be4073bc94ca5206dfbf6430091420b4171bf28835be5d7f9ebf27a24"
+  },
+  "source_export_files": 7,
+  "original_inputs": [],
+  "linked_into_terminal": false,
+  "physical_deployment_changed": false,
+  "scope": "Exercise private-DTA continuation against an independent foreign DOS search. Actual DOS2F/1A/4E/4F, independent installed foreign DTA and continuation, exact names/attributes/size/time/date, failed-path/missing/invalid arguments, active-owner refusal, error-output preservation and100close/reopen cycles. Banked state stays outside DGROUP. No listing UI, UART, DOS6.22 or physical acceptance."
+}
