@@ -133,7 +133,7 @@ async def run(args):
  if observer:
   observer=observer.resolve();assert observer.is_relative_to(ROOT/'build') and observer.suffix.upper()=='.COM'
   observer_bytes=observer.read_bytes();(output/'OBSERVE.COM').write_bytes(observer_bytes)
-  observer_start='D:\\OBSERVE T';observer_stop='D:\\OBSERVE'
+  observer_start=('LOADHIGH ' if getattr(args,'video_observer_high',False) else '')+'D:\\OBSERVE T';observer_stop='D:\\OBSERVE'
  keyboard_helper=getattr(args,'keyboard_helper',None);helper_start='';helper_bytes=None
  if keyboard_helper:
   keyboard_helper=keyboard_helper.resolve();assert keyboard_helper.is_relative_to(ROOT/'build') and keyboard_helper.suffix.upper()=='.COM'
@@ -177,6 +177,10 @@ D:\\SNAP A
 exit
 '''
  cpu=getattr(args,'cpu','386')
+ if getattr(args,'video_observer_high',False):
+  assert observer is not None,'Upper-memory placement requires an explicit observer'
+  assert cpu in ('386','486'),'DOSBox upper-memory observer testing requires a386+ CPU model'
+  config=config.replace('[autoexec]','[dos]\nxms=true\nems=false\numb=true\n[autoexec]')
  assert cpu in ('8086','286','386','486')
  if cpu!='386':config=config.replace('cputype=386','cputype='+cpu)
  (output/'dosbox.conf').write_text(config)
@@ -228,6 +232,7 @@ exit
  result['comspec_fixture_sha256']=hashlib.sha256(comspec_bytes).hexdigest() if comspec_bytes is not None else None
  result['initialization_wait_seconds']=init_wait
  result['cpu']=next(line.split('=',1)[1] for line in config.splitlines() if line.startswith('cputype='))
+ result['video_observer_high_requested']=getattr(args,'video_observer_high',False)
  if irq is not None:result['serial']['irq']=irq
  result['server_log']=str(server_log) if server_log is not None else None
  result['server_endpoint']={'address':'127.0.0.1','port':args.port}
@@ -257,6 +262,7 @@ if __name__=='__main__':
  p.add_argument('--raw-upstream',action='store_true',help='Upstream is an explicit serial-side bridge; leave Telnet ownership to that bridge')
  p.add_argument('--comspec-fixture',type=Path,help='Explicit source-built test interpreter under build/; copied to owned D: and selected with COMSPEC')
  p.add_argument('--video-observer',type=Path,help='Explicit source-built passive COM observer under build/; install with T and collect after DOS return')
+ p.add_argument('--video-observer-high',action='store_true',help='Explicitly load the passive test observer in DOSBox UMBs; application memory policy is unchanged')
  p.add_argument('--phone-log',action='store_true',help='Enable saved telephone logging to the owned D: fixture using PCPLUS fallback')
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')
  p.add_argument('--directory-view-fixture',action='store_true',help='Browse an independent read-only directory on D: without changing the dialing target')

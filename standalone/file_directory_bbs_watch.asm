@@ -259,6 +259,26 @@ start:
  int 0x21
 install:
 %ifdef FILE_VIEWER_ROUNDTRIP
+ ; Record this observer's actual DOS segment, independently of LOADHIGH's
+ ; command text. Failure to obtain an UMB must never masquerade as success.
+ mov ax,cs
+ mov [resident_segment],ax
+ mov dx,segment_name
+ xor cx,cx
+ mov ah,3ch
+ int 21h
+ jc failed
+ mov bx,ax
+ mov dx,resident_segment
+ mov cx,2
+ mov ah,40h
+ int 21h
+ jc failed
+ cmp ax,2
+ jne failed
+ mov ah,3eh
+ int 21h
+ jc failed
  mov dx,view_name
  xor cx,cx
  mov ah,3ch
@@ -297,6 +317,8 @@ failed:
  mov ax,0x4c01
  int 0x21
 %ifdef FILE_VIEWER_ROUNDTRIP
+resident_segment: dw 0
+segment_name: db 'D:\VFSEG.BIN',0
 name: db 'D:\VFVIEW.BIN',0
 view_name: db 'D:\VIEW.DAT',0
 view_data: db 'VIEWER CHECK',13,10,'READ ONLY / CP437: ',0dbh,0b1h,0c4h,13,10,'Editor stays active.',13,10

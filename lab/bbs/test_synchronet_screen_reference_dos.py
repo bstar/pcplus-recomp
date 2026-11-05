@@ -88,12 +88,13 @@ def main():
             assert proc.poll() is None,'Proxy exited: '+proc.stderr.read()
             assert time.monotonic()<deadline,'Proxy readiness timeout';time.sleep(.05)
         ready=json.loads((bridge/'ready.json').read_text())
-        command=[sys.executable,str(ROOT/'lab/bbs/editor_dos_probe.py'),str(stage/'TERMINAL.EXE'),'synchronet','--port',str(ready['endpoint']['port']),'--label',a.label,'--com','3','--baud','19200','--flow','HARD','--directory-fixture','--directory-script-fixture',str(stage/'SYNC.ASX'),'--keyboard-helper',str(helper),'--irq','5','--mouse-scales','8','4','--cpu','8086','--timeout','160','--wait','145','--raw-upstream','--keys','p900 enter']
+        cpu='386' if a.file_viewer_overlay else '8086'
+        command=[sys.executable,str(ROOT/'lab/bbs/editor_dos_probe.py'),str(stage/'TERMINAL.EXE'),'synchronet','--port',str(ready['endpoint']['port']),'--label',a.label,'--com','3','--baud','19200','--flow','HARD','--directory-fixture','--directory-script-fixture',str(stage/'SYNC.ASX'),'--keyboard-helper',str(helper),'--irq','5','--mouse-scales','8','4','--cpu',cpu,'--timeout','160','--wait','145','--raw-upstream','--keys','p900 enter']
         if a.size_probe:command+=['--display-rows',str(a.display_rows),'--status-hidden',str(a.status_hidden)]
         if a.phone_log:command+=['--phone-log','--video-observer',str(observer)]
         if a.gateway_overlay:command+=['--comspec-fixture',str(gateway_child),'--video-observer',str(observer)]
         if a.file_directory_overlay:command+=['--video-observer',str(observer)]
-        if a.file_viewer_overlay:command+=['--video-observer',str(observer)]
+        if a.file_viewer_overlay:command+=['--video-observer',str(observer),'--video-observer-high']
         with (out/'harness.log').open('w') as log:code=subprocess.run(command,cwd=ROOT,stdout=log,stderr=log,timeout=175).returncode
         base_result=json.loads((out/'result.json').read_text())
         closed=json.loads((bridge/'1-closed.json').read_text());proof=json.loads((bridge/'1-screen-reference.json').read_text())
@@ -115,13 +116,13 @@ def main():
                     fixture_CPR_consumed=proof['probeReplyConsumed'],expected_geometry_advertised=ready['terminalRows']==expected_rows,
                     source_inputs_unchanged=frozen=={str(n.relative_to(ROOT)):sha(n) for n in sources},**semantic)
         result=dict(passed=all(checks.values()),checks=checks,server='Synchronet',binary_sha256=sha(binary),interpreter_sha256=sha(child),generated_inputs=generated,stages=stages,screen_sha256=sha(out/'SCREEN.BIN'),terminal_geometry=geometry,display_layout=layout,screen_reference=proof,bridge=ready,command=command,product_inputs=frozen,
-                    scope='Actual DOS8086 COM3/IRQ5 candidate and stock owned Synchronet FSEditor through the real SynthModem proxy.250ms key framing/20ms input pacing. Editor bytes freeze at a real CPR; held continuation independently checks normal Ctrl-Q abort and unchanged message bodies. No application patch, unframed/SIP/DSP/analog or physical acceptance.')
+                    scope=f'Actual DOS{cpu} COM3/IRQ5 candidate and stock owned Synchronet FSEditor through the real SynthModem proxy. Viewer variant explicitly enables XMS/UMB, disables EMS and requires its passive observer in upper memory.250ms key framing/20ms input pacing. Editor bytes freeze at a real CPR; held continuation independently checks normal Ctrl-Q abort and unchanged message bodies. No application patch, unframed/SIP/DSP/analog or physical acceptance.')
         if a.file_directory_overlay:
             from file_directory_bbs_support import audit as audit_listing
             result['file_directory']=audit_listing(out);checks['actual_File_Directory_roundtrip']=result['file_directory']['passed'];result['passed']=all(checks.values())
         if a.file_viewer_overlay:
             from file_viewer_bbs_support import audit as audit_viewer
-            result['file_viewer']=audit_viewer(out);checks['actual_File_Viewer_roundtrip']=result['file_viewer']['passed'];result['passed']=all(checks.values())
+            result['file_viewer']=audit_viewer(out,require_high=True);checks['actual_File_Viewer_roundtrip']=result['file_viewer']['passed'];result['passed']=all(checks.values())
         if a.gateway_overlay:
             from gateway_bbs_support import audit as audit_gateway
             result['gateway']=audit_gateway(out);checks['actual_Gateway_roundtrip']=result['gateway']['passed'];result['passed']=all(checks.values())

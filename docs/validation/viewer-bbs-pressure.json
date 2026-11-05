@@ -1,15 +1,228 @@
 {
-  "schema": 1,
+  "passed": true,
   "binary_sha256": "1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e",
-  "source_build": "build/viewer-ui-build-20261105",
   "physical_deployment_changed": false,
+  "servers": [
+    {
+      "server": "Enigma",
+      "cpu": "8086",
+      "report": {
+        "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/proxy-integration.json",
+        "sha256": "e26b5485d18892dfbffbca1dcb1475afef54977602061ee2be03ccfbe8bf9f44"
+      },
+      "screen_audit": {
+        "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/screen-reference-audit.json",
+        "sha256": "98894574236868fe6cb881d6ab2fe13dc8562ae3a04eb08323680ab699292cb0"
+      },
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "actual_File_Viewer_roundtrip": true,
+        "reference_freeze_completed": true,
+        "expected_geometry_advertised": true
+      },
+      "viewer": {
+        "passed": true,
+        "checks": {
+          "observer_segment_recorded": true,
+          "observer_high_if_required": true,
+          "observer_complete": true,
+          "exact_editor_frame": true,
+          "cursor_shape_preserved": true,
+          "mode_rows_preserved": true,
+          "exact_2000_viewer_cells": true,
+          "owned_input_unchanged": true,
+          "filename_consumed_locally": true,
+          "subsequent_edit_keys": true
+        },
+        "observer_words": [
+          22103,
+          1,
+          1,
+          1,
+          25,
+          25,
+          2048,
+          2048,
+          15,
+          15,
+          20483,
+          20483
+        ],
+        "observer_resident_segment": 2068,
+        "observer_high_required": false,
+        "capture_sha256": "afeb76a807d6f970d6c75846d4b2a93698ded1ea7ec0b223dec71d4c868207b2",
+        "file_sha256": "129dc21c92dffcee2d65f793fde98d4dd1dfb0d694a8365430681585a4d126ff",
+        "sources": {
+          "lab/bbs/file_viewer_bbs_support.py": "2f8585610a54e59a05a2fa51809c32820ea1c5a963dec29e8164ce032a486df8",
+          "standalone/file_directory_bbs_watch.asm": "736978eb2987116f9d01dc9824fd3beb9078c2b4532253bb5532fc0b58b29b98"
+        },
+        "scope": "Actual Alt-V, owned D:\\VIEW.DAT read-only page and Escape inside a stock unsaved editor. Passive full4000-byte editor return/cursor/shape plus4000-byte local viewer image, subsequent ordinary editing and unchanged generated file. Observer install creates only its owned DOS fixture, never product memory. No terminal reply injection, SIP/DSP, analog or physical acceptance."
+      },
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "delivered_bytes": 48365,
+      "artifacts": [
+        {
+          "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/VFVIEW.BIN",
+          "sha256": "afeb76a807d6f970d6c75846d4b2a93698ded1ea7ec0b223dec71d4c868207b2"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/VFSEG.BIN",
+          "sha256": "8149a8dabfbcae50c4620b8a4985e25582022705495ac6d670ecf3948f8fb3a8"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/VIEW.DAT",
+          "sha256": "129dc21c92dffcee2d65f793fde98d4dd1dfb0d694a8365430681585a4d126ff"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/SCREEN.BIN",
+          "sha256": "d0134e3e50ab8fe6c64adb5eebc15a29184bbdf6b8aef980d823a70d251cc78c"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/serial-sent.bin",
+          "sha256": "99678d61ed17e03a0512b98f3741e27e2d7df06d1f9e0f25b7cd35b0a6bcc638"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/viewer-stock-enigma-segment-20261105/serial-received.bin",
+          "sha256": "ef11d87fb736f7f404710cd0aebc7e3c36d5c89ac85baefc68abb65e60fc30e0"
+        }
+      ]
+    },
+    {
+      "server": "Synchronet",
+      "cpu": "386",
+      "report": {
+        "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/proxy-integration.json",
+        "sha256": "c71fa5c0ca4ed62c1037bec42ce447c2b1afbb71d7746b7ce5bc6a3faa5ebadf"
+      },
+      "screen_audit": {
+        "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/screen-reference-audit.json",
+        "sha256": "1642f50cc05cf6f6686599a16e2671cde66b3c2ed537e59e62eacbfd77c9b2d5"
+      },
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "runtime_unchanged": true,
+        "server_static_inputs_unchanged": true,
+        "message_bodies_unchanged": true,
+        "no_message_mail_or_transfer_writes": true,
+        "actual_ASPECT_login": true,
+        "staged_inputs_unchanged": true,
+        "frozen_editor_frame": true,
+        "actual_CPR_boundary": true,
+        "fixture_CPR_consumed": true,
+        "expected_geometry_advertised": true,
+        "source_inputs_unchanged": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true,
+        "actual_File_Viewer_roundtrip": true
+      },
+      "viewer": {
+        "passed": true,
+        "checks": {
+          "observer_segment_recorded": true,
+          "observer_high_if_required": true,
+          "observer_complete": true,
+          "exact_editor_frame": true,
+          "cursor_shape_preserved": true,
+          "mode_rows_preserved": true,
+          "exact_2000_viewer_cells": true,
+          "owned_input_unchanged": true,
+          "filename_consumed_locally": true,
+          "subsequent_edit_keys": true
+        },
+        "observer_words": [
+          22103,
+          1,
+          1,
+          1,
+          25,
+          25,
+          1024,
+          1024,
+          1551,
+          1551,
+          20483,
+          20483
+        ],
+        "observer_resident_segment": 52299,
+        "observer_high_required": true,
+        "capture_sha256": "4b4d4494d0541ec0fcfbdb5a48c91e14fbe61ef358e4908f43b3918a3fcc8631",
+        "file_sha256": "129dc21c92dffcee2d65f793fde98d4dd1dfb0d694a8365430681585a4d126ff",
+        "sources": {
+          "lab/bbs/file_viewer_bbs_support.py": "2f8585610a54e59a05a2fa51809c32820ea1c5a963dec29e8164ce032a486df8",
+          "standalone/file_directory_bbs_watch.asm": "736978eb2987116f9d01dc9824fd3beb9078c2b4532253bb5532fc0b58b29b98"
+        },
+        "scope": "Actual Alt-V, owned D:\\VIEW.DAT read-only page and Escape inside a stock unsaved editor. Passive full4000-byte editor return/cursor/shape plus4000-byte local viewer image, subsequent ordinary editing and unchanged generated file. Observer install creates only its owned DOS fixture, never product memory. No terminal reply injection, SIP/DSP, analog or physical acceptance."
+      },
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "delivered_bytes": 23990,
+      "artifacts": [
+        {
+          "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/VFVIEW.BIN",
+          "sha256": "4b4d4494d0541ec0fcfbdb5a48c91e14fbe61ef358e4908f43b3918a3fcc8631"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/VFSEG.BIN",
+          "sha256": "587ca209a4d21b7f01084d893f6b890a64ef2ecba2504d61b456318eae7f8b7b"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/VIEW.DAT",
+          "sha256": "129dc21c92dffcee2d65f793fde98d4dd1dfb0d694a8365430681585a4d126ff"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/SCREEN.BIN",
+          "sha256": "26df2f629ade126d0ba939eada91d9800bf6e4d73e5a1ec0586cc4a5cdd0508d"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/serial-sent.bin",
+          "sha256": "2260f4d9345d497a54050f039e2a005ba407eafd4393ce33dc5fcd386e5f7ea5"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/viewer-stock-sync-high-386-20261105/serial-received.bin",
+          "sha256": "801cb328322a41164ab50e3770fb87a5d6d6da8809359a1920f9ed03ea8e25eb"
+        }
+      ]
+    }
+  ],
   "pressure": {
-    "passed": true,
-    "report": "build/viewer-sinks-verified-20261105/result.json",
-    "report_sha256": "5f5d93b423d0f6b338f9646c38527800789cf96f99e29e4483ad5bfe43ab8e03",
+    "report": {
+      "path": "build/viewer-sinks-verified-20261105/result.json",
+      "sha256": "5f5d93b423d0f6b338f9646c38527800789cf96f99e29e4483ad5bfe43ab8e03"
+    },
     "cases": [
       {
         "case": "capture",
+        "passed": true,
         "checks": {
           "fresh_DSR_after_viewer_burst": true,
           "post_viewer_keyboard_DSR": true,
@@ -37,8 +250,6 @@
           "capture_wrote_while_viewer_owned": true,
           "capture_not_closed_between_writes": true
         },
-        "capture_bytes": 3815,
-        "printer_bytes": 0,
         "observations": {
           "parent_DS": 19392,
           "viewer_open_record": 15,
@@ -49,10 +260,16 @@
           ],
           "viewer_close_record": 31,
           "record_count": 46
-        }
+        },
+        "errors": [],
+        "capture_bytes": 3815,
+        "printer_bytes": 0,
+        "binary_sha256": "1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e",
+        "scope": "Actual internal viewer during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while local view is open, raw DSR and later keyboard, exact virtualPRN/capture, passive local/updated live VGA and DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance."
       },
       {
         "case": "hold",
+        "passed": true,
         "checks": {
           "fresh_DSR_after_viewer_burst": true,
           "post_viewer_keyboard_DSR": true,
@@ -79,8 +296,6 @@
           "same_capture_FD_after_viewer": true,
           "capture_not_closed_between_writes": true
         },
-        "capture_bytes": 613,
-        "printer_bytes": 0,
         "observations": {
           "parent_DS": 19392,
           "viewer_open_record": 15,
@@ -91,10 +306,16 @@
           ],
           "viewer_close_record": 18,
           "record_count": 33
-        }
+        },
+        "errors": [],
+        "capture_bytes": 613,
+        "printer_bytes": 0,
+        "binary_sha256": "1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e",
+        "scope": "Actual internal viewer during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while local view is open, raw DSR and later keyboard, exact virtualPRN/capture, passive local/updated live VGA and DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance."
       },
       {
         "case": "capture-printer",
+        "passed": true,
         "checks": {
           "fresh_DSR_after_viewer_burst": true,
           "post_viewer_keyboard_DSR": true,
@@ -122,8 +343,6 @@
           "capture_wrote_while_viewer_owned": true,
           "capture_not_closed_between_writes": true
         },
-        "capture_bytes": 3815,
-        "printer_bytes": 3815,
         "observations": {
           "parent_DS": 19392,
           "viewer_open_record": 17,
@@ -134,10 +353,16 @@
           ],
           "viewer_close_record": 33,
           "record_count": 49
-        }
+        },
+        "errors": [],
+        "capture_bytes": 3815,
+        "printer_bytes": 3815,
+        "binary_sha256": "1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e",
+        "scope": "Actual internal viewer during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while local view is open, raw DSR and later keyboard, exact virtualPRN/capture, passive local/updated live VGA and DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance."
       },
       {
         "case": "hold-printer",
+        "passed": true,
         "checks": {
           "fresh_DSR_after_viewer_burst": true,
           "post_viewer_keyboard_DSR": true,
@@ -164,8 +389,6 @@
           "same_capture_FD_after_viewer": true,
           "capture_not_closed_between_writes": true
         },
-        "capture_bytes": 613,
-        "printer_bytes": 3823,
         "observations": {
           "parent_DS": 19392,
           "viewer_open_record": 17,
@@ -176,10 +399,16 @@
           ],
           "viewer_close_record": 20,
           "record_count": 36
-        }
+        },
+        "errors": [],
+        "capture_bytes": 613,
+        "printer_bytes": 3823,
+        "binary_sha256": "1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e",
+        "scope": "Actual internal viewer during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while local view is open, raw DSR and later keyboard, exact virtualPRN/capture, passive local/updated live VGA and DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance."
       },
       {
         "case": "printer",
+        "passed": true,
         "checks": {
           "fresh_DSR_after_viewer_burst": true,
           "post_viewer_keyboard_DSR": true,
@@ -203,8 +432,6 @@
           "viewer_read_and_closed_once": true,
           "no_viewer_close_before_last_read": true
         },
-        "capture_bytes": 0,
-        "printer_bytes": 3815,
         "observations": {
           "parent_DS": 19392,
           "viewer_open_record": 14,
@@ -215,7 +442,12 @@
           ],
           "viewer_close_record": 17,
           "record_count": 31
-        }
+        },
+        "errors": [],
+        "capture_bytes": 0,
+        "printer_bytes": 3815,
+        "binary_sha256": "1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e",
+        "scope": "Actual internal viewer during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while local view is open, raw DSR and later keyboard, exact virtualPRN/capture, passive local/updated live VGA and DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance."
       }
     ],
     "sources": {
@@ -230,80 +462,11 @@
       "standalone/test_ansi_reference_dos.py": "bd89a1b58792c7d4d4a5719263ef8868f4bb62d5defe8ee5af3c8532df2c0dde"
     }
   },
-  "enigma": {
-    "passed": true,
-    "report": "build/bbs-lab/results/enigma/viewer-stock-enigma-20261105/proxy-integration.json",
-    "report_sha256": "4f7150d03608451c9f84439e1fdd77f96de20c24203fdcd9d1f5755fb829490e",
-    "checks": {
-      "size_probe_requested": true,
-      "harness": true,
-      "semantic_audit": true,
-      "exact_screen": true,
-      "proxy_source_unchanged": true,
-      "product_source_unchanged": true,
-      "actual_File_Viewer_roundtrip": true,
-      "reference_freeze_completed": true,
-      "expected_geometry_advertised": true
-    },
-    "viewer": {
-      "passed": true,
-      "checks": {
-        "observer_complete": true,
-        "exact_editor_frame": true,
-        "cursor_shape_preserved": true,
-        "mode_rows_preserved": true,
-        "exact_2000_viewer_cells": true,
-        "owned_input_unchanged": true,
-        "filename_consumed_locally": true,
-        "subsequent_edit_keys": true
-      },
-      "observer_words": [
-        22103,
-        1,
-        1,
-        1,
-        25,
-        25,
-        2048,
-        2048,
-        15,
-        15,
-        20483,
-        20483
-      ],
-      "capture_sha256": "afeb76a807d6f970d6c75846d4b2a93698ded1ea7ec0b223dec71d4c868207b2",
-      "file_sha256": "129dc21c92dffcee2d65f793fde98d4dd1dfb0d694a8365430681585a4d126ff",
-      "sources": {
-        "lab/bbs/file_viewer_bbs_support.py": "52f769099cd83d4f6367f241e62a585bd61aed38ba1db9835c1ff8df41d1ed77",
-        "standalone/file_directory_bbs_watch.asm": "be1b3ceb558ed82cd22af82e6fae365d359ea148b9fae1baeb1c931e11be40b9"
-      },
-      "scope": "Actual Alt-V, owned D:\\VIEW.DAT read-only page and Escape inside a stock unsaved editor. Passive full4000-byte editor return/cursor/shape plus4000-byte local viewer image, subsequent ordinary editing and unchanged generated file. Observer install creates only its owned DOS fixture, never product memory. No terminal reply injection, SIP/DSP, analog or physical acceptance."
-    },
-    "screen_reference": {
-      "report": "build/bbs-lab/results/enigma/viewer-stock-enigma-20261105/screen-reference-audit.json",
-      "report_sha256": "c536c4c33a65bd0097a9f7ba144c83529e87f4192a9ced717674a5a4c11612fb",
-      "passed": true,
-      "matched_cells": 1920,
-      "different_cells": 0,
-      "delivered_bytes": 48365
-    }
-  },
-  "synchronet": {
-    "passed": false,
-    "report": "build/bbs-lab/results/synchronet/viewer-stock-sync-current-20261105/proxy-integration.json",
-    "report_sha256": "56fdec75ec2c31626a626022208591e4eafbb7efe6e818e4aceeaf6fcd896f19",
-    "automatic_login_observed": false,
-    "state": "Connected to CONNECT> but no script output; launch diagnosis remains open.",
-    "diagnosis": {
-      "report": "build/bbs-lab/results/synchronet/viewer-sync-launch-diagnostic-20261105/VFVIEW.BIN",
-      "dos_EXEC_error": 8,
-      "parent_exit": 0,
-      "uart_RX_dropped": 0,
-      "scope": "Separate passive INT21 diagnostic, same parent/runner; altered report extent deliberately fails the normal viewer audit. Not acceptance."
-    }
-  },
   "existing_fixture_controls": {
-    "passed": true,
+    "report": {
+      "path": "build/viewer-fixture-final-controls-20261105/result.json",
+      "sha256": "7dca667054162f73f3d5283316f2622ae1064c2a9057fa8b2eb2f536533e55b7"
+    },
     "cases": [
       {
         "name": "file_directory_bbs_watch-default",
@@ -322,10 +485,16 @@
       }
     ]
   },
+  "conventional_memory_limit": "The stock Synchronet run with the full observer in conventional memory failed DOS EXEC with error8. Its accepted386 run explicitly enables XMS/UMB, disables EMS and verifies the observer segment. This does not establish an8086 conventional-memory ASPECT/viewer pass.",
+  "sources": {
+    "standalone/record_viewer_bbs_pressure.py": "5827c9034f84fb112d3924315582074c370cefe577e0a5fa2a44d922b1061c8c",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55"
+  },
+  "original_inputs": [],
   "limits": [
     "No SIP/audio/DSP/analog or physical acceptance.",
     "Printer is DOSBox virtual PRN.",
-    "Synchronet viewer/editor gate remains unaccepted.",
-    "No installed release/selector/private configuration changes."
+    "No application memory-loan experiment was promoted.",
+    "Installed release, selector and private configuration are unchanged."
   ]
 }

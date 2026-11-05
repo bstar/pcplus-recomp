@@ -116,12 +116,22 @@ trace verifies one read-only viewer open/close and continued capture ownership.
 Printer-ready polling is excluded from that bounded trace; device classification
 remains recorded. This is virtual PRN evidence, not a physical printer test.
 
-Synchronet reaches the bridge's CONNECT> prompt but does not run its automatic
-ASPECT login in the current viewer-enabled parent. Its complete editor/viewer
-gate fails despite the lower-level connection check passing. Child-launch
-diagnosis remains open; do not describe this as accepted Synchronet coverage.
+Synchronet also passes automatic ASPECT login, the stock unsaved FSEditor
+roundtrip, subsequent editing and draft cancellation with the same application
+bytes. Its independent screen audit reports zero different cells. This run
+uses the386 CPU model with explicit XMS/UMB enabled and EMS disabled, loading
+the passive observer high; the observer records its actual resident segment
+and the audit refuses a conventional-memory fallback.
 
-Complete the Synchronet editor gate, carrier-loss/reconnect/transfer/cancel and
+The initial strict8086 run failed ASPECT EXEC with DOS error8 while the full
+observer occupied conventional memory. Merely writing LOADHIGH did not help:
+DOSBox disables XMS for its8086 model and loaded the observer low. The accepted
+386 run verifies upper-memory placement atCC4Bh. This establishes the editor
+workflow with that explicit memory setup, not an8086 conventional-memory
+ASPECT/viewer pass. A separate application memory-loan experiment was not
+promoted; the application's source and executable remain unchanged.
+
+Complete carrier-loss/reconnect/transfer/cancel and
 native DOS failure/shutdown composition. Recover configured external-viewer
 binding, exhaustive native filename-field key behavior, and remaining
 editor/key/Chat/ASPECT/emulation/protocol/Host features.
