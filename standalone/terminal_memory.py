@@ -1266,6 +1266,21 @@ def inspect_terminal_memory(binary,map_path):
   for name in ('_gateway_files_run','_gateway_files_owned'):
    assert symbols[name][0]==seg,(name,'Gateway file owner must remain in FILE_CODE')
   extra.update(gateway_files_state_bytes=6,gateway_files_state_retained=True,gateway_files_DGROUP_bytes=0)
+ if 'gateway_uart_storage' in symbols:
+  bank=next(c for c in code_segments if c['name']=='FILE_CODE')
+  seg,off=symbols['gateway_uart_storage'];lo=seg*16+off
+  assert seg==bank['relative_segment'] and seg!=ds and symbols['gateway_uart_storage_end']==(seg,off+22)
+  assert bank['offset']<=off and off+22<=bank['offset']+bank['bytes']
+  assert lo+22<=static_end and lo+22<=module_bytes and word('gateway_uart_storage')==0x4755
+  for name,state_bytes in (('_path_session_storage',76),('_terminal_path_dialog_state',144),('_process_handles_storage',36),('_gateway_files_storage',6)):
+   other=address(name);assert lo+22<=other or other+state_bytes<=lo,'Gateway UART state overlaps another owner'
+  for name in ('gateway_uart_begin','gateway_uart_return','gateway_uart_end','gateway_uart_interrupt','gateway_uart_foreground_flow'):
+   assert symbols[name][0]==seg,(name,'Gateway UART code must remain retained')
+  target=symbols['gateway_uart_return'];encoded=b'\x9a'+struct.pack('<HH',target[1],target[0])
+  assert raw('terminal_process_quiet_uart',80).count(encoded)==1,'Missing IF0 Gateway return call'
+  target=symbols['gateway_uart_foreground_flow'];encoded=b'\x9a'+struct.pack('<HH',target[1],target[0])
+  assert raw('uart_poll_flow',80).count(encoded)==1,'Missing combined-flow low-water return'
+  extra.update(gateway_uart_state_bytes=22,gateway_uart_state_retained=True,gateway_uart_DGROUP_bytes=0,gateway_uart_IF0_return_linked=True)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
  allocated=((module_bytes+15)//16+header[5])*16

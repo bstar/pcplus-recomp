@@ -47,6 +47,10 @@ uart_poll_flow:
  push dx
  cmp word [uart_break_hold],0
  jne .done
+%ifdef TERMINAL_GATEWAY_UART
+ extern gateway_uart_foreground_flow
+ call far gateway_uart_foreground_flow
+%endif
  cmp byte [uart_flow_pending],0
  je .done
  mov dx,[uart_port_lsr]

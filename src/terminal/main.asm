@@ -142,10 +142,12 @@ _small_code_:
 .path_bound:
 %endif
 %ifdef TERMINAL_GATEWAY_PROBE
+%ifndef TERMINAL_GATEWAY_UART_PROBE
  extern terminal_gateway_probe
  call far terminal_gateway_probe
  mov [terminal_exit_code],ax
  jmp terminal_shutdown
+%endif
 %endif
 %ifdef TERMINAL_DIRECTORY_RESOURCE_CLI
  extern _terminal_resource_cli_bind
@@ -358,6 +360,12 @@ terminal_phone_log_startup_done equ $
  jmp terminal_shutdown
 %endif
  call uart_enable
+%ifdef TERMINAL_GATEWAY_UART_PROBE
+ extern terminal_gateway_probe
+ call far terminal_gateway_probe
+ mov [terminal_exit_code],ax
+ jmp terminal_shutdown
+%endif
  call terminal_connection_start
 .loop:
 %ifdef TERMINAL_TRAPS

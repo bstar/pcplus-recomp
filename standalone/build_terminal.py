@@ -50,6 +50,8 @@ parser.add_argument('--path-control',action='store_true',help='Serviced original
 parser.add_argument('--gateway-lookup',action='store_true',help='Link direct empty-tail COMSPEC policy; requires hook lookup, no Gateway key/menu binding')
 parser.add_argument('--gateway-handles',action='store_true',help='Link retained private-JFT bracket; implies Gateway lookup/path-control, no foreground binding')
 parser.add_argument('--gateway-files',action='store_true',help='Compose direct COMSPEC with private sink leases; no foreground key or serial policy')
+parser.add_argument('--gateway-uart',action='store_true',help='Link retained live Gateway IRQ and IF0 return gate; no normal foreground binding')
+parser.add_argument('--gateway-uart-probe',action='store_true',help='Diagnostic only: application file probe with UART active and live IRQ across DOS EXEC')
 parser.add_argument('--gateway-files-probe',choices=['normal','hold'],help='Diagnostic only: four open application files across direct COMSPEC before UART startup')
 parser.add_argument('--gateway-probe',action='store_true',help='Diagnostic only: invoke direct COMSPEC before UART startup, record result, then exit')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
@@ -85,6 +87,9 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.gateway_uart_probe:args.gateway_uart=True;args.gateway_files_probe='normal'
+if args.gateway_uart:args.gateway_files=True
+if args.gateway_uart:assert args.program_display_owner or args.directory_resource_owner,'Gateway UART requires the IF0 raw EXEC return gate'
 if args.gateway_files_probe:args.gateway_files=True;args.gateway_probe=True
 if args.gateway_files:args.gateway_handles=True
 if args.gateway_handles:args.gateway_lookup=True;args.path_control=True
@@ -281,6 +286,7 @@ if args.path_control:out_name+='-path-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
 if args.gateway_files:out_name+='-gateway-files'
+if args.gateway_uart:out_name+='-gateway-uart'
 if args.gateway_files_probe:out_name+='-'+args.gateway_files_probe
 if args.gateway_probe:out_name+='-gateway-probe'
 if args.phone_log_bank:
@@ -317,6 +323,7 @@ if args.hook_execute:sources.append(ROOT/'src/process/hook_owner_dos.asm')
 if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
+if not args.gateway_uart:sources=[p for p in sources if p.name!='gateway_uart.asm']
 if not args.local_controls:sources=[p for p in sources if p.name!='local_controls.asm']
 if not args.window_size_report:sources=[p for p in sources if p.name!='window_size_report.asm']
 if not args.reset_row_owner:sources=[p for p in sources if p.name!='reset_rows.asm']
@@ -463,6 +470,8 @@ for index,source in enumerate(sources):
  if args.hook_apply:options+=['-DTERMINAL_HOOK_APPLY']
  if args.hook_lookup:options+=['-DTERMINAL_HOOK_LOOKUP']
  if args.gateway_files:options+=['-DTERMINAL_GATEWAY_FILES']
+ if args.gateway_uart:options+=['-DTERMINAL_GATEWAY_UART']
+ if args.gateway_uart_probe:options+=['-DTERMINAL_GATEWAY_UART_PROBE']
  if args.phone_log_startup:options+=['-DTERMINAL_PHONE_LOG_STARTUP']
  if args.phone_log_events:options+=['-DTERMINAL_PHONE_LOG_EVENTS']
  if args.phone_log_disk:options+=['-DTERMINAL_PHONE_LOG_DISK']
@@ -672,6 +681,7 @@ for source in c_sources:
  if args.gateway_files and source==ROOT/'src/process/gateway_files.c':options+=['-dPROCESS_HANDLES_BANKED','-nt=FILE_CODE','-nc=FARCODE']
  if source==ROOT/'standalone/gateway_files_probe.c':
   options+=['-nt=FILE_CODE','-nc=FARCODE']
+  if args.gateway_uart_probe:options+=['-dTERMINAL_GATEWAY_UART_PROBE']
   if args.gateway_files_probe=='hold':options+=['-dGATEWAY_PROBE_HOLD']
  if args.path_control:options+=['-dTERMINAL_PATH_CONTROL']
  if source in path_sources:options+=['-nt=FILE_CODE','-nc=FARCODE']
@@ -785,6 +795,7 @@ if args.notice_sound:inputs.append(ROOT/'src/ui/speaker.h')
 inputs += [ROOT/'src/config/resource_path.h']
 if args.status_owner:inputs.append(ROOT/'src/terminal/status_transition.h')
 if args.custom_irq:inputs.append(ROOT/'src/config/irq_policy.h')
+if args.gateway_uart:inputs.append(ROOT/'src/terminal/gateway_uart.h')
 inputs += sorted((ROOT/'src/directory').glob('*.h'))+sorted((ROOT/'src/directory').glob('*.inc'))
 inputs += sorted((ROOT/'src/process').glob('*.h'))
 inputs += sorted((ROOT/'src/capture').glob('*.h'))
@@ -825,6 +836,8 @@ manifest['experimental_path_control']=args.path_control
 manifest['experimental_gateway_lookup']=args.gateway_lookup
 manifest['experimental_gateway_handles']=args.gateway_handles
 manifest['experimental_gateway_files']=args.gateway_files
+manifest['experimental_gateway_uart']=args.gateway_uart
+manifest['diagnostic_gateway_uart_probe']=args.gateway_uart_probe
 manifest['diagnostic_gateway_files_probe']=args.gateway_files_probe
 manifest['diagnostic_gateway_probe']=args.gateway_probe
 manifest['experimental_reset_row_owner']=args.reset_row_owner

@@ -82,12 +82,16 @@ are not deployment candidates or evidence of active UART compatibility.
 
 ## Next integration
 
+The optional [live UART owner](GATEWAY_UART.md) now implements and tests the
+kind9 IF0 return path and live RX/flow policy. Its diagnostic uses this file
+transaction with an acquired UART across real DOS EXEC. Foreground/display and
+physical/BBS acceptance remain open.
+
 Add the distinct Gateway foreground action with revalidation at launch, printer
 drain, no return-key prompt, and appropriate failure/quarantine handling. Reuse
-the verified display and mouse owners while preserving shell CWD. Choose and
-test serial ownership explicitly: the original leaves its ISR live, while
-maintained PROGRAM detaches it. The new job kind must also enter the IF0 child
-UART-return boundary before trap resume or interrupt enable.
+the verified display and mouse owners while preserving shell CWD. Integrate the
+tested live UART owner and kind9 IF0 return boundary into that normal scheduler;
+their diagnostic invocation does not establish the full foreground lifecycle.
 
 Sustained RX/flow, DCD, FIFO state, transient DTR behavior, reconnects, transfers,
 BBS interaction and physical Boca/SPA2102/SynthModem acceptance remain required.

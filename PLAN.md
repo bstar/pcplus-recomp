@@ -5324,3 +5324,28 @@ disabled parent and ordinary ASPECT retain their preceding bytes.
 
 Alt-F4 remains unbound; foreground/display/serial integration and physical/BBS
 acceptance remain required. See `docs/GATEWAY_FILES.md` and its receipt.
+
+### Gateway live UART and return boundary
+
+The optional --gateway-uart parent preserves live native RX through a retained
+IRQ wrapper while DOS owns the console. The wrapper completes queued software
+flow through THRE, handles modem-status observations and supports hardware
+high-water pause in combined mode. A foreground poll completes combined RTS
+low-water recovery alongside XON. The recovered flat UART bytes remain unchanged.
+
+Kind9 now enters the raw EXEC IF0 return boundary before trap resume/IF1; hardware
+and the parent vector are restored without replacing native shutdown snapshots
+or reading/discarding RBR. Invalid leases use the existing quiet fallback.
+The lease adds22 far bytes and no near state; normal residentCS is65358.
+
+Verified54 linked cases and nine actual DOS8086/FPU-off workflows/189checks:
+COM1/2 N/S/H/B, foreign child DS, 3200 binary bytes, actual XOFF/RTS pause and
+dequeue/XON/RTS resume, four open files continuingAB, and a child replacing its
+vector/changing UART state. Fault8 is reported while data/hardware are restored.
+Normal/diagnostic images reproduce from588/590publicinputs; disabled parent and
+ordinary ASPECT reproduce their prior bytes. File40, handle56, resolver33 and
+HOOK28/14 regressions pass.
+
+AltF4 remains unbound. Foreground revalidation, PRN drain, display/mouse/traps,
+normal return/error/carrier integration, BBS workflows and physical acceptance
+remain required. See `docs/GATEWAY_UART.md` and its receipt.

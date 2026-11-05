@@ -70,10 +70,14 @@ The ownership audit establishes concrete requirements beyond this resolver:
 2. Include the new job kind in the critical IF0 UART-quiet boundary, which
    currently admits only kinds up to 5. A child ISR must be quiet before trap
    resume, interrupt enable or released child memory can become relevant.
+   The optional [live UART owner](GATEWAY_UART.md) now adds kind9 and validates
+   that return boundary; the normal Gateway action remains unbound.
 3. Choose and test serial ownership across an interactive shell. The original
    keeps its ISR live; maintained PROGRAM pauses/detaches. Neither recovery nor
    this startup probe establishes sustained RX/flow/DCD/FIFO or transient-DTR
    behavior for the new Gateway lifetime.
+   The later UART component chooses a live wrapper and verifies RX/flow across
+   actual DOS EXEC. Full foreground/display, BBS and physical gates remain open.
 4. Preserve active capture/printer state and private file positions through an
    explicit child-handle boundary. Existing PROGRAM stops capture and closes
    printer output; its raw EXEC path does not use ASPECT's JFT isolation.

@@ -2,6 +2,9 @@
 BITS 16
 CPU 8086
 ORG 0x100
+%ifdef GATEWAY_UART_CHILD
+%include "gateway_uart_child.inc"
+%endif
  mov bx,5
  mov si,report
 .next:

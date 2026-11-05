@@ -764,6 +764,19 @@ terminal_process_quiet_uart:
  jne .done
  cmp word [terminal_program_pending],0
  jne .done
+%ifdef TERMINAL_GATEWAY_UART
+ cmp word [terminal_program_kind],9
+ jne .ordinary
+ extern gateway_uart_return
+ call far gateway_uart_return
+ or ax,ax
+ jz .done
+ ; An invalid lease cannot be trusted to retire a child vector. Keep the
+ ; existing masked/IER0 baseline fallback until foreground quarantine.
+ call program_quiet_uart
+ jmp .done
+.ordinary:
+%endif
  cmp word [terminal_program_kind],5
  ja .done
  call program_quiet_uart
