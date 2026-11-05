@@ -75,12 +75,18 @@ Enigma and Synchronet editor returns, full-frame/cursor restoration and all 1,92
 logical cells per peer. They use the same executable with a synthetic graphics
 child and explicitly staged proxy settings.
 
+The later [composition checks](GATEWAY_COMPOSITION.md) pass five actual Gateway
+capture/HOLD/PRN workflows, normal-parent ANSI/VT220 loss/redial, and independently
+audited stock Enigma cancellation/cleanup/exact binary retry on this executable.
+The latter two groups regress the enabled image without opening Gateway during
+those operations.
+
 ## Remaining acceptance
 
 Beyond those selected editor returns, the normal frontend still needs full
-online Enigma/Synchronet interactions,
-active capture/HOLD and printer workflows, sustained traffic, binary transfers,
-carrier loss and same-process reconnect coverage through the complete route.
+online Enigma/Synchronet interactions and further capture/HOLD/printer owner
+combinations, sustained real-peer traffic, wider transfer/cancellation and
+carrier-loss/reconnect coverage through the complete route.
 Microsoft DOS6.22 and physical Boca/SPA2102/SynthModem acceptance remain open.
 These tests do not prove physical flow-control timing or perfect BBS rendering.
 No physical files, deployment selector, networking, boot configuration, adapter

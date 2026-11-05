@@ -1,0 +1,709 @@
+{
+  "passed": true,
+  "binary_sha256": "ae6cbad95094fd59f98fd95a7831cbdc014b404ec37886a290294fe05089d90b",
+  "terminal": {
+    "path": "build/gateway-front-reviewed-20261104/TERMINAL.EXE",
+    "sha256": "ae6cbad95094fd59f98fd95a7831cbdc014b404ec37886a290294fe05089d90b"
+  },
+  "manifest": {
+    "path": "build/gateway-front-reviewed-20261104/manifest.json",
+    "sha256": "2c5e43d709a9c2f8171be33e2c969b436dd5aca55e761897589ae2f93310e132"
+  },
+  "map": {
+    "path": "build/gateway-front-reviewed-20261104/terminal.map",
+    "sha256": "02cf2ad31bdee87c015b442dd24a1f89dfe781defeed21157c9a64fd1133d953"
+  },
+  "sinks": {
+    "report": {
+      "path": "build/gateway-sinks-final-20261104/result.json",
+      "sha256": "caa5984f2b54be2a6b89f9f43c62191449f6131b5145bdf956d7210d17d21116"
+    },
+    "cases": [
+      {
+        "case": "capture",
+        "passed": true,
+        "checks": {
+          "initial_DSR": true,
+          "first_text_consumed": true,
+          "actual_child_uart_marker": true,
+          "post_child_keyboard_without_return_prompt": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "child_private_writes_and_closes_refused": true,
+          "child_own_file_and_empty_tail": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "software_flow_pair": true,
+          "child_live_IRQ_and_RTS_pressure": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "binary_unchanged": true,
+          "passive_trace_retired": true,
+          "one_actual_EXEC": true,
+          "same_capture_handle_before_after_EXEC": true,
+          "capture_not_closed_at_Gateway": true
+        },
+        "capture_bytes": 3215,
+        "printer_bytes": 0,
+        "evidence": [
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/result.json",
+            "sha256": "260301ea1605d9bfca458cdb9fe9cddfb49bb933b47087e8a4e056336694913a"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/TEST.PRM",
+            "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/CHILD.BIN",
+            "sha256": "652e1e984de65fb47815936dad79e1e3a871bef9ca88e0dc6a4e6be9eade5c13"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/GUSHELL.BIN",
+            "sha256": "b96c2fc10dc5abc426d27d0db1e91ae1500c4741d59a5e547a4a8fe709ea31a7"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/OWN.DAT",
+            "sha256": "18f5384d58bcb1bba0bcd9e6a6781d1a6ac2cc280c330ecbab6cb7931b721552"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/TRACE.BIN",
+            "sha256": "6412046987b2162c7c87ba613cc1f11eaa5092405faa462da2ad3b27d7456fa7"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/wire.bin",
+            "sha256": "86d0873185718a5d480c96ad72c84086b206b0f7ac8ab7933bdd8a5a1a83c62f"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/peer-text.bin",
+            "sha256": "52b0fa7e2b6752324618ab37395b30a2f26bf4093fc277049f0915a6d643af13"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/BEFORE.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/AFTER.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/AFTERCD.TXT",
+            "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/dosbox.conf",
+            "sha256": "57f094b7fbeb64a2dbf328b302c9d011c61a91955849b62cc9d045378ee159f2"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/SHELL.COM",
+            "sha256": "0a330b71fca9ea97dafb5be611964de5c95ce0d8ec56ac4d282ef77191722077"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/TRACE.COM",
+            "sha256": "41115d1dfe7788563d893f0b659198ba90eb58c531788e58bf3bd8cd71552888"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/TDUMP.COM",
+            "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture/CAP.LOG",
+            "sha256": "52b0fa7e2b6752324618ab37395b30a2f26bf4093fc277049f0915a6d643af13"
+          }
+        ]
+      },
+      {
+        "case": "hold",
+        "passed": true,
+        "checks": {
+          "initial_DSR": true,
+          "first_text_consumed": true,
+          "held_text_consumed": true,
+          "actual_child_uart_marker": true,
+          "post_child_keyboard_without_return_prompt": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "child_private_writes_and_closes_refused": true,
+          "child_own_file_and_empty_tail": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "software_flow_pair": true,
+          "child_live_IRQ_and_RTS_pressure": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "binary_unchanged": true,
+          "passive_trace_retired": true,
+          "one_actual_EXEC": true,
+          "same_capture_handle_before_after_EXEC": true,
+          "capture_not_closed_at_Gateway": true
+        },
+        "capture_bytes": 13,
+        "printer_bytes": 0,
+        "evidence": [
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/result.json",
+            "sha256": "c29f31fbf6c7c211cf3c5f26a82aaf21361815d8363a22c186cc6e8a1052c19b"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/TEST.PRM",
+            "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/CHILD.BIN",
+            "sha256": "652e1e984de65fb47815936dad79e1e3a871bef9ca88e0dc6a4e6be9eade5c13"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/GUSHELL.BIN",
+            "sha256": "b96c2fc10dc5abc426d27d0db1e91ae1500c4741d59a5e547a4a8fe709ea31a7"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/OWN.DAT",
+            "sha256": "18f5384d58bcb1bba0bcd9e6a6781d1a6ac2cc280c330ecbab6cb7931b721552"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/TRACE.BIN",
+            "sha256": "79e46f4c7424e61cf31df02e1ba69b09c25e59f9f671c8b57fa96f79f3ea3c82"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/wire.bin",
+            "sha256": "d42a6427ec0b01d2a6038ad4a1d70fe873d4d89bad74313e0e851033493a9ae2"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/peer-text.bin",
+            "sha256": "6b5073169eb253d8e317818d63b9ec2b11f0ed8a936cb08ddf9bc27e0c8f98b8"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/BEFORE.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/AFTER.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/AFTERCD.TXT",
+            "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/dosbox.conf",
+            "sha256": "e679c5b2af06ac59ed630776dae3ad59fb40175a2e76888f0b886fd7b49687c6"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/SHELL.COM",
+            "sha256": "0a330b71fca9ea97dafb5be611964de5c95ce0d8ec56ac4d282ef77191722077"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/TRACE.COM",
+            "sha256": "41115d1dfe7788563d893f0b659198ba90eb58c531788e58bf3bd8cd71552888"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/TDUMP.COM",
+            "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold/CAP.LOG",
+            "sha256": "ddc85543758536e9ee578220ae82e278e4ba387321f6d2a730c6debcbcd10733"
+          }
+        ]
+      },
+      {
+        "case": "capture-printer",
+        "passed": true,
+        "checks": {
+          "initial_DSR": true,
+          "first_text_consumed": true,
+          "actual_child_uart_marker": true,
+          "post_child_keyboard_without_return_prompt": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "child_private_writes_and_closes_refused": true,
+          "child_own_file_and_empty_tail": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "software_flow_pair": true,
+          "child_live_IRQ_and_RTS_pressure": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "binary_unchanged": true,
+          "passive_trace_retired": true,
+          "one_actual_EXEC": true,
+          "printer_not_closed_before_Gateway": true,
+          "same_capture_handle_before_after_EXEC": true,
+          "capture_not_closed_at_Gateway": true,
+          "printer_not_closed_before_post_return_capture": true
+        },
+        "capture_bytes": 3215,
+        "printer_bytes": 3215,
+        "evidence": [
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/result.json",
+            "sha256": "b966575002e540e4328ace84f52d901eace38e2a6d23723f54e53b97f5916ff8"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/TEST.PRM",
+            "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/CHILD.BIN",
+            "sha256": "652e1e984de65fb47815936dad79e1e3a871bef9ca88e0dc6a4e6be9eade5c13"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/GUSHELL.BIN",
+            "sha256": "b96c2fc10dc5abc426d27d0db1e91ae1500c4741d59a5e547a4a8fe709ea31a7"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/OWN.DAT",
+            "sha256": "18f5384d58bcb1bba0bcd9e6a6781d1a6ac2cc280c330ecbab6cb7931b721552"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/TRACE.BIN",
+            "sha256": "123e1c4198aae7bd07dfd076b5547d6ff6a43d912931e9a7574f967c99a988eb"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/wire.bin",
+            "sha256": "86d0873185718a5d480c96ad72c84086b206b0f7ac8ab7933bdd8a5a1a83c62f"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/peer-text.bin",
+            "sha256": "52b0fa7e2b6752324618ab37395b30a2f26bf4093fc277049f0915a6d643af13"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/BEFORE.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/AFTER.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/AFTERCD.TXT",
+            "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/dosbox.conf",
+            "sha256": "b85bd65d509b42f524324938d4e68811474987b3f4b039551a419606f8f10629"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/SHELL.COM",
+            "sha256": "0a330b71fca9ea97dafb5be611964de5c95ce0d8ec56ac4d282ef77191722077"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/TRACE.COM",
+            "sha256": "41115d1dfe7788563d893f0b659198ba90eb58c531788e58bf3bd8cd71552888"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/TDUMP.COM",
+            "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/CAP.LOG",
+            "sha256": "52b0fa7e2b6752324618ab37395b30a2f26bf4093fc277049f0915a6d643af13"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/capture-printer/PRINTER.RAW",
+            "sha256": "52b0fa7e2b6752324618ab37395b30a2f26bf4093fc277049f0915a6d643af13"
+          }
+        ]
+      },
+      {
+        "case": "hold-printer",
+        "passed": true,
+        "checks": {
+          "initial_DSR": true,
+          "first_text_consumed": true,
+          "held_text_consumed": true,
+          "actual_child_uart_marker": true,
+          "post_child_keyboard_without_return_prompt": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "child_private_writes_and_closes_refused": true,
+          "child_own_file_and_empty_tail": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "software_flow_pair": true,
+          "child_live_IRQ_and_RTS_pressure": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "binary_unchanged": true,
+          "passive_trace_retired": true,
+          "one_actual_EXEC": true,
+          "printer_not_closed_before_Gateway": true,
+          "same_capture_handle_before_after_EXEC": true,
+          "capture_not_closed_at_Gateway": true,
+          "printer_not_closed_before_post_return_capture": true
+        },
+        "capture_bytes": 13,
+        "printer_bytes": 3223,
+        "evidence": [
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/result.json",
+            "sha256": "3b2ddebc09699757229d2269f102b149b17e338cc757c3d86e76520ced338df4"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/TEST.PRM",
+            "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/CHILD.BIN",
+            "sha256": "652e1e984de65fb47815936dad79e1e3a871bef9ca88e0dc6a4e6be9eade5c13"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/GUSHELL.BIN",
+            "sha256": "b96c2fc10dc5abc426d27d0db1e91ae1500c4741d59a5e547a4a8fe709ea31a7"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/OWN.DAT",
+            "sha256": "18f5384d58bcb1bba0bcd9e6a6781d1a6ac2cc280c330ecbab6cb7931b721552"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/TRACE.BIN",
+            "sha256": "f6340116d6cec480863a46a7ba080887e9dd4883ea6f06b7432b4c6a5034ea36"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/wire.bin",
+            "sha256": "d42a6427ec0b01d2a6038ad4a1d70fe873d4d89bad74313e0e851033493a9ae2"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/peer-text.bin",
+            "sha256": "6b5073169eb253d8e317818d63b9ec2b11f0ed8a936cb08ddf9bc27e0c8f98b8"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/BEFORE.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/AFTER.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/AFTERCD.TXT",
+            "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/dosbox.conf",
+            "sha256": "51152e965e66ab23ce139aa69234a383eb8cd43d70d87f52af698055695613fd"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/SHELL.COM",
+            "sha256": "0a330b71fca9ea97dafb5be611964de5c95ce0d8ec56ac4d282ef77191722077"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/TRACE.COM",
+            "sha256": "41115d1dfe7788563d893f0b659198ba90eb58c531788e58bf3bd8cd71552888"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/TDUMP.COM",
+            "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/CAP.LOG",
+            "sha256": "ddc85543758536e9ee578220ae82e278e4ba387321f6d2a730c6debcbcd10733"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/hold-printer/PRINTER.RAW",
+            "sha256": "6b5073169eb253d8e317818d63b9ec2b11f0ed8a936cb08ddf9bc27e0c8f98b8"
+          }
+        ]
+      },
+      {
+        "case": "printer",
+        "passed": true,
+        "checks": {
+          "initial_DSR": true,
+          "first_text_consumed": true,
+          "actual_child_uart_marker": true,
+          "post_child_keyboard_without_return_prompt": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "child_private_writes_and_closes_refused": true,
+          "child_own_file_and_empty_tail": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "software_flow_pair": true,
+          "child_live_IRQ_and_RTS_pressure": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "binary_unchanged": true,
+          "passive_trace_retired": true,
+          "one_actual_EXEC": true,
+          "printer_not_closed_before_Gateway": true
+        },
+        "capture_bytes": 0,
+        "printer_bytes": 3215,
+        "evidence": [
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/result.json",
+            "sha256": "b1f29d7a45063d9c4dd14fbb3b8253698dab9afc41d6f0409f5d793e1513cd9b"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/TEST.PRM",
+            "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/CHILD.BIN",
+            "sha256": "652e1e984de65fb47815936dad79e1e3a871bef9ca88e0dc6a4e6be9eade5c13"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/GUSHELL.BIN",
+            "sha256": "b96c2fc10dc5abc426d27d0db1e91ae1500c4741d59a5e547a4a8fe709ea31a7"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/OWN.DAT",
+            "sha256": "18f5384d58bcb1bba0bcd9e6a6781d1a6ac2cc280c330ecbab6cb7931b721552"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/TRACE.BIN",
+            "sha256": "0766530d6f182a499f5a8dfc726c819202f5d4404301b10ab998abfa088f0455"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/wire.bin",
+            "sha256": "86d0873185718a5d480c96ad72c84086b206b0f7ac8ab7933bdd8a5a1a83c62f"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/peer-text.bin",
+            "sha256": "52b0fa7e2b6752324618ab37395b30a2f26bf4093fc277049f0915a6d643af13"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/BEFORE.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/AFTER.BIN",
+            "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/AFTERCD.TXT",
+            "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/dosbox.conf",
+            "sha256": "59df2bb4847370f7ee288720d6c24b215f37db0a8fa4c4113bfa22fb53010e96"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/SHELL.COM",
+            "sha256": "0a330b71fca9ea97dafb5be611964de5c95ce0d8ec56ac4d282ef77191722077"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/TRACE.COM",
+            "sha256": "41115d1dfe7788563d893f0b659198ba90eb58c531788e58bf3bd8cd71552888"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/TDUMP.COM",
+            "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+          },
+          {
+            "path": "build/gateway-sinks-final-20261104/printer/PRINTER.RAW",
+            "sha256": "52b0fa7e2b6752324618ab37395b30a2f26bf4093fc277049f0915a6d643af13"
+          }
+        ]
+      }
+    ]
+  },
+  "reconnect": [
+    {
+      "profile": 4,
+      "passed": true,
+      "report": {
+        "path": "build/gateway-normal-reconnect-ansi-20261104/result.json",
+        "sha256": "05965cdd6895c07aa67c37cc1e60c304434b1c2cf6f97ed4d54a3dca99a60088"
+      },
+      "checks": {
+        "emulated_modem_connected_to_selected_endpoint": true,
+        "first_peer_carrier_drop": true,
+        "manual_query_sent": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_LOGIN.ASP": true,
+        "fixture_unchanged_LOGIN.ASX": true,
+        "fixture_unchanged_ASPECT.EXE": true,
+        "fixture_unchanged_RENDER.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "screen_snapshot_complete": true,
+        "first_child_exit": true,
+        "first_JFT": true,
+        "first_owners": true,
+        "second_JFT": true,
+        "second_owners": true,
+        "second_child_success": true,
+        "first_carrier_dropped": true,
+        "second_connection": true,
+        "child_was_paused": true,
+        "paused_parent_cleared": true,
+        "disconnected_observed": true,
+        "redial_observed": true,
+        "reconnected_observed": true,
+        "ready_and_exit_keys": true,
+        "second_script": true,
+        "manual_query": true,
+        "second_lower_row_query": true,
+        "full_logical_frame": true,
+        "physical_status": true,
+        "final_peer_closed": true,
+        "final_owners": true,
+        "clean_modem_commands": true,
+        "no_modem_ERROR": true
+      },
+      "observations": {
+        "second_execs": 1,
+        "second_done": 1,
+        "second_exits": 1,
+        "second_exit_code": 0,
+        "disconnected_ticks": 39,
+        "stale_pause_seen": 0,
+        "reconnected_ticks": 44,
+        "final_ticks": 36,
+        "redial_key_sent": 1,
+        "ready_keys_sent": 1,
+        "exit_key_sent": 1,
+        "child_pause_seen": 1,
+        "cleanup_seen": 1,
+        "cleanup_state": 0,
+        "cleanup_status": 6,
+        "cleanup_program": 0,
+        "cleanup_parser": 0,
+        "cleanup_aspect": 0,
+        "cleanup_wait": 0,
+        "cleanup_rows": 25,
+        "cleanup_flow": 0,
+        "cleanup_logical": 24,
+        "cleanup_bios_rows": 25,
+        "cleanup_font": 16
+      },
+      "modem_commands": [
+        "ATZ",
+        "ATD127.0.0.1:59421",
+        "",
+        "ATZ",
+        "ATD127.0.0.1:59421"
+      ],
+      "scope": "Actual DOS larger-height carrier loss, XOFF cleanup and same-process redial.\nAn owned TCP peer closes the DOSBox-X modem's socket; DCD/results are generated\nby that modem. The observer reads state and supplies ordinary BIOS keys only.\nNo physical Boca/SPA2102, real BBS or transfer acceptance is implied.\n"
+    },
+    {
+      "profile": 6,
+      "passed": true,
+      "report": {
+        "path": "build/gateway-normal-reconnect-vt220-20261104/result.json",
+        "sha256": "ebd296d529622e6167712f7a273e04f4fcb0fbabdc9213b46dff22bf185bc1b0"
+      },
+      "checks": {
+        "emulated_modem_connected_to_selected_endpoint": true,
+        "first_peer_carrier_drop": true,
+        "manual_query_sent": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_LOGIN.ASP": true,
+        "fixture_unchanged_LOGIN.ASX": true,
+        "fixture_unchanged_ASPECT.EXE": true,
+        "fixture_unchanged_RENDER.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "screen_snapshot_complete": true,
+        "first_child_exit": true,
+        "first_JFT": true,
+        "first_owners": true,
+        "second_JFT": true,
+        "second_owners": true,
+        "second_child_success": true,
+        "first_carrier_dropped": true,
+        "second_connection": true,
+        "child_was_paused": true,
+        "paused_parent_cleared": true,
+        "disconnected_observed": true,
+        "redial_observed": true,
+        "reconnected_observed": true,
+        "ready_and_exit_keys": true,
+        "second_script": true,
+        "manual_query": true,
+        "second_lower_row_query": true,
+        "full_logical_frame": true,
+        "physical_status": true,
+        "final_peer_closed": true,
+        "final_owners": true,
+        "clean_modem_commands": true,
+        "no_modem_ERROR": true
+      },
+      "observations": {
+        "second_execs": 1,
+        "second_done": 1,
+        "second_exits": 1,
+        "second_exit_code": 0,
+        "disconnected_ticks": 39,
+        "stale_pause_seen": 0,
+        "reconnected_ticks": 44,
+        "final_ticks": 36,
+        "redial_key_sent": 1,
+        "ready_keys_sent": 1,
+        "exit_key_sent": 1,
+        "child_pause_seen": 1,
+        "cleanup_seen": 1,
+        "cleanup_state": 0,
+        "cleanup_status": 6,
+        "cleanup_program": 0,
+        "cleanup_parser": 0,
+        "cleanup_aspect": 0,
+        "cleanup_wait": 0,
+        "cleanup_rows": 25,
+        "cleanup_flow": 0,
+        "cleanup_logical": 24,
+        "cleanup_bios_rows": 25,
+        "cleanup_font": 16
+      },
+      "modem_commands": [
+        "ATZ",
+        "ATD127.0.0.1:37477",
+        "",
+        "ATZ",
+        "ATD127.0.0.1:37477"
+      ],
+      "scope": "Actual DOS larger-height carrier loss, XOFF cleanup and same-process redial.\nAn owned TCP peer closes the DOSBox-X modem's socket; DCD/results are generated\nby that modem. The observer reads state and supplies ordinary BIOS keys only.\nNo physical Boca/SPA2102, real BBS or transfer acceptance is implied.\n"
+    }
+  ],
+  "transfer": {
+    "report": {
+      "path": "build/gateway-compose-cancel-audit-20261104/result.json",
+      "sha256": "1f0ea21001df14c26a259d957ae3ca46ffef43ebe1c0513fe0007426842c3c64"
+    },
+    "payload_bytes": 65539,
+    "partial_disk_bytes": 4096,
+    "server_exit_codes": [
+      255,
+      0
+    ],
+    "scope": "Independently replay current stock-BBS cancellation/retry capture gates. Actual BIOS Escape after visible8KiB,nonempty source-prefix disk stage then empty receive directory before retry,target search before retry command and after completed retry,raw proxy equality,standard CRC/control/finish,exact binary destination. Synthetic nullmodem CTS-ready; no physical/SIP/DSP/carrier-loss or all-layout/protocol acceptance."
+  },
+  "sources": {
+    "standalone/record_gateway_composition.py": "51f1deb7a37a194cdf3aee874fd2da5f89cadcd1f26ad36c413dd92c7089bcab",
+    "standalone/test_gateway_sinks_dos.py": "82e713ab9fe5d1feed1e41952be8b680406461591854088bd109ecf5afab930c",
+    "standalone/gateway_sinks_trace_install.asm": "aab606549040eb9e40e053d5363b7c68eb2b63c76ef55cd687a87de2794d1cf1",
+    "standalone/gateway_sinks_trace_dump.asm": "700ec3695247033f6c9a2c0e7f79b793502f401f74eb6f0222d80d3a1a06df29",
+    "standalone/test_modem_large_reconnect_dos.py": "d3bfddfb964364119cdd30512a24db12175476408c9afbd59d53c4a15b3bc79b",
+    "lab/bbs/audit_proxy_cancel_retry.py": "3921e1318776653c8c0596ca5ba288e3ecdf272419b0417e9563641a1c1f973a"
+  },
+  "original_inputs": [],
+  "physical_deployment_changed": false,
+  "scope": "Unchanged normal Gateway-enabled parent: five actual DOS foreground Gateway sink combinations with3200-byte child pressure; ANSI/VT220 same-process modem loss/redial and ASPECT recovery; independently audited stock Enigma cancel/cleanup/exact65539-byte retry. Reconnect and transfer cases regress the enabled image but do not invoke Gateway during those operations. Synthetic DOSBox modem/nullmodem and explicit staged proxy, not SIP/DSP/analog or physical acceptance.",
+  "remaining": [
+    "Unverified device faults, other complete owner combinations and sustained real BBS/physical flow timing.",
+    "Transfers interrupted by real carrier loss, uploads and wider protocol/layout/profile combinations on this parent.",
+    "Microsoft DOS6.22 and physical Boca/SPA2102/SynthModem acceptance; physical deployment unchanged.",
+    "Remaining original file/DOS, directory/key, Chat, ASPECT/emulation/protocol/Host parity."
+  ]
+}

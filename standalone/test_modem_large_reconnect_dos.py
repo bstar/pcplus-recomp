@@ -206,10 +206,12 @@ def observer(out,terminal):
  return (out/'RENDER.COM').read_bytes()
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--build',type=Path,required=True);p.add_argument('--runner',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--rows',type=int,choices=[25,28,43,50],required=True);p.add_argument('--profile',type=int,choices=[4,6],required=True);p.add_argument('--flow',choices=['soft','both'],default='both');a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);selection=p.add_mutually_exclusive_group(required=True);selection.add_argument('--build',type=Path);selection.add_argument('--terminal',type=Path,help='Normal source-built parent with explicit saved display preferences');p.add_argument('--runner',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--rows',type=int,choices=[25,28,43,50],required=True);p.add_argument('--profile',type=int,choices=[4,6],required=True);p.add_argument('--flow',choices=['soft','both'],default='both');a=p.parse_args()
  out=a.output.resolve();assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
- terminal=(a.build/str(a.rows)/'TERMINAL.EXE').resolve();runner=a.runner.resolve();inputs={}
- tm=json.loads((terminal.parent/'manifest.json').read_text());assert tm['diagnostic_session_rows_probe']==a.rows and tm['experimental_row_notices']
+ terminal=(a.terminal if a.terminal else a.build/str(a.rows)/'TERMINAL.EXE').resolve();runner=a.runner.resolve();inputs={}
+ tm=json.loads((terminal.parent/'manifest.json').read_text());assert tm['experimental_row_notices']
+ if a.terminal:assert not tm['diagnostic_session_rows_probe'] and tm['experimental_display_startup']
+ else:assert tm['diagnostic_session_rows_probe']==a.rows
  for binary in [terminal,runner]:
   manifest=json.loads((binary.parent/'manifest.json').read_text());assert sha(binary)==manifest['binary_sha256'] and not manifest.get('original_inputs',[])
   for name,h in manifest['sources'].items():
@@ -222,6 +224,8 @@ def main():
  script='proc main\nwaitfor "LOGIN:" 5\nset duplex full\nwhen disconnect transmit "^MAT^M"\ntransmit "KEYREADY"\nwaitfor "END" 30\nif waitfor\ntransmit "SECONDOK"\nfopen 5 "SECOND.OK" "wb"\nfputs 5 "RECONNECTED"\nfclose 5\nendif\nendproc\n'
  payload=bytearray(directory(profile=a.profile));payload[302:311]=b'LOGIN\0\0\0\0'
  settings=bytearray(prm(port=3,soft=1,hard=int(a.flow=='both')));struct.pack_into('<H',settings,0x188,5);struct.pack_into('<HH',settings,0x4e4,8,4);struct.pack_into('<H',settings,0x196,0);struct.pack_into('<HH',settings,0x1bc,0,0);struct.pack_into('<H',settings,0x1e4,0)
+ if a.terminal:
+  for at,value in [(0x1c2,0),(0x1c8,2),(0x1ca,a.rows),(0x4ec,0)]:struct.pack_into('<H',settings,at,value)
  settings[0x79:0x79+25]=b'ATH^M'.ljust(25,b'\0')
  logical=a.rows-1;lower=f'LOWER-{a.rows}'.encode()
  banner=ESC+b'[2J'+ESC+b'[HFIRST BYTE SAFE'+ESC+b'[6n'+ESC+b'[0c'+ESC+f'[{logical};1H'.encode()+lower+ESC+b'[6n'+ESC+b'[1;1H'+ESC+b'[KFIRST BYTE SAFE'+ESC+b'[6nLOGIN:'
@@ -254,6 +258,6 @@ def main():
  checks.update(clean_modem_commands=commands in (['ATZ','ATD'+dial,'ATZ','ATD'+dial],['ATZ','ATD'+dial,'','ATZ','ATD'+dial]),no_modem_ERROR='Modem response: ERROR' not in log)
  for name,h in inputs.items():assert sha(ROOT/name)==h,name
  sources=[str(Path(__file__).relative_to(ROOT)),'standalone/test_modem_reconnect_dos.py','standalone/test_connection_dos.py','standalone/test_aspect_renderer_dos.py','standalone/test_aspect_script_window_dos.py','standalone/directory_fixtures.py']
- report=dict(passed=all(checks.values()),checks=checks,physical_rows=a.rows,profile=a.profile,flow=a.flow,observations=state,modem_commands=commands,inputs=inputs,sources={n:sha(ROOT/n) for n in sources},captures={str(p.relative_to(folder)):sha(p) for p in folder.rglob('*') if p.is_file()},observer_sha256=sha(out/'RENDER.COM'),observer_source_sha256=sha(out/'observer.asm'),scope=__doc__)
+ report=dict(passed=all(checks.values()),normal_display_startup=bool(a.terminal),checks=checks,physical_rows=a.rows,profile=a.profile,flow=a.flow,observations=state,modem_commands=commands,inputs=inputs,sources={n:sha(ROOT/n) for n in sources},captures={str(p.relative_to(folder)):sha(p) for p in folder.rglob('*') if p.is_file()},observer_sha256=sha(out/'RENDER.COM'),observer_source_sha256=sha(out/'observer.asm'),scope=__doc__)
  (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('FINAL PASS' if report['passed'] else 'FINAL FAIL '+str([n for n,v in checks.items() if not v]),flush=True);assert report['passed']
 if __name__=='__main__':main()

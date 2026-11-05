@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The Gateway-enabled normal parent now passes [sink and compatibility composition](GATEWAY_COMPOSITION.md):
+five capture/HOLD/PRN Gateway workflows with child receive pressure, ANSI/VT220
+same-process loss/redial and stock Enigma cancel/cleanup/exact binary retry.
+These selected emulator/proxy results leave physical acceptance and the full
+remaining application inventory open. The installed release is unchanged.
+
 The optional [normal DOS Gateway frontend](GATEWAY_FRONTEND.md) now binds Alt-F4
 and the command/reference menu, composes live serial and private-file ownership,
 and restores the display/mouse without a return-key prompt. Actual DOS keyboard,

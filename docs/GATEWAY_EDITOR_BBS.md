@@ -87,6 +87,8 @@ compact variant is limited deliberately to this 25-row test. Other display row
 heights retain their separate linked foreground tests.
 
 No physical files, deployment selector, live proxy service, adapter, boot or
-network configuration changed. Active capture/HOLD/printer composition, sustained
-traffic, binary transfer/cancel/carrier-loss/reconnect sessions, Microsoft
+network configuration changed. Later [composition checks](GATEWAY_COMPOSITION.md)
+cover selected Gateway capture/HOLD/PRN and enabled-image reconnect/cancel-retry
+workflows. Further owner combinations, sustained traffic, broader transfer and
+carrier-loss/reconnect sessions, Microsoft
 DOS 6.22 and physical Boca/SPA2102/SynthModem acceptance remain required.
