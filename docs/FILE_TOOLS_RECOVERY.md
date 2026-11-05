@@ -4,7 +4,9 @@ The [runtime follow-up](validation/file-tools-original.json) now adds five
 unmodified-original DOS workflows, and the [private search owner](FILE_FIND_OWNER.md)
 provides a source-built enumeration prerequisite. This supersedes the earlier
 unknowns below only where the following observations supply direct evidence;
-neither File Directory nor View a File is enabled in TERMINAL yet.
+The later optional [File Directory frontend](FILE_DIRECTORY.md) now enables
+the listing in its source candidate. View a File remains unimplemented, and
+the installed release is tracked separately by the private package selector.
 
 ## Enumeration and original runtime follow-up
 

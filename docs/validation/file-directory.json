@@ -1,0 +1,898 @@
+{
+  "passed": true,
+  "binary_sha256": "74e3f0822044128b68c2f51660efa4e913292cca786edb649c2d662d53e72239",
+  "terminal": {
+    "path": "build/file-directory-dirty-20261105/TERMINAL.EXE",
+    "sha256": "74e3f0822044128b68c2f51660efa4e913292cca786edb649c2d662d53e72239"
+  },
+  "manifest": {
+    "path": "build/file-directory-dirty-20261105/manifest.json",
+    "sha256": "6ffd283a9ecf7e872e397e5c677e6126730d6efca343b250acfaa1e4efa5371d"
+  },
+  "product_source_commit": "cdaf2b3f9aa5da34c0a43d9f293f6ad4a1113c18",
+  "source_files": 596,
+  "source_proof": {
+    "path": "build/file-directory-public-source-20261105/result.json",
+    "sha256": "fc67ccb70803cde176892598b22ca9fd2d3d9688014f7d86c5ddf6f4a147c010"
+  },
+  "linked_search": {
+    "path": "build/file-directory-dirty-search-20261105/result.json",
+    "sha256": "89b83ab5bde8af9643ae98fc9f21c6d033c7e34dd611b526265909c7387d2bc9"
+  },
+  "linked_format_editor": {
+    "path": "build/file-directory-dirty-linked-20261105/result.json",
+    "sha256": "572472d18128351276ac1ebd46512f4b9b6e2b83f07d05bd35522eb9ecde9b0d"
+  },
+  "DOS_report": {
+    "path": "build/file-directory-accept-dos-20261105/result.json",
+    "sha256": "30fb95eb55981bfca196c8e093c3c90f741e0256bb75956e0a927cbd3d096520"
+  },
+  "DOS_cases": [
+    {
+      "case": "cancel",
+      "checks": {
+        "dial_action_called": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_FILEOBS.COM": true,
+        "fixture_unchanged_FILES/F00.TXT": true,
+        "fixture_unchanged_FILES/F01.TXT": true,
+        "fixture_unchanged_FILES/F02.TXT": true,
+        "fixture_unchanged_FILES/F03.TXT": true,
+        "fixture_unchanged_FILES/F04.TXT": true,
+        "fixture_unchanged_FILES/F05.TXT": true,
+        "fixture_unchanged_FILES/F06.TXT": true,
+        "fixture_unchanged_FILES/F07.TXT": true,
+        "fixture_unchanged_FILES/F08.TXT": true,
+        "fixture_unchanged_FILES/F09.TXT": true,
+        "fixture_unchanged_FILES/F10.TXT": true,
+        "fixture_unchanged_FILES/F11.TXT": true,
+        "fixture_unchanged_FILES/F12.TXT": true,
+        "fixture_unchanged_FILES/F13.TXT": true,
+        "fixture_unchanged_FILES/F14.TXT": true,
+        "fixture_unchanged_FILES/F15.TXT": true,
+        "fixture_unchanged_FILES/F16.TXT": true,
+        "fixture_unchanged_FILES/F17.TXT": true,
+        "fixture_unchanged_FILES/F18.TXT": true,
+        "fixture_unchanged_FILES/F19.TXT": true,
+        "fixture_unchanged_FILES/F20.TXT": true,
+        "fixture_unchanged_FILES/F21.TXT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_observer_and_restore": true,
+        "startup_drive_and_directory": true,
+        "keyboard_after_dialog": true,
+        "post_dialog_query": true,
+        "post_dialog_display": true,
+        "prompt_geometry": true,
+        "prompt_label": true,
+        "live_background": true
+      },
+      "evidence": [
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-cancel/FILEVIEW.BIN",
+          "sha256": "0451d0775938913b0d5cd6483583c5c934d2eb4a2de004be9a6bbc349e1addea"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-cancel/SCREEN.BIN",
+          "sha256": "d6bd202f1d5bcdfeab1c71ead08197c2a2afc94ac39c56429571aacd65e4a42c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-cancel/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-cancel/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-cancel/serial.bin",
+          "sha256": "b8cd6f6102b1d916069c890ebdeca59333834fcb379e86940bf205a4b7cd050b"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-cancel/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-cancel/dosbox.conf",
+          "sha256": "7e7dba6396f7177965a9a80b1a0a89483988ae1856498cdab097af544994d7de"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-cancel/FILEOBS.COM",
+          "sha256": "89a2eeb7b43c4483c835cc24fc36e716216427aab6f037912ab9fd2cb0e45de4"
+        }
+      ]
+    },
+    {
+      "case": "empty",
+      "checks": {
+        "dial_action_called": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_FILEOBS.COM": true,
+        "fixture_unchanged_FILES/F00.TXT": true,
+        "fixture_unchanged_FILES/F01.TXT": true,
+        "fixture_unchanged_FILES/F02.TXT": true,
+        "fixture_unchanged_FILES/F03.TXT": true,
+        "fixture_unchanged_FILES/F04.TXT": true,
+        "fixture_unchanged_FILES/F05.TXT": true,
+        "fixture_unchanged_FILES/F06.TXT": true,
+        "fixture_unchanged_FILES/F07.TXT": true,
+        "fixture_unchanged_FILES/F08.TXT": true,
+        "fixture_unchanged_FILES/F09.TXT": true,
+        "fixture_unchanged_FILES/F10.TXT": true,
+        "fixture_unchanged_FILES/F11.TXT": true,
+        "fixture_unchanged_FILES/F12.TXT": true,
+        "fixture_unchanged_FILES/F13.TXT": true,
+        "fixture_unchanged_FILES/F14.TXT": true,
+        "fixture_unchanged_FILES/F15.TXT": true,
+        "fixture_unchanged_FILES/F16.TXT": true,
+        "fixture_unchanged_FILES/F17.TXT": true,
+        "fixture_unchanged_FILES/F18.TXT": true,
+        "fixture_unchanged_FILES/F19.TXT": true,
+        "fixture_unchanged_FILES/F20.TXT": true,
+        "fixture_unchanged_FILES/F21.TXT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_observer_and_restore": true,
+        "startup_drive_and_directory": true,
+        "keyboard_after_dialog": true,
+        "post_dialog_query": true,
+        "post_dialog_display": true,
+        "heading": true,
+        "listing_geometry": true
+      },
+      "evidence": [
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-empty/FILEVIEW.BIN",
+          "sha256": "b0e36a9ddc4a67d2b8f573ebea1db617362d8cb91270e66af0f937401fdc917c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-empty/SCREEN.BIN",
+          "sha256": "d6bd202f1d5bcdfeab1c71ead08197c2a2afc94ac39c56429571aacd65e4a42c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-empty/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-empty/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-empty/serial.bin",
+          "sha256": "b8cd6f6102b1d916069c890ebdeca59333834fcb379e86940bf205a4b7cd050b"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-empty/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-empty/dosbox.conf",
+          "sha256": "fab3a49d859b4c17d2ca8fe0a4fcbcbc76d99df3e8221f3131968d282dab5040"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-empty/FILEOBS.COM",
+          "sha256": "9f8267423a4b2158e224661a0b4a1ac1444ec6e8fce531f0d01ccebbce4c65b9"
+        }
+      ]
+    },
+    {
+      "case": "page",
+      "checks": {
+        "dial_action_called": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_FILEOBS.COM": true,
+        "fixture_unchanged_FILES/F00.TXT": true,
+        "fixture_unchanged_FILES/F01.TXT": true,
+        "fixture_unchanged_FILES/F02.TXT": true,
+        "fixture_unchanged_FILES/F03.TXT": true,
+        "fixture_unchanged_FILES/F04.TXT": true,
+        "fixture_unchanged_FILES/F05.TXT": true,
+        "fixture_unchanged_FILES/F06.TXT": true,
+        "fixture_unchanged_FILES/F07.TXT": true,
+        "fixture_unchanged_FILES/F08.TXT": true,
+        "fixture_unchanged_FILES/F09.TXT": true,
+        "fixture_unchanged_FILES/F10.TXT": true,
+        "fixture_unchanged_FILES/F11.TXT": true,
+        "fixture_unchanged_FILES/F12.TXT": true,
+        "fixture_unchanged_FILES/F13.TXT": true,
+        "fixture_unchanged_FILES/F14.TXT": true,
+        "fixture_unchanged_FILES/F15.TXT": true,
+        "fixture_unchanged_FILES/F16.TXT": true,
+        "fixture_unchanged_FILES/F17.TXT": true,
+        "fixture_unchanged_FILES/F18.TXT": true,
+        "fixture_unchanged_FILES/F19.TXT": true,
+        "fixture_unchanged_FILES/F20.TXT": true,
+        "fixture_unchanged_FILES/F21.TXT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_observer_and_restore": true,
+        "startup_drive_and_directory": true,
+        "keyboard_after_dialog": true,
+        "post_dialog_query": true,
+        "post_dialog_display": true,
+        "heading": true,
+        "listing_geometry": true,
+        "first_record": true,
+        "more": true
+      },
+      "evidence": [
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-page/FILEVIEW.BIN",
+          "sha256": "8ecbd13eb79b65824262653dc4623b7d1e88fb37824047558ffbff44f757e223"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-page/SCREEN.BIN",
+          "sha256": "d6bd202f1d5bcdfeab1c71ead08197c2a2afc94ac39c56429571aacd65e4a42c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-page/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-page/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-page/serial.bin",
+          "sha256": "b8cd6f6102b1d916069c890ebdeca59333834fcb379e86940bf205a4b7cd050b"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-page/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-page/dosbox.conf",
+          "sha256": "aad43e71ed8a2ae2891cbb74806dab1dec884805abd7b674d6fed225742230ab"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-page/FILEOBS.COM",
+          "sha256": "d80fe7cf2263a4133ad7f57040adec31772ad7d383bd01fd406bb2b5fbd13570"
+        }
+      ]
+    },
+    {
+      "case": "next",
+      "checks": {
+        "dial_action_called": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_FILEOBS.COM": true,
+        "fixture_unchanged_FILES/F00.TXT": true,
+        "fixture_unchanged_FILES/F01.TXT": true,
+        "fixture_unchanged_FILES/F02.TXT": true,
+        "fixture_unchanged_FILES/F03.TXT": true,
+        "fixture_unchanged_FILES/F04.TXT": true,
+        "fixture_unchanged_FILES/F05.TXT": true,
+        "fixture_unchanged_FILES/F06.TXT": true,
+        "fixture_unchanged_FILES/F07.TXT": true,
+        "fixture_unchanged_FILES/F08.TXT": true,
+        "fixture_unchanged_FILES/F09.TXT": true,
+        "fixture_unchanged_FILES/F10.TXT": true,
+        "fixture_unchanged_FILES/F11.TXT": true,
+        "fixture_unchanged_FILES/F12.TXT": true,
+        "fixture_unchanged_FILES/F13.TXT": true,
+        "fixture_unchanged_FILES/F14.TXT": true,
+        "fixture_unchanged_FILES/F15.TXT": true,
+        "fixture_unchanged_FILES/F16.TXT": true,
+        "fixture_unchanged_FILES/F17.TXT": true,
+        "fixture_unchanged_FILES/F18.TXT": true,
+        "fixture_unchanged_FILES/F19.TXT": true,
+        "fixture_unchanged_FILES/F20.TXT": true,
+        "fixture_unchanged_FILES/F21.TXT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_observer_and_restore": true,
+        "startup_drive_and_directory": true,
+        "keyboard_after_dialog": true,
+        "post_dialog_query": true,
+        "post_dialog_display": true,
+        "heading": true,
+        "listing_geometry": true,
+        "first_record": true,
+        "last_record": true,
+        "partial_page_no_more": true,
+        "cleared_unused_rows": true
+      },
+      "evidence": [
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-next/FILEVIEW.BIN",
+          "sha256": "548d0f3bb81d5010b6dea520364f195517d6bf85b6f4f1175fdf28f470c6ceb4"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-next/SCREEN.BIN",
+          "sha256": "d6bd202f1d5bcdfeab1c71ead08197c2a2afc94ac39c56429571aacd65e4a42c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-next/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-next/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-next/serial.bin",
+          "sha256": "b8cd6f6102b1d916069c890ebdeca59333834fcb379e86940bf205a4b7cd050b"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-next/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-next/dosbox.conf",
+          "sha256": "51dfa25cf09b9d8d7249e25313982e4837849a8b8f4bf9ddb6b9ce766afc94c3"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-next/FILEOBS.COM",
+          "sha256": "4436fdecc53404c4a3c14d50bc5703f50eb97de9e923ad695b7551afd5b079cc"
+        }
+      ]
+    },
+    {
+      "case": "missing",
+      "checks": {
+        "dial_action_called": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_FILEOBS.COM": true,
+        "fixture_unchanged_FILES/F00.TXT": true,
+        "fixture_unchanged_FILES/F01.TXT": true,
+        "fixture_unchanged_FILES/F02.TXT": true,
+        "fixture_unchanged_FILES/F03.TXT": true,
+        "fixture_unchanged_FILES/F04.TXT": true,
+        "fixture_unchanged_FILES/F05.TXT": true,
+        "fixture_unchanged_FILES/F06.TXT": true,
+        "fixture_unchanged_FILES/F07.TXT": true,
+        "fixture_unchanged_FILES/F08.TXT": true,
+        "fixture_unchanged_FILES/F09.TXT": true,
+        "fixture_unchanged_FILES/F10.TXT": true,
+        "fixture_unchanged_FILES/F11.TXT": true,
+        "fixture_unchanged_FILES/F12.TXT": true,
+        "fixture_unchanged_FILES/F13.TXT": true,
+        "fixture_unchanged_FILES/F14.TXT": true,
+        "fixture_unchanged_FILES/F15.TXT": true,
+        "fixture_unchanged_FILES/F16.TXT": true,
+        "fixture_unchanged_FILES/F17.TXT": true,
+        "fixture_unchanged_FILES/F18.TXT": true,
+        "fixture_unchanged_FILES/F19.TXT": true,
+        "fixture_unchanged_FILES/F20.TXT": true,
+        "fixture_unchanged_FILES/F21.TXT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_observer_and_restore": true,
+        "startup_drive_and_directory": true,
+        "keyboard_after_dialog": true,
+        "post_dialog_query": true,
+        "post_dialog_display": true,
+        "not_found": true
+      },
+      "evidence": [
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-missing/FILEVIEW.BIN",
+          "sha256": "549e94ee2763eed3e454a8b2677b4541d44003e43578375d5d2bc395114c9ce8"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-missing/SCREEN.BIN",
+          "sha256": "d6bd202f1d5bcdfeab1c71ead08197c2a2afc94ac39c56429571aacd65e4a42c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-missing/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-missing/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-missing/serial.bin",
+          "sha256": "b8cd6f6102b1d916069c890ebdeca59333834fcb379e86940bf205a4b7cd050b"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-missing/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-missing/dosbox.conf",
+          "sha256": "dfe1d97274126dd4a56551811d4718378315f90dac987897b5e134fdfceea950"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-missing/FILEOBS.COM",
+          "sha256": "bf3c82cd62bccd2634f37b18710109a9f5f7701fcfb3ad88b3ec4ef22e9828ab"
+        }
+      ]
+    },
+    {
+      "case": "reference",
+      "checks": {
+        "dial_action_called": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_FILEOBS.COM": true,
+        "fixture_unchanged_FILES/F00.TXT": true,
+        "fixture_unchanged_FILES/F01.TXT": true,
+        "fixture_unchanged_FILES/F02.TXT": true,
+        "fixture_unchanged_FILES/F03.TXT": true,
+        "fixture_unchanged_FILES/F04.TXT": true,
+        "fixture_unchanged_FILES/F05.TXT": true,
+        "fixture_unchanged_FILES/F06.TXT": true,
+        "fixture_unchanged_FILES/F07.TXT": true,
+        "fixture_unchanged_FILES/F08.TXT": true,
+        "fixture_unchanged_FILES/F09.TXT": true,
+        "fixture_unchanged_FILES/F10.TXT": true,
+        "fixture_unchanged_FILES/F11.TXT": true,
+        "fixture_unchanged_FILES/F12.TXT": true,
+        "fixture_unchanged_FILES/F13.TXT": true,
+        "fixture_unchanged_FILES/F14.TXT": true,
+        "fixture_unchanged_FILES/F15.TXT": true,
+        "fixture_unchanged_FILES/F16.TXT": true,
+        "fixture_unchanged_FILES/F17.TXT": true,
+        "fixture_unchanged_FILES/F18.TXT": true,
+        "fixture_unchanged_FILES/F19.TXT": true,
+        "fixture_unchanged_FILES/F20.TXT": true,
+        "fixture_unchanged_FILES/F21.TXT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_observer_and_restore": true,
+        "startup_drive_and_directory": true,
+        "keyboard_after_dialog": true,
+        "post_dialog_query": true,
+        "post_dialog_display": true,
+        "heading": true,
+        "listing_geometry": true,
+        "first_record": true,
+        "more": true
+      },
+      "evidence": [
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-reference/FILEVIEW.BIN",
+          "sha256": "08bac3ca7dbc75a6861c143a9579259102725db5b0c9dab24c9944667856bc6c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-reference/SCREEN.BIN",
+          "sha256": "d6bd202f1d5bcdfeab1c71ead08197c2a2afc94ac39c56429571aacd65e4a42c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-reference/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-reference/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-reference/serial.bin",
+          "sha256": "b8cd6f6102b1d916069c890ebdeca59333834fcb379e86940bf205a4b7cd050b"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-reference/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-reference/dosbox.conf",
+          "sha256": "8d0b6eab6a6bb9324e0a3cfc2a5f1bb926dda5f8f586a91ecf507a502805f487"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-reference/FILEOBS.COM",
+          "sha256": "d80fe7cf2263a4133ad7f57040adec31772ad7d383bd01fd406bb2b5fbd13570"
+        }
+      ]
+    },
+    {
+      "case": "browser",
+      "checks": {
+        "dial_action_called": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_FILEOBS.COM": true,
+        "fixture_unchanged_FILES/F00.TXT": true,
+        "fixture_unchanged_FILES/F01.TXT": true,
+        "fixture_unchanged_FILES/F02.TXT": true,
+        "fixture_unchanged_FILES/F03.TXT": true,
+        "fixture_unchanged_FILES/F04.TXT": true,
+        "fixture_unchanged_FILES/F05.TXT": true,
+        "fixture_unchanged_FILES/F06.TXT": true,
+        "fixture_unchanged_FILES/F07.TXT": true,
+        "fixture_unchanged_FILES/F08.TXT": true,
+        "fixture_unchanged_FILES/F09.TXT": true,
+        "fixture_unchanged_FILES/F10.TXT": true,
+        "fixture_unchanged_FILES/F11.TXT": true,
+        "fixture_unchanged_FILES/F12.TXT": true,
+        "fixture_unchanged_FILES/F13.TXT": true,
+        "fixture_unchanged_FILES/F14.TXT": true,
+        "fixture_unchanged_FILES/F15.TXT": true,
+        "fixture_unchanged_FILES/F16.TXT": true,
+        "fixture_unchanged_FILES/F17.TXT": true,
+        "fixture_unchanged_FILES/F18.TXT": true,
+        "fixture_unchanged_FILES/F19.TXT": true,
+        "fixture_unchanged_FILES/F20.TXT": true,
+        "fixture_unchanged_FILES/F21.TXT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_observer_and_restore": true,
+        "startup_drive_and_directory": true,
+        "keyboard_after_dialog": true,
+        "post_dialog_query": true,
+        "post_dialog_display": true,
+        "heading": true,
+        "listing_geometry": true,
+        "first_record": true,
+        "more": true
+      },
+      "evidence": [
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-browser/FILEVIEW.BIN",
+          "sha256": "08bac3ca7dbc75a6861c143a9579259102725db5b0c9dab24c9944667856bc6c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-browser/SCREEN.BIN",
+          "sha256": "d6bd202f1d5bcdfeab1c71ead08197c2a2afc94ac39c56429571aacd65e4a42c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-browser/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-browser/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-browser/serial.bin",
+          "sha256": "b8cd6f6102b1d916069c890ebdeca59333834fcb379e86940bf205a4b7cd050b"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-browser/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-browser/dosbox.conf",
+          "sha256": "ca46a3dedc62802ff4be79c4ad7fc4d4e49a635ef89d55efb4fbcb6ba3dcf80d"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-browser/FILEOBS.COM",
+          "sha256": "d80fe7cf2263a4133ad7f57040adec31772ad7d383bd01fd406bb2b5fbd13570"
+        }
+      ]
+    },
+    {
+      "case": "serviced",
+      "checks": {
+        "dial_action_called": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_FILEOBS.COM": true,
+        "fixture_unchanged_FILES/F00.TXT": true,
+        "fixture_unchanged_FILES/F01.TXT": true,
+        "fixture_unchanged_FILES/F02.TXT": true,
+        "fixture_unchanged_FILES/F03.TXT": true,
+        "fixture_unchanged_FILES/F04.TXT": true,
+        "fixture_unchanged_FILES/F05.TXT": true,
+        "fixture_unchanged_FILES/F06.TXT": true,
+        "fixture_unchanged_FILES/F07.TXT": true,
+        "fixture_unchanged_FILES/F08.TXT": true,
+        "fixture_unchanged_FILES/F09.TXT": true,
+        "fixture_unchanged_FILES/F10.TXT": true,
+        "fixture_unchanged_FILES/F11.TXT": true,
+        "fixture_unchanged_FILES/F12.TXT": true,
+        "fixture_unchanged_FILES/F13.TXT": true,
+        "fixture_unchanged_FILES/F14.TXT": true,
+        "fixture_unchanged_FILES/F15.TXT": true,
+        "fixture_unchanged_FILES/F16.TXT": true,
+        "fixture_unchanged_FILES/F17.TXT": true,
+        "fixture_unchanged_FILES/F18.TXT": true,
+        "fixture_unchanged_FILES/F19.TXT": true,
+        "fixture_unchanged_FILES/F20.TXT": true,
+        "fixture_unchanged_FILES/F21.TXT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_observer_and_restore": true,
+        "startup_drive_and_directory": true,
+        "keyboard_after_dialog": true,
+        "post_dialog_query": true,
+        "post_dialog_display": true,
+        "heading": true,
+        "listing_geometry": true,
+        "first_record": true,
+        "UART_during_dialog": true,
+        "query_while_open": true
+      },
+      "evidence": [
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-serviced/FILEVIEW.BIN",
+          "sha256": "cb45bb8fc283a322f2d20e7a93b55a43572c0049d3877f285fd3bba5dc6451e3"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-serviced/SCREEN.BIN",
+          "sha256": "524bf58072d195f398f0ad97d2e52e1b3783235b1ee21851acdab33647e753fb"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-serviced/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-serviced/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-serviced/serial.bin",
+          "sha256": "3079bf815cf0c63edf180611d95f8ee28634e8d39c8e6afdc449a18b7e5dfabc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-serviced/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-serviced/dosbox.conf",
+          "sha256": "2cf14854656786f685d2faffe47e2b37c50f6e603bdf7d2963dc302aca8eeb8e"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-serviced/FILEOBS.COM",
+          "sha256": "ad04a623282c7cbf36abe6eba452ee2be89a097a0757381fbc2f20cd270dbbc3"
+        }
+      ]
+    },
+    {
+      "case": "loading-cancel",
+      "checks": {
+        "dial_action_called": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_FILEOBS.COM": true,
+        "fixture_unchanged_FILES/F00.TXT": true,
+        "fixture_unchanged_FILES/F01.TXT": true,
+        "fixture_unchanged_FILES/F02.TXT": true,
+        "fixture_unchanged_FILES/F03.TXT": true,
+        "fixture_unchanged_FILES/F04.TXT": true,
+        "fixture_unchanged_FILES/F05.TXT": true,
+        "fixture_unchanged_FILES/F06.TXT": true,
+        "fixture_unchanged_FILES/F07.TXT": true,
+        "fixture_unchanged_FILES/F08.TXT": true,
+        "fixture_unchanged_FILES/F09.TXT": true,
+        "fixture_unchanged_FILES/F10.TXT": true,
+        "fixture_unchanged_FILES/F11.TXT": true,
+        "fixture_unchanged_FILES/F12.TXT": true,
+        "fixture_unchanged_FILES/F13.TXT": true,
+        "fixture_unchanged_FILES/F14.TXT": true,
+        "fixture_unchanged_FILES/F15.TXT": true,
+        "fixture_unchanged_FILES/F16.TXT": true,
+        "fixture_unchanged_FILES/F17.TXT": true,
+        "fixture_unchanged_FILES/F18.TXT": true,
+        "fixture_unchanged_FILES/F19.TXT": true,
+        "fixture_unchanged_FILES/F20.TXT": true,
+        "fixture_unchanged_FILES/F21.TXT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_observer_and_restore": true,
+        "startup_drive_and_directory": true,
+        "keyboard_after_dialog": true,
+        "post_dialog_query": true,
+        "post_dialog_display": true,
+        "prompt_geometry": true,
+        "prompt_label": true,
+        "live_background": true
+      },
+      "evidence": [
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-loading-cancel/FILEVIEW.BIN",
+          "sha256": "77af5897a6a0b2882afb0013fc3a0ee2531832e2dece54e16afb9eaf996eb575"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-loading-cancel/SCREEN.BIN",
+          "sha256": "d6bd202f1d5bcdfeab1c71ead08197c2a2afc94ac39c56429571aacd65e4a42c"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-loading-cancel/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-loading-cancel/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-loading-cancel/serial.bin",
+          "sha256": "b8cd6f6102b1d916069c890ebdeca59333834fcb379e86940bf205a4b7cd050b"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-loading-cancel/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-loading-cancel/dosbox.conf",
+          "sha256": "8e2f7c61f4b03fde38ccd8451ac19bc7558296a56a7d2aa078ba7f9d881407f3"
+        },
+        {
+          "path": "build/connection-dos/file-directory-accept-dos-20261105-loading-cancel/FILEOBS.COM",
+          "sha256": "89a2eeb7b43c4483c835cc24fc36e716216427aab6f037912ab9fd2cb0e45de4"
+        }
+      ]
+    }
+  ],
+  "regressions": [
+    {
+      "name": "gateway",
+      "report": {
+        "path": "build/file-directory-gateway-dos-20261105/result.json",
+        "sha256": "c5e97ad0491072c5e6928c04064b699ff942da695e04ef6dd75422af00321bbc"
+      },
+      "scope": "Actual Alt-F4/menu Gateway, independent BIOS frame observer and serial peer. Normal application keyboard/menu route, graphics child, serial traffic and passive frame/cursor observation. No physical or external BBS acceptance."
+    },
+    {
+      "name": "path",
+      "report": {
+        "path": "build/file-directory-path-regression-20261105/result.json",
+        "sha256": "cc53acd655caa93cb0c633129641460fbcc0bd2a646bec59763b81e0bcae42ab"
+      },
+      "scope": "Actual DOS8086 Alt-F7, serviced UART, VGA dialog and startup restoration. Synthetic serial modem, actual DOSBox-X8086 COM3/IRQ5; passive ISR observer only. No physical modem acceptance."
+    }
+  ],
+  "BBS": [
+    {
+      "peer": "enigma",
+      "passed": true,
+      "matched_cells": 1920,
+      "evidence": [
+        {
+          "path": "build/bbs-lab/results/enigma/file-directory-gateway-enigma-20261105/result.json",
+          "sha256": "95ec743fb2612a936a7b08b311dc14201aeaeff5b40c3939bc8f929c87e278ce"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/file-directory-gateway-enigma-20261105/proxy-integration.json",
+          "sha256": "edcb8a42528ed1cc3ab0f8f0e31bfd7d90068cae4216f621735eb6a97960b351"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/file-directory-gateway-enigma-20261105/gateway-audit.json",
+          "sha256": "9e54794f7cc724013b9d13b8e2fdfcbcd76899d8c52fdb8164ee46182d8fa15d"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/file-directory-gateway-enigma-20261105/screen-reference-audit.json",
+          "sha256": "9b9109990a337c2f434b30ca16438ec0c666fe9646cc61bf81b929e2a8272220"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/file-directory-gateway-enigma-20261105/GWVIEW.BIN",
+          "sha256": "2cf30085d294f56c0f99630363cf03c7243f706dbb285a2a1d07cc3f28a8e716"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/file-directory-gateway-enigma-20261105/GWCHILD.BIN",
+          "sha256": "a1f386a0ecb061b3c46a038616212779858ba7258b2eccb818a64986c97282da"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/file-directory-gateway-enigma-20261105/serial-received.bin",
+          "sha256": "7b95d979eb4ab7700997d6064d9d645c09fce8c1dd765f481cd3048cb5ceb5fa"
+        }
+      ],
+      "scope": "Actual keyboard Gateway and graphics-mode DOS child inside an owned stock BBS editor; passive BIOS/VGA frame and cursor comparison, empty-tail file and subsequent edit-key wire. No product state or terminal reply injection. One quiet-editor return, not sustained traffic, physical/audio or all workflows."
+    },
+    {
+      "peer": "synchronet",
+      "passed": true,
+      "matched_cells": 1920,
+      "evidence": [
+        {
+          "path": "build/bbs-lab/results/synchronet/file-directory-gateway-sync-current-20261105/result.json",
+          "sha256": "80614adf960e4e22c44a0db0dc895b6e39280f0c83274c929aa2b37a7646c840"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/file-directory-gateway-sync-current-20261105/proxy-integration.json",
+          "sha256": "e8a870a6fc3f57c1e36411c265a107c6c2931d368a03ffa29ee75c12af9a9deb"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/file-directory-gateway-sync-current-20261105/gateway-audit.json",
+          "sha256": "f0df8694b6fffd09a91d44395821a37edffc610614b8134436dd4a78d57a9e44"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/file-directory-gateway-sync-current-20261105/screen-reference-audit.json",
+          "sha256": "683c2c91b1d4da7ef755daaf9f1c8ba78f1fa4d1e06643efdc5cf86187a7d9a8"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/file-directory-gateway-sync-current-20261105/GWVIEW.BIN",
+          "sha256": "88cd95903d7492e9bbe80fa03eb4f52ca8b53c3fa634fc969b3b22e70eb0cff5"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/file-directory-gateway-sync-current-20261105/GWCHILD.BIN",
+          "sha256": "a1f386a0ecb061b3c46a038616212779858ba7258b2eccb818a64986c97282da"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/file-directory-gateway-sync-current-20261105/serial-received.bin",
+          "sha256": "d79be6fa638c69d14f0765a1e2ed204849dc8f00b9e827fb012b2cb3bc9f3e05"
+        }
+      ],
+      "scope": "Actual keyboard Gateway and graphics-mode DOS child inside an owned stock BBS editor; passive BIOS/VGA frame and cursor comparison, empty-tail file and subsequent edit-key wire. No product state or terminal reply injection. One quiet-editor return, not sustained traffic, physical/audio or all workflows."
+    }
+  ],
+  "memory": {
+    "near_bytes": 65488,
+    "near_spare_bytes": 48,
+    "resident_code_bytes": 65414,
+    "resident_code_spare_bytes": 122,
+    "file_directory_state_bytes": 1724,
+    "file_directory_DGROUP_bytes": 0,
+    "retained_parent_paragraphs": 29359
+  },
+  "original_inputs": [],
+  "physical_deployment_changed": false,
+  "recorder_sha256": "a31aaf0530874f3403b48d1e9f736fd43d5957569c149e6d2cba010970451faa",
+  "scope": "Optional normal File Directory frontend: linked actual code with modeled DOS/readiness and near-memory canary; nine actual DOS listing/return workflows; existing AltF7/Gateway regressions; two stock-editor Gateway return and1920-cell audits. BBS regressions do not open File Directory. Fresh original-free public-source enabled/disabled rebuild. No physical/audio/DOS6.22 or full original-feature-parity claim.",
+  "remaining": [
+    "Listing during stock editor sessions and capture/HOLD/PRN, pressure/loss/reconnect/transfer composition.",
+    "Physical Boca/SPA2102/SynthModem and Microsoft DOS6.22 acceptance; selected physical release unchanged.",
+    "Internal/configured viewers, external editor integration and remaining directory/key/Chat/ASPECT/emulation/protocol/Host parity."
+  ],
+  "acceptance_report": {
+    "path": "build/file-directory-acceptance-20261105/result.json",
+    "sha256": "4063c3d84a358f6c36cad804467c3f3c684504a5b4caa9c100cf632a9c083926"
+  }
+}

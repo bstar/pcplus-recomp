@@ -7,8 +7,8 @@ preserves the caller's DTA. This is a source development candidate; the private
 current-package selector still determines the physically installed release.
 
 Enter accepts `*.*`; a trailing drive colon or backslash appends that wildcard.
-The field holds64characters, with fixed-width overwrite/Insert, Backspace,
-Delete, Home/End, arrows and Ctrl-End. The request buffer allows67characters
+The field holds 64 characters, with fixed-width overwrite/Insert, Backspace,
+Delete, Home/End, arrows and Ctrl-End. The request buffer allows 67 characters
 plus its terminator. An active foreign search owner is refused and never closed
 by this dialog. Recording, unsafe connection/byte ownership, path quarantine
 and, when linked, uncertain capture/printer handles also refuse admission.
@@ -21,19 +21,19 @@ background while the modal frame is retained. Escape cancels loading or closes
 the view. Other keys continue a page only when a prefetched next entry exists;
 otherwise they acknowledge the last page and return.
 
-The page capacity is physical rows minus10, bounded by the40-row far buffer.
-All 1,724bytes of new persistent dialog/search state reside in retained
-FILE_CODE. The near-data area remains65,488bytes. Memory validation checks
+The page capacity is physical rows minus10, bounded by the 40-row far buffer.
+All 1,724 bytes of new persistent dialog/search state reside in retained
+FILE_CODE. The near-data area remains 65,488 bytes. Memory validation checks
 bank placement, nonoverlap, retention and API locations. No file handle,
 allocation, directory change, resource reload
 or output file belongs to this command.
 
 ## Deliberate presentation corrections
 
-Normal1993 rows follow the original spacing. Dates use the year modulo100,
-so2026 renders26 rather than the original126. Each page clears all entry cells,
+Normal 1993 rows follow the original spacing. Dates use the year modulo 100,
+so 2026 renders 26 rather than the original 126. Each page clears all entry cells,
 preventing the native stale trailing characters. Six-digit sizes retain the
-native layout; larger unsigned32-bit sizes use a compact38-column row that
+native layout; larger unsigned 32-bit sizes use a compact 38-column row that
 keeps every digit within the window border. CP437 filenames are retained.
 
 These are documented corrections to the observed original presentation, not
@@ -51,8 +51,15 @@ exercise real enumeration, keyboard, modal frame, serial queries and restored
 UART/PIC/vectors on owned fixture files. Original runtime comparison data remain
 bound by [file-tool recovery](FILE_TOOLS_RECOVERY.md).
 
+Accepted counts are 19 linked search/lifecycle cases, 900 formatter cases,
+1,170 field-edit cases, nine real DOS listing workflows, one serviced Alt-F7
+regression and three Gateway workflows. Stock Enigma and Synchronet each pass
+Gateway/editor return and an independent 1,920-cell/cursor audit. An empty export
+of 1,951 public source files from commit `cdaf2b3` reproduces the full executable;
+the disabled variant exactly reproduces the preceding Gateway executable.
+
 Early candidates remain local failure evidence. A compiler-generated near call
-to the resident32-bit division helper from FILE_CODE was replaced with local
+to the resident 32-bit division helper from FILE_CODE was replaced with local
 16-bit arithmetic. A decaying two-dimensional based array wrote into DGROUP;
 a flat buffer with explicit far-root arithmetic fixes it. Conditional selection
 of based error strings now converts each leaf to a far pointer. A cached phase
@@ -69,6 +76,10 @@ listing is open, visible updated text and normal keyboard/query return.
 The recorded BBS workflows regress the Gateway-enabled image and editor return;
 they do not yet open File Directory inside those stock editors. Sustained RX
 pressure, capture/HOLD/printer composition during listing, physical Boca/
-SPA2102/SynthModem and DOS6.22 acceptance remain required. Internal/configured
+SPA2102/SynthModem and DOS 6.22 acceptance remain required. Internal/configured
 viewers, editor integration, directory/key tools, Chat and remaining full
 ASPECT/emulation/protocol/Host parity stay open.
+
+The one-call scheduler bounds the number of DOS calls per turn, rather than
+kernel/media latency or critical-error handling. Those fault paths need
+separate acceptance.

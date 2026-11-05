@@ -1,7 +1,8 @@
 # Private DOS search owner
 
 `src/filesystem/find_owner.c` and `find_kernel.asm` provide the maintained search
-component for File Directory. It is not linked into TERMINAL yet. The new owner
+component for File Directory. Its initial diagnostic was separate; the later
+optional [frontend](FILE_DIRECTORY.md) links it into the normal terminal. The owner
 uses the original DOS4E/4F enumeration family and DTA layout identified through
 REA, with an explicit adaptation: each call saves the caller's current DTA,
 installs a private DTA, performs one search, and restores the caller's DTA on
