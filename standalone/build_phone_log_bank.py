@@ -36,7 +36,7 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def build_bank(out, reservations=False, startup=False, lifecycle=False, events=False, disk=False, controls=False):
+def build_bank(out, reservations=False, startup=False, lifecycle=False, events=False, disk=False, controls=False, gateway=False):
     OUT = Path(out)
     OUT.mkdir(parents=True, exist_ok=True)
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
@@ -44,6 +44,7 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False, events=F
         flags += ['-dPHONE_LOG_QUEUE_RESERVATION', '-dCAPTURE_FIXED_RESERVATION']
     if disk:flags += ['-dPHONE_LOG_DISK']
     if controls:flags += ['-dPHONE_LOG_CONTROLS']
+    if gateway:flags += ['-dTERMINAL_GATEWAY_FILES']
     sources = ['src/directory/' + name + '.c' for name in
                ['phone_log_queue', 'phone_log_format', 'phone_log_clock', 'phone_log_file', 'phone_log_fs']]
     aliases = dict(ALIASES)

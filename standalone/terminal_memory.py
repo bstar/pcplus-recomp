@@ -1255,6 +1255,17 @@ def inspect_terminal_memory(binary,map_path):
   for name in ('_process_handles_begin','_process_handles_end','_process_handles_recover','_process_handles_active_query','_capture_file_child_handle','_printer_device_child_handle'):
    assert symbols[name][0]==seg,(name,'private handle API must remain in retained FILE_CODE')
   extra.update(gateway_private_jft_bytes=36,gateway_private_jft_retained=True,gateway_private_jft_DGROUP_bytes=0)
+ if '_gateway_files_storage' in symbols:
+  bank=next(c for c in code_segments if c['name']=='FILE_CODE')
+  seg,off=symbols['_gateway_files_storage'];lo=seg*16+off
+  assert seg==bank['relative_segment'] and seg!=ds
+  assert bank['offset']<=off and off+6<=bank['offset']+bank['bytes']
+  assert lo+6<=static_end and lo+6<=module_bytes and word('_gateway_files_storage')==0x4746
+  for name,state_bytes in (('_path_session_storage',76),('_terminal_path_dialog_state',144),('_process_handles_storage',36)):
+   other=address(name);assert lo+6<=other or other+state_bytes<=lo,'Gateway file owner overlaps another retained state'
+  for name in ('_gateway_files_run','_gateway_files_owned'):
+   assert symbols[name][0]==seg,(name,'Gateway file owner must remain in FILE_CODE')
+  extra.update(gateway_files_state_bytes=6,gateway_files_state_retained=True,gateway_files_DGROUP_bytes=0)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
  allocated=((module_bytes+15)//16+header[5])*16

@@ -68,6 +68,10 @@ their existing near code and data segment sizes remain unchanged.
 
 ## Remaining integration
 
+The optional [Gateway file transaction](GATEWAY_FILES.md) now composes these
+queries and the lease with direct COMSPEC and capture flush, including actual
+application-file DOS evidence. Foreground and serial integration remain open.
+
 The launch owner still needs to gather the descriptors at a revalidated idle
 boundary, preserve/drain capture and printer adapters, bracket actual COMSPEC
 EXEC, restore on all return paths, and quarantine uncertain restoration before

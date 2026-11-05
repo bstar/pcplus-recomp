@@ -14,4 +14,9 @@ unsigned __cdecl capture_session_stop(void);
 unsigned __cdecl capture_session_pause(void);
 void __cdecl capture_session_poll(unsigned long ticks);
 unsigned __cdecl capture_session_shutdown(void);
+#if defined(TERMINAL_GATEWAY_FILES)
+/* Flush buffered bytes without stopping capture or changing HOLD. Pure idle
+ * success is allowed before initialization; no new file is opened here. */
+unsigned __far __cdecl capture_session_child_flush(void);
+#endif
 #endif

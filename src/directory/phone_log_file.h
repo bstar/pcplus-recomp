@@ -17,6 +17,10 @@ typedef struct phone_log_file_snapshot {
  char path[128];
 } phone_log_file_snapshot;
 extern phone_log_file_snapshot phone_log_file_result;
+#if defined(TERMINAL_GATEWAY_FILES)
+/* No call-log append transaction or unresolved rollback may span a child. */
+unsigned __far __cdecl phone_log_file_child_ready(void);
+#endif
 /* Initialization never clears uncertain handle/file history. Resolved complete
  * or failed history remains available until a subsequent valid append starts. */
 unsigned __cdecl phone_log_file_initialize(void);

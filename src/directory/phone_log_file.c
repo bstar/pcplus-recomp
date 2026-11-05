@@ -155,3 +155,12 @@ close:
 done:
  busy=0;return r->status;
 }
+#if defined(TERMINAL_GATEWAY_FILES)
+unsigned __far __cdecl phone_log_file_child_ready(void)
+{
+ if(busy)return 0;
+ if(cookie==0x504c)return held==-1;
+ return cookie==0x504d && !phone_log_file_result.handle_open &&
+  !phone_log_file_result.handle_uncertain && !phone_log_file_result.recovery_required;
+}
+#endif

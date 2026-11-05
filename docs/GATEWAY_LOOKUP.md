@@ -80,6 +80,8 @@ The ownership audit establishes concrete requirements beyond this resolver:
    The optional [private-handle prerequisite](GATEWAY_HANDLES.md) now supplies
    retained JFT isolation and read-only owner queries; application adapter and
    foreground integration remain open.
+   The later [file transaction](GATEWAY_FILES.md) now composes the resolver,
+   capture flush and lease; it still leaves the foreground action unbound.
 5. Revalidate parser, transfers, recording, views, directory/resource transactions,
    log recovery and path quarantine. A generic raw-EXEC permission is not proof
    that the foreground is idle. Keep display/mouse/trap restoration and the

@@ -114,3 +114,11 @@ unsigned __cdecl capture_session_shutdown(void)
  status=capture_session_stop();
  return capture_session_failed?capture_session_failed:status;
 }
+#if defined(TERMINAL_GATEWAY_FILES)
+unsigned __far __cdecl capture_session_child_flush(void)
+{
+ if(cookie==0xc510)return !terminal_sink_398a_enabled && !capture_session_buffered?CF_OK:CF_STATE;
+ if(cookie!=0xc511)return CF_STATE;
+ return capture_session_flush();
+}
+#endif

@@ -36,6 +36,23 @@ _hook_lookup_context:
 .bad:
  xor ax,ax
  ret
+%ifdef TERMINAL_GATEWAY_FILES
+global _gateway_files_context
+extern _hook_platform_psp,process_psp
+_gateway_files_context:
+ call _hook_lookup_context
+ or ax,ax
+ jz .done
+ call _hook_platform_psp
+ cmp ax,[process_psp]
+ jne .bad
+ mov ax,1
+ retf
+.bad:
+ xor ax,ax
+.done:
+ retf
+%endif
 _hook_lookup_readable:
  push bp
  mov bp,sp

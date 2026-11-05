@@ -5303,3 +5303,24 @@ Alt-F4 remains unbound. Foreground admission, adapter drain/preservation, lease
 bracketing around the actual shell, error quarantine and serial ownership remain
 required. These component tests do not establish sustained UART or physical
 modem acceptance and close no full application-parity gate.
+
+### Gateway application file transaction
+
+The optional --gateway-files parent now composes direct COMSPEC with capture
+flush, open sink collection and the private-JFT lease. Capture remains enabled
+or held, and the same capture/snapshot/monitor/history/PRN owners retain their
+descriptors. Queued/closing PRN and unresolved call-log transactions refuse
+admission. Restoration or transaction-state uncertainty latches recovery before
+further file IO or EXEC. The designated parent result prevents output-pointer
+aliasing with arbitrary owner state.
+
+Verified 40 linked composition/fault cases and ten actual DOS8086/FPU-off
+workflows with 184 checks: four application files across synthetic interpreters,
+failed/rejected COMSPEC and real COMMAND.COM, with correct capture flags/buffer,
+unchanged descriptors, exact AB file continuation and persistent shell CWD until
+normal exit. Normal/probe/hold images reproduce from 586/588/588 source inputs.
+The 56 private-handle, 33 resolver and ordinary HOOK28/14 regressions pass;
+disabled parent and ordinary ASPECT retain their preceding bytes.
+
+Alt-F4 remains unbound; foreground/display/serial integration and physical/BBS
+acceptance remain required. See `docs/GATEWAY_FILES.md` and its receipt.
