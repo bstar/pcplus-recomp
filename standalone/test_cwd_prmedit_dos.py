@@ -60,7 +60,7 @@ def main():
                   production_editor_discard_footer=b'Esc Discard' in text[23*80:24*80],
                   actual_DOS_chdir_observed=(drive/'CWDMOVED.TXT').read_text()=='before=D:\\\nafter=D:\\OTHER\n',
                   child_created_witness=(drive/'OTHER/WITNESS').is_dir(),
-                  production_editor_restored_changed_CWD=observed[4006]==3 and observed[4007:].split(b'\0')[0]==b'OTHER',
+                  final_CWD_matches_parent_lifecycle=observed[4006]==3 and observed[4007:].split(b'\0')[0]==(b'' if manifest.get('experimental_path_control') else b'OTHER'),
                   decoy_helper_not_executed=not (drive/'DECOY.TXT').exists(),
                   post_editor_keyboard_delivered=wire.count(b'ready\r')==1,
                   post_editor_UART_query_replied=b'\x1b[3;17R' in wire,
@@ -74,7 +74,7 @@ def main():
     report=dict(passed=all(checks.values()),checks=checks,binary_sha256=sha(binary),editor_sha256=sha(editor),
                 observer=dict(flags=flags,ticks=ticks),sources={n:sha(ROOT/n) for n in sources},
                 artifacts={str(f.relative_to(drive)):sha(f) for f in drive.rglob('*') if f.is_file()},original_inputs=[],
-                scope=__doc__+' DOSBox-X8086 COM3/IRQ5, synthetic modem peer and owned files. Real production editor opens and displays COM3 from startup PRM after CWD moves beside COM2 decoy; Escape cancels, files stay unchanged, editor restores changed CWD, late UART/keyboard/query and final hardware restoration pass. Passive INT1C reads VGA only; DOS collection/vector restore occurs after terminal exit. No editor save/adoption, physical machine, original PCSETUP or Alt-F7 UI acceptance.')
+                scope=__doc__+' DOSBox-X8086 COM3/IRQ5, synthetic modem peer and owned files. Real production editor displays COM3 beside a COM2 decoy; Escape cancels, files stay unchanged, late UART/keyboard/query and final hardware restoration are checked. Final CWD is sampled after terminal exit: startup root with path-control, changed OTHER otherwise. This does not independently sample editor-return CWD before parent shutdown. Passive INT1C reads VGA only; DOS collection/vector restore occurs after terminal exit. No editor save/adoption, physical machine, original PCSETUP or Alt-F7 UI acceptance.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n')
     print('PASS' if report['passed'] else 'FAIL',{k:v for k,v in checks.items() if not v},flush=True)
     assert report['passed'],report

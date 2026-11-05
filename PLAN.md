@@ -40,6 +40,17 @@ owner through a serviced Alt-F7 dialog and restore the original startup
 directory on final exit next. Only 48 near bytes remain in this variant, so
 retained dialog/startup-path storage needs an explicit far-storage design.
 
+The next [path-control checkpoint](docs/PATH_CONTROL.md) now links the recovered
+helper and a serviced Alt-F7 dialog with startup-directory restoration in an
+optional parent. Its retained FILE_CODE bank holds all 220 new persistent
+state bytes without consuming more DGROUP. Original-reference and browser
+dispatch, current-screen popup composition and lifecycle verification have
+dedicated checks. This supersedes the preceding "not linked" description for
+the enabled candidate only. Application fault injection, Microsoft DOS 6.22,
+physical acceptance and broader owner combinations remain gates. Gateway,
+File Directory, View a File and editor integration remain next file/DOS work;
+the selected physical release remains unchanged.
+
 ### Earlier connection and network checkpoints
 
 **Real hardware connection achieved; compatibility acceptance continues.**

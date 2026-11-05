@@ -1,5 +1,15 @@
 # Full application reconstruction checklist
 
+The optional [serviced path-control candidate](PATH_CONTROL.md) now integrates
+Alt-F7 directly and through the original reference/command browser, with a
+blank bounded field, the observed original frame, checked path changes and
+startup-directory restoration on orderly exit. Its 220 bytes of new persistent
+state live in a retained code bank, preserving the 48-byte DGROUP headroom.
+The evidence receipt separates component fault wrappers, actual DOS emulation,
+live popup composition, resource identity and stock BBS rendering checks.
+Physical deployment, application fault injection, Microsoft DOS 6.22 and the
+remaining file/DOS commands remain open.
+
 [Stable CWD resource identities](CWD_IDENTITIES.md) now protect startup
 PRM/DIR/KEY/KBD/XLT selectors, PRMEDIT lookup and default XLT provenance in an
 optional parent. Six original-runtime dialog observations, 12 linked identity
@@ -7,9 +17,9 @@ cases, three real-CWD setup/accounting workflows and an unchanged-image failure
 control bind this checkpoint. The 573-input source-only rebuild and fresh
 Enigma/Synchronet 1,920-cell editor audits pass. A separate 31-check production
 PRMEDIT open/cancel workflow also selects the startup PRM after CWD changes.
-Alt-F7 itself, exit-directory
-restoration, foreground path ownership and physical acceptance remain open;
-the deployment selection is unchanged.
+Alt-F7 and exit-directory restoration are supplied by the newer optional
+path-control candidate above. This prerequisite image alone does not provide
+them; physical acceptance and the deployment selection remain unchanged.
 
 The [file path foundation](FILE_PATH_OWNER.md) recovers the original 58-byte
 path/drive helper and adds a separate bounded owner with verified rollback

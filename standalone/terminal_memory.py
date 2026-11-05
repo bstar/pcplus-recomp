@@ -1229,6 +1229,18 @@ def inspect_terminal_memory(binary,map_path):
                 native_reset_ASPECT_backup_start=ui_buffers['redisplay_live']['start_linear'])
  assert word('terminal_peer_width_available')==int('terminal_native_width'in symbols)
  extra.update(resident_code_bytes=near_code['bytes'],resident_code_spare_bytes=65536-near_code['bytes'],code_segments=code_segments,far_code_bridge_pairs_verified=bridges)
+ if '_path_session_storage' in symbols:
+  bank=next(c for c in code_segments if c['name']=='FILE_CODE')
+  assert bank['relative_segment']!=ds and bank['bytes']<=65536
+  spans=[]
+  for name,state_bytes,cookie in (('_path_session_storage',76,0x7050),('_terminal_path_dialog_state',144,0x5044)):
+   seg,off=symbols[name];lo=seg*16+off
+   assert seg==bank['relative_segment'] and bank['offset']<=off and off+state_bytes<=bank['offset']+bank['bytes']
+   assert lo+state_bytes<=static_end and lo+state_bytes<=module_bytes
+   assert word(name)==cookie,(name,'initialized file-bank sentinel')
+   spans.append((lo,lo+state_bytes))
+  assert spans[0][1]<=spans[1][0] or spans[1][1]<=spans[0][0]
+  extra.update(path_bank_bytes=bank['bytes'],path_bank_state_bytes=220,path_bank_state_retained=True,path_bank_DGROUP_bytes=0)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
  allocated=((module_bytes+15)//16+header[5])*16

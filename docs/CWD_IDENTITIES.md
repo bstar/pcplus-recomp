@@ -69,9 +69,12 @@ child and do not by themselves validate production editor saving.
 A separate 31-check workflow uses the actual source-built PRMEDIT. After the
 real directory change, a passive stable-VGA capture shows the startup PRM's
 COM3 beside a COM2 decoy. Escape cancels, both files remain unchanged, the
-editor restores the changed working directory, and keyboard/UART/query service
-and hardware restoration pass. This covers production editor open/cancel and
-does not claim save/adoption coverage.
+the directory remains changed after terminal exit, and keyboard/UART/query
+service and hardware restoration pass. The observer collects DOS CWD after
+terminal exit; it does not independently sample the editor's immediate return.
+This covers production editor open/cancel and does not claim save/adoption
+coverage. The newer path-control candidate instead restores startup CWD on
+orderly terminal exit and is tested with that distinct expectation.
 
 The unchanged disabled parent fails the same real-CWD live-settings probe at
 the four intended settings identity checks while retaining the real directory

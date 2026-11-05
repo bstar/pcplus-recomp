@@ -2,6 +2,9 @@
  * Code-segment constants keep UI prose outside the small-model DGROUP and
  * ahead of uninitialized far buffers. See Watcom's segment-constant objects. */
 #include "command_menu.h"
+#ifdef TERMINAL_PATH_CONTROL
+#include "../filesystem/path_dialog.h"
+#endif
 #ifdef PHONE_LOG_CONTROLS
 extern unsigned __far __cdecl phone_log_controls_event(unsigned,unsigned,unsigned short __far *);
 #pragma aux phone_log_controls_event "_phone_log_controls_event_far";
@@ -246,6 +249,12 @@ ENTRY(line_toggle,"Toggle Lines                   Ctrl--",
  "Active connections and unsafe owners refuse or defer the request.\n"
  "Imported display preferences are required and remain unchanged.");
 #endif
+#ifdef TERMINAL_PATH_CONTROL
+ENTRY(change_dir,"Change directory                Alt-F7",
+ "Change the current drive and directory while terminal traffic remains serviced.\n"
+ "An empty path or Escape returns without a change.\n"
+ "The starting directory is restored when PCPLUS exits.");
+#endif
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
  ROW(script,0,0xfe00,'A'),ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
@@ -279,6 +288,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_LINE_CONTROL
  ,ROW(line_toggle,2,0x0c1f,'L')
+#endif
+#ifdef TERMINAL_PATH_CONTROL
+ ,ROW(change_dir,0,0x6e00,'G')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))
@@ -368,6 +380,9 @@ static void record_view(void)
 static void draw(void)
 {
  word i,n=0,at;
+#ifdef TERMINAL_PATH_CONTROL
+ if(phase==12){path_dialog_event(2,0,view);return;}
+#endif
 #ifdef PHONE_LOG_CONTROLS
  if(phase==11){phone_log_controls_event(2,0,view);return;}
 #endif
@@ -425,6 +440,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(!recording_terminal_inspect())recording_terminal_initialize();
 #ifdef TERMINAL_REFERENCE
   reference_origin=0;
+#ifdef TERMINAL_PATH_CONTROL
+  if(key==0x6e00){phase=12;path_dialog_event(0,key,view);return 1;}
+#endif
 #ifdef TERMINAL_DIRECTORY_VIEW
   if(key==0x2000){directory_parent=0;phase=10;directory_view_event(0,key,view);return 1;}
 #endif
@@ -440,6 +458,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   draw();return 1;}
  if(event==4){
+#ifdef TERMINAL_PATH_CONTROL
+  if(phase==12)path_dialog_event(4,0,view);
+#endif
 #ifdef PHONE_LOG_CONTROLS
   if(phase==11)phone_log_controls_event(4,0,view);
 #endif
@@ -461,7 +482,17 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
  }
 #endif
  if(event!=1)return 1;
- if(key==0x2d00){command_menu_action=key;command_menu_active=0;return 0;}
+ if(key==0x2d00){
+#ifdef TERMINAL_PATH_CONTROL
+  if(phase==12)path_dialog_event(4,0,view);
+#endif
+  command_menu_action=key;command_menu_active=0;return 0;}
+#ifdef TERMINAL_PATH_CONTROL
+ if(phase==12){
+  if(path_dialog_event(1,key,view))return 1;
+  command_menu_active=0;return 0;
+ }
+#endif
 #ifdef PHONE_LOG_CONTROLS
  if(phase==11){
   if(phone_log_controls_event(1,key,view))return 1;
@@ -488,6 +519,13 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   n=command_reference_event(1,key,view);
   if(n==1){command_menu_active=0;return 0;}
   if(n==0x200){reference_origin=0;category=selected=phase=notice=0;draw();return 1;}
+#ifdef TERMINAL_PATH_CONTROL
+  if(n==0x100+PATH_CONTROL_ACTION){phase=12;path_dialog_event(0,0,view);return 1;}
+  if(n==0x300+PATH_CONTROL_ACTION){
+   for(i=0;i<COUNT;++i)if(items[i].key==0x6e00){selected=i;break;}
+   category=items[selected].category;phase=1;draw();return 1;
+  }
+#endif
   if(n>=0x300 && n<0x300+COUNT){selected=n-0x300;category=items[selected].category;phase=1;draw();return 1;}
   if(n>=0x100 && n<0x100+COUNT){selected=n-0x100;category=items[selected].category;phase=notice=0;goto activate;}
   return 1;
@@ -535,6 +573,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
    if(i==COUNT){draw();return 1;}}
 #ifdef TERMINAL_REFERENCE
 activate:
+#ifdef TERMINAL_PATH_CONTROL
+  if(items[selected].key==0x6e00){phase=12;path_dialog_event(0,0,view);return 1;}
+#endif
 #endif
   if(record_blocked(items[selected].key)){phase=6;notice=104;}
   else if(items[selected].key==0xfd00){

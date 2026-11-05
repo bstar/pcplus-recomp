@@ -132,6 +132,15 @@ _small_code_:
 %endif
  jmp terminal_shutdown
 .configured:
+%ifdef TERMINAL_PATH_CONTROL
+ extern terminal_path_begin,terminal_path_restore
+ call far terminal_path_begin
+ or ax,ax
+ jz .path_bound
+ mov word [terminal_exit_code],17
+ jmp terminal_shutdown
+.path_bound:
+%endif
 %ifdef TERMINAL_DIRECTORY_RESOURCE_CLI
  extern _terminal_resource_cli_bind
  global terminal_resource_cli_startup
@@ -616,6 +625,15 @@ terminal_shutdown:
  mov ah,9
  int 0x21
 .dos_exit:
+%ifdef TERMINAL_PATH_CONTROL
+ call far terminal_path_restore
+ or ax,ax
+ jz .path_restored
+ cmp word [terminal_exit_code],0
+ jne .path_restored
+ mov word [terminal_exit_code],17
+.path_restored:
+%endif
 %ifdef TERMINAL_MOUSE
  call far terminal_mouse_exit
 %endif

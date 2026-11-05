@@ -4,6 +4,9 @@
 #include "../capture/capture_file.h"
 #include "../clipboard/clipboard_ui.h"
 #include "command_menu.h"
+#ifdef TERMINAL_PATH_CONTROL
+#include "../filesystem/path_dialog.h"
+#endif
 #ifdef TERMINAL_ELAPSED_VIEW
 #include "elapsed_view.h"
 extern void __far __cdecl elapsed_notice_flush(void);
@@ -110,7 +113,23 @@ static void cursor_restore(void)
 }
 }
 static void hide(void)
-{__asm {
+{
+#ifdef TERMINAL_PATH_CONTROL
+ word p=path_dialog_cursor(),s=shape&0x1f1f;
+ if(p!=0xffff){
+  __asm {
+   mov ah,1
+   mov cx,s
+   int 10h
+   mov ah,2
+   xor bh,bh
+   mov dx,p
+   int 10h
+  }
+  return;
+ }
+#endif
+ __asm {
  mov ah,1
  mov cx,2000h
  int 10h 
@@ -259,6 +278,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   direct_clipboard=(key==0x2c00 || key==0x1300
 #ifdef TERMINAL_REFERENCE
    || (key&255)=='`' || key==0x6c00 || key==0x1700 || command_reference_unavailable(key)
+#ifdef TERMINAL_PATH_CONTROL
+   || key==0x6e00
+#endif
 #ifdef TERMINAL_DIRECTORY_VIEW
    || key==0x2000
 #endif
@@ -336,6 +358,11 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
  }
  if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;redisplay_live_ready=1;clipboard_ui_visible=0;if(clipboard_ui_active)clipboard_ui_event(2,0,view);}return 0;}
  if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
+#ifdef TERMINAL_PATH_CONTROL
+   /* A small popup must compose over the current BBS frame, rather than
+    * restoring the browser's intentionally frozen whole-screen view. */
+   if(command_menu_active && path_dialog_cursor()!=0xffff){copy(view,live);path_dialog_event(2,0,view);}
+#endif
 #ifdef TERMINAL_LARGE_VIEW_FRAMES
    refresh_tail();
 #endif
