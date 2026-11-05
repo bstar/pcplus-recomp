@@ -45,6 +45,9 @@ keys:
 %include "multiline_keys.inc"
 %else
 keys:
+%ifdef FILE_VIEWER_ROUNDTRIP
+ dw 2f00h,2044h,273ah,2b5ch,2f56h,1749h,1245h,1157h,342eh,2044h,1e41h,1454h,1c0dh,011bh
+%endif
 %ifdef FILE_DIRECTORY_ROUNDTRIP
  dw 2100h,2044h,273ah,2b5ch,1454h,1245h,1f53h,1454h,342eh,1950h,1352h,324dh,1c0dh,011bh
 %endif
@@ -137,6 +140,20 @@ handler:
  jne .listing_wait_done
  mov word [ticks],18
 .listing_wait_done:
+%endif
+%ifdef FILE_VIEWER_ROUNDTRIP
+ cmp word [bx-2],2f00h
+ jne .viewer_enter
+ mov word [ticks],18
+.viewer_enter:
+ cmp word [bx-2],1c0dh
+ jne .viewer_escape
+ mov word [ticks],36
+.viewer_escape:
+ cmp word [bx-2],011bh
+ jne .viewer_wait_done
+ mov word [ticks],18
+.viewer_wait_done:
 %endif
 %ifdef GATEWAY_ROUNDTRIP
  cmp word [bx-2],6b00h

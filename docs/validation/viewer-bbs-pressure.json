@@ -1,0 +1,331 @@
+{
+  "schema": 1,
+  "binary_sha256": "1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e",
+  "source_build": "build/viewer-ui-build-20261105",
+  "physical_deployment_changed": false,
+  "pressure": {
+    "passed": true,
+    "report": "build/viewer-sinks-verified-20261105/result.json",
+    "report_sha256": "5f5d93b423d0f6b338f9646c38527800789cf96f99e29e4483ad5bfe43ab8e03",
+    "cases": [
+      {
+        "case": "capture",
+        "checks": {
+          "fresh_DSR_after_viewer_burst": true,
+          "post_viewer_keyboard_DSR": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "observed_viewer_and_restored_live": true,
+          "exact_local_page": true,
+          "exact_updated_live_1920_cells": true,
+          "exact_updated_live_cursor": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "viewer_file_unchanged": true,
+          "trace_complete": true,
+          "one_private_readonly_open": true,
+          "viewer_device_inspected": true,
+          "viewer_read_and_closed_once": true,
+          "no_viewer_close_before_last_read": true,
+          "capture_wrote_before_viewer": true,
+          "same_capture_FD_after_viewer": true,
+          "capture_wrote_while_viewer_owned": true,
+          "capture_not_closed_between_writes": true
+        },
+        "capture_bytes": 3815,
+        "printer_bytes": 0,
+        "observations": {
+          "parent_DS": 19392,
+          "viewer_open_record": 15,
+          "viewer_device_record": 16,
+          "viewer_FD": 6,
+          "viewer_read_records": [
+            17
+          ],
+          "viewer_close_record": 31,
+          "record_count": 46
+        }
+      },
+      {
+        "case": "hold",
+        "checks": {
+          "fresh_DSR_after_viewer_burst": true,
+          "post_viewer_keyboard_DSR": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "observed_viewer_and_restored_live": true,
+          "exact_local_page": true,
+          "exact_updated_live_1920_cells": true,
+          "exact_updated_live_cursor": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "viewer_file_unchanged": true,
+          "trace_complete": true,
+          "one_private_readonly_open": true,
+          "viewer_device_inspected": true,
+          "viewer_read_and_closed_once": true,
+          "no_viewer_close_before_last_read": true,
+          "capture_wrote_before_viewer": true,
+          "same_capture_FD_after_viewer": true,
+          "capture_not_closed_between_writes": true
+        },
+        "capture_bytes": 613,
+        "printer_bytes": 0,
+        "observations": {
+          "parent_DS": 19392,
+          "viewer_open_record": 15,
+          "viewer_device_record": 16,
+          "viewer_FD": 6,
+          "viewer_read_records": [
+            17
+          ],
+          "viewer_close_record": 18,
+          "record_count": 33
+        }
+      },
+      {
+        "case": "capture-printer",
+        "checks": {
+          "fresh_DSR_after_viewer_burst": true,
+          "post_viewer_keyboard_DSR": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "observed_viewer_and_restored_live": true,
+          "exact_local_page": true,
+          "exact_updated_live_1920_cells": true,
+          "exact_updated_live_cursor": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "viewer_file_unchanged": true,
+          "trace_complete": true,
+          "one_private_readonly_open": true,
+          "viewer_device_inspected": true,
+          "viewer_read_and_closed_once": true,
+          "no_viewer_close_before_last_read": true,
+          "capture_wrote_before_viewer": true,
+          "same_capture_FD_after_viewer": true,
+          "capture_wrote_while_viewer_owned": true,
+          "capture_not_closed_between_writes": true
+        },
+        "capture_bytes": 3815,
+        "printer_bytes": 3815,
+        "observations": {
+          "parent_DS": 19392,
+          "viewer_open_record": 17,
+          "viewer_device_record": 18,
+          "viewer_FD": 7,
+          "viewer_read_records": [
+            19
+          ],
+          "viewer_close_record": 33,
+          "record_count": 49
+        }
+      },
+      {
+        "case": "hold-printer",
+        "checks": {
+          "fresh_DSR_after_viewer_burst": true,
+          "post_viewer_keyboard_DSR": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "observed_viewer_and_restored_live": true,
+          "exact_local_page": true,
+          "exact_updated_live_1920_cells": true,
+          "exact_updated_live_cursor": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "viewer_file_unchanged": true,
+          "trace_complete": true,
+          "one_private_readonly_open": true,
+          "viewer_device_inspected": true,
+          "viewer_read_and_closed_once": true,
+          "no_viewer_close_before_last_read": true,
+          "capture_wrote_before_viewer": true,
+          "same_capture_FD_after_viewer": true,
+          "capture_not_closed_between_writes": true
+        },
+        "capture_bytes": 613,
+        "printer_bytes": 3823,
+        "observations": {
+          "parent_DS": 19392,
+          "viewer_open_record": 17,
+          "viewer_device_record": 18,
+          "viewer_FD": 7,
+          "viewer_read_records": [
+            19
+          ],
+          "viewer_close_record": 20,
+          "record_count": 36
+        }
+      },
+      {
+        "case": "printer",
+        "checks": {
+          "fresh_DSR_after_viewer_burst": true,
+          "post_viewer_keyboard_DSR": true,
+          "post_close_keyboard_DSR": true,
+          "normal_exit": true,
+          "peer_ok": true,
+          "observed_viewer_and_restored_live": true,
+          "exact_local_page": true,
+          "exact_updated_live_1920_cells": true,
+          "exact_updated_live_cursor": true,
+          "exact_capture": true,
+          "exact_PRN": true,
+          "hardware_restored": true,
+          "startup_CWD": true,
+          "PRM_unchanged": true,
+          "binary_unchanged": true,
+          "viewer_file_unchanged": true,
+          "trace_complete": true,
+          "one_private_readonly_open": true,
+          "viewer_device_inspected": true,
+          "viewer_read_and_closed_once": true,
+          "no_viewer_close_before_last_read": true
+        },
+        "capture_bytes": 0,
+        "printer_bytes": 3815,
+        "observations": {
+          "parent_DS": 19392,
+          "viewer_open_record": 14,
+          "viewer_device_record": 15,
+          "viewer_FD": 6,
+          "viewer_read_records": [
+            16
+          ],
+          "viewer_close_record": 17,
+          "record_count": 31
+        }
+      }
+    ],
+    "sources": {
+      "standalone/test_viewer_sinks_dos.py": "23f1b6139505f38b77f282a01000736edd2ff2770551fc561a7d903a70b8083b",
+      "standalone/viewer_pressure_watch.asm": "a4e9ea0e1723a34f691f87d6cf209d4ba649f96c21a5aee577f4b220b8cbe7d7",
+      "standalone/viewer_sinks_trace_install.asm": "6fd16a810828feb036b2813249f6f883c39d3f582e30338ef50bcc0863558403",
+      "standalone/gateway_sinks_trace_dump.asm": "700ec3695247033f6c9a2c0e7f79b793502f401f74eb6f0222d80d3a1a06df29",
+      "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+      "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4",
+      "standalone/test_terminal.py": "b0b93eef678e74cf30e628b5d1863938e5b017865cb65b469c972ed5fc0079c2",
+      "standalone/test_viewer_dialog_dos.py": "dcb2cec3b0adfef66529ba7d1b978b2042a5231b32b84007da838179f1d2ca9f",
+      "standalone/test_ansi_reference_dos.py": "bd89a1b58792c7d4d4a5719263ef8868f4bb62d5defe8ee5af3c8532df2c0dde"
+    }
+  },
+  "enigma": {
+    "passed": true,
+    "report": "build/bbs-lab/results/enigma/viewer-stock-enigma-20261105/proxy-integration.json",
+    "report_sha256": "4f7150d03608451c9f84439e1fdd77f96de20c24203fdcd9d1f5755fb829490e",
+    "checks": {
+      "size_probe_requested": true,
+      "harness": true,
+      "semantic_audit": true,
+      "exact_screen": true,
+      "proxy_source_unchanged": true,
+      "product_source_unchanged": true,
+      "actual_File_Viewer_roundtrip": true,
+      "reference_freeze_completed": true,
+      "expected_geometry_advertised": true
+    },
+    "viewer": {
+      "passed": true,
+      "checks": {
+        "observer_complete": true,
+        "exact_editor_frame": true,
+        "cursor_shape_preserved": true,
+        "mode_rows_preserved": true,
+        "exact_2000_viewer_cells": true,
+        "owned_input_unchanged": true,
+        "filename_consumed_locally": true,
+        "subsequent_edit_keys": true
+      },
+      "observer_words": [
+        22103,
+        1,
+        1,
+        1,
+        25,
+        25,
+        2048,
+        2048,
+        15,
+        15,
+        20483,
+        20483
+      ],
+      "capture_sha256": "afeb76a807d6f970d6c75846d4b2a93698ded1ea7ec0b223dec71d4c868207b2",
+      "file_sha256": "129dc21c92dffcee2d65f793fde98d4dd1dfb0d694a8365430681585a4d126ff",
+      "sources": {
+        "lab/bbs/file_viewer_bbs_support.py": "52f769099cd83d4f6367f241e62a585bd61aed38ba1db9835c1ff8df41d1ed77",
+        "standalone/file_directory_bbs_watch.asm": "be1b3ceb558ed82cd22af82e6fae365d359ea148b9fae1baeb1c931e11be40b9"
+      },
+      "scope": "Actual Alt-V, owned D:\\VIEW.DAT read-only page and Escape inside a stock unsaved editor. Passive full4000-byte editor return/cursor/shape plus4000-byte local viewer image, subsequent ordinary editing and unchanged generated file. Observer install creates only its owned DOS fixture, never product memory. No terminal reply injection, SIP/DSP, analog or physical acceptance."
+    },
+    "screen_reference": {
+      "report": "build/bbs-lab/results/enigma/viewer-stock-enigma-20261105/screen-reference-audit.json",
+      "report_sha256": "c536c4c33a65bd0097a9f7ba144c83529e87f4192a9ced717674a5a4c11612fb",
+      "passed": true,
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "delivered_bytes": 48365
+    }
+  },
+  "synchronet": {
+    "passed": false,
+    "report": "build/bbs-lab/results/synchronet/viewer-stock-sync-current-20261105/proxy-integration.json",
+    "report_sha256": "56fdec75ec2c31626a626022208591e4eafbb7efe6e818e4aceeaf6fcd896f19",
+    "automatic_login_observed": false,
+    "state": "Connected to CONNECT> but no script output; launch diagnosis remains open.",
+    "diagnosis": {
+      "report": "build/bbs-lab/results/synchronet/viewer-sync-launch-diagnostic-20261105/VFVIEW.BIN",
+      "dos_EXEC_error": 8,
+      "parent_exit": 0,
+      "uart_RX_dropped": 0,
+      "scope": "Separate passive INT21 diagnostic, same parent/runner; altered report extent deliberately fails the normal viewer audit. Not acceptance."
+    }
+  },
+  "existing_fixture_controls": {
+    "passed": true,
+    "cases": [
+      {
+        "name": "file_directory_bbs_watch-default",
+        "identical": true,
+        "sha256": "f799b670569938bd47ce291e2e3072a484b5f6bc0303abc1610afc00b6ac005a"
+      },
+      {
+        "name": "audio_synchronet_editor_keys-default",
+        "identical": true,
+        "sha256": "7f5c6249a024e3ef1c8a4b2b8c7fae653234564515cf2535688fd69c21bf93e1"
+      },
+      {
+        "name": "audio_synchronet_editor_keys-fd",
+        "identical": true,
+        "sha256": "47c7c2837444204c5898aa46a9bbc0a68bffec6678c9caa5a4d993668db8c249"
+      }
+    ]
+  },
+  "limits": [
+    "No SIP/audio/DSP/analog or physical acceptance.",
+    "Printer is DOSBox virtual PRN.",
+    "Synchronet viewer/editor gate remains unaccepted.",
+    "No installed release/selector/private configuration changes."
+  ]
+}

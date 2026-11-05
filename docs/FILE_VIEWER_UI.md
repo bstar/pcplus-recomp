@@ -104,8 +104,24 @@ the receipt's source proof/manifest.
 
 ## Remaining acceptance
 
-Run this exact parent inside stock Enigma/Synchronet editors and under capture,
-HOLD and printer pressure. Complete carrier-loss/reconnect/transfer/cancel and
+The [BBS and pressure receipt](validation/viewer-bbs-pressure.json) additionally
+records this exact parent returning from Alt-V to an unchanged stock Enigma
+editor, including cursor/shape, literal CP437 viewer cells and subsequent editing.
+The independent screen audit reports zero different cells at the CPR boundary.
+Five actual DOS8086/FPU-off pressure cases pass capture, HOLD, capture/printer,
+HOLD/printer and printer alone. Each receives3202 bytes while the viewer is open,
+answers fresh DSRs and returns to the exact updated1920-cell live frame/cursor.
+Capture and virtual PRN output match expected bytes exactly. The passive DOS
+trace verifies one read-only viewer open/close and continued capture ownership.
+Printer-ready polling is excluded from that bounded trace; device classification
+remains recorded. This is virtual PRN evidence, not a physical printer test.
+
+Synchronet reaches the bridge's CONNECT> prompt but does not run its automatic
+ASPECT login in the current viewer-enabled parent. Its complete editor/viewer
+gate fails despite the lower-level connection check passing. Child-launch
+diagnosis remains open; do not describe this as accepted Synchronet coverage.
+
+Complete the Synchronet editor gate, carrier-loss/reconnect/transfer/cancel and
 native DOS failure/shutdown composition. Recover configured external-viewer
 binding, exhaustive native filename-field key behavior, and remaining
 editor/key/Chat/ASPECT/emulation/protocol/Host features.

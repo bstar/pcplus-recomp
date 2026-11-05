@@ -6,9 +6,20 @@ ORG 0x100
 jmp start
 old10: dd 0
 old2f: dd 0
-report: dw 0x464f,0,0,0,0,0,0,0,0,0,0,0
+%ifdef FILE_VIEWER_ROUNDTRIP
+%define REPORT_MAGIC 0x5657
+%define REPORT_QUERY 0xd743
+%define DETAIL_BYTES 4000
+%define REPORT_BYTES 12024
+%else
+%define REPORT_MAGIC 0x464f
+%define REPORT_QUERY 0xd742
+%define DETAIL_BYTES 320
+%define REPORT_BYTES 8344
+%endif
+report: dw REPORT_MAGIC,0,0,0,0,0,0,0,0,0,0,0
 frames: times 8000 db 0
-listing: times 320 db 0
+listing: times DETAIL_BYTES db 0
 %macro save 0
  push ax
  push bx
@@ -122,6 +133,25 @@ observe_listing:
  jne .done
  mov ax,0xb800
  mov es,ax
+%ifdef FILE_VIEWER_ROUNDTRIP
+ cmp word [es:0],0756h
+ jne .done
+ cmp word [es:2],0749h
+ jne .done
+ cmp word [es:4],0745h
+ jne .done
+ cmp word [es:3842],7148h
+ jne .done
+ xor si,si
+ mov di,listing
+ mov cx,2000
+.view_page:
+ mov ax,[es:si]
+ mov [di],ax
+ add si,2
+ add di,2
+ loop .view_page
+%else
  cmp word [es:364],0x0746 ; FILE NAME
  jne .done
  cmp word [es:684],0x0754 ; TEST.PRM
@@ -147,11 +177,12 @@ observe_listing:
  add si,2
  add di,2
  loop .entry
+%endif
  mov word [report+4],1
 .done:
  ret
 hook2f:
- cmp ax,0xd742
+ cmp ax,REPORT_QUERY
  jne .chain
  or bx,bx
  jne .chain
@@ -196,10 +227,10 @@ resident_end:
 start:
  cmp byte [0x82],'T'
  je install
- mov ax,0xd742
+ mov ax,REPORT_QUERY
  xor bx,bx
  int 0x2f
- cmp word [es:di],0x464f
+ cmp word [es:di],REPORT_MAGIC
  jne failed
  mov si,di
  push es
@@ -214,12 +245,12 @@ start:
  mov ax,es
  mov ds,ax
  mov dx,si
- mov cx,8344
+ mov cx,REPORT_BYTES
  mov ah,0x40
  int 0x21
  pop ds
  jc failed
- cmp ax,8344
+ cmp ax,REPORT_BYTES
  jne failed
  mov ah,0x3e
  int 0x21
@@ -227,6 +258,24 @@ start:
  mov ax,0x4c00
  int 0x21
 install:
+%ifdef FILE_VIEWER_ROUNDTRIP
+ mov dx,view_name
+ xor cx,cx
+ mov ah,3ch
+ int 21h
+ jc failed
+ mov bx,ax
+ mov dx,view_data
+ mov cx,view_end-view_data
+ mov ah,40h
+ int 21h
+ jc failed
+ cmp ax,view_end-view_data
+ jne failed
+ mov ah,3eh
+ int 21h
+ jc failed
+%endif
  mov ax,0x3510
  int 0x21
  mov [old10],bx
@@ -247,4 +296,11 @@ install:
 failed:
  mov ax,0x4c01
  int 0x21
+%ifdef FILE_VIEWER_ROUNDTRIP
+name: db 'D:\VFVIEW.BIN',0
+view_name: db 'D:\VIEW.DAT',0
+view_data: db 'VIEWER CHECK',13,10,'READ ONLY / CP437: ',0dbh,0b1h,0c4h,13,10,'Editor stays active.',13,10
+view_end:
+%else
 name: db 'D:\FDVIEW.BIN',0
+%endif
