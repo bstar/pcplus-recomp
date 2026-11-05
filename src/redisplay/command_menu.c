@@ -11,6 +11,9 @@
 #ifdef TERMINAL_FILE_DIRECTORY
 #include "../filesystem/file_dialog.h"
 #endif
+#ifdef TERMINAL_FILE_VIEWER
+#include "../filesystem/viewer_dialog.h"
+#endif
 #ifdef PHONE_LOG_CONTROLS
 extern unsigned __far __cdecl phone_log_controls_event(unsigned,unsigned,unsigned short __far *);
 #pragma aux phone_log_controls_event "_phone_log_controls_event_far";
@@ -274,6 +277,12 @@ ENTRY(file_directory,"File Directory                   Alt-F",
  "Serial input continues between search steps. Escape returns to the terminal.\n"
  "A full page with more entries accepts another key to continue.");
 #endif
+#ifdef TERMINAL_FILE_VIEWER
+ENTRY(file_viewer,"View a File                      Alt-V",
+ "View a DOS file while terminal traffic remains serviced.\n"
+ "Home returns to the top; PgUp/PgDn select a page. Escape returns.\n"
+ "Read-only viewing preserves raw characters and clips long lines.");
+#endif
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
  ROW(script,0,0xfe00,'A'),ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
@@ -316,6 +325,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_FILE_DIRECTORY
  ,ROW(file_directory,0,0x2100,'I')
+#endif
+#ifdef TERMINAL_FILE_VIEWER
+ ,ROW(file_viewer,0,0x2f00,'V')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))
@@ -409,6 +421,9 @@ static void record_view(void)
 static void draw(void)
 {
  word i,n=0,at;
+#ifdef TERMINAL_FILE_VIEWER
+ if(phase==14){viewer_dialog_event(2,0,view);return;}
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
  if(phase==13){file_dialog_event(2,0,view);return;}
 #endif
@@ -472,6 +487,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(!recording_terminal_inspect())recording_terminal_initialize();
 #ifdef TERMINAL_REFERENCE
   reference_origin=0;
+#ifdef TERMINAL_FILE_VIEWER
+  if(key==0x2f00){phase=14;viewer_dialog_event(0,key,view);return 1;}
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
   if(key==0x2100){phase=13;file_dialog_event(0,key,view);return 1;}
 #endif
@@ -493,6 +511,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   draw();return 1;}
  if(event==4){
+#ifdef TERMINAL_FILE_VIEWER
+  if(phase==14)viewer_dialog_event(4,0,view);
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
   if(phase==13)file_dialog_event(4,0,view);
 #endif
@@ -507,6 +528,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   command_menu_action=command_menu_active=0;return 0;}
  if(!command_menu_active)return 0;
+#ifdef TERMINAL_FILE_VIEWER
+ if(phase==14&&event==3)return viewer_dialog_event(3,0,view);
+#endif
 #ifdef TERMINAL_DIRECTORY_VIEW
  if(phase==10 && (event==1 || event==3)){
   if(event==1 && key==0x2d00){directory_view_event(4,0,view);command_menu_action=key;command_menu_active=0;return 0;}
@@ -524,6 +548,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
  if(event!=1)return 1;
  if(key==0x2d00){
+#ifdef TERMINAL_FILE_VIEWER
+  if(phase==14)viewer_dialog_event(4,0,view);
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
   if(phase==13)file_dialog_event(4,0,view);
 #endif
@@ -531,6 +558,12 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(phase==12)path_dialog_event(4,0,view);
 #endif
   command_menu_action=key;command_menu_active=0;return 0;}
+#ifdef TERMINAL_FILE_VIEWER
+ if(phase==14){
+  if(viewer_dialog_event(1,key,view))return 1;
+  command_menu_active=0;return 0;
+ }
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
  if(phase==13){
   if(file_dialog_event(1,key,view))return 1;
@@ -569,6 +602,13 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   n=command_reference_event(1,key,view);
   if(n==1){command_menu_active=0;return 0;}
   if(n==0x200){reference_origin=0;category=selected=phase=notice=0;draw();return 1;}
+#ifdef TERMINAL_FILE_VIEWER
+  if(n==0x100+FILE_VIEWER_ACTION){phase=14;viewer_dialog_event(0,0,view);return 1;}
+  if(n==0x300+FILE_VIEWER_ACTION){
+   for(i=0;i<COUNT;++i)if(items[i].key==0x2f00){selected=i;break;}
+   category=items[selected].category;phase=1;draw();return 1;
+  }
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
   if(n==0x100+FILE_DIRECTORY_ACTION){phase=13;file_dialog_event(0,0,view);return 1;}
   if(n==0x300+FILE_DIRECTORY_ACTION){
@@ -637,6 +677,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
    if(i==COUNT){draw();return 1;}}
 #ifdef TERMINAL_REFERENCE
 activate:
+#ifdef TERMINAL_FILE_VIEWER
+  if(items[selected].key==0x2f00){phase=14;viewer_dialog_event(0,0,view);return 1;}
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
   if(items[selected].key==0x2100){phase=13;file_dialog_event(0,0,view);return 1;}
 #endif

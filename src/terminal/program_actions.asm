@@ -296,6 +296,12 @@ terminal_program_poll:
  call program_progress
  jmp .done ; Wait for this XOFF's physical shift-register completion too.
 .launch:
+%ifdef TERMINAL_FILE_VIEWER
+ extern _viewer_dialog_owned
+ call far _viewer_dialog_owned
+ or ax,ax
+ jnz .cancel
+%endif
 %ifdef TERMINAL_DIRECTORY_RETIREMENT
  ; Internal file transactions never EXEC a child. Keep independent
  ; capture/printer/file owners alive; shared directory claims reject aliases.

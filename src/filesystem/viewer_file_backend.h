@@ -14,4 +14,6 @@ unsigned __cdecl viewer_kernel_close(unsigned);
 unsigned __far __cdecl viewer_admit_validate(const char *);
 unsigned __far __cdecl viewer_admit_claim(const char *,void *);
 unsigned __far __cdecl viewer_admit_release(void *);
+/* Pure reservation callback over the retained canonical identity. */
+unsigned __far __cdecl viewer_file_conflict(const char *,void *);
 #endif

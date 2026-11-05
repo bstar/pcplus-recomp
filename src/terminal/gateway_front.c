@@ -8,6 +8,9 @@
 #include "../capture/capture_file.h"
 #include "../printer/printer_device.h"
 #include "../directory/phone_log_file.h"
+#ifdef TERMINAL_FILE_VIEWER
+#include "../filesystem/viewer_dialog.h"
+#endif
 extern unsigned terminal_quit,terminal_exit_code,terminal_program_kind,terminal_program_status,terminal_macro_tx_epoch;
 extern unsigned terminal_printer_count,terminal_printer_closing,terminal_printer_fault_epoch;
 extern unsigned uart_rx_dropped;
@@ -70,6 +73,9 @@ static unsigned idle(void)
 static unsigned files_ready(void)
 {
  unsigned i;
+#ifdef TERMINAL_FILE_VIEWER
+ if(viewer_dialog_owned())return 0;
+#endif
  if(gateway_files_owned() || path_session_quarantined() || !phone_log_file_child_ready())return 0;
  for(i=0;i<4;++i)if(capture_file_child_handle(i)==0xfffe)return 0;
  return printer_device_child_handle()!=0xfffe;

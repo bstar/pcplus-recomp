@@ -4,6 +4,9 @@
 #include "../capture/capture_session.h"
 #include "../printer/printer_device.h"
 #include "../directory/phone_log_file.h"
+#ifdef TERMINAL_FILE_VIEWER
+#include "../filesystem/viewer_dialog.h"
+#endif
 extern unsigned terminal_printer_count,terminal_printer_closing;
 #pragma aux terminal_printer_count "terminal_printer_count";
 #pragma aux terminal_printer_closing "terminal_printer_closing";
@@ -27,6 +30,9 @@ unsigned __far __cdecl gateway_files_run(process_result *r)
  if(!gateway_files_context() || r!=&terminal_program_result || !apart(r,sizeof(*r),descriptors,sizeof(descriptors)))return PROCESS_ARGUMENT;
  if(G.cookie!=0x4746 || G.recovery)return failed(r,GATEWAY_FILES_RECOVERY);
  if(G.active || process_handles_active_query())return failed(r,PROCESS_BUSY);
+#ifdef TERMINAL_FILE_VIEWER
+ if(viewer_dialog_owned())return failed(r,PROCESS_BUSY);
+#endif
  if(terminal_printer_count || terminal_printer_closing || !phone_log_file_child_ready())return failed(r,PROCESS_BUSY);
  for(index=0;index<5;++index){
   handle=index<4?capture_file_child_handle(index):printer_device_child_handle();

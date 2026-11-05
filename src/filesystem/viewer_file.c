@@ -47,6 +47,16 @@ static word close_owned(void)
  }
  S.token=0;R.phase=VF_CLOSED;return R.first_status;
 }
+unsigned __far __cdecl viewer_file_conflict(const char *identity,void *token)
+{
+ word i;
+ if(S.cookie!=0x5646||!token||token!=S.token||!identity)return 1;
+ for(i=0;i<64;i++){
+  if(identity[i]!=R.path[i])return 0;
+  if(!identity[i])return 1;
+ }
+ return 1;
+}
 unsigned __far __cdecl viewer_file_open(const char *path,void *token)
 {
  char absolute[128];word i,n,error,attributes,handle=0xffff,result;

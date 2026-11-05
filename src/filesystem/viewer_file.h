@@ -2,7 +2,7 @@
 #define PCPLUS_VIEWER_FILE_H
 /* Foreground DOS3+, DS=SS. One banked read-only owner; no CRT FILE object.
  * Path is a bounded DOS83 string within a readable64-byte near span. Token is
- * a stable non-null near opaque identity for the shared fixed reservation.
+ * a stable non-null near opaque identity for the shared dynamic reservation.
  * Canonical DOS identity is validated/claimed before attributes/open. Device
  * and directory targets are refused; open requests deny-write and no-inherit.
  * DOS SHARE/network enforcement is environmental, not a replacement for the

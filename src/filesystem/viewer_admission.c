@@ -5,6 +5,9 @@
 unsigned __far __cdecl viewer_admit_validate(const char *path)
 {return capture_file_validate_path(path,0);}
 unsigned __far __cdecl viewer_admit_claim(const char *path,void *token)
-{return capture_file_claim(path,token);}
+{
+ if(!token||!viewer_file_conflict(path,token))return CF_ARGUMENT;
+ return capture_file_reserve(viewer_file_conflict,token);
+}
 unsigned __far __cdecl viewer_admit_release(void *token)
-{return capture_file_unclaim(token);}
+{return capture_file_release(viewer_file_conflict,token);}

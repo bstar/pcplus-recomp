@@ -10,6 +10,9 @@
 #ifdef TERMINAL_FILE_DIRECTORY
 #include "../filesystem/file_dialog.h"
 #endif
+#ifdef TERMINAL_FILE_VIEWER
+#include "../filesystem/viewer_dialog.h"
+#endif
 #ifdef TERMINAL_ELAPSED_VIEW
 #include "elapsed_view.h"
 extern void __far __cdecl elapsed_notice_flush(void);
@@ -83,7 +86,11 @@ static word frame_rows=25,frame_cells=2000;
 /* Menus retain their25-row layout. Refresh the exposed lower background only;
  * history itself uses the whole accepted frame. No metadata/parser mutation. */
 static void refresh_tail(void)
-{word i;if(direct_clipboard)for(i=2000;i<frame_cells;++i)view[i]=live[i];}
+{word i;
+#ifdef TERMINAL_FILE_VIEWER
+ if(viewer_dialog_fullscreen())return;
+#endif
+ if(direct_clipboard)for(i=2000;i<frame_cells;++i)view[i]=live[i];}
 #else
 #define FRAME_ROWS 25
 #define FRAME_CELLS 2000
@@ -95,6 +102,9 @@ static void copy(word __far *to,const word __far *from)
  * over live BBS video, including the first paint after menu selection. */
 static void path_overlay(void)
 {
+#ifdef TERMINAL_FILE_VIEWER
+ if(command_menu_active&&viewer_dialog_cursor()!=0xffff){copy(view,live);viewer_dialog_event(2,0,view);return;}
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
  if(command_menu_active&&file_dialog_cursor()!=0xffff){
   copy(view,live);file_dialog_event(2,0,view);return;
@@ -132,10 +142,33 @@ static void cursor_restore(void)
 }
 static void hide(void)
 {
+#ifdef TERMINAL_FILE_VIEWER
+ word vp,vs;
+#endif
 #ifdef TERMINAL_PATH_CONTROL
  word p=path_dialog_cursor(),s=0;
 #ifdef TERMINAL_FILE_DIRECTORY
  word fp=file_dialog_cursor();
+#endif
+#endif
+#ifdef TERMINAL_FILE_VIEWER
+ vp=viewer_dialog_cursor();
+ if(vp!=0xffff){
+  vs=viewer_dialog_shape(shape);
+  __asm {
+   mov ah,1
+   mov cx,vs
+   int 10h
+   mov ah,2
+   xor bh,bh
+   mov dx,vp
+   int 10h
+  }
+  return;
+ }
+#endif
+#ifdef TERMINAL_PATH_CONTROL
+#ifdef TERMINAL_FILE_DIRECTORY
  if(fp!=0xffff){p=fp;s=file_dialog_shape(shape);}else
  if(p!=0xffff)s=path_dialog_shape(shape);
  if(p!=0xffff){
@@ -304,6 +337,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
 #endif
   source=(byte __far *)MK_FP(c->source_seg,0);
   snapshot=(byte __far *)MK_FP(c->snapshot_seg,c->snapshot_off);
+ #ifdef TERMINAL_FILE_VIEWER
+  viewer_dialog_bind(snapshot);
+ #endif
   live=(word __far *)MK_FP(c->live_seg,c->live_off);
   view=(word __far *)MK_FP(c->view_seg,c->view_off);
 #ifdef TERMINAL_ORIGINAL_KEYS
@@ -314,6 +350,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
    || key==0x6e00
 #ifdef TERMINAL_FILE_DIRECTORY
    || key==0x2100
+#endif
+#ifdef TERMINAL_FILE_VIEWER
+   || key==0x2f00
 #endif
 #endif
 #ifdef TERMINAL_DIRECTORY_VIEW
@@ -428,7 +467,7 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
    refresh_tail();
 #endif
    redisplay_live_ready=0;visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}
-#if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_FILE_DIRECTORY)
+#if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_FILE_DIRECTORY) || defined(TERMINAL_FILE_VIEWER)
   if(command_menu_active){
    mode=command_menu_event(3,0,view);
    if(!mode){

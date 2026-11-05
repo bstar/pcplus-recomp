@@ -1,5 +1,8 @@
 #include "directory_resource_owner.h"
 #include "session_baseline.h"
+#ifdef TERMINAL_FILE_VIEWER
+#include "../filesystem/viewer_dialog.h"
+#endif
 #ifdef DIRECTORY_SCRIPT_COMPILE
 #include "../directory/directory_compile.h"
 #define COMPILE_STAGE ((directory_resource_bundle __far *)(redisplay_snapshot+6700))
@@ -84,6 +87,9 @@ unsigned __far __cdecl terminal_directory_resources_queued(void)
 unsigned __far __cdecl terminal_directory_resources_queue(const directory_selection_proposal __far *proposal)
 {
  unsigned status,baseline;
+#ifdef TERMINAL_FILE_VIEWER
+ if(viewer_dialog_owned())return DRO_BUSY;
+#endif
  initialize();
  if(cookie!=0xd841 || terminal_directory_resources.state!=DRO_IDLE || terminal_program_pending || terminal_program_active ||
   !redisplay_active || !command_menu_active || connection_state || terminal_parser_active)return DRO_BUSY;

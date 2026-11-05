@@ -445,6 +445,12 @@ terminal_phone_log_startup_done equ $
  jmp .loop
 .idle:
  call terminal_redisplay_idle
+%ifdef TERMINAL_FILE_VIEWER
+ extern _viewer_dialog_pending
+ call far _viewer_dialog_pending
+ or ax,ax
+ jnz .loop
+%endif
 %ifdef TERMINAL_FILE_DIRECTORY
  extern _file_dialog_pending
  call far _file_dialog_pending
@@ -514,6 +520,12 @@ terminal_shutdown:
  mov ss,ax
  mov sp,terminal_stack_top
  sti
+%ifdef TERMINAL_FILE_VIEWER
+ extern _viewer_dialog_shutdown,_viewer_dialog_unsafe
+ call far _viewer_dialog_shutdown
+ or ax,ax
+ jnz .printer_closed
+%endif
 %ifdef TERMINAL_GATEWAY
  extern _gateway_quarantined
  call far _gateway_quarantined
@@ -558,6 +570,11 @@ terminal_shutdown:
  call uart_restore_hardware_state
  mov byte [hardware_active],0
 .exit:
+%ifdef TERMINAL_FILE_VIEWER
+ call far _viewer_dialog_unsafe
+ or ax,ax
+ jnz .dos_exit
+%endif
 %ifdef TERMINAL_GATEWAY
  call far _gateway_quarantined
  or ax,ax

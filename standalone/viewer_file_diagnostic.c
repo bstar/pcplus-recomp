@@ -50,6 +50,11 @@ int main(void)
  CHECK(viewer_file_open(path,&token)==VF_CLAIM);
  CHECK(viewer_file_inspect(&s)==VF_OK&&s.phase==VF_CLOSED&&!s.claimed&&s.handle==0xffff&&s.claim_error==CF_BUSY);
  CHECK(capture_file_cleanup()==CF_OK);
+ CHECK(capture_file_claim("D:\\RESERVED.BIN",&checks)==CF_OK);
+ CHECK(viewer_file_open(path,&token)==VF_OK&&viewer_file_close()==VF_OK);
+ CHECK(capture_file_begin("D:\\RESERVED.BIN",CF_NEW)==CF_BUSY);
+ CHECK(viewer_file_open("D:\\RESERVED.BIN",&token)==VF_CLAIM);
+ CHECK(capture_file_unclaim(&checks)==CF_OK);
  CHECK(viewer_file_open("D:\\SUB",&token)==VF_ATTRIBUTES);
  CHECK(viewer_file_close()==VF_ATTRIBUTES);
  r=viewer_file_open("D:\\MISSING.BIN",&token);CHECK(r==VF_ATTRIBUTES||r==VF_CANONICAL);

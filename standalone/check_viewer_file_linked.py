@@ -92,7 +92,7 @@ def main():
   s,path=m.snapshot();assert s[0:3]==(3,want,error) and s[6:9]==(65535,0,0)
   assert m.calls.count('close')==closes
   calls=m.calls[:];assert m.bank('close')==want and m.calls==calls
-  assert m.uc.mem_read(m.symbols['_capture_reservation']+8,2)==b'\0\0'
+  assert m.uc.mem_read(m.symbols['_capture_reservation'],6)==b'\0'*6
   rows.append(dict(case=fault,status=want,DOS_calls=m.calls,closed=closes,passed=True))
  for fault,want,error,operation in [('read-error',9,5,'read'),('read-too-many',14,0,'read'),('seek-error',10,25,'seek'),('seek-wrong',14,0,'seek')]:
   m=Owner(binary,fault);assert m.open()==0
@@ -113,6 +113,7 @@ def main():
    if fault=='release-error':m.uc.mem_write(m.symbols['_capture_reservation']+6,b'\1\0')
    assert m.bank('close')==({'close-error':11,'read-close-error':9,'release-error':12}[fault])
   s,path=m.snapshot();assert s[0]==4 and s[7]==1 and path==b'D:\\DATA.BIN'
+  assert bytes(m.uc.mem_read(m.symbols['_capture_reservation'],6))!=b'\0'*6
   assert s[3]==(6 if fault in ['close-error','read-close-error'] else 0)
   assert s[5]==(2 if fault=='release-error' else 0)
   assert m.calls.count('close')==(0 if fault=='invalid-handle' else 1)
