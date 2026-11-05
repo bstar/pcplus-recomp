@@ -115,5 +115,13 @@
     "Synthetic overlay images are static analysis only; actual DOS workflows execute the unmodified original.",
     "100-page cap and zero-length trimming concern are static observations, not verified runtime defects.",
     "External-viewer configuration and full serviced handle/fault lifecycle remain pending."
-  ]
+  ],
+  "decoder_component": {
+    "report": "docs/validation/viewer-decode.json",
+    "sha256": "ad84388f522135b416e7dce2b2be1b8c5e0c8aec9cebab9fe3aa807dd7e873a2",
+    "binary_sha256": "21005614a234a072106a15f6679a05e2467518c7a1061ba7ad7570712de0bcb6",
+    "state_bytes": 26,
+    "persistent_DGROUP_bytes": 0,
+    "scope": "Source-only bounded decoder component, no maintained viewer UI/handle integration or deployment."
+  }
 }

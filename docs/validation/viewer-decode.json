@@ -1,0 +1,120 @@
+{
+  "passed": true,
+  "binary_sha256": "21005614a234a072106a15f6679a05e2467518c7a1061ba7ad7570712de0bcb6",
+  "state_bytes": 26,
+  "decoder_code_bytes": 1314,
+  "persistent_DGROUP_bytes": 0,
+  "DOS": {
+    "vectors": 175,
+    "state_placements": 2,
+    "checks": 45745,
+    "report": {
+      "path": "build/viewer-decode-dos-20261105/result.json",
+      "sha256": "3904dc76175e7c6e552e3c26fd4aa7fb4386907bc5304b6e22f5170025806d81"
+    }
+  },
+  "linked": {
+    "inputs": 66,
+    "report": {
+      "path": "build/viewer-decode-linked-20261105/result.json",
+      "sha256": "e162173572e3f432c305a1f1a29e5c4b04e6fc4016cb48f4b36de805a86697e2"
+    }
+  },
+  "public_source": {
+    "path": "build/viewer-decode-public-source-20261105/result.json",
+    "sha256": "6ffd03dd2e2d387853698e1165d4b6c969bdd6d1ab4e1a91c3802b55d2832afb"
+  },
+  "original_receipt": {
+    "path": "docs/validation/file-viewer-original.json",
+    "sha256": "a1eed8a9b07e3816e363648e63646e123dd29677e118fc543c7071520096a57a"
+  },
+  "original_comparisons": [
+    {
+      "case": "long",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/long/frame-2.bin",
+        "sha256": "e92e8a46e4419fba70abf51e1e65b1d49b18e526feb115f3a70ba86d3a784c59"
+      }
+    },
+    {
+      "case": "binary",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/binary/frame-2.bin",
+        "sha256": "a5e31358aadafcc5c808358f754a3b73ba4bf9d479fa97178d598c16af95e53a"
+      }
+    },
+    {
+      "case": "empty",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/empty/frame-2.bin",
+        "sha256": "870da8cd73daf62c354db942a1f8a0ae5330f9aea9293569dca5838e8182c875"
+      }
+    },
+    {
+      "case": "unterminated",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/unterminated/frame-2.bin",
+        "sha256": "c197b3da3e9a302b77836b9ac79d48c2117e90834908d67e24c6b651f38f07a8"
+      }
+    },
+    {
+      "case": "no-lf",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/no-lf/frame-2.bin",
+        "sha256": "62219fdd17033eb7a5cb97043a893cdcc1dba34e36846f266e57892a8bdee7d7"
+      }
+    },
+    {
+      "case": "exact-page",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/exact-page/frame-2.bin",
+        "sha256": "fad8cc87ab81d12efa862dd6e6338285bfc33b2dd8a05260cb17f8d2946972cc"
+      }
+    },
+    {
+      "case": "large",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/large/frame-0.bin",
+        "sha256": "abf620b0ad509748615d0bcb5f144e36b730709e784903e0e9088465b9711d08"
+      }
+    },
+    {
+      "case": "retry",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/retry/frame-4.bin",
+        "sha256": "c5bb13aa40c4323afa4bed21bb6133f5f8b15b51e6ab80e57c19cf9ebe447e34"
+      }
+    }
+  ],
+  "original_inputs": [],
+  "manifest": {
+    "path": "build/viewer-decode-bank-20261105/manifest.json",
+    "sha256": "1b0cdeb9b868bd594acc15446f730aa2a82551a02b6b9fe68e963b5e3546b04c"
+  },
+  "sources": {
+    "src/filesystem/viewer_decode.c": "098acc45d5a9b7ba2b59dcd521aacbf086932db52c153d1dcc9ef5d753408c54",
+    "src/filesystem/viewer_decode.h": "ff8fb099d5e80042a7e3c67f6e9ddeaac33a3e23d4ad3d067d1f8a224e789079",
+    "standalone/viewer_decode_diagnostic.c": "2027ecf43ba033250a016f6269305d0379f9fc1d18fa3f4a050a305bd8396b2f",
+    "standalone/build_viewer_decode.py": "2feb92be9e5532d26db06d3d288284f0ed9efb18a0cae43ace6913b9306dfe6a",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55",
+    "standalone/test_viewer_decode_dos.py": "99a0e2396b9135e422c4f425777a2cb52e89ff077603b4ad948b87b446404a9c",
+    "standalone/check_viewer_decode_linked.py": "d8d65427f42cc4a2046e8923a2761c7fafc38e22b9fc8bec2a220900f3a28335",
+    "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+    "standalone/record_viewer_decode.py": "938f2549af57abffd4f9b2244df8f3abf14da3f7a73cd78006b1f7d3ad14c32a"
+  },
+  "scope": "Source-only banked incremental decoder;175 actualDOS8086 vectors at two state placements,66 linked far-page/state/ABI/no-interrupt cases,15360 content bytes matched to eight original viewer captures and byte-identical five-file public-source rebuild. No terminal/UI/file-handle integration or physical deployment/acceptance.",
+  "remaining": [
+    "Read-only DOS handle/seek ownership, canonical/share checks, failure/close quarantine.",
+    "Serviced viewer UI, paging checkpoints, exact frame/cursor restoration and Alt-V dispatch.",
+    "Capture/HOLD/PRN, live BBS/editor, carrier-loss/reconnect/transfer composition.",
+    "Configured external-viewer binding, physical DOS6.22/Boca/SIP route and full remaining parity inventory."
+  ]
+}

@@ -1,9 +1,10 @@
 # Internal View a File recovery
 
 The internal viewer's read/format/page contract is now recovered from the original
-2.01 code and eight original-executable DOSBox workflows. The maintained viewer
-is still pending. This evidence does not enable Alt-V or change the selected
-physical installation.
+2.01 code and eight original-executable DOSBox workflows. A source-built
+[incremental decoder](FILE_VIEWER_DECODER.md) now passes component checks;
+the maintained viewer UI/handle owner is still pending. This evidence does not
+enable Alt-V or change the selected physical installation.
 
 [Provenance](../reconstruction/file_viewer/provenance.json) binds the original
 regions and REA Evidence IDs. The [runtime receipt](validation/file-viewer-original.json)
