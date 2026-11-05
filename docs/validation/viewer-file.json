@@ -1,0 +1,324 @@
+{
+  "passed": true,
+  "binary_sha256": "24fc2ad8c37a40b0f8b21512d361c76cb41d32120050264db2681496598bc3fa",
+  "owner_bytes": 90,
+  "snapshot_bytes": 84,
+  "owner_object_FILE_CODE_bytes": 1568,
+  "persistent_DGROUP_bytes": 0,
+  "DOS": {
+    "checks": 897,
+    "report": {
+      "path": "build/viewer-file-real-dos-20261105/result.json",
+      "sha256": "0ff73085953f20179bacde731278f2a31a612046b413baa5d8d0ebee8e008c1a"
+    }
+  },
+  "linked": {
+    "inputs": 25,
+    "cases": [
+      {
+        "case": "canonical-error",
+        "status": 4,
+        "DOS_calls": [
+          "canonical"
+        ],
+        "closed": 0,
+        "passed": true
+      },
+      {
+        "case": "canonical-device",
+        "status": 4,
+        "DOS_calls": [
+          "canonical"
+        ],
+        "closed": 0,
+        "passed": true
+      },
+      {
+        "case": "attributes-error",
+        "status": 6,
+        "DOS_calls": [
+          "canonical",
+          "attributes"
+        ],
+        "closed": 0,
+        "passed": true
+      },
+      {
+        "case": "directory",
+        "status": 6,
+        "DOS_calls": [
+          "canonical",
+          "attributes"
+        ],
+        "closed": 0,
+        "passed": true
+      },
+      {
+        "case": "volume",
+        "status": 6,
+        "DOS_calls": [
+          "canonical",
+          "attributes"
+        ],
+        "closed": 0,
+        "passed": true
+      },
+      {
+        "case": "open-error",
+        "status": 7,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open"
+        ],
+        "closed": 0,
+        "passed": true
+      },
+      {
+        "case": "device-error",
+        "status": 8,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "close"
+        ],
+        "closed": 1,
+        "passed": true
+      },
+      {
+        "case": "character-device",
+        "status": 8,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "close"
+        ],
+        "closed": 1,
+        "passed": true
+      },
+      {
+        "case": "read-error",
+        "status": 9,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "read",
+          "close"
+        ],
+        "passed": true
+      },
+      {
+        "case": "read-too-many",
+        "status": 14,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "read",
+          "close"
+        ],
+        "passed": true
+      },
+      {
+        "case": "seek-error",
+        "status": 10,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "seek",
+          "close"
+        ],
+        "passed": true
+      },
+      {
+        "case": "seek-wrong",
+        "status": 14,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "seek",
+          "close"
+        ],
+        "passed": true
+      },
+      {
+        "case": "close-error",
+        "quarantined": true,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "close"
+        ],
+        "first_status": 11,
+        "close_error": 6,
+        "release_error": 0,
+        "passed": true
+      },
+      {
+        "case": "read-close-error",
+        "quarantined": true,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "read",
+          "close"
+        ],
+        "first_status": 9,
+        "close_error": 6,
+        "release_error": 0,
+        "passed": true
+      },
+      {
+        "case": "release-error",
+        "quarantined": true,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "close"
+        ],
+        "first_status": 12,
+        "close_error": 0,
+        "release_error": 2,
+        "passed": true
+      },
+      {
+        "case": "invalid-handle",
+        "quarantined": true,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open"
+        ],
+        "first_status": 14,
+        "close_error": 0,
+        "release_error": 0,
+        "passed": true
+      },
+      {
+        "case": "reservation-busy-before-open",
+        "passed": true,
+        "DOS_calls": [
+          "canonical"
+        ]
+      },
+      {
+        "case": "far-buffer-32-bit-position",
+        "passed": true,
+        "DOS_calls": [
+          "canonical",
+          "attributes",
+          "open",
+          "device",
+          "seek",
+          "read",
+          "close"
+        ]
+      },
+      {
+        "case": "count257",
+        "argument_preserves_owner_output": true,
+        "passed": true
+      },
+      {
+        "case": "buffer-wrap",
+        "argument_preserves_owner_output": true,
+        "passed": true
+      },
+      {
+        "case": "over-1MB",
+        "argument_preserves_owner_output": true,
+        "passed": true
+      },
+      {
+        "case": "null-buffer",
+        "argument_preserves_owner_output": true,
+        "passed": true
+      },
+      {
+        "case": "owner-alias",
+        "argument_preserves_owner_output": true,
+        "passed": true
+      },
+      {
+        "case": "output-overlap",
+        "argument_preserves_owner_output": true,
+        "passed": true
+      },
+      {
+        "case": "reentrant-owner-refused",
+        "passed": true
+      }
+    ],
+    "report": {
+      "path": "build/viewer-file-faults-20261105/result.json",
+      "sha256": "76aa199e246edca72d79cf112bf42e879d0e6aa5c0091e4c45e03b6f43a1939c"
+    }
+  },
+  "public_source": {
+    "path": "build/viewer-file-public-source-20261105/result.json",
+    "sha256": "7d9dd1b9226b7e57c12c9deabc14c529a03851a2f2f9db9fb1640179d6b5bdcc"
+  },
+  "manifest": {
+    "path": "build/viewer-file-accept-20261105/manifest.json",
+    "sha256": "7d5362ca21b685eec2009d2621156b35ae6658a38125ffa5cd0cdc642c443e98"
+  },
+  "sources": {
+    "src/filesystem/viewer_file.c": "320d92867292db9bd780bed673984ae453e1afc86541acb5fb598199174b9a96",
+    "src/filesystem/viewer_admission.c": "8808d4ff2b70e55d274b40fa92d8cf9b1cb1517bec39dbe3fc123b28e01b1e1c",
+    "src/capture/capture_file.c": "a6301ab3e690380f783b015b1b77492878b07f5ddb53527f10d3a87fd971206e",
+    "src/capture/capture_reservation.c": "9ee39b9a6690a6ae25185c46a6d06d4cec9d548274e92d94259cfd9fb7c99079",
+    "src/capture/capture_fs.c": "51b17907493fbe6ab11b82b7e5b2fdae4a1db47b8d5a843b9d839878ae84f5f8",
+    "standalone/viewer_file_diagnostic.c": "35353f27197eaed30db02a0a306b2dd6bab6a926be37fc1ac48eb8175ce46005",
+    "src/filesystem/viewer_file.h": "cf8165da7b4ed7e001c316c43b88668a3eb3c7ad594009ceb20995f231c9e416",
+    "src/filesystem/viewer_file_backend.h": "202b867861c8e28398e0e732fd131c7ef54f4d6d50da80224796af39f321156f",
+    "src/filesystem/viewer_kernel.asm": "61111dff40ddbe58fed3c52c312717e43cb73cd68925305721cd915a15c26bb9",
+    "src/capture/capture_file.h": "63b97b4ba134a85cd5fea6fdece8b3f75e844fcc0592d3c4fbc6668b09773bee",
+    "src/capture/capture_reservation.h": "063426bd35513f20420aa9e6cd718ae1018c508c1bed38f58d9fd2fce334301c",
+    "src/capture/capture_fs.h": "806b050d4b9ebc1dd66c4d4d30d9b08e2e5256043eb51e7f07aba69524512155",
+    "standalone/build_viewer_file.py": "f847a4450121f419cabee9c17bb2d7e469aa59e71bc13bdb25080564cfc153de",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55",
+    "standalone/test_viewer_file_dos.py": "52e03e6a962065fcced1bdc7e1bac3ce8fa6f4535d2e0d0ad87fbae33f560702",
+    "standalone/check_viewer_file_linked.py": "86f623b84a5c5c5b8b5bfe4a9422fdfa7f4c01a87cd7bd6ae5c5d7ec8f8533ac",
+    "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+    "standalone/record_viewer_file.py": "c933660830f7de685d60892be220c5d563b6a879ebf4be9f913b2534b71c0cbc"
+  },
+  "original_inputs": [],
+  "scope": "Read-only FILE_CODE owner component with real capture reservation.897 actualDOS8086 checks,25 linked modeled-DOS error/ABI cases and byte-identical14-file original-free rebuild. Actual media faults, DOS6.22/SHARE enforcement, serviced terminal/viewer UI and hardware are not established.",
+  "retained_attempts": [
+    {
+      "path": "build/viewer-file-dos-20261105",
+      "reason": "One diagnostic assertion compared stale idle snapshot after an explicit close; fixture corrected, no owner change."
+    },
+    {
+      "path": "build/viewer-file-accept-dos-20261105",
+      "reason": "897 DOS checks passed; outer verifier rejected expected DOSBox readonly attribute sidecar."
+    },
+    {
+      "path": "build/viewer-file-native-20261105",
+      "reason": "897 DOS checks passed; outer verifier expected sidecar01 rather than observed00 plus host readonly mode. Corrected fresh verifier passes."
+    }
+  ],
+  "remaining": [
+    "Compose owner and decoder with retained read-ahead and paging offsets.",
+    "Serviced viewer UI, frame/cursor restoration, Alt-V dispatch, capture/HOLD/PRN/BBS/carrier/transfer composition.",
+    "Child/exit admission for uncertain viewer ownership and configured external-viewer integration.",
+    "Physical DOS6.22/Boca/SIP acceptance and full remaining parity gates."
+  ]
+}

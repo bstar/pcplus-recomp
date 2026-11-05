@@ -123,5 +123,13 @@
     "state_bytes": 26,
     "persistent_DGROUP_bytes": 0,
     "scope": "Source-only bounded decoder component, no maintained viewer UI/handle integration or deployment."
+  },
+  "file_owner_component": {
+    "report": "docs/validation/viewer-file.json",
+    "sha256": "099e38faa9f1c62d3b21e1d49a1a4282f3a62a3aeb864fa71b9217e78f7b6c48",
+    "binary_sha256": "24fc2ad8c37a40b0f8b21512d361c76cb41d32120050264db2681496598bc3fa",
+    "owner_bytes": 90,
+    "persistent_DGROUP_bytes": 0,
+    "scope": "Read-only DOS handle/claim component; not linked into the serviced terminal or viewer UI; no deployment or physical acceptance."
   }
 }
