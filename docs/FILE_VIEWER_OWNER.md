@@ -2,14 +2,16 @@
 
 The [file owner](../src/filesystem/viewer_file.c) now supplies the source-built
 read/seek/close prerequisite for the [incremental decoder](FILE_VIEWER_DECODER.md).
-It remains a standalone component. The [validation receipt](validation/viewer-file.json)
-binds actual DOS, linked fault injection and a public-source reproduction.
-Alt-V and the physical installation are unchanged.
+The initial [component receipt](validation/viewer-file.json) binds actual DOS,
+linked fault injection and a public-source reproduction. The later
+[serviced viewer](FILE_VIEWER_UI.md) adds terminal integration, dynamic-reservation
+admission and updated owner checks. The physical installation is unchanged.
 
 ## File and reservation lifetime
 
-The owner keeps90 bytes of state in FILE_CODE; its object occupies1568 bytes
-of that bank and emits zero bytes in other object segments. A read-only84-byte
+The owner keeps90 bytes of state in FILE_CODE; the initial object occupied1568
+bytes, and the dynamic-reservation callback increases it to1640 bytes. Both
+emit zero bytes in other object segments. A read-only84-byte
 snapshot exposes status, handle number, claim, position and canonical path.
 Querying the snapshot does not transfer ownership. Its public interface uses
 far cdecl calls with DS=SS, while the small DOS boundary shares FILE_CODE.
@@ -18,9 +20,11 @@ A caller supplies a stable non-null near opaque token. The existing capture
 validator rejects malformed DOS83 paths, wildcards, devices, traversal and
 unbounded strings. DOS6000 canonicalization is mandatory; the absolute result
 is normalized, revalidated and reserved before attributes/open. All later path
-operations use that admitted absolute name. The normal capture fixed-reservation
+operations use that admitted absolute name. The shared capture reservation
 mechanism rejects both an active writer's alias and a writer attempting to open
-or replace the viewer's reserved file.
+or replace the viewer's reserved file. The viewer now uses its dynamic slot,
+coexisting with the call log's fixed claim; the original standalone checkpoint
+used the fixed slot before that application interaction was exposed.
 
 Directories/volume entries are refused. DOS3DA0 requests read-only access,
 deny-write sharing and no inheritance. DOS4400 then rejects a character-device
@@ -53,6 +57,10 @@ no reset that discards unresolved ownership, and this component does not yet
 provide an application recovery/child-launch policy for it.
 
 ## Validation
+
+The following counts describe the initial component checkpoint. The later
+[UI receipt](validation/viewer-ui.json) repeats the owner with902 actual DOS
+checks (including fixed-claim coexistence) and25 updated linked cases.
 
 - 897 actual DOS checks execute with8086/FPU-off DOSBox: binary reads into a
   far allocation, seek/read across64KB and at69,696, short/zero EOF reads,

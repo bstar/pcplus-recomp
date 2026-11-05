@@ -1,0 +1,906 @@
+{
+  "passed": true,
+  "binary_sha256": "1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e",
+  "source_commit": "c89bc12a73a2e029f1e742de4fbf9eec2127f004",
+  "workflows": [
+    {
+      "case": "cancel",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "original_prompt_geometry": true,
+        "prompt_cursor": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-cancel-20261105/result.json",
+        "sha256": "9fc4825ea598b38a821892ffa606e59981911a74cc81a34fda851cfd9965778b"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-cancel-20261105-cancel/VIEWUI.BIN",
+          "sha256": "54b3c6a406c96b266ee60096dee1c1e7c38c53d97fe626ac254d46826de98540"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-cancel-20261105-cancel/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-cancel-20261105-cancel/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-cancel-20261105-cancel/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-cancel-20261105-cancel/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-cancel-20261105-cancel/VIEWOBS.COM",
+          "sha256": "0270b2109722a6e9bea6b46413ed042d538707fad672121514cd2e1de6e4d2c5"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-cancel-20261105-cancel/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-cancel-20261105-cancel/dosbox.conf",
+          "sha256": "9832b731875c8846ea0fa3328fa1d1d1437c713213e1b4c1ca4874721f1bb988"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-cancel-20261105-cancel/result.json",
+          "sha256": "ad7d736b089bc4376f16c37a480b5dd243415a195eb6bcb62548e55cd62e8bfe"
+        }
+      ]
+    },
+    {
+      "case": "page",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "exact_2000_view_cells": true,
+        "offscreen_cursor_original_shape": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-page-20261105/result.json",
+        "sha256": "0c15629a4bb15c84af284b4666dd895fe5b58c7ae1e6698612e0df165cec1ab6"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-page-20261105-page/VIEWUI.BIN",
+          "sha256": "90a6c39ed5958d0d54022f7031301ff16b6ebb67ecce5c4121a9c31c037beb4b"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-page-20261105-page/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-page-20261105-page/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-page-20261105-page/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-page-20261105-page/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-page-20261105-page/VIEWOBS.COM",
+          "sha256": "79e4ae86a918e10929c071270855d948e1155d17bae07a4f148093ac0d385a75"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-page-20261105-page/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-page-20261105-page/dosbox.conf",
+          "sha256": "53fc5b821686de05fe9edc7288beef5e98d0704f3f11d6317fca1a0c9b93ac30"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-page-20261105-page/result.json",
+          "sha256": "0a7baee9647566d73b5d19d2f7eb36eeba6bb82d4b77bd1c6058e6b75d0e3560"
+        }
+      ]
+    },
+    {
+      "case": "next",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "exact_2000_view_cells": true,
+        "offscreen_cursor_original_shape": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-next-20261105/result.json",
+        "sha256": "83025db3f0bf107bd7b802a94d06276a0c6d0ee33f95a7847e54269a46ccede4"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-next-20261105-next/VIEWUI.BIN",
+          "sha256": "7df5605e4af45904cb2077690ebb39b87677702594192301f4e12d7057cc7938"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-next-20261105-next/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-next-20261105-next/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-next-20261105-next/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-next-20261105-next/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-next-20261105-next/VIEWOBS.COM",
+          "sha256": "990a314737fc373e790006f2f6f49d7ad3720cc92c05b574767d56c6b9813e5f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-next-20261105-next/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-next-20261105-next/dosbox.conf",
+          "sha256": "3a39467458ef03ec20c9b84f23f9c05463fe8ba56c8c8fe4ec2ce4fd7210f664"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-next-20261105-next/result.json",
+          "sha256": "71d2670cc71e784ee233cdddf0dd687d95e6b21e6b7fed4b3e474af597250f06"
+        }
+      ]
+    },
+    {
+      "case": "home",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "exact_2000_view_cells": true,
+        "offscreen_cursor_original_shape": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-home-20261105/result.json",
+        "sha256": "656e78ad2e906a2e18183f2337c092b5f961e3a01def5710b17a421c79809a18"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-home-20261105-home/VIEWUI.BIN",
+          "sha256": "34148d8901e3b0628734f9e12d51b67614ddb4fc52aeeea7d8d688a4e6410ced"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-home-20261105-home/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-home-20261105-home/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-home-20261105-home/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-home-20261105-home/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-home-20261105-home/VIEWOBS.COM",
+          "sha256": "bcb644bafd4898008c024dbca0494dbcd4d86b63f8952ad0838deb44d64fdbd0"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-home-20261105-home/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-home-20261105-home/dosbox.conf",
+          "sha256": "4bb214243eeeb0143c9758e4239d4ee558046d045b167c048a4bc3d4de883944"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-home-20261105-home/result.json",
+          "sha256": "e9361221c36d81176460a2c3aba4aafe3316c67b50406f3bddbc29852794036b"
+        }
+      ]
+    },
+    {
+      "case": "missing",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "not_found": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-missing-20261105/result.json",
+        "sha256": "2773946288dde1357bc91dc0ba1956f3d7051d30ec620c338dd1c176389a4e94"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-missing-20261105-missing/VIEWUI.BIN",
+          "sha256": "59d14603221ee77dbb76c4b1e60e7c8cb655af825ff725358723ee354aed5cae"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-missing-20261105-missing/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-missing-20261105-missing/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-missing-20261105-missing/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-missing-20261105-missing/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-missing-20261105-missing/VIEWOBS.COM",
+          "sha256": "3fa7c674b0445a553864cb5637f5130e9b9eb41bcddefee7d1cd02cb869527b0"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-missing-20261105-missing/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-missing-20261105-missing/dosbox.conf",
+          "sha256": "2577bae416da4f1513a043112d6f428b5ad9cef94bbab82edebc7b6e31f2d22f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-missing-20261105-missing/result.json",
+          "sha256": "f324a13c5c2667412a5488dde5b0a0c654e43597a5868973eacf10a8e02e3ebc"
+        }
+      ]
+    },
+    {
+      "case": "binary",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "exact_2000_view_cells": true,
+        "offscreen_cursor_original_shape": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-binary-20261105/result.json",
+        "sha256": "bbe0594bfaf00c6f0403b0a58b89f1f8726e7e35380367d9be4d82052f299edf"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-binary-20261105-binary/VIEWUI.BIN",
+          "sha256": "3ab36e5561fb944a69fa9f5ade6c71c0986fffedc306dea7b9546b1fe52079c5"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-binary-20261105-binary/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-binary-20261105-binary/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-binary-20261105-binary/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-binary-20261105-binary/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-binary-20261105-binary/VIEWOBS.COM",
+          "sha256": "cb67851e2493db7a69727939f6f1dcfee1fbaf4c98db7e32e973a13f767eb638"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-binary-20261105-binary/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-binary-20261105-binary/dosbox.conf",
+          "sha256": "3f2de361aedad749fc3b290b22e2c5a34958f0bb12970a40608ec613d72f102e"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-binary-20261105-binary/result.json",
+          "sha256": "009180cb273f31c46f2fa10801e8e18a821125bcd31700e3b2059a78fb98a929"
+        }
+      ]
+    },
+    {
+      "case": "empty",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "exact_2000_view_cells": true,
+        "offscreen_cursor_original_shape": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-empty-20261105/result.json",
+        "sha256": "e4dcc95035d1dfea864e85d229d2b5923a12e206a3c4d4fde4b0611d29bff639"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-empty-20261105-empty/VIEWUI.BIN",
+          "sha256": "d32df0928e8ae1234392a515b17b3fecbfddb9ffe5c1f495591f894734bd9f04"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-empty-20261105-empty/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-empty-20261105-empty/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-empty-20261105-empty/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-empty-20261105-empty/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-empty-20261105-empty/VIEWOBS.COM",
+          "sha256": "0333096d57405ae638d749eeac82388deac004a5e36b76aaa826f44e18f73d81"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-empty-20261105-empty/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-empty-20261105-empty/dosbox.conf",
+          "sha256": "deaceeae2d3f263937f73086c65528be1b119d9762ef9560b33ee6b253b543e0"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-empty-20261105-empty/result.json",
+          "sha256": "15706aeff609745873bfb02a80fd6e4b504fc47d5db92423078e4e1fbedcf2da"
+        }
+      ]
+    },
+    {
+      "case": "reference",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "exact_2000_view_cells": true,
+        "offscreen_cursor_original_shape": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-reference-20261105/result.json",
+        "sha256": "9acf30a77c87b745130bd51d7343ab390d0d38c650a0ca7dbfcdea422c1c81a4"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-reference-20261105-reference/VIEWUI.BIN",
+          "sha256": "9077fbeea95b3c5887c5a5554b7cdf81d061ffae860d15c07df6028ce46ad2f3"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-reference-20261105-reference/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-reference-20261105-reference/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-reference-20261105-reference/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-reference-20261105-reference/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-reference-20261105-reference/VIEWOBS.COM",
+          "sha256": "79e4ae86a918e10929c071270855d948e1155d17bae07a4f148093ac0d385a75"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-reference-20261105-reference/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-reference-20261105-reference/dosbox.conf",
+          "sha256": "d7ee6db8b7b2c89104f6c24b1484e2f6f4fe246884c7d050a71cf65bdb6cd319"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-reference-20261105-reference/result.json",
+          "sha256": "5be13d6b24556938528baedc52a3e71c543359d5d63c08141c984ff171a7b0c7"
+        }
+      ]
+    },
+    {
+      "case": "browser",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "exact_2000_view_cells": true,
+        "offscreen_cursor_original_shape": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-browser-20261105/result.json",
+        "sha256": "2663f200adb16f3afa1ecb8e3bba5f46e739133b9a1bf9e4a1b2d65b2bb3c363"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-browser-20261105-browser/VIEWUI.BIN",
+          "sha256": "9077fbeea95b3c5887c5a5554b7cdf81d061ffae860d15c07df6028ce46ad2f3"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-browser-20261105-browser/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-browser-20261105-browser/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-browser-20261105-browser/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-browser-20261105-browser/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-browser-20261105-browser/VIEWOBS.COM",
+          "sha256": "79e4ae86a918e10929c071270855d948e1155d17bae07a4f148093ac0d385a75"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-browser-20261105-browser/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-browser-20261105-browser/dosbox.conf",
+          "sha256": "acd5345bb2600f9480d801d9e3631cb611ae8b0d052814aa41298fe907e05534"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-browser-20261105-browser/result.json",
+          "sha256": "eca1c64d17c366a75e308231b1d5bc30fb6c878d4712832ac9036e10da1cff1c"
+        }
+      ]
+    },
+    {
+      "case": "loading-cancel",
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_VIEWOBS.COM": true,
+        "fixture_unchanged_PAGE.DAT": true,
+        "fixture_unchanged_BINARY.DAT": true,
+        "fixture_unchanged_EMPTY.DAT": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "passive_before_target_after_and_vector_restore": true,
+        "exact_terminal_frame_restore": true,
+        "exact_cursor_and_shape_restore": true,
+        "drive_and_CWD_restored": true,
+        "keyboard_after_viewer": true,
+        "post_view_query": true,
+        "post_view_display": true,
+        "original_prompt_geometry": true,
+        "prompt_cursor": true
+      },
+      "report": {
+        "path": "build/viewer-ui-verified-loading-cancel-20261105/result.json",
+        "sha256": "397d636ab5ae0af5864034b6e438dd20a09cf1c264f8b39a5a690a31393d8701"
+      },
+      "artifacts": [
+        {
+          "path": "build/connection-dos/viewer-ui-verified-loading-cancel-20261105-loading-cancel/VIEWUI.BIN",
+          "sha256": "eb44f77aeb50d11ea2fd280517d92e3990e041888dd42a58fbbd6ed8f8eff7b4"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-loading-cancel-20261105-loading-cancel/BEFORE.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-loading-cancel-20261105-loading-cancel/AFTER.BIN",
+          "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-loading-cancel-20261105-loading-cancel/SCREEN.BIN",
+          "sha256": "5637b528da9dd383c0d4b9201b08fddc5e607090e03c9a82cac420735af62f0f"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-loading-cancel-20261105-loading-cancel/serial.bin",
+          "sha256": "1b909f87b540daa5366795925bbe217996690e5247b741d810b7e6230e772a69"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-loading-cancel-20261105-loading-cancel/VIEWOBS.COM",
+          "sha256": "0270b2109722a6e9bea6b46413ed042d538707fad672121514cd2e1de6e4d2c5"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-loading-cancel-20261105-loading-cancel/TEST.PRM",
+          "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-loading-cancel-20261105-loading-cancel/dosbox.conf",
+          "sha256": "928d1295f29f12bcd1bc8fd5a681d171914facb6d441c7031597b6c4310f302a"
+        },
+        {
+          "path": "build/connection-dos/viewer-ui-verified-loading-cancel-20261105-loading-cancel/result.json",
+          "sha256": "641f0c9f6c547499b11d802859fb259eb5b0692c1d02d4fe5134c8898d4f4487"
+        }
+      ]
+    }
+  ],
+  "service": {
+    "report": {
+      "path": "build/viewer-ui-serviced-20261105/result.json",
+      "sha256": "8a3c7a0698e765ff80c87c500ee898dc4c808fb14753f4e5cad61d8dcca4be4e"
+    },
+    "checks": {
+      "configured_hangup_reached_wire": true,
+      "DOS_expected_exit": true,
+      "hardware_restored": true,
+      "PRM_unchanged": true,
+      "binary_unchanged": true,
+      "no_peer_errors": true,
+      "no_unexpected_commands": true,
+      "fixture_unchanged_VIEWOBS.COM": true,
+      "fixture_unchanged_PAGE.DAT": true,
+      "actual_init_and_dial": true,
+      "actual_DOS_CPR": true,
+      "actual_DOS_DA": true,
+      "immediate_banner_not_dropped": true,
+      "online_triggers_sent": true,
+      "observer_and_vector_restore": true,
+      "exact_local_page": true,
+      "incoming_query_while_viewer_open": true,
+      "exact_updated_live_frame_after_escape": true,
+      "updated_live_cursor_after_escape": true,
+      "later_query_and_keyboard": true,
+      "owned_file_unchanged": true,
+      "CWD_unchanged": true
+    },
+    "evidence": [
+      {
+        "path": "build/connection-dos/viewer-ui-serviced-20261105-serviced/VIEWUI.BIN",
+        "sha256": "3d41807c22fd13c13446e1810c58c8dc0702b785629d5db1c46506ac0f4ebd20"
+      },
+      {
+        "path": "build/connection-dos/viewer-ui-serviced-20261105-serviced/BEFORE.BIN",
+        "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+      },
+      {
+        "path": "build/connection-dos/viewer-ui-serviced-20261105-serviced/AFTER.BIN",
+        "sha256": "8afbdd5fd3186c8fccb43f1d8dcf0ccb3d455534b214f4ae0c93f985d90dc425"
+      },
+      {
+        "path": "build/connection-dos/viewer-ui-serviced-20261105-serviced/SCREEN.BIN",
+        "sha256": "2c78da2193f875b608e15340733b7e4aede3606555a86858b36b2da685ade753"
+      },
+      {
+        "path": "build/connection-dos/viewer-ui-serviced-20261105-serviced/serial.bin",
+        "sha256": "5b462fbcdf8a63228e03ab9129b6f40cbfedb9b328a2491fe6e4c13375cc53b2"
+      },
+      {
+        "path": "build/connection-dos/viewer-ui-serviced-20261105-serviced/VIEWOBS.COM",
+        "sha256": "59e0326a2075ac27cacc6adca6daf3393b60029481d4aa2b56de24e1e5668558"
+      },
+      {
+        "path": "build/connection-dos/viewer-ui-serviced-20261105-serviced/TEST.PRM",
+        "sha256": "95a08fe98faf8452435a5f6438f1a9fa6caed81462da04fac431c33fa2d3b4dc"
+      },
+      {
+        "path": "build/connection-dos/viewer-ui-serviced-20261105-serviced/result.json",
+        "sha256": "59f61013c5653935d632f725a4b739290031989a12a2c64907e42a6206a39b3d"
+      }
+    ]
+  },
+  "linked": {
+    "report": {
+      "path": "build/viewer-ui-linked-20261105/result.json",
+      "sha256": "69fa87797129615ff4f8ab0bacf434922d0c3339008ea9a075be12083eebc87d"
+    },
+    "editor_cases": 792,
+    "lifecycle_cases": 10
+  },
+  "layout": {
+    "path": "build/viewer-ui-layout-20261105/result.json",
+    "sha256": "da76b82af383c55c90e1a6263bfa2ae76d4ec724ade2e288b793d95de7d72e3c"
+  },
+  "source_proof": {
+    "path": "build/viewer-ui-public-source-20261105/result.json",
+    "sha256": "91d73aee9487ecb5af2924c3134820a12b0ea31e9adeeafe79e06217c3a8ed6f"
+  },
+  "original_comparisons": [
+    {
+      "case": "page",
+      "matched_bytes": 4000,
+      "original_capture": {
+        "path": "build/viewer-original-accepted-20261105/exact-page/frame-2.bin",
+        "sha256": "fad8cc87ab81d12efa862dd6e6338285bfc33b2dd8a05260cb17f8d2946972cc"
+      }
+    },
+    {
+      "case": "binary",
+      "matched_bytes": 4000,
+      "original_capture": {
+        "path": "build/viewer-original-accepted-20261105/binary/frame-2.bin",
+        "sha256": "a5e31358aadafcc5c808358f754a3b73ba4bf9d479fa97178d598c16af95e53a"
+      }
+    },
+    {
+      "case": "empty",
+      "matched_bytes": 4000,
+      "original_capture": {
+        "path": "build/viewer-original-accepted-20261105/empty/frame-2.bin",
+        "sha256": "870da8cd73daf62c354db942a1f8a0ae5330f9aea9293569dca5838e8182c875"
+      }
+    },
+    {
+      "case": "cancel",
+      "matched_bytes": 710,
+      "original_capture": {
+        "path": "build/viewer-original-accepted-20261105/long/frame-1.bin",
+        "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+      }
+    },
+    {
+      "case": "missing",
+      "matched_bytes": 710,
+      "original_capture": {
+        "path": "build/viewer-original-accepted-20261105/retry/frame-2.bin",
+        "sha256": "8c8104010807a5ee49ac51353df5e59c875eb2459b65e4a555bee0894e81f6d3"
+      }
+    }
+  ],
+  "components": [
+    {
+      "case": "owner-DOS",
+      "report": {
+        "path": "build/viewer-dynamic-owner-dos-20261105/result.json",
+        "sha256": "24517c6f5cc13e207a2815ea9730e0290a4d798cdab2ce77c0c6867d9d652ff1"
+      },
+      "checks_or_inputs": 902,
+      "binary_sha256": "abea9a3d2b8160ad1b4ad9defc7419e77af812197c09da7bb9d2bcbee7b4fd67"
+    },
+    {
+      "case": "owner-linked",
+      "report": {
+        "path": "build/viewer-dynamic-owner-linked-20261105/result.json",
+        "sha256": "7a5f81ab80329dd06ad66918b527a8b4e9548842ffb0bd5be9003b2c1e6cb1c2"
+      },
+      "checks_or_inputs": 25,
+      "binary_sha256": "abea9a3d2b8160ad1b4ad9defc7419e77af812197c09da7bb9d2bcbee7b4fd67"
+    },
+    {
+      "case": "session-DOS",
+      "report": {
+        "path": "build/viewer-dynamic-session-dos-20261105/result.json",
+        "sha256": "29fe617a618cb7bd3f197a7f0c5ca7c584be8bc0c030218ea1b69c16f62684ba"
+      },
+      "checks_or_inputs": 21727,
+      "binary_sha256": "3a417719e958a76201a6627e2fca39abd12e9b9fab16eb75dac97d02e19b9bb5"
+    },
+    {
+      "case": "session-linked",
+      "report": {
+        "path": "build/viewer-dynamic-session-linked-20261105/result.json",
+        "sha256": "4e5f431d6a85eaf9be9a1d0844c671b335540c6f7e87eff6b77919fe9cc61845"
+      },
+      "checks_or_inputs": 26,
+      "binary_sha256": "3a417719e958a76201a6627e2fca39abd12e9b9fab16eb75dac97d02e19b9bb5"
+    }
+  ],
+  "original_inputs": [],
+  "physical_deployment_changed": false,
+  "memory": {
+    "DGROUP_bytes": 65488,
+    "DGROUP_spare": 48,
+    "resident_bytes": 65458,
+    "resident_spare": 78,
+    "viewer_state_bytes": 754,
+    "borrowed_existing_page_bytes": 3920
+  },
+  "sources": {
+    "standalone/record_viewer_ui.py": "6f3317ff41cae73899f2a309304cac4e3dd6308350e2552715e6462802c30754"
+  },
+  "scope": "Opt-in source-only Alt-V terminal integration, ten actualDOS8086 COM3/IRQ5 workflows plus live incoming serial service, passive full-frame/cursor restoration, three exact original4000-byte pages and two original710-byte popup comparisons, linked editor/geometry/fault/layout guards, dynamic viewer/fixed call-log reservation coexistence and exact enabled/disabled public-source rebuild. Not stock BBS editor/sink/transfer pressure, configured external viewer, physical DOS6.22/SHARE/SIP/modem or full feature parity.",
+  "remaining": [
+    "Stock Enigma/Synchronet editor and capture/HOLD/PRN pressure composition for this exact parent.",
+    "Carrier-loss/reconnect/transfer/cancel and end-to-end nativeDOS main-loop fault/shutdown composition.",
+    "Configured external-viewer PRM binding and remaining original file/editor/key/Chat/ASPECT/emulation/protocol/Host parity.",
+    "Physical DOS6.22/Boca/SPA2102/SynthModem acceptance and verified deployment; installed selector unchanged."
+  ]
+}

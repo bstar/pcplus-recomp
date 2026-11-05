@@ -5,7 +5,9 @@ unmodified-original DOS workflows, and the [private search owner](FILE_FIND_OWNE
 provides a source-built enumeration prerequisite. This supersedes the earlier
 unknowns below only where the following observations supply direct evidence;
 The later optional [File Directory frontend](FILE_DIRECTORY.md) now enables
-the listing in its source candidate. View a File remains unimplemented, and
+the listing in its source candidate. The later opt-in [internal viewer](FILE_VIEWER_UI.md)
+also enables Alt-V in its tested source candidate; configured external viewing
+and full file-tool parity remain open, and
 the installed release is tracked separately by the private package selector.
 
 ## Enumeration and original runtime follow-up

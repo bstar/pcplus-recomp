@@ -3,8 +3,9 @@
 The [controller](../src/filesystem/viewer_session.c) now composes the recovered
 [decoder](FILE_VIEWER_DECODER.md) and [read-only file owner](FILE_VIEWER_OWNER.md).
 The [receipt](validation/viewer-session.json) binds its DOS, linked-error,
-original-content and public-source reproduction proofs. It remains outside the
-terminal/UI build; Alt-V and the installed DOS release are unchanged.
+original-content and public-source reproduction proofs for that component
+checkpoint. The subsequent [serviced UI](FILE_VIEWER_UI.md) integrates it into
+an opt-in terminal candidate; the installed DOS release is unchanged.
 
 ## State and scheduling
 

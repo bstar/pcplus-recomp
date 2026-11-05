@@ -139,5 +139,14 @@
     "session_bytes": 596,
     "persistent_DGROUP_bytes": 0,
     "scope": "Composed bounded paging/read-ahead/cache/rescan controller, outside terminal UI; no physical deployment or acceptance."
+  },
+  "terminal_UI": {
+    "report": "docs/validation/viewer-ui.json",
+    "sha256": "d8c20ac49d1ba55414cd86b3e5495911fa61cdf922bd7ddce10af5c60c292c18",
+    "binary_sha256": "1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e",
+    "source_commit": "c89bc12a73a2e029f1e742de4fbf9eec2127f004",
+    "viewer_state_bytes": 754,
+    "persistent_DGROUP_bytes": 0,
+    "scope": "Opt-in serviced internal Alt-V UI; ten terminal workflows plus incoming serial service and source/layout/component proofs. Dynamic reservation supersedes earlier fixed viewer claim; external viewing/pressure/hardware/physical deployment remain open."
   }
 }
