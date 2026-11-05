@@ -51,6 +51,23 @@ physical acceptance and broader owner combinations remain gates. Gateway,
 File Directory, View a File and editor integration remain next file/DOS work;
 the selected physical release remains unchanged.
 
+The [original path-editor follow-up](docs/PATH_EDITOR_PARITY.md) now corrects
+the earlier screen decoder's two-byte offset, restores fixed-width editing and
+modal error acknowledgement, and tests actual application rollback/shutdown
+failure paths. Menu background composition and unpaced full-field entry are
+checked explicitly. Linked instructions also guard the based-code compiler's
+Backspace indexing behavior. Gateway recovery is the next independent file/DOS
+entry; its native interactive-shell contract must be distinguished from the
+existing PROGRAM handoff before integration. Broader physical/owner acceptance
+and the explicit remaining inventory still apply.
+
+The [original Gateway recovery](docs/GATEWAY_RECOVERY.md) now identifies the
+25-byte Alt-F4 body and tests an actual interactive shell, empty tail, no-extra-
+wait return and persistent shell CWD. The original live UART ISR differs from
+the maintained PROGRAM handoff. Implement that distinct foreground contract
+next, with explicit serial/file ownership and missing-COMSPEC policy; source
+Gateway integration and its acceptance gates remain open.
+
 ### Earlier connection and network checkpoints
 
 **Real hardware connection achieved; compatibility acceptance continues.**

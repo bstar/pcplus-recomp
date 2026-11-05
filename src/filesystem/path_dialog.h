@@ -6,4 +6,6 @@
 unsigned short __far __cdecl path_dialog_event(unsigned short,unsigned short,unsigned short __far *);
 /* BIOS row/column while the dialog owns the visible frame, otherwiseFFFF. */
 unsigned short __far __cdecl path_dialog_cursor(void);
+/* Original Insert cursor: start=floor(saved end/2)+1, unchanged end. */
+unsigned short __far __cdecl path_dialog_shape(unsigned short saved);
 #endif

@@ -1,5 +1,10 @@
 # Directory dialog contract and stable resource identities
 
+The [path-editor follow-up](PATH_EDITOR_PARITY.md) corrects the earlier raw
+screen decoder's two-byte offset error and establishes the unshifted geometry,
+fixed-width editing and cursor behavior. Earlier raw files are retained; their
+screen coordinate interpretation is superseded by the corrected receipt.
+
 The original Alt-F7 dialog is now identified in overlay 3 at DB99..DC33.
 REA/Ghidra evidence
 `ev_67c3a1cf531aa98f5c88d875c0474bd0356a2a2732f5fec5f84bf102e1b663ce`

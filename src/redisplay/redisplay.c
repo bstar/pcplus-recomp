@@ -87,6 +87,16 @@ static void refresh_tail(void)
 #endif
 static void copy(word __far *to,const word __far *from)
 {word i;for(i=0;i<FRAME_CELLS;++i)to[i]=from[i];}
+#ifdef TERMINAL_PATH_CONTROL
+/* Menus own a frozen full-screen frame. The small path popup instead belongs
+ * over live BBS video, including the first paint after menu selection. */
+static void path_overlay(void)
+{
+ if(command_menu_active && path_dialog_cursor()!=0xffff){
+  copy(view,live);path_dialog_event(2,0,view);
+ }
+}
+#endif
 static void cursor_get(void)
 {
  word p=0,s=0;
@@ -115,8 +125,9 @@ static void cursor_restore(void)
 static void hide(void)
 {
 #ifdef TERMINAL_PATH_CONTROL
- word p=path_dialog_cursor(),s=shape&0x1f1f;
+ word p=path_dialog_cursor(),s=0;
  if(p!=0xffff){
+  s=path_dialog_shape(shape);
   __asm {
    mov ah,1
    mov cx,s
@@ -244,6 +255,9 @@ static word search_step(void)
  * fixed relocated extents. Return1 consumes a key,0 allows normal dispatch. */
 unsigned __cdecl redisplay_event(word event,word key,const context *c)
 {
+#ifdef TERMINAL_PATH_CONTROL
+ word path_before;
+#endif
  word i,p=0,mode=0;byte __far *source;
  if(event==0){
   if(redisplay_active)return 1;
@@ -311,7 +325,11 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
 #else
    0,
 #endif
-   view);copy((word __far *)MK_FP(0xb800,0),view);hide();}
+   view);
+#ifdef TERMINAL_PATH_CONTROL
+   path_overlay();
+#endif
+   copy((word __far *)MK_FP(0xb800,0),view);hide();}
   else if(direct_clipboard){copy(view,live);clipboard_ui_event(0,0,view);}else draw();return 1;
  }
  if(!redisplay_active)return 0;
@@ -336,7 +354,21 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
  }
 #endif
  if(command_menu_active && (event==1 || event==4)){
-  if(command_menu_event(event,key,view)){if(visible){copy((word __far *)MK_FP(0xb800,0),view);hide();}return 1;}
+#ifdef TERMINAL_PATH_CONTROL
+  path_before=path_dialog_cursor();
+#endif
+  if(command_menu_event(event,key,view)){if(visible){
+#ifdef TERMINAL_PATH_CONTROL
+   if(path_before!=0xffff && path_before!=0x64c8 && (byte)key!=13 && path_dialog_cursor()!=0xffff){
+    /* Ordinary field edits/cursor keys cannot change any other video cells.
+     * Avoid full-screen copies and duplicate popup composition per key. */
+    word __far *video=(word __far *)MK_FP(0xb800,0);
+    for(i=7*80+13;i<7*80+75;++i)video[i]=view[i];
+    hide();return 1;
+   }
+   path_overlay();
+#endif
+   copy((word __far *)MK_FP(0xb800,0),view);hide();}return 1;}
   if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();}
   redisplay_search_pending=redisplay_export_pending=0;redisplay_active=visible=redisplay_live_ready=clipboard_ui_visible=0;
   return command_menu_action?0:1;
@@ -359,9 +391,7 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
  if(event==2){if(visible){copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();visible=0;redisplay_live_ready=1;clipboard_ui_visible=0;if(clipboard_ui_active)clipboard_ui_event(2,0,view);}return 0;}
  if(event==3){if(export_step() || search_step())draw();if(!visible){cursor_get();copy(live,(word __far *)MK_FP(0xb800,0));
 #ifdef TERMINAL_PATH_CONTROL
-   /* A small popup must compose over the current BBS frame, rather than
-    * restoring the browser's intentionally frozen whole-screen view. */
-   if(command_menu_active && path_dialog_cursor()!=0xffff){copy(view,live);path_dialog_event(2,0,view);}
+   path_overlay();
 #endif
 #ifdef TERMINAL_LARGE_VIEW_FRAMES
    refresh_tail();

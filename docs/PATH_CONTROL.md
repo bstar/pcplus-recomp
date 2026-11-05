@@ -1,5 +1,11 @@
 # Serviced change-directory command
 
+The newer [original path-editor follow-up](PATH_EDITOR_PARITY.md) corrects a
+one-cell error in the original capture decoder, restores fixed-width editing
+and modal acknowledgement, and adds application-level DOS failure tests. Its
+receipt supersedes this checkpoint's UI coordinates and interaction claims.
+The lifecycle/storage checkpoint below remains historical evidence.
+
 The optional `--path-control` parent implements original Alt-F7 through the
 shared foreground viewer. It also enables the startup resource identities and
 original command reference. The command is available directly, from Alt-Z,

@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+The [original path-editor follow-up](PATH_EDITOR_PARITY.md) corrects the old
+capture decoder's one-cell geometry error and restores fixed-width overwrite,
+Insert/full-latch/cursor and modal-acknowledgement behavior. First menu-to-popup
+paint now uses the live background; field-only video updates preserve the same
+unpaced62-character input that overflowed the older paint path. Linked edit
+coverage and application-level DOS failure injection supplement the original
+runtime comparisons. This supersedes the earlier UI contract, without changing
+the selected physical release or closing the remaining file/DOS/parity gates.
+
 The optional [serviced path-control candidate](PATH_CONTROL.md) now integrates
 Alt-F7 directly and through the original reference/command browser, with a
 blank bounded field, the observed original frame, checked path changes and
@@ -7,7 +16,7 @@ startup-directory restoration on orderly exit. Its 220 bytes of new persistent
 state live in a retained code bank, preserving the 48-byte DGROUP headroom.
 The evidence receipt separates component fault wrappers, actual DOS emulation,
 live popup composition, resource identity and stock BBS rendering checks.
-Physical deployment, application fault injection, Microsoft DOS 6.22 and the
+Physical deployment, broader application-fault combinations, Microsoft DOS 6.22 and the
 remaining file/DOS commands remain open.
 
 [Stable CWD resource identities](CWD_IDENTITIES.md) now protect startup

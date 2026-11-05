@@ -9,7 +9,7 @@ sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
- p.add_argument('--case',choices=('cancel','empty','relative','cross','missing','browser','reference','editing','serviced'))
+ p.add_argument('--case',choices=('cancel','empty','relative','cross','missing','browser','reference','editing','serviced','browser-open','reference-open'))
  a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve()
  assert not out.exists() and out.is_relative_to(ROOT/'build')
  manifest=json.loads(binary.with_name('manifest.json').read_text())
@@ -20,10 +20,12 @@ def main():
   struct.pack_into('<H',settings,at,val)
  scenarios=[
   ('cancel',1,'a-f7 p900 escape',b'D:\\'),
+  ('browser-open',1,'` p500 g p900 escape',b'D:\\'),
+  ('reference-open',1,'a-z p500 a-f7 p900 escape',b'D:\\'),
   ('empty',1,'a-f7 p900 enter',b'D:\\'),
   ('relative',2,'a-f7 p450 o t h e r enter p600 a-f7 p900 escape',b'D:\\OTHER'),
   ('cross',4,'a-f7 p450 c : \\ enter p600 a-f7 p900 escape',b'C:\\'),
-  ('missing',3,'a-f7 p450 m i s s i n g enter p900 o t h e r enter',b'D:\\'),
+  ('missing',3,'a-f7 p450 m i s s i n g enter p900 space o t h e r enter',b'D:\\'),
   ('browser',2,'` p500 g p450 o t h e r enter p600 a-f7 p900 escape',b'D:\\OTHER'),
   ('reference',2,'a-z p500 a-f7 p450 o t h e r enter p600 a-f7 p900 escape',b'D:\\OTHER'),
   ('editing',2,'a-f7 p450 o t h e x left del r home right end enter p600 a-f7 p900 escape',b'D:\\OTHER'),
@@ -45,20 +47,23 @@ def main():
   chars=lambda row,col,n:frame[(row*80+col)*2:(row*80+col+n)*2:2]
   checks=dict(base['checks'])
   checks.update(observer_captured_and_restored=magic==0x5044 and flags==3 and ticks>2,
-   original_popup_geometry=all(frame[(r*80+c)*2:(r*80+c)*2+2]==bytes((glyph,3)) for r,c,glyph in ((5,2,201),(5,77,187),(9,2,200),(9,77,188))),
-   original_header=chars(5,5,14)==b' CURRENT DIR: ' and chars(5,19,len(header))==header,
-   original_prompt=chars(7,4,9)==b'NEW PATH:',
-   original_field_attributes=frame[(7*80+14)*2+1:(7*80+76)*2:2]==bytes([13])*62,
+   original_popup_geometry=all(frame[(r*80+c)*2:(r*80+c)*2+2]==bytes((glyph,3)) for r,c,glyph in ((5,1,201),(5,76,187),(9,1,200),(9,76,188))),
+   original_header=chars(5,4,14)==b' CURRENT DIR: ' and chars(5,18,len(header))==header,
+   original_prompt=chars(7,3,9)==b'NEW PATH:',
+   original_field_attributes=frame[(7*80+13)*2+1:(7*80+75)*2:2]==bytes([13])*62,
    startup_default_drive_restored=raw[4006]==3,
    startup_CWD_restored=raw[4007:].split(b'\0',1)[0]==b'',
    post_dialog_keyboard_reached_UART=wire.count(b'ready\r')==1,
    post_dialog_query_replied=b'\x1b[3;18R' in wire,
    post_dialog_input_rendered=screen[320:354:2]==b'AFTER-PATH-DIALOG')
-  if name=='missing':checks['failed_change_keeps_dialog_open']=chars(8,4,14)==b'Path not found'
+  if name=='missing':checks.update(failed_change_keeps_modal_open=chars(10,33,14)==b'Path not found',failed_path_retained_until_ack=chars(7,13,7)==b'missing')
+  if name in ('cancel','browser-open','reference-open'):
+   checks['popup_opens_over_BBS_background']=chars(0,0,15)==b'FIRST BYTE SAFE'
+   checks['no_menu_frame_below_popup']=all(frame[(r*80+c)*2:(r*80+c)*2+2]==b' \x07' for r in range(10,24) for c in range(80))
   if name=='serviced':
    checks['incoming_UART_rendered_with_popup_visible']=chars(1,0,15)==b'UART-WHILE-OPEN'
    checks['query_answered_while_popup_open']=b'\x1b[2;16R' in wire
-  result=dict(case=name,passed=all(checks.values()),checks=checks,observed_header=chars(5,19,40).decode('cp437'),result=str(drive/'result.json'))
+  result=dict(case=name,passed=all(checks.values()),checks=checks,observed_header=chars(5,18,40).decode('cp437'),result=str(drive/'result.json'))
   cases.append(result);(out/(name+'.json')).write_text(json.dumps(result,indent=2)+'\n')
   print(name,{k:v for k,v in checks.items() if not v},flush=True);assert result['passed'],result
  report=dict(passed=True,binary_sha256=sha(binary),cases=cases,

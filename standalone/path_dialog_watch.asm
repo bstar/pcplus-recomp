@@ -25,20 +25,20 @@ handler:
  jnz .done
  mov ax,0xb800
  mov es,ax
- cmp word [es:808],0x03b5 ; original path header marker
+ cmp word [es:806],0x03b5 ; corrected unshifted original path header marker
  jne .done
- cmp word [es:810],0x0320
+ cmp word [es:808],0x0320
  jne .done
- cmp word [es:1128],0x034e ; NEW PATH:
+ cmp word [es:1126],0x034e ; NEW PATH:
  jne .done
 %if WATCH_KIND = 2
- cmp word [es:844],0x034f ; header D:\OTHER
+ cmp word [es:842],0x034f ; header D:\OTHER
  jne .done
 %elif WATCH_KIND = 3
- cmp word [es:1288],0x0f50 ; Path not found
+ cmp word [es:1666],0x0a50 ; original modal Path not found
  jne .done
 %elif WATCH_KIND = 4
- cmp word [es:838],0x0343 ; default-drive C:
+ cmp word [es:836],0x0343 ; default-drive C:
  jne .done
 %elif WATCH_KIND = 5
  cmp byte [es:160],'U' ; CSI2;1 addresses zero-based row1, outside the popup
@@ -46,6 +46,11 @@ handler:
  cmp byte [es:162],'A'
  jne .done
  cmp byte [es:164],'R'
+ jne .done
+%elif WATCH_KIND = 7
+ cmp byte [es:1286],'C' ; verified rollback notice in the open dialog
+ jne .done
+ cmp byte [es:1288],'h'
  jne .done
 %endif
  xor dx,dx

@@ -1,0 +1,377 @@
+{
+  "passed": true,
+  "checks": {
+    "source_identity": true,
+    "dispatch_table_points_BA3F": true,
+    "original_stub_and_gateway_bytes_bound": true,
+    "COMSPEC_literal_bound": true,
+    "child_empty_CR_tail": true,
+    "child_original_ISR_remains_live": true,
+    "child_IER_enabled_DTR_RTS_asserted": true,
+    "synthetic_exit37_returns_without_key": true,
+    "real_interactive_shell_and_EXIT": true,
+    "shell_CWD_change_survives_return": true,
+    "all_exits_restore_start_directory": true,
+    "original_images_unchanged": true
+  },
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "static_carrier_sha256": "fff9700d3b5e76b8f0d76c3a9df7051bfa39f87c0891bd593a8f84f19c758b19",
+  "gateway_entry": {
+    "BIOS_key": "6B00",
+    "dispatch_table_DS": "44E0",
+    "resident": "BA3F",
+    "original_stub_file_offset": 52287,
+    "original_stub_bytes": "9aec02ec0a0300ea34dc0000",
+    "stub_scope": "CALL FAR overlay manager + embedded overlay3 selector + FAR JMP0000:DC34; anchored image replaces stub with JMP/NOPs",
+    "overlay": 3,
+    "body": "DC34..DC4C",
+    "original_file_offset": 62132,
+    "bytes": "b80100502bc0505050b88c3150e8ceb15b50e8f46683c40ac3",
+    "sha256": "a3239298a41feecaa953dcee65b40837a83f835acc34eed8a7bc9935a1c9cb06",
+    "COMSPEC_DS": "318C",
+    "COMSPEC_file_offset": 166620,
+    "arguments": [
+      "getenv(COMSPEC)",
+      "NULL",
+      "command_processor=0",
+      "wait=0",
+      "save_screen=1"
+    ]
+  },
+  "evidence": {
+    "gateway": "ev_fb0d293d84e990a3af553417c7020f78bd2d93829c760e71178868e3c385975f",
+    "UART_return_03A7": "ev_593fe058c249fda90791167a6ab1c55f05aaf8635a55f9fefba80f79ee27ec09",
+    "cursor_save": "ev_d3d653930cc8b63576f9dc3f8760caef4cfff85f0dab41d2d6970f4c95a82a91",
+    "mouse_probe": "ev_0b32db25b388770124cfd09f70c1a93e0f6909fb76dcde65c129a7de6fa69103",
+    "UART_config": "ev_4fcb9e138d215d8b991fde2ad8268f13563a455149d8ffc671022a2ab4d277a5",
+    "UART_ports": "ev_4d120de274059bdeac1946d424f7c7957883c228d40f5074c3c2a3ed5b774517",
+    "tick_delay": "ev_2d5bc843a57bf8e5e2acd8641c3f244d8a2cac68109dc5b551439009aac100fd",
+    "existing_executor": {
+      "evidence_id": "ev_a5c189826e129ae1c8a59c464a4fb7be362d61aaeadcb2317f2c1b78b19768ad",
+      "saved_export": "analysis/pcplus-main/functions/0x1433d-asm.json"
+    },
+    "existing_EXEC": {
+      "evidence_id": "ev_9f941d3453b6171221a7e708d17f2865fe383265f41d1677002ac5dbdf5b672f",
+      "saved_export": "analysis/pcplus-main/functions/0x16a22-asm.json"
+    },
+    "existing_environment_tail": {
+      "evidence_id": "ev_82bb269d504574be861a5035336ab5e3340081fba03629135fefb05784cf78d8",
+      "saved_export": "analysis/pcplus-main/functions/0x165ca-asm.json"
+    }
+  },
+  "call_chain": [
+    "BIOS6B00\u2192keyboard DS44E0[6B]\u2192BA3F overlay3stub\u2192DC34",
+    "DC34\u2192getenv8E12(COMSPEC)\u2192433D(program,NULL,0,0,1)",
+    "433D direct branch\u21928D34 spawnl(mode0,program,argv0=program,NULL)",
+    "8D34\u2192A64E spawnlp\u2192A4A6 spawn_search\u219268EE spawnv\u219265CA environment/tail\u21926A22 DOS4B00/4D",
+    "Normal return skips3745 WAIT; calls03A7 UART reinit,7508 break install,40DF display service,6D1A display query,4870 screen restore,6B42 cursor restore,76EA mouse restore,optional error notice,original cursor policy and busy clear"
+  ],
+  "observations": {
+    "command_processor": "Uppercase COMSPEC lookup; direct interpreter with no /c and no user command tail. Actual COMMAND.COM accepts commands until EXIT.",
+    "namespace": "Recovered spawn path supplies COM/EXE/BAT extension resolution and uppercase PATH retry only for bare missing names; qualified missing COMSPEC does not use SYSTEM896A command.com fallback.",
+    "serial": "Offline/dummyUART COM1/19200N81 child sees original AC B8 ISR still installed, IER1, MCR0B, IRQ4 unmasked. This differs from maintained PROGRAM exclusive detach/pause owner.",
+    "return_contract": "Childexit37 is not an error notice; returns automatically to exact4000cells/cursor/shape. Shell CD changes survive Gateway return; original final app exit restores startup directory.",
+    "file_ownership": "Child JFT has6open slots in this fixture; no attribution to capture/printer/overlay files or inherited position preservation. Executor wrapper has no recovered explicit capture/printer close operation; generic CRT/environment handle metadata is documented separately."
+  },
+  "static_failure": {
+    "no_program_name": "4748 rejects empty/leading[; notice No program name specified; missing COMSPEC yields null pointer and native boundary assumes dereferenceable near pointer.",
+    "no_fallback": "Gateway flags direct0, so no program_system896A fallback to command.com.",
+    "spawn_failure": "FFFF+nonzero CRTerrno yields formatted EXTERNAL PROGRAM ERROR: %s after common cleanup, with messages selected for2/7/8/12, otherwise unknown.",
+    "messages": {
+      "2": "File or path not found.",
+      "7": "Argument list or environment too big.",
+      "8": "File not executable.",
+      "12": "Not enough memory available.",
+      "0": "Error unknown."
+    },
+    "normal_WAIT": "waitflag0; PRESS ANY KEY TO CONTINUE3745 is skipped on normal return. Error notice owns a separate acknowledgement, not yet runtime verified."
+  },
+  "integration_requirements": [
+    "Create a distinct Gateway action with direct validated COMSPEC executable and empty tail, not PROGRAM /c command construction. Preserve original no-extra-WAIT normal return.",
+    "Choose/document missing/invalid COMSPEC policy explicitly; refuse null safely. Retain bounded environment/PATH/executable ownership and typed errors; do not silently import SYSTEM fallback behavior.",
+    "Use maintained foreground/process/display/mouse/trap ownership and retained memory floor. Exclude active transfer/controller/parser/resource/file transaction conflicts before execution.",
+    "Document original liveISR versus maintained exclusive UART handoff. Existing safe detach/pause/DTR-retention and loss-reporting policy is deliberate; test shell lifetime, queued RX, flow pressure, carrier loss and reconnect on return rather than claiming original equivalence.",
+    "Retain full frame, cursor shape, parser geometry and per-session configuration. Gate return until verified display/UART ownership restores; no hidden parser/RIS reset or duplicate key prompt.",
+    "Preserve startup resource canonical identities and path-session original directory. Allow shell CWD changes during lifetime, restore startup path on orderly application exit.",
+    "Retain capture/log/history/printer/script resource claims and known stream positions; determine JFT inheritance/isolation explicitly. Current original runtime does not establish those busy-file combinations."
+  ],
+  "cases": {
+    "synthetic-final": {
+      "case": "synthetic-final",
+      "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "keys": "p750 enter p3250 a-f4 p1800 a-x p500 y enter p600 a-x p500 y enter",
+      "frames": [
+        {
+          "index": 0,
+          "cursor": [
+            1,
+            0
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "index": 1,
+          "cursor": [
+            2,
+            0
+          ],
+          "shape": "0x607",
+          "synthetic_child": true,
+          "command_prompt": false,
+          "has_PROCOMM": false,
+          "sha256": "ffb666cbd16cc470b5f378327e9232b3a9501577629eba632b28bcdbc0b3260d"
+        },
+        {
+          "index": 2,
+          "cursor": [
+            1,
+            0
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "index": 3,
+          "cursor": [
+            3,
+            26
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ],
+      "exit_CWD": "C:\\",
+      "original_unchanged": true,
+      "interactive_witness": false,
+      "child": {
+        "magic": "0x4744",
+        "parent_psp": "0xf54",
+        "tail_length": 0,
+        "tail_hex": "000d",
+        "IRQ4": [
+          "0xf64",
+          "0xacb8"
+        ],
+        "original_parent_ISR": true,
+        "LCR": "0x3",
+        "IER": "0x1",
+        "MCR": "0xb",
+        "PIC": "0xe8",
+        "IRQ4_masked": false,
+        "open_JFT_slots": 6,
+        "drive": "C",
+        "cwd": ""
+      }
+    },
+    "interactive": {
+      "case": "interactive",
+      "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "keys": "p750 enter p3250 a-f4 p1800 m d space G A T E W I T enter p700 e x i t enter p1500 a-x p500 y enter p600 a-x p500 y enter",
+      "frames": [
+        {
+          "index": 0,
+          "cursor": [
+            1,
+            0
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "index": 1,
+          "cursor": [
+            5,
+            5
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": true,
+          "has_PROCOMM": false,
+          "sha256": "1d2dacee9192bcc4b3d8371acb76a24131821ce0d9db44dced398ff069b46cd7"
+        },
+        {
+          "index": 2,
+          "cursor": [
+            8,
+            5
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": true,
+          "has_PROCOMM": false,
+          "sha256": "56e543d3a58027ae521425e6e7d153dfeb6e5a629f5ef7c0db7bcadf6763b6cb"
+        },
+        {
+          "index": 3,
+          "cursor": [
+            1,
+            0
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "index": 4,
+          "cursor": [
+            3,
+            26
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ],
+      "exit_CWD": "C:\\",
+      "original_unchanged": true,
+      "interactive_witness": true
+    },
+    "interactive-cwd": {
+      "case": "interactive-cwd",
+      "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "keys": "p750 enter p3250 a-f4 p1800 c d space T A R G E T enter p700 e x i t enter p1000 a-f7 p900 escape p500 a-x p500 y enter p600 a-x p500 y enter",
+      "frames": [
+        {
+          "index": 0,
+          "cursor": [
+            1,
+            0
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "index": 1,
+          "cursor": [
+            5,
+            5
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": true,
+          "has_PROCOMM": false,
+          "sha256": "1d2dacee9192bcc4b3d8371acb76a24131821ce0d9db44dced398ff069b46cd7"
+        },
+        {
+          "index": 2,
+          "cursor": [
+            8,
+            11
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": true,
+          "has_PROCOMM": false,
+          "sha256": "61bfd0e5ee7e5da71a7004ceb59f7730ef8b5a77c18103eab2e4ae26067f4a3a"
+        },
+        {
+          "index": 3,
+          "cursor": [
+            1,
+            0
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "index": 4,
+          "cursor": [
+            7,
+            13
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "eb05a49a3386785bc1b58ec6511b2ba3a5f85796f8e8e53ecc1e0148a47706a3"
+        },
+        {
+          "index": 5,
+          "cursor": [
+            1,
+            0
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "index": 6,
+          "cursor": [
+            3,
+            26
+          ],
+          "shape": "0x607",
+          "synthetic_child": false,
+          "command_prompt": false,
+          "has_PROCOMM": true,
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ],
+      "exit_CWD": "C:\\",
+      "original_unchanged": true,
+      "interactive_witness": false
+    }
+  },
+  "files": {
+    "shell.asm": "e33482504ad36f74d2358731ba02e0663e4a67e774485f9c7943d3a3bdcc0082",
+    "probe.py": "63af6b0137302f898da6aea8f5262d6701741f85c51889dbdd5f5be6830e2efa",
+    "overlay-static.rea.json": "6ee7977298b07ac2c632395e37f69f96142d7b230fd33fa8b4c1c575d81a21cf",
+    "original-ba3f.bin": "b4f610c9a74b489836aef76dde1c194cb6213c1fdde9a2190326cb3c8a8c8ee0",
+    "original-dc34.bin": "a3239298a41feecaa953dcee65b40837a83f835acc34eed8a7bc9935a1c9cb06",
+    "summarize.py": "c7f31c9ae7429a4b6fecd3da52864f4bd74b7d6f11aa5b25a7400f12790dd29d"
+  },
+  "reused_sources": {
+    "reconstruction/program_exec/provenance.json": "dea1a491c50dcbfdd28ac810ff17857c62f8c4155b1d79aaa744696ae8947f7f",
+    "reconstruction/program_exec/executor.asm": "c01f303f1f1613162d6bb10d7d3e8c0c2349afcd1aaa6e35dcae3fa11f12b581",
+    "reconstruction/program_exec/spawnl.asm": "57406f64f86b87f7a073a2e7be5b6e4085de7a3d83c1e8da63806e3a9d46d676",
+    "reconstruction/program_exec/spawnlp.asm": "47ab364495a577269d4a2a7748054c8bb652fc428b89a7102f1db37759d64d17",
+    "reconstruction/program_exec/spawn_search.asm": "53729c1346950c9bbf9110f172ed5de56d7161b8df1330e429dea76bec96609f",
+    "reconstruction/program_exec/environment_tail.asm": "642d85d6237c4d1aa2243097a6253701121b7c65c6776bccfc41e1a72513afea",
+    "reconstruction/program_exec/exec.asm": "298dacad9c43679bf7f4c196b6bd33eff5f14e516c7e95db7b4917ad99fe14bb",
+    "reconstruction/keyboard_mapping/dispatch_table.asm": "71a5575f7c755d3f29646f8a10917a1facc37c1cdee50efd9f1736b2c65c401f",
+    "reconstruction/uart/core.asm": "9c0a38a7a305c5eec8e1c2299da74953656d33bdcae63f9866d7ef2d576fa52f"
+  },
+  "exclusions": [
+    "Initial synthetic child forgot to restore ES before JFT-copy; it wrote outside owned record, so exclude initial synthetic completely. Corrected synthetic-final accepted.",
+    "Missing/absent COMSPEC original UI schedules timed out after30seconds and yielded no collected frame; failureUI remains unresolved/static-only.",
+    "No .analysis.exe executed; overlay static carrier contains substituted trampolines; original stub/body bytes bound independently."
+  ],
+  "limitations": [
+    "DOSBox-X internal DOS/8086, offline dummyUART and copied private PRM/resources; no online BBS/real modem/flow-pressure/DCD/CTS claims.",
+    "No active capture/printer/transfer/file transaction child workflow or parent file-position validation.",
+    "Original overlay callback atEXECgate remains unresolved in recovered source.",
+    "No child-altered UART/vector/display or low-memory EXEC error acceptance in this original runtime.",
+    "Original error/absent-COMSPEC acknowledgement and null-pointer behavior not established dynamically.",
+    "Static source byte/call interpretation and REA decompiler output are distinct from runtime observations.",
+    "REA export has8records; opened native session closed."
+  ],
+  "component": "Original Alt-F4 Gateway contract recovery only; not a source-built Gateway implementation",
+  "local_evidence_root": "build/gateway-original-20261104",
+  "local_receipt_sha256": "7fdae62cd8343f5519a63f5fe5de2a1f15114b663d8ad6d95f58915453b6e908"
+}
