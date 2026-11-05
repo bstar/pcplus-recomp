@@ -156,6 +156,9 @@ async def run_case(parent,out,name,ticks,soft,aspect=None,transfer=None):
     server=await asyncio.start_server(peer,'127.0.0.1',0);port=server.sockets[0].getsockname()[1]
     target=f'127.0.0.1:{port}'.encode()
     config=bytearray(prm(port=3,baud=5,soft=soft,hard=not soft))
+    if options.get('experimental_display_startup'):
+        for at,value in ((0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0)):
+            struct.pack_into('<H',config,at,value)
     struct.pack_into('<HH',config,0x4e4,8,4);struct.pack_into('<H',config,0x188,5);struct.pack_into('<H',config,0x1e6,1)
     init=b'AT&K4^M' if soft else b'AT&K3^M';config[0x18:0x47]=init.ljust(47,b'\0')
     directory_bytes=directory(entry=1,target=target,port=3,baud=5)

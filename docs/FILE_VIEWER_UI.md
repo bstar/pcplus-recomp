@@ -131,8 +131,15 @@ workflow with that explicit memory setup, not an8086 conventional-memory
 ASPECT/viewer pass. A separate application memory-loan experiment was not
 promoted; the application's source and executable remain unchanged.
 
-Complete carrier-loss/reconnect/transfer/cancel and
-native DOS failure/shutdown composition. Recover configured external-viewer
+The subsequent [transfer/recovery checkpoint](FILE_VIEWER_TRANSFER_RECOVERY.md)
+binds43 positive runtime cases and eight rejected copied-artifact controls for
+the same application bytes. It covers X/Y/ZMODEM, viewer-before-transfer,
+automatic viewer cleanup on carrier loss, same-parent redial, and large stock
+Enigma upload/download/cancel/retry through the SynthModem serial-side proxy.
+These are scoped software results; physical timing and other text geometries
+remain separate.
+
+Complete native DOS failure/shutdown composition. Recover configured external-viewer
 binding, exhaustive native filename-field key behavior, and remaining
 editor/key/Chat/ASPECT/emulation/protocol/Host features.
 Physical DOS6.22/SHARE/Boca/SPA2102/SynthModem testing and verified deployment

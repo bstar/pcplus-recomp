@@ -85,6 +85,11 @@ def run_case(r, binary, manifest, root):
     struct.pack_into('<HH', raw, 0x4e4, 8, 4)
     struct.pack_into('<HH', raw, 0x1bc, 0, 0)
     struct.pack_into('<H', raw, 0x1e6, 0)
+    if manifest.get('experimental_display_startup'):
+        # This partial PRM deliberately poisons unspecified words. A parent
+        # importing display preferences needs an explicit owned VGA selector.
+        for at, value in ((0x1c2, 0), (0x1c8, 2), (0x1ca, 25), (0x4ec, 0)):
+            struct.pack_into('<H', raw, at, value)
     (out / 'TEST.PRM').write_bytes(raw)
     sampler = SAMPLER
     for offset in (0, 1, 3, 4):
