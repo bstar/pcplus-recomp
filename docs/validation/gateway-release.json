@@ -1,0 +1,140 @@
+{
+  "passed": true,
+  "package": {
+    "path": "build/gateway-connection-package-20261104/manifest.json",
+    "sha256": "82775fa1a58fe661a3c6aa9a2aa2b581b2c47c15705b26e7d3732143efdd6817"
+  },
+  "source_proof": {
+    "path": "build/gateway-package-source-20261104/result.json",
+    "sha256": "70fea95656b60495fc1c44046df1e6ee34314cd3f95b9a0b5c12a8a90d8b2db1"
+  },
+  "source_commit": "d3b2d994821f60afdef268993c549beb3e8ae0ae",
+  "source_count": 2194,
+  "files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "ca0b479128709a895e32b326caf1581e4dd9656f05ebde66fbd8d0c78c8c2498",
+    "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+    "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+    "TERMINAL.EXE": "ae6cbad95094fd59f98fd95a7831cbdc014b404ec37886a290294fe05089d90b",
+    "VERSION.TXT": "a415f58d9dc2c5cf3a02949a39107f69cf393628b90a7cd48a42634d96510c41",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "launchers": [
+    {
+      "case": "splash",
+      "report": {
+        "path": "build/gateway-package-splash-20261104/result.json",
+        "sha256": "87f2ed0c1c1d0db5bd8f9a224f100c075e394a494a9d990f61ea9c85c78ebb47"
+      },
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ]
+    },
+    {
+      "case": "setup",
+      "report": {
+        "path": "build/gateway-package-setup-test-20261104/result.json",
+        "sha256": "e2a06010db9a1034565f675e45db34c885435b786cb075483950e8158918bdee"
+      },
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ]
+    },
+    {
+      "case": "script",
+      "report": {
+        "path": "build/gateway-package-script-20261104/result.json",
+        "sha256": "3767affb4a926322f0af34ecbedddd3369b47662d7ced4337d1ddcb446d27c41"
+      },
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "DOS precompilation produces exact ASX",
+        "script writes expected result"
+      ]
+    }
+  ],
+  "transfers": {
+    "path": "build/gateway-transfer-roundtrips-20261104/result.json",
+    "sha256": "61dc1b7e300811ec3de6f11adb3d2720078aafeca8228533745ca3225a375abb"
+  },
+  "cases": [
+    {
+      "label": "gateway-transfer-roundtrips-20261104-upload-25",
+      "mode": "upload",
+      "physical_rows": 25,
+      "status_hidden": 0,
+      "name": "PC8A266.BIN",
+      "payload_sha256": "650c4e5e74a5ba0f5f7e64b9867975eb59cf3dbad6ac5810c3f9e3e20c0b4131",
+      "payload_bytes": 65539,
+      "audit_path": "build/gateway-transfer-roundtrips-20261104/gateway-transfer-roundtrips-20261104-upload-25-audit/result.json",
+      "audit_sha256": "6641ccaec7b6245305425de85fcc250868bc313bcb3392b59503c500e13e9364",
+      "passed": true
+    },
+    {
+      "label": "gateway-transfer-roundtrips-20261104-download-25",
+      "mode": "download",
+      "physical_rows": 25,
+      "status_hidden": 0,
+      "name": "PC8A266.BIN",
+      "payload_sha256": "650c4e5e74a5ba0f5f7e64b9867975eb59cf3dbad6ac5810c3f9e3e20c0b4131",
+      "payload_bytes": 65539,
+      "audit_path": "build/gateway-transfer-roundtrips-20261104/gateway-transfer-roundtrips-20261104-download-25-audit/result.json",
+      "audit_sha256": "e486d24b3510a20c4276ff38f038a83cf18657ab55d98d9385e1d038f08740f5",
+      "passed": true
+    },
+    {
+      "label": "gateway-transfer-roundtrips-20261104-upload-50",
+      "mode": "upload",
+      "physical_rows": 50,
+      "status_hidden": 1,
+      "name": "P71BED4.BIN",
+      "payload_sha256": "fc38d57f2faa19dc6ac8074a997844ff9f8b075c0893b4be25b18a7cd86654df",
+      "payload_bytes": 65539,
+      "audit_path": "build/gateway-transfer-roundtrips-20261104/gateway-transfer-roundtrips-20261104-upload-50-audit/result.json",
+      "audit_sha256": "e3689f0b05dd14a0a7713800940c4a93282989c164b118dc3d8072119f03d717",
+      "passed": true
+    },
+    {
+      "label": "gateway-transfer-roundtrips-20261104-download-50",
+      "mode": "download",
+      "physical_rows": 50,
+      "status_hidden": 1,
+      "name": "P71BED4.BIN",
+      "payload_sha256": "fc38d57f2faa19dc6ac8074a997844ff9f8b075c0893b4be25b18a7cd86654df",
+      "payload_bytes": 65539,
+      "audit_path": "build/gateway-transfer-roundtrips-20261104/gateway-transfer-roundtrips-20261104-download-50-audit/result.json",
+      "audit_sha256": "95c41f750722af21c286cf806a4bacee2bf2747de275e63f095cea260d1b96f9",
+      "passed": true
+    }
+  ],
+  "original_inputs": [],
+  "recorder_sha256": "729c97031b16797696c58ad42c49701051e09b31ef9aee80f41f32e797cf4cd5",
+  "scope": "Exact original-free package reconstruction and DOS8086 launcher checks; four independently audited stock Enigma upload/download cases at25/50physical rows. Separate processes per transfer direction. No physical runtime, analog/SIP/DSP, every-layout/protocol or full original feature-parity claim.",
+  "proof_report": {
+    "path": "build/gateway-release-proof-20261105/result.json",
+    "sha256": "21c7ca4ebe568765adceb05e48a162e3e48a66017cdc9e889c2cc5fd8fca2434"
+  },
+  "remaining": [
+    "Physical Boca/SPA2102/SynthModem runtime and audio acceptance of this terminal",
+    "Microsoft DOS6.22 and wider protocol/layout/owner combinations",
+    "File Directory, internal/configured viewer and editor integration",
+    "Directory/key tools, Chat and full ASPECT/emulation/protocol/Host parity"
+  ]
+}

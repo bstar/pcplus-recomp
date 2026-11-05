@@ -4,6 +4,17 @@
 
 ### November 4 checkpoint
 
+The [Gateway release checkpoint](docs/GATEWAY_RELEASE.md) supersedes the older
+"Alt-F4 remains unbound" and "Alt-F7 next" development statements below for the
+enabled candidate. It binds the source-only matching package, three actual DOS
+launcher runs and four exact Enigma upload/download layout cases. The private
+`build/connection-test-current.json` and machine record remain authoritative
+for installation/readback and physical acceptance. Next application work is
+File Directory and the internal/configured viewer contracts identified in
+[file-tool recovery](docs/FILE_TOOLS_RECOVERY.md), then the remaining daily-use
+and full-parity inventory. Do not infer physical runtime acceptance from these
+software checks or a deployment transaction.
+
 The full active goal continues beyond initial connection to reliable daily use
 and explicit original-feature parity. The carrier/C0 package has been installed
 with verified per-file transactions; a separate final remote readback and

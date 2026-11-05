@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [Gateway release checkpoint](GATEWAY_RELEASE.md) now reproduces the complete
+five-executable/ten-file package from an original-free source export. Three DOS
+launcher runs and four independently audited stock Enigma ZMODEM transfers pass
+at25/50 physical rows. These software gates do not close physical acceptance or
+the remaining original-command inventory; deployment identity is tracked in the
+private current-package selector and machine record.
+
 The unchanged Gateway-enabled image now passes [stock Enigma transfer-time carrier loss and exact retry](GATEWAY_TRANSFER_CARRIER.md),
 including native script compilation, two automatic logins, cleanup, independent
 protocol/raw-wire audit and eleven copied-evidence controls. [Original file-command
