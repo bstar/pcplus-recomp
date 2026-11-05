@@ -51,8 +51,10 @@ receipt checks complete captured frame bytes and expected content. An earlier
 viewer attempt used invalid ADDKEY token `pgdn` and timed out; the accepted
 fresh recipes use `pgdown`. No synthetic analysis image was executed.
 
-Original wrapping, tabs/binary bytes, long-line/EOF behavior, detailed error
-paths and configured external-viewer PRM binding still require recovery.
+The subsequent [internal viewer recovery](FILE_VIEWER_RECOVERY.md) establishes
+chunking, clipping, tabs/binary bytes, long-line/EOF behavior, missing-file retry
+and a seek beyond64KB in eight more original workflows. Detailed DOS error paths
+and configured external-viewer PRM binding still require recovery.
 
 Fresh REA/Ghidra evidence identifies the original 2.01 Alt-F directory listing
 and both Alt-V viewer paths. This is a static recovery checkpoint; it does not

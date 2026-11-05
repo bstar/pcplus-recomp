@@ -1,0 +1,119 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "kind": "static-and-original-runtime-internal-viewer-recovery",
+  "regions": [
+    {
+      "name": "previous_page",
+      "file_offset": 125144,
+      "bytes": 84,
+      "sha256": "a823ec74eab26935778dd5f3109759821fe0384089966f0b8e62975bc2d27ac1"
+    },
+    {
+      "name": "next_page",
+      "file_offset": 125228,
+      "bytes": 76,
+      "sha256": "ff96744b1e5ee63d37dc65d64aad433e961e2006901fa332d7b82e8f105aafd3"
+    },
+    {
+      "name": "render_page",
+      "file_offset": 125304,
+      "bytes": 172,
+      "sha256": "3420bb4335cbf4df0b623bad67df0882a13b6887880d259a671146470f45b669"
+    }
+  ],
+  "evidence_bundle": {
+    "path": "analysis/viewer-page-recovery-20261105.json",
+    "sha256": "a132698ab441c1db7f7c08df645198d89c9a15d63b2962b3e9b223c543e8147c"
+  },
+  "evidence": [
+    {
+      "id": "ev_2e3506bba68f5fe64d5312d387bda5a56c05a3691aca86d542fdcc0974787056",
+      "operation": "read_bytes",
+      "parameters": {
+        "address": "0x27340",
+        "length": 24
+      }
+    },
+    {
+      "id": "ev_391ef2528123da1af12edeb8b9493bdf4786253b5da7b0f33c99bcf4ee5f3b8e",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e84c"
+      }
+    },
+    {
+      "id": "ev_3e7c59f7942c08ea133a6b2718f5c9be099f462dbbd1746dfcc55643b81bc80e",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x18ed8"
+      }
+    },
+    {
+      "id": "ev_6a174b3284c8787bfcdaf45a0c64a3290c5c988aac07a0811e92fcdbbb294b62",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1853a"
+      }
+    },
+    {
+      "id": "ev_706638a987fd08de2cb8b6f79d700bec8aa29e1cdea10977a3b4f9d13e372adc",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e7f8"
+      }
+    },
+    {
+      "id": "ev_75b165d138611ba3ee60b065c97fe16f6cb0f2ce6fa1ea8a3720f257dcd2150e",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1841a"
+      }
+    },
+    {
+      "id": "ev_bc0ef29543e7f93f54aa4864048372208b642875413682d94e616266203cd0c6",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x198b0"
+      }
+    },
+    {
+      "id": "ev_dc27d6c77cd933b9bf61deff5771d66cd1c63036ef4819bedcc5bea3acc43bd3",
+      "operation": "read_bytes",
+      "parameters": {
+        "address": "0x22560",
+        "length": 190
+      }
+    },
+    {
+      "id": "ev_dfa64c976a6678903a4201bbb46be2add594c2b28267f4c058c60691074c86ce",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x16bf0"
+      }
+    },
+    {
+      "id": "ev_e71aaa7939a539176bd83a79a8cc01343514d91dc373e9898d197a0fe05ffad3",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x1e898"
+      }
+    },
+    {
+      "id": "ev_f2f8a20a922d73e420cf7b1172406df52e2fd083f1e779338f16d7e2744e0494",
+      "operation": "analyze_function",
+      "parameters": {
+        "procedure": "0x199a8"
+      }
+    }
+  ],
+  "runtime": {
+    "path": "docs/validation/file-viewer-original.json",
+    "sha256": "a1eed8a9b07e3816e363648e63646e123dd29677e118fc543c7071520096a57a"
+  },
+  "limitations": [
+    "No maintained viewer implementation or physical deployment change.",
+    "Synthetic overlay images are static analysis only; actual DOS workflows execute the unmodified original.",
+    "100-page cap and zero-length trimming concern are static observations, not verified runtime defects.",
+    "External-viewer configuration and full serviced handle/fault lifecycle remain pending."
+  ]
+}

@@ -1,0 +1,376 @@
+{
+  "passed": true,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "cases": [
+    {
+      "case": "long",
+      "checks": {
+        "normal_exit": true,
+        "original_and_payload_unchanged": true,
+        "exact_2000_cells": true,
+        "exact_hidden_cursor_and_shape": true,
+        "exact_terminal_restore": true
+      },
+      "matched_cells": 2000,
+      "keys": "p750 enter p3250 a-v p900 P A G E . D A T enter p1200 escape p500 a-x p400 y enter p500 a-x p400 y enter",
+      "report": {
+        "path": "build/viewer-original-accepted-20261105/long/result.json",
+        "sha256": "4f79d3f5d8adf8ec678c69d8b41aa898232411a19b69b75c26748b38bcca063a"
+      },
+      "observer": {
+        "path": "build/viewer-original-accepted-20261105/long/watch.asm",
+        "sha256": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2"
+      },
+      "captures": [
+        {
+          "path": "build/viewer-original-accepted-20261105/long/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/long/frame-1.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/long/frame-2.bin",
+          "sha256": "e92e8a46e4419fba70abf51e1e65b1d49b18e526feb115f3a70ba86d3a784c59"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/long/frame-3.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/long/frame-4.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ]
+    },
+    {
+      "case": "binary",
+      "checks": {
+        "normal_exit": true,
+        "original_and_payload_unchanged": true,
+        "exact_2000_cells": true,
+        "exact_hidden_cursor_and_shape": true,
+        "exact_terminal_restore": true
+      },
+      "matched_cells": 2000,
+      "keys": "p750 enter p3250 a-v p900 P A G E . D A T enter p1200 escape p500 a-x p400 y enter p500 a-x p400 y enter",
+      "report": {
+        "path": "build/viewer-original-accepted-20261105/binary/result.json",
+        "sha256": "adc3310d86455a6cce4c8587b8ff3f8354457de1c175649c1603f459c69d7548"
+      },
+      "observer": {
+        "path": "build/viewer-original-accepted-20261105/binary/watch.asm",
+        "sha256": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2"
+      },
+      "captures": [
+        {
+          "path": "build/viewer-original-accepted-20261105/binary/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/binary/frame-1.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/binary/frame-2.bin",
+          "sha256": "a5e31358aadafcc5c808358f754a3b73ba4bf9d479fa97178d598c16af95e53a"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/binary/frame-3.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/binary/frame-4.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ]
+    },
+    {
+      "case": "empty",
+      "checks": {
+        "normal_exit": true,
+        "original_and_payload_unchanged": true,
+        "exact_2000_cells": true,
+        "exact_hidden_cursor_and_shape": true,
+        "exact_terminal_restore": true
+      },
+      "matched_cells": 2000,
+      "keys": "p750 enter p3250 a-v p900 P A G E . D A T enter p1200 escape p500 a-x p400 y enter p500 a-x p400 y enter",
+      "report": {
+        "path": "build/viewer-original-accepted-20261105/empty/result.json",
+        "sha256": "66d85815d0671288db498c9513e3e29543d7f27f83014d4d4765b2d450c1e8e6"
+      },
+      "observer": {
+        "path": "build/viewer-original-accepted-20261105/empty/watch.asm",
+        "sha256": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2"
+      },
+      "captures": [
+        {
+          "path": "build/viewer-original-accepted-20261105/empty/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/empty/frame-1.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/empty/frame-2.bin",
+          "sha256": "870da8cd73daf62c354db942a1f8a0ae5330f9aea9293569dca5838e8182c875"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/empty/frame-3.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/empty/frame-4.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ]
+    },
+    {
+      "case": "unterminated",
+      "checks": {
+        "normal_exit": true,
+        "original_and_payload_unchanged": true,
+        "exact_2000_cells": true,
+        "exact_hidden_cursor_and_shape": true,
+        "exact_terminal_restore": true
+      },
+      "matched_cells": 2000,
+      "keys": "p750 enter p3250 a-v p900 P A G E . D A T enter p1200 escape p500 a-x p400 y enter p500 a-x p400 y enter",
+      "report": {
+        "path": "build/viewer-original-accepted-20261105/unterminated/result.json",
+        "sha256": "eb9cce147c262dd18e313778d3aecd6253a7c55ff111712f6cb28a6236e98ba6"
+      },
+      "observer": {
+        "path": "build/viewer-original-accepted-20261105/unterminated/watch.asm",
+        "sha256": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2"
+      },
+      "captures": [
+        {
+          "path": "build/viewer-original-accepted-20261105/unterminated/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/unterminated/frame-1.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/unterminated/frame-2.bin",
+          "sha256": "c197b3da3e9a302b77836b9ac79d48c2117e90834908d67e24c6b651f38f07a8"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/unterminated/frame-3.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/unterminated/frame-4.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ]
+    },
+    {
+      "case": "no-lf",
+      "checks": {
+        "normal_exit": true,
+        "original_and_payload_unchanged": true,
+        "exact_2000_cells": true,
+        "exact_hidden_cursor_and_shape": true,
+        "exact_terminal_restore": true
+      },
+      "matched_cells": 2000,
+      "keys": "p750 enter p3250 a-v p900 P A G E . D A T enter p1200 escape p500 a-x p400 y enter p500 a-x p400 y enter",
+      "report": {
+        "path": "build/viewer-original-accepted-20261105/no-lf/result.json",
+        "sha256": "b93251f6b06feae5f10f545c661d8f510e4d24e6aefbeaeafb503cc3136a5377"
+      },
+      "observer": {
+        "path": "build/viewer-original-accepted-20261105/no-lf/watch.asm",
+        "sha256": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2"
+      },
+      "captures": [
+        {
+          "path": "build/viewer-original-accepted-20261105/no-lf/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/no-lf/frame-1.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/no-lf/frame-2.bin",
+          "sha256": "62219fdd17033eb7a5cb97043a893cdcc1dba34e36846f266e57892a8bdee7d7"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/no-lf/frame-3.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/no-lf/frame-4.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ]
+    },
+    {
+      "case": "exact-page",
+      "checks": {
+        "normal_exit": true,
+        "original_and_payload_unchanged": true,
+        "exact_2000_cells": true,
+        "exact_hidden_cursor_and_shape": true,
+        "exact_terminal_restore": true,
+        "blank_page_after_exact_boundary_and_pageup_restore": true
+      },
+      "matched_cells": 2000,
+      "keys": "p750 enter p3250 a-v p900 P A G E . D A T enter p1200 pgdown p900 pgdown p600 pgup p900 escape p500 a-x p400 y enter p500 a-x p400 y enter",
+      "report": {
+        "path": "build/viewer-original-accepted-20261105/exact-page/result.json",
+        "sha256": "6a6e88bf764767a94a944599ea3b217c5293a35bbf472661871bfbdfab1f3551"
+      },
+      "observer": {
+        "path": "build/viewer-original-accepted-20261105/exact-page/watch.asm",
+        "sha256": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2"
+      },
+      "captures": [
+        {
+          "path": "build/viewer-original-accepted-20261105/exact-page/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/exact-page/frame-1.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/exact-page/frame-2.bin",
+          "sha256": "fad8cc87ab81d12efa862dd6e6338285bfc33b2dd8a05260cb17f8d2946972cc"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/exact-page/frame-3.bin",
+          "sha256": "870da8cd73daf62c354db942a1f8a0ae5330f9aea9293569dca5838e8182c875"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/exact-page/frame-4.bin",
+          "sha256": "fad8cc87ab81d12efa862dd6e6338285bfc33b2dd8a05260cb17f8d2946972cc"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/exact-page/frame-5.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/exact-page/frame-6.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ]
+    },
+    {
+      "case": "large",
+      "checks": {
+        "normal_exit": true,
+        "original_and_payload_unchanged": true,
+        "exact_2000_cells": true,
+        "exact_hidden_cursor_and_shape": true,
+        "page23_after_64k_offset": true
+      },
+      "matched_cells": 2000,
+      "keys": "p750 enter p3250 a-v p900 P A G E . D A T enter p1200 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 pgdown p150 p1200 escape p500 a-x p400 y enter p500 a-x p400 y enter",
+      "report": {
+        "path": "build/viewer-original-accepted-20261105/large/result.json",
+        "sha256": "6dc7a840de148d6ce41be1a1c9a42846e6711a4c5c946170a9e4369ecda87520"
+      },
+      "observer": {
+        "path": "build/viewer-original-accepted-20261105/large/watch.asm",
+        "sha256": "5b5058618c3e7e7108e966dc1bf984dc691faff7d573354f42b306705825914f"
+      },
+      "captures": [
+        {
+          "path": "build/viewer-original-accepted-20261105/large/frame-0.bin",
+          "sha256": "abf620b0ad509748615d0bcb5f144e36b730709e784903e0e9088465b9711d08"
+        }
+      ]
+    },
+    {
+      "case": "retry",
+      "checks": {
+        "normal_exit": true,
+        "original_and_payload_unchanged": true,
+        "exact_2000_cells": true,
+        "exact_hidden_cursor_and_shape": true,
+        "exact_terminal_restore": true,
+        "missing_file_acknowledge_retry": true
+      },
+      "matched_cells": 2000,
+      "keys": "p750 enter p3250 a-v p900 N O F I L E . X enter p1000 space p600 home del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del del P A G E . D A T enter p1200 escape p500 a-x p400 y enter p500 a-x p400 y enter",
+      "report": {
+        "path": "build/viewer-original-accepted-20261105/retry/result.json",
+        "sha256": "253fe8e6b2ae77deac79146d47db1ca5218e3ccd799f4275c6032b293d3f44be"
+      },
+      "observer": {
+        "path": "build/viewer-original-accepted-20261105/retry/watch.asm",
+        "sha256": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2"
+      },
+      "captures": [
+        {
+          "path": "build/viewer-original-accepted-20261105/retry/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/retry/frame-1.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/retry/frame-2.bin",
+          "sha256": "8c8104010807a5ee49ac51353df5e59c875eb2459b65e4a555bee0894e81f6d3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/retry/frame-3.bin",
+          "sha256": "b5d5380d1220f23e6df6d01697fb82a5624fa6598e6218604496eeca9cfb1e62"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/retry/frame-4.bin",
+          "sha256": "c5bb13aa40c4323afa4bed21bb6133f5f8b15b51e6ab80e57c19cf9ebe447e34"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/retry/frame-5.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-original-accepted-20261105/retry/frame-6.bin",
+          "sha256": "539b9a7e2a59d1b3986b097d2264a0d7bea9e30577e18001939cd1229f6f154b"
+        }
+      ]
+    }
+  ],
+  "sources": {
+    "standalone/test_viewer_original_dos.py": "c8190d26d3c20505b6a5d259f205fcfcf4a56eaac2a798033c7a3a423d4d3555",
+    "standalone/viewer_original_watch.asm": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2",
+    "standalone/record_viewer_original.py": "bba69f59f9b450e7bf82887dbf39d8e244277786e4af70f070c7bc9d60b23166"
+  },
+  "static_bundle": {
+    "path": "analysis/viewer-page-recovery-20261105.json",
+    "sha256": "a132698ab441c1db7f7c08df645198d89c9a15d63b2962b3e9b223c543e8147c"
+  },
+  "evidence_ids": [
+    "ev_2e3506bba68f5fe64d5312d387bda5a56c05a3691aca86d542fdcc0974787056",
+    "ev_391ef2528123da1af12edeb8b9493bdf4786253b5da7b0f33c99bcf4ee5f3b8e",
+    "ev_3e7c59f7942c08ea133a6b2718f5c9be099f462dbbd1746dfcc55643b81bc80e",
+    "ev_6a174b3284c8787bfcdaf45a0c64a3290c5c988aac07a0811e92fcdbbb294b62",
+    "ev_706638a987fd08de2cb8b6f79d700bec8aa29e1cdea10977a3b4f9d13e372adc",
+    "ev_75b165d138611ba3ee60b065c97fe16f6cb0f2ce6fa1ea8a3720f257dcd2150e",
+    "ev_bc0ef29543e7f93f54aa4864048372208b642875413682d94e616266203cd0c6",
+    "ev_dc27d6c77cd933b9bf61deff5771d66cd1c63036ef4819bedcc5bea3acc43bd3",
+    "ev_dfa64c976a6678903a4201bbb46be2add594c2b28267f4c058c60691074c86ce",
+    "ev_e71aaa7939a539176bd83a79a8cc01343514d91dc373e9898d197a0fe05ffad3",
+    "ev_f2f8a20a922d73e420cf7b1172406df52e2fd083f1e779338f16d7e2744e0494"
+  ],
+  "prior_unaccepted_retry": {
+    "path": "build/viewer-original-20261105/retry/result.json",
+    "sha256": "30aaf2c9037a9bdd980c1ac90f535688cdeabfaaa163ffffcd8e2a8f1583ab0c"
+  },
+  "scope": "Eight unmodified-original DOSBox8086 offline workflows, generated files, dummy UART. Exact full viewer frames including raw control/CP437 bytes, clipping, empty/unterminated/EOF paging, retry and32-bit seek. Passive seven-frame timer sample is not a complete event trace. No analysis-image execution, maintained-viewer implementation, DOS6.22 or physical acceptance claim.",
+  "remaining": [
+    "Maintained serviced viewer and file-handle lifecycle/fault tests.",
+    "Configured external-viewer PRM binding and launch integration.",
+    "Native100-page limit is static inference, not runtime verified."
+  ]
+}
