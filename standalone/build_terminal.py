@@ -47,6 +47,8 @@ parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchang
 parser.add_argument('--input-tables-data',action='store_true',help='Move two near input dispatch pointer tables from resident code into DGROUP')
 parser.add_argument('--cwd-identities',action='store_true',help='Freeze startup selectors and XLT defaults; resolve PRMEDIT absolutely; no directory-change key')
 parser.add_argument('--path-control',action='store_true',help='Serviced original Alt-F7 dialog and verified startup-directory restoration; implies cwd identities/reference')
+parser.add_argument('--gateway-lookup',action='store_true',help='Link direct empty-tail COMSPEC policy; requires hook lookup, no Gateway key/menu binding')
+parser.add_argument('--gateway-probe',action='store_true',help='Diagnostic only: invoke direct COMSPEC before UART startup, record result, then exit')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
 parser.add_argument('--manual-init',action='store_true',help='Integrate guarded manual Init key/menu and exclusive foreground UART scheduling')
 parser.add_argument('--manual-init-owner',action='store_true',help='Link isolated bounded send-only Init Modem owner; no keyboard/menu binding')
@@ -80,6 +82,8 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.gateway_probe:args.gateway_lookup=True;args.path_control=True
+if args.gateway_lookup:assert args.hook_lookup,'Direct Gateway resolver requires the bounded HOOK_CODE DOS boundary'
 if args.path_control:
  args.cwd_identities=True
  args.original_reference=True
@@ -268,6 +272,8 @@ if args.keyboard_bank:out_name+='-keyboard-bank'
 if args.input_tables_data:out_name+='-input-tables-data'
 if args.cwd_identities:out_name+='-cwd-identities'
 if args.path_control:out_name+='-path-control'
+if args.gateway_lookup:out_name+='-gateway-lookup'
+if args.gateway_probe:out_name+='-gateway-probe'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
  # buffers as the existing feature suffix chain grows.
@@ -282,6 +288,7 @@ modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
 modules += ['viewport','protected_erase','alternate_output','substitute_control']
 sources=[]
 if args.path_control:sources += [ROOT/'src/filesystem/path_bank.asm',ROOT/'src/filesystem/path_kernel.asm',ROOT/'reconstruction/file_path/change.asm']
+if args.gateway_probe:sources.append(ROOT/'standalone/gateway_lookup_probe.asm')
 for module in modules:
  sources += sorted((ROOT/'reconstruction'/module).glob('*.asm'))
 sources += [ROOT/'reconstruction/uart/core.asm',ROOT/'reconstruction/keyboard/core.asm',ROOT/'src/uart/api.asm',ROOT/'src/ansi/decimal.asm',ROOT/'src/reports/decimal.asm',ROOT/'src/reports/data.asm']
@@ -451,6 +458,7 @@ for index,source in enumerate(sources):
  if args.phone_log_disk:options+=['-DTERMINAL_PHONE_LOG_DISK']
  if args.custom_irq:options+=['-DTERMINAL_CUSTOM_IRQ']
  if args.cwd_identities:options+=['-DTERMINAL_CWD_IDENTITIES']
+ if args.gateway_probe:options+=['-DTERMINAL_GATEWAY_PROBE']
  if args.path_control:
   options+=['-DTERMINAL_PATH_CONTROL']
   if source in (ROOT/'src/filesystem/path_kernel.asm',ROOT/'reconstruction/file_path/change.asm'):
@@ -644,6 +652,7 @@ for source in c_sources:
  if args.phone_log_controls:options+=['-dPHONE_LOG_CONTROLS']
  if args.local_controls:options+=['-dTERMINAL_LOCAL_CONTROLS']
  if args.cwd_identities:options+=['-dTERMINAL_CWD_IDENTITIES']
+ if args.gateway_lookup:options+=['-dTERMINAL_GATEWAY_LOOKUP']
  if args.path_control:options+=['-dTERMINAL_PATH_CONTROL']
  if source in path_sources:options+=['-nt=FILE_CODE','-nc=FARCODE']
  if args.status_control:options+=['-dTERMINAL_STATUS_CONTROL']
@@ -793,6 +802,8 @@ manifest={'experimental_directory_keys':args.directory_keys,'experimental_aspect
 manifest['experimental_keyboard_bank']=args.keyboard_bank
 manifest['experimental_cwd_identities']=args.cwd_identities
 manifest['experimental_path_control']=args.path_control
+manifest['experimental_gateway_lookup']=args.gateway_lookup
+manifest['diagnostic_gateway_probe']=args.gateway_probe
 manifest['experimental_reset_row_owner']=args.reset_row_owner
 manifest['experimental_status_owner']=args.status_owner
 manifest['diagnostic_xlt_display_probe']=args.xlt_display_probe

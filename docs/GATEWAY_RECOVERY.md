@@ -1,5 +1,9 @@
 # Original Gateway to DOS contract
 
+The [direct COMSPEC prerequisite](GATEWAY_LOOKUP.md) now implements and tests
+the bounded execution policy. Foreground Alt-F4 ownership and binding remain
+open; the startup diagnostic is not an online Gateway acceptance test.
+
 Original Alt-F4 is an interactive shell gateway. It reads uppercase `COMSPEC`,
 executes that interpreter directly with an empty DOS command tail, and restores
 the terminal when the child exits. It does not add `/c` or the ordinary PROGRAM

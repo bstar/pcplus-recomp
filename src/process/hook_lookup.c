@@ -117,3 +117,54 @@ unsigned __far __cdecl hook_lookup_run(const char *name,const char *tail,process
  }
  return status;
 }
+#ifdef TERMINAL_GATEWAY_LOOKUP
+/* COMSPEC must select a directly executable interpreter. Reject BAT rather
+ * than entering native CRT batch coercion or attempting to run text as code. */
+static unsigned gateway_spawn(char *name,process_result *r)
+{
+ static const char __based(__segname("_CODE")) extensions[3][5]={".com",".exe",".bat"};
+ char empty[1];unsigned i,j,n,base=0,dot=CAP;
+ empty[0]=0;n=length(name,CAP-1);
+ if(!n || n>=CAP)return failure(r,PROCESS_COMMAND,0);
+ if(hook_lookup_cancelled())return failure(r,PROCESS_TRAP,0);
+ for(i=0;i<n;++i)if(name[i]=='/'||name[i]=='\\'||name[i]==':')base=i+1;
+ for(i=base;i<n;++i)if(name[i]=='.'){dot=i;break;}
+ if(dot!=CAP){if(batch(name,dot))return failure(r,PROCESS_COMMAND,0);r->status=hook_lookup_raw(name,empty,r);return r->status;}
+ if(n+4>=CAP)return failure(r,PROCESS_COMMAND,0);
+ for(i=0;i<3;++i){
+  for(j=0;j<5;++j)name[n+j]=extensions[i][j];
+  if(hook_lookup_cancelled())return failure(r,PROCESS_TRAP,0);
+  if(!hook_lookup_access(name)){if(i==2)return failure(r,PROCESS_COMMAND,0);r->status=hook_lookup_raw(name,empty,r);return r->status;}
+ }
+ name[n]=0;return failure(r,PROCESS_EXEC,2);
+}
+unsigned __far __cdecl gateway_lookup_run(process_result *r)
+{
+ inherited e;char name[CAP],candidate[CAP];unsigned i,n,at,start,count,used,status;
+ if(!hook_lookup_context()||hook_platform_psp()!=process_psp||!extent(r,sizeof(*r)))return PROCESS_ARGUMENT;
+ if(hook_lookup_cancelled())return failure(r,PROCESS_TRAP,0);
+ if(!environment(&e)||!e.comspec.found||!e.comspec.bytes||e.comspec.bytes>=CAP)return failure(r,PROCESS_ENVIRONMENT,0);
+ n=e.comspec.bytes;
+ for(i=0;i<n;++i){name[i]=e.data[e.comspec.at+i];if((unsigned char)name[i]<32 || name[i]==127)return failure(r,PROCESS_ENVIRONMENT,0);}
+ name[n]=0;if(name[0]=='[')return failure(r,PROCESS_COMMAND,0);
+ copy(candidate,name,n+1);status=gateway_spawn(candidate,r);
+ if(status!=PROCESS_EXEC||(r->dos_error!=2&&r->dos_error!=3)||!e.path.found)return status;
+ for(i=0;i<n;++i)if(name[i]=='/'||name[i]=='\\'||(i==1&&name[i]==':'))return status;
+ at=0;
+ while(at<e.path.bytes){
+  if(hook_lookup_cancelled())return failure(r,PROCESS_TRAP,0);
+  start=at;while(at<e.path.bytes&&e.data[e.path.at+at]!=';')++at;
+  count=at-start;while(at<e.path.bytes&&e.data[e.path.at+at]==';')++at;
+  /* Preserve native path_component's stop, not truncation or skip, on a
+   * leading empty or oversized entry. Repeated delimiters after an entry skip. */
+  if(!count||count>=259)break;used=count;
+  for(i=0;i<count;++i){candidate[i]=e.data[e.path.at+start+i];if((unsigned char)candidate[i]<32 || candidate[i]==127)return failure(r,PROCESS_ENVIRONMENT,0);}
+  if(candidate[used-1]!='\\'&&candidate[used-1]!='/')candidate[used++]='\\';
+  if(used+n>=CAP)break;copy(candidate+used,name,n+1);
+  status=gateway_spawn(candidate,r);if(status!=PROCESS_EXEC)break;
+  if(r->dos_error!=2&&r->dos_error!=3&&!(candidate[0]=='/'||candidate[0]=='\\'))break;
+  if(r->dos_error!=2&&r->dos_error!=3&&candidate[1]!='/'&&candidate[1]!='\\')break;
+ }
+ return status;
+}
+#endif

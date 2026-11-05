@@ -141,6 +141,12 @@ _small_code_:
  jmp terminal_shutdown
 .path_bound:
 %endif
+%ifdef TERMINAL_GATEWAY_PROBE
+ extern terminal_gateway_probe
+ call far terminal_gateway_probe
+ mov [terminal_exit_code],ax
+ jmp terminal_shutdown
+%endif
 %ifdef TERMINAL_DIRECTORY_RESOURCE_CLI
  extern _terminal_resource_cli_bind
  global terminal_resource_cli_startup

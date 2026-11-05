@@ -68,6 +68,13 @@ the maintained PROGRAM handoff. Implement that distinct foreground contract
 next, with explicit serial/file ownership and missing-COMSPEC policy; source
 Gateway integration and its acceptance gates remain open.
 
+The [direct COMSPEC prerequisite](docs/GATEWAY_LOOKUP.md) now implements bounded
+interpreter selection and empty-tail EXEC, with native selection comparisons
+and an actual interactive COMMAND.COM/EXIT diagnostic before UART startup.
+The source ownership audit exposes remaining capture/PRN/JFT and critical IF0
+UART-kind gaps. Implement the distinct Gateway foreground transaction next;
+the component diagnostic does not enable Alt-F4 or establish online acceptance.
+
 ### Earlier connection and network checkpoints
 
 **Real hardware connection achieved; compatibility acceptance continues.**

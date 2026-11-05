@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The [direct COMSPEC prerequisite](GATEWAY_LOOKUP.md) now links an optional
+empty-tail interpreter policy with native selection comparisons and actual
+DOS shell/exit tests. Ordinary HOOK lookup remains covered and the disabled
+parent is byte-identical. Alt-F4 binding awaits explicit file/serial ownership,
+launch revalidation and return handling; the diagnostic runs before UART startup.
+
 The [original path-editor follow-up](PATH_EDITOR_PARITY.md) corrects the old
 capture decoder's one-cell geometry error and restores fixed-width overwrite,
 Insert/full-latch/cursor and modal-acknowledgement behavior. First menu-to-popup
