@@ -1,0 +1,304 @@
+{
+  "passed": true,
+  "observations": {
+    "same_parent_without_Gateway_observer": {
+      "producer": {
+        "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-control-20261104/proxy-integration.json",
+        "sha256": "458ebc0a808be133ae3d54e129350fa8a5602ff766442d641e661149db27ac4b"
+      },
+      "cell_audit": {
+        "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-control-20261104/screen-reference-audit.json",
+        "sha256": "f5167e70cc8cbb0f14281fa15f58820acff063d235a8f3779f00f96dedbdca22"
+      },
+      "passed": true
+    },
+    "oversized_observer_failure": {
+      "producer": {
+        "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-live-20261104/proxy-integration.json",
+        "sha256": "bfbf160b6534c84e43df940a5cbe760da5d0b2870dc7628d42f7a5f4e1032a78"
+      },
+      "base_harness": {
+        "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-live-20261104/result.json",
+        "sha256": "b73668b93fd38b9d4e7a89435e4ffe15717a9ca2ad0f2d38497ebe5abb9f59fc"
+      },
+      "observer": {
+        "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-live-20261104/OBSERVE.COM",
+        "sha256": "20b9ae1670fbcdd11fd062ce2375ccf1e2ed4bbaa971b284e675b9f5186130aa"
+      },
+      "normal_DOS_exit_was_not_accepted": true,
+      "scope": "The16000-byte-buffer observer did not reach scripted login or the Gateway. The8000-byte-buffer variant reached both with the same parent/ASPECT. Consistent with conventional-memory pressure; the exact DOS error was not sampled, so root cause is not claimed proven."
+    }
+  },
+  "binary_sha256": "ae6cbad95094fd59f98fd95a7831cbdc014b404ec37886a290294fe05089d90b",
+  "terminal": {
+    "path": "build/gateway-front-reviewed-20261104/TERMINAL.EXE",
+    "sha256": "ae6cbad95094fd59f98fd95a7831cbdc014b404ec37886a290294fe05089d90b"
+  },
+  "manifest": {
+    "path": "build/gateway-front-reviewed-20261104/manifest.json",
+    "sha256": "2c5e43d709a9c2f8171be33e2c969b436dd5aca55e761897589ae2f93310e132"
+  },
+  "runner": {
+    "path": "build/gateway-bbs-aspect-20261104/ASPECT.EXE",
+    "sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f"
+  },
+  "runner_manifest": {
+    "path": "build/gateway-bbs-aspect-20261104/manifest.json",
+    "sha256": "6e2319d878fe2bbf14bc7113e719665c5c1e08ea6f39d1a3db6a5673a108b102"
+  },
+  "cases": [
+    {
+      "peer": "enigma",
+      "passed": true,
+      "checks": {
+        "actual_empty_tail_child": true,
+        "observer_complete": true,
+        "exact_editor_frame": true,
+        "cursor_and_shape": true,
+        "mode_and_rows": true,
+        "post_return_edit_keys": true
+      },
+      "matched_cells": 1920,
+      "CPR": [
+        9,
+        8
+      ],
+      "delivered_bytes": 47821,
+      "serial": {
+        "com": 3,
+        "baud": 19200,
+        "line": "8N1",
+        "flow": "HARD",
+        "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.",
+        "irq": 5
+      },
+      "gateway_observer_words": [
+        18255,
+        1,
+        1,
+        1,
+        25,
+        25,
+        2048,
+        2048,
+        15,
+        15,
+        20483,
+        20483
+      ],
+      "evidence": [
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/result.json",
+          "sha256": "744b6324aa501530d6252445bbe25596f600d733df46653074fe4f813ea5d976"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/proxy-integration.json",
+          "sha256": "5ea595ac253e1b2fc175847ab605631e817a4707fb420c5112030f7c27b27d75"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/gateway-audit.json",
+          "sha256": "9e54794f7cc724013b9d13b8e2fdfcbcd76899d8c52fdb8164ee46182d8fa15d"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/screen-reference-audit.json",
+          "sha256": "50ace71a86b6316b522073a58464c17c5badba6d6454c66b2e579ce392f36c3e"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/GWVIEW.BIN",
+          "sha256": "2cf30085d294f56c0f99630363cf03c7243f706dbb285a2a1d07cc3f28a8e716"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/GWCHILD.BIN",
+          "sha256": "a1f386a0ecb061b3c46a038616212779858ba7258b2eccb818a64986c97282da"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/serial-received.bin",
+          "sha256": "956ed626a1fc11b0dfd4924651b4877f5a1f88c22d64e19a98a908a217abd4e9"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/GWSHELL.COM",
+          "sha256": "abab1cf181160e8296c6c20cee3fea303373d150702b3e0ae7008b9e8dd0caac"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/OBSERVE.COM",
+          "sha256": "6441a901cb8f8dff35052755b85a937462a0654b4a50bf8fff64d76e02741320"
+        },
+        {
+          "path": "build/bbs-lab/gateway-stock-enigma-compact-20261104-proxy/ready.json",
+          "sha256": "ff801ab760aedb34ad4d6bb0a2cfb83f720f936ef8d6e0ef8bc9d7025539dd27"
+        },
+        {
+          "path": "build/bbs-lab/gateway-stock-enigma-compact-20261104-proxy/1-closed.json",
+          "sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/gateway-stock-enigma-compact-20261104/semantic-audit.json",
+          "sha256": "82d1aaf4b6fbbf5a034e57fa385f3d6a25dbaec912b5f24d9d395ff2925345f6"
+        }
+      ],
+      "runtime_sources": {
+        "config.js": "130ce8b74a4eba86e2c6ba28a4e18ae2ad5035596d8832c47f668eea3daf470a",
+        "src/telnet/TelnetProxy.js": "c88ccf3b407a91431f9b03b1c82142f506649f14116099c1e86e9dc7582dd618",
+        "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+        "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "src/telnet/WindowSizeReply.js": "b7b4a58e37ccd3d124102559c932be9357686f71259d791be2fc2210ee9a25a6",
+        "COPYING": "0ed8b6028dc07428234531de5a5ec59c878ec622f599e4c353520a10be909cd9"
+      }
+    },
+    {
+      "peer": "synchronet",
+      "passed": true,
+      "checks": {
+        "actual_empty_tail_child": true,
+        "observer_complete": true,
+        "exact_editor_frame": true,
+        "cursor_and_shape": true,
+        "mode_and_rows": true,
+        "post_return_edit_keys": true
+      },
+      "matched_cells": 1920,
+      "CPR": [
+        5,
+        8
+      ],
+      "delivered_bytes": 21266,
+      "serial": {
+        "com": 3,
+        "baud": 19200,
+        "line": "8N1",
+        "flow": "HARD",
+        "hardware_scope": "DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.",
+        "irq": 5
+      },
+      "gateway_observer_words": [
+        18255,
+        1,
+        1,
+        1,
+        25,
+        25,
+        1024,
+        1024,
+        1551,
+        1551,
+        20483,
+        20483
+      ],
+      "evidence": [
+        {
+          "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-compact-20261104/result.json",
+          "sha256": "c90a1176ae4518024fecfab6eb83fafd05c8cce1c1aee1eea1a3c1201dd2d2f6"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-compact-20261104/proxy-integration.json",
+          "sha256": "b324d02aca61491326f3442520046b78f8d2a2089ac16e5988fd41099dc1d65f"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-compact-20261104/gateway-audit.json",
+          "sha256": "f0df8694b6fffd09a91d44395821a37edffc610614b8134436dd4a78d57a9e44"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-compact-20261104/screen-reference-audit.json",
+          "sha256": "31aaf207abe71d6fb5a7b8994473630475ed64aeb9557ef8ea4a0afe942f9055"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-compact-20261104/GWVIEW.BIN",
+          "sha256": "88cd95903d7492e9bbe80fa03eb4f52ca8b53c3fa634fc969b3b22e70eb0cff5"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-compact-20261104/GWCHILD.BIN",
+          "sha256": "a1f386a0ecb061b3c46a038616212779858ba7258b2eccb818a64986c97282da"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-compact-20261104/serial-received.bin",
+          "sha256": "7efd774a892bbc997a1adcebbb84d904cbaab8b84986aa194119507d723a460a"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-compact-20261104/GWSHELL.COM",
+          "sha256": "abab1cf181160e8296c6c20cee3fea303373d150702b3e0ae7008b9e8dd0caac"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/gateway-stock-sync-compact-20261104/OBSERVE.COM",
+          "sha256": "6441a901cb8f8dff35052755b85a937462a0654b4a50bf8fff64d76e02741320"
+        },
+        {
+          "path": "build/bbs-lab/gateway-stock-sync-compact-20261104-proxy/ready.json",
+          "sha256": "afce4299f8f0b536d6007c5acb25eb7bc03020591c7ba45d9dab3f54304b2cdc"
+        },
+        {
+          "path": "build/bbs-lab/gateway-stock-sync-compact-20261104-proxy/1-closed.json",
+          "sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+        }
+      ],
+      "runtime_sources": {
+        "config.js": "130ce8b74a4eba86e2c6ba28a4e18ae2ad5035596d8832c47f668eea3daf470a",
+        "src/telnet/TelnetProxy.js": "c88ccf3b407a91431f9b03b1c82142f506649f14116099c1e86e9dc7582dd618",
+        "src/telnet/TelnetCodec.js": "732b57d3134a1941e0f78f9c281d76f7b4d775ce11cf1c2cf1912804fb868f5e",
+        "src/telnet/InputSequenceFramer.js": "00f00af6e692c42426f85121317117367e3ae43fae97f48f08d34252f90f850a",
+        "src/logger.js": "9ce9d913744df9fb0f3c4c1573f683608c4de19e6c3e2ba475a8d91411d7f2a5",
+        "src/telnet/WindowSizeReply.js": "b7b4a58e37ccd3d124102559c932be9357686f71259d791be2fc2210ee9a25a6",
+        "COPYING": "0ed8b6028dc07428234531de5a5ec59c878ec622f599e4c353520a10be909cd9"
+      }
+    }
+  ],
+  "controls": {
+    "path": "build/gateway-bbs-compact-controls-20261104/result.json",
+    "sha256": "64ab875d6e6bf20945ad1457f2a6ded20fc8a2b6c45432185f6dfa75a0defe53"
+  },
+  "sources": {
+    "standalone/record_gateway_editor_bbs.py": "bf47967be5003e1566febdbcb61b77b2ef013ca3da2575eb5535646ea1bd3882",
+    "standalone/check_gateway_bbs_evidence.py": "fc3d6232be03da53d9b1a8f1842a85e90d25aacc72560dc95759215281729713",
+    "lab/bbs/gateway_bbs_support.py": "880b641528fbc30dabb9ce90ca12bf8086030b8a5e86f633188674de600deb04",
+    "standalone/gateway_bbs_child.asm": "a1acc421813963da627962092c1610b8709d2759866bba9de9b30ce54dd6bd9c",
+    "standalone/gateway_bbs_watch.asm": "5c361c38e85c7b58270762f03b09c835b84d43c8bc9bfe4b6c32b20697cacf91",
+    "lab/bbs/audio_synchronet_editor_keys.asm": "48d47452cab0d9960525b32572c208e1f1fc52d0b6463ebe94e25a0ded5491d5",
+    "lab/bbs/test_synthmodem_proxy_dos.py": "6b40350b6213ff62c8c9684338bd3a692187e3d373ea290c5b3bf4a092da95bd",
+    "lab/bbs/test_synchronet_screen_reference_dos.py": "7f0eae537ebc7029594fc9543c2751313baea64e4f6a8bd765ece5c6b7dfcc82",
+    "lab/bbs/test_dos.py": "8f11c284e545a45b87ad31a305867ec100b9ee8d92dd8bc26381de2e59d3052a",
+    "lab/bbs/editor_dos_probe.py": "e151b915529b28aa293408114feed5617f0a41099cdf83c059e743869f58a932",
+    "lab/bbs/audit_screen_reference.py": "82ea451cd4a5bc24a5194fcfa183e9d51ebf6b2c33bfd9c41ac8d99c34071d22",
+    "lab/bbs/product_inputs.py": "f4b94653d54bf91234359f1683dbce11a4201c5e1702018f16ed7af757e31f73"
+  },
+  "original_inputs": [],
+  "physical_deployment_changed": false,
+  "scope": "Two actual owned stock BBS editor sessions through the staged real SynthModem Telnet proxy, DOS8086 COM3/IRQ5 HARD. Real Alt-F4/empty-tail graphics child, exact25-row frame/cursor return, post-return editing and1920-cell/CPR reference per peer. Explicit250ms key framing and20ms input pacing; no SIP/DSP/analog, physical flow-control or whole-application acceptance.",
+  "remaining": [
+    "Active capture/HOLD and printer composition.",
+    "Sustained output, repeated reconnect and binary transfer/cancel/carrier-loss workflows through this Gateway-enabled image.",
+    "Microsoft DOS6.22 and physical Boca/SPA2102/SynthModem acceptance.",
+    "Full original command, ASPECT/emulation/protocol/Host parity."
+  ],
+  "disabled_keyboard_helper_control": {
+    "path": "build/gateway-editor-helper-control-20261104/result.json",
+    "sha256": "366005ec4e59d4fd5e2a67e1c97f40cf978b4cb13ed949d85e640277afa81765",
+    "result": {
+      "passed": true,
+      "cases": [
+        {
+          "rows": 25,
+          "sha256": "284a55da783bdf8360c452b5b43edecb42137dfbeb644fd1c8f3ac4b7ea079a6",
+          "passed": true
+        },
+        {
+          "rows": 28,
+          "sha256": "6c42b13474fffafd1da26c730653b28035ef3208b6ebca83e35838ffd4e3c26a",
+          "passed": true
+        },
+        {
+          "rows": 43,
+          "sha256": "6d289aacdfc166e72c27ea3710330a1e72fe8fbc20ded0250be4e09a557b9571",
+          "passed": true
+        },
+        {
+          "rows": 50,
+          "sha256": "84815fb5f583859b746996bae85a514df0d3700ba7e0a25c1933c3ec5aee67f4",
+          "passed": true
+        }
+      ],
+      "scope": "Gateway option disabled: existing native BIOS helper remains byte-identical at25/28/43/50 rows.",
+      "old_source_sha256": "2bbf5a86b41a0c5c5ae9e7962fc97bed58b0c5d313b43f4b12d6af365e566d19",
+      "current_source_sha256": "48d47452cab0d9960525b32572c208e1f1fc52d0b6463ebe94e25a0ded5491d5"
+    }
+  }
+}

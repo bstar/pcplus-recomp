@@ -92,6 +92,12 @@ async def run(args):
  if init_wait is not None:
   assert 0<=init_wait<=32767
   command+=f' /I:{init_wait}'
+ comspec=getattr(args,'comspec_fixture',None);comspec_bytes=None
+ if comspec:
+  comspec=comspec.resolve();assert comspec.is_relative_to(ROOT/'build') and comspec.suffix.upper()=='.COM'
+  comspec_bytes=comspec.read_bytes();assert comspec_bytes
+  (output/'GWSHELL.COM').write_bytes(comspec_bytes)
+  environment+='\nset COMSPEC=D:\\GWSHELL.COM'
  keymap=None
  if args.keymap_fixture:
   keymap=args.keymap_fixture.read_bytes()
@@ -210,6 +216,7 @@ exit
  after=(output/'AFTER.BIN').read_bytes() if (output/'AFTER.BIN').exists() else b''
  checks={'dos_normal_exit':code==0 and (output/'PASS.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'screen_captured':len(screen)==snapshot_bytes,'bbs_connected':any(e['kind']=='bbs-connected' for e in modem.events),'bbs_display_received':bool(modem.display)}
  if fixture is not None:checks['configuration_unchanged']=(output/'TEST.PRM').read_bytes()==fixture
+ if comspec_bytes is not None:checks['comspec_fixture_unchanged']=(output/'GWSHELL.COM').read_bytes()==comspec_bytes
  if meta is not None:checks['meta_actions_unchanged']=(output/'ACTIONS.KEY').read_bytes()==meta
  if keymap is not None:checks['keyboard_profile_unchanged']=(output/'BOARD.KBD').read_bytes()==keymap
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
@@ -218,6 +225,7 @@ exit
  if helper_bytes is not None:checks['keyboard_helper_unchanged']=(output/'KEYS.COM').read_bytes()==helper_bytes
  if view_fixture is not None:checks['read_only_directory_unchanged']=(output/'PCPLUS.DIR').read_bytes()==view_fixture
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'keyboard_input':args.keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
+ result['comspec_fixture_sha256']=hashlib.sha256(comspec_bytes).hexdigest() if comspec_bytes is not None else None
  result['initialization_wait_seconds']=init_wait
  result['cpu']=next(line.split('=',1)[1] for line in config.splitlines() if line.startswith('cputype='))
  if irq is not None:result['serial']['irq']=irq
@@ -247,6 +255,7 @@ if __name__=='__main__':
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')
  p.add_argument('--raw-upstream',action='store_true',help='Upstream is an explicit serial-side bridge; leave Telnet ownership to that bridge')
+ p.add_argument('--comspec-fixture',type=Path,help='Explicit source-built test interpreter under build/; copied to owned D: and selected with COMSPEC')
  p.add_argument('--video-observer',type=Path,help='Explicit source-built passive COM observer under build/; install with T and collect after DOS return')
  p.add_argument('--phone-log',action='store_true',help='Enable saved telephone logging to the owned D: fixture using PCPLUS fallback')
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')

@@ -44,7 +44,11 @@ main_footer: db 'Local [',0
 keys:
 %include "multiline_keys.inc"
 %else
-keys: dw 1519h,1e41h,3042h,2e43h,2044h,1245h,4700h,2348h,4f00h,1245h
+keys:
+%ifdef GATEWAY_ROUNDTRIP
+ dw 6b00h
+%endif
+ dw 1519h,1e41h,3042h,2e43h,2044h,1245h,4700h,2348h,4f00h,1245h
       dw 4b00h,5300h,5200h,2c5ah,0f09h,1454h,4900h,5100h,1519h
       dw 1655h,314eh,1f53h,1e41h,2f56h,1245h,2044h,1011h,3920h,2d00h,0
 %endif
@@ -117,6 +121,12 @@ handler:
  cmp word [bx],0
  je .restore
  mov word [ticks],AUDIO_SYNC_EDITOR_KEY_WAIT
+%ifdef GATEWAY_ROUNDTRIP
+ cmp word [bx-2],6b00h
+ jne .ordinary_wait
+ mov word [ticks],72 ; Real graphics child and automatic foreground restore.
+.ordinary_wait:
+%endif
  cmp word [bx],2d00h
  jne .done
  mov word [ticks],AUDIO_SYNC_EDITOR_FINAL_WAIT

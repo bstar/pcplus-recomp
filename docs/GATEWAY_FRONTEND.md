@@ -70,9 +70,15 @@ inputs. Disabling only the frontend reproduces the preceding UART-only parent
 exactly. UART54, file-owner40, private-handle56 and interpreter-lookup33 component
 cases pass against the composed frontend image.
 
+The later [stock-editor Gateway tests](GATEWAY_EDITOR_BBS.md) also pass actual
+Enigma and Synchronet editor returns, full-frame/cursor restoration and all 1,920
+logical cells per peer. They use the same executable with a synthetic graphics
+child and explicitly staged proxy settings.
+
 ## Remaining acceptance
 
-The normal frontend still needs full online Enigma/Synchronet interactions,
+Beyond those selected editor returns, the normal frontend still needs full
+online Enigma/Synchronet interactions,
 active capture/HOLD and printer workflows, sustained traffic, binary transfers,
 carrier loss and same-process reconnect coverage through the complete route.
 Microsoft DOS6.22 and physical Boca/SPA2102/SynthModem acceptance remain open.

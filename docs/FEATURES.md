@@ -3,8 +3,9 @@
 The optional [normal DOS Gateway frontend](GATEWAY_FRONTEND.md) now binds Alt-F4
 and the command/reference menu, composes live serial and private-file ownership,
 and restores the display/mouse without a return-key prompt. Actual DOS keyboard,
-menu and COMMAND.COM workflows pass. Online BBS, active sink combinations and
-physical modem acceptance remain open; the deployed release is unchanged.
+menu and COMMAND.COM workflows pass. [Stock Enigma/Synchronet editor returns](GATEWAY_EDITOR_BBS.md)
+also pass exact frame/cursor restoration and 1,920-cell audits per peer. Full BBS
+sessions, active sink combinations and physical modem acceptance remain open; the deployed release is unchanged.
 
 The [direct COMSPEC prerequisite](GATEWAY_LOOKUP.md) now links an optional
 empty-tail interpreter policy with native selection comparisons and actual
