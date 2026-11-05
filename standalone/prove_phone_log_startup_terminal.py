@@ -39,6 +39,12 @@ def flags(manifest, startup, event_hooks=True, disk=True, controls=True):
         'experimental_window_size_report': 'window-size-report',
         'experimental_input_tables_data': 'input-tables-data',
         'experimental_cwd_identities': 'cwd-identities',
+        'experimental_path_control': 'path-control',
+        'experimental_gateway_lookup': 'gateway-lookup',
+        'experimental_gateway_handles': 'gateway-handles',
+        'experimental_gateway_files': 'gateway-files',
+        'experimental_gateway_uart': 'gateway-uart',
+        'experimental_gateway_frontend': 'gateway',
         'experimental_original_keys': 'original-keys', 'experimental_original_reference': 'original-reference',
         'experimental_native_reset_bank': 'native-reset-bank', 'native_reset_transaction': 'native-reset-transaction'}
     result = ['--' + flag for field, flag in fields.items() if manifest.get(field)]

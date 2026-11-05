@@ -17,14 +17,17 @@ def main():
     a=p.parse_args();cap,bridge,out=[p.resolve() for p in (a.capture,a.bridge,a.output)]
     assert all(p.is_relative_to(ROOT/'build') for p in (cap,bridge,out));out.mkdir(parents=True,exist_ok=False)
     original=json.loads((cap/'carrier-checks.json').read_text());assert original['passed']
-    kinds=['unchanged','partial-hash','partial-after-drop','stage-not-clean','missing-carrier-notice',
+    kinds=['unchanged','source-count','partial-hash','partial-after-drop','stage-not-clean','missing-carrier-notice',
            'NAWS','hardware','DOS-compiler','second-interrupted','retry-payload']
     cases=[]
     for kind in kinds:
         copied=out/kind/'capture';copied_bridge=out/kind/'bridge'
         shutil.copytree(cap,copied);shutil.copytree(bridge,copied_bridge)
         r=json.loads((copied/'carrier-checks.json').read_text())
-        if kind in ('partial-hash','partial-after-drop','stage-not-clean'):
+        if kind=='source-count':
+            r['products']['TERMINAL.EXE']['source_files']+=1
+            (copied/'carrier-checks.json').write_text(json.dumps(r)+'\n')
+        elif kind in ('partial-hash','partial-after-drop','stage-not-clean'):
             if kind=='partial-hash':r['snapshots'][0]['sha256']='0'*64
             elif kind=='partial-after-drop':
                 first=json.loads((copied/'connection-1/session.json').read_text())

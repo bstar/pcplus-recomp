@@ -7,7 +7,7 @@ from pathlib import Path
 import struct
 import subprocess
 import sys
-from product_inputs import ROOT,sha
+from product_inputs import ROOT,sha,select_product
 from audit_zmodem import scan,packet,metadata,audit_batch,audit_controls
 from test_transfer_dos import timestamp,offset_after
 from audit_size_probe_screen import telnet
@@ -27,7 +27,9 @@ def main():
     for n,h in r['sources'].items():assert sha(ROOT/n)==h,n
     for leaf,product in r['products'].items():assert sha(cap/'program'/leaf)==sha(ROOT/product['path'])==product['sha256']
     parent=r['products']['TERMINAL.EXE'];manifest=json.loads((ROOT/parent['path']).with_name('manifest.json').read_text())
-    assert not manifest.get('original_inputs') and len(manifest['sources'])==570
+    selected,source_inputs=select_product(ROOT/parent['path'],'TERMINAL.EXE')
+    assert sha(selected)==parent['sha256']
+    assert not manifest.get('original_inputs') and len(manifest['sources'])==parent['source_files']==len(source_inputs)-2
     assert manifest['memory_layout']['resident_CS_extent_bytes']<=65536
     assert (cap/'PASS.TXT').exists() and not (cap/'FAIL.TXT').exists()
     before=(cap/'BEFORE.BIN').read_bytes();assert len(before)==42 and before==(cap/'AFTER.BIN').read_bytes()

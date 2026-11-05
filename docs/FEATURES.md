@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The unchanged Gateway-enabled image now passes [stock Enigma transfer-time carrier loss and exact retry](GATEWAY_TRANSFER_CARRIER.md),
+including native script compilation, two automatic logins, cleanup, independent
+protocol/raw-wire audit and eleven copied-evidence controls. [Original file-command
+recovery anchors](FILE_TOOLS_RECOVERY.md) separately identify the listing and both
+viewer routes; those commands remain unimplemented.
+
 The Gateway-enabled normal parent now passes [sink and compatibility composition](GATEWAY_COMPOSITION.md):
 five capture/HOLD/PRN Gateway workflows with child receive pressure, ANSI/VT220
 same-process loss/redial and stock Enigma cancel/cleanup/exact binary retry.

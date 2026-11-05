@@ -1,0 +1,124 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "kind": "static-original-file-command-routing-and-controller-contracts",
+  "regions": [
+    {
+      "name": "Alt-F table slot",
+      "file_offset": 171634,
+      "bytes": 2,
+      "sha256": "37421fb83261f3ac6e20752a7b170a3a29ee76a7cb4d1eb6f996891431fc59c0"
+    },
+    {
+      "name": "Alt-V table slot",
+      "file_offset": 171662,
+      "bytes": 2,
+      "sha256": "0065ab16cadcb1ac4b6f0b61086722f1286101320dfba31295d0b41be6bbcf01"
+    },
+    {
+      "name": "Alt-F resident wrapper",
+      "file_offset": 9474,
+      "bytes": 13,
+      "sha256": "cc2135c93d01ebdf79aec0f78324f331ea6be614d4b6ae3b6fbab93b9a543c80"
+    },
+    {
+      "name": "Alt-V resident dispatch",
+      "file_offset": 9588,
+      "bytes": 22,
+      "sha256": "185aab0d18331bbf409f4b604f9c6fa05214e6c7038d6af2d426b2373ac3b41b"
+    },
+    {
+      "name": "overlay18:0xf08e",
+      "file_offset": 120990,
+      "bytes": 366,
+      "sha256": "b0efddb8777f2757c6dfe51414cb3adb79784e9600b6b41bd63e2493809d89e4"
+    },
+    {
+      "name": "overlay3:0xde2c",
+      "file_offset": 62636,
+      "bytes": 84,
+      "sha256": "e70cfe0a9009cf8b50318f6f405738e9ef485e7a1459ae3ddf57b59538b67388"
+    },
+    {
+      "name": "overlay20:0xe660",
+      "file_offset": 124736,
+      "bytes": 408,
+      "sha256": "fe3e53cf412a6c831f03c3d63ff6d83f529c505fd4e7d3dbeb5ea9f798f4aaaa"
+    },
+    {
+      "name": "default wildcard",
+      "file_offset": 172692,
+      "bytes": 4,
+      "sha256": "0308cdf4963fc7e0b9c1c5b3433590f8c287515b0ec53d2346d7c96eac4fd39b"
+    }
+  ],
+  "trampolines": [
+    {
+      "resident_offset": "0xbb6b",
+      "overlay": 18,
+      "target_relative_address": "0xf08e",
+      "region": {
+        "name": "loader trampoline",
+        "file_offset": 52587,
+        "bytes": 12,
+        "sha256": "7f0a8ef55af8384913624d1b5a544790ce31eb59ddb17d50779b4c6233bda6dd"
+      }
+    },
+    {
+      "resident_offset": "0xba87",
+      "overlay": 3,
+      "target_relative_address": "0xde2c",
+      "region": {
+        "name": "loader trampoline",
+        "file_offset": 52359,
+        "bytes": 12,
+        "sha256": "f19b17ecddafbd058f3fd71942a6b91829ed7ae2094cf1b6beb340c8f287804e"
+      }
+    },
+    {
+      "resident_offset": "0xbb2f",
+      "overlay": 20,
+      "target_relative_address": "0xe660",
+      "region": {
+        "name": "loader trampoline",
+        "file_offset": 52527,
+        "bytes": 12,
+        "sha256": "fcab63223290f998322518b2ab521f5a07b0f39b5fcff7368fb3ca58cb1af38c"
+      }
+    }
+  ],
+  "evidence_bundles": [
+    {
+      "path": "analysis/file-tools-resident-20261104.json",
+      "sha256": "d2e60f352f7c7e050447cd6b4edc93de37523f1b0ccffb4e90cb7e4b0dbea5f1"
+    },
+    {
+      "path": "analysis/file-tools-overlay03-20261104.json",
+      "sha256": "e52ae67a97f4e34f9ebf8dd6980b5ba86cb339bdac905c66222e1a8ef7867459"
+    },
+    {
+      "path": "analysis/file-tools-overlay18-20261104.json",
+      "sha256": "528ebe55f553ee2f741cc602e58d4deb372d116f3339ad4037a50096977f9bfb"
+    },
+    {
+      "path": "analysis/file-tools-overlay20-20261104.json",
+      "sha256": "e947650d7ecb35e549ba108fbde5e2a316e211a822dc2c86bebf3a807e50acfb"
+    }
+  ],
+  "evidence_ids": {
+    "file_directory_entry": "ev_9237e38d0f5dac86d5d795ccb85b925f9ee9224ee390e62e183c8d36e4ba3414",
+    "file_view_dispatch": "ev_dfaf91f2edfa4f0c12f38b6e5038a219a56c9fb5d27d95370b4009a8ed61e263",
+    "external_viewer_controller": "ev_cec032b01f75b903865319d3e6debc86649a8fdc0f4253ee78ba6ecc3d570a04",
+    "file_directory_controller": "ev_808697acd499d4d43c8688ee4edeb7637968c1ad4f27ed11bb15dfb5b791e49b",
+    "directory_findfirst": "ev_dd634fa94e314295fffc4234d9f9e5289ab1fe27bd88abf4cafcbca72b592b4e",
+    "directory_findnext": "ev_2629587a74fb7ffff9e87192622369d564fe324ce363ad4ab18fb9c77fb7a719",
+    "default_wildcard": "ev_7cc0df921e78f1bc7eafeba989b149133c3e871923339506a84cb3b2f66ec3d4",
+    "internal_viewer_controller": "ev_731beec064eb3df06e2dc9a2ae6498f0db4e46267df682e1fb74f24e5422bbac"
+  },
+  "scope": "REA6.8/Ghidra12.1.2 static code and data evidence; resident bytes agree with original, controller regions agree with mapped original overlays. Overlay images are synthetic analysis contexts and were not executed.",
+  "limitations": [
+    "No file listing/viewer is enabled by this evidence checkpoint.",
+    "No runtime UI comparison, complete enumeration/formatting, configured-viewer PRM schema or file/DOS fault contract is established.",
+    "Overlay20 requires existing entry-anchor analysis context; absence from default Ghidra discovery did not establish missing code.",
+    "Native call/data meanings beyond directly inspected instructions remain provisional until further tracing/runtime checks."
+  ]
+}

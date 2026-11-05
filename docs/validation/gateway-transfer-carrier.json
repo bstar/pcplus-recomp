@@ -1,0 +1,164 @@
+{
+  "passed": true,
+  "binary_sha256": "ae6cbad95094fd59f98fd95a7831cbdc014b404ec37886a290294fe05089d90b",
+  "products": {
+    "TERMINAL.EXE": {
+      "path": "build/gateway-front-reviewed-20261104/TERMINAL.EXE",
+      "sha256": "ae6cbad95094fd59f98fd95a7831cbdc014b404ec37886a290294fe05089d90b",
+      "source_files": 591
+    },
+    "ASPECT.EXE": {
+      "path": "build/gateway-bbs-aspect-20261104/ASPECT.EXE",
+      "sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+      "source_files": 288
+    },
+    "ASPCOMP.EXE": {
+      "path": "build/aspect-compiler-dos/ASPCOMP.EXE",
+      "sha256": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "source_files": 19
+    }
+  },
+  "producer": {
+    "path": "build/bbs-lab/results/enigma/gateway-transfer-dcd-paced-20261104/carrier-checks.json",
+    "sha256": "6d3c21d6d9a439538a7270d0fac39285d50cc38cb423f5283bc9b747b70d9380"
+  },
+  "independent_audit": {
+    "path": "build/gateway-transfer-dcd-audit-20261104/result.json",
+    "sha256": "3363877bb679e053a129d4cfbba30d1010894daf0ed14b305c4d595dc2096b02"
+  },
+  "controls": {
+    "report": {
+      "path": "build/gateway-transfer-dcd-controls-20261104/result.json",
+      "sha256": "9ea89512475e4a8db1b0bf4d8c9a1430e13172fd987bf42a064eae0d17e33234"
+    },
+    "cases": [
+      {
+        "case": "unchanged",
+        "rejected": false,
+        "passed": true,
+        "log_sha256": "109f0ab74d6f09a7d9d366dbb84e549e5e81bd27859bdd9ff05f200c12d1f816"
+      },
+      {
+        "case": "source-count",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "24be3dfcec2f2bef71673a6db81ae680b9f857593af50544334dd274baed9621"
+      },
+      {
+        "case": "partial-hash",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "8a75b06933e7e5b9c71ea74a83422a9eb585e44a00c25d7f330aaa7165023e3a"
+      },
+      {
+        "case": "partial-after-drop",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "787aad2b786072d6bcc979fbc9ca6b8ba7fefb63c090dbf0648b78ec1c8018b1"
+      },
+      {
+        "case": "stage-not-clean",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "25241e44f11004e7409098bb663cb0f1890011e55382d403e675060f14df8549"
+      },
+      {
+        "case": "missing-carrier-notice",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "eff6d8a7b64eb9b70bd12bf047c86eb1199ca07cc70e7ba33c28b4875d223915"
+      },
+      {
+        "case": "NAWS",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "11776d42e151a212c1e82336a956e46a38f8707b37b4e1fdac52820706f20a5a"
+      },
+      {
+        "case": "hardware",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "40ca5a8735a4131dd3b014b103019522bde7e7db768181b799da0517cfe6ca65"
+      },
+      {
+        "case": "DOS-compiler",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "f51a697a1ebf27b387f895ead1fc22460971c3f0ad2a98150a5f6388377f7272"
+      },
+      {
+        "case": "second-interrupted",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "bb78be29d01a54b3df1583b9707f6e3cbe9b4878213a6cc9bf4cdd7a613ce903"
+      },
+      {
+        "case": "retry-payload",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "e311042817acd642ae185d2154b92df90caa31bf304c5eb9262ac571cf7f4c6a"
+      }
+    ]
+  },
+  "partial_disk_bytes": 4096,
+  "retry_bytes": 65539,
+  "payload_sha256": "bbbd96ec651e8fc754f7c3e71d7d348454741c62fdfe2cb0d720a82a4caf1a33",
+  "transfer_wait_ms": 150000,
+  "checks": {
+    "DOS_normal_exit": true,
+    "hardware_restored": true,
+    "sources_unchanged": true,
+    "PRM_unchanged": true,
+    "DOS_compiler_exact": true,
+    "both_script_logins": true,
+    "two_connections": true,
+    "stage_clean_before_second_login": true,
+    "real_carrier_notice": true,
+    "RX_complete_notice": true,
+    "exact_retry": true,
+    "only_expected_file": true,
+    "directory_two_connections": true,
+    "no_post_saved": true,
+    "source_matching_retry_finish_search_raw_proxy": true,
+    "two_authenticated_sessions": true
+  },
+  "notices": [
+    " RX carrier los\u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE ",
+    " Carrier lost  \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE ",
+    " RX complete   \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE  ",
+    " RX complete   \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE ",
+    " Carrier lost  \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE "
+  ],
+  "source_count_guard": "Validate current manifest, executable identity and every public source hash; require agreement with producer source_files instead of historical constant570.",
+  "retained_short_wait": {
+    "producer": {
+      "path": "build/bbs-lab/results/enigma/gateway-transfer-dcd-20261104/carrier-checks.json",
+      "sha256": "6edcfc0c441860dfb516e62807a1f8220e56e65bee31f02fce73bfe38a9ac0fe"
+    },
+    "passed": false,
+    "wait_ms": 60000,
+    "failed_checks": [
+      "RX_complete_notice",
+      "exact_retry",
+      "only_expected_file",
+      "source_matching_retry_finish_search_raw_proxy"
+    ],
+    "errors": [
+      "AssertionError at audit_zmodem.py:81: Missing complete protocol header"
+    ],
+    "observations": {
+      "first_retry_data_seconds": 107.90002860198729,
+      "local_cancel_seconds": 163.67853561899392,
+      "last_ZDATA_position": 41984
+    },
+    "interpretation": "Captured local CAN/backspace and RX-canceled notice while the scheduled post-transfer keys arrived before completion. Longer allowance matches the previously accepted current-image recipe; application unchanged."
+  },
+  "original_inputs": [],
+  "physical_deployment_changed": false,
+  "scope": "Independent current-image DCD loss/redial/retry and raw-proxy capture audit. One8086 parent,actual built-in modem DCD,socket abort after source-prefix write,cleanup before second login,two source-built ASPECT logins and DOS compiler equivalence,actual NAWS,raw byte prefixes at loss/exact second streams,CRC/finish/controls and exact retry. No physical/SIP/DSP or all-layout/protocol acceptance.",
+  "remaining": [
+    "Upload/download layout matrix is running separately; not included in this receipt.",
+    "SIP/DSP/analog and physical Boca/SPA2102 acceptance remain open.",
+    "Remaining file/DOS, directory/key, Chat and complete ASPECT/emulation/protocol/Host parity remain open."
+  ]
+}
