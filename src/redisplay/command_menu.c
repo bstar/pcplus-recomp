@@ -2,6 +2,9 @@
  * Code-segment constants keep UI prose outside the small-model DGROUP and
  * ahead of uninitialized far buffers. See Watcom's segment-constant objects. */
 #include "command_menu.h"
+#ifdef TERMINAL_GATEWAY
+#include "../terminal/gateway_front.h"
+#endif
 #ifdef TERMINAL_PATH_CONTROL
 #include "../filesystem/path_dialog.h"
 #endif
@@ -255,6 +258,13 @@ ENTRY(change_dir,"Change directory                Alt-F7",
  "An empty path or Escape returns without a change.\n"
  "The starting directory is restored when PCPLUS exits.");
 #endif
+#ifdef TERMINAL_GATEWAY
+ENTRY(gateway,"DOS Gateway                     Alt-F4",
+ "Open the configured command interpreter while the serial receiver remains active.\n"
+ "EXIT returns directly to the terminal; capture and printer owners stay open.\n"
+ "A changed directory remains current until PCPLUS exits.\n"
+ "Busy file, transfer, recording and display owners refuse the request.");
+#endif
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
  ROW(script,0,0xfe00,'A'),ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
@@ -291,6 +301,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_PATH_CONTROL
  ,ROW(change_dir,0,0x6e00,'G')
+#endif
+#ifdef TERMINAL_GATEWAY
+ ,ROW(gateway,0,0x6b00,'S')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))
@@ -347,7 +360,11 @@ static word record_blocked(word key)
  const recording_file *r=recording_terminal_inspect();
  if(!r || !r->claimed)return 0;
  return key==RECEIVE_KEY || key==SEND_KEY || key==0xfe00 || key==REDIAL_KEY || key==0x2300 ||
-  key==0x3000 || key==0x2b1c || key==0x7100 || key==0x7000 || key==TABLE_KEY;
+  key==0x3000 || key==0x2b1c || key==0x7100 || key==0x7000 || key==TABLE_KEY
+#ifdef TERMINAL_GATEWAY
+  || key==0x6b00
+#endif
+  ;
 }
 static void record_view(void)
 {
@@ -519,6 +536,13 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   n=command_reference_event(1,key,view);
   if(n==1){command_menu_active=0;return 0;}
   if(n==0x200){reference_origin=0;category=selected=phase=notice=0;draw();return 1;}
+#ifdef TERMINAL_GATEWAY
+  if(n==0x100+GATEWAY_CONTROL_ACTION){command_menu_action=0x6b00;command_menu_active=0;return 0;}
+  if(n==0x300+GATEWAY_CONTROL_ACTION){
+   for(i=0;i<COUNT;++i)if(items[i].key==0x6b00){selected=i;break;}
+   category=items[selected].category;phase=1;draw();return 1;
+  }
+#endif
 #ifdef TERMINAL_PATH_CONTROL
   if(n==0x100+PATH_CONTROL_ACTION){phase=12;path_dialog_event(0,0,view);return 1;}
   if(n==0x300+PATH_CONTROL_ACTION){

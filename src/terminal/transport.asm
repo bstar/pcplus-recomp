@@ -298,6 +298,24 @@ terminal_keyboard_dispatch_far:
  call keyboard_poll
  or ax,ax
  jz .done
+%ifdef TERMINAL_GATEWAY
+ extern terminal_program_kind
+ cmp word [terminal_program_pending],0
+ je .gateway_read
+ cmp word [terminal_program_kind],9
+ jne .gateway_read
+ ; Preserve ordinary BIOS typeahead for COMMAND.COM while TX/PRN drains.
+ ; Cancellation and repeated requests remain immediately local.
+ cmp ax,0x2d00
+ je .gateway_read
+ cmp ax,0x2300
+ je .gateway_read
+ cmp ax,0x6b00
+ je .gateway_read
+ cmp al,27
+ jne .done
+.gateway_read:
+%endif
  ; A successful peek makes this actual blocking read immediately satisfiable;
  ; the private application queue is disabled and BIOS has one foreground reader.
  call terminal_read_key

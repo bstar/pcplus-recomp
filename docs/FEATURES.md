@@ -1,10 +1,16 @@
 # Full application reconstruction checklist
 
+The optional [normal DOS Gateway frontend](GATEWAY_FRONTEND.md) now binds Alt-F4
+and the command/reference menu, composes live serial and private-file ownership,
+and restores the display/mouse without a return-key prompt. Actual DOS keyboard,
+menu and COMMAND.COM workflows pass. Online BBS, active sink combinations and
+physical modem acceptance remain open; the deployed release is unchanged.
+
 The [direct COMSPEC prerequisite](GATEWAY_LOOKUP.md) now links an optional
 empty-tail interpreter policy with native selection comparisons and actual
 DOS shell/exit tests. Ordinary HOOK lookup remains covered and the disabled
-parent is byte-identical. Alt-F4 binding awaits explicit file/serial ownership,
-launch revalidation and return handling; the diagnostic runs before UART startup.
+parent is byte-identical. This earlier prerequisite diagnostic runs before UART
+startup; its later normal integration is documented above.
 
 The [original path-editor follow-up](PATH_EDITOR_PARITY.md) corrects the old
 capture decoder's one-cell geometry error and restores fixed-width overwrite,

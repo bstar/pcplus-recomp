@@ -96,11 +96,12 @@ frontend or deployment selection.
 
 ## Remaining application integration
 
-Implement the actual Gateway scheduler/action: foreground revalidation, printer
-drain, display/mouse/trap ownership, no return-key prompt, serial/file error
-quarantine and connection/carrier observations. Then test the full keyboard/menu
-route, active BBS interactions, sustained traffic, disconnect/reconnect and
-transfers, followed by physical Boca/SPA2102/SynthModem acceptance.
+The optional [normal frontend](GATEWAY_FRONTEND.md) now supplies the scheduler,
+keyboard/menu route, foreground revalidation, printer drain, display/mouse
+ownership, no-return-key behavior, serial/file error quarantine and foreground
+connection poll. Its separate receipt covers the composed application. Active
+BBS interactions, sustained traffic, disconnect/reconnect, transfers and physical
+Boca/SPA2102/SynthModem acceptance remain open.
 
 The DOS peer intentionally delivers in-flight bytes after flow requests; it
 does not prove a physical peer honors RTS or emulate SIP/audio/carrier. No

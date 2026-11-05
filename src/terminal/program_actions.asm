@@ -232,6 +232,10 @@ terminal_program_poll:
  push es
  cmp word [terminal_program_pending],0
  je .done
+%ifdef TERMINAL_GATEWAY
+ cmp word [terminal_program_kind],9
+ je .done ; The distinct live Gateway owner preserves files and does not WAIT.
+%endif
 %ifdef TERMINAL_SOUND
  extern terminal_connect_alert_stop
  call far terminal_connect_alert_stop

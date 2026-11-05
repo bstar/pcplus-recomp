@@ -1281,6 +1281,20 @@ def inspect_terminal_memory(binary,map_path):
   target=symbols['gateway_uart_foreground_flow'];encoded=b'\x9a'+struct.pack('<HH',target[1],target[0])
   assert raw('uart_poll_flow',80).count(encoded)==1,'Missing combined-flow low-water return'
   extra.update(gateway_uart_state_bytes=22,gateway_uart_state_retained=True,gateway_uart_DGROUP_bytes=0,gateway_uart_IF0_return_linked=True)
+ if '_gateway_front_storage' in symbols:
+  bank=next(c for c in code_segments if c['name']=='FILE_CODE')
+  seg,off=symbols['_gateway_front_storage'];lo=seg*16+off
+  assert seg==bank['relative_segment'] and seg!=ds
+  assert bank['offset']<=off and off+20<=bank['offset']+bank['bytes']
+  assert lo+20<=static_end and lo+20<=module_bytes and word('_gateway_front_storage')==0x4747
+  for name,state_bytes in (('_path_session_storage',76),('_terminal_path_dialog_state',144),('_process_handles_storage',36),('_gateway_files_storage',6),('gateway_uart_storage',22)):
+   other=address(name);assert lo+20<=other or other+state_bytes<=lo,'Gateway frontend state overlaps another owner'
+  for name in ('_gateway_start','_gateway_poll','_gateway_quarantined','terminal_gateway_key_far','_gateway_video_ready','_gateway_clock_ready','_gateway_ticks','_gateway_notice'):
+   assert symbols[name][0]==seg,(name,'Gateway frontend must remain retained in FILE_CODE')
+  target=symbols['_gateway_quarantined'];encoded=b'\x9a'+struct.pack('<HH',target[1],target[0])
+  shutdown=raw('terminal_shutdown',address('terminal_parser_active')-address('terminal_shutdown'))
+  assert shutdown.count(encoded)==2,'Missing shutdown file-quarantine gates'
+  extra.update(gateway_front_state_bytes=20,gateway_front_state_retained=True,gateway_front_DGROUP_bytes=0,gateway_front_shutdown_quarantine_gates=2)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
  allocated=((module_bytes+15)//16+header[5])*16

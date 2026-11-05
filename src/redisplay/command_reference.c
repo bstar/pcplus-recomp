@@ -3,6 +3,9 @@
  * This entire module and its constants live in REFERENCE_CODE. */
 #include "command_reference.h"
 #include "command_menu.h"
+#ifdef TERMINAL_GATEWAY
+#include "../terminal/gateway_front.h"
+#endif
 #ifdef TERMINAL_PATH_CONTROL
 #include "../filesystem/path_dialog.h"
 #endif
@@ -72,9 +75,12 @@ LABEL(dim,"Dim commands are unavailable. Assigned BBS page keys remain unchanged
 LABEL(refused,"Not available in this build: ");
 static word selected,refusal;
 static word __far *view;
-#if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL)
+#if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL) || defined(TERMINAL_GATEWAY)
 static word action(word i)
 {
+#ifdef TERMINAL_GATEWAY
+ if(items[i].key==0x6b00)return GATEWAY_CONTROL_ACTION;
+#endif
 #ifdef TERMINAL_PATH_CONTROL
  if(items[i].key==0x6e00)return PATH_CONTROL_ACTION;
 #endif

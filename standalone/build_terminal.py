@@ -51,6 +51,7 @@ parser.add_argument('--gateway-lookup',action='store_true',help='Link direct emp
 parser.add_argument('--gateway-handles',action='store_true',help='Link retained private-JFT bracket; implies Gateway lookup/path-control, no foreground binding')
 parser.add_argument('--gateway-files',action='store_true',help='Compose direct COMSPEC with private sink leases; no foreground key or serial policy')
 parser.add_argument('--gateway-uart',action='store_true',help='Link retained live Gateway IRQ and IF0 return gate; no normal foreground binding')
+parser.add_argument('--gateway',action='store_true',help='Enable guarded live DOS Gateway through Alt-F4 and command menu')
 parser.add_argument('--gateway-uart-probe',action='store_true',help='Diagnostic only: application file probe with UART active and live IRQ across DOS EXEC')
 parser.add_argument('--gateway-files-probe',choices=['normal','hold'],help='Diagnostic only: four open application files across direct COMSPEC before UART startup')
 parser.add_argument('--gateway-probe',action='store_true',help='Diagnostic only: invoke direct COMSPEC before UART startup, record result, then exit')
@@ -87,6 +88,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.gateway:args.gateway_uart=True;assert args.program_display_owner and args.mouse,'Gateway frontend requires composed display/mouse owners'
 if args.gateway_uart_probe:args.gateway_uart=True;args.gateway_files_probe='normal'
 if args.gateway_uart:args.gateway_files=True
 if args.gateway_uart:assert args.program_display_owner or args.directory_resource_owner,'Gateway UART requires the IF0 raw EXEC return gate'
@@ -287,6 +289,7 @@ if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
 if args.gateway_files:out_name+='-gateway-files'
 if args.gateway_uart:out_name+='-gateway-uart'
+if args.gateway:out_name+='-gateway'
 if args.gateway_files_probe:out_name+='-'+args.gateway_files_probe
 if args.gateway_probe:out_name+='-gateway-probe'
 if args.phone_log_bank:
@@ -324,6 +327,7 @@ if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 if not args.gateway_uart:sources=[p for p in sources if p.name!='gateway_uart.asm']
+if not args.gateway:sources=[p for p in sources if p.name!='gateway_front.asm']
 if not args.local_controls:sources=[p for p in sources if p.name!='local_controls.asm']
 if not args.window_size_report:sources=[p for p in sources if p.name!='window_size_report.asm']
 if not args.reset_row_owner:sources=[p for p in sources if p.name!='reset_rows.asm']
@@ -471,6 +475,7 @@ for index,source in enumerate(sources):
  if args.hook_lookup:options+=['-DTERMINAL_HOOK_LOOKUP']
  if args.gateway_files:options+=['-DTERMINAL_GATEWAY_FILES']
  if args.gateway_uart:options+=['-DTERMINAL_GATEWAY_UART']
+ if args.gateway:options+=['-DTERMINAL_GATEWAY']
  if args.gateway_uart_probe:options+=['-DTERMINAL_GATEWAY_UART_PROBE']
  if args.phone_log_startup:options+=['-DTERMINAL_PHONE_LOG_STARTUP']
  if args.phone_log_events:options+=['-DTERMINAL_PHONE_LOG_EVENTS']
@@ -521,6 +526,7 @@ path_sources={ROOT/'src/filesystem'/n for n in ('path_owner.c','path_session.c',
 c_sources+=sorted(path_sources)
 if args.gateway_handles:c_sources.append(ROOT/'src/process/process_handles.c')
 if args.gateway_files:c_sources.append(ROOT/'src/process/gateway_files.c')
+if args.gateway:c_sources.append(ROOT/'src/terminal/gateway_front.c')
 if args.gateway_files_probe:c_sources.append(ROOT/'standalone/gateway_files_probe.c')
 c_sources += [ROOT/'src/key_mapping/key_actions_dos.c',ROOT/'src/process/program.c']
 c_sources += [ROOT/'src/config/live_configuration.c']
@@ -677,6 +683,8 @@ for source in c_sources:
  if args.gateway_lookup:options+=['-dTERMINAL_GATEWAY_LOOKUP']
  if args.gateway_handles:options+=['-dTERMINAL_GATEWAY_HANDLES']
  if args.gateway_files:options+=['-dTERMINAL_GATEWAY_FILES']
+ if args.gateway:options+=['-dTERMINAL_GATEWAY']
+ if source==ROOT/'src/terminal/gateway_front.c':options+=['-nt=FILE_CODE','-nc=FARCODE']
  if args.gateway_handles and source==ROOT/'src/process/process_handles.c':options+=['-dPROCESS_HANDLES_BANKED','-nt=FILE_CODE','-nc=FARCODE']
  if args.gateway_files and source==ROOT/'src/process/gateway_files.c':options+=['-dPROCESS_HANDLES_BANKED','-nt=FILE_CODE','-nc=FARCODE']
  if source==ROOT/'standalone/gateway_files_probe.c':
@@ -796,6 +804,7 @@ inputs += [ROOT/'src/config/resource_path.h']
 if args.status_owner:inputs.append(ROOT/'src/terminal/status_transition.h')
 if args.custom_irq:inputs.append(ROOT/'src/config/irq_policy.h')
 if args.gateway_uart:inputs.append(ROOT/'src/terminal/gateway_uart.h')
+if args.gateway:inputs.append(ROOT/'src/terminal/gateway_front.h')
 inputs += sorted((ROOT/'src/directory').glob('*.h'))+sorted((ROOT/'src/directory').glob('*.inc'))
 inputs += sorted((ROOT/'src/process').glob('*.h'))
 inputs += sorted((ROOT/'src/capture').glob('*.h'))
@@ -837,6 +846,7 @@ manifest['experimental_gateway_lookup']=args.gateway_lookup
 manifest['experimental_gateway_handles']=args.gateway_handles
 manifest['experimental_gateway_files']=args.gateway_files
 manifest['experimental_gateway_uart']=args.gateway_uart
+manifest['experimental_gateway_frontend']=args.gateway
 manifest['diagnostic_gateway_uart_probe']=args.gateway_uart_probe
 manifest['diagnostic_gateway_files_probe']=args.gateway_files_probe
 manifest['diagnostic_gateway_probe']=args.gateway_probe

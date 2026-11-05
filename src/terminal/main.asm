@@ -394,6 +394,10 @@ terminal_phone_log_startup_done equ $
  terminal_directory_retire_poll_site equ $
  call far _terminal_directory_retire_poll
 %endif
+%ifdef TERMINAL_GATEWAY
+ extern _gateway_poll
+ call far _gateway_poll
+%endif
  call terminal_program_poll
  cmp word [terminal_quit],0
  jne terminal_shutdown
@@ -504,6 +508,12 @@ terminal_shutdown:
  mov ss,ax
  mov sp,terminal_stack_top
  sti
+%ifdef TERMINAL_GATEWAY
+ extern _gateway_quarantined
+ call far _gateway_quarantined
+ or ax,ax
+ jnz .printer_closed
+%endif
 %ifdef TERMINAL_MANUAL_INIT
  extern terminal_manual_init_stop_far
  mov ax,8
@@ -542,6 +552,11 @@ terminal_shutdown:
  call uart_restore_hardware_state
  mov byte [hardware_active],0
 .exit:
+%ifdef TERMINAL_GATEWAY
+ call far _gateway_quarantined
+ or ax,ax
+ jnz .dos_exit
+%endif
 %ifdef TERMINAL_PHONE_LOG_EVENTS
  extern _terminal_phone_log_events_shutdown_far
  global terminal_phone_log_shutdown_site

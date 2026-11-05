@@ -37,6 +37,11 @@ extern terminal_viewport_admit_far
 terminal_redisplay_key_impl:
  cmp word [_redisplay_active],0
  jne .key
+%ifdef TERMINAL_GATEWAY
+ extern terminal_gateway_key_far
+ call far terminal_gateway_key_far
+ jc .gateway_consumed
+%endif
 %ifdef TERMINAL_REFERENCE
  extern _command_reference_unavailable
  push ax
@@ -192,6 +197,11 @@ terminal_redisplay_key_impl:
 .ordinary:
  clc
  ret
+%ifdef TERMINAL_GATEWAY
+.gateway_consumed:
+ stc
+ ret
+%endif
 global terminal_redisplay_key_end
 terminal_redisplay_key_end:
 terminal_redisplay_before_impl:
