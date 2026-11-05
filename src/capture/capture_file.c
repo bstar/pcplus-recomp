@@ -231,3 +231,20 @@ unsigned __cdecl history_file_event(unsigned operation,const void *data,unsigned
   status=begin(owner,(const char *)data,CF_NEW);
  return status;
 }
+#if defined(TERMINAL_GATEWAY_HANDLES)
+#pragma code_seg("FILE_CODE","FARCODE")
+unsigned __far __cdecl capture_file_child_handle(unsigned index)
+{
+ capture_owner *owner;capture_file_snapshot *r;
+ if(index>=4 || capture_reservation.busy)return 0xfffe;
+ owner=&owners[index];
+ if(owner->cookie==0xcf10)return owner->handle==-1?0xffff:0xfffe;
+ if(owner->cookie!=0xcf11)return 0xfffe;
+ r=owner->result;
+ if(r->handle_uncertain)return 0xfffe;
+ if(!r->handle_open)return 0xffff;
+ if(r->state!=CF_OPENED || r->first_status || owner->handle<0)return 0xfffe;
+ return (unsigned)owner->handle;
+}
+#pragma code_seg()
+#endif

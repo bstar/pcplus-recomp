@@ -77,6 +77,9 @@ The ownership audit establishes concrete requirements beyond this resolver:
 4. Preserve active capture/printer state and private file positions through an
    explicit child-handle boundary. Existing PROGRAM stops capture and closes
    printer output; its raw EXEC path does not use ASPECT's JFT isolation.
+   The optional [private-handle prerequisite](GATEWAY_HANDLES.md) now supplies
+   retained JFT isolation and read-only owner queries; application adapter and
+   foreground integration remain open.
 5. Revalidate parser, transfers, recording, views, directory/resource transactions,
    log recovery and path quarantine. A generic raw-EXEC permission is not proof
    that the foreground is idle. Keep display/mouse/trap restoration and the

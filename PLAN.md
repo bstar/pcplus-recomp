@@ -5286,3 +5286,20 @@ attempt compiled/authenticated but retained the known Home-key failure. No
 immediate-forwarding fix or physical modem compatibility is claimed. Full native
 language/compiler UI/recorder and all F01–F16 requirements remain open. See
 `docs/ASPECT_SOURCE_COMPILE.md` and `docs/validation/aspect-source-compile.json`.
+
+### Gateway private file lifetime prerequisite
+
+The optional Gateway parent now retains a 36-byte private-JFT lease in FILE_CODE
+and exposes read-only borrowed descriptor queries for capture, snapshot, monitor,
+history and PRN. No near data or resident code is added. Existing ASPECT behavior
+and the disabled parent reproduce their preceding executables exactly.
+
+Verified 56 linked cases (actual sink owners with modeled DOS/FS endpoints), five
+actual DOS8086/FPU-off child workflows with 35 external checks, 33 Gateway lookup
+cases and ordinary HOOK28/14 regressions. A fresh 584-input source tree reproduces
+the new parent exactly. See `docs/GATEWAY_HANDLES.md` and its receipt.
+
+Alt-F4 remains unbound. Foreground admission, adapter drain/preservation, lease
+bracketing around the actual shell, error quarantine and serial ownership remain
+required. These component tests do not establish sustained UART or physical
+modem acceptance and close no full application-parity gate.

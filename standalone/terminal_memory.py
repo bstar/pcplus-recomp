@@ -1241,6 +1241,20 @@ def inspect_terminal_memory(binary,map_path):
    spans.append((lo,lo+state_bytes))
   assert spans[0][1]<=spans[1][0] or spans[1][1]<=spans[0][0]
   extra.update(path_bank_bytes=bank['bytes'],path_bank_state_bytes=220,path_bank_state_retained=True,path_bank_DGROUP_bytes=0)
+ if '_process_handles_storage' in symbols:
+  bank=next(c for c in code_segments if c['name']=='FILE_CODE')
+  seg,off=symbols['_process_handles_storage'];lo=seg*16+off
+  assert seg==bank['relative_segment'] and seg!=ds
+  assert bank['offset']<=off and off+36<=bank['offset']+bank['bytes']
+  assert lo+36<=static_end and lo+36<=module_bytes
+  assert word('_process_handles_storage')==0x484a
+  for name,state_bytes in (('_path_session_storage',76),('_terminal_path_dialog_state',144)):
+   if name in symbols:
+    other=address(name)
+    assert lo+36<=other or other+state_bytes<=lo,'Private handle state overlaps path state'
+  for name in ('_process_handles_begin','_process_handles_end','_process_handles_recover','_process_handles_active_query','_capture_file_child_handle','_printer_device_child_handle'):
+   assert symbols[name][0]==seg,(name,'private handle API must remain in retained FILE_CODE')
+  extra.update(gateway_private_jft_bytes=36,gateway_private_jft_retained=True,gateway_private_jft_DGROUP_bytes=0)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
  allocated=((module_bytes+15)//16+header[5])*16

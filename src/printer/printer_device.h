@@ -13,6 +13,11 @@ typedef struct printer_device_snapshot {
  unsigned long accepted,ready_calls;
 } printer_device_snapshot;
 extern printer_device_snapshot printer_device_result;
+#if defined(TERMINAL_GATEWAY_HANDLES)
+/* Borrowed descriptor only; ffff idle/closed, fffe inconsistent/uncertain.
+ * Pure query, no DOS IO or transfer. DS=SS. Child lifetime uses the JFT lease. */
+unsigned __far __cdecl printer_device_child_handle(void);
+#endif
 unsigned __cdecl printer_device_initialize(void);
 unsigned __cdecl printer_device_begin(void);
 unsigned __cdecl printer_device_ready(void);

@@ -18,6 +18,13 @@ extern capture_file_snapshot capture_file_result;
 extern capture_file_snapshot snapshot_file_result;
 extern capture_file_snapshot monitor_file_result;
 extern capture_file_snapshot history_file_result;
+#if defined(TERMINAL_GATEWAY_HANDLES)
+/* Foreground borrowed descriptor query: 0..7fff handle, ffff no open handle,
+ * fffe inconsistent/uncertain owner. Index0..3 selects capture/snapshot/monitor/
+ * history. No DOS IO or ownership transfer; bracket child inheritance before
+ * EXEC and restore before any parent IO. DS=SS remains required. */
+unsigned __far __cdecl capture_file_child_handle(unsigned index);
+#endif
 /* DATA cookie initializes dirty assembly-host BSS once. Repeated initialization
  * preserves resolved history and refuses open/ambiguous ownership unchanged. */
 unsigned __cdecl capture_file_initialize(void);

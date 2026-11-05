@@ -48,6 +48,7 @@ parser.add_argument('--input-tables-data',action='store_true',help='Move two nea
 parser.add_argument('--cwd-identities',action='store_true',help='Freeze startup selectors and XLT defaults; resolve PRMEDIT absolutely; no directory-change key')
 parser.add_argument('--path-control',action='store_true',help='Serviced original Alt-F7 dialog and verified startup-directory restoration; implies cwd identities/reference')
 parser.add_argument('--gateway-lookup',action='store_true',help='Link direct empty-tail COMSPEC policy; requires hook lookup, no Gateway key/menu binding')
+parser.add_argument('--gateway-handles',action='store_true',help='Link retained private-JFT bracket; implies Gateway lookup/path-control, no foreground binding')
 parser.add_argument('--gateway-probe',action='store_true',help='Diagnostic only: invoke direct COMSPEC before UART startup, record result, then exit')
 parser.add_argument('--local-controls',action='store_true',help='Enable original Clear/Reset/Duplex through a guarded foreground owner')
 parser.add_argument('--manual-init',action='store_true',help='Integrate guarded manual Init key/menu and exclusive foreground UART scheduling')
@@ -82,6 +83,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.gateway_handles:args.gateway_lookup=True;args.path_control=True
 if args.gateway_probe:args.gateway_lookup=True;args.path_control=True
 if args.gateway_lookup:assert args.hook_lookup,'Direct Gateway resolver requires the bounded HOOK_CODE DOS boundary'
 if args.path_control:
@@ -273,6 +275,7 @@ if args.input_tables_data:out_name+='-input-tables-data'
 if args.cwd_identities:out_name+='-cwd-identities'
 if args.path_control:out_name+='-path-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
+if args.gateway_handles:out_name+='-gateway-handles'
 if args.gateway_probe:out_name+='-gateway-probe'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
@@ -500,6 +503,7 @@ for index,source in enumerate(sources):
 c_sources=[ROOT/'src/config/prm_dos.c',ROOT/'src/config/terminal_import.c',ROOT/'src/config/modem_import.c',ROOT/'src/config/startup_import.c',ROOT/'src/directory/directory_dos.c',ROOT/'src/directory/directory_live.c',ROOT/'src/directory/directory_actions.c',ROOT/'src/directory/directory_replace.c',ROOT/'src/directory/directory_replace_fs.c',ROOT/'src/key_mapping/keymap_dos.c',ROOT/'src/key_mapping/keymap_dos_fs.c']
 path_sources={ROOT/'src/filesystem'/n for n in ('path_owner.c','path_session.c','path_dialog.c')} if args.path_control else set()
 c_sources+=sorted(path_sources)
+if args.gateway_handles:c_sources.append(ROOT/'src/process/process_handles.c')
 c_sources += [ROOT/'src/key_mapping/key_actions_dos.c',ROOT/'src/process/program.c']
 c_sources += [ROOT/'src/config/live_configuration.c']
 c_sources += [ROOT/'src/config/live_setup_owner.c']
@@ -653,6 +657,8 @@ for source in c_sources:
  if args.local_controls:options+=['-dTERMINAL_LOCAL_CONTROLS']
  if args.cwd_identities:options+=['-dTERMINAL_CWD_IDENTITIES']
  if args.gateway_lookup:options+=['-dTERMINAL_GATEWAY_LOOKUP']
+ if args.gateway_handles:options+=['-dTERMINAL_GATEWAY_HANDLES']
+ if args.gateway_handles and source==ROOT/'src/process/process_handles.c':options+=['-dPROCESS_HANDLES_BANKED','-nt=FILE_CODE','-nc=FARCODE']
  if args.path_control:options+=['-dTERMINAL_PATH_CONTROL']
  if source in path_sources:options+=['-nt=FILE_CODE','-nc=FARCODE']
  if args.status_control:options+=['-dTERMINAL_STATUS_CONTROL']
@@ -803,6 +809,7 @@ manifest['experimental_keyboard_bank']=args.keyboard_bank
 manifest['experimental_cwd_identities']=args.cwd_identities
 manifest['experimental_path_control']=args.path_control
 manifest['experimental_gateway_lookup']=args.gateway_lookup
+manifest['experimental_gateway_handles']=args.gateway_handles
 manifest['diagnostic_gateway_probe']=args.gateway_probe
 manifest['experimental_reset_row_owner']=args.reset_row_owner
 manifest['experimental_status_owner']=args.status_owner

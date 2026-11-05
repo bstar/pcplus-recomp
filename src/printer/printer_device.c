@@ -71,3 +71,15 @@ unsigned __cdecl printer_device_write(unsigned c)
 }
 unsigned __cdecl printer_device_cleanup(void)
 {return printer_device_close();}
+#if defined(TERMINAL_GATEWAY_HANDLES)
+#pragma code_seg("FILE_CODE","FARCODE")
+unsigned __far __cdecl printer_device_child_handle(void)
+{
+ if(cookie==0xd810)return handle==-1?0xffff:0xfffe;
+ if(cookie!=0xd811 || R.handle_uncertain)return 0xfffe;
+ if(!R.handle_open)return 0xffff;
+ if(R.state!=PD_OPENED || R.first_status || handle<0)return 0xfffe;
+ return (unsigned)handle;
+}
+#pragma code_seg()
+#endif
