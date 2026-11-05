@@ -73,10 +73,11 @@ listing is open, visible updated text and normal keyboard/query return.
 
 ## Remaining gates
 
-The recorded BBS workflows regress the Gateway-enabled image and editor return;
-they do not yet open File Directory inside those stock editors. Sustained RX
-pressure, capture/HOLD/printer composition during listing, physical Boca/
-SPA2102/SynthModem and DOS 6.22 acceptance remain required. Internal/configured
+The later [composition checkpoint](FILE_DIRECTORY_COMPOSITION.md) now opens File
+Directory inside stock editors and tests capture/HOLD/virtual-printer receive
+pressure on this exact image. It supersedes those earlier gaps for the selected
+workflows. Carrier loss, reconnect, transfer and media-fault composition,
+physical Boca/SPA2102/SynthModem and DOS 6.22 acceptance remain required. Internal/configured
 viewers, editor integration, directory/key tools, Chat and remaining full
 ASPECT/emulation/protocol/Host parity stay open.
 

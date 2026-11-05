@@ -45,6 +45,9 @@ keys:
 %include "multiline_keys.inc"
 %else
 keys:
+%ifdef FILE_DIRECTORY_ROUNDTRIP
+ dw 2100h,2044h,273ah,2b5ch,1454h,1245h,1f53h,1454h,342eh,1950h,1352h,324dh,1c0dh,011bh
+%endif
 %ifdef GATEWAY_ROUNDTRIP
  dw 6b00h
 %endif
@@ -121,6 +124,20 @@ handler:
  cmp word [bx],0
  je .restore
  mov word [ticks],AUDIO_SYNC_EDITOR_KEY_WAIT
+%ifdef FILE_DIRECTORY_ROUNDTRIP
+ cmp word [bx-2],2100h
+ jne .listing_enter
+ mov word [ticks],18
+.listing_enter:
+ cmp word [bx-2],1c0dh
+ jne .listing_escape
+ mov word [ticks],36
+.listing_escape:
+ cmp word [bx-2],011bh
+ jne .listing_wait_done
+ mov word [ticks],18
+.listing_wait_done:
+%endif
 %ifdef GATEWAY_ROUNDTRIP
  cmp word [bx-2],6b00h
  jne .ordinary_wait

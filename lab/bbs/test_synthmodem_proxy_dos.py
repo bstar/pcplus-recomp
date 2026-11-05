@@ -27,6 +27,7 @@ def main():
     p.add_argument('--label', required=True)
     p.add_argument('--framing-ms', type=int, choices=[0,250], default=0)
     p.add_argument('--byte-delay-ms', type=int, choices=range(21), default=2)
+    p.add_argument('--file-directory-overlay',action='store_true',help='Open File Directory inside the unsaved stock editor and verify its return')
     p.add_argument('--gateway-overlay',action='store_true',help='Run a source-built graphics child through the normal Alt-F4 while the stock editor is idle')
     p.add_argument('--reference-overlay', action='store_true', help='Observe Alt-Z/refusal during the stock BBS editor workflow')
     p.add_argument('--directory-overlay', action='store_true', help='Observe read-only Alt-D loading/pages during the stock editor workflow')
@@ -44,6 +45,7 @@ def main():
     if args.multiline_editor:
         assert args.screen_reference and not args.reference_overlay and not args.directory_overlay
     if args.phone_log:assert not args.reference_overlay and not args.directory_overlay
+    if args.file_directory_overlay:assert not any((args.gateway_overlay,args.reference_overlay,args.directory_overlay,args.phone_log,args.multiline_editor)) and args.display_rows==25 and args.status_hidden==0
     if args.gateway_overlay:assert not any((args.reference_overlay,args.directory_overlay,args.phone_log,args.multiline_editor)) and args.display_rows==25 and args.status_hidden==0
     assert process_pid(), 'Start the owned stock ENiGMA fixture first'
     # One synthetic account/server log is shared by these runs. Keep its
@@ -69,6 +71,9 @@ def main():
     reference_args=(['--probe-terminal-size'] if args.size_probe else [])+['--terminal-rows',str(expected_rows)]+(['--screen-reference'] if args.screen_reference else [])
     if args.gateway_overlay:
         from gateway_bbs_support import SOURCES
+        sources += [ROOT/n for n in SOURCES]
+    if args.file_directory_overlay:
+        from file_directory_bbs_support import SOURCES
         sources += [ROOT/n for n in SOURCES]
     before = {str(f.relative_to(ROOT)): sha(f) for f in sources}
     base = ROOT/'build/bbs-lab'
@@ -113,6 +118,13 @@ def main():
             observer=base/(args.label+'-observer.COM')
             assert not observer.exists()
             subprocess.run(['nasm','-fbin',*(['-DDIRECTORY_ADOPT']if adopt_owner else[]),*(['-DDIRECTORY_PREVIEW']if args.directory_preview_overlay else[]),*(['-DDIRECTORY_RESOURCE_OWNER']if resource_owner and args.directory_preview_overlay else[]),str(ROOT/'standalone/directory_view_watch.asm'),'-o',str(observer)],check=True)
+        if args.file_directory_overlay:
+            assert json.loads((binary.parent/'manifest.json').read_text())['experimental_file_directory']
+            from file_directory_bbs_support import prepare
+            observer=prepare(base/(args.label+'-file-directory'))
+            marker='K E Y T E S T enter p1800 '
+            assert keys.count(marker)==1
+            keys=keys.replace(marker,marker+'a-f p600 D : \\ T E S T . P R M enter p1600 escape p900 ')
         gateway_child=None
         if args.gateway_overlay:
             assert json.loads((binary.parent/'manifest.json').read_text())['experimental_gateway_frontend']
@@ -225,6 +237,9 @@ def main():
             scope='Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, '
                   'actual SynthModem proxy and stock loopback ENiGMA. '
                   'Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.')
+        if args.file_directory_overlay:
+            from file_directory_bbs_support import audit as audit_listing
+            result['file_directory']=audit_listing(output);checks['actual_File_Directory_roundtrip']=result['file_directory']['passed'];result['passed']=all(checks.values())
         if args.gateway_overlay:
             from gateway_bbs_support import audit as audit_gateway
             result['gateway']=audit_gateway(output);checks['actual_Gateway_roundtrip']=result['gateway']['passed'];result['passed']=all(checks.values())

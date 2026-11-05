@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[File Directory composition](FILE_DIRECTORY_COMPOSITION.md) now verifies actual
+listing inside unsaved Enigma/Synchronet editors and five capture/HOLD/virtual
+printer pressure combinations on the unchanged candidate. Both editor frames
+and 3,840 independently audited cells match. Carrier/media-fault composition,
+DOS6.22, physical acceptance and the remaining full-parity inventory stay open.
+
 The optional [serviced File Directory frontend](FILE_DIRECTORY.md) now connects
 Alt-F and both menus to the private-DTA search owner. Its current evidence and
 remaining composition/hardware gates are recorded separately; the complete

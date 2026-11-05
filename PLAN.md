@@ -4,6 +4,12 @@
 
 ### November 4 checkpoint
 
+[File Directory composition](docs/FILE_DIRECTORY_COMPOSITION.md) now passes
+actual listing/editor return on stock Enigma and Synchronet plus five active
+capture/HOLD/virtual-PRN pressure combinations. The normal terminal bytes stay
+unchanged. Physical/DOS6.22 and carrier/media fault combinations remain open;
+continue the internal/configured viewer contracts and remaining inventory.
+
 The optional [File Directory frontend](docs/FILE_DIRECTORY.md) now supersedes
 the earlier "not linked" component statements for its enabled candidate. It
 adds a serviced modal listing and Alt-F/menu dispatch, preserving the near-data

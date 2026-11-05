@@ -1,0 +1,683 @@
+{
+  "passed": true,
+  "binary_sha256": "74e3f0822044128b68c2f51660efa4e913292cca786edb649c2d662d53e72239",
+  "terminal": {
+    "path": "build/file-directory-dirty-20261105/TERMINAL.EXE",
+    "sha256": "74e3f0822044128b68c2f51660efa4e913292cca786edb649c2d662d53e72239"
+  },
+  "runner": {
+    "path": "build/file-directory-aspect-absolute-20261105/ASPECT.EXE",
+    "sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f"
+  },
+  "BBS": [
+    {
+      "peer": "enigma",
+      "passed": true,
+      "checks": {
+        "observer_complete": true,
+        "exact_editor_frame": true,
+        "cursor_shape_preserved": true,
+        "mode_rows_preserved": true,
+        "real_listing_heading": true,
+        "real_listing_entry": true,
+        "file_spec_consumed_locally": true,
+        "subsequent_edit_keys": true
+      },
+      "matched_cells": 1920,
+      "observer_words": [
+        17999,
+        1,
+        1,
+        1,
+        25,
+        25,
+        2048,
+        2048,
+        15,
+        15,
+        20483,
+        20483
+      ],
+      "scope": "Actual Alt-F, TEST.PRM search and Escape inside an owned stock editor. Passive BIOS/VGA before/after full4000-byte frame, cursor/shape, heading and real1264-byte file entry; continued normal editing and local filename consumption. No product memory writes, injected terminal replies, SIP/DSP/analog or physical acceptance.",
+      "evidence": [
+        {
+          "path": "build/bbs-lab/results/enigma/fd-stock-enigma-drive-20261105/result.json",
+          "sha256": "e25a611d6bbebe03e8616644f287547dde111ae163f53731172d5ba662fb342d"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/fd-stock-enigma-drive-20261105/proxy-integration.json",
+          "sha256": "6a011120356b0433ce0492e124077daaf92fcf499c4d3b05fb5944673311326c"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/fd-stock-enigma-drive-20261105/file-directory-audit.json",
+          "sha256": "578f472c1c7cf022a692de1d52b1f09023afbfff0a0cb23d48c458ab42c20267"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/fd-stock-enigma-drive-20261105/screen-reference-audit.json",
+          "sha256": "1d45a1aedf8f5b76136740d656b3908eda8fef52724b3505b8fe261a53511408"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/fd-stock-enigma-drive-20261105/FDVIEW.BIN",
+          "sha256": "d8253e1df98b70c990f52fdf22f18bfdfee600de502af637db98694feb819788"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/fd-stock-enigma-drive-20261105/serial-received.bin",
+          "sha256": "62d2c45b8555ee30f8fff9481271a9d35496d47042da48815fd8503a51afa644"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/fd-stock-enigma-drive-20261105/OBSERVE.COM",
+          "sha256": "f799b670569938bd47ce291e2e3072a484b5f6bc0303abc1610afc00b6ac005a"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/fd-stock-enigma-drive-20261105/TEST.PRM",
+          "sha256": "e8b2364bbf8f918164bfe32a4e1c684d28e134ce08b35eb3f812d85a1901e681"
+        },
+        {
+          "path": "build/bbs-lab/fd-stock-enigma-drive-20261105-proxy/ready.json",
+          "sha256": "092c9d6a5a83ed73df5cacd870f450642602beffdaea5d74ca0421735b333498"
+        },
+        {
+          "path": "build/bbs-lab/fd-stock-enigma-drive-20261105-proxy/1-closed.json",
+          "sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+        }
+      ]
+    },
+    {
+      "peer": "synchronet",
+      "passed": true,
+      "checks": {
+        "observer_complete": true,
+        "exact_editor_frame": true,
+        "cursor_shape_preserved": true,
+        "mode_rows_preserved": true,
+        "real_listing_heading": true,
+        "real_listing_entry": true,
+        "file_spec_consumed_locally": true,
+        "subsequent_edit_keys": true
+      },
+      "matched_cells": 1920,
+      "observer_words": [
+        17999,
+        1,
+        1,
+        1,
+        25,
+        25,
+        1024,
+        1024,
+        1551,
+        1551,
+        20483,
+        20483
+      ],
+      "scope": "Actual Alt-F, TEST.PRM search and Escape inside an owned stock editor. Passive BIOS/VGA before/after full4000-byte frame, cursor/shape, heading and real1264-byte file entry; continued normal editing and local filename consumption. No product memory writes, injected terminal replies, SIP/DSP/analog or physical acceptance.",
+      "evidence": [
+        {
+          "path": "build/bbs-lab/results/synchronet/fd-stock-sync-drive-20261105/result.json",
+          "sha256": "ee1b38651ad01141eda071517122cd173da6721c4ca2d374ee1b4e9b630ea731"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/fd-stock-sync-drive-20261105/proxy-integration.json",
+          "sha256": "850f67534a5e6334256150cc7e8a90618454dc71a0ebf3563e36553e62df81fc"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/fd-stock-sync-drive-20261105/file-directory-audit.json",
+          "sha256": "d07ba13964a912d12127644e68109467bcf6ec4f3b247d0bfde52466289e28fd"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/fd-stock-sync-drive-20261105/screen-reference-audit.json",
+          "sha256": "64bfdf3461eb4a3df5631b12c5e97e82fee87dae1e2ba9b13fb75140dacf7122"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/fd-stock-sync-drive-20261105/FDVIEW.BIN",
+          "sha256": "84b38c2dfcadb41a8b1428fbfe7fbfc0a0683aa348b15fc6d36fa5547e0f5da9"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/fd-stock-sync-drive-20261105/serial-received.bin",
+          "sha256": "ac207963c3be90c624e322d67b7d3fe70e0260203601f7b65ebbc86a96b8a4af"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/fd-stock-sync-drive-20261105/OBSERVE.COM",
+          "sha256": "f799b670569938bd47ce291e2e3072a484b5f6bc0303abc1610afc00b6ac005a"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/fd-stock-sync-drive-20261105/TEST.PRM",
+          "sha256": "969fecc4e6fb82220b4767dff9d15e92d475ed4ca0a9cb5d93566d1b3df213e6"
+        },
+        {
+          "path": "build/bbs-lab/fd-stock-sync-drive-20261105-proxy/ready.json",
+          "sha256": "5dd8b21e8bab7cd57202788b210dabb0cac0c7f307d9a91f45a915c319452f93"
+        },
+        {
+          "path": "build/bbs-lab/fd-stock-sync-drive-20261105-proxy/1-closed.json",
+          "sha256": "47db6d2e31fb720431e98c10270113055fd7243e3fcbf9502e0a4bdaa2fe8452"
+        }
+      ]
+    }
+  ],
+  "sink_reports": [
+    {
+      "path": "build/fd-sinks-drive-20261105/result.json",
+      "sha256": "0b2b7719f289df14f9a5c419692935f274b08227cf81aeec729c5c436e6d1530"
+    },
+    {
+      "path": "build/fd-sinks-other-20261105/result.json",
+      "sha256": "a4068dee550646ef92495a125a5a514ceaf849428d2d2a149ec877918d558c3c"
+    }
+  ],
+  "sinks": [
+    {
+      "case": "capture",
+      "passed": true,
+      "checks": {
+        "fresh_DSR_after_listing_burst": true,
+        "post_listing_keyboard_DSR": true,
+        "post_close_keyboard_DSR": true,
+        "normal_exit": true,
+        "peer_ok": true,
+        "observed_listing_and_RX": true,
+        "exact_capture": true,
+        "exact_PRN": true,
+        "hardware_restored": true,
+        "startup_CWD": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "trace_complete": true,
+        "one_listing_findfirst": true,
+        "one_listing_findnext": true,
+        "no_close_during_search": true,
+        "capture_wrote_before_search": true,
+        "same_capture_FD_after_search": true,
+        "capture_not_closed_between_writes": true
+      },
+      "capture_bytes": 3815,
+      "printer_bytes": 0,
+      "observations": {
+        "parent_DS": 18262,
+        "findfirst_record": 14,
+        "findnext_record": 18,
+        "record_count": 47
+      },
+      "scope": "Actual File Directory during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while the modal page is visible, raw DSR and later keyboard, exact file-only PRN/capture, passive DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance.",
+      "evidence": [
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/result.json",
+          "sha256": "1a9c93af7a5394f63f878f83c93911d321ebb47f2600cd32ccdb2828922fc244"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/FILEVIEW.BIN",
+          "sha256": "bdbb0b7c1726e509e5b8d077fc1e50620be1ad1d9ce49cc5de218f7d6b441532"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/TRACE.BIN",
+          "sha256": "6ebbf8fdb641354bbc51d71fe635c2a70c1ef8574ea524a7b0732259fe93e504"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/wire.bin",
+          "sha256": "e258d7b405b2a7e6d34711a77182948b95c55a7ffa00ce7079af7d7d52d639fd"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/peer-text.bin",
+          "sha256": "9c822cf1791bfe660b1a95b8dce86c21b27e160acd47ea3372723ea4d0f0e40d"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/BEFORE.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/AFTER.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/AFTERCD.TXT",
+          "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/TEST.PRM",
+          "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/dosbox.conf",
+          "sha256": "6f538c57629233e95729cf6c0575aca4de3606a521ab5922c35a862ddc6a6650"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/WATCH.COM",
+          "sha256": "d7770563b1629284bccc3750f16ab3f8bab73e404a04f0b0d9f7fc07acc8e86b"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/TRACE.COM",
+          "sha256": "6a32f81f638864474d1057efed944edeecaa63a4559d2382e323237d44d0f9b2"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/TDUMP.COM",
+          "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+        },
+        {
+          "path": "build/fd-sinks-drive-20261105/capture/CAP.LOG",
+          "sha256": "9c822cf1791bfe660b1a95b8dce86c21b27e160acd47ea3372723ea4d0f0e40d"
+        }
+      ]
+    },
+    {
+      "case": "hold",
+      "passed": true,
+      "checks": {
+        "fresh_DSR_after_listing_burst": true,
+        "post_listing_keyboard_DSR": true,
+        "post_close_keyboard_DSR": true,
+        "normal_exit": true,
+        "peer_ok": true,
+        "observed_listing_and_RX": true,
+        "exact_capture": true,
+        "exact_PRN": true,
+        "hardware_restored": true,
+        "startup_CWD": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "trace_complete": true,
+        "one_listing_findfirst": true,
+        "one_listing_findnext": true,
+        "no_close_during_search": true,
+        "capture_wrote_before_search": true,
+        "same_capture_FD_after_search": true,
+        "capture_not_closed_between_writes": true
+      },
+      "capture_bytes": 613,
+      "printer_bytes": 0,
+      "observations": {
+        "parent_DS": 18262,
+        "findfirst_record": 14,
+        "findnext_record": 18,
+        "record_count": 34
+      },
+      "scope": "Actual File Directory during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while the modal page is visible, raw DSR and later keyboard, exact file-only PRN/capture, passive DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance.",
+      "evidence": [
+        {
+          "path": "build/fd-sinks-other-20261105/hold/result.json",
+          "sha256": "6d4f8b8a4a152d947f8cc0a6e64d404afc7ebd8ab037a6ae32321078b6be9a0b"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/FILEVIEW.BIN",
+          "sha256": "ca299ecddc5492d19d3d96d63f3bd4bec3913f94b1cb502a37b231b4e24e7c7d"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/TRACE.BIN",
+          "sha256": "e432ef498ec2e961a34c9aa27c12800e2ac5e7734741f471445d3fa253bb66ee"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/wire.bin",
+          "sha256": "2287ec4f4505c9ba14c7d032263500d80ef0f7dd8236b662fcf6b82a048dd2c3"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/peer-text.bin",
+          "sha256": "924ee096a345acedcc987a0e6d61532b58c43128dde22e86e8f72bc54906d217"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/BEFORE.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/AFTER.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/AFTERCD.TXT",
+          "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/TEST.PRM",
+          "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/dosbox.conf",
+          "sha256": "e85f401b6bdb4ab133b2c861af3a917163e56697426fb0e3426a1759f0771899"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/WATCH.COM",
+          "sha256": "d7770563b1629284bccc3750f16ab3f8bab73e404a04f0b0d9f7fc07acc8e86b"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/TRACE.COM",
+          "sha256": "6a32f81f638864474d1057efed944edeecaa63a4559d2382e323237d44d0f9b2"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/TDUMP.COM",
+          "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold/CAP.LOG",
+          "sha256": "9aaf568d485f327aa6fcdda168f92dfa79eecb1dedcb750ed6ac996aea7c46b5"
+        }
+      ]
+    },
+    {
+      "case": "capture-printer",
+      "passed": true,
+      "checks": {
+        "fresh_DSR_after_listing_burst": true,
+        "post_listing_keyboard_DSR": true,
+        "post_close_keyboard_DSR": true,
+        "normal_exit": true,
+        "peer_ok": true,
+        "observed_listing_and_RX": true,
+        "exact_capture": true,
+        "exact_PRN": true,
+        "hardware_restored": true,
+        "startup_CWD": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "trace_complete": true,
+        "one_listing_findfirst": true,
+        "one_listing_findnext": true,
+        "no_close_during_search": true,
+        "capture_wrote_before_search": true,
+        "same_capture_FD_after_search": true,
+        "capture_not_closed_between_writes": true
+      },
+      "capture_bytes": 3815,
+      "printer_bytes": 3815,
+      "observations": {
+        "parent_DS": 18262,
+        "findfirst_record": 14,
+        "findnext_record": 18,
+        "record_count": 48
+      },
+      "scope": "Actual File Directory during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while the modal page is visible, raw DSR and later keyboard, exact file-only PRN/capture, passive DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance.",
+      "evidence": [
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/result.json",
+          "sha256": "6370e6573eb926ddc6c30d7a5b05a384828b29dab379834bbaccc3d6f410be98"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/FILEVIEW.BIN",
+          "sha256": "f7a3570a1ded639608c7ad0c088f1adf7f3c816e2cb07ebe25917515e32f2962"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/TRACE.BIN",
+          "sha256": "c3e2446a9c3304e293d65d96df3f13c9a72f7b30850a0740ef84a250a3431ac3"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/wire.bin",
+          "sha256": "e258d7b405b2a7e6d34711a77182948b95c55a7ffa00ce7079af7d7d52d639fd"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/peer-text.bin",
+          "sha256": "9c822cf1791bfe660b1a95b8dce86c21b27e160acd47ea3372723ea4d0f0e40d"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/BEFORE.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/AFTER.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/AFTERCD.TXT",
+          "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/TEST.PRM",
+          "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/dosbox.conf",
+          "sha256": "7120577e14a5db180168f5ea80ee96f9985200707d1dd20ac6cdf24d0711847e"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/WATCH.COM",
+          "sha256": "d7770563b1629284bccc3750f16ab3f8bab73e404a04f0b0d9f7fc07acc8e86b"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/TRACE.COM",
+          "sha256": "6a32f81f638864474d1057efed944edeecaa63a4559d2382e323237d44d0f9b2"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/TDUMP.COM",
+          "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/CAP.LOG",
+          "sha256": "9c822cf1791bfe660b1a95b8dce86c21b27e160acd47ea3372723ea4d0f0e40d"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/capture-printer/PRINTER.RAW",
+          "sha256": "9c822cf1791bfe660b1a95b8dce86c21b27e160acd47ea3372723ea4d0f0e40d"
+        }
+      ]
+    },
+    {
+      "case": "hold-printer",
+      "passed": true,
+      "checks": {
+        "fresh_DSR_after_listing_burst": true,
+        "post_listing_keyboard_DSR": true,
+        "post_close_keyboard_DSR": true,
+        "normal_exit": true,
+        "peer_ok": true,
+        "observed_listing_and_RX": true,
+        "exact_capture": true,
+        "exact_PRN": true,
+        "hardware_restored": true,
+        "startup_CWD": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "trace_complete": true,
+        "one_listing_findfirst": true,
+        "one_listing_findnext": true,
+        "no_close_during_search": true,
+        "capture_wrote_before_search": true,
+        "same_capture_FD_after_search": true,
+        "capture_not_closed_between_writes": true
+      },
+      "capture_bytes": 613,
+      "printer_bytes": 3823,
+      "observations": {
+        "parent_DS": 18262,
+        "findfirst_record": 14,
+        "findnext_record": 18,
+        "record_count": 35
+      },
+      "scope": "Actual File Directory during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while the modal page is visible, raw DSR and later keyboard, exact file-only PRN/capture, passive DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance.",
+      "evidence": [
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/result.json",
+          "sha256": "35daa1bb01ef294ed6829719d39acd63818b8b58e88f4d37a2e4370c504dd62e"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/FILEVIEW.BIN",
+          "sha256": "9af29b10178020ecba0fb414263436303068d94ee9c6d15f06d79bd4bd909246"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/TRACE.BIN",
+          "sha256": "49aeae61e9ef0c332838acd7dbab52ed0bd2c5523531c777eb3bbee75506b773"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/wire.bin",
+          "sha256": "2287ec4f4505c9ba14c7d032263500d80ef0f7dd8236b662fcf6b82a048dd2c3"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/peer-text.bin",
+          "sha256": "924ee096a345acedcc987a0e6d61532b58c43128dde22e86e8f72bc54906d217"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/BEFORE.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/AFTER.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/AFTERCD.TXT",
+          "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/TEST.PRM",
+          "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/dosbox.conf",
+          "sha256": "7e0a67a76a336adb700a9f3d1dd1e2d0f23733bac881165a67728b449a8f139a"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/WATCH.COM",
+          "sha256": "d7770563b1629284bccc3750f16ab3f8bab73e404a04f0b0d9f7fc07acc8e86b"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/TRACE.COM",
+          "sha256": "6a32f81f638864474d1057efed944edeecaa63a4559d2382e323237d44d0f9b2"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/TDUMP.COM",
+          "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/CAP.LOG",
+          "sha256": "9aaf568d485f327aa6fcdda168f92dfa79eecb1dedcb750ed6ac996aea7c46b5"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/hold-printer/PRINTER.RAW",
+          "sha256": "924ee096a345acedcc987a0e6d61532b58c43128dde22e86e8f72bc54906d217"
+        }
+      ]
+    },
+    {
+      "case": "printer",
+      "passed": true,
+      "checks": {
+        "fresh_DSR_after_listing_burst": true,
+        "post_listing_keyboard_DSR": true,
+        "post_close_keyboard_DSR": true,
+        "normal_exit": true,
+        "peer_ok": true,
+        "observed_listing_and_RX": true,
+        "exact_capture": true,
+        "exact_PRN": true,
+        "hardware_restored": true,
+        "startup_CWD": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "trace_complete": true,
+        "one_listing_findfirst": true,
+        "one_listing_findnext": true,
+        "no_close_during_search": true
+      },
+      "capture_bytes": 0,
+      "printer_bytes": 3815,
+      "observations": {
+        "parent_DS": 18262,
+        "findfirst_record": 11,
+        "findnext_record": 15,
+        "record_count": 30
+      },
+      "scope": "Actual File Directory during RX pressure with capture/HOLD and virtual PRN. Actual DOS8086/FPU-off COM1/BOTH,3202-byte RX while the modal page is visible, raw DSR and later keyboard, exact file-only PRN/capture, passive DOS trace. No stock server, physical printer/flow timing, modem carrier or analog acceptance.",
+      "evidence": [
+        {
+          "path": "build/fd-sinks-other-20261105/printer/result.json",
+          "sha256": "6f80c42f65e15957d0140883963a2ca7e43861945096065cb690780264640532"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/FILEVIEW.BIN",
+          "sha256": "81a16fad5676fda40b7a9a9f4b4803cd76136032dd875b4333dade3c145e68a8"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/TRACE.BIN",
+          "sha256": "d32e835ed6b42f098976c199c53be333f22109297216cbf8d3a1d6517b3f71f7"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/wire.bin",
+          "sha256": "e258d7b405b2a7e6d34711a77182948b95c55a7ffa00ce7079af7d7d52d639fd"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/peer-text.bin",
+          "sha256": "9c822cf1791bfe660b1a95b8dce86c21b27e160acd47ea3372723ea4d0f0e40d"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/BEFORE.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/AFTER.BIN",
+          "sha256": "68459db8b8d19a5b8107e27afec071c64dd552dcdf631c041e9d3475184d1c49"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/AFTERCD.TXT",
+          "sha256": "b79f77bf1861122cb5e33a9d23dfd3e542feba8fe16a659113a381b5fbc6d67c"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/TEST.PRM",
+          "sha256": "66bf0dad3a2fa3314d614f80785172d6e107dd82e97ff45932f7c18539f1c2d1"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/dosbox.conf",
+          "sha256": "487aa0761d20ac2ec0d2e69f5377265521380a448d8305cfa60d79052a18fe97"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/WATCH.COM",
+          "sha256": "d7770563b1629284bccc3750f16ab3f8bab73e404a04f0b0d9f7fc07acc8e86b"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/TRACE.COM",
+          "sha256": "6a32f81f638864474d1057efed944edeecaa63a4559d2382e323237d44d0f9b2"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/TDUMP.COM",
+          "sha256": "569f09bb8f67ddaa8296d411ad22887240222d4a70b15c6df64ea4797b22e6bf"
+        },
+        {
+          "path": "build/fd-sinks-other-20261105/printer/PRINTER.RAW",
+          "sha256": "9c822cf1791bfe660b1a95b8dce86c21b27e160acd47ea3372723ea4d0f0e40d"
+        }
+      ]
+    }
+  ],
+  "sink_checks": 92,
+  "controls": {
+    "path": "build/fd-stock-evidence-controls-20261105/result.json",
+    "sha256": "da825d61dd7cd8bf23e47df8e3445432f948199a8fd8abe69500eebecf42b763"
+  },
+  "original_inputs": [],
+  "physical_deployment_changed": false,
+  "recorder_sha256": "22a19df88e8a94e7ced35743ec5cafc6100e75ae6850136724d0735c5d2120ee",
+  "scope": "Unchanged normal File Directory terminal: actual Alt-F/file-spec/Escape inside stock Enigma and Synchronet editors with exact full-frame/cursor/shape return, continued editing and3840-cell audits; five actual8086 capture/HOLD/virtualPRN pressure combinations with3202-byte RX, fresh DSR, passive visible-page/traffic capture and DOS entry trace. No SIP/DSP/analog, physical printer/modem, DOS6.22 or whole-application-parity claim.",
+  "remaining": [
+    "File Directory carrier-loss/reconnect/transfer and kernel/media fault composition.",
+    "Microsoft DOS6.22 and physical Boca/SPA2102/SynthModem acceptance; selected physical release unchanged.",
+    "Internal/configured viewers, editor integration and remaining directory/key/Chat/ASPECT/emulation/protocol/Host parity."
+  ],
+  "acceptance_report": {
+    "path": "build/file-directory-composition-20261105/result.json",
+    "sha256": "cb8a391b890efb99764dbad61e820c1032dae835165e61f777af39177c6d55c8"
+  },
+  "default_recipe_control": {
+    "path": "build/fd-default-helper-control-20261105/result.json",
+    "sha256": "5d8bc8f00474998a6e1013c9f2ad06ec2a6c53b1c11f864e36c63c27d95778a3"
+  },
+  "retained_fixture_failures": [
+    {
+      "kind": "relative-file-specification",
+      "report": {
+        "path": "build/bbs-lab/results/enigma/fd-stock-enigma-20261105/proxy-integration.json",
+        "sha256": "9e9ea724f710c0e546b449eb8008f9729a7f79d0adcc1fedd6107ab2a39c477f"
+      },
+      "counted_as_acceptance": false
+    },
+    {
+      "kind": "relative-file-specification",
+      "report": {
+        "path": "build/bbs-lab/results/synchronet/fd-stock-sync-20261105/proxy-integration.json",
+        "sha256": "bf292afa714ec1ae7bfca2a86049f63cd9916ac264dc59c70311d4b518eaf174"
+      },
+      "counted_as_acceptance": false
+    },
+    {
+      "kind": "malformed-drive-command",
+      "report": {
+        "path": "build/fd-sinks-first-20261105/capture/result.json",
+        "sha256": "86837cc6cbbbc6087f799ff293c4e56c2ffa6506b82ac673b697ea95ee9eac18"
+      },
+      "counted_as_acceptance": false
+    }
+  ]
+}
