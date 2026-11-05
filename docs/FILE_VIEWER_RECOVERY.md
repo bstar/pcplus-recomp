@@ -3,8 +3,8 @@
 The internal viewer's read/format/page contract is now recovered from the original
 2.01 code and eight original-executable DOSBox workflows. A source-built
 [incremental decoder](FILE_VIEWER_DECODER.md) and [read-only owner](FILE_VIEWER_OWNER.md)
-now pass component checks; their composition and maintained viewer UI are still
-pending. This evidence does not
+now pass component checks. Their [paging composition](FILE_VIEWER_SESSION.md)
+also passes; the maintained viewer UI is still pending. This evidence does not
 enable Alt-V or change the selected physical installation.
 
 [Provenance](../reconstruction/file_viewer/provenance.json) binds the original

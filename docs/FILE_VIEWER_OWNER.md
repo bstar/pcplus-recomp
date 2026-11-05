@@ -92,8 +92,9 @@ Reproduce with fresh output paths:
 
 ## Remaining composition
 
-Compose the owner and decoder with bounded read-ahead/paging checkpoints, then
-the serviced foreground UI, original footer/frame/cursor behavior and Alt-V.
+The [paging controller](FILE_VIEWER_SESSION.md) now composes the owner/decoder
+with bounded read-ahead and cached/rescanned checkpoints. Next comes the
+serviced foreground UI, original footer/frame/cursor behavior and Alt-V.
 Child/exit admission must recognize a pending/uncertain viewer owner before
 this is enabled. Validate live UART/parser service, capture/HOLD/printing,
 Enigma/Synchronet editor return, cancellation, disconnect/reconnect, transfers

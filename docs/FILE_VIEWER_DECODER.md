@@ -81,8 +81,8 @@ Reproduce with fresh output paths in the pinned environment:
 ## Remaining viewer work
 
 The decoder is not a file viewer by itself. A [read-only DOS owner](FILE_VIEWER_OWNER.md)
-now passes its component checks; compose its bounded reads,32-bit seeks and
-quarantine with retained read-ahead and paging checkpoints. The serviced foreground UI must preserve
+now passes its component checks, and their [paging controller](FILE_VIEWER_SESSION.md)
+passes composition checks with retained read-ahead and checkpoints. The serviced foreground UI must preserve
 incoming UART/parser service, capture/HOLD/printing, frame/cursor restoration,
 cancellation and disconnect/reconnect behavior. Enable Alt-V only after this
 composition passes. Configured external-viewer binding, hardware acceptance and

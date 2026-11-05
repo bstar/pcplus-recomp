@@ -1,0 +1,127 @@
+{
+  "passed": true,
+  "binary_sha256": "f7311ca586f1b92e16dde071b056466aa166968f5a884531d77c7c520d48bf6c",
+  "session_bytes": 596,
+  "owner_bytes": 90,
+  "persistent_DGROUP_bytes": 0,
+  "DOS": {
+    "scenarios": 11,
+    "checks": 21727,
+    "actions": 211,
+    "ready_page_checks": 205,
+    "matched_character_bytes": 389644,
+    "max_steps_per_action": 1001,
+    "report": {
+      "path": "build/viewer-session-volatile-dos-20261105/result.json",
+      "sha256": "180754b6060cab46b978149550c10e68a3e3fb4fdea45b35a9917a2db4d2f656"
+    }
+  },
+  "linked": {
+    "inputs": 26,
+    "bounded_steps": 158,
+    "max_DOS_data_calls_per_step": 1,
+    "report": {
+      "path": "build/viewer-session-linked-20261105/result.json",
+      "sha256": "d55f45e26cfb95a6584a5428c68acd0b6510c28800f130dd5ac00a365d9ac5ac"
+    }
+  },
+  "public_source": {
+    "path": "build/viewer-session-public-source-20261105/result.json",
+    "sha256": "2abbd7fd3cc1646cdb6d7bf0b01a59e887ae9e3ee2c96aec17d9d4be8a6589b6"
+  },
+  "original_comparisons": [
+    {
+      "case": "binary-original",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/binary/frame-2.bin",
+        "sha256": "a5e31358aadafcc5c808358f754a3b73ba4bf9d479fa97178d598c16af95e53a"
+      },
+      "scope": "Content only; long fixture concatenates four2-row controller pages in order."
+    },
+    {
+      "case": "exact-EOF",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/exact-page/frame-2.bin",
+        "sha256": "fad8cc87ab81d12efa862dd6e6338285bfc33b2dd8a05260cb17f8d2946972cc"
+      },
+      "scope": "Content only; long fixture concatenates four2-row controller pages in order."
+    },
+    {
+      "case": "empty",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/empty/frame-2.bin",
+        "sha256": "870da8cd73daf62c354db942a1f8a0ae5330f9aea9293569dca5838e8182c875"
+      },
+      "scope": "Content only; long fixture concatenates four2-row controller pages in order."
+    },
+    {
+      "case": "long-read-ahead",
+      "matched_character_bytes": 1920,
+      "capture": {
+        "path": "build/viewer-original-accepted-20261105/long/frame-2.bin",
+        "sha256": "e92e8a46e4419fba70abf51e1e65b1d49b18e526feb115f3a70ba86d3a784c59"
+      },
+      "scope": "Content only; long fixture concatenates four2-row controller pages in order."
+    }
+  ],
+  "manifest": {
+    "path": "build/viewer-session-volatile-20261105/manifest.json",
+    "sha256": "7adf888fb746ecc62a50613c76410671e4220f8bce96401e602de7502e17d621"
+  },
+  "original_inputs": [],
+  "compiler_recovery": {
+    "rejected_runtime": {
+      "path": "build/viewer-session-observe-dos-20261105/c/RESULT.TXT",
+      "sha256": "3b6214e02806177513fd621dca999808a0548ae30a43c324304aee6a67e39e77"
+    },
+    "rejected_object": {
+      "path": "build/viewer-session-observe-20261105/session.obj",
+      "sha256": "bed5894940a46c7c585b070888a5e547c0dbe5080427e1e2994ed1a33dc35215"
+    },
+    "rejected_disassembly": {
+      "path": "build/viewer-session-observe-20261105/session.dis",
+      "sha256": "092b078a11d7275a714aec6d481f1eaa6201c7ac5f879dd1000c669917af9a2f"
+    },
+    "accepted_disassembly": {
+      "path": "build/viewer-session-volatile-20261105/session.dis",
+      "sha256": "fb9cb9a01c6bd80acc3dfbd22e4b348e32c71b3cab9f9bcbc73938cd41078e25"
+    },
+    "observation": "Nonvolatile banked object stores old current into target before incrementing current; actualDOS stops with page1/target0. Volatile state orders current increment before target reload/store; unchanged paging expectations pass."
+  },
+  "sources": {
+    "src/filesystem/viewer_session.c": "5c308db77e640f977291b2e5d50f4b8ce5de743b2bcdd183427a96da4e9aaa80",
+    "src/filesystem/viewer_decode.c": "098acc45d5a9b7ba2b59dcd521aacbf086932db52c153d1dcc9ef5d753408c54",
+    "src/filesystem/viewer_file.c": "320d92867292db9bd780bed673984ae453e1afc86541acb5fb598199174b9a96",
+    "src/filesystem/viewer_admission.c": "8808d4ff2b70e55d274b40fa92d8cf9b1cb1517bec39dbe3fc123b28e01b1e1c",
+    "src/capture/capture_file.c": "a6301ab3e690380f783b015b1b77492878b07f5ddb53527f10d3a87fd971206e",
+    "src/capture/capture_reservation.c": "9ee39b9a6690a6ae25185c46a6d06d4cec9d548274e92d94259cfd9fb7c99079",
+    "src/capture/capture_fs.c": "51b17907493fbe6ab11b82b7e5b2fdae4a1db47b8d5a843b9d839878ae84f5f8",
+    "standalone/viewer_session_diagnostic.c": "7e65ae2dfb172303944a74b0cc096eac7d0243dd43ad7ad3f671b19f95263010",
+    "src/filesystem/viewer_session.h": "d35e89961584a01645a4f2e6c8c1a85c458fcc946378a370f1f70eb075653b8c",
+    "src/filesystem/viewer_decode.h": "ff8fb099d5e80042a7e3c67f6e9ddeaac33a3e23d4ad3d067d1f8a224e789079",
+    "src/filesystem/viewer_file.h": "cf8165da7b4ed7e001c316c43b88668a3eb3c7ad594009ceb20995f231c9e416",
+    "src/filesystem/viewer_file_backend.h": "202b867861c8e28398e0e732fd131c7ef54f4d6d50da80224796af39f321156f",
+    "src/filesystem/viewer_kernel.asm": "61111dff40ddbe58fed3c52c312717e43cb73cd68925305721cd915a15c26bb9",
+    "src/capture/capture_file.h": "63b97b4ba134a85cd5fea6fdece8b3f75e844fcc0592d3c4fbc6668b09773bee",
+    "src/capture/capture_reservation.h": "063426bd35513f20420aa9e6cd718ae1018c508c1bed38f58d9fd2fce334301c",
+    "src/capture/capture_fs.h": "806b050d4b9ebc1dd66c4d4d30d9b08e2e5256043eb51e7f07aba69524512155",
+    "standalone/build_viewer_session.py": "5ec98d2faf3b1740966301a7af4508fb63079ed36e4d03c57c3b5abf4c528d5a",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55",
+    "standalone/test_viewer_session_dos.py": "62a17925d2243194497c2436a4e8730c1ab12d759015f101e59d32f56c3c08b8",
+    "standalone/test_viewer_decode_dos.py": "99a0e2396b9135e422c4f425777a2cb52e89ff077603b4ad948b87b446404a9c",
+    "standalone/check_viewer_session_linked.py": "007791861e203df459e3b5fcc6d84fa39984ac9d834b6598410d18f07be27759",
+    "standalone/check_viewer_file_linked.py": "86f623b84a5c5c5b8b5bfe4a9422fdfa7f4c01a87cd7bd6ae5c5d7ec8f8533ac",
+    "standalone/dos_image.py": "319e92316365f6acbdb406eb964dab1a22bc2e6ca57e3062e085527a17d2822c",
+    "standalone/record_viewer_session.py": "f4ec96c59ffb86d662561e78148d66bb521784f869e607c6e8a7f7209c5257eb"
+  },
+  "scope": "Composed controller/decoder/read-only owner, not terminal UI. ActualDOS8086 exact paging/read-ahead/cache/rescan/cancel/error checks, linked modeled-DOS budget/cleanup cases, four original content comparisons and byte-identical18-file original-free rebuild. No UART/UI/hardware acceptance.",
+  "remaining": [
+    "Serviced viewer UI/frame/footer/cursor and Alt-V dispatch.",
+    "Child/exit admission for uncertain viewer ownership and foreground shared-buffer admission.",
+    "Capture/HOLD/PRN, live Enigma/Synchronet editor, carrier-loss/reconnect/transfer composition.",
+    "Configured external viewer, DOS6.22/SHARE/media faults, physical Boca/SIP acceptance and full remaining parity inventory."
+  ]
+}
