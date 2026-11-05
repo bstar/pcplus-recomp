@@ -9,6 +9,9 @@
 #ifdef TERMINAL_PATH_CONTROL
 #include "../filesystem/path_dialog.h"
 #endif
+#ifdef TERMINAL_FILE_DIRECTORY
+#include "../filesystem/file_dialog.h"
+#endif
 typedef unsigned short word;
 typedef unsigned char byte;
 typedef struct reference_item {
@@ -75,9 +78,12 @@ LABEL(dim,"Dim commands are unavailable. Assigned BBS page keys remain unchanged
 LABEL(refused,"Not available in this build: ");
 static word selected,refusal;
 static word __far *view;
-#if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL) || defined(TERMINAL_GATEWAY)
+#if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL) || defined(TERMINAL_GATEWAY) || defined(TERMINAL_FILE_DIRECTORY)
 static word action(word i)
 {
+#ifdef TERMINAL_FILE_DIRECTORY
+ if(items[i].key==0x2100)return FILE_DIRECTORY_ACTION;
+#endif
 #ifdef TERMINAL_GATEWAY
  if(items[i].key==0x6b00)return GATEWAY_CONTROL_ACTION;
 #endif

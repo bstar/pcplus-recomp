@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+The optional [serviced File Directory frontend](FILE_DIRECTORY.md) now connects
+Alt-F and both menus to the private-DTA search owner. Its current evidence and
+remaining composition/hardware gates are recorded separately; the complete
+F15 and full application-parity requirements remain open.
+
 The [private DOS search owner](FILE_FIND_OWNER.md) now preserves independent
 caller DTA state across listing enumeration. Its source-only diagnostic passes
 253actual DOS checks and a missing-restoration negative control. This is a

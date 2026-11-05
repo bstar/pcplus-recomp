@@ -7,6 +7,9 @@
 #ifdef TERMINAL_PATH_CONTROL
 #include "../filesystem/path_dialog.h"
 #endif
+#ifdef TERMINAL_FILE_DIRECTORY
+#include "../filesystem/file_dialog.h"
+#endif
 #ifdef TERMINAL_ELAPSED_VIEW
 #include "elapsed_view.h"
 extern void __far __cdecl elapsed_notice_flush(void);
@@ -92,6 +95,11 @@ static void copy(word __far *to,const word __far *from)
  * over live BBS video, including the first paint after menu selection. */
 static void path_overlay(void)
 {
+#ifdef TERMINAL_FILE_DIRECTORY
+ if(command_menu_active&&file_dialog_cursor()!=0xffff){
+  copy(view,live);file_dialog_event(2,0,view);return;
+ }
+#endif
  if(command_menu_active && path_dialog_cursor()!=0xffff){
   copy(view,live);path_dialog_event(2,0,view);
  }
@@ -126,8 +134,15 @@ static void hide(void)
 {
 #ifdef TERMINAL_PATH_CONTROL
  word p=path_dialog_cursor(),s=0;
+#ifdef TERMINAL_FILE_DIRECTORY
+ word fp=file_dialog_cursor();
+ if(fp!=0xffff){p=fp;s=file_dialog_shape(shape);}else
+ if(p!=0xffff)s=path_dialog_shape(shape);
+ if(p!=0xffff){
+#else
  if(p!=0xffff){
   s=path_dialog_shape(shape);
+#endif
   __asm {
    mov ah,1
    mov cx,s
@@ -257,6 +272,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
 {
 #ifdef TERMINAL_PATH_CONTROL
  word path_before;
+#ifdef TERMINAL_FILE_DIRECTORY
+ word file_before;
+#endif
 #endif
  word i,p=0,mode=0;byte __far *source;
  if(event==0){
@@ -294,6 +312,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
    || (key&255)=='`' || key==0x6c00 || key==0x1700 || command_reference_unavailable(key)
 #ifdef TERMINAL_PATH_CONTROL
    || key==0x6e00
+#ifdef TERMINAL_FILE_DIRECTORY
+   || key==0x2100
+#endif
 #endif
 #ifdef TERMINAL_DIRECTORY_VIEW
    || key==0x2000
@@ -356,9 +377,19 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
  if(command_menu_active && (event==1 || event==4)){
 #ifdef TERMINAL_PATH_CONTROL
   path_before=path_dialog_cursor();
+#ifdef TERMINAL_FILE_DIRECTORY
+  file_before=file_dialog_cursor();
+#endif
 #endif
   if(command_menu_event(event,key,view)){if(visible){
 #ifdef TERMINAL_PATH_CONTROL
+#ifdef TERMINAL_FILE_DIRECTORY
+   if(file_before!=0xffff&&file_before!=0x64c8&&(byte)key!=13&&file_dialog_cursor()!=0xffff&&file_dialog_cursor()!=0x64c8){
+    word __far *video=(word __far *)MK_FP(0xb800,0);
+    for(i=12*80+8;i<12*80+72;++i)video[i]=view[i];
+    hide();return 1;
+   }
+#endif
    if(path_before!=0xffff && path_before!=0x64c8 && (byte)key!=13 && path_dialog_cursor()!=0xffff){
     /* Ordinary field edits/cursor keys cannot change any other video cells.
      * Avoid full-screen copies and duplicate popup composition per key. */
@@ -397,12 +428,13 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
    refresh_tail();
 #endif
    redisplay_live_ready=0;visible=1;copy((word __far *)MK_FP(0xb800,0),view);hide();}
-#ifdef TERMINAL_DIRECTORY_VIEW
+#if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_FILE_DIRECTORY)
   if(command_menu_active){
-   if(!command_menu_event(3,0,view)){
+   mode=command_menu_event(3,0,view);
+   if(!mode){
     copy((word __far *)MK_FP(0xb800,0),live);cursor_restore();
     redisplay_search_pending=redisplay_export_pending=0;redisplay_active=visible=redisplay_live_ready=clipboard_ui_visible=0;return 0;}
-   copy((word __far *)MK_FP(0xb800,0),view);hide();
+   if(mode!=2){copy((word __far *)MK_FP(0xb800,0),view);hide();}
   }
 #endif
   clipboard_ui_visible=visible;if(clipboard_ui_active)clipboard_ui_event(3,0,view);return 0;}

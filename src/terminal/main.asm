@@ -445,6 +445,12 @@ terminal_phone_log_startup_done equ $
  jmp .loop
 .idle:
  call terminal_redisplay_idle
+%ifdef TERMINAL_FILE_DIRECTORY
+ extern _file_dialog_pending
+ call far _file_dialog_pending
+ or ax,ax
+ jnz .loop
+%endif
  cmp word [_redisplay_search_pending],0
  jne .loop
  cmp word [_redisplay_export_pending],0

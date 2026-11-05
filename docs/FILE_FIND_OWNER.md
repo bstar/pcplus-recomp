@@ -14,12 +14,17 @@ preservation remain explicit at the assembly boundary. Interrupts are not
 disabled around DOS calls; application admission and UART servicing still need
 integration.
 
-Begin validates a nonempty, terminated specification of at most63 bytes and an
+Begin validates a nonempty, terminated specification of at most67 bytes and an
 8-bit attribute mask. It refuses a second active owner. Search errors are
 latched until close, preventing a later Next from reusing invalid continuation.
 Failures preserve the caller's output. Successful results publish bounded8.3
 names, attributes, raw DOS date/time and the full32-bit size. Date formatting
 belongs to the later presentation layer.
+
+The later [File Directory frontend](FILE_DIRECTORY.md) extends the initial
+63-character component limit to67, allowing its64-character field to append
+`*.*` after a drive colon or backslash. The earlier receipt below retains the
+original component checkpoint; the frontend receipt binds the current build.
 
 ## Verification
 

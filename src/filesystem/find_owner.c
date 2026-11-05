@@ -41,8 +41,8 @@ unsigned __far __cdecl file_find_begin(const char *spec,unsigned attributes,file
  unsigned i;
  if(!spec||!out||attributes>255)return FILE_FIND_ARGUMENT;
  if(file_find_storage.active)return FILE_FIND_BUSY;
- for(i=0;i<64&&spec[i];i++);
- if(!i||i==64)return FILE_FIND_ARGUMENT;
+ for(i=0;i<68&&spec[i];i++);
+ if(!i||i==68)return FILE_FIND_ARGUMENT;
  file_find_storage.active=1;
  return search(0x4e00,spec,attributes,out);
 }

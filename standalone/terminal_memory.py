@@ -824,7 +824,7 @@ def inspect_terminal_memory(binary,map_path):
     assert symbols['_command_menu_event'][1]<reference['bytes']
     lo=config_seg*16;body=image[start+lo:start+lo+config_code['bytes']]
     pattern=b'\x9a'+struct.pack('<HH',symbols['_command_menu_event'][1],menu_seg)
-    menu_calls=3 if '_directory_view_event' in symbols else 2
+    menu_calls=3 if '_directory_view_event' in symbols or '_file_dialog_event' in symbols else 2
     assert body.count(pattern)==menu_calls,'Redisplay compiled far menu calls'
     sites=[];offset=0
     for i in range(menu_calls):
@@ -1295,6 +1295,22 @@ def inspect_terminal_memory(binary,map_path):
   shutdown=raw('terminal_shutdown',address('terminal_parser_active')-address('terminal_shutdown'))
   assert shutdown.count(encoded)==2,'Missing shutdown file-quarantine gates'
   extra.update(gateway_front_state_bytes=20,gateway_front_state_retained=True,gateway_front_DGROUP_bytes=0,gateway_front_shutdown_quarantine_gates=2)
+ if '_terminal_file_dialog_state' in symbols:
+  bank=next(c for c in code_segments if c['name']=='FILE_CODE')
+  spans=[]
+  for name,state_bytes in (('_terminal_file_dialog_state',1676),('_file_find_storage',48)):
+   seg,off=symbols[name];lo=seg*16+off
+   assert seg==bank['relative_segment'] and seg!=ds and off+state_bytes<=bank['offset']+bank['bytes']
+   assert lo+state_bytes<=static_end and lo+state_bytes<=module_bytes
+   for other,n in (('_path_session_storage',76),('_terminal_path_dialog_state',144),('_process_handles_storage',36),('_gateway_files_storage',6),('gateway_uart_storage',22),('_gateway_front_storage',20)):
+    if other in symbols:
+     at=address(other);assert lo+state_bytes<=at or at+n<=lo,(name,'listing state overlaps',other)
+   spans.append((lo,lo+state_bytes))
+  assert spans[0][1]<=spans[1][0] or spans[1][1]<=spans[0][0]
+  assert word('_terminal_file_dialog_state')==0x4644 and word('_file_find_storage')==0
+  for name in ('_file_dialog_event','_file_dialog_cursor','_file_dialog_pending','_file_dialog_shape','_file_dialog_format','_file_find_begin','_file_find_next','_file_find_close','_file_find_kernel'):
+   assert symbols[name][0]==bank['relative_segment'],(name,'listing API outside FILE_CODE')
+  extra.update(file_directory_state_bytes=1724,file_directory_DGROUP_bytes=0,file_directory_state_retained=True)
  retained=(static_end+15)//16
  assert retained*16>=module_bytes,'PROGRAM retention would free serialized application data'
  allocated=((module_bytes+15)//16+header[5])*16

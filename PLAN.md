@@ -4,6 +4,13 @@
 
 ### November 4 checkpoint
 
+The optional [File Directory frontend](docs/FILE_DIRECTORY.md) now supersedes
+the earlier "not linked" component statements for its enabled candidate. It
+adds a serviced modal listing and Alt-F/menu dispatch, preserving the near-data
+budget. Its receipt distinguishes linked/DOS/BBS regression from remaining
+online listing composition and physical acceptance. Internal/configured viewer
+and editor integration remain next file/DOS recovery work; full scope is intact.
+
 The [file-search owner](docs/FILE_FIND_OWNER.md) is now a source-only FILE_CODE
 component with253actual DOS checks, an exact empty-source rebuild and a rejected
 missing-DTA-restoration control. Five fresh original runtime workflows establish

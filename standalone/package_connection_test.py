@@ -69,6 +69,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         + ('Alt-J: send configured initialization only; Escape cancels.\n' if terminal.get('experimental_manual_init') else '')
         + ('Alt-Y: send configured answer-on; follows local echo. Escape cancels.\n' if terminal.get('experimental_auto_answer') else '')
         + ('Alt-F7: change directory; startup directory returns on final exit.\n' if terminal.get('experimental_path_control') else '')
+        + ('Alt-F: File Directory; Enter selects *.*, Escape returns.\n' if terminal.get('experimental_file_directory') else '')
         + ('Alt-F4: DOS Gateway; EXIT returns without a return-key prompt.\n'
            'Gateway keeps serial reception, capture/HOLD and printer owners.\n' if terminal.get('experimental_gateway_frontend') else '')
         + 'Dim commands remain unavailable. This is a test candidate.\n\n'
@@ -96,6 +97,8 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         'authored_help_sha256':help_record['sha256'],'card_written':False,'validation':'Staged only; requires separate DOS/package and hardware acceptance.'}
     if terminal.get('experimental_path_control') or terminal.get('experimental_gateway_frontend'):
         record.update(experimental_path_control=bool(terminal.get('experimental_path_control')),experimental_gateway_frontend=bool(terminal.get('experimental_gateway_frontend')))
+    if terminal.get('experimental_file_directory'):
+        record['experimental_file_directory']=True
     (output/'manifest.json').write_text(json.dumps(record,indent=2)+'\n');return record
 
 def main():

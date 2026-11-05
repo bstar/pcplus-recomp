@@ -8,6 +8,9 @@
 #ifdef TERMINAL_PATH_CONTROL
 #include "../filesystem/path_dialog.h"
 #endif
+#ifdef TERMINAL_FILE_DIRECTORY
+#include "../filesystem/file_dialog.h"
+#endif
 #ifdef PHONE_LOG_CONTROLS
 extern unsigned __far __cdecl phone_log_controls_event(unsigned,unsigned,unsigned short __far *);
 #pragma aux phone_log_controls_event "_phone_log_controls_event_far";
@@ -265,6 +268,12 @@ ENTRY(gateway,"DOS Gateway                     Alt-F4",
  "A changed directory remains current until PCPLUS exits.\n"
  "Busy file, transfer, recording and display owners refuse the request.");
 #endif
+#ifdef TERMINAL_FILE_DIRECTORY
+ENTRY(file_directory,"File Directory                   Alt-F",
+ "List a DOS file specification, including directories. Enter selects *.*.\n"
+ "Serial input continues between search steps. Escape returns to the terminal.\n"
+ "A full page with more entries accepts another key to continue.");
+#endif
 static const item MENU_TEXT items[]={
  ROW(receive,0,RECEIVE_KEY,'R'),ROW(send,0,SEND_KEY,'S'),ROW(snapshot,0,0x2200,'W'),
  ROW(script,0,0xfe00,'A'),ROW(capture,0,0x6800,'O'),ROW(hold,0,0x6900,'H'),ROW(crlf,0,0x6a00,'T'),ROW(exit,0,0x2d00,'X'),
@@ -304,6 +313,9 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_GATEWAY
  ,ROW(gateway,0,0x6b00,'S')
+#endif
+#ifdef TERMINAL_FILE_DIRECTORY
+ ,ROW(file_directory,0,0x2100,'I')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))
@@ -397,6 +409,9 @@ static void record_view(void)
 static void draw(void)
 {
  word i,n=0,at;
+#ifdef TERMINAL_FILE_DIRECTORY
+ if(phase==13){file_dialog_event(2,0,view);return;}
+#endif
 #ifdef TERMINAL_PATH_CONTROL
  if(phase==12){path_dialog_event(2,0,view);return;}
 #endif
@@ -457,6 +472,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(!recording_terminal_inspect())recording_terminal_initialize();
 #ifdef TERMINAL_REFERENCE
   reference_origin=0;
+#ifdef TERMINAL_FILE_DIRECTORY
+  if(key==0x2100){phase=13;file_dialog_event(0,key,view);return 1;}
+#endif
 #ifdef TERMINAL_PATH_CONTROL
   if(key==0x6e00){phase=12;path_dialog_event(0,key,view);return 1;}
 #endif
@@ -475,6 +493,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   draw();return 1;}
  if(event==4){
+#ifdef TERMINAL_FILE_DIRECTORY
+  if(phase==13)file_dialog_event(4,0,view);
+#endif
 #ifdef TERMINAL_PATH_CONTROL
   if(phase==12)path_dialog_event(4,0,view);
 #endif
@@ -498,12 +519,24 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   phase=directory_parent==1?9:0;notice=0;draw();return 1;
  }
 #endif
+#ifdef TERMINAL_FILE_DIRECTORY
+ if(phase==13&&event==3)return file_dialog_event(3,0,view);
+#endif
  if(event!=1)return 1;
  if(key==0x2d00){
+#ifdef TERMINAL_FILE_DIRECTORY
+  if(phase==13)file_dialog_event(4,0,view);
+#endif
 #ifdef TERMINAL_PATH_CONTROL
   if(phase==12)path_dialog_event(4,0,view);
 #endif
   command_menu_action=key;command_menu_active=0;return 0;}
+#ifdef TERMINAL_FILE_DIRECTORY
+ if(phase==13){
+  if(file_dialog_event(1,key,view))return 1;
+  command_menu_active=0;return 0;
+ }
+#endif
 #ifdef TERMINAL_PATH_CONTROL
  if(phase==12){
   if(path_dialog_event(1,key,view))return 1;
@@ -536,6 +569,13 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   n=command_reference_event(1,key,view);
   if(n==1){command_menu_active=0;return 0;}
   if(n==0x200){reference_origin=0;category=selected=phase=notice=0;draw();return 1;}
+#ifdef TERMINAL_FILE_DIRECTORY
+  if(n==0x100+FILE_DIRECTORY_ACTION){phase=13;file_dialog_event(0,0,view);return 1;}
+  if(n==0x300+FILE_DIRECTORY_ACTION){
+   for(i=0;i<COUNT;++i)if(items[i].key==0x2100){selected=i;break;}
+   category=items[selected].category;phase=1;draw();return 1;
+  }
+#endif
 #ifdef TERMINAL_GATEWAY
   if(n==0x100+GATEWAY_CONTROL_ACTION){command_menu_action=0x6b00;command_menu_active=0;return 0;}
   if(n==0x300+GATEWAY_CONTROL_ACTION){
@@ -597,6 +637,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
    if(i==COUNT){draw();return 1;}}
 #ifdef TERMINAL_REFERENCE
 activate:
+#ifdef TERMINAL_FILE_DIRECTORY
+  if(items[selected].key==0x2100){phase=13;file_dialog_event(0,0,view);return 1;}
+#endif
 #ifdef TERMINAL_PATH_CONTROL
   if(items[selected].key==0x6e00){phase=12;path_dialog_event(0,0,view);return 1;}
 #endif

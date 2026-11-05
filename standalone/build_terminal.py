@@ -10,6 +10,7 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser.add_argument('--file-directory',action='store_true',help='Serviced original-style Alt-F file listing; implies path control')
 parser.add_argument('--session-projection',action='store_true')
 parser.add_argument('--projection-probe',action='store_true')
 parser.add_argument('--session-baseline',action='store_true')
@@ -88,6 +89,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.file_directory:args.path_control=True
 if args.gateway:args.gateway_uart=True;assert args.program_display_owner and args.mouse,'Gateway frontend requires composed display/mouse owners'
 if args.gateway_uart_probe:args.gateway_uart=True;args.gateway_files_probe='normal'
 if args.gateway_uart:args.gateway_files=True
@@ -285,6 +287,7 @@ if args.keyboard_bank:out_name+='-keyboard-bank'
 if args.input_tables_data:out_name+='-input-tables-data'
 if args.cwd_identities:out_name+='-cwd-identities'
 if args.path_control:out_name+='-path-control'
+if args.file_directory:out_name+='-file-directory'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
 if args.gateway_files:out_name+='-gateway-files'
@@ -306,6 +309,7 @@ modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
 modules += ['viewport','protected_erase','alternate_output','substitute_control']
 sources=[]
 if args.path_control:sources += [ROOT/'src/filesystem/path_bank.asm',ROOT/'src/filesystem/path_kernel.asm',ROOT/'reconstruction/file_path/change.asm']
+if args.file_directory:sources.append(ROOT/'src/filesystem/find_kernel.asm')
 if args.gateway_probe:sources.append(ROOT/('standalone/gateway_files_probe.asm' if args.gateway_files_probe else 'standalone/gateway_lookup_probe.asm'))
 for module in modules:
  sources += sorted((ROOT/'reconstruction'/module).glob('*.asm'))
@@ -483,6 +487,7 @@ for index,source in enumerate(sources):
  if args.custom_irq:options+=['-DTERMINAL_CUSTOM_IRQ']
  if args.cwd_identities:options+=['-DTERMINAL_CWD_IDENTITIES']
  if args.gateway_probe:options+=['-DTERMINAL_GATEWAY_PROBE']
+ if args.file_directory:options+=['-DTERMINAL_FILE_DIRECTORY']
  if args.path_control:
   options+=['-DTERMINAL_PATH_CONTROL']
   if source in (ROOT/'src/filesystem/path_kernel.asm',ROOT/'reconstruction/file_path/change.asm'):
@@ -523,6 +528,7 @@ for index,source in enumerate(sources):
   obj.write_bytes(normalized);render_import_adapters=dict(import_counts=counts,compiler_object_sha256=hashlib.sha256(before).hexdigest(),normalized_object_sha256=hashlib.sha256(normalized).hexdigest())
 c_sources=[ROOT/'src/config/prm_dos.c',ROOT/'src/config/terminal_import.c',ROOT/'src/config/modem_import.c',ROOT/'src/config/startup_import.c',ROOT/'src/directory/directory_dos.c',ROOT/'src/directory/directory_live.c',ROOT/'src/directory/directory_actions.c',ROOT/'src/directory/directory_replace.c',ROOT/'src/directory/directory_replace_fs.c',ROOT/'src/key_mapping/keymap_dos.c',ROOT/'src/key_mapping/keymap_dos_fs.c']
 path_sources={ROOT/'src/filesystem'/n for n in ('path_owner.c','path_session.c','path_dialog.c')} if args.path_control else set()
+if args.file_directory:path_sources.update(ROOT/'src/filesystem'/n for n in ('find_owner.c','file_dialog.c'))
 c_sources+=sorted(path_sources)
 if args.gateway_handles:c_sources.append(ROOT/'src/process/process_handles.c')
 if args.gateway_files:c_sources.append(ROOT/'src/process/gateway_files.c')
@@ -691,6 +697,7 @@ for source in c_sources:
   options+=['-nt=FILE_CODE','-nc=FARCODE']
   if args.gateway_uart_probe:options+=['-dTERMINAL_GATEWAY_UART_PROBE']
   if args.gateway_files_probe=='hold':options+=['-dGATEWAY_PROBE_HOLD']
+ if args.file_directory:options+=['-dTERMINAL_FILE_DIRECTORY']
  if args.path_control:options+=['-dTERMINAL_PATH_CONTROL']
  if source in path_sources:options+=['-nt=FILE_CODE','-nc=FARCODE']
  if args.status_control:options+=['-dTERMINAL_STATUS_CONTROL']
@@ -825,6 +832,7 @@ if args.keyboard_bank:inputs.append(ROOT/'src/terminal/keyboard_bank_targets.jso
 if args.directory_resource_cli:inputs += [ROOT/'src/directory/directory_resource_cli.h',ROOT/'src/directory/directory_resources.h']
 if args.directory_resource_owner:inputs += [ROOT/'src/terminal/directory_resource_owner.h',ROOT/'src/terminal/directory_identity.h']
 if args.cwd_identities and not args.directory_resource_owner:inputs += [ROOT/'src/terminal/directory_identity.h']
+if args.file_directory:inputs += [ROOT/'src/filesystem'/n for n in ('find_owner.h','file_dialog.h')]
 if args.path_control:inputs += [ROOT/'src/filesystem'/n for n in ('path_owner.h','path_session.h','path_dialog.h')]+[ROOT/'reconstruction/file_path/provenance.json']
 if args.directory_retirement:inputs.append(ROOT/'src/terminal/directory_retirement.h')
 if args.directory_scripts:inputs.append(ROOT/'src/directory/directory_script.h')
@@ -842,6 +850,7 @@ manifest={'experimental_directory_keys':args.directory_keys,'experimental_aspect
 manifest['experimental_keyboard_bank']=args.keyboard_bank
 manifest['experimental_cwd_identities']=args.cwd_identities
 manifest['experimental_path_control']=args.path_control
+manifest['experimental_file_directory']=args.file_directory
 manifest['experimental_gateway_lookup']=args.gateway_lookup
 manifest['experimental_gateway_handles']=args.gateway_handles
 manifest['experimental_gateway_files']=args.gateway_files

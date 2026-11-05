@@ -13,7 +13,7 @@ int main(void)
  unsigned old[2],current[2],foreign_address[2],i,r,count;
  unsigned char foreign[43],saved[43];
  file_find_entry entry,sentinel;
- char too_long[65];
+ char too_long[69];
  find_probe_get(old);
  memset(foreign,0xa5,sizeof(foreign));
  find_probe_set((void __far *)foreign);
@@ -27,7 +27,7 @@ int main(void)
  CHECK(file_find_next(&entry)==FILE_FIND_INACTIVE);
  CHECK(!memcmp(&entry,&sentinel,sizeof(entry)));
  CHECK(file_find_begin(0,0,&entry)==FILE_FIND_ARGUMENT);
- memset(too_long,'X',64);too_long[64]=0;
+ memset(too_long,'X',68);too_long[68]=0;
  CHECK(file_find_begin(too_long,0,&entry)==FILE_FIND_ARGUMENT);
  CHECK(file_find_begin("",0,&entry)==FILE_FIND_ARGUMENT);
  CHECK(file_find_begin("FILES\\*.TXT",256,&entry)==FILE_FIND_ARGUMENT);

@@ -55,6 +55,10 @@ terminal_redisplay_key_impl:
  je .open
  cmp ax,0x6c00 ; Original Alt-F5: source-owned script filename prompt.
  je .open
+%ifdef TERMINAL_FILE_DIRECTORY
+ cmp ax,0x2100 ; Original Alt-F: serviced file listing.
+ je .open
+%endif
 %ifdef TERMINAL_PATH_CONTROL
  cmp ax,0x6e00 ; Original Alt-F7: serviced path change.
  je .open
