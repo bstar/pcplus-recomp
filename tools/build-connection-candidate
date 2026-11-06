@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+pcplus_candidate_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$pcplus_candidate_root"
+exec "$pcplus_candidate_root/tools/dev" --command python standalone/build_connection_candidate.py "$@"
