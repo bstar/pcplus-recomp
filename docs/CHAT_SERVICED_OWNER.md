@@ -1,5 +1,10 @@
 # Serviced Chat send owner
 
+The early CHAT_HELP result name for6D00 is a legacy mislabel: the original
+command is Alt-F6 Redisplay. See the [REA correction](CHAT_REDISPLAY_ENTRY.md).
+That continuation remains unimplemented; these component results do not prove
+a generic Help view.
+
 `src/terminal/chat_owner.c` projects the keyboard/send branches of the
 [recovered native controller](CHAT_NATIVE.md) into a yielding state machine.
 It is a component for live integration, not an enabled application command.

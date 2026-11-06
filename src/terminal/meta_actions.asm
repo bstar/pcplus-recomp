@@ -15,6 +15,9 @@ extern terminal_script_start,_command_menu_script
 %endif
 extern terminal_monitor_active
 extern terminal_controller_active
+%ifdef TERMINAL_CHAT_FOREGROUND_TEXT
+extern _redisplay_active,pcplus_flow_bell
+%endif
 global terminal_load_actions,terminal_macro_start,terminal_macro_poll
 global terminal_macro_cancel,terminal_defer_key,terminal_take_deferred_key
 
@@ -324,10 +327,29 @@ terminal_defer_key:
  pop bx
  ret
 .full:
+%ifdef TERMINAL_CHAT_FOREGROUND_TEXT
+ ; Chat's retained prefix is complete. Consume excess ordinary BIOS keys
+ ; with the existing overflow status/bell, so cancellation stays reachable.
+ ; Never append past32 or turn a queue-limit event into process termination.
+ cmp word [_redisplay_active],2
+ je .chat_full
+%endif
  call terminal_macro_cancel
+%ifndef TERMINAL_CHAT_FOREGROUND_TEXT
  mov word [terminal_macro_status],7
+%endif
  mov word [terminal_exit_code],3
  mov word [terminal_quit],1
+%ifdef TERMINAL_CHAT_FOREGROUND_TEXT
+ jmp short .overflow_status
+.chat_full:
+ cmp word [terminal_macro_status],7
+ je .overflow_done
+ call pcplus_flow_bell ; Once per Chat session, not a blocking bell per key.
+.overflow_status:
+ mov word [terminal_macro_status],7
+.overflow_done:
+%endif
  pop bx
  ret
 terminal_take_deferred_key:

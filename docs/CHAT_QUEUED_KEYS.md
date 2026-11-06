@@ -1,5 +1,9 @@
 # Cancellation behind Chat typeahead
 
+The later [queue-limit policy](CHAT_QUEUE_PRESSURE.md) also handles excess
+ordinary input after the retained prefix reaches32 keys. The full-queue hold
+and unverified pressure behavior below describe this earlier checkpoint.
+
 The optional foreground TEXT build now retains ordinary keys in the existing
 32-word deferred FIFO while Chat cannot accept them. Escape, Alt-H and Alt-X
 can then reach the BIOS queue head and cancel a blocked native echo. The FIFO

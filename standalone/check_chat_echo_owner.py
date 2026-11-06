@@ -138,6 +138,16 @@ def main():
                 assert m.echo(65)==1 and m.error()==0;m.restored(before,cursor)
                 assert m.get('terminal_deferred_count')==count
         check('foreground-owned-bounded-typeahead-does-not-reject-or-consume-native-echo',retained)
+        def legacy_overflow():
+            for owner in (0,1):
+                m=Echo();m.put('_redisplay_active',owner)
+                m.put('terminal_deferred_count',32);m.put('terminal_macro_active',1)
+                before=m.native();cursor=m.cursor
+                m.call('terminal_defer_key',ax=ord('X'))
+                assert (m.get('terminal_deferred_count'),m.get('terminal_macro_active'),
+                        m.get('terminal_macro_status'),m.get('terminal_exit_code'),m.get('terminal_quit'))==(0,0,7,3,1)
+                m.restored(before,cursor)
+        check('non-Chat-full-FIFO-retains-legacy-explicit-stop-without-Chat-bell-policy',legacy_overflow)
     sources=dict(manifest['sources'])
     for mod in tuple(sys.modules.values()):
         q=Path(getattr(mod,'__file__','') or '/').resolve()

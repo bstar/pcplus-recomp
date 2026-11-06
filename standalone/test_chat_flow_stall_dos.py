@@ -11,7 +11,9 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('terminal','output'):p.add_argument('--'+n,type=Path,required=True)
     p.add_argument('--cancel-queued',action='store_true',help='Cancel stalled TEXT with X ahead of Escape')
+    p.add_argument('--pressure',type=int,choices=[0,40],default=0,help='Fill the retained FIFO and supply excess ordinary keys during the XOFF stall')
     a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve()
+    assert not a.pressure or a.cancel_queued
     assert out.is_relative_to(ROOT/'build') and not out.exists()
     m=json.loads(binary.with_name('manifest.json').read_text());assert m['experimental_chat_foreground_text'] and sha(binary)==m['binary_sha256']
     names=('standalone/test_chat_flow_stall_dos.py','standalone/chat_flow_watch.asm','standalone/test_connection_dos.py',
@@ -36,10 +38,11 @@ def main():
     records=struct.pack('<H',2)+b'GO~TAIL^M'.ljust(52,b'\0')+bytes(54*9)
     keys='p900 enter p5000 a-o p1800 a-1 p2200 escape p800 N O R M A L p1000 a-x'
     if a.cancel_queued:keys='p900 enter p5000 a-o p1800 a-1 p750 X p100 escape p1600 N O R M A L p1000 a-x'
+    if a.pressure:keys='p900 enter p5000 a-o p1800 a-1 p750 '+'X '*a.pressure+'p100 escape p1600 N O R M A L p1000 a-x'
     harness.BINARY=stage/'TERMINAL.EXE';name=out.name+'-flow';capture=ROOT/'build/connection-dos'/name;assert not capture.exists()
     r=harness.run(name,'success',keys,prm=bytes(settings),com=3,irq=5,cpu='8086',working_drive='d',timeout=40,
         arguments='@TEST.PRM /D:CaseTest:23 /T:D:\\ACTIONS.KEY',files={'ACTIONS.KEY':records,'FLOWW.COM':observer.read_bytes()},observer='FLOWW',
-        online_triggers=[(b'GO',[(0,b'\x13'),(.15,b'RXD'),(1.2,b'\x11')]),(b'NORMAL',[(0,b'BACK\x1b[6n')])])
+        online_triggers=[(b'GO',[(0,b'\x13'),(.15,b'RXD'),(3.0 if a.pressure else 1.2,b'\x11')]),(b'NORMAL',[(0,b'BACK\x1b[6n')])])
     wire=(capture/'serial.bin').read_bytes();screen=(capture/'SCREEN.BIN').read_bytes()[::2]
     words=struct.unpack('<8H',(capture/'FLOWVIEW.BIN').read_bytes());flags=words[1]
     checks=dict(harness=r['passed'],observer=words[0]==0x4657,
@@ -52,9 +55,11 @@ def main():
         module_unchanged=sha(stage/'PCCHAT.OVL')==m['chat_loader']['module']['binary_sha256'])
     if a.cancel_queued:
         checks.update(queued_X_retained=words[5]>=1,retired_FIFO_empty=words[6]==0,
+                      retired_before_XON=words[7]==1,
                       abandoned_TEXT_and_typeahead_discarded=b'TAIL' not in wire and b'GOX' not in wire)
+    if a.pressure:checks['FIFO_capacity_observed']=words[5]==32
     report=dict(passed=all(checks.values()),checks=checks,observer_words=words,observer_constants=constants,
-        binary_sha256=sha(binary),module_sha256=sha(stage/'PCCHAT.OVL'),sources=sources,capture=str(capture.relative_to(ROOT)),cancel_queued=a.cancel_queued,
+        binary_sha256=sha(binary),module_sha256=sha(stage/'PCCHAT.OVL'),sources=sources,capture=str(capture.relative_to(ROOT)),cancel_queued=a.cancel_queued,pressure_keys=a.pressure,
         scope=__doc__+' Ordinary main and actual synthetic UART XOFF/XON. Passive INT16 observer confirms parent DS=SS/exact API, owner2/TEXT active, physical UART pause, pending T transmit and remote RXD cells during that stall. Normal case checks XON completion; optional cancellation puts X ahead of Escape before XON and checks retired owner/TEXT, empty FIFO and no abandoned X/TAIL on wire. No product state writes or manufactured flow flags. No physical CTS/RTS, sustained saturation, printer/logging fault or hardware acceptance.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');assert report['passed'],checks
     print('PASS DOS XOFF TEXT stall: concurrent RX, physical XON resume and normal return')

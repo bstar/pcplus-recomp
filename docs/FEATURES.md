@@ -2475,3 +2475,14 @@ also passes during a serial XOFF stall with concurrent RX. The existing32-word
 FIFO is reused; no stack, stream or buffer capacity is reduced. Current parent
 retains479408 bytes and passes nested-ASPECT. Full-queue pressure, broader
 failures/UI and physical acceptance remain open.
+
+The [queue-pressure follow-up](CHAT_QUEUE_PRESSURE.md) keeps cancellation
+reachable after the existing32-key FIFO fills, with an explicit oldest-prefix
+retention/excess-key discard policy and one overflow-bell request per session.
+Actual DOS verifies32/40-key bursts, two successful sessions in one process,
+and Escape/Alt-H/Alt-X behind full input. No capacities are reduced.
+
+A separate [REA correction](CHAT_REDISPLAY_ENTRY.md) identifies original6D00
+as Alt-F6 Redisplay/scrollback. Earlier Chat Help labeling was incorrect.
+Nested viewer ownership/return must be implemented against that actual command;
+global Help and Alt-Z remain separate requirements.

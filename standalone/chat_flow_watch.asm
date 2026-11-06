@@ -71,6 +71,11 @@ handler:
  mov [cs:sample+12],ax
  or ax,ax
  jnz .done
+ test word [cs:sample+2],4
+ jnz .cancelled
+ mov ax,[PAUSED_OFF]
+ mov [cs:sample+14],ax ; first retirement must precede peer XON
+.cancelled:
  or word [cs:sample+2],4
  inc word [cs:sample+8]
 %endif

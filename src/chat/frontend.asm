@@ -11,6 +11,10 @@ _chat_front_claim:
 %ifdef CHAT_FOREGROUND_TEXT
  sbb ax,ax
  inc ax ; CF0 ->1, CF1 ->0, without retaining a branch island.
+ jz .claimed
+ extern terminal_macro_status
+ mov [terminal_macro_status],ax ; Reset this session's overflow-bell latch.
+.claimed:
 %else
  mov ax,0
  jc .done
@@ -35,7 +39,11 @@ global %1
  push bp
  push ax
 %ifdef CHAT_FOREGROUND_TEXT
+%if %2 = 0
+ xor ax,ax
+%else
  mov ax,%2
+%endif
  jmp chat_front_bridge_common
 %else
  push bx
@@ -85,7 +93,8 @@ chat_front_bridge_common:
  mov bp,sp
  push word [bp+12]
  push ax
- call far _chat_front_event
+ push cs
+ call _chat_front_event ; Same CONFIG_CODE segment; exact FAR return frame.
  add sp,4
  neg ax ; CF is exactly whether the C result was nonzero; POPs preserve it.
  pop es

@@ -326,12 +326,10 @@ terminal_keyboard_dispatch_far:
 %ifdef TERMINAL_CHAT_FOREGROUND_TEXT
  jnc .chat_key_ready
  ; Move held ordinary BIOS keys to the existing bounded FIFO, so a later
- ; Escape/Alt-H/Alt-X can reach the queue head. Do not dequeue a held Escape
- ; or overflow the FIFO; the successful peek makes read nonblocking.
+ ; Escape/Alt-H/Alt-X can reach the queue head. Do not dequeue a held Escape.
+ ; The producer caps retention and reports excess input; peek makes read safe.
  cmp al,27
  je .done
- cmp word [terminal_deferred_count],32
- jae .done
  call terminal_read_key
  call terminal_defer_key
  jmp .done

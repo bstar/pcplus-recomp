@@ -13,7 +13,7 @@ or full original Chat acceptance.
 The core currently selects buffered sending. It uses the accepted parent duplex
 and newline settings and snapshots the accepted input translation table at
 entry. Immediate sending is component-tested but has no foreground setting yet.
-Original Chat Help6D00 and Alt-number direct TEXT are explicitly refused with
+Original Chat Redisplay6D00 and Alt-number direct TEXT are explicitly refused with
 internal diagnostic7F01; they do not accidentally execute a different general
 KEY action. The Alt-Z Chat item remains unavailable. Those continuations and
 configuration/UI work remain part of the goal.

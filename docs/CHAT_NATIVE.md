@@ -39,7 +39,8 @@ Backspace0E08 removes a buffered byte and clamps at the start. Enter000D and
 E00D submit the accumulated NUL-terminated line through0A62. An LF is additionally
 sent when DS3986 or duplex is nonzero. Escape exits without flushing an unfinished
 line. Alt1..Alt0 select ten54-byte KEY records starting3758 through the existing
-48CC action service;6D00 invokes the help service sequence.
+48CC action service;6D00 invokes the Redisplay service sequence. The earlier
+Help label was incorrect; see the [static correction](CHAT_REDISPLAY_ENTRY.md).
 
 The echo helper does not transmit. It walks a NUL-terminated string only when
 duplex is nonzero, promotes each signed byte with CBW and calls the actual logger
