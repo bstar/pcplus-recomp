@@ -36,12 +36,17 @@ class Menu:
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ['plain','packed','output']:p.add_argument('--'+n,type=Path,required=True)
+ p.add_argument('--same-dictionary',action='store_true',help='Compare compact code-label tables against full pointers with the same packed dictionary')
  a=p.parse_args();plain=a.plain.resolve();packed=a.packed.resolve();out=a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and not out.exists()
  for binary in [plain,packed]:
   m=json.loads(binary.with_name('manifest.json').read_text());assert sha(binary)==m['binary_sha256']
   for n,h in m['sources'].items():assert sha(ROOT/n)==h,n
- assert json.loads(plain.with_name('manifest.json').read_text())['packed_command_ui']['pairs']==0
+ control=json.loads(plain.with_name('manifest.json').read_text());candidate=json.loads(packed.with_name('manifest.json').read_text())
+ if a.same_dictionary:
+  assert not control.get('experimental_code_label_offsets') and candidate['experimental_code_label_offsets']
+  assert control['packed_command_ui']==candidate['packed_command_ui']
+ else:assert control['packed_command_ui']['pairs']==0
  assert json.loads(packed.with_name('manifest.json').read_text())['experimental_packed_command_ui']
  left,right=Menu(plain),Menu(packed);rows=[]
  def compare(label,event,key=0):
@@ -67,6 +72,7 @@ def main():
   compare('reference-help',1,0x3b00)
   compare('reference-close',1,27)
  result=dict(passed=True,plain_sha256=sha(plain),binary_sha256=sha(packed),identical_frames=len(rows),
+             same_dictionary=a.same_dictionary,
              cases=rows,sources={n:sha(ROOT/n) for n in ['standalone/check_packed_command_ui.py','standalone/dos_image.py']},
              scope=__doc__+' Actual linked far-cdecl menu entry; complete4000-byte frames,return values and action/active flags. No application callbacks replaced. Interrupts reject. Full terminal/DOS/hardware acceptance is separate.')
  out.mkdir();(out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS',len(rows),'exact UI frames and return/owner states')

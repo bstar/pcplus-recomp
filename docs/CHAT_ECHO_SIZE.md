@@ -23,7 +23,7 @@ The linked result is:
 | --- | ---: | ---: |
 | Minimum allocation | 480368 | 479888 |
 | Near DS=SS | 65504 | 65504 |
-| Resident CS | 65464 | 65464 |
+| Resident CS | 65464 | 65368 |
 | Echo bank | 895 | 831 |
 | Declared application stack | 8192 | 8192 |
 
@@ -79,3 +79,7 @@ local cursor/presentation synchronization and foreground TEXT scheduling.
 The full feature inventory and hardware/package/BBS gates remain open. Selected
 and installed packages, private settings/call history and the production bridge
 are unchanged. See the [receipt](validation/chat-echo-size.json).
+
+The subsequent [compact-label follow-up](CHAT_ECHO_LABEL_FUNDING.md) restores
+the full allocation budget and passes nested ASPECT with the unchanged runner.
+Foreground TEXT binding and physical acceptance remain open.

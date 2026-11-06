@@ -2441,3 +2441,10 @@ The [echo size follow-up](CHAT_ECHO_SIZE.md) recovers480 allocated bytes through
 measured C choices and shorter admission branches, with unchanged capacities.
 CPU echo and ordinary DOS Chat pass; actual nested-ASPECT still fails, so full
 memory funding and foreground TEXT binding remain open.
+
+The [compact-label funding checkpoint](CHAT_ECHO_LABEL_FUNDING.md) closes the
+measured echo memory gate:479408-byte parent,1146 identical UI frames and26
+passing nested-ASPECT checks with the unchanged interpreter. Ordinary Chat,
+Synchronet editor/viewer and Enigma carrier-loss/redial/exact-retry regressions
+pass. Foreground TEXT/echo scheduling and broader Chat/full-parity/hardware gates
+remain open; no installed package changes here.

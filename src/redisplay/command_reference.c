@@ -20,10 +20,20 @@
 #endif
 typedef unsigned short word;
 typedef unsigned char byte;
+#ifdef CHAT_NEAR_TEXT
+typedef const char __based(__segname("_CODE")) *reference_label;
+#pragma pack(push,1)
+#else
+typedef const char __far *reference_label;
+#endif
 typedef struct reference_item {
- const char __far *label;const char __far *shortcut;
+ reference_label label,shortcut;
  word key;byte row,column,action;
 } reference_item;
+#ifdef CHAT_NEAR_TEXT
+#pragma pack(pop)
+typedef char compact_reference_item_must_be_9[(sizeof(reference_item)==9)?1:-1];
+#endif
 #define CONST __based(__segname("_CODE"))
 #define LABEL(n,s) static const char CONST n[]=s
 #define NAME(n,s,k) LABEL(n##_label,s);LABEL(n##_key,k)

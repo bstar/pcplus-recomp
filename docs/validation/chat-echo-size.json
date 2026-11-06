@@ -16,7 +16,7 @@
   "object_code_recovered": 423,
   "compiler_choices": 33,
   "near_bytes": 65504,
-  "resident_CS_bytes": 65464,
+  "resident_CS_bytes": 65368,
   "stack_bytes": 8192,
   "capacity_reductions": false,
   "source_export_files": 3645,
@@ -57,5 +57,6 @@
     "Actual busy BIOS key/cancel and reentry acceptance",
     "Synchronize local cursor/presentation and compose foreground TEXT/echo/TX/timing",
     "Bind all ten TEXT keys; broader Chat/UI/BBS/package/deployment/hardware/full-parity acceptance"
-  ]
+  ],
+  "resident_CS_correction": "Corrected against the exact067cfdf5 executable/map: the compiler profile also reduced resident CS by96 bytes. Allocation and all report bindings are unchanged."
 }

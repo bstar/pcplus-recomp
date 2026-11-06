@@ -33,7 +33,14 @@ static unsigned directory_parent;
 extern unsigned __far __cdecl recording_ui_ready(void);
 typedef unsigned short word;
 typedef unsigned char byte;
-typedef struct item { const char __far *name;const char __far *help;word category,key,letter; } item;
+#ifdef CHAT_NEAR_TEXT
+typedef const char __based(__segname("_CODE")) *menu_label;
+typedef struct item { menu_label name,help;word key;byte category,letter; } item;
+typedef char compact_menu_item_must_be_8[(sizeof(item)==8)?1:-1];
+#else
+typedef const char __far *menu_label;
+typedef struct item { menu_label name,help;word category,key,letter; } item;
+#endif
 #ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
 extern unsigned __far __cdecl terminal_directory_resources_queued(void);
 #endif
@@ -245,6 +252,10 @@ ENTRY(auto_answer,"Auto Answer                    Alt-Y",
  "This does not toggle answer mode or insert an online escape sequence.");
 #endif
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
+#ifdef CHAT_NEAR_TEXT
+#undef ROW
+#define ROW(n,c,k,l) {n##_name,n##_help,k,c,l}
+#endif
 #ifdef TERMINAL_MANUAL_INIT
 ENTRY(manual_init,"Init Modem                     Alt-J",
  "Send the configured initialization without dialing or waiting for OK.\n"

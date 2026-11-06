@@ -35,16 +35,18 @@ _terminal_chat_text_echo_sink:
  ; ends holding the updated local cursor and the parent is restored exactly.
  push word [terminal_ansi_wait_cancel]
  push word [terminal_ansi_wait_timed_out]
- mov word [cs:active],1
+ mov ax,1
+ mov [cs:active],ax
+ mov [cs:have_last],ax
  mov word [cs:remaining],4096
- mov word [cs:fault],0
- mov word [cs:unread],0
- mov word [cs:have_last],1
+ xor ax,ax
+ mov [cs:fault],ax
+ mov [cs:unread],ax
+ mov [terminal_ansi_wait_cancel],ax
+ mov [terminal_ansi_wait_timed_out],ax
+ inc word [terminal_ansi_wait_active] ; Admission requires zero here.
  mov ax,[ss:bp+8]
  mov [cs:last],ax ; Native C1 unread precedes its first continuation read.
- mov word [terminal_ansi_wait_active],1
- mov word [terminal_ansi_wait_cancel],0
- mov word [terminal_ansi_wait_timed_out],0
  inc word [terminal_parser_active]
  call far line_tick_far
  mov [cs:started],ax
@@ -58,9 +60,10 @@ _terminal_chat_text_echo_sink:
  mov word [terminal_ansi_wait_active],0
  pop word [terminal_ansi_wait_timed_out]
  pop word [terminal_ansi_wait_cancel]
- mov word [cs:active],0
- mov word [cs:unread],0
- mov word [cs:have_last],0
+ xor ax,ax
+ mov [cs:active],ax
+ mov [cs:unread],ax
+ mov [cs:have_last],ax
  mov ax,1 ; Accepted exactly once, even if the parser partially painted/faulted.
 .done:
  pop es

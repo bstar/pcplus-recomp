@@ -1,0 +1,101 @@
+{
+  "status": "echo-allocation-and-nested-ASPECT-gate-restored-foreground-TEXT-unbound",
+  "binary_sha256": "457ebb171b564d7548cd1a27ba58e6b68e7dc8b1b3cc877e6efd7257fd280a82",
+  "full_pointer_control_sha256": "354a9dacce55df61ab289aa3c3ee4c1f4aaacbf91cc6779e4737329dbcf76574",
+  "disabled_sha256": "5ecf87743f55c97e83a334c3a5ef9e049dc4de1558ec4d482a529cf215092846",
+  "module_sha256": "5b6892e71dfb6054cc5e1ff04b9cfac380af1a5e530da11dc2780325a8d45622",
+  "interpreter_sha256": "cbdee1949f0ac6bba34f56ae9c594a17888ef9b5143ee5dca9cd76498737ccfd",
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "foreground_TEXT_bound": false,
+  "full_Chat_acceptance": false,
+  "allocation_and_nested_ASPECT_gate": true,
+  "minimum_allocation_bytes": 479408,
+  "full_pointer_control_minimum_bytes": 479872,
+  "near_bytes": 65504,
+  "resident_CS_bytes": 65368,
+  "stack_bytes": 8192,
+  "echo_bank_bytes": 808,
+  "browser_item_bytes": 8,
+  "reference_item_bytes": 9,
+  "identical_UI_frames": 1146,
+  "nested_ASPECT_checks": 26,
+  "Synchronet_checks": 25,
+  "Enigma_checks": 16,
+  "retry_bytes": 65539,
+  "capacity_reductions": false,
+  "source_export_files": 3645,
+  "reports": {
+    "budget": {
+      "path": "build/chat-echo-funded-label-final-size-20261106/result.json",
+      "sha256": "1e528c28b54707e02a1f260882bb5d3dd134bc3f5fcbdb93db57853bae0cdb80",
+      "passed": true
+    },
+    "nested_ASPECT": {
+      "path": "build/chat-echo-funded-label-final-aspect-20261106/result.json",
+      "sha256": "3d87be2ecb05740dcc92374617be0320233cb749c2c6d06272cca1dcb886475c",
+      "passed": true
+    },
+    "full_pointer_ASPECT_control": {
+      "path": "build/chat-echo-wide-label-aspect-control-20261106/result.json",
+      "sha256": "dab8345e60ec08cc724a1e84e2b68e8fde48fb06a1981779bc5d3d6432674d7c",
+      "passed": false
+    },
+    "UI_equality": {
+      "path": "build/chat-echo-label-final-ui-20261106/result.json",
+      "sha256": "85528d676ff194b15cdb142bf65b35afe0916303105f9af0cc9fb81c41580073",
+      "passed": true
+    },
+    "echo_CPU": {
+      "path": "build/chat-echo-label-final-owner-20261106/result.json",
+      "sha256": "90962d58535634d8486d46fe6cb5911b468c485e6e8c1fcb965065bcce239765",
+      "passed": true
+    },
+    "ordinary_main": {
+      "path": "build/chat-echo-funded-label-main-20261106/result.json",
+      "sha256": "38cf5501679c1331b3e4c3527aba9c9a267c2beefe00b298b29f70b8447f92ae",
+      "passed": true
+    },
+    "editor_reference": {
+      "path": "build/chat-echo-label-editor-reference-20261106/result.json",
+      "sha256": "7e2507671adbaadeb9f7817d06cd872b3a04883224991ab056f462d5ff3121d1",
+      "passed": true
+    },
+    "editor_browser": {
+      "path": "build/chat-echo-label-editor-browser-20261106/result.json",
+      "sha256": "8e7aa3ba19264c8f268fdf066ee1a4925d46325729c8eef45167aa021acac923",
+      "passed": true
+    },
+    "clean_parent": {
+      "path": "build/chat-echo-label-cold-20261106/result.json",
+      "sha256": "1223bce158f7d69b857bfb27caf340c3a1e04e57da76c080ed5be86c835bad32",
+      "passed": true
+    },
+    "clean_interpreter": {
+      "path": "build/chat-echo-label-cold-runner-20261106/result.json",
+      "sha256": "e57ea24c905f0441b961147364a4eb820ed136626a3f8a9fccec231c43e51f35",
+      "passed": true
+    },
+    "Synchronet": {
+      "path": "build/bbs-lab/results/synchronet/chat-echo-funded-sync-20261106/proxy-integration.json",
+      "sha256": "6adf3aac6ed8d6ad082367d453e3f6f483bb4a2bd08dad116bf121e37d14e28a",
+      "passed": true
+    },
+    "Enigma": {
+      "path": "build/bbs-lab/results/enigma/chat-echo-funded-carrier-20261106/carrier-checks.json",
+      "sha256": "a9aade8e1829dd7cf18d60debfb4e9b729ee4c0fa64467d48e24058be8215ea1",
+      "passed": true
+    },
+    "independent_wire_audit": {
+      "path": "build/chat-echo-funded-carrier-audit-20261106/result.json",
+      "sha256": "d3f740d9b7d319c9e7971ab69e40a9805121ad45c144b3ed47c71119949ce485",
+      "passed": true
+    }
+  },
+  "remaining": [
+    "Initialize/synchronize local echo and physical presentation state",
+    "Bind ten direct TEXT keys with module-owned scheduling and pre-read/RX fairness",
+    "Actual busy-key/cancel, Help/Alt-Z/send-mode and broader Chat fault/geometry/traffic gates",
+    "Final package/deployment/physical/full original parity acceptance"
+  ]
+}

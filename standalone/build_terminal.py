@@ -15,6 +15,7 @@ parser.add_argument('--external-viewer',action='store_true',help='Configured nat
 parser.add_argument('--external-editor',action='store_true',help='Original Alt-A external editor using its separate PRM command; implies external viewer')
 parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bounded packing of authored command-browser text')
 parser.add_argument('--optimize-size',action='store_true',help='Experimental reviewed per-source C size profile; stacks and capacities unchanged')
+parser.add_argument('--code-label-offsets',action='store_true',help='Store same-bank command-label offsets and compact item metadata; requires packed original reference')
 parser.add_argument('--chat-loader',action='store_true',help='Link the checked source-built Chat overlay loader; no foreground Chat binding yet')
 parser.add_argument('--chat-storage',action='store_true',help='Exclusive frozen-storage lease for Chat; requires loader, reference and large frames; no foreground binding')
 parser.add_argument('--chat-presentation',action='store_true',help='Select API0101 physical Chat module and matching checked loader; requires Chat storage; no foreground binding')
@@ -105,6 +106,7 @@ parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
 assert args.command_ui_pairs==64 or args.packed_command_ui
+if args.code_label_offsets:assert args.original_reference and args.packed_command_ui
 if args.aspect_snapshot_lease:assert args.external_render and args.notice_input and args.large_view_frames
 if args.chat_storage:assert args.chat_loader and args.original_reference and args.large_view_frames
 if args.chat_presentation:assert args.chat_storage
@@ -331,6 +333,7 @@ if args.chat_adapters:out_name+='-chat-adapters'
 if args.chat_text_transport:out_name+='-chat-text-transport'
 if args.chat_timing:out_name+='-chat-timing'
 if args.chat_echo:out_name+='-chat-echo'
+if args.code_label_offsets:out_name+='-code-label-offsets'
 if args.chat_frontend:out_name+='-chat-frontend'
 if args.command_ui_pairs==0:out_name+='-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
@@ -744,6 +747,7 @@ for source in c_sources:
   # The foreground owner remains in CONFIG_CODE. Its explicitly far cdecl
   # menu entry shares the reference bank; DGROUP and frame ownership stay put.
   options=['-nt=REFERENCE_CODE','-nc=FARCODE']
+ if args.code_label_offsets and source.name in ('command_menu.c','command_reference.c'):options+=['-dCHAT_NEAR_TEXT']
  if args.directory_view and source in (ROOT/'src/redisplay/directory_view.c',ROOT/'src/directory/directory_reader.c',ROOT/'src/directory/directory_reader_fs.c'):
   options=['-nt=DIRECTORY_CODE','-nc=FARCODE','-dDIRECTORY_READER_FAR']
  if source in hook_sources:
@@ -985,6 +989,7 @@ manifest['experimental_chat_presentation']=args.chat_presentation
 manifest['experimental_chat_adapters']=args.chat_adapters
 manifest['experimental_chat_text_transport']=args.chat_text_transport
 manifest['experimental_chat_echo']=args.chat_echo
+manifest['experimental_code_label_offsets']=args.code_label_offsets
 manifest['experimental_chat_timing']=args.chat_timing
 manifest['experimental_chat_frontend']=args.chat_frontend
 if chat_loader:manifest['chat_loader']={k:v for k,v in chat_loader.items() if k not in ('objects','inputs')}
