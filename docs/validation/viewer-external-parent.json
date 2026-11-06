@@ -1,0 +1,287 @@
+{
+  "passed": true,
+  "binary_sha256": "c793d062a637f77a2baec1fc82b7419e2740188325f22512cb18f83175a9f473",
+  "physical_deployment_changed": false,
+  "runtime": [
+    {
+      "kind": "external",
+      "case": "relative",
+      "report": {
+        "path": "build/viewer-external-v5-external-relative-20261105/result.json",
+        "sha256": "b364c53645a9f479d99888f0f5dcc7a0813c2f01231bac61328da8c48bb9d558"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "absolute",
+      "report": {
+        "path": "build/viewer-external-v5-external-absolute-20261105/result.json",
+        "sha256": "d9206289ab9255728347eae471d7afc24698241ad106e76f7bfc3adea016b80b"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "options",
+      "report": {
+        "path": "build/viewer-external-v5-external-options-20261105/result.json",
+        "sha256": "8da81b7de72351c4176d58a5c3b735afaf8b188cdf585853d2e6b4cd7542840f"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "spaces",
+      "report": {
+        "path": "build/viewer-external-v5-external-spaces-20261105/result.json",
+        "sha256": "8a55aa8059e52ded518e18d3bfdb859bd72db65f6d9de2a4d418af34b4126668"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "empty",
+      "report": {
+        "path": "build/viewer-external-v5-external-empty-20261105/result.json",
+        "sha256": "0e1c4cf9bb1ca3e2020d8cb960c9fb781935b4413f391bf4b527c1b389b180df"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "cancel",
+      "report": {
+        "path": "build/viewer-external-v5-external-cancel-20261105/result.json",
+        "sha256": "cb66955ae6d8a63e3b4b7485061d3d94cc858c922b35259a3f6c3181d01a1677"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "long",
+      "report": {
+        "path": "build/viewer-external-v5-external-long-20261105/result.json",
+        "sha256": "e864b28729607bd088e83198fe8de83f8318a695a65210874563ef1d7de0ccea"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "maximum",
+      "report": {
+        "path": "build/viewer-external-v5-external-maximum-20261105/result.json",
+        "sha256": "93a1099d14b3526fe59a6ba056277c13c5ccee1fdb986002509aaa0e312fcc15"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "reference",
+      "report": {
+        "path": "build/viewer-external-v5-external-reference-20261105/result.json",
+        "sha256": "25398ebeff4e8b10f95a7b7619e5c1f3e917b636e54d3698341150f4c0a4e865"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "browser",
+      "report": {
+        "path": "build/viewer-external-v5-external-browser-20261105/result.json",
+        "sha256": "48de65c2753e97d3bd2554fe139480736d237269adece946856f1126439d7df8"
+      }
+    },
+    {
+      "kind": "external",
+      "case": "malformed",
+      "report": {
+        "path": "build/viewer-external-v5-external-malformed-20261105/result.json",
+        "sha256": "2a38db09b8e2cd77597a0106eba8cc7c7cad3d9693384d685c4bef9f76a5ac0f"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "cancel",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-cancel-20261105/result.json",
+        "sha256": "33b2d6e7673db5df623a2baa8d0e8fa93aab8cc74126fd34de950604a252f4ee"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "page",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-page-20261105/result.json",
+        "sha256": "93e832c10aeea0ab556f89aaa90be63dd132b76352c9f6f5a05f2d65e00c2c2e"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "next",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-next-20261105/result.json",
+        "sha256": "1ab91fa351d88763c813e581b85ec79e902ddb9e1f00d09e00e9c07e32b00514"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "home",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-home-20261105/result.json",
+        "sha256": "aede282779c3a27795df4b92ad81e2a917dc4c44edc32aab61e8730b0c285aa8"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "missing",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-missing-20261105/result.json",
+        "sha256": "8440c5bdf06aa8baf9ba36b87a6c288cc8bd088e9fc56bc1dda6768ad9e10e74"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "binary",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-binary-20261105/result.json",
+        "sha256": "b3ec5691db37a673073932205c3767a0cf1d645d669ba8cdac19540edbf76c1a"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "empty",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-empty-20261105/result.json",
+        "sha256": "bfbdb2428e9f61c341af91351e3976a09f94a684f8783bd756c96370b49e589c"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "reference",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-reference-20261105/result.json",
+        "sha256": "b160bce736fd85443ecf14eced9f0bcaf1f613f85d7ffbf9a8ab9932961d9466"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "browser",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-browser-20261105/result.json",
+        "sha256": "53b3835fb987b644f7062ff1f2df84655513d508cd52f445b75afc595db8732e"
+      }
+    },
+    {
+      "kind": "fallback",
+      "case": "loading-cancel",
+      "report": {
+        "path": "build/viewer-external-v5-fallback-loading-cancel-20261105/result.json",
+        "sha256": "6f3e5550d82af487cec4cfeefff0f23a06ee38991a147bfed59e3ddb4ef22781"
+      }
+    }
+  ],
+  "native_prompt_comparisons": [
+    {
+      "case": "relative",
+      "identical_bytes": 710,
+      "native": {
+        "path": "build/viewer-external-native-final-relative-20261105/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "parent": {
+        "path": "build/connection-dos/viewer-external-v5-external-relative-20261105-relative/VIEWUI.BIN",
+        "sha256": "dd4ff34abaee9eb46e781d9ff7050de0dad343a694fc46c856ad20d26209953f"
+      }
+    },
+    {
+      "case": "absolute",
+      "identical_bytes": 710,
+      "native": {
+        "path": "build/viewer-external-native-final-absolute-20261105/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "parent": {
+        "path": "build/connection-dos/viewer-external-v5-external-absolute-20261105-absolute/VIEWUI.BIN",
+        "sha256": "dd4ff34abaee9eb46e781d9ff7050de0dad343a694fc46c856ad20d26209953f"
+      }
+    },
+    {
+      "case": "options",
+      "identical_bytes": 710,
+      "native": {
+        "path": "build/viewer-external-native-final-options-20261105/c/EDITVIEW.BIN",
+        "sha256": "723151ca575c04e9161ebd102c3798e7586214218da2c84a98a4a479098df811"
+      },
+      "parent": {
+        "path": "build/connection-dos/viewer-external-v5-external-options-20261105-options/VIEWUI.BIN",
+        "sha256": "a2b9e01c1ca84f7a797e1db83b8b72610546f2943652c4252f9fe49d445911b0"
+      }
+    },
+    {
+      "case": "spaces",
+      "identical_bytes": 710,
+      "native": {
+        "path": "build/viewer-external-native-final-spaces-20261105/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "parent": {
+        "path": "build/connection-dos/viewer-external-v5-external-spaces-20261105-spaces/VIEWUI.BIN",
+        "sha256": "dd4ff34abaee9eb46e781d9ff7050de0dad343a694fc46c856ad20d26209953f"
+      }
+    },
+    {
+      "case": "empty",
+      "identical_bytes": 710,
+      "native": {
+        "path": "build/viewer-external-native-final-empty-20261105/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "parent": {
+        "path": "build/connection-dos/viewer-external-v5-external-empty-20261105-empty/VIEWUI.BIN",
+        "sha256": "99714bbd090db05a9af3403ebf1adbe848d67f79d763dbd2fad8f937160fc699"
+      }
+    },
+    {
+      "case": "cancel",
+      "identical_bytes": 710,
+      "native": {
+        "path": "build/viewer-external-native-final-cancel-20261105/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "parent": {
+        "path": "build/connection-dos/viewer-external-v5-external-cancel-20261105-cancel/VIEWUI.BIN",
+        "sha256": "92454fd0abfcfd0d3891d1baaaac28f9e865040675720e5d0b34b8840c2edebf"
+      }
+    },
+    {
+      "case": "long",
+      "identical_bytes": 710,
+      "native": {
+        "path": "build/viewer-external-native-final-long-20261105/c/EDITVIEW.BIN",
+        "sha256": "954288f1c9b1fb22738cee256178d93fb10e95f41c26baa7f29e8cd2fbef3fd5"
+      },
+      "parent": {
+        "path": "build/connection-dos/viewer-external-v5-external-long-20261105-long/VIEWUI.BIN",
+        "sha256": "4bc805598bdf3fb410854089d532b281921926e7693e06f8d4c2244d3c08b828"
+      }
+    }
+  ],
+  "linked": {
+    "path": "build/viewer-external-linked-v5-20261105/result.json",
+    "sha256": "0252df542470d504e1c504310f9d6438854b7bdec9eb54403c3403b0de18e864"
+  },
+  "layout": {
+    "path": "build/viewer-external-layout-v5-20261105/result.json",
+    "sha256": "e13505103d9e1398c6ee79547c0f9fe9b9dc7ee5dfc9690bc0134146c23e4d24"
+  },
+  "public_source_build": {
+    "path": "build/viewer-external-public-source-20261105/result.json",
+    "sha256": "aaa3281daf620edf0b7bbed14be9d28f2d76c9166e50c2bd821a0546a4ba357e"
+  },
+  "near_bytes": 65488,
+  "resident_code_bytes": 65516,
+  "original_application_build_inputs": [],
+  "sources": {
+    "standalone/record_viewer_external_parent.py": "75e16ce4d6a10b3bbb6508cbcaea6014c8a5c4d359203544236b6bf3fcd4ad57",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55"
+  },
+  "limits": [
+    "Synthetic COM3/IRQ5 modem in DOSBox; no physical/SIP/audio acceptance.",
+    "Default25-row colors and native prompt geometry only; long title clipping is a bounded source policy.",
+    "Missing interpreter/program, DOS allocation failure, nonzero child exit presentation, live BBS pressure, transfers and reconnects through this external child path remain unverified.",
+    "The prior internal-viewer BBS/transfer receipts describe their previous executable, not this candidate.",
+    "Installed selection, private settings and physical PC remain unchanged."
+  ]
+}

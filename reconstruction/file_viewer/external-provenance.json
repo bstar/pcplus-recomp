@@ -72,7 +72,17 @@
   "limitations": [
     "Synthetic overlay entry images are analyzed only and never executed; original runtime uses the unmodified original executable.",
     "Native64-character command plus48-character parameter allowance exceeds its80-byte temporary; this is a static bounds concern, not an observed original crash.",
-    "The source component is a checked literal command builder, not yet a full parent frontend/PRM binding/EXEC implementation.",
+    "The original-contract component receipt remains separate from the opt-in parent receipt. Parent failure, live BBS/transfer and reconnect composition remain open.",
     "No hardware, physical deployment, original UI editing-key completeness or full original-parity claim."
+  ],
+  "parent_receipt": "docs/validation/viewer-external-parent.json",
+  "source_parent": [
+    "src/filesystem/viewer_external_dialog.c",
+    "src/filesystem/viewer_external_dialog.h",
+    "src/process/program.c",
+    "src/terminal/program_actions.asm",
+    "src/terminal/redisplay.asm",
+    "src/redisplay/command_menu.c",
+    "src/redisplay/redisplay.c"
   ]
 }

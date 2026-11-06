@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+The opt-in [configured external viewer](FILE_VIEWER_EXTERNAL.md) now uses the
+recovered PRM field and48-character parameter dialog through Alt-V and both
+menus, then hands off to guarded PROGRAM/COMSPEC execution. Its separate
+[parent receipt](validation/viewer-external-parent.json) binds21 DOS workflows,
+seven exact native prompt boxes, linked cancellation/admission checks and an
+original-free public rebuild. Empty configuration retains the internal viewer.
+Child failure presentation, BBS/transfer/reconnect composition through this new
+path and physical acceptance remain open; this does not close F15.
+
 [File Directory composition](FILE_DIRECTORY_COMPOSITION.md) now verifies actual
 listing inside unsaved Enigma/Synchronet editors and five capture/HOLD/virtual
 printer pressure combinations on the unchanged candidate. Both editor frames
