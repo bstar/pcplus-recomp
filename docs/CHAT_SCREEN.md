@@ -89,8 +89,8 @@ checks. Report and executable hashes are in
 remain local; final receipts bind the current source, including separate clear
 color and native REP copy.
 
-Next compose incoming rendering with the serviced send owner while output is
-backpressured, then integrate Alt-O/reference/browser, real receive/TX/log/history,
+The [composed Chat session](CHAT_SESSION.md) now checks incoming rendering while
+the send owner is backpressured. Next integrate Alt-O/reference/browser, real receive/TX/log/history,
 KEY/help and deferred notices. Verify foreground admission, hardware cursor and
 frame restoration, no dropped input, conventional-memory headroom and the full
 Enigma/Synchronet connection gates before selecting a package. No physical file,

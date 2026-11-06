@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MODULE = ROOT / 'reconstruction/chat'
 
 
-def execute(code, keys, *, buffered=0, duplex=0, newline=0, rows=25, received=b'', translation=None, helper=None):
+def execute(code, keys, *, buffered=0, duplex=0, newline=0, rows=25, received=b'', translation=None, helper=None,key_markers=False):
     u = Uc(UC_ARCH_X86, UC_MODE_16)
     u.mem_map(0, 0x100000)
     u.mem_write(0x1e828, code)
@@ -30,7 +30,7 @@ def execute(code, keys, *, buffered=0, duplex=0, newline=0, rows=25, received=b'
             b.append(value)
         raise AssertionError('unterminated source')
     for at, value in ((0x1d76, buffered), (0x1d1a, duplex), (0x3986, newline),
-                      (0x7a74, rows), (0x7a84, (rows - 1) << 8), (0x8e20, len(received))):
+                      (0x7a74, rows), (0x7a84, (rows - 1) << 8), (0x334a,rows-2), (0x8e20, len(received))):
         word(at, value)
     u.mem_write(0x5d00a, translation or bytes(range(256)))
     u.mem_write(0x57746, b'\n\0')
@@ -81,7 +81,9 @@ def execute(code, keys, *, buffered=0, duplex=0, newline=0, rows=25, received=b'
             assert queue, 'native Chat is waiting for a key'
             u.reg_write(UC_X86_REG_AX, 1)
         elif address == 0x64fe:
-            u.reg_write(UC_X86_REG_AX, queue.pop(0))
+            key=queue.pop(0)
+            if key_markers:events.append((address,key))
+            u.reg_write(UC_X86_REG_AX,key)
         elif address == 0xaa65:
             assert rx
             u.reg_write(UC_X86_REG_AX, rx.pop(0))

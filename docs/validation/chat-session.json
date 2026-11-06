@@ -1,0 +1,54 @@
+{
+  "checkpoint_recorded": true,
+  "application_changed": false,
+  "physical_runtime_verified": false,
+  "cases_per_run": 8,
+  "complete_frames_per_run": 568,
+  "accepted_effects_per_run": 1071,
+  "rx_effects_while_tx_refused": 1024,
+  "abort_reopen_progress_points": 12,
+  "session_context_bytes": 358,
+  "source_export_files": 23,
+  "native_reference_bytes": 1422,
+  "results": {
+    "original_comparison": {
+      "path": "build/chat-session-original-dos-20261106/result.json",
+      "sha256": "2b3dc1dc26d388ea8855f7a52855599132875cd42468d9135ef6953cf2057fe8",
+      "passed": true
+    },
+    "clean_export": {
+      "path": "build/chat-session-clean-export-20261106/build/proof/result.json",
+      "sha256": "ece285df20884aa8370b695f44e381ea52c61bb5d9d78d67a24549fa1e049463",
+      "passed": true
+    },
+    "screen_regression": {
+      "path": "build/chat-session-screen-regression-20261106/result.json",
+      "sha256": "974425d705bb301e4b0255fc1af90c2a5a47bc94398c17e775927bfa0894355c",
+      "passed": true
+    },
+    "send_regression": {
+      "path": "build/chat-session-send-regression-20261106/result.json",
+      "sha256": "c0c25cba72f27f5a1845c725bf5f5c5695dc105b35d0926a3e8c72ccd55306dc",
+      "passed": true
+    },
+    "native_regression": {
+      "path": "build/chat-session-native-regression-20261106/result.json",
+      "sha256": "d2f11c6604450280ccd5425907db67182c6987c82592e3ae3b3d3541749af099",
+      "passed": true
+    }
+  },
+  "dos_fixture_sha256": "6b393a900246d890e2306d19f417bb4d4a8d0d4fa8f9bc9dde48bd92d69d24b0",
+  "code_bytes_by_object": {
+    "session": 920,
+    "screen": 1227,
+    "send": 900
+  },
+  "bank_code_bytes": 3047,
+  "DGROUP_bytes": 0,
+  "limits": [
+    "Per-stream native effects and full frame comparison; yielding interleaving differs intentionally from native blocking timing.",
+    "Native BIOS/scroll/UI/TX/log/history callees remain explicitly modeled boundaries.",
+    "No actual parent/UART/cursor/help/KEY/deferred-notice integration or BBS/physical acceptance.",
+    "On-demand overlay loading is a proposed next mechanism; no loader, new package selection or deployment claimed."
+  ]
+}

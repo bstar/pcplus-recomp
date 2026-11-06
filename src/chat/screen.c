@@ -52,7 +52,7 @@ static void scroll(chat_screen CHAT_FAR *s,chat_pane CHAT_FAR *p)
         pop ds
     }
 }
-unsigned CHAT_CALL chat_screen_put(chat_screen CHAT_FAR *s,unsigned which,unsigned value)
+unsigned CHAT_CALL chat_screen_ready(chat_screen CHAT_FAR *s,unsigned which)
 {
     chat_pane CHAT_FAR *p;
     if(s->active!=1 || !geometry(s->rows) || s->cells!=s->rows*80 || which>1)return 0;
@@ -60,6 +60,13 @@ unsigned CHAT_CALL chat_screen_put(chat_screen CHAT_FAR *s,unsigned which,unsign
     if(p->first!=(which?(s->rows>28?34:20):1) ||
        p->last!=(which?s->rows-2:(s->rows>28?32:18)) ||
        p->row<p->first || p->row>p->last || p->column>79)return 0;
+    return 1;
+}
+unsigned CHAT_CALL chat_screen_put(chat_screen CHAT_FAR *s,unsigned which,unsigned value)
+{
+    chat_pane CHAT_FAR *p;
+    if(!chat_screen_ready(s,which))return 0;
+    p=&s->pane[which];
     value&=255;
     if(value==10)return 1;
     if(value==9){p->column=(p->column+8)&~7U;if(p->column>79)p->column=0;return 1;}

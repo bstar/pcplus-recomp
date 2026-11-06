@@ -2305,6 +2305,15 @@ geometries, translation/control/scroll boundaries and independent colors. A
 reverse-wrap-off component evidence with modeled BIOS/scroll boundaries;
 foreground/RX integration, parent memory, BBS and physical gates remain open.
 
+The [composed Chat session](CHAT_SESSION.md) passes eight DOS8086 far-bank
+workflows,568 full frames and1071 accepted effects against the scoped native
+references. All1024 incoming history/log effects finish while TX is refused;
+pending-key/RX refusal, transport-idle handoff,12 abort/reopen points and invalid
+frame retirement pass. A23-file clean export reproduces the fixture, with fresh
+native/send/screen regressions. The358-byte far context and3047-byte code bank
+remain outside the selected application. An on-demand loading/memory mechanism,
+real frontend/UART/cursor/help/KEY/notices, BBS and physical gates remain open.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

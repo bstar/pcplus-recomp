@@ -11,5 +11,6 @@ typedef struct chat_screen {
 unsigned CHAT_CALL chat_screen_open(chat_screen CHAT_FAR *,chat_word CHAT_FAR *frame,
     unsigned capacity,unsigned rows,unsigned attribute,unsigned bar,unsigned clear);
 unsigned CHAT_CALL chat_screen_put(chat_screen CHAT_FAR *,unsigned pane,unsigned value);
+unsigned CHAT_CALL chat_screen_ready(chat_screen CHAT_FAR *,unsigned pane);
 unsigned CHAT_CALL chat_screen_receive(chat_screen CHAT_FAR *,const unsigned char CHAT_FAR *table,unsigned value);
 #endif
