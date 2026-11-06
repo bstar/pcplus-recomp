@@ -23,11 +23,13 @@ def inspect(binary):
  target=(symbols['_external_program_queue'][1]+6+struct.unpack_from('<h',code,4)[0])&0xffff
  assert symbols['terminal_program_start']==(symbols['_external_program_queue'][0],target),'Ordinary PROGRAM admission must run'
  gates={}
+ dispatch=linear('terminal_redisplay_key_impl')
+ assert data[begin+dispatch:begin+dispatch+3]==b'\x3d\x00\xf3','Viewer must use F300; F600 belongs to redial'
  for name,bank_name in [('_viewer_external_execute','_TEXT'),('_viewer_external_cancel','_TEXT'),('_viewer_external_start','CONFIG_CODE'),('_program_execute_external','FILE_CODE')]:
   b=banks[bank_name];at=b['relative_segment']*16;raw=data[begin+at:begin+at+b['bytes']];sig=encoded(name)
   assert raw.count(sig)==1,(name,'gate missing or duplicated');pos=raw.index(sig);gates[name]=at+pos
   assert at+pos+3 in {s*16+o for o,s in (struct.unpack_from('<HH',data,header[12]+i*4) for i in range(header[3]))},name
- return dict(memory=memory,state_bytes=128,near_marker_bytes=2,near_bytes=memory['near_bytes'],resident_code_bytes=memory['resident_code_bytes'],gates=gates)
+ return dict(memory=memory,state_bytes=128,near_marker_bytes=2,near_bytes=memory['near_bytes'],resident_code_bytes=memory['resident_code_bytes'],gates=gates,private_action_site=dispatch,private_action=0xf300,redial_action=0xf600)
 
 def main():
  p=argparse.ArgumentParser(description=__doc__)
@@ -39,6 +41,10 @@ def main():
   try:inspect(target)
   except AssertionError:controls.append(dict(gate=name,rejected=True))
   else:raise AssertionError(name)
+ folder=out/'redial-collision';folder.mkdir();target=folder/'damaged.analysis.exe';damaged=bytearray(data);at=result['private_action_site'];damaged[begin+at+1:begin+at+3]=struct.pack('<H',0xf600);target.write_bytes(damaged);target.with_name('terminal.map').write_bytes(binary.with_name('terminal.map').read_bytes())
+ try:inspect(target)
+ except AssertionError:controls.append(dict(gate='redial-action-collision',rejected=True))
+ else:raise AssertionError('Redial collision must be rejected')
  names=['standalone/check_viewer_external_parent.py','standalone/terminal_memory.py','standalone/build_path_session.py']
- (out/'result.json').write_text(json.dumps(dict(passed=True,binary_sha256=sha(binary),**result,negative_controls=controls,sources={n:sha(ROOT/n) for n in names},scope=__doc__+' Static linked instruction/relocation/state retention checks; four damaged analysis-only copies are rejected without execution. No runtime or physical acceptance.'),indent=2)+'\n');print('PASS retained128-byte state,2-byte marker,4gates and4unexecuted negative controls')
+ (out/'result.json').write_text(json.dumps(dict(passed=True,binary_sha256=sha(binary),**result,negative_controls=controls,sources={n:sha(ROOT/n) for n in names},scope=__doc__+' Static linked instruction/relocation/state retention and distinct viewer/redial action checks; five damaged analysis-only copies are rejected without execution. No runtime or physical acceptance.'),indent=2)+'\n');print('PASS retained128-byte state,2-byte marker,4gates,distinct redial action and5unexecuted negative controls')
 if __name__=='__main__':main()

@@ -4,6 +4,19 @@ CPU 8086
 ORG 100h
 jmp start
 old: dw 0,0
+%ifdef EXTERNAL_CHILD
+old2f: dd 0
+child_completed: dw 0
+hook2f:
+ cmp ax,0d744h
+ jne .chain
+ cmp bx,5658h
+ jne .chain
+ mov word [cs:child_completed],1
+ iret
+.chain:
+ jmp far [cs:old2f]
+%endif
 sample: dw 5656h,0,0,0,0,0,0,0,0
 frames: times 12000 db 0
 last: dw 0
@@ -98,6 +111,10 @@ handler:
  xor bx,bx
  jmp .live
 .live_after:
+%ifdef EXTERNAL_CHILD
+ cmp word [child_completed],1
+ jne .done
+%endif
  mov bx,2
 %if WATCH_KIND = 8
  cmp word [es:3520],0755h
@@ -183,6 +200,15 @@ start:
  jne collect
  mov [old],bx
  mov [old+2],es
+%ifdef EXTERNAL_CHILD
+ mov ax,352fh
+ int 21h
+ mov [old2f],bx
+ mov [old2f+2],es
+ mov dx,hook2f
+ mov ax,252fh
+ int 21h
+%endif
  mov dx,handler
  mov ax,251ch
  int 21h
@@ -206,6 +232,12 @@ collect:
  inc di
  loop .copy
  popf
+%ifdef EXTERNAL_CHILD
+ mov ax,[es:old2f]
+ mov [expected2f],ax
+ mov ax,[es:old2f+2]
+ mov [expected2f+2],ax
+%endif
  mov dx,[es:old]
  mov [expected_offset],dx
  mov ax,[es:old+2]
@@ -222,6 +254,22 @@ collect:
  mov ax,es
  cmp ax,[expected_segment]
  jne failed
+%ifdef EXTERNAL_CHILD
+ push ds
+ mov dx,[expected2f]
+ mov ax,[expected2f+2]
+ mov ds,ax
+ mov ax,252fh
+ int 21h
+ pop ds
+ mov ax,352fh
+ int 21h
+ cmp bx,[expected2f]
+ jne failed
+ mov ax,es
+ cmp ax,[expected2f+2]
+ jne failed
+%endif
  or word [buffer+2],8
  mov ah,19h
  int 21h
@@ -255,4 +303,7 @@ failed:
 filename: db 'D:\VIEWUI.BIN',0
 expected_offset: dw 0
 expected_segment: dw 0
+%ifdef EXTERNAL_CHILD
+expected2f: dd 0
+%endif
 buffer: times 12083 db 0

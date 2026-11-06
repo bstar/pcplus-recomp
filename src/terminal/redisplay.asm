@@ -36,7 +36,7 @@ extern terminal_viewport_admit_far
 
 terminal_redisplay_key_impl:
 %ifdef TERMINAL_EXTERNAL_VIEWER
- cmp ax,0xf600
+ cmp ax,0xf300 ; F600 remains the browser's redial action.
  jne .not_external_viewer
  extern _viewer_external_start
  call far _viewer_external_start

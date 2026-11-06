@@ -46,6 +46,13 @@ start:
  mov ah,3eh
  int 21h
  jc failed
+%ifdef VIEWER_GRAPHICS_RETURN
+ mov ax,13h
+ int 10h
+ mov ax,0d744h
+ mov bx,5658h
+ int 2fh
+%endif
  mov ax,4c00h
  int 21h
 failed:

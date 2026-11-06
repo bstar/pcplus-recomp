@@ -46,11 +46,19 @@ handler:
  mov [report+18],ax
  add bx,VIEWER_SEGMENT
  mov es,bx
+%ifdef EXTERNAL_VIEWER
+ cmp word [es:VIEWER_STATE],5658h
+%else
  cmp word [es:VIEWER_STATE],5644h
+%endif
  jne .done
  cmp word [es:VIEWER_STATE+2],1
  jne .inactive
+%ifdef EXTERNAL_VIEWER
+ cmp word [es:VIEWER_STATE+4],0
+%else
  cmp word [es:VIEWER_STATE+4],3
+%endif
  jne .done
  cmp ax,6
  jne .done
@@ -60,9 +68,15 @@ handler:
  push es
  mov ax,0b800h
  mov es,ax
+%ifdef EXTERNAL_VIEWER
+ cmp word [es:1934],0b45h
+ jne .not_painted
+ cmp word [es:1936],0b6eh
+%else
  cmp word [es:0],074ch
  jne .not_painted
  cmp word [es:3842],7148h
+%endif
  jne .not_painted
  mov word [report+6],1
  xor si,si
@@ -93,6 +107,18 @@ handler:
  mov [report+20],ax
  mov ax,[es:VIEWER_STATE+2]
  mov [report+22],ax
+%ifdef EXTERNAL_VIEWER
+ mov ax,[es:VIEWER_STATE]
+ mov [report+24],ax
+ mov ax,[es:VIEWER_STATE+4]
+ mov [report+26],ax
+ xor ax,ax
+ mov [report+30],ax
+ cmp word [report+24],5658h
+ jne .done
+ cmp word [report+26],0
+ jne .done
+%else
  mov ax,[es:FILE_STATE+18]
  mov [report+24],ax
  mov ax,[es:FILE_STATE+20]
@@ -105,6 +131,7 @@ handler:
  jne .done
  cmp word [report+30],3
  jne .done
+%endif
  mov word [report+10],1
  jmp .done
 .reconnected:

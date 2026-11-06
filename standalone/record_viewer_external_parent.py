@@ -38,12 +38,12 @@ def main():
   assert native_box==source_box and len(source_box)==710,name
   comparisons.append(dict(case=name,identical_bytes=710,native=bind(folder/'c/EDITVIEW.BIN'),parent=bind(parent)))
  linked=read(a.linked);layout=read(a.layout);proof=read(a.source_proof)
- assert len(linked['cases'])==13 and len(layout['negative_controls'])==4
+ assert len(linked['cases'])==13 and len(layout['negative_controls'])==5
  assert all(c['rejected'] for c in layout['negative_controls'])
  assert proof['disabled_sha256']=='1aa5cdb84a595c96ebba6ce2b359690723881c6d56266c2377fa040f81f0902e'
  result=dict(passed=True,binary_sha256=digest,physical_deployment_changed=False,runtime=rows,native_prompt_comparisons=comparisons,
   linked=bind(a.linked),layout=bind(a.layout),public_source_build=bind(a.source_proof),near_bytes=layout['near_bytes'],resident_code_bytes=layout['resident_code_bytes'],
   original_application_build_inputs=[],sources={n:sha(ROOT/n) for n in ['standalone/record_viewer_external_parent.py','standalone/build_path_session.py']},
   limits=['Synthetic COM3/IRQ5 modem in DOSBox; no physical/SIP/audio acceptance.','Default25-row colors and native prompt geometry only; long title clipping is a bounded source policy.','Missing interpreter/program, DOS allocation failure, nonzero child exit presentation, live BBS pressure, transfers and reconnects through this external child path remain unverified.','The prior internal-viewer BBS/transfer receipts describe their previous executable, not this candidate.','Installed selection, private settings and physical PC remain unchanged.'])
- out.mkdir();(out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS21 DOS workflows,7 native boxes,13 linked cases,4 static negative controls and public cold build')
+ out.mkdir();(out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS21 DOS workflows,7 native boxes,13 linked cases,5 static negative controls and public cold build')
 if __name__=='__main__':main()

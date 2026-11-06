@@ -8,11 +8,14 @@ from test_viewer_dialog_dos import page
 ROOT=release.ROOT;sha=release.sha
 PAYLOAD=b''.join(('L%03d\r\n'%i).encode() for i in range(1,49))
 
-def prepare(out):
+def prepare(out,external=False):
  (out/'VIEW.DAT').write_bytes(PAYLOAD)
- subprocess.run(['nasm','-fbin','-DWATCH_KIND=2',str(ROOT/'standalone/viewer_dialog_watch.asm'),'-o',str(out/'VIEWOBS.COM')],check=True)
+ subprocess.run(['nasm','-fbin','-DWATCH_KIND='+('9' if external else '2'),*(['-DEXTERNAL_CHILD'] if external else []),str(ROOT/'standalone/viewer_dialog_watch.asm'),'-o',str(out/'VIEWOBS.COM')],check=True)
+ if external:
+  raw=bytearray((out/'TEST.PRM').read_bytes());raw[0x35d:0x39e]=b'D:\\VTEST.COM'.ljust(65,b'\0');(out/'TEST.PRM').write_bytes(raw)
+  subprocess.run(['nasm','-fbin','-DVIEWER_GRAPHICS_RETURN',str(ROOT/'standalone/viewer_external_child.asm'),'-o',str(out/'VTEST.COM')],check=True)
 
-def adapter():
+def adapter(external=False):
  source=inspect.getsource(release.run_case)
  replacements={
   "(out / 'TEST.PRM').write_bytes(raw)":"(out / 'TEST.PRM').write_bytes(raw)\n    prepare(out)",
@@ -21,15 +24,20 @@ def adapter():
   'D:\\\\SNAP S\nD:\\\\SNAP A':'D:\\\\SNAP S\nD:\\\\VIEWOBS\nD:\\\\SNAP A',
  }
  for old,new in replacements.items():assert source.count(old)==1,(old,source.count(old));source=source.replace(old,new)
- m=types.ModuleType('viewer_transfer_release');m.__dict__.update(release.__dict__);m.prepare=prepare
+ if external:
+  source=source.replace("'p1100','escape','p800'","'p1800','p800'")
+  source=source.replace('    prepare(out)','    prepare(out)\n    raw=(out / \'TEST.PRM\').read_bytes()',1)
+ m=types.ModuleType('viewer_transfer_release');m.__dict__.update(release.__dict__);m.prepare=lambda out:prepare(out,external)
  exec(compile(source,release.__file__,'exec'),m.__dict__);return m
 
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ['terminal','output']:p.add_argument('--'+n,type=Path,required=True)
- p.add_argument('--case',action='append');p.add_argument('--jobs',type=int,choices=[1,2],default=1);a=p.parse_args()
+ p.add_argument('--case',action='append');p.add_argument('--jobs',type=int,choices=[1,2],default=1);p.add_argument('--external-viewer',action='store_true');a=p.parse_args()
  binary=a.terminal.resolve();manifest=json.loads(binary.with_name('manifest.json').read_text());assert manifest['experimental_file_viewer'] and sha(binary)==manifest['binary_sha256']
+ if a.external_viewer:assert manifest['experimental_external_viewer']
  names=['standalone/test_viewer_transfer_dos.py','standalone/test_release_transfers_dos.py','standalone/viewer_dialog_watch.asm','standalone/test_viewer_dialog_dos.py','standalone/test_terminal.py','standalone/modem_fixtures.py','standalone/terminal_config_fixtures.py','standalone/test_terminal_transfer_dos.py','standalone/test_terminal_upload_dos.py','standalone/test_terminal_ymodem_dos.py','standalone/test_terminal_zmodem_dos.py']
+ names+=['standalone/viewer_external_child.asm']
  frozen=dict(manifest['sources']);frozen.update({n:sha(ROOT/n) for n in names})
  for n,h in frozen.items():assert sha(ROOT/n)==h,n
  out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
@@ -54,15 +62,18 @@ def main():
     peer.log('keyboard-after-viewer');return
    peer.receive()
   raise TimeoutError('No post-viewer keyboard marker')
- Peer.ready=ready;m=adapter()
+ Peer.ready=ready;m=adapter(a.external_viewer)
  def run(recipe):
   result=m.run_case(recipe,binary,manifest,out);folder=out/recipe['name'];raw=(folder/'VIEWUI.BIN').read_bytes();words=struct.unpack_from('<9H',raw)
   checks=dict(result['checks'],complete_viewer_observer=len(raw)==12083 and words[:2]==(0x5656,15),exact_live_frame_return=raw[18:4018]==raw[8018:12018],exact_cursor_shape_return=words[3:5]==words[7:9],exact_viewer_page=raw[4018:8018]==page([('L%03d'%i).encode() for i in range(1,25)]),viewer_input_unchanged=(folder/'VIEW.DAT').read_bytes()==PAYLOAD,viewer_filename_not_remote=b'VIEW.DAT' not in (folder/'serial.bin').read_bytes(),startup_path=raw[12018]==3 and raw[12019:].split(b'\0',1)[0]==b'')
+  if a.external_viewer:
+   del checks['exact_viewer_page'];prompt=raw[4018:8018];child=(folder/'VCHILD.BIN').read_bytes()
+   checks.update(external_parameter_prompt=prompt[(12*80+7)*2:(12*80+24)*2:2]==b'Enter parameters:',actual_external_child=len(child)==202 and struct.unpack_from('<2H',child)==(0x5645,1),exact_external_arguments=child[8:19]==b'\x09 VIEW.DAT\r',external_child_CWD=len(child)==202 and struct.unpack_from('<H',child,136)[0]==3 and child[138]==0)
   result.update(passed=all(checks.values()),checks=checks,viewer_capture_sha256=sha(folder/'VIEWUI.BIN'),scope=__doc__+' Real DOS8086 COM3/IRQ5,19200/HARD, passive full2000-cell viewer and exact live/cursor return before transfer. Independent protocol peers; no SIP/DCD/physical or stock-server claim.')
   (folder/'viewer-result.json').write_text(json.dumps(result,indent=2)+'\n');print(recipe['name'],'VIEWER PASS' if result['passed'] else {n:v for n,v in checks.items() if not v},flush=True);assert result['passed'];return result
  try:
   with concurrent.futures.ThreadPoolExecutor(max_workers=a.jobs) as pool:cases=list(pool.map(run,recipes))
  finally:Peer.ready=original
  for n,h in frozen.items():assert sha(ROOT/n)==h,n
- (out/'result.json').write_text(json.dumps(dict(passed=True,binary_sha256=sha(binary),cases=cases,sources=frozen,original_inputs=[],scope=__doc__),indent=2)+'\n')
+ (out/'result.json').write_text(json.dumps(dict(passed=True,binary_sha256=sha(binary),external_viewer=a.external_viewer,cases=cases,sources=frozen,original_inputs=[],scope=__doc__+(' External variant requires the owned mode13h child completion marker before capturing the restored live frame.' if a.external_viewer else '')),indent=2)+'\n')
 if __name__=='__main__':main()
