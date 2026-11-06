@@ -65,8 +65,12 @@ The render routine computes a pointer one byte before its line buffer when
 out-of-bounds concern, not an observed crash. The maintained implementation
 must trim with an explicit length guard rather than reproduce this access.
 
-The configured external viewer at DS:1EE1 is a separate command path. Its PRM
-binding, quoting/length contract and launch integration remain unresolved.
+The configured external viewer at DS:1EE1 is a separate command path. The
+subsequent [external-viewer checkpoint](FILE_VIEWER_EXTERNAL.md) establishes
+its PRM binding,64-character command,48-character parameter prompt and literal
+COMSPEC launch contract, with original runtime evidence and a checked source
+command builder. Its serviced parent frontend and launch integration remain
+unfinished.
 
 ## Reproduction and boundaries
 

@@ -139,8 +139,12 @@ Enigma upload/download/cancel/retry through the SynthModem serial-side proxy.
 These are scoped software results; physical timing and other text geometries
 remain separate.
 
-Complete native DOS failure/shutdown composition. Recover configured external-viewer
-binding, exhaustive native filename-field key behavior, and remaining
+The [external-viewer checkpoint](FILE_VIEWER_EXTERNAL.md) now establishes the
+native PRM/parameter/COMSPEC contract and a checked source command builder;
+the full parent route is still unimplemented.
+
+Complete native DOS failure/shutdown composition, configured external-viewer
+integration, exhaustive native filename-field key behavior, and remaining
 editor/key/Chat/ASPECT/emulation/protocol/Host features.
 Physical DOS6.22/SHARE/Boca/SPA2102/SynthModem testing and verified deployment
 remain separate gates. This integration closes no full original-parity claim.

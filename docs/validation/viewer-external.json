@@ -1,0 +1,355 @@
+{
+  "passed": true,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "cases": [
+    {
+      "case": "relative",
+      "report": {
+        "path": "build/viewer-external-native-final-relative-20261105/result.json",
+        "sha256": "fc0b331b4663690bb68f389fa16579c4d4042994b5acffe436f570703f2f835c"
+      },
+      "actual_tail": " PAGE.DAT",
+      "prompt_cursor": [
+        12,
+        25
+      ],
+      "exact_terminal_cells": 2000,
+      "cursor_shape_restored": true,
+      "normal_DOS_exit": true,
+      "original_unchanged": true,
+      "captures": [
+        {
+          "path": "build/viewer-external-native-final-relative-20261105/c/EDITVIEW.BIN",
+          "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+        },
+        {
+          "path": "build/viewer-external-native-final-relative-20261105/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-relative-20261105/frame-1.bin",
+          "sha256": "9f185ee7ad4774de54be781d1167a88dc2ef190ae25177c2eebac1369e959d1e"
+        },
+        {
+          "path": "build/viewer-external-native-final-relative-20261105/frame-2.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-relative-20261105/dosbox.conf",
+          "sha256": "8279999e57390e0b6263980373eb8496b15c70e2553381db5b92bf684cd23b7a"
+        },
+        {
+          "path": "build/viewer-external-native-final-relative-20261105/d/VTEST.COM",
+          "sha256": "d685cdc14f3abbb6f6ae842417735f30eef23365245c9e3fce190599edb0aba6"
+        },
+        {
+          "path": "build/viewer-external-native-final-relative-20261105/d/VCHILD.BIN",
+          "sha256": "e3b8fa940e12235cece5fc55fe25de9f03a781eead90cdc553af1934aa7cc28b"
+        }
+      ]
+    },
+    {
+      "case": "absolute",
+      "report": {
+        "path": "build/viewer-external-native-final-absolute-20261105/result.json",
+        "sha256": "f84563db6d7d1f4b6a9a8d44ef2e50eeb023c9209d2327ed650ff16356465edc"
+      },
+      "actual_tail": " D:\\PAGE.DAT",
+      "prompt_cursor": [
+        12,
+        25
+      ],
+      "exact_terminal_cells": 2000,
+      "cursor_shape_restored": true,
+      "normal_DOS_exit": true,
+      "original_unchanged": true,
+      "captures": [
+        {
+          "path": "build/viewer-external-native-final-absolute-20261105/c/EDITVIEW.BIN",
+          "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+        },
+        {
+          "path": "build/viewer-external-native-final-absolute-20261105/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-absolute-20261105/frame-1.bin",
+          "sha256": "9f185ee7ad4774de54be781d1167a88dc2ef190ae25177c2eebac1369e959d1e"
+        },
+        {
+          "path": "build/viewer-external-native-final-absolute-20261105/frame-2.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-absolute-20261105/dosbox.conf",
+          "sha256": "cbafcdc72687456a57c711cd169a96281401bd4df122df9e49fc8f11ecfef2f4"
+        },
+        {
+          "path": "build/viewer-external-native-final-absolute-20261105/d/VTEST.COM",
+          "sha256": "d685cdc14f3abbb6f6ae842417735f30eef23365245c9e3fce190599edb0aba6"
+        },
+        {
+          "path": "build/viewer-external-native-final-absolute-20261105/d/VCHILD.BIN",
+          "sha256": "783405865269cebf8bae0aeebe46093dbeec5dbd81dc0637382a8b537fe3c110"
+        }
+      ]
+    },
+    {
+      "case": "options",
+      "report": {
+        "path": "build/viewer-external-native-final-options-20261105/result.json",
+        "sha256": "153aeec4747868c3719569a4e1c86f80f2798c3d730769a9317c5fe43dbe02c1"
+      },
+      "actual_tail": " /Q /X PAGE.DAT",
+      "prompt_cursor": [
+        12,
+        25
+      ],
+      "exact_terminal_cells": 2000,
+      "cursor_shape_restored": true,
+      "normal_DOS_exit": true,
+      "original_unchanged": true,
+      "captures": [
+        {
+          "path": "build/viewer-external-native-final-options-20261105/c/EDITVIEW.BIN",
+          "sha256": "723151ca575c04e9161ebd102c3798e7586214218da2c84a98a4a479098df811"
+        },
+        {
+          "path": "build/viewer-external-native-final-options-20261105/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-options-20261105/frame-1.bin",
+          "sha256": "b287f27fb343d463e41ea15bcbc58c8dbce081302494be1b4732ee75d3ac53d6"
+        },
+        {
+          "path": "build/viewer-external-native-final-options-20261105/frame-2.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-options-20261105/dosbox.conf",
+          "sha256": "e798472e532089c33865341abe5305a394cbdd23dd1fb20a84ab601e387f701f"
+        },
+        {
+          "path": "build/viewer-external-native-final-options-20261105/d/VTEST.COM",
+          "sha256": "d685cdc14f3abbb6f6ae842417735f30eef23365245c9e3fce190599edb0aba6"
+        },
+        {
+          "path": "build/viewer-external-native-final-options-20261105/d/VCHILD.BIN",
+          "sha256": "4c40f02773e97d8be74f8bcbe87e2ae8933e2d9657ddb0b736698cafb3bbb6e2"
+        }
+      ]
+    },
+    {
+      "case": "spaces",
+      "report": {
+        "path": "build/viewer-external-native-final-spaces-20261105/result.json",
+        "sha256": "ea94d49fb616c8b48aa6f29190c5b3dfbc6f7d77e3bb70667b270ded991b2960"
+      },
+      "actual_tail": " D:\\A B.DAT",
+      "prompt_cursor": [
+        12,
+        25
+      ],
+      "exact_terminal_cells": 2000,
+      "cursor_shape_restored": true,
+      "normal_DOS_exit": true,
+      "original_unchanged": true,
+      "captures": [
+        {
+          "path": "build/viewer-external-native-final-spaces-20261105/c/EDITVIEW.BIN",
+          "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+        },
+        {
+          "path": "build/viewer-external-native-final-spaces-20261105/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-spaces-20261105/frame-1.bin",
+          "sha256": "9f185ee7ad4774de54be781d1167a88dc2ef190ae25177c2eebac1369e959d1e"
+        },
+        {
+          "path": "build/viewer-external-native-final-spaces-20261105/frame-2.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-spaces-20261105/dosbox.conf",
+          "sha256": "594cd14743ed9ae6a0c410f28d560078dd11fa5aac49bffc265b1266faa1a33d"
+        },
+        {
+          "path": "build/viewer-external-native-final-spaces-20261105/d/VTEST.COM",
+          "sha256": "d685cdc14f3abbb6f6ae842417735f30eef23365245c9e3fce190599edb0aba6"
+        },
+        {
+          "path": "build/viewer-external-native-final-spaces-20261105/d/VCHILD.BIN",
+          "sha256": "d368275419b4f98a79fa87edf8f30d9b0b72c6803129c5507721fabeefd4762f"
+        }
+      ]
+    },
+    {
+      "case": "empty",
+      "report": {
+        "path": "build/viewer-external-native-final-empty-20261105/result.json",
+        "sha256": "bf68354eeab55fb784e3efb09f340580481b1b82bde422b3f7730c68d3e7a7bb"
+      },
+      "actual_tail": "",
+      "prompt_cursor": [
+        12,
+        25
+      ],
+      "exact_terminal_cells": 2000,
+      "cursor_shape_restored": true,
+      "normal_DOS_exit": true,
+      "original_unchanged": true,
+      "captures": [
+        {
+          "path": "build/viewer-external-native-final-empty-20261105/c/EDITVIEW.BIN",
+          "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+        },
+        {
+          "path": "build/viewer-external-native-final-empty-20261105/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-empty-20261105/frame-1.bin",
+          "sha256": "9f185ee7ad4774de54be781d1167a88dc2ef190ae25177c2eebac1369e959d1e"
+        },
+        {
+          "path": "build/viewer-external-native-final-empty-20261105/frame-2.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-empty-20261105/dosbox.conf",
+          "sha256": "893a90dcaf51529829eba5eb84058e86e10a87090aba13a7dd9f996ac606596e"
+        },
+        {
+          "path": "build/viewer-external-native-final-empty-20261105/d/VTEST.COM",
+          "sha256": "d685cdc14f3abbb6f6ae842417735f30eef23365245c9e3fce190599edb0aba6"
+        },
+        {
+          "path": "build/viewer-external-native-final-empty-20261105/d/VCHILD.BIN",
+          "sha256": "527ecdce9d485b566b8d0bee8f2bd8a7be18bdd8c5f3a126ddc65c1af4ed9645"
+        }
+      ]
+    },
+    {
+      "case": "cancel",
+      "report": {
+        "path": "build/viewer-external-native-final-cancel-20261105/result.json",
+        "sha256": "6bece247bd3350d45cedfda91140bb2f4f6e94d6b6bafa6ceaa8e7bf75fa300e"
+      },
+      "actual_tail": null,
+      "prompt_cursor": [
+        12,
+        25
+      ],
+      "exact_terminal_cells": 2000,
+      "cursor_shape_restored": true,
+      "normal_DOS_exit": true,
+      "original_unchanged": true,
+      "captures": [
+        {
+          "path": "build/viewer-external-native-final-cancel-20261105/c/EDITVIEW.BIN",
+          "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+        },
+        {
+          "path": "build/viewer-external-native-final-cancel-20261105/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-cancel-20261105/frame-1.bin",
+          "sha256": "9f185ee7ad4774de54be781d1167a88dc2ef190ae25177c2eebac1369e959d1e"
+        },
+        {
+          "path": "build/viewer-external-native-final-cancel-20261105/frame-2.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-cancel-20261105/dosbox.conf",
+          "sha256": "2296d76ee1ca24d1b7319b608acca98bb88ebad3d1c218f219422131873ee74d"
+        },
+        {
+          "path": "build/viewer-external-native-final-cancel-20261105/d/VTEST.COM",
+          "sha256": "d685cdc14f3abbb6f6ae842417735f30eef23365245c9e3fce190599edb0aba6"
+        }
+      ]
+    },
+    {
+      "case": "long",
+      "report": {
+        "path": "build/viewer-external-native-final-long-20261105/result.json",
+        "sha256": "be03f0fa0c25db708cdfa2ba3a0a357b4dee97e8a5cb14b606bf0dadf0ed9e91"
+      },
+      "actual_tail": " AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "prompt_cursor": [
+        12,
+        25
+      ],
+      "exact_terminal_cells": 2000,
+      "cursor_shape_restored": true,
+      "normal_DOS_exit": true,
+      "original_unchanged": true,
+      "captures": [
+        {
+          "path": "build/viewer-external-native-final-long-20261105/c/EDITVIEW.BIN",
+          "sha256": "954288f1c9b1fb22738cee256178d93fb10e95f41c26baa7f29e8cd2fbef3fd5"
+        },
+        {
+          "path": "build/viewer-external-native-final-long-20261105/frame-0.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-long-20261105/frame-1.bin",
+          "sha256": "9f185ee7ad4774de54be781d1167a88dc2ef190ae25177c2eebac1369e959d1e"
+        },
+        {
+          "path": "build/viewer-external-native-final-long-20261105/frame-2.bin",
+          "sha256": "3dc6580f5820078d84fc0a2a056dd9bb100b7549ca577abdfb7d95bc7ba072e3"
+        },
+        {
+          "path": "build/viewer-external-native-final-long-20261105/dosbox.conf",
+          "sha256": "9a10f32624a96391ec65611959f84e1070e04dfc4db9f75c106c84eb7ae5e4fc"
+        },
+        {
+          "path": "build/viewer-external-native-final-long-20261105/d/VTEST.COM",
+          "sha256": "d685cdc14f3abbb6f6ae842417735f30eef23365245c9e3fce190599edb0aba6"
+        },
+        {
+          "path": "build/viewer-external-native-final-long-20261105/d/VCHILD.BIN",
+          "sha256": "09b5f3f0e24d279456ead0550f7713786236906c679ef78841c90b5f429e2b4c"
+        }
+      ]
+    }
+  ],
+  "component": {
+    "report": {
+      "path": "build/viewer-external-command-final-20261105/result.json",
+      "sha256": "0fb262c04d86fd49aba7c2888524fb74848204bb8a6c428781b11761859d9f06"
+    },
+    "checks": 36147,
+    "binary_sha256": "49e84204269ac9d14372af3fd79840c13fe9cb009da588abd51f8988c1ddc737",
+    "segments": {
+      "FILE_CODE": {
+        "class": "FARCODE",
+        "bytes": 672
+      },
+      "CONST": {
+        "class": "DATA",
+        "bytes": 0
+      },
+      "CONST2": {
+        "class": "DATA",
+        "bytes": 0
+      },
+      "_DATA": {
+        "class": "DATA",
+        "bytes": 0
+      }
+    }
+  },
+  "sources": {
+    "standalone/record_viewer_external.py": "860b38d42e60d616255c1fd2e84b821def0c75ba1957da56a9894024fc71e7bc",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55"
+  },
+  "scope": "Bind original external-viewer argv/parameter UI and checked source command-builder evidence. Original runtime uses copied private PRM and unmodified original only; source component build has no original inputs. Parameters are opaque48-character text, not a filename-only field. Configured command is64 characters plus NUL at PRM035Dh. Full serviced parent external frontend/handoff, lifecycle errors and physical acceptance remain unimplemented/unverified."
+}

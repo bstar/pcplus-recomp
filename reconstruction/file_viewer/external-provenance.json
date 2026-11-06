@@ -1,0 +1,78 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "kind": "static-original-PRM-external-command-and-parameter-contract-with-runtime-argv",
+  "regions": [
+    {
+      "name": "external-controller",
+      "file_offset": 62636,
+      "bytes": 84,
+      "sha256": "e70cfe0a9009cf8b50318f6f405738e9ef485e7a1459ae3ddf57b59538b67388"
+    },
+    {
+      "name": "parameter-prompt",
+      "file_offset": 62720,
+      "bytes": 120,
+      "sha256": "2633309e493bc36b24c0e9431591ef4969a81e5b5a27a91e817607800ddd32a5"
+    },
+    {
+      "name": "configured-viewer-reader",
+      "file_offset": 123675,
+      "bytes": 12,
+      "sha256": "e481bcc85818e8fd149cc7331916a240f849dce3fec10fc8858929ef403fcfab"
+    }
+  ],
+  "evidence_bundles": [
+    {
+      "path": "analysis/viewer-external-static-20261105.json",
+      "sha256": "3f323d0ff807a42b133ddfb36ddd1b610870a14b0bcdfbac6299a31f506e774d"
+    },
+    {
+      "path": "analysis/viewer-external-setup-static-20261105.json",
+      "sha256": "04873ae0e4b9614660572d8b4859d228ffe54158e3b731f756ca649121bb4748"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_f0e4f577c15d6a1b69c78d08bf06a80ce6b85e949b077226b435f87ea1b1ef49",
+      "procedure": "0x1de2c"
+    },
+    {
+      "id": "ev_1f5f11c244b02483db9dbc036d302d3fa7b59332b7c2c89911ccaee89c085241",
+      "procedure": "0x1de80"
+    },
+    {
+      "id": "ev_5d7f7c989f4f870c46667072099be05d632d7a297644ea52cb7dc052cc7e67fa",
+      "procedure": "0x13ea4"
+    },
+    {
+      "id": "ev_4b017bfa004e898ccdd4ab27cb09a1cb82ef0cbebf08c60df25bad91855a1c94",
+      "procedure": "0x1ee2b"
+    },
+    {
+      "id": "ev_fb2d7299a350beea9229e65ca1123fab0d245f0e41ba9b279c75a84ef8b4838c",
+      "procedure": "0x1e72a"
+    }
+  ],
+  "contract": {
+    "PRM_offset": "0x35d",
+    "original_DS": "0x1ee1",
+    "configured_characters": 64,
+    "configured_storage_bytes": 65,
+    "parameter_characters": 48,
+    "parameter_storage_bytes": 49,
+    "native_temporary_bytes": 80,
+    "maintained_command_bytes": 114,
+    "dispatch": "COMSPEC /c; raw configured command + one space + opaque parameters; no TEXT expansion or quoting added"
+  },
+  "runtime_receipt": "docs/validation/viewer-external.json",
+  "source_component": [
+    "src/filesystem/viewer_external.c",
+    "src/filesystem/viewer_external.h"
+  ],
+  "limitations": [
+    "Synthetic overlay entry images are analyzed only and never executed; original runtime uses the unmodified original executable.",
+    "Native64-character command plus48-character parameter allowance exceeds its80-byte temporary; this is a static bounds concern, not an observed original crash.",
+    "The source component is a checked literal command builder, not yet a full parent frontend/PRM binding/EXEC implementation.",
+    "No hardware, physical deployment, original UI editing-key completeness or full original-parity claim."
+  ]
+}
