@@ -7,7 +7,7 @@ import re
 TOKENS = re.compile(r'/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\])*"', re.S)
 
 def pack(source, output, pair_limit=64):
-    assert pair_limit in (0,64)
+    assert pair_limit in (0,64,128)
     text = source.read_text()
     literals = []
     for match in TOKENS.finditer(text):
@@ -29,7 +29,7 @@ def pack(source, output, pair_limit=64):
         pairs.append(pair)
     depth = [0] * 128
     for left, right in pairs:depth.append(1 + max(depth[left], depth[right]))
-    assert len(pairs) <= 64 and max(depth) <= 64
+    assert len(pairs) <= 128 and max(depth) <= 64
     def expand(data):
         result = bytearray();pending = list(reversed(data))
         while pending:

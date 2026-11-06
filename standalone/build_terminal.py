@@ -14,7 +14,7 @@ parser.add_argument('--file-directory',action='store_true',help='Serviced origin
 parser.add_argument('--external-viewer',action='store_true',help='Configured native-style external Alt-V parameter dialog and guarded COMSPEC handoff; requires session baseline')
 parser.add_argument('--external-editor',action='store_true',help='Original Alt-A external editor using its separate PRM command; implies external viewer')
 parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bounded packing of authored command-browser text')
-parser.add_argument('--command-ui-pairs',type=int,choices=[0,64],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
+parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
 parser.add_argument('--session-projection',action='store_true')
 parser.add_argument('--projection-probe',action='store_true')

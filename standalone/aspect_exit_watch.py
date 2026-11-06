@@ -26,7 +26,12 @@ def build(parent,runner,out):
     return {str(source.relative_to(ROOT)):sha(source),'standalone/aspect_exit_watch.py':sha(Path(__file__))}
 
 def read(path):
-    raw=path.read_bytes();assert len(raw)==218
+    raw=path.read_bytes();assert len(raw) in (218,352)
     magic,version,count,launches,segment=struct.unpack_from('<5H',raw)
     assert magic==0xae51 and version==2 and count<=8
-    return dict(launches=launches,resident_segment=segment,exits=[dict(zip(FIELDS,struct.unpack_from('<13H',raw,10+i*26))) for i in range(count)])
+    result=dict(launches=launches,resident_segment=segment,exits=[dict(zip(FIELDS,struct.unpack_from('<13H',raw,10+i*26))) for i in range(count)])
+    if len(raw)==352:
+        magic,version,count=struct.unpack_from('<3H',raw,218)
+        assert magic==0xa148 and version==1 and count<=16
+        result['allocations']=[dict(zip(['paragraphs','ax','bx','carry'],struct.unpack_from('<4H',raw,224+i*8))) for i in range(count)]
+    return result

@@ -52,8 +52,8 @@ def flags(manifest, startup, event_hooks=True, disk=True, controls=True):
         'experimental_original_keys': 'original-keys', 'experimental_original_reference': 'original-reference',
         'experimental_native_reset_bank': 'native-reset-bank', 'native_reset_transaction': 'native-reset-transaction'}
     result = ['--' + flag for field, flag in fields.items() if manifest.get(field)]
-    if manifest.get('experimental_packed_command_ui') and manifest['packed_command_ui']['pairs']==0:
-        result += ['--command-ui-pairs','0']
+    if manifest.get('experimental_packed_command_ui') and manifest['packed_command_ui']['pairs']!=64:
+        result += ['--command-ui-pairs',str(manifest['packed_command_ui']['pairs'])]
     if manifest.get('experimental_notice_input'):
         result += ['--notice-sound']
     if manifest.get('experimental_native_reset_bank') and not manifest.get('native_reset_overlay'):

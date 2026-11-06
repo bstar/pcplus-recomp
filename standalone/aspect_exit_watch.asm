@@ -1,4 +1,4 @@
-; Test-only passive INT21 witness. No DOS calls, allocation or product writes
+; Test-only passive INT21 witness. No additional DOS requests or product writes
 ; inside the hook. Captures only a child bound by the parent's render lease.
 BITS 16
 CPU 8086
@@ -8,6 +8,9 @@ old21: dd 0
 parent_ds: dw 0
 data: dw 0xae51,2,0,0,0
 records: times 8*13 dw 0
+alloc_data: dw 0xa148,1,0
+alloc_records: times 16*4 dw 0
+alloc_current: dw 0
 hook:
  pushf
  push ax
@@ -19,6 +22,8 @@ hook:
  push bp
  push ds
  push es
+ cmp ah,0x48
+ je .allocate
  cmp ax,0x4b00
  je .exec
  cmp ah,0x4c
@@ -74,6 +79,86 @@ hook:
  mov ax,[CHILD_HEADER]
  mov [cs:di+24],ax
  jmp .done
+.allocate:
+ cmp word [cs:parent_ds],0
+ je .done
+ cmp word [cs:alloc_current],0
+ jne .done
+ mov bx,[cs:parent_ds]
+ sub bx,PARENT_DATA_SEG
+ add bx,PARENT_RENDER_SEG
+ mov es,bx
+ mov bx,[es:PARENT_CHILD_DS]
+ mov cx,ds
+ cmp cx,bx
+ jne .done
+ mov bx,ss
+ cmp bx,cx
+ jne .done
+ mov di,[cs:alloc_data+4]
+ cmp di,16
+ jae .done
+ inc word [cs:alloc_data+4]
+ shl di,1
+ shl di,1
+ shl di,1
+ add di,alloc_records
+ mov [cs:alloc_current],di
+ mov bp,sp
+ mov ax,[ss:bp+14] ; caller BX, requested paragraphs
+ mov [cs:di],ax
+ pop es
+ pop ds
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ popf
+ ; Give the predecessor the original interrupt FLAGS, including caller IF.
+ ; The extra saved BP remains below that frame until our final IRET.
+ push bp
+ mov bp,sp
+ push word [ss:bp+6]
+ mov bp,[ss:bp]
+ call far [cs:old21]
+ ; DOS has returned its actual AX/BX/FLAGS. Record without changing them,
+ ; then transfer the predecessor flags into the original interrupt frame.
+ pushf
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push bp
+ push ds
+ push es
+ mov bp,sp
+ mov di,[cs:alloc_current]
+ mov word [cs:alloc_current],0
+ mov ax,[ss:bp+16]
+ mov [cs:di+2],ax
+ mov ax,[ss:bp+14]
+ mov [cs:di+4],ax
+ mov ax,[ss:bp+18]
+ mov [ss:bp+26],ax
+ and ax,1
+ mov [cs:di+6],ax
+ pop es
+ pop ds
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ popf
+ add sp,2 ; discard the extra pre-call BP; IRET restores returned flags
+ iret
 .exec:
  mov bx,ss
  mov cx,ds
@@ -159,6 +244,17 @@ collect:
  pop ds
  jc failed
  cmp ax,10+8*26
+ jne failed
+ push ds
+ push es
+ pop ds
+ mov dx,alloc_data
+ mov cx,6+16*8
+ mov ah,0x40
+ int 0x21
+ pop ds
+ jc failed
+ cmp ax,6+16*8
  jne failed
  mov ah,0x3e
  int 0x21

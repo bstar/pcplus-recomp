@@ -31,8 +31,11 @@ def main():
  env=dict(os.environ,GIT_CEILING_DIRECTORIES=str(out))
  assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode
  selected=flags(manifest,True);feature='--'+a.feature;assert feature in selected
+ disabled=[f for f in selected if f!=feature]
+ if a.feature=='packed-command-ui' and '--command-ui-pairs' in disabled:
+  at=disabled.index('--command-ui-pairs');del disabled[at:at+2]
  with (out/'build.log').open('w') as log:
-  for folder,options,want in [('enabled',selected,manifest['binary_sha256']),('disabled',[f for f in selected if f!=feature],a.disabled_sha256)]:
+  for folder,options,want in [('enabled',selected,manifest['binary_sha256']),('disabled',disabled,a.disabled_sha256)]:
    subprocess.run([sys.executable,'standalone/build_terminal.py',*options,'--output-dir','build/'+folder],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
    assert sha(fresh/'build'/folder/'TERMINAL.EXE')==want,folder
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name

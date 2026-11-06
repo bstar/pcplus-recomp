@@ -10,7 +10,11 @@ static void ui_begin(ui_reader *r,const char __far *s)
 static byte ui_next(ui_reader *r)
 {
  byte c=r->count?r->pending[--r->count]:(byte)*r->cursor++;
+#if UI_PAIR_COUNT == 128
+ while(c>=128){
+#else
  while(c>=128 && c<128+UI_PAIR_COUNT){
+#endif
   if(r->count==64)return 0;
   r->pending[r->count++]=command_ui_pairs[c-128][1];
   c=command_ui_pairs[c-128][0];
