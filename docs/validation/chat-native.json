@@ -1,0 +1,24 @@
+{
+  "checkpoint_recorded": true,
+  "application_changed": false,
+  "bytes": 760,
+  "cases_per_run": 1089,
+  "native_sha256": "b9cbfeada51d78a00c53f98a400d8f2b0093a72a38c397a2e3bf9e7878c6a7e6",
+  "results": {
+    "original_comparison": {
+      "path": "build/chat-native-original-final-20261106/result.json",
+      "sha256": "72333804196439647e1ed9b1f29367e55fc4f8093a67a8494f86b4c3b5159a26",
+      "passed": true
+    },
+    "clean_three_file_export": {
+      "path": "build/chat-native-clean-export-20261106/build/proof/result.json",
+      "sha256": "e6547ea7aa6b3e620aa0eed7672568369316571edae567924710f78edd24251b",
+      "passed": true
+    }
+  },
+  "limits": [
+    "Modeled external callees; no full DOS/UI/serial or physical acceptance.",
+    "Original native blocking semantics recovered; maintained Chat integration remains open.",
+    "The source export covers this component, not the whole application."
+  ]
+}

@@ -2281,6 +2281,14 @@ and CPU/ABI evidence are scoped separately from physical acceptance. The later
 file/DOS, directory/key and Chat work remain open;
 additional geometry and full application gates do not close.
 
+The [native Chat recovery](CHAT_NATIVE.md) adds760 exact original overlay15
+bytes: the controller and duplex log/history helper. Its1089 modeled CPU cases
+pass optional original comparison and a clean three-file source export. This
+establishes original send-mode,298-byte buffer, translation, echo, flow-key,
+KEY-record and help branches with explicit service boundaries. Serviced live
+ownership, DOS/BBS rendering and physical acceptance remain open; Alt-O is not
+enabled by this component recovery and F12 does not close.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

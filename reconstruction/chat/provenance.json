@@ -1,0 +1,15 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 15,
+  "entry": "0xe828",
+  "end_exclusive": "0xeb20",
+  "source_file_offset": 108424,
+  "bytes": 760,
+  "sha256": "b9cbfeada51d78a00c53f98a400d8f2b0093a72a38c397a2e3bf9e7878c6a7e6",
+  "source": "reconstruction/chat/chat.asm",
+  "evidence": [
+    "ev_a1102a9ca1c8cd961517e2dcad8fe603db710c271e68720d8d8b574b349ebe0a",
+    "ev_1ecfcddbd56817869467b7c15da370d82800ca9c2a034331e7663df7b7188761"
+  ],
+  "scope": "Exact native source recovery. Synthetic overlay image is static analysis only, never executed. Live terminal integration remains open."
+}
