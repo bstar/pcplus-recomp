@@ -1,5 +1,11 @@
 # PCPlus DOS reconstruction
 
+[Build the packed editor connection candidate](docs/PACKED_COMMAND_UI.md#packaged-connection-candidate)
+with `./tools/build-connection-candidate --recipe standalone/packed_connection_candidate_recipe.json`.
+The five executables and ten package files reproduce exactly. The packed command
+UI reduces retained memory while restoring the external-editor command; Enigma,
+Synchronet and transfer regressions pass. Physical acceptance remains open.
+
 [Build the reviewed viewer connection candidate](docs/VIEWER_CONNECTION_CANDIDATE.md)
 with `./tools/build-connection-candidate`. Its five executables, ten public files
 and ZIP reproduce exactly; packaged DOS launchers and stock Enigma large-file

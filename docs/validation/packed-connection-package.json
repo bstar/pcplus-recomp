@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "source_base_commit": "a1245c8abc957298c9fd1406a7e45fa1da45aebf",
+  "files": {
+    "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+    "ASPECT.EXE": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "1d6fbba427e8b83a7bad7e46f65a651424f4c192e7a6306642227a74eb1b7c50",
+    "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+    "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+    "TERMINAL.EXE": "72f3ced9e6090cd0e443ce822184c04612e8d244b51fc9e16f1f1ac196c86b09",
+    "VERSION.TXT": "7a2b27233c7ed8c6b34ea464297fc7d90bd9ee2aff07731713b2bee4c36c4fe0",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "archive_sha256": "ea5df2d8043ba2fe351f8b8bcfdde228cc4c4d17769d9ef9b5a5a4d9a5e34df5",
+  "checks": {
+    "source_reproduction": {
+      "path": "build/packed-package-source-proof-20261106/result.json",
+      "sha256": "cd47f7aa53500299a73b0bf34a13b9c90ab9f1ba9e48cd52e0ea78ace260fc9e",
+      "passed": true
+    },
+    "recipe_rebuild": {
+      "path": "build/packed-candidate-recipe-proof-20261106/result.json",
+      "sha256": "88c37ce74a97ee0153e7738fe41b7165cb2cd1c64bf178726c4e2022bb5cdd1d",
+      "passed": true
+    },
+    "splash": {
+      "path": "build/packed-package-splash-run-20261106/result.json",
+      "sha256": "69ce4a4640d72676d8621411d3165d05be5aecd87ac3ca7f4e7beac5c4ca3a09",
+      "passed": true
+    },
+    "setup": {
+      "path": "build/packed-package-setup-run-20261106/result.json",
+      "sha256": "06325649e96978b60b1fd7036fc9f2adc6996eebeabb434e7c821b0c4580a29d",
+      "passed": true
+    },
+    "script": {
+      "path": "build/packed-package-script-run-20261106/result.json",
+      "sha256": "f504973af163f69186678ddb6b90c48392ad12911c2383614b6eb12d1bc3efcb",
+      "passed": true
+    },
+    "preceding_viewer_recipe": {
+      "path": "build/viewer-recipe-after-selector-20261106/result.json",
+      "sha256": "37aed27fccaf9e5719a351f026ba2094cecc609d329917c4897b8a6450c8bfd0",
+      "passed": true,
+      "archive_sha256": "76da9ea0b6c5323606b6b2f6e621d810379bd6f934c94d87a04537d66e9939e2"
+    }
+  },
+  "physical_runtime_verified": false,
+  "scope": "Public application package validation only. Separate private release journal records installation and preservation; emulator gates do not establish physical modem acceptance."
+}

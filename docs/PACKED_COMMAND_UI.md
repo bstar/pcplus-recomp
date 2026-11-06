@@ -94,3 +94,37 @@ parity, Host mode and physical hardware acceptance remain open. The installed
 selection and reviewed package recipe remain unchanged at this checkpoint.
 The reviewed one-command builder still reproduces all ten public files and
 the exact76da9ea0 ZIP from current source.
+
+
+## Packaged connection candidate
+
+Build the reviewed packed editor payload using the pinned Nix toolchain:
+
+```sh
+./tools/build-connection-candidate --recipe standalone/packed_connection_candidate_recipe.json --output-dir build/packed-connection-candidate
+```
+
+Choose a new output directory for each build. This leaves the preceding viewer
+recipe available as the default baseline. The packed recipe pins package source
+commit `a1245c8`, terminal `72f3ced9` and unchanged ASPECT runner `23caac93`.
+Its deterministic `archive/PCPLUSSE.ZIP` has SHA256
+`ea5df2d8043ba2fe351f8b8bcfdde228cc4c4d17769d9ef9b5a5a4d9a5e34df5`.
+The package guide describes this source-built runner's remaining limits and
+keeps external editor configuration separate from the viewer. No proprietary
+editor or private configuration is included.
+
+The [package receipt](validation/packed-connection-package.json) binds a fresh
+export of2281 public sources, five exact rebuilt executables, ten exact staged
+files, the recipe rebuild and three actual DOS8086 launcher tests. START and
+SETUP preserve synthetic private settings, restore UART/PIC vectors and the
+PCPLUS environment, and capture the magenta special-edition splash. A separate
+START case compiles the authored script before retaining the terminal and runs
+it on COM3/IRQ5 with the BIOS port entry omitted. This does not claim resident
+compilation or nested PROGRAM composition.
+
+A separate private application-only release installed this payload at
+`C:\PCPLUS` and independently read back all ten files. All eight current
+private settings/history files retained their hashes; reversible backups and
+the release journal remain private. Physical modem connection, splash and
+rendering acceptance for this exact build are pending user testing. Reboot out
+of network management before modem use when the NIC and modem share an IRQ.
