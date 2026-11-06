@@ -51,8 +51,8 @@ code65516 remain unchanged.
   state to complete both scripts, six simultaneous file streams, missing-file
   recovery and subsequent keyboard/hangup. A separate NOCLEAR workflow passes.
   All1920 cells of the **final parent viewport** match the expected text and
-  attributes. This final capture does not substitute for an inner pre/post-child
-  screen/cursor capture, since the outer PROGRAM also restores its own frame.
+  attributes. The later independent inner-boundary capture below supplies the
+  separate pre/post-child screen/cursor comparison.
 - Seven register/recovery cases pass43 paired full830-byte snapshots: normal,
   bad token, missing script/helper, divide, execution budget and user abort.
   These do not inject a fault while the borrowed snapshot is active.
@@ -92,9 +92,54 @@ Use `test_aspect_heap_startup_dos.py` with the same pair, `--nested-program
 
 ## Remaining release gates
 
-Direct inner screen/cursor/geometry capture, faults/cancellation during an active
-borrowed lease, actual larger-row use, Enigma/Synchronet rendering/input and
+Faults/cancellation during an active borrowed lease, actual larger-row use,
+Enigma/Synchronet rendering/input and
 transfer/cancellation/carrier-loss regressions remain open for this exact pair.
 Only after those gates should it replace the selected package through a verified
 configuration-preserving deployment. Physical modem acceptance, broader original
 language/emulation/protocol coverage, Chat and Host remain separate requirements.
+
+## Direct inner boundary capture
+
+The [inner-screen receipt](validation/snapshot-inner-screen.json) verifies the
+same application binaries before the outer ASPECT process returns. A passive
+INT21 witness captures the screen and BIOS state on two owned file opens: one
+immediately before the script's nested PROGRAM, and one immediately after it.
+The script closes the marker stream before running the child. Marker files
+must actually be created successfully; their operations do not draw or emit
+terminal output. Duplicate open/create requests cannot generate extra phases.
+
+Both actual nested children query BIOS after entering graphics mode13h and
+append their observed mode to an owned file; its exact contents are1313h. In
+both inner pre/post pairs, all4000 character/attribute bytes match, along with
+mode3,80columns,25rows,16-pixel font, cursor000Fh, shape060Fh and page0. These
+captures happen while ASPECT still owns the UART/foreground allocation, before
+its outer saved-screen restoration can hide an error. They compare the full
+25-row inner screen, including the status row, rather than just the final
+24-row parent viewport.
+
+The witness is8086 machine code but this captured run uses the separate386/XMS/
+UMB emulator profile; its actual resident segmentCC4Bh is checked. It makes no
+additional DOS/BIOS calls, draws nothing, emits no terminal replies and does not
+write product state inside the hook. It reads BIOS state directly and selects
+the color/monochrome text address by mode. Actual captured evidence here is the
+color80x25 case, not physical CGA timing or all modes.
+
+Thirty-six assembled-hook cases verify filtering, parent/child IRQ routes,
+phase sequencing, duplicate/capacity bounds and register/stack/FLAGS preservation
+for both direction/carry values against a modeled predecessor IRET. Seven
+damaged artifacts are rejected: count, mode, cursor, shape, character, attribute
+and truncation controls. These component tests remain separate from actual DOS.
+
+A fresh unobserved8086 SAVE control passes after the harness change. Both runs
+retain the six-stream and missing-file recovery checks and subsequent keyboard/
+hangup behavior. The new evidence changes no application binary or deployment.
+Repeat using a fresh output directory:
+
+```sh
+./tools/dev --command python standalone/test_aspect_heap_startup_dos.py \
+  --terminal build/terminal-snapshot-lease-v2-20261106/TERMINAL.EXE \
+  --runner build/aspect-snapshot-lease-v2-20261106/ASPECT.EXE \
+  --nested-program --nested-graphics --inner-screen --cpu 386 \
+  --output build/inner-screen-new
+```

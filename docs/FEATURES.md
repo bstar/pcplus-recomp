@@ -11,8 +11,10 @@ NOCLEAR DOS children surrounding six-stream/missing-file recovery. Seven correct
 register-handoff cases pass43 complete snapshot pairs. The opt-in
 [retained snapshot lease](SNAPSHOT_LEASE.md) now completes ordinary8086 SAVE
 graphics workflows with the matched capability17 pair and exact final viewport;
-42 ownership checks and clean parent/child source exports pass. Direct inner
-screen/cursor capture, borrowed-active fault coverage, larger rows, BBS/transfer
+42 ownership checks and clean parent/child source exports pass. A separate
+386/UMB witness now verifies two full inner4000-byte screens and BIOS cursor/
+geometry pairs before outer return, with36 observer and7 rejection controls.
+Borrowed-active fault coverage, larger rows, BBS/transfer
 regressions and physical acceptance remain open. The installed16 pair is unchanged.
 
 The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)

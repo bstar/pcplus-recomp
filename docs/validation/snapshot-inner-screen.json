@@ -1,0 +1,81 @@
+{
+  "checkpoint_recorded": true,
+  "source_commit": "ac7a9bc",
+  "terminal_sha256": "bad604fbc5bc1e680b778d69edc692e541ffe52c65e8a8b882e5afc2d6ef9106",
+  "interpreter_sha256": "7aa7066f288c2daa5f4f0cc3513ae110239895b6285aecccad231302e2db47c9",
+  "results": {
+    "inner": {
+      "path": "build/snapshot-inner-screen-v1-20261106/result.json",
+      "sha256": "8f3a66bcf1ef9984d4cf569d9557815edff42f5705064e2806d8138411239fbf",
+      "passed": true,
+      "capture": {
+        "passed": true,
+        "resident_segment": 52299,
+        "captures": [
+          {
+            "sequence": 0,
+            "mode": 3,
+            "columns": 80,
+            "rows": 25,
+            "font_height": 16,
+            "cursor": 15,
+            "cursor_shape": 1551,
+            "page": 0
+          },
+          {
+            "sequence": 1,
+            "mode": 3,
+            "columns": 80,
+            "rows": 25,
+            "font_height": 16,
+            "cursor": 15,
+            "cursor_shape": 1551,
+            "page": 0
+          },
+          {
+            "sequence": 2,
+            "mode": 3,
+            "columns": 80,
+            "rows": 25,
+            "font_height": 16,
+            "cursor": 15,
+            "cursor_shape": 1551,
+            "page": 0
+          },
+          {
+            "sequence": 3,
+            "mode": 3,
+            "columns": 80,
+            "rows": 25,
+            "font_height": 16,
+            "cursor": 15,
+            "cursor_shape": 1551,
+            "page": 0
+          }
+        ],
+        "identical_inner_screen_bytes": 8000,
+        "raw_sha256": "b9ef204d2f4983d6d66d5fad20d948dd03f39bf7a202ba04886f4885fe82a9c8",
+        "scope": "Two inner pre/post PROGRAM pairs, each4000 screen bytes plus BIOS mode/geometry/cursor/shape/page, captured on owned file-open requests before outer ASPECT return. No injected replies or drawing."
+      }
+    },
+    "observer": {
+      "path": "build/snapshot-inner-observer-policy-20261106/result.json",
+      "sha256": "b8a7006d406b7fef26010dce1c9c3e7e980b615650d68175ba7030ad6f90936e",
+      "passed": true
+    },
+    "unobserved_8086": {
+      "path": "build/snapshot-inner-unobserved-control-20261106/result.json",
+      "sha256": "88f4567647efb4eb4edb165728b6863b3a0f433a2e35a8d2cc5f832149f290f0",
+      "passed": true
+    }
+  },
+  "application_binary_changed": false,
+  "installed_candidate_changed": false,
+  "physical_runtime_verified": false,
+  "limits": [
+    "Inner capture is a separate386/XMS/UMB run with an observed upper-memory TSR and owned file-open markers, not unobserved8086 memory/timing evidence.",
+    "Each of2pairs compares all4000 inner screen bytes plus BIOS mode/columns/rows/font/cursor/shape/page before outer ASPECT return.",
+    "Unit hooks use modeled IRQ/BDA/video and predecessor IRET; actual DOS capture is separate.",
+    "Actual borrowed-active faults/cancel, larger rows, BBS/transfers and physical acceptance remain open."
+  ]
+}
