@@ -419,6 +419,11 @@ terminal_phone_log_startup_done equ $
  cmp word [connection_result],0xffff
  jne .idle
 .receive:
+%ifdef TERMINAL_CHAT_FRONTEND
+ extern terminal_chat_receive_hold_far,terminal_chat_receive_far
+ call far terminal_chat_receive_hold_far
+ jc .idle
+%endif
  cmp word [terminal_monitor_active],2
  je .idle ;Prompt owns keyboard; leave all incoming bytes in actual RX ring.
  call terminal_controller_receive_hold
@@ -433,6 +438,10 @@ terminal_phone_log_startup_done equ $
  call terminal_redisplay_before
  call terminal_connection_receive
  jc .loop
+%ifdef TERMINAL_CHAT_FRONTEND
+ call far terminal_chat_receive_far
+ jc .loop
+%endif
  call terminal_monitor_filter
  jc .loop
  call terminal_controller_filter

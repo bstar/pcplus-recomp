@@ -298,6 +298,11 @@ terminal_keyboard_dispatch_far:
  call keyboard_poll
  or ax,ax
  jz .done
+%ifdef TERMINAL_CHAT_FRONTEND
+ extern terminal_chat_key_hold_far,terminal_chat_key_far
+ call far terminal_chat_key_hold_far
+ jc .done
+%endif
 %ifdef TERMINAL_GATEWAY
  extern terminal_program_kind
  cmp word [terminal_program_pending],0
@@ -352,6 +357,12 @@ terminal_keyboard_dispatch_far:
  push ax
  call _terminal_autostart_flush
  pop ax
+%ifdef TERMINAL_CHAT_FRONTEND
+ ; Retain the established manual-init/input-flush boundary before acquiring
+ ; Chat's saved underlay. A held invitation must not paint after Chat opens.
+ call far terminal_chat_key_far
+ jc .done
+%endif
  call terminal_redisplay_key
  jc .done
  cmp ax,0x3000 ; Native Alt-B, including dedicated/raw controller mode.

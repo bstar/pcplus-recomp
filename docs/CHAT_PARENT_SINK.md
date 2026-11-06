@@ -67,3 +67,7 @@ memory and Enigma/Synchronet after those hooks. The preceding presentation
 parent's BBS results are not acceptance of this new image. The older unexplained
 redial miss remains open. Selected package, physical DOS PC and production
 SynthModem/Enigma are unchanged; no full parity or physical acceptance claim.
+
+The subsequent [experimental foreground core](CHAT_FOREGROUND_CORE.md) wires
+Alt-O, keyboard/RX ownership and idle/retirement service. Original Help/direct
+TEXT and broader acceptance remain open.

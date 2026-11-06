@@ -1,0 +1,108 @@
+{
+  "status": "experimental-buffered-foreground-core-verified-Help-TEXT-menu-and-broader-acceptance-open",
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "full_original_Chat_acceptance": false,
+  "full_candidate_acceptance": false,
+  "binary_sha256": "5875536a193a3f7db696307dfb358bc0adc1b3d3fdae44b7eeb40980d9198fef",
+  "module_sha256": "f0e91e2b1aff29e466d68bbe7d1a267c57382126dce21b2c6759aff6ce31850f",
+  "minimum_module_bytes": 479408,
+  "retained_parent_paragraphs": 29978,
+  "near_bytes": 65504,
+  "resident_CS_bytes": 65528,
+  "frontend_C_code_bytes": 839,
+  "frontend_bridge_code_bytes": 240,
+  "frontend_object_near_bytes": 31,
+  "additional_minimum_bytes": 1168,
+  "additional_near_extent_bytes": 16,
+  "capacities_unchanged": {
+    "far_bytes": 71192,
+    "history_bytes": 63000,
+    "native_reset_private_stack_bytes": 4096,
+    "native_reset_shadow_bytes": 6600,
+    "native_reset_workspace_bytes": 65504,
+    "snapshot_bytes": 2000,
+    "far_ui_storage_bytes": 24000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_row_index_bytes": 494
+  },
+  "compiler_profile_unchanged": true,
+  "source_export_files": 647,
+  "direct_entries": 3,
+  "direct_module_relocation_bases": 1,
+  "main_CPR_replies": 2,
+  "buffered_only_foreground": true,
+  "Help_and_direct_TEXT_refused": true,
+  "Alt_Z_Chat_available": false,
+  "reports": {
+    "direct_foreground": {
+      "path": "build/chat-frontend-reviewed-20261106/direct/result.json",
+      "sha256": "9d046fdc2c6e5878e3bd3f347111188fa9baabcf3343ce2209bbcf2ba0a18105"
+    },
+    "normal_main_UART_BIOS": {
+      "path": "build/chat-frontend-reviewed-20261106/main/result.json",
+      "sha256": "0f951a14ba44ade13293d7ac18505c1c6bb1eef9c1d41cd127d9784bbf9a9fee"
+    },
+    "held_invitation_after_fix": {
+      "path": "build/chat-frontend-reviewed-20261106/prefix/result.json",
+      "sha256": "3c659fbb89eb48e0c6e7301ad80c5cd227273af1fb78336a3609f6055293bd03"
+    },
+    "dispatch_order_control": {
+      "path": "build/chat-frontend-order-regression-20261106/result.json",
+      "sha256": "fbecdb51c169f2cdcb49b6967d60fb7eb04f80fdac8bf54ce44d49aa5eb64281"
+    },
+    "normal_main_ASPECT": {
+      "path": "build/chat-frontend-reviewed-aspect-20261106/result.json",
+      "sha256": "122ddbbaa16c71de854af4dc7195a2d2b4ad103396afc23f7e24d6d2759b66e5"
+    },
+    "linked_storage": {
+      "path": "build/chat-frontend-reviewed-storage-20261106/result.json",
+      "sha256": "ae3fc525ccda815a4001ec300651a84f0e070171a85254e1b1d0519bc2f37d90"
+    },
+    "cold_source_main_and_composition": {
+      "path": "build/chat-frontend-source-20261106/result.json",
+      "sha256": "df9e1e2158ba77dc61648276ce946e94507f151ef0c1e9f14d20f3c779c74254"
+    },
+    "disabled_control": {
+      "path": "build/chat-frontend-disabled-20261106/result.json",
+      "sha256": "6ca97bada5dda42a324f782457719753f5bb02fef2ce02e39a732e9f2224a7f2"
+    },
+    "synchronet_editor_viewer": {
+      "path": "build/bbs-lab/results/synchronet/chat-frontend-reviewed-sync-20261106/proxy-integration.json",
+      "sha256": "ff344798d536dcc45a3db205366fc600dd8c873f1e8dab2e760617ebb258cc1d"
+    },
+    "enigma_carrier_retry": {
+      "path": "build/bbs-lab/results/enigma/chat-frontend-reviewed-carrier-20261106/carrier-checks.json",
+      "sha256": "8c661a97bb8fd78abca56c50fa8d27e6b67baa7095d465b2c36d6c35d445d27a"
+    },
+    "enigma_independent_wire_audit": {
+      "path": "build/chat-frontend-reviewed-carrier-audit-20261106/result.json",
+      "sha256": "b87be948ca8c2be83b5588923d73988093ccd42e162e969a5727dfab1759bd3b"
+    }
+  },
+  "retained_negative_invitation": {
+    "path": "build/chat-frontend-prefix-before-20261106/result.json",
+    "sha256": "4f1e78deafdbef48a68f09fd1a0b045044e29337558c993e2d9e2645126b0232",
+    "checks": {
+      "harness": true,
+      "two_real_peer_triggers": true,
+      "exact_two_CPR": true,
+      "chat_buffer_submitted": true,
+      "ordinary_keys_resume": true,
+      "chat_underlay_restored": true,
+      "ordinary_RX_after_chat": true,
+      "unchanged_sources": true,
+      "unchanged_module": true,
+      "held_invitation_restored_in_underlay": false
+    }
+  },
+  "earlier_unattributed_redial_miss_resolved": false,
+  "remaining": [
+    "Original Chat Help and direct48CC TEXT continuations",
+    "Alt-Z Chat reference/action binding",
+    "Immediate/buffered send-mode configuration and UI",
+    "Further notice/trap/disconnect/error/mouse/geometry and sustained Chat checks",
+    "Full final memory, BBS/package and physical acceptance",
+    "Earlier unattributed redial miss"
+  ]
+}

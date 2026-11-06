@@ -2387,6 +2387,17 @@ source reproduction pass. The adapter adds128minimum module bytes and no near
 data; disabling it retains the preceding parent exactly. Main Chat entry,
 input/receive hooks and final BBS/package/physical gates remain open.
 
+The [experimental Chat foreground core](CHAT_FOREGROUND_CORE.md) now wires
+original Alt-O, pre-read keyboard hold, pre-dequeue RX hold, real module/sink
+service and retirement. Actual DOS8086 normal-main BIOS/UART tests distinguish
+raw Chat receive from ordinary ANSI parsing and verify Escape return. A held
+auto-download prefix regression fails before a dispatch-order fix and passes
+with identical settings/keys afterward. Three direct foreground entries,
+changed-page quarantine, six-stream/three-child ASPECT admission,54storage cases
+and647-file clean source reproduction pass. The frontend stays opt-in; Help,
+direct TEXT, Alt-Z Chat, send-mode settings and broader acceptance remain open.
+No selected deployment or full F12/parity closure follows from these results.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

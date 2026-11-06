@@ -283,9 +283,17 @@ terminal_redisplay_before_impl:
  mov dx,2
  jmp redisplay_event
 terminal_redisplay_idle_impl:
+%ifdef TERMINAL_CHAT_FRONTEND
+ extern terminal_chat_idle_far
+ call far terminal_chat_idle_far
+%endif
  mov dx,3
  jmp redisplay_event
 terminal_redisplay_stop_impl:
+%ifdef TERMINAL_CHAT_FRONTEND
+ extern terminal_chat_stop_far
+ call far terminal_chat_stop_far
+%endif
  cmp word [terminal_menu_pending],0
  jne .cancel
  cmp word [_command_menu_active],0

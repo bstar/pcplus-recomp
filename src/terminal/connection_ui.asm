@@ -77,6 +77,11 @@ terminal_connection_notice:
  jc .discard
  ; Notices own the live screen, never a cached history-page underlay.
  call terminal_redisplay_stop
+%ifdef TERMINAL_CHAT_FRONTEND
+ extern _redisplay_active
+ cmp word [_redisplay_active],2
+ je .done ; Geometry/busy retirement refusal retains the Chat owner.
+%endif
  cmp byte [notice_active],0
 %ifdef TERMINAL_ROW_NOTICES
  je .capture

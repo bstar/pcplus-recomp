@@ -19,6 +19,7 @@ parser.add_argument('--chat-loader',action='store_true',help='Link the checked s
 parser.add_argument('--chat-storage',action='store_true',help='Exclusive frozen-storage lease for Chat; requires loader, reference and large frames; no foreground binding')
 parser.add_argument('--chat-presentation',action='store_true',help='Select API0101 physical Chat module and matching checked loader; requires Chat storage; no foreground binding')
 parser.add_argument('--chat-adapters',action='store_true',help='Link real TX/log/history Chat sink; requires presentation; entry/input hooks remain unbound')
+parser.add_argument('--chat-frontend',action='store_true',help='Experimental Alt-O core and keyboard/RX/idle ownership; Help/direct TEXT remain refused; requires adapters')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
@@ -105,6 +106,7 @@ if args.aspect_snapshot_lease:assert args.external_render and args.notice_input 
 if args.chat_storage:assert args.chat_loader and args.original_reference and args.large_view_frames
 if args.chat_presentation:assert args.chat_storage
 if args.chat_adapters:assert args.chat_presentation
+if args.chat_frontend:assert args.chat_adapters and args.keyboard_bank
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
  args.file_viewer=True
@@ -320,6 +322,7 @@ if args.chat_loader:out_name+='-chat-loader'
 if args.chat_storage:out_name+='-chat-storage'
 if args.chat_presentation:out_name+='-chat-presentation'
 if args.chat_adapters:out_name+='-chat-adapters'
+if args.chat_frontend:out_name+='-chat-frontend'
 if args.command_ui_pairs==0:out_name+='-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
@@ -497,6 +500,7 @@ for index,source in enumerate(sources):
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.aspect_snapshot_lease:options+=['-DASPECT_SNAPSHOT_LEASE']
  if args.chat_storage:options+=['-DTERMINAL_CHAT_STORAGE']
+ if args.chat_frontend:options+=['-DTERMINAL_CHAT_FRONTEND']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
@@ -860,6 +864,14 @@ if args.chat_adapters:
  source=ROOT/'src/chat/parent_sink.asm';obj=OUT/'chat-adapters.obj'
  subprocess.run(['nasm','-fobj',str(source),'-o',str(obj)],check=True)
  objects.append(str(obj));sources+=[source,ROOT/'src/chat/parent_sink.h']
+if args.chat_frontend:
+ source=ROOT/'src/chat/frontend.c';obj=OUT/'chat-frontend.obj'
+ subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we','-ecc','-ox','-os','-oe=0',
+  '-dCHAT_PRESENTATION','-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
+ objects.insert(objects.index(str(config_end_obj)),str(obj));sources.append(source)
+ source=ROOT/'src/chat/frontend.asm';obj=OUT/'chat-frontend-bridges.obj'
+ subprocess.run(['nasm','-fobj',str(source),'-o',str(obj)],check=True)
+ objects.insert(objects.index(str(config_end_obj)),str(obj));sources.append(source)
 if args.directory_resource_owner:ordering+=['FAR_DATA','FROZEN_DATA']
 subprocess.run(['wlink','system','dos','order',*[value for kind in ordering for value in ('clname',kind)],'option','quiet','option','map='+str(OUT/'terminal.map'),'name',str(OUT/'TERMINAL.EXE'),'file',','.join(objects),'library',str(Path(os.environ['WATCOM'])/'lib286/dos/clibs.lib')],check=True)
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
@@ -940,6 +952,7 @@ manifest['experimental_chat_loader']=args.chat_loader
 manifest['experimental_chat_storage']=args.chat_storage
 manifest['experimental_chat_presentation']=args.chat_presentation
 manifest['experimental_chat_adapters']=args.chat_adapters
+manifest['experimental_chat_frontend']=args.chat_frontend
 if chat_loader:manifest['chat_loader']={k:v for k,v in chat_loader.items() if k not in ('objects','inputs')}
 if args.optimize_size:manifest['optimized_c_sources']=optimized_c_sources
 manifest['packed_command_ui']=packed_command_ui
