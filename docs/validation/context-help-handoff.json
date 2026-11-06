@@ -1,0 +1,140 @@
+{
+  "passed": true,
+  "scope": "Recovered contextual Help descriptor producer and controlled source-built DOS process ABI; no global terminal Help integration or physical deployment.",
+  "native_bytes": 132,
+  "reused_native_bytes": 53,
+  "manifest_sha256": "39bb047c4b9070e993ef648b0b58b9cca5c426c16e7648ba9f412596b9e4282e",
+  "sources": {
+    "standalone/build_context_help.py": "ad1452a93086795359065f5f28fcf034ddbabbbcbf774535786424988f51db5c",
+    "standalone/context_help_state.asm": "e358785a797828ffbc686efa54cde1e076e583bd4f76ba9ad5011f28b6cc0d8e",
+    "standalone/context_help_parent.c": "9cad6fed9c2ebfb56c2ff6fa85985e1bc57ff6cc4cde83120c307380d60275ab",
+    "standalone/context_help_child.c": "53ec168293d49cef843e35aee083260f00a979c2098295fe403924537d2a2e0f",
+    "src/help/format.c": "a6f7585e56c793998f29047172929f8fb25e5ec424679524efcecb0f06a40571",
+    "src/help/format.h": "bf9c74896bcc57c935273f1315350193bc44df35b923f1c1078ed4ab55e70283",
+    "reconstruction/context_help/provenance.json": "530cdc1e8a6c9ff0257c156749e73c0b2aa566a314f01e99bc7c7b38a5f3d0e0",
+    "reconstruction/program_exec/provenance.json": "dea1a491c50dcbfdd28ac810ff17857c62f8c4155b1d79aaa744696ae8947f7f",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/context_help/handoff.asm": "806c2aeb76eea2106cfe298d7fa6598896b49b755c1191753c526b356cd840db",
+    "reconstruction/program_exec/strcpy.asm": "4c2420d76d56a852b2ff6bb2ebfbf567b082c6880b2bd715f698ebd2d9941299",
+    "reconstruction/program_exec/get_ds.asm": "c98c2d6535c41beae3d72fd3b0686a588bc5c10fb904a632688456d5ddc675c2"
+  },
+  "products": {
+    "CONTEXT.EXE": "06ede2fc09da8fd7733675b789a715f9a9526ffa5425468ae964fecd735c5e74",
+    "HLPPROBE.EXE": "fb94998343d3a338764936d2bb4bd5717d7e1ecfc6e0396564a11b014a810ab1",
+    "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+  },
+  "cpu": {
+    "passed": true,
+    "cases": 1728,
+    "original_comparisons": 1728,
+    "checker_sha256": "7c52c3040c011f15c68b559382fe517e05e53de5ad30e6e391d84c7b9d9e6fa4",
+    "manifest_sha256": "39bb047c4b9070e993ef648b0b58b9cca5c426c16e7648ba9f412596b9e4282e",
+    "scope": "Actual132-byte producer,50-byte strcpy and3-byte getDS. Resolver, formatter and PROGRAM are modeled boundaries; no original executable or analysis image executed. Native unbounded path copy tested only through65 chars. No production help UI, UART or physical acceptance."
+  },
+  "dos": {
+    "passed": true,
+    "timed_out": false,
+    "checks": 182,
+    "products": {
+      "CONTEXT.EXE": "06ede2fc09da8fd7733675b789a715f9a9526ffa5425468ae964fecd735c5e74",
+      "HLPPROBE.EXE": "fb94998343d3a338764936d2bb4bd5717d7e1ecfc6e0396564a11b014a810ab1",
+      "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+    },
+    "manifest_sha256": "39bb047c4b9070e993ef648b0b58b9cca5c426c16e7648ba9f412596b9e4282e",
+    "checker_sha256": "58bcbba64d5b60dc69fdda6c0309af5ba558ca63d471e5a85c179fd5cd4981e8",
+    "artifacts": {
+      "CONTEXT.EXE": "06ede2fc09da8fd7733675b789a715f9a9526ffa5425468ae964fecd735c5e74",
+      "HLPPROBE.EXE": "fb94998343d3a338764936d2bb4bd5717d7e1ecfc6e0396564a11b014a810ab1",
+      "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3",
+      "manifest.json": "39bb047c4b9070e993ef648b0b58b9cca5c426c16e7648ba9f412596b9e4282e",
+      "checker.py": "58bcbba64d5b60dc69fdda6c0309af5ba558ca63d471e5a85c179fd5cd4981e8",
+      "RUN.BAT": "71cbdec99ea76db251db6a61ed7c3ca5634c64d86ecaac55757aa1bafdb9bfee",
+      "dosbox.conf": "62e4d06bbb5da2d9b2fe8742aeffda7f2011ce01263815e4a2d2d30a0b44d38e",
+      "dosbox.log": "c60a0f3b747b06186eb1d8df7870162f034652cd405458b90f742f6000aed274",
+      "CHECKS.TXT": "5257d3b4cfcf7bd4df80d02395ba780691c70210fc24c7c05b513fefbc7af94e",
+      "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c"
+    },
+    "scope": "Exact native descriptor producer with real recovered strcpy/getDS. Diagnostic resolver/CRT formatter/spawn boundary and controlled source child exercise actual DOS foreign-memory transfer and authored HLP reading; no full native PROGRAM controller, production PCHELP, UI or UART integration."
+  },
+  "cold": {
+    "passed": true,
+    "source_files": 15,
+    "source_sha256": {
+      "reconstruction/context_help/handoff.asm": "806c2aeb76eea2106cfe298d7fa6598896b49b755c1191753c526b356cd840db",
+      "reconstruction/context_help/provenance.json": "530cdc1e8a6c9ff0257c156749e73c0b2aa566a314f01e99bc7c7b38a5f3d0e0",
+      "reconstruction/program_exec/get_ds.asm": "c98c2d6535c41beae3d72fd3b0686a588bc5c10fb904a632688456d5ddc675c2",
+      "reconstruction/program_exec/provenance.json": "dea1a491c50dcbfdd28ac810ff17857c62f8c4155b1d79aaa744696ae8947f7f",
+      "reconstruction/program_exec/strcpy.asm": "4c2420d76d56a852b2ff6bb2ebfbf567b082c6880b2bd715f698ebd2d9941299",
+      "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+      "src/help/format.c": "a6f7585e56c793998f29047172929f8fb25e5ec424679524efcecb0f06a40571",
+      "src/help/format.h": "bf9c74896bcc57c935273f1315350193bc44df35b923f1c1078ed4ab55e70283",
+      "standalone/build_context_help.py": "ad1452a93086795359065f5f28fcf034ddbabbbcbf774535786424988f51db5c",
+      "standalone/check_context_help.py": "7c52c3040c011f15c68b559382fe517e05e53de5ad30e6e391d84c7b9d9e6fa4",
+      "standalone/context_help_child.c": "53ec168293d49cef843e35aee083260f00a979c2098295fe403924537d2a2e0f",
+      "standalone/context_help_parent.c": "9cad6fed9c2ebfb56c2ff6fa85985e1bc57ff6cc4cde83120c307380d60275ab",
+      "standalone/context_help_state.asm": "e358785a797828ffbc686efa54cde1e076e583bd4f76ba9ad5011f28b6cc0d8e",
+      "standalone/test_context_help_cold.py": "f99c0829d4953b35aaea4ee7c85f8c133959b84ff2448f4471b153b3bc84df24",
+      "standalone/test_context_help_dos.py": "58bcbba64d5b60dc69fdda6c0309af5ba558ca63d471e5a85c179fd5cd4981e8"
+    },
+    "products": {
+      "CONTEXT.EXE": "06ede2fc09da8fd7733675b789a715f9a9526ffa5425468ae964fecd735c5e74",
+      "HLPPROBE.EXE": "fb94998343d3a338764936d2bb4bd5717d7e1ecfc6e0396564a11b014a810ab1",
+      "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+    },
+    "manifest_sha256": "39bb047c4b9070e993ef648b0b58b9cca5c426c16e7648ba9f412596b9e4282e",
+    "cpu": {
+      "passed": true,
+      "cases": 1728,
+      "original_comparisons": 0,
+      "checker_sha256": "7c52c3040c011f15c68b559382fe517e05e53de5ad30e6e391d84c7b9d9e6fa4",
+      "manifest_sha256": "39bb047c4b9070e993ef648b0b58b9cca5c426c16e7648ba9f412596b9e4282e",
+      "scope": "Actual132-byte producer,50-byte strcpy and3-byte getDS. Resolver, formatter and PROGRAM are modeled boundaries; no original executable or analysis image executed. Native unbounded path copy tested only through65 chars. No production help UI, UART or physical acceptance."
+    },
+    "dos": {
+      "passed": true,
+      "timed_out": false,
+      "checks": 182,
+      "products": {
+        "CONTEXT.EXE": "06ede2fc09da8fd7733675b789a715f9a9526ffa5425468ae964fecd735c5e74",
+        "HLPPROBE.EXE": "fb94998343d3a338764936d2bb4bd5717d7e1ecfc6e0396564a11b014a810ab1",
+        "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+      },
+      "manifest_sha256": "39bb047c4b9070e993ef648b0b58b9cca5c426c16e7648ba9f412596b9e4282e",
+      "checker_sha256": "58bcbba64d5b60dc69fdda6c0309af5ba558ca63d471e5a85c179fd5cd4981e8",
+      "artifacts": {
+        "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "CHECKS.TXT": "5257d3b4cfcf7bd4df80d02395ba780691c70210fc24c7c05b513fefbc7af94e",
+        "dosbox.log": "3f7ccca201b8f114e93feadf7904e3d6d65865d645d5b9f202d8d8026c9c357f",
+        "dosbox.conf": "2e9aed861fa01be954e02d109665f45bece494cc5e6fe487cf08dcf93d9b560c",
+        "RUN.BAT": "71cbdec99ea76db251db6a61ed7c3ca5634c64d86ecaac55757aa1bafdb9bfee",
+        "checker.py": "58bcbba64d5b60dc69fdda6c0309af5ba558ca63d471e5a85c179fd5cd4981e8",
+        "manifest.json": "39bb047c4b9070e993ef648b0b58b9cca5c426c16e7648ba9f412596b9e4282e",
+        "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3",
+        "HLPPROBE.EXE": "fb94998343d3a338764936d2bb4bd5717d7e1ecfc6e0396564a11b014a810ab1",
+        "CONTEXT.EXE": "06ede2fc09da8fd7733675b789a715f9a9526ffa5425468ae964fecd735c5e74"
+      },
+      "scope": "Exact native descriptor producer with real recovered strcpy/getDS. Diagnostic resolver/CRT formatter/spawn boundary and controlled source child exercise actual DOS foreign-memory transfer and authored HLP reading; no full native PROGRAM controller, production PCHELP, UI or UART integration."
+    },
+    "scope": "Isolated public source tree with pinned toolchain inherited from caller; no original binaries, HLP, configurations, analysis artifacts or prior objects copied. Exact products and manifest reproduced, then source CPU and DOS EXEC tests rerun."
+  },
+  "cold_receipt_sha256": "6fecd1fc21790bf93bd7bdf75ea1224854eb0321fac7d8d9942fd97c32d856a4",
+  "rea": {
+    "producer": "ev_d9f426ad32032b1f5e33c9129443266507450309678c399665faa683811abb74",
+    "strings": "ev_aa52c3b5e93853a2378b90f6ad14c7cb2dd293c76c7d2454834ca959ab937060",
+    "session_closed": true
+  },
+  "prior_failures": [
+    {
+      "attempt": "build/context-help-first-20261106",
+      "reason": "Undefined _sprintf ASM binding; replaced by fixed-signature C adapter."
+    },
+    {
+      "attempt": "build/context-help-dos-20261106",
+      "checks": 182,
+      "failures": 1,
+      "reason": "Zero-pointer negative fixture expected memory error although parser rejects earlier; changed fixture to valid decimal low-segment pointer65536."
+    }
+  ],
+  "application_integration": false,
+  "physical_deployment": false
+}

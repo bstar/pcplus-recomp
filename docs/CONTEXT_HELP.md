@@ -1,5 +1,10 @@
 # Contextual help and the PCHELP handoff
 
+The [native producer and real DOS parent/helper checkpoint](CONTEXT_HELP_HANDOFF.md)
+now recovers the descriptor construction and verifies a source-only process
+handoff. Global application integration and the original helper UI remain open;
+the PROGRAM-notice help below is a separate maintained interface.
+
 Alt-Z in the recovered keyboard poll is gated by a signed context word. When
 enabled, it consumes the BIOS key and calls resident57AE. Fresh REA analysis
 corrects the earlier description of that callback as a local diagnostic dialog:

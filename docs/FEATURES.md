@@ -2520,3 +2520,14 @@ cases and normal-main saved-preference tests at25/28/43/50 rows. Active graphics
 framebuffer contents remain untouched while held. Default API0104 bytes and
 all retained capacities remain unchanged; full regression/cold-build gates pass.
 Physical deployment and the remaining acceptance/parity inventory stay open.
+
+## Native contextual Help producer
+
+The [PCHELP handoff checkpoint](CONTEXT_HELP_HANDOFF.md) recovers132 exact
+producer bytes and reuses53 native dependency bytes. A source-only parent and
+helper pass182 actual DOS checks, including eight synchronous foreign-memory
+transfers and three rejected requests.1728 isolated source/original-slice cases
+and an identical15-file cold rebuild pass. The original resolver, formatter
+and PROGRAM boundaries are explicit diagnostic substitutions. This does not
+enable the global helper or close its UI, admission, context mapping, UART or
+physical acceptance requirements.

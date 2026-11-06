@@ -1,0 +1,34 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/context_help/handoff.asm",
+      "start": 22446,
+      "end": 22578,
+      "file_offset": 27054,
+      "bytes": 132,
+      "sha256": "0d430ecc986f02501c598a2240a5f05e4d0efb8b8efb1a2006f78db32ee9786c",
+      "rea_evidence_id": "ev_d9f426ad32032b1f5e33c9129443266507450309678c399665faa683811abb74"
+    }
+  ],
+  "state": {
+    "0x397a": "help_topic",
+    "0x1d3e": "help_ui_1d3e",
+    "0x1d32": "help_normal",
+    "0x1d34": "help_bold",
+    "0x1d38": "help_reverse",
+    "0x2068": "help_mouse_x",
+    "0x206a": "help_mouse_y"
+  },
+  "dependency_sources": [
+    "reconstruction/program_exec/strcpy.asm",
+    "reconstruction/program_exec/get_ds.asm"
+  ],
+  "limitations": [
+    "Exact descriptor producer only; original353D resolver,82B6 formatter and433D program controller remain declared external boundaries.",
+    "Native strcpy is unbounded. The118-byte frame leaves66 bytes before its30-byte command buffer and18-byte descriptor; controlled tests keep the resolved path bounded.",
+    "Context word is copied verbatim. Signed/out-of-range topic fallback belongs to the helper consumer.",
+    "Six UI words are raw transport values: three color words and two configured mouse scales have independent source/provenance mappings;1D3E remains address-named.",
+    "Synthetic carrier used only for static REA; original-file slices are audited separately and no analysis image is executed."
+  ]
+}
