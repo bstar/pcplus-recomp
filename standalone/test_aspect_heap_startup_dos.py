@@ -137,6 +137,8 @@ message: db 'CHILD|'
         assert sha(ROOT / name) == expected, name
     if args.nested_program:
         checks['two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|CHILD|'
+        expected=b''.join(bytes([c,7]) for c in b'FIRST BYTE SAFE'.ljust(1920,b' '))
+        checks['exact_1920_viewport_cells']=(drive/'SCREEN.BIN').read_bytes()[:3840]==expected
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary),
                   program_result_probe=args.program_result_probe,
                   cpu=args.cpu,

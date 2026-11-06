@@ -24,6 +24,7 @@ def main(extension=None):
     if extension and extension.get('custom_irq'):feature_flags+=['-DASPECT_CUSTOM_IRQ']
     if extension and extension.get('file_open_probe'):feature_flags+=['-DASPECT_FILE_OPEN_PROBE']
     if extension and extension.get('program_result_probe'):feature_flags+=['-DASPECT_PROGRAM_RESULT_PROBE']
+    if extension and extension.get('snapshot_lease'):feature_flags+=['-DASPECT_SNAPSHOT_LEASE']
     if extension and extension.get('heap_growth_bytes') is not None:
         assert extension.get('register_handoff') and extension['heap_growth_bytes'] in (128,256,512)
         feature_flags+=['-DASPECT_HEAP_GROWTH_BYTES='+str(extension['heap_growth_bytes'])]
@@ -108,6 +109,7 @@ def main(extension=None):
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
                   diagnostic_file_open_probe=bool(extension and extension.get('file_open_probe')),
                   diagnostic_program_result_probe=bool(extension and extension.get('program_result_probe')),
+                  experimental_snapshot_lease=bool(extension and extension.get('snapshot_lease')),
                   startup_heap_growth_bytes=extension.get('heap_growth_bytes') or 512 if extension and extension.get('register_handoff') else None,
                   experimental_serial_bank=banked_serial,
                   experimental_register_handoff=bool(extension and extension.get('register_handoff')),

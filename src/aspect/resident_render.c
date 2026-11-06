@@ -6,6 +6,10 @@
 #include "serial_runtime.h"
 #include "receive_runtime.h"
 #include "when_runtime.h"
+#if defined(ASPECT_SNAPSHOT_LEASE)
+#include <dos.h>
+static unsigned snapshot_owned;
+#endif
 unsigned aspect_render_parent_entry[2];
 aspect_render_client aspect_render_client_record;
 static unsigned attached,callback_error;
@@ -42,6 +46,9 @@ unsigned __cdecl aspect_render_program_begin(unsigned save_screen)
 unsigned __cdecl aspect_render_program_end(unsigned view_reset)
 {
  unsigned result;
+#if defined(ASPECT_SNAPSHOT_LEASE)
+ if(snapshot_owned)return ASPECT_RUN_STATE;
+#endif
  if(!attached || !program_owned || view_reset>1 || aspect_render_client_check())return ASPECT_RUN_STATE;
  result=aspect_render_request(ASPECT_RENDER_PROGRAM_END,view_reset);
  /* The parent's END retires on success, rejected view3 or returned UART14.
@@ -50,6 +57,32 @@ unsigned __cdecl aspect_render_program_end(unsigned view_reset)
  if(!result || result==ASPECT_RUN_UNSUPPORTED || result==ASPECT_RUN_SERIAL)program_owned=0;
  return typed(result);
 }
+#if defined(ASPECT_SNAPSHOT_LEASE)
+unsigned __cdecl aspect_render_snapshot_end(void)
+{
+ unsigned result;
+ if(!attached || !program_owned || !snapshot_owned || aspect_render_client_check())return ASPECT_RUN_STATE;
+ result=typed(aspect_render_request(ASPECT_RENDER_SNAPSHOT_END,0));
+ if(!result)snapshot_owned=0;
+ return result;
+}
+void __far * __cdecl aspect_render_snapshot_begin(unsigned bytes)
+{
+ unsigned value,i,words[2]={0,0};
+ if(!attached || !program_owned || snapshot_owned || !bytes || bytes>8000 || aspect_render_client_check())return 0;
+ if(typed(aspect_render_request(ASPECT_RENDER_SNAPSHOT_BEGIN,bytes)))return 0;
+ snapshot_owned=1;
+ for(i=0;i<4;++i){
+  value=aspect_render_request(ASPECT_RENDER_SNAPSHOT_BYTE,i);
+  if(value>255 || aspect_render_client_check())goto failed;
+  words[i/2]|=value<<((i&1)*8);
+ }
+ if(!words[1] || (unsigned long)words[0]+bytes>65536UL)goto failed;
+ return MK_FP(words[1],words[0]);
+failed:
+ aspect_render_snapshot_end();return 0;
+}
+#endif
 #endif
 #if defined(ASPECT_EXTERNAL_RENDER)
 static unsigned service_check(void)

@@ -15,6 +15,7 @@ parser.add_argument('--external-viewer',action='store_true',help='Configured nat
 parser.add_argument('--external-editor',action='store_true',help='Original Alt-A external editor using its separate PRM command; implies external viewer')
 parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bounded packing of authored command-browser text')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
+parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
 parser.add_argument('--session-projection',action='store_true')
 parser.add_argument('--projection-probe',action='store_true')
@@ -95,6 +96,7 @@ parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
 assert args.command_ui_pairs==64 or args.packed_command_ui
+if args.aspect_snapshot_lease:assert args.external_render and args.notice_input and args.large_view_frames
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
  args.file_viewer=True
@@ -480,6 +482,7 @@ for index,source in enumerate(sources):
  if args.directory_compile:options+=['-DDIRECTORY_SCRIPT_COMPILE']
  if args.directory_adopt:options+=['-DDIRECTORY_RESOURCE_ADOPTION']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
+ if args.aspect_snapshot_lease:options+=['-DASPECT_SNAPSHOT_LEASE']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
@@ -757,6 +760,7 @@ for source in c_sources:
  if args.directory_adopt:options+=['-dDIRECTORY_RESOURCE_ADOPTION']
  if args.directory_resource_owner and source.name in ('directory_resources.c','keymap_dos.c','key_actions_dos.c'):options+=['-dKEY_RESOURCE_PRIVATE_READS']
  if args.external_render:options+=['-dASPECT_EXTERNAL_RENDER']
+ if args.aspect_snapshot_lease:options+=['-dASPECT_SNAPSHOT_LEASE']
  if args.session_baseline:options+=['-dTERMINAL_SESSION_BASELINE']
  if args.display_preferences:options+=['-dTERMINAL_DISPLAY_PREFERENCES']
  if args.register_handoff:options+=['-dTERMINAL_REGISTER_HANDOFF']
@@ -984,6 +988,7 @@ manifest['zmodem_compiler_helper_adapters']=zmodem_helper_adapters
 (OUT/'zmodem-compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**zmodem_helper_adapters},indent=2)+'\n')
 manifest['limitations'].append('Maintained YMODEM framing and header codec execute in CONFIG_CODE with unchanged near data and protocol logic. Explicit callbacks bridge resident UART/CRC/file owners; zero-argument callbacks have their own declared family. Newly compiled batch_header OMF imports for Watcom32-bit arithmetic are renamed to local register adapters; all code/data/fixup records and external indices are preserved. Original ordinary XMODEM modules remain resident and unchanged.')
 manifest['experimental_external_render']=args.external_render
+manifest['experimental_aspect_snapshot_lease']=args.aspect_snapshot_lease
 manifest['experimental_mouse']=args.mouse
 manifest['experimental_notice_input']=args.notice_input
 manifest['terminal_exit_guard']=args.exit_guard

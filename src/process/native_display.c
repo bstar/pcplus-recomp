@@ -1,6 +1,10 @@
 #include "native_display.h"
 #include <dos.h>
 #include <malloc.h>
+#if defined(ASPECT_SNAPSHOT_LEASE)
+#include "../aspect/resident_render.h"
+static unsigned borrowed;
+#endif
 #if defined(ASPECT_EXTERNAL_UNWIND)
 #include "../aspect/external_unwind.h"
 #endif
@@ -24,6 +28,13 @@ void __far *__cdecl display_platform_allocate(unsigned bytes)
  ++native_display_allocs;if(native_display_fail_alloc)return 0;
 #endif
 #if defined(ASPECT_EXTERNAL_UNWIND)
+#if defined(ASPECT_SNAPSHOT_LEASE)
+ if(aspect_render_active()){
+  pending=aspect_render_snapshot_begin(bytes);
+  if(pending){borrowed=1;external_phase(EXTERNAL_SNAPSHOT_ALLOC);}
+  return pending;
+ }
+#endif
  pending=_fmalloc(bytes);if(pending)external_phase(EXTERNAL_SNAPSHOT_ALLOC);return pending;
 #else
  return _fmalloc(bytes);
@@ -37,6 +48,19 @@ void __cdecl display_platform_free(void __far *pointer)
 #endif
 #if defined(ASPECT_EXTERNAL_UNWIND)
  external_phase(EXTERNAL_SNAPSHOT_FREE);
+#endif
+#if defined(ASPECT_SNAPSHOT_LEASE)
+ if(borrowed){
+  if(pointer!=pending && pointer!=snapshot)return;
+  if(aspect_render_snapshot_end())return;
+  borrowed=0;
+#if defined(NATIVE_DISPLAY_DIAGNOSTIC) && defined(ASPECT_EXTERNAL_UNWIND)
+  ++native_display_frees;
+#endif
+  if(pointer==snapshot){snapshot=0;native_display_owned=0;}
+  if(pointer==pending)pending=0;
+  return;
+ }
 #endif
  _ffree(pointer);if(pointer==snapshot){snapshot=0;native_display_owned=0;}
 #if defined(ASPECT_EXTERNAL_UNWIND)

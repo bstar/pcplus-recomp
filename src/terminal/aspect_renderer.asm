@@ -4,7 +4,10 @@
 BITS 16
 CPU 8086
 %include "resident_bridge.inc"
-%ifdef ASPECT_NOTICE_INPUT
+%ifdef ASPECT_SNAPSHOT_LEASE
+ %define RENDER_CAPABILITY 17
+ extern _terminal_sound_enabled,terminal_program_result,_terminal_mouse_selected_scale
+%elifdef ASPECT_NOTICE_INPUT
  %define RENDER_CAPABILITY 16
  extern _terminal_sound_enabled,terminal_program_result,_terminal_mouse_selected_scale
 %else
@@ -103,6 +106,11 @@ global terminal_render_unsupported,terminal_render_read,terminal_render_read_now
 global terminal_render_unread,terminal_render_send,terminal_render_string
 global terminal_render_poll,terminal_render_cancel
 global terminal_render_control,terminal_render_set_modes,terminal_render_reset_modes
+%ifdef ASPECT_SNAPSHOT_LEASE
+extern redisplay_live,redisplay_live_end,_redisplay_active,_redisplay_live_ready,_command_menu_active
+extern terminal_editor_screen_owned,terminal_browser_screen_owned
+extern terminal_script_window_active
+%endif
 terminal_render_prepare:
  push bp
  push bx
@@ -120,6 +128,9 @@ terminal_render_prepare:
  mov word [cs:render_attached],0
 %ifdef ASPECT_EXTERNAL_RENDER
  mov word [cs:render_program_owned],0
+%endif
+%ifdef ASPECT_SNAPSHOT_LEASE
+ mov word [cs:render_snapshot_owned],0
 %endif
  mov word [cs:render_callback],0
  mov word [cs:render_callback+2],0
@@ -165,6 +176,10 @@ terminal_render_revoke:
  mov word [cs:render_attached],0
 %ifdef ASPECT_EXTERNAL_RENDER
  mov word [cs:render_program_owned],0
+%endif
+%ifdef ASPECT_SNAPSHOT_LEASE
+ ; The child has returned; invalidate its service before reusing the frame.
+ mov word [cs:render_snapshot_owned],0
 %endif
  mov word [cs:render_callback],0
  mov word [cs:render_callback+2],0
@@ -276,6 +291,14 @@ render_body:
  je .sound_policy
 %endif
 %ifdef ASPECT_EXTERNAL_RENDER
+%ifdef ASPECT_SNAPSHOT_LEASE
+ cmp di,17
+ je .snapshot_begin
+ cmp di,18
+ je .snapshot_byte
+ cmp di,19
+ je .snapshot_end
+%endif
  cmp di,10
  je .program_end
  cmp word [cs:render_program_owned],0
@@ -569,6 +592,101 @@ render_body:
  mov ax,14
  ret
 %ifdef ASPECT_EXTERNAL_RENDER
+%ifdef ASPECT_SNAPSHOT_LEASE
+.snapshot_begin:
+ cmp word [cs:render_program_owned],2
+ jne .state
+ cmp word [cs:render_snapshot_owned],0
+ jne .state
+ or bx,bx
+ jz .operand
+ cmp bx,8000
+ ja .operand
+ cmp word [_redisplay_active],0
+ jne .state
+ cmp word [_redisplay_live_ready],0
+ jne .state
+ cmp word [_command_menu_active],0
+ jne .state
+ cmp byte [terminal_editor_screen_owned],0
+ jne .state
+ cmp byte [terminal_browser_screen_owned],0
+ jne .state
+ cmp word [cs:terminal_script_window_active],0
+ jne .state
+ cmp word [cs:terminal_script_confirm_active],0
+ jne .state
+ ; Check the frame against the still-retained parent block, not assumptions
+ ; about link order. DOS MCB size includes the PSP; its end is exclusive.
+ push es
+ mov ax,[process_psp]
+ mov cx,ax
+ dec ax
+ mov es,ax
+ cmp [es:1],cx
+ jne .snapshot_bad
+ cmp byte [es:0],'M'
+ je .snapshot_mcb
+ cmp byte [es:0],'Z'
+ jne .snapshot_bad
+.snapshot_mcb:
+ mov dx,[es:3]
+ add dx,cx
+ jc .snapshot_bad
+ add cx,16
+ jc .snapshot_bad
+ mov ax,redisplay_live
+ test ax,15
+ jnz .snapshot_bad
+ shr ax,1
+ shr ax,1
+ shr ax,1
+ shr ax,1
+ mov di,seg redisplay_live
+ add ax,di
+ jc .snapshot_bad
+ cmp ax,cx
+ jb .snapshot_bad
+ add ax,500 ; retained full8000-byte frame, paragraph aligned
+ jc .snapshot_bad
+ cmp ax,dx
+ ja .snapshot_bad
+ pop es
+ mov word [cs:render_snapshot_owned],1
+ xor ax,ax
+ ret
+.snapshot_bad:
+ pop es
+ jmp .state
+.snapshot_byte:
+ cmp word [cs:render_snapshot_owned],1
+ jne .state
+ cmp word [cs:render_program_owned],2
+ jne .state
+ cmp bx,3
+ ja .operand
+ mov ax,redisplay_live
+ cmp bx,2
+ jb .snapshot_low
+ mov ax,seg redisplay_live
+.snapshot_low:
+ test bl,1
+ jz .snapshot_value
+ mov al,ah
+.snapshot_value:
+ xor ah,ah
+ ret
+.snapshot_end:
+ cmp word [cs:render_snapshot_owned],1
+ jne .state
+ cmp word [cs:render_program_owned],2
+ jne .state
+ or bx,bx
+ jnz .operand
+ mov word [cs:render_snapshot_owned],0
+ xor ax,ax
+ ret
+%endif
 .program_begin:
  cmp word [cs:terminal_script_confirm_active],0
  jne .state
@@ -588,6 +706,10 @@ render_body:
  xor ax,ax
  ret
 .program_end:
+%ifdef ASPECT_SNAPSHOT_LEASE
+ cmp word [cs:render_snapshot_owned],0
+ jne .state
+%endif
  cmp word [cs:render_program_owned],0
  je .state
  cmp bx,1
@@ -909,6 +1031,10 @@ render_unsupported: dw 0
 %ifdef ASPECT_EXTERNAL_RENDER
 global render_program_owned,render_program_begins,render_program_ends,render_program_refreshes
 render_program_owned: dw 0
+%ifdef ASPECT_SNAPSHOT_LEASE
+global render_snapshot_owned
+render_snapshot_owned: dw 0
+%endif
 render_program_begins: dw 0
 render_program_ends: dw 0
 render_program_refreshes: dw 0
