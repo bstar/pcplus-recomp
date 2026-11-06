@@ -95,6 +95,11 @@ not been rebuilt with it. Fund that resident cost and prove the existing storage
 lease before binding pre-dequeue hold, receive filter, idle service and command
 entry. Preserve current ASPECT admission, stack and stream capacities.
 
+The subsequent [reviewed parent compiler profile](TERMINAL_SIZE_PROFILE.md)
+saves 1,296 retained bytes without reducing these capacities. Its opt-in parent
+is a separate candidate; the loader and frontend have not yet been added, so
+the saving alone does not close the admission gate.
+
 Original Chat Alt-number keys call the native48CC TEXT sender over the54-byte
 records directly. The frontend must preserve that route rather than silently
 executing all general KEY action kinds. Help, notices, real log/history/TX,

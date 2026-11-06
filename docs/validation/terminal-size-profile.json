@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "kind": "experimental-reviewed-parent-compiler-size-profile",
+  "binary_sha256": "dddff45b5fe361c5fd6be09289b67c35f9b0a329ee648b0144a098dc1e6e9004",
+  "control_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+  "interpreter_sha256": "cbdee1949f0ac6bba34f56ae9c594a17888ef9b5143ee5dca9cd76498737ccfd",
+  "optimized_source_count": 41,
+  "object_bytes_saved": 1283,
+  "retained_bytes_saved": 1296,
+  "minimum_module_bytes": {
+    "control": 478032,
+    "optimized": 476736
+  },
+  "near_bytes": 65488,
+  "near_spare_bytes": 48,
+  "resident_CS_spare_bytes": 58,
+  "exact_ui_frames": 1146,
+  "external_editor_cases": 12,
+  "clean_source_files": 614,
+  "partial_disk_bytes": 4096,
+  "exact_retry_bytes": 65539,
+  "reports": {
+    "layout": {
+      "path": "build/size-profile-layout-audit-20261106/result.json",
+      "sha256": "b07165fb001671b776e5891995c0190b2d2d289961d8eb50a934c50e5192a094"
+    },
+    "linked_menu_reference": {
+      "path": "build/parent-size-ui-compare-20261106/result.json",
+      "sha256": "b5fbd925fcbc8037e52fea8eb4e9ab9deab208fdb0c78332babffe281d3b7799"
+    },
+    "aspect_six_streams_children": {
+      "path": "build/parent-size-aspect-20261106/result.json",
+      "sha256": "f5f4c45c6c512750ea19086a75360f5a00598a97b33218270730b96ec03ac5c3"
+    },
+    "external_editor_dos": {
+      "path": "build/size-profile-editor-20261106/result.json",
+      "sha256": "2a2396e6d7b29677825643ef505e9cf82544822625654e531ad9be2882355271"
+    },
+    "external_editor_layout": {
+      "path": "build/size-profile-editor-layout-20261106/result.json",
+      "sha256": "69be0718cc6098ac4a586782f513403a575e13e8fdd96937d47ed61fb9dbf7bb"
+    },
+    "clean_source": {
+      "path": "build/parent-size-source-proof-20261106/result.json",
+      "sha256": "3605efcf9f8e8e0a93d9a7167af979e53f05d22a9b83051e54f9a02feb247fff"
+    },
+    "stale_profile_rejection": {
+      "path": "build/size-profile-stale-guard-20261106/result.json",
+      "sha256": "38cf3210f06247f7bc673714f453c4e1aee86adb9314568d8eeba557956792ff"
+    },
+    "synchronet_editor_graphics_return": {
+      "path": "build/bbs-lab/results/synchronet/size-profile-synchronet-editor-20261106/proxy-integration.json",
+      "sha256": "141491a14a3d2ee6a4042f0dc3c9b5d445b11dbd5bf8444bbd5c03b912bab1e9"
+    },
+    "enigma_carrier_retry": {
+      "path": "build/bbs-lab/results/enigma/size-profile-enigma-carrier-20261106/carrier-checks.json",
+      "sha256": "1d46d81a08cd85187f41decdb79bdc13e75d81de098335353c99bdf31d97747f"
+    },
+    "enigma_independent_audit": {
+      "path": "build/size-profile-enigma-carrier-audit-20261106/result.json",
+      "sha256": "5f9eaf11671f7d12abaf5c651d3dfd26a067ef4255747456f20eadf0bfc6923b"
+    }
+  },
+  "sources": {
+    "standalone/build_terminal.py": "b9a19b6c652059d8f033e9152aa7f3f4e5e97ffb0527896ae230e57179cd7937",
+    "standalone/terminal_size_profile.json": "3a4069e9d98b44e752f6f0f338c2aa4ac5104a991f5937c13c1ec07d34b2e2a8",
+    "standalone/check_terminal_size_profile.py": "1b9155195269c46ac72eb6ce630708a4f93e22b8394946af3befdeba5d9ac73c"
+  },
+  "selected_package_changed": false,
+  "physical_machine_changed": false,
+  "production_bridge_changed": false,
+  "chat_parent_enabled": false,
+  "scope": "Opt-in capability18/128-pair parent compiler profile, measured memory and scoped software regressions. Original/assembly ABI and capacities unchanged. Enigma: actual DOS8086 COM3/IRQ5, builtin virtual-modem DCD and isolated real SynthModem Telnet, two ASPECT logins and exact binary retry. Synchronet graphics child: existing386/UMB observer/helper profile. No physical Boca/SPA2102/SIP/audio, performance budget or full original parity acceptance. Loader/frontend still require parent integration and admission."
+}

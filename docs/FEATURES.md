@@ -2323,6 +2323,15 @@ checks and the full composed workflow. A 35-file export exactly reproduces the
 storage lease and application hooks still require full parent memory/connection
 acceptance. No application, package-selection or physical gate closes.
 
+The subsequent [reviewed parent compiler profile](TERMINAL_SIZE_PROFILE.md)
+saves 1,296 retained bytes across 41 measured C sources, with capacities and
+near data unchanged. Exact menu frames, six-stream ASPECT/child execution,
+12 external-editor cases, Synchronet editor/graphics return and the Enigma
+carrier-loss/redial/exact-retry workflow pass. A clean 614-file export matches
+exactly; disabled output remains `61757956`. This opt-in preparation does not
+enable Chat or change the selected/deployed package. Its 1,328-byte loader and
+frontend still require full parent admission and connection acceptance.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

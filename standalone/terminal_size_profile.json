@@ -1,0 +1,510 @@
+{
+  "version": 1,
+  "scope": "Measured per-source compiler options for the capability18/128-pair parent; no linker elimination, stack reduction or feature-capacity change. Runtime acceptance is separate.",
+  "compiler_options": {
+    "full": [
+      "-ox",
+      "-os"
+    ],
+    "no-inline": [
+      "-ox",
+      "-os",
+      "-oe=0"
+    ]
+  },
+  "potential_object_saving_bytes": 1283,
+  "sources": {
+    "src/aspect/renderer_client.c": {
+      "profile": "no-inline",
+      "source_sha256": "d71c6ddad5b2702ceb08cfbef63980d9666fe521e94833b04d29310774eb0904",
+      "control_code_data_bytes": [
+        423,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        413,
+        0
+      ]
+    },
+    "src/aspect/renderer_policy.c": {
+      "profile": "full",
+      "source_sha256": "6348ee6a72dbd930ce074e942dcd3baafb7c4b588e0e48d47e14e4c14b4f2474",
+      "control_code_data_bytes": [
+        1414,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1334,
+        0
+      ]
+    },
+    "src/capture/capture_reservation.c": {
+      "profile": "no-inline",
+      "source_sha256": "9ee39b9a6690a6ae25185c46a6d06d4cec9d548274e92d94259cfd9fb7c99079",
+      "control_code_data_bytes": [
+        623,
+        74
+      ],
+      "optimized_code_data_bytes": [
+        622,
+        74
+      ]
+    },
+    "src/clipboard/clipboard.c": {
+      "profile": "no-inline",
+      "source_sha256": "9547621a8ebce3c8707eceaa087a59735945523818a19f215b4e9027a224147a",
+      "control_code_data_bytes": [
+        1539,
+        15
+      ],
+      "optimized_code_data_bytes": [
+        1508,
+        15
+      ]
+    },
+    "src/clipboard/clipboard_ui.c": {
+      "profile": "no-inline",
+      "source_sha256": "d9907992805a4414102fbdfb194163b17a6ef06934c72fd7c4173170ad4f7632",
+      "control_code_data_bytes": [
+        2256,
+        1170
+      ],
+      "optimized_code_data_bytes": [
+        2132,
+        1170
+      ]
+    },
+    "src/config/hook_apply.c": {
+      "profile": "no-inline",
+      "source_sha256": "ccc5308a30acc16d1137c0778d58b9e92b14ea4032103a59058813cff42bc3e8",
+      "control_code_data_bytes": [
+        2098,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        2036,
+        0
+      ]
+    },
+    "src/config/hook_input.c": {
+      "profile": "no-inline",
+      "source_sha256": "d4031c9c276d47043e084ee249ecf5d505e45669e329b1ebcd20877be1380f0d",
+      "control_code_data_bytes": [
+        558,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        554,
+        0
+      ]
+    },
+    "src/config/hook_modem.c": {
+      "profile": "full",
+      "source_sha256": "8e92258be6c95164e41fca890db5704856f2a078dc8c204961e5e9f5e11dc9fa",
+      "control_code_data_bytes": [
+        1089,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1035,
+        0
+      ]
+    },
+    "src/config/hook_return.c": {
+      "profile": "full",
+      "source_sha256": "cf196d6d6d426a0b8c429866499664ac48a43b32834f88e9b60f6c4b72bab34c",
+      "control_code_data_bytes": [
+        1693,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1640,
+        0
+      ]
+    },
+    "src/config/live_configuration.c": {
+      "profile": "full",
+      "source_sha256": "bb32533b8c4ffcc65bfe063e039c56e26711179f59dc31b2de5f489032dab49b",
+      "control_code_data_bytes": [
+        1423,
+        44
+      ],
+      "optimized_code_data_bytes": [
+        1371,
+        44
+      ]
+    },
+    "src/config/live_setup_owner.c": {
+      "profile": "full",
+      "source_sha256": "43f1b73aca727892fb95e186f6d442da6a2857cfd0bbd29043beae02406ff2f5",
+      "control_code_data_bytes": [
+        1978,
+        3296
+      ],
+      "optimized_code_data_bytes": [
+        1964,
+        3296
+      ]
+    },
+    "src/directory/directory_dos.c": {
+      "profile": "no-inline",
+      "source_sha256": "2e39893159d4c3744c58047500a528089607671555af98ba85475950c5a9b887",
+      "control_code_data_bytes": [
+        889,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        859,
+        0
+      ]
+    },
+    "src/filesystem/find_owner.c": {
+      "profile": "no-inline",
+      "source_sha256": "2159637754134ee3933f233147407f5cfba3240f76887b66c138c87e50d74684",
+      "control_code_data_bytes": [
+        397,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        390,
+        0
+      ]
+    },
+    "src/filesystem/path_dialog.c": {
+      "profile": "no-inline",
+      "source_sha256": "c0a01a8ffb462c5063ae7b4b8406b1338da6f496feebb9f196700a9c3b8cc358",
+      "control_code_data_bytes": [
+        2140,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        2136,
+        0
+      ]
+    },
+    "src/filesystem/path_session.c": {
+      "profile": "no-inline",
+      "source_sha256": "c2bd2af1c3d38af395879c05ba6c189e00a8ebad52784e0f608ed9f78ff35747",
+      "control_code_data_bytes": [
+        889,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        879,
+        0
+      ]
+    },
+    "src/filesystem/viewer_admission.c": {
+      "profile": "no-inline",
+      "source_sha256": "98f4d05702bbf339ae86f07aca8ba14a38f8375f479c3875e67e80aff3089283",
+      "control_code_data_bytes": [
+        94,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        90,
+        0
+      ]
+    },
+    "src/filesystem/viewer_decode.c": {
+      "profile": "no-inline",
+      "source_sha256": "098acc45d5a9b7ba2b59dcd521aacbf086932db52c153d1dcc9ef5d753408c54",
+      "control_code_data_bytes": [
+        1236,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1233,
+        0
+      ]
+    },
+    "src/filesystem/viewer_dialog.c": {
+      "profile": "no-inline",
+      "source_sha256": "18ca2a431b6c91bf1ab6f5b6ed3b31b672c0818e28a40e3be2789185b38fbc49",
+      "control_code_data_bytes": [
+        2894,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        2823,
+        0
+      ]
+    },
+    "src/filesystem/viewer_external_dialog.c": {
+      "profile": "no-inline",
+      "source_sha256": "ff1c1ec2a86591cf485ec02475a7f3ad8010cd47281b90f843af8fb24bbeccb4",
+      "control_code_data_bytes": [
+        2132,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        2106,
+        0
+      ]
+    },
+    "src/filesystem/viewer_session.c": {
+      "profile": "no-inline",
+      "source_sha256": "5c308db77e640f977291b2e5d50f4b8ce5de743b2bcdd183427a96da4e9aaa80",
+      "control_code_data_bytes": [
+        3058,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        3045,
+        0
+      ]
+    },
+    "src/mouse/owner.c": {
+      "profile": "full",
+      "source_sha256": "b51789ac4afe74e3d2ac960b59b515e05bf8fd7a955e8ad9e86cd023dfe4c5ce",
+      "control_code_data_bytes": [
+        1654,
+        52
+      ],
+      "optimized_code_data_bytes": [
+        1632,
+        52
+      ]
+    },
+    "src/process/hook_exchange.c": {
+      "profile": "no-inline",
+      "source_sha256": "ed0465f2f25b14b3ac2b311c61034329a54e387ebbaf81d908d03312773cbeb9",
+      "control_code_data_bytes": [
+        2026,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1995,
+        0
+      ]
+    },
+    "src/process/hook_owner.c": {
+      "profile": "no-inline",
+      "source_sha256": "6df8bb49bdd95dd75b6ec16ffcbbdcdb605e618ecbb6756dc1d7ccad07fd971f",
+      "control_code_data_bytes": [
+        2266,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        2253,
+        0
+      ]
+    },
+    "src/recording/dos_backend.c": {
+      "profile": "no-inline",
+      "source_sha256": "a5e3547057d3adb7a9b4f615ba1c7892b2c4781ceb484baee11ec78e1992d923",
+      "control_code_data_bytes": [
+        260,
+        36
+      ],
+      "optimized_code_data_bytes": [
+        257,
+        36
+      ]
+    },
+    "src/recording/foreground.c": {
+      "profile": "no-inline",
+      "source_sha256": "4fa0bfb4d3b8bf0f30546954b18e6c46c999d7a24afd10f8ff6059f641eca9fe",
+      "control_code_data_bytes": [
+        425,
+        392
+      ],
+      "optimized_code_data_bytes": [
+        421,
+        392
+      ]
+    },
+    "src/redisplay/command_menu.c": {
+      "profile": "no-inline",
+      "source_sha256": "55a1a129bdf12f658485a3279fb0f6b3618276b6794e2ad9ea07de96d54cf1c4",
+      "control_code_data_bytes": [
+        12824,
+        84
+      ],
+      "optimized_code_data_bytes": [
+        12712,
+        84
+      ]
+    },
+    "src/redisplay/command_reference.c": {
+      "profile": "no-inline",
+      "source_sha256": "9c12e798e50f5be946eeb4bc7be0e28380ac5e2cce008318ffbe114f88a5be2b",
+      "control_code_data_bytes": [
+        3484,
+        8
+      ],
+      "optimized_code_data_bytes": [
+        3409,
+        8
+      ]
+    },
+    "src/redisplay/elapsed_view.c": {
+      "profile": "no-inline",
+      "source_sha256": "02315d51cd0a7b61c8d2c5524dbea63306ca852469afe0660ff31e667c433f31",
+      "control_code_data_bytes": [
+        792,
+        14
+      ],
+      "optimized_code_data_bytes": [
+        743,
+        14
+      ]
+    },
+    "src/redisplay/redisplay.c": {
+      "profile": "no-inline",
+      "source_sha256": "f0b890813ef4e1d22298051818db5a153bff17c76776bad438df6168b9c4471b",
+      "control_code_data_bytes": [
+        5675,
+        420
+      ],
+      "optimized_code_data_bytes": [
+        5610,
+        420
+      ]
+    },
+    "src/status/status_formatter.c": {
+      "profile": "no-inline",
+      "source_sha256": "4cc9ef228190a7e847342338b2757ba85c610022fc3e9d6b0d1755285b37434b",
+      "control_code_data_bytes": [
+        663,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        642,
+        0
+      ]
+    },
+    "src/terminal/directory_identity.c": {
+      "profile": "full",
+      "source_sha256": "214157e667778f8c1956e30e427faea29cb305997f21d732d9a7cf02a81cbe08",
+      "control_code_data_bytes": [
+        400,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        371,
+        0
+      ]
+    },
+    "src/terminal/gateway_front.c": {
+      "profile": "no-inline",
+      "source_sha256": "27fd390d9de0e64610ec47cf1b52d9acf7aec95fe73f9478e6e45d8b27a18433",
+      "control_code_data_bytes": [
+        1502,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1485,
+        0
+      ]
+    },
+    "src/terminal/hook_transaction.c": {
+      "profile": "full",
+      "source_sha256": "3caa70d94f774c744a390470d4bfb6ccd01f6549eadb8e4c0ae60bb4189bd65b",
+      "control_code_data_bytes": [
+        1099,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1069,
+        0
+      ]
+    },
+    "src/terminal/register_owner.c": {
+      "profile": "full",
+      "source_sha256": "4295d207eb8c6092377b3fe31c1dcc6a781aeaab78b0bb99b3b93b94cd2fc02f",
+      "control_code_data_bytes": [
+        1397,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1361,
+        0
+      ]
+    },
+    "src/terminal/status_transition.c": {
+      "profile": "no-inline",
+      "source_sha256": "302acc782718f6a1e5efabad1aba19ca50e757a39aca843cff2a0080a6e2b4be",
+      "control_code_data_bytes": [
+        1871,
+        2
+      ],
+      "optimized_code_data_bytes": [
+        1826,
+        2
+      ]
+    },
+    "src/transfer/download_compare.c": {
+      "profile": "full",
+      "source_sha256": "82bcfcb4d3cdc6289eaddea561e916c6797838fe49a6a231d3da4edd7a63e2be",
+      "control_code_data_bytes": [
+        573,
+        2
+      ],
+      "optimized_code_data_bytes": [
+        562,
+        2
+      ]
+    },
+    "src/transfer/native_file_bridge.c": {
+      "profile": "no-inline",
+      "source_sha256": "2d33493a85e26c587c2a6f281b4e9ed1b9224669a3a9f4c3f1b4344d2a76f7bf",
+      "control_code_data_bytes": [
+        363,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        358,
+        0
+      ]
+    },
+    "src/transfer/terminal_autostart.c": {
+      "profile": "no-inline",
+      "source_sha256": "e78feccf967c94be6b812b916f702461efddeb816db0f563e0216c1f736793c6",
+      "control_code_data_bytes": [
+        299,
+        114
+      ],
+      "optimized_code_data_bytes": [
+        294,
+        114
+      ]
+    },
+    "src/transfer/terminal_zmodem.c": {
+      "profile": "no-inline",
+      "source_sha256": "381af8e33a2ca28761950b26e9ee9a093a9db3462815c05d48ad991f43273da3",
+      "control_code_data_bytes": [
+        1247,
+        73
+      ],
+      "optimized_code_data_bytes": [
+        1214,
+        73
+      ]
+    },
+    "src/translation/xlt_default.c": {
+      "profile": "full",
+      "source_sha256": "a9f3b1ba201063f4684ff25333846cfc2b7e915712017d09e245c643c7240932",
+      "control_code_data_bytes": [
+        311,
+        11
+      ],
+      "optimized_code_data_bytes": [
+        302,
+        11
+      ]
+    },
+    "src/translation/xlt_live.c": {
+      "profile": "full",
+      "source_sha256": "98a437d8aaaaac1dec6c8fc1c81945b602abd9b6400a11bc9cc3f8ba4989a97f",
+      "control_code_data_bytes": [
+        1933,
+        625
+      ],
+      "optimized_code_data_bytes": [
+        1918,
+        625
+      ]
+    }
+  }
+}

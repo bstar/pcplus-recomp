@@ -14,6 +14,7 @@ parser.add_argument('--file-directory',action='store_true',help='Serviced origin
 parser.add_argument('--external-viewer',action='store_true',help='Configured native-style external Alt-V parameter dialog and guarded COMSPEC handoff; requires session baseline')
 parser.add_argument('--external-editor',action='store_true',help='Original Alt-A external editor using its separate PRM command; implies external viewer')
 parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bounded packing of authored command-browser text')
+parser.add_argument('--optimize-size',action='store_true',help='Experimental reviewed per-source C size profile; stacks and capacities unchanged')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
@@ -307,6 +308,7 @@ if args.file_viewer:out_name+='-file-viewer'
 if args.external_viewer:out_name+='-external-viewer'
 if args.external_editor:out_name+='-external-editor'
 if args.packed_command_ui:out_name+='-packed-ui'
+if args.optimize_size:out_name+='-optimized-size'
 if args.command_ui_pairs==0:out_name+='-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
@@ -689,6 +691,10 @@ config_aliases.update({name:'config_'+short+'_service' for name,short in {
  'batch_upload_close':'bu_close','batch_upload_abort':'bu_abort'}.items()})
 helper_adapters={};zmodem_helper_adapters={};directory_fs_adapters={}
 packed_command_ui=None
+size_profile_path=ROOT/'standalone/terminal_size_profile.json'
+size_profile=json.loads(size_profile_path.read_text())if args.optimize_size else None
+optimized_c_sources={}
+if size_profile:assert size_profile['version']==1
 for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
@@ -783,6 +789,12 @@ for source in c_sources:
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  if args.row_geometry_owner and args.display_row_probe and source==ROOT/'standalone/display_rows_terminal_probe.c':options+=['-dTERMINAL_ROW_GEOMETRY_PROBE']
  compiled_source=source;packed_includes=[]
+ if size_profile:
+  entry=size_profile['sources'].get(str(source.relative_to(ROOT)))
+  if entry:
+   assert hashlib.sha256(source.read_bytes()).hexdigest()==entry['source_sha256'],'Refresh the reviewed size profile after source changes: '+str(source)
+   chosen=size_profile['compiler_options'][entry['profile']]
+   options+=chosen;optimized_c_sources[str(source.relative_to(ROOT))]=chosen
  if args.packed_command_ui and source==ROOT/'src/redisplay/command_menu.c':
   from pack_command_ui import pack
   compiled_source,packed_command_ui=pack(source,OUT,args.command_ui_pairs)
@@ -865,6 +877,7 @@ inputs += [ROOT/'src/transfer/download_compare.h']
 inputs += [ROOT/'standalone/omf_imports.py',Path(__file__).resolve()]
 inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
 if args.packed_command_ui:inputs += [ROOT/'standalone/pack_command_ui.py',ROOT/'src/redisplay/command_ui_codec.h']
+if args.optimize_size:inputs.append(size_profile_path)
 if args.session_projection:inputs += [ROOT/'src/config/prm_projection.h',ROOT/'src/terminal/session_projection.h']
 if args.session_baseline:inputs += [ROOT/'src/terminal/session_baseline.h']
 if args.directory_preview:inputs += [ROOT/'src/terminal/directory_preview.h']
@@ -897,6 +910,8 @@ manifest['experimental_file_viewer']=args.file_viewer
 manifest['experimental_external_viewer']=args.external_viewer
 manifest['experimental_external_editor']=args.external_editor
 manifest['experimental_packed_command_ui']=args.packed_command_ui
+manifest['experimental_optimize_size']=args.optimize_size
+if args.optimize_size:manifest['optimized_c_sources']=optimized_c_sources
 manifest['packed_command_ui']=packed_command_ui
 manifest['experimental_gateway_lookup']=args.gateway_lookup
 manifest['experimental_gateway_handles']=args.gateway_handles
