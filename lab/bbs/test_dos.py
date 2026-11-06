@@ -133,7 +133,10 @@ async def run(args):
  if external_child:
   external_child=external_child.resolve();assert external_child.is_relative_to(ROOT/'build') and external_child.suffix.upper()=='.COM' and fixture is not None
   external_bytes=external_child.read_bytes();(output/'VTEST.COM').write_bytes(external_bytes)
-  fixture=bytearray(fixture);fixture[0x35d:0x39e]=b'D:\\VTEST.COM'.ljust(65,b'\0');fixture=bytes(fixture)
+  tool=getattr(args,'external_command_tool','viewer');offset=0x39e if tool=='editor' else 0x35d
+  fixture=bytearray(fixture);fixture[offset:offset+65]=b'D:\\VTEST.COM'.ljust(65,b'\0')
+  if tool=='editor':fixture[0x35d:0x39e]=b'NO-VIEW.COM'.ljust(65,b'\0')
+  fixture=bytes(fixture)
   (output/'TEST.PRM').write_bytes(fixture)
  observer=getattr(args,'video_observer',None);observer_start=observer_stop='';observer_bytes=None
  if observer:
@@ -270,6 +273,7 @@ if __name__=='__main__':
  p.add_argument('--comspec-fixture',type=Path,help='Explicit source-built test interpreter under build/; copied to owned D: and selected with COMSPEC')
  p.add_argument('--video-observer',type=Path,help='Explicit source-built passive COM observer under build/; install with T and collect after DOS return')
  p.add_argument('--external-viewer-fixture',type=Path,help='Owned COM viewer under build/; configure only synthetic PRM035Dh and retain actual child report')
+ p.add_argument('--external-command-tool',choices=['viewer','editor'],default='viewer',help='Select external launcher PRM field for the owned COM fixture')
  p.add_argument('--video-observer-high',action='store_true',help='Explicitly load the passive test observer in DOSBox UMBs; application memory policy is unchanged')
  p.add_argument('--keyboard-helper-high',action='store_true',help='Explicitly load the test BIOS key producer high; requires the386/XMS/UMB lab setup')
  p.add_argument('--phone-log',action='store_true',help='Enable saved telephone logging to the owned D: fixture using PCPLUS fallback')

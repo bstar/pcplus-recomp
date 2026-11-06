@@ -8,14 +8,15 @@ from test_viewer_dialog_dos import page
 ROOT=release.ROOT;sha=release.sha
 PAYLOAD=b''.join(('L%03d\r\n'%i).encode() for i in range(1,49))
 
-def prepare(out,external=False):
+def prepare(out,external=False,tool='viewer'):
  (out/'VIEW.DAT').write_bytes(PAYLOAD)
  subprocess.run(['nasm','-fbin','-DWATCH_KIND='+('9' if external else '2'),*(['-DEXTERNAL_CHILD'] if external else []),str(ROOT/'standalone/viewer_dialog_watch.asm'),'-o',str(out/'VIEWOBS.COM')],check=True)
  if external:
-  raw=bytearray((out/'TEST.PRM').read_bytes());raw[0x35d:0x39e]=b'D:\\VTEST.COM'.ljust(65,b'\0');(out/'TEST.PRM').write_bytes(raw)
+  raw=bytearray((out/'TEST.PRM').read_bytes());offset=0x39e if tool=='editor' else 0x35d
+  raw[offset:offset+65]=b'D:\\VTEST.COM'.ljust(65,b'\0');(out/'TEST.PRM').write_bytes(raw)
   subprocess.run(['nasm','-fbin','-DVIEWER_GRAPHICS_RETURN',str(ROOT/'standalone/viewer_external_child.asm'),'-o',str(out/'VTEST.COM')],check=True)
 
-def adapter(external=False):
+def adapter(external=False,tool='viewer'):
  source=inspect.getsource(release.run_case)
  replacements={
   "(out / 'TEST.PRM').write_bytes(raw)":"(out / 'TEST.PRM').write_bytes(raw)\n    prepare(out)",
@@ -27,15 +28,19 @@ def adapter(external=False):
  if external:
   source=source.replace("'p1100','escape','p800'","'p1800','p800'")
   source=source.replace('    prepare(out)','    prepare(out)\n    raw=(out / \'TEST.PRM\').read_bytes()',1)
- m=types.ModuleType('viewer_transfer_release');m.__dict__.update(release.__dict__);m.prepare=lambda out:prepare(out,external)
+ if tool=='editor':source=source.replace("'a-v'","'a-a'")
+ m=types.ModuleType('viewer_transfer_release');m.__dict__.update(release.__dict__);m.prepare=lambda out:prepare(out,external,tool)
  exec(compile(source,release.__file__,'exec'),m.__dict__);return m
 
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ['terminal','output']:p.add_argument('--'+n,type=Path,required=True)
+ p.add_argument('--tool',choices=['viewer','editor'],default='viewer')
  p.add_argument('--case',action='append');p.add_argument('--jobs',type=int,choices=[1,2],default=1);p.add_argument('--external-viewer',action='store_true');a=p.parse_args()
+ if a.tool=='editor':a.external_viewer=True
  binary=a.terminal.resolve();manifest=json.loads(binary.with_name('manifest.json').read_text());assert manifest['experimental_file_viewer'] and sha(binary)==manifest['binary_sha256']
  if a.external_viewer:assert manifest['experimental_external_viewer']
+ if a.tool=='editor':assert manifest['experimental_external_editor']
  names=['standalone/test_viewer_transfer_dos.py','standalone/test_release_transfers_dos.py','standalone/viewer_dialog_watch.asm','standalone/test_viewer_dialog_dos.py','standalone/test_terminal.py','standalone/modem_fixtures.py','standalone/terminal_config_fixtures.py','standalone/test_terminal_transfer_dos.py','standalone/test_terminal_upload_dos.py','standalone/test_terminal_ymodem_dos.py','standalone/test_terminal_zmodem_dos.py']
  names+=['standalone/viewer_external_child.asm']
  frozen=dict(manifest['sources']);frozen.update({n:sha(ROOT/n) for n in names})
@@ -62,7 +67,7 @@ def main():
     peer.log('keyboard-after-viewer');return
    peer.receive()
   raise TimeoutError('No post-viewer keyboard marker')
- Peer.ready=ready;m=adapter(a.external_viewer)
+ Peer.ready=ready;m=adapter(a.external_viewer,a.tool)
  def run(recipe):
   result=m.run_case(recipe,binary,manifest,out);folder=out/recipe['name'];raw=(folder/'VIEWUI.BIN').read_bytes();words=struct.unpack_from('<9H',raw)
   checks=dict(result['checks'],complete_viewer_observer=len(raw)==12083 and words[:2]==(0x5656,15),exact_live_frame_return=raw[18:4018]==raw[8018:12018],exact_cursor_shape_return=words[3:5]==words[7:9],exact_viewer_page=raw[4018:8018]==page([('L%03d'%i).encode() for i in range(1,25)]),viewer_input_unchanged=(folder/'VIEW.DAT').read_bytes()==PAYLOAD,viewer_filename_not_remote=b'VIEW.DAT' not in (folder/'serial.bin').read_bytes(),startup_path=raw[12018]==3 and raw[12019:].split(b'\0',1)[0]==b'')
@@ -75,5 +80,5 @@ def main():
   with concurrent.futures.ThreadPoolExecutor(max_workers=a.jobs) as pool:cases=list(pool.map(run,recipes))
  finally:Peer.ready=original
  for n,h in frozen.items():assert sha(ROOT/n)==h,n
- (out/'result.json').write_text(json.dumps(dict(passed=True,binary_sha256=sha(binary),external_viewer=a.external_viewer,cases=cases,sources=frozen,original_inputs=[],scope=__doc__+(' External variant requires the owned mode13h child completion marker before capturing the restored live frame.' if a.external_viewer else '')),indent=2)+'\n')
+ (out/'result.json').write_text(json.dumps(dict(passed=True,binary_sha256=sha(binary),external_viewer=a.external_viewer,external_command_tool=a.tool,cases=cases,sources=frozen,original_inputs=[],scope=__doc__+(' External variant requires the owned mode13h child completion marker before capturing the restored live frame.' if a.external_viewer else '')),indent=2)+'\n')
 if __name__=='__main__':main()

@@ -26,7 +26,11 @@ def login_script():
     return source+wait('FSEditor v1.105','EDITOR')+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25);p.add_argument('--status-hidden',type=int,choices=[0,1],default=0);p.add_argument('--size-probe',action='store_true');p.add_argument('--phone-log',action='store_true');p.add_argument('--gateway-overlay',action='store_true');p.add_argument('--file-directory-overlay',action='store_true');p.add_argument('--file-viewer-overlay',action='store_true');p.add_argument('--external-viewer-overlay',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25);p.add_argument('--status-hidden',type=int,choices=[0,1],default=0);p.add_argument('--size-probe',action='store_true');p.add_argument('--phone-log',action='store_true');p.add_argument('--gateway-overlay',action='store_true');p.add_argument('--file-directory-overlay',action='store_true');p.add_argument('--file-viewer-overlay',action='store_true');p.add_argument('--external-viewer-overlay',action='store_true');p.add_argument('--external-editor-overlay',action='store_true');a=p.parse_args()
+    if a.external_editor_overlay:
+        assert not a.external_viewer_overlay
+        a.external_viewer_overlay=True
+    external_tool='editor' if a.external_editor_overlay else 'viewer'
     if a.external_viewer_overlay:assert not any((a.file_viewer_overlay,a.file_directory_overlay,a.gateway_overlay,a.phone_log)) and a.display_rows==25 and a.status_hidden==0
     if a.file_directory_overlay:assert not a.gateway_overlay and not a.phone_log and a.display_rows==25 and a.status_hidden==0
     if a.file_viewer_overlay:assert not a.file_directory_overlay and not a.gateway_overlay and not a.phone_log and a.display_rows==25 and a.status_hidden==0
@@ -65,7 +69,7 @@ def main():
     shutil.copyfile(binary,stage/'TERMINAL.EXE');shutil.copyfile(child,stage/'ASPECT.EXE')
     source=login_script();(stage/'SYNC.ASP').write_text(source);(stage/'SYNC.ASX').write_bytes(compile_source(source))
     helper=out/'EDITKEY.COM'
-    subprocess.run(['nasm','-fbin',*(['-DGATEWAY_ROUNDTRIP'] if a.gateway_overlay else []),*(['-DFILE_DIRECTORY_ROUNDTRIP'] if a.file_directory_overlay else []),*(['-DFILE_VIEWER_ROUNDTRIP'] if a.file_viewer_overlay else []),*(['-DEXTERNAL_VIEWER_ROUNDTRIP','-DRECORD_KEY_SEGMENT'] if a.external_viewer_overlay else []),'-DSCREEN_REFERENCE_FREEZE','-DAUDIO_SYNC_EDITOR_SCREEN_BYTES='+str((layout['physical_rows'] if layout else 25)*160),'-DAUDIO_SYNC_EDITOR_SETTLE=72','-DAUDIO_SYNC_EDITOR_KEY_WAIT=9','-DAUDIO_SYNC_EDITOR_FINAL_WAIT=54','-DAUDIO_SYNC_EDITOR_WATCHDOG_TICKS=2160',str(ROOT/'lab/bbs/audio_synchronet_editor_keys.asm'),'-o',str(helper)],check=True)
+    subprocess.run(['nasm','-fbin',*(['-DGATEWAY_ROUNDTRIP'] if a.gateway_overlay else []),*(['-DFILE_DIRECTORY_ROUNDTRIP'] if a.file_directory_overlay else []),*(['-DFILE_VIEWER_ROUNDTRIP'] if a.file_viewer_overlay else []),*(['-DEXTERNAL_VIEWER_ROUNDTRIP','-DRECORD_KEY_SEGMENT'] if a.external_viewer_overlay else []),*(['-DEXTERNAL_EDITOR_ROUNDTRIP'] if a.external_editor_overlay else []),'-DSCREEN_REFERENCE_FREEZE','-DAUDIO_SYNC_EDITOR_SCREEN_BYTES='+str((layout['physical_rows'] if layout else 25)*160),'-DAUDIO_SYNC_EDITOR_SETTLE=72','-DAUDIO_SYNC_EDITOR_KEY_WAIT=9','-DAUDIO_SYNC_EDITOR_FINAL_WAIT=54','-DAUDIO_SYNC_EDITOR_WATCHDOG_TICKS=2160',str(ROOT/'lab/bbs/audio_synchronet_editor_keys.asm'),'-o',str(helper)],check=True)
     generated_paths=[*stage.iterdir(),helper]
     observer=None;gateway_child=None
     if a.gateway_overlay:
@@ -84,6 +88,7 @@ def main():
     external_child=None
     if a.external_viewer_overlay:
         assert json.loads((binary.parent/'manifest.json').read_text())['experimental_external_viewer']
+        if a.external_editor_overlay:assert json.loads((binary.parent/'manifest.json').read_text())['experimental_external_editor']
         from external_viewer_bbs_support import prepare
         external_child,observer=prepare(out/'external-viewer');generated_paths += [external_child,observer]
     if a.phone_log:
@@ -105,6 +110,7 @@ def main():
         if a.file_directory_overlay:command+=['--video-observer',str(observer)]
         if a.file_viewer_overlay:command+=['--video-observer',str(observer),'--video-observer-high']
         if a.external_viewer_overlay:command+=['--external-viewer-fixture',str(external_child),'--video-observer',str(observer),'--video-observer-high','--keyboard-helper-high']
+        if external_child:command+=['--external-command-tool',external_tool]
         with (out/'harness.log').open('w') as log:code=subprocess.run(command,cwd=ROOT,stdout=log,stderr=log,timeout=175).returncode
         base_result=json.loads((out/'result.json').read_text())
         closed=json.loads((bridge/'1-closed.json').read_text());proof=json.loads((bridge/'1-screen-reference.json').read_text())
@@ -137,7 +143,7 @@ def main():
             from external_viewer_bbs_support import audit as audit_external
             import struct
             segment=struct.unpack('<H',(out/'VFSEG.BIN').read_bytes())[0]
-            result['external_viewer']=audit_external(out)
+            result['external_viewer']=audit_external(out,external_tool)
             checks['actual_external_viewer_roundtrip']=result['external_viewer']['passed']
             checks['external_observer_actually_high']=segment>=0xa000 and base_result['video_observer_high_requested']
             result['external_observer_segment']=segment

@@ -78,3 +78,49 @@ workflows, editor-specific transfer/carrier-loss composition, arbitrary third
 party editors, and separate PCEDIT functionality remain open. Prior viewer
 receipts are evidence for their exact prior executable, not automatic acceptance
 of this optional editor candidate.
+
+## Enigma, transfer and recovery composition
+
+The later [composition receipt](validation/editor-composition.json) extends this
+same93f08d0c executable with an actual Enigma editor session through the current
+SynthModem source. Alt-A runs the owned mode13h child, then the post-child marker
+gates an exact4000-byte editor/cursor/shape return. Subsequent ordinary editing
+and draft abort pass. Independent pyte interpretation matches1920 final cells
+with zero differences. The editor setting differs deliberately from the viewer
+setting; the receipt checks that the child used the editor's field.
+
+This accepted path uses250ms input-sequence framing and20ms serial input pacing.
+An initial run with framing disabled and2ms pacing restores the editor but fails
+later editing semantics and final-screen comparison. A paired reviewed-v6
+control with those same disabled-framing settings fails those same checks.
+That bounds the result as an existing compatibility limit rather than an
+editor-specific regression. The workstation's private preload already selects
+250ms framing; these tests do not change or restart its service. TCP write
+boundaries alone are not a universal stream-parsing guarantee.
+
+Six further DOS8086 workflows launch the graphics child through Alt-A before
+X/Y/ZMODEM receive/send, including binary bytes, ZMODEM escaping and same-session
+YMODEM cancel/retry. All pass exact protocol/file/frame/owner checks. Four
+carrier-recovery workflows also pass: loss during bounded text and graphics
+children, and loss during a partial YMODEM receive or ZMODEM upload after the
+child. Independent peers require actual protocol progress before disconnecting;
+the parent redials and accepts fresh keyboard input in the same DOS process.
+
+Synchronet is **not accepted** for this editor candidate. Its ASPECT login never
+starts in the current constrained lab. A fresh runner rebuild matches the
+reviewed23caac93 interpreter exactly. A paired run with the reviewed2d626fb0
+terminal, same interpreter/proxy/fixture and the same verified upper-memory
+observer/key-helper placements successfully logs in, invokes the external
+viewer, restores the editor and aborts the draft. The new terminal retains
+482880 module bytes versus482400 in the reviewed parent:480 more bytes, while
+DGROUP and resident-code extents stay unchanged. This is evidence of a tight
+parent/child admission constraint; a specific DOS allocation error has not
+been captured. Fixing and verifying memory admission is the next application
+gate. Do not promote this optional candidate on the strength of Enigma alone.
+
+The first Synchronet attempt was refused by the stale ASPECT source manifest
+before DOS started. A rebuild with a relative output path also failed before
+producing the runner; the accepted rebuilt runner uses an absolute output path.
+Those attempts are not BBS or application acceptance evidence. All failed actual
+DOS runs remain retained and excluded from accepted-path claims. No package
+selector, installed file, private configuration or production service changed.

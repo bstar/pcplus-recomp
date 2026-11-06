@@ -1,0 +1,90 @@
+{
+  "passed": true,
+  "binary_sha256": "93f08d0cf3fd4174718e7ca727758ddb63f4e6f0ecd1471b3fb00c41c1f4d800",
+  "enigma": {
+    "path": "build/bbs-lab/results/enigma/editor-v2-enigma-framed-20261106/proxy-integration.json",
+    "sha256": "e31145b2f3994e57032a4048ec071c6603f32ae0fb7d7011a8f5e43e445ab682"
+  },
+  "independent_screen": {
+    "path": "build/bbs-lab/results/enigma/editor-v2-enigma-framed-20261106/screen-reference-audit.json",
+    "sha256": "00b4db40150b59eafacf7f87bf70299254806f1cf5173f0caac54f5c410b5368"
+  },
+  "matched_cells": 1920,
+  "different_cells": 0,
+  "transfers": {
+    "path": "build/editor-transfers-20261106/result.json",
+    "sha256": "c52537897ba7741d5ed5aeb5cca51fd0adf40fad2bf7507281ccefb7de8e4d6c"
+  },
+  "carrier_recovery": [
+    {
+      "path": "build/editor-child-carrier-20261106/result.json",
+      "sha256": "079ea93b561ae0d71349a750dc8580de314d5e37f732658388dd31ee1ace75f6"
+    },
+    {
+      "path": "build/editor-transfer-carrier-20261106/result.json",
+      "sha256": "71ef09ce9f829c6a6091e320dddf46c5a2f714467b00b8ecc21dfab5b8e2af1d"
+    }
+  ],
+  "framing_disabled_failures": [
+    {
+      "report": {
+        "path": "build/bbs-lab/results/enigma/editor-v2-enigma-20261106/proxy-integration.json",
+        "sha256": "ba3f1eeccd8ee82214045de2c856ec80591ec824d2121d9df23d1717166d47d4"
+      },
+      "failed_checks": [
+        "semantic_audit",
+        "exact_screen"
+      ]
+    },
+    {
+      "report": {
+        "path": "build/bbs-lab/results/enigma/viewer-v6-unframed-control-20261106/proxy-integration.json",
+        "sha256": "f3d8f1d5102270c317ca9d205ae142ea0219235970023134e2c4f53954560043"
+      },
+      "failed_checks": [
+        "semantic_audit",
+        "exact_screen"
+      ]
+    }
+  ],
+  "synchronet_unaccepted": {
+    "path": "build/bbs-lab/results/synchronet/editor-v2-synchronet-run-20261106/proxy-integration.json",
+    "sha256": "c2defd6520312418387fd9b18b8f653c891e80f3fd05403f8d561593bb1cf0c4"
+  },
+  "synchronet_reviewed_control": {
+    "path": "build/bbs-lab/results/synchronet/viewer-v6-synchronet-control-20261106/proxy-integration.json",
+    "sha256": "6c2962664f6e78886cd705c9e7a53723cfa5748facae6732fc42e8e457f7afbc"
+  },
+  "retained_module_bytes": 482880,
+  "reviewed_module_bytes": 482400,
+  "additional_parent_bytes": 480,
+  "synchronet_failed_checks": [
+    "actual_ASPECT_login",
+    "frozen_editor_frame",
+    "actual_CPR_boundary",
+    "fixture_CPR_consumed",
+    "stock_editor_entered",
+    "draft_aborted",
+    "insert_toggled_overtype",
+    "home_marker_at_line_start",
+    "end_marker_at_line_end",
+    "delete_erases_final_character",
+    "tab_advances_to_next_stop",
+    "page_keys_report_document_boundaries",
+    "ctrl_y_delete_line_response",
+    "actual_external_viewer_roundtrip"
+  ],
+  "application_changed": false,
+  "deployment_changed": false,
+  "sources": {
+    "standalone/record_editor_composition.py": "0dbcf9019a04d6a53b117229477df2e41d5db174531b6548d4e32b5c18c786eb",
+    "standalone/terminal_memory.py": "71f5f8b8ca1c2bcdc8ec432c6d28e4785e110d7f7b801b8b5b32a9117c41dfac"
+  },
+  "limits": [
+    "Receipt seals the stated successes and failures; it does not accept every compatibility gate.",
+    "Enigma requires tested framing250ms and20ms paced serial input; disabled-framing failures remain explicit.",
+    "Synchronet editor candidate did not start its ASPECT login; remains unaccepted.",
+    "Synthetic DOS serial/DCD and loopback BBSes; physical SIP/audio/CTS and arbitrary children remain open.",
+    "No selected-package, private settings, live bridge or hardware changes."
+  ]
+}

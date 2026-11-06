@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The editor's [composed compatibility tests](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
+pass framed Enigma with1920 exact reference cells, six X/Y/ZMODEM workflows and
+four child/transfer carrier-loss redials. Disabled-framing failures also occur
+in the reviewed viewer control. Synchronet remains unaccepted: its ASPECT login
+fails to start in the480-byte-larger candidate while the paired reviewed parent
+succeeds. Memory admission is the next gate; installed selection is unchanged.
+
 The opt-in [external editor launcher](EXTERNAL_EDITOR.md) now restores Alt-A
 and both menu routes using its separately recovered PRM setting. Original DOS
 launch observations and maintained frame/child-return tests cover the launcher;

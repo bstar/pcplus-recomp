@@ -47,7 +47,11 @@ keys:
 keys:
 %ifdef EXTERNAL_VIEWER_ROUNDTRIP
 %define VIEWER_RETURN_WAIT
+%ifdef EXTERNAL_EDITOR_ROUNDTRIP
+ dw 1e00h,1950h,1e41h,2247h,1245h,342eh,2044h,1e41h,1454h,1c0dh
+%else
  dw 2f00h,1950h,1e41h,2247h,1245h,342eh,2044h,1e41h,1454h,1c0dh
+%endif
 %endif
 %ifdef FILE_VIEWER_ROUNDTRIP
 %define VIEWER_RETURN_WAIT
@@ -147,7 +151,11 @@ handler:
 .listing_wait_done:
 %endif
 %ifdef VIEWER_RETURN_WAIT
+%ifdef EXTERNAL_EDITOR_ROUNDTRIP
+ cmp word [bx-2],1e00h
+%else
  cmp word [bx-2],2f00h
+%endif
  jne .viewer_enter
  mov word [ticks],18
 .viewer_enter:

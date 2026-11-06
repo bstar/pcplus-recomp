@@ -17,7 +17,8 @@ def prepare(folder):
  subprocess.run(['nasm','-fbin',str(folder/'child.asm'),'-o',str(child)],check=True)
  return child,observer
 
-def audit(output):
+def audit(output,tool='viewer'):
+ assert tool in ('viewer','editor')
  output=Path(output);raw=(output/'VFVIEW.BIN').read_bytes();words=struct.unpack_from('<12H',raw) if len(raw)==12024 else None
  wire=(output/'serial-received.bin').read_bytes();path=output/'VCHILD.BIN';child=path.read_bytes() if path.exists() else b''
  prompt=raw[8024:12024];settings=(output/'TEST.PRM').read_bytes()
@@ -30,9 +31,11 @@ def audit(output):
   actual_child=len(child)==202 and struct.unpack_from('<2H',child)==(0x5645,1),
   exact_child_tail=len(child)==202 and child[8:19]==b'\x09 PAGE.DAT\r',
   original_drive_CWD=len(child)==202 and struct.unpack_from('<H',child,136)[0]==2 and child[138]==0,
-  synthetic_configuration=settings[0x35d:0x39e]==b'D:\\VTEST.COM'.ljust(65,b'\0'),
+  synthetic_configuration=settings[(0x39e if tool=='editor' else 0x35d):(0x3df if tool=='editor' else 0x39e)]==b'D:\\VTEST.COM'.ljust(65,b'\0'),
   parameters_consumed_locally=b'PAGE.DAT' not in wire,
   subsequent_editor_keys=b'ABCDE' in wire and b'UNSAVED' in wire)
- r=dict(passed=all(checks.values()),checks=checks,observer_words=words,capture_sha256=sha(output/'VFVIEW.BIN'),child_sha256=sha(path) if child else None,
+ if tool=='editor':checks['independent_viewer_setting']=settings[0x35d:0x39e]==b'NO-VIEW.COM'.ljust(65,b'\0')
+ r=dict(passed=all(checks.values()),external_command_tool=tool,checks=checks,observer_words=words,capture_sha256=sha(output/'VFVIEW.BIN'),child_sha256=sha(path) if child else None,
   sources={n:sha(ROOT/n) for n in SOURCES},scope='Actual Alt-V parameter dialog and external COMSPEC /c owned child inside the stock unsaved editor. Child records PSP/CWD, enters mode13h, then sends a private observer-only completion marker. Return capture is gated on that marker and text-mode editor visibility; no pre-EXEC frame can pass. Full4000-byte editor/cursor/shape preservation and subsequent ordinary editing. No product-memory writes, terminal replies, physical/SIP/audio acceptance or broad external-program claim.')
- (output/'external-viewer-audit.json').write_text(json.dumps(r,indent=2)+'\n');return r
+ r['scope']=r['scope'].replace('Alt-V', 'Alt-A' if tool=='editor' else 'Alt-V')
+ (output/('external-'+tool+'-audit.json')).write_text(json.dumps(r,indent=2)+'\n');return r
