@@ -80,6 +80,52 @@ A fresh unobserved8086 NOCLEAR control also passes after the harness changes.
 The upper-memory settings are opt-in emulator configuration. No application,
 physical memory-manager configuration or installed payload is changed.
 
+## Allocation pressure and packing control
+
+The [allocation-pressure receipt](validation/program-allocation-pressure.json)
+extends the same passive witness to DOS48h allocation requests. It forwards the
+original request once, records the returned AX/BX/carry and propagates those
+results. The predecessor receives the original interrupt FLAGS; the wrapper
+preserves its result and caller stack. Thirty-six assembled component cases
+include actual success/error result propagation with both input carry and
+direction-flag values. These model the predecessor service, separate from DOS.
+
+The unchanged72f3ced9 image's paired386/XMS/UMB run records no allocation requests
+in the passing NOCLEAR control. Each failing SAVE invocation requests252 DOS
+paragraphs and gets error8, with only229 paragraphs available. That is a real
+368-byte deficit for the recorded request. It narrows the memory investigation,
+but does not by itself expose the final `native_program_result`: Watcom's
+[`_fmalloc` implementation](https://github.com/open-watcom/open-watcom-v2/blob/master/bld/clib/heap/c/fmalloc.c)
+can fall back to the near heap after failing a segment allocation. Direct
+display/process return-state observation remains necessary before assigning the
+entire failure to one source function.
+
+An opt-in128-pair UI dictionary supplies a controlled smaller parent. It packs
+the same230 ASCII literals from12738 to6795 bytes with a256-byte dictionary and
+maximum expansion depth4. The decoder retains its64-byte stack and no new
+DGROUP storage. A conditional full-byte-range loop avoids Watcom's always-true
+comparison warning when all128 high-byte values are dictionary tokens. The
+preceding64-pair and zero-pair images still reproduce exactly, including the
+installed72f3ced9 image. The default remains64 pairs.
+
+The experimental867cb827 image retains477664 bytes instead of478656, freeing992
+bytes/62 paragraphs; near data/stack65488 and resident code65516 are unchanged.
+Its1146 complete UI frames and return/owner states match the corrected
+uncompressed decoder control; twelve legacy search selections/no-match controls
+pass. A fresh export of2028 public sources, without originals, prior objects,
+private configuration or ancestor Git, reproduces both867cb827 and the disabled
+93f08d0c image under Nix.
+
+This smaller parent gets a successful252-paragraph allocation in the SAVE
+diagnostic, then a successful38-paragraph allocation, then a failed254-paragraph
+request with no available block. Both nested attempts show that sequence.
+Unobserved8086 SAVE still fails before its child marker; NOCLEAR still passes.
+The optimization is therefore retained as an unselected experiment, not a fix
+or a release. Do not reduce heap growth or six-stream capacity based on this
+partial improvement. Next identify the precise display/process results and the
+later allocation's owner, then choose a resource-lifetime or placement change
+that retains the complete workflow.
+
 ## Repeat
 
 Run through the pinned Nix environment, choosing fresh output names:

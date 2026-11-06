@@ -1,0 +1,316 @@
+{
+  "checkpoint_recorded": true,
+  "saved_program_fixed": false,
+  "installed_candidate_changed": false,
+  "source_commit": "642f315",
+  "baseline_sha256": "72f3ced9e6090cd0e443ce822184c04612e8d244b51fc9e16f1f1ac196c86b09",
+  "experimental_sha256": "867cb82732c9244c0b049bde8601533430356f0f6d6b9038a05bcab1608d6d0e",
+  "first_request_paragraphs": 252,
+  "largest_available_paragraphs": 229,
+  "first_deficit_bytes": 368,
+  "extra_retained_bytes_recovered": 992,
+  "results": {
+    "allocator_hook": {
+      "path": "build/program-allocation-hook-policy-v2-20261106/result.json",
+      "sha256": "3a1aadcc8143728e9075bbe9d6d0906f2d4a319c850575ff85c14953c3d032d4",
+      "passed": true
+    },
+    "baseline_noclear": {
+      "path": "build/program-pack64-noclear-allocation-final-20261106/result.json",
+      "sha256": "8db2a89cdc14c492c8d1368ac191d826c92ec641fb9a3566db129bfb1d200a06",
+      "passed": true,
+      "exit_watch": {
+        "launches": 4,
+        "resident_segment": 52299,
+        "exits": [
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          }
+        ],
+        "allocations": []
+      }
+    },
+    "baseline_save": {
+      "path": "build/program-pack64-save-allocation-final-20261106/result.json",
+      "sha256": "46ea4a73b72a25604ab278ef3e105231777519ba7d824b65ad75d70604ab1981",
+      "passed": false,
+      "exit_watch": {
+        "launches": 4,
+        "resident_segment": 52299,
+        "exits": [
+          {
+            "exit": 10,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 10,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          }
+        ],
+        "allocations": [
+          {
+            "paragraphs": 252,
+            "ax": 8,
+            "bx": 229,
+            "carry": 1
+          },
+          {
+            "paragraphs": 252,
+            "ax": 8,
+            "bx": 229,
+            "carry": 1
+          }
+        ]
+      }
+    },
+    "pack128_save_trace": {
+      "path": "build/program-pack128-save-allocation-20261106/result.json",
+      "sha256": "b76a5af8089da04520862c7987edbdaad4663cb86728e3e9ee5637aa1f7ab771",
+      "passed": false,
+      "exit_watch": {
+        "launches": 4,
+        "resident_segment": 52299,
+        "exits": [
+          {
+            "exit": 10,
+            "ds": 37269,
+            "ss": 37269,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37269,
+            "ss": 37269,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37269,
+            "ss": 37269,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 10,
+            "ds": 37269,
+            "ss": 37269,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          }
+        ],
+        "allocations": [
+          {
+            "paragraphs": 252,
+            "ax": 40668,
+            "bx": 252,
+            "carry": 0
+          },
+          {
+            "paragraphs": 38,
+            "ax": 40921,
+            "bx": 38,
+            "carry": 0
+          },
+          {
+            "paragraphs": 254,
+            "ax": 8,
+            "bx": 0,
+            "carry": 1
+          },
+          {
+            "paragraphs": 252,
+            "ax": 40668,
+            "bx": 252,
+            "carry": 0
+          },
+          {
+            "paragraphs": 38,
+            "ax": 40921,
+            "bx": 38,
+            "carry": 0
+          },
+          {
+            "paragraphs": 254,
+            "ax": 8,
+            "bx": 0,
+            "carry": 1
+          }
+        ]
+      }
+    },
+    "pack128_noclear_8086": {
+      "path": "build/program-pack128-noclear-8086-20261106/result.json",
+      "sha256": "44381d69914819ae64df39c3fb33a5f83518a19d4b03d40ccce838a675f2e3c9",
+      "passed": true
+    },
+    "pack128_save_8086": {
+      "path": "build/program-pack128-save-8086-20261106/result.json",
+      "sha256": "4454d465649e5dfdb216fca147b2b9da94b4b8f26613f18d1e555f7908de475e",
+      "passed": false
+    },
+    "pack128_frames": {
+      "path": "build/program-pack128-ui-frames-20261106/result.json",
+      "sha256": "e1f026a9053753e66ba201a81597ce24390fc00f64a5bce49cb1ff7368fbeec5",
+      "passed": true
+    },
+    "pack128_search": {
+      "path": "build/program-pack128-search-v2-20261106/result.json",
+      "sha256": "b6e32f6deaebc4d0d2e199e22229edd8dcd1b2dfd44b11c60747d0eb7bdbb15e",
+      "passed": true
+    },
+    "pack128_source": {
+      "path": "build/program-pack128-public-source-20261106/result.json",
+      "sha256": "e8edc0486495b687e35b249d4e347387f43a9cab5f5cff5e520f1df8bbca6eb6",
+      "passed": true
+    }
+  },
+  "limits": [
+    "386/XMS/UMB passive trace; allocation hook forwards the original DOS request once and returns exact DOS results. No extra allocation or product-memory writes.",
+    "First failed DOS allocation is observed; exact native display/process return status still needs measurement.",
+    "128-pair candidate reproduces source and UI but remains unselected because SAVE still fails; later254-paragraph request has DOS error8/largest block0.",
+    "Ordinary8086 SAVE failure remains reproduced; no physical modem or full original parity claim."
+  ]
+}
