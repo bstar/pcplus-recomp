@@ -8,6 +8,12 @@ Enigma carrier/retry and Synchronet editor regressions pass. The accepted
 Other Help contexts, broader input/mouse/video parity and physical acceptance
 remain open; this candidate has not replaced the physical selection.
 
+The [four-height Help follow-up](validation/global-help-rows.json) repeats all
+six main-loop workflows at25/28/43/50 rows.24 DOS8086 sessions verify actual
+height, full frame/cursor restoration, bottom-row Help footer and resumed
+serial/parser work. The four products are unchanged; the extended checker
+also passes a fresh5301-file cold-source rebuild and normal/flow runs.
+
 The [packed command UI](PACKED_COMMAND_UI.md) now recovers4224 parent bytes with
 lossless text and correct far category labels.1146 linked frames and18 actual
 DOS modal workflows pass; the unchanged512-byte-policy ASPECT runner again

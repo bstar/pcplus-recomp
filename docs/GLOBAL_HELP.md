@@ -11,6 +11,7 @@ Build with the pinned toolchain:
 ```sh
 ./tools/dev --command python standalone/build_global_help_profile.py --output build/my-help-profile
 ./tools/dev --command python standalone/test_global_help_main.py --package build/my-help-profile --output build/my-help-test
+./tools/dev --command python standalone/test_global_help_rows.py --package build/my-help-profile --output build/my-help-rows
 ./tools/dev --command python standalone/prove_global_help_source.py --package build/my-help-profile --output build/my-help-source
 ```
 
@@ -75,8 +76,53 @@ previous objects or analysis databases. The unchanged helper separately has
 18 original/source DOS comparisons at25/50 rows with144 matching full-screen
 frames and cursor states; see [the component report](HELP_PROGRAM.md).
 
-These are bounded emulator and owned BBS-lab checks. Main Help integration
-is currently tested at25 rows. The BBS regressions exercise the new parent,
+The [four-height follow-up](validation/global-help-rows.json) tests all six
+main-loop workflows at25/28/43/50 rows:24 independent DOS8086 sessions. It
+checks the actual BDA height and the helper's footer at the last visible row,
+in addition to complete reference/cursor restoration and resumed serial/parser
+work. All four products are unchanged. A fresh5301-file source export repeats
+the exact build and25-row normal/flow cases with the extended checker.
+The earlier5296-file receipt remains a historical checkpoint.
+The flow fixture places its pre-Help text in the connection banner so the
+first saved cursor has a deterministic location. A second timed update is
+held until the observed XON. An earlier timed pre-Help update raced the
+reference snapshot in one50-row run; its retained capture showed that input
+arriving after the first snapshot but before Help. The strict cursor assertion
+was retained; the fixture ordering was corrected. Matrix capture names include
+a run identity so another run cannot reuse a previous run's directory.
+
+These are bounded emulator and owned BBS-lab checks. The BBS regressions exercise the new parent,
 not a Help invocation during a real BBS session. Physical Boca/SPA2102 audio,
 all Help contexts, mouse navigation, complete input editing, alternate video
 modes and full original feature parity remain open.
+
+## Next original context: Chat
+
+Static REA evidence identifies the next mapping without inventing a Chat key:
+the original Chat controller at linear1E828 writes3 to the context word397A
+at1E8E5 on its input/RX loop. It calls6530 before normal keyboard handling.
+That poll consumes key2C00 when the signed context is nonnegative, calls the
+native57AE Help producer, and returns zero to its caller. The blocking64FE
+wrapper waits for a nonzero key. This places Help ahead of ordinary Chat
+input; it is separate from the already recovered6D00 Alt-F6 Redisplay path.
+
+- Controller Evidence: `ev_447c3458b0576257fb3285adb5c875046e217d6ada751d2f0bf02fd88329df8e`.
+- Poll Evidence: `ev_05d576e12ae30194f84c73c6867726bcee600d7e0972bf84b9c46d8fcc6aa7f3`.
+- Blocking wrapper dossier: `ev_f6b22a0d59f80d22b17ab12997e236eb447639f7094f0d49e0f309d3a4f7223d`.
+
+These are static observations of the identified overlay15 analysis image,
+SHA256 `4ae6ee164991ab772dcb0dba4974fe30d00ee97429719dbbe0b56d5756fbc868`.
+No synthetic image was executed. The snapshot is retained privately at
+`analysis/global-help-context-next-20261106.rea.json`; REA is closed.
+Only the immediate-store scan over this image was performed; it does not
+prove a complete map across all original overlays or indirect context writes.
+
+Chat context3 is not wired yet. Integration needs an explicit foreground
+Help continuation retaining the loaded module, unfinished input, Chat view
+and return cursor. Busy parser/TEXT/Redisplay continuations must not reenter
+or unload the active module. Actual normal-main RX/input/flow and full-screen
+return tests are required before accepting that continuation.
+In the current source, `terminal_program_start` explicitly refuses the active
+Chat storage owner (`redisplay_active==2`). A direct key-to-queue call would
+therefore fail. That guard must be replaced by a narrowly admitted Help lease
+with tested lifetime rules, rather than removed for arbitrary PROGRAM children.

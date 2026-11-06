@@ -1829,13 +1829,15 @@ test-help-program-source: help-program
 	python3 standalone/test_help_program_source.py --build $(HELP_PROGRAM_OUTPUT) --output $(HELP_PROGRAM_OUTPUT)/source-proof --cold
 
 GLOBAL_HELP_OUTPUT := build/global-help-make-$(shell date +%s%N)
-.PHONY: global-help test-global-help test-global-help-source test-resource-path-shared
+.PHONY: global-help test-global-help test-global-help-rows test-global-help-source test-resource-path-shared
 global-help:
 	python3 standalone/build_global_help_profile.py --output $(GLOBAL_HELP_OUTPUT)
 test-global-help: global-help
-	$(foreach case,normal repeat missing-helper missing-resource bad-resource flow,python3 standalone/test_global_help_main.py --package $(GLOBAL_HELP_OUTPUT) --output $(GLOBAL_HELP_OUTPUT)/test-$(case) --case $(case) &&) true
+	$(foreach case,normal repeat missing-helper missing-resource bad-resource flow,python3 standalone/test_global_help_main.py --package $(GLOBAL_HELP_OUTPUT) --output $(GLOBAL_HELP_OUTPUT)-test-$(case) --case $(case) &&) true
 test-global-help-source: global-help
 	python3 standalone/prove_global_help_source.py --package $(GLOBAL_HELP_OUTPUT) --output $(GLOBAL_HELP_OUTPUT)/source-proof
+test-global-help-rows: global-help
+	python3 standalone/test_global_help_rows.py --package $(GLOBAL_HELP_OUTPUT) --output $(GLOBAL_HELP_OUTPUT)/rows
 test-resource-path-shared:
 	python3 standalone/test_resource_path_pair.py --output build/resource-path-shared-make-$(shell date +%s%N)
 
