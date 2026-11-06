@@ -63,6 +63,10 @@ The same cases pass with optional exact original comparison and from a separate
 three-file source export containing only assembly, provenance and the checker.
 The [receipt](validation/chat-native.json) binds both results.
 
+The [serviced send owner](CHAT_SERVICED_OWNER.md) now preserves those native
+keyboard/effect branches with bounded sink work, caller-owned far storage and
+actual DOS near/far-bank checks. It is not yet bound into the application.
+
 Next integrate Chat as a serviced foreground owner with checked bank interfaces:
 defer entry under parser/macro/child/transfer ownership, keep UART RX/TX and flow
 control running, maintain separate pane state and bounded input, preserve local

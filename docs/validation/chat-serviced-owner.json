@@ -1,0 +1,36 @@
+{
+  "checkpoint_recorded": true,
+  "application_changed": false,
+  "physical_runtime_verified": false,
+  "cases_per_run": 342,
+  "exact_ordered_effects_per_run": 119312,
+  "bank_code_bytes": 900,
+  "owner_context_bytes": 320,
+  "max_sink_attempts_per_turn": 32,
+  "permanent_refusal_turns": 64,
+  "additional_abort_progress_points": 42,
+  "clean_export_source_files": 8,
+  "banked_dos_fixture_sha256": "aa86355c5d161685d907d7b954d79340c91383c88e959d998a4fb117f3e7a353",
+  "results": {
+    "near": {
+      "path": "build/chat-owner-reviewed-near-dos-20261106/result.json",
+      "sha256": "59d1d723ab1d3cc9f5b0b555a5c81d12b4a74206229aba818a3a076196d8f28e",
+      "passed": true
+    },
+    "banked": {
+      "path": "build/chat-owner-reviewed-banked-dos-20261106/result.json",
+      "sha256": "67d52ec390a1c4bf51d4bfbe58a81592190b82b0bd9054ceb1c845b5204c50eb",
+      "passed": true
+    },
+    "source_export": {
+      "path": "build/chat-owner-reviewed-clean-export-20261106/build/proof/result.json",
+      "sha256": "195cd98eff38fb1284ce001d8b60025681dfcebf36867a8f4765b86e073073da",
+      "passed": true
+    }
+  },
+  "limits": [
+    "Modeled native callees and synthetic DOS sinks; no live terminal or UART/CTS acceptance.",
+    "Far code and far state validated; the full application conventional-memory gate remains open.",
+    "Alt-O binding, panes, RX routing, adapters and BBS/physical acceptance remain open."
+  ]
+}

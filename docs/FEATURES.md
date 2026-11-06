@@ -2289,6 +2289,14 @@ KEY-record and help branches with explicit service boundaries. Serviced live
 ownership, DOS/BBS rendering and physical acceptance remain open; Alt-O is not
 enabled by this component recovery and F12 does not close.
 
+The [serviced Chat send owner](CHAT_SERVICED_OWNER.md) now passes342 actual
+DOS8086 vectors and119312 exact ordered native-trace effects in near and distinct
+far-code variants, with a guarded320-byte DOS-allocated context, bounded sink
+refusals, pending-key preservation and abort retirement. An eight-file clean
+export reproduces the banked fixture. Pane/RX routing, full parent memory
+admission, live adapters, Alt-O/reference binding and BBS/physical acceptance
+remain open; the selected application is unchanged.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A
