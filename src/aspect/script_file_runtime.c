@@ -9,6 +9,10 @@
 #include <string.h>
 #include <io.h>
 #include <errno.h>
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+#include <malloc.h>
+#endif
+#define SCRIPT_BUFFER_BYTES 512
 
 typedef char prefix_size_check[sizeof(aspect_script_file_prefix)==8?1:-1];
 typedef char prefix_flags_check[offsetof(aspect_script_file_prefix,flags)==6?1:-1];
@@ -17,7 +21,11 @@ typedef struct script_owner {
  aspect_script_file_prefix native;
  FILE *stream;
  unsigned char eof_latched,error_latched;
- unsigned char buffer[512];
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+ unsigned char *buffer;
+#else
+ unsigned char buffer[SCRIPT_BUFFER_BYTES];
+#endif
 } script_owner;
 static script_owner owners[ASPECT_SCRIPT_FILE_SLOTS];
 aspect_script_file_prefix *runtime_script_file_slots[ASPECT_SCRIPT_FILE_SLOTS];
@@ -41,31 +49,59 @@ static struct {
  FILE *stream;
  long position;
  unsigned char eof,error,mode;
- unsigned char buffer[512];
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+ unsigned char *buffer;
+#else
+ unsigned char buffer[SCRIPT_BUFFER_BYTES];
+#endif
 } external_saved[ASPECT_SCRIPT_FILE_SLOTS];
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+static void release_external_buffers(void)
+{
+ unsigned i;
+ for(i=0;i<ASPECT_SCRIPT_FILE_SLOTS;++i)
+  if(external_saved[i].buffer){_nfree(external_saved[i].buffer);external_saved[i].buffer=0;}
+}
+#endif
 unsigned runtime_script_files_external_begin(unsigned *descriptors,unsigned *count)
 {
  unsigned i;
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+ unsigned status=ASPECT_RUN_STATE;
+#define SNAPSHOT_REJECT(code) {status=(code);goto rejected;}
+#else
+#define SNAPSHOT_REJECT(code) return (code)
+#endif
  if(external_held||!descriptors||!count)return ASPECT_RUN_STATE;
  *count=0;
  for(i=0;i<ASPECT_SCRIPT_FILE_SLOTS;++i){
   script_owner *owner=&owners[i];
   if((owner->stream!=0)!=(runtime_script_file_slots[i]!=0)||
-     (owner->stream&&runtime_script_file_slots[i]!=&owner->native))return ASPECT_RUN_STATE;
+     (owner->stream&&runtime_script_file_slots[i]!=&owner->native))SNAPSHOT_REJECT(ASPECT_RUN_STATE);
   external_saved[i].slot=runtime_script_file_slots[i];external_saved[i].stream=owner->stream;
   if(!owner->stream)continue;
-  if((owner->native.flags&0x82)&&fflush(owner->stream))return ASPECT_RUN_IO;
+  if((owner->native.flags&0x82)&&fflush(owner->stream))SNAPSHOT_REJECT(ASPECT_RUN_IO);
   external_saved[i].position=ftell(owner->stream);
-  if(external_saved[i].position<0)return ASPECT_RUN_IO;
+  if(external_saved[i].position<0)SNAPSHOT_REJECT(ASPECT_RUN_IO);
   external_saved[i].prefix=owner->native;
   external_saved[i].eof=owner->eof_latched;external_saved[i].error=owner->error_latched;
   external_saved[i].mode=runtime_script_file_mode_flags[owner->native.descriptor];
-  memcpy(external_saved[i].buffer,owner->buffer,sizeof(owner->buffer));
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+  if(external_saved[i].buffer)SNAPSHOT_REJECT(ASPECT_RUN_STATE);
+  external_saved[i].buffer=_nmalloc(SCRIPT_BUFFER_BYTES);
+  if(!external_saved[i].buffer)SNAPSHOT_REJECT(ASPECT_RUN_HEAP);
+#endif
+  memcpy(external_saved[i].buffer,owner->buffer,SCRIPT_BUFFER_BYTES);
   descriptors[(*count)++]=owner->native.descriptor;
  }
- if(*count!=runtime_script_file_live)return ASPECT_RUN_STATE;
+ if(*count!=runtime_script_file_live)SNAPSHOT_REJECT(ASPECT_RUN_STATE);
  external_live=runtime_script_file_live;external_opens=runtime_script_file_open_calls;external_closes=runtime_script_file_close_calls;
  external_held=1;return 0;
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+rejected:
+ release_external_buffers();*count=0;return status;
+#endif
+#undef SNAPSHOT_REJECT
 }
 unsigned runtime_script_files_external_end(void)
 {
@@ -80,8 +116,11 @@ unsigned runtime_script_files_external_end(void)
      external_saved[i].position!=ftell(owner->stream)||
      external_saved[i].eof!=owner->eof_latched||external_saved[i].error!=owner->error_latched||
      external_saved[i].mode!=runtime_script_file_mode_flags[owner->native.descriptor]||
-     memcmp(external_saved[i].buffer,owner->buffer,sizeof(owner->buffer)))status=ASPECT_RUN_STATE;
+     memcmp(external_saved[i].buffer,owner->buffer,SCRIPT_BUFFER_BYTES))status=ASPECT_RUN_STATE;
  }
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+ release_external_buffers();
+#endif
  external_held=0;return status;
 }
 #endif
@@ -116,6 +155,9 @@ static int close_owner(script_owner *owner)
 {
  int result,descriptor=owner->native.descriptor;
  result=fclose(owner->stream);owner->stream=0;
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+ _nfree(owner->buffer);owner->buffer=0;
+#endif
  owner->native.flags=0;runtime_script_file_mode_flags[descriptor]=0;
  owner->eof_latched=owner->error_latched=0;
  ++runtime_script_file_close_calls;
@@ -131,7 +173,11 @@ unsigned runtime_script_files_reset(void)
 #endif
  if(runtime_script_file_live)return ASPECT_RUN_STATE;
  for(slot=0;slot<ASPECT_SCRIPT_FILE_SLOTS;++slot)
-  if(owners[slot].stream)return ASPECT_RUN_STATE;
+  if(owners[slot].stream
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+     || owners[slot].buffer
+#endif
+     )return ASPECT_RUN_STATE;
  memset(owners,0,sizeof(owners));memset(runtime_script_file_slots,0,sizeof(runtime_script_file_slots));
  memset(runtime_script_file_mode_flags,0,sizeof(runtime_script_file_mode_flags));
  memset(&runtime_script_file_fallback,0,sizeof(runtime_script_file_fallback));
@@ -152,6 +198,9 @@ void runtime_script_files_finish(void)
   if(owners[slot].stream && close_owner(&owners[slot]))++runtime_script_file_cleanup_errors;
   runtime_script_file_slots[slot]=0;
  }
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS) && defined(ASPECT_EXTERNAL_PROCESS)
+ if(!external_held)release_external_buffers();
+#endif
 }
 aspect_script_file_prefix *runtime_script_file_open(const char *path,const char *mode)
 {
@@ -159,11 +208,24 @@ aspect_script_file_prefix *runtime_script_file_open(const char *path,const char 
  if(slot>=ASPECT_SCRIPT_FILE_SLOTS || !path || !mode){runtime_set_error(ASPECT_RUN_STATE);return 0;}
  owner=&owners[slot];
  if(owner->stream){runtime_set_error(ASPECT_RUN_STATE);return 0;}
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+ if(owner->buffer){runtime_set_error(ASPECT_RUN_STATE);return 0;}
+ owner->buffer=_nmalloc(SCRIPT_BUFFER_BYTES);if(!owner->buffer)return 0;
+#endif
  ++runtime_script_file_open_calls;
- stream=fopen(path,mode);if(!stream)return 0;
+ stream=fopen(path,mode);if(!stream){
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+  _nfree(owner->buffer);owner->buffer=0;
+#endif
+  return 0;
+ }
  descriptor=fileno(stream);
- if(descriptor<0 || descriptor>255 || setvbuf(stream,(char *)owner->buffer,_IOFBF,sizeof(owner->buffer))){
-  fclose(stream);return 0;
+ if(descriptor<0 || descriptor>255 || setvbuf(stream,(char *)owner->buffer,_IOFBF,SCRIPT_BUFFER_BYTES)){
+  fclose(stream);
+#if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+  _nfree(owner->buffer);owner->buffer=0;
+#endif
+  return 0;
  }
  memset(&owner->native,0,sizeof(owner->native));owner->stream=stream;
  owner->eof_latched=owner->error_latched=0;

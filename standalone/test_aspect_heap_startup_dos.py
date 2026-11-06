@@ -21,6 +21,7 @@ def main():
     for name in ['terminal', 'runner', 'output']:
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--nested-program',action='store_true',help='Run an actual DOS child twice around the six-stream and missing-file cases')
+    parser.add_argument('--streams-around-child',action='store_true',help='Also retain six buffered streams across a third real DOS child')
     parser.add_argument('--nested-graphics',action='store_true',help='Use default SAVE and let each child leave BIOS mode13h active')
     parser.add_argument('--nested-wait',choices=['space','escape'],help='Real PROGRAM WAIT continued by this BIOS key; Escape is a continue key, not script cancellation')
     parser.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25)
@@ -34,6 +35,7 @@ def main():
     parser.add_argument('--lease-fault-kind',choices=['divide','abort','dispatcher'],default='divide')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
+    if args.streams_around_child:assert args.nested_program and not args.lease_fault_phase
     if args.nested_wait:assert args.nested_graphics and not args.lease_fault_phase and not args.inner_screen
     assert not args.exit_watch_high or args.exit_watch
     assert not args.inner_screen or (args.nested_graphics and args.cpu=='386' and not args.exit_watch)
@@ -65,8 +67,13 @@ def main():
     six = 'proc main\n'
     for i in range(6):
         six += f'fopen {i} "D:\\SLOT{i}.TXT" "wb"\nif failure\nexit\nendif\n'
-    for i in range(6):
-        six += f'fputs {i} "SLOT{i}|"\nfclose {i}\n'
+    if args.streams_around_child:
+        for i in range(6):six += f'fputs {i} "SLOT{i}|"\n'
+        six+='run "D:\\NEST.COM"'+('' if args.nested_graphics else ' NOCLEAR')+'\n'
+        for i in range(6):six+=f'fputs {i} "AFTER{i}|"\n'
+        for i in range(6):six+=f'fclose {i}\n'
+    else:
+        for i in range(6):six+=f'fputs {i} "SLOT{i}|"\nfclose {i}\n'
     six += 'transmit "SIXOK^M"\nendproc\n'
     missing = 'proc main\nfopen 0 "D:\\ABSENT.TXT" "rb"\nif failure\ntransmit "MISSINGOK^M"\nelse\nexit\nendif\nfopen 0 "D:\\RECOVER.TXT" "wb"\nif failure\nexit\nendif\nfputs 0 "RECOVERED|"\nfclose 0\ntransmit "RECOVEROK^M"\nendproc\n'
     files = {}
@@ -203,11 +210,11 @@ mode_opened:
                   keyboard_after_scripts=wire.endswith(b'ready\r+++ATH\r'),
                   first_file=(drive / 'FIRST.LOG').exists() and (drive / 'FIRST.LOG').read_bytes() == b'FIRST|',
                   recovery_file=(drive / 'RECOVER.TXT').exists() and (drive / 'RECOVER.TXT').read_bytes() == b'RECOVERED|',
-                  six_files=all((drive / f'SLOT{i}.TXT').exists() and (drive / f'SLOT{i}.TXT').read_bytes() == f'SLOT{i}|'.encode() for i in range(6)))
+                  six_files=all((drive / f'SLOT{i}.TXT').exists() and (drive / f'SLOT{i}.TXT').read_bytes() == (f'SLOT{i}|'+(f'AFTER{i}|' if args.streams_around_child else '')).encode() for i in range(6)))
     for name, expected in sources.items():
         assert sha(ROOT / name) == expected, name
     if args.nested_program:
-        checks['two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|CHILD|'
+        checks['three_nested_children' if args.streams_around_child else 'two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|'*(3 if args.streams_around_child else 2)
         viewport_cells=(args.display_rows-1)*80
         characters=bytearray(b'FIRST BYTE SAFE'.ljust(viewport_cells,b' '))
         if args.lease_fault_phase:
@@ -225,13 +232,15 @@ mode_opened:
                   program_result_probe=args.program_result_probe,
                   cpu=args.cpu,
                   physical_rows=args.display_rows,
+                  streams_around_child=args.streams_around_child,
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
     if args.nested_program:
         report['nested_child_source_sha256']=sha(out/'NEST.ASM')
         report['nested_child_sha256']=sha(out/'NEST.COM')
         report['nested_graphics']=args.nested_graphics
-        report['scope']=__doc__+' Actual DOS '+args.cpu+' COM3/IRQ5; two '+('SAVE graphics' if args.nested_graphics else 'NOCLEAR text')+' DOS children surrounding six-stream and missing-file recovery. Synthetic modem; no physical or complete PROGRAM-option acceptance.'
+        report['nested_child_count']=3 if args.streams_around_child else 2
+        report['scope']=__doc__+' Actual DOS '+args.cpu+' COM3/IRQ5; '+str(report['nested_child_count'])+' '+('SAVE graphics' if args.nested_graphics else 'NOCLEAR text')+' DOS children with six-stream and missing-file recovery. Synthetic modem; no physical or complete PROGRAM-option acceptance.'
     if args.exit_watch:
         report['exit_watch']=aspect_exit_watch.read(drive/'EXITSTAT.BIN')
         report['observer_sha256']=sha(out/'EWATCH.COM')
@@ -269,7 +278,7 @@ mode_opened:
             report['scope']+=' One selected '+args.lease_fault_kind+' fault in FAULT.ASX, then six streams/missing-file recovery and normal nested FIRST.ASX in the same terminal. No injected cleanup success.'
     if args.inner_screen:
         report['inner_screen']=snapshot_screen_watch.verify(drive/'SSCREEN.BIN',args.display_rows)
-        checks['child_observed_graphics_mode']=(drive/'CHMODE.BIN').read_bytes()==b'\x13\x13'
+        checks['child_observed_graphics_mode']=(drive/'CHMODE.BIN').read_bytes()==b'\x13'*(3 if args.streams_around_child else 2)
         checks['marker_files_created']=all((drive/n).exists() and (drive/n).stat().st_size==0 for n in ['FPRE.TXT','FPST.TXT'])
         report['passed']=all(checks.values())
         report['scope']+=' Separate386/XMS/UMB passive full inner screen/cursor witness and child-reported BIOS graphics mode; no physical timing claim.'

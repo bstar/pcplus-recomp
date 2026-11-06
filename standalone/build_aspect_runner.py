@@ -25,6 +25,7 @@ def main(extension=None):
     if extension and extension.get('file_open_probe'):feature_flags+=['-DASPECT_FILE_OPEN_PROBE']
     if extension and extension.get('program_result_probe'):feature_flags+=['-DASPECT_PROGRAM_RESULT_PROBE']
     if extension and extension.get('snapshot_lease'):feature_flags+=['-DASPECT_SNAPSHOT_LEASE']
+    if extension and extension.get('defer_script_buffers'):feature_flags+=['-DASPECT_DEFER_SCRIPT_BUFFERS']
     if extension and extension.get('lease_fault_phase'):feature_flags+=['-DASPECT_LEASE_FAULT_PHASE='+str(extension['lease_fault_phase'])]
     if extension and extension.get('lease_fault_foreign_ds'):feature_flags+=['-DASPECT_LEASE_FAULT_FOREIGN_DS']
     if extension and extension.get('lease_fault_kind') in ('abort','dispatcher'):
@@ -111,6 +112,7 @@ def main(extension=None):
                     *([] if banked_serial else [str(ROOT/'src/aspect/serial.c')]),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'),
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
+                  experimental_deferred_script_buffers=bool(extension and extension.get('defer_script_buffers')),
                   diagnostic_file_open_probe=bool(extension and extension.get('file_open_probe')),
                   diagnostic_program_result_probe=bool(extension and extension.get('program_result_probe')),
                   experimental_snapshot_lease=bool(extension and extension.get('snapshot_lease')),
