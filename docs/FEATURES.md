@@ -2448,3 +2448,12 @@ passing nested-ASPECT checks with the unchanged interpreter. Ordinary Chat,
 Synchronet editor/viewer and Enigma carrier-loss/redial/exact-retry regressions
 pass. Foreground TEXT/echo scheduling and broader Chat/full-parity/hardware gates
 remain open; no installed package changes here.
+
+The [foreground TEXT checkpoint](CHAT_FOREGROUND_TEXT.md) binds Alt-1 through
+Alt-0 directly to all ten imported KEY text fields. Actual DOS8086 main now
+passes native local echo, pause/RX, queued typing, cancellation and normal
+return. The API0104 module passes two-address loading with no free paragraphs,
+binding bounds/stale identity/reentry/echo-fault retirement and frame restore.
+Sharing the event bridges retains479312 bytes and passes the unchanged
+interpreter's nested-child/six-stream gate. Broader Chat UI/failure/geometry,
+native-parser-busy key and physical/package acceptance remain open.

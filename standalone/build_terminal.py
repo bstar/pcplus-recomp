@@ -23,6 +23,7 @@ parser.add_argument('--chat-adapters',action='store_true',help='Link real TX/log
 parser.add_argument('--chat-text-transport',action='store_true',help='Link optional physical-completion TEXT TX sink; requires adapters; foreground TEXT remains unbound')
 parser.add_argument('--chat-timing',action='store_true',help='Select matching API0103 loader/module with serviced TEXT timing; requires physical-TX adapter; shortcuts remain unbound')
 parser.add_argument('--chat-echo',action='store_true',help='Experimental native echo scope/input service; requires timing/frontend; TEXT scheduling remains unbound')
+parser.add_argument('--chat-foreground-text',action='store_true',help='Bind all ten direct Chat TEXT keys through module-owned scheduling; requires echo and compact labels')
 parser.add_argument('--chat-frontend',action='store_true',help='Experimental Alt-O core and keyboard/RX/idle ownership; Help/direct TEXT remain refused; requires adapters')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
@@ -114,6 +115,7 @@ if args.chat_adapters:assert args.chat_presentation
 if args.chat_text_transport:assert args.chat_adapters and args.optimize_size
 if args.chat_timing:assert args.chat_text_transport
 if args.chat_echo:assert args.chat_timing and args.chat_frontend
+if args.chat_foreground_text:assert args.chat_echo and args.code_label_offsets
 if args.chat_frontend:assert args.chat_adapters and args.keyboard_bank
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
@@ -333,6 +335,7 @@ if args.chat_adapters:out_name+='-chat-adapters'
 if args.chat_text_transport:out_name+='-chat-text-transport'
 if args.chat_timing:out_name+='-chat-timing'
 if args.chat_echo:out_name+='-chat-echo'
+if args.chat_foreground_text:out_name+='-foreground-text'
 if args.code_label_offsets:out_name+='-code-label-offsets'
 if args.chat_frontend:out_name+='-chat-frontend'
 if args.command_ui_pairs==0:out_name+='-control'
@@ -882,7 +885,7 @@ ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+
 chat_loader=None
 if args.chat_loader:
  from chat.loader_link import build_loader
- chat_loader=build_loader(ROOT,OUT,presentation=args.chat_presentation,timing=args.chat_timing)
+ chat_loader=build_loader(ROOT,OUT,presentation=args.chat_presentation,timing=args.chat_timing,foreground=args.chat_foreground_text)
  objects+=list(map(str,chat_loader['objects']));sources+=chat_loader['inputs']
 if args.chat_adapters:
  source=ROOT/'src/chat/parent_sink.asm';obj=OUT/'chat-adapters.obj'
@@ -900,10 +903,10 @@ if args.chat_echo:
 if args.chat_frontend:
  source=ROOT/'src/chat/frontend.c';obj=OUT/'chat-frontend.obj'
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we','-ecc','-ox','-os','-oe=0',
-  '-dCHAT_PRESENTATION',*(['-dCHAT_TEXT','-dCHAT_TIMING'] if args.chat_timing else []),*(['-dCHAT_ECHO'] if args.chat_echo else []),'-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
+  '-dCHAT_PRESENTATION',*(['-dCHAT_TEXT','-dCHAT_TIMING'] if args.chat_timing else []),*(['-dCHAT_ECHO'] if args.chat_echo else []),*(['-dCHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),'-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
  objects.insert(objects.index(str(config_end_obj)),str(obj));sources.append(source)
  source=ROOT/'src/chat/frontend.asm';obj=OUT/'chat-frontend-bridges.obj'
- subprocess.run(['nasm','-fobj',str(source),'-o',str(obj)],check=True)
+ subprocess.run(['nasm','-fobj',*(['-DCHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),str(source),'-o',str(obj)],check=True)
  objects.insert(objects.index(str(config_end_obj)),str(obj));sources.append(source)
 if args.directory_resource_owner:ordering+=['FAR_DATA','FROZEN_DATA']
 subprocess.run(['wlink','system','dos','order',*[value for kind in ordering for value in ('clname',kind)],'option','quiet','option','map='+str(OUT/'terminal.map'),'name',str(OUT/'TERMINAL.EXE'),'file',','.join(objects),'library',str(Path(os.environ['WATCOM'])/'lib286/dos/clibs.lib')],check=True)
@@ -989,6 +992,7 @@ manifest['experimental_chat_presentation']=args.chat_presentation
 manifest['experimental_chat_adapters']=args.chat_adapters
 manifest['experimental_chat_text_transport']=args.chat_text_transport
 manifest['experimental_chat_echo']=args.chat_echo
+manifest['experimental_chat_foreground_text']=args.chat_foreground_text
 manifest['experimental_code_label_offsets']=args.code_label_offsets
 manifest['experimental_chat_timing']=args.chat_timing
 manifest['experimental_chat_frontend']=args.chat_frontend

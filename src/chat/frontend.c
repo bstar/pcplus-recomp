@@ -4,6 +4,17 @@
 #include "loader.h"
 #include "parent_sink.h"
 #include "../config/resource_path.h"
+#ifdef CHAT_FOREGROUND_TEXT
+#include "text_transport.h"
+extern unsigned char terminal_action_definitions[],terminal_macro_pause_character;
+extern unsigned terminal_macro_character_delay_units;
+#pragma aux terminal_action_definitions "terminal_action_definitions";
+#pragma aux terminal_macro_pause_character "terminal_macro_pause_character";
+#pragma aux terminal_macro_character_delay_units "terminal_macro_character_delay_units";
+extern unsigned CHAT_FAR __cdecl terminal_chat_text_echo_sink(unsigned,unsigned,void CHAT_FAR *);
+extern unsigned CHAT_FAR __cdecl terminal_chat_echo_error(void);
+#pragma aux terminal_chat_echo_error "terminal_chat_echo_error_far";
+#endif
 extern unsigned char CHAT_FAR redisplay_snapshot[],redisplay_view[];
 #pragma aux redisplay_snapshot "redisplay_snapshot";
 #pragma aux redisplay_view "redisplay_view";
@@ -21,6 +32,14 @@ extern unsigned char terminal_translation_table[];
 #pragma aux connection_state "connection_state";
 #pragma aux terminal_translation_enabled "terminal_translation_enabled";
 #pragma aux terminal_translation_table "terminal_translation_table";
+#ifdef CHAT_FOREGROUND_TEXT
+static const chat_live_binding __based(__segname("_CODE")) binding={
+    terminal_action_definitions,&terminal_macro_pause_character,
+    (const chat_word __near *)&terminal_macro_character_delay_units,
+    (const chat_word __near *)&modes_value_1d1a,
+    terminal_chat_text_tx_sink,terminal_chat_text_echo_sink,terminal_chat_echo_error,
+    (chat_word CHAT_FAR *)(redisplay_snapshot+14500)};
+#endif
 extern unsigned CHAT_FAR __cdecl chat_front_claim(void);
 extern void CHAT_FAR __cdecl chat_front_release(void);
 static chat_module_handle handle;
@@ -44,7 +63,7 @@ static unsigned enter(void)
     unsigned char CHAT_FAR *bytes=(unsigned char CHAT_FAR *)REQUEST;
     if(handle.loaded || terminal_deferred_count ||
        resource_program_path(process_psp,leaf,path) || !chat_front_claim())return 0;
-    if(chat_module_load(&handle,STATE,path,redisplay_snapshot,8192)){
+    if(chat_module_load(&handle,STATE,path,redisplay_snapshot,CHAT_CODE_WINDOW)){
         chat_front_release();return 0;
     }
     for(i=0;i<sizeof(*REQUEST);++i)bytes[i]=0;
@@ -54,6 +73,9 @@ static unsigned enter(void)
     REQUEST->bar=REQUEST->attribute|0x19;REQUEST->clear=REQUEST->attribute;
     REQUEST->buffered=1;REQUEST->duplex=modes_value_1d1a;REQUEST->newline=terminal_cr_adds_lf;
     REQUEST->user=redisplay_snapshot+13000;REQUEST->value=16;
+#ifdef CHAT_FOREGROUND_TEXT
+    REQUEST->table=(const unsigned char CHAT_FAR *)&binding;
+#endif
     if(operation(CHAT_MODULE_PRESENT_OPEN)!=1){stop();return 0;}
     REQUEST->sink=terminal_chat_sink;REQUEST->user=0;REQUEST->budget=32;
     REQUEST->table=redisplay_snapshot+14000;
@@ -83,17 +105,25 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
     }
 #endif
     if(event==5)return stop();
+#ifdef CHAT_FOREGROUND_TEXT
+    if(event==1)return value!=0x2d00 && value!=0x2300 &&
+        (STATE->send.phase || STATE->rx_phase ||
+         ((STATE->text.active || terminal_tx_count) && !(STATE->text.active && (value&255)==27)));
+#else
     if(event==1)return (value!=0x2d00 && value!=0x2300) &&
         (STATE->send.phase || STATE->rx_phase ||
          ((value&255)==27 && terminal_tx_count));
+#endif
     if(event==2)return STATE->rx_phase!=0 || operation(CHAT_MODULE_PRESENT_CURSOR)!=1;
     if(event==0){
         if(value==0x2d00 || value==0x2300){return stop()?1:0;}
-        /* Help/direct TEXT require their own continuation. Experimental core
-         * refuses these keys rather than running a different KEY action. */
+#ifndef CHAT_FOREGROUND_TEXT
+        /* Unbound core refuses Help/direct TEXT rather than substituting a
+         * different KEY action. The foreground module owns those decisions. */
         if(value==0x6d00 || (value>=0x7800 && value<=0x8100 && !(value&255))){
             handle.dos_error=0x7f01;return 1;
         }
+#endif
         REQUEST->key=value;REQUEST->transport_idle=terminal_tx_count==0;
         result=operation(CHAT_MODULE_KEY);
         if(result==CHAT_MODULE_BAD || (result&CHAT_FAILED) || !STATE->send.active)stop();

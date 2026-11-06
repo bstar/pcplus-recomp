@@ -1,6 +1,12 @@
 #ifndef PCPLUS_CHAT_SESSION_H
 #define PCPLUS_CHAT_SESSION_H
 #include "screen.h"
+#ifdef CHAT_FOREGROUND_TEXT
+#include "live.h"
+#define CHAT_CODE_WINDOW 12288
+#else
+#define CHAT_CODE_WINDOW 8192
+#endif
 #ifdef CHAT_TEXT
 #include "text.h"
 #endif
@@ -20,6 +26,10 @@ typedef struct chat_session {
 #endif
 #ifdef CHAT_TIMING
     chat_timing timing;
+#endif
+#ifdef CHAT_FOREGROUND_TEXT
+    chat_live_binding live;
+    chat_word live_bound,live_next;
 #endif
 } chat_session;
 /* Single foreground owner. Callbacks must be bounded, all-or-refuse, and must

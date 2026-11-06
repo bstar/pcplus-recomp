@@ -1,5 +1,9 @@
 # Experimental Chat foreground core
 
+The later [foreground TEXT checkpoint](CHAT_FOREGROUND_TEXT.md) adds the ten
+Alt-number shortcuts and native echo/pause service behind a separate opt-in
+flag. The refusal behavior below describes this earlier core without that flag.
+
 `--chat-frontend` wires the loaded Chat session into original Alt-O entry,
 keyboard dispatch, top-level receive admission, idle service and screen-owner
 retirement. It requires the adapter/presentation/storage/loader options and the

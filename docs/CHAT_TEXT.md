@@ -1,5 +1,9 @@
 # Serviced direct TEXT for Chat
 
+The later [foreground integration](CHAT_FOREGROUND_TEXT.md) binds these text
+semantics to all ten live Chat shortcuts, with native echo and timing. The
+component results and unbound interfaces below describe the earlier checkpoint.
+
 Original Chat's Alt1..Alt0 branches call48CC with the selected52-byte text
 field at3758 +54*index. They do not call47B6's general action dispatcher or
 inspect the preceding kind word. The maintained sender and optional module

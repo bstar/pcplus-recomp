@@ -20,6 +20,10 @@ global %1
 %1:
  push bp
  push ax
+%ifdef CHAT_FOREGROUND_TEXT
+ mov ax,%2
+ jmp chat_front_bridge_common
+%else
  push bx
  push cx
  push dx
@@ -45,6 +49,7 @@ global %1
  retf
 %%no: clc
  retf
+%endif
 %endmacro
 bridge terminal_chat_key_far,0
 bridge terminal_chat_key_hold_far,1
@@ -52,3 +57,35 @@ bridge terminal_chat_receive_hold_far,2
 bridge terminal_chat_receive_far,3
 bridge terminal_chat_idle_far,4
 bridge terminal_chat_stop_far,5
+%ifdef CHAT_FOREGROUND_TEXT
+; All six entries have the same preserved-register and carry ABI. Share the
+; body rather than retaining six copies in the conventional-memory parent.
+; At BP+12 is the caller's AX; AX itself is the selected event number.
+chat_front_bridge_common:
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push es
+ mov bp,sp
+ push word [bp+12]
+ push ax
+ call far _chat_front_event
+ add sp,4
+ or ax,ax
+ pop es
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ pop bp
+ jz .no
+ stc
+ retf
+.no:
+ clc
+ retf
+%endif

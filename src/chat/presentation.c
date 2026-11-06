@@ -29,7 +29,7 @@ static unsigned context_ready(chat_session CHAT_FAR *s,chat_presentation CHAT_FA
            p->cells==p->rows*80 && extent(p->backup,p->cells*2) &&
            !overlap(p,sizeof(*p),s,sizeof(*s)) &&
            !overlap(p->backup,p->cells*2,s,sizeof(*s)) && !overlap(p->backup,p->cells*2,p,sizeof(*p)) &&
-           !overlap(p,sizeof(*p),code,8192) && !overlap(p->backup,p->cells*2,code,8192);
+           !overlap(p,sizeof(*p),code,CHAT_CODE_WINDOW) && !overlap(p->backup,p->cells*2,code,CHAT_CODE_WINDOW);
 }
 unsigned CHAT_CALL chat_present_open(chat_session CHAT_FAR *s,chat_presentation CHAT_FAR *p,
     chat_word CHAT_FAR *backup,unsigned capacity,unsigned rows,unsigned attribute,
@@ -42,8 +42,8 @@ unsigned CHAT_CALL chat_present_open(chat_session CHAT_FAR *s,chat_presentation 
        !geometry(rows) || capacity<cells || attribute>255 || bar>255 || clear>255 ||
        !extent(backup,cells*2) || overlap(backup,cells*2,s,sizeof(*s)) ||
        overlap(backup,cells*2,p,sizeof(*p)) || overlap(p,sizeof(*p),s,sizeof(*s)) ||
-       overlap(backup,cells*2,code,8192) || overlap(s,sizeof(*s),code,8192) ||
-       overlap(p,sizeof(*p),code,8192))return 0;
+       overlap(backup,cells*2,code,CHAT_CODE_WINDOW) || overlap(s,sizeof(*s),code,CHAT_CODE_WINDOW) ||
+       overlap(p,sizeof(*p),code,CHAT_CODE_WINDOW))return 0;
     chat_present_get_cursor(&position,&shape);
     for(i=0;i<cells;++i)backup[i]=video[i];
     if(!chat_session_open(s,video,cells,rows,attribute,bar,clear,buffered,duplex,newline))return 0;
