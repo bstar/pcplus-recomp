@@ -1,0 +1,332 @@
+{
+  "passed": true,
+  "application_integration": false,
+  "physical_deployment": false,
+  "scope": "Source-only PCHELP executable with original-derived UI, admitted legacy process descriptor and streamed authored HLP. Selected actual original/source DOS UI comparisons; not full helper or terminal/serial/hardware acceptance.",
+  "sources": {
+    "src/help/program.c": "01ed3b6859c761db44fcdd69c7ec8418be7deb068f86d4a1bce59606b8ad5c99",
+    "src/help/parent.c": "86d2b5780894211f3099f3f36b545b62d1c3061af2f821a815b37a72ac191ad1",
+    "src/help/parent_dos.c": "82c043fd21b0c678b11b84c72d37ad16793a2d56b68a015f6acfa4b66686786d",
+    "src/help/format.c": "a6f7585e56c793998f29047172929f8fb25e5ec424679524efcecb0f06a40571",
+    "src/help/document.c": "841e34e8672064e0213acbc10026ac58b8766f60c2d0bf58931386fb314aaa21",
+    "src/help/parent.h": "51c7a61f322ee752aabf1316385f139f1bf2f87e6196aea9ed6fdc511b6cd5f9",
+    "src/help/format.h": "bf9c74896bcc57c935273f1315350193bc44df35b923f1c1078ed4ab55e70283",
+    "src/help/document.h": "2e49fe1f9fa76e293eaa2a255d3e403282ad27101290d87b5a6f51fb24078fb8",
+    "standalone/build_help_program.py": "dc0033a4f826f15835fd33b4cc585c2316e3733af7ca623a8493f516e351976b",
+    "standalone/build_context_help.py": "6764f8b4529ebea9dbccc96b213587701bf223dbbcfd73a993943c9e5d0a69bb"
+  },
+  "products": {
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b"
+  },
+  "manifest_sha256": "64afb3c1042343ba160e40a72443abd9510162804e6486840ec2c3f80e827dc1",
+  "matrix": {
+    "passed": true,
+    "receipt_sha256": "b1f1539c048ad8fbe547ef2ba497df9b2a41888899fec68132198072e3352699",
+    "checker_sha256": "0fef409d8378b1f1f042655625309930dfeb7ac6670507281c762a76f860aa6c",
+    "capture_checker_sha256": "954c38bb44b1aaf910e2f269703507ca73884430f74d8591499b069c93398578",
+    "pairs": [
+      {
+        "case": "topics-cancel",
+        "rows": 25,
+        "frames": 3,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "45642871b7df4324ff1be772f1f92458191735c2bbe27295f22861fdc299f369"
+      },
+      {
+        "case": "scroll",
+        "rows": 25,
+        "frames": 7,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "c412db3488e04fa21767847541677baf9f71eeea62d6a3af30b3e56c5c4fcbaa"
+      },
+      {
+        "case": "topic-memory",
+        "rows": 25,
+        "frames": 10,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "eb2ba6715502f772d316c50ad8c72c225a9a9789bf20413b57f0783c3eb2298e"
+      },
+      {
+        "case": "search-no",
+        "rows": 25,
+        "frames": 12,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "16af5590d5b0e92cb37455fbfb7fbdf5de6d824b82282695f4ec3649c97ea954"
+      },
+      {
+        "case": "search-yes",
+        "rows": 25,
+        "frames": 12,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "0faaa6e861a06637d6633eec700593f9529aa6576546ecc077da6955cee03274"
+      },
+      {
+        "case": "search-cancel",
+        "rows": 25,
+        "frames": 6,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "0b3139e623e6fc338a5c14d8d98cdc55f2d1ce32320957eb03eb4cf3e6ae69fc"
+      },
+      {
+        "case": "search-other-topic",
+        "rows": 25,
+        "frames": 12,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "e2a9be44e84865ce93801ef759c477b344f68a83138e403238d9221bdf52ece1"
+      },
+      {
+        "case": "search-missing",
+        "rows": 25,
+        "frames": 9,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "9a364d86f283b9a1f6b17844b6b4448c7258e5f7246b14d6927a2a7cb1769901"
+      },
+      {
+        "case": "negative-context",
+        "rows": 25,
+        "frames": 1,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "b47d618ba4dfa12a0e403718f638dfa5b69e6cffcdde978806e88a7e81f3f083"
+      },
+      {
+        "case": "topics-cancel",
+        "rows": 50,
+        "frames": 3,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "79251c7e7545929489a7b28f51f10e623bd8e8aea14140142db2d63808ca4219"
+      },
+      {
+        "case": "scroll",
+        "rows": 50,
+        "frames": 7,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "01e8b84622249e8d81fc0aa9e59d01e8abb5d71fd9ae469e475c62f1ec42da8f"
+      },
+      {
+        "case": "topic-memory",
+        "rows": 50,
+        "frames": 10,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "ab08b56822375d076d70abba76cd3738f3133d4ff41cd07ffc85a586ac19b0b3"
+      },
+      {
+        "case": "search-no",
+        "rows": 50,
+        "frames": 12,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "74cda40a5d41e5b3b7f020e1289d1343b7f81098d32b70fb6b7ab81939eb4e4b"
+      },
+      {
+        "case": "search-yes",
+        "rows": 50,
+        "frames": 12,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "8b73c8bb9bbdc49de6f2ee450e09d3d4343e35e1714ffc44f8e8345348b34248"
+      },
+      {
+        "case": "search-cancel",
+        "rows": 50,
+        "frames": 6,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "5e8a7427604401595c5e44831ec8e6237d7be52eaef8051a1cb8050b9b8202b7"
+      },
+      {
+        "case": "search-other-topic",
+        "rows": 50,
+        "frames": 12,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "b114698adf879cc2ce3e09a6cc5a34be4b6fbe69c089a6dad93a5081e0b0c506"
+      },
+      {
+        "case": "search-missing",
+        "rows": 50,
+        "frames": 9,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "79e9bb8e3149bc0e1eb3257e5620caa02c3f4df45922c54e05523d169352773a"
+      },
+      {
+        "case": "negative-context",
+        "rows": 50,
+        "frames": 1,
+        "all_visible_bytes_equal": true,
+        "all_cursor_states_equal": true,
+        "restored": true,
+        "original_exit": 35,
+        "source_exit": 0,
+        "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+        "original_frame_set_sha256": "9833391c6cb3b25bcafab49feb50f8f98a579ec51be90f8280978e26f5886ed0"
+      }
+    ],
+    "snapshots": 144,
+    "sessions": 36,
+    "reference_helper_sha256": "5d135afc5808ddec923ec027f385490c7ecd4fa5004d11cefe6ff4a3c468d0aa",
+    "native_producer_bytes": 132,
+    "reused_native_dependency_bytes": 53,
+    "hlp_topics": 47,
+    "hlp_lines": 1880,
+    "hlp_bytes": 78869
+  },
+  "golden": {
+    "path": "standalone/fixtures/help_program_vga.json",
+    "sha256": "1c06a102c184717e066e3478e973ebea44b83de063c7ef8cd87ed1fc428e376f"
+  },
+  "cold": {
+    "passed": true,
+    "receipt_sha256": "6ed1d53357e3add6d0f2eb98dfc9f2450101549875a39ad2cf27bed99f30de61",
+    "source_files": 24,
+    "sources": {
+      "reconstruction/context_help/handoff.asm": "806c2aeb76eea2106cfe298d7fa6598896b49b755c1191753c526b356cd840db",
+      "reconstruction/context_help/provenance.json": "530cdc1e8a6c9ff0257c156749e73c0b2aa566a314f01e99bc7c7b38a5f3d0e0",
+      "reconstruction/program_exec/get_ds.asm": "c98c2d6535c41beae3d72fd3b0686a588bc5c10fb904a632688456d5ddc675c2",
+      "reconstruction/program_exec/provenance.json": "dea1a491c50dcbfdd28ac810ff17857c62f8c4155b1d79aaa744696ae8947f7f",
+      "reconstruction/program_exec/strcpy.asm": "4c2420d76d56a852b2ff6bb2ebfbf567b082c6880b2bd715f698ebd2d9941299",
+      "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+      "src/help/document.c": "841e34e8672064e0213acbc10026ac58b8766f60c2d0bf58931386fb314aaa21",
+      "src/help/document.h": "2e49fe1f9fa76e293eaa2a255d3e403282ad27101290d87b5a6f51fb24078fb8",
+      "src/help/format.c": "a6f7585e56c793998f29047172929f8fb25e5ec424679524efcecb0f06a40571",
+      "src/help/format.h": "bf9c74896bcc57c935273f1315350193bc44df35b923f1c1078ed4ab55e70283",
+      "src/help/parent.c": "86d2b5780894211f3099f3f36b545b62d1c3061af2f821a815b37a72ac191ad1",
+      "src/help/parent.h": "51c7a61f322ee752aabf1316385f139f1bf2f87e6196aea9ed6fdc511b6cd5f9",
+      "src/help/parent_dos.c": "82c043fd21b0c678b11b84c72d37ad16793a2d56b68a015f6acfa4b66686786d",
+      "src/help/program.c": "01ed3b6859c761db44fcdd69c7ec8418be7deb068f86d4a1bce59606b8ad5c99",
+      "standalone/build_context_help.py": "6764f8b4529ebea9dbccc96b213587701bf223dbbcfd73a993943c9e5d0a69bb",
+      "standalone/build_help_program.py": "dc0033a4f826f15835fd33b4cc585c2316e3733af7ca623a8493f516e351976b",
+      "standalone/capture_help_screen.py": "954c38bb44b1aaf910e2f269703507ca73884430f74d8591499b069c93398578",
+      "standalone/context_help_child.c": "0f7e5dc82faabce7ae048eae3f273a9bfc7d8bd4c2f94d6d8f8684ec7486c9b9",
+      "standalone/context_help_parent.c": "99f1a93eb6816e5e2500a6c1aa87e19deb4cc1b7ae3054ffc742a77af7714a81",
+      "standalone/context_help_state.asm": "e358785a797828ffbc686efa54cde1e076e583bd4f76ba9ad5011f28b6cc0d8e",
+      "standalone/fixtures/help_program_vga.json": "1c06a102c184717e066e3478e973ebea44b83de063c7ef8cd87ed1fc428e376f",
+      "standalone/help_screen_observer.asm": "d2aa0705bb1e6b456d49ba328154376680ddf6bf373588fcec6b77f72d0e8a1e",
+      "standalone/help_screen_parent.c": "4f289a0ecf14180ec510f89ebcfe36dd24df8ad20ded0d29020baff2119cd34d",
+      "standalone/test_help_program_source.py": "9ef3e60e26df8f40cb958dba055286b95c4ce1b793e19ba9a85189a604c835db"
+    },
+    "products": {
+      "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b"
+    },
+    "sessions": 18,
+    "snapshots": 144,
+    "all_checks": true
+  },
+  "rea": {
+    "session_closed": true,
+    "snapshot_sha256": "b57ca7c4b234fb00c697127bd17b40785d07c54cfa2067d7c68ae882a5bfdeb9",
+    "scrollbar": "ev_462c9820877e6dfa4f40fa7f2fc1ab2294521e36369a6bbc3e08d19f882e625a",
+    "body": "ev_e1e1077db8eae549d6195f25cf7278519b6bb077cf495fce49fdff1e5f251d55",
+    "down": "ev_13cc3106bc98434ec5efcab1e5bb771d562656b5b073019919a3938d00e857a1",
+    "pageup": "ev_76846e4cd6225628eccaa4ac337f52437f525a0e189e07a05174f730446c8a9d",
+    "end": "ev_743199c67802387d85f1144c68d7c416375ddc3499f9993f0b50048bef5bbd4b"
+  },
+  "retained_negative_attempts": [
+    {
+      "path": "build/help-screen-original-first-20261106",
+      "reason": "Normal original exit35 initially classified as failure; capture/launch status now separate."
+    },
+    {
+      "path": "build/help-screen-source-topics-first-20261106",
+      "reason": "One-cell topic label offset; search prompt centering also corrected."
+    },
+    {
+      "path": "build/help-program-compare-first-20261106",
+      "reason": "PageDown short-page and boundary/short-topic scrollbar semantics differed."
+    },
+    {
+      "path": "build/help-program-cursor-first-20261106",
+      "reason": "VGA matched but hidden cursor shape, topic position and confirmation cursor differed."
+    }
+  ],
+  "build_memory": {
+    "mz_minimum_dos_block_bytes_including_psp": 30384,
+    "dgroup_bytes": 9824,
+    "stack_bytes": 8192,
+    "snapshot_bytes": [
+      4000,
+      8000
+    ],
+    "full_parent_composition_verified": false
+  }
+}

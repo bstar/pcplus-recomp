@@ -1,0 +1,1124 @@
+{
+  "original_helper_sha256": "5d135afc5808ddec923ec027f385490c7ecd4fa5004d11cefe6ff4a3c468d0aa",
+  "scope": "Hashes/cursor states from actual original DOS helper using authored LF HLP and the source native-producer/BIOS observer. No executable or vendor help resource bytes. Selected workflows only.",
+  "entries": [
+    {
+      "rows": 25,
+      "topic": 1,
+      "keys": [
+        84,
+        27,
+        27
+      ],
+      "captures": 3,
+      "frames": {
+        "VIEW00.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a",
+        "VIEW01.BIN": "b80210a5232acf5a4836c4175ab2b44abec0e8bc3cd00c0ff3c5a066925b9e99",
+        "VIEW02.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "topics-cancel"
+    },
+    {
+      "rows": 25,
+      "topic": 1,
+      "keys": [
+        20480,
+        20736,
+        18432,
+        18688,
+        20224,
+        18176,
+        27
+      ],
+      "captures": 7,
+      "frames": {
+        "VIEW00.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a",
+        "VIEW01.BIN": "979ef3118eb9fba7cf626263a59c378ff37c8e113949511ab46bff6aed4a93b2",
+        "VIEW02.BIN": "3ec53eb9152fa43005b278fb25b8e5f519c78c6d580e33d2bab0a1a31cef256d",
+        "VIEW03.BIN": "32e87b7a9374dcb6a0bfcecbf61c604d976cd7beac72a5b0c8cefdb12f0e50c5",
+        "VIEW04.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a",
+        "VIEW05.BIN": "a85bd742cefd982442827e9ca6bd819935da62e5357a693421b7c35c9859072d",
+        "VIEW06.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "scroll"
+    },
+    {
+      "rows": 25,
+      "topic": 1,
+      "keys": [
+        84,
+        20224,
+        13,
+        84,
+        18432,
+        18688,
+        20736,
+        18176,
+        13,
+        27
+      ],
+      "captures": 10,
+      "frames": {
+        "VIEW00.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a",
+        "VIEW01.BIN": "b80210a5232acf5a4836c4175ab2b44abec0e8bc3cd00c0ff3c5a066925b9e99",
+        "VIEW02.BIN": "df2939219446331c905ac1c6adb75c6b6735feeacc12996c467d4b9dfd96ad83",
+        "VIEW03.BIN": "5c6981f9aba9777b45f3ab904a06930aa32ce2ad9ef745097a687a95ed32448c",
+        "VIEW04.BIN": "289cb03b26403e0b0d00df57a40ab6296b9ce7525a375280abaddadd6fa9bc0d",
+        "VIEW05.BIN": "972b3efa44c6e45a8959db6f0e82ac34c7ae7c5fd16eb779aa0cd7e84a888641",
+        "VIEW06.BIN": "35c68f00edb65084a3ced970919c1077061f056d09e213d81395279f90753244",
+        "VIEW07.BIN": "313d6c67a5d3fe5000e2ff66b21124e9a2de308167464caae95069b70d98180f",
+        "VIEW08.BIN": "28e37c89314f5f7b7d0e039ffe97ff8165915928b54f1ae6a78073cdcbcbc92b",
+        "VIEW09.BIN": "dfc63a7785b02b5115443a5eac9c881e875928ff05432cd110d5fdb90bd0bdf5"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "topic-memory"
+    },
+    {
+      "rows": 25,
+      "topic": 1,
+      "keys": [
+        83,
+        76,
+        73,
+        78,
+        69,
+        32,
+        48,
+        53,
+        13,
+        67,
+        78,
+        27
+      ],
+      "captures": 12,
+      "frames": {
+        "VIEW00.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a",
+        "VIEW01.BIN": "66b7ee99538e7331ab2c2897320da3bda281a31d6f55079508f0bad14db82975",
+        "VIEW02.BIN": "9344c1023cc396b9e0ead43090e541cf939a3d5e3cd49b9db7893ff238c6ed44",
+        "VIEW03.BIN": "7acb448697224d5022d0f4635ecae66d9c62b6227a680b7f0df0be94f4bf0e0e",
+        "VIEW04.BIN": "359504fa95c353eb05eb13ac71ddef723b26da58adc40efcbe3b6714ee610f55",
+        "VIEW05.BIN": "b51a5af8dbec587da0e8ecfbe6ef8f7eb545d8bd97d07ca3545fac1d4429e46c",
+        "VIEW06.BIN": "b51a5af8dbec587da0e8ecfbe6ef8f7eb545d8bd97d07ca3545fac1d4429e46c",
+        "VIEW07.BIN": "1c8a27305a36c4ab5f1f1e9bce5ee12a6caebb3c3284bdd23997ff9188556500",
+        "VIEW08.BIN": "770760ab797dcc052a7185b18d88d48f440834cb09df75e2d83b158e0b419434",
+        "VIEW09.BIN": "7df4f27237a7f325392f67726016026380e3cdab9e2c08ebd6b7de84dc2368cd",
+        "VIEW10.BIN": "c010e5799e4161b51a26c62c9536c8c0a01d0247ded6a09a523be7b54b8dfb9c",
+        "VIEW11.BIN": "7df4f27237a7f325392f67726016026380e3cdab9e2c08ebd6b7de84dc2368cd"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          3084,
+          1543
+        ],
+        [
+          3085,
+          1543
+        ],
+        [
+          3086,
+          1543
+        ],
+        [
+          3087,
+          1543
+        ],
+        [
+          3088,
+          1543
+        ],
+        [
+          3089,
+          1543
+        ],
+        [
+          3090,
+          1543
+        ],
+        [
+          3091,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          6214,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-no"
+    },
+    {
+      "rows": 25,
+      "topic": 1,
+      "keys": [
+        83,
+        76,
+        73,
+        78,
+        69,
+        32,
+        48,
+        53,
+        13,
+        67,
+        89,
+        27
+      ],
+      "captures": 12,
+      "frames": {
+        "VIEW00.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a",
+        "VIEW01.BIN": "66b7ee99538e7331ab2c2897320da3bda281a31d6f55079508f0bad14db82975",
+        "VIEW02.BIN": "9344c1023cc396b9e0ead43090e541cf939a3d5e3cd49b9db7893ff238c6ed44",
+        "VIEW03.BIN": "7acb448697224d5022d0f4635ecae66d9c62b6227a680b7f0df0be94f4bf0e0e",
+        "VIEW04.BIN": "359504fa95c353eb05eb13ac71ddef723b26da58adc40efcbe3b6714ee610f55",
+        "VIEW05.BIN": "b51a5af8dbec587da0e8ecfbe6ef8f7eb545d8bd97d07ca3545fac1d4429e46c",
+        "VIEW06.BIN": "b51a5af8dbec587da0e8ecfbe6ef8f7eb545d8bd97d07ca3545fac1d4429e46c",
+        "VIEW07.BIN": "1c8a27305a36c4ab5f1f1e9bce5ee12a6caebb3c3284bdd23997ff9188556500",
+        "VIEW08.BIN": "770760ab797dcc052a7185b18d88d48f440834cb09df75e2d83b158e0b419434",
+        "VIEW09.BIN": "7df4f27237a7f325392f67726016026380e3cdab9e2c08ebd6b7de84dc2368cd",
+        "VIEW10.BIN": "c010e5799e4161b51a26c62c9536c8c0a01d0247ded6a09a523be7b54b8dfb9c",
+        "VIEW11.BIN": "89648cd00f5d8f284814ce9ce18eb33e18c850d74da2b62fffd641f05373a0bd"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          3084,
+          1543
+        ],
+        [
+          3085,
+          1543
+        ],
+        [
+          3086,
+          1543
+        ],
+        [
+          3087,
+          1543
+        ],
+        [
+          3088,
+          1543
+        ],
+        [
+          3089,
+          1543
+        ],
+        [
+          3090,
+          1543
+        ],
+        [
+          3091,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          6214,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-yes"
+    },
+    {
+      "rows": 25,
+      "topic": 1,
+      "keys": [
+        83,
+        65,
+        66,
+        8,
+        27,
+        27
+      ],
+      "captures": 6,
+      "frames": {
+        "VIEW00.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a",
+        "VIEW01.BIN": "66b7ee99538e7331ab2c2897320da3bda281a31d6f55079508f0bad14db82975",
+        "VIEW02.BIN": "9eeb5703e7026cc92fce929fd457507f7366cab36518dcb71a7e54ca500860c1",
+        "VIEW03.BIN": "04f4844e4e85266ede9462b9db346c003f88caa5429731c061696be5e5aaf45d",
+        "VIEW04.BIN": "9eeb5703e7026cc92fce929fd457507f7366cab36518dcb71a7e54ca500860c1",
+        "VIEW05.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          3084,
+          1543
+        ],
+        [
+          3085,
+          1543
+        ],
+        [
+          3086,
+          1543
+        ],
+        [
+          3085,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-cancel"
+    },
+    {
+      "rows": 25,
+      "topic": 1,
+      "keys": [
+        83,
+        84,
+        79,
+        80,
+        73,
+        67,
+        32,
+        52,
+        54,
+        13,
+        89,
+        27
+      ],
+      "captures": 12,
+      "frames": {
+        "VIEW00.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a",
+        "VIEW01.BIN": "66b7ee99538e7331ab2c2897320da3bda281a31d6f55079508f0bad14db82975",
+        "VIEW02.BIN": "81ef6cf84f467702fd4e2f2e1d92c1a363febb54b9ec905d6e16be92cfee7a25",
+        "VIEW03.BIN": "9bf635ac73d1353d13db29897cc7d0dafe2fd2f587a9ef43c6be75e26ae737ec",
+        "VIEW04.BIN": "77e79673bef91e40efc1557f497921651e5a2a19d724bfeb0cb347ac5f9a3804",
+        "VIEW05.BIN": "f0efe1f656acd1718abb41e227322e10311537340e3dde5a0fc99bae189b2087",
+        "VIEW06.BIN": "fdce52e71ca70c8c9088899f921689d13cea1ec8a9332510691d13202f48b4ee",
+        "VIEW07.BIN": "fdce52e71ca70c8c9088899f921689d13cea1ec8a9332510691d13202f48b4ee",
+        "VIEW08.BIN": "a319345466e673d9b8aaf52e1d2d87c3aab216a6284a1f65aada7e8601e9ea36",
+        "VIEW09.BIN": "924411c36fb78eaf0907855159dcc759feabdb28d90a2efc91d94e95e6a9554c",
+        "VIEW10.BIN": "b8c7a0da9ab538e24f889e448ce216ecc381e5d9d3cbc663a8d82f93ad075685",
+        "VIEW11.BIN": "5a86c9afaba327800f03b4658250012e1a4817aa742707642800ed21dc8e509e"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          3084,
+          1543
+        ],
+        [
+          3085,
+          1543
+        ],
+        [
+          3086,
+          1543
+        ],
+        [
+          3087,
+          1543
+        ],
+        [
+          3088,
+          1543
+        ],
+        [
+          3089,
+          1543
+        ],
+        [
+          3090,
+          1543
+        ],
+        [
+          3091,
+          1543
+        ],
+        [
+          3092,
+          1543
+        ],
+        [
+          6214,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-other-topic"
+    },
+    {
+      "rows": 25,
+      "topic": 1,
+      "keys": [
+        83,
+        78,
+        69,
+        86,
+        69,
+        82,
+        13,
+        89,
+        27,
+        27
+      ],
+      "captures": 9,
+      "frames": {
+        "VIEW00.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a",
+        "VIEW01.BIN": "66b7ee99538e7331ab2c2897320da3bda281a31d6f55079508f0bad14db82975",
+        "VIEW02.BIN": "b6e88aed6795a696720b9deefff84a1aad91c489c5e2404e65ec2d0cd6247fee",
+        "VIEW03.BIN": "cc197973182632e83a0e243158b76c2d58d673f72c862a5b384ba05b3d49f27b",
+        "VIEW04.BIN": "797a2a1be4324f671dd3a7ed76f2f304289ce4adb661c5a96d3d2aff718a9a46",
+        "VIEW05.BIN": "2c04c50c060ca2d393c671510e2924d50c00e3c01f0798fe41552b631ea115c5",
+        "VIEW06.BIN": "5c3a6f3569fa44d985076c304d3c75f84931538833dbfc41c107041a3e96ab0f",
+        "VIEW07.BIN": "b8c7a0da9ab538e24f889e448ce216ecc381e5d9d3cbc663a8d82f93ad075685",
+        "VIEW08.BIN": "3abaa00f56309c49f4a5cb70e94d8e7805bc22e36b6ddfb738b5ea82512e833a"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          3084,
+          1543
+        ],
+        [
+          3085,
+          1543
+        ],
+        [
+          3086,
+          1543
+        ],
+        [
+          3087,
+          1543
+        ],
+        [
+          3088,
+          1543
+        ],
+        [
+          3089,
+          1543
+        ],
+        [
+          6214,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-missing"
+    },
+    {
+      "rows": 25,
+      "topic": 65535,
+      "keys": [
+        27
+      ],
+      "captures": 1,
+      "frames": {
+        "VIEW00.BIN": "dfc63a7785b02b5115443a5eac9c881e875928ff05432cd110d5fdb90bd0bdf5"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "negative-context"
+    },
+    {
+      "rows": 50,
+      "topic": 1,
+      "keys": [
+        84,
+        27,
+        27
+      ],
+      "captures": 3,
+      "frames": {
+        "VIEW00.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW01.BIN": "276c8918b8387a27bc0548f6fc0c1163b5043e808a854c09583cb17fa1c1620f",
+        "VIEW02.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "topics-cancel"
+    },
+    {
+      "rows": 50,
+      "topic": 1,
+      "keys": [
+        20480,
+        20736,
+        18432,
+        18688,
+        20224,
+        18176,
+        27
+      ],
+      "captures": 7,
+      "frames": {
+        "VIEW00.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW01.BIN": "00da47eaa9193507449e1d8a0ac63347b5b836038931651a473741ec27f3ace2",
+        "VIEW02.BIN": "00da47eaa9193507449e1d8a0ac63347b5b836038931651a473741ec27f3ace2",
+        "VIEW03.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW04.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW05.BIN": "00da47eaa9193507449e1d8a0ac63347b5b836038931651a473741ec27f3ace2",
+        "VIEW06.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "scroll"
+    },
+    {
+      "rows": 50,
+      "topic": 1,
+      "keys": [
+        84,
+        20224,
+        13,
+        84,
+        18432,
+        18688,
+        20736,
+        18176,
+        13,
+        27
+      ],
+      "captures": 10,
+      "frames": {
+        "VIEW00.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW01.BIN": "276c8918b8387a27bc0548f6fc0c1163b5043e808a854c09583cb17fa1c1620f",
+        "VIEW02.BIN": "7305f420c1f9154e24982fd256ac0b8bddb6434564b41f2cdde8983d63c7e8da",
+        "VIEW03.BIN": "f31b5fbc1b2a21e744b60b8d8e23c73596aa2f3b06dfa758c341c681ceda0005",
+        "VIEW04.BIN": "5f6d1123a6d26607243d1c1e02c425148997e732084e4f7cc7972b4bbc5a7b8e",
+        "VIEW05.BIN": "0290fb6b14b15ce5a13c1dd469c225e02bb95c218c3ad8c68fba25b27538b730",
+        "VIEW06.BIN": "0701d46c2dc4a694ae6f4387e228d30d2d8f0a0138ee1d88283776abb9deecc6",
+        "VIEW07.BIN": "40db6115077918a5b321ae5f8ef6c67e8a3fbc616f4e736d058f49243c1cdef1",
+        "VIEW08.BIN": "974025f78566e437c2933c7a8d6ddd26901fb8f00f98266aa72fdc7d0f3ee147",
+        "VIEW09.BIN": "8f4ed9c3c94edaa6eb49500b82073c58467111eaf185c23e4a601cd3b9471f9c"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          25800,
+          9735
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "topic-memory"
+    },
+    {
+      "rows": 50,
+      "topic": 1,
+      "keys": [
+        83,
+        76,
+        73,
+        78,
+        69,
+        32,
+        48,
+        53,
+        13,
+        67,
+        78,
+        27
+      ],
+      "captures": 12,
+      "frames": {
+        "VIEW00.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW01.BIN": "390b1f0560e9d40323169f75fea06fba84918ef9248c95c8b8e653893f857f96",
+        "VIEW02.BIN": "f8963045f22e209f52d32f0e480e5174846d360b576a9d0502afea3a28e448ae",
+        "VIEW03.BIN": "43102474f7137c67316749e77a0d32d9d976d198a4e4ec5131650f7b8786898e",
+        "VIEW04.BIN": "d018463b1339e0b817e40ac0de4d0b737665a38d22c2fa3f8c5e9ef8f9a0b8e6",
+        "VIEW05.BIN": "c5cc20a3b0f858d8643f613e894faf2886ec3119637f4488b0faed714390db0b",
+        "VIEW06.BIN": "c5cc20a3b0f858d8643f613e894faf2886ec3119637f4488b0faed714390db0b",
+        "VIEW07.BIN": "5f2f5f826ede810a9644724b241a6b09440229b5e4935d7be0ae016f4232260c",
+        "VIEW08.BIN": "f24f651ddf0937fe2eb68c144f52db6acc6b5dc0362500e335bb79ad5a858c3e",
+        "VIEW09.BIN": "045af2945b5eac55ffbd4a7e39452aa7a8f405c5ec62232a73f7ac6b48566dd0",
+        "VIEW10.BIN": "5a4602c4e25824fe3552a62d12939fb34c576b5b7d3f06d660b58e2726c255e6",
+        "VIEW11.BIN": "045af2945b5eac55ffbd4a7e39452aa7a8f405c5ec62232a73f7ac6b48566dd0"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          6412,
+          1543
+        ],
+        [
+          6413,
+          1543
+        ],
+        [
+          6414,
+          1543
+        ],
+        [
+          6415,
+          1543
+        ],
+        [
+          6416,
+          1543
+        ],
+        [
+          6417,
+          1543
+        ],
+        [
+          6418,
+          1543
+        ],
+        [
+          6419,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          12614,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-no"
+    },
+    {
+      "rows": 50,
+      "topic": 1,
+      "keys": [
+        83,
+        76,
+        73,
+        78,
+        69,
+        32,
+        48,
+        53,
+        13,
+        67,
+        89,
+        27
+      ],
+      "captures": 12,
+      "frames": {
+        "VIEW00.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW01.BIN": "390b1f0560e9d40323169f75fea06fba84918ef9248c95c8b8e653893f857f96",
+        "VIEW02.BIN": "f8963045f22e209f52d32f0e480e5174846d360b576a9d0502afea3a28e448ae",
+        "VIEW03.BIN": "43102474f7137c67316749e77a0d32d9d976d198a4e4ec5131650f7b8786898e",
+        "VIEW04.BIN": "d018463b1339e0b817e40ac0de4d0b737665a38d22c2fa3f8c5e9ef8f9a0b8e6",
+        "VIEW05.BIN": "c5cc20a3b0f858d8643f613e894faf2886ec3119637f4488b0faed714390db0b",
+        "VIEW06.BIN": "c5cc20a3b0f858d8643f613e894faf2886ec3119637f4488b0faed714390db0b",
+        "VIEW07.BIN": "5f2f5f826ede810a9644724b241a6b09440229b5e4935d7be0ae016f4232260c",
+        "VIEW08.BIN": "f24f651ddf0937fe2eb68c144f52db6acc6b5dc0362500e335bb79ad5a858c3e",
+        "VIEW09.BIN": "045af2945b5eac55ffbd4a7e39452aa7a8f405c5ec62232a73f7ac6b48566dd0",
+        "VIEW10.BIN": "5a4602c4e25824fe3552a62d12939fb34c576b5b7d3f06d660b58e2726c255e6",
+        "VIEW11.BIN": "0095a3e457e07dbbb4196fabf76aa434a0b1d5f488fddca82b12864f8d4e596d"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          6412,
+          1543
+        ],
+        [
+          6413,
+          1543
+        ],
+        [
+          6414,
+          1543
+        ],
+        [
+          6415,
+          1543
+        ],
+        [
+          6416,
+          1543
+        ],
+        [
+          6417,
+          1543
+        ],
+        [
+          6418,
+          1543
+        ],
+        [
+          6419,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ],
+        [
+          12614,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-yes"
+    },
+    {
+      "rows": 50,
+      "topic": 1,
+      "keys": [
+        83,
+        65,
+        66,
+        8,
+        27,
+        27
+      ],
+      "captures": 6,
+      "frames": {
+        "VIEW00.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW01.BIN": "390b1f0560e9d40323169f75fea06fba84918ef9248c95c8b8e653893f857f96",
+        "VIEW02.BIN": "1377c89096c7cfc60fa5b7aeecd675ba4b1cf71587b10daeea61b42e268351cd",
+        "VIEW03.BIN": "2dc22c5be50699cf58bc513865f9ae36ce78bfd2f2081e6f417300f13aad62f8",
+        "VIEW04.BIN": "1377c89096c7cfc60fa5b7aeecd675ba4b1cf71587b10daeea61b42e268351cd",
+        "VIEW05.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          6412,
+          1543
+        ],
+        [
+          6413,
+          1543
+        ],
+        [
+          6414,
+          1543
+        ],
+        [
+          6413,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-cancel"
+    },
+    {
+      "rows": 50,
+      "topic": 1,
+      "keys": [
+        83,
+        84,
+        79,
+        80,
+        73,
+        67,
+        32,
+        52,
+        54,
+        13,
+        89,
+        27
+      ],
+      "captures": 12,
+      "frames": {
+        "VIEW00.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW01.BIN": "390b1f0560e9d40323169f75fea06fba84918ef9248c95c8b8e653893f857f96",
+        "VIEW02.BIN": "bc36a10d503fc6c417bc894997382bd46a094aaf16c06dbfaaa7ac1746490f97",
+        "VIEW03.BIN": "ff279c0800abc09dde80cdc71a72d1b7fdec23b59ea99e560b49b8bae5e7bccd",
+        "VIEW04.BIN": "e659d7086f22e7e1e15306f6bcfc73c57961e18bd6b5159e72b223c89c1cbd6a",
+        "VIEW05.BIN": "96157907c10485ab09b0a1ea09b2574b21d6b10a676c73d0d34218fb4a0d3b10",
+        "VIEW06.BIN": "7a00624c6a9bdec3eee9ef9d7a1d482e6c3fa1bea64a0ed86a9eff1f276b4d3c",
+        "VIEW07.BIN": "7a00624c6a9bdec3eee9ef9d7a1d482e6c3fa1bea64a0ed86a9eff1f276b4d3c",
+        "VIEW08.BIN": "a901175d8bccac8dd3679dd966ce4cdf7372b9babb9ce340b72cbb31a6d62736",
+        "VIEW09.BIN": "32d164b1f463c9cdb80aa4e82c05d6a79efb09abb9cf5c3573541ab61e2d6112",
+        "VIEW10.BIN": "0890857861b758b147bb0dd19d4004d96eb61c750bb1ee0a3e1b83b778834de4",
+        "VIEW11.BIN": "e1d69819cf5934c6e5a41b4840b969ffe2d27587abdf23f697cc8209804317ba"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          6412,
+          1543
+        ],
+        [
+          6413,
+          1543
+        ],
+        [
+          6414,
+          1543
+        ],
+        [
+          6415,
+          1543
+        ],
+        [
+          6416,
+          1543
+        ],
+        [
+          6417,
+          1543
+        ],
+        [
+          6418,
+          1543
+        ],
+        [
+          6419,
+          1543
+        ],
+        [
+          6420,
+          1543
+        ],
+        [
+          12614,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-other-topic"
+    },
+    {
+      "rows": 50,
+      "topic": 1,
+      "keys": [
+        83,
+        78,
+        69,
+        86,
+        69,
+        82,
+        13,
+        89,
+        27,
+        27
+      ],
+      "captures": 9,
+      "frames": {
+        "VIEW00.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4",
+        "VIEW01.BIN": "390b1f0560e9d40323169f75fea06fba84918ef9248c95c8b8e653893f857f96",
+        "VIEW02.BIN": "abf6342b093d9ee2344179a95b1934785aaa047af704cd50d5e7257322baf0f4",
+        "VIEW03.BIN": "3506323b30536c22c45e3cafc6249ca2592def0ceb3c86fe6d5f5b4436e604f4",
+        "VIEW04.BIN": "02eb596a02a4c32036766586862ff7f987e04987b6ce17f91bc13b4bfa2dec12",
+        "VIEW05.BIN": "45ae5aac9bbac54512a5d547fe45e862e0262413dcfe9ed9bab8b9e4d3a953c9",
+        "VIEW06.BIN": "c6a32af20d4eacd92095b0d67ee43c56611e214c0d8b716e05324490c36b4b7a",
+        "VIEW07.BIN": "0890857861b758b147bb0dd19d4004d96eb61c750bb1ee0a3e1b83b778834de4",
+        "VIEW08.BIN": "8cee0938fb2a27dccf77e61632190cbf1a0c99577d0c7d4dcc9cf2a89dc75da4"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ],
+        [
+          6412,
+          1543
+        ],
+        [
+          6413,
+          1543
+        ],
+        [
+          6414,
+          1543
+        ],
+        [
+          6415,
+          1543
+        ],
+        [
+          6416,
+          1543
+        ],
+        [
+          6417,
+          1543
+        ],
+        [
+          12614,
+          1543
+        ],
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "search-missing"
+    },
+    {
+      "rows": 50,
+      "topic": 65535,
+      "keys": [
+        27
+      ],
+      "captures": 1,
+      "frames": {
+        "VIEW00.BIN": "8f4ed9c3c94edaa6eb49500b82073c58467111eaf185c23e4a601cd3b9471f9c"
+      },
+      "metadata": [
+        [
+          1803,
+          9735
+        ]
+      ],
+      "restored": true,
+      "resource_sha256": "826a17409535d148069b536b7bfebd08ab93236be20d68817f88c06e4e5c4444",
+      "case": "negative-context"
+    }
+  ]
+}

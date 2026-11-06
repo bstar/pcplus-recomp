@@ -2541,3 +2541,15 @@ and an identical19-file source-only rebuild pass. New REA evidence identifies
 the original topic selector, new/continued search and height-dependent dialogs.
 Global helper UI, bounded producer resolution, parent owner/context mapping
 and connected-session acceptance are still open; this component is opt-in.
+
+## Source PCHELP interface
+
+The [source helper](HELP_PROGRAM.md) now accepts the native producer's legacy
+descriptor and renders the original-derived full-screen, topic and search UI.
+18 actual original/source DOS pairs at25/50 rows match144 VGA snapshots and
+cursor states, including complete background/cursor restoration. The authored
+78869-byte fixture exercises later-topic reads/search beyond64KiB. A24-file
+isolated source rebuild reproduces the helper and repeats all18 sessions.
+Global terminal entry/owner integration, full-parent memory and connected
+serial composition, real context content, broader UI/input/faults and physical
+acceptance remain open. No physical deployment or terminal change occurred.

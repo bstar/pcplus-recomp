@@ -9,6 +9,10 @@ The next [parent admission checkpoint](HELP_PARENT_ADMISSION.md) checks actual
 DOS PSP/main-block ownership and bounded string copies. It also records the
 original helper's T/S/C controls for the remaining UI integration.
 
+The [source PCHELP interface](HELP_PROGRAM.md) now reproduces the selected
+full-screen/topic/search workflows in actual DOS, including cursor and screen
+restoration. It is still separate from the terminal's global Help entry.
+
 Alt-Z in the recovered keyboard poll is gated by a signed context word. When
 enabled, it consumes the BIOS key and calls resident57AE. Fresh REA analysis
 corrects the earlier description of that callback as a local diagnostic dialog:

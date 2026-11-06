@@ -1819,6 +1819,15 @@ test-notice-help-combined: notice-help
 	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-help-speaker-make-$(shell date +%s%N) --quarantine help-speaker --port 2 --mode 2D --mode 2A --mode 2F
 	python3 standalone/test_program_notices_sound_dos.py --mouse --input --notice-help --label combined-help-foreign-make-$(shell date +%s%N) --quarantine help-foreign --port 2 --mode 2D --mode 2A --mode 2F
 
+HELP_PROGRAM_OUTPUT := build/help-program-make-$(shell date +%s%N)
+.PHONY: help-program test-help-program test-help-program-source
+help-program:
+	python3 standalone/build_help_program.py --output $(HELP_PROGRAM_OUTPUT)
+test-help-program: help-program
+	python3 standalone/test_help_program_source.py --build $(HELP_PROGRAM_OUTPUT) --output $(HELP_PROGRAM_OUTPUT)/regression
+test-help-program-source: help-program
+	python3 standalone/test_help_program_source.py --build $(HELP_PROGRAM_OUTPUT) --output $(HELP_PROGRAM_OUTPUT)/source-proof --cold
+
 .PHONY: help-resource test-help-document test-help-resource test-help-resource-combined test-help-resource-source
 help-resource: program-notice-input
 	python3 standalone/build_aspect_process.py --notice-bank --notice-sound --notice-input --notice-help --help-resource
