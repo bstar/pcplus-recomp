@@ -1,0 +1,42 @@
+{
+  "checkpoint_recorded": true,
+  "application_changed": false,
+  "physical_runtime_verified": false,
+  "source_export_files": 35,
+  "module_file_bytes": 3386,
+  "module_image_bytes": 3338,
+  "loader_bank_bytes": 1328,
+  "module_DGROUP_bytes": 0,
+  "module_stack_bytes": 0,
+  "loads": 6,
+  "relocation_bases": 2,
+  "free_paragraphs_during_load": 0,
+  "composed_frames": 568,
+  "composed_effects": 1071,
+  "rx_effects_while_tx_blocked": 1024,
+  "results": {
+    "reviewed": {
+      "path": "build/chat-module-reviewed-dos-20261106/result.json",
+      "sha256": "9e340d1475aac504eaee1cd2cdc9d58ccbfe6f490bee0bb257c29c245f449f8e",
+      "passed": true
+    },
+    "source_export": {
+      "path": "build/chat-module-reviewed-clean-export-20261106/build/proof/result.json",
+      "sha256": "23561b8173fd88e0d7a8cf43afc8daecc2c7e006b0924cc1588e95e7411fa387",
+      "passed": true
+    }
+  },
+  "exact_export_artifacts": {
+    "module/PCCHAT.OVL": "77270fb67a435c52ee0a61969cfbb68822ada57c3cdb56d6b3f7b66de84a63d2",
+    "drive/LOADCHAT.EXE": "cbb038cbdb2f29bd835ede01598e80ae18337b1c23d13656acacdd83a64b36b0",
+    "composed/COMPOSE.EXE": "241d5bb013e2cb2a9f3c77db415b9bbfd883616b302f8b5487264ebf72a18400",
+    "composed/FRAMES.BIN": "bf7222c3c16739e83dc756ea12081bc1eace57382be890355558cfaffbdcdc65",
+    "composed/EVENTS.BIN": "52b232baf72e3c49518ec824d487c7ec0c2b34364b3a6a47b6c2ccad2ee1a86d"
+  },
+  "limits": [
+    "Actual DOSBox-X DOS8086 overlay/component evidence; no physical MS-DOS or main parent integration.",
+    "Original sink/BIOS/scroll/UI boundaries retain their documented scope.",
+    "Exclusive borrowed storage and unchanged artifact during preflight/kernel load are caller requirements.",
+    "Loader resident footprint and full parent Enigma/Synchronet/memory/package/deployment gates remain open."
+  ]
+}

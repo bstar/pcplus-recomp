@@ -2314,6 +2314,15 @@ native/send/screen regressions. The358-byte far context and3047-byte code bank
 remain outside the selected application. An on-demand loading/memory mechanism,
 real frontend/UART/cursor/help/KEY/notices, BBS and physical gates remain open.
 
+The [on-demand Chat module](CHAT_MODULE.md) now passes real DOS8086 overlay
+loading into existing guarded storage with zero free paragraphs, six loads at
+two relocation bases, unchanged PSP/JFT/free memory, version/lifetime/identity
+checks and the full composed workflow. A 35-file export exactly reproduces the
+3,386-byte module and both hosts. Chat is absent from the host link maps; its
+3,338-byte image need not be permanently linked. The 1,328-byte loader bank,
+storage lease and application hooks still require full parent memory/connection
+acceptance. No application, package-selection or physical gate closes.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

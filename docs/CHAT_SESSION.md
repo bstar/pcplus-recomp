@@ -81,11 +81,11 @@ would require fresh memory/admission evidence; a successful standalone bank is
 not that evidence. Borrowing an existing snapshot area can avoid another358-byte
 reservation but does not eliminate code retention.
 
-The next implementation should investigate a source-built on-demand DOS overlay
-loaded into checked existing far storage, then bind the foreground hooks. DOS
-overlay loading, relocation/entry bounds, exact module identity, DS=SS, nested
-callbacks, retirement and memory behavior must be proved before relying on it.
-This is a proposed next mechanism, not an implemented loader or accepted package.
+The [on-demand module proof](CHAT_MODULE.md) now covers source-built DOS overlay
+loading into checked existing far storage, relocation/image identity, DS=SS,
+callbacks and retirement. Its full component workflow and clean export pass.
+The loader's own resident cost, shared storage lease and foreground hooks still
+need integration and full parent admission evidence; no package is selected.
 Repeat full Enigma/Synchronet connection and memory gates on the resulting parent
 before reversible deployment and physical Boca/SPA2102 testing. Preserve existing
 stacks, stream capacities, configuration and call history.
