@@ -1,0 +1,250 @@
+{
+  "passed": true,
+  "binary_sha256": "72f3ced9e6090cd0e443ce822184c04612e8d244b51fc9e16f1f1ac196c86b09",
+  "retained_module_bytes": 478656,
+  "retained_parent_paragraphs": 29931,
+  "saved_against_editor_bytes": 4224,
+  "saved_against_reviewed_viewer_bytes": 3744,
+  "near_bytes": 65488,
+  "resident_code_bytes": 65516,
+  "packed_text": {
+    "literals": 230,
+    "pairs": 64,
+    "max_depth": 3,
+    "original_literal_bytes": 12738,
+    "packed_literal_bytes": 7972,
+    "dictionary_bytes": 128,
+    "generated_sha256": "3758912aa4310359bd294522b72220f237428f443e2ca5de3aa0b9964c5bde1d",
+    "dictionary_sha256": "a16262061c17fba9824ddae633ee7e151a8516456ff75933a41cbaa05c015bb1"
+  },
+  "UI_comparison": {
+    "path": "build/packed-ui-frame-parity-v3-20261106/result.json",
+    "sha256": "ec73b707190e3de8f6588024f031a6840141c98904fb0eb88f8f6b395c77911a"
+  },
+  "legacy_search": {
+    "path": "build/packed-ui-legacy-search-20261106/result.json",
+    "sha256": "98e0100ceb19b3adb446218a96afa7ab9fc7cc7ac6d125e7f35776109de97e11"
+  },
+  "reviewed_package_reproduction": {
+    "path": "build/reviewed-after-ui-pack-20261106/result.json",
+    "sha256": "924320a43d4f60690fa7133d0591831918bd70de0193a7219f4d5225327380dc"
+  },
+  "public_source_build": {
+    "path": "build/packed-ui-public-source-proof-v3-20261106/result.json",
+    "sha256": "399d92d85b8e6d1654fc0a90acf7f933a4e7957e5a08a47d3c76b01c6d37be26"
+  },
+  "source_commit": "985c76e59200108073d07f4a6e1453dfdc408648",
+  "linked_layout": {
+    "path": "build/packed-ui-v3-layout-20261106/result.json",
+    "sha256": "77e7f3fc11d0540ba7aa9f6cc60d9e4a0eeec769cd259d70bafe4343f5cd5138"
+  },
+  "modal_workflows": [
+    {
+      "tool": "editor",
+      "case": "relative",
+      "report": {
+        "path": "build/packed-ui-v3-editor-relative-20261106/result.json",
+        "sha256": "8b4fb2eeaf860ad7e089895dab14b72af9349e4749d9a04310c47f97353747dd"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "absolute",
+      "report": {
+        "path": "build/packed-ui-v3-editor-absolute-20261106/result.json",
+        "sha256": "a6b98e332ffca56d4fa7eb81528bb7d7ae770d7f7059b4836c5182c5a949de35"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "options",
+      "report": {
+        "path": "build/packed-ui-v3-editor-options-20261106/result.json",
+        "sha256": "99ce4849477e3686a86a8718bc335683463c98b4950b0a84264f8ab271390268"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "spaces",
+      "report": {
+        "path": "build/packed-ui-v3-editor-spaces-20261106/result.json",
+        "sha256": "aae2feb2d4f2defae6eb8e4cbd121b12df8836f0276666651d26723c98205157"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "empty",
+      "report": {
+        "path": "build/packed-ui-v3-editor-empty-20261106/result.json",
+        "sha256": "0d906c68b7d128362edd8e5da196256c191d1dd97582824a81737f940e5c50da"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "cancel",
+      "report": {
+        "path": "build/packed-ui-v3-editor-cancel-20261106/result.json",
+        "sha256": "ed65b1a54939781c8f0c23fdfa1f052747eb8185b55a01a1784bc3bc9bab4a29"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "long",
+      "report": {
+        "path": "build/packed-ui-v3-editor-long-20261106/result.json",
+        "sha256": "aac61354858ec8c10c5d8bfd38bcca0f53c22d0a766da3d3820f2f4e6f0a87ea"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "maximum",
+      "report": {
+        "path": "build/packed-ui-v3-editor-maximum-20261106/result.json",
+        "sha256": "0ec49496d45e7ea146e9be326b677d90c926adc4818581319de3494fa5b117f9"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "reference",
+      "report": {
+        "path": "build/packed-ui-v3-editor-reference-20261106/result.json",
+        "sha256": "b77f809338808218ca0c2d912b5f61228965f62353555f4928058938885d353d"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "browser",
+      "report": {
+        "path": "build/packed-ui-v3-editor-browser-20261106/result.json",
+        "sha256": "15df7ca3b5068227d8cc5185e4433857e3b894f6cb3396ad77199c7cdcb41c4a"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "malformed",
+      "report": {
+        "path": "build/packed-ui-v3-editor-malformed-20261106/result.json",
+        "sha256": "c52b40a85c30f0cb3e0e6489d839bf68383190c6df34786632f1a7d248e4330c"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "disabled",
+      "report": {
+        "path": "build/packed-ui-v3-editor-disabled-20261106/result.json",
+        "sha256": "407f07738f88909ff71176c0d9113718d9e1e2e28bd59f15b20b7a2a14c230c9"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "relative",
+      "report": {
+        "path": "build/packed-ui-v3-viewer-relative-20261106/result.json",
+        "sha256": "f796666f79e34c94f29be4c5cfd5976c03a6dd95b1d662094de0d7cae9e1f0f5"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "options",
+      "report": {
+        "path": "build/packed-ui-v3-viewer-options-20261106/result.json",
+        "sha256": "8276a52e8bfc369f379de0ed54d9b9547ef155d189c74ab1273a6c56e929d7f4"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "cancel",
+      "report": {
+        "path": "build/packed-ui-v3-viewer-cancel-20261106/result.json",
+        "sha256": "5f7e4fcea0bb8ddfb1ae3be7ac4f455e825824d4d175e6bad32072c032ba64c0"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "reference",
+      "report": {
+        "path": "build/packed-ui-v3-viewer-reference-20261106/result.json",
+        "sha256": "f58b136b6f619dc1fc8a190c647aa63a34012a64cfdb4d82c6ff61958bc9df9f"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "browser",
+      "report": {
+        "path": "build/packed-ui-v3-viewer-browser-20261106/result.json",
+        "sha256": "812e7bf500350532d3094276297b54b05e4aadebb47319d977afd888b97b1130"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "maximum",
+      "report": {
+        "path": "build/packed-ui-v3-viewer-maximum-20261106/result.json",
+        "sha256": "32a2e1cdb87add051f7d9e6af4180e8ab9ec1692b29433430e16a58dee40bfbe"
+      }
+    }
+  ],
+  "servers": [
+    {
+      "server": "synchronet",
+      "report": {
+        "path": "build/bbs-lab/results/synchronet/packed-ui-v3-sync-20261106/proxy-integration.json",
+        "sha256": "76193e79a6be18f415fb978c4e23fb2c352e198b8a94d67c3e3ec50b01240f33"
+      },
+      "reference": {
+        "path": "build/bbs-lab/results/synchronet/packed-ui-v3-sync-20261106/screen-reference-audit.json",
+        "sha256": "52b2c5a6a83472ba528384501923700c6650c49857b77f2b453bf3a91b0c8dc9"
+      },
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "successful_script_open_witness": {
+        "path": "build/bbs-lab/results/synchronet/packed-ui-v3-sync-20261106/ADMIT.BIN",
+        "sha256": "6d937877bae87107affdcdd21e4e31bd2716f2eec366c61b57c8dc8e22c8558a"
+      }
+    },
+    {
+      "server": "enigma",
+      "report": {
+        "path": "build/bbs-lab/results/enigma/packed-ui-v3-enigma-20261106/proxy-integration.json",
+        "sha256": "ae06cf6e37364657930736c823f627723c8d94b680059ba821169169a14995a2"
+      },
+      "reference": {
+        "path": "build/bbs-lab/results/enigma/packed-ui-v3-enigma-20261106/screen-reference-audit.json",
+        "sha256": "39354d4dce9b107a463428f5ba6c9dd344f37aa407b684ec1bcefb134c904845"
+      },
+      "matched_cells": 1920,
+      "different_cells": 0
+    }
+  ],
+  "stream_capacity": {
+    "path": "build/packed-ui-v3-six-streams-20261106/result.json",
+    "sha256": "2451b2f0561322e1fbddf78b6d72610c5389f8825935eece7abb09b0b4631b37"
+  },
+  "transfers": {
+    "path": "build/packed-ui-v3-transfers-20261106/result.json",
+    "sha256": "d6965ca09260a727da5244f2978634385e34f543d7a449669c8adcc99d96573e"
+  },
+  "carrier_recovery": [
+    {
+      "path": "build/packed-ui-v3-child-loss-20261106/result.json",
+      "sha256": "36c35872c97a65c3ab2d19154e4e2b107fc57a89506c60f6861dfa1f380b3189"
+    },
+    {
+      "path": "build/packed-ui-v3-transfer-loss-20261106/result.json",
+      "sha256": "d1bed1cb4b8dfe46cc05925f3ca6cba68f374181fa42df332de6dc529f326216"
+    }
+  ],
+  "interpreter_changed": false,
+  "default_interpreter_heap_growth": 512,
+  "installed_package_changed": false,
+  "sources": {
+    "standalone/record_packed_command_ui.py": "e9188620b3c30c2d5a2a2bec8dc435ef2832776acfeb070f32296982b55601f8"
+  },
+  "limits": [
+    "Uncompressed UI control and packed variant both correct the category far-pointer conversion; comparison is not against the prior corrupted category display.",
+    "Final v3 BBS sessions run sequentially; earlier v2 concurrent Enigma session failed semantics and is excluded, not reattributed to the category fix.",
+    "Software-only DOS/loopback BBS tests; physical Boca/SPA2102/SIP/audio/CTS acceptance and complete original parity remain open.",
+    "Nested ASPECT PROGRAM composition remains a separate open gate; no stack,history,stream capacity or command is removed.",
+    "Default uncompressed/editor-off reviewed package recipe and installed selection are not updated by this receipt."
+  ]
+}
