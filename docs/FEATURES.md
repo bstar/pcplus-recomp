@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+The [composed connection package](CHAT_HELP_RELEASE.md) now supplies all13
+public files, including PCCHAT.OVL, PCHELP.RTE and authored PCPLUS.HLP, with a
+matching snapshot-lease ASPECT interpreter. A clean2413-file export reproduces
+the exact ZIP; four DOS8086 START/SETUP/script/Chat-Help launcher workflows pass,
+including COM3 absent from the BIOS table. The earlier default archive remains
+unchanged. Hardware acceptance and the complete original feature inventory stay
+open; installation identity is a separate private deployment record.
+
 The [Chat Help geometry guard](CHAT_HELP_GEOMETRY.md) now validates presentation
 before queuing Help, preserving unfinished input when an external BIOS screen
 change makes the presentation invalid. Twelve component cases pass206028 checks;
