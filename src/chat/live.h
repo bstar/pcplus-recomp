@@ -14,8 +14,15 @@ typedef struct chat_live_binding {
     chat_sink transmit,echo;
     chat_echo_error error;
     chat_word CHAT_FAR *cursor;
+#ifdef CHAT_REDISPLAY
+    const void CHAT_FAR *view;
+#endif
 } chat_live_binding;
+#ifdef CHAT_REDISPLAY
+typedef char chat_live_binding_must_be_28[(sizeof(chat_live_binding)==28)?1:-1];
+#else
 typedef char chat_live_binding_must_be_24[(sizeof(chat_live_binding)==24)?1:-1];
+#endif
 struct chat_session;
 struct chat_module_request;
 unsigned CHAT_CALL chat_live_bind(struct chat_session CHAT_FAR *,const chat_live_binding CHAT_FAR *);

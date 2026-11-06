@@ -31,6 +31,9 @@ unsigned CHAT_CALL chat_live_bind(chat_session CHAT_FAR *s,const chat_live_bindi
        overlap(b->cursor,22,((chat_presentation CHAT_FAR *)s->presentation)->backup,s->screen.cells*2))return 0;
     s->live.keys=b->keys;s->live.pause=b->pause;s->live.pacing=b->pacing;s->live.duplex=b->duplex;
     s->live.transmit=b->transmit;s->live.echo=b->echo;s->live.error=b->error;s->live.cursor=b->cursor;
+#ifdef CHAT_REDISPLAY
+    s->live.view=b->view;
+#endif
     s->live_bound=1;s->live_next=0;return 1;
 }
 unsigned CHAT_CALL chat_live_key(chat_module_request CHAT_FAR *r)

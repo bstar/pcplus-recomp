@@ -4,6 +4,15 @@
 #include "loader.h"
 #include "parent_sink.h"
 #include "../config/resource_path.h"
+#ifdef CHAT_REDISPLAY
+#include "redisplay_lease.h"
+extern unsigned redisplay_active,redisplay_snapshot_segment;
+#pragma aux redisplay_snapshot_segment "redisplay_snapshot_segment";
+unsigned chat_view_active;
+extern const chat_view_binding __based(__segname("_CODE")) chat_front_view_binding;
+extern unsigned CHAT_FAR __cdecl chat_view_enter(void);
+extern void CHAT_FAR __cdecl chat_view_leave(void);
+#endif
 #ifdef CHAT_FOREGROUND_TEXT
 #include "text_transport.h"
 extern unsigned char terminal_action_definitions[],terminal_macro_pause_character;
@@ -15,7 +24,8 @@ extern unsigned CHAT_FAR __cdecl terminal_chat_text_echo_sink(unsigned,unsigned,
 extern unsigned CHAT_FAR __cdecl terminal_chat_echo_error(void);
 #pragma aux terminal_chat_echo_error "terminal_chat_echo_error_far";
 #endif
-extern unsigned char CHAT_FAR redisplay_snapshot[],redisplay_view[];
+extern unsigned char CHAT_FAR redisplay_snapshot[];
+extern unsigned char CHAT_FAR redisplay_view[];
 #pragma aux redisplay_snapshot "redisplay_snapshot";
 #pragma aux redisplay_view "redisplay_view";
 extern unsigned process_psp,ui_window_rows,attributes_normal_value,modes_value_1d1a;
@@ -38,7 +48,11 @@ static const chat_live_binding __based(__segname("_CODE")) binding={
     (const chat_word __near *)&terminal_macro_character_delay_units,
     (const chat_word __near *)&modes_value_1d1a,
     terminal_chat_text_tx_sink,terminal_chat_text_echo_sink,terminal_chat_echo_error,
-    (chat_word CHAT_FAR *)(redisplay_snapshot+14500)};
+    (chat_word CHAT_FAR *)(redisplay_snapshot+14500)
+#ifdef CHAT_REDISPLAY
+    ,&chat_front_view_binding
+#endif
+    };
 #endif
 extern unsigned CHAT_FAR __cdecl chat_front_claim(void);
 extern void CHAT_FAR __cdecl chat_front_release(void);
@@ -49,10 +63,30 @@ static const char leaf[]="PCCHAT.OVL";
 #define REQUEST ((chat_module_request CHAT_FAR *)(redisplay_snapshot+13200))
 static unsigned operation(unsigned op)
 {REQUEST->operation=op;return chat_module_call(&handle,REQUEST);}
+#ifdef CHAT_REDISPLAY
+const chat_view_binding __based(__segname("_CODE")) chat_front_view_binding={
+    &chat_view_active,&redisplay_active,&redisplay_snapshot_segment,
+    &terminal_tx_count,&connection_state,
+    (chat_word CHAT_FAR *)redisplay_view,redisplay_snapshot+14600,
+    chat_view_enter,chat_view_leave,&ui_window_rows,&attributes_normal_value,
+    &modes_value_1d1a,&terminal_cr_adds_lf,&terminal_translation_enabled,
+    terminal_translation_table,redisplay_snapshot+13000,redisplay_snapshot+14000,
+    terminal_chat_sink};
+static unsigned view(unsigned action)
+{
+    unsigned result;
+    REQUEST->value=action;
+    result=operation(CHAT_MODULE_REDISPLAY);
+    return result==1;
+}
+#endif
 static unsigned stop(void)
 {
     if(!handle.loaded)return 0;
     if(handle.busy)return 1;
+#ifdef CHAT_REDISPLAY
+    if(chat_view_active && !view(CHAT_VIEW_CLOSE))return 1;
+#endif
     operation(CHAT_MODULE_ABORT);
     if(handle.active || chat_module_unload(&handle))return 1;
     chat_front_release();return 0;
@@ -68,6 +102,10 @@ static unsigned enter(void)
     }
     for(i=0;i<sizeof(*REQUEST);++i)bytes[i]=0;
     REQUEST->api=CHAT_MODULE_API;REQUEST->state=STATE;
+#ifdef CHAT_REDISPLAY
+    REQUEST->table=(const unsigned char CHAT_FAR *)&binding;
+    if(operation(CHAT_MODULE_FRONT_OPEN)!=1){stop();return 0;}
+#else
     REQUEST->frame=(chat_word CHAT_FAR *)redisplay_view;REQUEST->capacity=4000;
     REQUEST->rows=ui_window_rows;REQUEST->attribute=attributes_normal_value&255;
     REQUEST->bar=REQUEST->attribute|0x19;REQUEST->clear=REQUEST->attribute;
@@ -80,6 +118,7 @@ static unsigned enter(void)
     REQUEST->sink=terminal_chat_sink;REQUEST->user=0;REQUEST->budget=32;
     REQUEST->table=redisplay_snapshot+14000;
     for(i=0;i<256;++i)redisplay_snapshot[14000+i]=terminal_translation_enabled?terminal_translation_table[i]:(unsigned char)i;
+#endif
     return 1;
 }
 /* Events:0 key,1 pre-read key hold,2 pre-dequeue RX hold,3 actual raw RX,
@@ -90,6 +129,9 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
     if(initialized==0xc701){
         unsigned char *p=(unsigned char *)&handle;
         for(i=0;i<sizeof(handle);++i)p[i]=0;
+#ifdef CHAT_REDISPLAY
+        chat_view_active=0;
+#endif
         initialized=0xc702;
     }
     if(initialized!=0xc702)return 0;
@@ -105,6 +147,17 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
     }
 #endif
     if(event==5)return stop();
+#ifdef CHAT_REDISPLAY
+    /* Viewer closure can happen in the parent dispatcher after event0.
+     * Resume before any subsequent key, RX admission or idle continuation. */
+    if(chat_view_active && redisplay_active!=1 && !view(CHAT_VIEW_RESUME))return 1;
+    if(event==0 && (value==0x2d00 || value==0x2300))return stop()?1:0;
+    if(chat_view_active && event<=1)return 0;
+#endif
+#ifdef CHAT_REDISPLAY
+    if(event==1){REQUEST->key=value;return operation(CHAT_MODULE_KEY_HOLD)!=0;}
+    if(event==2)return operation(CHAT_MODULE_RX_HOLD)!=0;
+#else
 #ifdef CHAT_FOREGROUND_TEXT
     if(event==1)return value!=0x2d00 && value!=0x2300 &&
         (STATE->send.phase || STATE->rx_phase ||
@@ -114,9 +167,13 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
         (STATE->send.phase || STATE->rx_phase ||
          ((value&255)==27 && terminal_tx_count));
 #endif
-    if(event==2)return STATE->rx_phase!=0 || operation(CHAT_MODULE_PRESENT_CURSOR)!=1;
+    if(event==2)return STATE->rx_phase!=0 ||
+        operation(CHAT_MODULE_PRESENT_CURSOR)!=1;
+#endif
     if(event==0){
+#ifndef CHAT_REDISPLAY
         if(value==0x2d00 || value==0x2300){return stop()?1:0;}
+#endif
 #ifndef CHAT_FOREGROUND_TEXT
         /* Unbound core refuses Help/direct TEXT rather than substituting a
          * different KEY action. The foreground module owns those decisions. */
@@ -126,14 +183,23 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
 #endif
         REQUEST->key=value;REQUEST->transport_idle=terminal_tx_count==0;
         result=operation(CHAT_MODULE_KEY);
+#ifdef CHAT_REDISPLAY
+        if(result!=CHAT_MODULE_BAD && (result&CHAT_HELP) && value==0x6d00 &&
+           !view(CHAT_VIEW_BEGIN))handle.dos_error=0x7f02;
+#endif
         if(result==CHAT_MODULE_BAD || (result&CHAT_FAILED) || !STATE->send.active)stop();
         return 1;
     }
     if(event==3){REQUEST->value=value;return operation(CHAT_MODULE_RECEIVE);}
     if(event==4){
+#ifdef CHAT_REDISPLAY
+        result=operation(CHAT_MODULE_FOREGROUND_STEP);
+        if(result==CHAT_MODULE_BAD)stop();
+#else
         if(connection_state!=0 && connection_state!=6){stop();return 0;}
         result=operation(CHAT_MODULE_STEP);
         if(result==CHAT_MODULE_BAD || STATE->fault)stop();
+#endif
     }
     return 0;
 }

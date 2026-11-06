@@ -13,7 +13,7 @@ def main():
     a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists()
     m=json.loads(binary.with_name('manifest.json').read_text());assert m['experimental_chat_foreground_text']
-    assert sha(binary)==m['binary_sha256'] and m['chat_loader']['module']['api_version']==0x104
+    assert sha(binary)==m['binary_sha256'] and m['chat_loader']['module']['api_version']==(0x105 if m.get('experimental_chat_redisplay') else 0x104)
     sources={**m['sources'],**{n:sha(ROOT/n) for n in ('standalone/test_chat_live_keys_dos.py','standalone/test_connection_dos.py','standalone/directory_fixtures.py','standalone/modem_fixtures.py','standalone/terminal_config_fixtures.py','standalone/test_terminal.py','standalone/directory_test_support.py','standalone/build_path_session.py')}}
     for n,h in sources.items():assert sha(ROOT/n)==h,n
     out.mkdir();stage=out/'program';stage.mkdir()

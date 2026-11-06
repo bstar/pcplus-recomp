@@ -29,7 +29,17 @@ _terminal_chat_sink:
  push di
  push es
  cmp word [_redisplay_active],2
+%ifdef CHAT_REDISPLAY
+ je .owned
+ extern _chat_view_active
+ cmp word [_redisplay_active],1
  jne .refuse
+ cmp word [_chat_view_active],1
+ jne .refuse
+.owned:
+%else
+ jne .refuse
+%endif
  cmp word [terminal_quit],0
  jne .refuse
  cmp word [terminal_aspect_active],0

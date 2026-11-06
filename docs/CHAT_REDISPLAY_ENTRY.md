@@ -2,9 +2,10 @@
 
 Earlier Chat notes and the maintained internal CHAT_HELP flag misidentified
 key6D00 as Help. It is the original Alt-F6 Redisplay/scrollback command. This
-corrects the integration target; the current frontend still has no implemented
-continuation for that result. It does not establish completed Redisplay inside
-Chat or completed global Help.
+corrects the integration target. At this initial recovery checkpoint the
+frontend had no continuation for that result. The later opt-in
+[Chat Redisplay integration](CHAT_REDISPLAY.md) supplies a maintained storage
+lease and return; global Help remains separate.
 
 ## Static evidence
 

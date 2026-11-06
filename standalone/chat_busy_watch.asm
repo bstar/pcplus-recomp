@@ -3,6 +3,12 @@
 BITS 16
 CPU 8086
 ORG 100h
+%ifndef CHAT_API_VERSION
+%define CHAT_API_VERSION 0x104
+%endif
+%ifndef CHAT_STEP_OPERATION
+%define CHAT_STEP_OPERATION 4
+%endif
 jmp start
 old_vector: dw 0,0
 old_bell_vector: dw 0,0
@@ -29,9 +35,9 @@ handler:
  jne .done
  cmp word [es:7],0x4343
  jne .done
- cmp word [es:13],0x0104
+ cmp word [es:13],CHAT_API_VERSION
  jne .done
- cmp word [es:13202],4 ; foreground module STEP
+ cmp word [es:13202],CHAT_STEP_OPERATION ; foreground module STEP
  jne .cleanup
  cmp word [es:12650],1 ; session+362, active TEXT
  jne .cleanup
@@ -125,7 +131,7 @@ bell_handler:
  mov es,ax
  cmp word [es:5],0x4f4c
  jne .done
- cmp word [es:13],0x0104
+ cmp word [es:13],CHAT_API_VERSION
  jne .done
  cmp word [OWNER_OFF],2
  jne .done

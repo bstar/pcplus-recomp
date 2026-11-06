@@ -1,5 +1,8 @@
 /* Overlay entry keeps the parent's DS=SS and uses only caller-owned far state. */
 #include "module.h"
+#ifdef CHAT_REDISPLAY
+#include "redisplay_lease.h"
+#endif
 #ifdef CHAT_PRESENTATION
 #include "presentation.h"
 #endif
@@ -36,9 +39,18 @@ unsigned CHAT_FAR __cdecl chat_module_dispatch(chat_module_request CHAT_FAR *r)
      * still stop the session; its saved frame keeps the module held until the
      * caller restores the admitted geometry and retries retirement. */
     else if(r->state->presentation && r->operation!=CHAT_MODULE_ABORT &&
+#ifdef CHAT_REDISPLAY
+            r->operation!=CHAT_MODULE_KEY_HOLD &&
+#endif
             !chat_present_cursor(r->state))return CHAT_MODULE_BAD;
 #endif
     else switch(r->operation){
+#ifdef CHAT_REDISPLAY
+    case CHAT_MODULE_FRONT_OPEN:result=chat_view_front_open(r);break;
+    case CHAT_MODULE_REDISPLAY:result=chat_view_dispatch(r);break;
+    case CHAT_MODULE_KEY_HOLD:case CHAT_MODULE_RX_HOLD:case CHAT_MODULE_FOREGROUND_STEP:
+        result=chat_view_service(r);break;
+#endif
     case CHAT_MODULE_OPEN:
 #ifdef CHAT_TEXT
         if(r->state->text.active)return CHAT_MODULE_BAD;
@@ -103,10 +115,16 @@ unsigned CHAT_FAR __cdecl chat_module_dispatch(chat_module_request CHAT_FAR *r)
     default:return CHAT_MODULE_BAD;
     }
 #ifdef CHAT_PRESENTATION
+#ifdef CHAT_REDISPLAY
+    if(r->operation!=CHAT_MODULE_KEY_HOLD){
+#endif
     if(r->operation!=CHAT_MODULE_QUERY && r->state->presentation &&
        !r->state->send.active && !chat_present_close(r->state))result=CHAT_MODULE_BAD;
     else if(r->operation!=CHAT_MODULE_QUERY && r->state->presentation &&
             r->state->send.active && !chat_present_cursor(r->state))result=CHAT_MODULE_BAD;
+#endif
+#ifdef CHAT_REDISPLAY
+    }
 #endif
     r->result=result;return result;
 }

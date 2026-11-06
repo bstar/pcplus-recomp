@@ -293,6 +293,19 @@ terminal_chat_storage_release:
 .denied:
  stc
  retf
+%ifdef TERMINAL_CHAT_REDISPLAY
+; The foreground frontend has redirected the snapshot to an owned arena and
+; saved its normal underlay. Reuse the full existing viewer admission/cleanup.
+global _chat_view_enter,_chat_view_leave
+_chat_view_enter:
+ mov ax,0x6d00
+ call terminal_redisplay_key_impl.open
+ retf
+_chat_view_leave:
+ mov dx,4
+ call redisplay_event
+ retf
+%endif
 %endif
 terminal_redisplay_before_impl:
  mov dx,2

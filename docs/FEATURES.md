@@ -2490,3 +2490,21 @@ bytes.3460 instruction cases pass as source, paired original-slice replay and
 a clean source-only rebuild. This establishes nested cursor/screen lifetime and
 the original allocation-failure path; it does not implement live Chat/viewer
 ownership or RX handoff. Global Help and Alt-Z remain separate requirements.
+
+
+## Chat Redisplay integration checkpoint
+
+The opt-in [Chat Alt-F6 integration](CHAT_REDISPLAY.md) now preserves the loaded
+module and unfinished input while the serviced history viewer runs. Raw Chat
+RX/history/log effects continue, then the same session resumes. Allocation
+refusal, export, wrapped history and all retirement paths pass actual DOS
+composition; a separate normal-main/passive-observer gate proves hidden-frame
+CP437 RX and visible return. A legacy far-buffer declaration is corrected too.
+
+Moving construction/scheduling/lifetime work into API0105's loaded bank keeps
+the parent64 bytes smaller than its predecessor, with all capacities retained.
+Nested ASPECT, all ten TEXT keys, native echo, full-queue cancellation, flow
+control, Synchronet and Enigma regressions pass; a clean source export repeats
+the exact build and Chat gates. Current live nesting coverage is80x25. This is
+an opt-in software checkpoint, with no physical deployment or full-original
+parity claim. Global Help/Alt-Z and the remaining acceptance inventory stay open.

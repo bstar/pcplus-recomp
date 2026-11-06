@@ -26,7 +26,7 @@ def main():
     symbols={n:(int(seg,16),int(off,16)) for seg,off,n in re.findall(
         r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I)}
     ds=int(re.search(r'^DGROUP\s+([0-9a-f]+):0000',listing,re.M|re.I)[1],16)
-    constants={'FROZEN_DELTA':symbols['redisplay_snapshot'][0]-ds}
+    constants={'FROZEN_DELTA':symbols['redisplay_snapshot'][0]-ds,'CHAT_API_VERSION':m['chat_loader']['module']['api_version'],'CHAT_STEP_OPERATION':14 if m.get('experimental_chat_redisplay') else 4}
     assert symbols['redisplay_snapshot'][1]==0
     for label,name in [('OWNER_OFF','_redisplay_active'),('PARSER_OFF','terminal_parser_active'),('WAIT_OFF','terminal_ansi_wait_active'),('DEFERRED_OFF','terminal_deferred_count'),('STATUS_OFF','terminal_macro_status')]:
         seg,off=symbols[name];assert seg==ds;constants[label]=off

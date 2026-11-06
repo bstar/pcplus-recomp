@@ -3,6 +3,9 @@
 BITS 16
 CPU 8086
 ORG 100h
+%ifndef CHAT_API_VERSION
+%define CHAT_API_VERSION 0x104
+%endif
 jmp start
 old_vector: dw 0,0
 sample: dw 0x4657,0,0,0,0,0,0,0
@@ -21,7 +24,7 @@ handler:
  mov es,ax
  cmp word [es:5],0x4f4c
  jne .done
- cmp word [es:13],0x0104
+ cmp word [es:13],CHAT_API_VERSION
  jne .done
  cmp word [OWNER_OFF],2
  jne .not_owned
