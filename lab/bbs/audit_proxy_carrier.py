@@ -48,12 +48,25 @@ def main():
     subprocess.run(['nasm','-fbin',str(cap/'KEYS.ASM'),'-o',str(out/'PACED.COM')],check=True)
     assert sha(out/'PACED.COM')==sha(cap/'PACED.COM')
     sampler=SAMPLER.replace('mov cx,4000','mov cx,8000')
+    if r.get('guard_observer'):
+        from carrier_key_observer import build,decode
+        sampler,guard=build(selected,out/'guard-observer')
+        assert guard['observer_sha256']==r['guard_observer']['observer_sha256']
+        assert guard['retained_bytes']==guard['baseline_retained_bytes']==r['guard_observer']['retained_bytes']
+        assert decode(cap/'LABELS.BIN')==r['guard_observer']['trace']
+        assert r['guard_observer']['trace']['int16_restored']
+        proof=r['guard_observer']['transparency_report'];proof_path=(ROOT/proof['path']).resolve()
+        assert proof_path.is_relative_to(ROOT/'build') and sha(proof_path)==proof['sha256']
+        control=json.loads(proof_path.read_text());assert control['passed']
+        assert control['observer']['observer_sha256']==guard['observer_sha256']
+        for n,h in control['sources'].items():assert sha(ROOT/n)==h,n
     for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(0x3e8+off))
     assert sampler==(cap/'sampler.asm').read_text()
     subprocess.run(['nasm','-fbin',str(cap/'sampler.asm'),'-o',str(out/'SNAP.COM')],check=True)
     assert sha(out/'SNAP.COM')==sha(cap/'SNAP.COM')
     labels=(cap/'LABELS.BIN').read_bytes();magic,count,ticks=struct.unpack_from('<3H',labels)
-    assert len(labels)==2566 and magic==0x4e5a and 0<count<=16
+    capacity=r['guard_observer']['video_capacity'] if r.get('guard_observer') else 16
+    assert len(labels)==2566 and magic==0x4e5a and 0<count<=capacity
     notices=[labels[6+i*160:6+(i+1)*160:2].decode('cp437') for i in range(count)]
     assert notices==r['notices'] and any('carrier lost' in n.lower() for n in notices) and any('RX complete' in n for n in notices)
     geom=struct.unpack('<4H',(cap/'GEOM.BIN').read_bytes());assert (geom[0],geom[1],geom[2],geom[3]>>8)==(25,16,0x5003,0)
@@ -112,6 +125,7 @@ def main():
     sources=['lab/bbs/audit_proxy_carrier.py','lab/bbs/test_proxy_carrier_dos.py','lab/bbs/proxy_carrier_relay.py',
         'lab/bbs/audit_zmodem.py','lab/bbs/test_transfer_dos.py','lab/bbs/audit_size_probe_screen.py',
         'lab/bbs/paced_bios_keys.py','lab/bbs/carrier_notice_watch.py','lab/bbs/zmodem_label_watch.py','standalone/directory_test_support.py']
+    if r.get('guard_observer'):sources+=list(n for n in control['sources'] if n not in sources)
     result=dict(passed=True,terminal_sha256=parent['sha256'],products=r['products'],partial_disk_bytes=part['bytes'],
         exact_retry_bytes=len(payload),payload_sha256=r['payload_sha256'],sessions=sessions,notices=notices,
         sources={n:sha(ROOT/n) for n in sources},captures={str(p.relative_to(ROOT)):sha(p) for p in captures},

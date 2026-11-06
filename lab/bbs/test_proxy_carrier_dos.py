@@ -67,7 +67,19 @@ async def run(a):
         filename+' enter p1500 enter p6000 q p3000 escape p3000 G enter p3000 Y p5000 enter p8000 '+
         'Q U I T enter p10000 a-x')
     (out/'recipe.json').write_text(json.dumps(dict(recipe=recipe),indent=2)+'\n')
-    (out/'KEYS.ASM').write_text(keyboard_source(recipe));(out/'sampler.asm').write_text(SAMPLER.replace('mov cx,4000','mov cx,8000'))
+    guard_observer=None
+    sampler_source=SAMPLER.replace('mov cx,4000','mov cx,8000')
+    if getattr(a,'guard_observer_check',None):
+        from carrier_key_observer import build
+        sampler_source,guard_observer=build(a.terminal,out/'guard-observer')
+        proof=a.guard_observer_check.resolve();assert proof.is_relative_to(ROOT/'build')
+        control=json.loads(proof.read_text());assert control['passed']
+        assert control['observer']['observer_sha256']==guard_observer['observer_sha256']
+        assert control['observer']['binary_sha256']==sha(a.terminal)
+        for name,digest in control['sources'].items():assert sha(ROOT/name)==digest,name
+        guard_observer['transparency_report']=dict(path=str(proof.relative_to(ROOT)),sha256=sha(proof))
+        inputs += [proof,ROOT/'lab/bbs/carrier_key_observer.py']+[p for p in (out/'guard-observer').iterdir() if p.is_file()]
+    (out/'KEYS.ASM').write_text(keyboard_source(recipe));(out/'sampler.asm').write_text(sampler_source)
     # COM3, IRQ5; passive sampler uses the actual configured UART addresses.
     sampler=(out/'sampler.asm').read_text()
     for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(0x3e8+off))
@@ -197,6 +209,14 @@ exit
             real_carrier_notice=any('carrier lost' in n.lower() for n in notices),RX_complete_notice=any('RX complete' in n for n in notices),
             exact_retry=(recv/a.file).exists() and (recv/a.file).read_bytes()==payload,only_expected_file={p.name for p in recv.iterdir()}=={a.file},
             directory_two_connections=accounting_check(bytes(book),(out/'TEST.DIR').read_bytes(),3,2),no_post_saved=posts==post_count())
+        if guard_observer:
+            from carrier_key_observer import decode
+            try:
+                guard_observer['trace']=decode(out/'LABELS.BIN')
+                checks['guard_keyboard_vector_restored']=guard_observer['trace']['int16_restored']
+            except (AssertionError,ValueError,FileNotFoundError,struct.error) as error:
+                guard_observer['trace_error']=str(error)
+                checks['guard_keyboard_vector_restored']=False
         errors=[];protocol={}
         try:
             assert len(sessions)==2,'Expected interrupted connection and redial'
@@ -244,6 +264,7 @@ exit
             products=products,sources=frozen,runtime=str(runtime.relative_to(ROOT)),proxy=ready,payload_name=a.file,payload_bytes=len(payload),payload_sha256=sha(payload_path),
             protocol=protocol,wire_evidence=wire_evidence,scope=__doc__+' Actual8086 COM3/IRQ5,19200/HARD,source-built ASPECT/compiler,stock owned helper; one parent two automatic script logins. Fixture S12=25,not physical modem configuration.')
         result['transfer_wait_ms']=a.transfer_wait_ms
+        if guard_observer:result['guard_observer']=guard_observer
         (out/'carrier-checks.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(dict(passed=result['passed'],checks=checks,errors=errors,notices=notices),indent=2))
         return 0 if result['passed'] else 1
@@ -258,4 +279,5 @@ if __name__=='__main__':
     for n in ['runtime','terminal','runner','compiler']:p.add_argument('--'+n,type=Path,required=True)
     p.add_argument('--file',required=True);p.add_argument('--label',required=True);p.add_argument('--witness',action='store_true')
     p.add_argument('--transfer-wait-ms',type=int,choices=[60000,150000],default=60000)
+    p.add_argument('--guard-observer-check',type=Path,help='Explicit passive diagnostic; require matching current transparency report and identical TSR footprint')
     raise SystemExit(asyncio.run(run(p.parse_args())))

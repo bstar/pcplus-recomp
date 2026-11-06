@@ -82,3 +82,7 @@ or production bridge changes. No physical/SIP/audio or full parity claim.
 Resolve the intermittent redial miss, then bind the original Chat entry and
 foreground input/RX/TX/history/log/help/TEXT/notices/traps/frame/cursor behavior.
 Repeat final memory, Enigma/Synchronet, package/source and physical gates.
+
+The [passive key-owner diagnostic](CARRIER_KEY_OWNERS.md) now observes the
+actual parent key-read boundary with the same retained TSR footprint. Passing
+observed requests are kept separate from the still-unexplained earlier miss.

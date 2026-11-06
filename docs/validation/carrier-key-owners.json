@@ -1,0 +1,137 @@
+{
+  "status": "diagnostic-verified-earlier-redial-miss-not-reproduced",
+  "diagnostic_checks_passed": true,
+  "original_failure_resolved": false,
+  "application_changed": false,
+  "observer_cases": 10,
+  "observer_retained_bytes": 3215,
+  "observer_retained_paragraphs": 201,
+  "baseline_retained_paragraphs": 201,
+  "diagnostic_notice_capacity": 8,
+  "baseline_notice_capacity": 16,
+  "key_record_capacity": 16,
+  "runs": [
+    {
+      "parent_sha256": "75c84373b57fe597248b35c9f103d9468a36b6d9a3c8853655d8b152e03cf76f",
+      "partial": 4096,
+      "retry_bytes": 65539,
+      "retained_paragraphs": 201,
+      "captured_keys": 16,
+      "browser": {
+        "observed": {
+          "tick": 25494,
+          "key": 10592,
+          "caller_ip": 11434,
+          "caller_cs": 2480,
+          "read_ax": 4096,
+          "parent_ds": 18222,
+          "terminal_parser_active": 0,
+          "terminal_transfer_active": 0,
+          "terminal_transfer_pending": 0,
+          "terminal_program_active": 0,
+          "terminal_program_pending": 0,
+          "_redisplay_active": 0,
+          "connection_state": 0,
+          "terminal_ansi_wait_active": 0,
+          "terminal_menu_pending": 0,
+          "_command_menu_active": 0
+        },
+        "sufficient_open_guard_blockers": {},
+        "existing_view_owner": 0,
+        "pending_menu": 0,
+        "callsite": {
+          "link_segment": 0,
+          "return_offset": 11434,
+          "BIOS_interrupt_exact": true,
+          "native_keyboard_read": true
+        }
+      }
+    },
+    {
+      "parent_sha256": "75c84373b57fe597248b35c9f103d9468a36b6d9a3c8853655d8b152e03cf76f",
+      "partial": 4096,
+      "retry_bytes": 65539,
+      "retained_paragraphs": 201,
+      "captured_keys": 16,
+      "browser": {
+        "observed": {
+          "tick": 36854,
+          "key": 10592,
+          "caller_ip": 11434,
+          "caller_cs": 2480,
+          "read_ax": 4096,
+          "parent_ds": 18222,
+          "terminal_parser_active": 0,
+          "terminal_transfer_active": 0,
+          "terminal_transfer_pending": 0,
+          "terminal_program_active": 0,
+          "terminal_program_pending": 0,
+          "_redisplay_active": 0,
+          "connection_state": 0,
+          "terminal_ansi_wait_active": 0,
+          "terminal_menu_pending": 0,
+          "_command_menu_active": 0
+        },
+        "sufficient_open_guard_blockers": {},
+        "existing_view_owner": 0,
+        "pending_menu": 0,
+        "callsite": {
+          "link_segment": 0,
+          "return_offset": 11434,
+          "BIOS_interrupt_exact": true,
+          "native_keyboard_read": true
+        }
+      }
+    }
+  ],
+  "reports": {
+    "observer_transparency": {
+      "path": "build/carrier-key-observer-check-20261106/result.json",
+      "sha256": "801d64ca9537e203202381fab11753bbcb20a423fdd781a1680c39d425081edc"
+    },
+    "disabled_helper_control": {
+      "path": "build/carrier-key-disabled-control-20261106/result.json",
+      "sha256": "7bee5c2d55e1af28d5a9d10b1a282a7d24803b9b98196a63798613bad4581422"
+    },
+    "first_observed": {
+      "path": "build/bbs-lab/results/enigma/chat-storage-key-owners-20261106/carrier-checks.json",
+      "sha256": "7af785914894d1bdfd7db38a424839c3c5cde587af5e84a320ea2943c5cf6d1a"
+    },
+    "first_analysis": {
+      "path": "build/chat-storage-key-owner-analysis-reviewed-20261106/result.json",
+      "sha256": "4451e7fe85e4fdaa8f030b89c616b37326d5941459ea3cccf79c602dd69754c5"
+    },
+    "first_independent_audit": {
+      "path": "build/chat-storage-key-owner-audit-final-20261106/result.json",
+      "sha256": "4e96614c7d60308ebf543d25052e2b236e71d95884b32631ba0c6936b9af89aa"
+    },
+    "repeat_observed": {
+      "path": "build/bbs-lab/results/enigma/chat-storage-key-owners-repeat-20261106/carrier-checks.json",
+      "sha256": "f34ebad131532d25ffd649d2db6bf6c335a36633145d0ce41e4f756cffdfc419"
+    },
+    "repeat_analysis": {
+      "path": "build/chat-storage-key-owner-repeat-analysis-20261106/result.json",
+      "sha256": "eb643f3edee8dae0f57c96ba75218c980bf28fbf6adf83a7d3abfdf9fa2ac678"
+    },
+    "repeat_independent_audit": {
+      "path": "build/chat-storage-key-owner-repeat-audit-20261106/result.json",
+      "sha256": "d93bc25498a84b97b203e3d506cfc2b7b12d05b6c1a348ea67651bdb8cfe4129"
+    }
+  },
+  "retained_failure": {
+    "path": "build/bbs-lab/results/enigma/chat-storage-enigma-carrier-20261106/carrier-checks.json",
+    "sha256": "ce0450d56ade8b9e4fc033e01d8b20cff80bb292c408dbde97b31fde680e2b45",
+    "producer_source_commit": "81c16ca"
+  },
+  "sources": {
+    "lab/bbs/carrier_key_observer.py": "7755939e76dfec948257b54aedfe4af74a06ce99e18da0e6c19c7bb4901ec407",
+    "lab/bbs/check_carrier_key_observer.py": "cac27dc689d7f781cfb619e28ff337d4e7342f4f5a3671878cfa7f6b8967890e",
+    "lab/bbs/analyze_carrier_key_owners.py": "387899d8788d3250324f2282ba6cfde839cacbe0eea5cd0f8eb702de27361b98",
+    "lab/bbs/test_proxy_carrier_dos.py": "3122b0940cdd0e0c123ec4f10737f884d82f248a5b0024a4313f202190f1db6a",
+    "lab/bbs/audit_proxy_carrier.py": "520e4d131ebdd744459a03df0d91821ee56f55b2e80714faef2cffa7c91ce9a8"
+  },
+  "selected_package_changed": false,
+  "physical_machine_changed": false,
+  "production_bridge_changed": false,
+  "scope": "Passive diagnostic and two observed DOS8086/real isolated SynthModem Telnet carrier/redial/exact-retry runs. Original unobserved failure remains unexplained. Records precede BIOS delivery/normalization/dispatch, not direct guard-branch observations. Missing fields/contexts are not assumed idle. No physical/SIP/audio, full reliability, foreground Chat or original feature-parity acceptance."
+}

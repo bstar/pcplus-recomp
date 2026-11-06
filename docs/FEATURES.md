@@ -2349,6 +2349,13 @@ addresses pass, with exact clean-source reproduction. Foreground Chat remains
 unbound. A first Enigma redial miss and passing same-input repeat are both
 retained; connection reliability and final deployment acceptance remain open.
 
+The [carrier key-owner diagnostic](CARRIER_KEY_OWNERS.md) adds passive pre-BIOS
+key/owner observation with the same 201-paragraph TSR footprint and explicit
+keyboard-vector restoration checks. Two observed redial/exact-retry runs and
+independent audits pass with idle captured owners at the browser read. The
+earlier miss is not reproduced or attributed; application behavior and the
+remaining foreground Chat/reliability/deployment gates are unchanged.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A
