@@ -8,13 +8,27 @@ extern _chat_front_event
 global _chat_front_claim,_chat_front_release
 _chat_front_claim:
  call far terminal_chat_storage_acquire
+%ifdef CHAT_FOREGROUND_TEXT
+ sbb ax,ax
+ inc ax ; CF0 ->1, CF1 ->0, without retaining a branch island.
+%else
  mov ax,0
  jc .done
  inc ax
-.done: retf
+.done:
+%endif
+ retf
 _chat_front_release:
+%ifdef CHAT_FOREGROUND_TEXT
+ ; The session admitted an empty FIFO. Anything still retained belongs to
+ ; this Chat session; cancellation/failure must not turn it into BBS input.
+ extern keyboard_bank_terminal_macro_cancel
+ call far keyboard_bank_terminal_macro_cancel
+ jmp far terminal_chat_storage_release
+%else
  call far terminal_chat_storage_release
  retf
+%endif
 %macro bridge 2
 global %1
 %1:
@@ -73,7 +87,7 @@ chat_front_bridge_common:
  push ax
  call far _chat_front_event
  add sp,4
- or ax,ax
+ neg ax ; CF is exactly whether the C result was nonzero; POPs preserve it.
  pop es
  pop di
  pop si
@@ -82,10 +96,5 @@ chat_front_bridge_common:
  pop bx
  pop ax
  pop bp
- jz .no
- stc
- retf
-.no:
- clc
  retf
 %endif

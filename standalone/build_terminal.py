@@ -517,6 +517,7 @@ for index,source in enumerate(sources):
  if args.chat_storage:options+=['-DTERMINAL_CHAT_STORAGE']
  if args.chat_frontend:options+=['-DTERMINAL_CHAT_FRONTEND']
  if args.chat_echo:options+=['-DTERMINAL_CHAT_ECHO']
+ if args.chat_foreground_text:options+=['-DTERMINAL_CHAT_FOREGROUND_TEXT']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
@@ -898,7 +899,7 @@ if args.chat_text_transport:
 if args.chat_echo:
  for leaf in ('echo_cursor','echo_owner'):
   source=ROOT/'src/chat'/(leaf+'.asm');obj=OUT/(leaf+'.obj')
-  subprocess.run(['nasm','-fobj',str(source),'-o',str(obj)],check=True)
+  subprocess.run(['nasm','-fobj',*(['-DTERMINAL_CHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),str(source),'-o',str(obj)],check=True)
   objects.append(str(obj));sources.append(source)
 if args.chat_frontend:
  source=ROOT/'src/chat/frontend.c';obj=OUT/'chat-frontend.obj'

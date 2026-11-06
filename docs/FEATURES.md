@@ -2466,3 +2466,12 @@ RX during a pending TEXT transmit. Retained allocation479360 still passes the
 nested-child/six-stream gate. These are maintained foreground changes;
 broader Chat UI, queued-cancellation/failure/geometry coverage and physical
 acceptance remain open.
+
+The [queued Chat input follow-up](CHAT_QUEUED_KEYS.md) fixes cancellation blocked
+behind ordinary typing and the resulting post-timeout input leak. Actual DOS
+retains X/Enter through successful native echo, but promptly cancels X-before-
+Escape/Alt-H/Alt-X and clears its owned FIFO on retirement. X-before-Escape
+also passes during a serial XOFF stall with concurrent RX. The existing32-word
+FIFO is reused; no stack, stream or buffer capacity is reduced. Current parent
+retains479408 bytes and passes nested-ASPECT. Full-queue pressure, broader
+failures/UI and physical acceptance remain open.

@@ -50,6 +50,15 @@ handler:
  mov [cs:sample+16],ax
  or word [cs:sample+2],1
  inc word [cs:sample+4]
+ mov ax,[DEFERRED_OFF]
+ cmp ax,[cs:sample+22]
+ jbe .deferred_counted
+ mov [cs:sample+22],ax
+.deferred_counted:
+ or ax,ax
+ jz .no_deferred
+ or word [cs:sample+2],8
+.no_deferred:
  mov bx,[es:0x1a]
  cmp bx,[es:0x1c]
  je .done
@@ -74,6 +83,8 @@ handler:
  jne .done
  test word [cs:sample+2],4
  jnz .retired
+ mov ax,[DEFERRED_OFF]
+ mov [cs:sample+20],ax ; retained FIFO must be empty once Chat is retired
  mov ax,0x40
  mov es,ax
  mov ax,[es:0x6c]

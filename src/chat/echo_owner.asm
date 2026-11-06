@@ -88,11 +88,19 @@ admit:
  jne .bad
  cmp word [_redisplay_active],2
  jne .bad
+%ifdef TERMINAL_CHAT_FOREGROUND_TEXT
+ ; Entry admitted an empty shared FIFO; the foreground now owns its retained
+ ; typeahead until TEXT completes or the entire Chat session is retired.
+ cmp word [terminal_deferred_count],32
+ ja .bad
+%endif
  mov ax,[terminal_aspect_active]
  or ax,[terminal_parser_active]
  or ax,[terminal_ansi_wait_active]
  or ax,[terminal_quit]
+%ifndef TERMINAL_CHAT_FOREGROUND_TEXT
  or ax,[terminal_deferred_count]
+%endif
  or ax,[terminal_macro_active]
  or ax,[terminal_program_pending]
  or ax,[screen_viewport_enabled]

@@ -305,6 +305,15 @@ terminal_keyboard_dispatch_far:
  jne .bios_key
  cmp word [terminal_program_pending],0
  jne .bios_key
+%ifdef TERMINAL_CHAT_FOREGROUND_TEXT
+ ; A zero-key query asks whether Chat can accept retained typeahead. Never
+ ; remove it from the FIFO while TEXT/native echo still owns the continuation.
+ cmp word [terminal_deferred_count],0
+ je .bios_key
+ xor ax,ax
+ call far terminal_chat_key_hold_far
+ jc .bios_key
+%endif
  call terminal_take_deferred_key
  jnc .key_ready
 .bios_key:
@@ -314,7 +323,22 @@ terminal_keyboard_dispatch_far:
 %ifdef TERMINAL_CHAT_FRONTEND
  extern terminal_chat_key_hold_far,terminal_chat_key_far
  call far terminal_chat_key_hold_far
+%ifdef TERMINAL_CHAT_FOREGROUND_TEXT
+ jnc .chat_key_ready
+ ; Move held ordinary BIOS keys to the existing bounded FIFO, so a later
+ ; Escape/Alt-H/Alt-X can reach the queue head. Do not dequeue a held Escape
+ ; or overflow the FIFO; the successful peek makes read nonblocking.
+ cmp al,27
+ je .done
+ cmp word [terminal_deferred_count],32
+ jae .done
+ call terminal_read_key
+ call terminal_defer_key
+ jmp .done
+.chat_key_ready:
+%else
  jc .done
+%endif
 %endif
 %ifdef TERMINAL_GATEWAY
  extern terminal_program_kind

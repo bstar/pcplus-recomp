@@ -24,7 +24,7 @@ handler:
  cmp word [es:13],0x0104
  jne .done
  cmp word [OWNER_OFF],2
- jne .done
+ jne .not_owned
  cmp word [es:12650],1
  jne .finished
  cmp word [PAUSED_OFF],1
@@ -35,6 +35,11 @@ handler:
  jne .done
  or word [cs:sample+2],1
  inc word [cs:sample+4]
+ mov ax,[DEFERRED_OFF]
+ cmp ax,[cs:sample+10]
+ jbe .counted
+ mov [cs:sample+10],ax
+.counted:
  mov ax,0xb800
  mov es,ax
  cmp byte [es:2880],'R'
@@ -53,6 +58,22 @@ handler:
  jne .done
  or word [cs:sample+2],4
  inc word [cs:sample+8]
+ jmp .done
+.not_owned:
+%ifdef CHAT_FLOW_CANCEL
+ cmp word [OWNER_OFF],0
+ jne .done
+ test word [cs:sample+2],1
+ jz .done
+ cmp word [es:12650],0
+ jne .done
+ mov ax,[DEFERRED_OFF]
+ mov [cs:sample+12],ax
+ or ax,ax
+ jnz .done
+ or word [cs:sample+2],4
+ inc word [cs:sample+8]
+%endif
 .done:
  pop es
  pop ds

@@ -1,5 +1,9 @@
 # Chat native-parser wait and cancellation
 
+The later [queued-key follow-up](CHAT_QUEUED_KEYS.md) also handles cancellation
+behind ordinary typeahead. Its bounded FIFO retention/retirement policy
+supersedes the earlier BIOS-head-only coverage described here.
+
 This follow-up addresses two failures found by exercising real BIOS keys while
 foreground Chat TEXT is inside the native echo parser. It is an opt-in
 development checkpoint, separate from installed-package and physical acceptance.

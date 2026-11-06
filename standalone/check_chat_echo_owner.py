@@ -114,7 +114,7 @@ def main():
         assert m.read_polls==4098 and not m.get('uart_rx_count')
     check('original-alternate-CSI-M-wait-uses-owned-nonblocking-read-and-cancels-on-budget',nested)
     def admission():
-        for field,value in [('_redisplay_active',0),('terminal_aspect_active',1),('terminal_parser_active',1),('terminal_ansi_wait_active',1),('terminal_quit',1),('terminal_deferred_count',1),('terminal_macro_active',1),('terminal_program_pending',1),('screen_viewport_enabled',1),('screen_viewport_offset',1),('connection_state',2)]:
+        for field,value in [('_redisplay_active',0),('terminal_aspect_active',1),('terminal_parser_active',1),('terminal_ansi_wait_active',1),('terminal_quit',1),('terminal_deferred_count',33 if manifest.get('experimental_chat_foreground_text') else 1),('terminal_macro_active',1),('terminal_program_pending',1),('screen_viewport_enabled',1),('screen_viewport_offset',1),('connection_state',2)]:
             m=Echo();m.put(field,value);before=m.native();video=bytes(m.uc.mem_read(0xb8000,4000));local=m.local()
             assert m.echo(65)==0 and m.native()==before and m.local()==local and bytes(m.uc.mem_read(0xb8000,4000))==video
         for kind,value,delta in ((1,65,0),(4,256,0),(4,65,2)):
@@ -130,6 +130,14 @@ def main():
             m=Echo();m.uc.mem_write(m.context+offset,struct.pack('<H',value));before=m.native()
             assert m.echo(65)==0 and m.native()==before
     check('owner-pointer-byte-geometry-and-cursor-admission-refuse-before-paint',admission)
+    if manifest.get('experimental_chat_foreground_text'):
+        def retained():
+            for count in (1,32):
+                m=Echo();m.put('terminal_deferred_count',count)
+                before=m.native();cursor=m.cursor
+                assert m.echo(65)==1 and m.error()==0;m.restored(before,cursor)
+                assert m.get('terminal_deferred_count')==count
+        check('foreground-owned-bounded-typeahead-does-not-reject-or-consume-native-echo',retained)
     sources=dict(manifest['sources'])
     for mod in tuple(sys.modules.values()):
         q=Path(getattr(mod,'__file__','') or '/').resolve()

@@ -1,5 +1,9 @@
 # Foreground Chat text shortcuts
 
+The [queued-key follow-up](CHAT_QUEUED_KEYS.md) now uses the existing deferred
+FIFO while TEXT/native echo cannot accept ordinary input. Earlier descriptions
+of holding that input in BIOS apply to this initial foreground checkpoint.
+
 The opt-in `--chat-foreground-text` build connects Alt-1 through Alt-0 to the
 ten imported KEY text fields in ordinary DOS8086 main. It passes direct text,
 native local echo, pause/RX, queued typing, cancellation and nested-ASPECT

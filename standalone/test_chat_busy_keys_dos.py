@@ -10,6 +10,7 @@ from build_path_session import ROOT,sha
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('terminal','output'):p.add_argument('--'+n,type=Path,required=True)
+    p.add_argument('--queued',action='store_true',help='Put ordinary X ahead of cancellation in the real BIOS queue')
     a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists()
     m=json.loads(binary.with_name('manifest.json').read_text())
@@ -26,7 +27,7 @@ def main():
     ds=int(re.search(r'^DGROUP\s+([0-9a-f]+):0000',listing,re.M|re.I)[1],16)
     constants={'FROZEN_DELTA':symbols['redisplay_snapshot'][0]-ds}
     assert symbols['redisplay_snapshot'][1]==0
-    for label,name in [('OWNER_OFF','_redisplay_active'),('PARSER_OFF','terminal_parser_active'),('WAIT_OFF','terminal_ansi_wait_active')]:
+    for label,name in [('OWNER_OFF','_redisplay_active'),('PARSER_OFF','terminal_parser_active'),('WAIT_OFF','terminal_ansi_wait_active'),('DEFERRED_OFF','terminal_deferred_count')]:
         seg,off=symbols[name];assert seg==ds;constants[label]=off
     out.mkdir();stage=out/'program';stage.mkdir()
     shutil.copyfile(binary,stage/'TERMINAL.EXE');shutil.copyfile(binary.parent/'PCCHAT.OVL',stage/'PCCHAT.OVL')
@@ -44,6 +45,9 @@ def main():
         'escape':prefix+'p400 escape p1000 N O R M A L p1000 a-x',
         'hangup':prefix+'p400 a-h p2200 a-x',
         'quit':prefix+'p400 a-x'}
+    if a.queued:
+        for case in ('escape','hangup','quit'):
+            recipes[case]=recipes[case].replace('p400 ','p200 X p200 ',1)
     results=[]
     for case,keys in recipes.items():
         harness.BINARY=stage/'TERMINAL.EXE';name=out.name+'-'+case;capture=ROOT/'build/connection-dos'/name
@@ -61,12 +65,18 @@ def main():
                     native_wait_observed=bool(flags&1) and words[2]>0,
                     initial_text_prefix=b'GO' in wire)
         if case=='complete':
-            checks.update(queued_X_remains_in_BIOS=bool(flags&2) and words[3]>0 and words[5]!=words[6],
+            checks.update(BIOS_X_observed_before_dequeue=bool(flags&2) and words[3]>0 and words[5]!=words[6],
                           TEXT_then_queued_input=b'GO\x1bTAIL\rX\r' in wire)
         else:checks['cancelled_before_ESC_TX']=b'TAIL' not in wire and b'GO\x1b' not in wire
-        if case!='quit':checks['owner_and_wait_unwound']=bool(flags&4) and words[4]>0
-        if case in ('escape','hangup'):
+        if case!='quit' or a.queued:checks['owner_and_wait_unwound']=bool(flags&4) and words[4]>0
+        if case in ('escape','hangup') or (case=='quit' and a.queued):
             checks['prompt_cancel_before_deadline']=((words[9]-words[7])&65535)<18
+        if a.queued and case!='complete':
+            checks['X_was_queued_during_wait']=bool(flags&2) and words[3]>0
+            checks['cancelled_typeahead_does_not_leak']=b'GOX' not in wire
+        if a.queued or case=='complete':
+            checks['owned_FIFO_retains_typeahead']=bool(flags&8) and (2 if case=='complete' else 1)<=words[11]<=32
+        if flags&4:checks['retired_FIFO_empty']=words[10]==0
         if case in ('complete','escape'):
             checks.update(normal_input_resumes=b'NORMAL' in wire and b'BACK' in screen,
                           ordinary_CPR_after_return=len(re.findall(rb'\x1b\[\d+;\d+R',wire))==2)
@@ -76,7 +86,8 @@ def main():
                 module_unchanged=sha(stage/'PCCHAT.OVL')==m['chat_loader']['module']['binary_sha256'])
     report=dict(passed=all(checks.values()),checks=checks,cases=results,binary_sha256=sha(binary),
                 module_sha256=sha(stage/'PCCHAT.OVL'),sources=sources,observer_constants=constants,observer_sha256=sha(observer),
-                scope=__doc__+' Actual main and loaded module/native parser, real BIOS keys and synthetic physical UART. Passive INT16 observer validates DS=SS, exact module header/API, STEP/TEXT/owner/parser/wait state, queued X before BIOS dequeue and later owner/parser/wait retirement. Observer only reads product/BIOS memory and chains original BIOS provider. Delayed CSI completes one wait; Escape/AltH/AltX cancel others without later TEXT emission. No injected product state, substituted native routines, physical modem/SIP/audio, broad geometry/failure or full original controller acceptance.')
+                queued_cancellation=a.queued,
+                scope=__doc__+' Actual main and loaded module/native parser, real BIOS keys and synthetic physical UART. Passive INT16 observer validates DS=SS, exact module header/API, STEP/TEXT/owner/parser/wait state, queued X before BIOS dequeue and later owner/parser/wait retirement. Observer only reads product/BIOS memory and chains original BIOS provider. Delayed CSI completes one wait; Escape/AltH/AltX cancel others without later TEXT emission. Optional queued case places X before each cancellation and checks prompt return without transmitting abandoned typeahead. No injected product state, substituted native routines, physical modem/SIP/audio, broad geometry/failure or full original controller acceptance.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n')
     assert report['passed'],results
     print('PASS DOS native-parser wait: BIOS X retained, real continuation and Escape/AltH/AltX unwind')
