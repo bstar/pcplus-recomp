@@ -204,3 +204,49 @@ All results above are software evidence. The physical installation and package
 selector are unchanged; SIP/audio, Boca CTS timing, analog modem and remaining
 feature-parity acceptance remain open. Earlier receipts retain their original
 candidate hashes and do not imply acceptance of this corrected executable.
+
+## Carrier loss during transfers and children
+
+The [carrier-recovery receipt](validation/viewer-external-carrier-recovery.json)
+extends the same corrected executable with18 actual DOS workflows. The
+application and installed package do not change for this checkpoint.
+
+- Four XMODEM cases drop carrier during receive negotiation, a partial receive,
+  an unacknowledged upload and a partial upload.
+- Ten YMODEM/ZMODEM cases drop carrier during receive metadata, partial receive,
+  receive with a completed file retained, upload metadata and partial upload.
+- Two bounded external children, in text and graphics modes, directly observe
+  MSR carrier high then low while the parent has relinquished its UART IRQ.
+  They record enabled interrupts, DTR preserved, RTS lowered, IER disabled and
+  a bounded BIOS-tick wait. The children send no serial commands or replies.
+- Two composed cases first run the external mode13h child, then encounter loss
+  during a YMODEM receive with a completed file retained or a partial ZMODEM
+  upload. These exercise handoff, transfer cleanup and redial in one parent.
+
+Every workflow requires two actual virtual-modem connections, fresh parser and
+keyboard service after redial, checked call-log/accounting records and final
+UART/PIC/vector restoration. Transfer cases require the actual carrier fault,
+closed transfer owners, expected partial-file cleanup and retained-file policy;
+the independent peers observe genuine negotiated/CRC-checked protocol progress.
+The14 direct transfer cases have no preceding viewer. The two composed cases
+cover that additional interaction explicitly.
+
+For running-child loss, a separate read-only timer witness derives the live
+parent identity from its reacquired IRQ vector. It waits for the second peer's
+KEYOK marker, then records mode3,25 rows,font height16, cleared PROGRAM and
+external-viewer ownership, and the actual FIRST BYTE SAFE/REDIAL OK/KEYOK screen.
+This happens while the parent is connected, before shutdown could restore the
+video mode. Capturing only the post-exit screen would be insufficient. Six
+copied-report controls corrupt carrier, drop evidence, mode, owner state or the
+remote display marker and must be rejected.
+
+The first composed probe reached the second connection but its original28-second
+fixture deadline expired before shutdown/collection. It is excluded. The accepted
+longer recipe has a38-second bound to accommodate the additional viewer action;
+neither the application nor protocol timeouts changed.
+
+These tests use DOSBox's modem-generated DCD from owned socket closure. They do
+not establish Boca/SPA2102/SIP/audio/DSP/analog behavior or physical CTS timing.
+Hung or interrupt-disabled third-party children, arbitrary external programs,
+all remaining protocol/emulation/Host functions and physical acceptance remain
+open. No private configuration, call history or package selector was modified.

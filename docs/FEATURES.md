@@ -1,12 +1,20 @@
 # Full application reconstruction checklist
 
+The unchanged corrected viewer candidate now passes the
+[18-case carrier-recovery matrix](FILE_VIEWER_EXTERNAL.md#carrier-loss-during-transfers-and-children):
+fourteen X/Y/ZMODEM loss cases, two running text/graphics children, and two
+viewer-before-transfer loss/redial compositions. A live witness checks graphics
+restoration and released owners on the second connection before exit; six
+damaged data controls are rejected. Physical modem/SIP/audio, arbitrary hung
+children and the complete original-parity gates remain open.
+
 The external-viewer [transfer/reconnect checkpoint](FILE_VIEWER_EXTERNAL.md#redial-correction-and-transfer-composition)
 fixes a private-action collision that intercepted browser redial. The corrected
 candidate repeats21 UI workflows and both stock BBS editor audits, then passes
 six X/Y/ZMODEM workflows, YMODEM cancel/retry and carrier loss during the parameter
 dialog followed by same-parent redial. A collision negative control and public
-source reproduction bind the correction. Running-child/transfer-time carrier
-loss on this candidate, physical acceptance and full F15 remain open.
+source reproduction bind the correction. The following carrier matrix extends
+those software gates; physical acceptance and full F15 remain open.
 
 The opt-in [configured external viewer](FILE_VIEWER_EXTERNAL.md) now uses the
 recovered PRM field and48-character parameter dialog through Alt-V and both
