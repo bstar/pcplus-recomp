@@ -1,0 +1,112 @@
+{
+  "status": "storage-verified-frontend-and-connection-reliability-open",
+  "storage_stage_passed": true,
+  "full_candidate_acceptance": false,
+  "binary_sha256": "75c84373b57fe597248b35c9f103d9468a36b6d9a3c8853655d8b152e03cf76f",
+  "binary_path": "build/chat-storage-parent-reviewed-20261106/TERMINAL.EXE",
+  "module_sha256": "77270fb67a435c52ee0a61969cfbb68822ada57c3cdb56d6b3f7b66de84a63d2",
+  "near_bytes": 65488,
+  "new_near_state_bytes": 0,
+  "resident_CS_bytes": 65488,
+  "minimum_module_bytes": 478080,
+  "retained_parent_paragraphs": 29895,
+  "linked_cases": 54,
+  "lease_cycles": 16,
+  "DOS_loads": 2,
+  "cold_parent_sources": 629,
+  "cold_composition_sources": 632,
+  "reports": {
+    "linked_storage": {
+      "path": "build/chat-storage-linked-reviewed-20261106/result.json",
+      "sha256": "e50dbc0782a4547d507f6bb8fba2e8ff7cfcd64c8c534e4c97db15f26c7a35ef"
+    },
+    "DOS_parent_composition": {
+      "path": "build/chat-storage-parent-dos-v3-20261106/result.json",
+      "sha256": "53ae70c01f8bfce54458c6dbea2ca4b995827a8088f26b7bc26ea2da6ac9970b"
+    },
+    "normal_main_ASPECT": {
+      "path": "build/chat-storage-parent-aspect-20261106/result.json",
+      "sha256": "773ba21fef7a35b2238f78941ae4f9a6566ad8096be73a47ad90f2c4f15fd71e"
+    },
+    "cold_parent_source": {
+      "path": "build/chat-storage-source-proof-20261106/result.json",
+      "sha256": "c3694514b3d7fe8127a4809f64a8b14600a18a77dc2025c5111e6d1d49a3a52a"
+    },
+    "cold_DOS_composition": {
+      "path": "build/chat-storage-source-proof-20261106/composition-result.json",
+      "sha256": "14b2cae2e5ae013f1a9a1bf4b017c2e22a01784be4f6a2fa173bc015517bd4b6"
+    },
+    "synchronet_editor": {
+      "path": "build/bbs-lab/results/synchronet/chat-storage-synchronet-editor-20261106/proxy-integration.json",
+      "sha256": "bd5d60769d79fe60b04d2ff63912abd76beee4f1dcd28ab8025dffe74c0249ae"
+    },
+    "enigma_repeat": {
+      "path": "build/bbs-lab/results/enigma/chat-storage-enigma-carrier-repeat-20261106/carrier-checks.json",
+      "sha256": "820ac7046ed283632c8fdff5d62ad0b977b7921cb29976fb89c99f07637b1898"
+    },
+    "enigma_repeat_audit": {
+      "path": "build/chat-storage-enigma-carrier-audit-20261106/result.json",
+      "sha256": "97fbd6b43268489e90798d00de437fed5e547b96318b289dc3a5d8203a1b5441"
+    },
+    "enigma_comparison": {
+      "path": "build/chat-storage-carrier-comparison-20261106/result.json",
+      "sha256": "603784eba93edc76f9db3e0e695e49e8cc24b842e366871fcaf29c6fa443a621"
+    }
+  },
+  "disabled_controls": {
+    "default": {
+      "path": "build/chat-storage-disabled-default-20261106/manifest.json",
+      "manifest_sha256": "972305cd978a63162a7b856fc91f97bac2aa0047ad9396ad8cf7fa99e9ebb8b7",
+      "binary_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041"
+    },
+    "loader": {
+      "path": "build/chat-storage-disabled-loader-20261106/manifest.json",
+      "manifest_sha256": "49b2413551052a702acb82e89cca5afb5c00c43d96a02b8f3c239f4536442e3a",
+      "binary_sha256": "03a2149b55a8fd9adb668fe88ccd8f0520047549381042ec2db755bd4d4c7e6c"
+    }
+  },
+  "retained_counterexample": {
+    "path": "build/bbs-lab/results/enigma/chat-storage-enigma-carrier-20261106/carrier-checks.json",
+    "sha256": "ce0450d56ade8b9e4fc033e01d8b20cff80bb292c408dbde97b31fde680e2b45",
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "sources_unchanged": true,
+      "PRM_unchanged": true,
+      "DOS_compiler_exact": true,
+      "both_script_logins": true,
+      "two_connections": false,
+      "stage_clean_before_second_login": false,
+      "real_carrier_notice": true,
+      "RX_complete_notice": false,
+      "exact_retry": false,
+      "only_expected_file": false,
+      "directory_two_connections": false,
+      "no_post_saved": true,
+      "source_matching_retry_finish_search_raw_proxy": false,
+      "two_authenticated_sessions": false
+    },
+    "errors": [
+      "AssertionError at test_proxy_carrier_dos.py:202: Expected interrupted connection and redial"
+    ]
+  },
+  "unresolved": [
+    "First normal DOS8086 timed carrier workflow never redialed; same-input repeat passed. Cause unestablished, not dismissed as timing.",
+    "Parent keyboard/receive/transmit Chat frontend and pending input/notice/trap/cursor policy unbound; caller must retire module before explicit storage release.",
+    "Final memory/package/deployment and physical acceptance remain open."
+  ],
+  "sources": {
+    "src/terminal/redisplay.asm": "2242a0ff61c051878351a2882a6e4d6bddf1a0bc6890ce6232a9b446a11e9373",
+    "src/terminal/program_actions.asm": "c163d781eef3649ddd80cffd567ccba412289964fdfe0ab970cf1693e10bcb55",
+    "standalone/build_terminal.py": "52ee264351563f585940ea20e8fc939d75897ccda134d8888096224ff2581444",
+    "standalone/check_chat_storage_live.py": "8de5a88ec7540823b97483d13ebef8101b9b8e2be5aab57bab0aadc742f33cfa",
+    "standalone/test_chat_storage_dos.py": "e134e5d9f59a9ab1b2c7f678de3c664b8fdae4884f262bf675e982f031ba4d36",
+    "standalone/chat_parent_storage_host.c": "4dd6c59e800cdac573c5e2fabbaa828ab1264c19cb3395d0bb41ac98e9a546e3",
+    "standalone/chat_parent_invoke.asm": "ca92b68cd4b0eadfa5b7ff1ae6fc4591df39458a26cb263c421b1248ac80bfee"
+  },
+  "foreground_binding": false,
+  "selected_package_changed": false,
+  "physical_machine_changed": false,
+  "production_bridge_changed": false,
+  "scope": "Exclusive frozen-storage primitive and dedicated real-DOS composition, not complete interactive Chat or full connection reliability. Parent loaded as source-built DOS overlay for composed API test; main startup independently tested. Normal DOS8086 ASPECT and same-input Enigma retry pass, prior redial miss retained. Synchronet graphics variant uses386/UMB helpers. No physical Boca/SPA2102/SIP/audio or full parity claim."
+}

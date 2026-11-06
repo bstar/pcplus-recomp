@@ -81,3 +81,9 @@ fits; it does not prove that adding the frontend fits. Repeat actual ASPECT and
 Enigma/Synchronet admission with the final bindings, then package/source and
 reversible deployment checks and physical Boca/SPA2102/SIP/audio observations.
 Full original ASPECT, emulation/protocol and Host parity remain separate work.
+
+The subsequent [storage checkpoint](CHAT_STORAGE_PARENT.md) adds explicit
+acquire/release APIs and tests the actual parent storage/loader composition in
+DOS. Foreground Chat remains unbound, and an intermittent redial miss remains
+open despite a passing same-input repeat. The earlier loader-only identity and
+acceptance above are unchanged historical evidence.

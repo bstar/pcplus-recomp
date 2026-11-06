@@ -16,6 +16,7 @@ parser.add_argument('--external-editor',action='store_true',help='Original Alt-A
 parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bounded packing of authored command-browser text')
 parser.add_argument('--optimize-size',action='store_true',help='Experimental reviewed per-source C size profile; stacks and capacities unchanged')
 parser.add_argument('--chat-loader',action='store_true',help='Link the checked source-built Chat overlay loader; no foreground Chat binding yet')
+parser.add_argument('--chat-storage',action='store_true',help='Exclusive frozen-storage lease for Chat; requires loader, reference and large frames; no foreground binding')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
@@ -99,6 +100,7 @@ parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
 assert args.command_ui_pairs==64 or args.packed_command_ui
 if args.aspect_snapshot_lease:assert args.external_render and args.notice_input and args.large_view_frames
+if args.chat_storage:assert args.chat_loader and args.original_reference and args.large_view_frames
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
  args.file_viewer=True
@@ -311,6 +313,7 @@ if args.external_editor:out_name+='-external-editor'
 if args.packed_command_ui:out_name+='-packed-ui'
 if args.optimize_size:out_name+='-optimized-size'
 if args.chat_loader:out_name+='-chat-loader'
+if args.chat_storage:out_name+='-chat-storage'
 if args.command_ui_pairs==0:out_name+='-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
@@ -487,6 +490,7 @@ for index,source in enumerate(sources):
  if args.directory_adopt:options+=['-DDIRECTORY_RESOURCE_ADOPTION']
  if args.external_render:options+=['-DASPECT_EXTERNAL_RENDER']
  if args.aspect_snapshot_lease:options+=['-DASPECT_SNAPSHOT_LEASE']
+ if args.chat_storage:options+=['-DTERMINAL_CHAT_STORAGE']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
@@ -923,6 +927,7 @@ manifest['experimental_external_editor']=args.external_editor
 manifest['experimental_packed_command_ui']=args.packed_command_ui
 manifest['experimental_optimize_size']=args.optimize_size
 manifest['experimental_chat_loader']=args.chat_loader
+manifest['experimental_chat_storage']=args.chat_storage
 if chat_loader:manifest['chat_loader']={k:v for k,v in chat_loader.items() if k not in ('objects','inputs')}
 if args.optimize_size:manifest['optimized_c_sources']=optimized_c_sources
 manifest['packed_command_ui']=packed_command_ui

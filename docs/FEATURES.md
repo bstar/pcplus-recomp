@@ -2341,6 +2341,14 @@ a cold 629-file parent/module/header export pass. The parent does not call the
 loader yet: storage ownership,
 frontend bindings and final connection/deployment acceptance remain open.
 
+The [exclusive Chat storage checkpoint](CHAT_STORAGE_PARENT.md) adds no near
+state: explicit acquisition uses the existing view owner, preserves borrowed
+storage against ordinary viewer/PROGRAM entry and requires explicit retirement.
+Linked guards and actual DOS parent-code loading/open/close/unload at two
+addresses pass, with exact clean-source reproduction. Foreground Chat remains
+unbound. A first Enigma redial miss and passing same-input repeat are both
+retained; connection reliability and final deployment acceptance remain open.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

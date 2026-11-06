@@ -23,6 +23,9 @@ FAR_ENTRY terminal_redisplay_idle
 FAR_ENTRY terminal_redisplay_stop
 
 extern _redisplay_event_impl,_redisplay_active
+%ifdef TERMINAL_CHAT_STORAGE
+extern _redisplay_live_ready,_redisplay_export_pending,_redisplay_search_pending
+%endif
 extern _command_menu_action,_command_menu_active
 extern terminal_deferred_count,terminal_deferred_head,terminal_deferred_tail
 extern terminal_history_pointer,terminal_history_start,terminal_history_end,terminal_history_wrapped
@@ -168,6 +171,12 @@ terminal_redisplay_key_impl:
  stc
  ret
 .bind:
+%ifdef TERMINAL_CHAT_STORAGE
+ pop ax
+ cmp ax,0xffff ; Private acquire continuation, never a synthetic BIOS key.
+ je .chat_claimed
+ push ax
+%endif
  mov ax,[terminal_history_start]
  mov [context+16],ax
  mov ax,[terminal_history_end]
@@ -179,11 +188,21 @@ terminal_redisplay_key_impl:
  pop ax
  xor dx,dx
  jmp .call
+%ifdef TERMINAL_CHAT_STORAGE
+.chat_claimed:
+ mov word [_redisplay_active],2
+ clc
+ ret
+%endif
 .denied:
  pop ax
  stc
  ret
 .key:
+%ifdef TERMINAL_CHAT_STORAGE
+ cmp word [_redisplay_active],2
+ je .refused ; Storage has no viewer state. Its future frontend owns keys.
+%endif
  mov dx,1
 .call:
  push ax
@@ -225,6 +244,41 @@ terminal_redisplay_key_impl:
 %endif
 global terminal_redisplay_key_end
 terminal_redisplay_key_end:
+%ifdef TERMINAL_CHAT_STORAGE
+; Foreground-only FAR register API, DS=SS=parent, preserve all registers.
+; CF0 acquired/retired, CF1 refused. Existing nonzero view-owner guards protect
+; the complete frozen snapshot/index and live/view frames. No new near state.
+; A caller must close/retire its own module before explicit release. Stop and
+; ordinary keys cannot silently free executable storage or enter viewer C.
+global terminal_chat_storage_acquire,terminal_chat_storage_release
+terminal_chat_storage_acquire:
+ push ax
+ mov ax,[_redisplay_active]
+ or ax,[_redisplay_live_ready]
+ or ax,[_redisplay_export_pending]
+ or ax,[_redisplay_search_pending]
+ or ax,[_command_menu_active]
+ jnz .denied
+ cmp word [screen_attribute_row_bytes],80
+ jne .denied
+ mov ax,0xffff
+ call terminal_redisplay_key_impl.open
+ pop ax
+ retf
+.denied:
+ pop ax
+ stc
+ retf
+terminal_chat_storage_release:
+ cmp word [_redisplay_active],2
+ jne .denied
+ mov word [_redisplay_active],0
+ clc
+ retf
+.denied:
+ stc
+ retf
+%endif
 terminal_redisplay_before_impl:
  mov dx,2
  jmp redisplay_event
@@ -244,6 +298,10 @@ terminal_redisplay_stop_impl:
 .event:
  mov dx,4
 redisplay_event:
+%ifdef TERMINAL_CHAT_STORAGE
+ cmp word [_redisplay_active],2
+ je .done ; Explicit owner retirement only, including foreground stop.
+%endif
  cmp word [_redisplay_active],0
  je .done
  push ax

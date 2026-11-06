@@ -151,6 +151,11 @@ terminal_program_start:
  or ax,ax
  pop ax
  jnz .busy
+%ifdef TERMINAL_CHAT_STORAGE
+ extern _redisplay_active
+ cmp word [_redisplay_active],2
+ je .busy
+%endif
 %ifdef TERMINAL_UI_SCREEN_OVERLAY
  extern terminal_browser_screen_owned
  cmp byte [terminal_browser_screen_owned],0
