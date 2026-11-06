@@ -25,95 +25,11 @@ _terminal_chat_text_echo_sink:
  push si
  push di
  push es
- cmp word [ss:bp+6],4
- jne .refuse
- cmp word [ss:bp+8],255
- ja .refuse
- cmp word [ss:bp+10],redisplay_snapshot+14500
- jne .refuse
- mov ax,seg redisplay_snapshot
- cmp [ss:bp+12],ax
- jne .refuse
- cmp word [cs:active],0
- jne .refuse
- cmp word [_redisplay_active],2
- jne .refuse
- mov ax,[terminal_aspect_active]
- or ax,[terminal_parser_active]
- or ax,[terminal_ansi_wait_active]
- or ax,[terminal_quit]
- or ax,[terminal_deferred_count]
- or ax,[terminal_macro_active]
- or ax,[terminal_program_pending]
- or ax,[screen_viewport_enabled]
- or ax,[screen_viewport_offset]
- jnz .refuse
- cmp word [screen_video_row_bytes],160
- jne .refuse
- cmp word [screen_attribute_row_bytes],80
- jne .refuse
- mov ax,0x40
- mov es,ax
- cmp byte [es:0x49],3
- jne .refuse
- cmp word [es:0x4a],80
- jne .refuse
- cmp byte [es:0x62],0
- jne .refuse
+ call admit
+ jnc .accepted
  xor ax,ax
- mov al,[es:0x84]
- or ax,ax
- jnz .rows
- mov ax,24
-.rows:
- inc ax
- cmp ax,[ui_window_rows]
- jne .refuse
- mov cx,ax
- mov si,screen_line_flags
-.plain:
- cmp byte [si],0
- jne .refuse
- inc si
- loop .plain
- cmp word [connection_state],0
- je .context
- cmp word [connection_state],6
- jne .refuse
-.context:
- les di,[ss:bp+10]
- mov ax,[es:di]
- cmp ax,[ui_window_rows]
- jae .refuse
- cmp [es:di+6],ax
- jne .refuse
- mov dx,[es:di+2]
- cmp dx,79
- ja .refuse
- cmp [es:di+4],dx
- jne .refuse
- cmp [es:di+8],dx
- jne .refuse
- mov cx,80
- mul cx
- add ax,[es:di+2]
- cmp [es:di+12],ax
- jne .refuse
- shl ax,1
- cmp [es:di+10],ax
- jne .refuse
- cmp word [es:di+14],1
- ja .refuse
- jne .no_wrap
- mov ax,[es:di]
- cmp [es:di+16],ax
- jne .refuse
- mov ax,[es:di+2]
- cmp [es:di+18],ax
- jne .refuse
-.no_wrap:
- cmp word [es:di+20],1
- ja .refuse
+ jmp .done
+.accepted:
  ; Scope state is retained in this bank, never a new near allocation. The
  ; callback has one foreground owner. Context storage exchanges twice, so it
  ; ends holding the updated local cursor and the parent is restored exactly.
@@ -146,15 +62,114 @@ _terminal_chat_text_echo_sink:
  mov word [cs:unread],0
  mov word [cs:have_last],0
  mov ax,1 ; Accepted exactly once, even if the parser partially painted/faulted.
- jmp .done
-.refuse:
- xor ax,ax
 .done:
  pop es
  pop di
  pop si
  pop bp
  retf
+
+; Read-only admission islands keep every refusal close to its checks.
+admit:
+ cmp word [ss:bp+6],4
+ jne .bad
+ cmp word [ss:bp+8],255
+ ja .bad
+ cmp word [ss:bp+10],redisplay_snapshot+14500
+ jne .bad
+ mov ax,seg redisplay_snapshot
+ cmp [ss:bp+12],ax
+ jne .bad
+ cmp word [cs:active],0
+ jne .bad
+ cmp word [_redisplay_active],2
+ jne .bad
+ mov ax,[terminal_aspect_active]
+ or ax,[terminal_parser_active]
+ or ax,[terminal_ansi_wait_active]
+ or ax,[terminal_quit]
+ or ax,[terminal_deferred_count]
+ or ax,[terminal_macro_active]
+ or ax,[terminal_program_pending]
+ or ax,[screen_viewport_enabled]
+ or ax,[screen_viewport_offset]
+ jnz .bad
+ jmp short .planes
+.bad:
+ stc
+ ret
+.planes:
+ cmp word [screen_video_row_bytes],160
+ jne .bad
+ cmp word [screen_attribute_row_bytes],80
+ jne .bad
+ mov ax,0x40
+ mov es,ax
+ cmp byte [es:0x49],3
+ jne .bad
+ cmp word [es:0x4a],80
+ jne .bad
+ cmp byte [es:0x62],0
+ jne .bad
+ xor ax,ax
+ mov al,[es:0x84]
+ or ax,ax
+ jnz .rows
+ mov ax,24
+.rows:
+ inc ax
+ cmp ax,[ui_window_rows]
+ jne .bad
+ mov cx,ax
+ mov si,screen_line_flags
+.plain:
+ cmp byte [si],0
+ jne .bad
+ inc si
+ loop .plain
+ cmp word [connection_state],0
+ je .context
+ cmp word [connection_state],6
+ jne .bad
+.context:
+ les di,[ss:bp+10]
+ mov ax,[es:di]
+ cmp ax,[ui_window_rows]
+ jae .cursor_bad
+ cmp [es:di+6],ax
+ jne .cursor_bad
+ mov dx,[es:di+2]
+ cmp dx,79
+ ja .cursor_bad
+ cmp [es:di+4],dx
+ jne .cursor_bad
+ cmp [es:di+8],dx
+ jne .cursor_bad
+ mov cx,80
+ mul cx
+ add ax,[es:di+2]
+ cmp [es:di+12],ax
+ jne .cursor_bad
+ shl ax,1
+ cmp [es:di+10],ax
+ jne .cursor_bad
+ cmp word [es:di+14],1
+ ja .cursor_bad
+ jne .no_wrap
+ mov ax,[es:di]
+ cmp [es:di+16],ax
+ jne .cursor_bad
+ mov ax,[es:di+2]
+ cmp [es:di+18],ax
+ jne .cursor_bad
+.no_wrap:
+ cmp word [es:di+20],1
+ ja .cursor_bad
+ clc
+ ret
+.cursor_bad:
+ stc
+ ret
 
 ; CF0: unowned, preserve AX. CF1: owned AX=actual byte orFFFF. The whole echo
 ; has36 BIOS ticks and4096 read/poll attempts, not36 ticks per incoming byte.

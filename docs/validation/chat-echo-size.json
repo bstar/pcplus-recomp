@@ -1,0 +1,61 @@
+{
+  "status": "partial-echo-memory-recovery-nested-ASPECT-still-fails-TEXT-unbound",
+  "binary_sha256": "067cfdf53a6f8a4e3e0cb1a57733d7a7a9acb885597468101906eab6962e405c",
+  "module_sha256": "5b6892e71dfb6054cc5e1ff04b9cfac380af1a5e530da11dc2780325a8d45622",
+  "echo_disabled_sha256": "5ecf87743f55c97e83a334c3a5ef9e049dc4de1558ec4d482a529cf215092846",
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "foreground_TEXT_bound": false,
+  "complete_memory_funding": false,
+  "nested_ASPECT_passed": false,
+  "allocation_before": 480368,
+  "allocation_after": 479888,
+  "allocation_recovered": 480,
+  "echo_bank_before": 895,
+  "echo_bank_after": 831,
+  "object_code_recovered": 423,
+  "compiler_choices": 33,
+  "near_bytes": 65504,
+  "resident_CS_bytes": 65464,
+  "stack_bytes": 8192,
+  "capacity_reductions": false,
+  "source_export_files": 3645,
+  "reports": {
+    "partial_size": {
+      "path": "build/chat-echo-compact-size-20261106/result.json",
+      "sha256": "df354b4c6575d1662efe8d65382cf9fc15f1f9f3eb35345a2260f1e08d9bbb7e",
+      "passed": true
+    },
+    "native_echo": {
+      "path": "build/chat-echo-compact-reviewed-check-20261106/result.json",
+      "sha256": "00ebc7f8c5be0be0135c419369b0ea5b2713e4965460ae0611f186b750a00ec5",
+      "passed": true
+    },
+    "ordinary_dos_main": {
+      "path": "build/chat-echo-compact-main-20261106/result.json",
+      "sha256": "7db674509f6ae3e0592667db3f748419d4099c3332311df404111f65a6e9f612",
+      "passed": true
+    },
+    "cold_source": {
+      "path": "build/chat-echo-size-cold-20261106/result.json",
+      "sha256": "a649412e60b7792bd879aaf6d82bf71c42789f179a2de6346f6b5e2133a15f6a",
+      "passed": true
+    },
+    "stale_profile_rejection": {
+      "path": "build/chat-echo-size-stale-20261106/result.json",
+      "sha256": "38de0b001ff18924876cdf5ed737f881b3306ae58c7630ab5a61e95560768485",
+      "passed": true
+    },
+    "nested_ASPECT": {
+      "path": "build/chat-echo-compact-admission-aspect-20261106/result.json",
+      "sha256": "32e225d6a82a5c5ea9d900365e8a2a0ca91d1987aa64f0f3ff0fe00398a3aec5",
+      "passed": false
+    }
+  },
+  "remaining": [
+    "Recover remaining memory cost without reducing capacities and pass nested-ASPECT gate",
+    "Actual busy BIOS key/cancel and reentry acceptance",
+    "Synchronize local cursor/presentation and compose foreground TEXT/echo/TX/timing",
+    "Bind all ten TEXT keys; broader Chat/UI/BBS/package/deployment/hardware/full-parity acceptance"
+  ]
+}

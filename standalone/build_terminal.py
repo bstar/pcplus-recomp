@@ -726,6 +726,11 @@ if args.chat_text_transport:
  chat_size=json.loads(chat_size_path.read_text());assert chat_size['version']==1
  size_profile['compiler_options'].update(chat_size['compiler_options'])
  size_profile['sources'].update(chat_size['sources'])
+if args.chat_echo:
+ echo_size_path=ROOT/'src/chat/echo_size.json'
+ echo_size=json.loads(echo_size_path.read_text());assert echo_size['version']==1
+ size_profile['compiler_options'].update(echo_size['compiler_options'])
+ size_profile['sources'].update(echo_size['sources'])
 for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
@@ -940,6 +945,7 @@ inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
 if args.packed_command_ui:inputs += [ROOT/'standalone/pack_command_ui.py',ROOT/'src/redisplay/command_ui_codec.h']
 if args.optimize_size:inputs.append(size_profile_path)
 if args.chat_text_transport:inputs.append(chat_size_path)
+if args.chat_echo:inputs.append(echo_size_path)
 if args.session_projection:inputs += [ROOT/'src/config/prm_projection.h',ROOT/'src/terminal/session_projection.h']
 if args.session_baseline:inputs += [ROOT/'src/terminal/session_baseline.h']
 if args.directory_preview:inputs += [ROOT/'src/terminal/directory_preview.h']

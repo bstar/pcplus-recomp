@@ -1,0 +1,413 @@
+{
+  "version": 1,
+  "scope": "Opt-in experimental Chat echo compiler-size choices only; no stack, heap, stream, data or feature capacity reductions. Allocation and runtime acceptance are separate.",
+  "compiler_options": {
+    "echo-size": [
+      "-os",
+      "-oe=0"
+    ],
+    "echo-size-20": [
+      "-os",
+      "-oe=20"
+    ]
+  },
+  "potential_object_saving_bytes": 423,
+  "sources": {
+    "src/aspect/renderer_policy.c": {
+      "profile": "echo-size-20",
+      "source_sha256": "6348ee6a72dbd930ce074e942dcd3baafb7c4b588e0e48d47e14e4c14b4f2474",
+      "control_code_data_bytes": [
+        1334,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1330,
+        0
+      ]
+    },
+    "src/capture/capture_file.c": {
+      "profile": "echo-size-20",
+      "source_sha256": "a6301ab3e690380f783b015b1b77492878b07f5ddb53527f10d3a87fd971206e",
+      "control_code_data_bytes": [
+        2409,
+        968
+      ],
+      "optimized_code_data_bytes": [
+        2408,
+        968
+      ]
+    },
+    "src/clipboard/clipboard.c": {
+      "profile": "echo-size",
+      "source_sha256": "9547621a8ebce3c8707eceaa087a59735945523818a19f215b4e9027a224147a",
+      "control_code_data_bytes": [
+        1508,
+        15
+      ],
+      "optimized_code_data_bytes": [
+        1498,
+        15
+      ]
+    },
+    "src/clipboard/clipboard_ui.c": {
+      "profile": "echo-size",
+      "source_sha256": "d9907992805a4414102fbdfb194163b17a6ef06934c72fd7c4173170ad4f7632",
+      "control_code_data_bytes": [
+        2132,
+        1170
+      ],
+      "optimized_code_data_bytes": [
+        2125,
+        1170
+      ]
+    },
+    "src/config/modem_import.c": {
+      "profile": "echo-size",
+      "source_sha256": "aa984d766d561ab15e6fd067757953c856eb054a61dc8f4cb9c58c58f5df2a4b",
+      "control_code_data_bytes": [
+        767,
+        24
+      ],
+      "optimized_code_data_bytes": [
+        765,
+        24
+      ]
+    },
+    "src/config/prm_projection.c": {
+      "profile": "echo-size-20",
+      "source_sha256": "6045aad846a02d03f274e4c966d3c2f8863f971ec2d6e9065feda559f62a0565",
+      "control_code_data_bytes": [
+        1319,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1302,
+        0
+      ]
+    },
+    "src/config/resource_path.c": {
+      "profile": "echo-size",
+      "source_sha256": "6415ca340fdad3d8938c708584f0bdf50fbfee76c6001d2f14a8d8de8f036c3a",
+      "control_code_data_bytes": [
+        1877,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1857,
+        0
+      ]
+    },
+    "src/config/startup_import.c": {
+      "profile": "echo-size",
+      "source_sha256": "31ad7ca3b1802d0edb863503972cf82dd383928123a78315a74125dfd7c824ec",
+      "control_code_data_bytes": [
+        380,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        376,
+        0
+      ]
+    },
+    "src/config/terminal_preferences.c": {
+      "profile": "echo-size",
+      "source_sha256": "7a8f91043d1a91efb6ca78d396c135f9f46744db7db7c02003491bf3f7615a13",
+      "control_code_data_bytes": [
+        1420,
+        14
+      ],
+      "optimized_code_data_bytes": [
+        1411,
+        14
+      ]
+    },
+    "src/directory/directory_live.c": {
+      "profile": "echo-size",
+      "source_sha256": "3be33ec280c0545bb820f9c7606145d3304d7a2d28ee3a8b62fb4b3c1f676a35",
+      "control_code_data_bytes": [
+        3060,
+        58
+      ],
+      "optimized_code_data_bytes": [
+        3040,
+        58
+      ]
+    },
+    "src/directory/directory_replace.c": {
+      "profile": "echo-size",
+      "source_sha256": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+      "control_code_data_bytes": [
+        1900,
+        70
+      ],
+      "optimized_code_data_bytes": [
+        1886,
+        70
+      ]
+    },
+    "src/filesystem/path_dialog.c": {
+      "profile": "echo-size",
+      "source_sha256": "c0a01a8ffb462c5063ae7b4b8406b1338da6f496feebb9f196700a9c3b8cc358",
+      "control_code_data_bytes": [
+        2136,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        2118,
+        0
+      ]
+    },
+    "src/filesystem/path_owner.c": {
+      "profile": "echo-size-20",
+      "source_sha256": "c9e322612b119bcd138d06ad69c8e8ac9746cac57dc0b4438aea36c88a97db68",
+      "control_code_data_bytes": [
+        678,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        670,
+        0
+      ]
+    },
+    "src/filesystem/path_session.c": {
+      "profile": "echo-size",
+      "source_sha256": "c2bd2af1c3d38af395879c05ba6c189e00a8ebad52784e0f608ed9f78ff35747",
+      "control_code_data_bytes": [
+        879,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        877,
+        0
+      ]
+    },
+    "src/filesystem/startup_identities.c": {
+      "profile": "echo-size",
+      "source_sha256": "568aad6e35dc710c5e8b4c71e38a569c0f09da0ea5297b9c1bcea0f418080012",
+      "control_code_data_bytes": [
+        365,
+        12
+      ],
+      "optimized_code_data_bytes": [
+        363,
+        12
+      ]
+    },
+    "src/filesystem/viewer_dialog.c": {
+      "profile": "echo-size",
+      "source_sha256": "18ca2a431b6c91bf1ab6f5b6ed3b31b672c0818e28a40e3be2789185b38fbc49",
+      "control_code_data_bytes": [
+        2823,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        2817,
+        0
+      ]
+    },
+    "src/key_mapping/key_actions_dos.c": {
+      "profile": "echo-size-20",
+      "source_sha256": "968eea96422bc4ab660979ed372093332c1a32fd84ae74da6d7dc8a8fc9b9e38",
+      "control_code_data_bytes": [
+        630,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        611,
+        0
+      ]
+    },
+    "src/key_mapping/keymap_dos.c": {
+      "profile": "echo-size-20",
+      "source_sha256": "9784a3451a573892c1a0050ad7f473341b1b25f5d2570a3b24c09dae65d5b6da",
+      "control_code_data_bytes": [
+        721,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        719,
+        0
+      ]
+    },
+    "src/printer/printer_device.c": {
+      "profile": "echo-size",
+      "source_sha256": "0f42e7199d7eb824d9a3437cf90ca901c5a9c77d2ef5b7a483941aedf2cb65e7",
+      "control_code_data_bytes": [
+        677,
+        36
+      ],
+      "optimized_code_data_bytes": [
+        674,
+        36
+      ]
+    },
+    "src/process/process_handles.c": {
+      "profile": "echo-size",
+      "source_sha256": "e572e8fad32edbe2c113c12598b3a29e6fa6acdd014b122d2630d5fc138d75d2",
+      "control_code_data_bytes": [
+        1241,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        1238,
+        0
+      ]
+    },
+    "src/process/program.c": {
+      "profile": "echo-size-20",
+      "source_sha256": "e0455a66c53cfb235fcb606d6ddc0fe4c6b798c296d1247171241498ce93b606",
+      "control_code_data_bytes": [
+        1198,
+        25
+      ],
+      "optimized_code_data_bytes": [
+        1194,
+        25
+      ]
+    },
+    "src/recording/file.c": {
+      "profile": "echo-size",
+      "source_sha256": "351b66ef8549eca4306484d540dacbc872fa1425fbbb55d3a1743cb5fb298e68",
+      "control_code_data_bytes": [
+        3120,
+        88
+      ],
+      "optimized_code_data_bytes": [
+        3105,
+        88
+      ]
+    },
+    "src/redisplay/redisplay.c": {
+      "profile": "echo-size",
+      "source_sha256": "f0b890813ef4e1d22298051818db5a153bff17c76776bad438df6168b9c4471b",
+      "control_code_data_bytes": [
+        5610,
+        420
+      ],
+      "optimized_code_data_bytes": [
+        5512,
+        420
+      ]
+    },
+    "src/transfer/batch_header.c": {
+      "profile": "echo-size",
+      "source_sha256": "5003de29446cc1ec3a3776dcb1798b2763a6f1d556e866abe7e207cc39b49aa5",
+      "control_code_data_bytes": [
+        1310,
+        48
+      ],
+      "optimized_code_data_bytes": [
+        1306,
+        48
+      ]
+    },
+    "src/transfer/batch_upload.c": {
+      "profile": "echo-size",
+      "source_sha256": "f1d0f8041de05741971c8736072b46757f04874c59c87870b89ef5ef127890ef",
+      "control_code_data_bytes": [
+        2006,
+        275
+      ],
+      "optimized_code_data_bytes": [
+        1985,
+        275
+      ]
+    },
+    "src/transfer/download_file.c": {
+      "profile": "echo-size",
+      "source_sha256": "1fb8a05e824665cb339ed42a57196c5cb0ccd9ff64c60d3f5ada059c0338a6df",
+      "control_code_data_bytes": [
+        1288,
+        198
+      ],
+      "optimized_code_data_bytes": [
+        1274,
+        198
+      ]
+    },
+    "src/transfer/upload_file.c": {
+      "profile": "echo-size",
+      "source_sha256": "9edaa9928d231ff6ccf92aba5a3af2586f7e124cb127d7b37d845d35015bea8d",
+      "control_code_data_bytes": [
+        1860,
+        146
+      ],
+      "optimized_code_data_bytes": [
+        1844,
+        146
+      ]
+    },
+    "src/transfer/ymodem.c": {
+      "profile": "echo-size",
+      "source_sha256": "83c8802337c04ea9d100a11eaf4578bc89b46a28e9f94825fa70fa1ed8f2a20a",
+      "control_code_data_bytes": [
+        2284,
+        40
+      ],
+      "optimized_code_data_bytes": [
+        2270,
+        40
+      ]
+    },
+    "src/transfer/zmodem.c": {
+      "profile": "echo-size",
+      "source_sha256": "b5a7b4248053c2547a5ccf1a6e8f51aedf25e1ac7d964a9c5769e68c31038c6a",
+      "control_code_data_bytes": [
+        6122,
+        3
+      ],
+      "optimized_code_data_bytes": [
+        6071,
+        3
+      ]
+    },
+    "src/transfer/zmodem_autostart.c": {
+      "profile": "echo-size",
+      "source_sha256": "a232cdcbc084949d53c1634c9012aa16ec793a349eb47bd50b6c2b146178f7c0",
+      "control_code_data_bytes": [
+        424,
+        0
+      ],
+      "optimized_code_data_bytes": [
+        417,
+        0
+      ]
+    },
+    "src/transfer/zmodem_wire.c": {
+      "profile": "echo-size",
+      "source_sha256": "fdae5d7c899ac2b32efe4b2f9d14d6c66ca323263b2fff5bf5da33f5915c1a6b",
+      "control_code_data_bytes": [
+        2354,
+        17
+      ],
+      "optimized_code_data_bytes": [
+        2352,
+        17
+      ]
+    },
+    "src/translation/xlt_live.c": {
+      "profile": "echo-size-20",
+      "source_sha256": "98a437d8aaaaac1dec6c8fc1c81945b602abd9b6400a11bc9cc3f8ba4989a97f",
+      "control_code_data_bytes": [
+        1918,
+        625
+      ],
+      "optimized_code_data_bytes": [
+        1916,
+        625
+      ]
+    },
+    "src/ui/connect_alert.c": {
+      "profile": "echo-size",
+      "source_sha256": "19db966be0d258b269052077516cb2398a87277bf0500df617cf210cd625166c",
+      "control_code_data_bytes": [
+        533,
+        18
+      ],
+      "optimized_code_data_bytes": [
+        529,
+        18
+      ]
+    }
+  }
+}

@@ -2436,3 +2436,8 @@ cancellation and cursor restoration in CPU checks. Ordinary DOS Chat passes,
 but the larger experimental parent fails nested-ASPECT child/stream capacity.
 Memory funding, actual busy-key scheduling and foreground TEXT binding remain
 required before candidate acceptance; the selected package is unchanged.
+
+The [echo size follow-up](CHAT_ECHO_SIZE.md) recovers480 allocated bytes through
+measured C choices and shorter admission branches, with unchanged capacities.
+CPU echo and ordinary DOS Chat pass; actual nested-ASPECT still fails, so full
+memory funding and foreground TEXT binding remain open.

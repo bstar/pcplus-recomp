@@ -85,3 +85,7 @@ physical PC or production network/bridge configuration changed.
 
 See the [receipt](validation/chat-echo-owner.json) and
 [cursor primitive](CHAT_ECHO_CURSOR_SWAP.md).
+
+The subsequent [partial memory recovery](CHAT_ECHO_SIZE.md) saves480 allocated
+bytes while preserving capacities. Its nested-ASPECT gate still fails; it does
+not enable TEXT or change the selected package.

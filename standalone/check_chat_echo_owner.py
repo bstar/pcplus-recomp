@@ -108,6 +108,13 @@ def main():
             assert m.echo(65)==0 and m.native()==before and m.local()==local and bytes(m.uc.mem_read(0xb8000,4000))==video
         for kind,value,delta in ((1,65,0),(4,256,0),(4,65,2)):
             m=Echo();before=m.native();assert m.echo(value,kind,delta)==0 and m.native()==before
+        for at,data in ((0x449,b'\x13'),(0x44a,b'\x84\x00'),(0x462,b'\x01'),(0x484,b'\x31')):
+            m=Echo();m.uc.mem_write(at,data);before=m.native();local=m.local()
+            video=bytes(m.uc.mem_read(0xb8000,4000))
+            assert m.echo(65)==0 and m.native()==before and m.local()==local
+            assert bytes(m.uc.mem_read(0xb8000,4000))==video
+        m=Echo();m.uc.mem_write(m.symbols['screen_line_flags']+20,b'\x80');before=m.native()
+        assert m.echo(65)==0 and m.native()==before
         for offset,value in ((0,25),(2,80),(6,19),(10,1),(14,2),(20,2)):
             m=Echo();m.uc.mem_write(m.context+offset,struct.pack('<H',value));before=m.native()
             assert m.echo(65)==0 and m.native()==before
