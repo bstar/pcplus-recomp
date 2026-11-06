@@ -14,12 +14,14 @@ from build_aspect_script_file_backend import ROOT, OUT, sha, main as build
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--label', default='check-' + str(time.time_ns()))
+    p.add_argument("--deferred-script-buffers",action="store_true")
     a = p.parse_args()
     assert re.fullmatch(r'[A-Za-z0-9_-]+', a.label)
-    build()
-    stage = OUT / 'tests' / a.label
+    product=OUT/"deferred" if a.deferred_script_buffers else OUT
+    build(defer_script_buffers=a.deferred_script_buffers,output=product)
+    stage = product / 'tests' / a.label
     stage.mkdir(parents=True, exist_ok=False)
-    binary = OUT / 'SCRIPTIO.EXE'
+    binary = product / 'SCRIPTIO.EXE'
     before = sha(binary)
     shutil.copyfile(binary, stage / binary.name)
     config = f'''[sdl]
@@ -68,17 +70,17 @@ exit
         assert (stage / name).read_bytes() == data, name
     assert not (stage / 'ABSENT').exists() and not (stage / 'INVALID.BIN').exists()
     assert sha(binary) == before == sha(stage / binary.name)
-    report = dict(passed=True, DOS_summary=summary[0], assertions=int(summary[1]),
+    report = dict(passed=True,deferred_script_buffers=a.deferred_script_buffers, DOS_summary=summary[0], assertions=int(summary[1]),
                   cycles=100, simultaneous_slots=6, binary_sha256=before,
                   heap_observation=dict(far_used_blocks=int(cycles[1]), near_used_blocks=int(cycles[2]),
                                         addresses_and_sizes_preserved=True, inherited_JFT_entries_preserved=20),
-                  manifest_sha256=sha(OUT / 'manifest.json'), checker_sha256=sha(Path(__file__)),
+                  manifest_sha256=sha(product / 'manifest.json'), checker_sha256=sha(Path(__file__)),
                   result_sha256=sha(stage / 'RESULT.TXT'), original_inputs=[],
                   files={name: dict(bytes=len(data), sha256=sha(stage / name))
                          for name, data in expected.items()},
                   scope='Actual native13 handlers and3 helpers over real owned DOS stdio. Binary/text bytes, CRLF/controlZ, 32bit positions beyond64KiB, read-only errors, failed replacement, explicit and cleanup DOS-close faults, six-slot100-cycle near/far heap and JFT identity, guarded string writes. Typed operand/writeback/returning-warning/lowercase callbacks are test boundaries; actual interpreter/compiler/abort/CHAIN integration and original CRT equivalence remain separate.')
     (stage / 'checks.json').write_text(json.dumps(report, indent=2) + '\n')
-    (OUT / 'checks.json').write_text(json.dumps(dict(report, run=str(stage.relative_to(ROOT))), indent=2) + '\n')
+    (product / 'checks.json').write_text(json.dumps(dict(report, run=str(stage.relative_to(ROOT))), indent=2) + '\n')
     print(report['DOS_summary'], ';', len(expected), 'byte-exact files; result:', stage)
 
 
