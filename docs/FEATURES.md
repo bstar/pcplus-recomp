@@ -2484,5 +2484,9 @@ and Escape/Alt-H/Alt-X behind full input. No capacities are reduced.
 
 A separate [REA correction](CHAT_REDISPLAY_ENTRY.md) identifies original6D00
 as Alt-F6 Redisplay/scrollback. Earlier Chat Help labeling was incorrect.
-Nested viewer ownership/return must be implemented against that actual command;
-global Help and Alt-Z remain separate requirements.
+Its subsequent native-source checkpoint recovers190 exact bytes for entry,
+screen restore/NULL fallback, reusing280 previously recovered display/cursor
+bytes.3460 instruction cases pass as source, paired original-slice replay and
+a clean source-only rebuild. This establishes nested cursor/screen lifetime and
+the original allocation-failure path; it does not implement live Chat/viewer
+ownership or RX handoff. Global Help and Alt-Z remain separate requirements.

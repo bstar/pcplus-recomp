@@ -36,21 +36,86 @@ The existing terminal dispatch and original-reference table already identify
 6D00 as Alt-F6 Redisplay. Together these facts support the corrected command
 identity, rather than a new generic Help page.
 
-The generated analysis image has explicit loader/image-mapping limitations.
-This pass did not newly match D830's complete underlying original-file slice
-or run original PCPlus. The earlier Chat controller itself has the separate
-original-byte match recorded in CHAT_NATIVE.md. No complete original runtime
-behavior is inferred from the new pseudocode. The private saved snapshot is
+The initial investigation did not match D830's underlying original-file slice.
+The subsequent native-source checkpoint below closes that mapping gap; neither
+pass runs the synthetic image or original whole application. The earlier Chat
+controller has its separate original-byte match in CHAT_NATIVE.md. No complete
+original runtime behavior is inferred from pseudocode. The initial private snapshot is
 `analysis/chat-pressure-redisplay-entry-20261106.rea.json`; REA closed normally
 with15 retained Evidence records. It remains excluded from public Git.
+
+## Native entry and return recovery
+
+`reconstruction/redisplay_entry/` now contains190 exact original bytes:
+D830–D8BC entry141 bytes,4870–488E restore wrapper31 bytes and488F–48A0
+fallback18 bytes. Each compiles to its original flat slice and relocatable OMF.
+The source-only builder reads public assembly/provenance only. The optional
+analyst audit separately matches identified original-file slices at offsets
+104336,23152 and23183 through the loader source ranges. It checks that none
+overlap replaced trampolines and that the static carrier contains identical
+bytes. No analysis image is executable input.
+
+Fresh REA assembly views `ev_c181d6a9f8a1abdc7f3343bf840f2802a1b010c4e570e47984dd278ff61d952d`
+and `ev_5784e27c7be825d8b1df12ade511351b67be8cd0ed7d77cf6632f6e792d9b5d6`
+complete the wrapper/fallback contract. Existing exact6BBE/7558 screen services
+in `reconstruction/program_display/` and6B5A/6B42 cursor services in
+`reconstruction/notice_window/` supply the dependencies, without duplicating
+their recovered source. Combined with the entry, the CPU check composes470
+bytes of native instructions. Heap, viewer, BIOS/CRT and alert endpoints remain
+declared models.
+
+The contract has several consequential details:
+
+- `6BBE` allocates `display_bytes`, saves the frame and returns DX:AX. The
+ entry retains both words across the viewer.
+- `4870` tests both pointer words. A nonzero far pointer reaches7558, which
+ restores the frame and frees it. NULL invokes488F; it never copies/frees NULL.
+- Allocation failure does **not** prevent the original entry from calling the
+ viewer or empty-history notice. Its fallback calls376D, then7722 with stack
+ arguments100/440, then376D again. Static7722 evidence confirms the two-argument
+ RET4 ABI (`ev_bff68d9907a2228106ed3622c3c421616dcac41b421990b0010ee52747526339`).
+ No acoustic output is claimed. The maintained Chat owner should refuse before
+ the handoff when it cannot fund safe preservation, rather than adopting this
+ unrecoverable-screen behavior.
+- `6B5A/6B42` nest cursor positions. Chat's outer save/restore surrounds the
+ entry's own save/restore; one saved cursor word cannot replace both levels.
+- `7A50` is the mouse X scale, independently mapped by the existing mouse
+ reconstruction and PRM reader. The entry restores it from configured2068,
+ **not** from its previous runtime value.397A=0x25 is the Redisplay help context,
+ consistent with other recovered local-window help-context use.
+
+[The checked receipt](validation/redisplay-entry.json) binds3460 source CPU
+cases,3460 paired original-slice comparisons and a separate3460-case cold
+source-only rebuild. The matrix covers25/28/43/50-row frames, direct CRT/BIOS
+cursor paths, both conditional cursor-policy branches, zero/seven existing
+cursor frames, a diagnostic caller matching Chat's nested call sequence,
+empty/nonempty/wrapped history, arithmetic wrap, allocation failure, and all
+four zero/nonzero far-pointer offset/segment classes. These are instruction
+replays with explicit service models, not live DOS, serial or physical tests.
+
+Reproduce under the pinned toolchain with fresh output directories:
+
+```sh
+./tools/dev --command python standalone/build_redisplay_entry.py --output build/redisplay-entry-check
+./tools/dev --command python standalone/check_redisplay_entry.py --output build/redisplay-entry-check
+# Optional identified local originals, outside the source build:
+./tools/dev --command python standalone/check_redisplay_entry.py --output build/redisplay-entry-check --original
+./tools/dev --command python standalone/test_redisplay_entry_cold.py --build build/redisplay-entry-check --output /tmp/pcplus-redisplay-cold-check
+```
+
+REA closed normally to ignored
+`analysis/chat-redisplay-contract-20261106.rea.json`, retaining40 records.
+This checkpoint changes no live application code, module ABI, selected package
+or deployment. The controller's blocking D95C implementation is not integrated;
+global Help, Alt-Z and the broader original-feature inventory remain separate.
 
 ## Integration requirements
 
 The viewer needs a real suspend/resume boundary: Chat currently executes its
 loadable module from frozen storage that ordinary Redisplay also owns. Calling
 the viewer while the module retains that storage would overwrite live code.
-Recover and verify the original entry/screen/cursor contract, preserve Chat's
-session and normal underlay across the ownership handoff, then restore Chat
+The entry/screen/cursor contract above is now byte-checked in isolation.
+Preserve Chat's session and normal underlay across the ownership handoff, then restore Chat
 and receive/input service on return. Cover cancellation, carrier loss and
 viewer/file operations without reentrant loading or leaking retained keys.
 

@@ -1,0 +1,59 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "static_carrier_sha256": "4ae6ee164991ab772dcb0dba4974fe30d00ee97429719dbbe0b56d5756fbc868",
+  "source_mapping_manifest_sha256": "f823ad14e2fea0a83a84929db04d7acbe3ac3a5d5ee2e3fbf38628aa88f1f23a",
+  "units": [
+    {
+      "file": "reconstruction/redisplay_entry/enter.asm",
+      "start": 55344,
+      "end": 55485,
+      "file_offset": 104336,
+      "bytes": 141,
+      "sha256": "94f3e3428f2e43cfd9c8e0baeb376fac8fe6693438edfdaea6106b2b86929351",
+      "rea_evidence_id": "ev_bcc76b021eed706adc74b2fd7450379de1f7a32c4d711b922314572f337cca25",
+      "mapping": {
+        "role": "overlay-15",
+        "relative_address": 53456,
+        "source_file_offset": 102448,
+        "bytes": 6736
+      }
+    },
+    {
+      "file": "reconstruction/redisplay_entry/restore_or_alert.asm",
+      "start": 18544,
+      "end": 18575,
+      "file_offset": 23152,
+      "bytes": 31,
+      "sha256": "06f6114fcac11be61a0cf9a24559be04239f21a8a646849f3a3f36296c696d69",
+      "rea_evidence_id": "ev_c181d6a9f8a1abdc7f3343bf840f2802a1b010c4e570e47984dd278ff61d952d",
+      "mapping": {
+        "role": "resident",
+        "relative_address": 0,
+        "source_file_offset": 4608,
+        "bytes": 53456
+      }
+    },
+    {
+      "file": "reconstruction/redisplay_entry/snapshot_alert.asm",
+      "start": 18575,
+      "end": 18593,
+      "file_offset": 23183,
+      "bytes": 18,
+      "sha256": "eb971c5c7212cddaa9d9982583c870a12ff61a5186147f49fa6c44c81a048426",
+      "rea_evidence_id": "ev_5784e27c7be825d8b1df12ade511351b67be8cd0ed7d77cf6632f6e792d9b5d6",
+      "mapping": {
+        "role": "resident",
+        "relative_address": 0,
+        "source_file_offset": 4608,
+        "bytes": 53456
+      }
+    }
+  ],
+  "limitations": [
+    "Original-file slices are matched through loader source ranges and checked not to overlap patched trampolines; the synthetic analysis image is never executed.",
+    "The recovered entry still invokes the original blocking viewer boundary; no maintained Chat/viewer storage handoff is implemented by these units.",
+    "Native snapshot failure does not cancel viewer entry. The NULL restore wrapper alerts instead of copying or freeing; a maintained owner must select its own safe admission policy.",
+    "Boundary names are analyst annotations. The complete D95C viewer and 376D/7722 effect implementations are not recovered here.",
+    "The temporary mouse-scale value is restored from configured2068, not from the previous runtime7A50 value."
+  ]
+}

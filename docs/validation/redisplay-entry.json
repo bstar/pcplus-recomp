@@ -1,0 +1,247 @@
+{
+  "passed": true,
+  "component_only": true,
+  "whole_application_gates_closed": [],
+  "application_selected_or_deployed": false,
+  "build_original_inputs": [],
+  "recovered_bytes": 190,
+  "dependency_bytes": 280,
+  "source_only_CPU_cases": 3460,
+  "analyst_paired_original_cases": 3460,
+  "cold_source_only_CPU_cases": 3460,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "sources": {
+    "standalone/build_redisplay_entry.py": "49624d8237d42be336851bbbbc2a9c7332649775bf04dde67f7531ea8af47b6f",
+    "reconstruction/redisplay_entry/provenance.json": "081a7e66db0ea599ab1535eb17f5b0b4e88afd17b5f78aac740c7e912ecbae33",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/program_display/provenance.json": "6b3a2f47120c20ba43cac11f074da5daf7ca85f388a1ba87739be0f3fe41cb27",
+    "reconstruction/notice_window/provenance.json": "ca21b48e5618df93f0813f964382639ba24840865b03a332f4d303b43e10f1bd",
+    "reconstruction/program_ui/provenance.json": "ea7cf6e3e92da71a06921b9106514642458a361cd5c177f9bc90b348fa0aa790",
+    "reconstruction/redisplay_entry/enter.asm": "d0d34c4aaba004dec5aff82f41c48a19625f55b2fc71e3c86bb2c3550c1f243f",
+    "reconstruction/redisplay_entry/restore_or_alert.asm": "1567c919c7db370518b15d806b4687e9ab5cab4aa69bad33eacf2a2b52dbfe4a",
+    "reconstruction/redisplay_entry/snapshot_alert.asm": "add3e2e7f5f52861138fd5cd16dbac2594191a9dcbee34358a3d7efa45d98cb9",
+    "reconstruction/program_display/snapshot.asm": "b14553105adce657970031110614ad769cd5208ec1580660cb71cffc69183ce5",
+    "reconstruction/program_display/restore.asm": "0afe70fb362c90e08977a9daf1b9f73b533398b1fb837cf64067efd1ae1e7f3e",
+    "reconstruction/program_display/snow_enable.asm": "acfc80bf0dac30c7733784fafe7bb25ae9f50358a8539e149604fc7a75a57ab9",
+    "reconstruction/program_display/snow_disable.asm": "2ca6e6e84047f235d2c994a8bfb319f664b80442cb4b36ec7a61f76cb7612990",
+    "reconstruction/notice_window/cursor_pop.asm": "d2a00520742f1de18767a104b42933737959642d384b8ca638db082cfadab212",
+    "reconstruction/notice_window/cursor_push.asm": "45599c016260c5e12d08ecdecd486f52168654abec47c184505bf163d8a1b754",
+    "reconstruction/notice_window/cursor_get.asm": "6f98f7b563f3914673fefb5175501b6352ff8d0d78d4241af25b10cd948195a0",
+    "reconstruction/program_ui/cursor.asm": "dac8ddb81da4e77050386cb3b2cda6b74c1960834eab4341ae9d53f24222798e",
+    "standalone/redisplay_chat_sequence.asm": "29a2efe755331b22eb4fc19c2017c07a9deebd468f23ceef7403ec8836a4ee5e",
+    "standalone/check_redisplay_entry.py": "99d45b9b591cfcd3a8f6b12ff91703979440bb5ca5889b7249d82f1ef4e74a1a",
+    "standalone/test_redisplay_entry_cold.py": "a92f899e1c5286b1bfc5108d2b1522b6f900b9350f9b3d54ae8baa7a84b29e3b"
+  },
+  "artifacts": {
+    "chat_sequence.bin": "43fde8d1403515659ffa010757641edba3314e6770301f13716ef38375c0b0e2",
+    "cursor.bin": "743e345fcdb471636b2dbbb1c007f1daf3db6fc552104c2d1b7e00aeb60cb847",
+    "cursor.obj": "1a3f4ef00e004790d7eb0204d7adbc639f87a1997e6c435b11a2abcc46ce76bb",
+    "cursor_get.bin": "ca5cacff797fbe0ebdeb2cde96e2e1293c11cd54634069b6a03b128a80e4db1b",
+    "cursor_get.obj": "3c00504e4dc91963de763e93e0a3e0e120e4d37819e1f483601243526dbc26c5",
+    "cursor_pop.bin": "abeb2eb16fd1d5cb88f2e6e2d10d0379e65732acb917c0132a2d5697129927ce",
+    "cursor_pop.obj": "c78f5dd736e14d79f2926cdce7c114c0a74f1e14555994f53e786990aba190b7",
+    "cursor_push.bin": "b8cf98c71a7789f24cea2f160e4f521032f2da547afffafbd0092894bd93cd3f",
+    "cursor_push.obj": "2bb89f8213f9c3d4bfe30256d0b796895c6c8eafe8f09c0903a94e717a42bd88",
+    "enter.bin": "94f3e3428f2e43cfd9c8e0baeb376fac8fe6693438edfdaea6106b2b86929351",
+    "enter.obj": "6b556562878dbc6b4c8d49452ffb1d8bd2c21fafc4cf110d355f04192f82ee27",
+    "restore.bin": "b09b806dfc742a30e693288cb672da6825b25b1c9cdf49f9d5ed6f94bb66b2cf",
+    "restore.obj": "a77bc87bb7b483a059e4ab6b5336f11c85ce97f2ec923a9a729ec4b7e1709787",
+    "restore_or_alert.bin": "06f6114fcac11be61a0cf9a24559be04239f21a8a646849f3a3f36296c696d69",
+    "restore_or_alert.obj": "e8e585f5e752687b3e2f530af9e54cf272ca22f36a5616bcf2b4d4c06cdeed64",
+    "snapshot.bin": "164dc8ffafd40e92ac35748da7c406bab2ca02d88b1fafc0d9b55f760193ebe5",
+    "snapshot.obj": "0135a2988b1a08726f41f56d72dbd36e38a924f55ba8cfafd07e76890763eed2",
+    "snapshot_alert.bin": "eb971c5c7212cddaa9d9982583c870a12ff61a5186147f49fa6c44c81a048426",
+    "snapshot_alert.obj": "747da5ec8ce4056b121e0c050ddddcf085e236605347b0cce7519eff3cbb8a87",
+    "snow_disable.bin": "2cc6e3631df4700f866b38ea1f726e830474355ea81536da84aca5593cd1ab0f",
+    "snow_disable.obj": "c3f20eeaa434e2906736286028505364d8a65b4b74ac3351459b825d6e9427aa",
+    "snow_enable.bin": "aeb0332b6f43a6fbd8a691b197b2036c863ea3c5832b0602ac5ae8e44024288d",
+    "snow_enable.obj": "3a61a7417ea9acac1f0d7e514cae374a166b0a0bbc5c25e98e19b5fd45454ad7"
+  },
+  "units": [
+    {
+      "file": "reconstruction/redisplay_entry/enter.asm",
+      "start": 55344,
+      "end": 55485,
+      "file_offset": 104336,
+      "bytes": 141,
+      "sha256": "94f3e3428f2e43cfd9c8e0baeb376fac8fe6693438edfdaea6106b2b86929351",
+      "rea_evidence_id": "ev_bcc76b021eed706adc74b2fd7450379de1f7a32c4d711b922314572f337cca25",
+      "mapping": {
+        "role": "overlay-15",
+        "relative_address": 53456,
+        "source_file_offset": 102448,
+        "bytes": 6736
+      },
+      "omf_define": "REDISPLAY_ENTRY_OMF"
+    },
+    {
+      "file": "reconstruction/redisplay_entry/restore_or_alert.asm",
+      "start": 18544,
+      "end": 18575,
+      "file_offset": 23152,
+      "bytes": 31,
+      "sha256": "06f6114fcac11be61a0cf9a24559be04239f21a8a646849f3a3f36296c696d69",
+      "rea_evidence_id": "ev_c181d6a9f8a1abdc7f3343bf840f2802a1b010c4e570e47984dd278ff61d952d",
+      "mapping": {
+        "role": "resident",
+        "relative_address": 0,
+        "source_file_offset": 4608,
+        "bytes": 53456
+      },
+      "omf_define": "REDISPLAY_ENTRY_OMF"
+    },
+    {
+      "file": "reconstruction/redisplay_entry/snapshot_alert.asm",
+      "start": 18575,
+      "end": 18593,
+      "file_offset": 23183,
+      "bytes": 18,
+      "sha256": "eb971c5c7212cddaa9d9982583c870a12ff61a5186147f49fa6c44c81a048426",
+      "rea_evidence_id": "ev_5784e27c7be825d8b1df12ade511351b67be8cd0ed7d77cf6632f6e792d9b5d6",
+      "mapping": {
+        "role": "resident",
+        "relative_address": 0,
+        "source_file_offset": 4608,
+        "bytes": 53456
+      },
+      "omf_define": "REDISPLAY_ENTRY_OMF"
+    },
+    {
+      "file": "reconstruction/program_display/snapshot.asm",
+      "start": 27582,
+      "end": 27632,
+      "file_offset": 32190,
+      "bytes": 50,
+      "sha256": "164dc8ffafd40e92ac35748da7c406bab2ca02d88b1fafc0d9b55f760193ebe5",
+      "rea_evidence_id": "ev_ac7d90ed8ae0a2dc8b649c76f874230e491d45b8c80e941dcbe4bfefc936258e",
+      "omf_define": "PROGRAM_DISPLAY_OMF"
+    },
+    {
+      "file": "reconstruction/program_display/restore.asm",
+      "start": 30040,
+      "end": 30089,
+      "file_offset": 34648,
+      "bytes": 49,
+      "sha256": "b09b806dfc742a30e693288cb672da6825b25b1c9cdf49f9d5ed6f94bb66b2cf",
+      "rea_evidence_id": "ev_4959ff5d180ec0c84656738e2f8c77a1d6c7241c23f3318135deb9ba0f43ab11",
+      "omf_define": "PROGRAM_DISPLAY_OMF"
+    },
+    {
+      "file": "reconstruction/program_display/snow_enable.asm",
+      "start": 30638,
+      "end": 30653,
+      "file_offset": 35246,
+      "bytes": 15,
+      "sha256": "aeb0332b6f43a6fbd8a691b197b2036c863ea3c5832b0602ac5ae8e44024288d",
+      "rea_evidence_id": "ev_d73c4e7b64c9b374609b0bf3b3cf6cd9f0178557d6eade8a6c43ca58089980cb",
+      "omf_define": "PROGRAM_DISPLAY_OMF"
+    },
+    {
+      "file": "reconstruction/program_display/snow_disable.asm",
+      "start": 30654,
+      "end": 30674,
+      "file_offset": 35262,
+      "bytes": 20,
+      "sha256": "2cc6e3631df4700f866b38ea1f726e830474355ea81536da84aca5593cd1ab0f",
+      "rea_evidence_id": "ev_a9dc13ecc72ed1929018e5d3d25664daae72cffe649a28d8e9f200b7d9f530fa",
+      "omf_define": "PROGRAM_DISPLAY_OMF"
+    },
+    {
+      "file": "reconstruction/notice_window/cursor_pop.asm",
+      "start": 27458,
+      "end": 27481,
+      "file_offset": 32066,
+      "bytes": 23,
+      "sha256": "abeb2eb16fd1d5cb88f2e6e2d10d0379e65732acb917c0132a2d5697129927ce",
+      "rea_evidence_id": "ev_cfba4996d719ffa645f8bf36ee90775e3c5643de99be4f41f2ba78d101533f1f",
+      "read_evidence": "ev_0966dad89c7ae542aa7f77b551bf50dec4ba75961c0f96de85156df54e48e60f",
+      "mapping_evidence": "ev_af9586d73e044cda0c12f8d6cdbea92f92324be8e69da27c35fa1a998756ab32",
+      "omf_define": "NOTICE_WINDOW_OMF"
+    },
+    {
+      "file": "reconstruction/notice_window/cursor_push.asm",
+      "start": 27482,
+      "end": 27505,
+      "file_offset": 32090,
+      "bytes": 23,
+      "sha256": "b8cf98c71a7789f24cea2f160e4f521032f2da547afffafbd0092894bd93cd3f",
+      "rea_evidence_id": "ev_a3f3fefd31718352fea99b764dbe9772aa3590a0ec8c68c73ab2d50c485ef097",
+      "read_evidence": "ev_1f54057193cad402562937f8d74555a17bd7f4d061499229a3d9cd210a1a986c",
+      "mapping_evidence": "ev_2d2602aa07b5576dde41b5b3c2b91a15fa58e15e190f9907fab8aa4bef79a1ce",
+      "omf_define": "NOTICE_WINDOW_OMF"
+    },
+    {
+      "file": "reconstruction/notice_window/cursor_get.asm",
+      "start": 31118,
+      "end": 31144,
+      "file_offset": 35726,
+      "bytes": 26,
+      "sha256": "ca5cacff797fbe0ebdeb2cde96e2e1293c11cd54634069b6a03b128a80e4db1b",
+      "rea_evidence_id": "ev_97be3c1149741d865df1f28fd73a6778bdd01f184d72edb2b45ff23b430689c8",
+      "read_evidence": "ev_01bb07b8569d8f6514b946ea6b53449142d2115a2762da6212b7253e0a4ac121",
+      "mapping_evidence": "ev_bf77283dde32ea527cae29b234bc6ef149b5c5c83961ddff61701dce1a9c4e7c",
+      "omf_define": "NOTICE_WINDOW_OMF"
+    },
+    {
+      "file": "reconstruction/program_ui/cursor.asm",
+      "start": 28280,
+      "end": 28354,
+      "file_offset": 32888,
+      "bytes": 74,
+      "sha256": "743e345fcdb471636b2dbbb1c007f1daf3db6fc552104c2d1b7e00aeb60cb847",
+      "rea_evidence_id": "ev_a2fb1ff9b02353e7bd8644d794ccf1b8903bab67ef17b1e5912b894f5377cfab",
+      "omf_define": "PROGRAM_DISPLAY_OMF"
+    }
+  ],
+  "REA": [
+    {
+      "unit": "enter",
+      "evidence_id": "ev_bcc76b021eed706adc74b2fd7450379de1f7a32c4d711b922314572f337cca25",
+      "original_file_offset": 104336,
+      "instructions": 52,
+      "original_slice_and_unpatched_loader_mapping_matched": true
+    },
+    {
+      "unit": "restore_or_alert",
+      "evidence_id": "ev_c181d6a9f8a1abdc7f3343bf840f2802a1b010c4e570e47984dd278ff61d952d",
+      "original_file_offset": 23152,
+      "instructions": 13,
+      "original_slice_and_unpatched_loader_mapping_matched": true
+    },
+    {
+      "unit": "snapshot_alert",
+      "evidence_id": "ev_5784e27c7be825d8b1df12ade511351b67be8cd0ed7d77cf6632f6e792d9b5d6",
+      "original_file_offset": 23183,
+      "instructions": 8,
+      "original_slice_and_unpatched_loader_mapping_matched": true
+    }
+  ],
+  "checks": [
+    "Direct entry and a diagnostic caller with the recovered Chat save/enter/restore/show call sequence.",
+    "Nested cursor stack with zero and seven existing frames, direct CRT and BIOS cursor paths.",
+    "80-column frames of25/28/43/50 rows, both conditional cursor-policy branches, arithmetic wrap.",
+    "Empty, nonempty and wrapped history, including head=start/end-1 and noncanonical nonzero wrapped flag.",
+    "Actual recovered copy/restore/free instructions, saved-screen guards, exact cursor/stack/DS=SS return.",
+    "Failed allocation still invokes viewer/empty notice and NULL cleanup alerts without copy/free.",
+    "All four zero/nonzero offset/segment pointer classes in shared restore wrapper.",
+    "Configured mouse-scale restoration intentionally differs from pre-entry runtime value.",
+    "Minimal public-source rebuild without originals, analysis inputs, prior objects or Git ancestry."
+  ],
+  "evidence": {
+    "build_manifest": "a576c6fd116c09f212988b2e0c751b3e1e8dde5a51197372994e37393ac595ec",
+    "source_CPU": "62713f33b5b49d8429cc99df53d8462804a67dfa36a361f64b8ce6cb3e829f89",
+    "paired_original_CPU": "d7500cc2a85543d584f4007c91a954931ce9e061bfb79c96751ab5367d74d5b7",
+    "cold": "7ef628478777a5a973e45da0187729e2b7835a841b6142aeb8859a6f545327ca",
+    "private_REA_snapshot": "d7bb4ff6f74dc9fd36319a58dad31fdec766f5d67ccfa7ba83b219b874cb4f85"
+  },
+  "recorder_sha256": "262dcdb9b6c7707cac3cd6e3133a6758e7df03b9008ef57943eb8f456d8ae771",
+  "limitations": [
+    "Original-file slices are matched through loader source ranges and checked not to overlap patched trampolines; the synthetic analysis image is never executed.",
+    "The recovered entry still invokes the original blocking viewer boundary; no maintained Chat/viewer storage handoff is implemented by these units.",
+    "Native snapshot failure does not cancel viewer entry. The NULL restore wrapper alerts instead of copying or freeing; a maintained owner must select its own safe admission policy.",
+    "Boundary names are analyst annotations. The complete D95C viewer and 376D/7722 effect implementations are not recovered here.",
+    "The temporary mouse-scale value is restored from configured2068, not from the previous runtime7A50 value.",
+    "CPU replay uses declared viewer/heap/BIOS/CRT/alert endpoints; it is not original whole-program execution, DOS or physical/acoustic testing.",
+    "The loadable Chat module and maintained viewer still share frozen storage. Nested storage, RX service, unfinished input, file operations and cancellation/carrier-loss integration remain open."
+  ]
+}
