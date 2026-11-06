@@ -13,6 +13,9 @@
 #endif
 #ifdef TERMINAL_FILE_VIEWER
 #include "../filesystem/viewer_dialog.h"
+#ifdef TERMINAL_EXTERNAL_VIEWER
+#include "../filesystem/viewer_external_dialog.h"
+#endif
 #endif
 #ifdef PHONE_LOG_CONTROLS
 extern unsigned __far __cdecl phone_log_controls_event(unsigned,unsigned,unsigned short __far *);
@@ -421,6 +424,9 @@ static void record_view(void)
 static void draw(void)
 {
  word i,n=0,at;
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ if(phase==15){viewer_external_event(2,0,view);return;}
+#endif
 #ifdef TERMINAL_FILE_VIEWER
  if(phase==14){viewer_dialog_event(2,0,view);return;}
 #endif
@@ -488,7 +494,11 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #ifdef TERMINAL_REFERENCE
   reference_origin=0;
 #ifdef TERMINAL_FILE_VIEWER
-  if(key==0x2f00){phase=14;viewer_dialog_event(0,key,view);return 1;}
+  if(key==0x2f00){
+#ifdef TERMINAL_EXTERNAL_VIEWER
+   if(viewer_external_select()){phase=15;viewer_external_event(0,key,view);return 1;}
+#endif
+   phase=14;viewer_dialog_event(0,key,view);return 1;}
 #endif
 #ifdef TERMINAL_FILE_DIRECTORY
   if(key==0x2100){phase=13;file_dialog_event(0,key,view);return 1;}
@@ -511,6 +521,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   draw();return 1;}
  if(event==4){
+#ifdef TERMINAL_EXTERNAL_VIEWER
+  if(phase==15)viewer_external_event(4,0,view);
+#endif
 #ifdef TERMINAL_FILE_VIEWER
   if(phase==14)viewer_dialog_event(4,0,view);
 #endif
@@ -528,6 +541,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   command_menu_action=command_menu_active=0;return 0;}
  if(!command_menu_active)return 0;
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ if(phase==15&&event==3)return viewer_external_event(3,0,view);
+#endif
 #ifdef TERMINAL_FILE_VIEWER
  if(phase==14&&event==3)return viewer_dialog_event(3,0,view);
 #endif
@@ -548,6 +564,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
  if(event!=1)return 1;
  if(key==0x2d00){
+#ifdef TERMINAL_EXTERNAL_VIEWER
+  if(phase==15)viewer_external_event(4,0,view);
+#endif
 #ifdef TERMINAL_FILE_VIEWER
   if(phase==14)viewer_dialog_event(4,0,view);
 #endif
@@ -558,6 +577,13 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(phase==12)path_dialog_event(4,0,view);
 #endif
   command_menu_action=key;command_menu_active=0;return 0;}
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ if(phase==15){
+  if(viewer_external_event(1,key,view))return 1;
+  if(viewer_external_queued())command_menu_action=VIEWER_EXTERNAL_ACTION;
+  command_menu_active=0;return 0;
+ }
+#endif
 #ifdef TERMINAL_FILE_VIEWER
  if(phase==14){
   if(viewer_dialog_event(1,key,view))return 1;
@@ -603,7 +629,11 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(n==1){command_menu_active=0;return 0;}
   if(n==0x200){reference_origin=0;category=selected=phase=notice=0;draw();return 1;}
 #ifdef TERMINAL_FILE_VIEWER
-  if(n==0x100+FILE_VIEWER_ACTION){phase=14;viewer_dialog_event(0,0,view);return 1;}
+  if(n==0x100+FILE_VIEWER_ACTION){
+#ifdef TERMINAL_EXTERNAL_VIEWER
+   if(viewer_external_select()){phase=15;viewer_external_event(0,0,view);return 1;}
+#endif
+   phase=14;viewer_dialog_event(0,0,view);return 1;}
   if(n==0x300+FILE_VIEWER_ACTION){
    for(i=0;i<COUNT;++i)if(items[i].key==0x2f00){selected=i;break;}
    category=items[selected].category;phase=1;draw();return 1;
@@ -678,7 +708,11 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #ifdef TERMINAL_REFERENCE
 activate:
 #ifdef TERMINAL_FILE_VIEWER
-  if(items[selected].key==0x2f00){phase=14;viewer_dialog_event(0,0,view);return 1;}
+  if(items[selected].key==0x2f00){
+#ifdef TERMINAL_EXTERNAL_VIEWER
+   if(viewer_external_select()){phase=15;viewer_external_event(0,0,view);return 1;}
+#endif
+   phase=14;viewer_dialog_event(0,0,view);return 1;}
 #endif
 #ifdef TERMINAL_FILE_DIRECTORY
   if(items[selected].key==0x2100){phase=13;file_dialog_event(0,0,view);return 1;}

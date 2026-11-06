@@ -1,4 +1,7 @@
 #include "viewer_dialog.h"
+#ifdef TERMINAL_EXTERNAL_VIEWER
+#include "viewer_external_dialog.h"
+#endif
 #include "viewer_session.h"
 #include "viewer_file.h"
 #include "path_session.h"
@@ -38,13 +41,21 @@ static const char TEXT footer[]=" Home: Top of file      PgUp: Previous page    
 word __far __cdecl viewer_dialog_unsafe(void)
 {
  viewer_file_snapshot f;viewer_session_snapshot s;
- return S.cookie!=0x5644||viewer_file_inspect(&f)||viewer_session_inspect(&s)||
+ return
+#ifdef TERMINAL_EXTERNAL_VIEWER
+        viewer_external_unsafe()||
+#endif
+        S.cookie!=0x5644||viewer_file_inspect(&f)||viewer_session_inspect(&s)||
         f.phase==VF_UNCERTAIN||s.phase==VS_UNCERTAIN;
 }
 word __far __cdecl viewer_dialog_owned(void)
 {
  viewer_file_snapshot f;viewer_session_snapshot s;
- return S.cookie!=0x5644||S.active||viewer_file_inspect(&f)||viewer_session_inspect(&s)||
+ return
+#ifdef TERMINAL_EXTERNAL_VIEWER
+        viewer_external_owned()||
+#endif
+        S.cookie!=0x5644||S.active||viewer_file_inspect(&f)||viewer_session_inspect(&s)||
         f.handle!=0xffff||f.claimed||f.phase==VF_UNCERTAIN||s.owned||s.phase==VS_UNCERTAIN;
 }
 static void fatal(void)
@@ -57,7 +68,11 @@ static word close(void)
  S.started=S.active=0;return 0;
 }
 word __far __cdecl viewer_dialog_shutdown(void)
-{close();return viewer_dialog_owned();}
+{
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ viewer_external_event(4,0,0);
+#endif
+ close();return viewer_dialog_owned();}
 word __far __cdecl viewer_dialog_bind(byte __far *page)
 {
  viewer_session_snapshot s;

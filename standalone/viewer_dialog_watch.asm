@@ -35,6 +35,18 @@ handler:
  jne .done
  cmp word [es:1980],0a20h
  jne .done
+%elif WATCH_KIND = 9
+ cmp word [es:1934],0b45h ; Enter parameters
+ jne .done
+ cmp word [es:1936],0b6eh
+ jne .done
+ cmp word [es:1970],0a20h ;48-cell field starts at column25
+ jne .done
+%elif WATCH_KIND = 10
+ cmp word [es:1934],0b45h ; External viewer unavailable
+ jne .done
+ cmp word [es:1936],0b78h
+ jne .done
 %elif WATCH_KIND = 4
  cmp word [es:1934],0b46h
  jne .done

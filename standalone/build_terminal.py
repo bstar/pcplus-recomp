@@ -11,6 +11,7 @@ ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
 parser.add_argument('--file-directory',action='store_true',help='Serviced original-style Alt-F file listing; implies path control')
+parser.add_argument('--external-viewer',action='store_true',help='Configured native-style external Alt-V parameter dialog and guarded COMSPEC handoff; requires session baseline')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
 parser.add_argument('--session-projection',action='store_true')
 parser.add_argument('--projection-probe',action='store_true')
@@ -90,6 +91,9 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.external_viewer:
+ args.file_viewer=True
+ assert args.session_baseline,'External viewer requires the accepted PRM baseline'
 if args.file_directory:args.path_control=True
 if args.file_viewer:
  args.path_control=True
@@ -293,6 +297,7 @@ if args.cwd_identities:out_name+='-cwd-identities'
 if args.path_control:out_name+='-path-control'
 if args.file_directory:out_name+='-file-directory'
 if args.file_viewer:out_name+='-file-viewer'
+if args.external_viewer:out_name+='-external-viewer'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
 if args.gateway_files:out_name+='-gateway-files'
@@ -495,6 +500,7 @@ for index,source in enumerate(sources):
  if args.gateway_probe:options+=['-DTERMINAL_GATEWAY_PROBE']
  if args.file_directory:options+=['-DTERMINAL_FILE_DIRECTORY']
  if args.file_viewer:options+=['-DTERMINAL_FILE_VIEWER']
+ if args.external_viewer:options+=['-DTERMINAL_EXTERNAL_VIEWER']
  if args.path_control:
   options+=['-DTERMINAL_PATH_CONTROL']
   if source in (ROOT/'src/filesystem/path_kernel.asm',ROOT/'reconstruction/file_path/change.asm'):
@@ -537,6 +543,7 @@ c_sources=[ROOT/'src/config/prm_dos.c',ROOT/'src/config/terminal_import.c',ROOT/
 path_sources={ROOT/'src/filesystem'/n for n in ('path_owner.c','path_session.c','path_dialog.c')} if args.path_control else set()
 if args.file_directory:path_sources.update(ROOT/'src/filesystem'/n for n in ('find_owner.c','file_dialog.c'))
 if args.file_viewer:path_sources.update(ROOT/'src/filesystem'/n for n in ('viewer_file.c','viewer_decode.c','viewer_session.c','viewer_dialog.c'))
+if args.external_viewer:path_sources.update(ROOT/'src/filesystem'/n for n in ('viewer_external.c','viewer_external_dialog.c'))
 c_sources+=sorted(path_sources)
 if args.file_viewer:c_sources.append(ROOT/'src/filesystem/viewer_admission.c')
 if args.gateway_handles:c_sources.append(ROOT/'src/process/process_handles.c')
@@ -709,6 +716,7 @@ for source in c_sources:
   if args.gateway_files_probe=='hold':options+=['-dGATEWAY_PROBE_HOLD']
  if args.file_directory:options+=['-dTERMINAL_FILE_DIRECTORY']
  if args.file_viewer:options+=['-dTERMINAL_FILE_VIEWER']
+ if args.external_viewer:options+=['-dTERMINAL_EXTERNAL_VIEWER']
  if args.path_control:options+=['-dTERMINAL_PATH_CONTROL']
  if source in path_sources:options+=['-nt=FILE_CODE','-nc=FARCODE']
  if args.status_control:options+=['-dTERMINAL_STATUS_CONTROL']
@@ -845,6 +853,7 @@ if args.directory_resource_owner:inputs += [ROOT/'src/terminal/directory_resourc
 if args.cwd_identities and not args.directory_resource_owner:inputs += [ROOT/'src/terminal/directory_identity.h']
 if args.file_directory:inputs += [ROOT/'src/filesystem'/n for n in ('find_owner.h','file_dialog.h')]
 if args.file_viewer:inputs += [ROOT/'src/filesystem'/n for n in ('viewer_file.h','viewer_file_backend.h','viewer_decode.h','viewer_session.h','viewer_dialog.h')]
+if args.external_viewer:inputs += [ROOT/'src/filesystem'/n for n in ('viewer_external.h','viewer_external_dialog.h')]
 if args.path_control:inputs += [ROOT/'src/filesystem'/n for n in ('path_owner.h','path_session.h','path_dialog.h')]+[ROOT/'reconstruction/file_path/provenance.json']
 if args.directory_retirement:inputs.append(ROOT/'src/terminal/directory_retirement.h')
 if args.directory_scripts:inputs.append(ROOT/'src/directory/directory_script.h')
@@ -864,6 +873,7 @@ manifest['experimental_cwd_identities']=args.cwd_identities
 manifest['experimental_path_control']=args.path_control
 manifest['experimental_file_directory']=args.file_directory
 manifest['experimental_file_viewer']=args.file_viewer
+manifest['experimental_external_viewer']=args.external_viewer
 manifest['experimental_gateway_lookup']=args.gateway_lookup
 manifest['experimental_gateway_handles']=args.gateway_handles
 manifest['experimental_gateway_files']=args.gateway_files

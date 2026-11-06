@@ -35,6 +35,15 @@ extern screen_attribute_row_bytes,screen_video_row_bytes,connection_state
 extern terminal_viewport_admit_far
 
 terminal_redisplay_key_impl:
+%ifdef TERMINAL_EXTERNAL_VIEWER
+ cmp ax,0xf600
+ jne .not_external_viewer
+ extern _viewer_external_start
+ call far _viewer_external_start
+ stc
+ ret
+.not_external_viewer:
+%endif
  cmp word [_redisplay_active],0
  jne .key
 %ifdef TERMINAL_GATEWAY

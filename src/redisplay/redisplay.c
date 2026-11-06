@@ -12,6 +12,9 @@
 #endif
 #ifdef TERMINAL_FILE_VIEWER
 #include "../filesystem/viewer_dialog.h"
+#ifdef TERMINAL_EXTERNAL_VIEWER
+#include "../filesystem/viewer_external_dialog.h"
+#endif
 #endif
 #ifdef TERMINAL_ELAPSED_VIEW
 #include "elapsed_view.h"
@@ -103,6 +106,9 @@ static void copy(word __far *to,const word __far *from)
 static void path_overlay(void)
 {
 #ifdef TERMINAL_FILE_VIEWER
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ if(command_menu_active&&viewer_external_cursor()!=0xffff){copy(view,live);viewer_external_event(2,0,view);return;}
+#endif
  if(command_menu_active&&viewer_dialog_cursor()!=0xffff){copy(view,live);viewer_dialog_event(2,0,view);return;}
 #endif
 #ifdef TERMINAL_FILE_DIRECTORY
@@ -152,9 +158,16 @@ static void hide(void)
 #endif
 #endif
 #ifdef TERMINAL_FILE_VIEWER
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ vp=viewer_external_cursor();
+ if(vp!=0xffff){vs=viewer_external_shape(shape);goto viewer_cursor;}
+#endif
  vp=viewer_dialog_cursor();
  if(vp!=0xffff){
   vs=viewer_dialog_shape(shape);
+#ifdef TERMINAL_EXTERNAL_VIEWER
+viewer_cursor:
+#endif
   __asm {
    mov ah,1
    mov cx,vs
@@ -305,6 +318,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
 {
 #ifdef TERMINAL_PATH_CONTROL
  word path_before;
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ word external_before;
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
  word file_before;
 #endif
@@ -416,11 +432,21 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
  if(command_menu_active && (event==1 || event==4)){
 #ifdef TERMINAL_PATH_CONTROL
   path_before=path_dialog_cursor();
+#ifdef TERMINAL_EXTERNAL_VIEWER
+  external_before=viewer_external_cursor();
+#endif
 #ifdef TERMINAL_FILE_DIRECTORY
   file_before=file_dialog_cursor();
 #endif
 #endif
   if(command_menu_event(event,key,view)){if(visible){
+#ifdef TERMINAL_EXTERNAL_VIEWER
+   if(external_before!=0xffff&&event==1&&viewer_external_cursor()!=0xffff){
+    word __far *video=(word __far *)MK_FP(0xb800,0);
+    for(i=12*80+25;i<12*80+73;++i)video[i]=view[i];
+    hide();return 1;
+   }
+#endif
 #ifdef TERMINAL_PATH_CONTROL
 #ifdef TERMINAL_FILE_DIRECTORY
    if(file_before!=0xffff&&file_before!=0x64c8&&(byte)key!=13&&file_dialog_cursor()!=0xffff&&file_dialog_cursor()!=0x64c8){

@@ -223,6 +223,20 @@ terminal_program_start:
  pop bp
  ret
 
+%ifdef TERMINAL_EXTERNAL_VIEWER
+; Queue only after the modal frame has restored the live screen. The tiny near
+; marker uses the ordinary admission path; the real command stays banked.
+global _external_program_queue
+_external_program_queue:
+ mov ax,program_external_marker
+ call terminal_program_start
+ or ax,ax
+ jnz .done
+ mov word [terminal_program_kind],10
+.done:
+ retf
+%endif
+
 ; Called only by main, never from parser callbacks or a DOS/BIOS interrupt.
 ; Drain existing replies and the physical shift register before pausing RX.
 terminal_program_poll:
@@ -429,6 +443,15 @@ terminal_program_poll:
 %endif
  mov ax,terminal_program_result
  push ax
+%ifdef TERMINAL_EXTERNAL_VIEWER
+ cmp word [terminal_program_kind],10
+ jne .not_external_child
+ extern _viewer_external_execute
+ call far _viewer_external_execute
+ add sp,2
+ jmp .child_status
+.not_external_child:
+%endif
  cmp word [terminal_program_kind],4
  je .script_child
  cmp word [terminal_program_kind],3
@@ -540,6 +563,14 @@ terminal_program_poll:
  cmp word [connection_state],6
  je .restore_screen
 .ordinary_script:
+%endif
+%ifdef TERMINAL_EXTERNAL_VIEWER
+ ; Native external viewing does not insert an acknowledgement after success.
+ cmp word [terminal_program_kind],10
+ jne .not_external_prompt
+ cmp word [terminal_program_status],4
+ je .restore_screen
+.not_external_prompt:
 %endif
  ; A successful online script must resume the terminal immediately. A welcome
  ; stream can exceed the bounded raw ring while a user acknowledges console
@@ -965,6 +996,14 @@ terminal_program_cancel:
  push cx
  push di
  push es
+%ifdef TERMINAL_EXTERNAL_VIEWER
+ extern _viewer_external_cancel
+ push bx
+ push dx
+ call far _viewer_external_cancel
+ pop dx
+ pop bx
+%endif
  cmp word [terminal_program_pending],0
  je .clear
  mov word [terminal_program_status],3
@@ -1026,6 +1065,9 @@ program_progress:
  ret
 
 SEGMENT _DATA public align=16 class=DATA use16
+%ifdef TERMINAL_EXTERNAL_VIEWER
+program_external_marker: db 'V',0
+%endif
 %ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER
 terminal_program_critical_paragraphs: dw 0
 %endif

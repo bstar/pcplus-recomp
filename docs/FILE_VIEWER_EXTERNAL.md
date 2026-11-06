@@ -57,15 +57,46 @@ length0..49, minimum/full output capacities, literal OEM bytes, guards,
 unchanged inputs, disabled/error transactions and pointer bounds. It is a
 component gate, not acceptance of external viewing in the interactive parent.
 
-## Integration remaining
+## Opt-in parent integration
 
-The parent must import the configured field without altering opaque PRM bytes,
-select the external route only when configured, reproduce the48-character
-parameter prompt, and release the modal owner before the existing guarded
-PROGRAM/COMSPEC handoff. A transient stack command can avoid expanding the
-nearly full near-data bank. Cancellation must never queue a child. Reconnect,
-file owners, capture/printing, traps, UART and display restoration need checks
-through this composed path, including missing interpreter/program and allocation
-failures. The maintained parent's live external-viewer route is not enabled by
-this component checkpoint. Physical acceptance and all remaining feature-parity
-gates remain separate.
+`--external-viewer` now implies `--file-viewer` and requires the accepted session
+baseline and existing Gateway/large-frame parent. Alt-V, the native Alt-Z entry
+and browser V all inspect the same opaque PRM field. An empty field retains the
+internal viewer; malformed configuration produces a local refusal. No PRM bytes
+are rewritten by viewing. The accepted copied baseline is checked again before
+launch so a changed command cannot silently replace the one shown to the user.
+
+The external editor has a48-character field, native default box/cursor and
+literal parameter handling. Escape queues no child. Enter releases the modal
+screen owner before queueing the existing foreground PROGRAM transaction. That
+transaction keeps its serial, file, trap, mouse and display safeguards. The new
+COMSPEC wrapper accepts the full113-character command; ordinary PROGRAM keeps
+its existing51-character limit. Successful external viewing restores the terminal
+without an extra acknowledgement. Parameter editing repaints just48 cells on
+each key; the initial full-box redraw caused rapid BIOS input to overflow the
+test queue and was corrected before accepting the final candidate.
+
+State uses128 retained FILE_CODE bytes and a two-byte near admission marker;
+the command is transient stack storage. The candidate uses65488 DGROUP bytes
+(48 spare) and65516 resident code bytes (20 spare). All four cross-bank dispatch
+gates have linked relocation checks and rejected, unexecuted damaged controls.
+
+The parent acceptance checkpoint is recorded separately in
+[viewer-external-parent.json](validation/viewer-external-parent.json). It covers
+eleven actual DOS launch/cancel/refusal routes, ten internal fallback workflows,
+seven native710-byte prompt comparisons and thirteen linked lifecycle cases.
+Actual child PSP tails establish configured switches, literal spaces, empty
+parameters,48 entered characters and the maximum113-character command. Each
+runtime case verifies complete terminal cells/cursor/shape restoration, fresh
+keyboard/CPR service, unchanged PRM and normal UART/PIC/vector restoration.
+The public-source export gate reproduces both the enabled executable and the
+previous internal-viewer executable with the external feature disabled.
+
+This candidate has not replaced the physical installation. Default25-row colors
+are the runtime reference; long titles use bounded clipping, whose exact native
+behavior is not established. Missing interpreter/program, allocation failure,
+nonzero child-exit presentation, live BBS pressure, transfer recovery and
+same-process reconnects through this external-child path remain separate work.
+The previous internal-viewer BBS and transfer receipts retain their original
+executable identity. Physical acceptance and the broader parity inventory remain
+open.

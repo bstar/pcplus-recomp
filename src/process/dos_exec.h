@@ -18,4 +18,9 @@ process_status_code __cdecl process_run(const char *path,const char *tail,
  * Result required/disjoint. Does not implement UI, serial ownership or HOOK.
  */
 process_status_code __cdecl program_execute(const char *command,process_result *result);
+#ifdef TERMINAL_EXTERNAL_VIEWER
+/* Internal configured-viewer command1..113 bytes; same guarded COMSPEC policy.
+ * Called only after PROGRAM admission, live-screen restore and UART pause. */
+process_status_code __far __cdecl program_execute_external(const char *,process_result *);
+#endif
 #endif

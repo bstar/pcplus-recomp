@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproduce viewer-enabled and previous listing terminals from a public Git export."""
+"""Reproduce a viewer feature and its disabled parent from a public Git export."""
 import argparse,json,os,re,subprocess,sys
 from pathlib import Path
 from build_path_session import ROOT,sha
@@ -8,10 +8,12 @@ from prove_phone_log_startup_terminal import flags
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ['terminal','output']:p.add_argument('--'+n,type=Path,required=True)
- p.add_argument('--disabled-sha256',required=True);a=p.parse_args()
+ p.add_argument('--disabled-sha256',required=True)
+ p.add_argument('--feature',choices=['file-viewer','external-viewer'],default='file-viewer');a=p.parse_args()
  assert re.fullmatch('[a-f0-9]{64}',a.disabled_sha256)
  binary=a.terminal.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  manifest=json.loads(binary.with_name('manifest.json').read_text());assert manifest['experimental_file_viewer'] and sha(binary)==manifest['binary_sha256']
+ assert manifest['experimental_'+a.feature.replace('-','_')]
  revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
  tracked=subprocess.check_output(['git','ls-tree','-r','--name-only',revision],cwd=ROOT,text=True).splitlines()
  names=set(manifest['sources'])|{n for n in tracked if n.startswith('standalone/') and n.endswith('.py')}
@@ -27,9 +29,9 @@ def main():
  for name,digest in manifest['sources'].items():assert sources[name]==digest,name
  env=dict(os.environ,GIT_CEILING_DIRECTORIES=str(out))
  assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode
- selected=flags(manifest,True);assert '--file-viewer' in selected
+ selected=flags(manifest,True);feature='--'+a.feature;assert feature in selected
  with (out/'build.log').open('w') as log:
-  for folder,options,want in [('enabled',selected,manifest['binary_sha256']),('disabled',[f for f in selected if f!='--file-viewer'],a.disabled_sha256)]:
+  for folder,options,want in [('enabled',selected,manifest['binary_sha256']),('disabled',[f for f in selected if f!=feature],a.disabled_sha256)]:
    subprocess.run([sys.executable,'standalone/build_terminal.py',*options,'--output-dir','build/'+folder],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
    assert sha(fresh/'build'/folder/'TERMINAL.EXE')==want,folder
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name

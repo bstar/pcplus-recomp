@@ -15,12 +15,15 @@ def page(rows):
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ['terminal','output']:p.add_argument('--'+n,type=Path,required=True)
- p.add_argument('--case');a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve()
+ p.add_argument('--case');p.add_argument('--internal-fallback',action='store_true');a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and not out.exists();m=json.loads(binary.with_name('manifest.json').read_text())
  assert m['experimental_file_viewer'] and sha(binary)==m['binary_sha256']
  for n,h in m['sources'].items():assert sha(ROOT/n)==h,n
  out.mkdir(parents=True);harness.BINARY=binary;settings=bytearray(prm(port=3,baud=5))
  for at,val in [(0x188,5),(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)]:struct.pack_into('<H',settings,at,val)
+ if a.internal_fallback:
+  assert m['experimental_external_viewer']
+  settings[0x35d:0x39e]=bytes(65)
  lines=b''.join(('L%03d\r\n'%i).encode() for i in range(1,73))
  binary_text=b'TAB\tMID\r\nC\rR\nNUL\0HIDDEN\r\nZ\x1aAFTER\r\nE\x1b[31mRED\r\n'+bytes([0x80,0x81,0xdb,0xb0,0xff])+b'\r\nTRAIL  \t\x1a\r\n \t\r\n'
  recipes=[('cancel',1,'a-v p1200 escape'),('page',2,'a-v p500 p a g e . d a t enter p1500 escape'),

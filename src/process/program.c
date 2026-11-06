@@ -73,20 +73,36 @@ static unsigned execute(const char *path,const char *tail,process_result *r)
  zero_result(r);status=process_run(path,tail,r);r->status=status;
  return status;
 }
+#ifdef TERMINAL_EXTERNAL_VIEWER
+static process_status_code program_execute_bounded(const char *command,process_result *result,unsigned limit)
+#else
 process_status_code __cdecl program_execute(const char *command,process_result *result)
+#endif
 {
  environment_span env;
  process_result stage;
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ char program[128],tail[118];
+#else
  char program[128],tail[56];
+#endif
  unsigned n,i,at,start,length,used,status;
  static const char fallback_name[]="COMMAND.COM";
  if(!extent(result,sizeof(*result)) || !command)return PROCESS_ARGUMENT;
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ for(n=0;n<limit;++n){
+#else
  for(n=0;n<52;++n){
+#endif
   if(!extent(command,n+1))return PROCESS_ARGUMENT;
   if(!command[n])break;
   if(command[n]=='\r' || command[n]=='\n')return PROCESS_ARGUMENT;
  }
+#ifdef TERMINAL_EXTERNAL_VIEWER
+ if(!n || n>=limit || !disjoint(command,n+1,result,sizeof(*result)))return PROCESS_ARGUMENT;
+#else
  if(!n || n>=52 || !disjoint(command,n+1,result,sizeof(*result)))return PROCESS_ARGUMENT;
+#endif
  zero_result(&stage);
  if(!environment(&env)){stage.status=PROCESS_ENVIRONMENT;*result=stage;return stage.status;}
  tail[0]=' ';tail[1]='/';tail[2]='c';tail[3]=' ';
@@ -121,3 +137,10 @@ process_status_code __cdecl program_execute(const char *command,process_result *
  }
  *result=stage;return stage.status;
 }
+
+#ifdef TERMINAL_EXTERNAL_VIEWER
+process_status_code __cdecl program_execute(const char *command,process_result *result)
+{return program_execute_bounded(command,result,52);}
+process_status_code __far __cdecl program_execute_external(const char *command,process_result *result)
+{return program_execute_bounded(command,result,114);}
+#endif
