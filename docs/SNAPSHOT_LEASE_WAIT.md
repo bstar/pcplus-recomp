@@ -52,5 +52,5 @@ receipts and hashes are in
 [`validation/snapshot-lease-wait.json`](validation/snapshot-lease-wait.json).
 
 This is no production application change or deployment. WAIT transport errors,
-script cancellation, larger-row layouts, current-pair BBS/transfer/carrier-loss
+script cancellation, larger-row WAIT composition, current-pair carrier-loss
 regressions and physical modem acceptance remain open.

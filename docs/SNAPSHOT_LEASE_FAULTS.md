@@ -105,10 +105,12 @@ accepts the same phase/foreign selectors for the diagnostic source comparisons.
 ## Remaining boundaries
 
 The additional typed-abort and direct-dispatcher checks below cover the same
-six boundaries with the owned DS/SS. WAIT/cancellation, arbitrary kernel/allocator
-corruption and physical fault acceptance remain open. Actual larger-row leases and Enigma/Synchronet/transfer/
-carrier-loss regressions remain open for this exact capability18 pair. Re-run
-those gates and package/source/deployment checks before changing the selected
+six boundaries with the owned DS/SS. WAIT transport faults/script cancellation,
+arbitrary kernel/allocator corruption and physical fault acceptance remain open.
+Normal [larger-row leases](SNAPSHOT_LEASE_ROWS.md) and the declared
+[BBS/editor/transfer regressions](SNAPSHOT_LEASE_BBS.md) now have separate
+capability18 evidence. Complete the remaining composition and
+package/source/deployment checks before changing the selected
 physical installation. Broader original application parity remains open.
 
 ## Typed abort and direct dispatcher exit

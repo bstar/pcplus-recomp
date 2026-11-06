@@ -1,0 +1,98 @@
+{
+  "checkpoint_recorded": true,
+  "capability": 18,
+  "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+  "child_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+  "results": {
+    "cancel": {
+      "path": "build/lease18-enigma-cancel-audit-20261106/result.json",
+      "sha256": "b4330b13f17cd75328c953bc90529543c9678d7d1c4a9edfaeee3f95749b1e4f",
+      "passed": true
+    },
+    "pressure": {
+      "path": "build/lease18-viewer-sinks-internal-20261106/result.json",
+      "sha256": "954683642f53a5d203d59c537e8710340b9a0e6966e870d03e6d0b2ec11f9cde",
+      "passed": true
+    },
+    "exec_hook_ABI": {
+      "path": "build/lease18-carrier-exec-hook-check-20261106/result.json",
+      "sha256": "9310ae801a44c674118bda4106bc1987e361730a0a1e5210c952638153ce4e8b",
+      "passed": true
+    },
+    "carrier_observed": {
+      "path": "build/bbs-lab/results/enigma/lease18-enigma-carrier-20261106/carrier-checks.json",
+      "sha256": "6ab55190748c5020c82ad24ec1637e0842ac8cc48417ddd7e49ac34490673e4c",
+      "passed": false
+    },
+    "carrier_plain": {
+      "path": "build/bbs-lab/results/enigma/lease18-enigma-carrier-plain-20261106/carrier-checks.json",
+      "sha256": "cbe33123b949de045308bc807558dbc34b0b9710877403166763a8951bd44bcd",
+      "passed": false
+    },
+    "pressure_sentinel_attempt": {
+      "path": "build/lease18-viewer-sinks-20261106/capture/result.json",
+      "sha256": "c1583d7233ab71e90f7e6a99b51aaf4a7c782217d836e211ce0849ff1c1d02c1",
+      "passed": false
+    }
+  },
+  "cancel": {
+    "payload_bytes": 65539,
+    "payload_sha256": "c62fdfdef826f32aa019b9543f718b0c7bb86204972a699a30b815e4d8b66e4e",
+    "partial_disk_bytes": 4096,
+    "same_DOS_process": true,
+    "authenticated_sessions": 1,
+    "proxy_connections": 1,
+    "server_exit_codes": [
+      255,
+      0
+    ]
+  },
+  "pressure_cases": [
+    {
+      "case": "capture",
+      "passed": true
+    },
+    {
+      "case": "hold",
+      "passed": true
+    },
+    {
+      "case": "capture-printer",
+      "passed": true
+    },
+    {
+      "case": "hold-printer",
+      "passed": true
+    },
+    {
+      "case": "printer",
+      "passed": true
+    }
+  ],
+  "admission_diagnostic": {
+    "path": "build/lease18-carrier-exec-probe-20261106/result.json",
+    "sha256": "605c08393fee20b9a81efefa7c760076933e051af389ad868adde9511987904d",
+    "source_path": "build/lease18-carrier-exec-probe-20261106/EXECWATCH.ASM",
+    "source_sha256": "a617d8a31f4fd7ea6005f8a53b827328db865f5b93ee94fadbb973873983284a",
+    "attempted_execs": 1,
+    "child_exit_records": 0,
+    "DOS_carry": 1,
+    "DOS_AX": 8,
+    "BX_uninterpreted": 712,
+    "record_tag": "4B00h; not allocation paragraphs",
+    "child_minimum_MZ_bytes_including_PSP": 137280,
+    "prototype_ABI_cases": 8,
+    "parent_retained_paragraphs": 29892,
+    "parent_retained_bytes": 478272
+  },
+  "installed_candidate_changed": false,
+  "application_binaries_changed": false,
+  "physical_runtime_verified": false,
+  "limits": [
+    "Cancellation/retry is one DOS8086 session through stock loopback Enigma and isolated SynthModem; no physical/SIP/audio/DSP claim.",
+    "Both complete carrier runs failed acceptance; normal exit is not success. The next application work is memory admission, then carrier/redial/retry.",
+    "Short synthetic launch/abort probes are diagnostic contrasts with intentionally failing generic CPR checks, not additional passing BBS workflows.",
+    "Receive pressure uses COM1/BOTH and virtual PRN; explicit empty synthetic viewer setting selects internal fallback.",
+    "Broader original parity, larger-row fault/WAIT composition, packaging/deployment and physical acceptance remain open."
+  ]
+}

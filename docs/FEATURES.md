@@ -25,8 +25,11 @@ returns, a50-row Synchronet reference and all16 independent transfer cases;
 the exact same65539 bytes also upload and download through real Enigma.
 [Nested SAVE at all four standard row counts](SNAPSHOT_LEASE_ROWS.md) passes
 eight actual DOS workflows with full-frame comparisons. Script cancellation,
-larger-row fault composition, remaining real-BBS transfer/carrier tests and physical
-acceptance remain open. The installed16 pair is unchanged.
+larger-row fault composition and physical acceptance remain open. Real Enigma
+[cancellation/retry passes](SNAPSHOT_LEASE_RECOVERY.md), but the current carrier
+fixture fails DOS ASPECT admission with error8. Recover memory headroom before
+accepting carrier/redial/retry or promoting the staged pair. The installed16
+pair is unchanged.
 
 The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
 captures the unchanged runner's file-structure allocation failure, correcting

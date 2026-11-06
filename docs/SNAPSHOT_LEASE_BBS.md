@@ -77,8 +77,10 @@ input framing and20ms byte pacing. It owns Telnet; the DOS client talks to a
 synthetic Hayes serial modem. No running production service is reconfigured.
 
 Actual SIP/audio/DSP, Boca CTS timing, the physical Enigma header and sustained
-hardware operation need physical acceptance. Current-pair real-BBS cancel/retry
-and carrier-loss/reconnect evidence remains to be completed.
+hardware operation need physical acceptance. Current-pair real-BBS
+[cancel/retry now passes](SNAPSHOT_LEASE_RECOVERY.md). The carrier test found
+DOS insufficient memory while launching ASPECT; carrier-loss/reconnect remains
+unaccepted until that memory-admission problem is resolved.
 [Nested SAVE at25/28/43/50 rows](SNAPSHOT_LEASE_ROWS.md) now has separate exact
 full-frame evidence. WAIT transport faults, broader application commands,
 ASPECT/emulations/protocols and Host parity remain separate gates.

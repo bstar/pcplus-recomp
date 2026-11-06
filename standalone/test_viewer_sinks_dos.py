@@ -10,9 +10,10 @@ from test_ansi_reference_dos import reference
 FIRST=b'FIRST'+b'B'*600+b'\r\n';PAUSED=b'PAUSED\r\n';BURST=b'A'*3200+b'\r\n';LAST=b'LAST\r\n'
 CASES={'capture':(1,0,0),'hold':(1,1,0),'capture-printer':(1,0,1),'hold-printer':(1,1,1),'printer':(0,0,1)}
 
-def run(binary,out,name):
+def run(binary,out,name,internal_fallback=False):
  capture,hold,printer=CASES[name];drive=out/name;drive.mkdir();package=drive/'package';package.mkdir();shutil.copyfile(binary,package/'TERMINAL.EXE')
  raw=bytearray(fixture(initialize=0));struct.pack_into('<HH',raw,0x198,1,1)
+ if internal_fallback:raw[0x35d:0x39e]=bytes(65)
  for at,value in [(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0),(0x196,0)]:struct.pack_into('<H',raw,at,value)
  (drive/'TEST.PRM').write_bytes(raw);(drive/'SNAP.ASM').write_text(SAMPLER)
  payload=b''.join(('L%03d\r\n'%i).encode() for i in range(1,73));(drive/'VIEW.DAT').write_bytes(payload)
@@ -162,11 +163,12 @@ exit
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ['terminal','output']:p.add_argument('--'+n,type=Path,required=True)
- p.add_argument('--case',choices=CASES,action='append');a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
+ p.add_argument('--case',choices=CASES,action='append');p.add_argument('--internal-fallback',action='store_true',help='Explicitly clear the synthetic external-viewer field to select the internal tool');a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  m=json.loads(binary.with_name('manifest.json').read_text());assert m['experimental_file_viewer'] and sha(binary)==m['binary_sha256']
+ if a.internal_fallback:assert m['experimental_external_viewer']
  for n,h in m['sources'].items():assert sha(ROOT/n)==h,n
- out.mkdir(parents=True);cases=[run(binary,out,n) for n in a.case or CASES]
+ out.mkdir(parents=True);cases=[run(binary,out,n,a.internal_fallback) for n in a.case or CASES]
  for n,h in m['sources'].items():assert sha(ROOT/n)==h,n
  names=['standalone/test_viewer_sinks_dos.py','standalone/viewer_pressure_watch.asm','standalone/viewer_sinks_trace_install.asm','standalone/gateway_sinks_trace_dump.asm','standalone/modem_fixtures.py','standalone/terminal_config_fixtures.py','standalone/test_terminal.py','standalone/test_viewer_dialog_dos.py','standalone/test_ansi_reference_dos.py']
- (out/'result.json').write_text(json.dumps(dict(passed=True,cases=cases,binary_sha256=sha(binary),sources={n:sha(ROOT/n) for n in names},original_inputs=[],scope=__doc__),indent=2)+'\n')
+ (out/'result.json').write_text(json.dumps(dict(passed=True,cases=cases,binary_sha256=sha(binary),internal_fallback=a.internal_fallback,sources={n:sha(ROOT/n) for n in names},original_inputs=[],scope=__doc__),indent=2)+'\n')
 if __name__=='__main__':main()
