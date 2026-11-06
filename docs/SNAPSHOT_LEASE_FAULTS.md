@@ -104,10 +104,55 @@ accepts the same phase/foreign selectors for the diagnostic source comparisons.
 
 ## Remaining boundaries
 
-This closes the six active-lease own-stack DIV boundaries for two DS selections
-in the declared emulator profile. It is not typed-abort, direct-dispatcher
-longjmp, WAIT/cancellation, arbitrary kernel/allocator corruption or physical
-fault acceptance. Actual larger-row leases and Enigma/Synchronet/transfer/
+The additional typed-abort and direct-dispatcher checks below cover the same
+six boundaries with the owned DS/SS. WAIT/cancellation, arbitrary kernel/allocator
+corruption and physical fault acceptance remain open. Actual larger-row leases and Enigma/Synchronet/transfer/
 carrier-loss regressions remain open for this exact capability18 pair. Re-run
 those gates and package/source/deployment checks before changing the selected
 physical installation. Broader original application parity remains open.
+
+## Typed abort and direct dispatcher exit
+
+Source checkpoint `b3943ec` adds two diagnostic routes restricted to `FAULT.ASX`.
+The typed route sets file/output error5 and enters the ordinary abort adapter.
+The dispatcher route sets the same error and jumps directly through the native
+dispatcher, bypassing that adapter. Runtime shutdown must then recover the live
+checkpoint and release its resources. Neither route synthesizes cleanup success.
+Foreign DS remains exclusive to the separate DIV matrix; these two routes use
+the owned DS=SS ABI.
+
+All twelve DOS386/XMS/UMB diagnostic cases pass at phases17,5,6,8,10,22:
+
+- Immediately before each exit, the tagged parent service authenticates a live
+  lease, and the observer records the selected phase and matching DS/SS.
+- The first invocation reports error5 at opcode9Bh; the next three return0.
+  Every exit has zero cleanup error, external scope and display/program/process
+  ownership words. Child counts match the selected pre/post-child boundary.
+- Six streams, missing-file recovery, a subsequent normal graphics SAVE child,
+  continued keyboard output and hangup complete in the same terminal process.
+- All1920 viewport cells, including the expected error text and attributes,
+  match exactly. Private inputs and the UART/PIC/vector snapshot are unchanged.
+
+Two separate clean public source exports reproduce the phase17 diagnostic for
+each route and the exact normal child `b61f3a03`. Within each six-image group,
+whole executable comparison permits only the two phase-immediate byte changes.
+These are two representative source exports, not twelve independent exports.
+The normal8086 graphics SAVE workflow also passes with the freshly built normal
+child. Diagnostic observers add memory; their runs do not establish unobserved
+memory capacity or physical modem behavior.
+
+Receipts and exact hashes are in
+[`validation/snapshot-lease-unwinds.json`](validation/snapshot-lease-unwinds.json).
+Repeat with fresh output directories and matching diagnostic binaries:
+
+```sh
+./tools/dev --command python standalone/test_aspect_heap_startup_dos.py \
+  --terminal build/terminal-lease18-final-20261106/TERMINAL.EXE \
+  --runner build/aspect-lease18-dispatcher-17-unwind-20261106/ASPECT.EXE \
+  --nested-program --nested-graphics --program-result-probe \
+  --lease-fault-phase 17 --lease-fault-kind dispatcher \
+  --exit-watch --exit-watch-high --cpu 386 --output build/unwind-repeat
+```
+
+The normal parent and child hashes and physical release selection are unchanged.
+The diagnostic builds are not deployment candidates.

@@ -1,0 +1,327 @@
+{
+  "checkpoint_recorded": true,
+  "application_source_commit": "b3943ec",
+  "capability": 18,
+  "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+  "child_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+  "cases": [
+    {
+      "kind": "abort",
+      "phase": 17,
+      "result": {
+        "path": "build/lease18-abort-17-unwind-20261106/result.json",
+        "sha256": "4ece546a502c4aca0cc792159b2e7ea118882c5383a41f4dee5890f1f4cd9cfe",
+        "passed": true
+      },
+      "interpreter_sha256": "9a65bb4280b2db657257e0bd9138299fc52c08cd0edfa111a3c893241aa63e69",
+      "fault_witness": {
+        "kind": "abort",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "abort",
+      "phase": 5,
+      "result": {
+        "path": "build/lease18-abort-5-unwind-20261106/result.json",
+        "sha256": "8c1c6a34b63cf14d96bb2ebf5977749a37fbfb8d47e01f62736d5cbddd04ebc0",
+        "passed": true
+      },
+      "interpreter_sha256": "776fb144caa9dcf9d1b861dc673004e27bfdea0976eb2ad3010c2013bde2ab7a",
+      "fault_witness": {
+        "kind": "abort",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "abort",
+      "phase": 6,
+      "result": {
+        "path": "build/lease18-abort-6-unwind-20261106/result.json",
+        "sha256": "3c6022703cc4bb972341cecfefc66a706847e0bf462e8f0246af3832d02135de",
+        "passed": true
+      },
+      "interpreter_sha256": "53df606218811a074237462f04ba81067d94b6f6f7ba05a194fe040647020238",
+      "fault_witness": {
+        "kind": "abort",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "abort",
+      "phase": 8,
+      "result": {
+        "path": "build/lease18-abort-8-unwind-20261106/result.json",
+        "sha256": "84ce167bdb1872a199bab5e1b83b4503cdfc4c87a4568cd59bcd1ae0f6d9fd5f",
+        "passed": true
+      },
+      "interpreter_sha256": "1614f35fb38f482ec7d0ad1c5885de742c5474d1765416d493b0cb300ff5a1c1",
+      "fault_witness": {
+        "kind": "abort",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "abort",
+      "phase": 10,
+      "result": {
+        "path": "build/lease18-abort-10-unwind-20261106/result.json",
+        "sha256": "b1e989e94461ee5069c0f58dbe002f1946020b396d837a82c04c2a5e8da2ae37",
+        "passed": true
+      },
+      "interpreter_sha256": "91711b01b9d8f945a7068af4f6ead25bbd834797dc5b282950843aa377212723",
+      "fault_witness": {
+        "kind": "abort",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "abort",
+      "phase": 22,
+      "result": {
+        "path": "build/lease18-abort-22-unwind-20261106/result.json",
+        "sha256": "a2983c1f4c728244da23356e623ee496c26c69be930869d6d9876bd3fad75a0e",
+        "passed": true
+      },
+      "interpreter_sha256": "bda047097ddd71247cc912ef789db47c599bf801b0a45ca810b665e7122ca461",
+      "fault_witness": {
+        "kind": "abort",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "dispatcher",
+      "phase": 17,
+      "result": {
+        "path": "build/lease18-dispatcher-17-unwind-20261106/result.json",
+        "sha256": "ee0905ce4c16a01096f815e12aa0d1719cead00abf7cc4aeb2964e1bf3f00c12",
+        "passed": true
+      },
+      "interpreter_sha256": "f9ca36b6ba4a36342226e72410940aca8bdbd34bea279f54f43be9d86f6ae06e",
+      "fault_witness": {
+        "kind": "dispatcher",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "dispatcher",
+      "phase": 5,
+      "result": {
+        "path": "build/lease18-dispatcher-5-unwind-20261106/result.json",
+        "sha256": "f49326156ec39812bde158f2a4d44b53f93a0b4b78f16effff0e8f98d5762e03",
+        "passed": true
+      },
+      "interpreter_sha256": "96988bbab06984c08217038d1aaff6c16ac9b2f83f015ccd765f622241eab8a6",
+      "fault_witness": {
+        "kind": "dispatcher",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "dispatcher",
+      "phase": 6,
+      "result": {
+        "path": "build/lease18-dispatcher-6-unwind-20261106/result.json",
+        "sha256": "0724a5c6714d1059bb5839aeacbde617735589f4c3f211f6f81d1a20df6cbed8",
+        "passed": true
+      },
+      "interpreter_sha256": "8fb1b4b71731e68db902d09c4c6e70e514c55e0e1ca3dc1104989e3a27175a47",
+      "fault_witness": {
+        "kind": "dispatcher",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "dispatcher",
+      "phase": 8,
+      "result": {
+        "path": "build/lease18-dispatcher-8-unwind-20261106/result.json",
+        "sha256": "69a8759917b1a594810202c7c0c2d5e58b67bed52cab7f16316d917a928fb17b",
+        "passed": true
+      },
+      "interpreter_sha256": "5133d3af9fb8adefac103d2c9371ffedaa6bdfc8a713e2a990d1c69e516d6fb9",
+      "fault_witness": {
+        "kind": "dispatcher",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "dispatcher",
+      "phase": 10,
+      "result": {
+        "path": "build/lease18-dispatcher-10-unwind-20261106/result.json",
+        "sha256": "b32e00ca4c64fef2d50f213ad48abd0556a063250c5eeeeb33bbbe269802a36a",
+        "passed": true
+      },
+      "interpreter_sha256": "3735ba862ee9a22643cb3df691ddcc93cdc969f8eb6faadfb00e7fad48907578",
+      "fault_witness": {
+        "kind": "dispatcher",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    },
+    {
+      "kind": "dispatcher",
+      "phase": 22,
+      "result": {
+        "path": "build/lease18-dispatcher-22-unwind-20261106/result.json",
+        "sha256": "8dfa094a9f59225986a89fd222e8a5e033ccc618c82cb002ebb4a03950e71595",
+        "passed": true
+      },
+      "interpreter_sha256": "5bef3cf94a219c5c200525ff5ce2104142408a55f82a74b5e2e47a13bff5d6a3",
+      "fault_witness": {
+        "kind": "dispatcher",
+        "parent_lease_live": true,
+        "ds": 37356,
+        "ss": 37356,
+        "foreign_ds": false
+      },
+      "exit_errors": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "all_owners_retired": true
+    }
+  ],
+  "results": {
+    "normal8086": {
+      "path": "build/lease18-unwind-normal-20261106/result.json",
+      "sha256": "92bd6524a6d9c6b3f44f15f8d151f5d4baf1c10ae457d41fc005cdd812ee1e6d",
+      "passed": true
+    },
+    "whole_image_variants": {
+      "path": "build/lease18-unwind-variant-check-20261106/result.json",
+      "sha256": "7806dac74c86b1a2789192fce65ee7e44c31e802fafa270cc36d9ce05a71e6cc",
+      "passed": true
+    },
+    "source_abort": {
+      "path": "build/lease18-unwind-source-abort-20261106/result.json",
+      "sha256": "53c25bc622b21efb5114c3ed65ed6507a8bcba1f5e324600f7ee3a5f6c3fa7ea",
+      "passed": true
+    },
+    "source_dispatcher": {
+      "path": "build/lease18-unwind-source-dispatcher-20261106/result.json",
+      "sha256": "2d6f3329bc55d582883072507546b5d509a99b93e18137b299668bcac4dc0780",
+      "passed": true
+    }
+  },
+  "installed_candidate_changed": false,
+  "physical_runtime_verified": false,
+  "limits": [
+    "Owned DS=SS typed abort and direct dispatcher exit only; separate foreign-DS DIV evidence remains in snapshot-lease-faults.json.",
+    "Diagnostic DOS386/XMS/UMB observer changes footprint; normal8086 SAVE is separate.",
+    "Two representative clean1703-source exports; whole-image comparison covers phase variants.",
+    "WAIT/cancellation, larger rows, latest-pair BBS/transfer/carrier-loss and physical acceptance remain open."
+  ]
+}
