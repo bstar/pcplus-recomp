@@ -74,8 +74,8 @@ artifacts retained. Neither switch is part of this change.
 
 ## Remaining gates
 
-The physical installation and canonical package recipe remain unchanged.
-Refresh active-lease abort/dispatcher/DIV and WAIT/cancel composition with the
-dynamic storage, complete package/source identity and reversible deployment
+Active-lease abort/dispatcher/DIV, held-stream WAIT and canonical package/source
+checks now pass; see [the recovery/package checkpoint](DEFERRED_BUFFER_FAULTS.md).
+The physical installation remains unchanged. Complete reversible deployment
 checks, then obtain physical modem/rendering/transfer observations. Broader
 original commands, ASPECT, emulations/protocols, Chat and Host parity remain open.

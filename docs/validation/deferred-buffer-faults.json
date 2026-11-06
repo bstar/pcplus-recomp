@@ -1,0 +1,222 @@
+{
+  "checkpoint_recorded": true,
+  "source_commit": "b1c38876789b188f2645e82654c8226a17117b06",
+  "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+  "child_sha256": "cbdee1949f0ac6bba34f56ae9c594a17888ef9b5143ee5dca9cd76498737ccfd",
+  "archive_sha256": "3c99eface0963806d233ab1e3bd5240918f0ae46980ac367d98ed761a0df81d4",
+  "recipe": "standalone/deferred_connection_candidate_recipe.json",
+  "results": {
+    "own_17": {
+      "path": "build/deferred-fault-final-own-17-20261106/result.json",
+      "sha256": "afebb212477994644e7768200b6152bccbe4d8b2c3d237840edff10e318ce068",
+      "passed": true
+    },
+    "own_5": {
+      "path": "build/deferred-fault-final-own-5-20261106/result.json",
+      "sha256": "d9880ed07d78416dc8f1f58116cfc6ffcc4bafc403f35cbdd9903c38a953b78b",
+      "passed": true
+    },
+    "own_6": {
+      "path": "build/deferred-fault-final-own-6-20261106/result.json",
+      "sha256": "7a77dd6c0ed39c25ea461c9ccd0b87eaea6bd4025a73a221505a4b64c0419266",
+      "passed": true
+    },
+    "own_8": {
+      "path": "build/deferred-fault-final-own-8-20261106/result.json",
+      "sha256": "3f18b4c2943d38f90afd3a878dcb4c483c95af0ef740a34dc53fcfed30039fa1",
+      "passed": true
+    },
+    "own_10": {
+      "path": "build/deferred-fault-final-own-10-20261106/result.json",
+      "sha256": "b092384ab0514b135f396b6d861c8cadb44ea21abc3800c4049ec0708620df1f",
+      "passed": true
+    },
+    "own_22": {
+      "path": "build/deferred-fault-final-own-22-20261106/result.json",
+      "sha256": "3cc6cab9f9fa5f8ce10dc03c9449e5849aae4ea5c5d93becf5ff7c9b89f8db18",
+      "passed": true
+    },
+    "source_own": {
+      "path": "build/deferred-fault-source-own-20261106/result.json",
+      "sha256": "38295d610204dc558228455bd04592f6ad935b90f8fce707a06d35dda4f3ace8",
+      "passed": true
+    },
+    "foreign_17": {
+      "path": "build/deferred-fault-final-foreign-17-20261106/result.json",
+      "sha256": "d538ca12582d5ecd2b51c8eafd93f702e11eba0e8ae4a4f00793193553a10fe2",
+      "passed": true
+    },
+    "foreign_5": {
+      "path": "build/deferred-fault-final-foreign-5-20261106/result.json",
+      "sha256": "dc3c7dce061de89fc5dfc0201b4cced0576efe87d3117c9cabe1e3f16dd4229e",
+      "passed": true
+    },
+    "foreign_6": {
+      "path": "build/deferred-fault-final-foreign-6-20261106/result.json",
+      "sha256": "3d40a4ad05cb2c77d3d999f6bd6b55d9e9d158f0bee0b28f5a6547d2eda0fb4c",
+      "passed": true
+    },
+    "foreign_8": {
+      "path": "build/deferred-fault-final-foreign-8-20261106/result.json",
+      "sha256": "2365a5740bb24d4981f9e57659b912c4fed324e374486eaa6fca7b3b60910733",
+      "passed": true
+    },
+    "foreign_10": {
+      "path": "build/deferred-fault-final-foreign-10-20261106/result.json",
+      "sha256": "c5fd68b5057e41881aa2ecaeddbac93ba96995125dc004faf81ec58a2b6ea97f",
+      "passed": true
+    },
+    "foreign_22": {
+      "path": "build/deferred-fault-final-foreign-22-20261106/result.json",
+      "sha256": "240832bc2c355aab011432a525ea03f35e1c49387770ee8539ef3cdfa75e386a",
+      "passed": true
+    },
+    "source_foreign": {
+      "path": "build/deferred-fault-source-foreign-20261106/result.json",
+      "sha256": "57addfc5cb384838a4e459c14e0a070c28f29c5e969a4a3c0057ba896855fac6",
+      "passed": true
+    },
+    "abort_17": {
+      "path": "build/deferred-fault-final-abort-17-20261106/result.json",
+      "sha256": "148bfbffdb8220e00f5902aeb7c21f97670ea4295b9d1e0441ca2c333fb567ee",
+      "passed": true
+    },
+    "abort_5": {
+      "path": "build/deferred-fault-final-abort-5-20261106/result.json",
+      "sha256": "28a0dbe953a6a3feac17cfa70cb9dd146a8d62ef5b31dee47a74befbd0ec2824",
+      "passed": true
+    },
+    "abort_6": {
+      "path": "build/deferred-fault-final-abort-6-20261106/result.json",
+      "sha256": "4a22f51ff2f88b93a118308631e82535c671b4105ba2c5ceb184d71ce11ce152",
+      "passed": true
+    },
+    "abort_8": {
+      "path": "build/deferred-fault-final-abort-8-20261106/result.json",
+      "sha256": "3a1d5088126fe21d35ed80c5e97cd1793455346987794899515d46227637e379",
+      "passed": true
+    },
+    "abort_10": {
+      "path": "build/deferred-fault-final-abort-10-20261106/result.json",
+      "sha256": "d1027f298472e670ee862a608f757aa6353429b121f1cc93262245e6df61292b",
+      "passed": true
+    },
+    "abort_22": {
+      "path": "build/deferred-fault-final-abort-22-20261106/result.json",
+      "sha256": "0c86f7a98e18daf259fd34c86256f95c51edb702a1afee0211a18fecb9cf1583",
+      "passed": true
+    },
+    "source_abort": {
+      "path": "build/deferred-fault-source-abort-20261106/result.json",
+      "sha256": "3212264098c81acfe3041c7581acb22d91551d56f5d6d07885c2c4a70bb94c1e",
+      "passed": true
+    },
+    "dispatcher_17": {
+      "path": "build/deferred-fault-final-dispatcher-17-20261106/result.json",
+      "sha256": "ac7420421ef785d212c69c126d871b80ea4e17eefa8c45c44a0af2d627589a0b",
+      "passed": true
+    },
+    "dispatcher_5": {
+      "path": "build/deferred-fault-final-dispatcher-5-20261106/result.json",
+      "sha256": "406845f4f2ca1bc0b8493f57d341560302fd7c4cac26652bc358ae5e63da9b64",
+      "passed": true
+    },
+    "dispatcher_6": {
+      "path": "build/deferred-fault-final-dispatcher-6-20261106/result.json",
+      "sha256": "a3306956db6c1ee6b710e34cbd43e03638f80d64c5c510c937019f9f67c5b22c",
+      "passed": true
+    },
+    "dispatcher_8": {
+      "path": "build/deferred-fault-final-dispatcher-8-20261106/result.json",
+      "sha256": "0a3e24fc97e1a1343d17270aafb449048cc48dea7b9de32910ad554229e67c31",
+      "passed": true
+    },
+    "dispatcher_10": {
+      "path": "build/deferred-fault-final-dispatcher-10-20261106/result.json",
+      "sha256": "0b908a0b5bd6feec81a9a494a21bcb5232a5c40e7e0f4487592793551a473a47",
+      "passed": true
+    },
+    "dispatcher_22": {
+      "path": "build/deferred-fault-final-dispatcher-22-20261106/result.json",
+      "sha256": "a972d7931d1d16b285088b6d8cabba6d31021936ea05bd31be923260279eae54",
+      "passed": true
+    },
+    "source_dispatcher": {
+      "path": "build/deferred-fault-source-dispatcher-20261106/result.json",
+      "sha256": "40bdd7e46a6a2cbbedfb7f52a28bb30be4563064b40633838d06bb425c6ca59e",
+      "passed": true
+    },
+    "wait_space_8086": {
+      "path": "build/deferred-held-wait-space-8086-20261106/result.json",
+      "sha256": "b3bb6012ca6d34d1f0f6169a8034e66d9b9da715147c3191f6e4ae8254667d67",
+      "passed": true
+    },
+    "wait_space_observed": {
+      "path": "build/deferred-held-wait-space-observed-20261106/result.json",
+      "sha256": "25ad6e7f313f4bc82e8682b687fe4c5898f9870d3bb0187beaec2fad0be48181",
+      "passed": true
+    },
+    "wait_escape_8086": {
+      "path": "build/deferred-held-wait-escape-8086-20261106/result.json",
+      "sha256": "3e39edec84655d4c80102fa9043999c4545df8f81654c6c43f78355a8ffe8659",
+      "passed": true
+    },
+    "wait_escape_observed": {
+      "path": "build/deferred-held-wait-escape-observed-20261106/result.json",
+      "sha256": "71b915fcb4fc74bfd9695087b68e91ad4c6f3aec07795512747dead129d6a8f8",
+      "passed": true
+    },
+    "raw_audit": {
+      "path": "build/deferred-fault-capture-audit-20261106/result.json",
+      "sha256": "777ca49e5313ebcfcf2b4290f2ce38a96b10e79cbf74478b99d8b351a76e5219",
+      "passed": true
+    },
+    "observer": {
+      "path": "build/deferred-buffer-exit-hook-20261106/result.json",
+      "sha256": "319a930eae74902717a44fd933c83ab3fc53c295df27ab5ec493e9413dd5802e",
+      "passed": true
+    },
+    "phase_variants": {
+      "path": "build/deferred-fault-variants-20261106/result.json",
+      "sha256": "7fca825165d615872a6c061f4e51cb2ef6a2dec6f2533bddc0d9609d2a8f7307",
+      "passed": true
+    },
+    "package": {
+      "path": "build/deferred-connection-candidate-final-20261106/result.json",
+      "sha256": "0168bfd5c108c2045abc3cac015a581b400d0fe81ccac428ad45c4bcc4def2b8",
+      "passed": true
+    },
+    "source_package": {
+      "path": "build/deferred-connection-source-proof-20261106/result.json",
+      "sha256": "d4e0c5cac640af14223b13169adcfc3a89e280771dc2738fe3abf8b57a240939",
+      "passed": true
+    },
+    "reject_diagnostics": {
+      "path": "build/deferred-package-diagnostic-negative-20261106/result.json",
+      "sha256": "9af30c0949813cee5eeb56dadf306332b7f42d941e436c6df72a121f73c8bf80",
+      "passed": true
+    },
+    "launcher_splash": {
+      "path": "build/deferred-package-splash-20261106/result.json",
+      "sha256": "758228677c408cebf9d525e6e09509c9de8e563be626100db8207b16791852a5",
+      "passed": true
+    },
+    "launcher_setup": {
+      "path": "build/deferred-package-setup-20261106/result.json",
+      "sha256": "15c3c49f0fa72f1d7090f1f9dfb6602363b185c23a31b206ac534e4b20aa275f",
+      "passed": true
+    },
+    "launcher_script": {
+      "path": "build/deferred-package-script-20261106/result.json",
+      "sha256": "6031bd996da17761458b57b3ae200615a3ef1b920d7e670c14606c2848e7ac77",
+      "passed": true
+    }
+  },
+  "installed_candidate_changed": false,
+  "physical_runtime_verified": false,
+  "limits": [
+    "24 diagnostic runs; four representative clean exports, with whole-image phase comparisons for the other variants.",
+    "WAIT Escape resumes WAIT, not a claim of general ASPECT script cancellation.",
+    "Virtual serial/DOS software evidence; physical Boca/SPA2102 and full original feature parity remain open."
+  ]
+}
