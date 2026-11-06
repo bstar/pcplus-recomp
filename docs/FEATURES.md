@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+The [connected Enigma Chat Help checkpoint](CHAT_HELP_BBS.md) passes source
+Chat/PCHELP/Chat/editor return inside a real authenticated stock editor session
+through SynthModem's Telnet proxy. All4000 editor and Chat frame bytes/cursors
+return exactly, the native bar remains ON-LINE, local input stays local, and
+editing resumes without posting. Independent final replay matches1920 cells
+and cursor; eight altered-evidence controls reject. Products are unchanged.
+Traffic deliberately arriving during the child, physical SIP/audio, other
+profiles and geometry/allocation/lifetime faults remain open.
+
 The [native-wait Chat Help follow-up](CHAT_HELP_BUSY.md) verifies Alt-Z behind
 ordinary input while the real native echo parser waits for delayed CSI. Eight
 DOS8086 sessions at25/28/43/50 rows include31 keys plus Help filling the32-key

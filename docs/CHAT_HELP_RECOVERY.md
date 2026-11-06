@@ -73,4 +73,7 @@ at exact FIFO capacity and samples loaded-image identity before/at/after Help.
 Other wait states, Help beyond FIFO capacity, continuous module lifetime and
 allocation faults, geometry-fault recovery, Help during a real BBS session, physical acceptance,
 other contexts and full original feature parity remain open. No physical
-deployment or selected-package change occurred.
+deployment or selected-package change occurred. The later
+[Enigma editor checkpoint](CHAT_HELP_BBS.md) verifies connected idle-editor
+Help return and resumed input/cells; deliberate traffic during the child and
+the other stated faults remain separate.

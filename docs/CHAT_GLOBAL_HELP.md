@@ -71,3 +71,5 @@ Boca/SPA2102/SynthModem acceptance, other contexts and full original feature
 parity remain open. The subsequent [native-wait checkpoint](CHAT_HELP_BUSY.md)
 adds exact-capacity FIFO Help and sampled loaded-image identity; it does not
 close every wait state or module lifetime/geometry fault.
+The [connected Enigma editor test](CHAT_HELP_BBS.md) additionally covers real
+authenticated idle-editor return, resumed editing and independent final cells.

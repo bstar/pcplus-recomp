@@ -79,7 +79,10 @@ products; it is not claimed as eight cold-export sessions. No original binary,
 private configuration, previous object or analysis database is a build input.
 
 Help beyond FIFO capacity, other pending native controllers or TX flow stalls,
-geometry/allocation/lifetime faults, Help during an actual BBS session and
+geometry/allocation/lifetime faults and
 physical Boca/SPA2102/SynthModem acceptance remain open. Other Help contexts,
 ASPECT/emulation/protocol gaps, Host mode and full original parity remain in
 the [application inventory](FEATURES.md).
+The subsequent [Enigma editor checkpoint](CHAT_HELP_BBS.md) covers actual
+connected Help return while the stock editor is idle; deliberate remote
+traffic inside the child remains separate.
