@@ -61,10 +61,11 @@ is visible, confirms the context3 heading, and checks identical return frame
 and cursor. The preserved line transmits once; after leaving Chat, ordinary
 keys and a fresh parser reply work. Hardware snapshots and PRM remain unchanged.
 
-These tests do not independently witness the loaded module's memory identity,
-nor prove every Chat lifetime edge. Busy parser/TEXT, full deferred input,
-Help launch/resource failures, repeated Help, concurrent Chat RX/flow and
-geometry faults still need focused tests. Enigma/Synchronet regressions must
-be rerun for this parent identity; earlier BBS receipts belong to the preceding
-parent. Physical Boca/SPA2102/SynthModem acceptance, other contexts and full
-original feature parity remain open.
+The [recovery follow-up](CHAT_HELP_RECOVERY.md) closes repeated Help, resource
+failures and raw receive/software-flow return at all four supported heights,
+and reruns Enigma/Synchronet for this exact parent. It also repeats the prior
+busy/cancellation pressure regression. The tests still do not independently
+witness loaded-module memory identity or every lifetime edge. Help queued
+during busy parser/TEXT/full deferred input, geometry faults, physical
+Boca/SPA2102/SynthModem acceptance, other contexts and full original feature
+parity remain open.

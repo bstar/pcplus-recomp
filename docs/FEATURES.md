@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+The [Chat Help recovery follow-up](CHAT_HELP_RECOVERY.md) passes24 main-loop
+sessions across25/28/43/50 rows, including repeated Help, resource failures
+and actual XOFF/XON with exact CP437 receive/frame return. The unchanged
+6fd8aafc parent passes current Enigma carrier/retry with independent65539-byte
+audit, Synchronet editor/display and the four40-key busy/cancellation cases.
+Busy Help admission, module lifetime/geometry faults, connected BBS Help and
+physical acceptance remain open.
+
 The opt-in [Chat Alt-Z Help checkpoint](CHAT_GLOBAL_HELP.md) now queues original
 context3 through a private PROGRAM admission while retaining the Chat session.
 Actual25/50-row main-loop tests preserve the full frame, cursor and unfinished
