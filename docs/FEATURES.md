@@ -2508,3 +2508,15 @@ control, Synchronet and Enigma regressions pass; a clean source export repeats
 the exact build and Chat gates. Current live nesting coverage is80x25. This is
 an opt-in software checkpoint, with no physical deployment or full-original
 parity claim. Global Help/Alt-Z and the remaining acceptance inventory stay open.
+
+
+## Chat viewer geometry protection
+
+[API0106 display protection](CHAT_VIEW_GEOMETRY.md) closes the detached-view
+geometry gap reproduced in API0105. Key/RX/idle/close continuations hold their
+lease across a BIOS mode/page/height mismatch, then restore the saved live
+frame and redraw after recovery. The final DOS matrix passes12 fault/recovery
+cases and normal-main saved-preference tests at25/28/43/50 rows. Active graphics
+framebuffer contents remain untouched while held. Default API0104 bytes and
+all retained capacities remain unchanged; full regression/cold-build gates pass.
+Physical deployment and the remaining acceptance/parity inventory stay open.

@@ -3,6 +3,9 @@
 BITS 16
 CPU 8086
 ORG 100h
+%ifndef CHAT_API_VERSION
+%define CHAT_API_VERSION 0x105
+%endif
 jmp start
 old_vector: dw 0,0
 sample: dw 0x5657,0,0,0,0,0,0,0
@@ -23,18 +26,26 @@ handler:
  jne .done
  cmp word [es:7],0x4343
  jne .done
- cmp word [es:13],0x0105
+ cmp word [es:13],CHAT_API_VERSION
  jne .done
  cmp word [OWNER_OFF],1
  jne .chat
  cmp word [VIEW_OFF],1
  jne .done
+ push es
+ mov ax,0x40
+ mov es,ax
+ xor ax,ax
+ mov al,[es:0x84]
+ inc ax
+ mov [cs:sample+10],ax
+ pop es
  mov ax,ss
  add ax,LIVE_DELTA
  mov es,ax
  test word [cs:sample+2],1
  jnz .viewer_seen
- cmp byte [es:LIVE_OFF+2880],32
+ cmp byte [es:LIVE_OFF+REMOTE_OFF],32
  jne .viewer_seen
  or word [cs:sample+2],16 ; The remote pane was empty at viewer entry.
 .viewer_seen:
@@ -51,23 +62,23 @@ handler:
  mov es,ax
  xor bx,bx
 .remote:
- cmp byte [es:bx+2880],'R'
+ cmp byte [es:bx+REMOTE_OFF],'R'
  jne .done
- cmp byte [es:bx+2882],'X'
+ cmp byte [es:bx+REMOTE_OFF+2],'X'
  jne .done
- cmp byte [es:bx+2884],'L'
+ cmp byte [es:bx+REMOTE_OFF+4],'L'
  jne .done
- cmp byte [es:bx+2886],'I'
+ cmp byte [es:bx+REMOTE_OFF+6],'I'
  jne .done
- cmp byte [es:bx+2888],'V'
+ cmp byte [es:bx+REMOTE_OFF+8],'V'
  jne .done
- cmp byte [es:bx+2890],'E'
+ cmp byte [es:bx+REMOTE_OFF+10],'E'
  jne .done
- cmp byte [es:bx+2892],0xf0
+ cmp byte [es:bx+REMOTE_OFF+12],0xf0
  jne .done
- cmp byte [es:bx+3200],'A'
+ cmp byte [es:bx+LOCAL_OFF],'A'
  jne .done
- cmp byte [es:bx+3202],'B'
+ cmp byte [es:bx+LOCAL_OFF+2],'B'
  jne .done
  cmp word [OWNER_OFF],1
  jne .resumed

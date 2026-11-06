@@ -11,4 +11,8 @@ unsigned CHAT_CALL chat_present_open(chat_session CHAT_FAR *,chat_presentation C
     chat_word CHAT_FAR *,unsigned,unsigned,unsigned,unsigned,unsigned,unsigned,unsigned,unsigned);
 unsigned CHAT_CALL chat_present_cursor(chat_session CHAT_FAR *);
 unsigned CHAT_CALL chat_present_close(chat_session CHAT_FAR *);
+#ifdef CHAT_REDISPLAY
+/* Check a detached presentation without selecting a cursor or painting. */
+unsigned CHAT_CALL chat_present_suspended(chat_session CHAT_FAR *,chat_presentation CHAT_FAR *);
+#endif
 #endif

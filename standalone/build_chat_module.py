@@ -48,7 +48,7 @@ def build(out,presentation=False,text=False,timing=False,foreground=False,redisp
     assert (pages-1)*512+(last or 512)==len(raw)
     window=12288 if foreground else 8192
     image=raw[paragraphs*16:];assert 0<len(image)<window and cs==ip==ss==sp==minalloc==0
-    api,state_bytes=(0x105,480) if redisplay else (0x104,476) if foreground else (0x103,448) if timing else (0x102,430) if text else (0x101,362) if presentation else (0x100,358)
+    api,state_bytes=(0x106,480) if redisplay else (0x104,476) if foreground else (0x103,448) if timing else (0x102,430) if text else (0x101,362) if presentation else (0x100,358)
     assert image[0]==0xea and image[5:19]==b'LOCCHAT\0'+struct.pack('<3H',api,50,state_bytes)
     relocations=[struct.unpack_from('<2H',raw,table+i*4) for i in range(relocs)]
     assert relocs and all(seg*16+off+2<=len(image) for off,seg in relocations)

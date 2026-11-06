@@ -11,7 +11,7 @@ chat_overlay_entry:
  jmp far _chat_module_dispatch
  db 'LOCCHAT',0
 %ifdef CHAT_REDISPLAY
- dw 0x0105,50,480
+ dw 0x0106,50,480
 %elifdef CHAT_FOREGROUND_TEXT
  dw 0x0104,50,476
 %elifdef CHAT_TIMING

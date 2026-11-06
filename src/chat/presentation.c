@@ -69,3 +69,8 @@ unsigned CHAT_CALL chat_present_close(chat_session CHAT_FAR *s)
     chat_present_set_cursor(p->position,p->shape);
     p->signature=0;s->presentation=0;return 1;
 }
+
+#ifdef CHAT_REDISPLAY
+unsigned CHAT_CALL chat_present_suspended(chat_session CHAT_FAR *s,chat_presentation CHAT_FAR *p)
+{return context_ready(s,p);}
+#endif

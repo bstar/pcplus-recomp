@@ -314,6 +314,11 @@ terminal_redisplay_idle_impl:
 %ifdef TERMINAL_CHAT_FRONTEND
  extern terminal_chat_idle_far
  call far terminal_chat_idle_far
+%ifdef TERMINAL_CHAT_REDISPLAY
+ jnc .viewer_ready
+ ret ; A held Chat presentation also suspends the viewer's paint continuation.
+.viewer_ready:
+%endif
 %endif
  mov dx,3
  jmp redisplay_event

@@ -1,5 +1,9 @@
 # Chat Alt-F6 Redisplay integration
 
+This records the API0105 integration checkpoint. The current profile is
+[API0106 with display-change protection](CHAT_VIEW_GEOMETRY.md); its new build
+identities and wider height coverage are documented there.
+
 The opt-in `--chat-redisplay` profile now opens the existing serviced history
 viewer from Chat and returns to the same session. Unfinished local input stays
 intact. Incoming bytes continue through Chat's plain CP437 pane projection,

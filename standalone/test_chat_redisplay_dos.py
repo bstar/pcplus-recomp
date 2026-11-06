@@ -15,7 +15,7 @@ def main():
  a=p.parse_args();binary,out=a.terminal.resolve(),a.output.resolve()
  assert binary.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build') and not out.exists()
  m=json.loads(binary.with_name('manifest.json').read_text())
- assert m['experimental_chat_redisplay'] and m['chat_loader']['module']['api_version']==0x105
+ assert m['experimental_chat_redisplay'] and m['chat_loader']['module']['api_version']in (0x105,0x106)
  assert sha(binary)==m['binary_sha256']
  sources=dict(m['sources'])
  for n in ['standalone/test_chat_redisplay_dos.py','standalone/chat_redisplay_host.c','standalone/chat_parent_invoke.asm']:sources[n]=sha(ROOT/n)

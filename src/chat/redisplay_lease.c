@@ -8,14 +8,25 @@ extern unsigned CHAT_FAR __cdecl chat_view_allocate(unsigned);
 extern unsigned CHAT_FAR __cdecl chat_view_free(unsigned);
 typedef struct lease {
     unsigned segment,snapshot_segment,cells;
+    unsigned held;
     chat_presentation CHAT_FAR *presentation;
 } lease;
+typedef char chat_view_lease_must_be_12[(sizeof(lease)==12)?1:-1];
 /*63000 history bytes rounded to a paragraph, then a normalized underlay. */
 #define HISTORY_PARAGRAPHS 3938
 static chat_word CHAT_FAR *saved(lease CHAT_FAR *l)
 {return (chat_word CHAT_FAR *)MK_FP(l->segment+HISTORY_PARAGRAPHS,0);}
 static void copy(chat_word CHAT_FAR *to,const chat_word CHAT_FAR *from,unsigned cells)
 {unsigned i;for(i=0;i<cells;++i)to[i]=from[i];}
+/* The viewer temporarily detaches Chat's presentation. Its geometry contract
+ * still applies to every key/RX/idle/close continuation. Once restored, put
+ * the saved live Chat frame back before the viewer resumes drawing. */
+static unsigned ready(chat_session CHAT_FAR *s,const chat_view_binding CHAT_FAR *b,lease CHAT_FAR *l)
+{
+    if(!chat_present_suspended(s,l->presentation)){l->held=1;return 0;}
+    if(l->held){b->before();l->held=0;}
+    return 1;
+}
 static unsigned resume(chat_session CHAT_FAR *s,const chat_view_binding CHAT_FAR *b,lease CHAT_FAR *l)
 {
     if(!*b->active)return 1;
@@ -40,7 +51,7 @@ static unsigned begin(chat_session CHAT_FAR *s,const chat_view_binding CHAT_FAR 
     paragraphs=HISTORY_PARAGRAPHS+(p->cells+7)/8;
     segment=chat_view_allocate(paragraphs);if(!segment)return 0;
     l->segment=segment;l->snapshot_segment=*b->snapshot_segment;
-    l->cells=p->cells;l->presentation=p;
+    l->cells=p->cells;l->presentation=p;l->held=0;
     if(segment<0x50 || (unsigned long)segment+paragraphs>0xa000UL){
         *b->active=2;resume(s,b,l);return 0;
     }
@@ -56,10 +67,14 @@ unsigned CHAT_CALL chat_view_dispatch(chat_module_request CHAT_FAR *r)
     const chat_view_binding CHAT_FAR *b=(const chat_view_binding CHAT_FAR *)r->state->live.view;
     lease CHAT_FAR *l;
     if(!b || !b->active || !b->owner || !b->snapshot_segment || !b->scratch ||
-       !b->underlay || !b->enter || !b->leave)return 0;
+       !b->underlay || !b->enter || !b->leave || !b->before)return 0;
     l=(lease CHAT_FAR *)b->scratch;
     if(r->value==CHAT_VIEW_BEGIN)return begin(r->state,b,l);
-    if(r->value==CHAT_VIEW_CLOSE && *b->active==1 && *b->owner==1)b->leave();
+    if(r->value==CHAT_VIEW_READY)return *b->active!=1 || ready(r->state,b,l);
+    if(r->value==CHAT_VIEW_CLOSE && *b->active==1 && *b->owner==1){
+        if(!ready(r->state,b,l))return 0;
+        b->leave();
+    }
     if(r->value==CHAT_VIEW_RESUME || r->value==CHAT_VIEW_CLOSE)return resume(r->state,b,l);
     return 0;
 }
@@ -75,7 +90,8 @@ unsigned CHAT_CALL chat_view_service(chat_module_request CHAT_FAR *r)
     if(r->operation==CHAT_MODULE_KEY_HOLD)return value!=0x2d00 && value!=0x2300 &&
         (s->send.phase || s->rx_phase ||
          ((s->text.active || *b->tx_count) && !(s->text.active && (value&255)==27)));
-    if(r->operation==CHAT_MODULE_RX_HOLD)return s->rx_phase!=0;
+    if(*b->active==1 && !ready(s,b,(lease CHAT_FAR *)b->scratch))return CHAT_MODULE_BAD;
+    if(r->operation==CHAT_MODULE_RX_HOLD)return !s->send.active || !s->screen.active || s->rx_phase!=0;
     if(*b->connection!=0 && *b->connection!=6)return CHAT_MODULE_BAD;
     result=chat_live_step(r);return s->fault?CHAT_MODULE_BAD:result;
 }

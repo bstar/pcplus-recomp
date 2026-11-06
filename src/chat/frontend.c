@@ -12,6 +12,8 @@ unsigned chat_view_active;
 extern const chat_view_binding __based(__segname("_CODE")) chat_front_view_binding;
 extern unsigned CHAT_FAR __cdecl chat_view_enter(void);
 extern void CHAT_FAR __cdecl chat_view_leave(void);
+extern void CHAT_FAR __cdecl chat_view_before(void);
+#pragma aux chat_view_before "terminal_redisplay_before_far";
 #endif
 #ifdef CHAT_FOREGROUND_TEXT
 #include "text_transport.h"
@@ -71,7 +73,7 @@ const chat_view_binding __based(__segname("_CODE")) chat_front_view_binding={
     chat_view_enter,chat_view_leave,&ui_window_rows,&attributes_normal_value,
     &modes_value_1d1a,&terminal_cr_adds_lf,&terminal_translation_enabled,
     terminal_translation_table,redisplay_snapshot+13000,redisplay_snapshot+14000,
-    terminal_chat_sink};
+    terminal_chat_sink,chat_view_before};
 static unsigned view(unsigned action)
 {
     unsigned result;
@@ -152,7 +154,7 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
      * Resume before any subsequent key, RX admission or idle continuation. */
     if(chat_view_active && redisplay_active!=1 && !view(CHAT_VIEW_RESUME))return 1;
     if(event==0 && (value==0x2d00 || value==0x2300))return stop()?1:0;
-    if(chat_view_active && event<=1)return 0;
+    if(chat_view_active && event<=1)return !view(CHAT_VIEW_READY);
 #endif
 #ifdef CHAT_REDISPLAY
     if(event==1){REQUEST->key=value;return operation(CHAT_MODULE_KEY_HOLD)!=0;}
@@ -194,7 +196,7 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
     if(event==4){
 #ifdef CHAT_REDISPLAY
         result=operation(CHAT_MODULE_FOREGROUND_STEP);
-        if(result==CHAT_MODULE_BAD)stop();
+        if(result==CHAT_MODULE_BAD)return stop();
 #else
         if(connection_state!=0 && connection_state!=6){stop();return 0;}
         result=operation(CHAT_MODULE_STEP);

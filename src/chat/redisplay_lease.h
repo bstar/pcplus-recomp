@@ -4,6 +4,7 @@
 #define CHAT_VIEW_BEGIN 1
 #define CHAT_VIEW_RESUME 2
 #define CHAT_VIEW_CLOSE 3
+#define CHAT_VIEW_READY 4
 /* Immutable parent CODE descriptor. Both banks retain the parent's DS=SS;
  * these three near words belong to that DS, never to the module's CS. */
 typedef struct chat_view_binding {
@@ -18,7 +19,9 @@ typedef struct chat_view_binding {
     void CHAT_FAR *presentation;
     unsigned char CHAT_FAR *rx_table;
     chat_sink sink;
+    void (CHAT_FAR __cdecl *before)(void);
 } chat_view_binding;
+typedef char chat_view_binding_must_be_54[(sizeof(chat_view_binding)==54)?1:-1];
 unsigned CHAT_CALL chat_view_dispatch(chat_module_request CHAT_FAR *);
 unsigned CHAT_CALL chat_view_service(chat_module_request CHAT_FAR *);
 unsigned CHAT_CALL chat_view_front_open(chat_module_request CHAT_FAR *);
