@@ -1,0 +1,272 @@
+{
+  "passed": true,
+  "binary_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+  "runner_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+  "servers": [
+    {
+      "server": "Enigma",
+      "report": {
+        "path": "build/bbs-lab/results/enigma/lease18-enigma-editor-20261106/proxy-integration.json",
+        "sha256": "11e6fbeaaeac6780cb2c686eedb6c9b857aa27ec3ccf251e41355bd00fdaf430"
+      },
+      "screen_audit": {
+        "path": "build/bbs-lab/results/enigma/lease18-enigma-editor-20261106/screen-reference-audit.json",
+        "sha256": "ad08f0726977959ff49f21148e4f1e5143d6cc01273a6d47609846a2b7a855f4"
+      },
+      "viewer": {
+        "passed": true,
+        "external_command_tool": "viewer",
+        "checks": {
+          "observer_complete": true,
+          "exact_post_child_editor_frame": true,
+          "cursor_shape_preserved": true,
+          "mode_rows_preserved": true,
+          "parameter_prompt": true,
+          "configured_title": true,
+          "actual_child": true,
+          "exact_child_tail": true,
+          "original_drive_CWD": true,
+          "synthetic_configuration": true,
+          "parameters_consumed_locally": true,
+          "subsequent_editor_keys": true
+        },
+        "observer_words": [
+          22103,
+          1,
+          1,
+          1,
+          25,
+          25,
+          2048,
+          2048,
+          15,
+          15,
+          20483,
+          20483
+        ],
+        "capture_sha256": "6dd9c0973838d58d0e103d0179b807bb0860b76ef2fb63ab09b1089d477d48d3",
+        "child_sha256": "2664877c2190c720984524e787e577c1640df1d12f4a7d50c43e9a774340bb33",
+        "sources": {
+          "lab/bbs/external_viewer_bbs_support.py": "4b09a215d6a7e4f63fb852b032ffe12302ff1f1e631d4a801b26b0dc6528b9d6",
+          "standalone/file_directory_bbs_watch.asm": "9a3894933156a136a35f16755c23bc7dd9d7bdc0b38d2edee0ea98feb8d67cc9",
+          "standalone/viewer_external_child.asm": "78f088cc9ca7f366346845b7449b97ac22a602c33b6f49740fac7b6b1f93399b"
+        },
+        "scope": "Actual Alt-V parameter dialog and external COMSPEC /c owned child inside the stock unsaved editor. Child records PSP/CWD, enters mode13h, then sends a private observer-only completion marker. Return capture is gated on that marker and text-mode editor visibility; no pre-EXEC frame can pass. Full4000-byte editor/cursor/shape preservation and subsequent ordinary editing. No product-memory writes, terminal replies, physical/SIP/audio acceptance or broad external-program claim."
+      },
+      "cpu": "8086",
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "delivered_bytes": 47821,
+      "artifacts": [
+        {
+          "path": "build/bbs-lab/results/enigma/lease18-enigma-editor-20261106/VFVIEW.BIN",
+          "sha256": "6dd9c0973838d58d0e103d0179b807bb0860b76ef2fb63ab09b1089d477d48d3"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/lease18-enigma-editor-20261106/VCHILD.BIN",
+          "sha256": "2664877c2190c720984524e787e577c1640df1d12f4a7d50c43e9a774340bb33"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/lease18-enigma-editor-20261106/VFSEG.BIN",
+          "sha256": "8149a8dabfbcae50c4620b8a4985e25582022705495ac6d670ecf3948f8fb3a8"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/lease18-enigma-editor-20261106/SCREEN.BIN",
+          "sha256": "d0134e3e50ab8fe6c64adb5eebc15a29184bbdf6b8aef980d823a70d251cc78c"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/lease18-enigma-editor-20261106/serial-sent.bin",
+          "sha256": "9a061a823d6e0753103f9ba2a7062ec7c6504833ae375ead604dd2e0d9241178"
+        },
+        {
+          "path": "build/bbs-lab/results/enigma/lease18-enigma-editor-20261106/serial-received.bin",
+          "sha256": "52c5e16fec5a191e10b7c74466b0272b8316207a7a30adb7a71fa659b9c6b129"
+        }
+      ]
+    },
+    {
+      "server": "Synchronet",
+      "report": {
+        "path": "build/bbs-lab/results/synchronet/lease18-synchronet-editor-20261106/proxy-integration.json",
+        "sha256": "0f029e9ff8c78e09dc4352ae3b4c4b3230d7c39e371930aa8457ca898b09aada"
+      },
+      "screen_audit": {
+        "path": "build/bbs-lab/results/synchronet/lease18-synchronet-editor-20261106/screen-reference-audit.json",
+        "sha256": "e13dc0c9ccaa839e98bc583f9991814619d1494240714c2865064e55ac95983f"
+      },
+      "viewer": {
+        "passed": true,
+        "external_command_tool": "viewer",
+        "checks": {
+          "observer_complete": true,
+          "exact_post_child_editor_frame": true,
+          "cursor_shape_preserved": true,
+          "mode_rows_preserved": true,
+          "parameter_prompt": true,
+          "configured_title": true,
+          "actual_child": true,
+          "exact_child_tail": true,
+          "original_drive_CWD": true,
+          "synthetic_configuration": true,
+          "parameters_consumed_locally": true,
+          "subsequent_editor_keys": true
+        },
+        "observer_words": [
+          22103,
+          1,
+          1,
+          1,
+          25,
+          25,
+          1024,
+          1024,
+          1551,
+          1551,
+          20483,
+          20483
+        ],
+        "capture_sha256": "d616702d0f5b521cfeb00ad129b66df51917c2c463a7125eb9e448e2631b112b",
+        "child_sha256": "8493ffc4367abd394a6088086d84159f17b949e46a134267015c641a5baf1aea",
+        "sources": {
+          "lab/bbs/external_viewer_bbs_support.py": "4b09a215d6a7e4f63fb852b032ffe12302ff1f1e631d4a801b26b0dc6528b9d6",
+          "standalone/file_directory_bbs_watch.asm": "9a3894933156a136a35f16755c23bc7dd9d7bdc0b38d2edee0ea98feb8d67cc9",
+          "standalone/viewer_external_child.asm": "78f088cc9ca7f366346845b7449b97ac22a602c33b6f49740fac7b6b1f93399b"
+        },
+        "scope": "Actual Alt-V parameter dialog and external COMSPEC /c owned child inside the stock unsaved editor. Child records PSP/CWD, enters mode13h, then sends a private observer-only completion marker. Return capture is gated on that marker and text-mode editor visibility; no pre-EXEC frame can pass. Full4000-byte editor/cursor/shape preservation and subsequent ordinary editing. No product-memory writes, terminal replies, physical/SIP/audio acceptance or broad external-program claim."
+      },
+      "cpu": "386",
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "delivered_bytes": 21759,
+      "artifacts": [
+        {
+          "path": "build/bbs-lab/results/synchronet/lease18-synchronet-editor-20261106/VFVIEW.BIN",
+          "sha256": "d616702d0f5b521cfeb00ad129b66df51917c2c463a7125eb9e448e2631b112b"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/lease18-synchronet-editor-20261106/VCHILD.BIN",
+          "sha256": "8493ffc4367abd394a6088086d84159f17b949e46a134267015c641a5baf1aea"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/lease18-synchronet-editor-20261106/VFSEG.BIN",
+          "sha256": "587ca209a4d21b7f01084d893f6b890a64ef2ecba2504d61b456318eae7f8b7b"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/lease18-synchronet-editor-20261106/SCREEN.BIN",
+          "sha256": "26df2f629ade126d0ba939eada91d9800bf6e4d73e5a1ec0586cc4a5cdd0508d"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/lease18-synchronet-editor-20261106/serial-sent.bin",
+          "sha256": "c57d6978deae915f81012757b9fa8599e23398f4bb72c5d3e3cfa00c4069611a"
+        },
+        {
+          "path": "build/bbs-lab/results/synchronet/lease18-synchronet-editor-20261106/serial-received.bin",
+          "sha256": "4e9e07b9e001d540e3386b136559318ad4d54578232f18314c4edeb131c341b6"
+        }
+      ]
+    }
+  ],
+  "fixture_controls": {
+    "report": {
+      "path": "build/lease18-bbs-fixture-controls-20261106/result.json",
+      "sha256": "926dd89511c7d3b05208ebdf7e5912767a2d0cea08fc83638e997263b3d450ca"
+    },
+    "cases": [
+      {
+        "source": "standalone/file_directory_bbs_watch.asm",
+        "flags": [],
+        "identical": true,
+        "sha256": "f799b670569938bd47ce291e2e3072a484b5f6bc0303abc1610afc00b6ac005a"
+      },
+      {
+        "source": "standalone/file_directory_bbs_watch.asm",
+        "flags": [
+          "-DFILE_VIEWER_ROUNDTRIP"
+        ],
+        "identical": true,
+        "sha256": "ee8800b9aaf239874bdffab249c4e78255009e5ba3cee1f0eed6e4fe5eaaa32d"
+      },
+      {
+        "source": "lab/bbs/audio_synchronet_editor_keys.asm",
+        "flags": [],
+        "identical": true,
+        "sha256": "7f5c6249a024e3ef1c8a4b2b8c7fae653234564515cf2535688fd69c21bf93e1"
+      },
+      {
+        "source": "lab/bbs/audio_synchronet_editor_keys.asm",
+        "flags": [
+          "-DFILE_VIEWER_ROUNDTRIP"
+        ],
+        "identical": true,
+        "sha256": "e2b0f5e1d8f952768661b45aecdc60457eda33532440a817faae4013e2652f0e"
+      },
+      {
+        "source": "lab/bbs/audio_synchronet_editor_keys.asm",
+        "flags": [
+          "-DFILE_DIRECTORY_ROUNDTRIP"
+        ],
+        "identical": true,
+        "sha256": "47c7c2837444204c5898aa46a9bbc0a68bffec6678c9caa5a4d993668db8c249"
+      },
+      {
+        "source": "lab/bbs/audio_synchronet_editor_keys.asm",
+        "flags": [
+          "-DGATEWAY_ROUNDTRIP"
+        ],
+        "identical": true,
+        "sha256": "d39b3a50f35d2570ec1af6ec0e2e14975cc95f28dfee69173562aace53c17e1c"
+      }
+    ]
+  },
+  "negative_controls": [
+    {
+      "case": "editor-cell",
+      "rejected": true,
+      "failed_checks": [
+        "exact_post_child_editor_frame"
+      ]
+    },
+    {
+      "case": "cursor",
+      "rejected": true,
+      "failed_checks": [
+        "cursor_shape_preserved"
+      ]
+    },
+    {
+      "case": "post-child-completion",
+      "rejected": true,
+      "failed_checks": [
+        "observer_complete"
+      ]
+    },
+    {
+      "case": "child-tail",
+      "rejected": true,
+      "failed_checks": [
+        "exact_child_tail"
+      ]
+    },
+    {
+      "case": "local-parameters",
+      "rejected": true,
+      "failed_checks": [
+        "parameters_consumed_locally"
+      ]
+    }
+  ],
+  "physical_deployment_changed": false,
+  "sources": {
+    "standalone/record_viewer_external_bbs.py": "af629acba4a5c11054abfcc18e569f5121abda1d8b352678678f99975bf092cc",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55"
+  },
+  "limits": [
+    "Owned stock loopback BBSes and isolated SynthModem Telnet proxy, synthetic modem serial transport; no SIP/audio/DSP/analog/physical acceptance.",
+    "Synchronet uses386/XMS/UMB and verifies both observer and BIOS key producer actually loaded high; no8086 low-memory ASPECT/editor assertion.",
+    "The historical conventional-memory Synchronet key-producer failure is documented separately; these runs require UMB and do not establish low-memory acceptance.",
+    "The owned viewer deliberately leaves mode13h, then sends a private completion marker to gate post-child capture; it does not patch product memory.",
+    "Parameters/default geometry only; arbitrary viewers, other video modes, transfers/cancellation/carrier/reconnect through this path remain open.",
+    "The selected runner is verified against the actual Synchronet login producer. The external viewer is a terminal command, not a nested ASPECT SAVE exercise.",
+    "No deployment, live service or private configuration change."
+  ]
+}

@@ -16,9 +16,15 @@ graphics workflows with the matched capability17 pair and exact final viewport;
 geometry pairs before outer return, with36 observer and7 rejection controls.
 The [capability18 follow-up](SNAPSHOT_LEASE_FAULTS.md) tags pointer bytes, passes48
 ownership guards and twelve active-lease DIV cases (six phases, own/foreign DS),
-and refreshes43 register pairs plus clean source exports. Other fault/cancellation
-classes, larger rows, BBS/transfer
-regressions and physical acceptance remain open. The installed16 pair is unchanged.
+and refreshes43 register pairs plus clean source exports. Twelve further
+typed-abort/direct-dispatcher recovery cases pass. Ordinary
+[PROGRAM WAIT](SNAPSHOT_LEASE_WAIT.md) passes with real Space/Escape input,
+including separate live-ownership observations. The capability18
+[BBS regressions](SNAPSHOT_LEASE_BBS.md) now pass both stock editor/graphics-child
+returns, a50-row Synchronet reference and all16 independent transfer cases;
+the exact same65539 bytes also upload and download through real Enigma. Script cancellation, nested
+larger-row SAVE, remaining real-BBS transfer/carrier tests and physical
+acceptance remain open. The installed16 pair is unchanged.
 
 The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
 captures the unchanged runner's file-structure allocation failure, correcting

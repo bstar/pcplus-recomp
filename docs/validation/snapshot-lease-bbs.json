@@ -1,0 +1,149 @@
+{
+  "checkpoint_recorded": true,
+  "capability": 18,
+  "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+  "child_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+  "results": {
+    "editors": {
+      "path": "docs/validation/snapshot-lease-bbs-editors.json",
+      "sha256": "74e7cfa29a496911cd192174016e6dcda052602d86ea769a754a927ea663ecb5",
+      "passed": true
+    },
+    "runner_negative": {
+      "path": "build/lease18-bbs-runner-negative-20261106/result.json",
+      "sha256": "c2db677d3184ef6c50bb70fcd0950c899c7977f7d1955e03bdf966fe10333f74",
+      "passed": true
+    },
+    "synchronet50": {
+      "path": "build/bbs-lab/results/synchronet/lease18-synchronet-50-20261106/proxy-integration.json",
+      "sha256": "10af82dff240e0bf8f19c6abbb200caf3a5db476caa5b6f315dfd456fa7711ed",
+      "passed": true
+    },
+    "synchronet50_cells": {
+      "path": "build/bbs-lab/results/synchronet/lease18-synchronet-50-20261106/screen-reference-audit.json",
+      "sha256": "bba142b66ddb91b71da9a6f25df7945525060bf9715fe17f9f1f25f30fd0c4d7",
+      "passed": true
+    },
+    "transfers16": {
+      "path": "build/release-transfers-dos/lease18-transfer-regression-20261106/result.json",
+      "sha256": "255b08eb57a9e16349eca3681841db20dab8351fec55df43146cb2deedcef76e",
+      "passed": true
+    },
+    "upload": {
+      "path": "build/lease18-enigma-upload-audit-20261106/result.json",
+      "sha256": "ede9d73cbd91dee872e7d9c2582de507877112960d80f8b839215242b1b3ed36",
+      "passed": true
+    },
+    "download": {
+      "path": "build/lease18-enigma-download-audit-20261106/result.json",
+      "sha256": "6b1de253e475dc3a14439c8cc6f81fa29fab75803caf5379c98b6f128d5ac850",
+      "passed": true
+    }
+  },
+  "editors": [
+    {
+      "server": "Enigma",
+      "cpu": "8086",
+      "matched_cells": 1920,
+      "different_cells": 0
+    },
+    {
+      "server": "Synchronet",
+      "cpu": "386",
+      "matched_cells": 1920,
+      "different_cells": 0
+    }
+  ],
+  "transfer_cases": [
+    {
+      "name": "x-rx-binary",
+      "passed": true
+    },
+    {
+      "name": "x-rx-badCRC-retry",
+      "passed": true
+    },
+    {
+      "name": "x-rx-local-Escape",
+      "passed": true
+    },
+    {
+      "name": "x-tx-binary",
+      "passed": true
+    },
+    {
+      "name": "x-tx-NAK-retry",
+      "passed": true
+    },
+    {
+      "name": "x-tx-peer-CAN",
+      "passed": true
+    },
+    {
+      "name": "y-rx-binary",
+      "passed": true
+    },
+    {
+      "name": "y-tx-binary",
+      "passed": true
+    },
+    {
+      "name": "y-rx-local-Escape",
+      "passed": true
+    },
+    {
+      "name": "y-rx-cancel-retry",
+      "passed": true
+    },
+    {
+      "name": "y-rx-retained-first",
+      "passed": true
+    },
+    {
+      "name": "y-tx-NAK-retry",
+      "passed": true
+    },
+    {
+      "name": "z-rx-default",
+      "passed": true
+    },
+    {
+      "name": "z-rx-crc16",
+      "passed": true
+    },
+    {
+      "name": "z-tx-default",
+      "passed": true
+    },
+    {
+      "name": "z-tx-escape",
+      "passed": true
+    }
+  ],
+  "large_payload": {
+    "bytes": 65539,
+    "sha256": "c62fdfdef826f32aa019b9543f718b0c7bb86204972a699a30b815e4d8b66e4e",
+    "same_upload_download": true,
+    "NAWS": [
+      [
+        80,
+        24
+      ]
+    ]
+  },
+  "excluded_attempt": {
+    "path": "build/bbs-lab/lease18-enigma-download-20261106-transfer/result.json",
+    "sha256": "382ee8f05f672f17fb75999975786798599ec047d4720aad17e79df1775fcab4",
+    "passed": false,
+    "reason": "Default30-second transfer wait advances to local input; eight CAN observed33.508 seconds after first receiver response. Explicit90-second run passes unchanged checks."
+  },
+  "installed_candidate_changed": false,
+  "physical_runtime_verified": false,
+  "limits": [
+    "Actual stock loopback BBSes and isolated menu-size-accepted-20261104/candidate SynthModem proxy; synthetic serial modem.",
+    "Enigma editor8086; Synchronet graphics-viewer return386/XMS/UMB; separate Synchronet50-row editor8086.",
+    "Terminal external viewer is distinct from nested ASPECT SAVE; larger-row nested lease remains open.",
+    "Real BBS upload/download are separate processes/sessions. Current-pair real-BBS cancel/retry and carrier-loss/reconnect remain open.",
+    "No production bridge restart, deployment or private configuration changes; SIP/DSP/analog/Boca and physical LoC header acceptance remain open."
+  ]
+}

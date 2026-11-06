@@ -13,7 +13,8 @@ def main():
  binary=a.terminal.resolve();m=json.loads(binary.with_name('manifest.json').read_text());digest=sha(binary)
  assert m['experimental_external_viewer'] and digest==m['binary_sha256']
  runner=a.runner.resolve();rm=json.loads(runner.with_name('manifest.json').read_text())
- assert sha(runner)==rm['binary_sha256']=='23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f'
+ assert sha(runner)==rm['binary_sha256'] and rm['experimental_register_handoff']
+ assert not m.get('diagnostic_build') and not rm.get('diagnostic_build')
  for manifest in [m,rm]:
   assert not manifest.get('original_inputs')
   for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
@@ -27,6 +28,7 @@ def main():
   assert len((folder/'VFVIEW.BIN').read_bytes())==12024
   for n,h in v['sources'].items():assert sha(ROOT/n)==h,n
   if name=='Synchronet':
+   assert r['interpreter_sha256']==sha(runner),'Selected runner differs from actual Synchronet login'
    assert base['cpu']=='386' and base['video_observer_high_requested'] and r['external_observer_segment']>=0xa000 and r['external_key_helper_segment']>=0xa000
    assert r['checks']['actual_ASPECT_login']
   else:assert base['cpu']=='8086'
@@ -44,6 +46,6 @@ def main():
   negative.append(dict(case=name,rejected=True,failed_checks=[n for n,v in r['checks'].items() if not v]))
  result=dict(passed=True,binary_sha256=digest,runner_sha256=sha(runner),servers=servers,fixture_controls=dict(report=bind(a.controls),cases=controls['cases']),negative_controls=negative,physical_deployment_changed=False,
   sources={n:sha(ROOT/n) for n in ['standalone/record_viewer_external_bbs.py','standalone/build_path_session.py']},
-  limits=['Owned stock loopback BBSes and isolated SynthModem Telnet proxy, synthetic modem serial transport; no SIP/audio/DSP/analog/physical acceptance.','Synchronet uses386/XMS/UMB and verifies both observer and BIOS key producer actually loaded high; no8086 low-memory ASPECT/editor assertion.','The first Synchronet runtime did not launch ASPECT with the key producer in conventional memory. Moving that test producer high allowed the unchanged parent/runner to start the script; this is a lab memory constraint, not a promoted application memory-loan fix.','The owned viewer deliberately leaves mode13h, then sends a private completion marker to gate post-child capture; it does not patch product memory.','Parameters/default geometry only; arbitrary viewers, other video modes, transfers/cancellation/carrier/reconnect through this path remain open.','No application memory-loan change, deployment, live service or private configuration change.'])
+  limits=['Owned stock loopback BBSes and isolated SynthModem Telnet proxy, synthetic modem serial transport; no SIP/audio/DSP/analog/physical acceptance.','Synchronet uses386/XMS/UMB and verifies both observer and BIOS key producer actually loaded high; no8086 low-memory ASPECT/editor assertion.','The historical conventional-memory Synchronet key-producer failure is documented separately; these runs require UMB and do not establish low-memory acceptance.','The owned viewer deliberately leaves mode13h, then sends a private completion marker to gate post-child capture; it does not patch product memory.','Parameters/default geometry only; arbitrary viewers, other video modes, transfers/cancellation/carrier/reconnect through this path remain open.','The selected runner is verified against the actual Synchronet login producer. The external viewer is a terminal command, not a nested ASPECT SAVE exercise.','No deployment, live service or private configuration change.'])
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS2 post-child BBS editor returns,3840 reference cells,6 unchanged fixtures and5 rejected data controls')
 if __name__=='__main__':main()
