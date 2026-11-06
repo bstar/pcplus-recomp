@@ -2,6 +2,34 @@
 #include <stddef.h>
 #include <string.h>
 #include <limits.h>
+#if defined(ASPECT_FILE_OPEN_PROBE)
+#include <dos.h>
+#include <io.h>
+#include <fcntl.h>
+#include <errno.h>
+/* Explicit diagnostic build only. Raw DOS logging needs no stdio allocation.
+ * A failed fopen is compared with a read-only DOS open of the same path. */
+static void open_probe(const char *path,FILE *handle,int saved_errno)
+{
+    unsigned record[48],i,status,written;int raw,log;
+    unsigned char *name=(unsigned char *)(record+7);
+    memset(record,0,sizeof(record));record[0]=0x4f46;record[1]=1;
+    record[2]=handle!=0;record[3]=(unsigned)saved_errno;record[4]=65535U;
+    for(i=0;i<81 && path[i];++i)name[i]=(unsigned char)path[i];
+    record[6]=i;
+    if(!handle){
+        status=_dos_open(path,O_RDONLY|O_BINARY,&raw);record[4]=status;
+        if(!status)record[5]=_dos_close(raw);
+    }
+    status=_dos_open("D:\\FOPEN.BIN",O_WRONLY|O_BINARY,&log);
+    if(status)status=_dos_creat("D:\\FOPEN.BIN",0,&log);
+    if(!status){
+        if(lseek(log,0L,SEEK_END)>=0)_dos_write(log,record,sizeof(record),&written);
+        _dos_close(log);
+    }
+    errno=saved_errno;
+}
+#endif
 #if !defined(__WATCOMC__)
 #include <stdint.h>
 #endif
@@ -69,6 +97,9 @@ unsigned aspect_file_open(aspect_file *file,const char *path)
     if(file->handle)return ASPECT_FILE_STATE;
     if(!path || !*path)return ASPECT_FILE_ARGUMENT;
     handle=fopen(path,"rb");
+#if defined(ASPECT_FILE_OPEN_PROBE)
+    open_probe(path,handle,errno);
+#endif
     if(!handle){file->status=ASPECT_FILE_IO;return ASPECT_FILE_IO;}
     file->handle=handle;file->native.flags=0;file->status=ASPECT_FILE_OK;
     reset_window(file);return ASPECT_FILE_OK;

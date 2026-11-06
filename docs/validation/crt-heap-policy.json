@@ -1,0 +1,126 @@
+{
+  "passed": true,
+  "application_accepted": false,
+  "deployment_changed": false,
+  "terminal_sha256": "93f08d0cf3fd4174718e7ca727758ddb63f4e6f0ecd1471b3fb00c41c1f4d800",
+  "reviewed_interpreter_sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+  "original_failure": {
+    "path": "build/bbs-lab/results/synchronet/aspect-crt-startup-message-20261106/proxy-integration.json",
+    "sha256": "8805af3e0bac59461ed7184876d3f6f2e797b0d030468b0e3743d70592bfbdc1"
+  },
+  "capture": {
+    "path": "build/bbs-lab/results/synchronet/aspect-crt-startup-message-20261106/ADMIT.BIN",
+    "sha256": "b5314a93d05c29d1707b85146bce707ee628265c42532e238018ca46cfb03e4c"
+  },
+  "DOS_EXEC_succeeded": true,
+  "CRT_startup_message": "Not enough memory to allocate file structures",
+  "child_exit1_is_not_proof_of_ASPECT_RUN_OPEN": true,
+  "wrapper_validation": {
+    "path": "build/admission-crt-wrapper-20261106/result.json",
+    "sha256": "7c22fe7e7e85cccf9dc18070fddd5bbf2c47fa7ce7dc268106eca57efe68f318"
+  },
+  "heap_variants": [
+    {
+      "policy": 128,
+      "binary_sha256": "b18074a17be3a6bb348ac31bd85859fd8e5e52670fbad99e99a0c8ecb1aab1a1",
+      "changed_offsets": [
+        86510,
+        86511
+      ],
+      "heap_word_offset": 86510,
+      "all_other_bytes_identical": true
+    },
+    {
+      "policy": 256,
+      "binary_sha256": "37e36ad0ca869e486754d2c93cb345803f32b41084eea065c1bf3f72a7976d1e",
+      "changed_offsets": [
+        86511
+      ],
+      "heap_word_offset": 86510,
+      "all_other_bytes_identical": true
+    }
+  ],
+  "repeated_script_and_stream_controls": [
+    {
+      "label": "editor128",
+      "accepted": false,
+      "report": {
+        "path": "build/heap-policy-final-editor128-20261106/result.json",
+        "sha256": "63877ccdbb53fa689e7a10e31d7ec01099578cfbfcd79f326b14782f08a5d019"
+      },
+      "failed_checks": [
+        "all_six_streams",
+        "six_files"
+      ]
+    },
+    {
+      "label": "editor256",
+      "accepted": false,
+      "report": {
+        "path": "build/heap-policy-final-editor256-20261106/result.json",
+        "sha256": "4c8dc702f3b3c4b6c4d65a7bad77315cbf56adb9845a76d24a6c324f43bdaad7"
+      },
+      "failed_checks": [
+        "four_calls",
+        "all_six_streams",
+        "missing_and_recovered",
+        "first_file",
+        "recovery_file",
+        "six_files"
+      ]
+    },
+    {
+      "label": "reviewed128",
+      "accepted": false,
+      "report": {
+        "path": "build/heap-policy-final-reviewed128-20261106/result.json",
+        "sha256": "cff68a2557d6f93ac7ff6bba6e329dc3fee97ebb5bfc62bf1ff187203adf23d1"
+      },
+      "failed_checks": [
+        "all_six_streams",
+        "six_files"
+      ]
+    },
+    {
+      "label": "reviewed512",
+      "accepted": true,
+      "report": {
+        "path": "build/heap-policy-final-reviewed512-20261106/result.json",
+        "sha256": "9b6a3c1ef4389f0a8f9bcd35359b6a88e8c2d6a47a21f7758ec81d6e93525e4f"
+      },
+      "failed_checks": []
+    }
+  ],
+  "heap128_BBS_success": {
+    "path": "build/bbs-lab/results/synchronet/aspect-heap128-sync-20261106/proxy-integration.json",
+    "sha256": "34aa21a2b61db1389a2ef570d373526c48d5a5f24041eab932dc03f6c572dc99"
+  },
+  "independent_screen": {
+    "path": "build/bbs-lab/results/synchronet/aspect-heap128-sync-20261106/screen-reference-audit.json",
+    "sha256": "012ac9d976f104f2a379f0c93d6f07b5dd05cafd3a6c716805311ec97e5e4a70"
+  },
+  "heap256_BBS_failure": {
+    "path": "build/bbs-lab/results/synchronet/aspect-heap256-sync-20261106/proxy-integration.json",
+    "sha256": "f139212c802dba6be0ae39715376447836f0c3d718602c02a443548bd0228cd7"
+  },
+  "oversized_diagnostic_DOS_EXEC_error8": {
+    "path": "build/bbs-lab/results/synchronet/aspect-crt-open-reason-20261106/proxy-integration.json",
+    "sha256": "ed5f2a819f82e6b15baa98dcf14956668910943b485f0f54f44b045abbc0a294"
+  },
+  "file_probe_unit": {
+    "path": "build/file-open-probe-unit-final-20261106/result.json",
+    "sha256": "c0794acc5d5f07131d76902dca53b02dd4fc42d7913c878a6c4a8da5059cefe7"
+  },
+  "default_policy_retained": 512,
+  "sources": {
+    "standalone/record_crt_heap_policy.py": "72091eb11794183c3123b05aef024e3770fa469fa9704fb4a2e04efd8906b015"
+  },
+  "limits": [
+    "Raw observed startup message establishes CRT file-structure allocation failure, not ASPECT script-open failure.",
+    "128-byte growth is rejected despite full Synchronet editor success because six concurrent script streams fail in both tested parents.",
+    "256-byte growth is rejected for startup failure; the default512-byte reviewed runner retains all six streams in its paired reviewed parent.",
+    "Instrumented runner is too large and fails DOS EXEC; it supplies no evidence about the original fopen path.",
+    "Current default source reproduces the exact reviewed interpreter; optional probes/tuning are not selected or deployed.",
+    "Parent memory recovery and subsequent compatibility gates remain open; no physical acceptance."
+  ]
+}

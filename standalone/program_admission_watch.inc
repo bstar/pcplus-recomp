@@ -4,8 +4,69 @@ admission_old: dd 0
 admission_old21: dd 0
 admission_data: dw 0xad41,1,0,0,0,0,0,0,0,0,0,0,0,0
 admission_open: dw 0,0,0,0
+admission_crt_seen: dw 0
+admission_crt_text: times 64 db 0
+admission_crt_prefix: db 'Not enough memory'
 admission_hook21:
  pushf
+ cmp ah,09h
+ je .message
+ cmp ah,40h
+ jne .open
+ cmp cx,17
+ jae .message
+ jmp .chain
+.message:
+ push ax
+ push cx
+ push si
+ push di
+ push bp
+ mov bp,sp
+ mov si,dx
+ cmp si,0xffc0
+ ja .message_done
+ mov di,admission_crt_prefix
+ mov cx,17
+.compare:
+ mov al,[si]
+ cmp al,[cs:di]
+ jne .message_done
+ inc si
+ inc di
+ loop .compare
+ mov word [cs:admission_crt_seen],1
+ mov si,dx
+ mov di,admission_crt_text
+ mov cx,64
+ cmp ah,40h
+ jne .copy_message
+ mov cx,[ss:bp+6]
+ cmp cx,64
+ jbe .copy_message
+ mov cx,64
+.copy_message:
+ mov al,[si]
+ or al,al
+ jz .message_done
+ cmp al,'$'
+ je .message_done
+ cmp al,13
+ je .message_done
+ cmp al,10
+ je .message_done
+ mov [cs:di],al
+ inc si
+ inc di
+ loop .copy_message
+.message_done:
+ pop bp
+ pop di
+ pop si
+ pop cx
+ pop ax
+ jmp .chain
+.open:
  cmp ah,3dh
  je .inspect
  cmp ax,6c00h
@@ -158,7 +219,7 @@ admission_collect:
  jc .done
  mov bx,ax
  mov dx,admission_data
- mov cx,36
+ mov cx,102
  mov ah,40h
  int 21h
  mov ah,3eh

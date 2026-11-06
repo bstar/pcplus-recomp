@@ -11,7 +11,10 @@
 #include <stdlib.h>
 /* Keep startup heap slack bounded while a retained terminal and this VM
  * invoke the sibling DOS compiler. This changes growth, not stack or limits. */
-unsigned _WCDATA _amblksiz=512;
+#ifndef ASPECT_HEAP_GROWTH_BYTES
+#define ASPECT_HEAP_GROWTH_BYTES 512
+#endif
+unsigned _WCDATA _amblksiz=ASPECT_HEAP_GROWTH_BYTES;
 #endif
 #include <string.h>
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)

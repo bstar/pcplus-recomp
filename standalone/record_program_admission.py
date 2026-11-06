@@ -18,8 +18,8 @@ def main():
     assert output.is_relative_to(ROOT / 'build') and not output.exists()
     captured = session / 'ADMIT.BIN'
     raw = captured.read_bytes()
-    assert len(raw) == 36
-    words = struct.unpack('<18H', raw)
+    assert len(raw) in (36,102)
+    words = struct.unpack_from('<18H', raw)
     assert words[:2] == (0xad41, 1) and all(words[i] for i in [2, 3, 4])
     assert words[5] == 5 and words[6:9] == (0, 0, 1)
     assert words[10:14] == (0, 0, 1, words[9])
@@ -48,7 +48,7 @@ def main():
                   capture=bind(captured), wrapper_checks=bind(wrapper), observer_words=words,
                   observer_segment=observer_segment, keyboard_helper_segment=helper_segment,
                   DOS_EXEC_succeeded=True, DOS_EXEC_error=0, child_termination_type=0,
-                  child_exit_code=1, ASPECT_exit_meaning='ASPECT_RUN_OPEN: cannot open script',
+                  child_exit_code=1, ASPECT_exit_meaning='Exit1 alone does not establish entry to ASPECT main or ASPECT_RUN_OPEN.',
                   matching_script_open_calls=words[14],
                   last_open=dict(function=words[17], carry=bool(words[15] & 1), ax=words[16]) if words[14] else None,
                   hardware_restored=True, application_accepted=False, deployment_changed=False,

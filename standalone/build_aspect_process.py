@@ -7,7 +7,9 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None):
+    assert heap_growth_bytes is None or heap_growth_bytes in (128,256,512)
+    assert heap_growth_bytes is None or register_handoff
     if notice_help:assert notice_input
     if help_resource:assert notice_help
     if output is None:output=ROOT/'build/aspect-process-parent' if parent_render else OUT
@@ -121,6 +123,8 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
         resource=generate(output/'LOCHELP.HLP');sources += [ROOT/n for n in resource['sources']]
         (output/'help-resource.json').write_text(json.dumps(resource,indent=2)+'\n')
     extension=dict(output=output,objects=objects,c_sources=c_sources,sources=sources,parent_render=parent_render,break_owner=break_owner,program_far=True,notice_bank=notice_bank,focused_notice=focused_notice,notice_sound=notice_sound,notice_input=notice_input,notice_help=notice_help,help_resource=help_resource,serial_bank=serial_bank,register_handoff=register_handoff,custom_irq=custom_irq)
+    extension['file_open_probe']=file_open_probe
+    extension['heap_growth_bytes']=heap_growth_bytes
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
     if notice_bank:

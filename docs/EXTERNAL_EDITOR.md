@@ -81,6 +81,44 @@ of this optional editor candidate.
 
 ## Enigma, transfer and recovery composition
 
+**Correction from the [CRT startup receipt](validation/crt-heap-policy.json):**
+exit1 in the earlier launch diagnostic was incorrectly interpreted as
+`ASPECT_RUN_OPEN`. The unchanged23caac93 runner actually emits
+`Not enough memory to allocate file structures`. The passive observer now
+captures that exact message while preserving the complete hardware snapshot.
+It is a C-runtime stream-initialization failure, before the script-open path.
+Open Watcom's [stream initializer](https://github.com/open-watcom/open-watcom-v2/blob/master/bld/clib/streamio/c/initfile.c)
+corroborates the message and fatal exit1. The earlier receipt's typed exit
+interpretation is superseded; raw DOS-success/exit-code observations stand.
+
+An optional `file_open_probe=True` ASPECT build records path/errno and a raw
+read-only DOS comparison using `D:\FOPEN.BIN`. Its real DOS existing/missing-file
+component tests pass. However, that enlarged interpreter fails DOS EXEC with
+error8 in this constrained parent, so its missing log establishes nothing about
+the original fopen call. This diagnostic build remains explicitly marked and
+unselected. Twenty-four assembled observer cases check open/message filtering,
+success/error carry, register/stack/FLAGS preservation and message capture.
+
+Controlled128/256-byte `_amblksiz` variants change only their heap-growth word;
+all other executable bytes, stack and compiled stream capacity remain identical.
+The128 variant completes the full Synchronet graphics-child/editor test and
+matches1920 independent reference cells. It nevertheless fails the simultaneous
+six-stream test in both the editor parent and reviewed parent. The256 variant
+does not start successfully. Both variants are rejected. The default512 runner
+still reproduces the exact reviewed executable and passes the paired reviewed
+parent's repeated calls, six simultaneous streams and missing-file recovery.
+Neither a passing BBS workflow alone nor a reduced startup allocation closes
+the required interpreter-capacity gate.
+
+The existing register-handoff test initially used incompatible display defaults;
+an explicit valid-display experiment then reached the parent but refused nested
+PROGRAM at opcode9B/state10. These attempts are excluded, rather than presented
+as register acceptance. Nested PROGRAM remains a separate composition gap.
+The focused repeated-call/stream producer uses actual compiled scripts and
+owned files; it records both passing and failing cases. Parent memory recovery
+is the next gate. The reviewed512-byte policy, package selection and installed
+system remain unchanged.
+
 The later [launch diagnostic](validation/program-admission.json) corrects the
 initial startup interpretation below. DOS EXEC succeeds with no DOS error;
 ASPECT terminates normally with exit1, `ASPECT_RUN_OPEN` (cannot open script).

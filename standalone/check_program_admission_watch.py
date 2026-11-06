@@ -31,7 +31,8 @@ def main():
     entry, old, report = struct.unpack_from('<3H', data)
     cases = []
     for path, function in [(b'D:\\SYNC.ASX\0', 0x3d00), (b'D:\\SYNC.ASX\0', 0x6c00), (b'OTHER.DAT\0', 0x3d00),
-                           (b'D:\\SYNC.ASX\0', 0x4300)]:
+                           (b'D:\\SYNC.ASX\0', 0x4300),
+                           (b'Not enough memory\0', 0x0900), (b'Not enough memory\0', 0x4000)]:
         for error, result in [(False, 6), (True, 2), (True, 5), (True, 8)]:
             u = Uc(UC_ARCH_X86, UC_MODE_16)
             u.mem_map(0, 0x100000)
@@ -69,6 +70,11 @@ def main():
             assert recorded[0] == int(matched)
             if matched:
                 assert recorded[1] & 1 == error and recorded[2] == result and recorded[3] == function
+            message = bytes(u.mem_read(0x10000 + report + 8, 66))
+            if function in (0x0900, 0x4000):
+                assert message[:2] == b'\x01\0' and message[2:19] == b'Not enough memory'
+            else:
+                assert message == bytes(66)
             cases.append(dict(path=path.rstrip(b'\0').decode(), function=function,
                               error=error, result=result, passed=True))
     result = dict(passed=True, cases=cases,

@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
+captures the unchanged runner's file-structure allocation failure, correcting
+the earlier script-open interpretation of exit1. Smaller128/256 heap-growth
+variants are rejected:128 passes Synchronet but fails six simultaneous streams;
+256 fails startup. Default512 remains byte-identical and passes the reviewed
+parent's capacity control. Parent memory recovery is still required.
+
 The [Synchronet launch diagnostic](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
 now rules out failed DOS EXEC in its observed session: ASPECT launches and exits
 with cannot-open-script status. No owned-script DOS3D/6C open was observed;
