@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "scope": "Opt-in Chat physical-TX parent funding only; compiler choices change no stacks, heap quantum, streams or feature capacities. Application acceptance is separate.",
+  "compiler_options": {
+    "chat-text-size": ["-os", "-oe=0"]
+  },
+  "sources": {
+    "src/directory/directory_dos.c": {
+      "profile": "chat-text-size",
+      "source_sha256": "2e39893159d4c3744c58047500a528089607671555af98ba85475950c5a9b887",
+      "control_code_data_bytes": [859, 0],
+      "optimized_code_data_bytes": [835, 0]
+    },
+    "src/filesystem/file_dialog.c": {
+      "profile": "chat-text-size",
+      "source_sha256": "2478cc47cbf724ec9455326a608d536df1acc7f05866a9cb75de075b16876701",
+      "control_code_data_bytes": [4528, 0],
+      "optimized_code_data_bytes": [4486, 0]
+    },
+    "src/capture/capture_file.c": {
+      "profile": "chat-text-size",
+      "source_sha256": "a6301ab3e690380f783b015b1b77492878b07f5ddb53527f10d3a87fd971206e",
+      "control_code_data_bytes": [2484, 968],
+      "optimized_code_data_bytes": [2409, 968]
+    }
+  }
+}

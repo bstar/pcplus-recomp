@@ -1,7 +1,12 @@
 # Experimental physical TEXT transmit service
 
+This records the initial unbudgeted experiment. The subsequent
+[funded build](CHAT_TEXT_FUNDING.md) restores the nested ASPECT gate using
+source-hash-pinned compiler choices; the negative results below remain valid
+for the explicitly identified earlier images.
+
 `--chat-text-transport` links an optional service for the recovered Chat TEXT
-sender. **Keep it disabled for application use: nested ASPECT RUN regresses.**
+sender. **The unbudgeted images identified below fail nested ASPECT RUN.**
 It does not enable Alt-number shortcuts, select API0102, change the selected
 connection package or update the physical PC.
 
@@ -57,10 +62,11 @@ no product RX fix was made. An initial stale interpreter manifest was rejected
 before DOS; actual tests use the current-source cbdee194 build. A first cold
 receipt mistyped the header name; final checks use `chat-module/expected.h`.
 
-Next isolate native process allocation/failure and fund parent memory without
-reducing stacks, streams or capacities. Restore the ASPECT gate before promoting
-this flag, then finish original echo, bounded delays and foreground TEXT keys.
-Full BBS/package/deployment/physical acceptance remains open.
+The [funding follow-up](CHAT_TEXT_FUNDING.md) restores ASPECT admission without
+reducing stacks, streams or capacities and retains a controlled padding failure.
+Original echo, bounded delays and foreground TEXT keys remain unfinished.
+General low-memory failure handling and final package/deployment/physical
+acceptance remain open.
 
 See the [receipt](validation/chat-text-transport.json),
 [sender](CHAT_TEXT.md) and [foreground core](CHAT_FOREGROUND_CORE.md).

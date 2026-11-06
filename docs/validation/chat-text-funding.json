@@ -1,0 +1,119 @@
+{
+  "status": "physical-TX-parent-memory-funding-verified-foreground-TEXT-services-unfinished",
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "foreground_TEXT_enabled": false,
+  "full_original_Chat_acceptance": false,
+  "full_candidate_acceptance": false,
+  "binary_sha256": "5c4f5c94984ec394d75d492fe6b15e53a1a60c1978684ddf4f91f7385802105e",
+  "module_sha256": "f0e91e2b1aff29e466d68bbe7d1a267c57382126dce21b2c6759aff6ce31850f",
+  "minimum_module_bytes": 479376,
+  "preceding_foreground_minimum_bytes": 479408,
+  "unbudgeted_adapter_minimum_bytes": 479520,
+  "resident_CS_bytes": 65440,
+  "near_bytes": 65504,
+  "retained_parent_paragraphs": 29976,
+  "stack_bytes": 8192,
+  "compiler_choices": {
+    "sources": [
+      "src/directory/directory_dos.c",
+      "src/filesystem/file_dialog.c",
+      "src/capture/capture_file.c"
+    ],
+    "options": [
+      "-os",
+      "-oe=0"
+    ],
+    "flag_scoped": true,
+    "base_profile_unchanged": true
+  },
+  "capacities_unchanged": {
+    "near_bytes": 65504,
+    "far_bytes": 71192,
+    "history_bytes": 63000,
+    "native_reset_private_stack_bytes": 4096,
+    "native_reset_shadow_bytes": 6600,
+    "native_reset_workspace_bytes": 65504,
+    "snapshot_bytes": 2000,
+    "far_ui_storage_bytes": 24000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_row_index_bytes": 494
+  },
+  "source_export_files": 658,
+  "ASPECT_checks": 26,
+  "Synchronet_checks": 25,
+  "Enigma_checks": 16,
+  "default_flag_disabled_sha256": "5875536a193a3f7db696307dfb358bc0adc1b3d3fdae44b7eeb40980d9198fef",
+  "padding_control": {
+    "unreachable_bytes": 144,
+    "minimum_module_bytes": 479520,
+    "binary_sha256": "6de57747b8c5d9bc6d2f724c9d329be9f4f6a5df1a67d254040fd6f9fa2720fa",
+    "ASPECT_passed": false,
+    "compiler_choices_unchanged": true,
+    "diagnostic_only": true
+  },
+  "reports": {
+    "budget": {
+      "path": "build/chat-text-funded-budget-20261106/result.json",
+      "sha256": "3b99ac3838b6d2a37a28975fadf3b8718262b01a0dc5566cef134c81d0eb09a8"
+    },
+    "ASPECT_nested": {
+      "path": "build/chat-text-funded-aspect-20261106/result.json",
+      "sha256": "d80b08d482a6108d93ad2c71715e829414b027eed4b1af7265261268fe30d18b"
+    },
+    "physical_TX_CPU": {
+      "path": "build/chat-text-funded-replay-20261106/result.json",
+      "sha256": "e0eeec68a413e01e8785cd348062d8c480c8afb0c3fc117b6c47d720e155dac0"
+    },
+    "normal_main_prefix": {
+      "path": "build/chat-text-funded-main-20261106/result.json",
+      "sha256": "e191d551d7043c4e08a6cb79696a125ab696c8add17ea405a7dc919b84dc2d66"
+    },
+    "file_dialog": {
+      "path": "build/chat-text-funded-file-dialog-20261106/result.json",
+      "sha256": "fec752907753e39b23231486b9f2aea57f83e2fe02eae249210d728a38dd6ba7"
+    },
+    "directory_backend": {
+      "path": "build/chat-text-funded-directory-io-20261106/checks.json",
+      "sha256": "39de3f77188c3973aac77f52fe9cf53a13b680fb8c70ea85d9643b55fc41da9a"
+    },
+    "capture_history_parent": {
+      "path": "build/chat-text-funded-sink-20261106/result.json",
+      "sha256": "8c628f0fec25fe83a300d622eafea719bc8799efbc268dd9271e81d335d367cd"
+    },
+    "listing_RX_sinks": {
+      "path": "build/chat-text-funded-file-sinks-20261106/result.json",
+      "sha256": "65f54ad269b646c10af071c89120725a18d942e22e69a546de42653285114d4a"
+    },
+    "clean_source": {
+      "path": "build/chat-text-funded-cold-20261106/result.json",
+      "sha256": "b5b2f0c788d385a850f6b832340cabb5eda7bdec86ecff7c433deac9e48cdf67"
+    },
+    "controlled_padding": {
+      "path": "build/chat-text-funded-padding-control-20261106/result.json",
+      "sha256": "f756f7128d192384c9acac2bd8dba37599e636e02240ec6f86f87b8fe8e19c35"
+    },
+    "synchronet_editor_viewer": {
+      "path": "build/bbs-lab/results/synchronet/chat-text-funded-sync-20261106/proxy-integration.json",
+      "sha256": "21c847638e5064762197430ce07b607d8217e33593dc6cd112ed860fd607bd47"
+    },
+    "enigma_carrier_retry": {
+      "path": "build/bbs-lab/results/enigma/chat-text-funded-carrier-20261106/carrier-checks.json",
+      "sha256": "6a0046b9b22f78a37a0a3764e06d35832b50ff88b496c5ebe185d4af2c4e62ed"
+    },
+    "enigma_independent_audit": {
+      "path": "build/chat-text-funded-carrier-audit-20261106/result.json",
+      "sha256": "cba37121163a3b8730fce69532c79fe3f14d123f9143bc2f317d88408b5bd950"
+    }
+  },
+  "generic_low_memory_failure_fixed": false,
+  "earlier_unattributed_redial_miss_resolved": false,
+  "remaining": [
+    "Original0610 echo context and serviced delay completion",
+    "API0102 frontend direct-TEXT scheduling and ten shortcuts",
+    "Chat Help/Alt-Z/send-mode/UI and broader failure/geometry coverage",
+    "Full final BBS/package/source/deployment/physical gates",
+    "Generic low-memory process/popup error behavior",
+    "Earlier unattributed redial miss"
+  ]
+}

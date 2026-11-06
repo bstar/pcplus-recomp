@@ -108,6 +108,6 @@ broader failure/geometry/mouse coverage and final BBS/package/physical gates
 remain open. No foreground shortcut, selected package, physical PC or production
 bridge/server was changed by this component checkpoint.
 
-The next [physical TX adapter experiment](CHAT_TEXT_TRANSPORT.md) passes its
-linked UART boundaries but fails nested ASPECT RUN. It stays disabled and does
-not complete those foreground integration gates.
+The [physical TX adapter experiment](CHAT_TEXT_TRANSPORT.md) passes its linked
+UART boundaries. Its initial nested ASPECT failure is addressed by the
+[funded build](CHAT_TEXT_FUNDING.md); foreground integration remains unfinished.

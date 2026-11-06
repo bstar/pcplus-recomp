@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Source-built DOS directory streaming IO tests; synthetic files and DOS faults."""
-import hashlib,json,os,re,subprocess
+import argparse,hashlib,json,os,re,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/directory-dos'
 COMMON=r'''
@@ -149,13 +149,24 @@ def payload():
   at=250+(entry-1)*114;data[at:at+2]=entry.to_bytes(2,'little')
  return bytes(data)
 def main():
+ global OUT
+ parser=argparse.ArgumentParser(description=__doc__)
+ parser.add_argument('--output',type=Path,default=OUT)
+ parser.add_argument('--chat-text-size',action='store_true',help='Check the source-hash-pinned Chat transport compiler choice')
+ args=parser.parse_args();OUT=args.output.resolve();assert OUT.is_relative_to(ROOT/'build')
+ compiler_options=[]
+ if args.chat_text_size:
+  profile=json.loads((ROOT/'src/chat/text_transport_size.json').read_text())
+  entry=profile['sources']['src/directory/directory_dos.c']
+  assert hashlib.sha256((ROOT/'src/directory/directory_dos.c').read_bytes()).hexdigest()==entry['source_sha256']
+  compiler_options=profile['compiler_options'][entry['profile']]
  OUT.mkdir(parents=True,exist_ok=True)
  macros={name:int(value) for name,value in re.findall(r'^%define (DD_\w+) (\d+)$',(ROOT/'src/directory/directory_dos.inc').read_text(),re.M)}
  for name,value in {'DD_ENTRY_NUMBER':0,'DD_HEADER':2,'DD_RECORD':252,'DD_SELECTION_SIZE':366,'DD_PAGE_FIRST':0,'DD_PAGE_COUNT':2,'DD_PAGE_HEADER':4,'DD_PAGE_RECORDS':254,'DD_PAGE_CAPACITY':10,'DD_PAGE_SIZE':1394,'DD_FILE_SIZE':23050,'DD_RESULT_SIZE':8}.items():assert macros[name]==value
  (OUT/'real.c').write_text(NORMAL);(OUT/'fault.c').write_text(FAULT)
  source=ROOT/'src/directory/directory_dos.c'
  for stem,host,extra in [('DIRREAL','real.c',[]),('DIRFAULT','fault.c',['-d_dos_open=directory_fault_open','-d_dos_read=directory_fault_read','-d_dos_close=directory_fault_close'])]:
-  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192','-i='+str(ROOT/'src/directory'),'-fm='+stem+'.map','-fe='+stem+'.EXE',*extra,str(source),str(OUT/host)],cwd=OUT,check=True)
+  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192',*compiler_options,'-i='+str(ROOT/'src/directory'),'-fm='+stem+'.map','-fe='+stem+'.EXE',*extra,str(source),str(OUT/host)],cwd=OUT,check=True)
  data=payload()
  for name,value in [('NORMAL.DIR',data),('SHORT.DIR',data[:-1]),('LONG.DIR',data+b'X'),('EMPTY.DIR',b'')]: (OUT/name).write_bytes(value)
  before={name:hashlib.sha256((OUT/name).read_bytes()).hexdigest() for name in ('NORMAL.DIR','SHORT.DIR','LONG.DIR','EMPTY.DIR')}
@@ -170,6 +181,8 @@ def main():
  assert 'DIRECTORY FAULT 34 checks 0 failures' in logs['FAULT.TXT']
  assert before=={name:hashlib.sha256((OUT/name).read_bytes()).hexdigest() for name in before}
  inputs=[source,ROOT/'src/directory/directory_dos.h',ROOT/'src/directory/directory_dos.inc',Path(__file__).resolve()]
+ if args.chat_text_size:inputs.append(ROOT/'src/chat/text_transport_size.json')
  result={'passed':True,'selection_bytes':366,'page_bytes':1394,'real_DOS_checks':10,'injected_service_checks':34,'selected_entries_tested':200,'page_start_positions_tested':200,'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},'binary_sha256':{name:hashlib.sha256((OUT/name).read_bytes()).hexdigest() for name in ('DIRREAL.EXE','DIRFAULT.EXE')},'synthetic_files_unchanged':before,'scope':'Actual DOS8086 streaming selected-entry/page IO with synthetic files; separate actual compiled backend has declared injected DOS open/read/close faults. No originals, private directories, semantic/UI/password display or file writes from reader.'}
+ result['compiler_options']=compiler_options
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()
