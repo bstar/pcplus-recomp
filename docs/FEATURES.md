@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [reviewed viewer connection candidate](VIEWER_CONNECTION_CANDIDATE.md) now
+has a tracked one-command Nix builder and deterministic public ZIP. Five
+executables and ten package files reproduce from public source; three DOS
+launchers and actual stock Enigma65539-byte upload/download/cancel-retry pass.
+The tested bridge size-negotiation snapshot differs from the workstation
+checkout, and physical acceptance/full original parity remain open.
+
 The unchanged corrected viewer candidate now passes the
 [18-case carrier-recovery matrix](FILE_VIEWER_EXTERNAL.md#carrier-loss-during-transfers-and-children):
 fourteen X/Y/ZMODEM loss cases, two running text/graphics children, and two

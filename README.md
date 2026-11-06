@@ -1,5 +1,11 @@
 # PCPlus DOS reconstruction
 
+[Build the reviewed viewer connection candidate](docs/VIEWER_CONNECTION_CANDIDATE.md)
+with `./tools/build-connection-candidate`. Its five executables, ten public files
+and ZIP reproduce exactly; packaged DOS launchers and stock Enigma large-file
+upload/download/cancel-retry pass. This candidate remains staged, with the tested
+bridge snapshot and physical acceptance boundaries documented separately.
+
 [The original startup layout](docs/SPECIAL_EDITION.md) is restored with the LoC
 version annotation and installed at `C:\PCPLUS`. Its matched build passes
 source-only reproduction, original-layout checks, DOS startup/connection tests

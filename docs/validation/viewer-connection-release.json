@@ -1,0 +1,117 @@
+{
+  "passed": true,
+  "binary_sha256": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+  "package": {
+    "manifest": {
+      "path": "build/viewer-v6-package-20261105/manifest.json",
+      "sha256": "79b221cde1bdd2b292e569f8663fd0698ba10861dff49e777d3fd25065d76c0c"
+    },
+    "source_commit": "e74425eab020bec53f40ff25049f2d45b082e21e",
+    "files": {
+      "ASPCOMP.EXE": "ae0fe208df788b0b3023d723d80afb02443d36751c6bee301402b7eec321b142",
+      "ASPECT.EXE": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+      "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+      "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+      "README.TXT": "18ae8609bd2fb97fc79166830ccdf7c23f4e6d1356d7eee726410bd125f9b414",
+      "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+      "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+      "TERMINAL.EXE": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+      "VERSION.TXT": "5b579d6030dc68f7cba186c4b099a6c2a3a6f4861868f578743b36f79bfe7014",
+      "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+    }
+  },
+  "public_source_build": {
+    "path": "build/viewer-v6-package-source-proof-20261105/result.json",
+    "sha256": "67e1325f579a563aee3ae2e20a9105d374b786644725abcd51135544be5e3bdc"
+  },
+  "archive": {
+    "report": {
+      "path": "build/viewer-v6-package-archive-20261105/result.json",
+      "sha256": "787d1dce1753ea1ef8e109fccd50294182832055653c891f1f2b07c17bd5e7e8"
+    },
+    "file": {
+      "path": "build/viewer-v6-package-archive-20261105/PCPLUSSE.ZIP",
+      "sha256": "76da9ea0b6c5323606b6b2f6e621d810379bd6f934c94d87a04537d66e9939e2"
+    }
+  },
+  "launchers": [
+    {
+      "case": "splash",
+      "report": {
+        "path": "build/viewer-v6-package-splash-20261105/result.json",
+        "sha256": "8b300f2a2166c53a571e1282745697ea6028a59667f4dbcb0fc74f3dc81837f6"
+      },
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ]
+    },
+    {
+      "case": "setup",
+      "report": {
+        "path": "build/viewer-v6-package-setup-run-20261105/result.json",
+        "sha256": "c0cab2a758a6c45b456f38b35be112da3ce196497d30ce6e684c0284bd36c556"
+      },
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ]
+    },
+    {
+      "case": "script",
+      "report": {
+        "path": "build/viewer-v6-package-script-20261105/result.json",
+        "sha256": "53f3a72b8f72e95a62f5f390db5f5d14341f76155edb19fa7464566aefdeae5e"
+      },
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/XLT unchanged",
+        "packaged binaries unchanged",
+        "DOS precompilation produces exact ASX",
+        "script writes expected result"
+      ]
+    }
+  ],
+  "stock_enigma": {
+    "upload": {
+      "path": "build/viewer-v6-enigma-upload-audit-20261105/result.json",
+      "sha256": "0f4dd9ee9d88dbe0338b57f3d83d932c2803bc64dae372d311456aab0a030885"
+    },
+    "download": {
+      "path": "build/viewer-v6-enigma-download-audit-20261105/result.json",
+      "sha256": "9e17d27736123ddc9b420587cefc5897390568b254d68dd860f81e3a81f01477"
+    },
+    "cancel_retry": {
+      "path": "build/viewer-v6-enigma-cancel-retry-audit-20261105/result.json",
+      "sha256": "d67c44658cff22fcda0958cf1738b1ebb37d1018445b1fe5d38d9d78a31ae9c4"
+    },
+    "payload_bytes": 65539,
+    "payload_sha256": "c0b69410bb2d5b8c17d827aa876c94b5cbc47be7d8814ff662c909310a5c7fcc",
+    "partial_cancel_bytes": 4096
+  },
+  "card_written": false,
+  "selector_changed": false,
+  "sources": {
+    "standalone/record_viewer_release.py": "cc1dc38653fdec87b5751d0359038177022626a2f5828153c5d697a38d5f91c1",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55"
+  },
+  "original_inputs": [],
+  "limits": [
+    "This is a local connection-test candidate, not a published release or physical installation.",
+    "Real stock Enigma/sexyz and isolated SynthModem Telnet proxy are exercised through synthetic Hayes serial transport; SIP/audio/DSP/analog/Boca CTS acceptance remains open.",
+    "The accepted isolated bridge snapshot includes the menu-owned WindowSizeReply patch, which is absent from the workstation SynthModem checkout. These runs do not prove runtime equivalence to that checkout or deploy the patch.",
+    "Three launcher cases use dummy8086 COM3/IRQ5 UART fixtures; stock transfers use25 physical rows and24 logical rows.",
+    "The cancellation run receives the exact same large payload on retry in one DOS process and connection; it does not establish physical carrier-loss behavior.",
+    "Complete original PCPlus, compiler/ASPECT/emulation/protocol/Host parity remains open."
+  ]
+}
