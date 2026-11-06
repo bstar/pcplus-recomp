@@ -14,7 +14,10 @@ graphics workflows with the matched capability17 pair and exact final viewport;
 42 ownership checks and clean parent/child source exports pass. A separate
 386/UMB witness now verifies two full inner4000-byte screens and BIOS cursor/
 geometry pairs before outer return, with36 observer and7 rejection controls.
-Borrowed-active fault coverage, larger rows, BBS/transfer
+The [capability18 follow-up](SNAPSHOT_LEASE_FAULTS.md) tags pointer bytes, passes48
+ownership guards and twelve active-lease DIV cases (six phases, own/foreign DS),
+and refreshes43 register pairs plus clean source exports. Other fault/cancellation
+classes, larger rows, BBS/transfer
 regressions and physical acceptance remain open. The installed16 pair is unchanged.
 
 The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)

@@ -1,0 +1,398 @@
+{
+  "checkpoint_recorded": true,
+  "capability": 18,
+  "tagged_pointer_reply": "F000h OR byte",
+  "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+  "child_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+  "results": {
+    "owners": {
+      "path": "build/lease18-policy-final-20261106/result.json",
+      "sha256": "52f3a7e31b3562f6f352c1b857a75757c24599aaec41e0b61510381e456d0ca5",
+      "passed": true
+    },
+    "save": {
+      "path": "build/lease18-save-final-20261106/result.json",
+      "sha256": "25b488a1f8d8fc82b23c000d47d7bda81b889af6d7652e8993cb390c26d6c5fc",
+      "passed": true
+    },
+    "inner": {
+      "path": "build/lease18-inner-final-20261106/result.json",
+      "sha256": "e40d6eb6ce7e21283cf61af039cdf2bb05ce91e5414019e56e70b693d8ea672a",
+      "passed": true,
+      "capture": {
+        "passed": true,
+        "resident_segment": 52299,
+        "captures": [
+          {
+            "sequence": 0,
+            "mode": 3,
+            "columns": 80,
+            "rows": 25,
+            "font_height": 16,
+            "cursor": 15,
+            "cursor_shape": 1551,
+            "page": 0
+          },
+          {
+            "sequence": 1,
+            "mode": 3,
+            "columns": 80,
+            "rows": 25,
+            "font_height": 16,
+            "cursor": 15,
+            "cursor_shape": 1551,
+            "page": 0
+          },
+          {
+            "sequence": 2,
+            "mode": 3,
+            "columns": 80,
+            "rows": 25,
+            "font_height": 16,
+            "cursor": 15,
+            "cursor_shape": 1551,
+            "page": 0
+          },
+          {
+            "sequence": 3,
+            "mode": 3,
+            "columns": 80,
+            "rows": 25,
+            "font_height": 16,
+            "cursor": 15,
+            "cursor_shape": 1551,
+            "page": 0
+          }
+        ],
+        "identical_inner_screen_bytes": 8000,
+        "raw_sha256": "b9ef204d2f4983d6d66d5fad20d948dd03f39bf7a202ba04886f4885fe82a9c8",
+        "scope": "Two inner pre/post PROGRAM pairs, each4000 screen bytes plus BIOS mode/geometry/cursor/shape/page, captured on owned file-open requests before outer ASPECT return. No injected replies or drawing."
+      }
+    },
+    "variants": {
+      "path": "build/lease18-variant-check-20261106/result.json",
+      "sha256": "c7e5027510dddd3f5f65d33e1fd6e0cc36b0fdd135d3990583eb4fe33ae3337d",
+      "passed": true
+    },
+    "source_parent": {
+      "path": "build/lease18-source-parent-20261106/result.json",
+      "sha256": "9c4301e4cdd3a2532447084286721f38febbe9cd947fd09a481f2283a4954136",
+      "passed": true,
+      "source_count": 2032
+    },
+    "source_own": {
+      "path": "build/lease18-source-own-20261106/result.json",
+      "sha256": "053a70baede99078f112e597e27f54149fcf9b0437967eb860b4ad3a75a0458b",
+      "passed": true,
+      "source_count": 1702
+    },
+    "source_foreign": {
+      "path": "build/lease18-source-foreign-20261106/result.json",
+      "sha256": "c3d14dd6c296b5fb6b8773f6a215df8958eb7ee6e709b56ce0a6ba4964036d5c",
+      "passed": true,
+      "source_count": 1702
+    },
+    "source_normal": {
+      "path": "build/lease18-source-normal-20261106/result.json",
+      "sha256": "8e32b6093a61ec70e1a9530b93620769e68ec47d2ef38db10755e27880b2b6c0",
+      "passed": true,
+      "source_count": 1702
+    },
+    "own_17": {
+      "path": "build/lease18-own-17-final-20261106/result.json",
+      "sha256": "62e65321c15f4beda1624b8b58579dc1657bb7e60092daf5a9f4fb2cbe7a5ad1",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 37355,
+        "ss": 37355,
+        "foreign_ds": false
+      },
+      "phase": 17,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 273
+    },
+    "own_5": {
+      "path": "build/lease18-own-5-final-20261106/result.json",
+      "sha256": "3c8f4ab420bba67adba51128e36b4df308922e1d946c76062385e1a68f613314",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 37355,
+        "ss": 37355,
+        "foreign_ds": false
+      },
+      "phase": 5,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 261
+    },
+    "own_6": {
+      "path": "build/lease18-own-6-final-20261106/result.json",
+      "sha256": "7963decdd832cad5de8fc5a19427c30f8fe2ae38ce175af0d60db8f6e49fe320",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 37355,
+        "ss": 37355,
+        "foreign_ds": false
+      },
+      "phase": 6,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 262
+    },
+    "own_8": {
+      "path": "build/lease18-own-8-final-20261106/result.json",
+      "sha256": "da43b1e06de14656c736046022222046f15292662721946bac49df16dfe726de",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 37355,
+        "ss": 37355,
+        "foreign_ds": false
+      },
+      "phase": 8,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 264
+    },
+    "own_10": {
+      "path": "build/lease18-own-10-final-20261106/result.json",
+      "sha256": "f08aef7282ce2cd0d93bb051ae44a848883624ebfa78845ab143a2a50546aa65",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 37355,
+        "ss": 37355,
+        "foreign_ds": false
+      },
+      "phase": 10,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 266
+    },
+    "own_22": {
+      "path": "build/lease18-own-22-final-20261106/result.json",
+      "sha256": "aa3da5c1e140fc94a6f5a59a0c8965b06d2114cccf37776f285d79b0e3e9c617",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 37355,
+        "ss": 37355,
+        "foreign_ds": false
+      },
+      "phase": 22,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 278
+    },
+    "foreign_17": {
+      "path": "build/lease18-foreign-17-final-20261106/result.json",
+      "sha256": "f0dfb754e088a288ee5ade5a7a586b3980b51c88c41f811bb8411100aa3a540e",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 47104,
+        "ss": 37356,
+        "foreign_ds": true
+      },
+      "phase": 17,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 273
+    },
+    "foreign_5": {
+      "path": "build/lease18-foreign-5-final-20261106/result.json",
+      "sha256": "2ed327fc9ad5f87f9d737627166cef83a95264c824bbbb0318a34eac457ae543",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 47104,
+        "ss": 37356,
+        "foreign_ds": true
+      },
+      "phase": 5,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 261
+    },
+    "foreign_6": {
+      "path": "build/lease18-foreign-6-final-20261106/result.json",
+      "sha256": "faaa1575f6d8ab36f607bb6629285712d611ddd7b34d504b353c7b036a3ae741",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 47104,
+        "ss": 37356,
+        "foreign_ds": true
+      },
+      "phase": 6,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 262
+    },
+    "foreign_8": {
+      "path": "build/lease18-foreign-8-final-20261106/result.json",
+      "sha256": "d9c9df5110ac42d444ba2bdf1ec6b46b8a2c50bc4fa8837481379d39c0ee9637",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 47104,
+        "ss": 37356,
+        "foreign_ds": true
+      },
+      "phase": 8,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 264
+    },
+    "foreign_10": {
+      "path": "build/lease18-foreign-10-final-20261106/result.json",
+      "sha256": "3fa104d1e089c09ccad6ff1a6688e18e954b800ea89fa98200f21dcf246555f4",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 47104,
+        "ss": 37356,
+        "foreign_ds": true
+      },
+      "phase": 10,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 266
+    },
+    "foreign_22": {
+      "path": "build/lease18-foreign-22-final-20261106/result.json",
+      "sha256": "5fc289c32e34c4fee09035d436d71c7282b1eceec55f68f0733abcf25b61b143",
+      "passed": true,
+      "fault_witness": {
+        "parent_lease_live": true,
+        "ds": 47104,
+        "ss": 37356,
+        "foreign_ds": true
+      },
+      "phase": 22,
+      "exit_errors": [
+        12,
+        0,
+        0,
+        0
+      ],
+      "marker": 278
+    },
+    "register_normal": {
+      "path": "build/register-handoff-dos/lease18-register-normal-final-20261106/result.json",
+      "sha256": "b7dea8719a1faae2884e67e821c3ea0a7d6d93985d89f5b0e606d1a062657d23",
+      "passed": true,
+      "snapshots": 5
+    },
+    "register_bad-token": {
+      "path": "build/register-handoff-dos/lease18-register-bad-token-final-20261106/result.json",
+      "sha256": "1a5e0708f67880f4341cd14ae6e64d26de755ecd7dd0d3a661b343d4724034bc",
+      "passed": true,
+      "snapshots": 7
+    },
+    "register_missing-script": {
+      "path": "build/register-handoff-dos/lease18-register-missing-script-final-20261106/result.json",
+      "sha256": "aa1746be317a7fde57a21db1c6c40c8969506d0257e89db5897301c75eaffe45",
+      "passed": true,
+      "snapshots": 5
+    },
+    "register_missing-helper": {
+      "path": "build/register-handoff-dos/lease18-register-missing-helper-final-20261106/result.json",
+      "sha256": "a99a830a19554170a98e67b54c2b81871801f63213a61b0e338e14fc15ea0b53",
+      "passed": true,
+      "snapshots": 5
+    },
+    "register_divide": {
+      "path": "build/register-handoff-dos/lease18-register-divide-final-20261106/result.json",
+      "sha256": "2422e6d633cb6ae1225ba9a9e07b7123b224572757b2bc7daab52b6642e4fcf8",
+      "passed": true,
+      "snapshots": 7
+    },
+    "register_budget": {
+      "path": "build/register-handoff-dos/lease18-register-budget-final-20261106/result.json",
+      "sha256": "af8a1e74eadf2a200ed2df8285027c901e4591b8b740a3333a53bcd4a0c922b0",
+      "passed": true,
+      "snapshots": 7
+    },
+    "register_abort": {
+      "path": "build/register-handoff-dos/lease18-register-abort-final-20261106/result.json",
+      "sha256": "b2fbe82a90c613e835cacee12d64815a506dab229f56812c2bd341187a6a0435",
+      "passed": true,
+      "snapshots": 7
+    },
+    "old-parent": {
+      "path": "build/lease18-old-parent-reject-20261106/result.json",
+      "sha256": "347004f67f19ee1db13e43b7d95eb4618d7a7e96f478bbffaf6a89541369fc5e",
+      "nominal_passed": false,
+      "expected_rejection_passed": true,
+      "scope": "No script output; all hardware/settings/input/final-viewport and later keyboard/hangup checks pass."
+    },
+    "old-child": {
+      "path": "build/lease18-old-child-reject-20261106/result.json",
+      "sha256": "bf49b536dea040089abd5cccb7176b1e08c8cc182c99b0981fd289656ad1bfdd",
+      "nominal_passed": false,
+      "expected_rejection_passed": true,
+      "scope": "No script output; all hardware/settings/input/final-viewport and later keyboard/hangup checks pass."
+    }
+  },
+  "divide_cases": 12,
+  "register_snapshot_pairs": 43,
+  "installed_candidate_changed": false,
+  "physical_runtime_verified": false,
+  "limits": [
+    "Real own-stack DIV in six phases with DS=SS and DS=B800h; separate386/XMS/UMB passive witness. Not typed-abort/dispatcher-longjmp/WAIT/cancellation or physical acceptance.",
+    "Only FAULT.ASX arms each diagnostic. FIRST.ASX normal recovery reuses the same terminal and retained frame.",
+    "The first aborted probe record overloads its status/display/serial words with live-lease boolean, measured DS and measured SS; stage100h+phase distinguishes it from a returned controller result.",
+    "Two representative diagnostic clean exports plus exact whole-image two-immediate comparisons cover the12images; not12independent clean exports.",
+    "Capability17 is superseded; installed capability16 pair is unchanged. Larger rows and Enigma/Synchronet/transfer gates remain open for18."
+  ],
+  "application_source_commit": "9034862"
+}

@@ -1,9 +1,14 @@
 # Retained snapshot lease for nested PROGRAM
 
-The opt-in capability17 pair completes the ordinary8086 nested SAVE workflow
+The initial opt-in capability17 pair completes the ordinary8086 nested SAVE workflow
 that failed under heap pressure. Parent `bad604fb` and ASPECT `7aa7066f` borrow
 an existing retained parent frame for the child's saved screen. No additional
 screen buffer is allocated. The installed capability16 package remains selected.
+
+That initial pair is superseded by the [tagged capability18 follow-up](SNAPSHOT_LEASE_FAULTS.md),
+TERMINAL61757956/ASPECTb61f3a03. It rejects typed errors as pointer data, passes48
+linked guards and twelve active-lease divide cases, and refreshes the normal
+screen/register/source checks. Earlier identities below remain historical evidence.
 
 The [receipt](validation/snapshot-lease.json) binds the matched products, actual
 DOS runs, linked ownership checks, version refusals and clean source exports.
@@ -21,7 +26,7 @@ Capability17 adds three scalar requests to the authenticated existing bridge:
 | Operation | Input | Result |
 | --- | --- | --- |
 |17 acquire |1..8000 bytes | Typed status; requires the attached child's SAVE PROGRAM lease |
-|18 pointer byte | Index0..3 | One byte of the retained offset/segment, only while owned |
+|18 pointer byte | Index0..3 | Capability18 returnsF000h OR byte; only while owned |
 |19 retire | Zero | Typed status; failed retirement retains ownership |
 
 Existing child PSP, DS=SS, service token/version and checked bridge-stack
@@ -92,7 +97,8 @@ Use `test_aspect_heap_startup_dos.py` with the same pair, `--nested-program
 
 ## Remaining release gates
 
-Faults/cancellation during an active borrowed lease, actual larger-row use,
+Further fault classes (typed abort, dispatcher unwind), WAIT/cancellation,
+actual larger-row use,
 Enigma/Synchronet rendering/input and
 transfer/cancellation/carrier-loss regressions remain open for this exact pair.
 Only after those gates should it replace the selected package through a verified
