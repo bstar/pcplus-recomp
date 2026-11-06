@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [SynthModem source integration](BRIDGE_INTEGRATION.md) now adds the optional
+menu-owned size query to the workstation source, preserving fixed80x24/no-query
+behavior by default.25 Telnet and seven session tests pass; both actual
+probe/fixed DOS-Enigma editor paths match exact screens. A discovered ignored-RX
+heartbeat deadline bug is corrected with pre-patch failure evidence. Live
+activation, pending backend readiness and physical acceptance remain separate.
+
 The [reviewed viewer connection candidate](VIEWER_CONNECTION_CANDIDATE.md) now
 has a tracked one-command Nix builder and deterministic public ZIP. Five
 executables and ten package files reproduce from public source; three DOS

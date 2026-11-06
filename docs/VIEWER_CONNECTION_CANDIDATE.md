@@ -64,13 +64,16 @@ established hardware path remains Boca COM3/3E8h/IRQ5 through SPA2102 and the
 Linux SynthModem bridge. Reboot out of network management before modem testing
 because the NIC and Boca share IRQ5.
 
-The tested bridge is the isolated `menu-size-accepted-20261104` snapshot. Its
+The large-file transfer checkpoint uses the isolated `menu-size-accepted-20261104` snapshot. Its
 [menu-owned size-negotiation patch](../lab/bbs/patches/synthmodem-menu-size/README.md)
-adds WindowSizeReply and differs from the workstation SynthModem checkout.
-That checkout also has unrelated VM/backend work in progress. These tests do
-not establish equivalence to that runtime or install/restart its service.
-Preserve local aliases, SIP/audio configuration and existing work when
-integrating the patch.
+adds WindowSizeReply. The [subsequent bridge integration](BRIDGE_INTEGRATION.md)
+now applies it to the workstation source with probing off by default. Both
+probe-enabled and fixed80x24/no-query editor paths pass on that source. The
+large-file checkpoint retains its earlier snapshot identity.
+
+The running service has not been restarted. The checkout also has existing
+VM/backend work in progress; activation would load those changes too. Preserve
+local aliases, SIP/audio configuration and existing work during integration.
 
 SIP/audio/DSP/analog behavior, physical CTS timing, full sustained hardware
 display/editor/transfers and remaining original PCPlus parity remain open.

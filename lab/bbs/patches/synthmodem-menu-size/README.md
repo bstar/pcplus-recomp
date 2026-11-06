@@ -57,3 +57,31 @@ SIP/audio or analog acceptance, or update the physical machine. The component
 coverage does not establish Enigma/Synchronet layout, file-transfer acceptance
 or complete PCPlus parity. See `docs/MENU_SIZE_BRIDGE.md` for the bound receipt
 and next integration gates.
+
+## Current working-tree integration
+
+`integration.patch` applies with zero fuzz to SynthModem f0e8d5f. It includes
+the actual proxy/collector,25 Telnet tests and generic fixtures, documentation,
+and a menu-heartbeat correction. It was replayed in an isolated public source
+tree and compared byte-for-byte with the seven integrated targets. No private
+configuration or VM/backend work is included. SynthModem's GPL attribution and
+COPYING remain intact.
+
+The original staging command above still requires its pinned pre-patch baseline;
+it intentionally refuses an already-integrated runtime. Integration tests run
+with `node --test test/telnet/*.test.js`. Default absent/zero probe behavior is
+compared with pre-patch golden wire bytes. The heartbeat fixture avoids local
+configuration/banner dependencies and establishes that ignored RX does not
+postpone a TX keepalive; actual local echo still defers it.
+
+Both probe-enabled and fixed80x24/no-query DOS/Enigma editor paths pass with the
+integrated on-disk source. Each runs the owned graphics viewer, restores the
+editor and matches the independent final-screen reference exactly. Seven
+session/backend tests also pass against the existing worktree with stubbed
+SIP/backend boundaries. See
+[the integration receipt](../../../../docs/validation/bridge-integration.json).
+
+The source is integrated locally; the public patch is maintained here. The
+running bridge was not restarted and probing was not enabled in production.
+Existing VM/backend/performance/configuration work remains outside these commits.
+Live activation must account for that work and subsequent physical acceptance.

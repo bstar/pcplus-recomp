@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "synthmodem_local_commit": "7e5fc16cc1f45110b3d74cfd9ef317dbb671e7d2",
+  "public_patch": {
+    "path": "lab/bbs/patches/synthmodem-menu-size/integration.patch",
+    "sha256": "07b8ee1806486d778ffcff755ea7bc1c4fccdf90ce42f7efcb55f4247419b35c"
+  },
+  "patch_replay": {
+    "path": "build/synthmodem-integration-replay-20261105/result.json",
+    "sha256": "f9c3af101773e9b3c3af9d749134c9b95e8d39e62bc3126e9f91e94e0e1876d9"
+  },
+  "integrated_files": {
+    "src/telnet/TelnetProxy.js": "29f6c8e4205d159daf11dcc40eb4428e289cf6ff1cd988bfb2e94d4084b03ea5",
+    "src/telnet/WindowSizeReply.js": "b7b4a58e37ccd3d124102559c932be9357686f71259d791be2fc2210ee9a25a6",
+    "test/telnet/heartbeat.test.js": "e848393153c9b623b94f4cce05e65def364035346fc10523ac0d5fd9c8206af2",
+    "test/telnet/window-size.test.js": "2a53c7192a2374e36e414dab5f514c07d2c6cd9ee901d4bb5110681664573327",
+    "test/telnet/fixtures/window-size-config.js": "130ce8b74a4eba86e2c6ba28a4e18ae2ad5035596d8832c47f668eea3daf470a",
+    "test/telnet/fixtures/window-size-default.json": "e78a6938fb4ed70751125a3802c9aefb257bb96c6fb3abf333a632ac93cd8676",
+    "docs/terminal-size-probe.md": "3ea9a2b3c8718b909d153c85a2fadd85c822c5aa73ce85995581f84aec0851a0"
+  },
+  "unit_tests": 25,
+  "session_tests": 7,
+  "heartbeat_baseline": {
+    "passed": 6,
+    "failed": 1,
+    "log": {
+      "path": "build/synthmodem-baseline-heartbeat-current-20261105.tap",
+      "sha256": "eaae4f3c3b7480ac79f2021c7c3bdb38527ec3d91360c1348afa327dc0531ead"
+    }
+  },
+  "unit_log": {
+    "path": "build/synthmodem-integrated-telnet-accepted-20261105.tap",
+    "sha256": "bcfe65690b11bde3ae1dc2f1a1c666da59e073110a1bbacec498dea64c7aebe8"
+  },
+  "session_log": {
+    "path": "build/synthmodem-integrated-session-final-20261105.log",
+    "sha256": "2610e9b27865c4a76f4764d45e060bf8da85871d6f9283709d23a9d359454776"
+  },
+  "DOS_Enigma": [
+    {
+      "mode": "probe",
+      "size_probe": true,
+      "report": {
+        "path": "build/bbs-lab/results/enigma/integrated-bridge-probe-enigma-20261105/proxy-integration.json",
+        "sha256": "7dd607fef96310cb56cba6447d64644549b01c2d65af4254556570dfa902e8d9"
+      },
+      "audit": {
+        "path": "build/bbs-lab/results/enigma/integrated-bridge-probe-enigma-20261105/screen-reference-audit.json",
+        "sha256": "be13bf68432b326f33662174e079725677505743002c666b099fb032a21e02ef"
+      },
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "delivered_bytes": 48083
+    },
+    {
+      "mode": "fixed",
+      "size_probe": false,
+      "report": {
+        "path": "build/bbs-lab/results/enigma/integrated-bridge-fixed-enigma-20261105/proxy-integration.json",
+        "sha256": "5d58721c05bdf00ab93689eb29b4874228ff61555b9589aa8cc1dbadcfcd95dd"
+      },
+      "audit": {
+        "path": "build/bbs-lab/results/enigma/integrated-bridge-fixed-enigma-20261105/screen-reference-audit.json",
+        "sha256": "a4b7b613d58574204167477cd7800e5898d02425d023e62572f7128a2c14aac6"
+      },
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "delivered_bytes": 48078
+    }
+  ],
+  "live_service_restarted": false,
+  "production_probe_enabled": false,
+  "physical_deployment_changed": false,
+  "sources": {
+    "standalone/record_bridge_integration.py": "b878d9b916565e408ed5b402de3bcdf37c1d4413894af51fe7f9e3a0eb21f992",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55"
+  },
+  "limits": [
+    "The exported GPL patch applies with zero fuzz to public f0e8d5f sources; unrelated VM/backend/performance/config changes remain outside these commits.",
+    "Session tests run against the existing worktree and stub SIP/backend objects; they do not establish readiness of its pending VM/backend work or real SIP/audio.",
+    "Both actual DOS8086 editor paths use the integrated on-disk proxy in isolated loopback processes. The existing running service was not restarted and its active module identity is unverified.",
+    "Probe absent/zero retains fixed geometry; opt-in requires a terminal that supports CSI18t replies. Do not enable globally for unsupported clients.",
+    "Heartbeat timing tests establish byte/deadline behavior, not physical UART resynchronization.",
+    "Physical Boca/SPA2102/SIP/audio/DSP/CTS acceptance and full original PCPlus parity remain open."
+  ]
+}

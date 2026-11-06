@@ -1,0 +1,733 @@
+diff --git a/docs/terminal-size-probe.md b/docs/terminal-size-probe.md
+new file mode 100644
+index 0000000..aa5a118
+--- /dev/null
++++ b/docs/terminal-size-probe.md
+@@ -0,0 +1,45 @@
++# Optional pre-session terminal size
++
++The Telnet proxy can query a capable serial terminal after it selects an allowed
++BBS destination, before opening the BBS TCP connection. Set
++`telnet.terminalSizeProbeTimeoutMs` to an integer1..10000 to opt in. Omit it or
++set0 to retain fixed `terminalRows`/`terminalCols` and emit no size query.
++Existing configuration, aliases and modem/SIP/audio settings are unchanged.
++
++The proxy sends CSI18t once, accepts the bounded CSI8;rows;columns t response,
++and supplies the dimensions to TelnetCodec's existing NAWS negotiation. The
++peer must still negotiate NAWS; this does not prove its application resized.
++Only this pre-session owner parses size replies. BBS output, binary uploads and
++downloads remain opaque, including size-looking bytes and all256 byte values.
++
++The owner retains up to1024 bytes of ordinary typing, handles split CRLF, and
++forwards that input once TCP connects. Timeout, malformed reserved response,
++invalid nonzero configuration or overflow closes the modem session without
++opening TCP. Cancellation and stale socket/deadline events cannot reopen a
++closed or newer connection. A later call may query again; a failed query is not
++retried in the same call. There is no wire nonce or authentication.
++
++Use the option only with terminals that implement the response, such as the
++reviewed source-built PCPlus candidate. Fixed geometry remains appropriate for
++other terminals. Production enablement requires separate call-path testing.
++
++## Tests and provenance
++
++Run `node --test test/telnet/*.test.js`. The size tests use the actual source
++with declared config/socket/clock boundaries and a real loopback TCP case.
++Default absent/zero output is compared with golden bytes recorded from the
++pre-patch TelnetProxy at f0e8d5f, SHA256
++8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628.
++The configuration fixture contains no private addresses or SIP credentials.
++
++This integrates the GPL-2.0-or-later menu-size patch maintained in bstar's
++PCPlus reconstruction, preserving SynthModem attribution and COPYING. It does
++not claim that SIP/audio/DSP code was reconstructed from PCPlus.
++
++The independent heartbeat fixture also exposed an existing behavior bug:
++ignored RX noise repeatedly postponed a configured menu TX keepalive. RX noise
++now leaves an already-armed deadline intact; actual output, including local
++echo, still defers it. A pre-patch fixture run fails the RX test. Heartbeats
++remain disabled when configured off, and never run while proxying BBS data.
++These tests establish timer/byte behavior, not a physical modem resynchronization
++claim. Backend/session and physical SIP/audio acceptance remain separate.
+diff --git a/src/telnet/TelnetProxy.js b/src/telnet/TelnetProxy.js
+index eb4a6cf..4c938b9 100644
+--- a/src/telnet/TelnetProxy.js
++++ b/src/telnet/TelnetProxy.js
+@@ -15,6 +15,7 @@ const dns            = require('dns');
+ const { EventEmitter } = require('events');
+ const { TelnetCodec } = require('./TelnetCodec');
+ const { InputSequenceFramer } = require('./InputSequenceFramer');
++const { WindowSizeReply } = require('./WindowSizeReply');
+ const config         = require('../../config');
+ const { makeLogger } = require('../logger');
+ 
+@@ -38,6 +39,7 @@ const OPT_NAWS          = 0x1F;
+ 
+ // ─── Telnet proxy states ──────────────────────────────────────────────────────
+ const STATE = {
++  PROBING:    'PROBING',    // One owned size query before any BBS TCP connection
+   MENU:       'MENU',       // Showing menu, reading host:port
+   CONNECTING: 'CONNECTING', // TCP connect in progress
+   PROXYING:   'PROXYING',   // Bidirectional proxy active
+@@ -57,6 +59,11 @@ class TelnetProxy extends EventEmitter {
+     this._telnet = null;
+     this._inputFramer = null;
+     this._outputBlocked = false;
++    this._sizeProbe = null;
++    this._windowSize = null;
++    this._connectInput = null;
++    this._menuTerminatorCR = false;
++    this._skipProbeLF = false;
+ 
+     // Menu-idle heartbeat — see _scheduleMenuHeartbeat for rationale.
+     this._menuHeartbeat = null;
+@@ -87,13 +94,32 @@ class TelnetProxy extends EventEmitter {
+    * @param {Buffer} data
+    */
+   receive(data) {
+-    // Any inbound activity from the modem side defers the menu-idle
+-    // heartbeat — when the user is actively typing, the UART is being
+-    // exercised by real frames in both directions, so the heartbeat
+-    // would be redundant. The heartbeat only matters during long
+-    // periods of NO data flow.
+-    this._scheduleMenuHeartbeat();
++    // Ignored RX bytes must not postpone an already-armed TX keepalive.
++    // Local echo/other actual output still resets the deadline through _send.
++    if (!this._menuHeartbeat || this._state !== STATE.MENU) this._scheduleMenuHeartbeat();
+ 
++    if (this._state === STATE.PROBING) {
++      if (this._skipProbeLF && data.length) {
++        this._skipProbeLF = false;
++        if (data[0] === 10) data = data.subarray(1); // Menu CRLF may span chunks.
++      }
++      const probe = this._sizeProbe;
++      try {
++        if (probe.reply.feed(data)) this._finishSizeProbe(probe);
++      } catch (error) {
++        this._failSizeProbe(probe);
++      }
++      return;
++    }
++    if (this._state === STATE.CONNECTING && this._connectInput !== null) {
++      this._queueConnectInput(data);
++      return;
++    }
++
++    if (this._state === STATE.PROXYING && !this._telnet && this._connectInput !== null) {
++      this._queueConnectInput(data); // A synchronous send callback may type ahead.
++      return;
++    }
+     if (this._state === STATE.PROXYING) {
+       // Disabled by default: an in-band escape consumes valid binary bytes.
+       // An explicit opt-in is independent of receive chunk boundaries.
+@@ -113,7 +139,8 @@ class TelnetProxy extends EventEmitter {
+ 
+     if (this._state === STATE.MENU) {
+       // Accumulate into line buffer
+-      for (const byte of data) {
++      for (let at = 0; at < data.length; at++) {
++        const byte = data[at];
+         const ch = String.fromCharCode(byte);
+         if (byte === 0x08 || byte === 0x7F) {
+           // Backspace
+@@ -124,8 +151,17 @@ class TelnetProxy extends EventEmitter {
+         } else if (byte === 0x0D || byte === 0x0A) {
+           // Enter
+           if (tcfg.localEcho) this._send(Buffer.from(tcfg.lineEnding));
++          this._menuTerminatorCR = byte === 13;
+           this._handleInput(this._inputBuf.trim());
++          this._menuTerminatorCR = false;
+           this._inputBuf = '';
++          // Only the opted-in owner accepts typing ahead across this boundary.
++          if (this._state === STATE.PROBING || this._connectInput !== null || this._state === STATE.CLOSING) {
++            let tail = at + 1;
++            if (byte === 13 && data[tail] === 10) { tail++; this._skipProbeLF = false; }
++            if (tail < data.length) this.receive(data.subarray(tail));
++            return;
++          }
+         } else if (byte >= 0x20 && byte < 0x7F) {
+           this._inputBuf += ch;
+           if (tcfg.localEcho) this._send(Buffer.from(ch));
+@@ -291,9 +327,65 @@ class TelnetProxy extends EventEmitter {
+   // ─── TCP connection ───────────────────────────────────────────────────────────
+ 
+   _connect(host, port) {
++    if (this._state !== STATE.MENU) return;
++    const timeout = cfg.terminalSizeProbeTimeoutMs;
++    if (timeout === undefined || timeout === 0 || !this._checkAllowed(host)) {
++      this._connectTcp(host, port);
++      return;
++    }
++    if (!Number.isInteger(timeout) || timeout < 1 || timeout > 10000) {
++      this._failSizeProbe();
++      return;
++    }
++    this._cancelMenuHeartbeat();
++    this._state = STATE.PROBING;
++    this._skipProbeLF = this._menuTerminatorCR;
++    const probe = { host, port, reply: new WindowSizeReply(), timer: null };
++    this._sizeProbe = probe;
++    // Install owner/deadline before send: a terminal callback can reply inline.
++    probe.timer = setTimeout(() => this._failSizeProbe(probe), timeout);
++    this._send(Buffer.from('\x1b[18t', 'ascii'));
++  }
++
++  _cancelSizeProbe() {
++    const probe = this._sizeProbe;
++    this._sizeProbe = null;
++    this._skipProbeLF = false;
++    if (probe && probe.timer !== null) clearTimeout(probe.timer);
++  }
++
++  _finishSizeProbe(probe) {
++    if (this._sizeProbe !== probe || this._state !== STATE.PROBING) return;
++    const input = probe.reply.takeInput();
++    const dimensions = probe.reply.dimensions;
++    this._cancelSizeProbe();
++    this._windowSize = dimensions;
++    this._connectInput = input;
++    this._connectTcp(probe.host, probe.port);
++  }
++
++  _queueConnectInput(data) {
++    if (this._connectInput.length + data.length > 1024) {
++      this._failSizeProbe();
++      return;
++    }
++    this._connectInput = Buffer.concat([this._connectInput, data]);
++  }
++
++  _failSizeProbe(probe) {
++    if (this._state === STATE.CLOSING || (probe && this._sizeProbe !== probe)) return;
++    this._state = STATE.CLOSING;
++    this._cancelMenuHeartbeat();
++    this._closeConnection();
++    this._sendLine('Terminal size could not be confirmed. Reconnect and try again.');
++    this.emit('disconnect');
++  }
++
++  _connectTcp(host, port) {
+     this._cancelMenuHeartbeat();
+     this._state = STATE.CONNECTING;
+     this._sendLine(`Connecting to ${host}:${port}...`);
++    if (this._state !== STATE.CONNECTING) return; // Output callback may cancel.
+     log.info(`Connecting to ${host}:${port}`);
+ 
+     // Access control check
+@@ -303,10 +395,12 @@ class TelnetProxy extends EventEmitter {
+       return;
+     }
+ 
+-    this._connectTimer = setTimeout(() => {
++    const connectTimer = setTimeout(() => {
++      if (this._connectTimer !== connectTimer || this._state !== STATE.CONNECTING) return;
+       this._sendLine('Connection timed out.');
+       this._returnToMenu();
+     }, cfg.connectTimeoutMs);
++    this._connectTimer = connectTimer;
+ 
+     const socket = net.connect(port, host, () => {
+       if (this._tcpSocket !== socket) return;
+@@ -315,16 +409,19 @@ class TelnetProxy extends EventEmitter {
+       this._state = STATE.PROXYING;
+       log.info(`Connected to ${host}:${port}`);
+       this._sendLine(`Connected to ${host}:${port}.`);
++      if (this._tcpSocket !== socket || this._state !== STATE.PROXYING) return;
+       this._sendLine(this._escapeHelp());
++      if (this._tcpSocket !== socket || this._state !== STATE.PROXYING) return;
+       this._sendLine('');
++      if (this._tcpSocket !== socket || this._state !== STATE.PROXYING) return;
+       this._startIdleTimer();
+ 
+       this._telnet = new TelnetCodec({
+         send: data => { if (this._tcpSocket && !this._tcpSocket.destroyed) this._tcpSocket.write(data); },
+         display: data => this._send(data),
+         terminalType: cfg.terminalType,
+-        terminalCols: cfg.terminalCols,
+-        terminalRows: cfg.terminalRows,
++        terminalCols: this._windowSize ? this._windowSize.cols : cfg.terminalCols,
++        terminalRows: this._windowSize ? this._windowSize.rows : cfg.terminalRows,
+       });
+       // Opt-in assembly for servers whose input decoder loses fragmented ANSI keys.
+       const timeout = cfg.inputSequenceTimeoutMs;
+@@ -337,6 +434,9 @@ class TelnetProxy extends EventEmitter {
+       }
+       // Parsing is still required when unsolicited initial offers are disabled.
+       if (cfg.negotiateOptions) this._telnet.start();
++      const pending = this._connectInput;
++      this._connectInput = null;
++      if (pending && pending.length) this._forwardInput(pending);
+     });
+ 
+     this._tcpSocket = socket;
+@@ -444,9 +544,9 @@ class TelnetProxy extends EventEmitter {
+   // does not run during PROXYING — real BBS data already exercises
+   // the UART continuously.
+   //
+-  // Cadence: after 5 s of MENU idle with no TX/RX, send one CR. Reset
+-  // the timer on any send/receive activity. So during normal use
+-  // (user is typing or BBS data is flowing) the heartbeat never fires.
++  // Cadence: after the configured MENU interval without TX, send one CR.
++  // Actual output, including local echo, resets the deadline. Ignored RX
++  // noise does not defer the clean outbound frame. PROXYING has no heartbeat.
+ 
+   _scheduleMenuHeartbeat() {
+     this._cancelMenuHeartbeat();
+@@ -484,14 +584,18 @@ class TelnetProxy extends EventEmitter {
+   // ─── Return to menu ───────────────────────────────────────────────────────────
+ 
+   _closeConnection() {
++    this._cancelSizeProbe();
++    this._windowSize = null;
++    this._connectInput = null;
+     this._inputFramer?.close();
+     this._inputFramer = null;
+     if (this._connectTimer) { clearTimeout(this._connectTimer); this._connectTimer = null; }
+     this._telnet = null;
+     if (this._idleTimer) { clearTimeout(this._idleTimer); this._idleTimer = null; }
+     if (this._tcpSocket) {
+-      this._tcpSocket.destroy();
+-      this._tcpSocket = null;
++      const socket = this._tcpSocket;
++      this._tcpSocket = null; // Detach identity before synchronous/stale events.
++      socket.destroy();
+     }
+   }
+ 
+diff --git a/src/telnet/WindowSizeReply.js b/src/telnet/WindowSizeReply.js
+new file mode 100644
+index 0000000..a48c172
+--- /dev/null
++++ b/src/telnet/WindowSizeReply.js
+@@ -0,0 +1,49 @@
++'use strict';
++// SPDX-License-Identifier: GPL-2.0-or-later
++// One owned pre-TCP terminal query. Never feed proxied BBS/transfer data here.
++class WindowSizeReply {
++  constructor(limit = 1024) {
++    if (!Number.isInteger(limit) || limit < 1 || limit > 4096) throw new RangeError('Invalid input bound');
++    this.limit = limit;
++    this.pending = [];
++    this.input = [];
++    this.dimensions = null;
++  }
++
++  append(bytes) {
++    if (this.input.length + bytes.length > this.limit) throw new RangeError('Pending input limit exceeded');
++    this.input.push(...bytes);
++  }
++
++  feed(data) {
++    for (const byte of data) {
++      if (this.dimensions) { this.append([byte]); continue; }
++      if (!this.pending.length && byte !== 27) { this.append([byte]); continue; }
++      this.pending.push(byte);
++      const text = Buffer.from(this.pending).toString('latin1');
++      const reply = /^\x1b\[8;([0-9]{1,5});([0-9]{1,5})t$/.exec(text);
++      if (reply) {
++        const rows = Number(reply[1]), cols = Number(reply[2]);
++        if (rows < 1 || rows > 65535 || cols < 1 || cols > 65535) throw new RangeError('Invalid terminal dimensions');
++        this.dimensions = { cols, rows };
++        this.pending = [];
++      } else if (byte !== 116 && /^\x1b(?:\[(?:8(?:;[0-9]{0,5}(?:;[0-9]{0,5})?)?)?)?$/.test(text)) {
++        // At most17 bytes, regardless of receive chunking.
++      } else {
++        if (text.startsWith('\x1b[8;')) throw new RangeError('Malformed terminal dimensions');
++        const restart = byte === 27;
++        this.append(restart ? this.pending.slice(0, -1) : this.pending);
++        this.pending = restart ? [27] : [];
++      }
++    }
++    return this.dimensions;
++  }
++
++  takeInput() {
++    if (!this.dimensions || this.pending.length) throw new Error('Terminal query incomplete');
++    const input = Buffer.from(this.input);
++    this.input = [];
++    return input;
++  }
++}
++module.exports = { WindowSizeReply };
+diff --git a/test/telnet/fixtures/window-size-config.js b/test/telnet/fixtures/window-size-config.js
+new file mode 100644
+index 0000000..37db950
+--- /dev/null
++++ b/test/telnet/fixtures/window-size-config.js
+@@ -0,0 +1,11 @@
++'use strict';
++// Synthetic public test configuration; never copy a user's bridge config here.
++module.exports = {
++ logging: {level: 'error', timestampFormat: 'unix', colorize: false},
++ telnet: {terminalType: 'ANSI', terminalCols: 80, terminalRows: 24,
++  negotiateOptions: true, inputSequenceTimeoutMs: 0, proxyEscapeByte: null,
++  idleTimeoutMs: 0, connectTimeoutMs: 2000, menuIdleHeartbeatMs: 0,
++  allowedHosts: [], blockedHosts: []},
++ terminal: {banner: 'SynthModem\r\n', prompt: 'CONNECT> ', lineEnding: '\r\n',
++  localEcho: true, defaultPort: 23, aliases: {loc: '127.0.0.1:2323'}}
++};
+diff --git a/test/telnet/fixtures/window-size-default.json b/test/telnet/fixtures/window-size-default.json
+new file mode 100644
+index 0000000..1c1f4a0
+--- /dev/null
++++ b/test/telnet/fixtures/window-size-default.json
+@@ -0,0 +1,57 @@
++{
++  "absent": {
++    "outputs": [
++      "53796e74684d6f64656d0d0d0a",
++      "434f4e4e4543543e20",
++      "6c",
++      "6f",
++      "63",
++      "0d0a",
++      "436f6e6e656374696e6720746f203132372e302e302e313a323332332e2e2e0d0d0a",
++      "436f6e6e656374656420746f203132372e302e302e313a323332332e0d0d0a",
++      "496e2d62616e64206d656e75206573636170652064697361626c65643b2072656d6f746520636c6f73652072657475726e7320746f206d656e752e20515549542074686572652068616e67732075702e0d0d0a",
++      "0d0d0a"
++    ],
++    "writes": [
++      "fffb00",
++      "fffb03",
++      "fffb18",
++      "fffb1f",
++      "fffd00",
++      "fffd03",
++      "fffd01",
++      "fffa1f00500018fff0",
++      "6162630d00"
++    ]
++  },
++  "zero": {
++    "outputs": [
++      "53796e74684d6f64656d0d0d0a",
++      "434f4e4e4543543e20",
++      "6c",
++      "6f",
++      "63",
++      "0d0a",
++      "436f6e6e656374696e6720746f203132372e302e302e313a323332332e2e2e0d0d0a",
++      "436f6e6e656374656420746f203132372e302e302e313a323332332e0d0d0a",
++      "496e2d62616e64206d656e75206573636170652064697361626c65643b2072656d6f746520636c6f73652072657475726e7320746f206d656e752e20515549542074686572652068616e67732075702e0d0d0a",
++      "0d0d0a"
++    ],
++    "writes": [
++      "fffb00",
++      "fffb03",
++      "fffb18",
++      "fffb1f",
++      "fffd00",
++      "fffd03",
++      "fffd01",
++      "fffa1f00500018fff0",
++      "6162630d00"
++    ]
++  },
++  "_provenance": {
++    "source_commit": "f0e8d5f",
++    "source_sha256": "8ba4a0e1b9d4be1c51bc6d2f534e56e37528eed2d1915e58505fc2be88d99628",
++    "scope": "Pre-patch actual TelnetProxy with synthetic 80x24 config, mock TCP/timers and disabled heartbeat. Recorded before modifying the installed source. Not SIP/audio/physical evidence."
++  }
++}
+diff --git a/test/telnet/heartbeat.test.js b/test/telnet/heartbeat.test.js
+index c5de343..cadd248 100644
+--- a/test/telnet/heartbeat.test.js
++++ b/test/telnet/heartbeat.test.js
+@@ -19,7 +19,7 @@
+ // This avoids tying tests to wall-clock interval values from config.
+ 
+ const assert = require('node:assert/strict');
+-const { test } = require('node:test');
++const { test, beforeEach, afterEach } = require('node:test');
+ 
+ // Stub timer helpers — we install these per-test so we don't pollute
+ // other suites if they run in the same process.
+@@ -73,6 +73,22 @@ function installFakeTimers() {
+ const { TelnetProxy } = require('../../src/telnet/TelnetProxy');
+ const config = require('../../config');
+ 
++// Heartbeat assertions must not depend on a user's idle policy or banner CRs.
++let fixtureSaved;
++beforeEach(() => {
++  fixtureSaved = { telnet: { ...config.telnet }, terminal: { ...config.terminal } };
++  Object.assign(config.telnet, { menuIdleHeartbeatMs: 1000, idleTimeoutMs: 0,
++    terminalSizeProbeTimeoutMs: 0 });
++  Object.assign(config.terminal, { banner: 'Heartbeat fixture', prompt: 'CONNECT> ', localEcho: true });
++});
++afterEach(() => {
++  for (const group of ['telnet', 'terminal']) {
++    for (const key of Object.keys(config[group])) delete config[group][key];
++    Object.assign(config[group], fixtureSaved[group]);
++  }
++});
++
++
+ test('Heartbeat: fires CR after MENU idle interval', () => {
+   const fakes = installFakeTimers();
+   try {
+@@ -146,6 +162,24 @@ test('Heartbeat: receive() activity does NOT defer the next heartbeat', () => {
+   }
+ });
+ 
++test('Heartbeat: actual local-echo TX defers the deadline', () => {
++  const fakes = installFakeTimers();
++  try {
++    const proxy = new TelnetProxy();
++    const txLog = [];
++    proxy.attach(buf => txLog.push(...buf));
++    fakes.advance(900);
++    proxy.receive(Buffer.from('x'));
++    fakes.advance(150);
++    assert.equal(txLog.filter(b => b === 0x0D).length, 0);
++    fakes.advance(850);
++    assert.equal(txLog.filter(b => b === 0x0D).length, 1);
++    proxy.disconnect();
++  } finally {
++    fakes.restore();
++  }
++});
++
+ test('Heartbeat: does not fire after disconnect()', () => {
+   const fakes = installFakeTimers();
+   try {
+diff --git a/test/telnet/window-size.test.js b/test/telnet/window-size.test.js
+new file mode 100644
+index 0000000..4da5faa
+--- /dev/null
++++ b/test/telnet/window-size.test.js
+@@ -0,0 +1,235 @@
++'use strict';
++// SPDX-License-Identifier: GPL-2.0-or-later
++// The actual proxy runs unchanged; only its IO/config/clock boundaries
++// are supplied here. The final test uses real Node TCP sockets and timers.
++const test = require('node:test');
++const assert = require('node:assert/strict');
++const fs = require('node:fs');
++const vm = require('node:vm');
++const path = require('node:path');
++const net = require('node:net');
++const {EventEmitter} = require('node:events');
++const {createRequire} = require('node:module');
++const root = path.resolve(__dirname, '../..');
++const {WindowSizeReply} = require(path.join(root, 'src/telnet/WindowSizeReply'));
++const B = value => Buffer.from(value, 'latin1');
++const cat = chunks => Buffer.concat(chunks);
++const query = B('\x1b[18t');
++const reply = (rows = 42, cols = 80) => B(`\x1b[8;${rows};${cols}t`);
++const escape = bytes => Buffer.from([...bytes].flatMap(b => b === 255 ? [255,255] : [b]));
++const naws = (rows, cols) => {
++  const value = Buffer.alloc(5); value[0]=31; value.writeUInt16BE(cols,1); value.writeUInt16BE(rows,3);
++  return cat([Buffer.from([255,250]),escape(value),Buffer.from([255,240])]);
++};
++class Clock {
++  constructor() { this.id=0; this.active=new Map(); this.all=new Map(); }
++  set(fn,ms) { const id=++this.id; this.active.set(id,{fn,ms}); this.all.set(id,fn); return id; }
++  clear(id) { this.active.delete(id); }
++  fire(id) { const item=this.active.get(id); assert(item); this.active.delete(id); item.fn(); }
++}
++class Socket extends EventEmitter {
++  constructor() { super(); this.writes=[]; this.destroyed=false; this.pauses=0; this.resumes=0; }
++  write(data) { this.writes.push(Buffer.from(data)); return true; }
++  pause() { this.pauses++; }
++  resume() { this.resumes++; }
++  destroy() { this.destroyed=true; this.emit('close'); }
++}
++function harness({timeout=500, clock=new Clock(), real=false, onSend=null, extra={}}={}) {
++  const config=structuredClone(require('./fixtures/window-size-config'));
++  if (timeout !== undefined) config.telnet.terminalSizeProbeTimeoutMs=timeout;
++  Object.assign(config.telnet,extra);
++  const sockets=[], outputs=[];
++  const file=path.join(root,'src/telnet/TelnetProxy.js');
++  const actualRequire=createRequire(file);
++  const module={exports:{}};
++  const dependencies = name => {
++    if(name==='../../config') return config;
++    if(name==='../logger') return {makeLogger:()=>({info(){},warn(){},debug(){},error(){}})};
++    if(name==='net' && !real) return {connect(port,host,cb) { const s=new Socket(); s.host=host;s.port=port;s.once('connect',cb);sockets.push(s);return s; }};
++    return actualRequire(name);
++  };
++  vm.runInNewContext('(function(require,module,exports,Buffer,setTimeout,clearTimeout){'+fs.readFileSync(file,'utf8')+'\n})',{}, {filename:file})(
++    dependencies,module,module.exports,Buffer,real?setTimeout:clock.set.bind(clock),real?clearTimeout:clock.clear.bind(clock));
++  const proxy=new module.exports.TelnetProxy();
++  let disconnects=0; proxy.on('disconnect',()=>disconnects++);
++  proxy.attach(data=>{ outputs.push(Buffer.from(data)); if(onSend)onSend(data,proxy); return true; });
++  return {proxy,config,sockets,outputs,clock,get disconnects(){return disconnects;}};
++}
++function begin(h, data='loc\r') { h.proxy.receive(B(data)); return h; }
++function connected(h, rows=42, cols=80) {
++  const count=h.sockets.length;begin(h);h.proxy.receive(reply(rows,cols));assert.equal(h.sockets.length,count+1);
++  const socket=h.sockets[count];socket.emit('connect');assert.equal(h.proxy.state,'PROXYING');return socket;
++}
++function binary(s) { s.emit('data',Buffer.from([255,253,0,255,251,0])); }
++
++test('collector accepts all boundaries, every split and bytewise input',()=>{
++  for(const rows of [1,24,42,49,50,255,256,65535]) for(const cols of [1,80,132,255,256,65535]) {
++    const wire=reply(rows,cols);
++    for(let split=0;split<=wire.length;split++) {
++      const c=new WindowSizeReply();c.feed(wire.subarray(0,split));c.feed(wire.subarray(split));
++      assert.deepEqual(c.dimensions,{rows,cols});assert.equal(c.takeInput().length,0);
++    }
++    const c=new WindowSizeReply(); for(const b of wire)c.feed(Buffer.from([b]));
++    assert.deepEqual(c.dimensions,{rows,cols});
++  }
++});
++test('collector rejects invalid reserved replies and bounds retained typing',()=>{
++  for(const text of ['0;80','42;0','65536;80','42;65536','123456;80',';80','-1;80','42;;80'])
++    assert.throws(()=>new WindowSizeReply().feed(B(`\x1b[8;${text}t`)));
++  const c=new WindowSizeReply();const prefix=B('a\x1b[A\x1b\x1b[B');c.feed(prefix);c.feed(reply());c.feed(B('z'));
++  assert.deepEqual(c.takeInput(),cat([prefix,B('z')]));
++  const full=new WindowSizeReply();full.feed(Buffer.alloc(1024,65));full.feed(reply());assert.equal(full.takeInput().length,1024);
++  assert.throws(()=>new WindowSizeReply().feed(Buffer.alloc(1025,65)));
++  const first=new WindowSizeReply();first.feed(cat([reply(),reply(49)]));assert.deepEqual(first.takeInput(),reply(49));
++});
++test('default absent/zero matches pre-patch source golden wire behavior',()=>{
++  const golden=require('./fixtures/window-size-default.json');
++  for(const [key,timeout] of [['absent',undefined],['zero',0]]) {
++    const h=harness({timeout});if(timeout===undefined)delete h.config.telnet.terminalSizeProbeTimeoutMs;
++    begin(h);h.sockets[0].emit('connect');h.sockets[0].emit('data',Buffer.from([255,253,31]));h.proxy.receive(B('abc\r'));
++    assert.deepEqual({outputs:h.outputs.map(b=>b.toString('hex')),writes:h.sockets[0].writes.map(b=>b.toString('hex'))},golden[key]);
++    assert(!cat(h.outputs).includes(query));h.proxy.disconnect();
++  }
++});
++test('single owned query, absolute deadline and all fragmented replies',()=>{
++  const wire=reply();
++  for(let split=0;split<=wire.length;split++) {
++    const h=begin(harness({extra:{menuIdleHeartbeatMs:50}}));
++    assert.equal(h.proxy.state,'PROBING');assert.equal(h.sockets.length,0);assert.equal(h.clock.active.size,1);
++    const deadline=h.proxy._sizeProbe.timer;
++    h.proxy.receive(wire.subarray(0,split));
++    if(split<wire.length)assert(h.clock.active.has(deadline));
++    h.proxy.receive(wire.subarray(split));assert.equal(h.sockets.length,1);assert.equal(h.proxy.state,'CONNECTING');
++    assert.equal(cat(h.outputs).toString('latin1').split('\x1b[18t').length-1,1);
++    h.sockets[0].emit('connect');h.sockets[0].emit('data',Buffer.from([255,253,31]));
++    assert(cat(h.sockets[0].writes).includes(naws(42,80)));h.proxy.disconnect();assert.equal(h.clock.active.size,0);
++  }
++});
++test('menu CRLF across every split and typing ahead is delivered once',()=>{
++  const menu=B('loc\r\nuser');
++  for(let split=0;split<=menu.length;split++) {
++    const h=harness();h.proxy.receive(menu.subarray(0,split));h.proxy.receive(menu.subarray(split));
++    h.proxy.receive(reply());h.proxy.receive(B('name'));const s=h.sockets[0];s.emit('connect');
++    const wire=cat(s.writes);assert(wire.subarray(-8).equals(B('username')),`split ${split}`);
++    assert.equal(wire.toString('latin1').split('username').length-1,1);h.proxy.disconnect();
++  }
++});
++test('inline terminal reply and inline greeting typing survive callback reentry',()=>{
++  const h=harness({onSend(data,proxy){
++    if(data.equals(query))proxy.receive(reply());
++    else if(data.toString().startsWith('Connected to '))proxy.receive(B('inline'));
++  }});
++  begin(h);assert.equal(h.sockets.length,1);h.sockets[0].emit('connect');
++  assert(cat(h.sockets[0].writes).subarray(-6).equals(B('inline')));h.proxy.disconnect();
++});
++test('NAWS quotes IAC dimensions and does not send refused sizes',()=>{
++  for(const [rows,cols] of [[42,80],[255,255],[65535,65535]]) {
++    const h=harness(),s=connected(h,rows,cols);const count=s.writes.length;
++    s.emit('data',Buffer.from([255,254,31]));assert(!cat(s.writes.slice(count)).includes(Buffer.from([255,250,31])));
++    s.emit('data',Buffer.from([255,253,31]));assert(cat(s.writes).includes(naws(rows,cols)));h.proxy.disconnect();
++  }
++});
++test('timeouts, malformed replies, overflows and invalid config close without opening TCP',()=>{
++  for(const action of ['timeout','malformed','overflow']) {
++    const h=begin(harness());
++    if(action==='timeout')h.clock.fire(h.proxy._sizeProbe.timer);
++    if(action==='malformed')h.proxy.receive(reply(0));
++    if(action==='overflow')h.proxy.receive(Buffer.alloc(1025,65));
++    assert.equal(h.proxy.state,'CLOSING');assert.equal(h.disconnects,1);assert.equal(h.sockets.length,0);assert.equal(h.clock.active.size,0);
++    h.proxy.receive(reply());assert.equal(h.sockets.length,0);assert.equal(h.disconnects,1);
++  }
++  for(const timeout of [-1,10001,1.5,'500',null]) {
++    const h=begin(harness({timeout}));assert.equal(h.proxy.state,'CLOSING');assert.equal(h.disconnects,1);assert.equal(h.sockets.length,0);
++  }
++  const h=begin(harness());h.proxy.receive(reply());h.proxy.receive(Buffer.alloc(1025,65));
++  assert.equal(h.proxy.state,'CLOSING');assert(h.sockets[0].destroyed);assert.equal(h.disconnects,1);
++});
++test('disconnect cancels ownership; stale timer cannot cancel later connection',()=>{
++  const h=begin(harness()),timer=h.proxy._sizeProbe.timer;h.proxy.receive(reply());
++  h.sockets[0].emit('connect');h.sockets[0].emit('close');assert.equal(h.proxy.state,'MENU');
++  begin(h);h.clock.all.get(timer)();assert.equal(h.proxy.state,'PROBING');
++  h.proxy.receive(reply(49));const s=h.sockets[1];s.emit('connect');s.emit('data',Buffer.from([255,253,31]));
++  assert(cat(s.writes).includes(naws(49,80)));h.proxy.disconnect();assert.equal(h.clock.active.size,0);
++  const cancelled=begin(harness()),old=cancelled.proxy._sizeProbe.timer;cancelled.proxy.disconnect();cancelled.clock.all.get(old)();
++  cancelled.proxy.receive(reply());assert.equal(cancelled.sockets.length,0);assert.equal(cancelled.proxy.state,'CLOSING');
++});
++test('old socket events and pending typing cannot escape into the next session',()=>{
++  const h=begin(harness());h.proxy.receive(cat([B('private'),reply()]));const old=h.sockets[0];
++  old.emit('error',new Error('synthetic failure'));assert.equal(h.proxy.state,'MENU');
++  const s=connected(h,49);old.emit('data',B('stale'));old.emit('close');old.emit('error',new Error('stale'));
++  assert.equal(h.proxy.state,'PROXYING');assert.equal(h.proxy._tcpSocket,s);assert(!cat(s.writes).includes(B('private')));
++  old.destroy=()=>{old.emit('error',new Error('sync'));old.emit('close');};
++  h.proxy.disconnect();assert.equal(h.proxy.state,'CLOSING');
++});
++test('disconnect detaches before synchronous socket error and close',()=>{
++  const h=harness(),s=connected(h);s.destroy=()=>{s.destroyed=true;s.emit('error',new Error('sync destroy'));s.emit('close');};
++  h.proxy.disconnect();assert.equal(h.proxy.state,'CLOSING');assert.equal(h.proxy._tcpSocket,null);
++});
++test('all 256 bytes and size lookalikes remain opaque at every split while proxying',()=>{
++  const payload=cat([Buffer.from(Array.from({length:256},(_,i)=>i)),reply(),query]);
++  const h=harness(),s=connected(h);binary(s);
++  for(let split=0;split<=payload.length;split++) {
++    let start=s.writes.length;h.proxy.receive(payload.subarray(0,split));h.proxy.receive(payload.subarray(split));
++    assert.deepEqual(cat(s.writes.slice(start)),escape(payload));
++    assert.equal(h.proxy.state,'PROXYING');assert.equal(h.proxy._telnet.rows,42);
++  }
++  const wire=escape(payload);
++  for(let split=0;split<=wire.length;split++) {
++    const start=h.outputs.length;
++    s.emit('data',wire.subarray(0,split));s.emit('data',wire.subarray(split));assert.deepEqual(cat(h.outputs.slice(start)),payload);
++    assert.equal(h.proxy.state,'PROXYING');assert.equal(h.proxy._telnet.rows,42);
++  }
++  h.proxy.disconnect();
++});
++test('ACL denial never emits query or opens socket',()=>{
++  const h=begin(harness({extra:{blockedHosts:['127.0.0.1']}}));assert.equal(h.proxy.state,'MENU');
++  assert.equal(h.sockets.length,0);assert(!cat(h.outputs).includes(query));h.proxy.disconnect();
++});
++test('real loopback TCP: fragmented terminal reply, NAWS and bidirectional binary data', {timeout:8000},async()=>{
++  const peers=new Set(),received=[];let peer;
++  const server=net.createServer(s=>{peer=s;peers.add(s);s.on('close',()=>peers.delete(s));s.on('data',d=>received.push(Buffer.from(d)));s.write(Buffer.from([255,253,31,255,253,0,255,251,0]));});
++  await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
++  const h=harness({real:true,timeout:2000,onSend(data,proxy){if(data.equals(query))queueMicrotask(()=>{proxy.receive(B('\x1b[8;4'));proxy.receive(B('2;80t'));});}});
++  const waitFor=async predicate=>{
++    const end=Date.now()+2500;while(!predicate()) {assert(Date.now()<end,'loopback condition deadline');await new Promise(r=>setTimeout(r,5));}
++  };
++  try {
++    h.proxy.receive(B(`127.0.0.1:${server.address().port}\r`));
++    await waitFor(()=>cat(received).includes(naws(42,80)) && h.proxy._telnet?.local.has(0) && h.proxy._telnet?.remote.has(0));
++    // Wait for the wire NAWS acknowledgment first; payload checks exclude negotiation.
++    const payload=cat([Buffer.from(Array.from({length:256},(_,i)=>i)),reply(49),query]);
++    const start=cat(received).length;h.proxy.receive(payload);
++    await waitFor(()=>cat(received).length>=start+escape(payload).length);
++    assert.deepEqual(cat(received).subarray(start),escape(payload));
++    const mark=h.outputs.length;peer.write(escape(payload));
++    await waitFor(()=>cat(h.outputs.slice(mark)).length>=payload.length);
++    assert.deepEqual(cat(h.outputs.slice(mark)),payload);
++    peer.end();await waitFor(()=>h.proxy.state==='MENU');
++    assert.equal(h.disconnects,0);
++  } finally {h.proxy.disconnect();for(const s of peers)s.destroy();await new Promise(r=>server.close(r));}
++});
++
++test('inline overflow during connection messages cannot open or resurrect TCP',()=>{
++  for(const prefix of ['Connecting to ','Connected to ']) {
++    const h=harness({onSend(data,proxy){if(data.toString().startsWith(prefix))proxy.receive(Buffer.alloc(1025,65));}});
++    begin(h);h.proxy.receive(reply());
++    if(prefix==='Connected to ')h.sockets[0].emit('connect');
++    assert.equal(h.proxy.state,'CLOSING');assert.equal(h.disconnects,1);
++    assert.equal(h.proxy._tcpSocket,null);assert.equal(h.proxy._telnet,null);assert.equal(h.clock.active.size,0);
++    if(prefix==='Connecting to ')assert.equal(h.sockets.length,0);
++  }
++});
++test('cancelled connect deadline cannot cancel a newer TCP connection',()=>{
++  const h=begin(harness());h.proxy.receive(reply());const deadline=h.proxy._connectTimer;
++  h.sockets[0].emit('connect');h.sockets[0].emit('close');const current=connected(h,49);
++  h.clock.all.get(deadline)();assert.equal(h.proxy.state,'PROXYING');assert.equal(h.proxy._tcpSocket,current);h.proxy.disconnect();
++});
++
++test('solicited NAWS works without initial offers; query backpressure survives until resume',()=>{
++  const h=harness({extra:{negotiateOptions:false}});
++  h.proxy.attach(data=>{h.outputs.push(Buffer.from(data));return !data.equals(query);});
++  begin(h);h.proxy.receive(reply());const socket=h.sockets[0];
++  assert.equal(socket.pauses,1);socket.emit('connect');assert.equal(socket.writes.length,0);
++  h.proxy.resumeOutput();assert.equal(socket.resumes,1);
++  socket.emit('data',Buffer.from([255,253,31]));assert(cat(socket.writes).includes(naws(42,80)));h.proxy.disconnect();
++});
