@@ -372,10 +372,21 @@ TEXT(record_original,"Original backup retained: recover from DOS after ending th
 TEXT(record_uncertain,"Close uncertain: retained files cannot be cleaned in this session.");
 TEXT(record_codes,"Status:       DOS:       Close:       Restore:");
 static byte fold(byte c){return c>='a' && c<='z'?c-32:c;}
+#ifdef UI_PACKED_TEXT
+#include "command_ui_codec.h"
+#endif
 static void text(word at,const char __far *s,word attr)
+#ifdef UI_PACKED_TEXT
+{ui_reader r;byte c;ui_begin(&r,s);while(at<2000 && (c=ui_next(&r))!=0)view[at++]=attr|c;}
+#else
 {while(*s && at<2000)view[at++]=attr|(byte)*s++;}
+#endif
 static void prose(word at,const char __far *s)
+#ifdef UI_PACKED_TEXT
+{ui_reader r;word col=0;byte c;ui_begin(&r,s);while(at<1840 && (c=ui_next(&r))!=0){if(c==10){at+=80-col;col=0;}else{view[at++]=0x0700|c;if(++col==76){at+=4;col=0;}}}}
+#else
 {word col=0;byte c;while((c=*s++)!=0 && at<1840){if(c==10){at+=80-col;col=0;}else{view[at++]=0x0700|c;if(++col==76){at+=4;col=0;}}}}
+#endif
 static void near_text(word at,const char *s,word count)
 {word i;for(i=0;i<count && s[i] && at<1840;++i)view[at++]=0x0700|(byte)s[i];}
 static void owned_path(word at,const recording_file *r,const char *leaf)
@@ -456,7 +467,13 @@ static void draw(void)
  for(i=0;i<2000;++i)view[i]=0x0720;
  for(i=0;i<80;++i)view[i]=view[1920+i]=0x1f20;
  text(1,title,0x1f00);
- for(i=0;i<5;++i)text(162+i*15,categories[i],i==category?0x7000:0x1f00);
+ for(i=0;i<5;++i)text(162+i*15,
+#ifdef UI_PACKED_TEXT
+  (const char __far *)categories+i*12,
+#else
+  categories[i],
+#endif
+  i==category?0x7000:0x1f00);
  if(phase>=4){record_view();return;}
  if(phase==1){text(402,items[selected].name,0x1f00);prose(562,items[selected].help);text(1921,help_footer,0x1f00);}
  else{
@@ -474,8 +491,12 @@ static void draw(void)
 }
 static word matches(const char __far *s)
 {
+#ifdef UI_PACKED_TEXT
+ return ui_matches(s);
+#else
  word i;while(*s){for(i=0;i<query_size && s[i] && fold((byte)s[i])==fold((byte)query[i]);++i){}
   if(i==query_size)return 1;++s;}return 0;
+#endif
 }
 static void search(void)
 {

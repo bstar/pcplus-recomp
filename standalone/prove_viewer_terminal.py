@@ -9,7 +9,7 @@ def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ['terminal','output']:p.add_argument('--'+n,type=Path,required=True)
  p.add_argument('--disabled-sha256',required=True)
- p.add_argument('--feature',choices=['file-viewer','external-viewer','external-editor'],default='file-viewer');a=p.parse_args()
+ p.add_argument('--feature',choices=['file-viewer','external-viewer','external-editor','packed-command-ui'],default='file-viewer');a=p.parse_args()
  assert re.fullmatch('[a-f0-9]{64}',a.disabled_sha256)
  binary=a.terminal.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  manifest=json.loads(binary.with_name('manifest.json').read_text());assert manifest['experimental_file_viewer'] and sha(binary)==manifest['binary_sha256']

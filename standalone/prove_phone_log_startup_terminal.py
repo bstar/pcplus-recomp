@@ -43,6 +43,7 @@ def flags(manifest, startup, event_hooks=True, disk=True, controls=True):
         'experimental_file_directory': 'file-directory',
         'experimental_file_viewer': 'file-viewer', 'experimental_external_viewer': 'external-viewer',
         'experimental_external_editor': 'external-editor',
+        'experimental_packed_command_ui': 'packed-command-ui',
         'experimental_gateway_lookup': 'gateway-lookup',
         'experimental_gateway_handles': 'gateway-handles',
         'experimental_gateway_files': 'gateway-files',

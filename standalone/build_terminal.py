@@ -13,6 +13,8 @@ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--outpu
 parser.add_argument('--file-directory',action='store_true',help='Serviced original-style Alt-F file listing; implies path control')
 parser.add_argument('--external-viewer',action='store_true',help='Configured native-style external Alt-V parameter dialog and guarded COMSPEC handoff; requires session baseline')
 parser.add_argument('--external-editor',action='store_true',help='Original Alt-A external editor using its separate PRM command; implies external viewer')
+parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bounded packing of authored command-browser text')
+parser.add_argument('--command-ui-pairs',type=int,choices=[0,64],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
 parser.add_argument('--session-projection',action='store_true')
 parser.add_argument('--projection-probe',action='store_true')
@@ -92,6 +94,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+assert args.command_ui_pairs==64 or args.packed_command_ui
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
  args.file_viewer=True
@@ -301,6 +304,8 @@ if args.file_directory:out_name+='-file-directory'
 if args.file_viewer:out_name+='-file-viewer'
 if args.external_viewer:out_name+='-external-viewer'
 if args.external_editor:out_name+='-external-editor'
+if args.packed_command_ui:out_name+='-packed-ui'
+if args.command_ui_pairs==0:out_name+='-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
 if args.gateway_files:out_name+='-gateway-files'
@@ -680,6 +685,7 @@ config_aliases.update({name:'config_'+short+'_service' for name,short in {
  'batch_upload_begin':'bu_begin','batch_upload_read':'bu_read','batch_upload_next':'bu_next',
  'batch_upload_close':'bu_close','batch_upload_abort':'bu_abort'}.items()})
 helper_adapters={};zmodem_helper_adapters={};directory_fs_adapters={}
+packed_command_ui=None
 for source in c_sources:
  obj=OUT/(source.stem+'.obj');objects.append(str(obj))
  options=['-nt=CONFIG_CODE','-nc=FARCODE']+['-d'+name+'='+alias for name,alias in config_aliases.items()] if source in config_sources else []
@@ -772,7 +778,12 @@ for source in c_sources:
    options+=['-nt=MOUSE_CODE','-nc=FARCODE','-ecc','-dMOUSE_DOS_PLATFORM',*['-d'+n+'='+n+'_impl' for n in mouse_names]]
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  if args.row_geometry_owner and args.display_row_probe and source==ROOT/'standalone/display_rows_terminal_probe.c':options+=['-dTERMINAL_ROW_GEOMETRY_PROBE']
- subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(source)],cwd=OUT,check=True)
+ compiled_source=source;packed_includes=[]
+ if args.packed_command_ui and source==ROOT/'src/redisplay/command_menu.c':
+  from pack_command_ui import pack
+  compiled_source,packed_command_ui=pack(source,OUT,args.command_ui_pairs)
+  packed_includes=['-i='+str(source.parent),'-i='+str(OUT)]
+ subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,*packed_includes,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(compiled_source)],cwd=OUT,check=True)
  if args.directory_view and source.name=='directory_reader_fs.c':
   before=obj.read_bytes();normalized,counts=rename_imports(before,{
    '_dos_'+name+'_':'directory_dos_'+name+'_service_' for name in ('open','read','close')})
@@ -849,6 +860,7 @@ inputs += [ROOT/'src/transfer/zmodem.h',ROOT/'src/transfer/zmodem_wire.h',ROOT/'
 inputs += [ROOT/'src/transfer/download_compare.h']
 inputs += [ROOT/'standalone/omf_imports.py',Path(__file__).resolve()]
 inputs += sorted((ROOT/'src/terminal').glob('*.inc'))
+if args.packed_command_ui:inputs += [ROOT/'standalone/pack_command_ui.py',ROOT/'src/redisplay/command_ui_codec.h']
 if args.session_projection:inputs += [ROOT/'src/config/prm_projection.h',ROOT/'src/terminal/session_projection.h']
 if args.session_baseline:inputs += [ROOT/'src/terminal/session_baseline.h']
 if args.directory_preview:inputs += [ROOT/'src/terminal/directory_preview.h']
@@ -880,6 +892,8 @@ manifest['experimental_file_directory']=args.file_directory
 manifest['experimental_file_viewer']=args.file_viewer
 manifest['experimental_external_viewer']=args.external_viewer
 manifest['experimental_external_editor']=args.external_editor
+manifest['experimental_packed_command_ui']=args.packed_command_ui
+manifest['packed_command_ui']=packed_command_ui
 manifest['experimental_gateway_lookup']=args.gateway_lookup
 manifest['experimental_gateway_handles']=args.gateway_handles
 manifest['experimental_gateway_files']=args.gateway_files
