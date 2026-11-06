@@ -21,6 +21,7 @@ parser.add_argument('--chat-presentation',action='store_true',help='Select API01
 parser.add_argument('--chat-adapters',action='store_true',help='Link real TX/log/history Chat sink; requires presentation; entry/input hooks remain unbound')
 parser.add_argument('--chat-text-transport',action='store_true',help='Link optional physical-completion TEXT TX sink; requires adapters; foreground TEXT remains unbound')
 parser.add_argument('--chat-timing',action='store_true',help='Select matching API0103 loader/module with serviced TEXT timing; requires physical-TX adapter; shortcuts remain unbound')
+parser.add_argument('--chat-echo',action='store_true',help='Experimental native echo scope/input service; requires timing/frontend; TEXT scheduling remains unbound')
 parser.add_argument('--chat-frontend',action='store_true',help='Experimental Alt-O core and keyboard/RX/idle ownership; Help/direct TEXT remain refused; requires adapters')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
@@ -110,6 +111,7 @@ if args.chat_presentation:assert args.chat_storage
 if args.chat_adapters:assert args.chat_presentation
 if args.chat_text_transport:assert args.chat_adapters and args.optimize_size
 if args.chat_timing:assert args.chat_text_transport
+if args.chat_echo:assert args.chat_timing and args.chat_frontend
 if args.chat_frontend:assert args.chat_adapters and args.keyboard_bank
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
@@ -328,6 +330,7 @@ if args.chat_presentation:out_name+='-chat-presentation'
 if args.chat_adapters:out_name+='-chat-adapters'
 if args.chat_text_transport:out_name+='-chat-text-transport'
 if args.chat_timing:out_name+='-chat-timing'
+if args.chat_echo:out_name+='-chat-echo'
 if args.chat_frontend:out_name+='-chat-frontend'
 if args.command_ui_pairs==0:out_name+='-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
@@ -507,6 +510,7 @@ for index,source in enumerate(sources):
  if args.aspect_snapshot_lease:options+=['-DASPECT_SNAPSHOT_LEASE']
  if args.chat_storage:options+=['-DTERMINAL_CHAT_STORAGE']
  if args.chat_frontend:options+=['-DTERMINAL_CHAT_FRONTEND']
+ if args.chat_echo:options+=['-DTERMINAL_CHAT_ECHO']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
@@ -879,10 +883,15 @@ if args.chat_text_transport:
  source=ROOT/'src/chat/text_transport.asm';obj=OUT/'chat-text-transport.obj'
  subprocess.run(['nasm','-fobj',str(source),'-o',str(obj)],check=True)
  objects.append(str(obj));sources+=[source,ROOT/'src/chat/text_transport.h']
+if args.chat_echo:
+ for leaf in ('echo_cursor','echo_owner'):
+  source=ROOT/'src/chat'/(leaf+'.asm');obj=OUT/(leaf+'.obj')
+  subprocess.run(['nasm','-fobj',str(source),'-o',str(obj)],check=True)
+  objects.append(str(obj));sources.append(source)
 if args.chat_frontend:
  source=ROOT/'src/chat/frontend.c';obj=OUT/'chat-frontend.obj'
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we','-ecc','-ox','-os','-oe=0',
-  '-dCHAT_PRESENTATION',*(['-dCHAT_TEXT','-dCHAT_TIMING'] if args.chat_timing else []),'-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
+  '-dCHAT_PRESENTATION',*(['-dCHAT_TEXT','-dCHAT_TIMING'] if args.chat_timing else []),*(['-dCHAT_ECHO'] if args.chat_echo else []),'-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
  objects.insert(objects.index(str(config_end_obj)),str(obj));sources.append(source)
  source=ROOT/'src/chat/frontend.asm';obj=OUT/'chat-frontend-bridges.obj'
  subprocess.run(['nasm','-fobj',str(source),'-o',str(obj)],check=True)
@@ -969,6 +978,7 @@ manifest['experimental_chat_storage']=args.chat_storage
 manifest['experimental_chat_presentation']=args.chat_presentation
 manifest['experimental_chat_adapters']=args.chat_adapters
 manifest['experimental_chat_text_transport']=args.chat_text_transport
+manifest['experimental_chat_echo']=args.chat_echo
 manifest['experimental_chat_timing']=args.chat_timing
 manifest['experimental_chat_frontend']=args.chat_frontend
 if chat_loader:manifest['chat_loader']={k:v for k,v in chat_loader.items() if k not in ('objects','inputs')}

@@ -2429,3 +2429,10 @@ exchange service around native echo parsing. Independent contexts verify160
 exchanges, pending wraps and shared history; it remains unlinked from the live
 parent/module until admission, serviced continuation and memory-budget gates
 pass. See [the implementation and limits](CHAT_ECHO_CURSOR_SWAP.md).
+
+The subsequent optional [native echo input scope](CHAT_ECHO_OWNER.md) now
+executes native echo/CSI/C1 through the live UART ring with bounded reads,
+cancellation and cursor restoration in CPU checks. Ordinary DOS Chat passes,
+but the larger experimental parent fails nested-ASPECT child/stream capacity.
+Memory funding, actual busy-key scheduling and foreground TEXT binding remain
+required before candidate acceptance; the selected package is unchanged.

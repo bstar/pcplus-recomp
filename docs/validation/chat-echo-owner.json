@@ -1,0 +1,49 @@
+{
+  "status": "experimental-native-echo-scope-verified-unfunded-parent-fails-ASPECT-TEXT-unbound",
+  "binary_sha256": "977d1f552fb214a464e79f640eff43f14eae02d0c10dede41d5b09d47969f70c",
+  "module_sha256": "5b6892e71dfb6054cc5e1ff04b9cfac380af1a5e530da11dc2780325a8d45622",
+  "echo_disabled_sha256": "5ecf87743f55c97e83a334c3a5ef9e049dc4de1558ec4d482a529cf215092846",
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "foreground_TEXT_bound": false,
+  "full_Chat_acceptance": false,
+  "CPU_scope_passed": true,
+  "ordinary_DOS_main_passed": true,
+  "busy_BIOS_key_branch_accepted": false,
+  "nested_ASPECT_passed": false,
+  "minimum_allocation_bytes": 480368,
+  "near_bytes": 65504,
+  "resident_CS_bytes": 65464,
+  "echo_bank_bytes": 895,
+  "resident_hook_bytes": 24,
+  "source_export_files": 3643,
+  "reports": {
+    "scope_cpu": {
+      "path": "build/chat-echo-owner-check-guarded-20261106/result.json",
+      "sha256": "3e6680d3e7ee7508a5730840e7b6fc8b67caea5db427e1c0d903fc08aa92ecc8",
+      "passed": true
+    },
+    "clean_source": {
+      "path": "build/chat-echo-owner-cold-guarded-20261106/result.json",
+      "sha256": "ab09279c3a25f6a21918ddb31b7b5d8b6df504521875217d3a5014b76c63b6ac",
+      "passed": true
+    },
+    "ordinary_dos_main": {
+      "path": "build/chat-echo-owner-guarded-main-20261106/result.json",
+      "sha256": "46fd76e5b2113e75a900c6d4cc5eb55578b29af465e4fa0c0788c3764cd61353",
+      "passed": true
+    },
+    "unfunded_nested_ASPECT": {
+      "path": "build/chat-echo-owner-guarded-unfunded-aspect-20261106/result.json",
+      "sha256": "2b36e1811e36cf42c59e5e5514457e39acacd299f841c4712b080dd94109dbb7",
+      "passed": false
+    }
+  },
+  "remaining": [
+    "Recover parent memory budget and pass nested ASPECT without capacity reduction",
+    "Actual busy-key/cancel and reentry acceptance",
+    "Initialize/synchronize local cursor and presentation state",
+    "Compose foreground echo/physical-TX/timing scheduler and bind all ten TEXT keys",
+    "Broad Chat fault/geometry/UI/BBS/package/deployment/hardware/full-parity acceptance"
+  ]
+}

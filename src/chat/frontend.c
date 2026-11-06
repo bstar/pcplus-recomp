@@ -72,6 +72,16 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
     }
     if(initialized!=0xc702)return 0;
     if(!handle.loaded){if(event==0 && value==0x1800){enter();return 1;}return 0;}
+#ifdef CHAT_ECHO
+    /* A native echo parser can poll IO while the module call retains its
+     * stack. Preserve ordinary typeahead; only cancellation keys may escape
+     * to the existing parent dispatcher. Never call/unload the busy module. */
+    if(handle.busy){
+        if(event==0)return 0;
+        if(event==1)return value!=0x2d00 && value!=0x2300 && (value&255)!=27;
+        return 1;
+    }
+#endif
     if(event==5)return stop();
     if(event==1)return (value!=0x2d00 && value!=0x2300) &&
         (STATE->send.phase || STATE->rx_phase ||

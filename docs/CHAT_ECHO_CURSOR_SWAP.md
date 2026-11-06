@@ -5,7 +5,9 @@ far service that exchanges eleven native cursor/cache/deferred words with
 caller-owned storage. It uses the existing position service to move the BIOS
 cursor, preserves general/segment registers and the caller frame, and adds no
 private state or UART/keyboard operation. The primitive is linked into an
-isolated diagnostic; **it is not linked into the live parent or Chat module.**
+isolated diagnostic at this checkpoint. The subsequent optional
+[native echo scope](CHAT_ECHO_OWNER.md) links it into an experimental parent;
+the default parent, module and foreground TEXT binding remain unchanged.
 
 The caller supplies DS=SS, DF clear and ES:DI pointing to22 writable bytes,
 disjoint from native state/stack and without segment wrap. The words are:

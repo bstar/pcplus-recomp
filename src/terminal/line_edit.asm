@@ -34,6 +34,14 @@ line_tick_far:
  call terminal_tick_low
  retf
 line_receive_far:
+%ifdef TERMINAL_CHAT_ECHO
+ extern terminal_chat_echo_read_now_far
+ global line_raw_receive_far
+ call far terminal_chat_echo_read_now_far
+ jnc line_raw_receive_far
+ retf
+line_raw_receive_far:
+%endif
  call uart_receive_byte
  retf
 

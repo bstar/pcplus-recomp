@@ -1098,7 +1098,19 @@ def inspect_terminal_memory(binary,map_path):
    line_calls(aspect_bytes,aspect_lo,bridge,2)
   for bridge,target,count in (('line_tick_far','terminal_tick_low',2),('line_poll_far','terminal_poll_io',1),('line_receive_far','uart_receive_byte',1)):
    assert symbols[bridge][0]==symbols[target][0]==near_code['relative_segment']
-   near_call(bridge,target,suffix=b'\xcb');line_calls(controller,controller_start,bridge,count)
+   raw_bridge='line_raw_receive_far' if bridge=='line_receive_far' and 'line_raw_receive_far' in symbols else bridge
+   near_call(raw_bridge,target,suffix=b'\xcb');line_calls(controller,controller_start,bridge,count)
+  if 'line_raw_receive_far' in symbols:
+   echo=next(c for c in code_segments if c['name']=='CHAT_ECHO_CODE')
+   for source,target,return_opcode in (
+       ('ansi_next_byte','terminal_chat_echo_read_far',b'\xc3'),
+       ('ansi_unread_byte','terminal_chat_echo_unread_far',b'\xc3'),
+       ('line_receive_far','terminal_chat_echo_read_now_far',b'\xcb')):
+    assert symbols[source][0]==near_code['relative_segment'] and symbols[target][0]==echo['relative_segment']
+    assert raw(source,8)==b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0])+b'\x73\x01'+return_opcode
+    assert address(source)+3 in relocations
+   assert address('line_raw_receive_far')==address('line_receive_far')+8
+   extra.update(chat_echo_owned_read_hooks_verified=3,chat_echo_near_hook_bytes=24)
   assert symbols['attribute_screen_set_cursor_far'][0]==near_code['relative_segment']
   near_call('attribute_screen_set_cursor_far','screen_set_cursor',suffix=b'\xcb')
   line_calls(controller,controller_start,'attribute_screen_set_cursor_far',3)

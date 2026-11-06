@@ -65,6 +65,13 @@ terminal_clock_ticks:
 ; Consume one actual RX byte, including NUL, or return ffff after36 BIOS ticks.
 ; Continue servicing flow, bounded TX and keyboard/Alt-X while waiting.
 ansi_next_byte:
+%ifdef TERMINAL_CHAT_ECHO
+ extern terminal_chat_echo_read_far,terminal_chat_echo_unread_far
+ call far terminal_chat_echo_read_far
+ jnc .unowned_echo
+ ret
+.unowned_echo:
+%endif
  cmp word [terminal_aspect_active],0
  je .ordinary
  call far terminal_render_read
@@ -109,6 +116,12 @@ ansi_next_byte:
 
 ; Original parser calls this only immediately after consuming a byte.
 ansi_unread_byte:
+%ifdef TERMINAL_CHAT_ECHO
+ call far terminal_chat_echo_unread_far
+ jnc .unowned_echo
+ ret
+.unowned_echo:
+%endif
  cmp word [terminal_aspect_active],0
  je .ordinary
  call far terminal_render_unread
