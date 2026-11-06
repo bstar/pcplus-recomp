@@ -1,0 +1,331 @@
+[
+  {
+    "context": 0,
+    "title": "ASPECT Language Reference",
+    "lines": [
+      "ASPECT scripts automate dialing and terminal work. Select a script with Alt-F5. Review a script before running it; file and modem commands operate on the current session."
+    ]
+  },
+  {
+    "context": 1,
+    "title": "ASPECT Keycode Reference",
+    "lines": [
+      "Scripts use key codes to recognize ordinary and extended keys. A key assigned to a local terminal command is handled locally; text bindings send their configured text to the remote system."
+    ]
+  },
+  {
+    "context": 2,
+    "title": "Change Directory",
+    "lines": [
+      "Alt-F7 selects a DOS working directory. Enter a drive and path, or cancel with Escape. Relative filenames use the selected working directory."
+    ]
+  },
+  {
+    "context": 3,
+    "title": "Chat Mode",
+    "lines": [
+      "Alt-O opens Chat Mode. Type a line and press Enter to send it. Received text appears in the remote pane. Escape returns to the terminal. Alt-F6 opens Redisplay without discarding unfinished input."
+    ]
+  },
+  {
+    "context": 4,
+    "title": "Clipboard",
+    "lines": [
+      "Alt-= opens the filename clipboard. Choose a local name before sending it. Clipboard text is sent only after confirmation; Escape cancels."
+    ]
+  },
+  {
+    "context": 5,
+    "title": "Color Options",
+    "lines": [
+      "Normal, bold and reverse colors control terminal text and local windows. Keep enough contrast to distinguish selected items and prompts."
+    ]
+  },
+  {
+    "context": 6,
+    "title": "Dialing Codes",
+    "lines": [
+      "A dialing code expands a configured dialing prefix or suffix. Use the codes assigned to your modem and dialing directory; Internet hostnames are entered at the bridge prompt after carrier when using the local modem bridge."
+    ]
+  },
+  {
+    "context": 7,
+    "title": "Dialing Directory",
+    "lines": [
+      "Use Alt-D to open the dialing directory. Select the entry for the system to call. Confirm the number, serial port and line format before dialing."
+    ]
+  },
+  {
+    "context": 8,
+    "title": "Dialing Directory - Revising",
+    "lines": [
+      "Keep a copy of the dialing directory before revising entries. Check the number, terminal emulation, line format, script and transfer choices for each system."
+    ]
+  },
+  {
+    "context": 9,
+    "title": "Display/Sound Options",
+    "lines": [
+      "Display height and sound options apply to local terminal operation. A connected system may have its own screen-size or ANSI setting. Select settings suitable for the installed display."
+    ]
+  },
+  {
+    "context": 10,
+    "title": "Elapsed Time",
+    "lines": [
+      "Alt-T displays elapsed connection time. Carrier detection and the connected modem determine when a call starts and ends."
+    ]
+  },
+  {
+    "context": 11,
+    "title": "File Directory",
+    "lines": [
+      "Alt-F lists local files. Check the drive and working directory before choosing a file. Escape returns without selecting a file."
+    ]
+  },
+  {
+    "context": 12,
+    "title": "File/Path Options",
+    "lines": [
+      "Use explicit drive and directory names when a file is outside the working directory. Keep program resources beside the program so local commands can find their matching files."
+    ]
+  },
+  {
+    "context": 13,
+    "title": "General Options",
+    "lines": [
+      "Use Setup Facility for available terminal settings. Review the serial line format, flow control and terminal type before calling a different system."
+    ]
+  },
+  {
+    "context": 14,
+    "title": "Host Mode Help",
+    "lines": [
+      "Host Mode is not available in this edition. Use terminal mode to call another system."
+    ]
+  },
+  {
+    "context": 15,
+    "title": "Host Mode Options",
+    "lines": [
+      "Host Mode options are reserved for the host facility. They do not configure a normal outgoing terminal call."
+    ]
+  },
+  {
+    "context": 16,
+    "title": "Kermit Server Commands",
+    "lines": [
+      "Kermit server commands are not available in this edition. Choose a transfer protocol supported by both ends of the connection."
+    ]
+  },
+  {
+    "context": 17,
+    "title": "Key Mapping",
+    "lines": [
+      "A keyboard profile assigns text and special-key behavior. Check bindings before using a key in a remote editor; an assigned local command or text binding may take precedence."
+    ]
+  },
+  {
+    "context": 18,
+    "title": "Line/Port Setup",
+    "lines": [
+      "Alt-P opens Line/Port Setup. Match the modem card address and IRQ to the program settings. Use the same DTE rate at both the terminal and modem, the required line format, and flow control supported by the modem."
+    ]
+  },
+  {
+    "context": 19,
+    "title": "Menu Line",
+    "lines": [
+      "The local status and menu lines describe the current terminal session. Local commands do not send their Alt-key sequences to the remote system."
+    ]
+  },
+  {
+    "context": 20,
+    "title": "Meta Keys",
+    "lines": [
+      "Meta keys send configured text. Confirm the binding and any carriage return before using one at a remote prompt. Use Escape to cancel a local selection."
+    ]
+  },
+  {
+    "context": 21,
+    "title": "Modem General Options",
+    "lines": [
+      "Keep modem initialization suitable for the installed modem. Use the modem manual for command support. Do not select commands intended for a different chipset."
+    ]
+  },
+  {
+    "context": 22,
+    "title": "Modem Commands",
+    "lines": [
+      "AT checks whether the modem responds; ATH hangs up. Dial a telephone number with the command supported by the modem. A telephone modem does not interpret an Internet hostname as a telephone number."
+    ]
+  },
+  {
+    "context": 23,
+    "title": "Modem Port Assignments",
+    "lines": [
+      "The modem COM address and IRQ must match the hardware. An ISA IRQ cannot be shared safely by active devices without compatible hardware and drivers. Disable the other serial port when it conflicts."
+    ]
+  },
+  {
+    "context": 24,
+    "title": "Modem Result Messages",
+    "lines": [
+      "OK acknowledges a command. CONNECT reports a connection. NO CARRIER reports carrier loss or a failed call. BUSY and NO DIALTONE describe different call failures. Reported DTE and carrier rates may differ."
+    ]
+  },
+  {
+    "context": 25,
+    "title": "Monitor Mode",
+    "lines": [
+      "Monitor Mode displays received data for inspection. Return to normal terminal operation before judging how a BBS screen or editor renders."
+    ]
+  },
+  {
+    "context": 26,
+    "title": "PCEDIT Help",
+    "lines": [
+      "Alt-A invokes the configured external editor. Enter the file or parameters requested by its local dialog. Save work in the editor and exit it to return to the terminal."
+    ]
+  },
+  {
+    "context": 27,
+    "title": "PCEDIT Color Options",
+    "lines": [
+      "External editor colors are controlled by that editor. Terminal color options do not necessarily change an external program."
+    ]
+  },
+  {
+    "context": 28,
+    "title": "PCEDIT General Options",
+    "lines": [
+      "Check the external editor command and file path before starting it. An editor runs locally; its keyboard input is not sent to the connected system."
+    ]
+  },
+  {
+    "context": 29,
+    "title": "Protocol General Options",
+    "lines": [
+      "Choose the same transfer protocol at both ends. Binary transfers must preserve every byte. Confirm the destination directory and available disk space before receiving."
+    ]
+  },
+  {
+    "context": 30,
+    "title": "Protocol Options - ASCII",
+    "lines": [
+      "ASCII transfer is for text. Carriage-return handling and pacing affect the result. Use a binary protocol for archives, executables and disk images."
+    ]
+  },
+  {
+    "context": 31,
+    "title": "Protocol Options - KERMIT",
+    "lines": [
+      "Kermit transfer is not available in this edition. Use another mutually supported protocol."
+    ]
+  },
+  {
+    "context": 32,
+    "title": "Protocol Options - ZMODEM",
+    "lines": [
+      "ZMODEM transfers binary files with error checking. Start the sender and receiver as required by the remote system. After cancellation, wait for the remote prompt before retrying."
+    ]
+  },
+  {
+    "context": 33,
+    "title": "Protocol Options - External",
+    "lines": [
+      "External protocol programs have their own command lines and memory requirements. Use only a configured protocol supported by the current terminal edition."
+    ]
+  },
+  {
+    "context": 34,
+    "title": "Pulldown Menus",
+    "lines": [
+      "Alt-Z opens the command reference. Arrows and Tab select an entry; Enter runs an available command. Dim entries are unavailable. The backtick key opens the command browser."
+    ]
+  },
+  {
+    "context": 35,
+    "title": "Receive Files",
+    "lines": [
+      "Start the remote sender, then select the matching local receive operation. Confirm the destination path and protocol. Do not overwrite a needed file without keeping a copy."
+    ]
+  },
+  {
+    "context": 36,
+    "title": "Record Mode",
+    "lines": [
+      "Record Mode records supported local actions for later use. Finish or cancel the current recording before starting another program when requested."
+    ]
+  },
+  {
+    "context": 37,
+    "title": "Redisplay Buffer",
+    "lines": [
+      "Alt-F6 opens Redisplay. Browse received text without sending navigation keys to the remote system. Escape returns to the live terminal. Incoming data can continue while browsing."
+    ]
+  },
+  {
+    "context": 38,
+    "title": "Script File Selection",
+    "lines": [
+      "Alt-F5 selects an ASPECT script. Enter the script name and confirm. A running script may control the modem and keyboard; cancel it before starting conflicting local work."
+    ]
+  },
+  {
+    "context": 39,
+    "title": "Send Files",
+    "lines": [
+      "Select the local file and the protocol expected by the remote receiver. Check the full path. During transfer, use the protocol cancellation command rather than entering ordinary BBS commands."
+    ]
+  },
+  {
+    "context": 40,
+    "title": "Setup Facility",
+    "lines": [
+      "Alt-S opens Setup Facility. Change only the options needed for the current system. Save the desired settings and return to the terminal."
+    ]
+  },
+  {
+    "context": 41,
+    "title": "Terminal Help",
+    "lines": [
+      "Alt-Z opens the command reference. Press Alt-Z again for this help. Escape returns to the same reference window; another Escape returns to the terminal. F1 in the reference opens the selected command description."
+    ]
+  },
+  {
+    "context": 42,
+    "title": "Terminal Color Options",
+    "lines": [
+      "Normal, bold and reverse attributes affect ANSI text and local windows. A remote ANSI program also selects colors. Reset Terminal can clear attributes left by a remote screen."
+    ]
+  },
+  {
+    "context": 43,
+    "title": "Terminal Options",
+    "lines": [
+      "Select the terminal emulation expected by the BBS. ANSI systems commonly use an 80-column CP437 display. Keyboard mode, translation and line-ending options also affect remote editors."
+    ]
+  },
+  {
+    "context": 44,
+    "title": "Translation Table",
+    "lines": [
+      "Alt-W opens translation-table controls. Select a table appropriate for the remote system. For ordinary CP437 ANSI BBS use, avoid translations that alter control or drawing characters."
+    ]
+  },
+  {
+    "context": 45,
+    "title": "Using On-Line Help",
+    "lines": [
+      "T opens the topic selector. Arrows, PageUp/PageDown, Home and End move through topics; Enter selects and Escape cancels. In a topic, use the same scrolling keys to browse its text. S enters a search; C continues it. Accept the other-topics prompt to extend the search. Escape returns to the calling window."
+    ]
+  },
+  {
+    "context": 46,
+    "title": "View a File",
+    "lines": [
+      "Alt-V opens the local file viewer. Enter or select a file. The configured external viewer may be used when selected. Escape cancels a local selection or returns from the internal viewer."
+    ]
+  }
+]

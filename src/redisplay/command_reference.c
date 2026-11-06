@@ -85,13 +85,19 @@ LABEL(title,"P R O C O M M   P L U S   C O M M A N D   M E N U");
 LABEL(communications,"COMMUNICATIONS");LABEL(setup_title,"SET UP");
 LABEL(other,"OTHER FUNCTIONS");LABEL(before," BEFORE ");
 LABEL(after," AFTER ");LABEL(during," DURING ");LABEL(other_group," OTHER ");
-#ifdef PHONE_LOG_CONTROLS
+#ifdef TERMINAL_GLOBAL_HELP
+LABEL(footer,"Alt-Z:Help F1:command help Arrows/Tab:select Enter:run L:call log Esc");
+#elif defined(PHONE_LOG_CONTROLS)
 LABEL(footer,"Arrows/Tab:select Enter:run F1:help L:call log `:browser Esc:return");
 #else
 LABEL(footer,"Arrows/Tab: select  Enter: run  F1: help  `: command browser  Esc: return");
 #endif
 LABEL(dim,"Dim commands are unavailable. Assigned BBS page keys remain unchanged.");
 LABEL(refused,"Not available in this build: ");
+#ifdef TERMINAL_GLOBAL_HELP
+extern unsigned __far __cdecl terminal_help_queue(unsigned);
+LABEL(help_busy,"Help could not be queued. Finish the active program or port operation.");
+#endif
 static word selected,refusal;
 static word __far *view;
 #if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL) || defined(TERMINAL_GATEWAY) || defined(TERMINAL_FILE_DIRECTORY) || defined(TERMINAL_FILE_VIEWER)
@@ -183,6 +189,10 @@ static void draw(void)
   text(row*80+end+1-length(items[i].shortcut),items[i].shortcut,attribute);
  }
  text(1762,footer,0x1f00);
+#ifdef TERMINAL_GLOBAL_HELP
+ if(refusal==2)text(1842,help_busy,0x4f00);
+ else
+#endif
  if(refusal){text(1842,refused,0x4f00);text(1870,items[selected].label,0x4f00);}
  else text(1842,dim,0x0700);
 }
@@ -209,7 +219,12 @@ unsigned __far __cdecl command_reference_event(word event,word key,word __far *f
   for(i=0;i<COUNT;++i)if(key==items[i].key){selected=i;refusal=action(i)==UNAVAILABLE;break;}
   draw();return 0;}
  if(event==2){draw();return 0;}
+#ifdef TERMINAL_GLOBAL_HELP
+ if(key==0x2c00){refusal=terminal_help_queue(41)?2:0;draw();return 0;}
+ if((key&255)==27)return 1;
+#else
  if((key&255)==27 || key==0x2c00)return 1;
+#endif
  if((key&255)=='`')return 0x200;
  key=normalize(key);
  refusal=0;

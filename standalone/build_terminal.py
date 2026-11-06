@@ -13,6 +13,7 @@ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--outpu
 parser.add_argument('--file-directory',action='store_true',help='Serviced original-style Alt-F file listing; implies path control')
 parser.add_argument('--external-viewer',action='store_true',help='Configured native-style external Alt-V parameter dialog and guarded COMSPEC handoff; requires session baseline')
 parser.add_argument('--external-editor',action='store_true',help='Original Alt-A external editor using its separate PRM command; implies external viewer')
+parser.add_argument('--global-help',action='store_true',help='Native PCHELP descriptor through PROGRAM; requires original reference, banked process, display and mouse owners')
 parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bounded packing of authored command-browser text')
 parser.add_argument('--optimize-size',action='store_true',help='Experimental reviewed per-source C size profile; stacks and capacities unchanged')
 parser.add_argument('--code-label-offsets',action='store_true',help='Store same-bank command-label offsets and compact item metadata; requires packed original reference')
@@ -118,6 +119,7 @@ if args.chat_timing:assert args.chat_text_transport
 if args.chat_echo:assert args.chat_timing and args.chat_frontend
 if args.chat_foreground_text:assert args.chat_echo and args.code_label_offsets
 if args.chat_redisplay:assert args.chat_foreground_text
+if args.global_help:assert args.original_reference and args.process_bank and args.program_display_owner and args.mouse and args.external_viewer
 if args.chat_frontend:assert args.chat_adapters and args.keyboard_bank
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
@@ -362,6 +364,16 @@ modules=['ansi','attributes','screen','erase','scroll','terminal_services','curs
 modules += ['attribute_boundary','keyboard_reverse_tab','attribute_repair']
 modules += ['viewport','protected_erase','alternate_output','substitute_control']
 sources=[]
+help_native_proof=[]
+if args.global_help:
+ for name in ['context_help','program_exec']:
+  proof_path=ROOT/'reconstruction'/name/'provenance.json'
+  for unit in json.loads(proof_path.read_text())['units']:
+   if name=='program_exec' and Path(unit['file']).stem not in ('strcpy','get_ds'):continue
+   flat=OUT/('help-'+Path(unit['file']).stem+'-baseline.bin')
+   subprocess.run(['nasm','-fbin','-I',str(ROOT/'reconstruction/uart')+'/',str(ROOT/unit['file']),'-o',str(flat)],check=True)
+   assert flat.stat().st_size==unit['bytes'] and hashlib.sha256(flat.read_bytes()).hexdigest()==unit['sha256']
+   help_native_proof.append(unit)
 if args.path_control:sources += [ROOT/'src/filesystem/path_bank.asm',ROOT/'src/filesystem/path_kernel.asm',ROOT/'reconstruction/file_path/change.asm']
 if args.file_directory:sources.append(ROOT/'src/filesystem/find_kernel.asm')
 if args.file_viewer:sources.append(ROOT/'src/filesystem/viewer_kernel.asm')
@@ -385,7 +397,9 @@ if args.hook_execute:sources.append(ROOT/'src/process/hook_owner_dos.asm')
 if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
+if args.global_help:sources += [ROOT/'reconstruction/context_help/handoff.asm',ROOT/'reconstruction/program_exec/strcpy.asm',ROOT/'reconstruction/program_exec/get_ds.asm']
 if not args.gateway_uart:sources=[p for p in sources if p.name!='gateway_uart.asm']
+if not args.global_help:sources=[p for p in sources if p.name!='help_program.asm']
 if not args.gateway:sources=[p for p in sources if p.name!='gateway_front.asm']
 if not args.local_controls:sources=[p for p in sources if p.name!='local_controls.asm']
 if not args.window_size_report:sources=[p for p in sources if p.name!='window_size_report.asm']
@@ -447,6 +461,9 @@ for index,source in enumerate(sources):
  obj=OUT/f'unit-{index}.obj';objects.append(str(obj));options=[]
  if source==ROOT/'src/ui/speaker_native.asm':options+=['-D_TEXT=CONFIG_CODE','-DCODE=FARCODE']
  if source.parent.parent.name=='reconstruction':options=['-D'+source.parent.name.upper()+'_OMF']
+ if args.global_help and source in [ROOT/'reconstruction/context_help/handoff.asm',ROOT/'reconstruction/program_exec/strcpy.asm',ROOT/'reconstruction/program_exec/get_ds.asm']:
+  options+=['-D_TEXT=CONFIG_CODE','-DCODE=FARCODE','-Dprogram_strcpy=help_native_strcpy','-Dprogram_get_ds=help_native_get_ds']
+  if source.parent.name=='context_help':options+=['-DCONTEXT_HELP_LIVE']
  if args.row_geometry_owner and source==ROOT/'reconstruction/program_mouse/init.asm':options+=['-Dmouse_bind=terminal_rows_mouse_bind']
  if source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_CHARACTER_PREFLIGHT','-DTERMINAL_LINE_PREFLIGHT','-DTERMINAL_RENDER_PREFLIGHT']
  if source==ROOT/'reconstruction/erase/display_after.asm':options+=['-Dcsi_service_d8b6=terminal_erase_after_native','-DTERMINAL_ERASE_PREFLIGHT']
@@ -522,6 +539,7 @@ for index,source in enumerate(sources):
  if args.chat_echo:options+=['-DTERMINAL_CHAT_ECHO']
  if args.chat_foreground_text:options+=['-DTERMINAL_CHAT_FOREGROUND_TEXT']
  if args.chat_redisplay:options+=['-DTERMINAL_CHAT_REDISPLAY']
+ if args.global_help:options+=['-DTERMINAL_GLOBAL_HELP']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
@@ -610,7 +628,7 @@ if args.display_row_probe:c_sources.append(ROOT/'standalone/display_rows_termina
 c_sources += [ROOT/'src/config'/name for name in ['terminal_preferences.c','transfer_import.c']]
 if args.notice_sound:c_sources += [ROOT/'src/ui/speaker.c',ROOT/'src/ui/connect_alert.c']
 c_sources += [ROOT/'src/translation/xlt_dos.c',ROOT/'src/translation/xlt_dos_fs.c']
-c_sources += [ROOT/'src/translation/xlt_default.c',ROOT/'src/config/resource_path.c']
+c_sources += [ROOT/'src/translation/xlt_default.c',ROOT/'src/config'/('resource_path_shared.c' if args.global_help else 'resource_path.c')]
 c_sources += [ROOT/'src/translation/xlt_live.c',ROOT/'src/redisplay/redisplay.c']
 c_sources += [ROOT/'src/redisplay/command_menu.c',ROOT/'src/terminal/script_launch.c']
 if args.original_reference:c_sources.append(ROOT/'src/redisplay/command_reference.c')
@@ -669,6 +687,7 @@ if args.notice_sound:config_sources.update({ROOT/'src/ui/speaker.c',ROOT/'src/ui
 config_sources.update({ROOT/'src/transfer'/name for name in ['zmodem_autostart.c','terminal_autostart.c']})
 config_sources.add(ROOT/'src/translation/xlt_dos.c')
 config_sources.update({ROOT/'src/translation/xlt_default.c',ROOT/'src/config/resource_path.c'})
+if args.global_help:config_sources.add(ROOT/'src/config/resource_path_shared.c')
 config_sources.add(ROOT/'src/translation/xlt_live.c')
 if args.elapsed_view:
  c_sources.append(ROOT/'src/redisplay/elapsed_view.c')
@@ -784,6 +803,7 @@ for source in c_sources:
  if args.file_directory:options+=['-dTERMINAL_FILE_DIRECTORY']
  if args.file_viewer:options+=['-dTERMINAL_FILE_VIEWER']
  if args.external_viewer:options+=['-dTERMINAL_EXTERNAL_VIEWER']
+ if args.global_help:options+=['-dTERMINAL_GLOBAL_HELP']
  if args.external_editor:options+=['-dTERMINAL_EXTERNAL_EDITOR']
  if args.path_control:options+=['-dTERMINAL_PATH_CONTROL']
  if source in path_sources:options+=['-nt=FILE_CODE','-nc=FARCODE']
@@ -884,7 +904,7 @@ if args.display_row_owner:
  objects+=list(map(str,display_rows_bank['objects']));sources+=display_rows_bank['inputs']
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
- phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup,lifecycle=args.phone_log_lifecycle,events=args.phone_log_events,disk=args.phone_log_disk,controls=args.phone_log_controls,gateway=args.gateway_files)
+ phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup,lifecycle=args.phone_log_lifecycle,events=args.phone_log_events,disk=args.phone_log_disk,controls=args.phone_log_controls,gateway=args.gateway_files,shared_paths=args.global_help)
  objects+=list(map(str,phone_log_bank['objects']));sources+=phone_log_bank['sources']
 ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
 chat_loader=None
@@ -933,6 +953,7 @@ if args.display_preferences:sources.append(ROOT/'src/config/display_preferences.
 inputs=sources+c_sources+[ROOT/'src/config/prm_dos.h',ROOT/'src/config/terminal_import.h',ROOT/'src/config/terminal_import.inc',ROOT/'src/config/modem_import.h',ROOT/'src/config/modem_import.inc',ROOT/'src/config/startup_import.h',ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/uart/layout.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc']
 inputs += [ROOT/'src/config/live_configuration.h',ROOT/'src/aspect/resident_render.h',ROOT/'src/aspect/resident_bridge.inc',ROOT/'src/aspect/renderer_policy.h',ROOT/'src/aspect/serial_handoff.h']
 inputs += [protected_provenance,alternate_provenance,substitute_provenance]
+if args.global_help:inputs += [ROOT/'reconstruction/context_help/provenance.json',ROOT/'reconstruction/program_exec/provenance.json']
 inputs += [ROOT/'src/status/status_state.inc',ROOT/'src/status/status_formatter.h']
 inputs += [ROOT/'src/config/live_setup_owner.h',ROOT/'src/config/terminal_preferences.h',ROOT/'src/config/transfer_import.h']
 if args.notice_sound:inputs.append(ROOT/'src/ui/speaker.h')
@@ -999,6 +1020,8 @@ manifest['experimental_chat_text_transport']=args.chat_text_transport
 manifest['experimental_chat_echo']=args.chat_echo
 manifest['experimental_chat_foreground_text']=args.chat_foreground_text
 manifest['experimental_chat_redisplay']=args.chat_redisplay
+manifest['experimental_global_help']=args.global_help
+if args.global_help:manifest['global_help_native_units']=help_native_proof
 manifest['experimental_code_label_offsets']=args.code_label_offsets
 manifest['experimental_chat_timing']=args.chat_timing
 manifest['experimental_chat_frontend']=args.chat_frontend

@@ -328,7 +328,7 @@
     },
     "src/redisplay/command_reference.c": {
       "profile": "no-inline",
-      "source_sha256": "e4dcd54c3c843ca1c3d27d313d74fe3590c018cbc60e7ea6e001bf8b9bc7b029",
+      "source_sha256": "4ac4558e61bdeda5bf058579f74c90d34bf260e05ad071c53e0fbee8bd863ca3",
       "control_code_data_bytes": [
         3484,
         8

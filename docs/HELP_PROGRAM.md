@@ -6,8 +6,9 @@ recovered132-byte parent producer launches it successfully under actual DOS.
 It admits the descriptor through the
 [parent PSP/MCB service](HELP_PARENT_ADMISSION.md), reads an HLP resource through
 the existing bounded streamed reader, and displays an original-derived Help UI.
-It is not yet wired to the terminal's global Help entry or selected for the
-physical machine.
+The opt-in [global Help profile](GLOBAL_HELP.md) now wires reference context41
+through the terminal's PROGRAM owner. It is not selected for the physical
+machine.
 
 The matched interface has a full-width topic/title header, right scrollbar,
 bottom key reference, scrollable text, `T` topic selector, `S` search dialog,

@@ -242,6 +242,26 @@ _external_program_queue:
  retf
 %endif
 
+%ifdef TERMINAL_GLOBAL_HELP
+; FAR C(context). The command reference keeps its own serviced screen lease;
+; the ordinary PROGRAM display owner uses the distinct browser snapshot.
+global _terminal_help_queue
+_terminal_help_queue:
+ push bp
+ mov bp,sp
+ mov ax,program_external_marker
+ call terminal_program_start
+ or ax,ax
+ jnz .done
+ mov word [terminal_program_kind],11
+ mov ax,[bp+6]
+ mov [terminal_program_command+50],ax
+ xor ax,ax
+.done:
+ pop bp
+ retf
+%endif
+
 ; Called only by main, never from parser callbacks or a DOS/BIOS interrupt.
 ; Drain existing replies and the physical shift register before pausing RX.
 terminal_program_poll:
@@ -448,6 +468,15 @@ terminal_program_poll:
 %endif
  mov ax,terminal_program_result
  push ax
+%ifdef TERMINAL_GLOBAL_HELP
+ cmp word [terminal_program_kind],11
+ jne .not_help_child
+ extern _terminal_help_execute
+ call far _terminal_help_execute
+ add sp,2
+ jmp .child_status
+.not_help_child:
+%endif
 %ifdef TERMINAL_EXTERNAL_VIEWER
  cmp word [terminal_program_kind],10
  jne .not_external_child
@@ -571,8 +600,13 @@ terminal_program_poll:
 %endif
 %ifdef TERMINAL_EXTERNAL_VIEWER
  ; Native external viewing does not insert an acknowledgement after success.
+%ifdef TERMINAL_GLOBAL_HELP
+ cmp word [terminal_program_kind],11
+ je .external_prompt_status
+%endif
  cmp word [terminal_program_kind],10
  jne .not_external_prompt
+.external_prompt_status:
  cmp word [terminal_program_status],4
  je .restore_screen
 .not_external_prompt:

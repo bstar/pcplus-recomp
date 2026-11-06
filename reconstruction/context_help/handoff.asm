@@ -6,9 +6,27 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 global context_help_native
 extern help_resolve,program_strcpy,program_get_ds,help_format_tail,help_execute
+%ifdef CONTEXT_HELP_LIVE
+; Link-time bindings for the live PROGRAM owner. Native instructions remain
+; unchanged; the queued52-byte command supplies names, raw UI word and topic.
+extern terminal_program_command,attributes_normal_value,attributes_bold_value,attributes_reverse_value
+extern mouse_scale_x,mouse_scale_y
+%define help_path_key terminal_program_command
+%define help_title terminal_program_command+11
+%define help_tail_format terminal_program_command+24
+%define help_program_key terminal_program_command+36
+%define help_ui_1d3e terminal_program_command+48
+%define help_topic terminal_program_command+50
+%define help_normal attributes_normal_value
+%define help_bold attributes_bold_value
+%define help_reverse attributes_reverse_value
+%define help_mouse_x mouse_scale_x
+%define help_mouse_y mouse_scale_y
+%else
 extern help_path_key,help_title,help_topic,help_ui_1d3e
 extern help_normal,help_bold,help_reverse,help_mouse_x,help_mouse_y
 extern help_tail_format,help_program_key
+%endif
 %else
 ORG 0x57ae
 %define help_resolve 0x353d

@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+The latest opt-in [global Help checkpoint](GLOBAL_HELP.md) connects the command
+reference's second Alt-Z to source PCHELP context41 through PROGRAM ownership.
+Six main-loop Help cases, six-stream ASPECT, Chat restoration and current
+Enigma carrier/retry and Synchronet editor regressions pass. The accepted
+479408-byte parent and all three companions reproduce from public source.
+Other Help contexts, broader input/mouse/video parity and physical acceptance
+remain open; this candidate has not replaced the physical selection.
+
 The [packed command UI](PACKED_COMMAND_UI.md) now recovers4224 parent bytes with
 lossless text and correct far category labels.1146 linked frames and18 actual
 DOS modal workflows pass; the unchanged512-byte-policy ASPECT runner again

@@ -36,7 +36,7 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def build_bank(out, reservations=False, startup=False, lifecycle=False, events=False, disk=False, controls=False, gateway=False):
+def build_bank(out, reservations=False, startup=False, lifecycle=False, events=False, disk=False, controls=False, gateway=False, shared_paths=False):
     OUT = Path(out)
     OUT.mkdir(parents=True, exist_ok=True)
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
@@ -48,6 +48,7 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False, events=F
     sources = ['src/directory/' + name + '.c' for name in
                ['phone_log_queue', 'phone_log_format', 'phone_log_clock', 'phone_log_file', 'phone_log_fs']]
     aliases = dict(ALIASES)
+    resource_source='src/config/'+('resource_path_shared.c' if shared_paths else 'resource_path.c')
     if lifecycle:
         sources += ['src/directory/phone_log_lifecycle.c']
         aliases.update({name: name + '_impl' for name in LIFECYCLE_ENTRIES})
@@ -67,13 +68,13 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False, events=F
         sources += ['src/directory/phone_log_controls.c']
         aliases['phone_log_controls_event']='phone_log_controls_event_impl'
     if startup:
-        sources += ['src/directory/phone_log_startup.c', 'src/directory/phone_log_startup_owner.c', 'src/config/resource_path.c']
+        sources += ['src/directory/phone_log_startup.c', 'src/directory/phone_log_startup_owner.c', resource_source]
         aliases.update(phone_log_startup_owner='phone_log_startup_owner_impl',
             resource_pcplus_path='phone_resource_pcplus_path', resource_program_path='phone_resource_program_path')
     objects = []
     adapters = {}
     for source in sources:
-        obj = OUT / (('phone_resource_path' if source == 'src/config/resource_path.c' else Path(source).stem) + '.obj')
+        obj = OUT / (('phone_resource_path' if source == resource_source else Path(source).stem) + '.obj')
         includes = ['-i=' + str(ROOT / 'src/config')] if source.endswith('/phone_log_events.c') else []
         subprocess.run(['wcl', '-c', *flags, *includes, '-dPHONE_LOG_QUEUE_FAR', '-dPHONE_LOG_QUEUE_EXTERNAL', '-nt=PHONE_LOG_CODE', '-nc=FARCODE',
                         *['-d' + name + '=' + value for name, value in aliases.items()],
