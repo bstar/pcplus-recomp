@@ -5,10 +5,14 @@ from product_inputs import ROOT,sha
 
 SOURCES=['lab/bbs/external_viewer_bbs_support.py','standalone/file_directory_bbs_watch.asm','standalone/viewer_external_child.asm']
 
-def prepare(folder):
+def prepare(folder,admission_binary=None):
  folder=Path(folder);folder.mkdir(parents=True,exist_ok=False)
  observer=folder/'EXWATCH.COM'
- subprocess.run(['nasm','-fbin','-DEXTERNAL_VIEWER_ROUNDTRIP',str(ROOT/SOURCES[1]),'-o',str(observer)],check=True)
+ observer_source=ROOT/SOURCES[1]
+ if admission_binary:
+  from program_admission_support import instrument
+  observer_source=folder/'observer.asm';observer_source.write_text(instrument((ROOT/SOURCES[1]).read_text(),admission_binary))
+ subprocess.run(['nasm','-fbin','-DEXTERNAL_VIEWER_ROUNDTRIP',str(observer_source),'-o',str(observer)],check=True)
  source=(ROOT/SOURCES[2]).read_text()
  # The owned child deliberately leaves graphics mode, then marks its completion
  # to the passive observer. A pre-EXEC screen cannot satisfy the return gate.

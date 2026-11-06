@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "binary_sha256": "93f08d0cf3fd4174718e7ca727758ddb63f4e6f0ecd1471b3fb00c41c1f4d800",
+  "interpreter_sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+  "session": {
+    "path": "build/bbs-lab/results/synchronet/editor-script-open-final-20261106/proxy-integration.json",
+    "sha256": "f081b97e4905e2bca699794aafa8e71721bb9189bcc0b279453fb4982f2ab219"
+  },
+  "capture": {
+    "path": "build/bbs-lab/results/synchronet/editor-script-open-final-20261106/ADMIT.BIN",
+    "sha256": "e5980d9803c93fb26c2f3aeeffccc8e58b0888f9f6a70d565b6a972d29e1b1c0"
+  },
+  "wrapper_checks": {
+    "path": "build/admission-watch-extended-wrapper-20261106/result.json",
+    "sha256": "9ab1d7718d5d5010fa9cd8a92fe7d9c03c8d891582bc50beab413d12c553c92c"
+  },
+  "observer_words": [
+    44353,
+    1,
+    2161,
+    2126,
+    2099,
+    5,
+    0,
+    0,
+    1,
+    30195,
+    0,
+    0,
+    1,
+    30195,
+    0,
+    0,
+    0,
+    0
+  ],
+  "observer_segment": 52299,
+  "keyboard_helper_segment": 53197,
+  "DOS_EXEC_succeeded": true,
+  "DOS_EXEC_error": 0,
+  "child_termination_type": 0,
+  "child_exit_code": 1,
+  "ASPECT_exit_meaning": "ASPECT_RUN_OPEN: cannot open script",
+  "matching_script_open_calls": 0,
+  "last_open": null,
+  "hardware_restored": true,
+  "application_accepted": false,
+  "deployment_changed": false,
+  "sources": {
+    "standalone/record_program_admission.py": "cd94e511ec82af8bc45cecb3df9bb6f64abcc65bd00fed4a6adfa2b6fb238193",
+    "lab/bbs/program_admission_support.py": "8b8b64558daad74ba3dc15277e5cbd205fe629ff2813b3207af6bdc861e3ea05",
+    "standalone/program_admission_watch.inc": "c8c9a5fd822294798dd381a9f46b04ddb0a2a8507d59c1e35345fe5642311289"
+  },
+  "limits": [
+    "Read-only parent timer witness and DOS3D/6C wrapper for owned SYNC.ASX only.",
+    "No caller memory modifications or fabricated DOS results; wrapper checks cover flags/register/stack preservation.",
+    "Cannot-open exit is established; heap exhaustion versus another CRT/path cause requires further evidence.",
+    "This diagnostic is a failed Synchronet workflow, never BBS acceptance.",
+    "Earlier observer attempts left extra diagnostic vectors installed; excluded from hardware-restoration claims.",
+    "No production package, private settings or service changes."
+  ]
+}

@@ -81,6 +81,30 @@ of this optional editor candidate.
 
 ## Enigma, transfer and recovery composition
 
+The later [launch diagnostic](validation/program-admission.json) corrects the
+initial startup interpretation below. DOS EXEC succeeds with no DOS error;
+ASPECT terminates normally with exit1, `ASPECT_RUN_OPEN` (cannot open script).
+The parent and PROGRAM result agree. Thus a failed DOS load is ruled out for
+this observed session; memory exhaustion remains an inference, not a finding.
+The owned-script DOS3D/6C observer records no matching `SYNC.ASX` request.
+Actual normalized path/CRT error and any alternative open mechanism still
+require investigation before attributing the error to heap allocation.
+
+This diagnostic uses a read-only timer witness and an owned-script-only DOS
+wrapper in the existing UMB observer. Sixteen executions of the assembled
+wrapper verify success/error carry, filter, register, stack and IRET FLAGS
+preservation. Its extra INT21/INT1C hooks are retired after the parent exits;
+the final actual DOS run passes the complete before/after hardware comparison.
+Earlier diagnostic versions omitted that retirement and are excluded from
+restoration claims. The report's `passed` means the failure evidence was
+validated; `application_accepted` is explicitly false. The failed BBS workflow
+has not been converted into compatibility acceptance.
+
+A subsequent menu-consolidation experiment kept all18 editor/viewer modal
+routes working, but increased retention by16 bytes rather than saving memory.
+It was rejected and reverted. Neither application code nor selected package
+changes at this diagnostic checkpoint.
+
 The later [composition receipt](validation/editor-composition.json) extends this
 same93f08d0c executable with an actual Enigma editor session through the current
 SynthModem source. Alt-A runs the owned mode13h child, then the post-child marker

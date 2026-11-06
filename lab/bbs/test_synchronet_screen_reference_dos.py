@@ -26,7 +26,7 @@ def login_script():
     return source+wait('FSEditor v1.105','EDITOR')+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25);p.add_argument('--status-hidden',type=int,choices=[0,1],default=0);p.add_argument('--size-probe',action='store_true');p.add_argument('--phone-log',action='store_true');p.add_argument('--gateway-overlay',action='store_true');p.add_argument('--file-directory-overlay',action='store_true');p.add_argument('--file-viewer-overlay',action='store_true');p.add_argument('--external-viewer-overlay',action='store_true');p.add_argument('--external-editor-overlay',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25);p.add_argument('--status-hidden',type=int,choices=[0,1],default=0);p.add_argument('--size-probe',action='store_true');p.add_argument('--phone-log',action='store_true');p.add_argument('--gateway-overlay',action='store_true');p.add_argument('--file-directory-overlay',action='store_true');p.add_argument('--file-viewer-overlay',action='store_true');p.add_argument('--external-viewer-overlay',action='store_true');p.add_argument('--external-editor-overlay',action='store_true');p.add_argument('--admission-watch',action='store_true');a=p.parse_args()
     if a.external_editor_overlay:
         assert not a.external_viewer_overlay
         a.external_viewer_overlay=True
@@ -61,6 +61,9 @@ def main():
     if a.external_viewer_overlay:
         from external_viewer_bbs_support import SOURCES
         sources += [ROOT/n for n in SOURCES]
+    if a.admission_watch:
+        assert a.external_viewer_overlay
+        sources += [ROOT/'lab/bbs/program_admission_support.py',ROOT/'standalone/program_admission_watch.inc']
     frozen={str(n.relative_to(ROOT)):sha(n) for n in sources}
     base=ROOT/'build/bbs-lab';bridge=base/(a.label+'-proxy');out=base/'results/synchronet'/a.label
     assert not bridge.exists() and not out.exists();out.mkdir(parents=True)
@@ -90,7 +93,7 @@ def main():
         assert json.loads((binary.parent/'manifest.json').read_text())['experimental_external_viewer']
         if a.external_editor_overlay:assert json.loads((binary.parent/'manifest.json').read_text())['experimental_external_editor']
         from external_viewer_bbs_support import prepare
-        external_child,observer=prepare(out/'external-viewer');generated_paths += [external_child,observer]
+        external_child,observer=prepare(out/'external-viewer',binary if a.admission_watch else None);generated_paths += [external_child,observer]
     if a.phone_log:
         from phone_log_evidence import build_observer
         observer=build_observer(binary,out/'LOGWATCH.COM');generated_paths.append(observer)

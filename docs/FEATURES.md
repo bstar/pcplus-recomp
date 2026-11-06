@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The [Synchronet launch diagnostic](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
+now rules out failed DOS EXEC in its observed session: ASPECT launches and exits
+with cannot-open-script status. No owned-script DOS3D/6C open was observed;
+normalized path/CRT error investigation remains. Hardware restoration and16
+assembled observer-wrapper cases pass. Memory exhaustion is not yet proven.
+
 The editor's [composed compatibility tests](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
 pass framed Enigma with1920 exact reference cells, six X/Y/ZMODEM workflows and
 four child/transfer carrier-loss redials. Disabled-framing failures also occur
