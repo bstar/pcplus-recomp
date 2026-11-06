@@ -1,5 +1,16 @@
 # Full application reconstruction checklist
 
+The [Chat Help geometry guard](CHAT_HELP_GEOMETRY.md) now validates presentation
+before queuing Help, preserving unfinished input when an external BIOS screen
+change makes the presentation invalid. Twelve component cases pass206028 checks;
+the frozen preceding parent reproduces the admission bug. Current-parent
+recovery/busy/cold-source, nested ASPECT, Enigma editor/reconnect/transfer and
+Synchronet regressions pass. The opt-in parent is nowfab5ac9e with minimum479408
+bytes; companions and the default no-Chat-Help profile remain unchanged.
+This does not reconstruct externally erased live Chat pixels or establish
+whole-main geometry-fault or physical acceptance. Earlier checkpoints below
+retain their own product hashes and describe the coverage at that time.
+
 The [connected Enigma Chat Help checkpoint](CHAT_HELP_BBS.md) passes source
 Chat/PCHELP/Chat/editor return inside a real authenticated stock editor session
 through SynthModem's Telnet proxy. All4000 editor and Chat frame bytes/cursors

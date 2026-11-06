@@ -1853,6 +1853,9 @@ test-chat-help-matrix: chat-help
 	python3 standalone/test_chat_help_matrix.py --package $(CHAT_HELP_OUTPUT) --output $(CHAT_HELP_OUTPUT)/matrix
 test-chat-help-busy: chat-help
 	python3 standalone/test_chat_help_busy_matrix.py --package $(CHAT_HELP_OUTPUT) --output $(CHAT_HELP_OUTPUT)/busy-matrix
+.PHONY: test-chat-help-geometry
+test-chat-help-geometry: chat-help
+	python3 standalone/test_chat_help_geometry_matrix.py --terminal $(CHAT_HELP_OUTPUT)/TERMINAL.EXE --output $(CHAT_HELP_OUTPUT)/geometry
 test-chat-help-busy-source: chat-help
 	python3 standalone/prove_global_help_source.py --package $(CHAT_HELP_OUTPUT) --output $(CHAT_HELP_OUTPUT)/busy-source --busy-help
 test-resource-path-shared:

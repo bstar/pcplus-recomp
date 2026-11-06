@@ -181,7 +181,10 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
          * PROGRAM keeps this module and its presentation in place; only the
          * private context3 queue entry admits the existing Chat owner. */
         if(value==0x2c00){
-            if(terminal_help_queue(3))handle.dos_error=0x7f03;
+            /* Help bypasses ordinary module KEY dispatch. Keep its existing
+             * non-destructive presentation check before PROGRAM admission;
+             * a failed check must not abort the retained Chat session. */
+            if(operation(CHAT_MODULE_PRESENT_CURSOR)!=1 || terminal_help_queue(3))handle.dos_error=0x7f03;
             return 1;
         }
 #endif
