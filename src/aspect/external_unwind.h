@@ -25,6 +25,9 @@ extern unsigned runtime_external_arena_valid,runtime_external_arena_ok;
 extern unsigned runtime_external_frame_offset,runtime_external_arena_changed;
 extern void __far *runtime_external_arena_copy;
 #define external_phase(value) runtime_external_phase(value)
+#elif defined(ASPECT_LEASE_FAULT_PHASE)
+void __cdecl runtime_external_phase(unsigned);
+#define external_phase(value) runtime_external_phase(value)
 #else
 #define external_phase(value) ((void)0)
 #endif

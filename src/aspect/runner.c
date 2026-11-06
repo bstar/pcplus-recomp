@@ -17,6 +17,9 @@
 unsigned _WCDATA _amblksiz=ASPECT_HEAP_GROWTH_BYTES;
 #endif
 #include <string.h>
+#if defined(ASPECT_LEASE_FAULT_PHASE)
+unsigned runtime_lease_fault_armed;
+#endif
 #if defined(NATIVE_PROGRAM_BREAK_OWNER)
 #include "../process/exit_owner.h"
 #endif
@@ -68,6 +71,9 @@ int main(int argc,char **argv)
 {
  unsigned limit=10000,result=0,i,has_budget=0,serial_status;
  const char *serial_option=0;
+#if defined(ASPECT_LEASE_FAULT_PHASE)
+ const char *fault_leaf;
+#endif
  if(argc==2 && (!strcmp(argv[1],"/?") || !strcmp(argv[1],"--help"))){
   puts("ASPECT script.ASX [instruction-budget:1..65535] [/S1:0003:03:N]");
   puts("PCPLUS_TXWAIT=1..3600 sets transmit stall seconds (default30).");return 0;
@@ -93,6 +99,14 @@ int main(int argc,char **argv)
   serial_status=aspect_serial_open(serial_option);
   if(serial_status){runtime_serial_error=serial_status;result=ASPECT_RUN_SERIAL;}
  }
+#if defined(ASPECT_LEASE_FAULT_PHASE)
+ if(!result){
+  fault_leaf=strrchr(argv[1],'\\');
+  if(!fault_leaf)fault_leaf=strrchr(argv[1],':');
+  fault_leaf=fault_leaf?fault_leaf+1:argv[1];
+  runtime_lease_fault_armed=!stricmp(fault_leaf,"FAULT.ASX");
+ }
+#endif
  if(!result)result=aspect_runtime_run(argv[1],limit);
  if(serial_option && aspect_serial_active){
   serial_status=aspect_serial_close();

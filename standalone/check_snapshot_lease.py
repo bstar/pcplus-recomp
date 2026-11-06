@@ -30,7 +30,7 @@ class Child(child_model.Client):
         old=self.reply
         if address==0x80000 and u.reg_read(UC_X86_REG_AX)==18 and not self.reply:
             i=u.reg_read(UC_X86_REG_BX)
-            self.reply=self.bad_byte if self.bad_byte is not None else struct.pack('<2H',*self.pointer)[i]
+            self.reply=self.bad_byte if self.bad_byte is not None else 0xf000|struct.pack('<2H',*self.pointer)[i]
         super().endpoint(u,address,size,unused);self.reply=old
 
 def main():
@@ -48,7 +48,8 @@ def main():
         m=Parent(layout);assert m.operation(9,1)==0;return m
     for size in [1,4000,4480,6880,8000]:
         m=parent();assert m.operation(17,size)==0 and m.get('render_snapshot_owned')==1
-        pointer=bytes(m.operation(18,i) for i in range(4));off,seg=struct.unpack('<2H',pointer)
+        values=[m.operation(18,i) for i in range(4)];assert all(v&0xff00==0xf000 for v in values)
+        pointer=bytes(v&255 for v in values);off,seg=struct.unpack('<2H',pointer)
         assert seg*16+off==m.frame
         assert bytes(m.uc.mem_read(m.frame,8000))==b'\xa5'*8000
         assert m.operation(10)==10 and m.get('render_program_owned')==2
@@ -96,7 +97,7 @@ def main():
         before=list(m.requests);assert m.call('_aspect_render_program_end',[0])==10 and m.requests==before
         m.reply=0;assert m.call('_aspect_render_snapshot_end')==0 and m.call('_aspect_render_program_end',[0])==0
         record('failed-release-quarantine-'+str(error))
-    for pointer,bad in [((0xffff,0x6000),None),((0,0),None),((0x2000,0x6000),256),((0x2000,0x6000),65535)]:
+    for pointer,bad in [((0xffff,0x6000),None),((0,0),None),*(((0x2000,0x6000),v) for v in [0,7,10,14,255,256,0xefff,65535])]:
         m=Child();m.pointer=pointer;m.bad_byte=bad;assert m.call('_aspect_render_program_begin',[1])==0
         assert m.call('_aspect_render_snapshot_begin',[4000])==0 and m.requests[-1]==(19,0)
         assert m.call('_aspect_render_program_end',[0])==0;record('invalid-pointer-'+str(pointer)+'-'+str(bad))

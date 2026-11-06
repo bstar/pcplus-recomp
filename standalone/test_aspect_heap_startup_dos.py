@@ -26,10 +26,14 @@ def main():
     parser.add_argument('--cpu',choices=['8086','386'],default='8086')
     parser.add_argument('--program-result-probe',action='store_true',help='Explicitly admit only the marked PROGRAM-result diagnostic interpreter')
     parser.add_argument('--inner-screen',action='store_true',help='Passive pre/post inner screen witness; requires graphics child and386/UMB observer')
+    parser.add_argument('--lease-fault-phase',type=int,choices=[0,5,6,8,10,17,22],default=0,help='Explicitly admit the matching one-shot FAULT.ASX divide diagnostic')
+    parser.add_argument('--lease-fault-foreign-ds',action='store_true',help='Require the marked diagnostic that faults with DS=B800h and the owned SS')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
     assert not args.exit_watch_high or args.exit_watch
     assert not args.inner_screen or (args.nested_graphics and args.cpu=='386' and not args.exit_watch)
+    if args.lease_fault_phase:assert args.nested_graphics and args.program_result_probe and args.exit_watch and args.exit_watch_high and args.cpu=='386'
+    if args.lease_fault_foreign_ds:assert args.lease_fault_phase
     binary, runner, out = args.terminal.resolve(), args.runner.resolve(), args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     sources = {}
@@ -37,6 +41,8 @@ def main():
         m = json.loads(program.with_name('manifest.json').read_text())
         assert sha(program) == m['binary_sha256']
         assert not m.get('diagnostic_build') or (program==runner and args.program_result_probe and m.get('diagnostic_program_result_probe'))
+        if program==runner:assert m.get('diagnostic_lease_fault_phase',0)==args.lease_fault_phase
+        if program==runner:assert bool(m.get('diagnostic_lease_fault_foreign_ds'))==args.lease_fault_foreign_ds
         for name, expected in m['sources'].items():
             assert sha(ROOT / name) == expected, name
             sources[name] = expected
@@ -147,6 +153,10 @@ mode_opened:
         keys[i * 54:(i + 1) * 54] = struct.pack('<H', 0) + path.ljust(52, b'\0')
         (out / (name + '.ASP')).write_text(text)
         files[name + '.ASX'] = compile_source(text)
+    if args.lease_fault_phase:
+        files['FAULT.ASX']=files['FIRST.ASX']
+        keys[:54]=struct.pack('<H',0)+b'D:\\FAULT.ASX'.ljust(52,b'\0')
+        keys[3*54:4*54]=struct.pack('<H',0)+b'D:\\FIRST.ASX'.ljust(52,b'\0')
     files['ACTIONS.KEY'] = bytes(keys)
     if args.exit_watch:
         import aspect_exit_watch
@@ -162,8 +172,10 @@ mode_opened:
         struct.pack_into('<H', settings, offset, value)
     harness.BINARY = stage / 'TERMINAL.EXE'
     label = out.name
+    schedule='p900 enter p3500 a-1 p1300 a-2 p1300 a-3 p1300 a-1 p1300 r e a d y enter p700 a-x'
+    if args.lease_fault_phase:schedule=schedule.replace('a-3 p1300 a-1','a-3 p1300 a-4')
     result = harness.run(label, 'success',
-        'p900 enter p3500 a-1 p1300 a-2 p1300 a-3 p1300 a-1 p1300 r e a d y enter p700 a-x',
+        schedule,
         prm=bytes(settings), arguments='@TEST.PRM /T:D:\\ACTIONS.KEY /D:CaseTest:23',
         com=3, irq=5, cpu=args.cpu, working_drive='d', timeout=30, files=files,
         observer='SSWATCH' if args.inner_screen else 'EWATCH' if args.exit_watch else None,
@@ -181,8 +193,18 @@ mode_opened:
         assert sha(ROOT / name) == expected, name
     if args.nested_program:
         checks['two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|CHILD|'
-        expected=b''.join(bytes([c,7]) for c in b'FIRST BYTE SAFE'.ljust(1920,b' '))
+        characters=bytearray(b'FIRST BYTE SAFE'.ljust(1920,b' '))
+        if args.lease_fault_phase:
+            notice=b'FIRST BYTE SAFEASPECT: CPU arithmetic fault (error 12, opcode 9B, step 2)'
+            characters[:len(notice)]=notice
+            notice=b'ASPECT returned an error.';characters[160:160+len(notice)]=notice
+        expected=b''.join(bytes([c,7]) for c in characters)
         checks['exact_1920_viewport_cells']=(drive/'SCREEN.BIN').read_bytes()[:3840]==expected
+    if args.lease_fault_phase:
+        checks.pop('four_calls');checks.pop('two_nested_children')
+        checks['one_failed_and_one_recovered_FIRST']=wire.count(b'FIRSTOK\r')==1
+        child_count=2 if args.lease_fault_phase in (10,22) else 1
+        checks['child_count_matches_fault_boundary']=(drive/'NEST.LOG').read_bytes()==b'CHILD|'*child_count
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary),
                   program_result_probe=args.program_result_probe,
                   cpu=args.cpu,
@@ -199,6 +221,18 @@ mode_opened:
         report['exit_watch_high']=args.exit_watch_high
         assert not args.exit_watch_high or report['exit_watch']['resident_segment']>=0xa000
         report['scope']+=' Passive exit observer adds resident memory; diagnostic run, not an unobserved capacity proof.'
+        if args.lease_fault_phase:
+            exits=report['exit_watch']['exits'];probes=report['exit_watch']['program_results']
+            checks['actual_selected_divide']=len(exits)==4 and exits[0]['error']==12 and exits[0]['opcode']==155 and probes[0]['stage']==256+args.lease_fault_phase
+            checks['parent_lease_live_before_divide']=probes[0]['status']==1
+            fault_ds=probes[0]['display_status'];fault_ss=probes[0]['serial_status']
+            checks['selected_fault_DS_SS']=fault_ds==0xb800 and fault_ss!=fault_ds if args.lease_fault_foreign_ds else fault_ds==fault_ss and fault_ds!=0
+            checks['later_calls_succeed']=len(exits)==4 and all(e['error']==0 for e in exits[1:]) and probes[3]['stage']==2 and probes[3]['status']==0
+            checks['all_owners_retired']=all(e[k]==0 for e in exits for k in ['cleanup_error','external_scope','display_owned','program_busy','process_busy'])
+            report['lease_fault_phase']=args.lease_fault_phase
+            report['fault_witness']=dict(parent_lease_live=probes[0]['status']==1,ds=fault_ds,ss=fault_ss,foreign_ds=args.lease_fault_foreign_ds)
+            report['passed']=all(checks.values())
+            report['scope']+=' One real own-stack DIV in FAULT.ASX, then six streams/missing-file recovery and normal nested FIRST.ASX in the same terminal. No injected cleanup success.'
     if args.inner_screen:
         report['inner_screen']=snapshot_screen_watch.verify(drive/'SSCREEN.BIN')
         checks['child_observed_graphics_mode']=(drive/'CHMODE.BIN').read_bytes()==b'\x13\x13'

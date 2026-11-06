@@ -5,7 +5,7 @@ BITS 16
 CPU 8086
 %include "resident_bridge.inc"
 %ifdef ASPECT_SNAPSHOT_LEASE
- %define RENDER_CAPABILITY 17
+ %define RENDER_CAPABILITY 18
  extern _terminal_sound_enabled,terminal_program_result,_terminal_mouse_selected_scale
 %elifdef ASPECT_NOTICE_INPUT
  %define RENDER_CAPABILITY 16
@@ -674,7 +674,7 @@ render_body:
  jz .snapshot_value
  mov al,ah
 .snapshot_value:
- xor ah,ah
+ mov ah,0xf0 ; tagged byte; typed errors0..14 can never be pointer data
  ret
 .snapshot_end:
  cmp word [cs:render_snapshot_owned],1

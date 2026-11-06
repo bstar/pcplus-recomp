@@ -74,14 +74,23 @@ void __far * __cdecl aspect_render_snapshot_begin(unsigned bytes)
  snapshot_owned=1;
  for(i=0;i<4;++i){
   value=aspect_render_request(ASPECT_RENDER_SNAPSHOT_BYTE,i);
-  if(value>255 || aspect_render_client_check())goto failed;
-  words[i/2]|=value<<((i&1)*8);
+  if((value&0xff00U)!=0xf000U || aspect_render_client_check())goto failed;
+  words[i/2]|=(value&255U)<<((i&1)*8);
  }
  if(!words[1] || (unsigned long)words[0]+bytes>65536UL)goto failed;
  return MK_FP(words[1],words[0]);
 failed:
  aspect_render_snapshot_end();return 0;
 }
+#if defined(ASPECT_LEASE_FAULT_PHASE)
+unsigned __cdecl aspect_render_snapshot_probe(void)
+{
+ unsigned value;
+ if(!attached || !program_owned || !snapshot_owned || aspect_render_client_check())return 0;
+ value=aspect_render_request(ASPECT_RENDER_SNAPSHOT_BYTE,0);
+ return (value&0xff00U)==0xf000U;
+}
+#endif
 #endif
 #endif
 #if defined(ASPECT_EXTERNAL_RENDER)

@@ -201,6 +201,49 @@ _runtime_external_raise:
  mov ax,aspect_dispatch_argument
  push ax
  call session_longjmp ; deliberately bypass the checkpoint's abort gate
+%elifdef ASPECT_LEASE_FAULT_PHASE
+; Minimal, separately marked lease diagnostic. Only FAULT.ASX arms it;
+; ordinary invocations and the production build cannot trigger this path.
+global _runtime_external_phase
+extern _runtime_lease_fault_armed,_runtime_external_result_probe,_aspect_render_snapshot_probe
+_runtime_external_phase:
+ push bp
+ mov bp,sp
+ push ax
+ push bx
+ push cx
+ push dx
+ cmp word [cs:checkpoint_ready],1
+ jne .done
+ cmp word [_runtime_lease_fault_armed],1
+ jne .done
+ cmp word [cs:lease_fault_fired],0
+ jne .done
+ cmp word [ss:bp+4],ASPECT_LEASE_FAULT_PHASE
+ jne .done
+ mov word [cs:lease_fault_fired],1
+ call _aspect_render_snapshot_probe
+ mov [_runtime_external_result_probe+2],ax
+ mov word [_runtime_external_result_probe],0x100+ASPECT_LEASE_FAULT_PHASE
+%ifdef ASPECT_LEASE_FAULT_FOREIGN_DS
+ mov ax,0xb800
+ mov ds,ax
+%endif
+ mov ax,ds
+ mov [ss:_runtime_external_result_probe+4],ax
+ mov ax,ss
+ mov [ss:_runtime_external_result_probe+6],ax
+ mov ax,1
+ xor dx,dx
+ div dx ; actual own-stack CPU divide exception, not a synthesized return
+.done:
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ pop bp
+ ret
+lease_fault_fired: dw 0
 %endif
 checkpoint_ready: dw 0
 checkpoint_ss: dw 0

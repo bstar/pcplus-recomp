@@ -14,7 +14,7 @@
 #define ASIO_VERSION_RENDER 4U
 #define ASIO_V4_SIZE 48U
 #if defined(ASPECT_SNAPSHOT_LEASE)
-#define ASPECT_RENDER_CAP_VERSION 17U
+#define ASPECT_RENDER_CAP_VERSION 18U
 #elif defined(ASPECT_NOTICE_INPUT)
 #define ASPECT_RENDER_CAP_VERSION 16U
 #elif defined(ASPECT_SOUND_POLICY)
@@ -37,6 +37,9 @@ enum { ASPECT_RENDER_SNAPSHOT_BEGIN=17,ASPECT_RENDER_SNAPSHOT_BYTE=18,
  ASPECT_RENDER_SNAPSHOT_END=19 };
 void __far * __cdecl aspect_render_snapshot_begin(unsigned bytes);
 unsigned __cdecl aspect_render_snapshot_end(void);
+#if defined(ASPECT_LEASE_FAULT_PHASE)
+unsigned __cdecl aspect_render_snapshot_probe(void);
+#endif
 #endif
 enum { ASPECT_RENDER_RAW_WAIT=0, ASPECT_RENDER_UNREAD=1,
  ASPECT_RENDER_SEND=2, ASPECT_RENDER_POLL=3, ASPECT_RENDER_ERROR=4,

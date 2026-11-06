@@ -7,10 +7,13 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False):
     assert heap_growth_bytes is None or heap_growth_bytes in (128,256,512)
     assert heap_growth_bytes is None or register_handoff
     if snapshot_lease:assert parent_render and notice_input
+    assert lease_fault_phase in (None,5,6,8,10,17,22)
+    if lease_fault_phase:assert driver is None and snapshot_lease and program_result_probe
+    if lease_fault_foreign_ds:assert lease_fault_phase
     if notice_help:assert notice_input
     if help_resource:assert notice_help
     if output is None:output=ROOT/'build/aspect-process-parent' if parent_render else OUT
@@ -45,6 +48,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     if notice_help:flags+=['-DASPECT_NOTICE_HELP']
     if help_resource:flags+=['-DASPECT_HELP_RESOURCE']
     if break_owner:flags+=['-DNATIVE_PROGRAM_BREAK_OWNER','-DNATIVE_BREAK_FAR']
+    if lease_fault_phase:flags+=['-DASPECT_LEASE_FAULT_PHASE='+str(lease_fault_phase)]
     focused_notice=bool(driver and driver.name=='aspect_notice_driver.c')
     if notice_help and focused_notice:flags+=['-DHELP_VIEW_DIAGNOSTIC']
     if driver and not focused_notice:flags+=['-DASPECT_EXTERNAL_DIAGNOSTIC','-DNATIVE_DISPLAY_DIAGNOSTIC']
@@ -128,6 +132,8 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     extension['heap_growth_bytes']=heap_growth_bytes
     extension['program_result_probe']=program_result_probe
     extension['snapshot_lease']=snapshot_lease
+    extension['lease_fault_phase']=lease_fault_phase
+    extension['lease_fault_foreign_ds']=lease_fault_foreign_ds
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
     if notice_bank:
