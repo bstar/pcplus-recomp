@@ -6,6 +6,11 @@ SEGMENT _TEXT public class=CODE use16
 extern keyboard_classify_raw,terminal_enqueue_user_al,terminal_receive_character
 extern screen_cursor_up,screen_cursor_down,screen_cursor_left,screen_cursor_right,screen_set_cursor
 global terminal_key_classify_far,terminal_key_emit_far,terminal_key_echo_far,terminal_key_cursor_far
+; Register entry AX=row,DX=column, DS=SS. Alias the existing CALL/RETF pair:
+; no extra resident bytes. Caller owns geometry/admission. Native cursor caches
+; and BIOS position move together; BP/SI/DI/DS/SS preserved, other regs scratch.
+global terminal_key_position_far
+terminal_key_position_far equ terminal_key_cursor_far.position
 terminal_key_classify_far:
  call keyboard_classify_raw
  retf
@@ -45,6 +50,7 @@ terminal_key_cursor_far:
  je .right
  xor ax,ax
  xor dx,dx
+.position:
  call screen_set_cursor
  retf
 .up: call screen_cursor_up

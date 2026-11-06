@@ -104,3 +104,7 @@ geometry and sustained-traffic gates. Final package/deployment/hardware and full
 original parity remain open. See [TEXT](CHAT_TEXT.md),
 [funding](CHAT_TEXT_FUNDING.md) and [foreground](CHAT_FOREGROUND_CORE.md).
 The [checkpoint receipt](validation/chat-text-timing.json) binds these checks.
+
+The next [echo-context checkpoint](CHAT_ECHO_CONTEXT.md) verifies the cached
+cursor hazard and exposes an existing position service without executable
+growth. The echo sink/parser and live TEXT shortcuts remain unfinished.

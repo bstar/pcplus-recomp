@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """Link real escape/parameter/dispatch/attribute/cursor/report/save-restore/modes code in a DOS diagnostic."""
+import argparse
 import hashlib
 import json
 from pathlib import Path
 import subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
-out=ROOT/'build/input_dispatch';out.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output',type=Path)
+args=parser.parse_args()
+out=args.output.resolve() if args.output else ROOT/'build/input_dispatch'
+assert out.is_relative_to(ROOT/'build') and (not args.output or not out.exists())
+out.mkdir(parents=True,exist_ok=True)
 sources=[ROOT/'reconstruction/ansi'/name for name in ['escape.asm','parameters.asm','transition.asm','dispatch.asm']]
 sources+=sorted((ROOT/'reconstruction/attributes').glob('*.asm'))
 sources+=sorted((ROOT/'reconstruction/screen').glob('*.asm'))
@@ -50,7 +56,8 @@ for index,source in enumerate(sources):
                  '-I',str(ROOT/'reconstruction/ansi')+'/', '-o',str(obj),str(source)],check=True)
 subprocess.run(['wlink','system','dos','option','quiet','option','map='+str(out/'input_dispatch.map'),
                 'name',str(out/'INPUT.EXE'),'file',','.join(objects)],check=True)
-inputs=sources+[ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc']
+inputs=sources+[ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc',
+ ROOT/'reconstruction/input_dispatch/provenance.json',ROOT/'reconstruction/input_dispatch/tables-provenance.json',Path(__file__).resolve()]
 manifest={'kind':'source-only-continuous-input-ansi-control-render-history-diagnostic',
  'binary_sha256':hashlib.sha256((out/'INPUT.EXE').read_bytes()).hexdigest(),
  'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},
@@ -58,4 +65,4 @@ manifest={'kind':'source-only-continuous-input-ansi-control-render-history-diagn
  'Memory input provider replaces a modem; unsupported control families and enabled logging sinks trap.',
  'Host supplies configuration, a4096-byte history ring, graphics map fixtures and ordinary tab stops.']}
 (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
-print('Built build/input_dispatch/INPUT.EXE',manifest['binary_sha256'],flush=True)
+print('Built',str(out.relative_to(ROOT)/'INPUT.EXE'),manifest['binary_sha256'],flush=True)

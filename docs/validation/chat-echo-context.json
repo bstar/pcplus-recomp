@@ -1,0 +1,69 @@
+{
+  "status": "echo-cursor-requirements-verified-zero-growth-service-ready-full-echo-unbound",
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "foreground_TEXT_enabled": false,
+  "full_original_Chat_acceptance": false,
+  "binary_sha256": "5ecf87743f55c97e83a334c3a5ef9e049dc4de1558ec4d482a529cf215092846",
+  "module_sha256": "5b6892e71dfb6054cc5e1ff04b9cfac380af1a5e530da11dc2780325a8d45622",
+  "input_diagnostic_sha256": "7bcb9d54d8f73afb763b0ca46383b547718ab5e54a0b71788a6279039ce713ea",
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "original_Chat_controller_bytes_matched": 760,
+  "original_Chat_controller_executed": false,
+  "genuine_resident_executed": true,
+  "vectors": 144,
+  "character_operations": 4608,
+  "raw_first_echo_misplacements": 72,
+  "repaired_cursor_vectors_match_original_handlers": true,
+  "repair_is_intentional_adaptation": true,
+  "full_echo_context_restored": false,
+  "cursor_move_alone_clears_deferred_wrap": false,
+  "parent_position_checks": 2000,
+  "added_executable_bytes": 0,
+  "added_near_bytes": 0,
+  "source_export_files": 673,
+  "original_executed_in_export": false,
+  "reports": {
+    "genuine_resident_comparison": {
+      "path": "build/chat-echo-context-final-20261106/result.json",
+      "sha256": "7b4641dbc80fadb999f461a0aabcefc22e33a04a3fe44b38b1bcea12065a8e4c"
+    },
+    "actual_parent_position_service": {
+      "path": "build/chat-echo-position-reviewed-20261106/result.json",
+      "sha256": "4cff244328535bcf2ec3e0e52bb95221e35981c218f8f34b9cd79ad2ba845863"
+    },
+    "clean_source": {
+      "path": "build/chat-echo-context-cold-final-20261106/result.json",
+      "sha256": "d8758829186288d283ce606272c9c7521c233949220b73bc242c15ca3521a7da"
+    }
+  },
+  "reused_unchanged_executable_regressions": {
+    "enigma": {
+      "path": "build/bbs-lab/results/enigma/chat-timing-carrier-20261106/carrier-checks.json",
+      "sha256": "e393f562a204c8b96776e5c3f83d6b81594d5fc22307192eca805c95cca8044a",
+      "basis": "unchanged exact executable bytes; original producer source snapshot is retained, not reclassified as a new BBS run"
+    },
+    "synchronet": {
+      "path": "build/bbs-lab/results/synchronet/chat-timing-sync-20261106/proxy-integration.json",
+      "sha256": "e92b8eb1b63c366e43b1c093e98aacd498d78b90ed814689a52d84f3db3c1a62",
+      "basis": "unchanged exact executable bytes; original producer source snapshot is retained, not reclassified as a new BBS run"
+    },
+    "independent_wire_audit": {
+      "path": "build/chat-timing-carrier-audit-20261106/result.json",
+      "sha256": "0b95bb95791189a3b231d1a34d40601a7ebb0244af237d9c54023a340ac38cf4",
+      "basis": "unchanged exact executable bytes; original producer source snapshot is retained, not reclassified as a new BBS run"
+    }
+  },
+  "REA_static_evidence": [
+    "ev_f365c88f83c443797063f3655ae754a0e43fd62fb975d0b030f373c2ab3b4c7e",
+    "ev_fda29d5a24cbef5ea8196a77a9fa0d5e557ba29da3255127e608c4d2aef6f5c4",
+    "ev_87fb0d4004131a25f656f3654a82585096a747f7d15552f2d58d7d300edeebee"
+  ],
+  "remaining": [
+    "Full renderer/parser echo-context owner and deferred state restoration",
+    "Serviced escape continuations without unowned input consumption",
+    "Ten foreground direct-TEXT shortcuts and key/RX fairness",
+    "Help/Alt-Z/send-mode and broader Chat gates",
+    "Final package/deployment/physical/full-parity acceptance"
+  ]
+}
