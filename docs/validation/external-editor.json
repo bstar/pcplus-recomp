@@ -1,0 +1,333 @@
+{
+  "passed": true,
+  "binary_sha256": "93f08d0cf3fd4174718e7ca727758ddb63f4e6f0ecd1471b3fb00c41c1f4d800",
+  "disabled_sha256": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "original_runtime": [
+    {
+      "case": "relative",
+      "report": {
+        "path": "build/editor-original-relative-20261106/result.json",
+        "sha256": "0e2a79265fe9b8ff702c56528149d573df1a475480e4110bf37c79f952704e5b"
+      }
+    },
+    {
+      "case": "absolute",
+      "report": {
+        "path": "build/editor-original-absolute-20261106/result.json",
+        "sha256": "8a093abdae3b679fd6c9fe5a33585eb3fabbe90c9c4cef97821065cad3c9a7db"
+      }
+    },
+    {
+      "case": "options",
+      "report": {
+        "path": "build/editor-original-options-20261106/result.json",
+        "sha256": "fc022512a7bddef16be4776263ddfa01d968224887ff9d0bbe61da5afc37dbf8"
+      }
+    },
+    {
+      "case": "spaces",
+      "report": {
+        "path": "build/editor-original-spaces-20261106/result.json",
+        "sha256": "dc5d56b0599acecadd7252ce3ac48dab78ee5f29dae66a93b7bf6e1bf46fe856"
+      }
+    },
+    {
+      "case": "empty",
+      "report": {
+        "path": "build/editor-original-empty-20261106/result.json",
+        "sha256": "e28496a35efdaaabef7ec1e70eb94b45630bece71dfe97d6b8e546b6c5ad9af8"
+      }
+    },
+    {
+      "case": "cancel",
+      "report": {
+        "path": "build/editor-original-cancel-20261106/result.json",
+        "sha256": "ee23f3743ae841bec1a58f24e3c581fe988ee841299b8203541af2a064dd7873"
+      }
+    },
+    {
+      "case": "long",
+      "report": {
+        "path": "build/editor-original-long-20261106/result.json",
+        "sha256": "03df2041c19658948d1842b7acbd050de0ec2a8f9ca6855afa6396dbe87177f6"
+      }
+    },
+    {
+      "case": "disabled",
+      "report": {
+        "path": "build/editor-original-disabled-20261106/result.json",
+        "sha256": "baa6da6fcf4f81fa9fef04542e2a3b9a4b044aca97b0d8e6f996130fcd856c60"
+      }
+    }
+  ],
+  "maintained_runtime": [
+    {
+      "tool": "editor",
+      "case": "relative",
+      "report": {
+        "path": "build/editor-parent-v2-relative-20261106/result.json",
+        "sha256": "310cdf27bd8325a127e0af38989161d91f57d14f2c8e446e678276849449c90b"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "absolute",
+      "report": {
+        "path": "build/editor-v2-editor-absolute-20261106/result.json",
+        "sha256": "7c6675a77e0b5468eeb2096aa9e72974a5951af22406827cba09e4a0b490c196"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "options",
+      "report": {
+        "path": "build/editor-v2-editor-options-20261106/result.json",
+        "sha256": "1d337478076388130774ce2f5f658ba59201d8bbbf37bc0d6421f0612c415a7d"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "spaces",
+      "report": {
+        "path": "build/editor-v2-editor-spaces-20261106/result.json",
+        "sha256": "a68aa5fffef2f04cd25fa8c697fffd47eb5840389cf107f0e205452ae4302956"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "empty",
+      "report": {
+        "path": "build/editor-v2-editor-empty-20261106/result.json",
+        "sha256": "f9e8942ac2cfb3c94e53618158a8ec794a9c7e7a4af5890af7dfa1c17f8d3082"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "cancel",
+      "report": {
+        "path": "build/editor-v2-editor-cancel-20261106/result.json",
+        "sha256": "78a3c995be9b5653be34d2e2ef25631b9ce61c5b219abd847461de447d1db70f"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "long",
+      "report": {
+        "path": "build/editor-v2-editor-long-20261106/result.json",
+        "sha256": "fbf693144fd162e61372ecb8d3fe13581c29dcf6b1e223b8bb01d021d46e353f"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "maximum",
+      "report": {
+        "path": "build/editor-v2-editor-maximum-20261106/result.json",
+        "sha256": "17e37995c11ba732430b690adc4fbf749da8c1524b00472ad22fcf8bd1412b18"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "reference",
+      "report": {
+        "path": "build/editor-v2-editor-reference-20261106/result.json",
+        "sha256": "de44ad10866cf6d06f90ce3a7eebc430aa76585a18157203e96ccd0fe7874f43"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "browser",
+      "report": {
+        "path": "build/editor-v2-editor-browser-20261106/result.json",
+        "sha256": "b18e821df5100a5a7fb051a625451625527c20c1622e39b5b552543787876954"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "malformed",
+      "report": {
+        "path": "build/editor-v2-editor-malformed-20261106/result.json",
+        "sha256": "2b9f68e3d73c6890e1b83df957e7287fc25625bd03043e45c6ab5efa47a5634e"
+      }
+    },
+    {
+      "tool": "editor",
+      "case": "disabled",
+      "report": {
+        "path": "build/editor-v2-editor-disabled-20261106/result.json",
+        "sha256": "8477aa9798d7dea7d31b8f27b1d911bf95d4ffb6fee66c43de52afc3c2914cc8"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "relative",
+      "report": {
+        "path": "build/editor-v2-viewer-relative-20261106/result.json",
+        "sha256": "042c6b7048b60aaf29324452e39402e7d623db46e143e439aa9a9b1b8eb9da53"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "options",
+      "report": {
+        "path": "build/editor-v2-viewer-options-20261106/result.json",
+        "sha256": "cee6f3258be4e6fd2470e437435dac56f157b76ad67b04a077b4d56b0b9fab81"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "cancel",
+      "report": {
+        "path": "build/editor-v2-viewer-cancel-20261106/result.json",
+        "sha256": "51701090725bc8474072e89ad4b4f49c30babc2d27eabfd294cd7ecb3b7f3e51"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "reference",
+      "report": {
+        "path": "build/editor-v2-viewer-reference-20261106/result.json",
+        "sha256": "e297bb8fd373327304a21f1893e988e738f4e5fe5135d9a8b2045cd5f9329b28"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "browser",
+      "report": {
+        "path": "build/editor-v2-viewer-browser-20261106/result.json",
+        "sha256": "f59bbeeb39851a2ee443db72360498acb2a3390a8119aefe6692c5a40e2e45d6"
+      }
+    },
+    {
+      "tool": "viewer",
+      "case": "maximum",
+      "report": {
+        "path": "build/editor-v2-viewer-maximum-20261106/result.json",
+        "sha256": "95abc7d24b21a4be93d12e1712ec1b8fbccd0744ac25d19c04329ab3da3954cb"
+      }
+    }
+  ],
+  "native_prompt_comparisons": [
+    {
+      "case": "relative",
+      "identical_bytes": 710,
+      "sha256": "99120277761e935bc55da9fc32dfe52231e34fabe55272cebfd3725b61998d0c",
+      "original": {
+        "path": "build/editor-original-relative-20261106/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "maintained": {
+        "path": "build/connection-dos/editor-parent-v2-relative-20261106-relative/VIEWUI.BIN",
+        "sha256": "dd4ff34abaee9eb46e781d9ff7050de0dad343a694fc46c856ad20d26209953f"
+      }
+    },
+    {
+      "case": "absolute",
+      "identical_bytes": 710,
+      "sha256": "99120277761e935bc55da9fc32dfe52231e34fabe55272cebfd3725b61998d0c",
+      "original": {
+        "path": "build/editor-original-absolute-20261106/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "maintained": {
+        "path": "build/connection-dos/editor-v2-editor-absolute-20261106-absolute/VIEWUI.BIN",
+        "sha256": "dd4ff34abaee9eb46e781d9ff7050de0dad343a694fc46c856ad20d26209953f"
+      }
+    },
+    {
+      "case": "options",
+      "identical_bytes": 710,
+      "sha256": "44e5939018a1d66b632dca10145043bae8262c4b696be5b5a24bc6c93ea46b58",
+      "original": {
+        "path": "build/editor-original-options-20261106/c/EDITVIEW.BIN",
+        "sha256": "723151ca575c04e9161ebd102c3798e7586214218da2c84a98a4a479098df811"
+      },
+      "maintained": {
+        "path": "build/connection-dos/editor-v2-editor-options-20261106-options/VIEWUI.BIN",
+        "sha256": "a2b9e01c1ca84f7a797e1db83b8b72610546f2943652c4252f9fe49d445911b0"
+      }
+    },
+    {
+      "case": "spaces",
+      "identical_bytes": 710,
+      "sha256": "99120277761e935bc55da9fc32dfe52231e34fabe55272cebfd3725b61998d0c",
+      "original": {
+        "path": "build/editor-original-spaces-20261106/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "maintained": {
+        "path": "build/connection-dos/editor-v2-editor-spaces-20261106-spaces/VIEWUI.BIN",
+        "sha256": "dd4ff34abaee9eb46e781d9ff7050de0dad343a694fc46c856ad20d26209953f"
+      }
+    },
+    {
+      "case": "empty",
+      "identical_bytes": 710,
+      "sha256": "99120277761e935bc55da9fc32dfe52231e34fabe55272cebfd3725b61998d0c",
+      "original": {
+        "path": "build/editor-original-empty-20261106/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "maintained": {
+        "path": "build/connection-dos/editor-v2-editor-empty-20261106-empty/VIEWUI.BIN",
+        "sha256": "99714bbd090db05a9af3403ebf1adbe848d67f79d763dbd2fad8f937160fc699"
+      }
+    },
+    {
+      "case": "cancel",
+      "identical_bytes": 710,
+      "sha256": "99120277761e935bc55da9fc32dfe52231e34fabe55272cebfd3725b61998d0c",
+      "original": {
+        "path": "build/editor-original-cancel-20261106/c/EDITVIEW.BIN",
+        "sha256": "91133eb5b4fe071d98591c6958a5bd0a3ec1b8322dd00937a8d553d179f6e6e9"
+      },
+      "maintained": {
+        "path": "build/connection-dos/editor-v2-editor-cancel-20261106-cancel/VIEWUI.BIN",
+        "sha256": "92454fd0abfcfd0d3891d1baaaac28f9e865040675720e5d0b34b8840c2edebf"
+      }
+    },
+    {
+      "case": "long",
+      "identical_bytes": 710,
+      "sha256": "99120277761e935bc55da9fc32dfe52231e34fabe55272cebfd3725b61998d0c",
+      "original": {
+        "path": "build/editor-original-long-20261106/c/EDITVIEW.BIN",
+        "sha256": "954288f1c9b1fb22738cee256178d93fb10e95f41c26baa7f29e8cd2fbef3fd5"
+      },
+      "maintained": {
+        "path": "build/connection-dos/editor-v2-editor-long-20261106-long/VIEWUI.BIN",
+        "sha256": "4bc805598bdf3fb410854089d532b281921926e7693e06f8d4c2244d3c08b828"
+      }
+    }
+  ],
+  "layout": {
+    "path": "build/editor-parent-v2-layout-20261106/result.json",
+    "sha256": "0fe8203e57833671b83f102810fedf4a8a79117f9ee3d284173b85b81fb53ef4"
+  },
+  "source_build": {
+    "path": "build/editor-public-source-proof-20261106/result.json",
+    "sha256": "4e4dbc8864d7f94c1e0ca858b5f2956f0d317d12cb20905d13879517c38fa01a"
+  },
+  "source_commit": "8dcd4dd73a75208b90ced4502a387ca6f6f24b36",
+  "source_file_count": 2014,
+  "static_evidence": {
+    "path": "analysis/pcedit-launch-static-20261106.json",
+    "sha256": "a3bcb23f143b2d329f771f1e3b0a353fa34e3fd74f2457ede5975e572ccd3546"
+  },
+  "static_evidence_ids": [
+    "ev_3160b3304ed30f8a5c28125da3d41ffb88b1a843a598edef29dc66284b73cc77",
+    "ev_b956c185a93758aaec6ab7c15e7ba99238c273d38bc1623ca407ce4ac665b1e4"
+  ],
+  "near_bytes": 65488,
+  "resident_code_bytes": 65516,
+  "deployment_changed": false,
+  "sources": {
+    "standalone/record_external_editor.py": "cbcaa7dae4aef99cbd11758498af780ee39814c89b940a5349fe347b826b613f"
+  },
+  "limits": [
+    "External launcher only; no recreated or bundled PCEDIT application.",
+    "Empty-setting error presentation intentionally differs from original.",
+    "Physical modem and editor-specific BBS/transfer/carrier-loss composition remain open.",
+    "Reviewed connection package and bridge service unchanged."
+  ]
+}
