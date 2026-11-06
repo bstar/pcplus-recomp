@@ -4,6 +4,7 @@ import argparse
 import json
 import shutil
 import struct
+import subprocess
 import sys
 from pathlib import Path
 import test_connection_dos as harness
@@ -18,7 +19,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ['terminal', 'runner', 'output']:
         parser.add_argument('--' + name, type=Path, required=True)
+    parser.add_argument('--nested-program',action='store_true',help='Run an actual DOS child twice around the six-stream and missing-file cases')
+    parser.add_argument('--nested-graphics',action='store_true',help='Use default SAVE and let each child leave BIOS mode13h active')
     args = parser.parse_args()
+    assert not args.nested_graphics or args.nested_program
     binary, runner, out = args.terminal.resolve(), args.runner.resolve(), args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     sources = {}
@@ -45,6 +49,53 @@ def main():
     six += 'transmit "SIXOK^M"\nendproc\n'
     missing = 'proc main\nfopen 0 "D:\\ABSENT.TXT" "rb"\nif failure\ntransmit "MISSINGOK^M"\nelse\nexit\nendif\nfopen 0 "D:\\RECOVER.TXT" "wb"\nif failure\nexit\nendif\nfputs 0 "RECOVERED|"\nfclose 0\ntransmit "RECOVEROK^M"\nendproc\n'
     files = {}
+    if args.nested_program:
+        child = out / 'NEST.ASM'
+        child_source='''BITS 16
+CPU 8086
+ORG 0x100
+ mov dx,name
+ mov ax,0x3d02
+ int 0x21
+ jnc opened
+ cmp ax,2
+ jne failed
+ xor cx,cx
+ mov ah,0x3c
+ int 0x21
+ jc failed
+opened:
+ mov bx,ax
+ xor cx,cx
+ xor dx,dx
+ mov ax,0x4202
+ int 0x21
+ jc failed
+ mov dx,message
+ mov cx,6
+ mov ah,0x40
+ int 0x21
+ jc failed
+ cmp ax,6
+ jne failed
+ mov ah,0x3e
+ int 0x21
+ jc failed
+ mov ax,0x4c00
+ int 0x21
+failed:
+ mov ax,0x4c07
+ int 0x21
+name: db 'D:\\NEST.LOG',0
+message: db 'CHILD|'
+'''
+        if args.nested_graphics:
+            child_source=child_source.replace(' mov ax,0x4c00',' mov ax,0x0013\n int 0x10\n mov ax,0x4c00',1)
+        child.write_text(child_source)
+        subprocess.run(['nasm','-fbin',str(child),'-o',str(out/'NEST.COM')],check=True)
+        files['NEST.COM']=(out/'NEST.COM').read_bytes()
+        option='' if args.nested_graphics else ' NOCLEAR'
+        first=first.replace('proc main\n','proc main\nrun "D:\\NEST.COM"'+option+'\n',1)
     keys = bytearray(actions(b'D:\\FIRST.ASX', 0))
     for i, (name, text) in enumerate([('FIRST', first), ('SIX', six), ('MISSING', missing)]):
         path = ('D:\\' + name + '.ASX').encode()
@@ -73,9 +124,16 @@ def main():
                   six_files=all((drive / f'SLOT{i}.TXT').exists() and (drive / f'SLOT{i}.TXT').read_bytes() == f'SLOT{i}|'.encode() for i in range(6)))
     for name, expected in sources.items():
         assert sha(ROOT / name) == expected, name
+    if args.nested_program:
+        checks['two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|CHILD|'
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary),
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS8086 COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
+    if args.nested_program:
+        report['nested_child_source_sha256']=sha(out/'NEST.ASM')
+        report['nested_child_sha256']=sha(out/'NEST.COM')
+        report['nested_graphics']=args.nested_graphics
+        report['scope']=__doc__+' Actual DOS8086 COM3/IRQ5; two '+('SAVE graphics' if args.nested_graphics else 'NOCLEAR text')+' DOS children surrounding six-stream and missing-file recovery. Synthetic modem; no physical or complete PROGRAM-option acceptance.'
     (out / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
     print({k:v for k,v in checks.items() if not v})
     assert report['passed']

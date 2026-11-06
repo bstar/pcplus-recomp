@@ -209,6 +209,7 @@ def main():
     parser.add_argument('--terminal',type=Path)
     parser.add_argument('--runner',type=Path)
     parser.add_argument('--irq',type=int,choices=[3,4,5,7])
+    parser.add_argument('--valid-display',action='store_true',help='Use an explicit admitted 80x25 display profile for current parents')
     parser.add_argument('--session-controls', action='store_true')
     parser.add_argument('--hook-return', action='store_true')
     parser.add_argument('--hook-execute', action='store_true')
@@ -330,6 +331,9 @@ flag_name: db '{name}.OK',0
     raw[250 + 0x56:250 + 0x56 + 9] = b'actions\0\0'
     settings = bytearray(prm(port=args.port))
     struct.pack_into('<HH', settings, 0x4e4, 8, 4)
+    if args.valid_display:
+        for offset,value in [(0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)]:
+            struct.pack_into('<H',settings,offset,value)
     if args.irq is not None:
         struct.pack_into('<H',settings,0x184+(args.port-1)*2,args.irq)
     keys = 'p3000 a-1 p900 a-2 p900 '
@@ -369,6 +373,16 @@ flag_name: db '{name}.OK',0
         tokens = [1, 1, 3, 3, 4]
         epochs = [0, 0, 1, 1, 3]
     snapshots = []
+    missing=[f'{kind}{index}.BIN' for index in range(len(expected)) for kind in ['OWNER','CHILD'] if not (folder/f'{kind}{index}.BIN').exists()]
+    if missing:
+        report=dict(passed=False,case=args.case,port=args.port,valid_display=args.valid_display,
+                    parent_sha256=sha(parent/'TERMINAL.EXE'),child_sha256=sha(child/'ASPECT.EXE'),
+                    missing_snapshots=missing,available_snapshots=sorted(p.name for p in folder.glob('OWNER*.BIN')),
+                    serial_sha256=sha(folder/'serial.bin'),DOS=result,
+                    test_source_sha256=sha(Path(__file__)),
+                    scope='Register-handoff composition did not produce all required nested snapshots. Missing files do not identify the failing opcode, guard or allocation; no acceptance claim.')
+        (output/'result.json').write_text(json.dumps(report,indent=2)+'\n')
+        raise AssertionError('Missing nested register snapshots: '+', '.join(missing))
     for index, (accepted, live) in enumerate(expected):
         owner = (folder / f'OWNER{index}.BIN').read_bytes()
         actual_live = (folder / f'CHILD{index}.BIN').read_bytes()
@@ -406,6 +420,7 @@ flag_name: db '{name}.OK',0
                   operand_fixture_patches=patches, parent_sha256=sha(parent / 'TERMINAL.EXE'), child_sha256=sha(child / 'ASPECT.EXE'),
                   DOS=result, scope='Actual source-built DOS terminal/ASPECT and nested observer. All830 register bytes, native reset/tails, returned acceptance and continued serial output. Integer-bank-A destinations are explicit native operand fixtures, not a compiler feature claim. Synthetic modem, no physical hardware or HOOK routing acceptance.')
     if args.irq is not None:report['irq']=args.irq
+    report['valid_display']=args.valid_display
     (output / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
     print('PASS', args.case, args.port, len(expected), 'complete bank snapshots')
 

@@ -5,14 +5,18 @@ lossless text and correct far category labels.1146 linked frames and18 actual
 DOS modal workflows pass; the unchanged512-byte-policy ASPECT runner again
 supports all six streams and both stock BBS editor paths. Six transfers and four
 carrier-loss redials pass. This resolves the measured software startup/capacity
-gap; physical acceptance, nested PROGRAM and full original parity remain open.
+gap; physical acceptance and full original parity remain open. The
+[current nested PROGRAM checkpoint](CURRENT_NESTED_PROGRAM.md) passes two
+NOCLEAR DOS children surrounding six-stream/missing-file recovery, while SAVE
+graphics admission and the full register snapshot sequence remain failing gates.
 
 The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
 captures the unchanged runner's file-structure allocation failure, correcting
 the earlier script-open interpretation of exit1. Smaller128/256 heap-growth
 variants are rejected:128 passes Synchronet but fails six simultaneous streams;
 256 fails startup. Default512 remains byte-identical and passes the reviewed
-parent's capacity control. Parent memory recovery is still required.
+parent's capacity control. The packed parent recovery above addresses that
+startup/capacity defect; the remaining PROGRAM composition failures are separate.
 
 The [Synchronet launch diagnostic](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
 now rules out failed DOS EXEC in its observed session: ASPECT launches and exits
