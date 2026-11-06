@@ -12,11 +12,13 @@ def main():
     p.add_argument('--lease-fault-foreign-ds',action='store_true')
     p.add_argument('--lease-fault-kind',choices=['divide','abort','dispatcher'],default='divide')
     p.add_argument('--deferred-script-buffers',action='store_true',help='Compare lazy stream storage with the same snapshot-lease control')
+    p.add_argument('--buffer-owners',action='store_true',help='Rebuild a marked live-buffer fault diagnostic against the ordinary deferred control')
     a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
     assert not a.lease_fault_phase or a.snapshot_lease
     assert not a.lease_fault_foreign_ds or a.lease_fault_phase
     if a.lease_fault_kind!='divide':assert a.lease_fault_phase and not a.lease_fault_foreign_ds
-    if a.deferred_script_buffers:assert a.snapshot_lease and not a.lease_fault_phase
+    if a.deferred_script_buffers:assert a.snapshot_lease
+    if a.buffer_owners:assert a.deferred_script_buffers and a.lease_fault_phase
     manifests={};binaries={}
     for name in ['probe','control']:
         folder=getattr(a,name).resolve();assert folder.is_relative_to(ROOT/'build')
@@ -26,7 +28,8 @@ def main():
         assert bool(m['diagnostic_program_result_probe'])==diagnostic
         assert bool(m['diagnostic_build'])==diagnostic
         assert bool(m.get('experimental_snapshot_lease'))==bool(a.snapshot_lease and (name=='probe' or a.lease_fault_phase or a.deferred_script_buffers))
-        assert bool(m.get('experimental_deferred_script_buffers'))==(a.deferred_script_buffers and name=='probe')
+        assert bool(m.get('experimental_deferred_script_buffers'))==(a.deferred_script_buffers and (name=='probe' or bool(a.lease_fault_phase)))
+        assert bool(m.get('diagnostic_script_buffer_owners'))==(a.buffer_owners and name=='probe')
         assert m.get('diagnostic_lease_fault_phase',0)==(a.lease_fault_phase if name=='probe' else 0)
         assert bool(m.get('diagnostic_lease_fault_foreign_ds'))==(a.lease_fault_foreign_ds and name=='probe')
         assert m.get('diagnostic_lease_fault_kind','divide')==(a.lease_fault_kind if name=='probe' else 'divide')
@@ -45,10 +48,10 @@ def main():
         stamp=(ROOT/path).stat();os.utime(target,ns=(stamp.st_atime_ns,stamp.st_mtime_ns))
     env=dict(os.environ,GIT_CEILING_DIRECTORIES=str(out))
     assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode
-    code="import sys;from pathlib import Path;sys.path.insert(0,'standalone');from build_aspect_process import main;selected=sys.argv[2]=='probe';mode=sys.argv[3];phase=int(sys.argv[4]);deferred=sys.argv[7]=='1';main(parent_render=True,output=Path(sys.argv[1]).resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,program_result_probe=selected and (mode=='diagnostic' or phase!=0),snapshot_lease=mode=='lease' and (selected or phase!=0 or deferred),lease_fault_phase=phase if selected and phase else None,lease_fault_foreign_ds=selected and sys.argv[5]=='1',lease_fault_kind=sys.argv[6] if selected else 'divide',defer_script_buffers=selected and deferred)"
+    code="import sys;from pathlib import Path;sys.path.insert(0,'standalone');from build_aspect_process import main;selected=sys.argv[2]=='probe';mode=sys.argv[3];phase=int(sys.argv[4]);deferred=sys.argv[7]=='1';main(parent_render=True,output=Path(sys.argv[1]).resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,program_result_probe=selected and (mode=='diagnostic' or phase!=0),snapshot_lease=mode=='lease' and (selected or phase!=0 or deferred),lease_fault_phase=phase if selected and phase else None,lease_fault_foreign_ds=selected and sys.argv[5]=='1',lease_fault_kind=sys.argv[6] if selected else 'divide',defer_script_buffers=deferred and (selected or phase!=0),buffer_probe=selected and sys.argv[8]=='1')"
     with (out/'build.log').open('w') as log:
         for name in ['probe','control']:
-            subprocess.run([sys.executable,'-c',code,'build/'+name,name,'lease' if a.snapshot_lease else 'diagnostic',str(a.lease_fault_phase),'1' if a.lease_fault_foreign_ds else '0',a.lease_fault_kind,'1' if a.deferred_script_buffers else '0'],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
+            subprocess.run([sys.executable,'-c',code,'build/'+name,name,'lease' if a.snapshot_lease else 'diagnostic',str(a.lease_fault_phase),'1' if a.lease_fault_foreign_ds else '0',a.lease_fault_kind,'1' if a.deferred_script_buffers else '0','1' if a.buffer_owners else '0'],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
             assert sha(fresh/'build'/name/'ASPECT.EXE')==sha(binaries[name]),name
     for name,h in sources.items():assert sha(ROOT/name)==sha(fresh/name)==h,name
     report=dict(passed=True,source_commit=revision,source_count=len(sources),sources=sources,
@@ -58,6 +61,7 @@ def main():
         lease_fault_foreign_ds=a.lease_fault_foreign_ds,
         lease_fault_kind=a.lease_fault_kind,
         deferred_script_buffers=a.deferred_script_buffers,
+        buffer_owners=a.buffer_owners,
         scope=__doc__+' Exact executable equality through pinned Nix; runtime tests and hardware acceptance remain separate. PROGRAM-result diagnostics are not deployable replacements.')
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS',len(sources),'public sources; exact diagnostic and control')
 if __name__=='__main__':main()

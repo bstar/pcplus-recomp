@@ -7,7 +7,7 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False):
     assert heap_growth_bytes is None or heap_growth_bytes in (128,256,512)
     assert heap_growth_bytes is None or register_handoff
     if snapshot_lease:assert parent_render and notice_input
@@ -16,6 +16,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     if lease_fault_foreign_ds:assert lease_fault_phase
     assert lease_fault_kind in ('divide','abort','dispatcher')
     if lease_fault_kind!='divide':assert lease_fault_phase and not lease_fault_foreign_ds
+    if buffer_probe:assert defer_script_buffers and program_result_probe
     if notice_help:assert notice_input
     if help_resource:assert notice_help
     if output is None:output=ROOT/'build/aspect-process-parent' if parent_render else OUT
@@ -138,6 +139,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     extension['lease_fault_foreign_ds']=lease_fault_foreign_ds
     extension['lease_fault_kind']=lease_fault_kind
     extension['defer_script_buffers']=defer_script_buffers
+    extension['buffer_probe']=buffer_probe
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
     if notice_bank:

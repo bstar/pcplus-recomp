@@ -27,7 +27,17 @@ typedef struct script_owner {
  unsigned char buffer[SCRIPT_BUFFER_BYTES];
 #endif
 } script_owner;
+#if defined(ASPECT_SCRIPT_BUFFER_DIAGNOSTIC)
+#if !defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+#error Buffer ownership diagnostics require deferred storage
+#endif
+#define owners runtime_script_buffer_owners
+typedef char owner_size_check[sizeof(script_owner)==14?1:-1];
+typedef char owner_buffer_check[offsetof(script_owner,buffer)==12?1:-1];
+script_owner owners[ASPECT_SCRIPT_FILE_SLOTS];
+#else
 static script_owner owners[ASPECT_SCRIPT_FILE_SLOTS];
+#endif
 aspect_script_file_prefix *runtime_script_file_slots[ASPECT_SCRIPT_FILE_SLOTS];
 aspect_script_file_prefix runtime_script_file_fallback;
 unsigned runtime_script_file_last,runtime_script_file_keep_crlf;
@@ -43,7 +53,7 @@ static unsigned external_held;
 unsigned runtime_script_files_external_active(void){return external_held;}
 #endif
 static unsigned external_live,external_opens,external_closes;
-static struct {
+typedef struct script_snapshot {
  aspect_script_file_prefix prefix;
  aspect_script_file_prefix *slot;
  FILE *stream;
@@ -54,7 +64,24 @@ static struct {
 #else
  unsigned char buffer[SCRIPT_BUFFER_BYTES];
 #endif
-} external_saved[ASPECT_SCRIPT_FILE_SLOTS];
+} script_snapshot;
+#if defined(ASPECT_SCRIPT_BUFFER_DIAGNOSTIC)
+#define external_saved runtime_script_buffer_snapshots
+typedef char snapshot_size_check[sizeof(script_snapshot)==22?1:-1];
+typedef char snapshot_buffer_check[offsetof(script_snapshot,buffer)==20?1:-1];
+script_snapshot external_saved[ASPECT_SCRIPT_FILE_SLOTS];
+unsigned __cdecl runtime_script_buffer_probe(void)
+{
+ unsigned i,value=0;
+ for(i=0;i<ASPECT_SCRIPT_FILE_SLOTS;++i){
+  if(owners[i].buffer)++value;
+  if(external_saved[i].buffer)value+=256;
+ }
+ return value;
+}
+#else
+static script_snapshot external_saved[ASPECT_SCRIPT_FILE_SLOTS];
+#endif
 #if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
 static void release_external_buffers(void)
 {

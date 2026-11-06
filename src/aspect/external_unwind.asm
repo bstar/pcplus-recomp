@@ -225,6 +225,11 @@ _runtime_external_phase:
  call _aspect_render_snapshot_probe
  mov [_runtime_external_result_probe+2],ax
  mov word [_runtime_external_result_probe],0x100+ASPECT_LEASE_FAULT_PHASE
+%ifdef ASPECT_SCRIPT_BUFFER_DIAGNOSTIC
+ extern _runtime_script_buffer_probe
+ call _runtime_script_buffer_probe
+ mov [_runtime_external_result_probe+8],ax
+%endif
 %ifdef ASPECT_LEASE_FAULT_FOREIGN_DS
  mov ax,0xb800
  mov ds,ax

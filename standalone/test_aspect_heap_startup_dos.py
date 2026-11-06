@@ -33,6 +33,8 @@ def main():
     parser.add_argument('--lease-fault-phase',type=int,choices=[0,5,6,8,10,17,22],default=0,help='Explicitly admit the matching one-shot FAULT.ASX divide diagnostic')
     parser.add_argument('--lease-fault-foreign-ds',action='store_true',help='Require the marked diagnostic that faults with DS=B800h and the owned SS')
     parser.add_argument('--lease-fault-kind',choices=['divide','abort','dispatcher'],default='divide')
+    parser.add_argument('--fault-open-streams',action='store_true',help='Keep six buffered streams and exact PROGRAM copies live at the selected fault')
+    parser.add_argument('--held-streams',action='store_true',help='Keep six buffered streams across each FIRST child, including PROGRAM WAIT')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
     if args.streams_around_child:assert args.nested_program and not args.lease_fault_phase
@@ -42,6 +44,8 @@ def main():
     if args.lease_fault_phase:assert args.nested_graphics and args.program_result_probe and args.exit_watch and args.exit_watch_high and args.cpu=='386'
     if args.lease_fault_foreign_ds:assert args.lease_fault_phase
     if args.lease_fault_kind!='divide':assert args.lease_fault_phase and not args.lease_fault_foreign_ds
+    if args.fault_open_streams:assert args.lease_fault_phase
+    if args.held_streams:assert args.nested_program and not args.lease_fault_phase
     binary, runner, out = args.terminal.resolve(), args.runner.resolve(), args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     sources = {}
@@ -52,6 +56,7 @@ def main():
         if program==runner:assert m.get('diagnostic_lease_fault_phase',0)==args.lease_fault_phase
         if program==runner:assert bool(m.get('diagnostic_lease_fault_foreign_ds'))==args.lease_fault_foreign_ds
         if program==runner:assert m.get('diagnostic_lease_fault_kind','divide')==args.lease_fault_kind
+        if program==runner:assert bool(m.get('diagnostic_script_buffer_owners'))==args.fault_open_streams
         for name, expected in m['sources'].items():
             assert sha(ROOT / name) == expected, name
             sources[name] = expected
@@ -158,6 +163,11 @@ mode_opened:
         option='' if args.nested_graphics else ' NOCLEAR'
         if args.nested_wait:option+=' WAIT'
         first=first.replace('proc main\n','proc main\nrun "D:\\NEST.COM"'+option+'\n',1)
+        if args.fault_open_streams or args.held_streams:
+            before=''.join(f'fopen {i} "D:\\HOLD{i}.BIN" "wb"\nfputs {i} "HELD{i}|"\n' for i in range(6))
+            after=''.join(f'fclose {i}\n' for i in range(6))
+            first=first.replace('proc main\n','proc main\n'+before,1)
+            first=first.replace('run "D:\\NEST.COM"'+option+'\n','run "D:\\NEST.COM"'+option+'\n'+after,1)
         if args.inner_screen:
             before='fopen 0 "D:\\FPRE.TXT" "wb"\nif failure\nexit\nendif\nfclose 0\n'
             after=before.replace('FPRE.TXT','FPST.TXT')
@@ -218,7 +228,7 @@ mode_opened:
         viewport_cells=(args.display_rows-1)*80
         characters=bytearray(b'FIRST BYTE SAFE'.ljust(viewport_cells,b' '))
         if args.lease_fault_phase:
-            notice=b'FIRST BYTE SAFEASPECT: '+(b'CPU arithmetic fault (error 12' if args.lease_fault_kind=='divide' else b'file or output error (error 5')+b', opcode 9B, step 2)'
+            notice=b'FIRST BYTE SAFEASPECT: '+(b'CPU arithmetic fault (error 12' if args.lease_fault_kind=='divide' else b'file or output error (error 5')+b', opcode 9B, step '+(b'14' if args.fault_open_streams else b'2')+b')'
             characters[:len(notice)]=notice
             notice=b'ASPECT returned an error.';characters[160:160+len(notice)]=notice
         expected=b''.join(bytes([c,7]) for c in characters)
@@ -228,11 +238,14 @@ mode_opened:
         checks['one_failed_and_one_recovered_FIRST']=wire.count(b'FIRSTOK\r')==1
         child_count=2 if args.lease_fault_phase in (10,22) else 1
         checks['child_count_matches_fault_boundary']=(drive/'NEST.LOG').read_bytes()==b'CHILD|'*child_count
+    if args.held_streams:
+        checks['held_files_preserved']=all((drive/f'HOLD{i}.BIN').read_bytes()==f'HELD{i}|'.encode() for i in range(6))
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary),
                   program_result_probe=args.program_result_probe,
                   cpu=args.cpu,
                   physical_rows=args.display_rows,
                   streams_around_child=args.streams_around_child,
+                  held_streams=args.held_streams,
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
     if args.nested_program:
@@ -262,20 +275,26 @@ mode_opened:
     if args.nested_wait:
         report['nested_wait']=args.nested_wait
         report['scope']+=' PROGRAM WAIT consumes actual BIOS '+args.nested_wait+' after graphics return; this is not ASPECT cancellation.'
-        if args.lease_fault_phase:
-            exits=report['exit_watch']['exits'];probes=report['exit_watch']['program_results']
-            expected_error=12 if args.lease_fault_kind=='divide' else 5
-            key={'divide':'actual_selected_divide','abort':'actual_typed_abort','dispatcher':'actual_dispatcher_unwind'}[args.lease_fault_kind]
-            checks[key]=len(exits)==4 and exits[0]['error']==expected_error and exits[0]['opcode']==155 and probes[0]['stage']==256+args.lease_fault_phase
-            checks['parent_lease_live_before_divide']=probes[0]['status']==1
-            fault_ds=probes[0]['display_status'];fault_ss=probes[0]['serial_status']
-            checks['selected_fault_DS_SS']=fault_ds==0xb800 and fault_ss!=fault_ds if args.lease_fault_foreign_ds else fault_ds==fault_ss and fault_ds!=0
-            checks['later_calls_succeed']=len(exits)==4 and all(e['error']==0 for e in exits[1:]) and probes[3]['stage']==2 and probes[3]['status']==0
-            checks['all_owners_retired']=all(e[k]==0 for e in exits for k in ['cleanup_error','external_scope','display_owned','program_busy','process_busy'])
-            report['lease_fault_phase']=args.lease_fault_phase
-            report['fault_witness']=dict(kind=args.lease_fault_kind,parent_lease_live=probes[0]['status']==1,ds=fault_ds,ss=fault_ss,foreign_ds=args.lease_fault_foreign_ds)
-            report['passed']=all(checks.values())
-            report['scope']+=' One selected '+args.lease_fault_kind+' fault in FAULT.ASX, then six streams/missing-file recovery and normal nested FIRST.ASX in the same terminal. No injected cleanup success.'
+    if args.lease_fault_phase:
+        exits=report['exit_watch']['exits'];probes=report['exit_watch']['program_results']
+        expected_error=12 if args.lease_fault_kind=='divide' else 5
+        key={'divide':'actual_selected_divide','abort':'actual_typed_abort','dispatcher':'actual_dispatcher_unwind'}[args.lease_fault_kind]
+        checks[key]=len(exits)==4 and exits[0]['error']==expected_error and exits[0]['opcode']==155 and probes[0]['stage']==256+args.lease_fault_phase
+        checks['parent_lease_live_before_divide']=probes[0]['status']==1
+        fault_ds=probes[0]['display_status'];fault_ss=probes[0]['serial_status']
+        checks['selected_fault_DS_SS']=fault_ds==0xb800 and fault_ss!=fault_ds if args.lease_fault_foreign_ds else fault_ds==fault_ss and fault_ds!=0
+        checks['later_calls_succeed']=len(exits)==4 and all(e['error']==0 for e in exits[1:]) and probes[3]['stage']==2 and probes[3]['status']==0
+        checks['all_owners_retired']=all(e[k]==0 for e in exits for k in ['cleanup_error','external_scope','display_owned','program_busy','process_busy'])
+        if args.fault_open_streams:
+            pointers=aspect_exit_watch.read_buffers(drive/'BUFPTRS.BIN')
+            checks['twelve_buffers_live_at_fault']=probes[0]['process_status']==0x0606
+            checks['all_buffer_pointers_retired']=len(exits)==4 and all(v==0 for row in pointers for v in row)
+            checks['held_files_preserved']=all((drive/f'HOLD{i}.BIN').read_bytes()==f'HELD{i}|'.encode() for i in range(6))
+            report['buffer_exit_pointers']=pointers[:len(exits)]
+        report['lease_fault_phase']=args.lease_fault_phase
+        report['fault_witness']=dict(kind=args.lease_fault_kind,parent_lease_live=probes[0]['status']==1,ds=fault_ds,ss=fault_ss,foreign_ds=args.lease_fault_foreign_ds)
+        report['passed']=all(checks.values())
+        report['scope']+=' One selected '+args.lease_fault_kind+' fault in FAULT.ASX, then six streams/missing-file recovery and normal nested FIRST.ASX in the same terminal. No injected cleanup success.'
     if args.inner_screen:
         report['inner_screen']=snapshot_screen_watch.verify(drive/'SSCREEN.BIN',args.display_rows)
         checks['child_observed_graphics_mode']=(drive/'CHMODE.BIN').read_bytes()==b'\x13'*(3 if args.streams_around_child else 2)
@@ -283,6 +302,7 @@ mode_opened:
         report['passed']=all(checks.values())
         report['scope']+=' Separate386/XMS/UMB passive full inner screen/cursor witness and child-reported BIOS graphics mode; no physical timing claim.'
     (out / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
+    if args.lease_fault_phase:assert 'all_owners_retired' in checks and 'selected_fault_DS_SS' in checks
     print({k:v for k,v in checks.items() if not v})
     assert report['passed']
 

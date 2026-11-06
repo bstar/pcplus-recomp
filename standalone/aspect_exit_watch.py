@@ -34,6 +34,10 @@ def build(parent,runner,out,wait=False):
     if '_runtime_external_result_probe' in c:
         assert c['_runtime_external_result_probe'][0]==c['_runtime_error'][0]
         values['CHILD_RESULT']=c['_runtime_external_result_probe'][1]
+    if '_runtime_script_buffer_owners' in c:
+        assert c['_runtime_script_buffer_owners'][0]==c['_runtime_script_buffer_snapshots'][0]==c['_runtime_error'][0]
+        values.update(CHILD_BUFFER_OWNERS=c['_runtime_script_buffer_owners'][1],
+                      CHILD_BUFFER_SNAPSHOTS=c['_runtime_script_buffer_snapshots'][1])
     source=ROOT/'standalone/aspect_exit_watch.asm'
     subprocess.run(['nasm','-fbin',*[f'-D{k}={v}' for k,v in values.items()],str(source),'-o',str(out)],check=True)
     return {str(source.relative_to(ROOT)):sha(source),'standalone/aspect_exit_watch.py':sha(Path(__file__))}
@@ -63,3 +67,8 @@ def read(path):
         names=['stage','status','display_status','serial_status','process_status','crt_error','dos_error','child_status']
         result['program_results']=[dict(zip(names,struct.unpack_from('<8H',raw,580+i*16))) for i in range(len(result['exits']))]
     return result
+
+def read_buffers(path):
+    raw=path.read_bytes();assert len(raw)==4+8*24
+    assert struct.unpack_from('<2H',raw)==(0xbf18,1)
+    return [list(struct.unpack_from('<12H',raw,4+i*24)) for i in range(8)]

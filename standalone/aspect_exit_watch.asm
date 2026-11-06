@@ -17,6 +17,10 @@ records: times 8*13 dw 0
 alloc_data: dw 0xa148,2,0
 alloc_records: times 16*11 dw 0
 alloc_current: dw 0
+%ifdef CHILD_BUFFER_OWNERS
+buffer_data: dw 0xbf18,1
+buffer_records: times 8*12 dw 0
+%endif
 %ifdef CHILD_RESULT
 probe_data: dw 0xb008,1
 probe_records: times 8*8 dw 0
@@ -104,6 +108,35 @@ hook:
  add si,2
  add di,2
  loop .probe_copy
+%endif
+%ifdef CHILD_BUFFER_OWNERS
+ ; Record actual private pointer fields, not product-maintained counters.
+ ; C diagnostic typedef assertions enforce both offsets and strides.
+ mov di,[cs:data+4]
+ dec di
+ mov bx,di
+ shl di,1
+ add di,bx
+ shl di,1
+ shl di,1
+ shl di,1
+ add di,buffer_records
+ mov si,CHILD_BUFFER_OWNERS+12
+ mov cx,6
+.owners_copy:
+ mov ax,[si]
+ mov [cs:di],ax
+ add si,14
+ add di,2
+ loop .owners_copy
+ mov si,CHILD_BUFFER_SNAPSHOTS+20
+ mov cx,6
+.snapshots_copy:
+ mov ax,[si]
+ mov [cs:di],ax
+ add si,22
+ add di,2
+ loop .snapshots_copy
 %endif
  jmp .done
 .allocate:
@@ -433,6 +466,28 @@ collect:
  mov ah,0x3e
  int 0x21
  jc failed
+%ifdef CHILD_BUFFER_OWNERS
+ mov dx,buffer_filename
+ xor cx,cx
+ mov ah,0x3c
+ int 0x21
+ jc failed
+ mov bx,ax
+ push ds
+ push es
+ pop ds
+ mov dx,buffer_data
+ mov cx,4+8*24
+ mov ah,0x40
+ int 0x21
+ pop ds
+ jc failed
+ cmp ax,4+8*24
+ jne failed
+ mov ah,0x3e
+ int 0x21
+ jc failed
+%endif
 %ifdef WAIT_WATCH
  mov dx,wait_filename
  xor cx,cx
@@ -461,6 +516,9 @@ failed:
  mov ax,0x4c01
  int 0x21
 filename: db 'D:\EXITSTAT.BIN',0
+%ifdef CHILD_BUFFER_OWNERS
+buffer_filename: db 'D:\BUFPTRS.BIN',0
+%endif
 %ifdef WAIT_WATCH
 wait_filename: db 'D:\WAITSTAT.BIN',0
 %endif

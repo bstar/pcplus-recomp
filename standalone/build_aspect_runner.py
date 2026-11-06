@@ -26,6 +26,7 @@ def main(extension=None):
     if extension and extension.get('program_result_probe'):feature_flags+=['-DASPECT_PROGRAM_RESULT_PROBE']
     if extension and extension.get('snapshot_lease'):feature_flags+=['-DASPECT_SNAPSHOT_LEASE']
     if extension and extension.get('defer_script_buffers'):feature_flags+=['-DASPECT_DEFER_SCRIPT_BUFFERS']
+    if extension and extension.get('buffer_probe'):feature_flags+=['-DASPECT_SCRIPT_BUFFER_DIAGNOSTIC']
     if extension and extension.get('lease_fault_phase'):feature_flags+=['-DASPECT_LEASE_FAULT_PHASE='+str(extension['lease_fault_phase'])]
     if extension and extension.get('lease_fault_foreign_ds'):feature_flags+=['-DASPECT_LEASE_FAULT_FOREIGN_DS']
     if extension and extension.get('lease_fault_kind') in ('abort','dispatcher'):
@@ -113,6 +114,7 @@ def main(extension=None):
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
                   experimental_deferred_script_buffers=bool(extension and extension.get('defer_script_buffers')),
+                  diagnostic_script_buffer_owners=bool(extension and extension.get('buffer_probe')),
                   diagnostic_file_open_probe=bool(extension and extension.get('file_open_probe')),
                   diagnostic_program_result_probe=bool(extension and extension.get('program_result_probe')),
                   experimental_snapshot_lease=bool(extension and extension.get('snapshot_lease')),
