@@ -6,7 +6,8 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False,dial_action=None,online_actions=(),auxiliary=(),flow_updates=(),flow_inflight=b''):
+def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False,dial_action=None,online_actions=(),auxiliary=(),flow_updates=(),flow_inflight=b'',keyboard_program='ADDKEY'):
+ assert keyboard_program in ('ADDKEY','Z:\\BIN\\ADDKEY.COM')
  assert cpu in ('8086','286','386','486')
  assert irq is None or irq in (3,4,5,7)
  assert working_drive in ("c","d")
@@ -155,7 +156,7 @@ mount d "{out}"
 D:\\SNAP B
 {auxiliary_start}
 {observer_start}
-ADDKEY {keys}
+{keyboard_program} {keys}
 C:\\TERMINAL {arguments}
 {branch}
 :expected

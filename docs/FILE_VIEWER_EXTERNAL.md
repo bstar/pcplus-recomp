@@ -100,3 +100,32 @@ same-process reconnects through this external-child path remain separate work.
 The previous internal-viewer BBS and transfer receipts retain their original
 executable identity. Physical acceptance and the broader parity inventory remain
 open.
+
+## Failure recovery and core Enigma regression
+
+The unchanged external-viewer candidate has a separate
+[recovery receipt](validation/viewer-external-recovery.json). Five actual DOS
+cases cover a missing viewer followed by a successful retry in the same parent,
+missing configured COMSPEC with ordinary and empty PATH, a valid MZ interpreter
+requesting65535 extra paragraphs, and an owned child that exits37. The allocation
+refusal displays the local PROGRAM failure acknowledgement; the test then checks
+all2000 terminal cells, cursor/shape, fresh keyboard/CPR and final hardware
+restoration. Shell-handled missing-command and nonzero-child cases return without
+an extra application acknowledgement. This observes the composed COMMAND.COM
+policy; it does not establish direct propagation of the viewer's exit code.
+
+The passive timer only reads video and keeps an error-prompt flag. It rejects a
+still-visible failure prompt as a restored terminal frame. An early two-byte MZ
+probe timed out and is excluded: it did not establish malformed-header refusal.
+The accepted allocation fixture has a complete MZ header and a valid exit stub.
+An empty-PATH exploration initially prevented the keyboard utility from running;
+accepted tests qualify its existing Z:\\BIN path. DOSBox still resolves its own
+COMMAND.COM with that empty PATH, so absent-interpreter rejection remains open.
+
+The same terminal executable passes the stock Enigma login and unsaved-editor
+workflow through the isolated, previously accepted SynthModem proxy snapshot.
+The independent reference audit matches1920 cells and cursor with zero differing
+cells across48365 delivered bytes. This checks the core terminal path: it does
+not open an external viewer inside the editor, exercise SIP/audio, or validate
+the physical modem. No application, live SynthModem service, installed selection
+or private configuration changed for this recovery checkpoint.

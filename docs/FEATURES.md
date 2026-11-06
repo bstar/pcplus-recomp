@@ -9,6 +9,12 @@ original-free public rebuild. Empty configuration retains the internal viewer.
 Child failure presentation, BBS/transfer/reconnect composition through this new
 path and physical acceptance remain open; this does not close F15.
 
+The unchanged external-viewer candidate also passes five
+[failure/fallback recovery cases and a separate core Enigma regression](FILE_VIEWER_EXTERNAL.md#failure-recovery-and-core-enigma-regression).
+The missing-target retry succeeds in the same parent; the independent Enigma
+audit matches1920 cells and cursor. Opening the external child inside that BBS
+editor and recovery on a real DOS kernel remain separate gates.
+
 [File Directory composition](FILE_DIRECTORY_COMPOSITION.md) now verifies actual
 listing inside unsaved Enigma/Synchronet editors and five capture/HOLD/virtual
 printer pressure combinations on the unchanged candidate. Both editor frames
