@@ -8,11 +8,14 @@ from build_path_session import ROOT,sha
 from snapshot_screen_watch import verify
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--rows',type=int,choices=[25,28,43,50],default=25);a=p.parse_args()
+    screen_bytes=a.rows*160;record_bytes=screen_bytes+16
+    height=14 if a.rows==28 else 8 if a.rows in (43,50) else 16
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir()
     source=ROOT/'standalone/snapshot_screen_watch.asm';wrapper=out/'watch.asm'
     wrapper.write_text(source.read_text()+'\ntest_symbols: dw hook,old21,data,resident_end\n')
-    values=dict(IRQ_VECTOR=52,PARENT_ISR_OFFSET=0x1111,CHILD_ISR_OFFSET=0x2222,
+    values=dict(SCREEN_ROWS=a.rows,IRQ_VECTOR=52,PARENT_ISR_OFFSET=0x1111,CHILD_ISR_OFFSET=0x2222,
         PARENT_ISR_SEG=0x100,PARENT_RENDER_SEG=0x200,PARENT_CHILD_DS=0x100,
         CHILD_ISR_SEG=0x100,CHILD_DATA_SEG=0x300)
     binary=out/'watch.com';subprocess.run(['nasm','-fbin',*[f'-D{k}={v}' for k,v in values.items()],str(wrapper),'-o',str(binary)],check=True)
@@ -26,9 +29,9 @@ def main():
        vector=(0x1111,0x5f00) if scenario=='parent' else (0x9999,0x6e00) if scenario=='wrong-irq' else (0x2222,0x6e00)
        u.mem_write(52,struct.pack('<2H',*vector));u.mem_write(0x60100,struct.pack('<H',0x7000))
        u.mem_write(0x449,bytes([0x13 if scenario=='wrong-mode' else 3]));u.mem_write(0x44a,struct.pack('<H',80))
-       u.mem_write(0x484,b'\x18');u.mem_write(0x485,struct.pack('<H',16));u.mem_write(0x450,struct.pack('<H',0x0312))
+       u.mem_write(0x484,bytes([a.rows-1]));u.mem_write(0x485,struct.pack('<H',height));u.mem_write(0x450,struct.pack('<H',0x0312))
        u.mem_write(0x460,struct.pack('<H',0x0607));u.mem_write(0x462,bytes([1 if scenario=='wrong-page' else 0]))
-       video=bytes((i*17+3)&255 for i in range(4000));u.mem_write(0xb8000,video)
+       video=bytes((i*17+3)&255 for i in range(screen_bytes));u.mem_write(0xb8000,video)
        u.hook_add(UC_HOOK_INTR,lambda *args:(_ for _ in ()).throw(AssertionError('Unexpected interrupt request')))
        def call(name,function=0x3c00):
         ds=0x7100 if scenario=='wrong-ds' else 0x7000;ss=0x7100 if scenario=='wrong-ss' else ds
@@ -51,7 +54,7 @@ def main():
         assert u.reg_read(UC_X86_REG_EFLAGS)&0x603==0x202|df|cf
         for reg,value in registers.items():
          if reg!=UC_X86_REG_SP:assert u.reg_read(reg)==value,(scenario,reg,'returned')
-        assert bytes(u.mem_read(0xb8000,4000))==video
+        assert bytes(u.mem_read(0xb8000,screen_bytes))==video
        accepted=scenario in ['child','parent']
        name=b'D:\\OTHER.TXT\0' if scenario=='wrong-path' else b'D:\\FPRE.TXT\0'
        call(name,0x4300 if scenario=='wrong-function' else 0x3c00)
@@ -60,26 +63,26 @@ def main():
         call(b'D:\\FPRE.TXT\0') # Duplicate open/create must not create another PRE.
         assert struct.unpack('<H',u.mem_read(0x10000+data+4,2))[0]==1
         call(b'D:\\FPST.TXT\0',0x3d00);call(b'D:\\FPRE.TXT\0',0x6c00);call(b'D:\\FPST.TXT\0')
-        before=bytes(u.mem_read(0x10000+data,8+4*4016));call(b'D:\\FPRE.TXT\0')
+        before=bytes(u.mem_read(0x10000+data,8+4*record_bytes));call(b'D:\\FPRE.TXT\0')
         assert bytes(u.mem_read(0x10000+data,len(before)))==before
         for i in range(4):
-         record=before[8+i*4016:8+(i+1)*4016]
-         assert struct.unpack('<8H',record[:16])==(i,3,80,25,16,0x0312,0x0607,0)
+         record=before[8+i*record_bytes:8+(i+1)*record_bytes]
+         assert struct.unpack('<8H',record[:16])==(i,3,80,a.rows,height,0x0312,0x0607,0)
          assert record[16:]==video
         valid=before
        cases.append(dict(scenario=scenario,df=bool(df),cf=bool(cf),passed=True))
-    original=out/'valid.bin';original.write_bytes(valid);assert verify(original)['passed']
+    original=out/'valid.bin';original.write_bytes(valid);assert verify(original,a.rows)['passed']
     rejected=[]
-    for name,offset in [('count',4),('mode',8+4016+2),('cursor',8+4016+10),('shape',8+4016+12),('character',8+4016+16),('attribute',8+4016+17)]:
+    for name,offset in [('count',4),('mode',8+record_bytes+2),('cursor',8+record_bytes+10),('shape',8+record_bytes+12),('character',8+record_bytes+16),('attribute',8+record_bytes+17),('last-character',8+2*record_bytes-2),('last-attribute',8+2*record_bytes-1)]:
      damaged=bytearray(valid);damaged[offset]^=1;p=out/(name+'.bin');p.write_bytes(damaged)
-     try:verify(p)
+     try:verify(p,a.rows)
      except AssertionError:rejected.append(name)
      else:raise AssertionError('Accepted damaged '+name)
     p=out/'truncated.bin';p.write_bytes(valid[:-1])
-    try:verify(p)
+    try:verify(p,a.rows)
     except AssertionError:rejected.append('truncated')
     else:raise AssertionError('Accepted truncated capture')
-    r=dict(passed=True,cases=cases,rejected_artifacts=rejected,resident_bytes=end,
+    r=dict(passed=True,rows=a.rows,cases=cases,rejected_artifacts=rejected,resident_bytes=end,
       sources={str(source.relative_to(ROOT)):sha(source),'standalone/snapshot_screen_watch.py':sha(ROOT/'standalone/snapshot_screen_watch.py'),'standalone/check_snapshot_screen_watch.py':sha(Path(__file__))},
       scope=__doc__+' Real assembled8086 hook with modeled predecessor IRET/IRQ/BDA/video. No actual DOS or hardware claim; separate captured DOS run required.')
     (out/'result.json').write_text(json.dumps(r,indent=2)+'\n');print('PASS',len(cases),'hook cases and',len(rejected),'damaged capture rejections')

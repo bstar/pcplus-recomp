@@ -4,6 +4,7 @@ import argparse
 import json
 import shutil
 import struct
+import inspect
 import subprocess
 import sys
 from pathlib import Path
@@ -22,6 +23,7 @@ def main():
     parser.add_argument('--nested-program',action='store_true',help='Run an actual DOS child twice around the six-stream and missing-file cases')
     parser.add_argument('--nested-graphics',action='store_true',help='Use default SAVE and let each child leave BIOS mode13h active')
     parser.add_argument('--nested-wait',choices=['space','escape'],help='Real PROGRAM WAIT continued by this BIOS key; Escape is a continue key, not script cancellation')
+    parser.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25)
     parser.add_argument('--exit-watch',action='store_true',help='Install a small passive diagnostic TSR; separate memory footprint from ordinary acceptance')
     parser.add_argument('--exit-watch-high',action='store_true',help='Require the passive observer to reside in UMB')
     parser.add_argument('--cpu',choices=['8086','386'],default='8086')
@@ -170,13 +172,18 @@ mode_opened:
         files['EWATCH.COM']=(out/'EWATCH.COM').read_bytes()
     if args.inner_screen:
         import snapshot_screen_watch
-        sources.update(snapshot_screen_watch.build(binary,runner,out/'SSWATCH.COM',5))
+        sources.update(snapshot_screen_watch.build(binary,runner,out/'SSWATCH.COM',5,args.display_rows))
         files['SSWATCH.COM']=(out/'SSWATCH.COM').read_bytes()
     settings = bytearray(prm(port=3, baud=5))
     for offset, value in [(0x188,5),(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),
-                          (0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)]:
+                          (0x1ca,args.display_rows),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)]:
         struct.pack_into('<H', settings, offset, value)
     harness.BINARY = stage / 'TERMINAL.EXE'
+    if args.display_rows!=25:
+        harness.SAMPLER=harness.SAMPLER.replace('mov cx,4000','mov cx,8000')
+        source=inspect.getsource(harness.run)
+        assert source.count('len(screen)==4000')==1
+        exec(compile(source.replace('len(screen)==4000','len(screen)==8000'),harness.__file__,'exec'),harness.__dict__)
     label = out.name
     schedule='p900 enter p3500 a-1 p1300 a-2 p1300 a-3 p1300 a-1 p1300 r e a d y enter p700 a-x'
     if args.lease_fault_phase:schedule=schedule.replace('a-3 p1300 a-1','a-3 p1300 a-4')
@@ -201,13 +208,14 @@ mode_opened:
         assert sha(ROOT / name) == expected, name
     if args.nested_program:
         checks['two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|CHILD|'
-        characters=bytearray(b'FIRST BYTE SAFE'.ljust(1920,b' '))
+        viewport_cells=(args.display_rows-1)*80
+        characters=bytearray(b'FIRST BYTE SAFE'.ljust(viewport_cells,b' '))
         if args.lease_fault_phase:
             notice=b'FIRST BYTE SAFEASPECT: '+(b'CPU arithmetic fault (error 12' if args.lease_fault_kind=='divide' else b'file or output error (error 5')+b', opcode 9B, step 2)'
             characters[:len(notice)]=notice
             notice=b'ASPECT returned an error.';characters[160:160+len(notice)]=notice
         expected=b''.join(bytes([c,7]) for c in characters)
-        checks['exact_1920_viewport_cells']=(drive/'SCREEN.BIN').read_bytes()[:3840]==expected
+        checks['exact_viewport_cells']=(drive/'SCREEN.BIN').read_bytes()[:viewport_cells*2]==expected
     if args.lease_fault_phase:
         checks.pop('four_calls');checks.pop('two_nested_children')
         checks['one_failed_and_one_recovered_FIRST']=wire.count(b'FIRSTOK\r')==1
@@ -216,6 +224,7 @@ mode_opened:
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary),
                   program_result_probe=args.program_result_probe,
                   cpu=args.cpu,
+                  physical_rows=args.display_rows,
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
     if args.nested_program:
@@ -259,7 +268,7 @@ mode_opened:
             report['passed']=all(checks.values())
             report['scope']+=' One selected '+args.lease_fault_kind+' fault in FAULT.ASX, then six streams/missing-file recovery and normal nested FIRST.ASX in the same terminal. No injected cleanup success.'
     if args.inner_screen:
-        report['inner_screen']=snapshot_screen_watch.verify(drive/'SSCREEN.BIN')
+        report['inner_screen']=snapshot_screen_watch.verify(drive/'SSCREEN.BIN',args.display_rows)
         checks['child_observed_graphics_mode']=(drive/'CHMODE.BIN').read_bytes()==b'\x13\x13'
         checks['marker_files_created']=all((drive/n).exists() and (drive/n).stat().st_size==0 for n in ['FPRE.TXT','FPST.TXT'])
         report['passed']=all(checks.values())

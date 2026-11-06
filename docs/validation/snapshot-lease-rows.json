@@ -1,0 +1,275 @@
+{
+  "checkpoint_recorded": true,
+  "capability": 18,
+  "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+  "child_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+  "results": {
+    "25-8086": {
+      "path": "build/lease18-rows25-8086-20261106/result.json",
+      "sha256": "1d132e831d2b87e2a9c3ff8c58554cddf84e528c77c053d5217bd9975f0c066f",
+      "passed": true
+    },
+    "25-inner": {
+      "path": "build/lease18-rows25-inner-20261106/result.json",
+      "sha256": "99d95203516d7d451ec8592013f5cfa8b8fc611cd879bd614bf91b579c89b8d3",
+      "passed": true
+    },
+    "25-observer": {
+      "path": "build/lease18-rows25-observer-20261106/result.json",
+      "sha256": "7ce47829d432cc575beb058317b3e091d8a7d4f2516da56190467e4341df62b2",
+      "passed": true
+    },
+    "28-8086": {
+      "path": "build/lease18-rows28-8086-20261106/result.json",
+      "sha256": "7b818f2168c5b36729c2d1cec90d411a4728a59fc86efe20dec47ee515c82efb",
+      "passed": true
+    },
+    "28-inner": {
+      "path": "build/lease18-rows28-inner-20261106/result.json",
+      "sha256": "d3d0e0a38fb3721e10dab255bc67bf951c0570b07d01090abdf57fd705339ff2",
+      "passed": true
+    },
+    "28-observer": {
+      "path": "build/lease18-rows28-observer-20261106/result.json",
+      "sha256": "1e5135a8977158c0c70978ffd042a56ef0f10d97a2861873e7bed1230e823c66",
+      "passed": true
+    },
+    "43-8086": {
+      "path": "build/lease18-rows43-8086-20261106/result.json",
+      "sha256": "1ea855ac969a7ac365ba7d48266cda86f2bffe6755de62ae8d885f68a5902770",
+      "passed": true
+    },
+    "43-inner": {
+      "path": "build/lease18-rows43-inner-20261106/result.json",
+      "sha256": "c56d2518607d6d4254e128a36b7b88a6a42c890b76f830f93bdfd2fb2e1ebae7",
+      "passed": true
+    },
+    "43-observer": {
+      "path": "build/lease18-rows43-observer-20261106/result.json",
+      "sha256": "3a0be42e3240d98c120113a8ee65776a80afb6d2981e5539c42ddc545fedea2c",
+      "passed": true
+    },
+    "50-8086": {
+      "path": "build/lease18-rows50-8086-20261106/result.json",
+      "sha256": "8ad25da442b7656cf5baa53a65369bf97248225a0c55908d883c9eba3de2c9c0",
+      "passed": true
+    },
+    "50-inner": {
+      "path": "build/lease18-rows50-inner-20261106/result.json",
+      "sha256": "1370bb52f83b8a9b36dc919aed704b4cc1756d72e07e83e696385325737de0a9",
+      "passed": true
+    },
+    "50-observer": {
+      "path": "build/lease18-rows50-observer-20261106/result.json",
+      "sha256": "cb5a6277490e3b8156017574cf0348dc2dc4f7213dd622493929d2eb1a212d89",
+      "passed": true
+    }
+  },
+  "frames": [
+    {
+      "rows": 25,
+      "bytes_per_frame": 4000,
+      "compared_bytes": 8000,
+      "captures": [
+        {
+          "sequence": 0,
+          "mode": 3,
+          "columns": 80,
+          "rows": 25,
+          "font_height": 16,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 1,
+          "mode": 3,
+          "columns": 80,
+          "rows": 25,
+          "font_height": 16,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 2,
+          "mode": 3,
+          "columns": 80,
+          "rows": 25,
+          "font_height": 16,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 3,
+          "mode": 3,
+          "columns": 80,
+          "rows": 25,
+          "font_height": 16,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        }
+      ],
+      "capture_sha256": "b9ef204d2f4983d6d66d5fad20d948dd03f39bf7a202ba04886f4885fe82a9c8"
+    },
+    {
+      "rows": 28,
+      "bytes_per_frame": 4480,
+      "compared_bytes": 8960,
+      "captures": [
+        {
+          "sequence": 0,
+          "mode": 3,
+          "columns": 80,
+          "rows": 28,
+          "font_height": 14,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 1,
+          "mode": 3,
+          "columns": 80,
+          "rows": 28,
+          "font_height": 14,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 2,
+          "mode": 3,
+          "columns": 80,
+          "rows": 28,
+          "font_height": 14,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 3,
+          "mode": 3,
+          "columns": 80,
+          "rows": 28,
+          "font_height": 14,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        }
+      ],
+      "capture_sha256": "69459a7f1db6d9ad12e49363fbe6054053a21d84ba9b5c91ac975e7a07ef8cae"
+    },
+    {
+      "rows": 43,
+      "bytes_per_frame": 6880,
+      "compared_bytes": 13760,
+      "captures": [
+        {
+          "sequence": 0,
+          "mode": 3,
+          "columns": 80,
+          "rows": 43,
+          "font_height": 8,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 1,
+          "mode": 3,
+          "columns": 80,
+          "rows": 43,
+          "font_height": 8,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 2,
+          "mode": 3,
+          "columns": 80,
+          "rows": 43,
+          "font_height": 8,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 3,
+          "mode": 3,
+          "columns": 80,
+          "rows": 43,
+          "font_height": 8,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        }
+      ],
+      "capture_sha256": "b3070996d81f3eb9c5cefc3c8717c0e586962010532591a36a041a6ad60b1a59"
+    },
+    {
+      "rows": 50,
+      "bytes_per_frame": 8000,
+      "compared_bytes": 16000,
+      "captures": [
+        {
+          "sequence": 0,
+          "mode": 3,
+          "columns": 80,
+          "rows": 50,
+          "font_height": 8,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 1,
+          "mode": 3,
+          "columns": 80,
+          "rows": 50,
+          "font_height": 8,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 2,
+          "mode": 3,
+          "columns": 80,
+          "rows": 50,
+          "font_height": 8,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        },
+        {
+          "sequence": 3,
+          "mode": 3,
+          "columns": 80,
+          "rows": 50,
+          "font_height": 8,
+          "cursor": 15,
+          "cursor_shape": 1551,
+          "page": 0
+        }
+      ],
+      "capture_sha256": "357042783015bc9c74bfadadefcf30d594da97e8e01c25da39eda7f1961acc2a"
+    }
+  ],
+  "default25_observer_unchanged": true,
+  "default25_observer_sha256": "4ec79f2ff850977a23211a3f8249239c487e6f4d1037326ac7b024b7bc7f081f",
+  "actual_DOS_workflows": 8,
+  "hook_cases": 144,
+  "damaged_capture_rejections": 36,
+  "application_binaries_changed": false,
+  "installed_candidate_changed": false,
+  "physical_runtime_verified": false,
+  "limits": [
+    "Normal8086 workflows and separate386/XMS/UMB full inner-frame captures.",
+    "Standard80-column25/28/43/50-row VGA fonts with status visible; no downloaded/custom fonts or physical VGA claim.",
+    "Larger-row fault/cancellation composition, WAIT transport failures and physical acceptance remain open."
+  ]
+}

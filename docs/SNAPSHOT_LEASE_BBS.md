@@ -79,5 +79,6 @@ synthetic Hayes serial modem. No running production service is reconfigured.
 Actual SIP/audio/DSP, Boca CTS timing, the physical Enigma header and sustained
 hardware operation need physical acceptance. Current-pair real-BBS cancel/retry
 and carrier-loss/reconnect evidence remains to be completed.
-Nested larger-row SAVE, WAIT transport faults, broader application commands,
+[Nested SAVE at25/28/43/50 rows](SNAPSHOT_LEASE_ROWS.md) now has separate exact
+full-frame evidence. WAIT transport faults, broader application commands,
 ASPECT/emulations/protocols and Host parity remain separate gates.

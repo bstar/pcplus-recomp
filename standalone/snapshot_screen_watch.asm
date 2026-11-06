@@ -3,10 +3,18 @@
 BITS 16
 CPU 8086
 ORG 0x100
+%ifndef SCREEN_ROWS
+%define SCREEN_ROWS 25
+%endif
+%if SCREEN_ROWS != 25 && SCREEN_ROWS != 28 && SCREEN_ROWS != 43 && SCREEN_ROWS != 50
+%error Unsupported screen geometry
+%endif
+%assign SCREEN_BYTES SCREEN_ROWS*160
+%assign RECORD_BYTES SCREEN_BYTES+16
 jmp start
 old21: dd 0
 data: dw 0x5357,1,0,0
-records: times 4*4016 db 0
+records: times 4*RECORD_BYTES db 0
 pre_name: db 'D:\FPRE.TXT',0
 post_name: db 'D:\FPST.TXT',0
 hook:
@@ -73,7 +81,7 @@ hook:
  inc di
  loop .compare
  mov ax,[cs:data+4]
- mov bx,4016
+ mov bx,RECORD_BYTES
  mul bx
  mov di,ax
  add di,records
@@ -116,7 +124,7 @@ hook:
  pop es
  add di,16
  xor si,si
- mov cx,2000
+ mov cx,SCREEN_BYTES/2
  cld
  rep movsw
  inc word [cs:data+4]
@@ -169,12 +177,12 @@ collect:
  push es
  pop ds
  mov dx,data
- mov cx,8+4*4016
+ mov cx,8+4*RECORD_BYTES
  mov ah,0x40
  int 0x21
  pop ds
  jc failed
- cmp ax,8+4*4016
+ cmp ax,8+4*RECORD_BYTES
  jne failed
  mov ah,0x3e
  int 0x21

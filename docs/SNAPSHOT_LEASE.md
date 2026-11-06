@@ -100,10 +100,12 @@ Use `test_aspect_heap_startup_dos.py` with the same pair, `--nested-program
 Typed abort and direct dispatcher recovery now have separate evidence in
 [`SNAPSHOT_LEASE_FAULTS.md`](SNAPSHOT_LEASE_FAULTS.md). Ordinary PROGRAM WAIT,
 continued by Space or Escape, is covered in
-[`SNAPSHOT_LEASE_WAIT.md`](SNAPSHOT_LEASE_WAIT.md). Script cancellation,
-actual larger-row use,
-Enigma/Synchronet rendering/input and
-transfer/cancellation/carrier-loss regressions remain open for this exact pair.
+[`SNAPSHOT_LEASE_WAIT.md`](SNAPSHOT_LEASE_WAIT.md).
+The standard25/28/43/50-row nested SAVE paths pass the separate
+[full-frame row matrix](SNAPSHOT_LEASE_ROWS.md). Matching BBS/editor and basic
+transfer results are in [SNAPSHOT_LEASE_BBS.md](SNAPSHOT_LEASE_BBS.md).
+Script cancellation, faults at larger row counts and complete real-BBS
+transfer cancellation/carrier-loss composition remain separate release gates.
 Only after those gates should it replace the selected package through a verified
 configuration-preserving deployment. Physical modem acceptance, broader original
 language/emulation/protocol coverage, Chat and Host remain separate requirements.
