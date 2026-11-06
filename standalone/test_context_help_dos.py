@@ -47,7 +47,9 @@ exit
         except subprocess.TimeoutExpired:timed_out=True
     output=(run/'CHECKS.TXT').read_text() if (run/'CHECKS.TXT').exists() else ''
     status=(run/'RESULT.TXT').read_text().strip() if (run/'RESULT.TXT').exists() else ''
-    match=re.search(r'CONTEXT checks=(\d+) errors=(\d+) children=8 invalid=3',output)
+    pattern=r'CONTEXT checks=(\d+) errors=(\d+) children=8 invalid='
+    pattern+=r'10 admission=1' if manifest.get('parent_admission') else '3'
+    match=re.search(pattern,output)
     passed=not timed_out and status=='PASS' and bool(match) and int(match[2])==0
     report=dict(passed=passed,timed_out=timed_out,checks=int(match[1]) if match else 0,products=manifest['products'],manifest_sha256=sha(run/'manifest.json'),checker_sha256=sha(Path(__file__)),artifacts={x.name:sha(x) for x in run.iterdir() if x.is_file()},scope=manifest['scope'])
     (run/'result.json').write_text(json.dumps(report,indent=2)+'\n')

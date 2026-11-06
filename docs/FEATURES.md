@@ -2531,3 +2531,13 @@ and an identical15-file cold rebuild pass. The original resolver, formatter
 and PROGRAM boundaries are explicit diagnostic substitutions. This does not
 enable the global helper or close its UI, admission, context mapping, UART or
 physical acceptance requirements.
+
+## Contextual Help parent admission
+
+The [parent admission checkpoint](HELP_PARENT_ADMISSION.md) adds actual DOS
+PSP/main-block validation before the source helper consumes its descriptor.
+353 host fault cases,231 DOS checks,1728 native source/original-slice cases
+and an identical19-file source-only rebuild pass. New REA evidence identifies
+the original topic selector, new/continued search and height-dependent dialogs.
+Global helper UI, bounded producer resolution, parent owner/context mapping
+and connected-session acceptance are still open; this component is opt-in.

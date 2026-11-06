@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "../src/help/format.h"
+#ifdef HELP_PARENT_ADMISSION
+#include "../src/help/parent.h"
+#endif
 static unsigned copy_string(unsigned segment,unsigned offset,char *to,unsigned capacity)
 {
  unsigned i;const unsigned char __far *from;
@@ -18,13 +21,23 @@ int main(int argc,char **argv)
  unsigned long pointer,size;unsigned seg,off,i,selected;
  unsigned char raw[18],header[3],record[38];char path[64]={0},title[40]={0},line[80],expected[40];
  const unsigned char __far *source;help_context ctx;help_header h;help_record topic;FILE *f;
+#ifdef HELP_PARENT_ADMISSION
+ help_parent_context admitted;
+#endif
  if(argc!=3)return 2;if(strcmp(argv[1],"PCHELP"))return 3;
  if(help_pointer_parse(argv[2],&pointer))return 4;
+#ifdef HELP_PARENT_ADMISSION
+ if(help_parent_read_dos(argv[2],&admitted))return 5;
+#endif
  seg=(unsigned)(pointer>>16);off=(unsigned)pointer;
  if(seg<0x50 || (unsigned long)seg*16+off+18>0xa0000UL)return 5;
  source=MK_FP(seg,off);for(i=0;i<18;++i)raw[i]=source[i];
  if(help_context_decode(raw,18,&ctx))return 6;
  if(copy_string(seg,ctx.path_offset,path,sizeof(path))||copy_string(seg,ctx.title_offset,title,sizeof(title)))return 7;
+#ifdef HELP_PARENT_ADMISSION
+ if(admitted.parent_ds!=seg||admitted.descriptor_offset!=off||
+    memcmp(&admitted.context,&ctx,sizeof(ctx))||strcmp(admitted.path,path)||strcmp(admitted.title,title))return 6;
+#endif
  f=fopen(path,"rb");if(!f)return 8;
  if(fseek(f,0,SEEK_END)){fclose(f);return 9;}size=(unsigned long)ftell(f);rewind(f);
  if(fread(header,1,3,f)!=3||help_header_decode(header,3,size,&h)){fclose(f);return 9;}

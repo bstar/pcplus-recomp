@@ -5,6 +5,10 @@ now recovers the descriptor construction and verifies a source-only process
 handoff. Global application integration and the original helper UI remain open;
 the PROGRAM-notice help below is a separate maintained interface.
 
+The next [parent admission checkpoint](HELP_PARENT_ADMISSION.md) checks actual
+DOS PSP/main-block ownership and bounded string copies. It also records the
+original helper's T/S/C controls for the remaining UI integration.
+
 Alt-Z in the recovered keyboard poll is gated by a signed context word. When
 enabled, it consumes the BIOS key and calls resident57AE. Fresh REA analysis
 corrects the earlier description of that callback as a local diagnostic dialog:

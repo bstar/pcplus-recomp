@@ -12,12 +12,13 @@ def main():
     out.mkdir(parents=True,exist_ok=False)
     manifest=json.loads((build/'manifest.json').read_text())
     sources=set(manifest['sources'])|{'standalone/check_context_help.py','standalone/test_context_help_dos.py','standalone/test_context_help_cold.py'}
+    if manifest.get('parent_admission'):sources.add('standalone/test_help_parent.py')
     for name in sorted(sources):
         source=ROOT/name
         if name in manifest['sources']:assert sha(source)==manifest['sources'][name],name
         target=out/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(source,target)
     for script,args in (
-        ('build_context_help.py',['--output',str(out/'build')]),
+        ('build_context_help.py',['--output',str(out/'build')]+(['--parent-admission'] if manifest.get('parent_admission') else [])),
         ('check_context_help.py',['--build',str(out/'build')]),
         ('test_context_help_dos.py',['--build',str(out/'build'),'--output',str(out/'dos')]),
     ):
@@ -27,7 +28,13 @@ def main():
     assert rebuilt==manifest
     cpu=json.loads((out/'build/cpu.json').read_text());dos=json.loads((out/'dos/result.json').read_text())
     assert cpu['passed'] and dos['passed']
+    admission=None
+    if manifest.get('parent_admission'):
+        with (out/'test_help_parent.py.log').open('w') as log:
+            subprocess.run([sys.executable,str(out/'standalone/test_help_parent.py'),'--output',str(out/'admission')],cwd=out,stdout=log,stderr=log,check=True)
+        admission=json.loads((out/'admission/result.json').read_text());assert admission['passed']
     report=dict(passed=True,source_files=len(sources),source_sha256={name:sha(out/name) for name in sorted(sources)},products=rebuilt['products'],manifest_sha256=sha(out/'build/manifest.json'),cpu=cpu,dos=dos,scope='Isolated public source tree with pinned toolchain inherited from caller; no original binaries, HLP, configurations, analysis artifacts or prior objects copied. Exact products and manifest reproduced, then source CPU and DOS EXEC tests rerun.')
+    if admission:report['admission']=admission
     (out/'result.json').write_text(json.dumps(report,indent=2)+'\n')
     print('Cold source build:',len(sources),'files;',cpu['cases'],'CPU cases;',dos['checks'],'DOS checks PASS')
 

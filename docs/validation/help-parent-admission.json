@@ -1,0 +1,354 @@
+{
+  "passed": true,
+  "parent_admission": true,
+  "application_integration": false,
+  "physical_deployment": false,
+  "scope": "Actual DOS parent/MCB admission for source-built PCHELP consumer; native producer remains exact. New safety checks are maintained, not recovered. Global help UI/owner/context/connected-session integration remains open.",
+  "manifest_sha256": "ea5b79aec47107144ab36f4caf04c89b2c98b60c58ebe62e2599ea511ff3501c",
+  "sources": {
+    "standalone/build_context_help.py": "6764f8b4529ebea9dbccc96b213587701bf223dbbcfd73a993943c9e5d0a69bb",
+    "standalone/context_help_state.asm": "e358785a797828ffbc686efa54cde1e076e583bd4f76ba9ad5011f28b6cc0d8e",
+    "standalone/context_help_parent.c": "99f1a93eb6816e5e2500a6c1aa87e19deb4cc1b7ae3054ffc742a77af7714a81",
+    "standalone/context_help_child.c": "0f7e5dc82faabce7ae048eae3f273a9bfc7d8bd4c2f94d6d8f8684ec7486c9b9",
+    "src/help/format.c": "a6f7585e56c793998f29047172929f8fb25e5ec424679524efcecb0f06a40571",
+    "src/help/format.h": "bf9c74896bcc57c935273f1315350193bc44df35b923f1c1078ed4ab55e70283",
+    "reconstruction/context_help/provenance.json": "530cdc1e8a6c9ff0257c156749e73c0b2aa566a314f01e99bc7c7b38a5f3d0e0",
+    "reconstruction/program_exec/provenance.json": "dea1a491c50dcbfdd28ac810ff17857c62f8c4155b1d79aaa744696ae8947f7f",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/context_help/handoff.asm": "806c2aeb76eea2106cfe298d7fa6598896b49b755c1191753c526b356cd840db",
+    "reconstruction/program_exec/strcpy.asm": "4c2420d76d56a852b2ff6bb2ebfbf567b082c6880b2bd715f698ebd2d9941299",
+    "reconstruction/program_exec/get_ds.asm": "c98c2d6535c41beae3d72fd3b0686a588bc5c10fb904a632688456d5ddc675c2",
+    "src/help/parent.c": "86d2b5780894211f3099f3f36b545b62d1c3061af2f821a815b37a72ac191ad1",
+    "src/help/parent.h": "51c7a61f322ee752aabf1316385f139f1bf2f87e6196aea9ed6fdc511b6cd5f9",
+    "src/help/parent_dos.c": "82c043fd21b0c678b11b84c72d37ad16793a2d56b68a015f6acfa4b66686786d"
+  },
+  "products": {
+    "CONTEXT.EXE": "542b3fdbc43d6f8db01db0a3e091852c9e7eace1d6f9d09257ffcf1447dd6ded",
+    "HLPPROBE.EXE": "f3db6737548110554c35846b5cca4f088462368f0687dc3b94ccd8acfc7da71b",
+    "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+  },
+  "host": {
+    "passed": true,
+    "cases": 353,
+    "read_failures": 29,
+    "sources": {
+      "src/help/parent.c": "86d2b5780894211f3099f3f36b545b62d1c3061af2f821a815b37a72ac191ad1",
+      "src/help/parent.h": "51c7a61f322ee752aabf1316385f139f1bf2f87e6196aea9ed6fdc511b6cd5f9",
+      "src/help/format.c": "a6f7585e56c793998f29047172929f8fb25e5ec424679524efcecb0f06a40571",
+      "src/help/format.h": "bf9c74896bcc57c935273f1315350193bc44df35b923f1c1078ed4ab55e70283",
+      "standalone/test_help_parent.py": "5167c40eaa113ea61971feab31a9ccbbaa543d3d9af38f66232079932970a920"
+    },
+    "library_sha256": "3446ded6a67e629ec681dc9c43af5cc187451567a1e7eb451ed05d15cc8fb5f7",
+    "scope": "Host-compiled admission core with explicit conventional-memory callback. Includes output nonpublication on all failures, ownership/bounds, parent above/below child, raw UI/context preservation, every read failure and changed identity/MCB/descriptor. Actual DOS backend is tested separately through EXEC; no full help UI or physical acceptance."
+  },
+  "dos": {
+    "passed": true,
+    "timed_out": false,
+    "checks": 231,
+    "products": {
+      "CONTEXT.EXE": "542b3fdbc43d6f8db01db0a3e091852c9e7eace1d6f9d09257ffcf1447dd6ded",
+      "HLPPROBE.EXE": "f3db6737548110554c35846b5cca4f088462368f0687dc3b94ccd8acfc7da71b",
+      "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+    },
+    "manifest_sha256": "ea5b79aec47107144ab36f4caf04c89b2c98b60c58ebe62e2599ea511ff3501c",
+    "checker_sha256": "487cf13e8b9cb45c8d856a970d7b1ff9fa6f0fd2e81a3805e5eb932eda3bd95b",
+    "artifacts": {
+      "CONTEXT.EXE": "542b3fdbc43d6f8db01db0a3e091852c9e7eace1d6f9d09257ffcf1447dd6ded",
+      "HLPPROBE.EXE": "f3db6737548110554c35846b5cca4f088462368f0687dc3b94ccd8acfc7da71b",
+      "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3",
+      "manifest.json": "ea5b79aec47107144ab36f4caf04c89b2c98b60c58ebe62e2599ea511ff3501c",
+      "checker.py": "487cf13e8b9cb45c8d856a970d7b1ff9fa6f0fd2e81a3805e5eb932eda3bd95b",
+      "RUN.BAT": "71cbdec99ea76db251db6a61ed7c3ca5634c64d86ecaac55757aa1bafdb9bfee",
+      "dosbox.conf": "64e2e1786e3c3136cc6b11fbc56be00a7d783532e8d15fc4a5ee6af86197f5a0",
+      "dosbox.log": "77ce6cf8e2921e7c5e1fac7c0e5ac799ebfec48305d379d06b35b54a624bd24d",
+      "CHECKS.TXT": "a0cd8cbb9ff026ae58f8e7f6a4cbd708c79865684bd63337cabd0bc7d067784a",
+      "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c"
+    },
+    "scope": "Exact native descriptor producer with real recovered strcpy/getDS. Diagnostic resolver/CRT formatter/spawn boundary and controlled source child exercise actual DOS foreign-memory transfer and authored HLP reading; no full native PROGRAM controller, production PCHELP, UI or UART integration. Parent admission verifies actual child/parent PSP, parent main-block MCB ownership and bounded descriptor/path/title spans before consuming memory or opening files; seven additional actual DOS negative requests."
+  },
+  "cpu": {
+    "passed": true,
+    "cases": 1728,
+    "original_comparisons": 1728,
+    "checker_sha256": "7c52c3040c011f15c68b559382fe517e05e53de5ad30e6e391d84c7b9d9e6fa4",
+    "manifest_sha256": "ea5b79aec47107144ab36f4caf04c89b2c98b60c58ebe62e2599ea511ff3501c",
+    "scope": "Actual132-byte producer,50-byte strcpy and3-byte getDS. Resolver, formatter and PROGRAM are modeled boundaries; no original executable or analysis image executed. Native unbounded path copy tested only through65 chars. No production help UI, UART or physical acceptance."
+  },
+  "cold": {
+    "passed": true,
+    "source_files": 19,
+    "source_sha256": {
+      "reconstruction/context_help/handoff.asm": "806c2aeb76eea2106cfe298d7fa6598896b49b755c1191753c526b356cd840db",
+      "reconstruction/context_help/provenance.json": "530cdc1e8a6c9ff0257c156749e73c0b2aa566a314f01e99bc7c7b38a5f3d0e0",
+      "reconstruction/program_exec/get_ds.asm": "c98c2d6535c41beae3d72fd3b0686a588bc5c10fb904a632688456d5ddc675c2",
+      "reconstruction/program_exec/provenance.json": "dea1a491c50dcbfdd28ac810ff17857c62f8c4155b1d79aaa744696ae8947f7f",
+      "reconstruction/program_exec/strcpy.asm": "4c2420d76d56a852b2ff6bb2ebfbf567b082c6880b2bd715f698ebd2d9941299",
+      "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+      "src/help/format.c": "a6f7585e56c793998f29047172929f8fb25e5ec424679524efcecb0f06a40571",
+      "src/help/format.h": "bf9c74896bcc57c935273f1315350193bc44df35b923f1c1078ed4ab55e70283",
+      "src/help/parent.c": "86d2b5780894211f3099f3f36b545b62d1c3061af2f821a815b37a72ac191ad1",
+      "src/help/parent.h": "51c7a61f322ee752aabf1316385f139f1bf2f87e6196aea9ed6fdc511b6cd5f9",
+      "src/help/parent_dos.c": "82c043fd21b0c678b11b84c72d37ad16793a2d56b68a015f6acfa4b66686786d",
+      "standalone/build_context_help.py": "6764f8b4529ebea9dbccc96b213587701bf223dbbcfd73a993943c9e5d0a69bb",
+      "standalone/check_context_help.py": "7c52c3040c011f15c68b559382fe517e05e53de5ad30e6e391d84c7b9d9e6fa4",
+      "standalone/context_help_child.c": "0f7e5dc82faabce7ae048eae3f273a9bfc7d8bd4c2f94d6d8f8684ec7486c9b9",
+      "standalone/context_help_parent.c": "99f1a93eb6816e5e2500a6c1aa87e19deb4cc1b7ae3054ffc742a77af7714a81",
+      "standalone/context_help_state.asm": "e358785a797828ffbc686efa54cde1e076e583bd4f76ba9ad5011f28b6cc0d8e",
+      "standalone/test_context_help_cold.py": "44da42325f130b611f81a4decd07473609dcb102c850976f4da019f5cdee8e80",
+      "standalone/test_context_help_dos.py": "487cf13e8b9cb45c8d856a970d7b1ff9fa6f0fd2e81a3805e5eb932eda3bd95b",
+      "standalone/test_help_parent.py": "5167c40eaa113ea61971feab31a9ccbbaa543d3d9af38f66232079932970a920"
+    },
+    "products": {
+      "CONTEXT.EXE": "542b3fdbc43d6f8db01db0a3e091852c9e7eace1d6f9d09257ffcf1447dd6ded",
+      "HLPPROBE.EXE": "f3db6737548110554c35846b5cca4f088462368f0687dc3b94ccd8acfc7da71b",
+      "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+    },
+    "manifest_sha256": "ea5b79aec47107144ab36f4caf04c89b2c98b60c58ebe62e2599ea511ff3501c",
+    "cpu": {
+      "passed": true,
+      "cases": 1728,
+      "original_comparisons": 0,
+      "checker_sha256": "7c52c3040c011f15c68b559382fe517e05e53de5ad30e6e391d84c7b9d9e6fa4",
+      "manifest_sha256": "ea5b79aec47107144ab36f4caf04c89b2c98b60c58ebe62e2599ea511ff3501c",
+      "scope": "Actual132-byte producer,50-byte strcpy and3-byte getDS. Resolver, formatter and PROGRAM are modeled boundaries; no original executable or analysis image executed. Native unbounded path copy tested only through65 chars. No production help UI, UART or physical acceptance."
+    },
+    "dos": {
+      "passed": true,
+      "timed_out": false,
+      "checks": 231,
+      "products": {
+        "CONTEXT.EXE": "542b3fdbc43d6f8db01db0a3e091852c9e7eace1d6f9d09257ffcf1447dd6ded",
+        "HLPPROBE.EXE": "f3db6737548110554c35846b5cca4f088462368f0687dc3b94ccd8acfc7da71b",
+        "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+      },
+      "manifest_sha256": "ea5b79aec47107144ab36f4caf04c89b2c98b60c58ebe62e2599ea511ff3501c",
+      "checker_sha256": "487cf13e8b9cb45c8d856a970d7b1ff9fa6f0fd2e81a3805e5eb932eda3bd95b",
+      "artifacts": {
+        "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+        "CHECKS.TXT": "a0cd8cbb9ff026ae58f8e7f6a4cbd708c79865684bd63337cabd0bc7d067784a",
+        "dosbox.log": "7313a6fb1bc85928595ffe1981becdcd561d7db989ba1e3738b1efa20ba32517",
+        "dosbox.conf": "c90baf0f87a7f12ef1e5268f61f5730499dc7784c20fe8b1ce820327e4f24b18",
+        "RUN.BAT": "71cbdec99ea76db251db6a61ed7c3ca5634c64d86ecaac55757aa1bafdb9bfee",
+        "checker.py": "487cf13e8b9cb45c8d856a970d7b1ff9fa6f0fd2e81a3805e5eb932eda3bd95b",
+        "manifest.json": "ea5b79aec47107144ab36f4caf04c89b2c98b60c58ebe62e2599ea511ff3501c",
+        "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3",
+        "HLPPROBE.EXE": "f3db6737548110554c35846b5cca4f088462368f0687dc3b94ccd8acfc7da71b",
+        "CONTEXT.EXE": "542b3fdbc43d6f8db01db0a3e091852c9e7eace1d6f9d09257ffcf1447dd6ded"
+      },
+      "scope": "Exact native descriptor producer with real recovered strcpy/getDS. Diagnostic resolver/CRT formatter/spawn boundary and controlled source child exercise actual DOS foreign-memory transfer and authored HLP reading; no full native PROGRAM controller, production PCHELP, UI or UART integration. Parent admission verifies actual child/parent PSP, parent main-block MCB ownership and bounded descriptor/path/title spans before consuming memory or opening files; seven additional actual DOS negative requests."
+    },
+    "admission": {
+      "passed": true,
+      "cases": 353,
+      "read_failures": 29,
+      "sources": {
+        "src/help/parent.c": "86d2b5780894211f3099f3f36b545b62d1c3061af2f821a815b37a72ac191ad1",
+        "src/help/parent.h": "51c7a61f322ee752aabf1316385f139f1bf2f87e6196aea9ed6fdc511b6cd5f9",
+        "src/help/format.c": "a6f7585e56c793998f29047172929f8fb25e5ec424679524efcecb0f06a40571",
+        "src/help/format.h": "bf9c74896bcc57c935273f1315350193bc44df35b923f1c1078ed4ab55e70283",
+        "standalone/test_help_parent.py": "5167c40eaa113ea61971feab31a9ccbbaa543d3d9af38f66232079932970a920"
+      },
+      "library_sha256": "3446ded6a67e629ec681dc9c43af5cc187451567a1e7eb451ed05d15cc8fb5f7",
+      "scope": "Host-compiled admission core with explicit conventional-memory callback. Includes output nonpublication on all failures, ownership/bounds, parent above/below child, raw UI/context preservation, every read failure and changed identity/MCB/descriptor. Actual DOS backend is tested separately through EXEC; no full help UI or physical acceptance."
+    },
+    "scope": "Isolated public source tree with pinned toolchain inherited from caller; no original binaries, HLP, configurations, analysis artifacts or prior objects copied. Exact products and manifest reproduced, then source CPU and DOS EXEC tests rerun."
+  },
+  "cold_receipt_sha256": "10290b067b67aab96990fdd7b0b1060533451e76b898e219e537e6746b58c23d",
+  "control": {
+    "products": {
+      "CONTEXT.EXE": "4053cf5c253af795d76084ccc07ffd0f8507bbe4e5852210517db2ec6fa65813",
+      "HLPPROBE.EXE": "fb94998343d3a338764936d2bb4bd5717d7e1ecfc6e0396564a11b014a810ab1",
+      "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+    },
+    "dos": {
+      "passed": true,
+      "timed_out": false,
+      "checks": 182,
+      "products": {
+        "CONTEXT.EXE": "4053cf5c253af795d76084ccc07ffd0f8507bbe4e5852210517db2ec6fa65813",
+        "HLPPROBE.EXE": "fb94998343d3a338764936d2bb4bd5717d7e1ecfc6e0396564a11b014a810ab1",
+        "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3"
+      },
+      "manifest_sha256": "4203b91809c847e30ffe0843995cc4ce78a239a8622e59b2c6e85a56966cdff5",
+      "checker_sha256": "487cf13e8b9cb45c8d856a970d7b1ff9fa6f0fd2e81a3805e5eb932eda3bd95b",
+      "artifacts": {
+        "CONTEXT.EXE": "4053cf5c253af795d76084ccc07ffd0f8507bbe4e5852210517db2ec6fa65813",
+        "HLPPROBE.EXE": "fb94998343d3a338764936d2bb4bd5717d7e1ecfc6e0396564a11b014a810ab1",
+        "HELP.HLP": "5ec7a3bb90271985e9d5126afbd82237a9a8e87fec28dc3d0cd566fc6522d4d3",
+        "manifest.json": "4203b91809c847e30ffe0843995cc4ce78a239a8622e59b2c6e85a56966cdff5",
+        "checker.py": "487cf13e8b9cb45c8d856a970d7b1ff9fa6f0fd2e81a3805e5eb932eda3bd95b",
+        "RUN.BAT": "71cbdec99ea76db251db6a61ed7c3ca5634c64d86ecaac55757aa1bafdb9bfee",
+        "dosbox.conf": "c32f4a944036c9292fc8da272cb17618cc69175ee706e336c133e03a1e4a6e69",
+        "dosbox.log": "1403112d04b890dab6eccb5c21dcb9454c0a77dbef0fd14fc61abba3fa0c0e5d",
+        "CHECKS.TXT": "5257d3b4cfcf7bd4df80d02395ba780691c70210fc24c7c05b513fefbc7af94e",
+        "RESULT.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c"
+      },
+      "scope": "Exact native descriptor producer with real recovered strcpy/getDS. Diagnostic resolver/CRT formatter/spawn boundary and controlled source child exercise actual DOS foreign-memory transfer and authored HLP reading; no full native PROGRAM controller, production PCHELP, UI or UART integration."
+    },
+    "old_parent_sha256": "06ede2fc09da8fd7733675b789a715f9a9526ffa5425468ae964fecd735c5e74",
+    "parent_bytes": 18640,
+    "diagnostic_line_constant_differences": [
+      {
+        "file_offset": 131,
+        "old": 23,
+        "new": 27
+      },
+      {
+        "file_offset": 211,
+        "old": 29,
+        "new": 33
+      },
+      {
+        "file_offset": 245,
+        "old": 29,
+        "new": 33
+      },
+      {
+        "file_offset": 282,
+        "old": 29,
+        "new": 33
+      },
+      {
+        "file_offset": 322,
+        "old": 30,
+        "new": 34
+      },
+      {
+        "file_offset": 415,
+        "old": 36,
+        "new": 56
+      },
+      {
+        "file_offset": 463,
+        "old": 37,
+        "new": 57
+      },
+      {
+        "file_offset": 504,
+        "old": 37,
+        "new": 57
+      },
+      {
+        "file_offset": 545,
+        "old": 37,
+        "new": 57
+      },
+      {
+        "file_offset": 586,
+        "old": 38,
+        "new": 58
+      },
+      {
+        "file_offset": 627,
+        "old": 38,
+        "new": 58
+      },
+      {
+        "file_offset": 659,
+        "old": 38,
+        "new": 58
+      },
+      {
+        "file_offset": 690,
+        "old": 38,
+        "new": 58
+      },
+      {
+        "file_offset": 730,
+        "old": 39,
+        "new": 59
+      },
+      {
+        "file_offset": 774,
+        "old": 39,
+        "new": 59
+      },
+      {
+        "file_offset": 807,
+        "old": 40,
+        "new": 60
+      },
+      {
+        "file_offset": 836,
+        "old": 41,
+        "new": 61
+      },
+      {
+        "file_offset": 867,
+        "old": 41,
+        "new": 61
+      },
+      {
+        "file_offset": 943,
+        "old": 42,
+        "new": 62
+      },
+      {
+        "file_offset": 987,
+        "old": 43,
+        "new": 63
+      },
+      {
+        "file_offset": 1035,
+        "old": 44,
+        "new": 64
+      },
+      {
+        "file_offset": 1155,
+        "old": 53,
+        "new": 73
+      },
+      {
+        "file_offset": 1193,
+        "old": 55,
+        "new": 75
+      },
+      {
+        "file_offset": 1225,
+        "old": 55,
+        "new": 75
+      },
+      {
+        "file_offset": 1277,
+        "old": 56,
+        "new": 76
+      },
+      {
+        "file_offset": 1329,
+        "old": 57,
+        "new": 77
+      },
+      {
+        "file_offset": 1381,
+        "old": 58,
+        "new": 78
+      },
+      {
+        "file_offset": 1418,
+        "old": 59,
+        "new": 79
+      }
+    ],
+    "helper_and_hlp_identical": true
+  },
+  "rea": {
+    "original_helper_sha256": "5d135afc5808ddec923ec027f385490c7ecd4fa5004d11cefe6ff4a3c468d0aa",
+    "session_closed": true,
+    "snapshot_sha256": "6b691dfd348f1a9e71b4e2a39fbdd954d33edaac26ac3817f42647dd8e22b0a4",
+    "geometry": "ev_b78ed4469ae3aeeb408c78484e237309d19077d36598cb67a6f096fea08f255b",
+    "topics": "ev_ea8e1cb68c1ceea5221f7a9348d63f30488d1dca84873ebd55146f11299a9604",
+    "new_search": "ev_ba0c2efe2ec4756766c17d34543e906ef52f1fdba17d209c1b9c0ae99072f498",
+    "search": "ev_53e67ad400113feaf0d4d4a5845f82722ff86d2dd041251817b807a7cb862a69",
+    "search_branch_assembly": "ev_078353ff16cf2070f5568f739494720151e810763bc01da285aae1687498dad6"
+  },
+  "prior_failures": [
+    {
+      "attempt": "build/help-parent-core-first-20261106",
+      "reason": "Host unsigned is wider than DOS unsigned; offset extraction needed explicit FFFF mask."
+    },
+    {
+      "attempt": "build/help-parent-core-reviewed-20261106",
+      "reason": "Negative fixture moved modeled DS without supplying its valid path; fixed fixture to reach intended title boundary."
+    }
+  ]
+}

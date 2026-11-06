@@ -12,6 +12,10 @@ extern char help_probe_title[];
 static unsigned calls,resolutions,failures,checks;
 static unsigned long expected_pointer;
 static char resolved[66];
+#ifdef HELP_PARENT_ADMISSION
+static unsigned admission_fault;
+static char bad_path[81],bad_title[31];
+#endif
 int __cdecl help_probe_format(char *out,const char *format,unsigned long pointer)
 {
  return sprintf(out,format,pointer);
@@ -28,6 +32,22 @@ unsigned __cdecl help_probe_execute(const char *exe,const char *tail,unsigned a,
  unsigned long pointer=0;
  CHECK(a==0&&b==0&&c==0);CHECK(!strcmp(exe,"HLPPROBE.EXE"));CHECK(!strncmp(tail," PCHELP ",8));
  CHECK(help_pointer_parse(tail+8,&pointer)==HELP_OK);expected_pointer=pointer;++calls;
+#ifdef HELP_PARENT_ADMISSION
+ if(admission_fault){
+  unsigned __far *raw=MK_FP((unsigned)(pointer>>16),(unsigned)pointer);
+  unsigned path=raw[0],title=raw[1],status;char decimal[12];union REGS r;
+  if(admission_fault==1)raw[0]=0;
+  if(admission_fault==2)raw[0]=0xffff;
+  if(admission_fault==3)raw[1]=0xffff;
+  if(admission_fault==4){memset(bad_path,'X',sizeof(bad_path));raw[0]=(unsigned)bad_path;}
+  if(admission_fault==5){memset(bad_title,'T',sizeof(bad_title));raw[1]=(unsigned)bad_title;}
+  if(admission_fault==6){r.h.ah=0x51;int86(0x21,&r,&r);pointer=(unsigned long)r.x.bx<<16|0x16;}
+  if(admission_fault==7)pointer=(pointer&0xffff0000UL)|0xffffUL;
+  sprintf(decimal,"%lu",pointer);
+  status=(unsigned)spawnl(P_WAIT,exe,exe,"PCHELP",decimal,(char *)0);
+  raw[0]=path;raw[1]=title;return status;
+ }
+#endif
  return (unsigned)spawnl(P_WAIT,exe,exe,"PCHELP",tail+8,(char *)0);
 }
 static void record(void)
@@ -57,6 +77,14 @@ int main(void)
  CHECK(spawnl(P_WAIT,"HLPPROBE.EXE","HLPPROBE.EXE","PCHELP","65536",(char *)0)==5);
  CHECK(spawnl(P_WAIT,"HLPPROBE.EXE","HLPPROBE.EXE","PCHELP","4294967296",(char *)0)==4);
  {FILE *f=fopen("HLPREC.BIN","rb");CHECK(!f);if(f)fclose(f);}
+#ifdef HELP_PARENT_ADMISSION
+ for(i=1;i<=7;++i){
+  FILE *f;admission_fault=i;CHECK(help_probe_invoke()==(i==7?4:5));
+  f=fopen("HLPREC.BIN","rb");CHECK(!f);if(f)fclose(f);
+ }
+ printf("CONTEXT checks=%u errors=%u children=8 invalid=10 admission=1\n",checks,failures);
+#else
  printf("CONTEXT checks=%u errors=%u children=8 invalid=3\n",checks,failures);
+#endif
  return failures?1:0;
 }
