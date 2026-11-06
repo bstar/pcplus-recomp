@@ -25,9 +25,11 @@ def main():
     parser.add_argument('--exit-watch-high',action='store_true',help='Require the passive observer to reside in UMB')
     parser.add_argument('--cpu',choices=['8086','386'],default='8086')
     parser.add_argument('--program-result-probe',action='store_true',help='Explicitly admit only the marked PROGRAM-result diagnostic interpreter')
+    parser.add_argument('--inner-screen',action='store_true',help='Passive pre/post inner screen witness; requires graphics child and386/UMB observer')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
     assert not args.exit_watch_high or args.exit_watch
+    assert not args.inner_screen or (args.nested_graphics and args.cpu=='386' and not args.exit_watch)
     binary, runner, out = args.terminal.resolve(), args.runner.resolve(), args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     sources = {}
@@ -97,11 +99,48 @@ message: db 'CHILD|'
 '''
         if args.nested_graphics:
             child_source=child_source.replace(' mov ax,0x4c00',' mov ax,0x0013\n int 0x10\n mov ax,0x4c00',1)
+        if args.inner_screen:
+            child_source=child_source.replace(' mov ax,0x4c00', ''' mov ah,0x0f
+ int 0x10
+ mov [mode],al
+ mov dx,mode_name
+ mov ax,0x3d02
+ int 0x21
+ jnc mode_opened
+ cmp ax,2
+ jne failed
+ xor cx,cx
+ mov ah,0x3c
+ int 0x21
+ jc failed
+mode_opened:
+ mov bx,ax
+ xor cx,cx
+ xor dx,dx
+ mov ax,0x4202
+ int 0x21
+ jc failed
+ mov dx,mode
+ mov cx,1
+ mov ah,0x40
+ int 0x21
+ jc failed
+ cmp ax,1
+ jne failed
+ mov ah,0x3e
+ int 0x21
+ jc failed
+ mov ax,0x4c00''',1)
+            child_source+="\nmode: db 0\nmode_name: db 'D:\\CHMODE.BIN',0\n"
         child.write_text(child_source)
         subprocess.run(['nasm','-fbin',str(child),'-o',str(out/'NEST.COM')],check=True)
         files['NEST.COM']=(out/'NEST.COM').read_bytes()
         option='' if args.nested_graphics else ' NOCLEAR'
         first=first.replace('proc main\n','proc main\nrun "D:\\NEST.COM"'+option+'\n',1)
+        if args.inner_screen:
+            before='fopen 0 "D:\\FPRE.TXT" "wb"\nif failure\nexit\nendif\nfclose 0\n'
+            after=before.replace('FPRE.TXT','FPST.TXT')
+            first=first.replace('run "D:\\NEST.COM"\n',before+'run "D:\\NEST.COM"\n'+after,1)
     keys = bytearray(actions(b'D:\\FIRST.ASX', 0))
     for i, (name, text) in enumerate([('FIRST', first), ('SIX', six), ('MISSING', missing)]):
         path = ('D:\\' + name + '.ASX').encode()
@@ -113,6 +152,10 @@ message: db 'CHILD|'
         import aspect_exit_watch
         sources.update(aspect_exit_watch.build(binary,runner,out/'EWATCH.COM'))
         files['EWATCH.COM']=(out/'EWATCH.COM').read_bytes()
+    if args.inner_screen:
+        import snapshot_screen_watch
+        sources.update(snapshot_screen_watch.build(binary,runner,out/'SSWATCH.COM',5))
+        files['SSWATCH.COM']=(out/'SSWATCH.COM').read_bytes()
     settings = bytearray(prm(port=3, baud=5))
     for offset, value in [(0x188,5),(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),
                           (0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)]:
@@ -123,7 +166,8 @@ message: db 'CHILD|'
         'p900 enter p3500 a-1 p1300 a-2 p1300 a-3 p1300 a-1 p1300 r e a d y enter p700 a-x',
         prm=bytes(settings), arguments='@TEST.PRM /T:D:\\ACTIONS.KEY /D:CaseTest:23',
         com=3, irq=5, cpu=args.cpu, working_drive='d', timeout=30, files=files,
-        observer='EWATCH' if args.exit_watch else None,observer_high=args.exit_watch_high)
+        observer='SSWATCH' if args.inner_screen else 'EWATCH' if args.exit_watch else None,
+        observer_high=args.exit_watch_high or args.inner_screen)
     drive = ROOT / 'build/connection-dos' / label
     wire = (drive / 'serial.bin').read_bytes()
     checks = dict(result['checks'], four_calls=wire.count(b'FIRSTOK\r') == 2,
@@ -155,6 +199,12 @@ message: db 'CHILD|'
         report['exit_watch_high']=args.exit_watch_high
         assert not args.exit_watch_high or report['exit_watch']['resident_segment']>=0xa000
         report['scope']+=' Passive exit observer adds resident memory; diagnostic run, not an unobserved capacity proof.'
+    if args.inner_screen:
+        report['inner_screen']=snapshot_screen_watch.verify(drive/'SSCREEN.BIN')
+        checks['child_observed_graphics_mode']=(drive/'CHMODE.BIN').read_bytes()==b'\x13\x13'
+        checks['marker_files_created']=all((drive/n).exists() and (drive/n).stat().st_size==0 for n in ['FPRE.TXT','FPST.TXT'])
+        report['passed']=all(checks.values())
+        report['scope']+=' Separate386/XMS/UMB passive full inner screen/cursor witness and child-reported BIOS graphics mode; no physical timing claim.'
     (out / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
     print({k:v for k,v in checks.items() if not v})
     assert report['passed']
