@@ -5,6 +5,12 @@ CPU 8086
 ORG 0x100
 jmp start
 old21: dd 0
+%ifdef WAIT_WATCH
+old16: dd 0
+wait_data: dw 0x5716,1,0
+wait_records: times 8*10 dw 0
+wait_current: dw 0
+%endif
 parent_ds: dw 0
 data: dw 0xae51,2,0,0,0
 records: times 8*13 dw 0
@@ -241,6 +247,97 @@ hook:
  pop ax
  popf
  jmp far [cs:old21]
+%ifdef WAIT_WATCH
+; Observe only actual BIOS blocking reads from the attached PROGRAM WAIT owner.
+; The original BIOS supplies the key. No key injection, DOS calls or product writes.
+hook16:
+ pushf
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push bp
+ push ds
+ push es
+ cmp ah,0
+ jne .chain
+ cmp word [cs:parent_ds],0
+ je .chain
+ mov bx,[cs:parent_ds]
+ sub bx,PARENT_DATA_SEG
+ add bx,PARENT_RENDER_SEG
+ mov es,bx
+ mov bx,[es:PARENT_CHILD_DS]
+ mov cx,ds
+ cmp cx,bx
+ jne .chain
+ mov bx,ss
+ cmp bx,cx
+ jne .chain
+ cmp word [CHILD_WAITING],1
+ jne .chain
+ mov di,[cs:wait_data+4]
+ cmp di,8
+ jae .chain
+ inc word [cs:wait_data+4]
+ mov bx,di
+ shl di,1
+ shl di,1
+ add di,bx
+ shl di,1
+ shl di,1
+ add di,wait_records
+ mov [cs:wait_current],di
+ mov [cs:di],ds
+ mov [cs:di+2],ss
+ mov ax,[es:PARENT_PROGRAM]
+ mov [cs:di+4],ax
+ mov ax,[es:PARENT_SNAPSHOT]
+ mov [cs:di+6],ax
+ mov ax,[CHILD_WAITING]
+ mov [cs:di+8],ax
+ mov ax,[CHILD_DISPLAY]
+ mov [cs:di+10],ax
+ mov ax,[CHILD_BUSY]
+ mov [cs:di+12],ax
+ mov ax,[CHILD_SERIAL]
+ mov [cs:di+14],ax
+ mov ax,[CHILD_DETACHED]
+ mov [cs:di+16],ax
+ pop es
+ pop ds
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ popf
+ pushf
+ call far [cs:old16]
+ pushf
+ push bx
+ mov bx,[cs:wait_current]
+ mov [cs:bx+18],ax
+ pop bx
+ popf
+ iret
+.chain:
+ pop es
+ pop ds
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ popf
+ jmp far [cs:old16]
+%endif
 resident_end:
 start:
  mov ax,0x3521
@@ -250,6 +347,15 @@ start:
  mov [old21],bx
  mov [old21+2],es
  mov [data+8],cs
+%ifdef WAIT_WATCH
+ mov ax,0x3516
+ int 0x21
+ mov [old16],bx
+ mov [old16+2],es
+ mov dx,hook16
+ mov ax,0x2516
+ int 0x21
+%endif
  mov dx,hook
  mov ax,0x2521
  int 0x21
@@ -261,6 +367,21 @@ collect:
  jne failed
  cmp word [es:data],0xae51
  jne failed
+%ifdef WAIT_WATCH
+ push es
+ mov ax,0x3516
+ int 0x21
+ cmp bx,hook16
+ jne failed
+ pop es
+ mov dx,[es:old16]
+ mov ax,[es:old16+2]
+ push ds
+ mov ds,ax
+ mov ax,0x2516
+ int 0x21
+ pop ds
+%endif
  mov dx,[es:old21]
  mov ax,[es:old21+2]
  push ds
@@ -312,9 +433,34 @@ collect:
  mov ah,0x3e
  int 0x21
  jc failed
+%ifdef WAIT_WATCH
+ mov dx,wait_filename
+ xor cx,cx
+ mov ah,0x3c
+ int 0x21
+ jc failed
+ mov bx,ax
+ push ds
+ push es
+ pop ds
+ mov dx,wait_data
+ mov cx,6+8*20
+ mov ah,0x40
+ int 0x21
+ pop ds
+ jc failed
+ cmp ax,6+8*20
+ jne failed
+ mov ah,0x3e
+ int 0x21
+ jc failed
+%endif
  mov ax,0x4c00
  int 0x21
 failed:
  mov ax,0x4c01
  int 0x21
 filename: db 'D:\EXITSTAT.BIN',0
+%ifdef WAIT_WATCH
+wait_filename: db 'D:\WAITSTAT.BIN',0
+%endif

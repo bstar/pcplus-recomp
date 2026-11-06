@@ -21,6 +21,7 @@ def main():
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--nested-program',action='store_true',help='Run an actual DOS child twice around the six-stream and missing-file cases')
     parser.add_argument('--nested-graphics',action='store_true',help='Use default SAVE and let each child leave BIOS mode13h active')
+    parser.add_argument('--nested-wait',choices=['space','escape'],help='Real PROGRAM WAIT continued by this BIOS key; Escape is a continue key, not script cancellation')
     parser.add_argument('--exit-watch',action='store_true',help='Install a small passive diagnostic TSR; separate memory footprint from ordinary acceptance')
     parser.add_argument('--exit-watch-high',action='store_true',help='Require the passive observer to reside in UMB')
     parser.add_argument('--cpu',choices=['8086','386'],default='8086')
@@ -31,6 +32,7 @@ def main():
     parser.add_argument('--lease-fault-kind',choices=['divide','abort','dispatcher'],default='divide')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
+    if args.nested_wait:assert args.nested_graphics and not args.lease_fault_phase and not args.inner_screen
     assert not args.exit_watch_high or args.exit_watch
     assert not args.inner_screen or (args.nested_graphics and args.cpu=='386' and not args.exit_watch)
     if args.lease_fault_phase:assert args.nested_graphics and args.program_result_probe and args.exit_watch and args.exit_watch_high and args.cpu=='386'
@@ -145,6 +147,7 @@ mode_opened:
         subprocess.run(['nasm','-fbin',str(child),'-o',str(out/'NEST.COM')],check=True)
         files['NEST.COM']=(out/'NEST.COM').read_bytes()
         option='' if args.nested_graphics else ' NOCLEAR'
+        if args.nested_wait:option+=' WAIT'
         first=first.replace('proc main\n','proc main\nrun "D:\\NEST.COM"'+option+'\n',1)
         if args.inner_screen:
             before='fopen 0 "D:\\FPRE.TXT" "wb"\nif failure\nexit\nendif\nfclose 0\n'
@@ -163,7 +166,7 @@ mode_opened:
     files['ACTIONS.KEY'] = bytes(keys)
     if args.exit_watch:
         import aspect_exit_watch
-        sources.update(aspect_exit_watch.build(binary,runner,out/'EWATCH.COM'))
+        sources.update(aspect_exit_watch.build(binary,runner,out/'EWATCH.COM',wait=bool(args.nested_wait)))
         files['EWATCH.COM']=(out/'EWATCH.COM').read_bytes()
     if args.inner_screen:
         import snapshot_screen_watch
@@ -177,6 +180,8 @@ mode_opened:
     label = out.name
     schedule='p900 enter p3500 a-1 p1300 a-2 p1300 a-3 p1300 a-1 p1300 r e a d y enter p700 a-x'
     if args.lease_fault_phase:schedule=schedule.replace('a-3 p1300 a-1','a-3 p1300 a-4')
+    if args.nested_wait:
+        schedule=schedule.replace('a-1 p1300',f'a-1 p700 {args.nested_wait} p600')
     result = harness.run(label, 'success',
         schedule,
         prm=bytes(settings), arguments='@TEST.PRM /T:D:\\ACTIONS.KEY /D:CaseTest:23',
@@ -224,6 +229,21 @@ mode_opened:
         report['exit_watch_high']=args.exit_watch_high
         assert not args.exit_watch_high or report['exit_watch']['resident_segment']>=0xa000
         report['scope']+=' Passive exit observer adds resident memory; diagnostic run, not an unobserved capacity proof.'
+        if args.nested_wait:
+            records=aspect_exit_watch.read_wait(drive/'WAITSTAT.BIN')
+            key=0x3920 if args.nested_wait=='space' else 0x011b
+            checks['two_real_owned_WAIT_reads']=len(records)==2 and all(
+                r['ds']==r['ss'] and r['ds']!=0 and r['parent_program']==2 and
+                r['parent_snapshot']==r['waiting']==r['display_owned']==r['program_busy']==r['serial_active']==1 and
+                r['serial_detached']==0 and r['key']==key for r in records)
+            checks['all_WAIT_exits_clean']=len(report['exit_watch']['exits'])==4 and all(
+                e[k]==0 for e in report['exit_watch']['exits'] for k in
+                ['error','cleanup_error','external_scope','display_owned','program_busy','process_busy'])
+            report['wait_reads']=records
+            report['passed']=all(checks.values())
+    if args.nested_wait:
+        report['nested_wait']=args.nested_wait
+        report['scope']+=' PROGRAM WAIT consumes actual BIOS '+args.nested_wait+' after graphics return; this is not ASPECT cancellation.'
         if args.lease_fault_phase:
             exits=report['exit_watch']['exits'];probes=report['exit_watch']['program_results']
             expected_error=12 if args.lease_fault_kind=='divide' else 5

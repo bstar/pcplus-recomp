@@ -1,0 +1,113 @@
+{
+  "checkpoint_recorded": true,
+  "capability": 18,
+  "results": {
+    "space-8086": {
+      "path": "build/lease18-wait-space-8086-20261106/result.json",
+      "sha256": "418b8f5f717d2a44cf3b021a4a963e210958f8c5bd565e990a70e21c73b7a590",
+      "passed": true,
+      "cpu": "8086",
+      "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+      "child_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+      "wait_reads": []
+    },
+    "escape-8086": {
+      "path": "build/lease18-wait-escape-8086-20261106/result.json",
+      "sha256": "eac913b4194c63c735be4927b7576492c2d47232de52b589928b36ffbb43dc3e",
+      "passed": true,
+      "cpu": "8086",
+      "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+      "child_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+      "wait_reads": []
+    },
+    "space-observed": {
+      "path": "build/lease18-wait-space-observed-20261106/result.json",
+      "sha256": "83b1dec6be1a8b2750cdc5fffe8ce181e414e3516dac7f897ccb8956ce98eb13",
+      "passed": true,
+      "cpu": "386",
+      "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+      "child_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+      "wait_reads": [
+        {
+          "ds": 37318,
+          "ss": 37318,
+          "parent_program": 2,
+          "parent_snapshot": 1,
+          "waiting": 1,
+          "display_owned": 1,
+          "program_busy": 1,
+          "serial_active": 1,
+          "serial_detached": 0,
+          "key": 14624
+        },
+        {
+          "ds": 37318,
+          "ss": 37318,
+          "parent_program": 2,
+          "parent_snapshot": 1,
+          "waiting": 1,
+          "display_owned": 1,
+          "program_busy": 1,
+          "serial_active": 1,
+          "serial_detached": 0,
+          "key": 14624
+        }
+      ]
+    },
+    "escape-observed": {
+      "path": "build/lease18-wait-escape-observed-20261106/result.json",
+      "sha256": "7bd49804cdec07b354cbc7a25755437dbb996c6f0627f8707d09193db5686ddf",
+      "passed": true,
+      "cpu": "386",
+      "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+      "child_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+      "wait_reads": [
+        {
+          "ds": 37318,
+          "ss": 37318,
+          "parent_program": 2,
+          "parent_snapshot": 1,
+          "waiting": 1,
+          "display_owned": 1,
+          "program_busy": 1,
+          "serial_active": 1,
+          "serial_detached": 0,
+          "key": 283
+        },
+        {
+          "ds": 37318,
+          "ss": 37318,
+          "parent_program": 2,
+          "parent_snapshot": 1,
+          "waiting": 1,
+          "display_owned": 1,
+          "program_busy": 1,
+          "serial_active": 1,
+          "serial_detached": 0,
+          "key": 283
+        }
+      ]
+    },
+    "observer-abi": {
+      "path": "build/lease18-wait-observer-abi-20261106/result.json",
+      "sha256": "ba40302868c27cb92ead20da89d01cd20dc82aab813fa5f93e1744f5b3c64110",
+      "passed": true,
+      "case_count": 28
+    },
+    "exit-observer-abi": {
+      "path": "build/lease18-wait-exit-observer-abi-20261106/result.json",
+      "sha256": "98b19e31faef082fb16fe722474208f6546b1911a2a8d5f5dfba54c133cf9d8e",
+      "passed": true,
+      "case_count": 36
+    }
+  },
+  "application_binaries_changed": false,
+  "installed_candidate_changed": false,
+  "physical_runtime_verified": false,
+  "scope": "Two normal8086 unobserved and two separate386/UMB passively observed actual DOS PROGRAM SAVE/WAIT workflows, two child calls per session; Space and Escape continue WAIT. Not script cancellation or physical acceptance.",
+  "remaining": [
+    "WAIT transport failures and ASPECT cancellation",
+    "Larger rows and latest-pair BBS/transfer/carrier-loss",
+    "Packaging/deployment and physical acceptance"
+  ]
+}

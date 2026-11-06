@@ -97,7 +97,10 @@ Use `test_aspect_heap_startup_dos.py` with the same pair, `--nested-program
 
 ## Remaining release gates
 
-Further fault classes (typed abort, dispatcher unwind), WAIT/cancellation,
+Typed abort and direct dispatcher recovery now have separate evidence in
+[`SNAPSHOT_LEASE_FAULTS.md`](SNAPSHOT_LEASE_FAULTS.md). Ordinary PROGRAM WAIT,
+continued by Space or Escape, is covered in
+[`SNAPSHOT_LEASE_WAIT.md`](SNAPSHOT_LEASE_WAIT.md). Script cancellation,
 actual larger-row use,
 Enigma/Synchronet rendering/input and
 transfer/cancellation/carrier-loss regressions remain open for this exact pair.
