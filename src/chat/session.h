@@ -6,6 +6,9 @@ typedef struct chat_session {
     chat_owner send;
     chat_screen screen;
     chat_word rx_phase,rx_value,next_rx,fault;
+#ifdef CHAT_PRESENTATION
+    void CHAT_FAR *presentation;
+#endif
 } chat_session;
 /* Single foreground owner. Callbacks must be bounded, all-or-refuse, and must
  * not reenter or mutate this context. No live parent ownership is implied. */

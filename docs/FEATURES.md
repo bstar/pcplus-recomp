@@ -2356,6 +2356,15 @@ independent audits pass with idle captured owners at the browser read. The
 earlier miss is not reproduced or attributed; application behavior and the
 remaining foreground Chat/reliability/deployment gates are unchanged.
 
+The [loadable Chat presentation](CHAT_PRESENTATION.md) adds API0101/state362
+alongside the unchanged default API0100. Eight actual DOS8086 presentations
+cover all four row geometries, visible/hidden cursors, exact saved-screen and
+cursor restoration, rejected key/RX writes after a page change and refusal to
+unload before safe retirement. A clean 38-file source export reproduces the
+module and DOS host exactly. The default session regression and byte-identical
+`75c84373` parent still pass. Foreground entry/adapters, memory admission, final
+BBS and physical gates remain open; no deployment or reliability claim changes.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

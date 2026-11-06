@@ -69,9 +69,12 @@ unsigned CHAT_FAR __cdecl chat_module_call(chat_module_handle *h,chat_module_req
 {
     unsigned result;
     if(h->busy)return CHAT_MODULE_BAD;
-    if(!h->loaded || !r || r->api!=CHAT_MODULE_API || r->state!=h->state || r->operation>CHAT_MODULE_ABORT)return CHAT_MODULE_BAD;
+    if(!h->loaded || !r || r->api!=CHAT_MODULE_API || r->state!=h->state || r->operation>CHAT_MODULE_MAX_OPERATION)return CHAT_MODULE_BAD;
     h->busy=1;result=h->entry(r);h->busy=0;
     if(r->operation!=CHAT_MODULE_QUERY)h->active=h->state->send.active || h->state->screen.active;
+#ifdef CHAT_PRESENTATION
+    if(h->state->presentation)h->active=1;
+#endif
     return result;
 }
 unsigned CHAT_FAR __cdecl chat_module_unload(chat_module_handle *h)

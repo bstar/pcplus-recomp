@@ -89,6 +89,10 @@ memory corruption or every DOS I/O failure path.
 
 ## Parent work remains
 
+The later [presentation variant](CHAT_PRESENTATION.md) adds separately versioned
+physical screen/cursor save and restore without changing this default module.
+Its DOS lifecycle is verified; the parent frontend remains unbound.
+
 The mechanism avoids permanently linking the 3,338-byte module image. The
 1,328-byte loader bank still costs conventional memory; the selected parent has
 not been rebuilt with it. Fund that resident cost and prove the existing storage

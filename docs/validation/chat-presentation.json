@@ -1,0 +1,60 @@
+{
+  "status": "presentation-component-verified-parent-frontend-open",
+  "application_changed": false,
+  "physical_runtime_verified": false,
+  "full_candidate_acceptance": false,
+  "module_sha256": "f0e91e2b1aff29e466d68bbe7d1a267c57382126dce21b2c6759aff6ce31850f",
+  "module_file_bytes": 5120,
+  "module_image_bytes": 5072,
+  "api_version": 257,
+  "session_bytes": 362,
+  "context_bytes": 16,
+  "request_bytes": 50,
+  "module_window_bytes": 8192,
+  "module_DGROUP_bytes": 0,
+  "module_private_stack_bytes": 0,
+  "presentations": 8,
+  "geometries": [
+    25,
+    28,
+    43,
+    50
+  ],
+  "relocation_bases": 2,
+  "free_DOS_paragraphs": 0,
+  "geometry_retirement_refusals": 4,
+  "invalid_open_controls": 9,
+  "source_export_files": 38,
+  "unchanged_parent_sha256": "75c84373b57fe597248b35c9f103d9468a36b6d9a3c8853655d8b152e03cf76f",
+  "unchanged_default_module_sha256": "77270fb67a435c52ee0a61969cfbb68822ada57c3cdb56d6b3f7b66de84a63d2",
+  "reports": {
+    "DOS_presentation": {
+      "path": "build/chat-presentation-dos-v4-20261106/result.json",
+      "sha256": "297adb7dd27bb3ccb4072ae91d117d3863faf078f22e5536e9263f81b3903aac"
+    },
+    "cold_source": {
+      "path": "build/chat-presentation-source-proof-20261106/result.json",
+      "sha256": "5159ae2e63e23b51a6499a2b2fb76a1f47140fdf44a2dc2d64f89b7840889acf"
+    },
+    "default_DOS_regression": {
+      "path": "build/chat-presentation-default-reviewed-20261106/result.json",
+      "sha256": "d79c5bc36820924f2dc3fce3570625aed3cfd4f9af6eaa417d31e3b5bd044cf8"
+    },
+    "unchanged_parent": {
+      "path": "build/chat-presentation-parent-control-20261106/result.json",
+      "sha256": "3b6497e9f770eea7a53841556e893f3287fa2df0548562675731c2a8f5ab85b7"
+    },
+    "tested_default_loader_binding": {
+      "path": "build/chat-presentation-loader-binding-20261106/result.json",
+      "sha256": "4d90fa64c919e1624ae894483fc2e43fae82bb490d521299b7315a12576851bc"
+    }
+  },
+  "remaining": [
+    "Foreground Alt-O/reference and pre-dequeue ownership",
+    "Real UART RX/TX/history/log and direct TEXT/Help adapters",
+    "Notice/trap/geometry policy and full storage lifetime integration",
+    "Parent memory/ASPECT and full Enigma/Synchronet acceptance",
+    "Unresolved earlier Enigma redial miss",
+    "Final package selection, reversible deployment and physical acceptance"
+  ]
+}
