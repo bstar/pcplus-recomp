@@ -193,7 +193,11 @@ Before binding child SAVE to parent storage, require all of the following:
   recovery. Then run Enigma/Synchronet/transfer regressions and clean source
   reproduction before selecting or deploying a new package.
 
-No such storage service is implemented or published by this checkpoint.
+That earlier checkpoint specified the storage gates. The later opt-in
+[capability17 snapshot lease](SNAPSHOT_LEASE.md) implements the guarded service
+and passes the ordinary8086 SAVE/NOCLEAR workflow,42 ownership cases,43 register
+snapshot pairs and source reproduction. Its remaining release boundaries are
+explicit; the installed capability16 pair is unchanged.
 
 ## Repeat
 

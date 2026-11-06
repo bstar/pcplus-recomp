@@ -1,0 +1,177 @@
+{
+  "checkpoint_recorded": true,
+  "ordinary_8086_save_workflow_passed": true,
+  "source_commit": "5de4f7c",
+  "terminal_sha256": "bad604fbc5bc1e680b778d69edc692e541ffe52c65e8a8b882e5afc2d6ef9106",
+  "interpreter_sha256": "7aa7066f288c2daa5f4f0cc3513ae110239895b6285aecccad231302e2db47c9",
+  "service_capability": 17,
+  "owned_parent_frame_bytes": 8000,
+  "new_parent_buffer_bytes": 0,
+  "parent_near_bytes": 65488,
+  "parent_resident_code_bytes": 65516,
+  "parent_retained_bytes": 478032,
+  "results": {
+    "owners": {
+      "path": "build/snapshot-lease-policy-final-20261106/result.json",
+      "sha256": "37a236eb56d55df5e9a5f161ed823c47577b5427e0611cbe6fcf3435bf8e57f5",
+      "passed": true
+    },
+    "save": {
+      "path": "build/snapshot-lease-save-final-20261106/result.json",
+      "sha256": "81a55677d3201efd731ac68b6dd53e8fca7e6d50cff4df6b8d5388c69beca21e",
+      "passed": true
+    },
+    "noclear": {
+      "path": "build/snapshot-lease-noclear-final-20261106/result.json",
+      "sha256": "40cb374852e7b0a46816b4c1afa05b422e175dd069c363ea5a4e8116a714bf22",
+      "passed": true
+    },
+    "allocation": {
+      "path": "build/snapshot-lease-allocation-20261106/result.json",
+      "sha256": "4dbdcc73dc8ac9dc675296d1b6361d791756d7a1dc7011169c0c077cab571ac3",
+      "passed": true,
+      "exit_watch": {
+        "launches": 4,
+        "resident_segment": 52299,
+        "exits": [
+          {
+            "exit": 0,
+            "ds": 37318,
+            "ss": 37318,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37318,
+            "ss": 37318,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37318,
+            "ss": 37318,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37318,
+            "ss": 37318,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          }
+        ],
+        "allocations": []
+      }
+    },
+    "parent_source": {
+      "path": "build/snapshot-lease-parent-source-20261106/result.json",
+      "sha256": "8ea71b6a96823772a53cdb5d19b91574108c457d85995c33fe6c87e5fde70a54",
+      "passed": true
+    },
+    "child_source": {
+      "path": "build/snapshot-lease-child-source-20261106/result.json",
+      "sha256": "979192aa04a251737525a7fcc3f3b0bb16e21bacd206c6a44fe8da0307292f8f",
+      "passed": true
+    },
+    "register_normal": {
+      "path": "build/register-handoff-dos/snapshot-lease-register-normal-20261106/result.json",
+      "sha256": "088d3458fbd3990ba50b714b3a1d9d127ce29920607025c576b6a799a0241fef",
+      "passed": true,
+      "snapshots": 5
+    },
+    "register_bad-token": {
+      "path": "build/register-handoff-dos/snapshot-lease-register-bad-token-20261106/result.json",
+      "sha256": "d4743239637c056416c7eb6d85b7483e89551babad77407fced971a9d1d002e4",
+      "passed": true,
+      "snapshots": 7
+    },
+    "register_missing-script": {
+      "path": "build/register-handoff-dos/snapshot-lease-register-missing-script-20261106/result.json",
+      "sha256": "cc6b740d08f2c22ec2047eef62132ecd7ad6be4ef774683d6687f2f0a94394bf",
+      "passed": true,
+      "snapshots": 5
+    },
+    "register_missing-helper": {
+      "path": "build/register-handoff-dos/snapshot-lease-register-missing-helper-20261106/result.json",
+      "sha256": "310828b78f8358aa71bc254ea06df59dd20a7d312f6378d3fc9da646c063842e",
+      "passed": true,
+      "snapshots": 5
+    },
+    "register_divide": {
+      "path": "build/register-handoff-dos/snapshot-lease-register-divide-20261106/result.json",
+      "sha256": "d622d147393cd5a2d3c493250776f71ed4b2573140c398724c2ba15703cf9c33",
+      "passed": true,
+      "snapshots": 7
+    },
+    "register_budget": {
+      "path": "build/register-handoff-dos/snapshot-lease-register-budget-20261106/result.json",
+      "sha256": "f24aad1f227e10e90de673d036175e4bbb7e66c7fc4dcace6d32e7f5ea8637f8",
+      "passed": true,
+      "snapshots": 7
+    },
+    "register_abort": {
+      "path": "build/register-handoff-dos/snapshot-lease-register-abort-20261106/result.json",
+      "sha256": "06a00c9ab327603672ca58aa166c5cf2cab51fd8b12021246d67d20115547f83",
+      "passed": true,
+      "snapshots": 7
+    },
+    "old-parent": {
+      "path": "build/snapshot-lease-old-parent-20261106/result.json",
+      "sha256": "12e9aa9079b681c0b6c182ee0c1fc2afd60a61c25ca0e69ee6f82343bdce6a3c",
+      "nominal_workflow_passed": false,
+      "expected_rejection_passed": true,
+      "scope": "All script outputs absent; hardware/settings/staged inputs, final viewport and subsequent keyboard/hangup checks passed."
+    },
+    "old-child": {
+      "path": "build/snapshot-lease-old-child-20261106/result.json",
+      "sha256": "8caaa811b2b13035b2947749d5d3d441b91a75d4ad90c5bfb25677c0e56c58aa",
+      "nominal_workflow_passed": false,
+      "expected_rejection_passed": true,
+      "scope": "All script outputs absent; hardware/settings/staged inputs, final viewport and subsequent keyboard/hangup checks passed."
+    }
+  },
+  "register_snapshot_pairs": 43,
+  "installed_candidate_changed": false,
+  "physical_runtime_verified": false,
+  "limits": [
+    "Opt-in matched parent/child. Existing16 defaults remain byte-identical controls.",
+    "Exact1920-cell capture is the final parent viewport; an independent full inner pre/post-child screen/cursor capture remains a separate gate.",
+    "Linked caller/view/window boundaries are modeled. Actual DOS standard25-row SAVE/NOCLEAR, six streams and recovery are separate passing runs.",
+    "Borrowed-active fault injection, actual larger-row lease use, Enigma/Synchronet/transfers and physical acceptance remain open for this pair."
+  ]
+}

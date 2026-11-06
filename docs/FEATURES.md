@@ -8,8 +8,12 @@ carrier-loss redials pass. This resolves the measured software startup/capacity
 gap; physical acceptance and full original parity remain open. The
 [current nested PROGRAM checkpoint](CURRENT_NESTED_PROGRAM.md) passes two
 NOCLEAR DOS children surrounding six-stream/missing-file recovery. Seven corrected
-register-handoff cases now pass43 complete snapshot pairs; SAVE graphics admission
-remains a failing gate, with a separate paired upper-memory diagnostic.
+register-handoff cases pass43 complete snapshot pairs. The opt-in
+[retained snapshot lease](SNAPSHOT_LEASE.md) now completes ordinary8086 SAVE
+graphics workflows with the matched capability17 pair and exact final viewport;
+42 ownership checks and clean parent/child source exports pass. Direct inner
+screen/cursor capture, borrowed-active fault coverage, larger rows, BBS/transfer
+regressions and physical acceptance remain open. The installed16 pair is unchanged.
 
 The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
 captures the unchanged runner's file-structure allocation failure, correcting
