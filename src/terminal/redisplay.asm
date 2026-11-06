@@ -201,7 +201,19 @@ terminal_redisplay_key_impl:
 .key:
 %ifdef TERMINAL_CHAT_STORAGE
  cmp word [_redisplay_active],2
- je .refused ; Storage has no viewer state. Its future frontend owns keys.
+ jne .viewer_key
+%ifdef TERMINAL_CHAT_ECHO
+ ; A busy Chat callback retains executable storage but must let the existing
+ ; parent cancellation paths run. Do not consume their keys as viewer input.
+ cmp ax,0x2d00
+ je .ordinary
+ cmp ax,0x2300
+ je .ordinary
+ cmp al,27
+ je .ordinary
+%endif
+ jmp .refused
+.viewer_key:
 %endif
  mov dx,1
 .call:

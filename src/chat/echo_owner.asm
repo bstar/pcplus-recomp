@@ -50,6 +50,7 @@ _terminal_chat_text_echo_sink:
  inc word [terminal_parser_active]
  call far line_tick_far
  mov [cs:started],ax
+ mov [cs:progress_tick],ax
  call far chat_echo_cursor_swap
  mov ax,[ss:bp+8]
  call far terminal_key_echo_far
@@ -175,7 +176,8 @@ admit:
  ret
 
 ; CF0: unowned, preserve AX. CF1: owned AX=actual byte orFFFF. The whole echo
-; has36 BIOS ticks and4096 read/poll attempts, not36 ticks per incoming byte.
+; has36 BIOS ticks, not36 per byte.4096 attempts without clock progress also
+; end a stopped-clock wait, without shortening the advancing-clock deadline.
 ; The finite count also terminates a stopped-clock/no-input fixture.
 terminal_chat_echo_read_far:
  cmp word [cs:active],0
@@ -223,9 +225,6 @@ unowned:
 checked_read:
  cmp word [cs:fault],0
  jne .failed_empty
- cmp word [cs:remaining],0
- je .budget
- dec word [cs:remaining]
  mov word [terminal_ansi_wait_active],1
  or di,di
  jz .polled ; The nested controller already serviced IO before this read.
@@ -244,6 +243,15 @@ checked_read:
  sub ax,[cs:started]
  cmp ax,36
  jae .timeout
+ add ax,[cs:started]
+ cmp ax,[cs:progress_tick]
+ je .read_budget
+ mov [cs:progress_tick],ax
+ mov word [cs:remaining],4096
+.read_budget:
+ cmp word [cs:remaining],0
+ je .budget
+ dec word [cs:remaining]
  cmp word [cs:unread],0
  je .receive
  mov word [cs:unread],0
@@ -298,6 +306,7 @@ terminal_chat_echo_error_far:
  retf
 active: dw 0
 started: dw 0
+progress_tick: dw 0
 remaining: dw 0
 fault: dw 0
 unread: dw 0

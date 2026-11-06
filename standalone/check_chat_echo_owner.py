@@ -84,9 +84,20 @@ def main():
             result=m.echo(27);error=m.error();assert result==1 and error==want,(advance,result,error,want)
             m.restored(before,cursor)
             assert m.get('terminal_ansi_wait_cancel')==0x1234 and m.get('terminal_ansi_wait_timed_out')==0x5678
-            assert m.read_polls<=4096 and m.get('uart_rx_count')==0
+            # Poll cancellation/clock once before refusing the exhausted
+            # no-progress budget:4096 read attempts plus this final service.
+            assert (m.read_polls<=4097 if advance else m.read_polls==4097),(advance,m.read_polls)
+            assert m.get('uart_rx_count')==0
             assert m.echo(65)==1 and m.error()==0;m.restored(before,cursor)
     check('whole-scope-tick-and-stopped-clock-budget-return-restore-and-retry',timeout)
+    def progressing_clock():
+        m=Echo();m.advance_ticks=False;m.set_tick(100);before=m.native();cursor=m.cursor
+        # A real advancing clock may permit more than4096 polls within the
+        # whole36-tick deadline. The no-progress guard must not shorten it.
+        m.intervention=lambda e:e.set_tick(100+e.read_polls//256)
+        assert m.echo(27)==1 and m.error()==1,(m.error(),m.read_polls)
+        assert m.read_polls>=36*256;m.restored(before,cursor)
+    check('progressing-clock-retains-whole-deadline-beyond4096-total-polls',progressing_clock)
     def aborts():
         for field,value,want in (('terminal_ansi_wait_cancel',1,2),('terminal_quit',1,2),('connection_state',7,3)):
             m=Echo();before=m.native();cursor=m.cursor
@@ -126,7 +137,7 @@ def main():
     for n,h in sources.items():assert sha(ROOT/n)==h,n
     out.mkdir();(out/'result.json').write_text(json.dumps(dict(passed=True,binary_sha256=sha(binary),cases=cases,sources=sources,
         minimum_allocated_module_bytes=manifest['memory_layout']['minimum_allocated_module_bytes'],
-        scope=__doc__+' Actual native parser/renderer, bounded live transport/keyboard polling, IRQ ring, C1 unread and nested original alternate wait run without product-code patches. Explicit cancellation/modem-phase intervention writes model an external request, not BIOS key-dispatch acceptance. Whole-echo36ticks/4096attempt policy is a maintained adaptation. Foreground TEXT keys, busy-key guard, ASPECT memory funding, actual DOS/BBS and hardware acceptance remain open.'),indent=2)+'\n')
+        scope=__doc__+' Actual native parser/renderer, bounded live transport/keyboard polling, IRQ ring, C1 unread and nested original alternate wait run without product-code patches. Explicit cancellation/modem-phase intervention writes model an external request, not BIOS key-dispatch acceptance. Whole-echo36tick deadline and4096attempts without BIOS clock progress are maintained adaptations. Foreground TEXT keys, busy-key guard, ASPECT memory funding, actual DOS/BBS and hardware acceptance are separate gates.'),indent=2)+'\n')
 
 
 if __name__=='__main__':main()

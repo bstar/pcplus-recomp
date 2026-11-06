@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""Normal DOS8086 native-echo wait with real BIOS typeahead/cancellation keys."""
+import argparse,json,re,shutil,struct,subprocess
+from pathlib import Path
+import test_connection_dos as harness
+from directory_fixtures import prm
+from build_path_session import ROOT,sha
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    for n in ('terminal','output'):p.add_argument('--'+n,type=Path,required=True)
+    a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve()
+    assert out.is_relative_to(ROOT/'build') and not out.exists()
+    m=json.loads(binary.with_name('manifest.json').read_text())
+    assert m['experimental_chat_foreground_text'] and sha(binary)==m['binary_sha256']
+    names=('standalone/test_chat_busy_keys_dos.py','standalone/chat_busy_watch.asm',
+           'standalone/test_connection_dos.py','standalone/directory_fixtures.py',
+           'standalone/modem_fixtures.py','standalone/terminal_config_fixtures.py',
+           'standalone/test_terminal.py','standalone/directory_test_support.py','standalone/build_path_session.py')
+    sources={**m['sources'],**{n:sha(ROOT/n) for n in names}}
+    for n,h in sources.items():assert sha(ROOT/n)==h,n
+    listing=binary.with_name('terminal.map').read_text()
+    symbols={n:(int(seg,16),int(off,16)) for seg,off,n in re.findall(
+        r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I)}
+    ds=int(re.search(r'^DGROUP\s+([0-9a-f]+):0000',listing,re.M|re.I)[1],16)
+    constants={'FROZEN_DELTA':symbols['redisplay_snapshot'][0]-ds}
+    assert symbols['redisplay_snapshot'][1]==0
+    for label,name in [('OWNER_OFF','_redisplay_active'),('PARSER_OFF','terminal_parser_active'),('WAIT_OFF','terminal_ansi_wait_active')]:
+        seg,off=symbols[name];assert seg==ds;constants[label]=off
+    out.mkdir();stage=out/'program';stage.mkdir()
+    shutil.copyfile(binary,stage/'TERMINAL.EXE');shutil.copyfile(binary.parent/'PCCHAT.OVL',stage/'PCCHAT.OVL')
+    observer=out/'BUSYW.COM'
+    subprocess.run(['nasm','-fbin',*['-D'+k+'='+str(v) for k,v in constants.items()],str(ROOT/'standalone/chat_busy_watch.asm'),'-o',str(observer)],check=True)
+    settings=bytearray(prm(port=3,baud=5))
+    for off,value in [(0x188,5),(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),
+                      (0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0),(0x1e4,0)]:
+        struct.pack_into('<H',settings,off,value)
+    settings[0x1e2]=ord('~')
+    records=struct.pack('<H',3)+b'GO^[TAIL^M'.ljust(52,b'\0')+bytes(54*9)
+    prefix='p900 enter p5000 a-e p500 a-o p1800 a-1 '
+    recipes={
+        'complete':prefix+'p200 X enter p1900 escape p800 N O R M A L p1000 a-x',
+        'escape':prefix+'p400 escape p1000 N O R M A L p1000 a-x',
+        'hangup':prefix+'p400 a-h p2200 a-x',
+        'quit':prefix+'p400 a-x'}
+    results=[]
+    for case,keys in recipes.items():
+        harness.BINARY=stage/'TERMINAL.EXE';name=out.name+'-'+case;capture=ROOT/'build/connection-dos'/name
+        assert not capture.exists()
+        triggers=[]
+        if case=='complete':triggers.append((b'GO',[(.6,b'[31m')]))
+        if case in ('complete','escape'):triggers.append((b'NORMAL',[(0,b'BACK\x1b[6n')]))
+        r=harness.run(name,'hangup' if case=='hangup' else 'success',keys,
+            prm=bytes(settings),com=3,irq=5,cpu='8086',working_drive='d',timeout=40,
+            arguments='@TEST.PRM /D:CaseTest:23 /T:D:\\ACTIONS.KEY',
+            files={'ACTIONS.KEY':records,'BUSYW.COM':observer.read_bytes()},observer='BUSYW',online_triggers=triggers)
+        wire=(capture/'serial.bin').read_bytes();screen=(capture/'SCREEN.BIN').read_bytes()[::2]
+        view=(capture/'BUSYVIEW.BIN').read_bytes();words=struct.unpack('<12H',view);flags=words[1]
+        checks=dict(harness=r['passed'],observer_identity=words[0]==0x4257,
+                    native_wait_observed=bool(flags&1) and words[2]>0,
+                    initial_text_prefix=b'GO' in wire)
+        if case=='complete':
+            checks.update(queued_X_remains_in_BIOS=bool(flags&2) and words[3]>0 and words[5]!=words[6],
+                          TEXT_then_queued_input=b'GO\x1bTAIL\rX\r' in wire)
+        else:checks['cancelled_before_ESC_TX']=b'TAIL' not in wire and b'GO\x1b' not in wire
+        if case!='quit':checks['owner_and_wait_unwound']=bool(flags&4) and words[4]>0
+        if case in ('escape','hangup'):
+            checks['prompt_cancel_before_deadline']=((words[9]-words[7])&65535)<18
+        if case in ('complete','escape'):
+            checks.update(normal_input_resumes=b'NORMAL' in wire and b'BACK' in screen,
+                          ordinary_CPR_after_return=len(re.findall(rb'\x1b\[\d+;\d+R',wire))==2)
+        results.append(dict(case=case,passed=all(checks.values()),checks=checks,
+                            observer_words=words,capture=str(capture.relative_to(ROOT))))
+    checks=dict(cases=all(r['passed'] for r in results),sources_unchanged=all(sha(ROOT/n)==h for n,h in sources.items()),
+                module_unchanged=sha(stage/'PCCHAT.OVL')==m['chat_loader']['module']['binary_sha256'])
+    report=dict(passed=all(checks.values()),checks=checks,cases=results,binary_sha256=sha(binary),
+                module_sha256=sha(stage/'PCCHAT.OVL'),sources=sources,observer_constants=constants,observer_sha256=sha(observer),
+                scope=__doc__+' Actual main and loaded module/native parser, real BIOS keys and synthetic physical UART. Passive INT16 observer validates DS=SS, exact module header/API, STEP/TEXT/owner/parser/wait state, queued X before BIOS dequeue and later owner/parser/wait retirement. Observer only reads product/BIOS memory and chains original BIOS provider. Delayed CSI completes one wait; Escape/AltH/AltX cancel others without later TEXT emission. No injected product state, substituted native routines, physical modem/SIP/audio, broad geometry/failure or full original controller acceptance.')
+    (out/'result.json').write_text(json.dumps(report,indent=2)+'\n')
+    assert report['passed'],results
+    print('PASS DOS native-parser wait: BIOS X retained, real continuation and Escape/AltH/AltX unwind')
+
+
+if __name__=='__main__':main()
