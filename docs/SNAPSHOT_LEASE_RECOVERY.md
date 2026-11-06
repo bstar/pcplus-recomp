@@ -1,5 +1,9 @@
 # Capability18 real-BBS transfer recovery
 
+The [deferred stream-storage follow-up](DEFERRED_SCRIPT_BUFFERS.md) fixes the
+memory admission failure recorded below and passes the complete carrier test
+with a new opt-in child. The earlier failed child/runs remain counterexamples.
+
 The staged normal parent `61757956` retains separate software acceptance from
 the installed physical release. The test uses the same65539-byte all-values
 file as the preceding Enigma upload/download checkpoint, with source SHA256

@@ -26,9 +26,12 @@ the exact same65539 bytes also upload and download through real Enigma.
 [Nested SAVE at all four standard row counts](SNAPSHOT_LEASE_ROWS.md) passes
 eight actual DOS workflows with full-frame comparisons. Script cancellation,
 larger-row fault composition and physical acceptance remain open. Real Enigma
-[cancellation/retry passes](SNAPSHOT_LEASE_RECOVERY.md), but the current carrier
-fixture fails DOS ASPECT admission with error8. Recover memory headroom before
-accepting carrier/redial/retry or promoting the staged pair. The installed16
+[cancellation/retry passes](SNAPSHOT_LEASE_RECOVERY.md). The old child fails DOS
+ASPECT admission with error8 in the complete carrier fixture. The opt-in
+[deferred stream-storage child](DEFERRED_SCRIPT_BUFFERS.md) now saves5984 bytes,
+passes that real Enigma carrier/redial/exact-retry workflow and clean source
+reproduction, preserving six512-byte streams and the8KiB stack. Dynamic-storage
+fault/ownership refresh and release gates remain. The installed16
 pair is unchanged.
 
 The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)

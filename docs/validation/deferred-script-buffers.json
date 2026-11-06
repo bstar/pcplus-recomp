@@ -1,0 +1,93 @@
+{
+  "checkpoint_recorded": true,
+  "application_source_commit": "374fd17",
+  "clean_export_source_commit": "a527fbe8ee8298433f830819855be77a46c53e11",
+  "parent_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041",
+  "child_sha256": "cbdee1949f0ac6bba34f56ae9c594a17888ef9b5143ee5dca9cd76498737ccfd",
+  "control_sha256": "b61f3a030af41a8adbc9b966f88778141d4bcb76f397b6bcd7e14cedf9e3ebf1",
+  "minimum_load_bytes": {
+    "control": 137280,
+    "deferred": 131296,
+    "saved": 5984,
+    "stack": 8192
+  },
+  "capacities": {
+    "stream_slots": 6,
+    "buffer_bytes_per_stream": 512,
+    "snapshot_bytes_per_open_stream": 512,
+    "native_FILE_prefix_bytes": 8
+  },
+  "results": {
+    "buffer_failures": {
+      "path": "build/deferred-buffer-failures-v2-20261106/result.json",
+      "sha256": "29f00083e1129e89a677f4e91832b498e4dd487307394260f53a3cc463f723ba",
+      "passed": true
+    },
+    "native_files": {
+      "path": "build/aspect-script-file-backend/deferred/checks.json",
+      "sha256": "ffc5c0c7b75a64638447c7929834314dce47e852bc9c3a82c5281ee41232283a",
+      "passed": true
+    },
+    "VM_six_streams": {
+      "path": "build/deferred-six-stream-final-25-20261106/result.json",
+      "sha256": "3ca4ec9c145047597b7b4126186d577ca026959252d92a16b89a688add0f98e2",
+      "passed": true
+    },
+    "VM_inner50": {
+      "path": "build/deferred-six-stream-final-50-20261106/result.json",
+      "sha256": "c7d7189e59dd01b61b0e02e019a64508bb0cdabf734ac6c3ca4c87dbdd16f545",
+      "passed": true
+    },
+    "carrier": {
+      "path": "build/bbs-lab/results/enigma/deferred-enigma-carrier-20261106/carrier-checks.json",
+      "sha256": "8d1b9d4938a6e774e70decf43e4cbddc9d94b71d4ccd1327757204d61979018a",
+      "passed": true
+    },
+    "carrier_audit": {
+      "path": "build/deferred-enigma-carrier-audit-20261106/result.json",
+      "sha256": "6cb86d2b97cf07652c707e1799ff3d97684128c88745cf42c77c86e748dc33c8",
+      "passed": true
+    },
+    "synchronet": {
+      "path": "build/bbs-lab/results/synchronet/deferred-synchronet-editor-20261106/proxy-integration.json",
+      "sha256": "7e2626239ebbd2bddbf293ad88102e8c2e72f92a95cd563e3abae40bd46b6c4c",
+      "passed": true
+    },
+    "synchronet_cells": {
+      "path": "build/bbs-lab/results/synchronet/deferred-synchronet-editor-20261106/screen-reference-audit.json",
+      "sha256": "743b9f8d149d7725df1890d2b8ab03158d8216e7cf0a64bd6fd6d6e1dafbb73a",
+      "passed": true
+    },
+    "source": {
+      "path": "build/deferred-buffer-clean-source-final-20261106/result.json",
+      "sha256": "0a3afd61f8e4372ca809adb91f3eae267ebfd6def022083e0fccd68797c818e9",
+      "passed": true
+    }
+  },
+  "memory_probe": {
+    "path": "build/lease18-memory-child-probe-20261106/result.json",
+    "sha256": "e617d52a316d3ce71f7737d6b37e81eadf92858f827f1b8f352f577d3728e751",
+    "largest_remaining_bytes": 132544,
+    "probe_bytes": 992,
+    "environment_bytes": 1168,
+    "parent_retained_bytes": 478272,
+    "scope": "Authored small diagnostic MZ under ASPECT filename queries actual DOS allocator. Not real ASPECT or BBS acceptance."
+  },
+  "carrier": {
+    "same_parent_process": true,
+    "authenticated_sessions": 2,
+    "partial_disk_bytes": 4096,
+    "exact_retry_bytes": 65539,
+    "payload_sha256": "c62fdfdef826f32aa019b9543f718b0c7bb86204972a699a30b815e4d8b66e4e",
+    "optional_final_exit_witness": false,
+    "transfer_wait_ms": 150000
+  },
+  "installed_candidate_changed": false,
+  "physical_runtime_verified": false,
+  "limits": [
+    "Opt-in storage only; default control and parent are unchanged.",
+    "Actual DOS8086/virtual modem DCD and isolated SynthModem Telnet/stock Enigma; no SIP/audio/DSP/analog/Boca CTS or physical acceptance.",
+    "Synchronet graphics-viewer uses separate386/XMS/UMB profile.",
+    "Dynamic-storage active-lease fault/WAIT/cancel refresh, package/source/deployment and broader original parity remain open."
+  ]
+}
