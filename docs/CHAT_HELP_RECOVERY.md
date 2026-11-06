@@ -68,7 +68,9 @@ Help normal/flow plus normal Chat Help at25/50 rows with the extended checker.
 The24-case matrix runs separately against the identical products; it is not
 claimed as a24-case cold-export run.
 
-Busy/full-FIFO Help admission, module memory identity and lifetime faults,
-geometry-fault recovery, Help during a real BBS session, physical acceptance,
+The [native-wait follow-up](CHAT_HELP_BUSY.md) tests Help behind real typeahead
+at exact FIFO capacity and samples loaded-image identity before/at/after Help.
+Other wait states, Help beyond FIFO capacity, continuous module lifetime and
+allocation faults, geometry-fault recovery, Help during a real BBS session, physical acceptance,
 other contexts and full original feature parity remain open. No physical
 deployment or selected-package change occurred.

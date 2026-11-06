@@ -1,5 +1,15 @@
 # Full application reconstruction checklist
 
+The [native-wait Chat Help follow-up](CHAT_HELP_BUSY.md) verifies Alt-Z behind
+ordinary input while the real native echo parser waits for delayed CSI. Eight
+DOS8086 sessions at25/28/43/50 rows include31 keys plus Help filling the32-key
+FIFO. Help runs after the native wait clears, preserves the exact PROGRAM
+frame/input and leaves all11396 loaded code bytes unchanged at sampled points.
+A final-byte observer corruption is rejected; a cold rebuild repeats both busy
+cases. Products remain6fd8aafc/6845e2c8/f163169f/45c6cdba. Other waits,
+geometry/allocation/lifetime faults, connected BBS Help and physical acceptance
+remain open.
+
 The [Chat Help recovery follow-up](CHAT_HELP_RECOVERY.md) passes24 main-loop
 sessions across25/28/43/50 rows, including repeated Help, resource failures
 and actual XOFF/XON with exact CP437 receive/frame return. The unchanged

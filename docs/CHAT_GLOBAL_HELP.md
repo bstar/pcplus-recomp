@@ -68,4 +68,6 @@ busy/cancellation pressure regression. The tests still do not independently
 witness loaded-module memory identity or every lifetime edge. Help queued
 during busy parser/TEXT/full deferred input, geometry faults, physical
 Boca/SPA2102/SynthModem acceptance, other contexts and full original feature
-parity remain open.
+parity remain open. The subsequent [native-wait checkpoint](CHAT_HELP_BUSY.md)
+adds exact-capacity FIFO Help and sampled loaded-image identity; it does not
+close every wait state or module lifetime/geometry fault.
