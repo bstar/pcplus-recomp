@@ -1,5 +1,10 @@
 # Experimental native Chat echo input scope
 
+The later [native-wait follow-up](CHAT_BUSY_KEYS.md) replenishes the read
+allowance on BIOS clock progress and verifies real busy-key cancellation.
+The global4096-attempt limit and unverified foreground guards below describe
+this earlier checkpoint, rather than the current native-echo build.
+
 `--chat-echo` now links the cursor exchange and a native echo scope into an
 experimental parent. It requires the existing timing, physical-TX adapter and
 foreground-core flags. **The TEXT scheduler and ten shortcuts remain unbound;

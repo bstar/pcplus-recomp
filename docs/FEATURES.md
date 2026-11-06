@@ -2457,3 +2457,12 @@ binding bounds/stale identity/reentry/echo-fault retirement and frame restore.
 Sharing the event bridges retains479312 bytes and passes the unchanged
 interpreter's nested-child/six-stream gate. Broader Chat UI/failure/geometry,
 native-parser-busy key and physical/package acceptance remain open.
+
+The [native parser wait follow-up](CHAT_BUSY_KEYS.md) fixes early read-budget
+expiry and cancellation keys swallowed by the redisplay storage guard. Actual
+DOS8086 verifies delayed CSI completion with queued typing and prompt Escape,
+Alt-H and single Alt-X retirement. A serial XOFF/XON test confirms concurrent
+RX during a pending TEXT transmit. Retained allocation479360 still passes the
+nested-child/six-stream gate. These are maintained foreground changes;
+broader Chat UI, queued-cancellation/failure/geometry coverage and physical
+acceptance remain open.

@@ -5,6 +5,12 @@ foreground Chat TEXT is inside the native echo parser. It is an opt-in
 development checkpoint, separate from installed-package and physical acceptance.
 The validation receipt records final identities and passing/negative evidence.
 
+Parent SHA256 is7497a9739cfd9fddb2a4ed5ebca3cfbd4a2aa5656a18d019ecb921a7fcd47eee.
+The API0104 module remains83b77da0…bc3eff. Minimum retained allocation479360,
+near DS=SS65504 and resident CS65368 retain the prior stack/buffer capacities.
+The echo bank is841 bytes. Actual nested-ASPECT acceptance remains separate
+from these size measurements.
+
 ## Failures and changes
 
 The first foreground TEXT parent, e03c6e41, can exhaust4096 read attempts before
@@ -67,7 +73,31 @@ external cancellation/modem changes, nested alternate wait and admission
 refusals. Its hardware remains modeled and its Chat owner/context supplied;
 it does not replace the normal-main BIOS tests.
 
+`standalone/test_chat_flow_stall_dos.py` separately supplies actual serial
+XOFF/XON bytes. Its passive observer confirms a paused UART with TEXT's T byte
+still pending, incoming RXD visible in the remote pane during that stall, then
+cleared pause and completed TEXT. The physical wire contains GO/TAIL in order
+and normal input resumes after Chat returns. This is software flow control;
+physical CTS/RTS and sustained saturation remain separate requirements.
+
+The original no-echo redisplay branch is retained under its compile-time guard.
+Echo disabled with the earlier full-label profile reproduces5ecf8774 exactly.
+The native-echo build's executable, redisplay object and module remain identical
+before and after this outer-guard cleanup. The BBS runs retain their227bf66
+producer source; their source guards passed before cleanup. The independent
+carrier audit validates that exact historical source, then restores the current
+guard. Current-source compilation and a fresh public-source export bind the
+identical enabled runtime to the final source. No BBS source result is silently
+reclassified as a current-source run.
+
+The [checkpoint receipt](validation/chat-busy-keys.json) records these source
+variants and exact artifacts. Enigma and Synchronet tests leave Chat inactive;
+actual Chat waits and flow stalls use the separate connected synthetic DOS
+fixtures. The installed package and physical PC are unchanged.
+
 Full original Chat/controller execution, Help/Alt-Z/configuration, broader
 binding/failure/geometry/mouse coverage, flow/printer/logging stress, final
-package and physical analog/SIP/audio acceptance remain open. Stock BBS
+package and physical analog/SIP/audio acceptance remain open. Cancellation
+behind already-held ordinary BIOS typeahead also needs separate coverage.
+Stock BBS
 regressions leave Chat inactive; their scope is reported separately.
