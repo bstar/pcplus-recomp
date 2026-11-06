@@ -72,6 +72,10 @@ terminal_redisplay_key_impl:
  cmp ax,0x2f00 ; Original Alt-V: serviced internal file viewer.
  je .open
 %endif
+%ifdef TERMINAL_EXTERNAL_EDITOR
+ cmp ax,0x1e00 ; Original Alt-A: configured external editor.
+ je .open
+%endif
 %ifdef TERMINAL_PATH_CONTROL
  cmp ax,0x6e00 ; Original Alt-F7: serviced path change.
  je .open

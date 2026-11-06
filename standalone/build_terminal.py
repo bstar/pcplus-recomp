@@ -12,6 +12,7 @@ import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
 parser.add_argument('--file-directory',action='store_true',help='Serviced original-style Alt-F file listing; implies path control')
 parser.add_argument('--external-viewer',action='store_true',help='Configured native-style external Alt-V parameter dialog and guarded COMSPEC handoff; requires session baseline')
+parser.add_argument('--external-editor',action='store_true',help='Original Alt-A external editor using its separate PRM command; implies external viewer')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
 parser.add_argument('--session-projection',action='store_true')
 parser.add_argument('--projection-probe',action='store_true')
@@ -91,6 +92,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.external_editor:args.external_viewer=True
 if args.external_viewer:
  args.file_viewer=True
  assert args.session_baseline,'External viewer requires the accepted PRM baseline'
@@ -298,6 +300,7 @@ if args.path_control:out_name+='-path-control'
 if args.file_directory:out_name+='-file-directory'
 if args.file_viewer:out_name+='-file-viewer'
 if args.external_viewer:out_name+='-external-viewer'
+if args.external_editor:out_name+='-external-editor'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
 if args.gateway_files:out_name+='-gateway-files'
@@ -501,6 +504,7 @@ for index,source in enumerate(sources):
  if args.file_directory:options+=['-DTERMINAL_FILE_DIRECTORY']
  if args.file_viewer:options+=['-DTERMINAL_FILE_VIEWER']
  if args.external_viewer:options+=['-DTERMINAL_EXTERNAL_VIEWER']
+ if args.external_editor:options+=['-DTERMINAL_EXTERNAL_EDITOR']
  if args.path_control:
   options+=['-DTERMINAL_PATH_CONTROL']
   if source in (ROOT/'src/filesystem/path_kernel.asm',ROOT/'reconstruction/file_path/change.asm'):
@@ -717,6 +721,7 @@ for source in c_sources:
  if args.file_directory:options+=['-dTERMINAL_FILE_DIRECTORY']
  if args.file_viewer:options+=['-dTERMINAL_FILE_VIEWER']
  if args.external_viewer:options+=['-dTERMINAL_EXTERNAL_VIEWER']
+ if args.external_editor:options+=['-dTERMINAL_EXTERNAL_EDITOR']
  if args.path_control:options+=['-dTERMINAL_PATH_CONTROL']
  if source in path_sources:options+=['-nt=FILE_CODE','-nc=FARCODE']
  if args.status_control:options+=['-dTERMINAL_STATUS_CONTROL']
@@ -874,6 +879,7 @@ manifest['experimental_path_control']=args.path_control
 manifest['experimental_file_directory']=args.file_directory
 manifest['experimental_file_viewer']=args.file_viewer
 manifest['experimental_external_viewer']=args.external_viewer
+manifest['experimental_external_editor']=args.external_editor
 manifest['experimental_gateway_lookup']=args.gateway_lookup
 manifest['experimental_gateway_handles']=args.gateway_handles
 manifest['experimental_gateway_files']=args.gateway_files

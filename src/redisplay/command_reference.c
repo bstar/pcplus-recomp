@@ -15,6 +15,9 @@
 #ifdef TERMINAL_FILE_VIEWER
 #include "../filesystem/viewer_dialog.h"
 #endif
+#ifdef TERMINAL_EXTERNAL_EDITOR
+#include "../filesystem/viewer_external_dialog.h"
+#endif
 typedef unsigned short word;
 typedef unsigned char byte;
 typedef struct reference_item {
@@ -84,6 +87,9 @@ static word __far *view;
 #if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL) || defined(TERMINAL_GATEWAY) || defined(TERMINAL_FILE_DIRECTORY) || defined(TERMINAL_FILE_VIEWER)
 static word action(word i)
 {
+#ifdef TERMINAL_EXTERNAL_EDITOR
+ if(items[i].key==0x1e00)return FILE_EDITOR_ACTION;
+#endif
 #ifdef TERMINAL_FILE_VIEWER
  if(items[i].key==0x2f00)return FILE_VIEWER_ACTION;
 #endif

@@ -75,6 +75,11 @@ static word __far *view;
 #define HISTORY_LABEL "Redisplay history              Ctrl-PgUp"
 #define PAGE_HELP ""
 #endif
+#ifdef TERMINAL_EXTERNAL_EDITOR
+ENTRY(external_editor,"Editor                         Alt-A",
+ "Run the configured external editor with literal parameters.\n"
+ "Escape cancels. The editor uses its own saved command setting.");
+#endif
 ENTRY(record,"Record / save ASPECT script" RECORD_SUFFIX,
  "Start a checked .ASP recording of prompts and bytes accepted by the UART.\n"
  "Existing files require Y before replacement; the original stays intact\n"
@@ -332,6 +337,9 @@ static const item MENU_TEXT items[]={
 #ifdef TERMINAL_FILE_VIEWER
  ,ROW(file_viewer,0,0x2f00,'V')
 #endif
+#ifdef TERMINAL_EXTERNAL_EDITOR
+ ,ROW(external_editor,0,0x1e00,'E')
+#endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))
 static const char MENU_TEXT categories[][12]={"File","Connection","View","Setup","Help"};
@@ -493,6 +501,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(!recording_terminal_inspect())recording_terminal_initialize();
 #ifdef TERMINAL_REFERENCE
   reference_origin=0;
+#ifdef TERMINAL_EXTERNAL_EDITOR
+  if(key==0x1e00){editor_external_select();phase=15;viewer_external_event(0,key,view);return 1;}
+#endif
 #ifdef TERMINAL_FILE_VIEWER
   if(key==0x2f00){
 #ifdef TERMINAL_EXTERNAL_VIEWER
@@ -628,6 +639,13 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   n=command_reference_event(1,key,view);
   if(n==1){command_menu_active=0;return 0;}
   if(n==0x200){reference_origin=0;category=selected=phase=notice=0;draw();return 1;}
+#ifdef TERMINAL_EXTERNAL_EDITOR
+  if(n==0x100+FILE_EDITOR_ACTION){editor_external_select();phase=15;viewer_external_event(0,0,view);return 1;}
+  if(n==0x300+FILE_EDITOR_ACTION){
+   for(i=0;i<COUNT;++i)if(items[i].key==0x1e00){selected=i;break;}
+   category=items[selected].category;phase=1;draw();return 1;
+  }
+#endif
 #ifdef TERMINAL_FILE_VIEWER
   if(n==0x100+FILE_VIEWER_ACTION){
 #ifdef TERMINAL_EXTERNAL_VIEWER
@@ -707,6 +725,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
    if(i==COUNT){draw();return 1;}}
 #ifdef TERMINAL_REFERENCE
 activate:
+#ifdef TERMINAL_EXTERNAL_EDITOR
+  if(items[selected].key==0x1e00){editor_external_select();phase=15;viewer_external_event(0,0,view);return 1;}
+#endif
 #ifdef TERMINAL_FILE_VIEWER
   if(items[selected].key==0x2f00){
 #ifdef TERMINAL_EXTERNAL_VIEWER

@@ -12,22 +12,31 @@ def recipes():
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ['terminal','output']:p.add_argument('--'+n,type=Path,required=True)
+ p.add_argument('--tool',choices=['viewer','editor'],default='viewer')
  p.add_argument('--case');a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();manifest=json.loads(binary.with_name('manifest.json').read_text());assert manifest['experimental_external_viewer'] and sha(binary)==manifest['binary_sha256']
+ if a.tool=='editor':assert manifest['experimental_external_editor']
  names=['standalone/test_viewer_external_parent.py','standalone/viewer_external_child.asm','standalone/viewer_dialog_watch.asm','standalone/test_connection_dos.py','standalone/directory_fixtures.py','standalone/modem_fixtures.py','standalone/terminal_config_fixtures.py','standalone/test_terminal.py'];frozen=dict(manifest['sources']);frozen.update({n:sha(ROOT/n) for n in names})
  for n,h in frozen.items():assert sha(ROOT/n)==h,n
  out.mkdir(parents=True);child=out/'VTEST.COM';subprocess.run(['nasm','-fbin',str(ROOT/'standalone/viewer_external_child.asm'),'-o',str(child)],check=True)
  harness.BINARY=binary;cases=[]
- selected=[r for r in recipes() if not a.case or r['name']==a.case];assert selected
+ selected=recipes()
+ if a.tool=='editor':selected.append(dict(name='disabled',parameters=None,disabled=True))
+ selected=[r for r in selected if not a.case or r['name']==a.case];assert selected
  for r in selected:
   name=r['name'];settings=bytearray(prm(port=3,baud=5))
   for at,v in [(0x188,5),(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)]:struct.pack_into('<H',settings,at,v)
   command='D:\\VTEST.COM'+r.get('options','')
   if r.get('maximum'):command='D:\\VTEST.COM '+'Q'*51
   assert len(command)<=64
-  settings[0x35d:0x39e]=command.encode().ljust(65,b'\0') if not r.get('malformed') else b'X'*65
-  observer=out/(name+'.COM');kind=10 if r.get('malformed') else 9
+  offset=0x39e if a.tool=='editor' else 0x35d
+  settings[offset:offset+65]=command.encode().ljust(65,b'\0') if not r.get('malformed') else b'X'*65
+  if r.get('disabled'):settings[offset:offset+65]=bytes(65)
+  if a.tool=='editor':settings[0x35d:0x39e]=b'NO-VIEW.COM'.ljust(65,b'\0')
+  observer=out/(name+'.COM');kind=10 if r.get('malformed') or r.get('disabled') else 9
   subprocess.run(['nasm','-fbin','-DWATCH_KIND='+str(kind),str(ROOT/'standalone/viewer_dialog_watch.asm'),'-o',str(observer)],check=True)
-  parameters=r['parameters'];body=r.get('prefix','a-v')+' p1000 '
+  parameters=r['parameters'];prefix=r.get('prefix','a-v')
+  if a.tool=='editor':prefix=prefix.replace('a-v','a-a').replace('p500 v','p500 e')
+  body=prefix+' p1000 '
   body+='escape' if parameters is None else ' '.join('space' if c==' ' else c for c in parameters)+' enter p1600'
   label=out.name+'-'+name;drive=ROOT/'build/connection-dos'/label;assert not drive.exists()
   base=harness.run(label,'success','p900 enter p3500 '+body+' p700 r e a d y enter p1000 a-x',prm=bytes(settings),arguments='@TEST.PRM /D:CaseTest:23',com=3,irq=5,cpu='8086',working_drive='d',observer='VIEWOBS',timeout=35,files={'VIEWOBS.COM':observer.read_bytes(),'VTEST.COM':child.read_bytes()},online_triggers=((b'ready\r',b'\x1b[3;1HAFTER-VIEWER\x1b[6n'),))
@@ -40,5 +49,5 @@ def main():
   else:checks.update(actual_child=len(data)==202 and struct.unpack_from('<2H',data)==(0x5645,1),exact_child_tail=len(data)==202 and data[8]==len(expected) and data[9:9+data[8]]==expected.encode(),child_CWD_unchanged=len(data)==202 and struct.unpack_from('<H',data,136)[0]==3 and not data[138])
   result=dict(case=name,passed=all(checks.values()),checks=checks,observer_words=words,child_tail_hex=data[8:136].hex() if data else None,frame_sha256=sha(drive/'VIEWUI.BIN'),drive=str(drive.relative_to(ROOT)));(out/(name+'.json')).write_text(json.dumps(result,indent=2)+'\n');print(name,{n:v for n,v in checks.items() if not v},flush=True);assert result['passed'],result;cases.append(result)
  for n,h in frozen.items():assert sha(ROOT/n)==h,n
- (out/'result.json').write_text(json.dumps(dict(passed=True,binary_sha256=sha(binary),cases=cases,sources=frozen,original_inputs=[],scope=__doc__+' DOS8086 COM3/IRQ5 synthetic serial modem; owned PRM/COM; passive full2000-cell frames/cursor and actual PSP tail/CWD, then fresh parser/keyboard and hardware restoration. No physical/SIP/DSP or whole-parity claim.'),indent=2)+'\n')
+ (out/'result.json').write_text(json.dumps(dict(passed=True,tool=a.tool,binary_sha256=sha(binary),cases=cases,sources=frozen,original_inputs=[],scope=__doc__+' DOS8086 COM3/IRQ5 synthetic serial modem; owned PRM/COM; passive full2000-cell frames/cursor and actual PSP tail/CWD, then fresh parser/keyboard and hardware restoration. No physical/SIP/DSP or whole-parity claim.'),indent=2)+'\n')
 if __name__=='__main__':main()

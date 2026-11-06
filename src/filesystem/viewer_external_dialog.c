@@ -10,8 +10,15 @@ typedef unsigned char byte;
 typedef struct external_dialog {
  word cookie,active,pending,cursor,insert,full,error;
  char configured[65],edit[49];
+#ifdef TERMINAL_EXTERNAL_EDITOR
+ word editor;
+#endif
 } external_dialog;
+#ifdef TERMINAL_EXTERNAL_EDITOR
+typedef char external_dialog_layout[sizeof(external_dialog)==130?1:-1];
+#else
 typedef char external_dialog_layout[sizeof(external_dialog)==128?1:-1];
+#endif
 volatile external_dialog TEXT terminal_external_viewer_state={0x5658};
 #define S terminal_external_viewer_state
 extern word csi_column_count,ui_window_rows;
@@ -22,11 +29,21 @@ extern word __far __cdecl external_program_queue(void);
 static const char TEXT parameters[]="Enter parameters:";
 static const char TEXT suffix[]=" Parameters ";
 static const char TEXT unavailable[]="External viewer unavailable";
+#ifdef TERMINAL_EXTERNAL_EDITOR
+static const char TEXT editor_unavailable[]="External editor unavailable";
+#define CONFIG_OFFSET (S.editor?EDITOR_EXTERNAL_PRM_OFFSET:VIEWER_EXTERNAL_PRM_OFFSET)
+#else
+#define CONFIG_OFFSET VIEWER_EXTERNAL_PRM_OFFSET
+#endif
 word __far __cdecl viewer_external_unsafe(void){return S.cookie!=0x5658;}
 word __far __cdecl viewer_external_owned(void){return viewer_external_unsafe()||S.active;}
 word __far __cdecl viewer_external_queued(void){return !viewer_external_unsafe()&&S.pending;}
 void __far __cdecl viewer_external_cancel(void){S.pending=0;}
+#ifdef TERMINAL_EXTERNAL_EDITOR
+static word select(void)
+#else
 word __far __cdecl viewer_external_select(void)
+#endif
 {
  prm_dos_image image;word i,status;
  S.error=1;
@@ -34,11 +51,17 @@ word __far __cdecl viewer_external_select(void)
  status=hook_baseline_copy(&image);
  if(status==SESSION_BASELINE_MISSING)return 0;
  if(status)return 2;
- for(i=0;i<65&&image.bytes[VIEWER_EXTERNAL_PRM_OFFSET+i];++i){}
+ for(i=0;i<65&&image.bytes[CONFIG_OFFSET+i];++i){}
  if(!i)return 0;if(i==65)return 2;
- for(i=0;i<65;++i)S.configured[i]=(char)image.bytes[VIEWER_EXTERNAL_PRM_OFFSET+i];
+ for(i=0;i<65;++i)S.configured[i]=(char)image.bytes[CONFIG_OFFSET+i];
  S.error=0;return 1;
 }
+#ifdef TERMINAL_EXTERNAL_EDITOR
+word __far __cdecl viewer_external_select(void)
+{if(viewer_external_unsafe()||S.active||S.pending)return 2;S.editor=0;return select();}
+word __far __cdecl editor_external_select(void)
+{if(viewer_external_unsafe()||S.active||S.pending)return 2;S.editor=1;return select();}
+#endif
 static void text(unsigned short __far *f,word at,const char __far *s,word count,word attr)
 {while(count--&&*s)f[at++]=attr|(byte)*s++;}
 static void draw(unsigned short __far *f)
@@ -54,7 +77,11 @@ static void draw(unsigned short __far *f)
  for(i=base;i<64&&S.configured[i]&&at<10*80+62;++i)f[at++]=0x0b00|(byte)S.configured[i];
  text(f,at,suffix,12,0x0b00);for(i=0;i<12&&suffix[i];++i){}at+=i;
  if(at<10*80+75)f[at]=0x0bc6;
- if(S.error){text(f,12*80+7,unavailable,66,0x0b00);return;}
+ if(S.error){
+#ifdef TERMINAL_EXTERNAL_EDITOR
+  if(S.editor){text(f,12*80+7,editor_unavailable,66,0x0b00);return;}
+#endif
+  text(f,12*80+7,unavailable,66,0x0b00);return;}
  text(f,12*80+7,parameters,17,0x0b00);
  for(i=0;i<48;++i)f[12*80+25+i]=0x0a00|(byte)S.edit[i];
 }
@@ -104,7 +131,12 @@ static word build(char *command)
 {
  prm_dos_image image;word i,length;
  if(hook_baseline_copy(&image))return PROCESS_ARGUMENT;
- for(i=0;i<65;++i)if(image.bytes[VIEWER_EXTERNAL_PRM_OFFSET+i]!=(byte)S.configured[i])return PROCESS_ARGUMENT;
+ for(i=0;i<65;++i)if(image.bytes[CONFIG_OFFSET+i]!=(byte)S.configured[i])return PROCESS_ARGUMENT;
+#ifdef TERMINAL_EXTERNAL_EDITOR
+ /* Reuse the checked literal builder after validating the editor's own field.
+  * This is a transient copy, never a write to the accepted baseline or PRM. */
+ if(S.editor)for(i=0;i<65;++i)image.bytes[VIEWER_EXTERNAL_PRM_OFFSET+i]=image.bytes[EDITOR_EXTERNAL_PRM_OFFSET+i];
+#endif
  return viewer_external_build((const byte __far *)&image,(const char __far *)S.edit,(char __far *)command,114,(word __far *)&length)?PROCESS_ARGUMENT:0;
 }
 word __far __cdecl viewer_external_execute(process_result *result)

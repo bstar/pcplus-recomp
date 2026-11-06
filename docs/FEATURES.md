@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+The opt-in [external editor launcher](EXTERNAL_EDITOR.md) now restores Alt-A
+and both menu routes using its separately recovered PRM setting. Original DOS
+launch observations and maintained frame/child-return tests cover the launcher;
+the separate PCEDIT application and physical/editor-specific BBS composition
+remain open. The reviewed connection package still has this feature disabled.
+
 The [SynthModem source integration](BRIDGE_INTEGRATION.md) now adds the optional
 menu-owned size query to the workstation source, preserving fixed80x24/no-query
 behavior by default.25 Telnet and seven session tests pass; both actual

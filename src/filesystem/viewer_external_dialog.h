@@ -4,6 +4,11 @@
 /* F600 belongs to browser redial; keep the private viewer action distinct. */
 #define VIEWER_EXTERNAL_ACTION 0xf300U
 unsigned __far __cdecl viewer_external_select(void);
+#ifdef TERMINAL_EXTERNAL_EDITOR
+#define FILE_EDITOR_ACTION 124U
+#define EDITOR_EXTERNAL_PRM_OFFSET 0x39e
+unsigned __far __cdecl editor_external_select(void);
+#endif
 unsigned __far __cdecl viewer_external_event(unsigned,unsigned,unsigned short __far *);
 unsigned __far __cdecl viewer_external_cursor(void);
 unsigned __far __cdecl viewer_external_shape(unsigned);

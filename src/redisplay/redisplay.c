@@ -362,6 +362,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   direct_clipboard=(key==0x2c00 || key==0x1300
 #ifdef TERMINAL_REFERENCE
    || (key&255)=='`' || key==0x6c00 || key==0x1700 || command_reference_unavailable(key)
+#ifdef TERMINAL_EXTERNAL_EDITOR
+   || key==0x1e00
+#endif
 #ifdef TERMINAL_PATH_CONTROL
    || key==0x6e00
 #ifdef TERMINAL_FILE_DIRECTORY
