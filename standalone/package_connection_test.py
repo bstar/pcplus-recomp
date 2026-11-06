@@ -70,6 +70,9 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         + ('Alt-Y: send configured answer-on; follows local echo. Escape cancels.\n' if terminal.get('experimental_auto_answer') else '')
         + ('Alt-F7: change directory; startup directory returns on final exit.\n' if terminal.get('experimental_path_control') else '')
         + ('Alt-F: File Directory; Enter selects *.*, Escape returns.\n' if terminal.get('experimental_file_directory') else '')
+        + ('Alt-V: read-only file viewer; Escape returns to the live terminal.\n' if terminal.get('experimental_file_viewer') else '')
+        + ('A saved external viewer command instead opens Enter parameters.\n'
+           'Enter runs that command; Escape cancels. Browser redial is separate.\n' if terminal.get('experimental_external_viewer') else '')
         + ('Alt-F4: DOS Gateway; EXIT returns without a return-key prompt.\n'
            'Gateway keeps serial reception, capture/HOLD and printer owners.\n' if terminal.get('experimental_gateway_frontend') else '')
         + 'Dim commands remain unavailable. This is a test candidate.\n\n'
@@ -99,6 +102,10 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         record.update(experimental_path_control=bool(terminal.get('experimental_path_control')),experimental_gateway_frontend=bool(terminal.get('experimental_gateway_frontend')))
     if terminal.get('experimental_file_directory'):
         record['experimental_file_directory']=True
+    if terminal.get('experimental_file_viewer'):
+        record['experimental_file_viewer']=True
+    if terminal.get('experimental_external_viewer'):
+        record['experimental_external_viewer']=True
     (output/'manifest.json').write_text(json.dumps(record,indent=2)+'\n');return record
 
 def main():
