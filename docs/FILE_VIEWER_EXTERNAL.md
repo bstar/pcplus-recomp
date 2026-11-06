@@ -163,3 +163,44 @@ The application executable, installed release and live SynthModem service are
 unchanged by these tests. BBS pressure during a running child, transfer/cancel/
 carrier-loss and reconnect composition through this path, other viewers/video
 settings, real DOS-kernel failure behavior and physical acceptance remain open.
+
+## Redial correction and transfer composition
+
+The [corrected-candidate receipt](validation/viewer-external-composition.json)
+binds executable `2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02`.
+The previous external-viewer candidate reused private action F600, which already
+belonged to browser redial. The first carrier/prompt run correctly closed the
+dialog but never reconnected: the viewer dispatcher consumed the redial request.
+The viewer now uses F300; browser redial retains F600. These two action bytes
+are the only executable differences from the prior candidate. A linked guard
+and a rejected, never-executed collision copy protect this namespace boundary.
+
+The corrected candidate repeats all21 external/internal-fallback UI workflows,
+seven710-byte native prompt comparisons and13 linked lifecycle cases. Both stock
+BBS editor tests repeat on these exact bytes, with zero differences across3840
+independently audited terminal cells and matching cursors. The original-free
+public source export reproduces this executable; disabling the external feature
+still reproduces the prior internal-viewer image exactly.
+
+Six further actual DOS workflows run the external graphics child before
+XMODEM upload/download, YMODEM upload and local cancellation followed by a
+successful retry on the same connection, and ZMODEM download/escaped-byte upload.
+Each child records its PSP arguments and current directory, enters mode13h and
+signals its private completion marker. The passive observer cannot capture the
+restored live frame until that marker arrives. Independent protocol peers check
+binary payloads and continued keyboard/query service, with final UART/PIC/vector
+restoration. ZMODEM escaping here describes wire-byte quoting, not cancellation.
+
+The carrier test drops the actual DOSBox modem socket while the external
+parameter prompt owns the screen. No Enter or Escape is supplied. The observer
+records active/pending/cookie state around automatic closure, then witnesses a
+second connection in the same parent. Fresh replies/input, two initializations,
+directory accounting and owned call-log records all pass. This establishes
+virtual DCD loss before child execution; loss during an external child or a
+transfer remains separate work on this candidate.
+
+Twelve earlier observer/child variants still compile byte-for-byte identically.
+All results above are software evidence. The physical installation and package
+selector are unchanged; SIP/audio, Boca CTS timing, analog modem and remaining
+feature-parity acceptance remain open. Earlier receipts retain their original
+candidate hashes and do not imply acceptance of this corrected executable.

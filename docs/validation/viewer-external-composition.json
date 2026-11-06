@@ -1,0 +1,534 @@
+{
+  "passed": true,
+  "binary_sha256": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+  "private_viewer_action": "F300",
+  "browser_redial_action": "F600",
+  "ui": {
+    "path": "build/viewer-external-parent-v6-acceptance-20261105/result.json",
+    "sha256": "89779d350bdfed24a2d61093a3439e97c6ce994689d4616a008d97d066390f9b"
+  },
+  "bbs": {
+    "path": "build/viewer-external-v6-bbs-accepted-20261105/result.json",
+    "sha256": "407aeae9e43a10756055ed427aa9b28dcf71834c3c345845b4225c3ef73e62df"
+  },
+  "transfer": {
+    "report": {
+      "path": "build/viewer-external-transfer-fixed-20261105/result.json",
+      "sha256": "677f780ce4540d191ab91b48cec35d597521f7a3e71fdbe2c824870a7a6a9191"
+    },
+    "cases": [
+      {
+        "passed": true,
+        "case": "x-rx-binary",
+        "checks": {
+          "actual_terminal_ready": true,
+          "negotiated_requested_integrity": true,
+          "complete_EOT_handshake": true,
+          "file_installed_before_final_ACK": true,
+          "posttransfer_DSR": true,
+          "posttransfer_keyboard": true,
+          "actual_ready": true,
+          "normal_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "final_screen": true,
+          "PRM_unchanged": true,
+          "source_unchanged": true,
+          "binary_unchanged": true,
+          "no_partial_stages": true,
+          "complete_protocol": true,
+          "exact_destination": true,
+          "complete_viewer_observer": true,
+          "exact_live_frame_return": true,
+          "exact_cursor_shape_return": true,
+          "viewer_input_unchanged": true,
+          "viewer_filename_not_remote": true,
+          "startup_path": true,
+          "external_parameter_prompt": true,
+          "actual_external_child": true,
+          "exact_external_arguments": true,
+          "external_child_CWD": true
+        },
+        "errors": [],
+        "terminal_sha256": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+        "seconds": 13.991,
+        "serial": {
+          "com": 3,
+          "irq": 5,
+          "baud": 19200,
+          "framing": "8N1",
+          "flow": "HARD"
+        },
+        "cpu": "8086",
+        "files": {
+          "ONE.BIN": "800a962a822cd33c4d3cb25d8393dd071c7c544b78bbd5462f60f02e523b094f"
+        },
+        "peer_command": null,
+        "scope": "Actual Alt-V roundtrip followed by X/Y/ZMODEM or cancel/retry in one DOS process. Real DOS8086 COM3/IRQ5,19200/HARD, passive full2000-cell viewer and exact live/cursor return before transfer. Independent protocol peers; no SIP/DCD/physical or stock-server claim.",
+        "viewer_capture_sha256": "f6481e52f5f4c11c691fe13161cc1183631e98a7725c594d9912bbd29724bd99"
+      },
+      {
+        "passed": true,
+        "case": "x-tx-binary",
+        "checks": {
+          "actual_terminal_ready": true,
+          "actual_upload_started": true,
+          "EOT_NAK_then_ACK": true,
+          "exact_source_and_padding": true,
+          "expected_block_count": true,
+          "posttransfer_DSR": true,
+          "posttransfer_keyboard": true,
+          "actual_ready": true,
+          "normal_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "final_screen": true,
+          "PRM_unchanged": true,
+          "source_unchanged": true,
+          "binary_unchanged": true,
+          "no_partial_stages": true,
+          "complete_protocol": true,
+          "exact_binary_and_padding": true,
+          "complete_viewer_observer": true,
+          "exact_live_frame_return": true,
+          "exact_cursor_shape_return": true,
+          "viewer_input_unchanged": true,
+          "viewer_filename_not_remote": true,
+          "startup_path": true,
+          "external_parameter_prompt": true,
+          "actual_external_child": true,
+          "exact_external_arguments": true,
+          "external_child_CWD": true
+        },
+        "errors": [],
+        "terminal_sha256": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+        "seconds": 14.041,
+        "serial": {
+          "com": 3,
+          "irq": 5,
+          "baud": 19200,
+          "framing": "8N1",
+          "flow": "HARD"
+        },
+        "cpu": "8086",
+        "files": {},
+        "peer_command": null,
+        "scope": "Actual Alt-V roundtrip followed by X/Y/ZMODEM or cancel/retry in one DOS process. Real DOS8086 COM3/IRQ5,19200/HARD, passive full2000-cell viewer and exact live/cursor return before transfer. Independent protocol peers; no SIP/DCD/physical or stock-server claim.",
+        "viewer_capture_sha256": "f6481e52f5f4c11c691fe13161cc1183631e98a7725c594d9912bbd29724bd99"
+      },
+      {
+        "passed": true,
+        "case": "y-tx-binary",
+        "checks": {
+          "actual_terminal_ready": true,
+          "exact_all_source_files": true,
+          "batch_end_ACK": true,
+          "posttransfer_DSR": true,
+          "posttransfer_keyboard": true,
+          "actual_ready": true,
+          "normal_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "final_screen": true,
+          "PRM_unchanged": true,
+          "source_unchanged": true,
+          "binary_unchanged": true,
+          "no_partial_stages": true,
+          "complete_protocol": true,
+          "exact_protocol_files": true,
+          "complete_viewer_observer": true,
+          "exact_live_frame_return": true,
+          "exact_cursor_shape_return": true,
+          "viewer_input_unchanged": true,
+          "viewer_filename_not_remote": true,
+          "startup_path": true,
+          "external_parameter_prompt": true,
+          "actual_external_child": true,
+          "exact_external_arguments": true,
+          "external_child_CWD": true
+        },
+        "errors": [],
+        "terminal_sha256": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+        "seconds": 26.162,
+        "serial": {
+          "com": 3,
+          "irq": 5,
+          "baud": 19200,
+          "framing": "8N1",
+          "flow": "HARD"
+        },
+        "cpu": "8086",
+        "files": {},
+        "peer_command": null,
+        "scope": "Actual Alt-V roundtrip followed by X/Y/ZMODEM or cancel/retry in one DOS process. Real DOS8086 COM3/IRQ5,19200/HARD, passive full2000-cell viewer and exact live/cursor return before transfer. Independent protocol peers; no SIP/DCD/physical or stock-server claim.",
+        "viewer_capture_sha256": "ea05cc2a54377ba4b7e9f81fd436dacd6a6e3f6b573136f7ac2b1df7aafec01a"
+      },
+      {
+        "passed": true,
+        "case": "y-rx-cancel-retry",
+        "checks": {
+          "actual_terminal_ready": true,
+          "actual_CRC_request": true,
+          "actual_CAN_pair": true,
+          "cancelled_and_resumed_before_retry": true,
+          "batch_end_ACK": true,
+          "exact_files_before_EOT_ACK": true,
+          "posttransfer_DSR": true,
+          "posttransfer_keyboard": true,
+          "retry_completed_same_connection": true,
+          "actual_ready": true,
+          "normal_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "final_screen": true,
+          "PRM_unchanged": true,
+          "source_unchanged": true,
+          "binary_unchanged": true,
+          "no_partial_stages": true,
+          "complete_protocol": true,
+          "exact_protocol_files": true,
+          "required_cancel_resume_retry": true,
+          "exact_destination": true,
+          "complete_viewer_observer": true,
+          "exact_live_frame_return": true,
+          "exact_cursor_shape_return": true,
+          "viewer_input_unchanged": true,
+          "viewer_filename_not_remote": true,
+          "startup_path": true,
+          "external_parameter_prompt": true,
+          "actual_external_child": true,
+          "exact_external_arguments": true,
+          "external_child_CWD": true
+        },
+        "errors": [],
+        "terminal_sha256": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+        "seconds": 31.421,
+        "serial": {
+          "com": 3,
+          "irq": 5,
+          "baud": 19200,
+          "framing": "8N1",
+          "flow": "HARD"
+        },
+        "cpu": "8086",
+        "files": {
+          "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+          "ALL.BIN": "56b4d1f464c8903c68ed1433a33e66d09f34c244464964e427dd75ad7148ccab"
+        },
+        "peer_command": null,
+        "scope": "Actual Alt-V roundtrip followed by X/Y/ZMODEM or cancel/retry in one DOS process. Real DOS8086 COM3/IRQ5,19200/HARD, passive full2000-cell viewer and exact live/cursor return before transfer. Independent protocol peers; no SIP/DCD/physical or stock-server claim.",
+        "viewer_capture_sha256": "0207054d0d02525650b19d9c58eb7846cfc525bc43619c1c73c50e95a25f5cb0"
+      },
+      {
+        "passed": true,
+        "case": "z-rx-default",
+        "checks": {
+          "actual_terminal_ready": true,
+          "independent_peer_exit_zero": true,
+          "posttransfer_DSR": true,
+          "posttransfer_keyboard": true,
+          "actual_ready": true,
+          "normal_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "final_screen": true,
+          "PRM_unchanged": true,
+          "source_unchanged": true,
+          "binary_unchanged": true,
+          "no_partial_stages": true,
+          "independent_lrzsz_success": true,
+          "exact_destination": true,
+          "complete_viewer_observer": true,
+          "exact_live_frame_return": true,
+          "exact_cursor_shape_return": true,
+          "viewer_input_unchanged": true,
+          "viewer_filename_not_remote": true,
+          "startup_path": true,
+          "external_parameter_prompt": true,
+          "actual_external_child": true,
+          "exact_external_arguments": true,
+          "external_child_CWD": true
+        },
+        "errors": [],
+        "terminal_sha256": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+        "seconds": 26.262,
+        "serial": {
+          "com": 3,
+          "irq": 5,
+          "baud": 19200,
+          "framing": "8N1",
+          "flow": "HARD"
+        },
+        "cpu": "8086",
+        "files": {
+          "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+          "ALL.BIN": "56b4d1f464c8903c68ed1433a33e66d09f34c244464964e427dd75ad7148ccab"
+        },
+        "peer_command": [
+          "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/sz",
+          "-b",
+          "-q",
+          "-L",
+          "1024",
+          "EMPTY.BIN",
+          "ODD.BIN",
+          "ALL.BIN"
+        ],
+        "scope": "Actual Alt-V roundtrip followed by X/Y/ZMODEM or cancel/retry in one DOS process. Real DOS8086 COM3/IRQ5,19200/HARD, passive full2000-cell viewer and exact live/cursor return before transfer. Independent protocol peers; no SIP/DCD/physical or stock-server claim.",
+        "viewer_capture_sha256": "104310741a24e30a155b13c2b6e7809b89652eb975ebad8ebd2899e6ba0ecd7f"
+      },
+      {
+        "passed": true,
+        "case": "z-tx-escape",
+        "checks": {
+          "actual_terminal_ready": true,
+          "independent_peer_exit_zero": true,
+          "posttransfer_DSR": true,
+          "posttransfer_keyboard": true,
+          "actual_ready": true,
+          "normal_DOS_exit": true,
+          "hardware_restored": true,
+          "no_peer_errors": true,
+          "final_screen": true,
+          "PRM_unchanged": true,
+          "source_unchanged": true,
+          "binary_unchanged": true,
+          "no_partial_stages": true,
+          "independent_lrzsz_success": true,
+          "exact_destination": true,
+          "complete_viewer_observer": true,
+          "exact_live_frame_return": true,
+          "exact_cursor_shape_return": true,
+          "viewer_input_unchanged": true,
+          "viewer_filename_not_remote": true,
+          "startup_path": true,
+          "external_parameter_prompt": true,
+          "actual_external_child": true,
+          "exact_external_arguments": true,
+          "external_child_CWD": true
+        },
+        "errors": [],
+        "terminal_sha256": "2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02",
+        "seconds": 26.313,
+        "serial": {
+          "com": 3,
+          "irq": 5,
+          "baud": 19200,
+          "framing": "8N1",
+          "flow": "HARD"
+        },
+        "cpu": "8086",
+        "files": {
+          "EMPTY.BIN": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ODD.BIN": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+          "ALL.BIN": "56b4d1f464c8903c68ed1433a33e66d09f34c244464964e427dd75ad7148ccab"
+        },
+        "peer_command": [
+          "/nix/store/78dra5pddiyzxcn4zcdhg90ppkxkfai1-lrzsz-0.12.20/bin/rz",
+          "-b",
+          "-q",
+          "-e"
+        ],
+        "scope": "Actual Alt-V roundtrip followed by X/Y/ZMODEM or cancel/retry in one DOS process. Real DOS8086 COM3/IRQ5,19200/HARD, passive full2000-cell viewer and exact live/cursor return before transfer. Independent protocol peers; no SIP/DCD/physical or stock-server claim.",
+        "viewer_capture_sha256": "104310741a24e30a155b13c2b6e7809b89652eb975ebad8ebd2899e6ba0ecd7f"
+      }
+    ]
+  },
+  "carrier": {
+    "report": {
+      "path": "build/viewer-external-carrier-fixed-20261105/result.json",
+      "sha256": "b283b68082f6691b495ac8d40b98d7b3625d6012837748663b599de97a7c2cfa"
+    },
+    "checks": {
+      "final_kind": true,
+      "startup_ok": true,
+      "lifecycle_idle": true,
+      "generation": true,
+      "queue_flags": true,
+      "queue_generations": true,
+      "final_status": true,
+      "heading_and_size": true,
+      "exact_event_records": true,
+      "normal_exit": true,
+      "hardware_restored": true,
+      "two_actual_connections": true,
+      "actual_first_reply": true,
+      "actual_redial_replies": true,
+      "keyboard_after_redial": true,
+      "real_modem_loss": true,
+      "two_real_initializations": true,
+      "original_file_prefix": true,
+      "exact_file_attempts": true,
+      "observer_final": true,
+      "held_real_write": true,
+      "DCD_high_at_entry": true,
+      "actual_loss_during_hold": true,
+      "high_DCD_observed": true,
+      "IRQs_and_no_RX_loss": true,
+      "directory_updated_twice": true,
+      "original_START_stamps_preserved": true,
+      "fixture_executables_unchanged": true,
+      "PRM_unchanged": true,
+      "peer_errors_absent": true,
+      "passive_witness_complete": true,
+      "online_viewer_seen": true,
+      "same_parent_reconnected_after_release": true,
+      "viewer_filename_local": true,
+      "viewer_input_unchanged": true,
+      "offline_closed_external": true,
+      "external_cookie_pending_preserved": true,
+      "actual_external_prompt": true
+    },
+    "observer_words": [
+      22104,
+      1,
+      343,
+      1,
+      1,
+      1,
+      1,
+      112,
+      3324,
+      8,
+      0,
+      0,
+      22104,
+      0,
+      5,
+      0
+    ]
+  },
+  "layout": {
+    "path": "build/viewer-external-layout-v6-20261105/result.json",
+    "sha256": "05819c832ad58d667ce2004b860000be5c3da707ac2d17cbc089cfa0fc017f45"
+  },
+  "public_source_build": {
+    "path": "build/viewer-external-public-source-v6-20261105/result.json",
+    "sha256": "0db8dd2b10cf95ad57e02679645b4d39557312868498f6cd9e3682fa2747d7b6"
+  },
+  "unchanged_prior_fixtures": {
+    "report": {
+      "path": "build/viewer-external-transfer-controls-20261105/result.json",
+      "sha256": "83fdb0ce64e55b22c6aec76a691be4e9a7d95ac64348578a840dec0bc29580f7"
+    },
+    "cases": [
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=1"
+        ],
+        "identical": true,
+        "sha256": "0270b2109722a6e9bea6b46413ed042d538707fad672121514cd2e1de6e4d2c5"
+      },
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=2"
+        ],
+        "identical": true,
+        "sha256": "79e4ae86a918e10929c071270855d948e1155d17bae07a4f148093ac0d385a75"
+      },
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=3"
+        ],
+        "identical": true,
+        "sha256": "990a314737fc373e790006f2f6f49d7ad3720cc92c05b574767d56c6b9813e5f"
+      },
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=4"
+        ],
+        "identical": true,
+        "sha256": "3fa7c674b0445a553864cb5637f5130e9b9eb41bcddefee7d1cd02cb869527b0"
+      },
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=5"
+        ],
+        "identical": true,
+        "sha256": "cb67851e2493db7a69727939f6f1dcfee1fbaf4c98db7e32e973a13f767eb638"
+      },
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=6"
+        ],
+        "identical": true,
+        "sha256": "0333096d57405ae638d749eeac82388deac004a5e36b76aaa826f44e18f73d81"
+      },
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=7"
+        ],
+        "identical": true,
+        "sha256": "bcb644bafd4898008c024dbca0494dbcd4d86b63f8952ad0838deb44d64fdbd0"
+      },
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=8"
+        ],
+        "identical": true,
+        "sha256": "59e0326a2075ac27cacc6adca6daf3393b60029481d4aa2b56de24e1e5668558"
+      },
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=9"
+        ],
+        "identical": true,
+        "sha256": "4ab56e183c864c370d90a8c497c716e3ed094388ca49b6b6e073a73a9c306421"
+      },
+      {
+        "source": "standalone/viewer_dialog_watch.asm",
+        "flags": [
+          "-DWATCH_KIND=10"
+        ],
+        "identical": true,
+        "sha256": "20dd8249fc3d299f87b46431e6b3a3bd6144de9e8372979cf3158778b0edfc23"
+      },
+      {
+        "source": "standalone/viewer_external_child.asm",
+        "flags": [],
+        "identical": true,
+        "sha256": "d685cdc14f3abbb6f6ae842417735f30eef23365245c9e3fce190599edb0aba6"
+      },
+      {
+        "source": "standalone/viewer_carrier_watch.asm",
+        "flags": [
+          "-DISR_OFFSET=0",
+          "-DISR_SEGMENT=0",
+          "-DDATA_SEGMENT=0",
+          "-DPROCESS_PSP=0",
+          "-DCONNECTION_STATUS=0",
+          "-DCONNECTION_STATE=0",
+          "-DVIEWER_SEGMENT=0",
+          "-DVIEWER_STATE=0",
+          "-DFILE_STATE=0"
+        ],
+        "identical": true,
+        "sha256": "0ed11adf7f1d2ed0e705db47e155ebda68ea1ecd2f41ccd8948784249f8efc98"
+      }
+    ]
+  },
+  "physical_deployment_changed": false,
+  "sources": {
+    "standalone/record_viewer_external_composition.py": "f1cc7f6e7326397af7996898da8258b8b41a741fc186d55781f2fd2288925b7b",
+    "standalone/build_path_session.py": "f27e7cd02cc511eacc09dbf65ed76959509bb7cd7d2c95015cd140a39cfbff55"
+  },
+  "limits": [
+    "Corrected candidate differs from the prior viewer candidate by exactly two F6-to-F3 action bytes; this resolves intercepted browser redial. The failing prompt-carrier/redial run remains excluded.",
+    "Transfer peers are independent owned protocol implementations; virtual UART/DCD and local BBS proxy do not establish physical CTS/SIP/audio/DSP/analog acceptance.",
+    "Carrier loss occurs while external parameters own the screen, before a child starts. Loss during a running child or transfer is not established by this receipt.",
+    "ZMODEM escape means escaped wire-byte transfer, not cancellation; YMODEM specifically exercises local cancellation and successful retry on the same connection.",
+    "Synchronet editor evidence requires the386/XMS/UMB setup with both test helpers actually high.",
+    "This does not replace the selected physical package or close the remaining full-parity inventory."
+  ]
+}
