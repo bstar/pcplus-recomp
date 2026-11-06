@@ -141,20 +141,37 @@ terminal_program_initialize_far:
 SEGMENT _TEXT
 ; AX near stored command1..51.0 queued,1 invalid,2 busy,3 modem owns RX.
 terminal_program_start:
+%ifdef TERMINAL_CHAT_HELP
+ xor cx,cx
+terminal_program_help_start:
+%endif
  extern terminal_recording_owned_far
  push bp
  push si
  push di
  push es
  push ax
+%ifdef TERMINAL_CHAT_HELP
+ push cx
+%endif
  call far terminal_recording_owned_far
+%ifdef TERMINAL_CHAT_HELP
+ pop cx
+%endif
  or ax,ax
  pop ax
  jnz .busy
 %ifdef TERMINAL_CHAT_STORAGE
  extern _redisplay_active
  cmp word [_redisplay_active],2
+%ifdef TERMINAL_CHAT_HELP
+ jne .chat_ready
+ cmp cx,3 ; Private context3 Help entry; ordinary PROGRAM always sets0.
+ jne .busy
+.chat_ready:
+%else
  je .busy
+%endif
 %endif
 %ifdef TERMINAL_UI_SCREEN_OVERLAY
  extern terminal_browser_screen_owned
@@ -250,7 +267,12 @@ _terminal_help_queue:
  push bp
  mov bp,sp
  mov ax,program_external_marker
+%ifdef TERMINAL_CHAT_HELP
+ mov cx,[bp+6]
+ call terminal_program_help_start
+%else
  call terminal_program_start
+%endif
  or ax,ax
  jnz .done
  mov word [terminal_program_kind],11

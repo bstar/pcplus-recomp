@@ -24,7 +24,7 @@ def generate(path):
  data=struct.pack('<BH',47,total)+b''.join(records+payload);assert b'retro' not in data.lower()
  path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(data)
  sources=[source,menu,Path(__file__),ROOT/'standalone/build_help_resource.py']
- report=dict(original_inputs=[],topics=47,lines=total,bytes=len(data),sha256=hashlib.sha256(data).hexdigest(),sources={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources},scope='Authored47-context HLP. Context41 includes the authored command-menu descriptions. Context identifiers retain the observed native order; only terminal reference41 is wired by this integration.')
+ report=dict(original_inputs=[],topics=47,lines=total,bytes=len(data),sha256=hashlib.sha256(data).hexdigest(),sources={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources},scope='Authored47-context HLP. Context41 includes the authored command-menu descriptions. Context identifiers retain the observed native order; entry wiring is recorded by the parent package, not this resource generator.')
  path.with_suffix('.json').write_text(json.dumps(report,indent=2)+'\n');return report
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args();print(json.dumps(generate(a.output.resolve())))

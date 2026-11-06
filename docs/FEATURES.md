@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+The opt-in [Chat Alt-Z Help checkpoint](CHAT_GLOBAL_HELP.md) now queues original
+context3 through a private PROGRAM admission while retaining the Chat session.
+Actual25/50-row main-loop tests preserve the full frame, cursor and unfinished
+line; the cold source build repeats both, reference Help normal/flow and exact
+products. The479392-byte parent passes six-stream/nested-ASPECT, with all
+capacities retained. Broader busy/failure/RX/flow/geometry cases, current-parent
+BBS regressions and physical acceptance remain open. The existing global Help
+profile without this opt-in flag remains byte-identical.
+
 The latest opt-in [global Help checkpoint](GLOBAL_HELP.md) connects the command
 reference's second Alt-Z to source PCHELP context41 through PROGRAM ownership.
 Six main-loop Help cases, six-stream ASPECT, Chat restoration and current

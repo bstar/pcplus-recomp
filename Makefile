@@ -1838,6 +1838,17 @@ test-global-help-source: global-help
 	python3 standalone/prove_global_help_source.py --package $(GLOBAL_HELP_OUTPUT) --output $(GLOBAL_HELP_OUTPUT)/source-proof
 test-global-help-rows: global-help
 	python3 standalone/test_global_help_rows.py --package $(GLOBAL_HELP_OUTPUT) --output $(GLOBAL_HELP_OUTPUT)/rows
+
+CHAT_HELP_OUTPUT := build/chat-help-make-$(shell date +%s%N)
+.PHONY: chat-help test-chat-help test-chat-help-source
+chat-help:
+	python3 standalone/build_global_help_profile.py --output $(CHAT_HELP_OUTPUT) --chat-help
+test-chat-help: chat-help
+	python3 standalone/test_chat_help_main.py --package $(CHAT_HELP_OUTPUT) --output $(CHAT_HELP_OUTPUT)-main25 --rows 25
+	python3 standalone/test_chat_help_main.py --package $(CHAT_HELP_OUTPUT) --output $(CHAT_HELP_OUTPUT)-main50 --rows 50
+	python3 standalone/test_resource_path_pair.py --output $(CHAT_HELP_OUTPUT)-paths --optimize-shared
+test-chat-help-source: chat-help
+	python3 standalone/prove_global_help_source.py --package $(CHAT_HELP_OUTPUT) --output $(CHAT_HELP_OUTPUT)/source-proof
 test-resource-path-shared:
 	python3 standalone/test_resource_path_pair.py --output build/resource-path-shared-make-$(shell date +%s%N)
 

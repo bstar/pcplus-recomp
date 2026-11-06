@@ -36,7 +36,7 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def build_bank(out, reservations=False, startup=False, lifecycle=False, events=False, disk=False, controls=False, gateway=False, shared_paths=False):
+def build_bank(out, reservations=False, startup=False, lifecycle=False, events=False, disk=False, controls=False, gateway=False, shared_paths=False, optimize_paths=False):
     OUT = Path(out)
     OUT.mkdir(parents=True, exist_ok=True)
     flags = ['-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-zld']
@@ -76,6 +76,7 @@ def build_bank(out, reservations=False, startup=False, lifecycle=False, events=F
     for source in sources:
         obj = OUT / (('phone_resource_path' if source == resource_source else Path(source).stem) + '.obj')
         includes = ['-i=' + str(ROOT / 'src/config')] if source.endswith('/phone_log_events.c') else []
+        if optimize_paths and source==resource_source:includes+=['-os']
         subprocess.run(['wcl', '-c', *flags, *includes, '-dPHONE_LOG_QUEUE_FAR', '-dPHONE_LOG_QUEUE_EXTERNAL', '-nt=PHONE_LOG_CODE', '-nc=FARCODE',
                         *['-d' + name + '=' + value for name, value in aliases.items()],
                         '-fo=' + obj.name, os.path.relpath(ROOT / source, OUT)], cwd=OUT, check=True)

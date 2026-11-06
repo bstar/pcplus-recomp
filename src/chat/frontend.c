@@ -82,6 +82,9 @@ static unsigned view(unsigned action)
     return result==1;
 }
 #endif
+#ifdef CHAT_GLOBAL_HELP
+extern unsigned CHAT_FAR __cdecl terminal_help_queue(unsigned);
+#endif
 static unsigned stop(void)
 {
     if(!handle.loaded)return 0;
@@ -173,6 +176,15 @@ unsigned CHAT_FAR __cdecl chat_front_event(unsigned event,unsigned value)
         operation(CHAT_MODULE_PRESENT_CURSOR)!=1;
 #endif
     if(event==0){
+#ifdef CHAT_GLOBAL_HELP
+        /* KEY_HOLD and the busy guard above serialize parser/TEXT work.
+         * PROGRAM keeps this module and its presentation in place; only the
+         * private context3 queue entry admits the existing Chat owner. */
+        if(value==0x2c00){
+            if(terminal_help_queue(3))handle.dos_error=0x7f03;
+            return 1;
+        }
+#endif
 #ifndef CHAT_REDISPLAY
         if(value==0x2d00 || value==0x2300){return stop()?1:0;}
 #endif

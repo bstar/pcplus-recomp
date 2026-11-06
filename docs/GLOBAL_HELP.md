@@ -117,12 +117,14 @@ No synthetic image was executed. The snapshot is retained privately at
 Only the immediate-store scan over this image was performed; it does not
 prove a complete map across all original overlays or indirect context writes.
 
-Chat context3 is not wired yet. Integration needs an explicit foreground
+The ordinary global Help profile keeps Chat context3 unwired. The subsequent
+opt-in [Chat Help checkpoint](CHAT_GLOBAL_HELP.md) adds its positive return
+path; the broader lifetime tests below remain required. Integration needs an explicit foreground
 Help continuation retaining the loaded module, unfinished input, Chat view
 and return cursor. Busy parser/TEXT/Redisplay continuations must not reenter
 or unload the active module. Actual normal-main RX/input/flow and full-screen
 return tests are required before accepting that continuation.
-In the current source, `terminal_program_start` explicitly refuses the active
+In the default profile, `terminal_program_start` explicitly refuses the active
 Chat storage owner (`redisplay_active==2`). A direct key-to-queue call would
 therefore fail. That guard must be replaced by a narrowly admitted Help lease
 with tested lifetime rules, rather than removed for arbitrary PROGRAM children.

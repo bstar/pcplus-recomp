@@ -14,6 +14,7 @@ parser.add_argument('--file-directory',action='store_true',help='Serviced origin
 parser.add_argument('--external-viewer',action='store_true',help='Configured native-style external Alt-V parameter dialog and guarded COMSPEC handoff; requires session baseline')
 parser.add_argument('--external-editor',action='store_true',help='Original Alt-A external editor using its separate PRM command; implies external viewer')
 parser.add_argument('--global-help',action='store_true',help='Native PCHELP descriptor through PROGRAM; requires original reference, banked process, display and mouse owners')
+parser.add_argument('--chat-help',action='store_true',help='Opt-in original Chat context3 Alt-Z through a private PROGRAM admission')
 parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bounded packing of authored command-browser text')
 parser.add_argument('--optimize-size',action='store_true',help='Experimental reviewed per-source C size profile; stacks and capacities unchanged')
 parser.add_argument('--code-label-offsets',action='store_true',help='Store same-bank command-label offsets and compact item metadata; requires packed original reference')
@@ -120,6 +121,7 @@ if args.chat_echo:assert args.chat_timing and args.chat_frontend
 if args.chat_foreground_text:assert args.chat_echo and args.code_label_offsets
 if args.chat_redisplay:assert args.chat_foreground_text
 if args.global_help:assert args.original_reference and args.process_bank and args.program_display_owner and args.mouse and args.external_viewer
+if args.chat_help:assert args.global_help and args.chat_redisplay
 if args.chat_frontend:assert args.chat_adapters and args.keyboard_bank
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
@@ -540,6 +542,7 @@ for index,source in enumerate(sources):
  if args.chat_foreground_text:options+=['-DTERMINAL_CHAT_FOREGROUND_TEXT']
  if args.chat_redisplay:options+=['-DTERMINAL_CHAT_REDISPLAY']
  if args.global_help:options+=['-DTERMINAL_GLOBAL_HELP']
+ if args.chat_help:options+=['-DTERMINAL_CHAT_HELP']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
@@ -863,6 +866,8 @@ for source in c_sources:
    assert hashlib.sha256(source.read_bytes()).hexdigest()==entry['source_sha256'],'Refresh the reviewed size profile after source changes: '+str(source)
    chosen=size_profile['compiler_options'][entry['profile']]
    options+=chosen;optimized_c_sources[str(source.relative_to(ROOT))]=chosen
+ if args.chat_help and source==ROOT/'src/config/resource_path_shared.c':
+  options+=['-os'];optimized_c_sources[str(source.relative_to(ROOT))]=['-os']
  if args.packed_command_ui and source==ROOT/'src/redisplay/command_menu.c':
   from pack_command_ui import pack
   compiled_source,packed_command_ui=pack(source,OUT,args.command_ui_pairs)
@@ -904,7 +909,7 @@ if args.display_row_owner:
  objects+=list(map(str,display_rows_bank['objects']));sources+=display_rows_bank['inputs']
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
- phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup,lifecycle=args.phone_log_lifecycle,events=args.phone_log_events,disk=args.phone_log_disk,controls=args.phone_log_controls,gateway=args.gateway_files,shared_paths=args.global_help)
+ phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup,lifecycle=args.phone_log_lifecycle,events=args.phone_log_events,disk=args.phone_log_disk,controls=args.phone_log_controls,gateway=args.gateway_files,shared_paths=args.global_help,optimize_paths=args.chat_help)
  objects+=list(map(str,phone_log_bank['objects']));sources+=phone_log_bank['sources']
 ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
 chat_loader=None
@@ -928,7 +933,7 @@ if args.chat_echo:
 if args.chat_frontend:
  source=ROOT/'src/chat/frontend.c';obj=OUT/'chat-frontend.obj'
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we','-ecc','-ox','-os','-oe=0',
-  '-dCHAT_PRESENTATION',*(['-dCHAT_TEXT','-dCHAT_TIMING'] if args.chat_timing else []),*(['-dCHAT_ECHO'] if args.chat_echo else []),*(['-dCHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),*(['-dCHAT_REDISPLAY'] if args.chat_redisplay else []),'-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
+  '-dCHAT_PRESENTATION',*(['-dCHAT_TEXT','-dCHAT_TIMING'] if args.chat_timing else []),*(['-dCHAT_ECHO'] if args.chat_echo else []),*(['-dCHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),*(['-dCHAT_REDISPLAY'] if args.chat_redisplay else []),*(['-dCHAT_GLOBAL_HELP'] if args.chat_help else []),'-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
  objects.insert(objects.index(str(config_end_obj)),str(obj));sources.append(source)
  source=ROOT/'src/chat/frontend.asm';obj=OUT/'chat-frontend-bridges.obj'
  subprocess.run(['nasm','-fobj',*(['-DCHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),*(['-DCHAT_REDISPLAY'] if args.chat_redisplay else []),str(source),'-o',str(obj)],check=True)
@@ -1021,6 +1026,7 @@ manifest['experimental_chat_echo']=args.chat_echo
 manifest['experimental_chat_foreground_text']=args.chat_foreground_text
 manifest['experimental_chat_redisplay']=args.chat_redisplay
 manifest['experimental_global_help']=args.global_help
+manifest['experimental_chat_help']=args.chat_help
 if args.global_help:manifest['global_help_native_units']=help_native_proof
 manifest['experimental_code_label_offsets']=args.code_label_offsets
 manifest['experimental_chat_timing']=args.chat_timing
