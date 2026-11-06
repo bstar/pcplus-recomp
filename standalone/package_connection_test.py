@@ -12,6 +12,33 @@ def validate_dos_directory(value):
         raise ValueError('DOS directory must be a non-device root directory name of1..8 ASCII letters, digits or underscores')
     return value.upper()
 
+def packed_guide(directory):
+    return dos_text(
+        'PROCOMM PLUS / LoC SPECIAL EDITION - CONNECTION TEST\n\n'
+        'Application files only. Keep your working PCPLUS.PRM, PCPLUS.DIR,\n'
+        'PCPLUS.KEY, PCPLUS.KBD, PCPLUS.XLT and PCPLUS.FON call history.\n'
+        'Back up the existing installation before replacing application files.\n'
+        'No private settings, dialing directory or machine recipes are included.\n\n'
+        'From DOS:\n  C:\n  CD \\'+directory+'\n  START\n'
+        'Keep the verified serial port, IRQ, baud and modem initialization.\n'
+        'START /D:NUMBER /I:3 dials a configured telephone destination.\n'
+        'Enter the BBS address or configured bridge alias after carrier connects.\n'
+        'A physical modem dials telephone numbers; bridge routing is separate.\n\n'
+        'Alt-Z: command reference. Backtick: command browser. Alt-X: exit.\n'
+        'Alt-S/Alt-P: setup. Alt-T: elapsed time. Alt-L: printer.\n'
+        'Alt-F: file directory. Alt-F7: directory change. Alt-V: file viewer.\n'
+        'Alt-A: run the separately configured external editor. The external\n'
+        'editor program itself is not bundled. Escape cancels its parameters.\n'
+        'Alt-F4: DOS Gateway; EXIT returns. Alt-F5: choose an ASPECT script.\n'
+        'Use Alt-Z then PgUp/PgDn for transfers without changing BBS key binds.\n'
+        'Compile source scripts with ASPCOMP SCRIPT.ASP before starting PCPlus.\n'
+        'Automatic resident compilation and nested PROGRAM remain separate gates.\n\n'
+        'This build packs command-browser text without removing help or commands.\n'
+        'The original ASPECT stack, heap-growth policy and six file slots remain.\n'
+        'Check login, ANSI/CP437, editor navigation, reconnect and owned-file\n'
+        'transfers on the intended hardware. Full original parity and physical\n'
+        'modem/SIP/audio acceptance remain open. This is a test candidate.\n')
+
 def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
     dos_directory=validate_dos_directory(dos_directory)
     assert output.is_relative_to(ROOT/'build') and not output.exists()
@@ -85,6 +112,8 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         'RAM in this candidate. The standalone compiler remains included.\n'
         'Physical modem/SIP/audio and complete original feature acceptance\n'
         'remain unverified. Building/staging does not update a card.\n').replace(b'PCPLUSSE',dos_directory.encode('ascii')))
+    if terminal.get('experimental_packed_command_ui'):
+        (payload/'README.TXT').write_bytes(packed_guide(dos_directory))
     for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
     record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
@@ -106,6 +135,8 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         record['experimental_file_viewer']=True
     if terminal.get('experimental_external_viewer'):
         record['experimental_external_viewer']=True
+    if terminal.get('experimental_external_editor'):record['experimental_external_editor']=True
+    if terminal.get('experimental_packed_command_ui'):record['experimental_packed_command_ui']=True
     (output/'manifest.json').write_text(json.dumps(record,indent=2)+'\n');return record
 
 def main():
