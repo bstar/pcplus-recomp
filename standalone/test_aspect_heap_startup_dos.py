@@ -21,8 +21,12 @@ def main():
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--nested-program',action='store_true',help='Run an actual DOS child twice around the six-stream and missing-file cases')
     parser.add_argument('--nested-graphics',action='store_true',help='Use default SAVE and let each child leave BIOS mode13h active')
+    parser.add_argument('--exit-watch',action='store_true',help='Install a small passive diagnostic TSR; separate memory footprint from ordinary acceptance')
+    parser.add_argument('--exit-watch-high',action='store_true',help='Require the passive observer to reside in UMB')
+    parser.add_argument('--cpu',choices=['8086','386'],default='8086')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
+    assert not args.exit_watch_high or args.exit_watch
     binary, runner, out = args.terminal.resolve(), args.runner.resolve(), args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     sources = {}
@@ -103,6 +107,10 @@ message: db 'CHILD|'
         (out / (name + '.ASP')).write_text(text)
         files[name + '.ASX'] = compile_source(text)
     files['ACTIONS.KEY'] = bytes(keys)
+    if args.exit_watch:
+        import aspect_exit_watch
+        sources.update(aspect_exit_watch.build(binary,runner,out/'EWATCH.COM'))
+        files['EWATCH.COM']=(out/'EWATCH.COM').read_bytes()
     settings = bytearray(prm(port=3, baud=5))
     for offset, value in [(0x188,5),(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),
                           (0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)]:
@@ -112,7 +120,8 @@ message: db 'CHILD|'
     result = harness.run(label, 'success',
         'p900 enter p3500 a-1 p1300 a-2 p1300 a-3 p1300 a-1 p1300 r e a d y enter p700 a-x',
         prm=bytes(settings), arguments='@TEST.PRM /T:D:\\ACTIONS.KEY /D:CaseTest:23',
-        com=3, irq=5, cpu='8086', working_drive='d', timeout=30, files=files)
+        com=3, irq=5, cpu=args.cpu, working_drive='d', timeout=30, files=files,
+        observer='EWATCH' if args.exit_watch else None,observer_high=args.exit_watch_high)
     drive = ROOT / 'build/connection-dos' / label
     wire = (drive / 'serial.bin').read_bytes()
     checks = dict(result['checks'], four_calls=wire.count(b'FIRSTOK\r') == 2,
@@ -127,13 +136,20 @@ message: db 'CHILD|'
     if args.nested_program:
         checks['two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|CHILD|'
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary),
+                  cpu=args.cpu,
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
-                  scope=__doc__ + ' Actual DOS8086 COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
+                  scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
     if args.nested_program:
         report['nested_child_source_sha256']=sha(out/'NEST.ASM')
         report['nested_child_sha256']=sha(out/'NEST.COM')
         report['nested_graphics']=args.nested_graphics
-        report['scope']=__doc__+' Actual DOS8086 COM3/IRQ5; two '+('SAVE graphics' if args.nested_graphics else 'NOCLEAR text')+' DOS children surrounding six-stream and missing-file recovery. Synthetic modem; no physical or complete PROGRAM-option acceptance.'
+        report['scope']=__doc__+' Actual DOS '+args.cpu+' COM3/IRQ5; two '+('SAVE graphics' if args.nested_graphics else 'NOCLEAR text')+' DOS children surrounding six-stream and missing-file recovery. Synthetic modem; no physical or complete PROGRAM-option acceptance.'
+    if args.exit_watch:
+        report['exit_watch']=aspect_exit_watch.read(drive/'EXITSTAT.BIN')
+        report['observer_sha256']=sha(out/'EWATCH.COM')
+        report['exit_watch_high']=args.exit_watch_high
+        assert not args.exit_watch_high or report['exit_watch']['resident_segment']>=0xa000
+        report['scope']+=' Passive exit observer adds resident memory; diagnostic run, not an unobserved capacity proof.'
     (out / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
     print({k:v for k,v in checks.items() if not v})
     assert report['passed']

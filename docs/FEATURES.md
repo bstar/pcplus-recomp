@@ -7,8 +7,9 @@ supports all six streams and both stock BBS editor paths. Six transfers and four
 carrier-loss redials pass. This resolves the measured software startup/capacity
 gap; physical acceptance and full original parity remain open. The
 [current nested PROGRAM checkpoint](CURRENT_NESTED_PROGRAM.md) passes two
-NOCLEAR DOS children surrounding six-stream/missing-file recovery, while SAVE
-graphics admission and the full register snapshot sequence remain failing gates.
+NOCLEAR DOS children surrounding six-stream/missing-file recovery. Seven corrected
+register-handoff cases now pass43 complete snapshot pairs; SAVE graphics admission
+remains a failing gate, with a separate paired upper-memory diagnostic.
 
 The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
 captures the unchanged runner's file-structure allocation failure, correcting

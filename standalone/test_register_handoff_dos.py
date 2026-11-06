@@ -210,6 +210,9 @@ def main():
     parser.add_argument('--runner',type=Path)
     parser.add_argument('--irq',type=int,choices=[3,4,5,7])
     parser.add_argument('--valid-display',action='store_true',help='Use an explicit admitted 80x25 display profile for current parents')
+    parser.add_argument('--exit-watch',action='store_true',help='Add passive exit telemetry with a separate diagnostic resident footprint')
+    parser.add_argument('--exit-watch-high',action='store_true',help='Require the passive observer to reside in UMB')
+    parser.add_argument('--cpu',choices=['8086','386'],default='8086')
     parser.add_argument('--session-controls', action='store_true')
     parser.add_argument('--hook-return', action='store_true')
     parser.add_argument('--hook-execute', action='store_true')
@@ -219,6 +222,7 @@ def main():
     parser.add_argument('--case', choices=['normal', 'bad-token', 'missing-script', 'missing-helper',
                                           'divide', 'budget', 'abort'], default='normal')
     args = parser.parse_args()
+    assert not args.exit_watch_high or args.exit_watch
     if args.hook_return:assert args.session_controls
     assert re.fullmatch('[A-Za-z0-9_-]+', args.label)
     output = ROOT / 'build/register-handoff-dos' / args.label
@@ -317,6 +321,10 @@ flag_name: db '{name}.OK',0
     files = {'ACTIONS.KEY': bytes(bindings), 'DUMP.COM': (output / 'DUMP.COM').read_bytes(),
              'FAULT.COM': (output / 'FAULT.COM').read_bytes(),
              'OBSERVE.ASX': compile_source('proc main\nrun "D:\\DUMP.COM" NOCLEAR\ntransmit "OBSERVE^M"\nendproc\n')}
+    if args.exit_watch:
+        import aspect_exit_watch
+        sources.update(aspect_exit_watch.build(parent/'TERMINAL.EXE',child/'ASPECT.EXE',output/'EWATCH.COM'))
+        files['EWATCH.COM']=(output/'EWATCH.COM').read_bytes()
     for name in ['HIDE', 'RESTORE']:
         files[name + '.COM'] = (output / (name + '.COM')).read_bytes()
     patches = {}
@@ -348,10 +356,15 @@ flag_name: db '{name}.OK',0
     else:
         keys += 'a-4 p700 '
     keys += 'r e a d y p500 a-x'
+    special_edition=bool(json.loads((parent/'manifest.json').read_text()).get('special_edition'))
+    if special_edition:
+        assert keys.startswith('p3000 ')
+        keys='p900 enter p3500 '+keys[len('p3000 '):]
     harness.BINARY = package / 'TERMINAL.EXE'
     result = harness.run('register-' + args.label, 'success', keys, directory=bytes(raw), prm=bytes(settings),
                          com=args.port, working_drive='d', arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1',
-                         files=files, cpu='8086', online_triggers=[(b'OBSERVE\r', b'\x1b[5n')],irq=args.irq)
+                         files=files, cpu=args.cpu, online_triggers=[(b'OBSERVE\r', b'\x1b[5n')],irq=args.irq,
+                         observer='EWATCH' if args.exit_watch else None,observer_high=args.exit_watch_high)
     folder = ROOT / 'build/connection-dos' / ('register-' + args.label)
     zero = bytes(830)
     first, _, _ = assigned(zero, 1)
@@ -375,12 +388,18 @@ flag_name: db '{name}.OK',0
     snapshots = []
     missing=[f'{kind}{index}.BIN' for index in range(len(expected)) for kind in ['OWNER','CHILD'] if not (folder/f'{kind}{index}.BIN').exists()]
     if missing:
-        report=dict(passed=False,case=args.case,port=args.port,valid_display=args.valid_display,
+        report=dict(passed=False,case=args.case,port=args.port,valid_display=args.valid_display,cpu=args.cpu,special_edition_startup_schedule=special_edition,
                     parent_sha256=sha(parent/'TERMINAL.EXE'),child_sha256=sha(child/'ASPECT.EXE'),
                     missing_snapshots=missing,available_snapshots=sorted(p.name for p in folder.glob('OWNER*.BIN')),
                     serial_sha256=sha(folder/'serial.bin'),DOS=result,
                     test_source_sha256=sha(Path(__file__)),
                     scope='Register-handoff composition did not produce all required nested snapshots. Missing files do not identify the failing opcode, guard or allocation; no acceptance claim.')
+        if args.exit_watch:
+            report['exit_watch']=aspect_exit_watch.read(folder/'EXITSTAT.BIN')
+            report['observer_sha256']=sha(output/'EWATCH.COM')
+            report['exit_watch_high']=args.exit_watch_high
+            assert not args.exit_watch_high or report['exit_watch']['resident_segment']>=0xa000
+            report['scope']+=' Passive observer adds resident memory; diagnostic only.'
         (output/'result.json').write_text(json.dumps(report,indent=2)+'\n')
         raise AssertionError('Missing nested register snapshots: '+', '.join(missing))
     for index, (accepted, live) in enumerate(expected):
@@ -416,11 +435,18 @@ flag_name: db '{name}.OK',0
         dest = output / 'sources' / name
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / name, dest)
-    report = dict(passed=True, case=args.case, port=args.port, cpu='8086', session_controls=args.session_controls,hook_return=args.hook_return,hook_execute=args.hook_execute,hook_modem=args.hook_modem,hook_input=args.hook_input,hook_apply=args.hook_apply,snapshots=snapshots, sources=sources,
+    report = dict(passed=True, case=args.case, port=args.port, cpu=args.cpu, session_controls=args.session_controls,hook_return=args.hook_return,hook_execute=args.hook_execute,hook_modem=args.hook_modem,hook_input=args.hook_input,hook_apply=args.hook_apply,snapshots=snapshots, sources=sources,
                   operand_fixture_patches=patches, parent_sha256=sha(parent / 'TERMINAL.EXE'), child_sha256=sha(child / 'ASPECT.EXE'),
                   DOS=result, scope='Actual source-built DOS terminal/ASPECT and nested observer. All830 register bytes, native reset/tails, returned acceptance and continued serial output. Integer-bank-A destinations are explicit native operand fixtures, not a compiler feature claim. Synthetic modem, no physical hardware or HOOK routing acceptance.')
     if args.irq is not None:report['irq']=args.irq
     report['valid_display']=args.valid_display
+    report['special_edition_startup_schedule']=special_edition
+    if args.exit_watch:
+        report['exit_watch']=aspect_exit_watch.read(folder/'EXITSTAT.BIN')
+        report['observer_sha256']=sha(output/'EWATCH.COM')
+        report['exit_watch_high']=args.exit_watch_high
+        assert not args.exit_watch_high or report['exit_watch']['resident_segment']>=0xa000
+        report['scope']+=' Passive observer adds resident memory; diagnostic only.'
     (output / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
     print('PASS', args.case, args.port, len(expected), 'complete bank snapshots')
 

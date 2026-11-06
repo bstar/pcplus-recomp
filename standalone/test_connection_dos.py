@@ -6,7 +6,7 @@ from modem_fixtures import fixture
 from test_terminal import SAMPLER
 from directory_test_support import accounting_check
 ROOT=Path(__file__).resolve().parents[1];BINARY=ROOT/'build/terminal/TERMINAL.EXE'
-def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False,dial_action=None,online_actions=(),auxiliary=(),flow_updates=(),flow_inflight=b'',keyboard_program='ADDKEY'):
+def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=None,com=1,profile=6,target=b'CaseTest:23',expected=0,directory_entry=1,directory_expected=None,accounting_delta=None,recovery_conflict=False,files=None,banner=None,working_drive="c",environment=None,observer=None,online_updates=(),online_triggers=(),cpu='386',irq=None,timeout=20,emulated_modem=False,dial_action=None,online_actions=(),auxiliary=(),flow_updates=(),flow_inflight=b'',keyboard_program='ADDKEY',observer_high=False):
  assert keyboard_program in ('ADDKEY','Z:\\BIN\\ADDKEY.COM')
  assert cpu in ('8086','286','386','486')
  assert irq is None or irq in (3,4,5,7)
@@ -19,6 +19,7 @@ def run(name,mode,keys,*,directory=None,prm=None,prm_expected=None,arguments=Non
  auxiliary_start='\n'.join('D:\\'+helper+' T' for helper in auxiliary)
  auxiliary_stop='\n'.join('D:\\'+helper for helper in reversed(auxiliary))
  observer_start=('D:\\'+observer+' T') if observer else ''
+ if observer and observer_high:observer_start='LH '+observer_start
  observer_stop=('D:\\'+observer) if observer else ''
  out=ROOT/'build/connection-dos'/name;out.mkdir(parents=True,exist_ok=True)
  for p in ('PASS.TXT','FAIL.TXT','BEFORE.BIN','AFTER.BIN','SCREEN.BIN'):(out/p).unlink(missing_ok=True)
@@ -176,6 +177,7 @@ exit
   if emulated_modem:cfg=cfg.replace('modem listenport:0','modem listenport:0 irq:'+str(irq))
   assert cfg.count('irq:')==1
  # Retain the literal default for the existing source-inspecting adapters.
+ if observer_high:cfg=cfg.replace('[autoexec]','[dos]\nxms=true\nems=false\numb=true\n[autoexec]')
  if cpu!='386':cfg=cfg.replace('cputype=386','cputype='+cpu)
  configured_cpu=next(line.split('=',1)[1] for line in cfg.splitlines() if line.startswith('cputype='))
  (out/'dosbox.conf').write_text(cfg)

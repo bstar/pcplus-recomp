@@ -1,0 +1,212 @@
+{
+  "checkpoint_recorded": true,
+  "all_program_gates_passed": false,
+  "terminal_sha256": "72f3ced9e6090cd0e443ce822184c04612e8d244b51fc9e16f1f1ac196c86b09",
+  "interpreter_sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+  "results": {
+    "observer_policy": {
+      "path": "build/aspect-exit-watch-policy-v4-20261106/result.json",
+      "sha256": "45fbd7189f6e82ce64fd7b576a868395a4dbbf64c4d432c97bc32cbf77fae5b0",
+      "passed": true
+    },
+    "noclear_8086_unobserved": {
+      "path": "build/packed-program-noclear-unobserved-final-20261106/result.json",
+      "sha256": "f82b20b752ef937c825603a8f977592645b407fbf31017c9c7ad21d3c60adfca",
+      "passed": true
+    },
+    "noclear_386_umb": {
+      "path": "build/packed-program-noclear-exit-umb-386-final-20261106/result.json",
+      "sha256": "3dc89b55fab8b8078202e584649113b96016271883fab80519d489f25fd81dcd",
+      "passed": true,
+      "exit_watch": {
+        "launches": 4,
+        "resident_segment": 52299,
+        "exits": [
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          }
+        ]
+      }
+    },
+    "save_386_umb": {
+      "path": "build/packed-program-save-exit-umb-386-20261106/result.json",
+      "sha256": "ad1993d31ddf5c5bdfa901f2abc03490ee026eabff184f4d7cbcd0e62fc352ae",
+      "passed": false,
+      "exit_watch": {
+        "launches": 4,
+        "resident_segment": 52299,
+        "exits": [
+          {
+            "exit": 10,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 10,
+            "ds": 37331,
+            "ss": 37331,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          }
+        ]
+      }
+    },
+    "register_normal": {
+      "path": "build/register-handoff-dos/packed-program-register-splash-fixed-20261106/result.json",
+      "sha256": "2ca79148faf1793a0b04783d6a68b120c8b3bd1c2b90681b9cdee70807703a39",
+      "passed": true,
+      "snapshots": 5
+    },
+    "register_bad-token": {
+      "path": "build/register-handoff-dos/packed-register-bad-token-20261106/result.json",
+      "sha256": "0acb73800f6154a3f198693f90a6ef6549877594558295ee264ba566998ef7dc",
+      "passed": true,
+      "snapshots": 7
+    },
+    "register_missing-script": {
+      "path": "build/register-handoff-dos/packed-register-missing-script-20261106/result.json",
+      "sha256": "f449dc35e3f1083f84cc877f3c96856da8faacfc7ab285e95b65307fa81a77dc",
+      "passed": true,
+      "snapshots": 5
+    },
+    "register_missing-helper": {
+      "path": "build/register-handoff-dos/packed-register-missing-helper-20261106/result.json",
+      "sha256": "119da249177d18dfbb9118fd1a1206cfab6dd48632ff3baf2eaa7f44ae990dc3",
+      "passed": true,
+      "snapshots": 5
+    },
+    "register_divide": {
+      "path": "build/register-handoff-dos/packed-register-divide-20261106/result.json",
+      "sha256": "70d5865a8e0bdbb2a3b47c676a3f088dd6e17f05d2205356ee2609dd1a052cfb",
+      "passed": true,
+      "snapshots": 7
+    },
+    "register_budget": {
+      "path": "build/register-handoff-dos/packed-register-budget-20261106/result.json",
+      "sha256": "199bd53af19ff39bf1d2428fb6ead32d14346f01ac60b6108117eb9ab79fe564",
+      "passed": true,
+      "snapshots": 7
+    },
+    "register_abort": {
+      "path": "build/register-handoff-dos/packed-register-abort-20261106/result.json",
+      "sha256": "841a29ad35f82c368db9ce0c1015cb97c4ff6c952d9b2d9151083dc8ef3f06c1",
+      "passed": true,
+      "snapshots": 7
+    }
+  },
+  "register_cases": 7,
+  "register_snapshot_pairs": 43,
+  "physical_runtime_verified": false,
+  "application_changed": false,
+  "limits": [
+    "SAVE fault location within PROGRAM remains unmeasured; error10/9B is observed only in the verified386/XMS/UMB diagnostic profile.",
+    "Low-memory witness perturbs the NOCLEAR control; earlier captures are excluded from causal attribution.",
+    "Initial register failures were a stale splash/startup schedule; they are superseded by seven corrected actual8086 runs.",
+    "No compiler bank-A feature, complete PROGRAM-option or physical timing acceptance."
+  ]
+}
