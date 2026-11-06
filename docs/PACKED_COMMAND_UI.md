@@ -49,6 +49,12 @@ and owner/action states match through browsing, help, search and reference route
 This is a comparison with a corrected control, not a claim that corrupted prior
 category screens are unchanged.
 
+Twelve additional controls execute the unchanged preceding editor parent's
+naive search and compare selected labels/no-match outcomes with the packed
+rolling-window search, including mixed case, leading/internal spaces and a
+31-character query. This supplies a separate search oracle beyond the corrected
+decoder control.
+
 The first generator attempt also transformed a pragma symbol string; the linker
 rejected it before execution. Directive filtering was corrected. Those failed
 attempts are retained locally and excluded from acceptance.
@@ -86,3 +92,5 @@ failure, nor acceptance of every timing pattern or disabled input framing.
 Nested ASPECT PROGRAM composition, broader original language/emulation/protocol
 parity, Host mode and physical hardware acceptance remain open. The installed
 selection and reviewed package recipe remain unchanged at this checkpoint.
+The reviewed one-command builder still reproduces all ten public files and
+the exact76da9ea0 ZIP from current source.

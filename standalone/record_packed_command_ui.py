@@ -5,7 +5,7 @@ from pathlib import Path
 from build_path_session import ROOT,sha
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--source-proof',type=Path,required=True);a=p.parse_args()
  out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  binary=ROOT/'build/editor-packed-ui-v3-20261106/TERMINAL.EXE';digest=sha(binary)
  manifest=json.loads(binary.with_name('manifest.json').read_text())
@@ -28,8 +28,13 @@ def main():
  assert (30195-memory['retained_parent_paragraphs'])*16==4224
  frames_path=ROOT/'build/packed-ui-frame-parity-v3-20261106/result.json';frames=read(frames_path)
  assert frames['identical_frames']==1146 and len(frames['cases'])==1146
- proof_path=ROOT/'build/packed-ui-public-source-proof-v2-20261106/result.json';proof=read(proof_path)
+ proof_path=a.source_proof.resolve();assert proof_path.is_relative_to(ROOT/'build');proof=read(proof_path)
  assert proof['disabled_sha256']=='93f08d0cf3fd4174718e7ca727758ddb63f4e6f0ecd1471b3fb00c41c1f4d800' and not proof['original_inputs'] and proof['ancestor_git_unavailable']
+ search_path=ROOT/'build/packed-ui-legacy-search-20261106/result.json';search=read(search_path)
+ assert len(search['cases'])==12 and all(c['passed'] for c in search['cases'])
+ reviewed_path=ROOT/'build/reviewed-after-ui-pack-20261106/result.json';reviewed=read(reviewed_path,False)
+ assert reviewed['archive_sha256']=='76da9ea0b6c5323606b6b2f6e621d810379bd6f934c94d87a04537d66e9939e2'
+ assert reviewed['files']['TERMINAL.EXE']=='2d626fb001bed53d3fb3c3a49ea1859f17e69b6ade07792c3a160043ff0a6c02'
  layout_path=ROOT/'build/packed-ui-v3-layout-20261106/result.json';layout=read(layout_path)
  assert layout['state_bytes']==130 and len(layout['negative_controls'])==5 and all(c['rejected'] for c in layout['negative_controls'])
  modal=[]
@@ -68,7 +73,7 @@ def main():
   loss.append(bind(path))
  result=dict(passed=True,binary_sha256=digest,retained_module_bytes=478656,retained_parent_paragraphs=memory['retained_parent_paragraphs'],
   saved_against_editor_bytes=4224,saved_against_reviewed_viewer_bytes=3744,near_bytes=65488,resident_code_bytes=65516,
-  packed_text=packed,UI_comparison=bind(frames_path),public_source_build=bind(proof_path),source_commit=proof['source_commit'],
+  packed_text=packed,UI_comparison=bind(frames_path),legacy_search=bind(search_path),reviewed_package_reproduction=bind(reviewed_path),public_source_build=bind(proof_path),source_commit=proof['source_commit'],
   linked_layout=bind(layout_path),modal_workflows=modal,servers=servers,stream_capacity=bind(streams_path),
   transfers=bind(transfers_path),carrier_recovery=loss,interpreter_changed=False,default_interpreter_heap_growth=512,
   installed_package_changed=False,sources={'standalone/record_packed_command_ui.py':sha(Path(__file__))},
