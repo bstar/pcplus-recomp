@@ -23,6 +23,7 @@ def main(extension=None):
     if extension and extension.get('register_handoff'):feature_flags+=['-DASPECT_REGISTER_HANDOFF']
     if extension and extension.get('custom_irq'):feature_flags+=['-DASPECT_CUSTOM_IRQ']
     if extension and extension.get('file_open_probe'):feature_flags+=['-DASPECT_FILE_OPEN_PROBE']
+    if extension and extension.get('program_result_probe'):feature_flags+=['-DASPECT_PROGRAM_RESULT_PROBE']
     if extension and extension.get('heap_growth_bytes') is not None:
         assert extension.get('register_handoff') and extension['heap_growth_bytes'] in (128,256,512)
         feature_flags+=['-DASPECT_HEAP_GROWTH_BYTES='+str(extension['heap_growth_bytes'])]
@@ -106,6 +107,7 @@ def main(extension=None):
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
                   diagnostic_file_open_probe=bool(extension and extension.get('file_open_probe')),
+                  diagnostic_program_result_probe=bool(extension and extension.get('program_result_probe')),
                   startup_heap_growth_bytes=extension.get('heap_growth_bytes') or 512 if extension and extension.get('register_handoff') else None,
                   experimental_serial_bank=banked_serial,
                   experimental_register_handoff=bool(extension and extension.get('register_handoff')),
@@ -121,7 +123,7 @@ def main(extension=None):
             experimental_break_owner=bool(extension.get('break_owner')),
             experimental_fault_unwind=True,compiler_size_optimized=True,
             experimental_parent_render=bool(extension.get('parent_render')),
-            diagnostic_build=diagnostic_driver or bool(extension.get('file_open_probe')),
+            diagnostic_build=diagnostic_driver or bool(extension.get('file_open_probe')) or bool(extension.get('program_result_probe')),
             main_source=str(main_source.relative_to(ROOT)),
             scope='Experimental108-slot raw/local ASPECT with composed PROGRAM, private DOS handles and real script/ASX ownership checks. Attached parent rendering rejects before execution; full application publication remains open.')
         if extension.get('parent_render'):result['scope']='Experimental108-slot ASPECT with capability13 attached parent PROGRAM lease, cooperative help/native yes-no confirmation, private streams and the PROGRAMCODE far controller through explicit near-platform adapters. Break/exit policy is selected separately. The normal105-slot application, complete command ownership and physical acceptance remain separate gates.'

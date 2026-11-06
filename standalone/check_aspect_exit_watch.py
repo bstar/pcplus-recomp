@@ -9,14 +9,14 @@ from build_path_session import ROOT,sha
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
     out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir()
-    fields=['ERROR','OPCODE','RAW','CLEANUP','CALLS','SCOPE','DISPLAY','BUSY','PROCESS','HEADER']
+    fields=['ERROR','OPCODE','RAW','CLEANUP','CALLS','SCOPE','DISPLAY','BUSY','PROCESS','HEADER','NEAR','FAR','BACKUP','ERRNO','DOSERR']
     offsets={n:0x100+i*2 for i,n in enumerate(fields)}
-    defines=dict(PARENT_DATA_SEG=0x200,PARENT_RENDER_SEG=0x100,PARENT_CHILD_DS=0x100,
+    defines=dict(PARENT_DATA_SEG=0x200,PARENT_RENDER_SEG=0x100,PARENT_CHILD_DS=0x100,CHILD_RESULT=0x140,
                  **{'CHILD_'+n:o for n,o in offsets.items()})
     source=ROOT/'standalone/aspect_exit_watch.asm';wrapper=out/'hook.asm'
-    wrapper.write_text(source.read_text()+'\ntest_symbols: dw hook,old21,parent_ds,data,resident_end,alloc_data,alloc_current\n')
+    wrapper.write_text(source.read_text()+'\ntest_symbols: dw hook,old21,parent_ds,data,resident_end,alloc_data,alloc_current,probe_records\n')
     binary=out/'hook.com';subprocess.run(['nasm','-fbin',*[f'-D{k}={v}' for k,v in defines.items()],str(wrapper),'-o',str(binary)],check=True)
-    raw=binary.read_bytes();entry,old,parent,data,end,alloc,current=struct.unpack('<7H',raw[-14:]);cases=[]
+    raw=binary.read_bytes();entry,old,parent,data,end,alloc,current,probe=struct.unpack('<8H',raw[-16:]);cases=[]
     for df in [0,0x400]:
       for cf in [0,1]:
        for scenario in ['match','other-name','other-function','foreign-stack','foreign-child','full','pointer-bound']:
@@ -24,6 +24,7 @@ def main():
         u.mem_write(0x10000+old,struct.pack('<HH',0,0x3000));u.mem_write(0x30000,b'\xcf')
         u.mem_write(0x5f100,struct.pack('<H',0x7000))
         for i,n in enumerate(fields):u.mem_write(0x70000+offsets[n],struct.pack('<H',0x120+i))
+        u.mem_write(0x70140,struct.pack('<8H',*range(0x900,0x908)))
         def invoke(ax,ds,ss,dx=0x2000,result=None):
             stub=b'\xcf'
             if result:
@@ -71,6 +72,7 @@ def main():
         if scenario=='match':
             values=struct.unpack('<13H',u.mem_read(0x10000+data+10,26))
             assert values==(10,0x7000,0x7000,*range(0x120,0x12a))
+            assert struct.unpack('<8H',u.mem_read(0x10000+probe,16))==tuple(range(0x900,0x908))
         after=bytes(u.mem_read(0x70000,0x10000))
         lo=(child-0x7000)*16+0x8f00;hi=(child-0x7000)*16+0x9006
         assert after[:lo]==product_before[:lo] and after[hi:]==product_before[hi:]
@@ -80,7 +82,8 @@ def main():
             for index,result in enumerate([(0x4567,0x3456,0),(8,229,1)]):
                 invoke(0x4800,0x7000,0x7000,result=result)
                 assert struct.unpack('<H',u.mem_read(0x10000+alloc+4,2))[0]==index+1
-                assert struct.unpack('<4H',u.mem_read(0x10000+alloc+6+index*8,8))==(0x3456,*result)
+                values=struct.unpack('<11H',u.mem_read(0x10000+alloc+6+index*22,22))
+                assert values==(0x3456,*result,*(0x120+fields.index(n) for n in ['NEAR','FAR','BACKUP','DISPLAY','PROCESS','ERRNO','DOSERR']))
                 assert struct.unpack('<H',u.mem_read(0x10000+current,2))[0]==0
                 cases.append(dict(scenario='allocation-return',df=bool(df),cf=bool(cf),result=result))
     report=dict(passed=True,cases=cases,resident_bytes=end,sources={str(source.relative_to(ROOT)):sha(source),str(Path(__file__).relative_to(ROOT)):sha(Path(__file__))},

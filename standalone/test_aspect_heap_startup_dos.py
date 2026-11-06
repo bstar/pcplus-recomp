@@ -24,6 +24,7 @@ def main():
     parser.add_argument('--exit-watch',action='store_true',help='Install a small passive diagnostic TSR; separate memory footprint from ordinary acceptance')
     parser.add_argument('--exit-watch-high',action='store_true',help='Require the passive observer to reside in UMB')
     parser.add_argument('--cpu',choices=['8086','386'],default='8086')
+    parser.add_argument('--program-result-probe',action='store_true',help='Explicitly admit only the marked PROGRAM-result diagnostic interpreter')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
     assert not args.exit_watch_high or args.exit_watch
@@ -32,7 +33,8 @@ def main():
     sources = {}
     for program in [binary, runner]:
         m = json.loads(program.with_name('manifest.json').read_text())
-        assert sha(program) == m['binary_sha256'] and not m.get('diagnostic_build')
+        assert sha(program) == m['binary_sha256']
+        assert not m.get('diagnostic_build') or (program==runner and args.program_result_probe and m.get('diagnostic_program_result_probe'))
         for name, expected in m['sources'].items():
             assert sha(ROOT / name) == expected, name
             sources[name] = expected
@@ -136,6 +138,7 @@ message: db 'CHILD|'
     if args.nested_program:
         checks['two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|CHILD|'
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary),
+                  program_result_probe=args.program_result_probe,
                   cpu=args.cpu,
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')

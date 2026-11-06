@@ -23,6 +23,9 @@ extern unsigned runtime_external_invocation_active,runtime_external_scope_storag
 #endif
 unsigned runtime_external_calls,runtime_external_raw_status,runtime_external_private_count;
 unsigned runtime_external_recoveries,runtime_external_cleanup_error;
+#if defined(ASPECT_PROGRAM_RESULT_PROBE)
+unsigned runtime_external_result_probe[8];
+#endif
 static struct {
  aspect_file file;
  long position,physical;
@@ -98,6 +101,11 @@ int runtime_external_execute_inner(const char *program,const char *tail,
 {
  unsigned descriptors[7],count=0,status=0,other;
  native_program_result result;
+#if defined(ASPECT_PROGRAM_RESULT_PROBE)
+ unsigned probe_i;
+ for(probe_i=0;probe_i<8;++probe_i)runtime_external_result_probe[probe_i]=65535U;
+ runtime_external_result_probe[0]=1;
+#endif
  runtime_external_raw_status=65535U;runtime_external_cleanup_error=0;
 #if !defined(ASPECT_EXTERNAL_RENDER)
  if(aspect_render_active()){runtime_set_error(ASPECT_RUN_STATE);return -1;}
@@ -125,6 +133,17 @@ int runtime_external_execute_inner(const char *program,const char *tail,
  external_phase(EXTERNAL_HANDLES);
  ++runtime_external_calls;
  other=native_program_execute(program,tail,processor,wait,save_screen,&result);
+#if defined(ASPECT_PROGRAM_RESULT_PROBE)
+ runtime_external_result_probe[0]=2;runtime_external_result_probe[1]=other;
+ if(other!=NATIVE_PROGRAM_BUSY){
+  runtime_external_result_probe[2]=result.display_status;
+  runtime_external_result_probe[3]=result.serial_status;
+  runtime_external_result_probe[4]=result.process.status;
+  runtime_external_result_probe[5]=result.process.crt_error;
+  runtime_external_result_probe[6]=result.process.dos_error;
+  runtime_external_result_probe[7]=result.process.child_status;
+ }
+#endif
  if(other!=NATIVE_PROGRAM_BUSY)held.view_reset=result.view_reset;
  if(other==NATIVE_PROGRAM_SERIAL){runtime_serial_error=result.serial_status;status=ASPECT_RUN_SERIAL;}
  else if(other>NATIVE_PROGRAM_PROCESS||other==NATIVE_PROGRAM_DISPLAY||other==NATIVE_PROGRAM_BUSY||

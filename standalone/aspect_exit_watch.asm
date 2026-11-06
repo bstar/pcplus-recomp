@@ -8,9 +8,13 @@ old21: dd 0
 parent_ds: dw 0
 data: dw 0xae51,2,0,0,0
 records: times 8*13 dw 0
-alloc_data: dw 0xa148,1,0
-alloc_records: times 16*4 dw 0
+alloc_data: dw 0xa148,2,0
+alloc_records: times 16*11 dw 0
 alloc_current: dw 0
+%ifdef CHILD_RESULT
+probe_data: dw 0xb008,1
+probe_records: times 8*8 dw 0
+%endif
 hook:
  pushf
  push ax
@@ -78,6 +82,23 @@ hook:
  mov [cs:di+22],ax
  mov ax,[CHILD_HEADER]
  mov [cs:di+24],ax
+%ifdef CHILD_RESULT
+ mov di,[cs:data+4]
+ dec di
+ shl di,1
+ shl di,1
+ shl di,1
+ shl di,1
+ add di,probe_records
+ mov si,CHILD_RESULT
+ mov cx,8
+.probe_copy:
+ mov ax,[si]
+ mov [cs:di],ax
+ add si,2
+ add di,2
+ loop .probe_copy
+%endif
  jmp .done
 .allocate:
  cmp word [cs:parent_ds],0
@@ -99,14 +120,33 @@ hook:
  cmp di,16
  jae .done
  inc word [cs:alloc_data+4]
+ mov bx,di
  shl di,1
- shl di,1
- shl di,1
+ shl bx,1
+ shl bx,1
+ add di,bx
+ shl bx,1
+ shl bx,1
+ add di,bx ; index*22
  add di,alloc_records
  mov [cs:alloc_current],di
  mov bp,sp
  mov ax,[ss:bp+14] ; caller BX, requested paragraphs
  mov [cs:di],ax
+ mov ax,[CHILD_NEAR]
+ mov [cs:di+8],ax
+ mov ax,[CHILD_FAR]
+ mov [cs:di+10],ax
+ mov ax,[CHILD_BACKUP]
+ mov [cs:di+12],ax
+ mov ax,[CHILD_DISPLAY]
+ mov [cs:di+14],ax
+ mov ax,[CHILD_PROCESS]
+ mov [cs:di+16],ax
+ mov ax,[CHILD_ERRNO]
+ mov [cs:di+18],ax
+ mov ax,[CHILD_DOSERR]
+ mov [cs:di+20],ax
  pop es
  pop ds
  pop bp
@@ -249,13 +289,26 @@ collect:
  push es
  pop ds
  mov dx,alloc_data
- mov cx,6+16*8
+ mov cx,6+16*22
  mov ah,0x40
  int 0x21
  pop ds
  jc failed
- cmp ax,6+16*8
+ cmp ax,6+16*22
  jne failed
+%ifdef CHILD_RESULT
+ push ds
+ push es
+ pop ds
+ mov dx,probe_data
+ mov cx,4+8*16
+ mov ah,0x40
+ int 0x21
+ pop ds
+ jc failed
+ cmp ax,4+8*16
+ jne failed
+%endif
  mov ah,0x3e
  int 0x21
  jc failed
