@@ -34,7 +34,7 @@ def packed_guide(directory):
         'Compile source scripts with ASPCOMP SCRIPT.ASP before starting PCPlus.\n'
         'Automatic resident compilation and nested PROGRAM remain separate gates.\n\n'
         'This build packs command-browser text without removing help or commands.\n'
-        'The original ASPECT stack, heap-growth policy and six file slots remain.\n'
+        'The existing ASPECT stack, heap-growth policy and six file slots remain.\n'
         'Check login, ANSI/CP437, editor navigation, reconnect and owned-file\n'
         'transfers on the intended hardware. Full original parity and physical\n'
         'modem/SIP/audio acceptance remain open. This is a test candidate.\n')
