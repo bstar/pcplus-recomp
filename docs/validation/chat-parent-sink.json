@@ -1,0 +1,70 @@
+{
+  "status": "actual-parent-effects-verified-foreground-unbound",
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "full_candidate_acceptance": false,
+  "binary_sha256": "c1b3faf82fb692c85cb9fd2f9eba85c1c27a48ca6bf6406fb0d955a171c3979b",
+  "module_sha256": "f0e91e2b1aff29e466d68bbe7d1a267c57382126dce21b2c6759aff6ce31850f",
+  "minimum_module_bytes": 478240,
+  "retained_parent_paragraphs": 29905,
+  "near_bytes": 65488,
+  "resident_CS_bytes": 65504,
+  "adapter_object_segments": {
+    "_TEXT": {
+      "class": "CODE",
+      "bytes": 17
+    },
+    "CHAT_ADAPTER_CODE": {
+      "class": "FARCODE",
+      "bytes": 110
+    }
+  },
+  "additional_minimum_bytes": 128,
+  "capacities_unchanged": {
+    "near_bytes": 65488,
+    "far_bytes": 71192,
+    "history_bytes": 63000,
+    "native_reset_private_stack_bytes": 4096,
+    "native_reset_shadow_bytes": 6600,
+    "native_reset_workspace_bytes": 65504,
+    "snapshot_bytes": 2000,
+    "far_ui_storage_bytes": 24000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_row_index_bytes": 494
+  },
+  "DOS_callback_compositions": 2,
+  "checked_capture_files": 2,
+  "checked_capture_bytes_each": 10,
+  "source_export_files": 637,
+  "disabled_parent_sha256": "75fdb753230eb9732dc16c7407a6cbfef26c9fba184a1f2464253b2cbc028545",
+  "reports": {
+    "actual_DOS_module_callbacks": {
+      "path": "build/chat-adapters-parent-dos-reviewed-20261106/result.json",
+      "sha256": "2b4cb6ff21e43360930d26a2a8d9f7690b80d69d55bf9c2d2f68f577db7b2011"
+    },
+    "normal_main_ASPECT": {
+      "path": "build/chat-adapters-parent-aspect-20261106/result.json",
+      "sha256": "a32f90adb802fbd1d4a2b12c2e6bd09e8617874a2707c9db864156b508dc6be8"
+    },
+    "linked_storage": {
+      "path": "build/chat-adapters-parent-linked-20261106/result.json",
+      "sha256": "9506fc0eb0bbf62429a97e6114bac917a35d50934171644b8ff509b8e5c0f9da"
+    },
+    "cold_source_composition": {
+      "path": "build/chat-adapters-parent-source-20261106/result.json",
+      "sha256": "5902de56e6ee01c4a112c04ce5d1639438aa62392005b858bea1540e57ba82c4"
+    },
+    "disabled_control": {
+      "path": "build/chat-adapters-disabled-20261106/result.json",
+      "sha256": "6c976b3225da5f69ebe88cf4c099b2a6c485aa31d734b71fd5415622351fd663"
+    }
+  },
+  "remaining": [
+    "Original Alt-O/reference entry and pre-dequeue input hold",
+    "Main-loop RX/idle service and transport-idle key handoff",
+    "Native direct TEXT/Help and notice/trap/disconnect retirement",
+    "Full frontend memory, Enigma/Synchronet and final package checks",
+    "Prior unattributed redial miss",
+    "Reversible deployment and physical acceptance"
+  ]
+}

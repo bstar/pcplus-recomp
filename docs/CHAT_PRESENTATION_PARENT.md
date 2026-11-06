@@ -68,3 +68,7 @@ Repeat final parent memory, connection, package and physical gates after those
 hooks are integrated. The earlier intermittent Enigma redial miss remains an
 open reliability issue. No selected payload, physical files or production
 SynthModem/Enigma configuration changes at this checkpoint.
+
+The next [parent sink checkpoint](CHAT_PARENT_SINK.md) binds the loaded module's
+effects to real parent TX/log/history services and verifies queue backpressure.
+Original entry and foreground input/receive hooks remain open.

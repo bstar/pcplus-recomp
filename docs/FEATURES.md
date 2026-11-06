@@ -2377,6 +2377,16 @@ The preceding parent remains byte-identical when the option is disabled.
 Foreground Chat entry/adapters, final memory/package/physical gates and the
 earlier unattributed redial miss remain open.
 
+The [real parent Chat sink](CHAT_PARENT_SINK.md) now connects loaded-module
+effects to user-origin TX queue admission and recovered native log/history.
+Actual DOS8086 tests at two module addresses cover full-queue refusal without
+byte/provenance changes, printer reservation, signed-word/native filters,
+CP437 RX, real checked capture files and unchanged PSP/JFT/free memory.
+Six-stream/three-child ASPECT admission,54storage cases and a637-file exact
+source reproduction pass. The adapter adds128minimum module bytes and no near
+data; disabling it retains the preceding parent exactly. Main Chat entry,
+input/receive hooks and final BBS/package/physical gates remain open.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A
