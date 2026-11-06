@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "kind": "resident-chat-loader-admission-without-frontend-binding",
+  "binary_sha256": "03a2149b55a8fd9adb668fe88ccd8f0520047549381042ec2db755bd4d4c7e6c",
+  "binary_path": "build/chat-loader-parent-reviewed-20261106/TERMINAL.EXE",
+  "module_sha256": "77270fb67a435c52ee0a61969cfbb68822ada57c3cdb56d6b3f7b66de84a63d2",
+  "module_file_bytes": 3386,
+  "module_image_bytes": 3338,
+  "loader_code_bytes": 1264,
+  "loader_object_bytes": 1259,
+  "loader_near_data_bytes": 0,
+  "minimum_module_bytes": 478000,
+  "retained_parent_paragraphs": 29890,
+  "near_bytes": 65488,
+  "resident_CS_bytes": 65478,
+  "baseline_bytes_saved": 32,
+  "clean_source_files": 629,
+  "disabled_control": {
+    "path": "build/chat-loader-disabled-control-20261106/manifest.json",
+    "manifest_sha256": "8cdc04fa5995a546b72773ffd8bf557de771cefbf7bee11ef70374af9fe44c0c",
+    "binary_sha256": "6175795625c78c658e09fb759708e1caee9ffc895cb1255fc7dc3ea8422ea041"
+  },
+  "reports": {
+    "optimized_overlay_dos": {
+      "path": "build/chat-module-size-loader-20261106/result.json",
+      "sha256": "530f1dbc06e5a4509ea4494b0875a30b358d65d25e1af858894d916a5b9e9d48"
+    },
+    "parent_tested_object_identity": {
+      "path": "build/chat-loader-parent-object-audit-final-20261106/result.json",
+      "sha256": "b2bd2fe8bdcbda3fa152592df2d8ff5d775c966440b4c969cff5382c09a4f50d"
+    },
+    "parent_aspect_six_streams_children": {
+      "path": "build/chat-loader-parent-aspect-20261106/result.json",
+      "sha256": "a669a2fc5e7b652e2f674d02b33781ab0abef9a18fe3a560d02dab103c82362f"
+    },
+    "cold_source_export": {
+      "path": "build/chat-loader-parent-source-proof-20261106/result.json",
+      "sha256": "c66e66dc15259aae8e97422f33b0d9ec8759a756e32bf60d8c474a2d9a474f9f"
+    },
+    "synchronet_editor_graphics_return": {
+      "path": "build/bbs-lab/results/synchronet/chat-loader-synchronet-editor-20261106/proxy-integration.json",
+      "sha256": "c866ceccc2703d7fb83f1ca5727ac8a34243415c62e46f8952960d0d551dbaea"
+    },
+    "enigma_carrier_redial_retry": {
+      "path": "build/bbs-lab/results/enigma/chat-loader-enigma-carrier-20261106/carrier-checks.json",
+      "sha256": "bcd84f4e05db76a2300b305d9a5326885d8a7ae5eac7c9c869b82795c8a23dca"
+    },
+    "enigma_independent_audit": {
+      "path": "build/chat-loader-enigma-carrier-audit-20261106/result.json",
+      "sha256": "3329aad939c80f4dad279aef347261d9aa40a9f4c9b792ca11fba643df89f254"
+    }
+  },
+  "partial_disk_bytes": 4096,
+  "exact_retry_bytes": 65539,
+  "sources": {
+    "src/chat/loader_link.py": "5e774c84ec1704d7a374094bd9c7735109b8d073ee490a683ff8c69476c3b893",
+    "standalone/build_terminal.py": "562dd9eafcf277664cbb4f6b24b6449c947e2b55707b99a602538c00c0a5d805",
+    "standalone/test_chat_module_dos.py": "8dced7fdde19bcb7eb8bfdb18a3977304e6e17ec08a945a6171b0b79bf9017c4",
+    "standalone/check_chat_loader_parent.py": "263d9cfbb4a1a12b55860f5771b69bfb462f66f923ddd34b859556ead780e183"
+  },
+  "foreground_binding": false,
+  "storage_lease": false,
+  "selected_package_changed": false,
+  "physical_machine_changed": false,
+  "production_bridge_changed": false,
+  "scope": "Checked loader retained in real opt-in parent; module implementation remains separately loadable. DOS-tested loader code/data/fixups match, allowing only checked generated-header dependency metadata. Actual DOS8086 ASPECT/child and Enigma carrier-loss/redial/65539-byte exact retry; Synchronet editor/graphics return uses existing386/UMB helper profile. No calls from parent into Chat yet, no physical Boca/SPA2102/SIP/audio, performance-budget or full original parity acceptance."
+}

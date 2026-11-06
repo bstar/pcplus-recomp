@@ -19,7 +19,9 @@ NAMES=list(dict.fromkeys(SOURCES+['src/chat/loader.c','src/chat/loader.h','src/c
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);args=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--optimize-loader',action='store_true',help='Use the exact resident parent loader compiler options')
+    args=p.parse_args()
     out=args.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir()
     sources={n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in NAMES}
     module=build(out/'module');drive=out/'drive';drive.mkdir()
@@ -29,7 +31,8 @@ def main():
     bad=bytearray(raw);table=struct.unpack_from('<H',raw,0x18)[0];struct.pack_into('<2H',bad,table,0xffff,0xffff);(drive/'RELOC.OVL').write_bytes(bad)
     for n,obj in [('src/chat/overlay_load.asm','load.obj'),('standalone/chat_overlay_storage.asm','storage.obj')]:
         subprocess.run(['nasm','-fobj',*(['-DCHAT_LOADER_BANK'] if obj=='load.obj' else []),str(ROOT/n),'-o',obj],cwd=drive,check=True)
-    subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we','-ecc','-nt=CHAT_LOAD_CODE','-nc=FARCODE','-i='+str(out/'module'),'-fo=loader.obj',str(ROOT/'src/chat/loader.c')],cwd=drive,check=True)
+    loader_flags=['-ox','-os','-oe=0'] if args.optimize_loader else []
+    subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we','-ecc',*loader_flags,'-nt=CHAT_LOAD_CODE','-nc=FARCODE','-i='+str(out/'module'),'-fo=loader.obj',str(ROOT/'src/chat/loader.c')],cwd=drive,check=True)
     imports=[name.decode() for kind,payload,raw_record in records((drive/'loader.obj').read_bytes()) if kind==0x8c for name,index in externals(payload)]
     assert set(imports)=={'_small_code_','_chat_file_open','_chat_file_read','_chat_file_close','_chat_dos_overlay_load','_chat_module_image_valid'},imports
     subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192',
@@ -63,7 +66,7 @@ def main():
     for leaf in ('FRAMES.BIN','EVENTS.BIN'):assert (proxy/leaf).read_bytes()==(out/'reference/drive'/leaf).read_bytes(),leaf
     assert all(hashlib.sha256((ROOT/n).read_bytes()).hexdigest()==h for n,h in sources.items())
     report=dict(passed=True,module_sha256=module['binary_sha256'],module_image_bytes=module['image_bytes'],
-        source_files=len(sources),loads=6,relocation_areas=2,free_paragraphs_during_load=0,
+        source_files=len(sources),loader_compiler_flags=loader_flags,loads=6,relocation_areas=2,free_paragraphs_during_load=0,
         malformed_file_controls=5,loaded_image_negative_controls=['ordinary-byte','relocation-word'],
         composed_frames=reference['complete_frames'],composed_effects=reference['ordered_effects'],rx_effects_while_tx_blocked=reference['rx_effects_while_tx_blocked'],loader_imports=imports,sources=sources,
         artifacts={str(p.relative_to(out)):hashlib.sha256(p.read_bytes()).hexdigest() for p in out.rglob('*') if p.is_file()},

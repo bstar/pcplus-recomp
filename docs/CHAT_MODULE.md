@@ -100,6 +100,11 @@ saves 1,296 retained bytes without reducing these capacities. Its opt-in parent
 is a separate candidate; the loader and frontend have not yet been added, so
 the saving alone does not close the admission gate.
 
+The [resident-loader checkpoint](CHAT_LOADER_PARENT.md) subsequently links the
+optimized loader into an opt-in real parent and tests its memory admission.
+Its separate module remains unbound to foreground Chat; storage ownership and
+application hooks are still open.
+
 Original Chat Alt-number keys call the native48CC TEXT sender over the54-byte
 records directly. The frontend must preserve that route rather than silently
 executing all general KEY action kinds. Help, notices, real log/history/TX,

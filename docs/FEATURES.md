@@ -2332,6 +2332,15 @@ exactly; disabled output remains `61757956`. This opt-in preparation does not
 enable Chat or change the selected/deployed package. Its 1,328-byte loader and
 frontend still require full parent admission and connection acceptance.
 
+The [resident Chat loader checkpoint](CHAT_LOADER_PARENT.md) now links a
+1,264-byte checked loader bank into the real opt-in parent, while keeping the
+3,338-byte implementation image outside its static link. Near data/capacities
+remain unchanged. Actual DOS overlay tests, six-stream ASPECT/child execution,
+Synchronet editor/graphics return, Enigma carrier-loss/redial/exact retry and
+a cold 629-file parent/module/header export pass. The parent does not call the
+loader yet: storage ownership,
+frontend bindings and final connection/deployment acceptance remain open.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

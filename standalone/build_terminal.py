@@ -15,6 +15,7 @@ parser.add_argument('--external-viewer',action='store_true',help='Configured nat
 parser.add_argument('--external-editor',action='store_true',help='Original Alt-A external editor using its separate PRM command; implies external viewer')
 parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bounded packing of authored command-browser text')
 parser.add_argument('--optimize-size',action='store_true',help='Experimental reviewed per-source C size profile; stacks and capacities unchanged')
+parser.add_argument('--chat-loader',action='store_true',help='Link the checked source-built Chat overlay loader; no foreground Chat binding yet')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
@@ -309,6 +310,7 @@ if args.external_viewer:out_name+='-external-viewer'
 if args.external_editor:out_name+='-external-editor'
 if args.packed_command_ui:out_name+='-packed-ui'
 if args.optimize_size:out_name+='-optimized-size'
+if args.chat_loader:out_name+='-chat-loader'
 if args.command_ui_pairs==0:out_name+='-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
@@ -839,11 +841,20 @@ if args.phone_log_bank:
  phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup,lifecycle=args.phone_log_lifecycle,events=args.phone_log_events,disk=args.phone_log_disk,controls=args.phone_log_controls,gateway=args.gateway_files)
  objects+=list(map(str,phone_log_bank['objects']));sources+=phone_log_bank['sources']
 ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
+chat_loader=None
+if args.chat_loader:
+ from chat.loader_link import build_loader
+ chat_loader=build_loader(ROOT,OUT)
+ objects+=list(map(str,chat_loader['objects']));sources+=chat_loader['inputs']
 if args.directory_resource_owner:ordering+=['FAR_DATA','FROZEN_DATA']
 subprocess.run(['wlink','system','dos','order',*[value for kind in ordering for value in ('clname',kind)],'option','quiet','option','map='+str(OUT/'terminal.map'),'name',str(OUT/'TERMINAL.EXE'),'file',','.join(objects),'library',str(Path(os.environ['WATCOM'])/'lib286/dos/clibs.lib')],check=True)
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
 assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64KiB'
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
+if chat_loader:
+ bank=next(c for c in memory['code_segments'] if c['name']=='CHAT_LOAD_CODE')
+ assert bank['bytes']==chat_loader['code_bytes'] and bank['offset']+bank['bytes']<=65536
+ assert '_chat_module_dispatch' not in listing,'Chat implementation must remain outside the resident parent'
 if args.display_row_owner:
  bank=next((c for c in memory['code_segments'] if c['name']=='DISPLAY_CODE'),None)
  assert bank and bank['offset']+bank['bytes']<=65536,'BIOS row bank exceeds its code segment'
@@ -911,6 +922,8 @@ manifest['experimental_external_viewer']=args.external_viewer
 manifest['experimental_external_editor']=args.external_editor
 manifest['experimental_packed_command_ui']=args.packed_command_ui
 manifest['experimental_optimize_size']=args.optimize_size
+manifest['experimental_chat_loader']=args.chat_loader
+if chat_loader:manifest['chat_loader']={k:v for k,v in chat_loader.items() if k not in ('objects','inputs')}
 if args.optimize_size:manifest['optimized_c_sources']=optimized_c_sources
 manifest['packed_command_ui']=packed_command_ui
 manifest['experimental_gateway_lookup']=args.gateway_lookup
