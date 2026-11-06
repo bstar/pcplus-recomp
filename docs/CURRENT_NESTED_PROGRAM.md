@@ -126,6 +126,75 @@ partial improvement. Next identify the precise display/process results and the
 later allocation's owner, then choose a resource-lifetime or placement change
 that retains the complete workflow.
 
+## Controller-result diagnostic and rejected allocation order
+
+The [controller-result receipt](validation/program-result-owner.json) adds a
+separately marked, non-deployable578f4ade interpreter. An opt-in compile flag
+retains eight result words around the actual `native_program_execute` call:
+whether it returned, its status, display/serial statuses and process
+status/CRT error/DOS error/child status. No synthetic successful return is
+inserted. The normal build excludes both the storage and assignments, and still
+reproduces the exact installed23caac93 interpreter.
+
+In the128-pair parent's386/XMS/UMB SAVE diagnostic, both nested invocations return
+controller status7 (`NATIVE_PROGRAM_NOTICE`), display0 and serial0, process4
+(`NATIVE_PROCESS_MEMORY`), CRT error12, DOS error8 and child statusFFFF. This is
+process-setup memory failure followed by failure of its error-notice path, not a
+successful child followed by bad screen restoration. Error10 is the outer
+interpreter's mapping of that controller failure. The paired NOCLEAR diagnostic
+returns controller/process/display/serial0 and child0. Six-stream, missing-file
+recovery and subsequent keyboard controls still pass.
+
+The allocation witness additionally reads existing near/far allocation counters,
+environment-size storage, display/process ownership and native error words.
+In the unchanged control's later38/254-paragraph requests, the native errno/DOS
+error are already12/8 and display/process ownership are already zero. Source
+control flow and those observations support an error-notice allocation path,
+rather than treating the254-paragraph request as a measured VM-backup failure.
+The exact return-site of each unmodified allocation remains untraced.
+
+The diagnostic changes allocation headroom: its later38-paragraph request fails
+with only33 available, while the unchanged control reaches the254-paragraph
+request. Do not substitute the diagnostic's exact branch or allocation sequence
+for the control. Its results establish the instrumented controller path. A
+fresh export of1699 public sources, without originals, previous objects or
+ancestor Git, reproduces both the diagnostic and unchanged control under Nix.
+Thirty-six assembled hook cases also check the optional eight-word result copy.
+
+An attempted near-first snapshot allocator failed with both64/128-pair parents
+in ordinary8086 SAVE tests and in its separate result diagnostic. It was removed
+from source; ignored artifacts retain the rejected inputs and receipts. Merely
+reordering `_nmalloc`/`_fmalloc` does not complete the workflow. Heap growth512,
+six-stream capacity, installed files and selected package remain unchanged.
+
+## Next storage-ownership gate
+
+The128-pair parent's actual map and current `redisplay.asm` provide a concrete
+candidate for removing this extra allocation: the retained8000-byte
+`redisplay_live` frame, which also holds the synchronous directory editor's
+4000-byte `ed_screen` role. This is a candidate, not an admitted lease. The
+browser and outer PROGRAM frames alias a different8000-byte block and must not
+be borrowed while the outer ASPECT process owns its saved screen.
+
+Before binding child SAVE to parent storage, require all of the following:
+
+- Audit every viewer/editor/script-window owner of the proposed frame. Acquire
+  only inside a valid attached child's PROGRAM lease with those owners inactive.
+- Validate the live PSP, DS=SS, service version/token, requested byte extent and
+  actual retained/disjoint frame bounds. Keep the old service ABI available;
+  unsupported parents must reject or take the existing allocation path.
+- Keep the parent frame distinct from the outer PROGRAM snapshot. While leased,
+  block every competing UI entry in both directions, including fault/retry paths.
+- Make the display allocator distinguish borrowed storage from heap storage;
+  never pass a parent-owned pointer to `_ffree`. Retire the lease after normal
+  restore/discard and recovery, retaining quarantine on failed retirement.
+- Prove exact saved-screen/cursor/geometry return, standard larger-row bounds,
+  repeat execution, six simultaneous streams and existing fault/cancellation
+  recovery. Then run Enigma/Synchronet/transfer regressions and clean source
+  reproduction before selecting or deploying a new package.
+
+No such storage service is implemented or published by this checkpoint.
+
 ## Repeat
 
 Run through the pinned Nix environment, choosing fresh output names:

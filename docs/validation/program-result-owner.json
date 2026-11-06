@@ -1,0 +1,487 @@
+{
+  "checkpoint_recorded": true,
+  "program_fixed": false,
+  "application_deployed": false,
+  "source_commit": "566e06e",
+  "control_sha256": "23caac9350b0a4be6f5898ce4bbc52c21604a5410a5f3340feae7732e04b004f",
+  "diagnostic_sha256": "578f4ade4813a9487e6e5e76d2b83d02e1be5041e300db0bb6f58a196aa06be5",
+  "results": {
+    "source": {
+      "path": "build/program-result-public-source-20261106/result.json",
+      "sha256": "e5c2ae5e9fda11971c30b1f242f33665beadfe84948ceb61be3390d6a627c73e",
+      "passed": true
+    },
+    "hook": {
+      "path": "build/program-result-owner-policy-20261106/result.json",
+      "sha256": "0d66d2e32ce6d31baf8a98c7f6b04ded09c109e19a0aa6c537b23dc602caf4a7",
+      "passed": true
+    },
+    "save_probe": {
+      "path": "build/program-result-final-save-probe-20261106/result.json",
+      "sha256": "2021a8a7d4972632c8fb084efa21469cece9bf0fd9808dd99ac28efdf8e42e93",
+      "passed": false,
+      "exit_watch": {
+        "launches": 4,
+        "resident_segment": 52299,
+        "exits": [
+          {
+            "exit": 10,
+            "ds": 37273,
+            "ss": 37273,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37273,
+            "ss": 37273,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37273,
+            "ss": 37273,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 10,
+            "ds": 37273,
+            "ss": 37273,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          }
+        ],
+        "allocations": [
+          {
+            "paragraphs": 252,
+            "ax": 40673,
+            "bx": 252,
+            "carry": 0,
+            "near_calls": 0,
+            "far_calls": 0,
+            "backup_extent": 0,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 0,
+            "native_dos_error": 0
+          },
+          {
+            "paragraphs": 38,
+            "ax": 8,
+            "bx": 33,
+            "carry": 1,
+            "near_calls": 1,
+            "far_calls": 0,
+            "backup_extent": 155,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 12,
+            "native_dos_error": 8
+          },
+          {
+            "paragraphs": 252,
+            "ax": 40673,
+            "bx": 252,
+            "carry": 0,
+            "near_calls": 0,
+            "far_calls": 0,
+            "backup_extent": 0,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 0,
+            "native_dos_error": 0
+          },
+          {
+            "paragraphs": 38,
+            "ax": 8,
+            "bx": 33,
+            "carry": 1,
+            "near_calls": 1,
+            "far_calls": 0,
+            "backup_extent": 155,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 12,
+            "native_dos_error": 8
+          }
+        ],
+        "program_results": [
+          {
+            "stage": 2,
+            "status": 7,
+            "display_status": 0,
+            "serial_status": 0,
+            "process_status": 4,
+            "crt_error": 12,
+            "dos_error": 8,
+            "child_status": 65535
+          },
+          {
+            "stage": 0,
+            "status": 0,
+            "display_status": 0,
+            "serial_status": 0,
+            "process_status": 0,
+            "crt_error": 0,
+            "dos_error": 0,
+            "child_status": 0
+          },
+          {
+            "stage": 0,
+            "status": 0,
+            "display_status": 0,
+            "serial_status": 0,
+            "process_status": 0,
+            "crt_error": 0,
+            "dos_error": 0,
+            "child_status": 0
+          },
+          {
+            "stage": 2,
+            "status": 7,
+            "display_status": 0,
+            "serial_status": 0,
+            "process_status": 4,
+            "crt_error": 12,
+            "dos_error": 8,
+            "child_status": 65535
+          }
+        ]
+      }
+    },
+    "save_control": {
+      "path": "build/program-result-final-save-control-20261106/result.json",
+      "sha256": "3b8610e53549755bf20aaa51d46160640acbb1018b843b2abada7f407ce6d2e3",
+      "passed": false,
+      "exit_watch": {
+        "launches": 4,
+        "resident_segment": 52299,
+        "exits": [
+          {
+            "exit": 10,
+            "ds": 37269,
+            "ss": 37269,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37269,
+            "ss": 37269,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37269,
+            "ss": 37269,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 10,
+            "ds": 37269,
+            "ss": 37269,
+            "error": 10,
+            "opcode": 155,
+            "raw_status": 65535,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          }
+        ],
+        "allocations": [
+          {
+            "paragraphs": 252,
+            "ax": 40668,
+            "bx": 252,
+            "carry": 0,
+            "near_calls": 0,
+            "far_calls": 0,
+            "backup_extent": 0,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 0,
+            "native_dos_error": 0
+          },
+          {
+            "paragraphs": 38,
+            "ax": 40921,
+            "bx": 38,
+            "carry": 0,
+            "near_calls": 1,
+            "far_calls": 0,
+            "backup_extent": 155,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 12,
+            "native_dos_error": 8
+          },
+          {
+            "paragraphs": 254,
+            "ax": 8,
+            "bx": 0,
+            "carry": 1,
+            "near_calls": 1,
+            "far_calls": 0,
+            "backup_extent": 155,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 12,
+            "native_dos_error": 8
+          },
+          {
+            "paragraphs": 252,
+            "ax": 40668,
+            "bx": 252,
+            "carry": 0,
+            "near_calls": 0,
+            "far_calls": 0,
+            "backup_extent": 0,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 0,
+            "native_dos_error": 0
+          },
+          {
+            "paragraphs": 38,
+            "ax": 40921,
+            "bx": 38,
+            "carry": 0,
+            "near_calls": 1,
+            "far_calls": 0,
+            "backup_extent": 155,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 12,
+            "native_dos_error": 8
+          },
+          {
+            "paragraphs": 254,
+            "ax": 8,
+            "bx": 0,
+            "carry": 1,
+            "near_calls": 1,
+            "far_calls": 0,
+            "backup_extent": 155,
+            "display_owned": 0,
+            "process_busy": 0,
+            "native_errno": 12,
+            "native_dos_error": 8
+          }
+        ]
+      }
+    },
+    "noclear_probe": {
+      "path": "build/program-result-final-noclear-probe-20261106/result.json",
+      "sha256": "77ec7c7cdef14ac87666f2b16f261262ad4d0ce4ac5069164b5303c6a21e4a65",
+      "passed": true,
+      "exit_watch": {
+        "launches": 4,
+        "resident_segment": 52299,
+        "exits": [
+          {
+            "exit": 0,
+            "ds": 37273,
+            "ss": 37273,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37273,
+            "ss": 37273,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37273,
+            "ss": 37273,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 0,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          },
+          {
+            "exit": 0,
+            "ds": 37273,
+            "ss": 37273,
+            "error": 0,
+            "opcode": 148,
+            "raw_status": 0,
+            "cleanup_error": 0,
+            "external_calls": 1,
+            "external_scope": 0,
+            "display_owned": 0,
+            "program_busy": 0,
+            "process_busy": 0,
+            "header": 0
+          }
+        ],
+        "allocations": [],
+        "program_results": [
+          {
+            "stage": 2,
+            "status": 0,
+            "display_status": 0,
+            "serial_status": 0,
+            "process_status": 0,
+            "crt_error": 0,
+            "dos_error": 0,
+            "child_status": 0
+          },
+          {
+            "stage": 0,
+            "status": 0,
+            "display_status": 0,
+            "serial_status": 0,
+            "process_status": 0,
+            "crt_error": 0,
+            "dos_error": 0,
+            "child_status": 0
+          },
+          {
+            "stage": 0,
+            "status": 0,
+            "display_status": 0,
+            "serial_status": 0,
+            "process_status": 0,
+            "crt_error": 0,
+            "dos_error": 0,
+            "child_status": 0
+          },
+          {
+            "stage": 2,
+            "status": 0,
+            "display_status": 0,
+            "serial_status": 0,
+            "process_status": 0,
+            "crt_error": 0,
+            "dos_error": 0,
+            "child_status": 0
+          }
+        ]
+      }
+    }
+  },
+  "rejected_near_first": [
+    {
+      "path": "build/program-near-first-128-8086-20261106/result.json",
+      "sha256": "d88a6b30c535e6df499a887e7289cc452f4a9d651be2fea1c84508696c5b495a",
+      "passed": false,
+      "binary_sha256": "867cb82732c9244c0b049bde8601533430356f0f6d6b9038a05bcab1608d6d0e",
+      "interpreter_sha256": "53dc6d870de67f60ed038f3db9a2aa3dfe8b5ca266a18a9d2c2483fe6d3a4264"
+    },
+    {
+      "path": "build/program-near-first-64-8086-20261106/result.json",
+      "sha256": "fb68c4759a8f4a98d27416c6e8f5002378922c41b0b36ab8fdc67b422c2eab7c",
+      "passed": false,
+      "binary_sha256": "72f3ced9e6090cd0e443ce822184c04612e8d244b51fc9e16f1f1ac196c86b09",
+      "interpreter_sha256": "53dc6d870de67f60ed038f3db9a2aa3dfe8b5ca266a18a9d2c2483fe6d3a4264"
+    },
+    {
+      "path": "build/program-near-first-128-probe-20261106/result.json",
+      "sha256": "d98becaae2c1d8573401253ba89527e666504451be905cc6c88dd34a972fec7d",
+      "passed": false,
+      "binary_sha256": "867cb82732c9244c0b049bde8601533430356f0f6d6b9038a05bcab1608d6d0e",
+      "interpreter_sha256": "71e22e760ba4d6d59df83cc35d3c74aa615b4758d1795ce6ef2af2acc7c2314a"
+    }
+  ],
+  "rejected_source_hashes": {
+    "native-display.patch": "fd7122db3da01479c5e4be74ab13d8d14ae2119ef174355c20b0150effd08a82",
+    "standalone/build_aspect_process.py": "05b2dac6a62a08897a26f2a6fc7e5bd8f2879d7b3c46aa0c7f3a10068fcc4d9f",
+    "standalone/build_aspect_runner.py": "ac8173f3192e0a2ad27d75f815e69dcdc088eadfd0b26ae48e8c90af2f1f053f",
+    "src/process/native_display.c": "1714ae7d29d251fa4e51243746a5653986f8528068c5f7f7ef022f200cf80351"
+  },
+  "limits": [
+    "Typed controller result belongs to the marked diagnostic578f4ade; it changes memory footprint and allocation endpoints. Do not claim the unmodified control took an identical internal branch.",
+    "Control23caac93 is exact unchanged executable; its trace is retained separately.",
+    "Near-first placement failed all3cases and was removed from source; ignored artifacts retain its inputs.",
+    "Physical acceptance and full original parity remain open."
+  ]
+}
