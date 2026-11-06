@@ -2398,6 +2398,16 @@ and647-file clean source reproduction pass. The frontend stays opt-in; Help,
 direct TEXT, Alt-Z Chat, send-mode settings and broader acceptance remain open.
 No selected deployment or full F12/parity closure follows from these results.
 
+The [direct Chat TEXT sender](CHAT_TEXT.md) adds a68-byte far owner and optional
+API0102 module. Actual DOS1834 vectors/8471 effects match recovered48CC/4934
+instructions, including caret, NUL/pause precedence, echo/pacing order,
+backpressure and12 abort points. Two runtime loads with zero free paragraphs
+verify direct field data for all four record kinds, preserved unfinished input,
+busy/ABI/retirement guards and incoming Chat progress while TX refuses.
+A29-file clean export reproduces both hosts and effect streams; the existing
+foreground remains byte-identical. Live echo/UART/delay and shortcut bindings
+remain open, as do Help/config/UI and final BBS/physical acceptance.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

@@ -75,6 +75,9 @@ unsigned CHAT_FAR __cdecl chat_module_call(chat_module_handle *h,chat_module_req
 #ifdef CHAT_PRESENTATION
     if(h->state->presentation)h->active=1;
 #endif
+#ifdef CHAT_TEXT
+    if(h->state->text.active)h->active=1;
+#endif
     return result;
 }
 unsigned CHAT_FAR __cdecl chat_module_unload(chat_module_handle *h)

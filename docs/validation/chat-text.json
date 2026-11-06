@@ -1,0 +1,62 @@
+{
+  "status": "direct-TEXT-owner-and-loadable-module-verified-live-services-unbound",
+  "application_changed": false,
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "full_original_Chat_acceptance": false,
+  "api_version": 258,
+  "module_sha256": "5ee67785e2efa4f630c6d17b391a99226fce9569af69070130cd5b53c87c0b72",
+  "module_file_bytes": 6176,
+  "module_image_bytes": 6128,
+  "module_DGROUP_bytes": 0,
+  "module_private_stack_bytes": 0,
+  "request_bytes": 50,
+  "session_bytes": 430,
+  "text_state_bytes": 68,
+  "text_code_bytes": 880,
+  "cases": 1834,
+  "ordered_effects": 8471,
+  "abort_points": 12,
+  "invalid_open_controls": 10,
+  "module_loads": 2,
+  "module_relocation_bases": 2,
+  "free_DOS_paragraphs": 0,
+  "module_ordered_effects": 88,
+  "source_export_files": 29,
+  "unchanged_foreground_sha256": "5875536a193a3f7db696307dfb358bc0adc1b3d3fdae44b7eeb40980d9198fef",
+  "reports": {
+    "DOS_native_effects": {
+      "path": "build/chat-text-owner-reviewed-20261106/result.json",
+      "sha256": "ae73d2f53d2996c4e9e916f38a07f440af6e4e0422fc4d0dc1edf4f8f0b6a70d"
+    },
+    "DOS_runtime_module": {
+      "path": "build/chat-text-module-dos-reviewed-20261106/result.json",
+      "sha256": "c17b6722d8dfb870fca7f6cbc5a25f330832cefacd776863044fd0d8fda2db70"
+    },
+    "cold_source": {
+      "path": "build/chat-text-source-proof-20261106/result.json",
+      "sha256": "10fe0d756808b99099b2c9de23c4f0b9ba3cc05e86d646575fcdb553324949d4"
+    },
+    "default_module_regression": {
+      "path": "build/chat-text-default-regression-20261106/result.json",
+      "sha256": "cd2b43f1930529c85d95d572e337f7c763e9fd6c2b497515276ac463c4ab19ec"
+    },
+    "presentation_regression": {
+      "path": "build/chat-text-presentation-control-20261106/result.json",
+      "sha256": "c385c1d1be3394f2917ee685a6d9e6a66f173cd2c48d70406b33e24b33318805"
+    },
+    "unchanged_foreground": {
+      "path": "build/chat-text-parent-control-20261106/result.json",
+      "sha256": "e9f3b73743f573a515fb766aa8dcfc6a53bb503bb8a8b784c5cff968769f3382"
+    }
+  },
+  "remaining": [
+    "Physical transmit-completion and bounded BIOS/calibrated delay services",
+    "Original0610 echo context/rendering and safe receive ownership",
+    "Ten foreground direct-TEXT shortcut bindings",
+    "Original Help/Alt-Z/send-mode/config UI",
+    "Broader Chat failure/geometry/mouse/sustained-data acceptance",
+    "Full final memory/BBS/package/deployment/physical gates",
+    "Earlier unattributed redial miss"
+  ]
+}

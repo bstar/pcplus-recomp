@@ -119,3 +119,8 @@ BBS/package and physical gates. Ordinary BBS regressions are not proof of
 interactive Chat inside every BBS workflow. The earlier unattributed redial
 miss remains open. No selected package, physical DOS PC or production
 SynthModem/Enigma configuration changes.
+
+The subsequent [direct TEXT checkpoint](CHAT_TEXT.md) adds a serviced sender
+and optional loaded ABI0102. Its native-ordered service effects and runtime
+module lifetime are verified; this foreground still uses API0101 until the
+live transport/echo/delay bindings are completed.

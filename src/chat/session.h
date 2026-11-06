@@ -1,6 +1,9 @@
 #ifndef PCPLUS_CHAT_SESSION_H
 #define PCPLUS_CHAT_SESSION_H
 #include "screen.h"
+#ifdef CHAT_TEXT
+#include "text.h"
+#endif
 #define CHAT_FAILED 32
 typedef struct chat_session {
     chat_owner send;
@@ -8,6 +11,9 @@ typedef struct chat_session {
     chat_word rx_phase,rx_value,next_rx,fault;
 #ifdef CHAT_PRESENTATION
     void CHAT_FAR *presentation;
+#endif
+#ifdef CHAT_TEXT
+    chat_text text;
 #endif
 } chat_session;
 /* Single foreground owner. Callbacks must be bounded, all-or-refuse, and must

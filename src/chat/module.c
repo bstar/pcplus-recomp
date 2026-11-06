@@ -20,6 +20,9 @@ unsigned CHAT_FAR __cdecl chat_module_dispatch(chat_module_request CHAT_FAR *r)
 #endif
     else switch(r->operation){
     case CHAT_MODULE_OPEN:
+#ifdef CHAT_TEXT
+        if(r->state->text.active)return CHAT_MODULE_BAD;
+#endif
 #ifdef CHAT_PRESENTATION
         if(r->state->presentation)return CHAT_MODULE_BAD;
 #endif
@@ -28,6 +31,15 @@ unsigned CHAT_FAR __cdecl chat_module_dispatch(chat_module_request CHAT_FAR *r)
     case CHAT_MODULE_RECEIVE:result=chat_session_receive(r->state,r->table,r->value);break;
     case CHAT_MODULE_STEP:result=chat_session_step(r->state,r->budget,r->sink,r->user);break;
     case CHAT_MODULE_ABORT:chat_session_abort(r->state);result=0;break;
+#ifdef CHAT_TEXT
+    case CHAT_MODULE_TEXT_OPEN:
+        if(!r->state->send.active || !r->state->screen.active || r->state->send.phase ||
+           r->state->rx_phase || !r->transport_idle)return CHAT_MODULE_BAD;
+        result=chat_text_open(&r->state->text,(const unsigned char CHAT_FAR *)r->user,
+            r->value,r->bar,r->duplex,r->budget);break;
+    case CHAT_MODULE_TEXT_STEP:
+        result=chat_text_step(&r->state->text,r->budget,r->sink,r->user);break;
+#endif
 #ifdef CHAT_PRESENTATION
     case CHAT_MODULE_PRESENT_OPEN:
         if(r->value!=sizeof(chat_presentation))return CHAT_MODULE_BAD;

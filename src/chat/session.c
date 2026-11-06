@@ -13,6 +13,9 @@ static unsigned CHAT_FAR __cdecl emit(unsigned kind,unsigned value,void CHAT_FAR
 }
 void CHAT_CALL chat_session_abort(chat_session CHAT_FAR *s)
 {
+#ifdef CHAT_TEXT
+    chat_text_abort(&s->text);
+#endif
     chat_owner_abort(&s->send);s->screen.active=0;
     s->rx_phase=s->rx_value=s->next_rx=0;
 }
@@ -24,12 +27,18 @@ unsigned CHAT_CALL chat_session_open(chat_session CHAT_FAR *s,chat_word CHAT_FAR
 {
     if(!chat_screen_open(&s->screen,frame,capacity,rows,attribute,bar,clear))return 0;
     chat_owner_open(&s->send,buffered,duplex,newline);
+#ifdef CHAT_TEXT
+    chat_text_abort(&s->text);
+#endif
     s->rx_phase=s->rx_value=s->next_rx=s->fault=0;
     return 1;
 }
 unsigned CHAT_CALL chat_session_key(chat_session CHAT_FAR *s,unsigned key,unsigned transport_idle)
 {
     unsigned result;
+#ifdef CHAT_TEXT
+    if(s->text.active)return 0;
+#endif
     if(s->fault)return CHAT_FAILED;
     if(!s->send.active || !s->screen.active || s->send.phase || s->rx_phase)return 0;
     if(!transport_idle && (key==27 || key==0x6d00 || (key>=0x7800 && key<=0x8100 && !(key&255))))return 0;
