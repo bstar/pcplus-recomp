@@ -1,0 +1,18 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "entry": "0x3d94",
+  "end_exclusive": "0x3ea4",
+  "source_file_offset": 20372,
+  "bytes": 272,
+  "sha256": "db19b0374dc4b65f0c89b981a99c6d3b9312ff05781a82f9d301411e76028daa",
+  "source": "reconstruction/chat/character.asm",
+  "evidence_id": "ev_40efa426d77ee29c087a8e5cb41f6a1445d395674ff05ba430b335656e1aa188",
+  "scope": "Exact native renderer instructions. Cursor, BIOS character and scroll callees remain separately declared interfaces.",
+  "bios_character": {
+    "entry": "0x6c4a",
+    "bytes": 20,
+    "source": "reconstruction/chat/bios_character.asm",
+    "sha256": "f0411eccace4f0edb9eac343ad0f7ceb4f04c76f635d07ad94ae771ac155e8b9",
+    "evidence_id": "ev_e1e8bee0fadd11cbb037fff1c36e3cd0b42089eff3ad5b8e29c9d0dbb944df33"
+  }
+}

@@ -2297,6 +2297,14 @@ export reproduces the banked fixture. Pane/RX routing, full parent memory
 admission, live adapters, Alt-O/reference binding and BBS/physical acceptance
 remain open; the selected application is unchanged.
 
+The [Chat pane renderer](CHAT_SCREEN.md) adds292 exact native renderer/BIOS-wrapper
+bytes and a maintained far-bank screen owner. Actual DOS8086 compares4837 full
+frames and both cursors against a662-byte native CPU reference across four row
+geometries, translation/control/scroll boundaries and independent colors. A
+16-file clean export reproduces the fixture. This is narrow/single-width,
+reverse-wrap-off component evidence with modeled BIOS/scroll boundaries;
+foreground/RX integration, parent memory, BBS and physical gates remain open.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

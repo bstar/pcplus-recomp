@@ -1,0 +1,38 @@
+{
+  "checkpoint_recorded": true,
+  "application_changed": false,
+  "physical_runtime_verified": false,
+  "new_native_bytes": 292,
+  "native_reference_bytes": 662,
+  "cases_per_run": 5,
+  "complete_frames_per_run": 4837,
+  "screen_context_bytes": 30,
+  "supported_rows": [
+    25,
+    28,
+    43,
+    50
+  ],
+  "source_export_files": 16,
+  "results": {
+    "original_comparison": {
+      "path": "build/chat-screen-final-original-dos-20261106/result.json",
+      "sha256": "8a5929cd00f24409051986deea373d8e74702747ada4cbdcfdae1f938410e8e6",
+      "passed": true
+    },
+    "source_export": {
+      "path": "build/chat-screen-clean-export-20261106/build/proof/result.json",
+      "sha256": "f7d27125efcdc553a18a619208e3a2feb2b9309aa303535358f3c7cf97f7739a",
+      "passed": true
+    }
+  },
+  "dos_fixture_sha256": "578d740beb405a3f242d5270b34058ada6481d81d5b3c8dc59d605c340ac04ea",
+  "screen_bank_code_bytes": 1184,
+  "owner_DGROUP_bytes": 0,
+  "limits": [
+    "Actual DOS maintained frame owner versus native CPU reference with explicit BIOS09/02 and scroll2530 boundaries.",
+    "Narrow80-column single-width reverse-wrap-off; no other emulation/viewport/double-width or physical acceptance.",
+    "Initial layout follows original static coordinate/style data; no original screenshot or font-pixel equivalence.",
+    "No parent command/RX binding, live UART/BBS acceptance or selected-package change."
+  ]
+}

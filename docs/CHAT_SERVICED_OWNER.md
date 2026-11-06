@@ -77,7 +77,7 @@ live UART/CTS handling, complete native callees, BBS rendering or hardware.
 ## Remaining integration
 
 Bind Alt-O/reference/browser entry, borrow checked far storage while Chat owns
-the foreground, implement the two panes and translated incoming-byte routing,
+the foreground, compose the [checked panes and translated incoming renderer](CHAT_SCREEN.md),
 and compose real UART/log/history adapters with macro/help and deferred notices.
 Entry must defer for parser, macro, child, transfer or other screen ownership.
 Verify cursor/frame restoration, disconnect/exit, bounded backpressure and no
