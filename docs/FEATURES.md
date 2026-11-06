@@ -2421,3 +2421,11 @@ Optional physical Chat TEXT TX adapter: [funded parent restores nested ASPECT RU
 Optional [API0103 Chat TEXT timing](CHAT_TEXT_TIMING.md) supplies serviced BIOS pauses and calibrated native-unit pacing, with a matching parent, actual DOS clock/geometry recovery and composed physical-UART checks. Original echo and foreground TEXT keys remain unfinished; full candidate/physical acceptance is not claimed.
 
 [Chat echo context](CHAT_ECHO_CONTEXT.md): original first-echo cursor-cache misplacement reproduced, coherent positioning verified, and existing parent cursor service exposed with zero executable growth. Full echo/parser ownership and TEXT shortcut binding remain open.
+
+## Chat cursor-context implementation checkpoint
+
+The optional source-only input diagnostic now executes a76-byte8086 cursor
+exchange service around native echo parsing. Independent contexts verify160
+exchanges, pending wraps and shared history; it remains unlinked from the live
+parent/module until admission, serviced continuation and memory-budget gates
+pass. See [the implementation and limits](CHAT_ECHO_CURSOR_SWAP.md).

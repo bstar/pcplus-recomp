@@ -1,0 +1,37 @@
+{
+  "status": "cursor-context-primitive-implemented-and-tested-live-echo-unbound",
+  "live_parent_linked": false,
+  "module_linked": false,
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "diagnostic_sha256": "ae448266ddc8fead88b96f717e20d55a6a2755fff69d40d4a4080af3794b68de",
+  "default_diagnostic_sha256": "7bcb9d54d8f73afb763b0ca46383b547718ab5e54a0b71788a6279039ce713ea",
+  "cursor_service_bytes": 76,
+  "caller_state_bytes": 22,
+  "private_state_bytes": 0,
+  "cursor_words": 11,
+  "cases": 16,
+  "exchanges": 160,
+  "local_parser_invocations": 80,
+  "register_stack_IF_and_canaries_passed": true,
+  "source_export_files": 3641,
+  "history_shared": true,
+  "continuation_provider": "diagnostic-owned memory, not live serial",
+  "reports": {
+    "interleaved_native_render": {
+      "path": "build/chat-echo-swap-check-20261106/result.json",
+      "sha256": "b4ec2bcdc1680145f364d5df8459863e872e87adf2bda818c7c8479575e55eb3"
+    },
+    "clean_source": {
+      "path": "build/chat-echo-swap-cold-final-20261106/result.json",
+      "sha256": "a841849857969868bfca90a5b9414f1b5ae8ce53bad7ab2cf931877d656c52dc"
+    }
+  },
+  "remaining": [
+    "Admission/reentry and parser-operation lifetime owner",
+    "Serviced live continuation ownership and cancellation",
+    "Integrate without regressing nested-ASPECT memory budget",
+    "Foreground TEXT scheduler and all ten shortcuts",
+    "Full Chat, package, BBS and hardware acceptance"
+  ]
+}

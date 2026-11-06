@@ -9,6 +9,7 @@ import subprocess
 ROOT=Path(__file__).resolve().parents[1]
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--output',type=Path)
+parser.add_argument('--chat-echo-cursor',action='store_true',help='Link the cursor-context primitive and its diagnostic position adapter')
 args=parser.parse_args()
 out=args.output.resolve() if args.output else ROOT/'build/input_dispatch'
 assert out.is_relative_to(ROOT/'build') and (not args.output or not out.exists())
@@ -26,6 +27,8 @@ sources+=[ROOT/'src/ansi/decimal.asm',ROOT/'standalone/input_dispatch_host.asm']
 sources+=sorted((ROOT/'reconstruction/input_dispatch').glob('*.asm'))
 sources+=sorted((ROOT/'reconstruction/render').glob('*.asm'))
 sources+=sorted((ROOT/'reconstruction/text').glob('*.asm'))
+if args.chat_echo_cursor:
+ sources += [ROOT/'src/chat/echo_cursor.asm',ROOT/'standalone/chat_echo_cursor_host.asm']
 # Verify each recovered input region without reading an original binary.
 proof=json.loads((ROOT/'reconstruction/input_dispatch/provenance.json').read_text())
 for unit in proof['units']:
@@ -59,6 +62,7 @@ subprocess.run(['wlink','system','dos','option','quiet','option','map='+str(out/
 inputs=sources+[ROOT/'reconstruction/uart/encodings.inc',ROOT/'reconstruction/ansi/dispatch-layout.inc',
  ROOT/'reconstruction/input_dispatch/provenance.json',ROOT/'reconstruction/input_dispatch/tables-provenance.json',Path(__file__).resolve()]
 manifest={'kind':'source-only-continuous-input-ansi-control-render-history-diagnostic',
+ 'chat_echo_cursor':args.chat_echo_cursor,
  'binary_sha256':hashlib.sha256((out/'INPUT.EXE').read_bytes()).hexdigest(),
  'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},
  'limitations':['Actual input/control/ANSI/render/cursor/scroll/history and guarded-log paths linked.',

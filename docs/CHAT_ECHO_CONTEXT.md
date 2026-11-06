@@ -75,3 +75,7 @@ bind all ten direct-TEXT keys with pre-read/RX fairness. Help/Alt-Z/send-mode UI
 broader Chat faults/geometry/sustained traffic and final package/hardware/full
 parity gates remain open. See the [receipt](validation/chat-echo-context.json)
 and [timing checkpoint](CHAT_TEXT_TIMING.md).
+
+The subsequent [cursor exchange implementation](CHAT_ECHO_CURSOR_SWAP.md)
+now preserves all eleven cursor/cache/deferred words across interleaved native
+rendering. Live parser ownership and foreground integration remain unfinished.
