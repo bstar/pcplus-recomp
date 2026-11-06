@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [packed command UI](PACKED_COMMAND_UI.md) now recovers4224 parent bytes with
+lossless text and correct far category labels.1146 linked frames and18 actual
+DOS modal workflows pass; the unchanged512-byte-policy ASPECT runner again
+supports all six streams and both stock BBS editor paths. Six transfers and four
+carrier-loss redials pass. This resolves the measured software startup/capacity
+gap; physical acceptance, nested PROGRAM and full original parity remain open.
+
 The [CRT startup investigation](EXTERNAL_EDITOR.md#enigma-transfer-and-recovery-composition)
 captures the unchanged runner's file-structure allocation failure, correcting
 the earlier script-open interpretation of exit1. Smaller128/256 heap-growth

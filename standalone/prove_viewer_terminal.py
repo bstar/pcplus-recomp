@@ -14,6 +14,7 @@ def main():
  binary=a.terminal.resolve();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  manifest=json.loads(binary.with_name('manifest.json').read_text());assert manifest['experimental_file_viewer'] and sha(binary)==manifest['binary_sha256']
  assert manifest['experimental_'+a.feature.replace('-','_')]
+ if a.feature=='packed-command-ui':assert manifest['packed_command_ui']['pairs']>0,'Select the packed product, not the uncompressed decoder control'
  revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
  tracked=subprocess.check_output(['git','ls-tree','-r','--name-only',revision],cwd=ROOT,text=True).splitlines()
  names=set(manifest['sources'])|{n for n in tracked if n.startswith('standalone/') and n.endswith('.py')}
