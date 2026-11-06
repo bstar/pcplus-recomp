@@ -20,6 +20,7 @@ parser.add_argument('--chat-storage',action='store_true',help='Exclusive frozen-
 parser.add_argument('--chat-presentation',action='store_true',help='Select API0101 physical Chat module and matching checked loader; requires Chat storage; no foreground binding')
 parser.add_argument('--chat-adapters',action='store_true',help='Link real TX/log/history Chat sink; requires presentation; entry/input hooks remain unbound')
 parser.add_argument('--chat-text-transport',action='store_true',help='Link optional physical-completion TEXT TX sink; requires adapters; foreground TEXT remains unbound')
+parser.add_argument('--chat-timing',action='store_true',help='Select matching API0103 loader/module with serviced TEXT timing; requires physical-TX adapter; shortcuts remain unbound')
 parser.add_argument('--chat-frontend',action='store_true',help='Experimental Alt-O core and keyboard/RX/idle ownership; Help/direct TEXT remain refused; requires adapters')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
@@ -108,6 +109,7 @@ if args.chat_storage:assert args.chat_loader and args.original_reference and arg
 if args.chat_presentation:assert args.chat_storage
 if args.chat_adapters:assert args.chat_presentation
 if args.chat_text_transport:assert args.chat_adapters and args.optimize_size
+if args.chat_timing:assert args.chat_text_transport
 if args.chat_frontend:assert args.chat_adapters and args.keyboard_bank
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
@@ -325,6 +327,7 @@ if args.chat_storage:out_name+='-chat-storage'
 if args.chat_presentation:out_name+='-chat-presentation'
 if args.chat_adapters:out_name+='-chat-adapters'
 if args.chat_text_transport:out_name+='-chat-text-transport'
+if args.chat_timing:out_name+='-chat-timing'
 if args.chat_frontend:out_name+='-chat-frontend'
 if args.command_ui_pairs==0:out_name+='-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
@@ -866,7 +869,7 @@ ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+
 chat_loader=None
 if args.chat_loader:
  from chat.loader_link import build_loader
- chat_loader=build_loader(ROOT,OUT,presentation=args.chat_presentation)
+ chat_loader=build_loader(ROOT,OUT,presentation=args.chat_presentation,timing=args.chat_timing)
  objects+=list(map(str,chat_loader['objects']));sources+=chat_loader['inputs']
 if args.chat_adapters:
  source=ROOT/'src/chat/parent_sink.asm';obj=OUT/'chat-adapters.obj'
@@ -879,7 +882,7 @@ if args.chat_text_transport:
 if args.chat_frontend:
  source=ROOT/'src/chat/frontend.c';obj=OUT/'chat-frontend.obj'
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we','-ecc','-ox','-os','-oe=0',
-  '-dCHAT_PRESENTATION','-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
+  '-dCHAT_PRESENTATION',*(['-dCHAT_TEXT','-dCHAT_TIMING'] if args.chat_timing else []),'-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
  objects.insert(objects.index(str(config_end_obj)),str(obj));sources.append(source)
  source=ROOT/'src/chat/frontend.asm';obj=OUT/'chat-frontend-bridges.obj'
  subprocess.run(['nasm','-fobj',str(source),'-o',str(obj)],check=True)
@@ -966,6 +969,7 @@ manifest['experimental_chat_storage']=args.chat_storage
 manifest['experimental_chat_presentation']=args.chat_presentation
 manifest['experimental_chat_adapters']=args.chat_adapters
 manifest['experimental_chat_text_transport']=args.chat_text_transport
+manifest['experimental_chat_timing']=args.chat_timing
 manifest['experimental_chat_frontend']=args.chat_frontend
 if chat_loader:manifest['chat_loader']={k:v for k,v in chat_loader.items() if k not in ('objects','inputs')}
 if args.optimize_size:manifest['optimized_c_sources']=optimized_c_sources

@@ -34,15 +34,22 @@ def main():
         stack=re.search(r'^STACK\s+STACK\s+DGROUP\s+\S+\s+([0-9a-f]+)',listing,re.M|re.I)
         assert stack and int(stack[1],16)==8192
     assert live['minimum_allocated_module_bytes']<=old['minimum_allocated_module_bytes']
-    assert sha(binary.parent/'PCCHAT.OVL')==sha(control.parent/'PCCHAT.OVL')
+    same_module=sha(binary.parent/'PCCHAT.OVL')==sha(control.parent/'PCCHAT.OVL')
+    if m.get('experimental_chat_timing'):
+        module=m['chat_loader']['module']
+        assert module['api_version']==0x103 and module['state_bytes']==448
+        assert module['image_bytes']<8192 and module['DGROUP_bytes']==module['own_stack_bytes']==0
+        assert sha(binary.parent/'PCCHAT.OVL')==module['binary_sha256']
+    else:assert same_module
     inputs=['standalone/check_chat_text_budget.py','standalone/build_path_session.py',
             'standalone/terminal_memory.py','src/chat/text_transport_size.json']
     out.mkdir();(out/'result.json').write_text(json.dumps(dict(passed=True,
         binary_sha256=sha(binary),control_sha256=sha(control),compiled_sources=rows,
         minimum_bytes=live['minimum_allocated_module_bytes'],control_minimum_bytes=old['minimum_allocated_module_bytes'],
+        module_unchanged=same_module,module_sha256=sha(binary.parent/'PCCHAT.OVL'),
         capacities_unchanged={n:live[n] for n in capacities},stack_bytes=8192,
-        sources={n:sha(ROOT/n) for n in inputs},scope=__doc__+' Object counts, live MZ/map inspection, declared stack/capacities and unchanged presentation module. Runtime and default-flag identity checks are separate.'),indent=2)+'\n')
-    print('PASS three compiled size choices; capacities/stack/module unchanged; parent fits preceding budget')
+        sources={n:sha(ROOT/n) for n in inputs},scope=__doc__+' Object counts, live MZ/map inspection, declared stack/capacities and module identity: API0103 when explicitly selected, otherwise the unchanged presentation module. Runtime and default-flag identity checks are separate.'),indent=2)+'\n')
+    print('PASS three compiled size choices; capacities/stack unchanged; declared module and parent fit budget')
 
 
 if __name__=='__main__':main()

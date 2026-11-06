@@ -6,13 +6,15 @@ from build_path_session import object_segments
 from omf_imports import records, externals
 
 
-def build_loader(root, out, presentation=False):
-    module = build(out / 'chat-module', presentation=presentation)
+def build_loader(root, out, presentation=False, timing=False):
+    if timing:presentation=True
+    module = build(out / 'chat-module', presentation=presentation, timing=timing)
     cobj, aobj = out / 'chat-loader.obj', out / 'chat-load-kernel.obj'
     flags = ['-ox', '-os', '-oe=0']
     subprocess.run(['wcc', '-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-ecc',
                     '-nt=CHAT_LOAD_CODE', '-nc=FARCODE', *flags,
                     *(['-dCHAT_PRESENTATION'] if presentation else []),
+                    *(['-dCHAT_TEXT','-dCHAT_TIMING'] if timing else []),
                     '-i='+str(out / 'chat-module'), '-fo='+str(cobj),
                     str(root / 'src/chat/loader.c')], cwd=out, check=True)
     subprocess.run(['nasm', '-fobj', '-DCHAT_LOADER_BANK',

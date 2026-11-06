@@ -1,0 +1,114 @@
+{
+  "status": "serviced-TEXT-timing-and-matching-parent-verified-original-echo-and-shortcuts-unfinished",
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "full_original_Chat_acceptance": false,
+  "full_candidate_acceptance": false,
+  "foreground_TEXT_enabled": false,
+  "binary_sha256": "5ecf87743f55c97e83a334c3a5ef9e049dc4de1558ec4d482a529cf215092846",
+  "module_sha256": "5b6892e71dfb6054cc5e1ff04b9cfac380af1a5e530da11dc2780325a8d45622",
+  "module_file_bytes": 7260,
+  "module_image_bytes": 7212,
+  "module_DGROUP_bytes": 0,
+  "module_private_stack_bytes": 0,
+  "module_extra_paragraphs": 0,
+  "module_relocations": 3,
+  "api_version": 259,
+  "state_bytes": 448,
+  "timing_owner_bytes": 18,
+  "request_bytes": 50,
+  "minimum_parent_bytes": 479392,
+  "near_bytes": 65504,
+  "resident_CS_bytes": 65440,
+  "retained_parent_paragraphs": 29977,
+  "calibration": {
+    "native_inner_loop_bytes": 11,
+    "chunk_iterations": 512,
+    "min_chunks": 4,
+    "max_chunks": 7039,
+    "measurement": "one BIOS tick interval",
+    "alignment_yields": true,
+    "measurement_yields": false,
+    "IRQs_enabled": true
+  },
+  "pacing": {
+    "max_units_per_effect_call": 1,
+    "units_word_bits": 16,
+    "zero_units_no_loop": true
+  },
+  "BIOS_wait": {
+    "native_argument": 9,
+    "elapsed_ticks": 10,
+    "full_day_and_low_word_wrap": true
+  },
+  "source_export_files": 689,
+  "source_export_commands": 9,
+  "default_module_frames": 568,
+  "default_module_effects": 1071,
+  "DOS_module_loads": 2,
+  "DOS_free_paragraphs": 0,
+  "DOS_geometry_quarantine": true,
+  "original_echo_rendering_verified": false,
+  "wall_clock_pacing_accuracy_verified": false,
+  "full_65535_unit_pacing_duration_executed": false,
+  "timing_disabled_parent_sha256": "5c4f5c94984ec394d75d492fe6b15e53a1a60c1978684ddf4f91f7385802105e",
+  "transport_disabled_parent_sha256": "5875536a193a3f7db696307dfb358bc0adc1b3d3fdae44b7eeb40980d9198fef",
+  "reports": {
+    "native_timing_CPU": {
+      "path": "build/chat-timing-cpu-final-20261106/result.json",
+      "sha256": "1d9d1d42809b1a37288f22f933bac179f97bec293ac834f578b67a3d1c6d9fdc"
+    },
+    "real_DOS_timing_and_geometry": {
+      "path": "build/chat-timing-dos-reviewed-20261106/result.json",
+      "sha256": "72ca01d594e51db66c3bf5f31716cbd965a29b9254488af9f028d2f912a6c38b"
+    },
+    "parent_UART_composition": {
+      "path": "build/chat-timing-parent-composed-20261106/result.json",
+      "sha256": "245c3e40d5ec90d671af846b0a46dfdcfd7f0f831eba8a73fdf4377adfb6ec99"
+    },
+    "parent_budget": {
+      "path": "build/chat-timing-parent-budget-reviewed-20261106/result.json",
+      "sha256": "ce90c26e792c549ebcf6e94d9dd77cea4ba8756b7a10531399061b29a45e3e88"
+    },
+    "normal_main_prefix": {
+      "path": "build/chat-timing-parent-main-20261106/result.json",
+      "sha256": "41bc2dbfd562e9c2a6668e52e98f9377b474c88c95a8f7bac9d03b2360aa6c2e"
+    },
+    "nested_ASPECT": {
+      "path": "build/chat-timing-parent-aspect-20261106/result.json",
+      "sha256": "1036cb60c2fdafcf42e2f0357f99426790d232416db25cfd6e24c67bb8315425"
+    },
+    "default_module_regression": {
+      "path": "build/chat-timing-default-regression-20261106/result.json",
+      "sha256": "ec085a551657bd79fab8d338be4478b416ffc3c4ccf51ae899c126d24dcd67e8"
+    },
+    "TEXT_module_regression": {
+      "path": "build/chat-timing-text-regression-20261106/result.json",
+      "sha256": "bc84dcda7161dc00cc0d1d3624877022ce2497ce9a541b677adb847be976a0a6"
+    },
+    "clean_source": {
+      "path": "build/chat-timing-cold-20261106/result.json",
+      "sha256": "53a6a20a17aa49f47e867418e91e41ba2b8f39907fdd472d276fd3bc06bc2545"
+    },
+    "synchronet_editor_viewer": {
+      "path": "build/bbs-lab/results/synchronet/chat-timing-sync-20261106/proxy-integration.json",
+      "sha256": "e92b8eb1b63c366e43b1c093e98aacd498d78b90ed814689a52d84f3db3c1a62"
+    },
+    "enigma_carrier_retry": {
+      "path": "build/bbs-lab/results/enigma/chat-timing-carrier-20261106/carrier-checks.json",
+      "sha256": "e393f562a204c8b96776e5c3f83d6b81594d5fc22307192eca805c95cca8044a"
+    },
+    "enigma_independent_audit": {
+      "path": "build/chat-timing-carrier-audit-20261106/result.json",
+      "sha256": "0b95bb95791189a3b231d1a34d40601a7ebb0244af237d9c54023a340ac38cf4"
+    }
+  },
+  "earlier_unattributed_redial_miss_resolved": false,
+  "remaining": [
+    "Original0610 local echo context/rendering and safe parser continuation",
+    "Ten frontend TEXT shortcut bindings and fair pre-read/RX ownership",
+    "Chat Help/Alt-Z/send-mode UI and broader notice/trap/failure/geometry/sustained-data tests",
+    "Final full package/source/deployment/physical gates",
+    "General low-memory error handling and earlier unattributed redial miss"
+  ]
+}

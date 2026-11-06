@@ -5,6 +5,26 @@
 #endif
 typedef char request_size_must_be_50[(sizeof(chat_module_request)==50)?1:-1];
 typedef char session_size_must_match[(sizeof(chat_session)==CHAT_MODULE_STATE_BYTES)?1:-1];
+#ifdef CHAT_TIMING
+typedef struct timing_dispatch {chat_sink sink;void CHAT_FAR *user;chat_timing CHAT_FAR *timing;} timing_dispatch;
+static unsigned CHAT_FAR __cdecl timing_sink(unsigned kind,unsigned value,void CHAT_FAR *user)
+{
+    timing_dispatch CHAT_FAR *d=(timing_dispatch CHAT_FAR *)user;
+    if(kind==CHAT_TEXT_BIOS_WAIT || kind==CHAT_TEXT_PACE)return chat_timing_effect(d->timing,kind,value);
+    return d->sink(kind,value,d->user);
+}
+static unsigned timed_step(chat_module_request CHAT_FAR *r)
+{
+    timing_dispatch d;unsigned result;
+    if(!r->budget || !r->sink || !r->state->text.active)return 0;
+    if(r->state->timing.error)return CHAT_MODULE_BAD;
+    if(r->state->text.pacing && !chat_timing_prepare(&r->state->timing))
+        return r->state->timing.error?CHAT_MODULE_BAD:0;
+    d.sink=r->sink;d.user=r->user;d.timing=&r->state->timing;
+    result=chat_text_step(&r->state->text,r->budget,timing_sink,&d);
+    return r->state->timing.error?CHAT_MODULE_BAD:result;
+}
+#endif
 unsigned CHAT_FAR __cdecl chat_module_dispatch(chat_module_request CHAT_FAR *r)
 {
     unsigned result;
@@ -38,7 +58,11 @@ unsigned CHAT_FAR __cdecl chat_module_dispatch(chat_module_request CHAT_FAR *r)
         result=chat_text_open(&r->state->text,(const unsigned char CHAT_FAR *)r->user,
             r->value,r->bar,r->duplex,r->budget);break;
     case CHAT_MODULE_TEXT_STEP:
+#ifdef CHAT_TIMING
+        result=timed_step(r);break;
+#else
         result=chat_text_step(&r->state->text,r->budget,r->sink,r->user);break;
+#endif
 #endif
 #ifdef CHAT_PRESENTATION
     case CHAT_MODULE_PRESENT_OPEN:

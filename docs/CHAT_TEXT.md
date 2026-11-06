@@ -111,3 +111,7 @@ bridge/server was changed by this component checkpoint.
 The [physical TX adapter experiment](CHAT_TEXT_TRANSPORT.md) passes its linked
 UART boundaries. Its initial nested ASPECT failure is addressed by the
 [funded build](CHAT_TEXT_FUNDING.md); foreground integration remains unfinished.
+
+The [API0103 timing module](CHAT_TEXT_TIMING.md) now supplies BIOS pauses and
+calibrated native-unit pacing, with a matching opt-in parent and runtime proof.
+Original echo and foreground shortcut binding remain unfinished.

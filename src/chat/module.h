@@ -1,12 +1,20 @@
 #ifndef PCPLUS_CHAT_MODULE_H
 #define PCPLUS_CHAT_MODULE_H
 #include "session.h"
+#if defined(CHAT_TIMING) && !defined(CHAT_TEXT)
+#error CHAT_TIMING requires CHAT_TEXT
+#endif
 #ifdef CHAT_TEXT
 #ifndef CHAT_PRESENTATION
 #error CHAT_TEXT requires CHAT_PRESENTATION
 #endif
+#ifdef CHAT_TIMING
+#define CHAT_MODULE_API 0x0103
+#define CHAT_MODULE_STATE_BYTES 448
+#else
 #define CHAT_MODULE_API 0x0102
 #define CHAT_MODULE_STATE_BYTES 430
+#endif
 #define CHAT_MODULE_MAX_OPERATION 9
 #define CHAT_MODULE_TEXT_OPEN 8
 #define CHAT_MODULE_TEXT_STEP 9

@@ -4,6 +4,9 @@
 #ifdef CHAT_TEXT
 #include "text.h"
 #endif
+#ifdef CHAT_TIMING
+#include "timing.h"
+#endif
 #define CHAT_FAILED 32
 typedef struct chat_session {
     chat_owner send;
@@ -14,6 +17,9 @@ typedef struct chat_session {
 #endif
 #ifdef CHAT_TEXT
     chat_text text;
+#endif
+#ifdef CHAT_TIMING
+    chat_timing timing;
 #endif
 } chat_session;
 /* Single foreground owner. Callbacks must be bounded, all-or-refuse, and must

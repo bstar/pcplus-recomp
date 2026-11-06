@@ -10,7 +10,9 @@ _small_code_ equ 0
 chat_overlay_entry:
  jmp far _chat_module_dispatch
  db 'LOCCHAT',0
-%ifdef CHAT_TEXT
+%ifdef CHAT_TIMING
+ dw 0x0103,50,448
+%elifdef CHAT_TEXT
  dw 0x0102,50,430
 %elifdef CHAT_PRESENTATION
  dw 0x0101,50,362

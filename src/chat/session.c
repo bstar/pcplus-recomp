@@ -13,6 +13,9 @@ static unsigned CHAT_FAR __cdecl emit(unsigned kind,unsigned value,void CHAT_FAR
 }
 void CHAT_CALL chat_session_abort(chat_session CHAT_FAR *s)
 {
+#ifdef CHAT_TIMING
+    chat_timing_reset(&s->timing);
+#endif
 #ifdef CHAT_TEXT
     chat_text_abort(&s->text);
 #endif
@@ -27,6 +30,9 @@ unsigned CHAT_CALL chat_session_open(chat_session CHAT_FAR *s,chat_word CHAT_FAR
 {
     if(!chat_screen_open(&s->screen,frame,capacity,rows,attribute,bar,clear))return 0;
     chat_owner_open(&s->send,buffered,duplex,newline);
+#ifdef CHAT_TIMING
+    chat_timing_reset(&s->timing);
+#endif
 #ifdef CHAT_TEXT
     chat_text_abort(&s->text);
 #endif

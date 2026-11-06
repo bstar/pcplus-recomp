@@ -2417,3 +2417,5 @@ rates. These scoped software checks do not close analog/BBS-file-area, other
 protocol or full original-feature acceptance gates.
 
 Optional physical Chat TEXT TX adapter: [funded parent restores nested ASPECT RUN](CHAT_TEXT_FUNDING.md), retaining the [unbudgeted negative](CHAT_TEXT_TRANSPORT.md). Foreground TEXT/echo/delay binding and full candidate acceptance remain open.
+
+Optional [API0103 Chat TEXT timing](CHAT_TEXT_TIMING.md) supplies serviced BIOS pauses and calibrated native-unit pacing, with a matching parent, actual DOS clock/geometry recovery and composed physical-UART checks. Original echo and foreground TEXT keys remain unfinished; full candidate/physical acceptance is not claimed.
