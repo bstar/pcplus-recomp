@@ -29,6 +29,7 @@ def main():
     p.add_argument('--byte-delay-ms', type=int, choices=range(21), default=2)
     p.add_argument('--file-directory-overlay',action='store_true',help='Open File Directory inside the unsaved stock editor and verify its return')
     p.add_argument('--file-viewer-overlay',action='store_true',help='Open the internal file viewer inside the unsaved stock editor and verify its return')
+    p.add_argument('--external-viewer-overlay',action='store_true',help='Run an owned external COM viewer inside the stock editor and verify exact return')
     p.add_argument('--gateway-overlay',action='store_true',help='Run a source-built graphics child through the normal Alt-F4 while the stock editor is idle')
     p.add_argument('--reference-overlay', action='store_true', help='Observe Alt-Z/refusal during the stock BBS editor workflow')
     p.add_argument('--directory-overlay', action='store_true', help='Observe read-only Alt-D loading/pages during the stock editor workflow')
@@ -40,6 +41,8 @@ def main():
     p.add_argument('--size-probe', action='store_true', help='Use staged pre-session size owner and valid owned startup preferences')
     p.add_argument('--phone-log', action='store_true', help='Enable and passively audit the call log during the real BBS workflow')
     args = p.parse_args()
+    if args.external_viewer_overlay:
+        assert not any((args.file_viewer_overlay,args.file_directory_overlay,args.gateway_overlay,args.reference_overlay,args.directory_overlay,args.phone_log,args.multiline_editor)) and args.display_rows==25 and args.status_hidden==0
     if args.directory_preview_overlay:args.directory_overlay=True
     assert re.fullmatch('[A-Za-z0-9_-]+', args.label)
     assert not (args.reference_overlay and args.directory_overlay)
@@ -79,6 +82,9 @@ def main():
         sources += [ROOT/n for n in SOURCES]
     if args.file_viewer_overlay:
         from file_viewer_bbs_support import SOURCES
+        sources += [ROOT/n for n in SOURCES]
+    if args.external_viewer_overlay:
+        from external_viewer_bbs_support import SOURCES
         sources += [ROOT/n for n in SOURCES]
     before = {str(f.relative_to(ROOT)): sha(f) for f in sources}
     base = ROOT/'build/bbs-lab'
@@ -137,6 +143,14 @@ def main():
             marker='K E Y T E S T enter p1800 '
             assert keys.count(marker)==1
             keys=keys.replace(marker,marker+'a-v p600 D : \\ V I E W . D A T enter p1600 escape p900 ')
+        external_child=None
+        if args.external_viewer_overlay:
+            assert json.loads((binary.parent/'manifest.json').read_text())['experimental_external_viewer']
+            from external_viewer_bbs_support import prepare
+            external_child,observer=prepare(base/(args.label+'-external-viewer'))
+            marker='K E Y T E S T enter p1800 '
+            assert keys.count(marker)==1
+            keys=keys.replace(marker,marker+'a-v p1000 P A G E . D A T enter p1800 ')
         gateway_child=None
         if args.gateway_overlay:
             assert json.loads((binary.parent/'manifest.json').read_text())['experimental_gateway_frontend']
@@ -187,6 +201,7 @@ def main():
             '--timeout', '160', '--wait', exit_wait, '--raw-upstream', '--keys', keys]
         if args.size_probe:command+=['--display-rows',str(args.display_rows),'--status-hidden',str(args.status_hidden)]
         if observer:command+=['--video-observer',str(observer)]
+        if external_child:command+=['--external-viewer-fixture',str(external_child)]
         if gateway_child:command+=['--comspec-fixture',str(gateway_child)]
         if args.phone_log:command+=['--phone-log']
         if keyboard_helper:command+=['--keyboard-helper',str(keyboard_helper)]
@@ -255,6 +270,9 @@ def main():
         if args.file_viewer_overlay:
             from file_viewer_bbs_support import audit as audit_viewer
             result['file_viewer']=audit_viewer(output);checks['actual_File_Viewer_roundtrip']=result['file_viewer']['passed'];result['passed']=all(checks.values())
+        if args.external_viewer_overlay:
+            from external_viewer_bbs_support import audit as audit_external
+            result['external_viewer']=audit_external(output);checks['actual_external_viewer_roundtrip']=result['external_viewer']['passed'];result['passed']=all(checks.values())
         if args.gateway_overlay:
             from gateway_bbs_support import audit as audit_gateway
             result['gateway']=audit_gateway(output);checks['actual_Gateway_roundtrip']=result['gateway']['passed'];result['passed']=all(checks.values())

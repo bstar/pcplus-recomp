@@ -129,6 +129,12 @@ async def run(args):
   assert args.directory_fixture and args.entry<=10,'Browser lab recipe supports first-page selection'
   prefix='p500 '+('down p100 '*(args.entry-1))+'enter p1000 '
  keys=prefix+args.keys+f' p{args.wait*1000} a-x'
+ external_child=getattr(args,'external_viewer_fixture',None);external_bytes=None
+ if external_child:
+  external_child=external_child.resolve();assert external_child.is_relative_to(ROOT/'build') and external_child.suffix.upper()=='.COM' and fixture is not None
+  external_bytes=external_child.read_bytes();(output/'VTEST.COM').write_bytes(external_bytes)
+  fixture=bytearray(fixture);fixture[0x35d:0x39e]=b'D:\\VTEST.COM'.ljust(65,b'\0');fixture=bytes(fixture)
+  (output/'TEST.PRM').write_bytes(fixture)
  observer=getattr(args,'video_observer',None);observer_start=observer_stop='';observer_bytes=None
  if observer:
   observer=observer.resolve();assert observer.is_relative_to(ROOT/'build') and observer.suffix.upper()=='.COM'
@@ -138,7 +144,7 @@ async def run(args):
  if keyboard_helper:
   keyboard_helper=keyboard_helper.resolve();assert keyboard_helper.is_relative_to(ROOT/'build') and keyboard_helper.suffix.upper()=='.COM'
   helper_bytes=keyboard_helper.read_bytes();(output/'KEYS.COM').write_bytes(helper_bytes)
-  helper_start='D:\\KEYS.COM'
+  helper_start=('LOADHIGH ' if getattr(args,'keyboard_helper_high',False) else '')+'D:\\KEYS.COM'
  serial='\n'.join(f'serial{i}='+ (f'nullmodem server:127.0.0.1 port:{port} transparent:1 rxdelay:200 txdelay:1' if i==args.com else 'disabled') for i in range(1,5))
  if irq is not None:serial=serial.replace('nullmodem ',f'nullmodem irq:{irq} ')
  config=f'''[sdl]
@@ -177,7 +183,7 @@ D:\\SNAP A
 exit
 '''
  cpu=getattr(args,'cpu','386')
- if getattr(args,'video_observer_high',False):
+ if getattr(args,'video_observer_high',False) or getattr(args,'keyboard_helper_high',False):
   assert observer is not None,'Upper-memory placement requires an explicit observer'
   assert cpu in ('386','486'),'DOSBox upper-memory observer testing requires a386+ CPU model'
   config=config.replace('[autoexec]','[dos]\nxms=true\nems=false\numb=true\n[autoexec]')
@@ -226,6 +232,7 @@ exit
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
  if observer_bytes is not None:checks['video_observer_unchanged']=(output/'OBSERVE.COM').read_bytes()==observer_bytes
+ if external_bytes is not None:checks['external_viewer_fixture_unchanged']=(output/'VTEST.COM').read_bytes()==external_bytes
  if helper_bytes is not None:checks['keyboard_helper_unchanged']=(output/'KEYS.COM').read_bytes()==helper_bytes
  if view_fixture is not None:checks['read_only_directory_unchanged']=(output/'PCPLUS.DIR').read_bytes()==view_fixture
  result={'name':args.name,'label':args.label,'checks':checks,'passed':all(checks.values()),'seconds':round(time.monotonic()-start,3),'binary_sha256':digest,'keyboard':keys,'keyboard_input':args.keys,'serial':{'com':args.com,'baud':args.baud,'line':'8N1','flow':args.flow,'hardware_scope':'DOSBox-X nullmodem holds CTS ready; physical handshake timing is not represented.'},'scope':'Actual local BBS via modeled Hayes/Telnet modem, DOSBox-X UART and source-built DOS terminal. Normal exit alone does not establish successful menu interaction.'}
@@ -262,7 +269,9 @@ if __name__=='__main__':
  p.add_argument('--raw-upstream',action='store_true',help='Upstream is an explicit serial-side bridge; leave Telnet ownership to that bridge')
  p.add_argument('--comspec-fixture',type=Path,help='Explicit source-built test interpreter under build/; copied to owned D: and selected with COMSPEC')
  p.add_argument('--video-observer',type=Path,help='Explicit source-built passive COM observer under build/; install with T and collect after DOS return')
+ p.add_argument('--external-viewer-fixture',type=Path,help='Owned COM viewer under build/; configure only synthetic PRM035Dh and retain actual child report')
  p.add_argument('--video-observer-high',action='store_true',help='Explicitly load the passive test observer in DOSBox UMBs; application memory policy is unchanged')
+ p.add_argument('--keyboard-helper-high',action='store_true',help='Explicitly load the test BIOS key producer high; requires the386/XMS/UMB lab setup')
  p.add_argument('--phone-log',action='store_true',help='Enable saved telephone logging to the owned D: fixture using PCPLUS fallback')
  p.add_argument('--directory-fixture',action='store_true',help='Load an actual synthetic directory record and dial it inside DOS')
  p.add_argument('--directory-view-fixture',action='store_true',help='Browse an independent read-only directory on D: without changing the dialing target')

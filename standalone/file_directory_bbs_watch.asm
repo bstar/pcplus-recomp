@@ -6,6 +6,9 @@ ORG 0x100
 jmp start
 old10: dd 0
 old2f: dd 0
+%ifdef EXTERNAL_VIEWER_ROUNDTRIP
+%define FILE_VIEWER_ROUNDTRIP
+%endif
 %ifdef FILE_VIEWER_ROUNDTRIP
 %define REPORT_MAGIC 0x5657
 %define REPORT_QUERY 0xd743
@@ -86,6 +89,10 @@ hook10:
 .after:
  save
  call observe_listing
+%ifdef EXTERNAL_VIEWER_ROUNDTRIP
+ cmp word [child_completed],1
+ jne .after_done
+%endif
  cmp word [report+2],1
  jne .after_done
  cmp word [report+4],1
@@ -134,6 +141,14 @@ observe_listing:
  mov ax,0xb800
  mov es,ax
 %ifdef FILE_VIEWER_ROUNDTRIP
+%ifdef EXTERNAL_VIEWER_ROUNDTRIP
+ cmp word [es:1934],0b45h ; Enter parameters:
+ jne .done
+ cmp word [es:1936],0b6eh
+ jne .done
+ cmp word [es:1970],0a20h
+ jne .done
+%else
  cmp word [es:0],0756h
  jne .done
  cmp word [es:2],0749h
@@ -142,6 +157,7 @@ observe_listing:
  jne .done
  cmp word [es:3842],7148h
  jne .done
+%endif
  xor si,si
  mov di,listing
  mov cx,2000
@@ -182,6 +198,15 @@ observe_listing:
 .done:
  ret
 hook2f:
+%ifdef EXTERNAL_VIEWER_ROUNDTRIP
+ cmp ax,0xd744
+ jne .not_child
+ cmp bx,0x5658
+ jne .not_child
+ mov word [cs:child_completed],1
+ iret
+.not_child:
+%endif
  cmp ax,REPORT_QUERY
  jne .chain
  or bx,bx
@@ -192,6 +217,9 @@ hook2f:
  iret
 .chain:
  jmp far [cs:old2f]
+%ifdef EXTERNAL_VIEWER_ROUNDTRIP
+child_completed: dw 0
+%endif
 ; Require the actual stock subject marker, regardless of its row.
 editor_prompt: db 'KEYTEST',0
 editor_visible:

@@ -129,3 +129,37 @@ cells across48365 delivered bytes. This checks the core terminal path: it does
 not open an external viewer inside the editor, exercise SIP/audio, or validate
 the physical modem. No application, live SynthModem service, installed selection
 or private configuration changed for this recovery checkpoint.
+
+## External child inside stock BBS editors
+
+The [BBS composition receipt](validation/viewer-external-bbs.json) records
+external Alt-V execution inside unsaved stock Enigma and Synchronet editors.
+An owned COM child records its real PSP tail and current drive/directory,
+switches to mode13h, then signals a private passive-observer completion marker.
+The observer will capture the restored editor only after this marker. Restoring
+the screen before EXEC cannot satisfy this gate. The child and observer do not
+write product memory or supply terminal replies.
+
+Each run checks all2000 editor cells, cursor position/shape and video geometry
+after the graphics child returns, then continues ordinary editing and aborts
+the draft. Independent final-screen audits compare1920 cells per server. The
+parameter prompt, configured title, literal child arguments and unchanged owned
+configuration/child are separate checks. Five copied-data controls damage an
+editor cell, cursor, completion flag, child tail or local-parameter wire; each
+must be rejected. Six prior observer/key-producer variants retain exact bytes.
+
+Enigma runs with the8086 CPU model. Synchronet performs actual ASPECT login
+using a fresh source build matching the earlier accepted ASPECT executable,
+with the386/XMS/UMB lab configuration. Both passive observer and BIOS keyboard
+producer must record actual upper-memory segments. The first Synchronet attempt
+loaded only the observer high and did not launch ASPECT. The new parent retains
+about3KB more memory; moving the remaining test producer high permits the same
+parent/runner to launch the script. The failed run remains excluded. This
+establishes a lab memory constraint without claiming a captured DOS error number
+or changing the application's memory-loan policy. Conventional-memory ASPECT
+acceptance on an8086 remains open.
+
+The application executable, installed release and live SynthModem service are
+unchanged by these tests. BBS pressure during a running child, transfer/cancel/
+carrier-loss and reconnect composition through this path, other viewers/video
+settings, real DOS-kernel failure behavior and physical acceptance remain open.

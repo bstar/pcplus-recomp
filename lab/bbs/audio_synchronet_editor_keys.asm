@@ -45,7 +45,12 @@ keys:
 %include "multiline_keys.inc"
 %else
 keys:
+%ifdef EXTERNAL_VIEWER_ROUNDTRIP
+%define VIEWER_RETURN_WAIT
+ dw 2f00h,1950h,1e41h,2247h,1245h,342eh,2044h,1e41h,1454h,1c0dh
+%endif
 %ifdef FILE_VIEWER_ROUNDTRIP
+%define VIEWER_RETURN_WAIT
  dw 2f00h,2044h,273ah,2b5ch,2f56h,1749h,1245h,1157h,342eh,2044h,1e41h,1454h,1c0dh,011bh
 %endif
 %ifdef FILE_DIRECTORY_ROUNDTRIP
@@ -141,7 +146,7 @@ handler:
  mov word [ticks],18
 .listing_wait_done:
 %endif
-%ifdef FILE_VIEWER_ROUNDTRIP
+%ifdef VIEWER_RETURN_WAIT
  cmp word [bx-2],2f00h
  jne .viewer_enter
  mov word [ticks],18
@@ -223,7 +228,34 @@ visible:
  ret
 resident_end:
 filename: db 'D:\KEYOLD.BIN',0
+%ifdef RECORD_KEY_SEGMENT
+key_segment: dw 0
+segment_name: db 'D:\KEYSEG.BIN',0
+%endif
 install:
+%ifdef RECORD_KEY_SEGMENT
+ mov ax,cs
+ mov [key_segment],ax
+ mov dx,segment_name
+ xor cx,cx
+ mov ah,3ch
+ int 21h
+ jc failure
+ mov bx,ax
+ mov dx,key_segment
+ mov cx,2
+ mov ah,40h
+ int 21h
+ pushf
+ push ax
+ mov ah,3eh
+ int 21h
+ pop ax
+ popf
+ jc failure
+ cmp ax,2
+ jne failure
+%endif
  mov ax,351ch
  int 21h
  mov [old_vector],bx
