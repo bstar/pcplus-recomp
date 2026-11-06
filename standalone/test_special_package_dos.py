@@ -9,7 +9,7 @@ import struct
 import subprocess
 import sys
 
-from package_special_edition import ROOT, PRODUCTS, sha
+from package_special_edition import ROOT, sha
 from check_setup_model import image
 from test_directory_key_bindings_dos import actions
 from test_terminal import SAMPLER
@@ -19,9 +19,11 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False):
+def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False):
     assert not precompile or not (setup or splash_only or after_child_view)
+    assert not chat_help or not (setup or splash_only or after_child_view or precompile)
     manifest = json.loads((package / 'manifest.json').read_text())
+    assert not chat_help or manifest.get('experimental_chat_help')
     dos_directory=validate_dos_directory(manifest.get('dos_directory','PCPLUSSE'))
     dos_root='C:\\'+dos_directory
     assert manifest['card_written'] is False
@@ -73,6 +75,15 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         subprocess.run(['nasm','-fbin',str(drive/'unlist.asm'),'-o',str(drive/'UNLIST.COM')],check=True)
     subprocess.run(['nasm', '-fbin', str(ROOT / 'standalone/special_watch.asm'),
                     '-o', str(drive / 'WATCH.COM')], check=True)
+    if chat_help:
+        source=(ROOT/'standalone/global_help_watch.asm').read_text()
+        for old,new in [("cmp byte [es:190],'P'","cmp byte [es:72],'R'"),("cmp byte [es:194],'R'","cmp byte [es:74],'E'"),("cmp byte [es:198],'O'","cmp byte [es:76],'M'"),("cmp byte [es:2],'T'","cmp byte [es:2],'C'"),("cmp byte [es:4],'e'","cmp byte [es:4],'h'"),("cmp byte [es:6],'r'","cmp byte [es:6],'a'")]:
+            assert source.count(old)==1;source=source.replace(old,new)
+        source=source.replace(' jmp .candidate\n.help:'," cmp byte [es:3200],'A'\n jne .done\n cmp byte [es:3202],'B'\n jne .done\n jmp .candidate\n.help:")
+        assert source.count("name: db 'HELPUI.BIN',0")==1
+        source=source.replace("name: db 'HELPUI.BIN',0","name: db 'C:\\HELPUI.BIN',0")
+        (drive/'HELPWAT.ASM').write_text(source)
+        subprocess.run(['nasm','-fbin',str(drive/'HELPWAT.ASM'),'-o',str(drive/'HELPWAT.COM')],check=True)
     strategy = manifest.get('experimental_directory_resource_owner',False)
     if strategy:
         subprocess.run(['nasm','-fbin',str(ROOT/'standalone/dos_strategy_sample.asm'),'-o',str(drive/'STRAT.COM')],check=True)
@@ -86,17 +97,18 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
             'p900 enter p1500 a-z p700 escape p600 a-x' if splash_only else
             'p900 enter p1500 a-1 p6500 space p700 a-x')
     if after_child_view:keys=keys.replace('a-x','c-pgup p1200 escape p500 a-x')
+    if chat_help:keys='p900 enter p1800 a-o p1500 A B p1000 a-z p2500 escape p1200 escape p1000 a-x'
     config = ('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\n'
               'cycles=fixed 12000\n[serial]\n'+
               ''.join('serial'+str(n)+'=dummy'+(' irq:'+str(irq)if n==com and irq is not None else '')+'\n'
                       for n in range(1,5))+
               '[mixer]\nnosound=true\n[autoexec]\n@echo off\n'
               'mount c "' + str(drive) + '"\nc:\nset PCPLUS=C:\\ORIGINAL\n' +
-              ('WATCH T\n' if observe else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+('UNLIST\n' if bios_absent else '')+'SNAP B\n'+
+              ('WATCH T\n' if observe else '')+('HELPWAT T\n' if chat_help else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+('UNLIST\n' if bios_absent else '')+'SNAP B\n'+
               ('CD \\'+dos_directory+'\nASPCOMP TEST.ASP\nIF ERRORLEVEL 1 GOTO failed\nCD \\\n' if precompile else '')+
               'ADDKEY ' + keys + '\n'
               'CALL '+dos_root+'\\' + launcher + '.BAT /T:ACTIONS.KEY\n'+
-              ('C:\\STRAT A\n' if strategy else '')+'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n'+('C:\\RVIEW\n' if after_child_view else '')+('C:\\WATCH\n' if observe else '')+
+              ('C:\\STRAT A\n' if strategy else '')+'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n'+('C:\\HELPWAT\n' if chat_help else '')+('C:\\RVIEW\n' if after_child_view else '')+('C:\\WATCH\n' if observe else '')+
               'if errorlevel 1 goto failed\necho RETURNED>C:\\RETURN.TXT\nexit\n'
               ':failed\necho FAIL>C:\\FAIL.TXT\nexit\n')
     (out / 'dosbox.conf').write_text(config)
@@ -123,25 +135,31 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     assert b'PCPLUS=C:\\ORIGINAL' in env and not any(s.startswith(b'LOC_PCPLUS=') for s in env)
     for leaf, data in fixtures.items():
         assert (app / leaf).read_bytes() == data, leaf
-    if not observe:
+    if chat_help:
+        captured=(drive/'HELPUI.BIN').read_bytes();assert len(captured)==24020
+        words=struct.unpack_from('<10H',captured);before=captured[20:8020];helper=captured[8020:16020];after=captured[16020:24020]
+        assert words[:2]==(0x4847,3) and words[3]==25 and words[4:6]==words[8:10]
+        assert before==after and before[3200:3204:2]==b'AB' and helper[2:20:2]==b'Chat Mode'
+        assert not (app/'TEST.ASX').exists() and not (app/'RESULT.BIN').exists()
+    elif not observe:
         assert (app / 'RESULT.BIN').read_bytes() == b'SPECIAL-COMPILED'
         assert (app / 'TEST.ASX').read_bytes() == compile_source(source)
     else:
         assert not (app / 'TEST.ASX').exists() and not (app / 'RESULT.BIN').exists()
-    for leaf in PRODUCTS:
+    for leaf in manifest['files']:
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, dos_directory=dos_directory,cpu='8086', port=com, io_base=base, resident_observer=observe,
-                  irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,
+                  irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,chat_help=chat_help,
                   package_manifest_sha256=sha(package / 'manifest.json'),
                   package_files=manifest['files'],
                   checks=['launcher returns to DOS', 'PCPLUS environment restored',
                           f'COM{com}/PIC/IRQ vectors restored', 'private PRM/DIR/XLT unchanged',
-                          'packaged binaries unchanged'] + (['actual magenta splash captured by independent timer'] if observe else
+                          'packaged binaries unchanged'] + (['actual packaged Chat/PCHELP round trip retains AB and exact frame/cursor'] if chat_help else ['actual magenta splash captured by independent timer'] if observe else
                           [('DOS precompilation produces exact ASX' if precompile else 'nested DOS source compilation produces exact ASX'), 'script writes expected result'])+(['DOS allocation strategy restored'] if strategy else [])+(['frozen-history viewer reopens after nested child return'] if after_child_view else []),
                   sources={n: sha(ROOT / n) for n in ['standalone/test_special_package_dos.py',
                            'standalone/special_watch.asm', 'standalone/test_terminal.py',
                            'standalone/check_setup_model.py', 'standalone/test_directory_key_bindings_dos.py',
-                           'src/aspect/compiler.py']+(['standalone/dos_strategy_sample.asm'] if strategy else [])+(['standalone/redisplay_watch.asm'] if after_child_view else [])},
+                           'src/aspect/compiler.py']+(['standalone/global_help_watch.asm'] if chat_help else [])+(['standalone/dos_strategy_sample.asm'] if strategy else [])+(['standalone/redisplay_watch.asm'] if after_child_view else [])},
                   artifacts={str(p.relative_to(out)): sha(p) for p in out.rglob('*') if p.is_file()},
                   scope=__doc__ + ' Dummy serial ports; no live BBS, card write or physical modem test.')
     (out / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
@@ -159,11 +177,12 @@ def main():
     p.add_argument('--com',type=int,choices=[1,2,3,4],default=2)
     p.add_argument('--precompile',action='store_true',help='Compile at the DOS prompt before retaining the terminal/interpreter')
     p.add_argument('--bios-absent',action='store_true',help='Clear the selected BIOS UART entry before launch; keep actual UART present')
+    p.add_argument('--chat-help',action='store_true',help='Exercise packaged Chat and PCHELP with retained input/frame/cursor')
     args = p.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     assert not (args.setup and args.splash_only)
-    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent)
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help)
 
 
 if __name__ == '__main__':

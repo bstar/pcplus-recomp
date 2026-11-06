@@ -39,6 +39,24 @@ def packed_guide(directory):
         'transfers on the intended hardware. Full original parity and physical\n'
         'modem/SIP/audio acceptance remain open. This is a test candidate.\n')
 
+def terminal_companions(binary,manifest):
+    """Return source-verified optional runtime files required by this parent."""
+    files={};sources={};base=binary.resolve().parent
+    if manifest.get('experimental_chat_loader'):
+        module=manifest['chat_loader']['module']
+        assert sha(base/'PCCHAT.OVL')==module['binary_sha256']
+        files['PCCHAT.OVL']=base/'PCCHAT.OVL'
+    if manifest.get('experimental_global_help'):
+        bundle=json.loads((base/'package.json').read_text())
+        assert bundle['passed'] and bundle['products']['TERMINAL.EXE']==sha(binary)
+        for n in ('PCHELP.RTE','PCPLUS.HLP'):
+            assert sha(base/n)==bundle['products'][n];files[n]=base/n
+        sources.update(bundle['sources'])
+    for n,h in sources.items():
+        p=Path(n);assert not p.is_absolute() and '..' not in p.parts and p.parts[0] not in ('build','analysis','original','originals','install')
+        assert sha(ROOT/p)==h,n
+    return files,sources
+
 def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
     dos_directory=validate_dos_directory(dos_directory)
     assert output.is_relative_to(ROOT/'build') and not output.exists()
@@ -55,9 +73,12 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         if leaf in ('TERMINAL.EXE','ASPECT.EXE','PRMEDIT.EXE'):assert m.get('experimental_custom_irq')
         manifests[leaf]=m;identities[leaf]={'folder':str(binary.parent.relative_to(ROOT/'build')),'manifest_sha256':sha(path),'binary_sha256':sha(binary)}
     terminal=manifests['TERMINAL.EXE']
+    companions,companion_sources=terminal_companions(products['TERMINAL.EXE'],terminal)
+    for n,h in companion_sources.items():assert sources.get(n,h)==h;sources[n]=h
     assert terminal.get('special_edition') and terminal.get('experimental_original_reference') and terminal.get('experimental_phone_log_controls') and terminal.get('experimental_status_geometry')
     assert terminal['memory_layout']['initial_terminal_rows']==24
     assert manifests['ASPECT.EXE'].get('experimental_register_handoff') and manifests['ASPECT.EXE'].get('experimental_help_resource')
+    assert bool(terminal.get('experimental_aspect_snapshot_lease'))==bool(manifests['ASPECT.EXE'].get('experimental_snapshot_lease')),'Parent and ASPECT snapshot lease must match'
     help_base=products['ASPECT.EXE'].resolve().parent;help_record=json.loads((help_base/'help-resource.json').read_text())
     assert sha(help_base/'LOCHELP.HLP')==help_record['sha256']
     for n,h in help_record['sources'].items():
@@ -65,6 +86,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         assert sha(ROOT/p)==h and sources.get(n,h)==h;sources[n]=h
     output.mkdir();payload=output/dos_directory;payload.mkdir()
     for leaf,binary in products.items():shutil.copyfile(binary,payload/leaf)
+    for leaf,binary in companions.items():shutil.copyfile(binary,payload/leaf)
     shutil.copyfile(help_base/'LOCHELP.HLP',payload/'LOCHELP.HLP')
     for name,setup in [('START.BAT',False),('SETUP.BAT',True)]:
         data=launch(setup);assert data.count(b'PCPLUSSE')==2
@@ -115,6 +137,14 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         'remain unverified. Building/staging does not update a card.\n').replace(b'PCPLUSSE',dos_directory.encode('ascii')))
     if terminal.get('experimental_packed_command_ui'):
         (payload/'README.TXT').write_bytes(packed_guide(dos_directory))
+    if terminal.get('experimental_global_help'):
+        with (payload/'README.TXT').open('ab') as guide:
+            guide.write(dos_text('\nContextual Help: press Alt-Z twice from the terminal.\n'
+                'Keep PCHELP.RTE and the authored PCPLUS.HLP beside TERMINAL.EXE.\n'))
+    if terminal.get('experimental_chat_loader'):
+        with (payload/'README.TXT').open('ab') as guide:
+            guide.write(dos_text('\nAlt-O: Chat; Alt-F6: Redisplay. Keep PCCHAT.OVL beside TERMINAL.EXE.\n'
+                +('Alt-Z in Chat opens Help and retains unfinished input.\n' if terminal.get('experimental_chat_help') else '')))
     for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
     record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
@@ -138,6 +168,8 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         record['experimental_external_viewer']=True
     if terminal.get('experimental_external_editor'):record['experimental_external_editor']=True
     if terminal.get('experimental_packed_command_ui'):record['experimental_packed_command_ui']=True
+    for flag in ('experimental_chat_loader','experimental_global_help','experimental_chat_help'):
+        if terminal.get(flag):record[flag]=True
     (output/'manifest.json').write_text(json.dumps(record,indent=2)+'\n');return record
 
 def main():

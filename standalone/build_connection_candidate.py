@@ -20,7 +20,12 @@ def main():
  def run(arguments):
   with log.open('a') as f:subprocess.run([sys.executable,*arguments],cwd=ROOT,stdout=f,stderr=f,check=True)
  terminal=out/'terminal';runner=out/'aspect';compiler=out/'compiler';setup=out/'setup';translation=out/'translation'
- run(['standalone/build_terminal.py',*r['terminal_flags'],'--output-dir',str(terminal)])
+ if '--global-help' in r['terminal_flags']:
+  profile=json.loads((ROOT/'standalone/chat_redisplay_profile.json').read_text())+['--global-help']
+  if '--chat-help' in r['terminal_flags']:profile+=['--chat-help']
+  assert r['terminal_flags']==profile,'Global Help recipe must use its tested composed profile'
+  run(['standalone/build_global_help_profile.py','--output',str(terminal)]+(['--chat-help'] if '--chat-help' in r['terminal_flags'] else []))
+ else:run(['standalone/build_terminal.py',*r['terminal_flags'],'--output-dir',str(terminal)])
  code="import sys,json;from pathlib import Path;sys.path.insert(0,'standalone');from build_aspect_process import main;main(parent_render=True,output=Path(sys.argv[1]),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,**json.loads(sys.argv[2]))"
  run(['-c',code,str(runner),json.dumps(aspect_options,sort_keys=True)])
  code="import sys;from pathlib import Path;sys.path.insert(0,'standalone');import build_aspect_compiler_dos as c;c.OUT=Path(sys.argv[1]);c.main()"

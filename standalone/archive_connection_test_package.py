@@ -12,7 +12,9 @@ def main():
  m=json.loads((package/'manifest.json').read_text());directory=validate_dos_directory(m['dos_directory'])
  assert m['original_inputs']==[] and not m['card_written']
  allowed={'TERMINAL.EXE','ASPECT.EXE','ASPCOMP.EXE','PRMEDIT.EXE','XLTEDIT.EXE','LOCHELP.HLP','START.BAT','SETUP.BAT','README.TXT','VERSION.TXT'}
- assert set(m['files'])==allowed,'Only the ten public application files may be archived'
+ if m.get('experimental_chat_loader'):allowed.add('PCCHAT.OVL')
+ if m.get('experimental_global_help'):allowed.update(('PCHELP.RTE','PCPLUS.HLP'))
+ assert set(m['files'])==allowed,'Only declared public application files may be archived'
  for n,h in m['files'].items():assert sha(package/directory/n)==h,n
  out.mkdir(parents=True)
  archive=out/'PCPLUSSE.ZIP'

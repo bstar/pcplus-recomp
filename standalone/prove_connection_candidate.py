@@ -25,6 +25,6 @@ def main():
  actual=json.loads((fresh/'build/reviewed/result.json').read_text());assert actual['passed'] and actual['files']==expected['files'] and actual['archive_sha256']==expected['archive_sha256']
  for n,h in sources.items():assert sha(ROOT/n)==sha(fresh/n)==h,n
  result=dict(passed=True,source_commit=revision,source_base_commit=expected['source_base_commit'],source_count=len(sources),sources=sources,files=actual['files'],archive_sha256=actual['archive_sha256'],original_inputs=[],ancestor_git_unavailable=True,
-  scope=__doc__+' Executes the tracked Python builder inside the pinned Nix environment with no prior build objects, originals, private configuration or Git metadata in its source export. The shell wrapper/Nix environment bootstrap is separately exercised in the working checkout. Five executables,ten package files and deterministic archive must match the reviewed build.')
- (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS tracked builder:',len(sources),'public files; exact five executables,ten package files and ZIP')
+  scope=__doc__+' Executes the tracked Python builder inside the pinned Nix environment with no prior build objects, originals, private configuration or Git metadata in its source export. The shell wrapper/Nix environment bootstrap is separately exercised in the working checkout. Every declared package file and deterministic archive must match the reviewed build.')
+ (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS tracked builder:',len(sources),'public source files;',len(actual['files']),'exact package files and ZIP')
 if __name__=='__main__':main()
