@@ -2415,3 +2415,5 @@ cancelled YMODEM attempt is retried successfully in the same process/connection.
 The selected-image deadline checker covers fixed DTE versus slow modeled wire
 rates. These scoped software checks do not close analog/BBS-file-area, other
 protocol or full original-feature acceptance gates.
+
+Optional physical Chat TEXT TX adapter: [component checks pass, nested ASPECT RUN fails](CHAT_TEXT_TRANSPORT.md). Keep `--chat-text-transport` disabled for application use. Foreground TEXT/echo/delay binding and full candidate acceptance remain open.

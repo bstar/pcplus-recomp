@@ -1,0 +1,61 @@
+{
+  "status": "experimental-physical-TX-component-passes-nested-ASPECT-RUN-fails-do-not-promote",
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "foreground_TEXT_enabled": false,
+  "full_candidate_acceptance": false,
+  "binary_sha256": "0258248b621e2280cd02a0542d71dc86634ff248f5c7d32112793aac1d80fbfa",
+  "disabled_sha256": "5875536a193a3f7db696307dfb358bc0adc1b3d3fdae44b7eeb40980d9198fef",
+  "minimum_module_bytes": 479520,
+  "additional_minimum_bytes": 112,
+  "resident_CS_bytes": 65528,
+  "near_bytes": 65504,
+  "additional_near_bytes": 0,
+  "additional_resident_CS_bytes": 0,
+  "source_export_files": 648,
+  "physical_TX_CPU_checks": 6,
+  "reports": {
+    "physical_TX_CPU": {
+      "path": "build/chat-text-transport-reused-replay-20261106/result.json",
+      "sha256": "efc7723668f6c61e39d8764ea4fcca80bbd4cf1062939a8e0bb4d8e22dc12f12",
+      "passed": true
+    },
+    "normal_main_prefix": {
+      "path": "build/chat-text-transport-reused-main-20261106/result.json",
+      "sha256": "e5b75a8ce7f157ab7f0980abfd01656421f6c3ba8d1b8594a3a44b5cdd73e156",
+      "passed": true
+    },
+    "clean_source": {
+      "path": "build/chat-text-transport-reused-cold-20261106/result.json",
+      "sha256": "f1ecd35da98d798eb2648ad35d377464bae2e45dba4fb1d0b8df792aabd4d496",
+      "passed": true
+    },
+    "ASPECT_failure": {
+      "path": "build/chat-text-transport-reused-aspect-20261106/result.json",
+      "sha256": "c0c897816a69c67749a2f6c658c8ab0681d665ee51a1f736d66d3e347525de3d",
+      "passed": false
+    },
+    "ASPECT_disabled_control": {
+      "path": "build/chat-text-transport-aspect-control-20261106/result.json",
+      "sha256": "8a91998c01aecc0d92f8a339b3fa4f9176d77f00e97a706d2221289f69c78d58",
+      "passed": true
+    },
+    "ASPECT_passive_diagnostic": {
+      "path": "build/chat-text-transport-aspect-observed-20261106/result.json",
+      "sha256": "fb518b84d21f45703bb7d6b258e73dd944a84a7bc1fecc8f208df8fad0a9cbcf",
+      "passed": false
+    }
+  },
+  "observed_allocation_failure": {
+    "request_paragraphs": 254,
+    "largest_offered_paragraphs": 67,
+    "dos_error": 8
+  },
+  "root_cause_fully_diagnosed": false,
+  "remaining": [
+    "Resolve enabled nested ASPECT RUN regression before promotion",
+    "Original echo context and bounded delay services",
+    "Foreground API0102/TEXT shortcut scheduling",
+    "Final BBS/package/deployment/physical acceptance"
+  ]
+}
