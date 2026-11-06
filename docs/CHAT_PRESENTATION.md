@@ -66,3 +66,7 @@ Foreground entry/pre-dequeue, real UART/RX/TX/history/log adapters, Help/direct
 TEXT, notice/trap policy, parent memory admission and final BBS/package/physical
 gates remain open. The prior intermittent Enigma redial miss remains unresolved.
 No physical DOS PC or production SynthModem/Enigma service was changed.
+
+The subsequent [parent selection checkpoint](CHAT_PRESENTATION_PARENT.md)
+adds an explicit matching-loader option and actual parent-code composition;
+normal foreground entry remains unbound.

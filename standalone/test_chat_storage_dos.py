@@ -24,6 +24,8 @@ def main():
     assert binary.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build') and not out.exists()
     m = json.loads(binary.with_name('manifest.json').read_text())
     assert m['experimental_chat_storage'] and m['experimental_chat_loader']
+    presentation = m.get('experimental_chat_presentation',False)
+    assert m['chat_loader']['module']['api_version']==(0x101 if presentation else 0x100)
     assert sha(binary)==m['binary_sha256']
     sources = dict(m['sources'])
     for n in ['standalone/test_chat_storage_dos.py','standalone/chat_parent_storage_host.c',
@@ -54,6 +56,7 @@ def main():
     shutil.copyfile(binary.parent/'PCCHAT.OVL',drive/'PCCHAT.OVL')
     subprocess.run(['nasm','-fobj',str(ROOT/'standalone/chat_parent_invoke.asm'),'-o','invoke.obj'],cwd=drive,check=True)
     subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-ecc','-k8192',
+                    *(['-dCHAT_PRESENTATION'] if presentation else []),
                     '-i='+str(drive),'-fe=LEASE.EXE','-fm=LEASE.MAP',
                     str(ROOT/'standalone/chat_parent_storage_host.c'),'invoke.obj'],cwd=drive,check=True)
     host_map=(drive/'LEASE.MAP').read_text()
@@ -71,7 +74,7 @@ def main():
     assert sha(drive/'PARENT.EXE')==sha(binary)
     assert sha(drive/'PCCHAT.OVL')==m['chat_loader']['module']['binary_sha256']
     record=dict(passed=True,binary_sha256=sha(binary),module_sha256=sha(drive/'PCCHAT.OVL'),
-                loads=2,relocation_areas=2,source_files=len(sources),sources=sources,
+                loads=2,relocation_areas=2,presentation=presentation,source_files=len(sources),sources=sources,
                 constants=constants,artifacts={str(p.relative_to(out)):sha(p) for p in out.rglob('*') if p.is_file()},
                 scope=__doc__+' Actual parent loader and storage APIs, separate actual Chat module, guarded existing frozen storage, buffered local glyph, active-unload refusal, before/idle/stop/key/reset exclusions, exact image CRC after guards, close/unload before explicit retirement, same PSP/JFT/largest memory. No UART/live BBS or physical claim; host links no Chat loader/implementation.')
     (out/'result.json').write_text(json.dumps(record,indent=2)+'\n')

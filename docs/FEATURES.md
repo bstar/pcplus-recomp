@@ -2365,6 +2365,18 @@ module and DOS host exactly. The default session regression and byte-identical
 `75c84373` parent still pass. Foreground entry/adapters, memory admission, final
 BBS and physical gates remain open; no deployment or reliability claim changes.
 
+The [matching presentation parent](CHAT_PRESENTATION_PARENT.md) now selects the
+new module explicitly and verifies actual parent-code storage/load/physical
+screen restore/unload at two addresses. It adds32 minimum module bytes, with
+near data and capacities unchanged. Six-stream/three-child ASPECT admission,
+54 linked storage guards, a635-file clean export, Synchronet editor/viewer
+return and independently audited Enigma redial/exact65539-byte retry pass.
+The Enigma pass uses the established150-second wait option; a failed60-second
+retry is retained with partial-wire and declared-input-difference evidence.
+The preceding parent remains byte-identical when the option is disabled.
+Foreground Chat entry/adapters, final memory/package/physical gates and the
+earlier unattributed redial miss remain open.
+
 The same Screen Pause image now has a [transfer-readiness receipt](TRANSFER_RELEASE_READINESS.md):
 16 actual DOS8086 COM3/IRQ5 X/Y/ZMODEM binary/retry/cancellation cases,18 real
 emulated carrier-loss transfer cases and4 ASPECT disconnect/window cases. A

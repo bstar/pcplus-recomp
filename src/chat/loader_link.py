@@ -6,12 +6,13 @@ from build_path_session import object_segments
 from omf_imports import records, externals
 
 
-def build_loader(root, out):
-    module = build(out / 'chat-module')
+def build_loader(root, out, presentation=False):
+    module = build(out / 'chat-module', presentation=presentation)
     cobj, aobj = out / 'chat-loader.obj', out / 'chat-load-kernel.obj'
     flags = ['-ox', '-os', '-oe=0']
     subprocess.run(['wcc', '-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-ecc',
                     '-nt=CHAT_LOAD_CODE', '-nc=FARCODE', *flags,
+                    *(['-dCHAT_PRESENTATION'] if presentation else []),
                     '-i='+str(out / 'chat-module'), '-fo='+str(cobj),
                     str(root / 'src/chat/loader.c')], cwd=out, check=True)
     subprocess.run(['nasm', '-fobj', '-DCHAT_LOADER_BANK',
@@ -29,7 +30,7 @@ def build_loader(root, out):
     # The C contribution begins the bank; include the intervening linker pad.
     size = ((sizes[0]+15)//16)*16 + sizes[1]
     shutil.copyfile(out / 'chat-module/PCCHAT.OVL', out / 'PCCHAT.OVL')
-    inputs = list(dict.fromkeys(SOURCES + ['src/chat/loader.c', 'src/chat/loader.h',
+    inputs = list(dict.fromkeys(list(module['sources']) + ['src/chat/loader.c', 'src/chat/loader.h',
                   'src/chat/overlay_load.asm', 'src/chat/loader_link.py',
                   'standalone/build_path_session.py', 'standalone/omf_imports.py']))
     return dict(objects=[cobj, aobj], inputs=[root / n for n in inputs],

@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "../src/chat/loader.h"
+#ifdef CHAT_PRESENTATION
+#include "../src/chat/presentation.h"
+#endif
 #include "parent.h"
 typedef struct invocation {
     unsigned ds,sp,off,seg,ax,count,args[8],result,flags;
@@ -42,6 +45,19 @@ static unsigned load_parent(void)
     sr.es=sr.ss;in.x.bx=(unsigned)&block;
     intdosx(&in,&out,&sr);return out.x.cflag?out.x.ax:0;
 }
+#ifdef CHAT_PRESENTATION
+static void cursor_set(unsigned position,unsigned shape)
+{
+    union REGS in,out;memset(&in,0,sizeof(in));in.h.ah=1;in.x.cx=shape;int86(0x10,&in,&out);
+    in.h.ah=2;in.h.bh=0;in.x.dx=position;int86(0x10,&in,&out);
+}
+static void cursor_get(unsigned *position,unsigned *shape)
+{
+    union REGS in,out;memset(&in,0,sizeof(in));in.h.ah=3;int86(0x10,&in,&out);*position=out.x.dx;*shape=out.x.cx;
+}
+static unsigned cell(unsigned i)
+{return ((i*17+7)&255)|(((i*11+7)&127)<<8);}
+#endif
 int main(void)
 {
     unsigned psp=current_psp(),before=largest(),after,i,j,base,state_seg;
@@ -53,6 +69,11 @@ int main(void)
     chat_module_request __far *request;
     chat_session __far *state;
     chat_word __far *frame;
+#ifdef CHAT_PRESENTATION
+    chat_presentation __far *presentation;
+    chat_word __far *video=MK_FP(0xb800,0);
+    unsigned position,shape,saved_position,saved_shape;
+#endif
     if(sizeof(invocation)!=32 || sizeof(chat_module_handle)!=18 || sizeof(chat_module_request)!=50)return 2;
     if(_dos_allocmem(PARENT_PARAS,&segment))return 3;
     for(i=0;i<PARENT_PARAS;i+=1024){
@@ -69,6 +90,9 @@ int main(void)
     frame=(chat_word __far *)MK_FP(segment+FRAME_SEG,FRAME_OFF);
     state_seg=segment+FROZEN_SEG;
     state=(chat_session __far *)MK_FP(state_seg,12288);
+#ifdef CHAT_PRESENTATION
+    presentation=MK_FP(state_seg,13000);
+#endif
     _fmemcpy(near_data+path,"PCCHAT.OVL",11);
     REQUIRE(*owner()==0);
     for(j=0;j<2;++j){
@@ -76,20 +100,42 @@ int main(void)
         _fmemset(handle,0,sizeof(*handle));
         RUN(ACQUIRE,0,0);REQUIRE(!(call.flags&1) && *owner()==2);
         RUN(ACQUIRE,0,0);REQUIRE((call.flags&1) && *owner()==2);
+#ifdef CHAT_PRESENTATION
+        base=state_seg+16+j*128;
+#else
         base=state_seg+16+j*256;
+#endif
         call.args[0]=h;call.args[1]=12288;call.args[2]=state_seg;
-        call.args[3]=path;call.args[4]=0;call.args[5]=base;call.args[6]=4096;
+        call.args[3]=path;call.args[4]=0;call.args[5]=base;
+        call.args[6]=
+#ifdef CHAT_PRESENTATION
+            8192;
+#else
+            4096;
+#endif
         REQUIRE(RUN(LOAD,0,7)==0 && handle->loaded && !handle->active);
         _fmemset(request,0,sizeof(*request));request->api=CHAT_MODULE_API;request->state=state;
-        REQUIRE(module_call(CHAT_MODULE_QUERY,h,r)==358);
+        REQUIRE(module_call(CHAT_MODULE_QUERY,h,r)==CHAT_MODULE_STATE_BYTES);
         request->frame=frame;request->capacity=4000;request->rows=25;
         request->attribute=0x17;request->bar=0x70;request->clear=0x07;
         request->buffered=1;
+#ifdef CHAT_PRESENTATION
+        for(i=0;i<2000;++i)video[i]=cell(i);
+        cursor_set(0x0b13,j?0x2607:0x0607);cursor_get(&saved_position,&saved_shape);
+        request->user=presentation;request->value=sizeof(*presentation);
+        REQUIRE(module_call(CHAT_MODULE_PRESENT_OPEN,h,r)==1 && handle->active);
+#else
         REQUIRE(module_call(CHAT_MODULE_OPEN,h,r)==1 && handle->active);
+#endif
         call.args[0]=h;REQUIRE(RUN(UNLOAD,0,1)==CHAT_LOAD_ACTIVE);
         request->key='A';request->transport_idle=1;
         REQUIRE(module_call(CHAT_MODULE_KEY,h,r)==(CHAT_ACCEPTED|CHAT_PAINT));
+#ifdef CHAT_PRESENTATION
+        REQUIRE(video[20*80]==0x1741 && frame[20*80]==cell(20*80));
+        cursor_get(&position,&shape);REQUIRE(position==0x1401 && shape==saved_shape);
+#else
         REQUIRE(frame[20*80]==0x1741);
+#endif
         RUN(BEFORE,0,0);RUN(IDLE,0,0);RUN(STOP,0,0);RUN(KEY,27,0);
         REQUIRE(*owner()==2 && handle->loaded && handle->active);
         REQUIRE(RUN(RESET,1,0)==1 && *owner()==2);
@@ -101,6 +147,12 @@ int main(void)
         REQUIRE(frozen[12287]==0xa5 && frozen[12288+sizeof(*state)]==0xa5);
         request->key=27;
         REQUIRE(module_call(CHAT_MODULE_KEY,h,r)==(CHAT_ACCEPTED|CHAT_CLOSED));
+#ifdef CHAT_PRESENTATION
+        for(i=0;i<2000;++i)REQUIRE(video[i]==cell(i));
+        cursor_get(&position,&shape);REQUIRE(position==saved_position && shape==saved_shape);
+        REQUIRE(!state->presentation && !presentation->signature);
+        REQUIRE(frozen[12999]==0xa5 && frozen[13000+sizeof(*presentation)]==0xa5);
+#endif
         call.args[0]=h;REQUIRE(RUN(UNLOAD,0,1)==0 && !handle->loaded);
         REQUIRE(*owner()==2);
         RUN(RELEASE,0,0);REQUIRE(!(call.flags&1) && *owner()==0);

@@ -17,6 +17,7 @@ parser.add_argument('--packed-command-ui',action='store_true',help='Lossless bou
 parser.add_argument('--optimize-size',action='store_true',help='Experimental reviewed per-source C size profile; stacks and capacities unchanged')
 parser.add_argument('--chat-loader',action='store_true',help='Link the checked source-built Chat overlay loader; no foreground Chat binding yet')
 parser.add_argument('--chat-storage',action='store_true',help='Exclusive frozen-storage lease for Chat; requires loader, reference and large frames; no foreground binding')
+parser.add_argument('--chat-presentation',action='store_true',help='Select API0101 physical Chat module and matching checked loader; requires Chat storage; no foreground binding')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
@@ -101,6 +102,7 @@ parser.add_argument('--session-capture',action='store_true');parser.add_argument
 assert args.command_ui_pairs==64 or args.packed_command_ui
 if args.aspect_snapshot_lease:assert args.external_render and args.notice_input and args.large_view_frames
 if args.chat_storage:assert args.chat_loader and args.original_reference and args.large_view_frames
+if args.chat_presentation:assert args.chat_storage
 if args.external_editor:args.external_viewer=True
 if args.external_viewer:
  args.file_viewer=True
@@ -314,6 +316,7 @@ if args.packed_command_ui:out_name+='-packed-ui'
 if args.optimize_size:out_name+='-optimized-size'
 if args.chat_loader:out_name+='-chat-loader'
 if args.chat_storage:out_name+='-chat-storage'
+if args.chat_presentation:out_name+='-chat-presentation'
 if args.command_ui_pairs==0:out_name+='-control'
 if args.gateway_lookup:out_name+='-gateway-lookup'
 if args.gateway_handles:out_name+='-gateway-handles'
@@ -848,7 +851,7 @@ ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+
 chat_loader=None
 if args.chat_loader:
  from chat.loader_link import build_loader
- chat_loader=build_loader(ROOT,OUT)
+ chat_loader=build_loader(ROOT,OUT,presentation=args.chat_presentation)
  objects+=list(map(str,chat_loader['objects']));sources+=chat_loader['inputs']
 if args.directory_resource_owner:ordering+=['FAR_DATA','FROZEN_DATA']
 subprocess.run(['wlink','system','dos','order',*[value for kind in ordering for value in ('clname',kind)],'option','quiet','option','map='+str(OUT/'terminal.map'),'name',str(OUT/'TERMINAL.EXE'),'file',','.join(objects),'library',str(Path(os.environ['WATCOM'])/'lib286/dos/clibs.lib')],check=True)
@@ -928,6 +931,7 @@ manifest['experimental_packed_command_ui']=args.packed_command_ui
 manifest['experimental_optimize_size']=args.optimize_size
 manifest['experimental_chat_loader']=args.chat_loader
 manifest['experimental_chat_storage']=args.chat_storage
+manifest['experimental_chat_presentation']=args.chat_presentation
 if chat_loader:manifest['chat_loader']={k:v for k,v in chat_loader.items() if k not in ('objects','inputs')}
 if args.optimize_size:manifest['optimized_c_sources']=optimized_c_sources
 manifest['packed_command_ui']=packed_command_ui

@@ -1,0 +1,110 @@
+{
+  "status": "matching-parent-loader-and-scoped-admission-verified-foreground-open",
+  "experimental_parent_changed": true,
+  "selected_package_changed": false,
+  "physical_runtime_verified": false,
+  "full_candidate_acceptance": false,
+  "binary_sha256": "75fdb753230eb9732dc16c7407a6cbfef26c9fba184a1f2464253b2cbc028545",
+  "module_sha256": "f0e91e2b1aff29e466d68bbe7d1a267c57382126dce21b2c6759aff6ce31850f",
+  "loader_bank_bytes": 1296,
+  "minimum_module_bytes": 478112,
+  "retained_parent_paragraphs": 29897,
+  "near_bytes": 65488,
+  "resident_CS_bytes": 65488,
+  "additional_minimum_bytes": 32,
+  "capacities_unchanged": {
+    "near_bytes": 65488,
+    "far_bytes": 71192,
+    "history_bytes": 63000,
+    "native_reset_private_stack_bytes": 4096,
+    "native_reset_shadow_bytes": 6600,
+    "native_reset_workspace_bytes": 65504,
+    "snapshot_bytes": 2000,
+    "far_ui_storage_bytes": 24000,
+    "redisplay_snapshot_bytes": 63000,
+    "redisplay_row_index_bytes": 494
+  },
+  "source_export_files": 635,
+  "source_only_DOS_parent_loads": 2,
+  "source_only_DOS_relocation_bases": 2,
+  "unchanged_disabled_parent_sha256": "75c84373b57fe597248b35c9f103d9468a36b6d9a3c8853655d8b152e03cf76f",
+  "reports": {
+    "DOS_parent_presentation": {
+      "path": "build/chat-presentation-parent-20261106/DOS/result.json",
+      "sha256": "c696c40f67b30611f11161f1ae09ade8ed1323eb55b788b8f077077d28a2361f"
+    },
+    "linked_storage": {
+      "path": "build/chat-presentation-parent-linked-20261106/result.json",
+      "sha256": "320414a659e781d79be05a9efcbe3370971697f32586427d3da9f01647789fb2"
+    },
+    "normal_main_ASPECT": {
+      "path": "build/chat-presentation-parent-aspect-20261106/result.json",
+      "sha256": "ce2de126922804b0e4c7605d470c7fbf8faa66f34de9a3b60d85fcb3b6ed7100"
+    },
+    "cold_parent_composition": {
+      "path": "build/chat-presentation-parent-source-20261106/result.json",
+      "sha256": "0c6955b5ab7bcaaaf84f10c7731f82cb8065ae6d53f562832edea3282564ea0c"
+    },
+    "disabled_DOS_composition": {
+      "path": "build/chat-presentation-parent-disabled-20261106/DOS/result.json",
+      "sha256": "9eb6cc50e8075ff158192dac13f6efee72cf5ad8adef9e8677368afb026385b3"
+    },
+    "synchronet_editor_viewer": {
+      "path": "build/bbs-lab/results/synchronet/chat-presentation-parent-sync-reviewed-20261106/proxy-integration.json",
+      "sha256": "7b2fa271e3c353ac8e9f7467e2c2621a8734f11048e8f451ab4f7e46b3b7c2c8"
+    },
+    "enigma_150": {
+      "path": "build/bbs-lab/results/enigma/chat-presentation-parent-carrier-150-20261106/carrier-checks.json",
+      "sha256": "fe071f2a82e6d1f497f97068e3837743b7bd5f6907ef6425cb646efa1896e78f"
+    },
+    "enigma_independent_audit": {
+      "path": "build/chat-presentation-parent-carrier-audit-20261106/result.json",
+      "sha256": "1d2f0276ace3e0a6b2807ac48086ee4703e95d0f113b4f82a9f8a2e643c048bd"
+    },
+    "enigma_wait_control": {
+      "path": "build/chat-presentation-carrier-wait-control-20261106/result.json",
+      "sha256": "73c53d4afdd209a9e5257e91b699be65ac7b0802cef96ab7c9c8d4e8b183bdca"
+    },
+    "enigma_failed_retry_partial_wire": {
+      "path": "build/chat-presentation-carrier-partial-20261106/result.json",
+      "sha256": "3b3bd65b64fb8f378c6fc96002544b6598222f5978dfd75e0908bafb48296dbf"
+    },
+    "incomplete_startup_negative_controls": {
+      "path": "build/chat-presentation-bbs-startup-controls-20261106/result.json",
+      "sha256": "5c6edd9c5a87dff01d3be126dd5fa4e506413a8d47405680dc9fed52097fa1bb"
+    }
+  },
+  "retained_failed_60s_retry": {
+    "path": "build/bbs-lab/results/enigma/chat-presentation-parent-carrier-reviewed-20261106/carrier-checks.json",
+    "sha256": "8e1e51c267cf0817d7e008b7e6246960992dc1b0cf8f9c67b7092321d55253e4",
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "sources_unchanged": true,
+      "PRM_unchanged": true,
+      "DOS_compiler_exact": true,
+      "both_script_logins": true,
+      "two_connections": true,
+      "stage_clean_before_second_login": true,
+      "real_carrier_notice": true,
+      "RX_complete_notice": false,
+      "exact_retry": false,
+      "only_expected_file": false,
+      "directory_two_connections": true,
+      "no_post_saved": true,
+      "source_matching_retry_finish_search_raw_proxy": false,
+      "two_authenticated_sessions": true
+    },
+    "errors": [
+      "AssertionError at audit_zmodem.py:81: Missing complete protocol header"
+    ]
+  },
+  "original_redial_failure_resolved": false,
+  "remaining": [
+    "Bind original Chat entry/reference and pre-dequeue input ownership",
+    "Real UART RX/TX/history/log, direct TEXT/Help and notices/traps",
+    "Full frontend memory, ASPECT, Enigma/Synchronet and package checks",
+    "Resolve prior unattributed redial miss",
+    "Reversible deployment and physical acceptance"
+  ]
+}
