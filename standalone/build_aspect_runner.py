@@ -27,6 +27,8 @@ def main(extension=None):
     if extension and extension.get('snapshot_lease'):feature_flags+=['-DASPECT_SNAPSHOT_LEASE']
     if extension and extension.get('lease_fault_phase'):feature_flags+=['-DASPECT_LEASE_FAULT_PHASE='+str(extension['lease_fault_phase'])]
     if extension and extension.get('lease_fault_foreign_ds'):feature_flags+=['-DASPECT_LEASE_FAULT_FOREIGN_DS']
+    if extension and extension.get('lease_fault_kind') in ('abort','dispatcher'):
+        feature_flags+=['-DASPECT_LEASE_FAULT_KIND='+str(1 if extension['lease_fault_kind']=='abort' else 3)]
     if extension and extension.get('heap_growth_bytes') is not None:
         assert extension.get('register_handoff') and extension['heap_growth_bytes'] in (128,256,512)
         feature_flags+=['-DASPECT_HEAP_GROWTH_BYTES='+str(extension['heap_growth_bytes'])]
@@ -114,6 +116,7 @@ def main(extension=None):
                   experimental_snapshot_lease=bool(extension and extension.get('snapshot_lease')),
                   diagnostic_lease_fault_phase=extension.get('lease_fault_phase') or 0 if extension else 0,
                   diagnostic_lease_fault_foreign_ds=bool(extension and extension.get('lease_fault_foreign_ds')),
+                  diagnostic_lease_fault_kind=extension.get('lease_fault_kind','divide') if extension else 'divide',
                   startup_heap_growth_bytes=extension.get('heap_growth_bytes') or 512 if extension and extension.get('register_handoff') else None,
                   experimental_serial_bank=banked_serial,
                   experimental_register_handoff=bool(extension and extension.get('register_handoff')),

@@ -233,9 +233,32 @@ _runtime_external_phase:
  mov [ss:_runtime_external_result_probe+4],ax
  mov ax,ss
  mov [ss:_runtime_external_result_probe+6],ax
+%ifdef ASPECT_LEASE_FAULT_KIND
+ extern _runtime_set_error
+ mov ax,5
+ push ax
+ call _runtime_set_error
+ add sp,2
+%if ASPECT_LEASE_FAULT_KIND = 1
+ jmp aspect_abort
+%elif ASPECT_LEASE_FAULT_KIND = 3
+ ; Bypass the checkpoint abort adapter. The runtime finish path must still
+ ; find the held lease and execute real cleanup before scope retirement.
+ extern aspect_dispatch_exit_state,aspect_dispatch_argument,session_longjmp
+ mov ax,0xffff
+ mov [aspect_dispatch_exit_state],ax
+ push ax
+ mov ax,aspect_dispatch_argument
+ push ax
+ call session_longjmp
+%else
+ %error Unsupported lease fault kind
+%endif
+%else
  mov ax,1
  xor dx,dx
  div dx ; actual own-stack CPU divide exception, not a synthesized return
+%endif
 .done:
  pop dx
  pop cx

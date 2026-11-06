@@ -28,12 +28,14 @@ def main():
     parser.add_argument('--inner-screen',action='store_true',help='Passive pre/post inner screen witness; requires graphics child and386/UMB observer')
     parser.add_argument('--lease-fault-phase',type=int,choices=[0,5,6,8,10,17,22],default=0,help='Explicitly admit the matching one-shot FAULT.ASX divide diagnostic')
     parser.add_argument('--lease-fault-foreign-ds',action='store_true',help='Require the marked diagnostic that faults with DS=B800h and the owned SS')
+    parser.add_argument('--lease-fault-kind',choices=['divide','abort','dispatcher'],default='divide')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
     assert not args.exit_watch_high or args.exit_watch
     assert not args.inner_screen or (args.nested_graphics and args.cpu=='386' and not args.exit_watch)
     if args.lease_fault_phase:assert args.nested_graphics and args.program_result_probe and args.exit_watch and args.exit_watch_high and args.cpu=='386'
     if args.lease_fault_foreign_ds:assert args.lease_fault_phase
+    if args.lease_fault_kind!='divide':assert args.lease_fault_phase and not args.lease_fault_foreign_ds
     binary, runner, out = args.terminal.resolve(), args.runner.resolve(), args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     sources = {}
@@ -43,6 +45,7 @@ def main():
         assert not m.get('diagnostic_build') or (program==runner and args.program_result_probe and m.get('diagnostic_program_result_probe'))
         if program==runner:assert m.get('diagnostic_lease_fault_phase',0)==args.lease_fault_phase
         if program==runner:assert bool(m.get('diagnostic_lease_fault_foreign_ds'))==args.lease_fault_foreign_ds
+        if program==runner:assert m.get('diagnostic_lease_fault_kind','divide')==args.lease_fault_kind
         for name, expected in m['sources'].items():
             assert sha(ROOT / name) == expected, name
             sources[name] = expected
@@ -195,7 +198,7 @@ mode_opened:
         checks['two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|CHILD|'
         characters=bytearray(b'FIRST BYTE SAFE'.ljust(1920,b' '))
         if args.lease_fault_phase:
-            notice=b'FIRST BYTE SAFEASPECT: CPU arithmetic fault (error 12, opcode 9B, step 2)'
+            notice=b'FIRST BYTE SAFEASPECT: '+(b'CPU arithmetic fault (error 12' if args.lease_fault_kind=='divide' else b'file or output error (error 5')+b', opcode 9B, step 2)'
             characters[:len(notice)]=notice
             notice=b'ASPECT returned an error.';characters[160:160+len(notice)]=notice
         expected=b''.join(bytes([c,7]) for c in characters)
@@ -223,16 +226,18 @@ mode_opened:
         report['scope']+=' Passive exit observer adds resident memory; diagnostic run, not an unobserved capacity proof.'
         if args.lease_fault_phase:
             exits=report['exit_watch']['exits'];probes=report['exit_watch']['program_results']
-            checks['actual_selected_divide']=len(exits)==4 and exits[0]['error']==12 and exits[0]['opcode']==155 and probes[0]['stage']==256+args.lease_fault_phase
+            expected_error=12 if args.lease_fault_kind=='divide' else 5
+            key={'divide':'actual_selected_divide','abort':'actual_typed_abort','dispatcher':'actual_dispatcher_unwind'}[args.lease_fault_kind]
+            checks[key]=len(exits)==4 and exits[0]['error']==expected_error and exits[0]['opcode']==155 and probes[0]['stage']==256+args.lease_fault_phase
             checks['parent_lease_live_before_divide']=probes[0]['status']==1
             fault_ds=probes[0]['display_status'];fault_ss=probes[0]['serial_status']
             checks['selected_fault_DS_SS']=fault_ds==0xb800 and fault_ss!=fault_ds if args.lease_fault_foreign_ds else fault_ds==fault_ss and fault_ds!=0
             checks['later_calls_succeed']=len(exits)==4 and all(e['error']==0 for e in exits[1:]) and probes[3]['stage']==2 and probes[3]['status']==0
             checks['all_owners_retired']=all(e[k]==0 for e in exits for k in ['cleanup_error','external_scope','display_owned','program_busy','process_busy'])
             report['lease_fault_phase']=args.lease_fault_phase
-            report['fault_witness']=dict(parent_lease_live=probes[0]['status']==1,ds=fault_ds,ss=fault_ss,foreign_ds=args.lease_fault_foreign_ds)
+            report['fault_witness']=dict(kind=args.lease_fault_kind,parent_lease_live=probes[0]['status']==1,ds=fault_ds,ss=fault_ss,foreign_ds=args.lease_fault_foreign_ds)
             report['passed']=all(checks.values())
-            report['scope']+=' One real own-stack DIV in FAULT.ASX, then six streams/missing-file recovery and normal nested FIRST.ASX in the same terminal. No injected cleanup success.'
+            report['scope']+=' One selected '+args.lease_fault_kind+' fault in FAULT.ASX, then six streams/missing-file recovery and normal nested FIRST.ASX in the same terminal. No injected cleanup success.'
     if args.inner_screen:
         report['inner_screen']=snapshot_screen_watch.verify(drive/'SSCREEN.BIN')
         checks['child_observed_graphics_mode']=(drive/'CHMODE.BIN').read_bytes()==b'\x13\x13'
