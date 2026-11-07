@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "original_inputs": [],
+  "dispatch_cases": 65536,
+  "profiles": 33,
+  "original_blank_frame_exact": true,
+  "source_VGA_roundtrip_frames": 33,
+  "slot_placement_checks": 79,
+  "marked_bindings_preserved": true,
+  "source_only_DOS": true,
+  "cpu": "8086",
+  "sources": {
+    "src/key_mapping/keymap_screen.c": "8ad70e7972571340648def46fd7286b98a1947a260622f66145f10265b075a2d",
+    "src/key_mapping/keymap_screen.h": "18e0dc986d055fb36719c886711fa8ac43602822de1e1cb0944149cbc6a028ef",
+    "src/key_mapping/keymap_text.c": "831f04731c6ed10f3406400fde94b9cbea094aab79f790437023cd6ddc569fc5",
+    "src/key_mapping/keymap_text.h": "e4185d2cff8963df1e92ba1f3dca5089c46472248798e7bd53619649980bcaa7",
+    "standalone/test_keymap_screen.py": "26a65664b4d643bfbb08dbfff79a3c039ccb8c50ccbe6106a25439eb89e2e314",
+    "standalone/keymap_screen_driver.c": "d2cb72ed6deba54f8fe48d4eb3dc264277385f7ccda5a51a000209dcdaa6c484",
+    "standalone/fixtures/keymap_dispatch_native.json": "992c577f5eb9a31a31052f3b2dc12f616d5969441d4a57832fd4046ca4b6d3b6",
+    "docs/validation/keymap-screen.json": "bd18e0da3ec05d9a5abd815d7ad7736d4ed3e1be93c1179a892b7e758a7c7658"
+  },
+  "binary_sha256": "3efb5d4c9b76f58933903585228cd91cf2efbf2ecce814a4e76b2b61a457e340",
+  "scope": "Memory-only screen/render/key dispatch; exact original blank ANSI frame, all keys and DOS VGA roundtrip. No interactive helper, saving, foreground return or physical acceptance.",
+  "isolated_source_reproduction": {
+    "files": 8,
+    "binary_identical": true,
+    "original_inputs": false
+  }
+}

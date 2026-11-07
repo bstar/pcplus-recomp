@@ -1,0 +1,30 @@
+{
+  "source_sha256": "f079418fca6392cde318e2eb657874a1f5ee10db83616c83054d191441fb6244",
+  "ranges": [
+    {
+      "name": "dispatch",
+      "source_file_offset": 669,
+      "size": 1655,
+      "sha256": "b460e4a6a24d3f5090e13d8e178061b82550e8991f975d036ac02f76d4a69b1b"
+    },
+    {
+      "name": "profile-label-pointers",
+      "source_file_offset": 20962,
+      "size": 66,
+      "sha256": "a7dd48ab3bbd506fe3d1625bdd5f8a1962d346b6d9a2cf8fceb1baa128a9e7c4"
+    },
+    {
+      "name": "slot-positions",
+      "source_file_offset": 21028,
+      "size": 158,
+      "sha256": "16764205e788caebb521f5de1d18b2c34c931fc632cb54314ae79b1f26e44e05"
+    }
+  ],
+  "static_paint_evidence": "ev_bec7564cd0007302d7b0e02a68549c5e564133b01cc1450e766af4ba0875b54b",
+  "original_screen_frame_sha256": "87f6aaa8025b4abe6a03d3ff0b4c197be5b04849db6a93b20dfc1d2b8f2c710f",
+  "limits": [
+    "No installed KBD or factory defaults imported.",
+    "Literal UI labels, positions and dispatch semantics reauthored; original binaries stay ignored.",
+    "Exact screen comparison covers blank ANSI profile; remaining32 profile frames are source VGA checks."
+  ]
+}

@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Source keyboard-mapping screen](KEYMAP_SCREEN_SOURCE.md) matches all4000
+original blank ANSI frame bytes and all65536 original dispatch inputs. DOS8086
+checks33 source VGA frames;79 binding placements, marked-input preservation
+and isolated reproduction pass. Interactive controller, persistence and Alt-F8
+integration remain open.
+
 [Keyboard editor field](KEYMAP_FIELD.md) now matches1246 original key states
 across363 cases in host and DOS8086, with bounded safety differences, four
 extra guards and isolated source reproduction. The real helper ready screen
