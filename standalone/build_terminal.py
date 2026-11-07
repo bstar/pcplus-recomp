@@ -10,6 +10,7 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser.add_argument('--meta-shared-runtime',action='store_true',help='Experimental shared Line/Port loader and transient Meta frontend; implies Alt-M')
 parser.add_argument('--meta-editor',action='store_true',help='Experimental serviced Alt-M and closed-lease live key adoption; implies matched module')
 parser.add_argument('--meta-loader-probe',action='store_true',help='Diagnostic only: full-parent loader/save/reload before UART startup, then exit')
 parser.add_argument('--meta-editor-module',action='store_true',help='Experimental matched PCMETA payload and resident loader; no Alt-M or menu entry')
@@ -117,8 +118,10 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.meta_shared_runtime:args.meta_editor=True
 if args.meta_editor:args.meta_editor_module=True
 if args.meta_loader_probe:args.meta_editor_module=True
+assert not(args.meta_shared_runtime and args.meta_loader_probe),"Shared runtime is an ordinary UI prototype; use separate loader probe"
 if args.meta_editor_module:args.meta_services=True
 assert args.command_ui_pairs==64 or args.packed_command_ui
 if args.code_label_offsets:assert args.original_reference and args.packed_command_ui
@@ -418,14 +421,14 @@ if args.hook_execute:sources.append(ROOT/'src/process/hook_owner_dos.asm')
 if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
-if args.line_port:sources += [ROOT/'reconstruction/line_port/key.asm']+sorted(p for p in (ROOT/'src/line_port').glob('*.asm')if args.line_port_overlay or not p.name.startswith('overlay'))
+if args.line_port:sources += [ROOT/'reconstruction/line_port/key.asm']+sorted(p for p in (ROOT/'src/line_port').glob('*.asm')if (args.line_port_overlay or not p.name.startswith('overlay')) and p.name!=('overlay_runtime.asm'if args.meta_shared_runtime else 'overlay_shared.asm'))
 if args.meta_editor:
  assert args.line_port_overlay and args.original_reference and args.path_control,'Meta editor requires composed transient/owned-screen profile'
  assert not args.directory_resource_owner,'Meta directory-resource cache adoption is not integrated'
 if args.meta_loader_probe:
  assert args.phone_log_bank,'Meta startup probe requires fixed capture reservations'
  sources += [ROOT/'standalone/meta_loader_parent_probe.asm']
-if args.meta_editor_module:sources += [ROOT/'src/key_mapping'/(n+'.asm')for n in ('meta_bank_runtime','meta_bank_entries','meta_bank_kernel','meta_loader_fs','meta_loader_path')]
+if args.meta_editor_module:sources += [ROOT/'src/key_mapping'/(n+'.asm')for n in (('meta_bank_runtime','meta_bank_entries','meta_bank_kernel')+(()if args.meta_shared_runtime else ('meta_loader_fs','meta_loader_path')))]
 if args.meta_services:sources += [ROOT/'src/key_mapping/meta_bank_resident.asm',ROOT/'src/key_mapping/meta_bank_resource.asm']
 if args.global_help:sources += [ROOT/'reconstruction/context_help/handoff.asm',ROOT/'reconstruction/program_exec/strcpy.asm',ROOT/'reconstruction/program_exec/get_ds.asm']
 if not args.gateway_uart:sources=[p for p in sources if p.name!='gateway_uart.asm']
@@ -524,6 +527,7 @@ for index,source in enumerate(sources):
    '-Dscreen_adjust_attribute_boundary=attribute_boundary_local']
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
  if args.meta_editor:options+=['-DTERMINAL_META_EDITOR']
+ if args.meta_shared_runtime:options+=['-DTERMINAL_META_SHARED']
  if args.meta_loader_probe:options+=['-DTERMINAL_META_LOADER_PROBE']
  if args.line_port:options+=['-DTERMINAL_LINE_PORT']
  if args.line_port_overlay:options+=['-DTERMINAL_LINE_PORT_OVERLAY']
@@ -666,9 +670,11 @@ c_sources += [ROOT/'src/key_mapping/key_actions_dos.c',ROOT/'src/process/program
 meta_bank_sources=set()
 if args.meta_editor_module:
  meta_bank_sources={ROOT/'src/key_mapping'/(n+'.c')for n in ('meta_editor','meta_dialog','meta_text','meta_file_prompt','meta_filename','meta_picker','meta_picker_scan','meta_key_owner','meta_key_resource','key_editor_file')}
- c_sources+=sorted(meta_bank_sources)+[ROOT/'src/key_mapping/meta_loader.c']
+ if args.meta_shared_runtime:meta_bank_sources.add(ROOT/'src/key_mapping/meta_shared_front.c')
+ if args.meta_shared_runtime:meta_bank_sources.add(ROOT/'src/redisplay/command_reference.c')
+ c_sources+=sorted(meta_bank_sources-{ROOT/'src/redisplay/command_reference.c'})+([]if args.meta_shared_runtime else [ROOT/'src/key_mapping/meta_loader.c'])
 if args.meta_loader_probe:c_sources.append(ROOT/'standalone/meta_loader_parent_probe.c')
-if args.meta_editor:c_sources.append(ROOT/'src/key_mapping/meta_front.c')
+if args.meta_editor and not args.meta_shared_runtime:c_sources.append(ROOT/'src/key_mapping/meta_front.c')
 c_sources += [ROOT/'src/config/live_configuration.c']
 c_sources += [ROOT/'src/config/live_setup_owner.c']
 if args.status_owner:c_sources.append(ROOT/'src/terminal/status_transition.c')
@@ -838,6 +844,7 @@ for source in c_sources:
   options+=['-dCAPTURE_FIXED_RESERVATION']
  if source.parent==ROOT/'src/aspect' and source not in config_sources:options=['-nt=ASPECT_CODE','-nc=FARCODE']
  if args.meta_editor:options+=['-dTERMINAL_META_EDITOR']
+ if args.meta_shared_runtime:options+=['-dTERMINAL_META_SHARED']
  if args.line_port:options+=['-dTERMINAL_LINE_PORT']
  if args.line_port_overlay:options+=['-dTERMINAL_LINE_PORT_OVERLAY']
  if args.line_port_overlay and source==ROOT/'src/line_port/persist.c':options+=['-d'+n+'=line_'+n+'_service'for n in ('memcpy','memset','memcmp')]
@@ -916,11 +923,13 @@ for source in c_sources:
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  if args.row_geometry_owner and args.display_row_probe and source==ROOT/'standalone/display_rows_terminal_probe.c':options+=['-dTERMINAL_ROW_GEOMETRY_PROBE']
  if source in meta_bank_sources:
+  reference_feature_options=[o for o in options if o.startswith('-d') and '='not in o]
   options=['-nt=META_EDITOR_CODE','-nc=FARCODE','-ecc','-os','-dMETA_EDITOR_BANK']
   options+=['-d'+n+'=meta_bank_'+n for n in ('memcpy','memset','memcmp','strchr','strcmp','strlen')]
   options+=['-d_'+n+'=meta_bank_'+n for n in ('fmemcpy','fmemset','fmemcmp','fstrcmp')]
   options+=['-d'+n+'=meta_bank_'+v for n,v in (('capture_fs_canonical','canonical'),('capture_fs_attributes','attributes'),('directory_replace_paths','paths'),('resource_pcplus_path','resource'),('key_actions_dos_read','actions'))]
-  if source.name=='meta_editor.c':options+=['-dmeta_editor_'+n+'=meta_editor_'+n+'_impl'for n in ('open','key','step','draw','cursor','shape','stop','matches','proposal')]
+  if source.name=='command_reference.c':options+=reference_feature_options
+  if source.name in ('meta_editor.c','meta_shared_front.c'):options+=['-dmeta_editor_'+n+'=meta_editor_'+n+'_impl'for n in ('open','key','step','draw','cursor','shape','stop','matches','proposal')]
  if args.meta_editor_module and source.name in ('meta_loader.c','meta_loader_parent_probe.c','meta_front.c'):options=['-nt=FILE_CODE','-nc=FARCODE','-ecc','-os']
  compiled_source=source;packed_includes=[]
  if size_profile:
@@ -929,8 +938,19 @@ for source in c_sources:
    assert hashlib.sha256(source.read_bytes()).hexdigest()==entry['source_sha256'],'Refresh the reviewed size profile after source changes: '+str(source)
    chosen=size_profile['compiler_options'][entry['profile']]
    options+=chosen;optimized_c_sources[str(source.relative_to(ROOT))]=chosen
+ if args.meta_shared_runtime and source.name=='command_reference.c':
+  options+=['-oe=0']
  if args.chat_help and source==ROOT/'src/config/resource_path_shared.c':
   options+=['-os'];optimized_c_sources[str(source.relative_to(ROOT))]=['-os']
+ if args.meta_shared_runtime and source.name=='command_reference.c':
+  from reference_split import split as split_reference
+  dispatch,compiled_source=split_reference(source,OUT)
+  dispatch_obj=OUT/'reference_dispatch.obj'
+  dispatch_options=[o for o in options if not o.startswith('-nt=')]+['-nt=REFERENCE_CODE']
+  include_options=['-i='+str(source.parent)]
+  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*dispatch_options,*include_options,'-fo='+str(dispatch_obj),str(dispatch)],cwd=OUT,check=True)
+  objects.append(str(dispatch_obj));sources.append(ROOT/'standalone/reference_split.py')
+  packed_includes=include_options
  if args.packed_command_ui and source==ROOT/'src/redisplay/command_menu.c':
   from pack_command_ui import pack
   compiled_source,packed_command_ui=pack(source,OUT,args.command_ui_pairs,meta_editor=args.meta_editor)
@@ -1011,7 +1031,7 @@ if args.line_port_overlay:
 meta_overlay=None
 if args.meta_editor_module:
  from meta_overlay import split
- meta_overlay=split(OUT/'TERMINAL.EXE',OUT/'terminal.map','redisplay_snapshot',line_overlay=line_overlay)
+ meta_overlay=split(OUT/'TERMINAL.EXE',OUT/'terminal.map','redisplay_snapshot',line_overlay=line_overlay,max_bytes=43000 if args.meta_shared_runtime else 24000)
  sources.append(ROOT/'standalone/meta_overlay.py')
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
 assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64KiB'
@@ -1086,6 +1106,7 @@ manifest['experimental_line_port']=args.line_port
 manifest['experimental_meta_services']=args.meta_services
 manifest['experimental_meta_editor_module']=args.meta_editor_module
 manifest['experimental_meta_editor']=args.meta_editor
+manifest['experimental_meta_shared_runtime']=args.meta_shared_runtime
 manifest['diagnostic_meta_loader_probe']=args.meta_loader_probe
 if meta_overlay:manifest['meta_editor_overlay']=meta_overlay
 manifest['experimental_line_port_overlay']=args.line_port_overlay

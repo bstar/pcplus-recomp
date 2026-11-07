@@ -10,7 +10,7 @@ sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
- p.add_argument('--case',choices=('edit','save','reference','browser','load','reload','cancel','missing'),default='edit')
+ p.add_argument('--case',choices=('edit','save','reference','browser','load','reload','cancel','missing','reference-cancel','reference-help','script-cancel','info-cancel'),default='edit')
  a=p.parse_args();binary=a.terminal.resolve();out=a.output.resolve()
  assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
  manifest=json.loads(binary.with_name('manifest.json').read_text())
@@ -24,12 +24,13 @@ def main():
   struct.pack_into('<H',settings,at,val)
  watch=(ROOT/'standalone/path_dialog_watch.asm').read_text()
  start=watch.index(' cmp word [es:806]');end=watch.index('%if WATCH_KIND',start)
- marker=" cmp byte [es:1604],'M'\n jne .done"if a.case=='missing'else" cmp byte [es:522],'M'\n jne .done\n cmp byte [es:524],'E'\n jne .done\n cmp byte [es:160],'U'\n jne .done"
+ notice_at=3202 if manifest.get('experimental_meta_shared_runtime') else 1604
+ marker=f" cmp byte [es:{notice_at}],'M'\n jne .done"if a.case=='missing'else" cmp byte [es:522],'M'\n jne .done\n cmp byte [es:524],'E'\n jne .done\n cmp byte [es:160],'U'\n jne .done"
  watch=watch[:start]+marker+'\n'+watch[end:]
 
  (out/'watch.asm').write_text(watch)
  subprocess.run(['nasm','-fbin','-DWATCH_KIND=0',str(out/'watch.asm'),'-o',str(out/'MFOBS.COM')],check=True)
- opening='a-z p500 a-m'if a.case=='reference'else'` p500 right right right p300 m'if a.case=='browser'else'a-m p10 escape p1000 a-m'if a.case=='cancel'else'a-m'
+ opening='a-z p1200 escape p500 a-m'if a.case=='reference-cancel'else'a-z p1200 down down f1 p500 escape p1200 a-m'if a.case=='reference-help'else'a-f5 p700 escape p1200 a-m'if a.case=='script-cancel'else'a-i p500 escape p1200 a-m'if a.case=='info-cancel'else'a-z p500 a-m'if a.case=='reference'else'` p500 right right right p300 m'if a.case=='browser'else'a-m p10 escape p1000 a-m'if a.case=='cancel'else'a-m'
  edit='r p300 enter p300 h e l l o enter p500'
  if a.case=='load':edit='l p300 n e x t enter p1500'
  if a.case=='missing':edit=''

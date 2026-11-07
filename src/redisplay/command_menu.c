@@ -29,6 +29,9 @@ extern unsigned __far __cdecl phone_log_controls_event(unsigned,unsigned,unsigne
 #endif
 #ifdef TERMINAL_REFERENCE
 #include "command_reference.h"
+#ifdef TERMINAL_META_SHARED
+extern void __far __cdecl command_reference_prepare(unsigned);
+#endif
 static unsigned reference_origin;
 #endif
 #ifdef TERMINAL_DIRECTORY_VIEW
@@ -591,16 +594,30 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   if(key==0x2c00 || command_reference_unavailable(key)){
    reference_origin=1;phase=9;command_reference_event(0,key,view);return 1;}
-  if(key==0x6c00){reference_origin=1;command_reference_event(0,key,view);
+  if(key==0x6c00){reference_origin=1;
+#ifdef TERMINAL_META_SHARED
+   command_reference_prepare(key);
+#else
+   command_reference_event(0,key,view);
+#endif
    selected=3;phase=3;query_size=0;query[0]=0;
    if(record_blocked(0xfe00)){phase=6;notice=104;}}
-  if(key==0x1700){reference_origin=1;command_reference_event(0,key,view);selected=20;category=4;phase=1;}
+  if(key==0x1700){reference_origin=1;
+#ifdef TERMINAL_META_SHARED
+   command_reference_prepare(key);
+#else
+   command_reference_event(0,key,view);
+#endif
+   selected=20;category=4;phase=1;}
 #endif
 #ifdef TERMINAL_ORIGINAL_KEYS
   if(key==0x1300){for(i=0;i<COUNT;++i)if(items[i].key==0xfd00){selected=i;break;}record_toggle();}
 #endif
   draw();return 1;}
  if(event==4){
+#ifdef TERMINAL_META_SHARED
+  if(phase==9)command_reference_event(4,0,view);
+#endif
 #ifdef TERMINAL_META_EDITOR
   if(phase==17)meta_front_event(4,0,view);
 #endif
@@ -627,6 +644,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   command_menu_action=command_menu_active=0;return 0;}
  if(!command_menu_active)return 0;
+#ifdef TERMINAL_META_SHARED
+ if(phase==9 && event==3)return command_reference_event(3,0,view);
+#endif
 #ifdef TERMINAL_META_EDITOR
  if(phase==17 && event==3){n=meta_front_event(3,0,view);if(n)return n;command_menu_active=0;return 0;}
 #endif
@@ -656,6 +676,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
  if(event!=1)return 1;
  if(key==0x2d00){
+#ifdef TERMINAL_META_SHARED
+  if(phase==9)command_reference_event(4,0,view);
+#endif
 #ifdef TERMINAL_META_EDITOR
   if(phase==17)meta_front_event(4,0,view);
 #endif
@@ -722,7 +745,11 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
  if(c==27){
 #ifdef TERMINAL_REFERENCE
-  if(phase==9){command_menu_active=0;return 0;}
+  if(phase==9){
+#ifdef TERMINAL_META_SHARED
+   command_reference_event(4,0,view);
+#endif
+   command_menu_active=0;return 0;}
   if(reference_origin){phase=9;notice=0;draw();return 1;}
 #endif
   if(phase){phase=notice=0;draw();return 1;}command_menu_active=0;return 0;}
@@ -730,7 +757,11 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
  if(phase==9){
 #ifdef PHONE_LOG_CONTROLS
   /* Plain L is an extension; original Alt-L still selects printer copy. */
-  if(fold(c)=='L'){phase=11;phone_log_controls_event(0,0,view);return 1;}
+  if(fold(c)=='L'){
+#ifdef TERMINAL_META_SHARED
+   command_reference_event(4,0,view);
+#endif
+   phase=11;phone_log_controls_event(0,0,view);return 1;}
 #endif
   n=command_reference_event(1,key,view);
 #ifdef TERMINAL_META_EDITOR

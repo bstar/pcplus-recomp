@@ -316,7 +316,7 @@
     },
     "src/redisplay/command_menu.c": {
       "profile": "no-inline",
-      "source_sha256": "50583c1e732e3545ec666505b093df96ea6d200668838fd5d965bbdfa1c4b26f",
+      "source_sha256": "4ec7baf4cf1216a93087842f411cffe5f9c4c7dee82abb3d25b88bd93373bc66",
       "control_code_data_bytes": [
         12824,
         84

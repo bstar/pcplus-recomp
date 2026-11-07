@@ -28,6 +28,7 @@ def main():
     parser.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25)
     parser.add_argument('--exit-watch',action='store_true',help='Install a small passive diagnostic TSR; separate memory footprint from ordinary acceptance')
     parser.add_argument('--heap-resize-watch',action='store_true',help='Also observe DOS AH=4A requests and pre-request MCB sizes; requires exit observer')
+    parser.add_argument('--meta-around-scripts',action='store_true',help='Edit and exercise Alt-0 before and after ASPECT borrows the shared arena; no disk save')
     parser.add_argument('--line-port-around-scripts',action='store_true',help='Open/close transient Alt-P before and after the same ASPECT workload')
     parser.add_argument('--exit-watch-high',action='store_true',help='Require the passive observer to reside in UMB')
     parser.add_argument('--cpu',choices=['8086','386'],default='8086')
@@ -74,6 +75,8 @@ def main():
     parent_manifest=json.loads(binary.with_name('manifest.json').read_text())
     overlay=parent_manifest.get('line_port_overlay')
     if args.line_port_around_scripts:assert overlay
+    assert not(args.line_port_around_scripts and args.meta_around_scripts)
+    if args.meta_around_scripts:assert parent_manifest.get('experimental_meta_shared_runtime')
     for name in ['standalone/test_aspect_heap_startup_dos.py', 'standalone/test_connection_dos.py',
                  'standalone/test_directory_key_bindings_dos.py', 'src/aspect/compiler.py']:
         sources[name] = sha(ROOT / name)
@@ -85,6 +88,9 @@ def main():
     if overlay:
         assert sha(binary.with_name('PCLINE.OVL'))==overlay['sha256']
         shutil.copyfile(binary.with_name('PCLINE.OVL'),stage/'PCLINE.OVL')
+    if args.meta_around_scripts:
+        module=binary.with_name('PCMETA.OVL');assert sha(module)==parent_manifest['meta_editor_overlay']['sha256']
+        shutil.copyfile(module,stage/module.name)
     first = 'proc main\nfopen 0 "D:\\FIRST.LOG" "wb"\nif failure\nexit\nendif\nfputs 0 "FIRST|"\nfclose 0\ntransmit "FIRSTOK^M"\nendproc\n'
     six = 'proc main\n'
     for i in range(6):
@@ -239,6 +245,10 @@ mode_opened:
     label = out.name
     schedule='p900 enter p3500 a-1 p1300 a-2 p1300 a-3 p1300 a-1 p1300 r e a d y enter p700 a-x'
     if args.line_port_around_scripts:schedule=schedule.replace('p3500 a-1','p3500 a-p p1800 escape p800 a-1',1).replace('a-1 p1300 r e a d y','a-1 p1300 a-p p1800 escape p800 r e a d y',1)
+    if args.meta_around_scripts:
+        first_meta='a-m p2000 up r enter M E T A 1 enter escape p900 a-0 p500 '
+        last_meta='a-m p2000 up r enter M E T A 2 enter escape p900 a-0 p500 '
+        schedule=schedule.replace('p3500 a-1','p3500 '+first_meta+'a-1',1).replace('a-1 p1300 r e a d y','a-1 p1300 '+last_meta+'r e a d y',1)
     if args.lease_fault_phase or args.emulate_reject:schedule=schedule.replace('a-3 p1300 a-1','a-3 p1300 a-4')
     if args.nested_wait:
         schedule=schedule.replace('a-1 p1300',f'a-1 p700 {args.nested_wait} p600')
@@ -262,6 +272,9 @@ mode_opened:
                   first_file=(drive / 'FIRST.LOG').exists() and (drive / 'FIRST.LOG').read_bytes() == b'FIRST|',
                   recovery_file=(drive / 'RECOVER.TXT').exists() and (drive / 'RECOVER.TXT').read_bytes() == b'RECOVERED|',
                   six_files=all((drive / f'SLOT{i}.TXT').exists() and (drive / f'SLOT{i}.TXT').read_bytes() == (f'SLOT{i}|'+(f'AFTER{i}|' if args.streams_around_child else '')).encode() for i in range(6)))
+    if args.meta_around_scripts:
+        checks['Meta_adoption_before_and_after_scripts']=wire.count(b'META1')==1 and wire.count(b'META2')==1 and 0<=wire.find(b'META1')<wire.find(b'FIRSTOK')<wire.find(b'META2')
+        checks['Meta_module_preserved']=sha(stage/'PCMETA.OVL')==parent_manifest['meta_editor_overlay']['sha256']
     if args.emulate_profile_switch:
         # EMULATE deliberately clears the old banner. Its original cursor reply
         # proves initial rendering before the first switch; fresh DA replies
@@ -310,6 +323,7 @@ mode_opened:
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
     report['line_port_around_scripts']=args.line_port_around_scripts
+    report['meta_editor_around_scripts']=args.meta_around_scripts
     if overlay:report['overlay_sha256']=overlay['sha256']
     if args.nested_program:
         report['nested_child_source_sha256']=sha(out/'NEST.ASM')

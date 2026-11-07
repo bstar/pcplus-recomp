@@ -23,3 +23,10 @@ _meta_module_resolve:
  lea sp,[bp]
  pop bp
  retf
+
+%ifdef TERMINAL_META_SHARED
+FAR_CDECL_ENTRY _meta_front_bank_event,4
+FAR_CDECL_ENTRY _meta_front_bank_cursor,0
+FAR_CDECL_ENTRY _meta_front_bank_shape,0
+FAR_CDECL_ENTRY _meta_front_bank_pending,0
+%endif

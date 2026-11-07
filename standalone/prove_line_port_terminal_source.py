@@ -34,6 +34,7 @@ def main():
  if m.get('experimental_meta_services'):flags.append('--meta-services')
  if m.get('experimental_meta_editor_module'):flags.append('--meta-editor-module')
  if m.get('experimental_meta_editor'):flags.append('--meta-editor')
+ if m.get('experimental_meta_shared_runtime'):flags.append('--meta-shared-runtime')
  rebuilt=fresh/'build/rebuilt'
  with(out/'build.log').open('w')as log:
   subprocess.run([sys.executable,'standalone/build_terminal.py',*flags,'--output-dir',str(rebuilt)],cwd=fresh,env=env,stdout=log,stderr=log,check=True)

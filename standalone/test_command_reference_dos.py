@@ -39,6 +39,9 @@ def main():
     observer=out/'REFW.COM';subprocess.run(['nasm','-fbin',str(root/'standalone/reference_watch.asm'),'-o',str(observer)],check=True)
     raw=bytearray(fixture(timeout=5));struct.pack_into('<2H',raw,0,2,5)
     struct.pack_into('<H',raw,0x178,0x3e8);struct.pack_into('<H',raw,0x188,5);struct.pack_into('<HH',raw,0x4e4,8,4)
+    if manifest.get('experimental_display_startup'):
+        for at,value in ((0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)):
+            struct.pack_into('<H',raw,at,value)
     driver.BINARY=binary
     keys='p900 enter p3500 a-z p700 a-d p800 escape p500 a-z p400 right down down f1 p500 escape p400 ` p600 escape p400 r e a d y p500 a-x'
     result=driver.run(case,'success',keys,prm=bytes(raw),com=3,irq=5,cpu='8086',

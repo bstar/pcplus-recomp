@@ -138,6 +138,8 @@ unsigned __far __cdecl meta_front_event(unsigned event,unsigned key,unsigned sho
  if(event==2){draw(frame);return 1;}
  if(event==3){poll();if(!state.phase)return 0;if(!state.dirty)return 2;state.dirty=0;draw(frame);return 1;}
  if(event!=1)return 1;
+ /* Enhanced BIOS navigation carries AL=E0; retain literal CP437 E0. */
+ if((key&255)==0xe0 && (key&0xff00))key&=0xff00;
  if(state.phase==FRONT_ERROR){if((key&255)==27){if(state.held){terminal_exit_code=14;terminal_quit=1;}state.phase=0;return 0;}return 1;}
  if(!state.bound){if((key&255)==27)state.cancel=1;return 1;}
  meta_editor_key_far(&meta_arena,key);state.dirty=1;draw(frame);return 1;

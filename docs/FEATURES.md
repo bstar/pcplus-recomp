@@ -1,5 +1,16 @@
 # Full application reconstruction checklist
 
+[Shared Meta runtime](META_SHARED_RUNTIME.md) restores the capacity gate:
+478192 retained bytes, below the479024-byte installed control, with unchanged
+streams/buffers/stacks. The reference UI and Meta frontend are transient; one
+loader and a resident shortcut classifier preserve their ownership boundaries.
+Thirty-two ordinary DOS8086 checks prove six streams/three nested children and
+actual Meta adoption/reload around arena reuse. Twelve UI cases, repeated Help,
+eight module refusals, exact727-file source reproduction and both stock BBS
+cell/modal checks pass. Enhanced BIOS navigation is corrected. Connection/
+transfer/reconnect, shared-kernel fault injection and physical acceptance remain
+before packaging/deployment; no installed package was changed.
+
 [Connected Meta editor and capacity gate](META_CONNECTED.md): stock Enigma and
 Synchronet Alt-M round trips restore all4000 frame bytes/cursor/shape and match
 all1920 independent BBS cells. Twenty copied-evidence controls and six unchanged

@@ -5,13 +5,13 @@ modules target the shared arena and must have exclusive foreground leases.
 """
 import hashlib,re,struct,zlib
 sha=lambda data:hashlib.sha256(data).hexdigest()
-def split(binary,map_path,arena_symbol,arena_bytes=63000,line_overlay=None):
+def split(binary,map_path,arena_symbol,arena_bytes=63000,line_overlay=None,max_bytes=24000):
  raw=bytearray(binary.read_bytes());h=list(struct.unpack_from('<14H',raw));assert raw[:2]==b'MZ' and (h[2]-1)*512+(h[1] or 512)==len(raw)
  start=h[4]*16;image=bytearray(raw[start:]);listing=map_path.read_text()
  symbols={n:(int(s,16),int(o,16))for s,o,n in re.findall(r'^([0-9a-f]+):([0-9a-f]+)[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I)}
  m=re.search(r'^META_EDITOR_CODE\s+FARCODE\s+\S+\s+([0-9a-f]+):0000\s+([0-9a-f]+)',listing,re.M|re.I);assert m
  bank,size=int(m[1],16),int(m[2],16);paras=(size+15)//16;lo,hi=bank*16,(bank+paras)*16
- assert 256<=size<=24000 and hi<=len(image) and not any(image[lo+size:hi])
+ assert max_bytes in (24000,43000) and 256<=size<=max_bytes and hi<=len(image) and not any(image[lo+size:hi])
  arena,offset=symbols[arena_symbol];assert offset==0 and arena_bytes==63000 and arena>=bank+paras
  target=arena+1024-paras
  def segment(value):
