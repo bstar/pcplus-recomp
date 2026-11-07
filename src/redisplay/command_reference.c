@@ -3,6 +3,9 @@
  * This entire module and its constants live in REFERENCE_CODE. */
 #include "command_reference.h"
 #include "command_menu.h"
+#ifdef TERMINAL_LINE_PORT
+#include "../line_port/front.h"
+#endif
 #ifdef TERMINAL_GATEWAY
 #include "../terminal/gateway_front.h"
 #endif
@@ -103,6 +106,9 @@ static word __far *view;
 #if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL) || defined(TERMINAL_GATEWAY) || defined(TERMINAL_FILE_DIRECTORY) || defined(TERMINAL_FILE_VIEWER)
 static word action(word i)
 {
+#ifdef TERMINAL_LINE_PORT
+ if(items[i].key==0x1900)return LINE_PORT_ACTION;
+#endif
 #ifdef TERMINAL_EXTERNAL_EDITOR
  if(items[i].key==0x1e00)return FILE_EDITOR_ACTION;
 #endif

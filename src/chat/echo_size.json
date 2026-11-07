@@ -279,7 +279,7 @@
     },
     "src/redisplay/redisplay.c": {
       "profile": "echo-size",
-      "source_sha256": "f0b890813ef4e1d22298051818db5a153bff17c76776bad438df6168b9c4471b",
+      "source_sha256": "7467679d96ac7219946068c37c4df22961a6d5e4ca9d199dd3cc63e151b6e167",
       "control_code_data_bytes": [
         5610,
         420

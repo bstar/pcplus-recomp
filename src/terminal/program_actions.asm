@@ -373,6 +373,10 @@ terminal_program_poll:
  cmp word [terminal_program_kind],7
  je .retirement_capture_ready
 %endif
+%ifdef TERMINAL_LINE_PORT
+ cmp word [terminal_program_kind],12
+ je .line_capture_ready
+%endif
 %ifdef TERMINAL_PHONE_LOG_DISK
  extern _phone_log_disk_before_program_far
  global terminal_phone_log_program_gate_site
@@ -387,6 +391,9 @@ terminal_program_poll:
  jnz .cancel
 %ifdef TERMINAL_DIRECTORY_RETIREMENT
 .retirement_capture_ready:
+%endif
+%ifdef TERMINAL_LINE_PORT
+.line_capture_ready:
 %endif
  call terminal_connection_notice_restore
 %ifdef TERMINAL_PROGRAM_DISPLAY
@@ -480,6 +487,14 @@ terminal_program_poll:
  call terminal_translation_reload_run
  jmp .record_status
 .execute_child:
+%ifdef TERMINAL_LINE_PORT
+ cmp word [terminal_program_kind],12
+ jne .line_port_done
+ extern _line_port_front_run
+ call far _line_port_front_run
+ jmp .record_status
+.line_port_done:
+%endif
 %ifdef TERMINAL_HOOK_APPLY
  cmp word [terminal_program_kind],5
  jne .ordinary_child
@@ -600,6 +615,10 @@ terminal_program_poll:
  jne .return_prompt
  call terminal_setup_complete
 .return_prompt:
+%ifdef TERMINAL_LINE_PORT
+ cmp word [terminal_program_kind],12
+ je .restore_screen
+%endif
 %ifdef TERMINAL_DIRECTORY_RETIREMENT
  cmp word [terminal_program_kind],7
  je .restore_screen

@@ -287,7 +287,8 @@ mode_opened:
         child_count=2 if args.lease_fault_phase in (10,22) else 1
         checks['child_count_matches_fault_boundary']=(drive/'NEST.LOG').read_bytes()==b'CHILD|'*child_count
     if args.held_streams:
-        checks['held_files_preserved']=all((drive/f'HOLD{i}.BIN').read_bytes()==f'HELD{i}|'.encode() for i in range(6))
+        checks['held_files_preserved']=all((drive/f'HOLD{i}.BIN').is_file() and
+            (drive/f'HOLD{i}.BIN').read_bytes()==f'HELD{i}|'.encode() for i in range(6))
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary),
                   program_result_probe=args.program_result_probe,
                   cpu=args.cpu,

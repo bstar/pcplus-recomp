@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Experimental live Alt-P](LINE_PORT_LIVE.md) connects the original selector,
+serviced popup, checked PRM prefix save and UART handoff. Ten DOS8086 sessions
+pass 257 checks, an offline port move passes 17, and a 689-file public-source
+export reproduces the parent exactly. **Not release eligible:** the paired
+ASPECT held-stream/nested-child/profile-switch workload fails with this parent;
+the unchanged parent passes all 29 checks with the same interpreter. Residency
+work is required before promotion. The installed package remains unchanged.
+
 [Active EMULATE-package alert/carrier matrix](EMULATE_CARRIER.md) passes eight
 actual DOS cases (296 checks): ANSI/VT220 with no disconnect handler, deferred
 CALL, TRANSMIT and XOFF service error. Ordinary packaged products restore speaker,
@@ -2861,3 +2869,20 @@ code bytes spare, so the front end needs far-bank storage and bounded stack
 snapshots. Canonical identity/claims, baseline reconciliation, PROGRAM/UART
 handoff, connected-input composition and application acceptance remain open.
 Installed RBADE091 and physical acceptance remain unchanged.
+
+## Live native Alt-P candidate (2026-11-07)
+
+[The optional live Line/Port candidate](LINE_PORT_LIVE.md), parent a057b35c,
+now binds native selection/rendering to serviced input, canonical file claims,
+checked prefix save and PROGRAM kind 12 UART handoff. Ten DOS8086 sessions pass
+257 checks, and an actual offline COM3/IRQ5→COM1/IRQ4 migration passes 17 checks
+with post-move data/replies and all four UART/PIC/vector snapshots restored.
+The 689-file isolated export reproduces the exact parent and repeats four live
+cases; the disabled control remains exact 856a9c85. DGROUP has 16 bytes spare and
+resident code has zero; all existing stacks/rings remain unchanged.
+The candidate fails the paired ASPECT capacity workload while the unchanged
+parent passes all 29 checks. It is neither release eligible, selected nor
+deployed. Residency, package, broader BBS regressions, other geometries/colors,
+the full port matrix, live uncertainty
+fault composition and physical acceptance remain open; no full-parity gate
+is closed by these named application results.

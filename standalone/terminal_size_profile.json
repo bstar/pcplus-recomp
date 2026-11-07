@@ -136,7 +136,7 @@
     },
     "src/config/live_setup_owner.c": {
       "profile": "full",
-      "source_sha256": "43f1b73aca727892fb95e186f6d442da6a2857cfd0bbd29043beae02406ff2f5",
+      "source_sha256": "18fbfb21969a5736fc7c12059dc6891ed95f64d5e56fb5664ef5862fcb54d369",
       "control_code_data_bytes": [
         1978,
         3296
@@ -316,7 +316,7 @@
     },
     "src/redisplay/command_menu.c": {
       "profile": "no-inline",
-      "source_sha256": "f21152ec407e830992c226bd51cea0f228304d2f7f70e53fbf7d0239be8bd276",
+      "source_sha256": "a85de8bd9d9b48da3026886a12bbe9732380a62a89ebd2895faa0602c9862c5a",
       "control_code_data_bytes": [
         12824,
         84
@@ -328,7 +328,7 @@
     },
     "src/redisplay/command_reference.c": {
       "profile": "no-inline",
-      "source_sha256": "4ac4558e61bdeda5bf058579f74c90d34bf260e05ad071c53e0fbee8bd863ca3",
+      "source_sha256": "321d670658eb3aae14873c71387094ef3c143e411a1ce01e79862527aae084b8",
       "control_code_data_bytes": [
         3484,
         8
@@ -352,7 +352,7 @@
     },
     "src/redisplay/redisplay.c": {
       "profile": "no-inline",
-      "source_sha256": "f0b890813ef4e1d22298051818db5a153bff17c76776bad438df6168b9c4471b",
+      "source_sha256": "7467679d96ac7219946068c37c4df22961a6d5e4ca9d199dd3cc63e151b6e167",
       "control_code_data_bytes": [
         5675,
         420

@@ -1,3 +1,6 @@
+#ifdef TERMINAL_LINE_PORT
+#include "../line_port/front.h"
+#endif
 /* Maintained redisplay over a frozen chronological native history snapshot.
  * DOS16 DS=SS; no heap, original resources, blocking input or UART ownership. */
 #include <dos.h>
@@ -105,6 +108,9 @@ static void copy(word __far *to,const word __far *from)
  * over live BBS video, including the first paint after menu selection. */
 static void path_overlay(void)
 {
+#ifdef TERMINAL_LINE_PORT
+ if(command_menu_active&&line_port_front_cursor()!=0xffff){copy(view,live);line_port_front_event(2,0,view);return;}
+#endif
 #ifdef TERMINAL_FILE_VIEWER
 #ifdef TERMINAL_EXTERNAL_VIEWER
  if(command_menu_active&&viewer_external_cursor()!=0xffff){copy(view,live);viewer_external_event(2,0,view);return;}
@@ -148,6 +154,9 @@ static void cursor_restore(void)
 }
 static void hide(void)
 {
+#ifdef TERMINAL_LINE_PORT
+ word lp=line_port_front_cursor();
+#endif
 #ifdef TERMINAL_FILE_VIEWER
  word vp,vs;
 #endif
@@ -156,6 +165,18 @@ static void hide(void)
 #ifdef TERMINAL_FILE_DIRECTORY
  word fp=file_dialog_cursor();
 #endif
+#endif
+#ifdef TERMINAL_LINE_PORT
+ if(lp!=0xffff){
+  __asm { mov ah,1
+   mov cx,0607h
+   int 10h
+   mov ah,2
+   xor bh,bh
+   mov dx,lp
+   int 10h }
+  return;
+ }
 #endif
 #ifdef TERMINAL_FILE_VIEWER
 #ifdef TERMINAL_EXTERNAL_VIEWER
@@ -360,6 +381,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   view=(word __far *)MK_FP(c->view_seg,c->view_off);
 #ifdef TERMINAL_ORIGINAL_KEYS
   direct_clipboard=(key==0x2c00 || key==0x1300
+#ifdef TERMINAL_LINE_PORT
+   || key==0x1900
+#endif
 #ifdef TERMINAL_REFERENCE
    || (key&255)=='`' || key==0x6c00 || key==0x1700 || command_reference_unavailable(key)
 #ifdef TERMINAL_EXTERNAL_EDITOR

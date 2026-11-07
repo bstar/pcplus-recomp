@@ -300,3 +300,24 @@ unsigned __cdecl live_setup_select(const directory_live_context *expected,
 }
 #endif
 #endif
+
+#ifdef TERMINAL_LINE_PORT
+/* Dedicated Alt-P edits the global prefix. Frozen directory record baud, when
+ * selected, remains the source baseline for later generic setup composition. */
+unsigned __far __cdecl line_port_setup_path(char *tail)
+{
+ unsigned n;char stage[68];
+ if(!external(tail,68))return LIVE_SETUP_ARGUMENT;
+ if(owner.bound!=1 || owner.pending || owner.offered_mask || owner.transfer_ready)return LIVE_SETUP_STATE;
+ for(n=0;n<128 && owner.canonical[n];++n){}
+ if(!n || n>63 || owner.canonical[1]!=':' || owner.canonical[2]!='\\')return LIVE_SETUP_IDENTITY;
+ memset(stage,0,sizeof(stage));stage[0]=' ';memcpy(stage+1,owner.canonical,n);
+ memcpy(tail,stage,sizeof(stage));return 0;
+}
+unsigned __far __cdecl line_port_setup_saved_ack(unsigned low,unsigned high)
+{
+ if(owner.bound!=1 || owner.pending || owner.offered_mask || owner.transfer_ready)return LIVE_SETUP_STATE;
+ if(!owner.has_context){owner.source_baud_low=low;owner.source_baud_high=high;}
+ return 0;
+}
+#endif

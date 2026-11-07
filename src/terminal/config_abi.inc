@@ -113,3 +113,9 @@ CONFIG_CDECL _config_capture_begin,_capture_file_begin,2
 CONFIG_CDECL _config_capture_append,_capture_file_append,2
 CONFIG_ZERO _config_capture_cleanup,_capture_file_cleanup
 CONFIG_REGISTER config_strlen_service_,strlen_
+
+%ifdef TERMINAL_LINE_PORT
+%ifndef TERMINAL_DIRECTORY_STORAGE
+CONFIG_CDECL _config_line_paths,_directory_replace_paths,3
+%endif
+%endif

@@ -1,8 +1,12 @@
 # Native Alt-P display and persistence
 
+The optional [live Alt-P candidate](LINE_PORT_LIVE.md) now composes these components
+and passes the named application gates. The installed/default release is unchanged;
+this document retains the separate component checkpoint and its limits.
+
 The maintained popup renderer now matches the authentic 2.01 popup for the
 observed default-color 80x25 cases. This follows the [414-byte key selector
-recovery](LINE_PORT_RECOVERY.md). Live Alt-P integration remains pending; the
+recovery](LINE_PORT_RECOVERY.md). The standalone checks below exclude terminal integration; the
 installed RBADE091 release still opens the general settings editor.
 
 ## Observations of the authentic program
@@ -48,8 +52,8 @@ format string:031F is the refresh service's display coordinate argument.
 caller-owned far text frame. It rejects invalid native state indices and short
 frames without writing. It has no DOS file, UART, saved-screen, keyboard or
 cursor dependency. The eventual terminal caller must own those services.
-Default attributes 7/11/113 match the observed configuration; configurable colors
-and alternate row counts require further work before live integration.
+Default attributes 7/11/113 match the observed configuration; the live front remaps configured colors. Comparison against nondefault native
+colors and alternate row counts still needs further work.
 
 The actual DOS diagnostic produces three states: 19200 /8N1, 9600 /8N1 and
 9600 /8E1. Comparing each with native initial/edited/reopened captures in both

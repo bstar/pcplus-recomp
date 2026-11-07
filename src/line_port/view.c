@@ -5,6 +5,12 @@ typedef unsigned word;
 static const char TEXT heading[]="BAUD RATE   PARITY     DATA BITS   STOP BITS   PORT";
 static const char TEXT footer[]="Esc) Exit   Alt-S) Save and Exit  YOUR CHOICE:";
 static const char TEXT title[]="LINE/PORT SETUP";
+static const char TEXT com_label[]="COM";
+static const char TEXT port_label[]="F1) COM1";
+static const char TEXT data7[]="Alt-7) 7";
+static const char TEXT data8[]="Alt-8) 8";
+static const char TEXT stop1[]="Alt-1) 1";
+static const char TEXT stop2[]="Alt-2) 2";
 static const char TEXT current[]="CURRENT SETTINGS:";
 static const char TEXT rates[]="300\0\0\0\0" "1200\0\0\0" "2400\0\0\0" "4800\0\0\0" "9600\0\0\0" "19200\0\0" "38400\0\0" "57600\0\0" "115200";
 static const char TEXT parity_letters[]="NOEMS";
@@ -38,7 +44,7 @@ unsigned __far __cdecl line_port_view(const line_port_values *v,word __far *f,wo
  f[at++]=0x0b2c;f[at++]=0x0b00|parity_letters[v->parity];
  f[at++]=0x0b2c;f[at++]=0x0b30+v->bits;
  f[at++]=0x0b2c;f[at++]=0x0b30+v->stop;
- f[at++]=0x0b2c;text(f,at,"COM",0x0b00);at+=3;
+ f[at++]=0x0b2c;text(f,at,com_label,0x0b00);at+=3;
  f[at]=0x0b31+v->port;
  text(f,6*80+20,heading,0x0b00);
  for(r=0;r<9;++r){
@@ -47,10 +53,10 @@ unsigned __far __cdecl line_port_view(const line_port_values *v,word __far *f,wo
   n=length((rate_text+r*7));text(f,at+29-n,(rate_text+r*7),0x0700);
   if(r<5)text(f,at+32,(parity_text+r*8),0x0700);
   if(r<2){
-   text(f,at+43,r?"Alt-8) 8":"Alt-7) 7",0x0700);
-   text(f,at+55,r?"Alt-2) 2":"Alt-1) 1",0x0700);
+   if(r)text(f,at+43,data8,0x0700);else text(f,at+43,data7,0x0700);
+   if(r)text(f,at+55,stop2,0x0700);else text(f,at+55,stop1,0x0700);
   }
-  if(r<8){text(f,at+67,"F1) COM1",0x0700);f[at+68]=0x0731+r;f[at+74]=0x0731+r;}
+  if(r<8){text(f,at+67,port_label,0x0700);f[at+68]=0x0731+r;f[at+74]=0x0731+r;}
   if(r==7)text(f,at+32,preset_n,0x0700);
   if(r==8)text(f,at+32,preset_e,0x0700);
  }

@@ -1,7 +1,11 @@
 # Original Alt-P Line/Port recovery
 
+The optional [live Alt-P candidate](LINE_PORT_LIVE.md) now composes these components
+and passes the named application gates. The installed/default release is unchanged;
+this document retains the separate component checkpoint and its limits.
+
 The native 2.01 key selector is now recovered as assembly and independently
-builds without the original executable. It is a component checkpoint: the live
+builds without the original executable. It is a component checkpoint: the default
 terminal still opens the general saved-settings editor for Alt-P. This work
 changes neither that behavior nor the installed RBADE091 package.
 
@@ -88,8 +92,9 @@ these accepted runs. No product behavior was changed to make tests pass.
 The [popup view checkpoint](LINE_PORT_VIEW.md) now corroborates default-color
 80x25 rendering and Escape/session persistence against the authentic executable.
 The [staged transaction and serial plan](LINE_PORT_SESSION.md) now combine
-this selector and view in a separate code bank. Next integrate with the maintained saved-screen, foreground, serviced-input and
-UART owners, preserving incoming traffic and checked file persistence. Original
+this selector and view in a separate code bank. The optional live candidate
+now composes the maintained saved-screen, foreground, serviced-input and UART
+owners; native apply-helper recovery and full hardware parity remain separate. Original
 COM1..8 choices exceed the maintained COM1..4 scope; unsupported ports need
 explicit handling rather than silent remapping. Trace application of baud,
 parity, bits, stops and IRQ to hardware before claiming native serial parity.

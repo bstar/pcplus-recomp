@@ -1,9 +1,13 @@
 # Checked Line/Port prefix persistence
 
+The optional [live Alt-P candidate](LINE_PORT_LIVE.md) now composes these components
+and passes the named application gates. The installed/default release is unchanged;
+this document retains the separate component checkpoint and its limits.
+
 `src/line_port/persist.c` now performs an actual checked save of the native
-five-word line-settings prefix. It is not yet called by the live terminal.
-The [staged popup transaction](LINE_PORT_SESSION.md), UART handoff and menu
-routes still need their final composition. Installed RBADE091 is unchanged.
+five-word line-settings prefix. The optional live candidate calls it through bank-local DOS boundaries.
+The [staged popup transaction](LINE_PORT_SESSION.md) has separate component
+coverage; broader application composition gates remain listed in the live report. Installed RBADE091 is unchanged.
 
 The caller supplies an absolute DOS83 PRM identity, the ten bytes accepted when
 the edit began, and the requested replacement prefix. The caller must hold the

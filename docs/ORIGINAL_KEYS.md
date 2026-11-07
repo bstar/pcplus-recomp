@@ -8,7 +8,7 @@ It is staged for the next card update; the card is absent and was not written.
 | --- | --- |
 | Alt-R | Open the checked ASPECT recorder; press again to save an active recording |
 | Alt-S | Open the eligible saved-settings editor |
-| Alt-P | Open that editor with its port field initially selected |
+| Alt-P | Default: settings editor with port selected. Optional `--line-port`: native popup |
 | Alt-F6 | Open serviced redisplay/history |
 | PgUp/PgDn | Send an assigned keyboard-profile binding; a native-local unassigned key opens send/receive |
 | Alt-F10 / Ctrl-PgUp | Retain the existing settings/history aliases |
@@ -18,7 +18,9 @@ Alt-P currently uses the complete source-built settings editor; it is not a
 reconstruction of the original dedicated line/port popup. The [native selector
 recovery](LINE_PORT_RECOVERY.md) now has exact assembly and component tests;
 its [popup rendering](LINE_PORT_VIEW.md) also matches bounded native DOS
-captures. Live popup integration remains pending. The original Alt-Z
+captures. The optional [live candidate](LINE_PORT_LIVE.md) now binds the popup to serviced
+input, prefix saving and serial handoff. It is not installed; broader release
+and physical gates remain pending. The original Alt-Z
 reference layout, backtick/mouse pull-downs, live Alt-D directory chooser and
 Alt-F8 key-map editor remain required. This checkpoint does not claim full
 original command or application parity.

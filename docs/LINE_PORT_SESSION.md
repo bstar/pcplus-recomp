@@ -1,8 +1,12 @@
 # Line/Port transaction and serial plan
 
+The optional [live Alt-P candidate](LINE_PORT_LIVE.md) now composes these components
+and passes the named application gates. The installed/default release is unchanged;
+this document retains the separate component checkpoint and its limits.
+
 The recovered selector, maintained renderer and a new staged transaction now run
-together in a separate 16-bit code bank. This is preparation for live Alt-P:
-**the terminal's menu/input routes and UART/file owners are not yet connected**.
+together in a separate 16-bit code bank. These standalone checks exclude the terminal's routes and actual IO; the
+optional live candidate now binds them.
 The installed RBADE091 package is unchanged. No physical acceptance is implied.
 
 ## Transaction contract

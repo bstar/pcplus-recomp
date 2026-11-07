@@ -44,6 +44,14 @@ port_enter:
  jc .invalid
  cmp word [terminal_program_active],1
  jne .invalid
+%ifdef TERMINAL_LINE_PORT
+ cmp word [terminal_program_kind],12
+ jne .not_line_port
+ cmp word [terminal_program_status],2
+ jne .invalid
+ jmp .line_owner_ready
+.not_line_port:
+%endif
 %ifdef DIRECTORY_RESOURCE_ADOPTION
  extern _terminal_directory_adopt_requested
  cmp word [terminal_program_kind],8
@@ -68,6 +76,9 @@ port_enter:
  jne .invalid
 %ifdef DIRECTORY_RESOURCE_ADOPTION
 .owner_ready:
+%endif
+%ifdef TERMINAL_LINE_PORT
+.line_owner_ready:
 %endif
  mov bx,[si+TI_PORT]
  dec bx

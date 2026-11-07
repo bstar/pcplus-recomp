@@ -399,6 +399,10 @@ terminal_phone_log_startup_done equ $
  call far _gateway_poll
 %endif
  call terminal_program_poll
+%ifdef TERMINAL_LINE_PORT
+ extern _line_port_front_poll
+ call far _line_port_front_poll
+%endif
  cmp word [terminal_quit],0
  jne terminal_shutdown
 %ifdef TERMINAL_PHONE_LOG_DISK

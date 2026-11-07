@@ -859,13 +859,18 @@ def inspect_terminal_memory(binary,map_path):
    return b'\x55\x89\xe5'+b''.join(bytes([0xff,0x76,first+2*i]) for i in reversed(range(count)))
   storage_enabled='_directory_storage_exec_allowed' in symbols
   resource_enabled='_terminal_directory_resources_run' in symbols
-  enabled=True
+  line_port_enabled='_line_port_front_run' in symbols
+  conditions={'TERMINAL_DIRECTORY_STORAGE':storage_enabled,
+   'TERMINAL_DIRECTORY_RESOURCE_OWNER':resource_enabled,'TERMINAL_LINE_PORT':line_port_enabled}
+  enabled=[True]
   for line in abi.read_text().splitlines():
    if not line or line.startswith(';'):continue
-   if line=='%ifdef TERMINAL_DIRECTORY_STORAGE':enabled=storage_enabled;continue
-   if line=='%ifdef TERMINAL_DIRECTORY_RESOURCE_OWNER':enabled=resource_enabled;continue
-   if line=='%endif':enabled=True;continue
-   if not enabled:continue
+   if line.startswith(('%ifdef ','%ifndef ')):
+    directive,condition=line.split();assert condition in conditions,condition
+    value=conditions[condition] if directive=='%ifdef' else not conditions[condition]
+    enabled.append(enabled[-1] and value);continue
+   if line=='%endif':assert len(enabled)>1;enabled.pop();continue
+   if not enabled[-1]:continue
    fields=line.replace(',',' ').split();kind,name=fields[:2]
    if kind=='CONFIG_ENTRY':
     assert len(fields)==3
@@ -892,7 +897,17 @@ def inspect_terminal_memory(binary,map_path):
     else:assert len(fields)==3
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
-  assert config_bridges==((99 if storage_enabled else 94)+(3 if resource_enabled else 0)),'Incomplete configuration ABI validation'
+  assert enabled==[True], 'Unbalanced configuration ABI conditions'
+  assert config_bridges==((99 if storage_enabled else 94)+(3 if resource_enabled else 0)+(1 if line_port_enabled and not storage_enabled else 0)),'Incomplete configuration ABI validation'
+  if line_port_enabled:
+   line_bank=next(c for c in code_segments if c['name']=='LINE_PORT_CODE')
+   seg,off=symbols['_line_port_front_storage']
+   assert seg==line_bank['relative_segment'] and off+256<=line_bank['bytes']
+   assert raw('_line_port_front_storage',256)==b'PL'+bytes(254), 'Far owner initialization'
+   assert seg!=near_code['relative_segment'] and seg*16!=near_start
+   extra['line_port_front_far_state_bytes']=256
+   extra['line_port_front_DGROUP_bytes']=0
+   extra['line_port_selector_adapter_DGROUP_bytes']=12
   if storage_enabled:
    assert symbols['_directory_storage_exec_allowed'][0]==config_seg
    process=next(c for c in code_segments if c['name']=='PROCESS_CODE')

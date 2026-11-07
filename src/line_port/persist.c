@@ -4,6 +4,17 @@
 #include <dos.h>
 #include <fcntl.h>
 #include <string.h>
+#ifdef TERMINAL_LINE_PORT
+#include "kernel.h"
+#define _dos_getfileattr line_kernel_attr
+#define _dos_open line_kernel_open
+#define _dos_creatnew line_kernel_create
+#define _dos_read line_kernel_read
+#define _dos_write line_kernel_write
+#define _dos_close line_kernel_close
+#define directory_replace_rename line_kernel_rename
+#define directory_replace_delete line_kernel_delete
+#endif
 static unsigned extent(const void *p,unsigned n)
 {return p && (unsigned long)(unsigned)p+n<=65536UL;}
 static unsigned separate(const void *a,unsigned n,const void *b,unsigned m)

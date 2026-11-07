@@ -15,7 +15,7 @@
     "src/line_port/select.asm": "2e01b7918372af0a52342b3c20740ee0acb3ba7155f8f3b26b6b8df3c3ed9a91",
     "src/line_port/session.c": "68f2d7a4d49669e3ae1283f5254642d7101e15bb73dfa12c132f62c132ddb8d9",
     "src/line_port/session.h": "f71916eefa03c0e7e022435d385606f5cb026871029d16f4237053b397fa5710",
-    "src/line_port/view.c": "b6e20722678e5fb6dd1e9f0faffc54cf35701e2a668765d03c46e6fa571cd55c",
+    "src/line_port/view.c": "7b7bf394fca523921638373c4a8920ec5f5034bc2b7620f4427a3bd514083b58",
     "src/line_port/view.h": "5f4d2c0322d5b7aa6d7f0b6300fd5d6d78cb5ad8a52926c552eaadf8304be6dd",
     "src/line_port/plan.c": "bc2c81c30c84d110e126c4efc38593a99cb62826f5a0620129ffe7a642c94314",
     "src/line_port/plan.h": "061a6cccdf60efb84b12e1e6c4f52cd8ce222998e348a9f4eb3c4d72e5392eaa",
@@ -27,12 +27,12 @@
     "standalone/test_line_port_session_dos.py": "f101c1b7be25597a6cd74140113dd2c883453b64eeb450d2d0833d2667de6761",
     "standalone/prove_line_port_session_source.py": "ec0b839f381c9ae6b5726616ddee38b336a5a586be97b7c49be012ee873e39d2",
     "standalone/record_line_port_session.py": "10e9ec06ccd7c23ba3b12ff68bcf84cfbd69bc74f19e9f66856841a7f05be2bf",
-    "docs/LINE_PORT_SESSION.md": "199396fb2231a128ecf4a286af917e71b320a9ba35f82dc912908950532d0176"
+    "docs/LINE_PORT_SESSION.md": "0f52a2d06f34b36ce8d02d44149c505dcfe50891c1b03c557bd3dd3e3cdc9952"
   },
   "receipts": {
-    "build/line-port-session/manifest.json": "0fb7db504d841015877484e2fed570694dcbbb53a7aceb6221153490e5ff88d3",
-    "build/line-port-session/dos-results.json": "a3daba08e89be2ba33d6c39458ca1cf83c87138e9b0f909244faea16025a2939",
-    "build/line-port-session/source-proof/result.json": "32fc4103645c8ce3ca34b681d4f4b0b7b26617adfae3c61d91a21db08ebc052a"
+    "build/line-port-session/manifest.json": "84c0518abc28969a7515bf0d5a1f7f3443689c0873e855dec29e383c5792a5af",
+    "build/line-port-session/dos-results.json": "5f5ebe317612d56f3db3da4b3394bef2734e4e5d514ae584cdf0baa14349c36f",
+    "build/line-port-session/source-proof/result.json": "1b913aeda463dcd2f49053e6384ac43fb8b16bda5a22c14d1efa1dd3fb95f6b6"
   },
   "limitations": [
     "Save/apply results are authored inputs; no real PRM save or UART handoff in this diagnostic.",
