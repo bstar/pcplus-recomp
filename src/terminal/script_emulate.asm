@@ -24,45 +24,38 @@ extern _command_menu_active,_redisplay_active
 global terminal_script_emulate
 terminal_script_emulate:
  pushf
- push bp
- mov bp,sp
- sub sp,4
- mov [ss:bp-2],ax
  push bx
  push cx
  push dx
  push si
  push di
  push es
- cmp ax,255
- ja .operand
+ cld
+ mov si,ax
+ or ah,ah
+ jnz .operand
  cmp ax,4
  je .supported
  cmp ax,6
  jne .unsupported
 .supported:
- cmp word [cs:script_emulate_quarantined],0
- jne .state
- cmp word [terminal_setup_profile_ready],0
- jne .state
- cmp word [cs:terminal_script_window_active],0
- jne .state
- cmp word [cs:terminal_script_confirm_active],0
- jne .state
- cmp byte [terminal_editor_screen_owned],0
- jne .state
- cmp byte [terminal_browser_screen_owned],0
- jne .state
- cmp word [_command_menu_active],0
- jne .state
- cmp word [_redisplay_active],0
- jne .state
- cmp word [terminal_quit],0
- jne .state
+ ; Every nonzero owner has the same typed state outcome. Fold the checks
+ ; without changing their admission semantics or discarding any owner.
+ mov ax,[cs:script_emulate_quarantined]
+ or ax,[terminal_setup_profile_ready]
+ or ax,[cs:terminal_script_window_active]
+ or ax,[cs:terminal_script_confirm_active]
+ or ax,[_command_menu_active]
+ or ax,[_redisplay_active]
+ or ax,[terminal_quit]
+ jnz .state
+ mov al,[terminal_editor_screen_owned]
+ or al,[terminal_browser_screen_owned]
+ jnz .state
  call _aspect_render_admit
  or ax,ax
  jnz .done
- mov ax,[ss:bp-2]
+ mov ax,si
  call far script_emulate_stage_resident
  cmp ax,2
  je .unsupported
@@ -70,22 +63,15 @@ terminal_script_emulate:
  jnz .io
  ; A synchronous foreground transaction cannot yield to a different owner
  ; between stage and commit. Stage does not poll parser/receive callbacks.
- mov ax,[terminal_setup_profile_status]
- mov [ss:bp-4],ax
- mov ax,[ss:bp-2]
+ mov di,[terminal_setup_profile_status]
+ mov ax,si
  mov [terminal_configuration_values+TI_PROFILE],ax
  mov word [terminal_setup_profile_status],1
  call far script_emulate_finish_resident
  cmp word [terminal_setup_profile_status],1
- jne .commit_failed
- mov ax,[ss:bp-4]
- mov [terminal_setup_profile_status],ax
+ jne .state
+ mov [terminal_setup_profile_status],di
  xor ax,ax
- jmp .done
-.commit_failed:
- ; Existing finish marks fatal reset/capture failure and requests orderly exit.
- ; Do not report success or restore the old selector over a partially reset view.
- mov ax,10
  jmp .done
 .io:
  cmp word [setup_profile_keyboard_io+4],0
@@ -109,8 +95,6 @@ terminal_script_emulate:
  pop dx
  pop cx
  pop bx
- mov sp,bp
- pop bp
  popf
  retf
 ; Unknown DOS-close outcome cannot be repaired by reopening the path.

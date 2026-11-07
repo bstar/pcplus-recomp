@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[EMULATE memory funding](ASPECT_EMULATE_FUNDING.md) resolves the parent capacity
+failure below: 27 held-stream checks on 8086 and 386, plus 26 stream-around-child
+checks on 8086 pass. The parent saves 208 bytes from the initial owner; no
+retained capacity is reduced. All 306 linked cases and DOS helper comparisons
+pass; a 5,449-file cold export reproduces parent/child and repeats selected
+suites. Child RPC/opcode, actual profile-switch/BBS/package/physical gates remain
+open; installation is unchanged.
+
 [Experimental EMULATE parent owner](ASPECT_EMULATE_PARENT.md) passes 294 linked
 profile/staging/reset/error checks and a 5,443-file cold rebuild. Its added
 256-byte minimum fails seven of 27 held-stream/nested-child DOS checks.

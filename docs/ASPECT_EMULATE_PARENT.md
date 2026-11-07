@@ -1,6 +1,10 @@
-# Experimental EMULATE parent transaction
+# Initial EMULATE parent transaction
 
-The parent profile transaction now executes the existing keyboard staging,
+This page records the initial, unfunded parent checkpoint. The subsequent
+[memory-funding checkpoint](ASPECT_EMULATE_FUNDING.md) resolves its capacity
+failure. The original negative receipt and observations below remain historical.
+
+The parent profile transaction executes the existing keyboard staging,
 configuration application and clean reset code for maintained profiles4/6.
 **It is unaccepted:** adding the owner increases the parent minimum by256 bytes,
 and the held-stream/nested-child DOS test fails seven of27 checks. Memory funding
@@ -73,9 +77,9 @@ held streams, local DATE/TIME values and three nested DOS children. It fails
 successfully with the same interpreter and harness. This result is retained as an
 unaccepted candidate, not hidden by the passing component matrix.
 
-Next fund and measure the parent's added memory without reducing retained
-capacities, then repeat capacity. Add the versioned child/parent request only
-after that foundation is viable. Exercise the actual bridge's bounded stack,
+The initial checkpoint required memory funding and repeated capacity. The
+subsequent funding proof supplies those gates. Next add the versioned
+child/parent request. Exercise the actual bridge's bounded stack,
 MCB/lease checks, script error cleanup, WHEN/modal ownership, profile-specific
 keys, received data, reset errors and repeated invocations. Then repeat current
 Enigma/Synchronet, clean package and physical acceptance gates. The other31

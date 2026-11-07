@@ -79,9 +79,10 @@ The [receipt](validation/aspect-emulate.json) binds sources and results:
   --output build/my-emulate-native
 ```
 
-The subsequent [parent transaction](ASPECT_EMULATE_PARENT.md) now executes
-keyboard staging/reset in linked tests. Its added memory fails the DOS capacity
-gate; the component remains unaccepted and the opcode remains unbound.
+The subsequent [parent transaction](ASPECT_EMULATE_PARENT.md) executes keyboard
+staging/reset in linked tests. Its initial memory failure is resolved by the
+[later funding proof](ASPECT_EMULATE_FUNDING.md). The child request and opcode
+remain unbound.
 
 ## Runtime integration still needed
 

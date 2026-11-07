@@ -24,18 +24,52 @@ extern unsigned terminal_directory_mode;
 #pragma aux connection_carrier_seen "connection_carrier_seen";
 #pragma aux terminal_directory_mode "terminal_directory_mode";
 static char digit(unsigned value){return value<10?(char)(value+'0'):(char)(value-10+'A');}
-static char *hexword(char *p,unsigned n){*p++=digit(n>>12);*p++=digit((n>>8)&15);*p++=digit((n>>4)&15);*p++=digit(n&15);return p;}
+static char *hexword(char *p,unsigned n)
+{
+#ifdef ASPECT_EMULATE_POLICY
+ unsigned count=4;
+ do{*p++=digit(n>>12);n<<=4;}while(--count);
+ return p;
+#else
+ *p++=digit(n>>12);*p++=digit((n>>8)&15);*p++=digit((n>>4)&15);*p++=digit(n&15);return p;
+#endif
+}
+/* Fixed script buffers: identical64/96-byte extents and half-open separation. */
+#ifndef ASPECT_EMULATE_POLICY
 static unsigned span(const void *p,unsigned n)
 {return p && (unsigned long)(unsigned)p+n<=65536UL;}
 static unsigned apart(const void *a,unsigned n,const void *b,unsigned m)
 {return (unsigned long)(unsigned)a+n<=(unsigned)b || (unsigned long)(unsigned)b+m<=(unsigned)a;}
+#else
+static unsigned buffers(const void *executable,const void *tail)
+{
+ unsigned e=(unsigned)executable,t=(unsigned)tail;
+ return e && t && e<=65472U && t<=65440U &&
+  (e<t ? t-e>=64U : e-t>=96U);
+}
+#endif
+#ifndef ASPECT_EMULATE_POLICY
 static unsigned folded(unsigned c){return c>='a' && c<='z'?c-32:c;}
+#endif
 static unsigned device(const char *p,unsigned n)
 {
+#ifdef ASPECT_EMULATE_POLICY
+ unsigned pair,last;
+ if(n!=3 && n!=4)return 0;
+ /* Only ASCII letters can match the names below. Clearing bit5 is
+  * equivalent for those comparisons for every byte; keep port digits raw. */
+ pair=((unsigned char)p[0]&0xdfU)|(((unsigned char)p[1]&0xdfU)<<8);
+ last=(unsigned char)p[2]&0xdfU;
+ if(n==3)return (last=='N'&&(pair==0x4f43||pair==0x5250)) ||
+  (last=='X'&&pair==0x5541) || (last=='L'&&pair==0x554e);
+ return p[3]>='1' && p[3]<='9' &&
+  ((pair==0x4f43&&last=='M') || (pair==0x504c&&last=='T'));
+#else
  unsigned a=folded(p[0]),b=n>1?folded(p[1]):0,c=n>2?folded(p[2]):0;
  if(n==3 && ((a=='C'&&b=='O'&&c=='N')||(a=='P'&&b=='R'&&c=='N')||
  (a=='A'&&b=='U'&&c=='X')||(a=='N'&&b=='U'&&c=='L')))return 1;
  return n==4 && ((a=='C'&&b=='O'&&c=='M')||(a=='L'&&b=='P'&&c=='T')) && p[3]>='1' && p[3]<='9';
+#endif
 }
 unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tail)
 {
@@ -43,7 +77,11 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
 #ifdef TERMINAL_REGISTER_HANDOFF
  unsigned long register_descriptor;
 #endif
+#ifdef ASPECT_EMULATE_POLICY
+ if(!buffers(executable,tail)||tail[0]!=' ')return 1;
+#else
  if(!span(executable,64)||!span(tail,96)||!apart(executable,64,tail,96)||tail[0]!=' ')return 1;
+#endif
 #ifdef DIRECTORY_RESOURCE_ADOPTION
  {
   extern unsigned __far __cdecl directory_adopt_script_check(const char *);
@@ -101,8 +139,14 @@ unsigned __cdecl terminal_script_prepare(unsigned psp,char *executable,char *tai
    start=i+1;base=extension=dot=0;continue;
   }
   if(c=='.'){if(!base||dot)return 1;dot=1;continue;}
+  /* Character admission: only the alphabetic comparison folds ASCII bit5. */
+#ifdef ASPECT_EMULATE_POLICY
+  if(!(((c&0xdfU)>='A'&&(c&0xdfU)<='Z')||(c>='0'&&c<='9')||c=='_'||c=='-'))return 1;
+#else
   c=folded(c);
   if(!((c>='A'&&c<='Z')||(c>='0'&&c<='9')||c=='_'||c=='-'))return 1;
+#endif
+  /* End character admission. */
   if(dot){if(++extension>3)return 1;}else if(++base>8)return 1;
  }
  return 1;

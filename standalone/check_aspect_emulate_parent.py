@@ -14,15 +14,15 @@ def main():
  manifest=json.loads((product/'manifest.json').read_text());assert sha(transport.BINARY)==manifest['binary_sha256']
  for n,h in manifest['sources'].items():assert sha(ROOT/n)==h,n
  class Parent(Profile):
-  def far(self,selector):
+  def far(self,selector,flags=0x202):
    u=self.uc;target=self.symbols['terminal_script_emulate'];segments=manifest['memory_layout']['code_segments']
    segment=self.base_segment+next(s['relative_segment'] for s in segments if self.base+s['relative_segment']*16<=target<self.base+s['relative_segment']*16+s['bytes'])
    sp=self.offset('terminal_stack_top')-4
    keep=[(UC_X86_REG_BX,0x1111),(UC_X86_REG_CX,0x2222),(UC_X86_REG_DX,0x3333),(UC_X86_REG_BP,0xbabe),(UC_X86_REG_SI,0x1234),(UC_X86_REG_DI,0x5678),(UC_X86_REG_ES,0xb800)]
-   for r,v in [(UC_X86_REG_CS,segment),(UC_X86_REG_DS,self.ds),(UC_X86_REG_SS,self.ds),(UC_X86_REG_SP,sp),(UC_X86_REG_AX,selector),(UC_X86_REG_EFLAGS,0x202)]+keep:u.reg_write(r,v)
+   for r,v in [(UC_X86_REG_CS,segment),(UC_X86_REG_DS,self.ds),(UC_X86_REG_SS,self.ds),(UC_X86_REG_SP,sp),(UC_X86_REG_AX,selector),(UC_X86_REG_EFLAGS,flags)]+keep:u.reg_write(r,v)
    u.mem_write(self.data_base+sp,struct.pack('<HH',self.return_offset,self.code_segment));self.returned=False
    u.emu_start(target,0,count=3000000);assert self.returned,'owner did not return'
-   for r,v in keep+[(UC_X86_REG_DS,self.ds),(UC_X86_REG_SS,self.ds),(UC_X86_REG_SP,sp+4),(UC_X86_REG_EFLAGS,0x202)]:assert u.reg_read(r)==v,(r,u.reg_read(r),v)
+   for r,v in keep+[(UC_X86_REG_DS,self.ds),(UC_X86_REG_SS,self.ds),(UC_X86_REG_SP,sp+4),(UC_X86_REG_EFLAGS,flags)]:assert u.reg_read(r)==v,(r,u.reg_read(r),v)
    return u.reg_read(UC_X86_REG_AX)
   def lease(self):
    self.uc.mem_write(0x449,b'\x03\x50\x00');self.uc.mem_write(0x462,b'\0');self.uc.mem_write(0x484,b'\x18')
@@ -44,6 +44,14 @@ def main():
    assert m.keymap()==expected and m.get('terminal_setup_profile_ready')==0
    assert before==(m.dll,m.dlm,m.lcr,m.mcr,m.ier,m.pic,m.vector_value(),bytes(m.rx),bytes(m.tx))
    cases.append(dict(case='profile-reset',explicit=explicit,target=target,result=answer))
+ # The compact owner uses SI/DI for its target/status and clears DF locally.
+ # Verify its promised caller-register/FLAGS restoration across those paths.
+ for explicit in (False,True):
+  for flags in (0x202,0x602,0x002):
+   for target in (4,6):
+    m=Parent();m.explicit() if explicit else None;m.lease()
+    assert m.far(target,flags=flags)==0 and m.get('csi_terminal_id')==target
+    cases.append(dict(case='compact-owner-ABI',explicit=explicit,target=target,flags=flags,result=0))
  # Unsupported selectors and malformed scalar requests are rejected before I/O.
  m=Parent().lease();original=m.view();calls=list(m.file_calls)
  for target in list(range(256))+[256,65535]:

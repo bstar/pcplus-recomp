@@ -855,6 +855,7 @@ for source in c_sources:
  if args.hook_modem:options+=['-dTERMINAL_HOOK_MODEM']
  if args.hook_input:options+=['-dTERMINAL_HOOK_INPUT']
  if args.hook_apply:options+=['-dTERMINAL_HOOK_APPLY']
+ if args.aspect_emulate_policy and source.name=='script_launch.c':options+=['-dASPECT_EMULATE_POLICY']
  if args.aspect_alarm_policy:options+=['-dASPECT_ALARM_POLICY']
  if args.notice_sound:options+=['-dASPECT_SOUND_POLICY','-dTERMINAL_SOUND']
  if args.notice_input:options+=['-dASPECT_NOTICE_INPUT']
