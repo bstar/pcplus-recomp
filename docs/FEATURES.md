@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Keyboard editor field](KEYMAP_FIELD.md) now matches1246 original key states
+across363 cases in host and DOS8086, with bounded safety differences, four
+extra guards and isolated source reproduction. The real helper ready screen
+was captured on synthetic media; source screen/persistence/integration remain open.
+
 [Keyboard editor notation](KEYMAP_NOTATION.md) recovers the original helper
 from the baseline image and adds bounded source converters. 800 original CPU
 comparisons, 772 DOS8086 cases, malformed-input checks and isolated source

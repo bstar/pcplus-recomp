@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "original_sha256": "f079418fca6392cde318e2eb657874a1f5ee10db83616c83054d191441fb6244",
+  "cpu": "8086",
+  "cycles": 1000,
+  "profile": 6,
+  "synthetic_KBD_bytes": 31284,
+  "synthetic_KBD_unchanged": true,
+  "stable_ready_screen": true,
+  "observer_unhook_verified": true,
+  "frame_bytes": 4000,
+  "frame_sha256": "87f6aaa8025b4abe6a03d3ff0b4c197be5b04849db6a93b20dfc1d2b8f2c710f",
+  "character_sha256": "aa67f1e7ad70cb49ac837ffe1890862deb9961345864a89b1efc295906e80fb7",
+  "attribute_counts": {
+    "23": 1080,
+    "31": 840,
+    "113": 80
+  },
+  "sources": {
+    "standalone/capture_keymap_screen.py": "be2983565d00f13d487192acbdbd0e4be57dd14dbfe540e84dc6895aef767f61",
+    "standalone/path_dialog_watch.asm": "65fed3d88c8621ecbd753eaf9ff65ac3547b4d07c3378577b25a50d6c36b6697"
+  },
+  "limitations": [
+    "Original helper executed only in DOSBox on synthetic media; original copied only into ignored build.",
+    "Captured original screen is a reference; no source-built editor screen or physical acceptance yet.",
+    "Initial READING DATA screen is excluded by readiness marker."
+  ]
+}

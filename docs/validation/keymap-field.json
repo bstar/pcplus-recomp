@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "original_inputs": [],
+  "cases": 363,
+  "native_key_states": 1246,
+  "cpu": "8086",
+  "source_only_DOS": true,
+  "host_extra_guards": 4,
+  "sources": {
+    "src/key_mapping/keymap_field.c": "d4c5dd94fb973cbc3c31b20f89f195f4406a07075794a2d0895d3b0855574cae",
+    "src/key_mapping/keymap_field.h": "9a9f09a5828444286dee10da9f13e8d3a80b1e2edd56ac8eeb690b0c177ce588",
+    "src/key_mapping/keymap_text.c": "831f04731c6ed10f3406400fde94b9cbea094aab79f790437023cd6ddc569fc5",
+    "src/key_mapping/keymap_text.h": "e4185d2cff8963df1e92ba1f3dca5089c46472248798e7bd53619649980bcaa7",
+    "standalone/test_keymap_field.py": "5ab65dd49d4311ab646c1f10dc26b4f5129e3664ea616d49dd50cf252bbb3874",
+    "standalone/keymap_field_driver.c": "bf3ea70fb87c1087bf35401477a48c531b69f6a563d4d18349304adb3d4d1d0c",
+    "standalone/fixtures/keymap_field_native.json": "391f92e01bc34cfd7725834d719929cbe806c45af41e0b2e9355fa2b8439d47c"
+  },
+  "binary_sha256": "8498bc39a967afa500d5259e32061af6eac5c1ffe4a12e84a5f937ea772a6e4d",
+  "scope": "Memory-only field/commit API, original instruction traces with modeled UI. No complete helper, actual VGA, file persistence, terminal or physical acceptance.",
+  "DOS_extra_guards": 4,
+  "isolated_source_reproduction": {
+    "files": 7,
+    "binary_identical": true,
+    "original_inputs": false
+  }
+}
