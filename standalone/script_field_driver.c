@@ -6,6 +6,7 @@
 extern unsigned field_request(unsigned,unsigned),field_adopt_request(unsigned,unsigned);
 extern void field_set_owners(unsigned,unsigned,unsigned);
 extern unsigned field_flags,field_abi_bad;
+extern unsigned field_break_owner;
 extern unsigned field_screen_columns,field_screen_video_row_bytes,field_text_video_segment;
 extern unsigned field_text_cga_status_port,field_text_bios_output,field_screen_viewport_offset;
 extern unsigned field_screen_cursor_row,field_screen_visible_column,field_attributes_current;
@@ -67,6 +68,7 @@ static void guards(void)
 {
  unsigned shape,position,i,before_calls;
  ++cases;setup(0,0,0x0205,0,0);
+ field_break_owner=1;ck(field_request(0,0xffff)==10);field_break_owner=0;
  field_set_owners(1,0,0);ck(field_request(0,0xffff)==10);
  field_set_owners(0,1,0);ck(field_request(0,0xffff)==10);
  field_set_owners(0,0,1);ck(field_request(0,0xffff)==10);field_set_owners(0,0,0);frame();

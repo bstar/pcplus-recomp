@@ -33,6 +33,17 @@ unsigned __cdecl aspect_render_alarm_policy(unsigned *,unsigned *);
 #else
 #define ASPECT_RENDER_CAP_VERSION 12U
 #endif
+#if defined(ASPECT_GET_DISPLAY)
+#if !defined(ASPECT_SNAPSHOT_LEASE) || (!defined(ASPECT_EMULATE_VM) && !defined(ASPECT_EMULATE_POLICY))
+#error ASPECT_GET_DISPLAY requires the complete EMULATE renderer profile
+#endif
+#undef ASPECT_RENDER_CAP_VERSION
+#define ASPECT_RENDER_CAP_VERSION 21U
+/*21..26: begin/configure/cell/present/info/end. Error end and renderer END
+ * acknowledge retirement as E000|typed status. Refused requests are untagged. */
+#define ASPECT_RENDER_FIELD_BEGIN 21U
+unsigned __cdecl aspect_render_field(unsigned operation,unsigned value);
+#endif
 #if defined(ASPECT_EMULATE_VM)
 #define ASPECT_RENDER_EMULATE 20U
 unsigned __cdecl aspect_render_emulate(unsigned selector);

@@ -101,8 +101,10 @@ proof on physical CGA hardware.
   --build build/my-script-field --output build/my-script-field-source
 ```
 
-Next is versioned parent/child RPC publication with PSP/DS/lease checks,
-symmetric rejection of competing operations, proper field retirement on END,
-real receive/repaint composition and native GET abort checkpoints. Floating
+The subsequent [experimental capability21 RPC checkpoint](ASPECT_GET_RPC.md)
+adds authenticated parent/child publication, competing-owner exclusion and
+explicit retirement. Its updated BREAK-admission regression passes805,134 checks;
+the receipt above preserves the earlier805,133-check historical checkpoint.
+Real receive/repaint composition and native GET abort checkpoints remain open. Floating
 runtime, both compiler grammars/opcode49 and connected script/memory/package
 acceptance remain open. Installed files and deployment selection are unchanged.

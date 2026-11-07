@@ -30,6 +30,13 @@ CPU 8086
  %define RENDER_CAPABILITY 12
 %endif
 %endif
+%ifdef ASPECT_GET_DISPLAY
+ %ifndef ASPECT_EMULATE_POLICY
+  %error GET display requires the complete EMULATE renderer policy
+ %endif
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 21
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
 extern terminal_program_active,terminal_program_kind
@@ -109,6 +116,9 @@ extern terminal_script_window_cooperative
 global terminal_script_window_poll
 global render_child_ds,render_started,render_body,render_attached,render_child_psp
 extern _script_handoff
+%ifdef ASPECT_GET_DISPLAY
+extern terminal_script_field,terminal_script_field_active
+%endif
 %ifdef ASPECT_EMULATE_POLICY
 extern terminal_script_emulate
 %endif
@@ -146,6 +156,11 @@ terminal_render_prepare:
 %endif
  mov word [cs:render_callback],0
  mov word [cs:render_callback+2],0
+%ifdef ASPECT_GET_DISPLAY
+ call field_retire
+ or ax,ax
+ jnz .done
+%endif
  call _aspect_render_admit
  or ax,ax
  jnz .done
@@ -178,6 +193,10 @@ terminal_render_prepare:
  retf
 
 terminal_render_revoke:
+%ifdef ASPECT_GET_DISPLAY
+ call field_retire
+ push ax
+%endif
  call terminal_script_window_close
  ; Parent cursor cleanup needs no retired child callback or UART operation.
  push bx
@@ -197,6 +216,14 @@ terminal_render_revoke:
  mov word [cs:render_callback+2],0
  mov word [terminal_aspect_active],0
  mov word [terminal_script_label_valid],0
+%ifdef ASPECT_GET_DISPLAY
+ or ax,ax
+ jnz .field_bridge_failed
+ pop ax
+ retf
+.field_bridge_failed:
+ add sp,2
+%endif
  retf
 
 terminal_render_validate:
@@ -294,6 +321,32 @@ render_body:
  mov ax,[cs:render_caller_ds]
  cmp ax,[cs:render_child_ds]
  jne .state
+%ifdef ASPECT_GET_DISPLAY
+ call field_client_check
+ or ax,ax
+ jnz .done
+ cmp di,21
+ jb .field_competing
+ cmp di,26
+ jbe .field
+.field_competing:
+ call field_owned
+ or ax,ax
+ jz .field_admitted
+ cmp di,5
+ je .state
+ cmp di,8
+ je .state
+ cmp di,9
+ je .state
+ cmp di,11
+ je .state
+ cmp di,12
+ je .state
+ cmp di,20
+ je .state
+.field_admitted:
+%endif
 %ifdef ASPECT_NOTICE_INPUT
  cmp di,14
  je .mouse_policy
@@ -782,6 +835,9 @@ render_body:
  pop bx
  or ax,ax
  jnz .done
+%ifdef ASPECT_GET_DISPLAY
+ push bx
+%endif
  sub sp,4
  mov di,sp
  push di
@@ -798,6 +854,10 @@ render_body:
  mov [cs:render_callback],ax
  pop ax
  mov [cs:render_callback+2],ax
+%ifdef ASPECT_GET_DISPLAY
+ pop bx
+ mov [cs:render_client_offset],bx
+%endif
  mov ax,[cs:render_caller_ds]
  mov [cs:render_child_ds],ax
  mov ax,[cs:render_caller_psp]
@@ -808,12 +868,44 @@ render_body:
  ret
 .client_bad:
  add sp,4
+%ifdef ASPECT_GET_DISPLAY
+ pop bx
+%endif
  ret
 .end:
+%ifdef ASPECT_GET_DISPLAY
+ call field_retire
+ push ax
+%endif
  call terminal_script_window_close
  mov word [cs:render_attached],0
+%ifdef ASPECT_GET_DISPLAY
+ pop ax
+ or ax,0xe000 ; END always retired the renderer, even on field cleanup error.
+%else
  xor ax,ax
+%endif
  ret
+%ifdef ASPECT_GET_DISPLAY
+.field:
+ cmp di,26
+ jne .field_serial
+ cmp bx,1
+ je .field_call
+.field_serial:
+ cmp word [_script_handoff+22],0
+ jne .serial
+.field_call:
+ mov ax,di
+ sub ax,21
+ call far terminal_script_field
+ cmp di,26
+ jne .done
+ cmp bx,1
+ jne .done
+ or ax,0xe000 ; Explicit error retirement executed; plain errors mean refusal.
+ ret
+%endif
 .abort_confirm:
  cmp bx,4
  ja .operand
@@ -1080,6 +1172,61 @@ render_snapshot_owned: dw 0
 render_program_begins: dw 0
 render_program_ends: dw 0
 render_program_refreshes: dw 0
+%endif
+
+%ifdef ASPECT_GET_DISPLAY
+render_client_offset: dw 0
+; Authenticate every capability21 call, not only BEGIN: current descriptor,
+; main child MCB, client magic/version/token and unchanged callback identity.
+field_client_check:
+ push bx
+ push di
+ call far terminal_render_validate
+ or ax,ax
+ jnz .invalid
+ sub sp,4
+ mov di,sp
+ push di
+ push word [cs:render_token]
+ push word [cs:render_client_offset]
+ push word [cs:render_child_ds]
+ push word [process_psp]
+ push word [cs:render_child_psp]
+ call _aspect_render_client_admit
+ add sp,12
+ or ax,ax
+ jnz .bad_client
+ pop ax
+ cmp ax,[cs:render_callback]
+ pop ax
+ jne .invalid
+ cmp ax,[cs:render_callback+2]
+ jne .invalid
+ xor ax,ax
+ jmp .done
+.bad_client:
+ add sp,4
+.invalid:
+ mov ax,10
+.done:
+ pop di
+ pop bx
+ ret
+; Cross-bank owner query, without a child callback or foreign DS transition.
+field_owned:
+ push es
+ mov ax,seg terminal_script_field_active
+ mov es,ax
+ mov ax,[es:terminal_script_field_active]
+ pop es
+ ret
+field_retire:
+ push bx
+ mov ax,5
+ mov bx,1
+ call far terminal_script_field
+ pop bx
+ ret
 %endif
 
 SEGMENT _DATA public class=DATA use16

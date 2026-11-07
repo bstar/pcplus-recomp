@@ -13,6 +13,7 @@ def main(extension=None):
     # Default production inputs/flags and opcode coverage remain unchanged.
     output=extension['output'] if extension else OUT
     feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS','-DASPECT_EXTERNAL_UNWIND'] if extension else []
+    if extension and extension.get('get_display'):feature_flags+=['-DASPECT_GET_DISPLAY']
     if extension and extension.get('emulate_vm'):feature_flags+=['-DASPECT_EMULATE_VM']
     if extension and extension.get('alarm_vm'):feature_flags+=['-DASPECT_ALARM_VM','-DASPECT_ALARM_SERVICE','-DASPECT_DEFER_NUMERIC_BANKS']
     if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
@@ -130,6 +131,7 @@ def main(extension=None):
                   diagnostic_program_result_probe=bool(extension and extension.get('program_result_probe')),
                   experimental_snapshot_lease=bool(extension and extension.get('snapshot_lease')),
                   experimental_alarm_VM=bool(extension and extension.get('alarm_vm')),
+                  experimental_get_display=bool(extension and extension.get('get_display')),
                   experimental_emulate_VM=bool(extension and extension.get('emulate_vm')),
                   diagnostic_lease_fault_phase=extension.get('lease_fault_phase') or 0 if extension else 0,
                   diagnostic_lease_fault_foreign_ds=bool(extension and extension.get('lease_fault_foreign_ds')),

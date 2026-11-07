@@ -17,6 +17,9 @@ static unsigned policy_queried,policy_wait,policy_received;
 static unsigned keyboard_queried,keyboard_wait,keyboard_received;
 static unsigned key_wait,key_policy_read,key_window;
 static unsigned window_owned,window_wait,window_received,confirm_owned;
+#ifdef ASPECT_GET_DISPLAY
+static unsigned field_owned,field_wait;
+#endif
 extern unsigned runtime_set_duplex_changed,runtime_serial_local_echo;
 static unsigned label_wait,label_next,label_done;
 static unsigned char script_label[13];
@@ -36,6 +39,9 @@ unsigned __cdecl aspect_render_program_active(void){return program_owned;}
 unsigned __cdecl aspect_render_program_begin(unsigned save_screen)
 {
  unsigned result;
+#ifdef ASPECT_GET_DISPLAY
+ if(field_owned || field_wait)return ASPECT_RUN_STATE;
+#endif
  if(!attached || program_owned || confirm_owned || policy_wait || keyboard_wait || key_wait || label_wait ||
     save_screen>1 || aspect_render_client_check())return ASPECT_RUN_STATE;
  if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
@@ -136,6 +142,9 @@ unsigned __cdecl aspect_render_prepare(unsigned offset,unsigned segment,unsigned
  aspect_render_client_record.callback_offset=aspect_render_callback_offset();
  aspect_render_client_record.callback_segment=aspect_render_code_segment();
  callback_error=label_wait=confirm_owned=0;aspect_render_policy_reset();
+#ifdef ASPECT_GET_DISPLAY
+ field_owned=field_wait=0;
+#endif
  return aspect_render_client_prepare();
 }
 unsigned __cdecl aspect_render_attach(void)
@@ -158,16 +167,61 @@ unsigned __cdecl aspect_render_emit(unsigned byte)
 unsigned __cdecl aspect_render_finish(void)
 {
  unsigned result;
+#ifdef ASPECT_GET_DISPLAY
+ if(field_wait)return ASPECT_RUN_STATE;
+#endif
  if(!attached)return 0;
  if(service_check())return ASPECT_RUN_STATE;
+#ifdef ASPECT_GET_DISPLAY
+ field_wait=1;callback_error=0;
+ result=aspect_render_request(ASPECT_RENDER_END,0);
+ field_wait=0;
+ if(service_check())return ASPECT_RUN_STATE;
+ if((result&0xfff0U)==0xe000U && (result&15U)<=ASPECT_RUN_SERIAL){
+  attached=window_owned=confirm_owned=field_owned=field_wait=0;
+  result&=15U;return result?result:callback_error;
+ }
+ return result?typed(result):ASPECT_RUN_STATE;
+#else
  result=typed(aspect_render_request(ASPECT_RENDER_END,0));
  if(!result){attached=0;window_owned=confirm_owned=0;}
  return result;
+#endif
 }
+#ifdef ASPECT_GET_DISPLAY
+unsigned __cdecl aspect_render_field(unsigned operation,unsigned value)
+{
+ unsigned result;
+ if(operation>5)return ASPECT_RUN_OPERAND;
+ if(RESPONSE_INVALID() || field_wait || window_owned || confirm_owned ||
+    policy_wait || keyboard_wait || key_wait || label_wait || window_wait)return ASPECT_RUN_STATE;
+ if(operation==0){if(field_owned)return ASPECT_RUN_STATE;}
+ else if(operation!=5 && !field_owned)return ASPECT_RUN_STATE;
+ if(operation==5 && value>1)return ASPECT_RUN_OPERAND;
+ if(aspect_serial_active!=1 && !(operation==5 && value==1))return ASPECT_RUN_SERIAL;
+ field_wait=1;callback_error=0;
+ result=aspect_render_request(ASPECT_RENDER_FIELD_BEGIN+operation,value);
+ field_wait=0;if(service_check())return ASPECT_RUN_STATE;
+ if(operation==5 && value==1){
+  if((result&0xfff0U)==0xe000U && (result&15U)<=ASPECT_RUN_SERIAL){field_owned=0;result&=15U;return result?result:callback_error;}
+  return result?typed(result):ASPECT_RUN_STATE;
+ }
+ if(operation==4){
+  if((result&0xff00U)==0xf000U)return callback_error?callback_error:result;
+  return result?typed(result):ASPECT_RUN_STATE;
+ }
+ result=typed(result);
+ if(!result){if(operation==0)field_owned=1;else if(operation==5)field_owned=0;}
+ return result?result:callback_error;
+}
+#endif
 #if defined(ASPECT_EMULATE_VM)
 unsigned __cdecl aspect_render_emulate(unsigned selector)
 {
  unsigned result;
+#ifdef ASPECT_GET_DISPLAY
+ if(field_owned || field_wait)return ASPECT_RUN_STATE;
+#endif
  if(RESPONSE_INVALID() || confirm_owned || window_owned ||
     policy_wait || keyboard_wait || key_wait || label_wait || window_wait)return ASPECT_RUN_STATE;
  if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
@@ -204,6 +258,9 @@ unsigned __cdecl aspect_render_policy_inherit(void)
 unsigned __cdecl aspect_render_break_notice(unsigned end)
 {
  unsigned result;
+#ifdef ASPECT_GET_DISPLAY
+ if(field_owned || field_wait)return ASPECT_RUN_STATE;
+#endif
  RESPONSE_READY(result);
  if(end>1)return ASPECT_RUN_OPERAND;
  callback_error=0;
@@ -226,6 +283,9 @@ unsigned __cdecl aspect_render_keyboard_inherit(void)
 unsigned __cdecl aspect_render_key(unsigned key)
 {
  unsigned result;
+#ifdef ASPECT_GET_DISPLAY
+ if(field_owned || field_wait)return ASPECT_RUN_STATE;
+#endif
  if(RESPONSE_INVALID() || confirm_owned || key_wait)return ASPECT_RUN_STATE;
  if(!aspect_serial_active)return ASPECT_RUN_SERIAL;
  callback_error=key_policy_read=window_received=0;key_window=key==0x2c00;key_wait=1;
@@ -238,6 +298,9 @@ unsigned __cdecl aspect_render_window_active(void){return attached && window_own
 unsigned __cdecl aspect_render_window_service(void)
 {
  unsigned result;
+#ifdef ASPECT_GET_DISPLAY
+ if(field_owned || field_wait)return ASPECT_RUN_STATE;
+#endif
  if(RESPONSE_INVALID() || window_wait || key_wait)return ASPECT_RUN_STATE;
  if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
  callback_error=window_received=0;window_wait=1;
@@ -249,6 +312,9 @@ unsigned __cdecl aspect_render_window_service(void)
 unsigned __cdecl aspect_render_confirm(unsigned operation)
 {
  unsigned result;
+#ifdef ASPECT_GET_DISPLAY
+ if(field_owned || field_wait)return ASPECT_RUN_STATE;
+#endif
  if(operation>4)return ASPECT_RUN_OPERAND;
  if(RESPONSE_INVALID() || window_wait || key_wait || label_wait || policy_wait || keyboard_wait)
   return ASPECT_RUN_STATE;
@@ -290,6 +356,9 @@ unsigned __cdecl aspect_render_script_label(const char *path,unsigned duplex)
 static unsigned callback_dispatch(unsigned operation,unsigned value)
 {
  unsigned result;
+#ifdef ASPECT_GET_DISPLAY
+ if(field_wait){callback_error=ASPECT_RUN_STATE;return operation==ASPECT_RENDER_RAW_WAIT || operation==ASPECT_RENDER_RAW_NOW?65535U:callback_error;}
+#endif
 #if defined(ASPECT_EXTERNAL_RENDER)
  if(program_owned){callback_error=ASPECT_RUN_STATE;return operation==ASPECT_RENDER_RAW_WAIT || operation==ASPECT_RENDER_RAW_NOW?65535U:callback_error;}
 #endif

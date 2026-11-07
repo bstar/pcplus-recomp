@@ -110,6 +110,9 @@ global _field_saved_flags
 _field_saved_flags: dw 0
 global _field_abi_bad
 _field_abi_bad: dw 0
+global script_break_ui_active,_field_break_owner
+script_break_ui_active:
+_field_break_owner: dw 0
 global screen_columns,_field_screen_columns
 screen_columns:
 _field_screen_columns: dw 80

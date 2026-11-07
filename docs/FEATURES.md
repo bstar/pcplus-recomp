@@ -14,8 +14,11 @@ WHEN action bodies and the parent receive/display entry are modeled. Three
 ALARM regressions pass; GET-disabled ALARM matches its pre-change source build.
 The [parent field display controller](ASPECT_GET_DISPLAY.md) passes103 actual
 DOS video/native-cursor cases, all255 nonzero CP437 byte values and an exact
-nine-input source rebuild. Parent admission is modeled; RPC publication,
-live child/serial composition and application memory/package gates remain open.
+nine-input source rebuild. The optional [capability21 RPC](ASPECT_GET_RPC.md)
+now passes35 actual full-parent bridge replays,271 DOS child-client checks and
+a752-input exact public-source reproduction. The complete experimental child
+also links; independent tests still model their peer services. Actual child/serial
+composition, native abort lifetime and application memory/package gates remain open.
 The field/input owner is not integrated: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.

@@ -1,0 +1,108 @@
+{
+  "checkpoint_verified": true,
+  "experimental_RPC_published": true,
+  "capability": 21,
+  "GET_opcode_enabled": false,
+  "actual_parent_child_pair_verified": false,
+  "physical_verified": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "original_inputs": [],
+  "sources": {
+    "src/aspect/resident_render.c": "1aae2d18b6214a2ab6a43fa2e1e94793dacb91999caee6dc529de646a96c5a4e",
+    "src/aspect/resident_render.h": "5e3dd6161a8d3766fd9924772fddd5cfecfdef9459fcfc89c70688d612a49f95",
+    "src/terminal/aspect_renderer.asm": "010d3829929f7e05dc1f5d2a1f17cefa377e535e040827d02e94b382d14ba7dd",
+    "src/terminal/script_field_adapters.asm": "3aaa9bb15b81921169df7a41eeafd4897193238e55d520b950b135d21e475353",
+    "standalone/build_terminal.py": "76b7789bc02592d255b83ac4cea26ff6e814f185ad6255a867673f9130fa6ba0",
+    "standalone/build_aspect_process.py": "98dc2be8a44034bd66c046fdb1f1db7339f9fc8cfa104ca2d1708d2a87132bcb",
+    "standalone/build_aspect_runner.py": "00c0d51ff055f48269d35965d0a4900f080bfd3b44e24da2af00668735153380",
+    "standalone/script_field_bindings.asm": "75ed6abd2ec8cf186f7773a3233eac25d6c16d3a6dbb76e5ab5add25da8499eb",
+    "standalone/script_field_driver.c": "3e1c63568477e94bf842f4b5ae70555a8111afa8018d7db848cdc3acde2b7f5d",
+    "standalone/build_get_display_client.py": "8cdce5e6c763fe094b127fff0fcbcf30fca34ac19a41fde42dcc251540914020",
+    "standalone/get_display_client_driver.c": "b45ddfcc6abda802eba6936604d21de30cb63ce24c061d50be557930ad48c480",
+    "standalone/check_get_display_bridge.py": "fe2559ffa39e3ef79cb6b633211827350412b2c45cc1bada5da525318515e544",
+    "standalone/prove_get_display_bridge.py": "0f4d9c6a3a965605e5087229c4c274102aff127d36b82604f61fcfeef6e86a6a",
+    "docs/ASPECT_GET_RPC.md": "95349b900fa1292e984f72200bb9e310680f8e0a9e7dd35aedd6a47c2748e978"
+  },
+  "products": {
+    "parent": {
+      "sha256": "c393a32b64504c64553050f47b1c0ed262f446d472801479ade30783992c73e2",
+      "manifest_sha256": "d316a11e3f74e8fd8c3d3c9ad05395b30f5d6adc5d0c03cf25f18089f6656ddc"
+    },
+    "child": {
+      "sha256": "767221e1c18662b22b1fa2d40b47375ac9c9f1936f94061ee356a17ca971e7ef",
+      "manifest_sha256": "30b54406a8b445cee314f2509cf2ae6e0c2f5f2f384fbd8fa0903ac0c449b2d1"
+    },
+    "disabled_parent": {
+      "sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "manifest_sha256": "bc6c3cdfe5e78742d2106af25c22565904386c54ed0f7f62b6317c9f52f9e5a7"
+    },
+    "disabled_child": {
+      "sha256": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+      "manifest_sha256": "40f9b8cb32adbb79b438f553e0a1469bb4abef78ad3435f88145c43b904411bf"
+    }
+  },
+  "evidence": {
+    "build/get-display-rpc-release-check-20261107/result.json": {
+      "sha256": "643c3854c11837de047b40235a3b70d62a30ca510dc0cf95ad4d74142d046674",
+      "passed": true,
+      "parent_sha256": "c393a32b64504c64553050f47b1c0ed262f446d472801479ade30783992c73e2",
+      "original_inputs": [],
+      "scope": "Execute capability21 parent bridge, allocation policy and field controller. Actual linked full parent renderer/bridge/allocation validator/field/adapters/native cursor/parser. Authored child callback never executes. BIOS, DOS PSP, UART hardware modeled; no actual child EXE/interpreter, live serial/BBS, whole package or physical acceptance.",
+      "cases": 35
+    },
+    "build/get-display-client-fixed-20261107/result.json": {
+      "sha256": "d02aa98ff96899ce657eac7aa88dbb49ff636e1b5812179eae9650bd10cb0c0a",
+      "passed": true,
+      "original_inputs": [],
+      "binary_sha256": "3f5dec67e88db05af848a3291a83e3520aa726c825dd27c3b592d1f8e3964c46",
+      "transcript": "PASS FIELD CLIENT 271 checks; retirement, owners, callbacks, quarantine",
+      "scope": "Real DOS child-client lifecycle tests with controlled parent scalar responses. Actual source client in DOS8086. Parent request/client-stack validation/serial boundaries are controlled services; no real resident bridge/parent/child EXE integration or physical acceptance."
+    },
+    "build/get-display-rpc-source-20261107/result.json": {
+      "sha256": "fcdb18d1ee00bba834ae0a1cacaabc2a79ace33d4662ba4853d0ce52719a43a6",
+      "passed": true,
+      "original_inputs": [],
+      "ancestor_git_unavailable": true,
+      "source_count": 752,
+      "parent_sha256": "c393a32b64504c64553050f47b1c0ed262f446d472801479ade30783992c73e2",
+      "client_sha256": "3f5dec67e88db05af848a3291a83e3520aa726c825dd27c3b592d1f8e3964c46",
+      "bridge_cases": 35,
+      "client_checks": 271,
+      "scope": "Rebuild experimental GET bridge and client tests from declared public sources. Exact parent and diagnostic client EXEs and reports. Independent parent CPU replay and DOS client with modeled peer services; not actual pair/interpreter GET, connected serial/BBS, package or physical acceptance."
+    },
+    "build/get-display-rpc-field-regression-20261107/result.json": {
+      "sha256": "09abd9eaee2b4fb289a00548fb22cb509e572f051b5276c16bd7cc8112a6b3ce",
+      "passed": true,
+      "original_inputs": [],
+      "disabled_objects_have_no_segments": true,
+      "binary_sha256": "f05a9c5b6152fb672c207cdfa7113bb19f7fd8bb6be4882b1d79a1c8c9c08097",
+      "CP437_bytes": 255,
+      "transcript": "PASS SCRIPT FIELD 103 cases; 805134 checks; 255 CP437 bytes, persistent video, native cursor, ABI",
+      "cpu": "8086",
+      "scope": "Source-only parent field staging, actual DOS video and native cursor checks. Opt-in ASPECT_GET_DISPLAY, parent field/adoption adapters with diagnostic segment/class aliases ASPECT_CODE=_TEXT and FARCODE=CODE. Real video/BIOS plus recovered screen_set_cursor/cursor_pack/cursor_output. Parent admission is modeled; no versioned RPC, child/interpreter/serial, whole parent or physical acceptance.",
+      "cases": 103
+    },
+    "build/get-display-rpc-field-source-20261107/result.json": {
+      "sha256": "db6926b57b79140b9c00d9d249899a168783228616e150a8a49d15361e6afcae",
+      "passed": true,
+      "original_inputs": [],
+      "ancestor_git_unavailable": true,
+      "source_count": 9,
+      "binary_sha256": "f05a9c5b6152fb672c207cdfa7113bb19f7fd8bb6be4882b1d79a1c8c9c08097",
+      "CP437_bytes": 255,
+      "transcript": "PASS SCRIPT FIELD 103 cases; 805134 checks; 255 CP437 bytes, persistent video, native cursor, ABI",
+      "scope": "Repeat parent field video/cursor checks from only declared public sources. Exact diagnostic EXE and complete103-case DOS report; no originals/private data/prior objects/ancestor Git. Actual video/BIOS/native cursor, modeled parent admission, diagnostic adapter segment/class aliases. Not RPC/interpreter/whole-parent/physical acceptance.",
+      "cases": 103
+    }
+  },
+  "remaining": [
+    "Actual child EXE and parent GET execution",
+    "Native abort checkpoint and buffer/destination lifetime",
+    "Serviced receive/parser/repaint composition",
+    "FLOAT.RTE",
+    "Both compiler grammars and opcode49",
+    "Whole application memory/package gates",
+    "Connected serial/BBS and physical acceptance"
+  ]
+}
