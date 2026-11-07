@@ -19,10 +19,11 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False):
+def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False,meta_editor=False):
     assert not precompile or not (setup or splash_only or after_child_view)
     assert not chat_help or not (setup or splash_only or after_child_view or precompile)
     manifest = json.loads((package / 'manifest.json').read_text())
+    assert not meta_editor or (manifest.get('experimental_meta_editor') and not (setup or splash_only or after_child_view or precompile or chat_help or native_line_port))
     assert not native_line_port or (manifest.get('experimental_line_port_overlay') and not (setup or splash_only or after_child_view or precompile or chat_help))
     assert not chat_help or manifest.get('experimental_chat_help')
     dos_directory=validate_dos_directory(manifest.get('dos_directory','PCPLUSSE'))
@@ -92,16 +93,23 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         source=source.replace("name: db 'HELPUI.BIN',0","name: db 'C:\\HELPUI.BIN',0")
         (drive/'HELPWAT.ASM').write_text(source)
         subprocess.run(['nasm','-fbin',str(drive/'HELPWAT.ASM'),'-o',str(drive/'HELPWAT.COM')],check=True)
-    if native_line_port:
+    if native_line_port or meta_editor:
         source=(ROOT/'standalone/path_dialog_watch.asm').read_text()
         begin=source.index(' cmp word [es:806]');end=source.index('%if WATCH_KIND',begin)
-        source=source[:begin]+''' cmp byte [es:356],0xc9
+        marker=''' cmp byte [es:522],'M'
+ jne .done
+ cmp byte [es:524],'E'
+ jne .done
+ cmp byte [es:532],'K'
+ jne .done
+''' if meta_editor else ''' cmp byte [es:356],0xc9
  jne .done
  cmp byte [es:542],'C'
  jne .done
  cmp byte [es:1000],'B'
  jne .done
-'''+source[end:]
+'''
+        source=source[:begin]+marker+source[end:]
         source=source.replace('D:\\PATHVIEW.BIN','C:\\PATHVIEW.BIN')
         (drive/'LINEWAT.ASM').write_text(source)
         subprocess.run(['nasm','-fbin','-DWATCH_KIND=0',str(drive/'LINEWAT.ASM'),'-o',str(drive/'LINEWAT.COM')],check=True)
@@ -120,17 +128,18 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     if after_child_view:keys=keys.replace('a-x','c-pgup p1200 escape p500 a-x')
     if chat_help:keys='p900 enter p1800 a-o p1500 A B p1000 a-z p2500 escape p1200 escape p1000 a-x'
     if native_line_port:keys='p900 enter p1800 a-p p2200 escape p1000 a-x'
+    if meta_editor:keys='p900 enter p1800 a-m p3000 escape p900 a-z p2500 escape p700 a-x'
     config = ('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\n'
               'cycles=fixed 12000\n[serial]\n'+
               ''.join('serial'+str(n)+'=dummy'+(' irq:'+str(irq)if n==com and irq is not None else '')+'\n'
                       for n in range(1,5))+
               '[mixer]\nnosound=true\n[autoexec]\n@echo off\n'
               'mount c "' + str(drive) + '"\nc:\nset PCPLUS=C:\\ORIGINAL\n' +
-              ('WATCH T\n' if observe else '')+('LINEWAT T\n' if native_line_port else '')+('HELPWAT T\n' if chat_help else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+('UNLIST\n' if bios_absent else '')+'SNAP B\n'+
+              ('WATCH T\n' if observe else '')+('LINEWAT T\n' if native_line_port or meta_editor else '')+('HELPWAT T\n' if chat_help else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+('UNLIST\n' if bios_absent else '')+'SNAP B\n'+
               ('CD \\'+dos_directory+'\nASPCOMP TEST.ASP\nIF ERRORLEVEL 1 GOTO failed\nCD \\\n' if precompile else '')+
               'ADDKEY ' + keys + '\n'
               'CALL '+dos_root+'\\' + launcher + '.BAT /T:ACTIONS.KEY\n'+
-              ('C:\\STRAT A\n' if strategy else '')+'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n'+('C:\\LINEWAT\n' if native_line_port else '')+('C:\\HELPWAT\n' if chat_help else '')+('C:\\RVIEW\n' if after_child_view else '')+('C:\\WATCH\n' if observe else '')+
+              ('C:\\STRAT A\n' if strategy else '')+'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n'+('C:\\LINEWAT\n' if native_line_port or meta_editor else '')+('C:\\HELPWAT\n' if chat_help else '')+('C:\\RVIEW\n' if after_child_view else '')+('C:\\WATCH\n' if observe else '')+
               'if errorlevel 1 goto failed\necho RETURNED>C:\\RETURN.TXT\nexit\n'
               ':failed\necho FAIL>C:\\FAIL.TXT\nexit\n')
     (out / 'dosbox.conf').write_text(config)
@@ -157,12 +166,13 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     assert b'PCPLUS=C:\\ORIGINAL' in env and not any(s.startswith(b'LOC_PCPLUS=') for s in env)
     for leaf, data in fixtures.items():
         assert (app / leaf).read_bytes() == data, leaf
-    if native_line_port:
+    if native_line_port or meta_editor:
         captured=(drive/'PATHVIEW.BIN').read_bytes();assert len(captured)==4071
         magic,flags,ticks=struct.unpack_from('<3H',captured)
         assert magic==0x5044 and flags==3 and ticks>2
         text=captured[6:4006:2]
-        assert b'CURRENT SETTINGS:' in text and b'Esc) Exit   Alt-S) Save and Exit  YOUR CHOICE:' in text
+        if meta_editor:assert text[3*80+20:3*80+31]==b' META KEYS '
+        else:assert b'CURRENT SETTINGS:' in text and b'Esc) Exit   Alt-S) Save and Exit  YOUR CHOICE:' in text
         assert not (app/'TEST.ASX').exists() and not (app/'RESULT.BIN').exists()
     elif chat_help:
         captured=(drive/'HELPUI.BIN').read_bytes();assert len(captured)==24020
@@ -179,7 +189,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, dos_directory=dos_directory,cpu='8086', port=com, io_base=base, resident_observer=observe,
                   irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,chat_help=chat_help,
-                  native_line_port=native_line_port,
+                  native_line_port=native_line_port,meta_editor=meta_editor,
                   packaged_ASPECT_clock_alarm_exercised=new_commands,
                   packaged_ASPECT_EMULATE_exercised=emulate,
                   package_manifest_sha256=sha(package / 'manifest.json'),
@@ -187,12 +197,12 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
                   private_fixture_sha256={leaf:sha(app/leaf) for leaf in fixtures},
                   checks=['launcher returns to DOS', 'PCPLUS environment restored',
                           f'COM{com}/PIC/IRQ vectors restored', 'private PRM/DIR/KEY/KBD/XLT/FON unchanged',
-                          'packaged binaries unchanged'] + (['actual packaged Alt-P loads its sibling module and returns'] if native_line_port else ['actual packaged Chat/PCHELP round trip retains AB and exact frame/cursor'] if chat_help else ['actual magenta splash captured by independent timer'] if observe else
+                          'packaged binaries unchanged'] + (['actual packaged Alt-M loads its sibling module and returns'] if meta_editor else ['actual packaged Alt-P loads its sibling module and returns'] if native_line_port else ['actual packaged Chat/PCHELP round trip retains AB and exact frame/cursor'] if chat_help else ['actual magenta splash captured by independent timer'] if observe else
                           [('DOS precompilation produces exact ASX' if precompile else 'nested DOS source compilation produces exact ASX'), 'script writes expected result'])+(['DOS allocation strategy restored'] if strategy else [])+(['frozen-history viewer reopens after nested child return'] if after_child_view else []),
                   sources={n: sha(ROOT / n) for n in ['standalone/test_special_package_dos.py',
                            'standalone/special_watch.asm', 'standalone/test_terminal.py',
                            'standalone/check_setup_model.py', 'standalone/test_directory_key_bindings_dos.py',
-                           'src/aspect/compiler.py']+(['standalone/path_dialog_watch.asm'] if native_line_port else [])+(['standalone/global_help_watch.asm'] if chat_help else [])+(['standalone/dos_strategy_sample.asm'] if strategy else [])+(['standalone/redisplay_watch.asm'] if after_child_view else [])},
+                           'src/aspect/compiler.py']+(['standalone/path_dialog_watch.asm'] if native_line_port or meta_editor else [])+(['standalone/global_help_watch.asm'] if chat_help else [])+(['standalone/dos_strategy_sample.asm'] if strategy else [])+(['standalone/redisplay_watch.asm'] if after_child_view else [])},
                   artifacts={str(p.relative_to(out)): sha(p) for p in out.rglob('*') if p.is_file()},
                   scope=__doc__ + ' Dummy serial ports; no live BBS, card write or physical modem test.')
     (out / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
@@ -212,11 +222,12 @@ def main():
     p.add_argument('--bios-absent',action='store_true',help='Clear the selected BIOS UART entry before launch; keep actual UART present')
     p.add_argument('--chat-help',action='store_true',help='Exercise packaged Chat and PCHELP with retained input/frame/cursor')
     p.add_argument('--native-line-port',action='store_true',help='Observe packaged Alt-P loading its matching sibling module')
+    p.add_argument('--meta-editor',action='store_true',help='Observe packaged Alt-M loading its matching sibling module')
     args = p.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     assert not (args.setup and args.splash_only)
-    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port)
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port,args.meta_editor)
 
 
 if __name__ == '__main__':

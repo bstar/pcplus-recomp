@@ -13,8 +13,12 @@ def main():
  assert r['kind']=='reviewed-source-only-connection-candidate' and r['dos_directory']=='PCPLUS'
  assert len(r['terminal_flags'])==len(set(r['terminal_flags'])) and all(s.startswith('--') for s in r['terminal_flags'])
  assert ('--line-port' in r['terminal_flags'])==('--line-port-overlay' in r['terminal_flags']),'Package native Alt-P only with its tested transient module'
+ shared='--meta-shared-runtime' in r['terminal_flags']
+ if shared:
+  assert '--line-port-overlay' in r['terminal_flags'] and 'PCMETA.OVL' in r['expected_files'],'Shared runtime requires matched Meta and Line/Port payloads'
+ else:assert 'PCMETA.OVL' not in r['expected_files'],'Undeclared Meta payload'
  if '--line-port-overlay' in r['terminal_flags']:
-  expected=json.loads((ROOT/'standalone/line_port_profile.json').read_text())+['--line-port-overlay']
+  expected=json.loads((ROOT/'standalone/line_port_profile.json').read_text())+['--line-port-overlay']+(['--meta-shared-runtime'] if shared else [])
   assert r['terminal_flags']==expected,'Alt-P package must use the tested composed profile'
  aspect_options=r.get('aspect_options',{})
  assert set(aspect_options)<=set(['snapshot_lease','defer_script_buffers','alarm_vm','emulate_vm']) and all(type(v) is bool for v in aspect_options.values())
@@ -34,8 +38,9 @@ def main():
   if '--aspect-alarm-policy' in r['terminal_flags']:profile+=['--aspect-alarm-policy']
   if '--aspect-emulate-policy' in r['terminal_flags']:profile+=['--aspect-emulate-policy']
   if '--line-port-overlay' in r['terminal_flags']:profile+=['--line-port','--line-port-overlay']
+  if shared:profile+=['--meta-shared-runtime']
   assert r['terminal_flags']==profile,'Global Help recipe must use its tested composed profile'
-  run(['standalone/build_global_help_profile.py','--output',str(terminal)]+[flag for flag in ('--chat-help','--aspect-alarm-policy','--aspect-emulate-policy','--line-port-overlay') if flag in r['terminal_flags']])
+  run(['standalone/build_global_help_profile.py','--output',str(terminal)]+[flag for flag in ('--chat-help','--aspect-alarm-policy','--aspect-emulate-policy','--line-port-overlay','--meta-shared-runtime') if flag in r['terminal_flags']])
  else:run(['standalone/build_terminal.py',*r['terminal_flags'],'--output-dir',str(terminal)])
  code="import sys,json;from pathlib import Path;sys.path.insert(0,'standalone');from build_aspect_process import main;main(parent_render=True,output=Path(sys.argv[1]),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,**json.loads(sys.argv[2]))"
  run(['-c',code,str(runner),json.dumps(aspect_options,sort_keys=True)])

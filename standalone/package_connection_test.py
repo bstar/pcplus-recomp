@@ -68,6 +68,22 @@ def terminal_companions(binary,manifest):
         assert manifest.get('experimental_line_port') and manifest['memory_layout']['line_port_overlay_contract_verified']
         assert sha(base/'PCLINE.OVL')==overlay['sha256'],'Alt-P module differs from the matched parent'
         files['PCLINE.OVL']=base/'PCLINE.OVL'
+    meta=manifest.get('meta_editor_overlay')
+    assert bool(meta)==bool(manifest.get('experimental_meta_editor_module')),'Meta module declaration and feature must match'
+    assert not manifest.get('experimental_meta_editor') or meta,'Meta frontend requires its module'
+    if manifest.get('experimental_meta_shared_runtime'):
+        assert meta and overlay and manifest.get('experimental_meta_editor'),'Shared runtime requires both matched modules and the Meta frontend'
+    if meta:
+        from terminal_memory import inspect_terminal_memory
+        layout=inspect_terminal_memory(binary,base/'terminal.map')
+        assert layout==manifest['memory_layout'],'Meta parent layout differs from its verified manifest'
+        assert not meta.get('original_inputs')
+        assert layout['meta_loader_retained'] and layout['meta_overlay_DGROUP_bytes']==0
+        assert layout['meta_overlay_bytes']==meta['bank_bytes'] and layout['meta_overlay_fixups']==meta['relocations']
+        assert layout['meta_editor_UI_bound']==bool(manifest.get('experimental_meta_editor'))
+        assert layout['meta_shared_runtime']==bool(manifest.get('experimental_meta_shared_runtime'))
+        assert sha(base/'PCMETA.OVL')==meta['sha256'],'Meta module differs from the matched parent'
+        files['PCMETA.OVL']=base/'PCMETA.OVL'
     if manifest.get('experimental_chat_loader'):
         module=manifest['chat_loader']['module']
         assert sha(base/'PCCHAT.OVL')==module['binary_sha256']
@@ -193,6 +209,12 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
                 'Alt-S saves the line prefix and applies it. COM1 through COM4.\n'
                 'Keep the matching PCLINE.OVL beside TERMINAL.EXE. Missing or\n'
                 'mismatched modules are refused; do not mix package versions.\n'))
+    if terminal.get('experimental_meta_editor'):
+        with (payload/'README.TXT').open('ab') as guide:
+            guide.write(dos_text('\nAlt-M: Meta Keys. Enter edits; Escape returns to the terminal.\n'
+                'Keep the matching PCMETA.OVL beside TERMINAL.EXE. The shared\n'
+                'command reference also needs this module. Update all package\n'
+                'companions together; do not mix parent and module versions.\n'))
     for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
     record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
@@ -221,6 +243,8 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
     for flag in ('experimental_chat_loader','experimental_global_help','experimental_chat_help'):
         if terminal.get(flag):record[flag]=True
     if terminal.get('experimental_line_port_overlay'):record['experimental_line_port_overlay']=True
+    for flag in ('experimental_meta_editor_module','experimental_meta_editor','experimental_meta_shared_runtime'):
+        if terminal.get(flag):record[flag]=True
     (output/'manifest.json').write_text(json.dumps(record,indent=2)+'\n');return record
 
 def main():

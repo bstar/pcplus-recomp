@@ -15,6 +15,10 @@ def main():
  if m.get('experimental_chat_loader'):allowed.add('PCCHAT.OVL')
  if m.get('experimental_global_help'):allowed.update(('PCHELP.RTE','PCPLUS.HLP'))
  if m.get('experimental_line_port_overlay'):allowed.add('PCLINE.OVL')
+ assert not m.get('experimental_meta_editor') or m.get('experimental_meta_editor_module'),'Meta frontend requires its module'
+ if m.get('experimental_meta_shared_runtime'):
+  assert m.get('experimental_meta_editor') and m.get('experimental_meta_editor_module') and m.get('experimental_line_port_overlay'),'Incomplete shared runtime package'
+ if m.get('experimental_meta_editor_module'):allowed.add('PCMETA.OVL')
  assert set(m['files'])==allowed,'Only declared public application files may be archived'
  for n,h in m['files'].items():assert sha(package/directory/n)==h,n
  out.mkdir(parents=True)
