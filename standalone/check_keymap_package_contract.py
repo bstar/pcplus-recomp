@@ -28,16 +28,17 @@ def main():
             ('wrong-maximum-size','maximum_KBD_bytes',31285),('padding-allowed','preserves_file_length',False),
             ('wrong-recovery-exit','recovery_exit',0),('wrong-arguments','arguments','filename'),
             ('wrong-new-size','new_file_profiles',7),('implicit-create','new_file_creation','on-open'),
-            ('replace-open-errors','missing_leaf_only',False)]:
+            ('replace-open-errors','missing_leaf_only',False),('wrong-help-context','help_context',41),
+            ('extra-help-process','help_placement','external'),('wrong-help-resource','help_resource','OTHER.HLP')]:
         profile=copy.deepcopy(reviewed);profile[field]=value
         try:reviewed_keymap_profile(profile);accepted=True
         except (AssertionError,KeyError):accepted=False
         assert not accepted,name
         rows.append(dict(case=name,accepted=False))
     fixture=out/'helper';fixture.mkdir();binary=fixture/'PCKEYMAP.EXE'
-    for name in ('valid','disabled','missing-selection','undeclared','missing-binary','missing-proof','corrupt','forged-proof-hash','not-passed','original-input','stale-source','foreign-source','non-source'):
+    for name in ('valid','disabled','missing-selection','undeclared','missing-binary','missing-proof','corrupt','forged-proof-hash','not-passed','original-input','stale-source','foreign-source','non-source','diagnostic-helper','missing-help-owner'):
         proof=copy.deepcopy(original);binary.write_bytes(blob)
-        selected=binary;parent={'experimental_keymap_editor':True}
+        selected=binary;parent={'experimental_keymap_editor':True,'experimental_global_help':True}
         if name=='disabled':selected=None;parent={}
         elif name=='missing-selection':selected=None
         elif name=='undeclared':parent={}
@@ -46,6 +47,8 @@ def main():
             binary.write_bytes(bytes([blob[0]^1])+blob[1:])
             if name=='forged-proof-hash':proof['binary_sha256']=sha(binary)
         elif name=='not-passed':proof['passed']=False
+        elif name=='diagnostic-helper':proof['diagnostic_build']=True
+        elif name=='missing-help-owner':parent.pop('experimental_global_help')
         elif name=='original-input':proof['original_inputs']=['original.exe']
         elif name=='stale-source':proof['sources'][next(iter(proof['sources']))]='0'*64
         elif name=='foreign-source':proof['sources']['../outside.py']='0'*64
@@ -59,7 +62,7 @@ def main():
         if name=='valid':assert files['PCKEYMAP.EXE'].read_bytes()==blob
         if name=='disabled':assert files=={}
         rows.append(dict(case=name,accepted=accepted))
-    for name in ('archive-missing','archive-corrupt','archive-undeclared','archive-forged-hash','archive-wrong-contract'):
+    for name in ('archive-missing','archive-corrupt','archive-undeclared','archive-forged-hash','archive-wrong-contract','archive-help-undeclared'):
         folder=out/name;shutil.copytree(package,folder)
         m=json.loads((folder/'manifest.json').read_text());leaf=folder/m['dos_directory']/'PCKEYMAP.EXE'
         if name=='archive-missing':del m['files']['PCKEYMAP.EXE']
@@ -67,6 +70,7 @@ def main():
             leaf.write_bytes(b'wrong helper')
             if name=='archive-forged-hash':m['files']['PCKEYMAP.EXE']=m['products']['PCKEYMAP.EXE']['binary_sha256']=sha(leaf)
         elif name=='archive-undeclared':m.pop('experimental_keymap_editor')
+        elif name=='archive-help-undeclared':m.pop('experimental_global_help')
         else:m['products']['PCKEYMAP.EXE']['contract']+=1
         (folder/'manifest.json').write_text(json.dumps(m))
         target=out/(name+'-zip')

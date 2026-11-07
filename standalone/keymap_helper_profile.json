@@ -1,8 +1,8 @@
 {
   "kind": "reviewed-source-keymap-helper",
-  "contract": 3,
+  "contract": 4,
   "parent_feature": "experimental_keymap_editor",
-  "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+  "helper_sha256": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
   "arguments": "profile frozen-absolute-KBD-path [/LEGACY]",
   "recovery_exit": 14,
   "profile_bytes": 948,
@@ -12,5 +12,8 @@
   "preserves_file_length": true,
   "new_file_profiles": 33,
   "new_file_creation": "explicit-save",
-  "missing_leaf_only": true
+  "missing_leaf_only": true,
+  "help_context": 17,
+  "help_placement": "embedded-full-viewer",
+  "help_resource": "PCPLUS.HLP"
 }

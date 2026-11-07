@@ -105,14 +105,17 @@ def reviewed_keymap_profile(profile=None):
     assert profile['kind']=='reviewed-source-keymap-helper'
     assert profile['parent_feature']=='experimental_keymap_editor'
     assert profile['arguments']=='profile frozen-absolute-KBD-path [/LEGACY]' and profile['recovery_exit']==14
-    assert profile['contract'] in (1,2,3)
+    assert profile['contract'] in (1,2,3,4)
     if profile['contract']==1:assert profile['KBD_bytes']==31284
     else:
         assert profile['profile_bytes']==948 and profile['minimum_profiles']==1 and profile['maximum_profiles']==33
         assert profile['maximum_KBD_bytes']==31284 and profile['preserves_file_length'] is True
-        if profile['contract']==3:
+        if profile['contract']>=3:
             assert profile['new_file_profiles']==33 and profile['new_file_creation']=='explicit-save'
             assert profile['missing_leaf_only'] is True
+        if profile['contract']==4:
+            assert profile['help_context']==17 and profile['help_placement']=='embedded-full-viewer'
+            assert profile['help_resource']=='PCPLUS.HLP'
     return profile
 
 def keymap_companion(terminal,helper):
@@ -122,10 +125,11 @@ def keymap_companion(terminal,helper):
     if not enabled:return {},{},{}
     profile_path=ROOT/'standalone/keymap_helper_profile.json'
     profile=reviewed_keymap_profile()
+    if profile['contract']==4:assert terminal.get('experimental_global_help'),'Mapper Help requires the matched authored HLP package'
     helper=Path(helper).resolve()
     assert helper.is_relative_to(ROOT/'build') and helper.name=='PCKEYMAP.EXE'
     proof_path=helper.with_name('result.json');proof=json.loads(proof_path.read_text())
-    assert proof['passed'] and proof['original_inputs']==[]
+    assert proof['passed'] and proof['original_inputs']==[] and not proof.get('diagnostic_build')
     assert sha(helper)==proof['binary_sha256']==profile['helper_sha256'],'Unreviewed keyboard helper or mismatched bytes'
     sources=dict(proof['sources']);sources[str(profile_path.relative_to(ROOT))]=sha(profile_path)
     for name,digest in sources.items():
@@ -266,11 +270,16 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
                 'The selected profile must exist. Save preserves the file length.\n')+
                 'Do not overwrite private bindings or append invented defaults.\n'
                 'Save updates the selected profile on return. Recovery exit14 stops PCPlus.\n'))
-        if keymap_identity['contract']==3:
+        if keymap_identity['contract']>=3:
             with (payload/'README.TXT').open('ab') as guide:
                 guide.write(dos_text('An absent KBD leaf opens a blank33-profile table in memory.\n'
                     'Alt-S or confirmed save creates it. Exit/discard creates nothing.\n'
                     'Other load errors do not become blank replacement files.\n'))
+        if keymap_identity['contract']==4:
+            with (payload/'README.TXT').open('ab') as guide:
+                guide.write(dos_text('Alt-Z inside Keyboard Mapping opens Key Mapping Help.\n'
+                    'Topics and Search use the full embedded source viewer.\n'
+                    'Keep the matching PCPLUS.HLP beside PCKEYMAP.EXE.\n'))
     record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
         'experimental_custom_irq':True,'experimental_original_keys':True,'experimental_original_reference':True,

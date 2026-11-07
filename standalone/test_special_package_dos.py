@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False,meta_editor=False,keymap_editor=False,keymap_profiles=33,keymap_new_file=False):
+def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False,meta_editor=False,keymap_editor=False,keymap_profiles=33,keymap_new_file=False,keymap_help=False):
     assert not precompile or not (setup or splash_only or after_child_view)
     assert not chat_help or not (setup or splash_only or after_child_view or precompile)
     manifest = json.loads((package / 'manifest.json').read_text())
@@ -116,6 +116,12 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         source=source.replace('D:\\PATHVIEW.BIN','C:\\PATHVIEW.BIN')
         (drive/'LINEWAT.ASM').write_text(source)
         subprocess.run(['nasm','-fbin','-DWATCH_KIND=0',str(drive/'LINEWAT.ASM'),'-o',str(drive/'LINEWAT.COM')],check=True)
+    if keymap_help:
+        assert keymap_editor
+        source=(ROOT/'standalone/path_dialog_watch.asm').read_text();begin=source.index(' cmp word [es:806]');end=source.index('%if WATCH_KIND',begin)
+        source=source[:begin]+" cmp word [es:2],0x714b\n jne .done\n cmp word [es:4],0x7165\n jne .done\n cmp word [es:6],0x7179\n jne .done\n cmp byte [es:10],'M'\n jne .done\n"+source[end:]
+        source=source.replace('D:\\PATHVIEW.BIN','C:\\HELPVIEW.BIN');(drive/'HELPWAT.ASM').write_text(source)
+        subprocess.run(['nasm','-fbin','-DWATCH_KIND=0',str(drive/'HELPWAT.ASM'),'-o',str(drive/'HELPWAT.COM')],check=True)
     strategy = manifest.get('experimental_directory_resource_owner',False)
     if strategy:
         subprocess.run(['nasm','-fbin',str(ROOT/'standalone/dos_strategy_sample.asm'),'-o',str(drive/'STRAT.COM')],check=True)
@@ -135,6 +141,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     if keymap_new_file:
         assert keymap_editor
         keys=keys.replace('p3000 f1','p3000 a-o p200 n e w enter p500 f1')
+    if keymap_help:keys=keys.replace('enter p300 a-s','enter p300 a-z p1200 escape p300 a-s')
     if meta_editor:keys='p900 enter p1800 a-m p3000 escape p900 a-z p2500 escape p700 a-x'
     config = ('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\n'
               'cycles=fixed 12000\n[serial]\n'+
@@ -142,11 +149,11 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
                       for n in range(1,5))+
               '[mixer]\nnosound=true\n[autoexec]\n@echo off\n'
               'mount c "' + str(drive) + '"\nc:\nset PCPLUS=C:\\ORIGINAL\n' +
-              ('WATCH T\n' if observe else '')+('LINEWAT T\n' if native_line_port or meta_editor else '')+('HELPWAT T\n' if chat_help else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+('UNLIST\n' if bios_absent else '')+'SNAP B\n'+
+              ('WATCH T\n' if observe else '')+('LINEWAT T\n' if native_line_port or meta_editor else '')+('HELPWAT T\n' if chat_help or keymap_help else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+('UNLIST\n' if bios_absent else '')+'SNAP B\n'+
               ('CD \\'+dos_directory+'\nASPCOMP TEST.ASP\nIF ERRORLEVEL 1 GOTO failed\nCD \\\n' if precompile else '')+
               'ADDKEY ' + keys + '\n'
               'CALL '+dos_root+'\\' + launcher + '.BAT /T:ACTIONS.KEY'+(' /K:'+dos_root+'\\SYN.KBD' if keymap_editor else '')+'\n'+
-              ('C:\\STRAT A\n' if strategy else '')+'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n'+('C:\\LINEWAT\n' if native_line_port or meta_editor else '')+('C:\\HELPWAT\n' if chat_help else '')+('C:\\RVIEW\n' if after_child_view else '')+('C:\\WATCH\n' if observe else '')+
+              ('C:\\STRAT A\n' if strategy else '')+'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n'+('C:\\LINEWAT\n' if native_line_port or meta_editor else '')+('C:\\HELPWAT\n' if chat_help or keymap_help else '')+('C:\\RVIEW\n' if after_child_view else '')+('C:\\WATCH\n' if observe else '')+
               'if errorlevel 1 goto failed\necho RETURNED>C:\\RETURN.TXT\nexit\n'
               ':failed\necho FAIL>C:\\FAIL.TXT\nexit\n')
     (out / 'dosbox.conf').write_text(config)
@@ -192,6 +199,8 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert (app/('NEW.KBD' if keymap_new_file else 'SYN.KBD')).read_bytes()==expected
         if keymap_new_file:assert (app/'SYN.KBD').read_bytes()==bytes(keymap_profiles*948)
         assert not (app/'KBDSTG.$$$').exists() and not (app/'KBDBAK.$$$').exists()
+        if keymap_help:
+            capture=(drive/'HELPVIEW.BIN').read_bytes();assert capture[:4]==b'\x44\x50\x03\x00' and b'A keyboard profile' in capture[6:4006:2]
     elif not observe:
         assert (app / 'RESULT.BIN').read_bytes() == b'SPECIAL-COMPILED'
         assert (app / 'TEST.ASX').read_bytes() == compile_source(source)
@@ -201,7 +210,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, dos_directory=dos_directory,cpu='8086', port=com, io_base=base, resident_observer=observe,
                   irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,chat_help=chat_help,
-                  native_line_port=native_line_port,meta_editor=meta_editor,keymap_editor=keymap_editor,keymap_profiles=keymap_profiles if keymap_editor else None,keymap_new_file=keymap_new_file,
+                  native_line_port=native_line_port,meta_editor=meta_editor,keymap_editor=keymap_editor,keymap_profiles=keymap_profiles if keymap_editor else None,keymap_new_file=keymap_new_file,keymap_help=keymap_help,
                   packaged_ASPECT_clock_alarm_exercised=new_commands,
                   packaged_ASPECT_EMULATE_exercised=emulate,
                   package_manifest_sha256=sha(package / 'manifest.json'),
@@ -214,7 +223,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
                   sources={n: sha(ROOT / n) for n in ['standalone/test_special_package_dos.py',
                            'standalone/special_watch.asm', 'standalone/test_terminal.py',
                            'standalone/check_setup_model.py', 'standalone/test_directory_key_bindings_dos.py',
-                           'src/aspect/compiler.py']+(['standalone/path_dialog_watch.asm'] if native_line_port or meta_editor else [])+(['standalone/global_help_watch.asm'] if chat_help else [])+(['standalone/dos_strategy_sample.asm'] if strategy else [])+(['standalone/redisplay_watch.asm'] if after_child_view else [])},
+                           'src/aspect/compiler.py']+(['standalone/path_dialog_watch.asm'] if native_line_port or meta_editor or keymap_help else [])+(['standalone/global_help_watch.asm'] if chat_help else [])+(['standalone/dos_strategy_sample.asm'] if strategy else [])+(['standalone/redisplay_watch.asm'] if after_child_view else [])},
                   artifacts={str(p.relative_to(out)): sha(p) for p in out.rglob('*') if p.is_file()},
                   scope=__doc__ + ' Dummy serial ports; no live BBS, card write or physical modem test.')
     (out / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
@@ -237,6 +246,7 @@ def main():
     p.add_argument('--keymap-editor',action='store_true',help='Edit/save through packaged START and its sibling PCKEYMAP, preserving existing private fixtures')
     p.add_argument('--keymap-profiles',type=int,choices=[7,33],default=33,help='Existing synthetic KBD size for the packaged mapper test')
     p.add_argument('--keymap-new-file',action='store_true',help='Open/create a separate NEW.KBD while preserving the frozen selected file')
+    p.add_argument('--keymap-help',action='store_true',help='Observe actual Key Mapping Help before saving')
     p.add_argument('--meta-editor',action='store_true',help='Observe packaged Alt-M loading its matching sibling module')
     args = p.parse_args()
     out = args.output.resolve()
@@ -244,7 +254,8 @@ def main():
     assert not (args.setup and args.splash_only)
     assert args.keymap_editor or args.keymap_profiles==33
     assert args.keymap_editor or not args.keymap_new_file
-    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port,args.meta_editor,args.keymap_editor,args.keymap_profiles,args.keymap_new_file)
+    assert args.keymap_editor or not args.keymap_help
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port,args.meta_editor,args.keymap_editor,args.keymap_profiles,args.keymap_new_file,args.keymap_help)
 
 
 if __name__ == '__main__':

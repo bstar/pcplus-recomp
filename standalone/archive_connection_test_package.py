@@ -16,6 +16,7 @@ def main():
  if m.get('experimental_keymap_editor'):
   allowed.add('PCKEYMAP.EXE')
   profile=reviewed_keymap_profile()
+  if profile['contract']==4:assert m.get('experimental_global_help') and 'PCPLUS.HLP' in m['files']
   assert m['files']['PCKEYMAP.EXE']==m['products']['PCKEYMAP.EXE']['binary_sha256']==profile['helper_sha256']
   assert m['products']['PCKEYMAP.EXE']['contract']==profile['contract']
  if m.get('experimental_global_help'):allowed.update(('PCHELP.RTE','PCPLUS.HLP'))
