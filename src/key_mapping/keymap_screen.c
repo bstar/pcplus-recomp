@@ -36,6 +36,20 @@ unsigned keymap_screen_key(unsigned key)
 }
 unsigned keymap_screen_position(unsigned slot){return slot<79?positions[slot]:0xffff;}
 const char *keymap_screen_profile(unsigned profile){return profile<33?profiles[profile]:0;}
+const char *keymap_screen_label(unsigned slot)
+{
+ static const char *special[]={"KEYPAD ASTERISK (*)","KEYPAD MINUS (-)","KEYPAD PLUS (+)","KEYPAD PERIOD (.)","KEYPAD SLASH (//)","KEYPAD ENTER (CR)","TAB","BACKTAB","INSERT","DELETE","BACKSPACE","CTRL-HOME","CTRL-END","CTRL-PGUP","CTRL-PGDN","CTRL-BACKSPACE"};
+ static const char *grey[]={"GREY CURSOR UP","GREY CURSOR DOWN","GREY CURSOR LEFT","GREY CURSOR RIGHT","GREY INSERT","GREY DELETE","GREY HOME","GREY END","GREY PGUP","GREY PGDN"};
+ static const char *cursor[]={"CURSOR UP","CURSOR DOWN","CURSOR LEFT","CURSOR RIGHT","HOME KEY","END KEY","ENTER KEY (CR)"};
+ static char label[24];
+ if(slot<16)return special[slot];
+ if(slot<28){sprintf(label,"F%u",slot-15);return label;}
+ if(slot<38){sprintf(label,"KEYPAD %u",slot-28);return label;}
+ if(slot<50){sprintf(label,"SHIFT-F%u",slot-37);return label;}
+ if(slot<60)return grey[slot-50];
+ if(slot<72){sprintf(label,"CTRL-F%u",slot-59);return label;}
+ return slot<79?cursor[slot-72]:0;
+}
 static void text(unsigned short *frame,unsigned row,unsigned col,const char *s,unsigned attr)
 {
  while(*s && col<80){frame[row*80+col++]=(unsigned char)*s+++(attr<<8);}

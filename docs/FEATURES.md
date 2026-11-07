@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Foreground keyboard helper](KEYMAP_HELPER.md) now joins the source screen and
+field model to checked full-size KBD persistence.14 DOS8086 workflows,19 save
+fault boundaries/eight load cases, isolated source reproduction and an actual
+existing-PROGRAM direct/open/save/serial-return pass. Dedicated Alt-F8/reload, matched
+packaging, remaining native UI/defaults and physical acceptance remain open.
+
 [Source keyboard-mapping screen](KEYMAP_SCREEN_SOURCE.md) matches all4000
 original blank ANSI frame bytes and all65536 original dispatch inputs. DOS8086
 checks33 source VGA frames;79 binding placements, marked-input preservation
@@ -20,7 +26,7 @@ original field/temporary capacity are explicit. Full editor integration remains 
 [Original keymap helper caller](KEYMAP_LAUNCHER.md) adds78 exact bytes and a
 source-only OMF/DOS ABI diagnostic:612 modeled CPU cases,8DOS cases and a
 five-file isolated reproduction pass. `RET4` screen-handle cleanup is explicit.
-PCKEYMAP implementation/defaults, full key editing and terminal integration
+Full PCKEYMAP parity/defaults and dedicated terminal integration
 remain open; the installed build is unchanged by this component.
 
 [Current Synchronet transfers](META_SHARED_SYNCHRONET_TRANSFERS.md) verify

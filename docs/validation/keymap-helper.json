@@ -1,0 +1,132 @@
+{
+  "passed": true,
+  "original_inputs": [],
+  "binary_sha256": "0280f9942a5eb9739a28af21405f50ab91be13c2a70b7ac98c5db38fb010ce51",
+  "sources": {
+    "src/key_mapping/keymap_front.c": "f1d280bbe206db56052785acfc2c6ae3056635ec1c41852edbc4eed17bf58c08",
+    "src/key_mapping/keymap_screen.c": "911119c82283d05d79afab1303be7703c52e9eb9dd190ed93ae756df1c5b6f8b",
+    "src/key_mapping/keymap_field.c": "d4c5dd94fb973cbc3c31b20f89f195f4406a07075794a2d0895d3b0855574cae",
+    "src/key_mapping/keymap_text.c": "831f04731c6ed10f3406400fde94b9cbea094aab79f790437023cd6ddc569fc5",
+    "src/key_mapping/kbd_editor_file.c": "4214de699153b87f54bcf1c3d43753355622fd78de60f94cc33123ed888aee08",
+    "src/key_mapping/key_file_fs.c": "751342a82fd9bc755d18fc343a3e39c8300045b32dd042e9cb27f5dbe5b3071f",
+    "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+    "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
+    "standalone/build_keymap_helper.py": "c0c3eb48d91345a28ed10cde2cab1dcc2f94238c93c93a744b0dd8bc84f42619",
+    "src/key_mapping/keymap_screen.h": "b57970cdd0b25b5229cb7931004245ac56e95eac8c6c733d36eeda9421f9dd5f",
+    "src/key_mapping/keymap_field.h": "9a9f09a5828444286dee10da9f13e8d3a80b1e2edd56ac8eeb690b0c177ce588",
+    "src/key_mapping/keymap_text.h": "e4185d2cff8963df1e92ba1f3dca5089c46472248798e7bd53619649980bcaa7",
+    "src/key_mapping/kbd_editor_file.h": "36122bd3f575f8f5621f58affe67b98f964d5a3449b590c8c78fae9ed1ee4adb",
+    "src/key_mapping/key_file_fs.h": "0edf624c48965e4ef08c0c0489b741961894556ada7ae17bdf62f88a09e95eab",
+    "src/directory/directory_replace.h": "b3534b26bc9e9fa577fbceda50276cc9339a4d57f26cf6e1de2e1d436e9ff936",
+    "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
+    "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b"
+  },
+  "scope": "Source-only foreground keyboard helper:14 actual DOS8086 workflows and source reproduction. Dedicated Alt-F8/reload, full native UI/defaults, other geometries and physical acceptance remain open.",
+  "isolated_source_reproduction": {
+    "files": 17,
+    "binary_identical": true,
+    "original_inputs": false
+  },
+  "workflow_checks": {
+    "passed": true,
+    "binary_sha256": "0280f9942a5eb9739a28af21405f50ab91be13c2a70b7ac98c5db38fb010ce51",
+    "cases": [
+      {
+        "name": "ready",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "cancel",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "save",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "discard",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "save-on-exit",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "cancel-exit",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "next-wrap",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "previous-wrap",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "open-missing-discard",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "open",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "legacy",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "long",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "conflict",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      },
+      {
+        "name": "readonly",
+        "passed": true,
+        "exact_files": true,
+        "screen_cursor_shape_restored": true
+      }
+    ],
+    "original_inputs": [],
+    "cpu": "8086",
+    "private_data_inputs": false,
+    "sources": {
+      "standalone/test_keymap_helper.py": "dcc6af16c22ad83b60c043951fc5f06d74494aed0cfcee6c55602eaff7368872",
+      "standalone/test_meta_dialog_vga.py": "464c7994920487888938ee4a2b1bd73f5a7aadc4942b0bb2bd1bd15281fb54f1",
+      "standalone/path_dialog_watch.asm": "65fed3d88c8621ecbd753eaf9ff65ac3547b4d07c3378577b25a50d6c36b6697",
+      "docs/validation/keymap-screen.json": "bd18e0da3ec05d9a5abd815d7ad7736d4ed3e1be93c1179a892b7e758a7c7658"
+    },
+    "scope": "Actual standalone foreground helper edit/cancel/save/open/profile wrap/refusals/restore on synthetic files. No parent EXEC, factory defaults, physical or modem acceptance."
+  },
+  "linker_memory_bytes": 69584,
+  "open_peak_reduction_bytes": 31284
+}

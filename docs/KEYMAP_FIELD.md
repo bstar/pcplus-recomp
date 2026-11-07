@@ -59,3 +59,7 @@ transactional KBD loading/saving without changing opaque or unselected slots;
 recover factory defaults separately; foreground helper admission, screen return
 and strict post-return keyboard reload. The installed build remains RA608E10,
 with physical acceptance pending.
+
+Subsequent integration: [foreground helper](KEYMAP_HELPER.md) now joins these
+components and verifies standalone persistence plus an existing PROGRAM return.
+Dedicated Alt-F8/reload and the remaining native parity gates are still open.

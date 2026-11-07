@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "opens_second_file": false,
+  "checks": {
+    "configured_hangup_reached_wire": true,
+    "DOS_expected_exit": true,
+    "hardware_restored": true,
+    "PRM_unchanged": true,
+    "binary_unchanged": true,
+    "no_peer_errors": true,
+    "no_unexpected_commands": true,
+    "fixture_unchanged_TEST.KEY": true,
+    "fixture_unchanged_PCKEYMAP.EXE": true,
+    "actual_init_and_dial": true,
+    "actual_DOS_CPR": true,
+    "actual_DOS_DA": true,
+    "immediate_banner_not_dropped": true,
+    "helper_saved_exact_selected_slot": true,
+    "parent_keyboard_resumed": true,
+    "source_helper_unchanged": true
+  },
+  "parent_sha256": "5b634d5cb3d10fd36e6a1a9374fb7b7539ace82f97983eedc5d6a35b29e523c0",
+  "helper_sha256": "0280f9942a5eb9739a28af21405f50ab91be13c2a70b7ac98c5db38fb010ce51",
+  "parent_result": "build/connection-dos/keymap-helper-parent-accepted-20261107/result.json",
+  "sources": {
+    "standalone/test_keymap_helper_parent.py": "bf4249f27c2d4173d8b8e1b4d3560509c6b97368696b20b2dd17c7cfc9c4f2dd",
+    "standalone/test_keymap_helper.py": "dcc6af16c22ad83b60c043951fc5f06d74494aed0cfcee6c55602eaff7368872",
+    "standalone/test_connection_dos.py": "e6cf72e5d8da0d27e160135c5a47c77b0de6c3412da5426109e39a8dff06fa60",
+    "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+    "standalone/terminal_config_fixtures.py": "dd38f8a0c6c77d5d2ec2120c1f3d6b8a755525d11e2f6d986a056a3d0d8e4df4"
+  },
+  "scope": "Capacity/resume check via existing PROGRAM path; not Alt-F8 integration. Owned copied runtime, synthetic modem and files; no physical or Enigma/SynthModem acceptance."
+}

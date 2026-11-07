@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "original_inputs": [],
+  "cpu": "8086",
+  "transcript": "PASS 219188 CHECKS; 19 SAVE BOUNDARIES; 8 LOAD CASES",
+  "sources": {
+    "src/key_mapping/kbd_editor_file.c": "4214de699153b87f54bcf1c3d43753355622fd78de60f94cc33123ed888aee08",
+    "src/key_mapping/key_file_fs.c": "751342a82fd9bc755d18fc343a3e39c8300045b32dd042e9cb27f5dbe5b3071f",
+    "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+    "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
+    "standalone/kbd_editor_faults.c": "c7143ca40adda976b73373bfac54b8062fdbab618200a4d32c81bca587b4cdd8",
+    "standalone/kbd_editor_file_driver.c": "0da21e785e62f561c4a515a8c610a54d8b0b9a8aa38f86cfc46c7f8aaf35a87f",
+    "src/key_mapping/kbd_editor_file.h": "36122bd3f575f8f5621f58affe67b98f964d5a3449b590c8c78fae9ed1ee4adb",
+    "src/key_mapping/key_file_fs.h": "0edf624c48965e4ef08c0c0489b741961894556ada7ae17bdf62f88a09e95eab",
+    "src/directory/directory_replace.h": "b3534b26bc9e9fa577fbceda50276cc9339a4d57f26cf6e1de2e1d436e9ff936",
+    "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
+    "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
+    "standalone/key_editor_faults.h": "b292761c9e294fcc5f4ce986f92e8a5f1990c73a0895e632ffc0b1ee6ac95518",
+    "standalone/test_kbd_editor_file.py": "4da8d3a87678075be028ba53b3a0096e7cba19ab30a148ab1f99b80bc4cd9c95"
+  },
+  "scope": "Actual DOS full-size KBD IO with fault injection and retained-byte checks. No crash atomicity, external locking, parent or physical acceptance."
+}

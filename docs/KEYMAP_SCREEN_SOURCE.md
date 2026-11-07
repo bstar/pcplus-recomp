@@ -53,3 +53,7 @@ the foreground controller joining this screen to the recovered field model,
 transactional file handling, dirty/open/save/exit behavior and Alt-F8 admission/
 return/reload. The installed application, physical machine, modem and BBS
 services were unchanged. RA608E10 physical acceptance remains pending.
+
+Subsequent integration: [foreground helper](KEYMAP_HELPER.md) now joins these
+components and verifies standalone persistence plus an existing PROGRAM return.
+Dedicated Alt-F8/reload and the remaining native parity gates are still open.

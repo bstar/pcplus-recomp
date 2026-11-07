@@ -6,6 +6,7 @@
 enum {KEYMAP_NEXT=79,KEYMAP_PREVIOUS,KEYMAP_OPEN,KEYMAP_SAVE,KEYMAP_EXIT,KEYMAP_ABOUT,KEYMAP_RESERVED,KEYMAP_INVALID};
 unsigned keymap_screen_key(unsigned key);
 unsigned keymap_screen_position(unsigned slot);
+const char *keymap_screen_label(unsigned slot);
 const char *keymap_screen_profile(unsigned profile);
 /* Caller owns a full 2000-word frame and disjoint 948-byte profile image.
  * Rendering never modifies bindings. Long/ambiguous bindings are marked.
