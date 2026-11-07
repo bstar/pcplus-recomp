@@ -6,6 +6,8 @@ fixture database, executable image, or generated analysis is a build input.
 """
 from __future__ import annotations
 
+EMULATIONS = {'tty': 0, 'vt52': 1, 'vt100': 2, 'vt102': 3, 'vt220': 4, 'vt320': 5, 'ansi': 6, 'ibmpc': 7, 'wyse75': 8, 'att605': 9, 'att4410': 10, 'tv922': 11, 'h19': 12, 'ibm3101': 13, 'ibm3161': 14, 'dgd100': 15, 'dgd200': 16, 'dgd210': 17, 'adds60': 18, 'adds90': 19, 'adm3': 20, 'adm5': 21, 'adm31': 22, 'esprit3': 23, 'ibm3270': 24, 'tv910': 25, 'tv912': 26, 'tv920': 27, 'tv925': 28, 'tv950': 29, 'tv955': 30, 'wyse50': 31, 'wyse100': 32}
+
 import argparse
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -188,7 +190,7 @@ class Compiler:
             if not part or not re.fullmatch(r'[a-z_$][a-z_0-9$]*', part[0]):
                 self.error('expected declaration name')
             name = part[0]
-            if name == 'text' or name in TYPED_BUILTINS:
+            if name == 'text' or name in TYPED_BUILTINS or name in EMULATIONS:
                 self.error(f'{name.upper()} is a reserved ASPECT keyword')
             symbols = self.globals if proc is None else proc.symbols
             if name in symbols:
@@ -521,6 +523,11 @@ class Compiler:
 
     def command(self, tokens):
         command = tokens[0]
+        if command == 'emulate':
+            if len(tokens) != 2 or tokens[1] not in EMULATIONS:
+                self.error('EMULATE requires one named terminal emulation')
+            self.emit(0x2F, EMULATIONS[tokens[1]])
+            return
         if command == 'alarm':
             parser = Expression(tokens[1:], self.line)
             self.emit(0x01, int(bool(parser.tokens)))

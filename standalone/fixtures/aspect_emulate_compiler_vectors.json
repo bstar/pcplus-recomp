@@ -1,0 +1,575 @@
+{
+  "schema": "aspect-emulate-compiler-v1",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "oracle_sha256": "3e7d23394a36631df90476d373d302b8519bafa37839581bce2a37364386b13d",
+  "probe_sha256": "94235db4599b7c5350e15f6bd7ee312e99f2cf163e2fd8ba3d61c53c5f0ceba6",
+  "freezer_sha256": "2ee0d95ed0a18c43a282779535bb2de59b4d4922fbdf9c36bdc5762a5e5de063",
+  "source_encoding": "cp437",
+  "vectors": [
+    {
+      "label": "name TTY",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate TTY\r\nendproc\r\n",
+      "source_sha256": "ba509cccd10935648d453119f315d20d8b09b30589753ca193dcdb7c51dc0c1a",
+      "hex": "01 cf 2f 00 94",
+      "asx_sha256": "b72e075912fd4bfa095b62f8d4de98e44bb76ed8103d15c35cc2defeded07c49"
+    },
+    {
+      "label": "name VT52",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate VT52\r\nendproc\r\n",
+      "source_sha256": "e56167351ef140f1e9a8d02f02c7c618a8a504224d76f6a1c272a5ec49b94cf1",
+      "hex": "01 cf 2f 01 94",
+      "asx_sha256": "afd96a0a2a1136765157c4e0aeec9eb2a99856a73f92788d77f26b926f522aa0"
+    },
+    {
+      "label": "name VT100",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate VT100\r\nendproc\r\n",
+      "source_sha256": "445632cc7fff43a03539119ed640542ce076b7e14091b938633a075e01a6bac4",
+      "hex": "01 cf 2f 02 94",
+      "asx_sha256": "0df778b17f23850b3432b31612bd4aedefe73eb4b575a6485371e7625091c241"
+    },
+    {
+      "label": "name VT102",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate VT102\r\nendproc\r\n",
+      "source_sha256": "0eee32f3b4907110fd974f96cd297e0b938753be79c2f89ab0497df440ab45ce",
+      "hex": "01 cf 2f 03 94",
+      "asx_sha256": "7399ce4e8edb44050160c374364c9785dc8139bff5edd601124ece5713e145bf"
+    },
+    {
+      "label": "name VT220",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate VT220\r\nendproc\r\n",
+      "source_sha256": "83aae3242efd09e14af7a2171c055303b0d5e2f3935eac0bbb982268b3e6875a",
+      "hex": "01 cf 2f 04 94",
+      "asx_sha256": "d311f6d6b60fbec5c6e4407c3c9d4ed8ae06a91c2b57301ad1ce8bf9a3ea686a"
+    },
+    {
+      "label": "name VT320",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate VT320\r\nendproc\r\n",
+      "source_sha256": "01b8fd2248aa3dd72812c89c69b5b89a0166de063c459cb0e543a169c37861b2",
+      "hex": "01 cf 2f 05 94",
+      "asx_sha256": "a36cd95ed8cfb3b752bf50e77883e3f04c2c02ed79bc273bd818c2fe0b515406"
+    },
+    {
+      "label": "name ANSI",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ANSI\r\nendproc\r\n",
+      "source_sha256": "4b7fdee05671c44f2f95920725d85e0f199e4dadf7de8e8f782fab17b8940f90",
+      "hex": "01 cf 2f 06 94",
+      "asx_sha256": "3c165a7382e850e05b079b8b25691d6025b11e1fbb39f678ed528b966f2a08b0"
+    },
+    {
+      "label": "name IBMPC",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate IBMPC\r\nendproc\r\n",
+      "source_sha256": "50153b5308142a7c1406b899ed0836f93e9c540f2b4e30af98f1bbb4008323ac",
+      "hex": "01 cf 2f 07 94",
+      "asx_sha256": "c601f75188394f7d32a11ef42923b4d7c87a6744bc25dd2cc35938d7fda2e79b"
+    },
+    {
+      "label": "name WYSE75",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate WYSE75\r\nendproc\r\n",
+      "source_sha256": "b19a314daeb528676a516cc930e1444713c99234f71c24d2037b34a1cda60170",
+      "hex": "01 cf 2f 08 94",
+      "asx_sha256": "6ac931e606b74b53148f00a786bac6fadd3e6b762f379159de94945802951e6e"
+    },
+    {
+      "label": "name ATT605",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ATT605\r\nendproc\r\n",
+      "source_sha256": "d17fc9d22065e3863e8716caf0318d38991252fcea01ec5d6c6211368895bcd4",
+      "hex": "01 cf 2f 09 94",
+      "asx_sha256": "42b0b4e36a702f957ed4df25aa21641654238deae40c94cbae502aea5ef0664b"
+    },
+    {
+      "label": "name ATT4410",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ATT4410\r\nendproc\r\n",
+      "source_sha256": "2470f12b435274d94a91e110e285c995fe604a365e3325617c5856560e23bb49",
+      "hex": "01 cf 2f 0a 94",
+      "asx_sha256": "5996b4deae13949486169af96072503563227125ea8efc427b48d93e5c6b092d"
+    },
+    {
+      "label": "name TV922",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate TV922\r\nendproc\r\n",
+      "source_sha256": "def058126322d38cee123a43da1333e4ee42b4e0b61260653648586a53689d03",
+      "hex": "01 cf 2f 0b 94",
+      "asx_sha256": "bce7b51d338e46bfcc5d47e1d0bb1943db662461f68c9ccf834d6758c87bb774"
+    },
+    {
+      "label": "name H19",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate H19\r\nendproc\r\n",
+      "source_sha256": "23b0144bc2f2b902dab3d8fdf4b96f05e1d68791dbee41f8f3094ca56a7830cb",
+      "hex": "01 cf 2f 0c 94",
+      "asx_sha256": "d5ee27a61dc6c4880125c7866b536d372f173bdb2f2313ce35d7ae371ad5907c"
+    },
+    {
+      "label": "name IBM3101",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate IBM3101\r\nendproc\r\n",
+      "source_sha256": "fe4a6b35042c56d6a188bfa20f4f02095f3118bf03a4546594a35cccda9a6d8d",
+      "hex": "01 cf 2f 0d 94",
+      "asx_sha256": "aa0a394d683207a3a91ca556e5a5c112e9afcc1831c085dbf8cf55bf585b5bb1"
+    },
+    {
+      "label": "name IBM3161",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate IBM3161\r\nendproc\r\n",
+      "source_sha256": "38340594c56fc001a6824140b8349c2168960e86850d6c9e500087a67292d31f",
+      "hex": "01 cf 2f 0e 94",
+      "asx_sha256": "21c6574b193cc631032a17a9420ee14bc8136900921400dd7710ab60a0bdb06f"
+    },
+    {
+      "label": "name DGD100",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate DGD100\r\nendproc\r\n",
+      "source_sha256": "fca3b2bf703d274143cfe5398e385e50ed3eb57c4c9d8e4d0725d0037fdca2b4",
+      "hex": "01 cf 2f 0f 94",
+      "asx_sha256": "77d7ae682a4844bb272194c99dba863208cc4e4016507a8403e8e95940af41d6"
+    },
+    {
+      "label": "name DGD200",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate DGD200\r\nendproc\r\n",
+      "source_sha256": "61825abef7a16e94ebc366d4a94966ddaad9f50893c208f80cd59b0ec32f4021",
+      "hex": "01 cf 2f 10 94",
+      "asx_sha256": "af29e7dbab92b943fbe655b9126b834c8e28f24cb1cb3a83f72b42d1478fce0a"
+    },
+    {
+      "label": "name DGD210",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate DGD210\r\nendproc\r\n",
+      "source_sha256": "694f1dc22fdf7031ba456f531e400ac5f904c9acb439d81c42f9f480095b6294",
+      "hex": "01 cf 2f 11 94",
+      "asx_sha256": "67a4e5bb4ca5784ebbd7c8d5b3f991f08f152f0bc9b5cac43956f9abba9a2427"
+    },
+    {
+      "label": "name ADDS60",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ADDS60\r\nendproc\r\n",
+      "source_sha256": "969d8dbbdb383db441771b4839c2f99832d2fcf9ac481be3bba671c5a27ef469",
+      "hex": "01 cf 2f 12 94",
+      "asx_sha256": "ea7d15a45521e3c1ac4d87d7578426ce27c502b139511de906b3f9a6e3f234e5"
+    },
+    {
+      "label": "name ADDS90",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ADDS90\r\nendproc\r\n",
+      "source_sha256": "b05db32d87275be87b90e151181bc0165f9325a97bf73353597a3d3259d381c7",
+      "hex": "01 cf 2f 13 94",
+      "asx_sha256": "8b565be0bec1ba438d54051fe34af761844cc5c2bfc1f6ae9ba59ff1e5acf709"
+    },
+    {
+      "label": "name ADM3",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ADM3\r\nendproc\r\n",
+      "source_sha256": "f7f99c9f5ce0cde12e65f2549a91338628b55db581c1d16442b258ba9073c53b",
+      "hex": "01 cf 2f 14 94",
+      "asx_sha256": "3ea757fb0414f87be09df7febb7c9596d512ccf3e48653fc61b26e2622446c1d"
+    },
+    {
+      "label": "name ADM5",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ADM5\r\nendproc\r\n",
+      "source_sha256": "67edab2e1e49722bebd86e04ab8d2343dcda95431c5739da9cbaf39e74898e6b",
+      "hex": "01 cf 2f 15 94",
+      "asx_sha256": "56ff3a9c0399e5ac73e1bcb3049a903b56b97c672722c19f71e0fa56d6bc83de"
+    },
+    {
+      "label": "name ADM31",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ADM31\r\nendproc\r\n",
+      "source_sha256": "69ec8d55ce69ead6b72c5fc537574529b0e8c2ffc6fed29e9dbfc256da39f259",
+      "hex": "01 cf 2f 16 94",
+      "asx_sha256": "bbb80114f37da251d0cd7f60bbfe7c26dc23b7767a2403d07b553aea8c398af4"
+    },
+    {
+      "label": "name ESPRIT3",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ESPRIT3\r\nendproc\r\n",
+      "source_sha256": "8e95b518f2c3e6d793394feb5819118533cf1c071ef55ca0595ccdffb1a9c326",
+      "hex": "01 cf 2f 17 94",
+      "asx_sha256": "d50ed2bfdd9025a57370d028a4fb877b026a824615333d0ed25a1e172d027f10"
+    },
+    {
+      "label": "name IBM3270",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate IBM3270\r\nendproc\r\n",
+      "source_sha256": "202fe9ce331d6a0d810e1c946d65b14e19d8f8727a22a9940b31f2ce1f1a3bf9",
+      "hex": "01 cf 2f 18 94",
+      "asx_sha256": "63bc8b771f9b2eb0b9cf5cbae0c84c0abd1458080bc6deef95f7eca5671a73ea"
+    },
+    {
+      "label": "name TV910",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate TV910\r\nendproc\r\n",
+      "source_sha256": "19dc8a43a6cc326f45bbb6b437105e04716e58bd6d652a2939f58bc12f305c2a",
+      "hex": "01 cf 2f 19 94",
+      "asx_sha256": "7bf07e84790e867af420a5a420ab82884336a60dbeea5642dc809a4041f5ae1c"
+    },
+    {
+      "label": "name TV912",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate TV912\r\nendproc\r\n",
+      "source_sha256": "3e3c26a5ad305a319800684ce59ecd509930c118c8e6c1a995eb6ee0304eff68",
+      "hex": "01 cf 2f 1a 94",
+      "asx_sha256": "5b3236d9c4421de043e74be752df00c94536f62e3073c7fdad13aa8ae7525644"
+    },
+    {
+      "label": "name TV920",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate TV920\r\nendproc\r\n",
+      "source_sha256": "9202ff8312324bcd32b61d85181ec1844f33c8d2b6ec3c37f5177353b44ddef0",
+      "hex": "01 cf 2f 1b 94",
+      "asx_sha256": "ecd4961a63fd0d1a6620258d4d1760b9fff477fe16cbfffd69a76849fa789598"
+    },
+    {
+      "label": "name TV925",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate TV925\r\nendproc\r\n",
+      "source_sha256": "4f7fa91ab24d040dd840e8c926ec0cd810bb2fcc17e08e2acfa382b543c4afe3",
+      "hex": "01 cf 2f 1c 94",
+      "asx_sha256": "0846cd4ffb1eeaad2e01b4e1e31c2196467a7ab6f549eb949e2efec815ead342"
+    },
+    {
+      "label": "name TV950",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate TV950\r\nendproc\r\n",
+      "source_sha256": "88760bd5bbab51a4a99095989fd1fec559aae3feb027afc873f61bc01bd013df",
+      "hex": "01 cf 2f 1d 94",
+      "asx_sha256": "52697912acb037780d60aa675af176e1827f8d8f61e2df13d29585739b578ce3"
+    },
+    {
+      "label": "name TV955",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate TV955\r\nendproc\r\n",
+      "source_sha256": "8d430b44e62c4be50b1b2325dc03e3b7567820b2db9b76a62f3b1b4cf829768b",
+      "hex": "01 cf 2f 1e 94",
+      "asx_sha256": "91cb0eb2d6ba1ca145bd62c50dd44c6b9802e0d0058f11338b6f8a2892f64397"
+    },
+    {
+      "label": "name WYSE50",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate WYSE50\r\nendproc\r\n",
+      "source_sha256": "e51fdf3d22facb3f5648581dcfc335ecef27dddba46cbefc4ed81bde11d73c6f",
+      "hex": "01 cf 2f 1f 94",
+      "asx_sha256": "de946c592d62aa005fbee8987c7441756f66ecd4daccc8ed10bbca1e730907a9"
+    },
+    {
+      "label": "name WYSE100",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate WYSE100\r\nendproc\r\n",
+      "source_sha256": "775e1d021bc5633918eaa355ae5c9419547087f51ee7a29912ad96a31d3bef53",
+      "hex": "01 cf 2f 20 94",
+      "asx_sha256": "e25a337dfcef94cc477fc088ea006ff0b41d3624512ba4e1d6ca0786164bf654"
+    },
+    {
+      "label": "operand ANSI ; comment",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ANSI ; comment\r\nendproc\r\n",
+      "source_sha256": "90cc430d5230606c24a3d56b42cf571a44cd7565f35a5c3713b446ec03e8fe78",
+      "hex": "01 cf 2f 06 94",
+      "asx_sha256": "3c165a7382e850e05b079b8b25691d6025b11e1fbb39f678ed528b966f2a08b0"
+    },
+    {
+      "label": "mixed case",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nEmUlAtE aNsI\r\nendproc\r\n",
+      "source_sha256": "37c1c74da90d74e062b3ab803e7101cf55a7d07f88ed8b033e9e00b9de225fa8",
+      "hex": "01 cf 2f 06 94",
+      "asx_sha256": "3c165a7382e850e05b079b8b25691d6025b11e1fbb39f678ed528b966f2a08b0"
+    },
+    {
+      "label": "two commands",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate tty\r\nemulate ansi\r\nendproc\r\n",
+      "source_sha256": "d4102e9fbfae5c26a1dd01b2316ba1a20d6610f482ece79141a273629c705b23",
+      "hex": "01 cf 2f 00 2f 06 94",
+      "asx_sha256": "1e7fb024c5f47f1c42656fb44402bacb5c8325b8e13d16d7b75943da65cd5d6b"
+    }
+  ],
+  "rejected": [
+    {
+      "label": "local reserved TTY",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger TTY\r\nemulate TTY\r\nendproc\r\n",
+      "source_sha256": "325d718d2f70240c3fdbf42a44228f0747554c536ff97fabf805a3091555ef29"
+    },
+    {
+      "label": "local reserved VT52",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger VT52\r\nemulate VT52\r\nendproc\r\n",
+      "source_sha256": "024811d68a20be6ea44d5932d48c2d1d907673017bf62f8bd3ec062a74684528"
+    },
+    {
+      "label": "local reserved VT100",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger VT100\r\nemulate VT100\r\nendproc\r\n",
+      "source_sha256": "1f313a4e34d025b476d89fd9cdd39e40542709213729b13fb7266dfde005f9b4"
+    },
+    {
+      "label": "local reserved VT102",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger VT102\r\nemulate VT102\r\nendproc\r\n",
+      "source_sha256": "427e78d9c53b8b1b5f899fc41260e14a771b5830ca38ccb10f5ba71a65e6382d"
+    },
+    {
+      "label": "local reserved VT220",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger VT220\r\nemulate VT220\r\nendproc\r\n",
+      "source_sha256": "a8aca069e57b53c0d61f3f2c32dec76e3f5b1aaf7938f38e53055ae1289f7798"
+    },
+    {
+      "label": "local reserved VT320",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger VT320\r\nemulate VT320\r\nendproc\r\n",
+      "source_sha256": "a5d020cfa553ef1609cef1f364f9cc6d83ecb7b68c711e43a4f9c0b6e7d08397"
+    },
+    {
+      "label": "local reserved ANSI",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ANSI\r\nemulate ANSI\r\nendproc\r\n",
+      "source_sha256": "f9ca6aa6e7732971c1214d2340e609d840af7cd533ffb45f92efe6d822c7cfa9"
+    },
+    {
+      "label": "local reserved IBMPC",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger IBMPC\r\nemulate IBMPC\r\nendproc\r\n",
+      "source_sha256": "1c365411ad61b98764fc5bb63128112eb3ed40e867152b35c7133b8a4cad8fed"
+    },
+    {
+      "label": "local reserved WYSE75",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger WYSE75\r\nemulate WYSE75\r\nendproc\r\n",
+      "source_sha256": "cc685bb68a53ab06ef4a49b7fb022ba6e7d68b2010413eb008aa58d3ca39759b"
+    },
+    {
+      "label": "local reserved ATT605",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ATT605\r\nemulate ATT605\r\nendproc\r\n",
+      "source_sha256": "9f0b61c12b5289ec9fe4fdd1f5a1c7da404f356cbfdf7e3491acf269a913895d"
+    },
+    {
+      "label": "local reserved ATT4410",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ATT4410\r\nemulate ATT4410\r\nendproc\r\n",
+      "source_sha256": "c2511aecc73bd870a4d5bd30483a92e526c22dcfbf78a1510ebf0707f4aaff1e"
+    },
+    {
+      "label": "local reserved TV922",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger TV922\r\nemulate TV922\r\nendproc\r\n",
+      "source_sha256": "72bb2ca4f9688899c275482cd110d58e7c90412baeee7624cdc1c2adb62e9bde"
+    },
+    {
+      "label": "local reserved H19",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger H19\r\nemulate H19\r\nendproc\r\n",
+      "source_sha256": "1e3eef7e548d9bfb9bb91ae26b51c28a1337b8526d03539051476f6efbd2f8e0"
+    },
+    {
+      "label": "local reserved IBM3101",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger IBM3101\r\nemulate IBM3101\r\nendproc\r\n",
+      "source_sha256": "38c463dea2affc6819a6f6b4dd54bf783fc9103b042c08a9eb94679dc3e16ac1"
+    },
+    {
+      "label": "local reserved IBM3161",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger IBM3161\r\nemulate IBM3161\r\nendproc\r\n",
+      "source_sha256": "fa7c1bd4d21920723da5508ddd5c1277aba423fe3866c8c8ea7e234b158cdc6c"
+    },
+    {
+      "label": "local reserved DGD100",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger DGD100\r\nemulate DGD100\r\nendproc\r\n",
+      "source_sha256": "37cf6aa1933b1c220569b5198088ff125c7075b1df506710cdbbc8dc3f6c3cb7"
+    },
+    {
+      "label": "local reserved DGD200",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger DGD200\r\nemulate DGD200\r\nendproc\r\n",
+      "source_sha256": "780a460fa176c4cd54c8d3fd7ac4ee05ab0c9e5f01dab2423c8dfa89041e57fe"
+    },
+    {
+      "label": "local reserved DGD210",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger DGD210\r\nemulate DGD210\r\nendproc\r\n",
+      "source_sha256": "7d869bf9ccdb900005de77f51650efb286a1f4da673d9bcedc13c0fc05a011f2"
+    },
+    {
+      "label": "local reserved ADDS60",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ADDS60\r\nemulate ADDS60\r\nendproc\r\n",
+      "source_sha256": "30f74efa745ec2ad9d98b29d50ce6b7664bbd8ba2a18f96153a4edfc0d9273a3"
+    },
+    {
+      "label": "local reserved ADDS90",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ADDS90\r\nemulate ADDS90\r\nendproc\r\n",
+      "source_sha256": "59c866bbc32dade2ac21874f735c7261aa7698f070b5fa55368e6495d09f24bf"
+    },
+    {
+      "label": "local reserved ADM3",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ADM3\r\nemulate ADM3\r\nendproc\r\n",
+      "source_sha256": "0ef7bad11a6498d759879fd60baac2bfa9ea9554fa22379360ea73fd425d4b9c"
+    },
+    {
+      "label": "local reserved ADM5",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ADM5\r\nemulate ADM5\r\nendproc\r\n",
+      "source_sha256": "a4fdfadaea354f45907ec344ba1411a21208b73781cb0562b9799fc0d3799740"
+    },
+    {
+      "label": "local reserved ADM31",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ADM31\r\nemulate ADM31\r\nendproc\r\n",
+      "source_sha256": "1cc40152e468e193c4f1a7d5aaaa3618f5757cc763cdcfea29354175cd70b732"
+    },
+    {
+      "label": "local reserved ESPRIT3",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ESPRIT3\r\nemulate ESPRIT3\r\nendproc\r\n",
+      "source_sha256": "c4f4053f457109c68268d5f1c5edd2169bac3cfc18d846f429b70b1c57c45ed9"
+    },
+    {
+      "label": "local reserved IBM3270",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger IBM3270\r\nemulate IBM3270\r\nendproc\r\n",
+      "source_sha256": "e906637ce9dec5986d4756f20690162f5ddb58db4f685b472eadc814a82c2ea0"
+    },
+    {
+      "label": "local reserved TV910",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger TV910\r\nemulate TV910\r\nendproc\r\n",
+      "source_sha256": "9f233d9a3ee9439db1e8e91b5f89b785a247862759298e1123a908291ee9be84"
+    },
+    {
+      "label": "local reserved TV912",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger TV912\r\nemulate TV912\r\nendproc\r\n",
+      "source_sha256": "a8fffebb3fc1ddb8be8ec140d0b33ba3448556fb34c74a0cfcabf930360a0fdd"
+    },
+    {
+      "label": "local reserved TV920",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger TV920\r\nemulate TV920\r\nendproc\r\n",
+      "source_sha256": "587f5f0a91069da7120949c3200bd9401b3c249d0536ae0b099141390abf7fc7"
+    },
+    {
+      "label": "local reserved TV925",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger TV925\r\nemulate TV925\r\nendproc\r\n",
+      "source_sha256": "c91ca63ff2172105460b20bc07c283fa5ebed9f4c40a9401b3f809f3b22b36fb"
+    },
+    {
+      "label": "local reserved TV950",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger TV950\r\nemulate TV950\r\nendproc\r\n",
+      "source_sha256": "690fcf6e1a3258ebaaac2af901e733253f1e58323354e9a17c4c49ac3c0aa72a"
+    },
+    {
+      "label": "local reserved TV955",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger TV955\r\nemulate TV955\r\nendproc\r\n",
+      "source_sha256": "e199ec451c7d469d5108673095293836547beee68af4a346a69def3d99f62904"
+    },
+    {
+      "label": "local reserved WYSE50",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger WYSE50\r\nemulate WYSE50\r\nendproc\r\n",
+      "source_sha256": "b7167fd46593e4a13105f2e5ead46d12f8f3258835839558cd79430e3316fe96"
+    },
+    {
+      "label": "local reserved WYSE100",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger WYSE100\r\nemulate WYSE100\r\nendproc\r\n",
+      "source_sha256": "21d8c8032a52b752b794680ce6d33fb645015de378f763162a67d61f2c375fb6"
+    },
+    {
+      "label": "operand ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate \r\nendproc\r\n",
+      "source_sha256": "52d4460ec891c8d0e9e2f50efbb71a2e957189651ce007e43cbe26eff56d4142"
+    },
+    {
+      "label": "operand 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate 0\r\nendproc\r\n",
+      "source_sha256": "0d1fd1bbb0184c4786555b9cdc5ee6630ee8d40e8603091e68b3a2d42b2e56ed"
+    },
+    {
+      "label": "operand 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate 1\r\nendproc\r\n",
+      "source_sha256": "41b83e31c21ac8a89b424c149515b212f2cca6cae9f141dade9e1cefd42891cf"
+    },
+    {
+      "label": "operand 6",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate 6\r\nendproc\r\n",
+      "source_sha256": "123abc9c8ccb296c90948e99058a27e81797348636414607cff778e02b841c7c"
+    },
+    {
+      "label": "operand 32",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate 32\r\nendproc\r\n",
+      "source_sha256": "465d690f1b272514e611a4aa6c91f706c0944c9770f17c9947bb796040cb42e5"
+    },
+    {
+      "label": "operand 33",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate 33\r\nendproc\r\n",
+      "source_sha256": "9bed1cff43f325e5b23f6461dde7095e7191f9c7498e9ec8467c696a57b1b5c2"
+    },
+    {
+      "label": "operand 255",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate 255\r\nendproc\r\n",
+      "source_sha256": "025e2d7a541511cf906b3175d12ab0667de02876ab7e191cecb1fa6ddce5a562"
+    },
+    {
+      "label": "operand 256",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate 256\r\nendproc\r\n",
+      "source_sha256": "31b25fb68ee3762c3938479d4b3a8c18d12fbdaa81b56c0b17fb54f38913e3b0"
+    },
+    {
+      "label": "operand -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate -1\r\nendproc\r\n",
+      "source_sha256": "685d0a6bfe7746bf88a3c80b5b77c4bf61a798f3cad24df1c48ac8a236963991"
+    },
+    {
+      "label": "operand i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate i\r\nendproc\r\n",
+      "source_sha256": "d6f90a16333b7c44242113ff4e475de2b966fa8168614b2ed25d2377e7d89c5a"
+    },
+    {
+      "label": "operand l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate l\r\nendproc\r\n",
+      "source_sha256": "b574dad84c85dd1c1feaf3c6925be6d7cd1a598c5dbde73476ae38b3a6146a3e"
+    },
+    {
+      "label": "operand f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate f\r\nendproc\r\n",
+      "source_sha256": "e07e1c7d2a4e7b4d23b92289fdc4c74d8c1a5533e458e4b9313f65eaf2169295"
+    },
+    {
+      "label": "operand s",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate s\r\nendproc\r\n",
+      "source_sha256": "c8ab1e3db5385a9246bcc153a6feb6cc302c86dbb61a87c63a7f1c640c6efccd"
+    },
+    {
+      "label": "operand i0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate i0\r\nendproc\r\n",
+      "source_sha256": "a05eb73ad964386b452af3798f734a89eaabe68f36b49fcf00c22892afb88438"
+    },
+    {
+      "label": "operand l0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate l0\r\nendproc\r\n",
+      "source_sha256": "a44251151ff5d1926d131c404b9620a7b86843040dd11693ca03e44206af6381"
+    },
+    {
+      "label": "operand s0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate s0\r\nendproc\r\n",
+      "source_sha256": "979ed61e59e0d4d1fde75efe649594ef933c408a65bfbd5a50988f2d05b3496b"
+    },
+    {
+      "label": "operand \"ANSI\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate \"ANSI\"\r\nendproc\r\n",
+      "source_sha256": "5bf351b5f5948a1d478252f7ced727676f37b8ef0b0b14e9a33217653dd92708"
+    },
+    {
+      "label": "operand unknown",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate unknown\r\nendproc\r\n",
+      "source_sha256": "d01d2b2b83551af9f6a4a312a9cf6075fa0d3fa7ec5a2c880c4759b85165f45f"
+    },
+    {
+      "label": "operand (ANSI)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate (ANSI)\r\nendproc\r\n",
+      "source_sha256": "96f0aa9f91ae51bb3189cf5de81bc63d8a951bf77b0d4cec8680703253f87224"
+    },
+    {
+      "label": "operand ANSI+1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ANSI+1\r\nendproc\r\n",
+      "source_sha256": "aa2c550b853e78c6117ee285492ade9d47fecf1111efc138b13ce1e30cb26eab"
+    },
+    {
+      "label": "operand ,ANSI",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ,ANSI\r\nendproc\r\n",
+      "source_sha256": "809922fb79343de6c82c82cb2589fcfe35320c860b400d81c2103f5b2b57906c"
+    },
+    {
+      "label": "operand ANSI,",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ANSI,\r\nendproc\r\n",
+      "source_sha256": "f7851347641787c52f0ff8754b0c5dcab51867b479c13176cfe36b6a70c75395"
+    },
+    {
+      "label": "operand ANSI 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ANSI 1\r\nendproc\r\n",
+      "source_sha256": "00732350d4ef41eb851e020b6133435e9cd4a549ce1192debd192014a7158972"
+    },
+    {
+      "label": "operand ANSI VT100",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ANSI VT100\r\nendproc\r\n",
+      "source_sha256": "84493a4acecad36e27d36de57ef9b598081337cdd3f970eef77d4b0e76561841"
+    },
+    {
+      "label": "operand VT420",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate VT420\r\nendproc\r\n",
+      "source_sha256": "df31a564dd07bfbf65d97ddf52d54404e2a4649e44463fc4e0b60bca59aa2d3c"
+    },
+    {
+      "label": "operand IBM",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate IBM\r\nendproc\r\n",
+      "source_sha256": "25c55c3b1dc142852d43f33d67e42eb0676e851269a1aa50aafd0363903ca804"
+    },
+    {
+      "label": "operand ON",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate ON\r\nendproc\r\n",
+      "source_sha256": "1c8a9162d0f62b6033d617436f050a8e008597b2e747b2d664d3a6e12e37f0f5"
+    },
+    {
+      "label": "operand OFF",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nemulate OFF\r\nendproc\r\n",
+      "source_sha256": "816f036142b79ba1ad1efbe5c574ab7e4c6bb132b15d0a6b1cd81d376bc718c6"
+    },
+    {
+      "label": "local named ANSI",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger ansi\r\nemulate ansi\r\nendproc\r\n",
+      "source_sha256": "1e2c625f6dffd11577c85dcb0b1b2d171b7221b85365fcf44ecbcd21f3cc6265"
+    }
+  ],
+  "scope": "Authored EMULATE grammar/emission only. No runtime execution or full compiler parity claim; originals are not normal build inputs."
+}

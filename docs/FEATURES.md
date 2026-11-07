@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[ASPECT EMULATE recovery/compiler](ASPECT_EMULATE.md) adds exact emission for
+all 33 original named selectors and a separate 15-byte native command owner.
+The 98 original outcomes plus 98 presentation cases, full 2,323-case DOS
+compiler corpus, 2,341-case checked-stack suite and 25-file cold compiler
+rebuild pass. Native replay covers 768 modeled-boundary cases. Runtime profile
+adoption/reset integration is still open; installation is unchanged.
+
 [Matched ALARM connection package](ALARM_CONNECTION_RELEASE.md) now passes
 fresh Enigma and Synchronet regressions, four DOS 8086 launch workflows and
 private-file preservation across six file types, including call history. A

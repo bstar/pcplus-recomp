@@ -114,7 +114,9 @@ The current receipts are under `build/alarm-carrier-funded-ansi-20261106`,
 `build/alarm-unwind-funded-capacity[-8086]-20261106` and
 `build/alarm-unwind-funded-cold-20261106`.
 
-New Enigma/Synchronet regressions for these exact candidate bytes, package
-selection, physical Boca/SPA2102/SynthModem acceptance and the remaining
-application inventory are still open. Previous BBS results belong to the
-preceding interpreter, not this new build.
+At this component checkpoint, new Enigma/Synchronet regressions and package
+selection were still open; prior BBS results belonged to the preceding
+interpreter. The subsequent [matched-package checkpoint](ALARM_CONNECTION_RELEASE.md)
+passes fresh BBS/package gates and verified deployment for these exact products.
+Physical Boca/SPA2102/SynthModem acceptance and the remaining application
+inventory are still open.

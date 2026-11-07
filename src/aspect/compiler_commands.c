@@ -1,5 +1,6 @@
 #include "compiler_program_internal.h"
 #include <string.h>
+#include "compiler_emulations.h"
 typedef struct command {const char *name,*roles;unsigned opcode,optional;} command;
 static const command commands[]={
  {"comgetc","i",0xc9,0},{"comgetcd","i",0xca,0},{"message","s",0x76,0},
@@ -187,6 +188,13 @@ void pc_commands(pc_compiler *c)
 {
  unsigned args[ASPECT_COMPILER_TOKEN_MAX],count,i,j,n,dest,expected,optional,command_index=65535U;
  char role;aspect_compiler_value value;const command *cmd;
+ if(pc_equal(c,0,"emulate")){
+  unsigned char name[254];int selector;
+  if(c->line.count!=2||aspect_compiler_token_copy(&c->line,1,name,sizeof(name))<0){bad(c);return;}
+  selector=aspect_compiler_emulation((char *)name);
+  if(selector<0){bad(c);return;}
+  emit(c,0x2f);emit(c,(unsigned)selector);return;
+ }
  if(pc_equal(c,0,"alarm")){alarm_command(c);return;}
  if(pc_equal(c,0,"dos")){external_command(c,0x28);return;}
  if(pc_equal(c,0,"run")){external_command(c,0x9b);return;}

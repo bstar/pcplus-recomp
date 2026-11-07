@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <limits.h>
 #include <string.h>
+#include "compiler_emulations.h"
 struct aspect_compiler_allocation {
  struct aspect_compiler_allocation *next;
  unsigned long alignment;
@@ -84,7 +85,7 @@ static unsigned reserved(const char *name)
  static const char *names[]={"text","comdata","failure","forever","found","success","waitfor",
  "$d_entry","$d_ldate","$d_kbdfile","$d_metakey","$d_name","$d_note","$d_phone","$d_pword","$d_script","$null","$d_baud","$fattr","$fdate","$fext","$filename","$fname","$ftime","$fsize"};
  unsigned i;for(i=0;i<sizeof(names)/sizeof(names[0]);++i)if(!strcmp(name,names[i]))return 1;
- return 0;
+ return aspect_compiler_emulation(name)>=0;
 }
 static unsigned duplicate(aspect_compiler_symbol *symbol,const char *name)
 {for(;symbol;symbol=symbol->next)if(!strcmp(symbol->name,name))return 1;return 0;}
