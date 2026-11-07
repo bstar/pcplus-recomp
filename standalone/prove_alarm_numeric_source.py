@@ -34,7 +34,7 @@ def main():
   run(['standalone/test_aspect_alarm_vm_dos.py','--label','cold-plain','--terminal-sha256',actual['TERMINAL.EXE'],'--runner-sha256',actual['ASPECT.EXE'],'--case','alarm-vm-plain-terminal'])
  results={}
  for name,path in [('unit',fresh/'build/unit/result.json'),('numeric',fresh/'build/numeric/result.json'),('strings',fresh/'build/strings/result.json'),('ALARM',fresh/'build/aspect-alarm-vm-dos/cold-plain/pause-checks.json')]:
-  r=json.loads(path.read_text());assert r['passed'],name;results[name]=dict(sha256=sha(path),cases=len(r['cases'])if 'cases'in r else r['checks'])
+  r=json.loads(path.read_text());assert r['passed'],name;results[name]=dict(sha256=sha(path),cases=len(r['cases'])if 'cases'in r else r['checks'],deep_cases=len(r.get('deep_cases',[])))
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
  (out/'inventory.json').write_text(json.dumps(inventory,sort_keys=True,indent=2)+'\n')
  report=dict(passed=True,products=actual,source_files=len(inventory),source_base_commit=base_commit,inventory_sha256=sha(out/'inventory.json'),overlay_sources=sources,results=results,original_inputs=[],scope=__doc__+' Public HEAD plus declared source overlay; no original binary, private files, prior objects or Git metadata. Exact products; full bank API and512+512 native VM cases, then one actual parent/ALARM/render case with UMB observer. Does not repeat native WHEN matrix, full parent capacity/BBS or physical acceptance. Pinned toolchain supplied by caller.')

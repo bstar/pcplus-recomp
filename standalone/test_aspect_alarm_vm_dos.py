@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Opt-in actual parent/VM ALARM through live native receive and WHEN service."""
-import inspect,json,sys,struct
+import inspect,json,sys,struct,argparse
 from pathlib import Path
 import test_aspect_pause_when_dos as pause
 import test_aspect_keys_dos as keys
@@ -9,6 +9,13 @@ PARENT=ROOT/'build/terminal-alarm-policy-admission-20261106'
 CHILD=ROOT/'build/aspect-alarm-vm-numeric-final-20261106'
 
 def main():
+ global PARENT,CHILD
+ parser=argparse.ArgumentParser(add_help=False)
+ parser.add_argument('--parent-dir',type=Path,default=PARENT)
+ parser.add_argument('--child-dir',type=Path,default=CHILD)
+ selected,remaining=parser.parse_known_args();sys.argv=[sys.argv[0],*remaining]
+ PARENT=selected.parent_dir.resolve();CHILD=selected.child_dir.resolve()
+ assert PARENT.is_relative_to(ROOT/'build') and CHILD.is_relative_to(ROOT/'build')
  original=pause.definitions
  original_prm=keys.renderer.prm
  def configured_prm():

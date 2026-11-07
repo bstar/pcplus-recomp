@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[ALARM numeric groups](ASPECT_ALARM_GROUPS.md) resolve the held-stream/nested-
+child capacity failure below: all27 checks on386 and26 on8086 now pass with
+unchanged capacities. The full1123-case VM diagnostic, five actual-parent
+ALARM cases, Synchronet editor/display return and independently audited Enigma
+carrier-loss/redial/65539-byte retry pass. A5397-file cold export reproduces
+the products and repeats selected suites. Full ALARM policy/key/sound/error
+coverage, packaging and physical acceptance remain open; installation is unchanged.
+
 [ALARM with deferred numeric banks](ASPECT_ALARM_NUMERIC.md) now passes five
 actual parent/native-WHEN/render cases,33115 bank API checks and1024 native
 system-slot VM cases. A5393-file cold export reproduces both products and

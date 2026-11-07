@@ -14,8 +14,8 @@ def main():
  with (out/'dosbox.log').open('w')as log:subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')],env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log,check=True,timeout=30)
  text=(out/'REPORT.TXT').read_text();match=re.fullmatch(r'NUMERIC BANK PASS (\d+) checks (\d+) allocations (\d+) frees\s*',text)
  assert match and (out/'PASS.TXT').exists()and not(out/'FAIL.TXT').exists(),text
- assert int(match[1])>30000 and int(match[2])==int(match[3])+4
+ assert int(match[1])>30000 and int(match[2])==int(match[3])+5
  for n,h in sources.items():assert sha(ROOT/n)==h,n
- report=dict(passed=True,checks=int(match[1]),allocations=int(match[2]),frees=int(match[3]),sources=sources,binary_sha256=sha(out/'BANKS.EXE'),original_inputs=[],scope=__doc__+' Full256-system/128-float slots,8bytes each, stable near identity/contiguity/isolation/reset; first/second allocation faults retain other owner;100 reuse cycles and foreign allocation preservation. Native operand adapters and VM/parent memory are separate integration gates.')
+ report=dict(passed=True,checks=int(match[1]),allocations=int(match[2]),frees=int(match[3]),sources=sources,binary_sha256=sha(out/'BANKS.EXE'),original_inputs=[],scope=__doc__+' Full256-system/128-float slots,8bytes each, stable per-slot near identity, within-group contiguity, isolation/reset; first/second-bank and same-bank group allocation faults retain other owner;100 reuse cycles and foreign allocation preservation. Native operand adapters and VM/parent memory are separate integration gates.')
  (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print(text.strip())
 if __name__=='__main__':main()

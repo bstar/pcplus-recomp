@@ -2,32 +2,41 @@
 #include "runtime.h"
 #include <malloc.h>
 #include <string.h>
-static unsigned char *banks[2];
-unsigned runtime_numeric_live(void){return (banks[0]!=0)+(banks[1]!=0);}
+/* Native consumers borrow one2/4/8-byte value, never a flat bank extent.
+ * Sixteen-slot groups preserve full byte-index capacity and stable per-slot
+ * near addresses while ordinary expression temporaries touch few groups. */
+#define GROUP_SLOTS 16U
+#define GROUP_BYTES 128U
+static unsigned char *groups[24];
+static unsigned bank_mask;
+unsigned runtime_numeric_live(void){return (bank_mask&1)+((bank_mask>>1)&1);}
 void runtime_numeric_finish(void)
 {
- unsigned i;for(i=0;i<2;++i)if(banks[i]){_nfree(banks[i]);banks[i]=0;}
+ unsigned i;for(i=0;i<24;++i)if(groups[i]){_nfree(groups[i]);groups[i]=0;}
+ bank_mask=0;
 }
 void runtime_numeric_reset(void)
 {
- unsigned i;for(i=0;i<2;++i)if(banks[i])memset(banks[i],0,i?1024:2048);
+ unsigned i;for(i=0;i<24;++i)if(groups[i])memset(groups[i],0,GROUP_BYTES);
 }
 unsigned char *__cdecl runtime_numeric_address(unsigned kind,unsigned index)
 {
- unsigned size;
+ unsigned group;
  if(kind>1 || index>=(kind?128:256)){runtime_set_error(ASPECT_RUN_OPERAND);return 0;}
- if(!banks[kind]){
-  size=kind?1024:2048;banks[kind]=_nmalloc(size);
-  if(!banks[kind]){runtime_set_error(ASPECT_RUN_HEAP);return 0;}
-  memset(banks[kind],0,size);
+ group=(kind?16:0)+(index>>4);
+ if(!groups[group]){
+  groups[group]=_nmalloc(GROUP_BYTES);
+  if(!groups[group]){runtime_set_error(ASPECT_RUN_HEAP);return 0;}
+  memset(groups[group],0,GROUP_BYTES);bank_mask|=1U<<kind;
  }
- return banks[kind]+index*8;
+ return groups[group]+(index&(GROUP_SLOTS-1))*8;
 }
-
-/* Far globals can occupy the DOS block immediately after DGROUP, preventing
- * later near expansion. Reserve both full banks before the first far global.
- * Scripts without far globals still materialize only the banks they touch. */
+/* A later DOS far block can prevent DGROUP expansion. Materialize all groups
+ * before the first far global, retaining any already-borrowed addresses. */
 unsigned runtime_numeric_prepare(void)
 {
- return runtime_numeric_address(0,0)!=0 && runtime_numeric_address(1,0)!=0;
+ unsigned kind,index;
+ for(kind=0;kind<2;++kind)for(index=0;index<(kind?128:256);index+=GROUP_SLOTS)
+  if(!runtime_numeric_address(kind,index))return 0;
+ return 1;
 }

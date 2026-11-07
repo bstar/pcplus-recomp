@@ -1,5 +1,11 @@
 # ALARM with deferred numeric banks
 
+This historical checkpoint retains its failed capacity evidence. The newer
+[numeric-group checkpoint](ASPECT_ALARM_GROUPS.md) replaces dense deferred
+banks with stable per-slot grouped storage and passes the capacity and modern
+BBS regressions. Whole-bank contiguity described below belongs to this earlier
+implementation, not the current grouped adapter.
+
 The opt-in ALARM interpreter now passes five full-parent cases with actual
 native WHEN TRANSMIT, CALL, framed CALL, multiple CALL ordering and plain
 receive/render servicing. The release remains unaccepted because the larger

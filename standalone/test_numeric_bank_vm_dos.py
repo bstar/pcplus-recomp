@@ -48,6 +48,15 @@ def main():
    name=f"{'I' if kind==0 else 'L'}{index:03}";(out/(name+'.ASX')).write_bytes(data)
    batch.extend([f'ASPECT {name}.ASX >{name}.TXT','if errorlevel 1 goto failed'])
    rows.append(dict(slot=index,kind=kind,name=name,ASX_sha256=sha(out/(name+'.ASX'))))
+ deep=[]
+ for kind,depth in ((0,48),(1,40)):
+  value='1L' if kind else '1';name=f'D{kind:03}'
+  expression=(value+'+(')*depth+value+')'*depth
+  text=('integer' if kind==0 else 'long')+' result\nproc main\nresult='+expression+'\nif result=='+str(depth+1)+('L' if kind else '')+'\nmessage "DEEP"\nelse\nmessage "BADDEEP"\nendif\nendproc\n'
+  assert max(map(len,text.splitlines()))<=253
+  (out/(name+'.ASX')).write_bytes(compile_source(text))
+  batch.extend([f'ASPECT {name}.ASX >{name}.TXT','if errorlevel 1 goto failed'])
+  deep.append(dict(name=name,kind=kind,temporary_depth=depth,source=text,ASX_sha256=sha(out/(name+'.ASX'))))
  batch+=['echo PASS>PASS.TXT','goto done',':failed','echo FAIL>FAIL.TXT',':done']
  (out/'RUN.BAT').write_bytes(('\r\n'.join(batch)+'\r\n').encode('ascii'))
  (out/'dosbox.conf').write_text('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\nfpu=false\ncycles=max\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "'+str(out)+'"\nmount d "'+str(out)+'"\nc:\ncall RUN.BAT\nSNAP S\nexit\n')
@@ -55,7 +64,9 @@ def main():
  assert(out/'PASS.TXT').exists()and not(out/'FAIL.TXT').exists()
  for row in rows:
   file=out/(row['name']+'.TXT');assert file.read_bytes()==((b'0\r\n37\r\n' if row['kind']==0 else b'0\r\n305419896\r\n') if a.strings else b'BANKOK\r\n'),(row['slot'],file.read_bytes());row['output_sha256']=sha(file)
+ for row in deep:
+  file=out/(row['name']+'.TXT');assert file.read_bytes()==b'DEEP\r\n';row['output_sha256']=sha(file)
  assert sha(out/'ASPECT.EXE')==binary
- report=dict(passed=True,cases=rows,runner_sha256=binary,sources={n:sha(ROOT/n)for n in ['src/aspect/compiler.py','standalone/test_numeric_bank_vm_dos.py','standalone/build_context_help.py','standalone/test_terminal.py']},with_far_global_strings=a.strings,authored_sources=[source(0,a.strings),source(1,a.strings)],original_inputs=[],scope=__doc__+' Authored global references rewritten to full byte-indexed system operands. Zero initialization and native integer/long selection, read/write/conditional through linked production VM. Does not exercise float arithmetic (still unsupported), parent memory or ALARM.')
+ report=dict(passed=True,cases=rows,deep_cases=deep,runner_sha256=binary,sources={n:sha(ROOT/n)for n in ['src/aspect/compiler.py','standalone/test_numeric_bank_vm_dos.py','standalone/build_context_help.py','standalone/test_terminal.py']},with_far_global_strings=a.strings,authored_sources=[source(0,a.strings),source(1,a.strings)],original_inputs=[],scope=__doc__+' Authored global references rewritten to full byte-indexed system operands. Zero initialization and native integer/long selection, read/write/conditional through linked production VM. Does not exercise float arithmetic (still unsupported), parent memory or ALARM.')
  (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS512 native integer/long system-slot VM cases')
 if __name__=='__main__':main()
