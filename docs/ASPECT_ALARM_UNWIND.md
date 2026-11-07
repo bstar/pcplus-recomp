@@ -10,7 +10,9 @@ The current candidate is `b4f0aecc`; parent `689bdce9` is unchanged. The
 [validation record](validation/aspect-alarm-unwind.json) binds the pre-fix
 failure, current sources/products, positive captures, memory funding, cold
 rebuild and diagnostic reuse. Installed RCC859D7 and the release selector
-remain unchanged. The candidate is not yet accepted for deployment.
+remain unchanged. The subsequent [matched-package checkpoint](ALARM_CONNECTION_RELEASE.md)
+passes fresh modern BBS and complete-package software gates. Physical acceptance
+and the remaining original-feature inventory are still open.
 
 ## Owned error return
 

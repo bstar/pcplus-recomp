@@ -1,12 +1,20 @@
 # Full application reconstruction checklist
 
+[Matched ALARM connection package](ALARM_CONNECTION_RELEASE.md) now passes
+fresh Enigma and Synchronet regressions, four DOS 8086 launch workflows and
+private-file preservation across six file types, including call history. A
+2,471-file clean public-source export reproduces all 13 payload files and the
+ZIP exactly. Software acceptance is recorded; installation, physical acceptance
+and the remaining original-feature inventory are still open.
+
 [Active ALARM error recovery](ASPECT_ALARM_UNWIND.md) fixes a native transmit
 timeout that skipped speaker/duration cleanup. Eight actual modem/DCD cases
 pass across ANSI/VT220; a separately marked same-process diagnostic proves
 error14 followed by two successful VM invocations. Compact CLI path checking
 funds the checkpoint with113580 equivalent cases; both capacity profiles and
 a5420-file cold rebuild pass. Ordinary interpreter and installation are unchanged.
-New-candidate modern BBS/package/physical/full-inventory gates remain open.
+Modern BBS and package gates subsequently pass in the matched-package checkpoint
+above. Physical and full-inventory gates remain open.
 
 [ALARM progress budgeting](ASPECT_ALARM_PROGRESS.md) replaces the whole-alert
 VM limit with credits renewed at valid observed second changes and fixes
