@@ -1400,4 +1400,19 @@ def inspect_terminal_memory(binary,map_path):
  assert allocated>=static_end,'MZ minimum allocation does not cover static storage'
  assert header[7]*16+header[8]==stack_end,'MZ SS:SP differs from linkedSTACK'
  assert retained+16<0xa000,'Static DOS parent cannot fit conventional memory'
+ if '_meta_loader_expected'in symbols:
+  import zlib
+  magic,version,n,count,low,high,target,data,arena,extent=struct.unpack('<10H',raw('_meta_loader_expected',20))
+  assert(magic,version)==(0x4d4c,1) and 256<=n<=24000 and count<=512
+  assert data==ds and arena==snap_seg and snap_off==0 and extent==63000 and target==arena+1024
+  body=Path(binary).with_name('PCMETA.OVL').read_bytes();assert len(body)==n+2*count and zlib.crc32(body)==low|(high<<16)
+  points=struct.unpack('<'+'H'*count,body[n:]);assert all(p+2<=n for p in points) and all(b>=a+2 for a,b in zip(points,points[1:]))
+  assert target*16>=snap_lo and target*16+len(body)<snap_lo+61000
+  file_seg=next(c['relative_segment']for c in code_segments if c['name']=='FILE_CODE')
+  for name in ('begin','step','enter','release','cancel','hold','inspect'):assert symbols['_meta_loader_'+name][0]==file_seg
+  assert symbols['_meta_loader_expected'][0]==file_seg and symbols['_meta_loader_path'][0]==config_seg
+  for name in ('open','key','step','draw','cursor','shape','stop','matches','proposal'):assert symbols['_meta_editor_'+name+'_far'][0]==target and symbols['_meta_editor_'+name+'_far'][1]<n
+  assert symbols['_meta_key_owner_exec_allowed'][0]==target and symbols['_meta_key_owner_exec_allowed'][1]<n
+  assert all(c['name']!='META_EDITOR_CODE'for c in code_segments)
+  extra.update(meta_overlay_bytes=n,meta_overlay_fixups=count,meta_loader_retained=True,meta_overlay_DGROUP_bytes=0,meta_editor_UI_bound=False)
  return {'near_bytes':near_size,'near_spare_bytes':65536-near_size,'near_relative_segment':ds,'far_relative_segment':far_seg,'shadow_offset':shadow_off,'history_offset':history_off,'far_bytes':71192,'history_relative_segment':history_seg,'history_bytes':63000,'far_end_linear':far_end,'stack_end_linear':stack_end,'loaded_module_bytes':module_bytes,'minimum_allocated_module_bytes':allocated,'retained_parent_paragraphs':retained+16,'far_pointer_relocations_verified':True,**extra}

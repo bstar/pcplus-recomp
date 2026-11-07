@@ -10,6 +10,8 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser.add_argument('--meta-loader-probe',action='store_true',help='Diagnostic only: full-parent loader/save/reload before UART startup, then exit')
+parser.add_argument('--meta-editor-module',action='store_true',help='Experimental matched PCMETA payload and resident loader; no Alt-M or menu entry')
 parser.add_argument('--meta-services',action='store_true',help='Experimental44-byte resident and20-byte CONFIG Meta callbacks; no loader or Alt-M binding')
 parser.add_argument('--line-port-overlay',action='store_true',help='Experimental matched transient Alt-P code bank; requires line-port')
 parser.add_argument('--line-port',action='store_true',help='Experimental serviced native Alt-P with checked prefix save and drained serial handoff')
@@ -114,6 +116,8 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.meta_loader_probe:args.meta_editor_module=True
+if args.meta_editor_module:args.meta_services=True
 assert args.command_ui_pairs==64 or args.packed_command_ui
 if args.code_label_offsets:assert args.original_reference and args.packed_command_ui
 if args.aspect_snapshot_lease:assert args.external_render and args.notice_input and args.large_view_frames
@@ -359,6 +363,8 @@ if args.gateway:out_name+='-gateway'
 if args.gateway_files_probe:out_name+='-'+args.gateway_files_probe
 if args.gateway_probe:out_name+='-gateway-probe'
 if args.meta_services:out_name+='-meta-services'
+if args.meta_editor_module:out_name+='-meta-module'
+if args.meta_loader_probe:out_name+='-meta-probe'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
  # buffers as the existing feature suffix chain grows.
@@ -410,6 +416,10 @@ if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 if args.line_port:sources += [ROOT/'reconstruction/line_port/key.asm']+sorted(p for p in (ROOT/'src/line_port').glob('*.asm')if args.line_port_overlay or not p.name.startswith('overlay'))
+if args.meta_loader_probe:
+ assert args.phone_log_bank,'Meta startup probe requires fixed capture reservations'
+ sources += [ROOT/'standalone/meta_loader_parent_probe.asm']
+if args.meta_editor_module:sources += [ROOT/'src/key_mapping'/(n+'.asm')for n in ('meta_bank_runtime','meta_bank_entries','meta_bank_kernel','meta_loader_fs','meta_loader_path')]
 if args.meta_services:sources += [ROOT/'src/key_mapping/meta_bank_resident.asm',ROOT/'src/key_mapping/meta_bank_resource.asm']
 if args.global_help:sources += [ROOT/'reconstruction/context_help/handoff.asm',ROOT/'reconstruction/program_exec/strcpy.asm',ROOT/'reconstruction/program_exec/get_ds.asm']
 if not args.gateway_uart:sources=[p for p in sources if p.name!='gateway_uart.asm']
@@ -507,6 +517,7 @@ for index,source in enumerate(sources):
    '-Dscreen_cursor_left=attribute_screen_cursor_left','-Dscreen_cursor_right=attribute_screen_cursor_right',
    '-Dscreen_adjust_attribute_boundary=attribute_boundary_local']
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
+ if args.meta_loader_probe:options+=['-DTERMINAL_META_LOADER_PROBE']
  if args.line_port:options+=['-DTERMINAL_LINE_PORT']
  if args.line_port_overlay:options+=['-DTERMINAL_LINE_PORT_OVERLAY']
  if args.line_port and (source.parent==ROOT/'src/line_port' or source.parent==ROOT/'reconstruction/line_port'):options+=['-DLINE_PORT_OMF','-DLINE_PORT_FAR_BANK']
@@ -627,7 +638,7 @@ for index,source in enumerate(sources):
  if args.input_tables_data and source==ROOT/'reconstruction/input_dispatch/dispatch.asm':options+=['-DINPUT_TABLES_DATA']
  # Keep NASM's THEADR source name independent of the checkout location, so
  # recorded import-adapter object hashes also reproduce in a fresh tree.
- subprocess.run(['nasm','-f','obj',*options,'-I',str(ROOT/'reconstruction/uart')+'/', '-I',str(ROOT/'reconstruction/ansi')+'/', '-I',str(ROOT/'src/terminal')+'/', '-I',str(ROOT/'src/config')+'/', '-I',str(ROOT/'src/directory')+'/', '-I',str(ROOT/'src/aspect')+'/',str(source.relative_to(ROOT)),'-o',str(obj)],cwd=ROOT,check=True)
+ subprocess.run(['nasm','-f','obj',*options,'-I',str(ROOT/'reconstruction/uart')+'/', '-I',str(ROOT/'reconstruction/ansi')+'/', '-I',str(ROOT/'src/terminal')+'/', '-I',str(ROOT/'src/config')+'/', '-I',str(ROOT/'src/directory')+'/', '-I',str(ROOT/'src/aspect')+'/', '-I',str(ROOT/'src/key_mapping')+'/',str(source.relative_to(ROOT)),'-o',str(obj)],cwd=ROOT,check=True)
  if source==ROOT/'reconstruction/ansi/dispatch.asm':
   before=obj.read_bytes();normalized,counts=rename_imports(before,{'csi_set_modes':'terminal_aspect_set_modes','csi_reset_modes':'terminal_aspect_reset_modes'})
   assert counts=={'csi_set_modes':1,'csi_reset_modes':1},counts
@@ -645,6 +656,11 @@ if args.gateway_files:c_sources.append(ROOT/'src/process/gateway_files.c')
 if args.gateway:c_sources.append(ROOT/'src/terminal/gateway_front.c')
 if args.gateway_files_probe:c_sources.append(ROOT/'standalone/gateway_files_probe.c')
 c_sources += [ROOT/'src/key_mapping/key_actions_dos.c',ROOT/'src/process/program.c']
+meta_bank_sources=set()
+if args.meta_editor_module:
+ meta_bank_sources={ROOT/'src/key_mapping'/(n+'.c')for n in ('meta_editor','meta_dialog','meta_text','meta_file_prompt','meta_filename','meta_picker','meta_picker_scan','meta_key_owner','meta_key_resource','key_editor_file')}
+ c_sources+=sorted(meta_bank_sources)+[ROOT/'src/key_mapping/meta_loader.c']
+if args.meta_loader_probe:c_sources.append(ROOT/'standalone/meta_loader_parent_probe.c')
 c_sources += [ROOT/'src/config/live_configuration.c']
 c_sources += [ROOT/'src/config/live_setup_owner.c']
 if args.status_owner:c_sources.append(ROOT/'src/terminal/status_transition.c')
@@ -890,6 +906,13 @@ for source in c_sources:
    options+=['-nt=MOUSE_CODE','-nc=FARCODE','-ecc','-dMOUSE_DOS_PLATFORM',*['-d'+n+'='+n+'_impl' for n in mouse_names]]
  if source==ROOT/'src/status/status_formatter.c':options=['-ecc']
  if args.row_geometry_owner and args.display_row_probe and source==ROOT/'standalone/display_rows_terminal_probe.c':options+=['-dTERMINAL_ROW_GEOMETRY_PROBE']
+ if source in meta_bank_sources:
+  options=['-nt=META_EDITOR_CODE','-nc=FARCODE','-ecc','-os','-dMETA_EDITOR_BANK']
+  options+=['-d'+n+'=meta_bank_'+n for n in ('memcpy','memset','memcmp','strchr','strcmp','strlen')]
+  options+=['-d_'+n+'=meta_bank_'+n for n in ('fmemcpy','fmemset','fmemcmp','fstrcmp')]
+  options+=['-d'+n+'=meta_bank_'+v for n,v in (('capture_fs_canonical','canonical'),('capture_fs_attributes','attributes'),('directory_replace_paths','paths'),('resource_pcplus_path','resource'),('key_actions_dos_read','actions'))]
+  if source.name=='meta_editor.c':options+=['-dmeta_editor_'+n+'=meta_editor_'+n+'_impl'for n in ('open','key','step','draw','cursor','shape','stop','matches','proposal')]
+ if args.meta_editor_module and source.name in ('meta_loader.c','meta_loader_parent_probe.c'):options=['-nt=FILE_CODE','-nc=FARCODE','-ecc','-os']
  compiled_source=source;packed_includes=[]
  if size_profile:
   entry=size_profile['sources'].get(str(source.relative_to(ROOT)))
@@ -976,6 +999,11 @@ if args.line_port_overlay:
  from line_port_overlay import split
  line_overlay=split(OUT/'TERMINAL.EXE',OUT/'terminal.map')
  sources.append(ROOT/'standalone/line_port_overlay.py')
+meta_overlay=None
+if args.meta_editor_module:
+ from meta_overlay import split
+ meta_overlay=split(OUT/'TERMINAL.EXE',OUT/'terminal.map','redisplay_snapshot',line_overlay=line_overlay)
+ sources.append(ROOT/'standalone/meta_overlay.py')
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
 assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64KiB'
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
@@ -1047,6 +1075,9 @@ if args.mouse:inputs += [ROOT/'src/mouse/owner.h',ROOT/'reconstruction/program_m
 manifest={'experimental_aspect_emulate_policy':args.aspect_emulate_policy,'experimental_directory_keys':args.directory_keys,'experimental_aspect_keys':args.aspect_keys,'aspect_renderer_import_adapters':render_import_adapters,'kind':'source-only-interactive-dos-terminal','binary_sha256':hashlib.sha256((OUT/'TERMINAL.EXE').read_bytes()).hexdigest(),'data_stack_bytes':int(group[1],16),'memory_layout':memory,'sources':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},'limitations':['Interactive terminal milestone, not the complete PCPlus application.','Explicit /X:FILE.XLT stages an exact256-byte input table before UART ownership. Normal terminal bytes translate after connection/raw-monitor/controller/transfer filtering; parser continuations, TX and binary/dedicated owners stay raw. RIS preserves selection. Saved PRM modes0/1/2 select identity, current-directory then bounded PCPLUS-environment PCPLUS.XLT lookup, or a7-bit driver mask; /X overrides valid saved modes. Binary transfers reject non-FF masks. AltF10 mode changes use a frozen pre-child current/PCPLUS namespace, checked table staging and separate confirmation before table/enabled/mask commit while serial ownership is handed off. Explicit /X pins its selection. Queued raw input uses the accepted mode after return. Alt-F9 or Setup/Reload input table stages the frozen active canonical source and asks before accepting a same-mode reload over the drained PROGRAM UART owner, without DOS EXEC. Failed/declined reloads retain the table; queued input uses an accepted table. Startup canonical source paths are limited to63 bytes, including resolved CWD. Alt-F8/menu launches sibling XLTEDIT for the frozen active canonical table via a bounded DOS3+ PSP trailer and direct EXEC. A fresh checked snapshot requires separate confirmation after return. The editor accepts DOS8.3 leaves and absolute63-byte paths with same-parent recovery. Complete resource and settings integration remain unfinished.','Selected ANSI/ordinary controls and ASCII/raw CP437 output; all79 raw keyboard binding slots, function/modifier/keypad banks and bounded binary output now integrated. Specialized controls, fonts, other profiles and full UI remain unfinished.','Maintained /S @8.3-leaf runs local source-built PRMEDIT.EXE directly before UART ownership; failure stops startup and successful return reloads through existing validation/CLI precedence. Alt-F10 invokes the editor through the live PROGRAM handoff for an explicit current-directory8.3 leaf. A canonical startup binding, validated candidate and selective commit adopt display, pacing, future modem commands/responses and BREAK; A separate Y/N choice permits same-port baud/line/flow changes after old-format XON/TEMT handoff; Supported4/6 profile changes use a separate confirmation, staged canonical KBD selection and clean RIS/view baseline. Confirmed COM moves require idle ports, preserve target DTR, restore old hardware/vector ownership and recheck acquisition after profile confirmation. No automatic hangup/redial, original PCSETUP ABI, complete emulation collection or source of defaults.', 'Standard COM1..4; default builds require a matching BIOS entry. Custom-IRQ builds also accept an omitted BIOS slot for the validated base/IRQ, but reject a conflicting nonzero entry. Explicit partial2.01 PRM import and CLI category overrides. Explicit KBD profile import stages and validates before UART access. AUTO BIOS detection and manual STANDARD/ENHANCED selection supported; no complete PRM schema/default generation.','Explicit-target and directory/browser MODEM/DIRECT connections supported. Native 16-field editor stages changes until acceptance; explicit saves use validated full-file staging and backup replacement.', 'Successful directory connections queue date/call-count updates for deferred foreground persistence. Replacement does not guarantee crash atomicity or concurrent-writer exclusion.', 'Stored password remains private metadata, masked in the editor and never automatically transmitted. Scripts, KEY/META bindings and HALF mode fail explicitly; cycles, advanced transfers, Host and the complete original settings/UI remain unfinished.','NETWORK line editing clips counts to the active region and preserves the column. ORIGINAL ANSI CSI M uses a serviced36-tick discard wait; the exact unbounded original helper is not linked. Complex attribute repair remains explicit. Supported-profile RIS restores a captured source-owned startup state and keymap without DOS/file IO.', 'KBD defaults are maintained network choices, not recovered factory per-profile blocks. Unknown original local actions stop explicitly; Explicit /T:FILE.KEY stages ten actions before UART installation. Alt1..Alt0 execute bounded nonblocking TEXT; PROGRAM uses bounded COMSPEC/PATH lookup, static-parent DOS EXEC, serial handoff, screen restoration and a return key prompt. ASPECT/HOOK execution and binding UI remain unfinished.', 'Alt-G freezes80x25 characters through recovered row helpers and appends checked PCPLUS.SCR rows via an independent canonical-path file owner. Far memory is retained across PROGRAM. Full original snapshot/printer/script/UI modes remain unfinished.', 'Alt-F1/F2 processed text capture uses checked append/exclusive creation, pause/resume and periodic buffering. Alt-F3 toggles CR-adds-LF. Write/close failures retain partial logs and sticky exit12; PROGRAM closes capture before EXEC. Full capture/printer/settings/UI and ASPECT modes remain unfinished.', 'Ctrl-backslash enters a serviced raw monitor using the actual UART and renderer. Explicit Y replaces PCPLUS.DMP through a third checked canonical-path owner; other answers select view-only. Binary256-byte buffering, periodic flush and failure-aware shutdown preserve text-capture ownership. Nested local/KEY/PROGRAM owners are blocked; the exact original owner/resolver/prompt remain separate diagnostics. Native HOOK and complete monitor/UI geometry remain unfinished.', 'AltR receives ordinary XMODEM CRC/checksum128/1024 using the real UART and checked staged DOS storage. HARD/NONE only; SOFT rejects before staging. FinalACK follows checked installation. AltS uses the native ordinary sender with checked read-only DOS source files and automatic1K blocks; only actual ACKs advance maintained progress. F2 inside the transfer prompt selects maintained CRC YMODEM batch transfer with checked per-file ownership and exact declared lengths. Window/streaming/other protocols, full transfer settings/UI and physical peers remain unfinished.', 'CtrlPgUp opens a maintained63000-byte frozen history viewer in80x25 BIOS mode3/page0 with local line/page/Home/End navigation, ASCII case-insensitive incremental search/F3 and Escape return to the updated live screen. UART/parser/history/capture/replies continue, with frame swaps at top-level receive/idle and64 search candidates per turn. W appends the frozen snapshot through a fourth checked file owner, expanding CR to CRLF in128-source-byte foreground chunks. Append/create, short writes, cancellation, close ambiguity and DOS child inheritance are checked. Alt-= opens a maintained filename clipboard and C enters it from redisplay. The15-entry list supports bounded extraction, add/edit/delete/purge, tags, runtime decimal separator and one/all/tagged paste. Whole-packet TX admission requires an empty queue; cancellation removes only the unsent prefix and preserves later parser replies. Single removal waits for actual UART acceptance, and connection queue resets retain the entry as interrupted. PRM04EA imports a validated0..255 separator through the44-byte settings plan; PRMEDIT offers46 fields. Live setup applies deliberate saved separator edits and preserves session R across canceled/no-op/unrelated returns using an acknowledged source baseline in the628-byte candidate owner. Full native UI, transfer-prompt workflows and other geometries remain unfinished.', 'PROGRAM preserves DTR, pauses configured flow and releases its UART IRQ during child execution; NONE cannot guarantee incoming-data preservation while a child owns the machine. No physical UART/modem/public BBS validation. ENiGMA editor escape-fragmentation behavior remains a server/packetization compatibility boundary.']}
 manifest['experimental_line_port']=args.line_port
 manifest['experimental_meta_services']=args.meta_services
+manifest['experimental_meta_editor_module']=args.meta_editor_module
+manifest['diagnostic_meta_loader_probe']=args.meta_loader_probe
+if meta_overlay:manifest['meta_editor_overlay']=meta_overlay
 manifest['experimental_line_port_overlay']=args.line_port_overlay
 if line_overlay:manifest['line_port_overlay']=line_overlay
 manifest['experimental_keyboard_bank']=args.keyboard_bank

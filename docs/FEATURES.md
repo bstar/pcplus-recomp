@@ -1,10 +1,18 @@
 # Full application reconstruction checklist
 
+[Matched Meta disk loader](META_MODULE_LOADER.md) now extracts and verifies
+PCMETA, composes its relocation with PCLINE, and runs the editor in the actual
+parent's startup diagnostic. Save/read, active callback refusal, code overwrite
+and reload pass. Source-only 733/725-file exports reproduce all products and
+repeat 20 refusal cases plus four Line/Port regressions. Ordinary live arena
+arbitration, Alt-M/menu, modal handoff and live action adoption remain open;
+no installed build changed.
+
 [Production Meta services](META_PARENT_SERVICES.md) now link into the full
 parent with 44 resident code bytes and no DGROUP additions. Independent bank
 workflows, exact 56/707-file source rebuilds, four real DOS Alt-P regressions
 and a byte-identical disabled parent pass. The new bank memory primitives pass
-35,332 comparisons against resident CRT routines. Matched editor loading,
+35,332 comparisons against resident CRT routines. Live terminal handoff,
 Alt-M/menu, arena lifetime and live action adoption remain open; RCE81708 stays
 installed.
 

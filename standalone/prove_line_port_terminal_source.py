@@ -31,12 +31,14 @@ def main():
  flags=json.loads((fresh/'standalone/line_port_profile.json').read_text())
  if m.get('experimental_line_port_overlay'):flags.append('--line-port-overlay')
  if m.get('experimental_meta_services'):flags.append('--meta-services')
+ if m.get('experimental_meta_editor_module'):flags.append('--meta-editor-module')
  rebuilt=fresh/'build/rebuilt'
  with(out/'build.log').open('w')as log:
   subprocess.run([sys.executable,'standalone/build_terminal.py',*flags,'--output-dir',str(rebuilt)],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
  assert sha(rebuilt/'TERMINAL.EXE')==sha(binary)
  if m.get('experimental_line_port_overlay'):
   assert sha(rebuilt/'PCLINE.OVL')==sha(binary.with_name('PCLINE.OVL'))==m['line_port_overlay']['sha256']
+ if m.get('experimental_meta_editor_module'):assert sha(rebuilt/'PCMETA.OVL')==sha(binary.with_name('PCMETA.OVL'))==m['meta_editor_overlay']['sha256']
  runs=[]
  for case in ('save','serviced','readonly','portbusy'):
   target=fresh/('build/live-'+case)
@@ -50,6 +52,7 @@ def main():
   limitations=['Exact optional parent and four real DOS synthetic-peer checks. No physical modem/BBS or complete application-parity claim.',
    'Only declared public sources; no original/private/analysis/prior objects or Git metadata. Outer pinned Nix supplies tools.'])
  if m.get('experimental_line_port_overlay'):result['overlay_sha256']=sha(rebuilt/'PCLINE.OVL')
+ if m.get('experimental_meta_editor_module'):result['meta_overlay_sha256']=sha(rebuilt/'PCMETA.OVL')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print('Alt-P public-source proof:',len(sources),'files; exact parent and four DOS application cases passed')
 
