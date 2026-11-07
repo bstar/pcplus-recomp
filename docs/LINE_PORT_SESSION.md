@@ -85,8 +85,9 @@ ignored build storage rather than silently used as build inputs.
 Add the optional terminal build wiring and direct/browser/reference Alt-P
 routing. Begin from an actual session snapshot, use configured popup colors and
 supported display geometry, and preserve live-screen/cursor ownership while
-serial input and replies continue. Bind the staged proposal to the existing
-foreground drain and port handoff, with checked PRM identity/prefix persistence
+serial input and replies continue. The [checked prefix storage component](LINE_PORT_PERSISTENCE.md) now passes
+real DOS and fault checks. Bind it and the staged proposal to the existing
+foreground drain and port handoff, including canonical PRM identity, file claims
 and recovery reporting. Do not synthesize a child PRMEDIT invocation or change
 unrelated settings to stand in for native Alt-P.
 

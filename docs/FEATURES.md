@@ -2849,3 +2849,15 @@ custom IRQ and different-port PRM mappings are preserved. Save/apply results
 are authored inputs here. Terminal routing, actual persistence, foreground UART
 handoff and connected-input composition remain open; no installed payload or
 physical acceptance changed.
+
+## Line/Port checked storage checkpoint (2026-11-07)
+
+[Prefix persistence](LINE_PORT_PERSISTENCE.md) passes 28 real DOS8086 checks
+and 37 injected filesystem failures. Independent readback verifies the exact
+ten-byte patch and preservation of every other PRM byte; an isolated ten-file
+export reproduces both EXEs and complete output. This is a storage component,
+not live Alt-P integration. The current parent has only 32 DGROUP/76 resident
+code bytes spare, so the front end needs far-bank storage and bounded stack
+snapshots. Canonical identity/claims, baseline reconciliation, PROGRAM/UART
+handoff, connected-input composition and application acceptance remain open.
+Installed RBADE091 and physical acceptance remain unchanged.

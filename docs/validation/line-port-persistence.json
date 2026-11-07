@@ -1,0 +1,41 @@
+{
+  "storage_component_verified": true,
+  "real_DOS_checks": 28,
+  "injected_fault_checks": 37,
+  "application_integrated": false,
+  "physical_runtime_verified": false,
+  "installed_package_changed": false,
+  "source_files_in_export": 10,
+  "sources": {
+    "src/line_port/persist.c": "c12760bf6d0dd749fefb39262c16f41791f4c06223e8d7366ac02c715bb914fe",
+    "src/line_port/persist.h": "5e3891b1e68adcc3883e7509998bfa00328d7696ecc426d7106716e942567090",
+    "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+    "src/directory/directory_replace.h": "b3534b26bc9e9fa577fbceda50276cc9339a4d57f26cf6e1de2e1d436e9ff936",
+    "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
+    "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
+    "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
+    "standalone/line_port_persist_real.c": "b0c87fa0d547c530ff31a4d821a931abdad3278b225de85975396b5776f9fe22",
+    "standalone/line_port_persist_fault.c": "5f892916e2433e17c42ead441b74dea6cfdb2ecca2b2f08ed3a972c547c76831",
+    "standalone/test_line_port_persist_dos.py": "04bf4a7476803aa32cb5c81eaed5fd7653a2ef77e311ea65b9495a0e23e871e6",
+    "standalone/prove_line_port_persist_source.py": "8847a5a5533d287230bbbc33d13248172885ab108b3bda8d332fa052f2e8fb0d",
+    "standalone/record_line_port_persistence.py": "2ee712a2b4098d9352f171ad625e66b1706b64a74b9c8d3eddce3427727b56f2",
+    "docs/LINE_PORT_PERSISTENCE.md": "0d2a02a1190097f77a2e3f448815fe73bd7e1558c0b82fecfb10dc2844e9362e"
+  },
+  "receipts": {
+    "build/line-port-persist-20261107/result.json": "7b8ebb07c7a9b3d82c3c43758c5006a62e5445ab216dfc9b1783cad3bcebbfea",
+    "build/line-port-persist-source-20261107/result.json": "0715b1fc4be936cf52352778c293ecf8aeb26d53826f91847cbdd93087275278",
+    "build/emulate-connection-candidate-20261107/terminal/manifest.json": "cc577da2eb46a0265c0cf330b122d60d2f1aa76172d74c529fd0335b82a2e064"
+  },
+  "baseline_memory": {
+    "parent_sha256": "856a9c85887312099ae92a9f47592ca8b04f6812e7e6e404ad240bad63a6f6d7",
+    "DGROUP_bytes": 65504,
+    "DGROUP_spare": 32,
+    "resident_code_bytes": 65460,
+    "resident_code_spare": 76
+  },
+  "limitations": [
+    "Canonical startup identity, exclusive claim and recovery/handle retirement are caller responsibilities.",
+    "Live popup, PROGRAM/UART handoff, saved-baseline reconciliation and configured display integration remain open.",
+    "No crash-atomic, external-concurrent-writer or physical-disk-fault guarantee; metadata is not preserved."
+  ]
+}

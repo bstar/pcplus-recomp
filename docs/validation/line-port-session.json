@@ -27,7 +27,7 @@
     "standalone/test_line_port_session_dos.py": "f101c1b7be25597a6cd74140113dd2c883453b64eeb450d2d0833d2667de6761",
     "standalone/prove_line_port_session_source.py": "ec0b839f381c9ae6b5726616ddee38b336a5a586be97b7c49be012ee873e39d2",
     "standalone/record_line_port_session.py": "10e9ec06ccd7c23ba3b12ff68bcf84cfbd69bc74f19e9f66856841a7f05be2bf",
-    "docs/LINE_PORT_SESSION.md": "ca14dca6f1e24c30d34ec8cc8235c36f5890befdee58ad2cf464ec01ece8d1b1"
+    "docs/LINE_PORT_SESSION.md": "199396fb2231a128ecf4a286af917e71b320a9ba35f82dc912908950532d0176"
   },
   "receipts": {
     "build/line-port-session/manifest.json": "0fb7db504d841015877484e2fed570694dcbbb53a7aceb6221153490e5ff88d3",
