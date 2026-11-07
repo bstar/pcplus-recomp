@@ -127,6 +127,8 @@ def main(a):
             assert keys.count(old)==1
             keys=keys.replace(old,'p2000 L enter p1500 escape p1500 escape p1500 L enter p5000')
             post=b'\x1b\x1bL\r'
+    if manifest.get('experimental_meta_shared_runtime'):
+        keys=keys.replace('a-z p150', 'a-z p3000')
     keys=keys.replace('p30000','p'+str(a.transfer_wait_ms))
     assert len('ADDKEY p1000 ' + keys + ' p3000 a-x') < 500
     proxy = subprocess.Popen(['node', str(ROOT / 'lab/bbs/synthmodem_proxy_serial.js'), '--runtime', str(a.runtime.resolve()),

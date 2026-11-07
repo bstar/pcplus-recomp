@@ -8,6 +8,7 @@ from build_context_help import ROOT, sha
 def main():
     parent = ROOT / 'build/meta-shared-help-seventh-20261107'
     digest = sha(parent / 'TERMINAL.EXE')
+    runner_digest = sha(ROOT / 'build/meta-shared-aspect-sixth-20261107/ASPECT.EXE')
     receipts, sources, groups = {}, {}, {}
     selections = {
         'x-carrier-accepted': {'receive-negotiation', 'receive-partial', 'upload-unacked', 'upload-partial'},
@@ -30,6 +31,7 @@ def main():
             assert row['observer_high_requested'] == high
             assert len(row['sessions']) == 2
             if high:
+                assert row['aspect']['runner_sha256'] == runner_digest
                 assert row['aspect']['record_limit'] == 8
                 config = (folder / row['case'] / 'dosbox.conf').read_text()
                 assert 'umb=true' in config and sum(line.startswith('LH ') for line in config.splitlines()) == 2
@@ -55,7 +57,7 @@ def main():
         sources[name] = sha(ROOT / name)
     report = dict(checkpoint_verified=True, release_eligible=False, installed_changed=False,
                   physical_verified=False, parent_sha256=digest,
-                  runner_sha256=sha(ROOT / 'build/meta-shared-aspect-sixth-20261107/ASPECT.EXE'),
+                  runner_sha256=runner_digest,
                   groups=groups, sources=sources, receipts=receipts,
                   low_memory_diagnostic=dict(program_result=list(program), accepted_ASPECT_workflow=False),
                   limitations=[

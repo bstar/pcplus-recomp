@@ -6511,7 +6511,7 @@
     "src/aspect/register_handoff.c": "996a72a95b26934103f1ac5ecf4dc7906ffc80601a365b6a9d877a561a47a4a7",
     "standalone/test_directory_key_bindings_dos.py": "065a4caf4eb47c5f06330360887abd110cb4884594345e75d19149eed25f1541",
     "src/aspect/compiler.py": "e02b1d3bc4e201ef889a95389f9ea0778b41788a224d5c6428df2302bfc585a2",
-    "standalone/record_meta_shared_carrier.py": "942fca1f3520150d4818dc4014512c6aaeccf8267131e4d321c627bda462b489",
+    "standalone/record_meta_shared_carrier.py": "6ef345517815293697850ec121fd637ccee221af374ba1d951a1e53debcaa1aa",
     "docs/META_SHARED_CARRIER.md": "b698edc2ffaf4195d1ea8ad59e450e40fb9c06bde196fa2b8dc79f8649c2bed7"
   },
   "receipts": {

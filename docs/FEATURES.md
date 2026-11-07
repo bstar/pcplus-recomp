@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Shared-parent live Enigma transfers](META_SHARED_ENIGMA_TRANSFERS.md) pass
+actual11521-byte download and65539-byte upload through the on-disk SynthModem
+Telnet proxy, exact files/protocol closure/menu return and hardware cleanup.
+The package/archive tools still need matched PCMETA support before packaging;
+physical acceptance and full original parity remain open.
+
 [Shared-parent carrier recovery](META_SHARED_CARRIER.md) passes eighteen
 ordinaryDOS8086 transfer-loss/redial cases and four ASPECT/window/disconnect
 cases with full diagnostics in386/UMB. A separate DOS8 witness identifies the
