@@ -197,6 +197,10 @@ ENTRY(table,TABLE_LABEL,
  "F1 saves changes; Escape returns. Y then applies a checked snapshot;\n"
  "other answers retain the active table. Only table mode is eligible.\n"
  "Capture closes while the UART and interrupt belong to the editor.");
+#ifdef TERMINAL_KEYMAP_EDITOR
+ENTRY(keymap,"Keyboard Mapping               Alt-F8",
+ "Edit the selected keyboard file. Checked bindings reload on return.");
+#endif
 ENTRY(script,"Run script",
  "Run a compiled ASPECT script from a local DOS file.\n"
  "Enter a DOS 8.3 path; Escape cancels. The script temporarily owns\n"
@@ -378,6 +382,10 @@ static const item MENU_TEXT items[]={
 #endif
 #ifdef TERMINAL_META_EDITOR
  ,ROW(meta_keys,3,0x3200,'M')
+#endif
+
+#ifdef TERMINAL_KEYMAP_EDITOR
+ ,ROW(keymap,3,0x6f00,'K')
 #endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))
@@ -764,6 +772,10 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
    phase=11;phone_log_controls_event(0,0,view);return 1;}
 #endif
   n=command_reference_event(1,key,view);
+#ifdef TERMINAL_KEYMAP_EDITOR
+  if(n==0x100+KEYMAP_EDITOR_ACTION){command_menu_action=0x6f00;command_menu_active=0;return 0;}
+  if(n==0x300+KEYMAP_EDITOR_ACTION){for(i=0;i<COUNT;++i)if(items[i].key==0x6f00){selected=i;break;}category=3;phase=1;draw();return 1;}
+#endif
 #ifdef TERMINAL_META_EDITOR
   if(n==0x100+META_KEYS_ACTION){phase=17;meta_front_event(0,0x3200,view);return 1;}
   if(n==0x300+META_KEYS_ACTION){for(i=0;i<COUNT;++i)if(items[i].key==0x3200){selected=i;break;}category=3;phase=1;draw();return 1;}

@@ -1,5 +1,8 @@
 #ifndef PCPLUS_COMMAND_MENU_H
 #define PCPLUS_COMMAND_MENU_H
+#ifdef TERMINAL_KEYMAP_EDITOR
+#define KEYMAP_EDITOR_ACTION 127U
+#endif
 /* Foreground view. The reference variant uses a separate code bank and a far
  * cdecl entry; older variants retain the CONFIG_CODE-local near entry.
  * The redisplay owner supplies the frame;

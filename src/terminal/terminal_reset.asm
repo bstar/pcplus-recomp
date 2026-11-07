@@ -426,6 +426,7 @@ RESET_BYTE_COUNT equ ($-reset_byte_addresses)/2
 SEGMENT _BSS public align=16 class=BSS use16
 reset_words: resw RESET_WORD_COUNT
 reset_bytes: resb RESET_BYTE_COUNT
+global reset_keymap
 reset_keymap: resb 948
 reset_tabs: resb 30
 SEGMENT STACK stack align=16 class=STACK use16

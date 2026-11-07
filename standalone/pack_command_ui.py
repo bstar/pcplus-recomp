@@ -6,13 +6,15 @@ import re
 
 TOKENS = re.compile(r'/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\])*"', re.S)
 
-def pack(source, output, pair_limit=64, meta_editor=False):
+def pack(source, output, pair_limit=64, meta_editor=False, keymap_editor=False):
     assert pair_limit in (0,64,128)
     text = source.read_text()
     # Exclude the optional entry before dictionary construction. Otherwise its
     # inactive literals change every existing packed label in disabled builds.
     if not meta_editor:
         text = re.sub(r'(?m)^#ifdef TERMINAL_META_EDITOR\nENTRY\(meta_keys,.*?^#endif\n', '', text, flags=re.S)
+    if not keymap_editor:
+        text = re.sub(r'(?m)^#ifdef TERMINAL_KEYMAP_EDITOR\nENTRY\(keymap,.*?^#endif\n', '', text, flags=re.S)
     literals = []
     for match in TOKENS.finditer(text):
         token = match.group()

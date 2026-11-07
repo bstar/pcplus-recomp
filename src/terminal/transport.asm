@@ -479,6 +479,16 @@ terminal_keyboard_dispatch_far:
  call terminal_script_start
  jmp .done
 .script_not_selected:
+%ifdef TERMINAL_KEYMAP_EDITOR
+ extern terminal_keymap_edit_start
+ cmp ax,0x6f00
+ jne .keymap_not_selected
+ global terminal_keymap_dispatch_site
+ terminal_keymap_dispatch_site equ $
+ call far terminal_keymap_edit_start
+ jmp .done
+.keymap_not_selected:
+%endif
 %ifdef TERMINAL_REFERENCE
  cmp ax,0x1100 ; Original Alt-W: translation table.
  je .translation_editor

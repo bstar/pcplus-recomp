@@ -33,6 +33,14 @@ CONFIG_ENTRY _xlt_live_commit,2
 CONFIG_ENTRY _xlt_live_initialize,5
 CONFIG_ENTRY _xlt_live_reload,3
 CONFIG_ENTRY _xlt_live_editor,3
+%ifdef TERMINAL_KEYMAP_EDITOR
+CONFIG_ENTRY _keymap_live_bind,0
+CONFIG_ENTRY _keymap_live_prepare,3
+CONFIG_ENTRY _keymap_live_reload,0
+%ifndef TERMINAL_DIRECTORY_RESOURCE_OWNER
+CONFIG_CDECL _config_keymap_live_read,_keymap_dos_read,4
+%endif
+%endif
 CONFIG_ENTRY _redisplay_event,3
 CONFIG_ENTRY _program_execute,2
 CONFIG_ENTRY _ymodem_run,2

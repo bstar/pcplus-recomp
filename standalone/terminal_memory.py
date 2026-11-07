@@ -203,6 +203,24 @@ def inspect_terminal_memory(binary,map_path):
   displacement=struct.unpack_from('<h',code,at+1)[0]
   assert symbols[source][0]==symbols[target][0]
   assert (symbols[source][1]+at+3+displacement)&65535==symbols[target][1],(source,'wrong near target')
+ if 'terminal_keymap_edit_start' in symbols:
+  keybank=next(c for c in code_segments if c['name']=='KEYMAP_CODE')
+  for name in ('terminal_keymap_edit_start','terminal_keymap_edit_prepare','terminal_keymap_edit_complete'):
+   assert symbols[name][0]==keybank['relative_segment']
+  routes=[('terminal_keymap_queue_site','terminal_keymap_queue'),
+   ('terminal_keymap_prepare_site','terminal_keymap_edit_prepare'),
+   ('terminal_keymap_complete_site','terminal_keymap_edit_complete'),
+   ('terminal_keymap_dispatch_site','terminal_keymap_edit_start'),
+   ('terminal_keymap_cprepare_site','_keymap_live_prepare_far'),
+   ('terminal_keymap_creload_site','_keymap_live_reload_far')]
+  for site,target in routes:
+   assert raw(site,5)==b'\x9a'+struct.pack('<HH',symbols[target][1],symbols[target][0]),(site,target)
+   assert address(site)+3 in relocations,(site,'missing far relocation')
+  for site,target in [('terminal_keymap_bind_site','_keymap_live_bind'),('terminal_keymap_queue_common_site','terminal_program_start')]:
+   near_call(site,target,suffix=b'')
+  near_call('terminal_keymap_read_key','terminal_read_foreground_key')
+  extra.update(keymap_editor_far_routes_verified=len(routes),keymap_editor_near_routes_verified=3,
+   keymap_editor_bank_bytes=keybank['bytes'])
  if 'terminal_local_control_key' in symbols:
   config=next(c for c in code_segments if c['name']=='CONFIG_CODE')
   assert symbols['terminal_local_control_key'][0]==config['relative_segment']
@@ -865,7 +883,8 @@ def inspect_terminal_memory(binary,map_path):
   resource_enabled='_terminal_directory_resources_run' in symbols
   line_port_enabled='_line_port_front_run' in symbols
   conditions={'TERMINAL_DIRECTORY_STORAGE':storage_enabled,
-   'TERMINAL_DIRECTORY_RESOURCE_OWNER':resource_enabled,'TERMINAL_LINE_PORT':line_port_enabled}
+   'TERMINAL_DIRECTORY_RESOURCE_OWNER':resource_enabled,'TERMINAL_LINE_PORT':line_port_enabled,
+   'TERMINAL_KEYMAP_EDITOR':'_keymap_live_bind' in symbols}
   enabled=[True]
   for line in abi.read_text().splitlines():
    if not line or line.startswith(';'):continue
@@ -911,7 +930,7 @@ def inspect_terminal_memory(binary,map_path):
     near_call(name+'_resident',target,prefix=prefix,suffix=suffix)
    config_bridges+=1
   assert enabled==[True], 'Unbalanced configuration ABI conditions'
-  assert config_bridges==((99 if storage_enabled else 94)+(3 if resource_enabled else 0)+(1 if line_port_enabled and not storage_enabled else 0)),'Incomplete configuration ABI validation'
+  assert config_bridges==((99 if storage_enabled else 94)+(3 if resource_enabled else 0)+(1 if line_port_enabled and not storage_enabled else 0)+((3 if resource_enabled else 4) if '_keymap_live_bind' in symbols else 0)),'Incomplete configuration ABI validation'
   if 'config_cdecl_tail_entries'in symbols:extra['configuration_cdecl_tail_frames_verified']=True
   if 'config_shared_cdecl_entry'in symbols:
    assert symbols['config_shared_cdecl_entry'][0]==symbols['config_shared_cdecl_entry_end'][0]==config_seg

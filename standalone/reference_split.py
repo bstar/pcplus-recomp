@@ -11,7 +11,7 @@ def split(source,output):
  table=text[text.index('static const reference_item CONST items[]={'):text.index('#define COUNT')]
  rows=re.findall(r'ITEM\((\w+),(0x[0-9a-f]+),\d+,\d+,(\d+)\)',table)
  assert len(rows)==39 and len({k for n,k,a in rows})==39
- start=text.index('#if defined(TERMINAL_DIRECTORY_VIEW)',text.index('static word selected'))
+ start=text.index('#if defined(',text.index('static word selected'))
  end=text.index('static word length(',start)
  methods=text[start:end]
  unavailable=methods.index('unsigned __far __cdecl command_reference_unavailable(')

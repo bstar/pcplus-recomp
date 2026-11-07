@@ -88,6 +88,8 @@ global terminal_translation_edit_status
 terminal_translation_edit_executable: times 64 db 0
 terminal_translation_edit_tail: times 96 db 0
 terminal_translation_edit_status: dw 0 ;1queued,2applied,3declined,4unavailable,5read,6unsafe,7child.
+global terminal_keymap_marker
+terminal_keymap_marker:
 edit_command: db 'XLTEDIT',0
 edit_unavailable: db 'Input table editor unavailable.',0
 edit_failed: db 13,10,'Input table editor failed; active table retained. Press a key.',0

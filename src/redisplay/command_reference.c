@@ -106,9 +106,12 @@ LABEL(help_busy,"Help could not be queued. Finish the active program or port ope
 #endif
 static word selected,refusal;
 static word __far *view;
-#if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL) || defined(TERMINAL_GATEWAY) || defined(TERMINAL_FILE_DIRECTORY) || defined(TERMINAL_FILE_VIEWER)
+#if defined(TERMINAL_KEYMAP_EDITOR) || defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL) || defined(TERMINAL_GATEWAY) || defined(TERMINAL_FILE_DIRECTORY) || defined(TERMINAL_FILE_VIEWER)
 static word action(word i)
 {
+#ifdef TERMINAL_KEYMAP_EDITOR
+ if(items[i].key==0x6f00)return KEYMAP_EDITOR_ACTION;
+#endif
 #ifdef TERMINAL_META_EDITOR
  if(items[i].key==0x3200)return META_KEYS_ACTION;
 #endif

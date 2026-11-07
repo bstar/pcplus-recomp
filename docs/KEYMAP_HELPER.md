@@ -85,9 +85,10 @@ four-byte edit and preserves all other file/hardware checks. An early partial
 PRM fixture was rejected for invalid mouse scales before connecting; it is not
 a child-run result. The accepted fixture supplies valid mouse/display settings.
 
-Remaining gates include dedicated Alt-F8 ownership/admission, matched helper
-packaging, strict post-return mapping reload/live publication and parent failure
-handling. Full native intro/about/prompt styling, wider DOS filename prompt
+[Dedicated Alt-F8 integration](KEYMAP_LIVE.md) now adds guarded PROGRAM entry,
+strict frozen-path reload, live publication/RIS updates and parent failure
+handling in a separate software checkpoint. Matched helper packaging and
+mapper-specific BBS/physical acceptance remain open. Full native intro/about/prompt styling, wider DOS filename prompt
 characters, new-file/default behavior, monochrome/other geometries and physical
 acceptance remain open. Current foreground support requires color80x25 page0;
 it does not change video mode. No new parent or helper has been deployed;

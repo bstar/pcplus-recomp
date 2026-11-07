@@ -316,7 +316,7 @@
     },
     "src/redisplay/command_menu.c": {
       "profile": "no-inline",
-      "source_sha256": "4ec7baf4cf1216a93087842f411cffe5f9c4c7dee82abb3d25b88bd93373bc66",
+      "source_sha256": "970553a6c369a4f79349fd0aae8b2068019d9cfcf6cea884b7347a5383852bc8",
       "control_code_data_bytes": [
         12824,
         84
@@ -328,7 +328,7 @@
     },
     "src/redisplay/command_reference.c": {
       "profile": "no-inline",
-      "source_sha256": "94e8b09c739563604ff44786c6969316f5f3b3ac856129204a563f17d2015878",
+      "source_sha256": "e4be751aaeabaa2a147215ced1c942f12cbf7ef7b0c773a649362d0728501ec4",
       "control_code_data_bytes": [
         3484,
         8

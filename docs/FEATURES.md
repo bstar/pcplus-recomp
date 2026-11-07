@@ -1,10 +1,17 @@
 # Full application reconstruction checklist
 
+[Live Alt-F8 keyboard mapping](KEYMAP_LIVE.md) adds the dedicated parent action,
+original reference and Setup entry, strict frozen-path reload and live/RIS
+publication through the existing PROGRAM owner. Matched source helper and exact
+whole-file DOS workflows are checked separately from package/BBS-modal/physical
+acceptance. Full original helper defaults and remaining UI parity stay open.
+
 [Foreground keyboard helper](KEYMAP_HELPER.md) now joins the source screen and
 field model to checked full-size KBD persistence.14 DOS8086 workflows,19 save
 fault boundaries/eight load cases, isolated source reproduction and an actual
-existing-PROGRAM direct/open/save/serial-return pass. Dedicated Alt-F8/reload, matched
-packaging, remaining native UI/defaults and physical acceptance remain open.
+existing-PROGRAM direct/open/save/serial-return pass. Dedicated Alt-F8/reload is
+now covered by the live checkpoint above; matched packaging, remaining native
+UI/defaults and physical acceptance remain open.
 
 [Source keyboard-mapping screen](KEYMAP_SCREEN_SOURCE.md) matches all4000
 original blank ANSI frame bytes and all65536 original dispatch inputs. DOS8086

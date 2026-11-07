@@ -24,6 +24,14 @@ terminal_load_keyboard:
  call terminal_initialize_keymap
  or ax,ax
  jnz .bad
+%ifdef TERMINAL_KEYMAP_EDITOR
+ extern _keymap_live_bind
+ global terminal_keymap_bind_site
+ terminal_keymap_bind_site equ $
+ call _keymap_live_bind
+ or ax,ax
+ jnz .bad
+%endif
  test word [terminal_option_mask],512
  jz .ok
  mov ax,terminal_keyboard_io

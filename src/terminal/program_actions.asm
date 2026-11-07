@@ -523,6 +523,10 @@ terminal_program_poll:
  jmp .child_status
 .not_external_child:
 %endif
+%ifdef TERMINAL_KEYMAP_EDITOR
+ cmp word [terminal_program_kind],13
+ je .keymap_child
+%endif
  cmp word [terminal_program_kind],4
  je .script_child
  cmp word [terminal_program_kind],3
@@ -550,6 +554,18 @@ terminal_program_poll:
  or ax,ax
  jnz .setup_denied
  jmp .direct_child
+%ifdef TERMINAL_KEYMAP_EDITOR
+.keymap_child:
+ mov word [terminal_program_result],1
+ mov word [terminal_program_result+4],0xffff
+ extern terminal_keymap_edit_prepare
+ global terminal_keymap_prepare_site
+ terminal_keymap_prepare_site equ $
+ call far terminal_keymap_edit_prepare
+ or ax,ax
+ jnz .setup_denied
+ jmp .direct_child
+%endif
 .edit_child:
  call terminal_translation_edit_prepare
  or ax,ax
@@ -571,6 +587,10 @@ terminal_program_poll:
  je .check_child_exit
  cmp word [terminal_program_kind],4
  je .check_child_exit
+%ifdef TERMINAL_KEYMAP_EDITOR
+ cmp word [terminal_program_kind],13
+ je .check_child_exit
+%endif
  cmp word [terminal_program_kind],3
  jne .record_status
 .check_child_exit:
@@ -603,6 +623,16 @@ terminal_program_poll:
  call program_resume_flow
  sti
 .not_script_complete:
+%ifdef TERMINAL_KEYMAP_EDITOR
+ cmp word [terminal_program_kind],13
+ jne .not_keymap_complete
+ extern terminal_keymap_edit_complete
+ global terminal_keymap_complete_site
+ terminal_keymap_complete_site equ $
+ call far terminal_keymap_edit_complete
+ jmp .restore_screen
+.not_keymap_complete:
+%endif
  cmp word [terminal_program_kind],3
  jne .setup_complete
  ; A failed/misbehaving editor must still leave its question readable.
