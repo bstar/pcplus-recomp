@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Matched keyboard-helper package](KEYMAP_PACKAGE.md) adds16 public files,
+18 admission cases and actual packaged START/Alt-F8 save/return with private
+fixtures preserved.2674-file isolated source reproduction matches the ZIP;
+disabled packaging retains the installed archive exactly. Paired Synchronet
+tests now isolate RTS gating from byte pacing. No deployment or physical
+acceptance is implied; selected KBD shape and wider regression gates remain.
+
 [Connected keyboard-mapper return](KEYMAP_BBS.md) passes actual Enigma and
 Synchronet editor save/return, exact frames/cursors, continued input and zero
 DOS exit. Synchronet passes with the RTS-aware lab model; the earlier transparent

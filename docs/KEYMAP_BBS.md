@@ -42,9 +42,10 @@ draft abort, unchanged message bodies/statistics and exact screen oracle pass.
 This distinguishes the transparent-fixture overrun from acceptance with modeled
 RTS flow. It does not establish real modem latency, CTS transitions, DCD loss,
 FIFO behavior or physical Boca/SPA2102/SIP/audio performance.
-The model also changes delivery granularity from32 bytes to one. An otherwise
-identical ungated pacing control remains open, so this is not a single-variable
-proof that RTS gating alone explains the transparent-fixture failure.
+The model also changes delivery granularity from32 bytes to one. The subsequent
+[matched pacing control](KEYMAP_PACKAGE.md) holds that granularity and framing
+fixed: ignoring RTS still exits6, while respecting it passes. This supports the
+flow-gating explanation within the model; physical behavior remains unverified.
 
 Failed sessions left synthetic Synchronet draft files, which were preserved in
 ignored lab storage before retrying. The extra draft-recovery prompt caused two

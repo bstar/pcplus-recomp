@@ -62,7 +62,9 @@ executables or private keyboard files are application/test inputs.
 [Actual BBS mapper returns](KEYMAP_BBS.md) now supplement this checkpoint:
 edit/save, exact frame/cursor restoration and subsequent editor input pass in
 Enigma and Synchronet, the latter using an RTS-aware software modem model.
-Remaining gates include matched-helper package admission, targeted refusal/close-fault
-injection and physical Boca/SPA2102 acceptance. Native
+[Matched-helper packaging](KEYMAP_PACKAGE.md) now passes source reproduction,
+admission and a packaged START/Alt-F8 edit/save/return test. Remaining gates
+include targeted refusal/close-fault injection, current-candidate connection
+regressions and physical Boca/SPA2102 acceptance. Native
 intro/about/prompt styling, broader filenames, new-file/default behavior and
 other display geometries remain open. The installed RA608E10 package is unchanged.
