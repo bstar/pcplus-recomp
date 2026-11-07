@@ -1,0 +1,37 @@
+{
+  "component_verified": true,
+  "application_integrated": false,
+  "physical_runtime_verified": false,
+  "installed_package_changed": false,
+  "sources": {
+    "docs/LINE_PORT_RECOVERY.md": "3a956f0acaa02b47551570c0b5f4a45cd2dd5c1e05bfa291869201eed9ee1cd8",
+    "reconstruction/line_port/key.asm": "a925942419efcebd7bbbcd7a2a426f6887ddc168e8fdfaa9a2a60ffb80de2782",
+    "reconstruction/line_port/provenance.json": "0091a60de900ea6d011d5f69439320a46642ed9ce52190d9224a0f232526c40d",
+    "reconstruction/line_port/recover.py": "bc443d65d23f1ed607d23e15d2c787aeda311d3c0af84b6d39813505a6796e99",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/build_line_port.py": "1638a57ea165124ebfe2d87661533a8de1ff2e7d4731a3c87f8ba2ad74d9e7c0",
+    "standalone/check_line_port.py": "e6df06782462d5d89757e29bafab824da1c0df27677384fcc092549f66763576",
+    "standalone/line_port_host.asm": "3d42e28ee51303d4e5ac65fddd067d65299d68179b581a10603ebaf3f4fcf78b",
+    "standalone/prove_line_port_source.py": "5d6c45c57c713d3bc0f5072bd3e9d10a9ebddedf3b67addaab5782074cdb34fe",
+    "standalone/record_line_port.py": "4e16520ed8bf4f465fb306ccea0c109f25107f041bd6747e4f9dc047469137a1",
+    "standalone/test_line_port_dos.py": "c77a571207f5549b9708d84c8a4e41a43c21ac27133c1c794108546520016d41"
+  },
+  "receipts": {
+    "build/line-port/manifest.json": "566fd41b60bda48d53df71a2dd037580013811af24e1d9bbe0b77c876464e4a8",
+    "build/line-port/selector-results.json": "c99aecfe19e918a04b170ff688871399c56b09c4e62a66c12405783304d1d8a2",
+    "build/line-port/dos-results.json": "c514ab0c6fd09910b3269de2078d9ceae96e0d031fcbaa4bb8a6a7b2682a66da",
+    "build/line-port/source-proof/result.json": "73ac616ffad56f95ba39c68f673d24b148e9df108ff80ffb9b9c1873619bae66"
+  },
+  "summary": {
+    "exact_bytes": 414,
+    "instructions": 135,
+    "exhaustive_cases": 262144,
+    "dos_8086_vectors": 40,
+    "isolated_source_files": 6
+  },
+  "limitations": [
+    "Bell/quiesce hardware services are recording boundaries.",
+    "Popup rendering, checked save/apply and live terminal integration remain open.",
+    "The installed RBADE091 payload and its physical acceptance are separate."
+  ]
+}

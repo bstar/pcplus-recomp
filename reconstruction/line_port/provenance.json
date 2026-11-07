@@ -1,0 +1,32 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 20,
+  "entry": 61532,
+  "end_exclusive": 61946,
+  "source_file_offset": 127292,
+  "bytes": 414,
+  "instructions": 135,
+  "sha256": "bf5ee58e858643a8d3076b2f4a9d30c49f75055e00ed561f457e666d9170551b",
+  "state": {
+    "0x1b84": "line_port_port",
+    "0x1b86": "line_port_baud",
+    "0x1b88": "line_port_parity",
+    "0x1b8a": "line_port_stop",
+    "0x1b8c": "line_port_bits"
+  },
+  "services": {
+    "0x376d": "line_port_bell",
+    "0xadba": "line_port_quiesce"
+  },
+  "REA": {
+    "analysis_image_sha256": "6bf3e7502a80735ba544174a7b19fb291288d908b826ce3e90ba25977cd03a64",
+    "key_dossier": "ev_394c7be3e6e48c412d327c081c2588fb78c243c68f1ec47359b8a96b56c5c89b",
+    "key_assembly": "ev_c0d69340f77c15c75b08ec130b186bfc7478b2f47d575591fedb5914b1c152ca",
+    "wrapper_dossier": "ev_fa051b50c21b78d453b383b0aed32c34dacdaac5468804f8c93c2ea749f26519",
+    "save_dossier": "ev_629b21d05031dec974bf7ce423600c150ebd02a169f4e50ec4f121c0245483b0"
+  },
+  "limitations": [
+    "Static synthetic overlay image was analyzed, never executed. Exact body bytes independently match identified original file region.",
+    "Bell and UART quiesce are explicit external boundaries. Popup/frame/render/save/apply/hardware and application integration remain separate."
+  ]
+}

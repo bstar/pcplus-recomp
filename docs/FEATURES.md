@@ -2817,3 +2817,13 @@ isolated source rebuild reproduces the helper and repeats all18 sessions.
 Global terminal entry/owner integration, full-parent memory and connected
 serial composition, real context content, broader UI/input/faults and physical
 acceptance remain open. No physical deployment or terminal change occurred.
+
+## Native Line/Port selector checkpoint (2026-11-07)
+
+[Alt-P recovery](LINE_PORT_RECOVERY.md) now includes 414 exact original bytes
+(135 instructions), source-only flat/OMF builds, 262144 exhaustive key/state
+cases, 40 actual DOS8086 vectors and isolated public-source reproduction.
+The popup wrapper's separate session-apply/save behavior is traced, but its
+rendering, persistence and live terminal/UART integration remain open. Alt-P
+still opens the general editor. Installed RBADE091 is unchanged; no physical
+acceptance or F03/full-parity completion is implied.
