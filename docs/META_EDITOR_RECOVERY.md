@@ -5,6 +5,12 @@ checkpoint recovers three native components needed for that command and tests
 their behavior independently. It does not select, package or install a new
 terminal. The existing KEY executor and its strict reader remain separate.
 
+The subsequent [serviced text-field model](META_TEXT_MODEL.md) resolves the
+Meta-specific accept/cancel and edit rules through a separate original-instruction
+replay. The modeled text callback in this historical component test remains an
+explicit boundary; its cancellation marker is not silently reclassified as the
+original shared editor's behavior.
+
 Original executable identity:
 `6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904`.
 REA/Ghidra 12.1.2 analyzed the existing overlay-3 analysis image

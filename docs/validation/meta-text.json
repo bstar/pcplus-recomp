@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "component_only": true,
+  "terminal_changed": false,
+  "installed_changed": false,
+  "physical_runtime_verified": false,
+  "diagnostic_sha256": "330bd8d6027354808906f21016e6ab231da8f5bddc73d3e24c86b7a18478b1f2",
+  "cases": 554,
+  "key_states": 8418,
+  "API_guards": 12,
+  "state_bytes": 64,
+  "isolated_source_files": 6,
+  "native_authority": {
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "ranges": [
+      {
+        "start": 30848,
+        "end_exclusive": 30879,
+        "source_file_offset": 35456,
+        "sha256": "041fd3e02658023721b9721d2c709e5058d24eaff44c93b757831838714f3043"
+      },
+      {
+        "start": 31188,
+        "end_exclusive": 32018,
+        "source_file_offset": 35796,
+        "sha256": "8de5a03982283d2bf2a2f575e8fec5c815fcdd4827961b12168041dafdd3d2b5"
+      }
+    ],
+    "REA_pseudocode": "ev_8c003c884636ef6c380b8805a8406868f097d76ba0b450d3bfe38dbd8cf4a278",
+    "scope": "Actual original 7880/79d4 and overlay3 e261 callback instructions plus original CRT helpers. Synthetic52-byte strings only; keyboard, display, cursor, visibility and bell boundaries modeled. No DOS/BIOS/UART, actual screen pixels, file persistence or physical acceptance."
+  },
+  "sources": {
+    "standalone/build_meta_text.py": "1018d38e2f61d04d335faf008482c2f436eef7cdca7f3e38fed78398e5011e32",
+    "standalone/meta_text_driver.c": "d0d51af719d852a0b531b0115e8c5552dc039c3065b387de9329f971f56fc96a",
+    "standalone/meta_text_padding.asm": "671b607baa748a70139f86f5de5ad8a9b26aa5c09c605a26f82c9bb3bffae6e9",
+    "standalone/fixtures/meta_text_native.json": "cfab56937e2c8fc6c6d6eea03f645087ec7e37f97b330f642e87f5dc1d7a8ab5",
+    "src/key_mapping/meta_text.c": "94a55b00ac866dafd1fa8499c78dd918b8b965294dcd911bb70db0d7198a83b6",
+    "src/key_mapping/meta_text.h": "5c7f1a876f418d87eb8d14daa42e044633c348252fe6633d108b96fb91dcf323",
+    "standalone/record_meta_text.py": "e945d47eaf728dcfd07ef7a3e66c697c2141c965d47bc2c64a2ca0e82f5a90ac",
+    "standalone/prove_meta_text_source.py": "2bf7bf0a7f7240e0d0b5a2d9a45481b3839b1ba96e0419a75b389148568d59c5",
+    "standalone/capture_meta_text_original.py": "961a2c094f488aeb1757d5e1403160cecc5924215c9a4e431eff5d6edaca2411",
+    "docs/META_TEXT_MODEL.md": "321751377edc6a8925af5257b7b0199b4825cdf5423f006137073e662f360903"
+  },
+  "receipts": {
+    "build/meta-text-far-20261107-final/result.json": "faa20b30b697ce202641869be4b45aa9b1f2cafe375cb9000414bc90548d9f5c",
+    "build/meta-text-source-20261107-final/result.json": "6e2baf248c6b78f402b10dd646ab63aa956ac534b631d6cbc4f7c429ac22f3b3"
+  },
+  "original_inputs": [],
+  "limitations": [
+    "Frozen traces derive from actual original instructions with synthetic text and modeled peripheral UI services; they are not VGA/BIOS/UART or physical observations.",
+    "Serviced memory-only field API, actual source-built DOS8086 with separate CS and DS=SS; no original executable, private data, prior objects or Git metadata in the isolated build.",
+    "Alt-M window/navigation, persistence/resource identity, action-table adoption, application capacity, physical acceptance and full shared-editor/F02/F05/F06 parity remain open."
+  ]
+}

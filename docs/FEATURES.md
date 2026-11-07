@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Serviced Meta Keys text field](META_TEXT_MODEL.md) matches 554 original-instruction
+traces containing 8,418 key states. Actual source-built DOS8086 tests compare
+field bytes, complete record outputs, cursor/shape, return codes and bell counts,
+including all byte-valued keys. Twelve far-pointer/state guards pass with the
+model and caller in different code segments. A six-file isolated source build
+reproduces the diagnostic exactly. Alt-M UI, persistence, foreground ownership
+and live adoption remain open; the installed parent is unchanged.
+
 [Native Meta Keys components](META_EDITOR_RECOVERY.md) recover 347 exact bytes
 for defaults, the field-key callback and row editing. Actual source-built
 DOS8086 tests cover all 65,536 field-key inputs, 320 row scenarios and three
