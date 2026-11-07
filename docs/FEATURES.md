@@ -3,15 +3,17 @@
 The [new-file helper checkpoint](KEYMAP_NEWFILE.md) recovers original missing-file
 semantics and adds unsaved blank tables with explicit creation, exact existing
 file preservation and parent publication/frozen-selection checks. Original
-observations and source/BBS tests are separate from reviewed package promotion.
+observations and source/BBS tests are separate from package/hardware acceptance.
 This corrects the earlier assumption that missing-file loading imports factory
 mappings; the observed path clears bindings instead.
 
-Current reviewed software checkpoint: [preserve-length keyboard editing](KEYMAP_PREFIX.md)
-and [contract2 packaging](KEYMAP_PACKAGE.md). The helper accepts existing1..33
+Current reviewed software checkpoint: [new-file creation](KEYMAP_NEWFILE.md),
+[preserve-length keyboard editing](KEYMAP_PREFIX.md) and
+[contract3 packaging](KEYMAP_PACKAGE.md). The helper accepts existing1..33
 complete profiles without padding; the parent and other application bytes are
-unchanged. All16 package files and their ZIP reproduce from2680 public source
-inputs. Packaged START edits both seven-profile and33-profile synthetic files.
+unchanged. All16 package files and their ZIP reproduce from2684 public source
+inputs. Packaged START edits both seven-profile and33-profile synthetic files
+and creates a new file without redirecting the frozen selected file.
 The selected physical installation remains the preceding RA608E10 package.
 The following chronological checkpoints retain their original scope and hashes;
 their older pending statements are superseded only by linked later evidence.
@@ -23,7 +25,7 @@ other internal owner combinations remain open.
 
 Immediate acceptance work remains the actual private configuration and physical
 Boca/SPA2102/SynthModem/LoC Enigma route. Independent software work remains
-other owner-state refusal/return composition and original helper UI/defaults.
+other owner-state refusal/return composition and original helper UI/resource-search behavior.
 Full native parity still requires the complete ASPECT command inventory, every
 advertised emulation/protocol and Host mode, plus the other F01–F16 requirements
 below. A source-built maintained package does not close those feature gates.

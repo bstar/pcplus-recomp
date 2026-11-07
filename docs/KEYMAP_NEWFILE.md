@@ -44,5 +44,7 @@ and size audits show zero different cells, and Synchronet's measured RTS pause
 is8.897 seconds without BBS delivery. Enigma uses DOS8086; Synchronet's
 diagnostic TSRs use386/UMB. These are software serial/Telnet tests, not a
 physical Boca/SPA2102/SIP/audio call or a test of new-file creation inside a BBS
-editor. Reviewed package promotion, private configuration and physical
+editor. The [reviewed contract3 package](KEYMAP_PACKAGE.md) now also passes
+packaged START creation/editing,29 admission checks and exact16-file/ZIP
+reproduction from2684 public inputs. Private configuration and physical
 acceptance remain separate. The installed payload and selector are unchanged.

@@ -1,10 +1,22 @@
 # Matched keyboard-helper package
 
-The following describes contract1's historical full-file checkpoint. The
-current recipe uses the [contract2 prefix-file extension](KEYMAP_PREFIX.md),
+The current recipe uses [contract3's explicit-save new-file workflow](KEYMAP_NEWFILE.md),
+helper `5a917b93…` and archive
+`f0f1b132e9ed8dbc9423ca5082e89ab1f08870469eb26ba131959f1f1ea32ab6`.
+[The current receipt](validation/keymap-newfile-package.json) records29 admission
+cases, packaged DOS8086 COM3/IRQ5 existing-file edits at seven and33 profiles,
+and a separate new-file creation preserving the frozen selected file and all
+private sentinel fixtures. All16 files and the ZIP reproduce from2684 public
+inputs at tooling commit270e1e5, with application source base38a37d6. Relative
+to contract2, only PCKEYMAP, README and VERSION payload bytes change. The
+feature-disabled archive remains exactly the installed `6f9e1f6f…` archive.
+No selected deployment or physical installation changes.
+
+The following describes preceding checkpoints. Contract2 uses the
+[prefix-file extension](KEYMAP_PREFIX.md),
 helper `618443f4…` and archive `9365ebff…`. It accepts1..33 complete profiles
 and preserves their exact file length. The
-[current package receipt](validation/keymap-prefix-package.json) records26
+[preceding package receipt](validation/keymap-prefix-package.json) records26
 admission checks, packaged DOS8086 COM3/IRQ5 START edits for both seven-profile
 and33-profile files, and an exact16-file/ZIP rebuild from2680 public source
 files at tooling commit4fe5bee. Source base fe43c2b identifies the application
