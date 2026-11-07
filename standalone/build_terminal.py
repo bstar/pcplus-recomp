@@ -29,6 +29,7 @@ parser.add_argument('--chat-redisplay',action='store_true',help='Opt-in Chat Alt
 parser.add_argument('--chat-foreground-text',action='store_true',help='Bind all ten direct Chat TEXT keys through module-owned scheduling; requires echo and compact labels')
 parser.add_argument('--chat-frontend',action='store_true',help='Experimental Alt-O core and keyboard/RX/idle ownership; Help/direct TEXT remain refused; requires adapters')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
+parser.add_argument('--aspect-alarm-policy',action='store_true',help='Opt-in capability19 current ALARM sound/duration scalars')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
 parser.add_argument('--session-projection',action='store_true')
@@ -543,6 +544,9 @@ for index,source in enumerate(sources):
  if args.chat_redisplay:options+=['-DTERMINAL_CHAT_REDISPLAY']
  if args.global_help:options+=['-DTERMINAL_GLOBAL_HELP']
  if args.chat_help:options+=['-DTERMINAL_CHAT_HELP']
+ if args.aspect_alarm_policy:
+  assert args.aspect_snapshot_lease and args.notice_sound
+  options+=['-DASPECT_ALARM_POLICY']
  if args.notice_sound:options+=['-DASPECT_SOUND_POLICY','-DTERMINAL_SOUND']
  if args.notice_input:options+=['-DASPECT_NOTICE_INPUT']
  if args.aspect_keys:options+=['-DASPECT_KEY_ACTIONS']
@@ -847,6 +851,7 @@ for source in c_sources:
  if args.hook_modem:options+=['-dTERMINAL_HOOK_MODEM']
  if args.hook_input:options+=['-dTERMINAL_HOOK_INPUT']
  if args.hook_apply:options+=['-dTERMINAL_HOOK_APPLY']
+ if args.aspect_alarm_policy:options+=['-dASPECT_ALARM_POLICY']
  if args.notice_sound:options+=['-dASPECT_SOUND_POLICY','-dTERMINAL_SOUND']
  if args.notice_input:options+=['-dASPECT_NOTICE_INPUT']
  if args.directory_keys:options+=['-dDIRECTORY_KEY_BINDINGS']

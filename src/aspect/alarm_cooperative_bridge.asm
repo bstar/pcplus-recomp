@@ -11,11 +11,17 @@ _alarm_coop_native: jmp aspect_alarm_alert
 alarm_seconds: jmp _alarm_coop_seconds
 alarm_peek: jmp _alarm_coop_peek
 alarm_read: jmp _alarm_coop_read
+%ifdef ASPECT_ALARM_VM
+extern aspect_string_option_flag,aspect_console_pause_operand
+alarm_option: jmp aspect_string_option_flag
+alarm_operand: jmp aspect_console_pause_operand
+%else
 ; The standalone component calls the alert, not the ASPECT operand wrapper.
 alarm_option:
 alarm_operand:
  xor ax,ax
  ret
+%endif
 alarm_ticks:
  push bp
  mov bp,sp

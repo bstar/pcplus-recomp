@@ -28,6 +28,9 @@ SEGMENT _TEXT public class=CODE use16
 global aspect_alarm_command,aspect_alarm_alert
 extern alarm_duration,alarm_enabled,alarm_option,alarm_operand
 extern alarm_seconds,alarm_tone,alarm_ticks,alarm_peek,alarm_read
+%ifdef ASPECT_ALARM_VM
+extern _runtime_alarm_wait
+%endif
 %endif
 %if ASPECT_ALARM_UNIT=0 || ASPECT_ALARM_UNIT=1
 aspect_alarm_command:
@@ -39,7 +42,11 @@ aspect_alarm_command:
  call alarm_operand
  mov [alarm_duration],ax
 .alert:
+%ifdef ASPECT_ALARM_VM
+ call _runtime_alarm_wait
+%else
  call aspect_alarm_alert
+%endif
  mov [alarm_duration],si
  pop si
  ret

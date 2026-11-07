@@ -321,3 +321,18 @@ unsigned __cdecl aspect_render_callback_dispatch(unsigned operation,unsigned val
  runtime_when_defer_begin();result=callback_dispatch(operation,value);runtime_when_defer_end();
  return result;
 }
+
+#ifdef ASPECT_ALARM_VM
+unsigned __cdecl aspect_render_alarm_policy(unsigned *duration,unsigned *enabled)
+{
+ unsigned sound,low,high;
+ if(!duration || !enabled || !attached || service_check())return ASPECT_RUN_STATE;
+ if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+ sound=aspect_render_request(13,0);
+ low=aspect_render_request(13,1);
+ high=aspect_render_request(13,2);
+ if(service_check() || (sound&0xfffeU)!=0xff00U ||
+    (low&0xff00U)!=0xff00U || (high&0xff00U)!=0xff00U)return ASPECT_RUN_STATE;
+ *duration=(low&255U)|((high&255U)<<8);*enabled=sound&1;return 0;
+}
+#endif

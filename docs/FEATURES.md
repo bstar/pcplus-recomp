@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[ALARM VM staging](ASPECT_ALARM_VM_STAGING.md) now links the recovered operand
+wrapper and serviced alert to an opt-in interpreter with a matching current-
+parent capability19 policy. This variant is **not accepted**: the instrumented
+parent attempts ASPECT but DOS EXEC returns8 before child entry. Its additional
+2368-byte minimum must be measured/funded without reducing capacities, then
+actual VM/WHEN/render/memory/BBS gates repeated. The ordinary interpreter
+remains exact and the installed release is unchanged.
+
 The [ALARM foreground key lease](ASPECT_ALARM_WHEN.md) now protects alert
 completion keys from ordinary Escape-abort/native key dispatch while actual
 WHEN C transport/foreground gates run.50 emulator I/O cases and a35-file cold

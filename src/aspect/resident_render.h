@@ -14,7 +14,12 @@
 #define ASIO_VERSION_RENDER 4U
 #define ASIO_V4_SIZE 48U
 #if defined(ASPECT_SNAPSHOT_LEASE)
+#ifdef ASPECT_ALARM_VM
+#define ASPECT_RENDER_CAP_VERSION 19U
+unsigned __cdecl aspect_render_alarm_policy(unsigned *,unsigned *);
+#else
 #define ASPECT_RENDER_CAP_VERSION 18U
+#endif
 #elif defined(ASPECT_NOTICE_INPUT)
 #define ASPECT_RENDER_CAP_VERSION 16U
 #elif defined(ASPECT_SOUND_POLICY)

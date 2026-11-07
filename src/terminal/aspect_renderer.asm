@@ -5,7 +5,12 @@ BITS 16
 CPU 8086
 %include "resident_bridge.inc"
 %ifdef ASPECT_SNAPSHOT_LEASE
- %define RENDER_CAPABILITY 18
+ %ifdef ASPECT_ALARM_POLICY
+  %define RENDER_CAPABILITY 19
+  extern _terminal_connect_alert_seconds
+ %else
+  %define RENDER_CAPABILITY 18
+ %endif
  extern _terminal_sound_enabled,terminal_program_result,_terminal_mouse_selected_scale
 %elifdef ASPECT_NOTICE_INPUT
  %define RENDER_CAPABILITY 16
@@ -360,12 +365,30 @@ render_body:
  ret
 %ifdef ASPECT_SOUND_POLICY
 .sound_policy:
+%ifdef ASPECT_ALARM_POLICY
+ cmp bx,2
+ ja .operand
+%else
  or bx,bx
  jnz .operand
+%endif
  cmp word [_script_handoff+22],0
  jne .serial
  ; Scalar, read-only policy is valid during an owned PROGRAM lease.
  ; No receive/parser/callback or temporary window state is entered.
+%ifdef ASPECT_ALARM_POLICY
+ or bx,bx
+ jz .alarm_sound
+ mov ax,[_terminal_connect_alert_seconds]
+ dec bx
+ jz .alarm_low
+ mov al,ah
+.alarm_low:
+ xor ah,ah
+ or ax,0xff00
+ ret
+.alarm_sound:
+%endif
  mov ax,[_terminal_sound_enabled]
  and ax,1
  or ax,0xff00

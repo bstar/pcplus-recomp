@@ -422,6 +422,20 @@ fail:
  call aspect_abort
  ret
 
+
+%ifdef ASPECT_ALARM_VM
+extern aspect_alarm_command,_runtime_alarm_prepare
+runtime_alarm_command:
+ call _runtime_alarm_prepare
+ or ax,ax
+ jnz fail
+ call aspect_alarm_command
+ mov ax,[_runtime_error]
+ or ax,ax
+ jnz fail
+ ret
+%endif
+
 global aspect_chain_copy
 aspect_chain_copy: jmp program_strcpy
 
@@ -973,9 +987,16 @@ aspect_stack_arena:
 _runtime_arena: times 0x3aca db 0
  global aspect_dispatch_handlers
 aspect_dispatch_handlers:
+%ifdef ASPECT_ALARM_VM
+%define ALARM_HANDLER runtime_alarm_command
+%else
+%define ALARM_HANDLER unsupported
+%endif
 %assign op 0
 %rep 215
-%if op=0x1d
+%if op=1
+ dw ALARM_HANDLER
+%elif op=0x1d
  dw aspect_clock_date
 %elif op=0xbe
  dw aspect_clock_time
