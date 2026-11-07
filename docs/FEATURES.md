@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[ALARM operand errors and subsequent reuse](ASPECT_ALARM_ERRORS.md) now pass five
+actual-parent malformed/range/truncation cases and seven invocations in one
+terminal: valid, all five expected errors, valid. The final recovery reopens six
+buffered streams and executes a DOS child; owner/ABI/keyboard checks pass.
+Active-alert carrier/service errors and full-duration budgets remain open.
+Application binaries and installation are unchanged.
+
 [ALARM speaker/cleanup observations](ASPECT_ALARM_SPEAKER.md) pass six more
 actual-parent cases: sounding natural completion and native WHEN TRANSMIT,
 sounding Escape/printable/F1 completion and a quiet control. Passive gate reads

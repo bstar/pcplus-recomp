@@ -5,6 +5,7 @@ from pathlib import Path
 import test_aspect_pause_when_dos as pause
 import test_aspect_keys_dos as keys
 from alarm_speaker_observer import instrument
+from alarm_error_fixtures import mutate
 ROOT=keys.ROOT
 PARENT=ROOT/'build/terminal-alarm-policy-admission-20261106'
 CHILD=ROOT/'build/aspect-alarm-vm-numeric-final-20261106'
@@ -14,7 +15,7 @@ def main():
  parser=argparse.ArgumentParser(add_help=False)
  parser.add_argument('--parent-dir',type=Path,default=PARENT)
  parser.add_argument('--child-dir',type=Path,default=CHILD)
- parser.add_argument('--variant',choices=('when','policy','keys'),default='when')
+ parser.add_argument('--variant',choices=('when','policy','keys','errors'),default='when')
  parser.add_argument('--speaker',action='store_true',help='Enable the parent sound policy and sample actual speaker gate/exit state')
  parser.add_argument('--observe-alarm',action='store_true',help='Sample speaker/exit state without enabling sound')
  selected,remaining=parser.parse_known_args();sys.argv=[sys.argv[0],*remaining]
@@ -45,6 +46,12 @@ def main():
  adapter_text=adapter_text.replace("old='if online:\\n       line.append(byte)'", "old='       line.append(byte)'")
  adapter_text=adapter_text.replace("if b'done' in line", "if b'PAUSEDONE' in line")
  exec(compile(adapter_text,str(Path(__file__)),'exec'),keys.__dict__)
+ if selected.variant=='errors':
+  original_compile=keys.renderer.compile_source
+  def compile_error_case(source):
+   data=original_compile(source)
+   return mutate(data,source.splitlines()[0].split(': ',1)[1])
+  keys.renderer.compile_source=compile_error_case
  def definitions():
   rows=original()
   if selected.variant!='when':
@@ -54,10 +61,17 @@ def main():
              ('zero-default','alarm 0\ntransmit "FIRSTDONE"\nalarm',3,5),
              ('override-default','alarm 2\ntransmit "FIRSTDONE"\nalarm',4,7)) if selected.variant=='policy' else tuple(
              (name,'alarm 32767',1,7) for name in ('escape','printable','extended'))
+   if selected.variant=='errors':
+    variants=tuple((name,'alarm -1' if name=='negative' else 'alarm 4',0,0)
+                   for name in ('negative','wide-negative','bad-tag','option-truncated','value-truncated'))
    for name,command,low,high in variants:
     row=dict(template,name='pause-when-'+selected.variant+'-'+name,
              source=template['source'].replace('pause 4',command),expected_min=low,expected_max=high)
     if 'FIRSTDONE' in command:row['key_wire']=row['key_wire'].replace(b'keys',b'keysFIRSTDONE',1)
+    if selected.variant=='errors':
+     row.update(source='; ALARMCASE: '+name+'\n'+row['source'].replace('transmit "PAUSEDONE"','transmit "BADAFTER"'),
+                success=False,expected_exit=5 if 'truncated' in name else 7,
+                screen=[(0,0,'FIRST BYTE SAFE')])
     rows.append(row)
   rows=[r for r in rows if r['name']!='pause-when-future-wait']
   for row in rows:
@@ -67,6 +81,7 @@ def main():
    if selected.variant=='keys':
     key={'escape':'escape','printable':'x','extended':'f1'}[row['name'].rsplit('-',1)[1]]
     row['keys']='p900 enter p5000 '+key+' p3000 space p700 r e a d y p700 a-x'
+   if selected.variant=='errors':row['keys']='p900 enter p6000 space p700 r e a d y p700 a-x'
    assert row['key_wire'].startswith(b'keys') and row['key_wire'].endswith(b'done')
    row['key_wire']=row['key_wire'][4:-4]
    row['no_window']=True
@@ -78,6 +93,10 @@ def main():
  replacement="source=inspect.getsource(renderer.main).replace(\"ROOT/'build/terminal/TERMINAL.EXE'\", "+repr("Path("+repr(str(PARENT/'TERMINAL.EXE'))+")")+").replace(\"ROOT/'build/aspect-runner/ASPECT.EXE'\", "+repr("Path("+repr(str(CHILD/'ASPECT.EXE'))+")")+")"
  text=text.replace("exec(compile(source,__file__,'exec'),scope)","source=source.replace(\"observer='RENDER'\",\"observer='RENDER',observer_high=True\");exec(compile(source,__file__,'exec'),scope)")
  assert text.count(old)==1;text=text.replace(old,replacement)
+ if selected.variant=='errors':
+  old="typed_key_error=case['passive_observer_header'][6]==3"
+  assert text.count(old)==1
+  text=text.replace(old,"typed_ALARM_error=case['passive_observer_header'][6]==spec['expected_exit']")
  exec(compile(text,str(Path(__file__)), 'exec'),keys.__dict__)
  scope=dict(pause.__dict__);scope['definitions']=definitions;scope['BASE']=ROOT/'build/aspect-alarm-vm-dos'
  text=inspect.getsource(pause.main).replace("4 <= elapsed <= 5", "3 <= elapsed <= 5").replace("ROOT / 'build/terminal/terminal.map'", "Path("+repr(str(PARENT/'terminal.map'))+")").replace("ROOT / 'build/aspect-runner/ASPECT.map'", "Path("+repr(str(CHILD/'ASPECT.map'))+")")
@@ -89,8 +108,15 @@ def main():
   old="(3.0, specs[args[0]]['marker'] + QUERY)"
   assert text.count(old)==1
   text=text.replace(old,"(4.5, specs[args[0]]['marker'] + QUERY)")
+ if selected.variant=='errors':
+  old="[(2.0, b'HOLD'), (3.0, specs[args[0]]['marker'] + QUERY)]"
+  assert text.count(old)==1
+  text=text.replace(old,"[(2.0, b'HOLD')]")
+  # Keep actual peer/observer/parent setup and complete key/error checks, but
+  # no successful-alert timing assertions for a command that must abort.
+  text=text[:text.index('    folder = BASE /')]
  exec(compile(text,str(Path(__file__)),'exec'),scope);scope['main']()
- report=ROOT/'build/aspect-alarm-vm-dos'/sys.argv[sys.argv.index('--label')+1]/'pause-checks.json'
+ report=ROOT/'build/aspect-alarm-vm-dos'/sys.argv[sys.argv.index('--label')+1]/('checks.json' if selected.variant=='errors' else 'pause-checks.json')
  assert json.loads(report.read_text())['passed'], 'ALARM VM acceptance remains unproven; inspect preserved captures'
  if selected.speaker or selected.observe_alarm:
   result=json.loads(report.read_text());cases=[]

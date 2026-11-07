@@ -63,3 +63,7 @@ These tests use standard BIOS/ANSI, a UMB observer, an emulated UART and an owne
 raw peer. No physical SIP/audio/CTS test, new cold export or new modern-BBS
 regression is claimed. Products remain exact to the preceding capacity/BBS
 checkpoint; the installed RCC859D7 release remains unchanged.
+
+The subsequent [operand-error checkpoint](ASPECT_ALARM_ERRORS.md) covers five
+invalid operands and subsequent same-parent reuse. It supersedes that portion
+of the remaining list above, without covering errors inside an active alert.
