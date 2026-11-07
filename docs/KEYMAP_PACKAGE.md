@@ -1,6 +1,12 @@
 # Matched keyboard-helper package
 
-The reviewed keyboard-mapper candidate now contains16 public files, including
+The following describes contract1's historical full-file checkpoint. The
+current recipe uses the [contract2 prefix-file extension](KEYMAP_PREFIX.md),
+helper `618443f4…` and archive `9365ebff…`. It accepts1..33 complete profiles
+and preserves their exact file length. Current package verification is recorded
+separately; the old receipts below remain bound to their original bytes.
+
+The preceding keyboard-mapper candidate contains16 public files, including
 the exact tested PCKEYMAP helper beside its parent. The tracked
 [recipe](../standalone/keymap_connection_candidate_recipe.json) builds every
 application from source, checks all payload hashes and produces deterministic

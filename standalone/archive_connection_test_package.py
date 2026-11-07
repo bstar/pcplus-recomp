@@ -2,7 +2,7 @@
 """Archive only the verified public application payload; never select or deploy it."""
 import argparse,json,zipfile
 from pathlib import Path
-from package_connection_test import ROOT,sha,validate_dos_directory
+from package_connection_test import ROOT,sha,validate_dos_directory,reviewed_keymap_profile
 
 def main():
  p=argparse.ArgumentParser(description=__doc__)
@@ -15,7 +15,7 @@ def main():
  if m.get('experimental_chat_loader'):allowed.add('PCCHAT.OVL')
  if m.get('experimental_keymap_editor'):
   allowed.add('PCKEYMAP.EXE')
-  profile=json.loads((ROOT/'standalone/keymap_helper_profile.json').read_text())
+  profile=reviewed_keymap_profile()
   assert m['files']['PCKEYMAP.EXE']==m['products']['PCKEYMAP.EXE']['binary_sha256']==profile['helper_sha256']
   assert m['products']['PCKEYMAP.EXE']['contract']==profile['contract']
  if m.get('experimental_global_help'):allowed.update(('PCHELP.RTE','PCPLUS.HLP'))

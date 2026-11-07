@@ -7,7 +7,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
-from package_connection_test import ROOT,sha,keymap_companion
+from package_connection_test import ROOT,sha,keymap_companion,reviewed_keymap_profile
 
 
 def main():
@@ -22,6 +22,16 @@ def main():
     assert helper.is_relative_to(ROOT/'build') and package.is_relative_to(ROOT/'build')
     original=json.loads(helper.with_name('result.json').read_text())
     blob=helper.read_bytes();rows=[]
+    reviewed=json.loads((ROOT/'standalone/keymap_helper_profile.json').read_text())
+    for name,field,value in [('unknown-version','contract',99),('wrong-profile-size','profile_bytes',947),
+            ('empty-file-allowed','minimum_profiles',0),('excess-profiles','maximum_profiles',34),
+            ('wrong-maximum-size','maximum_KBD_bytes',31285),('padding-allowed','preserves_file_length',False),
+            ('wrong-recovery-exit','recovery_exit',0),('wrong-arguments','arguments','filename')]:
+        profile=copy.deepcopy(reviewed);profile[field]=value
+        try:reviewed_keymap_profile(profile);accepted=True
+        except (AssertionError,KeyError):accepted=False
+        assert not accepted,name
+        rows.append(dict(case=name,accepted=False))
     fixture=out/'helper';fixture.mkdir();binary=fixture/'PCKEYMAP.EXE'
     for name in ('valid','disabled','missing-selection','undeclared','missing-binary','missing-proof','corrupt','forged-proof-hash','not-passed','original-input','stale-source','foreign-source','non-source'):
         proof=copy.deepcopy(original);binary.write_bytes(blob)

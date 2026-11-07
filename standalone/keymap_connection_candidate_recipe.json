@@ -1,6 +1,6 @@
 {
   "kind": "reviewed-source-only-connection-candidate",
-  "source_base_commit": "e508c2906e09e212f73a43f725e97df11a602f25",
+  "source_base_commit": "fe43c2bbfaedf295ee14e36447ef156699f3e7e0",
   "terminal_flags": [
     "--auto-answer",
     "--auto-answer-owner",
@@ -100,19 +100,19 @@
     "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
     "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
     "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
-    "PCKEYMAP.EXE": "0280f9942a5eb9739a28af21405f50ab91be13c2a70b7ac98c5db38fb010ce51",
+    "PCKEYMAP.EXE": "618443f4b12d79c0460c4819b569db82a8b81ecc5e081c5587867e4948d834bd",
     "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
     "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
     "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
     "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
-    "README.TXT": "3136b1940aaef2d4efe091bc6fe2682e2ca086c0b716093ceea052aa14326890",
+    "README.TXT": "f154628f3b6cf885056857395fbeeac9402dd0fcb09c34b2d9553f3bcefb8cea",
     "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
     "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
     "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
-    "VERSION.TXT": "7c6a69dd65906e7ef280c1170e50b8ddc5460f28ef1900a33f4826e30a82fe49",
+    "VERSION.TXT": "1b564c3182456bdafcbad927532dd2441b5f2845a48417bca16b6aa383bf4015",
     "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
   },
-  "expected_archive_sha256": "690eabd49b028388cdade5aa5c53437b568cbeda3c8208965c3017e6cf9a71cc",
+  "expected_archive_sha256": "9365ebff6d521cd9b3439c7de57c6646ccdb69c0bba5f738a35024f7cab7f2a5",
   "dos_directory": "PCPLUS",
   "limits": [
     "Matched capability20 parent and EMULATE/ALARM interpreter; public source-only payload.",

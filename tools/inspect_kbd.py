@@ -26,18 +26,20 @@ def inspect(path,profile):
     selected_bad=([slot for slot in range(79) if b'\0' not in selected[slot*SLOT_BYTES:(slot+1)*SLOT_BYTES]]
                   if len(selected)==PROFILE_BYTES else None)
     all_bad=None
-    if whole is not None and len(whole)==HELPER_BYTES:
-        all_bad=[slot for slot in range(2607) if b'\0' not in whole[slot*SLOT_BYTES:(slot+1)*SLOT_BYTES]]
+    if whole is not None and complete and len(whole)==before.st_size:
+        all_bad=[slot for slot in range(len(whole)//SLOT_BYTES) if b'\0' not in whole[slot*SLOT_BYTES:(slot+1)*SLOT_BYTES]]
     return dict(file_bytes=before.st_size,whole_profiles=before.st_size//PROFILE_BYTES if complete else None,
                 selected_profile=profile,stable_metadata=stable,
                 selected_profile_present=len(selected)==PROFILE_BYTES,
                 selected_unterminated_slots=selected_bad,
                 parent_content_compatible=stable and complete and len(selected)==PROFILE_BYTES and not selected_bad,
-                helper_content_compatible=stable and all_bad is not None and not all_bad,
+                helper_contract=2,
+                helper_content_compatible=stable and len(selected)==PROFILE_BYTES and all_bad is not None and not all_bad,
+                legacy_full_helper_content_compatible=stable and before.st_size==HELPER_BYTES and all_bad is not None and not all_bad,
                 helper_unterminated_slot_count=len(all_bad) if all_bad is not None else None,
                 sha256=hashlib.sha256(whole).hexdigest() if whole is not None else None,
                 content_check_only=True,
-                scope='Read-only content check against maintained selected-profile loader and full33-profile editor. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified.')
+                scope='Read-only content check against maintained selected-profile loader and contract2 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified.')
 
 
 def main():

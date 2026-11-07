@@ -72,12 +72,14 @@ DOS UI transitions into each owner state.
   --profile 6
 ```
 
-The inspector reads only. It reports selected-profile load compatibility and
+At this checkpoint the inspector read only and reported selected-profile load compatibility and
 the stricter full33-profile helper requirement separately, without displaying
 bindings or padding/rewriting a file. Known full33, short7, malformed and absent
 profile cases were checked. No current private KBD was inspected: the DOS card
 is not locally mounted and the selected record's cached configuration source
-is unavailable. Physical access, I/O-close reliability and DOS path permissions
+is unavailable. The newer [prefix-file extension](KEYMAP_PREFIX.md) updates
+the inspector for contract2 and retains a separate legacy full-file result.
+Physical access, I/O-close reliability and DOS path permissions
 remain separate from this content check.
 
 The installed RA608E10 package and selected payload remain unchanged. Physical

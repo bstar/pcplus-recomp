@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False,meta_editor=False,keymap_editor=False):
+def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False,meta_editor=False,keymap_editor=False,keymap_profiles=33):
     assert not precompile or not (setup or splash_only or after_child_view)
     assert not chat_help or not (setup or splash_only or after_child_view or precompile)
     manifest = json.loads((package / 'manifest.json').read_text())
@@ -61,7 +61,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     # No directory selector is requested; a local dialing file is not opened.
     for leaf, data in fixtures.items():
         (app / leaf).write_bytes(data)
-    if keymap_editor:(app/'SYN.KBD').write_bytes(bytes(33*948))
+    if keymap_editor:(app/'SYN.KBD').write_bytes(bytes(keymap_profiles*948))
     source = ('integer value\nproc main\nvalue=' + '(' * 120 + '37' + ')' * 120 +
               '\nif value==37\nfopen 0 "RESULT.BIN" "wb"\n'
               'fputs 0 "SPECIAL-COMPILED"\nfclose 0\nendif\nendproc\n')
@@ -185,7 +185,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert before==after and before[3200:3204:2]==b'AB' and helper[2:20:2]==b'Chat Mode'
         assert not (app/'TEST.ASX').exists() and not (app/'RESULT.BIN').exists()
     elif keymap_editor:
-        expected=bytearray(33*948);expected[6*948+16*12:6*948+16*12+4]=b'new\0'
+        expected=bytearray(keymap_profiles*948);expected[6*948+16*12:6*948+16*12+4]=b'new\0'
         assert (app/'SYN.KBD').read_bytes()==expected
         assert not (app/'KBDSTG.$$$').exists() and not (app/'KBDBAK.$$$').exists()
     elif not observe:
@@ -197,7 +197,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, dos_directory=dos_directory,cpu='8086', port=com, io_base=base, resident_observer=observe,
                   irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,chat_help=chat_help,
-                  native_line_port=native_line_port,meta_editor=meta_editor,keymap_editor=keymap_editor,
+                  native_line_port=native_line_port,meta_editor=meta_editor,keymap_editor=keymap_editor,keymap_profiles=keymap_profiles if keymap_editor else None,
                   packaged_ASPECT_clock_alarm_exercised=new_commands,
                   packaged_ASPECT_EMULATE_exercised=emulate,
                   package_manifest_sha256=sha(package / 'manifest.json'),
@@ -231,12 +231,14 @@ def main():
     p.add_argument('--chat-help',action='store_true',help='Exercise packaged Chat and PCHELP with retained input/frame/cursor')
     p.add_argument('--native-line-port',action='store_true',help='Observe packaged Alt-P loading its matching sibling module')
     p.add_argument('--keymap-editor',action='store_true',help='Edit/save through packaged START and its sibling PCKEYMAP, preserving existing private fixtures')
+    p.add_argument('--keymap-profiles',type=int,choices=[7,33],default=33,help='Existing synthetic KBD size for the packaged mapper test')
     p.add_argument('--meta-editor',action='store_true',help='Observe packaged Alt-M loading its matching sibling module')
     args = p.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     assert not (args.setup and args.splash_only)
-    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port,args.meta_editor,args.keymap_editor)
+    assert args.keymap_editor or args.keymap_profiles==33
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port,args.meta_editor,args.keymap_editor,args.keymap_profiles)
 
 
 if __name__ == '__main__':

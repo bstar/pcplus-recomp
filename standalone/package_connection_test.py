@@ -99,15 +99,26 @@ def terminal_companions(binary,manifest):
         assert sha(ROOT/p)==h,n
     return files,sources
 
+def reviewed_keymap_profile(profile=None):
+    if profile is None:
+        profile=json.loads((ROOT/'standalone/keymap_helper_profile.json').read_text())
+    assert profile['kind']=='reviewed-source-keymap-helper'
+    assert profile['parent_feature']=='experimental_keymap_editor'
+    assert profile['arguments']=='profile frozen-absolute-KBD-path [/LEGACY]' and profile['recovery_exit']==14
+    assert profile['contract'] in (1,2)
+    if profile['contract']==1:assert profile['KBD_bytes']==31284
+    else:
+        assert profile['profile_bytes']==948 and profile['minimum_profiles']==1 and profile['maximum_profiles']==33
+        assert profile['maximum_KBD_bytes']==31284 and profile['preserves_file_length'] is True
+    return profile
+
 def keymap_companion(terminal,helper):
     """Require the reviewed source helper whenever the parent exposes Alt-F8."""
     enabled=bool(terminal.get('experimental_keymap_editor'))
     assert enabled==bool(helper),'Alt-F8 parent and explicit keyboard helper must be selected together'
     if not enabled:return {},{},{}
     profile_path=ROOT/'standalone/keymap_helper_profile.json'
-    profile=json.loads(profile_path.read_text())
-    assert profile['kind']=='reviewed-source-keymap-helper' and profile['contract']==1
-    assert profile['parent_feature']=='experimental_keymap_editor'
+    profile=reviewed_keymap_profile()
     helper=Path(helper).resolve()
     assert helper.is_relative_to(ROOT/'build') and helper.name=='PCKEYMAP.EXE'
     proof_path=helper.with_name('result.json');proof=json.loads(proof_path.read_text())
@@ -247,8 +258,10 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
     if keymap_files:
         with (payload/'README.TXT').open('ab') as guide:
             guide.write(dos_text('\nAlt-F8: source keyboard mapping helper beside TERMINAL.EXE.\n'
-                'The selected KBD must contain all33 profiles (31284 bytes).\n'
-                'Existing shorter KBDs are preserved; do not overwrite private bindings.\n'
+                +('The selected KBD must contain all33 profiles (31284 bytes).\n' if keymap_identity['contract']==1 else
+                'KBD files may contain1 through33 complete948-byte profiles.\n'
+                'The selected profile must exist. Save preserves the file length.\n')+
+                'Do not overwrite private bindings or append invented defaults.\n'
                 'Save updates the selected profile on return. Recovery exit14 stops PCPlus.\n'))
     record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
