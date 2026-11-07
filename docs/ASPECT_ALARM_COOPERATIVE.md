@@ -3,7 +3,8 @@
 The recovered93-byte shared alert now runs through a bounded foreground service
 adapter. It retains the native controller's duration/paired-tone/keyboard flow
 while replacing its blocking service calls. This component is not yet an
-ASPECT opcode or a parent/serial/speaker platform binding.
+ASPECT opcode. The subsequent [real DOS platform](ASPECT_ALARM_DOS.md) supplies
+BIOS/DOS/UART/PIT component coverage; parent policy and VM binding remain open.
 
 `alarm_coop_run` borrows explicit clock, key, service and exclusive-tone
 callbacks. It services the caller during every tone/pause wait and native key
@@ -63,8 +64,8 @@ to the maintained compilers.
 ## Remaining integration
 
 Bind the recovered operand wrapper and compiler emission; add checked current
-parent duration/sound policy access; connect an exclusive speaker backend and
-foreground receive servicing that leaves ALARM's keys alone. Preserve the
+parent duration/sound policy access; integrate the real DOS speaker backend with VM
+foreground receive rendering that leaves ALARM's keys alone. Preserve the
 existing six-stream/nested-child memory gate and test carrier/WHEN/window/error
 cleanup through the real VM before selecting a package. Full parity and the
 Boca/SPA2102/SynthModem physical acceptance gates remain open. The installed

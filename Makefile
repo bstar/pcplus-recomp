@@ -1997,3 +1997,11 @@ test-aspect-alarm-cooperative:
 	python3 standalone/test_alarm_cooperative_dos.py --output $(ALARM_COOPERATIVE_OUTPUT)
 test-aspect-alarm-cooperative-source: test-aspect-alarm-cooperative
 	python3 standalone/prove_alarm_cooperative_source.py --test $(ALARM_COOPERATIVE_OUTPUT) --output $(ALARM_COOPERATIVE_OUTPUT)-source
+
+ALARM_DOS_OUTPUT := build/alarm-dos-make-$(shell date +%s%N)
+.PHONY: test-aspect-alarm-dos test-aspect-alarm-dos-source
+test-aspect-alarm-dos:
+	python3 standalone/build_alarm_dos_uart.py --output $(ALARM_DOS_OUTPUT)
+	python3 standalone/test_alarm_dos_uart.py --build $(ALARM_DOS_OUTPUT) --output $(ALARM_DOS_OUTPUT)-matrix
+test-aspect-alarm-dos-source: test-aspect-alarm-dos
+	python3 standalone/prove_alarm_dos_source.py --build $(ALARM_DOS_OUTPUT) --output $(ALARM_DOS_OUTPUT)-source

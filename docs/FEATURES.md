@@ -1,11 +1,19 @@
 # Full application reconstruction checklist
 
+The [real DOS ALARM platform](ASPECT_ALARM_DOS.md) now passes50 emulator
+cases/46120 checks with actual BIOS keys, DOS clock, banked PIT speaker and
+UART ISR. Each case receives508 exact bytes inside the alert; foreign speaker
+ownership is preserved through cleanup/recovery. A29-file cold rebuild matches
+the executable and repeats three selected cases. Compiler/VM, parent policy,
+WHEN/renderer integration and physical acceptance remain open. The installed
+package is unchanged.
+
 The [cooperative ALARM adapter](ASPECT_ALARM_COOPERATIVE.md) now retains native
 alert flow while servicing bounded callbacks during tones and waits.94 actual
 DOS cases/1701 checks and an8-file cold rebuild pass, including key completion,
 clock/budget faults, ownership quarantine and explicit cleanup recovery.39
-original compiler probes establish syntax. This is not yet compiler/VM or real
-UART/speaker integration; the installed package and full parity gates stay open.
+original compiler probes establish syntax. At that checkpoint real UART/speaker callbacks were modeled; the newer platform
+checkpoint above supplies them. Compiler/VM integration remains open; the installed package and full parity gates stay open.
 
 The [ALARM native baseline](ASPECT_ALARM_NATIVE.md) adds120 exact bytes and
 348 controller cases. It is not bound to the interpreter; compiler, serviced
