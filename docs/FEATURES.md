@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Matched native Alt-P package](LINE_PORT_CONNECTION_CANDIDATE.md) adds the
+compulsory source-built module to the public connection payload. Fourteen
+admission cases and five actual DOS8086 launcher/application workflows pass;
+all preserve six synthetic private-file sentinels. A 2,552-file isolated source
+export reproduces all 14 files and the deterministic ZIP. The previous 13-file
+archive is also reproduced exactly. No release selection or machine update
+occurred; physical acceptance and full original parity remain separate.
+
 [Transient native Alt-P](LINE_PORT_OVERLAY.md) resolves the resident prototype's
 ASPECT memory regression without shrinking configured capacities. The parent
 requires 479,024 bytes, 480 fewer than the unchanged control. Ten popup sessions,

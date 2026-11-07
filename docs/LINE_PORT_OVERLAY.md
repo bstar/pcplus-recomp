@@ -5,6 +5,10 @@ ASPECT capacity regression. The maintained native Alt-P popup, checked prefix
 save and UART handoff remain available; its code is loaded only while needed.
 The installed RBADE091 package and release selector are unchanged.
 
+The subsequent [matched package](LINE_PORT_CONNECTION_CANDIDATE.md) includes the
+required module and passes separate package/source/DOS gates. Installation and
+physical acceptance remain separate from that software package milestone.
+
 The reviewed parent is
 `ff6bb369a8b3693cefc357fec901ae576139cafe8915f8e60818ddcdde2e5399`.
 It requires its exact `PCLINE.OVL` beside `TERMINAL.EXE`. The unchanged ASPECT
