@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[EMULATE strict I/O and receive overlap](ASPECT_EMULATE_IO.md) adds three actual
+DOS workflows, 34 checks each. Missing/truncated KBD files produce native error 5,
+retain ANSI identity and allow later strict-profile/script recovery. During 128
+KBD-backed switches, all 512 incoming markers are acknowledged; a passive witness
+observes queued child RX at 185 parent I/O entries with no sampled drops/errors.
+This finite paced case does not establish physical or worst-case latency/flow
+headroom. Native fatal-reset/abort expansion, package and physical gates remain
+open. Products and installation are unchanged.
+
 [EMULATE production integration](ASPECT_EMULATE_INTEGRATION.md) adds 81 linked
 bridge cases and two real deferred-WHEN success/error workflows (31/38 checks).
 The exact pair passes Synchronet editor/viewer and Enigma carrier-loss/redial
