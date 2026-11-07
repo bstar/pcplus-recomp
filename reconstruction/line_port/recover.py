@@ -32,7 +32,7 @@ def main():
     for width in ('word','byte'):candidates.append(re.sub(r',(-?0x[0-9a-f]+)$',rf',strict {width} \1',instruction))
     instruction=next((c for c in candidates if assemble(c,at)==encoded),None);assert instruction is not None,(at,text,encoded.hex())
    rows.append((at,instruction))
-  lines=['; Native 2.01 Alt-P key selector; wrapper/save/hardware owners are separate.','BITS 16','CPU 8086','%ifdef LINE_PORT_OMF','GROUP DGROUP _DATA','SEGMENT _TEXT public class=CODE use16','global line_port_key']
+  lines=['; Native 2.01 Alt-P key selector; wrapper/save/hardware owners are separate.','BITS 16','CPU 8086','%ifdef LINE_PORT_OMF','GROUP DGROUP _DATA','%ifdef LINE_PORT_FAR_BANK','SEGMENT LINE_PORT_CODE public align=16 class=FARCODE use16','%else','SEGMENT _TEXT public class=CODE use16','%endif','global line_port_key']
   lines+=['extern '+n+':wrt DGROUP' for n in STATE.values()]+['extern '+n for n in CALLS.values()]
   lines+=['%else',f'ORG 0x{START:x}']+['%define '+n+' '+hex(k)for k,n in (STATE|CALLS).items()]+['%endif','%include "encodings.inc"','line_port_key:']
   for at,text in rows:

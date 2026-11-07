@@ -4,10 +4,10 @@
   "physical_runtime_verified": false,
   "installed_package_changed": false,
   "sources": {
-    "docs/LINE_PORT_RECOVERY.md": "506856449bf26856fa7dfdc66b3f820e40b41326d369965a9a095061dae3f532",
-    "reconstruction/line_port/key.asm": "a925942419efcebd7bbbcd7a2a426f6887ddc168e8fdfaa9a2a60ffb80de2782",
+    "docs/LINE_PORT_RECOVERY.md": "2053b39b622cac2a4482a969be2cfdbc6f2fc0c6d99b6ba514e3fe6e3740cffe",
+    "reconstruction/line_port/key.asm": "86097aa935ca271d39074cd7c741e9b23c2694e7abb8e0d37b93cd8a568cc8dd",
     "reconstruction/line_port/provenance.json": "0091a60de900ea6d011d5f69439320a46642ed9ce52190d9224a0f232526c40d",
-    "reconstruction/line_port/recover.py": "bc443d65d23f1ed607d23e15d2c787aeda311d3c0af84b6d39813505a6796e99",
+    "reconstruction/line_port/recover.py": "55ce812fdedf85947a0021430b6d842ebbc31cb6c952a667bfbc6b0949611456",
     "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
     "standalone/build_line_port.py": "1638a57ea165124ebfe2d87661533a8de1ff2e7d4731a3c87f8ba2ad74d9e7c0",
     "standalone/check_line_port.py": "e6df06782462d5d89757e29bafab824da1c0df27677384fcc092549f66763576",
@@ -17,10 +17,10 @@
     "standalone/test_line_port_dos.py": "c77a571207f5549b9708d84c8a4e41a43c21ac27133c1c794108546520016d41"
   },
   "receipts": {
-    "build/line-port/manifest.json": "566fd41b60bda48d53df71a2dd037580013811af24e1d9bbe0b77c876464e4a8",
-    "build/line-port/selector-results.json": "c99aecfe19e918a04b170ff688871399c56b09c4e62a66c12405783304d1d8a2",
+    "build/line-port/manifest.json": "797161eda1b46b17f8cad8c73c0bd3c4837342c1bc1412d5139f2229f94058a4",
+    "build/line-port/selector-results.json": "fd797eaabe8e1be5af5dbac0d83d9f66f835152ddaf854ffed301ade5861ced7",
     "build/line-port/dos-results.json": "c514ab0c6fd09910b3269de2078d9ceae96e0d031fcbaa4bb8a6a7b2682a66da",
-    "build/line-port/source-proof/result.json": "73ac616ffad56f95ba39c68f673d24b148e9df108ff80ffb9b9c1873619bae66"
+    "build/line-port/source-proof/result.json": "a8174e793fa5908cc422e979d672b5c8e30930d601704b2fd8564272f84ba0d3"
   },
   "summary": {
     "exact_bytes": 414,

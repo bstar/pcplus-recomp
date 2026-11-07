@@ -2838,3 +2838,14 @@ builds independently and reproduces from five public files. It remains a
 component: live serviced-input, saved-screen, UART apply and checked-save
 owners still need integration. RBADE091 remains unchanged and physically
 unaccepted; no original application-parity gate is closed.
+
+## Line/Port staged transaction checkpoint (2026-11-07)
+
+[The popup transaction and serial plan](LINE_PORT_SESSION.md) now combine the
+exact selector and renderer in a separately relocated code bank. All 71 actual
+DOS8086 checks and a 16-file original-free reproduction pass. Session/save/apply
+states retain failures and prevent duplicate save on apply retry; same-port
+custom IRQ and different-port PRM mappings are preserved. Save/apply results
+are authored inputs here. Terminal routing, actual persistence, foreground UART
+handoff and connected-input composition remain open; no installed payload or
+physical acceptance changed.

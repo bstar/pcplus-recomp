@@ -1,0 +1,42 @@
+{
+  "component_verified": true,
+  "application_integrated": false,
+  "persistence_executed": false,
+  "uart_apply_executed": false,
+  "physical_runtime_verified": false,
+  "installed_package_changed": false,
+  "dos_checks": 71,
+  "popup_cells": 1142,
+  "isolated_source_files": 16,
+  "sources": {
+    "reconstruction/line_port/key.asm": "86097aa935ca271d39074cd7c741e9b23c2694e7abb8e0d37b93cd8a568cc8dd",
+    "reconstruction/line_port/provenance.json": "0091a60de900ea6d011d5f69439320a46642ed9ce52190d9224a0f232526c40d",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "src/line_port/select.asm": "2e01b7918372af0a52342b3c20740ee0acb3ba7155f8f3b26b6b8df3c3ed9a91",
+    "src/line_port/session.c": "68f2d7a4d49669e3ae1283f5254642d7101e15bb73dfa12c132f62c132ddb8d9",
+    "src/line_port/session.h": "f71916eefa03c0e7e022435d385606f5cb026871029d16f4237053b397fa5710",
+    "src/line_port/view.c": "b6e20722678e5fb6dd1e9f0faffc54cf35701e2a668765d03c46e6fa571cd55c",
+    "src/line_port/view.h": "5f4d2c0322d5b7aa6d7f0b6300fd5d6d78cb5ad8a52926c552eaadf8304be6dd",
+    "src/line_port/plan.c": "bc2c81c30c84d110e126c4efc38593a99cb62826f5a0620129ffe7a642c94314",
+    "src/line_port/plan.h": "061a6cccdf60efb84b12e1e6c4f52cd8ce222998e348a9f4eb3c4d72e5392eaa",
+    "src/config/terminal_import.h": "662c6f0692dfdc8f569c5599e318b05bec571450c7753c3d08e96559c1930439",
+    "src/config/prm_dos.h": "3a6f8f27e13f5fc97e290b95def601e49ce93b54f729d1bc3ddc527ba39de20c",
+    "standalone/line_port_session_diagnostic.c": "cc902d89e03b33215140cff413ebdd188e6b270fb48d1bb4fb712c5e6064c42c",
+    "standalone/build_line_port_session.py": "1b1bacf920af9c9ed6a88e2231515d1d425ba8864f2f66e76e876bef33480731",
+    "standalone/line_port_bank_pad.asm": "5c988d5defaab181c47a27afdb7875c02267414fb31a01bfe8f54ec501b48be0",
+    "standalone/test_line_port_session_dos.py": "f101c1b7be25597a6cd74140113dd2c883453b64eeb450d2d0833d2667de6761",
+    "standalone/prove_line_port_session_source.py": "ec0b839f381c9ae6b5726616ddee38b336a5a586be97b7c49be012ee873e39d2",
+    "standalone/record_line_port_session.py": "10e9ec06ccd7c23ba3b12ff68bcf84cfbd69bc74f19e9f66856841a7f05be2bf",
+    "docs/LINE_PORT_SESSION.md": "ca14dca6f1e24c30d34ec8cc8235c36f5890befdee58ad2cf464ec01ece8d1b1"
+  },
+  "receipts": {
+    "build/line-port-session/manifest.json": "0fb7db504d841015877484e2fed570694dcbbb53a7aceb6221153490e5ff88d3",
+    "build/line-port-session/dos-results.json": "a3daba08e89be2ba33d6c39458ca1cf83c87138e9b0f909244faea16025a2939",
+    "build/line-port-session/source-proof/result.json": "32fc4103645c8ce3ca34b681d4f4b0b7b26617adfae3c61d91a21db08ebc052a"
+  },
+  "limitations": [
+    "Save/apply results are authored inputs; no real PRM save or UART handoff in this diagnostic.",
+    "Terminal routes, serviced-input composition, foreground binding, configured colors and recovery reporting remain open.",
+    "Exact installed RBADE091 and physical acceptance remain separate."
+  ]
+}

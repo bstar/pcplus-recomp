@@ -87,7 +87,8 @@ these accepted runs. No product behavior was changed to make tests pass.
 
 The [popup view checkpoint](LINE_PORT_VIEW.md) now corroborates default-color
 80x25 rendering and Escape/session persistence against the authentic executable.
-Next integrate with the maintained saved-screen, foreground, serviced-input and
+The [staged transaction and serial plan](LINE_PORT_SESSION.md) now combine
+this selector and view in a separate code bank. Next integrate with the maintained saved-screen, foreground, serviced-input and
 UART owners, preserving incoming traffic and checked file persistence. Original
 COM1..8 choices exceed the maintained COM1..4 scope; unsupported ports need
 explicit handling rather than silent remapping. Trace application of baud,

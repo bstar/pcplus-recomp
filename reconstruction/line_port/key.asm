@@ -3,7 +3,11 @@ BITS 16
 CPU 8086
 %ifdef LINE_PORT_OMF
 GROUP DGROUP _DATA
+%ifdef LINE_PORT_FAR_BANK
+SEGMENT LINE_PORT_CODE public align=16 class=FARCODE use16
+%else
 SEGMENT _TEXT public class=CODE use16
+%endif
 global line_port_key
 extern line_port_port:wrt DGROUP
 extern line_port_baud:wrt DGROUP
