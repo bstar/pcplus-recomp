@@ -54,5 +54,8 @@ unnecessary synchronous return pause; the full command remains499 characters.
 
 These are software serial/Telnet checks. They do not prove physical
 Boca/SPA2102 audio/CTS/DCD, private configuration, every Help context/geometry
-or complete original feature parity. Reviewed packaging is a separate
-checkpoint; the selected installation and physical machine are unchanged.
+or complete original feature parity. The
+[reviewed contract4 package](KEYMAP_PACKAGE.md) now also passes35 admission
+cases, actual packaged Help/edit/creation and exact16-file/ZIP reproduction
+from2690 public inputs. The selected installation and physical machine are
+unchanged.

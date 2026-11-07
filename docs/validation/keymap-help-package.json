@@ -1,0 +1,369 @@
+{
+  "checkpoint_verified": true,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "helper_contract": 4,
+  "evidence": {
+    "build/keymap-help-connection-verified-20261107/result.json": {
+      "passed": true,
+      "source_base_commit": "59bc74618f48809e15d7ff56eb0f46383e282a03",
+      "files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCKEYMAP.EXE": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+        "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+        "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "981621d1ee43e2eaa97e6dd3f53ccf40777560afa7f79bc388beff6389bb4d3c",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+        "VERSION.TXT": "3539c7b3db7f791e9763007fa44cc158bacb6fe25fe073df0986ac3112fdbcda",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "archive_sha256": "9ecf9c5bce2f87e71f609e729fe6bfdeebd3903d5090ecff1c533763075784ed",
+      "scope": "Build the reviewed connection candidate and verify its complete public archive. The tracked recipe pins the reviewed payload and package source identity. Uses current source and fails if any public application byte differs; no configuration, originals or previous objects are copied into application builds. Physical acceptance and full original parity remain separate.",
+      "package_manifest_sha256": "818361654d1d47d8175cf932cb0898d9eea201f4eb010e7fa87e754a4e931965",
+      "original_inputs": [],
+      "receipt_sha256": "7b1b1196af35dabbfbe6a3fc3a454026a6bc55e073ba5b0312904f29ce3fc30a",
+      "source_count_checked": 7
+    },
+    "build/keymap-help-connection-source-20261107/result.json": {
+      "passed": true,
+      "source_commit": "edb21fb4c73820e1bacbdb3b5752f2a3c4c08072",
+      "source_base_commit": "59bc74618f48809e15d7ff56eb0f46383e282a03",
+      "source_count": 2690,
+      "files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCKEYMAP.EXE": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+        "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+        "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "981621d1ee43e2eaa97e6dd3f53ccf40777560afa7f79bc388beff6389bb4d3c",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+        "VERSION.TXT": "3539c7b3db7f791e9763007fa44cc158bacb6fe25fe073df0986ac3112fdbcda",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "archive_sha256": "9ecf9c5bce2f87e71f609e729fe6bfdeebd3903d5090ecff1c533763075784ed",
+      "ancestor_git_unavailable": true,
+      "scope": "Run the tracked candidate builder from an original-free public source export. Executes the tracked Python builder inside the pinned Nix environment with no prior build objects, originals, private configuration or Git metadata in its source export. The shell wrapper/Nix environment bootstrap is separately exercised in the working checkout. Every declared package file and deterministic archive must match the reviewed build.",
+      "original_inputs": [],
+      "receipt_sha256": "731e4f65d4913d6d5d8f0110a469514d0e5410e668f341bbc76c84e2cad86e76",
+      "source_count_checked": 2690
+    },
+    "build/keymap-help-disabled-control-20261107/result.json": {
+      "passed": true,
+      "source_base_commit": "732af066c8a7e2e0433b6fbe639d2e2172438346",
+      "files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCLINE.OVL": "36e693176fe81a3fa4ecffc54a411fc6d546dfb1a0a1136caacf7c10b40ab40c",
+        "PCMETA.OVL": "20c5a47e2a07d442adbb1f55160559c595728f711a46c4bbaa400df4dbfc08b3",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "d367f9d265a500c32adf2016f540af5279c3ab762a06eaf5bd61ae1661f11815",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "5b634d5cb3d10fd36e6a1a9374fb7b7539ace82f97983eedc5d6a35b29e523c0",
+        "VERSION.TXT": "04370cb88a19b495e7deb0ebc4d318fb374ef0371735c62cd8e85192ba6abe0e",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "archive_sha256": "6f9e1f6f8b71ce0a52ea75477a3fd692f2afa1d4c9f1e89639da9c812dd47ea7",
+      "scope": "Build the reviewed connection candidate and verify its complete public archive. The tracked recipe pins the reviewed payload and package source identity. Uses current source and fails if any public application byte differs; no configuration, originals or previous objects are copied into application builds. Physical acceptance and full original parity remain separate.",
+      "package_manifest_sha256": "a29e763c1e7d77ba847a08034e9bc0e6b163862acf18b65d97a43fb190d212fe",
+      "original_inputs": [],
+      "receipt_sha256": "375960c34b7fb25eb0301e4fcca94e4eebe6562948903b51a3ce497ee1c2e35b",
+      "source_count_checked": 7
+    },
+    "build/keymap-help-package-contract-20261107/result.json": {
+      "passed": true,
+      "helper_sha256": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+      "cases": [
+        {
+          "case": "unknown-version",
+          "accepted": false
+        },
+        {
+          "case": "wrong-profile-size",
+          "accepted": false
+        },
+        {
+          "case": "empty-file-allowed",
+          "accepted": false
+        },
+        {
+          "case": "excess-profiles",
+          "accepted": false
+        },
+        {
+          "case": "wrong-maximum-size",
+          "accepted": false
+        },
+        {
+          "case": "padding-allowed",
+          "accepted": false
+        },
+        {
+          "case": "wrong-recovery-exit",
+          "accepted": false
+        },
+        {
+          "case": "wrong-arguments",
+          "accepted": false
+        },
+        {
+          "case": "wrong-new-size",
+          "accepted": false
+        },
+        {
+          "case": "implicit-create",
+          "accepted": false
+        },
+        {
+          "case": "replace-open-errors",
+          "accepted": false
+        },
+        {
+          "case": "wrong-help-context",
+          "accepted": false
+        },
+        {
+          "case": "extra-help-process",
+          "accepted": false
+        },
+        {
+          "case": "wrong-help-resource",
+          "accepted": false
+        },
+        {
+          "case": "valid",
+          "accepted": true
+        },
+        {
+          "case": "disabled",
+          "accepted": true
+        },
+        {
+          "case": "missing-selection",
+          "accepted": false
+        },
+        {
+          "case": "undeclared",
+          "accepted": false
+        },
+        {
+          "case": "missing-binary",
+          "accepted": false
+        },
+        {
+          "case": "missing-proof",
+          "accepted": false
+        },
+        {
+          "case": "corrupt",
+          "accepted": false
+        },
+        {
+          "case": "forged-proof-hash",
+          "accepted": false
+        },
+        {
+          "case": "not-passed",
+          "accepted": false
+        },
+        {
+          "case": "original-input",
+          "accepted": false
+        },
+        {
+          "case": "stale-source",
+          "accepted": false
+        },
+        {
+          "case": "foreign-source",
+          "accepted": false
+        },
+        {
+          "case": "non-source",
+          "accepted": false
+        },
+        {
+          "case": "diagnostic-helper",
+          "accepted": false
+        },
+        {
+          "case": "missing-help-owner",
+          "accepted": false
+        },
+        {
+          "case": "archive-missing",
+          "accepted": false,
+          "archive_started": false
+        },
+        {
+          "case": "archive-corrupt",
+          "accepted": false,
+          "archive_started": false
+        },
+        {
+          "case": "archive-undeclared",
+          "accepted": false,
+          "archive_started": false
+        },
+        {
+          "case": "archive-forged-hash",
+          "accepted": false,
+          "archive_started": false
+        },
+        {
+          "case": "archive-wrong-contract",
+          "accepted": false,
+          "archive_started": false
+        },
+        {
+          "case": "archive-help-undeclared",
+          "accepted": false,
+          "archive_started": false
+        }
+      ],
+      "scope": "Reject missing, stale or undeclared keyboard companions before archiving. Isolated public fixtures only; no child execution, private settings or deployment.",
+      "receipt_sha256": "4ac5e80d86188924b8c5dc669d60ed077cb63ffc7c4c4830f3590b855a2ee84f",
+      "source_count_checked": 4
+    },
+    "build/keymap-help-package-7help-20261107/result.json": {
+      "passed": true,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual packaged Alt-F8 saves only the selected KBD and returns; shorter private KBD unchanged"
+      ],
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "keymap_profiles": 7,
+      "keymap_new_file": false,
+      "keymap_help": true,
+      "scope": "Run packaged START/SETUP launchers on a synthetic card in actual DOS8086. Dummy serial ports; no live BBS, card write or physical modem test.",
+      "package_files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCKEYMAP.EXE": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+        "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+        "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "981621d1ee43e2eaa97e6dd3f53ccf40777560afa7f79bc388beff6389bb4d3c",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+        "VERSION.TXT": "3539c7b3db7f791e9763007fa44cc158bacb6fe25fe073df0986ac3112fdbcda",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "package_manifest_sha256": "0b3ec80bf03f446bbd6a7bdee09e20cbd07048c02f8d0d0ea17c0e9a9f27d1dd",
+      "receipt_sha256": "6be408d93d6d120e05316971f7e66c1b759aab82c79d51bcf7e916f5c8beeb35",
+      "source_count_checked": 7
+    },
+    "build/keymap-help-package-33-20261107/result.json": {
+      "passed": true,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual packaged Alt-F8 saves only the selected KBD and returns; shorter private KBD unchanged"
+      ],
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "keymap_profiles": 33,
+      "keymap_new_file": false,
+      "keymap_help": false,
+      "scope": "Run packaged START/SETUP launchers on a synthetic card in actual DOS8086. Dummy serial ports; no live BBS, card write or physical modem test.",
+      "package_files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCKEYMAP.EXE": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+        "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+        "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "981621d1ee43e2eaa97e6dd3f53ccf40777560afa7f79bc388beff6389bb4d3c",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+        "VERSION.TXT": "3539c7b3db7f791e9763007fa44cc158bacb6fe25fe073df0986ac3112fdbcda",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "package_manifest_sha256": "0b3ec80bf03f446bbd6a7bdee09e20cbd07048c02f8d0d0ea17c0e9a9f27d1dd",
+      "receipt_sha256": "c46c76f94631c6021b754e3094af590f765571605ed1702c370ddecbb2775650",
+      "source_count_checked": 6
+    },
+    "build/keymap-help-package-newhelp-20261107/result.json": {
+      "passed": true,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual packaged Alt-F8 explicitly creates NEW.KBD; frozen SYN/private KBD unchanged"
+      ],
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "keymap_profiles": 7,
+      "keymap_new_file": true,
+      "keymap_help": true,
+      "scope": "Run packaged START/SETUP launchers on a synthetic card in actual DOS8086. Dummy serial ports; no live BBS, card write or physical modem test.",
+      "package_files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCKEYMAP.EXE": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+        "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+        "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "981621d1ee43e2eaa97e6dd3f53ccf40777560afa7f79bc388beff6389bb4d3c",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+        "VERSION.TXT": "3539c7b3db7f791e9763007fa44cc158bacb6fe25fe073df0986ac3112fdbcda",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "package_manifest_sha256": "0b3ec80bf03f446bbd6a7bdee09e20cbd07048c02f8d0d0ea17c0e9a9f27d1dd",
+      "receipt_sha256": "b83b8634dc8782320f0c659925f5290a5a7eb7e0f995c6d6a24e38ed2e4eadc0",
+      "source_count_checked": 7
+    }
+  },
+  "source_base_commit": "59bc74618f48809e15d7ff56eb0f46383e282a03",
+  "package_source_commit": "edb21fb4c73820e1bacbdb3b5752f2a3c4c08072",
+  "scope": "Reviewed contract4 with full embedded context17 Help, actual packaged START Help/edit/new-file workflows, strict admission and exact16-file/ZIP reproduction. Owned synthetic media; no physical/private-machine or full-original-parity acceptance."
+}

@@ -1,9 +1,23 @@
 # Matched keyboard-helper package
 
-The current recipe uses [contract3's explicit-save new-file workflow](KEYMAP_NEWFILE.md),
+The current recipe uses [contract4's actual Key Mapping Help](KEYMAP_HELP.md),
+helper `c94d43ba…` and archive
+`9ecf9c5bce2f87e71f609e729fe6bfdeebd3903d5090ecff1c533763075784ed`.
+[The current receipt](validation/keymap-help-package.json) records35 admission
+cases, including diagnostic-helper and missing-Help-resource refusal.
+Packaged DOS8086 COM3/IRQ5 START edits a33-profile file, opens actual context17
+Help before saving a seven-profile file, and opens Help before explicitly
+creating a new file while preserving the frozen selected/private files.
+All16 products and the ZIP reproduce from2690 public inputs at tooling
+commitedb21fb, with application base59bc746. Only mapper/README/VERSION differ
+from contract3; parent, standalone PCHELP, authored HLP and other modules retain
+their bytes. The feature-disabled archive remains exactly installed `6f9e1f6f…`.
+No selected deployment or physical installation changes.
+
+The preceding recipe uses [contract3's explicit-save new-file workflow](KEYMAP_NEWFILE.md),
 helper `5a917b93…` and archive
 `f0f1b132e9ed8dbc9423ca5082e89ab1f08870469eb26ba131959f1f1ea32ab6`.
-[The current receipt](validation/keymap-newfile-package.json) records29 admission
+[The preceding receipt](validation/keymap-newfile-package.json) records29 admission
 cases, packaged DOS8086 COM3/IRQ5 existing-file edits at seven and33 profiles,
 and a separate new-file creation preserving the frozen selected file and all
 private sentinel fixtures. All16 files and the ZIP reproduce from2684 public

@@ -4,7 +4,8 @@
 notice with context17 and the full source viewer. Embedding avoids a measured
 extra-process DOS8 refusal. Standalone, connected-parent, paired external
 control and actual Enigma/Synchronet modal-return checks pass. Parent and
-standalone PCHELP bytes remain unchanged; package promotion is separate.
+standalone PCHELP bytes remain unchanged; reviewed contract4 packaging also
+passes actual START Help/edit/create and35 admission cases.
 
 The [new-file helper checkpoint](KEYMAP_NEWFILE.md) recovers original missing-file
 semantics and adds unsaved blank tables with explicit creation, exact existing
@@ -13,11 +14,12 @@ observations and source/BBS tests are separate from package/hardware acceptance.
 This corrects the earlier assumption that missing-file loading imports factory
 mappings; the observed path clears bindings instead.
 
-Current reviewed software checkpoint: [new-file creation](KEYMAP_NEWFILE.md),
+Current reviewed software checkpoint: [Key Mapping Help](KEYMAP_HELP.md),
+[new-file creation](KEYMAP_NEWFILE.md),
 [preserve-length keyboard editing](KEYMAP_PREFIX.md) and
-[contract3 packaging](KEYMAP_PACKAGE.md). The helper accepts existing1..33
+[contract4 packaging](KEYMAP_PACKAGE.md). The helper accepts existing1..33
 complete profiles without padding; the parent and other application bytes are
-unchanged. All16 package files and their ZIP reproduce from2684 public source
+unchanged. All16 package files and their ZIP reproduce from2690 public source
 inputs. Packaged START edits both seven-profile and33-profile synthetic files
 and creates a new file without redirecting the frozen selected file.
 The selected physical installation remains the preceding RA608E10 package.
