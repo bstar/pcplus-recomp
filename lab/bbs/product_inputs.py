@@ -15,11 +15,14 @@ def companions(binary):
     """Only explicit immutable source-built companions; never user files."""
     binary=Path(binary).resolve()
     manifest=json.loads(binary.with_name('manifest.json').read_text())
-    overlay=manifest.get('line_port_overlay')
-    if not overlay:return []
-    path=binary.with_name('PCLINE.OVL')
-    assert sha(path)==overlay['sha256']
-    return [path]
+    paths=[]
+    for key,leaf in (('line_port_overlay','PCLINE.OVL'),('meta_editor_overlay','PCMETA.OVL')):
+        overlay=manifest.get(key)
+        if not overlay:continue
+        path=binary.with_name(leaf)
+        assert sha(path)==overlay['sha256']
+        paths.append(path)
+    return paths
 
 
 def stage_companions(binary,directory):

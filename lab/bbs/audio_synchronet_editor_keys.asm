@@ -45,6 +45,9 @@ keys:
 %include "multiline_keys.inc"
 %else
 keys:
+%ifdef META_KEYS_ROUNDTRIP
+ dw 3200h,1352h,1c0dh,2c5ah,2c5ah,2c5ah,1c0dh,011bh
+%endif
 %ifdef EXTERNAL_VIEWER_ROUNDTRIP
 %define VIEWER_RETURN_WAIT
 %ifdef EXTERNAL_EDITOR_ROUNDTRIP
@@ -136,6 +139,16 @@ handler:
  cmp word [bx],0
  je .restore
  mov word [ticks],AUDIO_SYNC_EDITOR_KEY_WAIT
+%ifdef META_KEYS_ROUNDTRIP
+ cmp word [bx-2],3200h
+ jne .not_meta_open
+ mov word [ticks],72
+.not_meta_open:
+ cmp word [bx-2],011bh
+ jne .not_meta_close
+ mov word [ticks],36
+.not_meta_close:
+%endif
 %ifdef FILE_DIRECTORY_ROUNDTRIP
  cmp word [bx-2],2100h
  jne .listing_enter

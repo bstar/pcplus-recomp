@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Connected Meta editor and capacity gate](META_CONNECTED.md): stock Enigma and
+Synchronet Alt-M round trips restore all4000 frame bytes/cursor/shape and match
+all1920 independent BBS cells. Twenty copied-evidence controls and six unchanged
+observer/helper comparisons pass. **Release remains blocked by a confirmed
+conventional-memory regression**: the installed control passes all30 ordinary
+six-stream/nested-child checks; loader-only and full Meta parents fail. Separate
+allocation traces identify real DOS refusals. Reduce residency and rerun the
+complete workload before packaging or deployment; the installed build is unchanged.
+
 [Serviced Alt-M integration](META_FRONTEND.md) now opens the matched editor
 from the actual terminal, Alt-Z and Setup browser, preserves incoming UART/ANSI
 service, and adopts a checked closed-lease proposal into live Meta keys. Explicit

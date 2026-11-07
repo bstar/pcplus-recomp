@@ -6,6 +6,9 @@ ORG 0x100
 jmp start
 old10: dd 0
 old2f: dd 0
+%ifdef META_KEYS_ROUNDTRIP
+%define FILE_VIEWER_ROUNDTRIP
+%endif
 %ifdef EXTERNAL_VIEWER_ROUNDTRIP
 %define FILE_VIEWER_ROUNDTRIP
 %endif
@@ -141,7 +144,18 @@ observe_listing:
  mov ax,0xb800
  mov es,ax
 %ifdef FILE_VIEWER_ROUNDTRIP
-%ifdef EXTERNAL_VIEWER_ROUNDTRIP
+%ifdef META_KEYS_ROUNDTRIP
+ cmp word [es:522],1f4dh ; actual META heading and accepted first definition
+ jne .done
+ cmp word [es:524],1f45h
+ jne .done
+ cmp word [es:1010],715ah
+ jne .done
+ cmp word [es:1012],715ah
+ jne .done
+ cmp word [es:1014],715ah
+ jne .done
+%elifdef EXTERNAL_VIEWER_ROUNDTRIP
  cmp word [es:1934],0b45h ; Enter parameters:
  jne .done
  cmp word [es:1936],0b6eh
@@ -307,6 +321,7 @@ install:
  mov ah,3eh
  int 21h
  jc failed
+%ifndef META_KEYS_ROUNDTRIP
  mov dx,view_name
  xor cx,cx
  mov ah,3ch
@@ -323,6 +338,7 @@ install:
  mov ah,3eh
  int 21h
  jc failed
+%endif
 %endif
  mov ax,0x3510
  int 0x21
@@ -346,8 +362,13 @@ failed:
  int 0x21
 %ifdef FILE_VIEWER_ROUNDTRIP
 resident_segment: dw 0
+%ifdef META_KEYS_ROUNDTRIP
+segment_name: db 'D:\METASEG.BIN',0
+name: db 'D:\METAVIEW.BIN',0
+%else
 segment_name: db 'D:\VFSEG.BIN',0
 name: db 'D:\VFVIEW.BIN',0
+%endif
 view_name: db 'D:\VIEW.DAT',0
 view_data: db 'VIEWER CHECK',13,10,'READ ONLY / CP437: ',0dbh,0b1h,0c4h,13,10,'Editor stays active.',13,10
 view_end:

@@ -31,6 +31,7 @@ def main():
     p.add_argument('--file-viewer-overlay',action='store_true',help='Open the internal file viewer inside the unsaved stock editor and verify its return')
     p.add_argument('--external-viewer-overlay',action='store_true',help='Run an owned external COM viewer inside the stock editor and verify exact return')
     p.add_argument('--external-editor-overlay',action='store_true',help='Run the separate Alt-A editor launcher inside the stock BBS editor')
+    p.add_argument('--meta-keys-overlay',action='store_true',help='Edit Meta keys locally inside the unsaved stock editor and verify exact return')
     p.add_argument('--chat-help-overlay',action='store_true',help='Open Chat/context3 source Help and return to the stock unsaved editor')
     p.add_argument('--gateway-overlay',action='store_true',help='Run a source-built graphics child through the normal Alt-F4 while the stock editor is idle')
     p.add_argument('--reference-overlay', action='store_true', help='Observe Alt-Z/refusal during the stock BBS editor workflow')
@@ -47,6 +48,9 @@ def main():
         assert not args.external_viewer_overlay
         args.external_viewer_overlay=True
     external_tool='editor' if args.external_editor_overlay else 'viewer'
+    if args.meta_keys_overlay:
+        assert not any((args.chat_help_overlay,args.external_viewer_overlay,args.file_viewer_overlay,args.file_directory_overlay,args.gateway_overlay,args.reference_overlay,args.directory_overlay,args.phone_log,args.multiline_editor))
+        assert args.size_probe and args.screen_reference and (args.display_rows,args.status_hidden)==(25,0)
     if args.chat_help_overlay:
         assert not any((args.external_viewer_overlay,args.file_viewer_overlay,args.file_directory_overlay,args.gateway_overlay,args.reference_overlay,args.directory_overlay,args.phone_log,args.multiline_editor))
         assert args.size_probe and args.screen_reference and (args.display_rows,args.status_hidden)==(25,0)
@@ -98,6 +102,9 @@ def main():
     if args.chat_help_overlay:
         from chat_help_bbs_support import inputs
         sources += inputs(binary)
+    if args.meta_keys_overlay:
+        from meta_front_bbs_support import SOURCES
+        sources += [ROOT/n for n in SOURCES]
     before = {str(f.relative_to(ROOT)): sha(f) for f in sources}
     base = ROOT/'build/bbs-lab'
     bridge = base/(args.label+'-proxy')
@@ -120,6 +127,12 @@ def main():
             (ROOT/'lab/bbs/editor-recipes.json').read_text())['enigma_unsaved']['keyboard_input']
         observer=None
         chat_help_proof=None
+        if args.meta_keys_overlay:
+            from meta_front_bbs_support import prepare,KEYS
+            observer=prepare(base/(args.label+'-meta-keys'),binary)
+            marker='K E Y T E S T enter p1800 '
+            assert keys.count(marker)==1
+            keys=keys.replace(marker,marker+KEYS)
         if args.chat_help_overlay:
             from chat_help_bbs_support import prepare
             observer,chat_help_proof=prepare(base/(args.label+'-chat-help'),binary)
@@ -294,6 +307,9 @@ def main():
         if args.external_viewer_overlay:
             from external_viewer_bbs_support import audit as audit_external
             result['external_viewer']=audit_external(output,external_tool);checks['actual_external_viewer_roundtrip']=result['external_viewer']['passed'];result['passed']=all(checks.values())
+        if args.meta_keys_overlay:
+            from meta_front_bbs_support import audit as audit_meta
+            result['meta_front']=audit_meta(output,binary);checks['actual_Meta_Keys_editor_roundtrip']=result['meta_front']['passed'];result['passed']=all(checks.values())
         if args.chat_help_overlay:
             from chat_help_bbs_support import audit as audit_chat_help
             result['chat_help']=audit_chat_help(output,chat_help_proof);checks['actual_Chat_Help_editor_roundtrip']=result['chat_help']['passed'];result['passed']=all(checks.values())
