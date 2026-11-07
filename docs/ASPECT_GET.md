@@ -48,8 +48,9 @@ command that the runner cannot execute:
 
 1. Bind the serviced field described below to the real display, keyboard and
    cursor services; validate limits at the owner boundary.
-2. Bind the recovered typed readers/writeback/converters and field buffer to
-   the maintained runtime, with serviced UART/carrier and owner boundaries.
+2. Promote the checked typed-reader/writeback bindings below to the maintained
+   runtime, with serviced UART/carrier and owner boundaries; recover floating
+   conversion rather than substituting an opaque result.
 3. Add host and DOS compiler grammar matching the frozen oracle, then wire49.
 4. Validate actual DOS interaction for all four types, cancel/retry, limits,
    special keys, state restoration and continued connection traffic.
@@ -119,4 +120,72 @@ here changes the reviewed package, deployment selector or physical machine.
   --output build/my-get-field
 ./tools/dev --command python standalone/prove_aspect_get_field.py \
   --build build/my-get-field --output build/my-get-field-source
+```
+
+## Typed owner composition
+
+The [owner replay](../standalone/capture_aspect_get_owner_original.py) now
+executes the actual mode0 GET wrapper/owner, typed readers, global-string far
+copy/flush, shared editor/callbacks and integer/long CRT instructions. Its142
+authored cases span writable S0 plus global/local/parameter destinations of all
+four types, Enter and three cancellation paths, optional/default/zero/bad
+widths, last-line clipping, signed decimal prefixes and32-bit overflow. A
+synthetic buffered FILE record backs the operand stream; native inline token
+reads execute, while byte/word service reads update the same pointer/count.
+Peripheral UI, confirmation decisions and nonreturning abort dispatch remain
+explicit modeled boundaries. No private script or configuration is used.
+
+The resulting [fixture](../standalone/fixtures/aspect_get_owner_native.json)
+also exposes behavior which a replacement must preserve or deliberately change:
+
+- With native range checks enabled, the optional width reader accepts0..80.
+  Width81 and negative width reach native error1 before field entry. Compiler
+  acceptance is broader than runtime acceptance; the separate field's width81
+  observation does not override this command-level check.
+- Width0 skips field entry/cursor handling but still clears FAILURE and writes
+  back. Numeric conversion uses the existing scratch text.
+- Escape sets FAILURE. A confirmed abort does not reach writeback; a declined
+  confirmation or disabled KEYS path does. For example, with scratch `123`, a
+  numeric destination becomes123 after declining Escape, even though the field
+  itself never commits canceled edits. String cancellation retains its contents.
+- Default width clips at the last row when WRAP is zero. The observed WRAP1
+  path retains80 and can produce columns beyond79 in the modeled cursor service.
+  Actual screen geometry/wrap behavior still needs live UI validation; these
+  observations do not authorize unbounded direct VGA writes.
+- Integer/long conversion uses the recovered CRT's decimal prefix and32-bit
+  wrap semantics. `.5` converts to zero; `1.9` converts to one. These are not
+  host-language numeric conversions.
+
+[The source composition](../standalone/build_aspect_get_owner.py) links the
+recovered owner, typed readers, far copy/flush and integer CRT with the serviced
+field. Its explicit diagnostic bindings supply the synthetic stream, key input,
+cursor bookkeeping, bells, confirmation and nonreturning error/abort boundaries.
+Actual DOS8086 matches all142 final destination buffers, FAILURE values, widths,
+field/cursor/confirmation counts, conversion requests and stream/key consumption.
+It allocates a real far-heap string, checks DS=SS and forces the field model into
+a different code segment. A14-input isolated public-source export reproduces
+the exact executable and report. The
+[owner receipt](validation/aspect-get-owner.json) records identities and scope.
+
+Floating conversion remains a concrete gap. REA's overlay16/D408 dossier
+`ev_701c8030fe4fa8cb72faf470c262cd45d861bd6bb75b6ce43c7b18686e03acd2`
+shows a runtime request with selector5; its resource name at DGROUP497E is
+`FLOAT.RTE`. GET supplies its text through E142 and copies eight result bytes
+from E150. Both replays deliberately return an opaque authored eight-byte value
+at that boundary. They verify request text and typed result routing, **not
+floating-point conversion**. The source runner's existing unsupported float
+policy is unchanged.
+
+This is owner-component composition, not full dispatcher/compiler or application
+integration. Next work is the exclusive input lease and real parent display/
+cursor protocol, serviced UART/carrier and cancellation ownership, and the
+missing floating runtime. Then both compiler grammars and opcode49 can be
+enabled with actual script/connection, memory and package tests. The installed
+machine and deployment selector are unchanged.
+
+```sh
+./tools/dev --command python standalone/build_aspect_get_owner.py \
+  --output build/my-get-owner
+./tools/dev --command python standalone/prove_aspect_get_owner.py \
+  --build build/my-get-owner --output build/my-get-owner-source
 ```

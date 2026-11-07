@@ -5,6 +5,9 @@
 filter diagnostic with isolated reproduction. Its serviced memory-only field
 also matches1,527 original-instruction cases and25,873 key states in DOS8086,
 with separate-code/DS=SS checks,20 API guards and isolated source reproduction.
+The composed typed owner additionally passes142 DOS8086 cases using recovered
+readers, far-string writeback and integer/long CRT, with a14-input exact rebuild.
+Float requests are opaque boundary tests; floating conversion remains missing.
 The field/input owner is not integrated: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.
