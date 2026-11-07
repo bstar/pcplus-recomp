@@ -14,11 +14,15 @@
 #define ASIO_VERSION_RENDER 4U
 #define ASIO_V4_SIZE 48U
 #if defined(ASPECT_SNAPSHOT_LEASE)
-#if defined(ASPECT_ALARM_VM) || defined(ASPECT_ALARM_POLICY)
+#if defined(ASPECT_EMULATE_VM) || defined(ASPECT_EMULATE_POLICY)
+#define ASPECT_RENDER_CAP_VERSION 20U
+#elif defined(ASPECT_ALARM_VM) || defined(ASPECT_ALARM_POLICY)
 #define ASPECT_RENDER_CAP_VERSION 19U
-unsigned __cdecl aspect_render_alarm_policy(unsigned *,unsigned *);
 #else
 #define ASPECT_RENDER_CAP_VERSION 18U
+#endif
+#if defined(ASPECT_ALARM_VM) || defined(ASPECT_ALARM_POLICY)
+unsigned __cdecl aspect_render_alarm_policy(unsigned *,unsigned *);
 #endif
 #elif defined(ASPECT_NOTICE_INPUT)
 #define ASPECT_RENDER_CAP_VERSION 16U
@@ -28,6 +32,10 @@ unsigned __cdecl aspect_render_alarm_policy(unsigned *,unsigned *);
 #define ASPECT_RENDER_CAP_VERSION 13U
 #else
 #define ASPECT_RENDER_CAP_VERSION 12U
+#endif
+#if defined(ASPECT_EMULATE_VM)
+#define ASPECT_RENDER_EMULATE 20U
+unsigned __cdecl aspect_render_emulate(unsigned selector);
 #endif
 #define ASPECT_RENDER_CLIENT_MAGIC 0x5243U
 #define ASPECT_RENDER_CLIENT_SIZE 10U

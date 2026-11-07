@@ -36,6 +36,7 @@ def main():
     parser.add_argument('--lease-fault-kind',choices=['divide','abort','dispatcher'],default='divide')
     parser.add_argument('--fault-open-streams',action='store_true',help='Keep six buffered streams and exact PROGRAM copies live at the selected fault')
     parser.add_argument('--held-streams',action='store_true',help='Keep six buffered streams across each FIRST child, including PROGRAM WAIT')
+    parser.add_argument('--emulate-profile-switch',action='store_true',help='Execute VT220 then ANSI through actual native EMULATE and matching parent RPC')
     parser.add_argument('--clock-queries',action='store_true',help='Query local DATE/TIME strings across each FIRST child and save a clock trace')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
@@ -55,6 +56,7 @@ def main():
         m = json.loads(program.with_name('manifest.json').read_text())
         assert sha(program) == m['binary_sha256']
         assert not m.get('diagnostic_build') or (program==runner and args.program_result_probe and m.get('diagnostic_program_result_probe'))
+        if args.emulate_profile_switch:assert m.get('experimental_emulate_VM') if program==runner else m.get('experimental_aspect_emulate_policy')
         if program==runner:assert m.get('diagnostic_lease_fault_phase',0)==args.lease_fault_phase
         if program==runner:assert bool(m.get('diagnostic_lease_fault_foreign_ds'))==args.lease_fault_foreign_ds
         if program==runner:assert m.get('diagnostic_lease_fault_kind','divide')==args.lease_fault_kind
@@ -179,6 +181,7 @@ mode_opened:
         first=first.replace('proc main\n','proc main\n'+queries,1)
         trace='fopen 0 "D:\\CLOCK.LOG" "wb"\nfputs 0 clock_date\nfputc 0 32\nfputs 0 clock12\nfputc 0 32\nfputs 0 clock24\nfclose 0\n'
         first=first.replace('transmit "FIRSTOK^M"',trace+'transmit "FIRSTOK^M"',1)
+    if args.emulate_profile_switch:first=first.replace('fopen 0 ', 'emulate vt220\ntransmit "PROFILE4^M"\nwaitfor "ACK4" 1\nemulate ansi\ntransmit "PROFILE6^M"\nwaitfor "ACK6" 1\nfopen 0 ',1)
     keys = bytearray(actions(b'D:\\FIRST.ASX', 0))
     for i, (name, text) in enumerate([('FIRST', first), ('SIX', six), ('MISSING', missing)]):
         path = ('D:\\' + name + '.ASX').encode()
@@ -218,7 +221,8 @@ mode_opened:
         prm=bytes(settings), arguments='@TEST.PRM /T:D:\\ACTIONS.KEY /D:CaseTest:23',
         com=3, irq=5, cpu=args.cpu, working_drive='d', timeout=30, files=files,
         observer='SSWATCH' if args.inner_screen else 'EWATCH' if args.exit_watch else None,
-        observer_high=args.exit_watch_high or args.inner_screen)
+        observer_high=args.exit_watch_high or args.inner_screen,
+        online_triggers=((b'PROFILE4\r',b'\x1b[0cACK4'),(b'PROFILE6\r',b'\x1b[0cACK6'))*2 if args.emulate_profile_switch else ())
     drive = ROOT / 'build/connection-dos' / label
     wire = (drive / 'serial.bin').read_bytes()
     checks = dict(result['checks'], four_calls=wire.count(b'FIRSTOK\r') == 2,
@@ -228,6 +232,15 @@ mode_opened:
                   first_file=(drive / 'FIRST.LOG').exists() and (drive / 'FIRST.LOG').read_bytes() == b'FIRST|',
                   recovery_file=(drive / 'RECOVER.TXT').exists() and (drive / 'RECOVER.TXT').read_bytes() == b'RECOVERED|',
                   six_files=all((drive / f'SLOT{i}.TXT').exists() and (drive / f'SLOT{i}.TXT').read_bytes() == (f'SLOT{i}|'+(f'AFTER{i}|' if args.streams_around_child else '')).encode() for i in range(6)))
+    if args.emulate_profile_switch:
+        # EMULATE deliberately clears the old banner. Its original cursor reply
+        # proves initial rendering before the first switch; fresh DA replies
+        # prove each actual parent profile rather than trusting script success.
+        checks.pop('immediate_banner_not_dropped')
+        checks['initial_banner_cursor_before_reset']=b'\x1b[1;16R' in wire.split(b'PROFILE4\r',1)[0]
+        checks['both_profile_DA_pairs']=wire.count(b'PROFILE4\r\x1b[?62;2cPROFILE6\r\x1b[?1;2c')==2
+        viewport_cells=(args.display_rows-1)*80
+        checks['profile_reset_replaces_old_view']=((drive/'SCREEN.BIN').read_bytes()[:viewport_cells*2]==b''.join(bytes([c,7]) for c in b'ACK6'.ljust(viewport_cells,b' ')))
     if args.clock_queries:
         checks['actual_parent_clock_queries']=(drive/'CLOCK.LOG').exists() and bool(re.fullmatch(rb'\d{2}/\d{2}/\d{2,3} \d{2}:\d{2}:\d{2}[AP]M \d{2}:\d{2}:\d{2}',(drive/'CLOCK.LOG').read_bytes()))
     for name, expected in sources.items():
@@ -235,7 +248,7 @@ mode_opened:
     if args.nested_program:
         checks['three_nested_children' if args.streams_around_child else 'two_nested_children']=(drive/'NEST.LOG').exists() and (drive/'NEST.LOG').read_bytes()==b'CHILD|'*(3 if args.streams_around_child else 2)
         viewport_cells=(args.display_rows-1)*80
-        characters=bytearray(b'FIRST BYTE SAFE'.ljust(viewport_cells,b' '))
+        characters=bytearray((b'ACK6' if args.emulate_profile_switch else b'FIRST BYTE SAFE').ljust(viewport_cells,b' '))
         if args.lease_fault_phase:
             notice=b'FIRST BYTE SAFEASPECT: '+(b'CPU arithmetic fault (error 12' if args.lease_fault_kind=='divide' else b'file or output error (error 5')+b', opcode 9B, step '+(b'14' if args.fault_open_streams else b'2')+b')'
             characters[:len(notice)]=notice
@@ -255,7 +268,7 @@ mode_opened:
                   physical_rows=args.display_rows,
                   streams_around_child=args.streams_around_child,
                   held_streams=args.held_streams,
-                  clock_queries=args.clock_queries,
+                  clock_queries=args.clock_queries,emulate_profile_switch=args.emulate_profile_switch,
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
     if args.nested_program:

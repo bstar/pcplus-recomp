@@ -13,6 +13,7 @@ def main(extension=None):
     # Default production inputs/flags and opcode coverage remain unchanged.
     output=extension['output'] if extension else OUT
     feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS','-DASPECT_EXTERNAL_UNWIND'] if extension else []
+    if extension and extension.get('emulate_vm'):feature_flags+=['-DASPECT_EMULATE_VM']
     if extension and extension.get('alarm_vm'):feature_flags+=['-DASPECT_ALARM_VM','-DASPECT_ALARM_SERVICE','-DASPECT_DEFER_NUMERIC_BANKS']
     if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
     if extension and extension.get('program_far'):feature_flags+=['-DNATIVE_PROGRAM_FAR']
@@ -65,6 +66,8 @@ def main(extension=None):
         serial_asm += [('process_serial','src/aspect/process_serial.asm',None),
                        ('external_unwind','src/aspect/external_unwind.asm',None),
                        ('external_commands','src/aspect/external_commands.asm',None)]
+    if extension and extension.get('emulate_vm'):
+        serial_asm += [('emulate_native','src/aspect/emulate_native.asm',None)]
     if extension and extension.get('alarm_vm'):
         serial_asm += [('alarm_native','src/aspect/alarm_native.asm',None),
                        ('alarm_bridge','src/aspect/alarm_cooperative_bridge.asm',None),
@@ -127,6 +130,7 @@ def main(extension=None):
                   diagnostic_program_result_probe=bool(extension and extension.get('program_result_probe')),
                   experimental_snapshot_lease=bool(extension and extension.get('snapshot_lease')),
                   experimental_alarm_VM=bool(extension and extension.get('alarm_vm')),
+                  experimental_emulate_VM=bool(extension and extension.get('emulate_vm')),
                   diagnostic_lease_fault_phase=extension.get('lease_fault_phase') or 0 if extension else 0,
                   diagnostic_lease_fault_foreign_ds=bool(extension and extension.get('lease_fault_foreign_ds')),
                   diagnostic_lease_fault_kind=extension.get('lease_fault_kind','divide') if extension else 'divide',

@@ -138,6 +138,20 @@ unsigned __cdecl aspect_render_finish(void)
  if(!result){attached=0;window_owned=confirm_owned=0;}
  return result;
 }
+#if defined(ASPECT_EMULATE_VM)
+unsigned __cdecl aspect_render_emulate(unsigned selector)
+{
+ unsigned result;
+ if(!attached || service_check() || confirm_owned || window_owned ||
+    policy_wait || keyboard_wait || key_wait || label_wait || window_wait)return ASPECT_RUN_STATE;
+ if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+ if(selector>255)return ASPECT_RUN_OPERAND;
+ callback_error=0;
+ result=typed(aspect_render_request(ASPECT_RENDER_EMULATE,selector));
+ if(service_check())return ASPECT_RUN_STATE;
+ return result?result:callback_error;
+}
+#endif
 unsigned __cdecl aspect_render_status(unsigned duplex)
 {
  unsigned result;

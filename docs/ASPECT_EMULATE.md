@@ -2,7 +2,9 @@
 
 Both maintained compilers now emit the original `EMULATE` instruction for all
 33 original terminal names. The exact native command owner is recovered as a
-separate component. **The interpreter does not execute this opcode yet.** This
+separate component. The ordinary interpreter does not execute this opcode. The subsequent
+[experimental RPC/VM checkpoint](ASPECT_EMULATE_RPC.md) executes it in DOS, with
+capacity acceptance still open. This
 checkpoint expands compiler fidelity without changing the installed connection
 package or claiming support for 33 runtime emulations.
 
@@ -81,8 +83,8 @@ The [receipt](validation/aspect-emulate.json) binds sources and results:
 
 The subsequent [parent transaction](ASPECT_EMULATE_PARENT.md) executes keyboard
 staging/reset in linked tests. Its initial memory failure is resolved by the
-[later funding proof](ASPECT_EMULATE_FUNDING.md). The child request and opcode
-remain unbound.
+[later funding proof](ASPECT_EMULATE_FUNDING.md). The later [RPC/VM checkpoint](ASPECT_EMULATE_RPC.md) binds the request and opcode
+experimentally; its combined capacity gate still fails.
 
 ## Runtime integration still needed
 

@@ -1,5 +1,9 @@
 # EMULATE parent memory funding
 
+This page records the parent-only funding checkpoint. The later
+[RPC/VM integration](ASPECT_EMULATE_RPC.md) binds the command experimentally
+and exposes additional memory work before release acceptance.
+
 The experimental parent now passes the capacity tests that failed when its
 profile owner was added. It saves208 bytes from that initial candidate without
 reducing buffers, streams, numeric storage or stacks. This accepts the parent

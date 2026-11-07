@@ -423,6 +423,23 @@ fail:
  ret
 
 
+%ifdef ASPECT_EMULATE_VM
+extern aspect_emulate_command,_aspect_render_emulate
+global aspect_emulation_reset,aspect_emulation_selector
+runtime_emulate_command:
+ jmp aspect_emulate_command
+aspect_emulation_reset:
+ ; The exact wrapper has already read one byte and staged it locally. This
+ ; word is not a child renderer/cache; only a successful parent RPC commits
+ ; the live profile. Native reset argument1 remains caller-cleaned.
+ push word [aspect_emulation_selector]
+ call _aspect_render_emulate
+ pop bx
+ or ax,ax
+ jnz fail
+ ret
+%endif
+
 %ifdef ASPECT_ALARM_VM
 extern aspect_alarm_command,_runtime_alarm_prepare
 runtime_alarm_command:
@@ -982,6 +999,9 @@ aspect_globals_table:
 _runtime_strings: times 128 dd 0
  global aspect_operand_integer_bank_a,_runtime_integer_a
 aspect_operand_integer_bank_a:
+%ifdef ASPECT_EMULATE_VM
+aspect_emulation_selector: dw 0
+%endif
 _runtime_integer_a: times 10 dw 0
  global aspect_operand_integer_bank_b,_runtime_integer_b
 aspect_operand_integer_bank_b:
@@ -1019,6 +1039,12 @@ aspect_dispatch_handlers:
 %rep 215
 %if op=1
  dw ALARM_HANDLER
+%elif op=0x2f
+%ifdef ASPECT_EMULATE_VM
+ dw runtime_emulate_command
+%else
+ dw unsupported
+%endif
 %elif op=0x1d
  dw aspect_clock_date
 %elif op=0xbe

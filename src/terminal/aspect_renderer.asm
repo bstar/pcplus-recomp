@@ -6,7 +6,11 @@ CPU 8086
 %include "resident_bridge.inc"
 %ifdef ASPECT_SNAPSHOT_LEASE
  %ifdef ASPECT_ALARM_POLICY
-  %define RENDER_CAPABILITY 19
+  %ifdef ASPECT_EMULATE_POLICY
+   %define RENDER_CAPABILITY 20
+  %else
+   %define RENDER_CAPABILITY 19
+  %endif
   extern _terminal_connect_alert_seconds
  %else
   %define RENDER_CAPABILITY 18
@@ -105,6 +109,9 @@ extern terminal_script_window_cooperative
 global terminal_script_window_poll
 global render_child_ds,render_started,render_body,render_attached,render_child_psp
 extern _script_handoff
+%ifdef ASPECT_EMULATE_POLICY
+extern terminal_script_emulate
+%endif
 global terminal_render_prepare,terminal_render_revoke,terminal_render_validate,terminal_render_typed_abort
 global terminal_render_failure_notice
 global terminal_render_unsupported,terminal_render_read,terminal_render_read_now
@@ -311,6 +318,10 @@ render_body:
  cmp di,9
  je .program_begin
 %endif
+%ifdef ASPECT_EMULATE_POLICY
+ cmp di,20
+ je .emulate
+%endif
  cmp di,12
  je .abort_confirm
  cmp di,11
@@ -348,6 +359,14 @@ render_body:
  xor ax,ax
 .done:
  ret
+%ifdef ASPECT_EMULATE_POLICY
+.emulate:
+ cmp word [_script_handoff+22],0
+ jne .serial
+ mov ax,bx
+ call far terminal_script_emulate
+ ret
+%endif
 .status:
  ; returned is published last after child UART restoration. Unlike ordinary
  ; error rendering, STATUS reads hardware carrier and requires that lease.

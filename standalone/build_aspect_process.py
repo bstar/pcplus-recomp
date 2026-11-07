@@ -7,11 +7,12 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False):
     assert heap_growth_bytes is None or heap_growth_bytes in (128,256,512)
     assert heap_growth_bytes is None or register_handoff
     if snapshot_lease:assert parent_render and notice_input
     if alarm_vm:assert snapshot_lease and notice_sound
+    if emulate_vm:assert alarm_vm
     assert lease_fault_phase in (None,5,6,8,10,17,22)
     if lease_fault_phase:assert driver is None and snapshot_lease and program_result_probe
     if lease_fault_foreign_ds:assert lease_fault_phase
@@ -142,6 +143,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     extension['defer_script_buffers']=defer_script_buffers
     extension['buffer_probe']=buffer_probe
     extension['alarm_vm']=alarm_vm
+    extension['emulate_vm']=emulate_vm
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
     if notice_bank:

@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Experimental EMULATE RPC/VM integration](ASPECT_EMULATE_RPC.md) now executes
+the native command in DOS: two VT220→ANSI pairs produce actual profile-specific
+DA replies, with 26 normal workflow checks passing. **Unaccepted:** the larger
+parent/child pair fails eight of 30 held-stream/nested-child checks. Fund code
+without reducing capacities, then complete negative/WHEN/receive/BBS/package
+gates. Ordinary controls and installation remain unchanged.
+
 [EMULATE memory funding](ASPECT_EMULATE_FUNDING.md) resolves the parent capacity
 failure below: 27 held-stream checks on 8086 and 386, plus 26 stream-around-child
 checks on 8086 pass. The parent saves 208 bytes from the initial owner; no

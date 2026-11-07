@@ -29,7 +29,7 @@ parser.add_argument('--chat-redisplay',action='store_true',help='Opt-in Chat Alt
 parser.add_argument('--chat-foreground-text',action='store_true',help='Bind all ten direct Chat TEXT keys through module-owned scheduling; requires echo and compact labels')
 parser.add_argument('--chat-frontend',action='store_true',help='Experimental Alt-O core and keyboard/RX/idle ownership; Help/direct TEXT remain refused; requires adapters')
 parser.add_argument('--command-ui-pairs',type=int,choices=[0,64,128],default=64,help='Zero selects an uncompressed decoder control; requires packed UI')
-parser.add_argument('--aspect-emulate-policy',action='store_true',help='Experimental parent-owned script profile transaction; no RPC/VM binding yet')
+parser.add_argument('--aspect-emulate-policy',action='store_true',help='Experimental capability20 parent-owned script profile transaction')
 parser.add_argument('--aspect-alarm-policy',action='store_true',help='Opt-in capability19 current ALARM sound/duration scalars')
 parser.add_argument('--aspect-snapshot-lease',action='store_true',help='Opt-in capability17 retained screen storage for nested ASPECT PROGRAM')
 parser.add_argument('--file-viewer',action='store_true',help='Serviced internal Alt-V viewer; requires the composed Gateway/large-frame parent')
@@ -855,7 +855,7 @@ for source in c_sources:
  if args.hook_modem:options+=['-dTERMINAL_HOOK_MODEM']
  if args.hook_input:options+=['-dTERMINAL_HOOK_INPUT']
  if args.hook_apply:options+=['-dTERMINAL_HOOK_APPLY']
- if args.aspect_emulate_policy and source.name=='script_launch.c':options+=['-dASPECT_EMULATE_POLICY']
+ if args.aspect_emulate_policy:options+=['-dASPECT_EMULATE_POLICY']
  if args.aspect_alarm_policy:options+=['-dASPECT_ALARM_POLICY']
  if args.notice_sound:options+=['-dASPECT_SOUND_POLICY','-dTERMINAL_SOUND']
  if args.notice_input:options+=['-dASPECT_NOTICE_INPUT']
