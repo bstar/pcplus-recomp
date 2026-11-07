@@ -8,6 +8,10 @@ with separate-code/DS=SS checks,20 API guards and isolated source reproduction.
 The composed typed owner additionally passes142 DOS8086 cases using recovered
 readers, far-string writeback and integer/long CRT, with a14-input exact rebuild.
 Float requests are opaque boundary tests; floating conversion remains missing.
+The opt-in [GET keyboard/service lease](ASPECT_GET_SERVICE.md) passes36 real
+DOS BIOS/UART cases and a23-input clean rebuild with three wire repeats. Native
+WHEN action bodies and the parent receive/display entry are modeled. Three
+ALARM regressions pass; GET-disabled ALARM matches its pre-change source build.
 The field/input owner is not integrated: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.

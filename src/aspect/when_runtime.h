@@ -24,6 +24,16 @@ unsigned runtime_when_transport_poll(void);
  * at most64 native receive leads or one BIOS tick, WHEN before display; never call
  * from parser callbacks, monitors, TX pacing or generic raw delay services. */
 unsigned runtime_when_delay_poll(void);
+#ifdef ASPECT_GET_SERVICE
+/* Foreground GET field keyboard lease. Parent modal windows and ALARM cannot
+ * overlap it. Poll services native WHEN/carrier and bounded receive while
+ * leaving every BIOS key (including Escape) for the field. End after the
+ * field/renderer has retired, also on ordinary service errors. This API does
+ * not authorize clearing abandoned frames after a nonlocal native abort. */
+unsigned runtime_when_get_begin(void);
+unsigned runtime_when_get_end(void);
+unsigned runtime_when_get_poll(void);
+#endif
 #ifdef ASPECT_ALARM_SERVICE
 /* Ordinary foreground stack only. Exclusive key lease: transport/native WHEN
  * service must not consume any key while ALARM owns it. Nested/modal/borrowed

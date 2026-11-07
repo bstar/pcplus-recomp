@@ -177,8 +177,10 @@ floating-point conversion**. The source runner's existing unsupported float
 policy is unchanged.
 
 This is owner-component composition, not full dispatcher/compiler or application
-integration. Next work is the exclusive input lease and real parent display/
-cursor protocol, serviced UART/carrier and cancellation ownership, and the
+integration. The opt-in [keyboard/service lease](ASPECT_GET_SERVICE.md) now has
+actual DOS BIOS/UART checks; it still needs composition with this native owner.
+Next work is the real parent display/cursor protocol, native abort lifetime,
+serviced UART/carrier and cancellation ownership, and the
 missing floating runtime. Then both compiler grammars and opcode49 can be
 enabled with actual script/connection, memory and package tests. The installed
 machine and deployment selector are unchanged.

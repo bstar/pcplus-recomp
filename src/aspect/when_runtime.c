@@ -11,6 +11,9 @@
 #if defined(ASPECT_ALARM_SERVICE) && !defined(ASPECT_RUNTIME_SERIAL)
 #error ASPECT_ALARM_SERVICE requires the serial runtime
 #endif
+#if defined(ASPECT_GET_SERVICE) && !defined(ASPECT_RUNTIME_SERIAL)
+#error ASPECT_GET_SERVICE requires the serial runtime
+#endif
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "resident_render.h"
 #include "serial.h"
@@ -21,6 +24,9 @@ extern unsigned __cdecl runtime_when_native_service(void);
 unsigned runtime_when_deferred,runtime_when_pending_service;
 static unsigned service_busy,monitor_busy;
 static unsigned window_keys_suppressed;
+#ifdef ASPECT_GET_SERVICE
+static unsigned get_keys_owned;
+#endif
 #ifdef ASPECT_ALARM_SERVICE
 static unsigned alarm_keys_owned;
 #endif
@@ -39,6 +45,9 @@ static void disarm(void)
 }
 void runtime_when_reset(void)
 {
+#ifdef ASPECT_GET_SERVICE
+ if(get_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
+#endif
 #ifdef ASPECT_ALARM_SERVICE
  if(alarm_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
 #endif
@@ -55,11 +64,17 @@ void runtime_when_reset(void)
 }
 void runtime_when_file_reset(void)
 {
+#ifdef ASPECT_GET_SERVICE
+ if(get_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
+#endif
  disarm();
  runtime_when_deferred=runtime_when_pending_service=service_busy=monitor_busy=0;
 }
 void runtime_when_finish(void)
 {
+#ifdef ASPECT_GET_SERVICE
+ if(get_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
+#endif
 #if defined(ASPECT_RUNTIME_SERIAL)
  confirmation_active=0;
 #endif
@@ -88,6 +103,9 @@ unsigned runtime_when_transport_poll(void)
 #ifdef ASPECT_ALARM_SERVICE
  if(alarm_keys_owned)return 0;
 #endif
+#ifdef ASPECT_GET_SERVICE
+ if(get_keys_owned)return 0;
+#endif
  key=runtime_keyboard_peek();if(!key)return 0;
  /* Leave ordinary local keys queued for the native service's safe point. */
  if((key&255)==27){runtime_keyboard_read();runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
@@ -103,6 +121,9 @@ unsigned runtime_when_transport_poll(void)
 #ifdef ASPECT_ALARM_SERVICE
 unsigned runtime_when_alarm_begin(void)
 {
+#ifdef ASPECT_GET_SERVICE
+ if(get_keys_owned)return ASPECT_RUN_STATE;
+#endif
  if(runtime_error || alarm_keys_owned || runtime_when_deferred || service_busy ||
     monitor_busy || confirmation_active || aspect_render_window_active())return ASPECT_RUN_STATE;
  alarm_keys_owned=1;return 0;
@@ -133,6 +154,52 @@ unsigned runtime_when_alarm_poll(void)
  runtime_when_poll();if(runtime_error)return runtime_error;
  /* Raw ASIO has no idle renderer. Keep its bytes queued unless a native WHEN
   * pattern consumes them; the attached path retains ordinary WHEN-before-display. */
+ if(!runtime_when_idle_allowed())return 0;
+ started=aspect_serial_ticks();
+ for(leads=0;leads<64 && !runtime_error && aspect_serial_available();++leads){
+  runtime_receive_character(runtime_receive_display,0);
+  now=aspect_serial_ticks();if(now<started)now+=1573040UL;
+  if(now-started>=1UL)break;
+ }
+ return runtime_error;
+}
+#endif
+#ifdef ASPECT_GET_SERVICE
+unsigned runtime_when_get_begin(void)
+{
+ if(runtime_error || get_keys_owned || runtime_when_deferred || service_busy ||
+    monitor_busy || confirmation_active || aspect_render_window_active())return ASPECT_RUN_STATE;
+#ifdef ASPECT_ALARM_SERVICE
+ if(alarm_keys_owned)return ASPECT_RUN_STATE;
+#endif
+ if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+ get_keys_owned=1;return 0;
+}
+unsigned runtime_when_get_end(void)
+{
+ if(!get_keys_owned || runtime_when_deferred || service_busy || monitor_busy)return ASPECT_RUN_STATE;
+ get_keys_owned=0;return 0;
+}
+unsigned runtime_when_get_poll(void)
+{
+ unsigned leads;unsigned long started,now;
+ if(runtime_error)return runtime_error;
+ if(!get_keys_owned || runtime_when_deferred || service_busy || monitor_busy ||
+    confirmation_active || aspect_render_window_active()){
+  runtime_set_error(ASPECT_RUN_STATE);return runtime_error;
+ }
+ if(aspect_serial_active!=1){runtime_set_error(ASPECT_RUN_SERIAL);return runtime_error;}
+ runtime_when_poll();if(runtime_error)return runtime_error;
+ /* Native callbacks can stage a different modal/deferred/serial owner. Do not
+  * drain receive or return field input on a context admitted before that call. */
+ if(!get_keys_owned || runtime_when_deferred || service_busy || monitor_busy ||
+    confirmation_active || aspect_render_window_active()){
+  runtime_set_error(ASPECT_RUN_STATE);return runtime_error;
+ }
+ if(aspect_serial_active!=1){runtime_set_error(ASPECT_RUN_SERIAL);return runtime_error;}
+ /* Preserve raw ASIO bytes for script receive commands. An attached renderer
+  * or active WHEN pattern uses the existing translation/match/display owner.
+  * Transport callbacks below cannot consume Escape while the lease is held. */
  if(!runtime_when_idle_allowed())return 0;
  started=aspect_serial_ticks();
  for(leads=0;leads<64 && !runtime_error && aspect_serial_available();++leads){
@@ -216,10 +283,16 @@ unsigned runtime_when_key_ready(void)
 #ifdef ASPECT_ALARM_SERVICE
  if(alarm_keys_owned)return 0;
 #endif
+#ifdef ASPECT_GET_SERVICE
+ if(get_keys_owned)return 0;
+#endif
  return runtime_error || window_keys_suppressed?0:runtime_keyboard_peek();
 }
 unsigned runtime_when_read_key(void)
 {
+#ifdef ASPECT_GET_SERVICE
+ if(get_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return 0;}
+#endif
  return runtime_keyboard_read();
 }
 #if defined(ASPECT_RUNTIME_SERIAL)
@@ -280,6 +353,9 @@ unsigned runtime_when_confirm_abort(void)
 {
 #if defined(ASPECT_RUNTIME_SERIAL)
  unsigned answer;
+#ifdef ASPECT_GET_SERVICE
+ if(get_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return 1;}
+#endif
  if(aspect_render_active()){
   if(confirmation_active || !service_busy || runtime_when_deferred || monitor_busy){
    runtime_set_error(ASPECT_RUN_STATE);return 1;
@@ -296,6 +372,9 @@ unsigned runtime_when_confirm_abort(void)
 void runtime_when_abort(void){runtime_set_error(ASPECT_RUN_CANCELLED);}
 void runtime_when_dispatch_key(unsigned key)
 {
+#ifdef ASPECT_GET_SERVICE
+ if(get_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
+#endif
 #if defined(ASPECT_RUNTIME_SERIAL)
  if(aspect_render_active()){unsigned result=aspect_render_key(key);if(result)runtime_set_error(result);return;}
 #endif
