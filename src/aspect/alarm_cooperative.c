@@ -1,5 +1,5 @@
 /* Native flow retained; blocking native services replaced by bounded callbacks.
- * This component has no VM/parent policy or production UART binding yet. */
+ * Parent policy and actual platform services are supplied by separate adapters. */
 #include "alarm_cooperative.h"
 #define DAY 1573040UL
 extern void ALARM_CALL alarm_coop_native(void);
@@ -11,7 +11,8 @@ extern unsigned alarm_duration,alarm_enabled;
 static const alarm_coop_ops *platform;
 static void *cookie;
 static unsigned active,tone_owned,key_pending,cleanup_failed,working;
-static unsigned long limit;
+static unsigned long limit,remaining;
+static unsigned progress_budget,clock_seen,last_second;
 static alarm_coop_report report;
 
 static void fail(unsigned cause)
@@ -25,8 +26,9 @@ static unsigned step(void)
 {
  if(report.cause)return 1;
  if(!context())return 1;
- if(report.service_calls>=limit){fail(ALARM_COOP_BUDGET);return 1;}
- ++report.service_calls;
+ if(!remaining){fail(ALARM_COOP_BUDGET);return 1;}
+ --remaining;
+ if(report.service_calls!=0xffffffffUL)++report.service_calls;
  if(platform->service(cookie)){fail(ALARM_COOP_SERVICE);return 1;}
  if(!context())return 1;
  key_pending=platform->peek(cookie)!=0;
@@ -49,12 +51,19 @@ unsigned ALARM_CALL alarm_coop_seconds(void)
  if(report.cause||key_pending)return 0;
  if(!context())return 0;
  value=platform->seconds(cookie);if(value>59){fail(ALARM_COOP_CLOCK);return 0;}
+ /* Renew only at a valid DOS-second observation already required by native
+  * flow. No extra clock call or per-poll DOS overhead. A frozen DOS clock,
+  * stuck tick/tone helper or failed service still has finite work to retire. */
+ if(progress_budget && (!clock_seen || value!=last_second))remaining=limit;
+ clock_seen=1;last_second=value;
  return value;
 }
 unsigned ALARM_CALL alarm_coop_peek(void)
 {
  /* A service failure terminates native flow without inventing a BIOS key. */
- return report.cause?1:step();
+ /* Once our exclusive key lease observed a key, native's final peek must
+  * not spend another service credit before reading that same pending key. */
+ return report.cause||key_pending?1:step();
 }
 unsigned ALARM_CALL alarm_coop_read(void)
 {
@@ -106,8 +115,8 @@ unsigned ALARM_CALL alarm_coop_recover(void)
  active=0;platform=0;cookie=0;key_pending=0;
  working=0;report.status=report.cause;return report.status;
 }
-unsigned ALARM_CALL alarm_coop_run(const alarm_coop_ops *ops,void *opaque,
- unsigned seconds,unsigned enabled,unsigned long polls)
+static unsigned run(const alarm_coop_ops *ops,void *opaque,
+ unsigned seconds,unsigned enabled,unsigned long polls,unsigned progress)
 {
  if(active)return ALARM_COOP_BUSY;
  report.status=report.cause=report.key_consumed=report.key_word=0;report.service_calls=0;
@@ -115,9 +124,16 @@ unsigned ALARM_CALL alarm_coop_run(const alarm_coop_ops *ops,void *opaque,
     !ops->peek||!ops->read||!ops->tone_start||!ops->tone_poll||!ops->tone_stop||!polls){
   report.status=report.cause=ALARM_COOP_ARGUMENT;return report.status;
  }
- platform=ops;cookie=opaque;limit=polls;tone_owned=key_pending=cleanup_failed=0;active=working=1;
+ platform=ops;cookie=opaque;limit=remaining=polls;progress_budget=progress;
+ clock_seen=last_second=0;tone_owned=key_pending=cleanup_failed=0;active=working=1;
  if(context()){alarm_duration=seconds;alarm_enabled=enabled;alarm_coop_native();}
  working=0;
  if(cleanup_failed){report.status=ALARM_COOP_CLEANUP;return report.status;}
  return alarm_coop_recover();
 }
+unsigned ALARM_CALL alarm_coop_run(const alarm_coop_ops *ops,void *opaque,
+ unsigned seconds,unsigned enabled,unsigned long polls)
+{return run(ops,opaque,seconds,enabled,polls,0);}
+unsigned ALARM_CALL alarm_coop_run_progress(const alarm_coop_ops *ops,void *opaque,
+ unsigned seconds,unsigned enabled,unsigned long polls)
+{return run(ops,opaque,seconds,enabled,polls,1);}

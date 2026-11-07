@@ -1,5 +1,10 @@
 # Cooperative ALARM adapter
 
+This is the historical component checkpoint. The newer
+[progress-budget integration](ASPECT_ALARM_PROGRESS.md) links it into the
+opt-in VM and retains the total-budget API while adding progress-based limits
+and pending-key completion at the budget boundary.
+
 The recovered93-byte shared alert now runs through a bounded foreground service
 adapter. It retains the native controller's duration/paired-tone/keyboard flow
 while replacing its blocking service calls. This component is not yet an

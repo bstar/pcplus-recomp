@@ -20,7 +20,7 @@ void __cdecl runtime_alarm_wait(void)
 {
  unsigned status,error;
  error=runtime_when_alarm_begin();if(error){runtime_set_error(error);return;}
- status=alarm_dos_run(alarm_duration,alarm_enabled,2000000UL,service,0);
+ status=alarm_dos_run_progress(alarm_duration,alarm_enabled,2000000UL,service,0);
  error=runtime_error;
  if(!error && status){
   if(status==ALARM_COOP_SERVICE)error=alarm_dos_service_status();

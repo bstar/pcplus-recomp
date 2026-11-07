@@ -31,6 +31,10 @@ typedef struct alarm_coop_report {
  unsigned long service_calls;
 } alarm_coop_report;
 unsigned ALARM_CALL alarm_coop_run(const alarm_coop_ops *,void *,unsigned,unsigned,unsigned long);
+/* Progress policy: last argument bounds service calls between distinct valid
+ * DOS-second observations in native flow, rather than over the whole alert.
+ * Original run retains its total-call limit. Report total saturates at ULONG_MAX. */
+unsigned ALARM_CALL alarm_coop_run_progress(const alarm_coop_ops *,void *,unsigned,unsigned,unsigned long);
 unsigned ALARM_CALL alarm_coop_recover(void);
 unsigned ALARM_CALL alarm_coop_active(void);
 void ALARM_CALL alarm_coop_result(alarm_coop_report *);

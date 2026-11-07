@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[ALARM progress budgeting](ASPECT_ALARM_PROGRESS.md) replaces the whole-alert
+VM limit with credits renewed at valid observed second changes and fixes
+pending-key completion at the last credit. The legacy94-case suite and new
+33-case/1457099-check modeled suite pass, including full32767-count runs and
+frozen-clock protection. Actual parent WHEN/sounding keys, capacity and cold
+reproduction are covered separately. Active-alert carrier/service errors,
+physical/package/full-parity acceptance remain open. Installation is unchanged.
+
 [ALARM operand errors and subsequent reuse](ASPECT_ALARM_ERRORS.md) now pass five
 actual-parent malformed/range/truncation cases and seven invocations in one
 terminal: valid, all five expected errors, valid. The final recovery reopens six

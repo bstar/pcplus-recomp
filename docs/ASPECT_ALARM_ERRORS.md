@@ -69,3 +69,8 @@ audio behavior or full-duration service budgets. Those gates, packaging and the
 remaining full-parity inventory stay open. The installed RCC859D7 package is
 unchanged; no new cold rebuild or modern BBS regression is claimed for the
 unchanged application products.
+
+The subsequent [progress-budget checkpoint](ASPECT_ALARM_PROGRESS.md) changes
+the candidate interpreter's watchdog and pending-key boundary behavior and
+repeats its declared product gates. Its model coverage supersedes the fixed
+whole-alert budget limitation, without establishing physical long-run behavior.

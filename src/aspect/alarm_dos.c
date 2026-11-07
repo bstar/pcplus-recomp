@@ -61,14 +61,21 @@ unsigned ALARM_CALL alarm_dos_recover(void)
  if(!alarm_coop_active()){bound=0;worker=0;worker_cookie=0;}
  return result;
 }
-unsigned ALARM_CALL alarm_dos_run(unsigned duration,unsigned enabled,
- unsigned long polls,unsigned (ALARM_CALL *callback)(void *),void *cookie)
+static unsigned run(unsigned duration,unsigned enabled,
+ unsigned long polls,unsigned (ALARM_CALL *callback)(void *),void *cookie,unsigned progress)
 {
  unsigned result;
  if(bound||alarm_coop_active())return ALARM_COOP_BUSY;
  if(!callback||!polls)return ALARM_COOP_ARGUMENT;
  worker=callback;worker_cookie=cookie;tone_limit=polls;service_status=owned=0;bound=1;
- result=alarm_coop_run(&ops,0,duration,enabled,polls);
+ result=progress?alarm_coop_run_progress(&ops,0,duration,enabled,polls):
+                 alarm_coop_run(&ops,0,duration,enabled,polls);
  if(!alarm_coop_active()){bound=0;worker=0;worker_cookie=0;}
  return result;
 }
+unsigned ALARM_CALL alarm_dos_run(unsigned duration,unsigned enabled,
+ unsigned long polls,unsigned (ALARM_CALL *callback)(void *),void *cookie)
+{return run(duration,enabled,polls,callback,cookie,0);}
+unsigned ALARM_CALL alarm_dos_run_progress(unsigned duration,unsigned enabled,
+ unsigned long polls,unsigned (ALARM_CALL *callback)(void *),void *cookie)
+{return run(duration,enabled,polls,callback,cookie,1);}
