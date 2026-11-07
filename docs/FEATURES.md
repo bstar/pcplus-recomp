@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Shared-parent carrier recovery](META_SHARED_CARRIER.md) passes eighteen
+ordinaryDOS8086 transfer-loss/redial cases and four ASPECT/window/disconnect
+cases with full diagnostics in386/UMB. A separate DOS8 witness identifies the
+low-memory observer/child admission failure; it is not an accepted script run.
+Application and installed bytes remain unchanged. Live-BBS transfer, larger
+binary-loss/pressure and physical acceptance remain separate.
+
 [Shared-parent transfers/reconnect](META_SHARED_TRANSFERS.md): sixteen actual
 DOS8086 X/Y/ZMODEM cases and three virtual-carrier/call-log/redial cases pass
 on the unchanged shared parent. Test navigation now allows the reference's disk

@@ -82,8 +82,10 @@ can redraw it. Failed attempts are not accepted evidence.
 ## Remaining work
 
 [Transfer/reconnect checks](META_SHARED_TRANSFERS.md) now pass sixteen protocol
-cases and three idle/call-log carrier-loss cases on these exact bytes. Repeat
-active-transfer/ASPECT loss and live-BBS transfers before packaging.
+cases and three idle/call-log carrier-loss cases on these exact bytes.
+[Active-transfer/ASPECT loss](META_SHARED_CARRIER.md) now passes the bounded
+eighteen-transfer/four-script matrix, with observed ASPECT explicitly386/UMB.
+Repeat live-BBS transfers and larger binary-loss/pressure before packaging.
 [Shared-kernel fault checks](META_SHARED_FAULTS.md) now cover
 close boundaries, malformed headers/fixups, prior allocation and history return.
 Wider arena arbitration, other geometries, frozen-history entry,

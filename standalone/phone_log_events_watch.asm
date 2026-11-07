@@ -11,7 +11,12 @@ ORG 100h
 %else
 %define RECORD_BYTES 716
 %endif
+%ifndef RECORD_LIMIT
 %define RECORD_LIMIT 8
+%endif
+%if RECORD_LIMIT < 1 || RECORD_LIMIT > 8
+%error Invalid passive record capacity
+%endif
 %ifdef CONTROL_ACK_OFFSET
 %define SAMPLE_BYTES (4022+RECORD_BYTES*RECORD_LIMIT)
 %elifdef DISK_ATTEMPTS_OFFSET

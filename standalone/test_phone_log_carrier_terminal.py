@@ -11,14 +11,14 @@ sys.path.insert(0,str(ROOT/'lab/bbs'))
 from phone_log_evidence import build_observer
 
 
-async def run_case(parent,out,name,ticks,soft,aspect=None,transfer=None):
+async def run_case(parent,out,name,ticks,soft,aspect=None,transfer=None,observer_high=False):
     out.mkdir(parents=True);binary=parent/'TERMINAL.EXE'
     symbols={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',(parent/'terminal.map').read_text(),re.M|re.I)}
     stage=parent;extra_command='';keys='p900 enter p6000 a-d p4500 r e a d y p1800 a-x';extra_observer={};aspect_inputs=[]
     if aspect:
         runner=aspect['runner'];stage=out/'PARENT';stage.mkdir()
         for source in (binary,runner):shutil.copyfile(source,stage/source.name)
-        extra_command=' /T:D:\\ACTIONS.KEY'
+        extra_command=r' /T:D:\ACTIONS.KEY'
         keys='p900 enter p2500 a-1 '+('p600 a-z ' if aspect['window'] else '')+'p10000 a-d p4500 r e a d y p1800 a-x'
         sys.path.insert(0,str(ROOT/'src/aspect'))
         from compiler import compile_source
@@ -28,7 +28,7 @@ async def run_case(parent,out,name,ticks,soft,aspect=None,transfer=None):
         script+='pause 2\ntransmit "SCRIPTREADY^M"\nwaitfor "NEVER" 3\nif waitfor\nfputs 4 "BAD|"\nelse\nfputs 4 "RETURN|"\nendif\nfclose 4\nendproc\n'
         if aspect['handler']:script+='proc lost\nfputs 4 "LOST|"\nfclose 4\nexit\nendproc\n'
         (out/'CARRY.ASP').write_text(script);(out/'CARRY.ASX').write_bytes(compile_source(script))
-        (out/'ACTIONS.KEY').write_bytes(actions(b'D:\\CARRY.ASX',0))
+        (out/'ACTIONS.KEY').write_bytes(actions(br'D:\CARRY.ASX',0))
         aspect_inputs=[stage/'TERMINAL.EXE',stage/'ASPECT.EXE',out/'CARRY.ASP',out/'CARRY.ASX',out/'ACTIONS.KEY']
         child={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',(runner.parent/'ASPECT.map').read_text(),re.M|re.I)}
         extra_observer=dict(ASPECT_CHILD=1,PARENT_ASPECT_ACTIVE=symbols['terminal_aspect_active'][1],
@@ -61,8 +61,9 @@ async def run_case(parent,out,name,ticks,soft,aspect=None,transfer=None):
         # command browser's Connection/D action, preserving the selected target.
         keys=keys.replace('a-d', '` p200 right p200 d')
     if options.get('experimental_original_keys') and transfer:
-        keys=keys.replace('a-r','a-z p100 pgdown' if options.get('experimental_original_reference') else 'pgdown')
-        keys=keys.replace('a-s','a-z p100 pgup' if options.get('experimental_original_reference') else 'pgup')
+        reference_wait='p3000' if options.get('experimental_meta_shared_runtime') else 'p100'
+        keys=keys.replace('a-r','a-z '+reference_wait+' pgdown' if options.get('experimental_original_reference') else 'pgdown')
+        keys=keys.replace('a-s','a-z '+reference_wait+' pgup' if options.get('experimental_original_reference') else 'pgup')
     observer=build_observer(binary,out/'PLWATCH.COM',irq=5,extra=extra_observer)
     defines=dict(CARRIER=1,DELAY_TICKS=ticks,MCR_PORT=0x3ec,HARDWARE_ACTIVE_OFFSET=symbols['hardware_active'][1],
         RX_COUNT_OFFSET=symbols['uart_rx_count'][1],RX_DROPPED_OFFSET=symbols['uart_rx_dropped'][1],MSR_PORT_OFFSET=symbols['uart_port_msr'][1],
@@ -204,13 +205,19 @@ D:\\SLOWLOG
 D:\\SNAP A
 exit
 '''
+    if observer_high:
+        assert aspect
+        text=text.replace('cputype=8086','cputype=386')
+        text=text.replace('[autoexec]','[dos]\nxms=true\nems=false\numb=true\n[autoexec]')
+        text='\n'.join('LH '+line if line.endswith(('SLOWLOG T','PLWATCH T')) else line for line in text.split('\n'))
+        assert sum(line.startswith('LH ') for line in text.splitlines())==2
     (out/'dosbox.conf').write_text(text)
     immutable={str(p):sha(p) for p in [out/'PLWATCH.COM',out/'SLOWLOG.COM',out/'SNAP.COM',out/'dosbox.conf',*aspect_inputs]}
     try:
         with (out/'dosbox.log').open('w') as log:
             process=await asyncio.create_subprocess_exec('dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf'),cwd=out,
                 env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log)
-            try:code=await asyncio.wait_for(process.wait(),32 if aspect else 28 if transfer else 23)
+            try:code=await asyncio.wait_for(process.wait(),32 if aspect else (36 if options.get("experimental_meta_shared_runtime") else 28) if transfer else 23)
             except asyncio.TimeoutError:
                 process.terminate()
                 try:await asyncio.wait_for(process.wait(),3)
@@ -224,7 +231,9 @@ exit
         await asyncio.wait_for(server.wait_closed(),3)
     for item in sessions:
         (out/f"connection-{item['index']}.bin").write_bytes(item.pop('received'))
-    captured=(out/'PLSTATE.BIN').read_bytes();assert len(captured)==9798+(18 if aspect else (124 if transfer.get('protocol') else 64) if transfer else 0)
+    record_limit=8
+    capture_base=4022+722*record_limit
+    captured=(out/'PLSTATE.BIN').read_bytes();assert len(captured)==capture_base+(18 if aspect else (124 if transfer.get('protocol') else 64) if transfer else 0)
     header=struct.unpack_from('<10H',captured);samples=[captured[20+i*722:20+(i+1)*722] for i in range(header[2])];final=samples[-1]
     logdata=(out/'PCPLUS.FON').read_bytes()
     checks,records=inspect_disk_record(final,2,1,b'LAB NODE 001',target,HEADING+logdata[len(seed):])
@@ -259,13 +268,13 @@ exit
         PRM_unchanged=(out/'TEST.PRM').read_bytes()==config,peer_errors_absent=all(not s['errors'] for s in sessions))
     aspect_detail={}
     if aspect:
-        child=struct.unpack('<9H',captured[9798:]);marker=(out/'CHILD.LOG').read_bytes() if (out/'CHILD.LOG').exists() else b''
+        child=struct.unpack('<9H',captured[capture_base:]);marker=(out/'CHILD.LOG').read_bytes() if (out/'CHILD.LOG').exists() else b''
         checks.update(actual_ASPECT_progress=b'SCRIPTREADY\r' in first and marker==(b'START|LOST|' if aspect['handler'] else b'START|RETURN|'),
             actual_live_child=child[0]>0 and child[3]==child[4]!=0,
             actual_disconnect_policy=(child[1]>0)==aspect['handler'],
             actual_window_visibility=(child[2]>0)==aspect['window'],
             child_error_free=child[6]==0,child_wait_service=child[7]>0,actual_child_exit=child[8]==1)
-        aspect_detail=dict(handler=aspect['handler'],window=aspect['window'],observer=list(child),marker=marker.decode('ascii'),runner_sha256=sha(aspect['runner']))
+        aspect_detail=dict(handler=aspect['handler'],window=aspect['window'],observer=list(child),record_limit=record_limit,marker=marker.decode('ascii'),runner_sha256=sha(aspect['runner']))
     transfer_detail={}
     if transfer:
         watch=struct.unpack('<32H',captured[9798:9862]);download=watch[8:18];upload_state=watch[18:32]
@@ -302,7 +311,7 @@ exit
                 real_staged_file=(8192<=sessions[0].get('stage_before_drop',{}).get('bytes',0)<=10240 and sessions[0]['stage_before_drop']['exact']) if transfer['partial'] else 'stage_before_drop' not in sessions[0],
                 download_aborted=download[0]==4,exact_received_bytes=(download[8]|download[9]<<16)==(10240 if transfer['partial'] else 0))
         transfer_detail=dict(transfer,observer=list(watch))
-    result=dict(case=name,passed=all(checks.values()),checks=checks,records=records,slow_snapshot=list(delay),observer_header=list(header),sessions=sessions,aspect=aspect_detail,transfer=transfer_detail,
+    result=dict(case=name,passed=all(checks.values()),cpu='386' if observer_high else '8086',observer_high_requested=observer_high,checks=checks,records=records,slow_snapshot=list(delay),observer_header=list(header),sessions=sessions,aspect=aspect_detail,transfer=transfer_detail,
         artifacts={str(p.relative_to(ROOT)):sha(p) for p in out.rglob('*') if p.is_file()})
     (out/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
     print(name,'PASS' if result['passed'] else json.dumps({k:v for k,v in checks.items() if not v}),flush=True)
@@ -311,8 +320,11 @@ exit
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--terminal',type=Path,required=True);p.add_argument('--label',required=True)
+    p.add_argument('--observer-high',action='store_true',help='Use386/UMB for ASPECT diagnostic TSRs; distinct from ordinary8086 acceptance')
+    p.add_argument('--jobs',type=int,choices=[1,2],default=1)
     p.add_argument('--fragment',action='store_true');p.add_argument('--batch',action='store_true');p.add_argument('--transfer',action='store_true');p.add_argument('--aspect',action='store_true');p.add_argument('--runner',type=Path)
     p.add_argument('--case',choices=['idle-hard','write-hard','write-soft','aspect-wait','aspect-when','aspect-wait-window','aspect-when-window','receive-negotiation','receive-partial','upload-unacked','upload-partial',*[f'{protocol}-{kind}' for protocol in ('ymodem','zmodem') for kind in ('receive-metadata','receive-partial','receive-retained','upload-metadata','upload-partial')],*[f'{protocol}-fragment-{policy}' for protocol in ('ymodem','zmodem') for policy in ('legacy','strict')]]);a=p.parse_args();assert sum((a.aspect,a.transfer,a.batch,a.fragment))<=1;assert re.fullmatch('[a-z0-9-]+',a.label)
+    assert not a.observer_high or a.aspect
     parent=a.terminal.resolve();manifest=json.loads((parent/'manifest.json').read_text());assert manifest['experimental_phone_log_controls']
     original=sha(parent/'TERMINAL.EXE');assert original==manifest['binary_sha256']
     out=ROOT/'build/phone-log-carrier-terminal'/a.label;assert not out.exists();out.mkdir(parents=True)
@@ -342,13 +354,18 @@ def main():
     if a.batch:cases=[(f'{protocol}-{kind}',0,0) for protocol in ('ymodem','zmodem') for kind in ('receive-metadata','receive-partial','receive-retained','upload-metadata','upload-partial')]
     if a.fragment:cases=[(f'{protocol}-fragment-{policy}',0,0) for protocol in ('ymodem','zmodem') for policy in ('legacy','strict')]
     assert not a.case or any(row[0]==a.case for row in cases)
-    for name,ticks,soft in cases:
-        if a.case and a.case!=name:continue
+    async def execute(name,ticks,soft):
         aspect=dict(runner=runner,handler='when' in name,window=name.endswith('window')) if a.aspect else None
         transfer=dict(upload=name.startswith('upload'),partial=name.endswith('partial')) if a.transfer else None
         if a.batch:transfer=dict(protocol=1 if name.startswith('ymodem') else 2,upload='upload' in name,partial=name.endswith(('partial','retained')),retained=name.endswith('retained'))
         if a.fragment:transfer=dict(protocol=1 if name.startswith('ymodem') else 2,upload=True,partial=False,retained=False,fragment=True,strict=name.endswith('strict'))
-        rows.append(asyncio.run(run_case(parent,out/name,name,ticks,soft,aspect,transfer)))
+        return await run_case(parent,out/name,name,ticks,soft,aspect,transfer,a.observer_high)
+    async def all_cases():
+        semaphore=asyncio.Semaphore(a.jobs)
+        async def bounded(row):
+            async with semaphore:return await execute(*row)
+        return await asyncio.gather(*(bounded(row) for row in cases if not a.case or row[0]==a.case))
+    rows=asyncio.run(all_cases())
     checks=dict(all_cases=bool(rows) and all(r['passed'] for r in rows),sources_unchanged=all(sha(ROOT/n)==h for n,h in sources.items()),binary_unchanged=sha(parent/'TERMINAL.EXE')==original)
     result=dict(passed=all(checks.values()),checks=checks,cases=rows,sources=sources,
         artifacts={p:h for row in rows for p,h in row['artifacts'].items()},terminal_sha256=original,original_inputs=[],aspect_matrix=a.aspect,transfer_matrix=a.transfer,batch_matrix=a.batch,fragment_matrix=a.fragment,
