@@ -8,6 +8,7 @@
 #include "keymap_field.h"
 #include "keymap_text.h"
 #include "kbd_editor_prefix.h"
+#include "keymap_help.h"
 static unsigned char bindings[KBD_EDITOR_BYTES];
 static unsigned short frame[2000],saved[2000];
 static unsigned char __far *baseline;
@@ -162,7 +163,7 @@ int main(int argc,char **argv)
   else if(action==KEYMAP_PREVIOUS)profile=profile?profile-1:profiles-1;
   else if(action==KEYMAP_SAVE){save();}
   else if(action==KEYMAP_OPEN)open_file();
-  else if(action==KEYMAP_ABOUT)notice("PCPLUS keyboard mapping - LoC Special Edition. Press a key.");
+  else if(action==KEYMAP_HELP){e=keymap_help_open(frame);if(e)notice("Help could not open. Keep PCPLUS.HLP beside PCKEYMAP.");}
   else if(action==KEYMAP_EXIT){if(leave_dirty())break;}
   else if(action==KEYMAP_RESERVED)notice("ALT-1 through ALT-0 are defined with ALT-M. Press a key.");
   else notice("Invalid key pressed. Press a key.");

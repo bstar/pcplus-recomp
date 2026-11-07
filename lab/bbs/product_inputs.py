@@ -22,6 +22,12 @@ def companions(binary):
         path=binary.with_name(leaf)
         assert sha(path)==overlay['sha256']
         paths.append(path)
+    if manifest.get('experimental_global_help'):
+        bundle=json.loads(binary.with_name('package.json').read_text())
+        assert bundle['passed'] and bundle['products']['TERMINAL.EXE']==manifest['binary_sha256']
+        assert bundle['parent_manifest_sha256']==sha(binary.with_name('manifest.json'))
+        for leaf in ('PCHELP.RTE','PCPLUS.HLP')+ (('PCCHAT.OVL',) if manifest.get('experimental_chat_loader') else ()):
+            path=binary.with_name(leaf);assert sha(path)==bundle['products'][leaf];paths.append(path)
     return paths
 
 
@@ -49,4 +55,12 @@ def select_product(path, leaf):
         assert sha(ROOT / relative) == digest, name
         sources.append(ROOT / relative)
     sources+=companions(binary)
+    if manifest.get('experimental_global_help'):
+        bundle_path=binary.with_name('package.json');sources.append(bundle_path)
+        for name,digest in json.loads(bundle_path.read_text())['sources'].items():
+            relative=Path(name)
+            assert not relative.is_absolute() and '..' not in relative.parts
+            assert relative.parts[0] not in ('build','original','originals','install','analysis')
+            assert sha(ROOT/relative)==digest,name
+            sources.append(ROOT/relative)
     return binary, sources

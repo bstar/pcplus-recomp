@@ -69,8 +69,12 @@ and physical Boca/SPA2102 acceptance. The
 [connection checkpoint](KEYMAP_CONNECTION_REGRESSIONS.md) covers current BBS
 transfer/loss/redial and reported-close quarantine plus scoped CPU admission
 branches. Native
-intro/about/prompt styling, broader filenames, new-file/default behavior and
+intro/prompt styling, broader filenames/resource semantics and
 other display geometries remain open. The installed RA608E10 package is unchanged.
+
+Subsequent [new-file creation](KEYMAP_NEWFILE.md) and
+[context17 Help](KEYMAP_HELP.md) now cover those specific helper gaps. Alt-Z
+opens the full source viewer; it is not an About command.
 
 [Four real DOS owner workflows](KEYMAP_OWNER_DOS.md) now cover recording,
 raw monitor, scrollback and a bounded split ANSI sequence. A source-owned

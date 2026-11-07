@@ -30,7 +30,7 @@ unsigned keymap_screen_key(unsigned key)
  if(key==0x1800)return KEYMAP_OPEN;
  if(key==0x1f00)return KEYMAP_SAVE;
  if(key==27 || key==0x2d00)return KEYMAP_EXIT;
- if(key==0x2c00)return KEYMAP_ABOUT;
+ if(key==0x2c00)return KEYMAP_HELP;
  if(key>=0x7800 && key<=0x8100 && !(key&255))return KEYMAP_RESERVED;
  return KEYMAP_INVALID;
 }

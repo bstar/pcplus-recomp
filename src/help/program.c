@@ -185,6 +185,34 @@ static unsigned run(void)
  }
  return status;
 }
+#ifdef HELP_EMBEDDED
+#include "embedded.h"
+unsigned help_embedded_open(const char *path,const char *title,unsigned context,
+ unsigned normal_attr,unsigned bold_attr,unsigned reverse_attr,const unsigned short *saved)
+{
+ unsigned status,saved_cursor,saved_shape,i;unsigned long bytes;long length;
+ if(!path||!title||!saved||(unsigned long)(unsigned)saved+4000UL>65536UL||strlen(path)>=sizeof(parent.path)||strlen(title)>=sizeof(parent.title))return 2;
+ memset(&parent,0,sizeof(parent));strcpy(parent.path,path);strcpy(parent.title,title);
+ parent.context.topic=context;
+ memset(&document,0,sizeof(document));memset(&cursor,0,sizeof(cursor));memset(query,0,sizeof(query));
+ hit_topic=hit_line=hit_column=hit_length=hit_valid=top=edge_thumb=0;topic_row=0xffff;
+ file=fopen(parent.path,"rb");if(!file)return 4;
+ if(fseek(file,0,SEEK_END)){fclose(file);return 4;}length=ftell(file);
+ if(length<0){fclose(file);return 4;}bytes=(unsigned long)length;
+ status=help_document_begin(&document,read_at,0,bytes);
+ while(status==HELP_DOC_PENDING)status=help_document_step(&document);
+ if(status){fclose(file);return 5;}
+ rows=*(unsigned char __far *)MK_FP(0x40,0x84)+1;
+ if(rows!=25||!geometry()){fclose(file);return 6;}
+ video=MK_FP(0xb800,0);saved_cursor=*(unsigned __far *)MK_FP(0x40,0x50);saved_shape=*(unsigned __far *)MK_FP(0x40,0x60);
+ idle_cursor=saved_cursor;idle_shape=saved_shape|0x2000;page=rows-2;topic=help_topic_select(context,document.header.topics);
+ normal=normal_attr&255;bold=bold_attr&255;reverse=reverse_attr&255;
+ status=run();
+ if(geometry()){for(i=0;i<2000;++i)video[i]=saved[i];set_cursor(saved_cursor,saved_shape);}else status=1;
+ if(fclose(file))status=1;file=0;
+ return status?8:0;
+}
+#else
 int main(int argc,char **argv)
 {
  unsigned status,segment=0,saved_cursor,saved_shape,i;unsigned long bytes;long length;
@@ -213,3 +241,4 @@ int main(int argc,char **argv)
  if(_dos_freemem(segment))status=1;
  return status?8:0;
 }
+#endif

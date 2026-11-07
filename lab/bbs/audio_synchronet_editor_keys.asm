@@ -46,7 +46,11 @@ keys:
 %else
 keys:
 %ifdef KEYMAP_ROUNDTRIP
- dw 6f00h,3b00h,0f09h,2c5ah,2c5ah,2c5ah,1c0dh,1f00h,011bh
+ dw 6f00h,3b00h,0f09h,2c5ah,2c5ah,2c5ah,1c0dh
+%ifdef KEYMAP_HELP_ROUNDTRIP
+ dw 2c00h,011bh
+%endif
+ dw 1f00h,011bh
 %endif
 %ifdef META_KEYS_ROUNDTRIP
  dw 3200h,1352h,1c0dh,2c5ah,2c5ah,2c5ah,1c0dh,011bh
@@ -147,6 +151,12 @@ handler:
  jne .not_keymap_open
  mov word [ticks],72
 .not_keymap_open:
+%ifdef KEYMAP_HELP_ROUNDTRIP
+ cmp word [bx-2],2c00h
+ jne .not_keymap_help
+ mov word [ticks],36
+.not_keymap_help:
+%endif
  cmp word [bx-2],1f00h
  jne .not_keymap_save
  mov word [ticks],36

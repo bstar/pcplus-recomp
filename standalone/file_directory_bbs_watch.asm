@@ -31,6 +31,11 @@ old2f: dd 0
 report: dw REPORT_MAGIC,0,0,0,0,0,0,0,0,0,0,0
 frames: times 8000 db 0
 listing: times DETAIL_BYTES db 0
+%ifdef KEYMAP_HELP_ROUNDTRIP
+%undef REPORT_BYTES
+%define REPORT_BYTES 12026
+help_seen: dw 0
+%endif
 %macro save 0
  push ax
  push bx
@@ -96,6 +101,9 @@ hook10:
  jmp .chain
 .after:
  save
+%ifdef KEYMAP_HELP_ROUNDTRIP
+ call observe_help
+%endif
  call observe_listing
 %ifdef EXTERNAL_VIEWER_ROUNDTRIP
  cmp word [child_completed],1
@@ -227,6 +235,28 @@ observe_listing:
  mov word [report+4],1
 .done:
  ret
+%ifdef KEYMAP_HELP_ROUNDTRIP
+observe_help:
+ mov ax,0xb800
+ mov es,ax
+ cmp word [es:2],0x714b
+ jne .done
+ mov si,help_title
+ mov di,2
+.title:
+ lodsb
+ or al,al
+ jz .seen
+ cmp al,[es:di]
+ jne .done
+ add di,2
+ jmp .title
+.seen:
+ mov word [help_seen],1
+.done:
+ ret
+help_title: db 'Key Mapping',0
+%endif
 hook2f:
 %ifdef EXTERNAL_VIEWER_ROUNDTRIP
  cmp ax,0xd744

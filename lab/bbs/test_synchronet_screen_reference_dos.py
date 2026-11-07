@@ -26,8 +26,9 @@ def login_script():
     return source+wait('FSEditor v1.105','EDITOR')+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--keymap-helper',type=Path);p.add_argument('--keymap-profiles',type=int,choices=[7,33],default=33);p.add_argument('--ignore-rts',action='store_true');p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25);p.add_argument('--status-hidden',type=int,choices=[0,1],default=0);p.add_argument('--size-probe',action='store_true');p.add_argument('--phone-log',action='store_true');p.add_argument('--gateway-overlay',action='store_true');p.add_argument('--file-directory-overlay',action='store_true');p.add_argument('--file-viewer-overlay',action='store_true');p.add_argument('--external-viewer-overlay',action='store_true');p.add_argument('--external-editor-overlay',action='store_true');p.add_argument('--meta-keys-overlay',action='store_true');p.add_argument('--admission-watch',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--keymap-helper',type=Path);p.add_argument('--keymap-profiles',type=int,choices=[7,33],default=33);p.add_argument('--keymap-help',action='store_true');p.add_argument('--ignore-rts',action='store_true');p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25);p.add_argument('--status-hidden',type=int,choices=[0,1],default=0);p.add_argument('--size-probe',action='store_true');p.add_argument('--phone-log',action='store_true');p.add_argument('--gateway-overlay',action='store_true');p.add_argument('--file-directory-overlay',action='store_true');p.add_argument('--file-viewer-overlay',action='store_true');p.add_argument('--external-viewer-overlay',action='store_true');p.add_argument('--external-editor-overlay',action='store_true');p.add_argument('--meta-keys-overlay',action='store_true');p.add_argument('--admission-watch',action='store_true');a=p.parse_args()
     assert not a.ignore_rts or a.keymap_helper
+    assert a.keymap_helper or not a.keymap_help
     assert a.keymap_helper or a.keymap_profiles==33
     if a.keymap_helper:
         a.keymap_helper=a.keymap_helper.resolve()
@@ -90,13 +91,13 @@ def main():
     stage_companions(binary,stage)
     source=login_script();(stage/'SYNC.ASP').write_text(source);(stage/'SYNC.ASX').write_bytes(compile_source(source))
     helper=out/'EDITKEY.COM'
-    subprocess.run(['nasm','-fbin',*(['-DKEYMAP_ROUNDTRIP','-DRECORD_KEY_SEGMENT']if a.keymap_helper else []),*(['-DMETA_KEYS_ROUNDTRIP']if a.meta_keys_overlay else []),*(['-DGATEWAY_ROUNDTRIP'] if a.gateway_overlay else []),*(['-DFILE_DIRECTORY_ROUNDTRIP'] if a.file_directory_overlay else []),*(['-DFILE_VIEWER_ROUNDTRIP'] if a.file_viewer_overlay else []),*(['-DEXTERNAL_VIEWER_ROUNDTRIP','-DRECORD_KEY_SEGMENT'] if a.external_viewer_overlay else []),*(['-DEXTERNAL_EDITOR_ROUNDTRIP'] if a.external_editor_overlay else []),'-DSCREEN_REFERENCE_FREEZE','-DAUDIO_SYNC_EDITOR_SCREEN_BYTES='+str((layout['physical_rows'] if layout else 25)*160),'-DAUDIO_SYNC_EDITOR_SETTLE=72','-DAUDIO_SYNC_EDITOR_KEY_WAIT=9','-DAUDIO_SYNC_EDITOR_FINAL_WAIT=54','-DAUDIO_SYNC_EDITOR_WATCHDOG_TICKS=2160',str(ROOT/'lab/bbs/audio_synchronet_editor_keys.asm'),'-o',str(helper)],check=True)
+    subprocess.run(['nasm','-fbin',*(['-DKEYMAP_ROUNDTRIP','-DRECORD_KEY_SEGMENT']if a.keymap_helper else []),*(['-DKEYMAP_HELP_ROUNDTRIP'] if a.keymap_help else []),*(['-DMETA_KEYS_ROUNDTRIP']if a.meta_keys_overlay else []),*(['-DGATEWAY_ROUNDTRIP'] if a.gateway_overlay else []),*(['-DFILE_DIRECTORY_ROUNDTRIP'] if a.file_directory_overlay else []),*(['-DFILE_VIEWER_ROUNDTRIP'] if a.file_viewer_overlay else []),*(['-DEXTERNAL_VIEWER_ROUNDTRIP','-DRECORD_KEY_SEGMENT'] if a.external_viewer_overlay else []),*(['-DEXTERNAL_EDITOR_ROUNDTRIP'] if a.external_editor_overlay else []),'-DSCREEN_REFERENCE_FREEZE','-DAUDIO_SYNC_EDITOR_SCREEN_BYTES='+str((layout['physical_rows'] if layout else 25)*160),'-DAUDIO_SYNC_EDITOR_SETTLE=72','-DAUDIO_SYNC_EDITOR_KEY_WAIT=9','-DAUDIO_SYNC_EDITOR_FINAL_WAIT=54','-DAUDIO_SYNC_EDITOR_WATCHDOG_TICKS=2160',str(ROOT/'lab/bbs/audio_synchronet_editor_keys.asm'),'-o',str(helper)],check=True)
     generated_paths=[*stage.iterdir(),helper]
     observer=None;gateway_child=None
     if a.keymap_helper:
         from keymap_bbs_support import prepare
         keymap_folder=out/'keymap'
-        keymap_binary,observer=prepare(keymap_folder,binary,a.keymap_helper,a.keymap_profiles)
+        keymap_binary,observer=prepare(keymap_folder,binary,a.keymap_helper,a.keymap_profiles,a.keymap_help)
         shutil.copyfile(a.keymap_helper,stage/'PCKEYMAP.EXE')
         generated_paths += [stage/'PCKEYMAP.EXE',observer]
     if a.meta_keys_overlay:

@@ -3,7 +3,7 @@
 #define KEYMAP_SCREEN_WORDS 2000
 #define KEYMAP_PROFILE_BYTES 948
 /* Dispatch 0..78 selects a slot. Other actions leave the slot unchanged. */
-enum {KEYMAP_NEXT=79,KEYMAP_PREVIOUS,KEYMAP_OPEN,KEYMAP_SAVE,KEYMAP_EXIT,KEYMAP_ABOUT,KEYMAP_RESERVED,KEYMAP_INVALID};
+enum {KEYMAP_NEXT=79,KEYMAP_PREVIOUS,KEYMAP_OPEN,KEYMAP_SAVE,KEYMAP_EXIT,KEYMAP_HELP,KEYMAP_RESERVED,KEYMAP_INVALID};
 unsigned keymap_screen_key(unsigned key);
 unsigned keymap_screen_position(unsigned slot);
 const char *keymap_screen_label(unsigned slot);

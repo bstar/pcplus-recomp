@@ -23,6 +23,7 @@ from check_editor_dos import audit
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--keymap-profiles',type=int,choices=[7,33],default=33)
+    p.add_argument('--keymap-help',action='store_true',help='Open context17 Help inside the mapper before saving')
     p.add_argument('--keymap-helper', type=Path, help='Owned source helper for Alt-F8 editor roundtrip')
     p.add_argument('--runtime', type=Path, required=True)
     p.add_argument('--terminal', type=Path, required=True)
@@ -47,6 +48,7 @@ def main():
     p.add_argument('--phone-log', action='store_true', help='Enable and passively audit the call log during the real BBS workflow')
     args = p.parse_args()
     assert args.keymap_helper or args.keymap_profiles==33
+    assert args.keymap_helper or not args.keymap_help
     if args.keymap_helper:
         args.keymap_helper=args.keymap_helper.resolve()
         assert not any((args.meta_keys_overlay,args.chat_help_overlay,args.external_viewer_overlay,args.external_editor_overlay,args.file_viewer_overlay,args.file_directory_overlay,args.gateway_overlay,args.reference_overlay,args.directory_overlay,args.phone_log,args.multiline_editor))
@@ -140,12 +142,12 @@ def main():
         observer=None
         chat_help_proof=None
         if args.keymap_helper:
-            from keymap_bbs_support import prepare,KEYS
+            from keymap_bbs_support import prepare,key_sequence
             keymap_folder=base/(args.label+'-keymap')
-            binary,observer=prepare(keymap_folder,binary,args.keymap_helper,args.keymap_profiles)
+            binary,observer=prepare(keymap_folder,binary,args.keymap_helper,args.keymap_profiles,args.keymap_help)
             marker='K E Y T E S T enter p1800 '
             assert keys.count(marker)==1
-            keys=keys.replace(marker,marker+KEYS)
+            keys=keys.replace(marker,marker+key_sequence(args.keymap_help))
         if args.meta_keys_overlay:
             from meta_front_bbs_support import prepare,KEYS
             observer=prepare(base/(args.label+'-meta-keys'),binary)
@@ -212,6 +214,11 @@ def main():
             assert keys.count(marker)==1
             keys=keys.replace(marker,marker+'a-f4 p2500 ')
         exit_wait='2'
+        if args.keymap_help:
+            # One final exit preserves the three-second abort wait and keeps
+            # the expanded real-BIOS recipe below the500-character DOS bound.
+            assert keys.endswith(' p3000 a-x')
+            keys=keys[:-len(' p3000 a-x')];exit_wait='3'
         keyboard_helper=None
         if args.multiline_editor:
             # Keep the measured owned login/subject recipe, then wait for both

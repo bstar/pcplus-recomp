@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Actual Key Mapping Help](KEYMAP_HELP.md) replaces the mislabeled Alt-Z version
+notice with context17 and the full source viewer. Embedding avoids a measured
+extra-process DOS8 refusal. Standalone, connected-parent, paired external
+control and actual Enigma/Synchronet modal-return checks pass. Parent and
+standalone PCHELP bytes remain unchanged; package promotion is separate.
+
 The [new-file helper checkpoint](KEYMAP_NEWFILE.md) recovers original missing-file
 semantics and adds unsaved blank tables with explicit creation, exact existing
 file preservation and parent publication/frozen-selection checks. Original
