@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Composed Meta Keys editor](META_EDITOR_FLOW.md) combines dialog/name/picker,
+DOS search and file ownership into one serviced controller with a closed-lease
+proposal. The normal/fatal DOS runs pass 3,069/981 assertions; nine actual VGA
+checks verify load/edit/save and exact frame/cursor restoration. The 3,341-state
+native dialog regression and a 53-file isolated rebuild pass. Transient parent
+integration/adoption/capacity/BBS gates remain open; RCE81708 is unchanged.
+
 [Checked Meta Keys owner](META_KEY_OWNER.md) coordinates real capture claims,
 disk baselines, explicit load/default creation, save and recovery quarantine.
 Bind preserves unsaved live edits; uncertain operations retain both namespaces

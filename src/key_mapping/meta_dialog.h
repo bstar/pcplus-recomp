@@ -17,6 +17,8 @@ typedef struct meta_dialog_state {
 unsigned __far __cdecl meta_dialog_open(meta_dialog_state __far *,const unsigned char __far *,const char __far *,unsigned);
 unsigned __far __cdecl meta_dialog_key(meta_dialog_state __far *,unsigned);
 unsigned __far __cdecl meta_dialog_complete(meta_dialog_state __far *,unsigned,const unsigned char __far *,const char __far *);
+/* Cancel deferred file UI without changing the active name/definitions. */
+unsigned __far __cdecl meta_dialog_cancel(meta_dialog_state __far *);
 unsigned __far __cdecl meta_dialog_draw(const meta_dialog_state __far *,unsigned __far *,unsigned);
 unsigned __far __cdecl meta_dialog_cursor(const meta_dialog_state __far *);
 unsigned __far __cdecl meta_dialog_shape(const meta_dialog_state __far *);

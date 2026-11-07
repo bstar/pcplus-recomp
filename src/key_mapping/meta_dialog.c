@@ -90,6 +90,11 @@ unsigned __far __cdecl meta_dialog_complete(meta_dialog_state __far *s,unsigned 
  if(!status && s->io==META_DIALOG_LOAD){if(!inputs(s,records,name))return META_DIALOG_ARGUMENT;copy_in(s,records,name);}
  s->status=status;s->io=0;s->phase=META_DIALOG_OVERVIEW;select_row(s,s->row);return META_DIALOG_OK;
 }
+unsigned __far __cdecl meta_dialog_cancel(meta_dialog_state __far *s)
+{
+ if(!valid(s) || s->phase!=META_DIALOG_WAIT)return META_DIALOG_ARGUMENT;
+ s->status=s->io=0;s->phase=META_DIALOG_OVERVIEW;select_row(s,s->row);return META_DIALOG_OK;
+}
 unsigned __far __cdecl meta_dialog_cursor(const meta_dialog_state __far *s)
 {
  if(!valid(s) || s->phase==META_DIALOG_CLOSED || s->phase==META_DIALOG_WAIT)return 0xffff;
