@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Checked Meta Keys owner](META_KEY_OWNER.md) coordinates real capture claims,
+disk baselines, explicit load/default creation, save and recovery quarantine.
+Bind preserves unsaved live edits; uncertain operations retain both namespaces
+and block further IO/release/EXEC. Twenty-one DOS process cases and a 28-file
+isolated source rebuild pass. Modal/transient/live adoption and application
+acceptance remain open; installed RCE81708 is unchanged.
+
 [Meta Keys resource identity](META_KEY_RESOURCES.md) adds checked current/PCPLUS
 lookup, deferred picker fallback and selection from a frozen directory pattern.
 Actual DOS load/save keeps the accepted identity after CWD changes and a competing
