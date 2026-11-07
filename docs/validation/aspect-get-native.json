@@ -1,0 +1,79 @@
+{
+  "checkpoint_verified": true,
+  "application_integrated": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "native_static_identity": {
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "overlay": 17,
+    "start": "f280",
+    "end_exclusive": "f4b6",
+    "source_file_offset": 117808,
+    "bytes": 566,
+    "sha256": "32c048c3391d13641358dd868f6074a587645a07b820a424fc749e38c49768b1",
+    "core_evidence": "ev_048bc51f758f5883ec4e7e2b12ad78e9c95900e86c91ff4814b41bed0c726c36",
+    "filter_evidence": "ev_5dc870727d8fb8ddc55519c31f1d7d4ef9ef32b10bf35ad9bf58680e919e85da",
+    "scope": "Static byte identity only; external reader/UI/float/cancel bindings unresolved, not a production GET implementation."
+  },
+  "compiler_cases": 81,
+  "compiler_accepted": 28,
+  "compiler_rejected": 53,
+  "compiler_fixture_sha256": "fd4fc381fab6b38dc15f3d7c1f255af765584bd0ad5e9bbd594164eeec26d805",
+  "evidence": {
+    "build/aspect-get-native-final-20261107/result.json": {
+      "passed": true,
+      "native_bytes": 566,
+      "native_sha256": "32c048c3391d13641358dd868f6074a587645a07b820a424fc749e38c49768b1",
+      "object_sha256": "f588aab1eb39b449f83eb328a14e92d8190c65076c4a6c46bda61e95191ecc05",
+      "diagnostic_sha256": "5cbcabb911718df72f14caa0d73a117d51e1e2603a01dcb62dea6687c7ccb4cf",
+      "transcript": "GET FILTER cases=65536 errors=0",
+      "cpu": "8086",
+      "original_inputs": [],
+      "scope": "Build exact recovered GET source and exhaust its numeric filter in DOS8086. Whole566-byte static identity and linked real DOS filter only; bell is a counter, other service stubs are not exercised. No shared-owner/runtime/compiler integration or real field/UI/serial acceptance.",
+      "sources": {
+        "src/aspect/get_native.asm": "e54f6c3d009728265be999a45ccc543bc8834afc007dbf4a46935ab0428dfc70",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "standalone/fixtures/aspect_get_native.json": "a7ad488158b278e986d55b57c9bb023aa6c701eb743305a3351f49b7c32469ac",
+        "standalone/build_aspect_get_native.py": "9f8405bd38fbff194d93187a3d7786657d848ad9f31799e9e86e5979fabd6493",
+        "standalone/aspect_get_filter_stubs.asm": "cd3f91a4a497b3a9b981355c62ca1a7010f053f7577af804d6da44dd52d29904",
+        "standalone/aspect_get_filter_driver.c": "3f5765091417ec0ef9928af858901e8fa6e9dea5ae13506190c0dbfabdac42c8"
+      },
+      "receipt_sha256": "22e4ab6ec6b7d632c45dca6fdfdee71b188fdf3bd8f20fb1a58578457c310d44"
+    },
+    "build/aspect-get-native-source-20261107/result.json": {
+      "passed": true,
+      "native_sha256": "32c048c3391d13641358dd868f6074a587645a07b820a424fc749e38c49768b1",
+      "diagnostic_sha256": "5cbcabb911718df72f14caa0d73a117d51e1e2603a01dcb62dea6687c7ccb4cf",
+      "transcript": "GET FILTER cases=65536 errors=0",
+      "original_inputs": [],
+      "source_count": 6,
+      "ancestor_git_unavailable": true,
+      "scope": "Rebuild GET component/filter diagnostic from only declared public inputs. Exact flat/linked DOS binaries and all65536 numeric-filter cases; other GET services are unexecuted stubs. Outer pinned Nix supplies tools; no original/runtime/UI integration claim.",
+      "sources": {
+        "src/aspect/get_native.asm": "e54f6c3d009728265be999a45ccc543bc8834afc007dbf4a46935ab0428dfc70",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+        "standalone/fixtures/aspect_get_native.json": "a7ad488158b278e986d55b57c9bb023aa6c701eb743305a3351f49b7c32469ac",
+        "standalone/build_aspect_get_native.py": "9f8405bd38fbff194d93187a3d7786657d848ad9f31799e9e86e5979fabd6493",
+        "standalone/aspect_get_filter_stubs.asm": "cd3f91a4a497b3a9b981355c62ca1a7010f053f7577af804d6da44dd52d29904",
+        "standalone/aspect_get_filter_driver.c": "3f5765091417ec0ef9928af858901e8fa6e9dea5ae13506190c0dbfabdac42c8"
+      },
+      "receipt_sha256": "332890232d0029bc1833fd4d0cabdb06b28d3503e3f8b0c43d13d2de9d6b810e"
+    },
+    "build/aspect-get-grammar-extended-20261107/result.json": {
+      "passed": true,
+      "scope": "Explicit original ASPCOMP oracle for authored interactive GET grammar probes. Unmodified original compiler on owned DOS386 media; no private source, runtime execution or maintained grammar claim. Output lives only under ignored build.",
+      "sources": {
+        "standalone/observe_aspect_get_compiler.py": "3b35ad8626c6ed755a3aedc07b5162fd654af0dbf4a99bb17e97b071ff2df8da"
+      },
+      "receipt_sha256": "91b7bdd36baf2f370a800f9e93825e02beb183281b6f503b7342f673bdbf7fc6"
+    }
+  },
+  "limitations": [
+    "Numeric filter only executes in DOS; other shared-owner services are unexecuted diagnostic stubs.",
+    "UI field79D4, callbacks, numeric/float conversion, cancellation and serviced input still need recovery/composition.",
+    "GET grammar is not added to either maintained compiler, and opcode49 remains explicitly unsupported by the current runtime.",
+    "Sibling modes1/2/3 have no proved source command names here.",
+    "No private configuration, physical access or selected package changes."
+  ]
+}

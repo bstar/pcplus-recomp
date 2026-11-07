@@ -1,0 +1,12 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 17,
+  "start": "f280",
+  "end_exclusive": "f4b6",
+  "source_file_offset": 117808,
+  "bytes": 566,
+  "sha256": "32c048c3391d13641358dd868f6074a587645a07b820a424fc749e38c49768b1",
+  "core_evidence": "ev_048bc51f758f5883ec4e7e2b12ad78e9c95900e86c91ff4814b41bed0c726c36",
+  "filter_evidence": "ev_5dc870727d8fb8ddc55519c31f1d7d4ef9ef32b10bf35ad9bf58680e919e85da",
+  "scope": "Static byte identity only; external reader/UI/float/cancel bindings unresolved, not a production GET implementation."
+}

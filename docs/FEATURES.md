@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Interactive ASPECT GET](ASPECT_GET.md) now has81 original compiler probes,
+566 exact recovered source bytes and an exhaustive linked DOS8086 numeric-key
+filter diagnostic with isolated reproduction. The field/input owner is not
+integrated: both maintained compilers and the runner still refuse GET. This
+does not change the reviewed contract4 package or close F13.
+
 [Actual Key Mapping Help](KEYMAP_HELP.md) replaces the mislabeled Alt-Z version
 notice with context17 and the full source viewer. Embedding avoids a measured
 extra-process DOS8 refusal. Standalone, connected-parent, paired external

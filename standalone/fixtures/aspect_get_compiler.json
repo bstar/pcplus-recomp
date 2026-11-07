@@ -1,0 +1,440 @@
+{
+  "format": "aspect-get-compiler-oracle-v1",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "vectors": [
+    {
+      "label": "get",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 00 94"
+    },
+    {
+      "label": "get \"x\"",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget \"x\"\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get number",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget number\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8d 00 00 94"
+    },
+    {
+      "label": "get wide",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget wide\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8e 00 00 94"
+    },
+    {
+      "label": "get realnum",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget realnum\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8f 00 00 94"
+    },
+    {
+      "label": "get value 10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 10\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 b5 0a 94"
+    },
+    {
+      "label": "get value,10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value,10\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 b5 0a 94"
+    },
+    {
+      "label": "get 10 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 10 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 10, value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 10, value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 4 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 4 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 4 5 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 4 5 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 4 5 6 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 4 5 6 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 1 2",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 1 2\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 1 2 3",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 1 2 3\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 1 2 3 4",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 1 2 3 4\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 1 2 3 4 5",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 1 2 3 4 5\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value \"prompt\"",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value \"prompt\"\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get \"prompt\" value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget \"prompt\" value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 value 10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 value 10\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 value 10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 value 10\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 4 value 10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 4 value 10\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 4 5 value 10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 4 5 value 10\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 4 5 6 7 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 4 5 6 7 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 4 5 6 7 8 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 4 5 6 7 8 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1 2 3 4 5 6 7 8 9 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1 2 3 4 5 6 7 8 9 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 0 0 7 20 value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 0 0 7 20 value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 0 0 7 20 value \"initial\"",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 0 0 7 20 value \"initial\"\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 0 0 7 20",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 0 0 7 20\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get number \"prompt\"",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget number \"prompt\"\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value,10,0",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value,10,0\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 1,2,3,4,value",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 1,2,3,4,value\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 0",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 0\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 b5 00 94"
+    },
+    {
+      "label": "get value 1",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 1\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 b5 01 94"
+    },
+    {
+      "label": "get value 80",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 80\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 b5 50 94"
+    },
+    {
+      "label": "get value 81",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 81\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 b5 51 94"
+    },
+    {
+      "label": "get value 255",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 255\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 b5 ff 94"
+    },
+    {
+      "label": "get value 256",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 256\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 ab 00 01 94"
+    },
+    {
+      "label": "get value -1",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value -1\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 ab ff ff 94"
+    },
+    {
+      "label": "get value 32767",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 32767\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 ab ff 7f 94"
+    },
+    {
+      "label": "get value 32768",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 32768\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 65535",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 65535\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 10L",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 10L\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 10.0",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 10.0\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value number",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value number\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 8d 00 94"
+    },
+    {
+      "label": "get value wide",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value wide\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value realnum",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value realnum\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value failure",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value failure\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8c 00 01 6f 15 94"
+    },
+    {
+      "label": "get value \"10\"",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value \"10\"\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value ON",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value ON\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value (10)",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value (10)\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value number+1",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value number+1\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value ,",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value ,\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 10,",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 10,\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value ,10,",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value ,10,\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value 10 20",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value 10 20\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get s0",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget s0\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 64 00 00 94"
+    },
+    {
+      "label": "get i0",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget i0\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get l0",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget l0\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get f0",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget f0\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get $FDATE",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget $FDATE\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get $NULL",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget $NULL\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get failure",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget failure\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value+\"X\"",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value+\"X\"\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get (value)",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget (value)\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get value,",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget value,\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get 10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget 10\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get number+1",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget number+1\nendproc\n",
+      "accepted": false
+    },
+    {
+      "label": "get number,10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget number,10\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8d 00 01 b5 0a 94"
+    },
+    {
+      "label": "get wide,10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget wide,10\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8e 00 01 b5 0a 94"
+    },
+    {
+      "label": "get realnum,10",
+      "source": "integer number\nlong wide\nfloat realnum\nstring value\nproc main\nget realnum,10\nendproc\n",
+      "accepted": true,
+      "hex": "01 cf 49 8f 00 01 b5 0a 94"
+    },
+    {
+      "label": "GET local integer",
+      "source": "proc main\ninteger target\nget target,10\nendproc\n",
+      "accepted": true,
+      "hex": "00 d2 02 00 cf 49 a1 00 00 01 b5 0a 95"
+    },
+    {
+      "label": "GET parameter integer",
+      "source": "proc main\ncall worker with 0\nendproc\nproc worker\nintparm target\nget target,10\nendproc\n",
+      "accepted": true,
+      "hex": "00 cf d0 cc b5 00 c8 0f 00 00 00 d2 fe ff 94 cf 49 97 08 00 01 b5 0a 95"
+    },
+    {
+      "label": "GET local long",
+      "source": "proc main\nlong target\nget target,10\nendproc\n",
+      "accepted": true,
+      "hex": "00 d2 04 00 cf 49 a2 00 00 01 b5 0a 95"
+    },
+    {
+      "label": "GET parameter long",
+      "source": "proc main\ncall worker with 0L\nendproc\nproc worker\nlongparm target\nget target,10\nendproc\n",
+      "accepted": true,
+      "hex": "00 cf d0 cc ac 00 00 00 00 c8 12 00 00 00 d2 fc ff 94 cf 49 98 0a 00 01 b5 0a 95"
+    },
+    {
+      "label": "GET local float",
+      "source": "proc main\nfloat target\nget target,10\nendproc\n",
+      "accepted": true,
+      "hex": "00 d2 08 00 cf 49 a3 00 00 01 b5 0a 95"
+    },
+    {
+      "label": "GET parameter float",
+      "source": "proc main\ncall worker with 0.0\nendproc\nproc worker\nfloatparm target\nget target,10\nendproc\n",
+      "accepted": true,
+      "hex": "00 cf d0 cc ad 00 00 00 00 00 00 00 00 c8 16 00 00 00 d2 f8 ff 94 cf 49 99 0e 00 01 b5 0a 95"
+    },
+    {
+      "label": "GET local string",
+      "source": "proc main\nstring target\nget target,10\nendproc\n",
+      "accepted": true,
+      "hex": "00 d2 51 00 cf 49 a0 00 00 01 b5 0a 95"
+    },
+    {
+      "label": "GET parameter string",
+      "source": "proc main\ncall worker with \"X\"\nendproc\nproc worker\nstrparm target\nget target,10\nendproc\n",
+      "accepted": true,
+      "hex": "00 cf d0 cd aa b4 89 39 c8 11 00 00 00 d2 af ff 94 cf 49 96 57 00 01 b5 0a 95"
+    }
+  ],
+  "scope": "Authored source/compiled ASX only, frozen from the explicitly selected original compiler. No proprietary executable or runtime code included."
+}
