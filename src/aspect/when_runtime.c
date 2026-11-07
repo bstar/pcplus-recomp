@@ -5,6 +5,9 @@
 #include "runtime.h"
 #include "serial_runtime.h"
 #include "when_runtime.h"
+#if defined(ASPECT_ALARM_SERVICE) && !defined(ASPECT_RUNTIME_SERIAL)
+#error ASPECT_ALARM_SERVICE requires the serial runtime
+#endif
 #if defined(ASPECT_RUNTIME_SERIAL)
 #include "resident_render.h"
 #include "serial.h"
@@ -15,6 +18,9 @@ extern unsigned __cdecl runtime_when_native_service(void);
 unsigned runtime_when_deferred,runtime_when_pending_service;
 static unsigned service_busy,monitor_busy;
 static unsigned window_keys_suppressed;
+#ifdef ASPECT_ALARM_SERVICE
+static unsigned alarm_keys_owned;
+#endif
 #if defined(ASPECT_RUNTIME_SERIAL)
 static unsigned confirmation_active;
 unsigned runtime_abort_cursor_mode=1,runtime_abort_last_key;
@@ -30,8 +36,14 @@ static void disarm(void)
 }
 void runtime_when_reset(void)
 {
+#ifdef ASPECT_ALARM_SERVICE
+ if(alarm_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
+#endif
 #if defined(ASPECT_RUNTIME_SERIAL)
  confirmation_active=0;
+#endif
+#ifdef ASPECT_ALARM_SERVICE
+ alarm_keys_owned=0;
 #endif
  disarm();runtime_when_case_sensitive=0;runtime_when_keyboard_disabled=0;
  runtime_when_last_key=0;runtime_when_pending_key=65535U;
@@ -70,6 +82,9 @@ unsigned runtime_when_transport_poll(void)
   * including Escape, for the cooperative window's next ordinary safe point. */
  if(confirmation_active || aspect_render_window_active())return 0;
 #endif
+#ifdef ASPECT_ALARM_SERVICE
+ if(alarm_keys_owned)return 0;
+#endif
  key=runtime_keyboard_peek();if(!key)return 0;
  /* Leave ordinary local keys queued for the native service's safe point. */
  if((key&255)==27){runtime_keyboard_read();runtime_set_error(ASPECT_RUN_CANCELLED);return 1;}
@@ -82,6 +97,39 @@ unsigned runtime_when_transport_poll(void)
  return 0;
 }
 #if defined(ASPECT_RUNTIME_SERIAL)
+#ifdef ASPECT_ALARM_SERVICE
+unsigned runtime_when_alarm_begin(void)
+{
+ if(runtime_error || alarm_keys_owned || runtime_when_deferred || service_busy ||
+    monitor_busy || confirmation_active || aspect_render_window_active())return ASPECT_RUN_STATE;
+ alarm_keys_owned=1;return 0;
+}
+unsigned runtime_when_alarm_end(void)
+{
+ if(!alarm_keys_owned || runtime_when_deferred || service_busy || monitor_busy)return ASPECT_RUN_STATE;
+ alarm_keys_owned=0;return 0;
+}
+unsigned runtime_when_alarm_poll(void)
+{
+ unsigned leads;unsigned long started,now;
+ if(runtime_error)return runtime_error;
+ if(!alarm_keys_owned || runtime_when_deferred || service_busy || monitor_busy ||
+    confirmation_active || aspect_serial_active!=1){
+  runtime_set_error(ASPECT_RUN_STATE);return runtime_error;
+ }
+ runtime_when_poll();if(runtime_error)return runtime_error;
+ /* Raw ASIO has no idle renderer. Keep its bytes queued unless a native WHEN
+  * pattern consumes them; the attached path retains ordinary WHEN-before-display. */
+ if(!runtime_when_idle_allowed())return 0;
+ started=aspect_serial_ticks();
+ for(leads=0;leads<64 && !runtime_error && aspect_serial_available();++leads){
+  runtime_receive_character(runtime_receive_display,0);
+  now=aspect_serial_ticks();if(now<started)now+=1573040UL;
+  if(now-started>=1UL)break;
+ }
+ return runtime_error;
+}
+#endif
 unsigned runtime_when_delay_poll(void)
 {
  unsigned leads;unsigned long started,now;
@@ -151,6 +199,9 @@ unsigned runtime_when_key_ready(void)
 {
 #if defined(ASPECT_RUNTIME_SERIAL)
  if(confirmation_active)return 0; /* The modal native reader owns these keys. */
+#endif
+#ifdef ASPECT_ALARM_SERVICE
+ if(alarm_keys_owned)return 0;
 #endif
  return runtime_error || window_keys_suppressed?0:runtime_keyboard_peek();
 }

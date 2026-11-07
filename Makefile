@@ -2013,3 +2013,11 @@ test-aspect-alarm-compiler:
 	python3 standalone/test_aspect_alarm_compiler.py --compiler-dir build/aspect-compiler-dos --output $(ALARM_COMPILER_OUTPUT)
 test-aspect-alarm-compiler-source: test-aspect-alarm-compiler
 	python3 standalone/prove_aspect_alarm_compiler_source.py --test $(ALARM_COMPILER_OUTPUT) --output $(ALARM_COMPILER_OUTPUT)-source
+
+ALARM_WHEN_OUTPUT := build/alarm-when-make-$(shell date +%s%N)
+.PHONY: test-aspect-alarm-when test-aspect-alarm-when-source
+test-aspect-alarm-when:
+	python3 standalone/build_alarm_when_uart.py --output $(ALARM_WHEN_OUTPUT)
+	python3 standalone/test_alarm_when_uart.py --build $(ALARM_WHEN_OUTPUT) --output $(ALARM_WHEN_OUTPUT)-matrix
+test-aspect-alarm-when-source: test-aspect-alarm-when
+	python3 standalone/prove_alarm_when_source.py --build $(ALARM_WHEN_OUTPUT) --output $(ALARM_WHEN_OUTPUT)-source

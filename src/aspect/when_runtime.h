@@ -24,6 +24,14 @@ unsigned runtime_when_transport_poll(void);
  * at most64 native receive leads or one BIOS tick, WHEN before display; never call
  * from parser callbacks, monitors, TX pacing or generic raw delay services. */
 unsigned runtime_when_delay_poll(void);
+#ifdef ASPECT_ALARM_SERVICE
+/* Ordinary foreground stack only. Exclusive key lease: transport/native WHEN
+ * service must not consume any key while ALARM owns it. Nested/modal/borrowed
+ * entry is rejected. Caller retains lease until explicit end, even on error. */
+unsigned runtime_when_alarm_begin(void);
+unsigned runtime_when_alarm_end(void);
+unsigned runtime_when_alarm_poll(void);
+#endif
 void runtime_when_defer_begin(void);
 void runtime_when_defer_end(void);
 void runtime_when_monitor_begin(void);

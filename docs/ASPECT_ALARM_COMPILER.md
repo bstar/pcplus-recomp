@@ -60,3 +60,6 @@ no replacement package has been selected or installed for this checkpoint.
 Next are operand/VM binding, current parent duration/sound settings, exclusive
 key ownership during WHEN/receive rendering, code/memory funding and full
 connection regressions. Physical acceptance and full parity remain open.
+
+The subsequent [foreground key lease](ASPECT_ALARM_WHEN.md) supplies opt-in
+ownership-gate coverage; it does not yet establish VM execution.

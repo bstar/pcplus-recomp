@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+The [ALARM foreground key lease](ASPECT_ALARM_WHEN.md) now protects alert
+completion keys from ordinary Escape-abort/native key dispatch while actual
+WHEN C transport/foreground gates run.50 emulator I/O cases and a35-file cold
+rebuild pass; the latter repeats three cases. Native WHEN action bodies and
+receive/renderer entry are modeled. The ordinary interpreter rebuild remains
+byte-for-byte unchanged. VM/parent policy, real action/renderer integration,
+memory and physical gates remain open.
+
 The [ALARM compiler checkpoint](ASPECT_ALARM_COMPILER.md) adds exact native
 ALARM emission to both maintained compilers. All39 original outcomes and39
 presentation variants pass in host and DOS; full2225-case compiler and2243-case
