@@ -15,15 +15,18 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('receive_commands','src/aspect/receive_commands.asm',None),
  ('receive_policy','src/aspect/receive_policy.asm',None),
  ('when','src/aspect/when.asm',None),
- ('set_commands','src/aspect/set_commands.asm',None),
+ ('set_commands','src/aspect/set_commands.asm','ASPECT_COMPACT_SET'),
  ('break_commands','src/aspect/break_commands.asm','ASPECT_BREAK_RUNTIME'),
  ('end_wait','src/aspect/end_wait.asm',None),
  ('chain_command','src/aspect/chain_command.asm','ASPECT_CHAIN_RUNTIME'),
- ('fetch_command','src/aspect/fetch_command.asm',None),
+ ('fetch_command','src/aspect/fetch_command.asm','ASPECT_COMPACT_SET'),
  ('find_commands','src/aspect/find_commands.asm',None),('case_commands','src/aspect/case_commands.asm',None),
  ('directory','src/aspect/directory_builtins.asm',None),
  ('system_query','src/aspect/system_query.asm','ASPECT_SYSTEM_QUERY_RUNTIME'),
  ('environment','src/aspect/environment.asm',None),
+ ('clock_commands','src/aspect/clock_commands.asm',None),
+ ('clock_date','reconstruction/directory_accounting/date_original.asm','DIRECTORY_ACCOUNTING_OMF'),
+ ('clock_getdate','reconstruction/directory_accounting/getdate_original.asm','DIRECTORY_ACCOUNTING_OMF'),
  ('file_times','src/aspect/file_times.asm','ASPECT_FILE_TIMES_RUNTIME'),('file_attributes','src/aspect/file_attributes.asm','ASPECT_FILE_ATTRIBUTES_RUNTIME'),('enumeration','src/aspect/enumeration.asm','ASPECT_ENUM_RUNTIME'),('file_info','src/aspect/file_info.asm',None),
  ('script_file_setting','src/aspect/script_file_setting.asm',None),
  ('script_file_commands','src/aspect/script_file_commands.asm',None),('script_file_services','src/aspect/script_file_services.asm',None),('script_file_bridge','src/aspect/script_file_bridge.asm',None),
@@ -40,7 +43,7 @@ ASM=[('dispatch','src/aspect/dispatch.asm',None),('abort','src/aspect/abort.asm'
  ('copy','reconstruction/erase/move_bytes.asm','ERASE_OMF'),
  ('setjmp','reconstruction/transfer_session/setjmp.asm','TRANSFER_SESSION_OMF'),
  ('longjmp','reconstruction/transfer_session/longjmp.asm','TRANSFER_SESSION_OMF'),
- ('bridge','src/aspect/runtime_bridge.asm',None)]
+ ('bridge','src/aspect/runtime_bridge.asm','ASPECT_COMPACT_SET')]
 SUPPORT=[(1,0xd2a0,0xd2d6,109184-0xd0d0),(2,0xd3f2,0xd408,109184-0xd0d0),
  (3,0xdb7d,0xdc48,109184-0xd0d0),(4,0xde4d,0xdf04,109184-0xd0d0),(5,0x9ac0,0x9ae7,0x1200)]
 ERRORS={'unsupported':3,'float':4,'budget':6,'heap':8,'stack':9,'divide_zero':11,'native_int0':12,'operand':7,'cancelled':13,'serial':14}
@@ -251,7 +254,7 @@ def main():
  program=C.replace('result=aspect_runtime_run(path,limit);',near_admission+'result=aspect_runtime_run(path,limit);')
  program=program.replace(' ck(result==error);',near_observe+' ck(result==error);')
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
- assert len(supported)==105
+ assert len(supported)==107
  # ACV2 adds explicit owned-directory metadata to ACV1's diagnostic inputs.
  table=bytearray(b'ACV2'+struct.pack('<H',len(cases)))
  def block(data):
@@ -396,6 +399,6 @@ def main():
   maintained_string_fault_fixture={'STRSHORT':'STRGASS compiler bytes with final00 option and94 return removed; first global HELLO retained, second stays empty'},
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
-  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete105-slot opcode table; thirteen native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
+  scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete107-slot opcode table; thirteen native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

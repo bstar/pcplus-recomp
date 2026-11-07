@@ -1,0 +1,1000 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "probe_sha256": "49b563954ef2513bcfedf747c284e962945722addcbd5d6b70e6f256353f9336",
+  "cases": [
+    {
+      "label": "date result",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate result\r\nendproc\r\n",
+      "source_sha256": "86774c0a9e488212b4028feab8f5f2d2879b27e570f012c99a2c034f92d7658b",
+      "success": true,
+      "hex": "01 cf 1d 8c 00 94"
+    },
+    {
+      "label": "time result 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result 0\r\nendproc\r\n",
+      "source_sha256": "56c4069459d1c0498771731ff3c2c8e153cf2f94c0e58910eea5a4a627088265",
+      "success": true,
+      "hex": "01 cf be 8c 00 b5 00 94"
+    },
+    {
+      "label": "time result 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result 1\r\nendproc\r\n",
+      "source_sha256": "97b31758e135d6823be4978c970a1e593fe4883e6725ccc19bf7f17716035616",
+      "success": true,
+      "hex": "01 cf be 8c 00 b5 01 94"
+    },
+    {
+      "label": "time result 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result 2\r\nendproc\r\n",
+      "source_sha256": "bdd619c7c42a36a84a0f082db03bc7752146f4aa64622199ebba70968dd19d7f",
+      "success": true,
+      "hex": "01 cf be 8c 00 b5 02 94"
+    },
+    {
+      "label": "time result -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result -1\r\nendproc\r\n",
+      "source_sha256": "6a061b797608e32cb66d6fa82ce46de33ce7fc406187340194a2bc097e5ac0a8",
+      "success": true,
+      "hex": "01 cf be 8c 00 ab ff ff 94"
+    },
+    {
+      "label": "time result i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result i\r\nendproc\r\n",
+      "source_sha256": "d32d34c96d1c9c3591d377c6607e38681baa880c4b445601e32718051bae6f97",
+      "success": true,
+      "hex": "01 cf be 8c 00 8d 00 94"
+    },
+    {
+      "label": "time result l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result l\r\nendproc\r\n",
+      "source_sha256": "e6b84fdf58f6127ac0056703f9f2ce33f84acc645776c839952ef89c9bfbc32a",
+      "success": false
+    },
+    {
+      "label": "time result f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result f\r\nendproc\r\n",
+      "source_sha256": "2e5dc1b31ce21ef98a46b415d32422cc80396c0962c30b7d5c623d13e912c6b0",
+      "success": false
+    },
+    {
+      "label": "time result (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result (0)\r\nendproc\r\n",
+      "source_sha256": "e33e1afc5dc3caafdf0e8234ba6c0676ee273cc8d379afec1b79713bc349fd1c",
+      "success": false
+    },
+    {
+      "label": "time result 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result 1+0\r\nendproc\r\n",
+      "source_sha256": "ec536de70da801f72c7cfb179d72ce1cd31838a0750f01759721ef870611b5a5",
+      "success": false
+    },
+    {
+      "label": "time result \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result \"24\"\r\nendproc\r\n",
+      "source_sha256": "fe455ab090b35d10ff1e939ca681f52ba3c1005dbc48f706393598129da7aa97",
+      "success": false
+    },
+    {
+      "label": "time result ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result \r\nendproc\r\n",
+      "source_sha256": "dd646d6168faec319dfd323f85a12c9f7e658ef3ce01b29028d876de00f577db",
+      "success": false
+    },
+    {
+      "label": "date s0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate s0\r\nendproc\r\n",
+      "source_sha256": "71c2050dfb3b079c242bad3d1c9728eefea1d6a36195eb838d9aab8c43581162",
+      "success": true,
+      "hex": "01 cf 1d 64 00 94"
+    },
+    {
+      "label": "time s0 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 0\r\nendproc\r\n",
+      "source_sha256": "23ed3b130ae4dbe55ee4dbc7d1e4c4f48ff052c71d54adc9e81b6a259855649d",
+      "success": true,
+      "hex": "01 cf be 64 00 b5 00 94"
+    },
+    {
+      "label": "time s0 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 1\r\nendproc\r\n",
+      "source_sha256": "a99ab2d2516b17a6672ac66a448d628c5bf9db82b52a8db380781ff7adb221f5",
+      "success": true,
+      "hex": "01 cf be 64 00 b5 01 94"
+    },
+    {
+      "label": "time s0 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 2\r\nendproc\r\n",
+      "source_sha256": "757c4f28a674a636abf95c1229d6c3f92618d860bb001d52545fd04f29ffd9b1",
+      "success": true,
+      "hex": "01 cf be 64 00 b5 02 94"
+    },
+    {
+      "label": "time s0 -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 -1\r\nendproc\r\n",
+      "source_sha256": "f4136191ea9715fc842ef4874fc355150d7229ce58aae107dae22f21298e1723",
+      "success": true,
+      "hex": "01 cf be 64 00 ab ff ff 94"
+    },
+    {
+      "label": "time s0 i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 i\r\nendproc\r\n",
+      "source_sha256": "366cf0afa8926be41a28daaae24fd65a21a7f1a178f0c4749f327fba02b84441",
+      "success": true,
+      "hex": "01 cf be 64 00 8d 00 94"
+    },
+    {
+      "label": "time s0 l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 l\r\nendproc\r\n",
+      "source_sha256": "36a598029fb561f3441eb73814e8ba60cb2f0da968cc0fdba10592e93fb02f8d",
+      "success": false
+    },
+    {
+      "label": "time s0 f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 f\r\nendproc\r\n",
+      "source_sha256": "7383df424e4631918d008ba336f33f7702ef1dd1064c0a2b8acc512bcf905f8c",
+      "success": false
+    },
+    {
+      "label": "time s0 (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 (0)\r\nendproc\r\n",
+      "source_sha256": "0bb1094f6b3078a20d41329e7bc0604d64051dad302e6fc0d2060e421d5ba3a7",
+      "success": false
+    },
+    {
+      "label": "time s0 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 1+0\r\nendproc\r\n",
+      "source_sha256": "2e0336c92c87ae4b4f2c85cf61cbee477d3cfcc2065ebae9b47a08094cd801b7",
+      "success": false
+    },
+    {
+      "label": "time s0 \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 \"24\"\r\nendproc\r\n",
+      "source_sha256": "28803ea09c3ddc397c48dbab272ea32e2c403f9cd4d4adac5858326f902e3e47",
+      "success": false
+    },
+    {
+      "label": "time s0 ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s0 \r\nendproc\r\n",
+      "source_sha256": "08c02739e87896d75daae858350bc4829f84a194f3fdddd4499781f95a143480",
+      "success": false
+    },
+    {
+      "label": "date s9",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate s9\r\nendproc\r\n",
+      "source_sha256": "ce8d35613bebd77d884efa7a9bec6d91d2de4233dbdbc2f563e83684e0fe21ea",
+      "success": true,
+      "hex": "01 cf 1d 64 09 94"
+    },
+    {
+      "label": "time s9 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 0\r\nendproc\r\n",
+      "source_sha256": "6965618b01026811ecdb00c66854ffb52cace5de7c2d1dfe3029922550b4b047",
+      "success": true,
+      "hex": "01 cf be 64 09 b5 00 94"
+    },
+    {
+      "label": "time s9 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 1\r\nendproc\r\n",
+      "source_sha256": "6d4c9b8ffb59c97ee488c87721059dd5934d2192638a31f8fe96b3ec8811cdbe",
+      "success": true,
+      "hex": "01 cf be 64 09 b5 01 94"
+    },
+    {
+      "label": "time s9 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 2\r\nendproc\r\n",
+      "source_sha256": "e7f39725c7d794048a989e471f15d18b41751532f9d90b5f2393e0363cad6a07",
+      "success": true,
+      "hex": "01 cf be 64 09 b5 02 94"
+    },
+    {
+      "label": "time s9 -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 -1\r\nendproc\r\n",
+      "source_sha256": "85073c4e486f73015661e893670539056b276aff7abcb0b740b05e60d10ed981",
+      "success": true,
+      "hex": "01 cf be 64 09 ab ff ff 94"
+    },
+    {
+      "label": "time s9 i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 i\r\nendproc\r\n",
+      "source_sha256": "dd5851ee74bda0f5f2f2e92c23afdabdaad2e438602ae7982daf3289e338979f",
+      "success": true,
+      "hex": "01 cf be 64 09 8d 00 94"
+    },
+    {
+      "label": "time s9 l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 l\r\nendproc\r\n",
+      "source_sha256": "65b5800ac6d198391def8ce240d5aa87deec811f0811b90380fadd91ab73175f",
+      "success": false
+    },
+    {
+      "label": "time s9 f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 f\r\nendproc\r\n",
+      "source_sha256": "c162d6dc670c48366669fde2c57ca561d4c3c5a42ab8cfe75889475ca9cafe34",
+      "success": false
+    },
+    {
+      "label": "time s9 (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 (0)\r\nendproc\r\n",
+      "source_sha256": "ab55d915aa0a44d36fa05648978c584d3f2c29ea96aa9b9a2603b2d318b31535",
+      "success": false
+    },
+    {
+      "label": "time s9 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 1+0\r\nendproc\r\n",
+      "source_sha256": "7ec02134b7d7fe23f6e12637c8c3fc655ce5d51cdbfef23a5d11da82a40ee795",
+      "success": false
+    },
+    {
+      "label": "time s9 \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 \"24\"\r\nendproc\r\n",
+      "source_sha256": "931aaf6bc74e4f707fe392ed98253ae656b4ebff5aa4a7a279a50e7659e2a8da",
+      "success": false
+    },
+    {
+      "label": "time s9 ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime s9 \r\nendproc\r\n",
+      "source_sha256": "9193558bde54f20ac73f3024058427e25c45be49178ce63d00b4e168a0bb0d3b",
+      "success": false
+    },
+    {
+      "label": "date i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate i\r\nendproc\r\n",
+      "source_sha256": "bc742044dc1ecb15b9c0d30246dddd575c8bd08bc8a37fd54278872584d04e38",
+      "success": false
+    },
+    {
+      "label": "time i 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i 0\r\nendproc\r\n",
+      "source_sha256": "437a5c7d3b468806e5408c988818fcdb869e3b457913a935bce521b86f7d597f",
+      "success": false
+    },
+    {
+      "label": "time i 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i 1\r\nendproc\r\n",
+      "source_sha256": "61d6b08a1d08173cc67f69ffb1af24777f0ff9eaace071a107536f72646441b7",
+      "success": false
+    },
+    {
+      "label": "time i 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i 2\r\nendproc\r\n",
+      "source_sha256": "cdf254e16d02beb9e41e5e072b122963a34b766cb54abada4b404edcf2b6b244",
+      "success": false
+    },
+    {
+      "label": "time i -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i -1\r\nendproc\r\n",
+      "source_sha256": "42053789dd713cdaa1095460b07dfa6bb4bbf5a34d8f079238dddcd7fcf129c7",
+      "success": false
+    },
+    {
+      "label": "time i i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i i\r\nendproc\r\n",
+      "source_sha256": "c88aa33c31f331d36a2de0f6db70e86029b94e36a6362d21fa4e6bb6c6676263",
+      "success": false
+    },
+    {
+      "label": "time i l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i l\r\nendproc\r\n",
+      "source_sha256": "509ef8281727d3802e5ae2b3fcb1529898af026522f9a051c1be50c0073189a8",
+      "success": false
+    },
+    {
+      "label": "time i f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i f\r\nendproc\r\n",
+      "source_sha256": "1922a1ee9ad44b7ec9db517b05b12fd2274bd76fda6d4962ac4719a84272d26a",
+      "success": false
+    },
+    {
+      "label": "time i (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i (0)\r\nendproc\r\n",
+      "source_sha256": "19a2ec70c80c1edca5ee9b31d0f430098172aefdcc14b5a94993d111ede040b8",
+      "success": false
+    },
+    {
+      "label": "time i 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i 1+0\r\nendproc\r\n",
+      "source_sha256": "cde8e6c224b967e84476c6b8ff2ef9e8630ef6f8fadf703bdbf75a6752fec4b0",
+      "success": false
+    },
+    {
+      "label": "time i \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i \"24\"\r\nendproc\r\n",
+      "source_sha256": "1d52c543ebfeb4fd2a55e58be512e2bab6f68efc51bdc6bd76b1cc5ab8a9ddff",
+      "success": false
+    },
+    {
+      "label": "time i ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i \r\nendproc\r\n",
+      "source_sha256": "1cd079f96ccf0230b5d4973353f8d578409b51c93ff68d2dfb456820d7582fde",
+      "success": false
+    },
+    {
+      "label": "date l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate l\r\nendproc\r\n",
+      "source_sha256": "a2dd79af6d96d9233932caa0fa8108d81eb77f97416fe393a467f42c6c1099ef",
+      "success": false
+    },
+    {
+      "label": "time l 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l 0\r\nendproc\r\n",
+      "source_sha256": "0d9766abc27db2f8e4a710dd594857efb5888e8626d96afffc5e36b78528406f",
+      "success": false
+    },
+    {
+      "label": "time l 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l 1\r\nendproc\r\n",
+      "source_sha256": "f255ed985698956c6e7851c61c7921e97e1c40c19bbcb160114d696ac4387abb",
+      "success": false
+    },
+    {
+      "label": "time l 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l 2\r\nendproc\r\n",
+      "source_sha256": "a4e16a652481551a857daaa6ace18deff527fc3bedb0bbf6e694c05ae8af25b0",
+      "success": false
+    },
+    {
+      "label": "time l -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l -1\r\nendproc\r\n",
+      "source_sha256": "046de0afb0ddfe1c5739d2b4a9a992a0beb3aa3bf0dff54585951c46b6219408",
+      "success": false
+    },
+    {
+      "label": "time l i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l i\r\nendproc\r\n",
+      "source_sha256": "bb9fc95c14015211bed52ec577441306551f1c5ebff60caa935d2eb78438b332",
+      "success": false
+    },
+    {
+      "label": "time l l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l l\r\nendproc\r\n",
+      "source_sha256": "de10f0ad472dce91014609ec407694a649cc51a6bb6bf484213ab8391e2309d7",
+      "success": false
+    },
+    {
+      "label": "time l f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l f\r\nendproc\r\n",
+      "source_sha256": "3b2f1901b268e2dc4f6681843c65272ddb7f9286419cae74a46366c579e0b785",
+      "success": false
+    },
+    {
+      "label": "time l (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l (0)\r\nendproc\r\n",
+      "source_sha256": "9566d1eaceeb1ead9d74d55a9b7d52117b3d5a306c91d9b15566262cf484f061",
+      "success": false
+    },
+    {
+      "label": "time l 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l 1+0\r\nendproc\r\n",
+      "source_sha256": "9b6a7686e643e72c53299b03ac629b73c5e8ebe3ba9f498dbd7f2064a8e066a3",
+      "success": false
+    },
+    {
+      "label": "time l \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l \"24\"\r\nendproc\r\n",
+      "source_sha256": "32cd4012e932fff89bca6edee77d2f51fc533e597b0a9eb5046fb963966ed635",
+      "success": false
+    },
+    {
+      "label": "time l ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime l \r\nendproc\r\n",
+      "source_sha256": "6f09d29c7d6117f286e0a175e4ffb3d88321c486495bd4aa1bf1f0adfaa8a1de",
+      "success": false
+    },
+    {
+      "label": "date f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate f\r\nendproc\r\n",
+      "source_sha256": "479e8b74b31c36376b63ff507342297bb1c40822bfb51a1ba8afc461e3eff746",
+      "success": false
+    },
+    {
+      "label": "time f 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f 0\r\nendproc\r\n",
+      "source_sha256": "1983f0383958a04d9a8c46a54d90b82efb2e2a61a40ee479af88dd681c6fa8bb",
+      "success": false
+    },
+    {
+      "label": "time f 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f 1\r\nendproc\r\n",
+      "source_sha256": "86455522d7a4246a72b74cfaf79c50c8f0ac241d105ad6256d2fe29d06cb441a",
+      "success": false
+    },
+    {
+      "label": "time f 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f 2\r\nendproc\r\n",
+      "source_sha256": "db7f14691c05814d6ba12a4c94c0c21e4e324620e5407262a2475f181acb1290",
+      "success": false
+    },
+    {
+      "label": "time f -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f -1\r\nendproc\r\n",
+      "source_sha256": "4c3ea80d73f272ecf928dbd5b4b34f13dcdffcfd6da0fa3898fdf3a22e1855e2",
+      "success": false
+    },
+    {
+      "label": "time f i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f i\r\nendproc\r\n",
+      "source_sha256": "656a7029d5dc1fb784f862877e9ef401ad0155fba96aadf26b2cca7a9a50f265",
+      "success": false
+    },
+    {
+      "label": "time f l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f l\r\nendproc\r\n",
+      "source_sha256": "5fe192a10270b841bab55490c7235c1422eec1330cee58ea0743c704ca3ac7e2",
+      "success": false
+    },
+    {
+      "label": "time f f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f f\r\nendproc\r\n",
+      "source_sha256": "ec45a8e0f2cc661d185ee6de62efe76b4b2d0a86d4ee1ab1aee4690b3022b2aa",
+      "success": false
+    },
+    {
+      "label": "time f (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f (0)\r\nendproc\r\n",
+      "source_sha256": "c022b5f6ea93757a4fae7f8fbf97e7be5070b47f08b8b2ec6854815201d608c2",
+      "success": false
+    },
+    {
+      "label": "time f 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f 1+0\r\nendproc\r\n",
+      "source_sha256": "7bf5b7f3ec07a68e887703de2b297d4c6760d8cf04820739539d97d9b8521b4e",
+      "success": false
+    },
+    {
+      "label": "time f \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f \"24\"\r\nendproc\r\n",
+      "source_sha256": "d140c817cf86534009dc109cc3a0dcb2060e5b52e0b3a9e12e634d7c43fcead9",
+      "success": false
+    },
+    {
+      "label": "time f ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime f \r\nendproc\r\n",
+      "source_sha256": "7003a254fb9ccc88be9867ba1d38c03e48f76418ceb168e66f43c0fc99609abc",
+      "success": false
+    },
+    {
+      "label": "date i0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate i0\r\nendproc\r\n",
+      "source_sha256": "860771b50a0268382455a16653618c24e9361ec2d18d1adeb00e22a06c6cccd9",
+      "success": false
+    },
+    {
+      "label": "time i0 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 0\r\nendproc\r\n",
+      "source_sha256": "8efbb7ad85231afed789856b55c0863eb57749e0f8ce71e8a81c7beb4bb3fc4b",
+      "success": false
+    },
+    {
+      "label": "time i0 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 1\r\nendproc\r\n",
+      "source_sha256": "718ba812bb6b083fa15e26970a789a386a746b370d644de20c3b5de41710d17f",
+      "success": false
+    },
+    {
+      "label": "time i0 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 2\r\nendproc\r\n",
+      "source_sha256": "1a3978a67b50a2015f0eb49cb0f53743483298dc7dae32a044769dcd847bbafc",
+      "success": false
+    },
+    {
+      "label": "time i0 -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 -1\r\nendproc\r\n",
+      "source_sha256": "e06f71072158d2ee3d2ba0f8cc4db20c44f2919244fa7fecb1d1f65e2d217e32",
+      "success": false
+    },
+    {
+      "label": "time i0 i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 i\r\nendproc\r\n",
+      "source_sha256": "6850f84b7d6e10b3a2a0cfd40789936a56367b4fdb349cbb95b25aa581744cf3",
+      "success": false
+    },
+    {
+      "label": "time i0 l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 l\r\nendproc\r\n",
+      "source_sha256": "1a4e2a46f6575e9a2ae075b8e13bd61ed6d5e59626b40ee4917749f685db93c9",
+      "success": false
+    },
+    {
+      "label": "time i0 f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 f\r\nendproc\r\n",
+      "source_sha256": "a693b9fb3f0b9b3aaa957e63c41d78b5a5b7ea347a36aa3a483263d022e70d76",
+      "success": false
+    },
+    {
+      "label": "time i0 (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 (0)\r\nendproc\r\n",
+      "source_sha256": "d46b213dbc0e5b5cb455a7478ee75e0682057d1bfbc0ac261d2e40d83f0f5b36",
+      "success": false
+    },
+    {
+      "label": "time i0 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 1+0\r\nendproc\r\n",
+      "source_sha256": "79a697041f466cba72e32a82709e131383fb8c7d38470a2dcdc266c207880061",
+      "success": false
+    },
+    {
+      "label": "time i0 \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 \"24\"\r\nendproc\r\n",
+      "source_sha256": "3572c1c479468007fd3bb250621639f452448f920dc9567bad655a9afae84780",
+      "success": false
+    },
+    {
+      "label": "time i0 ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime i0 \r\nendproc\r\n",
+      "source_sha256": "3de362a6d83b091dd9cac617f9107a3a52835b118af6e2d990dd2c2338bde4c8",
+      "success": false
+    },
+    {
+      "label": "date $null",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate $null\r\nendproc\r\n",
+      "source_sha256": "6f9122fe0b7dc6765b51db13f23df8543a32dbb78e2e122d7938a21f35850e0e",
+      "success": false
+    },
+    {
+      "label": "time $null 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null 0\r\nendproc\r\n",
+      "source_sha256": "efaa2996b546c7f7d21f9b82ca9c0b98176f2d269ca47917a1928d1db9244e53",
+      "success": false
+    },
+    {
+      "label": "time $null 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null 1\r\nendproc\r\n",
+      "source_sha256": "8b4c94b1fce8fcc37d87af19203c26dd43467f793140e96687884e5f470b2f40",
+      "success": false
+    },
+    {
+      "label": "time $null 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null 2\r\nendproc\r\n",
+      "source_sha256": "fb57b661be14c6582396165e5063b98bf439fe7f597e3247431d6ed6e2303a5c",
+      "success": false
+    },
+    {
+      "label": "time $null -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null -1\r\nendproc\r\n",
+      "source_sha256": "e35b21a71a5ba0cb73c9510bfa6e2f466089e9c2332e0e2ea90ed57ee07626bc",
+      "success": false
+    },
+    {
+      "label": "time $null i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null i\r\nendproc\r\n",
+      "source_sha256": "f4882f99d73964891fb88bffe6ac9daa0acfde985286cbae486cb89ff49c1d1c",
+      "success": false
+    },
+    {
+      "label": "time $null l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null l\r\nendproc\r\n",
+      "source_sha256": "b6017f23d9f092ecf6747ad741b1374b17c9aad9a5226871420f20c7e5537286",
+      "success": false
+    },
+    {
+      "label": "time $null f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null f\r\nendproc\r\n",
+      "source_sha256": "1a852e0b17639a76b6bf851063cf73832fd558010d0688ed558891756c40566d",
+      "success": false
+    },
+    {
+      "label": "time $null (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null (0)\r\nendproc\r\n",
+      "source_sha256": "35addc3834e01f50ee80573498a607a15fabc499e658c700270a291f2b3ab91a",
+      "success": false
+    },
+    {
+      "label": "time $null 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null 1+0\r\nendproc\r\n",
+      "source_sha256": "2599404e5acdcab421641f2d14efd2b8f9fffd4c4a5ae80cf07faf7e24a6ecd7",
+      "success": false
+    },
+    {
+      "label": "time $null \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null \"24\"\r\nendproc\r\n",
+      "source_sha256": "9b0cce58901837d08a2368ebf19dcadbf29103db054cde6fe366fe1c4b59f16d",
+      "success": false
+    },
+    {
+      "label": "time $null ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime $null \r\nendproc\r\n",
+      "source_sha256": "aceb71c2c89ab8e224e1da829b731ff2810b34d99e57e712b0a3666ed89dce69",
+      "success": false
+    },
+    {
+      "label": "date \"literal\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate \"literal\"\r\nendproc\r\n",
+      "source_sha256": "d5a8d2365c4d4f901139f2cfb53cd2ffec6bbadad63a1d073c8fc7ff70b6d604",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" 0\r\nendproc\r\n",
+      "source_sha256": "09b2ca3d1011ea72fbcf528c59ef6174a6d75c24a62bc2dec503a5be3e57c38f",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" 1\r\nendproc\r\n",
+      "source_sha256": "979709069c552aa62611c5b3661f04b1265253a78b18088b766132c08195be3b",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" 2\r\nendproc\r\n",
+      "source_sha256": "3c41b794569200ccddafcbd6334847fbf51a3760c7d131a0065fda8fbc63224a",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" -1\r\nendproc\r\n",
+      "source_sha256": "051dbd79b4a61a8d064d98a37656d95f529c4efbf2b87503ebd3e3befac0c006",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" i\r\nendproc\r\n",
+      "source_sha256": "fc7ad86a5a048eac6016e43164a8b878a56c350df2933df339b9529f818a3ccc",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" l\r\nendproc\r\n",
+      "source_sha256": "db65d46694974608edb55554552ed50022997509c66766c485891fc15aa7a765",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" f\r\nendproc\r\n",
+      "source_sha256": "e36bf2fe995a6e95cd257d5b12c941de2812d44d62f856482db5ba6c38efe2ca",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" (0)\r\nendproc\r\n",
+      "source_sha256": "7b813e049cb0edef46a82f6194e0d60a77e7d7b4d1a6987965dc768f3937b093",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" 1+0\r\nendproc\r\n",
+      "source_sha256": "8b2b989a37da807c6c7347afe8c333a80752bc1c9c97a46d3552402204c7fdac",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" \"24\"\r\nendproc\r\n",
+      "source_sha256": "d2393681a5fc1e5e7f6964933dc3a4eca8bb31d6f3df86a4b012ca38456dae1f",
+      "success": false
+    },
+    {
+      "label": "time \"literal\" ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime \"literal\" \r\nendproc\r\n",
+      "source_sha256": "96a3ba7da009b7f8f3453d37e29643076f06ae4e29ea7ad680f1f03b3b6342a1",
+      "success": false
+    },
+    {
+      "label": "date (result)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate (result)\r\nendproc\r\n",
+      "source_sha256": "00478299aa05ec897bb5ce44ebe2481024d7a31a47192c8b1da88a94882a4c2e",
+      "success": false
+    },
+    {
+      "label": "time (result) 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) 0\r\nendproc\r\n",
+      "source_sha256": "995a9efafb6a5e0c3415e75462be7be8d922995e5b744a84440d466fb1e5ff62",
+      "success": false
+    },
+    {
+      "label": "time (result) 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) 1\r\nendproc\r\n",
+      "source_sha256": "09898706086e7e475826e3e723e8c01b8ab20d3f2008c14d8bc183ed7ad5fd44",
+      "success": false
+    },
+    {
+      "label": "time (result) 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) 2\r\nendproc\r\n",
+      "source_sha256": "7d6c31b76ffcd5c31e5ed73c9fcdd19245e65d0f7460e0ef9073bfd40e93d09b",
+      "success": false
+    },
+    {
+      "label": "time (result) -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) -1\r\nendproc\r\n",
+      "source_sha256": "2b5d26995754e0a01993e72cb7c3eed892cfdede83e3a745156c6d43c064b234",
+      "success": false
+    },
+    {
+      "label": "time (result) i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) i\r\nendproc\r\n",
+      "source_sha256": "7cc8924778f2b5621c90a26c717dd136619c473b9b289980755862fb946f23e2",
+      "success": false
+    },
+    {
+      "label": "time (result) l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) l\r\nendproc\r\n",
+      "source_sha256": "efc8ed719ca0a2c9fcd432075137299371aa112f5adb4ed85d28718d163eaf0e",
+      "success": false
+    },
+    {
+      "label": "time (result) f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) f\r\nendproc\r\n",
+      "source_sha256": "4255645d1bb6bdf4b0bc770fce9c8b116983f34a3172910957190495f1301010",
+      "success": false
+    },
+    {
+      "label": "time (result) (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) (0)\r\nendproc\r\n",
+      "source_sha256": "fff5220a916c1d9eba9a55063006c2cbf1e056c326c0266048e9c85af2fc5959",
+      "success": false
+    },
+    {
+      "label": "time (result) 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) 1+0\r\nendproc\r\n",
+      "source_sha256": "4b4bc55e2db057e4d1e7e283522ae6ed758fd769a3f1541f5e8039236f28df11",
+      "success": false
+    },
+    {
+      "label": "time (result) \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) \"24\"\r\nendproc\r\n",
+      "source_sha256": "a8e75c40e0f5ba414481916197088df16a352f25cda74c988198a96463760c3f",
+      "success": false
+    },
+    {
+      "label": "time (result) ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime (result) \r\nendproc\r\n",
+      "source_sha256": "5a59781e01ee8e1884bc19f4b393227b48f5ff0acf4c20c84e5bd5014fc48f45",
+      "success": false
+    },
+    {
+      "label": "date result+\"x\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate result+\"x\"\r\nendproc\r\n",
+      "source_sha256": "ba9e6c5f1e84aaa2726a29199bff98919efa9ac8c8527ac883ea760717cb9111",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" 0\r\nendproc\r\n",
+      "source_sha256": "73b4020c84eaaee8b0e10ded0e06d1c36da64f24a45aed3c6d2dd680fc46d77e",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" 1\r\nendproc\r\n",
+      "source_sha256": "974f50ef6bca06ec9c7ad59a1a53e1110765b4740974cd74895b880278af5193",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" 2\r\nendproc\r\n",
+      "source_sha256": "fdc861422254659e6d811e0e834f31e5999cdbbd912742e42e4a90161b116797",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" -1\r\nendproc\r\n",
+      "source_sha256": "1cb476db3eb4d841483e1bbd1ef325a8add8fb621fae71263cdf0fcd397bfcd8",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" i\r\nendproc\r\n",
+      "source_sha256": "57b42ec1ddfd0e62c320283d1b82b7f5557e92d4bbb830f6a36e391bf571e462",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" l\r\nendproc\r\n",
+      "source_sha256": "ceae9706c202279fec7d0906a2d652e71f91da489e4713c9414b947d2e63ca3a",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" f\r\nendproc\r\n",
+      "source_sha256": "68dfde9404b54160f91ad74788ebd1fe60a3199d0fcad219235b653b6038d00f",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" (0)\r\nendproc\r\n",
+      "source_sha256": "dda7d12f94ef8ecae0342726d27364deddf333607406c96908138f869fd20f86",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" 1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" 1+0\r\nendproc\r\n",
+      "source_sha256": "f01cf6a9ab87fa19fc36b7d1fc0311d5cf84d800d9a7aec4204b9e7cad601be4",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" \"24\"\r\nendproc\r\n",
+      "source_sha256": "f6c6dd388e2761a159aa7bee2902e2290b6d09cb7e23ecc67a67da1fdd4b4e49",
+      "success": false
+    },
+    {
+      "label": "time result+\"x\" ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result+\"x\" \r\nendproc\r\n",
+      "source_sha256": "5074c15b1342dc19a552520b47d7a1fc46951340514ef460b833e46e7e1b3c12",
+      "success": false
+    },
+    {
+      "label": "date ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate \r\nendproc\r\n",
+      "source_sha256": "42920e04afbab187a467969691dec9b4dbbfb52520a1cab8228adf96ad8fb77c",
+      "success": false
+    },
+    {
+      "label": "time  0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  0\r\nendproc\r\n",
+      "source_sha256": "749ce4794ba802288494dbd758d861b2fb3de4805e66575efb3ccd81d0530fcd",
+      "success": false
+    },
+    {
+      "label": "time  1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  1\r\nendproc\r\n",
+      "source_sha256": "3681b6314082a043dc54831f6ff95224368c5c4fdd6676996e8945d044fe6895",
+      "success": false
+    },
+    {
+      "label": "time  2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  2\r\nendproc\r\n",
+      "source_sha256": "b74ba0a242338635b07ca48064e67244a338e4806fc7e38e3ac783f1b9b04a22",
+      "success": false
+    },
+    {
+      "label": "time  -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  -1\r\nendproc\r\n",
+      "source_sha256": "370aa6ada61d0bd83d4c1b2561463ca7c6bcca61bbb51524f11aa7f3c2a94cf8",
+      "success": false
+    },
+    {
+      "label": "time  i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  i\r\nendproc\r\n",
+      "source_sha256": "1fab831f9a3c15d7febb4bc0b12f4e3fa753d64df976f56cf0ce3fc07c73c819",
+      "success": false
+    },
+    {
+      "label": "time  l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  l\r\nendproc\r\n",
+      "source_sha256": "313d6b4883b0bf3d61ba8293273e559600e592c45d7d70cd3717bd2c9efa7a8d",
+      "success": false
+    },
+    {
+      "label": "time  f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  f\r\nendproc\r\n",
+      "source_sha256": "25a0ab3043781e0fd9290cc3f5410f78056239093d3aa006bbe0c423dbb70eab",
+      "success": false
+    },
+    {
+      "label": "time  (0)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  (0)\r\nendproc\r\n",
+      "source_sha256": "2a49092b9ba81a6dd9bc8e7f472f75ccfd127be8208d86340e899035dc60ed63",
+      "success": false
+    },
+    {
+      "label": "time  1+0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  1+0\r\nendproc\r\n",
+      "source_sha256": "cdbe52bc3f4bc338ba0525c2c8a47ef97bd83e877b6953631d57fc8e20393f5d",
+      "success": false
+    },
+    {
+      "label": "time  \"24\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  \"24\"\r\nendproc\r\n",
+      "source_sha256": "32704717e668a9dc268e12878ab2d6e7eab8df30cf819395c552e00253df4c67",
+      "success": false
+    },
+    {
+      "label": "time  ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime  \r\nendproc\r\n",
+      "source_sha256": "dec4fb0ae8491aa45757a27cba2160cb364d3dc93770703ff61948b5864900a2",
+      "success": false
+    },
+    {
+      "label": "local date local",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\nstring local\r\ndate local\r\nstrcpy result local\r\nendproc\r\n",
+      "source_sha256": "5e307a89c744d6af05834d2b97b9febf58027b6b18e0d7d551ba23f16cbea579",
+      "success": true,
+      "hex": "01 d2 51 00 cf 1d a0 00 00 ac 8c 00 a0 00 00 00 95"
+    },
+    {
+      "label": "local time local 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\nstring local\r\ntime local 0\r\nstrcpy result local\r\nendproc\r\n",
+      "source_sha256": "9668c25f406c8ef8e3d5c4b535a6fc8ec3fdc62810c70b421d597aa2f5c9323d",
+      "success": true,
+      "hex": "01 d2 51 00 cf be a0 00 00 b5 00 ac 8c 00 a0 00 00 00 95"
+    },
+    {
+      "label": "local time local 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\nstring local\r\ntime local 1\r\nstrcpy result local\r\nendproc\r\n",
+      "source_sha256": "f88540aebc1af36b7350a217f710e2dfb914aa3038c1507d179670d8f7444697",
+      "success": true,
+      "hex": "01 d2 51 00 cf be a0 00 00 b5 01 ac 8c 00 a0 00 00 00 95"
+    },
+    {
+      "label": "parameter date value",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ncall worker with \"OLD\"\r\nendproc\r\nproc worker\r\nstrparm value\r\ndate value\r\nstrcpy result value\r\nendproc\r\n",
+      "source_sha256": "ca0beff8dad60da6e507b263624f113a05d5ded9062863c52223275bc1fad47f",
+      "success": true,
+      "hex": "01 cf d0 cd aa b6 8f 38 a5 3f c8 13 00 00 00 d2 af ff 94 cf 1d 96 57 00 ac 8c 00 96 57 00 00 95"
+    },
+    {
+      "label": "parameter time value 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ncall worker with \"OLD\"\r\nendproc\r\nproc worker\r\nstrparm value\r\ntime value 0\r\nstrcpy result value\r\nendproc\r\n",
+      "source_sha256": "8220a6b46567bacdb25e82f0e2e7bf6c36db090969cfec0f9719d12f4d181337",
+      "success": true,
+      "hex": "01 cf d0 cd aa b6 8f 38 a5 3f c8 13 00 00 00 d2 af ff 94 cf be 96 57 00 b5 00 ac 8c 00 96 57 00 00 95"
+    },
+    {
+      "label": "parameter time value 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ncall worker with \"OLD\"\r\nendproc\r\nproc worker\r\nstrparm value\r\ntime value 1\r\nstrcpy result value\r\nendproc\r\n",
+      "source_sha256": "64e1268c1ae60be2068402f879c75f969d83157914e389b2757712f8c5633ef1",
+      "success": true,
+      "hex": "01 cf d0 cd aa b6 8f 38 a5 3f c8 13 00 00 00 d2 af ff 94 cf be 96 57 00 b5 01 ac 8c 00 96 57 00 00 95"
+    },
+    {
+      "label": "date result 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate result 0\r\nendproc\r\n",
+      "source_sha256": "f2ded693dd1ff675257319dd7cbb79879748fa4379110c7baaa1deb74741c45c",
+      "success": false
+    },
+    {
+      "label": "date result,",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ndate result,\r\nendproc\r\n",
+      "source_sha256": "662844dde3ad7fde4e3f76220758feb526c58bc3e7dae8e013d68006e27a4e1a",
+      "success": false
+    },
+    {
+      "label": "time result,0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result,0\r\nendproc\r\n",
+      "source_sha256": "6acfbcf21e65b493d2547ef0bd33a22a38721bd1e42fa9dc5f20c79a0ec3e6dc",
+      "success": true,
+      "hex": "01 cf be 8c 00 b5 00 94"
+    },
+    {
+      "label": "time result,1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result,1\r\nendproc\r\n",
+      "source_sha256": "42de991cc9dceb9d472defc489b9519b3a511c9a0540f60f5ab23763a467f38e",
+      "success": true,
+      "hex": "01 cf be 8c 00 b5 01 94"
+    },
+    {
+      "label": "time result,,1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result,,1\r\nendproc\r\n",
+      "source_sha256": "bad83cbdb6c478b060d6f7421e37b1d18fc328e25171c1d639e93c2f8b8ed19f",
+      "success": false
+    },
+    {
+      "label": "time result 0 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result 0 1\r\nendproc\r\n",
+      "source_sha256": "27e0894cbe96bcd0c50096d3d25a29e92b71c74b46d74651b099794a41643972",
+      "success": false
+    },
+    {
+      "label": "time result 32767",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result 32767\r\nendproc\r\n",
+      "source_sha256": "1c2212d333a59c1e2b002ecaadf9a4799ca0867e748398e21d12bbbd0704034a",
+      "success": true,
+      "hex": "01 cf be 8c 00 ab ff 7f 94"
+    },
+    {
+      "label": "time result 32768",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result 32768\r\nendproc\r\n",
+      "source_sha256": "ea11b53e2179697c681bdd28023c28e8ba0a4167c02730da498938615e9b3841",
+      "success": false
+    },
+    {
+      "label": "time result 65535",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result 65535\r\nendproc\r\n",
+      "source_sha256": "bd0b3c5656203c3c00a7529b3dca79ed3c677fe324e2acf869db529545695b6d",
+      "success": false
+    },
+    {
+      "label": "time result 1L",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime result 1L\r\nendproc\r\n",
+      "source_sha256": "8d1091eeac58b11638728451ef60efe9e2bbc588f7d588797b3f6c888fc22036",
+      "success": false
+    },
+    {
+      "label": "time 0 result",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring result\r\nproc main\r\ntime 0 result\r\nendproc\r\n",
+      "source_sha256": "5f3e6b613d34a38a7d0bf032cb011ef0fb0fa0c2a3f7fdd8bab0ea32305bb7ec",
+      "success": false
+    }
+  ],
+  "scope": "Authored original compiler DATE/TIME grammar and emitted ASX only. No generated script executed; no original compiler or resource is a normal build input."
+}

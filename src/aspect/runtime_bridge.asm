@@ -20,6 +20,7 @@ extern aspect_external_dos,aspect_external_run,aspect_external_shell
 SEGMENT _TEXT public class=CODE use16
 extern aspect_dispatch,aspect_abort,session_setjmp
 extern aspect_path_chdir,aspect_path_mkdir,aspect_path_rmdir,aspect_path_delete
+extern aspect_clock_date,aspect_clock_time
 extern aspect_system_diskfree,aspect_system_dosver,aspect_system_getdir
 extern aspect_environment_get,aspect_environment_put
 extern aspect_script_file_setting
@@ -784,6 +785,59 @@ _runtime_case_string: times 81 db 0
 global _runtime_set_duplex_changed
 _runtime_set_duplex_changed: dw 0
 global aspect_set_table
+%ifdef ASPECT_COMPACT_SET
+; Shared bounded resolver preserves every maintained selector/error without
+; storing256 near pointers. Native flat SET/FETCH retain their original code.
+SEGMENT _TEXT public class=CODE use16
+global aspect_set_resolve
+aspect_set_resolve:
+ cmp ax,0x56
+ ja near unsupported
+ mov bx,ax
+ mov bl,[bx+aspect_set_index]
+ xor bh,bh
+ jmp word [bx+aspect_set_table]
+SEGMENT _DATA public class=DATA use16
+aspect_set_table:
+ dw unsupported,aspect_break_setting,aspect_set_display,runtime_set_duplex
+ dw aspect_script_file_setting,aspect_set_findcase,aspect_set_keys
+ dw aspect_set_msg_crlf,aspect_set_pausechar,aspect_set_rxdata
+ dw aspect_set_switchcase,aspect_set_txpace,aspect_set_waitcase,aspect_set_whencase
+aspect_set_index:
+%assign setting 0
+%rep 0x57
+%if setting=0x09
+ db 2
+%elif setting=0x12
+ db 4
+%elif setting=0x18
+ db 6
+%elif setting=0x22
+ db 8
+%elif setting=0x23
+ db 10
+%elif setting=0x29
+ db 12
+%elif setting=0x2e
+ db 14
+%elif setting=0x30
+ db 16
+%elif setting=0x3b
+ db 18
+%elif setting=0x44
+ db 20
+%elif setting=0x4c
+ db 22
+%elif setting=0x55
+ db 24
+%elif setting=0x56
+ db 26
+%else
+ db 0
+%endif
+%assign setting setting+1
+%endrep
+%else
 aspect_set_table:
 %assign setting 0
 %rep 256
@@ -818,6 +872,7 @@ aspect_set_table:
 %endif
 %assign setting setting+1
 %endrep
+%endif
 %ifndef ASPECT_RUNTIME_SERIAL
 scalar aspect_serial_rx_count,_runtime_serial_rx_count
 %else
@@ -920,7 +975,11 @@ _runtime_arena: times 0x3aca db 0
 aspect_dispatch_handlers:
 %assign op 0
 %rep 215
-%if op=0x4c
+%if op=0x1d
+ dw aspect_clock_date
+%elif op=0xbe
+ dw aspect_clock_time
+%elif op=0x4c
  dw aspect_environment_get
 %elif op=0x8b
  dw aspect_environment_put

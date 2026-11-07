@@ -14,11 +14,18 @@ ORG 0xe660
 SEGMENT _TEXT public class=CODE use16
 global aspect_fetch_command
 extern aspect_set_query_mode,aspect_dispatch_read,aspect_set_table
+%ifdef ASPECT_COMPACT_SET
+extern aspect_set_resolve
+%endif
 %endif
 aspect_fetch_command:
  mov word [aspect_set_query_mode],1
  call aspect_dispatch_read
+%ifdef ASPECT_COMPACT_SET
+ call aspect_set_resolve
+%else
  mov_load bx,ax
  shl bx,1
  call word [bx+aspect_set_table]
+%endif
  ret

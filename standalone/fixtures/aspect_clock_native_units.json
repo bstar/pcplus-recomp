@@ -1,0 +1,57 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "date",
+      "start": 59017,
+      "end": 59034,
+      "file_start": 118425,
+      "bytes": 17,
+      "sha256": "717f1d5f95b40ef7b28a9e76fda23ee20d4022d52c9040e9f6641a9d149b8ee7"
+    },
+    {
+      "unit": 2,
+      "name": "time",
+      "start": 59657,
+      "end": 59690,
+      "file_start": 119065,
+      "bytes": 33,
+      "sha256": "780f7dae79844e4617deb2c6655a4360229aefc21361749cba6c34f55defa79b"
+    },
+    {
+      "unit": 3,
+      "name": "time-format",
+      "start": 18827,
+      "end": 18948,
+      "file_start": 23435,
+      "bytes": 121,
+      "sha256": "67c2b3a66866d520190791aff58dc1c0f5ed021bf6228711c76bd3c278157d5f"
+    }
+  ],
+  "REA_evidence": [
+    "ev_1953d0587af4256af4eff5baa2618ad997ce4ecf22e61d2b329d0ede3fe1839c",
+    "ev_f71d94e20c5f1a3d9388b68566435e38528a9e094fb85b73718dec2f5bb43576",
+    "ev_ef34e543749a3645f18d60c2386b639c3815e7c6236e511f0605640176662f1a"
+  ],
+  "reused_units": [
+    {
+      "name": "date-format",
+      "start": 14036,
+      "bytes": 40,
+      "sha256": "b85ce0504418a3b647a751542b04995fe16ed0555cc9a04496171138a57a0225"
+    },
+    {
+      "name": "get-date",
+      "start": 30574,
+      "bytes": 30,
+      "sha256": "fcc85f1197bc6e4851e3fcfb4b25b112deed815f51678e40ecbf9d8493c72776"
+    },
+    {
+      "name": "get-time",
+      "start": 30604,
+      "bytes": 33,
+      "sha256": "c677c642aab995664be684bbcd61ded5f3be8491c1d7a89e8167fb50b53680d0"
+    }
+  ]
+}

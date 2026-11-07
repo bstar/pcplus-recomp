@@ -114,14 +114,21 @@ extern aspect_when_case_sensitive
 extern aspect_serial_pause_character
 extern aspect_serial_character_delay_value
 extern aspect_string_bounded_integer
+%ifdef ASPECT_COMPACT_SET
+extern aspect_set_resolve
+%endif
 %endif
 %if ASPECT_SET_UNIT=0 || ASPECT_SET_UNIT=1
 aspect_set_dispatch:
  mov word [aspect_set_query_mode],0
  call aspect_dispatch_read
+%ifdef ASPECT_COMPACT_SET
+ call aspect_set_resolve
+%else
  mov_load bx,ax
  shl bx,1
  call word [bx+aspect_set_table]
+%endif
  jmp near aspect_set_status_refresh
 %endif
 %if ASPECT_SET_UNIT=0 || ASPECT_SET_UNIT=2

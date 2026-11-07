@@ -9,7 +9,8 @@ static int aspect_runtime_format(char *out,const char *format,va_list args)
 {
  static const char *allowed[]={"%-12s   <DIR>  %2u-%.2u-%.2u  %.2u:%.2u",
   "%-12s  %6lu  %2u-%.2u-%.2u  %.2u:%.2u","%2u-%.2u-%.2u",
-  "%.2u:%.2u","%d.%02d","%c:\\"};
+  "%.2u:%.2u","%d.%02d","%c:\\","%2.2d/%2.2d/%2.2d",
+  "%02d:%02d:%02d%","%02d:%02d:%02d%2s"};
  const char *p,*string;char *start=out,digits[10];unsigned i,left,zero,width,precision,wide,n,count,negative;
  unsigned long value;long signed_value;
  if(!out||!format)return -1;
@@ -17,7 +18,8 @@ static int aspect_runtime_format(char *out,const char *format,va_list args)
  if(i==sizeof(allowed)/sizeof(allowed[0]))return -1;
  for(p=format;*p;++p){
   if(*p!='%'){*out++=*p;continue;}
-  ++p;left=zero=width=precision=wide=negative=0;
+  ++p;if(!*p)break; /* Native private24-hour format ends with a discarded%. */
+  left=zero=width=precision=wide=negative=0;
   if(*p=='-'){left=1;++p;}if(*p=='0'){zero=1;++p;}
   while(*p>='0'&&*p<='9'){width=width*10+*p-'0';++p;}
   if(*p=='.'){++p;while(*p>='0'&&*p<='9'){precision=precision*10+*p-'0';++p;}}

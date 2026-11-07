@@ -1974,3 +1974,15 @@ test-display-config:
 	python3 -m unittest discover -s src/config -p test_prm.py
 test-display-config-compat:
 	python3 standalone/check_display_config_native.py --output build/display-config-original/$$(date +%Y%m%d-%H%M%S-%N) --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE
+
+.PHONY: test-aspect-clock test-aspect-clock-compat
+test-aspect-clock:
+	python3 standalone/build_aspect_runtime.py
+	python3 standalone/build_aspect_runner.py
+	python3 standalone/build_aspect_compiler_dos.py
+	python3 standalone/check_aspect_clock.py --output build/aspect-clock-native-make-$(shell date +%s%N)
+	python3 standalone/test_aspect_clock_dos.py --output build/aspect-clock-dos-make-$(shell date +%s%N)
+	python3 standalone/check_aspect_compiler_dos.py
+	python3 standalone/check_aspect_runtime.py
+test-aspect-clock-compat:
+	python3 standalone/check_aspect_clock.py --output build/aspect-clock-original-make-$(shell date +%s%N) --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE

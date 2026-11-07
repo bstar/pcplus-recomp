@@ -5,6 +5,7 @@ import json
 import shutil
 import struct
 import inspect
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -35,6 +36,7 @@ def main():
     parser.add_argument('--lease-fault-kind',choices=['divide','abort','dispatcher'],default='divide')
     parser.add_argument('--fault-open-streams',action='store_true',help='Keep six buffered streams and exact PROGRAM copies live at the selected fault')
     parser.add_argument('--held-streams',action='store_true',help='Keep six buffered streams across each FIRST child, including PROGRAM WAIT')
+    parser.add_argument('--clock-queries',action='store_true',help='Query local DATE/TIME strings across each FIRST child and save a clock trace')
     args = parser.parse_args()
     assert not args.nested_graphics or args.nested_program
     if args.streams_around_child:assert args.nested_program and not args.lease_fault_phase
@@ -172,6 +174,11 @@ mode_opened:
             before='fopen 0 "D:\\FPRE.TXT" "wb"\nif failure\nexit\nendif\nfclose 0\n'
             after=before.replace('FPRE.TXT','FPST.TXT')
             first=first.replace('run "D:\\NEST.COM"\n',before+'run "D:\\NEST.COM"\n'+after,1)
+    if args.clock_queries:
+        queries='string clock_date,clock12,clock24\ndate clock_date\ntime clock12 0\ntime clock24 1\n'
+        first=first.replace('proc main\n','proc main\n'+queries,1)
+        trace='fopen 0 "D:\\CLOCK.LOG" "wb"\nfputs 0 clock_date\nfputc 0 32\nfputs 0 clock12\nfputc 0 32\nfputs 0 clock24\nfclose 0\n'
+        first=first.replace('transmit "FIRSTOK^M"',trace+'transmit "FIRSTOK^M"',1)
     keys = bytearray(actions(b'D:\\FIRST.ASX', 0))
     for i, (name, text) in enumerate([('FIRST', first), ('SIX', six), ('MISSING', missing)]):
         path = ('D:\\' + name + '.ASX').encode()
@@ -221,6 +228,8 @@ mode_opened:
                   first_file=(drive / 'FIRST.LOG').exists() and (drive / 'FIRST.LOG').read_bytes() == b'FIRST|',
                   recovery_file=(drive / 'RECOVER.TXT').exists() and (drive / 'RECOVER.TXT').read_bytes() == b'RECOVERED|',
                   six_files=all((drive / f'SLOT{i}.TXT').exists() and (drive / f'SLOT{i}.TXT').read_bytes() == (f'SLOT{i}|'+(f'AFTER{i}|' if args.streams_around_child else '')).encode() for i in range(6)))
+    if args.clock_queries:
+        checks['actual_parent_clock_queries']=(drive/'CLOCK.LOG').exists() and bool(re.fullmatch(rb'\d{2}/\d{2}/\d{2,3} \d{2}:\d{2}:\d{2}[AP]M \d{2}:\d{2}:\d{2}',(drive/'CLOCK.LOG').read_bytes()))
     for name, expected in sources.items():
         assert sha(ROOT / name) == expected, name
     if args.nested_program:
@@ -246,6 +255,7 @@ mode_opened:
                   physical_rows=args.display_rows,
                   streams_around_child=args.streams_around_child,
                   held_streams=args.held_streams,
+                  clock_queries=args.clock_queries,
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
     if args.nested_program:

@@ -575,6 +575,7 @@ class Compiler:
             self.operand(self.atomic(node), compact=True)
             return
         file_commands = {
+            'date': (0x1D, 'd'), 'time': (0xBE, 'dv'),
             'getenv': (0x4C, 'sd'), 'putenv': (0x8B, 's'),
             'diskfree': (0x25, 'vl'), 'dosver': (0x29, 'd'), 'getdir': (0x4B, 'vd'),
             'getfdate': (0x4E, 'sd'), 'getftime': (0x51, 'sd'),
