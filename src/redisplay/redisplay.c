@@ -40,9 +40,18 @@ unsigned redisplay_live_ready=0;
 unsigned redisplay_search_pending=0;
 unsigned redisplay_export_pending=0;
 static byte __far *snapshot;
+#ifdef TERMINAL_LINE_PORT_OVERLAY
+/* Defined below the direct-menu state declarations. */
+unsigned __far __cdecl line_overlay_arena_ready(void);
+#endif
 static word __far *live;
 static word __far *view;
 static word length,top,visible,position,shape,direct_clipboard;
+#ifdef TERMINAL_LINE_PORT_OVERLAY
+unsigned __far __cdecl line_overlay_arena_ready(void)
+{return redisplay_active==1 && command_menu_active && direct_clipboard==2 && !length &&
+ !redisplay_search_pending && !redisplay_export_pending;}
+#endif
 static word query_size,query_edit,found,last_match;
 static char query[40];
 extern word __far redisplay_row_index[247];

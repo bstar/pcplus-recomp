@@ -28,6 +28,7 @@ def main():
     parser.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25)
     parser.add_argument('--exit-watch',action='store_true',help='Install a small passive diagnostic TSR; separate memory footprint from ordinary acceptance')
     parser.add_argument('--heap-resize-watch',action='store_true',help='Also observe DOS AH=4A requests and pre-request MCB sizes; requires exit observer')
+    parser.add_argument('--line-port-around-scripts',action='store_true',help='Open/close transient Alt-P before and after the same ASPECT workload')
     parser.add_argument('--exit-watch-high',action='store_true',help='Require the passive observer to reside in UMB')
     parser.add_argument('--cpu',choices=['8086','386'],default='8086')
     parser.add_argument('--program-result-probe',action='store_true',help='Explicitly admit only the marked PROGRAM-result diagnostic interpreter')
@@ -70,6 +71,9 @@ def main():
         for name, expected in m['sources'].items():
             assert sha(ROOT / name) == expected, name
             sources[name] = expected
+    parent_manifest=json.loads(binary.with_name('manifest.json').read_text())
+    overlay=parent_manifest.get('line_port_overlay')
+    if args.line_port_around_scripts:assert overlay
     for name in ['standalone/test_aspect_heap_startup_dos.py', 'standalone/test_connection_dos.py',
                  'standalone/test_directory_key_bindings_dos.py', 'src/aspect/compiler.py']:
         sources[name] = sha(ROOT / name)
@@ -78,6 +82,9 @@ def main():
     stage.mkdir()
     for program in [binary, runner]:
         shutil.copyfile(program, stage / program.name)
+    if overlay:
+        assert sha(binary.with_name('PCLINE.OVL'))==overlay['sha256']
+        shutil.copyfile(binary.with_name('PCLINE.OVL'),stage/'PCLINE.OVL')
     first = 'proc main\nfopen 0 "D:\\FIRST.LOG" "wb"\nif failure\nexit\nendif\nfputs 0 "FIRST|"\nfclose 0\ntransmit "FIRSTOK^M"\nendproc\n'
     six = 'proc main\n'
     for i in range(6):
@@ -231,6 +238,7 @@ mode_opened:
         exec(compile(source.replace('len(screen)==4000','len(screen)==8000'),harness.__file__,'exec'),harness.__dict__)
     label = out.name
     schedule='p900 enter p3500 a-1 p1300 a-2 p1300 a-3 p1300 a-1 p1300 r e a d y enter p700 a-x'
+    if args.line_port_around_scripts:schedule=schedule.replace('p3500 a-1','p3500 a-p p1800 escape p800 a-1',1).replace('a-1 p1300 r e a d y','a-1 p1300 a-p p1800 escape p800 r e a d y',1)
     if args.lease_fault_phase or args.emulate_reject:schedule=schedule.replace('a-3 p1300 a-1','a-3 p1300 a-4')
     if args.nested_wait:
         schedule=schedule.replace('a-1 p1300',f'a-1 p700 {args.nested_wait} p600')
@@ -291,6 +299,7 @@ mode_opened:
     if args.held_streams:
         checks['held_files_preserved']=all((drive/f'HOLD{i}.BIN').is_file() and
             (drive/f'HOLD{i}.BIN').read_bytes()==f'HELD{i}|'.encode() for i in range(6))
+    if overlay:checks['overlay_file_preserved']=sha(stage/'PCLINE.OVL')==overlay['sha256']
     report = dict(passed=all(checks.values()), checks=checks, binary_sha256=sha(binary),
                   program_result_probe=args.program_result_probe,
                   cpu=args.cpu,
@@ -300,6 +309,8 @@ mode_opened:
                   clock_queries=args.clock_queries,emulate_profile_switch=args.emulate_profile_switch,emulate_when=args.emulate_when,
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
+    report['line_port_around_scripts']=args.line_port_around_scripts
+    if overlay:report['overlay_sha256']=overlay['sha256']
     if args.nested_program:
         report['nested_child_source_sha256']=sha(out/'NEST.ASM')
         report['nested_child_sha256']=sha(out/'NEST.COM')

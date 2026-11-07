@@ -9,7 +9,7 @@ import shutil
 import subprocess
 import sys
 import time
-from product_inputs import ROOT,select_product,sha
+from product_inputs import ROOT,select_product,sha,stage_companions
 from terminal_geometry import terminal_geometry
 from audio_synchronet import snapshot,message_bodies,statistics
 from audio_synchronet_editor import editor_checks
@@ -70,6 +70,7 @@ def main():
     (out/'server-inputs.json').write_text(json.dumps(server,indent=2)+'\n')
     stage=out/'program';stage.mkdir()
     shutil.copyfile(binary,stage/'TERMINAL.EXE');shutil.copyfile(child,stage/'ASPECT.EXE')
+    stage_companions(binary,stage)
     source=login_script();(stage/'SYNC.ASP').write_text(source);(stage/'SYNC.ASX').write_bytes(compile_source(source))
     helper=out/'EDITKEY.COM'
     subprocess.run(['nasm','-fbin',*(['-DGATEWAY_ROUNDTRIP'] if a.gateway_overlay else []),*(['-DFILE_DIRECTORY_ROUNDTRIP'] if a.file_directory_overlay else []),*(['-DFILE_VIEWER_ROUNDTRIP'] if a.file_viewer_overlay else []),*(['-DEXTERNAL_VIEWER_ROUNDTRIP','-DRECORD_KEY_SEGMENT'] if a.external_viewer_overlay else []),*(['-DEXTERNAL_EDITOR_ROUNDTRIP'] if a.external_editor_overlay else []),'-DSCREEN_REFERENCE_FREEZE','-DAUDIO_SYNC_EDITOR_SCREEN_BYTES='+str((layout['physical_rows'] if layout else 25)*160),'-DAUDIO_SYNC_EDITOR_SETTLE=72','-DAUDIO_SYNC_EDITOR_KEY_WAIT=9','-DAUDIO_SYNC_EDITOR_FINAL_WAIT=54','-DAUDIO_SYNC_EDITOR_WATCHDOG_TICKS=2160',str(ROOT/'lab/bbs/audio_synchronet_editor_keys.asm'),'-o',str(helper)],check=True)

@@ -1,6 +1,7 @@
 """Resolve explicit source-built products for owned BBS integration probes."""
 import hashlib
 import json
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -8,6 +9,26 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def companions(binary):
+    """Only explicit immutable source-built companions; never user files."""
+    binary=Path(binary).resolve()
+    manifest=json.loads(binary.with_name('manifest.json').read_text())
+    overlay=manifest.get('line_port_overlay')
+    if not overlay:return []
+    path=binary.with_name('PCLINE.OVL')
+    assert sha(path)==overlay['sha256']
+    return [path]
+
+
+def stage_companions(binary,directory):
+    staged=[]
+    for path in companions(binary):
+        dest=Path(directory)/path.name
+        shutil.copyfile(path,dest);assert sha(dest)==sha(path)
+        staged.append(dest)
+    return staged
 
 
 def select_product(path, leaf):
@@ -24,4 +45,5 @@ def select_product(path, leaf):
         assert relative.parts[0] not in ('build', 'original', 'originals', 'install', 'analysis')
         assert sha(ROOT / relative) == digest, name
         sources.append(ROOT / relative)
+    sources+=companions(binary)
     return binary, sources

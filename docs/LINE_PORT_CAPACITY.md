@@ -1,5 +1,9 @@
 # Alt-P capacity diagnosis
 
+The [transient implementation](LINE_PORT_OVERLAY.md) now passes the ordinary
+8086 capacity workload. This document retains the resident prototype's original
+diagnostic evidence and its limits.
+
 The experimental `a057b35c…` parent has a confirmed conventional-memory
 regression. The unchanged `856a9c85…` parent passes the same held-stream,
 nested-child and EMULATE workload with interpreter `5c641ac4…`.

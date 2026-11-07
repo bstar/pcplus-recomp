@@ -877,11 +877,20 @@ def inspect_terminal_memory(binary,map_path):
     count=int(fields[2]);assert 0<=count<=10
     assert symbols[name][0]==near_code['relative_segment']
     assert symbols[name+'_far'][0]==symbols[name+'_impl'][0]==config_seg
-    prefix=cdecl_prefix(count,4);suffix=b'\x8d\x66\x00\x5d\xc3'
-    code=raw(name,len(prefix)+5+len(suffix))
-    assert code==prefix+b'\x9a'+struct.pack('<HH',symbols[name+'_far'][1],config_seg)+suffix,(name,'entry arguments/far target/return')
-    assert address(name)+len(prefix)+3 in relocations,(name,'missing entry relocation')
-    near_call(name+'_far',name+'_impl',prefix=cdecl_prefix(count,6),suffix=b'\x8d\x66\x00\x5d\xcb')
+    if 'config_cdecl_tail_entries'in symbols:
+     assert '_line_overlay_state'in symbols
+     assert raw(name,8)==b'\x58\x0e\x50\xea'+struct.pack('<HH',symbols[name+'_far'][1],config_seg),(name,'tail cdecl frame/target')
+     assert address(name)+6 in relocations,(name,'missing tail entry relocation')
+    else:
+     prefix=cdecl_prefix(count,4);suffix=b'\x8d\x66\x00\x5d\xc3'
+     code=raw(name,len(prefix)+5+len(suffix))
+     assert code==prefix+b'\x9a'+struct.pack('<HH',symbols[name+'_far'][1],config_seg)+suffix,(name,'entry arguments/far target/return')
+     assert address(name)+len(prefix)+3 in relocations,(name,'missing entry relocation')
+    if 'config_shared_cdecl_entry'in symbols:
+     stub=raw(name+'_far',8);off=symbols[name+'_far'][1]
+     assert stub[:6]==b'\xb8'+struct.pack('<H',symbols[name+'_impl'][1])+b'\xb1'+bytes([count])+b'\xe9'
+     assert(off+8+struct.unpack('<h',stub[6:])[0])&65535==symbols['config_shared_cdecl_entry'][1]
+    else:near_call(name+'_far',name+'_impl',prefix=cdecl_prefix(count,6),suffix=b'\x8d\x66\x00\x5d\xcb')
    else:
     assert kind in ('CONFIG_REGISTER','CONFIG_CDECL','CONFIG_ZERO','CONFIG_DIRECTORY')
     target=fields[2]
@@ -899,7 +908,14 @@ def inspect_terminal_memory(binary,map_path):
    config_bridges+=1
   assert enabled==[True], 'Unbalanced configuration ABI conditions'
   assert config_bridges==((99 if storage_enabled else 94)+(3 if resource_enabled else 0)+(1 if line_port_enabled and not storage_enabled else 0)),'Incomplete configuration ABI validation'
-  if line_port_enabled:
+  if 'config_cdecl_tail_entries'in symbols:extra['configuration_cdecl_tail_frames_verified']=True
+  if 'config_shared_cdecl_entry'in symbols:
+   assert symbols['config_shared_cdecl_entry'][0]==symbols['config_shared_cdecl_entry_end'][0]==config_seg
+   length=address('config_shared_cdecl_entry_end')-address('config_shared_cdecl_entry')
+   assert length==30
+   assert raw('config_shared_cdecl_entry',length)==bytes.fromhex('55 89e5 56 30ed 89ce d1e6 83c604 e307 ff32 83ee02 e2f9 ffd0 8d66fe 5e 5d cb')
+   extra['configuration_cdecl_shared_entry_bytes']=length
+  if line_port_enabled and any(c['name']=='LINE_PORT_CODE'for c in code_segments):
    line_bank=next(c for c in code_segments if c['name']=='LINE_PORT_CODE')
    seg,off=symbols['_line_port_front_storage']
    assert seg==line_bank['relative_segment'] and off+256<=line_bank['bytes']
@@ -908,6 +924,46 @@ def inspect_terminal_memory(binary,map_path):
    extra['line_port_front_far_state_bytes']=256
    extra['line_port_front_DGROUP_bytes']=0
    extra['line_port_selector_adapter_DGROUP_bytes']=12
+  elif line_port_enabled:
+   # The source-linked bank is absent from the MZ and aliases only an explicit
+   # inactive-snapshot arena. Bind the module to the serialized parent contract.
+   import zlib
+   values=struct.unpack('<6H',raw('_line_overlay_expected',12))
+   bank_size,count,low,high,target,data=values
+   payload=Path(binary).with_name('PCLINE.OVL').read_bytes()
+   assert 256<bank_size<=24000 and count<=512 and len(payload)==bank_size+count*2
+   assert zlib.crc32(payload)==low|(high<<16)
+   points=struct.unpack('<'+'H'*count,payload[bank_size:])
+   assert list(points)==sorted(set(points)) and all(p+2<=bank_size for p in points)
+   assert data==ds and target==snap_seg+1024 and snap_off==0
+   assert target*16>=snap_lo and target*16+len(payload)<=snap_hi
+   assert symbols['_line_overlay_state'][0]==config_seg
+   assert raw('_line_overlay_state',32)==bytes(32)
+   assert symbols['_line_overlay_expected'][0]==config_seg
+   usage_off,usage_len=struct.unpack('<2H',raw('_line_overlay_expected',16)[12:])
+   assert 0<=usage_off<usage_off+usage_len<bank_size and payload[usage_off+usage_len]==36
+   assert symbols['terminal_usage']==(target,usage_off)
+   assert symbols['terminal_usage_end']==(target,usage_off+usage_len+1)
+   assert symbols['terminal_usage_stream'][0]==config_seg
+   extra['line_port_overlay_usage_bytes']=usage_len
+   for n in ('event','cursor','run','poll','busy'):
+    name='_line_port_bank_'+n
+    seg,off=symbols[name];assert seg==target and off<bank_size
+    sites=[m.start()+3 for op in (0x9a,0xea)for m in re.finditer(
+     re.escape(bytes([op])+struct.pack('<HH',off,seg)),image[start:])]
+    assert any(at in relocations for at in sites),name
+   for n in ('memcpy','memset','memcmp'):
+    seg,off=symbols['line_'+n+'_service_'];dest=symbols['config_'+n+'_service__resident']
+    assert seg==target and payload[off:off+6]==b'\x9a'+struct.pack('<HH',dest[1],dest[0])+b'\xc3'
+    assert off+3 in points
+   seg,off=symbols['_line_port_front_storage']
+   assert seg==target and off+256<=bank_size and payload[off:off+256]==b'PL'+bytes(254)
+   for n in ('event','cursor','run','poll'):
+    assert symbols['_line_port_front_'+n][0]==config_seg
+   extra.update(line_port_front_far_state_bytes=256,line_port_front_DGROUP_bytes=0,
+    line_port_selector_adapter_DGROUP_bytes=12,line_port_overlay_bytes=bank_size,
+    line_port_overlay_fixups=count,line_port_overlay_arena_offset=16384,
+    line_port_overlay_state_bytes=32,line_port_overlay_contract_verified=True)
   if storage_enabled:
    assert symbols['_directory_storage_exec_allowed'][0]==config_seg
    process=next(c for c in code_segments if c['name']=='PROCESS_CODE')

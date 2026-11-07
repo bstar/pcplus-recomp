@@ -136,7 +136,7 @@
     },
     "src/config/live_setup_owner.c": {
       "profile": "full",
-      "source_sha256": "18fbfb21969a5736fc7c12059dc6891ed95f64d5e56fb5664ef5862fcb54d369",
+      "source_sha256": "0187841d1d69c2691f83a4ecf0983bbcb28c619602aa1564a72d44916d975bfe",
       "control_code_data_bytes": [
         1978,
         3296
@@ -352,7 +352,7 @@
     },
     "src/redisplay/redisplay.c": {
       "profile": "no-inline",
-      "source_sha256": "7467679d96ac7219946068c37c4df22961a6d5e4ca9d199dd3cc63e151b6e167",
+      "source_sha256": "f84b5fc1354d4428246dfa5b3b2c33a1b20fa0a15369a27fbac6352e9dc8b2a1",
       "control_code_data_bytes": [
         5675,
         420

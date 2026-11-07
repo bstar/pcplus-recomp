@@ -119,6 +119,13 @@ _small_code_:
 .bad_options:
  mov word [terminal_exit_code],1
 .usage:
+%ifdef TERMINAL_LINE_PORT_OVERLAY
+ extern terminal_usage_stream
+ call far terminal_usage_stream
+ jnc .usage_done
+ mov word [terminal_exit_code],1
+.usage_done:
+%else
 %ifdef TERMINAL_FAR_USAGE
  push ds
  mov ax,seg terminal_usage
@@ -129,6 +136,7 @@ _small_code_:
  int 0x21
 %ifdef TERMINAL_FAR_USAGE
  pop ds
+%endif
 %endif
  jmp terminal_shutdown
 .configured:
@@ -458,6 +466,12 @@ terminal_phone_log_startup_done equ $
  jmp .loop
 .idle:
  call terminal_redisplay_idle
+%ifdef TERMINAL_LINE_PORT_OVERLAY
+ extern _line_port_front_pending
+ call far _line_port_front_pending
+ or ax,ax
+ jnz .loop
+%endif
 %ifdef TERMINAL_FILE_VIEWER
  extern _viewer_dialog_pending
  call far _viewer_dialog_pending

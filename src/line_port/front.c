@@ -51,6 +51,10 @@ typedef struct front_state {
 front_state TEXT line_port_front_storage={0x4c50};
 typedef char front_layout[sizeof(front_state)==256?1:-1];
 #define S line_port_front_storage
+#ifdef TERMINAL_LINE_PORT_OVERLAY
+unsigned __far __cdecl line_port_bank_busy(void)
+{return S.phase || S.claimed || S.uncertain;}
+#endif
 static const char TEXT busy[]="Line/Port unavailable. Finish the active operation. Esc returns.";
 static const char TEXT failed[]="Line/Port could not apply. Esc returns; reopen Alt-P to try again.";
 static const char TEXT saved_failed[]="Settings saved, but not applied. Esc returns.";

@@ -127,3 +127,58 @@
  pop bp
  retf
 %endmacro
+
+; A plain near-cdecl caller has only a return IP above its argument words.
+; Widen that return to CS:IP, then tail-enter the unchanged far-cdecl adapter.
+; AX is a volatile, non-argument register for this declared stack-only ABI.
+; The far adapter still copies arguments before its near implementation call;
+; implementation parameter writes therefore cannot modify caller argument slots.
+%macro NEAR_CDECL_TAIL_ENTRY 2
+ %if %2 < 0 || %2 > 10
+  %error Only explicitly declared0..10-word cdecl entries are supported
+ %endif
+ extern %1 %+ _far
+ global %1
+ %1:
+ pop ax
+ push cs
+ push ax
+ jmp far %1 %+ _far
+%endmacro
+
+; Share the far adapter's argument-copy loop in one CS. All inputs are declared
+; cdecl stack words. AX/CX are volatile; SI/BP and the caller's slots survive.
+%macro FAR_CDECL_SHARED_ENTRY 3
+ %if %2 < 0 || %2 > 10
+  %error Only explicitly declared0..10-word cdecl entries are supported
+ %endif
+ extern %1 %+ _impl
+ global %1 %+ _far
+ %1 %+ _far:
+ mov ax,%1 %+ _impl
+ mov cl,%2
+ jmp near %3
+%endmacro
+%macro FAR_CDECL_SHARED_BODY 1
+ global %1,%1 %+ _end
+ %1:
+ push bp
+ mov bp,sp
+ push si
+ xor ch,ch
+ mov si,cx
+ shl si,1
+ add si,4
+ jcxz %%call
+ %%copy:
+ push word [bp+si]
+ sub si,2
+ loop %%copy
+ %%call:
+ call ax
+ lea sp,[bp-2]
+ pop si
+ pop bp
+ retf
+ %1 %+ _end:
+%endmacro

@@ -302,17 +302,35 @@ unsigned __cdecl live_setup_select(const directory_live_context *expected,
 #endif
 
 #ifdef TERMINAL_LINE_PORT
+#ifdef TERMINAL_LINE_PORT_OVERLAY
+#pragma code_seg("LINE_PORT_CODE","FARCODE")
+#endif
 /* Dedicated Alt-P edits the global prefix. Frozen directory record baud, when
  * selected, remains the source baseline for later generic setup composition. */
 unsigned __far __cdecl line_port_setup_path(char *tail)
 {
- unsigned n;char stage[68];
+ unsigned n;
+#ifdef TERMINAL_LINE_PORT_OVERLAY
+ unsigned i;
+ /* This function runs in the transient CS. Avoid near CONFIG_CODE calls;
+  * keep the same extent/owner separation checks before touching the output. */
+ if(!tail || (unsigned long)(unsigned)tail+68>65536UL ||
+    !((unsigned long)(unsigned)tail+68<=(unsigned)&owner ||
+      (unsigned long)(unsigned)&owner+sizeof(owner)<=(unsigned)tail))return LIVE_SETUP_ARGUMENT;
+#else
+ char stage[68];
  if(!external(tail,68))return LIVE_SETUP_ARGUMENT;
+#endif
  if(owner.bound!=1 || owner.pending || owner.offered_mask || owner.transfer_ready)return LIVE_SETUP_STATE;
  for(n=0;n<128 && owner.canonical[n];++n){}
  if(!n || n>63 || owner.canonical[1]!=':' || owner.canonical[2]!='\\')return LIVE_SETUP_IDENTITY;
+#ifdef TERMINAL_LINE_PORT_OVERLAY
+ for(i=0;i<68;++i)tail[i]=0;
+ tail[0]=' ';for(i=0;i<n;++i)tail[i+1]=owner.canonical[i];return 0;
+#else
  memset(stage,0,sizeof(stage));stage[0]=' ';memcpy(stage+1,owner.canonical,n);
  memcpy(tail,stage,sizeof(stage));return 0;
+#endif
 }
 unsigned __far __cdecl line_port_setup_saved_ack(unsigned low,unsigned high)
 {
@@ -320,4 +338,7 @@ unsigned __far __cdecl line_port_setup_saved_ack(unsigned low,unsigned high)
  if(!owner.has_context){owner.source_baud_low=low;owner.source_baud_high=high;}
  return 0;
 }
+#ifdef TERMINAL_LINE_PORT_OVERLAY
+#pragma code_seg()
+#endif
 #endif

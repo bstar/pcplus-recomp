@@ -12,6 +12,7 @@ def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--terminal',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
  p.add_argument('--case',choices=('noop','escape','save','reference','browser','serviced','unsupported','readonly','conflict','portbusy'),default='noop')
+ p.add_argument('--open-delay-ms',type=int,default=1300,help='Explicit diagnostic opening delay; ordinary gate uses1300ms')
  a=p.parse_args();producer=sha(Path(__file__));binary=a.terminal.resolve();out=a.output.resolve()
  assert out.is_relative_to(ROOT/'build');out.mkdir(parents=True,exist_ok=False)
  manifest=json.loads(binary.with_name('manifest.json').read_text())
@@ -74,7 +75,8 @@ def main():
  subprocess.run(['nasm','-fbin','-DWATCH_KIND=0',str(out/'watch.asm'),'-o',str(out/'LPOBS.COM')],check=True)
  opening='a-z p500 a-p'if a.case=='reference'else '` p500 right right right p300 p'if a.case=='browser'else 'a-p'
  edit='5 p400 e p400'if a.case in ('escape','save','readonly','conflict')else'f5 p400'if a.case=='unsupported'else'f2 p400'if a.case=='portbusy'else''
- delay='p5500'if a.case=='serviced'else'p1300'
+ assert 1300<=a.open_delay_ms<=10000
+ delay='p'+str(max(5500,a.open_delay_ms)if a.case=='serviced'else a.open_delay_ms)
  leave='a-s'if a.case in ('save','readonly','conflict')else'escape'
  if a.case in ('readonly','conflict','portbusy'):leave+=' p1500 escape'
  keys='p900 enter p3500 '+opening+' '+delay+' '+edit+' '+leave+' p1300 r e a d y enter p1000 a-x'
@@ -109,6 +111,7 @@ def main():
  if a.case in ('readonly','conflict','portbusy'):checks['failure_notice_visible']=raw[4075]==1
  assert sha(Path(__file__))==producer
  report=dict(producer_sha256=producer,watcher_sha256=sha(out/'watch.asm'),sources={n:sha(ROOT/n)for n in ('standalone/test_line_port_terminal_dos.py','standalone/test_connection_dos.py','standalone/path_dialog_watch.asm','standalone/line_port_readonly.asm')},passed=all(checks.values()),case=a.case,checks=checks,binary_sha256=sha(binary),base_receipt=str(drive/'result.json'),frame_sha256=hashlib.sha256(frame).hexdigest(),post_lcr=raw[4071])
+ report['open_delay_ms']=a.open_delay_ms
  (out/'result.json').write_text(json.dumps(report,indent=2)+'\n')
  print(a.case,{k:v for k,v in checks.items()if not v},flush=True);assert report['passed'],report
 

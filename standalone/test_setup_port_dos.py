@@ -22,6 +22,13 @@ def run(name,source,target,*,accept=True,missing=False,combined=False,source_irq
  if target_irq is not None:wanted=word(wanted,0x184+(target-1)*2,target_irq)
  (folder/'TEST.PRM').write_bytes(raw)
  for binary in [BINARY,EDITOR]:shutil.copyfile(binary,folder/binary.name)
+ overlay=None
+ manifest=BINARY.with_name('manifest.json')
+ if manifest.is_file():overlay=json.loads(manifest.read_text()).get('line_port_overlay')
+ if overlay:
+  payload=BINARY.with_name('PCLINE.OVL')
+  assert hashlib.sha256(payload.read_bytes()).hexdigest()==overlay['sha256']
+  shutil.copyfile(payload,folder/'PCLINE.OVL')
  for index,base in enumerate(BASES,1):
   sampler=SAMPLER.replace('BEFORE.BIN',f'BEFORE{index}.BIN').replace('AFTER.BIN',f'AFTER{index}.BIN')
   for offset in [0,1,3,4]:sampler=sampler.replace(hex(0x3f8+offset),hex(base+offset))
@@ -126,6 +133,7 @@ exit
   else:checks[f'COM{i}_never_enabled']=observed['active_ticks']==0
  screen=(folder/'SCREEN.BIN').read_bytes()
  checks['actual_video_matches_resumed_remote_output']=screen[:30:2]==b'PORT READY LIVE'
+ if overlay:checks['matched_overlay_preserved']=hashlib.sha256((folder/'PCLINE.OVL').read_bytes()).hexdigest()==overlay['sha256']
  result=dict(case=name,passed=all(checks.values()),checks=checks,source=source,target=target,selected=selected,observations=observations,peer_errors=errors,
   terminal_sha256=hashlib.sha256((folder/'TERMINAL.EXE').read_bytes()).hexdigest(),editor_sha256=hashlib.sha256((folder/'PRMEDIT.EXE').read_bytes()).hexdigest())
  if source_irq is not None:result.update(source_irq=source_irq,target_irq=target_irq,physical_irqs=actual_irqs)

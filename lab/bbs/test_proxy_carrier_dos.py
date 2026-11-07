@@ -18,7 +18,7 @@ import subprocess
 import sys
 import time
 import traceback
-from product_inputs import ROOT,select_product,sha
+from product_inputs import ROOT,select_product,sha,stage_companions
 from proxy_carrier_relay import carrier_relay
 from test_transfer_dos import timestamp,offset_after
 from audit_zmodem import scan,packet,metadata,audit_batch,audit_controls
@@ -54,7 +54,8 @@ async def run(a):
     for leaf,path in [('TERMINAL.EXE',a.terminal),('ASPECT.EXE',a.runner),('ASPCOMP.EXE',a.compiler)]:
         binary,sources=select_product(path,leaf);inputs+=sources+[binary]
         shutil.copyfile(binary,stage/leaf);inputs.append(stage/leaf)
-        products[leaf]=dict(path=str(binary.relative_to(ROOT)),sha256=sha(binary),source_files=len(sources)-2)
+        staged=stage_companions(binary,stage);inputs+=staged
+        products[leaf]=dict(path=str(binary.relative_to(ROOT)),sha256=sha(binary),source_files=len(sources)-2-len(staged))
     help_file=a.runner.resolve().parent/'LOCHELP.HLP'
     if help_file.exists():shutil.copyfile(help_file,stage/help_file.name);inputs += [help_file,stage/help_file.name]
     script=login_source().replace('fputs 5 "START"\n','fputs 5 "START"\ntransmit "loc^M"\n',1)

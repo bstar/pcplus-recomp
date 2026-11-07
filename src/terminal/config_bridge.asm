@@ -3,7 +3,13 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 %include "far_bridge.inc"
+%ifdef TERMINAL_LINE_PORT_OVERLAY
+global config_cdecl_tail_entries
+config_cdecl_tail_entries:
+%define CONFIG_ENTRY NEAR_CDECL_TAIL_ENTRY
+%else
 %define CONFIG_ENTRY NEAR_CDECL_ENTRY
+%endif
 %define CONFIG_REGISTER NEAR_NAMED_SERVICE
 %define CONFIG_CDECL NEAR_CDECL_SERVICE
 ; Explicit zero-argument cdecl callbacks use the plain register-free frame.

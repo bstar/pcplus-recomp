@@ -6,6 +6,10 @@
 #include <string.h>
 #ifdef TERMINAL_LINE_PORT
 #include "kernel.h"
+#ifdef TERMINAL_LINE_PORT_OVERLAY
+extern unsigned __cdecl line_overlay_paths(const char *,char *,char *);
+#define directory_replace_paths line_overlay_paths
+#endif
 #define _dos_getfileattr line_kernel_attr
 #define _dos_open line_kernel_open
 #define _dos_creatnew line_kernel_create

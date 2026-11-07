@@ -726,10 +726,17 @@ terminal_zmodem_receive_credit:
 _terminal_zmodem_receive_credit: dw 0
 global terminal_modem_init_wait
 terminal_modem_init_wait: dw 0
+%ifdef TERMINAL_LINE_PORT_OVERLAY
+%define TERMINAL_FAR_USAGE
+%endif
 %ifdef TERMINAL_FAR_USAGE
 ; Read-only startup help need not consume scarce DS=SS data. Its only reader
 ; supplies the relocated segment explicitly around DOS09 and restores DS.
+%ifdef TERMINAL_LINE_PORT_OVERLAY
+SEGMENT LINE_PORT_CODE public align=16 class=FARCODE use16
+%else
 SEGMENT USAGE_CODE public align=16 class=FARCODE use16
+%endif
 %endif
 terminal_usage:
  db 'PCPLUS terminal lab',13,10

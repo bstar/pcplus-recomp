@@ -6,7 +6,13 @@ GROUP CONFIG_GROUP CONFIG_CODE
 global terminal_config_code_start
 terminal_config_code_start:
 %include "far_bridge.inc"
+%ifdef TERMINAL_LINE_PORT_OVERLAY
+%macro CONFIG_ENTRY 2
+ FAR_CDECL_SHARED_ENTRY %1,%2,config_shared_cdecl_entry
+%endmacro
+%else
 %define CONFIG_ENTRY FAR_CDECL_ENTRY
+%endif
 ; Compiler register symbols already include their final trailing underscore.
 %macro CONFIG_REGISTER 2
  global %1
@@ -23,3 +29,6 @@ terminal_config_code_start:
 %define CONFIG_DIRECTORY FAR_CDECL_SERVICE
 %endif
 %include "config_abi.inc"
+%ifdef TERMINAL_LINE_PORT_OVERLAY
+FAR_CDECL_SHARED_BODY config_shared_cdecl_entry
+%endif

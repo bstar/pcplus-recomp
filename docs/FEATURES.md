@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Transient native Alt-P](LINE_PORT_OVERLAY.md) resolves the resident prototype's
+ASPECT memory regression without shrinking configured capacities. The parent
+requires 479,024 bytes, 480 fewer than the unchanged control. Ten popup sessions,
+an offline port move, two complete ASPECT capacity workloads, four module faults,
+2,200 compiled-C ABI calls and an isolated source rebuild pass. Current Enigma
+and Synchronet editor/viewer regressions pass with the recorded paced bridge
+profile. The required `PCLINE.OVL` companion is source-built; package promotion,
+physical acceptance and full original feature parity remain separate.
+
 [Alt-P capacity diagnosis](LINE_PORT_CAPACITY.md) observes DOS refusing an
 ASPECT block resize: the immediate request exceeds the maximum by 496 bytes.
 The unchanged control passes 30 checks with the same high-loaded passive

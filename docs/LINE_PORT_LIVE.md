@@ -1,5 +1,9 @@
 # Live Alt-P candidate
 
+This receipt describes the rejected resident prototype. The subsequent
+[transient implementation](LINE_PORT_OVERLAY.md) passes the ASPECT capacity
+workload; the historical results below remain unchanged.
+
 The optional `--line-port` parent now connects the recovered selector and popup
 to serviced terminal input, checked prefix saving and the existing UART handoff.
 The candidate SHA-256 is

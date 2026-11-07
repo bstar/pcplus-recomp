@@ -1,6 +1,10 @@
 BITS 16
 CPU 8086
+%ifdef TERMINAL_LINE_PORT_OVERLAY
+SEGMENT LINE_PORT_CODE public align=16 class=FARCODE use16
+%else
 SEGMENT CONFIG_CODE public align=16 class=FARCODE use16
+%endif
 %macro enter 0
  push bp
  mov bp,sp
