@@ -22,6 +22,7 @@ from check_editor_dos import audit
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--keymap-profiles',type=int,choices=[7,33],default=33)
     p.add_argument('--keymap-helper', type=Path, help='Owned source helper for Alt-F8 editor roundtrip')
     p.add_argument('--runtime', type=Path, required=True)
     p.add_argument('--terminal', type=Path, required=True)
@@ -45,6 +46,7 @@ def main():
     p.add_argument('--size-probe', action='store_true', help='Use staged pre-session size owner and valid owned startup preferences')
     p.add_argument('--phone-log', action='store_true', help='Enable and passively audit the call log during the real BBS workflow')
     args = p.parse_args()
+    assert args.keymap_helper or args.keymap_profiles==33
     if args.keymap_helper:
         args.keymap_helper=args.keymap_helper.resolve()
         assert not any((args.meta_keys_overlay,args.chat_help_overlay,args.external_viewer_overlay,args.external_editor_overlay,args.file_viewer_overlay,args.file_directory_overlay,args.gateway_overlay,args.reference_overlay,args.directory_overlay,args.phone_log,args.multiline_editor))
@@ -140,7 +142,7 @@ def main():
         if args.keymap_helper:
             from keymap_bbs_support import prepare,KEYS
             keymap_folder=base/(args.label+'-keymap')
-            binary,observer=prepare(keymap_folder,binary,args.keymap_helper)
+            binary,observer=prepare(keymap_folder,binary,args.keymap_helper,args.keymap_profiles)
             marker='K E Y T E S T enter p1800 '
             assert keys.count(marker)==1
             keys=keys.replace(marker,marker+KEYS)

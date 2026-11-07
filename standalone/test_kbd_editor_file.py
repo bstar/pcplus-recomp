@@ -14,7 +14,7 @@ def main():
  (out/'LAB').mkdir();(out/'dosbox.conf').write_text('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\ncycles=fixed 30000\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "'+str(out)+'"\nc:\nKBDFILE >RESULT.TXT\nexit\n')
  with (out/'dosbox.log').open('w') as log:subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')],env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log,check=True,timeout=40)
  text=(out/'RESULT.TXT').read_text();assert '19 SAVE BOUNDARIES; 8 LOAD CASES' in text,text
- names=sources+['src/key_mapping/kbd_editor_file.h','src/key_mapping/key_file_fs.h','src/directory/directory_replace.h','src/directory/directory_dos.h','src/directory/directory_replace_fs.h','standalone/key_editor_faults.h','standalone/test_kbd_editor_file.py']
+ names=sources+['src/key_mapping/kbd_editor_file.h','src/key_mapping/kbd_editor_prefix.h','src/key_mapping/key_file_fs.h','src/directory/directory_replace.h','src/directory/directory_dos.h','src/directory/directory_replace_fs.h','standalone/key_editor_faults.h','standalone/test_kbd_editor_file.py']
  result=dict(passed=True,original_inputs=[],cpu='8086',transcript=text.strip(),sources={n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in names},scope='Actual DOS full-size KBD IO with fault injection and retained-byte checks. No crash atomicity, external locking, parent or physical acceptance.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(text)
 if __name__=='__main__':main()

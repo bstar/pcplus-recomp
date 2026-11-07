@@ -12,7 +12,8 @@ SOURCES = ['lab/bbs/keymap_bbs_support.py', 'standalone/file_directory_bbs_watch
 KEYS = 'a-f8 p4000 f1 p200 tab Z Z Z enter p300 a-s p2000 escape p2000 '
 
 
-def prepare(folder, binary, helper):
+def prepare(folder, binary, helper, profiles=33):
+    assert profiles in (7,33)
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=False)
     assert json.loads(binary.with_name('manifest.json').read_text())['experimental_keymap_editor']
@@ -27,10 +28,10 @@ def prepare(folder, binary, helper):
     shutil.copyfile(binary, stage / 'TERMINAL.EXE')
     stage_companions(binary, stage)
     shutil.copyfile(helper, stage / 'PCKEYMAP.EXE')
-    (folder / 'inputs.json').write_text(json.dumps(dict(helper_sha256=sha(helper), sources=proof['sources']), indent=2)+'\n')
+    (folder / 'inputs.json').write_text(json.dumps(dict(helper_sha256=sha(helper), sources=proof['sources'],profiles=profiles), indent=2)+'\n')
     sys.path.insert(0, str(ROOT / 'standalone'))
-    from build_keyboard_profiles import profiles
-    base = profiles()['NETWORK.KBD'][:948] * 33
+    from build_keyboard_profiles import profiles as network_profiles
+    base = network_profiles()['NETWORK.KBD'][:948] * profiles
     expected = bytearray(base)
     expected[6*948+16*12:6*948+17*12] = b'ZZZ'.ljust(12, b'\0')
     (folder / 'BOARD.KBD').write_bytes(base)
@@ -47,7 +48,8 @@ def audit(output, folder, binary, require_high=False):
     dialog = raw[8024:12024]
     status = struct.unpack('<3H',(output/'EXITCODE.BIN').read_bytes())
     wire = (output / 'serial-received.bin').read_bytes()
-    checks = dict(application_exit_zero=status==(0,0,0),
+    fixture=json.loads((folder/'inputs.json').read_text())
+    checks = dict(preserved_KBD_length=(output/'BOARD.KBD').stat().st_size==fixture['profiles']*948,application_exit_zero=status==(0,0,0),
                   no_save_residue=not any((output/n).exists() for n in ('KBDSTG.$$$','KBDBAK.$$$')),
                   observer_complete=words is not None and words[:4] == (0x5657, 1, 1, 1),
                   exact_editor_frame=words is not None and raw[24:4024] == raw[4024:8024],
@@ -64,7 +66,7 @@ def audit(output, folder, binary, require_high=False):
             data=(output/leaf).read_bytes()
             checks[leaf+'_in_UMB']=len(data)==2 and struct.unpack('<H',data)[0]>=0xa000
     result = dict(passed=all(checks.values()), checks=checks, observer_words=words, application_exit_status=status,
-                  parent_sha256=sha(binary), helper_sha256=sha(binary.with_name('PCKEYMAP.EXE')),
+                  profiles=fixture['profiles'],file_bytes=fixture['profiles']*948,parent_sha256=sha(binary), helper_sha256=sha(binary.with_name('PCKEYMAP.EXE')),
                   capture_sha256=sha(output / 'KMVIEW.BIN'), sources={n:sha(ROOT/n) for n in SOURCES},
                   scope='Actual Alt-F8/helper edit/save/Escape inside stock BBS editor; exact whole KBD mutation and passive 4000-byte frame/cursor/shape return, ordinary editor input resumes. No physical modem/SIP/audio acceptance.')
     (output / 'keymap-audit.json').write_text(json.dumps(result, indent=2) + '\n')

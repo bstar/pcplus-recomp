@@ -1,15 +1,15 @@
 #include <dos.h>
 #include <fcntl.h>
 #include <string.h>
-#include "kbd_editor_file.h"
+#include "kbd_editor_prefix.h"
 #include <malloc.h>
 #include "key_file_fs.h"
 static unsigned span(const void __far *p,unsigned n,unsigned long *at)
 {unsigned long a=(unsigned long)FP_SEG(p)*16UL+FP_OFF(p);if(!p || (unsigned long)FP_OFF(p)+n>65536UL || a+n>0x100000UL)return 0;*at=a;return 1;}
 static unsigned separate(const void __far *a,unsigned n,const void __far *b,unsigned m)
 {unsigned long x,y;return span(a,n,&x) && span(b,m,&y) && (x+n<=y || y+m<=x);}
-static unsigned schema(const unsigned char __far *p)
-{unsigned r,i;for(r=0;r<2607;++r){for(i=0;i<12 && p[r*12+i];++i){}if(i==12)return 0;}return 1;}
+static unsigned schema(const unsigned char __far *p,unsigned bytes)
+{unsigned r,i;for(r=0;r<bytes/12;++r){for(i=0;i<12 && p[r*12+i];++i){}if(i==12)return 0;}return 1;}
 static unsigned canonical(const char *target,char *t,char *s,char *b)
 {
  unsigned i,c,n;unsigned long address;
@@ -45,13 +45,13 @@ static unsigned absent(const char *p,directory_replace_result *r)
  if(!error){fail(r,DIRECTORY_REPLACE_CONFLICT,80);return 0;}
  if(error!=2){fail(r,DIRECTORY_REPLACE_INSPECT,error);return 0;}return 1;
 }
-static unsigned compare(const char *p,const unsigned char __far *expected,directory_replace_result *r)
+static unsigned compare(const char *p,const unsigned char __far *expected,unsigned bytes,directory_replace_result *r)
 {
  int h;unsigned char buffer[128],extra;unsigned pos=0,amount,count,error,i;
  error=key_file_open(p,O_RDONLY|O_NOINHERIT,&h);
  if(error){fail(r,DIRECTORY_REPLACE_SOURCE_OPEN,error);return 0;}
- while(pos<KBD_EDITOR_BYTES && !r->status){
-  amount=KBD_EDITOR_BYTES-pos;if(amount>128)amount=128;count=0;error=key_file_read(h,buffer,amount,&count);if(count>65535U-r->source_bytes)r->source_bytes=65535U;else r->source_bytes+=count;
+ while(pos<bytes && !r->status){
+  amount=bytes-pos;if(amount>128)amount=128;count=0;error=key_file_read(h,buffer,amount,&count);if(count>65535U-r->source_bytes)r->source_bytes=65535U;else r->source_bytes+=count;
   if(error){fail(r,DIRECTORY_REPLACE_READ,error);break;}
   if(!count || count>amount){fail(r,DIRECTORY_REPLACE_SIZE,0);break;}
   for(i=0;i<count;++i)if(buffer[i]!=expected[pos+i]){fail(r,DIRECTORY_REPLACE_STALE,0);break;}
@@ -60,30 +60,30 @@ static unsigned compare(const char *p,const unsigned char __far *expected,direct
  if(!r->status){count=0;error=key_file_read(h,&extra,1,&count);if(count>65535U-r->source_bytes)r->source_bytes=65535U;else r->source_bytes+=count;if(error)fail(r,DIRECTORY_REPLACE_READ,error);else if(count)fail(r,DIRECTORY_REPLACE_SIZE,0);}
  close_one(h,r);return !r->status;
 }
-unsigned __cdecl kbd_editor_file_save(const char *target,const unsigned char __far *expected,const unsigned char __far *replacement,directory_replace_result *result)
+static unsigned save_image(const char *target,const unsigned char __far *expected,const unsigned char __far *replacement,unsigned bytes,directory_replace_result *result)
 {
  char t[64],s[64],b[64];unsigned char buffer[128];unsigned long address;
  unsigned error,attr,pos,amount,count,i;int output;directory_replace_result local,*r=result?result:&local;
- if(!span(target,64,&address) || !span(replacement,KBD_EDITOR_BYTES,&address) || (expected && !span(expected,KBD_EDITOR_BYTES,&address)) ||
-  (result && (!separate(result,sizeof(*result),target,64) || !separate(result,sizeof(*result),replacement,KBD_EDITOR_BYTES) || (expected && !separate(result,sizeof(*result),expected,KBD_EDITOR_BYTES)))) ||
-  !canonical(target,t,s,b) || !schema(replacement) || (expected && !schema(expected)))return DIRECTORY_REPLACE_ARGUMENT;
+ if(!bytes || bytes>KBD_EDITOR_BYTES || bytes%948 || !span(target,64,&address) || !span(replacement,bytes,&address) || (expected && !span(expected,bytes,&address)) ||
+  (result && (!separate(result,sizeof(*result),target,64) || !separate(result,sizeof(*result),replacement,bytes) || (expected && !separate(result,sizeof(*result),expected,bytes)))) ||
+  !canonical(target,t,s,b) || !schema(replacement,bytes) || (expected && !schema(expected,bytes)))return DIRECTORY_REPLACE_ARGUMENT;
  memset(r,0,sizeof(*r));
  if(expected){
   error=key_file_attr(t,&attr);if(error || (attr&(_A_RDONLY|_A_SUBDIR|_A_VOLID))){fail(r,DIRECTORY_REPLACE_INSPECT,error?error:5);return r->status;}
  }else if(!absent(t,r))return r->status;
  if(!absent(s,r) || !absent(b,r))return r->status;
- if(expected && !compare(t,expected,r))return r->status;
+ if(expected && !compare(t,expected,bytes,r))return r->status;
  error=key_file_create(s,_A_NORMAL,&output);if(error){fail(r,DIRECTORY_REPLACE_STAGE_OPEN,error);return r->status;}
  r->stage_exists=1;pos=0;
- while(pos<KBD_EDITOR_BYTES && !r->status){
-  amount=KBD_EDITOR_BYTES-pos;if(amount>128)amount=128;for(i=0;i<amount;++i)buffer[i]=replacement[pos+i];count=0;
+ while(pos<bytes && !r->status){
+  amount=bytes-pos;if(amount>128)amount=128;for(i=0;i<amount;++i)buffer[i]=replacement[pos+i];count=0;
   error=key_file_write(output,buffer,amount,&count);r->bytes_processed+=count;
   if(error || count!=amount)fail(r,DIRECTORY_REPLACE_WRITE,error);pos+=amount;
  }
  close_one(output,r);if(r->status){discard(s,r);return r->status;}
- if(!compare(s,replacement,r)){discard(s,r);return r->status;}
+ if(!compare(s,replacement,bytes,r)){discard(s,r);return r->status;}
  if(expected){
-  if(!compare(t,expected,r)){discard(s,r);return r->status;}
+  if(!compare(t,expected,bytes,r)){discard(s,r);return r->status;}
   error=key_file_rename(t,b);if(error){fail(r,DIRECTORY_REPLACE_MOVE_OLD,error);discard(s,r);return r->status;}
   r->original_in_backup=1;
  }else if(!absent(t,r)){discard(s,r);return r->status;}
@@ -98,10 +98,10 @@ unsigned __cdecl kbd_editor_file_save(const char *target,const unsigned char __f
  return r->status;
 }
 
-unsigned kbd_editor_file_load(const char *target,unsigned char __far *destination,directory_replace_result *result)
+static unsigned load_image(const char *target,unsigned char __far *destination,unsigned prefix,directory_replace_result *result)
 {
  char t[64],s[64],b[64];unsigned long address;unsigned char buffer[128],extra;
- unsigned char __far *stage;unsigned pos=0,count,amount,error;int h;
+ unsigned char __far *stage;unsigned pos=0,count,amount,error,at_end=0;int h;
  directory_replace_result local,*r=result?result:&local;
  if(!span(destination,KBD_EDITOR_BYTES,&address) || !span(target,64,&address) ||
   !separate(target,64,destination,KBD_EDITOR_BYTES) ||
@@ -115,11 +115,21 @@ unsigned kbd_editor_file_load(const char *target,unsigned char __far *destinatio
   amount=KBD_EDITOR_BYTES-pos;if(amount>128)amount=128;count=0;
   error=key_file_read(h,buffer,amount,&count);r->source_bytes+=count;
   if(error){fail(r,DIRECTORY_REPLACE_READ,error);break;}
-  if(!count || count>amount){fail(r,DIRECTORY_REPLACE_SIZE,0);break;}
+  if(!count){if(prefix && pos && !(pos%948))at_end=1;else fail(r,DIRECTORY_REPLACE_SIZE,0);break;}
+  if(count>amount){fail(r,DIRECTORY_REPLACE_SIZE,0);break;}
   _fmemcpy(stage+pos,buffer,count);pos+=count;
  }
- if(!r->status){count=0;error=key_file_read(h,&extra,1,&count);r->source_bytes+=count;if(error)fail(r,DIRECTORY_REPLACE_READ,error);else if(count)fail(r,DIRECTORY_REPLACE_SIZE,0);}
- close_one(h,r);if(!r->status && !schema(stage))fail(r,KBD_EDITOR_SCHEMA,0);
- if(!r->status){_fmemcpy(destination,stage,KBD_EDITOR_BYTES);r->bytes_processed=KBD_EDITOR_BYTES;}
+ if(!r->status && !at_end){count=0;error=key_file_read(h,&extra,1,&count);r->source_bytes+=count;if(error)fail(r,DIRECTORY_REPLACE_READ,error);else if(count)fail(r,DIRECTORY_REPLACE_SIZE,0);}
+ close_one(h,r);if(!r->status && !schema(stage,pos))fail(r,KBD_EDITOR_SCHEMA,0);
+ if(!r->status){if(pos<KBD_EDITOR_BYTES)_fmemset(stage+pos,0,KBD_EDITOR_BYTES-pos);_fmemcpy(destination,stage,KBD_EDITOR_BYTES);r->bytes_processed=pos;}
  _ffree(stage);return r->status;
 }
+
+unsigned kbd_editor_file_load(const char *target,unsigned char __far *destination,directory_replace_result *result)
+{return load_image(target,destination,0,result);}
+unsigned kbd_editor_prefix_load(const char *target,unsigned char __far *destination,directory_replace_result *result)
+{return load_image(target,destination,1,result);}
+unsigned __cdecl kbd_editor_file_save(const char *target,const unsigned char __far *expected,const unsigned char __far *replacement,directory_replace_result *result)
+{return save_image(target,expected,replacement,KBD_EDITOR_BYTES,result);}
+unsigned kbd_editor_prefix_save(const char *target,const unsigned char __far *expected,const unsigned char __far *replacement,unsigned bytes,directory_replace_result *result)
+{return save_image(target,expected,replacement,bytes,result);}

@@ -7,12 +7,12 @@
 #include "keymap_screen.h"
 #include "keymap_field.h"
 #include "keymap_text.h"
-#include "kbd_editor_file.h"
+#include "kbd_editor_prefix.h"
 static unsigned char bindings[KBD_EDITOR_BYTES];
 static unsigned short frame[2000],saved[2000];
 static unsigned char __far *baseline;
 static char target[64],leaf[13];
-static unsigned profile,dirty,held,legacy,shape,old_cursor,page;
+static unsigned profile,profiles,dirty,held,legacy,shape,old_cursor,page;
 static unsigned short __far *video;
 static unsigned raw_key(void)
 {union REGS a,b;a.h.ah=(unsigned char)(legacy?0:0x10);int86(0x16,&a,&b);return b.x.ax;}
@@ -57,7 +57,7 @@ static void set_leaf(void)
 static unsigned save(void)
 {
  directory_replace_result r;unsigned e;
- memset(&r,0,sizeof(r));e=kbd_editor_file_save(target,baseline,bindings,&r);
+ memset(&r,0,sizeof(r));e=kbd_editor_prefix_save(target,baseline,bindings,profiles*948,&r);
  if(e){
   if(recovery(&r)){held=1;notice("KBD recovery required. Retained files must be checked. Press a key.");}
   else notice("Save failed; definitions remain in memory. Press a key.");
@@ -102,12 +102,12 @@ static void open_file(void)
   * far block; this avoids three simultaneous full KBD images under the parent. */
  if(dirty){_fmemcpy(bindings,baseline,KBD_EDITOR_BYTES);dirty=0;}
  _ffree(baseline);baseline=0;
- memset(&r,0,sizeof(r));e=kbd_editor_file_load(path,bindings,&r);
+ memset(&r,0,sizeof(r));e=kbd_editor_prefix_load(path,bindings,&r);
  baseline=_fmalloc(KBD_EDITOR_BYTES);
  if(!baseline){held=1;notice("Insufficient memory; no file was replaced. Press a key.");return;}
  _fmemcpy(baseline,bindings,KBD_EDITOR_BYTES);
  if(e){if(r.close_error)held=1;notice("Open failed; previous saved file retained. Press a key.");return;}
- strcpy(target,path);set_leaf();dirty=0;
+ profiles=r.bytes_processed/948;if(profile>=profiles)profile=0;strcpy(target,path);set_leaf();dirty=0;
 }
 static void edit(unsigned slot)
 {
@@ -140,8 +140,10 @@ int main(int argc,char **argv)
  value=strtoul(argv[1],&end,10);if(!argv[1][0] || *end || value>=33)return 2;profile=(unsigned)value;
  if(argc==4){if(strcmp(argv[3],"/LEGACY"))return 2;legacy=1;}
  if(!canonical(argv[2],target)){puts("Invalid keyboard path.");return 2;}
- memset(&r,0,sizeof(r));e=kbd_editor_file_load(target,bindings,&r);
+ memset(&r,0,sizeof(r));e=kbd_editor_prefix_load(target,bindings,&r);
  if(e){printf("Keyboard file could not load (status %u, DOS %u).\n",e,r.dos_error);return r.close_error?14:3;}
+ profiles=r.bytes_processed/948;
+ if(profile>=profiles){puts("Selected terminal is not present in this keyboard file.");return 3;}
  baseline=_fmalloc(KBD_EDITOR_BYTES);if(!baseline){puts("Insufficient memory.");return 8;}
  _fmemcpy(baseline,bindings,KBD_EDITOR_BYTES);set_leaf();
  a.h.ah=15;int86(0x10,&a,&b);page=b.h.bh;
@@ -151,8 +153,8 @@ int main(int argc,char **argv)
  for(;;){
   redraw();key=menu_key(raw_key());action=keymap_screen_key(key);
   if(action<79)edit(action);
-  else if(action==KEYMAP_NEXT)profile=profile==32?0:profile+1;
-  else if(action==KEYMAP_PREVIOUS)profile=profile?profile-1:32;
+  else if(action==KEYMAP_NEXT)profile=profile+1==profiles?0:profile+1;
+  else if(action==KEYMAP_PREVIOUS)profile=profile?profile-1:profiles-1;
   else if(action==KEYMAP_SAVE){save();}
   else if(action==KEYMAP_OPEN)open_file();
   else if(action==KEYMAP_ABOUT)notice("PCPLUS keyboard mapping - LoC Special Edition. Press a key.");

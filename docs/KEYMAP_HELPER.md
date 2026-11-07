@@ -1,5 +1,9 @@
 # Foreground keyboard-mapping helper
 
+The following is the original full-file checkpoint. The newer
+[prefix-file compatibility checkpoint](KEYMAP_PREFIX.md) accepts existing
+shorter complete files without padding and retains the strict storage API.
+
 The source-built `PCKEYMAP.EXE` now joins the recovered screen, dispatch,
 field editor and binary notation with checked KBD persistence. It accepts the
 original caller's profile/filename arguments:
