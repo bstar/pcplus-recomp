@@ -1,0 +1,188 @@
+{
+  "passed": true,
+  "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+  "counting_child_sha256": "f05f741d1a81d5cc34b569d320362c7aeed0aaf24df76c2c006e4aa9eb67fa33",
+  "cases": [
+    {
+      "case": "recording",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_SYN.KBD": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "owned_online_actions_run": true,
+        "online_triggers_sent": true,
+        "refused_until_owner_released": true,
+        "exactly_one_postrelease_child": true,
+        "ordinary_input_resumed": true,
+        "matched_products_unchanged": true,
+        "actual_continuous_recording": true,
+        "recording_staging_resolved": true
+      },
+      "snapshots": [
+        {
+          "at": "after-owner-before-allowed-entry",
+          "launch_exists": false,
+          "files": {
+            "PCPLUS.ASP": 143
+          }
+        },
+        {
+          "at": "after-allowed-entry",
+          "launch_bytes": "4b"
+        }
+      ],
+      "raw_result": "build/connection-dos/keymap-owner-dos-final-20261107-recording/result.json"
+    },
+    {
+      "case": "monitor",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_SYN.KBD": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "owned_online_actions_run": true,
+        "online_triggers_sent": true,
+        "refused_until_owner_released": true,
+        "exactly_one_postrelease_child": true,
+        "ordinary_input_resumed": true,
+        "matched_products_unchanged": true,
+        "actual_raw_monitor": true,
+        "no_parser_response_during_monitor": true
+      },
+      "snapshots": [
+        {
+          "at": "after-owner-before-allowed-entry",
+          "launch_exists": false,
+          "files": {
+            "PCPLUS.DMP": 28
+          }
+        },
+        {
+          "at": "after-allowed-entry",
+          "launch_bytes": "4b"
+        }
+      ],
+      "raw_result": "build/connection-dos/keymap-owner-dos-final-20261107-monitor/result.json"
+    },
+    {
+      "case": "redisplay",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_SYN.KBD": true,
+        "fixture_unchanged_RVWATCH.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "owned_online_actions_run": true,
+        "online_triggers_sent": true,
+        "refused_until_owner_released": true,
+        "exactly_one_postrelease_child": true,
+        "ordinary_input_resumed": true,
+        "matched_products_unchanged": true,
+        "actual_redisplay_observed": true
+      },
+      "snapshots": [
+        {
+          "at": "after-owner-before-allowed-entry",
+          "launch_exists": false,
+          "files": {}
+        },
+        {
+          "at": "after-allowed-entry",
+          "launch_bytes": "4b"
+        }
+      ],
+      "raw_result": "build/connection-dos/keymap-owner-dos-final-20261107-redisplay/result.json"
+    },
+    {
+      "case": "parser",
+      "passed": true,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "fixture_unchanged_SYN.KBD": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "owned_online_actions_run": true,
+        "online_triggers_sent": true,
+        "online_trigger_chunks_sent": true,
+        "refused_until_owner_released": true,
+        "exactly_one_postrelease_child": true,
+        "ordinary_input_resumed": true,
+        "matched_products_unchanged": true,
+        "split_parser_completed": true
+      },
+      "snapshots": [
+        {
+          "at": "after-owner-before-allowed-entry",
+          "launch_exists": false,
+          "files": {}
+        },
+        {
+          "at": "after-allowed-entry",
+          "launch_bytes": "4b"
+        }
+      ],
+      "raw_result": "build/connection-dos/keymap-owner-dos-final-20261107-parser/result.json"
+    }
+  ],
+  "cpu": "8086",
+  "original_inputs": [],
+  "products": {
+    "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+    "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+    "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+    "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+    "PCKEYMAP.EXE": "f05f741d1a81d5cc34b569d320362c7aeed0aaf24df76c2c006e4aa9eb67fa33"
+  },
+  "scope": "Real DOS owner refusal/release via BIOS keys, files and independent UART peer.\n\nThe source-owned counting child proves PROGRAM admission, not helper rendering.\nNo product variables, instruction bytes or modeled ownership callbacks change.\n Synthetic serial modem and KBD; no physical or actual mapper rendering acceptance.",
+  "source_count_checked": 744,
+  "receipt_sha256": "b5b72776013d861f9afcb672f02f0fd658fac0cacb62bceeb47608996e4c203e",
+  "sources": {
+    "standalone/test_keymap_owner_dos.py": "8ac592ae42869177190bbd2e84744700f138364aec2d28b278052fef69d67fc7",
+    "standalone/keymap_launch_probe.asm": "3107ac4d572acc5cf3fc65234f705cc523b3217b895240412750a936614edd60",
+    "standalone/redisplay_watch.asm": "20f0abe2911350b77f0a6b1b38685ae4739b50e7a20ba874d5577f76840fa300",
+    "standalone/test_connection_dos.py": "e6cf72e5d8da0d27e160135c5a47c77b0de6c3412da5426109e39a8dff06fa60",
+    "standalone/modem_fixtures.py": "7187efb833a4de48821687af34e9457440994bbae6c48aa8d56bfe702c0230c1",
+    "standalone/package_connection_test.py": "3e218b6c51d6ebd700af28f4df8da7f66d195a67728db96908d9269b9d671bf1"
+  },
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false
+}

@@ -1,5 +1,26 @@
 # Full application reconstruction checklist
 
+Current reviewed software checkpoint: [preserve-length keyboard editing](KEYMAP_PREFIX.md)
+and [contract2 packaging](KEYMAP_PACKAGE.md). The helper accepts existing1..33
+complete profiles without padding; the parent and other application bytes are
+unchanged. All16 package files and their ZIP reproduce from2680 public source
+inputs. Packaged START edits both seven-profile and33-profile synthetic files.
+The selected physical installation remains the preceding RA608E10 package.
+The following chronological checkpoints retain their original scope and hashes;
+their older pending statements are superseded only by linked later evidence.
+
+Four [actual DOS owner transitions](KEYMAP_OWNER_DOS.md) now verify mapper
+refusal/release through recording, raw monitor, scrollback and split ANSI
+collection. These supplement the32 modeled-service CPU admission cases;
+other internal owner combinations remain open.
+
+Immediate acceptance work remains the actual private configuration and physical
+Boca/SPA2102/SynthModem/LoC Enigma route. Independent software work remains
+other owner-state refusal/return composition and original helper UI/defaults.
+Full native parity still requires the complete ASPECT command inventory, every
+advertised emulation/protocol and Host mode, plus the other F01–F16 requirements
+below. A source-built maintained package does not close those feature gates.
+
 [Current keyboard-candidate connection checks](KEYMAP_CONNECTION_REGRESSIONS.md)
 pass four stock-BBS transfer runs, actual same-process Enigma cancel/retry and
 loss/redial/retry,25 bounded carrier cases and the copied LoC main screen.

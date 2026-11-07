@@ -64,10 +64,15 @@ edit/save, exact frame/cursor restoration and subsequent editor input pass in
 Enigma and Synchronet, the latter using an RTS-aware software modem model.
 [Matched-helper packaging](KEYMAP_PACKAGE.md) now passes source reproduction,
 admission and a packaged START/Alt-F8 edit/save/return test. Remaining gates
-include broader foreground-refusal DOS transitions, private KBD validation
+include other foreground-refusal DOS transitions, private KBD validation
 and physical Boca/SPA2102 acceptance. The
 [connection checkpoint](KEYMAP_CONNECTION_REGRESSIONS.md) covers current BBS
 transfer/loss/redial and reported-close quarantine plus scoped CPU admission
 branches. Native
 intro/about/prompt styling, broader filenames, new-file/default behavior and
 other display geometries remain open. The installed RA608E10 package is unchanged.
+
+[Four real DOS owner workflows](KEYMAP_OWNER_DOS.md) now cover recording,
+raw monitor, scrollback and a bounded split ANSI sequence. A source-owned
+counting child measures refusal during occupation and entry after release;
+real helper rendering and other internal owner combinations remain separate.
