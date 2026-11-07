@@ -5,7 +5,7 @@ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def audit(out,objects):
  listing=(out/'METAEDIT.map').read_text()
  symbols={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]+):([0-9a-f]+)\*?\s+(\w+)\s*$',listing,re.M|re.I)}
- segments={n:int(s,16) for n,s in re.findall(r'^(\w+)\s+\w+\s+\w+\s+([0-9a-f]+):0000\s+[0-9a-f]+',listing,re.M|re.I)}
+ segments={n:int(s,16) for n,s in re.findall(r'^(\w+)\s+\w+\s+\w+\s+([0-9a-f]+):[0-9a-f]+\s+[0-9a-f]+',listing,re.M|re.I)}
  reports={};edges=[]
  def check(edge,targets):
   source,target,context=edge
@@ -30,7 +30,7 @@ def audit(out,objects):
  # Alter only linked target placement; feed the same actual near-call edges
  # through the baseline verifier. No corrupted executable is constructed/run.
  challenges=[]
- for target in ('_meta_bank_paths','meta_bank_fmemcpy_','_capture_fs_canonical','_dos_open_'):
+ for target in ('_meta_bank_paths','meta_bank_fmemcpy_',('_capture_fs_canonical' if '_capture_fs_canonical' in symbols else 'config_memcpy_service_'),'_dos_open_'):
   edge=next(e for e in edges if e[1]==target)
   bad=dict(symbols);bad[target]=(symbols[target][0]^0x1000,symbols[target][1])
   try:check(edge,bad)

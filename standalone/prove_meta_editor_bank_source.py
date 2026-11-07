@@ -19,7 +19,7 @@ def main():
   target=fresh/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/path).read_bytes())
  env=dict(os.environ,GIT_CEILING_DIRECTORIES=str(out));assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode
  for mode,expected in bases.items():
-  with (out/(mode+'.log')).open('w') as log:subprocess.run([sys.executable,'standalone/build_meta_editor_bank.py',*(['--direct'] if mode=='direct' else []),'--output','build/'+mode],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
+  with (out/(mode+'.log')).open('w') as log:subprocess.run([sys.executable,'standalone/build_meta_editor_bank.py',*(['--direct'] if mode=='direct' else []),*(['--parent-services'] if expected.get('parent_services') else []),'--output','build/'+mode],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
   actual=json.loads((fresh/'build'/mode/'result.json').read_text())
   # Object/debug-listing filenames legitimately differ between exports.
   for k in expected:

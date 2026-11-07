@@ -207,7 +207,7 @@
     },
     "src/key_mapping/key_actions_dos.c": {
       "profile": "echo-size-20",
-      "source_sha256": "968eea96422bc4ab660979ed372093332c1a32fd84ae74da6d7dc8a8fc9b9e38",
+      "source_sha256": "9f1fdf650795016b4d4affb6b3018046fecb220a7087d6ef7df1e9a8daa0bae9",
       "control_code_data_bytes": [
         630,
         0
@@ -215,7 +215,8 @@
       "optimized_code_data_bytes": [
         611,
         0
-      ]
+      ],
+      "review_note": "KEY_EDITOR_FS test-hook conditional added in 73d58b0; ordinary parent does not define it. Recheck unchanged 611-byte code/zero-data footprint and exact disabled parent EXE before accepting this digest refresh."
     },
     "src/key_mapping/keymap_dos.c": {
       "profile": "echo-size-20",

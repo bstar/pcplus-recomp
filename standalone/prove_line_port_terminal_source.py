@@ -30,6 +30,7 @@ def main():
  assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode!=0
  flags=json.loads((fresh/'standalone/line_port_profile.json').read_text())
  if m.get('experimental_line_port_overlay'):flags.append('--line-port-overlay')
+ if m.get('experimental_meta_services'):flags.append('--meta-services')
  rebuilt=fresh/'build/rebuilt'
  with(out/'build.log').open('w')as log:
   subprocess.run([sys.executable,'standalone/build_terminal.py',*flags,'--output-dir',str(rebuilt)],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
