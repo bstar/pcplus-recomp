@@ -81,8 +81,10 @@ can redraw it. Failed attempts are not accepted evidence.
 
 ## Remaining work
 
-Repeat connection/reconnect/transfer/carrier-loss gates on these exact bytes
-before packaging. [Shared-kernel fault checks](META_SHARED_FAULTS.md) now cover
+[Transfer/reconnect checks](META_SHARED_TRANSFERS.md) now pass sixteen protocol
+cases and three idle/call-log carrier-loss cases on these exact bytes. Repeat
+active-transfer/ASPECT loss and live-BBS transfers before packaging.
+[Shared-kernel fault checks](META_SHARED_FAULTS.md) now cover
 close boundaries, malformed headers/fixups, prior allocation and history return.
 Wider arena arbitration, other geometries, frozen-history entry,
 directory-resource-cache adoption, original pixel parity and physical

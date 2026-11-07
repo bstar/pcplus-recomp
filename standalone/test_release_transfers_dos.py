@@ -73,6 +73,13 @@ class RetryBatchPeer(BatchPeer):
             self.checks['retry_completed_same_connection'] = bool(self.checks.get('batch_end_ACK') and self.checks.get('exact_files_before_EOT_ACK'))
 
 
+class DiskReferenceUploadPeer(BatchPeer):
+    """Let the user enter the upload prompt before issuing the initial CRC request."""
+    def ready(self):
+        super().ready()
+        time.sleep(3)
+
+
 def run_case(r, binary, manifest, root):
     out = root / r['name']
     out.mkdir()
@@ -105,7 +112,8 @@ def run_case(r, binary, manifest, root):
     elif r['protocol'] == 1:
         source_files = {} if incoming else {f['name']: f['data'] for f in r['files']}
         expected_files = {f['name']: f['data'] for f in r['files']} if incoming else {}
-        peer = (RetryBatchPeer if r.get('retry_after_cancel') else BatchPeer)(r, out / 'RECV')
+        peer_type = RetryBatchPeer if r.get('retry_after_cancel') else DiskReferenceUploadPeer if not incoming and manifest.get('experimental_meta_shared_runtime') else BatchPeer
+        peer = peer_type(r, out / 'RECV')
         filename = 'D:\\RECV\\' if incoming else 'D:\\SEND\\*.BIN'
     else:
         source_files = dict(r['files'])
@@ -118,7 +126,10 @@ def run_case(r, binary, manifest, root):
     source_before = {p.name: (p.stat().st_ino, p.stat().st_size, p.stat().st_mtime_ns, sha(p)) for p in source.iterdir()}
     peer.resume_timeout = 30
     peer.thread.start()
-    action = ['a-z', 'p150', 'pgdown' if incoming else 'pgup']
+    # The shared reference loads cooperatively from disk. Its navigation key
+    # must follow admission, rather than arriving during the loading notice.
+    reference_wait = 'p3000' if manifest.get('experimental_meta_shared_runtime') else 'p150'
+    action = ['a-z', reference_wait, 'pgdown' if incoming else 'pgup']
     if not manifest.get('experimental_original_reference'):
         action = ['a-r' if incoming else 'a-s']
     keys = (['p900', 'enter'] if manifest.get('special_edition') else []) + ['p1500'] + action + ['p300']

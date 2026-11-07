@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Shared-parent transfers/reconnect](META_SHARED_TRANSFERS.md): sixteen actual
+DOS8086 X/Y/ZMODEM cases and three virtual-carrier/call-log/redial cases pass
+on the unchanged shared parent. Test navigation now allows the reference's disk
+load and uses the recovered redial menu action. Active-transfer/ASPECT carrier
+loss, live-BBS transfers and physical acceptance remain before deployment.
+
 [Shared-runtime fault checks](META_SHARED_FAULTS.md) add two arena/history cases,
 twelve malformed-header/fixup refusals and four uncertain-close boundaries.
 An isolated728-file export reproduces the same application. No application or
