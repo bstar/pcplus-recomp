@@ -1,3 +1,6 @@
+#ifdef TERMINAL_META_EDITOR
+#include "../key_mapping/meta_front.h"
+#endif
 /* Authored terminal-command reference. Functional names/shortcut arrangement
  * follow the identified 2.01 reference data; navigation/refusal is maintained.
  * This entire module and its constants live in REFERENCE_CODE. */
@@ -106,6 +109,9 @@ static word __far *view;
 #if defined(TERMINAL_DIRECTORY_VIEW) || defined(TERMINAL_LOCAL_CONTROLS) || defined(TERMINAL_PATH_CONTROL) || defined(TERMINAL_GATEWAY) || defined(TERMINAL_FILE_DIRECTORY) || defined(TERMINAL_FILE_VIEWER)
 static word action(word i)
 {
+#ifdef TERMINAL_META_EDITOR
+ if(items[i].key==0x3200)return META_KEYS_ACTION;
+#endif
 #ifdef TERMINAL_LINE_PORT
  if(items[i].key==0x1900)return LINE_PORT_ACTION;
 #endif

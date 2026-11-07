@@ -84,6 +84,14 @@ terminal_macro_start:
  jne .busy
  cmp word [terminal_program_active],0
  jne .busy
+%ifdef TERMINAL_META_EDITOR
+ extern _meta_front_exec_allowed
+ push ax
+ call far _meta_front_exec_allowed
+ or ax,ax
+ pop ax
+ jz .busy
+%endif
  cmp ax,10
  jae .bad_index
  mov bx,54

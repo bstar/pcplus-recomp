@@ -19,6 +19,7 @@ def main():
   'standalone/modem_fixtures.py','standalone/directory_fixtures.py',
   'standalone/terminal_config_fixtures.py','standalone/test_terminal.py',
   'standalone/directory_test_support.py']
+ if m.get('experimental_meta_editor'):extra.append('standalone/test_meta_front_dos.py')
  for name in extra:sources[name]=sha(ROOT/name)
  for name,digest in sources.items():
   rel=Path(name);assert not rel.is_absolute() and '..'not in rel.parts
@@ -32,6 +33,7 @@ def main():
  if m.get('experimental_line_port_overlay'):flags.append('--line-port-overlay')
  if m.get('experimental_meta_services'):flags.append('--meta-services')
  if m.get('experimental_meta_editor_module'):flags.append('--meta-editor-module')
+ if m.get('experimental_meta_editor'):flags.append('--meta-editor')
  rebuilt=fresh/'build/rebuilt'
  with(out/'build.log').open('w')as log:
   subprocess.run([sys.executable,'standalone/build_terminal.py',*flags,'--output-dir',str(rebuilt)],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
@@ -46,9 +48,17 @@ def main():
    subprocess.run([sys.executable,'standalone/test_line_port_terminal_dos.py','--terminal',str(rebuilt/'TERMINAL.EXE'),'--output',str(target),'--case',case],cwd=fresh,env=env,stdout=log,stderr=log,check=True,timeout=45)
   result=json.loads((target/'result.json').read_text());assert result['passed']
   runs.append(dict(case=case,checks=result['checks'],result_sha256=sha(target/'result.json')))
+ meta_runs=[]
+ if m.get('experimental_meta_editor'):
+  for case in ('save','cancel','missing'):
+   target=fresh/('build/meta-'+case)
+   with(out/('meta-'+case+'.log')).open('w')as log:
+    subprocess.run([sys.executable,'standalone/test_meta_front_dos.py','--terminal',str(rebuilt/'TERMINAL.EXE'),'--output',str(target),'--case',case],cwd=fresh,env=env,stdout=log,stderr=log,check=True,timeout=45)
+   v=json.loads((target/'result.json').read_text());assert v['passed']
+   meta_runs.append(dict(case=case,checks=v['checks'],result_sha256=sha(target/'result.json')))
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
  result=dict(passed=True,binary_sha256=sha(binary),source_count=len(sources),sources=sources,
-  runs=runs,ancestor_git_unavailable=True,original_inputs=[],build_log_sha256=sha(out/'build.log'),
+  runs=runs,meta_runs=meta_runs,ancestor_git_unavailable=True,original_inputs=[],build_log_sha256=sha(out/'build.log'),
   limitations=['Exact optional parent and four real DOS synthetic-peer checks. No physical modem/BBS or complete application-parity claim.',
    'Only declared public sources; no original/private/analysis/prior objects or Git metadata. Outer pinned Nix supplies tools.'])
  if m.get('experimental_line_port_overlay'):result['overlay_sha256']=sha(rebuilt/'PCLINE.OVL')

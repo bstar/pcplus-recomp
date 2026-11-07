@@ -1414,5 +1414,10 @@ def inspect_terminal_memory(binary,map_path):
   for name in ('open','key','step','draw','cursor','shape','stop','matches','proposal'):assert symbols['_meta_editor_'+name+'_far'][0]==target and symbols['_meta_editor_'+name+'_far'][1]<n
   assert symbols['_meta_key_owner_exec_allowed'][0]==target and symbols['_meta_key_owner_exec_allowed'][1]<n
   assert all(c['name']!='META_EDITOR_CODE'for c in code_segments)
-  extra.update(meta_overlay_bytes=n,meta_overlay_fixups=count,meta_loader_retained=True,meta_overlay_DGROUP_bytes=0,meta_editor_UI_bound=False)
+  ui_bound='_meta_front_event'in symbols
+  if ui_bound:
+   for name in ('event','owned','cursor','shape','pending','exec_allowed'):assert symbols['_meta_front_'+name][0]==file_seg
+   assert symbols['_meta_module_resolve'][0]==target and symbols['_meta_module_resolve'][1]<n
+   assert symbols['_meta_overlay_arena_ready'][0]==config_seg and symbols['_line_overlay_available'][0]==config_seg
+  extra.update(meta_overlay_bytes=n,meta_overlay_fixups=count,meta_loader_retained=True,meta_overlay_DGROUP_bytes=0,meta_editor_UI_bound=ui_bound)
  return {'near_bytes':near_size,'near_spare_bytes':65536-near_size,'near_relative_segment':ds,'far_relative_segment':far_seg,'shadow_offset':shadow_off,'history_offset':history_off,'far_bytes':71192,'history_relative_segment':history_seg,'history_bytes':63000,'far_end_linear':far_end,'stack_end_linear':stack_end,'loaded_module_bytes':module_bytes,'minimum_allocated_module_bytes':allocated,'retained_parent_paragraphs':retained+16,'far_pointer_relocations_verified':True,**extra}

@@ -479,6 +479,12 @@ terminal_phone_log_startup_done equ $
  jmp .loop
 .idle:
  call terminal_redisplay_idle
+%ifdef TERMINAL_META_EDITOR
+ extern _meta_front_pending
+ call far _meta_front_pending
+ or ax,ax
+ jnz .loop
+%endif
 %ifdef TERMINAL_LINE_PORT_OVERLAY
  extern _line_port_front_pending
  call far _line_port_front_pending

@@ -1,3 +1,6 @@
+#ifdef TERMINAL_META_EDITOR
+#include "../key_mapping/meta_front.h"
+#endif
 #ifdef TERMINAL_LINE_PORT
 #include "../line_port/front.h"
 #endif
@@ -50,7 +53,16 @@ static word length,top,visible,position,shape,direct_clipboard;
 #ifdef TERMINAL_LINE_PORT_OVERLAY
 unsigned __far __cdecl line_overlay_arena_ready(void)
 {return redisplay_active==1 && command_menu_active && direct_clipboard==2 && !length &&
- !redisplay_search_pending && !redisplay_export_pending;}
+ !redisplay_search_pending && !redisplay_export_pending
+#ifdef TERMINAL_META_EDITOR
+ && meta_front_exec_allowed()
+#endif
+ ;}
+#endif
+#ifdef TERMINAL_META_EDITOR
+unsigned __far __cdecl meta_overlay_arena_ready(void)
+{return redisplay_active==1 && command_menu_active && direct_clipboard==2 && !length && !redisplay_search_pending && !redisplay_export_pending;}
+unsigned __far __cdecl redisplay_saved_shape(void){return shape;}
 #endif
 static word query_size,query_edit,found,last_match;
 static char query[40];
@@ -117,6 +129,9 @@ static void copy(word __far *to,const word __far *from)
  * over live BBS video, including the first paint after menu selection. */
 static void path_overlay(void)
 {
+#ifdef TERMINAL_META_EDITOR
+ if(command_menu_active&&meta_front_owned()){copy(view,live);meta_front_event(2,0,view);return;}
+#endif
 #ifdef TERMINAL_LINE_PORT
  if(command_menu_active&&line_port_front_cursor()!=0xffff){copy(view,live);line_port_front_event(2,0,view);return;}
 #endif
@@ -163,6 +178,9 @@ static void cursor_restore(void)
 }
 static void hide(void)
 {
+#ifdef TERMINAL_META_EDITOR
+ word mp,ms;
+#endif
 #ifdef TERMINAL_LINE_PORT
  word lp=line_port_front_cursor();
 #endif
@@ -174,6 +192,22 @@ static void hide(void)
 #ifdef TERMINAL_FILE_DIRECTORY
  word fp=file_dialog_cursor();
 #endif
+#endif
+#ifdef TERMINAL_META_EDITOR
+ mp=meta_front_cursor();ms=meta_front_shape();
+ if(meta_front_owned()){
+  __asm {mov ah,1
+   mov cx,ms
+   int 10h
+   mov dx,mp
+   cmp dx,0ffffh
+   je meta_no_cursor
+   mov ah,2
+   xor bh,bh
+   int 10h
+   meta_no_cursor:}
+  return;
+ }
 #endif
 #ifdef TERMINAL_LINE_PORT
  if(lp!=0xffff){
@@ -390,6 +424,9 @@ unsigned __cdecl redisplay_event(word event,word key,const context *c)
   view=(word __far *)MK_FP(c->view_seg,c->view_off);
 #ifdef TERMINAL_ORIGINAL_KEYS
   direct_clipboard=(key==0x2c00 || key==0x1300
+#ifdef TERMINAL_META_EDITOR
+   || key==0x3200
+#endif
 #ifdef TERMINAL_LINE_PORT
    || key==0x1900
 #endif

@@ -83,6 +83,10 @@ terminal_redisplay_key_impl:
  cmp ax,0x6e00 ; Original Alt-F7: serviced path change.
  je .open
 %endif
+%ifdef TERMINAL_META_EDITOR
+ cmp ax,0x3200
+ je .open
+%endif
 %ifdef TERMINAL_LINE_PORT
  cmp ax,0x1900
  je .open

@@ -524,3 +524,18 @@ crc_block:
  pop bx
  pop bp
  ret
+
+%ifdef TERMINAL_META_EDITOR
+; Pure resident admission; never enter bank code just to test its lifetime.
+global _line_overlay_available
+_line_overlay_available:
+ xor ax,ax
+ cmp word [cs:phase],0
+ jne .done
+ cmp word [cs:fatal],0
+ jne .done
+ cmp word [cs:busy],0
+ jne .done
+ inc ax
+.done:retf
+%endif

@@ -133,6 +133,12 @@ _process_run:
  call process_result_disjoint
  jc .invalid
 .validated:
+%ifdef TERMINAL_META_EDITOR
+ extern _meta_front_exec_allowed
+ call far _meta_front_exec_allowed
+ or ax,ax
+ jz .busy
+%endif
 %ifdef TERMINAL_DIRECTORY_STORAGE
  extern _directory_storage_exec_allowed
  call far _directory_storage_exec_allowed

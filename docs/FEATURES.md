@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Serviced Alt-M integration](META_FRONTEND.md) now opens the matched editor
+from the actual terminal, Alt-Z and Setup browser, preserves incoming UART/ANSI
+service, and adopts a checked closed-lease proposal into live Meta keys. Explicit
+save/load, reopen and local cancellation/recovery are tested in DOS. The disabled
+parent remains identical; the installed package is unchanged. Physical acceptance,
+other geometries, frozen-history entry and directory-cache adoption remain open.
+The component checkpoints below describe their earlier scope; this is the latest
+Meta integration status.
+
 [Matched Meta disk loader](META_MODULE_LOADER.md) now extracts and verifies
 PCMETA, composes its relocation with PCLINE, and runs the editor in the actual
 parent's startup diagnostic. Save/read, active callback refusal, code overwrite

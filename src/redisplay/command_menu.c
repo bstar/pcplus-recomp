@@ -1,3 +1,6 @@
+#ifdef TERMINAL_META_EDITOR
+#include "../key_mapping/meta_front.h"
+#endif
 /* Source-owned command menu and contextual help for the maintained terminal.
  * Code-segment constants keep UI prose outside the small-model DGROUP and
  * ahead of uninitialized far buffers. See Watcom's segment-constant objects. */
@@ -258,6 +261,12 @@ ENTRY(auto_answer,"Auto Answer                    Alt-Y",
  "Local echo follows the captured duplex setting. Escape cancels locally.\n"
  "This does not toggle answer mode or insert an online escape sequence.");
 #endif
+#ifdef TERMINAL_META_EDITOR
+ENTRY(meta_keys,"Meta Keys                      Alt-M",
+ "Revise the ten Meta key definitions, load a KEY file or save the current\n"
+ "definitions. Accepted edits become active when the editor closes.\n"
+ "Save writes the current KEY file; Escape does not undo accepted edits.");
+#endif
 #define ROW(n,c,k,l) {n##_name,n##_help,c,k,l}
 #ifdef CHAT_NEAR_TEXT
 #undef ROW
@@ -364,6 +373,9 @@ static const item MENU_TEXT items[]={
 #ifdef TERMINAL_LINE_PORT
  ,ROW(line_port,3,0x1900,'P')
 #endif
+#ifdef TERMINAL_META_EDITOR
+ ,ROW(meta_keys,3,0x3200,'M')
+#endif
 };
 #define COUNT (sizeof(items)/sizeof(items[0]))
 static const char MENU_TEXT categories[][12]={"File","Connection","View","Setup","Help"};
@@ -467,6 +479,9 @@ static void record_view(void)
 static void draw(void)
 {
  word i,n=0,at;
+#ifdef TERMINAL_META_EDITOR
+ if(phase==17){meta_front_event(2,0,view);return;}
+#endif
 #ifdef TERMINAL_LINE_PORT
  if(phase==16){line_port_front_event(2,0,view);return;}
 #endif
@@ -549,6 +564,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(!recording_terminal_inspect())recording_terminal_initialize();
 #ifdef TERMINAL_REFERENCE
   reference_origin=0;
+#ifdef TERMINAL_META_EDITOR
+  if(key==0x3200){phase=17;meta_front_event(0,key,view);return 1;}
+#endif
 #ifdef TERMINAL_LINE_PORT
   if(key==0x1900){phase=16;line_port_front_event(0,key,view);return 1;}
 #endif
@@ -583,6 +601,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   draw();return 1;}
  if(event==4){
+#ifdef TERMINAL_META_EDITOR
+  if(phase==17)meta_front_event(4,0,view);
+#endif
 #ifdef TERMINAL_LINE_PORT
   if(phase==16)line_port_front_event(4,0,view);
 #endif
@@ -606,6 +627,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
   command_menu_action=command_menu_active=0;return 0;}
  if(!command_menu_active)return 0;
+#ifdef TERMINAL_META_EDITOR
+ if(phase==17 && event==3){n=meta_front_event(3,0,view);if(n)return n;command_menu_active=0;return 0;}
+#endif
 #ifdef TERMINAL_LINE_PORT
  if(phase==16 && event==3)return line_port_front_event(3,0,view);
 #endif
@@ -632,6 +656,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #endif
  if(event!=1)return 1;
  if(key==0x2d00){
+#ifdef TERMINAL_META_EDITOR
+  if(phase==17)meta_front_event(4,0,view);
+#endif
 #ifdef TERMINAL_LINE_PORT
   if(phase==16)line_port_front_event(4,0,view);
 #endif
@@ -648,6 +675,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(phase==12)path_dialog_event(4,0,view);
 #endif
   command_menu_action=key;command_menu_active=0;return 0;}
+#ifdef TERMINAL_META_EDITOR
+ if(phase==17){if(meta_front_event(1,key,view))return 1;command_menu_active=0;return 0;}
+#endif
 #ifdef TERMINAL_LINE_PORT
  if(phase==16){
   if(line_port_front_event(1,key,view))return 1;
@@ -703,9 +733,19 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
   if(fold(c)=='L'){phase=11;phone_log_controls_event(0,0,view);return 1;}
 #endif
   n=command_reference_event(1,key,view);
+#ifdef TERMINAL_META_EDITOR
+  if(n==0x100+META_KEYS_ACTION){phase=17;meta_front_event(0,0x3200,view);return 1;}
+  if(n==0x300+META_KEYS_ACTION){for(i=0;i<COUNT;++i)if(items[i].key==0x3200){selected=i;break;}category=3;phase=1;draw();return 1;}
+#endif
 #ifdef TERMINAL_LINE_PORT
   if(n==0x100+LINE_PORT_ACTION){phase=16;line_port_front_event(0,0x1900,view);return 1;}
-  if(n==0x300+LINE_PORT_ACTION){selected=COUNT-1;category=3;phase=1;draw();return 1;}
+  if(n==0x300+LINE_PORT_ACTION){
+#ifdef TERMINAL_META_EDITOR
+   for(i=0;i<COUNT;++i)if(items[i].key==0x1900){selected=i;break;}
+#else
+   selected=COUNT-1;
+#endif
+   category=3;phase=1;draw();return 1;}
 #endif
   if(n==1){command_menu_active=0;return 0;}
   if(n==0x200){reference_origin=0;category=selected=phase=notice=0;draw();return 1;}
@@ -796,6 +836,9 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
 #ifdef TERMINAL_REFERENCE
 activate:
 #ifdef TERMINAL_LINE_PORT
+#ifdef TERMINAL_META_EDITOR
+  if(items[selected].key==0x3200){phase=17;meta_front_event(0,0x3200,view);return 1;}
+#endif
   if(items[selected].key==0x1900){phase=16;line_port_front_event(0,0x1900,view);return 1;}
 #endif
 #ifdef TERMINAL_EXTERNAL_EDITOR

@@ -10,6 +10,7 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser.add_argument('--meta-editor',action='store_true',help='Experimental serviced Alt-M and closed-lease live key adoption; implies matched module')
 parser.add_argument('--meta-loader-probe',action='store_true',help='Diagnostic only: full-parent loader/save/reload before UART startup, then exit')
 parser.add_argument('--meta-editor-module',action='store_true',help='Experimental matched PCMETA payload and resident loader; no Alt-M or menu entry')
 parser.add_argument('--meta-services',action='store_true',help='Experimental44-byte resident and20-byte CONFIG Meta callbacks; no loader or Alt-M binding')
@@ -116,6 +117,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.meta_editor:args.meta_editor_module=True
 if args.meta_loader_probe:args.meta_editor_module=True
 if args.meta_editor_module:args.meta_services=True
 assert args.command_ui_pairs==64 or args.packed_command_ui
@@ -365,6 +367,7 @@ if args.gateway_probe:out_name+='-gateway-probe'
 if args.meta_services:out_name+='-meta-services'
 if args.meta_editor_module:out_name+='-meta-module'
 if args.meta_loader_probe:out_name+='-meta-probe'
+if args.meta_editor:out_name+='-meta-editor'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
  # buffers as the existing feature suffix chain grows.
@@ -416,6 +419,9 @@ if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 sources += sorted((ROOT/'src/terminal').glob('*.asm'))
 if args.line_port:sources += [ROOT/'reconstruction/line_port/key.asm']+sorted(p for p in (ROOT/'src/line_port').glob('*.asm')if args.line_port_overlay or not p.name.startswith('overlay'))
+if args.meta_editor:
+ assert args.line_port_overlay and args.original_reference and args.path_control,'Meta editor requires composed transient/owned-screen profile'
+ assert not args.directory_resource_owner,'Meta directory-resource cache adoption is not integrated'
 if args.meta_loader_probe:
  assert args.phone_log_bank,'Meta startup probe requires fixed capture reservations'
  sources += [ROOT/'standalone/meta_loader_parent_probe.asm']
@@ -517,6 +523,7 @@ for index,source in enumerate(sources):
    '-Dscreen_cursor_left=attribute_screen_cursor_left','-Dscreen_cursor_right=attribute_screen_cursor_right',
    '-Dscreen_adjust_attribute_boundary=attribute_boundary_local']
  if source==ROOT/'src/aspect/resident_bridge.asm':options+=['-DRESIDENT_BRIDGE_FAR']
+ if args.meta_editor:options+=['-DTERMINAL_META_EDITOR']
  if args.meta_loader_probe:options+=['-DTERMINAL_META_LOADER_PROBE']
  if args.line_port:options+=['-DTERMINAL_LINE_PORT']
  if args.line_port_overlay:options+=['-DTERMINAL_LINE_PORT_OVERLAY']
@@ -661,6 +668,7 @@ if args.meta_editor_module:
  meta_bank_sources={ROOT/'src/key_mapping'/(n+'.c')for n in ('meta_editor','meta_dialog','meta_text','meta_file_prompt','meta_filename','meta_picker','meta_picker_scan','meta_key_owner','meta_key_resource','key_editor_file')}
  c_sources+=sorted(meta_bank_sources)+[ROOT/'src/key_mapping/meta_loader.c']
 if args.meta_loader_probe:c_sources.append(ROOT/'standalone/meta_loader_parent_probe.c')
+if args.meta_editor:c_sources.append(ROOT/'src/key_mapping/meta_front.c')
 c_sources += [ROOT/'src/config/live_configuration.c']
 c_sources += [ROOT/'src/config/live_setup_owner.c']
 if args.status_owner:c_sources.append(ROOT/'src/terminal/status_transition.c')
@@ -829,6 +837,7 @@ for source in c_sources:
  if args.phone_log_bank and source in (ROOT/'src/capture/capture_file.c',ROOT/'src/capture/capture_reservation.c'):
   options+=['-dCAPTURE_FIXED_RESERVATION']
  if source.parent==ROOT/'src/aspect' and source not in config_sources:options=['-nt=ASPECT_CODE','-nc=FARCODE']
+ if args.meta_editor:options+=['-dTERMINAL_META_EDITOR']
  if args.line_port:options+=['-dTERMINAL_LINE_PORT']
  if args.line_port_overlay:options+=['-dTERMINAL_LINE_PORT_OVERLAY']
  if args.line_port_overlay and source==ROOT/'src/line_port/persist.c':options+=['-d'+n+'=line_'+n+'_service'for n in ('memcpy','memset','memcmp')]
@@ -912,7 +921,7 @@ for source in c_sources:
   options+=['-d_'+n+'=meta_bank_'+n for n in ('fmemcpy','fmemset','fmemcmp','fstrcmp')]
   options+=['-d'+n+'=meta_bank_'+v for n,v in (('capture_fs_canonical','canonical'),('capture_fs_attributes','attributes'),('directory_replace_paths','paths'),('resource_pcplus_path','resource'),('key_actions_dos_read','actions'))]
   if source.name=='meta_editor.c':options+=['-dmeta_editor_'+n+'=meta_editor_'+n+'_impl'for n in ('open','key','step','draw','cursor','shape','stop','matches','proposal')]
- if args.meta_editor_module and source.name in ('meta_loader.c','meta_loader_parent_probe.c'):options=['-nt=FILE_CODE','-nc=FARCODE','-ecc','-os']
+ if args.meta_editor_module and source.name in ('meta_loader.c','meta_loader_parent_probe.c','meta_front.c'):options=['-nt=FILE_CODE','-nc=FARCODE','-ecc','-os']
  compiled_source=source;packed_includes=[]
  if size_profile:
   entry=size_profile['sources'].get(str(source.relative_to(ROOT)))
@@ -924,7 +933,7 @@ for source in c_sources:
   options+=['-os'];optimized_c_sources[str(source.relative_to(ROOT))]=['-os']
  if args.packed_command_ui and source==ROOT/'src/redisplay/command_menu.c':
   from pack_command_ui import pack
-  compiled_source,packed_command_ui=pack(source,OUT,args.command_ui_pairs)
+  compiled_source,packed_command_ui=pack(source,OUT,args.command_ui_pairs,meta_editor=args.meta_editor)
   packed_includes=['-i='+str(source.parent),'-i='+str(OUT)]
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we',*options,*packed_includes,'-i='+str(ROOT/'src/config'),'-i='+str(ROOT/'src/directory'),'-i='+str(ROOT/'src/key_mapping'),'-i='+str(ROOT/'src/process'),'-i='+str(ROOT/'src/transfer'),'-fo='+str(obj),str(compiled_source)],cwd=OUT,check=True)
  if args.directory_view and source.name=='directory_reader_fs.c':
@@ -1076,6 +1085,7 @@ manifest={'experimental_aspect_emulate_policy':args.aspect_emulate_policy,'exper
 manifest['experimental_line_port']=args.line_port
 manifest['experimental_meta_services']=args.meta_services
 manifest['experimental_meta_editor_module']=args.meta_editor_module
+manifest['experimental_meta_editor']=args.meta_editor
 manifest['diagnostic_meta_loader_probe']=args.meta_loader_probe
 if meta_overlay:manifest['meta_editor_overlay']=meta_overlay
 manifest['experimental_line_port_overlay']=args.line_port_overlay
