@@ -45,6 +45,9 @@ keys:
 %include "multiline_keys.inc"
 %else
 keys:
+%ifdef KEYMAP_ROUNDTRIP
+ dw 6f00h,3b00h,0f09h,2c5ah,2c5ah,2c5ah,1c0dh,1f00h,011bh
+%endif
 %ifdef META_KEYS_ROUNDTRIP
  dw 3200h,1352h,1c0dh,2c5ah,2c5ah,2c5ah,1c0dh,011bh
 %endif
@@ -139,6 +142,20 @@ handler:
  cmp word [bx],0
  je .restore
  mov word [ticks],AUDIO_SYNC_EDITOR_KEY_WAIT
+%ifdef KEYMAP_ROUNDTRIP
+ cmp word [bx-2],6f00h
+ jne .not_keymap_open
+ mov word [ticks],72
+.not_keymap_open:
+ cmp word [bx-2],1f00h
+ jne .not_keymap_save
+ mov word [ticks],36
+.not_keymap_save:
+ cmp word [bx-2],011bh
+ jne .not_keymap_close
+ mov word [ticks],36
+.not_keymap_close:
+%endif
 %ifdef META_KEYS_ROUNDTRIP
  cmp word [bx-2],3200h
  jne .not_meta_open

@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Connected keyboard-mapper return](KEYMAP_BBS.md) passes actual Enigma and
+Synchronet editor save/return, exact frames/cursors, continued input and zero
+DOS exit. Synchronet passes with the RTS-aware lab model; the earlier transparent
+fixture ignored RTS and produced receive-overrun code6. Physical modem flow
+and matched-package admission remain open; application bytes are unchanged.
+
 [Live Alt-F8 keyboard mapping](KEYMAP_LIVE.md) adds the dedicated parent action,
 original reference and Setup entry, strict frozen-path reload and live/RIS
 publication through the existing PROGRAM owner. Matched source helper and exact

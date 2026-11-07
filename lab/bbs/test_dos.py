@@ -121,7 +121,7 @@ async def run(args):
  (output/'sampler.asm').write_text(sampler)
  subprocess.run(['nasm','-f','bin',str(output/'sampler.asm'),'-o',str(output/'SNAP.COM')],check=True)
  modem=Modem('127.0.0.1',args.port,output,soft=args.flow=='SOFT',baud=args.baud,packet_delay_ms=args.packet_delay_ms,
-             raw=getattr(args,'raw_upstream',False))
+             raw=getattr(args,'raw_upstream',False),hardware_flow=getattr(args,'hardware_flow_model',False))
  server=await asyncio.start_server(modem.accept,'127.0.0.1',0)
  port=server.sockets[0].getsockname()[1]
  prefix=('p1000 ' if automatic else 'p1000 a t d enter ')
@@ -138,6 +138,10 @@ async def run(args):
   if tool=='editor':fixture[0x35d:0x39e]=b'NO-VIEW.COM'.ljust(65,b'\0')
   fixture=bytes(fixture)
   (output/'TEST.PRM').write_bytes(fixture)
+ if getattr(args,'keymap_expected',None):
+  assert args.keymap_fixture and args.keymap_expected.resolve().is_relative_to(ROOT/'build')
+  subprocess.run(['nasm','-fbin',str(ROOT/'standalone/dos_status_runner.asm'),'-o',str(output/'RUNSTAT.COM')],check=True)
+  command='D:\\RUNSTAT '+command.split(' ',1)[1]
  observer=getattr(args,'video_observer',None);observer_start=observer_stop='';observer_bytes=None
  if observer:
   observer=observer.resolve();assert observer.is_relative_to(ROOT/'build') and observer.suffix.upper()=='.COM'
@@ -150,6 +154,9 @@ async def run(args):
   helper_start=('LOADHIGH ' if getattr(args,'keyboard_helper_high',False) else '')+'D:\\KEYS.COM'
  serial='\n'.join(f'serial{i}='+ (f'nullmodem server:127.0.0.1 port:{port} transparent:1 rxdelay:200 txdelay:1' if i==args.com else 'disabled') for i in range(1,5))
  if irq is not None:serial=serial.replace('nullmodem ',f'nullmodem irq:{irq} ')
+ if getattr(args,'hardware_flow_model',False):
+  assert args.flow=='HARD'
+  serial=serial.replace('transparent:1','transparent:0')
  config=f'''[sdl]
 output=surface
 [dosbox]
@@ -231,7 +238,12 @@ exit
  if fixture is not None:checks['configuration_unchanged']=(output/'TEST.PRM').read_bytes()==fixture
  if comspec_bytes is not None:checks['comspec_fixture_unchanged']=(output/'GWSHELL.COM').read_bytes()==comspec_bytes
  if meta is not None:checks['meta_actions_unchanged']=(output/'ACTIONS.KEY').read_bytes()==meta
- if keymap is not None:checks['keyboard_profile_unchanged']=(output/'BOARD.KBD').read_bytes()==keymap
+ if keymap is not None:
+  expected_path=getattr(args,'keymap_expected',None)
+  expected=expected_path.read_bytes() if expected_path else keymap
+  assert len(expected)==len(keymap)
+  checks['keyboard_profile_expected' if expected_path else 'keyboard_profile_unchanged']=(output/'BOARD.KBD').read_bytes()==expected
+  if expected_path:checks['actual_application_exit_zero']=(output/'EXITCODE.BIN').read_bytes()==bytes(6)
  if directory_fixture is not None:checks['directory_accounting_exact']=accounting_check(directory_fixture,(output/'TEST.DIR').read_bytes(),args.entry)
  checks['binary_unchanged_during_run']=hashlib.sha256(binary.read_bytes()).hexdigest()==digest
  if observer_bytes is not None:checks['video_observer_unchanged']=(output/'OBSERVE.COM').read_bytes()==observer_bytes
@@ -267,8 +279,10 @@ if __name__=='__main__':
  p.add_argument('--directory-script-fixture',type=Path,help='Bind/copy a source-built ASX from build/ into an automatic directory fixture')
  p.add_argument('--keyboard-helper',type=Path,help='Install a source-built BIOS input helper from build/ once before the application')
  p.add_argument('--meta-fixture',type=Path,help='Load an explicit source-owned ten-record KEY fixture with /T')
+ p.add_argument('--keymap-expected',type=Path,help='Explicit expected whole KBD after an intentional local mapper Save')
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')
+ p.add_argument('--hardware-flow-model',action='store_true',help='Use actual DOSBox RTS control envelopes; model peer CTS/DSR asserted and gate BBS bytes on RTS')
  p.add_argument('--raw-upstream',action='store_true',help='Upstream is an explicit serial-side bridge; leave Telnet ownership to that bridge')
  p.add_argument('--comspec-fixture',type=Path,help='Explicit source-built test interpreter under build/; copied to owned D: and selected with COMSPEC')
  p.add_argument('--video-observer',type=Path,help='Explicit source-built passive COM observer under build/; install with T and collect after DOS return')

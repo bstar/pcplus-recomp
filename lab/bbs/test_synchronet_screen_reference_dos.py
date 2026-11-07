@@ -26,7 +26,11 @@ def login_script():
     return source+wait('FSEditor v1.105','EDITOR')+'fopen 0 "D:\\SCRIPT.OK" "wb"\nfputs 0 "PASS"\nfclose 0\nendproc\n'
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25);p.add_argument('--status-hidden',type=int,choices=[0,1],default=0);p.add_argument('--size-probe',action='store_true');p.add_argument('--phone-log',action='store_true');p.add_argument('--gateway-overlay',action='store_true');p.add_argument('--file-directory-overlay',action='store_true');p.add_argument('--file-viewer-overlay',action='store_true');p.add_argument('--external-viewer-overlay',action='store_true');p.add_argument('--external-editor-overlay',action='store_true');p.add_argument('--meta-keys-overlay',action='store_true');p.add_argument('--admission-watch',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--keymap-helper',type=Path);p.add_argument('--runtime',required=True,type=Path);p.add_argument('--terminal',required=True,type=Path);p.add_argument('--label',required=True);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-register-parent-custom-irq/ASPECT.EXE');p.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25);p.add_argument('--status-hidden',type=int,choices=[0,1],default=0);p.add_argument('--size-probe',action='store_true');p.add_argument('--phone-log',action='store_true');p.add_argument('--gateway-overlay',action='store_true');p.add_argument('--file-directory-overlay',action='store_true');p.add_argument('--file-viewer-overlay',action='store_true');p.add_argument('--external-viewer-overlay',action='store_true');p.add_argument('--external-editor-overlay',action='store_true');p.add_argument('--meta-keys-overlay',action='store_true');p.add_argument('--admission-watch',action='store_true');a=p.parse_args()
+    if a.keymap_helper:
+        a.keymap_helper=a.keymap_helper.resolve()
+        assert not any((a.meta_keys_overlay,a.external_editor_overlay,a.external_viewer_overlay,a.file_viewer_overlay,a.file_directory_overlay,a.gateway_overlay,a.phone_log,a.admission_watch))
+        assert a.size_probe and (a.display_rows,a.status_hidden)==(25,0)
     if a.meta_keys_overlay:
         assert not any((a.external_editor_overlay,a.external_viewer_overlay,a.file_viewer_overlay,a.file_directory_overlay,a.gateway_overlay,a.phone_log,a.admission_watch))
         assert a.size_probe and (a.display_rows,a.status_hidden)==(25,0)
@@ -70,6 +74,11 @@ def main():
     if a.meta_keys_overlay:
         from meta_front_bbs_support import SOURCES
         sources += [ROOT/n for n in SOURCES]
+    if a.keymap_helper:
+        from keymap_bbs_support import SOURCES
+        sources += [ROOT/n for n in SOURCES]+[ROOT/'lab/bbs/nullmodem_control.py']
+        proof=json.loads(a.keymap_helper.with_name('result.json').read_text())
+        sources += [a.keymap_helper,a.keymap_helper.with_name('result.json')]+[ROOT/n for n in proof['sources']]
     frozen={str(n.relative_to(ROOT)):sha(n) for n in sources}
     base=ROOT/'build/bbs-lab';bridge=base/(a.label+'-proxy');out=base/'results/synchronet'/a.label
     assert not bridge.exists() and not out.exists();out.mkdir(parents=True)
@@ -79,9 +88,15 @@ def main():
     stage_companions(binary,stage)
     source=login_script();(stage/'SYNC.ASP').write_text(source);(stage/'SYNC.ASX').write_bytes(compile_source(source))
     helper=out/'EDITKEY.COM'
-    subprocess.run(['nasm','-fbin',*(['-DMETA_KEYS_ROUNDTRIP']if a.meta_keys_overlay else []),*(['-DGATEWAY_ROUNDTRIP'] if a.gateway_overlay else []),*(['-DFILE_DIRECTORY_ROUNDTRIP'] if a.file_directory_overlay else []),*(['-DFILE_VIEWER_ROUNDTRIP'] if a.file_viewer_overlay else []),*(['-DEXTERNAL_VIEWER_ROUNDTRIP','-DRECORD_KEY_SEGMENT'] if a.external_viewer_overlay else []),*(['-DEXTERNAL_EDITOR_ROUNDTRIP'] if a.external_editor_overlay else []),'-DSCREEN_REFERENCE_FREEZE','-DAUDIO_SYNC_EDITOR_SCREEN_BYTES='+str((layout['physical_rows'] if layout else 25)*160),'-DAUDIO_SYNC_EDITOR_SETTLE=72','-DAUDIO_SYNC_EDITOR_KEY_WAIT=9','-DAUDIO_SYNC_EDITOR_FINAL_WAIT=54','-DAUDIO_SYNC_EDITOR_WATCHDOG_TICKS=2160',str(ROOT/'lab/bbs/audio_synchronet_editor_keys.asm'),'-o',str(helper)],check=True)
+    subprocess.run(['nasm','-fbin',*(['-DKEYMAP_ROUNDTRIP','-DRECORD_KEY_SEGMENT']if a.keymap_helper else []),*(['-DMETA_KEYS_ROUNDTRIP']if a.meta_keys_overlay else []),*(['-DGATEWAY_ROUNDTRIP'] if a.gateway_overlay else []),*(['-DFILE_DIRECTORY_ROUNDTRIP'] if a.file_directory_overlay else []),*(['-DFILE_VIEWER_ROUNDTRIP'] if a.file_viewer_overlay else []),*(['-DEXTERNAL_VIEWER_ROUNDTRIP','-DRECORD_KEY_SEGMENT'] if a.external_viewer_overlay else []),*(['-DEXTERNAL_EDITOR_ROUNDTRIP'] if a.external_editor_overlay else []),'-DSCREEN_REFERENCE_FREEZE','-DAUDIO_SYNC_EDITOR_SCREEN_BYTES='+str((layout['physical_rows'] if layout else 25)*160),'-DAUDIO_SYNC_EDITOR_SETTLE=72','-DAUDIO_SYNC_EDITOR_KEY_WAIT=9','-DAUDIO_SYNC_EDITOR_FINAL_WAIT=54','-DAUDIO_SYNC_EDITOR_WATCHDOG_TICKS=2160',str(ROOT/'lab/bbs/audio_synchronet_editor_keys.asm'),'-o',str(helper)],check=True)
     generated_paths=[*stage.iterdir(),helper]
     observer=None;gateway_child=None
+    if a.keymap_helper:
+        from keymap_bbs_support import prepare
+        keymap_folder=out/'keymap'
+        keymap_binary,observer=prepare(keymap_folder,binary,a.keymap_helper)
+        shutil.copyfile(a.keymap_helper,stage/'PCKEYMAP.EXE')
+        generated_paths += [stage/'PCKEYMAP.EXE',observer]
     if a.meta_keys_overlay:
         from meta_front_bbs_support import prepare
         observer=prepare(out/'meta-keys',binary);generated_paths.append(observer)
@@ -115,9 +130,10 @@ def main():
             assert proc.poll() is None,'Proxy exited: '+proc.stderr.read()
             assert time.monotonic()<deadline,'Proxy readiness timeout';time.sleep(.05)
         ready=json.loads((bridge/'ready.json').read_text())
-        cpu='386' if a.file_viewer_overlay or a.external_viewer_overlay or a.meta_keys_overlay else '8086'
+        cpu='386' if a.keymap_helper or a.file_viewer_overlay or a.external_viewer_overlay or a.meta_keys_overlay else '8086'
         command=[sys.executable,str(ROOT/'lab/bbs/editor_dos_probe.py'),str(stage/'TERMINAL.EXE'),'synchronet','--port',str(ready['endpoint']['port']),'--label',a.label,'--com','3','--baud','19200','--flow','HARD','--directory-fixture','--directory-script-fixture',str(stage/'SYNC.ASX'),'--keyboard-helper',str(helper),'--irq','5','--mouse-scales','8','4','--cpu',cpu,'--timeout','160','--wait','145','--raw-upstream','--keys','p900 enter']
         if a.size_probe:command+=['--display-rows',str(a.display_rows),'--status-hidden',str(a.status_hidden)]
+        if a.keymap_helper:command+=['--keymap-fixture',str(keymap_folder/'BOARD.KBD'),'--keymap-expected',str(keymap_folder/'EXPECT.KBD'),'--hardware-flow-model','--video-observer',str(observer),'--video-observer-high','--keyboard-helper-high']
         if a.meta_keys_overlay:command+=['--video-observer',str(observer),'--video-observer-high']
         if a.phone_log:command+=['--phone-log','--video-observer',str(observer)]
         if a.gateway_overlay:command+=['--comspec-fixture',str(gateway_child),'--video-observer',str(observer)]
@@ -147,6 +163,9 @@ def main():
                     source_inputs_unchanged=frozen=={str(n.relative_to(ROOT)):sha(n) for n in sources},**semantic)
         result=dict(passed=all(checks.values()),checks=checks,server='Synchronet',binary_sha256=sha(binary),interpreter_sha256=sha(child),generated_inputs=generated,stages=stages,screen_sha256=sha(out/'SCREEN.BIN'),terminal_geometry=geometry,display_layout=layout,screen_reference=proof,bridge=ready,command=command,product_inputs=frozen,
                     scope=f'Actual DOS{cpu} COM3/IRQ5 candidate and stock owned Synchronet FSEditor through the real SynthModem proxy. Viewer variant explicitly enables XMS/UMB, disables EMS and requires its passive observer in upper memory.250ms key framing/20ms input pacing. Editor bytes freeze at a real CPR; held continuation independently checks normal Ctrl-Q abort and unchanged message bodies. No application patch, unframed/SIP/DSP/analog or physical acceptance.')
+        if a.keymap_helper:
+            from keymap_bbs_support import audit as audit_keymap
+            result['keymap']=audit_keymap(out,keymap_folder,stage/'TERMINAL.EXE',require_high=True);checks['actual_keymap_roundtrip']=result['keymap']['passed'];result['passed']=all(checks.values())
         if a.meta_keys_overlay:
             from meta_front_bbs_support import audit as audit_meta
             result['meta_front']=audit_meta(out,binary);checks['actual_Meta_Keys_editor_roundtrip']=result['meta_front']['passed']

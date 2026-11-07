@@ -6,7 +6,12 @@ ORG 0x100
 jmp start
 old10: dd 0
 old2f: dd 0
+%ifdef KEYMAP_ROUNDTRIP
+%define SKIP_VIEW_FILE
+%define FILE_VIEWER_ROUNDTRIP
+%endif
 %ifdef META_KEYS_ROUNDTRIP
+%define SKIP_VIEW_FILE
 %define FILE_VIEWER_ROUNDTRIP
 %endif
 %ifdef EXTERNAL_VIEWER_ROUNDTRIP
@@ -144,7 +149,18 @@ observe_listing:
  mov ax,0xb800
  mov es,ax
 %ifdef FILE_VIEWER_ROUNDTRIP
-%ifdef META_KEYS_ROUNDTRIP
+%ifdef KEYMAP_ROUNDTRIP
+ cmp word [es:324],1f4bh ; KEYBOARD MAPPING at row2,col2
+ jne .done
+ cmp word [es:326],1f45h
+ jne .done
+ cmp word [es:224],1f5ah ; saved F1 notation ZZZ at row1,col32
+ jne .done
+ cmp word [es:226],1f5ah
+ jne .done
+ cmp word [es:228],1f5ah
+ jne .done
+%elifdef META_KEYS_ROUNDTRIP
  cmp word [es:522],1f4dh ; actual META heading and accepted first definition
  jne .done
  cmp word [es:524],1f45h
@@ -321,7 +337,7 @@ install:
  mov ah,3eh
  int 21h
  jc failed
-%ifndef META_KEYS_ROUNDTRIP
+%ifndef SKIP_VIEW_FILE
  mov dx,view_name
  xor cx,cx
  mov ah,3ch
@@ -362,7 +378,10 @@ failed:
  int 0x21
 %ifdef FILE_VIEWER_ROUNDTRIP
 resident_segment: dw 0
-%ifdef META_KEYS_ROUNDTRIP
+%ifdef KEYMAP_ROUNDTRIP
+segment_name: db 'D:\KMSEG.BIN',0
+name: db 'D:\KMVIEW.BIN',0
+%elifdef META_KEYS_ROUNDTRIP
 segment_name: db 'D:\METASEG.BIN',0
 name: db 'D:\METAVIEW.BIN',0
 %else

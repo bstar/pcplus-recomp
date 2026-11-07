@@ -112,10 +112,12 @@ class GuardedHangup:
   return bytes(output),matched
 
 class Modem:
- def __init__(self,host,port,output,*,soft=False,baud=38400,raw=False,packet_delay_ms=0,guarded_hangup_seconds=None):
+ def __init__(self,host,port,output,*,soft=False,baud=38400,raw=False,packet_delay_ms=0,guarded_hangup_seconds=None,hardware_flow=False):
   assert host in ('127.0.0.1','localhost','::1'),'Lab endpoints must be loopback'
   if not 0<=packet_delay_ms<=100:raise ValueError('Packet delay must be0..100 milliseconds')
   if soft and packet_delay_ms:raise ValueError('Buffering experiment requires NONE/HARD; software flow remains immediate')
+  assert not hardware_flow or (not soft and not packet_delay_ms)
+  self.hardware_flow=hardware_flow
   self.packet_delay_ms=packet_delay_ms
   self.host,self.port,self.output=host,port,Path(output);self.soft,self.baud,self.raw=soft,baud,raw
   self.output.mkdir(parents=True,exist_ok=True);self.ready=asyncio.Event();self.done=asyncio.Event();self.events=[];self.codec=Telnet(baud)
@@ -126,6 +128,15 @@ class Modem:
  async def accept(self,reader,writer):
   if self.connected:writer.close();return
   self.connected=True;self.event('serial-connected');self.ready.set();line=bytearray();up_reader=up_writer=None;task=None;guard_task=None
+  control=None
+  if self.hardware_flow:
+   from nullmodem_control import Control,Writer
+   def lines(rts,dtr,send_break):
+    self.event('serial-lines',rts=rts,dtr=dtr,send_break=send_break,delivered=len(self.serial_out))
+    self.pause.set() if rts else self.pause.clear()
+   control=Control(lines);self.pause.clear()
+   writer.write(b'\xff\x03');await writer.drain()
+   writer=Writer(writer)
   async def forward(data):
    forward=bytearray()
    for value in data:
@@ -143,6 +154,9 @@ class Modem:
   if self.hangup_guard:guard_task=asyncio.create_task(expire_guard())
   try:
    async for data in serial_packets(reader,self.packet_delay_ms):
+    if control:
+     data=control.feed(data)
+     if not data:continue
     self.keyboard.extend(data)
     if up_writer is None:
      for value in data:
@@ -182,12 +196,13 @@ class Modem:
    display,reply=(data,b'') if self.raw else self.codec.feed(data)
    if reply:self.wire_out.extend(reply);upstream.write(reply);await upstream.drain()
    self.display.extend(display)
-   for start in range(0,len(display),32):
-    await self.pause.wait();block=display[start:start+32]
+   width=1 if self.hardware_flow else 32
+   for start in range(0,len(display),width):
+    await self.pause.wait();block=display[start:start+width]
     self.serial_out.extend(block);serial.write(block);await serial.drain()
     await asyncio.sleep(len(block)*10/self.baud)
   self.event('bbs-eof')
  def save(self):
   for name,data in [('bbs-wire.bin',self.wire_in),('bbs-sent.bin',self.wire_out),('display.bin',self.display),('serial-received.bin',self.keyboard),('serial-sent.bin',self.serial_out)]:
    (self.output/name).write_bytes(data)
-  (self.output/'modem.json').write_text(json.dumps({'events':self.events,'telnet':self.codec.events,'flow_mode':'software' if self.soft else 'none','raw':self.raw,'baud':self.baud,'guarded_hangup_seconds':self.hangup_guard.guard if self.hangup_guard else None,'packet_delay_ms':self.packet_delay_ms,'packet_limit_bytes':256 if self.packet_delay_ms else None,'limitations':['Test modem model, not physical Wi-Fi modem firmware.','Telnet belongs to the explicit raw upstream when selected; all ANSI replies come from actual DOS.','ATD connects only configured loopback test BBS.','Optional guarded +++/ATH model matches the declared fixture guard; it is not a complete Hayes interpreter.','Optional buffering groups serial bytes without parsing them; TCP receive boundaries remain uncontrolled.']},indent=2)+'\n')
+  (self.output/'modem.json').write_text(json.dumps({'events':self.events,'telnet':self.codec.events,'flow_mode':'RTS-model' if self.hardware_flow else 'software' if self.soft else 'none','raw':self.raw,'baud':self.baud,'guarded_hangup_seconds':self.hangup_guard.guard if self.hangup_guard else None,'packet_delay_ms':self.packet_delay_ms,'packet_limit_bytes':256 if self.packet_delay_ms else None,'limitations':['Test modem model, not physical Wi-Fi modem firmware.','Telnet belongs to the explicit raw upstream when selected; all ANSI replies come from actual DOS.','ATD connects only configured loopback test BBS.','Optional guarded +++/ATH model matches the declared fixture guard; it is not a complete Hayes interpreter.','Optional buffering groups serial bytes without parsing them; TCP receive boundaries remain uncontrolled.']},indent=2)+'\n')

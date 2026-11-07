@@ -22,6 +22,7 @@ from check_editor_dos import audit
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--keymap-helper', type=Path, help='Owned source helper for Alt-F8 editor roundtrip')
     p.add_argument('--runtime', type=Path, required=True)
     p.add_argument('--terminal', type=Path, required=True)
     p.add_argument('--label', required=True)
@@ -44,6 +45,10 @@ def main():
     p.add_argument('--size-probe', action='store_true', help='Use staged pre-session size owner and valid owned startup preferences')
     p.add_argument('--phone-log', action='store_true', help='Enable and passively audit the call log during the real BBS workflow')
     args = p.parse_args()
+    if args.keymap_helper:
+        args.keymap_helper=args.keymap_helper.resolve()
+        assert not any((args.meta_keys_overlay,args.chat_help_overlay,args.external_viewer_overlay,args.external_editor_overlay,args.file_viewer_overlay,args.file_directory_overlay,args.gateway_overlay,args.reference_overlay,args.directory_overlay,args.phone_log,args.multiline_editor))
+        assert args.size_probe and args.screen_reference and (args.display_rows,args.status_hidden)==(25,0)
     if args.external_editor_overlay:
         assert not args.external_viewer_overlay
         args.external_viewer_overlay=True
@@ -105,6 +110,11 @@ def main():
     if args.meta_keys_overlay:
         from meta_front_bbs_support import SOURCES
         sources += [ROOT/n for n in SOURCES]
+    if args.keymap_helper:
+        from keymap_bbs_support import SOURCES
+        sources += [ROOT/n for n in SOURCES]
+        proof=json.loads(args.keymap_helper.with_name('result.json').read_text())
+        sources += [args.keymap_helper,args.keymap_helper.with_name('result.json')]+[ROOT/n for n in proof['sources']]
     before = {str(f.relative_to(ROOT)): sha(f) for f in sources}
     base = ROOT/'build/bbs-lab'
     bridge = base/(args.label+'-proxy')
@@ -127,6 +137,13 @@ def main():
             (ROOT/'lab/bbs/editor-recipes.json').read_text())['enigma_unsaved']['keyboard_input']
         observer=None
         chat_help_proof=None
+        if args.keymap_helper:
+            from keymap_bbs_support import prepare,KEYS
+            keymap_folder=base/(args.label+'-keymap')
+            binary,observer=prepare(keymap_folder,binary,args.keymap_helper)
+            marker='K E Y T E S T enter p1800 '
+            assert keys.count(marker)==1
+            keys=keys.replace(marker,marker+KEYS)
         if args.meta_keys_overlay:
             from meta_front_bbs_support import prepare,KEYS
             observer=prepare(base/(args.label+'-meta-keys'),binary)
@@ -233,6 +250,7 @@ def main():
             '--irq', '5', '--mouse-scales', '8', '4', '--cpu', '8086',
             '--timeout', '160', '--wait', exit_wait, '--raw-upstream', '--keys', keys]
         if args.size_probe:command+=['--display-rows',str(args.display_rows),'--status-hidden',str(args.status_hidden)]
+        if args.keymap_helper:command+=['--keymap-fixture',str(keymap_folder/'BOARD.KBD'),'--keymap-expected',str(keymap_folder/'EXPECT.KBD')]
         if observer:command+=['--video-observer',str(observer)]
         if external_child:command+=['--external-viewer-fixture',str(external_child)]
         if external_child:command+=['--external-command-tool',external_tool]
@@ -307,6 +325,9 @@ def main():
         if args.external_viewer_overlay:
             from external_viewer_bbs_support import audit as audit_external
             result['external_viewer']=audit_external(output,external_tool);checks['actual_external_viewer_roundtrip']=result['external_viewer']['passed'];result['passed']=all(checks.values())
+        if args.keymap_helper:
+            from keymap_bbs_support import audit as audit_keymap
+            result['keymap']=audit_keymap(output,keymap_folder,binary);checks['actual_keymap_roundtrip']=result['keymap']['passed'];result['passed']=all(checks.values())
         if args.meta_keys_overlay:
             from meta_front_bbs_support import audit as audit_meta
             result['meta_front']=audit_meta(output,binary);checks['actual_Meta_Keys_editor_roundtrip']=result['meta_front']['passed'];result['passed']=all(checks.values())
