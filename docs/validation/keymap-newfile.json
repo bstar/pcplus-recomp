@@ -1,0 +1,1061 @@
+{
+  "checkpoint_verified": true,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+  "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+  "evidence": {
+    "build/keymap-original-newfile-20261107/result.json": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "missing-exit",
+          "passed": true,
+          "ready_frame_sha256": "d8209d3791f0c6b2c1e58203e2018809dfb7231cd26b9181571393114cd31be0",
+          "file_created": false,
+          "file_bytes": null,
+          "file_sha256": null,
+          "observer_unhook_verified": true
+        },
+        {
+          "case": "missing-save",
+          "passed": true,
+          "ready_frame_sha256": "d8209d3791f0c6b2c1e58203e2018809dfb7231cd26b9181571393114cd31be0",
+          "file_created": true,
+          "file_bytes": 31284,
+          "file_sha256": "01ae3f892599792aa6b2ad12358d5450bf5b2430f008c53e834168ea5301524d",
+          "observer_unhook_verified": true
+        },
+        {
+          "case": "missing-edit-discard",
+          "passed": true,
+          "ready_frame_sha256": "d8209d3791f0c6b2c1e58203e2018809dfb7231cd26b9181571393114cd31be0",
+          "file_created": false,
+          "file_bytes": null,
+          "file_sha256": null,
+          "observer_unhook_verified": true
+        },
+        {
+          "case": "missing-edit-save",
+          "passed": true,
+          "ready_frame_sha256": "d8209d3791f0c6b2c1e58203e2018809dfb7231cd26b9181571393114cd31be0",
+          "file_created": true,
+          "file_bytes": 31284,
+          "file_sha256": "46a8aabcb5c166f4dc96620a8c4bd15427a94f691b702f10dcfe158ebb53d10d",
+          "observer_unhook_verified": true
+        }
+      ],
+      "cpu": "8086",
+      "original_sha256": "f079418fca6392cde318e2eb657874a1f5ee10db83616c83054d191441fb6244",
+      "scope": "Observe original missing-KBD behavior on isolated synthetic DOS media only. Original copied only into ignored build; explicit PCPLUS environment cleared; no private files or application builds. This tests first missing-file load, explicit save, edit/discard and edit/save, not every open failure or factory-map source.",
+      "receipt_sha256": "7790d12ac4041755171df426668a5ca1e3c6e1f86de8b41d63bef9ebbb3abd40",
+      "source_count_checked": 2
+    },
+    "build/keymap-newfile-workflows-20261107/result.json": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "missing-exit",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "missing-save-blank",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636,
+            "NEW.KBD": 31284
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "missing-save",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636,
+            "NEW.KBD": 31284
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "missing-discard",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "missing-save-on-exit",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636,
+            "NEW.KBD": 31284
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "missing-profile32",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636,
+            "NEW.KBD": 31284
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "open-new-unsaved",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "open-new-save",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636,
+            "NEW.KBD": 31284
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "discard-existing-open-new",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636,
+            "NEW.KBD": 31284
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "new-open-existing",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "new-dirty-open-existing",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "new-repeat-save",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636,
+            "NEW.KBD": 31284
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "new-stage-conflict",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "OLD.KBD": 6636
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "missing-parent",
+          "passed": true,
+          "exit": 3,
+          "file_bytes": {
+            "OLD.KBD": 6636
+          },
+          "exact_files_and_screen": true
+        },
+        {
+          "case": "empty-existing",
+          "passed": true,
+          "exit": 3,
+          "file_bytes": {
+            "OLD.KBD": 6636,
+            "NEW.KBD": 0
+          },
+          "exact_files_and_screen": true
+        }
+      ],
+      "cpu": "8086",
+      "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+      "scope": "Source mapper new-file workflow; explicit save only, no invented mappings. Exact files/lengths and screen/cursor/shape on owned media. Missing leaf starts blank33 profiles; creation only on explicit save. Does not cover parent/connected BBS or physical filesystem failure.",
+      "receipt_sha256": "e49fc40398172adf106f716b77bdabde35f23ee7acad3a021e33d3ccca926863",
+      "source_count_checked": 3
+    },
+    "build/keymap-newfile-full-workflows-20261107/result.json": {
+      "passed": true,
+      "cases": [
+        {
+          "name": "ready",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "cancel",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "save",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "discard",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "save-on-exit",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "cancel-exit",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "next-wrap",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "previous-wrap",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "open-missing-discard",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "open",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "legacy",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "long",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "conflict",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        },
+        {
+          "name": "readonly",
+          "passed": true,
+          "exact_files": true,
+          "screen_cursor_shape_restored": true
+        }
+      ],
+      "cpu": "8086",
+      "binary_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+      "scope": "Actual standalone foreground helper edit/cancel/save/open/profile wrap/refusals/restore on synthetic files. No parent EXEC, factory defaults, physical or modem acceptance.",
+      "receipt_sha256": "33db2d0f5308c95c2540e420e4fdb55b00569759fedc1a7b67a8d3dbb6acb31b",
+      "source_count_checked": 4
+    },
+    "build/keymap-newfile-prefix-workflows-20261107/result.json": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "short-save",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "one-save",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 948
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "next-wrap",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "previous-wrap",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "open-short-clamp",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 31284
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "open-one-clamp",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "open-full-preserve",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "open-short-preserve",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 31284
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "failed-open-keeps-count",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 31284
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "discard-missing",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "readonly",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "conflict",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "legacy",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "missing-profile",
+          "passed": true,
+          "exit": 3,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "truncated",
+          "passed": true,
+          "exit": 3,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6635
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "empty",
+          "passed": true,
+          "exit": 3,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 0
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "oversized",
+          "passed": true,
+          "exit": 3,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 31285
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "malformed",
+          "passed": true,
+          "exit": 3,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948,
+            "SYN.KBD": 6636
+          },
+          "all_bytes_and_screen_preserved": true
+        },
+        {
+          "case": "absent",
+          "passed": true,
+          "exit": 0,
+          "file_bytes": {
+            "SHORT.KBD": 6636,
+            "FULL.KBD": 31284,
+            "ONE.KBD": 948
+          },
+          "all_bytes_and_screen_preserved": true
+        }
+      ],
+      "cpu": "8086",
+      "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+      "scope": "Owned short1/7/full33 foreground navigation/save/Open/clamp/failure workflows and rejected initial files. Every file byte/length plus screen/cursor/shape required; no parent or physical acceptance.",
+      "receipt_sha256": "9f13a1547a303b4395d63c16b20902998160fbf7f2a38f7a0e7f74eab47df3f9",
+      "source_count_checked": 3
+    },
+    "build/keymap-newfile-parent-20261107/result.json": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "save",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "online_triggers_sent": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true,
+            "RIS_retains_binding": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-save/result.json"
+        },
+        {
+          "case": "cancel",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-cancel/result.json"
+        },
+        {
+          "case": "discard",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-discard/result.json"
+        },
+        {
+          "case": "other-file",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-other-file/result.json"
+        },
+        {
+          "case": "other-profile",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-other-profile/result.json"
+        },
+        {
+          "case": "missing-helper",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": null,
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-missing-helper/result.json"
+        },
+        {
+          "case": "invalid-return",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "fb55b71bebb202539181065e77964f9c75e42dfdf268e6256e0e74872503ac81",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-invalid-return/result.json"
+        },
+        {
+          "case": "recovery-exit",
+          "passed": true,
+          "checks": {
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "80ae740b80b0aba9027f89d6c8d50a6659aa49731e39d1d14df09405d730392c",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-recovery-exit/result.json"
+        },
+        {
+          "case": "error-valid-return",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "591da65fcb2eea54a7ecee002267b2e664835ea48d7ae77aad76bcd2f42b8cdb",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-error-valid-return/result.json"
+        },
+        {
+          "case": "reference",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-reference/result.json"
+        },
+        {
+          "case": "browser",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "SYN_exact": true,
+            "NEXT_exact": true,
+            "live_binding": true,
+            "ordinary_keys_resume": true
+          },
+          "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+          "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+          "raw_result": "build/connection-dos/keymap-newfile-parent-20261107-browser/result.json"
+        }
+      ],
+      "cpu": "8086",
+      "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "scope": "Actual new Alt-F8/foreground child/strict reload/live key output/RIS and hardware restore on owned synthetic media. No physical, source-package or live BBS acceptance.",
+      "profiles": 7,
+      "file_bytes": 6636,
+      "receipt_sha256": "6f5a09629a8ab786fc30d5cf9f3a6995993a2d239cb7b3a1bb5fd5426db7d041",
+      "source_count_checked": 5
+    },
+    "build/keymap-newfile-create-parent-20261107/result.json": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "create-selected",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "ordinary_keys_resume": true,
+            "products_unchanged": true,
+            "no_staging": true,
+            "exact_new_file": true,
+            "frozen_live_selection": true
+          },
+          "raw_result": "build/connection-dos/keymap-newfile-create-parent-20261107-create-selected/result.json"
+        },
+        {
+          "case": "discard-selected",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "ordinary_keys_resume": true,
+            "products_unchanged": true,
+            "no_staging": true,
+            "discard_creates_nothing": true
+          },
+          "raw_result": "build/connection-dos/keymap-newfile-create-parent-20261107-discard-selected/result.json"
+        },
+        {
+          "case": "create-other",
+          "passed": true,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "fixture_unchanged_SYN.KBD": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "ordinary_keys_resume": true,
+            "products_unchanged": true,
+            "no_staging": true,
+            "exact_new_file": true,
+            "frozen_live_selection": true
+          },
+          "raw_result": "build/connection-dos/keymap-newfile-create-parent-20261107-create-other/result.json"
+        }
+      ],
+      "cpu": "8086",
+      "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+      "scope": "Actual connected parent creates an absent KBD or retains its frozen selection. Real DOS/BIOS/files/UART and maintained parent/helper; synthetic serial modem, no physical/private configuration acceptance.",
+      "receipt_sha256": "575928fd5fa47068f572a8d7d6aa3b778bd571c576a7e7171918a43a3220deb3",
+      "source_count_checked": 743
+    },
+    "build/keymap-newfile-helper-source-20261107/result.json": {
+      "passed": true,
+      "binary_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+      "source_count": 18,
+      "scope": "Exact helper from declared public inputs in an empty export; outer pinned Nix supplies tools. Runtime/parent/BBS/physical acceptance is separate.",
+      "receipt_sha256": "48d5fff5263515af25443916b9bde87c15f8c3eb6a28aaf42abe0c7ed5f50a0d",
+      "source_count_checked": 18
+    },
+    "build/bbs-lab/results/enigma/newfile-keymap-enigma-20261107/proxy-integration.json": {
+      "passed": true,
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "actual_keymap_roundtrip": true,
+        "reference_freeze_completed": true,
+        "expected_geometry_advertised": true
+      },
+      "binary_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "scope": "Actual DOS8086 COM3/IRQ5 terminal, synthetic Hayes/nullmodem, actual SynthModem proxy and stock loopback ENiGMA. Explicit paced serial delivery; no SIP/DSP, physical CTS or analog acceptance.",
+      "receipt_sha256": "7a759970f08beb3142ad8569487423385521aa46407f5cef87a56446db0212ad",
+      "source_count_checked": 0
+    },
+    "build/bbs-lab/results/enigma/newfile-keymap-enigma-20261107/keymap-audit.json": {
+      "passed": true,
+      "checks": {
+        "preserved_KBD_length": true,
+        "application_exit_zero": true,
+        "no_save_residue": true,
+        "observer_complete": true,
+        "exact_editor_frame": true,
+        "cursor_shape": true,
+        "mode_rows": true,
+        "actual_mapper": true,
+        "actual_F1_notation": true,
+        "only_intended_KBD_edit": true,
+        "local_edit_never_sent": true,
+        "subsequent_editor_keys": true,
+        "helper_unchanged": true
+      },
+      "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+      "scope": "Actual Alt-F8/helper edit/save/Escape inside stock BBS editor; exact whole KBD mutation and passive 4000-byte frame/cursor/shape return, ordinary editor input resumes. No physical modem/SIP/audio acceptance.",
+      "profiles": 7,
+      "file_bytes": 6636,
+      "receipt_sha256": "090ae82c9239f68c4c106d0fe9553fc26d54663746c943bd2d81a965f842d6ae",
+      "source_count_checked": 5
+    },
+    "build/bbs-lab/results/enigma/newfile-keymap-enigma-20261107/size-probe-screen-audit.json": {
+      "passed": true,
+      "binary_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "scope": "Audit actual DOS size probe, captured BBS NAWS and CPR-bounded editor cells.\n\nOwned admitted-height loopback editor scope; no physical/SIP/DSP or all-screen acceptance.\n",
+      "receipt_sha256": "c0013fd73b34781d0f0444c922452a3a789cd23e10d55cc35f7b1ecfc3ab9cd1",
+      "source_count_checked": 1
+    },
+    "build/bbs-lab/results/synchronet/newfile-keymap-sync-20261107/proxy-integration.json": {
+      "passed": true,
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "runtime_unchanged": true,
+        "server_static_inputs_unchanged": true,
+        "message_bodies_unchanged": true,
+        "no_message_mail_or_transfer_writes": true,
+        "actual_ASPECT_login": true,
+        "staged_inputs_unchanged": true,
+        "frozen_editor_frame": true,
+        "actual_CPR_boundary": true,
+        "fixture_CPR_consumed": true,
+        "expected_geometry_advertised": true,
+        "source_inputs_unchanged": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true,
+        "actual_keymap_roundtrip": true
+      },
+      "binary_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "scope": "Actual DOS386 COM3/IRQ5 candidate and stock owned Synchronet FSEditor through the real SynthModem proxy. Viewer variant explicitly enables XMS/UMB, disables EMS and requires its passive observer in upper memory.250ms key framing/20ms input pacing. Editor bytes freeze at a real CPR; held continuation independently checks normal Ctrl-Q abort and unchanged message bodies. No application patch, unframed/SIP/DSP/analog or physical acceptance.",
+      "receipt_sha256": "100d639bb564f8130cd6c9f24903ee3dfdfd5a421ca2d81131e4c4820d999cfd",
+      "source_count_checked": 0
+    },
+    "build/bbs-lab/results/synchronet/newfile-keymap-sync-20261107/keymap-audit.json": {
+      "passed": true,
+      "checks": {
+        "preserved_KBD_length": true,
+        "application_exit_zero": true,
+        "no_save_residue": true,
+        "observer_complete": true,
+        "exact_editor_frame": true,
+        "cursor_shape": true,
+        "mode_rows": true,
+        "actual_mapper": true,
+        "actual_F1_notation": true,
+        "only_intended_KBD_edit": true,
+        "local_edit_never_sent": true,
+        "subsequent_editor_keys": true,
+        "helper_unchanged": true,
+        "KMSEG.BIN_in_UMB": true,
+        "KEYSEG.BIN_in_UMB": true
+      },
+      "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+      "scope": "Actual Alt-F8/helper edit/save/Escape inside stock BBS editor; exact whole KBD mutation and passive 4000-byte frame/cursor/shape return, ordinary editor input resumes. No physical modem/SIP/audio acceptance.",
+      "profiles": 7,
+      "file_bytes": 6636,
+      "receipt_sha256": "657210398bd4ee6daf15c818ee7f87af618df6fdcb5b0f9737e9450579d1784d",
+      "source_count_checked": 5
+    },
+    "build/bbs-lab/results/synchronet/newfile-keymap-sync-20261107/size-probe-screen-audit.json": {
+      "passed": true,
+      "binary_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "scope": "Audit actual DOS size probe, captured BBS NAWS and CPR-bounded editor cells.\n\nOwned admitted-height loopback editor scope; no physical/SIP/DSP or all-screen acceptance.\n",
+      "receipt_sha256": "21749a7567f7164140e924403346490675bb8eda9940a7ddf00f994b12933f2a",
+      "source_count_checked": 1
+    },
+    "build/bbs-lab/results/synchronet/newfile-keymap-sync-20261107/keymap-flow-audit.json": {
+      "passed": true,
+      "checks": {
+        "actual_mapper_and_editor_return": true,
+        "control_line_model": true,
+        "post_subject_pause_observed": true,
+        "no_BBS_bytes_delivered_while_paused": true,
+        "actual_DOS_exit_zero": true
+      },
+      "parent_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
+      "scope": "Actual DOSBox RTS envelopes, model holds peer CTS/DSR high and gates single-byte BBS delivery while RTS is low. DTR stays asserted during measured mapper pause. No real CTS transitions, modem latency, analog/SIP/audio or physical acceptance.",
+      "receipt_sha256": "35e79b48aeea4a48b73dabcdcbd612aadac29bae8cb9d590636cf6db250b8a39",
+      "source_count_checked": 1
+    }
+  },
+  "static_provenance": {
+    "original_sha256": "f079418fca6392cde318e2eb657874a1f5ee10db83616c83054d191441fb6244",
+    "original_load": {
+      "address": "0x10714",
+      "last_instruction": "0x1078b",
+      "evidence_id": "ev_1243f3ea2851fcdc46c0601c18aca73a866e90dc173b7b4b9122992d56cc22d5"
+    },
+    "original_save": {
+      "address": "0x10970",
+      "last_instruction": "0x10a2a",
+      "evidence_id": "ev_f431acc763c2af1c81fa6d452b8de6fd87d454f1dea77f61f17bf5a6f771b629"
+    },
+    "filename_resolution": {
+      "address": "0x10839",
+      "evidence_id": "ev_c7c4481a6a0a135e2e949d17dd068643f11ed91e547538148d02c0efc906ea54",
+      "pseudocode_view": "ev_1cc53186228d33d55cce7aeb9875e17bf43dc12f50e2f759242a76cd8dd89f14"
+    },
+    "static_only": true,
+    "originals_exported_publicly": false
+  },
+  "limitations": [
+    "Only missing leaf DOS2 starts a new source-helper file; other errors retain/refuse existing data.",
+    "Blank33-profile file is authored empty storage, not imported factory mappings.",
+    "Original filename/environment fallback statically traced; maintained parent retains frozen absolute selection.",
+    "Original GUI observations are distinct from maintained GUI/software serial checks and physical acceptance.",
+    "Reviewed package promotion follows separately."
+  ]
+}

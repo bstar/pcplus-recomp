@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [new-file helper checkpoint](KEYMAP_NEWFILE.md) recovers original missing-file
+semantics and adds unsaved blank tables with explicit creation, exact existing
+file preservation and parent publication/frozen-selection checks. Original
+observations and source/BBS tests are separate from reviewed package promotion.
+This corrects the earlier assumption that missing-file loading imports factory
+mappings; the observed path clears bindings instead.
+
 Current reviewed software checkpoint: [preserve-length keyboard editing](KEYMAP_PREFIX.md)
 and [contract2 packaging](KEYMAP_PACKAGE.md). The helper accepts existing1..33
 complete profiles without padding; the parent and other application bytes are

@@ -12,7 +12,7 @@ static unsigned char bindings[KBD_EDITOR_BYTES];
 static unsigned short frame[2000],saved[2000];
 static unsigned char __far *baseline;
 static char target[64],leaf[13];
-static unsigned profile,profiles,dirty,held,legacy,shape,old_cursor,page;
+static unsigned profile,profiles,baseline_exists,dirty,held,legacy,shape,old_cursor,page;
 static unsigned short __far *video;
 static unsigned raw_key(void)
 {union REGS a,b;a.h.ah=(unsigned char)(legacy?0:0x10);int86(0x16,&a,&b);return b.x.ax;}
@@ -44,7 +44,7 @@ static void footer(const char *message)
 static void notice(const char *message)
 {footer(message);paint();cursor(0,shape|0x2000);raw_key();}
 static void redraw(void)
-{keymap_screen_render(frame,profile,bindings+profile*948,leaf);paint();cursor(0,shape|0x2000);}
+{keymap_screen_render(frame,profile,bindings+profile*948,leaf);if(!baseline_exists)footer("New keyboard file. Alt-S creates it; Esc leaves it unsaved.");paint();cursor(0,shape|0x2000);}
 static unsigned recovery(const directory_replace_result *r)
 {return r->close_error || r->rollback_error || r->original_in_backup || r->stage_exists;}
 static unsigned canonical(const char *name,char *path)
@@ -57,13 +57,13 @@ static void set_leaf(void)
 static unsigned save(void)
 {
  directory_replace_result r;unsigned e;
- memset(&r,0,sizeof(r));e=kbd_editor_prefix_save(target,baseline,bindings,profiles*948,&r);
+ memset(&r,0,sizeof(r));e=kbd_editor_prefix_save(target,baseline_exists?baseline:0,bindings,profiles*948,&r);
  if(e){
   if(recovery(&r)){held=1;notice("KBD recovery required. Retained files must be checked. Press a key.");}
   else notice("Save failed; definitions remain in memory. Press a key.");
   return 0;
  }
- _fmemcpy(baseline,bindings,KBD_EDITOR_BYTES);dirty=0;return 1;
+ _fmemcpy(baseline,bindings,KBD_EDITOR_BYTES);baseline_exists=1;dirty=0;return 1;
 }
 /* Return0 cancels the request;1 means discard or a successful save. */
 static unsigned leave_dirty(void)
@@ -93,7 +93,7 @@ static unsigned prompt_name(char *name)
 }
 static void open_file(void)
 {
- char name[13],path[64];directory_replace_result r;unsigned e;
+ char name[13],path[64];directory_replace_result r;unsigned e,exists=1;
  if(!leave_dirty() || held)return;
  if(!prompt_name(name))return;
  strcat(name,".KBD");if(!canonical(name,path)){notice("Invalid keyboard filename. Press a key.");return;}
@@ -103,11 +103,14 @@ static void open_file(void)
  if(dirty){_fmemcpy(bindings,baseline,KBD_EDITOR_BYTES);dirty=0;}
  _ffree(baseline);baseline=0;
  memset(&r,0,sizeof(r));e=kbd_editor_prefix_load(path,bindings,&r);
+ /* Only a genuinely absent leaf starts a new blank file. Other open/load
+  * errors retain the previous image; no defaults or disk writes occur here. */
+ if(e==DIRECTORY_REPLACE_SOURCE_OPEN && r.dos_error==2 && !r.close_error){memset(bindings,0,KBD_EDITOR_BYTES);r.bytes_processed=KBD_EDITOR_BYTES;e=0;exists=0;}
  baseline=_fmalloc(KBD_EDITOR_BYTES);
  if(!baseline){held=1;notice("Insufficient memory; no file was replaced. Press a key.");return;}
  _fmemcpy(baseline,bindings,KBD_EDITOR_BYTES);
  if(e){if(r.close_error)held=1;notice("Open failed; previous saved file retained. Press a key.");return;}
- profiles=r.bytes_processed/948;if(profile>=profiles)profile=0;strcpy(target,path);set_leaf();dirty=0;
+ profiles=r.bytes_processed/948;baseline_exists=exists;if(profile>=profiles)profile=0;strcpy(target,path);set_leaf();dirty=0;
 }
 static void edit(unsigned slot)
 {
@@ -141,6 +144,8 @@ int main(int argc,char **argv)
  if(argc==4){if(strcmp(argv[3],"/LEGACY"))return 2;legacy=1;}
  if(!canonical(argv[2],target)){puts("Invalid keyboard path.");return 2;}
  memset(&r,0,sizeof(r));e=kbd_editor_prefix_load(target,bindings,&r);
+ baseline_exists=1;
+ if(e==DIRECTORY_REPLACE_SOURCE_OPEN && r.dos_error==2 && !r.close_error){memset(bindings,0,KBD_EDITOR_BYTES);r.bytes_processed=KBD_EDITOR_BYTES;e=0;baseline_exists=0;}
  if(e){printf("Keyboard file could not load (status %u, DOS %u).\n",e,r.dos_error);return r.close_error?14:3;}
  profiles=r.bytes_processed/948;
  if(profile>=profiles){puts("Selected terminal is not present in this keyboard file.");return 3;}

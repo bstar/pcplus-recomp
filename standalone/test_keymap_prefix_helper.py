@@ -45,7 +45,7 @@ def main():
         ('empty',b'',0,'',None,None,3),
         ('oversized',full+b'X',6,'',None,None,3),
         ('malformed',bytes(malformed),6,'',None,None,3),
-        ('absent',None,6,'',None,None,3),
+        ('absent',None,6,'escape',None,None,0),
     ]
     rows=[]
     for name,initial,profile,keys,edited,edited_profile,status in cases:
