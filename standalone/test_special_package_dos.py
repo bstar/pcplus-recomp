@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False,meta_editor=False,keymap_editor=False,keymap_profiles=33):
+def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False,meta_editor=False,keymap_editor=False,keymap_profiles=33,keymap_new_file=False):
     assert not precompile or not (setup or splash_only or after_child_view)
     assert not chat_help or not (setup or splash_only or after_child_view or precompile)
     manifest = json.loads((package / 'manifest.json').read_text())
@@ -132,6 +132,9 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     if chat_help:keys='p900 enter p1800 a-o p1500 A B p1000 a-z p2500 escape p1200 escape p1000 a-x'
     if native_line_port:keys='p900 enter p1800 a-p p2200 escape p1000 a-x'
     if keymap_editor:keys='p900 enter p1800 a-f8 p3000 f1 p200 tab n e w enter p300 a-s p900 escape p900 a-x'
+    if keymap_new_file:
+        assert keymap_editor
+        keys=keys.replace('p3000 f1','p3000 a-o p200 n e w enter p500 f1')
     if meta_editor:keys='p900 enter p1800 a-m p3000 escape p900 a-z p2500 escape p700 a-x'
     config = ('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\n'
               'cycles=fixed 12000\n[serial]\n'+
@@ -185,8 +188,9 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert before==after and before[3200:3204:2]==b'AB' and helper[2:20:2]==b'Chat Mode'
         assert not (app/'TEST.ASX').exists() and not (app/'RESULT.BIN').exists()
     elif keymap_editor:
-        expected=bytearray(keymap_profiles*948);expected[6*948+16*12:6*948+16*12+4]=b'new\0'
-        assert (app/'SYN.KBD').read_bytes()==expected
+        expected=bytearray((33 if keymap_new_file else keymap_profiles)*948);expected[6*948+16*12:6*948+16*12+4]=b'new\0'
+        assert (app/('NEW.KBD' if keymap_new_file else 'SYN.KBD')).read_bytes()==expected
+        if keymap_new_file:assert (app/'SYN.KBD').read_bytes()==bytes(keymap_profiles*948)
         assert not (app/'KBDSTG.$$$').exists() and not (app/'KBDBAK.$$$').exists()
     elif not observe:
         assert (app / 'RESULT.BIN').read_bytes() == b'SPECIAL-COMPILED'
@@ -197,7 +201,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, dos_directory=dos_directory,cpu='8086', port=com, io_base=base, resident_observer=observe,
                   irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,chat_help=chat_help,
-                  native_line_port=native_line_port,meta_editor=meta_editor,keymap_editor=keymap_editor,keymap_profiles=keymap_profiles if keymap_editor else None,
+                  native_line_port=native_line_port,meta_editor=meta_editor,keymap_editor=keymap_editor,keymap_profiles=keymap_profiles if keymap_editor else None,keymap_new_file=keymap_new_file,
                   packaged_ASPECT_clock_alarm_exercised=new_commands,
                   packaged_ASPECT_EMULATE_exercised=emulate,
                   package_manifest_sha256=sha(package / 'manifest.json'),
@@ -205,7 +209,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
                   private_fixture_sha256={leaf:sha(app/leaf) for leaf in fixtures},
                   checks=['launcher returns to DOS', 'PCPLUS environment restored',
                           f'COM{com}/PIC/IRQ vectors restored', 'private PRM/DIR/KEY/KBD/XLT/FON unchanged',
-                          'packaged binaries unchanged'] + (['actual packaged Alt-F8 saves only the selected KBD and returns; shorter private KBD unchanged'] if keymap_editor else ['actual packaged Alt-M loads its sibling module and returns'] if meta_editor else ['actual packaged Alt-P loads its sibling module and returns'] if native_line_port else ['actual packaged Chat/PCHELP round trip retains AB and exact frame/cursor'] if chat_help else ['actual magenta splash captured by independent timer'] if observe else
+                          'packaged binaries unchanged'] + (['actual packaged Alt-F8 explicitly creates NEW.KBD; frozen SYN/private KBD unchanged'] if keymap_new_file else ['actual packaged Alt-F8 saves only the selected KBD and returns; shorter private KBD unchanged'] if keymap_editor else ['actual packaged Alt-M loads its sibling module and returns'] if meta_editor else ['actual packaged Alt-P loads its sibling module and returns'] if native_line_port else ['actual packaged Chat/PCHELP round trip retains AB and exact frame/cursor'] if chat_help else ['actual magenta splash captured by independent timer'] if observe else
                           [('DOS precompilation produces exact ASX' if precompile else 'nested DOS source compilation produces exact ASX'), 'script writes expected result'])+(['DOS allocation strategy restored'] if strategy else [])+(['frozen-history viewer reopens after nested child return'] if after_child_view else []),
                   sources={n: sha(ROOT / n) for n in ['standalone/test_special_package_dos.py',
                            'standalone/special_watch.asm', 'standalone/test_terminal.py',
@@ -232,13 +236,15 @@ def main():
     p.add_argument('--native-line-port',action='store_true',help='Observe packaged Alt-P loading its matching sibling module')
     p.add_argument('--keymap-editor',action='store_true',help='Edit/save through packaged START and its sibling PCKEYMAP, preserving existing private fixtures')
     p.add_argument('--keymap-profiles',type=int,choices=[7,33],default=33,help='Existing synthetic KBD size for the packaged mapper test')
+    p.add_argument('--keymap-new-file',action='store_true',help='Open/create a separate NEW.KBD while preserving the frozen selected file')
     p.add_argument('--meta-editor',action='store_true',help='Observe packaged Alt-M loading its matching sibling module')
     args = p.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     assert not (args.setup and args.splash_only)
     assert args.keymap_editor or args.keymap_profiles==33
-    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port,args.meta_editor,args.keymap_editor,args.keymap_profiles)
+    assert args.keymap_editor or not args.keymap_new_file
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port,args.meta_editor,args.keymap_editor,args.keymap_profiles,args.keymap_new_file)
 
 
 if __name__ == '__main__':

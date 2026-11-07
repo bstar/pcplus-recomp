@@ -33,13 +33,13 @@ def inspect(path,profile):
                 selected_profile_present=len(selected)==PROFILE_BYTES,
                 selected_unterminated_slots=selected_bad,
                 parent_content_compatible=stable and complete and len(selected)==PROFILE_BYTES and not selected_bad,
-                helper_contract=2,
+                helper_contract=3,
                 helper_content_compatible=stable and len(selected)==PROFILE_BYTES and all_bad is not None and not all_bad,
                 legacy_full_helper_content_compatible=stable and before.st_size==HELPER_BYTES and all_bad is not None and not all_bad,
                 helper_unterminated_slot_count=len(all_bad) if all_bad is not None else None,
                 sha256=hashlib.sha256(whole).hexdigest() if whole is not None else None,
                 content_check_only=True,
-                scope='Read-only content check against maintained selected-profile loader and contract2 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified.')
+                scope='Read-only existing-file content check against maintained selected-profile loader and contract3 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, new-file creation, file locking and hardware are not verified.')
 
 
 def main():

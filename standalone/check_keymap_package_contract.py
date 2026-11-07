@@ -26,7 +26,9 @@ def main():
     for name,field,value in [('unknown-version','contract',99),('wrong-profile-size','profile_bytes',947),
             ('empty-file-allowed','minimum_profiles',0),('excess-profiles','maximum_profiles',34),
             ('wrong-maximum-size','maximum_KBD_bytes',31285),('padding-allowed','preserves_file_length',False),
-            ('wrong-recovery-exit','recovery_exit',0),('wrong-arguments','arguments','filename')]:
+            ('wrong-recovery-exit','recovery_exit',0),('wrong-arguments','arguments','filename'),
+            ('wrong-new-size','new_file_profiles',7),('implicit-create','new_file_creation','on-open'),
+            ('replace-open-errors','missing_leaf_only',False)]:
         profile=copy.deepcopy(reviewed);profile[field]=value
         try:reviewed_keymap_profile(profile);accepted=True
         except (AssertionError,KeyError):accepted=False

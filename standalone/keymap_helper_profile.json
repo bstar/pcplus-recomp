@@ -1,13 +1,16 @@
 {
   "kind": "reviewed-source-keymap-helper",
-  "contract": 2,
+  "contract": 3,
   "parent_feature": "experimental_keymap_editor",
-  "helper_sha256": "618443f4b12d79c0460c4819b569db82a8b81ecc5e081c5587867e4948d834bd",
+  "helper_sha256": "5a917b936982532361aad8d3908b176f47c7c0053973f63751288380e5d16d85",
   "arguments": "profile frozen-absolute-KBD-path [/LEGACY]",
   "recovery_exit": 14,
   "profile_bytes": 948,
   "minimum_profiles": 1,
   "maximum_profiles": 33,
   "maximum_KBD_bytes": 31284,
-  "preserves_file_length": true
+  "preserves_file_length": true,
+  "new_file_profiles": 33,
+  "new_file_creation": "explicit-save",
+  "missing_leaf_only": true
 }
