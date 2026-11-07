@@ -13,6 +13,11 @@ def main():
  assert m['original_inputs']==[] and not m['card_written']
  allowed={'TERMINAL.EXE','ASPECT.EXE','ASPCOMP.EXE','PRMEDIT.EXE','XLTEDIT.EXE','LOCHELP.HLP','START.BAT','SETUP.BAT','README.TXT','VERSION.TXT'}
  if m.get('experimental_chat_loader'):allowed.add('PCCHAT.OVL')
+ if m.get('experimental_keymap_editor'):
+  allowed.add('PCKEYMAP.EXE')
+  profile=json.loads((ROOT/'standalone/keymap_helper_profile.json').read_text())
+  assert m['files']['PCKEYMAP.EXE']==m['products']['PCKEYMAP.EXE']['binary_sha256']==profile['helper_sha256']
+  assert m['products']['PCKEYMAP.EXE']['contract']==profile['contract']
  if m.get('experimental_global_help'):allowed.update(('PCHELP.RTE','PCPLUS.HLP'))
  if m.get('experimental_line_port_overlay'):allowed.add('PCLINE.OVL')
  assert not m.get('experimental_meta_editor') or m.get('experimental_meta_editor_module'),'Meta frontend requires its module'

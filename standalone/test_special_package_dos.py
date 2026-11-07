@@ -19,10 +19,11 @@ sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
 
-def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False,meta_editor=False):
+def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_view=False,precompile=False,bios_absent=False,chat_help=False,native_line_port=False,meta_editor=False,keymap_editor=False):
     assert not precompile or not (setup or splash_only or after_child_view)
     assert not chat_help or not (setup or splash_only or after_child_view or precompile)
     manifest = json.loads((package / 'manifest.json').read_text())
+    assert not keymap_editor or (manifest.get('experimental_keymap_editor') and not any((setup,splash_only,after_child_view,precompile,chat_help,native_line_port,meta_editor)))
     assert not meta_editor or (manifest.get('experimental_meta_editor') and not (setup or splash_only or after_child_view or precompile or chat_help or native_line_port))
     assert not native_line_port or (manifest.get('experimental_line_port_overlay') and not (setup or splash_only or after_child_view or precompile or chat_help))
     assert not chat_help or manifest.get('experimental_chat_help')
@@ -52,6 +53,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     if irq is not None:
         assert irq in (3,4,5,7)and manifest.get('experimental_custom_irq')
         struct.pack_into('<H',raw,0x184+2*(com-1),irq)
+    if keymap_editor:struct.pack_into('<H',raw,0x194,6)
     fixtures = {'PCPLUS.PRM': bytes(raw), 'PCPLUS.XLT': bytes(range(256)),
                 'PCPLUS.DIR': b'PRIVATE-DIRECTORY-PRESERVATION-SENTINEL',
                 'PCPLUS.KEY': bytes(10*54), 'PCPLUS.KBD': bytes(7*948),
@@ -59,6 +61,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     # No directory selector is requested; a local dialing file is not opened.
     for leaf, data in fixtures.items():
         (app / leaf).write_bytes(data)
+    if keymap_editor:(app/'SYN.KBD').write_bytes(bytes(33*948))
     source = ('integer value\nproc main\nvalue=' + '(' * 120 + '37' + ')' * 120 +
               '\nif value==37\nfopen 0 "RESULT.BIN" "wb"\n'
               'fputs 0 "SPECIAL-COMPILED"\nfclose 0\nendif\nendproc\n')
@@ -128,6 +131,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     if after_child_view:keys=keys.replace('a-x','c-pgup p1200 escape p500 a-x')
     if chat_help:keys='p900 enter p1800 a-o p1500 A B p1000 a-z p2500 escape p1200 escape p1000 a-x'
     if native_line_port:keys='p900 enter p1800 a-p p2200 escape p1000 a-x'
+    if keymap_editor:keys='p900 enter p1800 a-f8 p3000 f1 p200 tab n e w enter p300 a-s p900 escape p900 a-x'
     if meta_editor:keys='p900 enter p1800 a-m p3000 escape p900 a-z p2500 escape p700 a-x'
     config = ('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\n'
               'cycles=fixed 12000\n[serial]\n'+
@@ -138,7 +142,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
               ('WATCH T\n' if observe else '')+('LINEWAT T\n' if native_line_port or meta_editor else '')+('HELPWAT T\n' if chat_help else '')+('RVIEW T\n' if after_child_view else '')+('STRAT B\n' if strategy else '')+('UNLIST\n' if bios_absent else '')+'SNAP B\n'+
               ('CD \\'+dos_directory+'\nASPCOMP TEST.ASP\nIF ERRORLEVEL 1 GOTO failed\nCD \\\n' if precompile else '')+
               'ADDKEY ' + keys + '\n'
-              'CALL '+dos_root+'\\' + launcher + '.BAT /T:ACTIONS.KEY\n'+
+              'CALL '+dos_root+'\\' + launcher + '.BAT /T:ACTIONS.KEY'+(' /K:'+dos_root+'\\SYN.KBD' if keymap_editor else '')+'\n'+
               ('C:\\STRAT A\n' if strategy else '')+'SET >C:\\ENV.TXT\nC:\\SNAP S\nC:\\SNAP A\n'+('C:\\LINEWAT\n' if native_line_port or meta_editor else '')+('C:\\HELPWAT\n' if chat_help else '')+('C:\\RVIEW\n' if after_child_view else '')+('C:\\WATCH\n' if observe else '')+
               'if errorlevel 1 goto failed\necho RETURNED>C:\\RETURN.TXT\nexit\n'
               ':failed\necho FAIL>C:\\FAIL.TXT\nexit\n')
@@ -180,6 +184,10 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert words[:2]==(0x4847,3) and words[3]==25 and words[4:6]==words[8:10]
         assert before==after and before[3200:3204:2]==b'AB' and helper[2:20:2]==b'Chat Mode'
         assert not (app/'TEST.ASX').exists() and not (app/'RESULT.BIN').exists()
+    elif keymap_editor:
+        expected=bytearray(33*948);expected[6*948+16*12:6*948+16*12+4]=b'new\0'
+        assert (app/'SYN.KBD').read_bytes()==expected
+        assert not (app/'KBDSTG.$$$').exists() and not (app/'KBDBAK.$$$').exists()
     elif not observe:
         assert (app / 'RESULT.BIN').read_bytes() == b'SPECIAL-COMPILED'
         assert (app / 'TEST.ASX').read_bytes() == compile_source(source)
@@ -189,7 +197,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, dos_directory=dos_directory,cpu='8086', port=com, io_base=base, resident_observer=observe,
                   irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,chat_help=chat_help,
-                  native_line_port=native_line_port,meta_editor=meta_editor,
+                  native_line_port=native_line_port,meta_editor=meta_editor,keymap_editor=keymap_editor,
                   packaged_ASPECT_clock_alarm_exercised=new_commands,
                   packaged_ASPECT_EMULATE_exercised=emulate,
                   package_manifest_sha256=sha(package / 'manifest.json'),
@@ -197,7 +205,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
                   private_fixture_sha256={leaf:sha(app/leaf) for leaf in fixtures},
                   checks=['launcher returns to DOS', 'PCPLUS environment restored',
                           f'COM{com}/PIC/IRQ vectors restored', 'private PRM/DIR/KEY/KBD/XLT/FON unchanged',
-                          'packaged binaries unchanged'] + (['actual packaged Alt-M loads its sibling module and returns'] if meta_editor else ['actual packaged Alt-P loads its sibling module and returns'] if native_line_port else ['actual packaged Chat/PCHELP round trip retains AB and exact frame/cursor'] if chat_help else ['actual magenta splash captured by independent timer'] if observe else
+                          'packaged binaries unchanged'] + (['actual packaged Alt-F8 saves only the selected KBD and returns; shorter private KBD unchanged'] if keymap_editor else ['actual packaged Alt-M loads its sibling module and returns'] if meta_editor else ['actual packaged Alt-P loads its sibling module and returns'] if native_line_port else ['actual packaged Chat/PCHELP round trip retains AB and exact frame/cursor'] if chat_help else ['actual magenta splash captured by independent timer'] if observe else
                           [('DOS precompilation produces exact ASX' if precompile else 'nested DOS source compilation produces exact ASX'), 'script writes expected result'])+(['DOS allocation strategy restored'] if strategy else [])+(['frozen-history viewer reopens after nested child return'] if after_child_view else []),
                   sources={n: sha(ROOT / n) for n in ['standalone/test_special_package_dos.py',
                            'standalone/special_watch.asm', 'standalone/test_terminal.py',
@@ -222,12 +230,13 @@ def main():
     p.add_argument('--bios-absent',action='store_true',help='Clear the selected BIOS UART entry before launch; keep actual UART present')
     p.add_argument('--chat-help',action='store_true',help='Exercise packaged Chat and PCHELP with retained input/frame/cursor')
     p.add_argument('--native-line-port',action='store_true',help='Observe packaged Alt-P loading its matching sibling module')
+    p.add_argument('--keymap-editor',action='store_true',help='Edit/save through packaged START and its sibling PCKEYMAP, preserving existing private fixtures')
     p.add_argument('--meta-editor',action='store_true',help='Observe packaged Alt-M loading its matching sibling module')
     args = p.parse_args()
     out = args.output.resolve()
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     assert not (args.setup and args.splash_only)
-    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port,args.meta_editor)
+    run(args.package.resolve(), out, args.setup, args.splash_only,args.irq,args.com,args.after_child_view,args.precompile,args.bios_absent,args.chat_help,args.native_line_port,args.meta_editor,args.keymap_editor)
 
 
 if __name__ == '__main__':

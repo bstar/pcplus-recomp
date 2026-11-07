@@ -99,7 +99,31 @@ def terminal_companions(binary,manifest):
         assert sha(ROOT/p)==h,n
     return files,sources
 
-def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
+def keymap_companion(terminal,helper):
+    """Require the reviewed source helper whenever the parent exposes Alt-F8."""
+    enabled=bool(terminal.get('experimental_keymap_editor'))
+    assert enabled==bool(helper),'Alt-F8 parent and explicit keyboard helper must be selected together'
+    if not enabled:return {},{},{}
+    profile_path=ROOT/'standalone/keymap_helper_profile.json'
+    profile=json.loads(profile_path.read_text())
+    assert profile['kind']=='reviewed-source-keymap-helper' and profile['contract']==1
+    assert profile['parent_feature']=='experimental_keymap_editor'
+    helper=Path(helper).resolve()
+    assert helper.is_relative_to(ROOT/'build') and helper.name=='PCKEYMAP.EXE'
+    proof_path=helper.with_name('result.json');proof=json.loads(proof_path.read_text())
+    assert proof['passed'] and proof['original_inputs']==[]
+    assert sha(helper)==proof['binary_sha256']==profile['helper_sha256'],'Unreviewed keyboard helper or mismatched bytes'
+    sources=dict(proof['sources']);sources[str(profile_path.relative_to(ROOT))]=sha(profile_path)
+    for name,digest in sources.items():
+        path=Path(name)
+        assert not path.is_absolute() and '..' not in path.parts
+        assert path.parts[0] in ('src','standalone','reconstruction')
+        assert path.suffix.lower() in ('.c','.h','.py','.asm','.inc','.json')
+        assert sha(ROOT/path)==digest,name
+    identity=dict(folder=str(helper.parent.relative_to(ROOT/'build')),manifest_sha256=sha(proof_path),binary_sha256=sha(helper),contract=profile['contract'])
+    return {'PCKEYMAP.EXE':helper},sources,identity
+
+def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keymap_helper=None):
     dos_directory=validate_dos_directory(dos_directory)
     assert output.is_relative_to(ROOT/'build') and not output.exists()
     sources={};identities={};manifests={}
@@ -115,6 +139,9 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         if leaf in ('TERMINAL.EXE','ASPECT.EXE','PRMEDIT.EXE'):assert m.get('experimental_custom_irq')
         manifests[leaf]=m;identities[leaf]={'folder':str(binary.parent.relative_to(ROOT/'build')),'manifest_sha256':sha(path),'binary_sha256':sha(binary)}
     terminal=manifests['TERMINAL.EXE']
+    keymap_files,keymap_sources,keymap_identity=keymap_companion(terminal,keymap_helper)
+    for n,h in keymap_sources.items():assert sources.get(n,h)==h;sources[n]=h
+    if keymap_identity:identities['PCKEYMAP.EXE']=keymap_identity
     capability=render_capability(products['TERMINAL.EXE'].resolve())
     validate_render_pair(capability,terminal,manifests['ASPECT.EXE'])
     companions,companion_sources=terminal_companions(products['TERMINAL.EXE'],terminal)
@@ -131,6 +158,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
     output.mkdir();payload=output/dos_directory;payload.mkdir()
     for leaf,binary in products.items():shutil.copyfile(binary,payload/leaf)
     for leaf,binary in companions.items():shutil.copyfile(binary,payload/leaf)
+    for leaf,binary in keymap_files.items():shutil.copyfile(binary,payload/leaf)
     shutil.copyfile(help_base/'LOCHELP.HLP',payload/'LOCHELP.HLP')
     for name,setup in [('START.BAT',False),('SETUP.BAT',True)]:
         data=launch(setup);assert data.count(b'PCPLUSSE')==2
@@ -216,6 +244,12 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
                 'command reference also needs this module. Update all package\n'
                 'companions together; do not mix parent and module versions.\n'))
     for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
+    if keymap_files:
+        with (payload/'README.TXT').open('ab') as guide:
+            guide.write(dos_text('\nAlt-F8: source keyboard mapping helper beside TERMINAL.EXE.\n'
+                'The selected KBD must contain all33 profiles (31284 bytes).\n'
+                'Existing shorter KBDs are preserved; do not overwrite private bindings.\n'
+                'Save updates the selected profile on return. Recovery exit14 stops PCPlus.\n'))
     record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
         'experimental_custom_irq':True,'experimental_original_keys':True,'experimental_original_reference':True,
@@ -239,6 +273,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
     if terminal.get('experimental_external_viewer'):
         record['experimental_external_viewer']=True
     if terminal.get('experimental_external_editor'):record['experimental_external_editor']=True
+    if keymap_files:record['experimental_keymap_editor']=True
     if terminal.get('experimental_packed_command_ui'):record['experimental_packed_command_ui']=True
     for flag in ('experimental_chat_loader','experimental_global_help','experimental_chat_help'):
         if terminal.get(flag):record[flag]=True
@@ -252,6 +287,7 @@ def main():
     p.add_argument('--source-base-commit',help='Explicit source identity for isolated reproduction without Git metadata')
     p.add_argument('--dos-directory',default='PCPLUSSE',help='DOS8.3 root directory on drive C:; default PCPLUSSE')
     for name in ('terminal','runner','compiler','setup','translation'):p.add_argument('--'+name,type=Path,required=True)
+    p.add_argument('--keymap-helper',type=Path,help='Explicit reviewed source PCKEYMAP companion, required by an Alt-F8 parent')
     a=p.parse_args();products=dict(zip(('TERMINAL.EXE','ASPECT.EXE','ASPCOMP.EXE','PRMEDIT.EXE','XLTEDIT.EXE'),(a.terminal,a.runner,a.compiler,a.setup,a.translation)))
-    r=stage(a.output.resolve(),products,a.source_base_commit,a.dos_directory);print('Staged',len(r['files']),'files for C:\\'+r['dos_directory']+'; sources and shared inputs agree; no card/configuration writes.')
+    r=stage(a.output.resolve(),products,a.source_base_commit,a.dos_directory,a.keymap_helper);print('Staged',len(r['files']),'files for C:\\'+r['dos_directory']+'; sources and shared inputs agree; no card/configuration writes.')
 if __name__=='__main__':main()

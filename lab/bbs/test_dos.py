@@ -121,7 +121,7 @@ async def run(args):
  (output/'sampler.asm').write_text(sampler)
  subprocess.run(['nasm','-f','bin',str(output/'sampler.asm'),'-o',str(output/'SNAP.COM')],check=True)
  modem=Modem('127.0.0.1',args.port,output,soft=args.flow=='SOFT',baud=args.baud,packet_delay_ms=args.packet_delay_ms,
-             raw=getattr(args,'raw_upstream',False),hardware_flow=getattr(args,'hardware_flow_model',False))
+             raw=getattr(args,'raw_upstream',False),hardware_flow=getattr(args,'hardware_flow_model',False),ignore_rts=getattr(args,'ignore_rts',False))
  server=await asyncio.start_server(modem.accept,'127.0.0.1',0)
  port=server.sockets[0].getsockname()[1]
  prefix=('p1000 ' if automatic else 'p1000 a t d enter ')
@@ -282,6 +282,7 @@ if __name__=='__main__':
  p.add_argument('--keymap-expected',type=Path,help='Explicit expected whole KBD after an intentional local mapper Save')
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')
+ p.add_argument('--ignore-rts',action='store_true',help='Diagnostic negative control only: decode identical envelopes and pace single bytes but ignore RTS')
  p.add_argument('--hardware-flow-model',action='store_true',help='Use actual DOSBox RTS control envelopes; model peer CTS/DSR asserted and gate BBS bytes on RTS')
  p.add_argument('--raw-upstream',action='store_true',help='Upstream is an explicit serial-side bridge; leave Telnet ownership to that bridge')
  p.add_argument('--comspec-fixture',type=Path,help='Explicit source-built test interpreter under build/; copied to owned D: and selected with COMSPEC')

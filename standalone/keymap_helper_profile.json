@@ -1,0 +1,9 @@
+{
+  "kind": "reviewed-source-keymap-helper",
+  "contract": 1,
+  "parent_feature": "experimental_keymap_editor",
+  "helper_sha256": "0280f9942a5eb9739a28af21405f50ab91be13c2a70b7ac98c5db38fb010ce51",
+  "arguments": "profile frozen-absolute-KBD-path [/LEGACY]",
+  "KBD_bytes": 31284,
+  "recovery_exit": 14
+}
