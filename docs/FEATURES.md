@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Active EMULATE-package alert/carrier matrix](EMULATE_CARRIER.md) passes eight
+actual DOS cases (296 checks): ANSI/VT220 with no disconnect handler, deferred
+CALL, TRANSMIT and XOFF service error. Ordinary packaged products restore speaker,
+duration, registration, JFT/sinks and parent owners, then return to the command
+menu with OFF-LINE status. Broader fault/flow, physical runtime acceptance and
+full original parity remain open; machine deployment is recorded privately.
+
 [Matched EMULATE package](EMULATE_CONNECTION_CANDIDATE.md) combines the tested
 capability 20 parent/interpreter and matching compiler in a 13-file public ZIP.
 Nine package-contract cases and four actual DOS8086 launcher/splash/Chat/Help

@@ -36,7 +36,8 @@ application source base `4d6c7e6`; the proof separately records its complete exp
 commit. The [validation record](validation/emulate-connection-candidate.json)
 binds the package, launch tests, contract checks and clean reproduction.
 
-The candidate is staged only: installed R59A85A8, its private configuration and
-call history remain unchanged. Native abort/fatal-reset expansion, stronger
-sustained flow/headroom and physical Boca/SPA2102/SynthModem acceptance remain
-open. The wider original-feature inventory remains open too.
+The package builder stages public files; machine selection/deployment and
+private-file preservation are separate operations tracked in the local machine
+record. The [active alert/carrier matrix](EMULATE_CARRIER.md) now passes for these
+exact products. Broader fault/flow cases, physical Boca/SPA2102/SynthModem runtime
+acceptance and the wider original-feature inventory remain open.
