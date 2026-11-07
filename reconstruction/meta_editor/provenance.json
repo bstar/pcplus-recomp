@@ -1,0 +1,70 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 3,
+  "analysis_image_sha256": "fff9700d3b5e76b8f0d76c3a9df7051bfa39f87c0891bd593a8f84f19c758b19",
+  "ranges": [
+    {
+      "name": "defaults",
+      "start": 57930,
+      "end_exclusive": 57953,
+      "source_file_offset": 63690,
+      "bytes": 23,
+      "instructions": 8,
+      "sha256": "4d660ed9bfe6274a93ec7749a3558941895d3bf69f6f28ef04e8ee96413e3dd6",
+      "REA_assembly": "ev_759edfe9e57c43926b819d4c40d8094b66cede44556408d4b01e2c039ff69468",
+      "data": {
+        "0x3756": "meta_editor_records",
+        "0x3972": "meta_editor_records_end"
+      },
+      "services": {}
+    },
+    {
+      "name": "field_key",
+      "start": 57953,
+      "end_exclusive": 58004,
+      "source_file_offset": 63713,
+      "bytes": 51,
+      "instructions": 24,
+      "sha256": "fadd9371ed85015c6a2007133d92d4a05da2f669b051813c99c4394008968655",
+      "REA_assembly": "ev_4d2fb7babb06d907ee451f5172b5786156748aefeac0e8996b678a9f7f173b40",
+      "data": {},
+      "services": {}
+    },
+    {
+      "name": "row",
+      "start": 58004,
+      "end_exclusive": 58277,
+      "source_file_offset": 63764,
+      "bytes": 273,
+      "instructions": 105,
+      "sha256": "8376a02ad23c1d086e8e56eaedd285bd3fa406a415729298613a08ec8f9ad8f1",
+      "REA_assembly": "ev_9715e3d77e9540c7766bdcd522bb72e2dae440aa96513c0c0a338c292866cdc3",
+      "data": {
+        "0x1f7c": "meta_editor_attribute",
+        "0x2068": "meta_editor_wait_default",
+        "0x2290": "meta_editor_kind_labels",
+        "0x3756": "meta_editor_records",
+        "0x3758": "meta_editor_text",
+        "0x5df4": "meta_editor_field_previous",
+        "0x5df8": "meta_editor_field_next",
+        "0x5e00": "meta_editor_edit_previous",
+        "0x5e04": "meta_editor_edit_next",
+        "0x6644": "meta_editor_kind_format",
+        "0x7a50": "meta_editor_wait_active"
+      },
+      "services": {
+        "0x4a04": "meta_editor_inverse",
+        "0x6e66": "meta_editor_cursor",
+        "0x7878": "meta_editor_read_key",
+        "0x7880": "meta_editor_edit_text",
+        "0x75e8": "meta_editor_draw_kind"
+      }
+    }
+  ],
+  "REA_dispatch": "ev_a1a870d1d2c2754325165f8155f2645805d413818b24f53fbf8bf375476f9bbf",
+  "limitations": [
+    "Static synthetic overlay analysis input was never executed; recovered bytes independently match original file ranges.",
+    "Row index must be0..9. Original row editor does not validate it or corrupt kind-label indices.",
+    "Shared text editor, cursor/keyboard/rendering/file/window services are explicit external boundaries. No whole Alt-M UI, save, service scheduling or terminal integration claim."
+  ]
+}

@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Native Meta Keys components](META_EDITOR_RECOVERY.md) recover 347 exact bytes
+for defaults, the field-key callback and row editing. Actual source-built
+DOS8086 tests cover all 65,536 field-key inputs, 320 row scenarios and three
+opaque-tail default fixtures. An isolated eight-file export reproduces the
+diagnostic and its tests. Keyboard/render/text services remain modeled; the
+Alt-M window, persistence and live adoption are still missing. The interactive
+parent and installation are unchanged by this component checkpoint.
+
 [Matched native Alt-P package](LINE_PORT_CONNECTION_CANDIDATE.md) adds the
 compulsory source-built module to the public connection payload. Fourteen
 admission cases and five actual DOS8086 launcher/application workflows pass;

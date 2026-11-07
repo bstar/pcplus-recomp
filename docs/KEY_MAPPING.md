@@ -1,5 +1,9 @@
 # Keyboard mapping files and selection
 
+The subsequent [native Meta Keys component recovery](META_EDITOR_RECOVERY.md)
+adds exact defaults, field-key and row-editor bodies with DOS/source replay.
+It does not yet implement the interactive Alt-M editor or change the file reader.
+
 The original2.01 KBD and KEY formats are proved by their actual loaders,
 writers, editors and consumers. A lossless host codec and a strict DOS KBD
 selection reader are implemented in `src/key_mapping/`. No installed KBD, KEY

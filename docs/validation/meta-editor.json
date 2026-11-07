@@ -1,0 +1,96 @@
+{
+  "passed": true,
+  "component_only": true,
+  "terminal_changed": false,
+  "installed_changed": false,
+  "physical_runtime_verified": false,
+  "diagnostic_sha256": "61a4cd68c86efc1f06d5ebaaa22dc6a316b97d434b007b3b5883bb648899f6ae",
+  "exact_bytes": 347,
+  "field_keys": 65536,
+  "row_scenarios": 320,
+  "defaults_cases": 3,
+  "isolated_source_files": 8,
+  "native_ranges": [
+    {
+      "name": "defaults",
+      "start": 57930,
+      "end_exclusive": 57953,
+      "source_file_offset": 63690,
+      "bytes": 23,
+      "instructions": 8,
+      "sha256": "4d660ed9bfe6274a93ec7749a3558941895d3bf69f6f28ef04e8ee96413e3dd6",
+      "REA_assembly": "ev_759edfe9e57c43926b819d4c40d8094b66cede44556408d4b01e2c039ff69468",
+      "data": {
+        "0x3756": "meta_editor_records",
+        "0x3972": "meta_editor_records_end"
+      },
+      "services": {}
+    },
+    {
+      "name": "field_key",
+      "start": 57953,
+      "end_exclusive": 58004,
+      "source_file_offset": 63713,
+      "bytes": 51,
+      "instructions": 24,
+      "sha256": "fadd9371ed85015c6a2007133d92d4a05da2f669b051813c99c4394008968655",
+      "REA_assembly": "ev_4d2fb7babb06d907ee451f5172b5786156748aefeac0e8996b678a9f7f173b40",
+      "data": {},
+      "services": {}
+    },
+    {
+      "name": "row",
+      "start": 58004,
+      "end_exclusive": 58277,
+      "source_file_offset": 63764,
+      "bytes": 273,
+      "instructions": 105,
+      "sha256": "8376a02ad23c1d086e8e56eaedd285bd3fa406a415729298613a08ec8f9ad8f1",
+      "REA_assembly": "ev_9715e3d77e9540c7766bdcd522bb72e2dae440aa96513c0c0a338c292866cdc3",
+      "data": {
+        "0x1f7c": "meta_editor_attribute",
+        "0x2068": "meta_editor_wait_default",
+        "0x2290": "meta_editor_kind_labels",
+        "0x3756": "meta_editor_records",
+        "0x3758": "meta_editor_text",
+        "0x5df4": "meta_editor_field_previous",
+        "0x5df8": "meta_editor_field_next",
+        "0x5e00": "meta_editor_edit_previous",
+        "0x5e04": "meta_editor_edit_next",
+        "0x6644": "meta_editor_kind_format",
+        "0x7a50": "meta_editor_wait_active"
+      },
+      "services": {
+        "0x4a04": "meta_editor_inverse",
+        "0x6e66": "meta_editor_cursor",
+        "0x7878": "meta_editor_read_key",
+        "0x7880": "meta_editor_edit_text",
+        "0x75e8": "meta_editor_draw_kind"
+      }
+    }
+  ],
+  "sources": {
+    "standalone/build_meta_editor.py": "48cbef086fbf8df6e4ac6f01c26e0e12221e00c33fb1513521d124454615f003",
+    "standalone/meta_editor_host.asm": "df180dec550e2d89e1452de2f46219e97e719d3a938c849396e7e3d98b2fc66b",
+    "standalone/meta_editor_driver.c": "9bf1b25fb108f9ad513e353714439a815c4ebd455926cd39140425f05b546965",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "reconstruction/meta_editor/provenance.json": "d1d470451afdbaa3dd6c529378a68d9bad630100e8609573cd6da30cdd070379",
+    "reconstruction/meta_editor/defaults.asm": "545068e36a78131a12a8944f61fbb35f91c6b5d6953cc29904530dfcfee1a41d",
+    "reconstruction/meta_editor/field_key.asm": "b14e7955a647d48cd5599f28a325e78242d8a9f353956a491fd6884529335836",
+    "reconstruction/meta_editor/row.asm": "48119f5be730bc2b57466f9706e2e1a2b373f43cf6620e00cd332106eaa969be",
+    "standalone/record_meta_editor.py": "a1637ab71261ef3b500d6209f6f16d7e862153bb1d93d2227dd086aa73d53179",
+    "standalone/prove_meta_editor_source.py": "dfe83be9462a01c50d15b1816163feec79fe167be9022939c6036a4666477a7b",
+    "reconstruction/meta_editor/recover.py": "f3fd30de130b2721cda526c47d4893b2184baab478246d86b62484f6e99a2e39",
+    "docs/META_EDITOR_RECOVERY.md": "1a4b70665a081792bc265694c1bde895b50a8f6cefa32ea17f527671dc9cc65e"
+  },
+  "receipts": {
+    "build/meta-editor-component-20261107-final/result.json": "ed6224e7cdd41aaa3cf57a5ddf068ab7434040d2f63b05692c31e498f35e3886",
+    "build/meta-editor-source-20261107-final/result.json": "ce97b885597a994f65aafccee6ad1d57a96d8c44380f06a4170e367a28586d3e"
+  },
+  "original_inputs": [],
+  "limitations": [
+    "Static native analysis image was never executed; native code ranges independently match original file bytes. Ordinary component builds use public source only.",
+    "Actual DOS8086 replay uses authored key/cursor/render/text services. Canceled text-service writes demonstrate aliasing, not the original shared-editor cancellation policy.",
+    "No full Alt-M UI, checked KEY persistence, live action-table adoption, UART service, physical acceptance or whole F02/F05/F06 parity claim."
+  ]
+}
