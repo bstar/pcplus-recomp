@@ -1,0 +1,35 @@
+{
+  "source_sha256": "f079418fca6392cde318e2eb657874a1f5ee10db83616c83054d191441fb6244",
+  "original_size": 23117,
+  "identification": "CF baseline FAT16 UTILS/PCPLUS/PCKEYMAP.EXE; 1991-05-01; external 2.01 identity; size is not a version signature",
+  "read_only_image_extraction": true,
+  "mz_header_bytes": 512,
+  "ghidra_load_segment": "0x1000",
+  "data_segment": "0x13f1",
+  "ranges": [
+    {
+      "name": "notation-to-storage",
+      "start": "0xd4c",
+      "end_exclusive": "0xdc4",
+      "source_file_offset": 3916,
+      "size": 120,
+      "sha256": "92727fbe9f4dafafa6b33ccb10c00ae88e30969e17d8ece21e6a29b200cf6d88",
+      "evidence_id": "ev_eb27237d632e534ab86992ec6ecb54cf84998a6d00cee928b7a66fdf68f5bbef"
+    },
+    {
+      "name": "storage-to-notation",
+      "start": "0xdc4",
+      "end_exclusive": "0xe4d",
+      "source_file_offset": 4036,
+      "size": 137,
+      "sha256": "5570c50ba639da44797fa90d06c35a4dbd7aedc92fa90df29f601056c00ec204",
+      "evidence_id": "ev_948f42cab123600f0f409cf814e9ca20cdddb8e0e35e7c338efb670b72853a47"
+    }
+  ],
+  "REA_bundle": "analysis/pckeymap-original-201/evidence-20261107.json",
+  "limitations": [
+    "Original helper/evidence stay in ignored analysis storage.",
+    "No original KBD contents or factory defaults imported.",
+    "Static pseudocode is not original source; CPU checks execute converters, not helper startup."
+  ]
+}

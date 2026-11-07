@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Keyboard editor notation](KEYMAP_NOTATION.md) recovers the original helper
+from the baseline image and adds bounded source converters. 800 original CPU
+comparisons, 772 DOS8086 cases, malformed-input checks and isolated source
+reproduction pass. Literal-AE marker ambiguity and expansion beyond the
+original field/temporary capacity are explicit. Full editor integration remains open.
+
 [Original keymap helper caller](KEYMAP_LAUNCHER.md) adds78 exact bytes and a
 source-only OMF/DOS ABI diagnostic:612 modeled CPU cases,8DOS cases and a
 five-file isolated reproduction pass. `RET4` screen-handle cleanup is explicit.
@@ -2143,7 +2149,7 @@ with a user's original resource can be an optional, documented path.
 | `PCPLUS.FON` | E1 reference; E4 present, 144,365 bytes; native overlay4 E2A9 text-append call-log controller | Telephone-call history, not font data. `PHONE_LOG.md` binds258 exact controller bytes and actual DOS append checks. Complete clock/path/PRM/lifecycle bindings and checked persistence; keep private call records out of public evidence. Native font resources remain independently unresolved. |
 | `PCPLUS.HLP`, `PCHELP.RTE` | E2 plus E1 names at `0x27dfc`, `0x27e22`; both installed | Recover help index/access/runtime integration; author maintainable help without publishing the original text. |
 | `PCSETUP.EXE` | E3/E1; installed | Reconstruct settings coverage and invocation/persistence interface; decide integrated versus separate maintained executable after tracing. |
-| `PCKEYMAP.EXE`, `PCEDIT` | E1/E3; not found among the 32 active-install filenames | Recover interfaces/features; absence from one copied install does not establish unsupported original behavior. `TINYEDIT.EXE` is installed but has not been established as the configured substitute. |
+| `PCKEYMAP.EXE`, `PCEDIT` | E1/E3; absent among the 32 active-install filenames; matching PCKEYMAP recovered from the baseline image | Recover interfaces/features; absence from one copied install does not establish unsupported original behavior. `TINYEDIT.EXE` is installed but has not been established as the configured substitute. |
 | `ASPCOMP.EXE`, `.ASP`, `.ASX`, `FLOAT.RTE` | E1 names; compiler installed; floating runtime not in active install | Compiler/VM format and full command surface remain open. Trace when FLOAT.RTE is required; no assumption that startup-script success covers floating operations. |
 | `KERMIT.RTE`, `CISB.RTE` | E1 names and E3 external-protocol note; not in active install | Recover loader/protocol interface and source equivalents; test missing-module behavior and actual transfers. |
 | `HCOMMAND.RTE`, host `.HPM/.HRM/.HST/.HXM/.NWS/.USR/.NUF/.HDR/.MSG/.HDL/.HHP/.ULD/.HMM` | E1 names; `.HST/.NWS/.HDR/.MSG` installed, other listed filenames absent | Trace format and purpose per file; do not assign roles merely from extensions or inspect private user/message content. Build synthetic host fixtures and source-owned prompts/help/defaults. |

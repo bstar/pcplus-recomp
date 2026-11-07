@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "source_only_build": true,
+  "original_cpu_comparison": true,
+  "original_sha256": "f079418fca6392cde318e2eb657874a1f5ee10db83616c83054d191441fb6244",
+  "original_cpu_cases": 800,
+  "dos_cases": 772,
+  "host_roundtrip_vectors": 386,
+  "host_transactional_boundary_checks": 789,
+  "literal_AE_collision_confirmed": true,
+  "sources": {
+    "src/key_mapping/keymap_text.c": "831f04731c6ed10f3406400fde94b9cbea094aab79f790437023cd6ddc569fc5",
+    "src/key_mapping/keymap_text.h": "e4185d2cff8963df1e92ba1f3dca5089c46472248798e7bd53619649980bcaa7",
+    "standalone/test_keymap_text.py": "d8337be172f9c97005f10c7a3f66121ad5c9bcceca8e6b520db8a119ac6e3814"
+  },
+  "dos_binary_sha256": "773367005995a6dd434721f2cfea85d6a74a60d37930535af53ea43a39fac86e",
+  "limits": [
+    "No editor GUI, file IO, factory defaults or terminal integration tested.",
+    "Strict malformed/capacity/literal-AE refusal intentionally differs from unbounded original.",
+    "Original CPU checks run conversion routines, including their real memcpy, without original startup."
+  ],
+  "isolated_source_reproduction": {
+    "files": 3,
+    "binary_identical": true,
+    "original_inputs": false
+  }
+}
