@@ -19,7 +19,7 @@ def main():
   'standalone/modem_fixtures.py','standalone/directory_fixtures.py',
   'standalone/terminal_config_fixtures.py','standalone/test_terminal.py',
   'standalone/directory_test_support.py']
- if m.get('experimental_meta_editor'):extra.append('standalone/test_meta_front_dos.py')
+ if m.get('experimental_meta_editor'):extra+=['standalone/test_meta_front_dos.py','standalone/arena_prior_fill.asm']
  for name in extra:sources[name]=sha(ROOT/name)
  for name,digest in sources.items():
   rel=Path(name);assert not rel.is_absolute() and '..'not in rel.parts

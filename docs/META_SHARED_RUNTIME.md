@@ -82,9 +82,9 @@ can redraw it. Failed attempts are not accepted evidence.
 ## Remaining work
 
 Repeat connection/reconnect/transfer/carrier-loss gates on these exact bytes
-before packaging. Add shared-kernel close/fixup fault injection and wider arena
-history/arbitration cases; the independent old loader's fault suite does not
-substitute for those new-runtime checks. Other geometries, frozen-history entry,
+before packaging. [Shared-kernel fault checks](META_SHARED_FAULTS.md) now cover
+close boundaries, malformed headers/fixups, prior allocation and history return.
+Wider arena arbitration, other geometries, frozen-history entry,
 directory-resource-cache adoption, original pixel parity and physical
 Boca/SPA2102/SynthModem/Enigma acceptance remain open, alongside the broader
 ASPECT/emulation/protocol/Host inventory. The physical package was not updated.

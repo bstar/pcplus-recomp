@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Shared-runtime fault checks](META_SHARED_FAULTS.md) add two arena/history cases,
+twelve malformed-header/fixup refusals and four uncertain-close boundaries.
+An isolated728-file export reproduces the same application. No application or
+installed-package change was needed; exact-product connection/transfer/reconnect
+and physical acceptance remain before packaging. Earlier entries below retain
+their historical checkpoint scope.
+
 [Shared Meta runtime](META_SHARED_RUNTIME.md) restores the capacity gate:
 478192 retained bytes, below the479024-byte installed control, with unchanged
 streams/buffers/stacks. The reference UI and Meta frontend are transient; one
