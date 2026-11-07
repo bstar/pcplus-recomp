@@ -1,4 +1,8 @@
-# Experimental ASPECT EMULATE integration
+# Initial ASPECT EMULATE integration
+
+This page records the initial binding and its failed capacity gate. The later
+[shared-client checkpoint](ASPECT_EMULATE_SHARED.md) resolves that failure while
+retaining the original negative receipt below. Release acceptance is still open.
 
 The optional interpreter now executes native EMULATE through the parent-owned
 profile transaction. Actual DOS tests switch VT220→ANSI twice in one retained

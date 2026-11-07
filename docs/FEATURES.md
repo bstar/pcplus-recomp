@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Shared client EMULATE funding](ASPECT_EMULATE_SHARED.md) resolves the combined
+capacity failure below: actual profile changes plus six-stream/nested-child
+workflows pass 30 checks on 386 and 29 on 8086. The interpreter saves 208 bytes;
+38,400 modeled-boundary client comparisons and a selected active ALARM error
+pass. A 5,456-file cold export reproduces the pair and repeats named suites.
+Negative protocol/stack/fault, current BBS/package and physical acceptance remain
+open. Installation is unchanged.
+
 [Experimental EMULATE RPC/VM integration](ASPECT_EMULATE_RPC.md) now executes
 the native command in DOS: two VT220→ANSI pairs produce actual profile-specific
 DA replies, with 26 normal workflow checks passing. **Unaccepted:** the larger
