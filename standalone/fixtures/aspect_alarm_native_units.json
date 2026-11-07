@@ -1,0 +1,26 @@
+{
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "alarm",
+      "start": 58976,
+      "bytes": 27,
+      "file_start": 118384,
+      "sha256": "5f7ddf8a99c59c9b080aaa92c73fd994484568c628e0297a159024aa80ff0372"
+    },
+    {
+      "unit": 2,
+      "name": "alert",
+      "start": 13846,
+      "bytes": 93,
+      "file_start": 18454,
+      "sha256": "54d0a9c70538daee0398cc1332b93ab0f9494ec04da2743749cd24b203495162"
+    }
+  ],
+  "REA_evidence": [
+    "ev_4144446925f09733abe9f13d106778a1ddb3691f0c2cbbada79fc70fef6e90e9",
+    "ev_14e5906eba85617d1389180edd33b51b3c7b8fae22574d6e89474837d3a735a8"
+  ],
+  "scope": "Native ALARM wrapper and shared alert only. Ordinary builds use source and numeric provenance; no production binding or serviced timing claim."
+}

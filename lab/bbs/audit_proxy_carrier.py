@@ -116,13 +116,29 @@ def main():
         sessions.append(dict(index=index,interrupted=s['interrupted'],NAWS=[80,24],delivered_bytes=len(stream),proxy_bytes=len(output),online_bytes=len(online)))
     assert len(list(bridge.glob('*-closed.json')))==2
     rows=[json.loads(line) for line in (cap/'server-session.jsonl').read_text().splitlines()]
+    marker=json.loads((cap/'server-log-start.json').read_text())
+    uses_journal='lab/bbs/bbs_log_capture.py' in r['sources']
+    if uses_journal:
+        assert 'device' in marker
+        journal=json.loads((cap/'server-log-capture/result.json').read_text())
+        assert journal['passed'] and journal['boundary']==marker and journal['boundary_sha256']==sha(cap/'server-log-start.json')
+        captured=[]
+        for index,segment in enumerate(journal['segments']):
+            assert segment['capture']==f'segment-{index:04}.jsonl'
+            body=(cap/'server-log-capture'/segment['capture']).read_bytes()
+            assert hashlib.sha256(body).hexdigest()==segment['sha256'] and len(body)==segment['end']-segment['start']
+            assert not body or body.endswith(b'\n')
+            captured.extend(json.loads(line) for line in body.splitlines() if line.strip())
+        assert len(captured)==journal['records'] and all(isinstance(r,dict) for r in captured)
+        authenticated={r['sessionId'] for r in captured if r.get('msg')=='User "loclab" successfully logged in'}
+        assert rows==[r for r in captured if r.get('sessionId') in authenticated]
     auth=[r for r in rows if r.get('msg')=='User "loclab" successfully logged in'];assert len(auth)==2 and len({r['sessionId'] for r in auth})==2
     for index,row in enumerate(auth):
         own=[r for r in rows if r['sessionId']==row['sessionId']]
         exits=[r.get('exitCode') for r in own if r.get('msg')=='Process exited']
         assert len(exits)==1 and ((exits[0]!=0) if index==0 else exits[0]==0)
     captures=[p for p in cap.rglob('*') if p.is_file()]+[p for p in bridge.glob('*') if p.is_file()]
-    sources=['lab/bbs/audit_proxy_carrier.py','lab/bbs/test_proxy_carrier_dos.py','lab/bbs/proxy_carrier_relay.py',
+    sources=['lab/bbs/audit_proxy_carrier.py','lab/bbs/test_proxy_carrier_dos.py','lab/bbs/proxy_carrier_relay.py','lab/bbs/bbs_log_capture.py',
         'lab/bbs/audit_zmodem.py','lab/bbs/test_transfer_dos.py','lab/bbs/audit_size_probe_screen.py',
         'lab/bbs/paced_bios_keys.py','lab/bbs/carrier_notice_watch.py','lab/bbs/zmodem_label_watch.py','standalone/directory_test_support.py']
     if r.get('guard_observer'):sources+=list(n for n in control['sources'] if n not in sources)

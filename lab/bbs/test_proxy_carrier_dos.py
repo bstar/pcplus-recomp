@@ -24,6 +24,7 @@ from test_transfer_dos import timestamp,offset_after
 from audit_zmodem import scan,packet,metadata,audit_batch,audit_controls
 from audit_size_probe_screen import telnet
 from enigma import SOURCE,process_pid
+from bbs_log_capture import begin as begin_log,collect as collect_log
 from test_proxy_transfer_dos import post_count
 from enigma_script_login import source as login_source
 from paced_bios_keys import source as paced_source
@@ -88,7 +89,7 @@ async def run(a):
         subprocess.run(['nasm','-fbin',str(asm),'-o',str(out/leaf)],check=True)
     inputs += [out/n for n in ['recipe.json','KEYS.ASM','sampler.asm','PACED.COM','SNAP.COM','GEOM.COM']]
     names=['test_proxy_carrier_dos','proxy_carrier_relay','paced_bios_keys','carrier_notice_watch','zmodem_label_watch',
-        'test_transfer_dos','modem','audit_zmodem','audit_size_probe_screen','enigma_script_login','test_proxy_transfer_dos']
+        'test_transfer_dos','modem','audit_zmodem','audit_size_probe_screen','enigma_script_login','test_proxy_transfer_dos','bbs_log_capture']
     inputs += [ROOT/'lab/bbs'/(n+'.py') for n in names]
     inputs += [ROOT/'lab/bbs/synthmodem_proxy_serial.js',ROOT/'standalone/test_terminal.py',
         ROOT/'standalone/display_startup_geometry.asm',ROOT/'standalone/directory_fixtures.py',ROOT/'standalone/directory_test_support.py',
@@ -101,8 +102,8 @@ async def run(a):
         build(a.terminal.resolve(),out)
         inputs += [ROOT/'lab/bbs/carrier_fault_witness.py',ROOT/'standalone/phone_log_events_watch.asm',
                    out/'WITNESS.ASM',out/'WITNESS.COM',out/'KEYWAIT.ASM',out/'KEYWAIT.COM']
-    posts=post_count();log=SOURCE/'logs/enigma-bbs.log';boundary=dict(path=str(log),inode=log.stat().st_ino,byte_offset=log.stat().st_size)
-    (out/'server-log-start.json').write_text(json.dumps(boundary)+'\n')
+    posts=post_count();log=SOURCE/'logs/enigma-bbs.log'
+    begin_log(log,out/'server-log-start.json')
     bridge=ROOT/'build/bbs-lab'/(a.label+'-proxy')
     proxy=subprocess.Popen(['node',str(ROOT/'lab/bbs/synthmodem_proxy_serial.js'),'--runtime',str(runtime),
         '--output',str(bridge),'--bbs-port','23233','--framing-ms','250','--byte-delay-ms','0',
@@ -255,8 +256,7 @@ exit
             site=traceback.extract_tb(error.__traceback__)[-1]
             errors.append(f'{type(error).__name__} at {Path(site.filename).name}:{site.lineno}: {error}')
             checks['source_matching_retry_finish_search_raw_proxy']=False;wire_evidence=[]
-        assert log.stat().st_ino==boundary['inode']
-        with log.open('rb') as f:f.seek(boundary['byte_offset']);rows=[json.loads(line) for line in f if line.strip()]
+        rows=collect_log(out/'server-log-start.json',out/'server-log-capture')
         authenticated={r['sessionId'] for r in rows if r.get('msg')=='User "loclab" successfully logged in'}
         own=[r for r in rows if r.get('sessionId') in authenticated];(out/'server-session.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in own))
         checks['two_authenticated_sessions']=len(authenticated)==2

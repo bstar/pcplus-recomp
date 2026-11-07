@@ -1986,3 +1986,7 @@ test-aspect-clock:
 	python3 standalone/check_aspect_runtime.py
 test-aspect-clock-compat:
 	python3 standalone/check_aspect_clock.py --output build/aspect-clock-original-make-$(shell date +%s%N) --original analysis/pcplus-originals/PCPLUS-main-2.01.EXE
+
+.PHONY: test-aspect-alarm-native
+test-aspect-alarm-native:
+	python3 standalone/check_aspect_alarm.py --output build/aspect-alarm-native-make-$(shell date +%s%N)

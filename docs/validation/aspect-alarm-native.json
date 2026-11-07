@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "cases": 348,
+  "native_bytes": 120,
+  "units": [
+    {
+      "unit": 1,
+      "name": "alarm",
+      "start": 58976,
+      "bytes": 27,
+      "file_start": 118384,
+      "sha256": "5f7ddf8a99c59c9b080aaa92c73fd994484568c628e0297a159024aa80ff0372",
+      "output": "build/aspect-alarm-native-check-20261106/alarm.bin"
+    },
+    {
+      "unit": 2,
+      "name": "alert",
+      "start": 13846,
+      "bytes": 93,
+      "file_start": 18454,
+      "sha256": "54d0a9c70538daee0398cc1332b93ab0f9494ec04da2743749cd24b203495162",
+      "output": "build/aspect-alarm-native-check-20261106/alert.bin"
+    }
+  ],
+  "instruction_addresses": 61,
+  "sources": {
+    "src/aspect/alarm_native.asm": "c25bb8ecae8cfbc4e6b0487ecd4165370e24ab2307c93e9afafbc10fccd960a4",
+    "standalone/check_aspect_alarm.py": "8a0eb29ff7fabfa448f701e951c9ed1a4b71527c27d9f71b23789d3b58e2bbe4",
+    "standalone/fixtures/aspect_alarm_native_units.json": "c0751f422b4c21b0ba0d08c45ff88a0fe998ffc504f10ea58e3931aed6d92b7b",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+  },
+  "original_inputs": [],
+  "scope": "Native ALARM controller replay with explicit clock/keyboard/sound boundaries. Source instructions match fixed original-range digests. Native optional-duration restoration, paired880Hz/duration15 requests and1/6-tick waits, quiet timing, seconds wrap/freeze and late-key consumption checked on DS=SS. Operand, clock, keyboard and tone/wait services modeled. Not actual BIOS/UART/PIT/audio timing or a serviced production binding; no installed change."
+}

@@ -1,5 +1,20 @@
 # Full application reconstruction checklist
 
+The [ALARM native baseline](ASPECT_ALARM_NATIVE.md) adds120 exact bytes and
+348 controller cases. It is not bound to the interpreter; compiler, serviced
+timing, policy/cancellation and physical acceptance remain open.
+
+The [ASPECT clock checkpoint](ASPECT_CLOCK.md) adds native DATE/TIME to both
+source compilers and interpreters:171 new exact instruction bytes,477 original
+CRT comparisons,2186 DOS compiler cases and372 clock VM runs pass. A compact
+bounded SET/FETCH table funds the feature without reducing stacks, stream or
+buffer capacity. The real parent repeats all six streams and three nested
+children while local clock strings survive child return. A5339-file source
+export reproduces both interpreter variants and the compiler. Base runtime
+coverage is107 slots; DOS/RUN/SHELL remain enabled in the external variant.
+The installed Chat/Help release is unchanged; physical and full parity gates
+remain open.
+
 The [composed connection package](CHAT_HELP_RELEASE.md) now supplies all13
 public files, including PCCHAT.OVL, PCHELP.RTE and authored PCPLUS.HLP, with a
 matching snapshot-lease ASPECT interpreter. A clean2413-file export reproduces
