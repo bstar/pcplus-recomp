@@ -39,7 +39,9 @@ def main():
     parser.add_argument('--emulate-profile-switch',action='store_true',help='Execute VT220 then ANSI through actual native EMULATE and matching parent RPC')
     parser.add_argument('--clock-queries',action='store_true',help='Query local DATE/TIME strings across each FIRST child and save a clock trace')
     parser.add_argument('--emulate-reject',choices=[n for n,v in EMULATIONS.items() if v not in (4,6)],help='Actual native unsupported selector error followed by three clean scripts in the same terminal')
+    parser.add_argument('--emulate-when',action='store_true',help='Run profile changes and optional rejection inside a real deferred WHEN worker')
     args = parser.parse_args()
+    if args.emulate_when:assert args.emulate_profile_switch and args.exit_watch and not args.lease_fault_phase
     if args.emulate_reject:assert args.emulate_profile_switch and args.exit_watch and not args.nested_program and not args.lease_fault_phase
     assert not args.nested_graphics or args.nested_program
     if args.streams_around_child:assert args.nested_program and not args.lease_fault_phase
@@ -183,7 +185,12 @@ mode_opened:
         first=first.replace('proc main\n','proc main\n'+queries,1)
         trace='fopen 0 "D:\\CLOCK.LOG" "wb"\nfputs 0 clock_date\nfputc 0 32\nfputs 0 clock12\nfputc 0 32\nfputs 0 clock24\nfclose 0\n'
         first=first.replace('transmit "FIRSTOK^M"',trace+'transmit "FIRSTOK^M"',1)
-    if args.emulate_profile_switch:first=first.replace('fopen 0 ', 'emulate vt220\ntransmit "PROFILE4^M"\nwaitfor "ACK4" 1\nemulate ansi\ntransmit "PROFILE6^M"\nwaitfor "ACK6" 1\nfopen 0 ',1)
+    profiles='emulate vt220\ntransmit "PROFILE4^M"\nwaitfor "ACK4" 1\nemulate ansi\ntransmit "PROFILE6^M"\nwaitfor "ACK6" 1\n'
+    when_wait='when 0 "TRIG" call worker\ntransmit "WHENREADY^M"\nwaitfor "END" 3\n'
+    if args.emulate_profile_switch:
+        first=first.replace('fopen 0 ',(when_wait+'transmit "AFTERWHEN^M"\n' if args.emulate_when else profiles)+'fopen 0 ',1)
+        if args.emulate_when:first+='proc worker\n'+profiles+'transmit "WHENWORKDONE^M"\nendproc\n'
+
     keys = bytearray(actions(b'D:\\FIRST.ASX', 0))
     for i, (name, text) in enumerate([('FIRST', first), ('SIX', six), ('MISSING', missing)]):
         path = ('D:\\' + name + '.ASX').encode()
@@ -196,6 +203,8 @@ mode_opened:
         keys[3*54:4*54]=struct.pack('<H',0)+b'D:\\FIRST.ASX'.ljust(52,b'\0')
     if args.emulate_reject:
         text='proc main\ntransmit "REJECTBEGIN^M"\nemulate '+args.emulate_reject+'\ntransmit "REJECTBAD^M"\nendproc\n'
+        if args.emulate_when:
+            text='proc main\n'+when_wait+'transmit "REJECTBAD^M"\nendproc\nproc worker\ntransmit "REJECTBEGIN^M"\nemulate '+args.emulate_reject+'\ntransmit "REJECTBAD^M"\nendproc\n'
         (out/'REJECT.ASP').write_text(text);files['REJECT.ASX']=compile_source(text)
         keys[:54]=struct.pack('<H',0)+b'D:\\REJECT.ASX'.ljust(52,b'\0')
         keys[3*54:4*54]=struct.pack('<H',0)+b'D:\\FIRST.ASX'.ljust(52,b'\0')
@@ -223,13 +232,17 @@ mode_opened:
     if args.lease_fault_phase or args.emulate_reject:schedule=schedule.replace('a-3 p1300 a-1','a-3 p1300 a-4')
     if args.nested_wait:
         schedule=schedule.replace('a-1 p1300',f'a-1 p700 {args.nested_wait} p600')
+    triggers=((b'PROFILE4\r',b'\x1b[0cACK4'),(b'PROFILE6\r',b'\x1b[0cACK6'))*(1 if args.emulate_reject else 2) if args.emulate_profile_switch else ()
+    if args.emulate_when:
+        pair=((b'WHENREADY\r',b'TRIGEND'),(b'PROFILE4\r',b'\x1b[0cACK4'),(b'PROFILE6\r',b'\x1b[0cACK6'))
+        triggers=(((b'WHENREADY\r',b'TRIGEND'),)+pair) if args.emulate_reject else pair*2
     result = harness.run(label, 'success',
         schedule,
         prm=bytes(settings), arguments='@TEST.PRM /T:D:\\ACTIONS.KEY /D:CaseTest:23',
         com=3, irq=5, cpu=args.cpu, working_drive='d', timeout=30, files=files,
         observer='SSWATCH' if args.inner_screen else 'EWATCH' if args.exit_watch else None,
         observer_high=args.exit_watch_high or args.inner_screen,
-        online_triggers=((b'PROFILE4\r',b'\x1b[0cACK4'),(b'PROFILE6\r',b'\x1b[0cACK6'))*(1 if args.emulate_reject else 2) if args.emulate_profile_switch else ())
+        online_triggers=triggers)
     drive = ROOT / 'build/connection-dos' / label
     wire = (drive / 'serial.bin').read_bytes()
     checks = dict(result['checks'], four_calls=wire.count(b'FIRSTOK\r') == (1 if args.emulate_reject else 2),
@@ -248,6 +261,12 @@ mode_opened:
         checks['both_profile_DA_pairs']=wire.count(b'PROFILE4\r\x1b[?62;2cPROFILE6\r\x1b[?1;2c')==(1 if args.emulate_reject else 2)
         viewport_cells=(args.display_rows-1)*80
         checks['profile_reset_replaces_old_view']=((drive/'SCREEN.BIN').read_bytes()[:viewport_cells*2]==b''.join(bytes([c,7]) for c in b'ACK6'.ljust(viewport_cells,b' ')))
+    if args.emulate_when:
+        pair=b'WHENREADY\rPROFILE4\r\x1b[?62;2cPROFILE6\r\x1b[?1;2cWHENWORKDONE\rAFTERWHEN\r'
+        checks['deferred_WHEN_profile_and_main_resume_order']=wire.count(pair)==(1 if args.emulate_reject else 2)
+        checks['two_WHEN_workers_triggered_during_WAITFOR']=wire.count(b'WHENREADY\r')==2
+        if args.emulate_reject:
+            start=wire.find(b'WHENREADY\rREJECTBEGIN\r');checks['WHEN_error_precedes_later_recovery']=start>=0 and start<wire.find(pair)
     if args.clock_queries:
         checks['actual_parent_clock_queries']=(drive/'CLOCK.LOG').exists() and bool(re.fullmatch(rb'\d{2}/\d{2}/\d{2,3} \d{2}:\d{2}:\d{2}[AP]M \d{2}:\d{2}:\d{2}',(drive/'CLOCK.LOG').read_bytes()))
     for name, expected in sources.items():
@@ -275,7 +294,7 @@ mode_opened:
                   physical_rows=args.display_rows,
                   streams_around_child=args.streams_around_child,
                   held_streams=args.held_streams,
-                  clock_queries=args.clock_queries,emulate_profile_switch=args.emulate_profile_switch,
+                  clock_queries=args.clock_queries,emulate_profile_switch=args.emulate_profile_switch,emulate_when=args.emulate_when,
                   interpreter_sha256=sha(runner), sources=sources, original_inputs=[],
                   scope=__doc__ + ' Actual DOS '+args.cpu+' COM3/IRQ5,synthetic modem and compiled owned scripts. No nested external PROGRAM or physical acceptance.')
     if args.nested_program:
@@ -302,6 +321,13 @@ mode_opened:
                 ['error','cleanup_error','external_scope','display_owned','program_busy','process_busy'])
             report['wait_reads']=records
             report['passed']=all(checks.values())
+    if args.emulate_when:
+        exits=report['exit_watch']['exits']
+        checks['WHEN_exit_errors_match_expected']=len(exits)==4 and [e['error'] for e in exits]==([3,0,0,0] if args.emulate_reject else [0,0,0,0])
+        checks['WHEN_native_owners_retired']=len(exits)==4 and all(e[k]==0 for e in exits for k in ['cleanup_error','external_scope','display_owned','program_busy','process_busy'])
+        checks['WHEN_exit_DS_equals_SS']=len(exits)==4 and all(e['ds']==e['ss']!=0 for e in exits)
+        report['scope']+=' Compiled WHEN registers a deferred CALL during WAITFOR; real handler performs EMULATE before main resume. Passive exit observer checks expected errors, native owners and DS=SS.'
+        report['passed']=all(checks.values())
     if args.emulate_reject:
         exits=report['exit_watch']['exits']
         checks['actual_native_EMULATE_error3']=len(exits)==4 and exits[0]['error']==3 and exits[0]['opcode']==0x2f

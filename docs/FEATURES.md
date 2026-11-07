@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[EMULATE production integration](ASPECT_EMULATE_INTEGRATION.md) adds 81 linked
+bridge cases and two real deferred-WHEN success/error workflows (31/38 checks).
+The exact pair passes Synchronet editor/viewer and Enigma carrier-loss/redial
+with an independently audited exact 65,539-byte retry. Separate independent
+Synchronet/Enigma editor audits match all 1,920 cells with zero differences;
+Enigma's keyboard-driven editor fixture exercises only the parent. Native
+fatal-reset/abort expansion, receive latency, matched package and physical
+acceptance remain open. Products and installed R59A85A8 are unchanged.
+
 [EMULATE guard and recovery checks](ASPECT_EMULATE_GUARDS.md) add52 linked parent
 admission cases,59 linked child guard cases and two actual DOS native-error
 recovery runs (32 checks each,386/8086). Unsupported EMULATE returns error3;
