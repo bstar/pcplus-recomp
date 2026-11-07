@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "component_only": true,
+  "installed_changed": false,
+  "terminal_changed": false,
+  "physical_runtime_verified": false,
+  "binary_sha256": "2088f8bda252e8617f5082b718acb25b3d9247a249c4f8c81ce619aad20ae569",
+  "assertions": 137372,
+  "scan_state_bytes": 130,
+  "scanner_owned_DGROUP_bytes": 0,
+  "scanner_owned_segments": {
+    "meta_picker_scan": {
+      "_TEXT": 1906,
+      "CONST": 0,
+      "CONST2": 0,
+      "_DATA": 0
+    },
+    "meta_scan_fs": {
+      "_TEXT": 149,
+      "CONST": 0,
+      "CONST2": 0,
+      "_DATA": 0
+    }
+  },
+  "unchanged_fixture_files": 1009,
+  "isolated_source_files": 16,
+  "maximum_find_calls_per_step": 1,
+  "maximum_sort_comparisons_per_step": 64,
+  "entry_limit": 1001,
+  "declared_fault_modes": 6,
+  "original_inputs": [],
+  "sources": {
+    "src/key_mapping/meta_picker.c": "2be507d5157bee4aae83330d348fa9bac6478d6304c20c9314c96329944059c5",
+    "src/key_mapping/meta_picker_scan.c": "5d64126899c141e525d3d4d2cd2e8aa09334b3408ace70c3c7c7ab3c7c3b806c",
+    "src/key_mapping/meta_scan_fs.c": "8f0293a3e7e881e6c08306bf06686031b2eb2a26ce2cbfdef9d5a62e90672f0b",
+    "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+    "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
+    "standalone/meta_scan_faults.c": "aed473358c12d554aaaff2d436eebd8ba677aa1d87bee6de62114cde4085b0ea",
+    "standalone/meta_scan_driver.c": "cb0700fa84c8a06f38f5371b97bff8d44f30fb338173dbf6131971e9a7c1ff74",
+    "src/key_mapping/meta_picker.h": "bb8e3ba47f5b82a15ea119e76041419f082c6b40855cb359637375f8b9b1cb87",
+    "src/key_mapping/meta_picker_scan.h": "5ca38cfb3f2465d12cdc971629675548158b7b388042b6e46807118baa084a1b",
+    "src/key_mapping/meta_scan_fs.h": "72466c0ffcc67c0517f53e3f4538a696964708a3ea356fe3cae39c09c453dd3b",
+    "src/directory/directory_replace.h": "b3534b26bc9e9fa577fbceda50276cc9339a4d57f26cf6e1de2e1d436e9ff936",
+    "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
+    "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
+    "standalone/meta_scan_faults.h": "e9d4879be91cc3ac35dea834489a599acc0c66d1ea85e496da7070df1acd75eb",
+    "standalone/meta_scan_banks.asm": "9df055f74eb8a99fc82243ffabf63e8097fb5a0af44cde088c4a9b282b2b007a",
+    "standalone/build_meta_scan.py": "b7cfa525193f06f163a42b3340c20941bcebd9a751461fdc353a0fb70b8cad83",
+    "standalone/record_meta_scan.py": "6ba073092c775b369762d01dcbbdaac0d0d4230a64b552da2e9333a93bf9e461",
+    "standalone/prove_meta_scan_source.py": "f28d74a71f732a3f55b6dfc01759ef72e1934e987c59db1d428cfcf6affadefe",
+    "docs/META_PICKER_SCAN.md": "881bbe0c7f79ad9aba6e4dace368bf8c279536ebc82f8527a08b18e651d0d62d"
+  },
+  "receipts": {
+    "build/meta-scan-20261107-final/result.json": "5f6863ebbe4d51545e01b19a8546512f4feb7b43915ef6ed7668f779f46dfcc5",
+    "build/meta-scan-source-20261107-final/result.json": "be7d868849e5889ac56c5aa7ef94804935fb9278e56a927a95e2d30d11bd4e64"
+  },
+  "limitations": [
+    "Actual source-built DOS8086 FindFirst/Next over owned fixtures, including interleaved separate find context and per-step DTA sentinels. Six declared wrapper modes inject IO errors/malformed/ineligible records; not observed hardware faults.",
+    "Assertion count includes each sentinel byte and file-list membership check, not independent scenario count. Maintained enumeration, not an original-binary comparison.",
+    "Explicit absolute ASCII DOS83 pattern only; CP437 stems retained. Resource fallback/claims and file/EXEC admission remain open. Limit means collection stopped at cap; does not itself establish additional matches.",
+    "No modal/terminal integration, missing-file defaults/create, checked adoption/quarantine, parent memory/capacity/BBS or physical acceptance. Installed RCE81708 unchanged."
+  ]
+}

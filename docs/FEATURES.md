@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[DOS Meta Keys enumeration](META_PICKER_SCAN.md) supplies bounded FindFirst/Next
+with private far continuation state and DTA restoration. Actual DOS tests verify
+interleaved searches, drive/CWD preservation, cancellation, failures and a
+1,001-name limit; all 1,009 fixture files retain their bytes. A 16-file isolated
+source rebuild passes. The scanner/adapter add no DGROUP data. Resource search,
+claims and live terminal integration remain open; installed RCE81708 is unchanged.
+
 [Serviced Meta Keys picker](META_PICKER.md) matches native ordering/navigation
 for 99 cases/2,431 states and checks the source frame at every state. Its
 28,973 DOS checks include CP437 names, maintained 1,001-entry capacity and
