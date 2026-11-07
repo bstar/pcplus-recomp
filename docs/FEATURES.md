@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Matched EMULATE package](EMULATE_CONNECTION_CANDIDATE.md) combines the tested
+capability 20 parent/interpreter and matching compiler in a 13-file public ZIP.
+Nine package-contract cases and four actual DOS8086 launcher/splash/Chat/Help
+workflows pass; packaged precompilation executes EMULATE/ALARM/DATE/TIME. A
+2,499-file public-source export reproduces every payload/archive byte. Six
+private-file sentinels per DOS workflow remain exact. This verifies the software
+package; no release selection or installed-machine update occurred. Native
+failure/flow expansion, physical acceptance and full original parity remain open.
+
 [EMULATE strict I/O and receive overlap](ASPECT_EMULATE_IO.md) adds three actual
 DOS workflows, 34 checks each. Missing/truncated KBD files produce native error 5,
 retain ANSI identity and allow later strict-profile/script recovery. During 128

@@ -28,7 +28,14 @@ PRM/DIR/KEY/KBD/XLT/FON preservation sentinels remain exact in each mode, as do
 all packaged files. COM3/IRQ5, hardware/vector and environment restoration pass.
 These use dummy UARTs and do not establish physical modem acceptance.
 
-A separate clean public-source reproduction is pending at this source checkpoint.
+A clean export of 2,499 public source files at commit `7ea851b` rebuilds all
+five executables, all 13 payload files and the ZIP byte-for-byte. The export has
+no prior objects, originals, private configuration or Git metadata; it runs the
+tracked builder inside the pinned Nix environment. VERSION retains the explicit
+application source base `4d6c7e6`; the proof separately records its complete export
+commit. The [validation record](validation/emulate-connection-candidate.json)
+binds the package, launch tests, contract checks and clean reproduction.
+
 The candidate is staged only: installed R59A85A8, its private configuration and
 call history remain unchanged. Native abort/fatal-reset expansion, stronger
 sustained flow/headroom and physical Boca/SPA2102/SynthModem acceptance remain
