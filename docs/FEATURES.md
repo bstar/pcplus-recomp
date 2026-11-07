@@ -4,8 +4,9 @@
 fresh Enigma and Synchronet regressions, four DOS 8086 launch workflows and
 private-file preservation across six file types, including call history. A
 2,471-file clean public-source export reproduces all 13 payload files and the
-ZIP exactly. Software acceptance is recorded; installation, physical acceptance
-and the remaining original-feature inventory are still open.
+ZIP exactly. Installation and independent readback now pass with eight actual
+private files preserved. Physical acceptance and the remaining original-feature
+inventory are still open.
 
 [Active ALARM error recovery](ASPECT_ALARM_UNWIND.md) fixes a native transmit
 timeout that skipped speaker/duration cleanup. Eight actual modem/DCD cases

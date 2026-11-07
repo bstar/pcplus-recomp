@@ -8,8 +8,11 @@ Physical acceptance and the remaining original-feature inventory are still open.
 
 The [validation record](validation/alarm-connection-release.json) binds 2,546
 source files and 200 receipts/captures. It records software acceptance only:
-the package is staged, not selected or installed. Installed RCC859D7 remains
-unchanged.
+at the time of that receipt, the package was staged without selection or
+installation. A subsequent verified deployment installed this package; all
+13 application files matched independent readback, and eight existing private
+files remained unchanged. Physical runtime acceptance is still pending.
+Deployment journals and machine details remain private.
 
 ## Reproduce the package
 
