@@ -4,6 +4,12 @@
 #include <fcntl.h>
 #include <stddef.h>
 #include <string.h>
+#ifdef KEY_EDITOR_FS
+#include "key_file_fs.h"
+#define _dos_open key_file_open
+#define _dos_read key_file_read
+#define _dos_close key_file_close
+#endif
 #define ABI(member,offset) typedef char abi_##member[(offsetof(key_actions_dos_result,member)==offset)?1:-1]
 ABI(status,0);ABI(dos_error,2);ABI(close_error,4);ABI(bytes_processed,6);
 typedef char abi_result_size[sizeof(key_actions_dos_result)==8?1:-1];

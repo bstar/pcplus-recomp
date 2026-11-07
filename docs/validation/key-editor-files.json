@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "component_only": true,
+  "installed_changed": false,
+  "terminal_changed": false,
+  "physical_runtime_verified": false,
+  "binary_sha256": "699ad961793d16012ca4f5e8fde6ea77cb7bd6ea1bd10d1309788420fa133bcd",
+  "checks": 5899,
+  "save_boundary_modes": 18,
+  "rejected_load_cases": 8,
+  "isolated_source_files": 16,
+  "reader_real_checks": 11,
+  "reader_fault_checks": 22,
+  "default_reader_exact_control": "4ab40fa1744f599e4cb72bdc37f99f667ae8a7b32d133e4ff6c2b0e6b00f9459",
+  "baseline_commit": "94ccaf0ba0963ab8e756cbb433ef5f04128e43b0",
+  "original_inputs": [],
+  "sources": {
+    "src/key_mapping/key_editor_file.c": "f5bb250f867e0b396f840b745c67f599d9d0ff5384b2bc27ff2be6032a9fd5fc",
+    "src/key_mapping/key_actions_dos.c": "9f1fdf650795016b4d4affb6b3018046fecb220a7087d6ef7df1e9a8daa0bae9",
+    "src/key_mapping/key_file_fs.c": "751342a82fd9bc755d18fc343a3e39c8300045b32dd042e9cb27f5dbe5b3071f",
+    "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+    "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
+    "standalone/key_editor_faults.c": "4016e935aacf1cfc59af9b2adb20cd4b22a906eb6b0644bfa9cf6e430fa571f5",
+    "standalone/key_editor_file_driver.c": "8a1cf80ce7673c363eee269bdcddda5e4240dd50e2cd31f36d6c96b2fa3d56e3",
+    "src/key_mapping/key_editor_file.h": "824471996909bca4aadf2c0d6b7fc4ec82222dfe3a6e893439df4446f261a3c3",
+    "src/key_mapping/key_actions_dos.h": "c546bdbf201f31f1f36aa937280a32c636af84bc8798256d4024e5af66ca494e",
+    "src/key_mapping/key_file_fs.h": "0edf624c48965e4ef08c0c0489b741961894556ada7ae17bdf62f88a09e95eab",
+    "src/directory/directory_replace.h": "b3534b26bc9e9fa577fbceda50276cc9339a4d57f26cf6e1de2e1d436e9ff936",
+    "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
+    "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
+    "standalone/key_editor_faults.h": "b292761c9e294fcc5f4ce986f92e8a5f1990c73a0895e632ffc0b1ee6ac95518",
+    "standalone/key_editor_file_banks.asm": "f05c5d301436b89565510d592038f2abbe5ae13beff2119e287bfa8a2a446c06",
+    "standalone/build_key_editor_file.py": "9d03ac2f472a16b0a3a7771828369dd39a2c35205c3e1b044b2103f85168653b",
+    "standalone/check_key_editor_default.py": "e805a7dcd94f85ac9d1d11a0956b2af8d257b0d2acaeb6023005dd5923dd710b",
+    "src/key_mapping/key_actions_dos.inc": "e59d70068d3908176304ebe8ad5404e4f373e310d15dda9c906139db4f00c859",
+    "standalone/check_key_actions_dos.py": "52cc963f2dd6a78c53c2793e611c0e9dc947d1712913c0d56fd7a3987cdc2664",
+    "standalone/record_key_editor_file.py": "61ddbc61e849877be8fd95a7aed5b0bdb25a41086e282b9f72adcb8ad896216f",
+    "standalone/prove_key_editor_file_source.py": "4d1bf98258abae9c5461ed627d58c5ec9132ad3edd2b99866d93f76f411b4a38",
+    "docs/KEY_EDITOR_FILES.md": "5a60f6c11832cfcf199133719ff7778a190e04c127f34d582b09970b949001f8"
+  },
+  "receipts": {
+    "build/key-editor-file-20261107-accepted/result.json": "7ab3c76c2c5d5d8a3b9a38d53f84e2181788f828ceaa9d7e396ffdafda5d2ec6",
+    "build/key-editor-file-source-20261107/result.json": "eb9fc7681e47861b1a5b08babad00103cb8e52ac2026885fc02c660525f3204b",
+    "build/key-editor-default-source-20261107/result.json": "30c512ec2a3c6b86f79dbb2cd01d1f4288a6ae75cc358e4f2ce5487a0c657dc2",
+    "build/key-actions-dos/checks.json": "d893d89011042bab4d5ecb560f9b15a023abab49f4bd6eb84f93fc1d11b0f4e7"
+  },
+  "limitations": [
+    "Maintained checked IO, not recovered original file-picker behavior; no original-binary input or native behavior comparison in these tests.",
+    "Injected wrappers perform real DOS IO in owned fixtures; close uncertainty requires owner quarantine/recovery. Optimistic comparison is not an external lock or power-loss guarantee; attributes/timestamps are not preserved.",
+    "No live Meta dialog linkage, filename selection, resource/EXEC ownership, live action adoption, application memory/capacity admission, BBS regression or physical acceptance. Installed RCE81708 unchanged."
+  ]
+}

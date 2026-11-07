@@ -95,6 +95,8 @@ An isolated twelve-file export reproduces both diagnostic/probe executables and
 repeats controller and actual VGA checks without originals, private data, prior
 objects or ancestor Git. The outer pinned Nix environment supplies tools. The
 [receipt](validation/meta-dialog.json) binds source and product identities.
-Checked KEY persistence, filename selection, original VGA comparison, live action
+A [separate checked KEY backend](KEY_EDITOR_FILES.md) now passes its component
+gates, but is not linked to this controller/probe. Filename selection, original
+VGA comparison, live action
 adoption, foreground/resource ownership and application capacity/BBS/physical
 acceptance remain separate. No whole F02/F05/F06 gate is closed.

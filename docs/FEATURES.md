@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Checked Meta Keys files](KEY_EDITOR_FILES.md) adds strict far-buffer loading
+and optimistic staged saves with explicit recovery flags. Real DOS8086 IO and
+injected boundary failures pass 5,899 checks; a 16-file isolated export reproduces
+the executable and results. The existing reader passes 33 checks and its default
+EXE remains byte-identical to pre-seam source. Live Alt-M linkage, filename
+selection, ownership/adoption and application acceptance remain open. Installed
+RCE81708 is unchanged.
+
 [Serviced Meta Keys dialog](META_DIALOG.md) composes native row/text semantics:
 328 original-reference cases and 3,341 key states/views pass in DOS8086, with
 684 bytes of state outside DGROUP. A passive actual VGA probe verifies editing,
