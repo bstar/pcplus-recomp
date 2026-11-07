@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+The [cooperative ALARM adapter](ASPECT_ALARM_COOPERATIVE.md) now retains native
+alert flow while servicing bounded callbacks during tones and waits.94 actual
+DOS cases/1701 checks and an8-file cold rebuild pass, including key completion,
+clock/budget faults, ownership quarantine and explicit cleanup recovery.39
+original compiler probes establish syntax. This is not yet compiler/VM or real
+UART/speaker integration; the installed package and full parity gates stay open.
+
 The [ALARM native baseline](ASPECT_ALARM_NATIVE.md) adds120 exact bytes and
 348 controller cases. It is not bound to the interpreter; compiler, serviced
 timing, policy/cancellation and physical acceptance remain open.

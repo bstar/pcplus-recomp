@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "binary_sha256": "59122cfe4c6fb3a29206b227c9ffd91766703e710e59644ce85c5c13ec33af8a",
+  "sources": {
+    "src/aspect/alarm_native.asm": "c25bb8ecae8cfbc4e6b0487ecd4165370e24ab2307c93e9afafbc10fccd960a4",
+    "src/aspect/alarm_cooperative.c": "bb48ca5c5f287f08fe002916d88892da8967987bbe45462a839851321894fc7f",
+    "src/aspect/alarm_cooperative.h": "5bd0c5856d97f26ab27915b08426e01eb6f51fbe984061b5832588561ef21901",
+    "src/aspect/alarm_cooperative_bridge.asm": "f5b932cf1e21b21a0994df366ec926dc9773e296f386d0b38facd8580d6491a6",
+    "standalone/test_alarm_cooperative_dos.py": "c7d7346c96a71b37bcb7e676b19e77be05e12eda6ba99f8f8260499c52db8e87",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/build_context_help.py": "6764f8b4529ebea9dbccc96b213587701bf223dbbcfd73a993943c9e5d0a69bb",
+    "standalone/prove_alarm_cooperative_source.py": "5a518a348fe9ac13f54e9d243ebcb0fac0caef28c28f830e29e4fd1fce46a902",
+    "standalone/check_aspect_alarm.py": "8a0eb29ff7fabfa448f701e951c9ed1a4b71527c27d9f71b23789d3b58e2bbe4",
+    "standalone/fixtures/aspect_alarm_native_units.json": "c0751f422b4c21b0ba0d08c45ff88a0fe998ffc504f10ea58e3931aed6d92b7b",
+    "standalone/probe_aspect_alarm_compiler.py": "e2d4aeaa22e3e6976e410a339acb3d8453e1f34bfe034b668a0439415eecc516",
+    "standalone/record_alarm_cooperative.py": "88c31dd746923dfab5c97825352932371d33688628e100af4b6c224a6752186f"
+  },
+  "receipts": {
+    "build/alarm-cooperative-dos-final-20261106/result.json": "5de6bc6e1149c286a0c841968ce1bfab4b5b8e4dcca0ca9025c94d26c4655eb1",
+    "build/alarm-cooperative-cold-source-20261106/result.json": "b11b4e99ca38bbf059ea1490c0c32e977ed190bf8deb8b48f1c183ed466d6075",
+    "docs/validation/aspect-alarm-native.json": "9e09b3febdb714ca186e1265c5726182ee1ee08ec46666f89928af7f10976749"
+  },
+  "summary": {
+    "DOS_cases": 94,
+    "DOS_checks": 1701,
+    "cold_source_files": 8,
+    "native_baseline_cases": 348,
+    "native_bytes": 120
+  },
+  "original_grammar": {
+    "cases": 39,
+    "accepted": 17,
+    "rejected": 22,
+    "fixture_sha256": "284cab33941d832d553cbd4ba45ea714e282666dc35e4d860b0720329933296e",
+    "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+    "probe_sha256": "e2d4aeaa22e3e6976e410a339acb3d8453e1f34bfe034b668a0439415eecc516"
+  },
+  "limitations": [
+    "Actual recovered native alert and C/RET2/RET4 bridge execute under DOS8086, but platform clock/keyboard/service/speaker callbacks are modeled.",
+    "No actual UART receive, PIT/acoustic timing, VM opcode binding, parent PRM policy or physical machine acceptance.",
+    "Tone duration15 uses a maintained3-BIOS-tick request. Keys can end an active tone early; this is a cooperative cancellation adaptation.",
+    "Original grammar is independently captured; maintained host/DOS compiler emission remains unimplemented at this checkpoint.",
+    "Callback context/ownership/lifetime contracts remain the platform adapter responsibility. Failed cleanup retains borrowed ops/cookie until explicit successful recovery.",
+    "No selected package, installed files, machine configuration or running BBS/bridge changes."
+  ],
+  "scope": "Bind cooperative native-alert ownership tests and cold source reproduction. Exact native93-byte shared alert retained, synchronous services replaced by bounded foreground callbacks. Error termination does not invent or consume a key. Reentrant run/recovery rejected; owned sound cleanup failures remain quarantined for retry. Full application integration and parity stay open."
+}

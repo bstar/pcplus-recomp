@@ -45,3 +45,8 @@ keyboard cancellation and tested cleanup. The existing synchronous native
 controller cannot simply be inserted into the live interpreter and declared
 compatible under sustained receive traffic. All application/physical gates
 for this command remain open.
+
+The [cooperative adapter](ASPECT_ALARM_COOPERATIVE.md) now exercises the native
+shared alert through bounded callback services in actual DOS. It remains a
+separate component; real parent policy, serial/speaker backends and opcode
+integration are still required.

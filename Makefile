@@ -1990,3 +1990,10 @@ test-aspect-clock-compat:
 .PHONY: test-aspect-alarm-native
 test-aspect-alarm-native:
 	python3 standalone/check_aspect_alarm.py --output build/aspect-alarm-native-make-$(shell date +%s%N)
+
+ALARM_COOPERATIVE_OUTPUT := build/alarm-cooperative-make-$(shell date +%s%N)
+.PHONY: test-aspect-alarm-cooperative test-aspect-alarm-cooperative-source
+test-aspect-alarm-cooperative:
+	python3 standalone/test_alarm_cooperative_dos.py --output $(ALARM_COOPERATIVE_OUTPUT)
+test-aspect-alarm-cooperative-source: test-aspect-alarm-cooperative
+	python3 standalone/prove_alarm_cooperative_source.py --test $(ALARM_COOPERATIVE_OUTPUT) --output $(ALARM_COOPERATIVE_OUTPUT)-source
