@@ -17,7 +17,8 @@ It is staged for the next card update; the card is absent and was not written.
 Alt-P currently uses the complete source-built settings editor; it is not a
 reconstruction of the original dedicated line/port popup. The [native selector
 recovery](LINE_PORT_RECOVERY.md) now has exact assembly and component tests;
-its popup integration remains pending. The original Alt-Z
+its [popup rendering](LINE_PORT_VIEW.md) also matches bounded native DOS
+captures. Live popup integration remains pending. The original Alt-Z
 reference layout, backtick/mouse pull-downs, live Alt-D directory chooser and
 Alt-F8 key-map editor remain required. This checkpoint does not claim full
 original command or application parity.

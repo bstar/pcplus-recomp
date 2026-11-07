@@ -24,8 +24,8 @@ Retained REA observations:
 | Popup EFDE | `ev_fa051b50c21b78d453b383b0aed32c34dacdaac5468804f8c93c2ea749f26519` | Saves window, draws popup, reads keys, refreshes fields. Escape applies session settings and restores window. Alt-S takes the save path before applying/restoring. |
 | Selector F05C | `ev_394c7be3e6e48c412d327c081c2588fb78c243c68f1ec47359b8a96b56c5c89b` | Updates five adjacent words and invokes bell or port-quiesce boundaries. |
 | Selector assembly | `ev_c0d69340f77c15c75b08ec130b186bfc7478b2f47d575591fedb5914b1c152ca` | 135 instructions; maintained instruction assembly reproduces every byte. |
-| Refresh F1FA | `ev_e18dd84a91a8b94683044f3192fc0d0e3c1ba01a95dc76211fa78896ff0effd9` | Displays baud selection, N/O/E/M/S parity, bits, stops and one-based port. Baud-label pointer interpretation still needs data corroboration. |
-| Save F260 | `ev_629b21d05031dec974bf7ce423600c150ebd02a169f4e50ec4f121c0245483b0` | Opens a file and writes the ten-byte settings prefix, then closes; exact filename is not yet resolved. Does not visibly check write/close results. |
+| Refresh F1FA | `ev_e18dd84a91a8b94683044f3192fc0d0e3c1ba01a95dc76211fa78896ff0effd9` | Displays baud selection, N/O/E/M/S parity, bits, stops and one-based port. Baud-label pointers resolve to 300 through 115200 in the original data. |
+| Save F260 | `ev_629b21d05031dec974bf7ce423600c150ebd02a169f4e50ec4f121c0245483b0` | Opens a file and writes the ten-byte settings prefix, then closes. The default filename is PCPLUS.PRM; a later data read resolves it. Does not visibly check write/close results. |
 | Apply 03A7 | `ev_019df849b434c3f7bf7437778876466852b4c08741eb8ea7a1f5d4c97e282850` | Calls serial helpers and updates port state; full hardware semantics remain untraced. |
 | Quiesce ADBA | `ev_cf4c84bd7f5642c585597129585d3f7a5d72a35cf9e948836f74e1d895ec6738` | Calls ADD6, masks an I/O register with7F and clears two I/O registers; exact register identities are not yet established. |
 
@@ -85,9 +85,9 @@ these accepted runs. No product behavior was changed to make tests pass.
 
 ## Remaining integration work
 
-Recover the popup's layout/data references and corroborate its runtime display,
-Escape/session-apply and Alt-S/save paths against the authentic executable.
-Then integrate with the maintained saved-screen, foreground, serviced-input and
+The [popup view checkpoint](LINE_PORT_VIEW.md) now corroborates default-color
+80x25 rendering and Escape/session persistence against the authentic executable.
+Next integrate with the maintained saved-screen, foreground, serviced-input and
 UART owners, preserving incoming traffic and checked file persistence. Original
 COM1..8 choices exceed the maintained COM1..4 scope; unsupported ports need
 explicit handling rather than silent remapping. Trace application of baud,

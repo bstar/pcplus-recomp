@@ -1,0 +1,114 @@
+{
+  "component_verified": true,
+  "application_integrated": false,
+  "physical_runtime_verified": false,
+  "manifest_sha256": "9591cdc5327c0eb0815e9e30505755e7a52570ae221e2473616f06c14cdc9880",
+  "dos_result_sha256": "12dac2415d10510a37be93e43c351e380437b95b472b725fce81b2b5f2c9ec5a",
+  "public_source_proof_sha256": "c51ab7df6a4b21c6959b824a9855abad4f01b31017ba72dce558221d3ecf2525",
+  "public_source_files": 5,
+  "sources": {
+    "src/line_port/view.c": "b6e20722678e5fb6dd1e9f0faffc54cf35701e2a668765d03c46e6fa571cd55c",
+    "src/line_port/view.h": "5f4d2c0322d5b7aa6d7f0b6300fd5d6d78cb5ad8a52926c552eaadf8304be6dd",
+    "standalone/line_port_view_diagnostic.c": "2c6b3b76810a968156a21123b3e48aa9d369f4e5e6e746403d27b76f597a8c61",
+    "standalone/build_line_port_view.py": "1b0cdc248dda140acb46bca96ea7902b46883c2d20e23f23d35419fcebd00711",
+    "standalone/test_line_port_view_dos.py": "9b1aa0a649311bdcc7f63033e16553df187c79d4d7569dec72f1b0b9ea9a93fd",
+    "standalone/test_line_port_original_dos.py": "55df0da7397bb3987022078f3cabfde305122323d90fac35fe0c3a8ce55b50e1",
+    "standalone/viewer_original_watch.asm": "2640588046e88f50ba643272cfa31e6f9e117246c5be3df630e58ccd3b6878c2",
+    "standalone/record_line_port_view.py": "e26f91cd8150e9c8b6c5cd165c626b175b3fdaeba18eb06f34423bc389744870",
+    "standalone/prove_line_port_view_source.py": "e4e0d854bfc5fcdc86f741c9d877a1f5da0f01e7e9de00241e7e6dabc756b701"
+  },
+  "sessions": [
+    {
+      "save": false,
+      "receipt": "build/line-port-original-escape-20261107/result.json",
+      "receipt_sha256": "0dc9f12050165ef613938126d82f9aae8bebd216e8cbe1bf0008019cb559aba3",
+      "compared": [
+        {
+          "original_frame": 1,
+          "source_frame": 0,
+          "cells": 1142,
+          "differences": 0,
+          "original_sha256": "752f12eb03f1bff1bba9490bfcc1861158da1d3152ea10439daf7238e3422d5c",
+          "source_sha256": "e5d4ae548ed10ad1b297d8e6a4e88ec110d30b30e662575c3c11af4646786c29"
+        },
+        {
+          "original_frame": 2,
+          "source_frame": 1,
+          "cells": 1142,
+          "differences": 0,
+          "original_sha256": "0df58f87020fa0944392fe30a162157f83c474fc2e97b19690a6ed049089e068",
+          "source_sha256": "77e60a787d6c277a6fc015fd7b5a574f16121f4dbdd0ef9a2c592b17bd04d997"
+        },
+        {
+          "original_frame": 3,
+          "source_frame": 2,
+          "cells": 1142,
+          "differences": 0,
+          "original_sha256": "a29a18fb801d43fe7b2643287f5eadca83548a288cb24044f3c9e9c918c3c9ba",
+          "source_sha256": "05e419659ccd95141abc86cb73f6f603790d6e896ddb16f3c6feb1dfee5b3fef"
+        },
+        {
+          "original_frame": 5,
+          "source_frame": 2,
+          "cells": 1142,
+          "differences": 0,
+          "original_sha256": "a29a18fb801d43fe7b2643287f5eadca83548a288cb24044f3c9e9c918c3c9ba",
+          "source_sha256": "05e419659ccd95141abc86cb73f6f603790d6e896ddb16f3c6feb1dfee5b3fef"
+        }
+      ],
+      "restored_live_cells": 1920,
+      "changed_prm_offsets": []
+    },
+    {
+      "save": true,
+      "receipt": "build/line-port-original-save-20261107/result.json",
+      "receipt_sha256": "4367ddddc1d8105c47cffdab188183307511e458dfb65f95418065f42f5853d3",
+      "compared": [
+        {
+          "original_frame": 1,
+          "source_frame": 0,
+          "cells": 1142,
+          "differences": 0,
+          "original_sha256": "752f12eb03f1bff1bba9490bfcc1861158da1d3152ea10439daf7238e3422d5c",
+          "source_sha256": "e5d4ae548ed10ad1b297d8e6a4e88ec110d30b30e662575c3c11af4646786c29"
+        },
+        {
+          "original_frame": 2,
+          "source_frame": 1,
+          "cells": 1142,
+          "differences": 0,
+          "original_sha256": "0df58f87020fa0944392fe30a162157f83c474fc2e97b19690a6ed049089e068",
+          "source_sha256": "77e60a787d6c277a6fc015fd7b5a574f16121f4dbdd0ef9a2c592b17bd04d997"
+        },
+        {
+          "original_frame": 3,
+          "source_frame": 2,
+          "cells": 1142,
+          "differences": 0,
+          "original_sha256": "a29a18fb801d43fe7b2643287f5eadca83548a288cb24044f3c9e9c918c3c9ba",
+          "source_sha256": "05e419659ccd95141abc86cb73f6f603790d6e896ddb16f3c6feb1dfee5b3fef"
+        },
+        {
+          "original_frame": 5,
+          "source_frame": 2,
+          "cells": 1142,
+          "differences": 0,
+          "original_sha256": "a29a18fb801d43fe7b2643287f5eadca83548a288cb24044f3c9e9c918c3c9ba",
+          "source_sha256": "05e419659ccd95141abc86cb73f6f603790d6e896ddb16f3c6feb1dfee5b3fef"
+        }
+      ],
+      "restored_live_cells": 1920,
+      "changed_prm_offsets": [
+        2,
+        4
+      ]
+    }
+  ],
+  "matching_popup_cells": 9136,
+  "limitations": [
+    "Native and maintained components execute in DOSBox-X8086; native uses dummy COM1.",
+    "Comparison covers default-color 80x25 popup/footer for three line states, including reopen.",
+    "Source renderer has no UART, apply/save owner, cursor service or live terminal integration.",
+    "Configured colors, other row counts and physical hardware remain unverified."
+  ]
+}

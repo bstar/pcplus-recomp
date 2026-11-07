@@ -2827,3 +2827,14 @@ The popup wrapper's separate session-apply/save behavior is traced, but its
 rendering, persistence and live terminal/UART integration remain open. Alt-P
 still opens the general editor. Installed RBADE091 is unchanged; no physical
 acceptance or F03/full-parity completion is implied.
+
+## Line/Port native display and persistence checkpoint (2026-11-07)
+
+[Native Alt-P observations and the maintained renderer](LINE_PORT_VIEW.md)
+now agree on 9136 character/attribute cells across Escape and Alt-S sessions.
+Native Escape keeps edits in the session without changing PRM; native Alt-S
+changes only the two edited words in the ten-byte prefix. The source view
+builds independently and reproduces from five public files. It remains a
+component: live serviced-input, saved-screen, UART apply and checked-save
+owners still need integration. RBADE091 remains unchanged and physically
+unaccepted; no original application-parity gate is closed.
