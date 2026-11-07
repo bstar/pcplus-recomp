@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Shared Meta connection-test package](META_SHARED_CONNECTION_CANDIDATE.md)
+includes the matched Meta/Line companions. All15 files and the ZIP reproduce
+from2644 public source files;31 package admission cases and six DOS8086 package
+workflows pass while preserving synthetic private settings/history. The prior
+14-file archive also reproduces. Deployment and physical acceptance are tracked
+separately; full original parity remains open.
+
 [Shared-parent live Enigma transfers](META_SHARED_ENIGMA_TRANSFERS.md) pass
 actual11521-byte download and65539-byte upload through the on-disk SynthModem
 Telnet proxy, exact files/protocol closure/menu return and hardware cleanup.
