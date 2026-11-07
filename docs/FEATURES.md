@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[ALARM speaker/cleanup observations](ASPECT_ALARM_SPEAKER.md) pass six more
+actual-parent cases: sounding natural completion and native WHEN TRANSMIT,
+sounding Escape/printable/F1 completion and a quiet control. Passive gate reads
+confirm activity only when enabled and gate/owner release at exit. Child duration
+is restored to4 after an explicit32767-count alert. Acoustic/physical timing,
+malformed operands, full-duration service budgets and carrier/error cleanup
+remain open. Product binaries and installation are unchanged.
+
 [ALARM duration policy and completion keys](ASPECT_ALARM_POLICY.md) now pass six
 additional actual-parent cases: omitted/zero/override durations, subsequent
 configured defaults, and Escape/printable/F1 completion of32767-count alerts.

@@ -58,3 +58,8 @@ cleanup remain open. No new cold export or modern BBS test is claimed here:
 the application products are unchanged from the
 [capacity/BBS checkpoint](ASPECT_ALARM_GROUPS.md). Packaging, physical acceptance
 and the remaining full-parity inventory are still required.
+
+The subsequent [speaker checkpoint](ASPECT_ALARM_SPEAKER.md) observes enabled
+gate activity, normal/key-completion cleanup and the child duration word at
+exit on these same products. It supersedes the sound/exit-state portions of
+this checkpoint's remaining work, without claiming acoustic or physical tests.

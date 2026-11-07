@@ -4,6 +4,7 @@ import inspect,json,sys,struct,argparse
 from pathlib import Path
 import test_aspect_pause_when_dos as pause
 import test_aspect_keys_dos as keys
+from alarm_speaker_observer import instrument
 ROOT=keys.ROOT
 PARENT=ROOT/'build/terminal-alarm-policy-admission-20261106'
 CHILD=ROOT/'build/aspect-alarm-vm-numeric-final-20261106'
@@ -14,6 +15,8 @@ def main():
  parser.add_argument('--parent-dir',type=Path,default=PARENT)
  parser.add_argument('--child-dir',type=Path,default=CHILD)
  parser.add_argument('--variant',choices=('when','policy','keys'),default='when')
+ parser.add_argument('--speaker',action='store_true',help='Enable the parent sound policy and sample actual speaker gate/exit state')
+ parser.add_argument('--observe-alarm',action='store_true',help='Sample speaker/exit state without enabling sound')
  selected,remaining=parser.parse_known_args();sys.argv=[sys.argv[0],*remaining]
  PARENT=selected.parent_dir.resolve();CHILD=selected.child_dir.resolve()
  assert PARENT.is_relative_to(ROOT/'build') and CHILD.is_relative_to(ROOT/'build')
@@ -22,6 +25,7 @@ def main():
  def configured_prm():
   settings=bytearray(original_prm())
   for off,value in [(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,4),(0x1e6,0),(0x1e4,0)]:struct.pack_into('<H',settings,off,value)
+  if selected.speaker:struct.pack_into('<H',settings,0x1bc,1)
   return bytes(settings)
  keys.renderer.prm=configured_prm
  observer_text=inspect.getsource(keys.renderer.observer)
@@ -32,6 +36,8 @@ def main():
  new=" call far [cs:old21]\n save\n mov bp,sp\n test word [ss:bp+18],1\n jz .exec_return_recorded\n mov ax,[ss:bp+16]\n mov [cs:exit_code],ax\n.exec_return_recorded:\n push cs"
  assert observer_text.count(old)==1
  observer_text=observer_text.replace(old,new)
+ if selected.speaker or selected.observe_alarm:
+  observer_text=instrument(observer_text,pause.window.symbols(CHILD/'ASPECT.map'))
  exec(compile(observer_text,str(Path(__file__)),'exec'),keys.renderer.__dict__)
  # The shared peer gained a software-flow block before line.append. Retain
  # that block and insert the existing READY/END hooks at the exact append.
@@ -86,6 +92,21 @@ def main():
  exec(compile(text,str(Path(__file__)),'exec'),scope);scope['main']()
  report=ROOT/'build/aspect-alarm-vm-dos'/sys.argv[sys.argv.index('--label')+1]/'pause-checks.json'
  assert json.loads(report.read_text())['passed'], 'ALARM VM acceptance remains unproven; inspect preserved captures'
+ if selected.speaker or selected.observe_alarm:
+  result=json.loads(report.read_text());cases=[]
+  for case in result['cases']:
+   raw=(report.parent/case['case']/'RENDER.BIN').read_bytes()
+   on,edges,last,port,owned,duration,abi=struct.unpack('<7H',raw[-28:-14])
+   checks=dict(speaker_activity_matches_policy=(on>0 and edges>=2) if selected.speaker else on==edges==0,
+               speaker_gate_off_at_exit=port==0,speaker_owner_released=owned==0,
+               configured_duration_restored_at_exit=duration==4,child_DS_equals_SS=abi==1)
+   cases.append(dict(case=case['case'],passed=all(checks.values()),checks=checks,
+                     speaker_on_ticks=on,speaker_gate_edges=edges,last_sample=last,
+                     exit_port=port,exit_owned=owned,exit_duration=duration))
+  speaker=dict(passed=all(c['passed'] for c in cases),enabled=selected.speaker,cases=cases,
+               scope='Passive INT1C samples actual emulated port61 gate bits during child EXEC; reads child owner/duration at DOS exit under verified DS=SS. No PIT writes, key or reply substitution. Detects enabled output and cleanup, not exact frequency, tone cadence or physical audibility.')
+  (report.parent/'speaker-checks.json').write_text(json.dumps(speaker,indent=2)+'\n')
+  assert speaker['passed'],speaker
  if selected.variant=='policy':
   result=json.loads(report.read_text());checks=[]
   for case in result['cases']:
