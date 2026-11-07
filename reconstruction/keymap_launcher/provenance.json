@@ -1,0 +1,22 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "address": "0x1145a",
+  "end_exclusive": "0x114a8",
+  "source_file_offset": 9818,
+  "bytes": 78,
+  "sha256": "a232e0136eaf00a7f12bc359ac00762148a05c88a7e43a5d9e1c2ea80be28b78",
+  "rea_evidence_id": "ev_bc822c737da0f500794a19a65784f194e4d51b6ff57576c3d0711fbc8baf6004",
+  "rea_export": "analysis/keymap-launcher-current-20261107-evidence.json",
+  "rea_export_sha256": "57f25b54c697edcd4c453d4e579e6fb1f682541eb4de9a6b38e8148bbaff8339",
+  "restore_ret4_evidence": "ev_96965061d48282dbba8fc0b1083bac343af45d1c86376b2955f2dcfc245bded3",
+  "factory_literals_file_offset": 171973,
+  "factory_literals": [
+    "%d %s",
+    "PCKEYMAP.EXE"
+  ],
+  "limitations": [
+    "Static caller only; six external services must be supplied.",
+    "Restore-screen uses callee cleanup RET4; decompiler cdecl labels are insufficient ABI evidence.",
+    "PCKEYMAP.EXE implementation and factory keyboard defaults are not recovered here."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "flat_bytes": 78,
+  "flat_sha256": "a232e0136eaf00a7f12bc359ac00762148a05c88a7e43a5d9e1c2ea80be28b78",
+  "binary_sha256": "f8379c334a3b1a9f925896135a8f355a164f03166b1a940c721126dc615199f2",
+  "model_cases": 612,
+  "DOS_cases": 8,
+  "original_compared": true,
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "trace_sha256": "e87527103170082e36290bdce86e2bee58fc2a6b16234827f96ad2515cf2ff9b",
+  "caller_stack_bytes": 20,
+  "source_export_files": 5,
+  "ancestor_git_unavailable": true,
+  "cold_binary_reproduced": true,
+  "linked_opcodes_verified": true,
+  "sources": {
+    "reconstruction/keymap_launcher/launch.asm": "a2177171d8386b5a6b16aa6c72725e5056e32c1d7b9d39763f5b2200d3a26ccd",
+    "reconstruction/keymap_launcher/provenance.json": "36c20f9d90f35c88287666d15c0360229d1437a99c54a76126aecbb0498817b4",
+    "standalone/keymap_launch_host.asm": "0968b5ebaec56b200e47640c3f95b668faba079370877df5125cd2453b8cd212",
+    "standalone/build_keymap_launch.py": "28abb550d557f59a68461c14e73692215f02e56c56ba502e0e4ea62f24c8ce68",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/test_keymap_launch.py": "633a7230bd9a4df12a87a2d0a3312783c866a0d32dd59c6d460715e425b3a733"
+  },
+  "scope": "Check native keymap caller frames, source reproduction and linked8086 DOS ABI.\n\nAll six callees are explicit models. Optional original input is SHA-pinned;\nno helper, settings file, real video or PROGRAM child is executed by the model.\n Models verify caller order/arguments, opaque screen handle, RET4 cleanup, reload after all modeled PROGRAM outcomes, BP/SI/SP and guard bytes. No original editor, real CRT/lookup/PROGRAM/video/load-file behavior or terminal integration claim."
+}

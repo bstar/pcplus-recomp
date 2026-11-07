@@ -1,5 +1,17 @@
 # Full application reconstruction checklist
 
+[Original keymap helper caller](KEYMAP_LAUNCHER.md) adds78 exact bytes and a
+source-only OMF/DOS ABI diagnostic:612 modeled CPU cases,8DOS cases and a
+five-file isolated reproduction pass. `RET4` screen-handle cleanup is explicit.
+PCKEYMAP implementation/defaults, full key editing and terminal integration
+remain open; the installed build is unchanged by this component.
+
+[Current Synchronet transfers](META_SHARED_SYNCHRONET_TRANSFERS.md) verify
+11521-byte download and65539-byte upload through the actual SynthModem proxy
+with the installed candidate's exact parent bytes. Files, official upload
+metadata, protocol closure, menu return and cleanup pass in DOS8086. Physical
+observations and broader original parity remain open.
+
 [Shared Meta connection-test package](META_SHARED_CONNECTION_CANDIDATE.md)
 includes the matched Meta/Line companions. All15 files and the ZIP reproduce
 from2644 public source files;31 package admission cases and six DOS8086 package
