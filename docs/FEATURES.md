@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Serviced Meta Keys dialog](META_DIALOG.md) composes native row/text semantics:
+328 original-reference cases and 3,341 key states/views pass in DOS8086, with
+684 bytes of state outside DGROUP. A passive actual VGA probe verifies editing,
+Insert shape and exact prior-screen/cursor restoration. Eight owner/API guards
+and a twelve-file isolated source rebuild pass. Decoration remains authored;
+checked persistence, live ownership/adoption and application integration remain
+open. The installed parent is unchanged by this component checkpoint.
+
 [Serviced Meta Keys text field](META_TEXT_MODEL.md) matches 554 original-instruction
 traces containing 8,418 key states. Actual source-built DOS8086 tests compare
 field bytes, complete record outputs, cursor/shape, return codes and bell counts,

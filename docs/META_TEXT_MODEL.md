@@ -5,6 +5,10 @@ shared editor without its blocking keyboard loop. It is a building block for
 Alt-M, not a complete editor or a change to the interactive terminal. The
 installed release and its pending physical acceptance are unchanged.
 
+The subsequent [dialog component](META_DIALOG.md) composes this field with the
+native row/navigation rules and tests an actual source-built VGA popup. It keeps
+file ownership and application integration separate.
+
 ## Native authority
 
 REA/Ghidra pseudocode for resident `79d4` is

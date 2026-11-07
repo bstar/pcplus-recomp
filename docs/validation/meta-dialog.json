@@ -1,0 +1,59 @@
+{
+  "passed": true,
+  "component_only": true,
+  "terminal_changed": false,
+  "installed_changed": false,
+  "physical_runtime_verified": false,
+  "controller_sha256": "d4779b6eed701596115253b743d83e06c6809f69344a32dc1ca04cd2a6a1e59f",
+  "VGA_probe_sha256": "086602c37d9b50d350ddda55464e112148a25ada5f3594f3743943e589a4a2d4",
+  "cases": 328,
+  "key_states": 3341,
+  "view_checks": 3341,
+  "API_guards": 8,
+  "state_bytes": 684,
+  "state_outside_DGROUP": true,
+  "VGA_checks": {
+    "overview": true,
+    "kind_selection": true,
+    "text_edit": true,
+    "typed_text": true,
+    "insert_shape": true,
+    "exact_screen_cursor_restore": true,
+    "canceled_text_unchanged": true
+  },
+  "isolated_source_files": 12,
+  "native_authority": {
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "dispatch_evidence": "ev_a1a870d1d2c2754325165f8155f2645805d413818b24f53fbf8bf375476f9bbf",
+    "scope": "Actual original df44/e294/7880/79d4/e261/e24a and CRT instructions. Keyboard/window/render/cursor/bell and load/save effects modeled over synthetic records; no real files/VGA/BIOS/UART or physical acceptance."
+  },
+  "sources": {
+    "standalone/build_meta_dialog.py": "eb89037e732ef8d9b893c756e68757a2db1a8681995b5dc1bcdfb853e88e82fe",
+    "standalone/meta_dialog_driver.c": "037184a955ed1d775f4e6e40efe05e81d8452479270bde4c2a2d7af800b98eba",
+    "standalone/meta_text_padding.asm": "671b607baa748a70139f86f5de5ad8a9b26aa5c09c605a26f82c9bb3bffae6e9",
+    "standalone/meta_dialog_banks.asm": "89ce2e72ce54bf009be50883356cc8a7e8ac42be36c40d877bba3bae3720f79c",
+    "standalone/fixtures/meta_dialog_native.json": "08c46d0d84785bb452eb17d351313244b037650c7e0fea49b91dc30762403daa",
+    "src/key_mapping/meta_dialog.c": "7039e4f91961ad9493f8537b4a434242acf0523409b2f067d3a23fd4241f2dbe",
+    "src/key_mapping/meta_dialog.h": "326ed7b381c855b0cc9273997c770602a1ef5b8255a350f099fb6056d8e32172",
+    "src/key_mapping/meta_text.c": "94a55b00ac866dafd1fa8499c78dd918b8b965294dcd911bb70db0d7198a83b6",
+    "src/key_mapping/meta_text.h": "5c7f1a876f418d87eb8d14daa42e044633c348252fe6633d108b96fb91dcf323",
+    "standalone/test_meta_dialog_vga.py": "464c7994920487888938ee4a2b1bd73f5a7aadc4942b0bb2bd1bd15281fb54f1",
+    "standalone/meta_dialog_demo.c": "6cd62165f0f386fd6960fee0a6bea78b045b026b504a87e0bfcdd47bce1f2b92",
+    "standalone/path_editor_watch.asm": "8c5b41137ef14c0257e1a9ccb05741bd90199679db0feba52f5352a8f9cedacc",
+    "standalone/record_meta_dialog.py": "7e674f0caa8d17fe97f0f20c5c7513a36dd551219ab749d4e6e60ffb93afaac6",
+    "standalone/prove_meta_dialog_source.py": "63cb8536e7e670b583690b502bcbce4490f546634100153f30c7cbbcc2996318",
+    "standalone/capture_meta_dialog_original.py": "da29455aa2399dcd2928795b56d5152dde5fa0976967b8bfcb782e5f1a6ddb2a",
+    "docs/META_DIALOG.md": "f96645ed3244b7bcc983f3c3083237bd25c5758cf163e6c74f7a124bfd9ca344"
+  },
+  "receipts": {
+    "build/meta-dialog-20261107-final/result.json": "96ce1f777bb3e087f7cf14a07104519c52910aa4d45eb1120f646a205fe0de13",
+    "build/meta-dialog-vga-records-20261107-final/result.json": "ecacf3071ef0a2e9d2ff5999d041fe67355277953602a0a16525615b396df148",
+    "build/meta-dialog-source-records-20261107-final/result.json": "7beeb38d2bd440635b9084e64430dc197413ff64600184a5219423298a381c42"
+  },
+  "original_inputs": [],
+  "limitations": [
+    "Original instruction replay uses synthetic definitions and modeled peripheral/window/file services. Authored window decoration is not original VGA equivalence.",
+    "Actual source-built DOS8086 controller and passive-observed VGA probe with exact screen/cursor/shape restoration; probe file commands deliberately fail without a persistence backend.",
+    "Checked KEY IO, filename selection, canonical resource/live action adoption, foreground ownership, application memory/BBS/physical acceptance and full F02/F05/F06 remain open."
+  ]
+}
