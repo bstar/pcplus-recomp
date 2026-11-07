@@ -31,6 +31,11 @@ unsigned runtime_when_delay_poll(void);
 unsigned runtime_when_alarm_begin(void);
 unsigned runtime_when_alarm_end(void);
 unsigned runtime_when_alarm_poll(void);
+#ifdef ASPECT_ALARM_VM
+/* Only after the native ALARM abort checkpoint restored its owning stack and
+ * the DOS/tone owner retired. Discards abandoned service bookkeeping. */
+unsigned runtime_when_alarm_unwind(void);
+#endif
 #endif
 void runtime_when_defer_begin(void);
 void runtime_when_defer_end(void);

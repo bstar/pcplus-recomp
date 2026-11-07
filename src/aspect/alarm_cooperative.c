@@ -127,6 +127,11 @@ static unsigned run(const alarm_coop_ops *ops,void *opaque,
  platform=ops;cookie=opaque;limit=remaining=polls;progress_budget=progress;
  clock_seen=last_second=0;tone_owned=key_pending=cleanup_failed=0;active=working=1;
  if(context()){alarm_duration=seconds;alarm_enabled=enabled;alarm_coop_native();}
+#ifdef ASPECT_ALARM_VM
+ /* The VM gate restored this C stack after a nonreturning native service
+  * error. Working now retires normally, including generation-safe tone stop. */
+ if(alarm_coop_native_aborted())fail(ALARM_COOP_SERVICE);
+#endif
  working=0;
  if(cleanup_failed){report.status=ALARM_COOP_CLEANUP;return report.status;}
  return alarm_coop_recover();

@@ -40,6 +40,18 @@ static unsigned path_ok(const char *path)
  }
  while(leaf[n] && leaf[n]!='.')++n;
  if(!n)return 0;
+#ifdef ASPECT_ALARM_VM
+ /* Same DOS device rules, folding each candidate byte once. The compact
+  * optional profile funds the alert's abort checkpoint without smaller
+  * buffers/stacks. Keep ordinary CLI code generation unchanged. */
+ if(n==3 || n==4){
+  unsigned pair=folded(leaf[0])|(folded(leaf[1])<<8),last=folded(leaf[2]);
+  if(n==3 && ((last=='N'&&(pair==0x4f43||pair==0x5250)) ||
+             (last=='X'&&pair==0x5541) || (last=='L'&&pair==0x554e)))return 0;
+  if(n==4 && leaf[3]>='1'&&leaf[3]<='9' &&
+     ((pair==0x4f43&&last=='M') || (pair==0x504c&&last=='T')))return 0;
+ }
+#else
  if(n==3 && ((folded(leaf[0])=='C'&&folded(leaf[1])=='O'&&folded(leaf[2])=='N') ||
              (folded(leaf[0])=='P'&&folded(leaf[1])=='R'&&folded(leaf[2])=='N') ||
              (folded(leaf[0])=='A'&&folded(leaf[1])=='U'&&folded(leaf[2])=='X') ||
@@ -47,6 +59,7 @@ static unsigned path_ok(const char *path)
  if(n==4 && leaf[3]>='1'&&leaf[3]<='9' &&
     ((folded(leaf[0])=='C'&&folded(leaf[1])=='O'&&folded(leaf[2])=='M') ||
      (folded(leaf[0])=='L'&&folded(leaf[1])=='P'&&folded(leaf[2])=='T')))return 0;
+#endif
  return 1;
 }
 static unsigned budget(const char *text,unsigned *value)

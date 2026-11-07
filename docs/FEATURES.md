@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Active ALARM error recovery](ASPECT_ALARM_UNWIND.md) fixes a native transmit
+timeout that skipped speaker/duration cleanup. Eight actual modem/DCD cases
+pass across ANSI/VT220; a separately marked same-process diagnostic proves
+error14 followed by two successful VM invocations. Compact CLI path checking
+funds the checkpoint with113580 equivalent cases; both capacity profiles and
+a5420-file cold rebuild pass. Ordinary interpreter and installation are unchanged.
+New-candidate modern BBS/package/physical/full-inventory gates remain open.
+
 [ALARM progress budgeting](ASPECT_ALARM_PROGRESS.md) replaces the whole-alert
 VM limit with credits renewed at valid observed second changes and fixes
 pending-key completion at the last credit. The legacy94-case suite and new

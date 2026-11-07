@@ -29,7 +29,8 @@ void __cdecl runtime_alarm_wait(void)
  /* Failed cleanup retains both ownerships for explicit recovery. The static
   * callback context remains valid; no borrowed script/stack pointer is kept. */
  if(!alarm_dos_active()){
-  status=runtime_when_alarm_end();if(!error)error=status;
+  status=alarm_coop_native_aborted()?runtime_when_alarm_unwind():runtime_when_alarm_end();
+  if(!error)error=status;
  }else if(!error)error=ASPECT_RUN_STATE;
  runtime_set_error(error);
 }

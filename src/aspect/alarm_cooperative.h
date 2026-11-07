@@ -35,6 +35,10 @@ unsigned ALARM_CALL alarm_coop_run(const alarm_coop_ops *,void *,unsigned,unsign
  * DOS-second observations in native flow, rather than over the whole alert.
  * Original run retains its total-call limit. Report total saturates at ULONG_MAX. */
 unsigned ALARM_CALL alarm_coop_run_progress(const alarm_coop_ops *,void *,unsigned,unsigned,unsigned long);
+#ifdef ASPECT_ALARM_VM
+/* Read-only checkpoint outcome; cleared on the next native alert entry. */
+unsigned ALARM_CALL alarm_coop_native_aborted(void);
+#endif
 unsigned ALARM_CALL alarm_coop_recover(void);
 unsigned ALARM_CALL alarm_coop_active(void);
 void ALARM_CALL alarm_coop_result(alarm_coop_report *);

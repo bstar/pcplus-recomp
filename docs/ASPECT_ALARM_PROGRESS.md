@@ -86,3 +86,7 @@ full VM cleanup, remain open. The preceding
 [operand-error checkpoint](ASPECT_ALARM_ERRORS.md) covers failures before
 foreground alert ownership. Packaging, physical tests and the remaining full
 application inventory still require acceptance.
+
+The subsequent [native-error checkpoint](ASPECT_ALARM_UNWIND.md) fixes the
+active-alert timeout cleanup gap and funds its memory cost. Its new candidate
+identity and acceptance limits supersede this checkpoint for that path.

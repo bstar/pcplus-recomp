@@ -48,7 +48,12 @@ _runtime_external_execute:
  ret
 runtime_external_abort_gate:
  cmp word [cs:checkpoint_ready],1
+%ifdef ASPECT_ALARM_VM
+ extern runtime_alarm_abort_gate
+ jne runtime_alarm_abort_gate
+%else
  jne aspect_abort_recovered
+%endif
  mov word [cs:checkpoint_cause],0 ; retain the actual typed runtime error
  jmp checkpoint_fault
 runtime_external_divide_gate:

@@ -5,6 +5,9 @@
 #include "runtime.h"
 #include "serial_runtime.h"
 #include "when_runtime.h"
+#ifdef ASPECT_ALARM_VM
+#include "alarm_cooperative.h"
+#endif
 #if defined(ASPECT_ALARM_SERVICE) && !defined(ASPECT_RUNTIME_SERIAL)
 #error ASPECT_ALARM_SERVICE requires the serial runtime
 #endif
@@ -109,6 +112,16 @@ unsigned runtime_when_alarm_end(void)
  if(!alarm_keys_owned || runtime_when_deferred || service_busy || monitor_busy)return ASPECT_RUN_STATE;
  alarm_keys_owned=0;return 0;
 }
+#ifdef ASPECT_ALARM_VM
+unsigned runtime_when_alarm_unwind(void)
+{
+ if(!alarm_keys_owned || !alarm_coop_native_aborted())return ASPECT_RUN_STATE;
+ /* Native abort has abandoned these C frames, not a still-running callback.
+  * VM finish will disarm records and close any staged FILE/frame ownership. */
+ service_busy=monitor_busy=runtime_when_deferred=runtime_when_pending_service=0;
+ alarm_keys_owned=0;return 0;
+}
+#endif
 unsigned runtime_when_alarm_poll(void)
 {
  unsigned leads;unsigned long started,now;
