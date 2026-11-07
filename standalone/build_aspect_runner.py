@@ -13,7 +13,7 @@ def main(extension=None):
     # Default production inputs/flags and opcode coverage remain unchanged.
     output=extension['output'] if extension else OUT
     feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS','-DASPECT_EXTERNAL_UNWIND'] if extension else []
-    if extension and extension.get('alarm_vm'):feature_flags+=['-DASPECT_ALARM_VM','-DASPECT_ALARM_SERVICE']
+    if extension and extension.get('alarm_vm'):feature_flags+=['-DASPECT_ALARM_VM','-DASPECT_ALARM_SERVICE','-DASPECT_DEFER_NUMERIC_BANKS']
     if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
     if extension and extension.get('program_far'):feature_flags+=['-DNATIVE_PROGRAM_FAR']
     if extension and extension.get('notice_bank'):feature_flags+=['-DNATIVE_PROGRAM_NOTICES','-DNOTICE_BANKED']
@@ -69,9 +69,9 @@ def main(extension=None):
         serial_asm += [('alarm_native','src/aspect/alarm_native.asm',None),
                        ('alarm_bridge','src/aspect/alarm_cooperative_bridge.asm',None),
                        ('alarm_clock','src/aspect/alarm_dos_clock.asm',None)]
-        additions=[ROOT/'src/aspect'/n for n in ('alarm_cooperative.c','alarm_dos.c','alarm_runtime.c')]
+        additions=[ROOT/'src/aspect'/n for n in ('alarm_cooperative.c','alarm_dos.c','alarm_runtime.c','numeric_bank_runtime.c')]
         extension['c_sources'] += additions
-        sources += additions+[ROOT/'src/aspect'/n for n in ('alarm_cooperative.h','alarm_dos.h')]
+        sources += additions+[ROOT/'src/aspect'/n for n in ('alarm_cooperative.h','alarm_dos.h','numeric_bank_runtime.h')]
     for name, relative, define in ASM+serial_asm:
         source, obj = ROOT / relative, output / (name + '.obj')
         sources.append(source)

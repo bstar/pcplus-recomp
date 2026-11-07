@@ -62,6 +62,9 @@ extern aspect_operand_frame_plus,aspect_operand_frame_minus,aspect_operand_inval
 extern aspect_operand_integer_bank_a,aspect_operand_integer_bank_b,aspect_operand_long_bank,aspect_operand_system_values
 extern aspect_expr_float_bank,aspect_expr_stage_index,aspect_expr_stage_types,aspect_ops_float_value
 extern aspect_expr_float_zero,aspect_expr_read_float,aspect_flow_read_dword,aspect_flow_seek,erase_move_bytes
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+extern aspect_operand_system_address,aspect_operand_float_address
+%endif
 %define native_boolean aspect_expr_boolean
 %define native_branch aspect_expr_branch
 %define native_compare aspect_expr_compare
@@ -232,10 +235,14 @@ aspect_expr_integer_address:
  ret
 .system:
  call aspect_dispatch_read
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+ jmp aspect_operand_system_address
+%else
  mov cl,3
  shl ax,cl
  add ax,aspect_operand_system_values
  ret
+%endif
 .global:
  call aspect_dispatch_read
  shl ax,1
@@ -261,10 +268,14 @@ aspect_expr_long_address:
  ret
 .system:
  call aspect_dispatch_read
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+ jmp aspect_operand_system_address
+%else
  mov cl,3
  shl ax,cl
  add ax,aspect_operand_system_values
  ret
+%endif
 .global:
  call aspect_dispatch_read
  shl ax,1
@@ -291,16 +302,24 @@ aspect_expr_float_address:
  ret
 .system:
  call aspect_dispatch_read
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+ jmp aspect_operand_system_address
+%else
  mov cl,3
  shl ax,cl
  add ax,aspect_operand_system_values
  ret
+%endif
 .global:
  call aspect_dispatch_read
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+ jmp aspect_operand_float_address
+%else
  mov cl,3
  shl ax,cl
  add ax,aspect_expr_float_bank
  ret
+%endif
 .minus:
  call aspect_operand_frame_minus
  ret

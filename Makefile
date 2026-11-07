@@ -2021,3 +2021,8 @@ test-aspect-alarm-when:
 	python3 standalone/test_alarm_when_uart.py --build $(ALARM_WHEN_OUTPUT) --output $(ALARM_WHEN_OUTPUT)-matrix
 test-aspect-alarm-when-source: test-aspect-alarm-when
 	python3 standalone/prove_alarm_when_source.py --build $(ALARM_WHEN_OUTPUT) --output $(ALARM_WHEN_OUTPUT)-source
+
+NUMERIC_BANK_OUTPUT := build/numeric-banks-make-$(shell date +%s%N)
+.PHONY: test-aspect-numeric-banks
+test-aspect-numeric-banks:
+	python3 standalone/test_numeric_banks_dos.py --output $(NUMERIC_BANK_OUTPUT)

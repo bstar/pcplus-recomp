@@ -436,6 +436,27 @@ runtime_alarm_command:
  ret
 %endif
 
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+extern _runtime_numeric_address
+; AX byte index in, AX stable near pointer out. Native consumers retain DS.
+global aspect_operand_system_address,aspect_operand_float_address
+aspect_operand_system_address:
+ xor dx,dx
+ jmp short numeric_address
+aspect_operand_float_address:
+ mov dx,1
+numeric_address:
+ push ax
+ push dx
+ call _runtime_numeric_address
+ add sp,4
+ or ax,ax
+ jnz .done
+ mov ax,[_runtime_error]
+ jmp fail
+.done: ret
+%endif
+
 global aspect_chain_copy
 aspect_chain_copy: jmp program_strcpy
 
@@ -968,12 +989,14 @@ _runtime_integer_b: times 128 dw 0
  global aspect_operand_long_bank,_runtime_longs
 aspect_operand_long_bank:
 _runtime_longs: times 128 dd 0
+%ifndef ASPECT_DEFER_NUMERIC_BANKS
  global aspect_expr_float_bank,_runtime_float_bank
 aspect_expr_float_bank:
 _runtime_float_bank: times 128*8 db 0
  global aspect_operand_system_values,_runtime_system
 aspect_operand_system_values:
 _runtime_system: times 256*8 db 0
+%endif
  global aspect_expr_stage_types,_runtime_stage_types
 aspect_expr_stage_types:
 _runtime_stage_types: times 10 db 0

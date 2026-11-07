@@ -1,5 +1,10 @@
 # ALARM VM integration staging — not accepted
 
+The subsequent [numeric-bank checkpoint](ASPECT_ALARM_NUMERIC.md) now executes
+ALARM through the actual parent and WHEN/renderer. Its release still awaits
+the held-stream capacity and other acceptance gates. The evidence below
+describes this earlier failed staging attempt.
+
 The opt-in interpreter now links opcode01 to the recovered ALARM operand
 wrapper, cooperative alert, real DOS/PIT platform and exclusive WHEN key lease.
 A matching opt-in parent publishes capability19 and current sound/duration

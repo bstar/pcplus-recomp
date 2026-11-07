@@ -54,6 +54,9 @@ extern aspect_flow_stream,aspect_flow_refill,aspect_flow_read_word,aspect_flow_r
 extern aspect_dispatch_read,aspect_operand_lookahead,aspect_operand_builtin_integer
 extern aspect_operand_builtin_long,aspect_operand_invalid
 extern aspect_operand_integer_bank_a,aspect_operand_integer_bank_b,aspect_operand_long_bank,aspect_operand_system_values
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+extern aspect_operand_system_address
+%endif
 %define native_next_token aspect_operand_next_token
 %define native_frame_plus aspect_operand_frame_plus
 %define native_frame_minus aspect_operand_frame_minus
@@ -151,10 +154,16 @@ aspect_operand_read_integer:
  ret
 .system:
  call aspect_dispatch_read
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+ call aspect_operand_system_address
+ mov bx,ax
+ mov ax,[bx]
+%else
  mov_load bx,ax
  mov cl,3
  shl bx,cl
  mov ax,[bx+aspect_operand_system_values]
+%endif
  ret
 .bank_b:
  call aspect_dispatch_read
@@ -201,11 +210,21 @@ aspect_operand_read_long:
  ret
 .system:
  call aspect_dispatch_read
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+ call aspect_operand_system_address
+ mov bx,ax
+ mov ax,[bx]
+%else
  mov_load bx,ax
  mov cl,3
  shl bx,cl
  mov ax,[bx+aspect_operand_system_values]
+%endif
+%ifdef ASPECT_DEFER_NUMERIC_BANKS
+ mov dx,[bx+2]
+%else
  mov dx,[bx+aspect_operand_system_values+2]
+%endif
  ret
 .bank:
  call aspect_dispatch_read

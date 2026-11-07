@@ -1,4 +1,7 @@
 #include "runtime.h"
+#ifdef ASPECT_DEFER_NUMERIC_BANKS
+#include "numeric_bank_runtime.h"
+#endif
 #include "when_runtime.h"
 #include "set_runtime.h"
 #include "find_runtime.h"
@@ -94,8 +97,11 @@ extern unsigned runtime_source_type,runtime_target_type,runtime_lookahead,runtim
 extern unsigned runtime_exit_state,runtime_local_count,runtime_string_count;
 extern unsigned runtime_word_value;
 extern unsigned long runtime_dword_value;
-extern unsigned char runtime_arena[0x3aca],runtime_float_bank[128][8];
-extern unsigned char runtime_system[256][8],runtime_stage_types[10],runtime_float_values[10][8];
+extern unsigned char runtime_arena[0x3aca];
+#ifndef ASPECT_DEFER_NUMERIC_BANKS
+extern unsigned char runtime_float_bank[128][8],runtime_system[256][8];
+#endif
+extern unsigned char runtime_stage_types[10],runtime_float_values[10][8];
 extern unsigned char runtime_locals[36];
 extern unsigned char runtime_string_bank_a[10][81],runtime_string_scratch[11][81];
 extern unsigned long runtime_string_pending_far;
@@ -140,7 +146,11 @@ void runtime_reset_native(void)
     runtime_exit_state=runtime_local_count=runtime_string_count=0;
     memset(runtime_integer_a,0,sizeof(runtime_integer_a));
     memset(runtime_integer_b,0,sizeof(runtime_integer_b));memset(runtime_longs,0,sizeof(runtime_longs));
+#ifdef ASPECT_DEFER_NUMERIC_BANKS
+    runtime_numeric_reset();
+#else
     memset(runtime_system,0,sizeof(runtime_system));memset(runtime_float_bank,0,sizeof(runtime_float_bank));
+#endif
     memset(runtime_stage_types,0,sizeof(runtime_stage_types));memset(runtime_float_values,0,sizeof(runtime_float_values));
     memset(runtime_locals,0,sizeof(runtime_locals));memset(runtime_strings,0,sizeof(runtime_strings));
     memset(runtime_arena,0,sizeof(runtime_arena));
@@ -216,6 +226,9 @@ void __far *runtime_alloc(unsigned size)
     if(runtime_alloc_calls++==runtime_fail_after)return 0;
 #else
     ++runtime_alloc_calls;
+#endif
+#ifdef ASPECT_DEFER_NUMERIC_BANKS
+    if(!runtime_numeric_prepare())return 0;
 #endif
     pointer=_fmalloc(size);
     if(pointer){++runtime_live;if(runtime_live>runtime_peak_live)runtime_peak_live=runtime_live;}
@@ -293,6 +306,9 @@ void runtime_finish(void)
     runtime_depth=0;runtime_stack_pointer=runtime_frame=(unsigned)runtime_arena+0x1b1a;
     runtime_string_pending_far=0;runtime_string_pending_near=0;
     runtime_string_scratch_pointer=runtime_string_scratch_index=0;
+#ifdef ASPECT_DEFER_NUMERIC_BANKS
+    runtime_numeric_finish();
+#endif
     if(runtime_live)runtime_set_error(ASPECT_RUN_STATE);
 }
 unsigned runtime_service(void)
@@ -344,6 +360,9 @@ void runtime_native_error(unsigned code)
 unsigned aspect_runtime_run(const char *path,unsigned step_limit)
 {
     void (__interrupt __far *previous_divide)(void);
+#ifdef ASPECT_DEFER_NUMERIC_BANKS
+    if(runtime_numeric_live())return ASPECT_RUN_STATE;
+#endif
     if(active || runtime_live || runtime_find_live || runtime_script_file_live || runtime_file_info_live || runtime_file_times_live || runtime_file.handle || !path || !*path || !step_limit)return ASPECT_RUN_STATE;
 #if defined(ASPECT_EXTERNAL_PROCESS)
     if(external_scope||process_handles_active||native_process_busy||native_program_busy||native_program_waiting||native_display_owned)return ASPECT_RUN_STATE;

@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[ALARM with deferred numeric banks](ASPECT_ALARM_NUMERIC.md) now passes five
+actual parent/native-WHEN/render cases,33115 bank API checks and1024 native
+system-slot VM cases. A5393-file cold export reproduces both products and
+repeats the bank suites plus one ALARM case. The launch minimum drops2800bytes,
+without reducing bank capacities, stacks or buffers; this is not a universal
+peak saving. **Release remains unaccepted:** held-stream/nested-child capacity
+fails four of27 checks with RUN state10. Physical and BBS gates remain open;
+the installed release and ordinary interpreter are unchanged.
+
 [ALARM VM staging](ASPECT_ALARM_VM_STAGING.md) now links the recovered operand
 wrapper and serviced alert to an opt-in interpreter with a matching current-
 parent capability19 policy. This variant is **not accepted**: the instrumented
