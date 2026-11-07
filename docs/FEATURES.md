@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Serviced Meta Keys picker](META_PICKER.md) matches native ordering/navigation
+for 99 cases/2,431 states and checks the source frame at every state. Its
+28,973 DOS checks include CP437 names, maintained 1,001-entry capacity and
+composition back into the filename prompt. A ten-file isolated source rebuild
+passes. Actual DOS enumeration/DTA/resource ownership and live integration remain
+open; the installed RCE81708 is unchanged.
+
 [Meta Keys filenames](META_FILENAMES.md) adds the original blank eight-cell
 name editor and deferred name/picker/load routing; Save retains the active name.
 314 native cases/1,304 states and actual DOS load/edit/save composition pass

@@ -1,0 +1,154 @@
+{
+  "passed": true,
+  "component_only": true,
+  "installed_changed": false,
+  "terminal_changed": false,
+  "physical_runtime_verified": false,
+  "binary_sha256": "071cb9cc3e7060b7aa04cc81daf22c6ed17f65c7b06bf5f07f8b50a8d3eb2115",
+  "checks": 28973,
+  "native_cases": 99,
+  "native_states": 2431,
+  "state_bytes": 20,
+  "table_bytes": 9009,
+  "maintained_entry_capacity": 1001,
+  "native_maximum_entries": 350,
+  "maximum_comparisons_per_sort_step": 64,
+  "isolated_source_files": 10,
+  "original_inputs": [],
+  "native_authorities": {
+    "dispatcher": {
+      "evidence_id": "ev_b5f69bd5a2bcae47a2d2777f8bc324e0ad53ef9a36ba2106d466fe481c9e462d",
+      "address": "0x1d0d0",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1d303",
+            "start": "0x1d0d0"
+          }
+        ],
+        "span_bytes": 564,
+        "total_bytes": 564
+      }
+    },
+    "redraw": {
+      "evidence_id": "ev_f03b1432a4d9edd777f5643602db22563b9d527c04eeeff3240aa0592a937e8e",
+      "address": "0x1d304",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1d389",
+            "start": "0x1d304"
+          }
+        ],
+        "span_bytes": 134,
+        "total_bytes": 134
+      }
+    },
+    "selection": {
+      "evidence_id": "ev_aa6d23793e2ce95eb157688a31514bbe2bd8bb4c8b7ac3373e0a828b30993c3a",
+      "address": "0x1d38a",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1d3e8",
+            "start": "0x1d38a"
+          }
+        ],
+        "span_bytes": 95,
+        "total_bytes": 95
+      }
+    },
+    "scroll": {
+      "evidence_id": "ev_64151658e4cec1076946bc2dc8807977913d33b9d0d96819726caee125a4ff5d",
+      "address": "0x1d3e9",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1d445",
+            "start": "0x1d3e9"
+          }
+        ],
+        "span_bytes": 93,
+        "total_bytes": 93
+      }
+    },
+    "sort": {
+      "evidence_id": "ev_583409ca6ae642e00a7b56e8c9d9a74cf1f33776015147ae4813c06ca456d5d5",
+      "address": "0x1d446",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1d4cc",
+            "start": "0x1d446"
+          }
+        ],
+        "span_bytes": 135,
+        "total_bytes": 135
+      }
+    },
+    "comparison": {
+      "evidence_id": "ev_499bb65ce9d48fc563cebd97e586e76391be37202ae00754bec35ba734755848",
+      "address": "0x193de",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1941f",
+            "start": "0x193de"
+          }
+        ],
+        "span_bytes": 66,
+        "total_bytes": 66
+      }
+    }
+  },
+  "analyst_evidence_bundle_sha256": "944334be5e23e8a9d8bbcae6576b6af788726e426836c142e3b252f237ffb1a7",
+  "sources": {
+    "src/key_mapping/meta_filename.c": "78ffe8cf5f504cfee1b6c65be691f94af65335a1252812557500a4d8761e4523",
+    "src/key_mapping/meta_file_prompt.c": "319b10139c65c24dbaf107dc363d490832ab95610309a8d7e559bad57cb2c62b",
+    "src/key_mapping/meta_picker.c": "2be507d5157bee4aae83330d348fa9bac6478d6304c20c9314c96329944059c5",
+    "standalone/meta_picker_driver.c": "366d91494b75a90c67caf3b92e0bd52c9126016f52040fc2557abceaa7458213",
+    "src/key_mapping/meta_filename.h": "2c46d23f99d185ea5413c44392f8e0ec688fc44c3520b32d28cde1946597b884",
+    "src/key_mapping/meta_file_prompt.h": "11891de8470caa7d3a1ebe369d4d26a7005be37592f9a8adea1cb6edc9ebb81d",
+    "src/key_mapping/meta_picker.h": "bb8e3ba47f5b82a15ea119e76041419f082c6b40855cb359637375f8b9b1cb87",
+    "standalone/fixtures/meta_picker_native.json": "8bf23ffe78fa02ac64b3c0a195edf8db6f2faafb141146cf4f7b69fc0169e2c6",
+    "standalone/meta_picker_banks.asm": "8542308dba8ba7e423e6efa8b63e4c388d7746a131922900ac32505fea178803",
+    "standalone/build_meta_picker.py": "690a5d1d424b3a464b024422efacf736ebc7084ed11d28ebc4c052eee32b0edb",
+    "standalone/record_meta_picker.py": "4db2bbeea1d2e224031fd8a186e188c6fa52030403b0a7e35a0d3d2cb8975229",
+    "standalone/prove_meta_picker_source.py": "810833a55050a8cd0d259c3ee77aaae2d2304d6c4e0955468005040fb70b92aa",
+    "standalone/capture_meta_picker_original.py": "7c83ee27f23e70e4decfae50beda0f94a848fc361cc61b1d8fccb8e245b0f360",
+    "docs/META_PICKER.md": "c0ae02bed1dacbd387f89d57fc1f22d66b8bd041b4f762e7fd1e92550e4b816b"
+  },
+  "receipts": {
+    "build/meta-picker-20261107-accepted/result.json": "15e379f2ccecacb2709b3e6c76f8b3ac7eb105b3a8cf50d9070c73cce5bd73f3",
+    "build/meta-picker-source-20261107/result.json": "2cacf12b72534e23900a34da275aa3067699d2af97c92a4f155bcd94f8a1efbb"
+  },
+  "limitations": [
+    "Original overlay1/shared picker and CRT instructions replay with synthetic enumeration and modeled formatting/window/keyboard/bell boundaries. Static synthetic image never executed; no native DOS/BIOS/VGA/hardware acceptance.",
+    "Native traces cover distinct stems/counts1..350, mixed case/punctuation/high CP437 bytes. Stable maintained sort is not recovered original code;1001-entry coverage is source-only, not original capacity parity.",
+    "Actual DOS enumeration/DTA and canonical resource search, modal ownership/restoration, missing-file creation, persistence/adoption/quarantine, parent scheduling/memory/capacity/BBS/physical acceptance remain open. Installed RCE81708 unchanged."
+  ]
+}
