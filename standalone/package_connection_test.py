@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Stage a matching source-built connection-test package; never access a card."""
-import argparse,hashlib,json,re,shutil,subprocess
+import argparse,hashlib,json,re,shutil,subprocess,struct
 from pathlib import Path
 from package_special_edition import ROOT,dos_text,launch
 
@@ -11,6 +11,17 @@ def validate_dos_directory(value):
     if not value.isascii() or not re.fullmatch('[A-Za-z0-9_]{1,8}',value) or value.upper() in reserved:
         raise ValueError('DOS directory must be a non-device root directory name of1..8 ASCII letters, digits or underscores')
     return value.upper()
+
+def render_capability(binary):
+    """Read the actual published WORD inside the source-built prepare routine."""
+    symbols={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)\s*$',binary.with_name('terminal.map').read_text(),re.M|re.I)}
+    start=symbols['terminal_render_prepare'];end=symbols['terminal_render_revoke'];version=symbols['_script_render_version']
+    assert start[0]==end[0] and start[1]<end[1] and version[1]<=65535
+    data=binary.read_bytes();assert data[:2]==b'MZ';base=struct.unpack_from('<H',data,8)[0]*16
+    code=data[base+start[0]*16+start[1]:base+end[0]*16+end[1]]
+    signature=b'\xc7\x06'+struct.pack('<H',version[1]);assert code.count(signature)==1
+    at=code.index(signature)+4;assert at+2<=len(code)
+    return struct.unpack_from('<H',code,at)[0]
 
 def packed_guide(directory):
     return dos_text(
@@ -73,6 +84,8 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         if leaf in ('TERMINAL.EXE','ASPECT.EXE','PRMEDIT.EXE'):assert m.get('experimental_custom_irq')
         manifests[leaf]=m;identities[leaf]={'folder':str(binary.parent.relative_to(ROOT/'build')),'manifest_sha256':sha(path),'binary_sha256':sha(binary)}
     terminal=manifests['TERMINAL.EXE']
+    capability=render_capability(products['TERMINAL.EXE'].resolve())
+    assert (capability==19)==bool(manifests['ASPECT.EXE'].get('experimental_alarm_VM')),'Published parent capability and ALARM interpreter must match'
     companions,companion_sources=terminal_companions(products['TERMINAL.EXE'],terminal)
     for n,h in companion_sources.items():assert sources.get(n,h)==h;sources[n]=h
     assert terminal.get('special_edition') and terminal.get('experimental_original_reference') and terminal.get('experimental_phone_log_controls') and terminal.get('experimental_status_geometry')
@@ -145,6 +158,13 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         with (payload/'README.TXT').open('ab') as guide:
             guide.write(dos_text('\nAlt-O: Chat; Alt-F6: Redisplay. Keep PCCHAT.OVL beside TERMINAL.EXE.\n'
                 +('Alt-Z in Chat opens Help and retains unfinished input.\n' if terminal.get('experimental_chat_help') else '')))
+    if manifests['ASPECT.EXE'].get('experimental_alarm_VM'):
+        with (payload/'README.TXT').open('ab') as guide:
+            guide.write(dos_text('\nASPECT scripts: DATE, TIME and ALARM are available.\n'
+                'ALARM accepts an optional duration from0 through32767.\n'
+                'Omitting it uses the saved duration; sound follows saved settings.\n'
+                'An explicit duration is temporary. Press a key to end the alert.\n'
+                'The complete original ASPECT language remains under reconstruction.\n'))
     for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
     record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
@@ -158,6 +178,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         'experimental_auto_answer':bool(terminal.get('experimental_auto_answer')),
         'experimental_directory_resource_owner':bool(terminal.get('experimental_directory_resource_owner')),'experimental_phone_log_controls':True,'experimental_status_geometry':True,
         'authored_help_sha256':help_record['sha256'],'card_written':False,'validation':'Staged only; requires separate DOS/package and hardware acceptance.'}
+    record.update(parent_render_capability=capability,experimental_alarm_VM=bool(manifests['ASPECT.EXE'].get('experimental_alarm_VM')))
     if terminal.get('experimental_path_control') or terminal.get('experimental_gateway_frontend'):
         record.update(experimental_path_control=bool(terminal.get('experimental_path_control')),experimental_gateway_frontend=bool(terminal.get('experimental_gateway_frontend')))
     if terminal.get('experimental_file_directory'):

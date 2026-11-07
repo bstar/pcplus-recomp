@@ -51,13 +51,18 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert irq in (3,4,5,7)and manifest.get('experimental_custom_irq')
         struct.pack_into('<H',raw,0x184+2*(com-1),irq)
     fixtures = {'PCPLUS.PRM': bytes(raw), 'PCPLUS.XLT': bytes(range(256)),
-                'PCPLUS.DIR': b'PRIVATE-DIRECTORY-PRESERVATION-SENTINEL'}
+                'PCPLUS.DIR': b'PRIVATE-DIRECTORY-PRESERVATION-SENTINEL',
+                'PCPLUS.KEY': bytes(10*54), 'PCPLUS.KBD': bytes(7*948),
+                'PCPLUS.FON': b'PRIVATE-CALL-HISTORY-PRESERVATION-SENTINEL\r\n'}
     # No directory selector is requested; a local dialing file is not opened.
     for leaf, data in fixtures.items():
         (app / leaf).write_bytes(data)
     source = ('integer value\nproc main\nvalue=' + '(' * 120 + '37' + ')' * 120 +
               '\nif value==37\nfopen 0 "RESULT.BIN" "wb"\n'
               'fputs 0 "SPECIAL-COMPILED"\nfclose 0\nendif\nendproc\n')
+    new_commands=precompile and manifest.get('experimental_alarm_VM',False)
+    if new_commands:
+        source=source.replace('proc main\n','proc main\nalarm 0\ndate s0\ntime s1 1\n',1)
     (app / 'TEST.ASP').write_text(source, encoding='ascii')
     (app / 'ACTIONS.KEY').write_bytes(actions((dos_root+('\\TEST.ASX' if precompile else '\\TEST.ASP')).encode('ascii'), 0))
     sampler = SAMPLER.replace('D:\\', 'C:\\')
@@ -150,10 +155,12 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
         assert sha(app / leaf) == manifest['files'][leaf]
     result = dict(passed=True, launcher=launcher, dos_directory=dos_directory,cpu='8086', port=com, io_base=base, resident_observer=observe,
                   irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,chat_help=chat_help,
+                  packaged_ASPECT_clock_alarm_exercised=new_commands,
                   package_manifest_sha256=sha(package / 'manifest.json'),
                   package_files=manifest['files'],
+                  private_fixture_sha256={leaf:sha(app/leaf) for leaf in fixtures},
                   checks=['launcher returns to DOS', 'PCPLUS environment restored',
-                          f'COM{com}/PIC/IRQ vectors restored', 'private PRM/DIR/XLT unchanged',
+                          f'COM{com}/PIC/IRQ vectors restored', 'private PRM/DIR/KEY/KBD/XLT/FON unchanged',
                           'packaged binaries unchanged'] + (['actual packaged Chat/PCHELP round trip retains AB and exact frame/cursor'] if chat_help else ['actual magenta splash captured by independent timer'] if observe else
                           [('DOS precompilation produces exact ASX' if precompile else 'nested DOS source compilation produces exact ASX'), 'script writes expected result'])+(['DOS allocation strategy restored'] if strategy else [])+(['frozen-history viewer reopens after nested child return'] if after_child_view else []),
                   sources={n: sha(ROOT / n) for n in ['standalone/test_special_package_dos.py',
