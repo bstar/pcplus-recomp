@@ -1,0 +1,86 @@
+{
+  "checkpoint_verified": true,
+  "application_integrated": false,
+  "RPC_published": false,
+  "compiler_enabled": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "original_inputs": [],
+  "disabled_objects_have_no_segments": true,
+  "diagnostic_sha256": "4b642570da99053cf53dbbf195ca4bde127baf4a9b50a99f294eb6093e2209bb",
+  "cases": 103,
+  "checks": 805133,
+  "CP437_nonzero_byte_values": 255,
+  "source_export_inputs": 9,
+  "sources": {
+    "src/terminal/script_field.asm": "334f99693977d5ca705f915ece6f8dc9234dba7336df729bd636da9d05965613",
+    "src/terminal/script_field_adapters.asm": "2897b2bb216c08804fd5b085f7e10b01103ef845a988723cdaf4928b58219479",
+    "standalone/script_field_bindings.asm": "e36922a205b87f74ffba7e4a20d94c085f37dbe60670772829b3f2f9f36f68c2",
+    "reconstruction/screen/set_cursor.asm": "db96a18c8f1d9a928800bf82f329cd57f74032fe920c2123e9de3dd9c8ae07b6",
+    "reconstruction/screen/cursor_pack.asm": "d35d5a306548a99526d13a0833aa3c781cf649b51662aa5a49a6fff80affd353",
+    "reconstruction/screen/cursor_output.asm": "b6583f7648c0f47a565e6361ef58481e3ac64e4bd571ebd4aa98e9873e65dd05",
+    "standalone/script_field_driver.c": "f22cf360d23c21cfbdccf70d5e8be43e4462d784659c0e2012a4e9823b01a1d0",
+    "standalone/build_script_field.py": "e68e6f7defe585561d0624dff4d9db73cdadd004784548efa98efe8dd38885f4",
+    "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919",
+    "standalone/prove_script_field.py": "60795aa04e23bc65f3db04a14d55fe1defb985d34839d07ccbfd897c975e4e64",
+    "docs/ASPECT_GET_DISPLAY.md": "abf48b8d3045bdb6d7f772d68bcfbeed1b49111fe978736ed885b84276b9751b"
+  },
+  "evidence": {
+    "build/script-field-gated-20261107/result.json": {
+      "passed": true,
+      "original_inputs": [],
+      "disabled_objects_have_no_segments": true,
+      "binary_sha256": "4b642570da99053cf53dbbf195ca4bde127baf4a9b50a99f294eb6093e2209bb",
+      "cases": 103,
+      "CP437_bytes": 255,
+      "transcript": "PASS SCRIPT FIELD 103 cases; 805133 checks; 255 CP437 bytes, persistent video, native cursor, ABI",
+      "cpu": "8086",
+      "sources": {
+        "src/terminal/script_field.asm": "334f99693977d5ca705f915ece6f8dc9234dba7336df729bd636da9d05965613",
+        "src/terminal/script_field_adapters.asm": "2897b2bb216c08804fd5b085f7e10b01103ef845a988723cdaf4928b58219479",
+        "standalone/script_field_bindings.asm": "e36922a205b87f74ffba7e4a20d94c085f37dbe60670772829b3f2f9f36f68c2",
+        "reconstruction/screen/set_cursor.asm": "db96a18c8f1d9a928800bf82f329cd57f74032fe920c2123e9de3dd9c8ae07b6",
+        "reconstruction/screen/cursor_pack.asm": "d35d5a306548a99526d13a0833aa3c781cf649b51662aa5a49a6fff80affd353",
+        "reconstruction/screen/cursor_output.asm": "b6583f7648c0f47a565e6361ef58481e3ac64e4bd571ebd4aa98e9873e65dd05",
+        "standalone/script_field_driver.c": "f22cf360d23c21cfbdccf70d5e8be43e4462d784659c0e2012a4e9823b01a1d0",
+        "standalone/build_script_field.py": "e68e6f7defe585561d0624dff4d9db73cdadd004784548efa98efe8dd38885f4",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+      },
+      "scope": "Source-only parent field staging, actual DOS video and native cursor checks. Opt-in ASPECT_GET_DISPLAY, parent field/adoption adapters with diagnostic segment/class aliases ASPECT_CODE=_TEXT and FARCODE=CODE. Real video/BIOS plus recovered screen_set_cursor/cursor_pack/cursor_output. Parent admission is modeled; no versioned RPC, child/interpreter/serial, whole parent or physical acceptance.",
+      "receipt_sha256": "d3229144f2e2b68c697a949d0c142b7867d669e5c11cc78909410e61e3f9f51b"
+    },
+    "build/script-field-gated-source-20261107/result.json": {
+      "passed": true,
+      "original_inputs": [],
+      "ancestor_git_unavailable": true,
+      "sources": {
+        "src/terminal/script_field.asm": "334f99693977d5ca705f915ece6f8dc9234dba7336df729bd636da9d05965613",
+        "src/terminal/script_field_adapters.asm": "2897b2bb216c08804fd5b085f7e10b01103ef845a988723cdaf4928b58219479",
+        "standalone/script_field_bindings.asm": "e36922a205b87f74ffba7e4a20d94c085f37dbe60670772829b3f2f9f36f68c2",
+        "reconstruction/screen/set_cursor.asm": "db96a18c8f1d9a928800bf82f329cd57f74032fe920c2123e9de3dd9c8ae07b6",
+        "reconstruction/screen/cursor_pack.asm": "d35d5a306548a99526d13a0833aa3c781cf649b51662aa5a49a6fff80affd353",
+        "reconstruction/screen/cursor_output.asm": "b6583f7648c0f47a565e6361ef58481e3ac64e4bd571ebd4aa98e9873e65dd05",
+        "standalone/script_field_driver.c": "f22cf360d23c21cfbdccf70d5e8be43e4462d784659c0e2012a4e9823b01a1d0",
+        "standalone/build_script_field.py": "e68e6f7defe585561d0624dff4d9db73cdadd004784548efa98efe8dd38885f4",
+        "reconstruction/uart/encodings.inc": "59c6d36650b88f721d26d4077bff00075de11626a4d7ab2586c46f5bbd47f919"
+      },
+      "source_count": 9,
+      "binary_sha256": "4b642570da99053cf53dbbf195ca4bde127baf4a9b50a99f294eb6093e2209bb",
+      "cases": 103,
+      "CP437_bytes": 255,
+      "transcript": "PASS SCRIPT FIELD 103 cases; 805133 checks; 255 CP437 bytes, persistent video, native cursor, ABI",
+      "scope": "Repeat parent field video/cursor checks from only declared public sources. Exact diagnostic EXE and complete103-case DOS report; no originals/private data/prior objects/ancestor Git. Actual video/BIOS/native cursor, modeled parent admission, diagnostic adapter segment/class aliases. Not RPC/interpreter/whole-parent/physical acceptance.",
+      "receipt_sha256": "93abe401837f0643e7ee2639f9e72268b23d40dd3141e375f56960cb20dd01e2"
+    }
+  },
+  "limitations": [
+    "Opt-in ASPECT_GET_DISPLAY. Without it, no SEGDEF records in either new terminal-glob object; no ordinary parent controller/adapters are enabled.",
+    "Actual DOS8086 video/BIOS, source controller/adapters and recovered native cursor instructions. Parent admission C body is modeled; its CS-based window/confirmation/PROGRAM guards execute.",
+    "Diagnostic aliases ASPECT_CODE=_TEXT and FARCODE=CODE place parent adapters beside their near C admission stub; linker-map assertions enforce this and a separate controller bank.",
+    "Actual physical modes3/7 at80x25 only. Narrow and retained-origin52 viewport cases; additional geometries and left-side wide-view application coverage remain open.",
+    "CGA selection exercises BIOS fallback routing in a VGA emulator, not physical CGA snow/timing or a new main-renderer mode policy.",
+    "Cross-row coordinates normalize and terminal-plane boundaries protect reserved status rows; these are maintained safety guards, not original overflow parity.",
+    "No authenticated versioned RPC/caller-PSP-DS lease checks, symmetric whole-parent owner gates, live child/serial/parser repaint, native GET abort lifetime, whole application memory/package or physical acceptance."
+  ]
+}

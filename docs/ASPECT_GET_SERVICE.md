@@ -86,6 +86,10 @@ rebuild. [The receipt](validation/aspect-get-service.json) binds these checks.
   --build build/my-get-uart --output build/my-get-uart-source
 ```
 
+The [parent display controller](ASPECT_GET_DISPLAY.md) now has separate actual
+DOS video/native-cursor component checks. Its RPC publication and composition
+with this lease are still pending.
+
 Next integration work is the parent field/cursor/attribute protocol, native GET
 abort checkpoints and lifetime, typed runtime bindings and floating runtime,
 then both compilers/opcode49, connected scripts and application memory/package

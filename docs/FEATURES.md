@@ -12,6 +12,10 @@ The opt-in [GET keyboard/service lease](ASPECT_GET_SERVICE.md) passes36 real
 DOS BIOS/UART cases and a23-input clean rebuild with three wire repeats. Native
 WHEN action bodies and the parent receive/display entry are modeled. Three
 ALARM regressions pass; GET-disabled ALARM matches its pre-change source build.
+The [parent field display controller](ASPECT_GET_DISPLAY.md) passes103 actual
+DOS video/native-cursor cases, all255 nonzero CP437 byte values and an exact
+nine-input source rebuild. Parent admission is modeled; RPC publication,
+live child/serial composition and application memory/package gates remain open.
 The field/input owner is not integrated: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.
