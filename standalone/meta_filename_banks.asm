@@ -1,0 +1,17 @@
+BITS 16
+CPU 8086
+SEGMENT META_TEXT_CODE public align=16 class=FARCODE use16
+GROUP META_TEXT_GROUP META_TEXT_CODE
+SEGMENT META_DIALOG_CODE public align=16 class=FARCODE use16
+GROUP META_DIALOG_GROUP META_DIALOG_CODE
+SEGMENT META_FILENAME_CODE public align=16 class=FARCODE use16
+GROUP META_FILENAME_GROUP META_FILENAME_CODE
+SEGMENT META_FILE_PROMPT_CODE public align=16 class=FARCODE use16
+GROUP META_FILE_PROMPT_GROUP META_FILE_PROMPT_CODE
+SEGMENT META_NAME_TEST public align=16 class=FARSTATE use16
+GROUP META_NAME_GROUP META_NAME_TEST
+global _filename_state,_prompt_state,_dialog_state,_file_records
+_filename_state: times 22 db 0
+_prompt_state: times 92 db 0
+_dialog_state: times 684 db 0
+_file_records: times 1620 db 0

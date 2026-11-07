@@ -1,0 +1,146 @@
+{
+  "passed": true,
+  "component_only": true,
+  "installed_changed": false,
+  "terminal_changed": false,
+  "physical_runtime_verified": false,
+  "binary_sha256": "243aa60edc5e58e7b4fc2bcf56b3362e64d1746a50080a724f67d05addc536d2",
+  "checks": 5555,
+  "native_cases": 314,
+  "native_states": 1304,
+  "field_state_bytes": 22,
+  "prompt_state_bytes": 92,
+  "isolated_source_files": 23,
+  "original_inputs": [],
+  "sources": {
+    "src/key_mapping/meta_text.c": "94a55b00ac866dafd1fa8499c78dd918b8b965294dcd911bb70db0d7198a83b6",
+    "src/key_mapping/meta_dialog.c": "7039e4f91961ad9493f8537b4a434242acf0523409b2f067d3a23fd4241f2dbe",
+    "src/key_mapping/meta_filename.c": "78ffe8cf5f504cfee1b6c65be691f94af65335a1252812557500a4d8761e4523",
+    "src/key_mapping/meta_file_prompt.c": "319b10139c65c24dbaf107dc363d490832ab95610309a8d7e559bad57cb2c62b",
+    "src/key_mapping/key_editor_file.c": "f5bb250f867e0b396f840b745c67f599d9d0ff5384b2bc27ff2be6032a9fd5fc",
+    "src/key_mapping/key_file_fs.c": "751342a82fd9bc755d18fc343a3e39c8300045b32dd042e9cb27f5dbe5b3071f",
+    "src/key_mapping/key_actions_dos.c": "9f1fdf650795016b4d4affb6b3018046fecb220a7087d6ef7df1e9a8daa0bae9",
+    "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+    "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
+    "standalone/meta_filename_driver.c": "70b3c453177b0ebc3f417690a937dad6ba3b96fbfb7ae09a97b2f59f788ba909",
+    "src/key_mapping/meta_text.h": "5c7f1a876f418d87eb8d14daa42e044633c348252fe6633d108b96fb91dcf323",
+    "src/key_mapping/meta_dialog.h": "326ed7b381c855b0cc9273997c770602a1ef5b8255a350f099fb6056d8e32172",
+    "src/key_mapping/meta_filename.h": "2c46d23f99d185ea5413c44392f8e0ec688fc44c3520b32d28cde1946597b884",
+    "src/key_mapping/meta_file_prompt.h": "11891de8470caa7d3a1ebe369d4d26a7005be37592f9a8adea1cb6edc9ebb81d",
+    "src/key_mapping/key_editor_file.h": "824471996909bca4aadf2c0d6b7fc4ec82222dfe3a6e893439df4446f261a3c3",
+    "src/key_mapping/key_file_fs.h": "0edf624c48965e4ef08c0c0489b741961894556ada7ae17bdf62f88a09e95eab",
+    "src/key_mapping/key_actions_dos.h": "c546bdbf201f31f1f36aa937280a32c636af84bc8798256d4024e5af66ca494e",
+    "src/directory/directory_replace.h": "b3534b26bc9e9fa577fbceda50276cc9339a4d57f26cf6e1de2e1d436e9ff936",
+    "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
+    "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
+    "standalone/fixtures/meta_filename_native.json": "fc13bc275e31f007399372fb0f67c2c52a647a296e0045a368ed2286a53ffe23",
+    "standalone/meta_filename_banks.asm": "8a11415c33b0daeda979e6f81c44a8e2ef8eff9ad4cdac587794254b5bace354",
+    "standalone/build_meta_filename.py": "3ed52b02f6c0a94b68c6c5855a4b7e2cb9e19756031bbb1149d98ee3b474b352",
+    "standalone/record_meta_filename.py": "7f1a0155e24e1b887e16864105de06e30f9d9d1a2e262c5ff65adca220205f16",
+    "standalone/prove_meta_filename_source.py": "119a549c226178912e4477c9f1b575b6a0bd23305ad7d165a72d28bc73ccdd26",
+    "standalone/capture_meta_filename_original.py": "b6b16c19b877266974f51fe0127c7156042bf8251aec3c36db602e60deebfe34",
+    "docs/META_FILENAMES.md": "49a5be00ed47476105d3abf45c90064c9aa4113488fa0ab7e80f3b9814655fc9"
+  },
+  "receipts": {
+    "build/meta-filename-20261107-accepted/result.json": "f45b81099f76dbc1bfd9e18de388c97910737f8fdbf4d63a1a35948089de08a6",
+    "build/meta-filename-source-20261107-accepted/result.json": "ce1817c7be054bfc946d5bacb1988bae286032a3efff438632b27f50a5b693be"
+  },
+  "native_authorities": {
+    "load": {
+      "evidence_id": "ev_01ef5e1485264783ea6b307d6d2fe014634648cec868abf0e81d369775c0bf71",
+      "address": "0x1e0d0",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1e16d",
+            "start": "0x1e0d0"
+          }
+        ],
+        "span_bytes": 158,
+        "total_bytes": 158
+      }
+    },
+    "save": {
+      "evidence_id": "ev_8fd8e445cd7d6aec7df9937d24c275c7d372224b3c7f9882aadd233856636611",
+      "address": "0x1e16e",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1e189",
+            "start": "0x1e16e"
+          }
+        ],
+        "span_bytes": 28,
+        "total_bytes": 28
+      }
+    },
+    "callback": {
+      "evidence_id": "ev_6d9e4b765bd0be63bbc2a427f1f3e876ec2414074b9d4144f0ae8c57e68bd2a9",
+      "address": "0x14aa7",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x14acb",
+            "start": "0x14aa7"
+          }
+        ],
+        "span_bytes": 37,
+        "total_bytes": 37
+      }
+    },
+    "normalize": {
+      "evidence_id": "ev_3c4203cbaaf4ae88d584aabfab5ca1e9c4e9c6c907a5638830cc6eeb55dabc8c",
+      "address": "0x1e18a",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1e1cb",
+            "start": "0x1e18a"
+          }
+        ],
+        "span_bytes": 66,
+        "total_bytes": 66
+      }
+    },
+    "picker": {
+      "evidence_id": "ev_b5f69bd5a2bcae47a2d2777f8bc324e0ad53ef9a36ba2106d466fe481c9e462d",
+      "address": "0x1d0d0",
+      "body": {
+        "available": true,
+        "contains_entry": true,
+        "non_contiguous": false,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "end": "0x1d303",
+            "start": "0x1d0d0"
+          }
+        ],
+        "span_bytes": 564,
+        "total_bytes": 564
+      }
+    }
+  },
+  "analyst_evidence_bundle_sha256": "55a14fcc5161e4cd3e312ab576e13de442035245e3efa74f4352eb8209121681",
+  "limitations": [
+    "Native filename instruction replay uses synthetic bytes and modeled keyboard/render/cursor/bell services; static synthetic image never executed. Ordinary builds use frozen traces, not original executables.",
+    "Actual checked DOS files composed with serviced dialog/prompt under a fixture resource resolver. Picker completion modeled; enumeration/sort/viewport UI is still missing.",
+    "Original higher-level load/default/create policy, resource lookup/claims, file/EXEC admission, quarantine/live adoption, scheduling, native VGA, application memory/capacity/BBS/physical acceptance remain open. Installed RCE81708 unchanged."
+  ]
+}

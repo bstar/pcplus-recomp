@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Meta Keys filenames](META_FILENAMES.md) adds the original blank eight-cell
+name editor and deferred name/picker/load routing; Save retains the active name.
+314 native cases/1,304 states and actual DOS load/edit/save composition pass
+5,555 checks. A 23-file isolated export reproduces the executable/results.
+Picker enumeration/UI, original default/create workflow, live resource ownership
+and application integration remain open. Installed RCE81708 is unchanged.
+
 [Checked Meta Keys files](KEY_EDITOR_FILES.md) adds strict far-buffer loading
 and optimistic staged saves with explicit recovery flags. Real DOS8086 IO and
 injected boundary failures pass 5,899 checks; a 16-file isolated export reproduces
