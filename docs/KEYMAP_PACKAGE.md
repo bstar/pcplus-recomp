@@ -3,8 +3,15 @@
 The following describes contract1's historical full-file checkpoint. The
 current recipe uses the [contract2 prefix-file extension](KEYMAP_PREFIX.md),
 helper `618443f4…` and archive `9365ebff…`. It accepts1..33 complete profiles
-and preserves their exact file length. Current package verification is recorded
-separately; the old receipts below remain bound to their original bytes.
+and preserves their exact file length. The
+[current package receipt](validation/keymap-prefix-package.json) records26
+admission checks, packaged DOS8086 COM3/IRQ5 START edits for both seven-profile
+and33-profile files, and an exact16-file/ZIP rebuild from2680 public source
+files at tooling commit4fe5bee. Source base fe43c2b identifies the application
+checkpoint. The feature-disabled archive remains exactly `6f9e1f6f…`.
+Seven read-only inspector cases cover full/short/VT220/absent/malformed/empty/
+oversized files, with bytes unchanged and no binding values displayed.
+The old receipts below remain bound to their original bytes.
 
 The preceding keyboard-mapper candidate contains16 public files, including
 the exact tested PCKEYMAP helper beside its parent. The tracked

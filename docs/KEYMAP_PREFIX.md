@@ -40,5 +40,6 @@ A fresh composed parent build produces the same executable and companion bytes.
 The current private KBD has not been inspected. These BBS checks use virtual
 serial connections and SynthModem's Telnet bridge. Physical Boca/SPA2102 audio,
 carrier/flow control and DOS disk-close behavior still require hardware tests.
-The installed package and selected deployment remain unchanged. Promotion of
-the reviewed helper/package contract is tracked separately.
+The installed package and selected deployment remain unchanged. The
+[reviewed contract2 package](KEYMAP_PACKAGE.md) now also passes packaged START
+editing at seven and33 profiles and exact clean-source archive reproduction.

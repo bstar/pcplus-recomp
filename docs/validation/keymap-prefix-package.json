@@ -1,0 +1,444 @@
+{
+  "checkpoint_verified": true,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "source_base_commit": "fe43c2bbfaedf295ee14e36447ef156699f3e7e0",
+  "package_source_commit": "4fe5bee6a2995637fb3bba63cd754eeb057e55d3",
+  "helper_contract": 2,
+  "evidence": {
+    "build/keymap-prefix-connection-verified-20261107/result.json": {
+      "passed": true,
+      "source_base_commit": "fe43c2bbfaedf295ee14e36447ef156699f3e7e0",
+      "files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCKEYMAP.EXE": "618443f4b12d79c0460c4819b569db82a8b81ecc5e081c5587867e4948d834bd",
+        "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+        "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "f154628f3b6cf885056857395fbeeac9402dd0fcb09c34b2d9553f3bcefb8cea",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+        "VERSION.TXT": "1b564c3182456bdafcbad927532dd2441b5f2845a48417bca16b6aa383bf4015",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "package_manifest_sha256": "0112b50041bb04bdb1dbffae8fc603d461a1bb14e7579a26c930a70f2bda689e",
+      "archive_sha256": "9365ebff6d521cd9b3439c7de57c6646ccdb69c0bba5f738a35024f7cab7f2a5",
+      "original_inputs": [],
+      "scope": "Build the reviewed connection candidate and verify its complete public archive. The tracked recipe pins the reviewed payload and package source identity. Uses current source and fails if any public application byte differs; no configuration, originals or previous objects are copied into application builds. Physical acceptance and full original parity remain separate.",
+      "receipt_sha256": "e62dc8c1b8510404e3a902130dc0bd8f3ffc81eeb8d2da46a1cb0048f91d0ed6",
+      "source_count_checked": 7
+    },
+    "build/keymap-prefix-connection-source-20261107/result.json": {
+      "passed": true,
+      "source_commit": "4fe5bee6a2995637fb3bba63cd754eeb057e55d3",
+      "source_base_commit": "fe43c2bbfaedf295ee14e36447ef156699f3e7e0",
+      "source_count": 2680,
+      "files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCKEYMAP.EXE": "618443f4b12d79c0460c4819b569db82a8b81ecc5e081c5587867e4948d834bd",
+        "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+        "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "f154628f3b6cf885056857395fbeeac9402dd0fcb09c34b2d9553f3bcefb8cea",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+        "VERSION.TXT": "1b564c3182456bdafcbad927532dd2441b5f2845a48417bca16b6aa383bf4015",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "archive_sha256": "9365ebff6d521cd9b3439c7de57c6646ccdb69c0bba5f738a35024f7cab7f2a5",
+      "original_inputs": [],
+      "ancestor_git_unavailable": true,
+      "scope": "Run the tracked candidate builder from an original-free public source export. Executes the tracked Python builder inside the pinned Nix environment with no prior build objects, originals, private configuration or Git metadata in its source export. The shell wrapper/Nix environment bootstrap is separately exercised in the working checkout. Every declared package file and deterministic archive must match the reviewed build.",
+      "receipt_sha256": "9d38e78f8c5f26c56a17e01b57e8db250da6c2b848cea63892541d632845a5ee",
+      "source_count_checked": 2680
+    },
+    "build/keymap-prefix-disabled-control-20261107/result.json": {
+      "passed": true,
+      "source_base_commit": "732af066c8a7e2e0433b6fbe639d2e2172438346",
+      "files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCLINE.OVL": "36e693176fe81a3fa4ecffc54a411fc6d546dfb1a0a1136caacf7c10b40ab40c",
+        "PCMETA.OVL": "20c5a47e2a07d442adbb1f55160559c595728f711a46c4bbaa400df4dbfc08b3",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "d367f9d265a500c32adf2016f540af5279c3ab762a06eaf5bd61ae1661f11815",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "5b634d5cb3d10fd36e6a1a9374fb7b7539ace82f97983eedc5d6a35b29e523c0",
+        "VERSION.TXT": "04370cb88a19b495e7deb0ebc4d318fb374ef0371735c62cd8e85192ba6abe0e",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "package_manifest_sha256": "a3048a90f42e8d7741310b58745a264c3d74c484ab58e1e70e533feeb6e0c169",
+      "archive_sha256": "6f9e1f6f8b71ce0a52ea75477a3fd692f2afa1d4c9f1e89639da9c812dd47ea7",
+      "original_inputs": [],
+      "scope": "Build the reviewed connection candidate and verify its complete public archive. The tracked recipe pins the reviewed payload and package source identity. Uses current source and fails if any public application byte differs; no configuration, originals or previous objects are copied into application builds. Physical acceptance and full original parity remain separate.",
+      "receipt_sha256": "af4311a17ddb35b5d17e50bda0e7e3a31fb6241b6ecc4b605c70790c8212e314",
+      "source_count_checked": 7
+    },
+    "build/keymap-prefix-package-contract-20261107/result.json": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "unknown-version",
+          "accepted": false
+        },
+        {
+          "case": "wrong-profile-size",
+          "accepted": false
+        },
+        {
+          "case": "empty-file-allowed",
+          "accepted": false
+        },
+        {
+          "case": "excess-profiles",
+          "accepted": false
+        },
+        {
+          "case": "wrong-maximum-size",
+          "accepted": false
+        },
+        {
+          "case": "padding-allowed",
+          "accepted": false
+        },
+        {
+          "case": "wrong-recovery-exit",
+          "accepted": false
+        },
+        {
+          "case": "wrong-arguments",
+          "accepted": false
+        },
+        {
+          "case": "valid",
+          "accepted": true
+        },
+        {
+          "case": "disabled",
+          "accepted": true
+        },
+        {
+          "case": "missing-selection",
+          "accepted": false
+        },
+        {
+          "case": "undeclared",
+          "accepted": false
+        },
+        {
+          "case": "missing-binary",
+          "accepted": false
+        },
+        {
+          "case": "missing-proof",
+          "accepted": false
+        },
+        {
+          "case": "corrupt",
+          "accepted": false
+        },
+        {
+          "case": "forged-proof-hash",
+          "accepted": false
+        },
+        {
+          "case": "not-passed",
+          "accepted": false
+        },
+        {
+          "case": "original-input",
+          "accepted": false
+        },
+        {
+          "case": "stale-source",
+          "accepted": false
+        },
+        {
+          "case": "foreign-source",
+          "accepted": false
+        },
+        {
+          "case": "non-source",
+          "accepted": false
+        },
+        {
+          "case": "archive-missing",
+          "accepted": false,
+          "archive_started": false
+        },
+        {
+          "case": "archive-corrupt",
+          "accepted": false,
+          "archive_started": false
+        },
+        {
+          "case": "archive-undeclared",
+          "accepted": false,
+          "archive_started": false
+        },
+        {
+          "case": "archive-forged-hash",
+          "accepted": false,
+          "archive_started": false
+        },
+        {
+          "case": "archive-wrong-contract",
+          "accepted": false,
+          "archive_started": false
+        }
+      ],
+      "helper_sha256": "618443f4b12d79c0460c4819b569db82a8b81ecc5e081c5587867e4948d834bd",
+      "scope": "Reject missing, stale or undeclared keyboard companions before archiving. Isolated public fixtures only; no child execution, private settings or deployment.",
+      "receipt_sha256": "c6d2a932a9cdf4adfa269ea12fee1c6544917371952759a02ab8dab1b7ae48d8",
+      "source_count_checked": 4
+    },
+    "build/keymap-prefix-package-7-20261107/result.json": {
+      "passed": true,
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "keymap_profiles": 7,
+      "package_manifest_sha256": "4f3a6e5b8ab36149b48fc68cfa9104b5136616b042942186f2911666c0411883",
+      "package_files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCKEYMAP.EXE": "618443f4b12d79c0460c4819b569db82a8b81ecc5e081c5587867e4948d834bd",
+        "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+        "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "f154628f3b6cf885056857395fbeeac9402dd0fcb09c34b2d9553f3bcefb8cea",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+        "VERSION.TXT": "1b564c3182456bdafcbad927532dd2441b5f2845a48417bca16b6aa383bf4015",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual packaged Alt-F8 saves only the selected KBD and returns; shorter private KBD unchanged"
+      ],
+      "scope": "Run packaged START/SETUP launchers on a synthetic card in actual DOS8086. Dummy serial ports; no live BBS, card write or physical modem test.",
+      "receipt_sha256": "0b557c67c1296e8fcdafa458c5fd6fc712023f59608dd7e280e512e3769167e7",
+      "source_count_checked": 6
+    },
+    "build/keymap-prefix-package-33-20261107/result.json": {
+      "passed": true,
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "keymap_profiles": 33,
+      "package_manifest_sha256": "4f3a6e5b8ab36149b48fc68cfa9104b5136616b042942186f2911666c0411883",
+      "package_files": {
+        "ASPCOMP.EXE": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+        "ASPECT.EXE": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+        "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+        "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+        "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+        "PCKEYMAP.EXE": "618443f4b12d79c0460c4819b569db82a8b81ecc5e081c5587867e4948d834bd",
+        "PCLINE.OVL": "8999065530ded00c189541e980ea2e1547ed5c3272509b8cbf76db0303a79196",
+        "PCMETA.OVL": "aadf9db74b4a6a34124a188d3f60c702be7bd870f872a8b20c7fef3c0d33ef46",
+        "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+        "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+        "README.TXT": "f154628f3b6cf885056857395fbeeac9402dd0fcb09c34b2d9553f3bcefb8cea",
+        "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+        "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+        "TERMINAL.EXE": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+        "VERSION.TXT": "1b564c3182456bdafcbad927532dd2441b5f2845a48417bca16b6aa383bf4015",
+        "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+      },
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual packaged Alt-F8 saves only the selected KBD and returns; shorter private KBD unchanged"
+      ],
+      "scope": "Run packaged START/SETUP launchers on a synthetic card in actual DOS8086. Dummy serial ports; no live BBS, card write or physical modem test.",
+      "receipt_sha256": "eb2b1b4b6dc26ac2cbfbb1d8512bb13651ecabfaefcfcd7adedaa58d2756bfbe",
+      "source_count_checked": 6
+    },
+    "build/keymap-prefix-inspector-20261107/result.json": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "full",
+          "report": {
+            "file_bytes": 31284,
+            "whole_profiles": 33,
+            "selected_profile": 6,
+            "stable_metadata": true,
+            "selected_profile_present": true,
+            "selected_unterminated_slots": [],
+            "parent_content_compatible": true,
+            "helper_contract": 2,
+            "helper_content_compatible": true,
+            "legacy_full_helper_content_compatible": true,
+            "helper_unterminated_slot_count": 0,
+            "sha256": "8b121875f7175ce4d3fbca7cbb8b43cd8a99f2773ae79cec2e34078e45d0c9df",
+            "content_check_only": true,
+            "scope": "Read-only content check against maintained selected-profile loader and contract2 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified."
+          },
+          "unchanged": true,
+          "no_binding_values": true
+        },
+        {
+          "case": "short",
+          "report": {
+            "file_bytes": 6636,
+            "whole_profiles": 7,
+            "selected_profile": 6,
+            "stable_metadata": true,
+            "selected_profile_present": true,
+            "selected_unterminated_slots": [],
+            "parent_content_compatible": true,
+            "helper_contract": 2,
+            "helper_content_compatible": true,
+            "legacy_full_helper_content_compatible": false,
+            "helper_unterminated_slot_count": 0,
+            "sha256": "a0dc6d247738d9f418fac099da251201a11182f05c44ae28846c9dbcd31d920d",
+            "content_check_only": true,
+            "scope": "Read-only content check against maintained selected-profile loader and contract2 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified."
+          },
+          "unchanged": true,
+          "no_binding_values": true
+        },
+        {
+          "case": "vt220",
+          "report": {
+            "file_bytes": 4740,
+            "whole_profiles": 5,
+            "selected_profile": 4,
+            "stable_metadata": true,
+            "selected_profile_present": true,
+            "selected_unterminated_slots": [],
+            "parent_content_compatible": true,
+            "helper_contract": 2,
+            "helper_content_compatible": true,
+            "legacy_full_helper_content_compatible": false,
+            "helper_unterminated_slot_count": 0,
+            "sha256": "dea7d1112bd28d7c0f918eddd8023228ca354531c984feada622aedd9640105a",
+            "content_check_only": true,
+            "scope": "Read-only content check against maintained selected-profile loader and contract2 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified."
+          },
+          "unchanged": true,
+          "no_binding_values": true
+        },
+        {
+          "case": "absent",
+          "report": {
+            "file_bytes": 4740,
+            "whole_profiles": 5,
+            "selected_profile": 6,
+            "stable_metadata": true,
+            "selected_profile_present": false,
+            "selected_unterminated_slots": null,
+            "parent_content_compatible": false,
+            "helper_contract": 2,
+            "helper_content_compatible": false,
+            "legacy_full_helper_content_compatible": false,
+            "helper_unterminated_slot_count": 0,
+            "sha256": "dea7d1112bd28d7c0f918eddd8023228ca354531c984feada622aedd9640105a",
+            "content_check_only": true,
+            "scope": "Read-only content check against maintained selected-profile loader and contract2 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified."
+          },
+          "unchanged": true,
+          "no_binding_values": true
+        },
+        {
+          "case": "malformed",
+          "report": {
+            "file_bytes": 6636,
+            "whole_profiles": 7,
+            "selected_profile": 6,
+            "stable_metadata": true,
+            "selected_profile_present": true,
+            "selected_unterminated_slots": [],
+            "parent_content_compatible": true,
+            "helper_contract": 2,
+            "helper_content_compatible": false,
+            "legacy_full_helper_content_compatible": false,
+            "helper_unterminated_slot_count": 1,
+            "sha256": "18db7e5e0ec73b8ba3964a6ff528ae782a118c203877f0e4e1b5b1bbcb2b4251",
+            "content_check_only": true,
+            "scope": "Read-only content check against maintained selected-profile loader and contract2 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified."
+          },
+          "unchanged": true,
+          "no_binding_values": true
+        },
+        {
+          "case": "empty",
+          "report": {
+            "file_bytes": 0,
+            "whole_profiles": null,
+            "selected_profile": 6,
+            "stable_metadata": true,
+            "selected_profile_present": false,
+            "selected_unterminated_slots": null,
+            "parent_content_compatible": false,
+            "helper_contract": 2,
+            "helper_content_compatible": false,
+            "legacy_full_helper_content_compatible": false,
+            "helper_unterminated_slot_count": null,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "content_check_only": true,
+            "scope": "Read-only content check against maintained selected-profile loader and contract2 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified."
+          },
+          "unchanged": true,
+          "no_binding_values": true
+        },
+        {
+          "case": "oversized",
+          "report": {
+            "file_bytes": 32232,
+            "whole_profiles": 34,
+            "selected_profile": 6,
+            "stable_metadata": true,
+            "selected_profile_present": true,
+            "selected_unterminated_slots": [],
+            "parent_content_compatible": true,
+            "helper_contract": 2,
+            "helper_content_compatible": false,
+            "legacy_full_helper_content_compatible": false,
+            "helper_unterminated_slot_count": null,
+            "sha256": null,
+            "content_check_only": true,
+            "scope": "Read-only content check against maintained selected-profile loader and contract2 prefix editor; legacy full-file compatibility is separate. No binding values displayed. DOS path/access/close behavior, file locking and hardware are not verified."
+          },
+          "unchanged": true,
+          "no_binding_values": true
+        }
+      ],
+      "scope": "Read-only synthetic content checks. No private file, DOS path or hardware access.",
+      "receipt_sha256": "dfb8be534171597889e11db5d795987dd1ca6c85a3a5450b2f211df369c452e1",
+      "source_count_checked": 1
+    }
+  },
+  "scope": "Exact contract2 package reproduction and DOS launcher editing on owned synthetic media; no private configuration, original programs, deployment, physical serial or SIP/audio test."
+}
