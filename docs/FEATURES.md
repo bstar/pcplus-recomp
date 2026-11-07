@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Meta Keys resource identity](META_KEY_RESOURCES.md) adds checked current/PCPLUS
+lookup, deferred picker fallback and selection from a frozen directory pattern.
+Actual DOS load/save keeps the accepted identity after CWD changes and a competing
+local copy appears. 699 assertions and a 28-file isolated source rebuild pass;
+the new module adds no DGROUP data. Claims, defaults/create and live integration
+remain open; installed RCE81708 is unchanged.
+
 [DOS Meta Keys enumeration](META_PICKER_SCAN.md) supplies bounded FindFirst/Next
 with private far continuation state and DTA restoration. Actual DOS tests verify
 interleaved searches, drive/CWD preservation, cancellation, failures and a

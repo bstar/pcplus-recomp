@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "component_only": true,
+  "installed_changed": false,
+  "terminal_changed": false,
+  "physical_runtime_verified": false,
+  "binary_sha256": "c3ab03116bac7b3888454bd3bb3376f06abe3ad016e51e8d6d150e3dada6959f",
+  "assertions": 699,
+  "result_bytes": 74,
+  "resource_owned_DGROUP_bytes": 0,
+  "resource_owned_segments": {
+    "_TEXT": 1465,
+    "CONST": 0,
+    "CONST2": 0,
+    "_DATA": 0
+  },
+  "isolated_source_files": 28,
+  "declared_fault_modes": 5,
+  "original_inputs": [],
+  "sources": {
+    "src/key_mapping/meta_key_resource.c": "f2b4bbe83120ba107ae9c818a68c0820c8c677841863c56d891f7c33b88aff0a",
+    "src/key_mapping/meta_picker.c": "2be507d5157bee4aae83330d348fa9bac6478d6304c20c9314c96329944059c5",
+    "src/key_mapping/meta_picker_scan.c": "5d64126899c141e525d3d4d2cd2e8aa09334b3408ace70c3c7c7ab3c7c3b806c",
+    "src/key_mapping/meta_scan_fs.c": "8f0293a3e7e881e6c08306bf06686031b2eb2a26ce2cbfdef9d5a62e90672f0b",
+    "src/key_mapping/key_editor_file.c": "f5bb250f867e0b396f840b745c67f599d9d0ff5384b2bc27ff2be6032a9fd5fc",
+    "src/key_mapping/key_file_fs.c": "751342a82fd9bc755d18fc343a3e39c8300045b32dd042e9cb27f5dbe5b3071f",
+    "src/key_mapping/key_actions_dos.c": "9f1fdf650795016b4d4affb6b3018046fecb220a7087d6ef7df1e9a8daa0bae9",
+    "src/config/resource_path.c": "6415ca340fdad3d8938c708584f0bdf50fbfee76c6001d2f14a8d8de8f036c3a",
+    "src/capture/capture_fs.c": "51b17907493fbe6ab11b82b7e5b2fdae4a1db47b8d5a843b9d839878ae84f5f8",
+    "src/directory/directory_replace.c": "86607d3bd46fe3f86cdf669dc7aa483af3633672fa48a2e7d848b4a790ec669b",
+    "src/directory/directory_replace_fs.c": "ea94c7e30ede691ac090cdff6ebfab9afb80c45e87b3603d85d19e4c7bffad5c",
+    "standalone/meta_resource_faults.c": "c606feb68c779ff422f790bc37cb5bda533cad91554815fa4aec504c03dcd9f8",
+    "standalone/meta_resource_driver.c": "540c1932ca8b7f1ee2746642b2c27408c5f756ef96ac794aa5f64e90788ed687",
+    "src/key_mapping/meta_key_resource.h": "c0c52e242ac7f54beb66f72c003085d8bb5a92f3625053964767730bb2e01740",
+    "src/key_mapping/meta_picker.h": "bb8e3ba47f5b82a15ea119e76041419f082c6b40855cb359637375f8b9b1cb87",
+    "src/key_mapping/meta_picker_scan.h": "5ca38cfb3f2465d12cdc971629675548158b7b388042b6e46807118baa084a1b",
+    "src/key_mapping/meta_scan_fs.h": "72466c0ffcc67c0517f53e3f4538a696964708a3ea356fe3cae39c09c453dd3b",
+    "src/key_mapping/key_editor_file.h": "824471996909bca4aadf2c0d6b7fc4ec82222dfe3a6e893439df4446f261a3c3",
+    "src/key_mapping/key_file_fs.h": "0edf624c48965e4ef08c0c0489b741961894556ada7ae17bdf62f88a09e95eab",
+    "src/key_mapping/key_actions_dos.h": "c546bdbf201f31f1f36aa937280a32c636af84bc8798256d4024e5af66ca494e",
+    "src/config/resource_path.h": "187327178d79148592c3fe42783ee38ff701500b836a0b54424ed13a6a158e31",
+    "src/capture/capture_fs.h": "806b050d4b9ebc1dd66c4d4d30d9b08e2e5256043eb51e7f07aba69524512155",
+    "src/directory/directory_replace.h": "b3534b26bc9e9fa577fbceda50276cc9339a4d57f26cf6e1de2e1d436e9ff936",
+    "src/directory/directory_replace_fs.h": "9702aba7c5d55548dc5ba38289a0c5f1409a2769459904445d9a64c8bc88da9b",
+    "src/directory/directory_dos.h": "4e5c3d971839de9899f2c0927d1bf8c5723ae14d2a123590381fd5706db5e72b",
+    "standalone/meta_resource_faults.h": "6a0aeead55387e2fb33257e6750997ccfcbd9c11504884deaf6d4dcbd083ca32",
+    "standalone/meta_resource_banks.asm": "a31d9ef00dc282c75af7c95d5629493b88ac98e8998f942e5a13c4d17ab8e30e",
+    "standalone/build_meta_resource.py": "179f7399109dd5040f0635f201c732e1c07254749ffc213d980b84f0828f1f89",
+    "standalone/record_meta_resource.py": "8cc5b1cddeb0bbbff2ed0b1d58f67c5bab683a123206ef8c9e138fc164e75c9e",
+    "standalone/prove_meta_resource_source.py": "d5099dc51fdde757917cad067a35043458ae2631eaee84d27f39dbad4f3246ca",
+    "docs/META_KEY_RESOURCES.md": "08f0f76deb377ef70a75cd77c778ceeb7213db94f3ad19be52526d5a4f2b4ca3"
+  },
+  "receipts": {
+    "build/meta-resource-20261107-final/result.json": "b344bc0bb39ef52b21bc765df32ba3f1675b14e83a3a93af6e28564e38ea4ff9",
+    "build/meta-resource-source-20261107/result.json": "79648d8ffa39b297a2ead25f446699fc722d03f31a54d848febd6f93d7890281"
+  },
+  "limitations": [
+    "Actual source-built DOS canonicalization/attributes, real picker scans, bounded synthetic PSP/environment and checked frozen-path IO over owned fixtures. Maintained lookup policy, not native whole-workflow comparison.",
+    "ASCII DOS83 paths and63-byte identity/53-byte parent limits. Only absence enables bare-name PCPLUS fallback; qualified requests remain explicit. MISSING supplies context, not create authorization or a claim.",
+    "Canonical paths are not external locks/host-inode identities. File/EXEC claims, defaults/create, baseline/live adoption/recovery, modal/transient integration, memory/capacity/UART/BBS/physical acceptance remain open. Installed RCE81708 unchanged."
+  ]
+}
