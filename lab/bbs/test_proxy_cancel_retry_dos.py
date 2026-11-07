@@ -17,7 +17,7 @@ import subprocess
 import time
 
 import test_dos
-from product_inputs import ROOT,select_product,sha
+from product_inputs import ROOT,select_product,sha,stage_companions
 from enigma import SOURCE,process_pid
 from test_proxy_transfer_dos import post_count
 from test_transfer_dos import ObservedModem,timestamp,offset_after
@@ -53,6 +53,7 @@ async def run(a):
     product_names=['test_proxy_cancel_retry_dos','paced_bios_keys','test_dos','test_proxy_transfer_dos',
                    'test_transfer_dos','modem','audit_zmodem','audit_size_probe_screen','zmodem_cancel_watch','zmodem_label_watch','zmodem_cancel_disk_watch']
     inputs += [ROOT/'lab/bbs'/(n+'.py') for n in product_names]
+    inputs += stage_companions(binary,stage)
     inputs += [ROOT/'lab/bbs/synthmodem_proxy_serial.js',ROOT/'lab/bbs/editor-recipes.json',
                ROOT/'standalone/test_terminal.py',ROOT/'standalone/display_startup_geometry.asm',
                payload_path,stage/'TERMINAL.EXE',out/'KEYS.ASM',out/'PACED.COM',out/'recipe.json']

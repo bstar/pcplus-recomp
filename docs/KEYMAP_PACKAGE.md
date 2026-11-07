@@ -47,7 +47,9 @@ the model. It does not establish physical CTS/DCD, modem latency or FIFO behavio
 RA608E10 and the selected connection-test payload remain unchanged. Before a
 deployment, validate the selected private KBD: the helper currently requires
 all33 profiles/31284 bytes and safely refuses shorter files. Expanding or
-replacing private bindings is not part of packaging. Targeted admission/close
-faults, current-candidate transfer/reconnect/carrier regressions and physical
-Boca/SPA2102 acceptance remain separate gates. Broader native helper/UI/defaults,
+replacing private bindings is not part of packaging.
+[Current-candidate connection regressions](KEYMAP_CONNECTION_REGRESSIONS.md)
+now cover BBS transfers, cancel/retry, actual Enigma loss/redial and reported-close
+quarantine. Private KBD validation, broader foreground-refusal DOS transitions
+and physical Boca/SPA2102 acceptance remain open. Broader native helper/UI/defaults,
 ASPECT, protocol/emulation and Host parity remain open.

@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Current keyboard-candidate connection checks](KEYMAP_CONNECTION_REGRESSIONS.md)
+pass four stock-BBS transfer runs, actual same-process Enigma cancel/retry and
+loss/redial/retry,25 bounded carrier cases and the copied LoC main screen.
+Reported KBD-close quarantine passes in DOS;32 admission-branch cases use
+modeled services under CPU emulation. No physical/private-machine acceptance
+or wider original-feature completion follows from these scoped results.
+
 [Matched keyboard-helper package](KEYMAP_PACKAGE.md) adds16 public files,
 18 admission cases and actual packaged START/Alt-F8 save/return with private
 fixtures preserved.2674-file isolated source reproduction matches the ZIP;
