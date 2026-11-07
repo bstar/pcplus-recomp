@@ -62,6 +62,12 @@ def packed_guide(directory):
 def terminal_companions(binary,manifest):
     """Return source-verified optional runtime files required by this parent."""
     files={};sources={};base=binary.resolve().parent
+    overlay=manifest.get('line_port_overlay')
+    assert bool(overlay)==bool(manifest.get('experimental_line_port_overlay')),'Alt-P module declaration and feature must match'
+    if overlay:
+        assert manifest.get('experimental_line_port') and manifest['memory_layout']['line_port_overlay_contract_verified']
+        assert sha(base/'PCLINE.OVL')==overlay['sha256'],'Alt-P module differs from the matched parent'
+        files['PCLINE.OVL']=base/'PCLINE.OVL'
     if manifest.get('experimental_chat_loader'):
         module=manifest['chat_loader']['module']
         assert sha(base/'PCCHAT.OVL')==module['binary_sha256']
@@ -181,6 +187,12 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
                 'Other named profiles compile but return an unsupported error.\n'
                 'An explicit keyboard file must remain available during scripts.\n'
                 'The parent and interpreter must be updated together.\n'))
+    if terminal.get('experimental_line_port_overlay'):
+        with (payload/'README.TXT').open('ab') as guide:
+            guide.write(dos_text('\nAlt-P: native Line/Port setup. Escape applies session changes;\n'
+                'Alt-S saves the line prefix and applies it. COM1 through COM4.\n'
+                'Keep the matching PCLINE.OVL beside TERMINAL.EXE. Missing or\n'
+                'mismatched modules are refused; do not mix package versions.\n'))
     for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
     record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
@@ -208,6 +220,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
     if terminal.get('experimental_packed_command_ui'):record['experimental_packed_command_ui']=True
     for flag in ('experimental_chat_loader','experimental_global_help','experimental_chat_help'):
         if terminal.get(flag):record[flag]=True
+    if terminal.get('experimental_line_port_overlay'):record['experimental_line_port_overlay']=True
     (output/'manifest.json').write_text(json.dumps(record,indent=2)+'\n');return record
 
 def main():

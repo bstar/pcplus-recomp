@@ -14,6 +14,7 @@ def main():
  allowed={'TERMINAL.EXE','ASPECT.EXE','ASPCOMP.EXE','PRMEDIT.EXE','XLTEDIT.EXE','LOCHELP.HLP','START.BAT','SETUP.BAT','README.TXT','VERSION.TXT'}
  if m.get('experimental_chat_loader'):allowed.add('PCCHAT.OVL')
  if m.get('experimental_global_help'):allowed.update(('PCHELP.RTE','PCPLUS.HLP'))
+ if m.get('experimental_line_port_overlay'):allowed.add('PCLINE.OVL')
  assert set(m['files'])==allowed,'Only declared public application files may be archived'
  for n,h in m['files'].items():assert sha(package/directory/n)==h,n
  out.mkdir(parents=True)
