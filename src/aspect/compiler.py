@@ -521,6 +521,17 @@ class Compiler:
 
     def command(self, tokens):
         command = tokens[0]
+        if command == 'alarm':
+            parser = Expression(tokens[1:], self.line)
+            self.emit(0x01, int(bool(parser.tokens)))
+            if parser.tokens:
+                if parser.tokens[0] in ('(', ','):
+                    self.error('ALARM requires an atomic integer')
+                node = parser.parse(7)
+                if parser.pos != len(parser.tokens):
+                    self.error('ALARM requires one atomic integer')
+                self.operand(self.word_argument(node), compact=True)
+            return
         if command == 'shell':
             if len(tokens) != 1:
                 self.error('SHELL does not accept operands')

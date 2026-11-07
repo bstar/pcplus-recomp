@@ -2005,3 +2005,11 @@ test-aspect-alarm-dos:
 	python3 standalone/test_alarm_dos_uart.py --build $(ALARM_DOS_OUTPUT) --output $(ALARM_DOS_OUTPUT)-matrix
 test-aspect-alarm-dos-source: test-aspect-alarm-dos
 	python3 standalone/prove_alarm_dos_source.py --build $(ALARM_DOS_OUTPUT) --output $(ALARM_DOS_OUTPUT)-source
+
+ALARM_COMPILER_OUTPUT := build/alarm-compiler-make-$(shell date +%s%N)
+.PHONY: test-aspect-alarm-compiler test-aspect-alarm-compiler-source
+test-aspect-alarm-compiler:
+	python3 standalone/build_aspect_compiler_dos.py
+	python3 standalone/test_aspect_alarm_compiler.py --compiler-dir build/aspect-compiler-dos --output $(ALARM_COMPILER_OUTPUT)
+test-aspect-alarm-compiler-source: test-aspect-alarm-compiler
+	python3 standalone/prove_aspect_alarm_compiler_source.py --test $(ALARM_COMPILER_OUTPUT) --output $(ALARM_COMPILER_OUTPUT)-source

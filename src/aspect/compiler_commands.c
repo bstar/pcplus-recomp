@@ -128,6 +128,15 @@ static void file_command(pc_compiler *c,const command *cmd)
  }
  if(c->expression.position!=c->expression.last)bad(c);
 }
+static void alarm_command(pc_compiler *c)
+{
+ unsigned n,present=c->line.count>1;
+ emit(c,1);emit(c,present);if(!present)return;
+ if(pc_equal(c,1,"(")||pc_equal(c,1,",")){bad(c);return;}
+ c->expression.position=1;n=parse(c);
+ if(!pc_ready(c)||c->expression.position!=c->expression.last){bad(c);return;}
+ operand(c,n,1);
+}
 static void execute(pc_compiler *c)
 {
  unsigned n;c->expression.position=1;
@@ -178,6 +187,7 @@ void pc_commands(pc_compiler *c)
 {
  unsigned args[ASPECT_COMPILER_TOKEN_MAX],count,i,j,n,dest,expected,optional,command_index=65535U;
  char role;aspect_compiler_value value;const command *cmd;
+ if(pc_equal(c,0,"alarm")){alarm_command(c);return;}
  if(pc_equal(c,0,"dos")){external_command(c,0x28);return;}
  if(pc_equal(c,0,"run")){external_command(c,0x9b);return;}
  if(pc_equal(c,0,"shell")){external_command(c,0xa3);return;}

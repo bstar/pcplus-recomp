@@ -1,11 +1,18 @@
 # Full application reconstruction checklist
 
+The [ALARM compiler checkpoint](ASPECT_ALARM_COMPILER.md) adds exact native
+ALARM emission to both maintained compilers. All39 original outcomes and39
+presentation variants pass in host and DOS; full2225-case compiler and2243-case
+checked-stack regressions pass. A24-file cold rebuild reproduces the compiler
+and repeats all78 ALARM cases. Interpreter/parent integration and physical
+acceptance remain open; the installed release is unchanged.
+
 The [real DOS ALARM platform](ASPECT_ALARM_DOS.md) now passes50 emulator
 cases/46120 checks with actual BIOS keys, DOS clock, banked PIT speaker and
 UART ISR. Each case receives508 exact bytes inside the alert; foreign speaker
 ownership is preserved through cleanup/recovery. A29-file cold rebuild matches
-the executable and repeats three selected cases. Compiler/VM, parent policy,
-WHEN/renderer integration and physical acceptance remain open. The installed
+the executable and repeats three selected cases. At that checkpoint compiler/VM binding remained absent. The newer compiler
+checkpoint above supplies emission; VM, parent policy and WHEN/renderer integration and physical acceptance remain open. The installed
 package is unchanged.
 
 The [cooperative ALARM adapter](ASPECT_ALARM_COOPERATIVE.md) now retains native

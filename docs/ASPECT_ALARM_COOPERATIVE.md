@@ -58,8 +58,8 @@ emits a presence byte then an atomic integer. Commas, parenthesized/compound
 operands and wrong types reject. Constants32768 and65535 reject, while
 negative16-bit constants compile but remain subject to the native0..32767
 runtime bound. `forever` is an ordinary integer builtin operand here, rather
-than WAITFOR's special timeout marker. This grammar has not yet been added
-to the maintained compilers.
+than WAITFOR's special timeout marker. This grammar was not implemented at this component checkpoint. The subsequent
+[compiler checkpoint](ASPECT_ALARM_COMPILER.md) supplies host/DOS emission.
 
 ## Remaining integration
 

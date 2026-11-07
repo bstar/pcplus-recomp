@@ -5,7 +5,8 @@ The standalone diagnostic passes 50 DOS8086 cases and 46,120 checks while
 receiving 508 exact bytes per case during the alert. A cold export of 29
 declared source files reproduces the exact executable and repeats three
 selected cases. This is component validation; the ALARM command has not yet
-been added to the maintained compilers or interpreter.
+been added to the interpreter. The subsequent
+[compiler checkpoint](ASPECT_ALARM_COMPILER.md) supplies host/DOS emission.
 
 `alarm_dos_run` uses DOS function 2Ch for seconds, atomically reads BIOS ticks,
 preserves the selected standard/enhanced BIOS keyboard mode, and borrows the
@@ -74,8 +75,8 @@ it does not repeat all 50 cases.
 
 ## Remaining application integration
 
-Add the checked operand/compiler emission and current parent duration/sound
-policy. Integrate foreground WHEN/receive rendering with exclusive key ownership
+Bind the checked operand wrapper to the now-emitted compiler format and current
+parent duration/sound policy. Integrate foreground WHEN/receive rendering with exclusive key ownership
 so Escape completes ALARM normally rather than aborting the script. Fund the
 extra code without reducing stacks, streams or buffers, then repeat six-stream,
 nested-child, carrier and BBS gates. The installed connection package remains

@@ -1,0 +1,242 @@
+{
+  "schema": "aspect-alarm-compiler-v1",
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "oracle_sha256": "284cab33941d832d553cbd4ba45ea714e282666dc35e4d860b0720329933296e",
+  "probe_sha256": "e2d4aeaa22e3e6976e410a339acb3d8453e1f34bfe034b668a0439415eecc516",
+  "freezer_sha256": "f4585166c300309e9582069c304f385e512c192fb8660be163174c742bf63a02",
+  "source_encoding": "cp437",
+  "vectors": [
+    {
+      "label": "alarm ",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm \r\nendproc\r\n",
+      "source_sha256": "2074139ac7993187aa685f49260ffb8a45ca3259dcd6fbd36656c724b7260f92",
+      "hex": "01 cf 01 00 94",
+      "asx_sha256": "d95ab5916ee7e9ce2c855d015f66d3f537746608a194fe2b55da4b01e0a3784d"
+    },
+    {
+      "label": "alarm 0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 0\r\nendproc\r\n",
+      "source_sha256": "03984a4b78f9d78513cd94dcb8f6336aaf4e21b5db4b0536531d972e60c187d9",
+      "hex": "01 cf 01 01 b5 00 94",
+      "asx_sha256": "a41b861fddd952615f4c26b4a9657b265c82c04094596f830bfb9266027869be"
+    },
+    {
+      "label": "alarm 1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 1\r\nendproc\r\n",
+      "source_sha256": "95cfc5d4729e0517706bb43c5bf6e633939c0a8a8b13603c024186d020820c29",
+      "hex": "01 cf 01 01 b5 01 94",
+      "asx_sha256": "fc01b1f9f9c0e0b802ad3d3e44c48fb855b6a689093e4b2fc8ceefa2a741ea2f"
+    },
+    {
+      "label": "alarm 3",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 3\r\nendproc\r\n",
+      "source_sha256": "9db23c9dbb35811578f56cf19867a13e6980f435508359c19134fb265bd561cc",
+      "hex": "01 cf 01 01 b5 03 94",
+      "asx_sha256": "8880132da2a0e7462600b1aba84615955f5370fbb46bbb59611e9507d19292bf"
+    },
+    {
+      "label": "alarm -1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm -1\r\nendproc\r\n",
+      "source_sha256": "02e8f227a6cb68070d94be28927e79fbe3f2f7916fc36a59d9fe6114d68acc0d",
+      "hex": "01 cf 01 01 ab ff ff 94",
+      "asx_sha256": "230d9d8de1668d74de6181c3dacbe07a6107057093b1c479c263f90c28c4927f"
+    },
+    {
+      "label": "alarm -32768",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm -32768\r\nendproc\r\n",
+      "source_sha256": "af4e66e0e3625acb4c06b219b3fc9dd4edc2741cdada519aec9fad4412379ab6",
+      "hex": "01 cf 01 01 ab 00 80 94",
+      "asx_sha256": "c17ab11f917a1722b31d1e7a4648bf5dd25d7631bb7b19fa101e6cbf46ce4e0b"
+    },
+    {
+      "label": "alarm 32767",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 32767\r\nendproc\r\n",
+      "source_sha256": "8b204a4807b826fe726eae5eff894432b06cedb3f140f84c9d93aed331c7a4a6",
+      "hex": "01 cf 01 01 ab ff 7f 94",
+      "asx_sha256": "d21c71947d3b9150fdd180885c1ebd1bd47c85a17c5364e5605ca2ef717de63a"
+    },
+    {
+      "label": "alarm i",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm i\r\nendproc\r\n",
+      "source_sha256": "acf69802c7242e3b1e314a18617043a590abac6b322945dc81bb00b47004c755",
+      "hex": "01 cf 01 01 8d 00 94",
+      "asx_sha256": "84498fc806fa13600f6a41727113e0afebcfbd37b6759f403889d94a94ecb303"
+    },
+    {
+      "label": "alarm forever",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm forever\r\nendproc\r\n",
+      "source_sha256": "4d455c5ef8765c33a9fa7a6117a1646c35b80ae2f316e166624b872805121383",
+      "hex": "01 cf 01 01 6f 16 94",
+      "asx_sha256": "772d0ccf5b35b139c111d5f2611190c290014d11c94cfec5b4aa9d3db5570925"
+    },
+    {
+      "label": "alarm success",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm success\r\nendproc\r\n",
+      "source_sha256": "46c3fed04e19c1656a92a2e05c9a1fb865d170ea2a49a919328ebc27e6119e14",
+      "hex": "01 cf 01 01 6f 1b 94",
+      "asx_sha256": "23a30b7b669ebc8511788014cacff20e87efda064414758eace9310628a6ebe9"
+    },
+    {
+      "label": "alarm failure",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm failure\r\nendproc\r\n",
+      "source_sha256": "e48a0a3be287c668e4882d9e55a5dd64722c1cbb2c5188f27ae1fe1b70175fb2",
+      "hex": "01 cf 01 01 6f 15 94",
+      "asx_sha256": "8465a5cd475c326faf0f85822247699a2fbd2b42a9779535735742a74768595e"
+    },
+    {
+      "label": "alarm found",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm found\r\nendproc\r\n",
+      "source_sha256": "756dd2f13cf3d981d6de08c98c0af4e7b0c210ddbf6a18e5b4ab21444530f3c0",
+      "hex": "01 cf 01 01 6f 17 94",
+      "asx_sha256": "99eaaf7d8e9ca4c2008ea4df7b13d4523536dd282fc83d8ae64a813c6a558aba"
+    },
+    {
+      "label": "alarm ; comment",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm ; comment\r\nendproc\r\n",
+      "source_sha256": "68acfc4776cb76d2edd61ea3ddfd12bc39ee0fe7a6b75cb3c0b8e4a4809147a6",
+      "hex": "01 cf 01 00 94",
+      "asx_sha256": "d95ab5916ee7e9ce2c855d015f66d3f537746608a194fe2b55da4b01e0a3784d"
+    },
+    {
+      "label": "case insensitive",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nAlArM 1\r\nendproc\r\n",
+      "source_sha256": "da319f9bc386d2b3af562e37623e953a8ed96fa6a31e72d61ba9ad8e09320e14",
+      "hex": "01 cf 01 01 b5 01 94",
+      "asx_sha256": "fc01b1f9f9c0e0b802ad3d3e44c48fb855b6a689093e4b2fc8ceefa2a741ea2f"
+    },
+    {
+      "label": "local",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ninteger local\r\nalarm local\r\nendproc\r\n",
+      "source_sha256": "02aba0b0e004fc393246b7514488a8bfd36a160651a95915699a7b90f37bffd2",
+      "hex": "01 d2 02 00 cf 01 01 a1 00 00 95",
+      "asx_sha256": "d286e83b27d9b5ec3f2cb1a512800bf50f2bbf267f7fef3c444c9f1715b6df6f"
+    },
+    {
+      "label": "parameter",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\ncall worker with 1\r\nendproc\r\nproc worker\r\nintparm duration\r\nalarm duration\r\nendproc\r\n",
+      "source_sha256": "6985107ee329c6dda9acf9ae217cae090e81ec8943137a5faa187ef903edcf21",
+      "hex": "01 cf d0 cc b5 01 c8 0f 00 00 00 d2 fe ff 94 cf 01 01 97 08 00 95",
+      "asx_sha256": "21c6ca00c1d22e518df1a9d35cf0e5bde451b0d3bb38d61bbf01ffcbe9ef8c00"
+    },
+    {
+      "label": "two alarms",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm\r\nalarm 0\r\nendproc\r\n",
+      "source_sha256": "ac3212506d39ebd68f406e5e27381898f372596f5d715c787c6b887587ab4f95",
+      "hex": "01 cf 01 00 01 01 b5 00 94",
+      "asx_sha256": "5b9e3b7e4301427040579e7dee7f73972f8061be9ec701ffb5c61c0ef81a7040"
+    }
+  ],
+  "rejected": [
+    {
+      "label": "alarm -32769",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm -32769\r\nendproc\r\n",
+      "source_sha256": "abaeb867ffe0e6e152072b9e3f8b6bc83e48e0fdce46dcf38448efe28d194e7c"
+    },
+    {
+      "label": "alarm 32768",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 32768\r\nendproc\r\n",
+      "source_sha256": "e7ed1c17dd0fc3bd9ff852f0ae374def4a5069bb3d129fb1489358c3426f7bd7"
+    },
+    {
+      "label": "alarm 65535",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 65535\r\nendproc\r\n",
+      "source_sha256": "c00aac9902f14073b79ccbcb28ed1af77e7a86480739108b866e70a4b7049df9"
+    },
+    {
+      "label": "alarm 65536",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 65536\r\nendproc\r\n",
+      "source_sha256": "d667b9397aa0fe613429a33847b68fbf03bc1e4c6e0966dccc40c4af4cb5cbc8"
+    },
+    {
+      "label": "alarm 1L",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 1L\r\nendproc\r\n",
+      "source_sha256": "353872638e0a7e13c952f24715c42e46a293ad1d000834f304dcda5263685d7e"
+    },
+    {
+      "label": "alarm 0.0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 0.0\r\nendproc\r\n",
+      "source_sha256": "bc3f86046b311d9fc4bd88315a3c30c218034dca7d05f31bc9a5391b2a2626ca"
+    },
+    {
+      "label": "alarm l",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm l\r\nendproc\r\n",
+      "source_sha256": "70fc77991093596c4424888821f406fdafd6d499ce0359d3e1f9b01ee3584768"
+    },
+    {
+      "label": "alarm f",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm f\r\nendproc\r\n",
+      "source_sha256": "79800e5f1ca61c2453036a36fa9100d2022cd3f3a977e313efc1d1d2f4b7e4cc"
+    },
+    {
+      "label": "alarm s",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm s\r\nendproc\r\n",
+      "source_sha256": "f8ca8eae61cd0c3ff9d5019228aca879e4c2d51f7d7b32b85288239b7df3f75a"
+    },
+    {
+      "label": "alarm i0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm i0\r\nendproc\r\n",
+      "source_sha256": "c1e2333785055286d84782ba8efe1ba5320506b1a27ead9cf8e5cb08738b2fc5"
+    },
+    {
+      "label": "alarm i9",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm i9\r\nendproc\r\n",
+      "source_sha256": "da14f9dfdcf536c6cbbc386657bd66d255848a7231469acef854cc828973b75d"
+    },
+    {
+      "label": "alarm l0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm l0\r\nendproc\r\n",
+      "source_sha256": "73eb1fd4d6b0620855ba3a344616d89a8d9284484653f97f71ed533adca0091b"
+    },
+    {
+      "label": "alarm s0",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm s0\r\nendproc\r\n",
+      "source_sha256": "3c406603a8bf038996fd60d7e0872130875f6d2af7cf45542b1fc59ccec7253e"
+    },
+    {
+      "label": "alarm (1)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm (1)\r\nendproc\r\n",
+      "source_sha256": "39dd2cf8440ca6add31d545ee8326de7328530244e735d505d9dadb9839cb621"
+    },
+    {
+      "label": "alarm (i)",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm (i)\r\nendproc\r\n",
+      "source_sha256": "7f3b0fcbcf99183154955ca733f3f6def753afa221ad2d4ae790a6b1e5d5077f"
+    },
+    {
+      "label": "alarm 1+1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 1+1\r\nendproc\r\n",
+      "source_sha256": "5db2bf806ab8c56e9a8f51a0249606feab31a652631bb89ca1eee980d63f9127"
+    },
+    {
+      "label": "alarm i+1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm i+1\r\nendproc\r\n",
+      "source_sha256": "29f38dd06f162917099f465fa81cb547a26d254db2946ec2eb7bc8fc0ade8608"
+    },
+    {
+      "label": "alarm \"3\"",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm \"3\"\r\nendproc\r\n",
+      "source_sha256": "9b0ef9a831f11f0ca6adb7b097ebe632298fce07937b20a60ae1813b2cf0eb5d"
+    },
+    {
+      "label": "alarm ,1",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm ,1\r\nendproc\r\n",
+      "source_sha256": "d714d8f11264d7cd906d3e721256403105da1d9c63ca3116303d4ba88cc8747c"
+    },
+    {
+      "label": "alarm 1,",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 1,\r\nendproc\r\n",
+      "source_sha256": "8dfc37341a1c2a3dee122ff341a6bc20f6333b364795e9db4ab69ad8e8d35f9b"
+    },
+    {
+      "label": "alarm 1 2",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm 1 2\r\nendproc\r\n",
+      "source_sha256": "f08e318382b036305c7b84d0663ec69b47a48e3ae81ec7e16be1c48b2df495a5"
+    },
+    {
+      "label": "alarm ,",
+      "source": "integer i\r\nlong l\r\nfloat f\r\nstring s\r\nproc main\r\nalarm ,\r\nendproc\r\n",
+      "source_sha256": "b638719e703d8b7369337be8901b01ae9b399e31c92bfa73567c4a1d5895a1ce"
+    }
+  ],
+  "scope": "Authored ALARM grammar/emission only. No runtime execution or full compiler parity claim; originals are not normal build inputs."
+}
