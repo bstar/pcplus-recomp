@@ -14,7 +14,16 @@ static unsigned canonical(const char *target,char *t,char *s,char *b)
  unsigned i,c,n;unsigned long address;
  if(!span(target,64,&address) || !target[0] || target[1]!=':' || (target[2]!='\\' && target[2]!='/') || directory_replace_paths(target,s,b))return 0;
  for(i=0;i<64;++i){c=(unsigned char)target[i];if(c>='a' && c<='z')c-=32;t[i]=(char)(c=='/'?'\\':c);if(!c)break;}
- n=strlen(s);if(n<10)return 0;memcpy(s+n-10,"KEYSTG.$$$",11);memcpy(b+n-10,"KEYBAK.$$$",11);
+ n=strlen(s);if(n<10)return 0;
+#ifdef META_EDITOR_BANK
+ /* The transient bank must not add resident string storage. These leaves
+  * travel with its code, so copying them requires explicit far sources. */
+ {static const char __based(__segname("_CODE")) stage[]="KEYSTG.$$$";
+ static const char __based(__segname("_CODE")) backup[]="KEYBAK.$$$";
+ _fmemcpy(s+n-10,stage,11);_fmemcpy(b+n-10,backup,11);}
+#else
+ memcpy(s+n-10,"KEYSTG.$$$",11);memcpy(b+n-10,"KEYBAK.$$$",11);
+#endif
  return strcmp(t,s) && strcmp(t,b);
 }
 unsigned __cdecl key_editor_file_paths(const char *target,char *stage,char *backup)

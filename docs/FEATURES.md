@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Separate-CS Meta editor bank](META_EDITOR_BANK.md) passes the direct DOS kernel
+and fault-injection workflows: 166 ABI/file/DTA checks, 3,069 workflow assertions
+and 981 fatal-owner assertions. A 52-file source-only export reproduces both
+executables exactly. The calculated product payload is 21,475 bytes with zero
+DGROUP additions; the default controller EXE remains byte-identical. Production
+parent bindings/loading, Alt-M/adoption and connected acceptance remain open.
+
 [Composed Meta Keys editor](META_EDITOR_FLOW.md) combines dialog/name/picker,
 DOS search and file ownership into one serviced controller with a closed-lease
 proposal. The normal/fatal DOS runs pass 3,069/981 assertions; nine actual VGA
