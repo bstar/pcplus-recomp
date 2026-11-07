@@ -14,7 +14,7 @@ from directory_fixtures import prm
 from test_directory_key_bindings_dos import actions
 from build_path_session import ROOT, sha
 sys.path.insert(0, str(ROOT / 'src/aspect'))
-from compiler import compile_source
+from compiler import compile_source, EMULATIONS
 
 
 def main():
@@ -38,7 +38,9 @@ def main():
     parser.add_argument('--held-streams',action='store_true',help='Keep six buffered streams across each FIRST child, including PROGRAM WAIT')
     parser.add_argument('--emulate-profile-switch',action='store_true',help='Execute VT220 then ANSI through actual native EMULATE and matching parent RPC')
     parser.add_argument('--clock-queries',action='store_true',help='Query local DATE/TIME strings across each FIRST child and save a clock trace')
+    parser.add_argument('--emulate-reject',choices=[n for n,v in EMULATIONS.items() if v not in (4,6)],help='Actual native unsupported selector error followed by three clean scripts in the same terminal')
     args = parser.parse_args()
+    if args.emulate_reject:assert args.emulate_profile_switch and args.exit_watch and not args.nested_program and not args.lease_fault_phase
     assert not args.nested_graphics or args.nested_program
     if args.streams_around_child:assert args.nested_program and not args.lease_fault_phase
     if args.nested_wait:assert args.nested_graphics and not args.lease_fault_phase and not args.inner_screen
@@ -192,6 +194,11 @@ mode_opened:
         files['FAULT.ASX']=files['FIRST.ASX']
         keys[:54]=struct.pack('<H',0)+b'D:\\FAULT.ASX'.ljust(52,b'\0')
         keys[3*54:4*54]=struct.pack('<H',0)+b'D:\\FIRST.ASX'.ljust(52,b'\0')
+    if args.emulate_reject:
+        text='proc main\ntransmit "REJECTBEGIN^M"\nemulate '+args.emulate_reject+'\ntransmit "REJECTBAD^M"\nendproc\n'
+        (out/'REJECT.ASP').write_text(text);files['REJECT.ASX']=compile_source(text)
+        keys[:54]=struct.pack('<H',0)+b'D:\\REJECT.ASX'.ljust(52,b'\0')
+        keys[3*54:4*54]=struct.pack('<H',0)+b'D:\\FIRST.ASX'.ljust(52,b'\0')
     files['ACTIONS.KEY'] = bytes(keys)
     if args.exit_watch:
         import aspect_exit_watch
@@ -213,7 +220,7 @@ mode_opened:
         exec(compile(source.replace('len(screen)==4000','len(screen)==8000'),harness.__file__,'exec'),harness.__dict__)
     label = out.name
     schedule='p900 enter p3500 a-1 p1300 a-2 p1300 a-3 p1300 a-1 p1300 r e a d y enter p700 a-x'
-    if args.lease_fault_phase:schedule=schedule.replace('a-3 p1300 a-1','a-3 p1300 a-4')
+    if args.lease_fault_phase or args.emulate_reject:schedule=schedule.replace('a-3 p1300 a-1','a-3 p1300 a-4')
     if args.nested_wait:
         schedule=schedule.replace('a-1 p1300',f'a-1 p700 {args.nested_wait} p600')
     result = harness.run(label, 'success',
@@ -222,10 +229,10 @@ mode_opened:
         com=3, irq=5, cpu=args.cpu, working_drive='d', timeout=30, files=files,
         observer='SSWATCH' if args.inner_screen else 'EWATCH' if args.exit_watch else None,
         observer_high=args.exit_watch_high or args.inner_screen,
-        online_triggers=((b'PROFILE4\r',b'\x1b[0cACK4'),(b'PROFILE6\r',b'\x1b[0cACK6'))*2 if args.emulate_profile_switch else ())
+        online_triggers=((b'PROFILE4\r',b'\x1b[0cACK4'),(b'PROFILE6\r',b'\x1b[0cACK6'))*(1 if args.emulate_reject else 2) if args.emulate_profile_switch else ())
     drive = ROOT / 'build/connection-dos' / label
     wire = (drive / 'serial.bin').read_bytes()
-    checks = dict(result['checks'], four_calls=wire.count(b'FIRSTOK\r') == 2,
+    checks = dict(result['checks'], four_calls=wire.count(b'FIRSTOK\r') == (1 if args.emulate_reject else 2),
                   all_six_streams=b'SIXOK\r' in wire,
                   missing_and_recovered=b'MISSINGOK\rRECOVEROK\r' in wire,
                   keyboard_after_scripts=wire.endswith(b'ready\r+++ATH\r'),
@@ -238,7 +245,7 @@ mode_opened:
         # prove each actual parent profile rather than trusting script success.
         checks.pop('immediate_banner_not_dropped')
         checks['initial_banner_cursor_before_reset']=b'\x1b[1;16R' in wire.split(b'PROFILE4\r',1)[0]
-        checks['both_profile_DA_pairs']=wire.count(b'PROFILE4\r\x1b[?62;2cPROFILE6\r\x1b[?1;2c')==2
+        checks['both_profile_DA_pairs']=wire.count(b'PROFILE4\r\x1b[?62;2cPROFILE6\r\x1b[?1;2c')==(1 if args.emulate_reject else 2)
         viewport_cells=(args.display_rows-1)*80
         checks['profile_reset_replaces_old_view']=((drive/'SCREEN.BIN').read_bytes()[:viewport_cells*2]==b''.join(bytes([c,7]) for c in b'ACK6'.ljust(viewport_cells,b' ')))
     if args.clock_queries:
@@ -295,6 +302,16 @@ mode_opened:
                 ['error','cleanup_error','external_scope','display_owned','program_busy','process_busy'])
             report['wait_reads']=records
             report['passed']=all(checks.values())
+    if args.emulate_reject:
+        exits=report['exit_watch']['exits']
+        checks['actual_native_EMULATE_error3']=len(exits)==4 and exits[0]['error']==3 and exits[0]['opcode']==0x2f
+        checks['unsupported_stops_before_next_statement']=wire.count(b'REJECTBEGIN\r')==1 and b'REJECTBAD' not in wire
+        checks['three_later_scripts_clean']=len(exits)==4 and all(e['error']==0 for e in exits[1:])
+        checks['all_native_owners_retired']=len(exits)==4 and all(e[k]==0 for e in exits for k in ['cleanup_error','external_scope','display_owned','program_busy','process_busy'])
+        checks['all_exit_DS_equals_SS']=len(exits)==4 and all(e['ds']==e['ss']!=0 for e in exits)
+        report['emulate_reject']=dict(name=args.emulate_reject,selector=EMULATIONS[args.emulate_reject])
+        report['scope']+=' Real native opcode2F unsupported error3; six streams, missing-file recovery and successful VT220/ANSI switch in the same parent lifetime. No injected product failure or cleanup result.'
+        report['passed']=all(checks.values())
     if args.nested_wait:
         report['nested_wait']=args.nested_wait
         report['scope']+=' PROGRAM WAIT consumes actual BIOS '+args.nested_wait+' after graphics return; this is not ASPECT cancellation.'

@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[EMULATE guard and recovery checks](ASPECT_EMULATE_GUARDS.md) add52 linked parent
+admission cases,59 linked child guard cases and two actual DOS native-error
+recovery runs (32 checks each,386/8086). Unsupported EMULATE returns error3;
+three later scripts and actual VT220/ANSI replies recover in the same parent.
+Bridge/modal/WHEN/fatal-reset, latency, current BBS/package and physical gates
+remain open. Application bytes and installation are unchanged.
+
 [Shared client EMULATE funding](ASPECT_EMULATE_SHARED.md) resolves the combined
 capacity failure below: actual profile changes plus six-stream/nested-child
 workflows pass 30 checks on 386 and 29 on 8086. The interpreter saves 208 bytes;
