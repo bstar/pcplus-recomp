@@ -4,10 +4,11 @@ import argparse,json,shutil,subprocess,sys
 from pathlib import Path
 from build_context_help import ROOT,sha
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--chat-help',action='store_true');p.add_argument('--aspect-alarm-policy',action='store_true');a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--chat-help',action='store_true');p.add_argument('--aspect-alarm-policy',action='store_true');p.add_argument('--aspect-emulate-policy',action='store_true');a=p.parse_args();assert not a.aspect_emulate_policy or a.aspect_alarm_policy;out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  flags=json.loads((ROOT/'standalone/chat_redisplay_profile.json').read_text())+['--global-help']
  if a.chat_help:flags+=['--chat-help']
  if a.aspect_alarm_policy:flags+=['--aspect-alarm-policy']
+ if a.aspect_emulate_policy:flags+=['--aspect-emulate-policy']
  subprocess.run([sys.executable,str(ROOT/'standalone/build_terminal.py'),'--output-dir',str(out),*flags],check=True)
  subprocess.run([sys.executable,str(ROOT/'standalone/build_help_program.py'),'--output',str(out/'help-build')],check=True)
  shutil.copyfile(out/'help-build/PCHELP.RTE',out/'PCHELP.RTE')

@@ -23,6 +23,15 @@ def render_capability(binary):
     at=code.index(signature)+4;assert at+2<=len(code)
     return struct.unpack_from('<H',code,at)[0]
 
+def validate_render_pair(capability,terminal,child):
+    """Bind the published contract to both compiled product selections."""
+    emulate=bool(child.get('experimental_emulate_VM'))
+    assert (capability==20)==emulate,'Published parent capability and EMULATE interpreter must match'
+    assert bool(terminal.get('experimental_aspect_emulate_policy'))==emulate,'EMULATE parent policy and interpreter must match'
+    assert (capability in (19,20))==bool(child.get('experimental_alarm_VM')),'Published parent capability and ALARM interpreter must match'
+    if emulate:
+        assert terminal.get('experimental_aspect_snapshot_lease') and child.get('experimental_snapshot_lease'),'EMULATE requires matching snapshot leases'
+
 def packed_guide(directory):
     return dos_text(
         'PROCOMM PLUS / LoC SPECIAL EDITION - CONNECTION TEST\n\n'
@@ -85,7 +94,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         manifests[leaf]=m;identities[leaf]={'folder':str(binary.parent.relative_to(ROOT/'build')),'manifest_sha256':sha(path),'binary_sha256':sha(binary)}
     terminal=manifests['TERMINAL.EXE']
     capability=render_capability(products['TERMINAL.EXE'].resolve())
-    assert (capability==19)==bool(manifests['ASPECT.EXE'].get('experimental_alarm_VM')),'Published parent capability and ALARM interpreter must match'
+    validate_render_pair(capability,terminal,manifests['ASPECT.EXE'])
     companions,companion_sources=terminal_companions(products['TERMINAL.EXE'],terminal)
     for n,h in companion_sources.items():assert sources.get(n,h)==h;sources[n]=h
     assert terminal.get('special_edition') and terminal.get('experimental_original_reference') and terminal.get('experimental_phone_log_controls') and terminal.get('experimental_status_geometry')
@@ -165,6 +174,13 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
                 'Omitting it uses the saved duration; sound follows saved settings.\n'
                 'An explicit duration is temporary. Press a key to end the alert.\n'
                 'The complete original ASPECT language remains under reconstruction.\n'))
+    if manifests['ASPECT.EXE'].get('experimental_emulate_VM'):
+        with (payload/'README.TXT').open('ab') as guide:
+            guide.write(dos_text('\nASPECT EMULATE: ANSI and VT220 are available.\n'
+                'A successful switch resets the display, modes and keyboard map.\n'
+                'Other named profiles compile but return an unsupported error.\n'
+                'An explicit keyboard file must remain available during scripts.\n'
+                'The parent and interpreter must be updated together.\n'))
     for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
     record={'kind':'source-built-special-edition-package','source_base_commit':revision,'dos_directory':dos_directory,'products':identities,'sources':sources,
         'files':{p.name:sha(p) for p in sorted(payload.iterdir())},'original_inputs':[],
@@ -179,6 +195,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE'):
         'experimental_directory_resource_owner':bool(terminal.get('experimental_directory_resource_owner')),'experimental_phone_log_controls':True,'experimental_status_geometry':True,
         'authored_help_sha256':help_record['sha256'],'card_written':False,'validation':'Staged only; requires separate DOS/package and hardware acceptance.'}
     record.update(parent_render_capability=capability,experimental_alarm_VM=bool(manifests['ASPECT.EXE'].get('experimental_alarm_VM')))
+    if manifests['ASPECT.EXE'].get('experimental_emulate_VM'):record['experimental_emulate_VM']=True
     if terminal.get('experimental_path_control') or terminal.get('experimental_gateway_frontend'):
         record.update(experimental_path_control=bool(terminal.get('experimental_path_control')),experimental_gateway_frontend=bool(terminal.get('experimental_gateway_frontend')))
     if terminal.get('experimental_file_directory'):

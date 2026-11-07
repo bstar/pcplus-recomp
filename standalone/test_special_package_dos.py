@@ -63,6 +63,8 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     new_commands=precompile and manifest.get('experimental_alarm_VM',False)
     if new_commands:
         source=source.replace('proc main\n','proc main\nalarm 0\ndate s0\ntime s1 1\n',1)
+    emulate=precompile and manifest.get('experimental_emulate_VM',False)
+    if emulate:source=source.replace('proc main\n','proc main\nemulate vt220\nemulate ansi\n',1)
     (app / 'TEST.ASP').write_text(source, encoding='ascii')
     (app / 'ACTIONS.KEY').write_bytes(actions((dos_root+('\\TEST.ASX' if precompile else '\\TEST.ASP')).encode('ascii'), 0))
     sampler = SAMPLER.replace('D:\\', 'C:\\')
@@ -156,6 +158,7 @@ def run(package, out, setup=False, splash_only=False,irq=None,com=2,after_child_
     result = dict(passed=True, launcher=launcher, dos_directory=dos_directory,cpu='8086', port=com, io_base=base, resident_observer=observe,
                   irq=irq, precompiled_before_terminal=precompile, bios_port_omitted=bios_absent,chat_help=chat_help,
                   packaged_ASPECT_clock_alarm_exercised=new_commands,
+                  packaged_ASPECT_EMULATE_exercised=emulate,
                   package_manifest_sha256=sha(package / 'manifest.json'),
                   package_files=manifest['files'],
                   private_fixture_sha256={leaf:sha(app/leaf) for leaf in fixtures},
