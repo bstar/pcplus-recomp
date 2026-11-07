@@ -1,0 +1,99 @@
+{
+  "checkpoint_verified": true,
+  "application_integrated": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "cases": 1527,
+  "key_states": 25873,
+  "API_guards": 20,
+  "state_bytes": 104,
+  "diagnostic_sha256": "7ed874c6afade99fc87a0405c8f0197f7057233957056186e7d9ab046f793c78",
+  "source_export_files": 6,
+  "original_inputs": [],
+  "sources": {
+    "standalone/build_aspect_get_field.py": "bc5e7c342c2121d4d76b711003f1db225cec51b65eeb976f462ecf58a89c258c",
+    "standalone/aspect_get_field_driver.c": "df8d0efd519b8a075934fa7e1ee92054e800b14efd38d93c16b20b7b81e8456d",
+    "standalone/meta_text_padding.asm": "671b607baa748a70139f86f5de5ad8a9b26aa5c09c605a26f82c9bb3bffae6e9",
+    "standalone/fixtures/aspect_get_field_native.json": "f6adfdf618f39f3484dc20acd8b60975180755c93b3b597e158aae2181b6c3b1",
+    "src/aspect/get_field.c": "a1c3c7b41e79a9c89bc4a630c0a1d898eed9c2fa2b23d339984a945d4632ebf9",
+    "src/aspect/get_field.h": "188d44f614128129a66dcedcfb138cdc8366bbe9c0badae9cd5350df2a448a31",
+    "standalone/capture_aspect_get_field_original.py": "db6667fecec8c6644a3ef1bb9990208330c8419824d67d27a7df1f8874e04aa2",
+    "standalone/prove_aspect_get_field.py": "7ae5b6e9afa80b19350dcb5a511dc9889a32722f0e8e4920bb5902ca0fa70f07",
+    "docs/ASPECT_GET.md": "26e7dd4a04c47d526e6c2f4b5af7e25871c68175ca2666c806476735d7607cbc"
+  },
+  "native_authority": {
+    "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+    "native_ranges": [
+      {
+        "start": 31188,
+        "end_exclusive": 32018,
+        "source_file_offset": 35796,
+        "sha256": "8de5a03982283d2bf2a2f575e8fec5c815fcdd4827961b12168041dafdd3d2b5"
+      },
+      {
+        "start": 16284,
+        "end_exclusive": 16304,
+        "source_file_offset": 20892,
+        "sha256": "d5b89e1e4db8aeb2e0a83249c15be1bf8bd381f516984abf8890350e996f1e99"
+      },
+      {
+        "start": 62585,
+        "end_exclusive": 62646,
+        "source_file_offset": 118313,
+        "sha256": "969350ccacf1d5139d116a861e4e3497914bd7322cb3ad4228127307cd1bed1a"
+      }
+    ],
+    "REA_field": "ev_431892296f1a449f84b3ca459253ec00d76f549853cc34941ca685b228e8a5eb",
+    "scope": "Actual original79D4/3F9C/F479 and original CRT instructions; synthetic separate initial/output buffers, widths1..81, masked/unmasked and numeric/string callbacks. Keyboard/display/cursor/visibility/bell services modeled. No BIOS/VGA/UART, conversions, GET owner, runtime or physical acceptance."
+  },
+  "evidence": {
+    "build/aspect-get-field-final-20261107/result.json": {
+      "passed": true,
+      "original_inputs": [],
+      "binary_sha256": "7ed874c6afade99fc87a0405c8f0197f7057233957056186e7d9ab046f793c78",
+      "cases": 1527,
+      "key_states": 25873,
+      "API_guards": 20,
+      "state_bytes": 104,
+      "separate_code_segment": true,
+      "data_equals_stack": true,
+      "cpu": "8086",
+      "sources": {
+        "standalone/build_aspect_get_field.py": "bc5e7c342c2121d4d76b711003f1db225cec51b65eeb976f462ecf58a89c258c",
+        "standalone/aspect_get_field_driver.c": "df8d0efd519b8a075934fa7e1ee92054e800b14efd38d93c16b20b7b81e8456d",
+        "standalone/meta_text_padding.asm": "671b607baa748a70139f86f5de5ad8a9b26aa5c09c605a26f82c9bb3bffae6e9",
+        "standalone/fixtures/aspect_get_field_native.json": "f6adfdf618f39f3484dc20acd8b60975180755c93b3b597e158aae2181b6c3b1",
+        "src/aspect/get_field.c": "a1c3c7b41e79a9c89bc4a630c0a1d898eed9c2fa2b23d339984a945d4632ebf9",
+        "src/aspect/get_field.h": "188d44f614128129a66dcedcfb138cdc8366bbe9c0badae9cd5350df2a448a31"
+      },
+      "scope": "Actual source-built DOS8086 memory-only far GET field API against frozen original-instruction traces. Callback, string/field mutation, cursor position/shape and bell counts; peripheral UI services were modeled in the original oracle. No original executable build input, typed conversion/GET owner, runtime/compiler integration, UART, physical or application capacity acceptance.",
+      "receipt_sha256": "6d235d8bc9a988c3e125504f17369cc192a17c74a98ca42a139fd9ce169c913d"
+    },
+    "build/aspect-get-field-source-20261107/result.json": {
+      "passed": true,
+      "sources": {
+        "standalone/build_aspect_get_field.py": "bc5e7c342c2121d4d76b711003f1db225cec51b65eeb976f462ecf58a89c258c",
+        "standalone/aspect_get_field_driver.c": "df8d0efd519b8a075934fa7e1ee92054e800b14efd38d93c16b20b7b81e8456d",
+        "standalone/meta_text_padding.asm": "671b607baa748a70139f86f5de5ad8a9b26aa5c09c605a26f82c9bb3bffae6e9",
+        "standalone/fixtures/aspect_get_field_native.json": "f6adfdf618f39f3484dc20acd8b60975180755c93b3b597e158aae2181b6c3b1",
+        "src/aspect/get_field.c": "a1c3c7b41e79a9c89bc4a630c0a1d898eed9c2fa2b23d339984a945d4632ebf9",
+        "src/aspect/get_field.h": "188d44f614128129a66dcedcfb138cdc8366bbe9c0badae9cd5350df2a448a31"
+      },
+      "source_count": 6,
+      "binary_sha256": "7ed874c6afade99fc87a0405c8f0197f7057233957056186e7d9ab046f793c78",
+      "cases": 1527,
+      "key_states": 25873,
+      "original_inputs": [],
+      "ancestor_git_unavailable": true,
+      "scope": "Repeat serviced GET field tests from an isolated minimal public source tree. Frozen synthetic native traces, six public sources only; no originals/private files/prior objects/Git metadata. Outer pinned Nix supplies tools. Exact executable and complete DOS replay report match; no terminal or physical acceptance.",
+      "receipt_sha256": "ca1be321d13cea73a7dee6f5172521eced36f54eaddfd5c9f025fd8a872c5a46"
+    }
+  },
+  "limitations": [
+    "Memory-only field model checked against original instructions with modeled peripheral services; no actual VGA, BIOS, UART or physical acceptance.",
+    "Maintained safety guards restrict width1..81 and initial length<=width, unlike the unbounded original; runtime screen/destination validation remains open.",
+    "Typed GET owner/conversions/cancel dispatch, runtime/compiler integration, live traffic, application residency and package/BBS composition remain open.",
+    "No selected package, installed files or user private configuration changed."
+  ]
+}

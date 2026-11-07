@@ -46,8 +46,8 @@ complete output without originals or ancestor Git metadata.
 Next work is the full input owner, rather than making the compiler emit a
 command that the runner cannot execute:
 
-1. Recover field79D4 and its callback/keyboard/cursor ABI, including limits,
-   editing and cancellation behavior.
+1. Bind the serviced field described below to the real display, keyboard and
+   cursor services; validate limits at the owner boundary.
 2. Bind the recovered typed readers/writeback/converters and field buffer to
    the maintained runtime, with serviced UART/carrier and owner boundaries.
 3. Add host and DOS compiler grammar matching the frozen oracle, then wire49.
@@ -61,4 +61,62 @@ command that the runner cannot execute:
   --output build/my-get-native
 ./tools/dev --command python standalone/prove_aspect_get_native.py \
   --build build/my-get-native --output build/my-get-source
+```
+
+## Serviced field checkpoint
+
+The earlier [Meta Keys field recovery](META_TEXT_MODEL.md) supplied the shared
+79D4 editing rules. GET uses different callbacks: string callback3F9C returns99
+on Enter, causing the editor to return the trimmed length; numeric callbackF479
+returns zero on Enter. Tab and Shift-Tab do not accept GET. String Tab becomes a
+raw field byte, whereas the numeric callback rejects it with a bell. Escape
+returnsFFFF without copying the working field into the destination.
+
+REA analysis of the identified original executable confirms the seven-word
+field ABI, separate initial/output pointers, masking and cursor handling. The
+explicit [original replay](../standalone/capture_aspect_get_field_original.py)
+executes original79D4, both callbacks and original CRT instructions with
+synthetic buffers. Display, keyboard, cursor visibility/position and bell calls
+are modeled services. The
+[frozen traces](../standalone/fixtures/aspect_get_field_native.json) cover1,527
+cases and25,873 pre-key states: widths1,2,10,50,80,81; empty/prefilled and separate
+buffers; both callbacks; masked/unmasked display; visible/hidden saved cursors;
+all byte keys; editing, full-latch and deterministic mixed-key sequences.
+These are instruction/service-boundary observations, not actual VGA or UART
+observations. The callback's all65,536-word filter proof remains separate.
+
+[get_field.c](../src/aspect/get_field.c) provides a104-byte caller-owned state
+with explicit far begin/key/render/commit/shape/visibility functions. Each key
+returns to the caller, allowing the future runtime owner to service traffic
+between keys. It allocates nothing and performs no DOS, BIOS, UART or file IO.
+The DOS8086 diagnostic compares every recorded frame, cursor, shape, visibility,
+bell count, final result and all82 output bytes, including preserved suffixes.
+Initial data remains unchanged. Twenty API guards cover invalid widths/flags,
+unterminated/oversized initial data, overlap/segment aliases, wrapping spans,
+invalid states and premature commit. A diagnostic-only64-KiB pad forces separate
+code segments; DS=SS is checked. A six-input isolated public-source rebuild
+reproduces the exact EXE and result without originals or ancestor Git metadata.
+The [field receipt](validation/aspect-get-field.json) binds these checks.
+
+Widths1..81 and initial length no greater than width are maintained safety
+guards, not recovered original validation. The original field has82-byte local
+arrays and does not adequately validate arbitrary compiler-accepted widths or
+initial lengths. No safe behavior is claimed for the original with zero,
+negative or oversized widths. The source API requires82-byte source/output
+buffers; the runtime still needs to validate actual destination capacity and
+screen placement. In small-model DOS callers, a conditional optional source
+must use explicitly far pointer branches: converting a conditional near NULL
+can produce DS:0000 instead of the required0000:0000. The test harness exercises
+both genuine NULL and non-NULL empty initial buffers.
+
+This closes the memory-only field component checkpoint. Full GET owner bindings,
+numeric conversions, cancellation dispatch, serviced live IO, both compilers,
+runtime dispatch, memory/package gates and BBS composition remain open. Nothing
+here changes the reviewed package, deployment selector or physical machine.
+
+```sh
+./tools/dev --command python standalone/build_aspect_get_field.py \
+  --output build/my-get-field
+./tools/dev --command python standalone/prove_aspect_get_field.py \
+  --build build/my-get-field --output build/my-get-field-source
 ```
