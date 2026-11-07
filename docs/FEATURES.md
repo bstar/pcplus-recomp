@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[ALARM duration policy and completion keys](ASPECT_ALARM_POLICY.md) now pass six
+additional actual-parent cases: omitted/zero/override durations, subsequent
+configured defaults, and Escape/printable/F1 completion of32767-count alerts.
+Keys do not leak to the peer, receive queries stay responsive and parent input
+resumes. This does not prove full-duration budgets or directly observe the
+child's intermediate duration word. Sound, malformed operands and carrier/error
+cleanup remain open. Application products and installation are unchanged.
+
 [ALARM numeric groups](ASPECT_ALARM_GROUPS.md) resolve the held-stream/nested-
 child capacity failure below: all27 checks on386 and26 on8086 now pass with
 unchanged capacities. The full1123-case VM diagnostic, five actual-parent

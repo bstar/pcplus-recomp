@@ -81,6 +81,10 @@ fixture attempts are retained as failed attempts, not accepted gates.
 
 ## Remaining acceptance
 
+The subsequent [policy/key checkpoint](ASPECT_ALARM_POLICY.md) covers omitted,
+zero and override durations and three actual BIOS completion-key cases on these
+same products. Its evidence and limits supersede those portions of the list below.
+
 Expand full-VM ALARM coverage for default and invalid operands, temporary policy
 restoration, early keys, sound, long-duration service budgets and carrier/error
 cleanup. Packaging, physical tests and the remaining feature inventory are

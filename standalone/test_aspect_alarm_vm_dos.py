@@ -13,6 +13,7 @@ def main():
  parser=argparse.ArgumentParser(add_help=False)
  parser.add_argument('--parent-dir',type=Path,default=PARENT)
  parser.add_argument('--child-dir',type=Path,default=CHILD)
+ parser.add_argument('--variant',choices=('when','policy','keys'),default='when')
  selected,remaining=parser.parse_known_args();sys.argv=[sys.argv[0],*remaining]
  PARENT=selected.parent_dir.resolve();CHILD=selected.child_dir.resolve()
  assert PARENT.is_relative_to(ROOT/'build') and CHILD.is_relative_to(ROOT/'build')
@@ -40,11 +41,26 @@ def main():
  exec(compile(adapter_text,str(Path(__file__)),'exec'),keys.__dict__)
  def definitions():
   rows=original()
+  if selected.variant!='when':
+   template=next(r for r in rows if r['name']=='pause-when-plain-terminal')
+   rows=[]
+   variants=(('default','alarm',3,5),
+             ('zero-default','alarm 0\ntransmit "FIRSTDONE"\nalarm',3,5),
+             ('override-default','alarm 2\ntransmit "FIRSTDONE"\nalarm',4,7)) if selected.variant=='policy' else tuple(
+             (name,'alarm 32767',1,7) for name in ('escape','printable','extended'))
+   for name,command,low,high in variants:
+    row=dict(template,name='pause-when-'+selected.variant+'-'+name,
+             source=template['source'].replace('pause 4',command),expected_min=low,expected_max=high)
+    if 'FIRSTDONE' in command:row['key_wire']=row['key_wire'].replace(b'keys',b'keysFIRSTDONE',1)
+    rows.append(row)
   rows=[r for r in rows if r['name']!='pause-when-future-wait']
   for row in rows:
    row['name']=row['name'].replace('pause-when','alarm-vm')
    row['source']=row['source'].replace('pause 4','alarm 4')
    row['keys']='p900 enter p14000 space p700 r e a d y p700 a-x'
+   if selected.variant=='keys':
+    key={'escape':'escape','printable':'x','extended':'f1'}[row['name'].rsplit('-',1)[1]]
+    row['keys']='p900 enter p5000 '+key+' p3000 space p700 r e a d y p700 a-x'
    assert row['key_wire'].startswith(b'keys') and row['key_wire'].endswith(b'done')
    row['key_wire']=row['key_wire'][4:-4]
    row['no_window']=True
@@ -59,7 +75,39 @@ def main():
  exec(compile(text,str(Path(__file__)), 'exec'),keys.__dict__)
  scope=dict(pause.__dict__);scope['definitions']=definitions;scope['BASE']=ROOT/'build/aspect-alarm-vm-dos'
  text=inspect.getsource(pause.main).replace("4 <= elapsed <= 5", "3 <= elapsed <= 5").replace("ROOT / 'build/terminal/terminal.map'", "Path("+repr(str(PARENT/'terminal.map'))+")").replace("ROOT / 'build/aspect-runner/ASPECT.map'", "Path("+repr(str(CHILD/'ASPECT.map'))+")")
+ if selected.variant!='when':
+  text=text.replace('3 <= elapsed <= 5',"spec['expected_min'] <= elapsed <= spec['expected_max']")
+ if selected.variant=='policy':
+  # Place the receive query inside the configured default, after both the
+  # zero and two-count first alerts. Freeze wire ordering before execution.
+  old="(3.0, specs[args[0]]['marker'] + QUERY)"
+  assert text.count(old)==1
+  text=text.replace(old,"(4.5, specs[args[0]]['marker'] + QUERY)")
  exec(compile(text,str(Path(__file__)),'exec'),scope);scope['main']()
  report=ROOT/'build/aspect-alarm-vm-dos'/sys.argv[sys.argv.index('--label')+1]/'pause-checks.json'
  assert json.loads(report.read_text())['passed'], 'ALARM VM acceptance remains unproven; inspect preserved captures'
+ if selected.variant=='policy':
+  result=json.loads(report.read_text());checks=[]
+  for case in result['cases']:
+   if 'default' not in case['case'] or case['case'].endswith('policy-default'):continue
+   target=report.parent/case['case'];events=json.loads((target/'peer-events.json').read_text())
+   received=b'';first=done=None
+   for event in events:
+    if event['kind']!='receive':continue
+    received+=bytes.fromhex(event['hex'])
+    if first is None and b'FIRSTDONE' in received:first=event['time']
+    if done is None and b'PAUSEDONE' in received:done=event['time']
+   delay=None if first is None or done is None else done-first
+   hold=next(e['time'] for e in events if e['kind']=='send' and e['hex']==b'HOLD'.hex())
+   check=dict(case=case['case'],configured_default_after_override_seconds=delay,
+              configured_default_observed=delay is not None and 3<=delay<=5,
+              first_alert_seconds=None if first is None else first-hold)
+   if 'zero-default' in case['case']:check['zero_returns_without_second_wait']=first is not None and 0<=first-hold<=1
+   check['passed']=check['configured_default_observed'] and check.get('zero_returns_without_second_wait',True)
+   checks.append(check)
+  assert len(checks)==2
+  policy=dict(passed=all(c['passed'] for c in checks),cases=checks,
+              scope='Actual parent policy reread after explicit overrides. Native wrapper restoration itself remains separately established by the exact-byte controller tests; this timing check does not sample the child duration word between commands.')
+  (report.parent/'policy-checks.json').write_text(json.dumps(policy,indent=2)+'\n')
+  assert policy['passed'],policy
 if __name__=='__main__':main()
