@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Alt-P capacity diagnosis](LINE_PORT_CAPACITY.md) observes DOS refusing an
+ASPECT block resize: the immediate request exceeds the maximum by 496 bytes.
+The unchanged control passes 30 checks with the same high-loaded passive
+observer and shows successful growth at least 7,152 bytes beyond that maximum.
+The trace has a finite 16-record limit; these diagnostic observations do not
+replace ordinary 8086 acceptance or fix the candidate. Default observer bytes,
+application binaries and installation remain unchanged.
+
 [Experimental live Alt-P](LINE_PORT_LIVE.md) connects the original selector,
 serviced popup, checked PRM prefix save and UART handoff. Ten DOS8086 sessions
 pass 257 checks, an offline port move passes 17, and a 689-file public-source

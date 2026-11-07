@@ -27,6 +27,7 @@ def main():
     parser.add_argument('--nested-wait',choices=['space','escape'],help='Real PROGRAM WAIT continued by this BIOS key; Escape is a continue key, not script cancellation')
     parser.add_argument('--display-rows',type=int,choices=[25,28,43,50],default=25)
     parser.add_argument('--exit-watch',action='store_true',help='Install a small passive diagnostic TSR; separate memory footprint from ordinary acceptance')
+    parser.add_argument('--heap-resize-watch',action='store_true',help='Also observe DOS AH=4A requests and pre-request MCB sizes; requires exit observer')
     parser.add_argument('--exit-watch-high',action='store_true',help='Require the passive observer to reside in UMB')
     parser.add_argument('--cpu',choices=['8086','386'],default='8086')
     parser.add_argument('--program-result-probe',action='store_true',help='Explicitly admit only the marked PROGRAM-result diagnostic interpreter')
@@ -41,6 +42,7 @@ def main():
     parser.add_argument('--emulate-reject',choices=[n for n,v in EMULATIONS.items() if v not in (4,6)],help='Actual native unsupported selector error followed by three clean scripts in the same terminal')
     parser.add_argument('--emulate-when',action='store_true',help='Run profile changes and optional rejection inside a real deferred WHEN worker')
     args = parser.parse_args()
+    if args.heap_resize_watch:assert args.exit_watch
     if args.emulate_when:assert args.emulate_profile_switch and args.exit_watch and not args.lease_fault_phase
     if args.emulate_reject:assert args.emulate_profile_switch and args.exit_watch and not args.nested_program and not args.lease_fault_phase
     assert not args.nested_graphics or args.nested_program
@@ -211,7 +213,7 @@ mode_opened:
     files['ACTIONS.KEY'] = bytes(keys)
     if args.exit_watch:
         import aspect_exit_watch
-        sources.update(aspect_exit_watch.build(binary,runner,out/'EWATCH.COM',wait=bool(args.nested_wait)))
+        sources.update(aspect_exit_watch.build(binary,runner,out/'EWATCH.COM',wait=bool(args.nested_wait),resize=args.heap_resize_watch))
         files['EWATCH.COM']=(out/'EWATCH.COM').read_bytes()
     if args.inner_screen:
         import snapshot_screen_watch
@@ -308,6 +310,7 @@ mode_opened:
         report['exit_watch']=aspect_exit_watch.read(drive/'EXITSTAT.BIN')
         report['observer_sha256']=sha(out/'EWATCH.COM')
         report['exit_watch_high']=args.exit_watch_high
+        report['heap_resize_watch']=args.heap_resize_watch
         assert not args.exit_watch_high or report['exit_watch']['resident_segment']>=0xa000
         report['scope']+=' Passive exit observer adds resident memory; diagnostic run, not an unobserved capacity proof.'
         if args.nested_wait:

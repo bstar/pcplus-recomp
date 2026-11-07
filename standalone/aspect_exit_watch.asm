@@ -14,8 +14,14 @@ wait_current: dw 0
 parent_ds: dw 0
 data: dw 0xae51,2,0,0,0
 records: times 8*13 dw 0
+%ifdef RESIZE_WATCH
+%define ALLOC_WORDS 15
+alloc_data: dw 0xa148,3,0
+%else
+%define ALLOC_WORDS 11
 alloc_data: dw 0xa148,2,0
-alloc_records: times 16*11 dw 0
+%endif
+alloc_records: times 16*ALLOC_WORDS dw 0
 alloc_current: dw 0
 %ifdef CHILD_BUFFER_OWNERS
 buffer_data: dw 0xbf18,1
@@ -38,6 +44,10 @@ hook:
  push es
  cmp ah,0x48
  je .allocate
+%ifdef RESIZE_WATCH
+ cmp ah,0x4a
+ je .allocate
+%endif
  cmp ax,0x4b00
  je .exec
  cmp ah,0x4c
@@ -167,6 +177,14 @@ hook:
  shl bx,1
  shl bx,1
  add di,bx ; index*22
+%ifdef RESIZE_WATCH
+ mov bx,[cs:alloc_data+4]
+ dec bx
+ shl bx,1
+ shl bx,1
+ shl bx,1
+ add di,bx ; index*30
+%endif
  add di,alloc_records
  mov [cs:alloc_current],di
  mov bp,sp
@@ -186,6 +204,29 @@ hook:
  mov [cs:di+18],ax
  mov ax,[CHILD_DOSERR]
  mov [cs:di+20],ax
+%ifdef RESIZE_WATCH
+ mov ax,[ss:bp+16] ; original AX: record the DOS request, not a guess
+ mov al,ah
+ xor ah,ah
+ mov [cs:di+22],ax
+ mov ax,[ss:bp] ; original ES: resized PSP block, when AH=4A
+ mov [cs:di+24],ax
+ mov word [cs:di+26],0xffff
+ mov word [cs:di+28],0xffff
+ cmp word [cs:di+22],0x4a
+ jne .resize_sampled
+ cmp ax,0x50
+ jb .resize_sampled
+ cmp ax,0xa000
+ jae .resize_sampled
+ dec ax
+ mov es,ax
+ mov ax,[es:3] ; MCB size before the predecessor handles the request
+ mov [cs:di+26],ax
+ mov ax,[es:1]
+ mov [cs:di+28],ax
+.resize_sampled:
+%endif
  pop es
  pop ds
  pop bp
@@ -443,12 +484,12 @@ collect:
  push es
  pop ds
  mov dx,alloc_data
- mov cx,6+16*22
+ mov cx,6+16*ALLOC_WORDS*2
  mov ah,0x40
  int 0x21
  pop ds
  jc failed
- cmp ax,6+16*22
+ cmp ax,6+16*ALLOC_WORDS*2
  jne failed
 %ifdef CHILD_RESULT
  push ds

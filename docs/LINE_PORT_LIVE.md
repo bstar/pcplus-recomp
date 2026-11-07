@@ -97,8 +97,10 @@ capture is not the evidence for this failure; the missing held file and paired
 control are.
 
 The candidate adds 9,040 minimum module bytes (488,544 versus 479,504). This
-establishes a capacity regression; the precise allocation failure mechanism
-still needs instrumentation. Compiler-size experiments saved only 16–256 bytes
+establishes a capacity regression. A separate
+[passive resize diagnostic](LINE_PORT_CAPACITY.md) now observes DOS refusing
+AH=4A with AX=8; mapping each request to its precise CRT owner remains open.
+Compiler-size experiments saved only 16–256 bytes
 and were reverted to the exact reviewed candidate. No stack, ring, stream count
 or file-buffer capacity was reduced. The next step is to reduce residency,
 potentially loading the popup code only while needed, and repeat the identical
@@ -111,13 +113,19 @@ The next residency change must satisfy these constraints:
 - Keep a small parent dispatcher and a distinct, versioned Line/Port callback
   descriptor. Loaded code must retain the parent DS=SS convention and validate
   its file/image identity before entry, as the Chat loader does.
-- Acquire storage without growing the parent's minimum allocation. The normal
-  popup already owns the redisplay underlay; Chat's snapshot lease refuses an
-  active command menu. Its arena cannot simply be reused under this popup.
-  Establish explicit ownership and underlay relocation before sharing storage.
+- Acquire storage without growing the parent's minimum allocation. In the
+  current redisplay source, Alt-P, Alt-Z and the browser enter as direct menus:
+  their history length is zero, so the 63,000-byte frozen snapshot is not
+  populated. The live/view underlays have separate storage. This makes the
+  snapshot a possible transient code arena without relocating those underlays.
+  Chat's existing lease still refuses an active command menu, so a distinct
+  lease must prove this direct-menu state rather than bypassing its guard.
+  File-viewer/path bindings must not access the borrowed region while leased.
 - Keep the canonical file claim and pending plan alive through PROGRAM kind12.
   Never overwrite executing module code, unload a pending save/handoff, or let
   a child reuse storage until the operation and every callback have retired.
+  Closing the visible menu does not retire a queued kind12 operation. A lease
+  therefore needs its own pending/active lifetime, not only redisplay_active.
 - On missing, truncated or mismatched module input, refuse the popup visibly
   and preserve UART traffic, owners and PRM bytes. Test reopening after failure.
 - Repeat the unchanged 257 UI checks, 17 move checks, paired ASPECT capacity

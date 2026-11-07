@@ -10,7 +10,7 @@ def symbols(path):
     return {n:(int(s,16),int(o,16)) for s,o,n in re.findall(
         r'^([0-9a-f]{4}):([0-9a-f]{4})[*+ ]+\s+(\w+)\s*$',path.read_text(),re.M|re.I)}
 
-def build(parent,runner,out,wait=False):
+def build(parent,runner,out,wait=False,resize=False):
     p=symbols(parent.with_name('terminal.map'));c=symbols(runner.with_name('ASPECT.map'))
     fields=dict(CHILD_ERROR='_runtime_error',CHILD_OPCODE='_runtime_last_opcode',
         CHILD_RAW='_runtime_external_raw_status',CHILD_CLEANUP='_runtime_external_cleanup_error',
@@ -23,6 +23,7 @@ def build(parent,runner,out,wait=False):
     values={name:c[symbol][1] for name,symbol in fields.items()}
     values.update(PARENT_DATA_SEG=p['terminal_program_kind'][0],
         PARENT_RENDER_SEG=p['render_child_ds'][0],PARENT_CHILD_DS=p['render_child_ds'][1])
+    if resize:values['RESIZE_WATCH']=1
     if wait:
         values.update(WAIT_WATCH=1,PARENT_PROGRAM=p['render_program_owned'][1],
             PARENT_SNAPSHOT=p['render_snapshot_owned'][1],
@@ -51,21 +52,24 @@ def read_wait(path):
     return [dict(zip(fields,struct.unpack_from('<10H',raw,6+i*20))) for i in range(count)]
 
 def read(path):
-    raw=path.read_bytes();assert len(raw) in (218,352,576,708)
+    raw=path.read_bytes();assert len(raw) in (218,352,576,708,704,836)
     magic,version,count,launches,segment=struct.unpack_from('<5H',raw)
     assert magic==0xae51 and version==2 and count<=8
     result=dict(launches=launches,resident_segment=segment,exits=[dict(zip(FIELDS,struct.unpack_from('<13H',raw,10+i*26))) for i in range(count)])
     if len(raw)>218:
         magic,version,count=struct.unpack_from('<3H',raw,218)
-        assert magic==0xa148 and version in (1,2) and count<=16
+        assert magic==0xa148 and version in (1,2,3) and count<=16
         names=['paragraphs','ax','bx','carry']
-        if version==2:names+=['near_calls','far_calls','backup_extent','display_owned','process_busy','native_errno','native_dos_error']
-        assert len(raw)==224+16*len(names)*2+(132 if len(raw)==708 else 0)
+        if version>=2:names+=['near_calls','far_calls','backup_extent','display_owned','process_busy','native_errno','native_dos_error']
+        if version==3:names+=['request_ah','target_es','mcb_paragraphs_before','mcb_owner_before']
+        has_result=len(raw) in (708,836)
+        assert len(raw)==224+16*len(names)*2+(132 if has_result else 0)
         result['allocations']=[dict(zip(names,struct.unpack_from('<'+str(len(names))+'H',raw,224+i*len(names)*2))) for i in range(count)]
-    if len(raw)==708:
-        assert struct.unpack_from('<2H',raw,576)==(0xb008,1)
+    if len(raw) in (708,836):
+        result_at=len(raw)-132
+        assert struct.unpack_from('<2H',raw,result_at)==(0xb008,1)
         names=['stage','status','display_status','serial_status','process_status','crt_error','dos_error','child_status']
-        result['program_results']=[dict(zip(names,struct.unpack_from('<8H',raw,580+i*16))) for i in range(len(result['exits']))]
+        result['program_results']=[dict(zip(names,struct.unpack_from('<8H',raw,result_at+4+i*16))) for i in range(len(result['exits']))]
     return result
 
 def read_buffers(path):

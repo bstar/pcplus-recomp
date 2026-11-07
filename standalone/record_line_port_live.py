@@ -61,7 +61,7 @@ def main():
   aspect_capacity=dict(control_checks=29,control_passed=True,interpreter_sha256=runner_sha,
    candidate_first_held_file_missing=True,candidate_top_level_summary_available=True,
    observation='ASPECT invalid operand error 7, opcode 41, step 9; held stream file absent.',
-   cause='Regression established by paired control; exact allocation failure mechanism remains uninstrumented.'),
+   cause='Paired control establishes regression. Separate diagnostic observes DOS AH=4A refusal; precise CRT allocation owner remains uninstrumented.'),
   parent_sha256=product,control_sha256=c['binary_sha256'],
   application_cases=cases,application_checks=sum(r['checks']for r in cases),
   offline_move_checks=len(v['result']['checks']),source_files_in_export=q['source_count'],
