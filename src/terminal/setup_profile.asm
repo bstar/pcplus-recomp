@@ -145,6 +145,9 @@ setup_profile_target: dw 0
 %ifdef TERMINAL_HOOK_APPLY
 global setup_profile_target
 %endif
+%ifdef ASPECT_EMULATE_POLICY
+global setup_profile_keyboard_io
+%endif
 setup_profile_keyboard_io: times 14 db 0
 SEGMENT _BSS public align=2 class=BSS use16
 global setup_profile_keymap,setup_keyboard_absolute

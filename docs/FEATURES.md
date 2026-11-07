@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Experimental EMULATE parent owner](ASPECT_EMULATE_PARENT.md) passes 294 linked
+profile/staging/reset/error checks and a 5,443-file cold rebuild. Its added
+256-byte minimum fails seven of 27 held-stream/nested-child DOS checks.
+**Unaccepted:** fund memory and repeat capacity before child RPC/opcode binding.
+The ordinary parent remains exact; installation is unchanged.
+
 [ASPECT EMULATE recovery/compiler](ASPECT_EMULATE.md) adds exact emission for
 all 33 original named selectors and a separate 15-byte native command owner.
 The 98 original outcomes plus 98 presentation cases, full 2,323-case DOS

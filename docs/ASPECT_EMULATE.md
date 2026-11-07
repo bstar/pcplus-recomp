@@ -79,6 +79,10 @@ The [receipt](validation/aspect-emulate.json) binds sources and results:
   --output build/my-emulate-native
 ```
 
+The subsequent [parent transaction](ASPECT_EMULATE_PARENT.md) now executes
+keyboard staging/reset in linked tests. Its added memory fails the DOS capacity
+gate; the component remains unaccepted and the opcode remains unbound.
+
 ## Runtime integration still needed
 
 The parent owns emulation, parser/reset state and keyboard behavior. The script
