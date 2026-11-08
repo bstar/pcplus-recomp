@@ -141,6 +141,11 @@ def main(extension=None):
         with (output/'GETVM.lnk').open('a') as link:
             link.write('\noption packcode=0\norder clname CODE clname FARCODE clname FAR_DATA clname BEGDATA clname DATA clname BSS clname STACK\n')
         subprocess.run(['wlink','@GETVM.lnk'],cwd=output,check=True)
+        from mz_layout import align_header
+        executable=output/'ASPECT.EXE'
+        aligned,mz_layout=align_header(executable.read_bytes())
+        executable.write_bytes(aligned)
+        sources.append(ROOT/'standalone/mz_layout.py')
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
                   experimental_deferred_script_buffers=bool(extension and extension.get('defer_script_buffers')),
                   diagnostic_script_buffer_owners=bool(extension and extension.get('buffer_probe')),
@@ -182,6 +187,7 @@ def main(extension=None):
     if get_vm:
         from build_get_bank import audit
         result['GET_bank_layout']=audit(output)
+        result['MZ_header_layout']=mz_layout
         result['source_extensions']['49']='Opt-in ordinary GET: string/integer/long; both compilers still refuse GET; float4, sibling modes unsupported.'
         result['scope']+=' Opt-in GET bank invokes the recovered owner with maintained typed/native/service adapters; only raw authored mode0 fixtures are admitted. Compiler grammar, full memory/package and physical acceptance remain open.'
     (output / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')

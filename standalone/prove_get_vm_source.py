@@ -20,7 +20,7 @@ def main():
   'standalone/directory_fixtures.py','standalone/modem_fixtures.py','standalone/directory_test_support.py',
   'standalone/terminal_config_fixtures.py','src/aspect/compiler.py','standalone/meta_shared_connection_candidate_recipe.json',
   'standalone/keymap_connection_candidate_recipe.json','standalone/check_aspect_file.py','standalone/build_aspect_file.py',
-  'standalone/aspect_file_fixture.c','standalone/aspect_file_fixture.asm']:
+  'standalone/aspect_file_fixture.c','standalone/aspect_file_fixture.asm','standalone/test_mz_layout_dos.py']:
   sources[n]=sha(ROOT/n)
  from build_aspect_file import ASM_SOURCES
  for name,n,define in ASM_SOURCES:sources[n]=sha(ROOT/n)
@@ -41,6 +41,7 @@ def main():
  assert sha(fresh/'build/child/ASPECT.EXE')==child['binary_sha256']
  run(['standalone/test_get_vm_cli.py','--child','build/child','--output','build/cli'])
  run(['standalone/check_aspect_file.py','--owned-window','--output','build/file'])
+ run(['standalone/test_mz_layout_dos.py','--output','build/mz'])
  run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child','--output','build/dos',*(['--stream-probe'] if checks.get('stream_probe') else []),*(['--allocation-probe'] if checks.get('allocation_probe') else [])])
  replay=json.loads((fresh/'build/dos/checks.json').read_text());assert replay['passed'] and len(replay['cases'])==len(checks['cases'])
  for previous,current in zip(checks['cases'],replay['cases']):
@@ -50,7 +51,7 @@ def main():
   assert (a.checks.parent/previous['case']/'serial.bin').read_bytes()==(fresh/'build/dos'/current['case']/'serial.bin').read_bytes()
  for n,h in sources.items():assert sha(ROOT/n)==sha(fresh/n)==h,n
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,source_count=len(sources),sources=sources,
-  parent_sha256=parent['binary_sha256'],child_sha256=child['binary_sha256'],DOS_cases=len(replay['cases']),CLI_cases=7,owned_read_window_checks=json.loads((fresh/'build/file/checks.json').read_text()),
+  parent_sha256=parent['binary_sha256'],child_sha256=child['binary_sha256'],DOS_cases=len(replay['cases']),CLI_cases=7,MZ_layout_checks=json.loads((fresh/'build/mz/result.json').read_text()),owned_read_window_checks=json.loads((fresh/'build/file/checks.json').read_text()),
   scope=__doc__+' Exact executables, DOS check booleans, serial wire and observer/probes. No originals/private files/prior objects/ancestor Git. Installed feature set plus capability22; larger keymap candidate memory and full variable/stream co-residency, compiler GET, physical hardware and whole-language parity remain open.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS GET VM cold source:',len(sources),'sources; exact pair and DOS replay')
 if __name__=='__main__':main()

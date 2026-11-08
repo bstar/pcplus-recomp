@@ -26,8 +26,10 @@ initialized null region after the stack and inflated the loaded image. The
 builder now checks all public bridge, implementation and callback segments,
 abort targets, field storage, CRT ordering and the unchanged8192-byte stack.
 The current audited layout is65405 resident code bytes (131 spare),4079 GET code bytes,
-1544 pure editor bytes and44096 DGROUP bytes. The MZ minimum including PSP is
-139168 bytes; this is not the total dynamic-memory requirement.
+1544 pure editor bytes and44096 DGROUP bytes. The aligned MZ page minimum including PSP is
+139168 bytes; environment/EXEC overhead and dynamic memory are additional.
+The [MZ layout checkpoint](ASPECT_MZ_LAYOUT.md) corrects the earlier file-length
+accounting and records the separate startup failure.
 
 `near_globals=True` is a separate opt-in allocator experiment.81-byte global
 strings first receive stable far pointers into ordinary near heap blocks with
@@ -67,8 +69,8 @@ Standalone full-interpreter DOS8086 tests cover healthy execution,128 strings,
 80-character values, mixed integer/long/string/file ownership, divide recovery,
 unattached GET refusal and missing-file errors.
 
-The larger keymap candidate still cannot start this GET child normally with
-the passive observer present. The installed-profile pair now passes the real
+The larger keymap candidate now loads the aligned child, but C-runtime
+startup still fails before main with the passive observer present. The installed-profile pair now passes the real
 FOPEN→GET sequence, retaining its stream and exact `BEFORE|LoC42` bytes. The
 [owned read-window change](ASPECT_READ_WINDOW.md) removes duplicate ASX stdio
 buffering while retaining the native256-byte window and full512-byte buffers

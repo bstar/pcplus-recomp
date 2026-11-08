@@ -80,6 +80,7 @@ def main():
   prm=settings,directory=lambda:renderer.directory(profile=4),
   PARENT_BINARY=parent/'TERMINAL.EXE',CHILD_BINARY=child/'ASPECT.EXE')
  allocation_fields=[('_runtime_script_file_open_calls',0),('_runtime_script_file_live',0),('_runtime_script_file_last',0),('_runtime_native_error_code',0),('_runtime_steps',0),('_runtime_live',0),('_runtime_alloc_calls',0),('___nheapbeg',0),('__curbrk',0),('__STACKLOW',0),('__STACKTOP',0)]
+ allocation_names=[n for n,d in allocation_fields]+['PSP_allocation_paragraphs','environment_paragraphs','environment_string_bytes']
  active_case=[None]
  def adapter():
   path=ROOT/'standalone/test_connection_dos.py';peer=path.read_text()
@@ -107,9 +108,10 @@ def main():
     probe+=' mov ax,[es:'+str(child_symbols[symbol]+delta)+']\n mov [cs:get_child_'+label+'],ax\n'
    if a.allocation_probe:
     marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
-    observer_source=observer_source.replace(marker,'get_allocation_probe: times '+str(len(allocation_fields))+' dw 0\n'+marker)
+    observer_source=observer_source.replace(marker,'get_allocation_probe: times '+str(len(allocation_names))+' dw 0\n'+marker)
     for index,(symbol,delta) in enumerate(allocation_fields):
      probe+=' mov ax,[es:'+str(child_symbols[symbol]+delta)+']\n mov [cs:get_allocation_probe+'+str(index*2)+'],ax\n'
+    probe+=' mov ax,[cs:get_child_ds]\n sub ax,'+str(int(group[1],16)+16)+'\n mov es,ax\n mov dx,[es:0x2c]\n dec ax\n mov es,ax\n mov ax,[es:3]\n mov [cs:get_allocation_probe+22],ax\n mov ax,dx\n dec ax\n mov es,ax\n mov cx,[es:3]\n mov [cs:get_allocation_probe+24],cx\n mov word [cs:get_allocation_probe+26],0xffff\n cmp cx,1\n jb .get_env_done\n cmp cx,2048\n ja .get_env_done\n shl cx,1\n shl cx,1\n shl cx,1\n shl cx,1\n dec cx\n mov es,dx\n xor bx,bx\n.get_env_scan:\n cmp bx,cx\n jae .get_env_done\n cmp word [es:bx],0\n je .get_env_found\n inc bx\n jmp .get_env_scan\n.get_env_found:\n add bx,2\n mov [cs:get_allocation_probe+26],bx\n.get_env_done:\n'
    observer_source=observer_source.replace(old,probe+' push cs')
    old=' mov di,before_history\n call copy_history\n restore';assert observer_source.count(old)==1
    new=' mov di,before_history\n call copy_history\n mov ax,cs\n mov [cs:get_observer_segment],ax\n mov ax,0x40\n mov es,ax\n mov ax,[es:0x13]\n mov [cs:get_conventional_kb],ax\n mov ah,0x48\n mov bx,0xffff\n pushf\n call far [cs:old21]\n mov [cs:get_largest_free],bx\n restore'
@@ -336,7 +338,7 @@ get_watch_data: dw 0x4757,2
   result['observer_source_sha256']=sha(folder/'observer.asm')
   result['memory_before_EXEC']=dict(largest_free_bytes=free*16,observer_segment=segment,conventional_kb=kb)
   if a.allocation_probe:
-   result['allocation_probe']=dict(zip([n for n,d in allocation_fields],struct.unpack('<'+str(len(allocation_fields))+'H',(folder/'RENDER.BIN').read_bytes()[-20-2*len(allocation_fields):-20])))
+   result['allocation_probe']=dict(zip(allocation_names,struct.unpack('<'+str(len(allocation_names))+'H',(folder/'RENDER.BIN').read_bytes()[-20-2*len(allocation_names):-20])))
   result['child_exit_probe']=dict(DS=child_ds,errno=child_errno,error=child_error,opcode=child_opcode,compiler_calls=child_compiles,file_status=child_file_status)
   if a.cpu=='386':result['checks']['passive_observer_in_UMB']=segment>=0xa000
   result['checks']['GET_typed_exit']=result['passive_observer_header'][6]==case['expected_exit']

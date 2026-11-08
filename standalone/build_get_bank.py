@@ -73,5 +73,6 @@ def audit(output):
   GET_code_bytes=bank['size'],editor_code_bytes=field['size'],field_state_bytes=state['size'],
   DGROUP_bytes=int(group[3],16),stack_bytes=8192,
   minimum_DOS_bytes_including_PSP=((len(exe)-header[4]*16+15)//16+header[5]+16)*16,
+  page_rounded_minimum_including_PSP=(header[2]*32-header[4]+header[5]+16)*16,
   near_entries=6,resident_callback_count=len(re.findall(r'^GET_CALLBACK ',inc,re.M)),
-  scope='Link-map segment/callback/CRT order admission; execution and available conventional memory require separate DOS tests.')
+  scope='Link-map segment/callback/CRT order and exact/page MZ minima; environment/EXEC overhead, execution and available conventional memory require separate DOS tests.')

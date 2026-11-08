@@ -65,8 +65,9 @@ integer/long, cancellation and typed refusals; standalone8086 tests retain128
 strings and80-character values with mixed numeric/file ownership. Both compilers
 still refuse GET. The installed-feature-set parent and heavier keymap candidate
 have separate capacity results: ordinary fields and FOPEN→GET now pass with the former after removing
-duplicate ASX stdio buffering; the heavier parent cannot start the child
-normally. [Read-window validation](ASPECT_READ_WINDOW.md) covers113 host and218
+duplicate ASX stdio buffering; the heavier parent now loads an aligned child but fails C-runtime
+startup before main. [MZ layout accounting](ASPECT_MZ_LAYOUT.md) distinguishes
+page-based EXEC admission, environment overhead and actual dynamic memory. [Read-window validation](ASPECT_READ_WINDOW.md) covers113 host and218
 DOS file checks and corrects the earlier runtime7 classification. No package or physical promotion; F13 and memory/compiler gates remain
 open. See the linked receipt for exact binaries, sources and cold reproduction.
 

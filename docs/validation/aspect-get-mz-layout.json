@@ -1,0 +1,223 @@
+{
+  "checkpoint": "MZ page admission, aligned header and actual EXEC environment accounting",
+  "original_inputs": [],
+  "source_context": [
+    "https://github.com/microsoft/MS-DOS/blob/main/v4.0/src/DOS/EXEC.ASM",
+    "https://github.com/joncampbell123/dosbox-x/blob/master/src/dos/dos_execute.cpp"
+  ],
+  "load_image_and_relocation_bytes_unchanged": true,
+  "header_padding_added": 448,
+  "page_minimum_before": 139616,
+  "page_minimum_after": 139168,
+  "environment_overhead_additional": true,
+  "full_installed_profile_pair_passed": true,
+  "larger_keymap_profile_passed": false,
+  "larger_failure_stage": "DOS EXEC admitted; C runtime exits1/errno5 before main; near heap not initialized. No GET execution.",
+  "observed_heavy_bytes": {
+    "before_EXEC_largest": 140352,
+    "child_PSP_block": 139168,
+    "child_environment": 1168,
+    "environment_MCB": 16,
+    "environment_string_bytes": 140
+  },
+  "default_child_exact": true,
+  "compiler_GET_enabled": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "sources": {
+    "standalone/mz_layout.py": "f50fce3b065e00f334a9e42df59ecc48db6df06c5cef67f9b3f86013d9249be8",
+    "standalone/test_mz_layout_dos.py": "c686902899f4f2ce72ea45d0ef700be145c25e6669af6b4fbb8a59686e58a016",
+    "standalone/build_aspect_runner.py": "9d342ae792a9c773d85b5f71e26abfbcf42bcafbcb5b41909ff13506939c4c56",
+    "standalone/build_get_bank.py": "b4c33a7ea3ece562e32d5e94750d9d9d622ae9cb6c3e9178616cf413c6dea65d",
+    "standalone/prove_get_vm_source.py": "0951ca5a46a139a4050f61fc6fd9e2d238f05a0f65177622cfa628b9978baa61",
+    "standalone/test_aspect_get_vm_dos.py": "2ed8b9a91fa9a804ef6eea30b11dc15858eb1d56c10ef9aff02b2751128a6319",
+    "docs/ASPECT_MZ_LAYOUT.md": "d42b5140392b33577a189807132efc229ef713f30e19a8ce8616d7817258e47b",
+    "docs/ASPECT_GET_VM.md": "65a9a2ff612481e5d857f29425304c0992e68f7f1337ed4b1d0ae4d457ff8860",
+    "docs/ASPECT_READ_WINDOW.md": "ac9fd09f2e431bc3502fe08ba279fb296e3ca511f7eba44bf1598cee30bc802f",
+    "docs/FEATURES.md": "1c43fbbcb474151240ff26d4d487c3aef5da2ecb37c09245bf157d73a8857a78"
+  },
+  "evidence": {
+    "build/mz-page-calibration-wide-20261107/result.json": {
+      "sha256": "4d1c4d9e12a6acfe0fbf1dcd1e3580cfc0740c275e92d61e53271fa0b5048d7c",
+      "passed": true,
+      "threshold_bytes": [
+        2816,
+        2352
+      ],
+      "layout": {
+        "before": {
+          "header_bytes": 32,
+          "image_bytes": 5,
+          "image_sha256": "f4ee8102c22efb02332d679649d248c5a6e88d5e31dbd774fb045af1dc28a2d6",
+          "relocation_table_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "exact_minimum_including_PSP": 1296,
+          "page_minimum_including_PSP": 1760
+        },
+        "after": {
+          "header_bytes": 496,
+          "image_bytes": 5,
+          "image_sha256": "f4ee8102c22efb02332d679649d248c5a6e88d5e31dbd774fb045af1dc28a2d6",
+          "relocation_table_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "exact_minimum_including_PSP": 1296,
+          "page_minimum_including_PSP": 1296
+        },
+        "header_padding_added": 464
+      },
+      "cases": 322
+    },
+    "build/get-mz-aligned-child-20261107/manifest.json": {
+      "sha256": "a696625268694214bb3a4f5982cbc8fa6990ee835500d374477bbbe37b322ce6",
+      "binary_sha256": "5733942842f41c2298db3bb874cb3c475fce60d772e5af091b9697b05b79789b",
+      "GET_bank_layout": {
+        "passed": true,
+        "near_code_bytes": 65405,
+        "near_code_spare": 131,
+        "GET_code_bytes": 4079,
+        "editor_code_bytes": 1544,
+        "field_state_bytes": 206,
+        "DGROUP_bytes": 44096,
+        "stack_bytes": 8192,
+        "minimum_DOS_bytes_including_PSP": 139168,
+        "page_rounded_minimum_including_PSP": 139168,
+        "near_entries": 6,
+        "resident_callback_count": 30,
+        "scope": "Link-map segment/callback/CRT order and exact/page MZ minima; environment/EXEC overhead, execution and available conventional memory require separate DOS tests."
+      },
+      "MZ_header_layout": {
+        "before": {
+          "header_bytes": 992,
+          "image_bytes": 120414,
+          "image_sha256": "fc1a0b24d4da10edd58f1a4c6a1ef9969c81f80cb3fde79e8b68cacd53dfd3d8",
+          "relocation_table_sha256": "5be14251ebf2bae3153bcad98f807be064dc37d35070c52b5e5c268503e18504",
+          "exact_minimum_including_PSP": 139168,
+          "page_minimum_including_PSP": 139616
+        },
+        "after": {
+          "header_bytes": 1440,
+          "image_bytes": 120414,
+          "image_sha256": "fc1a0b24d4da10edd58f1a4c6a1ef9969c81f80cb3fde79e8b68cacd53dfd3d8",
+          "relocation_table_sha256": "5be14251ebf2bae3153bcad98f807be064dc37d35070c52b5e5c268503e18504",
+          "exact_minimum_including_PSP": 139168,
+          "page_minimum_including_PSP": 139168
+        },
+        "header_padding_added": 448
+      }
+    },
+    "build/get-mz-aligned-matrix-20261107/checks.json": {
+      "sha256": "bcb3e5fb2c88ef92eaad6ff2a0603adeef8242a18722e5e6bde0f14ebc17a0b0",
+      "passed": true,
+      "cases": 6,
+      "string_probe": [
+        {
+          "case": "get-vm-string",
+          "memory_before_EXEC": {
+            "largest_free_bytes": 141568,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38126,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 0,
+            "file_status": 0
+          },
+          "allocation_probe": {
+            "_runtime_script_file_open_calls": 1,
+            "_runtime_script_file_live": 0,
+            "_runtime_script_file_last": 0,
+            "_runtime_native_error_code": 0,
+            "_runtime_steps": 14,
+            "_runtime_live": 0,
+            "_runtime_alloc_calls": 1,
+            "___nheapbeg": 44096,
+            "__curbrk": 45120,
+            "__STACKLOW": 35955,
+            "__STACKTOP": 44096,
+            "PSP_allocation_paragraphs": 8761,
+            "environment_paragraphs": 73,
+            "environment_string_bytes": 140
+          },
+          "passive_observer_header": [
+            21070,
+            1,
+            1,
+            1,
+            17932,
+            2068,
+            0
+          ]
+        }
+      ]
+    },
+    "build/get-mz-heavy-environment-20261107/checks.json": {
+      "sha256": "ce870391a2c3801e2907a9283049abd06c754284368547003a0396dd656eee9a",
+      "passed": false,
+      "cases": 1,
+      "string_probe": [
+        {
+          "case": "get-vm-string",
+          "memory_before_EXEC": {
+            "largest_free_bytes": 140352,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38202,
+            "errno": 5,
+            "error": 0,
+            "opcode": 0,
+            "compiler_calls": 0,
+            "file_status": 0
+          },
+          "allocation_probe": {
+            "_runtime_script_file_open_calls": 0,
+            "_runtime_script_file_live": 0,
+            "_runtime_script_file_last": 0,
+            "_runtime_native_error_code": 0,
+            "_runtime_steps": 0,
+            "_runtime_live": 0,
+            "_runtime_alloc_calls": 0,
+            "___nheapbeg": 0,
+            "__curbrk": 44096,
+            "__STACKLOW": 35955,
+            "__STACKTOP": 44096,
+            "PSP_allocation_paragraphs": 8698,
+            "environment_paragraphs": 73,
+            "environment_string_bytes": 140
+          },
+          "passive_observer_header": [
+            21070,
+            1,
+            1,
+            1,
+            18008,
+            2068,
+            1
+          ]
+        }
+      ]
+    },
+    "build/get-mz-aligned-source-20261107/result.json": {
+      "sha256": "f96ceab5b4d2c9d3f806057d6843a0c6126dba1c1f87451a2e7def58f23d1711",
+      "passed": true,
+      "source_count": 1012,
+      "parent_sha256": "69d9b25fc58c7e2186e892e07f4ac38c5c95c5bfa23703f9e4cc56150dce19de",
+      "child_sha256": "5733942842f41c2298db3bb874cb3c475fce60d772e5af091b9697b05b79789b",
+      "DOS_cases": 6,
+      "CLI_cases": 7
+    },
+    "build/get-mz-default-child-20261107/manifest.json": {
+      "sha256": "c8fcb41887a5fa942fb60e919920a2b700d39e618f90b8978fd417cc51f8d02a",
+      "binary_sha256": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066"
+    }
+  },
+  "remaining": [
+    "Fund larger-parent dynamic startup heap while preserving all capacities/features; header admission alone is insufficient.",
+    "Full variable/stream co-residency, ordinary8086 parent-child and realDOS/physical acceptance.",
+    "Repeated/EXECUTE GET, actual WHEN bodies, optional field policies, near exhaustion/far fallback.",
+    "Native string filter, sibling modes, FLOAT.RTE, both GET compilers, package admission and remaining whole-app parity."
+  ]
+}
