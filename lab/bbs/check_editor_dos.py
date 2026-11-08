@@ -11,9 +11,11 @@ def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='ne
  keys={'home':[b'\x1b[1~',b'\x1b[H',b'\x1bOH'],'end':[b'\x1b[4~',b'\x1b[F',b'\x1bOF'],'insert':[b'\x1b[2~'],'delete':[b'\x1b[3~'],'page_up':[b'\x1b[5~'],'page_down':[b'\x1b[6~'],'tab':[b'\t'],'delete_line_ctrl_y':[b'\x19']}
  multiline=keyboard_profile=='enigma-multiline'
  if multiline:
-  assert name=='enigma' and multiline_mode in ('page-up','page-down')
+  assert name=='enigma' and multiline_mode in ('page-up','page-down','navigation')
   keys={'page_up':[b'\x1b[5~'],'delete_line_ctrl_y':[b'\x19']}
-  if multiline_mode=='page-down':keys['page_down']=[b'\x1b[6~']
+  if multiline_mode in ('page-down','navigation'):keys['page_down']=[b'\x1b[6~']
+ if multiline and multiline_mode=='navigation':
+  keys.update(up=[b'\x1b[A',b'\x1bOA'],down=[b'\x1b[B',b'\x1bOB'],right=[b'\x1b[C',b'\x1bOC'],backspace=[b'\x08',b'\x7f'])
  if keyboard_profile=='enigma-editor':
   assert name=='enigma' and result.get('keyboard_profile'),'Explicit ENiGMA KBD run required'
   kbd=(out/'BOARD.KBD').read_bytes()
@@ -70,4 +72,4 @@ def audit(name,label,expect_page_down=True,disconnect=False,keyboard_profile='ne
  if audit['modem_packet_delay_ms']:audit['scope']+=' Explicit modem buffering experiment; does not replace immediate-bridge failures or prove physical firmware compatibility.'
  (out/'semantic-audit.json').write_text(json.dumps(audit,indent=2)+'\n');print(json.dumps(audit,indent=2));return audit['passed']
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=['enigma','synchronet']);p.add_argument('--label',required=True);p.add_argument('--page-down-not-exercised',action='store_true');p.add_argument('--disconnect-unsaved',action='store_true');p.add_argument('--keyboard-profile',choices=['network','enigma-editor','enigma-multiline'],default='network');p.add_argument('--multiline-mode',choices=['page-up','page-down']);a=p.parse_args();raise SystemExit(0 if audit(a.name,a.label,not a.page_down_not_exercised,a.disconnect_unsaved,a.keyboard_profile,a.multiline_mode) else 1)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('name',choices=['enigma','synchronet']);p.add_argument('--label',required=True);p.add_argument('--page-down-not-exercised',action='store_true');p.add_argument('--disconnect-unsaved',action='store_true');p.add_argument('--keyboard-profile',choices=['network','enigma-editor','enigma-multiline'],default='network');p.add_argument('--multiline-mode',choices=['page-up','page-down','navigation']);a=p.parse_args();raise SystemExit(0 if audit(a.name,a.label,not a.page_down_not_exercised,a.disconnect_unsaved,a.keyboard_profile,a.multiline_mode) else 1)

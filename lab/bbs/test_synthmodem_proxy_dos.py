@@ -41,7 +41,7 @@ def main():
     p.add_argument('--directory-overlay', action='store_true', help='Observe read-only Alt-D loading/pages during the stock editor workflow')
     p.add_argument('--directory-preview-overlay', action='store_true', help='Observe validated Alt-D preview inside the stock editor workflow')
     p.add_argument('--screen-reference', action='store_true', help='Match compiled geometry and freeze incoming bytes after a real final CPR probe')
-    p.add_argument('--multiline-editor', choices=['page-up','page-down'], help='Native BIOS input enters24 lines and exercises actual editor page navigation')
+    p.add_argument('--multiline-editor', choices=['page-up','page-down','navigation'], help='Native BIOS input enters24 lines and exercises actual editor page navigation')
     p.add_argument('--display-rows', type=int, choices=[25,28,43,50], default=25)
     p.add_argument('--status-hidden', type=int, choices=[0,1], default=0)
     p.add_argument('--size-probe', action='store_true', help='Use staged pre-session size owner and valid owned startup preferences')
@@ -228,13 +228,16 @@ def main():
             keys=keys[:keys.index(marker)+len(marker)]
             folder=base/(args.label+'-keys');folder.mkdir()
             scans=dict(R=0x13,U=0x16,P=0x19,M=0x32,A=0x1e,K=0x25,N=0x31,
-                       S=0x1f,V=0x2f,E=0x12,D=0x20)
+                       S=0x1f,V=0x2f,E=0x12,D=0x20,X=0x2d)
             scans.update({str(n):n+1 if n else 11 for n in range(10)})
             def words(text):return [(scans[c]<<8)|ord(c) for c in text]
             sequence=[0x1519]
             for n in range(1,25):sequence+=words(f'R{n:02}')+[0x1c0d]
+            if args.multiline_editor=='navigation':
+                # R24 -> RX4, then return to the empty final line before paging.
+                sequence += [0x4800,0x4d00,0x4d00,0x0e08]+words('X')+[0x4700,0x5000,0x4800,0x5000]
             sequence += [0x4900]+words('UPMARK')
-            if args.multiline_editor=='page-down':sequence += [0x5100]
+            if args.multiline_editor in ('page-down','navigation'):sequence += [0x5100]
             sequence += words('UNSAVED')+[0x2d00,0]
             (folder/'multiline_keys.inc').write_text('dw '+','.join(hex(word) for word in sequence)+'\n')
             keyboard_helper=folder/'MULTKEY.COM'
