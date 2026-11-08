@@ -1,5 +1,9 @@
 # Compact compiler lease and retained-arena experiment
 
+The later [live compiler bridge](ASPECT_COMPILER_BRIDGE.md) now exercises startup
+and source EXECUTE under the complete parent; the failures and open bridge work
+below are historical checkpoints.
+
 The next [whole-kernel loader checkpoint](ASPECT_COMPILER_ARENA.md) now loads
 this arrangement in the complete parent at startup and restores all27 existing
 GET regressions. The compact-resident failures below remain historical; live

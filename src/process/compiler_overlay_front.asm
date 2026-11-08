@@ -1,4 +1,4 @@
-; Parent-only startup frontend. No child/compiler RPC admission yet.
+; Retained parent frontend; live compiler RPC is an explicit opt-in extension.
 BITS 16
 CPU 8086
 SEGMENT COMPILER_FRONT_CODE public align=16 class=FARCODE use16
@@ -22,6 +22,12 @@ extern _compiler_lease_init,_compiler_lease_info
 global _compiler_overlay_expected
 _compiler_overlay_expected: dw 0x434b,1,0,0,0,0,0,0,0
 nonce: dw 0
+%ifdef TERMINAL_COMPILER_LEASE_BRIDGE
+bridge_owner: dw 0
+bridge_active: dw 0
+extern terminal_program_active,terminal_program_kind,terminal_irq_vector
+extern _compiler_lease_begin,_compiler_lease_end
+%endif
 %macro entry 1
 global _compiler_overlay_%1
 _compiler_overlay_%1:
@@ -53,6 +59,23 @@ leave:
  pop bp
  retf
 context:
+ call context_common
+ or ax,ax
+ jz .bad
+ cmp byte [hardware_active],0
+ jne .bad
+ cmp byte [vector_active],0
+ jne .bad
+ mov ah,0x51
+ int 0x21
+ cmp bx,[process_psp]
+ jne .bad
+ mov ax,1
+ ret
+.bad:xor ax,ax
+ ret
+; Retained parent stack/data and MCB are valid even while the later tail is lent.
+context_common:
  mov ax,ds
  mov dx,ss
  cmp ax,dx
@@ -65,18 +88,11 @@ context:
  and ax,0x600
  cmp ax,0x200
  jne .bad
- cmp byte [hardware_active],0
- jne .bad
- cmp byte [vector_active],0
- jne .bad
  mov ax,[_redisplay_active]
  or ax,[_command_menu_active]
  or ax,[_redisplay_live_ready]
  jnz .bad
- mov ah,0x51
- int 0x21
- cmp bx,[process_psp]
- jne .bad
+ mov bx,[process_psp]
  dec bx
  mov es,bx
  mov al,[es:0]
@@ -90,15 +106,18 @@ context:
  jne .bad
  mov ax,[cs:_compiler_overlay_expected+16]
  cmp ax,[es:3]
- jae .bad
+ ja .bad
  mov ax,1
  ret
 .bad:xor ax,ax
  ret
 entry load
+ call load_module
+ jmp leave
+load_module:
  call start
  cmp ax,1
- je leave
+ je .return
  or ax,ax
  jnz .failed
  mov cx,64
@@ -113,14 +132,20 @@ entry load
 .failed:
  call release_raw
  mov ax,4
- jmp leave
+ ret
 .ready:
  xor ax,ax
- jmp leave
+.return:ret
 entry init
+ call init_module
+ jmp leave
+init_module:
  call far _compiler_overlay_phase
  cmp ax,2
- jne unavailable
+ je .ready
+ mov ax,1
+ ret
+.ready:
  inc word [cs:nonce]
  jnz .token
  inc word [cs:nonce]
@@ -130,7 +155,7 @@ entry init
  push word [process_psp]
  call far _compiler_lease_init
  add sp,6
- jmp leave
+ ret
 entry info
  call far _compiler_overlay_phase
  cmp ax,2
@@ -249,3 +274,191 @@ release_raw:
  ret
 .bad:mov ax,1
  ret
+
+%ifdef TERMINAL_COMPILER_LEASE_BRIDGE
+; Called only after the renderer authenticates client/callback and flow scope.
+; Foreground runs DS=SS on retained parent stack, CurrentPDB remains the child.
+global _compiler_overlay_bridge,_compiler_overlay_loaned,_compiler_overlay_retire
+_compiler_overlay_loaned:
+ mov ax,[cs:bridge_active]
+ retf
+_compiler_overlay_retire:
+ ; Renderer revocation is an assembly service, not a C call. Preserve its
+ ; incoming register/flag contract even when close has no open descriptor.
+ pushf
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push ds
+ push es
+ cmp word [cs:bridge_active],0
+ jne fatal_parent
+ call release_raw
+ pop es
+ pop ds
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ popf
+ retf
+_compiler_overlay_bridge:
+ push bp
+ mov bp,sp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push ds
+ push es
+ call context_common
+ or ax,ax
+ jz .identity
+ cmp word [terminal_program_active],1
+ jne .identity
+ cmp word [terminal_program_kind],4
+ jne .identity
+ mov ah,0x51
+ int 0x21
+ cmp bx,[bp+8]
+ jne .identity
+ cmp bx,[process_psp]
+ je .identity
+ mov es,bx
+ mov ax,[process_psp]
+ cmp [es:0x16],ax
+ jne .identity
+ cmp word [es:0],0x20cd
+ jne .identity
+ dec bx
+ mov es,bx
+ mov ax,[bp+8]
+ cmp [es:1],ax
+ jne .identity
+ ; vector_active is a parent cleanup marker, not current IRQ ownership.
+ mov cx,[es:3]
+ add cx,ax
+ jc .identity
+ mov di,ax
+ add di,16
+ jc .identity
+ mov ax,[terminal_irq_vector]
+ mov ah,0x35
+ int 0x21
+ mov ax,es
+ shr bx,1
+ shr bx,1
+ shr bx,1
+ shr bx,1
+ add ax,bx
+ jc .identity
+ cmp ax,di
+ jb .identity
+ cmp ax,cx
+ jae .identity
+ cmp word [bp+6],1
+ je .end
+ cmp word [bp+6],0
+ jne .identity
+ cmp word [cs:bridge_active],0
+ jne .identity
+ mov ax,[bp+8]
+ mov [cs:bridge_owner],ax
+ call load_module
+ or ax,ax
+ jnz .intact_error
+ ; Init alone is scoped to parent PSP; no file operation crosses that scope.
+ ; DOS records its entry stack at CurrentPDB:2E, including AH50. Keep the
+ ; suspended outer EXEC stack intact until identity is back with the child.
+ mov es,[process_psp]
+ push word [es:0x2e]
+ push word [es:0x30]
+ mov bx,[process_psp]
+ mov ah,0x50
+ int 0x21
+ call init_module
+ push ax
+ mov bx,[cs:bridge_owner]
+ mov ah,0x50
+ int 0x21
+ mov es,[process_psp]
+ pop ax
+ pop word [es:0x30]
+ pop word [es:0x2e]
+ push ax
+ mov ah,0x51
+ int 0x21
+ cmp bx,[cs:bridge_owner]
+ pop ax
+ jne .identity
+ or ax,ax
+ jnz .begin_failed
+ push word [cs:bridge_owner]
+ push word [cs:nonce]
+ call far _compiler_lease_begin
+ add sp,4
+ or ax,ax
+ jnz .begin_failed
+ mov word [cs:bridge_active],1
+ xor ax,ax
+ jmp leave
+.begin_failed:
+ call release_raw ; Begin refusal never lent memory; stale temp cleanup may fail.
+.intact_error:
+ mov ax,0xe009
+ jmp leave
+.end:
+ cmp word [cs:bridge_active],1
+ jne .intact_state
+ mov ax,[bp+8]
+ cmp ax,[cs:bridge_owner]
+ jne .identity
+ push ax
+ push word [cs:nonce]
+ call far _compiler_lease_end
+ add sp,4
+ mov si,ax
+ mov ax,3
+ push ax
+ call far _compiler_lease_info
+ add sp,2
+ cmp ax,1
+ jne .identity ; No safe-retirement tag while memory is invalid.
+ mov word [cs:bridge_active],0
+ call release_raw
+ xor ax,ax
+ or si,si
+ jz .returned
+ mov ax,0xe009
+.returned:jmp leave
+.intact_state:
+ mov ax,0xe00a
+ jmp leave
+.identity:
+ mov ax,10
+ jmp leave
+; Unexpected child termination during an invalid loan must never repaint/free
+; through the missing tail. This deliberate fail-stop is not ordinary recovery.
+fatal_parent:
+ mov si,fatal_text
+.next:
+ mov al,[cs:si]
+ inc si
+ or al,al
+ jz .halt
+ mov ah,0x0e
+ xor bx,bx
+ int 0x10
+ jmp .next
+.halt:
+ sti
+ hlt
+ jmp .halt
+fatal_text: db 13,10,'Parent memory restore incomplete. Reboot required.',13,10,0
+%endif

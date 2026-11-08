@@ -155,6 +155,34 @@ unsigned __cdecl aspect_render_attach(void)
  if(!result)attached=1;
  return result;
 }
+#ifdef ASPECT_COMPILER_PARENT_LEASE
+extern unsigned aspect_serial_compile_pause_owned,runtime_compiler_scope_state;
+extern void __far __cdecl aspect_compiler_recovery_wait(void);
+/* Unknown END outcomes cannot be treated as a safe return to parent rendering.
+ * The E000 tag explicitly attests restored memory despite a typed IO error. */
+unsigned __cdecl aspect_render_compiler_end(void)
+{
+ unsigned result;
+ for(;;){
+  result=aspect_render_request(28,0);
+  if(!result)return 0;
+  if((result&0xfff0U)==0xe000U && (result&15U)<=14U)return result&15U;
+  aspect_compiler_recovery_wait();
+ }
+}
+unsigned __cdecl aspect_render_compiler_begin(void)
+{
+ unsigned result;
+ if(!attached || program_owned || confirm_owned || field_owned || field_wait ||
+    !aspect_serial_compile_pause_owned || !runtime_compiler_scope_state ||
+    aspect_serial_active!=1 || service_check())return ASPECT_RUN_STATE;
+ result=aspect_render_request(27,0);
+ if(!result)return 0;
+ if((result&0xfff0U)==0xe000U && (result&15U)<=14U)return result&15U;
+ /* A failed bridge guard may follow successful lending. Roll back first. */
+ aspect_render_compiler_end();return ASPECT_RUN_STATE;
+}
+#endif
 unsigned __cdecl aspect_render_active(void){return attached;}
 unsigned __cdecl aspect_render_emit(unsigned byte)
 {
@@ -384,6 +412,10 @@ unsigned __cdecl aspect_render_script_label(const char *path,unsigned duplex)
 static unsigned callback_dispatch(unsigned operation,unsigned value)
 {
  unsigned result;
+#ifdef ASPECT_COMPILER_PARENT_LEASE
+ if(operation==12)return aspect_serial_compile_pause_owned && runtime_compiler_scope_state &&
+  aspect_serial_active==1?0xc100U:ASPECT_RUN_STATE;
+#endif
 #ifdef ASPECT_GET_DISPLAY
  if(field_wait || confirm_wait){callback_error=ASPECT_RUN_STATE;return operation==ASPECT_RENDER_RAW_WAIT || operation==ASPECT_RENDER_RAW_NOW?65535U:callback_error;}
 #endif

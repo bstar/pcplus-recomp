@@ -10,6 +10,7 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser.add_argument('--compiler-lease-bridge',action='store_true',help='Experimental capability23 compiler BEGIN/END through authenticated renderer')
 parser.add_argument('--compiler-lease-arena',action='store_true',help='Experimental whole-kernel cold arena module and startup-only loader; no child bridge')
 parser.add_argument('--compiler-lease-arena-probe',action='store_true',help='Diagnostic only: load/init/release whole kernel before UART, then exit')
 parser.add_argument('--compiler-lease-module',action='store_true',help='Experimental resident core and cold compiler-bank layout; no child bridge admission yet')
@@ -124,6 +125,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.compiler_lease_bridge:args.compiler_lease_arena=True
 if args.compiler_lease_arena_probe:args.compiler_lease_arena=True
 if args.compiler_lease_arena:args.compiler_lease_module=True
 if args.keymap_editor:assert args.original_reference and args.keyboard_bank and args.program_display_owner,'Keymap editor requires original-reference, keyboard-bank and display owner'
@@ -543,6 +545,7 @@ for index,source in enumerate(sources):
  if args.keymap_editor:options+=['-DTERMINAL_KEYMAP_EDITOR']
  if args.meta_shared_runtime:options+=['-DTERMINAL_META_SHARED']
  if args.compiler_lease_arena:options+=['-DTERMINAL_COMPILER_ARENA']
+ if args.compiler_lease_bridge:options+=['-DTERMINAL_COMPILER_LEASE_BRIDGE']
  if args.compiler_lease_arena_probe:options+=['-DTERMINAL_COMPILER_ARENA_PROBE']
  if args.meta_loader_probe:options+=['-DTERMINAL_META_LOADER_PROBE']
  if args.line_port:options+=['-DTERMINAL_LINE_PORT']
@@ -935,6 +938,7 @@ for source in c_sources:
  if args.hook_apply:options+=['-dTERMINAL_HOOK_APPLY']
  if args.aspect_get_display:options+=['-dASPECT_GET_DISPLAY']
  if args.aspect_get_policy:options+=['-dASPECT_GET_POLICY']
+ if args.compiler_lease_bridge:options+=['-dASPECT_COMPILER_PARENT_LEASE']
  if args.aspect_emulate_policy:options+=['-dASPECT_EMULATE_POLICY']
  if args.aspect_alarm_policy:options+=['-dASPECT_ALARM_POLICY']
  if args.notice_sound:options+=['-dASPECT_SOUND_POLICY','-dTERMINAL_SOUND']
@@ -1039,7 +1043,7 @@ if args.compiler_lease_module:
  if args.compiler_lease_arena:
   for stem in ['compiler_overlay_front']+(['compiler_overlay_probe'] if args.compiler_lease_arena_probe else []):
    source=ROOT/'src/process'/(stem+'.asm');obj=OUT/(stem+'.obj')
-   subprocess.run(['nasm','-f','obj',str(source),'-o',str(obj)],check=True)
+   subprocess.run(['nasm','-f','obj',*(['-DTERMINAL_COMPILER_LEASE_BRIDGE'] if args.compiler_lease_bridge else []),str(source),'-o',str(obj)],check=True)
    objects.append(str(obj));sources.append(source)
 ordering=['CODE','FARCODE']+(['LEASE_MODULE'] if args.compiler_lease_arena else [])+(['LEASE_BANK'] if args.compiler_lease_module else [])+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
 chat_loader=None
@@ -1280,6 +1284,7 @@ if args.original_reference:
 manifest['limitations'].append('An otherwise eligible Alt-Z read during normal parser ownership is retained until a distinct resident foreground service can recheck all guards. All BIOS key values, including AX0, retain their key meaning. Subsequent keys remain in the existing32-word typeahead FIFO; repeated Alt-Z coalesces. Escape cancels locally; Alt-X/Alt-H cancel then use normal dispatch. Changed owners/geometry or foreground stop discard the owned pending typeahead. Overflow retains the existing explicit exit3 policy. This is maintained behavior; it does not identify the cause of the earlier unobserved Synchronet refusal.')
 manifest['compiler_helper_adapters']={'import_counts':helper_adapters['import_counts'],'record_policy':'Only EXTDEF names/record lengths/checksums change; symbol indices, code, data, local symbols and fixups are preserved.'}
 if args.compiler_lease_module:manifest['experimental_compiler_lease_module']=compiler_lease_module
+if args.compiler_lease_bridge:manifest['experimental_compiler_lease_bridge']=True
 if args.compiler_lease_arena:manifest['experimental_compiler_lease_arena']=True
 if args.compiler_lease_arena_probe:manifest['diagnostic_compiler_lease_arena_probe']=True
 (OUT/'compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**helper_adapters},indent=2)+'\n')

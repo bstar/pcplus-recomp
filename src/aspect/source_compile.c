@@ -2,6 +2,9 @@
 #include "script_path.h"
 #include "runtime.h"
 #include "serial.h"
+#ifdef ASPECT_COMPILER_PARENT_LEASE
+#include "resident_render.h"
+#endif
 #include "serial_runtime.h"
 #include "../config/resource_path.h"
 #include <stdio.h>
@@ -84,6 +87,9 @@ static unsigned compile(const char *source)
 {
  char compiler[64],log_path[128],buffer[128];
  int log=-1,out=-1,err=-1,result=-1,n;unsigned status=0,scope=0,paused=0,psp;
+#ifdef ASPECT_COMPILER_PARENT_LEASE
+ unsigned leased=0;
+#endif
  void (__interrupt __far *break_vector)(void),(__interrupt __far *critical_vector)(void);
  if(busy)return ASPECT_RUN_STATE;busy=1;
  runtime_compiler_exit=runtime_compiler_dos_error=0;
@@ -103,7 +109,11 @@ static unsigned compile(const char *source)
   * and IRQ code remain resident. The opt-in qualified compiler executor
   * preserves the existing parent allocation and restores its stack/context;
   * the default build retains Watcom P_WAIT. */
- _fheapshrink();++runtime_compiler_calls;
+ _fheapshrink();
+#ifdef ASPECT_COMPILER_PARENT_LEASE
+ status=aspect_render_compiler_begin();if(status)goto done;leased=1;
+#endif
+ ++runtime_compiler_calls;
  /* The compiler's default target is the same .ASX sibling. Passing only the
   * source keeps the native80-byte source path inside DOS's126-byte tail. */
 #ifdef ASPECT_COMPILER_DIRECT_EXEC
@@ -118,6 +128,9 @@ static unsigned compile(const char *source)
   _dos_setvect(0x23,break_vector);_dos_setvect(0x24,critical_vector);status=ASPECT_RUN_STATE;
  }
 done:
+#ifdef ASPECT_COMPILER_PARENT_LEASE
+ if(leased){unsigned r=aspect_render_compiler_end();leased=0;if(r&&!status)status=r;}
+#endif
  if(scope){unsigned r=runtime_compiler_scope(0);if(r&&!status)status=r;}
  if(paused){unsigned r=aspect_serial_compile_resume();if(r){runtime_serial_error=r;if(!status)status=ASPECT_RUN_SERIAL;}}
  if(out>=0){if(dup2(out,1)&&!status)status=ASPECT_RUN_IO;close(out);}

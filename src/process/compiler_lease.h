@@ -5,7 +5,8 @@
  * and storage lie below it. The optional bank can live in the lent tail;
  * preparation returns before shrink; finalization follows verified restore.
  * The integration/linker must prove placement and prohibit other consumers.
- * Begin/end execute on the checked immediate child's DS=SS stack. No caller
+ * Begin/end execute with the checked immediate child as CurrentPDB on an
+ * admitted DS=SS stack (child or retained parent RPC slice). No caller
  * pointer survives a call. No parent tail consumer may run while lent.
  * Any failed end keeps the lease: callers MUST NOT resume tail consumers.
  * DOS4+ exclusive no-inherit files; source-only component, not enabled in app. */

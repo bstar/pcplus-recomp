@@ -59,6 +59,15 @@ unsigned __cdecl aspect_render_field(unsigned operation,unsigned value);
 #define ASPECT_RENDER_EMULATE 20U
 unsigned __cdecl aspect_render_emulate(unsigned selector);
 #endif
+#ifdef ASPECT_COMPILER_PARENT_LEASE
+#if !defined(ASPECT_GET_POLICY)
+#error Compiler parent lease requires complete GET policy profile
+#endif
+#undef ASPECT_RENDER_CAP_VERSION
+#define ASPECT_RENDER_CAP_VERSION 23U
+unsigned __cdecl aspect_render_compiler_begin(void);
+unsigned __cdecl aspect_render_compiler_end(void);
+#endif
 #define ASPECT_RENDER_CLIENT_MAGIC 0x5243U
 #define ASPECT_RENDER_CLIENT_SIZE 10U
 enum { ASPECT_RENDER_BEGIN=0, ASPECT_RENDER_EMIT=1, ASPECT_RENDER_END=2,

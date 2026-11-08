@@ -158,6 +158,11 @@ entry resize
  mov ah,0x51
  int 0x21
  push bx
+ ; Each INT21 entry records SS:SP in CurrentPDB:2E. Preserve the suspended
+ ; outer EXEC return stack while briefly adopting the parent's identity.
+ mov es,[ss:bp+6]
+ push word [es:0x2e]
+ push word [es:0x30]
  mov bx,[ss:bp+6]
  mov ah,0x50
  int 0x21
@@ -170,8 +175,11 @@ entry resize
  mov bx,[ss:bp-16]
  mov ah,0x50
  int 0x21
+ mov es,[ss:bp+6]
  pop ax
  popf
+ pop word [es:0x30]
+ pop word [es:0x2e]
  pop bx
  jmp status
 entry read

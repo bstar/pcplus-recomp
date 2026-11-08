@@ -711,6 +711,10 @@ _line_port_front_poll:
  push ds
  cld
  mov word [cs:busy],1
+%ifdef TERMINAL_COMPILER_LEASE_BRIDGE
+ cmp word [cs:owner_kind],4
+ je .load_admitted ; Authenticated flow-held compiler request owns this load.
+%endif
  cmp word [cs:owner_kind],1
  je .load_admitted
  call far _recording_ui_ready

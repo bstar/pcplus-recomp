@@ -19,6 +19,7 @@ def main(extension=None):
     if extension and extension.get('near_globals'):
         assert extension.get('alarm_vm')
         feature_flags+=['-DASPECT_NEAR_GLOBALS']
+    if extension and extension.get('compiler_parent_lease'):feature_flags+=['-DASPECT_COMPILER_PARENT_LEASE']
     if get_vm:
         assert extension.get('get_policy') and extension.get('get_display') and extension.get('alarm_vm')
         feature_flags+=['-DASPECT_GET_VM','-DASPECT_GET_SERVICE','-DASPECT_GET_CONTEXT','-DASPECT_GET_CONFIRM','-DASPECT_GET_COMMAND','-DASPECT_GET_BANK','-DASPECT_FILE_OWNED_WINDOW','-DASPECT_COMPILER_DIRECT_EXEC']
@@ -156,7 +157,7 @@ def main(extension=None):
                   experimental_alarm_VM=bool(extension and extension.get('alarm_vm')),
                   experimental_get_display=bool(extension and extension.get('get_display')),
                   experimental_get_policy=bool(extension and extension.get('get_policy')),
-                  experimental_get_VM=get_vm,
+                  experimental_get_VM=get_vm,experimental_compiler_parent_lease=bool(extension and extension.get('compiler_parent_lease')),
                   experimental_owned_read_window=get_vm,
                   experimental_compiler_direct_exec=get_vm,
                   experimental_near_globals=bool(extension and extension.get('near_globals')),

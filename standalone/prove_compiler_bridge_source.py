@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+"""Cold rebuild and exact full-parent DOS replay of the opt-in compiler bridge.
+
+No originals, prior objects or ancestor Git are available inside the export.
+This proves only the supplied emulator cases, not physical or full ASPECT parity.
+"""
+import argparse, hashlib, json, os, subprocess, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+def sha(path):
+ return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+def main():
+ p = argparse.ArgumentParser(description=__doc__)
+ for name in ('parent', 'child', 'compiler', 'output'):
+  p.add_argument('--'+name, type=Path, required=True)
+ p.add_argument('--checks', type=Path, action='append', required=True)
+ a = p.parse_args(); out = a.output.resolve()
+ assert out.is_relative_to(ROOT/'build') and not out.exists()
+ manifests = [json.loads((folder/'manifest.json').read_text()) for folder in (a.parent,a.child,a.compiler)]
+ parent,child,compiler = manifests
+ assert parent['experimental_compiler_lease_bridge']
+ assert child['experimental_compiler_parent_lease'] and compiler['experimental_get_compiler']
+ sources = {}
+ for folder,leaf,m in zip((a.parent,a.child,a.compiler),('TERMINAL.EXE','ASPECT.EXE','ASPCOMP.EXE'),manifests):
+  assert sha(folder/leaf)==m['binary_sha256'] and m.get('original_inputs',[])==[]
+  for name,digest in m['sources'].items():
+   assert name not in sources or sources[name]==digest,name
+   sources[name]=digest
+ extras = ['standalone/prove_compiler_bridge_source.py','standalone/keymap_connection_candidate_recipe.json',
+  'standalone/test_aspect_get_vm_dos.py','standalone/test_aspect_renderer_dos.py',
+  'standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py',
+  'standalone/modem_fixtures.py','standalone/directory_test_support.py','standalone/terminal_config_fixtures.py',
+  'src/aspect/compiler.py']
+ for name in extras:sources[name]=sha(ROOT/name)
+ reports=[json.loads(path.read_text()) for path in a.checks]
+ assert any(r.get('source_lease_cases') and len(r['cases'])==2 for r in reports)
+ for r in reports:
+  assert r['passed'] and r['GET_VM'] and r['GET_compiler_sha256']==compiler['binary_sha256']
+  assert r['checker_sha256']==sources['standalone/test_aspect_get_vm_dos.py']
+  for case in r['cases']:
+   assert case['binary_sha256']==parent['binary_sha256']
+ out.mkdir(); fresh=out/'source'
+ for name,digest in sources.items():
+  n=Path(name)
+  assert not n.is_absolute() and '..' not in n.parts
+  assert n.parts[0] in ('src','standalone','reconstruction','resources')
+  assert n.suffix in ('.c','.h','.asm','.inc','.py','.json','.txt')
+  assert sha(ROOT/n)==digest,name
+  target=fresh/n;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/n).read_bytes())
+ env=dict(os.environ,GIT_CEILING_DIRECTORIES=str(out))
+ assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode
+ def run(args):
+  with (out/'replay.log').open('a') as log:
+   subprocess.run([sys.executable,*args],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
+ recipe=json.loads((fresh/'standalone/keymap_connection_candidate_recipe.json').read_text())
+ run(['standalone/build_terminal.py',*recipe['terminal_flags'],'--aspect-get-display','--aspect-get-policy',
+      '--compiler-lease-bridge','--output-dir','build/parent'])
+ assert child['startup_heap_growth_bytes'] in (128,256,512)
+ run(['-c','import json,sys;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path("build/child").resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,get_display=True,get_policy=True,get_vm=True,near_globals=True,compiler_parent_lease=True,heap_growth_bytes='+str(child['startup_heap_growth_bytes'])+',**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
+ run(['standalone/build_aspect_compiler_dos.py','--get','--output','build/compiler'])
+ artifacts={}
+ for folder,leaves,original in [('parent',('TERMINAL.EXE','PCCOMP.OVL','PCLINE.OVL','PCMETA.OVL'),a.parent),
+                                ('child',('ASPECT.EXE',),a.child),('compiler',('ASPCOMP.EXE',),a.compiler)]:
+  for leaf in leaves:
+   assert sha(fresh/'build'/folder/leaf)==sha(original/leaf),leaf
+   artifacts[leaf]=sha(original/leaf)
+ replays=[]
+ families=('source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
+ for i,(path,r) in enumerate(zip(a.checks,reports)):
+  leaf='build/replay-'+str(i)
+  flags=['--'+key.replace('_','-') for key in families if r.get(key)]
+  flags += ['--'+key.replace('_','-') for key in ('allocation_probe','stream_probe') if r.get(key)]
+  if 'get_watch_data:' in (path.parent/r['cases'][0]['case']/'observer.asm').read_text():flags+=['--watchdog']
+  run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child',
+       '--get-compiler-dir','build/compiler','--cpu',r['emulated_cpu'],'--output',leaf,*flags])
+  replay=json.loads((fresh/leaf/'checks.json').read_text())
+  assert replay['passed'] and len(replay['cases'])==len(r['cases'])
+  for old,new in zip(r['cases'],replay['cases']):
+   for key in ('case','checks','passive_observer_header','child_exit_probe','memory_before_EXEC',
+               'observer_sha256','observer_source_sha256','allocation_probe','compiler_EXEC_memory',
+               'GET_generations','GET_error_retirement','GET_pending_WHEN_gate','GET_waiting_before_WHEN','GET_observed_width'):
+    assert old.get(key)==new.get(key),(old['case'],key)
+   assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
+  replays.append(dict(cases=len(replay['cases']),checks_sha256=sha(fresh/leaf/'checks.json'),
+                      source_lease_cases=replay.get('source_lease_cases',False)))
+ for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
+ result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,sources=sources,source_count=len(sources),
+             artifacts=artifacts,replays=replays,DOS_cases=sum(r['cases'] for r in replays),
+             scope=__doc__,physical_verified=False,installed_changed=False)
+ (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
+ print('PASS compiler bridge cold source:',len(sources),'sources;',result['DOS_cases'],'exact DOS cases')
+
+if __name__=='__main__':main()

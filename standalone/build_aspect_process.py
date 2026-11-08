@@ -7,13 +7,14 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False):
     assert heap_growth_bytes is None or heap_growth_bytes in (128,256,512)
     assert heap_growth_bytes is None or register_handoff
     if snapshot_lease:assert parent_render and notice_input
     if alarm_vm:assert snapshot_lease and notice_sound
     if emulate_vm:assert alarm_vm
     if near_globals:assert alarm_vm
+    if compiler_parent_lease:assert get_vm and parent_render
     if get_vm:assert get_policy
     if get_policy:assert get_display
     if get_display:assert emulate_vm
@@ -152,6 +153,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     extension['get_policy']=get_policy
     extension['get_vm']=get_vm
     extension['near_globals']=near_globals
+    extension['compiler_parent_lease']=compiler_parent_lease
     if driver:extension['driver']=driver;extension['sources'].append(driver)
     runner.main(extension)
     if notice_bank:

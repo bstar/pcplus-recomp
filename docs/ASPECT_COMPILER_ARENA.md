@@ -1,5 +1,9 @@
 # Whole compiler kernel in the parent arena
 
+The next [live compiler checkpoint](ASPECT_COMPILER_BRIDGE.md) implements the
+opt-in child bridge and exercises actual full-parent source compilation. The
+startup-only arrangement and measurements below describe the earlier checkpoint.
+
 The complete lease kernel is now a source-linked cold module instead of a large
 permanent addition to the parent. All27 existing full-parent GET regressions pass
 again, including the lifetime/WHEN cases that failed with the resident kernel.

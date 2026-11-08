@@ -66,7 +66,12 @@ static unsigned end_wait_started;
 #else
 static unsigned active,end_wait_started;
 #endif
+#ifdef ASPECT_COMPILER_PARENT_LEASE
+unsigned runtime_compiler_scope_state;
+#define compiler_scope runtime_compiler_scope_state
+#else
 static unsigned compiler_scope;
+#endif
 extern void __interrupt __far runtime_divide_interrupt(void);
 #if defined(ASPECT_EXTERNAL_PROCESS)
 #if !defined(NATIVE_PROGRAM_NOTICES)

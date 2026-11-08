@@ -1,13 +1,20 @@
 # Full application reconstruction checklist
 
-[Whole-kernel arena loading](ASPECT_COMPILER_ARENA.md) restores all27 existing
+[Live compiler bridge](ASPECT_COMPILER_BRIDGE.md) now runs the actual DOS source
+compiler under the complete parent for startup and EXECUTE, then returns through
+GET and ordinary terminal input. This opt-in capability23 checkpoint preserves
+DOS's suspended parent return stack across temporary CurrentPDB changes and uses
+256-byte heap growth without smaller capacities. It remains unselected; see its
+validation record and remaining fault/hardware gates.
+
+The earlier [whole-kernel arena checkpoint](ASPECT_COMPILER_ARENA.md) restored all27 existing
 full-parent GET regressions, including lifetime/WHEN and the live-stream case.
 The kernel is a3,522-byte cold module; only752 aligned bytes are added
 permanently. Actual startup loading/init/release and five file/fixup refusal
 cases pass and reproduce in a742-source diagnostic rebuild;737 sources
 reproduce the ordinary parent/modules. Existing Meta/Line routes pass. The
-frontend remains parent/startup-only: live source compiler admission and
-full-parent source startup/EXECUTE are still open. No release promotion.
+frontend was parent/startup-only; its live source bridge is advanced by the
+checkpoint above. Neither checkpoint promotes a release.
 
 [Compact compiler leasing](ASPECT_COMPILER_RETAINED.md) reduces the resident
 module from2,902 to2,177 bytes before alignment. Six ordinary full-parent GET

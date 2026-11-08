@@ -37,7 +37,7 @@ def main():
  assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode
  recipe=json.loads((fresh/'standalone/keymap_connection_candidate_recipe.json').read_text())
  with (out/'replay.log').open('w') as log:
-  subprocess.run([sys.executable,'standalone/build_terminal.py',*recipe['terminal_flags'],'--aspect-get-display','--aspect-get-policy',('--compiler-lease-arena-probe' if m.get('diagnostic_compiler_lease_arena_probe') else '--compiler-lease-arena' if m.get('experimental_compiler_lease_arena') else '--compiler-lease-module'),'--output-dir','build/parent'],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
+  subprocess.run([sys.executable,'standalone/build_terminal.py',*recipe['terminal_flags'],'--aspect-get-display','--aspect-get-policy',('--compiler-lease-bridge' if m.get('experimental_compiler_lease_bridge') else '--compiler-lease-arena-probe' if m.get('diagnostic_compiler_lease_arena_probe') else '--compiler-lease-arena' if m.get('experimental_compiler_lease_arena') else '--compiler-lease-module'),'--output-dir','build/parent'],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
  replay=fresh/'build/parent';r=json.loads((replay/'manifest.json').read_text())
  for key in ['binary_sha256','experimental_compiler_lease_module','memory_layout','line_port_overlay','meta_editor_overlay']:
   assert r[key]==m[key],key

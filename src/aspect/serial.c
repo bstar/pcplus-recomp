@@ -31,7 +31,12 @@ extern unsigned __cdecl aspect_render_attach(void);
 #endif
 static aspect_serial_handoff __far *handoff;
 static unsigned char input_translation[256];
+#ifdef ASPECT_COMPILER_PARENT_LEASE
+unsigned aspect_serial_compile_pause_owned;
+#define compile_pause_owned aspect_serial_compile_pause_owned
+#else
 static unsigned compile_pause_owned;
+#endif
 #if defined(ASPECT_EXTERNAL_PROCESS)
 const unsigned aspect_process_serial_c_guards=1;
 #endif

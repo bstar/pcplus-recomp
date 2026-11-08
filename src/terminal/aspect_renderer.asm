@@ -41,6 +41,11 @@ CPU 8086
   %define RENDER_CAPABILITY 22
  %endif
 %endif
+%ifdef TERMINAL_COMPILER_LEASE_BRIDGE
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 23
+ extern _compiler_overlay_bridge,_compiler_overlay_loaned,_compiler_overlay_retire
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
 extern terminal_program_active,terminal_program_kind
@@ -197,6 +202,9 @@ terminal_render_prepare:
  retf
 
 terminal_render_revoke:
+%ifdef TERMINAL_COMPILER_LEASE_BRIDGE
+ call far _compiler_overlay_retire
+%endif
 %ifdef ASPECT_GET_DISPLAY
  call field_retire
  push ax
@@ -329,6 +337,15 @@ render_body:
  call field_client_check
  or ax,ax
  jnz .done
+%ifdef TERMINAL_COMPILER_LEASE_BRIDGE
+ cmp di,27
+ je .compiler
+ cmp di,28
+ je .compiler
+ call far _compiler_overlay_loaned
+ or ax,ax
+ jnz .state
+%endif
  cmp di,21
  jb .field_competing
  cmp di,26
@@ -416,6 +433,34 @@ render_body:
  xor ax,ax
 .done:
  ret
+%ifdef TERMINAL_COMPILER_LEASE_BRIDGE
+.compiler:
+ or bx,bx
+ jnz .operand
+ cmp di,28
+ je .compiler_call
+ call field_owned
+ or ax,ax
+ jnz .state
+ mov ax,[cs:render_program_owned]
+ or ax,[cs:render_snapshot_owned]
+ or ax,[cs:terminal_script_window_active]
+ or ax,[cs:terminal_script_confirm_active]
+ jnz .state
+ mov ax,12
+ xor bx,bx
+ call resident_bridge_callback
+ cmp ax,0xc100
+ jne .state
+.compiler_call:
+ mov ax,di
+ sub ax,27
+ push word [cs:render_child_psp]
+ push ax
+ call far _compiler_overlay_bridge
+ add sp,4
+ ret
+%endif
 %ifdef ASPECT_EMULATE_POLICY
 .emulate:
  cmp word [_script_handoff+22],0

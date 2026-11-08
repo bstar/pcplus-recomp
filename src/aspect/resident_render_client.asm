@@ -220,3 +220,47 @@ SEGMENT _DATA public class=DATA use16
 SEGMENT _BSS public class=BSS use16
 SEGMENT STACK stack class=STACK use16
 GROUP DGROUP _DATA _BSS STACK
+
+%ifdef ASPECT_COMPILER_PARENT_LEASE
+; Emergency recovery uses BIOS only, never a renderer touching an invalid tail.
+SEGMENT COMPILERWAIT_CODE public align=16 class=FARCODE use16
+global _aspect_compiler_recovery_wait
+_aspect_compiler_recovery_wait:
+ pushf
+ push ax
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push bp
+ push ds
+ push es
+ sti
+ cld
+ mov si,recovery_text
+.next:
+ mov al,[cs:si]
+ inc si
+ or al,al
+ jz .key
+ mov ah,0x0e
+ xor bx,bx
+ int 0x10
+ jmp .next
+.key:
+ xor ax,ax
+ int 0x16
+ pop es
+ pop ds
+ pop bp
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop ax
+ popf
+ retf
+recovery_text: db 13,10,'ASPECT memory restore incomplete. Repair media; press a key to retry.',13,10,0
+%endif
