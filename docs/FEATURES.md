@@ -3552,3 +3552,27 @@ export reproduces all eight selected products and replays all five cases.
 This is an experimental component gate: new-child BBS/package, loader I/O and
 lease-fault coverage, fallback contexts, physical acceptance and full parity
 remain open. No installation or selector changed. Host remains last.
+
+
+## Snapshot-profile BBS integration (2026-11-08)
+
+The70f6e1e7 interpreter now passes the current-image Enigma carrier test through
+the actual loopback SynthModem Telnet proxy:18 checks, two source-script logins,
+4096-byte deliberate partial loss, same-process reconnect and exact65539-byte
+retry with protocol closure, subsequent menu input and normal exit. An independent
+raw capture audit passes; the unchanged capture is accepted and15 altered copies
+are rejected. The established150000ms transfer window remains unchanged.
+
+Synchronet passes22 editor/input/server-integrity checks. Independent screen and
+size-probe audits confirm1920 matching cells, cursor5,8 and NAWS80x24. The selected
+new interpreter and unchanged a0e1b082 terminal are bound by the
+[snapshot integration record](validation/aspect-help-snapshot-integration.json),
+along with the267-check Help/ten-product cold rebuild,95 resource-failure checks,
+352 compiler-failure checks and22 isolated DOS allocator assertions.
+
+These results close the listed software regressions for the new interpreter.
+They do not close full-profile lease fault/loader I/O coverage, the complete
+connection-release matrix, physical modem/SIP/adapter acceptance or full ASPECT
+parity. The ten-product lab bundle has not been promoted to the installed selector.
+No private configuration/history, live bridge or workstation networking changed.
+Host remains last.

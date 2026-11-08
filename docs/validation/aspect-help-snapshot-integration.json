@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "original_inputs": [],
+  "artifacts": {
+    "TERMINAL.EXE": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8",
+    "PCLINE.OVL": "6e8253bb12b242b55b0987bd6850c16c053be605f2fa7447c159b23ab2604fb4",
+    "PCMETA.OVL": "ab929d876b1fcff4c51e136fb3e764231828dc88b6e4bf6ebc9039b94dc900b6",
+    "PCCOMP.OVL": "7067e4db661cb39e0d8e7336179fccd8d8cacebb2001a2f7a94dbf7cec0dffca",
+    "ASPECT.EXE": "70f6e1e7a0e5b0455f72182f2cddfe71d4808e9cd2c1a7b0ea0cae4d5ba44b57",
+    "ASPCOMP.EXE": "1db52316f671b43663395abc7de41925abfe1205fffb930bdb5d6dae70f98a14",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195"
+  },
+  "experimental": true,
+  "release_eligible": false,
+  "physical_verified": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "cold_source_files": 1073,
+  "cold_Help_cases": 5,
+  "cold_Help_checks": 267,
+  "cold_GET_cases": 2,
+  "compiler_failure_cases": 8,
+  "compiler_failure_checks": 352,
+  "allocator_stub_DOS_checks": 22,
+  "lab_contract_checks": 13,
+  "Enigma_checks": 18,
+  "Enigma_partial_bytes": 4096,
+  "Enigma_retry_bytes": 65539,
+  "Enigma_capture_controls": 16,
+  "Synchronet_checks": 22,
+  "Synchronet_screen_audit_checks": 10,
+  "receipts": {
+    "build/help-snapshot-package-cold-20261108/result.json": "349aca67e98ee048b875037970f6a6dd62e3c857b21b744538425535e1c5d35d",
+    "build/help-snapshot-lab-20261108/package.json": "0f8ff657c4ee0d48a9375a69ea358db7d8f225a4a7854272bce4cc3bf8c6569f",
+    "build/help-snapshot-lab-contract-20261108/result.json": "a56b7238f254768e8b80e224dc80b81514416d4942b3444e7cc4c3e978661ca3",
+    "build/notice-help/help-snapshot-missing-20261108/result.json": "f8e0beb08e35c3a56d2cec71f5d99c26a27c7a14c0680b2c33ae417aec62d042",
+    "build/notice-help/help-snapshot-bad-20261108/result.json": "95e29301b6d756289e37cfcb1e5aba44d0dc36c43049b30cdca7ce8c3e63e50b",
+    "build/help-snapshot-allocator-faults-v3-20261108/result.json": "a6bc0f12ac6d52469ff3a7d1f0b663be126b5e13cec177f5ddd0411f49334cba",
+    "build/help-snapshot-compiler-faults-20261108/checks.json": "2f7a233fedecbe317e402959cae86ba39990936cfc97b1fb2f86f1f1721b5864",
+    "build/bbs-lab/results/enigma/help-snapshot-enigma-20261108/carrier-checks.json": "270a3fd72b76c0696652b9f460f9ae23e4546ac6283fced6bce5009bb90315e0",
+    "build/help-snapshot-carrier-audit-20261108/result.json": "0ad47816bba2f9372d2a9c14b63b91756d103b7e2e4f8b38adc8b181005b9d10",
+    "build/help-snapshot-carrier-controls-20261108/result.json": "043ea771bb6e23f92a6181303a014cf07b9b9b095d684c0f8cff49ec472d18bf",
+    "build/bbs-lab/results/synchronet/help-snapshot-synchronet-20261108/proxy-integration.json": "13072a5aaa146177fbc3df58eb68a0f1e5bfa072126cd93318cf1f3cc13d9eae",
+    "build/bbs-lab/results/synchronet/help-snapshot-synchronet-20261108/screen-reference-audit.json": "6c93846ef444ae7b3e051bc91d9d66877ffe23f160d8e726dbe58bec9f3a6d0a",
+    "build/bbs-lab/results/synchronet/help-snapshot-synchronet-20261108/size-probe-screen-audit.json": "9e3ba70fede0907b148522238f0db3d609a099676549505b70744a8ab2de6214"
+  },
+  "sources": {
+    "standalone/help_snapshot_allocator_diagnostic.c": "9c980cb31b500694af7711efe04c76f171ea3a0d07b89c344590e0d1750c500e",
+    "standalone/test_help_snapshot_allocator_dos.py": "c5724766e0bcd4f7c5a76e52129f8dd8836eb4f42c04d54b63f1d2762261f636"
+  },
+  "limits": [
+    "Full-parent resource failure, runtime compiler refusal and current-image BBS gates pass; this is not a full connection release.",
+    "Allocator test uses production resource_heap.c in DOS with stub services; it does not prove real RPC refusal, malformed pointer publication or outer unwind.",
+    "Enigma uses actual loopback SynthModem Telnet proxy and virtual DCD, explicit UMB/COM3 IRQ5 19200 HARD; no DSP/SIP/analog hardware.",
+    "Synchronet editor screen equals reference across1920 cells; this does not establish every BBS screen or emulation.",
+    "Full-profile lease faults, loader-file I/O/lifetime matrix and complete connection-package gates remain open.",
+    "No physical deployment, private settings/history, live bridge or workstation network changes. Full original parity remains incomplete; Host last."
+  ]
+}

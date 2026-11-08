@@ -116,3 +116,31 @@ still need explicit coverage for this profile. The prior Enigma/Synchronet recei
 apply to822897f0; new-child BBS and complete package checks remain open. No installed
 selector, card, private settings/history, live bridge or workstation network changed.
 Physical acceptance and full ASPECT parity remain unverified; Host remains last.
+
+
+## Failure and bundle follow-up (2026-11-08)
+
+The same70f6e1e7 interpreter passes missing-resource47 and malformed-resource48
+full-parent checks, including exact screen restoration and resumed terminal input.
+The ten-product schema2 lab bundle passes13 companion integrity/semantic checks.
+An isolated1073-file source export reproduces all ten products, replays all five
+Help cases (267 checks) and both source-compiler/GET cases. Eight additional
+startup/EXECUTE cases reject missing, corrupt or truncated compiler modules and
+source syntax errors (352 checks), preserving typed exits and parent return.
+
+`test_help_snapshot_allocator_dos.py` compiles the production `resource_heap.c`
+with stub parent/private allocation services and executes it on an8086 DOS CPU.
+Its22 assertions exercise refused acquisition, wrong-pointer release, repeated
+allocation, release refusal followed by retry, retained ownership after failure,
+and choosing the releasing service from the original allocator even if the
+context changes. The test fixture uses explicit far NULL returns: Watcom's
+conditional near-pointer conversion otherwise produces DS:0, which is not a
+far NULL. The initial fixture failures were corrected without changing the
+application. This test does not exercise RPC pointer publication, the real parent
+refusal path or complete outer unwind; those full-profile fault gates stay open.
+
+
+The new interpreter also passes the Enigma virtual-carrier/retry test and
+Synchronet editor/screen regressions. See the
+[integration record](validation/aspect-help-snapshot-integration.json) for their
+exact scope and identities. Full connection-release and physical gates stay open.
