@@ -3456,5 +3456,13 @@ The optional [exact disk-snapshot experiment](DISK_SNAPSHOT_EXPERIMENT.md) passe
 checks; the old adapter passes8,819 controls and disabled application bytes stay
 exact. The larger experimental child fails earlier during file opening, so it
 is rejected for deployment. A corrected standard-overlay ABI probe and plain
-control each pass300 callbacks with DS=SS; actual application overlay lifetimes,
-unwind and memory admission still require implementation and verification.
+control each pass300 callbacks with DS=SS.
+
+The opt-in [application overlay experiment](ASPECT_STANDARD_OVERLAYS.md) fixes
+manager-table and preloaded-data ordering and passes six standalone bootstrap
+launches, one full-parent GET/open-stream case and two WHEN divide/cancellation
+cases. Its measured minimum allocation is2224 bytes below the disk-snapshot
+control, whose disabled bytes remain exact. The heavy six-file/graphics PROGRAM
+case still fails with runtime-state error10 at opcode9B/step20. Full Help,
+overlay eviction/unwind, compiler lending, cold rebuild and capacity acceptance
+remain open; no package is promoted or deployed.

@@ -4,6 +4,9 @@
 BITS 16
 CPU 8086
 %macro GET_ENTRY 2
+ %ifdef GET_BANK_ROOT_ONLY
+ extern %1 %+ _far
+ %endif
  global %1
  %1:
  %if %2=0
@@ -44,6 +47,7 @@ CPU 8086
  retf
  %endif
 %endmacro
+%ifndef GET_BANK_OVERLAY_ONLY
 SEGMENT _TEXT public class=CODE use16
 %include "get_bank.inc"
 extern runtime_get_abort_gate_impl,aspect_abort_recovered,runtime_alarm_abort_gate
@@ -52,6 +56,7 @@ runtime_get_abort_gate: jmp far runtime_get_abort_gate_impl
 global get_bank_abort_resident,get_bank_alarm_resident
 get_bank_abort_resident: jmp aspect_abort_recovered
 get_bank_alarm_resident: jmp runtime_alarm_abort_gate
+%endif
 %unmacro GET_ENTRY 2
 %unmacro GET_CALLBACK 3
 %macro GET_ENTRY 2
@@ -76,13 +81,21 @@ get_bank_alarm_resident: jmp runtime_alarm_abort_gate
  %endif
 %endmacro
 %macro GET_CALLBACK 3
+ %ifdef GET_BANK_OVERLAY_ONLY
+ extern %1 %+ _resident
+ %endif
  global %1
  %1:
  call far %1 %+ _resident
  ret
 %endmacro
+%ifndef GET_BANK_ROOT_ONLY
+%ifdef GET_BANK_OVERLAY_ONLY
+extern get_bank_abort_resident,get_bank_alarm_resident
+%endif
 SEGMENT GET_VM_CODE public align=16 class=FARCODE use16
 %include "get_bank.inc"
 global get_bank_abort,get_bank_alarm
 get_bank_abort: jmp far get_bank_abort_resident
 get_bank_alarm: jmp far get_bank_alarm_resident
+%endif

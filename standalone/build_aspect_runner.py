@@ -89,7 +89,7 @@ def main(extension=None):
     if get_vm:
         serial_asm += [('compiler_exec','src/aspect/compiler_exec.asm',None)]
         from build_get_bank import build as build_get_bank
-        get_objects,get_sources=build_get_bank(output,feature_flags)
+        get_objects,get_sources=build_get_bank(output,feature_flags,overlay_ready=bool(extension and extension.get('overlay_ready')))
         objects+=get_objects;sources+=get_sources
     for name, relative, define in ASM+serial_asm:
         source, obj = ROOT / relative, output / (name + '.obj')

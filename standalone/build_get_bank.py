@@ -4,7 +4,7 @@ import re,struct,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
-def build(output,flags):
+def build(output,flags,overlay_ready=False):
  own=['runtime_get_command_run','runtime_get_command_recover','runtime_get_command_ready','runtime_get_command_retained','runtime_get_command_execute',
       'runtime_get_native','runtime_get_native_active','runtime_get_native_aborted','runtime_get_native_generation',
       'runtime_get_context_policy','runtime_get_context_parent_policy','runtime_get_context_enter','runtime_get_context_leave',
@@ -36,7 +36,11 @@ def build(output,flags):
   source=ROOT/'src/aspect'/(name+'.asm');obj=output/(name+'-bank.obj');sources.append(source)
   aliases=[] if name in ('get_runtime_storage','get_vm_bindings','get_bank') else ['-D'+n+'='+v for n,v in asm_aliases.items()]
   bank=[] if name in ('get_runtime_storage','get_vm_bindings','get_bank') else ['-D_TEXT=GET_VM_CODE','-DCODE=FARCODE']
-  subprocess.run(['nasm','-fobj','-I'+str(ROOT/'reconstruction/uart')+'/','-I'+str(ROOT/'src/aspect')+'/',*flags,*bank,*aliases,str(source),'-o',str(obj)],check=True);objects.append(str(obj))
+  modes=[('get_bank_root','GET_BANK_ROOT_ONLY'),('get_bank_overlay','GET_BANK_OVERLAY_ONLY')] if overlay_ready and name=='get_bank' else [(name,None)]
+  for leaf,mode in modes:
+   obj=output/(leaf+'-bank.obj')
+   extra=(['-D'+mode] if mode else [])+(['-DGET_RESIDENT_CHECKPOINT'] if overlay_ready and name=='get_checkpoint' else [])
+   subprocess.run(['nasm','-fobj','-I'+str(ROOT/'reconstruction/uart')+'/','-I'+str(ROOT/'src/aspect')+'/',*flags,*bank,*aliases,*extra,str(source),'-o',str(obj)],check=True);objects.append(str(obj))
  sources += [ROOT/'src/aspect'/n for n in ('get_runtime.h','get_context.h','get_command.h','get_checkpoint.h','get_field.h','get_native_field.h')]
  return objects,sources
 

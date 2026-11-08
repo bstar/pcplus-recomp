@@ -7,8 +7,9 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False,defer_help_resource=False,disk_script_snapshots=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False,defer_help_resource=False,disk_script_snapshots=False,overlay_ready=False):
     assert not defer_help_resource or help_resource
+    assert not overlay_ready or (get_vm and help_resource)
     assert not disk_script_snapshots or (defer_script_buffers and not buffer_probe)
     assert heap_growth_bytes is None or heap_growth_bytes in (128,256,512)
     assert heap_growth_bytes is None or register_handoff
@@ -102,7 +103,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
             objects += [str(ROOT/'build/speaker'/name) for name in ('speaker.obj','backend.obj')]
         if notice_input:
             from build_notice_input_bank import build as build_input
-            input_objects,input_sources=build_input(output,help_view=notice_help,help_diagnostic=notice_help and focused_notice,help_resource=help_resource,defer_help_resource=defer_help_resource)
+            input_objects,input_sources=build_input(output,help_view=notice_help,help_diagnostic=notice_help and focused_notice,help_resource=help_resource,defer_help_resource=defer_help_resource,overlay_ready=overlay_ready)
             objects += input_objects;sources += [ROOT/x for x in input_sources]
             runtime=output/'notice-input-runtime.obj'
             subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',*flags,'-nt=NOTICECODE','-fo='+str(runtime),str(ROOT/'src/ui/notice.c')],cwd=output,check=True)
@@ -156,6 +157,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     extension['defer_script_buffers']=defer_script_buffers
     extension['buffer_probe']=buffer_probe
     extension['disk_script_snapshots']=disk_script_snapshots
+    extension['overlay_ready']=overlay_ready
     extension['alarm_vm']=alarm_vm
     extension['emulate_vm']=emulate_vm
     extension['get_display']=get_display
@@ -175,6 +177,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
         result['experimental_help_resource']=help_resource
         if defer_help_resource:result['experimental_deferred_help_resource']=True
         if disk_script_snapshots:result['experimental_disk_script_snapshots']=True
+        if overlay_ready:result['experimental_overlay_layout_ready']=True
         result['notice_PROGRAM_binding_accepted']=False
         path.write_text(json.dumps(result,indent=2)+'\n')
 

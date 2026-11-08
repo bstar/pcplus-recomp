@@ -3,6 +3,11 @@
 ; runtime; this layer never changes it or commits a destination after abort.
 BITS 16
 CPU 8086
+%ifdef GET_RESIDENT_CHECKPOINT
+ %define GET_STATE_SEG ss
+%else
+ %define GET_STATE_SEG cs
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern aspect_get,aspect_abort_recovered
 %ifdef ASPECT_ALARM_VM
@@ -11,16 +16,24 @@ extern aspect_get,aspect_abort_recovered
 global _runtime_get_native,_runtime_get_native_active
 global _runtime_get_native_aborted,_runtime_get_native_generation,runtime_get_abort_gate
 _runtime_get_native_generation:
- mov ax,[cs:get_generation]
+ mov ax,[GET_STATE_SEG:get_generation]
  ret
 _runtime_get_native_active:
- mov ax,[cs:get_checkpoint]
+ mov ax,[GET_STATE_SEG:get_checkpoint]
  ret
 _runtime_get_native_aborted:
- mov ax,[cs:get_aborted]
+ mov ax,[GET_STATE_SEG:get_aborted]
  ret
 _runtime_get_native:
- cmp word [cs:get_checkpoint],0
+%ifdef GET_RESIDENT_CHECKPOINT
+ ; Check the actual resident data stack before using SS-relative state.
+ ; Unlike overlaid CS, SS remains valid when a native fault changes DS.
+ mov ax,ss
+ mov dx,DGROUP
+ cmp ax,dx
+ jne .context
+%endif
+ cmp word [GET_STATE_SEG:get_checkpoint],0
  jne .busy
  ; Do not arm a checkpoint on a foreign data stack or with IF disabled.
  push ds
@@ -40,18 +53,18 @@ _runtime_get_native:
  push di
  push bx
  push es
- mov [cs:get_saved_ss],ss
- mov [cs:get_saved_sp],sp
+ mov [GET_STATE_SEG:get_saved_ss],ss
+ mov [GET_STATE_SEG:get_saved_sp],sp
  ; Capture flags after entry guards. The C ABI does not promise incoming
  ; arithmetic flags; preserve this exact foreground IF/DF state on abort.
  pushf
- pop word [cs:get_saved_flags]
- inc word [cs:get_generation]
+ pop word [GET_STATE_SEG:get_saved_flags]
+ inc word [GET_STATE_SEG:get_generation]
  jnz .generation_ready
- inc word [cs:get_generation]
+ inc word [GET_STATE_SEG:get_generation]
 .generation_ready:
- mov word [cs:get_aborted],0
- mov word [cs:get_checkpoint],1
+ mov word [GET_STATE_SEG:get_aborted],0
+ mov word [GET_STATE_SEG:get_checkpoint],1
 %ifdef ASPECT_GET_CONTEXT
  extern _runtime_get_context_enter,_runtime_get_context_leave
  call _runtime_get_context_enter
@@ -64,17 +77,17 @@ _runtime_get_native:
  or ax,ax
  jnz runtime_get_abort_gate
 %endif
- mov word [cs:get_checkpoint],0
+ mov word [GET_STATE_SEG:get_checkpoint],0
 .return:
  pop es
  pop bx
  pop di
  pop si
  pop bp
- mov word [cs:get_saved_ss],0
- mov word [cs:get_saved_sp],0
- mov word [cs:get_saved_flags],0
- mov ax,[cs:get_aborted]
+ mov word [GET_STATE_SEG:get_saved_ss],0
+ mov word [GET_STATE_SEG:get_saved_sp],0
+ mov word [GET_STATE_SEG:get_saved_flags],0
+ mov ax,[GET_STATE_SEG:get_aborted]
  ret
 .busy:
  mov ax,2
@@ -83,19 +96,19 @@ _runtime_get_native:
  mov ax,3
  ret
 runtime_get_abort_gate:
- cmp word [cs:get_checkpoint],1
+ cmp word [GET_STATE_SEG:get_checkpoint],1
  jne .fallback
  mov ax,ss
- cmp ax,[cs:get_saved_ss]
+ cmp ax,[GET_STATE_SEG:get_saved_ss]
  jne .fallback
  cli
- mov ax,[cs:get_saved_ss]
+ mov ax,[GET_STATE_SEG:get_saved_ss]
  mov ss,ax
- mov sp,[cs:get_saved_sp]
+ mov sp,[GET_STATE_SEG:get_saved_sp]
  mov ds,ax
- mov word [cs:get_checkpoint],0
- mov word [cs:get_aborted],1
- push word [cs:get_saved_flags]
+ mov word [GET_STATE_SEG:get_checkpoint],0
+ mov word [GET_STATE_SEG:get_aborted],1
+ push word [GET_STATE_SEG:get_saved_flags]
  popf
  jmp _runtime_get_native.return
 .fallback:
@@ -103,6 +116,12 @@ runtime_get_abort_gate:
  jmp runtime_alarm_abort_gate
 %else
  jmp aspect_abort_recovered
+%endif
+%ifdef GET_RESIDENT_CHECKPOINT
+SEGMENT _DATA public class=DATA use16
+GROUP DGROUP _DATA
+global get_resident_checkpoint_state
+get_resident_checkpoint_state:
 %endif
 get_saved_ss: dw 0
 get_saved_sp: dw 0
