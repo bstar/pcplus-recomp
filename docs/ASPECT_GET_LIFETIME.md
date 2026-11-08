@@ -53,7 +53,8 @@ existing compiler/serial/CLI/file/MZ checks. The
 Compilation occurs before the full parent starts. The attached matrix uses
 DOS386/UMB,640KB and an owned synthetic modem peer. It does not establish
 three-process compiler residency, physical Boca/ATA/SynthModem/BBS behavior,
-full memory co-residency, WHEN actions during GET, repeated cancellations,
+full memory co-residency, event/error cases beyond the two
+[GET/WHEN scenarios](ASPECT_GET_WHEN.md), repeated cancellations,
 local/parameter/S0 fields, floating GET or whole-language parity.
 
 Earlier exploratory inputs are not runtime failures: one fixture used

@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[GET/WHEN composition](ASPECT_GET_WHEN.md) now passes immediate TRANSMIT and
+deferred plain/framed CALL with the full experimental parent/interpreter. A
+passive observer proves a field waiting before a pending native action and
+withholds input until that action is staged. Exact wire, cursor and ownership
+checks pass. Broader event/error combinations, physical/package acceptance and
+full F13 parity remain open.
+
 [GET lifetime tests](ASPECT_GET_LIFETIME.md) now pass four consecutive fields
 and a separate EXECUTE transition under the complete capability22 keymap parent.
 Actual host/DOS-compiled programs verify fresh field generations, retained

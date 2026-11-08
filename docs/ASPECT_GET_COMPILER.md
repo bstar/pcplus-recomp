@@ -61,5 +61,6 @@ enable_get=True)`. Do not pair compiler-produced GET with the default interprete
 or deploy the experimental child alone under the installed capability20 parent.
 [Repeated GET and EXECUTE](ASPECT_GET_LIFETIME.md) now have two additional
 full-parent scenarios. Remaining gates include broader lifetime/error coverage,
-native WHEN actions, field policies,
+broader event/error coverage beyond the [WHEN action cases](ASPECT_GET_WHEN.md),
+field policies,
 floating support, full feature/memory co-residency and package/hardware admission.

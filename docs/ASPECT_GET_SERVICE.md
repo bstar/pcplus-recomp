@@ -1,5 +1,11 @@
 # GET keyboard and connection service
 
+The later [full-interpreter WHEN checkpoint](ASPECT_GET_WHEN.md) executes
+actual native TRANSMIT and deferred plain/framed CALL with a real parent/GET
+field. The component evidence below retains its modeled boundaries; the newer
+checkpoint does not establish all event/error/carrier combinations.
+
+
 The opt-in `ASPECT_GET_SERVICE` path adds an exclusive field keyboard lease to
 the actual WHEN runtime. It is not enabled in the maintained compiler, opcode49
 table or reviewed application package. The earlier [typed owner](ASPECT_GET.md)

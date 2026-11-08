@@ -1,0 +1,205 @@
+{
+  "checkpoint": "Native WHEN TRANSMIT and deferred plain/framed CALL with a live full-interpreter GET field",
+  "original_inputs": [],
+  "application_binary_changed": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "parent_sha256": "b25fe6d207e83e0ed1bd5ad2085aca719a324e4b2db9a0c01a0ec6c51f424d5b",
+  "child_sha256": "54590fd38a8c9992bc747d12b2ea330c6eb749f8bf7bbffcb2d9d4d0a0fe2ff1",
+  "GET_compiler_sha256": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+  "default_compiler_sha256": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+  "cold_source_count": 1040,
+  "cold_ancestor_git_unavailable": true,
+  "WHEN_cases": [
+    {
+      "name": "get-vm-when-plain",
+      "passed": true,
+      "field_waiting_before_WHEN": 1,
+      "native_CALL_gate_before_input": 1,
+      "checks": {
+        "renderer_post_sent": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_LOGIN.ASP": true,
+        "fixture_unchanged_LOGIN.ASX": true,
+        "fixture_unchanged_RENDER.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "online_trigger_chunks_sent": true,
+        "passive_EXEC_observed": true,
+        "child_exit_expected": true,
+        "parent_JFT_unchanged": true,
+        "all_parent_sink_owners_unchanged": true,
+        "explicit_password_only": true,
+        "ordinary_parent_keyboard_resumes": true,
+        "initial_CPR_before_password": true,
+        "no_automatic_redial": true,
+        "frozen_inputs": true,
+        "post_query_sent_after_password": true,
+        "post_return_cursor_coherent": true,
+        "video_0_0": true,
+        "far_history_retained_across_EXEC_return": true,
+        "far_history_bounds": true,
+        "native_renderer_updated_far_history": true,
+        "passive_observer_in_UMB": true,
+        "GET_typed_exit": true,
+        "script_reached_GET_boundary": true,
+        "BIOS_keys_after_field_admission": true,
+        "field_observed_before_WHEN_CALL": true,
+        "WHEN_CALL_staged_before_field_input": true,
+        "WHEN_transmit_and_worker_exact_once": true,
+        "no_bad_WHEN_output": true,
+        "GET_edited_value_reaches_peer": true
+      },
+      "child_exit_probe": {
+        "DS": 38036,
+        "errno": 0,
+        "error": 0,
+        "opcode": 148,
+        "compiler_calls": 0,
+        "file_status": 0
+      },
+      "wire_sha256": "9c02a7e63a905c24ab01dd4a38082fae01233e040be1c10ca89bd2bfeaa960ea"
+    },
+    {
+      "name": "get-vm-when-framed",
+      "passed": true,
+      "field_waiting_before_WHEN": 1,
+      "native_CALL_gate_before_input": 1,
+      "checks": {
+        "renderer_post_sent": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_LOGIN.ASP": true,
+        "fixture_unchanged_LOGIN.ASX": true,
+        "fixture_unchanged_RENDER.COM": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "online_triggers_sent": true,
+        "online_trigger_chunks_sent": true,
+        "passive_EXEC_observed": true,
+        "child_exit_expected": true,
+        "parent_JFT_unchanged": true,
+        "all_parent_sink_owners_unchanged": true,
+        "explicit_password_only": true,
+        "ordinary_parent_keyboard_resumes": true,
+        "initial_CPR_before_password": true,
+        "no_automatic_redial": true,
+        "frozen_inputs": true,
+        "post_query_sent_after_password": true,
+        "post_return_cursor_coherent": true,
+        "video_0_0": true,
+        "far_history_retained_across_EXEC_return": true,
+        "far_history_bounds": true,
+        "native_renderer_updated_far_history": true,
+        "passive_observer_in_UMB": true,
+        "GET_typed_exit": true,
+        "script_reached_GET_boundary": true,
+        "BIOS_keys_after_field_admission": true,
+        "field_observed_before_WHEN_CALL": true,
+        "WHEN_CALL_staged_before_field_input": true,
+        "WHEN_transmit_and_worker_exact_once": true,
+        "no_bad_WHEN_output": true,
+        "GET_edited_value_reaches_peer": true
+      },
+      "child_exit_probe": {
+        "DS": 38036,
+        "errno": 0,
+        "error": 0,
+        "opcode": 148,
+        "compiler_calls": 0,
+        "file_status": 0
+      },
+      "wire_sha256": "9c02a7e63a905c24ab01dd4a38082fae01233e040be1c10ca89bd2bfeaa960ea"
+    }
+  ],
+  "ordinary_GET_cases": 6,
+  "lifetime_GET_cases": 2,
+  "grammar_DOS_compilations": 324,
+  "compiler_regression_summary": "SOURCE_EXEC 24 cases 249 checks 0 failures",
+  "compiler_exact_output_files": 48,
+  "serial_compile_cases": 7,
+  "sources": {
+    "standalone/test_aspect_get_vm_dos.py": "24b519c1665324b839811288c52262eb3c53647e7e9af396c5a1520a2a2658f1",
+    "standalone/prove_get_vm_source.py": "e69b4d288eb44274abfed7585f1c035970801f64d1557cd5b66dfa5cfab3b976",
+    "src/aspect/when.asm": "65afd39e167e078ebc3c4c3eb83d3b03418c4d06aadf57b24b03f11836d8eea4",
+    "src/aspect/when_runtime.c": "2245e9daff3612863e72a56c54f839f0fe1a8e004a3dd1a18f45f35f2378e1f9",
+    "src/aspect/get_runtime.c": "4c180c16847d6d310d557d4405ae65f0002b8106d4d4f2161bbf901de0878aa8",
+    "docs/ASPECT_GET_WHEN.md": "b49bb24764b2fe7eb801d309afeadbde73db6e9cd8d878c3ad4630f801112c32",
+    "docs/ASPECT_GET_VM.md": "2cf4f0d073e08075bdab67fad632da9d46947b0d8b2acb7710505c1d251a2085",
+    "docs/ASPECT_GET_COMPILER.md": "dcefa0db3668061da4f72df03442533872f12716d0b1c6f74eb1357aa79f9466",
+    "docs/ASPECT_GET_LIFETIME.md": "1b85ec6361e69defc38ce83808b37382ae9dc279ec17e15a724306c640b3943f",
+    "docs/ASPECT_COMPILER_EXEC.md": "0ebc7a98a00840a69c5db0dcba4c2201330428b1521ded9a4cd81b5b7c27330a",
+    "docs/ASPECT_GET_SERVICE.md": "bd561cc68575a316676e26389b0088e417c606356e15d7902ca37f2612414faa",
+    "docs/ASPECT_WHEN_RUNTIME.md": "7092e7e8ae09fd25192609f4eacbf6cda9728edd37aed8b27868b2b23d898ff3",
+    "docs/FEATURES.md": "9fdcd4b9ce096cf5b5dc785a39710ed3ba886fe8d2a33f9fc50873021b2fa9f1"
+  },
+  "evidence": {
+    "build/get-when-final-20261107/checks.json": {
+      "sha256": "7a6de66d9a492ba3e978bffb7b0a7f2dbe5742927904e0271adb721610c67fbf",
+      "passed": true
+    },
+    "build/get-when-parent-source-20261107/result.json": {
+      "sha256": "6f22217a98fb3345280faeeb49e26e77012bf244c1b16ac81e3f3ddfd5ce1184",
+      "passed": true
+    },
+    "build/get-when-parent-source-20261107/source/build/dos/checks.json": {
+      "sha256": "d151937a39d560312cbf11690bcc560656b9529ba73ed8a816f148ea0245c4f8",
+      "passed": true
+    },
+    "build/get-when-parent-source-20261107/source/build/ordinary/checks.json": {
+      "sha256": "5848b1c6f221c9a055b33238dd5c6444b45b0c4fad891898c1811abecc65426e",
+      "passed": true
+    },
+    "build/get-when-parent-source-20261107/source/build/lifetime/checks.json": {
+      "sha256": "7800dd8d8db4e91445b738e8519a02ef8d2fe25a244726e91a7dae3b5ecf2601",
+      "passed": true
+    },
+    "build/get-when-parent-source-20261107/source/build/get-grammar/result.json": {
+      "sha256": "31780d6f393239102c428dc0fd0cdb8a78d20798250fce76ed353cd702004735",
+      "passed": true
+    },
+    "build/get-when-parent-source-20261107/source/build/compiler-exec/checks.json": {
+      "sha256": "815b943c72762ebdb1413632c1e3f7f682baa46a77df8f314b1e42e67509b2ca",
+      "passed": true
+    },
+    "build/get-when-parent-source-20261107/source/build/compiler-equivalence/result.json": {
+      "sha256": "1e6442e3676ee2a735c5d90162441b793453bf815a65a99e03849b1a2097f443",
+      "passed": true
+    },
+    "build/get-when-parent-source-20261107/source/build/compiler-serial/checks.json": {
+      "sha256": "bc9b80a60ffd08d96b7d732fcebce72b18130a3e3ae6a9a99fc06b8db86b3ba9",
+      "passed": true
+    }
+  },
+  "exploratory_notes": [
+    "First fixture stopped before parent execution: nested byte objects were not JSON-serializable; peer specifications now store text.",
+    "build/get-when-second-20261107 passed both scenarios with pending-gate samples; final run additionally records field waiting with gate0 before gate1.",
+    "Cold proof initially refused an existing output directory build/get-when-source-20261107, belonging to an older23-source diagnostic. Preserved it; canonical full-parent cold proof is build/get-when-parent-source-20261107."
+  ],
+  "limits": [
+    "Two ordered event-pair cases, one native CALL per field.",
+    "Multiple/rearmed/nested CALLs, handler errors/EXECUTE and cancellation/carrier-loss combinations remain open.",
+    "Local integer in framed WHEN body is exercised; GET local/parameter/S0 destinations are not established here.",
+    "DOS386/UMB640KB synthetic peer; no physical Boca/SPA2102/SynthModem/Enigma/Synchronet claim.",
+    "Compiler runs before full parent startup; three-process residency, full feature/memory co-residency, floating GET and whole-language/app parity remain open."
+  ]
+}

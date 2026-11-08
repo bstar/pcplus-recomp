@@ -45,11 +45,26 @@ def lifetime_definitions():
  return [dict(base,name='get-vm-repeat',source=repeat,direct_GET=True,field_batches=batches,field_BIOS_words=sum(batches,[]),expected_value_hex=b'B/-2/65536'.hex(),post_reply=renderer.ESC+b'[1;31R'),
   dict(base,name='get-vm-execute',source=chain,direct_GET=True,scripts={'NEXT':target},field_batches=[batches[0],batches[2],batches[1]],field_BIOS_words=sum([batches[0],batches[2],batches[1]],[]),expected_value_hex=b'<>B'.hex(),post_reply=renderer.ESC+b'[1;26R')]
 
+def when_definitions():
+ base=definitions()[0]
+ rows=[]
+ for framed in (False,True):
+  source=('integer hits\nstring value\nproc main\n'
+   'waitfor "LOGIN:" 5\nwhen 0 "PING" transmit "INLINE"\nwhen 1 "PONG" call worker\n'
+   'transmit "GETREADY"\nget value 10\nif hits != 1\ntransmit "BADCOUNT"\nendif\n'
+   'transmit value\ntransmit "^M"\ntransmit $D_PWORD\ntransmit "^M"\npause 1\nendproc\nproc worker\n'
+   +('integer local_value\nlocal_value=37\nif local_value != 37\ntransmit "BADLOCAL"\nendif\n' if framed else '')
+   +'hits=hits+1\ntransmit "WORKER"\nendproc\n')
+  rows.append(dict(base,name='get-vm-when-'+('framed' if framed else 'plain'),source=source,direct_GET=True,when_action=True,
+   expected_value_hex=b'INLINEWORKERLoC42'.hex(),peer_triggers=[('GETREADY',[(0.25,'PINGPONG')])]))
+ return rows
+
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--parent-dir',required=True,type=Path);p.add_argument('--child-dir',required=True,type=Path)
  p.add_argument('--output',required=True,type=Path);p.add_argument('--case',action='append')
  p.add_argument('--cpu',choices=('8086','386'),default='386')
+ p.add_argument('--when-cases',action='store_true',help='Run inline TRANSMIT and deferred plain/framed WHEN CALL during GET')
  p.add_argument('--lifetime-cases',action='store_true',help='Run repeated fields and EXECUTE with generation-conditioned BIOS input')
  p.add_argument('--get-compiler-dir',type=Path,help='Use actual opt-in DOS/Python GET compilation for ordinary cases; malformed EOF stays raw')
  p.add_argument('--disabled-control',action='store_true',help='Compare GET-disabled child: expect explicit unsupported after GETREADY')
@@ -67,8 +82,9 @@ def main():
  child_map=(child/'ASPECT.map').read_text();group=re.search(r'DGROUP\s+([0-9a-f]+):([0-9a-f]+)',child_map,re.I)
  child_base=int(group[1],16)*16+int(group[2],16)
  child_symbols={n:int(s,16)*16+int(o,16)-child_base for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)\s*$',child_map,re.M|re.I)}
- rows=lifetime_definitions() if a.lifetime_cases else definitions()
- if a.lifetime_cases:assert a.get_compiler_dir and not a.disabled_control
+ assert not (a.when_cases and a.lifetime_cases)
+ rows=when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
+ if a.lifetime_cases or a.when_cases:assert a.get_compiler_dir and not a.disabled_control
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
@@ -147,7 +163,7 @@ def main():
    case=next(r for r in rows if r['name']==args[0])
    for leaf,wire in case.get('compiled_scripts',{}).items():
     kwargs['files'][leaf+'.ASX']=bytes.fromhex(wire);kwargs['files'][leaf+'.ASP']=case['scripts'][leaf].encode('cp437')
-   return run(*args,**dict(kwargs,cpu=a.cpu,profile=4,timeout=45))
+   return run(*args,**dict(kwargs,cpu=a.cpu,profile=4,timeout=45,online_triggers=[(trigger.encode('ascii'),[(delay,data.encode('ascii')) for delay,data in chunks]) for trigger,chunks in case.get('peer_triggers',())]))
   module.run=configured;return module
  def observer(offsets):
   previous=renderer.OUT;renderer.OUT=scope['OUT']
@@ -163,6 +179,9 @@ def main():
    probe=' mov [cs:exit_code],ax\n mov ah,0x62\n pushf\n call far [cs:old21]\n mov ax,bx\n add ax,'+str(int(group[1],16)+16)+'\n mov es,ax\n mov [cs:get_child_ds],ax\n'
    for label,symbol,delta in [('errno','_errno',0),('error','_runtime_error',0),('opcode','_runtime_last_opcode',0),('compiles','_runtime_compiler_calls',0),('file_status','_runtime_file',14)]:
     probe+=' mov ax,[es:'+str(child_symbols[symbol]+delta)+']\n mov [cs:get_child_'+label+'],ax\n'
+   if active_case[0] and active_case[0].get('when_action'):
+    marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
+    observer_source=observer_source.replace(marker,'get_when_waiting: dw 0\nget_when_gate: dw 0\n'+marker)
    if active_case[0] and active_case[0].get('field_batches'):
     marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
     observer_source=observer_source.replace(marker,'get_lifetime_generations: times '+str(len(active_case[0]['field_batches']))+' dw 0\n'+marker)
@@ -292,6 +311,9 @@ get_input_tick:
  cmp bx,0x3e
  jae .done
 '''.replace('CHILD_GROUP',str(int(group[1],16))).replace('STORAGE_SEG',str(storage//16)).replace('STORAGE_OFFSET',str(storage%16))
+    if active_case[0].get('when_action'):
+     marker=' mov ax,0x40\n mov es,ax\n mov bx,[es:0x1c]';assert injector.count(marker)==1
+     injector=injector.replace(marker,' mov ax,ss\n mov es,ax\n mov ax,[es:'+str(child_symbols['_runtime_wait_gate'])+']\n or ax,ax\n jnz .when_pending\n mov word [cs:get_when_waiting],1\n jmp .done\n.when_pending:\n cmp ax,1\n jne .done\n cmp word [cs:get_when_waiting],1\n jne .done\n mov [cs:get_when_gate],ax\n'+marker)
     batches=active_case[0].get('field_batches')
     if batches:
      injector=injector.replace(' cmp word [cs:get_input_injected],0\n jne .done',' cmp word [cs:get_input_batch],'+str(len(batches))+'\n jae .done')
@@ -418,6 +440,15 @@ get_watch_data: dw 0x4757,2
   result['checks']['GET_typed_exit']=result['passive_observer_header'][6]==case['expected_exit']
   result['checks']['script_reached_GET_boundary']=b'GETREADY' in wire
   if get_enabled:result['checks']['BIOS_keys_after_field_admission']=injected==len(case['field_BIOS_words'])
+  if case.get('when_action'):
+   end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
+   waiting,gate=struct.unpack('<2H',(folder/'RENDER.BIN').read_bytes()[end-4:end])
+   result['GET_pending_WHEN_gate']=gate
+   result['GET_waiting_before_WHEN']=waiting
+   result['checks']['field_observed_before_WHEN_CALL']=waiting==1
+   result['checks']['WHEN_CALL_staged_before_field_input']=gate==1
+   result['checks']['WHEN_transmit_and_worker_exact_once']=wire.count(b'INLINE')==wire.count(b'WORKER')==1
+   result['checks']['no_bad_WHEN_output']=b'BAD' not in wire
   if case.get('field_batches'):
    count=len(case['field_batches']);end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
    generations=list(struct.unpack('<'+str(count)+'H',(folder/'RENDER.BIN').read_bytes()[end-2*count:end]))
@@ -431,7 +462,7 @@ get_watch_data: dw 0x4757,2
   else:result['checks']['no_post_GET_execution']=b'Synth42\r' not in wire
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
+ report.update(when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
   checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  print('GET full VM:',len(report['cases']),'cases',report['passed'])

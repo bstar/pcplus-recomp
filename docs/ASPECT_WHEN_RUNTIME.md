@@ -1,5 +1,11 @@
 # WHEN in the DOS runtime
 
+The experimental full interpreter now has [GET/WHEN composition evidence](ASPECT_GET_WHEN.md):
+immediate TRANSMIT and deferred plain/framed CALL while a field is live, with
+passively observed waiting/gate boundaries and exact full-parent serial output.
+This does not establish all event/error/lifetime combinations or change the
+installed package.
+
 The current [abort confirmation owner](ASPECT_LOCAL_UI.md#stop-script-confirmation)
 continues native receive matching and TRANSMIT actions while its modal prompt
 is visible. CALL workers remain deferred until the prompt ends. Native host/carrier polling now continues under that prompt, with normal
