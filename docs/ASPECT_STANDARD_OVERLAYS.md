@@ -369,7 +369,7 @@ acceptance remain open. Host remains last. No installed selector, private
 configuration, call history, workstation network or live bridge configuration
 changed in these tests.
 
-## Additional nested-program Help capacity gap (2026-11-08)
+## Historical nested-program Help capacity gap (2026-11-08)
 
 The [nested-program investigation](ASPECT_HELP_CAPACITY.md) finds a further
 composition gap: a successful PROGRAM before the error-notice/Help sequence
@@ -382,3 +382,18 @@ still pass. Their success does not close this required larger workload.
 The child observes no inherited nonstandard handles and leaves its parent's JFT
 unchanged. Loader-file identity and arbitrary I/O errors remain unverified.
 No application bytes, buffers, limits, installed selector or private data changed.
+
+
+## Opt-in Help snapshot capacity fix (2026-11-08)
+
+The [sequential snapshot fix](ASPECT_HELP_CAPACITY.md#sequential-parent-snapshot-reuse-2026-11-08)
+closes the measured nested-PROGRAM/held-FILE/Help capacity case for interpreter
+70f6e1e7. The unchanged a0e1b082 parent lends its existing capability23 buffer only
+after the native screen snapshot has been released. The disabled interpreter is
+byte-identical822897f0 and still fails the corrected combined fixture. No stack,
+frame guard, FILE buffer or limits were reduced. Three full Help cases pass172
+checks, and two source-compilation/GET cases pass91. An isolated1062-file source
+export reproduces all eight selected products and replays all five cases.
+This is an experimental component gate: new-child BBS/package, loader I/O and
+lease-fault coverage, fallback contexts, physical acceptance and full parity
+remain open. No installation or selector changed. Host remains last.

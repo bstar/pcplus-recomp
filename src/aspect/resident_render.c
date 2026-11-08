@@ -34,7 +34,14 @@ static unsigned typed(unsigned result)
 #if defined(ASPECT_EXTERNAL_RENDER)
 static unsigned program_owned;
 #if defined(ASPECT_EXTERNAL_UNWIND)
-unsigned __cdecl aspect_render_program_active(void){return program_owned;}
+unsigned __cdecl aspect_render_program_active(void)
+{
+#ifdef ASPECT_HELP_PARENT_SNAPSHOT
+ return program_owned!=0;
+#else
+ return program_owned;
+#endif
+}
 #endif
 unsigned __cdecl aspect_render_program_begin(unsigned save_screen)
 {
@@ -46,7 +53,14 @@ unsigned __cdecl aspect_render_program_begin(unsigned save_screen)
     save_screen>1 || aspect_render_client_check())return ASPECT_RUN_STATE;
  if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
  result=typed(aspect_render_request(ASPECT_RENDER_PROGRAM_BEGIN,save_screen));
- if(!result){program_owned=1;window_owned=0;}
+ if(!result){
+#ifdef ASPECT_HELP_PARENT_SNAPSHOT
+  program_owned=save_screen+1;
+#else
+  program_owned=1;
+#endif
+  window_owned=0;
+ }
  return result;
 }
 unsigned __cdecl aspect_render_program_end(unsigned view_reset)
@@ -64,6 +78,14 @@ unsigned __cdecl aspect_render_program_end(unsigned view_reset)
  return typed(result);
 }
 #if defined(ASPECT_SNAPSHOT_LEASE)
+#ifdef ASPECT_HELP_PARENT_SNAPSHOT
+unsigned __cdecl aspect_render_help_snapshot_ready(void)
+{
+ if(!attached)return 0;
+ if(!program_owned || aspect_render_client_check())return 2;
+ return program_owned==2 && !snapshot_owned?1:0;
+}
+#endif
 unsigned __cdecl aspect_render_snapshot_end(void)
 {
  unsigned result;

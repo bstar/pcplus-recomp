@@ -3531,9 +3531,24 @@ streams. Existing150s transfer timing is retained; the earlier60s cancellation
 remains failed. These are software gates, not SIP/audio/physical or full-parity
 acceptance. Loader file/handle failures and complete release coverage remain open.
 
-A [new combined Help capacity regression](ASPECT_HELP_CAPACITY.md) remains open:
+The initial [combined Help capacity regression](ASPECT_HELP_CAPACITY.md) failed:
 Help after an additional successful nested DOS program cannot allocate its4032-byte
 screen frame (128-byte measured shortfall without a held FILE,656 with one).
 The reference51-check Help path and55-check post-Help handle-isolation variant
 still pass; the larger required workload remains failed. Heap trimming trials
 did not fix it and were removed. Application bytes/installation are unchanged.
+
+
+## Opt-in Help snapshot capacity fix (2026-11-08)
+
+The [sequential snapshot fix](ASPECT_HELP_CAPACITY.md#sequential-parent-snapshot-reuse-2026-11-08)
+closes the measured nested-PROGRAM/held-FILE/Help capacity case for interpreter
+70f6e1e7. The unchanged a0e1b082 parent lends its existing capability23 buffer only
+after the native screen snapshot has been released. The disabled interpreter is
+byte-identical822897f0 and still fails the corrected combined fixture. No stack,
+frame guard, FILE buffer or limits were reduced. Three full Help cases pass172
+checks, and two source-compilation/GET cases pass91. An isolated1062-file source
+export reproduces all eight selected products and replays all five cases.
+This is an experimental component gate: new-child BBS/package, loader I/O and
+lease-fault coverage, fallback contexts, physical acceptance and full parity
+remain open. No installation or selector changed. Host remains last.

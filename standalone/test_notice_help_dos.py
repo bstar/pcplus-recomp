@@ -11,7 +11,7 @@ ROOT=render.ROOT;sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 PAYLOAD=b'Q'*500+b'ENDMARK!'
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--port',type=int,choices=[1,2],default=1);p.add_argument('--no-driver',action='store_true');p.add_argument('--bios',choices=['STANDARD','ENHANCED'],default='ENHANCED');p.add_argument('--help-resource',action='store_true');p.add_argument('--resource-case',choices=['normal','missing','bad'],default='normal');p.add_argument('--parent-dir',type=Path);p.add_argument('--child-dir',type=Path);p.add_argument('--cpu',choices=['8086','386'],default='8086');p.add_argument('--close-inherited-handles',action='store_true');p.add_argument('--handle-roundtrip',action='store_true',help='Combined workload: keep a FILE across nested children before/after Help');p.add_argument('--without-held-stream',action='store_true',help='Diagnostic control only: omit the held FILE from the nested-handle workload');p.add_argument('--allocation-watch',action='store_true');p.add_argument('--video-watch',action='store_true');p.add_argument('--timed-parent-keys',action='store_true',help='Diagnostic legacy wall-clock key schedule');p.add_argument('--drain-modal',action='store_true',help='Diagnostic extra Escape keys; acceptance checks remain unchanged');p.add_argument('--timeout-snapshot',action='store_true',help='Diagnostic owned emulator memory snapshot before timeout cleanup');p.add_argument('--key-delay-ms',type=int,default=16000);a=p.parse_args();assert 1000<=a.key_delay_ms<=40000;assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--port',type=int,choices=[1,2],default=1);p.add_argument('--no-driver',action='store_true');p.add_argument('--bios',choices=['STANDARD','ENHANCED'],default='ENHANCED');p.add_argument('--help-resource',action='store_true');p.add_argument('--resource-case',choices=['normal','missing','bad'],default='normal');p.add_argument('--parent-dir',type=Path);p.add_argument('--child-dir',type=Path);p.add_argument('--cpu',choices=['8086','386'],default='8086');p.add_argument('--close-inherited-handles',action='store_true');p.add_argument('--handle-roundtrip',action='store_true',help='Combined workload: keep a FILE across nested children before/after Help');p.add_argument('--without-held-stream',action='store_true',help='Diagnostic control only: omit the held FILE from the nested-handle workload');p.add_argument('--frame-loan-watch',action='store_true');p.add_argument('--allocation-watch',action='store_true');p.add_argument('--video-watch',action='store_true');p.add_argument('--timed-parent-keys',action='store_true',help='Diagnostic legacy wall-clock key schedule');p.add_argument('--drain-modal',action='store_true',help='Diagnostic extra Escape keys; acceptance checks remain unchanged');p.add_argument('--timeout-snapshot',action='store_true',help='Diagnostic owned emulator memory snapshot before timeout cleanup');p.add_argument('--key-delay-ms',type=int,default=16000);a=p.parse_args();assert 1000<=a.key_delay_ms<=40000;assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
     out=ROOT/'build/notice-help'/a.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/'build/terminal-mouse-notice-input/TERMINAL.EXE';child=ROOT/'build/aspect-notice-help-parent/ASPECT.EXE';sources={}
     if a.help_resource:child=ROOT/'build/aspect-help-resource-parent/ASPECT.EXE'
@@ -25,6 +25,7 @@ def main():
         for path in [product.parent/'manifest.json',product.parent/('terminal.map' if product==parent else 'ASPECT.map')]:sources[str(path.relative_to(ROOT))]=render.sha(path)
     for name in ['standalone/test_notice_help_dos.py','standalone/notice_help_probe.py','standalone/notice_input_fault_probe.py','standalone/notice_input_parent_probe.py','standalone/notice_input_no_driver_probe.py','standalone/mouse_parent_probe.py','standalone/mouse_sound_checks.py','standalone/test_aspect_parent_process_dos.py','standalone/test_aspect_renderer_dos.py','standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py','standalone/directory_test_support.py','standalone/terminal_config_fixtures.py','standalone/modem_fixtures.py','standalone/notice_success_child.asm','standalone/notice_parent_keys_probe.py','src/aspect/compiler.py']:sources[name]=render.sha(ROOT/name)
     if a.close_inherited_handles:sources['standalone/notice_close_handles_child.asm']=render.sha(ROOT/'standalone/notice_close_handles_child.asm')
+    if a.frame_loan_watch:sources['standalone/notice_frame_loan_probe.py']=render.sha(ROOT/'standalone/notice_frame_loan_probe.py')
     if a.timeout_snapshot:sources['standalone/dosbox_timeout_snapshot.py']=render.sha(ROOT/'standalone/dosbox_timeout_snapshot.py')
     if a.video_watch:sources['standalone/notice_video_probe.py']=render.sha(ROOT/'standalone/notice_video_probe.py')
     if a.allocation_watch:sources['standalone/notice_allocation_probe.py']=render.sha(ROOT/'standalone/notice_allocation_probe.py')
@@ -48,6 +49,10 @@ def main():
         from notice_video_probe import instrument as video_probe
         source=video_probe(source,child.parent/'ASPECT.map',no_driver=a.no_driver,parent_map=parent.parent/'terminal.map')
     parent_manifest=json.loads((parent.parent/'manifest.json').read_text())
+    if a.frame_loan_watch:
+        assert json.loads((child.parent/'manifest.json').read_text()).get('experimental_help_parent_snapshot')
+        from notice_frame_loan_probe import instrument as loan_probe
+        source=loan_probe(source,parent.parent/'terminal.map',child.parent/'ASPECT.map',no_driver=a.no_driver)
     if not a.timed_parent_keys:
         from notice_parent_keys_probe import instrument as parent_keys
         source=parent_keys(source,parent.parent/'terminal.map',no_driver=a.no_driver,reference=parent_manifest.get('experimental_original_reference',False))
@@ -63,6 +68,14 @@ def main():
     if a.handle_roundtrip:
         script=script.replace('run "ABSENT.COM"\n','fopen 4 "LEASE.DAT" "w+b"\nfputs 4 "BEFORE|"\nrun "SUCCESS.COM"\nif failure\ntransmit "BAD"\nexit\nendif\nrun "ABSENT.COM"\n',1)
         script=script.replace('message "AFTER HELP"\n','fputs 4 "AFTER"\nfclose 4\nmessage "AFTER HELP"\n',1)
+    if a.handle_roundtrip:
+        # Match the ordinary test's RX phase: do not consume its WAITFOR marker
+        # during the extra preliminary PROGRAM and its ordinary VM safe points.
+        script=script.replace('transmit "PAYLOAD!"\n','',1)
+        script=script.replace('run "ABSENT.COM"\n','transmit "PAYLOAD!"\nrun "ABSENT.COM"\n',1)
+    if a.handle_roundtrip:
+        pieces=script.split('transmit "BAD"\n');assert len(pieces)==4
+        script=pieces[0]+''.join('transmit "BAD'+str(i)+'"\n'+part for i,part in enumerate(pieces[1:],1))
     if a.without_held_stream:
         script=script.replace('fopen 4 "LEASE.DAT" "w+b"\nfputs 4 "BEFORE|"\n','').replace('fputs 4 "AFTER"\nfclose 4\n','')
     payload=bytearray(directory(port=a.port-1));payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
@@ -95,6 +108,10 @@ def main():
     result=harness.run('ordinary','success',keys,directory=bytes(payload),prm=bytes(settings),com=a.port,
         arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK /B:'+a.bios,files=files,banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0cLOGIN:',working_drive='d',observer='RENDER',cpu=a.cpu,observer_high=a.cpu=='386')
     raw=(folder/'RENDER.BIN').read_bytes();resource=None;resource_frames=None
+    frame_loan=None
+    if a.frame_loan_watch:
+        from notice_frame_loan_probe import read as loan_read,BYTES as LOAN_BYTES
+        frame_loan=loan_read(raw[-LOAN_BYTES:]);raw=raw[:-LOAN_BYTES]
     video=None
     if a.video_watch:
         from notice_video_probe import read as video_read,BYTES as VIDEO_BYTES
@@ -136,6 +153,15 @@ def main():
     if a.no_driver:
         result['checks'].update(INT33_absent_at_exit=c['exit_vector_zero']==1,INT33_restored=(c['old_off'],c['old_seg'])==(c['after_off'],c['after_seg']) and bool(c['old_off'] or c['old_seg']))
     else:result['checks']['callback_retired']=(c['exit_mask'],c['exit_off'],c['exit_seg'])==(mouse['suspended_mask'],mouse['suspended_off'],mouse['suspended_seg'])
+    if a.frame_loan_watch:
+        result['Help_frame_loan']=frame_loan
+        l=frame_loan;start=l['view_segment']*16+l['view_offset']
+        result['checks'].update(parent_frame_seen=l['visible_samples']>=90,
+            parent_frame_guards=l['guard_samples']==l['visible_samples'] and l['errors']==0,
+            Help_borrows_released_native_snapshot=l['snapshot_samples']==l['visible_samples'],
+            Help_loan_released_before_child_exit=l['released_during_child']==1,
+            parent_frame_lease_retired=l['parent_retired']==1,
+            parent_frame_MCB_bound=l['mcb_owner']==l['parent_psp'] and start>=(l['parent_psp']+16)*16 and start+4032<=(l['parent_psp']+l['mcb_paragraphs'])*16)
     if a.video_watch:result['Help_video_diagnostic']=video
     if a.allocation_watch:
         result['Help_allocation_diagnostic']=allocation

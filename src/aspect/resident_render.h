@@ -68,6 +68,11 @@ unsigned __cdecl aspect_render_emulate(unsigned selector);
 unsigned __cdecl aspect_render_compiler_begin(void);
 unsigned __cdecl aspect_render_compiler_end(void);
 #endif
+#ifdef ASPECT_HELP_PARENT_SNAPSHOT
+/*0: private DOS frame required;1: released parent snapshot is available;
+ *2: invalid attached PROGRAM/client context. Wire capability remains23. */
+unsigned __cdecl aspect_render_help_snapshot_ready(void);
+#endif
 #define ASPECT_RENDER_CLIENT_MAGIC 0x5243U
 #define ASPECT_RENDER_CLIENT_SIZE 10U
 enum { ASPECT_RENDER_BEGIN=0, ASPECT_RENDER_EMIT=1, ASPECT_RENDER_END=2,

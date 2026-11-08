@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "combined_workload_passed": true,
+  "experimental": true,
+  "package_eligible": false,
+  "physical_verified": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "original_inputs": [],
+  "artifacts": {
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8",
+    "TERMINAL.EXE": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+    "PCCOMP.OVL": "7067e4db661cb39e0d8e7336179fccd8d8cacebb2001a2f7a94dbf7cec0dffca",
+    "PCLINE.OVL": "6e8253bb12b242b55b0987bd6850c16c053be605f2fa7447c159b23ab2604fb4",
+    "PCMETA.OVL": "ab929d876b1fcff4c51e136fb3e764231828dc88b6e4bf6ebc9039b94dc900b6",
+    "ASPECT.EXE": "70f6e1e7a0e5b0455f72182f2cddfe71d4808e9cd2c1a7b0ea0cae4d5ba44b57",
+    "ASPCOMP.EXE": "1db52316f671b43663395abc7de41925abfe1205fffb930bdb5d6dae70f98a14",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf"
+  },
+  "parent_protocol_capability": 23,
+  "parent_binary_changed": false,
+  "disabled_child_sha256": "822897f0b67dfbfbe98bed8711cb1071417705ad9a75fdcd5138c88679fc7c05",
+  "required_frame_bytes": 4032,
+  "guard_bytes": 32,
+  "source_count": 1062,
+  "cold_Help_checks": 172,
+  "cold_GET_cases": 2,
+  "GET_checks": 91,
+  "cases": [
+    {
+      "receipt": "build/notice-help/help-snapshot-final-witness-20261108/result.json",
+      "passed": true,
+      "checks": 63,
+      "parent_sha256": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+      "child_sha256": "70f6e1e7a0e5b0455f72182f2cddfe71d4808e9cd2c1a7b0ea0cae4d5ba44b57",
+      "frame_loan": {
+        "visible_samples": 217,
+        "guard_samples": 217,
+        "snapshot_samples": 217,
+        "released_during_child": 1,
+        "parent_retired": 1,
+        "errors": 0,
+        "view_offset": 8000,
+        "view_segment": 22194,
+        "parent_psp": 2068,
+        "mcb_owner": 2068,
+        "mcb_paragraphs": 30170
+      }
+    },
+    {
+      "receipt": "build/notice-help/help-snapshot-final-ordinary-20261108/result.json",
+      "passed": true,
+      "checks": 56,
+      "parent_sha256": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+      "child_sha256": "70f6e1e7a0e5b0455f72182f2cddfe71d4808e9cd2c1a7b0ea0cae4d5ba44b57",
+      "frame_loan": null
+    },
+    {
+      "receipt": "build/notice-help/help-snapshot-final-bios-20261108/result.json",
+      "passed": true,
+      "checks": 53,
+      "parent_sha256": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+      "child_sha256": "70f6e1e7a0e5b0455f72182f2cddfe71d4808e9cd2c1a7b0ea0cae4d5ba44b57",
+      "frame_loan": {
+        "visible_samples": 215,
+        "guard_samples": 215,
+        "snapshot_samples": 215,
+        "released_during_child": 1,
+        "parent_retired": 1,
+        "errors": 0,
+        "view_offset": 8000,
+        "view_segment": 22194,
+        "parent_psp": 2068,
+        "mcb_owner": 2068,
+        "mcb_paragraphs": 30170
+      }
+    },
+    {
+      "receipt": "build/notice-help/help-snapshot-disabled-roundtrip-20261108/result.json",
+      "passed": false,
+      "checks": 57,
+      "parent_sha256": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+      "child_sha256": "822897f0b67dfbfbe98bed8711cb1071417705ad9a75fdcd5138c88679fc7c05",
+      "frame_loan": null
+    }
+  ],
+  "receipts": {
+    "build/help-snapshot-cold-source-20261108/result.json": "d489301f867ae86f9f2ed21802a71e8f7db7496615df758f80f849f1f979a7ea",
+    "build/help-snapshot-source-lease-20261108/checks.json": "b954e9d4bbc4eb273882bf2aba733c084953d934626288c103c5cfe3c257ec1d",
+    "build/notice-help/help-snapshot-final-witness-20261108/result.json": "328137580aab9919276d3bcf0ba496240759a5677372a6d2a5b073cba15519b2",
+    "build/notice-help/help-snapshot-final-ordinary-20261108/result.json": "05e468fc2d9388b873fa9c25295bc402ed21f1b550e46c2d78e814262541ba6b",
+    "build/notice-help/help-snapshot-final-bios-20261108/result.json": "91cadd4efbdf7ca19bd1f18dcd3343f1bab3350d791ef14fb8b4e81e2d58c80e",
+    "build/notice-help/help-snapshot-disabled-roundtrip-20261108/result.json": "2252ced6f3c8bd86161ba8d308a3f76c1e39b6e3d8aae236be8ff9e5bd6ca832"
+  },
+  "sources": {
+    "src/aspect/resident_render.c": "9ac7c2e77fabf564bac071f481f81fd660f5f435119e4916d56550e221460a2a",
+    "src/aspect/resident_render.h": "a277ce1c00199d7324947c7d8acdc735ae277189dd8e3ba510c8a7e0e7ca00a0",
+    "src/help/resource_heap.c": "d40842323b49f9a879896484a4565eace9617536fe8c2bcc3d066044001542a1",
+    "src/help/overlay_bridge.asm": "ab42298df3907e61925721729958bfd20510abd91df465cb297fa2e00a7a88fd",
+    "standalone/build_aspect_process.py": "658f10d4e4fcc0ca6f7342b9560e28f2ec2878f834c1df01d6b14cfabd1e2b1e",
+    "standalone/build_aspect_runner.py": "2d150f35812826ffad0855e5e75c60b7a511b1a8ea27206709e6e51b801dd6cb",
+    "standalone/build_notice_input_bank.py": "5f80ce69695432c2452b74d0e9168a192a36f721c5c7d61603e928946432b55d",
+    "standalone/prove_compiler_bridge_source.py": "b1b3445cca0e2151a1c1070236115687f985072eb7b60b6df1fdfb3e377ea5e3",
+    "standalone/test_notice_help_dos.py": "14f7fd2c90978379f5e3f3444ed0c7f68ed6d36e85a597c6cffb551bf33e1719",
+    "standalone/notice_frame_loan_probe.py": "60ed719fe6b9bffb07c2800afe31246b071b388b7bf4f466b1333e7a3ad82568"
+  },
+  "limits": [
+    "Sequential reuse after native display restore; no simultaneous snapshot ownership or new parent RPC.",
+    "Corrected fixture preserves two helper launches, held FILE and exact contents; disabled control still fails.",
+    "Timer witness and ordinary run establish component behavior, not arbitrary lease fault recovery.",
+    "Malformed pointer, release refusal, loader I/O errors and fallback contexts need explicit profile coverage.",
+    "Earlier Enigma/Synchronet receipts cover disabled822897f0; new-child BBS/package and physical acceptance remain open.",
+    "Full ASPECT and original feature parity incomplete; Host last."
+  ]
+}

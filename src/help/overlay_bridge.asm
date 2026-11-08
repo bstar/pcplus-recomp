@@ -18,11 +18,23 @@ CPU 8086
 %endmacro
 %ifdef HELP_OVERLAY_ROOT
 SEGMENT NOTICEINPUT_CODE public align=16 class=FARCODE use16
+%ifdef HELP_PARENT_FRAME
+extern _help_parent_frame_allocate,_help_parent_frame_release
+global _help_overlay_allocate_root,_help_overlay_release_root
+_help_overlay_allocate_root: jmp far _help_parent_frame_allocate
+_help_overlay_release_root: jmp far _help_parent_frame_release
+extern _mouse_platform_allocate,_mouse_platform_release
+%define _help_fallback_frame_allocate_target _mouse_platform_allocate
+%define _help_fallback_frame_release_target _mouse_platform_release
+entry _help_fallback_frame_allocate,1
+entry _help_fallback_frame_release,2
+%else
 extern _mouse_platform_allocate,_mouse_platform_release
 %define _help_overlay_allocate_root_target _mouse_platform_allocate
 %define _help_overlay_release_root_target _mouse_platform_release
 entry _help_overlay_allocate_root,1
 entry _help_overlay_release_root,2
+%endif
 %else
 SEGMENT HELP_OVL_CODE public align=16 class=FARCODE use16
 extern _help_overlay_allocate_root,_help_overlay_release_root

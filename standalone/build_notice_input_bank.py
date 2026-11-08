@@ -4,7 +4,7 @@ from pathlib import Path
 from omf_imports import records,externals
 ROOT=Path(__file__).resolve().parents[1]
 
-def build(output,help_view=False,help_diagnostic=False,help_resource=False,defer_help_resource=False,overlay_ready=False,early_help_model=False):
+def build(output,help_view=False,help_diagnostic=False,help_resource=False,defer_help_resource=False,overlay_ready=False,early_help_model=False,help_parent_snapshot=False):
     assert not help_diagnostic or help_view
     assert not help_resource or help_view
     assert not overlay_ready or help_resource
@@ -54,6 +54,6 @@ def build(output,help_view=False,help_diagnostic=False,help_resource=False,defer
         path='src/help/overlay_bridge.asm';sources.append(path)
         for role in ('root','overlay'):
             obj=output/('help_overlay_bridge_'+role+'.obj')
-            subprocess.run(['nasm','-fobj',*(['-DHELP_OVERLAY_ROOT'] if role=='root' else []),str(ROOT/path),'-o',str(obj)],check=True)
+            subprocess.run(['nasm','-fobj',*(['-DHELP_OVERLAY_ROOT'] if role=='root' else []),*(['-DHELP_PARENT_FRAME'] if help_parent_snapshot and role=='root' else []),str(ROOT/path),'-o',str(obj)],check=True)
             objects.append(str(obj))
     return objects,sources

@@ -19,6 +19,7 @@ def main(extension=None):
     if extension and extension.get('near_globals'):
         assert extension.get('alarm_vm')
         feature_flags+=['-DASPECT_NEAR_GLOBALS']
+    if extension and extension.get('help_parent_snapshot'):feature_flags+=['-DASPECT_HELP_PARENT_SNAPSHOT']
     if extension and extension.get('compiler_parent_lease'):feature_flags+=['-DASPECT_COMPILER_PARENT_LEASE']
     if get_vm:
         assert extension.get('get_policy') and extension.get('get_display') and extension.get('alarm_vm')

@@ -1,11 +1,12 @@
-# Help after a nested DOS program: remaining capacity gap
+# Help after a nested DOS program: capacity and sequential snapshot reuse
 
-The current source-built overlay child822897f0 still has a reproducible Help
+The previous source-built overlay child822897f0 has a reproducible Help
 capacity gap. Ordinary Help and the previously accepted GET/BBS workflows pass;
 adding a successful nested DOS program before the failed PROGRAM/Help sequence
 fails Help screen allocation. Holding a script FILE across that sequence makes
 the shortage larger. This prevents complete overlay/Help acceptance or package
-promotion. No application change from this investigation is retained.
+promotion. The initial heap-trimming experiments were discarded. The opt-in fix below now
+passes this combined workload; the historical failures remain evidence.
 
 ## Handle evidence and passing reference
 
@@ -22,7 +23,7 @@ unchanged. Full Help/search/cursor/mouse/menu/typing/hangup checks still pass.
 This proves the observed handle-isolation boundary. It does not identify a
 particular open file by name or prove arbitrary loader I/O-failure recovery.
 
-## Required combined regression: still failing
+## Historical disabled combined regression: failing
 
 ```sh
 ./tools/dev --command python standalone/test_notice_help_dos.py \
@@ -56,7 +57,7 @@ are44444 without the FILE and44972 with it, with nheapbeg40464. The precise live
 allocation/fragmentation cause is not yet established; these are measurements,
 not proof of a leak or a minimum budget for every script.
 
-## Rejected experiments and next gate
+## Rejected experiments and original next gate
 
 A disposable near-heap shrink experiment lowered curbrk only30 bytes and still
 failed the4032-byte frame allocation. It also added code and reduced the largest
@@ -73,3 +74,45 @@ full handle lifetime coverage, complete release/package coverage and physical
 Boca/SPA2102/SynthModem/Enigma acceptance remain open. Host remains last.
 [The validation record](validation/aspect-help-nested-capacity.json) binds the
 passing reference, failing combined/control cases and rejected experiments.
+
+
+## Sequential parent snapshot reuse (2026-11-08)
+
+The opt-in `help_parent_snapshot=True` interpreter uses the existing capability23
+snapshot service for the Help frame. `native_program.c` restores and releases the
+native program's saved screen before opening its error notice. Help can therefore
+borrow that same retained parent buffer afterward. It does not overlap a live
+native snapshot or add a parent RPC. The terminal remains byte-identical a0e1b082;
+the enabled interpreter is70f6e1e7. Disabling the option reproduces822897f0 exactly.
+
+The4032-byte frame and its32 guard bytes, stack and six512-byte FILE buffers are
+unchanged. Valid attached SAVE context uses the existing authenticated snapshot
+begin/pointer/end operations. Offline or NOCLEAR contexts retain the private DOS
+allocation path. Invalid attached context fails admission. A failed release keeps
+its ownership state rather than silently declaring the buffer free.
+
+The combined test now schedules its serial payload after the preliminary helper,
+immediately before the absent program, matching the original reference's receive
+phase. Previously the extra VM services could consume the WAITFOR marker early.
+Distinct BAD1/BAD2/BAD3 markers identify first-child, WAITFOR and second-child
+failures. Both nested children and the open FILE remain required. The byte-exact
+disabled control still fails frame allocation with this corrected fixture.
+
+Three enabled full-parent DOS386 cases pass:63 checks with allocation/loan
+observation,56 without those optional observers, and53 with BIOS-only input.
+The read-only timer witness sees the parent snapshot owned while the child's
+native display snapshot is released, intact frame guards throughout the visible
+Help interval, the pointer within the retained parent MCB, and retirement before
+child/parent return. Two source-compiler-loan/GET cases add91 checks. A cold export
+of1062 source files, with neither original executables nor ancestor Git, reproduces
+all eight selected products and replays those three Help cases (172 checks) and
+two compiler/GET cases successfully.
+
+[The snapshot validation record](validation/aspect-help-parent-snapshot.json)
+binds identities and receipts. This closes the measured combined capacity case,
+not all overlay acceptance. Malformed pointer publication, lease-release refusal,
+overlay-file I/O failures, other workload combinations and the fallback contexts
+still need explicit coverage for this profile. The prior Enigma/Synchronet receipts
+apply to822897f0; new-child BBS and complete package checks remain open. No installed
+selector, card, private settings/history, live bridge or workstation network changed.
+Physical acceptance and full ASPECT parity remain unverified; Host remains last.
