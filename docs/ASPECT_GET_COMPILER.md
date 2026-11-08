@@ -28,8 +28,9 @@ The compiler accepts float destinations because the original compiler does;
 the current interpreter explicitly refuses floating GET with error4. Runtime
 width admission remains bounded at 0..80 even though the original compiler
 accepts wider numeric constants. Positioned/sibling modes are not enabled.
-Local, parameter and S0 destinations have compiler evidence; this checkpoint
-does not establish their complete attached-runtime behavior.
+[Local, parameter and S0 destinations](ASPECT_GET_STORAGE.md) now also have
+seven attached-runtime cases for string/int/long writeback and guarded procedure
+return. This does not establish every storage/lifetime combination.
 
 The isolated public-source proof rebuilds both compilers, both interpreter
 profiles and the full parent, then repeats grammar, compiled GET, ordinary

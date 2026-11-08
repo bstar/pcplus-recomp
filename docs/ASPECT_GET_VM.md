@@ -11,7 +11,8 @@ scripts through this interpreter and the larger parent. Raw-mode tests still
 insert authored GET bytes at a unique PAUSE0 boundary; the malformed EOF case
 always uses authored bytes.
 The default application, selected package and installed machine are unchanged.
-F13 remains open.
+[Storage tests](ASPECT_GET_STORAGE.md) add seven local/parameter/S0 cases with
+exact writeback, frame guards and normal procedure return. F13 remains open.
 
 ## Code and data ownership
 

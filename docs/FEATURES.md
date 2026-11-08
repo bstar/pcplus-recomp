@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[GET storage coverage](ASPECT_GET_STORAGE.md) adds seven compiled full-parent
+cases: local and parameter string/int/long plus S0 in a framed worker. Exact
+writeback, local/caller guards, procedure return, cursor and terminal ownership
+checks pass. Broader storage/lifetime combinations, field policies, floating
+GET, package/hardware acceptance and full F13 parity remain open.
+
 [GET/WHEN failure retirement](ASPECT_GET_WHEN_ERRORS.md) now passes a framed
 worker divide fault and confirmed cancellation with a CALL pending. Real streams
 flush, typed errors11/13 are retained, all sampled GET ownership flags retire,

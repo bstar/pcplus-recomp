@@ -51,6 +51,7 @@ This is DOS386/UMB,640KB and a synthetic serial peer, not physical
 Boca/SPA2102/SynthModem/BBS acceptance. Each scenario has one child invocation;
 repeated failures within one child, post-error script restart, carrier loss,
 multiple/rearmed/nested actions, EXECUTE from a handler and full memory pressure
-remain unverified here. GET field policies/local/parameter/S0 runtime, floating
+remain unverified here. GET field policies and storage/lifetime combinations beyond the
+[seven local/parameter/S0 cases](ASPECT_GET_STORAGE.md), floating
 support, ordinary8086 parent capacity, three-process compiler residency, package
 promotion and full ASPECT/application parity remain open.

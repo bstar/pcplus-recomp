@@ -56,7 +56,9 @@ reports are bound by the [receipt](validation/aspect-get-when.json).
 This covers one ordered event pair and one CALL per field. [Division and pending-action cancellation](ASPECT_GET_WHEN_ERRORS.md) now have
 two additional full-parent cases. Multiple/rearmed or nested CALLs, further
 action errors, EXECUTE from a WHEN handler, carrier loss during event handling,
-full memory/feature pressure and other field types need separate tests. No physical Boca/SPA2102/SynthModem/BBS or three-process
+full memory/feature pressure and other field types need separate tests. The later
+[storage checkpoint](ASPECT_GET_STORAGE.md) covers seven ordinary
+local/parameter/S0 cases without event combinations. No physical Boca/SPA2102/SynthModem/BBS or three-process
 compiler-residency acceptance follows from this matrix. Floating GET, broader
 ASPECT/app parity and package promotion remain open. An initial fixture failed
 before parent execution because nested bytes were not JSON-serializable;
