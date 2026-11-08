@@ -2,8 +2,9 @@
 
 [Current compiler-bridge reliability](ASPECT_COMPILER_RELIABILITY.md) verifies
 BUSY cleanup, three calls in one parent,300-second/601-frame paced receive,
-stock Enigma multiline paging and Synchronet mapper/Help return. Four exact
-1920-cell editor references and corruption controls pass. The application and
+stock Enigma multiline paging and Synchronet mapper/Help return. Five exact
+1920-cell editor references and corruption controls pass, including explicit
+[Backspace and arrow-key editing](ASPECT_COMPILER_NAVIGATION.md). The application and
 selected physical installation stay unchanged; hardware and whole-feature gates
 remain open.
 

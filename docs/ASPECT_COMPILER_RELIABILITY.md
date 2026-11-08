@@ -6,7 +6,8 @@ stock-BBS editor snapshots. All four logical screens match an independent cell
 reference exactly. The [validation record](validation/aspect-compiler-reliability.json)
 binds these results to the exact [packaged candidate](ASPECT_COMPILER_PACKAGE.md).
 These are software checks; the physical installation and selected package remain
-unchanged.
+unchanged. A [fifth editor snapshot](ASPECT_COMPILER_NAVIGATION.md) adds explicit
+Backspace and up/down/right semantics with another exact1920-cell comparison.
 
 ## Reconnect and sustained receive
 

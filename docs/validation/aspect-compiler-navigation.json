@@ -1,0 +1,680 @@
+{
+  "checkpoint_verified": true,
+  "tool_source_commit": "e911f8b82b017653338900d19ced98d74377b630",
+  "application_bytes_changed": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "package_files": {
+    "ASPCOMP.EXE": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+    "ASPECT.EXE": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+    "PCCOMP.OVL": "5cb90b8b29218fc3580f5abe92b530642587e12e35975ebc28e8cdc34a1c8f6f",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCKEYMAP.EXE": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+    "PCLINE.OVL": "c89bbfce9ee58f153441cc89e46994bc68066ff04fd65b385234bb7404d0cde0",
+    "PCMETA.OVL": "ef8b9ca0a252d8b68dde0a264f527868235fcd9551ec6466635a8f9a80f03641",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "2cb3b8228dee4658feca7e3e477ccd213e80e0036cace02174290dfbc76cc1e1",
+    "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+    "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+    "TERMINAL.EXE": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+    "VERSION.TXT": "fb41c143a4ee8ec6d8421e25ee803b6a557376c7719df0f5b1a4460fb3208e29",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "semantic_checks": {
+    "DOS_harness": true,
+    "typed_draft_sent": true,
+    "all_exercised_keys_emitted": true,
+    "stock_editor_entered": true,
+    "no_post_saved": true,
+    "all24_lines_sent": true,
+    "real_page_up": true,
+    "top_edit_sent": true,
+    "real_page_down": true,
+    "final_marker_sent": true,
+    "exact_numbered_body_window": true,
+    "exact_document_footer": true,
+    "navigation_after_last_numbered_line": true,
+    "exact_navigation_cursor_history": true,
+    "backspace_moves_and_removes_character": true,
+    "explicit_up_down_right_wire": true,
+    "edited_last_numbered_line": true
+  },
+  "navigation": {
+    "expected_cursor_history": [
+      [
+        25,
+        1
+      ],
+      [
+        24,
+        1
+      ],
+      [
+        24,
+        2
+      ],
+      [
+        24,
+        3
+      ],
+      [
+        24,
+        2
+      ],
+      [
+        24,
+        3
+      ],
+      [
+        24,
+        1
+      ],
+      [
+        25,
+        1
+      ],
+      [
+        24,
+        1
+      ],
+      [
+        25,
+        1
+      ],
+      [
+        14,
+        1
+      ]
+    ],
+    "actual_cursor_history": [
+      [
+        25,
+        1
+      ],
+      [
+        24,
+        1
+      ],
+      [
+        24,
+        2
+      ],
+      [
+        24,
+        3
+      ],
+      [
+        24,
+        2
+      ],
+      [
+        24,
+        3
+      ],
+      [
+        24,
+        1
+      ],
+      [
+        25,
+        1
+      ],
+      [
+        24,
+        1
+      ],
+      [
+        25,
+        1
+      ],
+      [
+        14,
+        1
+      ]
+    ],
+    "final_edited_line": "RX4",
+    "wire_hex": "1b5b411b5b431b5b4308581b5b481b5b421b5b411b5b421b5b357e55504d41524b1b5b367e554e53415645441b5b32323b38522b2b2b4154480d"
+  },
+  "final_body": [
+    "R12",
+    "R13",
+    "UPMARKR14",
+    "R15",
+    "R16",
+    "R17",
+    "R18",
+    "R19",
+    "R20",
+    "R21",
+    "R22",
+    "R23",
+    "RX4",
+    "UNSAVED"
+  ],
+  "screen_checks": {
+    "producer_passed": true,
+    "runtime_unchanged": true,
+    "exact_delivered_prefix": true,
+    "real_single_CPR_boundary": true,
+    "cursor_matches_reference": true,
+    "all_cells_match": true,
+    "hardware_restored": true,
+    "status_ownership": true,
+    "font_probe_projection_explicit": true,
+    "held_output_exact": true
+  },
+  "matched_cells": 1920,
+  "different_cells": 0,
+  "CPR": [
+    22,
+    8
+  ],
+  "delivered_bytes": 89792,
+  "controls": [
+    {
+      "path": "build/compiler-bridge-editor-navigation-semantic-controls-20261108",
+      "cases": [
+        {
+          "case": "unchanged",
+          "passed": true,
+          "rejected": false,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": true,
+            "explicit_up_down_right_wire": true,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "95e213f14ea1c65ff997ef3e56f66ff471ffdbbceefe5bae8ae69a7fef36669a",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        },
+        {
+          "case": "missing-pageup",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": false,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": true,
+            "explicit_up_down_right_wire": true,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "553cc4546cefb49a027b3d1e04530b773dc5c541d81fa37473b43b1d81f8bc91",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        },
+        {
+          "case": "missing-pagedown",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": false,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": true,
+            "explicit_up_down_right_wire": true,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "2d88a7e48a916e3e082feb1ca417da17280dfcc14ab2bc501ca7c3be9a8acf68",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        },
+        {
+          "case": "missing-line24",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": false,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": false,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": false,
+            "explicit_up_down_right_wire": false,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "3bbad0049a04892a1c00a092ad7ca9953b227bb1f7d054e04ab21a81b0e7b1af",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        },
+        {
+          "case": "changed-body",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": false,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": true,
+            "explicit_up_down_right_wire": true,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "bf8d213df3c0c291e651e2db2bd59e68fc600faa634808eb8750a2cf6fb631cf",
+            "serial-received.bin": "95e213f14ea1c65ff997ef3e56f66ff471ffdbbceefe5bae8ae69a7fef36669a",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        },
+        {
+          "case": "wrong-document-row",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": false,
+            "top_edit_sent": true,
+            "real_page_down": false,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": false,
+            "backspace_moves_and_removes_character": true,
+            "explicit_up_down_right_wire": true,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "95e213f14ea1c65ff997ef3e56f66ff471ffdbbceefe5bae8ae69a7fef36669a",
+            "display.bin": "959595a0c2b4eb5b67e9affc9b6cbe2572998b6083585168a300269e002c13d1"
+          }
+        },
+        {
+          "case": "missing-backspace",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": false,
+            "explicit_up_down_right_wire": true,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "fac031da451173b02b10488c0f4ce1932cc0d154cd5aedf6d7bb01ebe781c83a",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        },
+        {
+          "case": "missing-right",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": false,
+            "explicit_up_down_right_wire": false,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "1d467a1bdffb6b99fc0a9e625c0afb47d9524fa72fc59de42758f0125987d005",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        },
+        {
+          "case": "missing-up",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": false,
+            "explicit_up_down_right_wire": false,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "c3bd721b2472d13e187da0f70bd795d874699df0d32e3e5fb8060acf0f6aa4f0",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        },
+        {
+          "case": "missing-down",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": true,
+            "explicit_up_down_right_wire": false,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "9b96c7a3c5d901b28a414690cafa902b791159cfac14ce6d0cd9695e7f483cf1",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        },
+        {
+          "case": "wrong-navigation-position",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": false,
+            "backspace_moves_and_removes_character": true,
+            "explicit_up_down_right_wire": true,
+            "edited_last_numbered_line": true
+          },
+          "files": {
+            "SCREEN.BIN": "6911f8111cb2575669edb6ac60055e38e4bbfca2a9f2109a2e5490a01c774c33",
+            "serial-received.bin": "95e213f14ea1c65ff997ef3e56f66ff471ffdbbceefe5bae8ae69a7fef36669a",
+            "display.bin": "7b9619c13229926d71e6e3692073524ec39ff088f8e134966f7a352760783603"
+          }
+        },
+        {
+          "case": "lost-backspace-edit",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": false,
+            "exact_document_footer": true,
+            "navigation_after_last_numbered_line": true,
+            "exact_navigation_cursor_history": true,
+            "backspace_moves_and_removes_character": true,
+            "explicit_up_down_right_wire": true,
+            "edited_last_numbered_line": false
+          },
+          "files": {
+            "SCREEN.BIN": "4d6bd4670437af9494e93d886cd03d3d4c276946781f8711d8623e995f74957a",
+            "serial-received.bin": "95e213f14ea1c65ff997ef3e56f66ff471ffdbbceefe5bae8ae69a7fef36669a",
+            "display.bin": "38e256566f0a131386877f9efe09b5b455ebbfa2618664b5c534fa0579b99f55"
+          }
+        }
+      ]
+    },
+    {
+      "path": "build/compiler-bridge-editor-navigation-screen-controls-20261108",
+      "cases": [
+        {
+          "case": "unchanged",
+          "passed": true,
+          "rejected": false,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "character",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "attribute",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "bottom-character",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "bottom-attribute",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "cursor",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "prefix-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Snapshot must pair with exactly the delivered prefix",
+          "different_cells": null
+        },
+        {
+          "case": "unsupported-font",
+          "passed": true,
+          "rejected": true,
+          "error": "('Unsupported reference intermediate', 496, '1b5b303b312044')",
+          "different_cells": null
+        },
+        {
+          "case": "proxy-input-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Only the fixture query reply may be removed before the actual proxy; preserve all other TX",
+          "different_cells": null
+        }
+      ]
+    },
+    {
+      "path": "build/compiler-bridge-editor-navigation-legacy-controls-20261108",
+      "cases": [
+        {
+          "case": "unchanged",
+          "passed": true,
+          "rejected": false,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true
+          },
+          "files": {
+            "SCREEN.BIN": "4d6bd4670437af9494e93d886cd03d3d4c276946781f8711d8623e995f74957a",
+            "serial-received.bin": "f3d86da868ec9fe397488889df1ed0578f14288f4ec751e97fc6e975addc2673",
+            "display.bin": "801ff6cb0f4d134c441840a453d3e18f77bfe0e4c240baf9fef2de9448e46489"
+          }
+        },
+        {
+          "case": "missing-pageup",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": false,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true
+          },
+          "files": {
+            "SCREEN.BIN": "4d6bd4670437af9494e93d886cd03d3d4c276946781f8711d8623e995f74957a",
+            "serial-received.bin": "d35e7bfbfc3b676e9bbb34e0a9110eb61580f03c1545df4c7c53b8ade5392252",
+            "display.bin": "801ff6cb0f4d134c441840a453d3e18f77bfe0e4c240baf9fef2de9448e46489"
+          }
+        },
+        {
+          "case": "missing-pagedown",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": false,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true
+          },
+          "files": {
+            "SCREEN.BIN": "4d6bd4670437af9494e93d886cd03d3d4c276946781f8711d8623e995f74957a",
+            "serial-received.bin": "2e1abfc0ab329c0fae5b29387460aee135894e4a73fb7c5b5418d0b3b552d617",
+            "display.bin": "801ff6cb0f4d134c441840a453d3e18f77bfe0e4c240baf9fef2de9448e46489"
+          }
+        },
+        {
+          "case": "missing-line24",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": false,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true
+          },
+          "files": {
+            "SCREEN.BIN": "4d6bd4670437af9494e93d886cd03d3d4c276946781f8711d8623e995f74957a",
+            "serial-received.bin": "494a7482a38aaf9f48a33517b8e3459ca795e5022e1c64e0f8ae510e6cd2c82a",
+            "display.bin": "801ff6cb0f4d134c441840a453d3e18f77bfe0e4c240baf9fef2de9448e46489"
+          }
+        },
+        {
+          "case": "changed-body",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": true,
+            "top_edit_sent": true,
+            "real_page_down": true,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": false,
+            "exact_document_footer": true
+          },
+          "files": {
+            "SCREEN.BIN": "873f0477fd3fcb3ec92f4a7e2e4af120cc0a7bff57eeaa62cea98b25a672f794",
+            "serial-received.bin": "f3d86da868ec9fe397488889df1ed0578f14288f4ec751e97fc6e975addc2673",
+            "display.bin": "801ff6cb0f4d134c441840a453d3e18f77bfe0e4c240baf9fef2de9448e46489"
+          }
+        },
+        {
+          "case": "wrong-document-row",
+          "passed": true,
+          "rejected": true,
+          "checks": {
+            "all24_lines_sent": true,
+            "real_page_up": false,
+            "top_edit_sent": true,
+            "real_page_down": false,
+            "final_marker_sent": true,
+            "exact_numbered_body_window": true,
+            "exact_document_footer": true
+          },
+          "files": {
+            "SCREEN.BIN": "4d6bd4670437af9494e93d886cd03d3d4c276946781f8711d8623e995f74957a",
+            "serial-received.bin": "f3d86da868ec9fe397488889df1ed0578f14288f4ec751e97fc6e975addc2673",
+            "display.bin": "68bf003e6ddc1c3e163c8d6c865c9e7c58da5994737c10a60fd4c5b24d25406a"
+          }
+        }
+      ]
+    }
+  ],
+  "receipts": {
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-navigation-20261108/proxy-integration.json": "f862d73c76b184e1ab42a3f44b6f27d7385cea229fc06265de3ab0af21c0b9b1",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-navigation-20261108/semantic-audit.json": "29a4e64128e7c572f83e8ca7af87b66dd2f9c6c5e9621d2334d1a96f2cabc93e",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-navigation-20261108/screen-reference-audit.json": "55ad0bd24e6633cc9d32fc3385464340306a975fb924f5c6edbe0afd80bca9d9",
+    "docs/validation/aspect-compiler-package.json": "156c499020a270166dcde0aa3834cce866a5a5b73e729b0cf685f115bcec2ac0",
+    "build/compiler-bridge-editor-navigation-semantic-controls-20261108/result.json": "726102f42f983849b70b30f7c60fc9872e61997c12804683b9f434029f7b3f89",
+    "build/compiler-bridge-editor-navigation-screen-controls-20261108/result.json": "378e82669d7bd6071acd051846431a7f20f1d34d9dc91f2d58624bcb0d4a85b9",
+    "build/compiler-bridge-editor-navigation-legacy-controls-20261108/result.json": "2707445c4a54f19b23d51336033daf84dff5d69887d6a39424bd8836cbc21e44"
+  },
+  "sources": {
+    "standalone/record_editor_navigation.py": "8a0c1d15bdc8039f827ea9863a93d6c6ca3c7373a17c43c1c43be12985ccae91",
+    "lab/bbs/check_enigma_multiline_controls.py": "5ca1ddfc56b8bead9d3481656099694e0b8072fbe8774fe5083cff7c8d740974",
+    "lab/bbs/enigma_multiline.py": "21c371c6f6310fac9707adf2e05c7daf9e44d32178979b76e781ed0340775ae1",
+    "lab/bbs/check_editor_dos.py": "39c396b2b652957b2e9402cee1a838f0497c41eeed31b81ebf2f1ada92d32545",
+    "lab/bbs/test_synthmodem_proxy_dos.py": "cd94b2fb70eb407bfcdfb555943c32b95f68432744c3b4443096361b7bc92026",
+    "lab/bbs/audit_screen_reference.py": "82ea451cd4a5bc24a5194fcfa183e9d51ebf6b2c33bfd9c41ac8d99c34071d22",
+    "lab/bbs/check_screen_reference_controls.py": "bf57da00323592bb5f59d2870112469f502c3144fbbe8317f5b415f643613969",
+    "nix/flake.nix": "1bed287bbe29de9ee1108e16ded622ad7f71736278098dad0fba741c540652fa",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "scope": "Actual DOS BIOS keys through SynthModem Telnet proxy into stock loopback Enigma unsaved editor. Default25-row/status-visible profile. No SIP/audio, physical CTS, every-profile or published-post acceptance."
+}
