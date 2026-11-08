@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+## Work order
+
+User priority, updated2026-11-08: complete Enigma compatibility and controlled
+hardware acceptance first, retaining Synchronet regressions. Then finish the
+remaining daily-use terminal controls, file/DOS operations, directory/key tools,
+Chat and UI; complete ASPECT, other emulations and transfer protocols.
+**Host mode is the final implementation stage.** It remains required for full
+original feature parity and is deferred until those earlier stages are complete.
+
 [Current Chat-mode package](CHAT_MODE_PACKAGE.md) now reproduces all17 files and
 its ZIP from1082 committed sources, with eight packaged DOS cases and matching
 Chat-mode editor contracts. [Reliability](CHAT_MODE_RELIABILITY.md) adds current-byte
