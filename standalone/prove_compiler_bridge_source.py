@@ -18,6 +18,7 @@ def main():
   p.add_argument('--'+name, type=Path, required=True)
  p.add_argument('--checks', type=Path, action='append', required=True)
  p.add_argument('--help-checks',type=Path,action='append',default=[])
+ p.add_argument('--overlay-io-checks',type=Path,action='append',default=[])
  p.add_argument('--lab-payload',type=Path)
  p.add_argument('--connection-package',type=Path)
  p.add_argument('--termination-checks',type=Path,action='append',default=[])
@@ -89,6 +90,12 @@ def main():
     continue
    assert name not in sources or sources[name]==digest,name
    sources[name]=digest
+ io_reports=[json.loads(path.read_text()) for path in a.overlay_io_checks]
+ for r in io_reports:
+  assert r['passed'] and all(r['checks'].values()) and r['parent_sha256']==parent['binary_sha256'] and r['child_sha256']==child['binary_sha256']
+  for name,digest in r['sources'].items():
+   assert sha(ROOT/name)==digest and (name not in sources or sources[name]==digest),name
+   sources[name]=digest
  out.mkdir(); fresh=out/'source'
  for name,digest in sources.items():
   n=Path(name)
@@ -111,7 +118,7 @@ def main():
  run(['-c','import json,sys;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path('+repr(child_build)+').resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,get_display=True,get_policy=True,get_vm=True,near_globals=True,compiler_parent_lease=True,heap_growth_bytes='+str(child['startup_heap_growth_bytes'])+',defer_help_resource='+str(bool(child.get('experimental_deferred_help_resource')))+',disk_script_snapshots='+str(bool(child.get('experimental_disk_script_snapshots')))+',early_help_model='+str(bool(child.get('experimental_early_help_model')))+',help_parent_snapshot='+str(bool(child.get('experimental_help_parent_snapshot')))+',overlay_ready='+str(bool(child.get('experimental_overlay_layout_ready')))+',**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
  if overlay:
   run(['standalone/build_aspect_standard_overlay.py','--base',child_build,'--output','build/child',
-       *(['--notice'] if child.get('experimental_notice_overlay') else []),*(['--program'] if child.get('experimental_program_overlay') else [])])
+        *(['--notice'] if child.get('experimental_notice_overlay') else []),*(['--program'] if child.get('experimental_program_overlay') else []),*(['--checked-io'] if child.get('experimental_checked_overlay_io') else [])])
  run(['standalone/build_aspect_compiler_dos.py','--get','--output','build/compiler'])
  artifacts={}
  if parent.get('experimental_chat_send_mode'):
@@ -233,9 +240,17 @@ def main():
   assert (path.parent/'ordinary/serial.bin').read_bytes()==(leaf/'ordinary/serial.bin').read_bytes()
   help_replays.append(dict(case=label,checks=len(replay['checks']),resource_case=r['resource_case'],no_driver=r['no_driver'],
                            checks_sha256=sha(leaf/'result.json'),original_checks_sha256=sha(path)))
+ io_replays=[]
+ for i,(path,r) in enumerate(zip(a.overlay_io_checks,io_reports)):
+  leaf='build/io-replay-'+str(i)
+  run(['standalone/test_aspect_overlay_io_dos.py','--parent','build/parent','--child','build/child','--output',leaf,'--fault',r['fault'],'--phase',r['phase']])
+  replay=json.loads((fresh/leaf/'result.json').read_text())
+  assert replay['passed'] and replay['checks']==r['checks']
+  assert replay['parent_sha256']==r['parent_sha256'] and replay['child_sha256']==r['child_sha256']
+  io_replays.append(dict(fault=r['fault'],phase=r['phase'],checks=len(replay['checks']),checks_sha256=sha(fresh/leaf/'result.json'),original_checks_sha256=sha(path)))
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,sources=sources,source_count=len(sources),
-             artifacts=artifacts,help_replays=help_replays,Help_cases=len(help_replays),Help_checks=sum(r['checks'] for r in help_replays),lab_payload=lab_payload,connection_package=connection_result,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
+             artifacts=artifacts,help_replays=help_replays,Help_cases=len(help_replays),Help_checks=sum(r['checks'] for r in help_replays),overlay_io_replays=io_replays,overlay_io_cases=len(io_replays),lab_payload=lab_payload,connection_package=connection_result,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
              scope=__doc__,physical_verified=False,installed_changed=False)
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print('PASS compiler bridge cold source:',len(sources),'sources;',result['DOS_cases'],'normal DOS cases;',result['termination_cases'],'expected fail-stops')

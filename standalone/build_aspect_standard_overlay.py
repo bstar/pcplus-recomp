@@ -24,6 +24,7 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--base',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
  p.add_argument('--notice',action='store_true',help='Also share notice code; requires resident notice checkpoint preparation')
  p.add_argument('--program',action='store_true',help='Also share the synchronous PROGRAM controller; keep its platform/IRQ adapters resident')
+ p.add_argument('--checked-io',action='store_true',help='Reject short overlay code/relocation reads through a source-owned DOS I/O adapter')
  a=p.parse_args()
  assert not a.program or a.notice
  base=a.base.resolve();out=a.output.resolve()
@@ -55,6 +56,12 @@ def main():
  assert get_names<=seen and help_names<=seen
  if a.notice:assert notice_names<=seen
  if a.program:assert 'native_program_far.obj' in seen
+ if a.checked_io:
+  path=ROOT/'src/aspect/overlay_io.asm';obj=out/'checked-io.obj'
+  subprocess.run(['nasm','-fobj',str(path),'-o',str(obj)],check=True)
+  groups[0].append('file checked-io.obj')
+  objects['checked-io.obj']=dict(original='src/aspect/overlay_io.asm',sha256=sha(obj))
+  m['sources']['src/aspect/overlay_io.asm']=sha(path)
  link=['system dos','option quiet','option stack=8192','option standard','option packcode=0',
        # Use DOSSEG rather than a manual ORDER. Its overlay-aware ordering
        # keeps manager tables in its CS and sorts the preloaded data section
@@ -81,6 +88,13 @@ def main():
  assert linear('GET_RUNTIME_STORAGE')+206<=linear('_NULL')==ds
  assert linear('_NULL')<linear('CONST')<linear('_BSS')<linear('STACK')
  assert linear('STACK')+8192==ds+size
+ if a.checked_io:
+  # The only non-exact read allowed by the adapter is the linker's initial
+  # far-data/DGROUP preload ending in BSS/stack. Bind that identity to this
+  # trusted layout; replaceable code and relocation scratch cannot alias it.
+  assert symbols['_runtime_get_field_storage']==linear('GET_RUNTIME_STORAGE')
+  assert symbols['_runtime_file']==linear('_BSS')==symbols['__End_YI']
+  assert linear('_BSS')>linear('GET_RUNTIME_STORAGE')
  for name in ('LOCHELP.HLP','help-resource.json'):
   if (base/name).exists():shutil.copyfile(base/name,out/name)
  m.pop('MZ_header_layout',None)
@@ -97,6 +111,11 @@ def main():
    scope='Preliminary trusted-linker map/MZ bounds only; full callback, checkpoint, recovery and allocation acceptance requires DOS execution.'),
   scope='Experimental standard overlays for GET and Help, with resident ISR/mouse code and SS-relative GET checkpoint state. Not packaged or physically verified.')
  m['sources']['standalone/build_aspect_standard_overlay.py']=sha(Path(__file__))
+ if a.checked_io:
+  m['experimental_checked_overlay_io']=True
+  m['checked_overlay_io_preload']=dict(segment=addresses['_runtime_get_field_storage'][0],offset=0,
+   initialized_prefix_bytes=linear('_BSS')-linear('GET_RUNTIME_STORAGE'),
+   scope='Only the exact initial far-data preload may end after the complete initialized prefix; code/relocation short reads fail.')
  (out/'manifest.json').write_text(json.dumps(m,indent=2)+'\n');print(json.dumps(dict(binary=m['binary_sha256'],layout=m['GET_bank_layout']),indent=2))
 
 

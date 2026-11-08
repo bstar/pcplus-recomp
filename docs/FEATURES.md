@@ -3576,3 +3576,18 @@ connection-release matrix, physical modem/SIP/adapter acceptance or full ASPECT
 parity. The ten-product lab bundle has not been promoted to the installed selector.
 No private configuration/history, live bridge or workstation networking changed.
 Host remains last.
+
+
+## Short overlay-read recovery (2026-11-08)
+
+The opt-in [checked I/O adapter](ASPECT_OVERLAY_IO.md) fixes a reproducible
+loader short-read hang. Exact disabled70f6e1e7 bytes retain the failing receipt;
+668e9722 rejects incomplete code/relocation reads while preserving the initial
+BSS/stack preload format and requiring its complete initialized prefix. Five
+full-parent cases pass201 checks, including error255 return, parent revocation,
+mouse/menu, keyboard, files, UART restoration and hangup. An isolated1064-source
+rebuild reproduces eight products and replays four loader cases, compilation/GET
+and the nested-PROGRAM/held-FILE/Help case. No stack or buffer limits were reduced.
+This maintained toolchain adapter remains experimental: broader loader/lease
+faults, new-byte BBS/package and physical gates remain open. No installation,
+private settings/history or live bridge changed. Host remains last.

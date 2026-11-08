@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "experimental": true,
+  "release_eligible": false,
+  "physical_verified": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "original_inputs": [],
+  "artifacts": {
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8",
+    "TERMINAL.EXE": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+    "PCCOMP.OVL": "7067e4db661cb39e0d8e7336179fccd8d8cacebb2001a2f7a94dbf7cec0dffca",
+    "PCLINE.OVL": "6e8253bb12b242b55b0987bd6850c16c053be605f2fa7447c159b23ab2604fb4",
+    "PCMETA.OVL": "ab929d876b1fcff4c51e136fb3e764231828dc88b6e4bf6ebc9039b94dc900b6",
+    "ASPECT.EXE": "668e972244fac9171d62bd2224ba4387987d65405625794e3200ae53a084729c",
+    "ASPCOMP.EXE": "1db52316f671b43663395abc7de41925abfe1205fffb930bdb5d6dae70f98a14",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf"
+  },
+  "disabled_child_sha256": "70f6e1e7a0e5b0455f72182f2cddfe71d4808e9cd2c1a7b0ea0cae4d5ba44b57",
+  "checked_preload": {
+    "segment": 5278,
+    "offset": 0,
+    "initialized_prefix_bytes": 25772,
+    "scope": "Only the exact initial far-data preload may end after the complete initialized prefix; code/relocation short reads fail."
+  },
+  "layout": {
+    "passed": true,
+    "near_code_bytes": 64548,
+    "near_code_spare": 988,
+    "GET_code_bytes": 4079,
+    "editor_code_bytes": 1544,
+    "Help_code_bytes": 6561,
+    "field_state_bytes": 206,
+    "DGROUP_bytes": 40464,
+    "stack_bytes": 8192,
+    "notice_code_bytes": 6466,
+    "notice_overlay": true,
+    "program_code_bytes": 1463,
+    "program_overlay": true,
+    "minimum_DOS_bytes_including_PSP": 125392,
+    "page_rounded_minimum_including_PSP": 125680,
+    "scope": "Preliminary trusted-linker map/MZ bounds only; full callback, checkpoint, recovery and allocation acceptance requires DOS execution."
+  },
+  "cases": [
+    {
+      "receipt": "build/checked-overlay-io-final-control-case-20261108/result.json",
+      "fault": "none",
+      "phase": "run",
+      "checks": 41,
+      "child_exit": 0,
+      "lease_at_EXEC_return": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "lease_at_parent_exit": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "receipt": "build/checked-overlay-io-final-read-case-20261108/result.json",
+      "fault": "read",
+      "phase": "run",
+      "checks": 40,
+      "child_exit": 255,
+      "lease_at_EXEC_return": [
+        2,
+        1,
+        0,
+        0
+      ],
+      "lease_at_parent_exit": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "receipt": "build/checked-overlay-io-final-open-case-20261108/result.json",
+      "fault": "open",
+      "phase": "startup",
+      "checks": 40,
+      "child_exit": 255,
+      "lease_at_EXEC_return": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "lease_at_parent_exit": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "receipt": "build/checked-overlay-io-final-short-case-20261108/result.json",
+      "fault": "short",
+      "phase": "run",
+      "checks": 40,
+      "child_exit": 255,
+      "lease_at_EXEC_return": [
+        2,
+        1,
+        0,
+        0
+      ],
+      "lease_at_parent_exit": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "receipt": "build/checked-overlay-io-preload-short-20261108/result.json",
+      "fault": "short",
+      "phase": "startup",
+      "checks": 40,
+      "child_exit": 255,
+      "lease_at_EXEC_return": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "lease_at_parent_exit": [
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "IO_checks": 201,
+  "cold_source_files": 1064,
+  "cold_IO_cases": 4,
+  "cold_IO_checks": 161,
+  "cold_GET_cases": 2,
+  "cold_Help_checks": 63,
+  "unchecked_zero_read": {
+    "passed": false,
+    "receipt": "build/help-overlay-io-verified-unchecked-short-20261108/result.json",
+    "scope": "Owned DOS emulator timed out; normal return/recovery unproven",
+    "checker_snapshot": "build/help-overlay-io-verified-unchecked-short-20261108/checker.py"
+  },
+  "receipts": {
+    "build/checked-overlay-io-cold-source-20261108/result.json": "4082169d1363b774e875ae5987f97be7227c84f59b87ebbf9aec99fef0611176",
+    "build/checked-overlay-io-source-lease-20261108/checks.json": "7cd527d0d11ecd45348ced104d8ae76cbca4ca5122eaac9f3552e502cbd41ef5",
+    "build/notice-help/checked-overlay-io-nested-help-20261108/result.json": "27ff2de03ecc0a0eca385dfa386a3f93b2018bf89f12f540105aac339e371cb0",
+    "build/checked-overlay-io-bootstrap-v2-20261108/result.json": "ad6a5b4d47d1842a551f8306c39918edb8a1027adf25905715a5c8703508900c",
+    "build/checked-overlay-io-final-control-case-20261108/result.json": "5d97c984bc9f985656c4c76ae10bcaa9e1cf51fe71ad5f68fa8f76592972000d",
+    "build/checked-overlay-io-final-read-case-20261108/result.json": "3b9a999d1c38fd6d107c57b5be5dd530bd0faa609d6cb78077021458d2c99724",
+    "build/checked-overlay-io-final-open-case-20261108/result.json": "2dc2f20c1f2f805bd2f124b9cbe41455a98cb317dca0dcef1afb4c9b284df120",
+    "build/checked-overlay-io-final-short-case-20261108/result.json": "7c7e7d796e3e61572143490dd1886f1af1049cae439e87db0aefcb2573db21ee",
+    "build/checked-overlay-io-preload-short-20261108/result.json": "022240ff7702d356afa15ca3645782b88653b442b44826e27838b84b6be50fdc",
+    "build/help-overlay-io-verified-unchecked-short-20261108/result.json": "61068ed97b293b1b4966004b288c764fb7442a7a3dcd47c468ea0268502e60e2",
+    "build/help-overlay-io-verified-unchecked-short-20261108/checker.py": "23e953d00624422daffdbdf63a91b9fe8392b94b5f107ad851a28939d60d8ae9",
+    "build/checked-overlay-io-final-20261108/manifest.json": "df0fe82a221de88979f1615eab5f28ddb986c9a5252aacda77484fe539554f43",
+    "build/checked-overlay-io-final-disabled-20261108/manifest.json": "027ba9a2422d0014f1ca3f129d6d8655d4c0b7f76def8c6c1bec06c1f26bb35f"
+  },
+  "sources": {
+    "src/aspect/overlay_io.asm": "06da6f9b6525bd585d26afbdec65d89a983ed66e72ba7e010af2133b8d296530",
+    "standalone/build_aspect_standard_overlay.py": "090a0a69c3a744a0c732585fd5844ab7f6c4dc57bc6082fa6ef56b40026cac5a",
+    "standalone/test_aspect_overlay_io_dos.py": "23e953d00624422daffdbdf63a91b9fe8392b94b5f107ad851a28939d60d8ae9",
+    "standalone/prove_compiler_bridge_source.py": "e6927e1e61a554b83a4971844662d245afc4f051b61b9bc63f4f1a8f0c7e9e22"
+  },
+  "upstream_sources": {
+    "bld/wl/ovlldr/c/ovlio.c": "a1c377287defdf2571024eaf4a8ac770de5df41db6d3bd3e38948da2f4d4ca7d",
+    "bld/wl/ovlldr/c/ovlboth.c": "c0941b446b0a9caba29feb1f9b4f9a446a63582be78116306f2a43fab070f571",
+    "bld/wl/ovlldr/c/ovlldr.c": "31d8cd9d29cac0cfdc1b391a634b7e7bc4aa142b0364dbfac1dc1f44f35acfb9",
+    "bld/wl/ovlldr/h/ovlstd.h": "c8a40122c1fa2ee66d8ac36648dcb9a241a2c17c1f4e5c0208e215791129bf32"
+  },
+  "limits": [
+    "Observed unchecked zero-byte RUN loader read hangs the owned emulator; exact disabled bytes preserved.",
+    "Checked code/relocation counts reject short reads; only initial far-data offset0 may end after the complete initialized prefix through linker _edata.",
+    "Fatal loader exit255 is contained by parent revoke; it is not graceful interpreter unwind or guaranteed flushing of its buffered FILE streams.",
+    "Normal, read-error, startup-open and RUN-short cases cold-replayed; initial-data-prefix short case additionally passes outside that export.",
+    "Nonzero partial, relocation-specific/seek failures, same-parent script relaunch and full Help RPC/error-lifetime composition remain open.",
+    "Enigma/Synchronet receipts cover earlier70f6e1e7, not new668e9722; complete connection-release/BBS/physical acceptance pending.",
+    "No installation, private configuration/history, physical networking, live bridge or ATA changes. Full parity incomplete; Host last."
+  ],
+  "initialized_prefix_refusal_cold_replayed": false
+}
