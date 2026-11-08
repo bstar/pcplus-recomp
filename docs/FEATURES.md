@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Compiler-bridge BBS regressions](ASPECT_COMPILER_BBS.md) now bind a nine-file
+lab payload and fresh stock Enigma/Synchronet ZMODEM downloads and uploads
+through the actual SynthModem Telnet proxy. Exact bytes, protocol closure,
+server metadata and menu return pass; physical route and promotion remain open.
+
 [Compiler error reuse](ASPECT_COMPILER_REUSE.md) now exercises a second real
 source launch through Alt-F5 after failed startup, within the same connected
 parent. Fresh lease ownership, orphan-backup avoidance, native receive/GET and

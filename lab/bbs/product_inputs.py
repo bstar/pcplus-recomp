@@ -16,7 +16,10 @@ def companions(binary):
     binary=Path(binary).resolve()
     manifest=json.loads(binary.with_name('manifest.json').read_text())
     paths=[]
-    for key,leaf in (('line_port_overlay','PCLINE.OVL'),('meta_editor_overlay','PCMETA.OVL')):
+    if manifest.get('experimental_compiler_lease_bridge'):
+        module=manifest.get('experimental_compiler_lease_module')
+        assert isinstance(module,dict) and module.get('whole_kernel') is True, 'Compiler bridge requires its matched whole-kernel module'
+    for key,leaf in (('line_port_overlay','PCLINE.OVL'),('meta_editor_overlay','PCMETA.OVL'),('experimental_compiler_lease_module','PCCOMP.OVL')):
         overlay=manifest.get(key)
         if not overlay:continue
         path=binary.with_name(leaf)

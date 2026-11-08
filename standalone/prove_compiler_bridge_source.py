@@ -17,6 +17,7 @@ def main():
  for name in ('parent', 'child', 'compiler', 'output'):
   p.add_argument('--'+name, type=Path, required=True)
  p.add_argument('--checks', type=Path, action='append', required=True)
+ p.add_argument('--lab-payload',type=Path)
  p.add_argument('--termination-checks',type=Path,action='append',default=[])
  a = p.parse_args(); out = a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and not out.exists()
@@ -36,6 +37,17 @@ def main():
   'standalone/modem_fixtures.py','standalone/directory_test_support.py','standalone/terminal_config_fixtures.py',
   'src/aspect/compiler.py','standalone/compiler_bridge_recovery_observer.py','standalone/compiler_bridge_repeat_observer.py','standalone/test_compiler_bridge_termination_dos.py','standalone/compiler_bridge_termination_observer.asm','standalone/compiler_bridge_reuse_observer.py']
  for name in extras:sources[name]=sha(ROOT/name)
+ payload=None
+ if a.lab_payload:
+  payload=json.loads((a.lab_payload/'package.json').read_text())
+  assert payload['passed'] and not payload.get('original_inputs')
+  for leaf,folder in (('TERMINAL.EXE',a.parent),('ASPECT.EXE',a.child),('ASPCOMP.EXE',a.compiler)):
+   assert payload['products'][leaf]==sha(folder/leaf)
+  for name,digest in payload['sources'].items():
+   assert sha(ROOT/name)==digest and (name not in sources or sources[name]==digest),name
+   sources[name]=digest
+  for name in ('standalone/test_compiler_bridge_lab_payload.py','lab/bbs/product_inputs.py'):sources[name]=sha(ROOT/name)
+
  reports=[json.loads(path.read_text()) for path in a.checks]
  assert any(r.get('source_lease_cases') and len(r['cases'])==2 for r in reports)
  for r in reports:
@@ -51,7 +63,7 @@ def main():
  for name,digest in sources.items():
   n=Path(name)
   assert not n.is_absolute() and '..' not in n.parts
-  assert n.parts[0] in ('src','standalone','reconstruction','resources')
+  assert n.parts[0] in ('src','standalone','reconstruction','resources','lab')
   assert n.suffix in ('.c','.h','.asm','.inc','.py','.json','.txt')
   assert sha(ROOT/n)==digest,name
   target=fresh/n;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/n).read_bytes())
@@ -72,6 +84,13 @@ def main():
   for leaf in leaves:
    assert sha(fresh/'build'/folder/leaf)==sha(original/leaf),leaf
    artifacts[leaf]=sha(original/leaf)
+ lab_payload=None
+ if payload:
+  run(['standalone/package_compiler_bridge_lab.py','--parent','build/parent','--child','build/child','--compiler','build/compiler','--output','build/lab-payload'])
+  staged=json.loads((fresh/'build/lab-payload/package.json').read_text());assert staged['products']==payload['products']
+  run(['standalone/test_compiler_bridge_lab_payload.py','--payload','build/lab-payload','--output','build/lab-contract'])
+  contract=json.loads((fresh/'build/lab-contract/result.json').read_text());assert contract['passed']
+  lab_payload=dict(products=staged['products'],package_sha256=sha(fresh/'build/lab-payload/package.json'),contract_sha256=sha(fresh/'build/lab-contract/result.json'),checks=contract['checks'])
  replays=[]
  families=('source_lease_reuse_cases','source_lease_close_cases','source_lease_begin_cases','source_lease_repeat_cases','source_lease_cleanup_cases','source_lease_recovery_cases','source_lease_fault_cases','source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
  for i,(path,r) in enumerate(zip(a.checks,reports)):
@@ -138,7 +157,7 @@ def main():
   termination_replays.append(dict(cases=len(replay['cases']),checks_sha256=sha(fresh/leaf/'checks.json'),expected_fail_stop=True))
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,sources=sources,source_count=len(sources),
-             artifacts=artifacts,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
+             artifacts=artifacts,lab_payload=lab_payload,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
              scope=__doc__,physical_verified=False,installed_changed=False)
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print('PASS compiler bridge cold source:',len(sources),'sources;',result['DOS_cases'],'normal DOS cases;',result['termination_cases'],'expected fail-stops')
