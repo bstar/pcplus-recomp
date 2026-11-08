@@ -66,6 +66,17 @@ unsigned __far __cdecl help_resource_release(void)
  help_resource_storage_release(storage);storage=0;return HELP_VIEW_OK;
 }
 #endif
+#ifdef ASPECT_EARLY_HELP_MODEL
+#ifndef ASPECT_DEFER_HELP_RESOURCE
+#error Early Help preparation requires deferred backing
+#endif
+unsigned __far __cdecl help_resource_prepare(void)
+{
+ if(help_view_active()||help_resource_active())return HELP_VIEW_STATE;
+ if(!storage)storage=help_resource_storage_allocate(sizeof(*storage));
+ return storage?HELP_VIEW_OK:HELP_VIEW_MEMORY;
+}
+#endif
 unsigned __far __cdecl help_resource_close(void)
 {
  unsigned status;
@@ -86,9 +97,13 @@ unsigned __far __cdecl help_resource_open(const char *path)
  unsigned status,i;unsigned long bytes;
 #ifdef ASPECT_DEFER_HELP_RESOURCE
  if(help_view_active()||help_resource_active())return HELP_VIEW_STATE;
+#ifdef ASPECT_EARLY_HELP_MODEL
+ status=help_resource_prepare();if(status)return status;
+#else
  if(help_resource_release())return HELP_VIEW_STATE;
  storage=help_resource_storage_allocate(sizeof(*storage));
  if(!storage)return HELP_VIEW_MEMORY;
+#endif
 #else
  if(held.owned||help_view_active())return HELP_VIEW_STATE;
 #endif

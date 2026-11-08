@@ -2,7 +2,7 @@
 
 The expanded GET/Help/notice overlay build passes the previously failing
 six-file/graphics PROGRAM workload, source compiler lending and GET recovery.
-It remains ineligible for packaging: full-parent Help still refuses memory.
+It remains ineligible for packaging: full-parent Help still fails during admission/service.
 No installed package, selector, private configuration or call history changes.
 
 This is maintained memory-layout work, not recovered vendor overlay code.
@@ -120,11 +120,74 @@ ignored receipts and do not count as accepted tests.
 The [expanded validation record](validation/aspect-notice-overlays.json) binds
 these receipts, including the failed Help run.
 
-Full-parent Help still fails while acquiring saved mouse state: notice input
-cause11, service4 (`MOUSE_MEMORY`), before Help opens. This is retained as a
-failed integration receipt. Consequently actual Notice→Help bank eviction and
+The earlier full-parent Help receipt reports notice input cause11, service4
+(`MOUSE_MEMORY`), before a captured Help frame. That mapped code also covers
+Help model and screen allocation failures; it did not establish a saved-mouse-
+state failure. This is retained as a failed integration receipt. Consequently
+actual Notice→Help bank eviction and
 notice recovery are not accepted merely because their state is now resident.
 Broader GET lifetime/WHEN tests, nonlocal recovery across real bank eviction,
 overlay handle inheritance/failure paths, remaining Help memory pressure and
 BBS/package regression gates remain open. Physical Boca/SPA2102/SynthModem/
 Enigma acceptance is separate. Host remains last; no package is promoted.
+
+## Help admission follow-up: allocations pass, service gate remains open
+
+The later [Help-admission record](validation/aspect-help-admission.json) narrows
+the earlier cause11/service4 failure. Service4 is a mapped `MOUSE_MEMORY` value,
+also returned for Help model or saved-screen allocation refusal. The mouse
+callback was already active and the notice was visible. It was incorrect to
+identify the earlier receipt as failure to allocate saved mouse state.
+
+An optional passive INT21 observer records requests after Help-key admission,
+their actual carry/AX/BX results, PSP, DS, caller and near-heap boundary. In the
+original notice-overlay child, the model allocation requests AH4A/BX8142,
+but DOS returns error8 and largest extent7933 paragraphs, with curbrk40960 and
+nheapbeg40448. This is a contiguous PSP growth refusal; no Help screen request
+has occurred. Separate DOS allocations pin the near heap's ceiling.
+
+`early_help_model=True` reserves the unchanged model before notice input takes
+its separate mouse/window DOS blocks. A failed reservation still permits the
+error notice, and its later Help request reports failure explicitly. Failed
+mouse admission releases an unused reservation; a retained mouse owner retains
+its backing until normal close/recovery. Missing-file fallback releases the
+model before using authored static pages. Existing view/model release guards
+still retain backing until both file and borrowed view have retired.
+
+This resolves model admission: curbrk reaches44298. The next observed refusal is
+then the actual4032-byte saved screen (AH48/BX252, largest free165 paragraphs).
+The experimental `--program` relink also shares the synchronous PROGRAM
+controller's1463 code bytes. Its mutable state already resides in DGROUP;
+platform, keyboard/UART interrupt code and native external checkpoint remain
+resident. This releases another1392 minimum bytes. All stack and buffer
+capacities remain intact.
+
+The resulting production-layout prototype is
+`822897f0b67dfbfbe98bed8711cb1071417705ad9a75fdcd5138c88679fc7c05`,
+minimum125120/page125200, DGROUP40464, stack8192:9920 minimum bytes below the
+disk-snapshot control. Its saved-screen request succeeds. The same unobserved
+8086 six-file/three-graphics/WAIT workload remains green. The reservation
+component passes91 DOS checks, including admission failure, idempotence,
+active-owner refusal, exact screen/JFT restoration, release retry and repeated
+resource search/lifetimes. Disabled production bytes remain exactly the prior
+disk-snapshot control.
+Two full-parent source compiler loan/GET/open-stream cases and six standalone
+bootstrap launches also pass. A clean1048-file export reproduces the exact
+parent/child/compiler/helpers and replays both compiler cases. These passing
+checks do not override the failed Help integration.
+
+Full Help is still rejected. The diagnostic `program_result_probe` profile now
+records the notice service failure's source and execution context. With BIOS
+input fallback, after successful4032-byte screen allocation, speaker polling
+returns STATE4 with DS=SS37608, FLAGS7006h (IF clear), and UART status0. This is
+NOTICE_SERVICE6, subsequently presented by the existing PROGRAM adapter as
+serial error14/status4. It does not establish a UART failure. The first point
+where IF becomes clear, and the associated unsupported INT10 calls in the
+emulator log, remain unresolved. The diagnosis uses a larger marked diagnostic
+child and BIOS fallback, not mouse-enabled capacity acceptance.
+
+Do not fix this by unconditionally enabling interrupts or weakening the
+speaker/context guards. Trace the first bad transition through Help paint,
+bank return and notice service. No actual captured Help page, paused timer,
+search/F3 sequence or exact notice restoration is accepted yet. Packaging,
+BBS/physical tests and full feature parity remain open.

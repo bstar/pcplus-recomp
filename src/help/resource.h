@@ -12,5 +12,9 @@ unsigned __far __cdecl help_resource_active(void);
 #ifdef ASPECT_DEFER_HELP_RESOURCE
 /* File close and view close/discard must both finish before backing release. */
 unsigned __far __cdecl help_resource_release(void);
+#ifdef ASPECT_EARLY_HELP_MODEL
+/* Reserve near backing before separate DOS screen/mouse blocks split the heap. */
+unsigned __far __cdecl help_resource_prepare(void);
+#endif
 #endif
 #endif

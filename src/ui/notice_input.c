@@ -74,12 +74,21 @@ unsigned __far __cdecl notice_input_open(const mouse_settings *settings)
 #ifdef NOTICE_INPUT_EXIT_GUARD
  if(notice_input_exit_prepare())return MOUSE_STATE;
 #endif
+#ifdef ASPECT_EARLY_HELP_MODEL
+ /* Reserve before mouse/window DOS blocks can pin the near heap's ceiling.
+  * Lack of Help backing must not prevent the error notice itself opening. */
+ status=help_resource_prepare();
+ if(status&&status!=HELP_VIEW_MEMORY)return MOUSE_STATE;
+#endif
  /* Publish before the first driver mutation: an outer nonlocal unwind may
   * abandon mouse_owner_open after it has acquired quarantined storage. */
  owned=1;status=mouse_owner_open(settings);
  if(mouse_owner_phase()==MOUSE_CLOSED)owned=0;
 #ifdef NOTICE_INPUT_BIOS_FALLBACK
  if(status==MOUSE_DRIVER&&!owned){owned=2;return MOUSE_OK;}
+#endif
+#ifdef ASPECT_EARLY_HELP_MODEL
+ if(status&&!owned&&help_resource_release())return MOUSE_STATE;
 #endif
  return status;
 }

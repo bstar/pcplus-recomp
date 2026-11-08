@@ -46,6 +46,21 @@ static unsigned stack_segment(void);
 #pragma aux stack_segment = "mov ax,ss" value [ax] modify [];
 static unsigned interrupt_flag(void);
 #pragma aux interrupt_flag = "pushf" "pop ax" "and ax,0x200" value [ax] modify [];
+#ifdef NOTICE_SERVICE_DIAGNOSTIC
+unsigned notice_service_probe[6];
+extern unsigned aspect_serial_status;
+static unsigned all_flags(void);
+#pragma aux all_flags = "pushf" "pop ax" value [ax] modify [];
+static void service_probe(unsigned origin,unsigned status)
+{
+ notice_service_probe[0]=origin;notice_service_probe[1]=status;
+ notice_service_probe[2]=data_segment();notice_service_probe[3]=stack_segment();
+ notice_service_probe[4]=all_flags();notice_service_probe[5]=aspect_serial_status;
+}
+#define SERVICE_PROBE(origin,status) service_probe(origin,status)
+#else
+#define SERVICE_PROBE(origin,status) ((void)0)
+#endif
 static unsigned extent(const void *pointer,unsigned size)
 {return pointer&&(unsigned long)(unsigned)pointer+size<=65536UL;}
 static void abort_notice(unsigned status)
@@ -73,13 +88,13 @@ static void service(void)
   if(speaker_generation()!=held.speaker_generation||!speaker_active())abort_notice(NOTICE_STATE);
   status=speaker_poll();
   if(status==SPEAKER_OK)held.speaker_owned=0;
-  else if(status!=SPEAKER_PENDING){held.result.service_status=status;abort_notice(NOTICE_SERVICE);}
+  else if(status!=SPEAKER_PENDING){SERVICE_PROBE(1,status);held.result.service_status=status;abort_notice(NOTICE_SERVICE);}
  }
 #endif
  if(held.owned&&!same_window())abort_notice(NOTICE_STATE);
  if(held.options.service){
   status=NOTICE_SERVICE_CALL(held.options.service);
-  if(status){held.result.service_status=status;abort_notice(NOTICE_SERVICE);}
+  if(status){SERVICE_PROBE(2,status);held.result.service_status=status;abort_notice(NOTICE_SERVICE);}
   if(held.owned&&!same_window())abort_notice(NOTICE_STATE);
  }
  now=notice_ticks_native();

@@ -40,6 +40,17 @@ int main(void)
  unsigned i;FILE *f;unsigned char header[41];
  for(i=0;i<4000;++i)original[i]=((unsigned char __far *)MK_FP(0xb800,0))[i]=(unsigned char)(i*13U+7U);
  for(i=0;i<20;++i)jft[i]=((unsigned char __far *)MK_FP(_psp,0x18))[i];
+#ifdef ASPECT_EARLY_HELP_MODEL
+ help_resource_heap_fail=1;
+ CHECK(help_resource_prepare()==HELP_VIEW_MEMORY&&help_resource_heap_live==0);
+ help_resource_heap_fail=0;
+ CHECK(help_resource_prepare()==0&&help_resource_heap_live==1&&!help_resource_active()&&!help_view_active());
+ CHECK(help_resource_prepare()==0&&help_resource_heap_live==1&&handles()&&restored());
+ CHECK(help_resource_release()==0&&help_resource_heap_live==0);
+ CHECK(help_resource_prepare()==0&&help_resource_open("LOCHELP.HLP")==0&&help_resource_heap_live==1);
+ CHECK(help_resource_prepare()==HELP_VIEW_STATE&&help_resource_heap_live==1);
+ CHECK(close_all()==0&&restored()&&handles());
+#endif
 #ifdef ASPECT_DEFER_HELP_RESOURCE
  CHECK(help_resource_heap_live==0&&help_resource_step()==HELP_VIEW_STATE&&help_resource_key(27)==HELP_VIEW_STATE);
  help_resource_heap_fail=1;

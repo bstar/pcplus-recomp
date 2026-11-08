@@ -91,10 +91,10 @@ def main():
  assert child['startup_heap_growth_bytes'] in (128,256,512)
  overlay=bool(child.get('experimental_standard_overlays'))
  child_build='build/child-base' if overlay else 'build/child'
- run(['-c','import json,sys;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path('+repr(child_build)+').resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,get_display=True,get_policy=True,get_vm=True,near_globals=True,compiler_parent_lease=True,heap_growth_bytes='+str(child['startup_heap_growth_bytes'])+',defer_help_resource='+str(bool(child.get('experimental_deferred_help_resource')))+',disk_script_snapshots='+str(bool(child.get('experimental_disk_script_snapshots')))+',overlay_ready='+str(bool(child.get('experimental_overlay_layout_ready')))+',**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
+ run(['-c','import json,sys;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path('+repr(child_build)+').resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,get_display=True,get_policy=True,get_vm=True,near_globals=True,compiler_parent_lease=True,heap_growth_bytes='+str(child['startup_heap_growth_bytes'])+',defer_help_resource='+str(bool(child.get('experimental_deferred_help_resource')))+',disk_script_snapshots='+str(bool(child.get('experimental_disk_script_snapshots')))+',early_help_model='+str(bool(child.get('experimental_early_help_model')))+',overlay_ready='+str(bool(child.get('experimental_overlay_layout_ready')))+',**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
  if overlay:
   run(['standalone/build_aspect_standard_overlay.py','--base',child_build,'--output','build/child',
-       *(['--notice'] if child.get('experimental_notice_overlay') else [])])
+       *(['--notice'] if child.get('experimental_notice_overlay') else []),*(['--program'] if child.get('experimental_program_overlay') else [])])
  run(['standalone/build_aspect_compiler_dos.py','--get','--output','build/compiler'])
  artifacts={}
  if parent.get('experimental_chat_send_mode'):

@@ -3474,6 +3474,17 @@ It also passes two source compiler loan/GET/open-stream cases, two WHEN
 divide/cancellation cases and an independent1048-file cold source rebuild with
 exact two-case replay. Its minimum DOS allocation is126432 bytes,8608 below
 the disk-snapshot control; disabled output stays byte-identical. Full-parent
-Help still fails its mouse-state allocation before opening, so actual notice/
+Help still reports a mapped memory refusal before a Help frame, so actual notice/
 Help eviction, wider lifetime/fault and BBS/package/physical gates remain open.
 The installed package and prepared connection payload remain unchanged.
+
+The [Help admission follow-up](ASPECT_STANDARD_OVERLAYS.md#help-admission-follow-up-allocations-pass-service-gate-remains-open)
+corrects the earlier saved-mouse-state diagnosis: the mapped memory code was
+first a near Help-model growth refusal, then a4032-byte screen allocation
+refusal. Optional early model reservation and an additional synchronous PROGRAM
+overlay let both allocations succeed. The six-file/graphics capacity case and
+two source compiler loan/GET/open-stream cases pass, with91 Help component
+checks and exact disabled bytes. Full Help still fails: a marked diagnostic
+captures the speaker service guard seeing IF clear with DS=SS and UART status0.
+The first bad transition and exact Help restoration remain unresolved; no
+package is promoted and no hardware acceptance is claimed.

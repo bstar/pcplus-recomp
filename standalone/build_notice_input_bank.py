@@ -4,10 +4,11 @@ from pathlib import Path
 from omf_imports import records,externals
 ROOT=Path(__file__).resolve().parents[1]
 
-def build(output,help_view=False,help_diagnostic=False,help_resource=False,defer_help_resource=False,overlay_ready=False):
+def build(output,help_view=False,help_diagnostic=False,help_resource=False,defer_help_resource=False,overlay_ready=False,early_help_model=False):
     assert not help_diagnostic or help_view
     assert not help_resource or help_view
     assert not overlay_ready or help_resource
+    assert not early_help_model or defer_help_resource
     assert not defer_help_resource or help_resource
     objects=[];sources=[]
     names=['read','peek','poll','normalize_bios','bios_read','bios_peek','queue_read','read_extended','normalize_extended',
@@ -39,6 +40,7 @@ def build(output,help_view=False,help_diagnostic=False,help_resource=False,defer
         obj=output/('input-'+Path(path).stem+'.obj')
         help_bank=overlay_ready and path.startswith('src/help/')
         extra=['-dmouse_platform_allocate=help_overlay_allocate','-dmouse_platform_release=help_overlay_release'] if help_bank else []
+        if early_help_model:extra+=['-dASPECT_EARLY_HELP_MODEL']
         subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we','-dNOTICE_BANKED','-dMOUSE_NOTICE_INPUT','-dMOUSE_DOS_PLATFORM','-dNOTICE_INPUT_BIOS_FALLBACK','-dNOTICE_INPUT_EXIT_GUARD','-dPROGRAM_EXIT_NO_BREAK','-dASPECT_EXTERNAL_PROCESS',*(['-dASPECT_NOTICE_HELP'] if help_view else []),*(['-dHELP_VIEW_DIAGNOSTIC'] if help_diagnostic else []),*(['-dASPECT_HELP_RESOURCE'] if help_resource else []),*(['-dASPECT_DEFER_HELP_RESOURCE'] if defer_help_resource else []),*extra,'-nt='+('HELP_OVL_CODE' if help_bank else 'NOTICEINPUT_CODE'),'-nc=FARCODE','-fo='+str(obj),str(ROOT/path)],cwd=output,check=True)
         imports={n.decode() for kind,payload,_ in records(obj.read_bytes()) if kind==0x8c for n,_ in externals(payload)}
         assert all(n.startswith(('_mouse_','_notice_','_program_exit_','_native_','_runtime_external_')) or (help_view and n.startswith('_help_')) or n in ('_small_code_','__STACKTOP','__psp','_process_handles_active','_aspect_process_serial_detached','_aspect_serial_active') for n in imports),imports
