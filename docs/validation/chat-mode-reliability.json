@@ -1,0 +1,329 @@
+{
+  "checkpoint_verified": true,
+  "tool_source_commit": "f43ad79b7b8d086dbd2549aa46a0d6d754b67dfe",
+  "files": {
+    "ASPCOMP.EXE": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+    "ASPECT.EXE": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8",
+    "PCCOMP.OVL": "7067e4db661cb39e0d8e7336179fccd8d8cacebb2001a2f7a94dbf7cec0dffca",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCKEYMAP.EXE": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+    "PCLINE.OVL": "6e8253bb12b242b55b0987bd6850c16c053be605f2fa7447c159b23ab2604fb4",
+    "PCMETA.OVL": "ab929d876b1fcff4c51e136fb3e764231828dc88b6e4bf6ebc9039b94dc900b6",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+    "PRMEDIT.EXE": "1c4ad0636cc611569172315216b0dea13f983b174bbe5f01aa4fca9ad15b3f26",
+    "README.TXT": "707f0f0153d70d2dc79c6f47f330875c3482cb1a388c0d28c644fc529758bf3a",
+    "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+    "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+    "TERMINAL.EXE": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+    "VERSION.TXT": "ce5078af388a47a15c5cfb242f926206caa6d141414da62597c753dff416a450",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "busy_and_reconnect": [
+    {
+      "case": "busy-exit",
+      "attempts": 1,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true
+      }
+    },
+    {
+      "case": "busy-redial",
+      "attempts": 2,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "second_configured_attempt": true
+      }
+    },
+    {
+      "case": "three-calls",
+      "attempts": 3,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true
+      }
+    }
+  ],
+  "endurance": {
+    "seconds": 300,
+    "frames": 601,
+    "actual_seconds": 319.533,
+    "scope": "Actual DOS8086 COM3/IRQ5 with BOTH flow selected; synthetic paced UART peer, not live BBS/SIP/audio or physical throughput."
+  },
+  "cancellation": {
+    "partial_disk_bytes": 4096,
+    "payload_bytes": 65539,
+    "same_DOS_process": true,
+    "authenticated_sessions": 1,
+    "proxy_connections": 1,
+    "exact_retry": true
+  },
+  "carrier": {
+    "cpu": "386",
+    "live_source": true,
+    "explicit_UMB": true,
+    "partial_disk_bytes": 4096,
+    "exact_retry_bytes": 65539,
+    "sessions": [
+      {
+        "index": 1,
+        "interrupted": true,
+        "NAWS": [
+          80,
+          24
+        ],
+        "delivered_bytes": 72057,
+        "proxy_bytes": 75091,
+        "online_bytes": 148
+      },
+      {
+        "index": 2,
+        "interrupted": false,
+        "NAWS": [
+          80,
+          24
+        ],
+        "delivered_bytes": 156649,
+        "proxy_bytes": 156649,
+        "online_bytes": 420
+      }
+    ],
+    "scope": "Independent current-image DCD loss/redial/retry and raw-proxy capture audit. One DOS386 parent,actual built-in modem DCD,socket abort after source-prefix write,cleanup before second login,two source-built ASPECT logins and DOS compiler equivalence,actual NAWS,raw byte prefixes at loss/exact second streams,CRC/finish/controls and exact retry. No physical/SIP/DSP or all-layout/protocol acceptance."
+  },
+  "carrier_checks": {
+    "DOS_normal_exit": true,
+    "hardware_restored": true,
+    "sources_unchanged": true,
+    "PRM_unchanged": true,
+    "DOS_compiler_exact": true,
+    "both_script_logins": true,
+    "two_connections": true,
+    "stage_clean_before_second_login": true,
+    "real_carrier_notice": true,
+    "RX_complete_notice": true,
+    "exact_retry": true,
+    "only_expected_file": true,
+    "directory_two_connections": true,
+    "no_post_saved": true,
+    "runtime_source_only_startup": true,
+    "runtime_compile_files_retired": true,
+    "source_matching_retry_finish_search_raw_proxy": true,
+    "two_authenticated_sessions": true
+  },
+  "controls": [
+    {
+      "name": "chat-mode-cancel-controls-20261108",
+      "cases": [
+        {
+          "case": "unchanged",
+          "rejected": false,
+          "passed": true,
+          "log_sha256": "ae190921c9d436702129ce1cebdc0496f40fad06cabfad5412e32ba889dd72d1"
+        },
+        {
+          "case": "partial-hash",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "7144c67e667456812133f9d185a6546a7bc39f659aa150e70b829d666ec80eb9"
+        },
+        {
+          "case": "partial-after-cancel",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "ca9d041dda42292bee54c4329727ac0fac9b713e7e953984ed03ff087ff00504"
+        },
+        {
+          "case": "stage-not-clean",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "7144c67e667456812133f9d185a6546a7bc39f659aa150e70b829d666ec80eb9"
+        },
+        {
+          "case": "BIOS-Escape",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "c8b27f8b3a3eea3836c5c482f0ae905c0f63f880494aba1f3cf0ceee92290bdb"
+        },
+        {
+          "case": "NAWS",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "369c389a13c287258d102112722100c30c7adea27187f578732b16ff0893db38"
+        },
+        {
+          "case": "hardware",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "472bb84fd20ce2a2a2340f2b01ef6572dae1fc4996c65ebc6b540271235a8626"
+        },
+        {
+          "case": "extra-session",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "1c53fbcb617badfab116086a04c1d44dcd3c7c424fdc8a2ea304e6810d5cd8ed"
+        },
+        {
+          "case": "retry-payload",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "2fbddaeaa82041353cefa24040c13ec218a61a891e09e3fd6d1846526a059945"
+        }
+      ]
+    },
+    {
+      "name": "chat-mode-carrier-controls-20261108",
+      "cases": [
+        {
+          "case": "unchanged",
+          "rejected": false,
+          "passed": true,
+          "log_sha256": "109f0ab74d6f09a7d9d366dbb84e549e5e81bd27859bdd9ff05f200c12d1f816"
+        },
+        {
+          "case": "source-count",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "8841bdfa64816a3bc183827be6308c030b4497ad3b2a133716a01b90c18d6284"
+        },
+        {
+          "case": "partial-hash",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "7facf5981e2169f347c6ca7fd6dccfddf21c209c157c8f34f2a1cb7f58d65e9a"
+        },
+        {
+          "case": "partial-after-drop",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "3994919add574ac84b701e4773509394c7f4d278c5b7065b93722b6bd4082d43"
+        },
+        {
+          "case": "stage-not-clean",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "9a424ea34a7b88e6dd9e1fa02047675ab5dc717279e06accb79a6d92e27f31c1"
+        },
+        {
+          "case": "missing-carrier-notice",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "80508b2c7fedbc1c0d9dfe34798120618cf4f2a3cd89f074fad3eabc2bd857a5"
+        },
+        {
+          "case": "NAWS",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "691a8149e30e8bd5e210b051d58a09158a2f86b8a3cc6f758a0e890370151fa2"
+        },
+        {
+          "case": "hardware",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "9505189c6b993c6b317f65c4c9e4888c2f2d278e2abdc9e790ab018a934f6382"
+        },
+        {
+          "case": "DOS-compiler",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "3f35b31ff4740effb54fdc3de96cb05d45b2c6476d108399a0649142c828bf60"
+        },
+        {
+          "case": "second-interrupted",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "fad2ef603876c44958609fba8a9e0f3f7ca192ce7ae5a5031b046de051c638eb"
+        },
+        {
+          "case": "retry-payload",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "6319961d0ee24b2a25688a52536d1959a01b6eb3ddf8cb620ade32ae76107eba"
+        },
+        {
+          "case": "declared-source-count",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "a975b1d99cd7805e9fcd870cfac79a6b396155da0b3f89f2dfb53c687aaf91ad"
+        },
+        {
+          "case": "bound-count",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "8841bdfa64816a3bc183827be6308c030b4497ad3b2a133716a01b90c18d6284"
+        },
+        {
+          "case": "missing-live-source-record",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "5e729e843650a7e6ae49ddcf487785740b48606b74cf61c493147384ab922cf7"
+        },
+        {
+          "case": "precompiled-source-claim",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "d9b58decc7e9c270ac94030726a1fbbbc1e256dbd899b9f66c9a6e9f12804710"
+        },
+        {
+          "case": "CPU-claim",
+          "rejected": true,
+          "passed": true,
+          "log_sha256": "5f51296617011dcbfee940ea1e2fc0714277e264aa997184c6fd3c4bc0c928fb"
+        }
+      ]
+    }
+  ],
+  "receipts": {
+    "docs/validation/chat-mode-package.json": "6d7e6c7fb9b6df9fe9b90dc61abcdafbcefb21cb97a729ad142c4fb252eee3cc",
+    "docs/validation/chat-mode-bbs.json": "fd15f530afd2848a91c7459a9ad6b32089c3d8399a0b6c417a058ca69835431d",
+    "build/busy-retry-dos/chat-mode-reliability-20261108/result.json": "49dd15574a91c29e9d4ce60feb0f4aac36b6210158d7e16152040f976f68173c",
+    "build/connection-dos/chat-mode-reliability-20261108-busy-exit/result.json": "7aa2ac85078381c4aeee16e0ef8ca782659d46d8106f98cdee8bc2d912396218",
+    "build/connection-dos/chat-mode-reliability-20261108-busy-redial/result.json": "fc8e9638acf4d37784ece2b70d4dcdd23189934d9c2bd94343a55e7e15d008f1",
+    "build/connection-dos/chat-mode-reliability-20261108-three-calls/result.json": "01c2e49951a0c67b39f0b13bdcfbbf65485d29deca000e69f801f47f85ad96e5",
+    "build/terminal-endurance/chat-mode-reliability-20261108/result.json": "911ff28848b7b75209535d0c0f1867b2754b7bdb612a1652a93d24f982292e18",
+    "build/connection-dos/chat-mode-reliability-20261108-stream/result.json": "e1be00e62c2f99e3a79e30486b2b2a38c66ba815ae0798acd05034b08aa3f012",
+    "build/chat-mode-cancel-audit-20261108/result.json": "ec72f7532e5e4513de57ce97668a032faa0d024fe9a52b69d268a638f4592335",
+    "build/bbs-lab/results/enigma/chat-mode-cancel-retry-20261108/cancel-checks.json": "3c6c19abd504d3e8b79882a57d21c373cb9f55f807389c859f2ae8dc70a835a1",
+    "build/bbs-lab/results/enigma/chat-mode-live-carrier-v2-20261108/carrier-checks.json": "e576a328cb73db3013e8496ef2e8cbab512c7bbcc5fe7ec674d7b54cc206231c",
+    "build/chat-mode-carrier-audit-20261108/result.json": "025c82de649fbe052bd77370e052e6f2a30e77662f012641795e2dacad2e29a7",
+    "build/chat-mode-cancel-controls-20261108/result.json": "c1c22e26d78ec612f9b190c2056c28f4d2e540a4a86c18692ca2737ad4d0cc1a",
+    "build/chat-mode-carrier-controls-20261108/result.json": "962218f8364d8c5546b5aa3772f8a2f447315d18f703cd1faa75ca3b018b5ae8"
+  },
+  "sources": {
+    "standalone/record_chat_mode_reliability.py": "d9e643b2f293572db9c3d18afa10eb40bcbb8a0133fa9362a51b7db6103a0acf"
+  },
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "scope": "Current17-file candidate. Actual DOS with synthetic Hayes for BUSY/endurance/cancellation; DOSBox native modem/DCD plus actual SynthModem Telnet proxy for live-source carrier/redial retry. Owned stock Enigma; no SIP/audio, physical CTS saturation or hardware acceptance.",
+  "excluded": [
+    "Initial carrier run added the optional20962-byte conventional-memory witness absent from the established passing profile. No ASX/login/retry completed; final DOS/hardware restoration passed. Removing that witness restores early source compilation/login; only the separately audited complete v2 may count as recovery acceptance. Exact DOS error for the witness failure was not captured."
+  ]
+}

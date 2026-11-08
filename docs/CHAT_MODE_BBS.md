@@ -4,7 +4,9 @@ The opt-in Chat-mode parent and API0107 module pass fresh stock Enigma and
 Synchronet ZMODEM uploads/downloads, exact screens and modal return checks.
 The [validation record](validation/chat-mode-bbs.json) binds these results to the
 same application bytes as the [live setting checkpoint](CHAT_SEND_MODE_LIVE.md).
-No selected package or physical installation changes in this checkpoint.
+No selected package or physical installation changes in this checkpoint. The
+later [complete package](CHAT_MODE_PACKAGE.md) and [reliability checks](CHAT_MODE_RELIABILITY.md)
+retain these same application bytes.
 
 The matched nine-file laboratory payload contains TERMINAL, ASPECT, ASPCOMP,
 PCCOMP/PCLINE/PCMETA/PCCHAT modules and source-built PCHELP/PCPLUS.HLP resources.

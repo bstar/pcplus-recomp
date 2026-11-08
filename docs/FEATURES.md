@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Current Chat-mode package](CHAT_MODE_PACKAGE.md) now reproduces all17 files and
+its ZIP from1082 committed sources, with eight packaged DOS cases and matching
+Chat-mode editor contracts. [Reliability](CHAT_MODE_RELIABILITY.md) adds current-byte
+BUSY/three-call,300-second receive, cancel/retry and live-source carrier/redial
+checks. The candidate is prepared for controlled hardware admission; deployment,
+physical acceptance and every whole-feature parity gate remain open.
+
 [Current Chat-mode BBS regressions](CHAT_MODE_BBS.md) now verify four stock
 Enigma/Synchronet binary transfers, three exact1920-cell screens, Chat/Help and
 mapper/Help returns, TEXT/echo preservation and the complete nine-file lab source
