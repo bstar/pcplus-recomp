@@ -9,6 +9,17 @@ class PrmTests(unittest.TestCase):
   for _ in range(64):
    data=bytes(rng.randrange(256) for _ in range(IMAGE_SIZE))
    self.assertEqual(LegacyPrm201(data).to_bytes(),data)
+ def test_chat_mode_is_one_byte_and_preserves_opaque_neighbor(self):
+  original=bytes((i*17+3)%256 for i in range(IMAGE_SIZE))
+  prm=LegacyPrm201(original)
+  for value in range(256):
+   edited=prm.with_byte('chat_buffered',value)
+   expected=bytearray(original);expected[0x1f2]=value
+   self.assertEqual(edited.byte('chat_buffered'),value)
+   self.assertEqual(edited.to_bytes(),bytes(expected))
+   self.assertEqual(prm.to_bytes(),original)
+  for value in (-1,256,True,'1'):
+   with self.assertRaises(ValueError):prm.with_byte('chat_buffered',value)
  def test_only_serial_prefix_changes(self):
   original=bytes((i*17+3)%256 for i in range(IMAGE_SIZE));prm=LegacyPrm201(original)
   updated=prm.with_serial(SerialSettings(7,8,2,1,8))

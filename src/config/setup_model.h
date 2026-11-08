@@ -7,16 +7,21 @@
  * and segment wrap before mutation. Unknown bytes remain opaque. */
 #ifdef SETUP_MOUSE
 #ifdef SETUP_SOUND
-#define SETUP_FIELD_COUNT 51U
+#define SETUP_BASE_FIELD_COUNT 51U
 #else
-#define SETUP_FIELD_COUNT 50U
+#define SETUP_BASE_FIELD_COUNT 50U
 #endif
 #else
 #ifdef SETUP_SOUND
-#define SETUP_FIELD_COUNT 49U
+#define SETUP_BASE_FIELD_COUNT 49U
 #else
-#define SETUP_FIELD_COUNT 48U
+#define SETUP_BASE_FIELD_COUNT 48U
 #endif
+#endif
+#ifdef SETUP_CHAT
+#define SETUP_FIELD_COUNT (SETUP_BASE_FIELD_COUNT+1U)
+#else
+#define SETUP_FIELD_COUNT SETUP_BASE_FIELD_COUNT
 #endif
 #define SETUP_TEXT_SIZE 64U
 #define SETUP_NO_FIELD 65535U

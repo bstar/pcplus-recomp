@@ -78,6 +78,9 @@ static const descriptor fields[SETUP_FIELD_COUNT]={
 #ifdef SETUP_SOUND
  ,F("Program sound","0 quiet; nonzero enables notice and connection tones.",1,0x1bc,DECIMAL,0,65535)
 #endif
+#ifdef SETUP_CHAT
+ ,F("Chat send mode","0 sends each key immediately; 1..255 buffers a line until Enter.",1,0x1f2,DECIMAL,0,255)
+#endif
 };
 static const unsigned bases[]={0x3f8,0x2f8,0x3e8,0x2e8};
 static const unsigned irqs[]={4,3,4,3};
@@ -91,7 +94,11 @@ static unsigned word(const prm_dos_image *im,unsigned at)
 { return im->bytes[at]|((unsigned)im->bytes[at+1]<<8); }
 static void putword(prm_dos_image *im,unsigned at,unsigned v)
 { im->bytes[at]=(unsigned char)v;im->bytes[at+1]=(unsigned char)(v>>8); }
-static unsigned bytefield(unsigned at) { return at==0x12 || at==0x1e2; }
+static unsigned bytefield(unsigned at) { return at==0x12 || at==0x1e2
+#ifdef SETUP_CHAT
+ || at==0x1f2
+#endif
+ ; }
 static unsigned length(const char *s,unsigned cap)
 { unsigned i;for(i=0;i<cap && s[i];++i);return i; }
 static unsigned caret_ok(const char *s,unsigned len)

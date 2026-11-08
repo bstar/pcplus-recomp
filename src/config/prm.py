@@ -145,7 +145,8 @@ WORD_FIELDS.update({
  'command_character_delay_units':0x1d68-ORIGINAL_DS_BASE,
  'break_delay_units':0x1d28-ORIGINAL_DS_BASE,
 })
-BYTE_FIELDS={'dial_abort_character':0x1b96-ORIGINAL_DS_BASE,
+BYTE_FIELDS={'chat_buffered':0x1d76-ORIGINAL_DS_BASE,
+             'dial_abort_character':0x1b96-ORIGINAL_DS_BASE,
              'command_pause_character':0x1d66-ORIGINAL_DS_BASE}
 
 

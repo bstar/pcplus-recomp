@@ -8,6 +8,7 @@ from dos_image import DosImage
 from check_modem_import import fixture
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'build/setup-model'
 MOUSE=False
+CHAT=False
 FIELD_COUNT=48
 SOURCES=['src/config/setup_model.c','src/config/transfer_import.c','src/config/terminal_import.c','src/config/modem_import.c','src/config/prm_dos.c','standalone/setup_model_host.c']
 RATES=[300,1200,2400,4800,9600,19200,38400,57600,115200]
@@ -18,7 +19,7 @@ def image():
  return bytes(raw)
 def build():
  OUT.mkdir(parents=True,exist_ok=True)
- subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192',*(['-dSETUP_MOUSE'] if MOUSE else []),'-i='+str(ROOT/'src/config'),'-fm=setup.map','-fe=MODEL.EXE',*[str(ROOT/p) for p in SOURCES]],cwd=OUT,check=True)
+ subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-s','-w4','-we','-k8192',*(['-dSETUP_MOUSE'] if MOUSE else []),*(['-dSETUP_CHAT'] if CHAT else []),'-i='+str(ROOT/'src/config'),'-fm=setup.map','-fe=MODEL.EXE',*[str(ROOT/p) for p in SOURCES]],cwd=OUT,check=True)
 class Model(DosImage):
  def __init__(self):
   super().__init__(OUT/'MODEL.EXE',OUT/'setup.map')
@@ -55,10 +56,11 @@ class Model(DosImage):
   assert before==self.raw();return status,self.get_word()
  def get_word(self):return int.from_bytes(self.uc.mem_read(self.data_base+self.bad,2),'little')
 def main():
- global OUT,MOUSE,FIELD_COUNT
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--mouse',action='store_true');args=parser.parse_args()
- MOUSE=args.mouse;FIELD_COUNT=50 if MOUSE else 48
+ global OUT,MOUSE,CHAT,FIELD_COUNT
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--chat-mode',action='store_true');parser.add_argument('--mouse',action='store_true');args=parser.parse_args()
+ MOUSE=args.mouse;CHAT=args.chat_mode;FIELD_COUNT=(50 if MOUSE else 48)+int(CHAT)
  if MOUSE:OUT=ROOT/'build/setup-model-mouse'
+ if CHAT:OUT=OUT.with_name(OUT.name+'-chat')
  build();m=Model();cases=[]
  def record(name,n):cases.append({'case':name,'inputs':n,'passed':True});print(name,n,flush=True)
  assert m.validate()==(0,65535)
@@ -179,6 +181,18 @@ def main():
     assert m.get(index)[0]==3 and m.validate()==(3,index)
     assert m.set(index,b'8')==0 and m.validate()==(0,65535);count+=1
   record('mouse-scales-range-rejection-lossless-edits-and-loaded-value-repair',count)
+ if CHAT:
+  index=FIELD_COUNT-1
+  for value in range(256):
+   # Neighbor is deliberately nonzero: a mistaken word edit must fail.
+   raw=bytearray(image());raw[0x1f3]=0xa7;m.reset(raw)
+   assert m.set(index,str(value).encode())==0
+   expected=bytearray(raw);expected[0x1f2]=value
+   assert m.raw()==expected and m.get(index)==(0,str(value).encode())
+   assert m.validate()==(0,65535)
+  for value in (b'-1',b'256',b'65535',b'',b'1x'):
+   m.reset();assert m.set(index,value)==2
+  record('chat-mode-all-byte-values-lossless-neighbor-and-invalid-rejection',261)
  (OUT/'VALID.PRM').write_bytes(image());before=hashlib.sha256(image()).hexdigest()
  for name in ['PASS.TXT','FAIL.TXT','LOG.TXT']:(OUT/name).unlink(missing_ok=True)
  (OUT/'dosbox.conf').write_text(f'[sdl]\noutput=surface\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "{OUT}"\nc:\nMODEL >LOG.TXT\nif errorlevel 1 goto fail\necho PASS>PASS.TXT\ngoto done\n:fail\necho FAIL>FAIL.TXT\n:done\nexit\n')
@@ -187,6 +201,6 @@ def main():
  assert hashlib.sha256((OUT/'VALID.PRM').read_bytes()).hexdigest()==before
  record('actual-DOS-c-runtime-model-and-no-file-rewrites',1)
  sources=SOURCES+['src/config/transfer_import.h','src/config/setup_model.h','src/config/terminal_import.h','src/config/modem_import.h','src/config/prm_dos.h','standalone/check_setup_model.py','standalone/check_modem_import.py','standalone/dos_image.py']
- result={'passed':True,'experimental_mouse':MOUSE,'field_count':FIELD_COUNT,'cases':cases,'binary_sha256':hashlib.sha256((OUT/'MODEL.EXE').read_bytes()).hexdigest(),'sources':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in sources},'scope':'Actual source-built DOS8086 C. Synthetic settings only. Pure API replay forbids interrupts and port I/O; separate DOS run checks C runtime and no rewrite. Field model only, no settings UI, save ownership or original PCSETUP child compatibility.'}
+ result={'passed':True,'experimental_mouse':MOUSE,'experimental_chat_mode':CHAT,'field_count':FIELD_COUNT,'cases':cases,'binary_sha256':hashlib.sha256((OUT/'MODEL.EXE').read_bytes()).hexdigest(),'sources':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in sources},'scope':'Actual source-built DOS8086 C. Synthetic settings only. Pure API replay forbids interrupts and port I/O; separate DOS run checks C runtime and no rewrite. Field model only, no settings UI, save ownership or original PCSETUP child compatibility.'}
  (OUT/'checks.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()
