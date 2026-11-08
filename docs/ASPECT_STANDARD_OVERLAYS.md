@@ -2,8 +2,10 @@
 
 The expanded GET/Help/notice overlay build passes the previously failing
 six-file/graphics PROGRAM workload, source compiler lending and GET recovery.
-It remains ineligible for packaging: parent keyboard/menu return after Help
-still times out, despite the verified child Help sub-gate below.
+The full Help composition gate now passes with mouse and BIOS-only input;
+missing and malformed Help resources also return safely to the live terminal.
+Packaging remains pending broader overlay lifetime/failure coverage and
+BBS/package regression gates. Earlier failures below are historical receipts.
 No installed package, selector, private configuration or call history changes.
 
 This is maintained memory-layout work, not recovered vendor overlay code.
@@ -286,3 +288,36 @@ startup experiments did not pass observer admission and prove no application
 behavior. All results are emulator evidence; no package, installed selector,
 private settings, hardware or call history changed. Full original Help/ASPECT
 parity, broader overlay acceptance and physical testing remain open; Host last.
+
+## Cold source replay and resource failures (2026-11-08)
+
+Missing LOCHELP.HLP exercises the built-in topic fallback; malformed data
+exercises the explicit Help-resource error page. Both complete the held timer,
+exact notice/cursor restoration, real next EXEC, resumed mouse/menu/Snapshot,
+queued receive, exact parent typing and hangup checks. These are47 and48 checks
+respectively, without the optional video/allocation observers. They establish
+these two resource-failure paths, not arbitrary overlay I/O failure recovery.
+
+`prove_compiler_bridge_source.py` accepts repeated `--help-checks RESULT.JSON`
+arguments. It validates each passing report's binary/source bindings, exports
+only allowed public source files, rebuilds the parent, compiler, prepared child
+and final overlay child, and requires exact product identities. Help maps,
+manifests and generated HLP are classified as product evidence rather than
+copied into the source export; the resource is regenerated and compared exactly.
+It then replays each supplied Help case, requiring identical check results,
+Help/resource witnesses, observer bytes, companion bindings and serial bytes.
+
+The1061-file Git-free export reproduces all eight bound products, including
+LOCHELP.HLP, and repeats four full Help cases (188 checks: normal mouse,
+BIOS-only, missing resource and malformed resource), plus two actual source
+compiler-loan/GET/open-stream cases. See
+[the cold replay record](validation/aspect-help-source-replay.json). This closes
+the source reproduction gate for these workflows; it does not close the broader
+overlay lifetime/handle-failure, BBS/package or physical gates.
+
+A packaging review also found a concrete next gap: the current compiler-bridge
+lab packager includes parent PCPLUS.HLP but omits the child's LOCHELP.HLP.
+The Help fixtures explicitly stage the latter, so their success cannot prove
+that an existing lab/release package has it. Preserve and bind that companion
+before using this new child for the complete packaged BBS regression. No payload
+or installed selector was changed in this checkpoint. Host remains last.

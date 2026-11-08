@@ -3508,3 +3508,10 @@ passes without the optional video/keyboard diagnostic. Exact receipts and
 limits are in [the validation record](validation/aspect-help-parent-return.json).
 No package promotion or physical acceptance is implied; full ASPECT/Help
 parity and remaining emulation/protocol work stay open, with Host last.
+
+The [cold Help replay](ASPECT_STANDARD_OVERLAYS.md#cold-source-replay-and-resource-failures-2026-11-08)
+adds safe return coverage for absent/malformed Help resources. A1061-file
+Git-free source export reproduces the eight exact products and repeats all
+four Help cases (188 checks) plus two source compiler-loan/GET cases. The
+compiler-bridge lab packager still needs the child's LOCHELP.HLP companion;
+fixtures explicitly stage it, so this checkpoint does not promote a package.

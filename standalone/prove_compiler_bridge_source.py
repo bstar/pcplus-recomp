@@ -17,6 +17,7 @@ def main():
  for name in ('parent', 'child', 'compiler', 'output'):
   p.add_argument('--'+name, type=Path, required=True)
  p.add_argument('--checks', type=Path, action='append', required=True)
+ p.add_argument('--help-checks',type=Path,action='append',default=[])
  p.add_argument('--lab-payload',type=Path)
  p.add_argument('--connection-package',type=Path)
  p.add_argument('--termination-checks',type=Path,action='append',default=[])
@@ -72,6 +73,22 @@ def main():
  for r in termination:
   assert r['passed'] and r['parent_sha256']==parent['binary_sha256'] and r['child_sha256']==child['binary_sha256'] and r['compiler_sha256']==compiler['binary_sha256']
   for name,digest in r['sources'].items():assert sources[name]==digest,name
+ help_reports=[json.loads(path.read_text()) for path in a.help_checks]
+ for path,r in zip(a.help_checks,help_reports):
+  assert r['passed'] and all(r['checks'].values())
+  assert r['parent_sha256']==parent['binary_sha256'] and r['child_sha256']==child['binary_sha256']
+  assert r['parent_key_delivery']=='child-return-and-menu-events'
+  assert r['checks']['exact_parent_typeahead'] and r['help_resource']
+  for name,digest in r['sources'].items():
+   assert sha(ROOT/name)==digest,name
+   n=Path(name)
+   if n.parts[0]=='build':
+    # Maps/manifests and generated Help data are product evidence, not source.
+    assert n.parent.resolve() in (a.parent.resolve(),a.child.resolve()),name
+    assert n.name in ('manifest.json','terminal.map','ASPECT.map','LOCHELP.HLP','help-resource.json'),name
+    continue
+   assert name not in sources or sources[name]==digest,name
+   sources[name]=digest
  out.mkdir(); fresh=out/'source'
  for name,digest in sources.items():
   n=Path(name)
@@ -193,9 +210,28 @@ def main():
    # Each run still checks its own full backup CRC and exact fatal BIOS text.
    assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
   termination_replays.append(dict(cases=len(replay['cases']),checks_sha256=sha(fresh/leaf/'checks.json'),expected_fail_stop=True))
+ help_replays=[]
+ if help_reports:
+  assert sha(fresh/'build/child/LOCHELP.HLP')==sha(a.child/'LOCHELP.HLP')
+  artifacts['LOCHELP.HLP']=sha(a.child/'LOCHELP.HLP')
+ for i,(path,r) in enumerate(zip(a.help_checks,help_reports)):
+  label='help-replay-'+str(i)
+  flags=['--no-driver'] if r['no_driver'] else []
+  if 'Help_video_diagnostic' in r:flags+=['--video-watch']
+  if 'Help_allocation_diagnostic' in r:flags+=['--allocation-watch']
+  run(['standalone/test_notice_help_dos.py','--label',label,'--parent-dir','build/parent','--child-dir','build/child',
+       '--help-resource','--resource-case',r['resource_case'],'--port',str(r['port']),'--cpu',r['cpu'],'--bios',r['bios'],*flags])
+  leaf=fresh/'build/notice-help'/label
+  replay=json.loads((leaf/'result.json').read_text())
+  assert replay['passed'] and replay['checks']==r['checks']
+  for key in ('parent_sha256','child_sha256','observer_sha256','staged_parent_modules','help','resource','parent_key_delivery'):
+   assert replay[key]==r[key],(label,key)
+  assert (path.parent/'ordinary/serial.bin').read_bytes()==(leaf/'ordinary/serial.bin').read_bytes()
+  help_replays.append(dict(case=label,checks=len(replay['checks']),resource_case=r['resource_case'],no_driver=r['no_driver'],
+                           checks_sha256=sha(leaf/'result.json'),original_checks_sha256=sha(path)))
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,sources=sources,source_count=len(sources),
-             artifacts=artifacts,lab_payload=lab_payload,connection_package=connection_result,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
+             artifacts=artifacts,help_replays=help_replays,Help_cases=len(help_replays),Help_checks=sum(r['checks'] for r in help_replays),lab_payload=lab_payload,connection_package=connection_result,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
              scope=__doc__,physical_verified=False,installed_changed=False)
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print('PASS compiler bridge cold source:',len(sources),'sources;',result['DOS_cases'],'normal DOS cases;',result['termination_cases'],'expected fail-stops')

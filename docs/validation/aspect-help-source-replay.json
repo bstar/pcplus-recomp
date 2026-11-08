@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "source_replay_passed": true,
+  "package_eligible": false,
+  "physical_verified": false,
+  "source_files": 1061,
+  "original_inputs": [],
+  "ancestor_git_unavailable": true,
+  "artifacts": {
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8",
+    "TERMINAL.EXE": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+    "PCCOMP.OVL": "7067e4db661cb39e0d8e7336179fccd8d8cacebb2001a2f7a94dbf7cec0dffca",
+    "PCLINE.OVL": "6e8253bb12b242b55b0987bd6850c16c053be605f2fa7447c159b23ab2604fb4",
+    "PCMETA.OVL": "ab929d876b1fcff4c51e136fb3e764231828dc88b6e4bf6ebc9039b94dc900b6",
+    "ASPECT.EXE": "822897f0b67dfbfbe98bed8711cb1071417705ad9a75fdcd5138c88679fc7c05",
+    "ASPCOMP.EXE": "1db52316f671b43663395abc7de41925abfe1205fffb930bdb5d6dae70f98a14",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf"
+  },
+  "Help_cases": 4,
+  "Help_checks": 188,
+  "compiler_GET_cases": 2,
+  "cases": [
+    {
+      "case": "help-return-final-mouse-20261108",
+      "checks": 51,
+      "resource_case": "normal",
+      "no_driver": false
+    },
+    {
+      "case": "help-return-final-bios-20261108",
+      "checks": 42,
+      "resource_case": "normal",
+      "no_driver": true
+    },
+    {
+      "case": "help-missing-overlay-20261108",
+      "checks": 47,
+      "resource_case": "missing",
+      "no_driver": false
+    },
+    {
+      "case": "help-bad-overlay-20261108",
+      "checks": 48,
+      "resource_case": "bad",
+      "no_driver": false
+    }
+  ],
+  "receipts": {
+    "build/help-composition-cold-source-20261108/result.json": "e2efb42f1ab3cfa6f84213f5a4d5b670539b0ab9b17f0534f36acc1371298d73",
+    "build/notice-help/help-return-final-mouse-20261108/result.json": "b83408f5b389771aec37c2d236eebd4eb99655a2c30144bed7a73050c65b6494",
+    "build/notice-help/help-return-final-bios-20261108/result.json": "5fb6e47d5175d7458a15fb5ce574593a080f06853f8bb77ccccc9be3e22c6457",
+    "build/notice-help/help-missing-overlay-20261108/result.json": "8ed2130449b0f6f61472908e0265f91c6227fd44baccf1df9f9d64875c34e125",
+    "build/notice-help/help-bad-overlay-20261108/result.json": "8d0ff1e30256c02c5e12c140727d2979b68c57e7365962f52e2dd519795f403c",
+    "build/help-composition-cold-source-20261108/source/build/notice-help/help-replay-0/result.json": "87b81c7e665cd1746c214c3b275075a7be0de9b00c4fa4394fb7e7392e1f7375",
+    "build/help-composition-cold-source-20261108/source/build/notice-help/help-replay-1/result.json": "b51e785ebace341763965444f2a342398bc62fbc9935405baf717db5ada680bf",
+    "build/help-composition-cold-source-20261108/source/build/notice-help/help-replay-2/result.json": "69fe22e70f528ff20b62103a8c9875dc1be758bddaac5ffc26f003dba73fec02",
+    "build/help-composition-cold-source-20261108/source/build/notice-help/help-replay-3/result.json": "cd97371fab1caec5fd00f6961d0041f341428b18e42df888640ceb671c6e7a3c"
+  },
+  "producer_sha256": "afd3b0d5bfc85b697b369702c0e189efd1454ce341bf5d8f76ac5668f6aeb5ec",
+  "production_bytes_changed": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "limits": [
+    "Actual386 DOS emulation with UMB and synthetic serial modem.",
+    "Four Help workflows and two source compiler/GET workflows; not full overlay/ASPECT parity.",
+    "Exact application, companion and generated Help resource rebuild; no originals, Git ancestry or previous objects in export.",
+    "Child LOCHELP.HLP still omitted by current compiler-bridge lab packager; fix binding/staging before packaged BBS acceptance.",
+    "Overlay handle/failure and broader lifetime gates, packaged Enigma/Synchronet regression and physical modem acceptance remain open; Host last."
+  ]
+}
