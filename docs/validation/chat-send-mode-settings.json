@@ -1,0 +1,217 @@
+{
+  "checkpoint_verified": true,
+  "tool_source_commit": "41a8495204200857bdec635f7691f87b6a4ec46c",
+  "original_evidence_id": "ev_e10972d2942871fa8a17cf33cd587285c16cd9d0bdf6f793e65949dc26b362db",
+  "original_DS": "1D76h",
+  "PRM_offset": "01F2h",
+  "width_bytes": 1,
+  "immediate_value": 0,
+  "buffered_values": "1..255",
+  "opaque_neighbor_preserved": true,
+  "models": [
+    {
+      "fields": 49,
+      "inputs": 713,
+      "cases": [
+        {
+          "case": "all-mapped-fields-get-set-byte-identical-with-opaque-tail-data",
+          "inputs": 49,
+          "passed": true
+        },
+        {
+          "case": "serial-profile-and-BREAK-values-agree-with-existing-importers",
+          "inputs": 32,
+          "passed": true
+        },
+        {
+          "case": "invalid-numeric-parity-and-unterminated-edits-entire-image-atomic",
+          "inputs": 85,
+          "passed": true
+        },
+        {
+          "case": "six-command-caret-grammar-capacities-tail-preservation-and-revert",
+          "inputs": 48,
+          "passed": true
+        },
+        {
+          "case": "11-expanded-response-slots-lossless-hex-and-invalid-input-atomic",
+          "inputs": 121,
+          "passed": true
+        },
+        {
+          "case": "malformed-loaded-fields-view-without-normalizing-and-explicit-repair",
+          "inputs": 42,
+          "passed": true
+        },
+        {
+          "case": "near-cdecl-null-overlap-capacity-and-segment-wrap",
+          "inputs": 16,
+          "passed": true
+        },
+        {
+          "case": "Auto-Download-word-lossless-edit-nonzero-enables-decoded-flag",
+          "inputs": 6,
+          "passed": true
+        },
+        {
+          "case": "download-path-roots-drive-relative-empty-63-byte-tail-preservation-and-revert",
+          "inputs": 16,
+          "passed": true
+        },
+        {
+          "case": "invalid-loaded-path-rejected-without-mutation-and-explicit-repair",
+          "inputs": 27,
+          "passed": true
+        },
+        {
+          "case": "transfer-settings-near-null-alias-wrap-and-capacity",
+          "inputs": 9,
+          "passed": true
+        },
+        {
+          "case": "chat-mode-all-byte-values-lossless-neighbor-and-invalid-rejection",
+          "inputs": 261,
+          "passed": true
+        },
+        {
+          "case": "actual-DOS-c-runtime-model-and-no-file-rewrites",
+          "inputs": 1,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "fields": 51,
+      "inputs": 733,
+      "cases": [
+        {
+          "case": "all-mapped-fields-get-set-byte-identical-with-opaque-tail-data",
+          "inputs": 51,
+          "passed": true
+        },
+        {
+          "case": "serial-profile-and-BREAK-values-agree-with-existing-importers",
+          "inputs": 32,
+          "passed": true
+        },
+        {
+          "case": "invalid-numeric-parity-and-unterminated-edits-entire-image-atomic",
+          "inputs": 87,
+          "passed": true
+        },
+        {
+          "case": "six-command-caret-grammar-capacities-tail-preservation-and-revert",
+          "inputs": 48,
+          "passed": true
+        },
+        {
+          "case": "11-expanded-response-slots-lossless-hex-and-invalid-input-atomic",
+          "inputs": 121,
+          "passed": true
+        },
+        {
+          "case": "malformed-loaded-fields-view-without-normalizing-and-explicit-repair",
+          "inputs": 42,
+          "passed": true
+        },
+        {
+          "case": "near-cdecl-null-overlap-capacity-and-segment-wrap",
+          "inputs": 16,
+          "passed": true
+        },
+        {
+          "case": "Auto-Download-word-lossless-edit-nonzero-enables-decoded-flag",
+          "inputs": 6,
+          "passed": true
+        },
+        {
+          "case": "download-path-roots-drive-relative-empty-63-byte-tail-preservation-and-revert",
+          "inputs": 16,
+          "passed": true
+        },
+        {
+          "case": "invalid-loaded-path-rejected-without-mutation-and-explicit-repair",
+          "inputs": 27,
+          "passed": true
+        },
+        {
+          "case": "transfer-settings-near-null-alias-wrap-and-capacity",
+          "inputs": 9,
+          "passed": true
+        },
+        {
+          "case": "mouse-scales-range-rejection-lossless-edits-and-loaded-value-repair",
+          "inputs": 16,
+          "passed": true
+        },
+        {
+          "case": "chat-mode-all-byte-values-lossless-neighbor-and-invalid-rejection",
+          "inputs": 261,
+          "passed": true
+        },
+        {
+          "case": "actual-DOS-c-runtime-model-and-no-file-rewrites",
+          "inputs": 1,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "UI": [
+    {
+      "case": "immediate",
+      "passed": true,
+      "full_image_exact": true,
+      "mode": 0,
+      "opaque_neighbor": 167,
+      "image_sha256": "3c387e55a341d7c2245a071892452de58966e43cee239f252476ef941057e6b2"
+    },
+    {
+      "case": "buffered",
+      "passed": true,
+      "full_image_exact": true,
+      "mode": 1,
+      "opaque_neighbor": 167,
+      "image_sha256": "8c2ed10e7156a1eb0f8011da195eb50454447658e8920489b59efd73eebe5c40"
+    },
+    {
+      "case": "noncanonical-buffered",
+      "passed": true,
+      "full_image_exact": true,
+      "mode": 255,
+      "opaque_neighbor": 167,
+      "image_sha256": "46d3bacf91533456a80a72db82932b32328ca75ae2fcb5d01b1e5e2103dfba94"
+    },
+    {
+      "case": "cancel",
+      "passed": true,
+      "full_image_exact": true,
+      "mode": 255,
+      "opaque_neighbor": 167,
+      "image_sha256": "46d3bacf91533456a80a72db82932b32328ca75ae2fcb5d01b1e5e2103dfba94"
+    }
+  ],
+  "optional_editor_sha256": "1c4ad0636cc611569172315216b0dea13f983b174bbe5f01aa4fca9ad15b3f26",
+  "legacy_editor_sha256": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+  "source_export_files": 30,
+  "receipts": {
+    "analysis/chat-send-mode-20261108.rea.json": "127bac82ba3bf745e3e1ce669f6c31d30b43852679d439af73852edc8d84dd91",
+    "build/setup-model-chat/checks.json": "b4c3490e68f067332762fa30b46c5a8cf7dbef1d4848be53a5c550c0893e1c6e",
+    "build/setup-model-mouse-chat/checks.json": "232fe9a6dcb18bc55b91a5ef71d32c12cce0049d3717b78d72f0e1f983caa082",
+    "build/setup-chat-mode-ui-v4-20261108/result.json": "336618f692e54252ebc88209adc4e23cc0b73ee6c6c602711fd68e3505004d25",
+    "build/setup-chat-mode-source-export-20261108/result.json": "40026712e5ec99f56bbe9b477fc98f41c0dc4bd3d15cae2df8cf02fcd9f4ad41",
+    "build/setup-chat-mode-legacy-editor-final-20261108/manifest.json": "584457b65f652b4610f015e0b5b3026550d1368389db58932c4ea9d58f95ef00"
+  },
+  "sources": {
+    "standalone/record_chat_mode_settings.py": "f68cc801f99f546afb6ade34707ddd3de2af51979e6c37b13c66077e99c12922"
+  },
+  "terminal_frontend_connected": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "scope": "Original static byte consumer plus source-built optional offline editor. DOS field-model and BIOS-key saves/reload/cancel; fresh declared-source export reproduces editor. Current terminal still forces buffered Chat. No physical settings or selected package changes.",
+  "failed_fixture_runs": [
+    "Initial Shift-Tab and Up recipes moved to the previous page and did not save; timed out. Retained v1/v2/v3 captures are excluded.",
+    "Renamed-main watchdog probe first rejected a near/far pointer declaration at compilation; corrected probe still timed out and is excluded."
+  ]
+}

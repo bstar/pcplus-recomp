@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Original Chat send-mode settings](CHAT_SEND_MODE_SETTINGS.md) now recover the
+single-byte PRM selector and add an opt-in offline editor field. Both byte
+semantics and DOS save/reload/cancel are verified; startup/live frontend binding
+is still required. The selected17-file candidate remains unchanged.
+
 [Current compiler-bridge reliability](ASPECT_COMPILER_RELIABILITY.md) verifies
 BUSY cleanup, three calls in one parent,300-second/601-frame paced receive,
 stock Enigma multiline paging and Synchronet mapper/Help return. Five exact

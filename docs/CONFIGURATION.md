@@ -298,3 +298,11 @@ it deferred until restart; independent edits can still apply. Explicit /X keeps
 its effective table selection after validating the saved PRM, so it never hides
 an invalid raw selection. The pure candidate ABI is now626 bytes: serial42,
 modem368, directory214 and trailing change word2.
+
+## Chat send-mode byte
+
+Fresh [Chat selector evidence](CHAT_SEND_MODE_SETTINGS.md) identifies DS1D76h,
+PRM01F2h, as a single-byte zero/nonzero selector. Zero selects immediate sends;
+nonzero selects line buffering. The adjacent byte remains opaque. The codec and
+optional offline editor expose this field without normalizing stored values;
+current live terminal import and Chat construction remain unbound to it.
