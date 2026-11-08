@@ -76,6 +76,21 @@ unsigned runtime_serial_carrier(void)
  return 1;
 #endif
 }
+unsigned runtime_serial_connected(void)
+{
+ if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return 0;}
+#if defined(ASPECT_RUNTIME_DIAGNOSTIC)
+ return (flags&4) && !((flags&8) && input_at>=input_size)?128:0;
+#elif defined(ASPECT_RUNTIME_SERIAL)
+ {
+  unsigned value=aspect_serial_carrier();
+  if(value==65535U){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return 0;}
+  return value;
+ }
+#else
+ return 0;
+#endif
+}
 unsigned runtime_serial_send(unsigned byte)
 {
  if(!runtime_serial_ready()){runtime_set_error(ASPECT_RUN_UNSUPPORTED);return runtime_error;}

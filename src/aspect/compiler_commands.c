@@ -205,6 +205,8 @@ void pc_commands(pc_compiler *c)
 {
  unsigned args[ASPECT_COMPILER_TOKEN_MAX],count,i,j,n,dest,expected,optional,command_index=65535U;
  char role;aspect_compiler_value value;const command *cmd;
+ /* Original standalone CONNECTED is an unused readonly operand, not an opcode. */
+ if(c->line.count==1 && pc_equal(c,0,"connected"))return;
  if(pc_equal(c,0,"emulate")){
   unsigned char name[254];int selector;
   if(c->line.count!=2||aspect_compiler_token_copy(&c->line,1,name,sizeof(name))<0){bad(c);return;}

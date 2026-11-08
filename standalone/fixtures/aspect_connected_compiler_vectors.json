@@ -1,0 +1,150 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "probe_sha256": "bb19dc046a385fbbfa49d946878d30acecbe7526d1a2c20543e0245f4f692e4f",
+  "cases": [
+    {
+      "label": "integer value",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\ni=connected\r\nendproc\r\n",
+      "source_sha256": "49ff3b36725cd8ccfb199cf1d5bdcdb020213468910473e3cff1437e4e5e7965",
+      "success": true,
+      "hex": "01 cf 5b 00 8d 00 6f 1d 94"
+    },
+    {
+      "label": "mixed case",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\ni=CoNnEcTeD\r\nendproc\r\n",
+      "source_sha256": "500fbd4eacfc8eb3dad2c3d259458d69a280e568007099733495dc1a4e677fc9",
+      "success": true,
+      "hex": "01 cf 5b 00 8d 00 6f 1d 94"
+    },
+    {
+      "label": "comparison",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nif connected == 128\r\ni=1\r\nendif\r\nendproc\r\n",
+      "source_sha256": "1f27d9c597af6e3e067aba78ba1d6dcd701ae1c26ed8fcbe3197f850d33e51ce",
+      "success": true,
+      "hex": "01 cf 32 00 6f 1d ab 80 00 79 00 15 19 00 00 00 79 00 5b 00 8d 00 ab 01 00 94"
+    },
+    {
+      "label": "boolean branch",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nif connected\r\ni=1\r\nendif\r\nendproc\r\n",
+      "source_sha256": "c9baa78706e7f88089ca3a209ee764546315a1e6e282812121dc0f3265f41cfa",
+      "success": true,
+      "hex": "01 cf 5b 00 79 00 6f 1d 15 16 00 00 00 79 00 5b 00 8d 00 ab 01 00 94"
+    },
+    {
+      "label": "numeric command",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nitoa connected s\r\nendproc\r\n",
+      "source_sha256": "ce231efdcf5dd05284475eabf0da5e37ec133f58521efc48fdb6f07bd1086fd9",
+      "success": true,
+      "hex": "01 cf 61 6f 1d 8c 00 94"
+    },
+    {
+      "label": "pause operand",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\npause connected\r\nendproc\r\n",
+      "source_sha256": "041bbddb94d1c8e4b703909940714f7ac2411006311485c37accd330fdb4c4d4",
+      "success": true,
+      "hex": "01 cf 88 6f 1d 94"
+    },
+    {
+      "label": "repeated expression",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\ni=connected+connected\r\nendproc\r\n",
+      "source_sha256": "de7e6a1bddc07a75ae493a93938b7ebeb8c9e9523d91903eedc64ca522d2686f",
+      "success": true,
+      "hex": "01 cf 00 00 6f 1d 6f 1d 79 00 5b 00 8d 00 79 00 94"
+    },
+    {
+      "label": "parenthesized",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\ni=(connected)\r\nendproc\r\n",
+      "source_sha256": "92ca409f390c736832fa61759ab7cddaba0986f9b14ad241c21a9abaac458d53",
+      "success": true,
+      "hex": "01 cf 5b 00 8d 00 6f 1d 94"
+    },
+    {
+      "label": "promoted long",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nl=connected+1L\r\nendproc\r\n",
+      "source_sha256": "4577037e1246f759b08411c4b9e73805094292b748691bf5b40771c476d00c2c",
+      "success": true,
+      "hex": "01 cf 00 05 6f 1d ac 01 00 00 00 7a 00 5b 05 8e 00 7a 00 94"
+    },
+    {
+      "label": "readonly assignment",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nconnected=1\r\nendproc\r\n",
+      "source_sha256": "70dbaf0c85803449821b4fc1c1f83bd3e8f7301cdba6c4922b9476207edaf450",
+      "success": false
+    },
+    {
+      "label": "not a command",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nconnected\r\nendproc\r\n",
+      "source_sha256": "93f7bd03351fc2f2429f9b1b106dc540529d493720dcb3673117954e44e3e69e",
+      "success": true,
+      "hex": "01 cf 94"
+    },
+    {
+      "label": "not a function",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\ni=connected()\r\nendproc\r\n",
+      "source_sha256": "bdee30630fb7b9e0e6a2200b378cef122f4ee6b6b3b5eaac964079235eb4f747",
+      "success": false
+    },
+    {
+      "label": "wrong string type",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nstrcpy s connected\r\nendproc\r\n",
+      "source_sha256": "2e5ca7b96e3ac8a43487ea53ec8bf2fdd4299fd986239ae9d846a46eb4081030",
+      "success": false
+    },
+    {
+      "label": "similar identifier",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\ninteger connectedx\r\nconnectedx=7\r\ni=connectedx\r\nendproc\r\n",
+      "source_sha256": "35d34cf5ea533755199b3cd37ee3303c33183a8b42b2b38d53e71e83e4363af1",
+      "success": true,
+      "hex": "01 d2 02 00 cf 5b 00 a1 00 00 ab 07 00 5b 00 8d 00 a1 00 00 95"
+    },
+    {
+      "label": "reserved local integer",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\ninteger connected\r\nendproc\r\n",
+      "source_sha256": "62a454a68cbf26133f00e48988260e65b1decf6924cf4c317bb5c3e3cf5ae397",
+      "success": false
+    },
+    {
+      "label": "reserved global integer",
+      "source": "integer connected\r\ninteger i\r\nproc main\r\ni=0\r\nendproc\r\n",
+      "source_sha256": "27928f9d17fc8bd45ad58fc1e4d8479685b857de8a2fdb74998b125e9b59c2b4",
+      "success": false
+    },
+    {
+      "label": "reserved local long",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nlong connected\r\nendproc\r\n",
+      "source_sha256": "31eb03a7c0a2e87cacd64b99d0fb02542ff030f7c8b7c804b8aeec7b4786724c",
+      "success": false
+    },
+    {
+      "label": "reserved global long",
+      "source": "long connected\r\ninteger i\r\nproc main\r\ni=0\r\nendproc\r\n",
+      "source_sha256": "e5530ed3591523c2cacfd2c868ed15f51f8442c8dad44ce38a8653a42a0864b6",
+      "success": false
+    },
+    {
+      "label": "reserved local float",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nfloat connected\r\nendproc\r\n",
+      "source_sha256": "d1968cb89b7e7a423258285668394cc310cd6088c32494e47318f88194b5df4d",
+      "success": false
+    },
+    {
+      "label": "reserved global float",
+      "source": "float connected\r\ninteger i\r\nproc main\r\ni=0\r\nendproc\r\n",
+      "source_sha256": "27e94bb61601fa11960615479963f04889b8d087f5d512a30e114763db86ce6c",
+      "success": false
+    },
+    {
+      "label": "reserved local string",
+      "source": "integer i\r\nlong l\r\nstring s\r\nproc main\r\nstring connected\r\nendproc\r\n",
+      "source_sha256": "63b25dfc0d5caa5b8059fee67487b407f5d5f530965f76e01eb36410a5c6d029",
+      "success": false
+    },
+    {
+      "label": "reserved global string",
+      "source": "string connected\r\ninteger i\r\nproc main\r\ni=0\r\nendproc\r\n",
+      "source_sha256": "f1a828d881741660664992ae920c6cfea7cf92a3737c0afa5271ae69bcef1de6",
+      "success": false
+    }
+  ],
+  "scope": "Private original-compiler oracle for authored CONNECTED operand grammar. Original compiler executes in DOS; generated ASX is never executed."
+}

@@ -48,6 +48,21 @@ class Serial(uart.Machine):
 def main():
  cases=[]
  def done(n,count):cases.append(dict(case=n,inputs=count,passed=True));print(n,count,flush=True)
+ # Execute the actual recovered IN/AND getter through the owned child backend.
+ # MSR delta/CTS/DSR/RI bits must not turn CONNECTED into a boolean1 or dequeue.
+ for port in range(1,5):
+  m=Serial();assert m.open(('/S%d:0003:03:N'%port).encode())==0
+  m.receive_irq(b'Q');assert m.call('_aspect_serial_available')==1
+  for msr in range(256):
+   m.registers[0x3fe]=msr;reads=sum(m.polls.values());writes=len(m.writes)
+   assert m.call('_aspect_serial_carrier')==(msr&128)
+   assert sum(m.polls.values())==reads+1 and len(m.writes)==writes
+   assert m.call('_aspect_serial_available')==1
+  assert m.call('_aspect_serial_read')==ord('Q')
+  assert m.call('_aspect_serial_close')==0;m.restored()
+  reads=sum(m.polls.values());assert m.call('_aspect_serial_carrier')==65535
+  assert sum(m.polls.values())==reads
+ done('carrier-raw-DCD-all-MSR-bits-four-ports-one-IN-no-dequeue-closed-no-IO',1028)
  for flag in [b'',b'S1:0003:03:N',b'/S0:0003:03:N',b'/S5:0003:03:N',b'/S1:0000:03:N',b'/S1:GGGG:03:N',b'/S1:0003:83:N',b'/S1:0003:43:N',b'/S1:0003:00:N',b'/S1:0003:03:X',b'/S1:0003:03:Nextra',b'/S1:0003:03:N:0000:0000']:
   m=Serial();assert m.open(flag)==1 and not m.writes and not m.get('_aspect_serial_active')
  done('strict-com-divisor-format-flow-descriptor-before-port-IO',12)

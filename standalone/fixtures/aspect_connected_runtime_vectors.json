@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "scope": "Authored expectations. Serial carrier and input are diagnostic models; original compiler grammar independently frozen. CONNECTED returns raw DCD bit128, no polling; unavailable owner aborts before destination write.",
+  "vectors": [
+    {
+      "name": "CN0",
+      "source": "integer i\nlong l\nstring s\nproc main\ni=connected\nl=connected+1L\nitoa connected s\nendproc\n",
+      "source_sha256": "77f9c5d4a01abbcd0b2bb69f765bc32fa3b51400d9f473e272b52f930cb055ca",
+      "hex": "01cf5b008d006f1d00056f1dac010000007a005b058e007a00616f1d8c0094",
+      "asx_sha256": "9d3d0469d73598a76e68d11e29f4685497d37fc7a1738f71d0e288105fcbe1f0",
+      "expected": {
+        "integer0": 0,
+        "long0": 1,
+        "string0": "0"
+      },
+      "serial": {
+        "carrier_present": false
+      }
+    },
+    {
+      "name": "CN128",
+      "source": "integer i\nlong l\nstring s\nproc main\ni=connected\nl=connected+1L\nitoa connected s\nendproc\n",
+      "source_sha256": "77f9c5d4a01abbcd0b2bb69f765bc32fa3b51400d9f473e272b52f930cb055ca",
+      "hex": "01cf5b008d006f1d00056f1dac010000007a005b058e007a00616f1d8c0094",
+      "asx_sha256": "9d3d0469d73598a76e68d11e29f4685497d37fc7a1738f71d0e288105fcbe1f0",
+      "expected": {
+        "integer0": 128,
+        "long0": 129,
+        "string0": "128"
+      },
+      "serial": {
+        "carrier_present": true
+      }
+    },
+    {
+      "name": "CNNOIO",
+      "source": "integer i\nproc main\ni=7\ni=connected\nendproc\n",
+      "source_sha256": "79c3a25380131bd2e980d5e5b7cd6fa1ee308faf2fbb2194ef9c788a0b9bd7ae",
+      "hex": "00cf5b008d00ab07005b008d006f1d94",
+      "asx_sha256": "0ff0a8622076ca62be22e42455e7dae516bac256de8a628c5d285be92f4c1c72",
+      "expected": {
+        "error": "unsupported",
+        "integer0": 7
+      }
+    },
+    {
+      "name": "CNOFF",
+      "source": "integer i\nproc main\ni=7\ni=connected\nendproc\n",
+      "source_sha256": "79c3a25380131bd2e980d5e5b7cd6fa1ee308faf2fbb2194ef9c788a0b9bd7ae",
+      "hex": "00cf5b008d00ab07005b008d006f1d94",
+      "asx_sha256": "0ff0a8622076ca62be22e42455e7dae516bac256de8a628c5d285be92f4c1c72",
+      "expected": {
+        "error": "unsupported",
+        "integer0": 7
+      },
+      "serial": {
+        "enabled": false,
+        "carrier_present": true
+      }
+    },
+    {
+      "name": "CNBARE",
+      "source": "integer i\nproc main\nconnected\ni=7\nendproc\n",
+      "source_sha256": "8b359e989373ba57103793b307828961711d436995600ec4b5a0b6b9c84365fe",
+      "hex": "00cf5b008d00ab070094",
+      "asx_sha256": "fea1e0933105f20290dc6bf4c8aaa7c69ce8da234d0203567f14f2de51322057",
+      "expected": {
+        "integer0": 7
+      }
+    },
+    {
+      "name": "CNBOOL",
+      "source": "integer i\nproc main\nif connected\ni=1\nendif\nif connected == 128\ni+=2\nendif\nendproc\n",
+      "source_sha256": "99a5acc8445bc44b04790532701536b8e9c7e27c478e1295503f51df84da0764",
+      "hex": "00cf5b0079006f1d151600000079005b008d00ab010032006f1dab800079001535000000790000008d00ab020079005b008d00790094",
+      "asx_sha256": "d56b1e0d69cab5d2272840d7be461f6d73d8a3f7dd53aab237750941155c64d8",
+      "expected": {
+        "integer0": 3
+      },
+      "serial": {
+        "carrier_present": true
+      }
+    }
+  ]
+}

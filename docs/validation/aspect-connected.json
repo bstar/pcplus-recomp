@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "schema": 1,
+  "original_inputs": [],
+  "compiler_oracle": {
+    "cases": 22,
+    "accepted": 11,
+    "rejected": 11,
+    "exact_DOS_and_host_bytes": true
+  },
+  "compiler_regression": "PROGRAM 2430 cases 0 failures",
+  "runtime_regression": "ASPECT_RUNTIME 1130 cases 27161 checks 0 failures",
+  "carrier_API_checks": 7,
+  "UART_carrier_inputs": 1028,
+  "UART_regression_inputs": 1136,
+  "DOS_cases": [
+    "carrierN",
+    "carrierS",
+    "carrierH",
+    "carrierB",
+    "carriernested"
+  ],
+  "binaries": {
+    "compiler": "902d39d2c4be34da9db2b63217f970d203cd07cf995476aef8d2d561c28a78d9",
+    "runner": "a2a20a0411d1155dd46877ded30be8020895d5b250b7706aca8aa2f1b73f8353",
+    "runtime": "36b3eaba79e87da2a7cfc23ab02935522fc62ff9c3027b0ebd0bcc6d37ad0a04",
+    "UART": "d2839c96f86574fd17a8d6e206b1f26fc16f9f3dd3510cea29488e12d6b6f6c5"
+  },
+  "receipts": {
+    "build/connected-compiler-final-20261108/checks.json": "be21dfb3f6a41d9cf56b21664eecad4e323ff21b0337b9b13f8c20a53dde6ef4",
+    "build/connected-runtime-v3-20261108/checks.json": "e9b4dfe0719e0245b49cac0126e17ec761ddaaa8688f888cb8826b0c5e574ac4",
+    "build/aspect-serial/checks.json": "5138c034bdd5195787df2f8c7a97c0db649a8419f2d8be9177410ee56becc19c",
+    "build/connected-dos-20261108/checks.json": "eac9d72eca3f2db4e56ba5cd7fb513c8106245cb1281e7b51eabe8677e67dc67",
+    "standalone/fixtures/aspect_connected_compiler_vectors.json": "567ec2c90f55899854b7a95dc457fd379030a9d605254f55559d81ad1bcd1bb7",
+    "standalone/fixtures/aspect_connected_runtime_vectors.json": "4c63efed226760076066f65f5e5bb0f3409852464b017a947669baa2e1f994b5"
+  },
+  "recorder_sha256": "1d91d9fd3531f7cc959ec2796f4a694b38677a346259c9a49503516ae79052e2",
+  "limitations": [
+    "Raw DCD0/128 semantics recovered statically; original runtime not executed.",
+    "Serial diagnostic inputs and CPU IO are explicit models.",
+    "Production DOS nullmodem holds DCD high; no analog/SIP/physical acceptance.",
+    "Standalone runner only; matched full-child promotion/package remains pending.",
+    "Stable hardware-test package and selected installation unchanged."
+  ]
+}

@@ -3412,3 +3412,16 @@ deployed. Residency, package, broader BBS regressions, other geometries/colors,
 the full port matrix, live uncertainty
 fault composition and physical acceptance remain open; no full-parity gate
 is closed by these named application results.
+
+## ASPECT CONNECTED operand checkpoint (2026-11-08)
+
+[CONNECTED](ASPECT_CONNECTED.md) now compiles in both maintained compilers and
+returns the original raw DCD0/128 value through the recovered UART getter.
+Twenty-two original compiler oracle cases match; the2,430-case DOS compiler and
+1,130-case DOS runtime regressions pass. Direct queued-byte checks and all256 MSR
+values on four modeled ports isolate the getter's single-read/no-dequeue behavior.
+Five actual8086 DOS production-runner cases cover N/S/H/B flow, unread ASIO return,
+hardware restoration and nested compilation with the session open. The nullmodem
+holds DCD high; physical carrier loss remains unverified. Full-child integration,
+capacity/package promotion and other ASPECT builtins remain open. The prepared
+Chat-mode package and installed selection are unchanged.

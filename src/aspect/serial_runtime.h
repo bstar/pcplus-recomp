@@ -14,6 +14,8 @@ unsigned runtime_serial_ready(void);
 unsigned runtime_serial_poll(void);
 /* Physical MSR80, or explicit diagnostic fixture flags4(high)/8(drop at EOF). */
 unsigned runtime_serial_carrier(void);
+/* CONNECTED integer operand: raw MSR80, no poll/dequeue/WHEN scheduling. */
+unsigned runtime_serial_connected(void);
 unsigned runtime_serial_send(unsigned byte);
 /* Maintained TRANSMITRAW extension: 0..80 hex characters, even length. Validate
  * the entire operand before sending any byte. No caret/pause/FF interpretation,

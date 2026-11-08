@@ -61,6 +61,7 @@ C=r'''
 #include "find_runtime.h"
 #include "script_file_runtime.h"
 extern unsigned runtime_receive_pattern_count,runtime_wait_gate,runtime_set_duplex_changed;
+extern unsigned runtime_serial_rx_count;
 extern aspect_file runtime_file;
 extern unsigned runtime_string_count,runtime_depth,runtime_stack_pointer,runtime_frame;
 extern unsigned char runtime_arena[0x3aca];
@@ -214,8 +215,11 @@ def main(lifecycle=False):
  find_corpus=json.loads(find_corpus_path.read_text())
  break_corpus_path=ROOT/'standalone/fixtures/aspect_break_runtime_vectors.json'
  break_corpus=json.loads(break_corpus_path.read_text())
+ connected_corpus_path=ROOT/'standalone/fixtures/aspect_connected_runtime_vectors.json'
+ connected_corpus=json.loads(connected_corpus_path.read_text())
  cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_cases+directory_corpus['vectors']+when_corpus['vectors']+find_corpus['vectors']+break_corpus['vectors']
  cases+=raw_output['vectors']
+ cases+=connected_corpus['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
@@ -234,6 +238,7 @@ def main(lifecycle=False):
  sources.append(set_corpus_path)
  sources.append(find_corpus_path)
  sources.append(break_corpus_path)
+ sources.append(connected_corpus_path)
  sources.append(raw_output_path)
  sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h',ROOT/'src/keyboard/api.h']
  for name,rel,define in ASM:
@@ -257,6 +262,20 @@ def main(lifecycle=False):
   sources += [probe,ROOT/'src/aspect/get_command.h']
   program=program.replace('int main(void){FILE *done;',probe.read_text()+'\nint main(void){FILE *done;\n lifecycle_probe();')
  program=program.replace(' ck(result==error);',near_observe+' ck(result==error);')
+ # Read carrier directly with an already queued byte. The native dispatch loop
+ # can drain input between commands, so a multi-command ASX cannot isolate the
+ # getter's side effects. This source-owned API probe does, before the VM suite.
+ connected_probe=""" current="CONNECTED_API";++cases;runtime_error=0;
+ runtime_serial_fixture((const unsigned char *)"A",1,0,0,13,0,1);
+ runtime_serial_reset();ck(runtime_serial_rx_count==1);
+ ck(runtime_serial_connected()==128);ck(runtime_serial_connected()==128);
+ ck(runtime_serial_rx_count==1);ck(runtime_serial_read_raw()==65);
+ ck(runtime_serial_connected()==0);ck(runtime_serial_rx_count==0);
+ runtime_serial_fixture_disable();runtime_serial_reset();
+ printf("CONNECTED_API 7 checks\\n");
+ """
+ program=program.replace(' if(fixture_suite())return 2;',connected_probe+' if(fixture_suite())return 2;')
+
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
  assert len(supported)==107
  # ACV2 adds explicit owned-directory metadata to ACV1's diagnostic inputs.
@@ -393,7 +412,7 @@ def main(lifecycle=False):
  '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC','ASPECT_SOURCE_OUTPUT'],fixture_count=len(cases),
-  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},source_extensions=raw_output['source_owned_extension'],unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+18+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors'])+(256-len(set_supported))+len(break_corpus['raw_getters'])+2,
+  supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},source_extensions=raw_output['source_owned_extension'],unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+19+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors'])+(256-len(set_supported))+len(break_corpus['raw_getters'])+2,
   SET_family=dict(supported_subcommands={f'{key:02x}':value for key,value in set_supported.items()},unsupported_subcommands_tested=256-len(set_supported),truncated_cases=2,raw_boolean_cases=2,integration_vectors=len(set_corpus['vectors'])),
   BREAK_family=dict(integration_vectors=len(break_corpus['vectors']),raw_fetch_getters=len(break_corpus['raw_getters']),unsupported_fetch_selectors_tested=256-len(set_supported),fetch_truncations=2,diagnostic_timing='Transport readiness only; actual UART pulses covered by separate product DOS tests.'),
   FIND_CASE_family=dict(integration_vectors=len(find_corpus['vectors']),near_failure_cases=sum('near_fail_after' in c for c in find_corpus['vectors']),native_bytes=401,scope='Actual native FIND/SWITCH/CASE with owned near allocations and typed failure before native NULL dereference. FOUND and SWITCH snapshots are shared state; per-invocation SET sensitivity resets separately.'),

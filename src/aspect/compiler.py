@@ -22,7 +22,7 @@ class CompileError(ValueError):
 TYPES = {"integer": 0, "long": 1, "float": 2, "string": 3}
 PARMS = {"intparm": 0, "longparm": 1, "floatparm": 2, "strparm": 3}
 BUILTINS = {'comdata': 20, 'failure': 21, 'forever': 22, 'found': 23,
-            'success': 27, 'waitfor': 28, '$d_entry': 3}
+            'success': 27, 'waitfor': 28, 'connected': 29, '$d_entry': 3}
 STRING_BUILTINS = {'$d_ldate': 0, '$d_kbdfile': 1, '$d_metakey': 2,
                    '$d_name': 3, '$d_note': 4, '$d_phone': 5,
                    '$d_pword': 6, '$d_script': 7, '$null': 19,
@@ -545,6 +545,9 @@ class Compiler:
 
     def command(self, tokens):
         command = tokens[0]
+        # Original compiler consumes this standalone readonly operand without code.
+        if command == 'connected' and len(tokens) == 1:
+            return
         if command == 'emulate':
             if len(tokens) != 2 or tokens[1] not in EMULATIONS:
                 self.error('EMULATE requires one named terminal emulation')

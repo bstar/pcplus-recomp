@@ -58,7 +58,7 @@ extern _runtime_serial_read_raw
 extern aspect_receive_policy_read
 extern aspect_when_register,aspect_when_cancel,aspect_when_monitor,aspect_when_service
 extern _runtime_when_poll,_runtime_when_cancel_poll,_runtime_when_idle_allowed
-extern _runtime_when_host_poll,_runtime_serial_carrier
+extern _runtime_when_host_poll,_runtime_serial_carrier,_runtime_serial_connected
 extern _runtime_set_status_refresh,_runtime_break_command
 extern aspect_break_command,aspect_break_setting,aspect_fetch_command
 extern aspect_end_wait
@@ -362,6 +362,8 @@ global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
  push bp
  mov bp,sp
+ cmp word [bp+4],29
+ je .connected
  cmp word [bp+4],3
  je .directory
  cmp word [bp+4],20
@@ -378,6 +380,12 @@ aspect_operand_builtin_integer:
  jne unsupported
  call aspect_string_success
  jmp short .done
+.connected:
+ call _runtime_serial_connected
+ cmp word [_runtime_error],0
+ je .done
+ mov ax,[_runtime_error]
+ jmp fail
 .comdata:
  call aspect_receive_available_status
  jmp short .done
