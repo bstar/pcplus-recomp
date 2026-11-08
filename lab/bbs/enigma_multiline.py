@@ -13,7 +13,11 @@ def editor_checks(output, tx, display, mode):
     up = ((25, 1), (14, 1))
     down = ((14, 7), (25, 1))
     video = (output / 'SCREEN.BIN').read_bytes()
-    body = [video[row*160:(row+1)*160:2].decode('cp437').rstrip()
+    # The owned geometry harness also captures a second video page. Document
+    # body/footer semantics concern the first page; full geometry is audited
+    # independently by the caller. Never search the second page for a footer.
+    page = video[:4000]
+    body = [page[row*160:(row+1)*160:2].decode('cp437').rstrip()
         for row in range(8, 22)]
     if mode == 'page-down':
         expected = [f'R{n:02}' if n != 14 else 'UPMARKR14'
@@ -29,7 +33,7 @@ def editor_checks(output, tx, display, mode):
             if mode == 'page-down' else b'\x1b[6~' not in tx,
         final_marker_sent=b'UNSAVED' in tx,
         exact_numbered_body_window=body == expected,
-        exact_document_footer=len(video) == 4000 and footer in video[::2])
+        exact_document_footer=len(video) in (4000,8000) and footer in page[::2])
     detail = dict(mode=mode, body_lines=24, cursor_positions=positions,
         page_up_transitions=[p for p in transitions if p == up],
         page_down_transitions=[p for p in transitions if p == down],

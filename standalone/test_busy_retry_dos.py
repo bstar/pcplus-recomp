@@ -23,7 +23,10 @@ def main():
  struct.pack_into('<HH',raw,0x1bc,0,0)
  struct.pack_into('<H',raw,0x1e6,0)
  m=json.loads((binary.parent/'manifest.json').read_text())
- redial='a-z p150 ` p150 right p150 d' if m.get('experimental_original_reference') else 'a-d'
+ assert m['binary_sha256']==hashlib.sha256(binary.read_bytes()).hexdigest()
+ if m.get('experimental_display_startup'):
+  for at,value in ((0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0)):struct.pack_into('<H',raw,at,value)
+ redial='` p500 right p500 d' if m.get('experimental_original_reference') else 'a-d'
  cases=[]
  for kind,mode,keys in [
   ('busy-exit','busy','p900 enter p5000 a-x'),

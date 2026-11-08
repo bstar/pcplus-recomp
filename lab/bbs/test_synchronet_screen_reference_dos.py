@@ -136,7 +136,7 @@ def main():
         cpu='386' if a.keymap_helper or a.file_viewer_overlay or a.external_viewer_overlay or a.meta_keys_overlay else '8086'
         command=[sys.executable,str(ROOT/'lab/bbs/editor_dos_probe.py'),str(stage/'TERMINAL.EXE'),'synchronet','--port',str(ready['endpoint']['port']),'--label',a.label,'--com','3','--baud','19200','--flow','HARD','--directory-fixture','--directory-script-fixture',str(stage/'SYNC.ASX'),'--keyboard-helper',str(helper),'--irq','5','--mouse-scales','8','4','--cpu',cpu,'--timeout','160','--wait','145','--raw-upstream','--keys','p900 enter']
         if a.size_probe:command+=['--display-rows',str(a.display_rows),'--status-hidden',str(a.status_hidden)]
-        if a.keymap_helper:command+=['--keymap-fixture',str(keymap_folder/'BOARD.KBD'),'--keymap-expected',str(keymap_folder/'EXPECT.KBD'),'--hardware-flow-model','--video-observer',str(observer),'--video-observer-high','--keyboard-helper-high']
+        if a.keymap_helper:command+=['--status-runner-high','--keymap-fixture',str(keymap_folder/'BOARD.KBD'),'--keymap-expected',str(keymap_folder/'EXPECT.KBD'),'--hardware-flow-model','--video-observer',str(observer),'--video-observer-high','--keyboard-helper-high']
         if a.ignore_rts:command+=['--ignore-rts']
         if a.meta_keys_overlay:command+=['--video-observer',str(observer),'--video-observer-high']
         if a.phone_log:command+=['--phone-log','--video-observer',str(observer)]

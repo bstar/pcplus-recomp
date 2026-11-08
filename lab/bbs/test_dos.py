@@ -12,6 +12,7 @@ from directory_fixtures import directory as directory_image,prm as directory_prm
 from directory_test_support import accounting_check
 
 async def run(args):
+ if getattr(args,'status_runner_high',False):assert args.keymap_expected and args.cpu in ('386','486')
  binary=ROOT/'build/terminal/TERMINAL.EXE'
  if getattr(args,'binary',None):binary=args.binary.resolve()
  digest=hashlib.sha256(binary.read_bytes()).hexdigest()
@@ -140,8 +141,9 @@ async def run(args):
   (output/'TEST.PRM').write_bytes(fixture)
  if getattr(args,'keymap_expected',None):
   assert args.keymap_fixture and args.keymap_expected.resolve().is_relative_to(ROOT/'build')
-  subprocess.run(['nasm','-fbin',str(ROOT/'standalone/dos_status_runner.asm'),'-o',str(output/'RUNSTAT.COM')],check=True)
+  subprocess.run(['nasm','-fbin',*(['-DSTATUS_RUNNER_HIGH'] if getattr(args,'status_runner_high',False) else []),str(ROOT/'standalone/dos_status_runner.asm'),'-o',str(output/'RUNSTAT.COM')],check=True)
   command='D:\\RUNSTAT '+command.split(' ',1)[1]
+  if getattr(args,'status_runner_high',False):command='LOADHIGH '+command
  observer=getattr(args,'video_observer',None);observer_start=observer_stop='';observer_bytes=None
  if observer:
   observer=observer.resolve();assert observer.is_relative_to(ROOT/'build') and observer.suffix.upper()=='.COM'
@@ -193,7 +195,7 @@ D:\\SNAP A
 exit
 '''
  cpu=getattr(args,'cpu','386')
- if getattr(args,'video_observer_high',False) or getattr(args,'keyboard_helper_high',False):
+ if getattr(args,'video_observer_high',False) or getattr(args,'keyboard_helper_high',False) or getattr(args,'status_runner_high',False):
   assert observer is not None,'Upper-memory placement requires an explicit observer'
   assert cpu in ('386','486'),'DOSBox upper-memory observer testing requires a386+ CPU model'
   config=config.replace('[autoexec]','[dos]\nxms=true\nems=false\numb=true\n[autoexec]')
@@ -236,6 +238,11 @@ exit
  after=(output/'AFTER.BIN').read_bytes() if (output/'AFTER.BIN').exists() else b''
  checks={'dos_normal_exit':code==0 and (output/'PASS.TXT').exists(),'hardware_restored':len(before)==42 and before==after,'screen_captured':len(screen)==snapshot_bytes,'bbs_connected':any(e['kind']=='bbs-connected' for e in modem.events),'bbs_display_received':bool(modem.display)}
  if fixture is not None:checks['configuration_unchanged']=(output/'TEST.PRM').read_bytes()==fixture
+ if getattr(args,'status_runner_high',False):
+  import struct
+  proof=(output/'ENVPROOF.BIN').read_bytes()
+  fields=struct.unpack('<6H',proof) if len(proof)==12 else (0,0,0,0,0,0)
+  checks['status_wrapper_environment_preserved']=fields[:2]==(0x5354,1) and fields[2]>=0x10 and fields[3]>=0xa000 and 1<=fields[4]<=4095 and fields[5]==1
  if comspec_bytes is not None:checks['comspec_fixture_unchanged']=(output/'GWSHELL.COM').read_bytes()==comspec_bytes
  if meta is not None:checks['meta_actions_unchanged']=(output/'ACTIONS.KEY').read_bytes()==meta
  if keymap is not None:
@@ -255,6 +262,7 @@ exit
  result['initialization_wait_seconds']=init_wait
  result['cpu']=next(line.split('=',1)[1] for line in config.splitlines() if line.startswith('cputype='))
  result['video_observer_high_requested']=getattr(args,'video_observer_high',False)
+ result['status_runner_high_requested']=getattr(args,'status_runner_high',False)
  if irq is not None:result['serial']['irq']=irq
  result['server_log']=str(server_log) if server_log is not None else None
  result['server_endpoint']={'address':'127.0.0.1','port':args.port}
@@ -280,6 +288,7 @@ if __name__=='__main__':
  p.add_argument('--keyboard-helper',type=Path,help='Install a source-built BIOS input helper from build/ once before the application')
  p.add_argument('--meta-fixture',type=Path,help='Load an explicit source-owned ten-record KEY fixture with /T')
  p.add_argument('--keymap-expected',type=Path,help='Explicit expected whole KBD after an intentional local mapper Save')
+ p.add_argument('--status-runner-high',action='store_true',help='Put the owned status wrapper and its exact environment in UMBs; launch application with ordinary first-fit allocation')
  p.add_argument('--keymap-fixture',type=Path,help='Copy an explicit source-owned KBD fixture to the owned DOS test drive and load with /K')
  p.add_argument('--packet-delay-ms',type=int,choices=range(101),default=0,help='Explicit byte-transparent modem buffering experiment, NONE/HARD only; default immediate')
  p.add_argument('--ignore-rts',action='store_true',help='Diagnostic negative control only: decode identical envelopes and pace single bytes but ignore RTS')
