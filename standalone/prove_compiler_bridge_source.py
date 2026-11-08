@@ -17,6 +17,7 @@ def main():
  for name in ('parent', 'child', 'compiler', 'output'):
   p.add_argument('--'+name, type=Path, required=True)
  p.add_argument('--checks', type=Path, action='append', required=True)
+ p.add_argument('--termination-checks',type=Path,action='append',default=[])
  a = p.parse_args(); out = a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and not out.exists()
  manifests = [json.loads((folder/'manifest.json').read_text()) for folder in (a.parent,a.child,a.compiler)]
@@ -33,7 +34,7 @@ def main():
   'standalone/test_aspect_get_vm_dos.py','standalone/test_aspect_renderer_dos.py',
   'standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py',
   'standalone/modem_fixtures.py','standalone/directory_test_support.py','standalone/terminal_config_fixtures.py',
-  'src/aspect/compiler.py','standalone/compiler_bridge_recovery_observer.py','standalone/compiler_bridge_repeat_observer.py']
+  'src/aspect/compiler.py','standalone/compiler_bridge_recovery_observer.py','standalone/compiler_bridge_repeat_observer.py','standalone/test_compiler_bridge_termination_dos.py','standalone/compiler_bridge_termination_observer.asm']
  for name in extras:sources[name]=sha(ROOT/name)
  reports=[json.loads(path.read_text()) for path in a.checks]
  assert any(r.get('source_lease_cases') and len(r['cases'])==2 for r in reports)
@@ -42,6 +43,10 @@ def main():
   assert r['checker_sha256']==sources['standalone/test_aspect_get_vm_dos.py']
   for case in r['cases']:
    assert case['binary_sha256']==parent['binary_sha256']
+ termination=[json.loads(path.read_text()) for path in a.termination_checks]
+ for r in termination:
+  assert r['passed'] and r['parent_sha256']==parent['binary_sha256'] and r['child_sha256']==child['binary_sha256'] and r['compiler_sha256']==compiler['binary_sha256']
+  for name,digest in r['sources'].items():assert sources[name]==digest,name
  out.mkdir(); fresh=out/'source'
  for name,digest in sources.items():
   n=Path(name)
@@ -111,11 +116,26 @@ def main():
    assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
   replays.append(dict(cases=len(replay['cases']),checks_sha256=sha(fresh/leaf/'checks.json'),
                       source_lease_cases=replay.get('source_lease_cases',False)))
+ termination_replays=[]
+ for i,(path,r) in enumerate(zip(a.termination_checks,termination)):
+  leaf='build/termination-'+str(i)
+  flags=[arg for case in r['cases'] for arg in ('--case',case['case'])]
+  run(['standalone/test_compiler_bridge_termination_dos.py','--parent','build/parent','--child','build/child','--compiler','build/compiler','--output',leaf,*flags])
+  replay=json.loads((fresh/leaf/'checks.json').read_text());assert replay['passed'] and len(replay['cases'])==len(r['cases'])
+  for old,new in zip(r['cases'],replay['cases']):
+   for key in ('case','checks','sample','BIOS_text_hex','observer_sha256'):
+    assert old[key]==new[key],(old['case'],key)
+   for key in ('kernel_before','kernel_after'):
+    assert {k:v for k,v in old[key].items() if k!='crc'}=={k:v for k,v in new[key].items() if k!='crc'},(old['case'],key)
+   # Full video/report/backup digests can contain mutable parent clock data.
+   # Each run still checks its own full backup CRC and exact fatal BIOS text.
+   assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
+  termination_replays.append(dict(cases=len(replay['cases']),checks_sha256=sha(fresh/leaf/'checks.json'),expected_fail_stop=True))
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,sources=sources,source_count=len(sources),
-             artifacts=artifacts,replays=replays,DOS_cases=sum(r['cases'] for r in replays),
+             artifacts=artifacts,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
              scope=__doc__,physical_verified=False,installed_changed=False)
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- print('PASS compiler bridge cold source:',len(sources),'sources;',result['DOS_cases'],'exact DOS cases')
+ print('PASS compiler bridge cold source:',len(sources),'sources;',result['DOS_cases'],'normal DOS cases;',result['termination_cases'],'expected fail-stops')
 
 if __name__=='__main__':main()

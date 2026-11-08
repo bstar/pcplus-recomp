@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Unexpected ASPECT termination](ASPECT_COMPILER_TERMINATION.md) now has four
+expected-stop tests: startup and EXECUTE after compilation and during partial
+parent restoration. The unchanged guard stops with an explicit reboot notice;
+these are containment checks, not successful recovery or physical acceptance.
+
 [Backup preparation failures](ASPECT_COMPILER_PREPARATION.md) now cover creation
 denial, a write error after a real4KB block and a reported short write at startup
 and EXECUTE. The parent is never lent; partial files retire and the interpreter

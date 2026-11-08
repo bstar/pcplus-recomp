@@ -62,7 +62,8 @@ for those same artifacts; they are not claimed as newly rerun by this checkpoint
 These are precisely scoped synthetic DOS failures with one real partial block,
 not actual permission, write-protection, full-disk or damaged-media tests. Failed
 close, repeated/partial restoration faults, corrupt-backup repair, unexpected
-child termination, reuse after an error and shared Meta/Line/snapshot composition
-remain open. Physical Boca/SPA2102/SynthModem/Enigma and Synchronet, selected
-package and full language/application acceptance remain separate gates. Installed
+child termination beyond the two boundaries covered by the subsequent
+[termination checkpoint](ASPECT_COMPILER_TERMINATION.md), reuse after an error
+and shared Meta/Line/snapshot composition remain open. Physical
+Boca/SPA2102/SynthModem/Enigma and Synchronet, selected package and full language/application acceptance remain separate gates. Installed
 files, boot configuration and private call history are unchanged.
