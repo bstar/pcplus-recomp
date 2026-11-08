@@ -1,11 +1,15 @@
 # Full application reconstruction checklist
 
+[The complete compiler-bridge package](ASPECT_COMPILER_PACKAGE.md) now reproduces
+all17 files and its ZIP from1082 committed public source files. Matching module
+and archive controls, seven packaged DOS launcher/helper cases and the prior
+same-byte Enigma/LoC checks pass. It remains an undeployed hardware-test candidate.
+
 [Compiler-bridge connection checks](ASPECT_COMPILER_CONNECTION.md) now verify
 this exact parent's1920-cell LoC main menu, real Enigma cancel/retry and live
 source compilation through carrier loss, redial and an exact65539-byte retry.
 The386/UMB lab fixes observer memory placement; application bytes stay unchanged.
-Independent audits and corrupted-capture controls pass. Physical admission and
-complete release packaging remain separate gates.
+Independent audits and corrupted-capture controls pass. Physical admission remains separate; the complete package has its own receipt.
 
 [Compiler-bridge BBS regressions](ASPECT_COMPILER_BBS.md) now bind a nine-file
 lab payload and fresh stock Enigma/Synchronet ZMODEM downloads and uploads

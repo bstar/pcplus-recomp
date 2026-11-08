@@ -88,6 +88,7 @@ These transfer receipts retain their original scope. The later
 parent's selected LoC main menu, cancel/retry and live-source Enigma compilation,
 carrier loss/redial/retry. It does not establish every foreground mode or layout.
 Earlier-parent receipts keep their own scope.
-Physical Boca/SPA2102/SynthModem/LoC Enigma and Synchronet acceptance, complete
-language/emulations/protocols/Host parity and selected-package promotion remain
-open. Private settings, call history, boot profiles and installation are unchanged.
+The [complete connection package](ASPECT_COMPILER_PACKAGE.md) now has separate
+source/launcher acceptance. Physical Boca/SPA2102/SynthModem/LoC Enigma and
+Synchronet acceptance, complete language/emulations/protocols/Host parity and
+selected-package promotion remain open. Private settings, call history, boot profiles and installation are unchanged.

@@ -94,9 +94,9 @@ carrier notices, partial timing, staging and second-session state.
 The [validation record](validation/aspect-compiler-connection.json) binds the
 exact unchanged payload, accepted captures/audits, controls and diagnostic
 observer checks. The earlier failed/aborted admission runs and the60-second
-canceled retry remain outside accepted workflow evidence. Application packaging
-and actual hardware memory admission remain separate; the successful386/UMB
-lab layout does not establish every conventional-memory/driver arrangement.
+canceled retry remain outside accepted workflow evidence. The [complete package](ASPECT_COMPILER_PACKAGE.md) now has separate source and
+launcher acceptance. Actual hardware memory admission remains separate; the
+successful386/UMB lab layout does not establish every memory/driver arrangement.
 
 No BIOS, memory manager, physical driver, private setting or installed package
 is changed.
