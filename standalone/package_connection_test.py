@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Stage a matching source-built connection-test package; never access a card."""
-import argparse,hashlib,json,re,shutil,subprocess,struct
+import argparse,hashlib,json,re,shutil,subprocess,struct,zlib
 from pathlib import Path
 from package_special_edition import ROOT,dos_text,launch
 
@@ -26,11 +26,42 @@ def render_capability(binary):
 def validate_render_pair(capability,terminal,child):
     """Bind the published contract to both compiled product selections."""
     emulate=bool(child.get('experimental_emulate_VM'))
-    assert (capability==20)==emulate,'Published parent capability and EMULATE interpreter must match'
+    assert capability in (12,13,15,16,18,19,20,21,22,23),'Unknown renderer capability'
+    assert (capability in (20,21,22,23))==emulate,'Published parent capability and EMULATE interpreter must match'
     assert bool(terminal.get('experimental_aspect_emulate_policy'))==emulate,'EMULATE parent policy and interpreter must match'
-    assert (capability in (19,20))==bool(child.get('experimental_alarm_VM')),'Published parent capability and ALARM interpreter must match'
+    assert (capability in (19,20,21,22,23))==bool(child.get('experimental_alarm_VM')),'Published parent capability and ALARM interpreter must match'
     if emulate:
         assert terminal.get('experimental_aspect_snapshot_lease') and child.get('experimental_snapshot_lease'),'EMULATE requires matching snapshot leases'
+    for parent_flag,child_flag,versions in (
+        ('experimental_aspect_get_display','experimental_get_display',(21,22,23)),
+        ('experimental_aspect_get_policy','experimental_get_policy',(22,23)),
+        ('experimental_compiler_lease_bridge','experimental_compiler_parent_lease',(23,))):
+        enabled=capability in versions
+        assert bool(terminal.get(parent_flag))==bool(child.get(child_flag))==enabled,(parent_flag,child_flag,capability)
+    if capability==23:
+        assert terminal.get('experimental_compiler_lease_arena') and child.get('experimental_get_VM'),'Compiler lease requires complete arena and GET VM'
+
+
+def compiler_module_contract(binary,manifest):
+    """Match raw module bytes/fixups to the descriptor embedded in this parent."""
+    module=manifest.get('experimental_compiler_lease_module')
+    assert bool(module)==bool(manifest.get('experimental_compiler_lease_bridge')),'Compiler bridge and module must be selected together'
+    if not module:return None
+    assert module['whole_kernel'] and module['format']=='source-linked-whole-compiler-lease-v1'
+    assert module.get('original_inputs')==[]
+    raw=binary.with_name('PCCOMP.OVL').read_bytes();size=module['bank_bytes'];count=module['relocations']
+    assert 256<=size<=8192 and 0<=count<=256 and len(raw)==size+2*count==module['module_bytes']
+    assert sha(binary.with_name('PCCOMP.OVL'))==module['sha256']
+    crc=zlib.crc32(raw);assert crc==int(module['crc32'],16)
+    fixups=struct.unpack_from('<'+'H'*count,raw,size)
+    assert all(at+2<=size for at in fixups) and all(b>=a+2 for a,b in zip(fixups,fixups[1:]))
+    matches=re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+_compiler_overlay_expected\s*$',binary.with_name('terminal.map').read_text(),re.M|re.I)
+    assert len(matches)==1
+    seg,off=(int(n,16) for n in matches[0]);image=binary.read_bytes();assert image[:2]==b'MZ'
+    base=struct.unpack_from('<H',image,8)[0]*16
+    magic,version,n,relocations,low,high,target,ds,keep=struct.unpack_from('<9H',image,base+seg*16+off)
+    assert (magic,version,n,relocations,low|(high<<16),target,keep)==(0x434b,1,size,count,crc,module['relative_target_segment'],module['keep_paragraphs'])
+    return module
 
 def packed_guide(directory):
     return dos_text(
@@ -62,6 +93,7 @@ def packed_guide(directory):
 def terminal_companions(binary,manifest):
     """Return source-verified optional runtime files required by this parent."""
     files={};sources={};base=binary.resolve().parent
+    if compiler_module_contract(binary,manifest):files['PCCOMP.OVL']=base/'PCCOMP.OVL'
     overlay=manifest.get('line_port_overlay')
     assert bool(overlay)==bool(manifest.get('experimental_line_port_overlay')),'Alt-P module declaration and feature must match'
     if overlay:
@@ -91,6 +123,7 @@ def terminal_companions(binary,manifest):
     if manifest.get('experimental_global_help'):
         bundle=json.loads((base/'package.json').read_text())
         assert bundle['passed'] and bundle['products']['TERMINAL.EXE']==sha(binary)
+        assert bundle['parent_manifest_sha256']==sha(base/'manifest.json')
         for n in ('PCHELP.RTE','PCPLUS.HLP'):
             assert sha(base/n)==bundle['products'][n];files[n]=base/n
         sources.update(bundle['sources'])
@@ -162,6 +195,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
     if keymap_identity:identities['PCKEYMAP.EXE']=keymap_identity
     capability=render_capability(products['TERMINAL.EXE'].resolve())
     validate_render_pair(capability,terminal,manifests['ASPECT.EXE'])
+    if capability==23:assert manifests['ASPCOMP.EXE'].get('experimental_get_compiler'),'Compiler bridge requires GET-enabled source compiler'
     companions,companion_sources=terminal_companions(products['TERMINAL.EXE'],terminal)
     for n,h in companion_sources.items():assert sources.get(n,h)==h;sources[n]=h
     assert terminal.get('special_edition') and terminal.get('experimental_original_reference') and terminal.get('experimental_phone_log_controls') and terminal.get('experimental_status_geometry')
@@ -227,6 +261,27 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
         'remain unverified. Building/staging does not update a card.\n').replace(b'PCPLUSSE',dos_directory.encode('ascii')))
     if terminal.get('experimental_packed_command_ui'):
         (payload/'README.TXT').write_bytes(packed_guide(dos_directory))
+    if terminal.get('experimental_compiler_lease_bridge'):
+        guide=payload/'README.TXT';text=guide.read_bytes()
+        previous=(
+            'Compile source scripts with ASPCOMP SCRIPT.ASP before starting PCPlus.\n'
+            'Automatic resident compilation and nested PROGRAM remain separate gates.\n',
+            'For source scripts, compile at the DOS prompt before starting PCPlus:\n'
+            '  ASPCOMP SCRIPT.ASP\n'
+            'Then select SCRIPT.ASX with Alt-F5. Automatic ASP compilation while\n'
+            'the terminal and interpreter are resident can run out of conventional\n'
+            'RAM in this candidate. The standalone compiler remains included.\n')
+        assert sum(text.count(dos_text(block)) for block in previous)==1
+        updated=dos_text('ASPECT: Alt-F5 accepts source ASP and compiled ASX scripts.\n'
+            'Keep matched ASPECT.EXE, ASPCOMP.EXE and PCCOMP.OVL beside TERMINAL.EXE.\n'
+            'Source compilation temporarily backs up and lends parent memory.\n'
+            'Keep the current directory writable with free disk space.\n'
+            'If memory restoration stops, follow the displayed recovery prompt;\n'
+            'do not delete its backing files or continue in unverified memory.\n'
+            'DOS-prompt compilation with ASPCOMP SCRIPT.ASP is also available.\n'
+            'Conventional-memory admission and modem timing need hardware tests.\n')
+        for block in previous:text=text.replace(dos_text(block),updated)
+        guide.write_bytes(text)
     if terminal.get('experimental_global_help'):
         with (payload/'README.TXT').open('ab') as guide:
             guide.write(dos_text('\nContextual Help: press Alt-Z twice from the terminal.\n'
@@ -261,7 +316,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
                 'Keep the matching PCMETA.OVL beside TERMINAL.EXE. The shared\n'
                 'command reference also needs this module. Update all package\n'
                 'companions together; do not mix parent and module versions.\n'))
-    for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py'):sources[n]=sha(ROOT/n)
+    for n in ('standalone/package_connection_test.py','standalone/package_special_edition.py','standalone/build_guarded_helper.py','standalone/archive_connection_test_package.py'):sources[n]=sha(ROOT/n)
     if keymap_files:
         with (payload/'README.TXT').open('ab') as guide:
             guide.write(dos_text('\nAlt-F8: source keyboard mapping helper beside TERMINAL.EXE.\n'
@@ -293,6 +348,8 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
         'experimental_directory_resource_owner':bool(terminal.get('experimental_directory_resource_owner')),'experimental_phone_log_controls':True,'experimental_status_geometry':True,
         'authored_help_sha256':help_record['sha256'],'card_written':False,'validation':'Staged only; requires separate DOS/package and hardware acceptance.'}
     record.update(parent_render_capability=capability,experimental_alarm_VM=bool(manifests['ASPECT.EXE'].get('experimental_alarm_VM')))
+    if capability==23:
+        record.update(experimental_compiler_lease_bridge=True,compiler_lease_module=compiler_module_contract(products['TERMINAL.EXE'],terminal),experimental_GET_VM=True)
     if manifests['ASPECT.EXE'].get('experimental_emulate_VM'):record['experimental_emulate_VM']=True
     if terminal.get('experimental_path_control') or terminal.get('experimental_gateway_frontend'):
         record.update(experimental_path_control=bool(terminal.get('experimental_path_control')),experimental_gateway_frontend=bool(terminal.get('experimental_gateway_frontend')))

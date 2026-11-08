@@ -18,6 +18,7 @@ def main():
   p.add_argument('--'+name, type=Path, required=True)
  p.add_argument('--checks', type=Path, action='append', required=True)
  p.add_argument('--lab-payload',type=Path)
+ p.add_argument('--connection-package',type=Path)
  p.add_argument('--termination-checks',type=Path,action='append',default=[])
  a = p.parse_args(); out = a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and not out.exists()
@@ -48,6 +49,18 @@ def main():
    sources[name]=digest
   for name in ('standalone/test_compiler_bridge_lab_payload.py','lab/bbs/product_inputs.py'):sources[name]=sha(ROOT/name)
 
+ connection=None
+ if a.connection_package:
+  assert a.lab_payload,'Connection package requires the complete lab/Help source closure'
+  connection=json.loads((a.connection_package/'manifest.json').read_text())
+  assert connection['experimental_compiler_lease_bridge'] and connection['parent_render_capability']==23
+  assert not connection['original_inputs'] and not connection['card_written']
+  for leaf,digest in connection['files'].items():assert sha(a.connection_package/connection['dos_directory']/leaf)==digest,leaf
+  for leaf,digest in payload['products'].items():assert connection['files'][leaf]==digest,leaf
+  for name,digest in connection['sources'].items():
+   assert sha(ROOT/name)==digest and (name not in sources or sources[name]==digest),name
+   sources[name]=digest
+  for name in ('standalone/check_compiler_bridge_package.py','standalone/archive_connection_test_package.py'):sources[name]=sha(ROOT/name)
  reports=[json.loads(path.read_text()) for path in a.checks]
  assert any(r.get('source_lease_cases') and len(r['cases'])==2 for r in reports)
  for r in reports:
@@ -91,6 +104,22 @@ def main():
   run(['standalone/test_compiler_bridge_lab_payload.py','--payload','build/lab-payload','--output','build/lab-contract'])
   contract=json.loads((fresh/'build/lab-contract/result.json').read_text());assert contract['passed']
   lab_payload=dict(products=staged['products'],package_sha256=sha(fresh/'build/lab-payload/package.json'),contract_sha256=sha(fresh/'build/lab-contract/result.json'),checks=contract['checks'])
+ connection_result=None
+ if connection:
+  run(['standalone/build_setup.py','--mouse','--notice-sound','--custom-irq','--output-dir','build/setup'])
+  run(['standalone/build_xlt_editor.py','--output-dir','build/translation'])
+  run(['standalone/build_keymap_helper.py','--output','build/keymap'])
+  run(['standalone/package_connection_test.py','--terminal','build/lab-payload/TERMINAL.EXE','--runner','build/child/ASPECT.EXE',
+       '--compiler','build/compiler/ASPCOMP.EXE','--setup','build/setup/PRMEDIT.EXE','--translation','build/translation/XLTEDIT.EXE',
+       '--keymap-helper','build/keymap/PCKEYMAP.EXE','--dos-directory',connection['dos_directory'],
+       '--source-base-commit',connection['source_base_commit'],'--output','build/connection-package'])
+  staged=json.loads((fresh/'build/connection-package/manifest.json').read_text());assert staged['files']==connection['files']
+  run(['standalone/check_compiler_bridge_package.py','--terminal','build/lab-payload/TERMINAL.EXE','--runner','build/child/ASPECT.EXE',
+       '--package','build/connection-package','--output','build/connection-contract'])
+  run(['standalone/archive_connection_test_package.py','--package','build/connection-package','--output','build/connection-archive'])
+  contract=json.loads((fresh/'build/connection-contract/result.json').read_text());archive=json.loads((fresh/'build/connection-archive/result.json').read_text())
+  assert contract['passed'] and archive['passed'] and archive['files']==connection['files']
+  connection_result=dict(files=staged['files'],contract_cases=len(contract['cases']),archive_sha256=archive['archive_sha256'],archive_bytes=archive['archive_bytes'])
  replays=[]
  families=('source_lease_reuse_cases','source_lease_close_cases','source_lease_begin_cases','source_lease_repeat_cases','source_lease_cleanup_cases','source_lease_recovery_cases','source_lease_fault_cases','source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
  for i,(path,r) in enumerate(zip(a.checks,reports)):
@@ -157,7 +186,7 @@ def main():
   termination_replays.append(dict(cases=len(replay['cases']),checks_sha256=sha(fresh/leaf/'checks.json'),expected_fail_stop=True))
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,sources=sources,source_count=len(sources),
-             artifacts=artifacts,lab_payload=lab_payload,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
+             artifacts=artifacts,lab_payload=lab_payload,connection_package=connection_result,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
              scope=__doc__,physical_verified=False,installed_changed=False)
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print('PASS compiler bridge cold source:',len(sources),'sources;',result['DOS_cases'],'normal DOS cases;',result['termination_cases'],'expected fail-stops')

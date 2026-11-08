@@ -2,7 +2,7 @@
 """Archive only the verified public application payload; never select or deploy it."""
 import argparse,json,zipfile
 from pathlib import Path
-from package_connection_test import ROOT,sha,validate_dos_directory,reviewed_keymap_profile
+from package_connection_test import ROOT,sha,validate_dos_directory,reviewed_keymap_profile,compiler_module_contract,render_capability,validate_render_pair
 
 def main():
  p=argparse.ArgumentParser(description=__doc__)
@@ -12,6 +12,28 @@ def main():
  m=json.loads((package/'manifest.json').read_text());directory=validate_dos_directory(m['dos_directory'])
  assert m['original_inputs']==[] and not m['card_written']
  allowed={'TERMINAL.EXE','ASPECT.EXE','ASPCOMP.EXE','PRMEDIT.EXE','XLTEDIT.EXE','LOCHELP.HLP','START.BAT','SETUP.BAT','README.TXT','VERSION.TXT'}
+ bridge=bool(m.get('experimental_compiler_lease_bridge'))
+ assert bridge==(m.get('parent_render_capability')==23)==bool(m.get('compiler_lease_module')),'Compiler capability/module declarations must match'
+ if bridge:
+  allowed.add('PCCOMP.OVL')
+  identity=m['products']['TERMINAL.EXE'];base=(ROOT/'build'/identity['folder']).resolve()
+  assert base.is_relative_to(ROOT/'build') and sha(base/'manifest.json')==identity['manifest_sha256']
+  parent=json.loads((base/'manifest.json').read_text())
+  assert sha(base/'TERMINAL.EXE')==parent['binary_sha256']==m['files']['TERMINAL.EXE']==identity['binary_sha256']
+  assert compiler_module_contract(base/'TERMINAL.EXE',parent)==m['compiler_lease_module']
+  assert m['files']['PCCOMP.OVL']==m['compiler_lease_module']['sha256']
+  assert m.get('experimental_GET_VM')
+  manifests={}
+  for leaf,item in m['products'].items():
+   folder=(ROOT/'build'/item['folder']).resolve();assert folder.is_relative_to(ROOT/'build')
+   proof=folder/('result.json' if leaf=='PCKEYMAP.EXE' else 'manifest.json')
+   assert sha(proof)==item['manifest_sha256']
+   manifest=json.loads(proof.read_text());assert not manifest.get('original_inputs') and not manifest.get('diagnostic_build')
+   assert sha(folder/leaf)==manifest['binary_sha256']==item['binary_sha256']==m['files'][leaf]
+   manifests[leaf]=manifest
+  assert render_capability(base/'TERMINAL.EXE')==m['parent_render_capability']
+  validate_render_pair(m['parent_render_capability'],parent,manifests['ASPECT.EXE'])
+  assert manifests['ASPCOMP.EXE'].get('experimental_get_compiler')
  if m.get('experimental_chat_loader'):allowed.add('PCCHAT.OVL')
  if m.get('experimental_keymap_editor'):
   allowed.add('PCKEYMAP.EXE')
