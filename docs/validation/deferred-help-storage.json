@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "package_eligible": false,
+  "child_sha256": "9b1b5f98d6e2a4d64e4154a5d2f97240c1455787e5a7ab5d8d4c1cf37c473fe0",
+  "disabled_sha256": "96ea98c9537f3d54b20d02fd8a5f5ec93849f2b01e0485b1a0b867ad199671ab",
+  "measured_layout": {
+    "before": {
+      "passed": true,
+      "near_code_bytes": 63023,
+      "near_code_spare": 2513,
+      "GET_code_bytes": 4079,
+      "editor_code_bytes": 1544,
+      "field_state_bytes": 206,
+      "DGROUP_bytes": 43712,
+      "stack_bytes": 8192,
+      "minimum_DOS_bytes_including_PSP": 136528,
+      "page_rounded_minimum_including_PSP": 136528,
+      "near_entries": 6,
+      "resident_callback_count": 30,
+      "scope": "Link-map segment/callback/CRT order and exact/page MZ minima; environment/EXEC overhead, execution and available conventional memory require separate DOS tests."
+    },
+    "after": {
+      "passed": true,
+      "near_code_bytes": 63071,
+      "near_code_spare": 2465,
+      "GET_code_bytes": 4079,
+      "editor_code_bytes": 1544,
+      "field_state_bytes": 206,
+      "DGROUP_bytes": 40288,
+      "stack_bytes": 8192,
+      "minimum_DOS_bytes_including_PSP": 133616,
+      "page_rounded_minimum_including_PSP": 133616,
+      "near_entries": 6,
+      "resident_callback_count": 30,
+      "scope": "Link-map segment/callback/CRT order and exact/page MZ minima; environment/EXEC overhead, execution and available conventional memory require separate DOS tests."
+    },
+    "DGROUP_saved": 3424,
+    "DOS_minimum_saved": 2912
+  },
+  "component_checks": [
+    {
+      "deferred": true,
+      "checks": 84
+    },
+    {
+      "deferred": false,
+      "checks": 49
+    }
+  ],
+  "full_parent_source_cases": 2,
+  "cold_source_files": 1044,
+  "capacity_passed": false,
+  "six_held_files_preserved": true,
+  "live_Help_passed": false,
+  "receipts": {
+    "build/deferred-help-child-20261108/manifest.json": "8a3fa4233ee38551074ceb0ea35563b512ebf4fbdbd347d76229f57a121e24dc",
+    "build/deferred-help-disabled-control-20261108/manifest.json": "9a5f6167830bb6cdf5daec7c25a4271e037a4ea26d4f9bbb7babe90e57445dff",
+    "build/deferred-help-component-20261108/result.json": "84a46fc9370479e71f6c6f2ffd7375d67aed8f3f68eb13c8fc4f74f7bfb8ddc1",
+    "build/deferred-help-legacy-component-20261108/result.json": "443c53e79067b512356282da911a5516df6bf237d49cf35e3a9ec4ceb4f99603",
+    "build/deferred-help-source-20261108/checks.json": "fd805c7a4639cf4bb9318484be7257fafe196372519ca07e3cf167b82921c5e0",
+    "build/deferred-help-source-export-20261108/result.json": "f06d41adb562f2dbf15986825a434aec38b7516d9ea37e63a7031370d5fa2432",
+    "build/deferred-help-capacity-20261108/result.json": "258512784c2a1af85d3d2e827885c25996f31c6981202ee1ab4fc804d81cd74b",
+    "build/connection-dos/deferred-help-capacity-20261108/screen.txt": "29e279e4b48b23bf315e82c5c4ead2cf4feaf0c6b515cfa5118a0c1bb1fae758",
+    "build/notice-help/deferred-help-full-v5-20261108/result.json": "729704ff797dbdba6b5782a8ab654f63797f19779c00dc2a88a5367fea11557e"
+  },
+  "recorder_sha256": "7ce10e6cba5f5b1475711e3e0746b1420fbb2b617bc8062e9d83c199ff7e1df7",
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "limits": [
+    "Optional storage placement only; Help page sizes, six512B file buffers and8192B stack unchanged.",
+    "Capacity now opens/preserves all six files but fails PROGRAM preparation with heap error8.",
+    "Full-parent Help attempt returns memory service4 without opening Help; not acceptance.",
+    "Early Help attempts used stale adapter/port/partial-PRM fixtures and are excluded.",
+    "Cold source proof covers exact artifacts and two source compilations, not full capacity or physical hardware."
+  ]
+}

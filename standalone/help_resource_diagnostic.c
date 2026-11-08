@@ -4,6 +4,10 @@
 #include <string.h>
 extern unsigned _psp;
 static unsigned checks,failures;
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+extern unsigned help_resource_heap_fail,help_resource_heap_live,help_resource_heap_bytes;
+extern unsigned help_view_fail_allocate,help_view_fail_release;
+#endif
 static unsigned char original[4000],jft[20];
 static void check(unsigned yes,unsigned line){++checks;if(!yes){++failures;printf("FAIL %u\n",line);}}
 #define CHECK(x) check((x)!=0,__LINE__)
@@ -24,12 +28,37 @@ static unsigned restored(void)
 static unsigned handles(void)
 {unsigned i;for(i=0;i<20;++i)if(jft[i]!=((unsigned char __far *)MK_FP(_psp,0x18))[i])return 0;return 1;}
 static unsigned close_all(void)
-{return help_resource_close()||help_view_close();}
+{
+ if(help_resource_close()||help_view_close())return 1;
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+ if(help_resource_release()||help_resource_heap_live)return 1;
+#endif
+ return 0;
+}
 int main(void)
 {
  unsigned i;FILE *f;unsigned char header[41];
  for(i=0;i<4000;++i)original[i]=((unsigned char __far *)MK_FP(0xb800,0))[i]=(unsigned char)(i*13U+7U);
  for(i=0;i<20;++i)jft[i]=((unsigned char __far *)MK_FP(_psp,0x18))[i];
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+ CHECK(help_resource_heap_live==0&&help_resource_step()==HELP_VIEW_STATE&&help_resource_key(27)==HELP_VIEW_STATE);
+ help_resource_heap_fail=1;
+ CHECK(help_resource_open("LOCHELP.HLP")==HELP_VIEW_MEMORY&&!help_resource_active()&&!help_view_active()&&handles()&&restored());
+ CHECK(help_resource_heap_live==0);help_resource_heap_fail=0;
+ help_view_fail_allocate=1;
+ CHECK(help_resource_open("LOCHELP.HLP")==HELP_VIEW_MEMORY&&!help_resource_active()&&!help_view_active()&&handles()&&restored());
+ CHECK(help_resource_heap_live==0);help_view_fail_allocate=0;
+ CHECK(help_resource_open("LOCHELP.HLP")==0&&pump(3,"EXTERNAL PROGRAM / ERROR NOTICE"));
+ CHECK(help_resource_heap_live==1&&help_resource_heap_bytes>=3000);
+ CHECK(help_resource_close()==0&&!help_resource_active()&&help_resource_heap_live==1);
+ CHECK(help_resource_release()==HELP_VIEW_STATE&&help_resource_heap_live==1);
+ help_view_fail_release=1;CHECK(close_all()!=0&&help_view_active()&&help_resource_heap_live==1);
+ help_view_fail_release=0;CHECK(close_all()==0&&restored()&&handles());
+ for(i=0;i<8;++i){
+  CHECK(help_resource_open("LOCHELP.HLP")==0&&help_resource_heap_live==1);
+  CHECK(pump(3,"EXTERNAL PROGRAM / ERROR NOTICE"));CHECK(close_all()==0&&restored()&&handles());
+ }
+#endif
  CHECK(help_resource_open("ABSENT.HLP")==HELP_RESOURCE_MISSING&&!help_resource_active()&&!help_view_active()&&handles()&&restored());
  CHECK(help_resource_open("LOCHELP.HLP")==0&&help_resource_active()&&help_view_active());
  CHECK(pump(3,"EXTERNAL PROGRAM / ERROR NOTICE"));CHECK(contains(5,"command could not run"));

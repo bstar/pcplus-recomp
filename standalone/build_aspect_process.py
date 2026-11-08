@@ -7,7 +7,8 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False,defer_help_resource=False):
+    assert not defer_help_resource or help_resource
     assert heap_growth_bytes is None or heap_growth_bytes in (128,256,512)
     assert heap_growth_bytes is None or register_handoff
     if snapshot_lease:assert parent_render and notice_input
@@ -100,7 +101,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
             objects += [str(ROOT/'build/speaker'/name) for name in ('speaker.obj','backend.obj')]
         if notice_input:
             from build_notice_input_bank import build as build_input
-            input_objects,input_sources=build_input(output,help_view=notice_help,help_diagnostic=notice_help and focused_notice,help_resource=help_resource)
+            input_objects,input_sources=build_input(output,help_view=notice_help,help_diagnostic=notice_help and focused_notice,help_resource=help_resource,defer_help_resource=defer_help_resource)
             objects += input_objects;sources += [ROOT/x for x in input_sources]
             runtime=output/'notice-input-runtime.obj'
             subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',*flags,'-nt=NOTICECODE','-fo='+str(runtime),str(ROOT/'src/ui/notice.c')],cwd=output,check=True)
@@ -133,6 +134,9 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
             subprocess.run(['nasm','-fobj',*(['-DPROGRAM_NOTICE_SPEAKER'] if notice_sound else []),str(asm),'-o',str(obj)],check=True);objects.append(str(obj))
             platform=ROOT/'standalone/notice_fault_platform.c';c_sources.append(platform)
             sources += [probe,asm,platform,ROOT/'standalone/notice_fault.h']
+    if defer_help_resource:
+        c_sources.append(ROOT/'src/help/resource_heap.c')
+        sources += [ROOT/'src/help/resource_heap.c',ROOT/'src/help/resource_heap.h']
     if help_resource:
         from build_help_resource import generate
         resource=generate(output/'LOCHELP.HLP');sources += [ROOT/n for n in resource['sources']]
@@ -164,6 +168,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
         result['experimental_notice_input_binding']=notice_input
         result['experimental_notice_help_binding']=notice_help
         result['experimental_help_resource']=help_resource
+        if defer_help_resource:result['experimental_deferred_help_resource']=True
         result['notice_PROGRAM_binding_accepted']=False
         path.write_text(json.dumps(result,indent=2)+'\n')
 

@@ -443,15 +443,15 @@ def adapter(cpu=None,observer_high=False,observer_collector=None,timeout_seconds
   assert source.count(old)==1
   source=source.replace(old,r"observer_stop='D:\\"+observer_collector+"' if observer else ''")
  if cpu:
-  assert cpu in ('8086','386') and source.count('cputype=386')==1
-  source=source.replace('cputype=386','cputype='+cpu)
+  assert cpu in ('8086','386') and source.count("cpu='386'")==1
+  source=source.replace("cpu='386'","cpu='"+cpu+"'",1)
  if observer_high:
-  old=r"observer_start=('D:\\'+observer+' T') if observer else ''"
+  old='observer_high=False'
   assert source.count(old)==1
-  source=source.replace(old,r"observer_start=('LH D:\\'+observer+' T') if observer else ''")
+  source=source.replace(old,'observer_high=True',1)
  replacements={"out=ROOT/'build/connection-dos'/name":"out=RENDER_OUT/name",
  "checks['immediate_banner_not_dropped']=len(screen)==4000 and screen[:30:2]==b'FIRST BYTE SAFE'":"checks['actual_screen_snapshot']=len(screen)==4000",
- "if online:\n       line.append(byte)":"if online:\n       line.append(byte)\n       if RENDER_POST and not checks.get('renderer_post_sent') and RENDER_TRIGGER in line:\n        conn.sendall(RENDER_POST);checks['renderer_post_sent']=True"}
+ "       line.append(byte)\n":"       line.append(byte)\n       if RENDER_POST and not checks.get('renderer_post_sent') and RENDER_TRIGGER in line:\n        conn.sendall(RENDER_POST);checks['renderer_post_sent']=True\n"}
  for old,new in replacements.items():assert source.count(old)==1;source=source.replace(old,new)
  module=types.ModuleType('renderer_connection_adapter');module.__file__=str(path);module.RENDER_OUT=OUT;module.RENDER_POST=b'';module.RENDER_TRIGGER=b'Synth42\r'
  exec(compile(source,str(path),'exec'),module.__dict__);return module

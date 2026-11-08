@@ -11,10 +11,12 @@ ROOT=render.ROOT;sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 PAYLOAD=b'Q'*500+b'ENDMARK!'
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--port',type=int,choices=[1,2],default=1);p.add_argument('--no-driver',action='store_true');p.add_argument('--bios',choices=['STANDARD','ENHANCED'],default='ENHANCED');p.add_argument('--help-resource',action='store_true');p.add_argument('--resource-case',choices=['normal','missing','bad'],default='normal');a=p.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--port',type=int,choices=[1,2],default=1);p.add_argument('--no-driver',action='store_true');p.add_argument('--bios',choices=['STANDARD','ENHANCED'],default='ENHANCED');p.add_argument('--help-resource',action='store_true');p.add_argument('--resource-case',choices=['normal','missing','bad'],default='normal');p.add_argument('--parent-dir',type=Path);p.add_argument('--child-dir',type=Path);p.add_argument('--cpu',choices=['8086','386'],default='8086');a=p.parse_args();assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
     out=ROOT/'build/notice-help'/a.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/'build/terminal-mouse-notice-input/TERMINAL.EXE';child=ROOT/'build/aspect-notice-help-parent/ASPECT.EXE';sources={}
     if a.help_resource:child=ROOT/'build/aspect-help-resource-parent/ASPECT.EXE'
+    if a.parent_dir:parent=a.parent_dir.resolve()/'TERMINAL.EXE'
+    if a.child_dir:child=a.child_dir.resolve()/'ASPECT.EXE'
     for product in (parent,child):
         m=json.loads((product.parent/'manifest.json').read_text());assert m['binary_sha256']==render.sha(product)
         for n,h in m['sources'].items():
@@ -42,14 +44,18 @@ def main():
     for product in (parent,child):shutil.copyfile(product,folder/product.name)
     subprocess.run(['nasm','-fbin',str(ROOT/'standalone/notice_success_child.asm'),'-o',str(folder/'SUCCESS.COM')],check=True)
     script='proc main\nwaitfor "LOGIN:" 5\nset keys off\nputenv "PATH="\ntransmit "PAYLOAD!"\nrun "ABSENT.COM"\nwaitfor "ENDMARK!" 5\nif waitfor\nelse\ntransmit "BAD"\nexit\nendif\nrun "SUCCESS.COM"\nif failure\ntransmit "BAD"\nexit\nendif\nmessage "AFTER HELP"\ntransmit $D_PWORD\ntransmit "^M"\npause 1\nendproc\n'
-    payload=bytearray(directory(port=a.port));payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
+    payload=bytearray(directory(port=a.port-1));payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
     settings=bytearray(prm(port=a.port,soft=0,hard=1));struct.pack_into('<H',settings,0x1bc,1);struct.pack_into('<HH',settings,0x4e4,8,4)
-    harness=render.adapter(cpu='8086',timeout_seconds=40);harness.BINARY=folder/'TERMINAL.EXE';harness.RENDER_POST=PAYLOAD;harness.RENDER_TRIGGER=b'PAYLOAD!'
+    # The partial PRM fixture leaves opaque A5 bytes; newer parents validate
+    # these proved display/row/startup fields before acquiring the UART.
+    for offset,value in [(0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0),(0x1be,4),(0x1e6,0),(0x1e4,0)]:
+        struct.pack_into('<H',settings,offset,value)
+    harness=render.adapter(timeout_seconds=40);harness.BINARY=folder/'TERMINAL.EXE';harness.RENDER_POST=PAYLOAD;harness.RENDER_TRIGGER=b'PAYLOAD!'
     files={'LOGIN.ASP':script.encode(),'LOGIN.ASX':compile_source(script),'RENDER.COM':(out/'RENDER.COM').read_bytes(),'SUCCESS.COM':(folder/'SUCCESS.COM').read_bytes()}
     if a.help_resource and a.resource_case!='missing':files['LOCHELP.HLP']=(child.parent/'LOCHELP.HLP').read_bytes() if a.resource_case=='normal' else b'bad'
     keys='p16000 space p700 a-z p1500 '+('escape ' if a.no_driver else '')+'r e a d y p700 a-x'
     result=harness.run('ordinary','success',keys,directory=bytes(payload),prm=bytes(settings),com=a.port,
-        arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK /B:'+a.bios,files=files,banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0cLOGIN:',working_drive='d',observer='RENDER')
+        arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK /B:'+a.bios,files=files,banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0cLOGIN:',working_drive='d',observer='RENDER',cpu=a.cpu,observer_high=a.cpu=='386')
     raw=(folder/'RENDER.BIN').read_bytes();resource=None;resource_frames=None
     if a.help_resource and a.resource_case=='normal':
         from notice_resource_probe import WORDS as RESOURCE_WORDS,BYTES as RESOURCE_BYTES

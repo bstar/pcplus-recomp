@@ -89,7 +89,7 @@ def main():
  run(['standalone/build_terminal.py',*recipe['terminal_flags'],'--aspect-get-display','--aspect-get-policy',
       '--compiler-lease-bridge',*(['--chat-send-mode'] if parent.get('experimental_chat_send_mode') else []),'--output-dir','build/parent'])
  assert child['startup_heap_growth_bytes'] in (128,256,512)
- run(['-c','import json,sys;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path("build/child").resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,get_display=True,get_policy=True,get_vm=True,near_globals=True,compiler_parent_lease=True,heap_growth_bytes='+str(child['startup_heap_growth_bytes'])+',**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
+ run(['-c','import json,sys;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path("build/child").resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,get_display=True,get_policy=True,get_vm=True,near_globals=True,compiler_parent_lease=True,heap_growth_bytes='+str(child['startup_heap_growth_bytes'])+',defer_help_resource='+str(bool(child.get('experimental_deferred_help_resource')))+',**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
  run(['standalone/build_aspect_compiler_dos.py','--get','--output','build/compiler'])
  artifacts={}
  if parent.get('experimental_chat_send_mode'):
@@ -129,6 +129,7 @@ def main():
   leaf='build/replay-'+str(i)
   flags=['--'+key.replace('_','-') for key in families if r.get(key)]
   flags += ['--'+key.replace('_','-') for key in ('allocation_probe','stream_probe') if r.get(key)]
+  if r.get('CONNECTED_probe'):flags+=['--connected-probe']
   if 'get_watch_data:' in (path.parent/r['cases'][0]['case']/'observer.asm').read_text():flags+=['--watchdog']
   run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child',
        '--get-compiler-dir','build/compiler','--cpu',r['emulated_cpu'],'--output',leaf,*flags])

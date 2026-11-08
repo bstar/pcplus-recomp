@@ -25,6 +25,19 @@ unsigned __far __cdecl notice_help_configure(unsigned enabled)
 }
 unsigned __far __cdecl notice_help_close(void)
 {
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+ unsigned status;
+ if(help_resource_close())return MOUSE_STATE;
+ if(help_view_active()){
+  if(!notice_window_phase())status=help_view_discard();
+  else{
+   if(notice_window_generation()!=help_generation||notice_window_identity()!=help_identity)return MOUSE_STATE;
+   status=help_view_close();
+  }
+  if(status)return MOUSE_STATE;
+ }
+ return help_resource_release()?MOUSE_STATE:MOUSE_OK;
+#else
 #ifdef ASPECT_HELP_RESOURCE
  if(help_resource_close())return MOUSE_STATE;
 #endif
@@ -35,6 +48,7 @@ unsigned __far __cdecl notice_help_close(void)
  if(!notice_window_phase())return help_view_discard()?MOUSE_STATE:MOUSE_OK;
  if(notice_window_generation()!=help_generation||notice_window_identity()!=help_identity)return MOUSE_STATE;
  return help_view_close()?MOUSE_STATE:MOUSE_OK;
+#endif
 }
 #endif
 #ifdef NOTICE_INPUT_BIOS_FALLBACK

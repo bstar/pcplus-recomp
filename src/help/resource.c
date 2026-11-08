@@ -5,12 +5,19 @@ extern unsigned __cdecl help_file_close(unsigned);
 extern unsigned __cdecl help_file_size(unsigned,unsigned long *);
 extern unsigned __cdecl help_file_read(unsigned,unsigned long,unsigned char *,unsigned,unsigned *);
 enum {R_ADMIT=1,R_PAGE,R_LOAD,R_READY,R_EDIT,R_FIND,R_ERROR};
-static struct {
+typedef struct {
  unsigned owned,handle,phase,topic,top,next_top,active,stage,rows,footer,query_size,hit_topic;
  unsigned long hit_position;
  help_document document;help_cursor cursor;help_find find;
  help_page page[2];char titles[2][33],lines[2][17][75],footers[2][75],query[32];
-} held;
+} help_resource_storage;
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+#include "resource_heap.h"
+static help_resource_storage *storage;
+#define held (*storage)
+#else
+static help_resource_storage held;
+#endif
 static const help_page loading={"READING HELP RESOURCE",{"The serial session remains active. Escape returns to the notice.",0}};
 static const char footer[]="Left/Right: topic  Up/Down PgUp/PgDn: scroll  /: find  F3: next  Esc";
 static void copy(char *to,const char *from,unsigned maximum)
@@ -42,21 +49,56 @@ static unsigned begin_find(unsigned repeat)
  if(status!=HELP_DOC_PENDING)return error_page();
  held.phase=R_FIND;return show_footer("Searching... Escape cancels; the serial session remains active.");
 }
-unsigned __far __cdecl help_resource_active(void){return held.owned;}
+unsigned __far __cdecl help_resource_active(void)
+{
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+ if(!storage)return 0;
+#endif
+ return held.owned;
+}
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+unsigned __far __cdecl help_resource_release(void)
+{
+ if(!storage)return HELP_VIEW_OK;
+ /* The view borrows page/title/line pointers until it is fully retired.
+  * Failed restoration or release must retain that backing for a retry. */
+ if(held.owned||help_view_active())return HELP_VIEW_STATE;
+ help_resource_storage_release(storage);storage=0;return HELP_VIEW_OK;
+}
+#endif
 unsigned __far __cdecl help_resource_close(void)
 {
  unsigned status;
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+ if(!storage)return HELP_VIEW_OK;
+#endif
  if(!held.owned)return HELP_VIEW_OK;
  help_find_cancel(&held.find);status=help_file_close(held.handle);
  if(status)return HELP_VIEW_STATE;
- held.owned=held.phase=held.query_size=0;held.document.phase=0;return HELP_VIEW_OK;
+ held.owned=held.phase=held.query_size=0;held.document.phase=0;
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+ if(!help_view_active())return help_resource_release();
+#endif
+ return HELP_VIEW_OK;
 }
 unsigned __far __cdecl help_resource_open(const char *path)
 {
  unsigned status,i;unsigned long bytes;
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+ if(help_view_active()||help_resource_active())return HELP_VIEW_STATE;
+ if(help_resource_release())return HELP_VIEW_STATE;
+ storage=help_resource_storage_allocate(sizeof(*storage));
+ if(!storage)return HELP_VIEW_MEMORY;
+#else
  if(held.owned||help_view_active())return HELP_VIEW_STATE;
+#endif
  status=help_file_open(path,&held.handle);
- if(status)return status==2||status==3?HELP_RESOURCE_MISSING:HELP_VIEW_STATE;
+ if(status){
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+  help_resource_release();
+#endif
+  return status==2||status==3?HELP_RESOURCE_MISSING:HELP_VIEW_STATE;
+ }
  held.owned=1;held.phase=R_ADMIT;held.topic=held.top=held.active=held.stage=held.footer=held.query_size=0;
  held.hit_topic=0;held.hit_position=0;held.query[0]=0;
  for(i=0;i<2;++i)held.page[i]=loading;
@@ -70,6 +112,9 @@ unsigned __far __cdecl help_resource_open(const char *path)
 unsigned __far __cdecl help_resource_step(void)
 {
  unsigned status,i,b,length;unsigned long next;
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+ if(!storage)return HELP_VIEW_STATE;
+#endif
  if(!held.owned)return HELP_VIEW_STATE;
  if(held.phase==R_ADMIT){
   status=help_document_step(&held.document);
@@ -106,8 +151,12 @@ unsigned __far __cdecl help_resource_step(void)
 }
 unsigned __far __cdecl help_resource_key(unsigned key)
 {
- unsigned c=key&255,topic=held.topic,top=held.top,last;
+ unsigned c=key&255,topic,top,last;
  char prompt[40];
+#ifdef ASPECT_DEFER_HELP_RESOURCE
+ if(!storage)return HELP_VIEW_STATE;
+#endif
+ topic=held.topic;top=held.top;
  if(!held.owned)return HELP_VIEW_STATE;
  if(held.phase==R_EDIT){
   if(c==27){held.phase=R_READY;return show_footer(footer);}

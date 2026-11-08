@@ -3442,3 +3442,11 @@ under the previous child as well as the new one. Paired DOS memory traces show
 AH4A/error8 refusals; the smaller128-byte heap-growth experiment also fails.
 This is an existing capacity gap missed by narrower connection/package checks.
 Preserve the full workload and application limits while resolving it.
+
+The optional [on-demand Help workspace](DEFERRED_HELP_STORAGE.md) saves3424 fixed
+DGROUP bytes and2912 minimum DOS bytes. The disabled control remains byte-exact.
+Its84 component checks,49 static controls and two full-parent source cases pass;
+a1044-file cold export rebuilds the artifacts and replays both source cases. The heavy workload now opens and
+preserves all six files but fails at PROGRAM preparation, and live Help under
+the largest parent returns a memory service error before opening. Neither
+capacity nor Help integration is accepted, and no package is promoted.
