@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "application_Help_composition_passed": true,
+  "package_eligible": false,
+  "full_parity": false,
+  "physical_verified": false,
+  "parent_sha256": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+  "child_sha256": "822897f0b67dfbfbe98bed8711cb1071417705ad9a75fdcd5138c88679fc7c05",
+  "production_bytes_changed": false,
+  "cases": [
+    {
+      "case": "help-return-final-mouse-20261108",
+      "checks": 51,
+      "passed": true,
+      "seconds": 20.947,
+      "no_driver": false,
+      "cpu": "386",
+      "diagnostic": false,
+      "parent_key_delivery": "child-return-and-menu-events"
+    },
+    {
+      "case": "help-return-final-bios-20261108",
+      "checks": 42,
+      "passed": true,
+      "seconds": 20.748,
+      "no_driver": true,
+      "cpu": "386",
+      "diagnostic": true,
+      "parent_key_delivery": "child-return-and-menu-events"
+    }
+  ],
+  "total_checks": 93,
+  "receipts": {
+    "build/notice-help/help-return-final-mouse-20261108/result.json": "b83408f5b389771aec37c2d236eebd4eb99655a2c30144bed7a73050c65b6494",
+    "build/notice-help/help-return-final-mouse-20261108/observer.asm": "513f6cce302553acc084d0744fa7360b92e98da01f176514de661d1e1df77012",
+    "build/notice-help/help-return-final-mouse-20261108/RENDER.COM": "dbc59632e4cbe5c21e0f7832fab1fe97b30360dde9b0607de2f7309022ee3d92",
+    "build/notice-help/help-return-final-mouse-20261108/ordinary/serial.bin": "6416e2a9d07bdcc8b4d18e9046609c7a57fc8845cb8160002574c70a8494de6a",
+    "build/notice-help/help-return-final-mouse-20261108/ordinary/SUCCESS.OK": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+    "build/notice-help/help-return-final-mouse-20261108/ordinary/dosbox.conf": "e505fd80237cd534cc5f0b50206942e9e43c71e0ba7edac859e79dd07ecf7aec",
+    "build/notice-help/help-return-final-mouse-20261108/ordinary/PCPLUS.SCR": "edd0cb3a6fb660a70a184672ae18c2d99b5532039ab42753a085f67e001dac80",
+    "build/notice-help/help-return-final-bios-20261108/result.json": "5fb6e47d5175d7458a15fb5ce574593a080f06853f8bb77ccccc9be3e22c6457",
+    "build/notice-help/help-return-final-bios-20261108/observer.asm": "6e42099f96f897a555f9f812ab10b0911441edde317b84e0da64a6c7bcd5c153",
+    "build/notice-help/help-return-final-bios-20261108/RENDER.COM": "d803ec4c00798330ff698a1b2ec6d1ad3bf2c0f5490c99ba431dbfd1cbf1445e",
+    "build/notice-help/help-return-final-bios-20261108/ordinary/serial.bin": "6416e2a9d07bdcc8b4d18e9046609c7a57fc8845cb8160002574c70a8494de6a",
+    "build/notice-help/help-return-final-bios-20261108/ordinary/SUCCESS.OK": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+    "build/notice-help/help-return-final-bios-20261108/ordinary/dosbox.conf": "de79d8d8f068ef1633aef003636a76d7a1d5479ea4401718a9768a933388553c",
+    "build/notice-help/help-parent-state-20261108/ordinary/timeout-snapshot.json": "6e30e2840e2309145725a6b7f78942a894331b644779c8e5e3b81cf7f9152c39",
+    "build/notice-help/help-parent-state-20261108/ordinary/observer-memory.bin": "8d126d039881ebcd3339b17fee1413cfb863e1090fc13fed2ae5b6e00c0ad3c8",
+    "build/notice-help/help-parent-state-20261108/observer.asm": "7f7b24969ee061ea98fae11005e9a245530a6455509a77d0c72d2be8383fdcdc",
+    "build/notice-help/help-parent-state-20261108/RENDER.COM": "81e6bd7e5027496d46efe29e9b6243d26394598eade6f8f619221f3c52219dc2",
+    "build/notice-help/help-parent-state-20261108/ordinary/serial.bin": "66e8b6f716f9bc907665431ef1f2d99fdb37bae211ac125cc6de527b9d53de90",
+    "build/notice-help/help-key-reader-20261108/ordinary/timeout-snapshot.json": "a93383b375ceb2599ff277625a58271ae0a8f571d1d5f15fa654705d60e0453a",
+    "build/notice-help/help-key-reader-20261108/ordinary/observer-memory.bin": "78330222308051046f050adc1ef60bed84a4a4ef374bf6faf02fb4355e0ab2ed",
+    "build/notice-help/help-key-reader-20261108/observer.asm": "567b9dc3e819fa5df08828567f66a6bfcd158f0d2a6048296d0328276081c63a",
+    "build/notice-help/help-key-reader-20261108/RENDER.COM": "bb8c09a3bd91546578aa5b6ba7607449e97ecb67203d2f864d30df2e15981c56",
+    "build/notice-help/help-key-reader-20261108/ordinary/serial.bin": "66e8b6f716f9bc907665431ef1f2d99fdb37bae211ac125cc6de527b9d53de90"
+  },
+  "sources": {
+    "standalone/notice_video_probe.py": "3c86d43775c338cbd86595262eabb981063beaa69b654dfc1b6a8b356f7bb0a1",
+    "standalone/notice_parent_keys_probe.py": "587d043f8e7957551d4a3c376963fdda81f75df9231d8174b8bee5d3f440bc03",
+    "standalone/test_notice_help_dos.py": "67d7106c7965f84202012f36d3ea051a206d82a6821a3b7e7281d5f3f5959323"
+  },
+  "original_inputs": [],
+  "installed_changed": false,
+  "selector_changed": false,
+  "limits": [
+    "Actual386 DOS emulation with UMB; synthetic serial modem, no physical hardware acceptance.",
+    "Prior timed ready/Alt-X keys were read before child EXEC returned; input schedule corrected, not application code.",
+    "Legacy first INT16 diagnostic function field was clobbered by MUL; key/caller/EXEC fields are usable. Current witness reloads function from saved AX.",
+    "Mouse case omits optional INT10/INT16 diagnostic; existing mouse probe and event sequencer remain.",
+    "BIOS case removes/restores INT33, passes PAUSE and full parent continuation; old unsupported PAUSE report does not reproduce.",
+    "Earlier empty-input startup experiments failed admission and are not accepted.",
+    "Full original Help/ASPECT parity, other emulations/protocols and physical acceptance remain open; Host last."
+  ]
+}

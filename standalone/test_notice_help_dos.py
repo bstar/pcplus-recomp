@@ -11,7 +11,7 @@ ROOT=render.ROOT;sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 PAYLOAD=b'Q'*500+b'ENDMARK!'
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--port',type=int,choices=[1,2],default=1);p.add_argument('--no-driver',action='store_true');p.add_argument('--bios',choices=['STANDARD','ENHANCED'],default='ENHANCED');p.add_argument('--help-resource',action='store_true');p.add_argument('--resource-case',choices=['normal','missing','bad'],default='normal');p.add_argument('--parent-dir',type=Path);p.add_argument('--child-dir',type=Path);p.add_argument('--cpu',choices=['8086','386'],default='8086');p.add_argument('--allocation-watch',action='store_true');p.add_argument('--video-watch',action='store_true');p.add_argument('--drain-modal',action='store_true',help='Diagnostic extra Escape keys; acceptance checks remain unchanged');p.add_argument('--timeout-snapshot',action='store_true',help='Diagnostic owned emulator memory snapshot before timeout cleanup');p.add_argument('--key-delay-ms',type=int,default=16000);a=p.parse_args();assert 1000<=a.key_delay_ms<=40000;assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--port',type=int,choices=[1,2],default=1);p.add_argument('--no-driver',action='store_true');p.add_argument('--bios',choices=['STANDARD','ENHANCED'],default='ENHANCED');p.add_argument('--help-resource',action='store_true');p.add_argument('--resource-case',choices=['normal','missing','bad'],default='normal');p.add_argument('--parent-dir',type=Path);p.add_argument('--child-dir',type=Path);p.add_argument('--cpu',choices=['8086','386'],default='8086');p.add_argument('--allocation-watch',action='store_true');p.add_argument('--video-watch',action='store_true');p.add_argument('--timed-parent-keys',action='store_true',help='Diagnostic legacy wall-clock key schedule');p.add_argument('--drain-modal',action='store_true',help='Diagnostic extra Escape keys; acceptance checks remain unchanged');p.add_argument('--timeout-snapshot',action='store_true',help='Diagnostic owned emulator memory snapshot before timeout cleanup');p.add_argument('--key-delay-ms',type=int,default=16000);a=p.parse_args();assert 1000<=a.key_delay_ms<=40000;assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
     out=ROOT/'build/notice-help'/a.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/'build/terminal-mouse-notice-input/TERMINAL.EXE';child=ROOT/'build/aspect-notice-help-parent/ASPECT.EXE';sources={}
     if a.help_resource:child=ROOT/'build/aspect-help-resource-parent/ASPECT.EXE'
@@ -23,7 +23,7 @@ def main():
             assert n not in sources or sources[n]==h,n
             sources[n]=h
         for path in [product.parent/'manifest.json',product.parent/('terminal.map' if product==parent else 'ASPECT.map')]:sources[str(path.relative_to(ROOT))]=render.sha(path)
-    for name in ['standalone/test_notice_help_dos.py','standalone/notice_help_probe.py','standalone/notice_input_fault_probe.py','standalone/notice_input_parent_probe.py','standalone/notice_input_no_driver_probe.py','standalone/mouse_parent_probe.py','standalone/mouse_sound_checks.py','standalone/test_aspect_parent_process_dos.py','standalone/test_aspect_renderer_dos.py','standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py','standalone/directory_test_support.py','standalone/terminal_config_fixtures.py','standalone/modem_fixtures.py','standalone/notice_success_child.asm','src/aspect/compiler.py']:sources[name]=render.sha(ROOT/name)
+    for name in ['standalone/test_notice_help_dos.py','standalone/notice_help_probe.py','standalone/notice_input_fault_probe.py','standalone/notice_input_parent_probe.py','standalone/notice_input_no_driver_probe.py','standalone/mouse_parent_probe.py','standalone/mouse_sound_checks.py','standalone/test_aspect_parent_process_dos.py','standalone/test_aspect_renderer_dos.py','standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py','standalone/directory_test_support.py','standalone/terminal_config_fixtures.py','standalone/modem_fixtures.py','standalone/notice_success_child.asm','standalone/notice_parent_keys_probe.py','src/aspect/compiler.py']:sources[name]=render.sha(ROOT/name)
     if a.timeout_snapshot:sources['standalone/dosbox_timeout_snapshot.py']=render.sha(ROOT/'standalone/dosbox_timeout_snapshot.py')
     if a.video_watch:sources['standalone/notice_video_probe.py']=render.sha(ROOT/'standalone/notice_video_probe.py')
     if a.allocation_watch:sources['standalone/notice_allocation_probe.py']=render.sha(ROOT/'standalone/notice_allocation_probe.py')
@@ -45,7 +45,11 @@ def main():
         source=allocation_probe(source,child.parent/'ASPECT.map',no_driver=a.no_driver)
     if a.video_watch:
         from notice_video_probe import instrument as video_probe
-        source=video_probe(source,child.parent/'ASPECT.map',no_driver=a.no_driver)
+        source=video_probe(source,child.parent/'ASPECT.map',no_driver=a.no_driver,parent_map=parent.parent/'terminal.map')
+    parent_manifest=json.loads((parent.parent/'manifest.json').read_text())
+    if not a.timed_parent_keys:
+        from notice_parent_keys_probe import instrument as parent_keys
+        source=parent_keys(source,parent.parent/'terminal.map',no_driver=a.no_driver,reference=parent_manifest.get('experimental_original_reference',False))
     (out/'observer.asm').write_text(source)
     subprocess.run(['nasm','-fbin',str(out/'observer.asm'),'-o',str(out/'RENDER.COM')],check=True)
     assert (out/'RENDER.COM').stat().st_size<=0xff00
@@ -78,6 +82,7 @@ def main():
     # mouse probe targets the separate browser and its Snapshot action.
     browser_key='`' if parent_manifest.get('experimental_original_reference') else 'a-z'
     keys='p'+str(a.key_delay_ms)+' space p700 '+browser_key+' p1500 '+('escape ' if a.no_driver else '')+'r e a d y p700 a-x'
+    if not a.timed_parent_keys:keys='p1000 space' # Dismiss startup splash only; return keys are event-driven.
     if a.drain_modal:keys+=' p2000 escape escape escape escape p500 a-x'
     result=harness.run('ordinary','success',keys,directory=bytes(payload),prm=bytes(settings),com=a.port,
         arguments='@D:\\TEST.PRM /E:D:\\TEST.DIR /N:1 /A:NETWORK /B:'+a.bios,files=files,banner=b'\x1b[2J\x1b[HFIRST BYTE SAFE\x1b[6n\x1b[0cLOGIN:',working_drive='d',observer='RENDER',cpu=a.cpu,observer_high=a.cpu=='386')
@@ -128,8 +133,10 @@ def main():
         result['Help_allocation_diagnostic']=allocation
         result['checks']['allocation_observer_not_overflowed']=allocation['overflow']==0
     assert all(render.sha(ROOT/n)==h for n,h in sources.items())
+    if not a.timed_parent_keys:result['checks']['exact_parent_typeahead']=b'Synth42\rready+++ATH\r' in wire
     result['staged_parent_modules']=module_hashes
     result.update(passed=all(result['checks'].values()),help=w,resource=resource,help_resource=a.help_resource,resource_case=a.resource_case,child_input=c,sources=sources,parent_sha256=render.sha(parent),child_sha256=render.sha(child),observer_sha256=render.sha(out/'RENDER.COM'),port=a.port,no_driver=a.no_driver,bios=a.bios,
-        scope=__doc__+' Owned timer seeds BIOS Alt-Z/navigation/Escape/Enter after callback/PSP admission; holds help90ticks beyond74tick notice timeout, compares exact4000-byte popup/cursor restoration and actual help captures. Direct authored child view replaces native external helper; no original UI/search parity, arbitrary faults or physical hardware acceptance.')
+        parent_key_delivery='timed-diagnostic' if a.timed_parent_keys else 'child-return-and-menu-events',
+        scope=__doc__+' Startup splash receives one timed Space; parent-return/menu/typeahead keys wait for observed ownership boundaries. Owned timer seeds BIOS Alt-Z/navigation/Escape/Enter after callback/PSP admission; holds help90ticks beyond74tick notice timeout, compares exact4000-byte popup/cursor restoration and actual help captures. Direct authored child view replaces native external helper; no original UI/search parity, arbitrary faults or physical hardware acceptance.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('FINAL',result['passed'],w,c,[k for k,v in result['checks'].items() if not v]);return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

@@ -245,3 +245,44 @@ removed from the gates. The [correction record](validation/aspect-help-observer-
 binds these partial results, the negative control and a fresh1048-file exact
 source rebuild with two compiler-loan/GET replays. No application bytes,
 installed package, private settings or call history changed in this correction.
+
+## Parent return gate: event-driven input (2026-11-08)
+
+The later parent timeout was also a fixture problem. A bounded, entry-only
+INT16 witness records the queued BIOS key, read function, caller, BIOS time and
+child EXEC-return state without intercepting the BIOS result. The old timed
+schedule delivered `ready` and Alt-X while `exec_done` was still zero, to the
+child's actual BIOS reader. Parent state subsequently showed connected6, no
+PROGRAM/menu/macro/redisplay owner, no paused transmitter and an empty keyboard
+queue. Those observations do not establish a broken parent input path.
+
+The fixture now sends one early Space to dismiss the startup splash. Its owned
+timer then waits for actual child return and release of PROGRAM ownership before
+seeding the browser key through BIOS AH05. With a mouse driver, it waits for the
+existing independent mouse probe to select Snapshot; without a driver, it waits
+for the actual menu and seeds Escape. Only after menu/redisplay ownership clears
+does it seed `ready`, followed by Alt-X. It neither calls an application command
+directly nor overwrites queued keys. Automatic LOGIN needs no extra return Space;
+a new exact-wire check prevents accidentally sending one to the BBS. The old
+wall-clock schedule remains available as `--timed-parent-keys` for diagnosis.
+
+The unchanged parent a0e1b082 and application-layout child822897f0 now pass the
+complete Help composition case, including real next EXEC, exact popup/cursor
+restore, five resource-search witnesses,90 held timer ticks, retained receive
+text, resumed parent typing and actual modem hangup. The mouse case also checks
+callback suspension/resumption, foreign-DS invocation, menu mouse events,
+Snapshot output and exact driver-state restoration. The BIOS-only case retains
+INT33 removal/restoration checks and completes PAUSE without the earlier
+unsupported-opcode report. No application code was changed to obtain these
+results; the prior BIOS report does not reproduce with corrected input delivery.
+
+See [the return validation record](validation/aspect-help-parent-return.json)
+for exact receipts and limits. The INT10/INT16 diagnostic remains optional;
+the complete mouse case is repeated without it. Earlier timeout captures stay
+historical failures, not passing tests. Their first INT16 diagnostic lost its
+function value to MUL's DX clobber; only its key/caller/EXEC-state evidence is
+used. The corrected witness reloads the saved function after MUL. Empty-input
+startup experiments did not pass observer admission and prove no application
+behavior. All results are emulator evidence; no package, installed selector,
+private settings, hardware or call history changed. Full original Help/ASPECT
+parity, broader overlay acceptance and physical testing remain open; Host last.

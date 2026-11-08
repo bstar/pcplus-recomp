@@ -3495,3 +3495,16 @@ restore, a subsequent DOS child and ASPECT exit0. Full parent keyboard/menu/
 hangup still times out; BIOS fallback separately reports unsupported PAUSE.
 Fresh1048-file exact rebuild and two compiler-loan/GET replays pass. These are
 explicit partial gates; no package is promoted or hardware acceptance claimed.
+
+The [parent-return follow-up](ASPECT_STANDARD_OVERLAYS.md#parent-return-gate-event-driven-input-2026-11-08)
+resolves those composition timeouts without changing either application binary.
+The old timed keys reached the child before it exited. Event-driven BIOS input
+now waits for child/PROGRAM return, menu action/closure and ordinary terminal
+ownership. Complete mouse and BIOS-only Help cases pass, including retained
+receive data, exact popup/cursor restore, subsequent EXEC, `ready` and hangup;
+the mouse path also verifies Snapshot and driver-state restoration. The
+earlier BIOS PAUSE error does not reproduce. The complete mouse case also
+passes without the optional video/keyboard diagnostic. Exact receipts and
+limits are in [the validation record](validation/aspect-help-parent-return.json).
+No package promotion or physical acceptance is implied; full ASPECT/Help
+parity and remaining emulation/protocol work stay open, with Host last.
