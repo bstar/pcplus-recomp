@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[GET lifetime tests](ASPECT_GET_LIFETIME.md) now pass four consecutive fields
+and a separate EXECUTE transition under the complete capability22 keymap parent.
+Actual host/DOS-compiled programs verify fresh field generations, retained
+numeric/settings state, per-file string reset, exact output/cursor reports and
+terminal restoration. This is emulator evidence for the experimental pair;
+package/hardware promotion and full F13 parity remain open.
+
+
 [Interactive ASPECT GET](ASPECT_GET.md) now has81 original compiler probes,
 566 exact recovered source bytes and an exhaustive linked DOS8086 numeric-key
 filter diagnostic with isolated reproduction. Its serviced memory-only field

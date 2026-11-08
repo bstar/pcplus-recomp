@@ -59,5 +59,7 @@ python src/aspect/compiler.py --get SOURCE.ASP -o SOURCE.ASX
 source/output command line. Python callers select `compile_source(source,
 enable_get=True)`. Do not pair compiler-produced GET with the default interpreter
 or deploy the experimental child alone under the installed capability20 parent.
-Remaining gates include repeated/EXECUTE GET, native WHEN actions, field policies,
+[Repeated GET and EXECUTE](ASPECT_GET_LIFETIME.md) now have two additional
+full-parent scenarios. Remaining gates include broader lifetime/error coverage,
+native WHEN actions, field policies,
 floating support, full feature/memory co-residency and package/hardware admission.

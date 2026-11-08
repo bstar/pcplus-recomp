@@ -89,7 +89,8 @@ retires normally, and native/runtime errors are0. The old failed reports stay
 historical; neither errno alone nor the old error label establishes a cause.
 
 Pending work includes full variable/stream/help co-residency admission,
-repeated/EXECUTE GET, actual native WHEN action composition, optional
+broader repeated/EXECUTE/error coverage beyond the two
+[lifetime scenarios](ASPECT_GET_LIFETIME.md), actual native WHEN action composition, optional
 width/masking/origin policies in the full VM, floating support, broader compiler
 coverage, package admission and connected physical acceptance. Existing
 component tests retain their narrower scope. No physical FTP, card, SIP, modem

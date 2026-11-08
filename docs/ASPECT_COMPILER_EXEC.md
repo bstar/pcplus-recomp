@@ -81,6 +81,7 @@ prior objects or ancestor Git.
 Default compilers still refuse GET syntax; the optional
 [GET compiler profile](ASPECT_GET_COMPILER.md) adds matching grammar and compiled
 parent/interpreter cases. Full variable/stream/help co-residency,
-ordinary8086 attached memory, repeated/EXECUTE GET, actual WHEN action composition,
+ordinary8086 attached memory, broader lifetime coverage beyond the two
+[GET/EXECUTE scenarios](ASPECT_GET_LIFETIME.md), actual WHEN action composition,
 remaining field modes/FLOAT.RTE, whole-language parity, package promotion and
 physical acceptance remain open. No installed or selected package changes.

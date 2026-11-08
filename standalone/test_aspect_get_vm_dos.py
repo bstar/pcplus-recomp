@@ -33,11 +33,24 @@ def definitions():
    post=renderer.QUERY,post_reply=renderer.ESC+(b'[1;27R' if kind in ('string','long') else b'[1;26R'),screen=[(0,0,'FIRST BYTE SAFE')]))
  return rows
 
+def lifetime_definitions():
+ base=definitions()[0]
+ header='integer number,saved\nlong wide\nstring value,temp\n'
+ start='proc main\nwaitfor "LOGIN:" 5\ntransmit "GETREADY"\n'
+ finish='transmit "^M"\ntransmit $D_PWORD\ntransmit "^M"\npause 1\nendproc\n'
+ batches=[[0x1e41,0x1c0d],[0x3042,0x1c0d],[0x0c2d,0x0332,0x1c0d],[0x0736,0x0635,0x0635,0x0433,0x0736,0x1c0d]]
+ repeat=header+start+'get value 10\nget value 10\nget number 10\nget wide 10\ntransmit value\ntransmit "/"\nitoa number temp\ntransmit temp\ntransmit "/"\nltoa wide temp\ntransmit temp\n'+finish
+ chain=header+start+'get value 10\nget number 10\nset break 1234\nexecute "NEXT"\ntransmit "BADRETURN"\nendproc\n'
+ target=header+'proc main\nfetch break saved\nif saved != 1234\ntransmit "BADPOLICY"\nendif\nif number != -2\ntransmit "BADNUMBER"\nendif\ntransmit "<"\ntransmit value\ntransmit ">"\nget value 10\ntransmit value\n'+finish
+ return [dict(base,name='get-vm-repeat',source=repeat,direct_GET=True,field_batches=batches,field_BIOS_words=sum(batches,[]),expected_value_hex=b'B/-2/65536'.hex(),post_reply=renderer.ESC+b'[1;31R'),
+  dict(base,name='get-vm-execute',source=chain,direct_GET=True,scripts={'NEXT':target},field_batches=[batches[0],batches[2],batches[1]],field_BIOS_words=sum([batches[0],batches[2],batches[1]],[]),expected_value_hex=b'<>B'.hex(),post_reply=renderer.ESC+b'[1;26R')]
+
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--parent-dir',required=True,type=Path);p.add_argument('--child-dir',required=True,type=Path)
  p.add_argument('--output',required=True,type=Path);p.add_argument('--case',action='append')
  p.add_argument('--cpu',choices=('8086','386'),default='386')
+ p.add_argument('--lifetime-cases',action='store_true',help='Run repeated fields and EXECUTE with generation-conditioned BIOS input')
  p.add_argument('--get-compiler-dir',type=Path,help='Use actual opt-in DOS/Python GET compilation for ordinary cases; malformed EOF stays raw')
  p.add_argument('--disabled-control',action='store_true',help='Compare GET-disabled child: expect explicit unsupported after GETREADY')
  p.add_argument('--stream-probe',action='store_true',help='Keep a real owned FOPEN stream across GET')
@@ -54,7 +67,8 @@ def main():
  child_map=(child/'ASPECT.map').read_text();group=re.search(r'DGROUP\s+([0-9a-f]+):([0-9a-f]+)',child_map,re.I)
  child_base=int(group[1],16)*16+int(group[2],16)
  child_symbols={n:int(s,16)*16+int(o,16)-child_base for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)\s*$',child_map,re.M|re.I)}
- rows=definitions()
+ rows=lifetime_definitions() if a.lifetime_cases else definitions()
+ if a.lifetime_cases:assert a.get_compiler_dir and not a.disabled_control
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
@@ -69,22 +83,32 @@ def main():
   shutil.copyfile(folder/'ASPCOMP.EXE',compile_folder/'ASPCOMP.EXE');batch=['@echo off'];stage=[]
   for i,row in enumerate(rows):
    if row['name']=='get-vm-truncated':continue
-   target='value' if row['name'] in ('get-vm-string','get-vm-cancel') else 'number'
-   if row['name']=='get-vm-float':row['source']=row['source'].replace('integer number','float number',1)
-   row['source']=row['source'].replace('pause 0\n','get '+target+' 10\n')
-   code=bytes.fromhex('49'+dict(string='8c00',cancel='8c00',integer='8d00',long='8e00',float='8f00')[row['name'][7:]]+'01b50a')
-   expected=renderer.compile_source(row['source'],enable_get=True);assert expected.count(code)==1
-   row['GET_hex']=code.hex();name='G'+str(i).zfill(3)
+   if not row.get('direct_GET'):
+    target='value' if row['name'] in ('get-vm-string','get-vm-cancel') else 'number'
+    if row['name']=='get-vm-float':row['source']=row['source'].replace('integer number','float number',1)
+    row['source']=row['source'].replace('pause 0\n','get '+target+' 10\n')
+    code=bytes.fromhex('49'+dict(string='8c00',cancel='8c00',integer='8d00',long='8e00',float='8f00')[row['name'][7:]]+'01b50a')
+    row['GET_hex']=code.hex()
+   expected=renderer.compile_source(row['source'],enable_get=True)
+   if not row.get('direct_GET'):assert expected.count(code)==1
+   name='G'+str(i).zfill(3)
    (compile_folder/(name+'.ASP')).write_bytes(row['source'].encode('cp437'));stage.append((row,name,expected))
    batch+=['ASPCOMP '+name+'.ASP '+name+'.ASX >'+name+'.LOG','if errorlevel 1 goto failed']
+   for leaf,source in row.get('scripts',{}).items():
+    expected_script=renderer.compile_source(source,enable_get=True);(compile_folder/(leaf+'.ASP')).write_bytes(source.encode('cp437'))
+    stage.append((row,leaf,expected_script));batch+=['ASPCOMP '+leaf+'.ASP '+leaf+'.ASX >'+leaf+'.LOG','if errorlevel 1 goto failed']
   batch+=['echo PASS>PASS.TXT','goto done',':failed','echo FAIL>FAIL.TXT',':done','exit']
   (compile_folder/'RUN.BAT').write_bytes(('\r\n'.join(batch)+'\r\n').encode())
   (compile_folder/'dosbox.conf').write_text('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\nfpu=false\ncycles=max\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "'+str(compile_folder)+'"\nc:\nRUN\n')
   with (compile_folder/'dosbox.log').open('w') as log:subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(compile_folder/'dosbox.conf')],env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log,check=True,timeout=30)
   assert (compile_folder/'PASS.TXT').exists() and not (compile_folder/'FAIL.TXT').exists()
   for row,name,expected in stage:
-   wire=(compile_folder/(name+'.ASX')).read_bytes();assert wire==expected,row['name'];dos_compiled[row['name']]=wire
-   row['compiled_source_sha256']=sha(compile_folder/(name+'.ASP'));row['compiled_ASX_sha256']=sha(compile_folder/(name+'.ASX'))
+   wire=(compile_folder/(name+'.ASX')).read_bytes();assert wire==expected,row['name']
+   if name.startswith('G'):dos_compiled[row['name']]=wire
+   else:row.setdefault('compiled_scripts',{})[name]=wire.hex()
+   if name.startswith('G'):
+    row['compiled_source_sha256']=sha(compile_folder/(name+'.ASP'));row['compiled_ASX_sha256']=sha(compile_folder/(name+'.ASX'))
+   else:row.setdefault('compiled_script_hashes',{})[name]=dict(source_sha256=sha(compile_folder/(name+'.ASP')),ASX_sha256=sha(compile_folder/(name+'.ASX')))
  original_compile=renderer.compile_source
  def compiled(source):
   case=next(r for r in rows if r['source']==source)
@@ -119,7 +143,11 @@ def main():
   module=types.ModuleType('get_vm_modem_peer');module.__file__=str(path)
   module.RENDER_OUT=scope['OUT'];module.RENDER_POST=b'';module.RENDER_TRIGGER=b'Synth42\r'
   exec(compile(peer,str(path),'exec'),module.__dict__);run=module.run
-  def configured(*args,**kwargs):return run(*args,**dict(kwargs,cpu=a.cpu,profile=4,timeout=45))
+  def configured(*args,**kwargs):
+   case=next(r for r in rows if r['name']==args[0])
+   for leaf,wire in case.get('compiled_scripts',{}).items():
+    kwargs['files'][leaf+'.ASX']=bytes.fromhex(wire);kwargs['files'][leaf+'.ASP']=case['scripts'][leaf].encode('cp437')
+   return run(*args,**dict(kwargs,cpu=a.cpu,profile=4,timeout=45))
   module.run=configured;return module
  def observer(offsets):
   previous=renderer.OUT;renderer.OUT=scope['OUT']
@@ -135,6 +163,9 @@ def main():
    probe=' mov [cs:exit_code],ax\n mov ah,0x62\n pushf\n call far [cs:old21]\n mov ax,bx\n add ax,'+str(int(group[1],16)+16)+'\n mov es,ax\n mov [cs:get_child_ds],ax\n'
    for label,symbol,delta in [('errno','_errno',0),('error','_runtime_error',0),('opcode','_runtime_last_opcode',0),('compiles','_runtime_compiler_calls',0),('file_status','_runtime_file',14)]:
     probe+=' mov ax,[es:'+str(child_symbols[symbol]+delta)+']\n mov [cs:get_child_'+label+'],ax\n'
+   if active_case[0] and active_case[0].get('field_batches'):
+    marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
+    observer_source=observer_source.replace(marker,'get_lifetime_generations: times '+str(len(active_case[0]['field_batches']))+' dw 0\n'+marker)
    if a.allocation_probe:
     marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
     observer_source=observer_source.replace(marker,'get_allocation_probe: times '+str(len(allocation_names))+' dw 0\n'+marker)
@@ -261,10 +292,24 @@ get_input_tick:
  cmp bx,0x3e
  jae .done
 '''.replace('CHILD_GROUP',str(int(group[1],16))).replace('STORAGE_SEG',str(storage//16)).replace('STORAGE_OFFSET',str(storage%16))
-    assert 0<len(input_words)<15
-    for i,word in enumerate(input_words):
+    batches=active_case[0].get('field_batches')
+    if batches:
+     injector=injector.replace(' cmp word [cs:get_input_injected],0\n jne .done',' cmp word [cs:get_input_batch],'+str(len(batches))+'\n jae .done')
+     marker=' mov ax,0x40\n mov es,ax\n mov bx,[es:0x1c]'
+     assert injector.count(marker)==1
+     injector=injector.replace(marker,' mov ax,[es:si+8]\n cmp ax,[cs:get_input_generation]\n je .done\n mov dx,ax\n'+marker)
+     for j,batch_words in enumerate(batches):
+      assert 0<len(batch_words)<15
+      injector+=' cmp word [cs:get_input_batch],'+str(j)+'\n jne .batch_next'+str(j)+'\n mov [cs:get_input_generation],dx\n mov [cs:get_lifetime_generations+'+str(j*2)+'],dx\n'
+      for i,word in enumerate(batch_words):
+       injector+=' mov word [es:bx],'+str(word)+'\n add bx,2\n cmp bx,0x3e\n jb .batch_key'+str(j)+'_'+str(i)+'\n mov bx,0x1e\n.batch_key'+str(j)+'_'+str(i)+':\n'
+      injector+=' mov [es:0x1c],bx\n add word [cs:get_input_injected],'+str(len(batch_words))+'\n inc word [cs:get_input_batch]\n jmp .done\n.batch_next'+str(j)+':\n'
+     injector+='.done:\n ret\nget_input_batch: dw 0\nget_input_generation: dw 0\n'
+    else:
+     assert 0<len(input_words)<15
+    for i,word in enumerate(input_words if not batches else []):
      injector+=' mov word [es:bx],'+str(word)+'\n add bx,2\n cmp bx,0x3e\n jb .key'+str(i)+'\n mov bx,0x1e\n.key'+str(i)+':\n'
-    injector+=' mov [es:0x1c],bx\n mov word [cs:get_input_injected],'+str(len(input_words))+'\n.done:\n ret\n'
+    if not batches:injector+=' mov [es:0x1c],bx\n mov word [cs:get_input_injected],'+str(len(input_words))+'\n.done:\n ret\n'
     old='resident_end:\nstart:';assert observer_source.count(old)==1
     observer_source=observer_source.replace(old,injector+'\n'+old)
    if a.watchdog:
@@ -373,13 +418,20 @@ get_watch_data: dw 0x4757,2
   result['checks']['GET_typed_exit']=result['passive_observer_header'][6]==case['expected_exit']
   result['checks']['script_reached_GET_boundary']=b'GETREADY' in wire
   if get_enabled:result['checks']['BIOS_keys_after_field_admission']=injected==len(case['field_BIOS_words'])
+  if case.get('field_batches'):
+   count=len(case['field_batches']);end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
+   generations=list(struct.unpack('<'+str(count)+'H',(folder/'RENDER.BIN').read_bytes()[end-2*count:end]))
+   result['GET_generations']=generations
+   result['checks']['fresh_GET_generation_per_field']=generations==list(range(1,count+1))
+   result['checks']['all_field_generations_completed']=injected==len(case['field_BIOS_words'])
+   result['checks']['no_bad_transition_output']=b'BAD' not in wire
   if case['success']:
    value=bytes.fromhex(case['expected_value_hex'])
    result['checks']['GET_edited_value_reaches_peer']=b'GETREADY'+value+b'\rSynth42\r' in wire
   else:result['checks']['no_post_GET_execution']=b'Synth42\r' not in wire
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
+ report.update(lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
   checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  print('GET full VM:',len(report['cases']),'cases',report['passed'])
