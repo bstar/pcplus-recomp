@@ -7,11 +7,28 @@ SOURCES=['lab/bbs/chat_help_bbs_support.py','standalone/chat_help_bbs_watch.asm'
 
 def inputs(binary):
  binary=binary.resolve();package=json.loads(binary.with_name('package.json').read_text())
- assert package['passed'] and package['mapped_contexts']==[3,41]
+ assert package['passed']
+ extra=[]
+ if 'mapped_contexts' in package:
+  assert package['mapped_contexts']==[3,41]
+ else:
+  # The complete compiler-bridge lab bundle uses hashed helper/resource
+  # manifests instead of the earlier two-context package marker.
+  manifest=binary.with_name('manifest.json');resource=binary.with_name('PCPLUS.json')
+  helper=binary.parent/'help-build/manifest.json'
+  m=json.loads(manifest.read_text());r=json.loads(resource.read_text())
+  assert m['experimental_compiler_lease_bridge'] and m['experimental_chat_help']
+  assert m['experimental_global_help'] and package['parent_manifest_sha256']==sha(manifest)
+  assert package['helper_manifest_sha256']==sha(helper)
+  assert package['resource_manifest_sha256']==sha(resource) and r['topics']==47
+  assert r['sha256']==package['products']['PCPLUS.HLP']
+  raw=binary.with_name('PCPLUS.HLP').read_bytes()
+  assert raw[0]==47 and raw[3+3*38:3+3*38+32].split(b'\0')[0]==b'Chat Mode'
+  extra=[manifest,resource,helper]
  assert package['products']['TERMINAL.EXE']==sha(binary)
  for name,digest in package['sources'].items():assert sha(ROOT/name)==digest,name
  for name,digest in package['products'].items():assert sha(binary.parent/name)==digest,name
- return [ROOT/n for n in SOURCES]+[ROOT/n for n in package['sources']]+[binary.parent/n for n in package['products']]+[binary.with_name('package.json')]
+ return [ROOT/n for n in SOURCES]+[ROOT/n for n in package['sources']]+[binary.parent/n for n in package['products']]+[binary.with_name('package.json')]+extra
 
 def prepare(folder,binary):
  folder=Path(folder);folder.mkdir(parents=True,exist_ok=False);binary=binary.resolve()
