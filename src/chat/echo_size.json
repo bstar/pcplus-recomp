@@ -111,7 +111,7 @@
     },
     "src/config/terminal_preferences.c": {
       "profile": "echo-size",
-      "source_sha256": "7a8f91043d1a91efb6ca78d396c135f9f46744db7db7c02003491bf3f7615a13",
+      "source_sha256": "1ad13a251e1db017a727da98c4514f47fa6be578bce8d6e5b3990b4c84f551cd",
       "control_code_data_bytes": [
         1420,
         14

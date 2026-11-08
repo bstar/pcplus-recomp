@@ -6,10 +6,10 @@ from build_path_session import object_segments
 from omf_imports import records, externals
 
 
-def build_loader(root, out, presentation=False, timing=False,foreground=False,redisplay=False):
+def build_loader(root, out, presentation=False, timing=False,foreground=False,redisplay=False,send_mode=False):
     if foreground:timing=True
     if timing:presentation=True
-    module = build(out / 'chat-module', presentation=presentation, timing=timing,foreground=foreground,redisplay=redisplay)
+    module = build(out / 'chat-module', presentation=presentation, timing=timing,foreground=foreground,redisplay=redisplay,send_mode=send_mode)
     cobj, aobj = out / 'chat-loader.obj', out / 'chat-load-kernel.obj'
     flags = ['-ox', '-os', '-oe=0']
     subprocess.run(['wcc', '-q', '-bt=dos', '-0', '-ms', '-s', '-w4', '-we', '-ecc',
@@ -18,6 +18,7 @@ def build_loader(root, out, presentation=False, timing=False,foreground=False,re
                     *(['-dCHAT_TEXT','-dCHAT_TIMING'] if timing else []),
                     *(['-dCHAT_FOREGROUND_TEXT'] if foreground else []),
                     *(['-dCHAT_REDISPLAY'] if redisplay else []),
+                    *(['-dCHAT_SEND_MODE'] if send_mode else []),
                     '-i='+str(out / 'chat-module'), '-fo='+str(cobj),
                     str(root / 'src/chat/loader.c')], cwd=out, check=True)
     subprocess.run(['nasm', '-fobj', '-DCHAT_LOADER_BANK',

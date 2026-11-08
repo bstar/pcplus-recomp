@@ -107,9 +107,18 @@ unsigned CHAT_CALL chat_view_front_open(chat_module_request CHAT_FAR *r)
     b=(const chat_view_binding CHAT_FAR *)live->view;
     if(!b->rows || !b->attribute || !b->duplex || !b->newline || !b->translate ||
        !b->input_table || !b->presentation || !b->rx_table || !b->sink)return 0;
+#ifdef CHAT_SEND_MODE
+    if(r->buffered>255)return 0;
+#endif
     attribute=*b->attribute&255;
     if(!chat_present_open(r->state,(chat_presentation CHAT_FAR *)b->presentation,
-        b->underlay,4000,*b->rows,attribute,attribute|0x19,attribute,1,*b->duplex,*b->newline))return 0;
+        b->underlay,4000,*b->rows,attribute,attribute|0x19,attribute,
+#ifdef CHAT_SEND_MODE
+        r->buffered,
+#else
+        1,
+#endif
+        *b->duplex,*b->newline))return 0;
     if(!chat_live_bind(r->state,live)){chat_session_abort(r->state);return 0;}
     r->sink=b->sink;r->user=0;r->budget=32;r->table=b->rx_table;
     for(i=0;i<256;++i)b->rx_table[i]=*b->translate?b->input_table[i]:(unsigned char)i;

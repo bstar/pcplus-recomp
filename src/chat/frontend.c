@@ -63,6 +63,9 @@ static unsigned initialized=0xc701;
 static const char leaf[]="PCCHAT.OVL";
 #define STATE ((chat_session CHAT_FAR *)(redisplay_snapshot+12288))
 #define REQUEST ((chat_module_request CHAT_FAR *)(redisplay_snapshot+13200))
+#ifdef CHAT_SEND_MODE
+extern unsigned terminal_chat_buffered;
+#endif
 static unsigned operation(unsigned op)
 {REQUEST->operation=op;return chat_module_call(&handle,REQUEST);}
 #ifdef CHAT_REDISPLAY
@@ -109,6 +112,9 @@ static unsigned enter(void)
     REQUEST->api=CHAT_MODULE_API;REQUEST->state=STATE;
 #ifdef CHAT_REDISPLAY
     REQUEST->table=(const unsigned char CHAT_FAR *)&binding;
+#ifdef CHAT_SEND_MODE
+    REQUEST->buffered=terminal_chat_buffered;
+#endif
     if(operation(CHAT_MODULE_FRONT_OPEN)!=1){stop();return 0;}
 #else
     REQUEST->frame=(chat_word CHAT_FAR *)redisplay_view;REQUEST->capacity=4000;

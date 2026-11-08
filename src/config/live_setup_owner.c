@@ -1,6 +1,9 @@
 #include "live_setup_owner.h"
 #include "transfer_import.h"
 extern transfer_import_settings terminal_transfer_preferences;
+#ifdef TERMINAL_CHAT_SEND_MODE
+extern unsigned terminal_chat_buffered;
+#endif
 #ifdef TERMINAL_SOUND
 extern unsigned terminal_sound_enabled;
 extern unsigned terminal_connect_alert_seconds;
@@ -161,6 +164,9 @@ unsigned __cdecl live_setup_finish_policy(live_configuration_plan *destination,
   owner.stage.serial.clipboard_separator=owner.active.serial.clipboard_separator;
   owner.stage.change_mask&=~LIVE_CHANGE_CLIPBOARD;
  }
+#ifdef TERMINAL_CHAT_SEND_MODE
+ if(owner.image.bytes[0x1f2]!=terminal_chat_buffered)owner.stage.change_mask|=LIVE_CHANGE_CHAT;
+#endif
  if(!command_valid(&owner.stage)){result->status=LIVE_SETUP_COMMAND;return result->status;}
 #ifdef TERMINAL_MOUSE
  status=terminal_mouse_offer(owner.image.bytes,sizeof(owner.image.bytes));
@@ -222,6 +228,9 @@ unsigned __cdecl live_setup_acknowledge(unsigned committed_baud_mask)
   terminal_sound_enabled=(owner.image.bytes[0x1bc]|owner.image.bytes[0x1bd])!=0;
   terminal_connect_alert_seconds=owner.image.bytes[0x1be]|((unsigned)owner.image.bytes[0x1bf]<<8);
  }
+#endif
+#ifdef TERMINAL_CHAT_SEND_MODE
+ if(owner.transfer_ready==1)terminal_chat_buffered=owner.image.bytes[0x1f2];
 #endif
  owner.source_clipboard_separator=owner.offered_clipboard_separator;
  owner.offered_mask=owner.transfer_ready=0;return LIVE_SETUP_OK;

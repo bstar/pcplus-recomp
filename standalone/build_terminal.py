@@ -37,6 +37,7 @@ parser.add_argument('--chat-adapters',action='store_true',help='Link real TX/log
 parser.add_argument('--chat-text-transport',action='store_true',help='Link optional physical-completion TEXT TX sink; requires adapters; foreground TEXT remains unbound')
 parser.add_argument('--chat-timing',action='store_true',help='Select matching API0103 loader/module with serviced TEXT timing; requires physical-TX adapter; shortcuts remain unbound')
 parser.add_argument('--chat-echo',action='store_true',help='Experimental native echo scope/input service; requires timing/frontend; TEXT scheduling remains unbound')
+parser.add_argument('--chat-send-mode',action='store_true',help='Import original Chat send-mode byte; requires Chat Redisplay')
 parser.add_argument('--chat-redisplay',action='store_true',help='Opt-in Chat Alt-F6 storage lease and serviced Redisplay return; requires foreground TEXT')
 parser.add_argument('--chat-foreground-text',action='store_true',help='Bind all ten direct Chat TEXT keys through module-owned scheduling; requires echo and compact labels')
 parser.add_argument('--chat-frontend',action='store_true',help='Experimental Alt-O core and keyboard/RX/idle ownership; Help/direct TEXT remain refused; requires adapters')
@@ -147,6 +148,7 @@ if args.chat_text_transport:assert args.chat_adapters and args.optimize_size
 if args.chat_timing:assert args.chat_text_transport
 if args.chat_echo:assert args.chat_timing and args.chat_frontend
 if args.chat_foreground_text:assert args.chat_echo and args.code_label_offsets
+if args.chat_send_mode:assert args.chat_redisplay
 if args.chat_redisplay:assert args.chat_foreground_text
 if args.global_help:assert args.original_reference and args.process_bank and args.program_display_owner and args.mouse and args.external_viewer
 if args.chat_help:assert args.global_help and args.chat_redisplay
@@ -371,6 +373,7 @@ if args.chat_timing:out_name+='-chat-timing'
 if args.chat_echo:out_name+='-chat-echo'
 if args.chat_foreground_text:out_name+='-foreground-text'
 if args.chat_redisplay:out_name+='-chat-redisplay'
+if args.chat_send_mode:out_name+='-chat-send-mode'
 if args.code_label_offsets:out_name+='-code-label-offsets'
 if args.chat_frontend:out_name+='-chat-frontend'
 if args.command_ui_pairs==0:out_name+='-control'
@@ -932,6 +935,7 @@ for source in c_sources:
  if args.display_preferences:options+=['-dTERMINAL_DISPLAY_PREFERENCES']
  if args.register_handoff:options+=['-dTERMINAL_REGISTER_HANDOFF']
  if args.custom_irq:options+=['-dTERMINAL_CUSTOM_IRQ']
+ if args.chat_send_mode:options+=['-dTERMINAL_CHAT_SEND_MODE']
  if args.session_controls:options+=['-dTERMINAL_SESSION_CONTROLS']
  if args.hook_return:options+=['-dTERMINAL_HOOK_RETURN']
  if args.hook_modem:options+=['-dTERMINAL_HOOK_MODEM']
@@ -1050,7 +1054,7 @@ ordering=['CODE','FARCODE']+(['LEASE_MODULE'] if args.compiler_lease_arena else 
 chat_loader=None
 if args.chat_loader:
  from chat.loader_link import build_loader
- chat_loader=build_loader(ROOT,OUT,presentation=args.chat_presentation,timing=args.chat_timing,foreground=args.chat_foreground_text,redisplay=args.chat_redisplay)
+ chat_loader=build_loader(ROOT,OUT,presentation=args.chat_presentation,timing=args.chat_timing,foreground=args.chat_foreground_text,redisplay=args.chat_redisplay,send_mode=args.chat_send_mode)
  objects+=list(map(str,chat_loader['objects']));sources+=chat_loader['inputs']
 if args.chat_adapters:
  source=ROOT/'src/chat/parent_sink.asm';obj=OUT/'chat-adapters.obj'
@@ -1068,7 +1072,7 @@ if args.chat_echo:
 if args.chat_frontend:
  source=ROOT/'src/chat/frontend.c';obj=OUT/'chat-frontend.obj'
  subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-s','-w4','-we','-ecc','-ox','-os','-oe=0',
-  '-dCHAT_PRESENTATION',*(['-dCHAT_TEXT','-dCHAT_TIMING'] if args.chat_timing else []),*(['-dCHAT_ECHO'] if args.chat_echo else []),*(['-dCHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),*(['-dCHAT_REDISPLAY'] if args.chat_redisplay else []),*(['-dCHAT_GLOBAL_HELP'] if args.chat_help else []),'-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
+  '-dCHAT_PRESENTATION',*(['-dCHAT_TEXT','-dCHAT_TIMING'] if args.chat_timing else []),*(['-dCHAT_ECHO'] if args.chat_echo else []),*(['-dCHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),*(['-dCHAT_REDISPLAY'] if args.chat_redisplay else []),*(['-dCHAT_GLOBAL_HELP'] if args.chat_help else []),*(['-dCHAT_SEND_MODE'] if args.chat_send_mode else []),'-nt=CONFIG_CODE','-nc=FARCODE','-fo='+str(obj),str(source)],check=True)
  objects.insert(objects.index(str(config_end_obj)),str(obj));sources.append(source)
  source=ROOT/'src/chat/frontend.asm';obj=OUT/'chat-frontend-bridges.obj'
  subprocess.run(['nasm','-fobj',*(['-DCHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),*(['-DCHAT_REDISPLAY'] if args.chat_redisplay else []),str(source),'-o',str(obj)],check=True)
@@ -1187,6 +1191,7 @@ manifest['experimental_chat_text_transport']=args.chat_text_transport
 manifest['experimental_chat_echo']=args.chat_echo
 manifest['experimental_chat_foreground_text']=args.chat_foreground_text
 manifest['experimental_chat_redisplay']=args.chat_redisplay
+manifest['experimental_chat_send_mode']=args.chat_send_mode
 manifest['experimental_global_help']=args.global_help
 manifest['experimental_chat_help']=args.chat_help
 if args.global_help:manifest['global_help_native_units']=help_native_proof

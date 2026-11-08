@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""Actual DOS rejects an older Chat module and retains ordinary serial terminal ownership."""
+import argparse,json,re,shutil,struct,sys
+from pathlib import Path
+import test_connection_dos as harness
+from directory_fixtures import prm
+from build_path_session import ROOT,sha
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    for n in ('terminal','output'):p.add_argument('--'+n,type=Path,required=True)
+    p.add_argument('--foreign-module',type=Path,required=True)
+    a=p.parse_args();binary,out=a.terminal.resolve(),a.output.resolve()
+    assert out.is_relative_to(ROOT/'build') and not out.exists()
+    m=json.loads(binary.with_name('manifest.json').read_text());assert m['experimental_chat_send_mode'] and m['chat_loader']['module']['api_version']==0x107
+    assert sha(binary)==m['binary_sha256']
+    names=['standalone/test_chat_send_mode_module_rejection_dos.py','standalone/test_connection_dos.py',
+           'standalone/directory_fixtures.py','standalone/modem_fixtures.py',
+           'standalone/terminal_config_fixtures.py','standalone/test_terminal.py',
+           'standalone/directory_test_support.py','standalone/build_path_session.py']
+    sources={**m['sources'],**{n:sha(ROOT/n) for n in names}}
+    assert all(sha(ROOT/n)==h for n,h in sources.items())
+    out.mkdir();stage=out/'program';stage.mkdir()
+    shutil.copyfile(binary,stage/'TERMINAL.EXE');foreign=a.foreign_module.resolve();foreign_sha=sha(foreign)
+    previous=json.loads((ROOT/'docs/validation/aspect-compiler-package.json').read_text())
+    assert foreign_sha==previous['files']['PCCHAT.OVL'] and foreign_sha!=m['chat_loader']['module']['binary_sha256']
+    shutil.copyfile(foreign,stage/'PCCHAT.OVL')
+    name=out.name+'-main';assert re.fullmatch('[A-Za-z0-9_-]+',name)
+    capture=ROOT/'build/connection-dos'/name;assert not capture.exists()
+    settings=bytearray(prm(port=3,baud=5))
+    for off,value in [(0x188,5),(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),
+                      (0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)]:
+        struct.pack_into('<H',settings,off,value)
+    harness.BINARY=stage/'TERMINAL.EXE'
+    settings[0x1f2]=0;settings[0x1f3]=0xa7
+    keys='p900 enter p5000 a-o p1500 N p120 O p120 R p120 M p120 A p120 L p1700 a-x'
+    triggers=[(b'NORMAL',[(0,b'BACK\x1b[6n')])]
+    r=harness.run(name,'success',keys,prm=bytes(settings),com=3,irq=5,cpu='8086',
+        working_drive='d',timeout=30,
+        online_triggers=triggers)
+    wire=(capture/'serial.bin').read_bytes();screen=(capture/'SCREEN.BIN').read_bytes()[::2]
+    replies=re.findall(rb'\x1b\[\d+;\d+R',wire)
+    checks=dict(harness=r['passed'],all_real_peer_triggers=r['checks']['online_triggers_sent'],
+        exact_two_CPR=len(replies)==2,old_module_not_admitted=len(replies)==2 and b'BACK' in screen,
+        ordinary_keys_resume=b'NORMAL' in wire,chat_underlay_restored=b'CHAT-REMOTE' not in screen,
+        ordinary_RX_after_chat=b'BACK' in screen,
+        unchanged_sources=all(sha(ROOT/n)==h for n,h in sources.items()),
+        unchanged_module=sha(stage/'PCCHAT.OVL')==foreign_sha)
+    report=dict(passed=all(checks.values()),checks=checks,binary_sha256=sha(binary),
+                rejected_module_sha256=foreign_sha,
+                sources=sources,CPR_replies=[x.hex() for x in replies],
+                capture=str(capture.relative_to(ROOT)),capture_files={str(q.relative_to(ROOT)):sha(q) for q in capture.rglob('*') if q.is_file()},
+                scope=__doc__+' New parent attempts Alt-O with the previous source-built API0106 module. NORMAL and a real CPR reply must continue through ordinary parsing; admitted Chat would consume the CPR without replying. Actual DOS/synthetic modem, hardware and settings restoration; no physical or all-profile acceptance.')
+    (out/'result.json').write_text(json.dumps(report,indent=2)+'\n')
+    assert report['passed'],checks
+    print('PASS normal DOS8086 Chat entry, BIOS typing, UART RX ownership and ordinary return')
+
+
+if __name__=='__main__':main()

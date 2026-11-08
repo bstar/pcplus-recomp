@@ -136,7 +136,7 @@
     },
     "src/config/live_setup_owner.c": {
       "profile": "full",
-      "source_sha256": "0187841d1d69c2691f83a4ecf0983bbcb28c619602aa1564a72d44916d975bfe",
+      "source_sha256": "9017ea58e43f45e05050cbf6f1de5623652910ed6e4b74910c9ad632f0c49dcb",
       "control_code_data_bytes": [
         1978,
         3296

@@ -1,6 +1,9 @@
 #ifndef PCPLUS_CHAT_MODULE_H
 #define PCPLUS_CHAT_MODULE_H
 #include "session.h"
+#if defined(CHAT_SEND_MODE) && !defined(CHAT_REDISPLAY)
+#error CHAT_SEND_MODE requires CHAT_REDISPLAY
+#endif
 #if defined(CHAT_FOREGROUND_TEXT) && !defined(CHAT_TIMING)
 #error CHAT_FOREGROUND_TEXT requires CHAT_TIMING
 #endif
@@ -14,7 +17,11 @@
 #ifdef CHAT_TIMING
 #ifdef CHAT_FOREGROUND_TEXT
 #ifdef CHAT_REDISPLAY
+#ifdef CHAT_SEND_MODE
+#define CHAT_MODULE_API 0x0107
+#else
 #define CHAT_MODULE_API 0x0106
+#endif
 #define CHAT_MODULE_STATE_BYTES 480
 #else
 #define CHAT_MODULE_API 0x0104

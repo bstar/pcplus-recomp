@@ -21,6 +21,10 @@ static void display_capture(const prm_dos_image *image)
 #ifdef TERMINAL_SESSION_BASELINE
 #include "../terminal/session_baseline.h"
 #endif
+#ifdef TERMINAL_CHAT_SEND_MODE
+/* Original byte DS1D76, relative to PRM memory image DS1B84. */
+unsigned terminal_chat_buffered=1;
+#endif
 #ifdef TERMINAL_SOUND
 /* PRM DS1d40 relative to memory image DS1b84. Any nonzero word enables. */
 unsigned terminal_sound_enabled;
@@ -50,9 +54,17 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
  prm_dos_image image;terminal_import_settings s;modem_import_settings m;
  transfer_import_settings t;unsigned n,status,count=0;
  #ifdef TERMINAL_DISPLAY_PREFERENCES
- const void *p[7];unsigned sizes[7];
+ const void *p[7
+#ifdef TERMINAL_CHAT_SEND_MODE
+ +1
+#endif
+ ];unsigned sizes[sizeof(p)/sizeof(p[0])];
 #else
- const void *p[5];unsigned sizes[5];
+ const void *p[5
+#ifdef TERMINAL_CHAT_SEND_MODE
+ +1
+#endif
+ ];unsigned sizes[sizeof(p)/sizeof(p[0])];
 #endif
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_invalidate())return 16;
@@ -65,6 +77,9 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
 #ifdef TERMINAL_DISPLAY_PREFERENCES
  p[count]=&terminal_display_preferences;sizes[count++]=sizeof(terminal_display_preferences);
  p[count]=&terminal_display_preferences_ready;sizes[count++]=sizeof(terminal_display_preferences_ready);
+#endif
+#ifdef TERMINAL_CHAT_SEND_MODE
+ p[count]=&terminal_chat_buffered;sizes[count++]=sizeof(terminal_chat_buffered);
 #endif
  if(!objects(p,sizes,count))return TERMINAL_IMPORT_ARGUMENT;
  if(prm_dos_load(path,&image,io))return TERMINAL_IMPORT_IO;
@@ -80,6 +95,9 @@ unsigned __cdecl terminal_preferences_read(const char *path,terminal_import_sett
 #endif
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_publish(&image,SESSION_BASELINE_STARTUP))return 16;
+#endif
+#ifdef TERMINAL_CHAT_SEND_MODE
+ terminal_chat_buffered=image.bytes[0x1f2];
 #endif
 #ifdef TERMINAL_DISPLAY_PREFERENCES
  display_capture(&image);
@@ -97,9 +115,17 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
  directory_live_context c;transfer_import_settings t;directory_live_result decoded;
  unsigned a,b,status,count=0;
 #ifdef TERMINAL_DISPLAY_PREFERENCES
- const void *p[10];unsigned sizes[10];
+ const void *p[10
+#ifdef TERMINAL_CHAT_SEND_MODE
+ +1
+#endif
+ ];unsigned sizes[sizeof(p)/sizeof(p[0])];
 #else
- const void *p[8];unsigned sizes[8];
+ const void *p[8
+#ifdef TERMINAL_CHAT_SEND_MODE
+ +1
+#endif
+ ];unsigned sizes[sizeof(p)/sizeof(p[0])];
 #endif
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_invalidate())return 16;
@@ -113,6 +139,9 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
 #ifdef TERMINAL_DISPLAY_PREFERENCES
  p[count]=&terminal_display_preferences;sizes[count++]=sizeof(terminal_display_preferences);
  p[count]=&terminal_display_preferences_ready;sizes[count++]=sizeof(terminal_display_preferences_ready);
+#endif
+#ifdef TERMINAL_CHAT_SEND_MODE
+ p[count]=&terminal_chat_buffered;sizes[count++]=sizeof(terminal_chat_buffered);
 #endif
  if(!objects(p,sizes,count))return DIRECTORY_LIVE_ARGUMENT;
  memset(result,0,sizeof(*result));
@@ -146,6 +175,9 @@ unsigned __cdecl terminal_directory_preferences_read(const char *path,const char
 #endif
 #ifdef TERMINAL_SESSION_BASELINE
  if(hook_baseline_publish(&image,SESSION_BASELINE_STARTUP)){result->status=16;return 16;}
+#endif
+#ifdef TERMINAL_CHAT_SEND_MODE
+ terminal_chat_buffered=image.bytes[0x1f2];
 #endif
 #ifdef TERMINAL_DISPLAY_PREFERENCES
  display_capture(&image);

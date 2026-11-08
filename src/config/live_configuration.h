@@ -19,6 +19,7 @@
 #define LIVE_CHANGE_CLIPBOARD 4096U
 #define LIVE_CHANGE_TRANSFER 8192U
 #define LIVE_CHANGE_MOUSE 16384U
+#define LIVE_CHANGE_CHAT 32768U
 #define LIVE_CHANGE_TRANSPORT 15U
 
 typedef struct live_configuration_plan {
