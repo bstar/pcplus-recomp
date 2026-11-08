@@ -14,10 +14,12 @@ def main():
  subprocess.run(['wcc',*options,'-nt=GET_FIELD_CODE','-nc=FARCODE','-fo='+str(out/'field.obj'),str(ROOT/'src/aspect/get_field.c')],check=True);objects.append(str(out/'field.obj'))
  cs=['src/aspect/get_runtime.c','src/aspect/when_runtime.c','src/aspect/resident_render.c','standalone/get_runtime_driver.c']
  subprocess.run(['wcl',*options,'-k8192','-fd=SESSION.lnk','-fm=SESSION.map','-fe=SESSION.EXE',*[str(ROOT/n) for n in cs],*objects],cwd=out,check=True)
- with (out/'SESSION.lnk').open('a') as f:f.write('\noption packcode=0\n')
+ with (out/'SESSION.lnk').open('a') as f:f.write('\noption packcode=0\norder clname CODE clname FARCODE clname FAR_DATA clname DATA clname BSS clname STACK\n')
  subprocess.run(['wlink','@SESSION.lnk'],cwd=out,check=True)
  layout=(out/'SESSION.map').read_text()
- storage=[line.split() for line in layout.splitlines() if line.startswith('GET_RUNTIME_STORAGE')];assert len(storage)==1 and storage[0][1:3]==['FAR_DATA','AUTO'] and int(storage[0][-1],16)==200,storage
+ storage=[line.split() for line in layout.splitlines() if line.startswith('GET_RUNTIME_STORAGE')];assert len(storage)==1 and storage[0][1:3]==['FAR_DATA','AUTO'] and int(storage[0][-1],16)==202,storage
+ def linear(s):a,b=s.split(':');return int(a,16)*16+int(b,16)
+ group=[line.split() for line in layout.splitlines() if line.startswith('DGROUP')];assert linear(storage[0][3])+202<=linear(group[0][1])
  field=[line.split() for line in layout.splitlines() if line.startswith('GET_FIELD_CODE')];assert len(field)==1 and field[0][3].split(':')[0]!='0000',field
  (out/'dosbox.conf').write_text(f'[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\nfpu=false\ncycles=fixed 30000\n[mixer]\nnosound=true\n[autoexec]\nmount c "{out}"\nc:\nSESSION >CHECK.LOG\nif errorlevel 1 goto failed\necho PASS>RESULT.TXT\nexit\n:failed\necho FAIL>RESULT.TXT\nexit\n')
  with (out/'dosbox.log').open('w') as log:subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')],stdout=log,stderr=log,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),timeout=30,check=True)

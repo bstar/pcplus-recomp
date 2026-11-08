@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <malloc.h>
 #include "runtime.h"
 #include "serial.h"
 #include "get_runtime.h"
@@ -14,7 +15,7 @@ unsigned runtime_serial_break_units,runtime_serial_error,runtime_keyboard_mode;
 unsigned runtime_receive_pattern_count,runtime_wait_gate,runtime_receive_display=1;
 unsigned runtime_when_disconnect_armed,runtime_when_case_sensitive,runtime_when_keyboard_disabled,runtime_when_last_key,runtime_when_pending_key;
 unsigned char runtime_when_records[344];
-static unsigned checks,scenario,parent_owned,frames,requests,staged,next,normal_refuse,error_refuse,cleanup_status,bad_client;
+static unsigned checks,scenario,parent_owned,frames,requests,staged,next,position,normal_refuse,error_refuse,cleanup_status,bad_client;
 static unsigned keys[8],key_count,key_at,rx,received,bells,services,inject_abort;
 static unsigned char picture[80],pending[80],output[82];
 extern unsigned aspect_render_prepare(unsigned,unsigned,unsigned),aspect_render_attach(void);
@@ -33,11 +34,11 @@ unsigned aspect_render_request(unsigned op,unsigned value)
  if(op==0)return 0;
  if(op==2){parent_owned=0;return 0xe000;}
  if(op==1){++received;picture[0]=(unsigned char)value;return 0;}
- if(op==21){if(parent_owned)return 10;parent_owned=1;next=0;if(scenario==8)bad_client=1;return 0;}
+ if(op==21){if(parent_owned)return 10;parent_owned=1;position=value;next=0;if(scenario==8)bad_client=1;return 0;}
  if(op==22){ck(parent_owned&&(value&255)<=80);staged=value&255;next=0;return 0;}
  if(op==23){ck(parent_owned&&(value>>8)==next&&next<staged&&(value&255));pending[next++]=(unsigned char)value;return 0;}
- if(op==24){ck(parent_owned&&next==staged&&(value&255)<staged);memcpy(picture,pending,staged);++frames;return 0;}
- if(op==25)return value==3?0xf007:value==4?0xf006:7;
+ if(op==24){ck(parent_owned&&next==staged&&(value&255)<staged);memcpy(picture,pending,staged);position=0x0505+(value&255);++frames;return 0;}
+ if(op==25)return value==3?0xf007:value==4?0xf006:value==9?0xf000|(position&255):value==10?0xf000|(position>>8):7;
  if(op==26){if((value==0&&normal_refuse)||(value==1&&error_refuse))return 10;parent_owned=0;return value?0xe000|cleanup_status:0;}
  ck(0);return 10;
 }
@@ -117,7 +118,8 @@ void get_scenario(void)
 }
 int main(void)
 {
- unsigned result;
+ unsigned result,i;unsigned char __far *heap_probe=_fmalloc(82);
+ ck(heap_probe!=0);for(i=0;i<82;++i)heap_probe[i]=0x5a;
  for(scenario=0;scenario<11;++scenario){
   prepare();keys[0]=scenario==1?'7':scenario==2?'x':'1';keys[1]=scenario==1?27:'2';keys[2]=13;key_count=scenario==1?2:3;
   if(scenario==2){keys[1]='-';keys[2]='5';keys[3]=13;key_count=4;}
@@ -142,6 +144,7 @@ int main(void)
    if(scenario==10)ck(output[0]==0xb3&&output[1]=='A'&&output[2]==0);
   }
  }
+ for(i=0;i<82;++i)ck(heap_probe[i]==0x5a);_ffree(heap_probe);
  prepare();ck(runtime_get_field_begin(0x0505,0x1f,8,0,0,0)==10&&runtime_when_get_begin()==10&&runtime_when_get_unwind()==10);ck(!aspect_render_finish());
  printf("PASS GET SESSION %u checks; actual checkpoint/WHEN/client; peer services modeled\r\n",checks);return 0;
 }

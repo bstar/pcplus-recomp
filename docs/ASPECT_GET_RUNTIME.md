@@ -1,5 +1,11 @@
 # Serviced GET editor lifetime
 
+The subsequent [native-owner checkpoint](ASPECT_GET_NATIVE_FIELD.md) connects the
+recovered owner to this editor in a diagnostic. It also adds cached cursor
+coordinates and corrects far-heap placement: the current202-byte record must
+precede DGROUP, and the lifecycle suite now passes759 checks with a heap probe.
+The676-check/200-byte evidence below describes the earlier checkpoint.
+
 `get_runtime.c` composes the existing field model, capability21 child client,
 WHEN keyboard/service lease and native abort checkpoint. It is an explicit
 attached-terminal prototype. The maintained application still refuses GET;

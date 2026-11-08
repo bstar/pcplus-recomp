@@ -14,6 +14,8 @@ unsigned runtime_get_field_phase(void);
 /* Native field result after ACCEPT/CANCEL, before ending a canceled field. */
 unsigned runtime_get_field_result(void);
 unsigned runtime_get_field_end(unsigned);
+/* Last presented physical cursor, cached before normal display retirement. */
+unsigned runtime_get_field_position(void);
 unsigned runtime_get_field_commit(unsigned char __far *);
 unsigned runtime_get_field_recover(void);
 unsigned runtime_get_field_active(void);

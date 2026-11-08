@@ -25,7 +25,11 @@ the owning stack. The [serviced editor lifetime](ASPECT_GET_RUNTIME.md) now
 composes field/client/WHEN/checkpoint machinery in676 DOS checks and a20-source
 exact rebuild, plus292 client checks. Actual recovered-command bindings, native
 dispatcher lifetime, real parent/receive and application integration remain open.
-The field/input owner is not integrated: both maintained compilers and the
+The [recovered owner with serviced field](ASPECT_GET_NATIVE_FIELD.md) now passes
+137 original-observation matches plus5 explicit protected-view refusals, with
+a34-source exact rebuild. It also exposed and fixes a far-heap layout conflict;
+the updated lifecycle diagnostic passes759 checks with a real heap sentinel.
+Application GET remains disabled: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.
 

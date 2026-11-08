@@ -7,6 +7,12 @@
 #include <malloc.h>
 #include <dos.h>
 #include "get_field.h"
+#ifdef ASPECT_GET_SERVICED
+#include "get_runtime.h"
+extern void owner_serviced_prepare(void),owner_serviced_finish(void);
+extern unsigned runtime_get_native_field_inner(unsigned,unsigned,unsigned,unsigned,unsigned,unsigned,unsigned);
+#define owner_field runtime_get_native_field
+#endif
 #ifdef ASPECT_GET_CHECKPOINT
 #include "get_checkpoint.h"
 extern void owner_abort_native(void),owner_checkpoint_foreign(unsigned);
@@ -21,9 +27,16 @@ extern unsigned long owner_longs[128],owner_globals[128],owner_pending_far;
 extern unsigned char owner_float_result[8],owner_floats[1024],owner_strings[810],owner_string_scratch[891];
 static unsigned char stream[16],scratch[82],frames[256],before[81],expected[81],opaque[8]={1,0x23,0x45,0x67,0x89,0xab,0xcd,0xef};
 static unsigned key_words[128],key_count,key_index,confirm_value,field_calls,field_width,field_callback,bells,position,position_calls,float_calls,confirm_calls,cancel_calls,error_code;
+#ifdef ASPECT_GET_SERVICED
+unsigned owner_serviced_peek(void){return key_index<key_count?key_words[key_index]:0;}
+unsigned owner_serviced_read(void){if(key_index==key_count)exit(35);return key_words[key_index++];}
+void owner_serviced_error(unsigned value){error_code=value;}
+#endif
 static char float_text[82],expected_float[82];
 static struct {unsigned char *pointer;int count;} synthetic_file;
+#ifndef ASPECT_GET_SERVICED
 static get_field_state field;
+#endif
 #ifndef ASPECT_GET_CHECKPOINT
 static jmp_buf owner_jump;
 #endif
@@ -64,12 +77,19 @@ void owner_float(unsigned selector)
 }
 unsigned owner_field(unsigned callback,unsigned masked,unsigned width,unsigned initial,unsigned output,unsigned attribute,unsigned start)
 {
- unsigned status,key;unsigned char text[82];
+ unsigned status;
+#ifndef ASPECT_GET_SERVICED
+ unsigned key;unsigned char text[82];
+#endif
 #ifdef ASPECT_GET_CHECKPOINT
  if(owner_checkpoint_foreign_stack() || runtime_get_native_active()!=1 || runtime_get_native()!=GET_NATIVE_BUSY || runtime_get_native_active()!=1)owner_unexpected();
 #endif
  ++field_calls;field_width=width;field_callback=callback==owner_numeric_filter();
  if(attribute!=13 || callback!=(field_callback?owner_numeric_filter():owner_string_filter()) || initial)owner_unexpected();
+#ifdef ASPECT_GET_SERVICED
+ status=runtime_get_native_field_inner(callback,masked,width,initial,output,attribute,start);
+ position=runtime_get_field_position();return status;
+#else
  if(get_field_begin(&field,(const unsigned char __far *)0,width,field_callback,masked,1,0x0607))owner_unexpected();
  while(field.phase==GET_FIELD_ACTIVE){
 #ifdef ASPECT_GET_CHECKPOINT
@@ -83,6 +103,7 @@ unsigned owner_field(unsigned callback,unsigned masked,unsigned width,unsigned i
   if(get_field_commit(&field,text)!=GET_FIELD_ACCEPT)owner_unexpected();strcpy((char *)output,(char *)text);
  }
  return field.result;
+#endif
 }
 static unsigned word(FILE *f){unsigned value;if(fread(&value,2,1,f)!=1)exit(30);return value;}
 static void bytes(FILE *f,void *buffer,unsigned count){if(fread(buffer,1,count,f)!=count)exit(30);}
@@ -123,9 +144,20 @@ int main(void)
   synthetic_file.pointer=stream;synthetic_file.count=stream_size;owner_file=(unsigned)&synthetic_file;
   key_index=field_calls=field_width=field_callback=bells=position_calls=float_calls=confirm_calls=cancel_calls=error_code=0;position=(owner_row<<8)|owner_column;float_text[0]=0;
 #ifdef ASPECT_GET_CHECKPOINT
+#ifdef ASPECT_GET_SERVICED
+  owner_serviced_prepare();
+#endif
   if(runtime_get_native_active())return 11;
   owner_checkpoint_foreign(index&3);owner_call();jump=runtime_get_native_aborted();
-  if(owner_checkpoint_abi() || (owner_checkpoint_flags()&0x0600)!=0x0200)return 14;
+#ifdef ASPECT_GET_SERVICED
+  if(jump && runtime_get_field_recover()){printf("FAIL serviced cleanup %u\n",index);return 36;}
+  owner_serviced_finish();
+  if(owner_row>=23){
+   if(error_code!=7 || !jump || key_index || position_calls || _fmemcmp(destination,before,size) || synthetic_file.count){printf("FAIL serviced view %u err%u jump%u key%u pos%u file%u\n",index,error_code,jump,key_index,position_calls,synthetic_file.count);return 37;}
+   continue;
+  }
+#endif
+  if(owner_checkpoint_abi() || (owner_checkpoint_flags()&0x0600)!=0x0200){printf("FAIL native ABI %u ABI%u flags%u\n",index,owner_checkpoint_abi(),owner_checkpoint_flags());return 14;}
   if(runtime_get_native_active())return 12;
 #else
   jump=setjmp(owner_jump);if(!jump)owner_call();
@@ -137,6 +169,7 @@ int main(void)
  }
  if(fgetc(f)!=EOF || fclose(f))return 10;_ffree(far_string);
 #ifdef ASPECT_GET_CHECKPOINT
+#ifndef ASPECT_GET_SERVICED
  /* Authored faults inside the field, after field acceptance before typed
   * conversion, and inside abort confirmation. Destination cannot be committed
   * by an abandoned owner, even if its scratch field accepted first. */
@@ -158,7 +191,12 @@ int main(void)
   owner_call();
   if(error_code || runtime_get_native_aborted() || runtime_get_native_active() || owner_integer_b[0]!=42 || owner_checkpoint_abi() || (owner_checkpoint_flags()&0x0600)!=0x0200){printf("FAIL checkpoint retry %u mode%u err%u aborted%u active%u dest%u ABI%u flags%u\n",index,n,error_code,runtime_get_native_aborted(),runtime_get_native_active(),owner_integer_b[0],owner_checkpoint_abi(),owner_checkpoint_flags());return 18;}
  }
+#endif
+#ifdef ASPECT_GET_SERVICED
+ printf("PASS SERVICED GET OWNER %u cases;137 native matches;5 protected-view refusals; actual field/WHEN/client; opaque float boundary\r\n",count);return 0;
+#else
  printf("PASS GET CHECKPOINT %u cases;12 injected faults/retries; recovered owner/readers/integer CRT; native abort restored DS=SS\r\n",count);return 0;
+#endif
 #else
  printf("PASS GET OWNER %u cases; recovered readers/field/integer CRT; opaque float boundary; DS=SS\r\n",count);return 0;
 #endif

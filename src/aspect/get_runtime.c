@@ -9,11 +9,11 @@
 /* Far static storage preserves the crowded ordinary data/stack group. There
  * are no borrowed callback contexts or destination pointers to free on abort. */
 typedef struct {
- unsigned active,busy,keys,display,generation,completed,attribute;
+ unsigned active,busy,keys,display,generation,completed,attribute,position;
  get_field_state field;
  unsigned char render[GET_FIELD_BUFFER];
 } get_runtime_state;
-typedef char get_runtime_layout[sizeof(get_runtime_state)==200?1:-1];
+typedef char get_runtime_layout[sizeof(get_runtime_state)==202?1:-1];
 extern get_runtime_state __far runtime_get_field_storage;
 #define held runtime_get_field_storage
 static unsigned native_context(void)
@@ -55,7 +55,7 @@ unsigned runtime_get_field_begin(unsigned start,unsigned attribute,unsigned widt
  if(!width || width>80 || attribute>255 || numeric>1 || masked>1)return ASPECT_RUN_OPERAND;
  if(runtime_get_native_active()!=1 || !runtime_get_native_generation())return ASPECT_RUN_STATE;
  if(!aspect_render_active())return ASPECT_RUN_UNSUPPORTED;
- held.attribute=attribute;held.generation=runtime_get_native_generation();held.completed=held.keys=held.display=0;
+ held.position=65535U;held.attribute=attribute;held.generation=runtime_get_native_generation();held.completed=held.keys=held.display=0;
  held.busy=1;
  result=runtime_when_get_begin();if(result){held.busy=0;return result;}
  held.active=held.keys=1;
@@ -88,12 +88,20 @@ unsigned runtime_get_field_poll(void)
  if(!result && (changed || (aspect_render_field_state()&ASPECT_FIELD_DIRTY)))result=paint();
  held.busy=0;return result;
 }
+unsigned runtime_get_field_position(void)
+{return native_context()?held.position:65535U;}
 unsigned runtime_get_field_end(unsigned error)
 {
- unsigned result;
+ unsigned result,lo,hi;
  if(error>1)return ASPECT_RUN_OPERAND;
  if(!held.active || held.busy || !native_context() || (!error && held.field.phase==GET_FIELD_ACTIVE))return ASPECT_RUN_STATE;
- held.busy=1;result=release(error,0);held.busy=0;return result;
+ held.busy=1;
+ if(!error){
+  lo=aspect_render_field(4,9);hi=aspect_render_field(4,10);
+  if((lo&0xff00U)!=0xf000U || (hi&0xff00U)!=0xf000U){held.busy=0;return ASPECT_RUN_STATE;}
+  held.position=((hi&255)<<8)|(lo&255);
+ }
+ result=release(error,0);held.busy=0;return result;
 }
 unsigned runtime_get_field_commit(unsigned char __far *target)
 {

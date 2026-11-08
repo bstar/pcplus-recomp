@@ -226,7 +226,9 @@ extern _owner_field,_owner_float,_owner_position,_owner_error
  pop bp
  ret %3*2
 %endmacro
+%ifndef ASPECT_GET_SERVICED
 adapter aspect_get_field,_owner_field,7
+%endif
 adapter aspect_get_parse_float,_owner_float,1
 adapter aspect_string_error,_owner_error,1
 ; Position is an unusual register ABI: AX=row,DX=column.
