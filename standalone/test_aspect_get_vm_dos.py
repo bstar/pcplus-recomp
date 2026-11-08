@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Actual full parent/GET interpreter DOS execution with an owned modem peer.
 
-GET bytes are explicitly authored at a unique linear PAUSE0 boundary. This
-tests the opt-in VM; it does not silently enable either production compiler.
+Raw mode authors GET at a linear PAUSE0 boundary. Compiler mode verifies real
+host/DOS GET compilation; the malformed EOF case remains an authored raw input.
 """
-import argparse,hashlib,inspect,json,re,struct,sys,types
+import argparse,hashlib,inspect,json,os,re,shutil,struct,subprocess,sys,types
 from pathlib import Path
 import test_aspect_renderer_dos as renderer
 ROOT=renderer.ROOT
@@ -38,6 +38,7 @@ def main():
  p.add_argument('--parent-dir',required=True,type=Path);p.add_argument('--child-dir',required=True,type=Path)
  p.add_argument('--output',required=True,type=Path);p.add_argument('--case',action='append')
  p.add_argument('--cpu',choices=('8086','386'),default='386')
+ p.add_argument('--get-compiler-dir',type=Path,help='Use actual opt-in DOS/Python GET compilation for ordinary cases; malformed EOF stays raw')
  p.add_argument('--disabled-control',action='store_true',help='Compare GET-disabled child: expect explicit unsupported after GETREADY')
  p.add_argument('--stream-probe',action='store_true',help='Keep a real owned FOPEN stream across GET')
  p.add_argument('--allocation-probe',action='store_true',help='Passively capture file/global/CRT heap metadata at child exit')
@@ -57,9 +58,37 @@ def main():
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
+ dos_compiled={};get_compiler_manifest=None
+ if a.get_compiler_dir:
+  assert get_enabled and not a.disabled_control
+  folder=a.get_compiler_dir.resolve();get_compiler_manifest=json.loads((folder/'manifest.json').read_text())
+  assert get_compiler_manifest['experimental_get_compiler'] and get_compiler_manifest['original_inputs']==[]
+  assert sha(folder/'ASPCOMP.EXE')==get_compiler_manifest['binary_sha256']
+  for n,h in get_compiler_manifest['sources'].items():assert sha(ROOT/n)==h,n
+  compile_folder=out/'compiled';compile_folder.mkdir(parents=True)
+  shutil.copyfile(folder/'ASPCOMP.EXE',compile_folder/'ASPCOMP.EXE');batch=['@echo off'];stage=[]
+  for i,row in enumerate(rows):
+   if row['name']=='get-vm-truncated':continue
+   target='value' if row['name'] in ('get-vm-string','get-vm-cancel') else 'number'
+   if row['name']=='get-vm-float':row['source']=row['source'].replace('integer number','float number',1)
+   row['source']=row['source'].replace('pause 0\n','get '+target+' 10\n')
+   code=bytes.fromhex('49'+dict(string='8c00',cancel='8c00',integer='8d00',long='8e00',float='8f00')[row['name'][7:]]+'01b50a')
+   expected=renderer.compile_source(row['source'],enable_get=True);assert expected.count(code)==1
+   row['GET_hex']=code.hex();name='G'+str(i).zfill(3)
+   (compile_folder/(name+'.ASP')).write_bytes(row['source'].encode('cp437'));stage.append((row,name,expected))
+   batch+=['ASPCOMP '+name+'.ASP '+name+'.ASX >'+name+'.LOG','if errorlevel 1 goto failed']
+  batch+=['echo PASS>PASS.TXT','goto done',':failed','echo FAIL>FAIL.TXT',':done','exit']
+  (compile_folder/'RUN.BAT').write_bytes(('\r\n'.join(batch)+'\r\n').encode())
+  (compile_folder/'dosbox.conf').write_text('[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\nfpu=false\ncycles=max\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount c "'+str(compile_folder)+'"\nc:\nRUN\n')
+  with (compile_folder/'dosbox.log').open('w') as log:subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(compile_folder/'dosbox.conf')],env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),stdout=log,stderr=log,check=True,timeout=30)
+  assert (compile_folder/'PASS.TXT').exists() and not (compile_folder/'FAIL.TXT').exists()
+  for row,name,expected in stage:
+   wire=(compile_folder/(name+'.ASX')).read_bytes();assert wire==expected,row['name'];dos_compiled[row['name']]=wire
+   row['compiled_source_sha256']=sha(compile_folder/(name+'.ASP'));row['compiled_ASX_sha256']=sha(compile_folder/(name+'.ASX'))
  original_compile=renderer.compile_source
  def compiled(source):
   case=next(r for r in rows if r['source']==source)
+  if case['name'] in dos_compiled:return dos_compiled[case['name']]
   wire=original_compile(source);assert wire.count(PAUSE)==1
   if case['name'].endswith('-truncated'):return wire[:wire.index(PAUSE)]+bytes.fromhex(case['GET_hex'])
   return wire.replace(PAUSE,bytes.fromhex(case['GET_hex']))
@@ -350,8 +379,8 @@ get_watch_data: dw 0x4757,2
   else:result['checks']['no_post_GET_execution']=b'Synth42\r' not in wire
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=False,emulated_cpu=a.cpu,
-  checker_sha256=sha(__file__),scope=__doc__+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
+ report.update(passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
+  checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  print('GET full VM:',len(report['cases']),'cases',report['passed'])
  return 0 if report['passed'] else 1

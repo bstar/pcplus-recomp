@@ -147,7 +147,8 @@ class Expression:
 
 
 class Compiler:
-    def __init__(self):
+    def __init__(self, enable_get=False):
+        self.enable_get = enable_get
         self.globals = {}
         self.counts = [0] * 4
         self.procedures = {}
@@ -438,6 +439,27 @@ class Compiler:
         else:
             self.error(f'unsupported SET setting {setting}')
 
+    def get_command(self, tokens):
+        if not self.enable_get:
+            self.error('GET requires the experimental GET compiler profile')
+        operands = tokens[1:]
+        if not operands or operands[0] in ('(', ','):
+            self.error('GET requires a writable destination')
+        parser = Expression(operands, self.line)
+        node = parser.parse(7)
+        _, wire = self.lvalue(node)
+        self.emit(0x49, wire)
+        present = parser.pos < len(operands)
+        self.emit(int(present))
+        if present:
+            if operands[parser.pos] == ',':
+                parser.pos += 1
+            if parser.pos == len(operands) or operands[parser.pos] in ('(', ','):
+                self.error('GET requires an atomic integer width')
+            self.operand(self.word_argument(parser.parse(7)), compact=True)
+        if parser.pos != len(operands):
+            self.error('unexpected GET operands')
+
     def fetch_command(self, tokens):
         # FETCH queries a setting; GET is an unrelated interactive input command.
         # Other native FETCH families remain outside the maintained subset.
@@ -569,6 +591,9 @@ class Compiler:
             self.error('BREAK does not accept operands or punctuation')
         if command == 'execute':
             self.execute_command(tokens)
+            return
+        if command == 'get':
+            self.get_command(tokens)
             return
         if command == 'fetch':
             self.fetch_command(tokens)
@@ -1028,19 +1053,20 @@ class Compiler:
         return bytes(self.output)
 
 
-def compile_source(source: str) -> bytes:
+def compile_source(source: str, *, enable_get=False) -> bytes:
     """Compile one CP437-representable ASPECT source, returning complete ASX."""
     source.encode('cp437')
-    return Compiler().compile(source)
+    return Compiler(enable_get=enable_get).compile(source)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--get', action='store_true', help='enable experimental GET grammar for a matching runtime')
     parser.add_argument('source', type=Path)
     parser.add_argument('-o', '--output', type=Path, required=True)
     args = parser.parse_args()
     try:
-        result = compile_source(args.source.read_bytes().decode('cp437'))
+        result = compile_source(args.source.read_bytes().decode('cp437'), enable_get=args.get)
     except (CompileError, UnicodeError) as error:
         parser.exit(1, f'{args.source}: {error}\n')
     args.output.write_bytes(result)

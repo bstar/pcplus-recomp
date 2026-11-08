@@ -1,0 +1,102 @@
+{
+  "checkpoint": "Opt-in GET grammar in both source compilers and compiled full-parent runtime replay",
+  "original_inputs": [],
+  "default_GET_enabled": false,
+  "experimental_GET_enabled": true,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "oracle_original_cases": 81,
+  "oracle_original_accepted": 28,
+  "oracle_original_rejected": 53,
+  "presentation_variants": 81,
+  "DOS_compilations": 324,
+  "default_refusals": 162,
+  "accepted_exact_ASX": 56,
+  "compiler_sha256": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+  "default_compiler_sha256": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+  "parent_sha256": "b25fe6d207e83e0ed1bd5ad2085aca719a324e4b2db9a0c01a0ec6c51f424d5b",
+  "child_sha256": "54590fd38a8c9992bc747d12b2ea330c6eb749f8bf7bbffcb2d9d4d0a0fe2ff1",
+  "cold_source_count": 1040,
+  "cold_ancestor_git_unavailable": true,
+  "compiled_parent_cases": 5,
+  "raw_malformed_parent_cases": 1,
+  "compiler_regression_summary": "SOURCE_EXEC 24 cases 249 checks 0 failures",
+  "exact_stdout_stderr_files": 48,
+  "serial_compilation_cases": 7,
+  "CLI_cases": 7,
+  "sources": {
+    "src/aspect/compiler.py": "12afecd9ccb22b6c3664988cc71a20756722f6a4fe5631a7d1e8bce4291e9ac9",
+    "src/aspect/compiler_commands.c": "9c04aeb8dc3ebd83aa8adbca7e7fe2934c7549b3ee4abd950576e149dd9bfa38",
+    "standalone/build_aspect_compiler_dos.py": "0e689c9c6ec749df3805c5f03948b2d8ce2f5c195b9e6676a55c7a502bee2ff1",
+    "standalone/test_aspect_get_compiler.py": "6dff0317116f24712ce3f59c39dc6371406e1a169781263ec0b9f3ff6fc4d8db",
+    "standalone/test_aspect_get_vm_dos.py": "5066d0e26c584072b30ec6ed9c1358bd5749d41ff2334188265b1653b58e6846",
+    "standalone/prove_get_vm_source.py": "1a3bdef15aeb6a707aeb65f562fb1d676c441c84a9fb2c67796d42ca1af9bad3",
+    "standalone/check_aspect_source_serial_dos.py": "cfc2cd591e5254503addeaec90b741ee441d2d9d45da4fc09c69b843df1af540",
+    "standalone/test_aspect_script_serial_dos.py": "32027cc25226f890334009767d074a3c1c162396fd79cd5cc1d0d7f38d2c78a7",
+    "standalone/fixtures/aspect_get_compiler.json": "fd4fc381fab6b38dc15f3d7c1f255af765584bd0ad5e9bbd594164eeec26d805",
+    "docs/ASPECT_GET_COMPILER.md": "622ed19db4079af46be07a5d3b18880d080bc46f789e935cbb2a017761a5d30b",
+    "docs/ASPECT_GET.md": "c15238f256b2f9dd02f03f3b0d67fa7cca54508c6271175c10aa088abcdb04b1",
+    "docs/ASPECT_GET_VM.md": "e8438b3cd5331839e4c9206aa84f6949a4d4933a2f431c434e13a52aa0d32813",
+    "docs/ASPECT_COMPILER_EXEC.md": "75a18acdc547beb4f5f381cab89df3f442532188a76c2a6ac0f097a87c24a227",
+    "docs/FEATURES.md": "0b8ee8a34683e660f26416a1dfca1f56abf97f37d652d9bc58c2cf4fea860017"
+  },
+  "evidence": {
+    "build/get-compiler-oracle-20261107/result.json": {
+      "sha256": "31780d6f393239102c428dc0fd0cdb8a78d20798250fce76ed353cd702004735",
+      "passed": true
+    },
+    "build/get-compiler-parent-final-20261107/checks.json": {
+      "sha256": "eced456d46b4ccd03e8836637354b5143382e4c77dcfec50729745f0abb04714",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/result.json": {
+      "sha256": "634ca5dc0d5957c617ce61d480009e3dc30ab6448cae2c5851af64833d5967fb",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/source/build/get-grammar/result.json": {
+      "sha256": "31780d6f393239102c428dc0fd0cdb8a78d20798250fce76ed353cd702004735",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/source/build/dos/checks.json": {
+      "sha256": "48aa2b93972351a1ac0937bec5569be06fb9990ecb98547bff1dd5def5cce472",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/source/build/compiler-exec/checks.json": {
+      "sha256": "815b943c72762ebdb1413632c1e3f7f682baa46a77df8f314b1e42e67509b2ca",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/source/build/compiler-baseline/checks.json": {
+      "sha256": "fd04694951e5198d3426a4223b80bf6021ccd2c17dc97511261292b192760d02",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/source/build/compiler-equivalence/result.json": {
+      "sha256": "1e6442e3676ee2a735c5d90162441b793453bf815a65a99e03849b1a2097f443",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/source/build/compiler-serial/checks.json": {
+      "sha256": "4125932e508c95e327406352665f2a9e062dc158c501a26691a4dbf3c8989f98",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/source/build/cli/result.json": {
+      "sha256": "f98aaffb6a350cca9b5f1101316938cdf9b3113bb417617f86e67632f8810880",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/source/build/mz/result.json": {
+      "sha256": "4d1c4d9e12a6acfe0fbf1dcd1e3580cfc0740c275e92d61e53271fa0b5048d7c",
+      "passed": true
+    },
+    "build/get-compiler-source-20261107/source/build/file/checks.json": {
+      "sha256": "efd107a88489d76e0baf3637b5b25cb1d7c180426e3648cfbc74498d50609c58",
+      "passed": true
+    }
+  },
+  "limits": [
+    "Float grammar emits recovered bytes, runtime still refuses with error4.",
+    "Ordinary mode0 only; attached runtime proves global string/int/long, cancellation and float refusal. Local/parameter/S0 runtime remains open.",
+    "Compiler widths match oracle; runtime width admission remains0..80.",
+    "Parent tests DOS386/UMB640KB with synthetic serial peer; no physical modem/ATA/SynthModem/BBS acceptance.",
+    "GET programs compiled before parent starts; three-process parent/interpreter/compiler memory admission remains open.",
+    "Repeated/EXECUTE GET, native WHEN actions, field policies, full feature/memory co-residency, ordinary8086 parent capacity and package promotion remain open."
+  ]
+}

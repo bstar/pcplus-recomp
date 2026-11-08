@@ -62,15 +62,16 @@ The [full interpreter GET checkpoint](ASPECT_GET_VM.md) now links opcode49 to
 an explicit code bank with real typed operands, native recovery and parent
 field/keyboard/serial services. Six actual DOS parent/child cases cover string,
 integer/long, cancellation and typed refusals; standalone8086 tests retain128
-strings and80-character values with mixed numeric/file ownership. Both compilers
-still refuse GET. The installed-feature-set parent and heavier keymap candidate
+strings and80-character values with mixed numeric/file ownership. Default compilers
+still refuse GET; the [opt-in compiler checkpoint](ASPECT_GET_COMPILER.md) adds
+matching grammar in both frontends and five compiled parent/interpreter cases. The installed-feature-set parent and heavier keymap candidate
 have separate capacity results: ordinary fields and FOPEN→GET now pass with the former after removing
 duplicate ASX stdio buffering; the heavier parent now also passes the six GET cases after the
 [qualified compiler executor](ASPECT_COMPILER_EXEC.md) removes3040 bytes of
 duplicate runtime footprint.24 compiler cases/249 checks,48 exact output
 comparisons and seven serial-compilation cases pass. [MZ layout accounting](ASPECT_MZ_LAYOUT.md)
 still distinguishes EXEC admission, environment overhead and peak memory. [Read-window validation](ASPECT_READ_WINDOW.md) covers113 host and218
-DOS file checks and corrects the earlier runtime7 classification. No package or physical promotion; F13 and memory/compiler gates remain
+DOS file checks and corrects the earlier runtime7 classification. No package or physical promotion; F13 and broader memory/compiler gates remain
 open. See the linked receipt for exact binaries, sources and cold reproduction.
 
 [Actual Key Mapping Help](KEYMAP_HELP.md) replaces the mislabeled Alt-Z version

@@ -129,6 +129,23 @@ static void file_command(pc_compiler *c,const command *cmd)
  }
  if(c->expression.position!=c->expression.last)bad(c);
 }
+#ifdef ASPECT_COMPILE_GET
+static void get_command(pc_compiler *c)
+{
+ unsigned n,k,present;
+ if(c->line.count<2||pc_equal(c,1,"(")||pc_equal(c,1,",")){bad(c);return;}
+ c->expression.position=1;n=parse(c);if(!pc_ready(c))return;
+ emit(c,0x49);aspect_compiler_emit_destination(&c->expression,&c->output,n,&k);
+ if(!pc_ready(c))return;
+ present=c->expression.position<c->expression.last;emit(c,present);
+ if(present){
+  if(pc_equal(c,c->expression.position,","))++c->expression.position;
+  if(c->expression.position==c->expression.last||pc_equal(c,c->expression.position,"(")||pc_equal(c,c->expression.position,",")){bad(c);return;}
+  n=parse(c);operand(c,n,1);
+ }
+ if(c->expression.position!=c->expression.last)bad(c);
+}
+#endif
 static void alarm_command(pc_compiler *c)
 {
  unsigned n,present=c->line.count>1;
@@ -195,6 +212,9 @@ void pc_commands(pc_compiler *c)
   if(selector<0){bad(c);return;}
   emit(c,0x2f);emit(c,(unsigned)selector);return;
  }
+#ifdef ASPECT_COMPILE_GET
+ if(pc_equal(c,0,"get")){get_command(c);return;}
+#endif
  if(pc_equal(c,0,"alarm")){alarm_command(c);return;}
  if(pc_equal(c,0,"dos")){external_command(c,0x28);return;}
  if(pc_equal(c,0,"run")){external_command(c,0x9b);return;}

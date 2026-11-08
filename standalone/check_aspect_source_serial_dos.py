@@ -6,11 +6,13 @@ import test_aspect_script_serial_dos as serial
 ROOT=serial.ROOT;OUT=ROOT/'build/aspect-source-serial-dos'
 def main():
  global OUT
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-runner/ASPECT.EXE');p.add_argument('--output',type=Path)
- a=p.parse_args();binary=a.runner.resolve()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-runner/ASPECT.EXE');p.add_argument('--output',type=Path);p.add_argument('--compiler',type=Path,default=ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE')
+ a=p.parse_args();binary=a.runner.resolve();serial.COMPILER=a.compiler.resolve()
  if a.output is not None:OUT=a.output.resolve();assert OUT.is_relative_to(ROOT/'build') and not OUT.exists()
  m=json.loads(binary.with_name('manifest.json').read_text());assert serial.sha(binary)==m['binary_sha256']
  for n,h in m['sources'].items():assert serial.sha(ROOT/n)==h,n
+ cm=json.loads(serial.COMPILER.with_name('manifest.json').read_text());assert serial.sha(serial.COMPILER)==cm['binary_sha256']
+ for n,h in cm['sources'].items():assert serial.sha(ROOT/n)==h,n
  OUT.mkdir(exist_ok=True);digest=serial.sha(binary)
  start='integer value,saved\nstring filename\nproc main\nvalue=42\nset break 1234\ntransmit "READY"\nfilename="NEXT.ASP"\nexecute filename\ntransmit "BAD"\nendproc\n'
  target='; padding for a real compiler interval\n'*2000+'integer value,saved\nproc main\nfetch break saved\nif value==42 && saved==1234\ntransmit "STATEOK"\nelse\ntransmit "BADSTATE"\nendif\nwaitfor "END" 5\ntransmit "DONE^M"\nendproc\n'
@@ -38,6 +40,6 @@ def main():
    before,after=struct.unpack('<II',(OUT/case['name']/'COMPTIME.BIN').read_bytes());assert after-before>=36
   print(case['name'],result['checks'])
  assert serial.sha(binary)==digest
- report=dict(passed=all(r['passed'] for r in results),runner_sha256=digest,compiler_sha256=serial.sha(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE'),checker_sha256=serial.sha(Path(__file__)),reused_checker_sha256=serial.sha(Path(serial.__file__)),cases=results,original_inputs=[],scope='Actual production nested DOS compiler and8086 ASPECT UART IRQ across N/S/H/B flow. Checked proactive XOFF/XON for S/B, raw IRQ reception, retained numeric/BREAK state, native compiled bytecode, exact unread ASIO return, vectors/PIC/MCR/guards. No resident-renderer, physical modem or external BBS claim.')
+ report=dict(passed=all(r['passed'] for r in results),runner_sha256=digest,compiler_sha256=serial.sha(serial.COMPILER),checker_sha256=serial.sha(Path(__file__)),reused_checker_sha256=serial.sha(Path(serial.__file__)),cases=results,original_inputs=[],scope='Actual production nested DOS compiler and8086 ASPECT UART IRQ across N/S/H/B flow. Checked proactive XOFF/XON for S/B, raw IRQ reception, retained numeric/BREAK state, native compiled bytecode, exact unread ASIO return, vectors/PIC/MCR/guards. No resident-renderer, physical modem or external BBS claim.')
  (OUT/'checks.json').write_text(json.dumps(report,indent=2)+'\n');assert report['passed'],[(r['name'],r['checks']) for r in results if not r['passed']]
 if __name__=='__main__':main()

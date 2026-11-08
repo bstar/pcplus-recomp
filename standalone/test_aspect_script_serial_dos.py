@@ -14,6 +14,7 @@ import threading
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
+COMPILER = ROOT / 'build/aspect-compiler-dos/ASPCOMP.EXE'
 sys.path.insert(0, str(ROOT / 'src/aspect'))
 from compiler import compile_source
 
@@ -95,7 +96,7 @@ def run(case, binary, destination, driver):
         (output/leaf).write_bytes(compile_source(source))
         dependencies[leaf]=dict(source=source,asx_sha256=sha(output/leaf))
     if case.get('source_scripts'):
-        shutil.copyfile(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE',output/'ASPCOMP.EXE')
+        shutil.copyfile(COMPILER,output/'ASPCOMP.EXE')
         for leaf, source in case['source_scripts'].items():
             assert re.fullmatch(r'[A-Z0-9_]{1,8}\.ASP',leaf),leaf
             (output/leaf).write_bytes(source.encode('cp437'))

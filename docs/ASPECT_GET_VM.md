@@ -5,8 +5,11 @@ actual source-built ASPECT interpreter. It calls the recovered GET owner through
 maintained typed readers, the serviced editor, capability22 parent metadata,
 WHEN confirmation and the native checkpoint/dispatcher error path. This is a
 full interpreter composition, beyond the earlier controlled-owner diagnostics.
-Both maintained compilers still refuse GET. Tests insert explicitly authored
-GET bytes at a unique, linear PAUSE0 instruction; this is not compiler support.
+Default compilers still refuse GET. The optional
+[GET compiler profile](ASPECT_GET_COMPILER.md) now passes five actual compiled
+scripts through this interpreter and the larger parent. Raw-mode tests still
+insert authored GET bytes at a unique PAUSE0 boundary; the malformed EOF case
+always uses authored bytes.
 The default application, selected package and installed machine are unchanged.
 F13 remains open.
 
@@ -87,8 +90,8 @@ historical; neither errno alone nor the old error label establishes a cause.
 
 Pending work includes full variable/stream/help co-residency admission,
 repeated/EXECUTE GET, actual native WHEN action composition, optional
-width/masking/origin policies in the full VM, floating support, both compiler
-frontends, package admission and connected physical acceptance. Existing
+width/masking/origin policies in the full VM, floating support, broader compiler
+coverage, package admission and connected physical acceptance. Existing
 component tests retain their narrower scope. No physical FTP, card, SIP, modem
 or BBS operation is part of this checkpoint.
 

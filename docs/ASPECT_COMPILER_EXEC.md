@@ -78,7 +78,9 @@ serial cases and the six larger-parent GET cases, plus the existing CLI, file an
 MZ calibration checks. It uses no original applications, private configuration,
 prior objects or ancestor Git.
 
-Both compilers still refuse GET syntax. Full variable/stream/help co-residency,
+Default compilers still refuse GET syntax; the optional
+[GET compiler profile](ASPECT_GET_COMPILER.md) adds matching grammar and compiled
+parent/interpreter cases. Full variable/stream/help co-residency,
 ordinary8086 attached memory, repeated/EXECUTE GET, actual WHEN action composition,
 remaining field modes/FLOAT.RTE, whole-language parity, package promotion and
 physical acceptance remain open. No installed or selected package changes.

@@ -1,9 +1,11 @@
 # Interactive GET recovery
 
-Interactive `GET` is a missing ASPECT command, distinct from the implemented
-`FETCH` settings query. It remains unsupported by the maintained compilers and
-runner until its input owner is integrated. The current release/package stays
-unchanged by this component checkpoint.
+Interactive `GET` is distinct from the implemented `FETCH` settings query.
+The default compilers and runner keep GET disabled. The experimental
+[compiler profile](ASPECT_GET_COMPILER.md) now emits the recovered ordinary GET
+grammar for the opt-in [full interpreter](ASPECT_GET_VM.md). The selected and
+installed packages remain unchanged. The component observations below retain
+their original scope.
 
 An explicit original ASPCOMP1.01 oracle, SHA256 `5664fdfa…`, compiles81 authored
 probes on owned DOS media. The28 accepted cases establish opcode49 followed by
@@ -43,8 +45,9 @@ other reader/UI/conversion/cancel imports are unexecuted stubs. A six-input
 empty public-source export reproduces the flat binary, linked diagnostic and
 complete output without originals or ancestor Git metadata.
 
-Next work is the full input owner, rather than making the compiler emit a
-command that the runner cannot execute:
+The original component recovery sequence was as follows. The linked owner and
+opt-in compiler checkpoints above now cover parts of this sequence; the full
+acceptance gates remain open:
 
 1. Bind the serviced field described below to the real display, keyboard and
    cursor services; validate limits at the owner boundary.
