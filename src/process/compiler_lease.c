@@ -1,31 +1,11 @@
 #include "compiler_lease.h"
 #include <i86.h>
+#include "compiler_lease_private.h"
+#ifdef COMPILER_LEASE_BANKED
+#pragma code_seg("LEASE_BANK", "LEASE_BANK")
+#else
 #pragma code_seg("LEASE_CODE", "FARCODE")
-#define STATE_BYTES 4352
-#define CHUNK_PARAS 256
-#define COOKIE 0x434c
-typedef struct {
- unsigned cookie,parent,keep,full,owner,token,phase,handle,crc,dos_error,created,valid,sequence,busy;
- unsigned char buffer[4096],name[96],cwd[64];
-} lease_state;
-typedef char lease_storage_fits[sizeof(lease_state)<=STATE_BYTES?1:-1];
-extern lease_state __far compiler_lease_storage;
-#define held compiler_lease_storage
-extern unsigned __far __cdecl lease_dos_context(void);
-extern unsigned __far __cdecl lease_dos_psp(void);
-extern unsigned __far __cdecl lease_dos_version(void);
-extern unsigned __far __cdecl lease_dos_drive(void);
-extern unsigned __far __cdecl lease_dos_error(void);
-extern unsigned __far __cdecl lease_dos_resize(unsigned,unsigned);
-extern unsigned __far __cdecl lease_dos_create(const unsigned char __far *);
-extern unsigned __far __cdecl lease_dos_exists(const unsigned char __far *);
-extern unsigned __far __cdecl lease_dos_open(const unsigned char __far *);
-extern unsigned __far __cdecl lease_dos_unlink(const unsigned char __far *);
-extern unsigned __far __cdecl lease_dos_close(unsigned);
-extern unsigned __far __cdecl lease_dos_rewind(unsigned);
-extern unsigned __far __cdecl lease_dos_read(unsigned,void __far *,unsigned);
-extern unsigned __far __cdecl lease_dos_write(unsigned,const void __far *,unsigned);
-extern unsigned __far __cdecl lease_dos_cwd(unsigned char __far *);
+#endif
 static unsigned word_at(unsigned seg,unsigned offset)
 {return *(unsigned __far *)MK_FP(seg,offset);}
 static unsigned block(unsigned psp,unsigned size)
@@ -95,7 +75,11 @@ unsigned __far __cdecl compiler_lease_init(unsigned parent,unsigned keep,unsigne
  held.cookie=COOKIE;held.parent=parent;held.keep=keep;held.full=full;held.token=token;
  held.handle=65535U;held.valid=1;return 0;
 }
+#ifdef COMPILER_LEASE_BANKED
+unsigned __far __cdecl compiler_lease_prepare(unsigned token,unsigned owner)
+#else
 unsigned __far __cdecl compiler_lease_begin(unsigned token,unsigned owner)
+#endif
 {
  unsigned status,seg,remaining,paras,n,i;unsigned char __far *p;
  if(held.cookie==COOKIE && held.busy)return CL_STATE;
@@ -121,22 +105,36 @@ unsigned __far __cdecl compiler_lease_begin(unsigned token,unsigned owner)
  held.handle=lease_dos_open(held.name);if(held.handle==65535U){status=failure(CL_IO);goto unchanged;}
  seg=held.parent+held.keep;remaining=held.full-held.keep;
  while(remaining){
-  paras=remaining>CHUNK_PARAS?CHUNK_PARAS:remaining;n=paras<<4;p=MK_FP(seg,0);
+  paras=remaining>VERIFY_PARAS?VERIFY_PARAS:remaining;n=paras<<4;p=MK_FP(seg,0);
   if(lease_dos_read(held.handle,held.buffer,n)!=n){status=failure(CL_IO);goto unchanged;}
   for(i=0;i<n;++i)if(p[i]!=held.buffer[i]){status=CL_CORRUPT;goto unchanged;}
   seg+=paras;remaining-=paras;
  }
  if(lease_dos_read(held.handle,held.buffer,1)!=0){status=CL_CORRUPT;goto unchanged;}
  if(lease_dos_rewind(held.handle)){status=failure(CL_IO);goto unchanged;}
+#ifdef COMPILER_LEASE_BANKED
+ held.phase=CL_PREPARED;return done(0);
+#else
  status=lease_dos_resize(held.parent,held.keep);
  if(status){status=failure(CL_RESIZE);goto unchanged;}
  held.valid=0;held.phase=CL_LENT;return done(0);
+#endif
 unchanged:
  held.valid=1;held.phase=CL_CLEANUP;
  /* Preserve the original failure; cleanup failure leaves owned state for
   * retry, and blocks beginning a different lease. */
  cleanup();return done(status);
 }
+#ifdef COMPILER_LEASE_BANKED
+unsigned __far __cdecl compiler_lease_finalize(unsigned token,unsigned owner)
+{
+ if(held.cookie==COOKIE && held.busy)return CL_STATE;
+ if(!identity(token,owner))return CL_IDENTITY;
+ if(owner!=held.owner || held.phase!=CL_CLEANUP || !held.valid ||
+    !block(held.parent,held.full))return CL_STATE;
+ held.busy=1;return done(cleanup());
+}
+#else
 unsigned __far __cdecl compiler_lease_end(unsigned token,unsigned owner)
 {
  unsigned seg,remaining,paras,n,crc=0xffff,actual;
@@ -168,3 +166,5 @@ unsigned __far __cdecl compiler_lease_info(unsigned selector)
  if(selector==9)return held.sequence;
  return 65535U;
 }
+
+#endif

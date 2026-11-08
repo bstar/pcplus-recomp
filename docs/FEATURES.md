@@ -1,11 +1,13 @@
 # Full application reconstruction checklist
 
-[Backed compiler-memory leasing](ASPECT_COMPILER_LEASE.md) now passes1,386
-DOS checks with real compiler execution, exact161,152-byte restoration, PSP/MCB
-ownership, no-inherit handles, collisions and failed-grow retry. A28-source cold
-rebuild reproduces the component. Production integration remains open: its7.1KB
-footprint exceeds current startup headroom and needs banking plus full-parent
-UART/UI/outer-loan admission. No deployed or full-parity change is claimed.
+[Banked compiler-memory leasing](ASPECT_COMPILER_LEASE.md) now passes1,416
+DOS checks with actual compiler execution over the temporary code bank, exact
+161,152-byte restoration, CRC-rejection quarantine/retry, PSP/MCB ownership,
+no-inherit handles, collisions and failed-grow recovery. Resident sections total
+2,241 bytes before alignment, down from7,133. A31-source cold rebuild reproduces
+the component; the unbanked1,386-check regression also passes. Production bank
+placement, bridge admission and full-parent UART/UI/outer-loan integration
+remain open. No deployed or full-parity change is claimed.
 
 [Compiler residency](ASPECT_COMPILER_MEMORY.md) is now measured under the full
 parent: startup and EXECUTE source compilation both fail for memory, with only

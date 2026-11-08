@@ -166,7 +166,12 @@ error_value:
  mov ax,0xffff
  leave
 last_error: dw 0
+%ifdef COMPILER_LEASE_BANKED
+%define LEASE_BYTES 512
+%else
+%define LEASE_BYTES 4352
+%endif
 SEGMENT LEASE_STORAGE public align=16 class=FAR_DATA use16
 global _compiler_lease_storage
 _compiler_lease_storage: dw 0
- resb 4350
+ resb LEASE_BYTES-2

@@ -2,9 +2,10 @@
 
 The [backed memory-lease component](ASPECT_COMPILER_LEASE.md) now runs the
 real compiler and restores161,152 bytes in a profile-sized DOS fixture, including
-failed-grow retry and ownership checks. It is not production-integrated. Its
-7.1KB footprint also exceeds the current startup headroom, so banked admission
-remains required; the full-parent failures below are not fixed yet.
+failed-grow retry and ownership checks. Its banked variant now retains only
+2,241 bytes before alignment and restores its own compiler-overwritten code
+bank;1,416 checks and a31-source cold rebuild pass. Production bank placement
+and bridge admission remain open; the full-parent failures below are not fixed.
 
 
 Source compilation currently fails under the full experimental parent and GET
