@@ -48,7 +48,10 @@ _runtime_external_execute:
  ret
 runtime_external_abort_gate:
  cmp word [cs:checkpoint_ready],1
-%ifdef ASPECT_ALARM_VM
+%ifdef ASPECT_GET_VM
+ extern runtime_get_abort_gate
+ jne runtime_get_abort_gate
+%elifdef ASPECT_ALARM_VM
  extern runtime_alarm_abort_gate
  jne runtime_alarm_abort_gate
 %else

@@ -18,7 +18,11 @@ nine-input source rebuild. The optional [capability21 RPC](ASPECT_GET_RPC.md)
 now passes35 actual full-parent bridge replays,271 DOS child-client checks and
 a752-input exact public-source reproduction. The complete experimental child
 also links; independent tests still model their peer services. Actual child/serial
-composition, native abort lifetime and application memory/package gates remain open.
+composition and application memory/package gates remain open. A subsequent
+[native abort checkpoint](ASPECT_GET_CHECKPOINT.md) passes the142 recovered-owner
+cases plus12 injected faults/retries and a16-input exact rebuild. It restores
+the owning stack; display/WHEN resource cleanup and actual interpreter lifetime
+integration remain open.
 The field/input owner is not integrated: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.

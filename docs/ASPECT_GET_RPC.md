@@ -55,7 +55,9 @@ PSP; the reviewed parent requires479,408 plus PSP. DGROUP remains65,520 bytes,
 with the existing63,000-byte history and redisplay snapshot capacities retained.
 Whole parent/child runtime capacity and package admission remain unverified.
 
-Actual child EXE-to-parent GET execution, native abort checkpoints, field buffer
+The subsequent [native checkpoint](ASPECT_GET_CHECKPOINT.md) separately proves
+GET stack restoration. Its field/WHEN cleanup integration remains open.
+Actual child EXE-to-parent GET execution, field buffer
 and destination lifetimes, serviced receive/repaint composition, FLOAT.RTE,
 both compiler grammars/opcode49, connected scripts and package/memory/physical
 acceptance remain open. No live serial, BBS, SIP or physical machine was probed.

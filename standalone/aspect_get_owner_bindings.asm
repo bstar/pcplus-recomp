@@ -5,7 +5,142 @@ CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern aspect_get,aspect_get_numeric_filter
 global _owner_call,_owner_numeric_filter,_owner_string_filter
+%ifdef ASPECT_GET_CHECKPOINT
+extern _runtime_get_native,runtime_get_abort_gate
+global _owner_checkpoint_guards,_owner_checkpoint_abi,_owner_checkpoint_foreign,_owner_checkpoint_flags,_owner_checkpoint_foreign_stack
+_owner_call:
+ push bp
+ push si
+ push di
+ push bx
+ push es
+ mov bp,0x1234
+ mov si,0x2345
+ mov di,0x3456
+ mov bx,0x4567
+ mov ax,0x5678
+ mov es,ax
+ call _runtime_get_native
+ cmp bp,0x1234
+ jne .bad
+ cmp si,0x2345
+ jne .bad
+ cmp di,0x3456
+ jne .bad
+ cmp bx,0x4567
+ jne .bad
+ push es
+ pop dx
+ cmp dx,0x5678
+ je .done
+.bad:
+ mov word [cs:_owner_abi_failed],1
+.done:
+ pop es
+ pop bx
+ pop di
+ pop si
+ pop bp
+ ret
+_owner_checkpoint_guards:
+ pushf
+ cli
+ call _runtime_get_native
+ popf
+ cmp ax,3
+ jne .bad
+ pushf
+ std
+ call _runtime_get_native
+ popf
+ cmp ax,3
+ jne .bad
+ push ds
+ mov ax,ss
+ inc ax
+ mov ds,ax
+ call _runtime_get_native
+ pop ds
+ cmp ax,3
+ jne .bad
+ call runtime_get_abort_gate ; inactive checkpoint delegates to dispatcher
+ cmp word [cs:fallback_calls],1
+ jne .bad
+ xor ax,ax
+ ret
+.bad:
+ mov ax,1
+ ret
+global _owner_abort_native
+_owner_abort_native:
+ test word [cs:_owner_foreign_abort],1
+ jz .interrupts
+ mov ax,0x7000
+ mov ds,ax ; an abandoned same-stack service with borrowed DS
+.interrupts:
+ test word [cs:_owner_foreign_abort],2
+ jz .gate
+ cli
+.gate:
+ jmp runtime_get_abort_gate
+; Explicit modeled final dispatcher boundary, only called by the guard test.
+global aspect_abort_recovered
+aspect_abort_recovered:
+ inc word [cs:fallback_calls]
+ ret
+; No C, DOS, BIOS or IRQ can run on this diagnostic foreign stack. A foreign
+; SS must delegate and leave the actual GET checkpoint armed for its own owner.
+_owner_checkpoint_foreign_stack:
+ pushf
+ pop word [cs:foreign_flags]
+ mov [cs:foreign_ss],ss
+ mov [cs:foreign_sp],sp
+ mov ax,[cs:fallback_calls]
+ inc ax
+ mov [cs:foreign_expected],ax
+ cli
+ mov ax,cs
+ mov ss,ax
+ mov sp,foreign_top
+ call runtime_get_abort_gate
+ mov ax,[cs:foreign_ss]
+ mov ss,ax
+ mov sp,[cs:foreign_sp]
+ push word [cs:foreign_flags]
+ popf
+ mov ax,[cs:fallback_calls]
+ cmp ax,[cs:foreign_expected]
+ mov ax,1
+ jne .done
+ xor ax,ax
+.done:
+ ret
+foreign_ss: dw 0
+foreign_sp: dw 0
+foreign_flags: dw 0
+foreign_expected: dw 0
+ times 64 dw 0
+foreign_top:
+_owner_checkpoint_flags:
+ pushf
+ pop ax
+ ret
+_owner_checkpoint_abi:
+ mov ax,[cs:_owner_abi_failed]
+ ret
+_owner_checkpoint_foreign:
+ push bp
+ mov bp,sp
+ mov ax,[bp+4]
+ mov [cs:_owner_foreign_abort],ax
+ pop bp
+ ret
+_owner_abi_failed: dw 0
+_owner_foreign_abort: dw 0
+fallback_calls: dw 0
+%else
 _owner_call: jmp aspect_get
+%endif
 _owner_numeric_filter: mov ax,aspect_get_numeric_filter
  ret
 _owner_string_filter: mov ax,aspect_get_string_filter

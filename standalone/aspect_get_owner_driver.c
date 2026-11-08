@@ -7,6 +7,12 @@
 #include <malloc.h>
 #include <dos.h>
 #include "get_field.h"
+#ifdef ASPECT_GET_CHECKPOINT
+#include "get_checkpoint.h"
+extern void owner_abort_native(void),owner_checkpoint_foreign(unsigned);
+extern unsigned owner_checkpoint_guards(void),owner_checkpoint_abi(void),owner_checkpoint_flags(void),owner_checkpoint_foreign_stack(void);
+static unsigned checkpoint_fault;
+#endif
 extern void owner_call(void);
 extern unsigned owner_numeric_filter(void),owner_string_filter(void);
 extern unsigned owner_lookahead,owner_scratch_pointer,owner_row,owner_column,owner_attribute,owner_wrap,owner_rows,owner_columns,owner_origin,owner_failure,owner_keys_disabled,owner_float_pointer,owner_file,owner_frame;
@@ -18,16 +24,38 @@ static unsigned key_words[128],key_count,key_index,confirm_value,field_calls,fie
 static char float_text[82],expected_float[82];
 static struct {unsigned char *pointer;int count;} synthetic_file;
 static get_field_state field;
+#ifndef ASPECT_GET_CHECKPOINT
 static jmp_buf owner_jump;
-void owner_error(unsigned code){error_code=code;longjmp(owner_jump,1);}
+#endif
+void owner_error(unsigned code){error_code=code;
+#ifdef ASPECT_GET_CHECKPOINT
+ owner_abort_native();exit(31);
+#else
+ longjmp(owner_jump,1);
+#endif
+}
 void owner_unexpected(void){owner_error(0xfffe);}
 unsigned owner_read_byte(void)
 {if(synthetic_file.count<=0)owner_unexpected();--synthetic_file.count;return *synthetic_file.pointer++;}
 unsigned owner_read_word(void){unsigned lo=owner_read_byte();return lo|(owner_read_byte()<<8);}
 unsigned owner_cursor(void){return position;}
-void owner_position(unsigned row,unsigned column){position=(row<<8)|column;++position_calls;}
-unsigned owner_confirm(void){++confirm_calls;return confirm_value;}
-void owner_cancel(void){++cancel_calls;longjmp(owner_jump,2);}
+void owner_position(unsigned row,unsigned column){
+#ifdef ASPECT_GET_CHECKPOINT
+ if(checkpoint_fault==2)owner_error(9);
+#endif
+ position=(row<<8)|column;++position_calls;}
+unsigned owner_confirm(void){++confirm_calls;
+#ifdef ASPECT_GET_CHECKPOINT
+ if(checkpoint_fault==3)owner_error(9);
+#endif
+ return confirm_value;}
+void owner_cancel(void){++cancel_calls;
+#ifdef ASPECT_GET_CHECKPOINT
+ owner_abort_native();exit(32);
+#else
+ longjmp(owner_jump,2);
+#endif
+}
 void owner_bell(void){++bells;}
 void owner_float(unsigned selector)
 {
@@ -37,10 +65,16 @@ void owner_float(unsigned selector)
 unsigned owner_field(unsigned callback,unsigned masked,unsigned width,unsigned initial,unsigned output,unsigned attribute,unsigned start)
 {
  unsigned status,key;unsigned char text[82];
+#ifdef ASPECT_GET_CHECKPOINT
+ if(owner_checkpoint_foreign_stack() || runtime_get_native_active()!=1 || runtime_get_native()!=GET_NATIVE_BUSY || runtime_get_native_active()!=1)owner_unexpected();
+#endif
  ++field_calls;field_width=width;field_callback=callback==owner_numeric_filter();
  if(attribute!=13 || callback!=(field_callback?owner_numeric_filter():owner_string_filter()) || initial)owner_unexpected();
  if(get_field_begin(&field,(const unsigned char __far *)0,width,field_callback,masked,1,0x0607))owner_unexpected();
  while(field.phase==GET_FIELD_ACTIVE){
+#ifdef ASPECT_GET_CHECKPOINT
+  if(checkpoint_fault==1 && key_index==1)owner_error(9);
+#endif
   if(key_index==key_count)owner_unexpected();key=key_words[key_index++];
   status=get_field_key(&field,key);if(status==GET_FIELD_BELL)++bells;else if(status==GET_FIELD_ARGUMENT)owner_unexpected();
  }
@@ -63,6 +97,9 @@ int main(void)
  FILE *f=fopen("CASES.BIN","rb");unsigned count,index,token,size,n,i,stream_size,expected_error,expected_return,expected_failure,expected_calls,expected_width,expected_numeric,expected_bells,expected_position_calls,expected_position,expected_confirm,expected_cancel,expected_float_calls,jump;
  unsigned char __far *far_string;void __far *destination;
  if(!f || ds()!=ss() || FP_SEG(get_field_key)==cs())return 1;far_string=_fmalloc(82);if(!far_string)return 2;
+#ifdef ASPECT_GET_CHECKPOINT
+ if(owner_checkpoint_guards() || runtime_get_native_active() || runtime_get_native_aborted())return 13;
+#endif
  if(word(f)!=0x474f)return 3;count=word(f);
  for(index=0;index<count;++index){
   token=word(f);owner_row=word(f);owner_column=word(f);owner_wrap=word(f);owner_keys_disabled=word(f);confirm_value=word(f);
@@ -85,12 +122,44 @@ int main(void)
   _fmemcpy(destination,before,size);
   synthetic_file.pointer=stream;synthetic_file.count=stream_size;owner_file=(unsigned)&synthetic_file;
   key_index=field_calls=field_width=field_callback=bells=position_calls=float_calls=confirm_calls=cancel_calls=error_code=0;position=(owner_row<<8)|owner_column;float_text[0]=0;
+#ifdef ASPECT_GET_CHECKPOINT
+  if(runtime_get_native_active())return 11;
+  owner_checkpoint_foreign(index&3);owner_call();jump=runtime_get_native_aborted();
+  if(owner_checkpoint_abi() || (owner_checkpoint_flags()&0x0600)!=0x0200)return 14;
+  if(runtime_get_native_active())return 12;
+#else
   jump=setjmp(owner_jump);if(!jump)owner_call();
+#endif
   if(error_code!=expected_error || (!jump)!=expected_return || owner_failure!=expected_failure || field_calls!=expected_calls || (field_calls && (field_width!=expected_width || field_callback!=expected_numeric)) || bells!=expected_bells || position_calls!=expected_position_calls || (position_calls && position!=expected_position) || confirm_calls!=expected_confirm || cancel_calls!=expected_cancel || float_calls!=expected_float_calls || strcmp(float_text,expected_float) || _fmemcmp(destination,expected,size) || ds()!=ss()){
    printf("FAIL owner %u err=%u/%u return=%u/%u failure=%u/%u field=%u/%u width=%u/%u bells=%u/%u\r\n",index,error_code,expected_error,!jump,expected_return,owner_failure,expected_failure,field_calls,expected_calls,field_width,expected_width,bells,expected_bells);return 8;
   }
   if(synthetic_file.count || key_index!=key_count)return 9;
  }
  if(fgetc(f)!=EOF || fclose(f))return 10;_ffree(far_string);
+#ifdef ASPECT_GET_CHECKPOINT
+ /* Authored faults inside the field, after field acceptance before typed
+  * conversion, and inside abort confirmation. Destination cannot be committed
+  * by an abandoned owner, even if its scratch field accepted first. */
+ for(index=1;index<=3;++index)for(n=0;n<4;++n){
+  checkpoint_fault=index;owner_checkpoint_foreign(n);
+  stream[0]=141;stream[1]=0;stream[2]=1;stream[3]=171;stream[4]=10;stream[5]=0;
+  synthetic_file.pointer=stream;synthetic_file.count=6;
+  owner_row=5;owner_column=0;owner_origin=owner_lookahead=owner_failure=owner_exit_state=owner_keys_disabled=0;
+  key_words[0]=index==3?27:'4';key_words[1]='2';key_words[2]=13;
+  key_count=index==3?1:3;key_index=0;confirm_value=1;error_code=0;
+  owner_integer_b[0]=0xbeef;strcpy((char *)scratch,"123");
+  owner_call();
+  if(error_code!=9 || runtime_get_native_aborted()!=1 || runtime_get_native_active() || owner_integer_b[0]!=0xbeef || owner_checkpoint_abi() || (owner_checkpoint_flags()&0x0600)!=0x0200){printf("FAIL checkpoint fault %u mode%u err%u aborted%u active%u dest%u ABI%u flags%u\n",index,n,error_code,runtime_get_native_aborted(),runtime_get_native_active(),owner_integer_b[0],owner_checkpoint_abi(),owner_checkpoint_flags());return 15;}
+  if(field.phase!=(index==1?GET_FIELD_ACTIVE:index==2?GET_FIELD_ACCEPT:GET_FIELD_CANCEL)){printf("FAIL checkpoint phase %u mode%u phase%u\n",index,n,field.phase);return 16;}
+  if(index==2 && strcmp((char *)scratch,"42")){printf("FAIL checkpoint scratch %s\n",scratch);return 17;}
+  /* Same process is reusable after every restored native stack. */
+  checkpoint_fault=0;synthetic_file.pointer=stream;synthetic_file.count=6;
+  key_words[0]='4';key_count=3;key_index=error_code=0;owner_lookahead=0;
+  owner_call();
+  if(error_code || runtime_get_native_aborted() || runtime_get_native_active() || owner_integer_b[0]!=42 || owner_checkpoint_abi() || (owner_checkpoint_flags()&0x0600)!=0x0200){printf("FAIL checkpoint retry %u mode%u err%u aborted%u active%u dest%u ABI%u flags%u\n",index,n,error_code,runtime_get_native_aborted(),runtime_get_native_active(),owner_integer_b[0],owner_checkpoint_abi(),owner_checkpoint_flags());return 18;}
+ }
+ printf("PASS GET CHECKPOINT %u cases;12 injected faults/retries; recovered owner/readers/integer CRT; native abort restored DS=SS\r\n",count);return 0;
+#else
  printf("PASS GET OWNER %u cases; recovered readers/field/integer CRT; opaque float boundary; DS=SS\r\n",count);return 0;
+#endif
 }
