@@ -6,6 +6,20 @@
 BITS 16
 CPU 8086
 %include "encodings.inc"
+%ifdef ASPECT_GET_CONTEXT
+ %ifdef ASPECT_GET_FLAT
+  %error Context bindings are not a flat-byte recovery mode
+ %endif
+ %define aspect_get_row _runtime_get_row
+ %define aspect_get_column _runtime_get_column
+ %define aspect_get_attribute _runtime_get_attribute
+ %define aspect_get_columns _runtime_get_columns
+ %define aspect_get_rows _runtime_get_rows
+ %define aspect_get_cursor_origin _runtime_get_origin
+ %define aspect_get_wrap _runtime_get_wrap
+ %define aspect_get_scratch _runtime_script_file_mode_pointer
+ %define aspect_get_keys_disabled _runtime_when_keyboard_disabled
+%endif
 %ifdef ASPECT_GET_FLAT
 ORG 0xf280
 %define aspect_dispatch_read 0x4cb4

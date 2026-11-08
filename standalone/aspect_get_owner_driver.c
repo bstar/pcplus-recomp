@@ -9,6 +9,10 @@
 #include "get_field.h"
 #ifdef ASPECT_GET_SERVICED
 #include "get_runtime.h"
+#ifdef ASPECT_GET_CONTEXT
+#include "get_context.h"
+extern void owner_serviced_origin(unsigned);
+#endif
 extern void owner_serviced_prepare(void),owner_serviced_finish(void);
 extern unsigned runtime_get_native_field_inner(unsigned,unsigned,unsigned,unsigned,unsigned,unsigned,unsigned);
 #define owner_field runtime_get_native_field
@@ -84,6 +88,9 @@ unsigned owner_field(unsigned callback,unsigned masked,unsigned width,unsigned i
 #ifdef ASPECT_GET_CHECKPOINT
  if(owner_checkpoint_foreign_stack() || runtime_get_native_active()!=1 || runtime_get_native()!=GET_NATIVE_BUSY || runtime_get_native_active()!=1)owner_unexpected();
 #endif
+#ifdef ASPECT_GET_CONTEXT
+ if(runtime_get_context_policy(1)!=10)owner_unexpected();
+#endif
  ++field_calls;field_width=width;field_callback=callback==owner_numeric_filter();
  if(attribute!=13 || callback!=(field_callback?owner_numeric_filter():owner_string_filter()) || initial)owner_unexpected();
 #ifdef ASPECT_GET_SERVICED
@@ -146,14 +153,38 @@ int main(void)
 #ifdef ASPECT_GET_CHECKPOINT
 #ifdef ASPECT_GET_SERVICED
   owner_serviced_prepare();
+#ifdef ASPECT_GET_CONTEXT
+  if(!index){
+   if(runtime_get_context_policy(2)!=7)return 40;
+   owner_call();
+   if(!runtime_get_native_aborted() || error_code!=10 || synthetic_file.count!=stream_size || key_index || field_calls)return 41;
+   owner_serviced_finish();error_code=0;owner_serviced_origin(52);owner_serviced_prepare();
+   owner_call();owner_serviced_finish();
+   if(runtime_get_native_aborted() || error_code || position!=0x0639 || _fmemcmp(destination,expected,size) || synthetic_file.count || key_index!=key_count)return 42;
+   owner_serviced_origin(0);_fmemcpy(destination,before,size);
+   synthetic_file.pointer=stream;synthetic_file.count=stream_size;key_index=field_calls=field_width=field_callback=bells=position_calls=float_calls=confirm_calls=cancel_calls=error_code=0;owner_lookahead=owner_failure=0;
+   position=(owner_row<<8)|owner_column;owner_serviced_prepare();
+  }
+#endif
 #endif
   if(runtime_get_native_active())return 11;
   owner_checkpoint_foreign(index&3);owner_call();jump=runtime_get_native_aborted();
 #ifdef ASPECT_GET_SERVICED
   if(jump && runtime_get_field_recover()){printf("FAIL serviced cleanup %u\n",index);return 36;}
   owner_serviced_finish();
+#ifdef ASPECT_GET_CONTEXT
+  if(owner_row==23 && !owner_wrap)expected_width=5;
+  if(owner_row>=24 || (owner_row==23 && owner_wrap)){
+#else
   if(owner_row>=23){
-   if(error_code!=7 || !jump || key_index || position_calls || _fmemcmp(destination,before,size) || synthetic_file.count){printf("FAIL serviced view %u err%u jump%u key%u pos%u file%u\n",index,error_code,jump,key_index,position_calls,synthetic_file.count);return 37;}
+#endif
+   if(error_code!=7 || !jump || key_index || position_calls || _fmemcmp(destination,before,size) || synthetic_file.count!=
+#ifdef ASPECT_GET_CONTEXT
+     (owner_row>=24?stream_size:0)
+#else
+     0
+#endif
+    ){printf("FAIL serviced view %u err%u jump%u key%u pos%u file%u\n",index,error_code,jump,key_index,position_calls,synthetic_file.count);return 37;}
    continue;
   }
 #endif
@@ -193,7 +224,11 @@ int main(void)
  }
 #endif
 #ifdef ASPECT_GET_SERVICED
+#ifdef ASPECT_GET_CONTEXT
+ printf("PASS CONTEXT GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals; shared scratch; origin52\r\n");return 0;
+#else
  printf("PASS SERVICED GET OWNER %u cases;137 native matches;5 protected-view refusals; actual field/WHEN/client; opaque float boundary\r\n",count);return 0;
+#endif
 #else
  printf("PASS GET CHECKPOINT %u cases;12 injected faults/retries; recovered owner/readers/integer CRT; native abort restored DS=SS\r\n",count);return 0;
 #endif

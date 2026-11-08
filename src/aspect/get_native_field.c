@@ -22,7 +22,11 @@ unsigned __cdecl runtime_get_native_field(unsigned callback,unsigned masked,unsi
   if(n==81){fail(ASPECT_RUN_OPERAND);return 65535U;}
   memcpy(seed,(const void *)initial,n+1);source=seed;
  }
- status=runtime_get_field_begin(start,attribute,width,numeric,masked,source);
+ if(runtime_get_anchor_active()){
+  n=runtime_get_anchor_info(0);status=runtime_get_anchor_info(1);
+  if((n&0xff00U)!=0xf000U || (status&0xff00U)!=0xf000U || (((status&255)<<8)|(n&255))!=start){fail(ASPECT_RUN_STATE);return 65535U;}
+  status=runtime_get_field_configure(attribute,width,numeric,masked,source);
+ }else status=runtime_get_field_begin(start,attribute,width,numeric,masked,source);
  if(status){fail(status);return 65535U;}
  while(runtime_get_field_phase()==GET_FIELD_ACTIVE){
   status=runtime_get_field_poll();if(status){fail(status);return 65535U;}

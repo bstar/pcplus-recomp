@@ -52,7 +52,18 @@ _runtime_get_native:
 .generation_ready:
  mov word [cs:get_aborted],0
  mov word [cs:get_checkpoint],1
+%ifdef ASPECT_GET_CONTEXT
+ extern _runtime_get_context_enter,_runtime_get_context_leave
+ call _runtime_get_context_enter
+ or ax,ax
+ jnz runtime_get_abort_gate
+%endif
  call aspect_get
+%ifdef ASPECT_GET_CONTEXT
+ call _runtime_get_context_leave
+ or ax,ax
+ jnz runtime_get_abort_gate
+%endif
  mov word [cs:get_checkpoint],0
 .return:
  pop es

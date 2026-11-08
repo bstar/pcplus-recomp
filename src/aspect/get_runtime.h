@@ -8,6 +8,11 @@
  * generation. Error end discards output. Recovery after a matching caught abort
  * retires display before discarding abandoned WHEN bookkeeping. Failed cleanup
  * retains ownership for retry and blocks reuse; it never clears another owner. */
+/* Reserve an invisible parent/keyboard anchor before operand parsing. */
+unsigned runtime_get_anchor_begin(unsigned);
+unsigned runtime_get_anchor_active(void);
+unsigned runtime_get_anchor_info(unsigned);
+unsigned runtime_get_field_configure(unsigned,unsigned,unsigned,unsigned,const unsigned char __far *);
 unsigned runtime_get_field_begin(unsigned,unsigned,unsigned,unsigned,unsigned,const unsigned char __far *);
 unsigned runtime_get_field_poll(void);
 unsigned runtime_get_field_phase(void);

@@ -1,5 +1,9 @@
 # Recovered GET owner with the serviced field
 
+The subsequent [context checkpoint](ASPECT_GET_CONTEXT.md) supplies view metadata
+before operands, explicit policy and shared scratch aliases. Its current far
+record is206 bytes; the202-byte evidence below describes this earlier checkpoint.
+
 The recovered GET owner now runs against the maintained field adapter,
 keyboard/service lease and child renderer client in a DOS diagnostic. This moves
 the command's typed readers, string writeback, integer/long conversion and cancel

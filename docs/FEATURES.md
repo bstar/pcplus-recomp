@@ -29,6 +29,10 @@ The [recovered owner with serviced field](ASPECT_GET_NATIVE_FIELD.md) now passes
 137 original-observation matches plus5 explicit protected-view refusals, with
 a34-source exact rebuild. It also exposed and fixes a far-heap layout conflict;
 the updated lifecycle diagnostic passes759 checks with a real heap sentinel.
+The [context checkpoint](ASPECT_GET_CONTEXT.md) now captures parent view metadata
+before operands and aliases the original shared scratch role. Its36-source
+reproduction covers137 native matches,1 view-rebased clip,4 protected-view
+refusals, explicit policy and origin52. Full-interpreter linkage remains open.
 Application GET remains disabled: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.
