@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Full-parent compiler refusals](ASPECT_COMPILER_REFUSALS.md) now cover missing,
+corrupt and truncated modules plus source syntax errors at startup and EXECUTE.
+They exposed and fixed the bridge's I/O-versus-stack result mismatch. The same
+parent retains normal source and GET regression coverage. Restore-failure
+quarantine, same-parent repair and physical/package acceptance remain open.
+
 [Live compiler bridge](ASPECT_COMPILER_BRIDGE.md) now runs the actual DOS source
 compiler under the complete parent for startup and EXECUTE, then returns through
 GET and ordinary terminal input. This opt-in capability23 checkpoint preserves

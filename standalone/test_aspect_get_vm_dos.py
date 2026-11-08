@@ -125,12 +125,20 @@ def source_memory_definitions():
   expected_exit=8,field_BIOS_words=[],scripts={'NEXT':following},expect_GET_boundary=True)
  return [start,execute]
 
+def source_fault_definitions():
+ rows=[]
+ for fault in ('missing','corrupt','truncated','compiler-error'):
+  for base in source_memory_definitions():
+   rows.append(dict(base,name=base['name']+'-'+fault,source_fault=fault,expected_exit=5))
+ return rows
+
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--parent-dir',required=True,type=Path);p.add_argument('--child-dir',required=True,type=Path)
  p.add_argument('--output',required=True,type=Path);p.add_argument('--case',action='append')
  p.add_argument('--cpu',choices=('8086','386'),default='386')
  p.add_argument('--source-lease-cases',action='store_true',help='Require successful startup/EXECUTE source compilation through the parent lease')
+ p.add_argument('--source-lease-fault-cases',action='store_true',help='Require safe startup/EXECUTE return after module refusal or compiler syntax error')
  p.add_argument('--source-memory-cases',action='store_true',help='Diagnose startup and EXECUTE source compilation under the complete parent')
  p.add_argument('--policy-cases',action='store_true',help='Run default/boundary widths and bottom-row shown/hidden status policy')
  p.add_argument('--storage-cases',action='store_true',help='Run local and parameter string/int/long GET plus builtin S0 with frame guards')
@@ -153,12 +161,13 @@ def main():
  child_map=(child/'ASPECT.map').read_text();group=re.search(r'DGROUP\s+([0-9a-f]+):([0-9a-f]+)',child_map,re.I)
  child_base=int(group[1],16)*16+int(group[2],16)
  child_symbols={n:int(s,16)*16+int(o,16)-child_base for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)\s*$',child_map,re.M|re.I)}
- assert sum((a.source_lease_cases,a.source_memory_cases,a.policy_cases,a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
- rows=source_memory_definitions() if a.source_memory_cases or a.source_lease_cases else policy_definitions() if a.policy_cases else storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
+ assert sum((a.source_lease_fault_cases,a.source_lease_cases,a.source_memory_cases,a.policy_cases,a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
+ rows=source_fault_definitions() if a.source_lease_fault_cases else source_memory_definitions() if a.source_memory_cases or a.source_lease_cases else policy_definitions() if a.policy_cases else storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
  if a.source_lease_cases:
   for row in rows:
    row.update(source_lease=True,success=True,expected_exit=0,field_BIOS_words=definitions()[0]['field_BIOS_words'],expect_GET_boundary=True)
- if a.source_lease_cases or a.source_memory_cases or a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
+ if a.source_lease_fault_cases or a.source_lease_cases or a.source_memory_cases or a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
+ if a.source_lease_fault_cases:assert a.allocation_probe
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
@@ -225,7 +234,7 @@ def main():
   prm=settings,directory=lambda:renderer.directory(profile=4),
   PARENT_BINARY=parent/'TERMINAL.EXE',CHILD_BINARY=child/'ASPECT.EXE')
  allocation_fields=[('_runtime_script_file_open_calls',0),('_runtime_script_file_live',0),('_runtime_script_file_last',0),('_runtime_native_error_code',0),('_runtime_steps',0),('_runtime_live',0),('_runtime_alloc_calls',0),('___nheapbeg',0),('__curbrk',0),('__STACKLOW',0),('__STACKTOP',0)]
- if a.source_memory_cases or a.source_lease_cases:allocation_fields += [('_runtime_compiler_exit',0),('_runtime_compiler_dos_error',0)]
+ if a.source_memory_cases or a.source_lease_cases or a.source_lease_fault_cases:allocation_fields += [('_runtime_compiler_exit',0),('_runtime_compiler_dos_error',0)]
  allocation_names=[n for n,d in allocation_fields]+['PSP_allocation_paragraphs','environment_paragraphs','environment_string_bytes']
  active_case=[None]
  def adapter():
@@ -244,6 +253,9 @@ def main():
     kwargs['files']['ASPCOMP.EXE']=(a.get_compiler_dir/'ASPCOMP.EXE').read_bytes()
     if case['source_memory']=='start':kwargs['files'].pop('LOGIN.ASX')
     else:kwargs['files']['NEXT.ASX']=renderer.compile_source('proc main\ntransmit "STALE"\nendproc\n')
+   if case.get('source_fault')=='compiler-error':
+    leaf='LOGIN' if case['source_memory']=='start' else 'NEXT'
+    kwargs['files'][leaf+'.ASP']=kwargs['files'][leaf+'.ASP'].replace(b'endproc',b'not_a_command\nendproc',1)
    return run(*args,**dict(kwargs,cpu=a.cpu,profile=4,timeout=45,online_triggers=[(trigger.encode('ascii'),[(delay,data.encode('ascii')) for delay,data in chunks]) for trigger,chunks in case.get('peer_triggers',())]))
   module.run=configured;return module
  def observer(offsets):
@@ -564,10 +576,20 @@ get_watch_data: dw 0x4757,2
  scope.update(adapter=adapter,observer=observer)
  def case_observer(case,offsets):active_case[0]=case;return observer(offsets)
  scope['case_observer']=case_observer
+ def kernel_fixture(case,folder):
+  path=folder/'PCCOMP.OVL';fault=case.get('source_fault')
+  if fault=='missing':path.unlink()
+  elif fault in ('corrupt','truncated'):
+   data=bytearray(path.read_bytes())
+   if fault=='corrupt':data[0]^=1
+   else:data.pop()
+   path.write_bytes(data)
+  case['kernel_fixture_sha256']=sha(path) if path.exists() else None
+ scope['kernel_fixture']=kernel_fixture
  if (parent/'PCCOMP.OVL').exists():
   marker="shutil.copyfile(runner,folder/'ASPECT.EXE');";assert source.count(marker)==1
   scope['PARENT_KERNEL']=parent/'PCCOMP.OVL'
-  source=source.replace(marker,marker+"shutil.copyfile(PARENT_KERNEL,folder/'PCCOMP.OVL');")
+  source=source.replace(marker,marker+"shutil.copyfile(PARENT_KERNEL,folder/'PCCOMP.OVL');kernel_fixture(case,folder);")
  old="  shutil.copyfile(OUT/'observer.asm',folder/'observer.asm')";assert source.count(old)==1
  source=source.replace(old,"  compiled_observer,modes,policy_pairs,snapshots=case_observer(case,map_offsets(maps[0]))\n"+old)
  sys.argv=[sys.argv[0],'--label',out.name,'--terminal-sha256',sha(parent/'TERMINAL.EXE'),'--runner-sha256',sha(child/'ASPECT.EXE')]
@@ -618,12 +640,22 @@ get_watch_data: dw 0x4757,2
     result['startup_error_retained_after_return']=result['checks'].pop('typed_error_stays_in_parent')
     result['checks']['startup_error_restored_view']=not result['startup_error_retained_after_return']
     result['startup_prompt_visibility_established']=prompt_seen==1
-   result['checks']['actual_compiler_EXEC_attempt']=attempts==1 and result['child_exit_probe']['compiler_calls']==1 and any(n.upper().endswith('ASPCOMP.EXE') for n in result['observed_EXEC_names'])
+   expected_attempts=0 if case.get('source_fault') in ('missing','corrupt','truncated') else 1
+   result['checks']['actual_compiler_EXEC_attempt']=attempts==expected_attempts and result['child_exit_probe']['compiler_calls']==expected_attempts and sum(n.upper().endswith('ASPCOMP.EXE') for n in result['observed_EXEC_names'])==expected_attempts
    if not case.get('source_lease'):result['checks']['no_failed_compiler_publication']=not (folder/'LOGIN.ASX').exists() if case['source_memory']=='start' else (folder/'NEXT.ASX').read_bytes()==renderer.compile_source('proc main\ntransmit "STALE"\nendproc\n')
    result['checks']['no_stale_or_trailing_execution']=b'STALE' not in wire and b'BADRETURN' not in wire
    result['checks']['compiler_log_retired']=not list(folder.glob('LPC*.LOG'))
    if case['source_memory']=='execute':result['checks']['source_failure_stream_flushed']=(folder/'OWNED.TXT').read_bytes()==b'BEFORE|'
-   if a.allocation_probe and not case.get('source_lease'):result['checks']['compiler_native_heap_error']=result['allocation_probe']['_runtime_compiler_exit']==65535 and result['allocation_probe']['_runtime_compiler_dos_error']==5
+   if a.allocation_probe and not case.get('source_lease') and not case.get('source_fault'):result['checks']['compiler_native_heap_error']=result['allocation_probe']['_runtime_compiler_exit']==65535 and result['allocation_probe']['_runtime_compiler_dos_error']==5
+  if case.get('source_fault'):
+   result['source_fault']=case['source_fault']
+   result['checks']['source_error_matches_child_probe']=result['child_exit_probe']['error']==case['expected_exit']
+   result['checks']['compiler_fault_status_exact']=result['allocation_probe']['_runtime_compiler_exit']==int(case['source_fault']=='compiler-error') and result['allocation_probe']['_runtime_compiler_dos_error']==0
+   result['checks']['passive_EXEC_observed']=result['passive_observer_header'][:4]==[0x524e,1,1,1+expected_attempts]
+   result['checks']['compiler_staging_and_log_retired']=not list(folder.glob('LPC*.*'))
+   result['checks']['backing_files_retired']=not list(folder.glob('LPM*.TMP'))
+   path=folder/'PCCOMP.OVL'
+   result['checks']['kernel_fault_fixture_unchanged']=(sha(path) if path.exists() else None)==case['kernel_fixture_sha256']
   if case.get('source_lease'):
    # The passive exit counter includes the actual nested compiler as well as
    # ASPECT. Require exactly both exits; precompiled cases retain count one.
@@ -653,7 +685,7 @@ get_watch_data: dw 0x4757,2
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
   if a.source_memory_cases:result['compatibility_accepted']=False
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(source_lease_cases=a.source_lease_cases,source_memory_cases=a.source_memory_cases,source_compiler_residency_verified=all(r['passed'] for r in report['cases']) if a.source_lease_cases else False if a.source_memory_cases else None,policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
+ report.update(source_lease_fault_cases=a.source_lease_fault_cases,source_lease_cases=a.source_lease_cases,source_memory_cases=a.source_memory_cases,source_compiler_residency_verified=all(r['passed'] for r in report['cases']) if a.source_lease_cases else False if a.source_memory_cases else None,policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
   checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  if a.source_memory_cases:

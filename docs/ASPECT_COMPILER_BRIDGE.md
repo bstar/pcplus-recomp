@@ -1,5 +1,10 @@
 # Live compiler bridge checkpoint
 
+The next [refusal checkpoint](ASPECT_COMPILER_REFUSALS.md) adds full-parent
+module and syntax-error cases and corrects the bridge's safe I/O status mapping.
+The normal-path measurements and source closure below describe this earlier
+checkpoint; dedicated invalid-restore/quarantine acceptance remains open.
+
 The opt-in capability23 pair can compile source while the complete terminal and
 ASPECT interpreter remain loaded. Startup `LOGIN.ASP` and source `EXECUTE` run the
 actual DOS compiler, execute its exact ASX output, complete GET input and return

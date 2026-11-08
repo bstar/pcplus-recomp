@@ -1,6 +1,8 @@
 ; Retained parent frontend; live compiler RPC is an explicit opt-in extension.
 BITS 16
 CPU 8086
+; Interpreter result namespace, matching src/aspect/runtime.h (not lease codes).
+%define ASPECT_RUN_IO 5
 SEGMENT COMPILER_FRONT_CODE public align=16 class=FARCODE use16
 GROUP COMPILER_FRONT_GROUP COMPILER_FRONT_CODE
 extern process_psp,hardware_active,vector_active
@@ -411,7 +413,7 @@ _compiler_overlay_bridge:
 .begin_failed:
  call release_raw ; Begin refusal never lent memory; stale temp cleanup may fail.
 .intact_error:
- mov ax,0xe009
+ mov ax,0xe000 | ASPECT_RUN_IO
  jmp leave
 .end:
  cmp word [cs:bridge_active],1
@@ -435,7 +437,7 @@ _compiler_overlay_bridge:
  xor ax,ax
  or si,si
  jz .returned
- mov ax,0xe009
+ mov ax,0xe000 | ASPECT_RUN_IO
 .returned:jmp leave
 .intact_state:
  mov ax,0xe00a

@@ -68,7 +68,7 @@ def main():
    assert sha(fresh/'build'/folder/leaf)==sha(original/leaf),leaf
    artifacts[leaf]=sha(original/leaf)
  replays=[]
- families=('source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
+ families=('source_lease_fault_cases','source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
  for i,(path,r) in enumerate(zip(a.checks,reports)):
   leaf='build/replay-'+str(i)
   flags=['--'+key.replace('_','-') for key in families if r.get(key)]
