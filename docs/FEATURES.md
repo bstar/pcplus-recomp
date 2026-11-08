@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Compiler residency](ASPECT_COMPILER_MEMORY.md) is now measured under the full
+parent: startup and EXECUTE source compilation both fail for memory, with only
+2,368/1,856 bytes free versus a75,920-byte compiler load minimum. The startup
+post-return view has no inline error; pre-return visibility remains unverified.
+Compiler residency is a confirmed open gate; standalone
+compiler and precompiled GET passes do not close them. A capacity-preserving
+parent memory-sharing plan is recorded for implementation.
+
 [GET width policy](ASPECT_GET_WIDTHS.md) adds eight compiled full-parent cases:
 omitted/0/1/80 widths, -1/81 operand refusals and actual PRM shown/hidden status
 geometry at the last text row. Passive field widths and exact cursor/value/exit

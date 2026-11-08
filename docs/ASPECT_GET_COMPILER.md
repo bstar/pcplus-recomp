@@ -1,5 +1,12 @@
 # Experimental GET compiler profile
 
+[Full-parent source compilation](ASPECT_COMPILER_MEMORY.md) now has a confirmed
+memory-refusal diagnostic. The compiler needs75,920 load bytes while the measured
+free blocks are2,368/1,856 bytes. This is an open integration gate, not successful
+compiler residency; earlier precompiled GET and standalone compiler evidence
+retain their scope.
+
+
 Both maintained compilers now have an explicit opt-in for ordinary ASPECT GET.
 The profile matches the frozen original ASPCOMP1.01 observations: writable
 string, integer, long and float destinations, an optional atomic integer width,

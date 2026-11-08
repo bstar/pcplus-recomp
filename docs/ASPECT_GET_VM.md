@@ -1,5 +1,12 @@
 # Full interpreter GET checkpoint
 
+[Full-parent source compilation](ASPECT_COMPILER_MEMORY.md) now has a confirmed
+memory-refusal diagnostic. The compiler needs75,920 load bytes while the measured
+free blocks are2,368/1,856 bytes. This is an open integration gate, not successful
+compiler residency; earlier precompiled GET and standalone compiler evidence
+retain their scope.
+
+
 The opt-in `get_vm=True` process build links ordinary opcode49 GET into the
 actual source-built ASPECT interpreter. It calls the recovered GET owner through
 maintained typed readers, the serviced editor, capability22 parent metadata,

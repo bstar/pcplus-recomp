@@ -1,0 +1,295 @@
+{
+  "checkpoint": "Confirmed source-compiler residency failure under the full experimental parent",
+  "expected_refusal_reproduced": true,
+  "source_compiler_residency_verified": false,
+  "memory_sharing_implemented": false,
+  "startup_message_absence_verified": false,
+  "original_inputs": [],
+  "application_binary_changed": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "executables": {
+    "build/get-status-parent-final-20261107/TERMINAL.EXE": {
+      "sha256": "b25fe6d207e83e0ed1bd5ad2085aca719a324e4b2db9a0c01a0ec6c51f424d5b",
+      "header_bytes": 4960,
+      "image_bytes": 288493,
+      "image_sha256": "b97f416d812015804db1de3de5a3058a371c2118a4ca409993d4b5788e26cede",
+      "relocation_table_sha256": "9a3bda16660c5761cb479f37e61d56a9d82e944de06187770765d2d2a8588ef8",
+      "exact_minimum_including_PSP": 481280,
+      "page_minimum_including_PSP": 481712
+    },
+    "build/get-direct-release-child-20261107/ASPECT.EXE": {
+      "sha256": "54590fd38a8c9992bc747d12b2ea330c6eb749f8bf7bbffcb2d9d4d0a0fe2ff1",
+      "header_bytes": 1152,
+      "image_bytes": 117630,
+      "image_sha256": "909e3751e0568f11b74bec3e593d99e69bf8229537376fe5a898863e2bbf8e36",
+      "relocation_table_sha256": "118cc908835c853b804f436cb19bd9a9d8cfaced78cf86c4ad74d9917f2570ca",
+      "exact_minimum_including_PSP": 136128,
+      "page_minimum_including_PSP": 136128
+    },
+    "build/get-compiler-enabled-20261107/ASPCOMP.EXE": {
+      "sha256": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+      "header_bytes": 1712,
+      "image_bytes": 50762,
+      "image_sha256": "c14c29ae10390f58a2fcf0f15e6d028a578327a5880397a312b8f0d497bfce85",
+      "relocation_table_sha256": "1939ef5d86e9cc279c983250b1f75eb5013553bd45c0d777f2ae42688645e368",
+      "exact_minimum_including_PSP": 75664,
+      "page_minimum_including_PSP": 75920
+    }
+  },
+  "total_page_minima": 693760,
+  "cold_source_count": 1040,
+  "cold_ancestor_git_unavailable": true,
+  "failure_cases": [
+    {
+      "name": "get-vm-source-start",
+      "compatibility_accepted": false,
+      "compiler_EXEC_memory": {
+        "largest_free_bytes": 2368,
+        "attempts": 1,
+        "startup_prompt_seen_before_ack": 0
+      },
+      "child_exit_probe": {
+        "DS": 38036,
+        "errno": 5,
+        "error": 8,
+        "opcode": 0,
+        "compiler_calls": 1,
+        "file_status": 3
+      },
+      "allocation_probe": {
+        "_runtime_script_file_open_calls": 0,
+        "_runtime_script_file_live": 0,
+        "_runtime_script_file_last": 0,
+        "_runtime_native_error_code": 0,
+        "_runtime_steps": 0,
+        "_runtime_live": 0,
+        "_runtime_alloc_calls": 0,
+        "___nheapbeg": 43712,
+        "__curbrk": 44224,
+        "__STACKLOW": 35571,
+        "__STACKTOP": 43712,
+        "_runtime_compiler_exit": 65535,
+        "_runtime_compiler_dos_error": 5,
+        "PSP_allocation_paragraphs": 8539,
+        "environment_paragraphs": 73,
+        "environment_string_bytes": 140
+      },
+      "startup_error_retained_after_return": false,
+      "startup_prompt_visibility_established": false,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_LOGIN.ASP": true,
+        "fixture_unchanged_RENDER.COM": true,
+        "fixture_unchanged_ASPCOMP.EXE": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "passive_EXEC_observed": true,
+        "child_exit_expected": true,
+        "parent_JFT_unchanged": true,
+        "all_parent_sink_owners_unchanged": true,
+        "explicit_password_only": true,
+        "ordinary_parent_keyboard_resumes": true,
+        "initial_CPR_before_password": true,
+        "no_automatic_redial": true,
+        "frozen_inputs": true,
+        "video_0_0": true,
+        "far_history_retained_across_EXEC_return": true,
+        "far_history_bounds": true,
+        "passive_observer_in_UMB": true,
+        "GET_typed_exit": true,
+        "script_reached_GET_boundary": true,
+        "BIOS_keys_after_field_admission": true,
+        "startup_error_restored_view": true,
+        "actual_compiler_EXEC_attempt": true,
+        "no_failed_compiler_publication": true,
+        "no_stale_or_trailing_execution": true,
+        "compiler_log_retired": true,
+        "compiler_native_heap_error": true,
+        "no_post_GET_execution": true
+      },
+      "wire_sha256": "48d696f25c6958fa49d420de8a49c3937655e3d20e8caf2c63d546eb96868bdb"
+    },
+    {
+      "name": "get-vm-source-execute",
+      "compatibility_accepted": false,
+      "compiler_EXEC_memory": {
+        "largest_free_bytes": 1856,
+        "attempts": 1,
+        "startup_prompt_seen_before_ack": 0
+      },
+      "child_exit_probe": {
+        "DS": 38036,
+        "errno": 5,
+        "error": 8,
+        "opcode": 203,
+        "compiler_calls": 1,
+        "file_status": 0
+      },
+      "allocation_probe": {
+        "_runtime_script_file_open_calls": 1,
+        "_runtime_script_file_live": 0,
+        "_runtime_script_file_last": 0,
+        "_runtime_native_error_code": 0,
+        "_runtime_steps": 6,
+        "_runtime_live": 0,
+        "_runtime_alloc_calls": 0,
+        "___nheapbeg": 43712,
+        "__curbrk": 44736,
+        "__STACKLOW": 35571,
+        "__STACKTOP": 43712,
+        "_runtime_compiler_exit": 65535,
+        "_runtime_compiler_dos_error": 5,
+        "PSP_allocation_paragraphs": 8571,
+        "environment_paragraphs": 73,
+        "environment_string_bytes": 140
+      },
+      "startup_error_retained_after_return": null,
+      "startup_prompt_visibility_established": null,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "directory_expected_updates_only": true,
+        "fixture_unchanged_LOGIN.ASP": true,
+        "fixture_unchanged_LOGIN.ASX": true,
+        "fixture_unchanged_RENDER.COM": true,
+        "fixture_unchanged_NEXT.ASX": true,
+        "fixture_unchanged_NEXT.ASP": true,
+        "fixture_unchanged_ASPCOMP.EXE": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "passive_EXEC_observed": true,
+        "child_exit_expected": true,
+        "parent_JFT_unchanged": true,
+        "all_parent_sink_owners_unchanged": true,
+        "explicit_password_only": true,
+        "ordinary_parent_keyboard_resumes": true,
+        "initial_CPR_before_password": true,
+        "no_automatic_redial": true,
+        "frozen_inputs": true,
+        "video_0_0": true,
+        "typed_error_stays_in_parent": true,
+        "far_history_retained_across_EXEC_return": true,
+        "far_history_bounds": true,
+        "passive_observer_in_UMB": true,
+        "GET_typed_exit": true,
+        "script_reached_GET_boundary": true,
+        "BIOS_keys_after_field_admission": true,
+        "actual_compiler_EXEC_attempt": true,
+        "no_failed_compiler_publication": true,
+        "no_stale_or_trailing_execution": true,
+        "compiler_log_retired": true,
+        "source_failure_stream_flushed": true,
+        "compiler_native_heap_error": true,
+        "no_post_GET_execution": true
+      },
+      "wire_sha256": "eca12e323d77cfce7bdcb554a643a10292a63aed6fee15e46f83e805451cbf3e"
+    }
+  ],
+  "existing_GET_regressions": 27,
+  "compiler_regression_summary": "SOURCE_EXEC 24 cases 249 checks 0 failures",
+  "compiler_exact_output_files": 48,
+  "serial_compile_cases": 7,
+  "sources": {
+    "standalone/test_aspect_get_vm_dos.py": "2e81b2811de6293964cc5937d2eca0d305cfa561f3f3c6f0e7d3b1ce4c4172a9",
+    "standalone/prove_get_vm_source.py": "8881a38262c4a749a141f7422ae0363bc0e2e1090bf8996969f8a7faa1ca9970",
+    "standalone/mz_layout.py": "f50fce3b065e00f334a9e42df59ecc48db6df06c5cef67f9b3f86013d9249be8",
+    "src/aspect/source_compile.c": "a956e6c854395b9de2e48326a41c9be9b285338cf8d3b705b20bfcf3bd80c696",
+    "src/aspect/compiler_exec.asm": "7e7309cedab40b968b7447bc9f47f1869a7e79b6c8b9b8a7e7989dfafc01028f",
+    "src/terminal/program_actions.asm": "95c02a7013b1a2c256780007995ab1af7c2250ab18d5b8f0919acce9282dbcae",
+    "src/terminal/aspect_renderer.asm": "9205d3b00ce2c33fbfd5608852fa511b036df81189f7b4f8d6ad1640123d96ca",
+    "src/process/dos_exec.asm": "670c1e0c451df69d7e6b9fffdcd83b15b2c1c67acda09a486e2d8afc3e1ba65f",
+    "src/terminal/state.asm": "c873b5a14334ee148802de1eb221c996c7fb637dcdb36cd359579531c9f2b0c2",
+    "docs/ASPECT_COMPILER_MEMORY.md": "a9f4ee57d1ec8e549d7f5a3ec98ef24bfd282d871bd5e997a1344dbf9934e726",
+    "docs/ASPECT_GET_VM.md": "94f9c86aeb4b04d8128a7726687d0a22d75db805855e8a6c4768deab12a8755f",
+    "docs/ASPECT_GET_COMPILER.md": "91d68196f622f283881a82648aee98a8fe6f91978d4c49e2401c0198c71c39ab",
+    "docs/ASPECT_COMPILER_EXEC.md": "1e7e42f4f4894448d9a7172d8a921ae1b0feb9800e8da359436bf9d5189a6cbb",
+    "docs/FEATURES.md": "0eb07ec19888aaa76737ed4d86ceeb8f4c7578539efc637f51a8c8a7a9ddb71b"
+  },
+  "evidence": {
+    "build/source-memory-diagnostic-final-20261108/checks.json": {
+      "sha256": "7cb37212556e2afc70eb68ce1816d3b164e9c5a8fe1aa9034cea799c939266eb",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/result.json": {
+      "sha256": "8715fe0f115f155795a2b17cf8144fb6d1e52bc9a8d14be659fbe77235a66629",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/dos/checks.json": {
+      "sha256": "39f7976ff892ce7fc9293c88d6952d5dafef1202302387e719ed514b5349b265",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/ordinary/checks.json": {
+      "sha256": "488bbc0b565aea13390098a39ce608938c545d08cab7a5139c931bdf5a78c55b",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/lifetime/checks.json": {
+      "sha256": "143946bc435232383f9d2ac1437955fca07b5a977d215841fbe551bfa09a2180",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/when/checks.json": {
+      "sha256": "05e8f05b3f1aebdd9794e5648ec5dbc0e2d2197d9a56626ad75c46a53cc3b235",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/when-errors/checks.json": {
+      "sha256": "1e614e0a4cf48a8f10bb61f62bbc1adf5abf5ad55aea4f7f7d0ccfb5aea27063",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/storage/checks.json": {
+      "sha256": "2142b9d8b732589a9c9cb76f22bb2f6d1c316df24e89f3bcf4bd69648c5f2610",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/policy/checks.json": {
+      "sha256": "1a2a6139479b22b5272abe57b08820df727d7afc301ed5ed7c8aebda33523bf7",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/get-grammar/result.json": {
+      "sha256": "31780d6f393239102c428dc0fd0cdb8a78d20798250fce76ed353cd702004735",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/compiler-exec/checks.json": {
+      "sha256": "815b943c72762ebdb1413632c1e3f7f682baa46a77df8f314b1e42e67509b2ca",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/compiler-equivalence/result.json": {
+      "sha256": "1e6442e3676ee2a735c5d90162441b793453bf815a65a99e03849b1a2097f443",
+      "observations_reproduced": true
+    },
+    "build/source-memory-diagnostic-source-final-20261108/source/build/compiler-serial/checks.json": {
+      "sha256": "474c831c5ff923523b233501afd3d584d17aef3b43cac676220a76575b9382c0",
+      "observations_reproduced": true
+    }
+  },
+  "parent_map_sha256": "785ffbda861273aabdc32cb94648343cc28f0943806b88bfa9fab6771e607c28",
+  "exploratory_notes": [
+    "Initial compiler-EXEC memory probe also sampled later SNAP/RENDER helpers; corrected to exec_done0.",
+    "Initial extended allocation probe reused hardcoded trailer offsets and overwrote compiler fields; trailer offsets now derive from field count.",
+    "Pinned DOS Watcom errno ENOMEM is5, not POSIX12.",
+    "An initial claim of a missing startup error message was withdrawn: snapshots show only no retained post-return inline text. Timer prompt observation0 does not establish absence; no UI defect is claimed here.",
+    "The earlier build/source-memory-parent-source-20261108 proof predates final UI-observation naming/probe; canonical proof is source-memory-diagnostic-source-final."
+  ],
+  "limits": [
+    "This diagnostic confirms a failure and recovery; PASS does not establish compiler residency or successful source integration.",
+    "Parent-tail spill/resize/restore is a plan, not an implemented or audited loan.",
+    "Pre-return startup prompt visibility remains unverified.",
+    "DOS386/UMB640KB synthetic serial peer; no physical modem/BBS acceptance.",
+    "Full feature/memory pressure, floating GET, ordinary8086 capacity, package promotion and whole-language/application parity remain open."
+  ]
+}

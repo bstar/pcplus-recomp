@@ -1,5 +1,12 @@
 # Qualified compiler execution and full GET memory admission
 
+[Full-parent source compilation](ASPECT_COMPILER_MEMORY.md) now has a confirmed
+memory-refusal diagnostic. The compiler needs75,920 load bytes while the measured
+free blocks are2,368/1,856 bytes. This is an open integration gate, not successful
+compiler residency; earlier precompiled GET and standalone compiler evidence
+retain their scope.
+
+
 The opt-in GET interpreter now calls its already-qualified source-built
 `ASPCOMP.EXE` through a small maintained DOS4B00 executor. The former Watcom
 `spawnl` call pulled another general process/path implementation into a program

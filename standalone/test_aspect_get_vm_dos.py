@@ -114,11 +114,23 @@ def policy_definitions():
    post_reply=renderer.ESC+cpr,banner=banner,policy_status_hidden=int(label.endswith('hidden'))))
  return rows
 
+def source_memory_definitions():
+ base=definitions()[0]
+ target=base['source'].replace('pause 0\n','get value 10\n')
+ start=dict(base,name='get-vm-source-start',source=target,direct_GET=True,source_memory='start',success=False,
+  expected_exit=8,field_BIOS_words=[],expect_GET_boundary=False)
+ chain='proc main\nwaitfor "LOGIN:" 5\nfopen 0 "OWNED.TXT" "w+b"\nfputs 0 "BEFORE|"\ntransmit "GETREADY"\nexecute "NEXT.ASP"\ntransmit "BADRETURN"\nendproc\n'
+ following=target.replace('waitfor "LOGIN:" 5\n','')
+ execute=dict(base,name='get-vm-source-execute',source=chain,direct_GET=True,source_memory='execute',success=False,
+  expected_exit=8,field_BIOS_words=[],scripts={'NEXT':following},expect_GET_boundary=True)
+ return [start,execute]
+
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--parent-dir',required=True,type=Path);p.add_argument('--child-dir',required=True,type=Path)
  p.add_argument('--output',required=True,type=Path);p.add_argument('--case',action='append')
  p.add_argument('--cpu',choices=('8086','386'),default='386')
+ p.add_argument('--source-memory-cases',action='store_true',help='Diagnose startup and EXECUTE source compilation under the complete parent')
  p.add_argument('--policy-cases',action='store_true',help='Run default/boundary widths and bottom-row shown/hidden status policy')
  p.add_argument('--storage-cases',action='store_true',help='Run local and parameter string/int/long GET plus builtin S0 with frame guards')
  p.add_argument('--when-error-cases',action='store_true',help='Run framed WHEN divide fault and confirmed GET cancellation with pending CALL')
@@ -140,9 +152,9 @@ def main():
  child_map=(child/'ASPECT.map').read_text();group=re.search(r'DGROUP\s+([0-9a-f]+):([0-9a-f]+)',child_map,re.I)
  child_base=int(group[1],16)*16+int(group[2],16)
  child_symbols={n:int(s,16)*16+int(o,16)-child_base for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)\s*$',child_map,re.M|re.I)}
- assert sum((a.policy_cases,a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
- rows=policy_definitions() if a.policy_cases else storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
- if a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
+ assert sum((a.source_memory_cases,a.policy_cases,a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
+ rows=source_memory_definitions() if a.source_memory_cases else policy_definitions() if a.policy_cases else storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
+ if a.source_memory_cases or a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
@@ -209,6 +221,7 @@ def main():
   prm=settings,directory=lambda:renderer.directory(profile=4),
   PARENT_BINARY=parent/'TERMINAL.EXE',CHILD_BINARY=child/'ASPECT.EXE')
  allocation_fields=[('_runtime_script_file_open_calls',0),('_runtime_script_file_live',0),('_runtime_script_file_last',0),('_runtime_native_error_code',0),('_runtime_steps',0),('_runtime_live',0),('_runtime_alloc_calls',0),('___nheapbeg',0),('__curbrk',0),('__STACKLOW',0),('__STACKTOP',0)]
+ if a.source_memory_cases:allocation_fields += [('_runtime_compiler_exit',0),('_runtime_compiler_dos_error',0)]
  allocation_names=[n for n,d in allocation_fields]+['PSP_allocation_paragraphs','environment_paragraphs','environment_string_bytes']
  active_case=[None]
  def adapter():
@@ -223,6 +236,10 @@ def main():
    case=next(r for r in rows if r['name']==args[0])
    for leaf,wire in case.get('compiled_scripts',{}).items():
     kwargs['files'][leaf+'.ASX']=bytes.fromhex(wire);kwargs['files'][leaf+'.ASP']=case['scripts'][leaf].encode('cp437')
+   if case.get('source_memory'):
+    kwargs['files']['ASPCOMP.EXE']=(a.get_compiler_dir/'ASPCOMP.EXE').read_bytes()
+    if case['source_memory']=='start':kwargs['files'].pop('LOGIN.ASX')
+    else:kwargs['files']['NEXT.ASX']=renderer.compile_source('proc main\ntransmit "STALE"\nendproc\n')
    return run(*args,**dict(kwargs,cpu=a.cpu,profile=4,timeout=45,online_triggers=[(trigger.encode('ascii'),[(delay,data.encode('ascii')) for delay,data in chunks]) for trigger,chunks in case.get('peer_triggers',())]))
   module.run=configured;return module
  def observer(offsets):
@@ -239,6 +256,11 @@ def main():
    probe=' mov [cs:exit_code],ax\n mov ah,0x62\n pushf\n call far [cs:old21]\n mov ax,bx\n add ax,'+str(int(group[1],16)+16)+'\n mov es,ax\n mov [cs:get_child_ds],ax\n'
    for label,symbol,delta in [('errno','_errno',0),('error','_runtime_error',0),('opcode','_runtime_last_opcode',0),('compiles','_runtime_compiler_calls',0),('file_status','_runtime_file',14)]:
     probe+=' mov ax,[es:'+str(child_symbols[symbol]+delta)+']\n mov [cs:get_child_'+label+'],ax\n'
+   if active_case[0] and active_case[0].get('source_memory'):
+    marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
+    observer_source=observer_source.replace(marker,'get_compiler_largest: dw 0\nget_compiler_attempts: dw 0\nget_startup_prompt_seen: dw 0\n'+marker)
+    marker='handler:\n save\n cld\n mov bp,sp';assert observer_source.count(marker)==1
+    observer_source=observer_source.replace(marker,'handler:\n save\n cld\n save\n cmp ax,0x4b00\n jne .compiler_probe_done\n cmp word [cs:exec_seen],1\n jne .compiler_probe_done\n cmp word [cs:exec_done],0\n jne .compiler_probe_done\n inc word [cs:get_compiler_attempts]\n mov ah,0x48\n mov bx,0xffff\n pushf\n call far [cs:old21]\n mov [cs:get_compiler_largest],bx\n.compiler_probe_done:\n restore\n mov bp,sp')
    if active_case[0] and 'policy_width' in active_case[0]:
     marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
     observer_source=observer_source.replace(marker,'get_policy_width: dw 0\n'+marker)
@@ -261,7 +283,10 @@ def main():
     observer_source=observer_source.replace(marker,'get_allocation_probe: times '+str(len(allocation_names))+' dw 0\n'+marker)
     for index,(symbol,delta) in enumerate(allocation_fields):
      probe+=' mov ax,[es:'+str(child_symbols[symbol]+delta)+']\n mov [cs:get_allocation_probe+'+str(index*2)+'],ax\n'
-    probe+=' mov ax,[cs:get_child_ds]\n sub ax,'+str(int(group[1],16)+16)+'\n mov es,ax\n mov dx,[es:0x2c]\n dec ax\n mov es,ax\n mov ax,[es:3]\n mov [cs:get_allocation_probe+22],ax\n mov ax,dx\n dec ax\n mov es,ax\n mov cx,[es:3]\n mov [cs:get_allocation_probe+24],cx\n mov word [cs:get_allocation_probe+26],0xffff\n cmp cx,1\n jb .get_env_done\n cmp cx,2048\n ja .get_env_done\n shl cx,1\n shl cx,1\n shl cx,1\n shl cx,1\n dec cx\n mov es,dx\n xor bx,bx\n.get_env_scan:\n cmp bx,cx\n jae .get_env_done\n cmp word [es:bx],0\n je .get_env_found\n inc bx\n jmp .get_env_scan\n.get_env_found:\n add bx,2\n mov [cs:get_allocation_probe+26],bx\n.get_env_done:\n'
+    trailer=' mov ax,[cs:get_child_ds]\n sub ax,'+str(int(group[1],16)+16)+'\n mov es,ax\n mov dx,[es:0x2c]\n dec ax\n mov es,ax\n mov ax,[es:3]\n mov [cs:get_allocation_probe+22],ax\n mov ax,dx\n dec ax\n mov es,ax\n mov cx,[es:3]\n mov [cs:get_allocation_probe+24],cx\n mov word [cs:get_allocation_probe+26],0xffff\n cmp cx,1\n jb .get_env_done\n cmp cx,2048\n ja .get_env_done\n shl cx,1\n shl cx,1\n shl cx,1\n shl cx,1\n dec cx\n mov es,dx\n xor bx,bx\n.get_env_scan:\n cmp bx,cx\n jae .get_env_done\n cmp word [es:bx],0\n je .get_env_found\n inc bx\n jmp .get_env_scan\n.get_env_found:\n add bx,2\n mov [cs:get_allocation_probe+26],bx\n.get_env_done:\n'
+    for old_offset,new_offset in ((26,2*len(allocation_fields)+4),(24,2*len(allocation_fields)+2),(22,2*len(allocation_fields))):
+     trailer=trailer.replace('[cs:get_allocation_probe+'+str(old_offset)+']','[cs:get_allocation_probe+'+str(new_offset)+']')
+    probe+=trailer
    observer_source=observer_source.replace(old,probe+' push cs')
    old=' mov di,before_history\n call copy_history\n restore';assert observer_source.count(old)==1
    new=' mov di,before_history\n call copy_history\n mov ax,cs\n mov [cs:get_observer_segment],ax\n mov ax,0x40\n mov es,ax\n mov ax,[es:0x13]\n mov [cs:get_conventional_kb],ax\n mov ah,0x48\n mov bx,0xffff\n pushf\n call far [cs:old21]\n mov [cs:get_largest_free],bx\n restore'
@@ -340,6 +365,46 @@ get_finish_phase: dw 0
 get_finish_ticks: dw 0
 get_finish_words: dw 0x1372,0x1265,0x1e61,0x2064,0x1579
 """.replace('PENDING_OFFSET',str(offsets['terminal_program_pending']))
+   if active_case[0] and active_case[0].get('source_memory')=='start':
+    marker=' cmp word [cs:get_finish_phase],0\n jne .done\n mov dx,0x3920';assert finish.count(marker)==1
+    finish=finish.replace(marker,' cmp word [cs:get_finish_phase],0\n jne .done\n call get_startup_prompt_probe\n or ax,ax\n jz .done\n mov word [cs:get_startup_prompt_seen],1\n mov dx,0x3920')
+    finish+='''
+get_startup_prompt_probe:
+ push bx
+ push cx
+ push si
+ push di
+ push es
+ mov ax,0xb800
+ mov es,ax
+ xor bx,bx
+.scan:
+ mov di,bx
+ mov si,get_startup_prompt_text
+ mov cx,21
+.compare:
+ mov al,[es:di]
+ cmp al,[cs:si]
+ jne .next
+ inc si
+ add di,2
+ loop .compare
+ mov ax,1
+ jmp .return
+.next:
+ add bx,2
+ cmp bx,3958
+ jbe .scan
+ xor ax,ax
+.return:
+ pop es
+ pop di
+ pop si
+ pop cx
+ pop bx
+ ret
+get_startup_prompt_text: db 'Program could not run.'
+'''
    old='resident_end:\nstart:';assert observer_source.count(old)==1
    observer_source=observer_source.replace(old,finish+'\n'+old)
    if input_words:
@@ -512,7 +577,7 @@ get_watch_data: dw 0x4757,2
   result['child_exit_probe']=dict(DS=child_ds,errno=child_errno,error=child_error,opcode=child_opcode,compiler_calls=child_compiles,file_status=child_file_status)
   if a.cpu=='386':result['checks']['passive_observer_in_UMB']=segment>=0xa000
   result['checks']['GET_typed_exit']=result['passive_observer_header'][6]==case['expected_exit']
-  result['checks']['script_reached_GET_boundary']=b'GETREADY' in wire
+  result['checks']['script_reached_GET_boundary']=(b'GETREADY' in wire)==case.get('expect_GET_boundary',True)
   if get_enabled:result['checks']['BIOS_keys_after_field_admission']=injected==len(case['field_BIOS_words'])
   if case.get('when_action'):
    end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
@@ -537,6 +602,20 @@ get_watch_data: dw 0x4757,2
    result['checks']['fresh_GET_generation_per_field']=generations==list(range(1,count+1))
    result['checks']['all_field_generations_completed']=injected==len(case['field_BIOS_words'])
    result['checks']['no_bad_transition_output']=b'BAD' not in wire
+  if case.get('source_memory'):
+   end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
+   largest,attempts,prompt_seen=struct.unpack('<3H',(folder/'RENDER.BIN').read_bytes()[end-6:end])
+   result['compiler_EXEC_memory']=dict(largest_free_bytes=largest*16,attempts=attempts,startup_prompt_seen_before_ack=prompt_seen)
+   if case['source_memory']=='start':
+    result['startup_error_retained_after_return']=result['checks'].pop('typed_error_stays_in_parent')
+    result['checks']['startup_error_restored_view']=not result['startup_error_retained_after_return']
+    result['startup_prompt_visibility_established']=prompt_seen==1
+   result['checks']['actual_compiler_EXEC_attempt']=attempts==1 and result['child_exit_probe']['compiler_calls']==1 and any(n.upper().endswith('ASPCOMP.EXE') for n in result['observed_EXEC_names'])
+   result['checks']['no_failed_compiler_publication']=not (folder/'LOGIN.ASX').exists() if case['source_memory']=='start' else (folder/'NEXT.ASX').read_bytes()==renderer.compile_source('proc main\ntransmit "STALE"\nendproc\n')
+   result['checks']['no_stale_or_trailing_execution']=b'STALE' not in wire and b'BADRETURN' not in wire
+   result['checks']['compiler_log_retired']=not list(folder.glob('LPC*.LOG'))
+   if case['source_memory']=='execute':result['checks']['source_failure_stream_flushed']=(folder/'OWNED.TXT').read_bytes()==b'BEFORE|'
+   if a.allocation_probe:result['checks']['compiler_native_heap_error']=result['allocation_probe']['_runtime_compiler_exit']==65535 and result['allocation_probe']['_runtime_compiler_dos_error']==5
   if 'policy_width' in case:
    end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
    width=struct.unpack('<H',(folder/'RENDER.BIN').read_bytes()[end-2:end])[0]
@@ -549,11 +628,15 @@ get_watch_data: dw 0x4757,2
    result['checks']['GET_edited_value_reaches_peer']=b'GETREADY'+value+b'\rSynth42\r' in wire
   else:result['checks']['no_post_GET_execution']=b'Synth42\r' not in wire
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
+  if a.source_memory_cases:result['compatibility_accepted']=False
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
+ report.update(source_memory_cases=a.source_memory_cases,source_compiler_residency_verified=False if a.source_memory_cases else None,policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
   checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
- print('GET full VM:',len(report['cases']),'cases',report['passed'])
+ if a.source_memory_cases:
+  report['scope']+=' Expected memory-refusal diagnostic, not compiler residency acceptance. Startup post-return error retention is sampled; a zero prompt observation does not establish pre-return message absence.'
+  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
+ print('Source compiler memory-refusal diagnostic:' if a.source_memory_cases else 'GET full VM:',len(report['cases']),'cases',report['passed'])
  return 0 if report['passed'] else 1
 
 if __name__=='__main__':raise SystemExit(main())
