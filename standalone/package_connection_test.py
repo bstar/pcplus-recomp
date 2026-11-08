@@ -174,6 +174,19 @@ def keymap_companion(terminal,helper):
     identity=dict(folder=str(helper.parent.relative_to(ROOT/'build')),manifest_sha256=sha(proof_path),binary_sha256=sha(helper),contract=profile['contract'])
     return {'PCKEYMAP.EXE':helper},sources,identity
 
+def validate_chat_setup_pair(terminal,setup):
+    """Advertise the send-mode editor only with a parent that imports it."""
+    enabled=bool(terminal.get('experimental_chat_send_mode'))
+    assert enabled==bool(setup.get('experimental_chat_mode')), 'Chat mode requires matching parent and settings editor'
+    api=terminal.get('chat_loader',{}).get('module',{}).get('api_version')
+    if enabled:
+        assert api==0x107, 'Chat send mode requires API0107 module'
+        count=(50 if setup.get('experimental_mouse') else 48)+int(bool(setup.get('experimental_notice_sound')))+1
+        assert setup['field_count']==count, 'Chat mode editor field count mismatch'
+    else:
+        assert api!=0x107, 'API0107 module requires Chat send-mode declaration'
+
+
 def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keymap_helper=None):
     dos_directory=validate_dos_directory(dos_directory)
     assert output.is_relative_to(ROOT/'build') and not output.exists()
@@ -190,6 +203,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
         if leaf in ('TERMINAL.EXE','ASPECT.EXE','PRMEDIT.EXE'):assert m.get('experimental_custom_irq')
         manifests[leaf]=m;identities[leaf]={'folder':str(binary.parent.relative_to(ROOT/'build')),'manifest_sha256':sha(path),'binary_sha256':sha(binary)}
     terminal=manifests['TERMINAL.EXE']
+    validate_chat_setup_pair(terminal,manifests['PRMEDIT.EXE'])
     keymap_files,keymap_sources,keymap_identity=keymap_companion(terminal,keymap_helper)
     for n,h in keymap_sources.items():assert sources.get(n,h)==h;sources[n]=h
     if keymap_identity:identities['PCKEYMAP.EXE']=keymap_identity
@@ -289,7 +303,8 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
     if terminal.get('experimental_chat_loader'):
         with (payload/'README.TXT').open('ab') as guide:
             guide.write(dos_text('\nAlt-O: Chat; Alt-F6: Redisplay. Keep PCCHAT.OVL beside TERMINAL.EXE.\n'
-                +('Alt-Z in Chat opens Help and retains unfinished input.\n' if terminal.get('experimental_chat_help') else '')))
+                +('Alt-Z in Chat opens Help and retains unfinished input.\n' if terminal.get('experimental_chat_help') else '')
+                +('Chat send mode in SETUP: 0 sends each key; nonzero buffers until Enter.\n' if terminal.get('experimental_chat_send_mode') else '')))
     if manifests['ASPECT.EXE'].get('experimental_alarm_VM'):
         with (payload/'README.TXT').open('ab') as guide:
             guide.write(dos_text('\nASPECT scripts: DATE, TIME and ALARM are available.\n'
@@ -362,7 +377,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
     if terminal.get('experimental_external_editor'):record['experimental_external_editor']=True
     if keymap_files:record['experimental_keymap_editor']=True
     if terminal.get('experimental_packed_command_ui'):record['experimental_packed_command_ui']=True
-    for flag in ('experimental_chat_loader','experimental_global_help','experimental_chat_help'):
+    for flag in ('experimental_chat_loader','experimental_global_help','experimental_chat_help','experimental_chat_send_mode'):
         if terminal.get(flag):record[flag]=True
     if terminal.get('experimental_line_port_overlay'):record['experimental_line_port_overlay']=True
     for flag in ('experimental_meta_editor_module','experimental_meta_editor','experimental_meta_shared_runtime'):
