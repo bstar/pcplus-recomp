@@ -205,6 +205,7 @@ def main():
  p.add_argument('--disabled-control',action='store_true',help='Compare GET-disabled child: expect explicit unsupported after GETREADY')
  p.add_argument('--stream-probe',action='store_true',help='Keep a real owned FOPEN stream across GET')
  p.add_argument('--allocation-probe',action='store_true',help='Passively capture file/global/CRT heap metadata at child exit')
+ p.add_argument('--connected-probe',action='store_true',help='Check raw CONNECTED128 and long promotion before/after GET and source EXECUTE')
  p.add_argument('--watchdog',action='store_true',help='Write a passive late GET state/video sample from the owned DOS test')
  a=p.parse_args();global STREAM_PROBE;STREAM_PROBE=a.stream_probe
  parent=a.parent_dir.resolve();child=a.child_dir.resolve();out=a.output.resolve()
@@ -228,6 +229,22 @@ def main():
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
+ if a.connected_probe:
+  assert a.get_compiler_dir and not a.disabled_control
+  guard='if connected != 128 || connected+1L != 129L\ntransmit "BADCARRIER"\nendif\n'
+  def carrier_probe(source):
+   result=[];count=0
+   for line in source.splitlines(keepends=True):
+    if line=='transmit "GETREADY"\n':result.append(guard);count+=1
+    result.append(line)
+    if line.startswith('get ') or line=='pause 0\n':result.append(guard);count+=1
+   assert count,source
+   return ''.join(result),count
+  for row in rows:
+   row['source'],row['CONNECTED_probe_count']=carrier_probe(row['source'])
+   for name,source in row.get('scripts',{}).items():
+    row['scripts'][name],count=carrier_probe(source)
+    row['CONNECTED_probe_count']+=count
  dos_compiled={};get_compiler_manifest=None
  if a.get_compiler_dir:
   assert get_enabled and not a.disabled_control
@@ -693,6 +710,9 @@ get_watch_data: dw 0x4757,2
   if a.cpu=='386':result['checks']['passive_observer_in_UMB']=segment>=0xa000
   result['checks']['GET_typed_exit']=result['passive_observer_header'][6]==case['expected_exit']
   result['checks']['script_reached_GET_boundary']=(b'GETREADY' in wire)==case.get('expect_GET_boundary',True)
+  if a.connected_probe:
+   result['CONNECTED_probe_count']=case['CONNECTED_probe_count']
+   result['checks']['CONNECTED_raw128_and_long129']=b'BADCARRIER' not in wire
   if get_enabled:result['checks']['BIOS_keys_after_field_admission']=injected==len(case['field_BIOS_words'])
   if case.get('when_action'):
    end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
@@ -880,7 +900,7 @@ get_watch_data: dw 0x4757,2
   if a.source_memory_cases:result['compatibility_accepted']=False
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  report.update(source_lease_reuse_cases=a.source_lease_reuse_cases,source_lease_close_cases=a.source_lease_close_cases,source_lease_begin_cases=a.source_lease_begin_cases,source_lease_repeat_cases=a.source_lease_repeat_cases,source_lease_cleanup_cases=a.source_lease_cleanup_cases,source_lease_recovery_cases=a.source_lease_recovery_cases,source_lease_fault_cases=a.source_lease_fault_cases,source_lease_cases=a.source_lease_cases,source_memory_cases=a.source_memory_cases,source_compiler_residency_verified=all(r['passed'] for r in report['cases']) if a.source_lease_cases else False if a.source_memory_cases else None,policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
-  checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
+  CONNECTED_probe=a.connected_probe,checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  if a.source_memory_cases:
   report['scope']+=' Expected memory-refusal diagnostic, not compiler residency acceptance. Startup post-return error retention is sampled; a zero prompt observation does not establish pre-return message absence.'

@@ -3434,3 +3434,11 @@ hardware restoration and nested compilation with the session open. The nullmodem
 holds DCD high; physical carrier loss remains unverified. Full-child integration,
 capacity/package promotion and other ASPECT builtins remain open. The prepared
 Chat-mode package and installed selection are unchanged.
+
+The [full-child follow-up](ASPECT_CONNECTED.md#full-child-follow-up-capacity-gate-remains-open)
+passes eight parent-session/source/GET cases, but package promotion is refused.
+The combined six-buffer/three-graphics-child/WAIT/profile-switch workload fails
+under the previous child as well as the new one. Paired DOS memory traces show
+AH4A/error8 refusals; the smaller128-byte heap-growth experiment also fails.
+This is an existing capacity gap missed by narrower connection/package checks.
+Preserve the full workload and application limits while resolving it.

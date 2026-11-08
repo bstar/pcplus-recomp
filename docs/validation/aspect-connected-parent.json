@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "integration_eligible": false,
+  "parent_sha256": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+  "child_sha256": "96ea98c9537f3d54b20d02fd8a5f5ec93849f2b01e0485b1a0b867ad199671ab",
+  "compiler_sha256": "1db52316f671b43663395abc7de41925abfe1205fffb930bdb5d6dae70f98a14",
+  "source_compilation_cases": 2,
+  "GET_cases": 6,
+  "carrier_value": 128,
+  "full_child_layout": {
+    "passed": true,
+    "near_code_bytes": 63023,
+    "near_code_spare": 2513,
+    "GET_code_bytes": 4079,
+    "editor_code_bytes": 1544,
+    "field_state_bytes": 206,
+    "DGROUP_bytes": 43712,
+    "stack_bytes": 8192,
+    "minimum_DOS_bytes_including_PSP": 136528,
+    "page_rounded_minimum_including_PSP": 136528,
+    "near_entries": 6,
+    "resident_callback_count": 30,
+    "scope": "Link-map segment/callback/CRT order and exact/page MZ minima; environment/EXEC overhead, execution and available conventional memory require separate DOS tests."
+  },
+  "capacity": {
+    "passed": false,
+    "previous_child_also_fails": true,
+    "baseline_source_commit": "a234c8ad9a71e316fab9ae89c3b6e1a39bc8a9de",
+    "baseline_requests": [
+      8620,
+      8628,
+      8620,
+      8620
+    ],
+    "new_requests": [
+      8623,
+      8631,
+      8623,
+      8623
+    ],
+    "largest_possible_paragraphs": 8607,
+    "failed_DOS_error": 8,
+    "child_exits": [
+      7,
+      0,
+      0,
+      7
+    ],
+    "smaller_128B_growth_also_fails": true
+  },
+  "receipts": {
+    "build/chat-send-mode-parent-v2-20261108/manifest.json": "be1cd668f3b547edd7aaaffbc10f0a7888c7a397120e4514305f504a4ec1013f",
+    "build/connected-full-child-20261108/manifest.json": "0122f578b51a8f419d36db5aa3c274a8c00420edc72a96552517f15e5bf9d066",
+    "build/connected-full-compiler-20261108/manifest.json": "63f35f728f0ba23db24b872c7e75fe01ecbc4b646622746cf9fb0a719c5473b5",
+    "build/connected-parent-source-umb-20261108/checks.json": "d727b7382667821f4ee41eb74c050ec89b92c4662a385a2b13f6dfedf3191213",
+    "build/connected-parent-get-20261108/checks.json": "cd94e7be4b37f435aca00b2d2b605f714661b00c2452377b4ebd0cba919494e7",
+    "build/connected-full-capacity-observed-20261108/result.json": "1cb405c83cdd09f36ac4971dc55796cf1e6a9d54ce404450ee67219363d7cdac",
+    "build/connected-capacity-baseline-source-20261108/build/paired/result.json": "9953e811e0b19e8c8910a544482b797e78cdd7a237bdaa09f1afa9cd9ac83fcc",
+    "build/connected-full-capacity-128-20261108/result.json": "d79a773a7687593500f36d79dbb6cc87afd6e754a6291cb0763d84c49b7f42c3",
+    "build/connected-full-capacity-20261108/result.json": "7e6b4c0e9d4fe20d32cd8b469b66645e5cf733129978e47cd09be01e1ce27f9a"
+  },
+  "recorder_sha256": "cfd9018c88dbbcfe6976c0720424d7e6497a08802dd17c06c51a02938ebe3368",
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "limits": [
+    "Synthetic serial peer; CONNECTED low/drop behavior belongs to separate modeled tests.",
+    "Observed source/GET runs use386 with diagnostic observers in UMB.",
+    "Initial8086 source run fails DOS load with131200B free versus136528B child minimum.",
+    "Heavy8086 unobserved capacity run and paired386/UMB observer runs fail.",
+    "Previous candidate also fails identical scripts; existing memory gap, not new regression.",
+    "No package promotion, whole-feature parity or physical acceptance."
+  ]
+}

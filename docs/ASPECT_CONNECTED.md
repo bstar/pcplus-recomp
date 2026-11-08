@@ -76,8 +76,54 @@ Builds and tests use the pinned Nix environment through `./tools/dev --command`.
 
 ## Remaining work
 
-Integrate this operand into the matched full ASPECT child, repeat its capacity
-and parent-session checks, then produce a separately identified package. The
+The full-child integration follow-up below now passes selected parent-session
+checks but fails capacity admission. Resolve that failure before producing a
+separately identified package. The
 prepared [Chat-mode hardware-test package](CHAT_MODE_PACKAGE.md), deployment
 selection and installed machine remain unchanged. Physical modem/SIP/BBS tests,
 other missing builtin operands and full ASPECT feature parity remain open.
+
+## Full-child follow-up: capacity gate remains open
+
+The [full-parent receipt](validation/aspect-connected-parent.json) binds the
+unchanged Chat-mode parent to new full child
+`96ea98c9537f3d54b20d02fd8a5f5ec93849f2b01e0485b1a0b867ad199671ab`
+and GET-enabled compiler. Resident near code is63023 bytes, DGROUP43712 and
+stack8192. The exact DOS minimum including PSP is136528 bytes,48 more than the
+preceding child; no stream, object, field or stack capacity was reduced.
+
+Eight full-parent checks pass under386/UMB diagnostic placement: startup and
+EXECUTE source compilation, plus string/integer/long input, cancellation, float
+refusal and malformed operands. The string case retains a real open FILE.
+Authored guards check raw CONNECTED128 and long129 before and after successful
+fields and in source chains. These use the owned synthetic serial peer, not an
+analog modem or observed electrical DCD transitions.
+
+The first source run under8086 with the diagnostic observer in conventional
+memory fails before ASPECT loads: the observed131200-byte largest free block
+is smaller than the136528-byte child minimum. Moving that observer to UMB in
+the existing386 fixture permits both source cases to finish. This is a test
+layout distinction, not a change to physical machine configuration.
+
+The heavier unobserved8086 workload fails. It holds six512-byte file buffers,
+runs three real graphics DOS children with WAIT, switches VT220/ANSI, and checks
+six-slot/missing-file recovery. A paired386/UMB trace compares the same parent
+and byte-identical authored scripts against the previous child in an isolated
+export of committed source base a234c8a. **Both children fail this workload.** This
+is an existing capacity gap; earlier successful package/connection checks did
+not establish this combined workload for the compiler-bridge child.
+
+Both traces observe real DOS AH4A memory-growth refusals, error8 and maximum8607
+paragraphs. The previous child's failed requests are8620,8628,8620,8620; the new
+child requests8623,8631,8623,8623, exactly three paragraphs more. Both show child
+exits7,0,0,7; the first/final scripts fail on FPUTS with a null file slot, native
+error4. This corroborates a memory shortage before writing, rather than proving
+a UART or carrier bug. A separately built128-byte heap-growth variant also fails
+the unobserved8086 workload; changing allocation granularity alone is insufficient.
+
+The new child is **not eligible for package promotion**. Next work is to reduce
+resident memory or safely recover available memory while preserving all six
+buffers, stacks, native VM limits and parent-service behavior, then repeat this
+exact workload and the source/GET checks. Broader BBS/package tests must use the
+eventual accepted child bytes. The prepared package, deployment selection,
+installed machine and private files remain unchanged.
