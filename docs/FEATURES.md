@@ -3466,3 +3466,14 @@ control, whose disabled bytes remain exact. The heavy six-file/graphics PROGRAM
 case still fails with runtime-state error10 at opcode9B/step20. Full Help,
 overlay eviction/unwind, compiler lending, cold rebuild and capacity acceptance
 remain open; no package is promoted or deployed.
+
+The [expanded notice overlay](ASPECT_STANDARD_OVERLAYS.md#expanded-notice-overlay-program-capacity-passes)
+now passes the previously failing unobserved8086 six-held-file/three-graphics-
+child/WAIT workload with30 final checks, retaining the full stack and buffers.
+It also passes two source compiler loan/GET/open-stream cases, two WHEN
+divide/cancellation cases and an independent1048-file cold source rebuild with
+exact two-case replay. Its minimum DOS allocation is126432 bytes,8608 below
+the disk-snapshot control; disabled output stays byte-identical. Full-parent
+Help still fails its mouse-state allocation before opening, so actual notice/
+Help eviction, wider lifetime/fault and BBS/package/physical gates remain open.
+The installed package and prepared connection payload remain unchanged.

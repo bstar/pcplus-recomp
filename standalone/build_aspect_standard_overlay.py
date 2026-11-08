@@ -21,18 +21,21 @@ def mz_overlay(data):
 
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--base',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--base',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+ p.add_argument('--notice',action='store_true',help='Also share notice code; requires resident notice checkpoint preparation')
+ a=p.parse_args()
  base=a.base.resolve();out=a.output.resolve()
  assert base.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build') and not out.exists()
  m=json.loads((base/'manifest.json').read_text());assert m['experimental_overlay_layout_ready']
  assert sha(base/'ASPECT.EXE')==m['binary_sha256'] and m['original_inputs']==[]
  for name,h in m['sources'].items():assert sha(ROOT/name)==h,name
- out.mkdir();groups=[[],[],[]];objects={}
+ out.mkdir();groups=[[],[],[],[]];objects={}
  help_names={'input-view.obj','input-notice_content.obj','input-format.obj','input-document.obj','input-resource.obj',
              'help-cursor.obj','help-resource-io.obj','help_overlay_bridge_overlay.obj'}
  get_names={'get_runtime-c-bank.obj','get_context-c-bank.obj','get_command-c-bank.obj','get_native_field-c-bank.obj',
   'get_vm_bindings-c-bank.obj','get-field-bank.obj','get_native-bank.obj','get_checkpoint-bank.obj','get_command-bank.obj',
   'get_native_field-bank.obj','get_vm_bindings-bank.obj','get_bank_overlay-bank.obj'}
+ notice_names={'notice-shared-owner-normal.obj','notice-shared-runtime.obj','notice-resident-checkpoint.obj','program_notice.obj'}
  seen=set()
  for line in (base/'GETVM.lnk').read_text().splitlines():
   if not line.startswith('file '):continue
@@ -44,13 +47,16 @@ def main():
   name='obj'+str(len(objects)).zfill(4)+'.obj';shutil.copyfile(original,out/name)
   objects[name]=dict(original=str(original.relative_to(ROOT)),sha256=sha(out/name))
   group=1 if original.name in get_names else 2 if original.name in help_names else 0
+  if a.notice and (original.parent==ROOT/'build/notice-bank' or original.name in notice_names):group=3
   seen.add(original.name);groups[group].append('file '+name)
  assert get_names<=seen and help_names<=seen
+ if a.notice:assert notice_names<=seen
  link=['system dos','option quiet','option stack=8192','option standard','option packcode=0',
        # Use DOSSEG rather than a manual ORDER. Its overlay-aware ordering
        # keeps manager tables in its CS and sorts the preloaded data section
        # too: far state before DGROUP, _NULL first, BSS then stack last.
-       'name ASPECT.EXE','option map=ASPECT.map',*groups[0],'begin','section',*groups[1],'section',*groups[2],'end']
+       'name ASPECT.EXE','option map=ASPECT.map',*groups[0],'begin','section',*groups[1],'section',*groups[2],
+       *(['section',*groups[3]] if a.notice else []),'end']
  (out/'OVERLAY.lnk').write_text('\n'.join(link)+'\n')
  subprocess.run(['wlink','@OVERLAY.lnk'],cwd=out,check=True)
  layout=mz_overlay((out/'ASPECT.EXE').read_bytes());text=(out/'ASPECT.map').read_text()
@@ -60,6 +66,7 @@ def main():
  group=re.search(r'DGROUP\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)',text,re.I)
  ds=int(group[1],16)*16+int(group[2],16);size=int(group[3],16)
  assert size<=65536 and ds<=symbols['get_resident_checkpoint_state']<ds+size
+ if a.notice:assert ds<=symbols['notice_resident_checkpoint_state']<ds+size
  assert segments['STACK']['size']==8192 and segments['_TEXT']['size']<=65536
  assert all(symbols[n]<layout['root_image_bytes'] for n in ('__OVLTAB__','__OVLSTARTVEC__','__LOVLLDR__'))
  assert symbols['__OVLENDVEC__']<=layout['root_image_bytes']
@@ -73,12 +80,13 @@ def main():
  for name in ('LOCHELP.HLP','help-resource.json'):
   if (base/name).exists():shutil.copyfile(base/name,out/name)
  m.pop('MZ_header_layout',None)
- m.update(binary_sha256=sha(out/'ASPECT.EXE'),experimental_standard_overlays=True,package_eligible=False,
+ m.update(binary_sha256=sha(out/'ASPECT.EXE'),experimental_standard_overlays=True,experimental_notice_overlay=a.notice,package_eligible=False,
   base_manifest_sha256=sha(base/'manifest.json'),base_binary_sha256=sha(base/'ASPECT.EXE'),overlay_objects=objects,
   MZ_overlay_layout=layout,
   GET_bank_layout=dict(passed=True,near_code_bytes=segments['_TEXT']['size'],near_code_spare=65536-segments['_TEXT']['size'],
    GET_code_bytes=segments['GET_VM_CODE']['size'],editor_code_bytes=segments['GET_FIELD_CODE']['size'],
    Help_code_bytes=segments['HELP_OVL_CODE']['size'],field_state_bytes=206,DGROUP_bytes=size,stack_bytes=8192,
+   notice_code_bytes=segments['NOTICECODE']['size'],notice_overlay=a.notice,
    minimum_DOS_bytes_including_PSP=layout['exact_minimum_including_PSP'],
    page_rounded_minimum_including_PSP=layout['page_minimum_including_PSP'],
    scope='Preliminary trusted-linker map/MZ bounds only; full callback, checkpoint, recovery and allocation acceptance requires DOS execution.'),

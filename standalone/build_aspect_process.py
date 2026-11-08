@@ -95,6 +95,13 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
             sound.main()
         nm=json.loads((ROOT/'build/notice-bank/manifest.json').read_text())
         objects += [str(ROOT/path) for path in nm['production_objects']]
+        if overlay_ready:
+            # A Help overlay may evict the active notice bank. Its foreground
+            # recovery words must survive that code reload.
+            obj=output/'notice-resident-checkpoint.obj'
+            subprocess.run(['nasm','-fobj','-DNOTICE_CHECKPOINT_SEGMENT=NOTICECODE','-DNOTICE_RESIDENT_CHECKPOINT',
+                str(ROOT/'src/ui/notice_checkpoint.asm'),'-o',str(obj)],check=True)
+            objects[objects.index(str(ROOT/'build/notice-bank/checkpoint.obj'))]=str(obj)
         sources += [ROOT/path for path in nm['sources']]
         if notice_sound:
             sm=json.loads((ROOT/'build/speaker-notice/manifest.json').read_text())

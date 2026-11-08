@@ -1,8 +1,8 @@
 # Experimental ASPECT standard overlays
 
-The optional GET/Help overlay build now starts and passes a full-parent GET
-editing test plus two GET divide/cancellation recovery cases. It remains
-ineligible for packaging: the six-file/graphics PROGRAM workload still fails.
+The expanded GET/Help/notice overlay build passes the previously failing
+six-file/graphics PROGRAM workload, source compiler lending and GET recovery.
+It remains ineligible for packaging: full-parent Help still refuses memory.
 No installed package, selector, private configuration or call history changes.
 
 This is maintained memory-layout work, not recovered vendor overlay code.
@@ -51,9 +51,9 @@ The upstream loader's version check and DOSSEG rules are documented in
 [Open Watcom loader source](https://github.com/open-watcom/open-watcom-v2/blob/master/bld/wl/ovlldr/c/ovlldr.c)
 and the [Linker Guide](https://open-watcom.github.io/open-watcom-v2-wikidocs/lguide.html).
 
-## Current evidence and remaining gates
+## Initial GET/Help checkpoint
 
-Final experimental ASPECT SHA256:
+The earlier GET/Help-only experimental ASPECT SHA256 was:
 `b57eeb6b9f731a3c261de5ef50b186e88d7721323f71d8cb8931e591d7b34da9`.
 Near code64340, GET4079, editor1544, Help6529, DGROUP40448, stack8192;
 exact MZ minimum including PSP132816 bytes (page minimum133088).
@@ -72,8 +72,59 @@ measure free runtime heap or prove nested-child capacity.
   The origin of that state refusal is still unresolved; do not call it a proven
   memory failure or successful PROGRAM integration.
 
-Full-parent Help, broader GET lifetime/WHEN tests, source compiler lending,
-overlay handle ownership during nested EXEC, nonlocal recovery across actual
-GET/Help eviction, independent cold rebuild, and the heavy workload remain
-open. BBS/package regressions and physical Boca/SPA2102/SynthModem/Enigma
-acceptance follow those gates. Host remains last in the full parity plan.
+## Expanded notice overlay: PROGRAM capacity passes
+
+The optional `--notice` relink also shares the6466-byte notice bank with GET
+and Help. Its three mutable recovery words move to resident DGROUP with
+SS-relative access and an entry stack check. A Help call must not erase its
+caller's notice recovery frame when loading another bank. The root allocator,
+mouse callback, UART, active PROGRAM controller and their return paths remain
+resident. Normal non-overlay output remains byte-identical.
+
+Expanded experimental ASPECT SHA256:
+`59dba04d2fbde87a92bc5755384aed07103227d7ff9dacdaf04e58d4df65db2e`.
+Exact minimum including PSP126432 bytes, page minimum126576, DGROUP40448 and
+stack8192. This saves8608 minimum bytes relative to the disk-snapshot control,
+including6384 beyond the GET/Help-only overlay. No stack, file-slot or512-byte
+buffer capacity was reduced.
+
+A passive386/UMB diagnostic of the earlier failure records process status4,
+CRT errno12 and DOS error8 with no child started. The subsequent error notice
+returns status7 (notice failure), causing outer runtime-state error10. This
+establishes process memory pressure beneath that error; stream masking and
+teardown completed and their owners retired. Diagnostic memory footprints are
+separate from the unobserved8086 acceptance run.
+
+The expanded build passes:
+
+- The original unobserved8086 workload: six held files, all six ordinary file
+  slots, three actual graphics children, actual WAIT Space, exact restored
+  viewport cells, VT220/ANSI switching, missing-file recovery and four script
+  calls within one parent. All30 final checks pass. The generic harness's
+  intermediate banner check is replaced by explicit pre-reset CPR and exact
+  post-reset viewport checks because EMULATE deliberately clears that banner.
+- Six standalone8086 bootstrap launches and30 checks with exact output.
+- Two full-parent386/UMB source compiler loans (startup and EXECUTE), exact
+  compiled ASX, GET editing and continued writes through an owned open stream.
+- Two full-parent386/UMB framed WHEN divide and confirmed cancellation cases.
+- Independent cold source rebuild of1048 files with no originals, old objects
+  or ancestor Git; exact parent, child, compiler and helper artifacts, plus
+  exact replay of both source-lending cases.
+
+The source test now requires the allocation/EXEC observer for lease acceptance.
+Its stream expectation distinguishes a refusal's flushed prefix from the
+successful stream's prefix plus edited GET value; it does not discard the
+contents check. Early unobserved attempts and that stale expectation remain in
+ignored receipts and do not count as accepted tests.
+
+The [expanded validation record](validation/aspect-notice-overlays.json) binds
+these receipts, including the failed Help run.
+
+Full-parent Help still fails while acquiring saved mouse state: notice input
+cause11, service4 (`MOUSE_MEMORY`), before Help opens. This is retained as a
+failed integration receipt. Consequently actual Notice→Help bank eviction and
+notice recovery are not accepted merely because their state is now resident.
+Broader GET lifetime/WHEN tests, nonlocal recovery across real bank eviction,
+overlay handle inheritance/failure paths, remaining Help memory pressure and
+BBS/package regression gates remain open. Physical Boca/SPA2102/SynthModem/
+Enigma acceptance is separate. Host remains last; no package is promoted.

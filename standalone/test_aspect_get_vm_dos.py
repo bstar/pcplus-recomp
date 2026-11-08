@@ -225,6 +225,7 @@ def main():
    row.update(source_lease=True,success=True,expected_exit=0,field_BIOS_words=definitions()[0]['field_BIOS_words'],expect_GET_boundary=True)
  if a.source_lease_reuse_cases or a.source_lease_close_cases or a.source_lease_begin_cases or a.source_lease_repeat_cases or a.source_lease_cleanup_cases or a.source_lease_recovery_cases or a.source_lease_fault_cases or a.source_lease_cases or a.source_memory_cases or a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
  if a.source_lease_fault_cases or a.source_lease_repeat_cases:assert a.allocation_probe
+ if a.source_lease_cases:assert a.allocation_probe,'source lease acceptance requires the passive allocation/EXEC observer'
  if a.source_lease_reuse_cases or a.source_lease_close_cases or a.source_lease_begin_cases or a.source_lease_recovery_cases or a.source_lease_cleanup_cases:assert a.allocation_probe and a.watchdog
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
@@ -750,7 +751,12 @@ get_watch_data: dw 0x4757,2
    if not case.get('source_lease') and not case.get('source_cleanup'):result['checks']['no_failed_compiler_publication']=not (folder/'LOGIN.ASX').exists() if case['source_memory']=='start' else (folder/'NEXT.ASX').read_bytes()==renderer.compile_source('proc main\ntransmit "STALE"\nendproc\n')
    result['checks']['no_stale_or_trailing_execution']=b'STALE' not in wire and b'BADRETURN' not in wire
    result['checks']['compiler_log_retired']=not list(folder.glob('LPC*.LOG'))
-   if case['source_memory']=='execute':result['checks']['source_failure_stream_flushed']=(folder/'OWNED.TXT').read_bytes()==b'BEFORE|'
+   if case['source_memory']=='execute':
+    # Successful lease cases may continue writing the edited GET value through
+    # this same stream. Refusal cases must flush only their original prefix.
+    continued=bool(case.get('source_lease') and a.stream_probe)
+    expected=b'BEFORE|'+(bytes.fromhex(case['expected_value_hex']) if continued else b'')
+    result['checks']['source_success_stream_retained' if continued else 'source_failure_stream_flushed']=(folder/'OWNED.TXT').read_bytes()==expected
    if a.allocation_probe and not case.get('source_lease') and not case.get('source_fault') and not case.get('source_cleanup') and not case.get('source_begin'):result['checks']['compiler_native_heap_error']=result['allocation_probe']['_runtime_compiler_exit']==65535 and result['allocation_probe']['_runtime_compiler_dos_error']==5
   if case.get('source_repeat'):
    from compiler_bridge_repeat_observer import FIELDS,WORDS
