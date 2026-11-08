@@ -13,6 +13,16 @@ successful packaging. Keep application hashes, source proof, automated evidence,
 actual remote read-back and user-operated physical observations distinct.
 Preserve PRM/DIR/KEY/KBD/XLT and the FON call log in every update.
 
+## Current compiler-bridge candidate
+
+[The current reliability receipt](ASPECT_COMPILER_RELIABILITY.md) covers the
+complete17-file candidate's exact parent: BUSY/exit/retry, three ordinary calls,
+300-second/601-frame receive, stock Enigma editor/multiline paging and Synchronet
+script login/mapper/Help return. Four independent1920-cell screen comparisons
+and corrupted-capture controls pass. The older receipts below retain their exact
+build scope. Physical/private-machine acceptance and additional Backspace,
+vertical/right-arrow, pressure/timing and owner/profile combinations remain open.
+
 ## Reliability acceptance
 
 - Main menu: exact CP437/color cells, classic ANSI and coherent80x24 with status.

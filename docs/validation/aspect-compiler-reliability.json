@@ -1,0 +1,498 @@
+{
+  "checkpoint_verified": true,
+  "tool_source_commit": "0439dd632700e521219c7821949eb125c5b391d7",
+  "application_bytes_changed": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "package_files": {
+    "ASPCOMP.EXE": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+    "ASPECT.EXE": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+    "PCCOMP.OVL": "5cb90b8b29218fc3580f5abe92b530642587e12e35975ebc28e8cdc34a1c8f6f",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCKEYMAP.EXE": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+    "PCLINE.OVL": "c89bbfce9ee58f153441cc89e46994bc68066ff04fd65b385234bb7404d0cde0",
+    "PCMETA.OVL": "ef8b9ca0a252d8b68dde0a264f527868235fcd9551ec6466635a8f9a80f03641",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+    "PRMEDIT.EXE": "0a8452e70e10514fd03131dcf096283baca7bc7955e4883a380861e5bebef26e",
+    "README.TXT": "2cb3b8228dee4658feca7e3e477ccd213e80e0036cace02174290dfbc76cc1e1",
+    "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+    "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+    "TERMINAL.EXE": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+    "VERSION.TXT": "fb41c143a4ee8ec6d8421e25ee803b6a557376c7719df0f5b1a4460fb3208e29",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "busy_and_reconnect": [
+    {
+      "case": "busy-exit",
+      "attempts": 1,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true
+      },
+      "actual_seconds": 6.025
+    },
+    {
+      "case": "busy-redial",
+      "attempts": 2,
+      "checks": {
+        "configured_abort_reached_wire": true,
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true,
+        "second_configured_attempt": true
+      },
+      "actual_seconds": 19.445
+    },
+    {
+      "case": "three-calls",
+      "attempts": 3,
+      "checks": {
+        "configured_hangup_reached_wire": true,
+        "DOS_expected_exit": true,
+        "hardware_restored": true,
+        "PRM_unchanged": true,
+        "binary_unchanged": true,
+        "no_peer_errors": true,
+        "no_unexpected_commands": true,
+        "actual_init_and_dial": true,
+        "actual_DOS_CPR": true,
+        "actual_DOS_DA": true,
+        "immediate_banner_not_dropped": true
+      },
+      "actual_seconds": 28.96
+    }
+  ],
+  "endurance": {
+    "seconds": 300,
+    "actual_seconds": 319.442,
+    "frames": 601,
+    "scope": "Actual DOS8086 COM3/IRQ5 with BOTH flow selected; synthetic paced UART peer, not live BBS/SIP/audio or physical throughput."
+  },
+  "editors": [
+    {
+      "server": "enigma",
+      "label": "compiler-bridge-editor-final-baseline-20261108",
+      "mode": "baseline",
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "actual_reference_observed": true,
+        "all_39_reference_commands": true,
+        "unavailable_AltD_observed": true,
+        "reference_freeze_completed": true,
+        "expected_geometry_advertised": true
+      },
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "CPR": [
+        9,
+        8
+      ],
+      "modal": {
+        "flags": 3,
+        "ticks": 1717,
+        "capture_sha256": "547455571cfd06991c65c5fe1b33c3b12212e086725e08f3b6902dc96d57c156",
+        "font_sha256": "a8bad6fd78475a6bc2a05438c19207a9bb8c0f4f4099f60384e158cdc3eba580",
+        "observer_sha256": "d3718ddb1c8275e28ecd78b2dda28df3da7a95641bb343906f99cd85782c491c"
+      }
+    },
+    {
+      "server": "enigma",
+      "label": "compiler-bridge-editor-final-pageup-20261108",
+      "mode": "page-up",
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "reference_freeze_completed": true,
+        "expected_geometry_advertised": true
+      },
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "CPR": [
+        22,
+        14
+      ],
+      "modal": {}
+    },
+    {
+      "server": "enigma",
+      "label": "compiler-bridge-editor-final-pagedown-20261108",
+      "mode": "page-down",
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "reference_freeze_completed": true,
+        "expected_geometry_advertised": true
+      },
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "CPR": [
+        22,
+        8
+      ],
+      "modal": {}
+    },
+    {
+      "server": "synchronet",
+      "label": "compiler-bridge-sync-editor-high-status-20261108",
+      "mode": "keymap-help",
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "runtime_unchanged": true,
+        "server_static_inputs_unchanged": true,
+        "message_bodies_unchanged": true,
+        "no_message_mail_or_transfer_writes": true,
+        "actual_ASPECT_login": true,
+        "staged_inputs_unchanged": true,
+        "frozen_editor_frame": true,
+        "actual_CPR_boundary": true,
+        "fixture_CPR_consumed": true,
+        "expected_geometry_advertised": true,
+        "source_inputs_unchanged": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true,
+        "actual_keymap_roundtrip": true
+      },
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "CPR": [
+        5,
+        8
+      ],
+      "modal": {
+        "passed": true,
+        "checks": {
+          "preserved_KBD_length": true,
+          "application_exit_zero": true,
+          "no_save_residue": true,
+          "observer_complete": true,
+          "exact_editor_frame": true,
+          "cursor_shape": true,
+          "mode_rows": true,
+          "actual_mapper": true,
+          "actual_F1_notation": true,
+          "only_intended_KBD_edit": true,
+          "local_edit_never_sent": true,
+          "subsequent_editor_keys": true,
+          "helper_unchanged": true,
+          "KMSEG.BIN_in_UMB": true,
+          "KEYSEG.BIN_in_UMB": true,
+          "actual_context17_Help": true
+        },
+        "observer_words": [
+          22103,
+          1,
+          1,
+          1,
+          25,
+          25,
+          1024,
+          1024,
+          1551,
+          1551,
+          20483,
+          20483
+        ],
+        "application_exit_status": [
+          0,
+          0,
+          0
+        ],
+        "profiles": 7,
+        "file_bytes": 6636,
+        "help_roundtrip": true,
+        "parent_sha256": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+        "helper_sha256": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+        "capture_sha256": "7aa42df394b3d2063f154cbaff20dff37bce1946bf3eb7e3561d85734f0410d9",
+        "sources": {
+          "lab/bbs/keymap_bbs_support.py": "722ded1c9d1a7d89b85da8ff32c4876b759fbf23830a7b9ae8a2bfa87a4469d7",
+          "standalone/file_directory_bbs_watch.asm": "c103e92f8a26afdfe30457c9b0ab33af098f8e759ec6ede5cbdb6bac13ca2deb",
+          "standalone/build_keyboard_profiles.py": "7a6df4fcefc34f10d62de1f176e68f891d487ac7511e7e7d8a02c32bfd0c30da",
+          "src/terminal/key_configuration.asm": "3de07b644496dec305bf427a0ebe99e8220cd070cb5ec2b27be39bc6718b3dc7",
+          "standalone/dos_status_runner.asm": "917ac019d7d64ced306d5226aff7e21f8106b89564370d2c1dfb2e54d28d7322"
+        },
+        "scope": "Actual Alt-F8/helper edit/save/Escape inside stock BBS editor; exact whole KBD mutation and passive 4000-byte frame/cursor/shape return, ordinary editor input resumes. No physical modem/SIP/audio acceptance."
+      }
+    }
+  ],
+  "screen_controls": [
+    {
+      "path": "build/compiler-bridge-enigma-editor-screen-controls-20261108",
+      "cases": [
+        {
+          "case": "unchanged",
+          "passed": true,
+          "rejected": false,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "character",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "attribute",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "bottom-character",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "bottom-attribute",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "cursor",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "prefix-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Snapshot must pair with exactly the delivered prefix",
+          "different_cells": null
+        },
+        {
+          "case": "unsupported-font",
+          "passed": true,
+          "rejected": true,
+          "error": "('Unsupported reference intermediate', 496, '1b5b303b312044')",
+          "different_cells": null
+        },
+        {
+          "case": "proxy-input-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Only the fixture query reply may be removed before the actual proxy; preserve all other TX",
+          "different_cells": null
+        }
+      ]
+    },
+    {
+      "path": "build/compiler-bridge-sync-editor-screen-controls-20261108",
+      "cases": [
+        {
+          "case": "unchanged",
+          "passed": true,
+          "rejected": false,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "character",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "attribute",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "bottom-character",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "bottom-attribute",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 1
+        },
+        {
+          "case": "cursor",
+          "passed": true,
+          "rejected": true,
+          "error": null,
+          "different_cells": 0
+        },
+        {
+          "case": "prefix-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Snapshot must pair with exactly the delivered prefix",
+          "different_cells": null
+        },
+        {
+          "case": "unsupported-font",
+          "passed": true,
+          "rejected": true,
+          "error": "('Unsupported reference intermediate', 22071, '1b5b303b312044')",
+          "different_cells": null
+        },
+        {
+          "case": "proxy-input-truncated",
+          "passed": true,
+          "rejected": true,
+          "error": "Only the fixture query reply may be removed before the actual proxy; preserve all other TX",
+          "different_cells": null
+        }
+      ]
+    }
+  ],
+  "wrapper_controls": [
+    {
+      "case": "high",
+      "passed": true,
+      "status": [
+        0,
+        0,
+        17
+      ],
+      "environment_proof": [
+        21332,
+        1,
+        52225,
+        52370,
+        75,
+        1
+      ],
+      "strategy_and_free_memory_restored": true
+    },
+    {
+      "case": "not-loaded-high",
+      "passed": true,
+      "status": [
+        1,
+        8,
+        65406
+      ],
+      "environment_proof": null,
+      "strategy_and_free_memory_restored": true
+    },
+    {
+      "case": "no-UMB",
+      "passed": true,
+      "status": [
+        1,
+        8,
+        65406
+      ],
+      "environment_proof": null,
+      "strategy_and_free_memory_restored": true
+    },
+    {
+      "case": "missing-child",
+      "passed": true,
+      "status": [
+        1,
+        2,
+        65406
+      ],
+      "environment_proof": [
+        21332,
+        1,
+        52225,
+        52370,
+        75,
+        1
+      ],
+      "strategy_and_free_memory_restored": true
+    }
+  ],
+  "receipts": {
+    "build/compiler-bridge-connection-package-20261108/manifest.json": "c31131609ef1f09a66b4b81f6bffab7737579966e6da5de0a0d3ba3874974c96",
+    "build/busy-retry-dos/compiler-bridge-browser-valid-20261108/result.json": "fe5ed6a7a09cae01e04616535078b9a3700738f58cd2f96ad2575cba1184c30e",
+    "build/connection-dos/compiler-bridge-browser-valid-20261108-busy-exit/result.json": "9ce6cdbba663d0d335cf84c0f808aef0c306283dc80c3ce45ceeda57cfd6fbb6",
+    "build/connection-dos/compiler-bridge-browser-valid-20261108-busy-redial/result.json": "7070c9f174b32e73c4893a1d33f03da6ff1fa244decf05d3dc3294188d293fd5",
+    "build/connection-dos/compiler-bridge-browser-valid-20261108-three-calls/result.json": "2f2956d56661fa5973dcd9d1ff507e0d36bd7ff92ff44c0fadaa78e56b4504f3",
+    "build/terminal-endurance/compiler-bridge-display-valid-20261108/result.json": "262fc16c7ba2f97578012a20f0adf5a0d73467aaef7a22bb87c6ea4fa4a42a62",
+    "build/connection-dos/compiler-bridge-display-valid-20261108-stream/result.json": "c3fcfb7a435df8e5e9106e632d8957a29645c0dd047277561df78a4e411650dc",
+    "build/compiler-bridge-status-high-controls-20261108/result.json": "b2438869229ad730b92356ef021640318a44b7d2d20054d10951d7dfaae2234f",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-final-baseline-20261108/proxy-integration.json": "6a7c354d848b6d658269ecb75eb55b36f994b5f7ca65c0a23557e8ca9771e324",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-final-baseline-20261108/screen-reference-audit.json": "283719b2338c8bc89c66d4b8daa35788f78978291680a53484baa60ae9bc539d",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-final-baseline-20261108/semantic-audit.json": "5db7a236efbd091d59b5ea93471207648714ad0094c9947ae934640c033e7147",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-final-pageup-20261108/proxy-integration.json": "62e26a7bdefc7f9aee30355e9ed078cde4852d6f54de5bbdfd3b15fdf280ca31",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-final-pageup-20261108/screen-reference-audit.json": "bd8e3d9fa939b801ee1b1859dc959bdfee0a0d8e912dcb70d96e3287edee0685",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-final-pageup-20261108/semantic-audit.json": "8d505bb3481501739c1901541c614883c1f788b7e4aad50cff67c922181b07f5",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-final-pagedown-20261108/proxy-integration.json": "0193170740ad6dccc58858222b8de17044b3507cb9b8f0b8d5e139d5234c3d67",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-final-pagedown-20261108/screen-reference-audit.json": "1d5d0f4d24f1674187cf817cedefe1031a0cbe3f0e47f054e068ee07b591ef9b",
+    "build/bbs-lab/results/enigma/compiler-bridge-editor-final-pagedown-20261108/semantic-audit.json": "b7fd30fff81c3e4da7b8ca6b15223c37001abd5fd015dfdd25c3041f0fa7e88d",
+    "build/bbs-lab/results/synchronet/compiler-bridge-sync-editor-high-status-20261108/proxy-integration.json": "becbc7c7c79868b3c2a939d9301dc1825d6e12a39ab1d05a078914d6189d5062",
+    "build/bbs-lab/results/synchronet/compiler-bridge-sync-editor-high-status-20261108/screen-reference-audit.json": "4cb17f3e7a92d58f0dea40ff194c28756b4b88936cb90774fd664df51839d2d4",
+    "build/bbs-lab/results/synchronet/compiler-bridge-sync-editor-high-status-20261108/keymap-audit.json": "dc07a23768aa2773a3f0c2b3f3ebf3eeecf7afe1135de21bf3425857c6e73633",
+    "build/bbs-lab/results/synchronet/compiler-bridge-sync-editor-high-status-20261108/result.json": "a94f6c10190e794c5483cc53358a15a576fec4e2b3cd87387b28a5db637892fa",
+    "build/compiler-bridge-enigma-editor-screen-controls-20261108/result.json": "ad6207db4ccdc90d4abc8cfd5dd357138a7e06f0ff86b7785b2a66c7c66adb46",
+    "build/compiler-bridge-sync-editor-screen-controls-20261108/result.json": "4e02d6b190285cc15e0db8e09d73d79c84207cf6929a92f3f3ff51a89a5e125f",
+    "docs/validation/aspect-compiler-package.json": "156c499020a270166dcde0aa3834cce866a5a5b73e729b0cf685f115bcec2ac0",
+    "docs/validation/aspect-compiler-connection.json": "41239efef90a82d09da3e4d737dcbb77571676d0fd61520f2bd7bedfc21edeef"
+  },
+  "sources": {
+    "standalone/record_compiler_bridge_reliability.py": "07d4f5700c1aa8ebac238d118a7adc7b82973e9ab26fec4698a685ff05fb75c3",
+    "standalone/test_busy_retry_dos.py": "134e9003398aad2c9b33ae25a0ba67b7697f9cdfadd4bc4c68b0e3109d48a9c0",
+    "standalone/test_terminal_endurance_dos.py": "801ef2c77a32ae3092a40abbfcd02d0ad311e54cfcb0ce19012d2eb8265ca361",
+    "lab/bbs/test_dos.py": "7838554f1a1445d5e03b9ed16840709ebf73e2c991f24a029932cc7d8764f66e",
+    "lab/bbs/test_synchronet_screen_reference_dos.py": "9db5527ad18f68c4feabf377b20e511018fbc9eb68083f78a19e5bc4db1611e6",
+    "lab/bbs/enigma_multiline.py": "bb48904a70d6a58d7a522681b0b40bed567c2fd7ea8946f1a4e76528bf70f18b",
+    "standalone/dos_status_runner.asm": "917ac019d7d64ced306d5226aff7e21f8106b89564370d2c1dfb2e54d28d7322",
+    "standalone/test_status_runner_high_dos.py": "4148c25f05455a8343ebb2c257cb87878a4aa685809ca31de9415256a8f1ec88",
+    "nix/flake.nix": "1bed287bbe29de9ee1108e16ded622ad7f71736278098dad0fba741c540652fa",
+    "nix/flake.lock": "88b079b37a4981fa4bfe352de0d8200d18bb3c915015e7188af1bc0e72b9fe26"
+  },
+  "scope": "Current unchanged17-file candidate: actual DOS/synthetic modem plus stock loopback BBS editors through actual Telnet proxy. Default25-row display/status visible; paced endurance is not saturation/SIP/audio/physical acceptance.",
+  "remaining": [
+    "Physical/private-machine admission and deployed-byte confirmation.",
+    "Saturation/CTS timing and every owner/geometry/profile combination.",
+    "Full original ASPECT/emulation/protocol/Host and remaining helper/UI equivalence."
+  ]
+}

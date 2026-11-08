@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Current compiler-bridge reliability](ASPECT_COMPILER_RELIABILITY.md) verifies
+BUSY cleanup, three calls in one parent,300-second/601-frame paced receive,
+stock Enigma multiline paging and Synchronet mapper/Help return. Four exact
+1920-cell editor references and corruption controls pass. The application and
+selected physical installation stay unchanged; hardware and whole-feature gates
+remain open.
+
 [The complete compiler-bridge package](ASPECT_COMPILER_PACKAGE.md) now reproduces
 all17 files and its ZIP from1082 committed public source files. Matching module
 and archive controls, seven packaged DOS launcher/helper cases and the prior
