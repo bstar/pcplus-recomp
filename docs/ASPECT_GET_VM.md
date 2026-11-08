@@ -25,9 +25,9 @@ turns off code packing. BEGDATA ordering is essential: omitting it placed the
 initialized null region after the stack and inflated the loaded image. The
 builder now checks all public bridge, implementation and callback segments,
 abort targets, field storage, CRT ordering and the unchanged8192-byte stack.
-The current audited layout is65405 resident code bytes (131 spare),4079 GET code bytes,
-1544 pure editor bytes and44096 DGROUP bytes. The aligned MZ page minimum including PSP is
-139168 bytes; environment/EXEC overhead and dynamic memory are additional.
+The current audited layout is62751 resident code bytes (2785 spare),4079 GET code bytes,
+1544 pure editor bytes and43712 DGROUP bytes. The aligned MZ page minimum including PSP is
+136128 bytes; environment/EXEC overhead and dynamic memory are additional.
 The [MZ layout checkpoint](ASPECT_MZ_LAYOUT.md) corrects the earlier file-length
 accounting and records the separate startup failure.
 
@@ -69,8 +69,9 @@ Standalone full-interpreter DOS8086 tests cover healthy execution,128 strings,
 80-character values, mixed integer/long/string/file ownership, divide recovery,
 unattached GET refusal and missing-file errors.
 
-The larger keymap candidate now loads the aligned child, but C-runtime
-startup still fails before main with the passive observer present. The installed-profile pair now passes the real
+The larger keymap candidate now passes the six attached cases after the
+[qualified compiler executor](ASPECT_COMPILER_EXEC.md) removes duplicate runtime
+code. Full memory/feature co-residency remains a separate gate. The installed-profile pair now passes the real
 FOPEN→GET sequence, retaining its stream and exact `BEFORE|LoC42` bytes. The
 [owned read-window change](ASPECT_READ_WINDOW.md) removes duplicate ASX stdio
 buffering while retaining the native256-byte window and full512-byte buffers
@@ -84,7 +85,7 @@ With duplicate buffering removed, the backend open count is1, the stream
 retires normally, and native/runtime errors are0. The old failed reports stay
 historical; neither errno alone nor the old error label establishes a cause.
 
-Pending work includes larger-parent and full variable/stream co-residency admission,
+Pending work includes full variable/stream/help co-residency admission,
 repeated/EXECUTE GET, actual native WHEN action composition, optional
 width/masking/origin policies in the full VM, floating support, both compiler
 frontends, package admission and connected physical acceptance. Existing

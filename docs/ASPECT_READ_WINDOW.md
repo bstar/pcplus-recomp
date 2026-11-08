@@ -46,9 +46,9 @@ Captured CRT heap boundaries are observational, not a general memory guarantee.
   the file, CLI and attached GET tests. Default interpreter bytes remain exact.
 
 The attached pair uses the complete installed feature set plus capability22.
-The separate heavier keymap parent still has an unresolved startup
-failure. The [later MZ layout checkpoint](ASPECT_MZ_LAYOUT.md) gets past DOS EXEC
-but exposes C-runtime allocation failure before main. Full variable/stream co-residency, ordinary8086 attached capacity,
+The [MZ checkpoint](ASPECT_MZ_LAYOUT.md) exposed a separate larger-parent
+startup failure. The later [compiler executor](ASPECT_COMPILER_EXEC.md) now passes
+that pair’s six GET cases; full peak-memory/feature co-residency remains open. Full variable/stream co-residency, ordinary8086 attached capacity,
 repeated/EXECUTE GET, native WHEN actions, both GET compilers, other field modes,
 FLOAT.RTE, package promotion and physical acceptance remain open. No selector,
 installed files, hardware or private settings change with this checkpoint.

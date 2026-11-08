@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 """Actual nested DOS compiler while UART IRQ/ASIO session ownership stays live."""
-import json,struct
+import argparse,json,struct
 from pathlib import Path
 import test_aspect_script_serial_dos as serial
 ROOT=serial.ROOT;OUT=ROOT/'build/aspect-source-serial-dos'
 def main():
- OUT.mkdir(exist_ok=True);binary=ROOT/'build/aspect-runner/ASPECT.EXE';digest=serial.sha(binary)
+ global OUT
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-runner/ASPECT.EXE');p.add_argument('--output',type=Path)
+ a=p.parse_args();binary=a.runner.resolve()
+ if a.output is not None:OUT=a.output.resolve();assert OUT.is_relative_to(ROOT/'build') and not OUT.exists()
+ m=json.loads(binary.with_name('manifest.json').read_text());assert serial.sha(binary)==m['binary_sha256']
+ for n,h in m['sources'].items():assert serial.sha(ROOT/n)==h,n
+ OUT.mkdir(exist_ok=True);digest=serial.sha(binary)
  start='integer value,saved\nstring filename\nproc main\nvalue=42\nset break 1234\ntransmit "READY"\nfilename="NEXT.ASP"\nexecute filename\ntransmit "BAD"\nendproc\n'
  target='; padding for a real compiler interval\n'*2000+'integer value,saved\nproc main\nfetch break saved\nif value==42 && saved==1234\ntransmit "STATEOK"\nelse\ntransmit "BADSTATE"\nendif\nwaitfor "END" 5\ntransmit "DONE^M"\nendproc\n'
  cases=[]

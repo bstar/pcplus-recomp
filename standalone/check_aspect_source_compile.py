@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Real production interpreter/compiler EXEC, namespace and fault isolation."""
-import json,os,shutil,subprocess,sys
+import argparse,json,os,shutil,struct,subprocess,sys
 from pathlib import Path
 from build_aspect_runner import ROOT,sha
 sys.path.insert(0,str(ROOT/'src/aspect'))
@@ -37,8 +37,15 @@ int main(void){
 '''
 
 def main():
+ global OUT
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--runner',type=Path,default=ROOT/'build/aspect-runner/ASPECT.EXE');p.add_argument('--compiler',type=Path,default=ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE');p.add_argument('--output',type=Path)
+ a=p.parse_args()
+ if a.output is not None:OUT=a.output.resolve();assert OUT.is_relative_to(ROOT/'build') and not OUT.exists()
+ for binary in (a.runner,a.compiler):
+  m=json.loads(binary.with_name('manifest.json').read_text());assert sha(binary)==m['binary_sha256']
+  for n,h in m['sources'].items():assert sha(ROOT/n)==h,n
  OUT.mkdir(exist_ok=True);folder=OUT/'tests';folder.mkdir(exist_ok=True)
- for leaf,path in [('ASPECT.EXE','aspect-runner/ASPECT.EXE'),('ASPCOMP.EXE','aspect-compiler-dos/ASPCOMP.EXE')]:shutil.copyfile(ROOT/'build'/path,folder/leaf)
+ for leaf,path in [('ASPECT.EXE',a.runner),('ASPCOMP.EXE',a.compiler)]:shutil.copyfile(path,folder/leaf)
  (folder/'LIB').mkdir(exist_ok=True);(folder/'SUB').mkdir(exist_ok=True);(folder/'DIR.ASP').mkdir(exist_ok=True)
  definitions=[('DIRECT','DIRECT.ASP','proc main\nmessage "direct"\nendproc\n',b'direct\r\n'),
               ('DEFAULT','DEFAULT.ASX','proc main\nmessage "fallback"\nendproc\n',b'fallback\r\n'),
@@ -50,6 +57,10 @@ def main():
   relative=('LIB/'+name if name=='PCONLY' else 'SUB/'+name if name=='QUALIFY' else name)
   (folder/(relative+'.ASP')).write_bytes(source.encode('cp437'));(folder/(relative+'.ASX')).unlink(missing_ok=True);sources[relative]=source
   program+=f' run("{name}",{json.dumps(path)},0);\n';expected[name]=out
+ # Authored DOS-only MZ requests more than640KB: exercise actual EXEC8 and
+ # the backend's DOS-to-errno mapping, without depending on a malformed loader.
+ (folder/'OVERBIG.EXE').write_bytes(struct.pack('<16H',0x5a4d,37,1,0,2,0xa000,0xffff,0,256,0,0,0,28,0,0,0)+bytes.fromhex('b8004ccd21'))
+ program+=' ck(rename("ASPCOMP.EXE","SAVED.EXE")==0);ck(rename("OVERBIG.EXE","ASPCOMP.EXE")==0);run("DOSMEM","DIRECT.ASP",8);ck(rename("ASPCOMP.EXE","OVERBIG.EXE")==0);ck(rename("SAVED.EXE","ASPCOMP.EXE")==0);\n';expected['DOSMEM']=b''
  relative='SUB/'+'/'.join(['ABCDEFGH']*7)+'/LONGFILE';long_source='proc main\nmessage "long path"\nendproc\n'
  (folder/relative).parent.mkdir(parents=True,exist_ok=True);(folder/(relative+'.ASP')).write_text(long_source);(folder/(relative+'.ASX')).unlink(missing_ok=True)
  long_path=(relative+'.ASP').replace('/','\\');assert len(long_path)==79
@@ -118,6 +129,18 @@ int main(int argc,char **argv){FILE *f;unsigned count=0;if(argc!=2)return 64;f=f
  (folder/'multi.c').write_text(multi);(folder/'COMPCNT.BIN').unlink(missing_ok=True)
  subprocess.run(['wcl','-q','-bt=dos','-0','-ml','-ecc','-s','-w4','-we','-k4096','-fe=MULTI.EXE',str(folder/'multi.c')],cwd=folder,check=True)
  program+=' ck(rename("ASPCOMP.EXE","SAVED.EXE")==0);ck(rename("MULTI.EXE","ASPCOMP.EXE")==0);run("CYCLES","CYCLES.ASX",0);ck(rename("ASPCOMP.EXE","MULTI.EXE")==0);ck(rename("SAVED.EXE","ASPCOMP.EXE")==0);\n';expected['CYCLES']=b'20\r\n';sources['LOOP']=cycle
+ # A compiler must see the effective C environment, including script PUTENV.
+ envstart='proc main\nputenv "LOC_COMPILER=live"\nexecute "ENVNEXT.ASP"\nendproc\n'
+ envnext='proc main\nmessage "effective environment"\nendproc\n'
+ (folder/'ENVSTART.ASX').write_bytes(compile_source(envstart));(folder/'ENVNEXT.ASP').write_text(envnext);(folder/'ENVNEXT.ASX').unlink(missing_ok=True)
+ envwrapper=r'''#include <stdlib.h>
+#include <string.h>
+#include <process.h>
+int main(int argc,char **argv){const char *value=getenv("LOC_COMPILER");if(argc!=2||!value||strcmp(value,"LIVE"))return 93;return spawnl(P_WAIT,"SAVED.EXE","ASPCOMP",argv[1],(char *)0);}
+'''
+ (folder/'envwrap.c').write_text(envwrapper)
+ subprocess.run(['wcl','-q','-bt=dos','-0','-ml','-ecc','-s','-w4','-we','-k4096','-fe=ENVWRAP.EXE',str(folder/'envwrap.c')],cwd=folder,check=True)
+ program+=' ck(rename("ASPCOMP.EXE","SAVED.EXE")==0);ck(rename("ENVWRAP.EXE","ASPCOMP.EXE")==0);run("ENVLIVE","ENVSTART.ASX",0);ck(rename("ASPCOMP.EXE","ENVWRAP.EXE")==0);ck(rename("SAVED.EXE","ASPCOMP.EXE")==0);\n';expected['ENVLIVE']=b'effective environment\r\n';sources['ENVNEXT']=envnext
  cp_source='proc main\nmessage "CP437 source"\nendproc\n'
  # Create OEM names through real DOS calls rather than assuming a host Unicode
  # filename mapping. Dump the generated ASX into an ASCII report carrier.
@@ -145,6 +168,6 @@ int main(int argc,char **argv){FILE *f;unsigned count=0;if(argc!=2)return 64;f=f
  for leaf,source in sources.items():assert (folder/(leaf+'.ASX')).read_bytes()==compile_source(source)
  raw=(folder/'FAULTCTX.BIN').read_bytes();assert len(raw)==4 and raw[:2]!=raw[2:],raw.hex()
  assert not list(folder.rglob('LPC*.LOG'))
- report=dict(passed=True,runner_sha256=sha(ROOT/'build/aspect-runner/ASPECT.EXE'),compiler_sha256=sha(ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE'),checker_sha256=sha(Path(__file__)),DOS_summary=result.strip().splitlines()[-1],fault_context_hex=raw.hex(),recompilation_cycles=20,test_inputs={n:sha(folder/n) for n in ('harness.c','fault.c','FAULT.EXE','leak.c','LEAKER.EXE','cancel.c','CANCEL.EXE','multi.c','MULTI.EXE','COMPCNT.BIN','PC437.BIN')},original_inputs=[],scope='Actual production interpreter automatically compiles ASP/missing-ASX with original namespace/old-ASX rules, preserves chain state, caller PSP/INT0/23/24 and files, survives a foreign-DS compiler CPU fault and a leaked INT0 vector, cancels before/after compiler EXEC, and completes20 counted real compiler replacements in one invocation. UART/renderer/BBS composition remains separately required.')
+ report=dict(passed=True,runner_sha256=sha(a.runner),compiler_sha256=sha(a.compiler),checker_sha256=sha(Path(__file__)),DOS_summary=result.strip().splitlines()[-1],fault_context_hex=raw.hex(),recompilation_cycles=20,test_inputs={n:sha(folder/n) for n in ('envwrap.c','ENVWRAP.EXE','OVERBIG.EXE','harness.c','fault.c','FAULT.EXE','leak.c','LEAKER.EXE','cancel.c','CANCEL.EXE','multi.c','MULTI.EXE','COMPCNT.BIN','PC437.BIN')},original_inputs=[],scope='Actual production interpreter automatically compiles ASP/missing-ASX with original namespace/old-ASX rules, preserves chain state, caller PSP/INT0/23/24 and files, survives a foreign-DS compiler CPU fault and a leaked INT0 vector, cancels before/after compiler EXEC, and completes20 counted real compiler replacements in one invocation. UART/renderer/BBS composition remains separately required.')
  (OUT/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
 if __name__=='__main__':main()

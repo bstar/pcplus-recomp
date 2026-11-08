@@ -1,0 +1,148 @@
+{
+  "checkpoint": "Qualified source compiler executor funds the complete larger-parent GET pair",
+  "original_inputs": [],
+  "maintained_not_original_instruction_recovery": true,
+  "effective_CRT_environment_copied": true,
+  "source_context": "https://github.com/open-watcom/open-watcom-v2/blob/master/bld/clib/_dos/c/dosret.c",
+  "previous_minimum_with_PSP": 139168,
+  "current_minimum_with_PSP": 136128,
+  "minimum_reduction": 3040,
+  "capacities_reduced": false,
+  "help_buffers_unchanged": true,
+  "stack_bytes": 8192,
+  "larger_keymap_parent_six_cases_passed": true,
+  "parent_CPU": "DOS386/UMB observer;640KB conventional",
+  "standalone_CPU": "DOS8086",
+  "compiler_cases": 24,
+  "compiler_checks": 249,
+  "exact_stdout_stderr_files": 48,
+  "serial_compilation_cases": 7,
+  "default_child_exact": true,
+  "compiler_GET_enabled": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "sources": {
+    "src/aspect/compiler_exec.asm": "7e7309cedab40b968b7447bc9f47f1869a7e79b6c8b9b8a7e7989dfafc01028f",
+    "src/aspect/source_compile.c": "a956e6c854395b9de2e48326a41c9be9b285338cf8d3b705b20bfcf3bd80c696",
+    "standalone/build_aspect_runner.py": "65ee6657afc2b29b3b72a4c1163c7f5a5bbdf961b410eca9cf5ff2ab1fc40c55",
+    "standalone/check_aspect_source_compile.py": "d0deaf08080f3a8773e756e8dae2040007bda2968a8d4fd132834a010d002568",
+    "standalone/check_aspect_source_serial_dos.py": "adda9e46fc17b21dc54f6729156d0d1eadc22f506fd9e7edfeeab438400675a5",
+    "standalone/compare_compiler_exec.py": "928bef6f484bde117ae085b0dd5d7587d3677bef36a8886b3ae3f80951f7d6c3",
+    "standalone/prove_get_vm_source.py": "d203d9a8b6aff035ce918a914914ada90194a791d0e374e5758e1bf2dcc39e23",
+    "docs/ASPECT_COMPILER_EXEC.md": "d722bab959617e0a77cae0671eb5e349ac2d2e43326642160353de6720fb82e0",
+    "docs/ASPECT_GET_VM.md": "30fe323e29ecd217bd058d7d0ffcc2644551c9fea0e6566efe4b5d8846c4b941",
+    "docs/ASPECT_MZ_LAYOUT.md": "0b679662fd706cb311f961c1c561e5550cc332958c8912e919a7158dcb1cb078",
+    "docs/ASPECT_READ_WINDOW.md": "a31d5239351dd617b19915dde3a295af7b32ba701c675b48a5f8d218a27eaac5",
+    "docs/FEATURES.md": "8c4ddbc1e24ee89d61c5b9ad26553dad7e4f082ab2e678128a695d5c04efafbb"
+  },
+  "evidence": {
+    "build/get-direct-release-child-20261107/manifest.json": {
+      "sha256": "0880729c6dd7fc305c5447476fe08d0ffbb310983a9d9515e0424f66e34a3f35",
+      "binary_sha256": "54590fd38a8c9992bc747d12b2ea330c6eb749f8bf7bbffcb2d9d4d0a0fe2ff1",
+      "GET_bank_layout": {
+        "passed": true,
+        "near_code_bytes": 62751,
+        "near_code_spare": 2785,
+        "GET_code_bytes": 4079,
+        "editor_code_bytes": 1544,
+        "field_state_bytes": 206,
+        "DGROUP_bytes": 43712,
+        "stack_bytes": 8192,
+        "minimum_DOS_bytes_including_PSP": 136128,
+        "page_rounded_minimum_including_PSP": 136128,
+        "near_entries": 6,
+        "resident_callback_count": 30,
+        "scope": "Link-map segment/callback/CRT order and exact/page MZ minima; environment/EXEC overhead, execution and available conventional memory require separate DOS tests."
+      }
+    },
+    "build/get-direct-default-child-20261107/manifest.json": {
+      "sha256": "c159226a0ccb585b49b04ded4d7d727ed002d02a59baa07d334e190d69d276f5",
+      "binary_sha256": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066"
+    },
+    "build/get-direct-release-source-20261107/source/build/compiler-exec/checks.json": {
+      "sha256": "a905796b08aa001b473d287e0134d9ff762f3d238a6b3580f74a98b80660637f",
+      "passed": true,
+      "compiler_sha256": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+      "DOS_summary": "SOURCE_EXEC 24 cases 249 checks 0 failures",
+      "recompilation_cycles": 20
+    },
+    "build/get-direct-release-source-20261107/source/build/compiler-baseline/checks.json": {
+      "sha256": "25263955a735d2a4a569a36092051c911f57402d6a7c60dcdd6223b46df06092",
+      "passed": true,
+      "compiler_sha256": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+      "DOS_summary": "SOURCE_EXEC 24 cases 249 checks 0 failures",
+      "recompilation_cycles": 20
+    },
+    "build/get-direct-release-source-20261107/source/build/compiler-equivalence/result.json": {
+      "sha256": "805b24d5cda76804e71a6b244fca21314dcbd9e2866f1743fd2cd1c493fbae56",
+      "passed": true,
+      "compiler_sha256": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+      "DOS_summary": "SOURCE_EXEC 24 cases 249 checks 0 failures",
+      "output_files": 48
+    },
+    "build/get-direct-release-source-20261107/source/build/compiler-serial/checks.json": {
+      "sha256": "9311eb5990b6c20a489bdc459b55698c254e0738928463887e52e4034d9e68b2",
+      "passed": true,
+      "compiler_sha256": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+      "cases": 7
+    },
+    "build/get-direct-release-heavy-20261107/checks.json": {
+      "sha256": "9092914d30bacd7f554cdc9074b897561aee1a7941946cf167de95d904805973",
+      "passed": true,
+      "cases": 6,
+      "string_probe": [
+        {
+          "case": "get-vm-string",
+          "memory_before_EXEC": {
+            "largest_free_bytes": 140352,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38036,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 0,
+            "file_status": 0
+          },
+          "allocation_probe": {
+            "_runtime_script_file_open_calls": 1,
+            "_runtime_script_file_live": 0,
+            "_runtime_script_file_last": 0,
+            "_runtime_native_error_code": 0,
+            "_runtime_steps": 14,
+            "_runtime_live": 0,
+            "_runtime_alloc_calls": 1,
+            "___nheapbeg": 43712,
+            "__curbrk": 44736,
+            "__STACKLOW": 35571,
+            "__STACKTOP": 43712,
+            "PSP_allocation_paragraphs": 8571,
+            "environment_paragraphs": 73,
+            "environment_string_bytes": 140
+          }
+        }
+      ]
+    },
+    "build/get-direct-release-source-20261107/result.json": {
+      "sha256": "bbe011c5f3488eebc5bcf45965614ba1c888c7ecb0759aacd7785c67b9df0565",
+      "passed": true,
+      "source_count": 1038,
+      "parent_sha256": "b25fe6d207e83e0ed1bd5ad2085aca719a324e4b2db9a0c01a0ec6c51f424d5b",
+      "child_sha256": "54590fd38a8c9992bc747d12b2ea330c6eb749f8bf7bbffcb2d9d4d0a0fe2ff1",
+      "compiler_sha256": "ac58a8a1ee07f6253b4dfb4d531eb1d456da3b6f7ea15afca8814db626e997e2",
+      "parent_profile": "keymap",
+      "DOS_cases": 6,
+      "CLI_cases": 7
+    }
+  },
+  "remaining": [
+    "Full variable/stream/help co-residency and ordinary8086 attached memory; three-process compiler-under-full-terminal capacity.",
+    "Repeated/EXECUTE GET, actual WHEN action composition and remaining field policy cases.",
+    "Environment maximum-pressure/DOS release errors, near allocation exhaustion/far fallback.",
+    "Native string filter, FLOAT.RTE, sibling modes, both GET compiler frontends and remaining full application parity.",
+    "Package admission/promotion and connected physical acceptance."
+  ]
+}

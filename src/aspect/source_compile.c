@@ -15,6 +15,34 @@
 #include <malloc.h>
 #include <sys/stat.h>
 extern unsigned __cdecl aspect_serial_psp(void);
+#ifdef ASPECT_COMPILER_DIRECT_EXEC
+extern int __cdecl aspect_compiler_exec(const char *,const char *,unsigned);
+extern int __cdecl aspect_compiler_errno(unsigned);
+/* DOS PSP inheritance alone omits script PUTENV updates to the effective CRT
+ * vector. Pack that exact vector into a temporary DOS block; no near/far heap
+ * growth is needed while the block is live, and no filename encoding changes. */
+static int compiler_launch(const char *path,const char *source)
+{
+ unsigned i,n,at=0,segment,status;unsigned long bytes=1;int result,saved_errno;
+ char **table=environ;unsigned char __far *block;
+ if(table)for(i=0;table[i];++i){
+  n=strlen(table[i]);bytes+=(unsigned long)n+1;
+  if(i>=32765U||bytes>32767UL){errno=E2BIG;return -1;}
+ }
+ if(bytes==1)bytes=2;
+ status=_dos_allocmem(((unsigned)bytes+15U)/16U,&segment);
+ if(status)return aspect_compiler_errno(status);
+ block=MK_FP(segment,0);
+ if(table)for(i=0;table[i];++i){
+  n=strlen(table[i])+1;_fmemcpy(block+at,(const char __far *)table[i],n);at+=n;
+ }
+ block[at]=0;if(!at)block[1]=0;
+ result=aspect_compiler_exec(path,source,segment);saved_errno=errno;
+ status=_dos_freemem(segment);
+ if(status && result>=0)return aspect_compiler_errno(status);
+ errno=saved_errno;return result;
+}
+#endif
 unsigned runtime_compiler_calls,runtime_compiler_exit,runtime_compiler_dos_error;
 static unsigned busy;
 static unsigned missing(const char *path)
@@ -72,12 +100,17 @@ static unsigned compile(const char *source)
  status=runtime_compiler_scope(1);if(status)goto done;scope=1;
  break_vector=_dos_getvect(0x23);critical_vector=_dos_getvect(0x24);
  /* Release only unused CRT far heap segments. Live interpreter/session data
-  * and IRQ code remain resident while Watcom's P_WAIT executor releases its
-  * unused parent block and restores the parent's stack/PSP on return. */
+  * and IRQ code remain resident. The opt-in qualified compiler executor
+  * preserves the existing parent allocation and restores its stack/context;
+  * the default build retains Watcom P_WAIT. */
  _fheapshrink();++runtime_compiler_calls;
  /* The compiler's default target is the same .ASX sibling. Passing only the
   * source keeps the native80-byte source path inside DOS's126-byte tail. */
+#ifdef ASPECT_COMPILER_DIRECT_EXEC
+ result=compiler_launch(compiler,source);
+#else
  result=spawnl(P_WAIT,compiler,"ASPCOMP",source,(char *)0);
+#endif
  runtime_compiler_exit=result<0?65535U:(unsigned)result;
  if(result<0){runtime_compiler_dos_error=errno;status=errno==ENOMEM?ASPECT_RUN_HEAP:ASPECT_RUN_OPEN;}
  else if(result)status=result==ASPECT_RUN_ARITHMETIC_FAULT?ASPECT_RUN_ARITHMETIC_FAULT:ASPECT_RUN_IO;

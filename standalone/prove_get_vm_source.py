@@ -7,12 +7,15 @@ def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ('parent','child','checks','output'):p.add_argument('--'+n,type=Path,required=True)
+ p.add_argument('--parent-profile',choices=('installed','keymap'),default='installed')
+ p.add_argument('--compiler',type=Path,default=ROOT/'build/aspect-compiler-dos/ASPCOMP.EXE')
  a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  parent=json.loads((a.parent/'manifest.json').read_text());child=json.loads((a.child/'manifest.json').read_text())
+ compiler=json.loads(a.compiler.with_name('manifest.json').read_text());assert sha(a.compiler)==compiler['binary_sha256']
  checks=json.loads(a.checks.read_text());assert checks['passed'] and checks['GET_VM'] and len(checks['cases'])==6
  assert sha(a.parent/'TERMINAL.EXE')==parent['binary_sha256'] and sha(a.child/'ASPECT.EXE')==child['binary_sha256']
  sources={}
- for manifest in (parent,child):
+ for manifest in (parent,child,compiler):
   assert manifest.get('original_inputs',[])==[]
   for n,h in manifest['sources'].items():assert n not in sources or sources[n]==h,n;sources[n]=h
  for n in ['standalone/prove_get_vm_source.py','standalone/test_get_vm_cli.py','standalone/test_aspect_get_vm_dos.py',
@@ -20,7 +23,8 @@ def main():
   'standalone/directory_fixtures.py','standalone/modem_fixtures.py','standalone/directory_test_support.py',
   'standalone/terminal_config_fixtures.py','src/aspect/compiler.py','standalone/meta_shared_connection_candidate_recipe.json',
   'standalone/keymap_connection_candidate_recipe.json','standalone/check_aspect_file.py','standalone/build_aspect_file.py',
-  'standalone/aspect_file_fixture.c','standalone/aspect_file_fixture.asm','standalone/test_mz_layout_dos.py']:
+  'standalone/aspect_file_fixture.c','standalone/aspect_file_fixture.asm','standalone/test_mz_layout_dos.py',
+  'standalone/check_aspect_source_compile.py','standalone/check_aspect_source_serial_dos.py','standalone/test_aspect_script_serial_dos.py','standalone/compare_compiler_exec.py']:
   sources[n]=sha(ROOT/n)
  from build_aspect_file import ASM_SOURCES
  for name,n,define in ASM_SOURCES:sources[n]=sha(ROOT/n)
@@ -34,11 +38,20 @@ def main():
  env=dict(os.environ,GIT_CEILING_DIRECTORIES=str(out));assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode
  def run(args):
   with (out/'build.log').open('a') as log:subprocess.run([sys.executable,*args],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
- recipe=json.loads((fresh/'standalone/meta_shared_connection_candidate_recipe.json').read_text())
+ recipe_name='keymap_connection_candidate_recipe.json' if a.parent_profile=='keymap' else 'meta_shared_connection_candidate_recipe.json'
+ recipe=json.loads((fresh/'standalone'/recipe_name).read_text())
  run(['standalone/build_terminal.py',*recipe['terminal_flags'],'--aspect-get-display','--aspect-get-policy','--output-dir','build/parent'])
  run(['-c','import sys,json;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path("build/child").resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,get_display=True,get_policy=True,get_vm=True,near_globals=True,**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
  assert sha(fresh/'build/parent/TERMINAL.EXE')==parent['binary_sha256']
  assert sha(fresh/'build/child/ASPECT.EXE')==child['binary_sha256']
+ run(['-c','import sys,json;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path("build/default-child").resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
+ assert sha(fresh/'build/default-child/ASPECT.EXE')==json.loads((fresh/'standalone/meta_shared_connection_candidate_recipe.json').read_text())['expected_files']['ASPECT.EXE']
+ run(['standalone/build_aspect_compiler_dos.py'])
+ assert sha(fresh/'build/aspect-compiler-dos/ASPCOMP.EXE')==compiler['binary_sha256']
+ run(['standalone/check_aspect_source_compile.py','--runner','build/default-child/ASPECT.EXE','--output','build/compiler-baseline'])
+ run(['standalone/check_aspect_source_compile.py','--runner','build/child/ASPECT.EXE','--output','build/compiler-exec'])
+ run(['standalone/compare_compiler_exec.py','--baseline','build/compiler-baseline','--candidate','build/compiler-exec','--output','build/compiler-equivalence'])
+ run(['standalone/check_aspect_source_serial_dos.py','--runner','build/child/ASPECT.EXE','--output','build/compiler-serial'])
  run(['standalone/test_get_vm_cli.py','--child','build/child','--output','build/cli'])
  run(['standalone/check_aspect_file.py','--owned-window','--output','build/file'])
  run(['standalone/test_mz_layout_dos.py','--output','build/mz'])
@@ -51,7 +64,7 @@ def main():
   assert (a.checks.parent/previous['case']/'serial.bin').read_bytes()==(fresh/'build/dos'/current['case']/'serial.bin').read_bytes()
  for n,h in sources.items():assert sha(ROOT/n)==sha(fresh/n)==h,n
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,source_count=len(sources),sources=sources,
-  parent_sha256=parent['binary_sha256'],child_sha256=child['binary_sha256'],DOS_cases=len(replay['cases']),CLI_cases=7,MZ_layout_checks=json.loads((fresh/'build/mz/result.json').read_text()),owned_read_window_checks=json.loads((fresh/'build/file/checks.json').read_text()),
-  scope=__doc__+' Exact executables, DOS check booleans, serial wire and observer/probes. No originals/private files/prior objects/ancestor Git. Installed feature set plus capability22; larger keymap candidate memory and full variable/stream co-residency, compiler GET, physical hardware and whole-language parity remain open.')
+  parent_sha256=parent['binary_sha256'],parent_profile=a.parent_profile,child_sha256=child['binary_sha256'],compiler_sha256=compiler['binary_sha256'],compiler_exec_checks=json.loads((fresh/'build/compiler-exec/checks.json').read_text()),compiler_equivalence=json.loads((fresh/'build/compiler-equivalence/result.json').read_text()),compiler_serial_checks=json.loads((fresh/'build/compiler-serial/checks.json').read_text()),DOS_cases=len(replay['cases']),CLI_cases=7,MZ_layout_checks=json.loads((fresh/'build/mz/result.json').read_text()),owned_read_window_checks=json.loads((fresh/'build/file/checks.json').read_text()),
+  scope=__doc__+' Exact executables, DOS check booleans, serial wire and observer/probes. No originals/private files/prior objects/ancestor Git. Selected complete parent recipe plus capability22. Six attached GET cases do not establish full variable/stream/help co-residency, compiler GET, physical hardware or whole-language parity.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS GET VM cold source:',len(sources),'sources; exact pair and DOS replay')
 if __name__=='__main__':main()

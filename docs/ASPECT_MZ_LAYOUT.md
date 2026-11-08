@@ -25,7 +25,7 @@ bytes. Before/after load-image and relocation-table SHA256 must match, as must
 the arithmetic lower bound. This is a layout transformation of newly generated
 source-built executables, not original application input or code replacement.
 
-For the current GET child:
+For the GET child at that checkpoint:
 
 | Property | Before | After |
 | --- | ---: | ---: |
@@ -56,14 +56,18 @@ The isolated public-source replay also runs this calibration, seven CLI cases
 and the113 host/218 DOS file API checks. Both full executables reproduce exactly.
 The default reviewed interpreter remains byte-identical.
 
-The heavier keymap parent now gets past DOS EXEC, but the C runtime exits1 with
+At that checkpoint the heavier keymap parent got past DOS EXEC, but the C runtime exits1 with
 errno5 before any script/main work. The passive child probe shows no near heap,
 no native error and zero runtime steps/allocations. Its allocation is8698
 paragraphs (139168 bytes); the environment occupies73 paragraphs (1168 bytes)
 for140 string bytes. Adding the16-byte environment MCB accounts for the entire
 140352-byte pre-EXEC block. This is a failed startup gate, not a passed GET test.
 
-Next work must fund actual dynamic memory while preserving features/capacities,
+The later [compiler executor](ASPECT_COMPILER_EXEC.md) funds startup and passes
+the six larger-parent GET cases without reducing capacities. Its broader peak
+memory/feature gates remain open.
+
+Further work must verify actual dynamic memory while preserving features/capacities,
 then verify the larger pair, full variable/stream co-residency and real DOS/physical
 acceptance. The header fix alone does not close those gates. Repeated/EXECUTE GET,
 WHEN actions, remaining field policies, both compilers and full parity remain open.
