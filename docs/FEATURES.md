@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Current Chat-mode BBS regressions](CHAT_MODE_BBS.md) now verify four stock
+Enigma/Synchronet binary transfers, three exact1920-cell screens, Chat/Help and
+mapper/Help returns, TEXT/echo preservation and the complete nine-file lab source
+proof. Full release packaging and physical admission remain open.
+
 [Live Chat send-mode configuration](CHAT_SEND_MODE_LIVE.md) now binds the recovered
 byte through startup and acknowledged live setup in an opt-in parent/API0107
 module. Seven DOS Chat/admission cases,295 preference checks, nested compilation

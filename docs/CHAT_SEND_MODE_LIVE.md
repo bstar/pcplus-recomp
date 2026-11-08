@@ -71,8 +71,9 @@ precede final source-specific checks; the final case artifacts determine accepta
 
 This remains an opt-in application checkpoint. No selected package, physical
 installation, private settings or call history is changed. Current BBS regressions
-for the preceding parent do not automatically certify these new bytes; fresh
-Enigma/Synchronet and package/hardware acceptance remain required.
+for the preceding parent do not automatically certify these new bytes. The
+[new BBS checkpoint](CHAT_MODE_BBS.md) now supplies selected fresh Enigma/Synchronet
+results; complete package and hardware acceptance remain required.
 
 A cold1042-file public source export reproduces the new parent, API0107 module,
 matching ASPECT interpreter and DOS compiler byte for byte, then repeats both

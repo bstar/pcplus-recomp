@@ -1,0 +1,422 @@
+{
+  "checkpoint_verified": true,
+  "tool_source_commit": "e800f195e90969a5174813effbdda5b26e1c02be",
+  "products": {
+    "TERMINAL.EXE": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8",
+    "PCLINE.OVL": "6e8253bb12b242b55b0987bd6850c16c053be605f2fa7447c159b23ab2604fb4",
+    "PCMETA.OVL": "ab929d876b1fcff4c51e136fb3e764231828dc88b6e4bf6ebc9039b94dc900b6",
+    "PCCOMP.OVL": "7067e4db661cb39e0d8e7336179fccd8d8cacebb2001a2f7a94dbf7cec0dffca",
+    "ASPECT.EXE": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+    "ASPCOMP.EXE": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195"
+  },
+  "transfers": [
+    {
+      "server": "enigma",
+      "mode": "download",
+      "fixture": {
+        "name": "PCXTEST.BIN",
+        "bytes": 11521,
+        "sha256": "3a15e1b5f15c8a5f8acb69e2cbc12e825e5f19ea2455494cca6478731e9543e6"
+      },
+      "checks": {
+        "harness": true,
+        "source_unchanged": true,
+        "server_inputs_unchanged": true,
+        "proxy_source_unchanged": true,
+        "no_post_saved": true,
+        "fixture_unchanged": true,
+        "raw_upstream": true,
+        "modeled_guarded_hangup": true,
+        "same_proxy_input": true,
+        "same_proxy_output": true
+      },
+      "protocol_checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_exact_length_PCXTEST.BIN": true,
+        "only_expected_received_files": true,
+        "unique_server_session_and_ordered_menus": true,
+        "no_leftover_staging": true
+      },
+      "scope": "Actual local BBS ZMODEM via unchanged observed Hayes/Telnet bridge and production DOS F2/AltR/AltS/UART/files. Independent passive header/data CRC, verified offsets, ZEOF and ZFIN/OO, opposite headers and post-transfer menu input/response. Synthetic media, no injected protocol replies or physical modem claim."
+    },
+    {
+      "server": "enigma",
+      "mode": "upload",
+      "fixture": {
+        "name": "P3DF162.BIN",
+        "bytes": 65539,
+        "sha256": "9cd1a4304b52a4d430357ae42af1e1d7bd0c93148a13672aa750739967c49221"
+      },
+      "checks": {
+        "harness": true,
+        "source_unchanged": true,
+        "server_inputs_unchanged": true,
+        "proxy_source_unchanged": true,
+        "no_post_saved": true,
+        "fixture_unchanged": true,
+        "raw_upstream": true,
+        "modeled_guarded_hangup": true,
+        "same_proxy_input": true,
+        "same_proxy_output": true
+      },
+      "protocol_checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_immutable_P3DF162.BIN": true,
+        "server_exact_length_P3DF162.BIN": true,
+        "server_metadata_audit": true,
+        "unique_server_session_and_ordered_menus": true,
+        "no_leftover_staging": true
+      },
+      "scope": "Actual local BBS ZMODEM via unchanged observed Hayes/Telnet bridge and production DOS F2/AltR/AltS/UART/files. Independent passive header/data CRC, verified offsets, ZEOF and ZFIN/OO, opposite headers and post-transfer menu input/response. Synthetic media, no injected protocol replies or physical modem claim."
+    },
+    {
+      "server": "synchronet",
+      "mode": "download",
+      "fixture": {
+        "name": "PCXTEST.BIN",
+        "bytes": 11521,
+        "sha256": "2d10c92c0212b12674a7c5fd7aaba6af4afb2a7d8a7356ce1b5521fc96180cdc"
+      },
+      "checks": {
+        "harness": true,
+        "product_source_unchanged": true,
+        "server_unchanged": true,
+        "fixture_unchanged": true,
+        "proxy_closed": true,
+        "proxy_source_unchanged": true,
+        "raw_upstream": true,
+        "same_proxy_input": true,
+        "same_proxy_output": true
+      },
+      "protocol_checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_exact_length_PCXTEST.BIN": true,
+        "only_expected_received_files": true,
+        "no_leftover_staging": true
+      },
+      "scope": "Actual local BBS ZMODEM via unchanged observed Hayes/Telnet bridge and production DOS F2/AltR/AltS/UART/files. Independent passive header/data CRC, verified offsets, ZEOF and ZFIN/OO, opposite headers and post-transfer menu input/response. Synthetic media, no injected protocol replies or physical modem claim."
+    },
+    {
+      "server": "synchronet",
+      "mode": "upload",
+      "fixture": {
+        "name": "PD19DC8.BIN",
+        "bytes": 65539,
+        "sha256": "bfacee482b73cce890f35e948f49639997ae7fe2cbda18cfa5e49130270e3a67"
+      },
+      "checks": {
+        "harness": true,
+        "product_source_unchanged": true,
+        "server_unchanged": true,
+        "fixture_unchanged": true,
+        "proxy_closed": true,
+        "proxy_source_unchanged": true,
+        "raw_upstream": true,
+        "same_proxy_input": true,
+        "same_proxy_output": true
+      },
+      "protocol_checks": {
+        "DOS_normal_exit": true,
+        "hardware_restored": true,
+        "screen_captured": true,
+        "bbs_connected": true,
+        "binary_unchanged": true,
+        "payload_fixture_unchanged": true,
+        "observed_decoded_offsets_match": true,
+        "configuration_unchanged": true,
+        "ZFILE_data_CRC_ZEOF_ZFIN_OO_confirmed": true,
+        "posttransfer_actual_menu_input_response": true,
+        "actual_validated_protocol": true,
+        "DOS_immutable_PD19DC8.BIN": true,
+        "server_exact_length_PD19DC8.BIN": true,
+        "server_metadata_audit": true,
+        "no_leftover_staging": true
+      },
+      "scope": "Actual local BBS ZMODEM via unchanged observed Hayes/Telnet bridge and production DOS F2/AltR/AltS/UART/files. Independent passive header/data CRC, verified offsets, ZEOF and ZFIN/OO, opposite headers and post-transfer menu input/response. Synthetic media, no injected protocol replies or physical modem claim."
+    }
+  ],
+  "screens": [
+    {
+      "server": "enigma",
+      "label": "chat-mode-loc-main-20261108",
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "CPR": [
+        24,
+        53
+      ],
+      "checks": {
+        "harness": true,
+        "authenticated": true,
+        "actual_reference_observed": true,
+        "all_native_labels": true,
+        "message_menu_entered": true,
+        "returned_to_custom_main": true,
+        "no_post_saved": true,
+        "typed_field_visible": true,
+        "real_CPR_boundary": true,
+        "source_unchanged": true
+      },
+      "modal_checks": {
+        "source_art": true,
+        "focused_field": true,
+        "native_reference": true,
+        "native_labels": true,
+        "message_menu_return": true
+      },
+      "rejected_screen_controls": 8,
+      "scope": "Compare copied LoC menu source cells, actual focused input and raw NAWS.\n\nIndependent ANSI oracle plus the art's source glyph/palette model. No live board,\nfont-pixel, full transfer/SIP/DSP/analog or physical acceptance.\n Every logical cell matches actual delivered ANSI; all except14 live field cells also match independent source art/palette, including blank extension rows. Field text/intensity/cursor checked separately. Explicit \u00d0->D CP437 fallback; source24-row blank-separator projection. Real modal witness and authenticated M/Q return; selected menu only."
+    },
+    {
+      "server": "enigma",
+      "label": "chat-mode-enigma-chat-help-v2-20261108",
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "CPR": [
+        9,
+        8
+      ],
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "semantic_audit": true,
+        "exact_screen": true,
+        "proxy_source_unchanged": true,
+        "product_source_unchanged": true,
+        "actual_Chat_Help_editor_roundtrip": true,
+        "reference_freeze_completed": true,
+        "expected_geometry_advertised": true
+      },
+      "modal_checks": {
+        "observer_complete": true,
+        "actual25_rows": true,
+        "exact_editor_logical_frame": true,
+        "exact_Chat_frame": true,
+        "editor_cursor_shape": true,
+        "Chat_cursor_shape": true,
+        "actual_context3": true,
+        "unfinished_input_retained": true,
+        "Help_PROGRAM_state": true,
+        "returned_Chat_state": true,
+        "mode_restored": true,
+        "actual_editor_before_after": true,
+        "local_keys_never_reached_BBS": true,
+        "subsequent_editor_input": true,
+        "observer_unchanged": true
+      },
+      "rejected_screen_controls": 8,
+      "scope": "Actual stock Enigma unsaved editor, local Chat X/Alt-Z source helper/Chat return, then discard local X and return to the unchanged editor. BIOS hook reads actual before-frame at Chat constructor; passive timer reads four later VGA/BDA frames and parent state. Exact24 logical editor rows and full25-row Chat frames, cursors/shapes; native bottom status row excluded from editor equality because elapsed time may change. Subsequent editor semantics/independent screen reference checked by outer harness. Editor idle during Help; no claim of BBS traffic arriving inside child, physical/SIP/audio or all-layout acceptance."
+    },
+    {
+      "server": "synchronet",
+      "label": "chat-mode-sync-editor-20261108",
+      "matched_cells": 1920,
+      "different_cells": 0,
+      "CPR": [
+        5,
+        8
+      ],
+      "checks": {
+        "size_probe_requested": true,
+        "harness": true,
+        "runtime_unchanged": true,
+        "server_static_inputs_unchanged": true,
+        "message_bodies_unchanged": true,
+        "no_message_mail_or_transfer_writes": true,
+        "actual_ASPECT_login": true,
+        "staged_inputs_unchanged": true,
+        "frozen_editor_frame": true,
+        "actual_CPR_boundary": true,
+        "fixture_CPR_consumed": true,
+        "expected_geometry_advertised": true,
+        "source_inputs_unchanged": true,
+        "stock_editor_entered": true,
+        "draft_aborted": true,
+        "insert_toggled_overtype": true,
+        "home_marker_at_line_start": true,
+        "end_marker_at_line_end": true,
+        "delete_erases_final_character": true,
+        "tab_advances_to_next_stop": true,
+        "page_keys_report_document_boundaries": true,
+        "ctrl_y_delete_line_response": true,
+        "actual_keymap_roundtrip": true
+      },
+      "modal_checks": {
+        "preserved_KBD_length": true,
+        "application_exit_zero": true,
+        "no_save_residue": true,
+        "observer_complete": true,
+        "exact_editor_frame": true,
+        "cursor_shape": true,
+        "mode_rows": true,
+        "actual_mapper": true,
+        "actual_F1_notation": true,
+        "only_intended_KBD_edit": true,
+        "local_edit_never_sent": true,
+        "subsequent_editor_keys": true,
+        "helper_unchanged": true,
+        "KMSEG.BIN_in_UMB": true,
+        "KEYSEG.BIN_in_UMB": true,
+        "actual_context17_Help": true
+      },
+      "rejected_screen_controls": 8,
+      "scope": "Actual Alt-F8/helper edit/save/Escape inside stock BBS editor; exact whole KBD mutation and passive 4000-byte frame/cursor/shape return, ordinary editor input resumes. No physical modem/SIP/audio acceptance."
+    }
+  ],
+  "native_Chat": [
+    {
+      "label": "chat-mode-text-regression-20261108",
+      "checks": {
+        "harness": true,
+        "all_triggers_sent": true,
+        "ten_direct_records_in_order": true,
+        "source_kind_ignored_as_native_TEXT": true,
+        "unfinished_local_line_preserved": true,
+        "normal_input_resumes": true,
+        "no_Chat_CPR": true,
+        "ordinary_RX_after_return": true,
+        "underlay_restored": true,
+        "sources_unchanged": true,
+        "module_unchanged": true
+      },
+      "scope": "Actual DOS8086 foreground Chat Alt1..Alt0 through module and physical UART. Normal parent main, actual BIOS keys, all ten imported54-byte records across kinds0..3 as direct TEXT, copied grammar/wireNUL/triplecarets/configured pause/nonzero native pacing, preserved unfinished local line, incoming raw Chat text without CPR parsing, Escape underlay return and subsequent ordinary CPR. Synthetic modem; no product-state injection, echo-on visual/busy-key/flow-stall/physical/BBS acceptance."
+    },
+    {
+      "label": "chat-mode-echo-regression-20261108",
+      "checks": {
+        "harness": true,
+        "all_triggers_sent": true,
+        "observer": true,
+        "RX_during_pause": true,
+        "native_echo_without_wire_NUL": true,
+        "local_pane_cursor_restored": true,
+        "wire_and_queued_keys": true,
+        "escape_cancels_TEXT": true,
+        "normal_input_resumes": true,
+        "no_Chat_CPR": true,
+        "underlay_restored": true,
+        "sources_unchanged": true,
+        "module_unchanged": true
+      },
+      "scope": "DOS8086 normal-main native Chat TEXT echo, pause/RX and queued BIOS keys. Actual BIOS keys and physical synthetic UART completion; passive INT1C observer only reads VGA/BDA. Checks both panes during configured pause, native echo skips wireNUL, module cursor restoration, ordinary keys retained through pause, Escape cancellation and normal terminal return. Observer consumes conventional memory; this is separate from unobserved ASPECT capacity checks. No native-parser-busy key injection, hardware flow-control stall, full original controller, BBS or physical acceptance."
+    }
+  ],
+  "help_bundle_controls": [
+    {
+      "case": "unchanged",
+      "passed": true,
+      "rejected": false,
+      "error": null
+    },
+    {
+      "case": "parent-binding",
+      "passed": true,
+      "rejected": true,
+      "error": "AssertionError"
+    },
+    {
+      "case": "missing-resource-manifest",
+      "passed": true,
+      "rejected": true,
+      "error": "FileNotFoundError"
+    },
+    {
+      "case": "helper-manifest",
+      "passed": true,
+      "rejected": true,
+      "error": "AssertionError"
+    },
+    {
+      "case": "topic-count",
+      "passed": true,
+      "rejected": true,
+      "error": "AssertionError"
+    },
+    {
+      "case": "context-three",
+      "passed": true,
+      "rejected": true,
+      "error": "AssertionError"
+    }
+  ],
+  "source_export_files": 1053,
+  "source_replayed_DOS_cases": 2,
+  "receipts": {
+    "build/chat-send-mode-bbs-payload-20261108/package.json": "98eb76bd735a80177d42868b57310a72ced77f2142b56329b72d64fcf303eff0",
+    "docs/validation/chat-send-mode-live.json": "e8f1ee26da0130a41547a1fc6ab57332918467a0e6172d8e713cb4665c6d126a",
+    "build/chat-mode-bbs-source-export-20261108/result.json": "3b9a85f0ff42d8b0afa171013583daad77a42f200ff27c2f6f7ef7a025052ac5",
+    "build/chat-mode-bbs-contract-20261108/result.json": "217bf84ab583d1759c26861d0d1eef139b80d2923bcf638ee390aacfe6f736c0",
+    "build/bbs-lab/chat-mode-enigma-download-v2-20261108-transfer/result.json": "22874e3a2ea65d7223b5a12d1a56240f8a2621b80bbe0575302974cabb3a95ba",
+    "build/bbs-lab/results/enigma/chat-mode-enigma-download-v2-20261108/result.json": "ebe1cebdc767bb8e285e0fce39fb8937de8be5550a7b7e0f20e19b71291d0b05",
+    "build/bbs-lab/chat-mode-enigma-upload-20261108-transfer/result.json": "f5ccb674576f12dfaae3712360168c7eb522d513fea7c908de8fa19f0f90d28f",
+    "build/bbs-lab/results/enigma/chat-mode-enigma-upload-20261108/result.json": "9e4432eb73612933593cb41cb7db5412c309df2751efae48cd5812032447ad70",
+    "build/bbs-lab/chat-mode-sync-download-20261108-transfer/result.json": "82482b4eb18f5025ec74f462011b12eb449037c8a6be0a68c623ac46bc6e909e",
+    "build/bbs-lab/results/synchronet/chat-mode-sync-download-20261108/result.json": "544ddf5772b5b49d22b3905d03b2be150d2ce4653a7a768cb8279d333b6c9de2",
+    "build/bbs-lab/chat-mode-sync-upload-20261108-transfer/result.json": "8f5238e56cd79bbc5b3849a288d3829c367d85fd7069b7a4594162d934aecd06",
+    "build/bbs-lab/results/synchronet/chat-mode-sync-upload-20261108/result.json": "b597a29def30ff6a622960231ab1752611e771ccd683c9c477063ac078a798cd",
+    "build/bbs-lab/results/enigma/chat-mode-loc-main-20261108/proxy-integration.json": "067ccceb30f96ac1f9e5f6b55d7871fa07913b5d5bb5f2a861ff33fdcc75c8b6",
+    "build/bbs-lab/results/enigma/chat-mode-loc-main-20261108/screen-reference-audit.json": "a151d7363836cbfdc1e30a18905e1fc616bc07439409bbfb3cdc16d9895df80c",
+    "build/bbs-lab/results/enigma/chat-mode-loc-main-20261108/loc-main-audit.json": "d66ffabca304861f33981ebcc837d0e6378f6d029e4e9fc3f43bfe029ba49bc1",
+    "build/chat-mode-loc-screen-controls-20261108/result.json": "19718794b07f8f799b754ce5dde5c50c6bfc8bb8b57589b2c9cb6668d9b50535",
+    "build/bbs-lab/results/enigma/chat-mode-enigma-chat-help-v2-20261108/proxy-integration.json": "1ab8c6baed7c96f053c6d79940524f84150d9bc6221ae5742d98a8c4777cdbde",
+    "build/bbs-lab/results/enigma/chat-mode-enigma-chat-help-v2-20261108/screen-reference-audit.json": "938ccf9101b0b8addba6a3dfccebe2220d69ad32e8564ea67ff3025674424721",
+    "build/bbs-lab/results/enigma/chat-mode-enigma-chat-help-v2-20261108/chat-help-audit.json": "bde142869564480bdebff0a82ecc2f5e65a5d1ecae55290c1f07a057394f3911",
+    "build/bbs-lab/results/enigma/chat-mode-enigma-chat-help-v2-20261108/semantic-audit.json": "dfe0d06352728025ab3161f9fc54b2236c6561500c49d61ed74eb32878aa0ff0",
+    "build/chat-mode-enigma-screen-controls-20261108/result.json": "a35a0beab9a864045f1c31ea80d67c67470c55236b1f9ae93cd0e977296264b6",
+    "build/bbs-lab/results/synchronet/chat-mode-sync-editor-20261108/proxy-integration.json": "58ae8a852c4c03ad88eb7dda82fc2edf80e5c36f5deef34730aa40826d9d8e61",
+    "build/bbs-lab/results/synchronet/chat-mode-sync-editor-20261108/screen-reference-audit.json": "e43aad6e0a3ad8eded4b47e086e3d73ed9afe44959af061d009e071911983b0e",
+    "build/bbs-lab/results/synchronet/chat-mode-sync-editor-20261108/keymap-audit.json": "40d1ebb3ef482647905295a6bc68837afa975dcff6a069247bbfe20097f50390",
+    "build/chat-mode-sync-screen-controls-20261108/result.json": "ece66296bf2f8974a8603da7ebfd4b2fe5575b0c22967ed3133a035f2dfcba37",
+    "build/chat-mode-text-regression-20261108/result.json": "9b442cdf082e2c22e175e93e7f2a4a760a22dd403516de012b6566dbd26646ab",
+    "build/chat-mode-echo-regression-20261108/result.json": "41fb8a0c22375a62646b9ed4a8f7bb69332b1eeed482e8f8b0f681f40eed15a5",
+    "build/chat-mode-help-bundle-controls-20261108/result.json": "26e0fcfb965de0362b0857c22e2e20fdb63f4cc24039c2d69249cd335d64a699"
+  },
+  "sources": {
+    "standalone/record_chat_mode_bbs.py": "eb9fcd4fcbebfadad0b57a2bbc63defb5745c3c4ab6f89d62d5ac2a117fc1be3",
+    "standalone/test_chat_live_keys_dos.py": "7d408240b6e391eaa4f828c98eeacaeee7a098546d00946fcf042b55fe596e67",
+    "lab/bbs/chat_help_bbs_support.py": "7a2c47e9e3e71c2268c49c26ab1cac1ebd77faf8537b382853b52c747b5fded3",
+    "lab/bbs/check_chat_help_bundle_controls.py": "5d1d45ff2b587c19e483189c99f56ba0ada2163301f7278437b2d135e7301e3f"
+  },
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "release_eligible": false,
+  "scope": "Current opt-in Chat parent/API0107 module, matched9-file lab payload. Actual DOS8086 serial-side stock BBS transfers; selected25-row screens/modal return. Actual SynthModem Telnet proxy, synthetic Hayes, no SIP/DSP/audio or physical CTS. Separate copied LoC menu fixture; live board unchanged. No full archive or original feature parity claim.",
+  "excluded": [
+    "Initial Enigma download requested upload-only post-menu-reset and was rejected before connection.",
+    "Initial Chat/Help BBS fixture expected legacy mapped_contexts metadata absent from the complete9-file bundle; rejected before connection. Updated hashed-manifest/actual-context guard and5 negative controls precede accepted v2."
+  ]
+}
