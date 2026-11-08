@@ -2,7 +2,8 @@
 
 The expanded GET/Help/notice overlay build passes the previously failing
 six-file/graphics PROGRAM workload, source compiler lending and GET recovery.
-It remains ineligible for packaging: full-parent Help still fails during admission/service.
+It remains ineligible for packaging: parent keyboard/menu return after Help
+still times out, despite the verified child Help sub-gate below.
 No installed package, selector, private configuration or call history changes.
 
 This is maintained memory-layout work, not recovered vendor overlay code.
@@ -176,18 +177,71 @@ bootstrap launches also pass. A clean1048-file export reproduces the exact
 parent/child/compiler/helpers and replays both compiler cases. These passing
 checks do not override the failed Help integration.
 
-Full Help is still rejected. The diagnostic `program_result_probe` profile now
+The initial full Help result was rejected. The diagnostic `program_result_probe` profile
 records the notice service failure's source and execution context. With BIOS
 input fallback, after successful4032-byte screen allocation, speaker polling
 returns STATE4 with DS=SS37608, FLAGS7006h (IF clear), and UART status0. This is
 NOTICE_SERVICE6, subsequently presented by the existing PROGRAM adapter as
-serial error14/status4. It does not establish a UART failure. The first point
-where IF becomes clear, and the associated unsupported INT10 calls in the
-emulator log, remain unresolved. The diagnosis uses a larger marked diagnostic
+serial error14/status4. It does not establish a UART failure. The later observer
+audit below identifies an instrumentation-induced IF leak, so this receipt is
+not evidence of an application interrupt-state defect. The diagnosis uses a larger marked diagnostic
 child and BIOS fallback, not mouse-enabled capacity acceptance.
 
-Do not fix this by unconditionally enabling interrupts or weakening the
-speaker/context guards. Trace the first bad transition through Help paint,
-bank return and notice service. No actual captured Help page, paused timer,
-search/F3 sequence or exact notice restoration is accepted yet. Packaging,
+No application STI or weakened context guard was introduced. Packaging,
 BBS/physical tests and full feature parity remain open.
+
+## Observer correction and verified Help sub-gate
+
+The allocation observer called the original DOS handler using its own
+interrupt-entry FLAGS and forwarded that returned IF0 into the caller's frame.
+It now forwards DOS's returned status/carry while retaining the caller's IF.
+An actual8086 DOS control verifies successful AH48, failed AH48 and successful
+AH4A: all three callers retain IF1 and carry remains0/1/0. A separate negative
+control omits only that preservation and reproduces IF0 for all three calls.
+An unobserved DOS baseline gives the same caller IF/carry values as the fixed
+observer:512/513/512 when masked to IF and carry. The negative control gives
+0/1/0. The older outer/nested EXEC observers use the same corrected forwarding rule.
+The earlier speaker STATE4/IF0 observation was induced by the diagnostic.
+
+INT10 function6F00 messages also do not establish corruption: the maintained
+display detector deliberately issues that optional vendor probe in
+`reconstruction/display_modes/detect.asm`. Unsupported replies are expected
+when the adapter does not identify itself. Neither observation justifies an
+application interrupt-state repair.
+
+The Help fixture now allows a longer final-key delay, selects the current
+browser key when Alt-Z belongs to the original reference, and stages the
+parent's exact PCMETA/PCLINE/PCCOMP/PCCHAT modules using manifest hashes. These
+fixture corrections do not turn the entire test green: it still times out on
+parent keyboard/menu/hangup. Missing modules and old bindings were fixture
+omissions; staging them did not resolve the remaining timeout.
+
+An optional entry-only INT10 witness records bounded register/FLAGS rows and
+two parent screen rows. On timeout, the parent Python process captures only
+its owned emulator's observer allocation before cleanup. Exact resident code,
+an allocated DOS MCB/PSP and the expected observer sample anchor that capture;
+UMB backing may be separate from conventional RAM. The tool never reads the
+physical PC. Failed snapshot attempts remain explicitly unverified.
+
+`extract_notice_timeout.py` reassembles the exact observer, requires its bytes
+to match the captured fixture, and uses the assembler's data-label offsets to
+decode the verified image. Its10 Help sub-gate checks pass for the unchanged
+production-layout child822897f0:
+
+- Both actual Help topics and resource-search captures are present.
+- The Help timer holds90 ticks; all five search/F3/no-match/cancel witnesses
+  fire exactly once, without BIOS seed failures.
+- The original popup and cursor restore exactly; the notice receives its own
+  Enter, with status/key1/13 and service0.
+- A real subsequent DOS child writes SUCCESS.OK; ASPECT exits0 and emits the
+  password exactly once without BAD output.
+
+This is evidence of child Help behavior and return from its modal frame, not
+complete parent acceptance. The parent has not emitted the scheduled `ready`
+or hangup, and its mouse-menu/action checks have not completed. A BIOS-fallback
+capture additionally reports unsupported service3 at PAUSE opcode88/step17;
+that path needs separate investigation. Both remain open rather than being
+removed from the gates. The [correction record](validation/aspect-help-observer-correction.json)
+binds these partial results, the negative control and a fresh1048-file exact
+source rebuild with two compiler-loan/GET replays. No application bytes,
+installed package, private settings or call history changed in this correction.

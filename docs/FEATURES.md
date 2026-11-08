@@ -3486,5 +3486,12 @@ overlay let both allocations succeed. The six-file/graphics capacity case and
 two source compiler loan/GET/open-stream cases pass, with91 Help component
 checks and exact disabled bytes. Full Help still fails: a marked diagnostic
 captures the speaker service guard seeing IF clear with DS=SS and UART status0.
-The first bad transition and exact Help restoration remain unresolved; no
-package is promoted and no hardware acceptance is claimed.
+The later [observer correction](ASPECT_STANDARD_OVERLAYS.md#observer-correction-and-verified-help-sub-gate)
+proves that IF leak was introduced by the diagnostic, not an established
+application defect. Corrected actual-DOS positive/negative controls preserve
+IF while retaining DOS carry. A verified observer image now passes10 child
+Help checks, including90-tick pause, resource search/F3, exact popup/cursor
+restore, a subsequent DOS child and ASPECT exit0. Full parent keyboard/menu/
+hangup still times out; BIOS fallback separately reports unsupported PAUSE.
+Fresh1048-file exact rebuild and two compiler-loan/GET replays pass. These are
+explicit partial gates; no package is promoted or hardware acceptance claimed.

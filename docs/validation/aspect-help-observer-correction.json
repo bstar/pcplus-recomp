@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "package_eligible": false,
+  "application_passed": false,
+  "Help_child_subset_passed": true,
+  "Help_child_checks": 10,
+  "parent_keyboard_return_verified": false,
+  "parent_sha256": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+  "child_sha256": "822897f0b67dfbfbe98bed8711cb1071417705ad9a75fdcd5138c88679fc7c05",
+  "production_bytes_changed": false,
+  "observer_IF_correction_verified": true,
+  "caller_IF_carry_baseline": [
+    512,
+    513,
+    512
+  ],
+  "caller_IF_carry_fixed": [
+    512,
+    513,
+    512
+  ],
+  "caller_IF_carry_negative": [
+    0,
+    1,
+    0
+  ],
+  "cold_source_files": 1048,
+  "cold_DOS_cases": 2,
+  "staged_parent_modules": {
+    "PCMETA.OVL": "ab929d876b1fcff4c51e136fb3e764231828dc88b6e4bf6ebc9039b94dc900b6",
+    "PCLINE.OVL": "6e8253bb12b242b55b0987bd6850c16c053be605f2fa7447c159b23ab2604fb4",
+    "PCCOMP.OVL": "7067e4db661cb39e0d8e7336179fccd8d8cacebb2001a2f7a94dbf7cec0dffca",
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8"
+  },
+  "receipts": {
+    "build/allocation-if-baseline-final-20261108/result.json": "759a825bd48a26463f5511914304be03994436812e2c543bc8b95db68da24a19",
+    "build/allocation-if-positive-final-20261108/result.json": "108a3e483e44ec5d9ce40219ea53d990b7b24423d7af5f4fa23c64e801feea8e",
+    "build/allocation-if-negative-final-20261108/result.json": "8899abe180d7d4e00a745b870fa08fdf135c14f844e303789094c3129e958fe6",
+    "build/notice-help/help-complete-parent-fixture-20261108/Help-subset.json": "8ac191d0ab41d08ce11485231c099610866ec4420acb60ca447e960fe5d8eff4",
+    "build/notice-help/help-complete-parent-fixture-20261108/ordinary/timeout-snapshot.json": "7c59b3e3b7cb14d088b766fc47b5172626dd676c1f17611464d7e67d4a6a1b84",
+    "build/notice-help/help-complete-parent-fixture-20261108/ordinary/dosbox.conf": "b23cfec50bfcc29320ba2e193873e82c846e1dfc2375b5e4991c3d2e04ac57d3",
+    "build/notice-help/help-complete-bios-fallback-20261108/ordinary/timeout-snapshot.json": "816357a500e1eaf3f470825863d4b4193fa9eb19bdc12308e832c95fbc4330bf",
+    "build/help-observer-fixed-source-lease-20261108/checks.json": "79724e82ccb3084d18453410c9e36878ee2f87550bd27cb20f51a28ea0a9d611",
+    "build/help-observer-fixed-cold-source-20261108/result.json": "756e407f083da85bef9031adf5303170fe1a38e1489208ffa5cf00d776937e88"
+  },
+  "sources": {
+    "standalone/notice_allocation_probe.py": "70a8aeaad8d8b4a700993ba99a031cd482e4efb22873b0d53b5c65275a0c5a5d",
+    "standalone/check_notice_allocation_probe_dos.py": "8e4ea3ca4e850dbfdcc8aacfce187e042a7f32a19fe35962e9ca263ca0c68cdb",
+    "standalone/notice_video_probe.py": "86eb3dae0edccf4d24399c9d19e0e03628bcd4ec396250d2c67019bcc2ba9636",
+    "standalone/dosbox_timeout_snapshot.py": "29bead61c0abf20b080bed9b26f2b09209a437c20004bc8e1121662405530954",
+    "standalone/extract_notice_timeout.py": "bf0afa2e9f6d8ab46daa1877046c235cf38cb1bc9efa85596f232853de920aef",
+    "standalone/test_notice_help_dos.py": "058489038e867dbaca68604d8d501f2e6cede69ead762268e746006f377c45e9",
+    "standalone/test_aspect_renderer_dos.py": "c8997b78ea1b3b2f67fe3426e2745ce893c4ad00d1c00301f5ee83cd4c946b98",
+    "standalone/test_aspect_parent_process_dos.py": "5d7fadcfb1b2d245d9df38e7d1a1cdc75c4033cb22d62e0af6c80b3fd5a64629"
+  },
+  "original_inputs": [],
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "limits": [
+    "Prior IF0 speaker diagnostic was instrumentation-induced; not a proven application interrupt defect. No STI or relaxed guard added.",
+    "INT10 6F00 is an optional vendor-detection probe in existing display source; unsupported log is not corruption evidence.",
+    "Verified owned observer image proves child Help topics,90ticks,search/F3/no-match/cancel,popup/cursor restore,real nextEXEC,and childexit0.",
+    "Parent keyboard/menu/ready/hangup still time out after successful child; unchanged checks remain open.",
+    "BIOS fallback capture reports unsupported PAUSE opcode88/step17 separately; not accepted.",
+    "New helper modules and browser binding make the fixture complete but did not resolve parent timeout.",
+    "Prepared payload/private settings/history unchanged. Host last; full parity and hardware acceptance open."
+  ]
+}

@@ -106,8 +106,10 @@
   "limits": [
     "Earlier mouse-state attribution was incorrect: service4 also maps Help allocation failures. Mouse callback/popup already active.",
     "Early reservation admits the unchanged near model; synchronous PROGRAM sharing admits the4032-byte screen without reducing stack/buffers.",
-    "Full Help remains rejected. Larger marked diagnostic with BIOS fallback records speaker STATE4, DS=SS, IF0, UART status0. First bad transition unresolved.",
+    "Historical full Help diagnostic records speaker STATE4, DS=SS, IF0, UART status0. The later observer audit invalidates its application-IF attribution; full parent acceptance remains open.",
     "No exact Help-page/timer/search/notice-return acceptance, BBS/package acceptance or physical claim.",
     "IRQ/native recovery/platform adapters remain resident. Prepared package and private settings/history unchanged; Host last."
-  ]
+  ],
+  "diagnostic_notice_service_valid_for_application_IF": false,
+  "diagnostic_notice_service_cause": "Allocation observer leaked interrupt-entry IF0. Later actual-DOS positive/negative controls reproduce and correct it; see aspect-help-observer-correction.json."
 }

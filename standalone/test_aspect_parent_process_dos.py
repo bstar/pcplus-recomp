@@ -139,6 +139,11 @@ nested_exec:
  ; Preserve the real DOS returned flags in the intercepted interrupt frame.
  mov bp,sp
  mov ax,[ss:bp+18]
+ ; Preserve caller IF instead of leaking the observer interrupt-entry IF0.
+ mov dx,[ss:bp+24]
+ and dx,0x0200
+ and ax,0xfdff
+ or ax,dx
  mov [ss:bp+24],ax
  restore
  iret
@@ -208,6 +213,11 @@ def exit_observer(source,map_path):
  mov ax,[ss:bp+16]
  mov [cs:retained_raw_status],ax
  mov ax,[ss:bp+18]
+ ; Preserve caller IF instead of leaking the observer interrupt-entry IF0.
+ mov dx,[ss:bp+24]
+ and dx,0x0200
+ and ax,0xfdff
+ or ax,dx
  mov [ss:bp+24],ax
  restore
  iret

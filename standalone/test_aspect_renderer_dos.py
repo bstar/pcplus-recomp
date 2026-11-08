@@ -191,6 +191,11 @@ handler:
  ; Preserve DOS's returned carry/FLAGS in the outer interrupt frame.
  mov bp,sp
  mov ax,[ss:bp+18]
+ ; Preserve caller IF instead of leaking the observer interrupt-entry IF0.
+ mov dx,[ss:bp+24]
+ and dx,0x0200
+ and ax,0xfdff
+ or ax,dx
  mov [ss:bp+24],ax
  restore
  iret

@@ -1,7 +1,7 @@
 """Passive INT21 allocation telemetry after a notice's Help key admission."""
 import re,struct
 FIELDS=['stage','request_ah','request_bx','target_es','caller_ip','caller_cs',
-        'ds','curbrk','nheapbeg','return_ax','return_bx','carry','owner_psp']
+        'ds','curbrk','nheapbeg','return_ax','return_bx','carry','owner_psp','entry_flags','forwarded_flags']
 CAPACITY=32
 BYTES=4+CAPACITY*len(FIELDS)*2+12
 
@@ -34,7 +34,7 @@ def instrument(source,child_map,no_driver=False):
  jmp .alloc_done
 .alloc_record:
  mov ax,[cs:aw_count]
- mov cx,26
+ mov cx,30
  mul cx
  mov di,aw_records
  add di,ax
@@ -57,6 +57,9 @@ def instrument(source,child_map,no_driver=False):
  mov [cs:di+12],ax
  mov ax,bx
  mov [cs:di+24],ax
+ mov ax,[ss:bp+24]
+ mov [cs:di+26],ax
+ mov ax,bx
  add ax,0x10+CHILD_DATA
  mov es,ax
  mov ax,[es:CHILD_CURBRK]
@@ -74,7 +77,14 @@ def instrument(source,child_map,no_driver=False):
  mov ax,[ss:bp+14]
  mov [cs:di+20],ax
  mov ax,[ss:bp+18]
+ ; The chained handler was called with interrupt-entry IF0. DOS48/4A's
+ ; caller must retain its original IF, not our observer's entry state.
+ mov dx,[ss:bp+24]
+ and dx,0x0200
+ and ax,0xfdff
+ or ax,dx
  mov [ss:bp+24],ax
+ mov [cs:di+28],ax
  and ax,1
  mov [cs:di+22],ax
  restore
@@ -86,7 +96,7 @@ def instrument(source,child_map,no_driver=False):
  if no_driver:code=code.replace('nip_seen','nd_seen').replace('nip_child_psp','nd_child_psp')
  source=source.replace(marker,marker+code)
  assert source.count('sample_end:')==1
- source=source.replace('sample_end:','aw_count: dw 0\naw_overflow: dw 0\naw_records: times 32*26 db 0\naw_service: times 6 dw 0\nsample_end:\naw_pending: dw 0')
+ source=source.replace('sample_end:','aw_count: dw 0\naw_overflow: dw 0\naw_records: times 32*30 db 0\naw_service: times 6 dw 0\nsample_end:\naw_pending: dw 0')
  if '_notice_service_probe' in symbols:
   assert symbols['_notice_service_probe'][0]==data
   marker=' inc word [cs:'+('nd_exit_seen' if no_driver else 'nip_exit_seen')+']\n';assert source.count(marker)==1
@@ -98,5 +108,5 @@ def instrument(source,child_map,no_driver=False):
 def read(raw):
  count,overflow=struct.unpack_from('<2H',raw)
  assert len(raw)==BYTES and count<=CAPACITY
- return dict(overflow=overflow,records=[dict(zip(FIELDS,struct.unpack_from('<13H',raw,4+i*26))) for i in range(count)],
+ return dict(overflow=overflow,records=[dict(zip(FIELDS,struct.unpack_from('<15H',raw,4+i*30))) for i in range(count)],
   service=dict(zip(('origin','status','ds','ss','flags','uart_status'),struct.unpack_from('<6H',raw,BYTES-12))))
