@@ -333,3 +333,38 @@ repeats that contract,93 full Help checks and two compiler-loan/GET cases.
 See [the companion contract](ASPECT_COMPILER_BBS.md#child-help-companion-contract-2026-11-08).
 This closes the lab omission recorded above; a complete connection release,
 overlay lifetime/failure coverage and physical admission remain separate.
+
+## Current-image BBS and overlay lifetime gates (2026-11-08)
+
+The source-built parenta0e1b082 / child822897f0 / compiler1db52316 now pass the
+actual SynthModem proxy/stock Enigma virtual-carrier recovery workflow. ASPECT
+compiles its source at runtime while the full parent is resident and completes
+two automatic logins. The first transfer loses carrier after4096 exact bytes;
+the same process clears staging, redials, authenticates and receives all65539
+bytes with complete protocol closure, subsequent menu input and normal exit.
+All18 checks and an independent raw-capture audit pass. Controls accept the
+original capture and reject15 modified copies. The established150000ms transfer
+window is used; the earlier60000ms cancellation remains a failed receipt.
+
+The same child also passes six additional8086 full-parent cases (242 checks):
+
+- Repeated string/integer/long fields and a real EXECUTE generation transition,
+  each retaining a checked open FILE stream across GET.
+- Inline WHEN input and deferred plain/framed WHEN CALL during an active field,
+  retaining the open stream and verifying pending/waiting boundaries.
+- A framed WHEN divide error and confirmed GET cancellation with a pending CALL,
+  including expected typed exits, owned-file contents and retirement/parent return.
+
+The current artifacts match the prior1072-file cold rebuild, and the exact public
+GET checker is already in that source export. This is new execution coverage of
+unchanged application/checker bytes, not another application patch or complete
+language/overlay acceptance. The
+[integration record](validation/aspect-overlay-integration.json) binds the cases,
+checks, source identities and both successful and failed Enigma scopes.
+
+Overlay-file open/read failures and inherited loader-handle behavior across
+nested DOS children still need explicit coverage. Complete release/package
+coverage, other BBS/profile/protocol workflows and physical Boca/SPA2102/SIP
+acceptance remain open. Host remains last. No installed selector, private
+configuration, call history, workstation network or live bridge configuration
+changed in these tests.

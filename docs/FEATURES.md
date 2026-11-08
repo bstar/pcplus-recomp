@@ -3521,3 +3521,12 @@ now closes that lab omission: LOCHELP.HLP is hash-bound to the selected child,
 verified and staged with the ordinary companions.13 contract checks and a
 1072-file exact ten-product cold rebuild pass, with93 Help checks and two
 compiler-loan/GET replays. This remains a lab bundle, not a deployed release.
+
+The [current-image integration gates](ASPECT_STANDARD_OVERLAYS.md#current-image-bbs-and-overlay-lifetime-gates-2026-11-08)
+now pass the Enigma live-source/virtual-carrier test:18 checks, two script logins,
+4096-byte partial loss, same-process reconnect and exact65539-byte retry. The
+independent raw audit passes and rejects15 altered captures. Six current8086
+GET/EXECUTE/WHEN/cancellation/divide-recovery cases add242 checks with held FILE
+streams. Existing150s transfer timing is retained; the earlier60s cancellation
+remains failed. These are software gates, not SIP/audio/physical or full-parity
+acceptance. Loader file/handle failures and complete release coverage remain open.

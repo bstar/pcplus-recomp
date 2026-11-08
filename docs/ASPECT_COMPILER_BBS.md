@@ -132,10 +132,21 @@ source compilation, exact generated ASX, virtual carrier-loss notice, staging
 cleanup and same-process redial. Its initial60000ms retry window cancels before
 EOF: RX-complete/exact-file/protocol-finish checks fail, despite48128 bytes of
 CRC-valid, source-exact retry data. It is not an accepted transfer result. The
-previously admitted carrier profile uses150000ms; a separate run with that
-window is pending. Neither the failed run nor a pending repeat establishes
-complete packaged Enigma acceptance. No application/protocol changes were made
-in response to this fixture-window failure.
+previously admitted carrier profile uses150000ms. Its separate repeat now passes
+all18 checks: both runtime-compiled logins, virtual DCD loss after4096 partial
+bytes, clean staging, same-process redial, exact65539-byte retry, full protocol
+closure, subsequent menu input, normal exit and restored hardware/configuration.
+No application/protocol changes were made in response to the short-window
+failure, which remains a failed historical receipt.
+
+The independent current-image audit validates the raw Telnet/proxy/relay bytes,
+source/product identities, DCD notices, partial-prefix timing, generated ASX,
+protocol CRC/offset/finish and exact installed file. Its controls accept the
+original and reject15 altered copies, including coherently changed payload
+bytes, source counts, compiler output, hardware state, partial timing, NAWS and
+incorrect startup/CPU claims. These establish the selected serial-side Enigma
+workflow with the current overlay child; SIP/audio/physical and full release
+acceptance remain separate.
 
 Exact current products, source/contract receipts and the accepted versus failed
 software gates are bound in the

@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "selected_software_cases_passed": true,
+  "package_eligible": false,
+  "physical_verified": false,
+  "parent_sha256": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+  "child_sha256": "822897f0b67dfbfbe98bed8711cb1071417705ad9a75fdcd5138c88679fc7c05",
+  "compiler_sha256": "1db52316f671b43663395abc7de41925abfe1205fffb930bdb5d6dae70f98a14",
+  "Enigma_checks": 18,
+  "Enigma_transfer_wait_ms": 150000,
+  "Enigma_exact_retry_bytes": 65539,
+  "Enigma_partial_before_drop": 4096,
+  "Enigma_raw_audit_passed": true,
+  "control_original_accepted": true,
+  "corrupt_captures_rejected": 15,
+  "GET_cases": [
+    {
+      "family": "lifetime",
+      "case": "get-vm-repeat",
+      "checks": 38,
+      "expected_exit": 0
+    },
+    {
+      "family": "lifetime",
+      "case": "get-vm-execute",
+      "checks": 40,
+      "expected_exit": 0
+    },
+    {
+      "family": "when",
+      "case": "get-vm-when-plain",
+      "checks": 41,
+      "expected_exit": 0
+    },
+    {
+      "family": "when",
+      "case": "get-vm-when-framed",
+      "checks": 41,
+      "expected_exit": 0
+    },
+    {
+      "family": "nonlocal",
+      "case": "get-vm-when-divide",
+      "checks": 41,
+      "expected_exit": 0
+    },
+    {
+      "family": "nonlocal",
+      "case": "get-vm-when-cancel",
+      "checks": 41,
+      "expected_exit": 0
+    }
+  ],
+  "GET_case_count": 6,
+  "GET_checks": 242,
+  "cold_source_identity_receipt": "docs/validation/aspect-help-companion.json",
+  "receipts": {
+    "build/bbs-lab/results/enigma/help-overlay-live-source-enigma-long-20261108/carrier-checks.json": "094141696c2338db21c7f678e2ec6dbbce89585adb4b103e53dd965d5c3c8410",
+    "build/help-overlay-carrier-audit-20261108/result.json": "c648283dc80ce7d73daae90fd9e4c1b56726f01522a31b6fa0f4c55d9b7adaa4",
+    "build/help-overlay-carrier-controls-20261108/result.json": "1478ed5bd766b162355cc4d8574b951bccf339bf1ac19b05ac8b5713f83b5a55",
+    "build/overlay-lifetime-complete-20261108/checks.json": "36cab0eb799a42ddaa52241d51d60f8bfcf3320d6a01b47ae45fc9eacb68ceb3",
+    "build/overlay-when-complete-20261108/checks.json": "393dbadbbb3fd5b7d196a7f22ceab8fd7aa8df30f3826d54ac5c5f4462dc723c",
+    "build/overlay-nonlocal-recovery-20261108/checks.json": "ce1354bc27a7823beffb7a9049172390e59223ccd7e65773d3790d7b29d5af1d"
+  },
+  "original_inputs": [],
+  "production_bytes_changed": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "limits": [
+    "DOS386 explicit UMB Enigma serial-side test with actual virtual DCD/modem and existing SynthModem proxy, not SIP/audio or physical modem acceptance.",
+    "Initial60-second retry fixture canceled before EOF and remains failed; existing150-second profile passes without application changes.",
+    "Exact source compilation while full parent runs, two logins,4096-byte partial loss, empty staging before second login, full65539-byte retry and protocol/menu/exit cleanup verified.",
+    "Six current8086 GET/WHEN/lifetime/recovery cases, not complete ASPECT/overlay parity.",
+    "Cold-rebuilt binary identities and public checker source match; no new application source change or redundant cold rebuild.",
+    "Overlay file-I/O/handle-inheritance failures, complete release/package/BBS matrix and physical acceptance remain open; Host last."
+  ]
+}

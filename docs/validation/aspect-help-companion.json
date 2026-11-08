@@ -36,7 +36,7 @@
     "source_matching_retry_finish_search_raw_proxy"
   ],
   "Enigma_long_window_case": "help-overlay-live-source-enigma-long-20261108",
-  "Enigma_long_window_pending": true,
+  "Enigma_long_window_pending": false,
   "sources": {
     "standalone/package_compiler_bridge_lab.py": "0f6fac88467df6f6243ad3840580022e6189cab1fd863928ef2ddca25c774d51",
     "standalone/test_compiler_bridge_lab_payload.py": "00f074d5d6a9d73c749ba812a254dc3506bf1cfaf61e30a4048377dc30dee12b",
@@ -51,7 +51,10 @@
     "build/bbs-lab/results/synchronet/help-overlay-synchronet-screen-20261108/proxy-integration.json": "8ec23efd583599507da338404e52141b28aab050c6d63a23ed2674354f2e31a3",
     "build/bbs-lab/results/synchronet/help-overlay-synchronet-screen-20261108/screen-reference-audit.json": "87f35fa05f0967e767c44a0d679e872c240afab6860649f9406c322ae2f8d361",
     "build/bbs-lab/results/synchronet/help-overlay-synchronet-screen-20261108/size-probe-screen-audit.json": "3a62a88d2e1b9eedf2c41152d73e1314f86c94441a8361682f470b20db44e659",
-    "build/bbs-lab/results/enigma/help-overlay-live-source-enigma-20261108/carrier-checks.json": "e345b8c56354758677a934f4d5fca2c9a6fc6a185dd777bc3971534e50a1406d"
+    "build/bbs-lab/results/enigma/help-overlay-live-source-enigma-20261108/carrier-checks.json": "e345b8c56354758677a934f4d5fca2c9a6fc6a185dd777bc3971534e50a1406d",
+    "build/bbs-lab/results/enigma/help-overlay-live-source-enigma-long-20261108/carrier-checks.json": "094141696c2338db21c7f678e2ec6dbbce89585adb4b103e53dd965d5c3c8410",
+    "build/help-overlay-carrier-audit-20261108/result.json": "c648283dc80ce7d73daae90fd9e4c1b56726f01522a31b6fa0f4c55d9b7adaa4",
+    "build/help-overlay-carrier-controls-20261108/result.json": "1478ed5bd766b162355cc4d8574b951bccf339bf1ac19b05ac8b5713f83b5a55"
   },
   "original_inputs": [],
   "limits": [
@@ -59,7 +62,12 @@
     "Hash/source consistency checks are not authentication of hostile manifests.",
     "Exact ten runtime products reproduced from1072 public source files; coherent metadata regenerated, not required byte-identical across build paths.",
     "Synchronet actual script/editor plus1920-cell/cursor audit passes; no SIP/audio/physical acceptance.",
-    "Enigma60s run canceled an incomplete retry; established150s repeat is pending and is not accepted.",
+    "Enigma60s run remains failed. Established150s repeat passes18checks plus independent raw audit and rejects15 altered captures; serial-side only.",
     "Full connection release, broader overlay lifetime/handle-failure and physical gates remain open; Host last."
-  ]
+  ],
+  "Enigma_long_window_passed": true,
+  "Enigma_long_window_checks": 18,
+  "Enigma_exact_retry_bytes": 65539,
+  "Enigma_independent_audit_passed": true,
+  "Enigma_corrupt_captures_rejected": 15
 }
