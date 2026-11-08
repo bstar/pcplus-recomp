@@ -9,6 +9,8 @@ sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ('package','proof','contract','archive','output'):p.add_argument('--'+n,type=Path,required=True)
+ p.add_argument('--chat-pair-controls',type=Path)
+ p.add_argument('--bbs-record',type=Path,default=ROOT/'docs/validation/aspect-compiler-connection.json')
  p.add_argument('--dos-check',type=Path,action='append',required=True)
  a=p.parse_args();receipts={}
  def read(path):
@@ -36,23 +38,31 @@ def main():
   assert r['package_manifest_sha256']==sha(a.package/'manifest.json') and r['package_files']==m['files']
   for n,h in r['sources'].items():assert sha(ROOT/n)==h,n
   for n,h in r['artifacts'].items():assert sha(folder/n)==h,n
-  dos.append({k:r[k] for k in ('launcher','cpu','port','irq','resident_observer','precompiled_before_terminal','native_line_port','meta_editor','keymap_editor','keymap_profiles','keymap_help','packaged_ASPECT_clock_alarm_exercised','packaged_ASPECT_EMULATE_exercised','checks')})
- assert len(dos)==7 and any(d['launcher']=='SETUP' for d in dos)
+  dos.append({k:r[k] for k in ('launcher','cpu','port','irq','resident_observer','precompiled_before_terminal','native_line_port','meta_editor','keymap_editor','keymap_profiles','keymap_help','chat_help','packaged_ASPECT_clock_alarm_exercised','packaged_ASPECT_EMULATE_exercised','checks')})
+ assert len(dos)>=7 and any(d['launcher']=='SETUP' for d in dos)
+ assert any(d['launcher']=='START' and d['resident_observer'] for d in dos),'Packaged splash observation required'
  assert any(d['keymap_help'] and d['keymap_profiles']==7 for d in dos)
  assert any(d['meta_editor'] for d in dos) and any(d['native_line_port'] for d in dos)
  assert any(d['precompiled_before_terminal'] and d['packaged_ASPECT_clock_alarm_exercised'] and d['packaged_ASPECT_EMULATE_exercised'] for d in dos)
  assert any(not d['resident_observer'] and not d['precompiled_before_terminal'] and 'nested DOS source compilation produces exact ASX' in d['checks'] for d in dos)
- bbs_path=ROOT/'docs/validation/aspect-compiler-connection.json';bbs=json.loads(bbs_path.read_text());assert bbs['checkpoint_verified']
+ chat_pairs=[]
+ if m.get('experimental_chat_send_mode'):
+  assert any(d['chat_help'] for d in dos) and a.chat_pair_controls
+  pair=read(a.chat_pair_controls);assert pair['passed'] and len(pair['cases'])==7
+  assert all(c['passed'] and c['accepted']==(c['case'] in ('matched-current','matched-legacy')) for c in pair['cases'])
+  for name,digest in pair['sources'].items():assert sha(ROOT/name)==digest,name
+  chat_pairs=pair['cases']
+ bbs_path=a.bbs_record.resolve();assert bbs_path.is_relative_to(ROOT/'docs/validation');bbs=json.loads(bbs_path.read_text());assert bbs['checkpoint_verified']
  for n,h in bbs['products'].items():assert m['files'][n]==h,n
  receipts[str(bbs_path.relative_to(ROOT))]=sha(bbs_path)
  r=dict(checkpoint_verified=True,source_base_commit=revision,files=m['files'],source_count=proof['source_count'],
         source_original_inputs=[],source_ancestor_git_unavailable=True,package_contract_cases=34,
         cold_package_contract_cases=proof['connection_package']['contract_cases'],cold_DOS_cases=proof['DOS_cases'],cold_termination_cases=proof['termination_cases'],
-        archive_sha256=archive['archive_sha256'],archive_bytes=archive['archive_bytes'],DOS_checks=dos,
+        archive_sha256=archive['archive_sha256'],archive_bytes=archive['archive_bytes'],DOS_checks=dos,chat_setup_pair_controls=chat_pairs,
         same_application_as_BBS_checkpoint=True,application_bytes_changed=False,installed_changed=False,selector_changed=False,physical_verified=False,
         receipts=receipts,sources={'standalone/record_compiler_bridge_package.py':sha(__file__)},
         remaining=['Controlled deployment preserving current private configuration and call history.','Physical memory admission, modem/SIP/audio and Enigma/Synchronet acceptance.','Full ASPECT/other emulations/protocols/Host parity.'])
- a.output.write_text(json.dumps(r,indent=2)+'\n');print('Verified17-file compiler-bridge candidate, exact source/archive and seven packaged DOS cases')
+ a.output.write_text(json.dumps(r,indent=2)+'\n');print('Verified17-file compiler-bridge candidate, exact source/archive and packaged DOS cases')
 
 
 if __name__=='__main__':main()
