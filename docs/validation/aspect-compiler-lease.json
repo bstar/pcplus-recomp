@@ -1,0 +1,121 @@
+{
+  "checkpoint": "Experimental backed parent-memory lease with real DOS compiler execution",
+  "component_passed": true,
+  "production_integrated": false,
+  "full_parent_source_compiler_residency_verified": false,
+  "banked_admission_implemented": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "original_inputs": [],
+  "parent_profile_simulated": true,
+  "parent_sha256": "daea5bb24f6098b7087d9f75484b6054ffa1764e3de7435a2ed6b77a579c2f45",
+  "client_sha256": "38f201554e8aad815fcbf116163eba9fcc7d9f97898adcb35942d17de8c75686",
+  "compiler_sha256": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+  "client_checks": 1386,
+  "rounds": 3,
+  "tail_bytes": 161152,
+  "parent_paragraphs": 30107,
+  "retained_paragraphs": 20035,
+  "client_paragraphs": 8539,
+  "observations": [
+    [
+      462,
+      0,
+      2704,
+      161136,
+      6,
+      20548
+    ],
+    [
+      462,
+      0,
+      2704,
+      161136,
+      6,
+      20548
+    ],
+    [
+      462,
+      0,
+      2704,
+      161136,
+      6,
+      20548
+    ]
+  ],
+  "vectors_unchanged": true,
+  "exact_parent_tail_restorations": 3,
+  "cold_source_count": 28,
+  "ancestor_git_unavailable": true,
+  "layout": {
+    "LEASE_CODE": {
+      "segment": 732,
+      "offset": 5,
+      "bytes": 2263
+    },
+    "LEASE_IO_CODE": {
+      "segment": 874,
+      "offset": 0,
+      "bytes": 518
+    },
+    "LEASE_STORAGE": {
+      "segment": 907,
+      "offset": 0,
+      "bytes": 4352
+    }
+  },
+  "resident_component_bytes_before_alignment": 7133,
+  "sources": {
+    "src/process/compiler_lease.c": "bc5633e00311965dc4ff4541179ec6244239e5735ee86f838d5039b4e445782a",
+    "src/process/compiler_lease.h": "dd06ddb55782a683fb0efec042f5f35bd1f9cb61ccbc1d7c5fa1e08737d8f3bd",
+    "src/process/compiler_lease_dos.asm": "cead66921dc0022550108d2d8b25e6e1c2d15f3996164f06952fdf9ee28cb6ef",
+    "standalone/test_compiler_lease_dos.py": "3be70af5cf6b5b65555d730edc509e9a8a4ab1de564ab8b0a7b95b718aeb733a",
+    "standalone/prove_compiler_lease_source.py": "d499c59667c4507bc72dd2eb890507224b8a846dc82580fae867a7e2b63eef9c",
+    "docs/ASPECT_COMPILER_LEASE.md": "9e212019b6d8a26adfa5d591a93de8461906c117b037bb2ecd47cc3ed74edd21",
+    "docs/ASPECT_COMPILER_MEMORY.md": "4775e1c04a87e82c08b309f168480dd7845e074c7dc1eedd6dcd477f383be786",
+    "docs/FEATURES.md": "4a710556b89f78ae25237c4d8c9eb1f2dda4e66aa701f6e7560e829f31ac4595"
+  },
+  "evidence": {
+    "build/compiler-lease-final-20261108/result.json": {
+      "sha256": "06acc1c565c0bfec010d9a41c11c980d0ba4e34014d4c3b7b170061a7488304f",
+      "passed": true
+    },
+    "build/compiler-lease-source-final-20261108/result.json": {
+      "sha256": "9c4236d180ab4c0ce2fe33d598c38a2a7802fc9f5b08f0dab4583adf4fe86e7c",
+      "passed": true
+    },
+    "build/compiler-lease-source-final-20261108/source/build/lease/result.json": {
+      "sha256": "06acc1c565c0bfec010d9a41c11c980d0ba4e34014d4c3b7b170061a7488304f",
+      "passed": true
+    }
+  },
+  "map_sha256": "6a6e002f2ba4f8c764d56d77558a291f1222368406dac2d9c6f0b3f2e1a98696",
+  "DOS_result_sha256": "dd3ba3858e8ecc8e4070b15542dd85f034c4f38b02b57efd99b6f9e8d5f32eea",
+  "DOS_client_log_sha256": "27c0a4c91457fbdf325c9630c45dc1c35447c4c7c1ceb0c0726125725be62898",
+  "API_sources": [
+    "https://github.com/microsoft/MS-DOS/blob/main/v4.0/src/DOS/ALLOC.ASM",
+    "https://github.com/microsoft/MS-DOS/blob/main/v4.0/src/DOS/FILE.ASM",
+    "https://github.com/microsoft/MS-DOS/blob/main/v4.0/src/DOS/HANDLE.ASM",
+    "https://github.com/joncampbell123/dosbox-x/blob/dosbox-x-v2026.07.02/src/dos/dos_files.cpp"
+  ],
+  "exploratory_notes": [
+    "First/third emulator runs stalled at init because comma-separated Watcom declarations made later DOS helpers near calls to far-returning functions. All declarations now separate, disassembly checked.",
+    "Second build refused a signed handle pointer mismatch in trace fixture; corrected int handle.",
+    "Fourth owned stalled emulator was explicitly terminated after near/far diagnosis; no user sessions/processes were targeted.",
+    "Fifth ran real compiler but restore refused after foreign SETBLOCK reassigned parent MCB ownership. DOS CurrentPDB scoping fixed it, backed by MS-DOS4 allocator source.",
+    "Sixth passed78 checks/3 restorations; seventh strengthened partial-growth/CWD/JFT tests and exposed fixture mkdir-existing errno assumption on second round. Fixture now precreates AWAY.",
+    "Eighth collision run exposed pinned DOSBox6C fail-existing handle leak. Attribute preflight retains final exclusive creation; ninth passed1386 checks.",
+    "Final test uses both segment bytes in patterns and latches any mismatch to avoid repeated4KB patterns or mismatch-counter wrap. Final/cold artifacts only are canonical."
+  ],
+  "limits": [
+    "Profile-sized harness parent/client, not production PCPlus bridge, UART, UI, history-consumer or outer-loan integration.",
+    "7133B component footprint exceeds existing roughly3KB startup headroom: banked kernel/admission required, not permanent linking.",
+    "DOS4+ entry guard; DOSBox8086/FPUoff integrated DOS execution, not booted MS-DOS4 or physical hardware.",
+    "Disk-full/short-I/O/corruption/fatal restore, compiler faults/TSRs, same-child repeated leases and asynchronous reentry remain open.",
+    "Raw backing file depends on resident metadata; not a persistent crash journal or DOS security sandbox.",
+    "CRC16 detects accidental corruption; not cryptographic authenticity.",
+    "An intervening-create race on the old emulator exclusive-open error path is not established safe by existing-name preflight.",
+    "Full feature/memory co-residency, source startup/EXECUTE under actual parent, package/hardware admission and whole-app parity remain open."
+  ]
+}

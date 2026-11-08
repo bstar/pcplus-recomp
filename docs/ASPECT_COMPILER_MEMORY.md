@@ -1,5 +1,12 @@
 # Source compiler residency under the complete parent
 
+The [backed memory-lease component](ASPECT_COMPILER_LEASE.md) now runs the
+real compiler and restores161,152 bytes in a profile-sized DOS fixture, including
+failed-grow retry and ownership checks. It is not production-integrated. Its
+7.1KB footprint also exceeds the current startup headroom, so banked admission
+remains required; the full-parent failures below are not fixed yet.
+
+
 Source compilation currently fails under the full experimental parent and GET
 interpreter at640KB. This is a confirmed compatibility gap, not a successful
 compilation checkpoint. Earlier standalone compiler/serial checks and the
@@ -100,6 +107,7 @@ and retain recovery evidence rather than silently resume through missing memory.
 The startup pre-return error-display path also needs direct tracing before
 classifying it as a defect or choosing a parent change.
 
-This plan has not been implemented or physically tested. DOS386/UMB synthetic
+The full-parent plan has not been integrated or physically tested; the linked
+component checkpoint has the narrower evidence described above. DOS386/UMB synthetic
 serial results do not establish Boca/SPA2102/SynthModem/BBS behavior, ordinary8086
 parent capacity, full memory pressure or whole-language/application parity.
