@@ -36,6 +36,10 @@ unsigned runtime_when_get_poll(void);
 #ifdef ASPECT_GET_VM
 /* Matching restored native GET generation, after field retirement only. */
 unsigned runtime_when_get_unwind(void);
+/* Foreground native GET confirmation, after its field/keyboard retirement. */
+unsigned runtime_when_get_confirm_abort(void);
+unsigned runtime_when_get_confirm_active(void);
+unsigned runtime_when_get_confirm_recover(void);
 #endif
 #endif
 #ifdef ASPECT_ALARM_SERVICE

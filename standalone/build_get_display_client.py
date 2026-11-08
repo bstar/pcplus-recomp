@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
  flags=['ASPECT_EXTERNAL_RENDER','ASPECT_EXTERNAL_UNWIND','ASPECT_SNAPSHOT_LEASE','ASPECT_ALARM_VM','ASPECT_EMULATE_VM','ASPECT_GET_DISPLAY']
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we','-k8192',*['-d'+f for f in flags],'-i='+str(ROOT/'src/aspect'),'-fe=CLIENT.EXE',str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'standalone/get_display_client_driver.c')],cwd=out,check=True)
  (out/'dosbox.conf').write_text(f'[sdl]\noutput=surface\n[cpu]\ncore=normal\ncputype=8086\nfpu=false\ncycles=fixed 30000\n[mixer]\nnosound=true\n[autoexec]\nmount c "{out}"\nc:\nCLIENT >CHECK.LOG\nif errorlevel 1 goto failed\necho PASS>RESULT.TXT\nexit\n:failed\necho FAIL>RESULT.TXT\nexit\n')

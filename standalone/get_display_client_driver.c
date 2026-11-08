@@ -89,5 +89,13 @@ int main(void)
  bad_check_at=0;before=requests;ck(aspect_render_field(0,0xffff)==10&&requests==before);
  ck(!aspect_render_field(5,1)&&!aspect_render_field_state());open();
  reset();override=1;reply=10;ck(aspect_render_field(0,0xffff)==10&&!aspect_render_field_state());override=0;open();
+ reset();ck(!aspect_render_confirm_state());check_calls=0;bad_check_at=2;
+ ck(aspect_render_confirm(0)==10&&aspect_render_confirm_state()==1);bad_check_at=0;
+ before=requests;ck(aspect_render_confirm(0)==10&&aspect_render_field(0,0xffff)==10&&requests==before);
+ ck(!aspect_render_confirm(3)&&!aspect_render_confirm_state());
+ reset();override=1;reply=10;ck(aspect_render_confirm(0)==10&&!aspect_render_confirm_state());override=0;
+ ck(!aspect_render_confirm(0)&&aspect_render_confirm_state()==1);callback_mode=2;nesting=1;
+ ck(aspect_render_confirm(4)==10&&callback_result==65535&&!raw_reads&&nested_finish==10&&nested_field==10);
+ callback_mode=0;aspect_serial_active=0;ck(!aspect_render_confirm(3)&&!aspect_render_confirm_state());
  ck(!aspect_render_finish()&&!deferred);printf("PASS FIELD CLIENT %u checks; retirement, owners, callbacks, quarantine\r\n",checks);return 0;
 }

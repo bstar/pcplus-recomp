@@ -9,8 +9,20 @@
 #include "get_field.h"
 #ifdef ASPECT_GET_SERVICED
 #include "get_runtime.h"
+#ifdef ASPECT_GET_CONFIRM
+#include "when_runtime.h"
+#endif
 #ifdef ASPECT_GET_CONTEXT
 #include "get_context.h"
+#ifdef ASPECT_GET_COMMAND
+#include "get_command.h"
+#include "runtime.h"
+#include "when_runtime.h"
+extern unsigned owner_dispatch_checkpoint(void *);
+extern unsigned char owner_dispatch_context[10];
+static unsigned command_test_generation;
+extern void owner_serviced_fault(unsigned);
+#endif
 extern void owner_serviced_origin(unsigned);
 #endif
 extern void owner_serviced_prepare(void),owner_serviced_finish(void);
@@ -32,9 +44,14 @@ extern unsigned char owner_float_result[8],owner_floats[1024],owner_strings[810]
 static unsigned char stream[16],scratch[82],frames[256],before[81],expected[81],opaque[8]={1,0x23,0x45,0x67,0x89,0xab,0xcd,0xef};
 static unsigned key_words[128],key_count,key_index,confirm_value,field_calls,field_width,field_callback,bells,position,position_calls,float_calls,confirm_calls,cancel_calls,error_code;
 #ifdef ASPECT_GET_SERVICED
+unsigned owner_serviced_choice(void){return confirm_value?'Y':'N';}
 unsigned owner_serviced_peek(void){return key_index<key_count?key_words[key_index]:0;}
 unsigned owner_serviced_read(void){if(key_index==key_count)exit(35);return key_words[key_index++];}
-void owner_serviced_error(unsigned value){error_code=value;}
+void owner_serviced_error(unsigned value){if(!error_code)error_code=value;}
+#endif
+#ifdef ASPECT_GET_COMMAND
+static unsigned command_failure(unsigned code,unsigned mode)
+{printf("FAIL command fault code%u mode%u err%u exit%u ready%u modal%u defer%u generation%u/%u\n",code,mode,runtime_error,owner_exit_state,runtime_get_command_ready(),runtime_when_get_confirm_active(),runtime_when_deferred,runtime_get_native_generation(),command_test_generation);return code;}
 #endif
 static char float_text[82],expected_float[82];
 static struct {unsigned char *pointer;int count;} synthetic_file;
@@ -62,10 +79,15 @@ void owner_position(unsigned row,unsigned column){
 #endif
  position=(row<<8)|column;++position_calls;}
 unsigned owner_confirm(void){++confirm_calls;
+#ifdef ASPECT_GET_CONFIRM
+ return runtime_when_get_confirm_abort();
+#else
 #ifdef ASPECT_GET_CHECKPOINT
  if(checkpoint_fault==3)owner_error(9);
 #endif
- return confirm_value;}
+ return confirm_value;
+#endif
+}
 void owner_cancel(void){++cancel_calls;
 #ifdef ASPECT_GET_CHECKPOINT
  owner_abort_native();exit(32);
@@ -86,7 +108,11 @@ unsigned owner_field(unsigned callback,unsigned masked,unsigned width,unsigned i
  unsigned key;unsigned char text[82];
 #endif
 #ifdef ASPECT_GET_CHECKPOINT
- if(owner_checkpoint_foreign_stack() || runtime_get_native_active()!=1 || runtime_get_native()!=GET_NATIVE_BUSY || runtime_get_native_active()!=1)owner_unexpected();
+ if(
+#ifndef ASPECT_GET_COMMAND
+ owner_checkpoint_foreign_stack() ||
+#endif
+ runtime_get_native_active()!=1 || runtime_get_native()!=GET_NATIVE_BUSY || runtime_get_native_active()!=1)owner_unexpected();
 #endif
 #ifdef ASPECT_GET_CONTEXT
  if(runtime_get_context_policy(1)!=10)owner_unexpected();
@@ -126,7 +152,9 @@ int main(void)
  unsigned char __far *far_string;void __far *destination;
  if(!f || ds()!=ss() || FP_SEG(get_field_key)==cs())return 1;far_string=_fmalloc(82);if(!far_string)return 2;
 #ifdef ASPECT_GET_CHECKPOINT
+#ifndef ASPECT_GET_COMMAND
  if(owner_checkpoint_guards() || runtime_get_native_active() || runtime_get_native_aborted())return 13;
+#endif
 #endif
  if(word(f)!=0x474f)return 3;count=word(f);
  for(index=0;index<count;++index){
@@ -154,7 +182,18 @@ int main(void)
 #ifdef ASPECT_GET_SERVICED
   owner_serviced_prepare();
 #ifdef ASPECT_GET_CONTEXT
+#ifdef ASPECT_GET_COMMAND
   if(!index){
+   command_test_generation=runtime_get_native_generation();
+   if(runtime_get_command_run(2)!=7 || runtime_get_native_generation()!=command_test_generation || synthetic_file.count!=stream_size || key_index)return 45;
+   error_code=0;owner_serviced_prepare();
+  }
+#endif
+  if(!index
+#ifdef ASPECT_GET_COMMAND
+     && 0
+#endif
+    ){
    if(runtime_get_context_policy(2)!=7)return 40;
    owner_call();
    if(!runtime_get_native_aborted() || error_code!=10 || synthetic_file.count!=stream_size || key_index || field_calls)return 41;
@@ -168,9 +207,18 @@ int main(void)
 #endif
 #endif
   if(runtime_get_native_active())return 11;
-  owner_checkpoint_foreign(index&3);owner_call();jump=runtime_get_native_aborted();
+  owner_checkpoint_foreign(index&3);
+#ifdef ASPECT_GET_COMMAND
+  jump=owner_dispatch_checkpoint(owner_dispatch_context);if(!jump)owner_call();
+  if((jump!=0)!=(owner_exit_state==65535U) || !runtime_get_command_ready()){printf("FAIL command dispatch %u jump%u exit%u ready%u\n",index,jump,owner_exit_state,runtime_get_command_ready());return 43;}
+#else
+  owner_call();jump=runtime_get_native_aborted();
+#endif
 #ifdef ASPECT_GET_SERVICED
   if(jump && runtime_get_field_recover()){printf("FAIL serviced cleanup %u\n",index);return 36;}
+#ifdef ASPECT_GET_CONFIRM
+  if(runtime_when_get_confirm_recover())return 44;
+#endif
   owner_serviced_finish();
 #ifdef ASPECT_GET_CONTEXT
   if(owner_row==23 && !owner_wrap)expected_width=5;
@@ -196,9 +244,44 @@ int main(void)
   if(error_code!=expected_error || (!jump)!=expected_return || owner_failure!=expected_failure || field_calls!=expected_calls || (field_calls && (field_width!=expected_width || field_callback!=expected_numeric)) || bells!=expected_bells || position_calls!=expected_position_calls || (position_calls && position!=expected_position) || confirm_calls!=expected_confirm || cancel_calls!=expected_cancel || float_calls!=expected_float_calls || strcmp(float_text,expected_float) || _fmemcmp(destination,expected,size) || ds()!=ss()){
    printf("FAIL owner %u err=%u/%u return=%u/%u failure=%u/%u field=%u/%u width=%u/%u bells=%u/%u\r\n",index,error_code,expected_error,!jump,expected_return,owner_failure,expected_failure,field_calls,expected_calls,field_width,expected_width,bells,expected_bells);return 8;
   }
-  if(synthetic_file.count || key_index!=key_count)return 9;
+  if(synthetic_file.count || key_index!=key_count){
+#ifdef ASPECT_GET_COMMAND
+   printf("FAIL owner consumption %u file%u key%u/%u\n",index,synthetic_file.count,key_index,key_count);
+#endif
+   return 9;
+  }
  }
  if(fgetc(f)!=EOF || fclose(f))return 10;_ffree(far_string);
+#ifdef ASPECT_GET_COMMAND
+ /* Native WHEN aborts inside the real prompt. Final dispatcher abort must
+  * wait for checked modal retirement, and retry must never execute GET twice. */
+ for(n=1;n<=3;++n){
+  stream[0]=141;stream[1]=0;stream[2]=1;stream[3]=171;stream[4]=10;stream[5]=0;
+  synthetic_file.pointer=stream;synthetic_file.count=6;
+  owner_row=6;owner_column=0;owner_wrap=owner_origin=owner_lookahead=owner_failure=owner_exit_state=owner_keys_disabled=0;
+  owner_scratch_pointer=(unsigned)scratch;strcpy((char *)scratch,"123");
+  owner_integer_b[0]=0xbeef;key_words[0]=27;key_count=1;key_index=0;confirm_value=1;
+  error_code=field_calls=position_calls=confirm_calls=cancel_calls=0;
+  owner_serviced_prepare();owner_serviced_fault(n);
+  command_test_generation=runtime_get_native_generation()+1;if(!command_test_generation)++command_test_generation;
+  jump=owner_dispatch_checkpoint(owner_dispatch_context);
+  if(!jump){
+   owner_call();
+   if(n==1 || owner_exit_state || runtime_get_command_ready() || !runtime_when_get_confirm_active() ||
+      runtime_error!=(n==3?10:5) || runtime_get_native_generation()!=command_test_generation)return command_failure(46,n);
+   if(runtime_get_command_run(0)!=runtime_error || runtime_get_native_generation()!=command_test_generation || synthetic_file.count || key_index!=1)return command_failure(47,n);
+   runtime_when_reset();runtime_when_file_reset();runtime_when_finish();
+   if(!runtime_when_get_confirm_active() || runtime_get_command_recover()!=10 || runtime_get_context_policy(0)!=10)return command_failure(48,n);
+   owner_serviced_fault(0);
+   if(runtime_get_command_recover() || !runtime_get_command_ready() || runtime_when_deferred)return command_failure(49,n);
+   owner_call();return command_failure(50,n); /* Sticky error must propagate, not run again. */
+  }
+  if(jump!=65535U || owner_exit_state!=65535U || !runtime_get_command_ready() || runtime_when_get_confirm_active() ||
+     runtime_get_native_generation()!=command_test_generation || runtime_error!=(n==3?10:5) || runtime_when_deferred ||
+     owner_integer_b[0]!=0xbeef || synthetic_file.count || key_index!=1 || ds()!=ss())return command_failure(51,n);
+  owner_serviced_finish();
+ }
+#endif
 #ifdef ASPECT_GET_CHECKPOINT
 #ifndef ASPECT_GET_SERVICED
  /* Authored faults inside the field, after field acceptance before typed
@@ -225,7 +308,11 @@ int main(void)
 #endif
 #ifdef ASPECT_GET_SERVICED
 #ifdef ASPECT_GET_CONTEXT
+#ifdef ASPECT_GET_COMMAND
+ printf("PASS COMMAND GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries; native confirmation/abort\r\n");return 0;
+#else
  printf("PASS CONTEXT GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals; shared scratch; origin52\r\n");return 0;
+#endif
 #else
  printf("PASS SERVICED GET OWNER %u cases;137 native matches;5 protected-view refusals; actual field/WHEN/client; opaque float boundary\r\n",count);return 0;
 #endif

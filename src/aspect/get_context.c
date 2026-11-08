@@ -2,12 +2,14 @@
 #include "get_runtime.h"
 #include "get_checkpoint.h"
 #include "runtime.h"
+#include "when_runtime.h"
+#include "resident_render.h"
 unsigned runtime_get_row,runtime_get_column,runtime_get_attribute;
 unsigned runtime_get_columns,runtime_get_rows,runtime_get_origin,runtime_get_wrap;
 static unsigned policy_ready;
 unsigned runtime_get_context_policy(unsigned wrap)
 {
- if(runtime_get_native_active() || runtime_get_field_active())return ASPECT_RUN_STATE;
+ if(runtime_get_native_active() || runtime_get_field_active() || runtime_when_get_confirm_active() || aspect_render_confirm_state())return ASPECT_RUN_STATE;
  policy_ready=0;if(wrap>1)return ASPECT_RUN_OPERAND;
  runtime_get_wrap=wrap;policy_ready=1;return 0;
 }

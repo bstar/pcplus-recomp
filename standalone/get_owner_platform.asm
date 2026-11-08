@@ -2,5 +2,10 @@ BITS 16
 CPU 8086
 SEGMENT _TEXT public class=CODE use16
 extern aspect_abort_recovered
+%ifdef ASPECT_GET_COMMAND
+extern runtime_get_abort_gate
+global runtime_external_abort_gate
+runtime_external_abort_gate: jmp runtime_get_abort_gate
+%endif
 global runtime_alarm_abort_gate
 runtime_alarm_abort_gate: jmp aspect_abort_recovered

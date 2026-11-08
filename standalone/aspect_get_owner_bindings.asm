@@ -20,19 +20,30 @@ _owner_call:
  mov bx,0x4567
  mov ax,0x5678
  mov es,ax
+%ifdef ASPECT_GET_COMMAND
+ extern _runtime_get_command_execute
+ push word [_owner_wrap]
+ call _runtime_get_command_execute
+ add sp,2
+%else
  call _runtime_get_native
+%endif
  cmp bp,0x1234
  jne .bad
  cmp si,0x2345
  jne .bad
  cmp di,0x3456
  jne .bad
+ %ifndef ASPECT_GET_COMMAND
  cmp bx,0x4567
  jne .bad
  push es
  pop dx
  cmp dx,0x5678
  je .done
+ %else
+ jmp .done
+ %endif
 .bad:
  mov word [cs:_owner_abi_failed],1
 .done:
@@ -84,10 +95,12 @@ _owner_abort_native:
 .gate:
  jmp runtime_get_abort_gate
 ; Explicit modeled final dispatcher boundary, only called by the guard test.
+%ifndef ASPECT_GET_COMMAND
 global aspect_abort_recovered
 aspect_abort_recovered:
  inc word [cs:fallback_calls]
  ret
+%endif
 ; No C, DOS, BIOS or IRQ can run on this diagnostic foreign stack. A foreign
 ; SS must delegate and leave the actual GET checkpoint armed for its own owner.
 _owner_checkpoint_foreign_stack:
@@ -322,6 +335,10 @@ global _owner_float_result
 _owner_float_result: times 8 db 0
 global aspect_flow_stream
 aspect_flow_stream:
+%ifdef ASPECT_GET_COMMAND
+global aspect_dispatch_stream
+aspect_dispatch_stream:
+%endif
 global _owner_file
 _owner_file: dw 0
 global aspect_flow_frame

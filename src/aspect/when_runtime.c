@@ -33,7 +33,7 @@ static unsigned window_keys_suppressed;
 #ifdef ASPECT_GET_SERVICE
 static unsigned get_keys_owned;
 #ifdef ASPECT_GET_VM
-static unsigned get_generation;
+static unsigned get_generation,get_confirmation_owned,get_confirmation_generation;
 #endif
 #endif
 #ifdef ASPECT_ALARM_SERVICE
@@ -54,6 +54,9 @@ static void disarm(void)
 }
 void runtime_when_reset(void)
 {
+#ifdef ASPECT_GET_VM
+ if(get_confirmation_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
+#endif
 #ifdef ASPECT_GET_SERVICE
  if(get_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
 #endif
@@ -73,6 +76,9 @@ void runtime_when_reset(void)
 }
 void runtime_when_file_reset(void)
 {
+#ifdef ASPECT_GET_VM
+ if(get_confirmation_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
+#endif
 #ifdef ASPECT_GET_SERVICE
  if(get_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
 #endif
@@ -81,6 +87,9 @@ void runtime_when_file_reset(void)
 }
 void runtime_when_finish(void)
 {
+#ifdef ASPECT_GET_VM
+ if(get_confirmation_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
+#endif
 #ifdef ASPECT_GET_SERVICE
  if(get_keys_owned){runtime_set_error(ASPECT_RUN_STATE);return;}
 #endif
@@ -199,6 +208,40 @@ unsigned runtime_when_get_end(void)
  get_keys_owned=0;return 0;
 }
 #ifdef ASPECT_GET_VM
+unsigned runtime_when_get_confirm_active(void){return get_confirmation_owned;}
+unsigned runtime_when_get_confirm_abort(void)
+{
+ unsigned answer;
+ if(runtime_error || runtime_get_native_active()!=1 || !aspect_render_active() ||
+    get_confirmation_owned || get_keys_owned || service_busy || monitor_busy ||
+    confirmation_active || runtime_when_deferred || aspect_render_window_active() ||
+    aspect_render_field_state() || aspect_render_confirm_state()){
+  runtime_set_error(ASPECT_RUN_STATE);return 1;
+ }
+ get_confirmation_owned=confirmation_active=1;
+ get_confirmation_generation=runtime_get_native_generation();
+ answer=runtime_abort_confirm_native();
+ if(aspect_render_confirm_state()){
+  runtime_set_error(ASPECT_RUN_STATE);return 1;
+ }
+ get_confirmation_owned=confirmation_active=get_confirmation_generation=0;
+ if(runtime_error)return 1;
+ if(!answer)return 0;
+ runtime_set_error(ASPECT_RUN_CANCELLED);return 1;
+}
+unsigned runtime_when_get_confirm_recover(void)
+{
+ unsigned status;
+ if(!get_confirmation_owned)return 0;
+ if(runtime_get_native_active() || !runtime_get_native_aborted() ||
+    get_confirmation_generation!=runtime_get_native_generation() || get_keys_owned ||
+    aspect_render_field_state())return ASPECT_RUN_STATE;
+ status=aspect_render_confirm(3);
+ if(aspect_render_confirm_state())return status?status:ASPECT_RUN_STATE;
+ get_confirmation_owned=confirmation_active=get_confirmation_generation=0;
+ service_busy=monitor_busy=runtime_when_deferred=runtime_when_pending_service=0;
+ return status;
+}
 unsigned runtime_when_get_unwind(void)
 {
  if(!get_keys_owned || runtime_get_native_active() || !runtime_get_native_aborted() ||

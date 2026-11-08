@@ -32,7 +32,11 @@ the updated lifecycle diagnostic passes759 checks with a real heap sentinel.
 The [context checkpoint](ASPECT_GET_CONTEXT.md) now captures parent view metadata
 before operands and aliases the original shared scratch role. Its36-source
 reproduction covers137 native matches,1 view-rebased clip,4 protected-view
-refusals, explicit policy and origin52. Full-interpreter linkage remains open.
+refusals, explicit policy and origin52. The subsequent
+[command checkpoint](ASPECT_GET_COMMAND.md) adds actual native yes/no and final
+abort/setjmp/longjmp, three modal faults/retries and a45-source exact rebuild.
+307 client checks and a10-source rebuild cover confirmation quarantine.
+Full-interpreter lifecycle cleanup and linkage remain open.
 Application GET remains disabled: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.

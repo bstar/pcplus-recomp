@@ -22,12 +22,27 @@ unsigned char runtime_when_records[344];
 extern unsigned owner_row,owner_column;
 extern unsigned owner_serviced_peek(void),owner_serviced_read(void);
 extern void owner_serviced_error(unsigned);
+#ifdef ASPECT_GET_CONFIRM
+extern unsigned owner_serviced_choice(void);
+static unsigned confirm_owned,modal_key_pending,modal_fault,bad_client;
+void owner_serviced_fault(unsigned value){modal_fault=value;bad_client=0;}
+#endif
 extern unsigned aspect_render_prepare(unsigned,unsigned,unsigned),aspect_render_attach(void);
 static unsigned owned,start,cursor,width,staged,trace_op,trace_value,checks;
 static void ck(unsigned x){++checks;if(!x){printf("FAIL platform %u op%u value%u owned%u width%u staged%u\n",checks,trace_op,trace_value,owned,width,staged);exit(38);}}
-void runtime_set_error(unsigned e){if(!runtime_error){runtime_error=e;owner_serviced_error(e);}}
+void runtime_set_error(unsigned e){if(!runtime_error){runtime_error=e;
+#ifdef ASPECT_GET_CONFIRM
+ if(e!=ASPECT_RUN_CANCELLED)
+#endif
+ owner_serviced_error(e);}}
 unsigned aspect_render_client_prepare(void){return 0;}
-unsigned aspect_render_client_check(void){return 0;}
+unsigned aspect_render_client_check(void){
+#ifdef ASPECT_GET_CONFIRM
+ return bad_client?10:0;
+#else
+ return 0;
+#endif
+}
 unsigned aspect_render_callback_offset(void){return 100;}
 unsigned aspect_render_code_segment(void){return 200;}
 unsigned aspect_render_request(unsigned op,unsigned value)
@@ -35,6 +50,13 @@ unsigned aspect_render_request(unsigned op,unsigned value)
  trace_op=op;trace_value=value;
  if(op==0)return 0;
  if(op==2){owned=0;return 0xe000;}
+#ifdef ASPECT_GET_CONFIRM
+ if(op==12){
+  if(value==0){ck(!owned&&!confirm_owned);confirm_owned=1;modal_key_pending=1;if(modal_fault==3)bad_client=1;return 0;}
+  if(value==3){if(modal_fault==2)return 10;confirm_owned=0;return 0;}
+  ck(confirm_owned);return 0;
+ }
+#endif
  if(op==21){
   ck(!owned);if(value==65535U)value=(owner_row<<8)|owner_column;
   if((value>>8)>=24 || (value&255)>=80)return 7;
@@ -62,6 +84,9 @@ void owner_serviced_prepare(void)
 {
  if(owned||runtime_get_field_active()||aspect_render_field_state()){printf("FAIL admission peer%u active%u state%u\n",owned,runtime_get_field_active(),aspect_render_field_state());exit(39);}
  runtime_error=0;
+#ifdef ASPECT_GET_CONFIRM
+ ck(!confirm_owned&&!runtime_when_get_confirm_active()&&!aspect_render_confirm_state());modal_key_pending=modal_fault=bad_client=0;
+#endif
  runtime_when_reset();
 #ifdef ASPECT_GET_CONTEXT
  ck(!runtime_get_context_policy(owner_wrap));if(owner_scratch_pointer)runtime_script_file_mode_pointer=(char *)owner_scratch_pointer;
@@ -71,22 +96,43 @@ void owner_serviced_prepare(void)
  if(!aspect_render_active())ck(!aspect_render_prepare(1,2,3)&&!aspect_render_attach());
 }
 void owner_serviced_finish(void)
-{ck(!owned&&!runtime_get_field_active()&&!aspect_render_field_state()&&!runtime_when_deferred);}
+{
+#ifdef ASPECT_GET_CONFIRM
+ ck(!confirm_owned&&!runtime_when_get_confirm_active()&&!aspect_render_confirm_state());
+#endif
+ ck(!owned&&!runtime_get_field_active()&&!aspect_render_field_state()&&!runtime_when_deferred);}
 unsigned runtime_console_cancel_poll(void){return 0;}
 unsigned runtime_serial_poll(void){return 0;}
 unsigned runtime_serial_send(unsigned x){(void)x;return 0;}
 unsigned aspect_serial_available(void){return 0;}
 unsigned aspect_serial_unread(void){return 0;}
 unsigned long aspect_serial_ticks(void){return 1;}
-unsigned runtime_keyboard_peek(void){return owner_serviced_peek();}
-unsigned runtime_keyboard_read(void){return owner_serviced_read();}
+unsigned runtime_keyboard_peek(void){
+#ifdef ASPECT_GET_CONFIRM
+ if(runtime_when_get_confirm_active())return modal_fault?0:modal_key_pending?owner_serviced_choice():0;
+#endif
+ return owner_serviced_peek();}
+unsigned runtime_keyboard_read(void){
+#ifdef ASPECT_GET_CONFIRM
+ if(runtime_when_get_confirm_active()){ck(modal_key_pending);modal_key_pending=0;return owner_serviced_choice();}
+#endif
+ return owner_serviced_read();}
 unsigned runtime_keyboard_auto(void){return 0;}
 unsigned runtime_keyboard_cancel_pending(void){return 0;}
 unsigned alarm_coop_native_aborted(void){return 0;}
+#ifndef ASPECT_GET_CONFIRM
 unsigned runtime_abort_confirm_native(void){ck(0);return 0;}
+#endif
 unsigned runtime_receive_raw_character(unsigned x){(void)x;ck(0);return 0xffff;}
 unsigned runtime_receive_character(unsigned x,unsigned y){(void)x;(void)y;ck(0);return 0;}
 unsigned runtime_receive_policy_byte(unsigned x,unsigned y){return runtime_receive_character(x,y);}
-unsigned runtime_when_native_service(void){return 0;}
+unsigned runtime_when_native_service(void){
+#ifdef ASPECT_GET_CONFIRM
+ if(modal_fault && runtime_when_get_confirm_active()){
+  extern void owner_abort_native(void);
+  runtime_when_defer_begin();runtime_when_monitor_begin();runtime_set_error(5);owner_abort_native();ck(0);
+ }
+#endif
+ return 0;}
 extern void owner_bell(void);
 void runtime_console_emit_byte(unsigned x){ck(x==7);owner_bell();}

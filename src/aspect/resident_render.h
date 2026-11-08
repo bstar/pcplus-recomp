@@ -44,6 +44,8 @@ unsigned __cdecl aspect_render_alarm_policy(unsigned *,unsigned *);
 #define ASPECT_RENDER_FIELD_BEGIN 21U
 enum {ASPECT_FIELD_OWNED=1,ASPECT_FIELD_WAIT=2,ASPECT_FIELD_DIRTY=4};
 unsigned __cdecl aspect_render_field_state(void);
+/* Bit0 owner, bit1 synchronous request in flight. */
+unsigned __cdecl aspect_render_confirm_state(void);
 unsigned __cdecl aspect_render_field(unsigned operation,unsigned value);
 #endif
 #if defined(ASPECT_EMULATE_VM)

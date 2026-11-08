@@ -1,5 +1,9 @@
 # GET context before operand parsing
 
+The subsequent [command checkpoint](ASPECT_GET_COMMAND.md) adds foreground
+confirmation ownership and actual final native abort/longjmp. Application
+interpreter linkage and its cleanup guards remain open.
+
 The optional `ASPECT_GET_CONTEXT` path now runs preparation and finish hooks
 inside the native GET checkpoint. Preparation acquires an invisible parent field
 and WHEN keyboard lease, captures current position/attribute/columns/logical rows/
