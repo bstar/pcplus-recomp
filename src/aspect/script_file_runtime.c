@@ -12,6 +12,12 @@
 #if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
 #include <malloc.h>
 #endif
+#ifdef ASPECT_DISK_SCRIPT_SNAPSHOTS
+#if !defined(ASPECT_DEFER_SCRIPT_BUFFERS) || !defined(ASPECT_EXTERNAL_PROCESS) || defined(ASPECT_SCRIPT_BUFFER_DIAGNOSTIC)
+#error Disk snapshots require deferred external buffers without the pointer-count diagnostic
+#endif
+#include "buffer_snapshot.h"
+#endif
 #define SCRIPT_BUFFER_BYTES 512
 
 typedef char prefix_size_check[sizeof(aspect_script_file_prefix)==8?1:-1];
@@ -85,9 +91,13 @@ static script_snapshot external_saved[ASPECT_SCRIPT_FILE_SLOTS];
 #if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
 static void release_external_buffers(void)
 {
+#ifdef ASPECT_DISK_SCRIPT_SNAPSHOTS
+ if(aspect_buffer_snapshot_discard())++runtime_script_file_cleanup_errors;
+#else
  unsigned i;
  for(i=0;i<ASPECT_SCRIPT_FILE_SLOTS;++i)
   if(external_saved[i].buffer){_nfree(external_saved[i].buffer);external_saved[i].buffer=0;}
+#endif
 }
 #endif
 unsigned runtime_script_files_external_begin(unsigned *descriptors,unsigned *count)
@@ -101,6 +111,9 @@ unsigned runtime_script_files_external_begin(unsigned *descriptors,unsigned *cou
 #endif
  if(external_held||!descriptors||!count)return ASPECT_RUN_STATE;
  *count=0;
+#ifdef ASPECT_DISK_SCRIPT_SNAPSHOTS
+ status=aspect_buffer_snapshot_begin(runtime_script_file_live);if(status)return status;
+#endif
  for(i=0;i<ASPECT_SCRIPT_FILE_SLOTS;++i){
   script_owner *owner=&owners[i];
   if((owner->stream!=0)!=(runtime_script_file_slots[i]!=0)||
@@ -113,15 +126,23 @@ unsigned runtime_script_files_external_begin(unsigned *descriptors,unsigned *cou
   external_saved[i].prefix=owner->native;
   external_saved[i].eof=owner->eof_latched;external_saved[i].error=owner->error_latched;
   external_saved[i].mode=runtime_script_file_mode_flags[owner->native.descriptor];
+#ifdef ASPECT_DISK_SCRIPT_SNAPSHOTS
+  external_saved[i].buffer=owner->buffer;
+  status=aspect_buffer_snapshot_save(i,owner->buffer);if(status)goto rejected;
+#else
 #if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
   if(external_saved[i].buffer)SNAPSHOT_REJECT(ASPECT_RUN_STATE);
   external_saved[i].buffer=_nmalloc(SCRIPT_BUFFER_BYTES);
   if(!external_saved[i].buffer)SNAPSHOT_REJECT(ASPECT_RUN_HEAP);
 #endif
   memcpy(external_saved[i].buffer,owner->buffer,SCRIPT_BUFFER_BYTES);
+#endif
   descriptors[(*count)++]=owner->native.descriptor;
  }
  if(*count!=runtime_script_file_live)SNAPSHOT_REJECT(ASPECT_RUN_STATE);
+#ifdef ASPECT_DISK_SCRIPT_SNAPSHOTS
+ status=aspect_buffer_snapshot_seal();if(status)goto rejected;
+#endif
  external_live=runtime_script_file_live;external_opens=runtime_script_file_open_calls;external_closes=runtime_script_file_close_calls;
  external_held=1;return 0;
 #if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
@@ -143,10 +164,19 @@ unsigned runtime_script_files_external_end(void)
      external_saved[i].position!=ftell(owner->stream)||
      external_saved[i].eof!=owner->eof_latched||external_saved[i].error!=owner->error_latched||
      external_saved[i].mode!=runtime_script_file_mode_flags[owner->native.descriptor]||
+#ifdef ASPECT_DISK_SCRIPT_SNAPSHOTS
+     external_saved[i].buffer!=owner->buffer)status=ASPECT_RUN_STATE;
+  {unsigned result=aspect_buffer_snapshot_compare(i,owner->buffer);if(result&&!status)status=result;}
+#else
      memcmp(external_saved[i].buffer,owner->buffer,SCRIPT_BUFFER_BYTES))status=ASPECT_RUN_STATE;
+#endif
  }
 #if defined(ASPECT_DEFER_SCRIPT_BUFFERS)
+#ifdef ASPECT_DISK_SCRIPT_SNAPSHOTS
+ {unsigned result=aspect_buffer_snapshot_finish();if(result&&!status)status=result;}
+#else
  release_external_buffers();
+#endif
 #endif
  external_held=0;return status;
 }
@@ -195,6 +225,9 @@ static int close_owner(script_owner *owner)
 unsigned runtime_script_files_reset(void)
 {
  unsigned slot;
+#ifdef ASPECT_DISK_SCRIPT_SNAPSHOTS
+ if(aspect_buffer_snapshot_active())return ASPECT_RUN_STATE;
+#endif
 #if defined(ASPECT_EXTERNAL_PROCESS)
  if(external_held)return ASPECT_RUN_STATE;
 #endif

@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "package_eligible": false,
+  "component_checks": 642,
+  "quarantine_checks": 16,
+  "integrated_checks": 8108,
+  "legacy_checks": 8819,
+  "child_sha256": "70e385f722a5f44d9e58fa9a2689bf0f18bcab23fca2e1fd03517355d4984be4",
+  "disabled_sha256": "9b1b5f98d6e2a4d64e4154a5d2f97240c1455787e5a7ab5d8d4c1cf37c473fe0",
+  "child_layout": {
+    "passed": true,
+    "near_code_bytes": 64340,
+    "near_code_spare": 1196,
+    "GET_code_bytes": 4079,
+    "editor_code_bytes": 1544,
+    "field_state_bytes": 206,
+    "DGROUP_bytes": 40432,
+    "stack_bytes": 8192,
+    "minimum_DOS_bytes_including_PSP": 135040,
+    "page_rounded_minimum_including_PSP": 135040,
+    "near_entries": 6,
+    "resident_callback_count": 30,
+    "scope": "Link-map segment/callback/CRT order and exact/page MZ minima; environment/EXEC overhead, execution and available conventional memory require separate DOS tests."
+  },
+  "capacity_passed": false,
+  "overlay_ABI_controls": [
+    {
+      "manager": "none",
+      "callbacks": 300,
+      "binary_sha256": "ff77a6fe252b350186f231fdcbb1074ecfd5154a7c49ab02584372774cb62c7b"
+    },
+    {
+      "manager": "standard",
+      "callbacks": 300,
+      "binary_sha256": "508a55209975b66f9428cbbe39b8a021baaf1359d9da9d47a82db6ff8dce1e68"
+    }
+  ],
+  "receipts": {
+    "build/disk-snapshot-component-bound-20261108/result.json": "2748f2ba9d286587c99e99ffbaa8e2dacec1917673356b908185ba1a3035aa32",
+    "build/disk-snapshot-integrated-final-20261108/result.json": "75efeeab4cfeb87dc50f9e3444bb14d0749af11e00ef7766f43c123348d0427b",
+    "build/disk-snapshot-legacy-20261108/result.json": "00a175301a009c0d8c9673bf83efb1e2158244e4dfdf88d878f0872f8d3d4a7e",
+    "build/disk-snapshot-child-final-20261108/manifest.json": "cac41d895994e42a6583289983aac9e8963cef0e24fe599d0001f48c3ea9f5ac",
+    "build/disk-snapshot-disabled-control-20261108/manifest.json": "72f74db11f0843ef2ab5c51b2dcec9e3a9e0336a13f924118caa2ad6f3b1390e",
+    "build/disk-snapshot-capacity-final-20261108/result.json": "c16c984bda9bd175aba703d7c6863798cfb9f6e837183cc8d4f2213b6c6f03fa",
+    "build/connection-dos/disk-snapshot-capacity-final-20261108/screen.txt": "d8632e7fcb2d29acad24c82fd15838dfd0da22894b8eb03ce728f751b4d8a0d2",
+    "build/overlay-plain-v2-20261108/result.json": "8c8ed54f6f18fde0b606fca283eafe0e026d481f4d6164de922d63c44f915167",
+    "build/overlay-standard-v2-20261108/result.json": "d8d82924ba28036d474eb63369f3be11bec0d36cb14e1f9a32d1cadb28018554"
+  },
+  "recorder_sha256": "7c0e1c65188234821013efd87741f0e9952f3b9081d50e5c78faa8ff6b682443",
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "limits": [
+    "Disk snapshots preserve all512 bytes and ownership metadata; no hashes or smaller buffers.",
+    "Full child regresses to fifth-file allocation refusal because extra resident code outweighs the available idle memory.",
+    "No snapshot IO occurs before the failed PROGRAM workload; component success is not full application admission.",
+    "Overlay controls prove small-root far-cdecl A/B/A and resident callbacks only; no application overlay lifetime/unwind/IRQ claim.",
+    "Initial overlay probes incorrectly declared the second function near; fixed plain/standard controls pass. Small-manager variant is not qualified.",
+    "Prepared package, installation and Host-last work order unchanged."
+  ]
+}

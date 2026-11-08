@@ -3450,3 +3450,11 @@ a1044-file cold export rebuilds the artifacts and replays both source cases. The
 preserves all six files but fails at PROGRAM preparation, and live Help under
 the largest parent returns a memory service error before opening. Neither
 capacity nor Help integration is accepted, and no package is promoted.
+
+The optional [exact disk-snapshot experiment](DISK_SNAPSHOT_EXPERIMENT.md) passes
+642 raw-DOS checks,16 uncertain-close checks and8,108 integrated file-adapter
+checks; the old adapter passes8,819 controls and disabled application bytes stay
+exact. The larger experimental child fails earlier during file opening, so it
+is rejected for deployment. A corrected standard-overlay ABI probe and plain
+control each pass300 callbacks with DS=SS; actual application overlay lifetimes,
+unwind and memory admission still require implementation and verification.

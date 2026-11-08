@@ -38,6 +38,7 @@ def main(extension=None):
     if extension and extension.get('program_result_probe'):feature_flags+=['-DASPECT_PROGRAM_RESULT_PROBE']
     if extension and extension.get('snapshot_lease'):feature_flags+=['-DASPECT_SNAPSHOT_LEASE']
     if extension and extension.get('defer_script_buffers'):feature_flags+=['-DASPECT_DEFER_SCRIPT_BUFFERS']
+    if extension and extension.get('disk_script_snapshots'):feature_flags+=['-DASPECT_DISK_SCRIPT_SNAPSHOTS']
     if extension and extension.get('buffer_probe'):feature_flags+=['-DASPECT_SCRIPT_BUFFER_DIAGNOSTIC']
     if extension and extension.get('lease_fault_phase'):feature_flags+=['-DASPECT_LEASE_FAULT_PHASE='+str(extension['lease_fault_phase'])]
     if extension and extension.get('lease_fault_foreign_ds'):feature_flags+=['-DASPECT_LEASE_FAULT_FOREIGN_DS']

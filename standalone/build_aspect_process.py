@@ -7,8 +7,9 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False,defer_help_resource=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False,defer_help_resource=False,disk_script_snapshots=False):
     assert not defer_help_resource or help_resource
+    assert not disk_script_snapshots or (defer_script_buffers and not buffer_probe)
     assert heap_growth_bytes is None or heap_growth_bytes in (128,256,512)
     assert heap_growth_bytes is None or register_handoff
     if snapshot_lease:assert parent_render and notice_input
@@ -134,6 +135,9 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
             subprocess.run(['nasm','-fobj',*(['-DPROGRAM_NOTICE_SPEAKER'] if notice_sound else []),str(asm),'-o',str(obj)],check=True);objects.append(str(obj))
             platform=ROOT/'standalone/notice_fault_platform.c';c_sources.append(platform)
             sources += [probe,asm,platform,ROOT/'standalone/notice_fault.h']
+    if disk_script_snapshots:
+        c_sources.append(ROOT/'src/aspect/buffer_snapshot.c')
+        sources += [ROOT/'src/aspect/buffer_snapshot.c',ROOT/'src/aspect/buffer_snapshot.h']
     if defer_help_resource:
         c_sources.append(ROOT/'src/help/resource_heap.c')
         sources += [ROOT/'src/help/resource_heap.c',ROOT/'src/help/resource_heap.h']
@@ -151,6 +155,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     extension['lease_fault_kind']=lease_fault_kind
     extension['defer_script_buffers']=defer_script_buffers
     extension['buffer_probe']=buffer_probe
+    extension['disk_script_snapshots']=disk_script_snapshots
     extension['alarm_vm']=alarm_vm
     extension['emulate_vm']=emulate_vm
     extension['get_display']=get_display
@@ -169,6 +174,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
         result['experimental_notice_help_binding']=notice_help
         result['experimental_help_resource']=help_resource
         if defer_help_resource:result['experimental_deferred_help_resource']=True
+        if disk_script_snapshots:result['experimental_disk_script_snapshots']=True
         result['notice_PROGRAM_binding_accepted']=False
         path.write_text(json.dumps(result,indent=2)+'\n')
 

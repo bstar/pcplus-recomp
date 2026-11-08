@@ -5,6 +5,13 @@
 #include <io.h>
 #include "runtime.h"
 #include "script_file_runtime.h"
+#ifdef ASPECT_DISK_SCRIPT_SNAPSHOTS
+#define SNAPSHOT_LIVE 6
+#define RETIRED_LIVE 0
+#else
+#define SNAPSHOT_LIVE 12
+#define RETIRED_LIVE 6
+#endif
 unsigned runtime_error;
 void runtime_set_error(unsigned value){if(!runtime_error)runtime_error=value;}
 static unsigned checks,failures,live,bad_free,reject_setvbuf;
@@ -50,7 +57,11 @@ static void close_all(void)
 }
 int main(void)
 {
- unsigned i,j,n,count,status;unsigned descriptors[6];unsigned char previous;
+ unsigned i,j,count;
+#ifndef ASPECT_DISK_SCRIPT_SNAPSHOTS
+ unsigned n,status;
+#endif
+ unsigned descriptors[6];unsigned char previous;
  ck(runtime_script_files_reset()==0);
  fail_after=0;runtime_script_file_last=0;
  ck(runtime_script_file_open("NOFILE.BIN","wb")==0&&live==0&&access("NOFILE.BIN",0)!=0);
@@ -58,21 +69,24 @@ int main(void)
  reject_setvbuf=1;ck(runtime_script_file_open("REJECT.BIN","wb")==0&&live==0);
  ck(runtime_script_files_reset()==0);open_all("wb");
  for(i=0;i<6;++i)for(j=0;j<640;++j)ck(runtime_script_file_putc(i+40,slots[i])!=EOF);
+
+#ifndef ASPECT_DISK_SCRIPT_SNAPSHOTS
  for(n=0;n<6;++n){fail_after=n;count=99;
   status=runtime_script_files_external_begin(descriptors,&count);
   ck(status==ASPECT_RUN_HEAP&&count==0&&live==6&&!runtime_script_files_external_active());
   for(i=0;i<6;++i)ck(runtime_script_file_tell(slots[i])==640L);
  }
+#endif
  fail_after=-1;count=0;ck(runtime_script_files_external_begin(descriptors,&count)==0);
- ck(count==6&&live==12&&runtime_script_files_external_active());
+ ck(count==6&&live==SNAPSHOT_LIVE&&runtime_script_files_external_active());
  ck(runtime_script_files_external_end()==0&&live==6&&!runtime_script_files_external_active());
- ck(runtime_script_files_external_begin(descriptors,&count)==0&&live==12);
+ ck(runtime_script_files_external_begin(descriptors,&count)==0&&live==SNAPSHOT_LIVE);
  previous=blocks[0].pointer[511];blocks[0].pointer[511]^=1;
  ck(runtime_script_files_external_end()==ASPECT_RUN_STATE&&live==6);
  blocks[0].pointer[511]=previous;close_all();
  open_all("rb");
  for(i=0;i<6;++i)for(j=0;j<100;++j)ck(runtime_script_file_getc(slots[i])==i+40);
- ck(runtime_script_files_external_begin(descriptors,&count)==0&&live==12);
+ ck(runtime_script_files_external_begin(descriptors,&count)==0&&live==SNAPSHOT_LIVE);
  ck(runtime_script_files_external_end()==0&&live==6);
  for(i=0;i<6;++i){ck(runtime_script_file_tell(slots[i])==100L);
   for(j=100;j<640;++j)ck(runtime_script_file_getc(slots[i])==i+40);
@@ -81,8 +95,8 @@ int main(void)
  runtime_script_file_last=0;slots[0]=runtime_script_file_open("CLOSE.BIN","wb");
  ck(slots[0]!=0&&live==1);ck(close(slots[0]->descriptor)==0);
  ck(runtime_script_file_close(slots[0])==EOF&&live==0);ck(runtime_script_files_reset()==0);
- open_all("rb");ck(runtime_script_files_external_begin(descriptors,&count)==0&&live==12);
- runtime_script_files_finish();ck(live==6&&runtime_script_file_live==0);
+ open_all("rb");ck(runtime_script_files_external_begin(descriptors,&count)==0&&live==SNAPSHOT_LIVE);
+ runtime_script_files_finish();ck(live==RETIRED_LIVE&&runtime_script_file_live==0);
  ck(runtime_script_files_external_end()==ASPECT_RUN_STATE&&live==0);
  ck(runtime_script_files_reset()==0);runtime_script_files_finish();
  ck(live==0&&bad_free==0&&runtime_error==0);
