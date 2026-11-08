@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Check real host/DOS file IO and linked native ASPECT flow; no originals."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -8,9 +9,15 @@ from build_aspect_file import ROOT,OUT,sha
 
 
 def main():
- subprocess.run(['python3',str(ROOT/'standalone/build_aspect_file.py')],check=True)
+ global OUT
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--owned-window',action='store_true');p.add_argument('--output',type=Path)
+ a=p.parse_args()
+ if a.output is not None:OUT=a.output.resolve()
+ if a.owned_window:assert a.output is not None and not OUT.exists()
+ subprocess.run(['python3',str(ROOT/'standalone/build_aspect_file.py'),*(['--owned-window'] if a.owned_window else []),'--output',str(OUT)],check=True)
  host=OUT/'host';host.mkdir(exist_ok=True)
  subprocess.run(['gcc','-std=c89','-Wall','-Wextra','-Werror','-pedantic','-O2',
+  *(['-DASPECT_FILE_OWNED_WINDOW'] if a.owned_window else []),
   '-I'+str(ROOT/'src/aspect'),str(ROOT/'src/aspect/file_io.c'),
   str(ROOT/'standalone/aspect_file_fixture.c'),'-o',str(host/'file-check')],check=True)
  for name in ('DONE.TXT','PASS.TXT','FAIL.TXT'):(OUT/name).unlink(missing_ok=True)
@@ -45,7 +52,7 @@ exit
  dos_summary=(OUT/'DONE.TXT').read_text().strip()
  assert (OUT/'PASS.TXT').exists() and not (OUT/'FAIL.TXT').exists(),(OUT/'RESULT.TXT').read_text()
  assert dos_summary.endswith('0 failures'),dos_summary
- report=dict(passed=True,host_summary=host_summary,DOS_summary=dos_summary,
+ report=dict(passed=True,owned_read_window=a.owned_window,host_summary=host_summary,DOS_summary=dos_summary,
   binary_sha256=sha(OUT/'FILE.EXE'),manifest_sha256=sha(OUT/'manifest.json'),
   check_sha256=sha(Path(__file__).resolve()),original_inputs=[],
   fixture_bytes=72016,host_fixture_sha256=sha(host/'FLOW.DAT'),DOS_fixture_sha256=sha(OUT/'FLOW.DAT'),

@@ -21,7 +21,7 @@ def main(extension=None):
         feature_flags+=['-DASPECT_NEAR_GLOBALS']
     if get_vm:
         assert extension.get('get_policy') and extension.get('get_display') and extension.get('alarm_vm')
-        feature_flags+=['-DASPECT_GET_VM','-DASPECT_GET_SERVICE','-DASPECT_GET_CONTEXT','-DASPECT_GET_CONFIRM','-DASPECT_GET_COMMAND','-DASPECT_GET_BANK']
+        feature_flags+=['-DASPECT_GET_VM','-DASPECT_GET_SERVICE','-DASPECT_GET_CONTEXT','-DASPECT_GET_CONFIRM','-DASPECT_GET_COMMAND','-DASPECT_GET_BANK','-DASPECT_FILE_OWNED_WINDOW']
     if extension and extension.get('emulate_vm'):feature_flags+=['-DASPECT_EMULATE_VM']
     if extension and extension.get('alarm_vm'):feature_flags+=['-DASPECT_ALARM_VM','-DASPECT_ALARM_SERVICE','-DASPECT_DEFER_NUMERIC_BANKS']
     if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
@@ -151,6 +151,7 @@ def main(extension=None):
                   experimental_get_display=bool(extension and extension.get('get_display')),
                   experimental_get_policy=bool(extension and extension.get('get_policy')),
                   experimental_get_VM=get_vm,
+                  experimental_owned_read_window=get_vm,
                   experimental_near_globals=bool(extension and extension.get('near_globals')),
                   experimental_emulate_VM=bool(extension and extension.get('emulate_vm')),
                   diagnostic_lease_fault_phase=extension.get('lease_fault_phase') or 0 if extension else 0,

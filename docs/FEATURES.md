@@ -64,9 +64,10 @@ field/keyboard/serial services. Six actual DOS parent/child cases cover string,
 integer/long, cancellation and typed refusals; standalone8086 tests retain128
 strings and80-character values with mixed numeric/file ownership. Both compilers
 still refuse GET. The installed-feature-set parent and heavier keymap candidate
-have separate capacity results: ordinary fields pass with the former, but its
-FOPEN→GET allocation fails before GET; the heavier parent cannot start the child
-normally. No package or physical promotion; F13 and memory/compiler gates remain
+have separate capacity results: ordinary fields and FOPEN→GET now pass with the former after removing
+duplicate ASX stdio buffering; the heavier parent cannot start the child
+normally. [Read-window validation](ASPECT_READ_WINDOW.md) covers113 host and218
+DOS file checks and corrects the earlier runtime7 classification. No package or physical promotion; F13 and memory/compiler gates remain
 open. See the linked receipt for exact binaries, sources and cold reproduction.
 
 [Actual Key Mapping Help](KEYMAP_HELP.md) replaces the mislabeled Alt-Z version

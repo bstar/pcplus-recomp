@@ -25,9 +25,9 @@ turns off code packing. BEGDATA ordering is essential: omitting it placed the
 initialized null region after the stack and inflated the loaded image. The
 builder now checks all public bridge, implementation and callback segments,
 abort targets, field storage, CRT ordering and the unchanged8192-byte stack.
-The audited layout is65389 resident code bytes (147 spare),4079 GET code bytes,
+The current audited layout is65405 resident code bytes (131 spare),4079 GET code bytes,
 1544 pure editor bytes and44096 DGROUP bytes. The MZ minimum including PSP is
-139152 bytes; this is not the total dynamic-memory requirement.
+139168 bytes; this is not the total dynamic-memory requirement.
 
 `near_globals=True` is a separate opt-in allocator experiment.81-byte global
 strings first receive stable far pointers into ordinary near heap blocks with
@@ -47,7 +47,9 @@ the position instead of applying the viewport origin twice.
 
 ## Execution and limits
 
-[The validation receipt](validation/aspect-get-vm.json) binds current evidence.
+[The original checkpoint receipt](validation/aspect-get-vm.json) remains historical.
+[The owned read-window receipt](validation/aspect-get-owned-window.json) binds
+the current build and corrects the earlier stream-failure classification.
 The full DOS parent/child matrix covers string input, integer input, long input,
 confirmed cancellation, floating refusal and truncated operands. BIOS keys are
 injected only after actual field admission. A passive DOS observer records child
@@ -65,16 +67,23 @@ Standalone full-interpreter DOS8086 tests cover healthy execution,128 strings,
 80-character values, mixed integer/long/string/file ownership, divide recovery,
 unattached GET refusal and missing-file errors.
 
-Two capacity failures remain explicit. The larger keymap candidate cannot start
-this GET child normally with the passive observer present. The installed-profile
-pair can edit fields, but opening an additional real owned stream before GET
-returns heap error7/ENOMEM5 before field admission. Reducing heap growth from512
-to128 bytes does not cure it. Neither failure is a successful scratch-lifetime or
-application-capacity result. The attempted FOPEN→GET test remains available as
-`--stream-probe`; successful standalone file operations do not close that gate.
+The larger keymap candidate still cannot start this GET child normally with
+the passive observer present. The installed-profile pair now passes the real
+FOPEN→GET sequence, retaining its stream and exact `BEFORE|LoC42` bytes. The
+[owned read-window change](ASPECT_READ_WINDOW.md) removes duplicate ASX stdio
+buffering while retaining the native256-byte window and full512-byte buffers
+for each script stream. It is enabled only in the opt-in GET build.
 
-Pending work includes full attached-memory admission, shared FOPEN→GET scratch
-lifetime, repeated/EXECUTE GET, actual native WHEN action composition, optional
+The preceding report incorrectly called runtime7 a heap error. It is an operand
+error raised by the later FPUTS after FOPEN failed. A passive exit probe now
+shows that the first failure was the512-byte script-buffer allocation: no
+backend open attempt occurred, and subsequent lookup raised native error4.
+With duplicate buffering removed, the backend open count is1, the stream
+retires normally, and native/runtime errors are0. The old failed reports stay
+historical; neither errno alone nor the old error label establishes a cause.
+
+Pending work includes larger-parent and full variable/stream co-residency admission,
+repeated/EXECUTE GET, actual native WHEN action composition, optional
 width/masking/origin policies in the full VM, floating support, both compiler
 frontends, package admission and connected physical acceptance. Existing
 component tests retain their narrower scope. No physical FTP, card, SIP, modem

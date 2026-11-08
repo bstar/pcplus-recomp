@@ -101,6 +101,14 @@ unsigned aspect_file_open(aspect_file *file,const char *path)
     open_probe(path,handle,errno);
 #endif
     if(!handle){file->status=ASPECT_FILE_IO;return ASPECT_FILE_IO;}
+#if defined(ASPECT_FILE_OWNED_WINDOW)
+    /* The native reader already owns its256-byte read-ahead window. Avoid a
+     * second stdio heap buffer; fread still fills that window in one request.
+     * Install before the first read, and never publish a failed stream. */
+    if(setvbuf(handle,0,_IONBF,0)){
+        fclose(handle);file->status=ASPECT_FILE_IO;return ASPECT_FILE_IO;
+    }
+#endif
     file->handle=handle;file->native.flags=0;file->status=ASPECT_FILE_OK;
     reset_window(file);return ASPECT_FILE_OK;
 }

@@ -40,6 +40,7 @@ def main():
  p.add_argument('--cpu',choices=('8086','386'),default='386')
  p.add_argument('--disabled-control',action='store_true',help='Compare GET-disabled child: expect explicit unsupported after GETREADY')
  p.add_argument('--stream-probe',action='store_true',help='Keep a real owned FOPEN stream across GET')
+ p.add_argument('--allocation-probe',action='store_true',help='Passively capture file/global/CRT heap metadata at child exit')
  p.add_argument('--watchdog',action='store_true',help='Write a passive late GET state/video sample from the owned DOS test')
  a=p.parse_args();global STREAM_PROBE;STREAM_PROBE=a.stream_probe
  parent=a.parent_dir.resolve();child=a.child_dir.resolve();out=a.output.resolve()
@@ -78,6 +79,7 @@ def main():
  scope=dict(renderer.__dict__);scope.update(OUT=out.parent,definitions=lambda:rows,get_compile=compiled,
   prm=settings,directory=lambda:renderer.directory(profile=4),
   PARENT_BINARY=parent/'TERMINAL.EXE',CHILD_BINARY=child/'ASPECT.EXE')
+ allocation_fields=[('_runtime_script_file_open_calls',0),('_runtime_script_file_live',0),('_runtime_script_file_last',0),('_runtime_native_error_code',0),('_runtime_steps',0),('_runtime_live',0),('_runtime_alloc_calls',0),('___nheapbeg',0),('__curbrk',0),('__STACKLOW',0),('__STACKTOP',0)]
  active_case=[None]
  def adapter():
   path=ROOT/'standalone/test_connection_dos.py';peer=path.read_text()
@@ -103,6 +105,11 @@ def main():
    probe=' mov [cs:exit_code],ax\n mov ah,0x62\n pushf\n call far [cs:old21]\n mov ax,bx\n add ax,'+str(int(group[1],16)+16)+'\n mov es,ax\n mov [cs:get_child_ds],ax\n'
    for label,symbol,delta in [('errno','_errno',0),('error','_runtime_error',0),('opcode','_runtime_last_opcode',0),('compiles','_runtime_compiler_calls',0),('file_status','_runtime_file',14)]:
     probe+=' mov ax,[es:'+str(child_symbols[symbol]+delta)+']\n mov [cs:get_child_'+label+'],ax\n'
+   if a.allocation_probe:
+    marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
+    observer_source=observer_source.replace(marker,'get_allocation_probe: times '+str(len(allocation_fields))+' dw 0\n'+marker)
+    for index,(symbol,delta) in enumerate(allocation_fields):
+     probe+=' mov ax,[es:'+str(child_symbols[symbol]+delta)+']\n mov [cs:get_allocation_probe+'+str(index*2)+'],ax\n'
    observer_source=observer_source.replace(old,probe+' push cs')
    old=' mov di,before_history\n call copy_history\n restore';assert observer_source.count(old)==1
    new=' mov di,before_history\n call copy_history\n mov ax,cs\n mov [cs:get_observer_segment],ax\n mov ax,0x40\n mov es,ax\n mov ax,[es:0x13]\n mov [cs:get_conventional_kb],ax\n mov ah,0x48\n mov bx,0xffff\n pushf\n call far [cs:old21]\n mov [cs:get_largest_free],bx\n restore'
@@ -328,6 +335,8 @@ get_watch_data: dw 0x4757,2
   result['observer_sha256']=sha(folder/'RENDER.COM')
   result['observer_source_sha256']=sha(folder/'observer.asm')
   result['memory_before_EXEC']=dict(largest_free_bytes=free*16,observer_segment=segment,conventional_kb=kb)
+  if a.allocation_probe:
+   result['allocation_probe']=dict(zip([n for n,d in allocation_fields],struct.unpack('<'+str(len(allocation_fields))+'H',(folder/'RENDER.BIN').read_bytes()[-20-2*len(allocation_fields):-20])))
   result['child_exit_probe']=dict(DS=child_ds,errno=child_errno,error=child_error,opcode=child_opcode,compiler_calls=child_compiles,file_status=child_file_status)
   if a.cpu=='386':result['checks']['passive_observer_in_UMB']=segment>=0xa000
   result['checks']['GET_typed_exit']=result['passive_observer_header'][6]==case['expected_exit']
@@ -339,7 +348,7 @@ get_watch_data: dw 0x4757,2
   else:result['checks']['no_post_GET_execution']=b'Synth42\r' not in wire
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=False,emulated_cpu=a.cpu,
+ report.update(passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=False,emulated_cpu=a.cpu,
   checker_sha256=sha(__file__),scope=__doc__+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  print('GET full VM:',len(report['cases']),'cases',report['passed'])

@@ -1,0 +1,232 @@
+{
+  "checkpoint": "Retain owned ASX read window and remove duplicate stdio buffering",
+  "original_inputs": [],
+  "root_cause": "Passive old-child probe: script backend open_calls0; the512-byte _nmalloc before that counter failed. Subsequent FPUTS native4 maps to operand7. The earlier heap7/FOPEN65 interpretation was wrong: heap8; opcode65=FPUTS.",
+  "fix": "Opt-in GET ASPECT_FILE_OWNED_WINDOW installs _IONBF before first ASX read; native256-byte read window remains; full512-byte script buffers and all capacities unchanged.",
+  "default_binary_sha256": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+  "actual_parent_child_stream_GET_verified": true,
+  "full_parent_CPU": "DOS386/UMB observer,640KB conventional",
+  "file_and_CLI_CPU": "DOS8086",
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "compiler_GET_enabled": false,
+  "sources": {
+    "src/aspect/file_io.c": "a0086c376e8dca06b16a895a0c75dc71a5b16389b55fca79afeff7100e517bc6",
+    "src/aspect/file_io.h": "a43126acae21c3daa15eb45e5aa92cb6c0bbde5c31b57b90dc552f9361549c7a",
+    "standalone/build_aspect_runner.py": "07e4182e856be6ddc4b997f3a55043d26e92315cafe325b43e3aa80a2d834f29",
+    "standalone/build_aspect_file.py": "1f4b9ea4c922ad87019c1cedf7986e71805f444566659a94eb4cf3f38ea16ff0",
+    "standalone/check_aspect_file.py": "686ac99ef16269a893ae9e00c1d5952a877762046eeeb8d80966074e93c94b90",
+    "standalone/prove_get_vm_source.py": "1fd5d1fc923729e90386d2e4bc26d028679dca0b444a926a41c576dcfe819f95",
+    "standalone/test_aspect_get_vm_dos.py": "fd418aa147127625b629bf1c5ac5b9958d4040f4c2b4991aa4ee66b09f3eaaf8",
+    "docs/ASPECT_READ_WINDOW.md": "a94f5d9b851251816b0709f7c5b50a4a4b2524c2b51a91a6a86eded2217a0df1",
+    "docs/ASPECT_GET_VM.md": "73d9949dff70754863483cbe7b4c57faabcd633718c4ade9ccbb22d166a266cd",
+    "docs/FEATURES.md": "f76241aa38293493303838b9c61df1859a590d91c2ebcc0e5e5782db0f125af6"
+  },
+  "evidence": {
+    "build/get-file-alloc-probe-20261107/checks.json": {
+      "sha256": "7cbf238e8d22d433299f7f04b807e5e87b0c9bbae214f45ea2a465fd37c10502",
+      "passed": false,
+      "cases": 1,
+      "exit_probes": [
+        {
+          "case": "get-vm-string",
+          "memory_before_EXEC": {
+            "largest_free_bytes": 141568,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38125,
+            "errno": 5,
+            "error": 7,
+            "opcode": 65,
+            "compiler_calls": 0,
+            "file_status": 0
+          },
+          "allocation_probe": {
+            "_runtime_script_file_open_calls": 0,
+            "_runtime_script_file_live": 0,
+            "_runtime_script_file_last": 0,
+            "_runtime_native_error_code": 4,
+            "_runtime_steps": 5,
+            "_runtime_live": 0,
+            "_runtime_alloc_calls": 1,
+            "___nheapbeg": 44096,
+            "__curbrk": 45120,
+            "__STACKLOW": 35955,
+            "__STACKTOP": 44096
+          }
+        }
+      ]
+    },
+    "build/get-owned-window-child-20261107/manifest.json": {
+      "sha256": "6b569671e920281dde626d58406c9feed3765f9300e08edb234148d1b166e803",
+      "binary_sha256": "77c2d4c789f72c2f643dd9a91d4de379f093294cdb7edd2f4c38012ee9da727c",
+      "GET_bank_layout": {
+        "passed": true,
+        "near_code_bytes": 65405,
+        "near_code_spare": 131,
+        "GET_code_bytes": 4079,
+        "editor_code_bytes": 1544,
+        "field_state_bytes": 206,
+        "DGROUP_bytes": 44096,
+        "stack_bytes": 8192,
+        "minimum_DOS_bytes_including_PSP": 139168,
+        "near_entries": 6,
+        "resident_callback_count": 30,
+        "scope": "Link-map segment/callback/CRT order admission; execution and available conventional memory require separate DOS tests."
+      }
+    },
+    "build/get-owned-window-stream-20261107/checks.json": {
+      "sha256": "14e28dddc1aee58a9e975c17727a7ae9a1735e6a89c0043f124f392e313de289",
+      "passed": true,
+      "cases": 1,
+      "exit_probes": [
+        {
+          "case": "get-vm-string",
+          "memory_before_EXEC": {
+            "largest_free_bytes": 141568,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38126,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 0,
+            "file_status": 0
+          },
+          "allocation_probe": {
+            "_runtime_script_file_open_calls": 1,
+            "_runtime_script_file_live": 0,
+            "_runtime_script_file_last": 0,
+            "_runtime_native_error_code": 0,
+            "_runtime_steps": 14,
+            "_runtime_live": 0,
+            "_runtime_alloc_calls": 1,
+            "___nheapbeg": 44096,
+            "__curbrk": 45120,
+            "__STACKLOW": 35955,
+            "__STACKTOP": 44096
+          }
+        }
+      ]
+    },
+    "build/get-owned-window-matrix-20261107/checks.json": {
+      "sha256": "3b6f313df6c558d562411c4353d3b4fdab941d11cda245cf5c7861426edeb3c0",
+      "passed": true,
+      "cases": 6,
+      "exit_probes": [
+        {
+          "case": "get-vm-string",
+          "memory_before_EXEC": {
+            "largest_free_bytes": 141568,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38126,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 0,
+            "file_status": 0
+          },
+          "allocation_probe": {
+            "_runtime_script_file_open_calls": 1,
+            "_runtime_script_file_live": 0,
+            "_runtime_script_file_last": 0,
+            "_runtime_native_error_code": 0,
+            "_runtime_steps": 14,
+            "_runtime_live": 0,
+            "_runtime_alloc_calls": 1,
+            "___nheapbeg": 44096,
+            "__curbrk": 45120,
+            "__STACKLOW": 35955,
+            "__STACKTOP": 44096
+          }
+        }
+      ]
+    },
+    "build/get-owned-window-cli-20261107/result.json": {
+      "sha256": "79cea8ffb54a5fce6fa427dcad574d375c4de3a5767bdc55783752a2e828404a",
+      "passed": true,
+      "child_sha256": "77c2d4c789f72c2f643dd9a91d4de379f093294cdb7edd2f4c38012ee9da727c",
+      "cases": 7,
+      "exit_probes": []
+    },
+    "build/get-owned-window-file-20261107/checks.json": {
+      "sha256": "efd107a88489d76e0baf3637b5b25cb1d7c180426e3648cfbc74498d50609c58",
+      "binary_sha256": "16f2b5e6cc5ddf590984a17ddfd4aa04632bc26c71108204a2999b911e665b70",
+      "passed": true,
+      "host_summary": "ASPECT_FILE 113 checks 0 failures",
+      "DOS_summary": "ASPECT_FILE 218 checks 0 failures",
+      "fixture_bytes": 72016,
+      "host_fixture_sha256": "53d5f77fc5300e3f3a28e74d744ada8683b6bffbc9c05c0e8d2eb524c5c60875",
+      "DOS_fixture_sha256": "53d5f77fc5300e3f3a28e74d744ada8683b6bffbc9c05c0e8d2eb524c5c60875",
+      "owned_read_window": true
+    },
+    "build/get-owned-window-file-20261107/manifest.json": {
+      "sha256": "fb6a2d6678e0b7a782f5ac643aeb8eabc59792cc1bb725b0fba040b38cf260d7",
+      "binary_sha256": "16f2b5e6cc5ddf590984a17ddfd4aa04632bc26c71108204a2999b911e665b70",
+      "owned_read_window": true
+    },
+    "build/get-owned-window-default-child-20261107/manifest.json": {
+      "sha256": "66762b8177a2f8eeba46144fbdc6a1625a4353d8d46e7844844a8866f2e7ee07",
+      "binary_sha256": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066"
+    },
+    "build/get-owned-window-heavy-20261107/checks.json": {
+      "sha256": "a0edacd7031fafd8f0e1b9ad791a47b42774871a16660e3c85359873477bd951",
+      "passed": false,
+      "cases": 1,
+      "exit_probes": [
+        {
+          "case": "get-vm-string",
+          "memory_before_EXEC": {
+            "largest_free_bytes": 140352,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 0,
+            "errno": 0,
+            "error": 0,
+            "opcode": 0,
+            "compiler_calls": 0,
+            "file_status": 0
+          },
+          "allocation_probe": {
+            "_runtime_script_file_open_calls": 0,
+            "_runtime_script_file_live": 0,
+            "_runtime_script_file_last": 0,
+            "_runtime_native_error_code": 0,
+            "_runtime_steps": 0,
+            "_runtime_live": 0,
+            "_runtime_alloc_calls": 0,
+            "___nheapbeg": 0,
+            "__curbrk": 0,
+            "__STACKLOW": 0,
+            "__STACKTOP": 0
+          }
+        }
+      ]
+    },
+    "build/get-owned-window-source-final-20261107/result.json": {
+      "passed": true,
+      "source_count": 1010,
+      "parent_sha256": "69d9b25fc58c7e2186e892e07f4ac38c5c95c5bfa23703f9e4cc56150dce19de",
+      "child_sha256": "77c2d4c789f72c2f643dd9a91d4de379f093294cdb7edd2f4c38012ee9da727c",
+      "DOS_cases": 6,
+      "CLI_cases": 7,
+      "sha256": "3bf8ab430a2edd161bc08629becf481171ed9f129c3f1fd54b7fe44464a63400"
+    }
+  },
+  "remaining": [
+    "Heavier keymap candidate still DOS EXEC8; full attached variable/stream co-residency and ordinary8086 memory admission remain open.",
+    "Repeated/EXECUTE GET, actual WHEN actions and optional field policy full-VM cases.",
+    "Near allocator exhaustion/far fallback, original string-filter recovery, sibling modes, FLOAT.RTE and both compiler frontends.",
+    "Whole-language/application parity, package admission and connected physical acceptance."
+  ]
+}
