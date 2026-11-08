@@ -1,5 +1,9 @@
 # Full-parent compiler refusal checkpoint
 
+The next [restore-recovery checkpoint](ASPECT_COMPILER_RECOVERY.md) exercises
+full-parent grow/read failure, BIOS quarantine and retry, and fixes display
+restoration after repair. The earlier refusal results below retain their scope.
+
 The capability23 bridge now returns the correct interpreter I/O result when its
 module cannot load. Eight full-parent failure cases cover startup and source
 EXECUTE with a missing, corrupt or truncated kernel, and a source syntax error.

@@ -28,7 +28,10 @@ nonce: dw 0
 bridge_owner: dw 0
 bridge_active: dw 0
 extern terminal_program_active,terminal_program_kind,terminal_irq_vector
-extern _compiler_lease_begin,_compiler_lease_end
+extern _compiler_lease_begin,_compiler_lease_end,redisplay_snapshot
+; First8006 snapshot bytes are compiler-owned while kind4 holds the arena.
+; The kernel starts at16384, so this frame remains below the retained cut.
+%define screen_meta redisplay_snapshot+8000
 %endif
 %macro entry 1
 global _compiler_overlay_%1
@@ -60,6 +63,8 @@ leave:
  pop bx
  pop bp
  retf
+%ifndef TERMINAL_COMPILER_LEASE_BRIDGE
+; Startup diagnostics are a separate build; live admission keeps its own guards.
 context:
  call context_common
  or ax,ax
@@ -76,6 +81,7 @@ context:
  ret
 .bad:xor ax,ax
  ret
+%endif
 ; Retained parent stack/data and MCB are valid even while the later tail is lent.
 context_common:
  mov ax,ds
@@ -113,9 +119,11 @@ context_common:
  ret
 .bad:xor ax,ax
  ret
+%ifndef TERMINAL_COMPILER_LEASE_BRIDGE
 entry load
  call load_module
  jmp leave
+%endif
 load_module:
  call start
  cmp ax,1
@@ -138,9 +146,11 @@ load_module:
 .ready:
  xor ax,ax
 .return:ret
+%ifndef TERMINAL_COMPILER_LEASE_BRIDGE
 entry init
  call init_module
  jmp leave
+%endif
 init_module:
  call far _compiler_overlay_phase
  cmp ax,2
@@ -158,6 +168,7 @@ init_module:
  call far _compiler_lease_init
  add sp,6
  ret
+%ifndef TERMINAL_COMPILER_LEASE_BRIDGE
 entry info
  call far _compiler_overlay_phase
  cmp ax,2
@@ -190,6 +201,7 @@ entry release
 unavailable:
  mov ax,1
  jmp leave
+%endif
 
 ; All shared-runtime fields are explicitly far, in CONFIG's segment.
 config_segment:
@@ -401,6 +413,9 @@ _compiler_overlay_bridge:
  jne .identity
  or ax,ax
  jnz .begin_failed
+ call capture_screen
+ or ax,ax
+ jnz .screen_failed
  push word [cs:bridge_owner]
  push word [cs:nonce]
  call far _compiler_lease_begin
@@ -409,6 +424,10 @@ _compiler_overlay_bridge:
  jnz .begin_failed
  mov word [cs:bridge_active],1
  xor ax,ax
+ jmp leave
+.screen_failed:
+ call release_raw
+ mov ax,0xe003
  jmp leave
 .begin_failed:
  call release_raw ; Begin refusal never lent memory; stale temp cleanup may fail.
@@ -433,6 +452,11 @@ _compiler_overlay_bridge:
  cmp ax,1
  jne .identity ; No safe-retirement tag while memory is invalid.
  mov word [cs:bridge_active],0
+ ; No video/frame access until the kernel attests valid memory. Compiler and
+ ; BIOS recovery output are temporary; restore the exact captured display.
+ push si
+ call restore_screen
+ pop si
  call release_raw
  xor ax,ax
  or si,si
@@ -445,6 +469,85 @@ _compiler_overlay_bridge:
 .identity:
  mov ax,10
  jmp leave
+; No CRT, allocation, callbacks or data borrowing across this video-DS window.
+; Only verified mode3/page0/80-column25/28/43/50-row frames are captured.
+capture_screen:
+ push ds
+ mov ax,0x40
+ mov es,ax
+ cmp byte [es:0x49],3
+ jne .bad
+ cmp word [es:0x4a],80
+ jne .bad
+ cmp byte [es:0x62],0
+ jne .bad
+ xor ax,ax
+ mov al,[es:0x84]
+ inc ax
+ cmp ax,1
+ jne .rows
+ mov ax,25 ; Older BIOS has no last-row byte.
+.rows:
+ cmp ax,25
+ je .size
+ cmp ax,28
+ je .size
+ cmp ax,43
+ je .size
+ cmp ax,50
+ jne .bad
+.size:
+ mov cx,80
+ mul cx
+ push ax
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ mov ax,seg redisplay_snapshot
+ mov es,ax
+ mov di,screen_meta
+ pop ax
+ cld
+ stosw
+ mov ax,cx
+ stosw
+ mov ax,dx
+ stosw
+ mov cx,[es:screen_meta]
+ mov di,redisplay_snapshot
+ mov ax,0xb800
+ mov ds,ax
+ xor si,si
+ rep movsw
+ pop ds
+ xor ax,ax
+ ret
+.bad:
+ pop ds
+ mov ax,3
+ ret
+restore_screen:
+ push ds
+ mov ax,seg redisplay_snapshot
+ mov ds,ax
+ mov cx,[screen_meta]
+ push word [screen_meta+4]
+ push word [screen_meta+2]
+ mov si,redisplay_snapshot
+ mov ax,0xb800
+ mov es,ax
+ xor di,di
+ cld
+ rep movsw
+ pop cx
+ mov ah,1
+ int 0x10
+ pop dx
+ xor bh,bh
+ mov ah,2
+ int 0x10
+ pop ds
+ ret
 ; Unexpected child termination during an invalid loan must never repaint/free
 ; through the missing tail. This deliberate fail-stop is not ordinary recovery.
 fatal_parent:

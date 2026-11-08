@@ -132,12 +132,21 @@ def source_fault_definitions():
    rows.append(dict(base,name=base['name']+'-'+fault,source_fault=fault,expected_exit=5))
  return rows
 
+def source_recovery_definitions():
+ rows=[]
+ for kind in ('grow','read'):
+  for base in source_memory_definitions():
+   rows.append(dict(base,name=base['name']+'-recover-'+kind,source_lease=True,source_recovery=kind,
+    success=True,expected_exit=0,field_BIOS_words=definitions()[0]['field_BIOS_words'],expect_GET_boundary=True))
+ return rows
+
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--parent-dir',required=True,type=Path);p.add_argument('--child-dir',required=True,type=Path)
  p.add_argument('--output',required=True,type=Path);p.add_argument('--case',action='append')
  p.add_argument('--cpu',choices=('8086','386'),default='386')
  p.add_argument('--source-lease-cases',action='store_true',help='Require successful startup/EXECUTE source compilation through the parent lease')
+ p.add_argument('--source-lease-recovery-cases',action='store_true',help='Inject one restore grow/read failure, observe BIOS quarantine, then retry')
  p.add_argument('--source-lease-fault-cases',action='store_true',help='Require safe startup/EXECUTE return after module refusal or compiler syntax error')
  p.add_argument('--source-memory-cases',action='store_true',help='Diagnose startup and EXECUTE source compilation under the complete parent')
  p.add_argument('--policy-cases',action='store_true',help='Run default/boundary widths and bottom-row shown/hidden status policy')
@@ -161,13 +170,14 @@ def main():
  child_map=(child/'ASPECT.map').read_text();group=re.search(r'DGROUP\s+([0-9a-f]+):([0-9a-f]+)',child_map,re.I)
  child_base=int(group[1],16)*16+int(group[2],16)
  child_symbols={n:int(s,16)*16+int(o,16)-child_base for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)\s*$',child_map,re.M|re.I)}
- assert sum((a.source_lease_fault_cases,a.source_lease_cases,a.source_memory_cases,a.policy_cases,a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
- rows=source_fault_definitions() if a.source_lease_fault_cases else source_memory_definitions() if a.source_memory_cases or a.source_lease_cases else policy_definitions() if a.policy_cases else storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
+ assert sum((a.source_lease_recovery_cases,a.source_lease_fault_cases,a.source_lease_cases,a.source_memory_cases,a.policy_cases,a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
+ rows=source_recovery_definitions() if a.source_lease_recovery_cases else source_fault_definitions() if a.source_lease_fault_cases else source_memory_definitions() if a.source_memory_cases or a.source_lease_cases else policy_definitions() if a.policy_cases else storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
  if a.source_lease_cases:
   for row in rows:
    row.update(source_lease=True,success=True,expected_exit=0,field_BIOS_words=definitions()[0]['field_BIOS_words'],expect_GET_boundary=True)
- if a.source_lease_fault_cases or a.source_lease_cases or a.source_memory_cases or a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
+ if a.source_lease_recovery_cases or a.source_lease_fault_cases or a.source_lease_cases or a.source_memory_cases or a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
  if a.source_lease_fault_cases:assert a.allocation_probe
+ if a.source_lease_recovery_cases:assert a.allocation_probe and a.watchdog
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
@@ -234,7 +244,7 @@ def main():
   prm=settings,directory=lambda:renderer.directory(profile=4),
   PARENT_BINARY=parent/'TERMINAL.EXE',CHILD_BINARY=child/'ASPECT.EXE')
  allocation_fields=[('_runtime_script_file_open_calls',0),('_runtime_script_file_live',0),('_runtime_script_file_last',0),('_runtime_native_error_code',0),('_runtime_steps',0),('_runtime_live',0),('_runtime_alloc_calls',0),('___nheapbeg',0),('__curbrk',0),('__STACKLOW',0),('__STACKTOP',0)]
- if a.source_memory_cases or a.source_lease_cases or a.source_lease_fault_cases:allocation_fields += [('_runtime_compiler_exit',0),('_runtime_compiler_dos_error',0)]
+ if a.source_memory_cases or a.source_lease_cases or a.source_lease_fault_cases or a.source_lease_recovery_cases:allocation_fields += [('_runtime_compiler_exit',0),('_runtime_compiler_dos_error',0)]
  allocation_names=[n for n,d in allocation_fields]+['PSP_allocation_paragraphs','environment_paragraphs','environment_string_bytes']
  active_case=[None]
  def adapter():
@@ -275,6 +285,12 @@ def main():
    if active_case[0] and active_case[0].get('source_memory'):
     marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
     observer_source=observer_source.replace(marker,'get_compiler_largest: dw 0\nget_compiler_attempts: dw 0\nget_startup_prompt_seen: dw 0\n'+marker)
+    # A nested compiler exits while the parent tail is lent. Count its exit,
+    # but never inspect the suspended parent's history or pretend its PSP is
+    # the interpreter's. Only the immediate ASPECT child gets those probes.
+    marker=' mov al,[ss:bp+16]\n xor ah,ah\n mov [cs:exit_code],ax';assert observer_source.count(marker)==1
+    guarded=' mov ah,0x51\n pushf\n call far [cs:old21]\n mov es,bx\n mov ax,[cs:parent_psp]\n cmp [es:0x16],ax\n je .direct_child_exit\n inc word [cs:child_exits]\n jmp .chain\n.direct_child_exit:\n'+marker
+    observer_source=observer_source.replace(marker,guarded)
     marker='handler:\n save\n cld\n mov bp,sp';assert observer_source.count(marker)==1
     observer_source=observer_source.replace(marker,'handler:\n save\n cld\n save\n cmp ax,0x4b00\n jne .compiler_probe_done\n cmp word [cs:exec_seen],1\n jne .compiler_probe_done\n cmp word [cs:exec_done],0\n jne .compiler_probe_done\n inc word [cs:get_compiler_attempts]\n mov ah,0x48\n mov bx,0xffff\n pushf\n call far [cs:old21]\n mov [cs:get_compiler_largest],bx\n.compiler_probe_done:\n restore\n mov bp,sp')
    if active_case[0] and 'policy_width' in active_case[0]:
@@ -570,6 +586,11 @@ get_watch_data: dw 0x4757,2
    old=' mov dx,handler\n mov ax,0x2521';assert observer_source.count(old)==1
    new=' mov ax,[0x2c]\n or ax,ax\n jz .get_no_environment\n mov es,ax\n mov ah,0x49\n int 0x21\n jc failed\n mov word [0x2c],0\n.get_no_environment:\n mov dx,handler\n mov ax,0x2521'
    observer_source=observer_source.replace(old,new)
+   if active_case[0] and active_case[0].get('source_recovery'):
+    from compiler_bridge_recovery_observer import attach
+    observer_source=attach(observer_source,kind=active_case[0]['source_recovery'],
+     parent=json.loads((parent/'manifest.json').read_text()),listing=(parent/'terminal.map').read_text(),
+     offsets=offsets,child_symbols=child_symbols,child_group=int(group[1],16))
    temporary=dict(renderer.__dict__);exec(compile(observer_source,__file__,'exec'),temporary)
    return temporary['observer'](offsets)
   finally:renderer.OUT=previous
@@ -647,6 +668,25 @@ get_watch_data: dw 0x4757,2
    result['checks']['compiler_log_retired']=not list(folder.glob('LPC*.LOG'))
    if case['source_memory']=='execute':result['checks']['source_failure_stream_flushed']=(folder/'OWNED.TXT').read_bytes()==b'BEFORE|'
    if a.allocation_probe and not case.get('source_lease') and not case.get('source_fault'):result['checks']['compiler_native_heap_error']=result['allocation_probe']['_runtime_compiler_exit']==65535 and result['allocation_probe']['_runtime_compiler_dos_error']==5
+  if case.get('source_recovery'):
+   from compiler_bridge_recovery_observer import FIELDS,PREFIX,WORDS
+   end=-20-2*len(allocation_names)-6
+   words=struct.unpack('<'+str(WORDS)+'H',(folder/'RENDER.BIN').read_bytes()[end-2*WORDS:end])
+   recovery=dict(zip(FIELDS,words[:len(FIELDS)]));prefix=dict(zip(PREFIX,words[len(FIELDS):]))
+   result['restore_recovery']=dict(kind=case['source_recovery'],sample=recovery,kernel=prefix)
+   result['checks']['restore_fault_injected_once']=recovery['injected']==1
+   result['checks']['BIOS_quarantine_observed']=recovery['prompt_seen']==1 and recovery['hold_ticks']>=5
+   result['checks']['retry_only_after_quarantine']=recovery['retry_key']==1 and recovery['retry_calls']>=1 and recovery['unsafe']==0
+   result['checks']['quarantine_keeps_compiler_scope_and_pause']=recovery['paused']==recovery['scope']==recovery['serial']==recovery['program_active']==1
+   result['checks']['quarantine_uses_child_PSP']=recovery['current_psp']==prefix['owner'] and recovery['child_ds']==result['child_exit_probe']['DS']
+   result['checks']['quarantine_keeps_invalid_owned_kernel']=prefix['cookie']==0x434c and prefix['parent']==result['passive_observer_header'][5] and prefix['valid']==prefix['busy']==0 and prefix['phase']==(2 if case['source_recovery']=='grow' else 3)
+   result['checks']['failed_restore_extent_exact']=recovery['parent_extent']==prefix['keep' if case['source_recovery']=='grow' else 'full']
+   trusted=json.loads((parent/'manifest.json').read_text())
+   result['checks']['quarantine_kernel_bounds_exact']=prefix['keep']==trusted['experimental_compiler_lease_module']['keep_paragraphs'] and prefix['full']==trusted['memory_layout']['retained_parent_paragraphs']
+   result['checks']['quarantine_records_DOS_failure']=prefix['dos_error']==(8 if case['source_recovery']=='grow' else 5)
+   result['checks']['quarantine_notice_retired']=b'ASPECT memory restore incomplete.' not in (folder/'SCREEN.BIN').read_bytes()[::2]
+   result['checks']['retained_capture_matches_original_display']=recovery['captured_cells']==2000
+   result['checks']['exact_display_restored_before_scope_resume']=recovery['display_checked']==recovery['display_valid']==recovery['display_cursor_ok']==recovery['display_shape_ok']==1 and recovery['display_cells']==2000
   if case.get('source_fault'):
    result['source_fault']=case['source_fault']
    result['checks']['source_error_matches_child_probe']=result['child_exit_probe']['error']==case['expected_exit']
@@ -685,7 +725,7 @@ get_watch_data: dw 0x4757,2
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
   if a.source_memory_cases:result['compatibility_accepted']=False
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(source_lease_fault_cases=a.source_lease_fault_cases,source_lease_cases=a.source_lease_cases,source_memory_cases=a.source_memory_cases,source_compiler_residency_verified=all(r['passed'] for r in report['cases']) if a.source_lease_cases else False if a.source_memory_cases else None,policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
+ report.update(source_lease_recovery_cases=a.source_lease_recovery_cases,source_lease_fault_cases=a.source_lease_fault_cases,source_lease_cases=a.source_lease_cases,source_memory_cases=a.source_memory_cases,source_compiler_residency_verified=all(r['passed'] for r in report['cases']) if a.source_lease_cases else False if a.source_memory_cases else None,policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
   checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  if a.source_memory_cases:

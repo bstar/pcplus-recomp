@@ -33,7 +33,7 @@ def main():
   'standalone/test_aspect_get_vm_dos.py','standalone/test_aspect_renderer_dos.py',
   'standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py',
   'standalone/modem_fixtures.py','standalone/directory_test_support.py','standalone/terminal_config_fixtures.py',
-  'src/aspect/compiler.py']
+  'src/aspect/compiler.py','standalone/compiler_bridge_recovery_observer.py']
  for name in extras:sources[name]=sha(ROOT/name)
  reports=[json.loads(path.read_text()) for path in a.checks]
  assert any(r.get('source_lease_cases') and len(r['cases'])==2 for r in reports)
@@ -68,7 +68,7 @@ def main():
    assert sha(fresh/'build'/folder/leaf)==sha(original/leaf),leaf
    artifacts[leaf]=sha(original/leaf)
  replays=[]
- families=('source_lease_fault_cases','source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
+ families=('source_lease_recovery_cases','source_lease_fault_cases','source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
  for i,(path,r) in enumerate(zip(a.checks,reports)):
   leaf='build/replay-'+str(i)
   flags=['--'+key.replace('_','-') for key in families if r.get(key)]
@@ -83,6 +83,14 @@ def main():
                'observer_sha256','observer_source_sha256','allocation_probe','compiler_EXEC_memory',
                'GET_generations','GET_error_retirement','GET_pending_WHEN_gate','GET_waiting_before_WHEN','GET_observed_width'):
     assert old.get(key)==new.get(key),(old['case'],key)
+   if 'restore_recovery' in old:
+    # The checksum covers mutable parent memory, including elapsed state.
+    # Each run must pass the kernel's complete checksum/EOF restoration gate;
+    # across runs compare the invariant capture, not that per-run checksum.
+    def invariant(case):
+     capture=case['restore_recovery']
+     return dict(capture,kernel={k:v for k,v in capture['kernel'].items() if k!='crc'})
+    assert invariant(old)==invariant(new),(old['case'],'restore_recovery')
    assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
   replays.append(dict(cases=len(replay['cases']),checks_sha256=sha(fresh/leaf/'checks.json'),
                       source_lease_cases=replay.get('source_lease_cases',False)))

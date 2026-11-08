@@ -125,6 +125,7 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+assert not(args.compiler_lease_bridge and args.compiler_lease_arena_probe),'Choose live bridge or startup-only compiler probe'
 if args.compiler_lease_bridge:args.compiler_lease_arena=True
 if args.compiler_lease_arena_probe:args.compiler_lease_arena=True
 if args.compiler_lease_arena:args.compiler_lease_module=True

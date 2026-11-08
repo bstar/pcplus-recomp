@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Compiler restore recovery](ASPECT_COMPILER_RECOVERY.md) now exercises grow/read
+failure, BIOS quarantine and key-triggered retry at startup and EXECUTE. It fixes
+a stale recovery notice by restoring the exact captured display after verified
+memory recovery. The live build drops unused startup-diagnostic entry points to
+fund the fix without smaller capacities. Package/physical/full-parity gates and
+additional fault/composition tests remain open.
+
 [Full-parent compiler refusals](ASPECT_COMPILER_REFUSALS.md) now cover missing,
 corrupt and truncated modules plus source syntax errors at startup and EXECUTE.
 They exposed and fixed the bridge's I/O-versus-stack result mismatch. The same

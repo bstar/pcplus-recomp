@@ -1,0 +1,339 @@
+"""Owned DOS fault fixture; never linked into the application.
+
+Fail one precisely scoped restore operation, observe BIOS quarantine for five
+timer ticks, then supply a retry key. Observe only retained/child state while the
+parent tail is invalid. INT21 frame offsets follow the observer's save macro.
+"""
+import re
+
+FIELDS = ['kind','injected','prompt_seen','hold_ticks','retry_key','retry_calls',
+ 'captured_cells','display_checked','display_cells','display_cursor_ok','display_shape_ok','display_valid',
+ 'unsafe','parent_extent','child_ds','paused','scope','serial','steps','current_psp','program_active']
+PREFIX = ['cookie','parent','keep','full','owner','token','phase','handle','crc',
+ 'dos_error','created','valid','sequence','busy']
+WORDS = len(FIELDS)+len(PREFIX)
+
+def attach(source, *, kind, parent, listing, offsets, child_symbols, child_group):
+ assert kind in ('grow','read')
+ kernel=parent['experimental_compiler_lease_module']
+ match=re.search(r'^([0-9a-f]+):([0-9a-f]+)\s+_compiler_lease_storage\b',listing,re.M)
+ assert match
+ assert kernel['arena_offset']>=8006
+ frame=re.search(r'^([0-9a-f]+):([0-9a-f]+)\s+redisplay_snapshot\b',listing,re.M);assert frame
+ frame_segment,frame_offset=(int(n,16) for n in frame.groups())
+ assert frame_offset+8006<=65536
+ segment,offset=(int(n,16) for n in match.groups())
+ keep=kernel['keep_paragraphs'];full=parent['memory_layout']['retained_parent_paragraphs']
+ assert (segment*16+offset+28+15)//16+16<=keep<full
+ prefix='get_recovery_sample:\n'+''.join('get_recovery_'+name+': dw '+str(int(kind=='read')+1 if name=='kind' else 0)+'\n' for name in FIELDS)+'get_recovery_prefix: times 14 dw 0\n'
+ marker='get_compiler_largest: dw 0';assert source.count(marker)==1
+ source=source.replace(marker,prefix+marker)
+ marker=' mov bp,sp\n cmp byte [ss:bp+17],0x4b';assert source.count(marker)==1
+ source=source.replace(marker,''' mov bp,sp
+ call get_recovery_dos
+ jnc .recovery_chain
+ restore
+ iret
+.recovery_chain:
+ cmp byte [ss:bp+17],0x4b''')
+ marker='timer:\n save\n cld';assert source.count(marker)==1
+ source=source.replace(marker,marker+'\n call get_recovery_tick')
+ constants=dict(RECOVERY_KIND=1 if kind=='grow' else 2,RECOVERY_KEEP=keep,RECOVERY_FULL=full,
+  RECOVERY_MODULE=kernel['relative_target_segment'],RECOVERY_END=kernel['relative_target_segment']+(kernel['bank_bytes']+15)//16,
+  RECOVERY_KERNEL=segment,RECOVERY_STATE=offset,RECOVERY_CHILD_GROUP=child_group,
+  RECOVERY_SCREEN=frame_segment,RECOVERY_FRAME=frame_offset,RECOVERY_FRAME_META=frame_offset+8000,
+  RECOVERY_PAUSE=child_symbols['_aspect_serial_compile_pause_owned'],
+  RECOVERY_SCOPE=child_symbols['_runtime_compiler_scope_state'],RECOVERY_SERIAL=child_symbols['_aspect_serial_active'],
+  RECOVERY_STEPS=child_symbols['_runtime_steps'],RECOVERY_ACTIVE=offsets['terminal_program_active'])
+ body='\n'.join('%define '+name+' '+str(value) for name,value in constants.items())+'\n'+ASM
+ marker='resident_end:\nstart:';assert source.count(marker)==1
+ return source.replace(marker,body+'\n'+marker)
+
+ASM=r'''
+get_recovery_dos:
+ save
+ call get_recovery_display
+ cmp word [cs:exec_seen],1
+ jne .no
+ cmp word [cs:exec_done],0
+ jne .no
+ cmp word [cs:get_compiler_attempts],1
+ jne .no
+ ; Authenticate the interrupted caller CS as the loaded kernel, not compiler.
+ mov ax,[cs:parent_psp]
+ add ax,16
+ mov di,ax
+ add ax,RECOVERY_MODULE
+ cmp [ss:bp+22],ax
+ jb .no
+ mov ax,di
+ add ax,RECOVERY_END
+ cmp [ss:bp+22],ax
+ jae .no
+%if RECOVERY_KIND == 1
+ cmp byte [ss:bp+17],0x4a
+ jne .no
+ mov ax,[cs:parent_psp]
+ cmp [ss:bp],ax ; ES saved by outer observer frame.
+ jne .no
+ cmp word [ss:bp+14],RECOVERY_FULL
+ jne .no
+%else
+ cmp byte [ss:bp+17],0x3f
+ jne .no
+ mov ax,[cs:parent_psp]
+ add ax,RECOVERY_KEEP
+ cmp [ss:bp+2],ax ; DS:DX first restoration buffer, never compiler input.
+ jne .no
+ cmp word [ss:bp+10],0
+ jne .no
+ cmp word [ss:bp+12],4096
+ jne .no
+%endif
+ mov ax,[cs:parent_psp]
+ dec ax
+ mov es,ax
+%if RECOVERY_KIND == 1
+ cmp word [es:3],RECOVERY_KEEP
+%else
+ cmp word [es:3],RECOVERY_FULL
+%endif
+ jne .no
+ cmp word [cs:get_recovery_injected],0
+ je .fail
+ cmp word [cs:get_recovery_retry_key],1
+ je .retry
+ mov word [cs:get_recovery_unsafe],1
+ jmp .no
+.retry:
+ inc word [cs:get_recovery_retry_calls]
+ jmp .no
+.fail:
+ call get_recovery_cells
+ mov [cs:get_recovery_captured_cells],ax
+ mov word [cs:get_recovery_injected],1
+ ; Remove only this owned fixture's early return-prompt key. No user keyboard.
+ mov ax,0x40
+ mov es,ax
+ mov ax,[es:0x1c]
+ mov [es:0x1a],ax
+%if RECOVERY_KIND == 1
+ mov word [ss:bp+16],8
+%else
+ mov word [ss:bp+16],5
+%endif
+ or word [ss:bp+24],1 ; CF in original INT21 IRET frame, not saved PUSHF.
+ restore
+ stc
+ ret
+.no:
+ restore
+ clc
+ ret
+
+; Scope0 restores INT0 immediately after END, before serial resume or rendering.
+; At that boundary compare EVERY captured character/attribute and BIOS cursor.
+get_recovery_display:
+ save
+ cmp word [cs:exec_done],0
+ jne .done
+ cmp word [cs:get_recovery_injected],1
+ jne .done
+ cmp word [cs:get_recovery_retry_key],1
+ jne .done
+ cmp word [cs:get_recovery_display_checked],0
+ jne .done
+ cmp word [ss:bp+16],0x2500
+ jne .done
+ ; SETVECT temporarily uses the ISR code segment as DS; authenticate SS/PSP.
+ mov ax,ss
+ sub ax,RECOVERY_CHILD_GROUP+16
+ mov es,ax
+ cmp word [es:0],0x20cd
+ jne .done
+ mov ax,[cs:parent_psp]
+ cmp [es:0x16],ax
+ jne .done
+ mov ax,ss
+ mov es,ax
+ cmp word [es:RECOVERY_SCOPE],1
+ jne .done
+ cmp word [es:RECOVERY_PAUSE],1
+ jne .done
+ mov word [cs:get_recovery_display_checked],1
+ mov ax,[cs:parent_psp]
+ add ax,16+RECOVERY_KERNEL
+ mov es,ax
+ cmp word [es:RECOVERY_STATE+22],1
+ jne .done
+ mov word [cs:get_recovery_display_valid],1
+ call get_recovery_cells
+ mov [cs:get_recovery_display_cells],ax
+ cmp ax,2000
+ jne .done
+ mov ah,3
+ xor bh,bh
+ int 0x10
+ mov ax,[cs:parent_psp]
+ add ax,16+RECOVERY_SCREEN
+ mov es,ax
+ cmp dx,[es:RECOVERY_FRAME_META+4]
+ jne .shape
+ mov word [cs:get_recovery_display_cursor_ok],1
+.shape:
+ cmp cx,[es:RECOVERY_FRAME_META+2]
+ jne .done
+ mov word [cs:get_recovery_display_shape_ok],1
+.done:
+ restore
+ ret
+
+; Compare the independently observed physical frame before failure and after
+; repair against the retained capture. AX=count matched; never read lent tail.
+get_recovery_cells:
+ mov ax,[cs:parent_psp]
+ add ax,16+RECOVERY_SCREEN
+ mov es,ax
+ xor bx,bx
+ mov cx,[es:RECOVERY_FRAME_META]
+ cmp cx,2000
+ jne .done
+ mov di,RECOVERY_FRAME
+ mov ax,0xb800
+ mov ds,ax
+ xor si,si
+.cells:
+ mov ax,[si]
+ cmp ax,[es:di]
+ jne .done
+ inc bx
+ add si,2
+ add di,2
+ loop .cells
+.done:
+ mov ax,bx
+ ret
+
+get_recovery_tick:
+ save
+ cmp word [cs:get_recovery_injected],1
+ jne .done
+ cmp word [cs:get_recovery_retry_key],0
+ jne .done
+ cmp word [cs:exec_done],0
+ je .live
+ mov word [cs:get_recovery_unsafe],1
+ jmp .done
+.live:
+ mov ax,ss
+ sub ax,RECOVERY_CHILD_GROUP+16
+ mov es,ax
+ cmp word [es:0],0x20cd
+ jne .done
+ mov ax,[cs:parent_psp]
+ cmp [es:0x16],ax
+ jne .done
+ les bx,[cs:get_watch_indos]
+ cmp byte [es:bx],0
+ jne .done
+ ; Require the actual BIOS-only recovery notice, not merely lack of progress.
+ mov ax,0xb800
+ mov es,ax
+ xor bx,bx
+.scan:
+ mov di,bx
+ mov si,get_recovery_notice
+ mov cx,32
+.compare:
+ mov al,[es:di]
+ cmp al,[cs:si]
+ jne .next
+ inc si
+ add di,2
+ loop .compare
+ jmp .found
+.next:
+ add bx,2
+ cmp bx,4000-64
+ jbe .scan
+ jmp .done
+.found:
+ mov ax,ss
+ mov es,ax
+ cmp word [cs:get_recovery_prompt_seen],0
+ jne .held
+ mov word [cs:get_recovery_prompt_seen],1
+ mov [cs:get_recovery_child_ds],ax
+ mov ax,[es:RECOVERY_STEPS]
+ mov [cs:get_recovery_steps],ax
+ mov ax,[es:RECOVERY_PAUSE]
+ mov [cs:get_recovery_paused],ax
+ mov ax,[es:RECOVERY_SCOPE]
+ mov [cs:get_recovery_scope],ax
+ mov ax,[es:RECOVERY_SERIAL]
+ mov [cs:get_recovery_serial],ax
+ mov ah,0x51
+ pushf
+ call far [cs:old21]
+ mov [cs:get_recovery_current_psp],bx
+ mov ax,[cs:parent_ds]
+ mov es,ax
+ mov ax,[es:RECOVERY_ACTIVE]
+ mov [cs:get_recovery_program_active],ax
+ mov ax,[cs:parent_psp]
+ dec ax
+ mov es,ax
+ mov ax,[es:3]
+ mov [cs:get_recovery_parent_extent],ax
+ mov ax,[cs:parent_psp]
+ add ax,16+RECOVERY_KERNEL
+ mov es,ax
+ mov si,RECOVERY_STATE
+ mov di,get_recovery_prefix
+ mov cx,14
+.capture:
+ mov ax,[es:si]
+ mov [cs:di],ax
+ add si,2
+ add di,2
+ loop .capture
+.held:
+ mov ax,ss
+ mov es,ax
+ mov ax,[es:RECOVERY_STEPS]
+ cmp ax,[cs:get_recovery_steps]
+ jne .unsafe
+ cmp word [es:RECOVERY_PAUSE],1
+ jne .unsafe
+ cmp word [es:RECOVERY_SCOPE],1
+ jne .unsafe
+ cmp word [es:RECOVERY_SERIAL],1
+ jne .unsafe
+ mov ax,[cs:parent_psp]
+ add ax,16+RECOVERY_KERNEL
+ mov es,ax
+ mov si,RECOVERY_STATE
+ mov di,get_recovery_prefix
+ mov cx,14
+.stable:
+ mov ax,[es:si]
+ cmp ax,[cs:di]
+ jne .unsafe
+ add si,2
+ add di,2
+ loop .stable
+ inc word [cs:get_recovery_hold_ticks]
+ cmp word [cs:get_recovery_hold_ticks],5
+ jb .done
+ mov dx,0x1c0d
+ call get_finish_key
+ jc .done
+ mov word [cs:get_recovery_retry_key],1
+ jmp .done
+.unsafe:
+ mov word [cs:get_recovery_unsafe],1
+.done:
+ restore
+ ret
+get_recovery_notice: db 'ASPECT memory restore incomplete.'
+'''

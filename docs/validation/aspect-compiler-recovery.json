@@ -1,0 +1,881 @@
+{
+  "checkpoint": "Full-parent one-shot restore failures, BIOS quarantine/retry and exact display restoration",
+  "passed": true,
+  "original_inputs": [],
+  "parent_sha256": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+  "child_sha256": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+  "compiler_sha256": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+  "artifacts": {
+    "TERMINAL.EXE": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+    "PCCOMP.OVL": "5cb90b8b29218fc3580f5abe92b530642587e12e35975ebc28e8cdc34a1c8f6f",
+    "PCLINE.OVL": "c89bbfce9ee58f153441cc89e46994bc68066ff04fd65b385234bb7404d0cde0",
+    "PCMETA.OVL": "ef8b9ca0a252d8b68dde0a264f527868235fcd9551ec6466635a8f9a80f03641"
+  },
+  "renderer_capability": 23,
+  "ASIO_version": 7,
+  "frontend_bytes": 1206,
+  "frontend_change_bytes": -36,
+  "aligned_parent_change_bytes": -32,
+  "near_bytes": 65520,
+  "module": {
+    "whole_kernel": true,
+    "format": "source-linked-whole-compiler-lease-v1",
+    "original_inputs": [],
+    "bank_bytes": 3408,
+    "relocations": 73,
+    "sha256": "5cb90b8b29218fc3580f5abe92b530642587e12e35975ebc28e8cdc34a1c8f6f",
+    "crc16": "9958",
+    "crc32": "db7f1315",
+    "relative_target_segment": 22629,
+    "keep_paragraphs": 22868,
+    "module_bytes": 3554,
+    "extracted_bytes": 3408,
+    "arena_symbol": "redisplay_snapshot",
+    "arena_offset": 16384,
+    "arena_bytes": 8192,
+    "linked_sha256": "cb072f5bba4813ee911d97d066ee4185b4ef4b304814d83ea4d061de3f0020a7",
+    "limitations": [
+      "Matched parent only; CRC32 is corruption detection, not authenticity.",
+      "Caller must own inactive overlay arena; layout extraction does not establish runtime ownership."
+    ],
+    "production_bridge_admission": false,
+    "runtime_arena_ownership_verified": false
+  },
+  "display_reservation": {
+    "start": 0,
+    "frame_capacity_bytes": 8000,
+    "metadata_bytes": 6,
+    "module_start": 16384,
+    "verified_rows": 25,
+    "verified_cells": 2000,
+    "admitted_rows": [
+      25,
+      28,
+      43,
+      50
+    ]
+  },
+  "recovery_cases": 4,
+  "positive_source_cases": 2,
+  "refusal_cases": 8,
+  "GET_regression_cases": 27,
+  "DOS_cases": 41,
+  "groups": [
+    {
+      "family": "recovery",
+      "path": "build/compiler-bridge-final-recovery-20261108/checks.json",
+      "sha256": "62ad830bafa134822ab2a06e2557b4e1b98b2b5b77cd367777b4f7c609044a68",
+      "cases": [
+        {
+          "name": "get-vm-source-start-recover-grow",
+          "passed": true,
+          "check_count": 56,
+          "checks": {
+            "renderer_post_sent": true,
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_LOGIN.ASP": true,
+            "fixture_unchanged_RENDER.COM": true,
+            "fixture_unchanged_ASPCOMP.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "passive_EXEC_observed": true,
+            "child_exit_expected": true,
+            "parent_JFT_unchanged": true,
+            "all_parent_sink_owners_unchanged": true,
+            "explicit_password_only": true,
+            "ordinary_parent_keyboard_resumes": true,
+            "initial_CPR_before_password": true,
+            "no_automatic_redial": true,
+            "frozen_inputs": true,
+            "post_query_sent_after_password": true,
+            "post_return_cursor_coherent": true,
+            "video_0_0": true,
+            "far_history_retained_across_EXEC_return": true,
+            "far_history_bounds": true,
+            "native_renderer_updated_far_history": true,
+            "passive_observer_in_UMB": true,
+            "GET_typed_exit": true,
+            "script_reached_GET_boundary": true,
+            "BIOS_keys_after_field_admission": true,
+            "actual_compiler_EXEC_attempt": true,
+            "no_stale_or_trailing_execution": true,
+            "compiler_log_retired": true,
+            "restore_fault_injected_once": true,
+            "BIOS_quarantine_observed": true,
+            "retry_only_after_quarantine": true,
+            "quarantine_keeps_compiler_scope_and_pause": true,
+            "quarantine_uses_child_PSP": true,
+            "quarantine_keeps_invalid_owned_kernel": true,
+            "failed_restore_extent_exact": true,
+            "quarantine_kernel_bounds_exact": true,
+            "quarantine_records_DOS_failure": true,
+            "quarantine_notice_retired": true,
+            "retained_capture_matches_original_display": true,
+            "exact_display_restored_before_scope_resume": true,
+            "source_compiler_ASX_exact": true,
+            "compiler_loaded_from_lent_memory": true,
+            "compiler_result_success": true,
+            "backing_files_retired": true,
+            "kernel_file_unchanged": true,
+            "GET_edited_value_reaches_peer": true
+          },
+          "recovery": {
+            "kind": "grow",
+            "sample": {
+              "kind": 1,
+              "injected": 1,
+              "prompt_seen": 1,
+              "hold_ticks": 5,
+              "retry_key": 1,
+              "retry_calls": 1,
+              "captured_cells": 2000,
+              "display_checked": 1,
+              "display_cells": 2000,
+              "display_cursor_ok": 1,
+              "display_shape_ok": 1,
+              "display_valid": 1,
+              "unsafe": 0,
+              "parent_extent": 22868,
+              "child_ds": 38144,
+              "paused": 1,
+              "scope": 1,
+              "serial": 1,
+              "steps": 0,
+              "current_psp": 32347,
+              "program_active": 1
+            },
+            "kernel": {
+              "cookie": 17228,
+              "parent": 2068,
+              "keep": 22868,
+              "full": 30165,
+              "owner": 32347,
+              "token": 1,
+              "phase": 2,
+              "handle": 8,
+              "crc": 24434,
+              "dos_error": 8,
+              "created": 1,
+              "valid": 0,
+              "sequence": 1,
+              "busy": 0
+            }
+          },
+          "compiler_EXEC_memory": {
+            "largest_free_bytes": 116576,
+            "attempts": 1,
+            "startup_prompt_seen_before_ack": 0
+          },
+          "memory_before_EXEC": {
+            "largest_free_bytes": 138976,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38144,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 1,
+            "file_status": 0
+          }
+        },
+        {
+          "name": "get-vm-source-execute-recover-grow",
+          "passed": true,
+          "check_count": 59,
+          "checks": {
+            "renderer_post_sent": true,
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_LOGIN.ASP": true,
+            "fixture_unchanged_LOGIN.ASX": true,
+            "fixture_unchanged_RENDER.COM": true,
+            "fixture_unchanged_NEXT.ASP": true,
+            "fixture_unchanged_ASPCOMP.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "passive_EXEC_observed": true,
+            "child_exit_expected": true,
+            "parent_JFT_unchanged": true,
+            "all_parent_sink_owners_unchanged": true,
+            "explicit_password_only": true,
+            "ordinary_parent_keyboard_resumes": true,
+            "initial_CPR_before_password": true,
+            "no_automatic_redial": true,
+            "frozen_inputs": true,
+            "post_query_sent_after_password": true,
+            "post_return_cursor_coherent": true,
+            "video_0_0": true,
+            "far_history_retained_across_EXEC_return": true,
+            "far_history_bounds": true,
+            "native_renderer_updated_far_history": true,
+            "passive_observer_in_UMB": true,
+            "GET_typed_exit": true,
+            "script_reached_GET_boundary": true,
+            "BIOS_keys_after_field_admission": true,
+            "actual_compiler_EXEC_attempt": true,
+            "no_stale_or_trailing_execution": true,
+            "compiler_log_retired": true,
+            "source_failure_stream_flushed": true,
+            "restore_fault_injected_once": true,
+            "BIOS_quarantine_observed": true,
+            "retry_only_after_quarantine": true,
+            "quarantine_keeps_compiler_scope_and_pause": true,
+            "quarantine_uses_child_PSP": true,
+            "quarantine_keeps_invalid_owned_kernel": true,
+            "failed_restore_extent_exact": true,
+            "quarantine_kernel_bounds_exact": true,
+            "quarantine_records_DOS_failure": true,
+            "quarantine_notice_retired": true,
+            "retained_capture_matches_original_display": true,
+            "exact_display_restored_before_scope_resume": true,
+            "source_compiler_ASX_exact": true,
+            "compiler_loaded_from_lent_memory": true,
+            "compiler_result_success": true,
+            "backing_files_retired": true,
+            "kernel_file_unchanged": true,
+            "GET_edited_value_reaches_peer": true
+          },
+          "recovery": {
+            "kind": "grow",
+            "sample": {
+              "kind": 1,
+              "injected": 1,
+              "prompt_seen": 1,
+              "hold_ticks": 5,
+              "retry_key": 1,
+              "retry_calls": 1,
+              "captured_cells": 2000,
+              "display_checked": 1,
+              "display_cells": 2000,
+              "display_cursor_ok": 1,
+              "display_shape_ok": 1,
+              "display_valid": 1,
+              "unsafe": 0,
+              "parent_extent": 22868,
+              "child_ds": 38144,
+              "paused": 1,
+              "scope": 1,
+              "serial": 1,
+              "steps": 6,
+              "current_psp": 32347,
+              "program_active": 1
+            },
+            "kernel": {
+              "cookie": 17228,
+              "parent": 2068,
+              "keep": 22868,
+              "full": 30165,
+              "owner": 32347,
+              "token": 1,
+              "phase": 2,
+              "handle": 9,
+              "crc": 34095,
+              "dos_error": 8,
+              "created": 1,
+              "valid": 0,
+              "sequence": 1,
+              "busy": 0
+            }
+          },
+          "compiler_EXEC_memory": {
+            "largest_free_bytes": 116576,
+            "attempts": 1,
+            "startup_prompt_seen_before_ack": 0
+          },
+          "memory_before_EXEC": {
+            "largest_free_bytes": 138976,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38144,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 1,
+            "file_status": 0
+          }
+        },
+        {
+          "name": "get-vm-source-start-recover-read",
+          "passed": true,
+          "check_count": 56,
+          "checks": {
+            "renderer_post_sent": true,
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_LOGIN.ASP": true,
+            "fixture_unchanged_RENDER.COM": true,
+            "fixture_unchanged_ASPCOMP.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "passive_EXEC_observed": true,
+            "child_exit_expected": true,
+            "parent_JFT_unchanged": true,
+            "all_parent_sink_owners_unchanged": true,
+            "explicit_password_only": true,
+            "ordinary_parent_keyboard_resumes": true,
+            "initial_CPR_before_password": true,
+            "no_automatic_redial": true,
+            "frozen_inputs": true,
+            "post_query_sent_after_password": true,
+            "post_return_cursor_coherent": true,
+            "video_0_0": true,
+            "far_history_retained_across_EXEC_return": true,
+            "far_history_bounds": true,
+            "native_renderer_updated_far_history": true,
+            "passive_observer_in_UMB": true,
+            "GET_typed_exit": true,
+            "script_reached_GET_boundary": true,
+            "BIOS_keys_after_field_admission": true,
+            "actual_compiler_EXEC_attempt": true,
+            "no_stale_or_trailing_execution": true,
+            "compiler_log_retired": true,
+            "restore_fault_injected_once": true,
+            "BIOS_quarantine_observed": true,
+            "retry_only_after_quarantine": true,
+            "quarantine_keeps_compiler_scope_and_pause": true,
+            "quarantine_uses_child_PSP": true,
+            "quarantine_keeps_invalid_owned_kernel": true,
+            "failed_restore_extent_exact": true,
+            "quarantine_kernel_bounds_exact": true,
+            "quarantine_records_DOS_failure": true,
+            "quarantine_notice_retired": true,
+            "retained_capture_matches_original_display": true,
+            "exact_display_restored_before_scope_resume": true,
+            "source_compiler_ASX_exact": true,
+            "compiler_loaded_from_lent_memory": true,
+            "compiler_result_success": true,
+            "backing_files_retired": true,
+            "kernel_file_unchanged": true,
+            "GET_edited_value_reaches_peer": true
+          },
+          "recovery": {
+            "kind": "read",
+            "sample": {
+              "kind": 2,
+              "injected": 1,
+              "prompt_seen": 1,
+              "hold_ticks": 5,
+              "retry_key": 1,
+              "retry_calls": 1,
+              "captured_cells": 2000,
+              "display_checked": 1,
+              "display_cells": 2000,
+              "display_cursor_ok": 1,
+              "display_shape_ok": 1,
+              "display_valid": 1,
+              "unsafe": 0,
+              "parent_extent": 30165,
+              "child_ds": 38144,
+              "paused": 1,
+              "scope": 1,
+              "serial": 1,
+              "steps": 0,
+              "current_psp": 32347,
+              "program_active": 1
+            },
+            "kernel": {
+              "cookie": 17228,
+              "parent": 2068,
+              "keep": 22868,
+              "full": 30165,
+              "owner": 32347,
+              "token": 1,
+              "phase": 3,
+              "handle": 8,
+              "crc": 24434,
+              "dos_error": 5,
+              "created": 1,
+              "valid": 0,
+              "sequence": 1,
+              "busy": 0
+            }
+          },
+          "compiler_EXEC_memory": {
+            "largest_free_bytes": 116576,
+            "attempts": 1,
+            "startup_prompt_seen_before_ack": 0
+          },
+          "memory_before_EXEC": {
+            "largest_free_bytes": 138976,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38144,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 1,
+            "file_status": 0
+          }
+        },
+        {
+          "name": "get-vm-source-execute-recover-read",
+          "passed": true,
+          "check_count": 59,
+          "checks": {
+            "renderer_post_sent": true,
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_LOGIN.ASP": true,
+            "fixture_unchanged_LOGIN.ASX": true,
+            "fixture_unchanged_RENDER.COM": true,
+            "fixture_unchanged_NEXT.ASP": true,
+            "fixture_unchanged_ASPCOMP.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "passive_EXEC_observed": true,
+            "child_exit_expected": true,
+            "parent_JFT_unchanged": true,
+            "all_parent_sink_owners_unchanged": true,
+            "explicit_password_only": true,
+            "ordinary_parent_keyboard_resumes": true,
+            "initial_CPR_before_password": true,
+            "no_automatic_redial": true,
+            "frozen_inputs": true,
+            "post_query_sent_after_password": true,
+            "post_return_cursor_coherent": true,
+            "video_0_0": true,
+            "far_history_retained_across_EXEC_return": true,
+            "far_history_bounds": true,
+            "native_renderer_updated_far_history": true,
+            "passive_observer_in_UMB": true,
+            "GET_typed_exit": true,
+            "script_reached_GET_boundary": true,
+            "BIOS_keys_after_field_admission": true,
+            "actual_compiler_EXEC_attempt": true,
+            "no_stale_or_trailing_execution": true,
+            "compiler_log_retired": true,
+            "source_failure_stream_flushed": true,
+            "restore_fault_injected_once": true,
+            "BIOS_quarantine_observed": true,
+            "retry_only_after_quarantine": true,
+            "quarantine_keeps_compiler_scope_and_pause": true,
+            "quarantine_uses_child_PSP": true,
+            "quarantine_keeps_invalid_owned_kernel": true,
+            "failed_restore_extent_exact": true,
+            "quarantine_kernel_bounds_exact": true,
+            "quarantine_records_DOS_failure": true,
+            "quarantine_notice_retired": true,
+            "retained_capture_matches_original_display": true,
+            "exact_display_restored_before_scope_resume": true,
+            "source_compiler_ASX_exact": true,
+            "compiler_loaded_from_lent_memory": true,
+            "compiler_result_success": true,
+            "backing_files_retired": true,
+            "kernel_file_unchanged": true,
+            "GET_edited_value_reaches_peer": true
+          },
+          "recovery": {
+            "kind": "read",
+            "sample": {
+              "kind": 2,
+              "injected": 1,
+              "prompt_seen": 1,
+              "hold_ticks": 5,
+              "retry_key": 1,
+              "retry_calls": 1,
+              "captured_cells": 2000,
+              "display_checked": 1,
+              "display_cells": 2000,
+              "display_cursor_ok": 1,
+              "display_shape_ok": 1,
+              "display_valid": 1,
+              "unsafe": 0,
+              "parent_extent": 30165,
+              "child_ds": 38144,
+              "paused": 1,
+              "scope": 1,
+              "serial": 1,
+              "steps": 6,
+              "current_psp": 32347,
+              "program_active": 1
+            },
+            "kernel": {
+              "cookie": 17228,
+              "parent": 2068,
+              "keep": 22868,
+              "full": 30165,
+              "owner": 32347,
+              "token": 1,
+              "phase": 3,
+              "handle": 9,
+              "crc": 34095,
+              "dos_error": 5,
+              "created": 1,
+              "valid": 0,
+              "sequence": 1,
+              "busy": 0
+            }
+          },
+          "compiler_EXEC_memory": {
+            "largest_free_bytes": 116576,
+            "attempts": 1,
+            "startup_prompt_seen_before_ack": 0
+          },
+          "memory_before_EXEC": {
+            "largest_free_bytes": 138976,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38144,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 1,
+            "file_status": 0
+          }
+        }
+      ]
+    },
+    {
+      "family": "errors",
+      "path": "build/compiler-bridge-final-errors-20261108/checks.json",
+      "sha256": "93f7c36ab3ffb6e89773ec70835411a20f78245ac9fa3b1724453a62f928b7f0",
+      "cases": [
+        {
+          "name": "get-vm-when-divide",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-when-cancel",
+          "passed": true,
+          "check_count": 42
+        }
+      ]
+    },
+    {
+      "family": "source",
+      "path": "build/compiler-bridge-recovery-source-20261108/checks.json",
+      "sha256": "cdcabc74c1bf154c0cd9e3c8bc67fab6c141b1ed8cd7d742625c593efe7b83a9",
+      "cases": [
+        {
+          "name": "get-vm-source-start",
+          "passed": true,
+          "check_count": 44
+        },
+        {
+          "name": "get-vm-source-execute",
+          "passed": true,
+          "check_count": 47
+        }
+      ]
+    },
+    {
+      "family": "refusals",
+      "path": "build/compiler-bridge-recovery-refusals-20261108/checks.json",
+      "sha256": "d93b525cf8364b37df5aebb1662b87690241317be002de594aeaa7e25ba89411",
+      "cases": [
+        {
+          "name": "get-vm-source-start-missing",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-source-execute-missing",
+          "passed": true,
+          "check_count": 46
+        },
+        {
+          "name": "get-vm-source-start-corrupt",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-source-execute-corrupt",
+          "passed": true,
+          "check_count": 46
+        },
+        {
+          "name": "get-vm-source-start-truncated",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-source-execute-truncated",
+          "passed": true,
+          "check_count": 46
+        },
+        {
+          "name": "get-vm-source-start-compiler-error",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-source-execute-compiler-error",
+          "passed": true,
+          "check_count": 46
+        }
+      ]
+    },
+    {
+      "family": "ordinary",
+      "path": "build/compiler-bridge-recovery-ordinary-20261108/checks.json",
+      "sha256": "7b27d364d6cc5db640143a69652d5edebed862766cf9125efb858835c1998b9b",
+      "cases": [
+        {
+          "name": "get-vm-string",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-integer",
+          "passed": true,
+          "check_count": 36
+        },
+        {
+          "name": "get-vm-long",
+          "passed": true,
+          "check_count": 36
+        },
+        {
+          "name": "get-vm-cancel",
+          "passed": true,
+          "check_count": 33
+        },
+        {
+          "name": "get-vm-float",
+          "passed": true,
+          "check_count": 33
+        },
+        {
+          "name": "get-vm-truncated",
+          "passed": true,
+          "check_count": 33
+        }
+      ]
+    },
+    {
+      "family": "lifetime",
+      "path": "build/compiler-bridge-recovery-lifetime-20261108/checks.json",
+      "sha256": "047596cb8a32b20812fadd625350461cb217c7fe8b9be9830f35f4897d7b500c",
+      "cases": [
+        {
+          "name": "get-vm-repeat",
+          "passed": true,
+          "check_count": 39
+        },
+        {
+          "name": "get-vm-execute",
+          "passed": true,
+          "check_count": 41
+        }
+      ]
+    },
+    {
+      "family": "when",
+      "path": "build/compiler-bridge-recovery-when-20261108/checks.json",
+      "sha256": "7f5fb1f93688936d731f71a0b315b6f359447554123078a6e68caa2b63bfea9c",
+      "cases": [
+        {
+          "name": "get-vm-when-plain",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-when-framed",
+          "passed": true,
+          "check_count": 42
+        }
+      ]
+    },
+    {
+      "family": "storage",
+      "path": "build/compiler-bridge-recovery-storage-20261108/checks.json",
+      "sha256": "0a14af080898a5d5e5b296731842685f36531f48247f4ac6e1cc66ac649fd331",
+      "cases": [
+        {
+          "name": "get-vm-local-string",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-local-integer",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-local-long",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-parameter-string",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-parameter-integer",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-parameter-long",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-builtin-string",
+          "passed": true,
+          "check_count": 37
+        }
+      ]
+    },
+    {
+      "family": "widths",
+      "path": "build/compiler-bridge-recovery-widths-20261108/checks.json",
+      "sha256": "cb052323b18ba27cfea779ba7095222e6ce2422652deebe32c9b872b522880c1",
+      "cases": [
+        {
+          "name": "get-vm-policy-default",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-policy-maximum",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-policy-one",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-policy-zero",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-policy-negative",
+          "passed": true,
+          "check_count": 34
+        },
+        {
+          "name": "get-vm-policy-oversize",
+          "passed": true,
+          "check_count": 34
+        },
+        {
+          "name": "get-vm-policy-bottom-shown",
+          "passed": true,
+          "check_count": 37
+        },
+        {
+          "name": "get-vm-policy-bottom-hidden",
+          "passed": true,
+          "check_count": 37
+        }
+      ]
+    }
+  ],
+  "source_rebuild": {
+    "path": "build/compiler-bridge-recovery-source-export-20261108/result.json",
+    "sha256": "a467a1f85ea496430b1ef9dec15d88e5b4d995d232a5df3fe3c218eb8d48d0db",
+    "passed": true,
+    "source_count": 1038,
+    "DOS_cases": 14,
+    "artifacts": {
+      "TERMINAL.EXE": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+      "PCCOMP.OVL": "5cb90b8b29218fc3580f5abe92b530642587e12e35975ebc28e8cdc34a1c8f6f",
+      "PCLINE.OVL": "c89bbfce9ee58f153441cc89e46994bc68066ff04fd65b385234bb7404d0cde0",
+      "PCMETA.OVL": "ef8b9ca0a252d8b68dde0a264f527868235fcd9551ec6466635a8f9a80f03641",
+      "ASPECT.EXE": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+      "ASPCOMP.EXE": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19"
+    },
+    "replays": [
+      {
+        "cases": 2,
+        "checks_sha256": "3af5d0931e18e03a542b8da812cf46eef1f471dbc11d0595cff001070c9fa73f",
+        "source_lease_cases": true
+      },
+      {
+        "cases": 4,
+        "checks_sha256": "78cad644f38bb5a56d2002530d0c1062013a96fb98abcc2e429efc399f72bef9",
+        "source_lease_cases": false
+      },
+      {
+        "cases": 8,
+        "checks_sha256": "c095862316ec9f727ab472139a49cd5512cbf38a5bcfc84a6beb62bd81931fd9",
+        "source_lease_cases": false
+      }
+    ],
+    "ancestor_git_unavailable": true,
+    "source_map_sha256": "6613bd1b4acf933b8c54a65368bcb002caca9822bef26e50d8ad9dd4df34fbd7"
+  },
+  "startup_diagnostic": {
+    "path": "build/compiler-bridge-recovery-startup-check-20261108/result.json",
+    "sha256": "f296bb85ea9cee63c2e5a13a7f070a2d43f5f0680ff9a4767efa74da06855641",
+    "case": "valid",
+    "parent_sha256": "789aa5f3cd50959eac5a765e68697581ed4edc88d63d88c7e1c5a94521c29c89",
+    "report": [
+      17231,
+      1,
+      10,
+      0,
+      1,
+      0,
+      3408,
+      22848
+    ]
+  },
+  "incompatible_build_modes_refused": true,
+  "sources": {
+    "src/process/compiler_overlay_front.asm": "9ba2a8286029feab73d6524d6aab90e157eda3289b9b8e943cc09ac6dcb323fb",
+    "standalone/build_terminal.py": "bc816a41786fbf9c915f637879b72e16dfe7c9357e92331e04832c7ff2726b9f",
+    "standalone/test_aspect_get_vm_dos.py": "a3df9f31737e98849416d50a75e5ab867e09235d1d103d9274476a2a81785fdc",
+    "standalone/compiler_bridge_recovery_observer.py": "9b784eee404c0bb36f730d97cf310ff3a500c144a238a821ee86dcae55ca71c5",
+    "standalone/prove_compiler_bridge_source.py": "cb94b8d89c581cdf55772cbbe15786298500af98db015e0f1aa5d4fd37551a5c"
+  },
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "full_parent_restore_failure_verified": true,
+  "full_parent_restore_scope": "One synthetic grow or first-read failure, five observed quarantine ticks, supplied retry key and actual successful retry at startup/EXECUTE; no actual DOS partial coalescing.",
+  "limitations": [
+    "These tests do not inject repeated faults, corrupt-backup repair, END cleanup errors, failed BEGIN file operations or unexpected child termination.",
+    "Exact video restoration verified for80x25 mode3/page0; other admitted rows/adapters remain separate acceptance gates.",
+    "Cold replay checks all invariant captures but excludes per-run checksum of mutable parent data; each run must pass actual kernel CRC/EOF restoration.",
+    "Historical intermediate source-case FINAL FAIL prints reflect delegated legacy expectations; final checks and process exits are authoritative.",
+    "Repeated compiler/arena reuse in one parent, selected package compatibility, physical route and full language/application parity remain open."
+  ]
+}
