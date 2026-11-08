@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[Live Chat send-mode configuration](CHAT_SEND_MODE_LIVE.md) now binds the recovered
+byte through startup and acknowledged live setup in an opt-in parent/API0107
+module. Seven DOS Chat/admission cases,295 preference checks, nested compilation
+and a1042-file cold source replay pass. New-byte BBS/package/hardware acceptance
+is still required; the selected candidate remains unchanged.
+
 [Original Chat send-mode settings](CHAT_SEND_MODE_SETTINGS.md) now recover the
 single-byte PRM selector and add an opt-in offline editor field. Both byte
 semantics and DOS save/reload/cancel are verified; startup/live frontend binding

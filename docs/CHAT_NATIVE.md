@@ -2,8 +2,8 @@
 
 The [send-mode settings checkpoint](CHAT_SEND_MODE_SETTINGS.md) confirms that
 DS1D76 is a **byte**, maps it to PRM01F2h and adds an optional offline settings
-field. The current frontend still forces buffering; native/component support
-for immediate transmission does not establish live configuration binding.
+field. The selected earlier frontend still forces buffering. The newer opt-in
+[live binding](CHAT_SEND_MODE_LIVE.md) has separate actual DOS configuration tests.
 
 The original Alt-O dispatch table at DS44E0 selects resident BAC3, a PLINK
 trampoline to overlay15:E828. The recovered controller E828..EAF2 and duplex

@@ -1,5 +1,9 @@
 # Original Chat send-mode setting
 
+The later [live configuration checkpoint](CHAT_SEND_MODE_LIVE.md) connects this
+field in an opt-in parent/API0107 module. Statements below about unbound live
+construction describe this earlier offline-settings checkpoint.
+
 The original Chat controller selects its send mode using a single byte at
 DS1D76h, PRM offset01F2h. Zero sends each key immediately; every nonzero value
 selects line buffering. The adjacent byte remains opaque. This is not a16-bit

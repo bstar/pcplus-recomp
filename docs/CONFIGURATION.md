@@ -305,4 +305,5 @@ Fresh [Chat selector evidence](CHAT_SEND_MODE_SETTINGS.md) identifies DS1D76h,
 PRM01F2h, as a single-byte zero/nonzero selector. Zero selects immediate sends;
 nonzero selects line buffering. The adjacent byte remains opaque. The codec and
 optional offline editor expose this field without normalizing stored values;
-current live terminal import and Chat construction remain unbound to it.
+the newer opt-in [live binding](CHAT_SEND_MODE_LIVE.md) separately verifies
+startup publication and acknowledged live adoption.
