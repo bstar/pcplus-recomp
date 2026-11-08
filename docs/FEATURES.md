@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Backup preparation failures](ASPECT_COMPILER_PREPARATION.md) now cover creation
+denial, a write error after a real4KB block and a reported short write at startup
+and EXECUTE. The parent is never lent; partial files retire and the interpreter
+returns I/O without a recovery wait. Application artifacts remain unchanged.
+
 [Compiler lifecycle tests](ASPECT_COMPILER_LIFECYCLE.md) now verify safe backup
 unlink failure after restored memory and two/three real compiler runs inside one
 ASPECT process. The same application binaries preserve policy, streams and fresh

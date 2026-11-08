@@ -68,7 +68,7 @@ def main():
    assert sha(fresh/'build'/folder/leaf)==sha(original/leaf),leaf
    artifacts[leaf]=sha(original/leaf)
  replays=[]
- families=('source_lease_repeat_cases','source_lease_cleanup_cases','source_lease_recovery_cases','source_lease_fault_cases','source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
+ families=('source_lease_begin_cases','source_lease_repeat_cases','source_lease_cleanup_cases','source_lease_recovery_cases','source_lease_fault_cases','source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
  for i,(path,r) in enumerate(zip(a.checks,reports)):
   leaf='build/replay-'+str(i)
   flags=['--'+key.replace('_','-') for key in families if r.get(key)]
@@ -91,6 +91,11 @@ def main():
      capture=case['restore_recovery']
      return dict(capture,kernel={k:v for k,v in capture['kernel'].items() if k!='crc'})
     assert invariant(old)==invariant(new),(old['case'],'restore_recovery')
+   if 'prepare_failure' in old:
+    def prepare_invariant(case):
+     capture=case['prepare_failure']
+     return dict(capture,kernel={k:v for k,v in capture['kernel'].items() if k!='crc'})
+    assert prepare_invariant(old)==prepare_invariant(new),(old['case'],'prepare_failure')
    if 'restore_cleanup' in old:
     def cleanup_invariant(case):
      capture=case['restore_cleanup']

@@ -1,12 +1,15 @@
 """Owned DOS fault fixture; never linked into the application.
 
-Fail one precisely scoped restore operation, observe BIOS quarantine for five
-timer ticks, then supply a retry key. Observe only retained/child state while the
-parent tail is invalid. INT21 frame offsets follow the observer's save macro.
+Inject precisely scoped preparation, restoration or cleanup failures. Observe
+BIOS quarantine/retry only for invalid memory; inspect retained/child state
+while the parent tail is invalid. INT21 frame offsets follow the observer's save macro.
 """
 import re
 
+KINDS={'grow':1,'read':2,'unlink':3,'create':4,'write':5,'short-write':6}
+
 FIELDS = ['kind','injected','prompt_seen','hold_ticks','retry_key','retry_calls',
+ 'parent_resize_calls','backup_create_calls','backup_write_calls','backup_position_lo','backup_position_hi',
  'close_calls','closed_handle','close_probe_error','retired_phase','retired_dos_error','retired_busy',
  'captured_cells','display_checked','display_cells','display_cursor_ok','display_shape_ok','display_valid',
  'unsafe','parent_extent','child_ds','paused','scope','serial','steps','current_psp','program_active']
@@ -15,7 +18,7 @@ PREFIX = ['cookie','parent','keep','full','owner','token','phase','handle','crc'
 WORDS = len(FIELDS)+len(PREFIX)
 
 def attach(source, *, kind, parent, listing, offsets, child_symbols, child_group):
- assert kind in ('grow','read','unlink')
+ assert kind in KINDS
  kernel=parent['experimental_compiler_lease_module']
  match=re.search(r'^([0-9a-f]+):([0-9a-f]+)\s+_compiler_lease_storage\b',listing,re.M)
  assert match
@@ -26,7 +29,7 @@ def attach(source, *, kind, parent, listing, offsets, child_symbols, child_group
  segment,offset=(int(n,16) for n in match.groups())
  keep=kernel['keep_paragraphs'];full=parent['memory_layout']['retained_parent_paragraphs']
  assert (segment*16+offset+28+15)//16+16<=keep<full
- prefix='get_recovery_sample:\n'+''.join('get_recovery_'+name+': dw '+str({'grow':1,'read':2,'unlink':3}[kind] if name=='kind' else 0)+'\n' for name in FIELDS)+'get_recovery_prefix: times 14 dw 0\n'
+ prefix='get_recovery_sample:\n'+''.join('get_recovery_'+name+': dw '+str(KINDS[kind] if name=='kind' else 0)+'\n' for name in FIELDS)+'get_recovery_prefix: times 14 dw 0\n'
  marker='get_compiler_largest: dw 0';assert source.count(marker)==1
  source=source.replace(marker,prefix+marker)
  marker=' mov bp,sp\n cmp byte [ss:bp+17],0x4b';assert source.count(marker)==1
@@ -39,7 +42,7 @@ def attach(source, *, kind, parent, listing, offsets, child_symbols, child_group
  cmp byte [ss:bp+17],0x4b''')
  marker='timer:\n save\n cld';assert source.count(marker)==1
  source=source.replace(marker,marker+'\n call get_recovery_tick')
- constants=dict(RECOVERY_KIND={'grow':1,'read':2,'unlink':3}[kind],RECOVERY_KEEP=keep,RECOVERY_FULL=full,
+ constants=dict(RECOVERY_KIND=KINDS[kind],RECOVERY_KEEP=keep,RECOVERY_FULL=full,
   RECOVERY_MODULE=kernel['relative_target_segment'],RECOVERY_END=kernel['relative_target_segment']+(kernel['bank_bytes']+15)//16,
   RECOVERY_KERNEL=segment,RECOVERY_STATE=offset,RECOVERY_CHILD_GROUP=child_group,
   RECOVERY_SCREEN=frame_segment,RECOVERY_FRAME=frame_offset,RECOVERY_FRAME_META=frame_offset+8000,
@@ -58,7 +61,11 @@ get_recovery_dos:
  jne .no
  cmp word [cs:exec_done],0
  jne .no
+%if RECOVERY_KIND >= 4
+ cmp word [cs:get_compiler_attempts],0
+%else
  cmp word [cs:get_compiler_attempts],1
+%endif
  jne .no
  ; Authenticate the interrupted caller CS as the loaded kernel, not compiler.
  mov ax,[cs:parent_psp]
@@ -71,6 +78,13 @@ get_recovery_dos:
  add ax,RECOVERY_END
  cmp [ss:bp+22],ax
  jae .no
+ cmp byte [ss:bp+17],0x4a
+ jne .not_resize
+ mov ax,[cs:parent_psp]
+ cmp [ss:bp],ax
+ jne .not_resize
+ inc word [cs:get_recovery_parent_resize_calls]
+.not_resize:
 %if RECOVERY_KIND == 1
  cmp byte [ss:bp+17],0x4a
  jne .no
@@ -90,7 +104,7 @@ get_recovery_dos:
  jne .no
  cmp word [ss:bp+12],4096
  jne .no
-%else
+%elif RECOVERY_KIND == 3
  mov ax,[cs:parent_psp]
  add ax,16+RECOVERY_KERNEL
  mov es,ax
@@ -118,6 +132,53 @@ get_recovery_dos:
  jne .no
  cmp word [es:RECOVERY_STATE+14],0xffff
  jne .no
+%else
+ mov ax,[cs:parent_psp]
+ add ax,16+RECOVERY_KERNEL
+ mov es,ax
+ cmp word [es:RECOVERY_STATE+12],1
+ jne .no
+ cmp word [es:RECOVERY_STATE+22],1
+ jne .no
+ cmp word [es:RECOVERY_STATE+26],1
+ jne .no
+%if RECOVERY_KIND == 4
+ cmp word [ss:bp+16],0x6c00
+ jne .no
+ mov ax,es
+ cmp [ss:bp+2],ax
+ jne .no
+ cmp word [ss:bp+8],RECOVERY_STATE+156 ; DS:SI exclusive-create name
+ jne .no
+ inc word [cs:get_recovery_backup_create_calls]
+%else
+ cmp byte [ss:bp+17],0x40
+ jne .no
+ mov ax,[es:RECOVERY_STATE+14]
+ cmp ax,0xffff
+ je .no
+ cmp [ss:bp+14],ax
+ jne .no
+ cmp word [ss:bp+10],0
+ jne .no
+ cmp word [ss:bp+12],4096
+ jne .no
+ mov ax,[cs:parent_psp]
+ add ax,RECOVERY_KEEP
+ cmp word [cs:get_recovery_backup_write_calls],0
+ je .first_write
+ add ax,256
+ cmp [ss:bp+2],ax
+ jne .no
+ inc word [cs:get_recovery_backup_write_calls]
+ jmp .write_match
+.first_write:
+ cmp [ss:bp+2],ax
+ jne .no
+ inc word [cs:get_recovery_backup_write_calls]
+ jmp .no ; First4096 bytes must be written by actual DOS.
+.write_match:
+%endif
 %endif
  mov ax,[cs:parent_psp]
  dec ax
@@ -138,6 +199,7 @@ get_recovery_dos:
  inc word [cs:get_recovery_retry_calls]
  jmp .no
 .fail:
+%if RECOVERY_KIND >= 3
 %if RECOVERY_KIND == 3
  ; Duplicating the previously closed child JFT entry must fail with DOS6.
  mov bx,[cs:get_recovery_closed_handle]
@@ -152,6 +214,18 @@ get_recovery_dos:
  xor ax,ax
 .closed:
  mov [cs:get_recovery_close_probe_error],ax
+%elif RECOVERY_KIND >= 5
+ mov bx,[ss:bp+14]
+ xor cx,cx
+ xor dx,dx
+ mov ax,0x4201 ; Current-position query: no seek or file mutation.
+ pushf
+ call far [cs:old21]
+ jc .position_failed
+ mov [cs:get_recovery_backup_position_lo],ax
+ mov [cs:get_recovery_backup_position_hi],dx
+.position_failed:
+%endif
  mov ax,[cs:parent_psp]
  add ax,16+RECOVERY_KERNEL
  mov es,ax
@@ -191,19 +265,24 @@ get_recovery_dos:
  call get_recovery_cells
  mov [cs:get_recovery_captured_cells],ax
  mov word [cs:get_recovery_injected],1
-%if RECOVERY_KIND != 3
+%if RECOVERY_KIND < 3
  ; Remove only this owned fixture's early return-prompt key. No user keyboard.
  mov ax,0x40
  mov es,ax
  mov ax,[es:0x1c]
  mov [es:0x1a],ax
 %endif
+%if RECOVERY_KIND == 6
+ mov word [ss:bp+16],4095 ; Synthetic short count, no second write performed.
+ and word [ss:bp+24],0xfffe
+%else
 %if RECOVERY_KIND == 1
  mov word [ss:bp+16],8
 %else
  mov word [ss:bp+16],5
 %endif
- or word [ss:bp+24],1 ; CF in original INT21 IRET frame, not saved PUSHF.
+ or word [ss:bp+24],1
+%endif ; CF in original INT21 IRET frame, not saved PUSHF.
  restore
  stc
  ret
@@ -212,7 +291,7 @@ get_recovery_dos:
  clc
  ret
 
-; Scope0 restores INT0 immediately after END, before serial resume or rendering.
+; Scope0 restores INT0 after the bridge completes, before serial resume/rendering.
 ; At that boundary compare EVERY captured character/attribute and BIOS cursor.
 get_recovery_display:
  save
@@ -220,7 +299,7 @@ get_recovery_display:
  jne .done
  cmp word [cs:get_recovery_injected],1
  jne .done
-%if RECOVERY_KIND != 3
+%if RECOVERY_KIND < 3
  cmp word [cs:get_recovery_retry_key],1
  jne .done
 %endif
@@ -304,8 +383,8 @@ get_recovery_cells:
  ret
 
 get_recovery_tick:
-%if RECOVERY_KIND == 3
- ret ; Valid-memory cleanup failure must never enter BIOS quarantine.
+%if RECOVERY_KIND >= 3
+ ret ; Valid-memory preparation/cleanup failure must not enter quarantine.
 %endif
  save
  cmp word [cs:get_recovery_injected],1

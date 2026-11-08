@@ -1,5 +1,10 @@
 # Compiler cleanup and repeated leases
 
+The next [preparation checkpoint](ASPECT_COMPILER_PREPARATION.md) verifies failed
+backup creation, a partial-backup write error and a short count before lending.
+It uses the same application artifacts; the lifecycle evidence below keeps its
+scope.
+
 The same experimental application artifacts now pass backup-deletion failure
 and two/three real source compilations inside one interpreter process. This
 checkpoint adds tests and source-replay support; it changes no application
