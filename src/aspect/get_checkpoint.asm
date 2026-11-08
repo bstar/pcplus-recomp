@@ -9,7 +9,10 @@ extern aspect_get,aspect_abort_recovered
  extern runtime_alarm_abort_gate
 %endif
 global _runtime_get_native,_runtime_get_native_active
-global _runtime_get_native_aborted,runtime_get_abort_gate
+global _runtime_get_native_aborted,_runtime_get_native_generation,runtime_get_abort_gate
+_runtime_get_native_generation:
+ mov ax,[cs:get_generation]
+ ret
 _runtime_get_native_active:
  mov ax,[cs:get_checkpoint]
  ret
@@ -43,6 +46,10 @@ _runtime_get_native:
  ; arithmetic flags; preserve this exact foreground IF/DF state on abort.
  pushf
  pop word [cs:get_saved_flags]
+ inc word [cs:get_generation]
+ jnz .generation_ready
+ inc word [cs:get_generation]
+.generation_ready:
  mov word [cs:get_aborted],0
  mov word [cs:get_checkpoint],1
  call aspect_get
@@ -91,3 +98,4 @@ get_saved_sp: dw 0
 get_saved_flags: dw 0
 get_checkpoint: dw 0
 get_aborted: dw 0
+get_generation: dw 0

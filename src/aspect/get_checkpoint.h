@@ -9,5 +9,7 @@
 enum {GET_NATIVE_OK,GET_NATIVE_ABORTED,GET_NATIVE_BUSY,GET_NATIVE_CONTEXT};
 unsigned __cdecl runtime_get_native(void);
 unsigned __cdecl runtime_get_native_active(void);
+/* Nonzero generation advances only on admitted entry; rejected nesting retains it. */
+unsigned __cdecl runtime_get_native_generation(void);
 unsigned __cdecl runtime_get_native_aborted(void);
 #endif

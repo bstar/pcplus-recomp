@@ -20,7 +20,9 @@ then propagate the original native abort. This checkpoint alone grants no right
 to clear live deferred frames or free a typed destination. Direct dispatcher
 longjmp, CPU faults, foreign-stack policy and recursive cleanup faults are not
 caught by this implementation. Actual field/receive/RPC and lifetime composition
-remains the next integration step.
+is covered next by the [serviced editor lifetime](ASPECT_GET_RUNTIME.md)
+diagnostic; actual recovered-command/dispatcher and live parent integration
+remain open.
 
 ## Evidence
 

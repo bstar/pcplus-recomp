@@ -21,8 +21,10 @@ also links; independent tests still model their peer services. Actual child/seri
 composition and application memory/package gates remain open. A subsequent
 [native abort checkpoint](ASPECT_GET_CHECKPOINT.md) passes the142 recovered-owner
 cases plus12 injected faults/retries and a16-input exact rebuild. It restores
-the owning stack; display/WHEN resource cleanup and actual interpreter lifetime
-integration remain open.
+the owning stack. The [serviced editor lifetime](ASPECT_GET_RUNTIME.md) now
+composes field/client/WHEN/checkpoint machinery in676 DOS checks and a20-source
+exact rebuild, plus292 client checks. Actual recovered-command bindings, native
+dispatcher lifetime, real parent/receive and application integration remain open.
 The field/input owner is not integrated: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.

@@ -5,6 +5,12 @@
 #include "runtime.h"
 #include "serial_runtime.h"
 #include "when_runtime.h"
+#if defined(ASPECT_GET_VM) && (!defined(ASPECT_GET_SERVICE) || !defined(ASPECT_GET_DISPLAY))
+#error Native GET requires its keyboard lease and renderer field contract
+#endif
+#ifdef ASPECT_GET_VM
+#include "get_checkpoint.h"
+#endif
 #ifdef ASPECT_ALARM_VM
 #include "alarm_cooperative.h"
 #endif
@@ -26,6 +32,9 @@ static unsigned service_busy,monitor_busy;
 static unsigned window_keys_suppressed;
 #ifdef ASPECT_GET_SERVICE
 static unsigned get_keys_owned;
+#ifdef ASPECT_GET_VM
+static unsigned get_generation;
+#endif
 #endif
 #ifdef ASPECT_ALARM_SERVICE
 static unsigned alarm_keys_owned;
@@ -173,17 +182,43 @@ unsigned runtime_when_get_begin(void)
  if(alarm_keys_owned)return ASPECT_RUN_STATE;
 #endif
  if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+#ifdef ASPECT_GET_VM
+ if(runtime_get_native_active()!=1 || !runtime_get_native_generation() || aspect_render_field_state())return ASPECT_RUN_STATE;
+ get_generation=runtime_get_native_generation();
+#endif
  get_keys_owned=1;return 0;
 }
 unsigned runtime_when_get_end(void)
 {
  if(!get_keys_owned || runtime_when_deferred || service_busy || monitor_busy)return ASPECT_RUN_STATE;
+#ifdef ASPECT_GET_VM
+ if(runtime_get_native_active()!=1 || get_generation!=runtime_get_native_generation() ||
+    (aspect_render_field_state()&(ASPECT_FIELD_OWNED|ASPECT_FIELD_WAIT)))return ASPECT_RUN_STATE;
+ get_generation=0;
+#endif
  get_keys_owned=0;return 0;
 }
+#ifdef ASPECT_GET_VM
+unsigned runtime_when_get_unwind(void)
+{
+ if(!get_keys_owned || runtime_get_native_active() || !runtime_get_native_aborted() ||
+    get_generation!=runtime_get_native_generation() ||
+    (aspect_render_field_state()&(ASPECT_FIELD_OWNED|ASPECT_FIELD_WAIT)))return ASPECT_RUN_STATE;
+ /* Only this synchronous GET generation's abandoned frames are discarded.
+  * A live or later invocation cannot use an old aborted outcome as authority. */
+ service_busy=monitor_busy=runtime_when_deferred=runtime_when_pending_service=0;
+ get_keys_owned=0;get_generation=0;return 0;
+}
+#endif
 unsigned runtime_when_get_poll(void)
 {
  unsigned leads;unsigned long started,now;
  if(runtime_error)return runtime_error;
+#ifdef ASPECT_GET_VM
+ if(runtime_get_native_active()!=1 || get_generation!=runtime_get_native_generation()){
+  runtime_set_error(ASPECT_RUN_STATE);return runtime_error;
+ }
+#endif
  if(!get_keys_owned || runtime_when_deferred || service_busy || monitor_busy ||
     confirmation_active || aspect_render_window_active()){
   runtime_set_error(ASPECT_RUN_STATE);return runtime_error;

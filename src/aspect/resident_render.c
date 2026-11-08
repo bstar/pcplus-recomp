@@ -18,7 +18,7 @@ static unsigned keyboard_queried,keyboard_wait,keyboard_received;
 static unsigned key_wait,key_policy_read,key_window;
 static unsigned window_owned,window_wait,window_received,confirm_owned;
 #ifdef ASPECT_GET_DISPLAY
-static unsigned field_owned,field_wait;
+static unsigned field_owned,field_wait,field_dirty;
 #endif
 extern unsigned runtime_set_duplex_changed,runtime_serial_local_echo;
 static unsigned label_wait,label_next,label_done;
@@ -143,7 +143,7 @@ unsigned __cdecl aspect_render_prepare(unsigned offset,unsigned segment,unsigned
  aspect_render_client_record.callback_segment=aspect_render_code_segment();
  callback_error=label_wait=confirm_owned=0;aspect_render_policy_reset();
 #ifdef ASPECT_GET_DISPLAY
- field_owned=field_wait=0;
+ field_owned=field_wait=field_dirty=0;
 #endif
  return aspect_render_client_prepare();
 }
@@ -160,6 +160,9 @@ unsigned __cdecl aspect_render_emit(unsigned byte)
 {
  unsigned result;
  if(RESPONSE_INVALID())return ASPECT_RUN_STATE;
+#ifdef ASPECT_GET_DISPLAY
+ if(field_owned)field_dirty=1;
+#endif
  callback_error=0;
  result=typed(aspect_render_request(ASPECT_RENDER_EMIT,byte&255));
  RESPONSE_DONE(result);
@@ -178,7 +181,7 @@ unsigned __cdecl aspect_render_finish(void)
  field_wait=0;
  if(service_check())return ASPECT_RUN_STATE;
  if((result&0xfff0U)==0xe000U && (result&15U)<=ASPECT_RUN_SERIAL){
-  attached=window_owned=confirm_owned=field_owned=field_wait=0;
+  attached=window_owned=confirm_owned=field_owned=field_wait=field_dirty=0;
   result&=15U;return result?result:callback_error;
  }
  return result?typed(result):ASPECT_RUN_STATE;
@@ -189,6 +192,8 @@ unsigned __cdecl aspect_render_finish(void)
 #endif
 }
 #ifdef ASPECT_GET_DISPLAY
+unsigned __cdecl aspect_render_field_state(void)
+{return (field_owned?ASPECT_FIELD_OWNED:0)|(field_wait?ASPECT_FIELD_WAIT:0)|(field_dirty?ASPECT_FIELD_DIRTY:0);}
 unsigned __cdecl aspect_render_field(unsigned operation,unsigned value)
 {
  unsigned result;
@@ -200,10 +205,14 @@ unsigned __cdecl aspect_render_field(unsigned operation,unsigned value)
  if(operation==5 && value>1)return ASPECT_RUN_OPERAND;
  if(aspect_serial_active!=1 && !(operation==5 && value==1))return ASPECT_RUN_SERIAL;
  field_wait=1;callback_error=0;
+ /* Parent BEGIN can acquire before the post-request client check fails.
+  * Reserve locally before crossing; a failed post-check must quarantine it
+  * until a repaired, tagged error-close proves retirement. */
+ if(operation==0)field_owned=field_dirty=1;
  result=aspect_render_request(ASPECT_RENDER_FIELD_BEGIN+operation,value);
  field_wait=0;if(service_check())return ASPECT_RUN_STATE;
  if(operation==5 && value==1){
-  if((result&0xfff0U)==0xe000U && (result&15U)<=ASPECT_RUN_SERIAL){field_owned=0;result&=15U;return result?result:callback_error;}
+  if((result&0xfff0U)==0xe000U && (result&15U)<=ASPECT_RUN_SERIAL){field_owned=field_dirty=0;result&=15U;return result?result:callback_error;}
   return result?typed(result):ASPECT_RUN_STATE;
  }
  if(operation==4){
@@ -211,7 +220,13 @@ unsigned __cdecl aspect_render_field(unsigned operation,unsigned value)
   return result?typed(result):ASPECT_RUN_STATE;
  }
  result=typed(result);
- if(!result){if(operation==0)field_owned=1;else if(operation==5)field_owned=0;}
+ if(operation==0 && result)field_owned=field_dirty=0;
+ if(!result){
+  if(operation==0){field_owned=field_dirty=1;}
+  else if(operation==5)field_owned=field_dirty=0;
+  else if(operation==1 || operation==2)field_dirty=1;
+  else if(operation==3)field_dirty=0;
+ }
  return result?result:callback_error;
 }
 #endif

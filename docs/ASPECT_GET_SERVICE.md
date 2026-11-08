@@ -87,8 +87,10 @@ rebuild. [The receipt](validation/aspect-get-service.json) binds these checks.
 ```
 
 The [parent display controller](ASPECT_GET_DISPLAY.md) now has separate actual
-DOS video/native-cursor component checks. Its RPC publication and composition
-with this lease are still pending.
+DOS video/native-cursor component checks. The [capability21 RPC](ASPECT_GET_RPC.md) and subsequent
+[serviced editor lifetime](ASPECT_GET_RUNTIME.md) now compose the child-side lease
+with the checkpoint and display client in a separate authored-command diagnostic.
+Actual recovered GET command and live parent/serial integration remain open.
 
 Next integration work is the parent field/cursor/attribute protocol, native GET
 abort checkpoints and lifetime, typed runtime bindings and floating runtime,

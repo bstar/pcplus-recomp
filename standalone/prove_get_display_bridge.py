@@ -9,7 +9,8 @@ def main():
  for name in ('bridge','client','output'):p.add_argument('--'+name,type=Path,required=True)
  a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  bridge=json.loads((a.bridge/'result.json').read_text());client=json.loads((a.client/'result.json').read_text())
- assert bridge['passed'] and len(bridge['cases'])==35 and client['passed'] and '271 checks' in client['transcript']
+ assert bridge['passed'] and len(bridge['cases'])==35 and client['passed']
+ client_checks=int(client['transcript'].split()[3]);assert client_checks>=271
  sources={}
  for report in (bridge,client):
   for n,d in report['sources'].items():
@@ -33,6 +34,6 @@ def main():
  run(['standalone/build_get_display_client.py','--output','build/client'])
  actual_client=json.loads((fresh/'build/client/result.json').read_text());assert actual_client==client
  for n,d in sources.items():assert sha(ROOT/n)==sha(fresh/n)==d,n
- result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,source_count=len(sources),sources=sources,parent_sha256=bridge['parent_sha256'],client_sha256=client['binary_sha256'],bridge_cases=35,client_checks=271,scope=__doc__+' Exact parent and diagnostic client EXEs and reports. Independent parent CPU replay and DOS client with modeled peer services; not actual pair/interpreter GET, connected serial/BBS, package or physical acceptance.')
+ result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,source_count=len(sources),sources=sources,parent_sha256=bridge['parent_sha256'],client_sha256=client['binary_sha256'],bridge_cases=35,client_checks=client_checks,scope=__doc__+' Exact parent and diagnostic client EXEs and reports. Independent parent CPU replay and DOS client with modeled peer services; not actual pair/interpreter GET, connected serial/BBS, package or physical acceptance.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS public source export:',len(sources),'inputs; exact parent/client and reports')
 if __name__=='__main__':main()

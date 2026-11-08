@@ -33,6 +33,10 @@ unsigned runtime_when_delay_poll(void);
 unsigned runtime_when_get_begin(void);
 unsigned runtime_when_get_end(void);
 unsigned runtime_when_get_poll(void);
+#ifdef ASPECT_GET_VM
+/* Matching restored native GET generation, after field retirement only. */
+unsigned runtime_when_get_unwind(void);
+#endif
 #endif
 #ifdef ASPECT_ALARM_SERVICE
 /* Ordinary foreground stack only. Exclusive key lease: transport/native WHEN

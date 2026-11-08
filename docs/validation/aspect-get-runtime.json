@@ -1,0 +1,109 @@
+{
+  "checkpoint_verified": true,
+  "application_GET_enabled": false,
+  "recovered_GET_command_bound": false,
+  "real_parent_parser_composition_verified": false,
+  "physical_verified": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "original_inputs": [],
+  "editor_far_storage_bytes": 200,
+  "editor_DGROUP_storage_bytes": 0,
+  "session_checks": 676,
+  "session_scenarios": 11,
+  "client_checks": 292,
+  "sources": {
+    "src/aspect/get_runtime.c": "d2a927eeb46ffef4b2632b971924ef7200fd80675a285fe5d7b8864646a108a3",
+    "src/aspect/get_runtime.h": "8958ab703e5687b1a82b47bb8339ebc306181dfb8ebd07b23b0b8a771c314f45",
+    "src/aspect/get_runtime_storage.asm": "4069ad5b08245b3c159d63c4a55733fba4fcfdd01a49bce984aa4549e823459f",
+    "src/aspect/get_checkpoint.asm": "ff9f9460d75b84eb6b040ff5bd84cd3ef1aa61571e98d7ad0b1f0f19af9df7a3",
+    "src/aspect/get_checkpoint.h": "ad5eeae18f683ccd5dee089e302476235af15b05301208911be5a0d969c61f49",
+    "src/aspect/resident_render.c": "c5bc0bb2be6401966f9f123b25022b4d9408c96dd5e889fb230523e36b4daac5",
+    "src/aspect/resident_render.h": "ab082345284761dd522fecb7ec96cabdf1d2760540f5673afa47d2613c4a5318",
+    "src/aspect/when_runtime.c": "1ddf75ad86866d5d631e06222072e15ada30ef610fd55012d8b8d9d841f7f2fe",
+    "src/aspect/when_runtime.h": "61e70ebc6797599e0aff84bc027632fdf6583c9436445252ac81de167e0f7c0d",
+    "standalone/build_get_runtime.py": "a9dc7583c860a58d62d0a895d34a45fc56ada1e40ed445a44fc5663ab562030e",
+    "standalone/get_runtime_bindings.asm": "02c7b5ed385919609ff66731d7f75f13f417590ceea925cff522726edc87f721",
+    "standalone/get_runtime_driver.c": "01db7dcdf87eeffaab7f8e845ccc9749f21eb05b08c97dd3269847cbe6a361bb",
+    "standalone/prove_get_runtime.py": "09d95a9a0fc8f22d0eeae47c80a2e556cb811867b268575e89ddef4a8b89f6b9",
+    "standalone/get_display_client_driver.c": "d598b049f68e6b1f07ab2881a56769b8487237e5ef7e7f917ebdcfa3b8e35c5f",
+    "standalone/prove_get_display_bridge.py": "6824dea483b87d8719466115af8d96ddb96695d52a409679e07ca88d0081b774",
+    "docs/ASPECT_GET_RUNTIME.md": "1c9b49cf10d419eaa5259e2d34000a78a2f05e069b353f0da5848bddfbee0c8f"
+  },
+  "evidence": {
+    "build/get-runtime-final-source-ready-20261107/result.json": {
+      "sha256": "d10a5a405995b21de6c342fe68f80f2b80d6b16a8ce323514c02943aad413bab",
+      "passed": true,
+      "binary_sha256": "c6f32d90572cb45aa0ba4493102c3985ecd3a2def0453da18f72776c6b4c4e16",
+      "transcript": "PASS GET SESSION 676 checks; actual checkpoint/WHEN/client; peer services modeled",
+      "original_inputs": [],
+      "scope": "Compose actual GET checkpoint, session, WHEN and renderer-client in DOS8086. Authored command body and modeled parent display/BIOS keys/serial/native WHEN actions. Actual native stack restoration and C ownership/field machinery. Not recovered GET operands/full dispatcher, live parent parser/UART, BBS, package capacity or physical acceptance."
+    },
+    "build/get-runtime-source-final-20261107/result.json": {
+      "sha256": "e3c8144692639f9686a909a9808957af6655941bb0e69effedc8398923bd21cf",
+      "passed": true,
+      "original_inputs": [],
+      "ancestor_git_unavailable": true,
+      "source_count": 20,
+      "binary_sha256": "c6f32d90572cb45aa0ba4493102c3985ecd3a2def0453da18f72776c6b4c4e16",
+      "transcript": "PASS GET SESSION 676 checks; actual checkpoint/WHEN/client; peer services modeled",
+      "scope": "Reproduce the GET editor lifecycle diagnostic from declared public sources. Exact diagnostic and complete report, far storage outside DGROUP and separate field code bank. Same modeled peer boundaries; no originals/private data/prior objects/ancestor Git. Not full interpreter, application/BBS/physical acceptance."
+    },
+    "build/get-runtime-client-expanded-20261107/result.json": {
+      "sha256": "1b16cd86d311abf1288820434c426ffcfd25096f90c6eaeab85ff59f959d1de8",
+      "passed": true,
+      "original_inputs": [],
+      "binary_sha256": "356ac45504d6979d06b14ff76b536cb9aa48bcc89228e31396af50429cacdec1",
+      "transcript": "PASS FIELD CLIENT 292 checks; retirement, owners, callbacks, quarantine",
+      "scope": "Real DOS child-client lifecycle tests with controlled parent scalar responses. Actual source client in DOS8086. Parent request/client-stack validation/serial boundaries are controlled services; no real resident bridge/parent/child EXE integration or physical acceptance."
+    },
+    "build/get-runtime-checkpoint-regression-20261107/result.json": {
+      "sha256": "a6a46f377ea0e75d6d74be306beab422b8c58ecd08b22284bf2716fa72658e52",
+      "checkpoint": true,
+      "injected_fault_cases": 12,
+      "passed": true,
+      "original_inputs": [],
+      "binary_sha256": "ae24d781fa31b3e4861f2f2b224a00c5644e9b416e6460b411c9ed1d74c543b3",
+      "cases": 142,
+      "cpu": "8086",
+      "data_equals_stack": true,
+      "transcript": "PASS GET CHECKPOINT 142 cases;12 injected faults/retries; recovered owner/readers/integer CRT; native abort restored DS=SS",
+      "scope": "Compose recovered GET owner/readers/integer CRT with serviced source field. Synthetic buffered stream, keyboard/display/cursor/cancel decisions and opaque float-service5. Native typed readers/global near-far copy/flush, source serviced field and native integer/long CRT. Not float mathematics, live UART, full ASPECT dispatcher, app integration or physical acceptance."
+    },
+    "build/get-runtime-checkpoint-source-20261107/result.json": {
+      "sha256": "da117d9d963c36706ae04f0864069288e509b8439a40212f21bfbe6ff7ce6c39",
+      "passed": true,
+      "source_count": 16,
+      "binary_sha256": "ae24d781fa31b3e4861f2f2b224a00c5644e9b416e6460b411c9ed1d74c543b3",
+      "cases": 142,
+      "transcript": "PASS GET CHECKPOINT 142 cases;12 injected faults/retries; recovered owner/readers/integer CRT; native abort restored DS=SS",
+      "original_inputs": [],
+      "ancestor_git_unavailable": true,
+      "scope": "Repeat composed GET owner tests from an isolated minimal public source tree. Frozen synthetic native traces, declared public sources only; no originals/private files/prior objects/Git metadata. Outer pinned Nix supplies tools. Exact executable and complete DOS replay report match; no terminal or physical acceptance."
+    }
+  },
+  "full_child_builds": {
+    "disabled": {
+      "sha256": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066",
+      "manifest_sha256": "ea3cfb063444207212fe154246eaf679d77fb5b3ae6bffc642da342f243583a3"
+    },
+    "capability21": {
+      "sha256": "d918564993399dd0b1e30d60acd1a80952a8cf9172c9dedef98a98ce9a81ffcd",
+      "manifest_sha256": "5e58d797a8b15e9afd89f2723e989f652081fbfd04e8f50fca606844a2cf758c"
+    }
+  },
+  "legacy_UART": {
+    "sha256": "962fc1d70aa908ea18dc8df872740896ec987d4fae1512c5d762d762a34401f4",
+    "manifest_sha256": "a484c018c5dafa2e426167d161bdd022948f8d571c98f5c08e652ef0e16e9f3e",
+    "wire_tests_repeated": false
+  },
+  "remaining": [
+    "Recovered GET command/runtime and cursor/geometry aliases",
+    "Typed destination/scratch lifetime in actual native dispatcher and final abort propagation",
+    "Actual parent parser and serial receive composition",
+    "FLOAT.RTE and both compiler grammars/opcode49",
+    "Raw console platform",
+    "Whole-application memory/package admission",
+    "Connected scripts/BBS and physical acceptance"
+  ]
+}

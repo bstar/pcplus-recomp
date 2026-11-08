@@ -42,6 +42,8 @@ unsigned __cdecl aspect_render_alarm_policy(unsigned *,unsigned *);
 /*21..26: begin/configure/cell/present/info/end. Error end and renderer END
  * acknowledge retirement as E000|typed status. Refused requests are untagged. */
 #define ASPECT_RENDER_FIELD_BEGIN 21U
+enum {ASPECT_FIELD_OWNED=1,ASPECT_FIELD_WAIT=2,ASPECT_FIELD_DIRTY=4};
+unsigned __cdecl aspect_render_field_state(void);
 unsigned __cdecl aspect_render_field(unsigned operation,unsigned value);
 #endif
 #if defined(ASPECT_EMULATE_VM)

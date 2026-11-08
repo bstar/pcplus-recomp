@@ -80,5 +80,14 @@ int main(void)
  reset();ck(!aspect_render_program_begin(0));before=requests;ck(aspect_render_field(0,0xffff)==10&&requests==before);
  reset();ck(!aspect_render_key(0x2c00));before=requests;ck(aspect_render_field(0,0xffff)==10&&requests==before);
  reset();check_calls=0;bad_check_at=1;before=requests;ck(aspect_render_field(0,0xffff)==10&&requests==before);bad_check_at=0;
+ reset();ck(!aspect_render_field_state());open();ck(aspect_render_field_state()==(ASPECT_FIELD_OWNED|ASPECT_FIELD_DIRTY));
+ ck(!aspect_render_field(3,0)&&aspect_render_field_state()==ASPECT_FIELD_OWNED);
+ ck(!aspect_render_emit('Z')&&(aspect_render_field_state()&ASPECT_FIELD_DIRTY));
+ ck(!aspect_render_field(5,1)&&!aspect_render_field_state());
+ reset();check_calls=0;bad_check_at=2;
+ ck(aspect_render_field(0,0xffff)==10&&(aspect_render_field_state()&ASPECT_FIELD_OWNED));
+ bad_check_at=0;before=requests;ck(aspect_render_field(0,0xffff)==10&&requests==before);
+ ck(!aspect_render_field(5,1)&&!aspect_render_field_state());open();
+ reset();override=1;reply=10;ck(aspect_render_field(0,0xffff)==10&&!aspect_render_field_state());override=0;open();
  ck(!aspect_render_finish()&&!deferred);printf("PASS FIELD CLIENT %u checks; retirement, owners, callbacks, quarantine\r\n",checks);return 0;
 }
