@@ -1,5 +1,8 @@
 # Compiler backup preparation failures
 
+The subsequent [close-error checkpoint](ASPECT_COMPILER_CLOSE.md) also checks
+failure reported after the complete backup has actually been closed.
+
 Six full-parent cases now verify failure before memory lending: exclusive backup
 creation denied, a write error after one real block, and a reported short write,
 each at source startup and EXECUTE. The same application binaries abort safely;

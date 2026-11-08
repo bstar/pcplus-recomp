@@ -1,5 +1,9 @@
 # Compiler cleanup and repeated leases
 
+The subsequent [close-error checkpoint](ASPECT_COMPILER_CLOSE.md) covers real
+backup closure followed by a reported error, before lending and after restore.
+Its scope is separate from the unlink and successful-chain cases below.
+
 The next [preparation checkpoint](ASPECT_COMPILER_PREPARATION.md) verifies failed
 backup creation, a partial-backup write error and a short count before lending.
 It uses the same application artifacts; the lifecycle evidence below keeps its

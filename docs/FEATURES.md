@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Compiler close-error tests](ASPECT_COMPILER_CLOSE.md) now cover the ambiguous
+closed-handle error before lending and after restoration at startup and EXECUTE.
+The unchanged application discards the handle, preserves valid memory/display
+and returns I/O5. Actual media errors and reuse after failure remain open.
+
 [Unexpected ASPECT termination](ASPECT_COMPILER_TERMINATION.md) now has four
 expected-stop tests: startup and EXECUTE after compilation and during partial
 parent restoration. The unchanged guard stops with an explicit reboot notice;

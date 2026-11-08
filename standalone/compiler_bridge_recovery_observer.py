@@ -6,11 +6,11 @@ while the parent tail is invalid. INT21 frame offsets follow the observer's save
 """
 import re
 
-KINDS={'grow':1,'read':2,'unlink':3,'create':4,'write':5,'short-write':6}
+KINDS={'grow':1,'read':2,'unlink':3,'create':4,'write':5,'short-write':6,'begin-close':7,'close':8}
 
 FIELDS = ['kind','injected','prompt_seen','hold_ticks','retry_key','retry_calls',
  'parent_resize_calls','backup_create_calls','backup_write_calls','backup_position_lo','backup_position_hi',
- 'close_calls','closed_handle','close_probe_error','retired_phase','retired_dos_error','retired_busy',
+ 'close_calls','closed_handle','close_probe_error','retired_phase','retired_dos_error','retired_busy','retired_handle',
  'captured_cells','display_checked','display_cells','display_cursor_ok','display_shape_ok','display_valid',
  'unsafe','parent_extent','child_ds','paused','scope','serial','steps','current_psp','program_active']
 PREFIX = ['cookie','parent','keep','full','owner','token','phase','handle','crc',
@@ -61,7 +61,7 @@ get_recovery_dos:
  jne .no
  cmp word [cs:exec_done],0
  jne .no
-%if RECOVERY_KIND >= 4
+%if RECOVERY_KIND >= 4 && RECOVERY_KIND != 8
  cmp word [cs:get_compiler_attempts],0
 %else
  cmp word [cs:get_compiler_attempts],1
@@ -104,7 +104,7 @@ get_recovery_dos:
  jne .no
  cmp word [ss:bp+12],4096
  jne .no
-%elif RECOVERY_KIND == 3
+%elif RECOVERY_KIND == 3 || RECOVERY_KIND == 8
  mov ax,[cs:parent_psp]
  add ax,16+RECOVERY_KERNEL
  mov es,ax
@@ -120,8 +120,12 @@ get_recovery_dos:
  cmp [ss:bp+14],ax
  jne .no
  mov [cs:get_recovery_closed_handle],ax
+%if RECOVERY_KIND == 8
+ jmp .close_matched
+%else
  inc word [cs:get_recovery_close_calls]
- jmp .no ; Actual close is always passed through to DOS.
+ jmp .no ; Unlink fixture passes actual close through to DOS.
+%endif
 .unlink:
  cmp byte [ss:bp+17],0x41
  jne .no
@@ -151,6 +155,14 @@ get_recovery_dos:
  cmp word [ss:bp+8],RECOVERY_STATE+156 ; DS:SI exclusive-create name
  jne .no
  inc word [cs:get_recovery_backup_create_calls]
+%elif RECOVERY_KIND == 7
+ cmp byte [ss:bp+17],0x3e
+ jne .no
+ mov ax,[es:RECOVERY_STATE+14]
+ cmp ax,0xffff
+ je .no
+ cmp [ss:bp+14],ax
+ jne .no
 %else
  cmp byte [ss:bp+17],0x40
  jne .no
@@ -180,6 +192,7 @@ get_recovery_dos:
 .write_match:
 %endif
 %endif
+.close_matched:
  mov ax,[cs:parent_psp]
  dec ax
  mov es,ax
@@ -213,6 +226,40 @@ get_recovery_dos:
  call far [cs:old21] ; retire only our unexpected duplicate, never original
  xor ax,ax
 .closed:
+ mov [cs:get_recovery_close_probe_error],ax
+%elif RECOVERY_KIND == 7 || RECOVERY_KIND == 8
+ ; Close the real owned backup first, then report an error to the caller.
+ ; DOS is permitted to have closed a handle despite returning a close error.
+ mov bx,[ss:bp+14]
+ mov [cs:get_recovery_closed_handle],bx
+ xor cx,cx
+ xor dx,dx
+ mov ax,0x4201
+ pushf
+ call far [cs:old21]
+ jc .close_position_failed
+ mov [cs:get_recovery_backup_position_lo],ax
+ mov [cs:get_recovery_backup_position_hi],dx
+.close_position_failed:
+ mov bx,[cs:get_recovery_closed_handle]
+ mov ah,0x3e
+ pushf
+ call far [cs:old21]
+ jnc .real_closed
+ mov word [cs:get_recovery_unsafe],1
+.real_closed:
+ inc word [cs:get_recovery_close_calls]
+ mov bx,[cs:get_recovery_closed_handle]
+ mov ah,0x45
+ pushf
+ call far [cs:old21]
+ jc .close_probed
+ mov bx,ax
+ mov ah,0x3e
+ pushf
+ call far [cs:old21]
+ xor ax,ax
+.close_probed:
  mov [cs:get_recovery_close_probe_error],ax
 %elif RECOVERY_KIND >= 5
  mov bx,[ss:bp+14]
@@ -335,6 +382,8 @@ get_recovery_display:
  mov [cs:get_recovery_retired_dos_error],ax
  mov ax,[es:RECOVERY_STATE+26]
  mov [cs:get_recovery_retired_busy],ax
+ mov ax,[es:RECOVERY_STATE+14]
+ mov [cs:get_recovery_retired_handle],ax
  call get_recovery_cells
  mov [cs:get_recovery_display_cells],ax
  cmp ax,2000
