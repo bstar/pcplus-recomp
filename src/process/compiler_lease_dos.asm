@@ -171,7 +171,11 @@ last_error: dw 0
 %else
 %define LEASE_BYTES 4352
 %endif
+%ifdef COMPILER_LEASE_MODULE
+SEGMENT LEASE_STORAGE public align=16 class=FARCODE use16
+%else
 SEGMENT LEASE_STORAGE public align=16 class=FAR_DATA use16
+%endif
 global _compiler_lease_storage
 _compiler_lease_storage: dw 0
  resb LEASE_BYTES-2

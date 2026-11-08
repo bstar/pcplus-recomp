@@ -10,6 +10,7 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser.add_argument('--compiler-lease-module',action='store_true',help='Experimental resident core and cold compiler-bank layout; no child bridge admission yet')
 parser.add_argument('--meta-shared-runtime',action='store_true',help='Experimental shared Line/Port loader and transient Meta frontend; implies Alt-M')
 parser.add_argument('--meta-editor',action='store_true',help='Experimental serviced Alt-M and closed-lease live key adoption; implies matched module')
 parser.add_argument('--meta-loader-probe',action='store_true',help='Diagnostic only: full-parent loader/save/reload before UART startup, then exit')
@@ -1014,7 +1015,22 @@ if args.phone_log_bank:
  from build_phone_log_bank import build_bank
  phone_log_bank=build_bank(OUT,reservations=args.phone_log_reservations,startup=args.phone_log_startup,lifecycle=args.phone_log_lifecycle,events=args.phone_log_events,disk=args.phone_log_disk,controls=args.phone_log_controls,gateway=args.gateway_files,shared_paths=args.global_help,optimize_paths=args.chat_help)
  objects+=list(map(str,phone_log_bank['objects']));sources+=phone_log_bank['sources']
-ordering=['CODE','FARCODE']+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
+compiler_lease_module=None
+if args.compiler_lease_module:
+ assert args.meta_shared_runtime and args.aspect_get_policy,'Compiler bank layout requires the complete shared-runtime GET profile'
+ lease_inputs=['compiler_lease.c','compiler_lease_core.c','compiler_lease_private.h','compiler_lease.h','compiler_lease_dos.asm','compiler_lease_module.asm','compiler_lease_bank.asm']
+ sources += [ROOT/'src/process'/n for n in lease_inputs]
+ for stem in ['compiler_lease','compiler_lease_core']:
+  obj=OUT/(stem+'.obj')
+  subprocess.run(['wcc','-q','-os','-bt=dos','-0','-ms','-fpc','-ecc','-s','-w4','-we','-dCOMPILER_LEASE_BANKED','-dCOMPILER_LEASE_MODULE','-fo='+str(obj),str(ROOT/'src/process'/(stem+'.c'))],check=True)
+  if stem=='compiler_lease':lease_bank_obj=str(obj)
+  else:objects.append(str(obj))
+ for stem,source,defines in [('lease_start','compiler_lease_bank.asm',['-DBANK_START','-DBANK_PADDING=0']),('lease_end','compiler_lease_bank.asm',[]),('lease_io','compiler_lease_dos.asm',['-DCOMPILER_LEASE_BANKED','-DCOMPILER_LEASE_MODULE']),('lease_info','compiler_lease_module.asm',[])]:
+  obj=OUT/(stem+'.obj')
+  subprocess.run(['nasm','-f','obj',*defines,str(ROOT/'src/process'/source),'-o',str(obj)],check=True)
+  objects.append(str(obj))
+  if stem=='lease_start':objects.append(lease_bank_obj)
+ordering=['CODE','FARCODE']+(['LEASE_BANK'] if args.compiler_lease_module else [])+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
 chat_loader=None
 if args.chat_loader:
  from chat.loader_link import build_loader
@@ -1053,6 +1069,11 @@ if args.meta_editor_module:
  from meta_overlay import split
  meta_overlay=split(OUT/'TERMINAL.EXE',OUT/'terminal.map','redisplay_snapshot',line_overlay=line_overlay,max_bytes=43000 if args.meta_shared_runtime else 24000)
  sources.append(ROOT/'standalone/meta_overlay.py')
+if args.compiler_lease_module:
+ from compiler_lease_module import split
+ compiler_lease_module=split(OUT/'TERMINAL.EXE',OUT/'terminal.map','redisplay_snapshot',arena_offset=14336,arena_bytes=2048,overlays=[('line',line_overlay),('meta',meta_overlay)])
+ compiler_lease_module.update(production_bridge_admission=False,runtime_arena_ownership_verified=False)
+ sources.append(ROOT/'standalone/compiler_lease_module.py')
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
 assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64KiB'
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
@@ -1247,6 +1268,7 @@ if args.original_reference:
  manifest['limitations']=[s.replace('Alt-Z opens a source-owned five-group','Backtick opens a source-owned five-group') for s in manifest['limitations']]
 manifest['limitations'].append('An otherwise eligible Alt-Z read during normal parser ownership is retained until a distinct resident foreground service can recheck all guards. All BIOS key values, including AX0, retain their key meaning. Subsequent keys remain in the existing32-word typeahead FIFO; repeated Alt-Z coalesces. Escape cancels locally; Alt-X/Alt-H cancel then use normal dispatch. Changed owners/geometry or foreground stop discard the owned pending typeahead. Overflow retains the existing explicit exit3 policy. This is maintained behavior; it does not identify the cause of the earlier unobserved Synchronet refusal.')
 manifest['compiler_helper_adapters']={'import_counts':helper_adapters['import_counts'],'record_policy':'Only EXTDEF names/record lengths/checksums change; symbol indices, code, data, local symbols and fixups are preserved.'}
+if args.compiler_lease_module:manifest['experimental_compiler_lease_module']=compiler_lease_module
 (OUT/'compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**helper_adapters},indent=2)+'\n')
 manifest['zmodem_compiler_helper_adapters']=zmodem_helper_adapters
 (OUT/'zmodem-compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**zmodem_helper_adapters},indent=2)+'\n')

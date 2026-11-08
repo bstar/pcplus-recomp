@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Compiler-bank loading](ASPECT_COMPILER_MODULE.md) passes cold loading, corrupt/
+missing-module refusal and1,416 restoration checks;33-source component and
+735-source full-parent rebuilds reproduce exactly. Rebased Line/Port and Meta
+checks pass. **Full-parent admission fails:** its additional2,912 resident bytes
+prevent ordinary GET startup; all six cases fail. This diagnostic candidate has
+no child bridge/admission and remains unselected. Reduce permanent footprint
+before integrating source compilation; do not relax the existing GET gate.
+
 [Banked compiler-memory leasing](ASPECT_COMPILER_LEASE.md) now passes1,416
 DOS checks with actual compiler execution over the temporary code bank, exact
 161,152-byte restoration, CRC-rejection quarantine/retry, PSP/MCB ownership,

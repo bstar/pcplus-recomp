@@ -1,0 +1,189 @@
+{
+  "checkpoint": "Cold compiler module with reproduced but unaccepted full-parent layout",
+  "component_passed": true,
+  "component_checks": 1416,
+  "module": {
+    "format": "source-linked-compiler-lease-v1",
+    "original_inputs": [],
+    "bank_bytes": 1792,
+    "relocations": 61,
+    "sha256": "1641e9952aa1051645c3ba88153994ca0e6d97f9142b3628c393bb6b9fc80e4e",
+    "crc16": "0ddd",
+    "relative_target_segment": 20019,
+    "keep_paragraphs": 20035,
+    "module_bytes": 1914,
+    "extracted_bytes": 1792,
+    "arena_symbol": "_compiler_lease_bank_start",
+    "arena_offset": 0,
+    "arena_bytes": 4096,
+    "linked_sha256": "49141a7a935739d86b34a73179377f627acc2263bdcd8cb8d627fe7b82e33eb9",
+    "limitations": [
+      "Matched parent only; CRC16 is corruption detection, not authenticity.",
+      "Caller must own inactive overlay arena; layout extraction does not establish runtime ownership."
+    ]
+  },
+  "resident_sections": {
+    "LEASE_CORE": 1858,
+    "LEASE_IO_CODE": 518,
+    "LEASE_STORAGE": 512,
+    "LEASE_MODULE_INFO": 14
+  },
+  "resident_section_bytes": 2902,
+  "component_source_count": 33,
+  "parent_layout_source_count": 735,
+  "full_parent_layout_reproduced": true,
+  "full_parent_compatibility_accepted": false,
+  "production_bridge_admission": false,
+  "runtime_arena_ownership_verified": false,
+  "production_integrated": false,
+  "source_compiler_residency_verified": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "original_inputs": [],
+  "parent_sha256": "84b303496b9f0164e655d5ace4e36b23dd64077fb21570ec3992bae947e12de6",
+  "child_sha256": "54590fd38a8c9992bc747d12b2ea330c6eb749f8bf7bbffcb2d9d4d0a0fe2ff1",
+  "component_parent_sha256": "9c9fe779e56dbcc375444dff22f7e3767a05b8a8ab023709326a7e02ab136aca",
+  "component_client_sha256": "04978c7a47281251dfdffe4cde2ce0a45c894d20f5bffea7bd20a3304532b968",
+  "compiler_sha256": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+  "full_parent_module": {
+    "format": "source-linked-compiler-lease-v1",
+    "original_inputs": [],
+    "bank_bytes": 1792,
+    "relocations": 61,
+    "sha256": "369d194ef73b5f8686a4b002ba36e6464f135a4d7c95dbea08634636255817bf",
+    "crc16": "9028",
+    "relative_target_segment": 22597,
+    "keep_paragraphs": 20217,
+    "module_bytes": 1914,
+    "extracted_bytes": 1792,
+    "arena_symbol": "redisplay_snapshot",
+    "arena_offset": 14336,
+    "arena_bytes": 2048,
+    "linked_sha256": "b1f4a77a0d7bcc5309676652aff3e9b40289aebe8ee0cd84c94e9a931e7ddb59",
+    "limitations": [
+      "Matched parent only; CRC16 is corruption detection, not authenticity.",
+      "Caller must own inactive overlay arena; layout extraction does not establish runtime ownership."
+    ],
+    "production_bridge_admission": false,
+    "runtime_arena_ownership_verified": false
+  },
+  "passed_rebased_UI_cases": [
+    "Line/Port noop",
+    "Meta edit"
+  ],
+  "failed_GET_cases": [
+    "get-vm-string",
+    "get-vm-integer",
+    "get-vm-long",
+    "get-vm-cancel",
+    "get-vm-float",
+    "get-vm-truncated"
+  ],
+  "child_startup_observation": {
+    "memory_before_EXEC": {
+      "largest_free_bytes": 137440,
+      "observer_segment": 52299,
+      "conventional_kb": 640
+    },
+    "allocation_probe": {
+      "_runtime_script_file_open_calls": 0,
+      "_runtime_script_file_live": 0,
+      "_runtime_script_file_last": 0,
+      "_runtime_native_error_code": 0,
+      "_runtime_steps": 0,
+      "_runtime_live": 0,
+      "_runtime_alloc_calls": 0,
+      "___nheapbeg": 0,
+      "__curbrk": 43712,
+      "__STACKLOW": 35571,
+      "__STACKTOP": 43712,
+      "PSP_allocation_paragraphs": 8516,
+      "environment_paragraphs": 73,
+      "environment_string_bytes": 140
+    },
+    "child_exit_probe": {
+      "DS": 38218,
+      "errno": 5,
+      "error": 0,
+      "opcode": 0,
+      "compiler_calls": 0,
+      "file_status": 0
+    }
+  },
+  "previous_parent_largest_free_bytes": 140352,
+  "actual_parent_largest_free_bytes": 137440,
+  "aligned_parent_increase_bytes": 2912,
+  "sources": {
+    "src/process/compiler_lease_bank.asm": "b5e2c0fff0d6b41c9dfaee17887b8144fdf39639ab5a55e4629be26822c19216",
+    "src/process/compiler_lease_core.c": "d8c887e3f59a2114e3f32da70d77c87b37ab48d9e3b3dd167bea7f01cba3e116",
+    "src/process/compiler_lease_dos.asm": "4ea04654aa0ee9fdbc2b71caba68cac081e5147bc48feb93886d9349997bdbee",
+    "src/process/compiler_lease_module.asm": "fc754658ac99654416b3dff87ee7ceffc286d1063832f4ede2e9d931c8c99543",
+    "standalone/compiler_lease_module.py": "f0e63b7c1dd37d77089b9ca1cc176f71799d63318f59bc0cce6edd1f8feb49f6",
+    "standalone/prove_compiler_lease_parent_layout.py": "5371956e77bd7b62182c9c387b2fdd80cf96ede6bf7129d54e720bf0cb2262ef",
+    "standalone/prove_compiler_lease_source.py": "133eeecee868e5c6b5d92a4b5d4a03f6a8f7ccfc0b751e6c430af5df81aebb24",
+    "standalone/test_compiler_lease_dos.py": "e5ea1d8fd77fc7377ec1907ee4edced62822d872859dd16d8c753668b11e858e",
+    "standalone/build_terminal.py": "6c5d103e49126185aeae73eb37dc5b5a0679d0e91d15c9f6f1c0151bde8fdc8a",
+    "docs/ASPECT_COMPILER_MODULE.md": "a21e8d6fdbf5ff335528bb0cc9d6afe44160cba7bec0a4ba16faaa76ab313e7e",
+    "docs/ASPECT_COMPILER_LEASE.md": "66e1bf510b4affb3f75cc0bf3de327c39c37b24d19f56117fe16c257b59d497e",
+    "docs/ASPECT_COMPILER_MEMORY.md": "3955b116dafb71e67de092ee0d0872bff8187a7cde7069152dafa3beff3b3554",
+    "docs/FEATURES.md": "d31693770a1f8513ff9c8c1a262643aead3ca7aa9a643e79b2407cd955f7e8e0"
+  },
+  "evidence": {
+    "build/compiler-lease-module-current-20261108/result.json": {
+      "sha256": "1d67957ad99e22519cd811bf41f1fbf3aa6fdd0cfddb96f75a52e2f4bd0dcd3c",
+      "passed": true
+    },
+    "build/compiler-lease-module-source-20261108/result.json": {
+      "sha256": "ee89c7cd40f8309e371725d27b6996eb867c22404bb588ac84dff41e1aeec04a",
+      "passed": true
+    },
+    "build/compiler-lease-parent-layout-source-20261108/result.json": {
+      "sha256": "879d95ca18b1a5084639000d018b61388a14f589c9062076f6642bf988392da7",
+      "passed": true
+    },
+    "build/compiler-lease-layout-get-20261108/checks.json": {
+      "sha256": "5d8eda4c0198f7f20a4067aa79ca9b56cf2f4cdb345b939a1031c1feb8a9943e",
+      "passed": false
+    },
+    "build/compiler-lease-layout-meta-20261108/result.json": {
+      "sha256": "ffeaaa09cde21e377e1fcf28c557a9863f30fd5cfd4fe7c17994a8680a912b5e",
+      "passed": true
+    },
+    "build/compiler-lease-layout-line-20261108/result.json": {
+      "sha256": "b98fdaf49aee074a338eeee7502f5be08d552ae0cb133fc253a1b2491030710d",
+      "passed": true
+    },
+    "build/compiler-lease-parent-layout-third-20261108/manifest.json": {
+      "sha256": "fd31a94017447396fe67c71aa363d500fcf21c94217d1c3322dd18d71f42c0dd"
+    },
+    "build/compiler-lease-parent-layout-third-20261108/terminal.map": {
+      "sha256": "35ddaa9674709240bfb0c877850a8f81979268e6efa0d9b783cca3c88c0a0361"
+    },
+    "build/compiler-lease-parent-layout-third-20261108/TERMINAL.EXE": {
+      "sha256": "84b303496b9f0164e655d5ace4e36b23dd64077fb21570ec3992bae947e12de6"
+    },
+    "build/compiler-lease-parent-layout-third-20261108/PCCOMP.OVL": {
+      "sha256": "369d194ef73b5f8686a4b002ba36e6464f135a4d7c95dbea08634636255817bf"
+    },
+    "build/compiler-lease-parent-layout-third-20261108/PCLINE.OVL": {
+      "sha256": "449f4fc27c64531ee79c04420b6fbd17ae9a95299ef487b8f9ddce1c3c483628"
+    },
+    "build/compiler-lease-parent-layout-third-20261108/PCMETA.OVL": {
+      "sha256": "8d8f0b7f7a22394017063618f07c8d267a62d10a0790b73418237b9f328e9400"
+    }
+  },
+  "exploratory_notes": [
+    "First component extraction refused nonzero bank origin produced by AUTO grouping. Explicit LEASE_BANK_GROUP enforces zero entry offset; module includes paragraph padding explicitly.",
+    "First full-parent invocation refused an overly strong DIRECTORY_RESOURCE_OWNER assertion, corrected to the actual complete shared GET recipe. Second refused a conservative worst-case fixup bound despite1914-byte actual module fitting2048-byte slot; final tool checks exact serialized body bound.",
+    "The first cold-parent proof expected an absent original_inputs manifest key. It now accepts the existing source-only manifest schema and independently restricts every export to public source formats/directories.",
+    "Full-parent third build, component current build and both cold exports are canonical. All six GET outcomes remain failures, not reclassified successes."
+  ],
+  "limits": [
+    "Cold loader is parent-only and requires caller-owned inactive arena. Production ownership/versioned child bridge and outer-loan coordination are not implemented.",
+    "Full-parent added2912 bytes prevents ordinary GET startup; child exit errno5/heaphead0/zero runtime allocations supports early memory failure, without instruction-level CRT tracing.",
+    "Cold rebuild pass establishes exact source/layout reproduction, not runtime compatibility. UI tests establish only reported rebased routes.",
+    "Component uses8086/FPUoff integrated DOSBox; full-parent serial tests use DOS386/UMB and synthetic peer. No physical ATA/modem/BBS/booted MS-DOS claim.",
+    "No RAM increase/capacity cuts/compatibility gate relaxation or release promotion. Full source startup/EXECUTE, UART/flow/in-flight/stream/fault/parity gates remain open."
+  ]
+}

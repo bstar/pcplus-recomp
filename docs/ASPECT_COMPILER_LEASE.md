@@ -1,5 +1,9 @@
 # Backed parent-memory lease component
 
+The next [cold-module/full-parent checkpoint](ASPECT_COMPILER_MODULE.md) loads
+this bank successfully in the harness, but finds that the complete parent still
+needs a smaller resident footprint to preserve ordinary interpreter startup.
+
 The experimental banked component runs the real DOS compiler with profile-sized
 parent/interpreter allocations and restores the exact161,152-byte parent tail.
 Its resident footprint is2,241 bytes before alignment, down from the original

@@ -1,5 +1,11 @@
 # Source compiler residency under the complete parent
 
+The [cold-module layout](ASPECT_COMPILER_MODULE.md) now reproduces under the
+complete parent, including rebased existing modules. Its2,912-byte aligned
+resident increase causes the precompiled GET child to fail early with ENOMEM;
+all six ordinary GET gates fail. That candidate is unaccepted and unselected.
+Further footprint reduction is required before adding the compiler bridge.
+
 The [backed memory-lease component](ASPECT_COMPILER_LEASE.md) now runs the
 real compiler and restores161,152 bytes in a profile-sized DOS fixture, including
 failed-grow retry and ownership checks. Its banked variant now retains only

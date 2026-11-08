@@ -87,3 +87,46 @@ unsigned __far __cdecl compiler_lease_info(unsigned selector)
  if(selector==12)return FP_OFF(&compiler_lease_bank_end)-FP_OFF(&compiler_lease_bank_start);
  return 65535U;
 }
+
+#ifdef COMPILER_LEASE_MODULE
+/* Trusted parent-only cold entry. Caller must hold the inactive overlay arena;
+ * this does not grant permission to overwrite a live menu or snapshot. No DOS
+ * child bridge may expose it. Load/check/fix first, enter bank only when valid. */
+typedef struct {unsigned magic,version,bytes,fixups,crc,target,keep;} lease_module;
+extern const lease_module __far compiler_lease_expected;
+extern unsigned __far __cdecl compiler_lease_init(unsigned,unsigned,unsigned);
+unsigned __far __cdecl compiler_lease_load(const char *path,unsigned parent,unsigned token)
+{
+ unsigned fd,n,status,seg,crc,at,previous=0,value,i,base=parent+16;
+ unsigned char __far *body;
+ const lease_module __far *m=&compiler_lease_expected;
+ if(!lease_dos_context() || lease_dos_psp()!=parent)return CL_IDENTITY;
+ if(held.cookie==COOKIE && (held.phase!=CL_IDLE || held.busy))return CL_STATE;
+ if(!token || m->magic!=0x4342 || m->version!=1 || !m->bytes || m->bytes>4096 ||
+    m->fixups>256 || m->target>0x9fff-base || m->keep<16)return CL_ARGUMENT;
+ n=m->bytes+m->fixups*2;seg=base+m->target;
+ if(!block(parent,word_at(parent-1,3)) || m->keep>=word_at(parent-1,3) ||
+    seg<parent+m->keep || (unsigned long)seg*16+n>(unsigned long)(parent+word_at(parent-1,3))*16 ||
+    FP_SEG(&compiler_lease_bank_start)!=seg || FP_OFF(&compiler_lease_bank_start)!=0 ||
+    FP_OFF(&compiler_lease_bank_end)!=m->bytes)return CL_ARGUMENT;
+ fd=lease_dos_open((const unsigned char __far *)path);if(fd==65535U)return CL_IO;
+ body=MK_FP(seg,0);status=0;
+ if(lease_dos_read(fd,body,n)!=n || lease_dos_read(fd,held.buffer,1)!=0)status=CL_IO;
+ if(lease_dos_close(fd))status=CL_IO;
+ if(status)return status;
+ crc=checksum(0xffff,body,n);if(crc!=m->crc)return CL_CORRUPT;
+ /* Validate the complete fixup table before changing any loaded word. */
+ for(i=0;i<m->fixups;++i){
+  at=*(unsigned __far *)(body+m->bytes+i*2);
+  if(at>m->bytes-2 || (i && at<previous+2))return CL_CORRUPT;
+  value=*(unsigned __far *)(body+at);
+  if(value>0x9fff-base)return CL_CORRUPT;
+  previous=at;
+ }
+ for(i=0;i<m->fixups;++i){
+  at=*(unsigned __far *)(body+m->bytes+i*2);
+  *(unsigned __far *)(body+at)+=base;
+ }
+ return compiler_lease_init(parent,m->keep,token);
+}
+#endif
