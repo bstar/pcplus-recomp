@@ -109,7 +109,7 @@ def main():
   lab_payload=dict(products=staged['products'],package_sha256=sha(fresh/'build/lab-payload/package.json'),contract_sha256=sha(fresh/'build/lab-contract/result.json'),checks=contract['checks'])
  connection_result=None
  if connection:
-  run(['standalone/build_setup.py','--mouse','--notice-sound','--custom-irq','--output-dir','build/setup'])
+  run(['standalone/build_setup.py','--mouse','--notice-sound','--custom-irq',*(['--chat-mode'] if connection.get('experimental_chat_send_mode') else []),'--output-dir','build/setup'])
   run(['standalone/build_xlt_editor.py','--output-dir','build/translation'])
   run(['standalone/build_keymap_helper.py','--output','build/keymap'])
   run(['standalone/package_connection_test.py','--terminal','build/lab-payload/TERMINAL.EXE','--runner','build/child/ASPECT.EXE',
