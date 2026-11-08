@@ -1,0 +1,73 @@
+{
+  "runtime_lifecycle_guards_verified": true,
+  "GET_peers_controlled": true,
+  "complete_dispatcher_cleanup_verified": false,
+  "full_GET_interpreter_linkage_verified": false,
+  "application_GET_enabled": false,
+  "compiler_GET_enabled": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "original_inputs": [],
+  "runtime_cases": 1123,
+  "runtime_checks": 27035,
+  "new_lifecycle_checks": 49,
+  "lifecycle_cold_sources": 116,
+  "command_cold_sources": 45,
+  "sources": {
+    "src/aspect/runtime.c": "336a7b827b44113f8c08475da6bbc50811e7662d44cfc94a539ec19f49153553",
+    "src/aspect/get_command.c": "c50f529ba0ff92ce35c6fb29855b79da2a700fed361bde3d8da4810fa9407937",
+    "src/aspect/get_command.h": "ece4774e99e6cc0a093c836a6025661ad04d5e9b413338e0b47ae17fc142567d",
+    "standalone/get_lifecycle_diagnostic.c": "e4e8598347620cc52cdaeea8891f291add3862a7fb52b67b13664f8816ee3dcb",
+    "standalone/build_aspect_runtime.py": "bca8ed3b5a985d61b8e0ec759cd4f9cdc4878b9126e4a6a072d9f5f6c3f414c6",
+    "standalone/check_aspect_runtime.py": "417a9d2010b74bdc48cc8de62ecaf93c653bf0cda1b2374ab05f9a0d1c3e7f78",
+    "standalone/prove_get_lifecycle.py": "cba689af9eceeb101b871039778c0f9c55b8bdcf21385511ebae64c3b610fc11",
+    "standalone/aspect_get_owner_driver.c": "4fcd70cb46213776a03ad268d93a169b47a13d68c35251437a72c3e0a4c3f8b9",
+    "docs/ASPECT_GET_COMMAND.md": "76b20bc5961fcb688197d14cc233ac263fdef5ebf5a0c10c7be9b3f7e142ddbe",
+    "docs/FEATURES.md": "92f8f17b77c7a33365b890a9109871c2076250c59e067c435be8ab34fdce8322"
+  },
+  "evidence": {
+    "build/get-lifecycle-final-20261107/checks.json": {
+      "sha256": "8742ca262888f62974aeda23ffb4d3e7ba800e23b6a55b5ae9dbe89aff3bbe21",
+      "passed": true,
+      "binary_sha256": "04a16ac019323352db54e2ae96daa17ac68c9480924190b8f5c5e30f4b85a5dc",
+      "DOS_summary": "ASPECT_RUNTIME 1123 cases 27035 checks 0 failures"
+    },
+    "build/get-lifecycle-final-20261107/manifest.json": {
+      "sha256": "1e8a35d8c4020bffd2cb625c1faec9e282ae1978af7e76be28ef2c6b7bf9eaa5",
+      "binary_sha256": "04a16ac019323352db54e2ae96daa17ac68c9480924190b8f5c5e30f4b85a5dc"
+    },
+    "build/get-lifecycle-source-20261107/result.json": {
+      "sha256": "1454d8d91071ac1f02129859b9172ae7e28c6001680734d7226a2aa976633722",
+      "passed": true,
+      "binary_sha256": "04a16ac019323352db54e2ae96daa17ac68c9480924190b8f5c5e30f4b85a5dc",
+      "DOS_summary": "ASPECT_RUNTIME 1123 cases 27035 checks 0 failures",
+      "source_count": 116
+    },
+    "build/get-lifecycle-command-20261107/result.json": {
+      "sha256": "3c6e64086af26bb2cda26a4538fad2db5c845450908d731aa1706bbcbdcffcbb",
+      "passed": true,
+      "binary_sha256": "8321e73fc5ef5db7f2eb8ec3d442bd5f4d56dc2f82ef75b74a93f813aae67bd3",
+      "native_matching_cases": 137,
+      "view_rebased_clips": 1,
+      "protected_view_refusals": 4,
+      "transcript": "PASS COMMAND GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries; native confirmation/abort"
+    },
+    "build/get-lifecycle-command-source-20261107/result.json": {
+      "sha256": "0886575ddf3463f5097d7f7a00111d1b7ad60c87ca5007fe98f8b3e461c2551e",
+      "passed": true,
+      "binary_sha256": "8321e73fc5ef5db7f2eb8ec3d442bd5f4d56dc2f82ef75b74a93f813aae67bd3",
+      "source_count": 45,
+      "transcript": "PASS COMMAND GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries; native confirmation/abort"
+    },
+    "build/get-lifecycle-disabled-child-20261107/manifest.json": {
+      "sha256": "06bd589b33eadfd477a5fd0e4c8e7072fbd20ec8e8b29e30b6d93c0aaad37c39",
+      "binary_sha256": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066"
+    }
+  },
+  "limitations": [
+    "Actual runtime files, far heap and native global-string release execute; GET retained/recovery peers are diagnostic models.",
+    "Recovered GET command independently executes native confirmation and abort/longjmp; not full-interpreter composition.",
+    "Native dispatcher shutdown, full linkage/memory budget, real parent/receive, compilers and hardware remain open."
+  ]
+}

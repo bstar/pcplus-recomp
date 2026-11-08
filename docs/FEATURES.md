@@ -36,7 +36,13 @@ refusals, explicit policy and origin52. The subsequent
 [command checkpoint](ASPECT_GET_COMMAND.md) adds actual native yes/no and final
 abort/setjmp/longjmp, three modal faults/retries and a45-source exact rebuild.
 307 client checks and a10-source rebuild cover confirmation quarantine.
-Full-interpreter lifecycle cleanup and linkage remain open.
+The runtime cleanup checkpoint now guards invocation/reset/open/close/cleanup/
+finish while GET retains state. With controlled GET peers, real DOS files,
+far heap and native release pass49 new checks, alongside all1,123 existing
+runtime cases (27,035 checks total); a116-source cold replay matches exactly.
+The recovered command separately retains its142 cases and three fault/retry
+tests with a45-source replay. Full GET/interpreter linkage, native dispatcher
+shutdown composition and memory admission remain open.
 Application GET remains disabled: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.

@@ -1,4 +1,17 @@
 #include "runtime.h"
+#if defined(ASPECT_GET_VM) || defined(ASPECT_GET_LIFECYCLE)
+#include "get_command.h"
+/* Refuse destructive entry while GET owns operands, editor or modal state.
+ * Cleanup may retry only the checkpoint's restored generation. */
+static unsigned get_lifecycle_ready(unsigned recover)
+{
+    unsigned status;
+    if(!runtime_get_command_retained())return 1;
+    if(recover){status=runtime_get_command_recover();if(status)runtime_set_error(status);}
+    if(!runtime_get_command_retained())return 1;
+    runtime_set_error(ASPECT_RUN_STATE);return 0;
+}
+#endif
 #ifdef ASPECT_DEFER_NUMERIC_BANKS
 #include "numeric_bank_runtime.h"
 #endif
@@ -126,6 +139,9 @@ void runtime_set_error(unsigned error)
 void runtime_reset_native(void)
 {
     unsigned base=(unsigned)runtime_arena+0x1b1a;
+#if defined(ASPECT_GET_VM) || defined(ASPECT_GET_LIFECYCLE)
+    if(!get_lifecycle_ready(0))return;
+#endif
     end_wait_started=0;
     runtime_depth=0;runtime_frame=runtime_stack_pointer=base;runtime_wait_gate=0;
     runtime_source_type=runtime_target_type=runtime_lookahead=runtime_stage_index=0;
@@ -165,6 +181,9 @@ unsigned runtime_open(unsigned owner,const char *path)
     unsigned char header;
     unsigned status,i,base=(unsigned)runtime_arena+0x1b1a;
     char normalized[ASPECT_SCRIPT_PATH_CAPACITY];
+#if defined(ASPECT_GET_VM) || defined(ASPECT_GET_LIFECYCLE)
+    if(!get_lifecycle_ready(0))return 0;
+#endif
     /* The argument may be the latest scratch slot. Stage before per-file
      * resets; retain numeric/settings/session banks across dispatcher999. */
     status=aspect_script_path(path,normalized);
@@ -244,6 +263,9 @@ void runtime_cleanup(void)
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
     unsigned i;
 #endif
+#if defined(ASPECT_GET_VM) || defined(ASPECT_GET_LIFECYCLE)
+    if(!get_lifecycle_ready(1))return;
+#endif
 #if defined(ASPECT_EXTERNAL_UNWIND)
     if(runtime_external_checkpoint_active())runtime_external_recover(runtime_error);
 #endif
@@ -260,6 +282,9 @@ void runtime_cleanup(void)
 }
 unsigned runtime_close(unsigned token)
 {
+#if defined(ASPECT_GET_VM) || defined(ASPECT_GET_LIFECYCLE)
+    if(!get_lifecycle_ready(0))return 0xffff;
+#endif
 #if defined(NATIVE_PROGRAM_NOTICES)
     if(process_handles_active)return 0xffff;
 #endif
@@ -289,6 +314,9 @@ void runtime_end_wait_step(void)
 }
 void runtime_finish(void)
 {
+#if defined(ASPECT_GET_VM) || defined(ASPECT_GET_LIFECYCLE)
+    if(!get_lifecycle_ready(1))return;
+#endif
 #if defined(ASPECT_EXTERNAL_UNWIND)
     if(runtime_external_checkpoint_active())runtime_external_recover(runtime_error);
 #endif
@@ -360,6 +388,9 @@ void runtime_native_error(unsigned code)
 unsigned aspect_runtime_run(const char *path,unsigned step_limit)
 {
     void (__interrupt __far *previous_divide)(void);
+#if defined(ASPECT_GET_VM) || defined(ASPECT_GET_LIFECYCLE)
+    if(!get_lifecycle_ready(0))return ASPECT_RUN_STATE;
+#endif
 #ifdef ASPECT_DEFER_NUMERIC_BANKS
     if(runtime_numeric_live())return ASPECT_RUN_STATE;
 #endif

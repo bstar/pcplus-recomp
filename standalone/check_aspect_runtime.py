@@ -75,8 +75,11 @@ def check_directory_metadata(records,output):
              scope='Independent ACV2 parse, exact authored114B/entry binding, and actualDOS output/tx/value lines. No private original input.')
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--original',type=Path);args=p.parse_args()
- subprocess.run(['python3',str(ROOT/'standalone/build_aspect_runtime.py')],check=True)
+ global OUT
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--original',type=Path)
+ p.add_argument('--get-lifecycle',action='store_true');p.add_argument('--output',type=Path);args=p.parse_args()
+ if args.output:OUT=args.output.resolve()
+ subprocess.run(['python3',str(ROOT/'standalone/build_aspect_runtime.py'),'--output',str(OUT),*(['--get-lifecycle'] if args.get_lifecycle else [])],check=True)
  manifest=json.loads((OUT/'manifest.json').read_text());optional=None
  assert manifest['fixture_data']['file']=='CASES.DAT' and sha(OUT/'CASES.DAT')==manifest['fixture_data']['sha256']
  assert manifest['fixture_data']['schema']=='ACV2'
@@ -125,5 +128,6 @@ def main():
   SET_family=manifest['SET_family'],
   supported_slot_count=len(manifest['supported_slots']),
   scope='Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far and near heaps and native console/serial/WHEN/SET/FIND/CASE commands. Serial queue/clock/carrier and requested pacing units are explicit diagnostic models. Supported slots and unsupported coverage are bound to the manifest; full compiler/VM and arbitrary-bytecode safety remain unfinished.')
+ if args.get_lifecycle:result['GET_lifecycle']=manifest['GET_lifecycle']
  (OUT/('checks-native.json' if optional else 'checks.json')).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

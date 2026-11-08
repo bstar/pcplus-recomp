@@ -267,16 +267,16 @@ int main(void)
   jump=owner_dispatch_checkpoint(owner_dispatch_context);
   if(!jump){
    owner_call();
-   if(n==1 || owner_exit_state || runtime_get_command_ready() || !runtime_when_get_confirm_active() ||
+   if(n==1 || owner_exit_state || runtime_get_command_ready() || !runtime_get_command_retained() || !runtime_when_get_confirm_active() ||
       runtime_error!=(n==3?10:5) || runtime_get_native_generation()!=command_test_generation)return command_failure(46,n);
    if(runtime_get_command_run(0)!=runtime_error || runtime_get_native_generation()!=command_test_generation || synthetic_file.count || key_index!=1)return command_failure(47,n);
    runtime_when_reset();runtime_when_file_reset();runtime_when_finish();
    if(!runtime_when_get_confirm_active() || runtime_get_command_recover()!=10 || runtime_get_context_policy(0)!=10)return command_failure(48,n);
    owner_serviced_fault(0);
-   if(runtime_get_command_recover() || !runtime_get_command_ready() || runtime_when_deferred)return command_failure(49,n);
+   if(runtime_get_command_recover() || runtime_get_command_retained() || !runtime_get_command_ready() || runtime_when_deferred)return command_failure(49,n);
    owner_call();return command_failure(50,n); /* Sticky error must propagate, not run again. */
   }
-  if(jump!=65535U || owner_exit_state!=65535U || !runtime_get_command_ready() || runtime_when_get_confirm_active() ||
+  if(jump!=65535U || owner_exit_state!=65535U || runtime_get_command_retained() || !runtime_get_command_ready() || runtime_when_get_confirm_active() ||
      runtime_get_native_generation()!=command_test_generation || runtime_error!=(n==3?10:5) || runtime_when_deferred ||
      owner_integer_b[0]!=0xbeef || synthetic_file.count || key_index!=1 || ds()!=ss())return command_failure(51,n);
   owner_serviced_finish();

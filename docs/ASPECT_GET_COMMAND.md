@@ -75,9 +75,9 @@ FILE/global/frame cleanup. Original abort and longjmp are real, while the test
 owns a standalone native environment. Parent pixels/parser, child handoff,
 real UART/BBS, application memory/package and physical acceptance remain open.
 
-**Do not enable opcode49 yet.** Full `runtime_cleanup`/`runtime_finish` paths must
-honor retained command ownership before freeing script strings/files/frames.
-Also required: full interpreter linkage and budget, real parent policy/scratch
+**Do not enable opcode49 yet.** The subsequent lifecycle checkpoint below
+guards the C runtime entry points; complete native dispatcher composition still
+needs verification. Also required: full interpreter linkage and budget, real parent policy/scratch
 backend lifetime, parent parser/receive and actual WHEN actions, FLOAT.RTE,
 both compiler grammars, raw console support, connected scripts and hardware.
 No installed files, selected package, card, FTP, modem, SIP or live BBS changed.
@@ -89,4 +89,42 @@ No installed files, selected package, card, FTP, modem, SIP or live BBS changed.
   --build build/my-get-command --output build/my-get-command-source
 ./tools/dev --command python standalone/prove_get_runtime.py --client \
   --build build/my-field-client --output build/my-field-client-source
+```
+
+## Runtime cleanup checkpoint
+
+The runtime now checks GET-specific retained ownership before invocation,
+reset, open, close, cleanup and finish. Entry/reset/open/close refuse without
+changing files, string tables or frames. Cleanup/finish may retry the restored
+GET generation; if ownership remains, they return before releasing anything.
+The first typed error remains sticky, including when a later retry succeeds.
+`runtime_get_command_retained()` deliberately excludes unrelated PROGRAM,
+WINDOW and ordinary WHEN confirmation ownership, so their existing recovery
+paths remain reachable. Command admission still checks those other owners.
+
+The opt-in `ASPECT_GET_LIFECYCLE` diagnostic executes the real runtime C entry
+points, real DOS file backend, far heap and native global-string release with
+controlled GET retained/recovery peers. It verifies refused reset/open/close/
+invocation, repeated cleanup/finish refusal and subsequent successful release.
+This adds49 checks to the existing26,986: all1,123 runtime cases and27,035
+checks pass. Its116-source cold rebuild reproduces the executable, manifest
+and DOS report exactly. The recovered GET command separately passes its142
+cases and three modal faults/retries with new retained-state assertions;
+its45-source cold reproduction also matches exactly. These are complementary
+tests, not one executable containing full GET and the full interpreter.
+
+The reviewed GET-disabled child still builds to
+`5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066`.
+No installed application, selected package or physical machine changed.
+Full linkage, memory admission and native frame/dispatcher shutdown paths
+remain open. The initial lifecycle fixture omitted file-backend initialization;
+its failed run is superseded by the initialized, passing fixture.
+Hashes and bounded evidence are in
+[the lifecycle record](validation/aspect-get-lifecycle.json).
+
+```sh
+./tools/dev --command python standalone/check_aspect_runtime.py \
+  --get-lifecycle --output build/my-get-lifecycle
+./tools/dev --command python standalone/prove_get_lifecycle.py \
+  --build build/my-get-lifecycle --output build/my-get-lifecycle-source
 ```

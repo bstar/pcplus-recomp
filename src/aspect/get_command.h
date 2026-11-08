@@ -9,5 +9,8 @@
 unsigned __cdecl runtime_get_command_run(unsigned);
 unsigned __cdecl runtime_get_command_recover(void);
 unsigned __cdecl runtime_get_command_ready(void);
+/* GET-specific lifetime only: unrelated WINDOW/PROGRAM/WHEN confirmation
+ * owners must still reach their existing recovery paths. */
+unsigned __cdecl runtime_get_command_retained(void);
 unsigned __cdecl runtime_get_command_execute(unsigned);
 #endif

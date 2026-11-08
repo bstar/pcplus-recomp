@@ -168,7 +168,7 @@ END=r'''
 }
 '''
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
-def main():
+def main(lifecycle=False):
  sys.path.insert(0,str(ROOT/'src/aspect'))
  from compiler import compile_source
  OUT.mkdir(parents=True,exist_ok=True);inc='-I'+str(ROOT/'reconstruction/uart')+'/'
@@ -252,6 +252,10 @@ def main():
    near_admission+=f' if(!strcmp(path,"{path}"))runtime_find_fail_after={case["near_fail_after"]};\n'
   near_observe+=f' if(!strcmp(path,"{path}")){{ck(runtime_find_peak=={ex["near_peak"]});ck(runtime_find_alloc_calls=={ex["near_calls"]});}}\n'
  program=C.replace('result=aspect_runtime_run(path,limit);',near_admission+'result=aspect_runtime_run(path,limit);')
+ if lifecycle:
+  probe=ROOT/'standalone/get_lifecycle_diagnostic.c'
+  sources += [probe,ROOT/'src/aspect/get_command.h']
+  program=program.replace('int main(void){FILE *done;',probe.read_text()+'\nint main(void){FILE *done;\n lifecycle_probe();')
  program=program.replace(' ck(result==error);',near_observe+' ck(result==error);')
  supported={int(op,16):name for op,name in re.findall(r'%(?:el)?if op=(0x[0-9a-f]+)\n dw (\w+)',(ROOT/'src/aspect/runtime_bridge.asm').read_text())}
  assert len(supported)==107
@@ -385,7 +389,7 @@ def main():
   extra+=f' run("{name}",1000,3,0,0,0,0UL,0);ck(runtime_last_opcode=={op});\n'
  program=program.replace(END,extra+END)
  (OUT/'diagnostic.c').write_text(program)
- subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',
+ subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',*(['-dASPECT_GET_LIFECYCLE'] if lifecycle else []),
  '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC','ASPECT_SOURCE_OUTPUT'],fixture_count=len(cases),
@@ -400,5 +404,15 @@ def main():
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
   scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete107-slot opcode table; thirteen native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
+ if lifecycle:
+  report['compile_flags'].append('ASPECT_GET_LIFECYCLE')
+  report['GET_lifecycle']='Actual runtime lifecycle with controlled GET retained/recovery peers; full GET linkage remains open.'
  (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
-if __name__=='__main__':main()
+if __name__=='__main__':
+ import argparse
+ parser=argparse.ArgumentParser(description=__doc__)
+ parser.add_argument('--get-lifecycle',action='store_true')
+ parser.add_argument('--output',type=Path)
+ args=parser.parse_args()
+ if args.output:OUT=args.output.resolve()
+ main(lifecycle=args.get_lifecycle)
