@@ -1,5 +1,8 @@
 # Compiler backup close-error handling
 
+The subsequent [reuse checkpoint](ASPECT_COMPILER_REUSE.md) checks a second
+source launch in the same connected PCPlus parent after these startup errors.
+
 Four full-parent cases exercise a close error after the owned backup handle has
 actually been closed. Source startup and EXECUTE each pass before memory lending
 and after complete verified restoration. The unchanged application returns

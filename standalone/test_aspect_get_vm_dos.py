@@ -144,6 +144,18 @@ def source_cleanup_definitions():
  return [dict(base,name=base['name']+'-cleanup-unlink',source_cleanup=True,expected_exit=5)
   for base in source_memory_definitions()]
 
+def source_reuse_definitions():
+ base=source_memory_definitions()[0];good=base['source'].replace('proc main\n','proc main\ntransmit "SECONDREADY"\n',1)
+ rows=[]
+ for kind in ('write','begin-close','close','unlink'):
+  row=dict(base,name='get-vm-source-reuse-'+kind,source='proc main\ntransmit "BADFIRST"\nendproc\n',
+   scripts={'GOOD':good},source_reuse=True,success=True,expected_exit=0,
+   peer_triggers=[('SECONDREADY',[(0.25,base['banner'].decode('ascii'))])],
+   field_BIOS_words=definitions()[0]['field_BIOS_words'],expect_GET_boundary=True)
+  row['source_begin' if kind in ('write','begin-close') else 'source_cleanup']=kind
+  rows.append(row)
+ return rows
+
 def source_close_definitions():
  rows=[]
  for base in source_memory_definitions():
@@ -176,6 +188,7 @@ def main():
  p.add_argument('--output',required=True,type=Path);p.add_argument('--case',action='append')
  p.add_argument('--cpu',choices=('8086','386'),default='386')
  p.add_argument('--source-lease-cases',action='store_true',help='Require successful startup/EXECUTE source compilation through the parent lease')
+ p.add_argument('--source-lease-reuse-cases',action='store_true',help='After a failed source startup, launch another source through real Alt-F5 without restarting the parent')
  p.add_argument('--source-lease-close-cases',action='store_true')
  p.add_argument('--source-lease-begin-cases',action='store_true',help='Fail backup creation/partial write before lending; require unchanged parent and safe abort')
  p.add_argument('--source-lease-repeat-cases',action='store_true',help='Compile two/three sources within one interpreter; verify each kernel token/MCB and stream retirement')
@@ -204,14 +217,14 @@ def main():
  child_map=(child/'ASPECT.map').read_text();group=re.search(r'DGROUP\s+([0-9a-f]+):([0-9a-f]+)',child_map,re.I)
  child_base=int(group[1],16)*16+int(group[2],16)
  child_symbols={n:int(s,16)*16+int(o,16)-child_base for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)\s*$',child_map,re.M|re.I)}
- assert sum((a.source_lease_close_cases,a.source_lease_begin_cases,a.source_lease_repeat_cases,a.source_lease_cleanup_cases,a.source_lease_recovery_cases,a.source_lease_fault_cases,a.source_lease_cases,a.source_memory_cases,a.policy_cases,a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
- rows=source_close_definitions() if a.source_lease_close_cases else source_begin_definitions() if a.source_lease_begin_cases else source_repeat_definitions() if a.source_lease_repeat_cases else source_cleanup_definitions() if a.source_lease_cleanup_cases else source_recovery_definitions() if a.source_lease_recovery_cases else source_fault_definitions() if a.source_lease_fault_cases else source_memory_definitions() if a.source_memory_cases or a.source_lease_cases else policy_definitions() if a.policy_cases else storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
+ assert sum((a.source_lease_reuse_cases,a.source_lease_close_cases,a.source_lease_begin_cases,a.source_lease_repeat_cases,a.source_lease_cleanup_cases,a.source_lease_recovery_cases,a.source_lease_fault_cases,a.source_lease_cases,a.source_memory_cases,a.policy_cases,a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
+ rows=source_reuse_definitions() if a.source_lease_reuse_cases else source_close_definitions() if a.source_lease_close_cases else source_begin_definitions() if a.source_lease_begin_cases else source_repeat_definitions() if a.source_lease_repeat_cases else source_cleanup_definitions() if a.source_lease_cleanup_cases else source_recovery_definitions() if a.source_lease_recovery_cases else source_fault_definitions() if a.source_lease_fault_cases else source_memory_definitions() if a.source_memory_cases or a.source_lease_cases else policy_definitions() if a.policy_cases else storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
  if a.source_lease_cases:
   for row in rows:
    row.update(source_lease=True,success=True,expected_exit=0,field_BIOS_words=definitions()[0]['field_BIOS_words'],expect_GET_boundary=True)
- if a.source_lease_close_cases or a.source_lease_begin_cases or a.source_lease_repeat_cases or a.source_lease_cleanup_cases or a.source_lease_recovery_cases or a.source_lease_fault_cases or a.source_lease_cases or a.source_memory_cases or a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
+ if a.source_lease_reuse_cases or a.source_lease_close_cases or a.source_lease_begin_cases or a.source_lease_repeat_cases or a.source_lease_cleanup_cases or a.source_lease_recovery_cases or a.source_lease_fault_cases or a.source_lease_cases or a.source_memory_cases or a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
  if a.source_lease_fault_cases or a.source_lease_repeat_cases:assert a.allocation_probe
- if a.source_lease_close_cases or a.source_lease_begin_cases or a.source_lease_recovery_cases or a.source_lease_cleanup_cases:assert a.allocation_probe and a.watchdog
+ if a.source_lease_reuse_cases or a.source_lease_close_cases or a.source_lease_begin_cases or a.source_lease_recovery_cases or a.source_lease_cleanup_cases:assert a.allocation_probe and a.watchdog
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
@@ -282,7 +295,7 @@ def main():
   prm=settings,directory=lambda:renderer.directory(profile=4),
   PARENT_BINARY=parent/'TERMINAL.EXE',CHILD_BINARY=child/'ASPECT.EXE')
  allocation_fields=[('_runtime_script_file_open_calls',0),('_runtime_script_file_live',0),('_runtime_script_file_last',0),('_runtime_native_error_code',0),('_runtime_steps',0),('_runtime_live',0),('_runtime_alloc_calls',0),('___nheapbeg',0),('__curbrk',0),('__STACKLOW',0),('__STACKTOP',0)]
- if a.source_lease_close_cases or a.source_memory_cases or a.source_lease_cases or a.source_lease_fault_cases or a.source_lease_recovery_cases or a.source_lease_cleanup_cases or a.source_lease_repeat_cases or a.source_lease_begin_cases:allocation_fields += [('_runtime_compiler_exit',0),('_runtime_compiler_dos_error',0)]
+ if a.source_lease_reuse_cases or a.source_lease_close_cases or a.source_memory_cases or a.source_lease_cases or a.source_lease_fault_cases or a.source_lease_recovery_cases or a.source_lease_cleanup_cases or a.source_lease_repeat_cases or a.source_lease_begin_cases:allocation_fields += [('_runtime_compiler_exit',0),('_runtime_compiler_dos_error',0)]
  allocation_names=[n for n,d in allocation_fields]+['PSP_allocation_paragraphs','environment_paragraphs','environment_string_bytes']
  active_case=[None]
  def adapter():
@@ -307,6 +320,9 @@ def main():
    if case.get('source_fault')=='compiler-error':
     leaf='LOGIN' if case['source_memory']=='start' else 'NEXT'
     kwargs['files'][leaf+'.ASP']=kwargs['files'][leaf+'.ASP'].replace(b'endproc',b'not_a_command\nendproc',1)
+   if case.get('source_reuse'):
+    kwargs['files'].pop('GOOD.ASX')
+    for leaf in ('PCMETA.OVL','PCLINE.OVL'):kwargs['files'][leaf]=(parent/leaf).read_bytes()
    return run(*args,**dict(kwargs,cpu=a.cpu,profile=4,timeout=45,online_triggers=[(trigger.encode('ascii'),[(delay,data.encode('ascii')) for delay,data in chunks]) for trigger,chunks in case.get('peer_triggers',())]))
   module.run=configured;return module
  def observer(offsets):
@@ -632,6 +648,9 @@ get_watch_data: dw 0x4757,2
     observer_source=attach(observer_source,kind=active_case[0].get('source_begin',active_case[0].get('source_recovery',active_case[0].get('source_cleanup') if isinstance(active_case[0].get('source_cleanup'),str) else 'unlink')),
      parent=json.loads((parent/'manifest.json').read_text()),listing=(parent/'terminal.map').read_text(),
      offsets=offsets,child_symbols=child_symbols,child_group=int(group[1],16))
+   if active_case[0] and active_case[0].get('source_reuse'):
+    from compiler_bridge_reuse_observer import attach
+    observer_source=attach(observer_source,parent=json.loads((parent/'manifest.json').read_text()),listing=(parent/'terminal.map').read_text(),offsets=offsets)
    if active_case[0] and active_case[0].get('source_repeat'):
     from compiler_bridge_repeat_observer import attach
     observer_source=attach(observer_source,count=active_case[0]['source_repeat'],
@@ -702,11 +721,11 @@ get_watch_data: dw 0x4757,2
    end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
    largest,attempts,prompt_seen=struct.unpack('<3H',(folder/'RENDER.BIN').read_bytes()[end-6:end])
    result['compiler_EXEC_memory']=dict(largest_free_bytes=largest*16,attempts=attempts,startup_prompt_seen_before_ack=prompt_seen)
-   if case['source_memory']=='start' and not case.get('source_lease'):
+   if case['source_memory']=='start' and not case.get('source_lease') and not case.get('source_reuse'):
     result['startup_error_retained_after_return']=result['checks'].pop('typed_error_stays_in_parent')
     result['checks']['startup_error_restored_view']=not result['startup_error_retained_after_return']
     result['startup_prompt_visibility_established']=prompt_seen==1
-   expected_attempts=0 if case.get('source_begin') or case.get('source_fault') in ('missing','corrupt','truncated') else case.get('source_repeat',1)
+   expected_attempts=1 if case.get('source_reuse') else 0 if case.get('source_begin') or case.get('source_fault') in ('missing','corrupt','truncated') else case.get('source_repeat',1)
    result['checks']['actual_compiler_EXEC_attempt']=attempts==expected_attempts and result['child_exit_probe']['compiler_calls']==expected_attempts and sum(n.upper().endswith('ASPCOMP.EXE') for n in result['observed_EXEC_names'])==expected_attempts
    if not case.get('source_lease') and not case.get('source_cleanup'):result['checks']['no_failed_compiler_publication']=not (folder/'LOGIN.ASX').exists() if case['source_memory']=='start' else (folder/'NEXT.ASX').read_bytes()==renderer.compile_source('proc main\ntransmit "STALE"\nendproc\n')
    result['checks']['no_stale_or_trailing_execution']=b'STALE' not in wire and b'BADRETURN' not in wire
@@ -735,6 +754,17 @@ get_watch_data: dw 0x4757,2
     result['checks']['compiled_chain_'+leaf+'_exact']=(folder/(leaf+'.ASX')).read_bytes()==renderer.compile_source(source_text,enable_get=True)
     del result['checks']['fixture_unchanged_'+leaf+'.ASX']
    for leaf,value in case['source_outputs'].items():result['checks']['stream_'+leaf+'_closed_exact']=(folder/leaf).read_bytes()==bytes.fromhex(value)
+  failure_probe=result['child_exit_probe']
+  if case.get('source_reuse'):
+   from compiler_bridge_reuse_observer import FIELDS as RF,WORDS as RW
+   from compiler_bridge_recovery_observer import WORDS as FW,PREFIX
+   end=-20-2*len(allocation_names)-6-2*FW
+   words=struct.unpack('<'+str(RW)+'H',(folder/'RENDER.BIN').read_bytes()[end-2*RW:end])
+   reuse=dict(zip(RF,words[:len(RF)]));at=len(RF)
+   first_header=list(words[at:at+7]);at+=7
+   failure_probe=dict(zip(('DS','errno','error','opcode','compiler_calls','file_status'),words[at:at+6]));at+=6
+   second=dict(zip(PREFIX,words[at:]))
+   result['compiler_reuse']=dict(sample=reuse,first_header=first_header,first_probe=failure_probe,second_kernel=second)
   if case.get('source_begin'):
    from compiler_bridge_recovery_observer import FIELDS,PREFIX,WORDS,KINDS
    end=-20-2*len(allocation_names)-6
@@ -745,7 +775,7 @@ get_watch_data: dw 0x4757,2
    result['checks']['prepare_fault_injected_once']=sample['kind']==KINDS[case['source_begin']] and sample['injected']==1 and sample['unsafe']==0
    result['checks']['prepare_never_lends_parent']=sample['parent_resize_calls']==0 and sample['parent_extent']==prefix['full']==trusted['memory_layout']['retained_parent_paragraphs'] and prefix['keep']==trusted['experimental_compiler_lease_module']['keep_paragraphs']
    result['checks']['prepare_failure_keeps_valid_owned_state']=prefix['cookie']==0x434c and prefix['phase']==1 and prefix['valid']==prefix['busy']==1 and prefix['parent']==result['passive_observer_header'][5] and sample['current_psp']==prefix['owner']
-   result['checks']['prepare_failure_returns_IO']=result['child_exit_probe']['error']==5 and result['allocation_probe']['_runtime_compiler_exit']==result['allocation_probe']['_runtime_compiler_dos_error']==0
+   result['checks']['prepare_failure_returns_IO']=failure_probe['error']==5 and result['allocation_probe']['_runtime_compiler_exit']==result['allocation_probe']['_runtime_compiler_dos_error']==0
    result['checks']['prepare_cleanup_retires_state']=sample['retired_phase']==sample['retired_busy']==0 and sample['retired_dos_error']==(0 if case['source_begin']=='short-write' else 5)
    result['checks']['prepare_never_quarantines']=sample['prompt_seen']==sample['hold_ticks']==sample['retry_key']==0
    result['checks']['prepare_preserves_exact_display']=sample['captured_cells']==sample['display_cells']==2000 and sample['display_checked']==sample['display_valid']==sample['display_cursor_ok']==sample['display_shape_ok']==1
@@ -763,7 +793,7 @@ get_watch_data: dw 0x4757,2
    sample=dict(zip(FIELDS,words[:len(FIELDS)]));prefix=dict(zip(PREFIX,words[len(FIELDS):]))
    backups=list(folder.glob('LPM*.TMP'))
    result['restore_cleanup']=dict(sample=sample,kernel=prefix,backups=[dict(name=p.name,bytes=p.stat().st_size,sha256=sha(p),crc16=crc16(p.read_bytes())) for p in backups])
-   result['checks']['cleanup_error_is_safe_IO']=result['child_exit_probe']['error']==5 and result['allocation_probe']['_runtime_compiler_exit']==result['allocation_probe']['_runtime_compiler_dos_error']==0
+   result['checks']['cleanup_error_is_safe_IO']=failure_probe['error']==5 and result['allocation_probe']['_runtime_compiler_exit']==result['allocation_probe']['_runtime_compiler_dos_error']==0
    result['checks']['cleanup_fault_injected_once']=sample['kind']==KINDS['close' if case['source_cleanup']=='close' else 'unlink'] and sample['injected']==1 and sample['unsafe']==0
    result['checks']['backup_handle_actually_closed']=sample['close_calls']==1 and sample['close_probe_error']==6 and prefix['handle']==(sample['closed_handle'] if case['source_cleanup']=='close' else 65535) and sample['retired_handle']==65535
    if case['source_cleanup']=='close':result['checks']['complete_restore_stream_before_close']=sample['backup_position_lo']+65536*sample['backup_position_hi']==(prefix['full']-prefix['keep'])*16
@@ -776,8 +806,22 @@ get_watch_data: dw 0x4757,2
    result['checks']['passive_EXEC_observed']=result['passive_observer_header'][:4]==[0x524e,1,1,2]
    leaf='LOGIN' if case['source_memory']=='start' else 'NEXT'
    expected_source=case['source'] if leaf=='LOGIN' else case['scripts']['NEXT']
-   result['checks']['compiled_output_published_but_not_executed']=(folder/(leaf+'.ASX')).read_bytes()==renderer.compile_source(expected_source,enable_get=True) and b'Synth42\r' not in wire
+   result['checks']['compiled_output_published_but_not_executed']=(folder/(leaf+'.ASX')).read_bytes()==renderer.compile_source(expected_source,enable_get=True) and (case.get('source_reuse') or b'Synth42\r' not in wire)
    if leaf=='NEXT':del result['checks']['fixture_unchanged_NEXT.ASX']
+  if case.get('source_reuse'):
+   trusted=json.loads((parent/'manifest.json').read_text())
+   result['checks']['two_real_interpreter_EXECs']=sum(n.upper().endswith('ASPECT.EXE') for n in result['observed_EXEC_names'])==2
+   result['checks']['fresh_peer_trigger_for_second_script']=wire.count(b'SECONDREADY')==1
+   result['checks']['first_error_observed_before_manual_relaunch']=first_header[:4]==[0x524e,1,1,1+int(bool(case.get('source_cleanup')))] and first_header[6]==failure_probe['error']==5
+   result['checks']['first_parent_owners_retired']=reuse['first_jft_equal']==reuse['first_owners_equal']==reuse['first_history_equal']==1
+   result['checks']['same_parent_second_interpreter']=reuse['stage']==3 and reuse['prompt_seen']==1 and reuse['first_psp']==reuse['second_psp']==result['passive_observer_header'][5] and reuse['first_ds']==result['passive_observer_header'][4]
+   result['checks']['second_real_compiler_lease']=reuse['second_compiler_seen']==1 and second['cookie']==0x434c and second['phase']==2 and second['valid']==second['busy']==0 and second['token']==2 and second['owner']+16+int(group[1],16)==reuse['second_ds']==result['child_exit_probe']['DS'] and second['parent']==reuse['second_psp'] and second['keep']==reuse['second_extent']==trusted['experimental_compiler_lease_module']['keep_paragraphs'] and second['full']==trusted['memory_layout']['retained_parent_paragraphs']
+   result['checks']['new_backup_avoids_preserved_name']=second['sequence']==(2 if case.get('source_cleanup') else 1)
+   result['checks']['good_source_compiled_exact']=(folder/'GOOD.ASX').read_bytes()==renderer.compile_source(case['scripts']['GOOD'],enable_get=True)
+   result['checks']['failed_source_never_executed']=b'BADFIRST' not in wire
+   result['checks']['actual_compiler_EXEC_attempt']=result['compiler_EXEC_memory']['attempts']==result['child_exit_probe']['compiler_calls']==1 and sum(n.upper().endswith('ASPCOMP.EXE') for n in result['observed_EXEC_names'])==1+reuse['first_compilers'] and failure_probe['compiler_calls']==reuse['first_compilers']
+   result['checks']['second_compiler_and_child_exit']=result['passive_observer_header'][:4]==[0x524e,1,1,2] and result['child_exit_probe']['error']==0 and result['child_exit_probe']['compiler_calls']==1
+   result['checks']['passive_EXEC_observed']=result['checks']['second_compiler_and_child_exit']
   if case.get('source_recovery'):
    from compiler_bridge_recovery_observer import FIELDS,PREFIX,WORDS
    end=-20-2*len(allocation_names)-6
@@ -835,7 +879,7 @@ get_watch_data: dw 0x4757,2
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
   if a.source_memory_cases:result['compatibility_accepted']=False
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(source_lease_close_cases=a.source_lease_close_cases,source_lease_begin_cases=a.source_lease_begin_cases,source_lease_repeat_cases=a.source_lease_repeat_cases,source_lease_cleanup_cases=a.source_lease_cleanup_cases,source_lease_recovery_cases=a.source_lease_recovery_cases,source_lease_fault_cases=a.source_lease_fault_cases,source_lease_cases=a.source_lease_cases,source_memory_cases=a.source_memory_cases,source_compiler_residency_verified=all(r['passed'] for r in report['cases']) if a.source_lease_cases else False if a.source_memory_cases else None,policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
+ report.update(source_lease_reuse_cases=a.source_lease_reuse_cases,source_lease_close_cases=a.source_lease_close_cases,source_lease_begin_cases=a.source_lease_begin_cases,source_lease_repeat_cases=a.source_lease_repeat_cases,source_lease_cleanup_cases=a.source_lease_cleanup_cases,source_lease_recovery_cases=a.source_lease_recovery_cases,source_lease_fault_cases=a.source_lease_fault_cases,source_lease_cases=a.source_lease_cases,source_memory_cases=a.source_memory_cases,source_compiler_residency_verified=all(r['passed'] for r in report['cases']) if a.source_lease_cases else False if a.source_memory_cases else None,policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
   checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  if a.source_memory_cases:

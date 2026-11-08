@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Compiler error reuse](ASPECT_COMPILER_REUSE.md) now exercises a second real
+source launch through Alt-F5 after failed startup, within the same connected
+parent. Fresh lease ownership, orphan-backup avoidance, native receive/GET and
+ordinary terminal return are required; application and installed bytes stay put.
+
 [Compiler close-error tests](ASPECT_COMPILER_CLOSE.md) now cover the ambiguous
 closed-handle error before lending and after restoration at startup and EXECUTE.
 The unchanged application discards the handle, preserves valid memory/display
