@@ -12,7 +12,7 @@ def main():
  a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  parent=json.loads((a.parent/'manifest.json').read_text());child=json.loads((a.child/'manifest.json').read_text())
  compiler=json.loads(a.compiler.with_name('manifest.json').read_text());assert sha(a.compiler)==compiler['binary_sha256']
- checks=json.loads(a.checks.read_text());assert checks['passed'] and checks['GET_VM'] and len(checks['cases'])==(7 if checks.get('storage_cases') else 2 if checks.get('lifetime_cases') or checks.get('when_cases') or checks.get('when_error_cases') else 6)
+ checks=json.loads(a.checks.read_text());assert checks['passed'] and checks['GET_VM'] and len(checks['cases'])==(8 if checks.get('policy_cases') else 7 if checks.get('storage_cases') else 2 if checks.get('lifetime_cases') or checks.get('when_cases') or checks.get('when_error_cases') else 6)
  assert sha(a.parent/'TERMINAL.EXE')==parent['binary_sha256'] and sha(a.child/'ASPECT.EXE')==child['binary_sha256']
  sources={}
  for manifest in (parent,child,compiler):
@@ -61,32 +61,36 @@ def main():
  run(['standalone/test_get_vm_cli.py','--child','build/child','--output','build/cli'])
  run(['standalone/check_aspect_file.py','--owned-window','--output','build/file'])
  run(['standalone/test_mz_layout_dos.py','--output','build/mz'])
- run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child','--output','build/dos',*(['--get-compiler-dir','build/get-compiler'] if checks.get('compiler_GET_enabled') else []),*(['--lifetime-cases'] if checks.get('lifetime_cases') else []),*(['--when-cases'] if checks.get('when_cases') else []),*(['--when-error-cases'] if checks.get('when_error_cases') else []),*(['--storage-cases'] if checks.get('storage_cases') else []),*(['--stream-probe'] if checks.get('stream_probe') else []),*(['--allocation-probe'] if checks.get('allocation_probe') else [])])
+ run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child','--output','build/dos',*(['--get-compiler-dir','build/get-compiler'] if checks.get('compiler_GET_enabled') else []),*(['--lifetime-cases'] if checks.get('lifetime_cases') else []),*(['--when-cases'] if checks.get('when_cases') else []),*(['--when-error-cases'] if checks.get('when_error_cases') else []),*(['--storage-cases'] if checks.get('storage_cases') else []),*(['--policy-cases'] if checks.get('policy_cases') else []),*(['--stream-probe'] if checks.get('stream_probe') else []),*(['--allocation-probe'] if checks.get('allocation_probe') else [])])
  replay=json.loads((fresh/'build/dos/checks.json').read_text());assert replay['passed'] and len(replay['cases'])==len(checks['cases'])
  for previous,current in zip(checks['cases'],replay['cases']):
   assert previous['case']==current['case'] and previous['checks']==current['checks']
-  for field in ('passive_observer_header','child_exit_probe','memory_before_EXEC','observer_sha256','observer_source_sha256',*(['GET_generations'] if checks.get('lifetime_cases') else []),*(['GET_pending_WHEN_gate','GET_waiting_before_WHEN'] if checks.get('when_cases') or checks.get('when_error_cases') else []),*(['GET_error_retirement'] if checks.get('when_error_cases') else []),*(['allocation_probe'] if checks.get('allocation_probe') else [])):
+  for field in ('passive_observer_header','child_exit_probe','memory_before_EXEC','observer_sha256','observer_source_sha256',*(['GET_generations'] if checks.get('lifetime_cases') else []),*(['GET_pending_WHEN_gate','GET_waiting_before_WHEN'] if checks.get('when_cases') or checks.get('when_error_cases') else []),*(['GET_error_retirement'] if checks.get('when_error_cases') else []),*(['GET_observed_width'] if checks.get('policy_cases') else []),*(['allocation_probe'] if checks.get('allocation_probe') else [])):
    assert previous[field]==current[field],(previous['case'],field)
   assert (a.checks.parent/previous['case']/'serial.bin').read_bytes()==(fresh/'build/dos'/current['case']/'serial.bin').read_bytes()
  ordinary=None
- if checks.get('storage_cases') or checks.get('lifetime_cases') or checks.get('when_cases') or checks.get('when_error_cases'):
+ if checks.get('policy_cases') or checks.get('storage_cases') or checks.get('lifetime_cases') or checks.get('when_cases') or checks.get('when_error_cases'):
   run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child','--output','build/ordinary','--get-compiler-dir','build/get-compiler','--stream-probe','--allocation-probe'])
   ordinary=json.loads((fresh/'build/ordinary/checks.json').read_text());assert ordinary['passed'] and len(ordinary['cases'])==6
  lifetime=None
- if checks.get('storage_cases') or checks.get('when_cases') or checks.get('when_error_cases'):
+ if checks.get('policy_cases') or checks.get('storage_cases') or checks.get('when_cases') or checks.get('when_error_cases'):
   run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child','--output','build/lifetime','--get-compiler-dir','build/get-compiler','--lifetime-cases','--allocation-probe'])
   lifetime=json.loads((fresh/'build/lifetime/checks.json').read_text());assert lifetime['passed'] and len(lifetime['cases'])==2
  successful_WHEN=None
- if checks.get('storage_cases') or checks.get('when_error_cases'):
+ if checks.get('policy_cases') or checks.get('storage_cases') or checks.get('when_error_cases'):
   run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child','--output','build/when','--get-compiler-dir','build/get-compiler','--when-cases','--allocation-probe'])
   successful_WHEN=json.loads((fresh/'build/when/checks.json').read_text());assert successful_WHEN['passed'] and len(successful_WHEN['cases'])==2
  failure_WHEN=None
- if checks.get('storage_cases'):
+ if checks.get('policy_cases') or checks.get('storage_cases'):
   run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child','--output','build/when-errors','--get-compiler-dir','build/get-compiler','--when-error-cases','--allocation-probe'])
   failure_WHEN=json.loads((fresh/'build/when-errors/checks.json').read_text());assert failure_WHEN['passed'] and len(failure_WHEN['cases'])==2
+ storage=None
+ if checks.get('policy_cases'):
+  run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child','--output','build/storage','--get-compiler-dir','build/get-compiler','--storage-cases','--allocation-probe'])
+  storage=json.loads((fresh/'build/storage/checks.json').read_text());assert storage['passed'] and len(storage['cases'])==7
  for n,h in sources.items():assert sha(ROOT/n)==sha(fresh/n)==h,n
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,source_count=len(sources),sources=sources,
-  parent_sha256=parent['binary_sha256'],parent_profile=a.parent_profile,child_sha256=child['binary_sha256'],compiler_sha256=compiler['binary_sha256'],compiler_exec_checks=json.loads((fresh/'build/compiler-exec/checks.json').read_text()),compiler_equivalence=json.loads((fresh/'build/compiler-equivalence/result.json').read_text()),compiler_serial_checks=json.loads((fresh/'build/compiler-serial/checks.json').read_text()),DOS_cases=len(replay['cases']),lifetime_cases=checks.get('lifetime_cases',False),when_cases=checks.get('when_cases',False),when_error_cases=checks.get('when_error_cases',False),storage_cases=checks.get('storage_cases',False),failure_WHEN_checks=failure_WHEN,successful_WHEN_checks=successful_WHEN,lifetime_GET_checks=lifetime,ordinary_GET_checks=ordinary,compiled_GET_cases=replay.get('compiled_GET_cases',0),GET_grammar_checks=json.loads((fresh/'build/get-grammar/result.json').read_text()) if checks.get('compiler_GET_enabled') else None,CLI_cases=7,MZ_layout_checks=json.loads((fresh/'build/mz/result.json').read_text()),owned_read_window_checks=json.loads((fresh/'build/file/checks.json').read_text()),
+  parent_sha256=parent['binary_sha256'],parent_profile=a.parent_profile,child_sha256=child['binary_sha256'],compiler_sha256=compiler['binary_sha256'],compiler_exec_checks=json.loads((fresh/'build/compiler-exec/checks.json').read_text()),compiler_equivalence=json.loads((fresh/'build/compiler-equivalence/result.json').read_text()),compiler_serial_checks=json.loads((fresh/'build/compiler-serial/checks.json').read_text()),DOS_cases=len(replay['cases']),lifetime_cases=checks.get('lifetime_cases',False),when_cases=checks.get('when_cases',False),when_error_cases=checks.get('when_error_cases',False),storage_cases=checks.get('storage_cases',False),policy_cases=checks.get('policy_cases',False),storage_GET_checks=storage,failure_WHEN_checks=failure_WHEN,successful_WHEN_checks=successful_WHEN,lifetime_GET_checks=lifetime,ordinary_GET_checks=ordinary,compiled_GET_cases=replay.get('compiled_GET_cases',0),GET_grammar_checks=json.loads((fresh/'build/get-grammar/result.json').read_text()) if checks.get('compiler_GET_enabled') else None,CLI_cases=7,MZ_layout_checks=json.loads((fresh/'build/mz/result.json').read_text()),owned_read_window_checks=json.loads((fresh/'build/file/checks.json').read_text()),
   scope=__doc__+' Exact executables, DOS check booleans, serial wire and observer/probes. No originals/private files/prior objects/ancestor Git. Selected complete parent recipe plus capability22. Attached GET cases establish only the reported compiler/runtime paths, not full variable/stream/help co-residency, physical hardware or whole-language parity.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS GET VM cold source:',len(sources),'sources; exact pair and DOS replay')
 if __name__=='__main__':main()

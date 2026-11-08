@@ -64,5 +64,5 @@ or deploy the experimental child alone under the installed capability20 parent.
 full-parent scenarios. Remaining gates include broader lifetime/error coverage,
 broader event/error coverage beyond the [WHEN action cases](ASPECT_GET_WHEN.md) and
 [divide/cancel retirement](ASPECT_GET_WHEN_ERRORS.md),
-field policies,
+field policies beyond the [eight width/status-row cases](ASPECT_GET_WIDTHS.md),
 floating support, full feature/memory co-residency and package/hardware admission.

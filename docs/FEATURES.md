@@ -1,5 +1,11 @@
 # Full application reconstruction checklist
 
+[GET width policy](ASPECT_GET_WIDTHS.md) adds eight compiled full-parent cases:
+omitted/0/1/80 widths, -1/81 operand refusals and actual PRM shown/hidden status
+geometry at the last text row. Passive field widths and exact cursor/value/exit
+checks pass. Other geometry/policy/error combinations, physical/package admission
+and full F13 parity remain open.
+
 [GET storage coverage](ASPECT_GET_STORAGE.md) adds seven compiled full-parent
 cases: local and parameter string/int/long plus S0 in a framed worker. Exact
 writeback, local/caller guards, procedure return, cursor and terminal ownership

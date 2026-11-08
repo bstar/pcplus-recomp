@@ -12,7 +12,8 @@ insert authored GET bytes at a unique PAUSE0 boundary; the malformed EOF case
 always uses authored bytes.
 The default application, selected package and installed machine are unchanged.
 [Storage tests](ASPECT_GET_STORAGE.md) add seven local/parameter/S0 cases with
-exact writeback, frame guards and normal procedure return. F13 remains open.
+exact writeback, frame guards and normal procedure return. The [width matrix](ASPECT_GET_WIDTHS.md) adds eight default/boundary/status-row
+cases. F13 remains open.
 
 ## Code and data ownership
 

@@ -1,5 +1,12 @@
 # GET status-line policy
 
+The later [full-interpreter width matrix](ASPECT_GET_WIDTHS.md) now executes
+actual parent/interpreter GET with PRM status visibility, confirming default
+width5 at the last shown-status row and width80 when the next row is available.
+It also covers omitted,0,1,80 and refused widths. Component evidence below
+retains its original scope; full parity and physical admission remain open.
+
+
 GET's original DS1D46 input is **STATUS_HIDDEN**, not terminal autowrap.
 The earlier GET components and frozen fixture called it `wrap`; that annotation
 was wrong. The recovered instruction bytes and historical observations remain

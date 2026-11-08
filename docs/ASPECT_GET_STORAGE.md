@@ -56,7 +56,8 @@ of that proof. Exact source/report identities are in the
 
 This covers one ordinary width10 field and one worker call per case. Nested or
 recursive frames, local/parameter cancellation and event errors, numeric limits,
-other S registers, floating GET, field policies and full memory/feature pressure
+other S registers, floating GET, field policies beyond the
+[eight width/status-row cases](ASPECT_GET_WIDTHS.md) and full memory/feature pressure
 remain open. The attached tests use DOS386/UMB,640KB and a synthetic serial peer;
 they do not establish physical Boca/SPA2102/SynthModem/BBS behavior, ordinary8086
 parent capacity or three-process compiler residency. Package promotion and full

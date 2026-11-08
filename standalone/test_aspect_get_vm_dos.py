@@ -92,11 +92,34 @@ def storage_definitions():
    expected_value_hex=(bytes.fromhex(base['expected_value_hex'])+b'/GUARD').hex()))
  return rows
 
+def policy_definitions():
+ base=definitions()[0];rows=[]
+ for label,width,observed,typed,value,error,cpr in [
+  ('default',None,80,base['field_BIOS_words'],b'LoC42',0,b'[1;27R'),
+  ('maximum','80',80,base['field_BIOS_words'],b'LoC42',0,b'[1;27R'),
+  ('one','1',1,[0x1e41,0x1c0d],b'A',0,b'[1;22R'),
+  ('zero','0',0,[],b'SEED',0,b'[1;22R'),
+  ('negative','-1',0,[],b'',7,b''),
+  ('oversize','81',0,[],b'',7,b''),
+  ('bottom-shown',None,5,base['field_BIOS_words'],b'LoC42',0,b'[24;80R'),
+  ('bottom-hidden',None,80,base['field_BIOS_words'],b'LoC42',0,b'[25;1R')]:
+  setting='' # Status visibility is a PRM preference, not an admitted SET command.
+  source=('string value\nproc main\n'+setting+('value="SEED"\n' if label=='zero' else '')+
+   'waitfor "LOGIN:" 5\ntransmit "GETREADY"\nget value'+(' '+width if width is not None else '')+'\n'
+   'transmit value\ntransmit "^M"\ntransmit $D_PWORD\ntransmit "^M"\npause 1\nendproc\n')
+  banner=base['banner']
+  if label.startswith('bottom-'):banner=banner.replace(b'LOGIN:',renderer.ESC+b'[24;70HLOGIN:')
+  rows.append(dict(base,name='get-vm-policy-'+label,source=source,direct_GET=True,policy_width=observed,
+   field_BIOS_words=typed,expected_value_hex=value.hex(),success=not error,expected_exit=error,
+   post_reply=renderer.ESC+cpr,banner=banner,policy_status_hidden=int(label.endswith('hidden'))))
+ return rows
+
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--parent-dir',required=True,type=Path);p.add_argument('--child-dir',required=True,type=Path)
  p.add_argument('--output',required=True,type=Path);p.add_argument('--case',action='append')
  p.add_argument('--cpu',choices=('8086','386'),default='386')
+ p.add_argument('--policy-cases',action='store_true',help='Run default/boundary widths and bottom-row shown/hidden status policy')
  p.add_argument('--storage-cases',action='store_true',help='Run local and parameter string/int/long GET plus builtin S0 with frame guards')
  p.add_argument('--when-error-cases',action='store_true',help='Run framed WHEN divide fault and confirmed GET cancellation with pending CALL')
  p.add_argument('--when-cases',action='store_true',help='Run inline TRANSMIT and deferred plain/framed WHEN CALL during GET')
@@ -117,9 +140,9 @@ def main():
  child_map=(child/'ASPECT.map').read_text();group=re.search(r'DGROUP\s+([0-9a-f]+):([0-9a-f]+)',child_map,re.I)
  child_base=int(group[1],16)*16+int(group[2],16)
  child_symbols={n:int(s,16)*16+int(o,16)-child_base for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)\s*$',child_map,re.M|re.I)}
- assert sum((a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
- rows=storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
- if a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
+ assert sum((a.policy_cases,a.storage_cases,a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
+ rows=policy_definitions() if a.policy_cases else storage_definitions() if a.storage_cases else when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
+ if a.policy_cases or a.storage_cases or a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
@@ -179,6 +202,8 @@ def main():
  def settings():
   data=bytearray(renderer.prm())
   for offset,value in [(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,4),(0x1e6,0),(0x1e4,0)]:struct.pack_into('<H',data,offset,value)
+  if active_case[0] is not None and 'policy_status_hidden' in active_case[0]:
+   struct.pack_into('<H',data,0x1c2,active_case[0]['policy_status_hidden'])
   return bytes(data)
  scope=dict(renderer.__dict__);scope.update(OUT=out.parent,definitions=lambda:rows,get_compile=compiled,
   prm=settings,directory=lambda:renderer.directory(profile=4),
@@ -214,6 +239,9 @@ def main():
    probe=' mov [cs:exit_code],ax\n mov ah,0x62\n pushf\n call far [cs:old21]\n mov ax,bx\n add ax,'+str(int(group[1],16)+16)+'\n mov es,ax\n mov [cs:get_child_ds],ax\n'
    for label,symbol,delta in [('errno','_errno',0),('error','_runtime_error',0),('opcode','_runtime_last_opcode',0),('compiles','_runtime_compiler_calls',0),('file_status','_runtime_file',14)]:
     probe+=' mov ax,[es:'+str(child_symbols[symbol]+delta)+']\n mov [cs:get_child_'+label+'],ax\n'
+   if active_case[0] and 'policy_width' in active_case[0]:
+    marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
+    observer_source=observer_source.replace(marker,'get_policy_width: dw 0\n'+marker)
    if active_case[0] and active_case[0].get('when_action'):
     marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
     observer_source=observer_source.replace(marker,'get_when_waiting: dw 0\nget_when_gate: dw 0\n'+marker)
@@ -354,6 +382,9 @@ get_input_tick:
  cmp bx,0x3e
  jae .done
 '''.replace('CHILD_GROUP',str(int(group[1],16))).replace('STORAGE_SEG',str(storage//16)).replace('STORAGE_OFFSET',str(storage%16))
+    if 'policy_width' in active_case[0]:
+     marker=' mov ax,0x40\n mov es,ax\n mov bx,[es:0x1c]';assert injector.count(marker)==1
+     injector=injector.replace(marker,' mov ax,[es:si+34]\n mov [cs:get_policy_width],ax\n'+marker)
     if active_case[0].get('when_action'):
      marker=' mov ax,0x40\n mov es,ax\n mov bx,[es:0x1c]';assert injector.count(marker)==1
      injector=injector.replace(marker,' mov ax,ss\n mov es,ax\n mov ax,[es:'+str(child_symbols['_runtime_wait_gate'])+']\n or ax,ax\n jnz .when_pending\n mov word [cs:get_when_waiting],1\n jmp .done\n.when_pending:\n cmp ax,1\n jne .done\n cmp word [cs:get_when_waiting],1\n jne .done\n mov [cs:get_when_gate],ax\n'+marker)
@@ -506,6 +537,11 @@ get_watch_data: dw 0x4757,2
    result['checks']['fresh_GET_generation_per_field']=generations==list(range(1,count+1))
    result['checks']['all_field_generations_completed']=injected==len(case['field_BIOS_words'])
    result['checks']['no_bad_transition_output']=b'BAD' not in wire
+  if 'policy_width' in case:
+   end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
+   width=struct.unpack('<H',(folder/'RENDER.BIN').read_bytes()[end-2:end])[0]
+   result['GET_observed_width']=width
+   result['checks']['GET_width_matches_policy']=width==case['policy_width']
   if case.get('storage_scope'):
    result['checks']['storage_guards_intact']=b'BAD' not in wire
   if case['success']:
@@ -514,7 +550,7 @@ get_watch_data: dw 0x4757,2
   else:result['checks']['no_post_GET_execution']=b'Synth42\r' not in wire
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
+ report.update(policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
   checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  print('GET full VM:',len(report['cases']),'cases',report['passed'])
