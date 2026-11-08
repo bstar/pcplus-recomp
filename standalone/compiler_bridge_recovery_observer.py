@@ -7,6 +7,7 @@ parent tail is invalid. INT21 frame offsets follow the observer's save macro.
 import re
 
 FIELDS = ['kind','injected','prompt_seen','hold_ticks','retry_key','retry_calls',
+ 'close_calls','closed_handle','close_probe_error','retired_phase','retired_dos_error','retired_busy',
  'captured_cells','display_checked','display_cells','display_cursor_ok','display_shape_ok','display_valid',
  'unsafe','parent_extent','child_ds','paused','scope','serial','steps','current_psp','program_active']
 PREFIX = ['cookie','parent','keep','full','owner','token','phase','handle','crc',
@@ -14,7 +15,7 @@ PREFIX = ['cookie','parent','keep','full','owner','token','phase','handle','crc'
 WORDS = len(FIELDS)+len(PREFIX)
 
 def attach(source, *, kind, parent, listing, offsets, child_symbols, child_group):
- assert kind in ('grow','read')
+ assert kind in ('grow','read','unlink')
  kernel=parent['experimental_compiler_lease_module']
  match=re.search(r'^([0-9a-f]+):([0-9a-f]+)\s+_compiler_lease_storage\b',listing,re.M)
  assert match
@@ -25,7 +26,7 @@ def attach(source, *, kind, parent, listing, offsets, child_symbols, child_group
  segment,offset=(int(n,16) for n in match.groups())
  keep=kernel['keep_paragraphs'];full=parent['memory_layout']['retained_parent_paragraphs']
  assert (segment*16+offset+28+15)//16+16<=keep<full
- prefix='get_recovery_sample:\n'+''.join('get_recovery_'+name+': dw '+str(int(kind=='read')+1 if name=='kind' else 0)+'\n' for name in FIELDS)+'get_recovery_prefix: times 14 dw 0\n'
+ prefix='get_recovery_sample:\n'+''.join('get_recovery_'+name+': dw '+str({'grow':1,'read':2,'unlink':3}[kind] if name=='kind' else 0)+'\n' for name in FIELDS)+'get_recovery_prefix: times 14 dw 0\n'
  marker='get_compiler_largest: dw 0';assert source.count(marker)==1
  source=source.replace(marker,prefix+marker)
  marker=' mov bp,sp\n cmp byte [ss:bp+17],0x4b';assert source.count(marker)==1
@@ -38,7 +39,7 @@ def attach(source, *, kind, parent, listing, offsets, child_symbols, child_group
  cmp byte [ss:bp+17],0x4b''')
  marker='timer:\n save\n cld';assert source.count(marker)==1
  source=source.replace(marker,marker+'\n call get_recovery_tick')
- constants=dict(RECOVERY_KIND=1 if kind=='grow' else 2,RECOVERY_KEEP=keep,RECOVERY_FULL=full,
+ constants=dict(RECOVERY_KIND={'grow':1,'read':2,'unlink':3}[kind],RECOVERY_KEEP=keep,RECOVERY_FULL=full,
   RECOVERY_MODULE=kernel['relative_target_segment'],RECOVERY_END=kernel['relative_target_segment']+(kernel['bank_bytes']+15)//16,
   RECOVERY_KERNEL=segment,RECOVERY_STATE=offset,RECOVERY_CHILD_GROUP=child_group,
   RECOVERY_SCREEN=frame_segment,RECOVERY_FRAME=frame_offset,RECOVERY_FRAME_META=frame_offset+8000,
@@ -78,7 +79,7 @@ get_recovery_dos:
  jne .no
  cmp word [ss:bp+14],RECOVERY_FULL
  jne .no
-%else
+%elif RECOVERY_KIND == 2
  cmp byte [ss:bp+17],0x3f
  jne .no
  mov ax,[cs:parent_psp]
@@ -88,6 +89,34 @@ get_recovery_dos:
  cmp word [ss:bp+10],0
  jne .no
  cmp word [ss:bp+12],4096
+ jne .no
+%else
+ mov ax,[cs:parent_psp]
+ add ax,16+RECOVERY_KERNEL
+ mov es,ax
+ cmp word [es:RECOVERY_STATE+12],4
+ jne .no
+ cmp word [es:RECOVERY_STATE+22],1
+ jne .no
+ cmp byte [ss:bp+17],0x3e
+ jne .unlink
+ mov ax,[es:RECOVERY_STATE+14]
+ cmp ax,0xffff
+ je .no
+ cmp [ss:bp+14],ax
+ jne .no
+ mov [cs:get_recovery_closed_handle],ax
+ inc word [cs:get_recovery_close_calls]
+ jmp .no ; Actual close is always passed through to DOS.
+.unlink:
+ cmp byte [ss:bp+17],0x41
+ jne .no
+ mov ax,es
+ cmp [ss:bp+2],ax
+ jne .no
+ cmp word [ss:bp+10],RECOVERY_STATE+156 ; compact state's absolute name
+ jne .no
+ cmp word [es:RECOVERY_STATE+14],0xffff
  jne .no
 %endif
  mov ax,[cs:parent_psp]
@@ -109,14 +138,66 @@ get_recovery_dos:
  inc word [cs:get_recovery_retry_calls]
  jmp .no
 .fail:
+%if RECOVERY_KIND == 3
+ ; Duplicating the previously closed child JFT entry must fail with DOS6.
+ mov bx,[cs:get_recovery_closed_handle]
+ mov ah,0x45
+ pushf
+ call far [cs:old21]
+ jc .closed
+ mov bx,ax
+ mov ah,0x3e
+ pushf
+ call far [cs:old21] ; retire only our unexpected duplicate, never original
+ xor ax,ax
+.closed:
+ mov [cs:get_recovery_close_probe_error],ax
+ mov ax,[cs:parent_psp]
+ add ax,16+RECOVERY_KERNEL
+ mov es,ax
+ mov si,RECOVERY_STATE
+ mov di,get_recovery_prefix
+ mov cx,14
+.cleanup_prefix:
+ mov ax,[es:si]
+ mov [cs:di],ax
+ add si,2
+ add di,2
+ loop .cleanup_prefix
+ mov ax,[es:RECOVERY_STATE+8]
+ add ax,16+RECOVERY_CHILD_GROUP
+ mov [cs:get_recovery_child_ds],ax
+ mov es,ax
+ mov ax,[es:RECOVERY_PAUSE]
+ mov [cs:get_recovery_paused],ax
+ mov ax,[es:RECOVERY_SCOPE]
+ mov [cs:get_recovery_scope],ax
+ mov ax,[es:RECOVERY_SERIAL]
+ mov [cs:get_recovery_serial],ax
+ mov ah,0x51
+ pushf
+ call far [cs:old21]
+ mov [cs:get_recovery_current_psp],bx
+ mov ax,[cs:parent_ds]
+ mov es,ax
+ mov ax,[es:RECOVERY_ACTIVE]
+ mov [cs:get_recovery_program_active],ax
+ mov ax,[cs:parent_psp]
+ dec ax
+ mov es,ax
+ mov ax,[es:3]
+ mov [cs:get_recovery_parent_extent],ax
+%endif
  call get_recovery_cells
  mov [cs:get_recovery_captured_cells],ax
  mov word [cs:get_recovery_injected],1
+%if RECOVERY_KIND != 3
  ; Remove only this owned fixture's early return-prompt key. No user keyboard.
  mov ax,0x40
  mov es,ax
  mov ax,[es:0x1c]
  mov [es:0x1a],ax
+%endif
 %if RECOVERY_KIND == 1
  mov word [ss:bp+16],8
 %else
@@ -139,8 +220,10 @@ get_recovery_display:
  jne .done
  cmp word [cs:get_recovery_injected],1
  jne .done
+%if RECOVERY_KIND != 3
  cmp word [cs:get_recovery_retry_key],1
  jne .done
+%endif
  cmp word [cs:get_recovery_display_checked],0
  jne .done
  cmp word [ss:bp+16],0x2500
@@ -167,6 +250,12 @@ get_recovery_display:
  cmp word [es:RECOVERY_STATE+22],1
  jne .done
  mov word [cs:get_recovery_display_valid],1
+ mov ax,[es:RECOVERY_STATE+12]
+ mov [cs:get_recovery_retired_phase],ax
+ mov ax,[es:RECOVERY_STATE+18]
+ mov [cs:get_recovery_retired_dos_error],ax
+ mov ax,[es:RECOVERY_STATE+26]
+ mov [cs:get_recovery_retired_busy],ax
  call get_recovery_cells
  mov [cs:get_recovery_display_cells],ax
  cmp ax,2000
@@ -215,6 +304,9 @@ get_recovery_cells:
  ret
 
 get_recovery_tick:
+%if RECOVERY_KIND == 3
+ ret ; Valid-memory cleanup failure must never enter BIOS quarantine.
+%endif
  save
  cmp word [cs:get_recovery_injected],1
  jne .done

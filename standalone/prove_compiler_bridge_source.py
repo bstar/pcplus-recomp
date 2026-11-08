@@ -33,7 +33,7 @@ def main():
   'standalone/test_aspect_get_vm_dos.py','standalone/test_aspect_renderer_dos.py',
   'standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py',
   'standalone/modem_fixtures.py','standalone/directory_test_support.py','standalone/terminal_config_fixtures.py',
-  'src/aspect/compiler.py','standalone/compiler_bridge_recovery_observer.py']
+  'src/aspect/compiler.py','standalone/compiler_bridge_recovery_observer.py','standalone/compiler_bridge_repeat_observer.py']
  for name in extras:sources[name]=sha(ROOT/name)
  reports=[json.loads(path.read_text()) for path in a.checks]
  assert any(r.get('source_lease_cases') and len(r['cases'])==2 for r in reports)
@@ -68,7 +68,7 @@ def main():
    assert sha(fresh/'build'/folder/leaf)==sha(original/leaf),leaf
    artifacts[leaf]=sha(original/leaf)
  replays=[]
- families=('source_lease_recovery_cases','source_lease_fault_cases','source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
+ families=('source_lease_repeat_cases','source_lease_cleanup_cases','source_lease_recovery_cases','source_lease_fault_cases','source_lease_cases','source_memory_cases','policy_cases','storage_cases','when_error_cases','when_cases','lifetime_cases')
  for i,(path,r) in enumerate(zip(a.checks,reports)):
   leaf='build/replay-'+str(i)
   flags=['--'+key.replace('_','-') for key in families if r.get(key)]
@@ -91,6 +91,18 @@ def main():
      capture=case['restore_recovery']
      return dict(capture,kernel={k:v for k,v in capture['kernel'].items() if k!='crc'})
     assert invariant(old)==invariant(new),(old['case'],'restore_recovery')
+   if 'restore_cleanup' in old:
+    def cleanup_invariant(case):
+     capture=case['restore_cleanup']
+     return dict(sample=capture['sample'],kernel={k:v for k,v in capture['kernel'].items() if k!='crc'},
+      backups=[{k:v for k,v in backup.items() if k not in ('sha256','crc16')} for backup in capture['backups']])
+    # Each preserved backup must match its own captured full-tail checksum;
+    # mutable parent bytes need not have the same digest between executions.
+    assert cleanup_invariant(old)==cleanup_invariant(new),(old['case'],'restore_cleanup')
+   if 'compiler_repeat' in old:
+    def repeat_invariant(case):
+     return [dict(sample=row['sample'],kernel={k:v for k,v in row['kernel'].items() if k!='crc'}) for row in case['compiler_repeat']]
+    assert repeat_invariant(old)==repeat_invariant(new),(old['case'],'compiler_repeat')
    assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
   replays.append(dict(cases=len(replay['cases']),checks_sha256=sha(fresh/leaf/'checks.json'),
                       source_lease_cases=replay.get('source_lease_cases',False)))

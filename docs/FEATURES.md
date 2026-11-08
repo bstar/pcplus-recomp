@@ -1,5 +1,10 @@
 # Full application reconstruction checklist
 
+[Compiler lifecycle tests](ASPECT_COMPILER_LIFECYCLE.md) now verify safe backup
+unlink failure after restored memory and two/three real compiler runs inside one
+ASPECT process. The same application binaries preserve policy, streams and fresh
+kernel ownership across repeated leases. No package or physical promotion.
+
 [Compiler restore recovery](ASPECT_COMPILER_RECOVERY.md) now exercises grow/read
 failure, BIOS quarantine and key-triggered retry at startup and EXECUTE. It fixes
 a stale recovery notice by restoring the exact captured display after verified

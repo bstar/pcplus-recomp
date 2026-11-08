@@ -1,0 +1,731 @@
+{
+  "checkpoint": "Safe restored cleanup errors and repeated compiler leases in one interpreter",
+  "passed": true,
+  "original_inputs": [],
+  "application_bytes_changed": false,
+  "parent_sha256": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+  "child_sha256": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+  "compiler_sha256": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+  "artifacts": {
+    "TERMINAL.EXE": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+    "PCCOMP.OVL": "5cb90b8b29218fc3580f5abe92b530642587e12e35975ebc28e8cdc34a1c8f6f",
+    "PCLINE.OVL": "c89bbfce9ee58f153441cc89e46994bc68066ff04fd65b385234bb7404d0cde0",
+    "PCMETA.OVL": "ef8b9ca0a252d8b68dde0a264f527868235fcd9551ec6466635a8f9a80f03641",
+    "ASPECT.EXE": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+    "ASPCOMP.EXE": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19"
+  },
+  "renderer_capability": 23,
+  "ASIO_version": 7,
+  "new_cleanup_cases": 2,
+  "new_repeat_cases": 2,
+  "current_lifecycle_cases": 18,
+  "prior_unchanged_artifact_validation": {
+    "path": "docs/validation/aspect-compiler-recovery.json",
+    "sha256": "9328357e97e84e072a885bdc7d77d8c3851ec2a00486008a0091fcd8306857ad",
+    "DOS_cases": 41,
+    "GET_regression_cases": 27,
+    "rerun_this_turn": false
+  },
+  "groups": [
+    {
+      "family": "cleanup",
+      "path": "build/compiler-bridge-lifecycle-cleanup-20261108/checks.json",
+      "sha256": "638790f629b76f6bdcd1ad4985cda355d40db559d6560a00499d23b4a5bde22f",
+      "cases": [
+        {
+          "name": "get-vm-source-start-cleanup-unlink",
+          "passed": true,
+          "check_count": 46,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_LOGIN.ASP": true,
+            "fixture_unchanged_RENDER.COM": true,
+            "fixture_unchanged_ASPCOMP.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "passive_EXEC_observed": true,
+            "child_exit_expected": true,
+            "parent_JFT_unchanged": true,
+            "all_parent_sink_owners_unchanged": true,
+            "explicit_password_only": true,
+            "ordinary_parent_keyboard_resumes": true,
+            "initial_CPR_before_password": true,
+            "no_automatic_redial": true,
+            "frozen_inputs": true,
+            "video_0_0": true,
+            "far_history_retained_across_EXEC_return": true,
+            "far_history_bounds": true,
+            "passive_observer_in_UMB": true,
+            "GET_typed_exit": true,
+            "script_reached_GET_boundary": true,
+            "BIOS_keys_after_field_admission": true,
+            "startup_error_restored_view": true,
+            "actual_compiler_EXEC_attempt": true,
+            "no_stale_or_trailing_execution": true,
+            "compiler_log_retired": true,
+            "cleanup_error_is_safe_IO": true,
+            "cleanup_fault_injected_once": true,
+            "backup_handle_actually_closed": true,
+            "cleanup_fails_after_valid_restore": true,
+            "cleanup_error_retires_busy_state": true,
+            "safe_cleanup_does_not_quarantine": true,
+            "cleanup_restores_exact_display": true,
+            "intact_backup_preserved": true,
+            "compiler_staging_and_log_retired": true,
+            "compiled_output_published_but_not_executed": true,
+            "no_post_GET_execution": true
+          },
+          "child_exit_probe": {
+            "DS": 38144,
+            "errno": 1,
+            "error": 5,
+            "opcode": 0,
+            "compiler_calls": 1,
+            "file_status": 3
+          },
+          "compiler_EXEC_memory": {
+            "largest_free_bytes": 116576,
+            "attempts": 1,
+            "startup_prompt_seen_before_ack": 0
+          },
+          "cleanup": {
+            "sample": {
+              "kind": 3,
+              "injected": 1,
+              "prompt_seen": 0,
+              "hold_ticks": 0,
+              "retry_key": 0,
+              "retry_calls": 0,
+              "close_calls": 1,
+              "closed_handle": 8,
+              "close_probe_error": 6,
+              "retired_phase": 4,
+              "retired_dos_error": 5,
+              "retired_busy": 0,
+              "captured_cells": 2000,
+              "display_checked": 1,
+              "display_cells": 2000,
+              "display_cursor_ok": 1,
+              "display_shape_ok": 1,
+              "display_valid": 1,
+              "unsafe": 0,
+              "parent_extent": 30165,
+              "child_ds": 38144,
+              "paused": 1,
+              "scope": 1,
+              "serial": 1,
+              "steps": 0,
+              "current_psp": 32347,
+              "program_active": 1
+            },
+            "kernel": {
+              "cookie": 17228,
+              "parent": 2068,
+              "keep": 22868,
+              "full": 30165,
+              "owner": 32347,
+              "token": 1,
+              "phase": 4,
+              "handle": 65535,
+              "crc": 24434,
+              "dos_error": 0,
+              "created": 1,
+              "valid": 1,
+              "sequence": 1,
+              "busy": 1
+            },
+            "backups": [
+              {
+                "name": "LPM00000.TMP",
+                "bytes": 116752,
+                "sha256": "1bd899ee93aef9f7b27b569313c6ff75db8967a5244293f19e059f097e59e249",
+                "crc16": 24434
+              }
+            ]
+          }
+        },
+        {
+          "name": "get-vm-source-execute-cleanup-unlink",
+          "passed": true,
+          "check_count": 49,
+          "checks": {
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_LOGIN.ASP": true,
+            "fixture_unchanged_LOGIN.ASX": true,
+            "fixture_unchanged_RENDER.COM": true,
+            "fixture_unchanged_NEXT.ASP": true,
+            "fixture_unchanged_ASPCOMP.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "passive_EXEC_observed": true,
+            "child_exit_expected": true,
+            "parent_JFT_unchanged": true,
+            "all_parent_sink_owners_unchanged": true,
+            "explicit_password_only": true,
+            "ordinary_parent_keyboard_resumes": true,
+            "initial_CPR_before_password": true,
+            "no_automatic_redial": true,
+            "frozen_inputs": true,
+            "video_0_0": true,
+            "typed_error_stays_in_parent": true,
+            "far_history_retained_across_EXEC_return": true,
+            "far_history_bounds": true,
+            "passive_observer_in_UMB": true,
+            "GET_typed_exit": true,
+            "script_reached_GET_boundary": true,
+            "BIOS_keys_after_field_admission": true,
+            "actual_compiler_EXEC_attempt": true,
+            "no_stale_or_trailing_execution": true,
+            "compiler_log_retired": true,
+            "source_failure_stream_flushed": true,
+            "cleanup_error_is_safe_IO": true,
+            "cleanup_fault_injected_once": true,
+            "backup_handle_actually_closed": true,
+            "cleanup_fails_after_valid_restore": true,
+            "cleanup_error_retires_busy_state": true,
+            "safe_cleanup_does_not_quarantine": true,
+            "cleanup_restores_exact_display": true,
+            "intact_backup_preserved": true,
+            "compiler_staging_and_log_retired": true,
+            "compiled_output_published_but_not_executed": true,
+            "no_post_GET_execution": true
+          },
+          "child_exit_probe": {
+            "DS": 38144,
+            "errno": 1,
+            "error": 5,
+            "opcode": 203,
+            "compiler_calls": 1,
+            "file_status": 0
+          },
+          "compiler_EXEC_memory": {
+            "largest_free_bytes": 116576,
+            "attempts": 1,
+            "startup_prompt_seen_before_ack": 0
+          },
+          "cleanup": {
+            "sample": {
+              "kind": 3,
+              "injected": 1,
+              "prompt_seen": 0,
+              "hold_ticks": 0,
+              "retry_key": 0,
+              "retry_calls": 0,
+              "close_calls": 1,
+              "closed_handle": 9,
+              "close_probe_error": 6,
+              "retired_phase": 4,
+              "retired_dos_error": 5,
+              "retired_busy": 0,
+              "captured_cells": 2000,
+              "display_checked": 1,
+              "display_cells": 2000,
+              "display_cursor_ok": 1,
+              "display_shape_ok": 1,
+              "display_valid": 1,
+              "unsafe": 0,
+              "parent_extent": 30165,
+              "child_ds": 38144,
+              "paused": 1,
+              "scope": 1,
+              "serial": 1,
+              "steps": 0,
+              "current_psp": 32347,
+              "program_active": 1
+            },
+            "kernel": {
+              "cookie": 17228,
+              "parent": 2068,
+              "keep": 22868,
+              "full": 30165,
+              "owner": 32347,
+              "token": 1,
+              "phase": 4,
+              "handle": 65535,
+              "crc": 34095,
+              "dos_error": 0,
+              "created": 1,
+              "valid": 1,
+              "sequence": 1,
+              "busy": 1
+            },
+            "backups": [
+              {
+                "name": "LPM00000.TMP",
+                "bytes": 116752,
+                "sha256": "fc70be44b4c70833774a7d92999f8f3c955fc691ebed6ba3a6a561b7fe220a22",
+                "crc16": 34095
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family": "repeat",
+      "path": "build/compiler-bridge-lifecycle-repeat-20261108/checks.json",
+      "sha256": "f2c97d5d79e6fd011ef170ee57837500c274b50c23777745d070a3c7dab212ea",
+      "cases": [
+        {
+          "name": "get-vm-source-repeat-2",
+          "passed": true,
+          "check_count": 54,
+          "checks": {
+            "renderer_post_sent": true,
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_LOGIN.ASP": true,
+            "fixture_unchanged_RENDER.COM": true,
+            "fixture_unchanged_NEXT.ASP": true,
+            "fixture_unchanged_ASPCOMP.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "passive_EXEC_observed": true,
+            "child_exit_expected": true,
+            "parent_JFT_unchanged": true,
+            "all_parent_sink_owners_unchanged": true,
+            "explicit_password_only": true,
+            "ordinary_parent_keyboard_resumes": true,
+            "initial_CPR_before_password": true,
+            "no_automatic_redial": true,
+            "frozen_inputs": true,
+            "post_query_sent_after_password": true,
+            "post_return_cursor_coherent": true,
+            "video_0_0": true,
+            "far_history_retained_across_EXEC_return": true,
+            "far_history_bounds": true,
+            "native_renderer_updated_far_history": true,
+            "passive_observer_in_UMB": true,
+            "GET_typed_exit": true,
+            "script_reached_GET_boundary": true,
+            "BIOS_keys_after_field_admission": true,
+            "actual_compiler_EXEC_attempt": true,
+            "no_stale_or_trailing_execution": true,
+            "compiler_log_retired": true,
+            "distinct_kernel_nonce_each_compile": true,
+            "one_interpreter_owns_every_loan": true,
+            "every_compile_uses_lent_parent": true,
+            "every_loan_matches_trusted_bounds": true,
+            "repeat_compiler_staging_retired": true,
+            "single_ASPECT_EXEC": true,
+            "no_stale_or_bad_chain_output": true,
+            "compiled_chain_NEXT_exact": true,
+            "stream_OWNED.TXT_closed_exact": true,
+            "source_compiler_ASX_exact": true,
+            "compiler_loaded_from_lent_memory": true,
+            "compiler_result_success": true,
+            "backing_files_retired": true,
+            "kernel_file_unchanged": true,
+            "GET_edited_value_reaches_peer": true
+          },
+          "child_exit_probe": {
+            "DS": 38144,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 2,
+            "file_status": 0
+          },
+          "compiler_EXEC_memory": {
+            "largest_free_bytes": 116576,
+            "attempts": 2,
+            "startup_prompt_seen_before_ack": 0
+          },
+          "compiler_repeat": [
+            {
+              "sample": {
+                "parent_extent": 22868,
+                "parent_mcb_owner": 2068,
+                "current_psp": 32347,
+                "child_ss": 38144,
+                "child_ds": 38144
+              },
+              "kernel": {
+                "cookie": 17228,
+                "parent": 2068,
+                "keep": 22868,
+                "full": 30165,
+                "owner": 32347,
+                "token": 1,
+                "phase": 2,
+                "handle": 8,
+                "crc": 24434,
+                "dos_error": 0,
+                "created": 1,
+                "valid": 0,
+                "sequence": 1,
+                "busy": 0
+              }
+            },
+            {
+              "sample": {
+                "parent_extent": 22868,
+                "parent_mcb_owner": 2068,
+                "current_psp": 32347,
+                "child_ss": 38144,
+                "child_ds": 38144
+              },
+              "kernel": {
+                "cookie": 17228,
+                "parent": 2068,
+                "keep": 22868,
+                "full": 30165,
+                "owner": 32347,
+                "token": 2,
+                "phase": 2,
+                "handle": 9,
+                "crc": 34095,
+                "dos_error": 0,
+                "created": 1,
+                "valid": 0,
+                "sequence": 1,
+                "busy": 0
+              }
+            }
+          ],
+          "ASX_outputs": {
+            "LOGIN.ASX": "1ff9c7cc7bd312e0fb1f74f1ce306d4b8f2ee108541667a1c6a5597a372775ee",
+            "NEXT.ASX": "46fc1f7d951514c3e42bab7f59962afd63f53bcc91ba09a868a6280c3f64dba1"
+          }
+        },
+        {
+          "name": "get-vm-source-repeat-3",
+          "passed": true,
+          "check_count": 57,
+          "checks": {
+            "renderer_post_sent": true,
+            "configured_hangup_reached_wire": true,
+            "DOS_expected_exit": true,
+            "hardware_restored": true,
+            "PRM_unchanged": true,
+            "binary_unchanged": true,
+            "no_peer_errors": true,
+            "no_unexpected_commands": true,
+            "directory_expected_updates_only": true,
+            "fixture_unchanged_LOGIN.ASP": true,
+            "fixture_unchanged_RENDER.COM": true,
+            "fixture_unchanged_NEXT.ASP": true,
+            "fixture_unchanged_FINAL.ASP": true,
+            "fixture_unchanged_ASPCOMP.EXE": true,
+            "actual_init_and_dial": true,
+            "actual_DOS_CPR": true,
+            "actual_DOS_DA": true,
+            "immediate_banner_not_dropped": true,
+            "passive_EXEC_observed": true,
+            "child_exit_expected": true,
+            "parent_JFT_unchanged": true,
+            "all_parent_sink_owners_unchanged": true,
+            "explicit_password_only": true,
+            "ordinary_parent_keyboard_resumes": true,
+            "initial_CPR_before_password": true,
+            "no_automatic_redial": true,
+            "frozen_inputs": true,
+            "post_query_sent_after_password": true,
+            "post_return_cursor_coherent": true,
+            "video_0_0": true,
+            "far_history_retained_across_EXEC_return": true,
+            "far_history_bounds": true,
+            "native_renderer_updated_far_history": true,
+            "passive_observer_in_UMB": true,
+            "GET_typed_exit": true,
+            "script_reached_GET_boundary": true,
+            "BIOS_keys_after_field_admission": true,
+            "actual_compiler_EXEC_attempt": true,
+            "no_stale_or_trailing_execution": true,
+            "compiler_log_retired": true,
+            "distinct_kernel_nonce_each_compile": true,
+            "one_interpreter_owns_every_loan": true,
+            "every_compile_uses_lent_parent": true,
+            "every_loan_matches_trusted_bounds": true,
+            "repeat_compiler_staging_retired": true,
+            "single_ASPECT_EXEC": true,
+            "no_stale_or_bad_chain_output": true,
+            "compiled_chain_NEXT_exact": true,
+            "compiled_chain_FINAL_exact": true,
+            "stream_OWNED.TXT_closed_exact": true,
+            "stream_HOP.TXT_closed_exact": true,
+            "source_compiler_ASX_exact": true,
+            "compiler_loaded_from_lent_memory": true,
+            "compiler_result_success": true,
+            "backing_files_retired": true,
+            "kernel_file_unchanged": true,
+            "GET_edited_value_reaches_peer": true
+          },
+          "child_exit_probe": {
+            "DS": 38144,
+            "errno": 1,
+            "error": 0,
+            "opcode": 148,
+            "compiler_calls": 3,
+            "file_status": 0
+          },
+          "compiler_EXEC_memory": {
+            "largest_free_bytes": 116576,
+            "attempts": 3,
+            "startup_prompt_seen_before_ack": 0
+          },
+          "compiler_repeat": [
+            {
+              "sample": {
+                "parent_extent": 22868,
+                "parent_mcb_owner": 2068,
+                "current_psp": 32347,
+                "child_ss": 38144,
+                "child_ds": 38144
+              },
+              "kernel": {
+                "cookie": 17228,
+                "parent": 2068,
+                "keep": 22868,
+                "full": 30165,
+                "owner": 32347,
+                "token": 1,
+                "phase": 2,
+                "handle": 8,
+                "crc": 24434,
+                "dos_error": 0,
+                "created": 1,
+                "valid": 0,
+                "sequence": 1,
+                "busy": 0
+              }
+            },
+            {
+              "sample": {
+                "parent_extent": 22868,
+                "parent_mcb_owner": 2068,
+                "current_psp": 32347,
+                "child_ss": 38144,
+                "child_ds": 38144
+              },
+              "kernel": {
+                "cookie": 17228,
+                "parent": 2068,
+                "keep": 22868,
+                "full": 30165,
+                "owner": 32347,
+                "token": 2,
+                "phase": 2,
+                "handle": 9,
+                "crc": 34095,
+                "dos_error": 0,
+                "created": 1,
+                "valid": 0,
+                "sequence": 1,
+                "busy": 0
+              }
+            },
+            {
+              "sample": {
+                "parent_extent": 22868,
+                "parent_mcb_owner": 2068,
+                "current_psp": 32347,
+                "child_ss": 38144,
+                "child_ds": 38144
+              },
+              "kernel": {
+                "cookie": 17228,
+                "parent": 2068,
+                "keep": 22868,
+                "full": 30165,
+                "owner": 32347,
+                "token": 3,
+                "phase": 2,
+                "handle": 9,
+                "crc": 34095,
+                "dos_error": 0,
+                "created": 1,
+                "valid": 0,
+                "sequence": 1,
+                "busy": 0
+              }
+            }
+          ],
+          "ASX_outputs": {
+            "FINAL.ASX": "46fc1f7d951514c3e42bab7f59962afd63f53bcc91ba09a868a6280c3f64dba1",
+            "LOGIN.ASX": "1ff9c7cc7bd312e0fb1f74f1ce306d4b8f2ee108541667a1c6a5597a372775ee",
+            "NEXT.ASX": "b53edc4ab63aacc329fd5728843dc9adb278bfcb9bb6c029eea0c7aa9679fa22"
+          }
+        }
+      ]
+    },
+    {
+      "family": "control",
+      "path": "build/compiler-bridge-lifecycle-control-20261108/checks.json",
+      "sha256": "9024d00a4aa60a16952011dfbaa69e461b5b564e62195726b5838f3ff9a978b6",
+      "cases": [
+        {
+          "name": "get-vm-source-start",
+          "passed": true,
+          "check_count": 44
+        },
+        {
+          "name": "get-vm-source-execute",
+          "passed": true,
+          "check_count": 47
+        }
+      ]
+    },
+    {
+      "family": "recovery",
+      "path": "build/compiler-bridge-lifecycle-recovery-20261108/checks.json",
+      "sha256": "72cd6dcc44c1dd4ccc396e1b90901e605b46f9e84fe2b596e59f18ae5d2056f8",
+      "cases": [
+        {
+          "name": "get-vm-source-start-recover-grow",
+          "passed": true,
+          "check_count": 56
+        },
+        {
+          "name": "get-vm-source-execute-recover-grow",
+          "passed": true,
+          "check_count": 59
+        },
+        {
+          "name": "get-vm-source-start-recover-read",
+          "passed": true,
+          "check_count": 56
+        },
+        {
+          "name": "get-vm-source-execute-recover-read",
+          "passed": true,
+          "check_count": 59
+        }
+      ]
+    },
+    {
+      "family": "refusals",
+      "path": "build/compiler-bridge-lifecycle-refusals-20261108/checks.json",
+      "sha256": "326512900964bdcc7934d58c52bc0d3c599116e559c3340add6c14d84edf27c8",
+      "cases": [
+        {
+          "name": "get-vm-source-start-missing",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-source-execute-missing",
+          "passed": true,
+          "check_count": 46
+        },
+        {
+          "name": "get-vm-source-start-corrupt",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-source-execute-corrupt",
+          "passed": true,
+          "check_count": 46
+        },
+        {
+          "name": "get-vm-source-start-truncated",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-source-execute-truncated",
+          "passed": true,
+          "check_count": 46
+        },
+        {
+          "name": "get-vm-source-start-compiler-error",
+          "passed": true,
+          "check_count": 42
+        },
+        {
+          "name": "get-vm-source-execute-compiler-error",
+          "passed": true,
+          "check_count": 46
+        }
+      ]
+    }
+  ],
+  "source_rebuild": {
+    "path": "build/compiler-bridge-lifecycle-source-export-20261108/result.json",
+    "sha256": "b919a5552156474de884b62654c548bb28b523477302b31fa9a528deb8ceac43",
+    "source_count": 1039,
+    "DOS_cases": 18,
+    "passed": true,
+    "ancestor_git_unavailable": true,
+    "artifacts": {
+      "TERMINAL.EXE": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+      "PCCOMP.OVL": "5cb90b8b29218fc3580f5abe92b530642587e12e35975ebc28e8cdc34a1c8f6f",
+      "PCLINE.OVL": "c89bbfce9ee58f153441cc89e46994bc68066ff04fd65b385234bb7404d0cde0",
+      "PCMETA.OVL": "ef8b9ca0a252d8b68dde0a264f527868235fcd9551ec6466635a8f9a80f03641",
+      "ASPECT.EXE": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+      "ASPCOMP.EXE": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19"
+    },
+    "replays": [
+      {
+        "cases": 2,
+        "checks_sha256": "de5d8225bac633ee0bd11606583e63c3dc822fb0c7471b5aa396d68bc00ade93",
+        "source_lease_cases": true
+      },
+      {
+        "cases": 2,
+        "checks_sha256": "de46ad071f08351681fa71e6ede4dd1026332b4f196a6febaee49ad46e0c093d",
+        "source_lease_cases": false
+      },
+      {
+        "cases": 2,
+        "checks_sha256": "4427ca1d169ba7562f07121833e5a8e637e430245520595ec1431208df6ffc5f",
+        "source_lease_cases": false
+      },
+      {
+        "cases": 4,
+        "checks_sha256": "4643771251a715a63b6bc9662bc1c771b111b0994d14e33a295ba876cd68c32b",
+        "source_lease_cases": false
+      },
+      {
+        "cases": 8,
+        "checks_sha256": "3ca043d6c1f76324e88f08816b2ebb6f15a46168c006605febf635251cce1e10",
+        "source_lease_cases": false
+      }
+    ],
+    "source_map_sha256": "5b7dcb2127b0929aa5b0259e123510fcc6e6632d81240fbf4b5ce4374ff996e1"
+  },
+  "sources": {
+    "standalone/compiler_bridge_recovery_observer.py": "773932e565fb074bace47b1417b56b5252d63831c22a797555b48ceb6976b46e",
+    "standalone/compiler_bridge_repeat_observer.py": "5142708047fc0008abe0f1e90ef086fb3d60375f66a65026fe36f4ab4852a443",
+    "standalone/test_aspect_get_vm_dos.py": "d304e4cddda9e8903cc574060e0909f863612896689054cca6cb502db7ad8e83",
+    "standalone/prove_compiler_bridge_source.py": "edd65d2160c36534f159ac4ed8f1d4491f4ea02cc78e6381d5d3241e5a8e870e"
+  },
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "limitations": [
+    "Synthetic unlink failure after valid restore only; no actual close or read-only-disk failure.",
+    "Preserved backups verified within each run against the captured full-tail checksum; mutable backup SHA/CRC need not match across executions.",
+    "Two/three successful leases within one ASPECT process; reuse after a cleanup error or across separate interpreter launches remains open.",
+    "Failed BEGIN operations, repeated/partial restore faults, corrupt-backup repair, unexpected termination and Meta/Line/snapshot composition remain open.",
+    "Inherited intermediate FINAL FAIL prints use delegated legacy expectations; final exact checks and process exits are authoritative.",
+    "No physical route, selected-package promotion or full application/language parity claim."
+  ]
+}

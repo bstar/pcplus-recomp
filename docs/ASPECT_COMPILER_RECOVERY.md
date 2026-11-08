@@ -1,5 +1,9 @@
 # Full-parent compiler restore recovery
 
+The next [lifecycle checkpoint](ASPECT_COMPILER_LIFECYCLE.md) verifies restored
+backup-unlink failure and repeated compiler leases in one interpreter, using the
+same application artifacts. The restore-recovery evidence below keeps its scope.
+
 The experimental compiler bridge now recovers from an injected parent regrow or
 restoration-read failure at both source startup and EXECUTE. During failure it
 keeps the compiler scope and serial pause, displays its BIOS-only recovery
