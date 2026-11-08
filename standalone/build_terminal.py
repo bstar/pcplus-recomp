@@ -10,6 +10,8 @@ from omf_imports import rename_imports
 ROOT=Path(__file__).resolve().parents[1]
 import argparse
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output-dir',type=Path,help='New isolated build directory under build/');parser.add_argument('--external-render',action='store_true');parser.add_argument('--mouse',action='store_true')
+parser.add_argument('--compiler-lease-arena',action='store_true',help='Experimental whole-kernel cold arena module and startup-only loader; no child bridge')
+parser.add_argument('--compiler-lease-arena-probe',action='store_true',help='Diagnostic only: load/init/release whole kernel before UART, then exit')
 parser.add_argument('--compiler-lease-module',action='store_true',help='Experimental resident core and cold compiler-bank layout; no child bridge admission yet')
 parser.add_argument('--meta-shared-runtime',action='store_true',help='Experimental shared Line/Port loader and transient Meta frontend; implies Alt-M')
 parser.add_argument('--meta-editor',action='store_true',help='Experimental serviced Alt-M and closed-lease live key adoption; implies matched module')
@@ -122,6 +124,8 @@ parser.add_argument('--native-reset-transaction',action='store_true',help='Exper
 parser.add_argument('--input-probe',action='store_true')
 parser.add_argument('--hook-probe',action='store_true')
 parser.add_argument('--session-capture',action='store_true');parser.add_argument('--directory-keys',action='store_true');parser.add_argument('--aspect-keys',action='store_true');parser.add_argument('--notice-input',action='store_true');parser.add_argument('--notice-sound',action='store_true');parser.add_argument('--exit-guard',action='store_true');parser.add_argument('--exit-probe',type=int,choices=[0,1,2,3]);parser.add_argument('--process-bank',action='store_true');parser.add_argument('--traps',action='store_true');parser.add_argument('--trap-probe',type=int,choices=range(5));args=parser.parse_args()
+if args.compiler_lease_arena_probe:args.compiler_lease_arena=True
+if args.compiler_lease_arena:args.compiler_lease_module=True
 if args.keymap_editor:assert args.original_reference and args.keyboard_bank and args.program_display_owner,'Keymap editor requires original-reference, keyboard-bank and display owner'
 if args.meta_shared_runtime:args.meta_editor=True
 if args.meta_editor:args.meta_editor_module=True
@@ -538,6 +542,8 @@ for index,source in enumerate(sources):
  if args.meta_editor:options+=['-DTERMINAL_META_EDITOR']
  if args.keymap_editor:options+=['-DTERMINAL_KEYMAP_EDITOR']
  if args.meta_shared_runtime:options+=['-DTERMINAL_META_SHARED']
+ if args.compiler_lease_arena:options+=['-DTERMINAL_COMPILER_ARENA']
+ if args.compiler_lease_arena_probe:options+=['-DTERMINAL_COMPILER_ARENA_PROBE']
  if args.meta_loader_probe:options+=['-DTERMINAL_META_LOADER_PROBE']
  if args.line_port:options+=['-DTERMINAL_LINE_PORT']
  if args.line_port_overlay:options+=['-DTERMINAL_LINE_PORT_OVERLAY']
@@ -1020,17 +1026,22 @@ if args.compiler_lease_module:
  assert args.meta_shared_runtime and args.aspect_get_policy,'Compiler bank layout requires the complete shared-runtime GET profile'
  lease_inputs=['compiler_lease_core.asm','compiler_lease.c','compiler_lease_core.c','compiler_lease_private.h','compiler_lease.h','compiler_lease_dos.asm','compiler_lease_module.asm','compiler_lease_bank.asm']
  sources += [ROOT/'src/process'/n for n in lease_inputs]
- for stem in ['compiler_lease','compiler_lease_core']:
+ for stem in (['compiler_lease'] if args.compiler_lease_arena else ['compiler_lease','compiler_lease_core']):
   obj=OUT/(stem+'.obj')
-  subprocess.run(['wcc','-q','-os','-bt=dos','-0','-ms','-fpc','-ecc','-s','-w4','-we','-dCOMPILER_LEASE_BANKED','-dCOMPILER_LEASE_MODULE','-fo='+str(obj),str(ROOT/'src/process'/(stem+'.c'))],check=True)
+  subprocess.run(['wcc','-q','-os','-bt=dos','-0','-ms','-fpc','-ecc','-s','-w4','-we','-dCOMPILER_LEASE_BANKED','-dCOMPILER_LEASE_MODULE',*(['-dCOMPILER_LEASE_RETAINED'] if args.compiler_lease_arena else []),'-fo='+str(obj),str(ROOT/'src/process'/(stem+'.c'))],check=True)
   if stem=='compiler_lease':lease_bank_obj=str(obj)
   else:objects.append(str(obj))
  for stem,source,defines in [('lease_start','compiler_lease_bank.asm',['-DBANK_START','-DBANK_PADDING=0']),('lease_end','compiler_lease_bank.asm',[]),('lease_io','compiler_lease_dos.asm',['-DCOMPILER_LEASE_BANKED','-DCOMPILER_LEASE_MODULE']),('lease_info','compiler_lease_module.asm',[]),('lease_core','compiler_lease_core.asm',[])]:
   obj=OUT/(stem+'.obj')
-  subprocess.run(['nasm','-f','obj',*defines,str(ROOT/'src/process'/source),'-o',str(obj)],check=True)
+  subprocess.run(['nasm','-f','obj',*(['-DCOMPILER_LEASE_RETAINED'] if args.compiler_lease_arena else []),*defines,str(ROOT/'src/process'/source),'-o',str(obj)],check=True)
   objects.append(str(obj))
   if stem=='lease_start':objects.append(lease_bank_obj)
-ordering=['CODE','FARCODE']+(['LEASE_BANK'] if args.compiler_lease_module else [])+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
+ if args.compiler_lease_arena:
+  for stem in ['compiler_overlay_front']+(['compiler_overlay_probe'] if args.compiler_lease_arena_probe else []):
+   source=ROOT/'src/process'/(stem+'.asm');obj=OUT/(stem+'.obj')
+   subprocess.run(['nasm','-f','obj',str(source),'-o',str(obj)],check=True)
+   objects.append(str(obj));sources.append(source)
+ordering=['CODE','FARCODE']+(['LEASE_MODULE'] if args.compiler_lease_arena else [])+(['LEASE_BANK'] if args.compiler_lease_module else [])+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
 chat_loader=None
 if args.chat_loader:
  from chat.loader_link import build_loader
@@ -1071,7 +1082,7 @@ if args.meta_editor_module:
  sources.append(ROOT/'standalone/meta_overlay.py')
 if args.compiler_lease_module:
  from compiler_lease_module import split
- compiler_lease_module=split(OUT/'TERMINAL.EXE',OUT/'terminal.map','redisplay_snapshot',arena_offset=14336,arena_bytes=2048,overlays=[('line',line_overlay),('meta',meta_overlay)])
+ compiler_lease_module=split(OUT/'TERMINAL.EXE',OUT/'terminal.map','redisplay_snapshot',arena_offset=16384 if args.compiler_lease_arena else 14336,arena_bytes=8192 if args.compiler_lease_arena else 2048,whole=args.compiler_lease_arena,overlays=[('line',line_overlay),('meta',meta_overlay)])
  compiler_lease_module.update(production_bridge_admission=False,runtime_arena_ownership_verified=False)
  sources.append(ROOT/'standalone/compiler_lease_module.py')
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
@@ -1269,6 +1280,8 @@ if args.original_reference:
 manifest['limitations'].append('An otherwise eligible Alt-Z read during normal parser ownership is retained until a distinct resident foreground service can recheck all guards. All BIOS key values, including AX0, retain their key meaning. Subsequent keys remain in the existing32-word typeahead FIFO; repeated Alt-Z coalesces. Escape cancels locally; Alt-X/Alt-H cancel then use normal dispatch. Changed owners/geometry or foreground stop discard the owned pending typeahead. Overflow retains the existing explicit exit3 policy. This is maintained behavior; it does not identify the cause of the earlier unobserved Synchronet refusal.')
 manifest['compiler_helper_adapters']={'import_counts':helper_adapters['import_counts'],'record_policy':'Only EXTDEF names/record lengths/checksums change; symbol indices, code, data, local symbols and fixups are preserved.'}
 if args.compiler_lease_module:manifest['experimental_compiler_lease_module']=compiler_lease_module
+if args.compiler_lease_arena:manifest['experimental_compiler_lease_arena']=True
+if args.compiler_lease_arena_probe:manifest['diagnostic_compiler_lease_arena_probe']=True
 (OUT/'compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**helper_adapters},indent=2)+'\n')
 manifest['zmodem_compiler_helper_adapters']=zmodem_helper_adapters
 (OUT/'zmodem-compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**zmodem_helper_adapters},indent=2)+'\n')

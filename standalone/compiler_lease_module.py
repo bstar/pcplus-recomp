@@ -12,19 +12,29 @@ def crc16(data):
   for _ in range(8):crc=(crc>>1)^(0xa001 if crc&1 else 0)
  return crc
 
-def split(binary,map_path,arena_symbol,arena_offset=0,arena_bytes=4096,keep_symbol='UI_STORAGE',overlays=()):
+def split(binary,map_path,arena_symbol,arena_offset=0,arena_bytes=4096,keep_symbol='UI_STORAGE',overlays=(),whole=False):
  raw=bytearray(binary.read_bytes());h=list(struct.unpack_from('<14H',raw))
  assert raw[:2]==b'MZ' and (h[2]-1)*512+(h[1] or 512)==len(raw)
  start=h[4]*16;image=bytearray(raw[start:]);listing=map_path.read_text()
  symbols={n:(int(s,16),int(o,16)) for s,o,n in re.findall(r'^([0-9a-f]+):([0-9a-f]+)[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I)}
  classes={n:c for n,c in re.findall(r'^(\w+)\s+(\w+)\s+\w+\s+[0-9a-f]+:[0-9a-f]+\s+[0-9a-f]+\s*$',listing,re.M|re.I)}
  segments={n:(int(s,16),int(o,16),int(z,16)) for n,s,o,z in re.findall(r'^(\w+)\s+\w+\s+\w+\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)\s*$',listing,re.M|re.I)}
- bank,offset,size=segments['LEASE_BANK'];assert offset==0 and 2<=size<=4096
- size=(size+15)//16*16
- paras=(size+15)//16;lo,hi=bank*16,(bank+paras)*16
+ if whole:
+  ranges=[(s*16+o,s*16+o+n) for name,(s,o,n) in segments.items() if classes[name]=='LEASE_MODULE']
+  assert ranges
+  lo=min(a for a,b in ranges);hi=(max(b for a,b in ranges)+15)//16*16
+  assert lo%16==0
+  for name,(s,o,n) in segments.items():
+   if classes[name]!='LEASE_MODULE':
+    assert not (lo<=s*16+o<hi),name
+    assert not (lo<=s*16<hi),('resident segment shares extracted module base',name,s,o)
+  bank=lo//16;size=hi-lo;assert 256<=size<=8192
+ else:
+  bank,offset,size=segments['LEASE_BANK'];assert offset==0 and 2<=size<=4096
+  size=(size+15)//16*16;lo=bank*16;hi=lo+size
+ paras=size//16
  assert lo<len(image) and hi<=len(image)+15
  if hi>len(image):image+=bytes(hi-len(image))
- assert not any(image[lo+size:hi])
  arena,off=symbols.get(arena_symbol,segments.get(arena_symbol,(None,None))[:2]);assert arena is not None
  arena_byte=arena*16+off+arena_offset
  assert arena_byte%16==0 and arena_bytes>=size
@@ -39,12 +49,13 @@ def split(binary,map_path,arena_symbol,arena_offset=0,arena_bytes=4096,keep_symb
  keep_seg,keep_off=symbols.get(keep_symbol,segments.get(keep_symbol,(None,None))[:2]);assert keep_seg is not None
  keep_byte=keep_seg*16+keep_off
  keep=((lo if keep_byte==lo else address(keep_byte))+15)//16+16
- assert target+16>=keep
+ if not whole:assert target+16>=keep
  payload=bytearray(image[lo:lo+size]);local=[];resident=[]
  for i in range(h[3]):
   off,seg=struct.unpack_from('<HH',raw,h[12]+i*4);at=seg*16+off;assert at+2<=len(image)
   value=struct.unpack_from('<H',image,at)[0]
   if lo<=at<hi:
+   if whole:assert bank<=value<bank+paras,('whole kernel has nonlocal segment import',at,value)
    assert at+2<=lo+size;struct.pack_into('<H',payload,at-lo,segment(value));local.append(at-lo)
   else:
    struct.pack_into('<H',image,at,segment(value));resident.append(address(at))
@@ -52,9 +63,16 @@ def split(binary,map_path,arena_symbol,arena_offset=0,arena_bytes=4096,keep_symb
  body=bytes(payload)+struct.pack('<'+'H'*len(local),*local)
  assert len(body)<=arena_bytes and len(resident)==len(set(resident))
  image=image[:lo]+image[hi:]
- expected=symbols['_compiler_lease_expected'];at=address(expected[0]*16+expected[1])
- assert struct.unpack_from('<2H',image,at)==(0x4342,1)
- struct.pack_into('<7H',image,at,0x4342,1,size,len(local),crc16(body),target,keep)
+ expected=symbols['_compiler_overlay_expected' if whole else '_compiler_lease_expected'];at=address(expected[0]*16+expected[1])
+ if whole:
+  assert struct.unpack_from('<2H',image,at)==(0x434b,1)
+  keep=target+(len(body)+15)//16+16
+  ds=re.search(r'^DGROUP\s+([0-9a-f]+):0000',listing,re.M|re.I);assert ds
+  checksum=zlib.crc32(body)
+  struct.pack_into('<9H',image,at,0x434b,1,size,len(local),checksum&65535,checksum>>16,target,segment(int(ds[1],16)),keep)
+ else:
+  assert struct.unpack_from('<2H',image,at)==(0x4342,1)
+  struct.pack_into('<7H',image,at,0x4342,1,size,len(local),crc16(body),target,keep)
  # Existing matched-parent modules contain parent-relative segment words too.
  # Rebase both their fixups and their resident expected metadata together.
  for kind,other in overlays:
@@ -79,7 +97,7 @@ def split(binary,map_path,arena_symbol,arena_offset=0,arena_bytes=4096,keep_symb
   path.write_bytes(data);other.update(sha256=sha(data),crc32=f'{checksum:08x}',compiler_lease_rebased=True)
  # Every permanently retained section and stack must be wholly below the cut.
  for name,(s,o,n) in segments.items():
-  if name=='LEASE_BANK' or name.startswith('LEASE_PAD') or classes[name]=='OVERLAY':continue
+  if name=='LEASE_BANK' or name.startswith('LEASE_PAD') or classes[name]=='OVERLAY' or (whole and classes[name]=='LEASE_MODULE'):continue
   if name in ('UI_STORAGE','REDISPLAY_STORAGE','SNAPSHOT_STORAGE','FAR_STORAGE','HISTORY_STORAGE','RESET_DATA'):continue
   assert address(s*16+o)+n<=keep*16-256,(name,s,o,n,keep)
  old_count=h[3];h[3]=len(resident);h[7]=segment(h[7]);h[11]=segment(h[11])
@@ -88,12 +106,12 @@ def split(binary,map_path,arena_symbol,arena_offset=0,arena_bytes=4096,keep_symb
  for i,p in enumerate(resident):struct.pack_into('<HH',raw,h[12]+4*i,p%16,p//16)
  binary.with_name('compiler-lease-linked.bin').write_bytes(binary.read_bytes())
  map_path.with_name('compiler-lease-linked.map').write_text(listing)
- listing=re.sub(r'^(LEASE_BANK\s+)LEASE_BANK',r'\1OVERLAY',listing,flags=re.M)
+ listing=re.sub(r'^(\w+\s+)LEASE_MODULE',r'\1OVERLAY',listing,flags=re.M) if whole else re.sub(r'^(LEASE_BANK\s+)LEASE_BANK',r'\1OVERLAY',listing,flags=re.M)
  listing=re.sub(r'\b([0-9a-f]{4}):([0-9a-f]{4})\b',lambda m:f'{segment(int(m[1],16)):04x}:{m[2]}',listing,flags=re.I)
  binary.write_bytes(bytes(raw[:start])+image);map_path.write_text(listing)
  binary.with_name('PCCOMP.OVL').write_bytes(body)
- return dict(format='source-linked-compiler-lease-v1',original_inputs=[],bank_bytes=size,relocations=len(local),
-  sha256=sha(body),crc16=f'{crc16(body):04x}',relative_target_segment=target,keep_paragraphs=keep,
+ return dict(whole_kernel=whole,format='source-linked-whole-compiler-lease-v1' if whole else 'source-linked-compiler-lease-v1',original_inputs=[],bank_bytes=size,relocations=len(local),
+  sha256=sha(body),crc16=f'{crc16(body):04x}',crc32=f'{zlib.crc32(body):08x}',relative_target_segment=target,keep_paragraphs=keep,
   module_bytes=len(body),extracted_bytes=hi-lo,arena_symbol=arena_symbol,arena_offset=arena_offset,arena_bytes=arena_bytes,
   linked_sha256=sha(binary.with_name('compiler-lease-linked.bin').read_bytes()),
-  limitations=['Matched parent only; CRC16 is corruption detection, not authenticity.','Caller must own inactive overlay arena; layout extraction does not establish runtime ownership.'])
+  limitations=['Matched parent only; '+('CRC32' if whole else 'CRC16')+' is corruption detection, not authenticity.','Caller must own inactive overlay arena; layout extraction does not establish runtime ownership.'])

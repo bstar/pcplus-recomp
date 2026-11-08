@@ -42,6 +42,9 @@ _line_overlay_state: times 16 dw 0
 %define last_segment _line_overlay_state+26
 %define last_offset _line_overlay_state+28
 %define dirty _line_overlay_state+30
+%ifdef TERMINAL_COMPILER_ARENA
+compiler_leaf: db 'PCCOMP.OVL',0
+%endif
 meta_leaf: db 'PCMETA.OVL',0
 leaf: db 'PCLINE.OVL',0
 meta_loading: db 'Loading Meta Keys... Esc cancels.',0
@@ -72,6 +75,11 @@ open_module:
  cmp word [cs:owner_kind],1
  je .selected_leaf
  mov si,meta_leaf
+%ifdef TERMINAL_COMPILER_ARENA
+ cmp word [cs:owner_kind],4
+ jne .selected_leaf
+ mov si,compiler_leaf
+%endif
 .selected_leaf:
  mov cx,11
 .leaf:
@@ -807,6 +815,10 @@ _line_port_front_poll:
  jmp .done
 .ready:
  mov word [cs:phase],2
+%ifdef TERMINAL_COMPILER_ARENA
+ cmp word [cs:owner_kind],4
+ je .done ; Kernel is not a UI frontend; publish only after file checks.
+%endif
  push word [cs:frame+2]
  push word [cs:frame]
  xor ax,ax
@@ -897,4 +909,18 @@ _line_overlay_available:
  jne .done
  inc ax
 .done:retf
+%endif
+
+%ifdef TERMINAL_COMPILER_ARENA
+; Only tiny adapters remain in the nearly full CONFIG segment.
+global compiler_overlay_owner_kind,compiler_overlay_active_expected
+compiler_overlay_owner_kind equ owner_kind
+compiler_overlay_active_expected equ active_expected
+global compiler_overlay_open,compiler_overlay_close
+compiler_overlay_open:
+ call open_module
+ retf
+compiler_overlay_close:
+ call close_file
+ retf
 %endif

@@ -1,0 +1,306 @@
+{
+  "checkpoint": "Whole-kernel arena module/startup loader and restored27-case parent regression",
+  "whole_module_built": true,
+  "parent_startup_loader_verified": true,
+  "startup_file_fixup_cases": 6,
+  "GET_regression_passed": true,
+  "GET_cases": 27,
+  "full_parent_source_compiler_residency_verified": false,
+  "live_child_bridge_implemented": false,
+  "live_serial_arena_arbitration_verified": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "original_inputs": [],
+  "parent_sha256": "c15a61be9b2c1c98fc020f3315712ac0444a6cf60c225d8989225ce6cc707095",
+  "probe_parent_sha256": "872126ce85bcc3e5a959a6cf1c87df6c96e656c8662921e50e02eda06d4414d0",
+  "child_sha256": "54590fd38a8c9992bc747d12b2ea330c6eb749f8bf7bbffcb2d9d4d0a0fe2ff1",
+  "module": {
+    "whole_kernel": true,
+    "format": "source-linked-whole-compiler-lease-v1",
+    "original_inputs": [],
+    "bank_bytes": 3376,
+    "relocations": 73,
+    "sha256": "cac28a3d2871ae0aaa99ac5d7303de5d67cb6f25315a8927fce9380b6b865d7c",
+    "crc16": "8652",
+    "crc32": "29c68048",
+    "relative_target_segment": 22590,
+    "keep_paragraphs": 22827,
+    "module_bytes": 3522,
+    "extracted_bytes": 3376,
+    "arena_symbol": "redisplay_snapshot",
+    "arena_offset": 16384,
+    "arena_bytes": 8192,
+    "linked_sha256": "b46bb4aac53015197284b85bbb27cc835a6f7ad15365d6c82fdd756ed146c27e",
+    "limitations": [
+      "Matched parent only; CRC32 is corruption detection, not authenticity.",
+      "Caller must own inactive overlay arena; layout extraction does not establish runtime ownership."
+    ],
+    "production_bridge_admission": false,
+    "runtime_arena_ownership_verified": false
+  },
+  "probe_module": {
+    "whole_kernel": true,
+    "format": "source-linked-whole-compiler-lease-v1",
+    "original_inputs": [],
+    "bank_bytes": 3376,
+    "relocations": 73,
+    "sha256": "324df4191ae84b860e3a69febfb7811a595f334237dbadf10098571c5290c057",
+    "crc16": "5991",
+    "crc32": "e6ac87cc",
+    "relative_target_segment": 22608,
+    "keep_paragraphs": 22845,
+    "module_bytes": 3522,
+    "extracted_bytes": 3376,
+    "arena_symbol": "redisplay_snapshot",
+    "arena_offset": 16384,
+    "arena_bytes": 8192,
+    "linked_sha256": "5ad4693d57f722d6daa38ce9fe17fd651e7c8159c235d56929b55c3fa6628b43",
+    "limitations": [
+      "Matched parent only; CRC32 is corruption detection, not authenticity.",
+      "Caller must own inactive overlay arena; layout extraction does not establish runtime ownership."
+    ],
+    "production_bridge_admission": false,
+    "runtime_arena_ownership_verified": false
+  },
+  "permanent_frontend_bytes": 698,
+  "added_CONFIG_bytes": 48,
+  "aligned_added_parent_bytes": 752,
+  "near_bytes": 65520,
+  "largest_before_ASPECT_EXEC": {
+    "largest_free_bytes": 139600,
+    "observer_segment": 52299,
+    "conventional_kb": 640
+  },
+  "normal_source_count": 737,
+  "probe_source_count": 742,
+  "GET_cases_by_suite": {
+    "ordinary": [
+      "get-vm-string",
+      "get-vm-integer",
+      "get-vm-long",
+      "get-vm-cancel",
+      "get-vm-float",
+      "get-vm-truncated"
+    ],
+    "lifetime": [
+      "get-vm-repeat",
+      "get-vm-execute"
+    ],
+    "when": [
+      "get-vm-when-plain",
+      "get-vm-when-framed"
+    ],
+    "errors": [
+      "get-vm-when-divide",
+      "get-vm-when-cancel"
+    ],
+    "storage": [
+      "get-vm-local-string",
+      "get-vm-local-integer",
+      "get-vm-local-long",
+      "get-vm-parameter-string",
+      "get-vm-parameter-integer",
+      "get-vm-parameter-long",
+      "get-vm-builtin-string"
+    ],
+    "widths": [
+      "get-vm-policy-default",
+      "get-vm-policy-maximum",
+      "get-vm-policy-one",
+      "get-vm-policy-zero",
+      "get-vm-policy-negative",
+      "get-vm-policy-oversize",
+      "get-vm-policy-bottom-shown",
+      "get-vm-policy-bottom-hidden"
+    ]
+  },
+  "startup_reports": {
+    "valid": [
+      17231,
+      1,
+      10,
+      0,
+      1,
+      0,
+      3376,
+      22845
+    ],
+    "missing": [
+      17231,
+      1,
+      1,
+      4,
+      0,
+      0,
+      3376,
+      22845
+    ],
+    "corrupt": [
+      17231,
+      1,
+      1,
+      4,
+      0,
+      0,
+      3376,
+      22845
+    ],
+    "truncated": [
+      17231,
+      1,
+      1,
+      4,
+      0,
+      0,
+      3376,
+      22845
+    ],
+    "fixup-range": [
+      17231,
+      1,
+      1,
+      4,
+      0,
+      0,
+      3376,
+      22845
+    ],
+    "fixup-order": [
+      17231,
+      1,
+      1,
+      4,
+      0,
+      0,
+      3376,
+      22845
+    ]
+  },
+  "sources": {
+    "src/process/compiler_overlay_front.asm": "e2f30e355dce7e35754b62f70237070b47d713bface09713237ae8ac18887d0a",
+    "src/process/compiler_overlay_probe.asm": "2436b7164284159e6ec40dcd681c560b63ecfbd3565eba012c6cfac28f37a643",
+    "src/line_port/overlay_shared.asm": "24ecf3d96d91d42974cf351c8ff2b3cc69b4be5b4096fee6ac8807e2518f2aeb",
+    "src/terminal/main.asm": "7ea14e613d5318db310861e0b83d302e493f6e3b094e17453529d02113582138",
+    "src/process/compiler_lease_dos.asm": "8efdd9878b84b961671905300cc0c84fe02c9d2abfe828dda848a6d476d5ca63",
+    "src/process/compiler_lease_module.asm": "c0703f8f0e5fb1b0564a29cd0de8e714e2d1ee6a661340e474f49d2857617811",
+    "standalone/build_terminal.py": "a76ef68e7f5ae60574ea00dcef2b8c1294918d496161680ae437c1606cd78996",
+    "standalone/compiler_lease_module.py": "141635ac98c767192a32b8ab74c856a49d6c91d73ec79f04b57057952e6f99bb",
+    "standalone/prove_compiler_lease_parent_layout.py": "efb59e00a38fe99dc2cf0ee24eb10fec493e1caaa5f0848b92f11b5496663614",
+    "standalone/test_compiler_overlay_parent_dos.py": "99bc3ebe8df75693bd4febd056706cfdb3aec1ecb557b087ef1cb70ea44cff5a",
+    "docs/ASPECT_COMPILER_ARENA.md": "d549767307dc0d856e420de207ba0ac952a5dfeb7f740ca666f8b4224c71b4e5",
+    "docs/ASPECT_COMPILER_RETAINED.md": "25af66d941088796740f56ad49d59267da37ffd87ef39330e8e1f5b59833815b",
+    "docs/ASPECT_COMPILER_MEMORY.md": "f9b141c9d8cabed1d5c00e2f18eaba2500ed38c38c6ad39ce0b93f9ffbbc6a5e",
+    "docs/FEATURES.md": "b22876c33449e6a45316c1c36e2e8f9ada00edaf8f60942c890703f6ddc32c66"
+  },
+  "evidence": {
+    "build/compiler-whole-get-ordinary-20261108/checks.json": {
+      "sha256": "7a3d8c78e3abb87acec3ec27064b6a13fc626acd5b073916ed66be0cbfb1c420",
+      "passed": true
+    },
+    "build/compiler-whole-get-lifetime-20261108/checks.json": {
+      "sha256": "cff9a24af428bf51f031a47edaf216b3de8dcf01b5616fccd9a0ca4acb19c6da",
+      "passed": true
+    },
+    "build/compiler-whole-get-when-20261108/checks.json": {
+      "sha256": "8cf0fcec15fddd03f7af89b119ac9ee9a9b0311e49eefd12d032919c62ec2976",
+      "passed": true
+    },
+    "build/compiler-whole-get-errors-20261108/checks.json": {
+      "sha256": "0bda53e04651eb01ec1c518c80bb895e7526532ebac7c3981da5a8c846f2eddd",
+      "passed": true
+    },
+    "build/compiler-whole-get-storage-20261108/checks.json": {
+      "sha256": "49280fb504b6465dd9a6290a229d36c32e0ee6362f343260dc1443fdb5ceebc6",
+      "passed": true
+    },
+    "build/compiler-whole-get-widths-20261108/checks.json": {
+      "sha256": "199e55cff49331c491f81f8ff3f81fe36ae1e5e7d4be3efb2bd02a86969436ac",
+      "passed": true
+    },
+    "build/compiler-whole-parent-source-20261108/result.json": {
+      "sha256": "3b9e6cd141f2df2ecf7abcd5b23294cc0dba0cd6aec00337eaf0bf3c570e45f7",
+      "passed": true
+    },
+    "build/compiler-whole-probe-source-20261108/result.json": {
+      "sha256": "1352e2f8f308edb957ea52b88d3af4f2e13ee0009130e1130da1f64453a24c57",
+      "passed": true
+    },
+    "build/compiler-whole-meta-20261108/result.json": {
+      "sha256": "ad37e3cf28396fbe3c5cadbe706ce8d0e21e62c48667a215dcf93c16eb3f6530",
+      "passed": true
+    },
+    "build/compiler-whole-line-20261108/result.json": {
+      "sha256": "e7ec583fc327ec95450b803f3f92b51ed4c7822ffcea5ed3ed63baabd5e6364e",
+      "passed": true
+    },
+    "build/compiler-whole-fault-final-valid-20261108/result.json": {
+      "sha256": "204271a9306afea82db80e3aab19fe79a008b39e67181965e863cbbafc9cf1cd",
+      "passed": true
+    },
+    "build/compiler-whole-fault-final-missing-20261108/result.json": {
+      "sha256": "ea19efebe3c2eab44b7e148aaddef0a1e3227da99ed4cc35de12d7c6e376ddb1",
+      "passed": true
+    },
+    "build/compiler-whole-fault-final-corrupt-20261108/result.json": {
+      "sha256": "095254bfbcdbf833ace5800c5436d8652bf8a4b9e864d4859e9e5264a8e3942b",
+      "passed": true
+    },
+    "build/compiler-whole-fault-final-truncated-20261108/result.json": {
+      "sha256": "53d6483512ef8295da250be50c4b6b37250872ae67598f9f6ec0abc2dadc7208",
+      "passed": true
+    },
+    "build/compiler-whole-fault-final-fixup-range-20261108/result.json": {
+      "sha256": "338d7ff2aa942b864f5eedea0fd1b89bbf1c954842b19c8e052f35538070b8ae",
+      "passed": true
+    },
+    "build/compiler-whole-fault-final-fixup-order-20261108/result.json": {
+      "sha256": "756918496a94eafdcc06137b7b8ae82e8aee5b8351dc488bb6e4ac8953511389",
+      "passed": true
+    },
+    "build/compiler-whole-parent-final-20261108/manifest.json": {
+      "sha256": "6679b1492f95a59d7741bda297290e4c73fcc51cfeb11e7c94b6f733ba9ba95f"
+    },
+    "build/compiler-whole-parent-final-20261108/terminal.map": {
+      "sha256": "99482188341c9a75544cf28ef639b1461ac5abeb4c4863f48d4092c6b7a5727d"
+    },
+    "build/compiler-whole-parent-final-20261108/PCCOMP.OVL": {
+      "sha256": "cac28a3d2871ae0aaa99ac5d7303de5d67cb6f25315a8927fce9380b6b865d7c"
+    },
+    "build/compiler-whole-parent-final-20261108/PCLINE.OVL": {
+      "sha256": "090ce00122d0ad65d694ab2db46903893dcc6fc5505fd12bf11fdddec04fac5c"
+    },
+    "build/compiler-whole-parent-final-20261108/PCMETA.OVL": {
+      "sha256": "86f7e6ee355989aa32eebf40874e8cb0cdbaf31fc5ca53a4a0abe22b3bf79438"
+    },
+    "build/compiler-whole-probe-final-20261108/manifest.json": {
+      "sha256": "22d6315f619ea1999fe2cbb5d5021c5aa85320d5f86fe37473ab46c6488080d3"
+    },
+    "build/compiler-whole-probe-final-20261108/terminal.map": {
+      "sha256": "9e2408471c9e1b6dcf01b4acddec457dc9f2b92ce7b786e6c0cdd32cdf943064"
+    },
+    "build/compiler-whole-probe-final-20261108/PCCOMP.OVL": {
+      "sha256": "324df4191ae84b860e3a69febfb7811a595f334237dbadf10098571c5290c057"
+    },
+    "build/compiler-whole-probe-final-20261108/PCLINE.OVL": {
+      "sha256": "4a037664816d9e17a8765a5d051333d3b2bc50ff442b4ec3c002c0d3cfe5c79d"
+    },
+    "build/compiler-whole-probe-final-20261108/PCMETA.OVL": {
+      "sha256": "2320d102d5f58a3c3edd2b6f212e667e518fba90028a1956aff76ad2ca3873f6"
+    }
+  },
+  "exploratory_notes": [
+    "First linker refused CONFIG_CODE exceeding64KB by63 bytes. Moved startup ownership/setup work to the far frontend; CONFIG retains tiny adapters and kind/filename dispatch only. No existing bounds/capacity check weakened.",
+    "Second extraction failed the existing call-log queue bounds check because metadata and resident PHONE_LOG_STORAGE shared an AUTO segment base. Explicit module IO/metadata groups plus resident-base exclusion checks fixed it before emulation.",
+    "Duplicate-load path reviewed before emulation: refused start must not release an existing claim. Returns state1 directly, confirmed by valid probe.",
+    "Initial missing-file harness expected only16 output bytes. Parent exit4 also emits its existing generic keyboard-refusal shutdown notice; final harness checks exact16-byte report and exact known suffix rather than ignoring arbitrary output.",
+    "Whole normal parent and startup diagnostic differ by probe-only code; normal GET/UI cases bind normal SHA, startup/fault cases bind probe SHA, including explicit patched-CRC diagnostic identities."
+  ],
+  "limits": [
+    "Startup-only authenticated parent API: no live child/compiler bridge, live serial loading or complete arena arbitration. No compiler EXEC occurs in these new parent tests.",
+    "Precompiled27 GET regressions prove retained compatibility with the new resident frontend, not source compilation. Earlier retained-arena compiler harness remains separate evidence.",
+    "Malformed fixup cases forge expected CRC only in an owned diagnostic parent to reach validation. CRC32 is corruption detection, not authenticity.",
+    "Nonfatal file/fixup refusals release the claim; same-parent damaged-file repair/retry, actual close/read errors and live restore containment not established here.",
+    "Normal full-parent serial tests use DOS386/UMB synthetic peer; startup tests use8086/FPU-off integrated DOSBox. No booted MS-DOS, physical Boca/ATA/SynthModem/BBS/package or full-parity acceptance."
+  ]
+}

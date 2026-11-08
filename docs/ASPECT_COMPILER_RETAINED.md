@@ -1,5 +1,10 @@
 # Compact compiler lease and retained-arena experiment
 
+The next [whole-kernel loader checkpoint](ASPECT_COMPILER_ARENA.md) now loads
+this arrangement in the complete parent at startup and restores all27 existing
+GET regressions. The compact-resident failures below remain historical; live
+source-compiler bridge admission is still open.
+
 The compact resident implementation restores ordinary interpreter startup under
 the full parent, but richer scripts still fail for memory. The next experiment
 places the entire kernel in modeled existing snapshot space and retains it during

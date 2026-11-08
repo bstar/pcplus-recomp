@@ -140,6 +140,12 @@ _small_code_:
 %endif
  jmp terminal_shutdown
 .configured:
+%ifdef TERMINAL_COMPILER_ARENA_PROBE
+ extern terminal_compiler_overlay_probe
+ call far terminal_compiler_overlay_probe
+ mov [terminal_exit_code],ax
+ jmp terminal_shutdown
+%endif
 %ifdef TERMINAL_META_LOADER_PROBE
  ; Diagnostic owns the unused retained arena before any UART/session work.
  extern _meta_loader_parent_probe,process_psp,redisplay_snapshot

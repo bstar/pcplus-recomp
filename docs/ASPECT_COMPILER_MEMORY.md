@@ -1,5 +1,11 @@
 # Source compiler residency under the complete parent
 
+The [whole-kernel arena loader](ASPECT_COMPILER_ARENA.md) now avoids the large
+permanent kernel cost, and all27 existing precompiled GET cases pass again.
+Startup load/init/release and malformed-module refusal reproduce from public
+sources. Live source startup/EXECUTE admission remains unimplemented; the older
+residency failures below are historical diagnostics, not successful compilation.
+
 The [compact/retained-arena experiment](ASPECT_COMPILER_RETAINED.md) now restores
 ordinary GET startup, but lifetime/WHEN cases still hit memory limits. A
 whole-kernel retained snapshot-space harness runs the compiler and restores

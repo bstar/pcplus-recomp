@@ -1,5 +1,14 @@
 # Full application reconstruction checklist
 
+[Whole-kernel arena loading](ASPECT_COMPILER_ARENA.md) restores all27 existing
+full-parent GET regressions, including lifetime/WHEN and the live-stream case.
+The kernel is a3,522-byte cold module; only752 aligned bytes are added
+permanently. Actual startup loading/init/release and five file/fixup refusal
+cases pass and reproduce in a742-source diagnostic rebuild;737 sources
+reproduce the ordinary parent/modules. Existing Meta/Line routes pass. The
+frontend remains parent/startup-only: live source compiler admission and
+full-parent source startup/EXECUTE are still open. No release promotion.
+
 [Compact compiler leasing](ASPECT_COMPILER_RETAINED.md) reduces the resident
 module from2,902 to2,177 bytes before alignment. Six ordinary full-parent GET
 cases pass again; both lifetime and both WHEN cases still fail for heap, so the
