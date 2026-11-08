@@ -3515,3 +3515,9 @@ Git-free source export reproduces the eight exact products and repeats all
 four Help cases (188 checks) plus two source compiler-loan/GET cases. The
 compiler-bridge lab packager still needs the child's LOCHELP.HLP companion;
 fixtures explicitly stage it, so this checkpoint does not promote a package.
+
+The [schema2 lab companion contract](ASPECT_COMPILER_BBS.md#child-help-companion-contract-2026-11-08)
+now closes that lab omission: LOCHELP.HLP is hash-bound to the selected child,
+verified and staged with the ordinary companions.13 contract checks and a
+1072-file exact ten-product cold rebuild pass, with93 Help checks and two
+compiler-loan/GET replays. This remains a lab bundle, not a deployed release.

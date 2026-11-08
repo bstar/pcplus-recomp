@@ -92,3 +92,51 @@ The [complete connection package](ASPECT_COMPILER_PACKAGE.md) now has separate
 source/launcher acceptance. Physical Boca/SPA2102/SynthModem/LoC Enigma and
 Synchronet acceptance, complete language/emulations/protocols/Host parity and
 selected-package promotion remain open. Private settings, call history, boot profiles and installation are unchanged.
+
+## Child Help companion contract (2026-11-08)
+
+The schema2 lab bundle adds LOCHELP.HLP when the selected ASPECT manifest
+requires its authored Help resource. It validates the resource hash and public
+source closure against help-resource.json before staging. ASPECT.json and
+LOCHLP.JSON are host-side evidence: their hashes bind the selected interpreter
+and resource metadata in package.json; they are not DOS runtime companions.
+The ten runtime products include the original nine above plus LOCHELP.HLP.
+
+The BBS resolver checks that bound ASPECT metadata matches the actual interpreter,
+then checks the resource bytes against both resource metadata and product hashes.
+It returns LOCHELP.HLP through the ordinary companion-staging path and includes
+the metadata in the frozen evidence inputs. Schema1 bundles keep their previous
+contract; they are not retroactively credited with the new resource guarantee.
+This remains consistency/corruption validation, not hostile-manifest authentication.
+
+The contract requires all ten products and exact staging of all seven companions.
+It retains four compiler-module rejection cases and adds six Help cases: missing,
+truncated, corrupt, undeclared, wrong interpreter and wrong resource metadata.
+The latter two retain coherent outer metadata hashes so they exercise the semantic
+binary/resource binding rather than merely a stale metadata digest. All13 checks
+pass. No DOS installation, selector or archive changes.
+
+A1072-file Git-free source export rebuilds all ten exact runtime products,
+regenerates coherent package metadata, repeats the13 contract checks, and
+replays93 full Help checks plus two source compiler-loan/GET cases. This is a
+lab package reproduction proof, not complete release or hardware acceptance.
+
+The unchanged parent/new overlay child pair also passes a fresh stock Synchronet
+session:22 checks cover actual ASPECT automatic login, editor input, unsaved
+abort and preserved server/configuration state. The independent10-check screen
+reference and size audit match all1920 logical cells and cursor5,8 exactly,
+with negotiated80x24. These are DOS8086 serial-side software checks.
+
+The new Enigma live-source carrier run passes both authentications, actual runtime
+source compilation, exact generated ASX, virtual carrier-loss notice, staging
+cleanup and same-process redial. Its initial60000ms retry window cancels before
+EOF: RX-complete/exact-file/protocol-finish checks fail, despite48128 bytes of
+CRC-valid, source-exact retry data. It is not an accepted transfer result. The
+previously admitted carrier profile uses150000ms; a separate run with that
+window is pending. Neither the failed run nor a pending repeat establishes
+complete packaged Enigma acceptance. No application/protocol changes were made
+in response to this fixture-window failure.
+
+Exact current products, source/contract receipts and the accepted versus failed
+software gates are bound in the
+[Help companion validation record](validation/aspect-help-companion.json).

@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "lab_companion_contract_passed": true,
+  "package_eligible": false,
+  "physical_verified": false,
+  "production_bytes_changed": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "products": {
+    "TERMINAL.EXE": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8",
+    "PCLINE.OVL": "6e8253bb12b242b55b0987bd6850c16c053be605f2fa7447c159b23ab2604fb4",
+    "PCMETA.OVL": "ab929d876b1fcff4c51e136fb3e764231828dc88b6e4bf6ebc9039b94dc900b6",
+    "PCCOMP.OVL": "7067e4db661cb39e0d8e7336179fccd8d8cacebb2001a2f7a94dbf7cec0dffca",
+    "ASPECT.EXE": "822897f0b67dfbfbe98bed8711cb1071417705ad9a75fdcd5138c88679fc7c05",
+    "ASPCOMP.EXE": "1db52316f671b43663395abc7de41925abfe1205fffb930bdb5d6dae70f98a14",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195"
+  },
+  "contract_checks": 13,
+  "cold_source_files": 1072,
+  "cold_Help_checks": 93,
+  "cold_compiler_GET_cases": 2,
+  "Synchronet_checks": 22,
+  "Synchronet_screen_checks": 10,
+  "Synchronet_matched_cells": 1920,
+  "Synchronet_different_cells": 0,
+  "Enigma_short_window_passed": false,
+  "Enigma_short_window_ms": 60000,
+  "Enigma_short_window_failures": [
+    "RX_complete_notice",
+    "exact_retry",
+    "only_expected_file",
+    "source_matching_retry_finish_search_raw_proxy"
+  ],
+  "Enigma_long_window_case": "help-overlay-live-source-enigma-long-20261108",
+  "Enigma_long_window_pending": true,
+  "sources": {
+    "standalone/package_compiler_bridge_lab.py": "0f6fac88467df6f6243ad3840580022e6189cab1fd863928ef2ddca25c774d51",
+    "standalone/test_compiler_bridge_lab_payload.py": "00f074d5d6a9d73c749ba812a254dc3506bf1cfaf61e30a4048377dc30dee12b",
+    "lab/bbs/product_inputs.py": "45807fa877f47e95a6aaa039db1977add19452df9851edeb9f00d56313c642f0"
+  },
+  "receipts": {
+    "build/help-companion-lab-20261108/package.json": "c62e67812a48aa5ab95ce3d9ac130848fc2573b318114530a7e18953d9d3625b",
+    "build/help-companion-lab-20261108/ASPECT.json": "f8e304f91c4252022a3eb881f2e50cf393600e0a565cd5f6825a4a7bb108171b",
+    "build/help-companion-lab-20261108/LOCHLP.JSON": "18a6b96e208c9d056cded675b4f51e2dbedab7e59c20afc7404ff50041fed3f6",
+    "build/help-companion-contract-final-20261108/result.json": "ab74a018a6708177bc08c49672325abdec5f3f718f3cf7d12e17f534e6d5e824",
+    "build/help-companion-cold-source-20261108/result.json": "db3aaf5284592bcd218d5b90f2544ad2a0532a20e4709a4655935353011a3912",
+    "build/bbs-lab/results/synchronet/help-overlay-synchronet-screen-20261108/proxy-integration.json": "8ec23efd583599507da338404e52141b28aab050c6d63a23ed2674354f2e31a3",
+    "build/bbs-lab/results/synchronet/help-overlay-synchronet-screen-20261108/screen-reference-audit.json": "87f35fa05f0967e767c44a0d679e872c240afab6860649f9406c322ae2f8d361",
+    "build/bbs-lab/results/synchronet/help-overlay-synchronet-screen-20261108/size-probe-screen-audit.json": "3a62a88d2e1b9eedf2c41152d73e1314f86c94441a8361682f470b20db44e659",
+    "build/bbs-lab/results/enigma/help-overlay-live-source-enigma-20261108/carrier-checks.json": "e345b8c56354758677a934f4d5fca2c9a6fc6a185dd777bc3971534e50a1406d"
+  },
+  "original_inputs": [],
+  "limits": [
+    "Lab schema2 carries LOCHELP.HLP with selected interpreter/resource metadata; schema1 retains its historical contract.",
+    "Hash/source consistency checks are not authentication of hostile manifests.",
+    "Exact ten runtime products reproduced from1072 public source files; coherent metadata regenerated, not required byte-identical across build paths.",
+    "Synchronet actual script/editor plus1920-cell/cursor audit passes; no SIP/audio/physical acceptance.",
+    "Enigma60s run canceled an incomplete retry; established150s repeat is pending and is not accepted.",
+    "Full connection release, broader overlay lifetime/handle-failure and physical gates remain open; Host last."
+  ]
+}

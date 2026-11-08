@@ -27,9 +27,20 @@ def main():
  assert child['experimental_compiler_parent_lease'] and compiler['experimental_get_compiler']
  leaves={'TERMINAL.EXE':a.parent/'TERMINAL.EXE','terminal.map':a.parent/'terminal.map','manifest.json':a.parent/'manifest.json',
   'PCCHAT.OVL':a.parent/'PCCHAT.OVL','PCLINE.OVL':a.parent/'PCLINE.OVL','PCMETA.OVL':a.parent/'PCMETA.OVL',
+  'ASPECT.json':a.child/'manifest.json',
   'PCCOMP.OVL':a.parent/'PCCOMP.OVL','ASPECT.EXE':a.child/'ASPECT.EXE','ASPCOMP.EXE':a.compiler/'ASPCOMP.EXE'}
  for key,leaf in (('line_port_overlay','PCLINE.OVL'),('meta_editor_overlay','PCMETA.OVL'),('experimental_compiler_lease_module','PCCOMP.OVL')):
   assert sha(leaves[leaf])==parent[key]['sha256'],leaf
+ aspect_resource=None
+ if child.get('experimental_help_resource'):
+  resource_path=a.child/'help-resource.json'
+  aspect_resource=json.loads(resource_path.read_text())
+  assert aspect_resource['original_inputs']==[] and sha(a.child/'LOCHELP.HLP')==aspect_resource['sha256']
+  for name,digest in aspect_resource['sources'].items():
+   assert sha(ROOT/name)==digest and (name not in sources or sources[name]==digest),name
+   sources[name]=digest
+  leaves['LOCHELP.HLP']=a.child/'LOCHELP.HLP'
+  leaves['LOCHLP.JSON']=resource_path
  out.mkdir()
  for leaf,path in leaves.items():shutil.copyfile(path,out/leaf);assert sha(out/leaf)==sha(path)
  subprocess.run([sys.executable,str(ROOT/'standalone/build_help_program.py'),'--output',str(out/'help-build')],check=True)
@@ -40,8 +51,9 @@ def main():
    assert sha(ROOT/name)==digest and (name not in sources or sources[name]==digest),name
    sources[name]=digest
  sources['standalone/package_compiler_bridge_lab.py']=sha(Path(__file__))
- report=dict(passed=True,original_inputs=[],sources=sources,inputs=inputs,
-  products={leaf:sha(out/leaf) for leaf in leaves if leaf not in ('terminal.map','manifest.json')},
+ report=dict(schema=2,passed=True,original_inputs=[],sources=sources,inputs=inputs,
+  products={leaf:sha(out/leaf) for leaf in leaves if leaf not in ('terminal.map','manifest.json','ASPECT.json','LOCHLP.JSON')},
+  aspect_manifest_sha256=sha(out/'ASPECT.json'),aspect_help_resource_manifest_sha256=sha(out/'LOCHLP.JSON') if aspect_resource else None,
   parent_manifest_sha256=sha(out/'manifest.json'),helper_manifest_sha256=sha(out/'help-build/manifest.json'),
   resource_manifest_sha256=sha(out/'PCPLUS.json'),installed_changed=False,selector_changed=False,
   release_eligible=False,physical_verified=False,scope=__doc__)

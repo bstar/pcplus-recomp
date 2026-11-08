@@ -321,3 +321,15 @@ The Help fixtures explicitly stage the latter, so their success cannot prove
 that an existing lab/release package has it. Preserve and bind that companion
 before using this new child for the complete packaged BBS regression. No payload
 or installed selector was changed in this checkpoint. Host remains last.
+
+## Lab companion gap closed (2026-11-08)
+
+The schema2 compiler-bridge lab bundle now carries LOCHELP.HLP and binds its
+resource metadata to the selected ASPECT binary. The ordinary BBS companion
+resolver verifies and stages it. The13-check contract includes actual staging
+and six resource mismatch/corruption cases, retaining the compiler-module
+checks. A1072-file source export reproduces all ten runtime products and
+repeats that contract,93 full Help checks and two compiler-loan/GET cases.
+See [the companion contract](ASPECT_COMPILER_BBS.md#child-help-companion-contract-2026-11-08).
+This closes the lab omission recorded above; a complete connection release,
+overlay lifetime/failure coverage and physical admission remain separate.
