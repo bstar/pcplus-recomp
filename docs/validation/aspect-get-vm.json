@@ -1,0 +1,185 @@
+{
+  "checkpoint": "Opt-in full-interpreter ordinary GET code bank",
+  "original_inputs": [],
+  "default_GET_enabled": false,
+  "opt_in_VM_GET_enabled": true,
+  "compiler_GET_enabled": false,
+  "actual_emulated_parent_child_pair_verified": true,
+  "emulated_parent_CPU": "386 with UMB observer;640KB conventional",
+  "standalone_CLI_CPU": "8086",
+  "original_owner_component_cases": 142,
+  "actual_parent_child_cases": 6,
+  "full_CLI_cases": 7,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "F13_complete": false,
+  "sources": {
+    "src/aspect/get_bank.asm": "4dc5b49a2c27ada60b4a97b5f0d7f41669eaa609c94ca812ee25ca4fd25dd1d9",
+    "src/aspect/get_bank.inc": "c472731e934a695191bc19f0c068a5aab8ae54c710c4da192b8a7b1d9b368e49",
+    "src/aspect/get_vm_bindings.asm": "5c2e2b24d5ec9bba5537d035f3f46333601217aab0e8cd7395e2483bb5bc8a43",
+    "src/aspect/get_vm_bindings.c": "52553d22d6dfa940c02c3c49494531b49a38ba9f8cfd1b51120d3f1ad71d3b13",
+    "src/aspect/get_field.c": "5d6f22cfa4073a30f8294b6cd85216dd307d1b2b920e569ba54102847d54fba1",
+    "src/aspect/get_native_field.c": "a3cb8652c624de8b621c1e1834c0f9b0c69e80009b1012c7abf61c1f55b371da",
+    "src/aspect/get_runtime.c": "4c180c16847d6d310d557d4405ae65f0002b8106d4d4f2161bbf901de0878aa8",
+    "src/aspect/runtime.c": "57843f9c403bc5c3aac438e692ad7e3dd37297d79d805507c0daa1371c591f7a",
+    "src/aspect/runtime_bridge.asm": "ddbfa502606ac66d64a31f5bbfd0404f7d8206d43f1d8de1a49de9b63046e81a",
+    "standalone/build_get_bank.py": "9c1a4c79e90e6719271263135492ddce08f1c94f12fc16f322ed0dcaca6f47ee",
+    "standalone/build_aspect_runner.py": "24ef28071bfebc7fd2c4a57085299153a205ebb4fa58224dea604c4cd6501472",
+    "standalone/build_aspect_process.py": "84ec4bddc5544c91f5c6246ed9ed23847a7a5c3e0aaf4d94782b8a20079dd4b6",
+    "standalone/test_aspect_get_vm_dos.py": "4b3f6b47dd1ed56eececfc8eac3dccfa37a2275d32989fdd130ab9f406d7b712",
+    "standalone/test_get_vm_cli.py": "395fe85d150c8684c95b8f5b959a8c182194418bda810ff8c31f26afd938b41c",
+    "standalone/prove_get_vm_source.py": "1e841f345dbcf071892007730da043f8e86021b1078b460efda36cc0eb4b0dbc",
+    "docs/ASPECT_GET_VM.md": "e4de228f80f8a3aff4bb2f14c6e9e9e7eab12f0e3027bc7ac269001a8d9fb928",
+    "docs/FEATURES.md": "e0beadc0041ce14b621f0f0910efd16d2cc899efbf038240ebc7081bb7425fc6",
+    "docs/ASPECT_GET_POLICY.md": "8a4191c320ea823933e411dbdaed96b2eeff4cdf7d5fc824b9af3fb204ee7997"
+  },
+  "evidence": {
+    "build/get-vm-audited-20261107/manifest.json": {
+      "sha256": "46e3df890eaa3d19c6ef353268d1395943cfa5d2a3e4f9cd21e35fb32cc3eede",
+      "binary_sha256": "df11209582c826a3482f437455d24cb804801b1bef99c9706c98a98a7c42da43",
+      "GET_bank_layout": {
+        "passed": true,
+        "near_code_bytes": 65389,
+        "near_code_spare": 147,
+        "GET_code_bytes": 4079,
+        "editor_code_bytes": 1544,
+        "field_state_bytes": 206,
+        "DGROUP_bytes": 44096,
+        "stack_bytes": 8192,
+        "minimum_DOS_bytes_including_PSP": 139152,
+        "near_entries": 6,
+        "resident_callback_count": 30,
+        "scope": "Link-map segment/callback/CRT order admission; execution and available conventional memory require separate DOS tests."
+      }
+    },
+    "build/get-vm-installed-profile-parent-20261107/manifest.json": {
+      "sha256": "5b002d03d3044ef1395aebe6d71977c242c9336f73894b023b05402e2fcb9f6c",
+      "binary_sha256": "69d9b25fc58c7e2186e892e07f4ac38c5c95c5bfa23703f9e4cc56150dce19de"
+    },
+    "build/get-vm-accepted-final-20261107/checks.json": {
+      "sha256": "88244616971e8b9bddd0de96a9fbadfa50fda83b2c8df72651afb01bab51b93a",
+      "passed": true,
+      "cases": 6
+    },
+    "build/get-vm-cli-final-20261107/result.json": {
+      "sha256": "f9dfdd94fe79a94d7c679650124dfd031e6e81df4350ccbb4b67d176a5eee286",
+      "passed": true,
+      "child_sha256": "df11209582c826a3482f437455d24cb804801b1bef99c9706c98a98a7c42da43",
+      "cases": 7
+    },
+    "build/get-vm-owner-regression-20261107/result.json": {
+      "sha256": "1b75581aa94514ec6133bedf102422fc6996cb9fbae0e3c12a6dc3bf3ff02d8c",
+      "binary_sha256": "1f89808a4847fda39c54e27ea19505eaebd058fb32d0d12b97ff26f9799b089e",
+      "passed": true,
+      "transcript": "PASS PARENT POLICY GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries;6 status-policy probes",
+      "cases": 142
+    },
+    "build/get-vm-source-replay-20261107/result.json": {
+      "sha256": "4c9b548b8bf808c4b0433cdfe1492c9a009318978b7b71a5aa7ff6cbe578405b",
+      "passed": true,
+      "source_count": 1006,
+      "parent_sha256": "69d9b25fc58c7e2186e892e07f4ac38c5c95c5bfa23703f9e4cc56150dce19de",
+      "child_sha256": "df11209582c826a3482f437455d24cb804801b1bef99c9706c98a98a7c42da43",
+      "DOS_cases": 6,
+      "CLI_cases": 7
+    },
+    "build/get-vm-heavy-memory-final-20261107/checks.json": {
+      "sha256": "0cef8bb75a041f9b2bda6162ad19e893e901756c1195676f2116d69a6b57647d",
+      "passed": false,
+      "cases": 1,
+      "failure_probes": [
+        {
+          "case": "get-vm-string",
+          "memory_before_EXEC": {
+            "largest_free_bytes": 140352,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 0,
+            "errno": 0,
+            "error": 0,
+            "opcode": 0,
+            "compiler_calls": 0,
+            "file_status": 0
+          },
+          "passive_observer_header": [
+            21070,
+            1,
+            1,
+            0,
+            18008,
+            2068,
+            8
+          ]
+        }
+      ]
+    },
+    "build/get-vm-stream-heap128-20261107/checks.json": {
+      "sha256": "c88edbd0b57c86925344cedf752d36a7a974e8447a91829a15c72634a9754c9e",
+      "passed": false,
+      "cases": 1,
+      "failure_probes": [
+        {
+          "case": "get-vm-string",
+          "memory_before_EXEC": {
+            "largest_free_bytes": 141568,
+            "observer_segment": 52299,
+            "conventional_kb": 640
+          },
+          "child_exit_probe": {
+            "DS": 38125,
+            "errno": 5,
+            "error": 7,
+            "opcode": 65,
+            "compiler_calls": 0,
+            "file_status": 0
+          },
+          "passive_observer_header": [
+            21070,
+            1,
+            1,
+            1,
+            17932,
+            2068,
+            7
+          ]
+        }
+      ]
+    },
+    "build/get-vm-heap128-20261107/manifest.json": {
+      "sha256": "57053be564010b5775d141e69e672d412bf0abf453a7055beffb573c17fe121c",
+      "binary_sha256": "4fe74daf85e78ca94a3f62610bee268d11387754e3f45460899e9d6ec4c7505a",
+      "GET_bank_layout": {
+        "passed": true,
+        "near_code_bytes": 65389,
+        "near_code_spare": 147,
+        "GET_code_bytes": 4079,
+        "editor_code_bytes": 1544,
+        "field_state_bytes": 206,
+        "DGROUP_bytes": 44096,
+        "stack_bytes": 8192,
+        "minimum_DOS_bytes_including_PSP": 139152,
+        "near_entries": 6,
+        "resident_callback_count": 30,
+        "scope": "Link-map segment/callback/CRT order admission; execution and available conventional memory require separate DOS tests."
+      }
+    },
+    "build/get-vm-default-parent-final-20261107/manifest.json": {
+      "sha256": "1dd45e5bb7b6a5e908589dbde82d9f3f998781f9208dc5803754ef8d7b9beeab",
+      "binary_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd"
+    },
+    "build/get-vm-default-child-final-20261107/manifest.json": {
+      "sha256": "4073320aac6dfc3bd8b0f15150bdaa3e6cde0ea25ebfbfb534e6cb15fcafafca",
+      "binary_sha256": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066"
+    }
+  },
+  "remaining": [
+    "Attached additional FOPEN returns heap7/ENOMEM5 before GET;512 and128 growth tested. Shared FOPEN\u2192GET scratch success remains open.",
+    "Heavier keymap candidate returns DOS EXEC8 with this GET child; no ordinary8086 full-pair memory acceptance.",
+    "Repeated/EXECUTE GET and actual native WHEN action composition; optional width/masking/origin full-VM cases.",
+    "Near-exhaustion/far allocator fallback, FLOAT.RTE, sibling modes, original string filter and both compiler frontends.",
+    "Package admission, selected/installed update and connected physical/BBS acceptance."
+  ]
+}

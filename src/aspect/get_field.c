@@ -82,6 +82,8 @@ unsigned __far __cdecl get_field_commit(const get_field_state __far *s,unsigned 
  n=s->width;while(n && s->field[n-1]==' ')--n;
  for(i=0;i<n;++i)target[i]=s->field[i];target[n]=0;return GET_FIELD_ACCEPT;
 }
+#ifndef ASPECT_GET_BANK
+/* Controller-only queries; parent display owns these in the full VM. */
 unsigned __far __cdecl get_field_shape(const get_field_state __far *s)
 {
  unsigned end;
@@ -89,6 +91,7 @@ unsigned __far __cdecl get_field_shape(const get_field_state __far *s)
  if(s->phase!=GET_FIELD_ACTIVE || !s->insert)return s->saved_shape;
  end=s->saved_shape&255;return ((end/2+1)<<8)|end;
 }
+#endif
 unsigned __far __cdecl get_field_render(const get_field_state __far *s,unsigned char __far *target)
 {
  unsigned i;
@@ -96,8 +99,10 @@ unsigned __far __cdecl get_field_render(const get_field_state __far *s,unsigned 
  for(i=0;i<s->width;++i)target[i]=s->masked && s->field[i]!=' '?'*':s->field[i];
  target[s->width]=0;return s->phase;
 }
+#ifndef ASPECT_GET_BANK
 unsigned __far __cdecl get_field_visible(const get_field_state __far *s)
 {
  if(!valid(s))return 0xffff;
  return s->phase==GET_FIELD_ACTIVE?1:s->visible;
 }
+#endif

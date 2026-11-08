@@ -453,6 +453,16 @@ runtime_alarm_command:
  ret
 %endif
 
+%ifdef ASPECT_GET_VM
+extern _runtime_get_command_execute
+runtime_get_command:
+ mov ax,65535
+ push ax
+ call _runtime_get_command_execute
+ add sp,2
+ ret
+%endif
+
 %ifdef ASPECT_DEFER_NUMERIC_BANKS
 extern _runtime_numeric_address
 ; AX byte index in, AX stable near pointer out. Native consumers retain DS.
@@ -939,15 +949,29 @@ scalar aspect_flow_wait_gate,_runtime_wait_gate
 scalar aspect_stack_pointer,_runtime_stack_pointer
 scalar aspect_ops_source_type,_runtime_source_type
 scalar aspect_ops_target_type,_runtime_target_type
+%ifdef ASPECT_GET_VM
+global aspect_get_destination_kind
+aspect_get_destination_kind:
+%endif
 scalar aspect_operand_lookahead,_runtime_lookahead
 scalar aspect_expr_stage_index,_runtime_stage_index
 scalar aspect_dispatch_exit_state,_runtime_exit_state
 scalar aspect_flow_local_count,_runtime_local_count
 scalar aspect_globals_count,_runtime_string_count
+%ifdef ASPECT_GET_VM
+; Unreachable float conversion relocations only: floating GET refuses before
+; obtaining its destination. No successful float result is supplied here.
+global aspect_get_float_text_pointer
+aspect_get_float_text_pointer:
+%endif
 scalar aspect_string_pending_near,_runtime_string_pending_near
 scalar aspect_string_scratch_pointer,_runtime_string_scratch_pointer
 scalar aspect_string_scratch_index,_runtime_string_scratch_index
 scalar aspect_string_check_range,_runtime_string_check_range
+%ifdef ASPECT_GET_VM
+global aspect_get_failure
+aspect_get_failure:
+%endif
 scalar aspect_string_compare_result,_runtime_string_compare_result
  global aspect_string_pending_far,_runtime_string_pending_far
 aspect_string_pending_far:
@@ -1020,6 +1044,10 @@ _runtime_system: times 256*8 db 0
  global aspect_expr_stage_types,_runtime_stage_types
 aspect_expr_stage_types:
 _runtime_stage_types: times 10 db 0
+%ifdef ASPECT_GET_VM
+global aspect_get_float_result
+aspect_get_float_result:
+%endif
  global aspect_ops_float_value,_runtime_float_values
 aspect_ops_float_value:
 _runtime_float_values: times 10*8 db 0
@@ -1123,6 +1151,12 @@ aspect_dispatch_handlers:
  dw aspect_script_file_tell
 %elif op=0x47
  dw aspect_script_file_write
+%elif op=0x49
+ %ifdef ASPECT_GET_VM
+ dw runtime_get_command
+ %else
+ dw unsupported
+ %endif
 %elif op=0x11
  dw aspect_path_chdir
 %elif op=0x79

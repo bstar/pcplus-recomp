@@ -15,6 +15,13 @@ def main(extension=None):
     feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS','-DASPECT_EXTERNAL_UNWIND'] if extension else []
     if extension and extension.get('get_display'):feature_flags+=['-DASPECT_GET_DISPLAY']
     if extension and extension.get('get_policy'):feature_flags+=['-DASPECT_GET_POLICY']
+    get_vm=bool(extension and extension.get('get_vm'))
+    if extension and extension.get('near_globals'):
+        assert extension.get('alarm_vm')
+        feature_flags+=['-DASPECT_NEAR_GLOBALS']
+    if get_vm:
+        assert extension.get('get_policy') and extension.get('get_display') and extension.get('alarm_vm')
+        feature_flags+=['-DASPECT_GET_VM','-DASPECT_GET_SERVICE','-DASPECT_GET_CONTEXT','-DASPECT_GET_CONFIRM','-DASPECT_GET_COMMAND','-DASPECT_GET_BANK']
     if extension and extension.get('emulate_vm'):feature_flags+=['-DASPECT_EMULATE_VM']
     if extension and extension.get('alarm_vm'):feature_flags+=['-DASPECT_ALARM_VM','-DASPECT_ALARM_SERVICE','-DASPECT_DEFER_NUMERIC_BANKS']
     if extension and extension.get('parent_render'):feature_flags.append('-DASPECT_EXTERNAL_RENDER')
@@ -77,6 +84,10 @@ def main(extension=None):
         additions=[ROOT/'src/aspect'/n for n in ('alarm_cooperative.c','alarm_dos.c','alarm_runtime.c','numeric_bank_runtime.c')]
         extension['c_sources'] += additions
         sources += additions+[ROOT/'src/aspect'/n for n in ('alarm_cooperative.h','alarm_dos.h','numeric_bank_runtime.h')]
+    if get_vm:
+        from build_get_bank import build as build_get_bank
+        get_objects,get_sources=build_get_bank(output,feature_flags)
+        objects+=get_objects;sources+=get_sources
     for name, relative, define in ASM+serial_asm:
         source, obj = ROOT / relative, output / (name + '.obj')
         sources.append(source)
@@ -120,11 +131,16 @@ def main(extension=None):
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-w4', '-we', '-k8192','-dASPECT_RUNTIME_SERIAL',
                     *(['-ob','-os'] if extension else []),
                     *feature_flags, *(['-DNATIVE_PROCESS_DIAGNOSTIC'] if extension else []),
+                    *(['-fd=GETVM.lnk'] if get_vm else []),
                     '-i=' + str(ROOT / 'src/aspect'), '-i='+str(ROOT/'src/process'), '-fm=ASPECT.map', '-fe=ASPECT.EXE',
                     str(main_source), str(ROOT / 'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),
                     str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/source_compile.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/serial_wait.c'),str(ROOT/'src/aspect/receive_runtime.c'),
                     *([] if banked_serial else [str(ROOT/'src/aspect/serial.c')]),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'),
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
+    if get_vm:
+        with (output/'GETVM.lnk').open('a') as link:
+            link.write('\noption packcode=0\norder clname CODE clname FARCODE clname FAR_DATA clname BEGDATA clname DATA clname BSS clname STACK\n')
+        subprocess.run(['wlink','@GETVM.lnk'],cwd=output,check=True)
     result = dict(binary_sha256=sha(output / 'ASPECT.EXE'), original_inputs=[],
                   experimental_deferred_script_buffers=bool(extension and extension.get('defer_script_buffers')),
                   diagnostic_script_buffer_owners=bool(extension and extension.get('buffer_probe')),
@@ -134,6 +150,8 @@ def main(extension=None):
                   experimental_alarm_VM=bool(extension and extension.get('alarm_vm')),
                   experimental_get_display=bool(extension and extension.get('get_display')),
                   experimental_get_policy=bool(extension and extension.get('get_policy')),
+                  experimental_get_VM=get_vm,
+                  experimental_near_globals=bool(extension and extension.get('near_globals')),
                   experimental_emulate_VM=bool(extension and extension.get('emulate_vm')),
                   diagnostic_lease_fault_phase=extension.get('lease_fault_phase') or 0 if extension else 0,
                   diagnostic_lease_fault_foreign_ds=bool(extension and extension.get('lease_fault_foreign_ds')),
@@ -160,6 +178,11 @@ def main(extension=None):
     if extension and extension.get('custom_irq'):
         result['experimental_custom_irq']=True
         result['source_extensions']['serial_IRQ']='Optional :I3/:I4/:I5/:I7 suffix; master-PIC child lease only.'
+    if get_vm:
+        from build_get_bank import audit
+        result['GET_bank_layout']=audit(output)
+        result['source_extensions']['49']='Opt-in ordinary GET: string/integer/long; both compilers still refuse GET; float4, sibling modes unsupported.'
+        result['scope']+=' Opt-in GET bank invokes the recovered owner with maintained typed/native/service adapters; only raw authored mode0 fixtures are admitted. Compiler grammar, full memory/package and physical acceptance remain open.'
     (output / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print('ASPECT.EXE', result['binary_sha256'])
 

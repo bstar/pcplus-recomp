@@ -241,21 +241,45 @@ no_file:
 void __far *runtime_alloc(unsigned size)
 {
     void __far *pointer;
+#ifdef ASPECT_NEAR_GLOBALS
+    unsigned *small;
+#endif
 #if defined(ASPECT_RUNTIME_DIAGNOSTIC)
     if(runtime_alloc_calls++==runtime_fail_after)return 0;
 #else
     ++runtime_alloc_calls;
 #endif
+#ifdef ASPECT_NEAR_GLOBALS
+    /* Native global strings still receive stable far pointers to81 bytes.
+     * Near storage does not erect a DOS far block behind DGROUP, so unrelated
+     * deferred numeric banks need not all be materialized for one string. */
+    if(size==81){
+        small=_nmalloc(83);
+        if(small){*small=0x47e1;pointer=(void __far *)(small+1);goto allocated;}
+    }
+#endif
 #ifdef ASPECT_DEFER_NUMERIC_BANKS
     if(!runtime_numeric_prepare())return 0;
 #endif
     pointer=_fmalloc(size);
+#ifdef ASPECT_NEAR_GLOBALS
+allocated:
+#endif
     if(pointer){++runtime_live;if(runtime_live>runtime_peak_live)runtime_peak_live=runtime_live;}
     return pointer;
 }
 void runtime_free(void __far *pointer)
 {
     if(!runtime_live){runtime_set_error(ASPECT_RUN_STATE);return;}
+#ifdef ASPECT_NEAR_GLOBALS
+    if(FP_SEG(pointer)==FP_SEG((void __far *)runtime_arena)){
+        unsigned *small;
+        if(FP_OFF(pointer)<2){runtime_set_error(ASPECT_RUN_STATE);return;}
+        small=(unsigned *)(FP_OFF(pointer)-2);
+        if(*small!=0x47e1){runtime_set_error(ASPECT_RUN_STATE);return;}
+        *small=0;_nfree(small);--runtime_live;return;
+    }
+#endif
     _ffree(pointer);--runtime_live;
 }
 void runtime_cleanup(void)

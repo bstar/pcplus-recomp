@@ -98,3 +98,7 @@ remain open. Neither the selected package nor installed machine changed.
 ./tools/dev --command python standalone/build_get_display_client.py \
   --policy --output build/my-policy-client
 ```
+
+The later [full GET interpreter checkpoint](ASPECT_GET_VM.md) composes the
+optional policy with actual typed execution and parent services. Its capacity
+failures and compiler limitations remain separate from the checks above.

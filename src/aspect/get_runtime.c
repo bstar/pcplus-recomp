@@ -89,6 +89,9 @@ unsigned runtime_get_field_configure(unsigned attribute,unsigned width,unsigned 
  if(result)release(1,0);
  held.busy=0;return result;
 }
+#ifndef ASPECT_GET_BANK
+/* Standalone controller conveniences. The full VM always prepares an anchor
+ * before operands and uses generation-checked commit/recovery afterwards. */
 unsigned runtime_get_field_begin(unsigned start,unsigned attribute,unsigned width,unsigned numeric,unsigned masked,const unsigned char __far *initial)
 {
  unsigned result;
@@ -96,6 +99,7 @@ unsigned runtime_get_field_begin(unsigned start,unsigned attribute,unsigned widt
  result=runtime_get_anchor_begin(start);if(result)return result;
  return runtime_get_field_configure(attribute,width,numeric,masked,initial);
 }
+#endif
 unsigned runtime_get_field_phase(void)
 {return (held.active && held.configured) || held.completed?held.field.phase:GET_FIELD_ARGUMENT;}
 unsigned runtime_get_field_result(void)
@@ -135,11 +139,13 @@ unsigned runtime_get_field_commit(unsigned char __far *target)
  if(get_field_commit(&held.field,target)!=GET_FIELD_ACCEPT)return ASPECT_RUN_OPERAND;
  held.completed=0;held.field.cookie=0;return 0;
 }
+#ifndef ASPECT_GET_BANK
 unsigned runtime_get_field_discard(void)
 {
  if(held.active || held.busy)return ASPECT_RUN_STATE;
  held.completed=0;held.field.cookie=0;return 0;
 }
+#endif
 unsigned runtime_get_field_recover(void)
 {
  unsigned result;

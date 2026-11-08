@@ -43,8 +43,9 @@ runtime cases (27,035 checks total); a116-source cold replay matches exactly.
 The recovered command separately retains its142 cases and three fault/retry
 tests with a45-source replay. Full GET/interpreter linkage, native dispatcher
 shutdown composition and memory admission remain open.
-Application GET remains disabled: both maintained compilers and the
-runner still refuse GET. This does not change the reviewed contract4 package
+Default application GET remains disabled: both maintained compilers and the
+default runner still refuse GET. The opt-in full interpreter checkpoint below
+is separate. This does not change the reviewed contract4 package
 or close F13.
 
 The [GET parent policy correction](ASPECT_GET_POLICY.md) identifies original
@@ -56,6 +57,17 @@ DOS video/controller tests pass103 case groups and811,165 checks with a
 nine-source replay. These remain separate peer-controlled compositions, with
 GET disabled in the full experimental interpreter. The reviewed capability20
 parent and child remain byte-identical; no deployment changed.
+
+The [full interpreter GET checkpoint](ASPECT_GET_VM.md) now links opcode49 to
+an explicit code bank with real typed operands, native recovery and parent
+field/keyboard/serial services. Six actual DOS parent/child cases cover string,
+integer/long, cancellation and typed refusals; standalone8086 tests retain128
+strings and80-character values with mixed numeric/file ownership. Both compilers
+still refuse GET. The installed-feature-set parent and heavier keymap candidate
+have separate capacity results: ordinary fields pass with the former, but its
+FOPEN→GET allocation fails before GET; the heavier parent cannot start the child
+normally. No package or physical promotion; F13 and memory/compiler gates remain
+open. See the linked receipt for exact binaries, sources and cold reproduction.
 
 [Actual Key Mapping Help](KEYMAP_HELP.md) replaces the mislabeled Alt-Z version
 notice with context17 and the full source viewer. Embedding avoids a measured
