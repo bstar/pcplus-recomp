@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[Compiler-bridge connection checks](ASPECT_COMPILER_CONNECTION.md) now verify
+this exact parent's1920-cell LoC main menu, real Enigma cancel/retry and live
+source compilation through carrier loss, redial and an exact65539-byte retry.
+The386/UMB lab fixes observer memory placement; application bytes stay unchanged.
+Independent audits and corrupted-capture controls pass. Physical admission and
+complete release packaging remain separate gates.
+
 [Compiler-bridge BBS regressions](ASPECT_COMPILER_BBS.md) now bind a nine-file
 lab payload and fresh stock Enigma/Synchronet ZMODEM downloads and uploads
 through the actual SynthModem Telnet proxy. Exact bytes, protocol closure,

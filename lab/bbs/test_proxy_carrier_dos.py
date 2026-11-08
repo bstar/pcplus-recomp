@@ -35,13 +35,27 @@ sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 
 
-def keyboard_source(recipe):
+def keyboard_source(recipe,upper_memory=False):
     # Only data changes: browser key60h/scan29h uses the proven paced ISR.
     # This recipe has no literal exclamation key; ASPECT supplies its password.
     assert '!' not in recipe.split()
     text=paced_source(recipe.replace('browser','!'))
     assert text.count(',545\n')==recipe.split().count('browser')
-    return text.replace(',545\n',',10592\n')
+    text=text.replace(',545\n',',10592\n')
+    if upper_memory:
+        marker='install:\n';assert text.count(marker)==1
+        text=text.replace(marker,marker+' mov ax,[0x2c]\n or ax,ax\n jz .no_env\n mov es,ax\n mov ah,49h\n int 21h\n jc .failed\n mov word [0x2c],0\n.no_env:\n',1)
+        text+='\n.failed:\n mov ax,4c01h\n int 21h\n'
+    return text
+
+
+def sampler_source(upper_memory=False):
+    text=SAMPLER.replace('mov cx,4000','mov cx,8000')
+    if upper_memory:
+        marker='install:\n';assert text.count(marker)==1
+        text=text.replace(marker,marker+' mov ax,[0x2c]\n or ax,ax\n jz .no_env\n mov es,ax\n mov ah,49h\n int 21h\n jc failed\n mov word [0x2c],0\n.no_env:\n',1)
+    for off in (0,1,3,4):text=text.replace(hex(0x3f8+off),hex(0x3e8+off))
+    return text
 
 
 async def run(a):
@@ -55,11 +69,24 @@ async def run(a):
         binary,sources=select_product(path,leaf);inputs+=sources+[binary]
         shutil.copyfile(binary,stage/leaf);inputs.append(stage/leaf)
         staged=stage_companions(binary,stage);inputs+=staged
-        products[leaf]=dict(path=str(binary.relative_to(ROOT)),sha256=sha(binary),source_files=len(sources)-2-len(staged))
+        # Help bundles add their own declared source closure; count actual unique
+        # source paths, rather than treating repeated manifest entries as files.
+        source_names={str(p.relative_to(ROOT)) for p in sources if p.relative_to(ROOT).parts[0]!='build'}
+        declared=json.loads(binary.with_name('manifest.json').read_text())
+        products[leaf]=dict(path=str(binary.relative_to(ROOT)),sha256=sha(binary),source_files=len(source_names),
+            declared_source_files=len(declared['sources']),bound_files=len({str(p) for p in sources}))
     help_file=a.runner.resolve().parent/'LOCHELP.HLP'
     if help_file.exists():shutil.copyfile(help_file,stage/help_file.name);inputs += [help_file,stage/help_file.name]
     script=login_source().replace('fputs 5 "START"\n','fputs 5 "START"\ntransmit "loc^M"\n',1)
     (stage/'LOGON.ASP').write_bytes(script.replace('\n','\r\n').encode('ascii'));inputs.append(stage/'LOGON.ASP')
+    initial_asx_absent=not (stage/'LOGON.ASX').exists();assert initial_asx_absent
+    if a.live_source:
+        parent_manifest=json.loads(a.terminal.resolve().with_name('manifest.json').read_text())
+        child_manifest=json.loads(a.runner.resolve().with_name('manifest.json').read_text())
+        assert parent_manifest['experimental_compiler_lease_bridge'] and child_manifest['experimental_compiler_parent_lease']
+        assert (stage/'PCCOMP.OVL').is_file()
+    startup=dict(live_source=a.live_source,initial_ASX_absent=initial_asx_absent,source_sha256=sha(stage/'LOGON.ASP'),compile_before_parent=not a.live_source)
+    (out/'startup-source.json').write_text(json.dumps(startup,indent=2)+'\n');inputs.append(out/'startup-source.json')
     payload_path=SOURCE/'file_base/pcplus_transfer'/a.file;payload=payload_path.read_bytes()
     assert len(payload)==65539 and set(payload)==set(range(256));inputs.append(payload_path)
     filename=' '.join(a.file)
@@ -68,12 +95,15 @@ async def run(a):
         'p85000 '+menu+'p'+str(a.transfer_wait_ms)+' enter p2000 L enter p1500 escape p1500 escape p1500 S enter p1500 '+
         filename+' enter p1500 enter p6000 q p3000 escape p3000 G enter p3000 Y p5000 enter p8000 '+
         'Q U I T enter p10000 a-x')
+    if a.startup_probe:
+        assert a.exec_probe
+        recipe='p900 enter p20000 space p4000 a-x'
     (out/'recipe.json').write_text(json.dumps(dict(recipe=recipe),indent=2)+'\n')
     guard_observer=None
-    sampler_source=SAMPLER.replace('mov cx,4000','mov cx,8000')
+    sampler_text=sampler_source(a.umb)
     if getattr(a,'guard_observer_check',None):
         from carrier_key_observer import build
-        sampler_source,guard_observer=build(a.terminal,out/'guard-observer')
+        sampler_text,guard_observer=build(a.terminal,out/'guard-observer')
         proof=a.guard_observer_check.resolve();assert proof.is_relative_to(ROOT/'build')
         control=json.loads(proof.read_text());assert control['passed']
         assert control['observer']['observer_sha256']==guard_observer['observer_sha256']
@@ -81,7 +111,7 @@ async def run(a):
         for name,digest in control['sources'].items():assert sha(ROOT/name)==digest,name
         guard_observer['transparency_report']=dict(path=str(proof.relative_to(ROOT)),sha256=sha(proof))
         inputs += [proof,ROOT/'lab/bbs/carrier_key_observer.py']+[p for p in (out/'guard-observer').iterdir() if p.is_file()]
-    (out/'KEYS.ASM').write_text(keyboard_source(recipe));(out/'sampler.asm').write_text(sampler_source)
+    (out/'KEYS.ASM').write_text(keyboard_source(recipe,upper_memory=a.umb));(out/'sampler.asm').write_text(sampler_text)
     # COM3, IRQ5; passive sampler uses the actual configured UART addresses.
     sampler=(out/'sampler.asm').read_text()
     for off in (0,1,3,4):sampler=sampler.replace(hex(0x3f8+off),hex(0x3e8+off))
@@ -89,6 +119,18 @@ async def run(a):
     for asm,leaf in [(out/'KEYS.ASM','PACED.COM'),(out/'sampler.asm','SNAP.COM'),(ROOT/'standalone/display_startup_geometry.asm','GEOM.COM')]:
         subprocess.run(['nasm','-fbin',str(asm),'-o',str(out/leaf)],check=True)
     inputs += [out/n for n in ['recipe.json','KEYS.ASM','sampler.asm','PACED.COM','SNAP.COM','GEOM.COM']]
+    if a.exec_probe:
+        observer=(ROOT/'standalone/help_exec_watch.asm').read_text()
+        marker=' mov [old21+2],es\n';assert observer.count(marker)==1
+        observer=observer.replace(marker,marker+' mov ax,[0x2c]\n or ax,ax\n jz .probe_no_env\n mov es,ax\n mov ah,49h\n int 21h\n jc failed\n mov word [0x2c],0\n.probe_no_env:\n',1)
+        marker='records: times 16*24 db 0';assert observer.count(marker)==1
+        observer=observer.replace(marker,marker+'\nmemsamples: times 16 dw 0\nmcbsamples: times 16*50 dw 0',1).replace('390','2022')
+        marker='.captured:\n';assert observer.count(marker)==1
+        observer=observer.replace(marker,marker+' cmp word [ss:bp-6],4b00h\n jne .memory_done\n push bx\n mov ah,48h\n mov bx,0ffffh\n pushf\n call far [cs:old21]\n mov di,[cs:state+2]\n dec di\n shl di,1\n mov [cs:memsamples+di],bx\n mov ax,di\n mov cx,50\n mul cx\n mov di,ax\n mov ah,62h\n pushf\n call far [cs:old21]\n mov [cs:mcbsamples+di],bx\n mov es,bx\n mov ax,[es:2ch]\n mov [cs:mcbsamples+di+2],ax\n add di,4\n dec bx\n mov cx,16\n.mcb_loop:\n cmp bx,0a000h\n jae .mcb_done\n mov es,bx\n mov al,[es:0]\n cmp al,4dh\n je .mcb_valid\n cmp al,5ah\n jne .mcb_done\n.mcb_valid:\n mov [cs:mcbsamples+di],bx\n mov ax,[es:1]\n mov [cs:mcbsamples+di+2],ax\n mov ax,[es:3]\n mov [cs:mcbsamples+di+4],ax\n add di,6\n add bx,ax\n jc .mcb_done\n inc bx\n loop .mcb_loop\n.mcb_done:\n pop bx\n.memory_done:\n',1)
+        (out/'EXECW.ASM').write_text(observer)
+        subprocess.run(['nasm','-fbin',str(out/'EXECW.ASM'),'-o',str(out/'EXECW.COM')],check=True)
+        inputs += [ROOT/'standalone/help_exec_watch.asm',out/'EXECW.ASM',out/'EXECW.COM']
+
     names=['test_proxy_carrier_dos','proxy_carrier_relay','paced_bios_keys','carrier_notice_watch','zmodem_label_watch',
         'test_transfer_dos','modem','audit_zmodem','audit_size_probe_screen','enigma_script_login','test_proxy_transfer_dos','bbs_log_capture']
     inputs += [ROOT/'lab/bbs'/(n+'.py') for n in names]
@@ -149,10 +191,11 @@ output=surface
 memsize=8
 [cpu]
 core=normal
-cputype=8086
+cputype={a.cpu}
 cycles=fixed 6000
 [mixer]
 nosound=true
+{('[dos]'+chr(10)+'xms=true'+chr(10)+'ems=false'+chr(10)+'umb=true') if a.umb else ''}
 [serial]
 serial1=disabled
 serial2=disabled
@@ -163,11 +206,12 @@ serial4=disabled
 mount c "{stage}"
 mount d "{out}"
 c:
-ASPCOMP LOGON.ASP LOGON.ASX >D:\\COMPILE.TXT
-if errorlevel 1 goto failed
-D:\\SNAP B
+{('rem Compile source inside the attached ASPECT interpreter' if a.live_source else 'ASPCOMP LOGON.ASP LOGON.ASX >D:'+chr(92)+'COMPILE.TXT'+chr(10)+'if errorlevel 1 goto failed')}
+{('LH D:'+chr(92)+'SNAP B') if a.umb else ('D:'+chr(92)+'SNAP B')}
+{(('LH ' if a.umb else '')+'D:'+chr(92)+'EXECW T') if a.exec_probe else ''}
 {('D:'+chr(92)+'WITNESS T') if a.witness else ''}
-D:\\PACED
+{('LH D:'+chr(92)+'PACED') if a.umb else ('D:'+chr(92)+'PACED')}
+if errorlevel 1 goto failed
 TERMINAL @D:\\TEST.PRM /E:D:\\TEST.DIR /N:3
 if errorlevel 1 goto failed
 echo PASS>D:\\PASS.TXT
@@ -176,6 +220,7 @@ goto capture
 echo FAIL>D:\\FAIL.TXT
 {('D:'+chr(92)+'KEYWAIT') if a.witness else ''}
 :capture
+{('D:'+chr(92)+'EXECW') if a.exec_probe else ''}
 {('D:'+chr(92)+'WITNESS') if a.witness else ''}
 D:\\GEOM
 D:\\SNAP S
@@ -202,8 +247,9 @@ exit
             magic,count,ticks=struct.unpack_from('<3H',labels)
             if magic==0x4e5a and 0<count<=16:notices=[labels[6+i*160:6+(i+1)*160:2].decode('cp437') for i in range(count)]
         before=(out/'BEFORE.BIN').read_bytes() if (out/'BEFORE.BIN').exists() else b''
+        after=(out/'AFTER.BIN').read_bytes() if (out/'AFTER.BIN').exists() else b''
         checks=dict(DOS_normal_exit=code==0 and (out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),
-            hardware_restored=len(before)==42 and before==(out/'AFTER.BIN').read_bytes(),sources_unchanged=all(sha(ROOT/n)==h for n,h in frozen.items()),
+            hardware_restored=len(before)==42 and before==after,sources_unchanged=all(sha(ROOT/n)==h for n,h in frozen.items()),
             PRM_unchanged=(out/'TEST.PRM').read_bytes()==image,DOS_compiler_exact=(stage/'LOGON.ASX').exists() and (stage/'LOGON.ASX').read_bytes()==compile_source(script),
             both_script_logins=bool(snapshots) and snapshots[0]['first_login_trace']=='STARTAUTHREADY' and (stage/'LOGIN.LOG').read_bytes()==b'STARTAUTHREADY',
             two_connections=len(sessions)==2 and sessions[0].interrupted and not sessions[1].interrupted and all(s.done and not s.errors for s in sessions),
@@ -211,6 +257,9 @@ exit
             real_carrier_notice=any('carrier lost' in n.lower() for n in notices),RX_complete_notice=any('RX complete' in n for n in notices),
             exact_retry=(recv/a.file).exists() and (recv/a.file).read_bytes()==payload,only_expected_file={p.name for p in recv.iterdir()}=={a.file},
             directory_two_connections=accounting_check(bytes(book),(out/'TEST.DIR').read_bytes(),3,2),no_post_saved=posts==post_count())
+        if a.live_source:
+            checks['runtime_source_only_startup']=initial_asx_absent and 'ASPCOMP LOGON.ASP LOGON.ASX' not in (out/'dosbox.conf').read_text() and not (out/'COMPILE.TXT').exists()
+            checks['runtime_compile_files_retired']=not list(stage.glob('LPM*.TMP')) and not list(stage.glob('LPC*.*'))
         if guard_observer:
             from carrier_key_observer import decode
             try:
@@ -263,8 +312,19 @@ exit
         checks['two_authenticated_sessions']=len(authenticated)==2
         result=dict(passed=all(checks.values()) and not errors,checks=checks,errors=errors,notices=notices,snapshots=snapshots,
             products=products,sources=frozen,runtime=str(runtime.relative_to(ROOT)),proxy=ready,payload_name=a.file,payload_bytes=len(payload),payload_sha256=sha(payload_path),
-            protocol=protocol,wire_evidence=wire_evidence,scope=__doc__+' Actual8086 COM3/IRQ5,19200/HARD,source-built ASPECT/compiler,stock owned helper; one parent two automatic script logins. Fixture S12=25,not physical modem configuration.')
+            protocol=protocol,wire_evidence=wire_evidence,scope=__doc__+' Actual DOS'+a.cpu+' COM3/IRQ5,19200/HARD,source-built ASPECT/compiler,stock owned helper; one parent two automatic script logins. Fixture S12=25,not physical modem configuration.')
         result['transfer_wait_ms']=a.transfer_wait_ms
+        result['startup_probe']=a.startup_probe
+        result['exec_probe']=a.exec_probe
+        if a.exec_probe:
+            path=out/'EXECTRAC.BIN'
+            if path.exists():
+                raw=path.read_bytes();magic,count,restored=struct.unpack_from('<3H',raw);assert magic==0x4b48 and count<=16
+                result['exec_trace']=dict(restored=restored,records=[dict(largest_free_paragraphs=struct.unpack_from('<H',raw,390+i*2)[0],psp=struct.unpack_from('<H',raw,422+i*100)[0],environment=struct.unpack_from('<H',raw,424+i*100)[0],mcbs=[struct.unpack_from('<3H',raw,426+i*100+j*6) for j in range(16)],function=struct.unpack_from('<H',raw,6+i*24)[0],AX=struct.unpack_from('<H',raw,8+i*24)[0],carry=struct.unpack_from('<H',raw,10+i*24)[0],name=raw[12+i*24:30+i*24].split(b'\0',1)[0].decode('cp437')) for i in range(count)])
+        result['cpu']=a.cpu
+        result['explicit_UMB']=a.umb
+        result['live_source']=a.live_source
+        result['startup_source']=startup
         if guard_observer:result['guard_observer']=guard_observer
         (out/'carrier-checks.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(dict(passed=result['passed'],checks=checks,errors=errors,notices=notices),indent=2))
@@ -278,6 +338,11 @@ exit
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for n in ['runtime','terminal','runner','compiler']:p.add_argument('--'+n,type=Path,required=True)
+    p.add_argument('--exec-probe',action='store_true',help='Owned passive real DOS EXEC/result diagnostic; not ordinary acceptance')
+    p.add_argument('--startup-probe',action='store_true',help='Diagnostic first startup only; does not satisfy carrier/retry gates')
+    p.add_argument('--cpu',choices=['8086','386'],default='8086')
+    p.add_argument('--umb',action='store_true',help='Use explicit XMS/no-EMS/UMB DOS layout for interpreter memory admission')
+    p.add_argument('--live-source',action='store_true',help='Omit bootstrap ASX compilation; require attached ASPECT to compile source while the full parent runs')
     p.add_argument('--file',required=True);p.add_argument('--label',required=True);p.add_argument('--witness',action='store_true')
     p.add_argument('--transfer-wait-ms',type=int,choices=[60000,150000],default=60000)
     p.add_argument('--guard-observer-check',type=Path,help='Explicit passive diagnostic; require matching current transparency report and identical TSR footprint')

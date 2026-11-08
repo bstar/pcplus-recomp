@@ -1,0 +1,341 @@
+{
+  "checkpoint_verified": true,
+  "application_bytes_changed": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "release_eligible": false,
+  "physical_verified": false,
+  "original_application_build_inputs": [],
+  "products": {
+    "TERMINAL.EXE": "c83934bd0a02c3723de0ceb0e4ac991a225854da144b2ad908fe01f381015880",
+    "PCCHAT.OVL": "6845e2c8e3faa4de505736e9fe6da715d5984da66c06b2617846646c08c16448",
+    "PCLINE.OVL": "c89bbfce9ee58f153441cc89e46994bc68066ff04fd65b385234bb7404d0cde0",
+    "PCMETA.OVL": "ef8b9ca0a252d8b68dde0a264f527868235fcd9551ec6466635a8f9a80f03641",
+    "PCCOMP.OVL": "5cb90b8b29218fc3580f5abe92b530642587e12e35975ebc28e8cdc34a1c8f6f",
+    "ASPECT.EXE": "20c5f38c00cb9244b65c31cbd9086a55b514c4f7b53780c963800b427dee6e8b",
+    "ASPCOMP.EXE": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195"
+  },
+  "loc": {
+    "cpu": "8086",
+    "physical_rows": 25,
+    "logical_rows": 24,
+    "status_hidden": 0,
+    "reference_cells": 1920,
+    "source_art_cells": 1906,
+    "field_cells": 14,
+    "actual_CPR": [
+      24,
+      53
+    ],
+    "all_39_native_labels": true,
+    "message_menu_return": true
+  },
+  "cancel": {
+    "bytes": 65539,
+    "partial_disk_bytes": 4096,
+    "exact_retry": true,
+    "payload_sha256": "dd5a05e04becc5cc091166df471fac293503d89e9a818397da1ddab54863dedc",
+    "same_DOS_process": true,
+    "authenticated_sessions": 1,
+    "proxy_connections": 1
+  },
+  "carrier": {
+    "cpu": "386",
+    "explicit_UMB": true,
+    "live_source_compile": true,
+    "transfer_wait_ms": 150000,
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "sources_unchanged": true,
+      "PRM_unchanged": true,
+      "DOS_compiler_exact": true,
+      "both_script_logins": true,
+      "two_connections": true,
+      "stage_clean_before_second_login": true,
+      "real_carrier_notice": true,
+      "RX_complete_notice": true,
+      "exact_retry": true,
+      "only_expected_file": true,
+      "directory_two_connections": true,
+      "no_post_saved": true,
+      "runtime_source_only_startup": true,
+      "runtime_compile_files_retired": true,
+      "source_matching_retry_finish_search_raw_proxy": true,
+      "two_authenticated_sessions": true
+    },
+    "partial_disk_bytes": 4096,
+    "exact_retry_bytes": 65539,
+    "sessions": [
+      {
+        "index": 1,
+        "interrupted": true,
+        "NAWS": [
+          80,
+          24
+        ],
+        "delivered_bytes": 71543,
+        "proxy_bytes": 74544,
+        "online_bytes": 148
+      },
+      {
+        "index": 2,
+        "interrupted": false,
+        "NAWS": [
+          80,
+          24
+        ],
+        "delivered_bytes": 156097,
+        "proxy_bytes": 156097,
+        "online_bytes": 420
+      }
+    ],
+    "notices": [
+      " RX carrier los\u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE ",
+      " Carrier lost  \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE ",
+      " RX complete   \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 ON-LINE  ",
+      " RX complete   \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE ",
+      " Carrier lost  \u2502 ANSI     \u2502 FDX \u2502 19200 N81 \u2502 LOG CLOSED \u2502 PRINT OFF \u2502 OFF-LINE "
+    ]
+  },
+  "negative_controls": {
+    "cancel": [
+      {
+        "case": "unchanged",
+        "rejected": false,
+        "passed": true,
+        "log_sha256": "ae190921c9d436702129ce1cebdc0496f40fad06cabfad5412e32ba889dd72d1"
+      },
+      {
+        "case": "partial-hash",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "7144c67e667456812133f9d185a6546a7bc39f659aa150e70b829d666ec80eb9"
+      },
+      {
+        "case": "partial-after-cancel",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "ca9d041dda42292bee54c4329727ac0fac9b713e7e953984ed03ff087ff00504"
+      },
+      {
+        "case": "stage-not-clean",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "7144c67e667456812133f9d185a6546a7bc39f659aa150e70b829d666ec80eb9"
+      },
+      {
+        "case": "BIOS-Escape",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "c8b27f8b3a3eea3836c5c482f0ae905c0f63f880494aba1f3cf0ceee92290bdb"
+      },
+      {
+        "case": "NAWS",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "369c389a13c287258d102112722100c30c7adea27187f578732b16ff0893db38"
+      },
+      {
+        "case": "hardware",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "472bb84fd20ce2a2a2340f2b01ef6572dae1fc4996c65ebc6b540271235a8626"
+      },
+      {
+        "case": "extra-session",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "1c53fbcb617badfab116086a04c1d44dcd3c7c424fdc8a2ea304e6810d5cd8ed"
+      },
+      {
+        "case": "retry-payload",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "2fbddaeaa82041353cefa24040c13ec218a61a891e09e3fd6d1846526a059945"
+      }
+    ],
+    "carrier": [
+      {
+        "case": "unchanged",
+        "rejected": false,
+        "passed": true,
+        "log_sha256": "109f0ab74d6f09a7d9d366dbb84e549e5e81bd27859bdd9ff05f200c12d1f816"
+      },
+      {
+        "case": "source-count",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "8841bdfa64816a3bc183827be6308c030b4497ad3b2a133716a01b90c18d6284"
+      },
+      {
+        "case": "partial-hash",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "7facf5981e2169f347c6ca7fd6dccfddf21c209c157c8f34f2a1cb7f58d65e9a"
+      },
+      {
+        "case": "partial-after-drop",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "3994919add574ac84b701e4773509394c7f4d278c5b7065b93722b6bd4082d43"
+      },
+      {
+        "case": "stage-not-clean",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "9a424ea34a7b88e6dd9e1fa02047675ab5dc717279e06accb79a6d92e27f31c1"
+      },
+      {
+        "case": "missing-carrier-notice",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "80508b2c7fedbc1c0d9dfe34798120618cf4f2a3cd89f074fad3eabc2bd857a5"
+      },
+      {
+        "case": "NAWS",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "691a8149e30e8bd5e210b051d58a09158a2f86b8a3cc6f758a0e890370151fa2"
+      },
+      {
+        "case": "hardware",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "9505189c6b993c6b317f65c4c9e4888c2f2d278e2abdc9e790ab018a934f6382"
+      },
+      {
+        "case": "DOS-compiler",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "3f35b31ff4740effb54fdc3de96cb05d45b2c6476d108399a0649142c828bf60"
+      },
+      {
+        "case": "second-interrupted",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "fad2ef603876c44958609fba8a9e0f3f7ca192ce7ae5a5031b046de051c638eb"
+      },
+      {
+        "case": "retry-payload",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "6319961d0ee24b2a25688a52536d1959a01b6eb3ddf8cb620ade32ae76107eba"
+      },
+      {
+        "case": "declared-source-count",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "a975b1d99cd7805e9fcd870cfac79a6b396155da0b3f89f2dfb53c687aaf91ad"
+      },
+      {
+        "case": "bound-count",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "8841bdfa64816a3bc183827be6308c030b4497ad3b2a133716a01b90c18d6284"
+      },
+      {
+        "case": "missing-live-source-record",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "012c85fbf38f618e9f074c0d8987ab787925d04af6487807e5adba6881f1036e"
+      },
+      {
+        "case": "precompiled-source-claim",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "d9b58decc7e9c270ac94030726a1fbbbc1e256dbd899b9f66c9a6e9f12804710"
+      },
+      {
+        "case": "CPU-claim",
+        "rejected": true,
+        "passed": true,
+        "log_sha256": "5f51296617011dcbfee940ea1e2fc0714277e264aa997184c6fd3c4bc0c928fb"
+      }
+    ]
+  },
+  "observer_controls": {
+    "passed": true,
+    "records": [
+      {
+        "function": 19200,
+        "AX": 15873,
+        "carry": 0,
+        "name": "RUN.COM",
+        "largest_free_paragraphs": 38965
+      },
+      {
+        "function": 19200,
+        "AX": 15873,
+        "carry": 0,
+        "name": "D:\\CHILD.COM",
+        "largest_free_paragraphs": 38796
+      },
+      {
+        "function": 19713,
+        "AX": 7,
+        "carry": 0,
+        "name": "",
+        "largest_free_paragraphs": 0
+      },
+      {
+        "function": 19200,
+        "AX": 2,
+        "carry": 1,
+        "name": "D:\\MISSING.COM",
+        "largest_free_paragraphs": 38796
+      },
+      {
+        "function": 19200,
+        "AX": 8,
+        "carry": 1,
+        "name": "D:\\HUGE.EXE",
+        "largest_free_paragraphs": 38796
+      },
+      {
+        "function": 19200,
+        "AX": 0,
+        "carry": 0,
+        "name": "EXECW.COM",
+        "largest_free_paragraphs": 38965
+      }
+    ],
+    "restored": 1,
+    "observer_sha256": "dfa2ac22135a5f623ca882740431e60e3d8577d93482754ea707497cfe25cc82",
+    "scope": "Owned DOS observer controls: successful child and status7, missing-file error2, impossible-allocation error8; no BBS or hardware.",
+    "captures": {
+      "build/compiler-bridge-exec-probe-controls-20261108/EXECW.ASM": "dfa2ac22135a5f623ca882740431e60e3d8577d93482754ea707497cfe25cc82",
+      "build/compiler-bridge-exec-probe-controls-20261108/CHILD.ASM": "9b9498953bd9e54b03a0eab5c563f9ba4c45e8d147ea353fe6e2037a588c548d",
+      "build/compiler-bridge-exec-probe-controls-20261108/HUGE.EXE": "46e5af6122a732929572e499eaef577fad4878bcf4a01a0f426e1ef6116d99e9",
+      "build/compiler-bridge-exec-probe-controls-20261108/RUN.ASM": "95e51612c5e48cb8a5d1be23579ddd4488fef708ffbda482db1e6197b35b71ef",
+      "build/compiler-bridge-exec-probe-controls-20261108/dosbox.conf": "ed4e248981c8786b6c5781b5d8d2b231d461729d3c80dced3f6c1c455ea1a01d",
+      "build/compiler-bridge-exec-probe-controls-20261108/EXECW.COM": "cc5b9904828a63a9bd1e873d3f81fb7ffeab6c239a120889a5f3a024180d6b47",
+      "build/compiler-bridge-exec-probe-controls-20261108/CHILD.COM": "41f99c45e501f4a3c107d4b458ae28d22dcdba938ad334d57afba3e4f139543f",
+      "build/compiler-bridge-exec-probe-controls-20261108/RUN.COM": "806a8c3435ed1aec50613c0154630155397544367ad1f8462a9054285362f315",
+      "build/compiler-bridge-exec-probe-controls-20261108/dosbox.log": "b5192f94596ef36ac289c25dc73254f482b98bfd386111b3a064ed64eea08f78",
+      "build/compiler-bridge-exec-probe-controls-20261108/PASS.TXT": "d938fa189912f8776c3deb31a6bec42f403f57b9c8e3ed936bdb076caf6bd61c",
+      "build/compiler-bridge-exec-probe-controls-20261108/EXECTRAC.BIN": "9b6ced9263dd7bbb9c59d954eedd726ee95f4715cd710f4429e73fcba1e22cf7"
+    }
+  },
+  "receipts": {
+    "build/compiler-bridge-bbs-payload-20261108/package.json": "40ee2dcdb5cf9572b36700c83d2866c54d00690da20968f09522cdf8daa1f768",
+    "build/bbs-lab/results/enigma/compiler-bridge-loc-main-20261108/loc-main-audit.json": "3981f3f6b01cbf68bdafd5c257cb720ca49881930950ce37abbea84338ee57e3",
+    "build/compiler-bridge-cancel-audit-20261108/result.json": "475ffb391b914cb5e4140b6b53035e7badc6baf9b42ef91bc406f2aa8d26d994",
+    "build/bbs-lab/results/enigma/compiler-bridge-live-carrier-long-20261108/carrier-checks.json": "7e11f8971ac8beb2680ca238cbd614251a29c7537008dc2ceed63ecc1baea67f",
+    "build/compiler-bridge-live-carrier-audit-20261108/result.json": "1a9670a3eb61bf8d889a2c899b48bd9774400e793071bbea284e09e76feece4f",
+    "build/compiler-bridge-exec-probe-controls-20261108/result.json": "7081adddbc35f7d6adc33de7a4469e5f30180e34922a6794d624377d8e1aabcf",
+    "build/compiler-bridge-cancel-controls-20261108/result.json": "a1c5f9c4a7c91b6343e2da4d5965330ec5a7d5098952fecfba590ae3ff8ca048",
+    "build/compiler-bridge-live-carrier-controls-20261108/result.json": "e2fcff38fc4a6619deabebf462af382e2506616c6d7067fbcb9e92b9e8981bc1"
+  },
+  "sources": {
+    "standalone/record_compiler_bridge_connection.py": "b61657671364bb490c57ac93263e8683c3821d1bcb436096aea98200298cfb3c"
+  },
+  "remaining": [
+    "Physical Boca/SPA2102/SynthModem/LoC Enigma and Synchronet acceptance.",
+    "Full release packaging and selected-package/deployment promotion.",
+    "Full ASPECT, other emulations/protocols and Host parity.",
+    "Other memory layouts, all live-board screens and physical timing."
+  ]
+}

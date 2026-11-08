@@ -19,6 +19,9 @@ def main():
     original=json.loads((cap/'carrier-checks.json').read_text());assert original['passed']
     kinds=['unchanged','source-count','partial-hash','partial-after-drop','stage-not-clean','missing-carrier-notice',
            'NAWS','hardware','DOS-compiler','second-interrupted','retry-payload']
+    if 'declared_source_files' in original['products']['TERMINAL.EXE']:kinds+=['declared-source-count','bound-count']
+    if original.get('live_source'):kinds+=['missing-live-source-record','precompiled-source-claim']
+    if original.get('cpu','8086')!='8086':kinds+=['CPU-claim']
     cases=[]
     for kind in kinds:
         copied=out/kind/'capture';copied_bridge=out/kind/'bridge'
@@ -26,6 +29,19 @@ def main():
         r=json.loads((copied/'carrier-checks.json').read_text())
         if kind=='source-count':
             r['products']['TERMINAL.EXE']['source_files']+=1
+            (copied/'carrier-checks.json').write_text(json.dumps(r)+'\n')
+        elif kind=='CPU-claim':
+            r['cpu']='8086'
+            (copied/'carrier-checks.json').write_text(json.dumps(r)+'\n')
+        elif kind in ('declared-source-count','bound-count'):
+            field='declared_source_files' if kind=='declared-source-count' else 'bound_files'
+            r['products']['TERMINAL.EXE'][field]+=1
+            (copied/'carrier-checks.json').write_text(json.dumps(r)+'\n')
+        elif kind=='missing-live-source-record':(copied/'startup-source.json').unlink()
+        elif kind=='precompiled-source-claim':
+            startup=json.loads((copied/'startup-source.json').read_text());startup['compile_before_parent']=True
+            r['startup_source']=startup
+            (copied/'startup-source.json').write_text(json.dumps(startup)+'\n')
             (copied/'carrier-checks.json').write_text(json.dumps(r)+'\n')
         elif kind in ('partial-hash','partial-after-drop','stage-not-clean'):
             if kind=='partial-hash':r['snapshots'][0]['sha256']='0'*64

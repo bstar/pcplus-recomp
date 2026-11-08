@@ -11,8 +11,7 @@ from product_inputs import ROOT,sha,select_product,companions
 from audit_zmodem import scan,packet,metadata,audit_batch,audit_controls
 from test_transfer_dos import timestamp,offset_after
 from audit_size_probe_screen import telnet
-from test_proxy_carrier_dos import keyboard_source
-from carrier_notice_watch import SAMPLER
+from test_proxy_carrier_dos import keyboard_source,sampler_source
 from directory_test_support import accounting_check
 sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
@@ -24,19 +23,29 @@ def main():
     a=p.parse_args();cap,bridge,out=[v.resolve() for v in (a.capture,a.bridge,a.output)]
     assert all(v.is_relative_to(ROOT/'build') for v in (cap,bridge,out));out.mkdir(parents=True,exist_ok=False)
     r=json.loads((cap/'carrier-checks.json').read_text());assert r['passed'] and all(r['checks'].values()) and not r['errors']
+    assert not r.get('startup_probe') and not r.get('exec_probe'), 'Diagnostic captures are not carrier acceptance'
     for n,h in r['sources'].items():assert sha(ROOT/n)==h,n
     for leaf,product in r['products'].items():assert sha(cap/'program'/leaf)==sha(ROOT/product['path'])==product['sha256']
     parent=r['products']['TERMINAL.EXE'];manifest=json.loads((ROOT/parent['path']).with_name('manifest.json').read_text())
     selected,source_inputs=select_product(ROOT/parent['path'],'TERMINAL.EXE')
     assert sha(selected)==parent['sha256']
     modules=companions(selected)
-    assert not manifest.get('original_inputs') and len(manifest['sources'])==parent['source_files']==len(source_inputs)-2-len(modules)
+    assert not manifest.get('original_inputs')
+    if 'declared_source_files' in parent:
+        source_names={str(p.relative_to(ROOT)) for p in source_inputs if p.relative_to(ROOT).parts[0]!='build'}
+        assert parent['declared_source_files']==len(manifest['sources'])
+        assert parent['source_files']==len(source_names) and parent['bound_files']==len({str(p) for p in source_inputs})
+    else:
+        assert len(manifest['sources'])==parent['source_files']==len(source_inputs)-2-len(modules)
     for module in modules:assert sha(cap/'program'/module.name)==sha(module)
     assert manifest['memory_layout']['resident_CS_extent_bytes']<=65536
     assert (cap/'PASS.TXT').exists() and not (cap/'FAIL.TXT').exists()
     before=(cap/'BEFORE.BIN').read_bytes();assert len(before)==42 and before==(cap/'AFTER.BIN').read_bytes()
     assert len((cap/'SCREEN.BIN').read_bytes())==8000 and not list(cap.rglob('PCRX.$$$'))
-    config=(cap/'dosbox.conf').read_text();assert 'cputype=8086' in config and 'serial3=modem irq:5 listenport:0' in config
+    config=(cap/'dosbox.conf').read_text();cpu=r.get('cpu','8086');assert cpu in ('8086','386')
+    assert ('cputype='+cpu) in config and 'serial3=modem irq:5 listenport:0' in config
+    if r.get('explicit_UMB'):
+        assert '[dos]\nxms=true\nems=false\numb=true' in config and 'LH D:\\PACED' in config and 'LH D:\\SNAP B' in config
     assert config.count('TERMINAL @D:')==1
     log=(cap/'dosbox.log').read_text();assert log.count('Modem response: CONNECT')==2 and 'Modem response: NO CARRIER' in log
     assert log.count('Command sent to modem: ->AT&K3S12=25<-')==2
@@ -45,11 +54,18 @@ def main():
     assert (cap/'program/LOGIN.LOG').read_bytes()==b'STARTAUTHREADY'
     script=(cap/'program/LOGON.ASP').read_bytes().decode('ascii').replace('\r\n','\n')
     assert script.count('transmit "loc^M"')==1 and (cap/'program/LOGON.ASX').read_bytes()==compile_source(script)
+    if r.get('live_source'):
+        initial=json.loads((cap/'startup-source.json').read_text());assert initial==r['startup_source']
+        assert initial['initial_ASX_absent'] and initial['live_source'] and not initial['compile_before_parent']
+        assert initial['source_sha256']==sha(cap/'program/LOGON.ASP')
+        assert manifest['experimental_compiler_lease_bridge'] and (cap/'program/PCCOMP.OVL').is_file()
+        assert 'ASPCOMP LOGON.ASP LOGON.ASX' not in config and not (cap/'COMPILE.TXT').exists()
+        assert not list((cap/'program').glob('LPM*.TMP')) and not list((cap/'program').glob('LPC*.*'))
     recipe=json.loads((cap/'recipe.json').read_text())['recipe']
-    assert recipe.count('browser tab D')==1 and (cap/'KEYS.ASM').read_text()==keyboard_source(recipe)
+    assert recipe.count('browser tab D')==1 and (cap/'KEYS.ASM').read_text()==keyboard_source(recipe,upper_memory=r.get('explicit_UMB',False))
     subprocess.run(['nasm','-fbin',str(cap/'KEYS.ASM'),'-o',str(out/'PACED.COM')],check=True)
     assert sha(out/'PACED.COM')==sha(cap/'PACED.COM')
-    sampler=SAMPLER.replace('mov cx,4000','mov cx,8000')
+    sampler=sampler_source(r.get('explicit_UMB',False))
     if r.get('guard_observer'):
         from carrier_key_observer import build,decode
         sampler,guard=build(selected,out/'guard-observer')
@@ -144,10 +160,10 @@ def main():
         'lab/bbs/audit_zmodem.py','lab/bbs/test_transfer_dos.py','lab/bbs/audit_size_probe_screen.py',
         'lab/bbs/paced_bios_keys.py','lab/bbs/carrier_notice_watch.py','lab/bbs/zmodem_label_watch.py','standalone/directory_test_support.py']
     if r.get('guard_observer'):sources+=list(n for n in control['sources'] if n not in sources)
-    result=dict(passed=True,terminal_sha256=parent['sha256'],products=r['products'],partial_disk_bytes=part['bytes'],
+    result=dict(passed=True,cpu=cpu,live_source=bool(r.get('live_source')),explicit_UMB=bool(r.get('explicit_UMB')),terminal_sha256=parent['sha256'],products=r['products'],partial_disk_bytes=part['bytes'],
         exact_retry_bytes=len(payload),payload_sha256=r['payload_sha256'],sessions=sessions,notices=notices,
         sources={n:sha(ROOT/n) for n in sources},captures={str(p.relative_to(ROOT)):sha(p) for p in captures},
-        scope=__doc__+' One8086 parent,actual built-in modem DCD,socket abort after source-prefix write,cleanup before second login,two source-built ASPECT logins and DOS compiler equivalence,actual NAWS,raw byte prefixes at loss/exact second streams,CRC/finish/controls and exact retry. No physical/SIP/DSP or all-layout/protocol acceptance.')
+        scope=__doc__+' One DOS'+cpu+' parent,actual built-in modem DCD,socket abort after source-prefix write,cleanup before second login,two source-built ASPECT logins and DOS compiler equivalence,actual NAWS,raw byte prefixes at loss/exact second streams,CRC/finish/controls and exact retry. No physical/SIP/DSP or all-layout/protocol acceptance.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS independent carrier loss/redial:',len(payload),'exact bytes')
 
 

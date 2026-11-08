@@ -83,9 +83,11 @@ F479. It does not justify changing the maintained editor or calling its callback
 identity tag as native code. The private snapshot retains full Evidence; no
 original executable or analysis database enters the public source build.
 
-Transfer regressions do not establish compiler execution during live BBS login,
-LoC custom main-menu rendering, cancel/retry, carrier-loss/redial or every
-foreground mode on this parent. Earlier-parent receipts keep their own scope.
+These transfer receipts retain their original scope. The later
+[connection checkpoint](ASPECT_COMPILER_CONNECTION.md) verifies this exact
+parent's selected LoC main menu, cancel/retry and live-source Enigma compilation,
+carrier loss/redial/retry. It does not establish every foreground mode or layout.
+Earlier-parent receipts keep their own scope.
 Physical Boca/SPA2102/SynthModem/LoC Enigma and Synchronet acceptance, complete
 language/emulations/protocols/Host parity and selected-package promotion remain
 open. Private settings, call history, boot profiles and installation are unchanged.
