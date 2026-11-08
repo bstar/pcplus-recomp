@@ -3530,3 +3530,10 @@ GET/EXECUTE/WHEN/cancellation/divide-recovery cases add242 checks with held FILE
 streams. Existing150s transfer timing is retained; the earlier60s cancellation
 remains failed. These are software gates, not SIP/audio/physical or full-parity
 acceptance. Loader file/handle failures and complete release coverage remain open.
+
+A [new combined Help capacity regression](ASPECT_HELP_CAPACITY.md) remains open:
+Help after an additional successful nested DOS program cannot allocate its4032-byte
+screen frame (128-byte measured shortfall without a held FILE,656 with one).
+The reference51-check Help path and55-check post-Help handle-isolation variant
+still pass; the larger required workload remains failed. Heap trimming trials
+did not fix it and were removed. Application bytes/installation are unchanged.

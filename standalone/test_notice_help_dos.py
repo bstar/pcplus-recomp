@@ -11,7 +11,7 @@ ROOT=render.ROOT;sys.path.insert(0,str(ROOT/'src/aspect'))
 from compiler import compile_source
 PAYLOAD=b'Q'*500+b'ENDMARK!'
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--port',type=int,choices=[1,2],default=1);p.add_argument('--no-driver',action='store_true');p.add_argument('--bios',choices=['STANDARD','ENHANCED'],default='ENHANCED');p.add_argument('--help-resource',action='store_true');p.add_argument('--resource-case',choices=['normal','missing','bad'],default='normal');p.add_argument('--parent-dir',type=Path);p.add_argument('--child-dir',type=Path);p.add_argument('--cpu',choices=['8086','386'],default='8086');p.add_argument('--allocation-watch',action='store_true');p.add_argument('--video-watch',action='store_true');p.add_argument('--timed-parent-keys',action='store_true',help='Diagnostic legacy wall-clock key schedule');p.add_argument('--drain-modal',action='store_true',help='Diagnostic extra Escape keys; acceptance checks remain unchanged');p.add_argument('--timeout-snapshot',action='store_true',help='Diagnostic owned emulator memory snapshot before timeout cleanup');p.add_argument('--key-delay-ms',type=int,default=16000);a=p.parse_args();assert 1000<=a.key_delay_ms<=40000;assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--label',required=True);p.add_argument('--port',type=int,choices=[1,2],default=1);p.add_argument('--no-driver',action='store_true');p.add_argument('--bios',choices=['STANDARD','ENHANCED'],default='ENHANCED');p.add_argument('--help-resource',action='store_true');p.add_argument('--resource-case',choices=['normal','missing','bad'],default='normal');p.add_argument('--parent-dir',type=Path);p.add_argument('--child-dir',type=Path);p.add_argument('--cpu',choices=['8086','386'],default='8086');p.add_argument('--close-inherited-handles',action='store_true');p.add_argument('--handle-roundtrip',action='store_true',help='Combined workload: keep a FILE across nested children before/after Help');p.add_argument('--without-held-stream',action='store_true',help='Diagnostic control only: omit the held FILE from the nested-handle workload');p.add_argument('--allocation-watch',action='store_true');p.add_argument('--video-watch',action='store_true');p.add_argument('--timed-parent-keys',action='store_true',help='Diagnostic legacy wall-clock key schedule');p.add_argument('--drain-modal',action='store_true',help='Diagnostic extra Escape keys; acceptance checks remain unchanged');p.add_argument('--timeout-snapshot',action='store_true',help='Diagnostic owned emulator memory snapshot before timeout cleanup');p.add_argument('--key-delay-ms',type=int,default=16000);a=p.parse_args();assert 1000<=a.key_delay_ms<=40000;assert re.fullmatch(r'[A-Za-z0-9_-]+',a.label)
     out=ROOT/'build/notice-help'/a.label;out.mkdir(parents=True,exist_ok=False)
     parent=ROOT/'build/terminal-mouse-notice-input/TERMINAL.EXE';child=ROOT/'build/aspect-notice-help-parent/ASPECT.EXE';sources={}
     if a.help_resource:child=ROOT/'build/aspect-help-resource-parent/ASPECT.EXE'
@@ -24,6 +24,7 @@ def main():
             sources[n]=h
         for path in [product.parent/'manifest.json',product.parent/('terminal.map' if product==parent else 'ASPECT.map')]:sources[str(path.relative_to(ROOT))]=render.sha(path)
     for name in ['standalone/test_notice_help_dos.py','standalone/notice_help_probe.py','standalone/notice_input_fault_probe.py','standalone/notice_input_parent_probe.py','standalone/notice_input_no_driver_probe.py','standalone/mouse_parent_probe.py','standalone/mouse_sound_checks.py','standalone/test_aspect_parent_process_dos.py','standalone/test_aspect_renderer_dos.py','standalone/test_connection_dos.py','standalone/test_terminal.py','standalone/directory_fixtures.py','standalone/directory_test_support.py','standalone/terminal_config_fixtures.py','standalone/modem_fixtures.py','standalone/notice_success_child.asm','standalone/notice_parent_keys_probe.py','src/aspect/compiler.py']:sources[name]=render.sha(ROOT/name)
+    if a.close_inherited_handles:sources['standalone/notice_close_handles_child.asm']=render.sha(ROOT/'standalone/notice_close_handles_child.asm')
     if a.timeout_snapshot:sources['standalone/dosbox_timeout_snapshot.py']=render.sha(ROOT/'standalone/dosbox_timeout_snapshot.py')
     if a.video_watch:sources['standalone/notice_video_probe.py']=render.sha(ROOT/'standalone/notice_video_probe.py')
     if a.allocation_watch:sources['standalone/notice_allocation_probe.py']=render.sha(ROOT/'standalone/notice_allocation_probe.py')
@@ -55,8 +56,15 @@ def main():
     assert (out/'RENDER.COM').stat().st_size<=0xff00
     folder=out/'ordinary';folder.mkdir()
     for product in (parent,child):shutil.copyfile(product,folder/product.name)
-    subprocess.run(['nasm','-fbin',str(ROOT/'standalone/notice_success_child.asm'),'-o',str(folder/'SUCCESS.COM')],check=True)
+    subprocess.run(['nasm','-fbin',str(ROOT/('standalone/notice_close_handles_child.asm' if a.close_inherited_handles else 'standalone/notice_success_child.asm')),'-o',str(folder/'SUCCESS.COM')],check=True)
     script='proc main\nwaitfor "LOGIN:" 5\nset keys off\nputenv "PATH="\ntransmit "PAYLOAD!"\nrun "ABSENT.COM"\nwaitfor "ENDMARK!" 5\nif waitfor\nelse\ntransmit "BAD"\nexit\nendif\nrun "SUCCESS.COM"\nif failure\ntransmit "BAD"\nexit\nendif\nmessage "AFTER HELP"\ntransmit $D_PWORD\ntransmit "^M"\npause 1\nendproc\n'
+    assert not a.handle_roundtrip or a.close_inherited_handles
+    assert not a.without_held_stream or a.handle_roundtrip
+    if a.handle_roundtrip:
+        script=script.replace('run "ABSENT.COM"\n','fopen 4 "LEASE.DAT" "w+b"\nfputs 4 "BEFORE|"\nrun "SUCCESS.COM"\nif failure\ntransmit "BAD"\nexit\nendif\nrun "ABSENT.COM"\n',1)
+        script=script.replace('message "AFTER HELP"\n','fputs 4 "AFTER"\nfclose 4\nmessage "AFTER HELP"\n',1)
+    if a.without_held_stream:
+        script=script.replace('fopen 4 "LEASE.DAT" "w+b"\nfputs 4 "BEFORE|"\n','').replace('fputs 4 "AFTER"\nfclose 4\n','')
     payload=bytearray(directory(port=a.port-1));payload[302:311]=b'LOGIN\0\0\0\0';payload[325:336]=b'Synth42\0\0\0\0'
     settings=bytearray(prm(port=a.port,soft=0,hard=1));struct.pack_into('<H',settings,0x1bc,1);struct.pack_into('<HH',settings,0x4e4,8,4)
     # The partial PRM fixture leaves opaque A5 bytes; newer parents validate
@@ -134,9 +142,25 @@ def main():
         result['checks']['allocation_observer_not_overflowed']=allocation['overflow']==0
     assert all(render.sha(ROOT/n)==h for n,h in sources.items())
     if not a.timed_parent_keys:result['checks']['exact_parent_typeahead']=b'Synth42\rready+++ATH\r' in wire
+    if a.close_inherited_handles:
+        handles=(folder/'HANDLES.BIN').read_bytes();records=[]
+        for at in range(0,len(handles),72):
+            block=handles[at:at+72];assert len(block)==72 and block[:4]==b'HND1'
+            own_count,parent_count,closed,errors=struct.unpack_from('<4H',block,4)
+            own,before,after=block[12:32],block[32:52],block[52:72]
+            records.append(dict(own_count=own_count,parent_count=parent_count,closed=closed,errors=errors,own_JFT=list(own),parent_before=list(before),parent_after=list(after)))
+        result['inherited_handles']=records
+        result['checks'].update(nested_handle_child_count=len(records)==(2 if a.handle_roundtrip else 1),
+            inherited_handles_closed=bool(records) and all(row['closed']==sum(x!=255 for x in row['own_JFT'][5:]) and row['errors']==0 for row in records),
+            nonstandard_parent_handles_isolated=bool(records) and all(any(x!=255 for x in row['parent_before'][5:]) and all(row['own_JFT'][i]==255 for i in range(5,20) if row['parent_before'][i]!=255) for row in records),
+            nested_parent_JFT_retained=bool(records) and all(row['parent_before']==row['parent_after'] for row in records))
+        if a.handle_roundtrip and not a.without_held_stream:
+            result['checks']['held_stream_survives_nested_close']=(folder/'LEASE.DAT').read_bytes()==b'BEFORE|AFTER'
+    if a.without_held_stream:
+        result['checks']['control_has_no_held_stream']=not (folder/'LEASE.DAT').exists()
     result['staged_parent_modules']=module_hashes
     result.update(passed=all(result['checks'].values()),help=w,resource=resource,help_resource=a.help_resource,resource_case=a.resource_case,child_input=c,sources=sources,parent_sha256=render.sha(parent),child_sha256=render.sha(child),observer_sha256=render.sha(out/'RENDER.COM'),port=a.port,no_driver=a.no_driver,bios=a.bios,
-        parent_key_delivery='timed-diagnostic' if a.timed_parent_keys else 'child-return-and-menu-events',
+        close_inherited_handles=a.close_inherited_handles,handle_roundtrip=a.handle_roundtrip,held_stream_control=a.without_held_stream,parent_key_delivery='timed-diagnostic' if a.timed_parent_keys else 'child-return-and-menu-events',
         scope=__doc__+' Startup splash receives one timed Space; parent-return/menu/typeahead keys wait for observed ownership boundaries. Owned timer seeds BIOS Alt-Z/navigation/Escape/Enter after callback/PSP admission; holds help90ticks beyond74tick notice timeout, compares exact4000-byte popup/cursor restoration and actual help captures. Direct authored child view replaces native external helper; no original UI/search parity, arbitrary faults or physical hardware acceptance.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('FINAL',result['passed'],w,c,[k for k,v in result['checks'].items() if not v]);return 0 if result['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

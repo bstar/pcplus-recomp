@@ -368,3 +368,17 @@ coverage, other BBS/profile/protocol workflows and physical Boca/SPA2102/SIP
 acceptance remain open. Host remains last. No installed selector, private
 configuration, call history, workstation network or live bridge configuration
 changed in these tests.
+
+## Additional nested-program Help capacity gap (2026-11-08)
+
+The [nested-program investigation](ASPECT_HELP_CAPACITY.md) finds a further
+composition gap: a successful PROGRAM before the error-notice/Help sequence
+fails the4032-byte Help frame allocation. The no-FILE control is128 bytes short;
+the held-FILE workload is656 bytes short in the measured allocation trace.
+The failure repeats without allocation instrumentation. Neither near-heap nor
+far-heap trimming resolves it; those application experiments were discarded.
+The original51-check Help case and a55-check post-Help handle-isolation variant
+still pass. Their success does not close this required larger workload.
+The child observes no inherited nonstandard handles and leaves its parent's JFT
+unchanged. Loader-file identity and arbitrary I/O errors remain unverified.
+No application bytes, buffers, limits, installed selector or private data changed.
