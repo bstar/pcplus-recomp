@@ -71,7 +71,11 @@ unsigned runtime_get_anchor_active(void){return held.active && !held.configured;
 unsigned runtime_get_anchor_info(unsigned selector)
 {
  if(!held.active || held.busy || !native_context())return ASPECT_RUN_STATE;
+#ifdef ASPECT_GET_POLICY
+ if(selector>12)return ASPECT_RUN_OPERAND;
+#else
  if(selector>10)return ASPECT_RUN_OPERAND;
+#endif
  return aspect_render_field(4,selector);
 }
 unsigned runtime_get_field_configure(unsigned attribute,unsigned width,unsigned numeric,unsigned masked,const unsigned char __far *initial)

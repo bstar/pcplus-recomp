@@ -4,6 +4,7 @@
 ;0 begin(packed physical position,FFFF=current native visible cursor)
 ;1 configure(attribute<<8|width),2 stage(index<<8|nonzero CP437 byte)
 ;3 present(insert<<8|cursor),4 info(byte index0..10,F000|byte)
+; ASPECT_GET_POLICY adds11=status_hidden,12=status_rows, separately versioned.
 ;5 end(0 adopt cursor+restore shape,1 retire on error without adopting cursor).
 ; The future versioned RPC must separately authenticate child PSP/DS/lease.
 %ifdef ASPECT_GET_DISPLAY
@@ -15,6 +16,9 @@ extern screen_columns,screen_video_row_bytes,text_video_segment
 extern text_cga_status_port,text_bios_output,screen_viewport_offset
 extern screen_cursor_row,screen_visible_column,attributes_current
 extern csi_last_row,screen_attribute_row_bytes
+%ifdef ASPECT_GET_POLICY
+extern ui_flow_suppressed,ui_flow_coordinate_base
+%endif
 global terminal_script_field,terminal_script_field_active
 
 terminal_script_field:
@@ -50,7 +54,11 @@ terminal_script_field:
  cmp ax,3
  je .present
  ; A tagged byte cannot be confused with a typed runtime error0..14.
+%ifdef ASPECT_GET_POLICY
+ cmp di,12
+%else
  cmp di,10
+%endif
  ja .operand
  mov bx,di
  mov al,[cs:info+bx]
@@ -104,6 +112,12 @@ terminal_script_field:
  mov [cs:info+5],al
  mov al,[cs:geometry_limit]
  mov [cs:info+6],al
+%ifdef ASPECT_GET_POLICY
+ mov ax,[ui_flow_suppressed]
+ mov [cs:info+11],al
+ mov ax,[ui_flow_coordinate_base]
+ mov [cs:info+12],ah
+%endif
  mov ax,di
  mov [cs:info+9],ax
  mov al,ah
@@ -366,6 +380,19 @@ context:
  cmp ax,dx
  ja .state
  mov [cs:geometry_limit],al
+%ifdef ASPECT_GET_POLICY
+ cmp word [ui_flow_suppressed],1
+ ja .state
+ mov ax,[ui_flow_coordinate_base]
+ test al,al
+ jnz .state
+ mov al,ah
+ xor ah,ah
+ or ax,ax
+ jz .state
+ cmp ax,dx
+ ja .state
+%endif
  mov ax,[screen_columns]
  add ax,[screen_viewport_offset]
  jc .state
@@ -373,6 +400,14 @@ context:
  ja .state
  cmp word [cs:terminal_script_field_active],0
  je .ok
+%ifdef ASPECT_GET_POLICY
+ mov ax,[ui_flow_suppressed]
+ cmp al,[cs:info+11]
+ jne .state
+ mov ax,[ui_flow_coordinate_base]
+ cmp ah,[cs:info+12]
+ jne .state
+%endif
  mov al,[cs:geometry_limit]
  xor ah,ah
  cmp ax,[cs:rows]
@@ -432,5 +467,8 @@ geometry_limit: db 0
 physical_rows: db 0
 geometry_video: dw 0
 info: times 11 db 0
+%ifdef ASPECT_GET_POLICY
+ times 2 db 0
+%endif
 cells: times 81 db 0
 %endif

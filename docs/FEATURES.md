@@ -47,6 +47,16 @@ Application GET remains disabled: both maintained compilers and the
 runner still refuse GET. This does not change the reviewed contract4 package
 or close F13.
 
+The [GET parent policy correction](ASPECT_GET_POLICY.md) identifies original
+DS1D46 as STATUS_HIDDEN, separate from autowrap, and binds STATUS_ROWS separately
+from the logical view. Optional capability22 passes43 full-parent bridge
+replays and308 DOS client checks with a752-source exact rebuild. The recovered
+owner adds six last-row/invalid-metadata probes with a45-source replay; actual
+DOS video/controller tests pass103 case groups and811,165 checks with a
+nine-source replay. These remain separate peer-controlled compositions, with
+GET disabled in the full experimental interpreter. The reviewed capability20
+parent and child remain byte-identical; no deployment changed.
+
 [Actual Key Mapping Help](KEYMAP_HELP.md) replaces the mislabeled Alt-Z version
 notice with context17 and the full source viewer. Embedding avoids a measured
 extra-process DOS8 refusal. Standalone, connected-parent, paired external

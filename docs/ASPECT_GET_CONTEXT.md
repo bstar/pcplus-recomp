@@ -1,8 +1,11 @@
 # GET context before operand parsing
 
 The subsequent [command checkpoint](ASPECT_GET_COMMAND.md) adds foreground
-confirmation ownership and actual final native abort/longjmp. Application
-interpreter linkage and its cleanup guards remain open.
+confirmation ownership and actual final native abort/longjmp. Its C runtime
+cleanup guards are now tested; complete interpreter linkage remains open.
+The [parent policy correction](ASPECT_GET_POLICY.md) establishes that the value
+called `wrap` below is STATUS_HIDDEN, and adds a separate STATUS_ROWS binding.
+The legacy explicit-policy results below remain historical evidence.
 
 The optional `ASPECT_GET_CONTEXT` path now runs preparation and finish hooks
 inside the native GET checkpoint. Preparation acquires an invisible parent field
@@ -19,11 +22,12 @@ Operand-read aborts retain the anchor for matching-generation recovery before th
 VM can discard abandoned frames. There are no retained destination/source pointers
 in this ownership record; its independently linked far extent is now206 bytes.
 
-Wrap is not derived from geometry. Each invocation requires an explicit checked
+The legacy status-visibility policy is not derived from geometry. Each invocation requires an explicit checked
 policy supplied before native entry. Invalid values disarm preparation, an
 unarmed call refuses before any operand is read, and policy changes are rejected
 while a native/field owner is active. The application still needs its real parent
-policy binding. This API does not establish a guessed default.
+policy binding. Capability22 now supplies it through the checked parent anchor;
+the legacy API does not establish a guessed default.
 
 ## Shared scratch evidence
 
@@ -64,7 +68,7 @@ native field ABI and serviced editor/WHEN/client:
   parent view. Its edited result and cursor remain correct; its field width is
   an explicit context change.
 - Four reserved-view cases refuse without consuming keys or changing the
-  destination. Row24 rejects before operands; a row23 wrap-enabled overrun
+  destination. Row24 rejects before operands; a row23 status-hidden overrun
   rejects after operand parsing, with matching ownership cleanup.
 - Extra probes cover invalid/unarmed policy, rejection of live policy changes,
   the poisoned old scratch alias and an origin52 edit. The latter reads physical

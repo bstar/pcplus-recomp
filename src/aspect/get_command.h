@@ -1,6 +1,8 @@
 #ifndef PCPLUS_ASPECT_GET_COMMAND_H
 #define PCPLUS_ASPECT_GET_COMMAND_H
-/* Ordinary VM DS=SS/IF1/DF0 only. Caller supplies checked wrap policy. Run returns sticky typed error; recover
+/* Ordinary VM DS=SS/IF1/DF0 only. Caller supplies checked STATUS_HIDDEN policy;
+ * ASPECT_GET_POLICY additionally accepts FFFF for checked parent metadata.
+ * Run returns sticky typed error; recover
  * retries only matching restored GET ownership. Ready authorizes final native
  * abort propagation, never freeing/reusing a retained editor/modal owner.
  * Execute invokes recovered abort/longjmp only when cleanup is complete; its

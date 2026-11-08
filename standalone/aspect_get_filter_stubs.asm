@@ -57,7 +57,7 @@ variable aspect_get_scratch
 variable aspect_get_row
 variable aspect_get_column
 variable aspect_get_attribute
-variable aspect_get_wrap
+variable aspect_get_status_hidden
 variable aspect_get_rows
 variable aspect_get_columns
 variable aspect_get_cursor_origin

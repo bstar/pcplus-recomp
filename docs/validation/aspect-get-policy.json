@@ -1,0 +1,174 @@
+{
+  "checked_parent_policy": true,
+  "original_1D46_role": "STATUS_HIDDEN, not autowrap",
+  "original_7A80_role": "STATUS_ROWS, separate from current logical view",
+  "REA_static_evidence": [
+    "ev_581226febafac6bb3a3fec10f24ab8d8c5f725deeb377b01b6b6dd35156e0415",
+    "ev_13f7d32173103cb3de49e9cff09a921f857661655a62c361d2af59c3688e5125"
+  ],
+  "capability": 22,
+  "original_inputs": [],
+  "full_GET_interpreter_linkage_verified": false,
+  "application_GET_enabled": false,
+  "compiler_GET_enabled": false,
+  "actual_parent_child_pair_verified": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "legacy_reviewed_parent_and_child_exact": true,
+  "sources": {
+    "src/aspect/get_command.c": "3a374e6b0edb9d66a06c633e346f0edba0221d22a75542d5cae4b4603ae21f36",
+    "src/aspect/get_command.h": "b691acbf9cab6ed073d3829ac7eb4b4d2419d08f80d2fe66495debe8356766d3",
+    "src/aspect/get_context.c": "7a9f4a299202575229d23fee8df10cb2dc70f16e4df89ba5c433e6119f25bbaf",
+    "src/aspect/get_context.h": "c2621d9c12c4b9b66fd89d89d51e0b71590819946cfb854db792db2994712714",
+    "src/aspect/get_native.asm": "2690a58eb0bcb77cb4bdd679e9936e1d017c4f240dd6eb9d2ab412fad9567157",
+    "src/aspect/get_runtime.c": "6fb2ebe7a4cfc2c4dccb2eff1a1dd45ab59412c59b338e9ea2944319c01bbc05",
+    "src/aspect/resident_render.h": "58b715661bef8ba44c7b9cc377a4682db4dc5c6248f4cdd69b3aeaabf983e948",
+    "src/terminal/aspect_renderer.asm": "9205d3b00ce2c33fbfd5608852fa511b036df81189f7b4f8d6ad1640123d96ca",
+    "src/terminal/script_field.asm": "db70ddf4084143cee3d81f1fd08cae153670bf5301e3db9134320211b180e3ee",
+    "standalone/aspect_get_owner_bindings.asm": "94a19c65d78f6745b5bb4deedecbeb9cb3e6d50dcba9d72580783af9f2a8558e",
+    "standalone/aspect_get_owner_driver.c": "b4a31604c0e5178010b304674e2deaaf97096935ae61e3b07a9add27c19f0ff2",
+    "standalone/build_aspect_get_owner.py": "ba8c28684f9c924d7989327b4978c46ac49d6ad586278dc13e46ef2768b5cca1",
+    "standalone/build_aspect_process.py": "cad5cf41832c97d72ac782377442263964be779924a4b196337c694da43f64cf",
+    "standalone/build_aspect_runner.py": "96567118a6676b584b3da871db315218e48990d0f90265428e055c37385b42b7",
+    "standalone/build_get_display_client.py": "93d3c20c928b9c993a94d522b3e4d23d075744eb4dd25f65df0fbff23e0d5bcd",
+    "standalone/build_script_field.py": "0044498282f05261780776800fd0e270cbb1776fbbd694965f992025705dc47e",
+    "standalone/build_terminal.py": "f9668477b3a529134c35c3ee35afba0e20ff400407db9ecc1a543dc265d49e2d",
+    "standalone/check_get_display_bridge.py": "7766aa466eda8b935cd5292ee700f2b1f8b299f2cd13164d822c763a870fc418",
+    "standalone/get_display_client_driver.c": "3a7ae93dcb94f17a18a71564c1463b799abe725abae34d8a9243c3b1a81d4155",
+    "standalone/get_owner_platform.c": "16b2de5cc882b4248ffb83a1a8c832bcc3959f5365de74426fa7af93f4736b9b",
+    "standalone/prove_aspect_get_owner.py": "37fb6e06bc426fc672e6ac7e1927241965003891628faad6341a06cf19ebefe3",
+    "standalone/prove_get_display_bridge.py": "750db5453eb2bd734acc3c9ebceb21f767680b8493228bbcb01dc677feaa835e",
+    "standalone/prove_get_runtime.py": "66a7bf4a5c71ae0d240f7dda0f7e2404ad6add3400a27c3e6bfbeb51035ae9c2",
+    "standalone/prove_script_field.py": "f7c30d0ee6efb751b421b80825c92007fe8e3fba25e9fc1542a532ee57cd4b97",
+    "standalone/script_field_bindings.asm": "66744049e66470db74fed5b4c20476fbf629bdcbf241929719452974318e076c",
+    "standalone/script_field_driver.c": "c6fc7c5a829d93ae44fa1cf259652afe4e5eeab63be4fda61b7b62528884a7df",
+    "docs/ASPECT_GET_POLICY.md": "2035ad4143c0df77c488d04e8471b3f25e39cf1d84d9e62d1a4721ed90dc4f13",
+    "docs/ASPECT_GET_CONTEXT.md": "0f11a5aafd7f6b78ba16b060d2ec7b9b6789618d4e425d5cafde593d9b5ed703",
+    "docs/ASPECT_GET_RPC.md": "781c57bf8832fcf28bf41e511b14d90b6c9ded34b7024aabbf75905fbc4208e6",
+    "docs/ASPECT_GET_COMMAND.md": "f28579c949cfc0a28d5d9e3c1928a0ea08976f372e864a2b284c751c270621a0",
+    "docs/FEATURES.md": "365e27421334cdba61606a8f3c7b586a0ef60312c1277f444bd8b8317936df94",
+    "standalone/aspect_get_filter_stubs.asm": "89cfed9a37859aa7c5e3fd00964bfaf23cc3aff1c273ac362a97cad3cfefa1b3",
+    "standalone/build_aspect_get_native.py": "9f8405bd38fbff194d93187a3d7786657d848ad9f31799e9e86e5979fabd6493",
+    "standalone/prove_aspect_get_native.py": "b21671d9584b6201cc6245428e05552c0fefd1d2118ae6333572182dd94c9d5b"
+  },
+  "evidence": {
+    "build/get-status-owner-reviewed-20261107/result.json": {
+      "sha256": "7d27eef0449ad31cc8b119c0d5748955c721359f03a29f0a3f0745c05470772b",
+      "binary_sha256": "1f89808a4847fda39c54e27ea19505eaebd058fb32d0d12b97ff26f9799b089e",
+      "passed": true,
+      "transcript": "PASS PARENT POLICY GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries;6 status-policy probes",
+      "parent_policy_probes": 6,
+      "cases": 142
+    },
+    "build/get-status-owner-reviewed-source-20261107/result.json": {
+      "sha256": "653d1ad2e343e2150eb0bbe3e008aa9c03410eb11682712ea9adb44efba7200c",
+      "binary_sha256": "1f89808a4847fda39c54e27ea19505eaebd058fb32d0d12b97ff26f9799b089e",
+      "passed": true,
+      "source_count": 45,
+      "transcript": "PASS PARENT POLICY GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries;6 status-policy probes",
+      "cases": 142
+    },
+    "build/get-status-field-accepted-20261107/result.json": {
+      "sha256": "69f32f1810e8a41b011b44ea58d709e33459dff654079d2a30d647208be380e7",
+      "binary_sha256": "d53e149a19a7d3e6dc604009ecb6bd16536b0c3bf6d20dc69e66224c979e798a",
+      "passed": true,
+      "transcript": "PASS SCRIPT FIELD 103 cases; 811165 checks; 255 CP437 bytes, persistent video, native cursor, ABI",
+      "cases": 103
+    },
+    "build/get-status-field-source-20261107/result.json": {
+      "sha256": "0742e22f571d70a14c75b56a7fc83e8c8caec6f151993c6863f0e5051bbf63d3",
+      "binary_sha256": "d53e149a19a7d3e6dc604009ecb6bd16536b0c3bf6d20dc69e66224c979e798a",
+      "passed": true,
+      "source_count": 9,
+      "transcript": "PASS SCRIPT FIELD 103 cases; 811165 checks; 255 CP437 bytes, persistent video, native cursor, ABI",
+      "cases": 103
+    },
+    "build/get-status-bridge-accepted-20261107/result.json": {
+      "sha256": "5b926cf5db538597b03a6621152358e087e75175a88efdfcb4590d75b9c67d44",
+      "passed": true,
+      "parent_sha256": "b25fe6d207e83e0ed1bd5ad2085aca719a324e4b2db9a0c01a0ec6c51f424d5b",
+      "cases": 43
+    },
+    "build/get-status-client-20261107/result.json": {
+      "sha256": "de198a20ca2df425f7d3db82e90bd9e86ce944ec6f209ab13c24e41fbc889162",
+      "binary_sha256": "584c00c2b7dd5f7f7c3b32f4cb36654eaa82ec2bc38adcb5738d656505ca1f63",
+      "passed": true,
+      "transcript": "PASS FIELD CLIENT 308 checks; retirement, owners, callbacks, quarantine"
+    },
+    "build/get-status-bridge-source-20261107/result.json": {
+      "sha256": "1a4993c46277936498f68bda98fdb446c00e6cf053ca5bfc96d2207ae56af55f",
+      "passed": true,
+      "source_count": 752,
+      "parent_sha256": "b25fe6d207e83e0ed1bd5ad2085aca719a324e4b2db9a0c01a0ec6c51f424d5b",
+      "client_sha256": "584c00c2b7dd5f7f7c3b32f4cb36654eaa82ec2bc38adcb5738d656505ca1f63",
+      "client_checks": 308,
+      "bridge_cases": 43
+    },
+    "build/get-status-parent-final-20261107/manifest.json": {
+      "sha256": "25d5197d705034e04f5e89b3dda7e58a112048eb728fab9355a74b0a3692b7e0",
+      "binary_sha256": "b25fe6d207e83e0ed1bd5ad2085aca719a324e4b2db9a0c01a0ec6c51f424d5b",
+      "layout": {
+        "near_bytes": 65520,
+        "near_spare_bytes": 16,
+        "resident_CS_spare_bytes": 358,
+        "minimum_allocated_module_bytes": 481024
+      }
+    },
+    "build/get-status-child-20261107/manifest.json": {
+      "sha256": "dea56baa9a98e7e1c4a6cda5dcaf85819ec4638a94c20fcff3d7b7a461e1e18b",
+      "binary_sha256": "84f23ade1348923ecd6ea1f4d8952fd960ec8a84bf7a6179ff4e8942cfd2f220"
+    },
+    "build/get-status-reviewed-parent-20261107/manifest.json": {
+      "sha256": "1dd45e5bb7b6a5e908589dbde82d9f3f998781f9208dc5803754ef8d7b9beeab",
+      "binary_sha256": "44891156c5696245291f96861a9d738b3159ed6e1de082a88f4aeb8ccd1353cd",
+      "layout": {
+        "near_bytes": 65520,
+        "near_spare_bytes": 16,
+        "resident_CS_spare_bytes": 358,
+        "minimum_allocated_module_bytes": 479408
+      }
+    },
+    "build/get-status-reviewed-child-20261107/manifest.json": {
+      "sha256": "f0166e22196fb1ec0dc690c52b0b843244ee681016816b80ce7d0a48fa2283da",
+      "binary_sha256": "5c641ac458494d8d6d7cb048d13dc531830689a4e401df7011092057c37ef066"
+    },
+    "build/get-status-command-final-20261107/result.json": {
+      "sha256": "e7207c7235b49e52d436f5b37cedd67d49c671463ed695336a62e2127932b06a",
+      "binary_sha256": "d375fc202c559ab0ec2c18cb4773129a62dee19907b7c9b2aa536e35eb40c812",
+      "passed": true,
+      "transcript": "PASS COMMAND GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries; native confirmation/abort",
+      "cases": 142
+    },
+    "build/get-status-field-legacy-20261107/result.json": {
+      "sha256": "69fef18ed63501a608edbda5fb35aff2ea7a7b0355eb8d87209305aeb4d41388",
+      "binary_sha256": "f05a9c5b6152fb672c207cdfa7113bb19f7fd8bb6be4882b1d79a1c8c9c08097",
+      "passed": true,
+      "transcript": "PASS SCRIPT FIELD 103 cases; 805134 checks; 255 CP437 bytes, persistent video, native cursor, ABI",
+      "cases": 103
+    },
+    "build/get-status-native-20261107/result.json": {
+      "sha256": "a48177a97ef7cce07ab14dc11639ef10e5de02ce12593115f9761cf4eadbdec6",
+      "passed": true,
+      "native_bytes": 566,
+      "native_sha256": "32c048c3391d13641358dd868f6074a587645a07b820a424fc749e38c49768b1",
+      "diagnostic_sha256": "5cbcabb911718df72f14caa0d73a117d51e1e2603a01dcb62dea6687c7ccb4cf",
+      "transcript": "GET FILTER cases=65536 errors=0"
+    },
+    "build/get-status-native-source-20261107/result.json": {
+      "sha256": "ece12494bb7e9c8cf58e22d134f78c95ae63d5461a9f77dfa1f85fe61d661f68",
+      "passed": true,
+      "native_sha256": "32c048c3391d13641358dd868f6074a587645a07b820a424fc749e38c49768b1",
+      "diagnostic_sha256": "5cbcabb911718df72f14caa0d73a117d51e1e2603a01dcb62dea6687c7ccb4cf",
+      "source_count": 6,
+      "transcript": "GET FILTER cases=65536 errors=0"
+    }
+  },
+  "limitations": [
+    "Parent full bridge and child owner/client run separately with modeled peer/BIOS/DOS/UART/native WHEN action boundaries.",
+    "Field controller executes real DOS video/BIOS/native cursor, with controlled parent admission.",
+    "Full capability22 interpreter links but GET and its typed production bindings remain disabled.",
+    "Layout is not combined parent/GET-child memory or physical acceptance.",
+    "Shared FOPEN scratch lifecycle, complete native dispatcher shutdown, compiler grammars, FLOAT.RTE, connected and physical gates remain open."
+  ]
+}

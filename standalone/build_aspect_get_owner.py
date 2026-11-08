@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--checkpoint',action='store_true');p.add_argument('--serviced',action='store_true');p.add_argument('--context',action='store_true');p.add_argument('--command',action='store_true');a=p.parse_args();assert not a.command or a.context;assert not a.serviced or a.checkpoint;assert not a.context or a.serviced;out=a.output.resolve()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--checkpoint',action='store_true');p.add_argument('--serviced',action='store_true');p.add_argument('--context',action='store_true');p.add_argument('--command',action='store_true');p.add_argument('--parent-policy',action='store_true');a=p.parse_args();assert not a.parent_policy or a.command;assert not a.command or a.context;assert not a.serviced or a.checkpoint;assert not a.context or a.serviced;out=a.output.resolve()
  assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
  fixture=ROOT/'standalone/fixtures/aspect_get_owner_native.json';v=json.loads(fixture.read_text());assert v['passed'] and v['format']=='aspect-get-owner-v1'
  with (out/'CASES.BIN').open('wb') as f:
@@ -25,6 +25,7 @@ def main():
  features=['ASPECT_RUNTIME_SERIAL','ASPECT_GET_VM','ASPECT_GET_SERVICE','ASPECT_GET_DISPLAY','ASPECT_ALARM_SERVICE','ASPECT_EXTERNAL_RENDER','ASPECT_EXTERNAL_UNWIND','ASPECT_SNAPSHOT_LEASE','ASPECT_ALARM_VM','ASPECT_EMULATE_VM'] if a.serviced else []
  if a.context:features+=['ASPECT_GET_CONTEXT']
  if a.command:features+=['ASPECT_GET_CONFIRM','ASPECT_GET_COMMAND']
+ if a.parent_policy:features+=['ASPECT_GET_POLICY']
  if a.serviced:modules += [('native-field','src/aspect/get_native_field.asm',[]),('storage','src/aspect/get_runtime_storage.asm',[]),('platform','standalone/get_owner_platform.asm',[])]
  if a.command:
   aliases={'abort_choice_no':'_runtime_abort_no','abort_choice_yes':'_runtime_abort_yes','abort_choice_cursor_mode':'_runtime_abort_cursor_mode','abort_choice_last_key':'_runtime_abort_last_key','abort_cursor_push':'_runtime_abort_ui_begin','abort_cursor_pop':'_runtime_abort_ui_end','abort_cursor_enable':'_runtime_abort_ui_invalid','abort_cursor_disable':'_runtime_abort_ui_invalid','abort_choice_key_read':'_runtime_abort_read_key','abort_choice_bell':'_runtime_abort_bell'}
@@ -40,7 +41,7 @@ def main():
   for i,n in enumerate(cs):
    obj=out/f'extra{i}.obj';rename=['-druntime_get_native_field=runtime_get_native_field_inner'] if n.endswith('get_native_field.c') else []
    subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-os',*['-d'+f for f in features],*rename,'-i='+str(ROOT/'src/aspect'),'-fo='+str(obj),str(ROOT/n)],check=True);extra.append(str(obj))
- subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-i='+str(ROOT/'src/aspect'),'-fd=GETOWNER.lnk','-fm=GETOWNER.map','-fe=GETOWNER.EXE',*(['-dASPECT_GET_CHECKPOINT'] if a.checkpoint else []),*(['-dASPECT_GET_SERVICED'] if a.serviced else []),*(['-dASPECT_GET_CONTEXT'] if a.context else []),*(['-dASPECT_GET_COMMAND','-dASPECT_GET_CONFIRM','-dASPECT_GET_VM','-dASPECT_GET_SERVICE'] if a.command else []),str(ROOT/'standalone/aspect_get_owner_driver.c'),*[str(out/(n+'.obj')) for n,_,_ in modules],str(out/'field.obj'),*extra],cwd=out,check=True)
+ subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-i='+str(ROOT/'src/aspect'),'-fd=GETOWNER.lnk','-fm=GETOWNER.map','-fe=GETOWNER.EXE',*(['-dASPECT_GET_CHECKPOINT'] if a.checkpoint else []),*(['-dASPECT_GET_SERVICED'] if a.serviced else []),*(['-dASPECT_GET_CONTEXT'] if a.context else []),*(['-dASPECT_GET_COMMAND','-dASPECT_GET_CONFIRM','-dASPECT_GET_VM','-dASPECT_GET_SERVICE'] if a.command else []),*(['-dASPECT_GET_POLICY'] if a.parent_policy else []),str(ROOT/'standalone/aspect_get_owner_driver.c'),*[str(out/(n+'.obj')) for n,_,_ in modules],str(out/'field.obj'),*extra],cwd=out,check=True)
  response=out/'GETOWNER.lnk';response.write_text(response.read_text()+('\noption packcode=0\n' if a.serviced else '')+'\norder clname CODE clname PADCODE clname FARCODE'+(' clname FAR_DATA' if a.serviced else '')+' clname DATA clname BSS clname STACK\n');subprocess.run(['wlink','@GETOWNER.lnk'],cwd=out,check=True)
  if a.serviced:
   listing=(out/'GETOWNER.map').read_text();storage=[line.split() for line in listing.splitlines() if line.startswith('GET_RUNTIME_STORAGE')];group=[line.split() for line in listing.splitlines() if line.startswith('DGROUP')]
@@ -54,13 +55,14 @@ def main():
  if a.serviced:expected_transcript=f'PASS SERVICED GET OWNER {len(v["cases"])} cases;137 native matches;5 protected-view refusals; actual field/WHEN/client; opaque float boundary'
  if a.context:expected_transcript='PASS CONTEXT GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals; shared scratch; origin52'
  if a.command:expected_transcript='PASS COMMAND GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries; native confirmation/abort'
+ if a.parent_policy:expected_transcript='PASS PARENT POLICY GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries;6 status-policy probes'
  assert transcript==expected_transcript,transcript
  names=[source for _,source,_ in modules]+['src/aspect/get_field.c','src/aspect/get_field.h','standalone/aspect_get_owner_driver.c','standalone/build_aspect_get_owner.py','standalone/fixtures/aspect_get_owner_native.json','reconstruction/uart/encodings.inc']
  if a.checkpoint:names+=['src/aspect/get_checkpoint.h']
  if a.serviced:names+=cs+['src/aspect/get_runtime.h','src/aspect/get_native_field.h','src/aspect/runtime.h','src/aspect/get_checkpoint.h','src/aspect/resident_render.h','src/aspect/when_runtime.h','src/aspect/serial.h','src/aspect/serial_handoff.h','src/aspect/serial_runtime.h','src/aspect/receive_runtime.h','src/aspect/alarm_cooperative.h']
  if a.context:names+=['src/aspect/get_context.h']
  if a.command:names+=['src/aspect/get_command.h']
- result=dict(command=a.command,context=a.context,serviced=a.serviced,checkpoint=a.checkpoint,view_rebased_clips=1 if a.context else 0,native_matching_cases=137 if a.serviced else len(v['cases']),protected_view_refusals=4 if a.context else 5 if a.serviced else 0,injected_fault_cases=12 if a.checkpoint and not a.serviced else 0,passed=True,original_inputs=[],binary_sha256=sha(out/'GETOWNER.EXE'),cases=len(v['cases']),cpu='8086',FPU=False,data_equals_stack=True,transcript=transcript,sources={n:sha(ROOT/n) for n in names},
+ result=dict(parent_policy=a.parent_policy,command=a.command,context=a.context,serviced=a.serviced,checkpoint=a.checkpoint,view_rebased_clips=1 if a.context else 0,native_matching_cases=137 if a.serviced else len(v['cases']),protected_view_refusals=4 if a.context else 5 if a.serviced else 0,injected_fault_cases=12 if a.checkpoint and not a.serviced else 0,passed=True,original_inputs=[],binary_sha256=sha(out/'GETOWNER.EXE'),cases=len(v['cases']),cpu='8086',FPU=False,data_equals_stack=True,transcript=transcript,sources={n:sha(ROOT/n) for n in names},
   scope=(('Recovered native GET/typed readers/integer CRT with actual native field ABI, editor session, WHEN gates and renderer client. Parent display, serial, BIOS keys, native WHEN and confirmation decisions modeled; observer C entry delegates unchanged native field implementation. Five explicit protected-view refusals; FLOAT.RTE opaque. Not full interpreter/live parent/UART/app integration/physical acceptance.') if a.serviced else __doc__+' Synthetic buffered stream, keyboard/display/cursor/cancel decisions and opaque float-service5. Native typed readers/global near-far copy/flush, source serviced field and native integer/long CRT. Not float mathematics, live UART, full ASPECT dispatcher, app integration or physical acceptance.'))
  if a.context:
   result['scope']='Actual checkpoint context hooks and parent anchor before recovered GET operands; scalar view/KEYS aliases, shared script-mode scratch symbol, native field/typed readers/integer CRT and serviced editor/WHEN/client.137 original matches,1 view-rebased clip,4 protected-view refusals; one-shot policy and origin52 probes. Parent, BIOS keys, serial, native WHEN actions, confirmation/final cursor/abort boundaries modeled; FLOAT.RTE opaque. Not full interpreter/real parent parser/UART/BBS/package/physical acceptance.'
@@ -69,6 +71,7 @@ def main():
   result['modal_fault_cases']=3
   result['context_probes']=['invalid caller policy','live policy change refused','old scratch alias poisoned','no duplicate execution after retained cleanup']
   result['scope']='Recovered GET owner/typed readers/integer CRT, native field, serviced editor/WHEN/client, actual yes/no and final recovered abort/setjmp/longjmp.137 native matches,1 view-rebased clip,4 protected-view refusals and3 modal faults/retries. Parent display/authentication, BIOS keys/serial/native WHEN actions and native-error mapping modeled. Floating conversion opaque. Full dispatcher/file cleanup, real parent parser/UART/BBS, application/package/physical acceptance remain open.'
+ if a.parent_policy:result['parent_policy_probes']=6;result['scope']+=' Capability22 STATUS_HIDDEN/STATUS_ROWS captured from controlled parent; three last-row default-width cases and three before-operand metadata refusals.'
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(transcript)
 
 if __name__=='__main__':main()

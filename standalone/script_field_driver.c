@@ -7,6 +7,9 @@ extern unsigned field_request(unsigned,unsigned),field_adopt_request(unsigned,un
 extern void field_set_owners(unsigned,unsigned,unsigned);
 extern unsigned field_flags,field_abi_bad;
 extern unsigned field_break_owner;
+#ifdef ASPECT_GET_POLICY
+extern unsigned field_status_hidden,field_status_base;
+#endif
 extern unsigned field_screen_columns,field_screen_video_row_bytes,field_text_video_segment;
 extern unsigned field_text_cga_status_port,field_text_bios_output,field_screen_viewport_offset;
 extern unsigned field_screen_cursor_row,field_screen_visible_column,field_attributes_current;
@@ -34,6 +37,9 @@ static void setup(unsigned mono,unsigned origin,unsigned position,unsigned hidde
  field_text_cga_status_port=fallback==2?0x3da:0;field_text_bios_output=fallback==1;
  field_screen_viewport_offset=origin;field_screen_viewport_enabled=origin!=0;field_screen_viewport_active=0;field_screen_viewport_left=origin;field_screen_viewport_right=79;
  field_screen_attribute_row_bytes=origin?132:80;field_csi_last_row=24;field_attributes_current=7;
+#ifdef ASPECT_GET_POLICY
+ field_status_hidden=1;field_status_base=24*256;
+#endif
  field_screen_cursor_row=field_screen_previous_row=row;field_screen_cursor_column=field_screen_previous_column=col+origin;field_screen_visible_column=col;
  field_screen_attribute_offset=row*field_screen_attribute_row_bytes+col+origin;field_screen_video_offset=row*160+col*2;field_screen_use_bios_cursor=cases%2;
  video=(unsigned __far *)MK_FP(field_text_video_segment,0);for(i=0;i<2000;++i)initial[i]=expected[i]=video[i]=0x0700|(33+i%90);
@@ -76,7 +82,13 @@ static void guards(void)
  before_calls=admission_calls;field_flags=1;ck(field_request(0,0xffff)==10&&admission_calls==before_calls);field_flags=0;frame();
  admission_error=3;ck(field_request(0,0xffff)==3);admission_error=0;
  ck(field_request(0,0x1900)==7&&field_request(0,0x0050)==7&&field_request(0,0xffff)==0);
- ck(field_request(1,0)==7&&field_request(1,82)==7&&field_request(4,11)==7);
+ ck(field_request(1,0)==7&&field_request(1,82)==7&&field_request(4,
+#ifdef ASPECT_GET_POLICY
+ 13
+#else
+ 11
+#endif
+ )==7);
  ck(field_request(1,0x1f0a)==0&&field_request(2,0x0141)==7&&field_request(2,0)==7&&field_request(3,0)==10);frame();
  stage(10,0x1f);ck(field_request(3,10)==7&&field_request(3,0x0200)==7);frame();
  ck(field_request(3,3)==0);for(i=0;i<10;++i)expected[165+i]=0x1f00|cell(i);frame();
@@ -97,11 +109,34 @@ static void guards(void)
  ck(field_request(5,1)==10);{unsigned after;ck(read_cursor(&after)==position&&after==shape);}
  ck(field_request(4,0)==10);mode(3);
 }
+#ifdef ASPECT_GET_POLICY
+static void policy(void)
+{
+ unsigned hidden;
+ for(hidden=0;hidden<2;++hidden){
+  setup(0,0,0x1705,0,0);field_status_hidden=hidden;field_csi_last_row=hidden?24:23;
+  ck(field_request(0,65535U)==0);
+  ck(info(11)==hidden && info(12)==24 && info(6)==(hidden?25:24));
+  ck(field_request(4,13)==7);frame();
+  field_status_hidden=1-hidden;ck(field_request(4,11)==10);field_status_hidden=hidden;
+  field_status_base=23*256;ck(field_request(4,12)==10);field_status_base=24*256;
+  ck(info(11)==hidden && info(12)==24);ck(field_request(5,1)==0);
+ }
+ setup(0,0,0x0205,0,0);field_status_hidden=2;ck(field_request(0,65535U)==10);
+ field_status_hidden=1;field_status_base=0;ck(field_request(0,65535U)==10);
+ field_status_base=26*256;ck(field_request(0,65535U)==10);field_status_base=24*256;
+ ck(field_request(0,65535U)==0 && field_request(5,1)==0);frame();
+}
+#endif
 int main(void)
 {
  unsigned mono,w,p,o,h,b,i;unsigned widths[]={1,10,80,81},positions[]={0x0205,0x1602,0x1800};
  ck(field_request(5,0)==0);
  for(w=0;w<4;++w)for(p=0;p<3;++p)for(o=0;o<2;++o)for(h=0;h<2;++h)for(b=0;b<2;++b)normal(0,widths[w],o?52:0,positions[p],h,b);
  for(mono=0;mono<2;++mono)for(b=0;b<3;++b)normal(mono,81,0,0x0405,1,b);
- guards();for(i=1;i<256;++i)ck(seen[i]);mode(3);printf("PASS SCRIPT FIELD %u cases; %lu checks; 255 CP437 bytes, persistent video, native cursor, ABI\r\n",cases,checks);return field_abi_bad?1:0;
+ guards();
+#ifdef ASPECT_GET_POLICY
+ policy();
+#endif
+ for(i=1;i<256;++i)ck(seen[i]);mode(3);printf("PASS SCRIPT FIELD %u cases; %lu checks; 255 CP437 bytes, persistent video, native cursor, ABI\r\n",cases,checks);return field_abi_bad?1:0;
 }

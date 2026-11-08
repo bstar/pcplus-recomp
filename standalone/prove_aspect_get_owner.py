@@ -16,7 +16,7 @@ def main():
   assert path.suffix.lower() not in ('.exe','.com','.obj','.prm','.fon','.img','.db')
   source=ROOT/path;assert sha(source)==h;target=fresh/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(source.read_bytes());sources[name]=h
  env=dict(os.environ,GIT_CEILING_DIRECTORIES=str(out));assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode
- with (out/'build.log').open('w') as log:subprocess.run([sys.executable,'standalone/build_aspect_get_owner.py','--output','build/field',*(['--checkpoint'] if expected.get('checkpoint') else []),*(['--serviced'] if expected.get('serviced') else []),*(['--context'] if expected.get('context') else []),*(['--command'] if expected.get('command') else [])],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
+ with (out/'build.log').open('w') as log:subprocess.run([sys.executable,'standalone/build_aspect_get_owner.py','--output','build/field',*(['--checkpoint'] if expected.get('checkpoint') else []),*(['--serviced'] if expected.get('serviced') else []),*(['--context'] if expected.get('context') else []),*(['--command'] if expected.get('command') else []),*(['--parent-policy'] if expected.get('parent_policy') else [])],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
  actual=json.loads((fresh/'build/field/result.json').read_text());assert actual==expected
  for n,h in sources.items():assert sha(ROOT/n)==sha(fresh/n)==h
  result=dict(passed=True,sources=sources,source_count=len(sources),binary_sha256=actual['binary_sha256'],cases=actual['cases'],transcript=actual['transcript'],original_inputs=[],ancestor_git_unavailable=True,

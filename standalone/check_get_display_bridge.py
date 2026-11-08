@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Execute capability21 parent bridge, allocation policy and field controller."""
+"""Execute versioned parent bridge, allocation policy and field controller."""
 import argparse,hashlib,json,struct,sys
 from pathlib import Path
 from unicorn import UC_HOOK_CODE
@@ -15,6 +15,7 @@ def main():
  transport.BINARY=product/'TERMINAL.EXE';transport.MAP=product/'terminal.map'
  from check_live_setup_profile import Profile
  manifest=json.loads((product/'manifest.json').read_text());assert manifest['experimental_aspect_get_display'] and sha(transport.BINARY)==manifest['binary_sha256']
+ parent_policy=manifest.get('experimental_aspect_get_policy',False);capability=22 if parent_policy else 21
  for name,digest in manifest['sources'].items():assert sha(ROOT/name)==digest,name
  class Parent(Profile):
   child_psp=0x9000;child_ds=0x9100;client_offset=0x1000
@@ -23,6 +24,7 @@ def main():
    super().__init__();self.uc.hook_add(UC_HOOK_CODE,self.observe)
    self.uc.mem_write(0x449,b'\x03\x50\0');self.uc.mem_write(0x462,b'\0');self.uc.mem_write(0x484,b'\x18')
    self.put('terminal_program_active',1);self.put('terminal_program_kind',4);self.put('terminal_program_pending',0);self.put('connection_state',6)
+   if parent_policy:self.put('ui_flow_suppressed',1);self.put('ui_flow_coordinate_base',24*256)
    self.uc.mem_write((self.child_psp-1)*16,b'M'+struct.pack('<HH',self.child_psp,0x1000)+b'\0'*11)
    self.uc.mem_write(0x90100,b'\x31\xc0\xcb')
   def observe(self,u,at,size,data):
@@ -49,8 +51,8 @@ def main():
    assert self.callback_calls==0
    return u.reg_read(UC_X86_REG_AX)
   def prepare(self):
-   assert self.far('terminal_render_prepare')==0 and self.get('_script_render_version')==21
-   self.record=[0x5243,21,self.get('_script_render_token'),0x100,0x9000];self.publish();return self
+   assert self.far('terminal_render_prepare')==0 and self.get('_script_render_version')==capability
+   self.record=[0x5243,capability,self.get('_script_render_token'),0x100,0x9000];self.publish();return self
   def publish(self):self.uc.mem_write(self.child_ds*16+self.client_offset,struct.pack('<5H',*self.record))
   def rpc(self,op,value=0,**kw):
    before=(self.dll,self.dlm,self.lcr,self.mcr,self.ier,self.pic,self.vector_value(),bytes(self.rx),bytes(self.tx),self.data_reads,list(self.port_writes))
@@ -92,7 +94,7 @@ def main():
   saved=bytes(m.uc.mem_read(at,2));m.uc.mem_write(at,struct.pack('<H',0x200 if where=='callback' else 20 if where=='version' else 0))
   assert m.rpc(24,0)==10 and m.rpc(26,1)==10 and m.view()==before and m.get('terminal_script_field_active')==1
   m.uc.mem_write(at,saved);assert m.rpc(26,1)==0xe000;done('per-request-authentication-and-retry',changed=where)
- for version in (0,20,22):
+ for version in (0,20,21 if parent_policy else 22):
   m=Parent().prepare();m.record[1]=version;m.publish();assert m.rpc(0,m.client_offset)==10 and not m.get('render_attached');done('wrong-version-BEGIN',version=version)
  for changed in ('psp','ds'):
   m=Parent().prepare().begin().field();before=m.view()
@@ -122,13 +124,33 @@ def main():
   assert m.rpc(22,0x0701,flags=flags)==0 and m.rpc(23,0xff,flags=flags)==0 and m.rpc(24,0,flags=flags)==0 and m.rpc(26,0,flags=flags)==0
   done('actual-request-ABI',flags=flags)
  m=Parent().prepare().begin().field();m.far('terminal_render_revoke');assert not m.get('terminal_script_field_active') and not m.get('render_attached') and m.rpc(21,0xffff)==0xfffd;done('revoke-retires-field-and-old-bridge')
+ if parent_policy:
+  for hidden in (0,1):
+   m=Parent().prepare().begin();m.put('ui_flow_suppressed',hidden);m.put('ui_flow_coordinate_base',24*256)
+   m.put('csi_row_count',25 if hidden else 24);m.put('csi_last_row',24 if hidden else 23);m.put('erase_cell_count',2000 if hidden else 1920)
+   before=m.view();assert m.rpc(21,0xffff)==0
+   assert m.rpc(25,11)==0xf000|hidden and m.rpc(25,12)==0xf018 and m.rpc(25,6)==0xf000|(25 if hidden else 24)
+   assert m.rpc(25,13)==7 and m.view()==before and m.rpc(26,1)==0xe000
+   done('checked-status-policy-independent-of-logical-view',hidden=hidden)
+  for name,value in (('ui_flow_suppressed',2),('ui_flow_coordinate_base',0),('ui_flow_coordinate_base',26*256)):
+   m=Parent().prepare().begin();m.put(name,value);before=m.view()
+   assert m.rpc(21,0xffff)==10 and m.view()==before and not m.get('terminal_script_field_active')
+   done('invalid-status-policy-before-acquisition',field=name,value=value)
+  for name,value in (('ui_flow_suppressed',0),('ui_flow_coordinate_base',23*256)):
+   m=Parent().prepare().begin().field();m.put(name,value);before=m.view()
+   assert m.rpc(25,11)==10 and m.rpc(24,0)==10 and m.view()==before and m.get('terminal_script_field_active')==1
+   assert m.rpc(26,1)==0xe00a and not m.get('terminal_script_field_active')
+   done('changed-status-policy-quarantined-until-error-retirement',field=name)
+  m=Parent().prepare();m.record[1]=21;m.publish();before=m.view()
+  assert m.rpc(0,m.client_offset)==10 and m.view()==before
+  done('old-capability-client-rejected')
  sources=dict(manifest['sources'])
  for module in list(sys.modules.values()):
   name=getattr(module,'__file__',None)
   if not name:continue
   path=Path(name).resolve()
   if path.suffix=='.py' and path.is_relative_to(ROOT) and path.relative_to(ROOT).parts[0] in ('standalone','src'):sources[str(path.relative_to(ROOT))]=sha(path)
- report=dict(passed=True,parent_sha256=manifest['binary_sha256'],cases=cases,sources=sources,original_inputs=[],scope=__doc__+' Actual linked full parent renderer/bridge/allocation validator/field/adapters/native cursor/parser. Authored child callback never executes. BIOS, DOS PSP, UART hardware modeled; no actual child EXE/interpreter, live serial/BBS, whole package or physical acceptance.')
+ report=dict(parent_policy=parent_policy,passed=True,parent_sha256=manifest['binary_sha256'],cases=cases,sources=sources,original_inputs=[],scope=__doc__+' Actual linked full parent renderer/bridge/allocation validator/field/adapters/native cursor/parser. Authored child callback never executes. BIOS, DOS PSP, UART hardware modeled; no actual child EXE/interpreter, live serial/BBS, whole package or physical acceptance.')
  (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS GET display bridge:',len(cases),'cases')
 
 if __name__=='__main__':main()

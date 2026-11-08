@@ -1,5 +1,9 @@
 # GET foreground confirmation and final abort
 
+The subsequent [parent policy correction](ASPECT_GET_POLICY.md) identifies
+STATUS_HIDDEN/STATUS_ROWS and binds their checked capability22 metadata.
+References to caller `wrap` policy below describe the earlier diagnostic API.
+
 The experimental command API now joins the native GET checkpoint, editor and
 context to foreground confirmation and final recovered abort/longjmp. It remains
 a diagnostic integration, with application GET/opcode49 and compiler support

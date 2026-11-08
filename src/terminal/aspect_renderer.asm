@@ -36,6 +36,10 @@ CPU 8086
  %endif
  %undef RENDER_CAPABILITY
  %define RENDER_CAPABILITY 21
+ %ifdef ASPECT_GET_POLICY
+  %undef RENDER_CAPABILITY
+  %define RENDER_CAPABILITY 22
+ %endif
 %endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp

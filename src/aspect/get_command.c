@@ -22,12 +22,17 @@ unsigned __cdecl runtime_get_command_recover(void)
  if(command_busy || runtime_get_native_active())return ASPECT_RUN_STATE;
  status=cleanup();if(status)runtime_set_error(status);return status;
 }
-unsigned __cdecl runtime_get_command_run(unsigned wrap)
+unsigned __cdecl runtime_get_command_run(unsigned status_hidden)
 {
  unsigned status,other;
  if(runtime_error)return runtime_error;
  if(!runtime_get_command_ready()){runtime_set_error(ASPECT_RUN_STATE);return ASPECT_RUN_STATE;}
- status=runtime_get_context_policy(wrap);if(status){runtime_set_error(status);return status;}
+#ifdef ASPECT_GET_POLICY
+ if(status_hidden==65535U)status=runtime_get_context_parent_policy();
+ else
+#endif
+ status=runtime_get_context_policy(status_hidden);
+ if(status){runtime_set_error(status);return status;}
  command_busy=1;status=runtime_get_native();
  if(status!=GET_NATIVE_OK){
   if(!runtime_error)runtime_set_error(ASPECT_RUN_STATE);

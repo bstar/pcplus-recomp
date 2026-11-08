@@ -39,6 +39,10 @@ unsigned __cdecl aspect_render_alarm_policy(unsigned *,unsigned *);
 #endif
 #undef ASPECT_RENDER_CAP_VERSION
 #define ASPECT_RENDER_CAP_VERSION 21U
+#ifdef ASPECT_GET_POLICY
+#undef ASPECT_RENDER_CAP_VERSION
+#define ASPECT_RENDER_CAP_VERSION 22U
+#endif
 /*21..26: begin/configure/cell/present/info/end. Error end and renderer END
  * acknowledge retirement as E000|typed status. Refused requests are untagged. */
 #define ASPECT_RENDER_FIELD_BEGIN 21U
@@ -47,6 +51,9 @@ unsigned __cdecl aspect_render_field_state(void);
 /* Bit0 owner, bit1 synchronous request in flight. */
 unsigned __cdecl aspect_render_confirm_state(void);
 unsigned __cdecl aspect_render_field(unsigned operation,unsigned value);
+#endif
+#if defined(ASPECT_GET_POLICY) && !defined(ASPECT_GET_DISPLAY)
+#error GET parent policy requires GET display
 #endif
 #if defined(ASPECT_EMULATE_VM)
 #define ASPECT_RENDER_EMULATE 20U

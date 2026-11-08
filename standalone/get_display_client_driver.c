@@ -23,7 +23,13 @@ unsigned __cdecl aspect_render_request(unsigned operation,unsigned value)
  if(callback_mode)callback_result=aspect_render_callback_dispatch(callback_mode==1?99:ASPECT_RENDER_RAW_NOW,0);
  if(override)return reply;
  if(operation==2 || (operation==26&&value==1))return 0xe000;
- if(operation==25)return value<=10?0xf000|value:7;
+ if(operation==25)return value<=
+#ifdef ASPECT_GET_POLICY
+ 12
+#else
+ 10
+#endif
+ ?0xf000|value:7;
  return 0;
 }
 void runtime_set_error(unsigned value){runtime_error=value;}
@@ -41,7 +47,13 @@ static void reset(void)
  runtime_set_duplex_changed=1;runtime_serial_local_echo=0;
  if(aspect_render_program_active())ck(!aspect_render_program_end(0));
  if(aspect_render_active())ck(!aspect_render_finish());
- ck(!aspect_render_prepare(1,2,3)&&!aspect_render_attach());ck(ASPECT_RENDER_CAP_VERSION==21);
+ ck(!aspect_render_prepare(1,2,3)&&!aspect_render_attach());ck(ASPECT_RENDER_CAP_VERSION==
+#ifdef ASPECT_GET_POLICY
+ 22
+#else
+ 21
+#endif
+ );
  check_calls=requests=raw_reads=deferred=0;
 }
 static void open(void){ck(!aspect_render_field(0,0xffff));}
@@ -51,7 +63,16 @@ int main(void)
  reset();ck(aspect_render_field(6,0)==7&&aspect_render_field(1,0x1f05)==10&&!requests);open();
  before=requests;ck(aspect_render_field(0,0xffff)==10&&aspect_render_program_begin(0)==10&&aspect_render_emulate(6)==10&&aspect_render_key(65)==10&&aspect_render_window_service()==10&&aspect_render_confirm(0)==10&&aspect_render_break_notice(0)==10&&requests==before);
  ck(!aspect_render_field(1,0x1f05)&&!aspect_render_field(2,65)&&!aspect_render_field(3,0));
- ck(aspect_render_field(4,0)==0xf000&&aspect_render_field(4,10)==0xf00a&&aspect_render_field(4,11)==7);
+ ck(aspect_render_field(4,0)==0xf000&&aspect_render_field(4,10)==0xf00a&&aspect_render_field(4,
+#ifdef ASPECT_GET_POLICY
+ 13
+#else
+ 11
+#endif
+ )==7);
+#ifdef ASPECT_GET_POLICY
+ ck(aspect_render_field(4,11)==0xf00b && aspect_render_field(4,12)==0xf00c);
+#endif
  ck(!aspect_render_field(5,0));open();ck(!aspect_render_field(5,1));open();ck(!aspect_render_finish()&&!aspect_render_active());
  for(i=0;i<10;++i){
   reset();open();override=1;reply=errors[i];

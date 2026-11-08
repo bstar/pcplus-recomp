@@ -176,3 +176,10 @@ _field_screen_use_bios_cursor: dw 1
 global csi_last_row,_field_csi_last_row
 csi_last_row:
 _field_csi_last_row: dw 24
+%ifdef ASPECT_GET_POLICY
+global ui_flow_suppressed,_field_status_hidden,ui_flow_coordinate_base,_field_status_base
+ui_flow_suppressed:
+_field_status_hidden: dw 1
+ui_flow_coordinate_base:
+_field_status_base: dw 24*256
+%endif

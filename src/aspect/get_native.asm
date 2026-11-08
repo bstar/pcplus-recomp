@@ -16,7 +16,7 @@ CPU 8086
  %define aspect_get_columns _runtime_get_columns
  %define aspect_get_rows _runtime_get_rows
  %define aspect_get_cursor_origin _runtime_get_origin
- %define aspect_get_wrap _runtime_get_wrap
+ %define aspect_get_status_hidden _runtime_get_status_hidden
  %define aspect_get_scratch _runtime_script_file_mode_pointer
  %define aspect_get_keys_disabled _runtime_when_keyboard_disabled
 %endif
@@ -50,7 +50,7 @@ ORG 0xf280
 %define aspect_get_row 0x399c
 %define aspect_get_column 0x399e
 %define aspect_get_attribute 0x1f70
-%define aspect_get_wrap 0x1d46
+%define aspect_get_status_hidden 0x1d46
 %define aspect_get_rows 0x7a80
 %define aspect_get_columns 0x7a72
 %define aspect_get_cursor_origin 0xce2e
@@ -91,7 +91,7 @@ extern aspect_get_scratch
 extern aspect_get_row
 extern aspect_get_column
 extern aspect_get_attribute
-extern aspect_get_wrap
+extern aspect_get_status_hidden
 extern aspect_get_rows
 extern aspect_get_columns
 extern aspect_get_cursor_origin
@@ -187,7 +187,7 @@ L_f311:
  jmp near L_f3c0
 L_f336:
  mov di, 0x50
- cmp word [aspect_get_wrap], 0x1
+ cmp word [aspect_get_status_hidden], 0x1
  sbb_load ax,ax
  neg ax
  sub ax, word [aspect_get_rows]

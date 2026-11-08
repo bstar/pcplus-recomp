@@ -22,7 +22,12 @@ _owner_call:
  mov es,ax
 %ifdef ASPECT_GET_COMMAND
  extern _runtime_get_command_execute
+ %ifdef ASPECT_GET_POLICY
+ mov ax,65535
+ push ax
+ %else
  push word [_owner_wrap]
+ %endif
  call _runtime_get_command_execute
  add sp,2
 %else
@@ -301,8 +306,8 @@ global aspect_get_attribute
 aspect_get_attribute:
 global _owner_attribute
 _owner_attribute: dw 0
-global aspect_get_wrap
-aspect_get_wrap:
+global aspect_get_status_hidden
+aspect_get_status_hidden:
 global _owner_wrap
 _owner_wrap: dw 0
 global aspect_get_rows

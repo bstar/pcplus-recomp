@@ -1,5 +1,9 @@
 # Experimental GET display RPC
 
+The subsequent [GET status policy](ASPECT_GET_POLICY.md) adds optional
+capability22 and checked STATUS_HIDDEN/STATUS_ROWS metadata. Capability21 and
+the reviewed capability20 application remain separate profiles.
+
 The optional `ASPECT_GET_DISPLAY` build publishes renderer capability21 in both
 parent and child. The default reviewed capability20 payload is unchanged. This
 is an interface checkpoint: GET opcode49 remains unavailable in the maintained

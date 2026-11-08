@@ -9,7 +9,7 @@ def main():
  for name in ('bridge','client','output'):p.add_argument('--'+name,type=Path,required=True)
  a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  bridge=json.loads((a.bridge/'result.json').read_text());client=json.loads((a.client/'result.json').read_text())
- assert bridge['passed'] and len(bridge['cases'])==35 and client['passed']
+ assert bridge['passed'] and len(bridge['cases'])==(43 if bridge.get('parent_policy') else 35) and client['passed']
  client_checks=int(client['transcript'].split()[3]);assert client_checks>=271
  sources={}
  for report in (bridge,client):
@@ -27,13 +27,13 @@ def main():
  def run(args):
   with (out/'build.log').open('a') as log:subprocess.run([sys.executable,*args],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
  recipe=json.loads((fresh/'standalone/keymap_connection_candidate_recipe.json').read_text())
- run(['standalone/build_terminal.py',*recipe['terminal_flags'],'--aspect-get-display','--output-dir','build/parent'])
+ run(['standalone/build_terminal.py',*recipe['terminal_flags'],'--aspect-get-display',*(['--aspect-get-policy'] if bridge.get('parent_policy') else []),'--output-dir','build/parent'])
  assert sha(fresh/'build/parent/TERMINAL.EXE')==bridge['parent_sha256']
  run(['standalone/check_get_display_bridge.py','--product','build/parent','--output','build/check'])
  actual=json.loads((fresh/'build/check/result.json').read_text());assert actual==bridge
- run(['standalone/build_get_display_client.py','--output','build/client'])
+ run(['standalone/build_get_display_client.py','--output','build/client',*(['--policy'] if client.get('parent_policy') else [])])
  actual_client=json.loads((fresh/'build/client/result.json').read_text());assert actual_client==client
  for n,d in sources.items():assert sha(ROOT/n)==sha(fresh/n)==d,n
- result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,source_count=len(sources),sources=sources,parent_sha256=bridge['parent_sha256'],client_sha256=client['binary_sha256'],bridge_cases=35,client_checks=client_checks,scope=__doc__+' Exact parent and diagnostic client EXEs and reports. Independent parent CPU replay and DOS client with modeled peer services; not actual pair/interpreter GET, connected serial/BBS, package or physical acceptance.')
+ result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,source_count=len(sources),sources=sources,parent_sha256=bridge['parent_sha256'],client_sha256=client['binary_sha256'],bridge_cases=len(bridge['cases']),client_checks=client_checks,scope=__doc__+' Exact parent and diagnostic client EXEs and reports. Independent parent CPU replay and DOS client with modeled peer services; not actual pair/interpreter GET, connected serial/BBS, package or physical acceptance.')
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS public source export:',len(sources),'inputs; exact parent/client and reports')
 if __name__=='__main__':main()

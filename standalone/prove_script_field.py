@@ -15,7 +15,7 @@ def main():
   assert path.suffix in ('.asm','.c','.py','.inc') and sha(ROOT/path)==digest
   target=fresh/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/path).read_bytes())
  env=dict(os.environ,GIT_CEILING_DIRECTORIES=str(out));assert subprocess.run(['git','rev-parse','--show-toplevel'],cwd=fresh,env=env,capture_output=True).returncode
- with (out/'build.log').open('w') as log:subprocess.run([sys.executable,'standalone/build_script_field.py','--output','build/field'],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
+ with (out/'build.log').open('w') as log:subprocess.run([sys.executable,'standalone/build_script_field.py','--output','build/field',*(['--policy'] if expected.get('parent_policy') else [])],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
  actual=json.loads((fresh/'build/field/result.json').read_text());assert actual==expected
  for name,digest in expected['sources'].items():assert sha(ROOT/name)==sha(fresh/name)==digest
  report=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,sources=expected['sources'],source_count=len(expected['sources']),binary_sha256=actual['binary_sha256'],cases=actual['cases'],CP437_bytes=actual['CP437_bytes'],transcript=actual['transcript'],scope=__doc__+' Exact diagnostic EXE and complete103-case DOS report; no originals/private data/prior objects/ancestor Git. Actual video/BIOS/native cursor, modeled parent admission, diagnostic adapter segment/class aliases. Not RPC/interpreter/whole-parent/physical acceptance.')

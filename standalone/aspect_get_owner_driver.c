@@ -24,6 +24,9 @@ static unsigned command_test_generation;
 extern void owner_serviced_fault(unsigned);
 #endif
 extern void owner_serviced_origin(unsigned);
+#ifdef ASPECT_GET_POLICY
+extern void owner_serviced_view(unsigned,unsigned);
+#endif
 #endif
 extern void owner_serviced_prepare(void),owner_serviced_finish(void);
 extern unsigned runtime_get_native_field_inner(unsigned,unsigned,unsigned,unsigned,unsigned,unsigned,unsigned);
@@ -252,6 +255,27 @@ int main(void)
   }
  }
  if(fgetc(f)!=EOF || fclose(f))return 10;_ffree(far_string);
+#ifdef ASPECT_GET_POLICY
+ /* Original STATUS_ROWS remains24 when hiding the status line exposes row24.
+  * The field's logical view bound and the native default-width threshold are
+  * separate values. No operands may be read after invalid parent metadata. */
+ for(n=0;n<6;++n){
+  stream[0]=141;stream[1]=0;stream[2]=0;synthetic_file.pointer=stream;synthetic_file.count=3;
+  owner_row=n==1?24:23;owner_column=75;owner_wrap=n==0?0:n==3?2:1;
+  owner_serviced_view(n==0?24:25,n==4?0:n==5?51:24);
+  owner_origin=owner_lookahead=owner_failure=owner_exit_state=owner_keys_disabled=0;
+  owner_scratch_pointer=(unsigned)scratch;strcpy((char *)scratch,"123");owner_integer_b[0]=0xbeef;
+  key_words[0]='4';key_words[1]='2';key_words[2]=13;key_count=3;key_index=0;confirm_value=0;
+  error_code=field_calls=field_width=position_calls=confirm_calls=cancel_calls=0;
+  owner_serviced_prepare();jump=owner_dispatch_checkpoint(owner_dispatch_context);if(!jump)owner_call();
+  if(n<3){
+   if(jump || runtime_error || synthetic_file.count || owner_integer_b[0]!=42 || field_calls!=1 || field_width!=(n==2?80:5) || key_index!=3 || runtime_get_status_hidden!=owner_wrap || runtime_get_rows!=24)return command_failure(52,n);
+  }else if(jump!=65535U || runtime_error!=10 || synthetic_file.count!=3 || key_index || field_calls || owner_integer_b[0]!=0xbeef)return command_failure(53,n);
+  if(runtime_get_command_retained() || !runtime_get_command_ready())return command_failure(54,n);
+  owner_serviced_finish();
+ }
+ owner_serviced_view(24,24);
+#endif
 #ifdef ASPECT_GET_COMMAND
  /* Native WHEN aborts inside the real prompt. Final dispatcher abort must
   * wait for checked modal retirement, and retry must never execute GET twice. */
@@ -309,7 +333,11 @@ int main(void)
 #ifdef ASPECT_GET_SERVICED
 #ifdef ASPECT_GET_CONTEXT
 #ifdef ASPECT_GET_COMMAND
+#ifdef ASPECT_GET_POLICY
+ printf("PASS PARENT POLICY GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries;6 status-policy probes\r\n");return 0;
+#else
  printf("PASS COMMAND GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals;3 modal faults/retries; native confirmation/abort\r\n");return 0;
+#endif
 #else
  printf("PASS CONTEXT GET OWNER 142 cases;137 native matches;1 view-rebased clip;4 protected-view refusals; shared scratch; origin52\r\n");return 0;
 #endif

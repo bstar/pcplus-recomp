@@ -13,6 +13,12 @@ char *runtime_script_file_mode_pointer;
 extern unsigned owner_wrap,owner_scratch_pointer,owner_keys_disabled;
 static unsigned view_origin;
 void owner_serviced_origin(unsigned value){view_origin=value;}
+#ifdef ASPECT_GET_POLICY
+static unsigned view_rows=24,view_status_rows=24;
+void owner_serviced_view(unsigned rows,unsigned status_rows){view_rows=rows;view_status_rows=status_rows;}
+#else
+#define view_rows 24
+#endif
 #endif
 unsigned aspect_serial_active=1,runtime_error,runtime_set_duplex_changed=1,runtime_serial_local_echo;
 unsigned runtime_serial_break_units,runtime_serial_error,runtime_keyboard_mode;
@@ -59,18 +65,22 @@ unsigned aspect_render_request(unsigned op,unsigned value)
 #endif
  if(op==21){
   ck(!owned);if(value==65535U)value=(owner_row<<8)|owner_column;
-  if((value>>8)>=24 || (value&255)>=80)return 7;
+  if((value>>8)>=view_rows || (value&255)>=80)return 7;
   owned=1;start=cursor=value;return 0;
  }
  if(op==22){
   ck(owned);width=value&255;
-  if(!width || width>81 || (start>>8)*80+(start&255)+width>24*80)return 7;
+  if(!width || width>81 || (start>>8)*80+(start&255)+width>view_rows*80)return 7;
   staged=0;return 0;
  }
  if(op==23){ck(owned&&(value>>8)==staged&&staged<width&&(value&255));++staged;return 0;}
  if(op==24){ck(owned&&staged==width);cursor=start+(value&255);return 0;}
- if(op==25)return value==3?0xf007:value==4?0xf006:value==9?0xf000|(cursor&255):value==10?0xf000|(cursor>>8):
- value==0?0xf000|(start&255):value==1?0xf000|(start>>8):value==2?0xf00d:value==5?0xf050:value==6?0xf018:value==7||value==8?
+ if(op==25)return
+#ifdef ASPECT_GET_POLICY
+ value==11?0xf000|owner_wrap:value==12?0xf000|view_status_rows:
+#endif
+ value==3?0xf007:value==4?0xf006:value==9?0xf000|(cursor&255):value==10?0xf000|(cursor>>8):
+ value==0?0xf000|(start&255):value==1?0xf000|(start>>8):value==2?0xf00d:value==5?0xf050:value==6?0xf000|view_rows:value==7||value==8?
 #ifdef ASPECT_GET_CONTEXT
  0xf000|(value==7?view_origin&255:view_origin>>8)
 #else
@@ -89,7 +99,12 @@ void owner_serviced_prepare(void)
 #endif
  runtime_when_reset();
 #ifdef ASPECT_GET_CONTEXT
- ck(!runtime_get_context_policy(owner_wrap));if(owner_scratch_pointer)runtime_script_file_mode_pointer=(char *)owner_scratch_pointer;
+#ifdef ASPECT_GET_POLICY
+ ck(!runtime_get_context_parent_policy());
+#else
+ ck(!runtime_get_context_policy(owner_wrap));
+#endif
+ if(owner_scratch_pointer)runtime_script_file_mode_pointer=(char *)owner_scratch_pointer;
  /* Poison the diagnostic-only old alias: native GET must use the shared one. */
  owner_scratch_pointer=0;runtime_when_keyboard_disabled=owner_keys_disabled;
 #endif
