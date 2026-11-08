@@ -91,7 +91,8 @@ historical; neither errno alone nor the old error label establishes a cause.
 Pending work includes full variable/stream/help co-residency admission,
 broader repeated/EXECUTE/error coverage beyond the two
 [lifetime scenarios](ASPECT_GET_LIFETIME.md), broader WHEN/error coverage beyond the
-[plain/framed action cases](ASPECT_GET_WHEN.md), optional
+[plain/framed action cases](ASPECT_GET_WHEN.md) and
+[divide/cancel cases](ASPECT_GET_WHEN_ERRORS.md), optional
 width/masking/origin policies in the full VM, floating support, broader compiler
 coverage, package admission and connected physical acceptance. Existing
 component tests retain their narrower scope. No physical FTP, card, SIP, modem

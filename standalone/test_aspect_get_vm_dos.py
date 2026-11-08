@@ -59,11 +59,24 @@ def when_definitions():
    expected_value_hex=b'INLINEWORKERLoC42'.hex(),peer_triggers=[('GETREADY',[(0.25,'PINGPONG')])]))
  return rows
 
+def when_error_definitions():
+ rows=when_definitions()
+ divide=dict(rows[1],name='get-vm-when-divide',success=False,expected_exit=11,when_worker_expected=1,
+  expected_owned_hex=b'BEFORE|WORKER|'.hex())
+ divide['source']=divide['source'].replace('integer hits\n','integer hits,zero,quotient\n',1).replace('transmit "WORKER"\n','transmit "WORKER"\nfputs 0 "WORKER|"\nquotient=1/zero\ntransmit "BADAFTER"\n')
+ cancel=dict(rows[0],name='get-vm-when-cancel',success=False,expected_exit=13,when_worker_expected=0,
+  field_BIOS_words=[0x011b,0x1579],expected_owned_hex=b'BEFORE|'.hex())
+ for row in (divide,cancel):
+  row['source']=row['source'].replace('transmit "GETREADY"\n','fopen 0 "OWNED.TXT" "w+b"\nfputs 0 "BEFORE|"\ntransmit "GETREADY"\n')
+  row['when_error']=True
+ return [divide,cancel]
+
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  p.add_argument('--parent-dir',required=True,type=Path);p.add_argument('--child-dir',required=True,type=Path)
  p.add_argument('--output',required=True,type=Path);p.add_argument('--case',action='append')
  p.add_argument('--cpu',choices=('8086','386'),default='386')
+ p.add_argument('--when-error-cases',action='store_true',help='Run framed WHEN divide fault and confirmed GET cancellation with pending CALL')
  p.add_argument('--when-cases',action='store_true',help='Run inline TRANSMIT and deferred plain/framed WHEN CALL during GET')
  p.add_argument('--lifetime-cases',action='store_true',help='Run repeated fields and EXECUTE with generation-conditioned BIOS input')
  p.add_argument('--get-compiler-dir',type=Path,help='Use actual opt-in DOS/Python GET compilation for ordinary cases; malformed EOF stays raw')
@@ -82,9 +95,9 @@ def main():
  child_map=(child/'ASPECT.map').read_text();group=re.search(r'DGROUP\s+([0-9a-f]+):([0-9a-f]+)',child_map,re.I)
  child_base=int(group[1],16)*16+int(group[2],16)
  child_symbols={n:int(s,16)*16+int(o,16)-child_base for s,o,n in re.findall(r'^\s*([0-9a-f]{4}):([0-9a-f]{4,8})[*+]?\s+(\w+)\s*$',child_map,re.M|re.I)}
- assert not (a.when_cases and a.lifetime_cases)
- rows=when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
- if a.lifetime_cases or a.when_cases:assert a.get_compiler_dir and not a.disabled_control
+ assert sum((a.when_error_cases,a.when_cases,a.lifetime_cases))<=1
+ rows=when_error_definitions() if a.when_error_cases else when_definitions() if a.when_cases else lifetime_definitions() if a.lifetime_cases else definitions()
+ if a.lifetime_cases or a.when_cases or a.when_error_cases:assert a.get_compiler_dir and not a.disabled_control
  if a.disabled_control:
   rows=[dict(r,success=False,expected_exit=3) for r in rows if r['name']=='get-vm-string']
  if a.case:rows=[r for r in rows if r['name'] in a.case];assert {r['name'] for r in rows}==set(a.case)
@@ -182,6 +195,14 @@ def main():
    if active_case[0] and active_case[0].get('when_action'):
     marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
     observer_source=observer_source.replace(marker,'get_when_waiting: dw 0\nget_when_gate: dw 0\n'+marker)
+   if active_case[0] and active_case[0].get('when_error'):
+    marker='get_when_waiting: dw 0';assert observer_source.count(marker)==1
+    observer_source=observer_source.replace(marker,'get_error_retirement: times 5 dw 0\n'+marker)
+    storage=child_symbols['_runtime_get_field_storage']
+    probe+=' mov ax,[cs:get_child_ds]\n add ax,'+str(storage//16)+'\n mov es,ax\n'
+    for index,offset in enumerate((0,2,4,6,10)):
+     probe+=' mov ax,[es:'+str(storage%16+offset)+']\n mov [cs:get_error_retirement+'+str(index*2)+'],ax\n'
+    probe+=' mov ax,[cs:get_child_ds]\n mov es,ax\n'
    if active_case[0] and active_case[0].get('field_batches'):
     marker='get_input_injected: dw 0';assert observer_source.count(marker)==1
     observer_source=observer_source.replace(marker,'get_lifetime_generations: times '+str(len(active_case[0]['field_batches']))+' dw 0\n'+marker)
@@ -447,8 +468,15 @@ get_watch_data: dw 0x4757,2
    result['GET_waiting_before_WHEN']=waiting
    result['checks']['field_observed_before_WHEN_CALL']=waiting==1
    result['checks']['WHEN_CALL_staged_before_field_input']=gate==1
-   result['checks']['WHEN_transmit_and_worker_exact_once']=wire.count(b'INLINE')==wire.count(b'WORKER')==1
+   result['checks']['WHEN_transmit_and_worker_exact_once']=wire.count(b'INLINE')==1 and wire.count(b'WORKER')==case.get('when_worker_expected',1)
    result['checks']['no_bad_WHEN_output']=b'BAD' not in wire
+  if case.get('when_error'):
+   end=-24-(2*len(allocation_names) if a.allocation_probe else 0)
+   retirement=list(struct.unpack('<5H',(folder/'RENDER.BIN').read_bytes()[end-10:end]))
+   result['GET_error_retirement']=dict(zip(('active','busy','keys','display','completed'),retirement))
+   result['checks']['GET_error_owners_retired']=retirement==[0]*5
+   result['checks']['WHEN_error_stream_flushed']=(folder/'OWNED.TXT').read_bytes()==bytes.fromhex(case['expected_owned_hex'])
+   result['checks']['error_matches_child_probe']=result['child_exit_probe']['error']==case['expected_exit']
   if case.get('field_batches'):
    count=len(case['field_batches']);end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
    generations=list(struct.unpack('<'+str(count)+'H',(folder/'RENDER.BIN').read_bytes()[end-2*count:end]))
@@ -462,7 +490,7 @@ get_watch_data: dw 0x4757,2
   else:result['checks']['no_post_GET_execution']=b'Synth42\r' not in wire
   if case['name']=='get-vm-string' and get_enabled and a.stream_probe:result['checks']['shared_FOPEN_GET_scratch_and_stream_retained']=(folder/'OWNED.TXT').is_file() and (folder/'OWNED.TXT').read_bytes()==b'BEFORE|LoC42'
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
- report.update(when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
+ report.update(when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
   checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  print('GET full VM:',len(report['cases']),'cases',report['passed'])

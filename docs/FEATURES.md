@@ -1,5 +1,12 @@
 # Full application reconstruction checklist
 
+[GET/WHEN failure retirement](ASPECT_GET_WHEN_ERRORS.md) now passes a framed
+worker divide fault and confirmed cancellation with a CALL pending. Real streams
+flush, typed errors11/13 are retained, all sampled GET ownership flags retire,
+and parent keyboard/hangup recover. This is additional full-parent emulator
+evidence; repeated recovery, carrier loss, package/hardware and full parity
+gates remain open.
+
 [GET/WHEN composition](ASPECT_GET_WHEN.md) now passes immediate TRANSMIT and
 deferred plain/framed CALL with the full experimental parent/interpreter. A
 passive observer proves a field waiting before a pending native action and

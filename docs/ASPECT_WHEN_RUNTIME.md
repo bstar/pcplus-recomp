@@ -3,8 +3,9 @@
 The experimental full interpreter now has [GET/WHEN composition evidence](ASPECT_GET_WHEN.md):
 immediate TRANSMIT and deferred plain/framed CALL while a field is live, with
 passively observed waiting/gate boundaries and exact full-parent serial output.
-This does not establish all event/error/lifetime combinations or change the
-installed package.
+[Divide/cancel retirement](ASPECT_GET_WHEN_ERRORS.md) adds two failure cases
+with real stream flushing and passive GET ownership samples. These do not
+establish all event/error/lifetime combinations or change the installed package.
 
 The current [abort confirmation owner](ASPECT_LOCAL_UI.md#stop-script-confirmation)
 continues native receive matching and TRANSMIT actions while its modal prompt
