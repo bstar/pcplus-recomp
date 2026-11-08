@@ -1,7 +1,9 @@
 #include "compiler_lease.h"
 #include <i86.h>
 #include "compiler_lease_private.h"
-#ifdef COMPILER_LEASE_BANKED
+#if defined(COMPILER_LEASE_RETAINED)
+#pragma code_seg("LEASE_BANK", "LEASE_MODULE")
+#elif defined(COMPILER_LEASE_BANKED)
 #pragma code_seg("LEASE_BANK", "LEASE_BANK")
 #else
 #pragma code_seg("LEASE_CODE", "FARCODE")
@@ -42,9 +44,9 @@ static unsigned reserve(void)
 {
  unsigned drive,i,n=3,j,value,attempt,exists;
  drive=lease_dos_drive();if(drive>25)return CL_ARGUMENT;
- if(lease_dos_cwd(held.cwd))return failure(CL_IO);
+ if(lease_dos_cwd(held_cwd))return failure(CL_IO);
  held.name[0]=(unsigned char)('A'+drive);held.name[1]=':';held.name[2]='\\';
- for(i=0;i<64 && held.cwd[i];++i){if(i==63)return CL_ARGUMENT;held.name[n++]=held.cwd[i];}
+ for(i=0;i<64 && held_cwd[i];++i){if(i==63)return CL_ARGUMENT;held.name[n++]=held_cwd[i];}
  if(n>3)held.name[n++]='\\';
  for(attempt=0;attempt<64;++attempt){
   value=held.sequence++;
@@ -106,11 +108,11 @@ unsigned __far __cdecl compiler_lease_begin(unsigned token,unsigned owner)
  seg=held.parent+held.keep;remaining=held.full-held.keep;
  while(remaining){
   paras=remaining>VERIFY_PARAS?VERIFY_PARAS:remaining;n=paras<<4;p=MK_FP(seg,0);
-  if(lease_dos_read(held.handle,held.buffer,n)!=n){status=failure(CL_IO);goto unchanged;}
-  for(i=0;i<n;++i)if(p[i]!=held.buffer[i]){status=CL_CORRUPT;goto unchanged;}
+  if(lease_dos_read(held.handle,held_buffer,n)!=n){status=failure(CL_IO);goto unchanged;}
+  for(i=0;i<n;++i)if(p[i]!=held_buffer[i]){status=CL_CORRUPT;goto unchanged;}
   seg+=paras;remaining-=paras;
  }
- if(lease_dos_read(held.handle,held.buffer,1)!=0){status=CL_CORRUPT;goto unchanged;}
+ if(lease_dos_read(held.handle,held_buffer,1)!=0){status=CL_CORRUPT;goto unchanged;}
  if(lease_dos_rewind(held.handle)){status=failure(CL_IO);goto unchanged;}
 #ifdef COMPILER_LEASE_BANKED
  held.phase=CL_PREPARED;return done(0);
@@ -154,7 +156,7 @@ unsigned __far __cdecl compiler_lease_end(unsigned token,unsigned owner)
   if(lease_dos_read(held.handle,MK_FP(seg,0),n)!=n)return done(failure(CL_IO));
   crc=checksum(crc,MK_FP(seg,0),n);seg+=paras;remaining-=paras;
  }
- if(lease_dos_read(held.handle,held.buffer,1)!=0 || crc!=held.crc)return done(CL_CORRUPT);
+ if(lease_dos_read(held.handle,held_buffer,1)!=0 || crc!=held.crc)return done(CL_CORRUPT);
  held.valid=1;held.phase=CL_CLEANUP;return done(cleanup());
 }
 unsigned __far __cdecl compiler_lease_info(unsigned selector)

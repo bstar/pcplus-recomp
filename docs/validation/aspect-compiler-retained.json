@@ -1,0 +1,231 @@
+{
+  "checkpoint": "Compact assembly core and whole-kernel retained-arena experiment",
+  "compact_component_passed": true,
+  "retained_component_passed": true,
+  "ordinary_GET_passed": true,
+  "richer_GET_passed": false,
+  "production_integrated": false,
+  "production_compatibility_accepted": false,
+  "source_compiler_residency_verified": false,
+  "production_arena_ownership_verified": false,
+  "production_runtime_module_loading_verified": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "original_inputs": [],
+  "compact_sections": {
+    "LEASE_CORE": 1795,
+    "LEASE_IO_CODE": 368,
+    "LEASE_MODULE_INFO": 14
+  },
+  "compact_section_bytes": 2177,
+  "compact_parent_aligned_increase_bytes": 2192,
+  "parent_sha256": "e9464f631fc8826469eb6c3a4c881b720de6ce1493f6d6bd20c6a8a05a383544",
+  "compiler_sha256": "db9de7ca29f322b386d26ada97573f3237a228cbd76953ad0bcd0718aac1cc19",
+  "child_sha256": "54590fd38a8c9992bc747d12b2ea330c6eb749f8bf7bbffcb2d9d4d0a0fe2ff1",
+  "compact_checks": 1416,
+  "compact_tail_bytes": 161152,
+  "retained_checks": 1416,
+  "retained_tail_bytes": 109792,
+  "retained_kernel_placement": {
+    "modeled_arena_image_byte": 360688,
+    "additional_parent_paragraphs_in_fixture": 0,
+    "production_cache_ownership_established": false
+  },
+  "retained_sections": {
+    "LEASE_CORE": 1187,
+    "LEASE_IO_CODE": 368,
+    "LEASE_MODULE_INFO": 14
+  },
+  "retained_preparation_bank_bytes": 1792,
+  "retained_total_component_bytes_before_alignment": 3361,
+  "retained_parent_paragraphs": 30107,
+  "retained_keep_paragraphs": 23245,
+  "retained_client_paragraphs": 8539,
+  "retained_observations": [
+    [
+      472,
+      0,
+      2704,
+      109776,
+      6,
+      23758
+    ],
+    [
+      472,
+      0,
+      2704,
+      109776,
+      6,
+      23758
+    ],
+    [
+      472,
+      0,
+      2704,
+      109776,
+      6,
+      23758
+    ]
+  ],
+  "compact_source_count": 34,
+  "retained_source_count": 34,
+  "parent_source_count": 736,
+  "ordinary_GET_cases": [
+    "get-vm-string",
+    "get-vm-integer",
+    "get-vm-long",
+    "get-vm-cancel",
+    "get-vm-float",
+    "get-vm-truncated"
+  ],
+  "failed_lifetime_cases": [
+    "get-vm-repeat",
+    "get-vm-execute"
+  ],
+  "failed_WHEN_cases": [
+    "get-vm-when-plain",
+    "get-vm-when-framed"
+  ],
+  "ordinary_allocation": {
+    "_runtime_script_file_open_calls": 0,
+    "_runtime_script_file_live": 0,
+    "_runtime_script_file_last": 0,
+    "_runtime_native_error_code": 0,
+    "_runtime_steps": 10,
+    "_runtime_live": 0,
+    "_runtime_alloc_calls": 1,
+    "___nheapbeg": 43712,
+    "__curbrk": 44224,
+    "__STACKLOW": 35571,
+    "__STACKTOP": 43712,
+    "PSP_allocation_paragraphs": 8539,
+    "environment_paragraphs": 73,
+    "environment_string_bytes": 140
+  },
+  "lifetime_allocation": {
+    "_runtime_script_file_open_calls": 0,
+    "_runtime_script_file_live": 0,
+    "_runtime_script_file_last": 0,
+    "_runtime_native_error_code": 101,
+    "_runtime_steps": 0,
+    "_runtime_live": 0,
+    "_runtime_alloc_calls": 2,
+    "___nheapbeg": 43712,
+    "__curbrk": 44224,
+    "__STACKLOW": 35571,
+    "__STACKTOP": 43712,
+    "PSP_allocation_paragraphs": 8561,
+    "environment_paragraphs": 73,
+    "environment_string_bytes": 140
+  },
+  "lifetime_exit": {
+    "DS": 38173,
+    "errno": 5,
+    "error": 8,
+    "opcode": 0,
+    "compiler_calls": 0,
+    "file_status": 0
+  },
+  "sources": {
+    "src/process/compiler_lease.c": "1f0c72c680a5f4393e4aa11dc1554455d989daf895af369b18e36dbe8f5afa56",
+    "src/process/compiler_lease_core.asm": "3dcc455d1549efa79c3b0cea415772c87007811045e115c7ac85729e72278150",
+    "src/process/compiler_lease_core.c": "b69157d63ede9252916ce812bf2747a216304ce4a320065767ff6154756317d2",
+    "src/process/compiler_lease_private.h": "e11f6d3112265940a98aa26b904b8251af07a53753f422ba2d6c6ab16469944f",
+    "src/process/compiler_lease_bank.asm": "df34646c6e9437c3c473305ec037f9371e188681071966376e8f4a5d2ac66364",
+    "src/process/compiler_lease_dos.asm": "d17bd809f8354a4b9db58be68cbe68f23f798f6fdf6880e49cb821bb7b43d122",
+    "src/process/compiler_lease_module.asm": "5831781919cab3224518b42bc27cbf0c055c2f21b5ebc187e70f13322ce07447",
+    "standalone/build_terminal.py": "887ddd31b47692bea9dc4ec32236f8c8362106cefeaaaa906f1df5afc32d508d",
+    "standalone/prove_compiler_lease_source.py": "6a4e30d12010afd40796e17f4c2520ce9d805b336b812e3446fe7345b49c3e22",
+    "standalone/test_compiler_lease_dos.py": "7963f39cb851480454b811bfe1464aa1e0ffdf901bc34d7b16ea61bbb3e3827e",
+    "docs/ASPECT_COMPILER_RETAINED.md": "1ea8130954033f6f64f40ef1c59887144abb6d83501295cfa77aac15e440101b",
+    "docs/ASPECT_COMPILER_MODULE.md": "b7d74d6e1fd2885ac44f022c27d47debfb9d795ec5c55fad664652a80aa648e4",
+    "docs/ASPECT_COMPILER_MEMORY.md": "c867b825b4c4e0058bba0d9fcd4044fa4f888b21804af5896cc1f155f287c4a4",
+    "docs/FEATURES.md": "214c1232783b37ad865a7d4f904f432e8c39fd81362c3521ded84a0987bf8cb9"
+  },
+  "evidence": {
+    "build/compiler-lease-compact-canonical-20261108/result.json": {
+      "sha256": "6b3ee969544386ad7286147aee6a037ceb081b29c60eeb80f8bec3d5a4f01b37",
+      "passed": true
+    },
+    "build/compiler-lease-compact-canonical-source-20261108/result.json": {
+      "sha256": "caccab42d15575f5079603bb9f28c00af5e60d7f6f96cfe5cd390e86cbd682d1",
+      "passed": true
+    },
+    "build/compiler-lease-retained-canonical-20261108/result.json": {
+      "sha256": "fee85975aa24456543281854be28323d3bef1a866f0d94a05cbc894605c8d437",
+      "passed": true
+    },
+    "build/compiler-lease-retained-canonical-source-20261108/result.json": {
+      "sha256": "01c05370c310bd36d401ae104303aacd4a63325fa799bc74699c769df7f736e5",
+      "passed": true
+    },
+    "build/compiler-lease-compact-parent-source-20261108/result.json": {
+      "sha256": "5bbb99c8f6f2dd9030f81e9adddf41a06bab82aa908092a6c681fe07bc9c92d5",
+      "passed": true
+    },
+    "build/compiler-lease-compact-get-second-20261108/checks.json": {
+      "sha256": "f007a645b77294186995adb9dc33edbe6c2c67261f7dfd0b915a0f983aeecf74",
+      "passed": true
+    },
+    "build/compiler-lease-compact-get-lifetime-20261108/checks.json": {
+      "sha256": "9f71b4ef90fe42319c807154fd4fae94117b47de4706a007f18114249be47164",
+      "passed": false
+    },
+    "build/compiler-lease-compact-get-when-20261108/checks.json": {
+      "sha256": "8e6b0aa49884614685a1550379d7ee093f414b699eb74a265ecbeb231ad6fd5b",
+      "passed": false
+    },
+    "build/compiler-lease-compact-meta-20261108/result.json": {
+      "sha256": "cc233ccf2d723b50d3723498b693f68618b8db3d4f76f6d48a04a7dfee591a32",
+      "passed": true
+    },
+    "build/compiler-lease-compact-line-20261108/result.json": {
+      "sha256": "c5bf4567d1af96b765ef72ad0c279069a555c10b2a103f7ab7d72681f1cfd50f",
+      "passed": true
+    },
+    "build/compiler-lease-compact-unbanked-20261108/result.json": {
+      "sha256": "590ea1ff1dad8500c2e50255db17e76f696464bf25e545d7a9110a0597f56260",
+      "passed": true
+    },
+    "build/compiler-lease-compact-canonical-20261108/PARENT.map": {
+      "sha256": "f116d4d312cf0999b352b9d42093af9cdc83270505338bdfe983728b49aac836"
+    },
+    "build/compiler-lease-compact-canonical-20261108/RESULT.TXT": {
+      "sha256": "94810f37b055aaf8fd0b9bffce9058e7ad824e19d4c81cfdf1a88a4dad2cd14f"
+    },
+    "build/compiler-lease-compact-canonical-20261108/CLIENT.LOG": {
+      "sha256": "6f9cfc371dfba2062bda644906a0c680bcf83c9a8d819a8bdcd72aadfd02fef0"
+    },
+    "build/compiler-lease-retained-canonical-20261108/PARENT.map": {
+      "sha256": "a04aef972e34496d728e7ca353fbadd52435cab8d9d12ff84be613e071d99541"
+    },
+    "build/compiler-lease-retained-canonical-20261108/RESULT.TXT": {
+      "sha256": "d352894c1d7639eefc58ad5fd07bae1d940c5856c01c3a6d58881212bd3de2ed"
+    },
+    "build/compiler-lease-retained-canonical-20261108/CLIENT.LOG": {
+      "sha256": "5ff9103cfd11ac094d0989745dc2ac3ead162e879d959ee739f52954bbeb3f36"
+    },
+    "build/compiler-lease-compact-parent-final-20261108/terminal.map": {
+      "sha256": "ed410e4e0519fd35589965b2728d2d18a948c80a0828e645d2b60cb10d311d6e"
+    },
+    "build/compiler-lease-compact-parent-final-20261108/manifest.json": {
+      "sha256": "91e39e85af22c56ca480f7dd86b13aca5006248d49afd98358fdd59b2b3e2c4f"
+    }
+  },
+  "notes": [
+    "First compact2177 predecessor was2574 bytes; ordinary GET still failed. Shared DOS prologues, shared MCB/CRC routines, explicit CS state and disjoint-lifetime scratch/CWD union yielded2177.",
+    "Current-source parent is byte-identical to tested parent; parent/overlay hashes compared before binding those runtime results.",
+    "Compact resident model restores six ordinary cases, but two lifetime/two WHEN cases fail for heap. Remaining GET suites not rerun after known failure.",
+    "Retained fixture places all component code/state in modeled snapshot space before23245-paragraph cut; parent30107/child8539 unchanged. The compiler does not overwrite that retained code.",
+    "Initial retained link needed338976 bytes of padding, above old fixture bound; padding capacity expanded to six <=65520-byte segments. No live emulation had started for that refusal.",
+    "Canonical component scope text states independently checked tail instead of always naming161152; retained tail is109792. Both canonical cold replays reproduce exact identities/results."
+  ],
+  "limits": [
+    "Whole-kernel retained placement is a DOS-loaded synthetic profile harness with padding, not production arena ownership or runtime module loading.",
+    "No full-parent source startup/EXECUTE bridge; compact full parent still regresses richer precompiled scripts and remains unselected.",
+    "No existing application capacity/stack/ring/history cuts, no conventional-RAM increase, no relaxed compatibility gates.",
+    "Component8086/FPU-off and full parent DOS386/UMB integrated DOSBox only; no booted MS-DOS or physical modem/BBS/package claim.",
+    "UART/flow/in-flight, environment/streams/full UI-history ownership, same-child repeated leases, actual backup corruption/short I/O/fatal containment and full parity remain open."
+  ]
+}

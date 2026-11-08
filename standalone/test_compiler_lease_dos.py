@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Experimental parent-owned DOS tail lease with real nested ASPCOMP execution.
 
-Two actual DOS PSPs, profile-sized MCBs and byte-checked161152-byte parent tail.
+Two actual DOS PSPs, profile-sized MCBs and an independently checked parent tail.
 No production parent/UART bridge or physical acceptance is implied.
 """
 import argparse,hashlib,json,os,re,shutil,subprocess,sys
@@ -61,7 +61,7 @@ int main(void)
  v0=_dos_getvect(0);v23=_dos_getvect(0x23);v24=_dos_getvect(0x24);
  if(lease_dos_resize(_psp,FULL)){fputs("RESIZE FAIL\n",log);fclose(log);return 2;}
  fputs("RESIZED\n",log);fclose(log);log=fopen("RESULT.TXT","a");
-#ifdef COMPILER_LEASE_MODULE
+#if defined(COMPILER_LEASE_MODULE) && !defined(COMPILER_LEASE_RETAINED)
  {extern unsigned __far __cdecl compiler_lease_load(const char *,unsigned,unsigned);
   if(compiler_lease_load("ABSENT.OVL",_psp,TOKEN)!=CL_IO ||
      compiler_lease_load("BROKEN.OVL",_psp,TOKEN)!=CL_CORRUPT)return 6;
@@ -148,7 +148,11 @@ int main(int argc,char **argv)
  CK(*(unsigned __far *)MK_FP(parent-1,1)==parent);
 #ifdef COMPILER_LEASE_BANKED
  bankseg=info(10);bankoff=info(11);banksize=info(12);
+#ifdef COMPILER_LEASE_RETAINED
+ CK(bankseg*16UL+bankoff<(parent+20035UL)*16 && banksize>512);
+#else
  CK(bankseg*16UL+bankoff==(parent+20035UL)*16 && banksize>512);
+#endif
  CK(FP_SEG(begin)*16UL+FP_OFF(begin)<(parent+20035UL)*16);
  CK(FP_SEG(end)*16UL+FP_OFF(end)<(parent+20035UL)*16);
  CK(FP_SEG(info)*16UL+FP_OFF(info)<(parent+20035UL)*16);
@@ -167,7 +171,11 @@ int main(int argc,char **argv)
  CK(aspect_compiler_exec("ASPCOMP.EXE","TEST.ASP",0)==0);
 #ifdef COMPILER_LEASE_BANKED
  for(i=0;i<32;++i)if(bankprefix[i]!=*((unsigned char __far *)MK_FP(bankseg,bankoff+i)))overwritten=1;
+#ifdef COMPILER_LEASE_RETAINED
+ CK(!overwritten); /* Entire kernel stays owned in the retained arena. */
+#else
  CK(overwritten); /* Compiler really occupied the region containing the bank. */
+#endif
 #endif
  /* Occupy the released parent's next block. Failed grow must retain backup,
   * actual smaller size and invalid-tail state until this owner retries. */
@@ -228,20 +236,24 @@ int main(int argc,char **argv){unsigned n;char byte;return argc==2 && _dos_read(
 '''
 def main():
  p=argparse.ArgumentParser(description=__doc__)
+ p.add_argument('--retained-arena',action='store_true',help='Place the entire kernel in modeled existing snapshot space, retain through compiler EXEC')
  p.add_argument('--module',action='store_true',help='Cold-load extracted code bank before trusted init; implies banked')
  p.add_argument('--banked',action='store_true',help='Place temporary code at the exact released parent boundary')
  p.add_argument('--compiler-dir',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
- a=p.parse_args();a.banked=a.banked or a.module;out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
+ a=p.parse_args();a.module=a.module or a.retained_arena;a.banked=a.banked or a.module;out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists()
  m=json.loads((a.compiler_dir/'manifest.json').read_text());assert sha(a.compiler_dir/'ASPCOMP.EXE')==m['binary_sha256']
  for n,h in m['sources'].items():assert sha(ROOT/n)==h,n
- sources=['standalone/compiler_lease_module.py','src/process/compiler_lease_module.asm','src/process/compiler_lease_private.h','src/process/compiler_lease_core.c','src/process/compiler_lease_bank.asm','src/process/compiler_lease.c','src/process/compiler_lease.h','src/process/compiler_lease_dos.asm','src/aspect/compiler_exec.asm','src/aspect/compiler.py','standalone/test_compiler_lease_dos.py','standalone/mz_layout.py']
+ sources=['src/process/compiler_lease_core.asm','standalone/compiler_lease_module.py','src/process/compiler_lease_module.asm','src/process/compiler_lease_private.h','src/process/compiler_lease_core.c','src/process/compiler_lease_bank.asm','src/process/compiler_lease.c','src/process/compiler_lease.h','src/process/compiler_lease_dos.asm','src/aspect/compiler_exec.asm','src/aspect/compiler.py','standalone/test_compiler_lease_dos.py','standalone/mz_layout.py']
  frozen={n:sha(ROOT/n) for n in sources};out.mkdir();(out/'AWAY').mkdir()
- (out/'parent.c').write_text(PARENT);(out/'client.c').write_text(CLIENT);(out/'fdtest.c').write_text(FDTEST)
+ (out/'parent.c').write_text(PARENT.replace('20035','23245') if a.retained_arena else PARENT);(out/'client.c').write_text(CLIENT.replace('20035','23245') if a.retained_arena else CLIENT);(out/'fdtest.c').write_text(FDTEST)
  def run(args):
+  if a.retained_arena and args[0]=='nasm':args=[args[0],'-DCOMPILER_LEASE_RETAINED',*args[1:]]
   with (out/'build.log').open('a') as log:subprocess.run(args,cwd=out,stdout=log,stderr=log,check=True)
  run(['nasm',*(['-DCOMPILER_LEASE_BANKED'] if a.banked else []),*(['-DCOMPILER_LEASE_MODULE'] if a.module else []),'-f','obj',str(ROOT/'src/process/compiler_lease_dos.asm'),'-o','lease_dos.obj'])
+ if a.module:run(['nasm','-f','obj',str(ROOT/'src/process/compiler_lease_core.asm'),'-o','core_asm.obj'])
  run(['nasm','-f','obj',str(ROOT/'src/aspect/compiler_exec.asm'),'-o','exec.obj'])
  flags=['-q','-os','-bt=dos','-0','-ms','-fpc','-ecc','-s','-w4','-we','-k8192','-I'+str(ROOT/'src/process')]
+ if a.retained_arena:flags+=['-dCOMPILER_LEASE_RETAINED']
  if a.banked:flags+=['-dCOMPILER_LEASE_BANKED']
  if a.module:
   flags+=['-dCOMPILER_LEASE_MODULE']
@@ -250,10 +262,10 @@ def main():
  if a.banked:
   for stem,defines in [('bank_start',['-DBANK_START','-DBANK_PADDING=0']),('bank_end',[])]:
    run(['nasm','-f','obj',*defines,str(ROOT/'src/process/compiler_lease_bank.asm'),'-o',stem+'.obj'])
-  extra=['bank_start.obj',str(ROOT/'src/process/compiler_lease.c'),'bank_end.obj',str(ROOT/'src/process/compiler_lease_core.c')]
+  extra=['bank_start.obj',str(ROOT/'src/process/compiler_lease.c'),'bank_end.obj',*([] if a.retained_arena else [str(ROOT/'src/process/compiler_lease_core.c')])]
  else:extra=[str(ROOT/'src/process/compiler_lease.c')]
- run(['wcl',*flags,'-fd=PARENT.lnk','-fm=PARENT.map','-fe=PARENT.EXE','parent.c',*extra,'lease_dos.obj','exec.obj',*(['module_info.obj'] if a.module else [])])
- with (out/'PARENT.lnk').open('a') as f:f.write('\noption packcode=0\n'+('order clname CODE clname FARCODE clname FAR_DATA clname BEGDATA clname DATA clname BSS clname STACK clname LEASE_PAD clname LEASE_BANK\n' if a.banked else ''))
+ run(['wcl',*flags,'-fd=PARENT.lnk','-fm=PARENT.map','-fe=PARENT.EXE','parent.c',*extra,'lease_dos.obj','exec.obj',*(['module_info.obj','core_asm.obj'] if a.module else [])])
+ with (out/'PARENT.lnk').open('a') as f:f.write('\noption packcode=0\n'+('order clname CODE clname FARCODE clname FAR_DATA clname BEGDATA clname DATA clname BSS clname STACK clname LEASE_PAD clname LEASE_MODULE clname LEASE_BANK\n' if a.banked else ''))
  run(['wlink','@PARENT.lnk'])
  bank_layout={}
  if a.banked:
@@ -261,16 +273,16 @@ def main():
    mat=re.search(r'^([0-9a-f]+):([0-9a-f]+)\s+'+symbol+r'\b',(out/'PARENT.map').read_text(),re.M)
    assert mat,symbol
    return int(mat[1],16)*16+int(mat[2],16)
-  padding=20035*16-256-address('_compiler_lease_bank_start');assert padding>0 and padding<300000
+  padding=(360688 if a.retained_arena else 20035*16-256)-address('_compiler_lease_bank_start');assert padding>0 and padding<400000
   run(['nasm','-f','obj','-DBANK_START','-DBANK_PADDING='+str(padding),str(ROOT/'src/process/compiler_lease_bank.asm'),'-o','bank_start.obj'])
   run(['wlink','@PARENT.lnk'])
   start=address('_compiler_lease_bank_start');end=address('_compiler_lease_bank_end')
-  assert start==20035*16-256 and start<end<(30107*16-256),(start,end)
+  assert start==(360688 if a.retained_arena else 20035*16-256) and start<end<(30107*16-256),(start,end)
   for symbol in ['_compiler_lease_begin','_compiler_lease_end','_compiler_lease_info','_compiler_lease_storage','_lease_dos_read','_lease_dos_resize']:
-   assert address(symbol)<start,symbol
+   assert address(symbol)<(23245*16-256 if a.retained_arena else start),symbol
   bank_layout=dict(start_image_byte=start,end_image_byte=end,bank_bytes=end-start,padding_bytes=padding)
  module=None
- if a.module:
+ if a.module and not a.retained_arena:
   from compiler_lease_module import split
   module=split(out/'PARENT.EXE',out/'PARENT.map','_compiler_lease_bank_start',keep_symbol='_compiler_lease_bank_start')
   bad=bytearray((out/'PCCOMP.OVL').read_bytes());bad[0]^=1;(out/'BROKEN.OVL').write_bytes(bad)
@@ -283,19 +295,19 @@ def main():
  layout=inspect((out/'PARENT.EXE').read_bytes())
  if a.banked:
   resident={}
-  for name in ['LEASE_CORE','LEASE_IO_CODE','LEASE_STORAGE']+(['LEASE_MODULE_INFO'] if a.module else []):
+  for name in ['LEASE_CORE','LEASE_IO_CODE']+(['LEASE_MODULE_INFO'] if a.module else ['LEASE_STORAGE']):
    mat=re.search(r'^'+name+r'\s+\S+\s+\S+\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)',text_map,re.M);assert mat,name
-   size=int(mat[3],16);assert int(mat[1],16)*16+int(mat[2],16)+size<=bank_layout['start_image_byte']
+   size=int(mat[3],16);assert int(mat[1],16)*16+int(mat[2],16)+size<=(23245*16-256 if a.retained_arena else bank_layout['start_image_byte'])
    resident[name]=size
   bank_layout['resident_sections']=resident;bank_layout['resident_bytes']=sum(resident.values())
   assert bank_layout['resident_bytes']<3000,bank_layout
   assert layout['page_minimum_including_PSP']<30107*16
-  run(['wdis','-a','-l=core.dis','compiler_lease_core.o'])
+  run(['wdis','-a','-l=core.dis','core_asm.obj' if a.retained_arena else 'compiler_lease_core.o'])
   dis=(out/'core.dis').read_text();assert not re.search(r'call\s+near ptr _(lease_dos_|compiler_lease_)',dis) and 'offset DGROUP:' not in dis
   for obj in ['lease.dis','core.dis']:
    asm=(out/obj).read_text()
    targets=re.findall(r'call\s+far ptr (\w+)',asm)
-   assert all(name.startswith('_lease_dos_') or name in ('_compiler_lease_prepare','_compiler_lease_finalize','_compiler_lease_init') for name in targets),targets
+   assert all(name.startswith('_lease_dos_') or name in ('_lease_core_block','_lease_core_checksum') or name in ('_compiler_lease_prepare','_compiler_lease_finalize','_compiler_lease_init') for name in targets),targets
  else:assert layout['page_minimum_including_PSP']<20035*16
  shutil.copyfile(a.compiler_dir/'ASPCOMP.EXE',out/'ASPCOMP.EXE')
  source='string value\nproc main\nget value 10\nendproc\n';(out/'TEST.ASP').write_bytes(source.encode())
@@ -304,13 +316,13 @@ def main():
  with (out/'dosbox.log').open('w') as log:subprocess.run(['dosbox-x','-fastlaunch','-nogui','-conf',str(out/'dosbox.conf')],stdout=log,stderr=log,env=dict(os.environ,SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy'),check=True,timeout=90)
  assert (out/'PASS.TXT').exists() and not (out/'FAIL.TXT').exists(),(out/'RESULT.TXT').read_text() if (out/'RESULT.TXT').exists() else 'no parent result'
  text=(out/'RESULT.TXT').read_text();assert 'RESULT 3 0 30107 1' in text,text
- rows=[list(map(int,line.split()[1:])) for line in (out/'CLIENT.LOG').read_text().splitlines()];assert len(rows)==3 and all(r[1]==0 and r[4]==6 and 20035<=r[5]<30107 for r in rows),rows
+ rows=[list(map(int,line.split()[1:])) for line in (out/'CLIENT.LOG').read_text().splitlines()];assert len(rows)==3 and all(r[1]==0 and r[4]==6 and (23245 if a.retained_arena else 20035)<=r[5]<30107 for r in rows),rows
  assert (out/'TEST.ASX').read_bytes()==compile_source(source,enable_get=True)
  assert not list(out.glob('LPM*.TMP'))
  for n,h in frozen.items():assert sha(ROOT/n)==h,n
  report=dict(passed=True,original_inputs=[],parent_profile_simulated=True,production_integrated=False,physical_verified=False,
-  module=module,banked=a.banked,bank_layout=bank_layout,rounds=3,tail_bytes=(30107-20035)*16,parent_paragraphs=30107,retained_paragraphs=20035,client_paragraphs=8539,
+  kernel_placement=dict(modeled_arena_image_byte=360688,additional_parent_paragraphs_in_fixture=0,production_cache_ownership_established=False) if a.retained_arena else None,retained_arena=a.retained_arena,module=module,banked=a.banked,bank_layout=bank_layout,rounds=3,tail_bytes=(30107-(23245 if a.retained_arena else 20035))*16,parent_paragraphs=30107,retained_paragraphs=23245 if a.retained_arena else 20035,client_paragraphs=8539,
   compiler_sha256=m['binary_sha256'],parent_sha256=sha(out/'PARENT.EXE'),client_sha256=sha(out/'CLIENT.EXE'),
   parent_minimum=layout,client_checks=rows,sources=frozen,result=text,scope=__doc__+' Real foreign parent MCB, no-inherit backup, exact tail bytes, real compiler, allocation obstruction/retry, repeated child invocations and vectors. DOSBox integrated DOS; no production UART/renderer/outer-loan/hardware or whole-language claim.')
- (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS compiler lease:',sum(r[0] for r in rows),'client checks;3 exact161152-byte restorations')
+ (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS compiler lease:',sum(r[0] for r in rows),'client checks;3 exact',report['tail_bytes'],'byte restorations')
 if __name__=='__main__':main()

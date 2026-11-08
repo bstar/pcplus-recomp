@@ -10,6 +10,12 @@ extern unsigned char __far compiler_lease_bank_start;
 extern unsigned char __far compiler_lease_bank_end;
 static unsigned word_at(unsigned seg,unsigned offset)
 {return *(unsigned __far *)MK_FP(seg,offset);}
+#ifdef COMPILER_LEASE_COMPACT
+extern unsigned __far __cdecl lease_core_block(unsigned,unsigned);
+extern unsigned __far __cdecl lease_core_checksum(unsigned,unsigned,unsigned);
+#define block lease_core_block
+#define checksum(c,p,n) lease_core_checksum(c,FP_SEG(p),n)
+#else
 static unsigned block(unsigned psp,unsigned size)
 {
  unsigned char type;
@@ -17,12 +23,16 @@ static unsigned block(unsigned psp,unsigned size)
  type=*(unsigned char __far *)MK_FP(psp-1,0);
  return (type=='M'||type=='Z') && word_at(psp-1,1)==psp && word_at(psp-1,3)==size && word_at(psp,0)==0x20cd;
 }
+#endif
+#ifndef COMPILER_LEASE_COMPACT
 static unsigned identity(unsigned token,unsigned owner)
 {
  return lease_dos_context() && held.cookie==COOKIE && token==held.token && owner && owner!=held.parent &&
   lease_dos_psp()==owner && word_at(owner,0)==0x20cd && word_at(owner,0x16)==held.parent &&
   word_at(owner-1,1)==owner;
 }
+#endif
+#ifndef COMPILER_LEASE_COMPACT
 static unsigned checksum(unsigned crc,const unsigned char __far *p,unsigned n)
 {
  unsigned i,b;
@@ -71,7 +81,7 @@ unsigned __far __cdecl compiler_lease_end(unsigned token,unsigned owner)
   if(lease_dos_read(held.handle,MK_FP(seg,0),n)!=n)return done(failure(CL_IO));
   crc=checksum(crc,MK_FP(seg,0),n);seg+=paras;remaining-=paras;
  }
- if(lease_dos_read(held.handle,held.buffer,1)!=0 || crc!=held.crc)return done(CL_CORRUPT);
+ if(lease_dos_read(held.handle,held_buffer,1)!=0 || crc!=held.crc)return done(CL_CORRUPT);
  held.valid=1;held.phase=CL_CLEANUP;held.busy=0;
  return compiler_lease_finalize(token,owner);
 }
@@ -88,6 +98,7 @@ unsigned __far __cdecl compiler_lease_info(unsigned selector)
  return 65535U;
 }
 
+#endif
 #ifdef COMPILER_LEASE_MODULE
 /* Trusted parent-only cold entry. Caller must hold the inactive overlay arena;
  * this does not grant permission to overwrite a live menu or snapshot. No DOS
@@ -97,21 +108,21 @@ extern const lease_module __far compiler_lease_expected;
 extern unsigned __far __cdecl compiler_lease_init(unsigned,unsigned,unsigned);
 unsigned __far __cdecl compiler_lease_load(const char *path,unsigned parent,unsigned token)
 {
- unsigned fd,n,status,seg,crc,at,previous=0,value,i,base=parent+16;
+ unsigned fd,n,status,seg,crc,at,previous=0,value,i,actual,base=parent+16;
  unsigned char __far *body;
  const lease_module __far *m=&compiler_lease_expected;
  if(!lease_dos_context() || lease_dos_psp()!=parent)return CL_IDENTITY;
  if(held.cookie==COOKIE && (held.phase!=CL_IDLE || held.busy))return CL_STATE;
- if(!token || m->magic!=0x4342 || m->version!=1 || !m->bytes || m->bytes>4096 ||
+ if(!token || m->magic!=0x4342 || m->version!=1 || m->bytes<2 || m->bytes>4096 ||
     m->fixups>256 || m->target>0x9fff-base || m->keep<16)return CL_ARGUMENT;
- n=m->bytes+m->fixups*2;seg=base+m->target;
- if(!block(parent,word_at(parent-1,3)) || m->keep>=word_at(parent-1,3) ||
-    seg<parent+m->keep || (unsigned long)seg*16+n>(unsigned long)(parent+word_at(parent-1,3))*16 ||
+ n=m->bytes+m->fixups*2;seg=base+m->target;actual=word_at(parent-1,3);
+ if(!block(parent,actual) || m->keep>=actual ||
+    seg<parent+m->keep || seg+(n+15)/16>parent+actual ||
     FP_SEG(&compiler_lease_bank_start)!=seg || FP_OFF(&compiler_lease_bank_start)!=0 ||
     FP_OFF(&compiler_lease_bank_end)!=m->bytes)return CL_ARGUMENT;
  fd=lease_dos_open((const unsigned char __far *)path);if(fd==65535U)return CL_IO;
  body=MK_FP(seg,0);status=0;
- if(lease_dos_read(fd,body,n)!=n || lease_dos_read(fd,held.buffer,1)!=0)status=CL_IO;
+ if(lease_dos_read(fd,body,n)!=n || lease_dos_read(fd,held_buffer,1)!=0)status=CL_IO;
  if(lease_dos_close(fd))status=CL_IO;
  if(status)return status;
  crc=checksum(0xffff,body,n);if(crc!=m->crc)return CL_CORRUPT;

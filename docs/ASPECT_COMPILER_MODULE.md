@@ -1,5 +1,10 @@
 # Compiler bank loading and full-parent admission
 
+The next [compact/retained-arena checkpoint](ASPECT_COMPILER_RETAINED.md)
+restores the six ordinary GET cases, but richer cases still fail. It also
+validates whole-kernel placement in modeled retained snapshot space. The
+2,902-byte layout and failed matrix below remain historical evidence.
+
 The source-linked compiler bank can now be extracted, checked and loaded as
 `PCCOMP.OVL`. A complete-parent layout builds and reproduces from735 public
 sources. **That layout is not accepted:** its additional resident footprint

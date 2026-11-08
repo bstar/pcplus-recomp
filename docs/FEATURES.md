@@ -1,5 +1,13 @@
 # Full application reconstruction checklist
 
+[Compact compiler leasing](ASPECT_COMPILER_RETAINED.md) reduces the resident
+module from2,902 to2,177 bytes before alignment. Six ordinary full-parent GET
+cases pass again; both lifetime and both WHEN cases still fail for heap, so the
+candidate stays unaccepted. A separate whole-kernel retained-arena experiment
+passes1,416 checks, actual compiler EXEC and three exact109,792-byte restorations
+with unchanged modeled parent allocation. Source rebuilds reproduce both
+arrangements. Production arena ownership/loading and source bridge remain open.
+
 [Compiler-bank loading](ASPECT_COMPILER_MODULE.md) passes cold loading, corrupt/
 missing-module refusal and1,416 restoration checks;33-source component and
 735-source full-parent rebuilds reproduce exactly. Rebased Line/Port and Meta

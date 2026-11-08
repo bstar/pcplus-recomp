@@ -26,14 +26,14 @@ def main():
   with (out/'replay.log').open('a') as log:subprocess.run([sys.executable,*args],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
  run(['standalone/build_aspect_compiler_dos.py','--get','--output','build/compiler'])
  assert sha(fresh/'build/compiler/ASPCOMP.EXE')==compiler['binary_sha256']
- run(['standalone/test_compiler_lease_dos.py',*(['--module'] if checks.get('module') else ['--banked'] if checks.get('banked') else []),'--compiler-dir','build/compiler','--output','build/lease'])
+ run(['standalone/test_compiler_lease_dos.py',*(['--retained-arena'] if checks.get('retained_arena') else ['--module'] if checks.get('module') else ['--banked'] if checks.get('banked') else []),'--compiler-dir','build/compiler','--output','build/lease'])
  replay=json.loads((fresh/'build/lease/result.json').read_text());assert replay['passed']
- for key in ('module','banked','bank_layout','parent_sha256','client_sha256','compiler_sha256','parent_paragraphs','retained_paragraphs','client_paragraphs','tail_bytes','rounds','client_checks','result'):
+ for key in ('kernel_placement','retained_arena','module','banked','bank_layout','parent_sha256','client_sha256','compiler_sha256','parent_paragraphs','retained_paragraphs','client_paragraphs','tail_bytes','rounds','client_checks','result'):
   assert checks[key]==replay[key],key
  for n,h in sources.items():assert sha(ROOT/n)==sha(fresh/n)==h,n
  report=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,source_count=len(sources),sources=sources,
   parent_sha256=replay['parent_sha256'],client_sha256=replay['client_sha256'],compiler_sha256=replay['compiler_sha256'],
-  module=replay['module'],banked=replay['banked'],bank_layout=replay['bank_layout'],client_checks=sum(row[0] for row in replay['client_checks']),tail_bytes=replay['tail_bytes'],rounds=replay['rounds'],
+  kernel_placement=replay['kernel_placement'],retained_arena=replay['retained_arena'],module=replay['module'],banked=replay['banked'],bank_layout=replay['bank_layout'],client_checks=sum(row[0] for row in replay['client_checks']),tail_bytes=replay['tail_bytes'],rounds=replay['rounds'],
   result_sha256=sha(fresh/'build/lease/result.json'),production_integrated=False,physical_verified=False,
   scope=__doc__+' Exact generated parent/client/compiler and observed DOS results. Profile-sized synthetic parent, not production bridge/IRQ/outer-loan/BBS acceptance.')
  (out/'result.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS compiler lease cold source:',len(sources),'sources;',report['client_checks'],'client checks')

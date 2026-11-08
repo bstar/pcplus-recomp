@@ -1,5 +1,11 @@
 # Source compiler residency under the complete parent
 
+The [compact/retained-arena experiment](ASPECT_COMPILER_RETAINED.md) now restores
+ordinary GET startup, but lifetime/WHEN cases still hit memory limits. A
+whole-kernel retained snapshot-space harness runs the compiler and restores
+109,792 bytes without increasing its modeled parent allocation. Production
+loading/ownership/bridge and full-parent source compilation remain open.
+
 The [cold-module layout](ASPECT_COMPILER_MODULE.md) now reproduces under the
 complete parent, including rebased existing modules. Its2,912-byte aligned
 resident increase causes the precompiled GET child to fail early with ENOMEM;

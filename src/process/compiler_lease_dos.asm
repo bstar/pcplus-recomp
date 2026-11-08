@@ -1,10 +1,17 @@
 ; Experimental far DOS boundary. No CRT, borrowed DS, or near parent pointers.
 BITS 16
 CPU 8086
+%ifdef COMPILER_LEASE_RETAINED
+SEGMENT LEASE_IO_CODE public align=16 class=LEASE_MODULE use16
+%else
 SEGMENT LEASE_IO_CODE public align=16 class=FARCODE use16
+%endif
 %macro entry 1
  global _lease_dos_%1
 _lease_dos_%1:
+%ifdef COMPILER_LEASE_MODULE
+ call save_regs
+%else
  push bp
  mov bp,sp
  push bx
@@ -14,8 +21,12 @@ _lease_dos_%1:
  push di
  push ds
  push es
+%endif
 %endmacro
 %macro leave 0
+%ifdef COMPILER_LEASE_MODULE
+ jmp restore_regs
+%else
  pop es
  pop ds
  pop di
@@ -25,7 +36,34 @@ _lease_dos_%1:
  pop bx
  pop bp
  retf
+%endif
 %endmacro
+%ifdef COMPILER_LEASE_MODULE
+; Pop the near setup return before establishing the original far frame.
+; All public input is on the stack; AX is the documented return register.
+save_regs:
+ pop ax
+ push bp
+ mov bp,sp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push ds
+ push es
+ jmp ax
+restore_regs:
+ pop es
+ pop ds
+ pop di
+ pop si
+ pop dx
+ pop cx
+ pop bx
+ pop bp
+ retf
+%endif
 entry context
  mov ax,ds
  mov dx,ss
@@ -166,13 +204,20 @@ error_value:
  mov ax,0xffff
  leave
 last_error: dw 0
-%ifdef COMPILER_LEASE_BANKED
+%ifdef COMPILER_LEASE_MODULE
+%define LEASE_BYTES 256
+%elifdef COMPILER_LEASE_BANKED
 %define LEASE_BYTES 512
 %else
 %define LEASE_BYTES 4352
 %endif
 %ifdef COMPILER_LEASE_MODULE
-SEGMENT LEASE_STORAGE public align=16 class=FARCODE use16
+%ifdef COMPILER_LEASE_RETAINED
+SEGMENT LEASE_CORE public align=16 class=LEASE_MODULE use16
+%else
+SEGMENT LEASE_CORE public align=16 class=FARCODE use16
+%endif
+GROUP LEASE_CORE_GROUP LEASE_CORE
 %else
 SEGMENT LEASE_STORAGE public align=16 class=FAR_DATA use16
 %endif

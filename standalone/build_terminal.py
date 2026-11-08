@@ -1018,14 +1018,14 @@ if args.phone_log_bank:
 compiler_lease_module=None
 if args.compiler_lease_module:
  assert args.meta_shared_runtime and args.aspect_get_policy,'Compiler bank layout requires the complete shared-runtime GET profile'
- lease_inputs=['compiler_lease.c','compiler_lease_core.c','compiler_lease_private.h','compiler_lease.h','compiler_lease_dos.asm','compiler_lease_module.asm','compiler_lease_bank.asm']
+ lease_inputs=['compiler_lease_core.asm','compiler_lease.c','compiler_lease_core.c','compiler_lease_private.h','compiler_lease.h','compiler_lease_dos.asm','compiler_lease_module.asm','compiler_lease_bank.asm']
  sources += [ROOT/'src/process'/n for n in lease_inputs]
  for stem in ['compiler_lease','compiler_lease_core']:
   obj=OUT/(stem+'.obj')
   subprocess.run(['wcc','-q','-os','-bt=dos','-0','-ms','-fpc','-ecc','-s','-w4','-we','-dCOMPILER_LEASE_BANKED','-dCOMPILER_LEASE_MODULE','-fo='+str(obj),str(ROOT/'src/process'/(stem+'.c'))],check=True)
   if stem=='compiler_lease':lease_bank_obj=str(obj)
   else:objects.append(str(obj))
- for stem,source,defines in [('lease_start','compiler_lease_bank.asm',['-DBANK_START','-DBANK_PADDING=0']),('lease_end','compiler_lease_bank.asm',[]),('lease_io','compiler_lease_dos.asm',['-DCOMPILER_LEASE_BANKED','-DCOMPILER_LEASE_MODULE']),('lease_info','compiler_lease_module.asm',[])]:
+ for stem,source,defines in [('lease_start','compiler_lease_bank.asm',['-DBANK_START','-DBANK_PADDING=0']),('lease_end','compiler_lease_bank.asm',[]),('lease_io','compiler_lease_dos.asm',['-DCOMPILER_LEASE_BANKED','-DCOMPILER_LEASE_MODULE']),('lease_info','compiler_lease_module.asm',[]),('lease_core','compiler_lease_core.asm',[])]:
   obj=OUT/(stem+'.obj')
   subprocess.run(['nasm','-f','obj',*defines,str(ROOT/'src/process'/source),'-o',str(obj)],check=True)
   objects.append(str(obj))
