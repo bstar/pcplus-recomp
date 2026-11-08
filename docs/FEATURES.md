@@ -9,7 +9,15 @@ Chat and UI; complete ASPECT, other emulations and transfer protocols.
 **Host mode is the final implementation stage.** It remains required for full
 original feature parity and is deferred until those earlier stages are complete.
 
-[Current Chat-mode package](CHAT_MODE_PACKAGE.md) now reproduces all17 files and
+[Current checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
+reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS
+workflows,34 package controls and fresh Enigma/Synchronet regressions pass.
+It includes the expanded interpreter, CONNECTED compiler, sequential Help frame
+reuse and short overlay-read rejection. Controlled deployment and physical
+Boca/SPA2102/SynthModem/LoC Enigma acceptance remain separate; it is not selected
+or installed. Full original feature parity remains open, with Host last.
+
+[Earlier Chat-mode package](CHAT_MODE_PACKAGE.md) now reproduces all17 files and
 its ZIP from1082 committed sources, with eight packaged DOS cases and matching
 Chat-mode editor contracts. [Reliability](CHAT_MODE_RELIABILITY.md) adds current-byte
 BUSY/three-call,300-second receive, cancel/retry and live-source carrier/redial

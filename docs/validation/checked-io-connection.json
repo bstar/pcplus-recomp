@@ -1,0 +1,55 @@
+{
+  "checkpoint_verified": true,
+  "products": {
+    "TERMINAL.EXE": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8",
+    "PCLINE.OVL": "6e8253bb12b242b55b0987bd6850c16c053be605f2fa7447c159b23ab2604fb4",
+    "PCMETA.OVL": "ab929d876b1fcff4c51e136fb3e764231828dc88b6e4bf6ebc9039b94dc900b6",
+    "PCCOMP.OVL": "7067e4db661cb39e0d8e7336179fccd8d8cacebb2001a2f7a94dbf7cec0dffca",
+    "ASPECT.EXE": "668e972244fac9171d62bd2224ba4387987d65405625794e3200ae53a084729c",
+    "ASPCOMP.EXE": "1db52316f671b43663395abc7de41925abfe1205fffb930bdb5d6dae70f98a14",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195"
+  },
+  "original_inputs": [],
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "release_eligible": false,
+  "Enigma_checks": 18,
+  "Enigma_partial_bytes": 4096,
+  "Enigma_retry_bytes": 65539,
+  "carrier_capture_control_cases": 16,
+  "Synchronet_editor_checks": 22,
+  "Synchronet_screen_cells": 1920,
+  "Synchronet_different_cells": 0,
+  "inherited_LoC_parent_only": {
+    "parent_sha256": "a0e1b082f4334e94871065ac98c09c3ecd107246744efcc10a59020892aebbef",
+    "matched_cells": 1920,
+    "scope": "Prior selected copied LoC menu and39-label Alt-Z return on the exact unchanged terminal; not a new interpreter or live-private-board test.",
+    "receipts": {
+      "build/bbs-lab/results/enigma/chat-mode-loc-main-20261108/proxy-integration.json": "067ccceb30f96ac1f9e5f6b55d7871fa07913b5d5bb5f2a861ff33fdcc75c8b6",
+      "build/bbs-lab/results/enigma/chat-mode-loc-main-20261108/screen-reference-audit.json": "a151d7363836cbfdc1e30a18905e1fc616bc07439409bbfb3cdc16d9895df80c",
+      "build/bbs-lab/results/enigma/chat-mode-loc-main-20261108/loc-main-audit.json": "d66ffabca304861f33981ebcc837d0e6378f6d029e4e9fc3f43bfe029ba49bc1"
+    }
+  },
+  "receipts": {
+    "build/bbs-lab/results/enigma/checked-io-enigma-20261108/carrier-checks.json": "4973970dddd0096c2a31036c1089ef5b8b10e20e11db6c43ff991e3275715766",
+    "build/checked-io-enigma-audit-20261108/result.json": "674f77122f268a1f94e89abe52346be76029ae9b0af20902f0b9564aa5c0dfb2",
+    "build/checked-io-enigma-controls-20261108/result.json": "b011733abd2059abe4828737c489181c991712c5924a4d73b898ed89033a260f",
+    "build/bbs-lab/results/synchronet/checked-io-synchronet-20261108/proxy-integration.json": "835f65f5cb8b7ab0bcc4adebefa5004e2e481a1215f28ed5e900dce664d77d06",
+    "build/bbs-lab/results/synchronet/checked-io-synchronet-20261108/screen-reference-audit.json": "6e16d76437f2c79d7fb15f6b2197cc67cdb09d41da601c6830b06708228faab4",
+    "build/bbs-lab/results/synchronet/checked-io-synchronet-20261108/size-probe-screen-audit.json": "c8267b054207af5a7e6deb051a601698eaff9053a1e298c7136ebebec7ad3bd5",
+    "build/checked-io-lab-20261108/package.json": "c5813c387bfe1ca30127061e92653aeb52144a14b17f906c00198fa1412029cb",
+    "build/checked-io-lab-contract-20261108/result.json": "5b28957274569b58c82c0d0f8ae7df95b3bb13fc3bbb83c5ec7e21f38c3ad1bd"
+  },
+  "limits": [
+    "Actual loopback SynthModem Telnet proxy/owned stock Enigma and Synchronet; no DSP/SIP/analog hardware.",
+    "Enigma386/UMB COM3IRQ5 19200HARD startup source compilation, virtualDCD loss, sameprocess retry/closure/menu/exit; established150000ms transfer window.",
+    "Synchronet DOS8086 stock editor key controls and exactCPR/NAWS screen reference.",
+    "LoC copied-menu evidence inherited only for identical parent binary; no claim about all current private-board screens.",
+    "Complete source/archive/packaged DOS qualification is recorded separately; no physical deployment or acceptance.",
+    "Loader/Help lease fault matrix, full ASPECT/emulation/protocol/Host parity remain open; Host last."
+  ]
+}

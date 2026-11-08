@@ -436,3 +436,15 @@ and the nested-PROGRAM/held-FILE/Help case. No stack or buffer limits were reduc
 This maintained toolchain adapter remains experimental: broader loader/lease
 faults, new-byte BBS/package and physical gates remain open. No installation,
 private settings/history or live bridge changed. Host remains last.
+
+
+## Complete checked-I/O candidate (2026-11-08)
+
+The [new17-file candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now reproduces its
+complete package and ZIP from1103 committed sources, passing34 package/module
+controls and eight actual packaged DOS8086 workflows. Fresh Enigma tests verify
+source compilation, two authenticated sessions, virtual carrier loss, exact65539
+byte retry, menu input and normal exit. Independent capture checks reject15
+mutations. Synchronet editor and1920-cell/CPR/NAWS reference audits pass too.
+This is an undeployed hardware-test candidate. Physical admission and broader
+loader/Help fault composition remain separate; full original parity is incomplete.
