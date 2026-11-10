@@ -169,7 +169,7 @@ END=r'''
 }
 '''
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
-def main(lifecycle=False):
+def main(lifecycle=False,directory_baud=False):
  sys.path.insert(0,str(ROOT/'src/aspect'))
  from compiler import compile_source
  OUT.mkdir(parents=True,exist_ok=True);inc='-I'+str(ROOT/'reconstruction/uart')+'/'
@@ -220,12 +220,16 @@ def main(lifecycle=False):
  cases=corpus['vectors']+arithmetic_corpus['vectors']+parameter_cases+command_corpus['vectors']+conversion_corpus['vectors']+compiler_corpus['vectors']+console_corpus['vectors']+serial_corpus['vectors']+receive_cases+directory_corpus['vectors']+when_corpus['vectors']+find_corpus['vectors']+break_corpus['vectors']
  cases+=raw_output['vectors']
  cases+=connected_corpus['vectors']
+ if directory_baud:
+  baud_corpus_path=ROOT/'standalone/fixtures/aspect_directory_baud_runtime_vectors.json'
+  cases+=json.loads(baud_corpus_path.read_text())['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
  assert len({c['name'] for c in cases})==len(cases)
  sources=[Path(__file__).resolve(),corpus_path,arithmetic_corpus_path,parameter_corpus_path,command_corpus_path,ROOT/'reconstruction/uart/encodings.inc',ROOT/'src/aspect/runtime.c',ROOT/'src/aspect/runtime.h',ROOT/'src/aspect/script_file_runtime.c',ROOT/'src/aspect/file_info_runtime.c',ROOT/'src/aspect/file_times_runtime.c',ROOT/'src/aspect/enumeration_runtime.c',ROOT/'src/aspect/script_file_runtime.h',ROOT/'src/aspect/file_info_runtime.h',ROOT/'src/aspect/file_times_runtime.h',ROOT/'src/aspect/enumeration_runtime.h',ROOT/'src/aspect/file_io.c',ROOT/'src/aspect/file_io.h',ROOT/'src/aspect/script_path.c',ROOT/'src/aspect/script_path.h']
  objects=[];units=[]
+ if directory_baud:sources.append(baud_corpus_path)
  sources.append(ROOT/'src/aspect/runtime_format.h')
  sources.append(conversion_corpus_path)
  sources.append(compiler_corpus_path)
@@ -243,7 +247,7 @@ def main(lifecycle=False):
  sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h',ROOT/'src/keyboard/api.h']
  for name,rel,define in ASM:
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
-  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+(['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
+  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+(['-DASPECT_DIRECTORY_BAUD'] if directory_baud else [])+(['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
  for unit,start,end,base in SUPPORT:
   p=OUT/f'support{unit}.bin'
   subprocess.run(['nasm','-f','bin',inc,'-DASPECT_EXPR_FLAT',f'-DASPECT_EXPR_UNIT={unit}',str(ROOT/'src/aspect/expression_support.asm'),'-o',str(p)],check=True)
@@ -323,7 +327,7 @@ def main(lifecycle=False):
  baud=directory_corpus['compiler_only'][0];baud_data=compile_source(baud['source'])
  assert baud_data==bytes.fromhex(baud['hex']) and hashlib.sha256(baud_data).hexdigest()==baud['asx_sha256']
  (OUT/'DIRBAUD.ASX').write_bytes(baud_data)
- program+=' run("DIRBAUD.ASX",1000,3,0,0,0,0UL,0);\n'
+ program+=(' run("DIRBAUD.ASX",1000,0,0,0,1,300UL,0);\n' if directory_baud else ' run("DIRBAUD.ASX",1000,3,0,0,0,0UL,0);\n')
  # Malformed fixtures stop at header/read/unsupported boundaries, not arbitrary unsafe operands.
  for name,data,error in [('NOHEADER',b'',2),('BADHEAD',bytes.fromhex('81 cf 94'),2),('BADOP',bytes.fromhex('00 ff'),3),('TRUNC',bytes.fromhex('00 cf 5b 00 8d 00 ab 07'),5)]:
   (OUT/(name+'.ASX')).write_bytes(data);program+=f' run("{name}.ASX",1000,{error},0,0,0,0UL,0);\n'
@@ -423,6 +427,7 @@ def main(lifecycle=False):
   maintained_heap_fault_fixtures={'HEAPFLT':'IDIVEDGE compiler bytes with global-string count changed from0to2','HEAPZERO':'IDZ compiler bytes with global-string count changed from0to2'},
   fixture_expectations={c['name']:{'source_sha256':c['source_sha256'],'asx_sha256':c['asx_sha256'],'expected':c['expected']} for c in cases},
   scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete107-slot opcode table; thirteen native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
+ report['experimental_directory_baud']=directory_baud
  if lifecycle:
   report['compile_flags'].append('ASPECT_GET_LIFECYCLE')
   report['GET_lifecycle']='Actual runtime lifecycle with controlled GET retained/recovery peers; full GET linkage remains open.'
@@ -431,7 +436,8 @@ if __name__=='__main__':
  import argparse
  parser=argparse.ArgumentParser(description=__doc__)
  parser.add_argument('--get-lifecycle',action='store_true')
+ parser.add_argument('--directory-baud',action='store_true')
  parser.add_argument('--output',type=Path)
  args=parser.parse_args()
  if args.output:OUT=args.output.resolve()
- main(lifecycle=args.get_lifecycle)
+ main(lifecycle=args.get_lifecycle,directory_baud=args.directory_baud)

@@ -32,7 +32,8 @@ maintained source relocates that word to `aspect_directory_entry`. The selected
 entry is separate from the114 record bytes. `$D_BAUD` is long selector0. Its
 original `DA59` getter uses record word46 as an index into the global DWORD baud
 tableDS:3270; compiler support does not establish that table's runtime binding.
-The baud vector remains explicitly compiler-only in this phase.
+The baud vector was compiler-only at this checkpoint. The later opt-in
+[runtime binding](ASPECT_DIRECTORY_BAUD.md) now executes and validates it.
 
 String operands encode as `6E selector`, integer operands as `6F selector`, and
 long operands as `70 selector`. For example:

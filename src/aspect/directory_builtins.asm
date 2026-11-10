@@ -4,6 +4,7 @@
 ; Near RET; AX result, flags and all other registers preserved. Strings alias
 ; the owned selected114-byte record, not literals or freshly allocated copies.
 ; Original compiler names KBDFILE/METAKEY map to offsets95/86 respectively.
+; Optional DA59..DA6A baud getter returns DX:AX and changes BX/FLAGS.
 BITS 16
 CPU 8086
 %ifdef ASPECT_DIRECTORY_FLAT
@@ -13,8 +14,10 @@ CPU 8086
 ORG 0xd9b5
 %elif ASPECT_DIRECTORY_UNIT=2
 ORG 0xdaa2
+%elif ASPECT_DIRECTORY_UNIT=3
+ORG 0xda59
 %else
-%error Select ASPECT_DIRECTORY_UNIT1..2
+%error Select ASPECT_DIRECTORY_UNIT1..3
 %endif
 %else
 SEGMENT _TEXT public class=CODE use16
@@ -70,4 +73,30 @@ aspect_directory_builtin_pword:
 aspect_directory_builtin_script:
  mov ax,aspect_directory_record+52
  ret
+%endif
+
+%ifdef ASPECT_DIRECTORY_FLAT
+%if ASPECT_DIRECTORY_UNIT=3
+%define DIRECTORY_BAUD_INCLUDE
+%define aspect_directory_baud_table 0x3270
+%endif
+%elifdef ASPECT_DIRECTORY_BAUD
+%define DIRECTORY_BAUD_INCLUDE
+global aspect_directory_builtin_baud
+%endif
+%ifdef DIRECTORY_BAUD_INCLUDE
+aspect_directory_builtin_baud:
+ mov bx,[aspect_directory_record+46]
+ shl bx,1
+ shl bx,1
+ mov ax,[bx+aspect_directory_baud_table]
+ mov dx,[bx+aspect_directory_baud_table+2]
+ ret
+%ifndef ASPECT_DIRECTORY_FLAT
+SEGMENT CONST public class=DATA use16
+GROUP DGROUP CONST
+global aspect_directory_baud_table
+aspect_directory_baud_table:
+ dd 300,1200,2400,4800,9600,19200,38400,57600,115200
+%endif
 %endif

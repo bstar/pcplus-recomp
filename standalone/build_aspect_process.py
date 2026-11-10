@@ -7,7 +7,7 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False,defer_help_resource=False,disk_script_snapshots=False,overlay_ready=False,early_help_model=False,help_parent_snapshot=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False,defer_help_resource=False,disk_script_snapshots=False,overlay_ready=False,early_help_model=False,help_parent_snapshot=False,directory_baud=False):
     assert not help_parent_snapshot or (overlay_ready and early_help_model and compiler_parent_lease)
     assert not early_help_model or defer_help_resource
     assert not defer_help_resource or help_resource
@@ -170,6 +170,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     extension['overlay_ready']=overlay_ready
     extension['early_help_model']=early_help_model
     extension['help_parent_snapshot']=help_parent_snapshot
+    extension['directory_baud']=directory_baud
     extension['alarm_vm']=alarm_vm
     extension['emulate_vm']=emulate_vm
     extension['get_display']=get_display

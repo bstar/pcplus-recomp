@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "scope": "Authored selected-directory configured baud values, independent of UART DTE or carrier. Invalid table indices use maintained operand error7 before destination assignment; no-entry uses the cleared record index0=300.",
+  "vectors": [
+    {
+      "name": "DB0",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 300,
+        "string0": "300"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DB1",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 1200,
+        "string0": "1200"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DB2",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 2400,
+        "string0": "2400"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DB3",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 4800,
+        "string0": "4800"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DB4",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 9600,
+        "string0": "9600"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DB5",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 19200,
+        "string0": "19200"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DB6",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 38400,
+        "string0": "38400"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DB7",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 57600,
+        "string0": "57600"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DB8",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 115200,
+        "string0": "115200"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DBNONE",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD\nltoa target value\nendproc\n",
+      "source_sha256": "5fe9dccaaf0767d071f4b8fb493c89d9359a039fefed4c5148f0f73842b96a56",
+      "hex": "01cf5b058e0070006e8e008c0094",
+      "asx_sha256": "24df3f53bdba1dcef926253fbf690e8037e4fcd4159c51a6e4de369919eae1ab",
+      "expected": {
+        "long0": 300,
+        "string0": "300"
+      }
+    },
+    {
+      "name": "DBBAD9",
+      "source": "long target\nproc main\ntarget=77L\ntarget=$D_BAUD\nendproc\n",
+      "source_sha256": "941d2f74c5d50480fe41e931521f45bf67d52ffb969ca3b7b180e8a7b3ef2283",
+      "hex": "00cf5b058e00ac4d0000005b058e00700094",
+      "asx_sha256": "427c175c90ae95c474edea1de3ad45815d4cc3fc7bff4d8ee0873930e119c091",
+      "expected": {
+        "error": "operand",
+        "long0": 77
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DBBADFF",
+      "source": "long target\nproc main\ntarget=77L\ntarget=$D_BAUD\nendproc\n",
+      "source_sha256": "941d2f74c5d50480fe41e931521f45bf67d52ffb969ca3b7b180e8a7b3ef2283",
+      "hex": "00cf5b058e00ac4d0000005b058e00700094",
+      "asx_sha256": "427c175c90ae95c474edea1de3ad45815d4cc3fc7bff4d8ee0873930e119c091",
+      "expected": {
+        "error": "operand",
+        "long0": 77
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "42415544205445535400000000000000000000000000000000000000000000000000000000000000000000000000ff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DBBADMAX",
+      "source": "long target\nproc main\ntarget=77L\ntarget=$D_BAUD\nendproc\n",
+      "source_sha256": "941d2f74c5d50480fe41e931521f45bf67d52ffb969ca3b7b180e8a7b3ef2283",
+      "hex": "00cf5b058e00ac4d0000005b058e00700094",
+      "asx_sha256": "427c175c90ae95c474edea1de3ad45815d4cc3fc7bff4d8ee0873930e119c091",
+      "expected": {
+        "error": "operand",
+        "long0": 77
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "42415544205445535400000000000000000000000000000000000000000000000000000000000000000000000000ffff000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DBMATH",
+      "source": "long target\nstring value\nproc main\ntarget=$D_BAUD+1L\nltoa target value\nendproc\n",
+      "source_sha256": "9b8db070b31569c84efd9e0f429359a6a891842ff149844dded3b9238608b372",
+      "hex": "01cf00057000ac010000007a005b058e007a006e8e008c0094",
+      "asx_sha256": "1ab19356d9021f3863429843517b10b90a0d5fb1d8e2c3b4c338e054f85ef5bb",
+      "expected": {
+        "long0": 115201,
+        "string0": "115201"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DBLOCAL",
+      "source": "long target\nstring value\nproc main\ncall worker\nltoa target value\nendproc\nproc worker\nlong local_value\nlocal_value=$D_BAUD\ntarget=local_value\nendproc\n",
+      "source_sha256": "8a2207dfe2fcf924f10244876ab7eaf82cec615bbcb1b85138a78d10d13d59f2",
+      "hex": "01cfd0c80e0000006e8e008c0094d20400cf5b05a2000070005b058e00a2000095",
+      "asx_sha256": "56ec24f359d774bbc556a2864d40f51d7265b74ec9d4d336c0e31957a71b15f1",
+      "expected": {
+        "long0": 57600,
+        "string0": "57600"
+      },
+      "directory": {
+        "entry": 7,
+        "record_hex": "424155442054455354000000000000000000000000000000000000000000000000000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    }
+  ]
+}

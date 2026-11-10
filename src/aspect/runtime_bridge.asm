@@ -409,11 +409,29 @@ aspect_operand_builtin_integer:
 aspect_operand_builtin_long:
  push bp
  mov bp,sp
+%ifdef ASPECT_DIRECTORY_BAUD
+ cmp word [bp+4],0
+ je .directory_baud
+%endif
  cmp word [bp+4],1
  jne unsupported
  call aspect_enumeration_size
  pop bp
  ret 2
+%ifdef ASPECT_DIRECTORY_BAUD
+extern aspect_directory_builtin_baud
+.directory_baud:
+ ; Native DA59 has unchecked table indexing. Refuse an invalid owned record
+ ; before reading the table or publishing an assignment destination.
+ cmp word [aspect_directory_record+46],8
+ ja .invalid_baud
+ call aspect_directory_builtin_baud
+ pop bp
+ ret 2
+.invalid_baud:
+ mov ax,7
+ jmp fail
+%endif
 
 global aspect_dispatch_wait,aspect_dispatch_shutdown
  global aspect_abort_tell,aspect_abort_format,aspect_abort_print

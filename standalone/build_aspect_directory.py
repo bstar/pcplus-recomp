@@ -4,7 +4,7 @@ import hashlib,json,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'build/aspect-directory';SOURCE=ROOT/'src/aspect/directory_builtins.asm'
-EXPECTED={1:bytes.fromhex('a182e4c3'),2:b''.join(bytes([0xb8])+p.to_bytes(2,'little')+bytes([0xc3]) for p in [0xe68d,0xe6af,0xe6a6,0xe650,0xe6b9,0xe669,0xe69b,0xe684])}
+EXPECTED={1:bytes.fromhex('a182e4c3'),2:b''.join(bytes([0xb8])+p.to_bytes(2,'little')+bytes([0xc3]) for p in [0xe68d,0xe6af,0xe6a6,0xe650,0xe6b9,0xe669,0xe69b,0xe684]),3:bytes.fromhex('8b1e7ee6d1e3d1e38b8770328b977232c3')}
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
  OUT.mkdir(parents=True,exist_ok=True);units=[]
