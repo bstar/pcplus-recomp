@@ -8,7 +8,7 @@ from build_aspect_runtime import ROOT, ASM, sha
 OUT = ROOT / 'build/aspect-runner'
 
 
-def main(extension=None,directory_baud=False,directory_fields=False):
+def main(extension=None,directory_baud=False,directory_fields=False,directory_proto=False):
     # Only the separately named experimental process builder supplies this.
     # Default production inputs/flags and opcode coverage remain unchanged.
     output=extension['output'] if extension else OUT
@@ -17,6 +17,8 @@ def main(extension=None,directory_baud=False,directory_fields=False):
     if directory_baud:feature_flags+=['-DASPECT_DIRECTORY_BAUD']
     directory_fields=directory_fields or bool(extension and extension.get('directory_fields'))
     if directory_fields:feature_flags+=['-DASPECT_DIRECTORY_FIELDS']
+    directory_proto=directory_proto or bool(extension and extension.get('directory_proto'))
+    if directory_proto:feature_flags+=['-DASPECT_DIRECTORY_PROTO']
     if extension and extension.get('get_display'):feature_flags+=['-DASPECT_GET_DISPLAY']
     if extension and extension.get('get_policy'):feature_flags+=['-DASPECT_GET_POLICY']
     get_vm=bool(extension and extension.get('get_vm'))
@@ -96,7 +98,7 @@ def main(extension=None,directory_baud=False,directory_fields=False):
         from build_get_bank import build as build_get_bank
         get_objects,get_sources=build_get_bank(output,feature_flags,overlay_ready=bool(extension and extension.get('overlay_ready')))
         objects+=get_objects;sources+=get_sources
-    for name, relative, define in ASM+serial_asm+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else []):
+    for name, relative, define in ASM+serial_asm+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else []):
         source, obj = ROOT / relative, output / (name + '.obj')
         sources.append(source)
         abort_flags=[]
@@ -182,6 +184,7 @@ def main(extension=None,directory_baud=False,directory_fields=False):
                   diagnostic_build=False,
                   experimental_directory_baud=directory_baud,
                   experimental_directory_fields=directory_fields,
+                  experimental_directory_proto=directory_proto,
                   scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN, thirteen SET/FETCH families and owned six-slot streams. Capability12 uses the real parent parser, selected key profile, cooperative help and native yes/no confirmation with child-owned receive. Raw ASIO retains immediate cancellation and queued raw delay semantics. Full language, command actions, other waits/flows, physical timing and arbitrary-bytecode safety remain unfinished.')
     if extension:
         result.update(experimental_external_commands=True,production_dispatch_changed=False,

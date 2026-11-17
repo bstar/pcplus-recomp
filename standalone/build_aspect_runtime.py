@@ -169,7 +169,7 @@ END=r'''
 }
 '''
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
-def main(lifecycle=False,directory_baud=False,directory_fields=False):
+def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_proto=False):
  sys.path.insert(0,str(ROOT/'src/aspect'))
  from compiler import compile_source
  OUT.mkdir(parents=True,exist_ok=True);inc='-I'+str(ROOT/'reconstruction/uart')+'/'
@@ -228,6 +228,11 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False):
  field_control=fields_corpus['disabled_control']
  cases.append(dict(field_control,expected=field_control['expected_enabled' if directory_fields else 'expected_disabled']))
  if directory_fields:cases+=fields_corpus['vectors']
+ proto_corpus_path=ROOT/'standalone/fixtures/aspect_directory_proto_runtime_vectors.json'
+ proto_corpus=json.loads(proto_corpus_path.read_text())
+ proto_control=proto_corpus['disabled_control']
+ cases.append(dict(proto_control,expected=proto_control['expected_enabled' if directory_proto else 'expected_disabled']))
+ if directory_proto:cases+=proto_corpus['vectors']
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
@@ -236,6 +241,7 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False):
  objects=[];units=[]
  if directory_baud:sources.append(baud_corpus_path)
  sources.append(fields_corpus_path)
+ sources.append(proto_corpus_path)
  sources.append(ROOT/'src/aspect/runtime_format.h')
  sources.append(conversion_corpus_path)
  sources.append(compiler_corpus_path)
@@ -251,9 +257,9 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False):
  sources.append(connected_corpus_path)
  sources.append(raw_output_path)
  sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h',ROOT/'src/keyboard/api.h']
- for name,rel,define in ASM+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else []):
+ for name,rel,define in ASM+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else []):
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
-  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+(['-DASPECT_DIRECTORY_BAUD'] if directory_baud else [])+(['-DASPECT_DIRECTORY_FIELDS'] if directory_fields else [])+(['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
+  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+(['-DASPECT_DIRECTORY_BAUD'] if directory_baud else [])+(['-DASPECT_DIRECTORY_FIELDS'] if directory_fields else [])+(['-DASPECT_DIRECTORY_PROTO'] if directory_proto else [])+(['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
  for unit,start,end,base in SUPPORT:
   p=OUT/f'support{unit}.bin'
   subprocess.run(['nasm','-f','bin',inc,'-DASPECT_EXPR_FLAT',f'-DASPECT_EXPR_UNIT={unit}',str(ROOT/'src/aspect/expression_support.asm'),'-o',str(p)],check=True)
@@ -435,6 +441,7 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False):
   scope='Incremental actual native dispatch/operand/operation/file/heap/WHEN/SET/FIND/CASE composition executing source-owned compiled fixtures. Incomplete107-slot opcode table; thirteen native SET setters and FETCH queries and shared FIND/CASE consumers. Serial queue/clock/carrier inputs and status-tail snapshots are explicit diagnostic models. Not full ASPECT or arbitrary-input safety.')
  report['experimental_directory_baud']=directory_baud
  report['experimental_directory_fields']=directory_fields
+ report['experimental_directory_proto']=directory_proto
  if lifecycle:
   report['compile_flags'].append('ASPECT_GET_LIFECYCLE')
   report['GET_lifecycle']='Actual runtime lifecycle with controlled GET retained/recovery peers; full GET linkage remains open.'
@@ -445,7 +452,8 @@ if __name__=='__main__':
  parser.add_argument('--get-lifecycle',action='store_true')
  parser.add_argument('--directory-baud',action='store_true')
  parser.add_argument('--directory-fields',action='store_true')
+ parser.add_argument('--directory-proto',action='store_true')
  parser.add_argument('--output',type=Path)
  args=parser.parse_args()
  if args.output:OUT=args.output.resolve()
- main(lifecycle=args.get_lifecycle,directory_baud=args.directory_baud,directory_fields=args.directory_fields)
+ main(lifecycle=args.get_lifecycle,directory_baud=args.directory_baud,directory_fields=args.directory_fields,directory_proto=args.directory_proto)

@@ -86,8 +86,8 @@ unsigned aspect_compiler_expression_symbol(aspect_compiler_expression *e,unsigne
 {
  static const char *names[]={"comdata","failure","forever","found","success","waitfor","$d_entry","$d_baud",
  "$d_ldate","$d_kbdfile","$d_metakey","$d_name","$d_note","$d_phone","$d_pword","$d_script","$null","$fattr","$fdate","$fext","$filename","$fname","$ftime","$fsize","connected",
- "$d_databit","$d_duplex","$d_mode","$d_parity","$d_port","$d_stopbit","$d_term","$d_total"};
- static const unsigned slots[]={20,21,22,23,27,28,3,0,0,1,2,3,4,5,6,7,19,9,10,11,12,13,14,1,29,1,2,4,5,6,8,9,10};
+ "$d_databit","$d_duplex","$d_mode","$d_parity","$d_port","$d_stopbit","$d_term","$d_total","$d_proto"};
+ static const unsigned slots[]={20,21,22,23,27,28,3,0,0,1,2,3,4,5,6,7,19,9,10,11,12,13,14,1,29,1,2,4,5,6,8,9,10,7};
  unsigned i;unsigned char text[254];const aspect_compiler_symbol *s;aspect_compiler_node *n;
  if(e->status)return e->status;
  if(!index||index>e->count||!info){aspect_compiler_expression_error(e,ASPECT_COMPILE_STATE);return e->status;}

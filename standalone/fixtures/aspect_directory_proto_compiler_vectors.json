@@ -1,0 +1,97 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "cases": [
+    {
+      "label": "proto-assignment",
+      "source": "integer v\nproc main\nv=$d_proto\nendproc\n",
+      "source_sha256": "ecb7be8c29fdcebea5487217205450306619e278ac3e229f4b61ae1344ff09c8",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0794",
+      "asx_sha256": "3a4d6e5e2f63c90bf35c57f24a6a3326642b6c5338fa4405401175ce0b27b0d6"
+    },
+    {
+      "label": "proto-casefold",
+      "source": "integer v\nproc main\nv=$D_PROTO\nendproc\n",
+      "source_sha256": "54e03e38358af32520f3c7434ba2d9df944329aba31af54c831ab6d68d33f891",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0794",
+      "asx_sha256": "3a4d6e5e2f63c90bf35c57f24a6a3326642b6c5338fa4405401175ce0b27b0d6"
+    },
+    {
+      "label": "proto-long",
+      "source": "long v\nproc main\nv=$d_proto+1L\nendproc\n",
+      "source_sha256": "a0b97e3ee9f5a9775d8339d51a209f2b2ad9a1850549b0eb826f118c042e7742",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f07ac010000007a005b058e007a0094",
+      "asx_sha256": "eff6a62764664901cd7ec99af510e6264af10fc4f3536116bfb70d4e0c40c192"
+    },
+    {
+      "label": "proto-string",
+      "source": "string v\nproc main\nv=$d_proto\nendproc\n",
+      "source_sha256": "37cb405ff85040afdbfbd7e908dcf1cf5de9c6edf7f843a336c886ce0ed07dba",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $D_PROTO"
+      ]
+    },
+    {
+      "label": "proto-condition",
+      "source": "integer v\nproc main\nif $d_proto<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "34d130f291d498199cfa57c41a2313b9174dd065850fda8ad6a10776537dd124",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f07ab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "3e949560ac408b5ba1d7506273497853d9510dfe84d8ef5bf309facc138ddee9"
+    },
+    {
+      "label": "proto-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$d_proto\nv=local\nendproc\n",
+      "source_sha256": "690800e97e6958ed66b78938eb394d915d61ffdea57319a4c2aa3846dfe4ce12",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f075b008d00a1000095",
+      "asx_sha256": "50f92e14fafddc20c4ef3a775d11fcdffe8f7d1f2700e31ec7f85b17934bd3e2"
+    },
+    {
+      "label": "proto-parameter",
+      "source": "integer v\nproc main\ncall worker with $d_proto\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "c1bddb3c7e5fa82f7b211a0d0c6afd989524053360741b54acaade8c46f39a14",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f07c80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "79d5bec0f8f803ec428750f89217f0bf0f80f1b0de55b1041f0ce5ae60041ee3"
+    },
+    {
+      "label": "proto-readonly",
+      "source": "proc main\n$d_proto=1\nendproc\n",
+      "source_sha256": "a8c1523aa5a3033f4cd2132703ede9d7302b907bdefa108fe094b30b0a817658",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "proto-reserved",
+      "source": "integer $d_proto\nproc main\nendproc\n",
+      "source_sha256": "db5dacf02b98328663b3b6663fe55dda68e040e5ff853971ca60df1633428cda",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $D_PROTO"
+      ]
+    },
+    {
+      "label": "proto-function",
+      "source": "integer v\nproc main\nv=$d_proto()\nendproc\n",
+      "source_sha256": "e72b88d131226497dcdf0c8b2b916845a7a80dedb9ef79ea6f8b45b104e9e677",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    }
+  ],
+  "scope": "Actual original compiler DOS8086 outputs for authored sources; no private configuration input."
+}

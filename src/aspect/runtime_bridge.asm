@@ -362,6 +362,10 @@ global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
  push bp
  mov bp,sp
+%ifdef ASPECT_DIRECTORY_PROTO
+ cmp word [bp+4],7
+ je .directory_proto
+%endif
 %ifdef ASPECT_DIRECTORY_FIELDS
  cmp word [bp+4],10
  ja .ordinary_integer
@@ -423,6 +427,21 @@ extern aspect_directory_builtin_stopbit,aspect_directory_builtin_term,aspect_dir
 .done:
  pop bp
  ret 2
+%ifdef ASPECT_DIRECTORY_PROTO
+extern aspect_directory_builtin_proto
+.directory_proto:
+ ; Native indexing is signed and unchecked. Refuse reserved/out-of-range
+ ; storage IDs before reading the table or replacing a destination.
+ cmp byte [aspect_directory_record+72],1
+ jb .invalid_proto
+ cmp byte [aspect_directory_record+72],18
+ ja .invalid_proto
+ call aspect_directory_builtin_proto
+ jmp .done
+.invalid_proto:
+ mov ax,7
+ jmp fail
+%endif
 aspect_operand_builtin_long:
  push bp
  mov bp,sp

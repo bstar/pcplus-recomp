@@ -24,7 +24,8 @@ PARMS = {"intparm": 0, "longparm": 1, "floatparm": 2, "strparm": 3}
 BUILTINS = {'comdata': 20, 'failure': 21, 'forever': 22, 'found': 23,
             'success': 27, 'waitfor': 28, 'connected': 29, '$d_entry': 3,
             '$d_databit': 1, '$d_duplex': 2, '$d_mode': 4, '$d_parity': 5,
-            '$d_port': 6, '$d_stopbit': 8, '$d_term': 9, '$d_total': 10}
+            '$d_port': 6, '$d_stopbit': 8, '$d_term': 9, '$d_total': 10,
+            '$d_proto': 7}
 STRING_BUILTINS = {'$d_ldate': 0, '$d_kbdfile': 1, '$d_metakey': 2,
                    '$d_name': 3, '$d_note': 4, '$d_phone': 5,
                    '$d_pword': 6, '$d_script': 7, '$null': 19,

@@ -208,6 +208,7 @@ def main():
  p.add_argument('--connected-probe',action='store_true',help='Check raw CONNECTED128 and long promotion before/after GET and source EXECUTE')
  p.add_argument('--directory-baud-probe',action='store_true',help='Check selected fixture directory baud38400 before/after GET and source EXECUTE')
  p.add_argument('--directory-fields-probe',action='store_true',help='Check eight selected directory integer fields before/after GET and source EXECUTE')
+ p.add_argument('--directory-proto-probe',action='store_true',help='Check selected directory protocol4 maps to ASPECT XMODEM17 before/after GET and source EXECUTE')
  p.add_argument('--watchdog',action='store_true',help='Write a passive late GET state/video sample from the owned DOS test')
  a=p.parse_args();global STREAM_PROBE;STREAM_PROBE=a.stream_probe
  parent=a.parent_dir.resolve();child=a.child_dir.resolve();out=a.output.resolve()
@@ -282,6 +283,21 @@ def main():
    row['source'],row['DIRECTORY_FIELDS_probe_count']=fields_probe(row['source'])
    for name,source in row.get('scripts',{}).items():
     row['scripts'][name],count=fields_probe(source);row['DIRECTORY_FIELDS_probe_count']+=count
+ if a.directory_proto_probe:
+  assert json.loads((child/'manifest.json').read_text()).get('experimental_directory_proto')
+  guard='if $d_proto!=17\ntransmit "BADPROTO"\nendif\n'
+  def proto_probe(source):
+   result=[];count=0
+   for line in source.splitlines(keepends=True):
+    if line=='transmit "GETREADY"\n':result.append(guard);count+=1
+    result.append(line)
+    if line.startswith('get ') or line=='pause 0\n':result.append(guard);count+=1
+   assert count,source
+   return ''.join(result),count
+  for row in rows:
+   row['source'],row['DIRECTORY_PROTO_probe_count']=proto_probe(row['source'])
+   for name,source in row.get('scripts',{}).items():
+    row['scripts'][name],count=proto_probe(source);row['DIRECTORY_PROTO_probe_count']+=count
  dos_compiled={};get_compiler_manifest=None
  if a.get_compiler_dir:
   assert get_enabled and not a.disabled_control
@@ -756,6 +772,9 @@ get_watch_data: dw 0x4757,2
   if a.directory_fields_probe:
    result['DIRECTORY_FIELDS_probe_count']=case['DIRECTORY_FIELDS_probe_count']
    result['checks']['selected_directory_integer_fields']=b'BADFIELDS' not in wire
+  if a.directory_proto_probe:
+   result['DIRECTORY_PROTO_probe_count']=case['DIRECTORY_PROTO_probe_count']
+   result['checks']['selected_directory_protocol4_to_XMODEM17']=b'BADPROTO' not in wire
   if get_enabled:result['checks']['BIOS_keys_after_field_admission']=injected==len(case['field_BIOS_words'])
   if case.get('when_action'):
    end=-20-(2*len(allocation_names) if a.allocation_probe else 0)
@@ -948,7 +967,7 @@ get_watch_data: dw 0x4757,2
   if a.source_memory_cases:result['compatibility_accepted']=False
   result['passed']=all(result['checks'].values());(folder/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  report.update(source_lease_reuse_cases=a.source_lease_reuse_cases,source_lease_close_cases=a.source_lease_close_cases,source_lease_begin_cases=a.source_lease_begin_cases,source_lease_repeat_cases=a.source_lease_repeat_cases,source_lease_cleanup_cases=a.source_lease_cleanup_cases,source_lease_recovery_cases=a.source_lease_recovery_cases,source_lease_fault_cases=a.source_lease_fault_cases,source_lease_cases=a.source_lease_cases,source_memory_cases=a.source_memory_cases,source_compiler_residency_verified=all(r['passed'] for r in report['cases']) if a.source_lease_cases else False if a.source_memory_cases else None,policy_cases=a.policy_cases,storage_cases=a.storage_cases,when_error_cases=a.when_error_cases,when_cases=a.when_cases,lifetime_cases=a.lifetime_cases,passed=all(r['passed'] for r in report['cases']),GET_VM=get_enabled,allocation_probe=a.allocation_probe,stream_probe=a.stream_probe,disabled_control=a.disabled_control,compiler_GET_enabled=bool(a.get_compiler_dir),compiled_GET_cases=len(dos_compiled),GET_compiler_sha256=get_compiler_manifest['binary_sha256'] if get_compiler_manifest else None,emulated_cpu=a.cpu,
-  CONNECTED_probe=a.connected_probe,DIRECTORY_BAUD_probe=a.directory_baud_probe,DIRECTORY_FIELDS_probe=a.directory_fields_probe,checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
+  CONNECTED_probe=a.connected_probe,DIRECTORY_BAUD_probe=a.directory_baud_probe,DIRECTORY_FIELDS_probe=a.directory_fields_probe,DIRECTORY_PROTO_probe=a.directory_proto_probe,checker_sha256=sha(__file__),scope=__doc__+(' Five ordinary cases can use real DOS/Python GET compilation; malformed EOF remains an explicitly authored input.' if a.get_compiler_dir else '')+' Actual parent, child, native dispatcher, GET bank, typed operands, DOS files/heap, UART/parser, BIOS keys and passive return observer. Synthetic modem peer; not physical Boca/ATA/SynthModem/BBS acceptance.')
  (out/'checks.json').write_text(json.dumps(report,indent=2)+'\n')
  if a.source_memory_cases:
   report['scope']+=' Expected memory-refusal diagnostic, not compiler residency acceptance. Startup post-return error retention is sampled; a zero prompt observation does not establish pre-return message absence.'

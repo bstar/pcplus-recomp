@@ -14,9 +14,11 @@ from compiler import CompileError, compile_source
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--dos', type=Path)
+    p.add_argument('--protocol', action='store_true')
     p.add_argument('--output', type=Path)
     a = p.parse_args()
-    fixture = ROOT/'standalone/fixtures/aspect_directory_fields_compiler_vectors.json'
+    feature='proto' if a.protocol else 'fields'
+    fixture = ROOT/('standalone/fixtures/aspect_directory_'+feature+'_compiler_vectors.json')
     corpus = json.loads(fixture.read_text())
     accepted = 0
     for case in corpus['cases']:
@@ -30,7 +32,8 @@ def main():
         if success:
             assert data == bytes.fromhex(case['hex']), case['label']
             accepted += 1
-    assert len(corpus['cases']) == 80 and accepted == 48
+    count,good=(10,6) if a.protocol else (80,48)
+    assert len(corpus['cases']) == count and accepted == good
     receipts = {}
     if a.dos:
         checks = json.loads((a.dos/'checks.json').read_text())
@@ -54,11 +57,11 @@ def main():
     if a.output:
         assert a.output.resolve().is_relative_to(ROOT/'build') and not a.output.exists()
         a.output.parent.mkdir(parents=True, exist_ok=True)
-        a.output.write_text(json.dumps(dict(passed=True, original_inputs=[], cases=80,
-            accepted=48, rejected=32, exact_DOS_bytes=bool(a.dos), receipts=receipts,
+        a.output.write_text(json.dumps(dict(passed=True, original_inputs=[], cases=count,
+            accepted=good, rejected=count-good, exact_DOS_bytes=bool(a.dos), receipts=receipts,
             fixture_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest(),
             checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()), indent=2)+'\n')
-    print('PASS 80 original compiler directory-field cases: 48 accepted, 32 rejected')
+    print('PASS',count,'original compiler directory-'+feature+' cases:',good,'accepted,',count-good,'rejected')
 
 
 if __name__ == '__main__':
