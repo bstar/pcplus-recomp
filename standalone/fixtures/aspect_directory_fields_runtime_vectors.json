@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "scope": "Authored independent raw signed byte and full-word expectations; controlled owned record. No-entry cleared-record behavior is maintained policy.",
+  "vectors": [
+    {
+      "name": "DFZERO",
+      "source": "integer v0,v1,v2,v3,v4,v5,v6,v7\nlong widened\nproc main\nv0=$d_databit\nv1=$d_duplex\nv2=$d_mode\nv3=$d_parity\nv4=$d_port\nv5=$d_stopbit\nv6=$d_term\nv7=$d_total\nwidened=$d_total\nendproc\n",
+      "source_sha256": "7f4a7fe3e2a7fea4f658ff038ff116a3ba1f86b21fbbfe0275adb74a8adfb273",
+      "hex": "00cf5b008d006f015b008d016f025b008d026f045b008d036f055b008d046f065b008d056f085b008d066f095b008d076f0a5b048e006f0a94",
+      "asx_sha256": "10a1c43bf39f21bca4e0f37b79f5c7114fa142f2228d807a0b403e9029847575",
+      "expected": {
+        "integer0": 0,
+        "integer1": 0,
+        "integer2": 0,
+        "integer3": 0,
+        "integer4": 0,
+        "integer5": 0,
+        "integer6": 0,
+        "integer7": 0,
+        "long0": 0
+      },
+      "directory": {
+        "entry": 200,
+        "record_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DFPOSITI",
+      "source": "integer v0,v1,v2,v3,v4,v5,v6,v7\nlong widened\nproc main\nv0=$d_databit\nv1=$d_duplex\nv2=$d_mode\nv3=$d_parity\nv4=$d_port\nv5=$d_stopbit\nv6=$d_term\nv7=$d_total\nwidened=$d_total\nendproc\n",
+      "source_sha256": "7f4a7fe3e2a7fea4f658ff038ff116a3ba1f86b21fbbfe0275adb74a8adfb273",
+      "hex": "00cf5b008d006f015b008d016f025b008d026f045b008d036f055b008d046f065b008d056f085b008d066f095b008d076f0a5b048e006f0a94",
+      "asx_sha256": "10a1c43bf39f21bca4e0f37b79f5c7114fa142f2228d807a0b403e9029847575",
+      "expected": {
+        "integer0": 127,
+        "integer1": 127,
+        "integer2": 127,
+        "integer3": 127,
+        "integer4": 127,
+        "integer5": 127,
+        "integer6": 127,
+        "integer7": 32767,
+        "long0": 32767
+      },
+      "directory": {
+        "entry": 200,
+        "record_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007f7f7f7f000000000000000000000000000000000000ff7f007f7f00000000000000000000000000000000000000000000000000000000007f000000000000000000"
+      }
+    },
+    {
+      "name": "DFNEGATI",
+      "source": "integer v0,v1,v2,v3,v4,v5,v6,v7\nlong widened\nproc main\nv0=$d_databit\nv1=$d_duplex\nv2=$d_mode\nv3=$d_parity\nv4=$d_port\nv5=$d_stopbit\nv6=$d_term\nv7=$d_total\nwidened=$d_total\nendproc\n",
+      "source_sha256": "7f4a7fe3e2a7fea4f658ff038ff116a3ba1f86b21fbbfe0275adb74a8adfb273",
+      "hex": "00cf5b008d006f015b008d016f025b008d026f045b008d036f055b008d046f065b008d056f085b008d066f095b008d076f0a5b048e006f0a94",
+      "asx_sha256": "10a1c43bf39f21bca4e0f37b79f5c7114fa142f2228d807a0b403e9029847575",
+      "expected": {
+        "integer0": 65408,
+        "integer1": 65408,
+        "integer2": 65408,
+        "integer3": 65408,
+        "integer4": 65408,
+        "integer5": 65408,
+        "integer6": 65408,
+        "integer7": 32768,
+        "long0": 4294934528
+      },
+      "directory": {
+        "entry": 200,
+        "record_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000808080800000000000000000000000000000000000000080008080000000000000000000000000000000000000000000000000000000000080000000000000000000"
+      }
+    },
+    {
+      "name": "DFMAXIMU",
+      "source": "integer v0,v1,v2,v3,v4,v5,v6,v7\nlong widened\nproc main\nv0=$d_databit\nv1=$d_duplex\nv2=$d_mode\nv3=$d_parity\nv4=$d_port\nv5=$d_stopbit\nv6=$d_term\nv7=$d_total\nwidened=$d_total\nendproc\n",
+      "source_sha256": "7f4a7fe3e2a7fea4f658ff038ff116a3ba1f86b21fbbfe0275adb74a8adfb273",
+      "hex": "00cf5b008d006f015b008d016f025b008d026f045b008d036f055b008d046f065b008d056f085b008d066f095b008d076f0a5b048e006f0a94",
+      "asx_sha256": "10a1c43bf39f21bca4e0f37b79f5c7114fa142f2228d807a0b403e9029847575",
+      "expected": {
+        "integer0": 65535,
+        "integer1": 65535,
+        "integer2": 65535,
+        "integer3": 65535,
+        "integer4": 65535,
+        "integer5": 65535,
+        "integer6": 65535,
+        "integer7": 65535,
+        "long0": 4294967295
+      },
+      "directory": {
+        "entry": 200,
+        "record_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ffffffff000000000000000000000000000000000000ffff00ffff0000000000000000000000000000000000000000000000000000000000ff000000000000000000"
+      }
+    },
+    {
+      "name": "DFDISTIN",
+      "source": "integer v0,v1,v2,v3,v4,v5,v6,v7\nlong widened\nproc main\nv0=$d_databit\nv1=$d_duplex\nv2=$d_mode\nv3=$d_parity\nv4=$d_port\nv5=$d_stopbit\nv6=$d_term\nv7=$d_total\nwidened=$d_total\nendproc\n",
+      "source_sha256": "7f4a7fe3e2a7fea4f658ff038ff116a3ba1f86b21fbbfe0275adb74a8adfb273",
+      "hex": "00cf5b008d006f015b008d016f025b008d026f045b008d036f055b008d046f065b008d056f085b008d066f095b008d076f0a5b048e006f0a94",
+      "asx_sha256": "10a1c43bf39f21bca4e0f37b79f5c7114fa142f2228d807a0b403e9029847575",
+      "expected": {
+        "integer0": 8,
+        "integer1": 0,
+        "integer2": 1,
+        "integer3": 2,
+        "integer4": 3,
+        "integer5": 1,
+        "integer6": 6,
+        "integer7": 12345,
+        "long0": 12345
+      },
+      "directory": {
+        "entry": 200,
+        "record_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020801000000000000000000000000000000000000003930000601000000000000000000000000000000000000000000000000000000000003000000000000000000"
+      }
+    },
+    {
+      "name": "DFMIXED",
+      "source": "integer v0,v1,v2,v3,v4,v5,v6,v7\nlong widened\nproc main\nv0=$d_databit\nv1=$d_duplex\nv2=$d_mode\nv3=$d_parity\nv4=$d_port\nv5=$d_stopbit\nv6=$d_term\nv7=$d_total\nwidened=$d_total\nendproc\n",
+      "source_sha256": "7f4a7fe3e2a7fea4f658ff038ff116a3ba1f86b21fbbfe0275adb74a8adfb273",
+      "hex": "00cf5b008d006f015b008d016f025b008d026f045b008d036f055b008d046f065b008d056f085b008d066f095b008d076f0a5b048e006f0a94",
+      "asx_sha256": "10a1c43bf39f21bca4e0f37b79f5c7114fa142f2228d807a0b403e9029847575",
+      "expected": {
+        "integer0": 0,
+        "integer1": 127,
+        "integer2": 65408,
+        "integer3": 65535,
+        "integer4": 1,
+        "integer5": 65534,
+        "integer6": 65409,
+        "integer7": 32768,
+        "long0": 4294934528
+      },
+      "directory": {
+        "entry": 200,
+        "record_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ff00fe7f0000000000000000000000000000000000000080008180000000000000000000000000000000000000000000000000000000000001000000000000000000"
+      }
+    },
+    {
+      "name": "DFNOENTR",
+      "source": "integer v0,v1,v2,v3,v4,v5,v6,v7\nlong widened\nproc main\nv0=$d_databit\nv1=$d_duplex\nv2=$d_mode\nv3=$d_parity\nv4=$d_port\nv5=$d_stopbit\nv6=$d_term\nv7=$d_total\nwidened=$d_total\nendproc\n",
+      "source_sha256": "7f4a7fe3e2a7fea4f658ff038ff116a3ba1f86b21fbbfe0275adb74a8adfb273",
+      "hex": "00cf5b008d006f015b008d016f025b008d026f045b008d036f055b008d046f065b008d056f085b008d066f095b008d076f0a5b048e006f0a94",
+      "asx_sha256": "10a1c43bf39f21bca4e0f37b79f5c7114fa142f2228d807a0b403e9029847575",
+      "expected": {
+        "integer0": 0,
+        "integer1": 0,
+        "integer2": 0,
+        "integer3": 0,
+        "integer4": 0,
+        "integer5": 0,
+        "integer6": 0,
+        "integer7": 0,
+        "long0": 0
+      }
+    }
+  ],
+  "disabled_control": {
+    "name": "DFGATE",
+    "source": "integer target\nproc main\ntarget=7\ntarget=$d_databit\nendproc\n",
+    "source_sha256": "0d6da859ae668b2b69d4cfde339efe4beb318ee3475c3e5d8886dd9ed40ceb13",
+    "hex": "00cf5b008d00ab07005b008d006f0194",
+    "asx_sha256": "e0b0a936c6c4038e86c6b6fa1b541ef6e4bb8cd9a63949c51a3af69e347d1a85",
+    "expected_enabled": {
+      "integer0": 0
+    },
+    "expected_disabled": {
+      "error": "unsupported",
+      "integer0": 7
+    }
+  }
+}

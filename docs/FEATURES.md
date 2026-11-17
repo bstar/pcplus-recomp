@@ -9,6 +9,15 @@ Chat and UI; complete ASPECT, other emulations and transfer protocols.
 **Host mode is the final implementation stage.** It remains required for full
 original feature parity and is deferred until those earlier stages are complete.
 
+November17 resumed recovery adds eight opt-in
+[selected-directory integer operands](ASPECT_DIRECTORY_FIELDS.md), with exact
+native getters, original compiler probes, DOS runtime/compiler regressions,
+full-parent source/GET checks and cold source reproduction. Their interpreter
+is a development profile; package/BBS/physical qualification remains open.
+The separate [baud-only profile](ASPECT_DIRECTORY_BAUD.md) now reproduces its
+complete17-file package/archive and passes eight packaged DOS workflows.
+Neither checkpoint closes any complete F01–F16 feature gate.
+
 [Current checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS
 workflows,34 package controls and fresh Enigma/Synchronet regressions pass.

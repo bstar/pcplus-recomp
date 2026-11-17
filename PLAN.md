@@ -1,6 +1,28 @@
 # Complete DOS rebuild plan
 
-## Active objective: ready the real SynthModem → Enigma connection test
+## Active objective: complete the source-only PCPlus reconstruction
+
+### November 17 resumption
+
+The full objective remains open across F01–F16 in
+[the feature matrix](docs/FEATURES.md). Source-only terminal and companion builds
+do not establish full original application parity. The separate historical
+`PCPLUS.EXE` compatibility target still reads the original executable; PRMEDIT
+still requires an existing externally identified configuration. Complete setup,
+terminal emulations, protocols, ASPECT and Host remain required; Host stays last.
+
+The opt-in [selected-directory baud profile](docs/ASPECT_DIRECTORY_BAUD.md)
+now passes cold source reproduction, including all17 package files and the ZIP,
+34 package controls and eight packaged DOS8086 workflows. Its new interpreter
+still needs BBS qualification and physical acceptance. The installed selector
+and private machine configuration are unchanged. Eight additional
+[directory integer operands](docs/ASPECT_DIRECTORY_FIELDS.md) now have exact
+native source, both compilers, opt-in runtime routing, full-parent source/GET
+checks and a cold source proof. Package/BBS qualification of those newer bytes,
+the remaining builtin/table owners and the complete application gates stay open.
+
+Earlier dated checkpoints below describe their own source/product identities;
+their “next” statements are historical where later evidence supersedes them.
 
 ### November 4 checkpoint
 

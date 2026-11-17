@@ -362,6 +362,23 @@ global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
  push bp
  mov bp,sp
+%ifdef ASPECT_DIRECTORY_FIELDS
+ cmp word [bp+4],10
+ ja .ordinary_integer
+ mov bx,[bp+4]
+ shl bx,1
+ call [cs:.directory_fields+bx]
+ jmp short .done
+.directory_fields:
+ dw unsupported,aspect_directory_builtin_databit,aspect_directory_builtin_duplex
+ dw aspect_directory_builtin_entry,aspect_directory_builtin_mode
+ dw aspect_directory_builtin_parity,aspect_directory_builtin_port,unsupported
+ dw aspect_directory_builtin_stopbit,aspect_directory_builtin_term,aspect_directory_builtin_total
+extern aspect_directory_builtin_databit,aspect_directory_builtin_duplex
+extern aspect_directory_builtin_mode,aspect_directory_builtin_parity,aspect_directory_builtin_port
+extern aspect_directory_builtin_stopbit,aspect_directory_builtin_term,aspect_directory_builtin_total
+.ordinary_integer:
+%endif
  cmp word [bp+4],29
  je .connected
  cmp word [bp+4],3
