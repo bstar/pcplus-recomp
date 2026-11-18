@@ -320,6 +320,14 @@ global aspect_string_builtin
 aspect_string_builtin:
  push bp
  mov bp,sp
+%ifdef ASPECT_CLOCK_BUILTINS
+ cmp word [bp+4],8
+ je .clock_date
+ cmp word [bp+4],20
+ je .clock_time0
+ cmp word [bp+4],21
+ je .clock_time1
+%endif
  cmp word [bp+4],7
  ja .other
  push bx
@@ -348,6 +356,20 @@ aspect_string_builtin:
  mov ax,empty_script
  pop bp
  ret 2
+%ifdef ASPECT_CLOCK_BUILTINS
+extern aspect_builtin_date,aspect_builtin_time0,aspect_builtin_time1
+.clock_date:
+ call aspect_builtin_date
+ jmp .clock_done
+.clock_time0:
+ call aspect_builtin_time0
+ jmp .clock_done
+.clock_time1:
+ call aspect_builtin_time1
+.clock_done:
+ pop bp
+ ret 2
+%endif
 enumeration_string_getters:
  dw aspect_enumeration_attributes,aspect_enumeration_date,aspect_enumeration_extension
  dw aspect_enumeration_filename,aspect_enumeration_basename,aspect_enumeration_time

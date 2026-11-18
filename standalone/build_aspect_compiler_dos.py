@@ -10,7 +10,7 @@ def main(get_enabled=False,output=None):
  if output is not None:OUT=output.resolve()
  OUT.mkdir(parents=True,exist_ok=True)
  sources=[ROOT/'src/aspect'/(name+suffix) for name in MODULES for suffix in ('.c','.h') if (ROOT/'src/aspect'/(name+suffix)).exists()]
- sources.extend([ROOT/'src/aspect/compiler_program_internal.h',ROOT/'src/aspect/compiler_main.c',ROOT/'src/aspect/compiler_emulations.h'])
+ sources.extend([ROOT/'src/aspect/compiler_program_internal.h',ROOT/'src/aspect/compiler_procedure_keywords.h',ROOT/'src/aspect/compiler_main.c',ROOT/'src/aspect/compiler_emulations.h'])
  # Keep room for compilation beneath the resident terminal and ASPECT child.
  # check_aspect_compiler_stack.py exercises the grammar with checked16KB stacks;
  # the shipped CLI retains24KB. Revalidate this budget when expanding grammar.

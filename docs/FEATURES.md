@@ -20,6 +20,12 @@ The later [protocol-operand profile](ASPECT_DIRECTORY_PROTO.md) also implements
 the directory protocol mapping and qualifies the combined package on current
 Enigma/Synchronet fixtures. Hardware acceptance and full F01–F16 parity stay open.
 
+[Clock string operands](ASPECT_CLOCK_BUILTINS.md) now have exact native getters,
+both compilers, opt-in runtime routing, shared-buffer/WHEN/DOS checks and a cold
+parent/compiler/interpreter proof. Procedure declarations now reject all558
+identifier-shaped native keywords. This development profile has separate
+package/BBS/physical gates; full language and whole-application parity remain open.
+
 [Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS
 workflows,34 package controls and fresh Enigma/Synchronet regressions pass.

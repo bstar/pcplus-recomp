@@ -26,6 +26,14 @@ source/package/Help reproduction and current Enigma/Synchronet workflows. All
 fault composition, remaining builtin/command owners and complete application
 gates remain open. The installed selector is unchanged.
 
+[Clock string recovery](docs/ASPECT_CLOCK_BUILTINS.md) adds `$DATE`, `$TIME0`
+and `$TIME1` with native shared-buffer behavior. It also corrects procedure
+keyword binding across the original catalog and makes compiler builtin types
+explicit. Native/original, DOS compiler/runtime, callback/alias, parent source/GET,
+nested Help and cold source checks pass. This newer profile still needs its own
+package/BBS/hardware qualification; it does not supersede the prepared package
+or close any full feature gate.
+
 Earlier dated checkpoints below describe their own source/product identities;
 their “next” statements are historical where later evidence supersedes them.
 

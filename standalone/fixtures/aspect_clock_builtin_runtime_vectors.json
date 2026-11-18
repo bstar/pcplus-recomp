@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "scope": "Feature-admission guards. Dynamic DOS clock values and aliasing checked separately by test_aspect_clock_dos.py, never frozen to wall-clock strings.",
+  "controls": [
+    {
+      "name": "CBDATE",
+      "source": "string target\nproc main\ntarget=\"OLD\"\ntarget=$date\nendproc\n",
+      "source_sha256": "01f6d228733336a69e7081f42c217e0a8281111a2ac4f465e6b922150b4f6c37",
+      "hex": "01cfac8c00aab60d54518b00ac8c006e080094",
+      "asx_sha256": "6890eab6fcb0efac90c388c35f828c773a503a014e5bd174b8fde17ec5266836",
+      "expected_enabled": {},
+      "expected_disabled": {
+        "error": "unsupported",
+        "string0": "OLD"
+      }
+    },
+    {
+      "name": "CBTIME0",
+      "source": "string target\nproc main\ntarget=\"OLD\"\ntarget=$time0\nendproc\n",
+      "source_sha256": "829f24b8ea533169dc6a99bf83a65195a2654bdd30f1cbf7c6654dbc96516f2b",
+      "hex": "01cfac8c00aab60d54518b00ac8c006e140094",
+      "asx_sha256": "563d9f7f3d6a05b411d6611ff7e90e87a8581c9442a3cf426fec693b495cd926",
+      "expected_enabled": {},
+      "expected_disabled": {
+        "error": "unsupported",
+        "string0": "OLD"
+      }
+    },
+    {
+      "name": "CBTIME1",
+      "source": "string target\nproc main\ntarget=\"OLD\"\ntarget=$time1\nendproc\n",
+      "source_sha256": "a15bf9108430024577df38b4f8e42345a75e79cd0ed79ec2b9a9b60a45ba1f9b",
+      "hex": "01cfac8c00aab60d54518b00ac8c006e150094",
+      "asx_sha256": "48050c556cda31ee9e5fcc317f4baad280998d5e955911b590c681494a2c4fd9",
+      "expected_enabled": {},
+      "expected_disabled": {
+        "error": "unsupported",
+        "string0": "OLD"
+      }
+    }
+  ]
+}

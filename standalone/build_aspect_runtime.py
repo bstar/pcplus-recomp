@@ -169,7 +169,7 @@ END=r'''
 }
 '''
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
-def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_proto=False):
+def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False):
  sys.path.insert(0,str(ROOT/'src/aspect'))
  from compiler import compile_source
  OUT.mkdir(parents=True,exist_ok=True);inc='-I'+str(ROOT/'reconstruction/uart')+'/'
@@ -233,6 +233,9 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_p
  proto_control=proto_corpus['disabled_control']
  cases.append(dict(proto_control,expected=proto_control['expected_enabled' if directory_proto else 'expected_disabled']))
  if directory_proto:cases+=proto_corpus['vectors']
+ clock_builtin_corpus_path=ROOT/'standalone/fixtures/aspect_clock_builtin_runtime_vectors.json'
+ for control in json.loads(clock_builtin_corpus_path.read_text())['controls']:
+  cases.append(dict(control,expected=control['expected_enabled' if clock_builtins else 'expected_disabled']))
  # Historical PAUSE oracle expected an unsupported stop before opcode88 recovery.
  # Its authored seven-second script now executes the recovered native delay.
  cases=[dict(c,expected={}) if c['name']=='PAUSE' else c for c in cases]
@@ -242,6 +245,7 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_p
  if directory_baud:sources.append(baud_corpus_path)
  sources.append(fields_corpus_path)
  sources.append(proto_corpus_path)
+ sources.append(clock_builtin_corpus_path)
  sources.append(ROOT/'src/aspect/runtime_format.h')
  sources.append(conversion_corpus_path)
  sources.append(compiler_corpus_path)
@@ -257,9 +261,9 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_p
  sources.append(connected_corpus_path)
  sources.append(raw_output_path)
  sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h',ROOT/'src/keyboard/api.h']
- for name,rel,define in ASM+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else []):
+ for name,rel,define in ASM+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else [])+([('clock_builtins','src/aspect/clock_builtins.asm',None)] if clock_builtins else []):
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
-  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+(['-DASPECT_DIRECTORY_BAUD'] if directory_baud else [])+(['-DASPECT_DIRECTORY_FIELDS'] if directory_fields else [])+(['-DASPECT_DIRECTORY_PROTO'] if directory_proto else [])+(['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
+  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+(['-DASPECT_DIRECTORY_BAUD'] if directory_baud else [])+(['-DASPECT_DIRECTORY_FIELDS'] if directory_fields else [])+(['-DASPECT_DIRECTORY_PROTO'] if directory_proto else [])+(['-DASPECT_CLOCK_BUILTINS'] if clock_builtins else [])+(['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
  for unit,start,end,base in SUPPORT:
   p=OUT/f'support{unit}.bin'
   subprocess.run(['nasm','-f','bin',inc,'-DASPECT_EXPR_FLAT',f'-DASPECT_EXPR_UNIT={unit}',str(ROOT/'src/aspect/expression_support.asm'),'-o',str(p)],check=True)
@@ -442,6 +446,7 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_p
  report['experimental_directory_baud']=directory_baud
  report['experimental_directory_fields']=directory_fields
  report['experimental_directory_proto']=directory_proto
+ report['experimental_clock_builtins']=clock_builtins
  if lifecycle:
   report['compile_flags'].append('ASPECT_GET_LIFECYCLE')
   report['GET_lifecycle']='Actual runtime lifecycle with controlled GET retained/recovery peers; full GET linkage remains open.'
@@ -453,7 +458,8 @@ if __name__=='__main__':
  parser.add_argument('--directory-baud',action='store_true')
  parser.add_argument('--directory-fields',action='store_true')
  parser.add_argument('--directory-proto',action='store_true')
+ parser.add_argument('--clock-builtins',action='store_true')
  parser.add_argument('--output',type=Path)
  args=parser.parse_args()
  if args.output:OUT=args.output.resolve()
- main(lifecycle=args.get_lifecycle,directory_baud=args.directory_baud,directory_fields=args.directory_fields,directory_proto=args.directory_proto)
+ main(lifecycle=args.get_lifecycle,directory_baud=args.directory_baud,directory_fields=args.directory_fields,directory_proto=args.directory_proto,clock_builtins=args.clock_builtins)
