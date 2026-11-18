@@ -126,6 +126,7 @@ SCREEN_COMMANDS = {'box': (0x0C, 'vvvvv', False), 'clear': (0x12, 'v', True),
                    'home': (0x57, '', False), 'locate': (0x6A, 'vv', False),
                    'scroll': (0x9C, 'vvvvvv', False), 'getvattr': (0x52, 'vvi', False),
                    'putvattr': (0x8C, 'vvv', False)}
+CONNECTION_COMMANDS = {'dial': 0x22, 'mdial': 0x70, 'redial': 0x92, 'hangup': 0x55}
 OPS = {"+": 0x00, "-": 0xB5, "*": 0x7D, "/": 0x26, "%": 0x7B,
        "==": 0x32, "!=": 0x7F, "<": 0x6D, ">": 0x54,
        "<=": 0x68, ">=": 0x48}
@@ -276,7 +277,7 @@ class Compiler:
                 self.error('expected declaration name')
             name = part[0]
             if (name == 'text' or name in TYPED_BUILTINS or name in EMULATIONS or
-                    name in SCREEN_COMMANDS or re.fullmatch(r'n[0-9]', name)):
+                    name in SCREEN_COMMANDS or name in CONNECTION_COMMANDS or re.fullmatch(r'n[0-9]', name)):
                 self.error(f'{name.upper()} is a reserved ASPECT keyword')
             symbols = self.globals if proc is None else proc.symbols
             if name in symbols:
@@ -684,8 +685,54 @@ class Compiler:
         if parser.pos != len(parser.tokens):
             self.error('unexpected screen command operands')
 
+    def connection_command(self, tokens):
+        command = tokens[0]
+        opcode = CONNECTION_COMMANDS[command]
+        parser = Expression(tokens[1:], self.line)
+        spans = [(m.start(1), m.end(1)) for m in TOKEN.finditer(self.source_lines[self.line - 1])]
+        self.emit(opcode)
+        if command == 'hangup':
+            if parser.tokens:
+                self.error('HANGUP does not accept operands')
+            return
+        if command != 'redial':
+            if not parser.tokens or parser.tokens[0] in ('(', ','):
+                self.error(f'{command} requires an atomic string')
+            node = parser.parse(7)
+            if self.kind(node) != 3:
+                self.error(f'{command} requires a string')
+            self.operand(self.atomic(node), compact=True)
+        present = parser.pos < len(parser.tokens)
+        self.emit(int(present))
+        if present:
+            if command != 'redial':
+                commas = []
+                while parser.pos < len(parser.tokens) and parser.tokens[parser.pos] == ',':
+                    current = parser.pos + 1
+                    if commas and spans[current][0] == spans[commas[-1]][1]:
+                        self.error('adjacent connection operand commas')
+                    commas.append(current)
+                    parser.pos += 1
+                current = parser.pos + 1
+                if not commas and current < len(tokens) and spans[current][0] == spans[current - 1][1]:
+                    self.error('connection operands require a separator')
+            if parser.pos == len(parser.tokens) or parser.tokens[parser.pos] in ('(', ','):
+                self.error(f'{command} requires an atomic string')
+            node = parser.parse(7)
+            if self.kind(node) != 3:
+                self.error(f'{command} requires a string')
+            if command == 'mdial':
+                self.operand(self.atomic(node), compact=True)
+            else:
+                self.emit(self.lvalue(node)[1])
+        if parser.pos != len(parser.tokens):
+            self.error(f'unexpected {command} operands')
+
     def command(self, tokens):
         command = tokens[0]
+        if command in CONNECTION_COMMANDS:
+            self.connection_command(tokens)
+            return
         if command in SCREEN_COMMANDS:
             self.screen_command(tokens)
             return

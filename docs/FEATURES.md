@@ -72,9 +72,15 @@ controls, eight packaged DOS cases/50 checks and Enigma18/Synchronet22 with
 independent wire/cell/CPR/NAWS audits. Cold replay repeats all three screen
 families, source/WHEN and63 Help checks. Physical gates, checked-HOME activation
 and frame-style producers remain open; the installed selector is unchanged.
-The [next ASPECT recovery families](ASPECT_RECOVERY_NEXT.md) include scripted
-connection control and script-owned transfers; the remaining work extends well
-beyond builtin tables.
+[Scripted connection recovery](ASPECT_SCRIPT_CONNECTION_COMPILER.md) now adds
+DIAL/MDIAL/REDIAL/HANGUP grammars to both compilers, matching311 frozen original
+sources. Eleven new exact native units plus the reused attempt pass241 CPU
+cases/4330 checks; ordinary/compiler-stack/source-budget regressions pass.
+The application still refuses these opcode slots. Compact module placement,
+one-UART handoff, directory/guard refresh and native resource/accounting behavior
+remain required before enabling the full family. The
+[next ASPECT recovery families](ASPECT_RECOVERY_NEXT.md) also include script-owned
+transfers; the remaining work extends well beyond builtin tables.
 
 [Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS

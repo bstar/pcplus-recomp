@@ -37,11 +37,16 @@ The next two larger families remain required:
 
 - Scripted connection control: DIAL22→resident567E, MDIAL70→5685,
   REDIAL92→568D, HANGUP55→overlay18:E759. Existing foreground modem code is
-  insufficient while the child owns the UART. Recover grammar and shared
-  helper5695, then implement the ownership transition, cancellation/results,
-  directory/accounting behavior and return to script. The retained helper
-  evidence is `ev_68a224dfa7a066c6b1d9f93fb2ff91df97d5797d06419cb4176229341e4bc34f`;
-  wrapper/body closure remains incomplete.
+  insufficient while the child owns the UART. Both compilers now match311
+  original cases; an isolated native family covers11 new exact units plus the
+  reused attempt,241 CPU cases/4330 checks. The
+  [compiler/component record](ASPECT_SCRIPT_CONNECTION_COMPILER.md),
+  [native contracts](ASPECT_SCRIPT_CONNECTION_RECOVERY.md) and
+  [owner audit](ASPECT_SCRIPT_CONNECTION_OWNER_AUDIT.md) identify remaining
+  compact placement, UART/cache/guard rebinding, resource/accounting and full
+  DOS execution gates. These opcodes remain unlinked in the application.
+  The shared5695 evidence is
+  `ev_68a224dfa7a066c6b1d9f93fb2ff91df97d5797d06419cb4176229341e4bc34f`.
 - Scripted transfer control: GETFILE4F→resident4FF6 and
   SENDFILE9D→resident5157. Native transfer engines and foreground owners exist,
   but script grammar, protocol/path/result behavior, UART handoff, retry/cancel

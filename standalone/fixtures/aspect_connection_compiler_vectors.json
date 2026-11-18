@@ -1,0 +1,3936 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "original_observations": 320,
+  "unique_sources": 311,
+  "accepted": 82,
+  "rejected": 229,
+  "command_grammar": {
+    "dial": "string input, optional writable string index",
+    "mdial": "string input, optional string display name",
+    "redial": "optional writable string index",
+    "hangup": "no operands"
+  },
+  "original_reports": {
+    "analysis/aspect-script-connection-20261119/grammar/report.json": "9a3030ed30f97c6a22988c230021f049390347aaaf9d38da17f3ff77217dd719",
+    "analysis/aspect-script-connection-20261119/grammar-edges-v2/report.json": "d246a4e7bcb0b3ac09af6d98bf03a1fa838a8aad55c09c043e7b33f2e76fc277",
+    "analysis/aspect-script-connection-20261118/grammar-separators-v1/report.json": "868ced1cfa99db7d9c873b49cd67b382537ae769f0965c03877089951143f664"
+  },
+  "cases": [
+    {
+      "label": "dial:",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \nendproc\n",
+      "source_sha256": "8230d9b758e08e717b73d260f19a77f18997c46385997e69c024d77840f180b0",
+      "success": false,
+      "errors": [
+        "Error C006 Line 6: Missing token"
+      ],
+      "observations": [
+        "dial:"
+      ]
+    },
+    {
+      "label": "dial:\"123\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\"\nendproc\n",
+      "source_sha256": "d17974be5f53322a55d2e66f86344e93b747fd9cc1513665f7dc175a19e2cf70",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:\"123\""
+      ],
+      "hex": "01cf22aab60ed8b3380094",
+      "asx_sha256": "9a1a9147eaaabc83136dfae781b6054dee476443e1b6ad176867d519ab2f8564"
+    },
+    {
+      "label": "dial:textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue\nendproc\n",
+      "source_sha256": "f30c3dfcb2397cc56919f224afbeee606b225aa93bd8681ddb468c2232df58b5",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:textvalue"
+      ],
+      "hex": "01cf228c000094",
+      "asx_sha256": "cd61a1d0f3fd9d4aad971cd9a3691ef0699c3cfc3af8065640d36056e8ec20bd"
+    },
+    {
+      "label": "dial:i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial i\nendproc\n",
+      "source_sha256": "59d0afc4281e6cde329a7325be6b13ca9fa8947c27cfde754ccb1b2bb30d8e16",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> I"
+      ],
+      "observations": [
+        "dial:i"
+      ]
+    },
+    {
+      "label": "dial:wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial wide\nendproc\n",
+      "source_sha256": "3618879bd3055ad0c61572d9b7bd90c019e966ff087e3a3c3af49e32a93376fd",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> WIDE"
+      ],
+      "observations": [
+        "dial:wide"
+      ]
+    },
+    {
+      "label": "dial:real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial real\nendproc\n",
+      "source_sha256": "a5aa109eca70462c435948f8b56ec5d0237b9673ff9aa1d9002d4bb86bfd0ad5",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> REAL"
+      ],
+      "observations": [
+        "dial:real"
+      ]
+    },
+    {
+      "label": "dial:1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial 1\nendproc\n",
+      "source_sha256": "0c972d9f3df21a7af05d3d22ca5f52c53663da194ac62bb024da6ae03d27e061",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 1"
+      ],
+      "observations": [
+        "dial:1"
+      ]
+    },
+    {
+      "label": "dial:-1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial -1\nendproc\n",
+      "source_sha256": "0bef214dc0c957178160fb43073ff050b3e4c225f3b60d6a4f147c12dbc7e59e",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> -1"
+      ],
+      "observations": [
+        "dial:-1"
+      ]
+    },
+    {
+      "label": "dial:65535",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial 65535\nendproc\n",
+      "source_sha256": "6de20e41fb32d6071ff9680fff8319627eafbc7da9defad152451de7f079a361",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 65535"
+      ],
+      "observations": [
+        "dial:65535"
+      ]
+    },
+    {
+      "label": "dial:\"123\" textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" textvalue\nendproc\n",
+      "source_sha256": "f06d0d5ffa8e251e3b45676f3af8d5434ff073afc89d2de6b5cd279e43eb07c5",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:\"123\" textvalue"
+      ],
+      "hex": "01cf22aab60ed8b338018c0094",
+      "asx_sha256": "0e299867df8d097ff5c0b67c2cdc9eae6d48a9dcbc75b5caa82230001d6b08bf"
+    },
+    {
+      "label": "dial:\"123\" i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" i\nendproc\n",
+      "source_sha256": "a863808e895b30e8edc57469bcfeb0ab551b554d1585b222ee0f5cd2f7a27fae",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> I"
+      ],
+      "observations": [
+        "dial:\"123\" i"
+      ]
+    },
+    {
+      "label": "dial:\"123\" wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" wide\nendproc\n",
+      "source_sha256": "0218e323897e711d8341c198da05840b66e81f9fa26550ffb25230d40c4e0e34",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> WIDE"
+      ],
+      "observations": [
+        "dial:\"123\" wide"
+      ]
+    },
+    {
+      "label": "dial:\"123\" real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" real\nendproc\n",
+      "source_sha256": "fec562c46b0aea32c2f1902b50f04eef2d6c7b81a94eefde302c5fd83c014e4a",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> REAL"
+      ],
+      "observations": [
+        "dial:\"123\" real"
+      ]
+    },
+    {
+      "label": "dial:\"123\" \"reply\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" \"reply\"\nendproc\n",
+      "source_sha256": "ddb7d2c7c6bc855903433fc62e1f96da342bad79f7bf6b63c19261469a0576d1",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> reply"
+      ],
+      "observations": [
+        "dial:\"123\" \"reply\""
+      ]
+    },
+    {
+      "label": "dial:textvalue textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue textvalue\nendproc\n",
+      "source_sha256": "12ab470912f27a3dda88df2e4e50bea2ecf545015ea978ebd00e2701f5ca5467",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:textvalue textvalue"
+      ],
+      "hex": "01cf228c00018c0094",
+      "asx_sha256": "1e7d5558cb0e02e2e4d5cdd8685ab8ac6fd2328e17f1a361f1bea721af8369ce"
+    },
+    {
+      "label": "dial:textvalue i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue i\nendproc\n",
+      "source_sha256": "247d7dff52621ecdec19f26bbfddfecce91439cc011076c3299db608d01d6980",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> I"
+      ],
+      "observations": [
+        "dial:textvalue i"
+      ]
+    },
+    {
+      "label": "dial:textvalue wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue wide\nendproc\n",
+      "source_sha256": "37033be62fa0155bb2406101149390bf271aea23388826190fe9fbb0d029e0cc",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> WIDE"
+      ],
+      "observations": [
+        "dial:textvalue wide"
+      ]
+    },
+    {
+      "label": "dial:textvalue real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue real\nendproc\n",
+      "source_sha256": "44a277cd7b4ea861606f9db67a44043d3ed563acfb552a6af112165e68b2557a",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> REAL"
+      ],
+      "observations": [
+        "dial:textvalue real"
+      ]
+    },
+    {
+      "label": "dial:\"1\" \"2\" \"3\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" \"2\" \"3\"\nendproc\n",
+      "source_sha256": "a8b52f6e44251c8bbdec609229b63ac8d7857118d344cbf8e02e3d9f08d1bfe4",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 2",
+        "Error C002 Line 6: Unexpected token ==> 3"
+      ],
+      "observations": [
+        "dial:\"1\" \"2\" \"3\""
+      ]
+    },
+    {
+      "label": "dial:\"123\" into textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" into textvalue\nendproc\n",
+      "source_sha256": "0b3b26a68cfb04ef4a426f5dc7a731473c05253726189ac5d32bb7b1a419b61a",
+      "success": false,
+      "errors": [
+        "Error C018 Line 6: Variable not defined ==> INTO",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "dial:\"123\" into textvalue"
+      ]
+    },
+    {
+      "label": "dial:\"123\" to textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" to textvalue\nendproc\n",
+      "source_sha256": "d20f489b7f2c1f1d198c1137dcedc2886163841f757a6e569accd3bb10240d44",
+      "success": false,
+      "errors": [
+        "Error C018 Line 6: Variable not defined ==> TO",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "dial:\"123\" to textvalue"
+      ]
+    },
+    {
+      "label": "dial:\"123\" result textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" result textvalue\nendproc\n",
+      "source_sha256": "667cee4596f08814f0f687e933270cadf6116fba573686f2a40faabed0b80782",
+      "success": false,
+      "errors": [
+        "Error C018 Line 6: Variable not defined ==> RESULT",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "dial:\"123\" result textvalue"
+      ]
+    },
+    {
+      "label": "dial:\"123\" with textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" with textvalue\nendproc\n",
+      "source_sha256": "ad71972760fed9ba0c49b279f9cb294dd0f5e6d7da10e344ee9d50fac33cb469",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> WITH",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "dial:\"123\" with textvalue"
+      ]
+    },
+    {
+      "label": "dial:\"123\" 5",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\" 5\nendproc\n",
+      "source_sha256": "7bb1b5df85b51c0a4682e7c2df4f1216fc7cf22790c9ee463e7e292fea8cefef",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 5"
+      ],
+      "observations": [
+        "dial:\"123\" 5"
+      ]
+    },
+    {
+      "label": "dial:textvalue, textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue, textvalue\nendproc\n",
+      "source_sha256": "5b90dbf8ffa42756b6b28fdb146cfdde8c4c2b5b696bc0ec5903c177681af0ea",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:textvalue, textvalue"
+      ],
+      "hex": "01cf228c00018c0094",
+      "asx_sha256": "1e7d5558cb0e02e2e4d5cdd8685ab8ac6fd2328e17f1a361f1bea721af8369ce"
+    },
+    {
+      "label": "dial:textvalue,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue,textvalue\nendproc\n",
+      "source_sha256": "7dc5d25934a168db480568341638c9387cb0d386a0677dfbed87773006c1e61e",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:textvalue,textvalue"
+      ],
+      "hex": "01cf228c00018c0094",
+      "asx_sha256": "1e7d5558cb0e02e2e4d5cdd8685ab8ac6fd2328e17f1a361f1bea721af8369ce"
+    },
+    {
+      "label": "dial:\"123\",textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"123\",textvalue\nendproc\n",
+      "source_sha256": "50b2a21835953c88f40df431b1f2acf72ad0ef695a94ed828b8e8a8e8a4b9420",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:\"123\",textvalue"
+      ],
+      "hex": "01cf22aab60ed8b338018c0094",
+      "asx_sha256": "0e299867df8d097ff5c0b67c2cdc9eae6d48a9dcbc75b5caa82230001d6b08bf"
+    },
+    {
+      "label": "dial:textvalue extra",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue extra\nendproc\n",
+      "source_sha256": "c95ef217b16a1d301b5f2c0bc6927fbf6c53a26a65803d4cd3d521e1459af886",
+      "success": false,
+      "errors": [
+        "Error C018 Line 6: Variable not defined ==> EXTRA"
+      ],
+      "observations": [
+        "dial:textvalue extra"
+      ]
+    },
+    {
+      "label": "dial:s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial s0\nendproc\n",
+      "source_sha256": "877d7ab46f9e050f032bfd3299906e797f91a353948fc4167404e1d9cabefd6a",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:s0",
+        "dial:s0"
+      ],
+      "hex": "01cf2264000094",
+      "asx_sha256": "bb86265fb4ade6aa2d34522b77a254441ad468a5f886efd4812131d5e708a83c"
+    },
+    {
+      "label": "dial:\"\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"\"\nendproc\n",
+      "source_sha256": "50deb58d6f236e946b52ced42a898b5ba8f8b696ac3be18bbbb24fce418cb1c0",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:\"\""
+      ],
+      "hex": "01cf226e130094",
+      "asx_sha256": "56d83ba1364fc0bc54994e5074856b2573a815c5ae4a9a893dc7cfdc8d5a4f4d"
+    },
+    {
+      "label": "dial:textvalue(1)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue(1)\nendproc\n",
+      "source_sha256": "607ec8a323253f4767a055cdf060b3cc9a7380fdb2a7d5b4773446f1d9c85bd2",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> (",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "dial:textvalue(1)"
+      ]
+    },
+    {
+      "label": "dial:(textvalue)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial (textvalue)\nendproc\n",
+      "source_sha256": "eb5b552af2864a4a573b70fbf3895ec864346000359b2d7d0fae0ea71e2c733d",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "dial:(textvalue)"
+      ]
+    },
+    {
+      "label": "dial:textvalue+\"X\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue+\"X\"\nendproc\n",
+      "source_sha256": "303326e528a001b53d56b5be537f2473f99d868c35013dc50b04445e00ec2088",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ],
+      "observations": [
+        "dial:textvalue+\"X\"",
+        "dial:textvalue+\"X\""
+      ]
+    },
+    {
+      "label": "mdial:",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \nendproc\n",
+      "source_sha256": "74f40f21fc5be9dbbd2deaf00470a32a416cb2c24edc8ec22fa66911157c9ccd",
+      "success": false,
+      "errors": [
+        "Error C006 Line 6: Missing token"
+      ],
+      "observations": [
+        "mdial:"
+      ]
+    },
+    {
+      "label": "mdial:\"123\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\"\nendproc\n",
+      "source_sha256": "d1671e8973ae7ab9f8ce08278c18fd571ad156858c7b75afcc219fd2659fc3ba",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"123\""
+      ],
+      "hex": "01cf70aab60ed8b3380094",
+      "asx_sha256": "c14d5029143e8482c98bb49e467696416e700ea65453d6f6ec38e2921927eb79"
+    },
+    {
+      "label": "mdial:textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue\nendproc\n",
+      "source_sha256": "52dd9dcd176c5effa2fb7e6489626b4eb9137ebd66e9a81875572c9646e40190",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:textvalue"
+      ],
+      "hex": "01cf708c000094",
+      "asx_sha256": "6874d7198c74af36dbfd3b03b4ff6565b5a5cbbdcfcd23365ed639f98d54e261"
+    },
+    {
+      "label": "mdial:i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial i\nendproc\n",
+      "source_sha256": "8ebc297e3bb5c04343db91a7ce219ffc070243d001d1d8c81baaa6c55ca16fdd",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> I"
+      ],
+      "observations": [
+        "mdial:i"
+      ]
+    },
+    {
+      "label": "mdial:wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial wide\nendproc\n",
+      "source_sha256": "d1843c795a4d024924ce2ad2f2528effc4a3058fd479820f2bdadc5c7edf1fe9",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> WIDE"
+      ],
+      "observations": [
+        "mdial:wide"
+      ]
+    },
+    {
+      "label": "mdial:real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial real\nendproc\n",
+      "source_sha256": "71492cda11ce6453537b704fafbc06135bf21f91e2604853de8a32241cc30616",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> REAL"
+      ],
+      "observations": [
+        "mdial:real"
+      ]
+    },
+    {
+      "label": "mdial:1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial 1\nendproc\n",
+      "source_sha256": "7b20188dcf74e97eb9d18f666d2fee13a75ddbe9096a96bd843be3a1a1c6005d",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 1"
+      ],
+      "observations": [
+        "mdial:1"
+      ]
+    },
+    {
+      "label": "mdial:-1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial -1\nendproc\n",
+      "source_sha256": "6595caa5b3ca0cb25774f276e8d15c078a3f3d5ba7dd304212280f933e437a95",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> -1"
+      ],
+      "observations": [
+        "mdial:-1"
+      ]
+    },
+    {
+      "label": "mdial:65535",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial 65535\nendproc\n",
+      "source_sha256": "7b4b22d36745b951fbdf9dfe56069a25aa42364bab5bc63ffa23da68bb52243b",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 65535"
+      ],
+      "observations": [
+        "mdial:65535"
+      ]
+    },
+    {
+      "label": "mdial:\"123\" textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" textvalue\nendproc\n",
+      "source_sha256": "9e4b3baee8f96124e72235800a2d45e9147b39278b531d43c1cf13644ac3786d",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"123\" textvalue"
+      ],
+      "hex": "01cf70aab60ed8b338018c0094",
+      "asx_sha256": "f383692b12d794c0210af707848bf494d4d678fae885fd7172c6f07b61a18ae7"
+    },
+    {
+      "label": "mdial:\"123\" i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" i\nendproc\n",
+      "source_sha256": "a585b0f42ada958f8c0821eebaef6631606598c8fb8018e48085dfc8f6232a62",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> I"
+      ],
+      "observations": [
+        "mdial:\"123\" i"
+      ]
+    },
+    {
+      "label": "mdial:\"123\" wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" wide\nendproc\n",
+      "source_sha256": "cd2d6310914cae4d8b2b00b08bcf828d3e3f5862d08f40c17916a7cac6b3f90c",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> WIDE"
+      ],
+      "observations": [
+        "mdial:\"123\" wide"
+      ]
+    },
+    {
+      "label": "mdial:\"123\" real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" real\nendproc\n",
+      "source_sha256": "e7621ab6a8c340d98a0ba98d98341582fc59b55ae1abd0c32cb1be288d1e6f50",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> REAL"
+      ],
+      "observations": [
+        "mdial:\"123\" real"
+      ]
+    },
+    {
+      "label": "mdial:\"123\" \"reply\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" \"reply\"\nendproc\n",
+      "source_sha256": "d66fea198619d532fe420b8cf5d3baa98883d8c8c54d2e5b944cba7d723f2b2f",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"123\" \"reply\""
+      ],
+      "hex": "01cf70aab60ed8b33801aab88b554e99c53294",
+      "asx_sha256": "586299c5414d6baddb1953bf1312f146a254a952ec13cc57fca8d501c36b269f"
+    },
+    {
+      "label": "mdial:textvalue textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue textvalue\nendproc\n",
+      "source_sha256": "2383cc2becfff4167a2ea5ea342c7c46a224619720ffc8e7971b7c6e51fffabd",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:textvalue textvalue"
+      ],
+      "hex": "01cf708c00018c0094",
+      "asx_sha256": "f64e02548183c76bea34fe8171ab33484f11be7a394fb8ea5360cbfed23ba0b4"
+    },
+    {
+      "label": "mdial:textvalue i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue i\nendproc\n",
+      "source_sha256": "622eb73751df294aa7f7b17dc9fdb74d319e7d941113d7a949742977d74bd418",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> I"
+      ],
+      "observations": [
+        "mdial:textvalue i"
+      ]
+    },
+    {
+      "label": "mdial:textvalue wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue wide\nendproc\n",
+      "source_sha256": "8e00cd14c08faf685f706ea5206efe28d57e8070d0a54b64e20973c71628893f",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> WIDE"
+      ],
+      "observations": [
+        "mdial:textvalue wide"
+      ]
+    },
+    {
+      "label": "mdial:textvalue real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue real\nendproc\n",
+      "source_sha256": "c06d60a94182308a8362cbfdc47e8b3e423ed330e34b3ad16c35012349b2bca8",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> REAL"
+      ],
+      "observations": [
+        "mdial:textvalue real"
+      ]
+    },
+    {
+      "label": "mdial:\"1\" \"2\" \"3\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" \"2\" \"3\"\nendproc\n",
+      "source_sha256": "68a0323cde57dae1263377337efbc39a2ec97ec3335bf56843cb2ef23b3181a9",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 3"
+      ],
+      "observations": [
+        "mdial:\"1\" \"2\" \"3\""
+      ]
+    },
+    {
+      "label": "mdial:\"123\" into textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" into textvalue\nendproc\n",
+      "source_sha256": "4c9e955d677c6955dfd898448bb9c4eb2da9bd3d3cff67a1f2e947be35a97430",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> INTO",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "mdial:\"123\" into textvalue"
+      ]
+    },
+    {
+      "label": "mdial:\"123\" to textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" to textvalue\nendproc\n",
+      "source_sha256": "4f5115939a6d3507a14dbf4022f0da07fe335dc5a55f7565cc9496095bc2aa12",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> TO",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "mdial:\"123\" to textvalue"
+      ]
+    },
+    {
+      "label": "mdial:\"123\" result textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" result textvalue\nendproc\n",
+      "source_sha256": "c3033d66a75e888572d501b7b012ad79ea6c7e0d4c1a2733155479506231e639",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> RESULT",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "mdial:\"123\" result textvalue"
+      ]
+    },
+    {
+      "label": "mdial:\"123\" with textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" with textvalue\nendproc\n",
+      "source_sha256": "8f0b9159d282e0d8fcb5f43c7f732b43f23f98f30093d2d5a95d4441d7dd3cb0",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> WITH",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "mdial:\"123\" with textvalue"
+      ]
+    },
+    {
+      "label": "mdial:\"123\" 5",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\" 5\nendproc\n",
+      "source_sha256": "92138ee4897bd1fcfa675ee3a0c3d17ea73d795db255f4cb4619ab5ffdbc3b76",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 5"
+      ],
+      "observations": [
+        "mdial:\"123\" 5"
+      ]
+    },
+    {
+      "label": "mdial:textvalue, textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue, textvalue\nendproc\n",
+      "source_sha256": "dc13f4af3c9513120b22dc5a2dd2a7e49686683f54d1b637c1adacc5243ac5b2",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:textvalue, textvalue"
+      ],
+      "hex": "01cf708c00018c0094",
+      "asx_sha256": "f64e02548183c76bea34fe8171ab33484f11be7a394fb8ea5360cbfed23ba0b4"
+    },
+    {
+      "label": "mdial:textvalue,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue,textvalue\nendproc\n",
+      "source_sha256": "27f847e9e42419fa7a8abdb1517dae5e572a3b1238eb0142b1315c4dcd601e80",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:textvalue,textvalue"
+      ],
+      "hex": "01cf708c00018c0094",
+      "asx_sha256": "f64e02548183c76bea34fe8171ab33484f11be7a394fb8ea5360cbfed23ba0b4"
+    },
+    {
+      "label": "mdial:\"123\",textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"123\",textvalue\nendproc\n",
+      "source_sha256": "7239cbbb99966c380e2ba0e86e9f7bab8a2c545ee61af16c031171dddca09f52",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"123\",textvalue"
+      ],
+      "hex": "01cf70aab60ed8b338018c0094",
+      "asx_sha256": "f383692b12d794c0210af707848bf494d4d678fae885fd7172c6f07b61a18ae7"
+    },
+    {
+      "label": "mdial:textvalue extra",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue extra\nendproc\n",
+      "source_sha256": "a85c3e9155596f7539616fdd57855e4ce046975544b54fedc464fbb9b812239e",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> EXTRA"
+      ],
+      "observations": [
+        "mdial:textvalue extra"
+      ]
+    },
+    {
+      "label": "mdial:s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial s0\nendproc\n",
+      "source_sha256": "678bcbf6e403070130123ecf95e893ede763a00cd8e6c81eb245b69af8294666",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:s0",
+        "mdial:s0"
+      ],
+      "hex": "01cf7064000094",
+      "asx_sha256": "eaf0ff9ea06441eb649e7cf0cd4c5b87a5fdfce69c9362fa194475e5085a6e2d"
+    },
+    {
+      "label": "mdial:\"\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"\"\nendproc\n",
+      "source_sha256": "75fae83c5bd6d7867f51da611eb311947b0a05f5870bd25e3ad22fa8a66af984",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"\"",
+        "separator-30"
+      ],
+      "hex": "01cf706e130094",
+      "asx_sha256": "a1b81633cdf7233cf4f1672f66077991395231753c13d48e8ef4f127088c3dba"
+    },
+    {
+      "label": "mdial:textvalue(1)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue(1)\nendproc\n",
+      "source_sha256": "4a6ae8d453ef8565b7899a0967df3634eb9f12ecd0c8bc2baf668a154f658f44",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "mdial:textvalue(1)"
+      ]
+    },
+    {
+      "label": "mdial:(textvalue)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial (textvalue)\nendproc\n",
+      "source_sha256": "20b3162941ee887b0cf836c0e973015f8e2a25244122c2952b49eea958ab8f43",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> (",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "mdial:(textvalue)"
+      ]
+    },
+    {
+      "label": "mdial:textvalue+\"X\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue+\"X\"\nendproc\n",
+      "source_sha256": "d8af0c7945f4a83b76872550532160ff22d13c2647bd22830a478198196a8cfb",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ],
+      "observations": [
+        "mdial:textvalue+\"X\"",
+        "mdial:textvalue+\"X\""
+      ]
+    },
+    {
+      "label": "redial:",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \nendproc\n",
+      "source_sha256": "ef5ae3396570e89ef439013a67fa8f12cdf57c185ecda92ec0b13b391b1a7664",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "redial:"
+      ],
+      "hex": "01cf920094",
+      "asx_sha256": "7b42375ef08c46449cc56b51ed112adcfd37b7301c7abc53f94eca8a7b9b72a1"
+    },
+    {
+      "label": "redial:\"123\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\"\nendproc\n",
+      "source_sha256": "66871579b349f46437b8f1e397ba4be004ed75896e1591f714db93c59ab5b0a3",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123"
+      ],
+      "observations": [
+        "redial:\"123\""
+      ]
+    },
+    {
+      "label": "redial:textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue\nendproc\n",
+      "source_sha256": "d2346e986c6697ba041c91a898353f9f2f336eb382c573174b2a374803720f85",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "redial:textvalue"
+      ],
+      "hex": "01cf92018c0094",
+      "asx_sha256": "d43e2fbc0e148dea0ba2c3d260de34b220b66fcf9d2711e9baf18397818023e1"
+    },
+    {
+      "label": "redial:i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial i\nendproc\n",
+      "source_sha256": "d23367780f9dd58a82cac680fa1a0bd8769b08e96ea8da5597528a0866bbdf44",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> I"
+      ],
+      "observations": [
+        "redial:i"
+      ]
+    },
+    {
+      "label": "redial:wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial wide\nendproc\n",
+      "source_sha256": "37efa96ea6fad2c44f2db9fb52126715d48b5e7552fce2cc4035673647969fb9",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> WIDE"
+      ],
+      "observations": [
+        "redial:wide"
+      ]
+    },
+    {
+      "label": "redial:real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial real\nendproc\n",
+      "source_sha256": "ba8fdf9bf5e4b2877d7e8651d049884419bb00920546beea444ccb1e851d87a6",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> REAL"
+      ],
+      "observations": [
+        "redial:real"
+      ]
+    },
+    {
+      "label": "redial:1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial 1\nendproc\n",
+      "source_sha256": "3e864131bb5ca970dd0040adc0cdd82e4ef8aad2464078e7a877442bdd8871e2",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1"
+      ],
+      "observations": [
+        "redial:1"
+      ]
+    },
+    {
+      "label": "redial:-1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial -1\nendproc\n",
+      "source_sha256": "792fb93505d4b8047da87bc412de3ddb4ae95cf5c6a8b0df7cdeadd34c9d3945",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> -1"
+      ],
+      "observations": [
+        "redial:-1"
+      ]
+    },
+    {
+      "label": "redial:65535",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial 65535\nendproc\n",
+      "source_sha256": "c226ff921f3481ab1f76726ee92c483f46527bb2398a4a017cd116397686a80d",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 65535"
+      ],
+      "observations": [
+        "redial:65535"
+      ]
+    },
+    {
+      "label": "redial:\"123\" textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" textvalue\nendproc\n",
+      "source_sha256": "f787d838d1b3733117ddaf273a8971c04d8ea3af2bd92a83b0e9ba1b79aabd67",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:\"123\" textvalue"
+      ]
+    },
+    {
+      "label": "redial:\"123\" i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" i\nendproc\n",
+      "source_sha256": "5cf3e0dedaf5835436bfb4b24392ee6c4017bd1d540408743edfa2c5bec92e1d",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> I"
+      ],
+      "observations": [
+        "redial:\"123\" i"
+      ]
+    },
+    {
+      "label": "redial:\"123\" wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" wide\nendproc\n",
+      "source_sha256": "ef894190dd9eb338b01348b948f3fed4faccc4a9b03da29459d8629126236732",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> WIDE"
+      ],
+      "observations": [
+        "redial:\"123\" wide"
+      ]
+    },
+    {
+      "label": "redial:\"123\" real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" real\nendproc\n",
+      "source_sha256": "7117fbafc5aa606ff07a33fbc44e03da7bed9310f0a973d7288ba1271fcedf88",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> REAL"
+      ],
+      "observations": [
+        "redial:\"123\" real"
+      ]
+    },
+    {
+      "label": "redial:\"123\" \"reply\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" \"reply\"\nendproc\n",
+      "source_sha256": "a4122f91020e9f6bbb1bb980613466c58016160f19824301037686cde2d74c5f",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> reply"
+      ],
+      "observations": [
+        "redial:\"123\" \"reply\""
+      ]
+    },
+    {
+      "label": "redial:textvalue textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue textvalue\nendproc\n",
+      "source_sha256": "f885e5b994593b8cad093c923f7360814886ac4584ad40d73c0c89bea474f353",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:textvalue textvalue"
+      ]
+    },
+    {
+      "label": "redial:textvalue i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue i\nendproc\n",
+      "source_sha256": "008255b5b7f1915ca9eb57c24604d347c626b9175345a7fefb61e9b59db317a8",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> I"
+      ],
+      "observations": [
+        "redial:textvalue i"
+      ]
+    },
+    {
+      "label": "redial:textvalue wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue wide\nendproc\n",
+      "source_sha256": "080030d839a143eeedffecadcfdae28e9ec2a26c12a7eae01484a2b7c6364e40",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> WIDE"
+      ],
+      "observations": [
+        "redial:textvalue wide"
+      ]
+    },
+    {
+      "label": "redial:textvalue real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue real\nendproc\n",
+      "source_sha256": "5a37f67fffe418d43c2eddc339ac58957ee16c0927d09e8e6c1b3dba0947457f",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> REAL"
+      ],
+      "observations": [
+        "redial:textvalue real"
+      ]
+    },
+    {
+      "label": "redial:\"1\" \"2\" \"3\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" \"2\" \"3\"\nendproc\n",
+      "source_sha256": "528328606df82a83bdb54369185b4bf6fda4bbf29a648efbec2f09106a7f326f",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> 2",
+        "Error C002 Line 6: Unexpected token ==> 3"
+      ],
+      "observations": [
+        "redial:\"1\" \"2\" \"3\""
+      ]
+    },
+    {
+      "label": "redial:\"123\" into textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" into textvalue\nendproc\n",
+      "source_sha256": "b0b1aa1d7c1ef77c70a85ac5fdf72fc5791a2f9de871fa0596fd9d61db688ee7",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> INTO",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:\"123\" into textvalue"
+      ]
+    },
+    {
+      "label": "redial:\"123\" to textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" to textvalue\nendproc\n",
+      "source_sha256": "9947b7d4103a57cc3066173509ec1d82ce7c70d51a34c0f77a0a89b26ddc5168",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> TO",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:\"123\" to textvalue"
+      ]
+    },
+    {
+      "label": "redial:\"123\" result textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" result textvalue\nendproc\n",
+      "source_sha256": "bfa85429f6a1bc949f1bbdc66f2165eb28b1075c9cc5da8b2842c1bdb49c25f0",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> RESULT",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:\"123\" result textvalue"
+      ]
+    },
+    {
+      "label": "redial:\"123\" with textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" with textvalue\nendproc\n",
+      "source_sha256": "9d3f9cab8484d13f235cf0f3b7f3d582b48023d1d890dc5ad342217c138022b4",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> WITH",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:\"123\" with textvalue"
+      ]
+    },
+    {
+      "label": "redial:\"123\" 5",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\" 5\nendproc\n",
+      "source_sha256": "9ee1346a0d9670e6b49896f67fb4ce86aaba9cb24d1fc53f37fe0800d91939be",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> 5"
+      ],
+      "observations": [
+        "redial:\"123\" 5"
+      ]
+    },
+    {
+      "label": "redial:textvalue, textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue, textvalue\nendproc\n",
+      "source_sha256": "93be3b3d8576baa8f9ac0cc89445821def4462b347c7b5e6ce4c2054a8602cb0",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:textvalue, textvalue"
+      ]
+    },
+    {
+      "label": "redial:textvalue,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue,textvalue\nendproc\n",
+      "source_sha256": "2d67baece28e5cedcdaf6918a22e86a3b437d0f949348c77f123a29cf410c8ac",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:textvalue,textvalue"
+      ]
+    },
+    {
+      "label": "redial:\"123\",textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"123\",textvalue\nendproc\n",
+      "source_sha256": "376fb6ef1ca42202456dd1b40bf96ef46d19920057cef44732f14bedd1203b8a",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 123",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:\"123\",textvalue"
+      ]
+    },
+    {
+      "label": "redial:textvalue extra",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue extra\nendproc\n",
+      "source_sha256": "ca3fb53ae6a1b131f33f89c3cbe977aaf4027ff272d213e5d5a1df48972c48dd",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> EXTRA"
+      ],
+      "observations": [
+        "redial:textvalue extra"
+      ]
+    },
+    {
+      "label": "redial:s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial s0\nendproc\n",
+      "source_sha256": "17ced7cbb8b95e0cea7285ba61b1c910376d161987f7c3c2596792a5d968195a",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "redial:s0",
+        "redial:s0"
+      ],
+      "hex": "01cf9201640094",
+      "asx_sha256": "18fbba8a30c0c4dd756232b2f698fa4cfc5cf9ef544206eb72c1a48c371af5cf"
+    },
+    {
+      "label": "redial:\"\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"\"\nendproc\n",
+      "source_sha256": "04684be04ed26cc8e22f17dfdd9f3cd3bab86441f31bc99c622c8995ed2e8461",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $NULL"
+      ],
+      "observations": [
+        "redial:\"\""
+      ]
+    },
+    {
+      "label": "redial:textvalue(1)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue(1)\nendproc\n",
+      "source_sha256": "ea3c72bb0d3b445927f2d2ebe179d085ce7460898821eaa9a90d8cdf20942aac",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> (",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "redial:textvalue(1)"
+      ]
+    },
+    {
+      "label": "redial:(textvalue)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial (textvalue)\nendproc\n",
+      "source_sha256": "386ecb45b7182138c1266a67c4a3c42abcafa52f330f3a95e5117a6e251a83a0",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> (",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "redial:(textvalue)"
+      ]
+    },
+    {
+      "label": "redial:textvalue+\"X\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue+\"X\"\nendproc\n",
+      "source_sha256": "bc456657a7d8e9cc36e2257efd57c22172060b968785f8ec9eeb79c57191018d",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ],
+      "observations": [
+        "redial:textvalue+\"X\"",
+        "redial:textvalue+\"X\""
+      ]
+    },
+    {
+      "label": "hangup:",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \nendproc\n",
+      "source_sha256": "95e8048f0d2cda25a5075c9aa88497a53cbf47e0398cb0b217d43f173d194fd2",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "hangup:"
+      ],
+      "hex": "01cf5594",
+      "asx_sha256": "e096e0b38a5909b41281ff0b46e3bfa2363a24612b99e164f2fc0fbd081428a8"
+    },
+    {
+      "label": "hangup:\"123\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\"\nendproc\n",
+      "source_sha256": "24cf85adfad4f16e134455f4ef91837ce9ae82f8e6654d55e0db24d8cf3e8fa6",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123"
+      ],
+      "observations": [
+        "hangup:\"123\""
+      ]
+    },
+    {
+      "label": "hangup:textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue\nendproc\n",
+      "source_sha256": "853783657c3e175a140638269347e9d043b63a0ffaf491316090eae5c81b7aa4",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:textvalue"
+      ]
+    },
+    {
+      "label": "hangup:i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup i\nendproc\n",
+      "source_sha256": "e526ac63f202f831a27ab11b67ccb2967a4340553793ca5365496484aa1c31ff",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> I"
+      ],
+      "observations": [
+        "hangup:i"
+      ]
+    },
+    {
+      "label": "hangup:wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup wide\nendproc\n",
+      "source_sha256": "82f3d24eeda6d553297db30dcc7d6d8bbeaf6f192a7c871ec7b0eafe1ea66bf6",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> WIDE"
+      ],
+      "observations": [
+        "hangup:wide"
+      ]
+    },
+    {
+      "label": "hangup:real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup real\nendproc\n",
+      "source_sha256": "ab55a1f850dfcea23f47e9692c1941db23c745b2816b85869cc7c95877be5630",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> REAL"
+      ],
+      "observations": [
+        "hangup:real"
+      ]
+    },
+    {
+      "label": "hangup:1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup 1\nendproc\n",
+      "source_sha256": "b8a4198cfc7c262ea6b4ad77c18265e73c312ae87b4ec56100924a46b70fb957",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1"
+      ],
+      "observations": [
+        "hangup:1"
+      ]
+    },
+    {
+      "label": "hangup:-1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup -1\nendproc\n",
+      "source_sha256": "b1648e5e6ba333efcd7426cfc2166ca4caf905a84f96bd325652278104f39482",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> -1"
+      ],
+      "observations": [
+        "hangup:-1"
+      ]
+    },
+    {
+      "label": "hangup:65535",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup 65535\nendproc\n",
+      "source_sha256": "6c885cd6f867ae5a6efafd9d0658832ca0d50e2263f63889b0df360d4f858734",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 65535"
+      ],
+      "observations": [
+        "hangup:65535"
+      ]
+    },
+    {
+      "label": "hangup:\"123\" textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" textvalue\nendproc\n",
+      "source_sha256": "6218d5411be3456647475f5f70008f7c65e6edf296afd90af7db232a54ba71e5",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:\"123\" textvalue"
+      ]
+    },
+    {
+      "label": "hangup:\"123\" i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" i\nendproc\n",
+      "source_sha256": "4ededcaf075b348c0679037df136034c662efd8399afb75410678b7317a4014b",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> I"
+      ],
+      "observations": [
+        "hangup:\"123\" i"
+      ]
+    },
+    {
+      "label": "hangup:\"123\" wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" wide\nendproc\n",
+      "source_sha256": "bed49ab62b598d6f28a7e39fa299940d4e428ae295ec93bbf6ae37c208548a64",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> WIDE"
+      ],
+      "observations": [
+        "hangup:\"123\" wide"
+      ]
+    },
+    {
+      "label": "hangup:\"123\" real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" real\nendproc\n",
+      "source_sha256": "fab268e5b63b211c0d6949464f43232751303d227cad1890f5bad4074b2769bc",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> REAL"
+      ],
+      "observations": [
+        "hangup:\"123\" real"
+      ]
+    },
+    {
+      "label": "hangup:\"123\" \"reply\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" \"reply\"\nendproc\n",
+      "source_sha256": "7da6d7790bf568eb94d85d03db0f7bc53acdb2634234e7ac4746c423e7d27fc2",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> reply"
+      ],
+      "observations": [
+        "hangup:\"123\" \"reply\""
+      ]
+    },
+    {
+      "label": "hangup:textvalue textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue textvalue\nendproc\n",
+      "source_sha256": "b9a2f2321244261bd893891dbe366552a662bc6ab3776d0abd55a486181fd4d6",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:textvalue textvalue"
+      ]
+    },
+    {
+      "label": "hangup:textvalue i",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue i\nendproc\n",
+      "source_sha256": "34d797018caeeb4f1c6bf7250688b6118b9253823e90a1ec894cd509ec2850e2",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> I"
+      ],
+      "observations": [
+        "hangup:textvalue i"
+      ]
+    },
+    {
+      "label": "hangup:textvalue wide",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue wide\nendproc\n",
+      "source_sha256": "36a9dd249c8fc22b52ba5cf724c33f75a9acc2fc533f36cc38113844988e02ab",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> WIDE"
+      ],
+      "observations": [
+        "hangup:textvalue wide"
+      ]
+    },
+    {
+      "label": "hangup:textvalue real",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue real\nendproc\n",
+      "source_sha256": "8084d7a0348e9495fc2ac10a47313752d709a6c45d8a32fad28565e2f288bc85",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> REAL"
+      ],
+      "observations": [
+        "hangup:textvalue real"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" \"2\" \"3\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" \"2\" \"3\"\nendproc\n",
+      "source_sha256": "b00b7879af378123adb127884d0de46f66666115e46395d6fdad44f214c042d7",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> 2",
+        "Error C002 Line 6: Unexpected token ==> 3"
+      ],
+      "observations": [
+        "hangup:\"1\" \"2\" \"3\""
+      ]
+    },
+    {
+      "label": "hangup:\"123\" into textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" into textvalue\nendproc\n",
+      "source_sha256": "857956707703e3e300152f77ef0914b55869339449bde01b1ce5b015329843e9",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> INTO",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:\"123\" into textvalue"
+      ]
+    },
+    {
+      "label": "hangup:\"123\" to textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" to textvalue\nendproc\n",
+      "source_sha256": "0e835a87158e06fa197763cece04cb492a9351b28c14f5a82395f90d12fac6e1",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> TO",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:\"123\" to textvalue"
+      ]
+    },
+    {
+      "label": "hangup:\"123\" result textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" result textvalue\nendproc\n",
+      "source_sha256": "fb2e1c5099db50fe322ec1fefe8fcfb50b356adb4093537df79ad38381a2abd5",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> RESULT",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:\"123\" result textvalue"
+      ]
+    },
+    {
+      "label": "hangup:\"123\" with textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" with textvalue\nendproc\n",
+      "source_sha256": "f3fb3cfd0a4056487d4ae53ff0cdf8463c9f439304b87b53acc29771ebf1bd91",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> WITH",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:\"123\" with textvalue"
+      ]
+    },
+    {
+      "label": "hangup:\"123\" 5",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\" 5\nendproc\n",
+      "source_sha256": "04bd9f6757e9ffe7adf11a6059d21057b058cf27c612b74176887208b96c34c6",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> 5"
+      ],
+      "observations": [
+        "hangup:\"123\" 5"
+      ]
+    },
+    {
+      "label": "hangup:textvalue, textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue, textvalue\nendproc\n",
+      "source_sha256": "8e7bac95bd491dd88f295ec8759e8405c268f63872e9f49c41fd9a70d0b05f2d",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:textvalue, textvalue"
+      ]
+    },
+    {
+      "label": "hangup:textvalue,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue,textvalue\nendproc\n",
+      "source_sha256": "57a72eded949668548e056a9eb4a630eb9ef9b65293e241c3cd93205e03fc1be",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:textvalue,textvalue"
+      ]
+    },
+    {
+      "label": "hangup:\"123\",textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"123\",textvalue\nendproc\n",
+      "source_sha256": "649da8cb74720969d5631c2f8c2b145dee8a5782e634e99cb577ddff3414a2da",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 123",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:\"123\",textvalue"
+      ]
+    },
+    {
+      "label": "hangup:textvalue extra",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue extra\nendproc\n",
+      "source_sha256": "b13e1ab3d6fc18c61c636b24a7a04f6b867f811d2a8d6d5f0c00e3d26432e135",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> EXTRA"
+      ],
+      "observations": [
+        "hangup:textvalue extra"
+      ]
+    },
+    {
+      "label": "hangup:s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup s0\nendproc\n",
+      "source_sha256": "d890e4754b99e2406aa92a0148f3b8f2ad39de144b433c70f9ca2a0d6a840844",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "hangup:s0",
+        "hangup:s0"
+      ]
+    },
+    {
+      "label": "hangup:\"\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"\"\nendproc\n",
+      "source_sha256": "b5a8791ef5b28b28fc692f9cb278d9bf97a5ac8b935ecce3f3902279f7db0935",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> $NULL"
+      ],
+      "observations": [
+        "hangup:\"\""
+      ]
+    },
+    {
+      "label": "hangup:textvalue(1)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue(1)\nendproc\n",
+      "source_sha256": "61196330bd155b9417a1590472854c88a785cf63e06b9a43c468695229c7b78f",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> (",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "hangup:textvalue(1)"
+      ]
+    },
+    {
+      "label": "hangup:(textvalue)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup (textvalue)\nendproc\n",
+      "source_sha256": "e0d28a0ea5bf6d655b701f290651d8431bcea4e7a1143bcaffe07e3301f3095f",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> (",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "hangup:(textvalue)"
+      ]
+    },
+    {
+      "label": "hangup:textvalue+\"X\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue+\"X\"\nendproc\n",
+      "source_sha256": "7aea7899eddd41ec62cce96c7ea0b317de3e945b405a0515cd553af3c10ef652",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ],
+      "observations": [
+        "hangup:textvalue+\"X\"",
+        "hangup:textvalue+\"X\""
+      ]
+    },
+    {
+      "label": "dial:\"1\" s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" s0\nendproc\n",
+      "source_sha256": "cf2b03eca4d47411613b051cbd17ea442855722bc8fe9834a748caf1f352109e",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:\"1\" s0"
+      ],
+      "hex": "01cf22aab40cd801640094",
+      "asx_sha256": "c586e3f69370636eb2296fda8fd8d702d127c7ff2e1c98afbb79c833861bfdfa"
+    },
+    {
+      "label": "dial:\"1\" $D_PWORD",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" $D_PWORD\nendproc\n",
+      "source_sha256": "fb4ac97cebaea6376ec90f6efd08d382f84b4e19d7800d0d4ae622b2c2ee935b",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $D_PWORD"
+      ],
+      "observations": [
+        "dial:\"1\" $D_PWORD"
+      ]
+    },
+    {
+      "label": "dial:\"1\" $DATE",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" $DATE\nendproc\n",
+      "source_sha256": "9d9a22a62a7520cea0c4fa32faffe90be49c27fe1fd8e9ae2924a1f88444f092",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $DATE"
+      ],
+      "observations": [
+        "dial:\"1\" $DATE"
+      ]
+    },
+    {
+      "label": "dial:\"1\" $COL",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" $COL\nendproc\n",
+      "source_sha256": "2ccaf4612b964e59bb2f3d94f4e673504f845efead6108377dd1a9bd67a79792",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $COL"
+      ],
+      "observations": [
+        "dial:\"1\" $COL"
+      ]
+    },
+    {
+      "label": "dial:\"1\" \"\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" \"\"\nendproc\n",
+      "source_sha256": "1661465449a3eb62fd50f4b9070f99b4add89efa06b7429581856d0f429b49e0",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $NULL"
+      ],
+      "observations": [
+        "dial:\"1\" \"\""
+      ]
+    },
+    {
+      "label": "dial:\"1\" \"label\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" \"label\"\nendproc\n",
+      "source_sha256": "9bd02fcb75e7ec75a1c879c163bc158f306db1c0ff85164c97ab54c1febd0dd4",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> label"
+      ],
+      "observations": [
+        "dial:\"1\" \"label\""
+      ]
+    },
+    {
+      "label": "dial:\"1\",,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\",,textvalue\nendproc\n",
+      "source_sha256": "f2cd98b90d0dd7db2c994c28e391f72638a53f7ba1857f8ae0d3d70b3da7778b",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "dial:\"1\",,textvalue"
+      ]
+    },
+    {
+      "label": "dial:\"1\", ,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\", ,textvalue\nendproc\n",
+      "source_sha256": "c32f5eac17ed70c99df18ee7db436c975119e35f78ea099d4c6fcbc69ec47c1d",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:\"1\", ,textvalue"
+      ],
+      "hex": "01cf22aab40cd8018c0094",
+      "asx_sha256": "397ab5424dd1099075dd76e37b48fed9a1c88a7fceb03cbc021b2ea28214702b"
+    },
+    {
+      "label": "dial:,\"1\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial ,\"1\"\nendproc\n",
+      "source_sha256": "0a90cc6ebcd78a4b7f5c002fe65260dadca2fd6c04e9c1d0376b90c132db158a",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> ,",
+        "Error C025 Line 6: Invalid identifier ==> 1"
+      ],
+      "observations": [
+        "dial:,\"1\""
+      ]
+    },
+    {
+      "label": "dial:\"1\",",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\",\nendproc\n",
+      "source_sha256": "4a83f3b86ade1694f5d8e36d275dff1c17bad7fd0d3804c98a61de60c51fec16",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,"
+      ],
+      "observations": [
+        "dial:\"1\","
+      ]
+    },
+    {
+      "label": "dial:\"1\" textvalue extra",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" textvalue extra\nendproc\n",
+      "source_sha256": "32dbec26e44c5b296a476579be91296b66167ccb5d5a7a3c0a4b8da1a09ba561",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> EXTRA"
+      ],
+      "observations": [
+        "dial:\"1\" textvalue extra"
+      ]
+    },
+    {
+      "label": "dial:\"1\" textvalue(1)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" textvalue(1)\nendproc\n",
+      "source_sha256": "875df767eec4a31dc0d80a23593a16ada2791c7c56b43f73f16f901dbf7414d4",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> (",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "dial:\"1\" textvalue(1)"
+      ]
+    },
+    {
+      "label": "dial:\"1\" textvalue+\"X\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" textvalue+\"X\"\nendproc\n",
+      "source_sha256": "bc066632e31036135df663b87cabd53b3d46aa5493d472b5ee3ee1b579f82df3",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ],
+      "observations": [
+        "dial:\"1\" textvalue+\"X\""
+      ]
+    },
+    {
+      "label": "dial:\"A\"+\"B\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"A\"+\"B\"\nendproc\n",
+      "source_sha256": "936d5465a10f437fc431cb38864d2fa218862f1f06d4a58c076ab948e5c3d809",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> +",
+        "Error C002 Line 6: Unexpected token ==> B"
+      ],
+      "observations": [
+        "dial:\"A\"+\"B\""
+      ]
+    },
+    {
+      "label": "dial:\"A\" \"B\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"A\" \"B\"\nendproc\n",
+      "source_sha256": "bc0a9174bd04d24fd513580b4bfd58a8ed6358d95c4f3c083e2ca9487f8c3e9f",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> B"
+      ],
+      "observations": [
+        "dial:\"A\" \"B\""
+      ]
+    },
+    {
+      "label": "dial:s0 s1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial s0 s1\nendproc\n",
+      "source_sha256": "82d1fb5faa8a16ab7b423cdd3a8569bc02e07ac9626b05cde3ae3335dfd94fec",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:s0 s1"
+      ],
+      "hex": "01cf22640001640194",
+      "asx_sha256": "ef3563df8b6caed176d96ed2465f7cb169fb01fc51e61dbe23ee7823d28d5665"
+    },
+    {
+      "label": "dial:$D_PWORD s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial $D_PWORD s0\nendproc\n",
+      "source_sha256": "9bca349904bff3d3b157b4badb86b9918cbb68f208d289a3c0a632e3f14afbab",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:$D_PWORD s0"
+      ],
+      "hex": "01cf226e0601640094",
+      "asx_sha256": "21772e16da2abf77b958dc7864543a4211e264f2a2c5878163084c9cf19a7a0e"
+    },
+    {
+      "label": "dial:$DATE s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial $DATE s0\nendproc\n",
+      "source_sha256": "ab3fc74666f64836a165d506f5ed1e621201c7f763de7335763ff3b36e9e63cb",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:$DATE s0"
+      ],
+      "hex": "01cf226e0801640094",
+      "asx_sha256": "8b60bef7dc8c0fcd1f737f42963ad46483fb15a27b28489fa9ff8517fe4e1bdd"
+    },
+    {
+      "label": "dial:s1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial s1\nendproc\n",
+      "source_sha256": "77f73257500aecc0a8b61e75cfabd790ec1c090c31f8c6d56528a01c7ff0b5df",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:s1"
+      ],
+      "hex": "01cf2264010094",
+      "asx_sha256": "2e1ed91b3abd01357ce0004bf1fd0742bdfd7c65af1f9fc8e0e3bc686f20b104"
+    },
+    {
+      "label": "dial:$D_PWORD",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial $D_PWORD\nendproc\n",
+      "source_sha256": "999ec3063beff47c573d2d7c0b63da766f1d311deee54acd4f895336a8ee949c",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:$D_PWORD"
+      ],
+      "hex": "01cf226e060094",
+      "asx_sha256": "b038fee411faf4f6055f648abc3f2c7b34029dfe9ebfcca6b16441cc140c5f1a"
+    },
+    {
+      "label": "dial:$DATE",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial $DATE\nendproc\n",
+      "source_sha256": "a3cd6f39dea96da65aa07172253409b048ee5074d06d5f26901b10712ea6fb19",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:$DATE"
+      ],
+      "hex": "01cf226e080094",
+      "asx_sha256": "5a2c65131533c09cf519f99c8c40093ce09c90e35ad7d7d819421ed0ee99947a"
+    },
+    {
+      "label": "dial:textvalue,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue,\nendproc\n",
+      "source_sha256": "c82041d0a642fc552377da2d747cbc8a3724a50c32e9c687a34961a52b5013c0",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,"
+      ],
+      "observations": [
+        "dial:textvalue,"
+      ]
+    },
+    {
+      "label": "dial:textvalue,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue,,\nendproc\n",
+      "source_sha256": "dbb0d7924d8b200394c307c6c55ccbab9ef303e26f6485fe11819462e9e3553a",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "dial:textvalue,,"
+      ]
+    },
+    {
+      "label": "dial:textvalue, ,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue, ,\nendproc\n",
+      "source_sha256": "063f252d766d43aed979e03b575e883c297585a4bbae2ddd390cad401af4e4ca",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,"
+      ],
+      "observations": [
+        "dial:textvalue, ,"
+      ]
+    },
+    {
+      "label": "dial:textvalue ; trailing",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue ; trailing\nendproc\n",
+      "source_sha256": "9e37224cd9eb7e6977179f0cf47973ae31af600bdaeacc1ef0f97be739eb3425",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:textvalue ; trailing"
+      ],
+      "hex": "01cf228c000094",
+      "asx_sha256": "cd61a1d0f3fd9d4aad971cd9a3691ef0699c3cfc3af8065640d36056e8ec20bd"
+    },
+    {
+      "label": "dial:textvalue ; ,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue ; ,,\nendproc\n",
+      "source_sha256": "5d189c62030ec021fd1611619a2db5ec8161168d59a16cbe820223c6645252cb",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:textvalue ; ,,"
+      ],
+      "hex": "01cf228c000094",
+      "asx_sha256": "cd61a1d0f3fd9d4aad971cd9a3691ef0699c3cfc3af8065640d36056e8ec20bd"
+    },
+    {
+      "label": "dial:\"1\" textvalue ; ,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" textvalue ; ,,\nendproc\n",
+      "source_sha256": "c9e1c83b191c147a38decd792c9cd69cf6ce6cef44e422fd59838efbcbcb8cd8",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial:\"1\" textvalue ; ,,"
+      ],
+      "hex": "01cf22aab40cd8018c0094",
+      "asx_sha256": "397ab5424dd1099075dd76e37b48fed9a1c88a7fceb03cbc021b2ea28214702b"
+    },
+    {
+      "label": "dial:0x1234",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial 0x1234\nendproc\n",
+      "source_sha256": "b2b55da6ad9b437ad67589f67c80e1c521a4c3058f6138f54588b41e97571440",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 0X1234"
+      ],
+      "observations": [
+        "dial:0x1234"
+      ]
+    },
+    {
+      "label": "dial:32768",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial 32768\nendproc\n",
+      "source_sha256": "a65c847aea0620af9b32fe99dac8fcb0cec040c44b92f0c1eebdbd07c91c746b",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 32768"
+      ],
+      "observations": [
+        "dial:32768"
+      ]
+    },
+    {
+      "label": "dial:\"1\" 0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" 0\nendproc\n",
+      "source_sha256": "9d42226aa8806fa9fbe9eb7b7efa54cee3b24b684df1858c1418164e11ae1ccf",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 0"
+      ],
+      "observations": [
+        "dial:\"1\" 0"
+      ]
+    },
+    {
+      "label": "dial:\"1\" N0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" N0\nendproc\n",
+      "source_sha256": "d236435f9cb40c7e03734762ff03c2118ff166ee68367817bdcdff83cdc56d77",
+      "success": false,
+      "errors": [
+        "Error C024 Line 6: Invalid string variable ==> N0"
+      ],
+      "observations": [
+        "dial:\"1\" N0"
+      ]
+    },
+    {
+      "label": "mdial:\"1\" s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" s0\nendproc\n",
+      "source_sha256": "b03d5089d4201cb616f5c56cb9ad3ecb355b60df536e6e04d86fc18a8cc02a90",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"1\" s0"
+      ],
+      "hex": "01cf70aab40cd801640094",
+      "asx_sha256": "6dea1b10a807b08f9a002d229ac0c24309a60b8f1423ae24fcabf8c40ab63f41"
+    },
+    {
+      "label": "mdial:\"1\" $D_PWORD",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" $D_PWORD\nendproc\n",
+      "source_sha256": "d7ee63054adcf7193e8675fc8205c7121d371c5e224479fd0b52ec706b734367",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"1\" $D_PWORD"
+      ],
+      "hex": "01cf70aab40cd8016e0694",
+      "asx_sha256": "391eb412d61965d625e0a47a9f7769152165ee49d21b9b80f1a8335cdd08990b"
+    },
+    {
+      "label": "mdial:\"1\" $DATE",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" $DATE\nendproc\n",
+      "source_sha256": "cbee8b988aa22155089a467aa7427b5f49758077e03edbe93085590f4ae7f8f9",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"1\" $DATE"
+      ],
+      "hex": "01cf70aab40cd8016e0894",
+      "asx_sha256": "d241bf8dd71f8bf9d618eedbff0d5f288ddc8a5d9a27efeed4529d83d3696ac1"
+    },
+    {
+      "label": "mdial:\"1\" $COL",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" $COL\nendproc\n",
+      "source_sha256": "53f6e5b47d1c9d9297eecc06ac36f8d03b67bbfe122eaa5ba24998a48cc355b7",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> $COL"
+      ],
+      "observations": [
+        "mdial:\"1\" $COL"
+      ]
+    },
+    {
+      "label": "mdial:\"1\" \"\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" \"\"\nendproc\n",
+      "source_sha256": "3361a600f2bea95648f99390c441b8a7add674d324598c70b2f24c22cf756db8",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"1\" \"\""
+      ],
+      "hex": "01cf70aab40cd8016e1394",
+      "asx_sha256": "15e516686a106d8fefa99ab8bc47b03e2d6c120838ade8154374ca90ca22397a"
+    },
+    {
+      "label": "mdial:\"1\" \"label\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" \"label\"\nendproc\n",
+      "source_sha256": "f2b53db2c689d23cac36e20272e15437c7159dbdd33767aab4e1b13d8572a37d",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"1\" \"label\""
+      ],
+      "hex": "01cf70aab40cd801aab88925424b2c6794",
+      "asx_sha256": "e614708a1b7ac00ea0f74f9513babeac63168db518be8291bb92830dd401ddd1"
+    },
+    {
+      "label": "mdial:\"1\",,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\",,textvalue\nendproc\n",
+      "source_sha256": "f0dc0c1b3102adc0c58d7d7d4f28d033561591190b28a81fce9de66159830c47",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "mdial:\"1\",,textvalue"
+      ]
+    },
+    {
+      "label": "mdial:\"1\", ,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\", ,textvalue\nendproc\n",
+      "source_sha256": "ebc12e266d7c823b231b53e5cc79bf2a68b14325a50a30be9e8f03f8e2a99d6e",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"1\", ,textvalue"
+      ],
+      "hex": "01cf70aab40cd8018c0094",
+      "asx_sha256": "ef988dea8243fd3f7f407bb28eb9596b292af2ec9979aa391c76ffd16cac8603"
+    },
+    {
+      "label": "mdial:,\"1\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial ,\"1\"\nendproc\n",
+      "source_sha256": "557f712a05b42bcb59eedb3b4edb1f10c89399d492430701a2409b903a964b49",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> ,"
+      ],
+      "observations": [
+        "mdial:,\"1\""
+      ]
+    },
+    {
+      "label": "mdial:\"1\",",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\",\nendproc\n",
+      "source_sha256": "b6580a936c3a3f9fb706ca6789d3675c2176f610f3deafc82591b8907d8e7ae5",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> ,"
+      ],
+      "observations": [
+        "mdial:\"1\","
+      ]
+    },
+    {
+      "label": "mdial:\"1\" textvalue extra",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" textvalue extra\nendproc\n",
+      "source_sha256": "f020ce67f7d64a379ffe7475284acb08cd44129f8b9d918dfd1f8b120c5a5a30",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> EXTRA"
+      ],
+      "observations": [
+        "mdial:\"1\" textvalue extra"
+      ]
+    },
+    {
+      "label": "mdial:\"1\" textvalue(1)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" textvalue(1)\nendproc\n",
+      "source_sha256": "1ad73d26f7d00e3f13492bc8ecfeb9745b224af8e0c5c143721099606a1e46ba",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> (",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "mdial:\"1\" textvalue(1)"
+      ]
+    },
+    {
+      "label": "mdial:\"1\" textvalue+\"X\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" textvalue+\"X\"\nendproc\n",
+      "source_sha256": "0b5019159d3efe7f1591fe91baefb111529074d7d73dcffdcf2f454b71016fe3",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ],
+      "observations": [
+        "mdial:\"1\" textvalue+\"X\""
+      ]
+    },
+    {
+      "label": "mdial:\"A\"+\"B\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"A\"+\"B\"\nendproc\n",
+      "source_sha256": "a8e5c42d35ef78f9a9c103ddb2469fc80a8c8079c27082bbc10f7d667e862b25",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> +",
+        "Error C002 Line 6: Unexpected token ==> B"
+      ],
+      "observations": [
+        "mdial:\"A\"+\"B\""
+      ]
+    },
+    {
+      "label": "mdial:\"A\" \"B\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"A\" \"B\"\nendproc\n",
+      "source_sha256": "fc58eadb1334da1c47296d8742b5812dba23b4d6c6dfd53aead216f5d7bd3e8f",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"A\" \"B\""
+      ],
+      "hex": "01cf70aab40ce801aab485fb94",
+      "asx_sha256": "a16cb8a1dcd80744d3ad892649a41dd9ea3984343d72d39a39fb41431287cecf"
+    },
+    {
+      "label": "mdial:s0 s1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial s0 s1\nendproc\n",
+      "source_sha256": "d5e99650856a4c4c0040138c90d672c62ee8f258e492f76cab7333920222e55f",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:s0 s1"
+      ],
+      "hex": "01cf70640001640194",
+      "asx_sha256": "5ef8476f0946fdfaf4c53166c0f29257c2de9ee6bc9306c5b9376afcb6817797"
+    },
+    {
+      "label": "mdial:$D_PWORD s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial $D_PWORD s0\nendproc\n",
+      "source_sha256": "89918449eed6bae4259b2fb6f1e8a2e82de40a48945145c63a4897025b5fec00",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:$D_PWORD s0"
+      ],
+      "hex": "01cf706e0601640094",
+      "asx_sha256": "0b57cb46ab41fd0b91e71ea6b6d6078b222aacf4c9b5c6ca74f09bbb4a49f599"
+    },
+    {
+      "label": "mdial:$DATE s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial $DATE s0\nendproc\n",
+      "source_sha256": "18b15297e47d8e6d0a2bd55dbf2d3253158e4de110d5ead2ff6cedc8c0213ec8",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:$DATE s0"
+      ],
+      "hex": "01cf706e0801640094",
+      "asx_sha256": "844563cf8127f3c8927c2cba5f60659f779949f76778a0c097c755a59efa1888"
+    },
+    {
+      "label": "mdial:s1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial s1\nendproc\n",
+      "source_sha256": "679f276dac8b1fe8560964b4b75931e87184e4cd5771eb56ceb86d08e94a3c97",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:s1"
+      ],
+      "hex": "01cf7064010094",
+      "asx_sha256": "e0799cbc07a3213dc4d060e704e5076ecea2db272074c4b375a0f40551ba9545"
+    },
+    {
+      "label": "mdial:$D_PWORD",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial $D_PWORD\nendproc\n",
+      "source_sha256": "5b6b99ffa963f3ed4ef1d034dc9a84050e0570da12cbc72266e9e0bc13d99bef",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:$D_PWORD"
+      ],
+      "hex": "01cf706e060094",
+      "asx_sha256": "6121ad84d8ae3fecf065796ad5ff0443995f5d16f5852d1342895c6e6a699c7c"
+    },
+    {
+      "label": "mdial:$DATE",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial $DATE\nendproc\n",
+      "source_sha256": "14d44852c8cd6ddfd9aeb87a44356cc0380b549ca5379862a9d9cd63b1b8b9d3",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:$DATE"
+      ],
+      "hex": "01cf706e080094",
+      "asx_sha256": "ab66bad0a916dc7f4d6b0137d9111ceabb323120c823efa1e826dfbd5f61fae6"
+    },
+    {
+      "label": "mdial:textvalue,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue,\nendproc\n",
+      "source_sha256": "2c8d2c0120422ccc0bdb2238c26ca70bd9f74c922bc9ef02f11ae755c088ee55",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> ,"
+      ],
+      "observations": [
+        "mdial:textvalue,"
+      ]
+    },
+    {
+      "label": "mdial:textvalue,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue,,\nendproc\n",
+      "source_sha256": "30297cf38ff82e840ff02bfa8424083d0dfb6aa03f207ea2eb5a7315e01e6250",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "mdial:textvalue,,"
+      ]
+    },
+    {
+      "label": "mdial:textvalue, ,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue, ,\nendproc\n",
+      "source_sha256": "a7397ca5557caac8557d3e3bb6b5b64fa0aa317d521a915d02e047a9127e68cd",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> ,"
+      ],
+      "observations": [
+        "mdial:textvalue, ,"
+      ]
+    },
+    {
+      "label": "mdial:textvalue ; trailing",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue ; trailing\nendproc\n",
+      "source_sha256": "431047d030f4fb9e7353511dfe55a8adf92b9950baaff00c1a6c364e077345d6",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:textvalue ; trailing"
+      ],
+      "hex": "01cf708c000094",
+      "asx_sha256": "6874d7198c74af36dbfd3b03b4ff6565b5a5cbbdcfcd23365ed639f98d54e261"
+    },
+    {
+      "label": "mdial:textvalue ; ,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue ; ,,\nendproc\n",
+      "source_sha256": "ccce01bb8a035766d3a9b136fbe268730733d0848e111e3d665e90d42c665fd7",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:textvalue ; ,,"
+      ],
+      "hex": "01cf708c000094",
+      "asx_sha256": "6874d7198c74af36dbfd3b03b4ff6565b5a5cbbdcfcd23365ed639f98d54e261"
+    },
+    {
+      "label": "mdial:\"1\" textvalue ; ,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" textvalue ; ,,\nendproc\n",
+      "source_sha256": "b4d42beebcf1dfededef2baecd3681fb341e825e2c31e3f106be95a1e852ec32",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial:\"1\" textvalue ; ,,"
+      ],
+      "hex": "01cf70aab40cd8018c0094",
+      "asx_sha256": "ef988dea8243fd3f7f407bb28eb9596b292af2ec9979aa391c76ffd16cac8603"
+    },
+    {
+      "label": "mdial:0x1234",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial 0x1234\nendproc\n",
+      "source_sha256": "68df2eda901befa9cb52f1697af00247a88e36011f5ab8f729c65cd3f6a916c0",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 0X1234"
+      ],
+      "observations": [
+        "mdial:0x1234"
+      ]
+    },
+    {
+      "label": "mdial:32768",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial 32768\nendproc\n",
+      "source_sha256": "c3861be0a2e9304d3a0f73935d43eb8db20e27212a772c5955dc2a16dd45c550",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 32768"
+      ],
+      "observations": [
+        "mdial:32768"
+      ]
+    },
+    {
+      "label": "mdial:\"1\" 0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" 0\nendproc\n",
+      "source_sha256": "0dd0a0477fd25b3d32285865902d7edc8a2e2fbdf8e62d04ca30433f5639054c",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> 0"
+      ],
+      "observations": [
+        "mdial:\"1\" 0"
+      ]
+    },
+    {
+      "label": "mdial:\"1\" N0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" N0\nendproc\n",
+      "source_sha256": "e6652f6d5f7045e8448483e4d89c95bf6366b78d583cafa356c58c6a3bd2370c",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> N0"
+      ],
+      "observations": [
+        "mdial:\"1\" N0"
+      ]
+    },
+    {
+      "label": "redial:\"1\" s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" s0\nendproc\n",
+      "source_sha256": "5136fb8f9ec0763afd55f54e42bc23a5148097948a9aab0f7939cf2dd2dc845e",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "redial:\"1\" s0"
+      ]
+    },
+    {
+      "label": "redial:\"1\" $D_PWORD",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" $D_PWORD\nendproc\n",
+      "source_sha256": "b81d34e0bbe335df7e06c8d8c51e708bb2c666238d60ecadfc31e8ed4e18c0e1",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> $D_PWORD"
+      ],
+      "observations": [
+        "redial:\"1\" $D_PWORD"
+      ]
+    },
+    {
+      "label": "redial:\"1\" $DATE",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" $DATE\nendproc\n",
+      "source_sha256": "370bb03317657010956063dc7cdc49f47148736bf59e7a1c26348926354dae60",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> $DATE"
+      ],
+      "observations": [
+        "redial:\"1\" $DATE"
+      ]
+    },
+    {
+      "label": "redial:\"1\" $COL",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" $COL\nendproc\n",
+      "source_sha256": "53edc4e050e2275a28d705c8395e9fd9aef1c7864873ba82cc4f90c167859862",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> $COL"
+      ],
+      "observations": [
+        "redial:\"1\" $COL"
+      ]
+    },
+    {
+      "label": "redial:\"1\" \"\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" \"\"\nendproc\n",
+      "source_sha256": "be1e14681c4142159a4d07a4a140a35f3224ef5cac35b839bf1a4520cbb80953",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> $NULL"
+      ],
+      "observations": [
+        "redial:\"1\" \"\""
+      ]
+    },
+    {
+      "label": "redial:\"1\" \"label\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" \"label\"\nendproc\n",
+      "source_sha256": "89fbe5f8fc5f5823c22aab7d8b0b330e8a72e680bf3acaf415518ef778b7e4bf",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> label"
+      ],
+      "observations": [
+        "redial:\"1\" \"label\""
+      ]
+    },
+    {
+      "label": "redial:\"1\",,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\",,textvalue\nendproc\n",
+      "source_sha256": "5e4c600fc90c2dbd2edec4572a373f90034a8c42f1e6abef408602c0525c3079",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:\"1\",,textvalue"
+      ]
+    },
+    {
+      "label": "redial:\"1\", ,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\", ,textvalue\nendproc\n",
+      "source_sha256": "8fb9b6834a90ccdec9a7573028f7afa19b1bfc6349ebb796821f2edb090da7a9",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:\"1\", ,textvalue"
+      ]
+    },
+    {
+      "label": "redial:,\"1\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial ,\"1\"\nendproc\n",
+      "source_sha256": "b64fe240924b1093726d9768cdf50b67052b7522c1512d4ec67e4b859464e634",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> 1"
+      ],
+      "observations": [
+        "redial:,\"1\""
+      ]
+    },
+    {
+      "label": "redial:\"1\",",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\",\nendproc\n",
+      "source_sha256": "3055cdf93209210ec47a094bbdf2cb2cbc4e21647bb380b17e0e3ce20f643955",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "redial:\"1\","
+      ]
+    },
+    {
+      "label": "redial:\"1\" textvalue extra",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" textvalue extra\nendproc\n",
+      "source_sha256": "53a55c11c6f4288034bcf28b5da9c19d6cc625cbcacea878fd2ba32b344d872d",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> EXTRA"
+      ],
+      "observations": [
+        "redial:\"1\" textvalue extra"
+      ]
+    },
+    {
+      "label": "redial:\"1\" textvalue(1)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" textvalue(1)\nendproc\n",
+      "source_sha256": "045f3204069690f335d576fa97af7cff15b04557ba8229164d93af90b0f6783f",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> (",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "redial:\"1\" textvalue(1)"
+      ]
+    },
+    {
+      "label": "redial:\"1\" textvalue+\"X\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" textvalue+\"X\"\nendproc\n",
+      "source_sha256": "8f0cf3ba82996ebe5b29598690713119caa1cb6140d51d5b9283fa17dddd9a57",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ],
+      "observations": [
+        "redial:\"1\" textvalue+\"X\""
+      ]
+    },
+    {
+      "label": "redial:\"A\"+\"B\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"A\"+\"B\"\nendproc\n",
+      "source_sha256": "9af4a525cb68c05b70512e1f6daf86ca11d771d7526d56465678cfd1de7a2e5f",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> A",
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> B"
+      ],
+      "observations": [
+        "redial:\"A\"+\"B\""
+      ]
+    },
+    {
+      "label": "redial:\"A\" \"B\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"A\" \"B\"\nendproc\n",
+      "source_sha256": "8f313d626839d88f0c1e6b8d3891250f46e5b658abdc27723d85e6fffa4c0585",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> A",
+        "Error C002 Line 6: Unexpected token ==> B"
+      ],
+      "observations": [
+        "redial:\"A\" \"B\""
+      ]
+    },
+    {
+      "label": "redial:s0 s1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial s0 s1\nendproc\n",
+      "source_sha256": "acba356ec23fdfec8a2a510a66217849af6475f009ffb8b2304a2dd7a1fb060b",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> S1"
+      ],
+      "observations": [
+        "redial:s0 s1"
+      ]
+    },
+    {
+      "label": "redial:$D_PWORD s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial $D_PWORD s0\nendproc\n",
+      "source_sha256": "05e0fc4311dc4d8935480556e6dd0bf1422b19b211575061bb33c1665501672d",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $D_PWORD",
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "redial:$D_PWORD s0"
+      ]
+    },
+    {
+      "label": "redial:$DATE s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial $DATE s0\nendproc\n",
+      "source_sha256": "41feb680a477b655fa9192876b9034ba70c68c3d217b3567423c5fc2c1288c46",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $DATE",
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "redial:$DATE s0"
+      ]
+    },
+    {
+      "label": "redial:s1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial s1\nendproc\n",
+      "source_sha256": "3c29eac97adbb451e497e5ebcf4d44508cacf8bc2cc971349886784d90549ff0",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "redial:s1"
+      ],
+      "hex": "01cf9201640194",
+      "asx_sha256": "0b33866b5eed15297fb4a23b3a0164147b33c961e970074fa3ab4a5fe8a0b506"
+    },
+    {
+      "label": "redial:$D_PWORD",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial $D_PWORD\nendproc\n",
+      "source_sha256": "0691e433d9ebc029987c524c5b16cbf78a23c37666f8a5112a973bb21f703bc0",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $D_PWORD"
+      ],
+      "observations": [
+        "redial:$D_PWORD"
+      ]
+    },
+    {
+      "label": "redial:$DATE",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial $DATE\nendproc\n",
+      "source_sha256": "2b85d7e327bba7c15c6163fdb169299ef81187bcee713abd59f600887efcaa2a",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> $DATE"
+      ],
+      "observations": [
+        "redial:$DATE"
+      ]
+    },
+    {
+      "label": "redial:textvalue,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue,\nendproc\n",
+      "source_sha256": "93330e28dbde874740c4e73f2d5da8d3bf6e8d5c4a9f4343fdf4e833610fbf3b",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "redial:textvalue,"
+      ]
+    },
+    {
+      "label": "redial:textvalue,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue,,\nendproc\n",
+      "source_sha256": "e4fae5ede078c3bc774d9a66b306a4710ec90a69152f972ad9a8caa9a6670871",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "redial:textvalue,,"
+      ]
+    },
+    {
+      "label": "redial:textvalue, ,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue, ,\nendproc\n",
+      "source_sha256": "df73c2b463163e0c864b9ca2f354c1d42c213220280cb10490aa2f1acd257216",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "redial:textvalue, ,"
+      ]
+    },
+    {
+      "label": "redial:textvalue ; trailing",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue ; trailing\nendproc\n",
+      "source_sha256": "1f1cda229b24c7b4bba4989090b8d84d97e40925e5d16fa1c5715a7cfec7cecc",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "redial:textvalue ; trailing"
+      ],
+      "hex": "01cf92018c0094",
+      "asx_sha256": "d43e2fbc0e148dea0ba2c3d260de34b220b66fcf9d2711e9baf18397818023e1"
+    },
+    {
+      "label": "redial:textvalue ; ,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial textvalue ; ,,\nendproc\n",
+      "source_sha256": "a789b491d1f76f8c811c2b089d7249049c8487e0a717dddff60663f9ce1fd016",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "redial:textvalue ; ,,"
+      ],
+      "hex": "01cf92018c0094",
+      "asx_sha256": "d43e2fbc0e148dea0ba2c3d260de34b220b66fcf9d2711e9baf18397818023e1"
+    },
+    {
+      "label": "redial:\"1\" textvalue ; ,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" textvalue ; ,,\nendproc\n",
+      "source_sha256": "7fbdf0e18277adedf7dd2369fed7c952b8059d106434a58d7fcf9c3eead2a6de",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "redial:\"1\" textvalue ; ,,"
+      ]
+    },
+    {
+      "label": "redial:0x1234",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial 0x1234\nendproc\n",
+      "source_sha256": "7374d62ae52fe5abda8685722db9f94836e146e37083ca3ec9b48b94898c9b8f",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 0X1234"
+      ],
+      "observations": [
+        "redial:0x1234"
+      ]
+    },
+    {
+      "label": "redial:32768",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial 32768\nendproc\n",
+      "source_sha256": "33f8497867695b328518fee6443dd613252da9f52d8a1504783976ad63b4eec0",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 32768"
+      ],
+      "observations": [
+        "redial:32768"
+      ]
+    },
+    {
+      "label": "redial:\"1\" 0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" 0\nendproc\n",
+      "source_sha256": "85b46579cf2934c922026ef0f1047da5f583cd80042482c6881d4eb69bd4b754",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> 0"
+      ],
+      "observations": [
+        "redial:\"1\" 0"
+      ]
+    },
+    {
+      "label": "redial:\"1\" N0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial \"1\" N0\nendproc\n",
+      "source_sha256": "e6ddecb31df37b4d71685559d28fcd2da0f30a9de556d6c339979057ca519900",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> 1",
+        "Error C002 Line 6: Unexpected token ==> N0"
+      ],
+      "observations": [
+        "redial:\"1\" N0"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" s0\nendproc\n",
+      "source_sha256": "052fb2f393ae8b6aeaa7759a20b0b089713c1cb247d40fae82d9a38174e5ff73",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "hangup:\"1\" s0"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" $D_PWORD",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" $D_PWORD\nendproc\n",
+      "source_sha256": "9eb4d34d7c9c41d9a5552c340ad8f3690d5cf583f6f080738d99221278b9ce8a",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> $D_PWORD"
+      ],
+      "observations": [
+        "hangup:\"1\" $D_PWORD"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" $DATE",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" $DATE\nendproc\n",
+      "source_sha256": "10a57bc76c333b38a39cca3f4c404731052d7ee3485daaf1310288d6dbd05429",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> $DATE"
+      ],
+      "observations": [
+        "hangup:\"1\" $DATE"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" $COL",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" $COL\nendproc\n",
+      "source_sha256": "acd1e96ba41fa03ff6542e75c0f39c778908f455357b1c75a9fffa64e58be247",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> $COL"
+      ],
+      "observations": [
+        "hangup:\"1\" $COL"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" \"\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" \"\"\nendproc\n",
+      "source_sha256": "82589e876e9dd075a766815bd8c9dc1958c5edf46c0f2d43db773300e1e8f36a",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> $NULL"
+      ],
+      "observations": [
+        "hangup:\"1\" \"\""
+      ]
+    },
+    {
+      "label": "hangup:\"1\" \"label\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" \"label\"\nendproc\n",
+      "source_sha256": "b8d17b49a42a8abe37f5b3a950572ad009743e538afd5c172e1bdf8b6c5416ed",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> label"
+      ],
+      "observations": [
+        "hangup:\"1\" \"label\""
+      ]
+    },
+    {
+      "label": "hangup:\"1\",,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\",,textvalue\nendproc\n",
+      "source_sha256": "8952b79a1a6134407e4af096a15af30590792f2ba7c93c058e050deeb91f1085",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:\"1\",,textvalue"
+      ]
+    },
+    {
+      "label": "hangup:\"1\", ,textvalue",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\", ,textvalue\nendproc\n",
+      "source_sha256": "a445ae0de56c5e8c1873a278a6fc3993e12ace4793d7bbe941ec19f3b0e4eaf6",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:\"1\", ,textvalue"
+      ]
+    },
+    {
+      "label": "hangup:,\"1\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup ,\"1\"\nendproc\n",
+      "source_sha256": "0b8a67e9b2b74583f3e54ce776be42f7e9054f665ec173b05831599fa859402a",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> 1"
+      ],
+      "observations": [
+        "hangup:,\"1\""
+      ]
+    },
+    {
+      "label": "hangup:\"1\",",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\",\nendproc\n",
+      "source_sha256": "84c35ea7f30cd947b85c8ca9a5761722471f1809a5fef8a1dec0e6e99a7d8a6b",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "hangup:\"1\","
+      ]
+    },
+    {
+      "label": "hangup:\"1\" textvalue extra",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" textvalue extra\nendproc\n",
+      "source_sha256": "b62f2c629d0a4d10de6b0df6645efa51db0f16d428acf4f4e7999bcc13d53d84",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> EXTRA"
+      ],
+      "observations": [
+        "hangup:\"1\" textvalue extra"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" textvalue(1)",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" textvalue(1)\nendproc\n",
+      "source_sha256": "bebac2b9bffb5a03d8f4b6168f333ddcb1d378ba23aa54694810ec5507a2ca95",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> (",
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> )"
+      ],
+      "observations": [
+        "hangup:\"1\" textvalue(1)"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" textvalue+\"X\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" textvalue+\"X\"\nendproc\n",
+      "source_sha256": "f23673eaca2aa6fa358487619df0283edfe654e2774e12b9e3cfe4897838c590",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> X"
+      ],
+      "observations": [
+        "hangup:\"1\" textvalue+\"X\""
+      ]
+    },
+    {
+      "label": "hangup:\"A\"+\"B\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"A\"+\"B\"\nendproc\n",
+      "source_sha256": "f81138ece47c7d685dbc56a2baf1276e17f0fe349be8871d75f6e99eb36574ca",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> A",
+        "Error C002 Line 6: Unexpected token ==> +",
+        "Error C002 Line 6: Unexpected token ==> B"
+      ],
+      "observations": [
+        "hangup:\"A\"+\"B\""
+      ]
+    },
+    {
+      "label": "hangup:\"A\" \"B\"",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"A\" \"B\"\nendproc\n",
+      "source_sha256": "08c65f414021020fbc3201fd7bb5b23f94e09a68a38bd0268d360f90904bbfc5",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> A",
+        "Error C002 Line 6: Unexpected token ==> B"
+      ],
+      "observations": [
+        "hangup:\"A\" \"B\""
+      ]
+    },
+    {
+      "label": "hangup:s0 s1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup s0 s1\nendproc\n",
+      "source_sha256": "5a2607d2f5fcbb6cf6a3b4ab84c3f3ad7b25d09dfafa0e942996bd80f1baf873",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> S0",
+        "Error C002 Line 6: Unexpected token ==> S1"
+      ],
+      "observations": [
+        "hangup:s0 s1"
+      ]
+    },
+    {
+      "label": "hangup:$D_PWORD s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup $D_PWORD s0\nendproc\n",
+      "source_sha256": "4a6d2f3126eb1dd480eccfc40ee91f2487d67f8ecc44a42926a4a3bc1300d38f",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> $D_PWORD",
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "hangup:$D_PWORD s0"
+      ]
+    },
+    {
+      "label": "hangup:$DATE s0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup $DATE s0\nendproc\n",
+      "source_sha256": "192d7a2e3ad2758fed0ca18717ca22f0415e356032d3720998e7d7d4c96a5bc4",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> $DATE",
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "hangup:$DATE s0"
+      ]
+    },
+    {
+      "label": "hangup:s1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup s1\nendproc\n",
+      "source_sha256": "5f15ebd210f4e1bbd70dcaeba1e81d097605f21a7336504c23a3b21356db5ab0",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> S1"
+      ],
+      "observations": [
+        "hangup:s1"
+      ]
+    },
+    {
+      "label": "hangup:$D_PWORD",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup $D_PWORD\nendproc\n",
+      "source_sha256": "395742cfcf759e21960a91de8d83e3ed26df7dbd3593efe43ce455861674da23",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> $D_PWORD"
+      ],
+      "observations": [
+        "hangup:$D_PWORD"
+      ]
+    },
+    {
+      "label": "hangup:$DATE",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup $DATE\nendproc\n",
+      "source_sha256": "1f4e1f5ccea3eee31cb07963fd8a587231aa9bb5ff0814afd9dbc6c09f418ff4",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> $DATE"
+      ],
+      "observations": [
+        "hangup:$DATE"
+      ]
+    },
+    {
+      "label": "hangup:textvalue,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue,\nendproc\n",
+      "source_sha256": "996ce4843d2bea84473ef1dac28abd5d64457d0e552fc8b9e9d0c73bcf6d1108",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "hangup:textvalue,"
+      ]
+    },
+    {
+      "label": "hangup:textvalue,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue,,\nendproc\n",
+      "source_sha256": "0f51a7c19d61f142f2402d2ef50aebc9f2acffd155426d02de560f7c344aea57",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "hangup:textvalue,,"
+      ]
+    },
+    {
+      "label": "hangup:textvalue, ,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue, ,\nendproc\n",
+      "source_sha256": "56c3f3910a6b094826d3fe7d6db90471dcd92a8d2d8b81c52e25592e7683fe4b",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "hangup:textvalue, ,"
+      ]
+    },
+    {
+      "label": "hangup:textvalue ; trailing",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue ; trailing\nendproc\n",
+      "source_sha256": "3a58a5cbaa134f0753fc544a63dcec60c5b5e2d819715db662a6161c286e079c",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:textvalue ; trailing"
+      ]
+    },
+    {
+      "label": "hangup:textvalue ; ,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup textvalue ; ,,\nendproc\n",
+      "source_sha256": "e38618abfad6a682706ed57dae98e073825620e891f7da485b13ffcb4b5f4fb4",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:textvalue ; ,,"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" textvalue ; ,,",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" textvalue ; ,,\nendproc\n",
+      "source_sha256": "d425fa25aaf2408bd8e32b1f9ba246f751245892d446c7884e666b2ac05dc7b0",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "hangup:\"1\" textvalue ; ,,"
+      ]
+    },
+    {
+      "label": "hangup:0x1234",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup 0x1234\nendproc\n",
+      "source_sha256": "c1f3ce0b0be9f8d169f9a4de9c8b45fd5d3a96f880394a46897e5df4d20c54a5",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 0X1234"
+      ],
+      "observations": [
+        "hangup:0x1234"
+      ]
+    },
+    {
+      "label": "hangup:32768",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup 32768\nendproc\n",
+      "source_sha256": "4d0504ff9b62d2460f030571faeaec5eadbe2ce13f8f19cf7b98e6afddfa4f37",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 32768"
+      ],
+      "observations": [
+        "hangup:32768"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" 0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" 0\nendproc\n",
+      "source_sha256": "6541e63d77476389d21314304a0034ea2036d66411da5b43d63326bc7e19fefa",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> 0"
+      ],
+      "observations": [
+        "hangup:\"1\" 0"
+      ]
+    },
+    {
+      "label": "hangup:\"1\" N0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup \"1\" N0\nendproc\n",
+      "source_sha256": "8b844d2e1aa3a02ebbeb4a173627d823c89a0d386f8609f2362a8c1aa76e0d2a",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> 1",
+        "Error C002 Line 6: Unexpected token ==> N0"
+      ],
+      "observations": [
+        "hangup:\"1\" N0"
+      ]
+    },
+    {
+      "label": "dial-local",
+      "source": "proc worker\nstring localvalue,resultvalue\ndial localvalue resultvalue\nendproc\nproc main\ncall worker\nendproc\n",
+      "source_sha256": "792d16a52ef641b155dffca3928d6fb94619927e99c4dd574b47143bdd5c8257",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial-local"
+      ],
+      "hex": "006213000000d2a200cf22a0000001a0510095cfd0c80600000094",
+      "asx_sha256": "cd117481da3705f3a581609262b36b42247d256b8f00bf438b1839343a0ab28b"
+    },
+    {
+      "label": "dial-parameter",
+      "source": "proc worker\nstrparm localvalue,resultvalue\ndial localvalue resultvalue\nendproc\nproc main\ncall worker with \"1\",\"2\"\nendproc\n",
+      "source_sha256": "f67f4a4fa76d2ca6c5cd4894f83c7c9d87885873f0b241cfb352224a752bd529",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial-parameter"
+      ],
+      "hex": "006210000000cf2296a8000196570095cfd0cdaab4046acdaab48913c806000000d25eff94",
+      "asx_sha256": "2a436e4ef7f8d5bf8f62cb23003955e791db6bd761c0337a6f0e3a787d066542"
+    },
+    {
+      "label": "dial-global",
+      "source": "string localvalue,resultvalue\nproc worker\ndial localvalue resultvalue\nendproc\nproc main\ncall worker\nendproc\n",
+      "source_sha256": "c639ce52ba76033811acbfe26ea8492818b71e9bb756101560eb8cf7056bdab9",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "dial-global"
+      ],
+      "hex": "02620e000000cf228c00018c0194cfd0c70600000094",
+      "asx_sha256": "72b04899f6e41287e9ac622fd1d9ea74050f4a979138c56964587a95bb6bf85c"
+    },
+    {
+      "label": "dial-reserved-global",
+      "source": "integer dial\nproc main\nendproc\n",
+      "source_sha256": "79976b0de013e702147cab895f35e6ec3a84d9e21f38ef06592d06ae1c83389d",
+      "success": false,
+      "errors": [
+        "Error C028 Line 1: Invalid use of reserved word ==> DIAL"
+      ],
+      "observations": [
+        "dial-reserved-global"
+      ]
+    },
+    {
+      "label": "dial-reserved-local",
+      "source": "proc worker\ninteger dial\nendproc\nproc main\nendproc\n",
+      "source_sha256": "67e8faa4c0ae1b3dd9f3c907679412291c5970c4164cd0da8c9d54d0f10b6353",
+      "success": false,
+      "errors": [
+        "Error C028 Line 2: Invalid use of reserved word ==> DIAL"
+      ],
+      "observations": [
+        "dial-reserved-local"
+      ]
+    },
+    {
+      "label": "dial-reserved-parameter",
+      "source": "proc worker\nintparm dial\nendproc\nproc main\nendproc\n",
+      "source_sha256": "b033cdd7c86e63f639cc22ae88bf17407d21be9435128e3f9d8e21b47827b0ab",
+      "success": false,
+      "errors": [
+        "Error C028 Line 2: Invalid use of reserved word ==> DIAL"
+      ],
+      "observations": [
+        "dial-reserved-parameter"
+      ]
+    },
+    {
+      "label": "mdial-local",
+      "source": "proc worker\nstring localvalue,resultvalue\nmdial localvalue resultvalue\nendproc\nproc main\ncall worker\nendproc\n",
+      "source_sha256": "a1e9a52bdb5f4a190a19bedc1f11fbf9198a1af2e202438ef547b07c3bb282d2",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial-local"
+      ],
+      "hex": "006213000000d2a200cf70a0000001a0510095cfd0c80600000094",
+      "asx_sha256": "7f4aa36601c9473407efb1ee5f3aedd0733452a103a110a678b07469edcc61f0"
+    },
+    {
+      "label": "mdial-parameter",
+      "source": "proc worker\nstrparm localvalue,resultvalue\nmdial localvalue resultvalue\nendproc\nproc main\ncall worker with \"1\",\"2\"\nendproc\n",
+      "source_sha256": "1086916a97d27db160b4b8e7e36c180f48c1a3cf2e5b30c42d18bafd01b78f69",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial-parameter"
+      ],
+      "hex": "006210000000cf7096a8000196570095cfd0cdaab4046acdaab48913c806000000d25eff94",
+      "asx_sha256": "77438920470be88344dcba936c29488d725040d2bb3e4475bb98152da2eee97e"
+    },
+    {
+      "label": "mdial-global",
+      "source": "string localvalue,resultvalue\nproc worker\nmdial localvalue resultvalue\nendproc\nproc main\ncall worker\nendproc\n",
+      "source_sha256": "3b35e971250d045c12c16827a1da3187fbdd2aa483af3236d3fc967f086b2cd5",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "mdial-global"
+      ],
+      "hex": "02620e000000cf708c00018c0194cfd0c70600000094",
+      "asx_sha256": "d7ffed8a416833438c09427303e002ff0837d432ee8f844f0ef6c976ac4151bd"
+    },
+    {
+      "label": "mdial-reserved-global",
+      "source": "integer mdial\nproc main\nendproc\n",
+      "source_sha256": "9d2d24c5a6bba685a2dae7df9846592b1971469b26546701395a38fbb6814c10",
+      "success": false,
+      "errors": [
+        "Error C028 Line 1: Invalid use of reserved word ==> MDIAL"
+      ],
+      "observations": [
+        "mdial-reserved-global"
+      ]
+    },
+    {
+      "label": "mdial-reserved-local",
+      "source": "proc worker\ninteger mdial\nendproc\nproc main\nendproc\n",
+      "source_sha256": "18d1b1294be8f0e7204b73bb3430b0f0c30a8edb663e6a1a01ecac7b6f1ebaab",
+      "success": false,
+      "errors": [
+        "Error C028 Line 2: Invalid use of reserved word ==> MDIAL"
+      ],
+      "observations": [
+        "mdial-reserved-local"
+      ]
+    },
+    {
+      "label": "mdial-reserved-parameter",
+      "source": "proc worker\nintparm mdial\nendproc\nproc main\nendproc\n",
+      "source_sha256": "a9f650ee36cbbdb66303af6a4fdab28f7db5ebaca3e348c1d613d07671172d78",
+      "success": false,
+      "errors": [
+        "Error C028 Line 2: Invalid use of reserved word ==> MDIAL"
+      ],
+      "observations": [
+        "mdial-reserved-parameter"
+      ]
+    },
+    {
+      "label": "redial-local",
+      "source": "proc worker\nstring localvalue,resultvalue\nredial resultvalue\nendproc\nproc main\ncall worker\nendproc\n",
+      "source_sha256": "c5a7db99e4d295936ba86dfb848467dd15672e0152c01385310acd52d205b33d",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "redial-local"
+      ],
+      "hex": "006210000000d2a200cf9201a0510095cfd0c80600000094",
+      "asx_sha256": "1c6f017f59d69a3da64b5c1f1891e1dc019707a7804d29a246349076eefbf560"
+    },
+    {
+      "label": "redial-parameter",
+      "source": "proc worker\nstrparm localvalue,resultvalue\nredial resultvalue\nendproc\nproc main\ncall worker with \"1\",\"2\"\nendproc\n",
+      "source_sha256": "c755c92d37d9f327e248e57f6d87083edbc9eb1da268420c09aafc7a49ff2a2b",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "redial-parameter"
+      ],
+      "hex": "00620d000000cf920196570095cfd0cdaab48d1acdaab40609c806000000d25eff94",
+      "asx_sha256": "7f4de3a453d91382555f1be5543b984c525f1ec3e05a6b5f2cc226a9870e71b0"
+    },
+    {
+      "label": "redial-global",
+      "source": "string localvalue,resultvalue\nproc worker\nredial resultvalue\nendproc\nproc main\ncall worker\nendproc\n",
+      "source_sha256": "29eee08594932d78d2ec21f03502c889a39d09602906b0c1872d874bd5c539f3",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "redial-global"
+      ],
+      "hex": "02620c000000cf92018c0194cfd0c70600000094",
+      "asx_sha256": "338b692c9f6c0127636a15733ddd6d3f618032d1e48f3c303651cbd727a92b9f"
+    },
+    {
+      "label": "redial-reserved-global",
+      "source": "integer redial\nproc main\nendproc\n",
+      "source_sha256": "6f81b0ac624de15c2a4dcfe5956b42f40779eab753ed38596dc109aa02ffee36",
+      "success": false,
+      "errors": [
+        "Error C028 Line 1: Invalid use of reserved word ==> REDIAL"
+      ],
+      "observations": [
+        "redial-reserved-global"
+      ]
+    },
+    {
+      "label": "redial-reserved-local",
+      "source": "proc worker\ninteger redial\nendproc\nproc main\nendproc\n",
+      "source_sha256": "f47fb1faed1c918e6c804cac0c7cc4dddb1effcd2e45ad6c8edd180bd9824d82",
+      "success": false,
+      "errors": [
+        "Error C028 Line 2: Invalid use of reserved word ==> REDIAL"
+      ],
+      "observations": [
+        "redial-reserved-local"
+      ]
+    },
+    {
+      "label": "redial-reserved-parameter",
+      "source": "proc worker\nintparm redial\nendproc\nproc main\nendproc\n",
+      "source_sha256": "880a3ede120febb56bf21bbbe0ad4d683fca48aadf4f9fb56a451615ebcbb320",
+      "success": false,
+      "errors": [
+        "Error C028 Line 2: Invalid use of reserved word ==> REDIAL"
+      ],
+      "observations": [
+        "redial-reserved-parameter"
+      ]
+    },
+    {
+      "label": "hangup-local",
+      "source": "proc worker\nstring localvalue,resultvalue\nhangup\nendproc\nproc main\ncall worker\nendproc\n",
+      "source_sha256": "feb95149eade3dc59b26c4cb0417bfb40be9eb2b6c1f7f82ea5f67b1d87279a9",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "hangup-local"
+      ],
+      "hex": "00620c000000d2a200cf5595cfd0c80600000094",
+      "asx_sha256": "19692db0745b2dd63fcfeab98693bbdb53adca971bf51606055424c7a45c36f3"
+    },
+    {
+      "label": "hangup-parameter",
+      "source": "proc worker\nstrparm localvalue,resultvalue\nhangup\nendproc\nproc main\ncall worker with \"1\",\"2\"\nendproc\n",
+      "source_sha256": "eb7dcd2a1bee2e8a3ef0a7f3dcee586954603dafce7c1a4049e6d91c9beab4d2",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "hangup-parameter"
+      ],
+      "hex": "006209000000cf5595cfd0cdaab48912cdaab402fdc806000000d25eff94",
+      "asx_sha256": "2e7dd83f9196a0efa63fd17f58dd8dd9039bbedf6ab7d04621387b4583ca03d7"
+    },
+    {
+      "label": "hangup-global",
+      "source": "string localvalue,resultvalue\nproc worker\nhangup\nendproc\nproc main\ncall worker\nendproc\n",
+      "source_sha256": "84a78702f4f2a1f01bf2d19c98eb79d5d4109bfc5a8d3aa6f88fcccbebc158ea",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "hangup-global"
+      ],
+      "hex": "026209000000cf5594cfd0c70600000094",
+      "asx_sha256": "c0e6884070d9a1eb571c2aec743f7a76d03c8e2f8116b431c427505e9f75d230"
+    },
+    {
+      "label": "hangup-reserved-global",
+      "source": "integer hangup\nproc main\nendproc\n",
+      "source_sha256": "84254bed0dd571a884806884418d302cb670c1c7c207f15b819807e054c9da09",
+      "success": false,
+      "errors": [
+        "Error C028 Line 1: Invalid use of reserved word ==> HANGUP"
+      ],
+      "observations": [
+        "hangup-reserved-global"
+      ]
+    },
+    {
+      "label": "hangup-reserved-local",
+      "source": "proc worker\ninteger hangup\nendproc\nproc main\nendproc\n",
+      "source_sha256": "fc8af9d752d66d599a7a4c33881d3d098b6500643e427bad00770fb103b23b52",
+      "success": false,
+      "errors": [
+        "Error C028 Line 2: Invalid use of reserved word ==> HANGUP"
+      ],
+      "observations": [
+        "hangup-reserved-local"
+      ]
+    },
+    {
+      "label": "hangup-reserved-parameter",
+      "source": "proc worker\nintparm hangup\nendproc\nproc main\nendproc\n",
+      "source_sha256": "2f33baf04260e9792c19ff7ad927fced81d644c363e4185ef094ffcdf906434f",
+      "success": false,
+      "errors": [
+        "Error C028 Line 2: Invalid use of reserved word ==> HANGUP"
+      ],
+      "observations": [
+        "hangup-reserved-parameter"
+      ]
+    },
+    {
+      "label": "separator-dial-0",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\"textvalue\nendproc\n",
+      "source_sha256": "1ca4e245e89cb49bf1a4fd52276fcefbcf1cf0c1e95318da06001f545f27671b",
+      "success": false,
+      "errors": [
+        "Error C041 Line 6: Missing space between tokens"
+      ],
+      "observations": [
+        "separator-dial-0"
+      ]
+    },
+    {
+      "label": "separator-dial-1",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\"s0\nendproc\n",
+      "source_sha256": "739fc5dfd598d4ca8cec8b2abeba0e0feb2eb3989a60e715045288f5072824fc",
+      "success": false,
+      "errors": [
+        "Error C041 Line 6: Missing space between tokens"
+      ],
+      "observations": [
+        "separator-dial-1"
+      ]
+    },
+    {
+      "label": "separator-dial-2",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\"\"label\"\nendproc\n",
+      "source_sha256": "ac3a2f4d1855d2280c8d7e0ec4795269e2e09e50f25dd5187ce6986827c1ee8a",
+      "success": false,
+      "errors": [
+        "Error C041 Line 6: Missing space between tokens",
+        "Error C025 Line 6: Invalid identifier ==> label"
+      ],
+      "observations": [
+        "separator-dial-2"
+      ]
+    },
+    {
+      "label": "separator-dial-3",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\"\ttextvalue\nendproc\n",
+      "source_sha256": "93c4dc217309009e36ef6971b80375c5452250bcdc97e0c09d55713bcae576e4",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-dial-3"
+      ],
+      "hex": "01cf22aab40cd8018c0094",
+      "asx_sha256": "397ab5424dd1099075dd76e37b48fed9a1c88a7fceb03cbc021b2ea28214702b"
+    },
+    {
+      "label": "separator-dial-4",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\", , ,textvalue\nendproc\n",
+      "source_sha256": "376193fb7962f74f6325d3734c458bfbad535866dca21e54cf788548f4243b29",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-dial-4"
+      ],
+      "hex": "01cf22aab40cd8018c0094",
+      "asx_sha256": "397ab5424dd1099075dd76e37b48fed9a1c88a7fceb03cbc021b2ea28214702b"
+    },
+    {
+      "label": "separator-dial-5",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\",\t,textvalue\nendproc\n",
+      "source_sha256": "aa63d46a02d7fb19a5b4ea7ed3202ece229171d3838d33413fa6c89feea2d475",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-dial-5"
+      ],
+      "hex": "01cf22aab40cd8018c0094",
+      "asx_sha256": "397ab5424dd1099075dd76e37b48fed9a1c88a7fceb03cbc021b2ea28214702b"
+    },
+    {
+      "label": "separator-dial-6",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\",, textvalue\nendproc\n",
+      "source_sha256": "fc78aa4171198dd5403dea8bd38a0dbf7a6848ab1c3abd11e7ca0a04eacb64c8",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "separator-dial-6"
+      ]
+    },
+    {
+      "label": "separator-dial-7",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" ,textvalue\nendproc\n",
+      "source_sha256": "26f60fcb3c870aea88d0e20693333396ab78a3899cd77f2a653884105d258631",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-dial-7"
+      ],
+      "hex": "01cf22aab40cd8018c0094",
+      "asx_sha256": "397ab5424dd1099075dd76e37b48fed9a1c88a7fceb03cbc021b2ea28214702b"
+    },
+    {
+      "label": "separator-dial-8",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" /*x*/ textvalue\nendproc\n",
+      "source_sha256": "911b519c4c8357feb98541c0c2a4e367534515145706e96547049f60a6750da9",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> /",
+        "Error C002 Line 6: Unexpected token ==> *",
+        "Error C002 Line 6: Unexpected token ==> X",
+        "Error C002 Line 6: Unexpected token ==> *",
+        "Error C002 Line 6: Unexpected token ==> /",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "separator-dial-8"
+      ]
+    },
+    {
+      "label": "separator-dial-9",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"\" s0\nendproc\n",
+      "source_sha256": "4b9c4d3283c6ef544d39a6442cfefc9e4b4c439db9e3d39ff9e7f3acd80312a0",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-dial-9"
+      ],
+      "hex": "01cf226e1301640094",
+      "asx_sha256": "62cda2fbfbe79c19084948e43465eac65a270f0db43839478bc61e10d77cdd15"
+    },
+    {
+      "label": "separator-dial-10",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial textvalue\ttextvalue\nendproc\n",
+      "source_sha256": "23436da05f6e7e628b3dd178ea2ee7c338d6db4d3bbd364eddb0a35cab6a41b6",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-dial-10"
+      ],
+      "hex": "01cf228c00018c0094",
+      "asx_sha256": "1e7d5558cb0e02e2e4d5cdd8685ab8ac6fd2328e17f1a361f1bea721af8369ce"
+    },
+    {
+      "label": "separator-dial-11",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\"  s0\nendproc\n",
+      "source_sha256": "9155842e98633537b713bb32f97fec22524bc12c10505c923bce585b5b29cce5",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-dial-11"
+      ],
+      "hex": "01cf22aab40cd801640094",
+      "asx_sha256": "c586e3f69370636eb2296fda8fd8d702d127c7ff2e1c98afbb79c833861bfdfa"
+    },
+    {
+      "label": "separator-mdial-12",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\"textvalue\nendproc\n",
+      "source_sha256": "b64336d240b808b3b7ced44fa8d70e9c015b0ade241ba2f29cb62ae0e16f8e56",
+      "success": false,
+      "errors": [
+        "Error C041 Line 6: Missing space between tokens"
+      ],
+      "observations": [
+        "separator-mdial-12"
+      ]
+    },
+    {
+      "label": "separator-mdial-13",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\"s0\nendproc\n",
+      "source_sha256": "ee8046d40148381625c480e9ff7db415739434386205e8937dee857ea6315b61",
+      "success": false,
+      "errors": [
+        "Error C041 Line 6: Missing space between tokens"
+      ],
+      "observations": [
+        "separator-mdial-13"
+      ]
+    },
+    {
+      "label": "separator-mdial-14",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\"\"label\"\nendproc\n",
+      "source_sha256": "9206df460bd56fb71c34c14943baad333353b935c08bd51e0cbbce9e2256bb5d",
+      "success": false,
+      "errors": [
+        "Error C041 Line 6: Missing space between tokens"
+      ],
+      "observations": [
+        "separator-mdial-14"
+      ]
+    },
+    {
+      "label": "separator-mdial-15",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\"\ttextvalue\nendproc\n",
+      "source_sha256": "5441e0bbedac530e78319e3f6c663e7a70021e20fb21abf9598bcabc67bc7921",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-mdial-15"
+      ],
+      "hex": "01cf70aab40cd8018c0094",
+      "asx_sha256": "ef988dea8243fd3f7f407bb28eb9596b292af2ec9979aa391c76ffd16cac8603"
+    },
+    {
+      "label": "separator-mdial-16",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\", , ,textvalue\nendproc\n",
+      "source_sha256": "5710e76eda84410fc561b45b1031ec884f549ef60e9b5ae60a8f5fe084f08543",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-mdial-16"
+      ],
+      "hex": "01cf70aab40cd8018c0094",
+      "asx_sha256": "ef988dea8243fd3f7f407bb28eb9596b292af2ec9979aa391c76ffd16cac8603"
+    },
+    {
+      "label": "separator-mdial-17",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\",\t,textvalue\nendproc\n",
+      "source_sha256": "7d3883ba38f0a3c2da67070456a91cc6c7554fe66af1a30a5bfc41115fd7b714",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-mdial-17"
+      ],
+      "hex": "01cf70aab40cd8018c0094",
+      "asx_sha256": "ef988dea8243fd3f7f407bb28eb9596b292af2ec9979aa391c76ffd16cac8603"
+    },
+    {
+      "label": "separator-mdial-18",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\",, textvalue\nendproc\n",
+      "source_sha256": "396659cebf3a9bf10859c11bb1a9a8985179484ad89ee0869d886bee61d4e12a",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "separator-mdial-18"
+      ]
+    },
+    {
+      "label": "separator-mdial-19",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" ,textvalue\nendproc\n",
+      "source_sha256": "f9340860d6501fd05e21a5c0eeee7070a3e45b83a774a0f8023a9c243462e4e2",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-mdial-19"
+      ],
+      "hex": "01cf70aab40cd8018c0094",
+      "asx_sha256": "ef988dea8243fd3f7f407bb28eb9596b292af2ec9979aa391c76ffd16cac8603"
+    },
+    {
+      "label": "separator-mdial-20",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\" /*x*/ textvalue\nendproc\n",
+      "source_sha256": "0c2371a3d27857d9c3cd639bd7b8ebc1e353adffe058f7e115308c86d683b4c7",
+      "success": false,
+      "errors": [
+        "Error C023 Line 6: Invalid string constant (quotes missing) ==> /",
+        "Error C002 Line 6: Unexpected token ==> *",
+        "Error C002 Line 6: Unexpected token ==> X",
+        "Error C002 Line 6: Unexpected token ==> *",
+        "Error C002 Line 6: Unexpected token ==> /",
+        "Error C002 Line 6: Unexpected token ==> TEXTVALUE"
+      ],
+      "observations": [
+        "separator-mdial-20"
+      ]
+    },
+    {
+      "label": "separator-mdial-21",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"\" s0\nendproc\n",
+      "source_sha256": "3cfe7c300377be2bd55353e60b1da079a8bcf24a386320e47f3f4f07d9e73d6d",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-mdial-21"
+      ],
+      "hex": "01cf706e1301640094",
+      "asx_sha256": "e736c19f87c14d66b7420bf25b3d429d2a51bf0095b3555a1c8b8e3d06e4fdaf"
+    },
+    {
+      "label": "separator-mdial-22",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial textvalue\ttextvalue\nendproc\n",
+      "source_sha256": "a9729b16aa50cea954cb5474015c237ba2afc3c84bae3644512b05f6698978cc",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-mdial-22"
+      ],
+      "hex": "01cf708c00018c0094",
+      "asx_sha256": "f64e02548183c76bea34fe8171ab33484f11be7a394fb8ea5360cbfed23ba0b4"
+    },
+    {
+      "label": "separator-mdial-23",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nmdial \"1\"  s0\nendproc\n",
+      "source_sha256": "da4b39c50b48959d34036e1cc611a5e649f7063445d1af42392f8161ba805f78",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-mdial-23"
+      ],
+      "hex": "01cf70aab40cd801640094",
+      "asx_sha256": "6dea1b10a807b08f9a002d229ac0c24309a60b8f1423ae24fcabf8c40ab63f41"
+    },
+    {
+      "label": "separator-24",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial ,s0\nendproc\n",
+      "source_sha256": "b59525b2b6ce467d89a99924b1b6aa0dbd29d3a9f74ea93d8407e2b71746522c",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "separator-24"
+      ]
+    },
+    {
+      "label": "separator-25",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial\ts0\nendproc\n",
+      "source_sha256": "93e37c7e7846d030efb4d5a72f0a2ce9877fb114fb4f7972e94211ed6ad3878d",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-25"
+      ],
+      "hex": "01cf9201640094",
+      "asx_sha256": "18fbba8a30c0c4dd756232b2f698fa4cfc5cf9ef544206eb72c1a48c371af5cf"
+    },
+    {
+      "label": "separator-26",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial, s0\nendproc\n",
+      "source_sha256": "86b9abfa010d6cd61bb17b1f485da730da024f4c3fd74d777d66060474c33cd4",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "separator-26"
+      ]
+    },
+    {
+      "label": "separator-27",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nredial , ,s0\nendproc\n",
+      "source_sha256": "69573e1065d369a04b5d72299e829f28ee945881bb085ee70b325d9db8bc1841",
+      "success": false,
+      "errors": [
+        "Error C025 Line 6: Invalid identifier ==> ,",
+        "Error C002 Line 6: Unexpected token ==> ,",
+        "Error C002 Line 6: Unexpected token ==> S0"
+      ],
+      "observations": [
+        "separator-27"
+      ]
+    },
+    {
+      "label": "separator-28",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup ,\nendproc\n",
+      "source_sha256": "4d5a30c0d33853239cb37130192dc2f3896938bef8b66021650629a1203a1e21",
+      "success": false,
+      "errors": [
+        "Error C002 Line 6: Unexpected token ==> ,"
+      ],
+      "observations": [
+        "separator-28"
+      ]
+    },
+    {
+      "label": "separator-29",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\nhangup\t\nendproc\n",
+      "source_sha256": "7036faa5c0e07e38711a98132c59cc7369fa34911fc751ea57005bdf2e270fa9",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-29"
+      ],
+      "hex": "01cf5594",
+      "asx_sha256": "e096e0b38a5909b41281ff0b46e3bfa2363a24612b99e164f2fc0fbd081428a8"
+    },
+    {
+      "label": "separator-31",
+      "source": "integer i,j,k\nlong wide\nfloat real\nstring textvalue\nproc main\ndial \"1\" ; tail\nendproc\n",
+      "source_sha256": "c7644d9a2bfbcef06245c3945301d08e55c4c8d7674c31efac28b56192e4ac7d",
+      "success": true,
+      "errors": [],
+      "observations": [
+        "separator-31"
+      ],
+      "hex": "01cf22aab40cd80094",
+      "asx_sha256": "03a2e04ecf5a552b915f2c5dc5aca755d156b2b7add2ad50a5975d072d72a471"
+    }
+  ],
+  "scope": "Authored sources and original ASPCOMP DOS8086 acceptance/exact ASX outputs. Normal checks consume these frozen public fixtures, not original binaries/analysis. No runtime or UART ownership proof."
+}

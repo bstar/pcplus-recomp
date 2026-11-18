@@ -1,0 +1,548 @@
+{
+  "schema": 1,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "source": "src/aspect/connection_commands.asm",
+  "units": [
+    {
+      "unit": 1,
+      "name": "dial",
+      "context": "resident",
+      "entry": "0x567e",
+      "source_file_offset": 26750,
+      "bytes": 7,
+      "sha256": "c6580a800a3ffd8de556faa8426fe25c0dd5ae7cf11d509e6aa63d3b904df394",
+      "symbol": "aspect_connection_dial"
+    },
+    {
+      "unit": 2,
+      "name": "mdial",
+      "context": "resident",
+      "entry": "0x5685",
+      "source_file_offset": 26757,
+      "bytes": 8,
+      "sha256": "106b539f61d3d927c8ab612beceff9a4c0623f5a53d7597968690b98ea5432ba",
+      "symbol": "aspect_connection_mdial"
+    },
+    {
+      "unit": 3,
+      "name": "redial",
+      "context": "resident",
+      "entry": "0x568d",
+      "source_file_offset": 26765,
+      "bytes": 8,
+      "sha256": "aa2c31261ac2a50816570241693e59ed8a0d2309c735cd154d9a2d1e9f9959b1",
+      "symbol": "aspect_connection_redial"
+    },
+    {
+      "unit": 4,
+      "name": "shared",
+      "context": "resident",
+      "entry": "0x5695",
+      "source_file_offset": 26773,
+      "bytes": 105,
+      "sha256": "1266a0abf3d52f1044fa71b01309be67731e1a21efce3df52b0d591380cd0509",
+      "symbol": "aspect_connection_shared"
+    },
+    {
+      "unit": 5,
+      "name": "hangup",
+      "context": 18,
+      "entry": "0xe759",
+      "source_file_offset": 118633,
+      "bytes": 11,
+      "sha256": "ca72f02021b1bb55dd7e037ef53e7c62d328df94928d207ce925f2a597955f51",
+      "symbol": "aspect_connection_hangup"
+    },
+    {
+      "unit": 6,
+      "name": "hangup-native",
+      "context": "resident",
+      "entry": "0x445",
+      "source_file_offset": 5701,
+      "bytes": 131,
+      "sha256": "0bf62d8a3b1fbe61ee01d93158868f197999b462f567e588243f4af0ccc58ede",
+      "symbol": "aspect_connection_hangup_native"
+    },
+    {
+      "unit": 7,
+      "name": "dial-engine",
+      "context": 4,
+      "entry": "0xe182",
+      "source_file_offset": 67458,
+      "bytes": 136,
+      "sha256": "7a32643c9d5ff132ca41fcdf03730d074baefd80ba725e5d53e4db21af64815d",
+      "symbol": "aspect_connection_dial_engine"
+    },
+    {
+      "unit": 8,
+      "name": "dial-commit",
+      "context": 4,
+      "entry": "0xe20a",
+      "source_file_offset": 67594,
+      "bytes": 159,
+      "sha256": "e0c0d3440f2bd865312d24b9c08cfe9ce03d32112b647be5947a93323ef39288",
+      "symbol": "aspect_connection_dial_commit"
+    },
+    {
+      "unit": 9,
+      "name": "selection-list",
+      "context": 5,
+      "entry": "0xe423",
+      "source_file_offset": 68131,
+      "bytes": 107,
+      "sha256": "b2bcda64927749a30ac345919564e53b14319e2aea8f21e850229833b1fa9770",
+      "symbol": "aspect_connection_selection_list"
+    },
+    {
+      "unit": 10,
+      "name": "manual-record",
+      "context": 5,
+      "entry": "0xe556",
+      "source_file_offset": 68438,
+      "bytes": 141,
+      "sha256": "be36d547d485400cda3f09ec53c278e5c943ac6480c91bbffa24738006f50f1a",
+      "symbol": "aspect_connection_manual_record"
+    },
+    {
+      "unit": 11,
+      "name": "dial-loop",
+      "context": 5,
+      "entry": "0xe5e3",
+      "source_file_offset": 68579,
+      "bytes": 714,
+      "sha256": "3b54c10185294b19230d63ca3f6efa116ef1b4946edeba1fbe0c899771e869d2",
+      "symbol": "aspect_connection_dial_loop"
+    }
+  ],
+  "reused_attempt": {
+    "source": "reconstruction/modem_responses/attempt.asm",
+    "name": "dial-attempt",
+    "context": 5,
+    "entry": "0xe8ad",
+    "source_file_offset": 69293,
+    "bytes": 576,
+    "sha256": "85437c8a0fb0c4281022511c4c96a5aed46493606bd513cce438ab2326a09d47"
+  },
+  "retained_REA": [
+    {
+      "path": "analysis/pcplus-main/functions/0x15695-asm.json",
+      "evidence_id": "ev_68a224dfa7a066c6b1d9f93fb2ff91df97d5797d06419cb4176229341e4bc34f",
+      "subject_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "file_sha256": "086eddedc8b2dfc0cdeb7399e94fc0d693a44931aafe679468b0b81ce45de099"
+    },
+    {
+      "path": "analysis/pcplus-main/functions/0x10445-asm.json",
+      "evidence_id": "ev_9a7bb35cde9b07a9e378a0b6babf104cb3daeef504c60c8d330431f079999cac",
+      "subject_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "file_sha256": "1c10b71bfe803d14ba18f85b391e1acea1ae209bb31d0b62a98ccea7d39a2c21"
+    },
+    {
+      "path": "analysis/pcplus-main/functions/0x12fb8-asm.json",
+      "evidence_id": "ev_37f3de96121de4b87b610528664677582883ea518eaecb770ba29ed10ada9cbe",
+      "subject_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+      "file_sha256": "44ab6525193c52172431b7e7799a82e2292ac9684427d5f30d4fe2d55fc50c82"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-18/functions/0x1e759-asm.json",
+      "evidence_id": "ev_b61736f28d3a464909f337db7988de806b8bd4e1a8719df82b07bc0b356ac1d0",
+      "subject_sha256": "6cea4652377db36867cf1a663e8e0d7bbf0c296e3cb5c86dd67b6e442bb7a194",
+      "file_sha256": "f582e626f5b07aca112a9c9cd80074204a7b050593807eda13fa39398bbdd774"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-04/functions/0x1e182-asm.json",
+      "evidence_id": "ev_5d453ec493498f14aadf5832f0c852b23209cb09130d32a08772c1f5028e9957",
+      "subject_sha256": "d9b4c834ff96f6d4971976ad3f6a4471365ce6ef6460c73ba9b2ee8e304b7648",
+      "file_sha256": "39fcef2183bbb52d809e720c814ae946f4f758c5dec40c29983ce40a6c6690f4"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-04/functions/0x1e20a-asm.json",
+      "evidence_id": "ev_c96024f10af2ad31a260e6dea4c9dae76858333b643478e9f742669eb90f3336",
+      "subject_sha256": "d9b4c834ff96f6d4971976ad3f6a4471365ce6ef6460c73ba9b2ee8e304b7648",
+      "file_sha256": "63bfffde26eaabb1e390c861cdf687b4cc270550b935daee2bf5861741269c4a"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-05/functions/0x1e423-asm.json",
+      "evidence_id": "ev_455c98ac540b937eefd30d70b9873b72af18999b60ff0a50dc6e8d51d9d58b64",
+      "subject_sha256": "a3aee577c5827301cb0b7f2d4eb493500bcc71821816f14e7f07ec4edf62cdb2",
+      "file_sha256": "91bad1b6db9f91db01dd8f29fb5caf02909d369f3f9a1cf4e8b498a0b97cfeba"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-05/functions/0x1e556-asm.json",
+      "evidence_id": "ev_3e617a9825a183fab03db388d66fb71b6c51feae30636e02aa30320ba5ebe843",
+      "subject_sha256": "a3aee577c5827301cb0b7f2d4eb493500bcc71821816f14e7f07ec4edf62cdb2",
+      "file_sha256": "9b66180cffc3015103fa7d1809c6946800c0525201e25d30b0c4fde171de7fb7"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-05/functions/0x1e5e3-asm.json",
+      "evidence_id": "ev_39a79d6b6cc8461be5670ec966b27debcb038be51912017ad7373672722d08c6",
+      "subject_sha256": "a3aee577c5827301cb0b7f2d4eb493500bcc71821816f14e7f07ec4edf62cdb2",
+      "file_sha256": "febc9b8cfa83bedef36866953208af2b775fa1d7b2397afe3314512218fcdf36"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-05/functions/0x1e8ad-asm.json",
+      "evidence_id": "ev_5023f79a668e8360dce2412988c12d76db925a146c121f7b7531c9555fabec38",
+      "subject_sha256": "a3aee577c5827301cb0b7f2d4eb493500bcc71821816f14e7f07ec4edf62cdb2",
+      "file_sha256": "d94f1bc68cee35fa18d94ab314af5ef4abc8dc7a88818d2819a7797bb287ebdf"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-05/functions/0x1eb89-asm.json",
+      "evidence_id": "ev_32a78d43d8e3c9b0aceb52fe72152714f3c53dcd03e49982095faea5a03b33b4",
+      "subject_sha256": "a3aee577c5827301cb0b7f2d4eb493500bcc71821816f14e7f07ec4edf62cdb2",
+      "file_sha256": "b7eb577a446ee94e5d8cc577299d84b0da260285b8aaf2bcc069187f8e09fc57"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-05/functions/0x1ec0e-asm.json",
+      "evidence_id": "ev_94814e7f388db888140f2079657a5ff4cd2adff9367e316f5fa3c90116dc7d3e",
+      "subject_sha256": "a3aee577c5827301cb0b7f2d4eb493500bcc71821816f14e7f07ec4edf62cdb2",
+      "file_sha256": "3587f4705e161d429843fdb4c2d6ecf8fd30ce565039f0c6752999d25edb0479"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-16/functions/0x1df04-asm.json",
+      "evidence_id": "ev_e1a00060acea25c7ea12c323bc3fb99e3618da8f1cf775165f18aca9ab23822e",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "file_sha256": "c92c1a1a673daff8bd18d23705210a1e4b4fc64ae546906edc2b43eb0c6d3da6"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-16/functions/0x1df0b-asm.json",
+      "evidence_id": "ev_f0aae9d0bfcdb33491bf3d110dc865b5427cfadc8f481d3d2359d052601a36b8",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "file_sha256": "0104f4694f27d6e0a4280e157822c714166d0d4b549d3a3520aeeb9408968a2c"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-16/functions/0x1e0e4-asm.json",
+      "evidence_id": "ev_4acd779e909f964a32dbe1e7c332a227f4f179a3f925079db0b41fc90bed27ca",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "file_sha256": "948667d289d0999cba335ab5430e1e009ec8b5b9bbf826bf06e0290ba24cf3ef"
+    },
+    {
+      "path": "analysis/pcplus-overlay-anchored-16/functions/0x1e0a4-asm.json",
+      "evidence_id": "ev_ee2dd97fb2ee67b14afdc71a175026e51de2d51b5c8d3893eb685c0a8404b563",
+      "subject_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+      "file_sha256": "dc2c08dc488b9f106ab1815b9db9d7ea7572063c2049fb7cfa15bf5b88e5309a"
+    }
+  ],
+  "call_bindings": {
+    "ac_call_adopt": {
+      "original_near": "0xe20a",
+      "OMF_symbol": "aspect_connection_dial_commit"
+    },
+    "ac_call_attempt": {
+      "original_near": "0xe8ad",
+      "OMF_symbol": "modem_dial_attempt_original"
+    },
+    "ac_call_engine": {
+      "original_near": "0xcdb3",
+      "OMF_symbol": "aspect_connection_dial_engine"
+    },
+    "ac_call_flush": {
+      "original_near": "0xcd47",
+      "OMF_symbol": "aspect_string_flush"
+    },
+    "ac_call_hangup": {
+      "original_near": "0x445",
+      "OMF_symbol": "aspect_connection_hangup_native"
+    },
+    "ac_call_itoa": {
+      "original_near": "0x8e6c",
+      "OMF_symbol": "aspect_conversion_itoa"
+    },
+    "ac_call_log": {
+      "original_near": "0xe2a9",
+      "OMF_symbol": "ac_log"
+    },
+    "ac_call_loop": {
+      "original_near": "0xe5e3",
+      "OMF_symbol": "aspect_connection_dial_loop"
+    },
+    "ac_call_manual": {
+      "original_near": "0xcff3",
+      "OMF_symbol": "aspect_connection_manual_record"
+    },
+    "ac_call_optional": {
+      "original_near": "0xcd5f",
+      "OMF_symbol": "aspect_string_option_flag"
+    },
+    "ac_call_read_input": {
+      "original_near": "0xce1f",
+      "OMF_symbol": "aspect_string_read"
+    },
+    "ac_call_read_second": {
+      "original_near": "0xce2b",
+      "OMF_symbol": "aspect_string_read_destination"
+    },
+    "ac_call_selection": {
+      "original_near": "0xcfe7",
+      "OMF_symbol": "aspect_connection_selection_list"
+    },
+    "ac_call_service_03a7": {
+      "original_near": "0x3a7",
+      "OMF_symbol": "ac_configure_serial"
+    },
+    "ac_call_service_0cd2": {
+      "original_near": "0xcd2",
+      "OMF_symbol": "ac_load_meta"
+    },
+    "ac_call_service_20a4": {
+      "original_near": "0x20a4",
+      "OMF_symbol": "ac_terminal_reset"
+    },
+    "ac_call_service_2fb8": {
+      "original_near": "0x2fb8",
+      "OMF_symbol": "ac_status"
+    },
+    "ac_call_service_31bb": {
+      "original_near": "0x31bb",
+      "OMF_symbol": "ac_message"
+    },
+    "ac_call_service_36d4": {
+      "original_near": "0x36d4",
+      "OMF_symbol": "ac_date"
+    },
+    "ac_call_service_3fc7": {
+      "original_near": "0x3fc7",
+      "OMF_symbol": "ac_save_screen"
+    },
+    "ac_call_service_4015": {
+      "original_near": "0x4015",
+      "OMF_symbol": "ac_restore_screen"
+    },
+    "ac_call_service_4056": {
+      "original_near": "0x4056",
+      "OMF_symbol": "ac_frame"
+    },
+    "ac_call_service_48cc": {
+      "original_near": "0x48cc",
+      "OMF_symbol": "ac_send_command"
+    },
+    "ac_call_service_498b": {
+      "original_near": "0x498b",
+      "OMF_symbol": "ac_format_time"
+    },
+    "ac_call_service_6b42": {
+      "original_near": "0x6b42",
+      "OMF_symbol": "ac_cursor_pop"
+    },
+    "ac_call_service_6b5a": {
+      "original_near": "0x6b5a",
+      "OMF_symbol": "ac_cursor_push"
+    },
+    "ac_call_service_6bb6": {
+      "original_near": "0x6bb6",
+      "OMF_symbol": "ac_delay"
+    },
+    "ac_call_service_6bf0": {
+      "original_near": "0x6bf0",
+      "OMF_symbol": "ac_draw_text"
+    },
+    "ac_call_service_6dca": {
+      "original_near": "0x6dca",
+      "OMF_symbol": "ac_cursor_show"
+    },
+    "ac_call_service_6e5a": {
+      "original_near": "0x6e5a",
+      "OMF_symbol": "ac_cursor_hide"
+    },
+    "ac_call_service_75e8": {
+      "original_near": "0x75e8",
+      "OMF_symbol": "ac_printf_at"
+    },
+    "ac_call_service_780e": {
+      "original_near": "0x780e",
+      "OMF_symbol": "ac_choices"
+    },
+    "ac_call_service_8268": {
+      "original_near": "0x8268",
+      "OMF_symbol": "ac_strcpy"
+    },
+    "ac_call_service_82a8": {
+      "original_near": "0x82a8",
+      "OMF_symbol": "ac_driver_control"
+    },
+    "ac_call_service_8d18": {
+      "original_near": "0x8d18",
+      "OMF_symbol": "ac_strlen"
+    },
+    "ac_call_service_9128": {
+      "original_near": "0x9128",
+      "OMF_symbol": "ac_uppercase"
+    },
+    "ac_call_service_97bc": {
+      "original_near": "0x97bc",
+      "OMF_symbol": "ac_strtok"
+    },
+    "ac_call_service_9888": {
+      "original_near": "0x9888",
+      "OMF_symbol": "ac_strncpy"
+    },
+    "ac_call_service_aa5c": {
+      "original_near": "0xaa5c",
+      "OMF_symbol": "ac_carrier"
+    },
+    "ac_call_service_abca": {
+      "original_near": "0xabca",
+      "OMF_symbol": "ac_rx_flush"
+    },
+    "ac_call_service_adba": {
+      "original_near": "0xadba",
+      "OMF_symbol": "ac_close_port"
+    },
+    "ac_call_service_bae7": {
+      "original_near": "0xbae7",
+      "OMF_symbol": "ac_load_key"
+    },
+    "ac_call_service_da4e": {
+      "original_near": "0xda4e",
+      "OMF_symbol": "ac_service_da4e"
+    },
+    "ac_call_service_dd28": {
+      "original_near": "0xdd28",
+      "OMF_symbol": "ac_write_stats"
+    },
+    "ac_call_service_dd94": {
+      "original_near": "0xdd94",
+      "OMF_symbol": "ac_store_record"
+    },
+    "ac_call_service_ddb6": {
+      "original_near": "0xddb6",
+      "OMF_symbol": "ac_load_record"
+    },
+    "ac_call_service_de19": {
+      "original_near": "0xde19",
+      "OMF_symbol": "ac_service_de19"
+    },
+    "ac_call_service_dfcd": {
+      "original_near": "0xdfcd",
+      "OMF_symbol": "ac_service_dfcd"
+    },
+    "ac_call_service_eaed": {
+      "original_near": "0xeaed",
+      "OMF_symbol": "ac_service_eaed"
+    },
+    "ac_call_service_eb89": {
+      "original_near": "0xeb89",
+      "OMF_symbol": "ac_service_eb89"
+    },
+    "ac_call_service_ec0e": {
+      "original_near": "0xec0e",
+      "OMF_symbol": "ac_abort_modem"
+    },
+    "ac_call_service_ec49": {
+      "original_near": "0xec49",
+      "OMF_symbol": "ac_clear_selections"
+    },
+    "ac_call_service_ec61": {
+      "original_near": "0xec61",
+      "OMF_symbol": "ac_expand_selection"
+    },
+    "ac_call_shared": {
+      "original_near": "0x5695",
+      "OMF_symbol": "aspect_connection_shared"
+    }
+  },
+  "data_bindings": {
+    "ac_baud": "0x1b86",
+    "ac_call_count": "0xe696",
+    "ac_call_date": "0xe68d",
+    "ac_character_delay": "0x1d68",
+    "ac_cycle_limit": "0x1b9a",
+    "ac_data_1b8e": "0x1b8e",
+    "ac_data_1b90": "0x1b90",
+    "ac_data_1f7a": "0x1f7a",
+    "ac_data_2076": "0x2076",
+    "ac_data_6626": "0x6626",
+    "ac_data_664c": "0x664c",
+    "ac_data_6672": "0x6672",
+    "ac_data_667c": "0x667c",
+    "ac_data_6686": "0x6686",
+    "ac_data_68b2": "0x68b2",
+    "ac_data_69f0": "0x69f0",
+    "ac_data_6f4a": "0x6f4a",
+    "ac_data_6f50": "0x6f50",
+    "ac_data_6ff2": "0x6ff2",
+    "ac_data_bits": "0x1b8c",
+    "ac_data_e464": "0xe464",
+    "ac_data_e466": "0xe466",
+    "ac_data_e468": "0xe468",
+    "ac_data_e46a": "0xe46a",
+    "ac_data_e57e": "0xe57e",
+    "ac_data_e67e": "0xe67e",
+    "ac_data_e680": "0xe680",
+    "ac_data_e681": "0xe681",
+    "ac_data_e682": "0xe682",
+    "ac_data_e683": "0xe683",
+    "ac_data_e684": "0xe684",
+    "ac_data_e69a": "0xe69a",
+    "ac_data_e6b8": "0xe6b8",
+    "ac_data_e6c2": "0xe6c2",
+    "ac_data_e6c4": "0xe6c4",
+    "ac_data_e6c6": "0xe6c6",
+    "ac_data_e6c8": "0xe6c8",
+    "ac_data_e6ca": "0xe6ca",
+    "ac_data_e6cc": "0xe6cc",
+    "ac_data_e6ce": "0xe6ce",
+    "ac_data_e6d0": "0xe6d0",
+    "ac_driver_handle": "0x8ff4",
+    "ac_duplex": "0x1d1a",
+    "ac_empty": "0x4942",
+    "ac_failure": "0xd124",
+    "ac_hangup_dtr": "0x1d72",
+    "ac_hangup_gate": "0x1d78",
+    "ac_hangup_other_gate": "0x3986",
+    "ac_hangup_text": "0x1bfd",
+    "ac_key_name": "0x21d8",
+    "ac_manual_name": "0x69e4",
+    "ac_manual_token": "0x7125",
+    "ac_meta_name": "0x3262",
+    "ac_number": "0xe669",
+    "ac_parity": "0x1b88",
+    "ac_physical_rows": "0x7a74",
+    "ac_port": "0x1b84",
+    "ac_protocol": "0x3996",
+    "ac_record": "0xe650",
+    "ac_record_key": "0xe6a6",
+    "ac_record_meta": "0xe6af",
+    "ac_record_protocol": "0xe698",
+    "ac_record_terminal": "0xe699",
+    "ac_script_stream": "0x4b02",
+    "ac_selection_end": "0x711d",
+    "ac_selection_flag_end": "0x7123",
+    "ac_selection_flags": "0x70ba",
+    "ac_selections": "0x70b4",
+    "ac_stop": "0x1b8a",
+    "ac_terminal": "0x1d18",
+    "ac_token_separators": "0x7121"
+  },
+  "limitations": [
+    "Isolated component; original overlays are modeled selected contexts, no live UART/IRQ, ASIO/MCB ownership, files, BIOS or native UI execution.",
+    "Default checker consumes authored source/provenance only; --original adds optional exact original byte comparisons.",
+    "The existing576-byte original dial-attempt source is reused as a separate explicit dependency; no duplicate copy is added.",
+    "OMF objects assemble with explicit imports; no maintained application link, UART owner transition or executable qualification is claimed.",
+    "Expansion, native retry-delay/abort, UI, KEY/META/reset, directory cache/file/persistence and fatal-handler boundaries are modeled in the CPU checker. Their dependencies/failure semantics remain separate implementation gates."
+  ],
+  "component_contract": {
+    "new_native_bytes": 1527,
+    "reused_attempt_bytes": 576,
+    "connection_family_bytes": 2103,
+    "abi": "8086 near calls; DS=SS, DF=0; ordinary FLAGS and command AX volatile. Engine E182 AX contains adoption bits before callback dispatch.",
+    "argument_cleanup": {
+      "shared": "RET2 mode WORD",
+      "dial-engine": "RET6 second-pointer, first-pointer, mode",
+      "dial-commit": "RET2 selected index",
+      "other_new_entries": "near RET, caller cleanup"
+    },
+    "modes": {
+      "DIAL": 0,
+      "MDIAL": 2,
+      "REDIAL": 1
+    },
+    "outputs": "DIAL/REDIAL optional writable string receives signed index -1/0/1..200 before pending far-global flush. MDIAL optional second string is input and is not flushed/adopted.",
+    "failure": "E182 publishes signed selected-index<0 into FAILURE, independently of engine adoption flags. HANGUP skips with prior FAILURE intact when both gates are nonzero.",
+    "not_application_selected": true
+  },
+  "data_layout_constraints": [
+    "The 15 selection slots are seven bytes each: ac_selections=70B4h, flags at slot+6=70BAh, ac_selection_end=711Dh, ac_selection_flag_end=7123h. End-address immediates are symbolic OMF fixups too.",
+    "The 114-byte working record aliases explicit field offsets: phone+25, baud+46, line bytes+48..51, date+61, count+70, protocol+72, terminal+73, MODEM/DIRECT+74, KEY+86, META+95, port+104.",
+    "ac_data_e57e is the indexed selection marker base; accesses add selected index 0..200. It is an explicit external relocation, not an allocated application global.",
+    "Physical original addresses and source bytes are evidence. A future linker owner must supply consistent symbolic storage/aliases; this component allocates no DATA."
+  ]
+}

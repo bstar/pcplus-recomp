@@ -134,6 +134,34 @@ static void file_command(pc_compiler *c,const command *cmd)
  }
  if(c->expression.position!=c->expression.last)bad(c);
 }
+static void connection_command(pc_compiler *c,unsigned opcode)
+{
+ unsigned n,present,previous,commas;
+ emit(c,opcode);c->expression.position=1;
+ if(opcode==0x55){if(c->line.count!=1)bad(c);return;}
+ if(opcode!=0x92){
+  if(c->line.count<2||pc_equal(c,1,"(")||pc_equal(c,1,",")){bad(c);return;}
+  n=parse(c);if(!pc_ready(c)||kind(c,n)!=3){bad(c);return;}operand(c,n,0);
+ }
+ if(!pc_ready(c))return;
+ present=c->expression.position<c->expression.last;emit(c,present);
+ if(present){
+  if(opcode!=0x92){
+   previous=commas=0;
+   while(pc_equal(c,c->expression.position,",")){
+    n=c->expression.position;
+    if(commas&&c->line.tokens[n].start==c->line.tokens[previous].start+c->line.tokens[previous].length){bad(c);return;}
+    previous=n;++commas;++c->expression.position;
+   }
+   n=c->expression.position;
+   if(!commas&&n<c->line.count&&c->line.tokens[n].start==c->line.tokens[n-1].start+c->line.tokens[n-1].length){bad(c);return;}
+  }
+  if(c->expression.position==c->expression.last||pc_equal(c,c->expression.position,"(")||pc_equal(c,c->expression.position,",")){bad(c);return;}
+  n=parse(c);if(!pc_ready(c)||kind(c,n)!=3){bad(c);return;}
+  if(opcode==0x70)operand(c,n,0);else destination(c,n,3);
+ }
+ if(c->expression.position!=c->expression.last)bad(c);
+}
 static void screen_word(pc_compiler *c,unsigned n)
 {
  aspect_compiler_value v;unsigned char text[254];unsigned length;
@@ -263,6 +291,10 @@ void pc_commands(pc_compiler *c)
  if(pc_equal(c,0,"get")){get_command(c);return;}
 #endif
  if(pc_equal(c,0,"alarm")){alarm_command(c);return;}
+ if(pc_equal(c,0,"dial")){connection_command(c,0x22);return;}
+ if(pc_equal(c,0,"mdial")){connection_command(c,0x70);return;}
+ if(pc_equal(c,0,"redial")){connection_command(c,0x92);return;}
+ if(pc_equal(c,0,"hangup")){connection_command(c,0x55);return;}
  if(pc_equal(c,0,"dos")){external_command(c,0x28);return;}
  if(pc_equal(c,0,"run")){external_command(c,0x9b);return;}
  if(pc_equal(c,0,"shell")){external_command(c,0xa3);return;}
