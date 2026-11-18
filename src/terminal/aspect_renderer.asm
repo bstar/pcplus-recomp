@@ -53,6 +53,13 @@ CPU 8086
  %undef RENDER_CAPABILITY
  %define RENDER_CAPABILITY 24
 %endif
+%ifdef ASPECT_HITKEY
+ %ifndef ASPECT_TERMINAL_QUERY
+  %error HITKEY requires the complete terminal-query renderer
+ %endif
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 25
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
 extern terminal_program_active,terminal_program_kind
@@ -164,6 +171,9 @@ terminal_render_prepare:
  mov word [terminal_aspect_adopt],0
  mov word [terminal_script_label_valid],0
  mov word [cs:render_attached],0
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
 %ifdef ASPECT_EXTERNAL_RENDER
  mov word [cs:render_program_owned],0
 %endif
@@ -224,6 +234,9 @@ terminal_render_revoke:
  pop bx
  call resident_bridge_disable
  mov word [cs:render_attached],0
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
 %ifdef ASPECT_EXTERNAL_RENDER
  mov word [cs:render_program_owned],0
 %endif
@@ -323,6 +336,14 @@ render_psp:
 
 render_body:
  mov di,ax
+%ifdef ASPECT_HITKEY
+ cmp di,30
+ je .hitkey_pair
+ cmp di,31
+ je .hitkey_pair
+ mov word [cs:render_hitkey_pending],0
+.hitkey_pair:
+%endif
  call resident_bridge_caller_ds
  mov [cs:render_caller_ds],ax
  call render_psp
@@ -407,6 +428,12 @@ render_body:
  cmp di,29
  je .terminal_query
 %endif
+%ifdef ASPECT_HITKEY
+ cmp di,30
+ je .hitkey_query
+ cmp di,31
+ je .hitkey_query
+%endif
  cmp di,12
  je .abort_confirm
  cmp di,11
@@ -443,6 +470,16 @@ render_body:
  call render_scope_end
  xor ax,ax
 .done:
+%ifdef ASPECT_HITKEY
+ ; Field/client admission can return here before the operation handler. A
+ ; body-level typed failure retires any pending keyboard observation too.
+ or ax,ax
+ jz .hitkey_reply
+ cmp ax,14
+ ja .hitkey_reply
+ mov word [cs:render_hitkey_pending],0
+.hitkey_reply:
+%endif
  ret
 %ifdef ASPECT_TERMINAL_QUERY
 extern aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
@@ -482,6 +519,53 @@ extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_term
 .terminal_getters:
  dw aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
  dw aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+%endif
+%ifdef ASPECT_HITKEY
+extern terminal_hitkey_sample,keyboard_queue_count,keyboard_queue_index
+.hitkey_query:
+ or bx,bx
+ jnz .operand
+ cmp word [_script_handoff+22],0
+ jne .serial
+ call _aspect_render_admit
+ or ax,ax
+ jnz .hitkey_rejected
+ cmp di,31
+ je .hitkey_high
+ cmp word [cs:render_hitkey_pending],0
+ jne .state
+ ; Native651A uses six mouse peek words. Refuse a corrupt index before its
+ ; unchecked address read; leave the raw queue and BIOS ring untouched.
+ cmp word [keyboard_queue_count],0
+ jne .hitkey_queue
+ ; Native7842 adds one to this byte for INT16. An invalid FF would wrap to
+ ; the consuming AH00 service, so admit only the two configured peek modes.
+ cmp byte [keyboard_bios_mode],0
+ je .hitkey_sample
+ cmp byte [keyboard_bios_mode],0x10
+ jne .operand
+ jmp .hitkey_sample
+.hitkey_queue:
+ cmp word [keyboard_queue_index],6
+ jae .operand
+.hitkey_sample:
+ call far terminal_hitkey_sample
+ mov [cs:render_hitkey_word],ax
+ mov word [cs:render_hitkey_pending],1
+ jmp .hitkey_byte
+.hitkey_high:
+ cmp word [cs:render_hitkey_pending],1
+ jne .state
+ mov ax,[cs:render_hitkey_word]
+ mov word [cs:render_hitkey_pending],0
+ mov al,ah
+.hitkey_byte:
+ xor ah,ah
+ or ax,0xf000
+ ret
+.hitkey_rejected:
+ mov word [cs:render_hitkey_pending],0
+ ret
 %endif
 %ifdef TERMINAL_COMPILER_LEASE_BRIDGE
 .compiler:
@@ -783,6 +867,9 @@ extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_term
  pop bp
  ret
 .serial:
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
  mov ax,14
  ret
 %ifdef ASPECT_EXTERNAL_RENDER
@@ -1039,9 +1126,15 @@ extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_term
  call window_publish
  ret
 .state:
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
  mov ax,10
  ret
 .operand:
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
  mov ax,7
  ret
 
@@ -1250,6 +1343,11 @@ terminal_render_string:
  retf
 
 render_attached: dw 0
+%ifdef ASPECT_HITKEY
+global render_hitkey_pending,render_hitkey_word
+render_hitkey_pending: dw 0
+render_hitkey_word: dw 0
+%endif
 render_token: dw 0
 render_callback: dd 0
 render_child_ds: dw 0

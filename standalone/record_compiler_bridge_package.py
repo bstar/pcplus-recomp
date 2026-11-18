@@ -17,13 +17,13 @@ def main():
   path=path.resolve();assert path.is_relative_to(ROOT/'build')
   r=json.loads(path.read_text());receipts[str(path.relative_to(ROOT))]=sha(path);return r
  m=read(a.package/'manifest.json');proof=read(a.proof/'result.json');contract=read(a.contract/'result.json');archive=read(a.archive/'result.json')
- assert m['parent_render_capability'] in (23,24) and m['experimental_compiler_lease_bridge'] and not m['card_written'] and not m['original_inputs']
+ assert m['parent_render_capability'] in (23,24,25) and m['experimental_compiler_lease_bridge'] and not m['card_written'] and not m['original_inputs']
  for n,h in m['files'].items():assert sha(a.package/m['dos_directory']/n)==h,n
  for n,h in m['sources'].items():assert sha(ROOT/n)==h,n
  assert proof['passed'] and proof['ancestor_git_unavailable'] and not proof['original_inputs']
  assert proof['connection_package']['files']==archive['files']==m['files'] and len(m['files'])==17
  assert proof['connection_package']['archive_sha256']==archive['archive_sha256']==sha(a.archive/archive['archive'])
- assert contract['passed'] and len(contract['cases'])==(39 if m['parent_render_capability']==24 else 34) and all(c['accepted']==(c['case'] in ('matched-pair','module-valid','archive-valid','capability23-without-terminal-query')) for c in contract['cases'])
+ assert contract['passed'] and len(contract['cases'])=={23:34,24:39,25:45}[m['parent_render_capability']] and all(c['accepted']==(c['case'] in ('matched-pair','module-valid','archive-valid','capability23-without-terminal-query','capability24-without-hitkey')) for c in contract['cases'])
  assert archive['passed'] and not archive['card_written'] and not archive['selector_changed']
  assert archive['package_manifest_sha256']==contract['package_manifest_sha256']==sha(a.package/'manifest.json')
  # Check the exported sources against the declared public commit, rather than

@@ -169,7 +169,7 @@ END=r'''
 }
 '''
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
-def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False,terminal_builtins=False):
+def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False,terminal_builtins=False,aspect_hitkey=False):
  sys.path.insert(0,str(ROOT/'src/aspect'))
  from compiler import compile_source
  OUT.mkdir(parents=True,exist_ok=True);inc='-I'+str(ROOT/'reconstruction/uart')+'/'
@@ -261,9 +261,9 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_p
  sources.append(connected_corpus_path)
  sources.append(raw_output_path)
  sources += [when_corpus_path,receive_overrides_path,ROOT/'src/aspect/when_runtime.c',ROOT/'src/aspect/when_runtime.h',ROOT/'src/keyboard/api.h']
- for name,rel,define in ASM+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else [])+([('clock_builtins','src/aspect/clock_builtins.asm',None)] if clock_builtins else [])+([('terminal_builtins','src/aspect/terminal_builtins.asm',None)] if terminal_builtins else []):
+ for name,rel,define in ASM+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else [])+([('clock_builtins','src/aspect/clock_builtins.asm',None)] if clock_builtins else [])+([('terminal_builtins','src/aspect/terminal_builtins.asm',None)] if terminal_builtins else [])+([('hitkey','src/aspect/hitkey.asm',None)] if aspect_hitkey else []):
   p=ROOT/rel;obj=OUT/(name+'.obj');sources.append(p)
-  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+(['-DASPECT_DIRECTORY_BAUD'] if directory_baud else [])+(['-DASPECT_DIRECTORY_FIELDS'] if directory_fields else [])+(['-DASPECT_DIRECTORY_PROTO'] if directory_proto else [])+(['-DASPECT_CLOCK_BUILTINS'] if clock_builtins else [])+(['-DASPECT_TERMINAL_BUILTINS'] if terminal_builtins else [])+(['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
+  subprocess.run(['nasm','-f','obj',inc]+(['-D'+define] if define else [])+(['-DASPECT_DIRECTORY_BAUD'] if directory_baud else [])+(['-DASPECT_DIRECTORY_FIELDS'] if directory_fields else [])+(['-DASPECT_DIRECTORY_PROTO'] if directory_proto else [])+(['-DASPECT_CLOCK_BUILTINS'] if clock_builtins else [])+(['-DASPECT_TERMINAL_BUILTINS'] if terminal_builtins else [])+(['-DASPECT_HITKEY','-DASPECT_HITKEY_DIAGNOSTIC'] if aspect_hitkey else [])+(['-DASPECT_SOURCE_OUTPUT'] if name=='dispatch' else [])+[str(p),'-o',str(obj)],check=True);objects.append(str(obj))
  for unit,start,end,base in SUPPORT:
   p=OUT/f'support{unit}.bin'
   subprocess.run(['nasm','-f','bin',inc,'-DASPECT_EXPR_FLAT',f'-DASPECT_EXPR_UNIT={unit}',str(ROOT/'src/aspect/expression_support.asm'),'-o',str(p)],check=True)
@@ -428,9 +428,10 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_p
   extra+=f' run("{name}",1000,3,0,0,0,0UL,0);ck(runtime_last_opcode=={op});\n'
  program=program.replace(END,extra+END)
  if terminal_builtins:sources += [ROOT/'src/aspect/terminal_builtins.c',ROOT/'src/aspect/terminal_builtins.h']
+ if aspect_hitkey:sources += [ROOT/'src/aspect/hitkey.c',ROOT/'src/aspect/hitkey.h']
  (OUT/'diagnostic.c').write_text(program)
  subprocess.run(['wcl','-q','-bt=dos','-0','-ms','-ecc','-s','-w4','-we','-k8192','-dASPECT_RUNTIME_DIAGNOSTIC',*(['-dASPECT_GET_LIFECYCLE'] if lifecycle else []),
- '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),*([str(ROOT/'src/aspect/terminal_builtins.c')] if terminal_builtins else []),*objects],cwd=OUT,check=True)
+ '-i='+str(ROOT/'src/aspect'),'-fm=EXECUTE.map','-fe=EXECUTE.EXE',str(OUT/'diagnostic.c'),str(ROOT/'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),str(ROOT/'src/aspect/file_io.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/receive_runtime.c'),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),*([str(ROOT/'src/aspect/terminal_builtins.c')] if terminal_builtins else []),*([str(ROOT/'src/aspect/hitkey.c')] if aspect_hitkey else []),*objects],cwd=OUT,check=True)
  report=dict(binary_sha256=sha(OUT/'EXECUTE.EXE'),sources={str(p.relative_to(ROOT)):sha(p) for p in sources},support_units=units,original_inputs=[],
   compile_flags=['8086','small model','cdecl','ASPECT_RUNTIME_DIAGNOSTIC','ASPECT_SOURCE_OUTPUT'],fixture_count=len(cases),
   supported_slots={f'{op:02x}':supported[op] for op in sorted(supported)},source_extensions=raw_output['source_owned_extension'],unsupported_slot_cases=len(unsupported),diagnostic_case_count=len(cases)+19+len(unsupported)+(256-len(set_supported))+4+len(set_corpus['vectors'])+(256-len(set_supported))+len(break_corpus['raw_getters'])+2,
@@ -449,6 +450,7 @@ def main(lifecycle=False,directory_baud=False,directory_fields=False,directory_p
  report['experimental_directory_proto']=directory_proto
  report['experimental_clock_builtins']=clock_builtins
  report['experimental_terminal_builtins']=terminal_builtins
+ report['experimental_hitkey']=aspect_hitkey
  if lifecycle:
   report['compile_flags'].append('ASPECT_GET_LIFECYCLE')
   report['GET_lifecycle']='Actual runtime lifecycle with controlled GET retained/recovery peers; full GET linkage remains open.'
@@ -462,7 +464,8 @@ if __name__=='__main__':
  parser.add_argument('--directory-proto',action='store_true')
  parser.add_argument('--clock-builtins',action='store_true')
  parser.add_argument('--terminal-builtins',action='store_true')
+ parser.add_argument('--hitkey',action='store_true')
  parser.add_argument('--output',type=Path)
  args=parser.parse_args()
  if args.output:OUT=args.output.resolve()
- main(lifecycle=args.get_lifecycle,directory_baud=args.directory_baud,directory_fields=args.directory_fields,directory_proto=args.directory_proto,clock_builtins=args.clock_builtins,terminal_builtins=args.terminal_builtins)
+ main(lifecycle=args.get_lifecycle,directory_baud=args.directory_baud,directory_fields=args.directory_fields,directory_proto=args.directory_proto,clock_builtins=args.clock_builtins,terminal_builtins=args.terminal_builtins,aspect_hitkey=args.hitkey)

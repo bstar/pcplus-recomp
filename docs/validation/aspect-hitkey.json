@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "passed": true,
+  "feature": "Opt-in original HITKEY integer operand25",
+  "products": {
+    "TERMINAL.EXE": {
+      "folder": "build/hitkey-parent-v3-20261118",
+      "sha256": "d7d7dcb3cba7b9013efd39b66da931a9043d03f6d55f8198b88fe7c71dc46030",
+      "manifest_sha256": "d273dc8be99cf2bed705d9773487e280bb8e2332dc0080891e845eadc5370ef6"
+    },
+    "ASPECT.EXE": {
+      "folder": "build/hitkey-child-overlay-20261118",
+      "sha256": "a117afc83c16b67664c376632cff1b2743a3f53070df0128026f439a00426f87",
+      "manifest_sha256": "7f20185a4ba26b763c6c1c43f684c5df07fc4c325113a1e29366032ed61ee048"
+    },
+    "ASPCOMP.EXE": {
+      "folder": "build/hitkey-compiler-20261118",
+      "sha256": "6e978674b1983c92d4c83a486554e66f08471a59db24108a2668ca7b8cf5bdf9",
+      "manifest_sha256": "6d4df7d87d6d5b46150c82cbbe063e5cb8f75d0d70b9e22b28dc04229d3edf1a"
+    },
+    "standalone_ASPECT.EXE": {
+      "folder": "build/hitkey-runner-20261118",
+      "sha256": "c6786f744f7054bd4426d43d6aeb0b1d57c3be8aa00be5741917ca164f6e406f",
+      "manifest_sha256": "fef083655aae531389260f3d6324a6c914846ea6aa306920e8dd931e7ef4e621"
+    }
+  },
+  "source_build_original_inputs": [],
+  "optional_native_original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "renderer_capability": 25,
+  "original_getter_bytes": 8,
+  "dependency_bytes": 86,
+  "native_keyboard_region_bytes": 231,
+  "native_calls": 262544,
+  "compiler_oracles": {
+    "cases": 10,
+    "accepted": 6,
+    "rejected": 4
+  },
+  "DOS_compiler_regression": {
+    "cases": 3256,
+    "API_checks": 1693
+  },
+  "DOS_client": {
+    "cases": 139,
+    "checks": 1628
+  },
+  "linked_parent": {
+    "cases": 401,
+    "handshake_versions": 10,
+    "invalid_BIOS_modes": 254
+  },
+  "VM": {
+    "cases": 231,
+    "checks": 3198,
+    "real_BIOS_checks": 11,
+    "disabled_guard_cases": 1
+  },
+  "base_runtime": {
+    "enabled_cases": 1414,
+    "enabled_checks": 35415,
+    "default_disabled_cases": 1135,
+    "default_disabled_checks": 27295
+  },
+  "legacy_client": {
+    "cases": 435,
+    "checks": 2766
+  },
+  "full_parent_source_GET": {
+    "cases": 2,
+    "checks": 105,
+    "HITKEY_probe_sites": 7,
+    "retained_BIOS_word": "0x4800",
+    "native_keyboard_dispatch_disabled": true
+  },
+  "post_GET_deferred_WHEN": {
+    "cases": 2,
+    "checks": 96,
+    "HITKEY_observations": 4,
+    "retained_BIOS_word": "0x4800",
+    "live_GET_modal_script_execution_verified": false
+  },
+  "nested_Help_checks": 63,
+  "cold_export": {
+    "sources": 1074,
+    "ancestor_git_unavailable": true,
+    "exact_products": true,
+    "source_GET_replay_cases": 2,
+    "Help_replay_checks": 63
+  },
+  "package_controls": {
+    "capability25": 45,
+    "capability24": 39,
+    "capability23": 34,
+    "staging_only": true
+  },
+  "interpreter_layout": {
+    "passed": true,
+    "near_code_bytes": 65316,
+    "near_code_spare": 220,
+    "GET_code_bytes": 4079,
+    "editor_code_bytes": 1544,
+    "Help_code_bytes": 6561,
+    "field_state_bytes": 206,
+    "DGROUP_bytes": 40624,
+    "stack_bytes": 8192,
+    "notice_code_bytes": 6466,
+    "notice_overlay": true,
+    "program_code_bytes": 1463,
+    "program_overlay": true,
+    "minimum_DOS_bytes_including_PSP": 126320,
+    "page_rounded_minimum_including_PSP": 126352,
+    "scope": "Preliminary trusted-linker map/MZ bounds only; full callback, checkpoint, recovery and allocation acceptance requires DOS execution."
+  },
+  "receipts": {
+    "build/hitkey-native-20261118/result.json": "51e34ee43c597bbaba79ee9121bc51c3e604231a75a10c99b465eda6ca222785",
+    "build/hitkey-compiler-oracles-20261118/result.json": "4f47beebbfb155ef9f34c69fa8c586b979c6b27b6d7b148fd470bc099f834b6e",
+    "build/hitkey-compiler-regression-20261118/checks.json": "9d1b0b2acb20dc1cac04bdecf313fbe9cb72f6a0cafba1f0c96359c112e96336",
+    "build/hitkey-client-20261118/result.json": "11c122e1238173d9b841dd0eca4deb73caef47a701ffcd15b5dfeaa7a0d54d75",
+    "build/hitkey-parent-v3-cpu-20261118/result.json": "14f5ceddf6c0a83af34a85e55905756998949598a863f61af7c4606534ea8132",
+    "build/hitkey-parent-legacy-helper-20261118.json": "8208d4b3470a341ec443e3cd88bfd4a7c108112c003d0c07145cc2528c573a13",
+    "build/hitkey-previous-client-regression-20261118/result.json": "8db07b712cf5c355d59777c53114c201b42b41d74fb4249af6a102f82a64605b",
+    "build/hitkey-dos-v7-20261118/result.json": "16bae97b4b0b5622b8bf688172c4d553300a06085c3491f6e322f70ec3d9625b",
+    "build/hitkey-runtime-regression-20261118/checks.json": "5144b196dc165b5974f8f287a897538c525069f9e4c2dff6b27f9274fe1f325b",
+    "build/hitkey-disabled-regression-20261118/checks.json": "0bb22cde6e1e4bfb5829af37ec99d4cd026e9a70562ac1250abc3fdc64abf4f6",
+    "build/hitkey-source-lease-v3-20261118/checks.json": "183767fc9fe7dfd313adc982e91ef55fbbcc3691184ca43943f2ca7a86b3d386",
+    "build/hitkey-when-postget-v3-dos-20261118/result.json": "dc6070b8d200fc9a3e37d1fa822351ab22b63ae8a53a347f58db6965a8a1c3b3",
+    "build/notice-help/hitkey-nested-help-v3-20261118/result.json": "70851823847bba467a5970e8985d3e6c8649090a6f0468dbe580cd144a0386ec",
+    "build/hitkey-v3-cold-20261118/result.json": "5781117bdec35d990d8242fa06630164bc35ef76929281bd07e8f24160aea9de",
+    "build/hitkey-v3-package-contract-20261118/result.json": "3bc9034987786f34c9599fb8a4c8b6f71612d8f4bddfa97098bd88752998341c",
+    "build/hitkey-old24-package-contract-20261118/result.json": "110362757dacbdd34a023d0fe5222fee0d12b95e16edafc5084f45b79490fbe9",
+    "build/hitkey-old23-package-contract-20261118/result.json": "7160dd41d37b5b07bddce24461d25d7ca42901704dc7de39686bdd8ec9cf546b",
+    "build/hitkey-when-dos-20261118/lifecycle-counterexample.json": "4fa921a07958457b656323393fac5322a0b3b3893b4b19db377d1567e64c5276"
+  },
+  "sources": {
+    "PLAN.md": "fd482b65137d6ed876f9a2d8fb04ca41de33f7ff93161e1269fc424c6fff24fe",
+    "docs/ASPECT_BUILTIN_REMAINDER.md": "68074bef36a89f97dbb6f3f514d0a1136282f24b95bb65e50c54177b36f0270f",
+    "docs/ASPECT_HITKEY.md": "7122d45cbb7cea3a0d36bdbfea2097636338e140a62453c723fd117b1964ab02",
+    "docs/FEATURES.md": "bb1603af8b45b04b650a16354544103ce7d367fa854a7f4c8671711e2b7572fc",
+    "reconstruction/aspect_hitkey/provenance.json": "66cae344d8436bd681b8597da6a3c03437dc9b5935cb65803388796390c9c7c3",
+    "src/aspect/compiler.py": "1f1e0248f2fab03141aeec8ec3f2d16fb8d4ca5362ef3db56d446ce0a31d4b75",
+    "src/aspect/compiler_expr.c": "c9319958d7a13c792053458b744584a0fbd8b11290d145f419d7d2f3d7374a04",
+    "src/aspect/compiler_unit.c": "36d62540374ea35cd7abf6699f59fa0226fe8c6a5f6c11e21c068a4b51502e39",
+    "src/aspect/hitkey.asm": "06a4fe5ed47573277f6ac3f2a163c7c71133dcba323bb9181739cd052495c7e2",
+    "src/aspect/hitkey.c": "b34e64ea20abec280d4abc70fda966f63d54171823cc6cec77d29f0a6c622e3b",
+    "src/aspect/hitkey.h": "67bbfe0f10be9ede9f4d01a10c2fe13d243d067c47ed712f23534ea8ee8c3d88",
+    "src/aspect/resident_render.c": "0284fa34394f74ad8cc52c00b826727e29e26e45e568162835f38e43bbbf9a53",
+    "src/aspect/resident_render.h": "4d021c926c1d6976bc3c682d8397a41fe3b91ca6bde82e50aee65daea7c40ad6",
+    "src/aspect/runtime_bridge.asm": "2c4caec64d3dff6a02764cd56fd3f52aa148f3b23955e6f452bf7904d50a0694",
+    "src/terminal/aspect_renderer.asm": "27343441ac9a3d01bd4e4c812b2af712b03e0d86772bcaf6d5cdf2a8739cec46",
+    "standalone/archive_connection_test_package.py": "b628c84239e8522e0e3f716fa9acae8c90e0ede15c47b0f26c31110ee1336415",
+    "standalone/build_aspect_process.py": "68028d04ae65b228b5a3e7361e9cc0f71bc4c1975ad32a3463be8260b1c549f2",
+    "standalone/build_aspect_runner.py": "5e611ca01b1bf68d02524a9eac1f2bfb572c3f454090087e53e08c5705b23893",
+    "standalone/build_aspect_runtime.py": "b3714a967022039f8861ac7ff911643f9df33a7ac19a3f0e15a3e208730f22a7",
+    "standalone/build_terminal.py": "6f408f6059bd0b6226dafc3ad203e7862311765405b792d89aec8b5ed623f3d0",
+    "standalone/check_aspect_hitkey_compiler.py": "f6ead9ab48bfa2fb899f611594564c475a5bee0bde94da19a2ea2fdfb6febabb",
+    "standalone/check_aspect_hitkey_native.py": "585a59e308ef73aef27bd84204fc20a04f7beb064c1510c5f0faf64d2aa64f65",
+    "standalone/check_aspect_hitkey_parent.py": "94202214f2d59882772591b5f57b3b6ad77c7f25759d7e584bf05b6b37c2d91a",
+    "standalone/check_aspect_runtime.py": "30184d903e0450c1ee68243e282be335b3d8b11bab1c057cb62e400d48fe7ef9",
+    "standalone/check_compiler_bridge_package.py": "0a914e14dedbf2c69a7815df49aa7c52b518c3a2d71e931ce99e28944e4d0d2f",
+    "standalone/check_terminal_query_parent.py": "2c486dd91656d14bba64e9ea561b7b5e5840f8b8b55caeb3900dbaf9e77568ad",
+    "standalone/fixtures/aspect_hitkey_compiler_vectors.json": "2f554c7215cb6aa084db459f7a3a4deea2ce8defa5a5240357343eff2216f6c8",
+    "standalone/hitkey_client_driver.c": "4e28f59e9de197d4e019e9fdba36c64f839f1bf5918a3ce78a23204447e6953a",
+    "standalone/package_connection_test.py": "759317009abab4dd4771e0eeabc8a8fdb27fb37d81dbbdcddd59fc7efd3db72e",
+    "standalone/prove_compiler_bridge_source.py": "e629470a41dd7b82147d43bf59565e44805281b44b4cad65ed72027fd9139af2",
+    "standalone/record_compiler_bridge_package.py": "526fe078d9b622e4cfb1e0b06b26d7603cad0c5931000c55ba25c995428cf481",
+    "standalone/test_aspect_get_vm_dos.py": "7ad1cdb4161eb0116e7e09969c154c49613f43ec348daf54c0dc2983c3cdbe87",
+    "standalone/test_aspect_hitkey_client_dos.py": "2e13d498e9f662290a7d5375be48cee6bd3d246c51cd3df00a36fd0c28b624b9",
+    "standalone/test_aspect_hitkey_dos.py": "6df4b7d42cfb105325046b7706c14874de549e1ef91ebe4c8d7909949a5f3dbc",
+    "standalone/test_aspect_hitkey_when_dos.py": "5b4f81259355178b18c09f180eb4924b8692d5cb88f170e58351dfe20fd80b28"
+  },
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "remaining": [
+    "Commit-bound complete release packaging and independent Enigma/Synchronet qualification for capability25; staged package is a contract fixture.",
+    "Physical memory, modem/SIP/audio acceptance and independent child notice mouse-producer composition.",
+    "FROMDDIR launch-origin lifecycle, MONO physical-state binding and six Host table services.",
+    "Broader ASPECT/compiler/GET callback lifecycles, source-owned setup defaults, terminal emulations, transfer protocols and full F01-F16 parity. Host stays last."
+  ],
+  "limitations": [
+    "Optional native comparison consumes a SHA-bound original separately; application builds and cold proof have no original inputs.",
+    "CPU native and linked-parent tests model INT16/device, pure admission, selected PSP/UI-retirement and UART-open boundaries. Actual DOS BIOS rings, full-parent source/GET and post-GET WHEN corroborate distinct scopes.",
+    "The GET loop defers WHEN CALL script execution until field retirement. The earlier worker-before-input gate is an invalid test lifecycle counterexample, not a product failure or proof of live-modal script execution.",
+    "Parent mouse producer is suspended during PROGRAM; retained queue lookup is distinct from physical/child-notice event production.",
+    "Pre-body bridge rejection cannot mutate the application latch; repaired high still requires authentication. Body errors and ordinary lifecycle operations retire it.",
+    "Existing immediate Escape cancellation may precede operand execution. The getter itself remains non-consuming.",
+    "No new BBS, installation or physical acceptance claim; preceding capability24 connection qualification retains its own bytes."
+  ]
+}

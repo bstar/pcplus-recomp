@@ -384,6 +384,10 @@ global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
  push bp
  mov bp,sp
+%ifdef ASPECT_HITKEY
+ cmp word [bp+4],25
+ je .hitkey
+%endif
 %ifdef ASPECT_TERMINAL_BUILTINS
  cmp word [bp+4],0
  je .terminal
@@ -458,6 +462,15 @@ extern aspect_directory_builtin_stopbit,aspect_directory_builtin_term,aspect_dir
 .done:
  pop bp
  ret 2
+%ifdef ASPECT_HITKEY
+extern _runtime_hitkey_refresh,_runtime_hitkey_value
+.hitkey:
+ call _runtime_hitkey_refresh
+ or ax,ax
+ jnz fail
+ mov ax,[_runtime_hitkey_value]
+ jmp .done
+%endif
 %ifdef ASPECT_TERMINAL_BUILTINS
 extern _runtime_terminal_refresh
 extern aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows

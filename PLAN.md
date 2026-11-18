@@ -47,9 +47,13 @@ OO finish on the first Enigma attempt remains a failed counterexample; the
 unchanged rerun passes every gate. Nothing was installed. Hardware and full
 F01–F16 completion remain open.
 
-The [remaining builtin-table audit](docs/ASPECT_BUILTIN_REMAINDER.md) identifies
-three non-Host operands still to bind: `HITKEY`, `FROMDDIR` and `MONO`. `HITKEY`
-must use the recovered non-consuming peek and key normalizer. `FROMDDIR` needs
+The [HITKEY checkpoint](docs/ASPECT_HITKEY.md) now binds the original normalized,
+non-consuming WORD peek through a single-observation capability25 parent pair
+and a real standalone BIOS path. Native/original, compiler, VM, callback,
+full-parent source/GET, nested Help and cold reproduction pass. New package/BBS
+and hardware qualification remain separate; the capability24 candidate is
+unchanged. The [remaining builtin-table audit](docs/ASPECT_BUILTIN_REMAINDER.md)
+identifies two non-Host operands still to bind: `FROMDDIR` and `MONO`. `FROMDDIR` needs
 automatic-script launch origin, and `MONO` needs physical display state; neither
 can use a convenient existing attribute/selection alias. Six recovered Host
 operands retain their session-producer/lifecycle gates for the final Host stage.

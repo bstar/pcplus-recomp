@@ -308,24 +308,32 @@ unsigned __cdecl aspect_render_status(unsigned duplex)
  RESPONSE_DONE(result);
 }
 #ifdef ASPECT_TERMINAL_QUERY
-unsigned __cdecl aspect_render_terminal_query(unsigned index,unsigned *output)
+static unsigned word_query(unsigned operation,unsigned index,unsigned *output)
 {
  unsigned i,result,value=0;
- if(index>8 || !output || (unsigned long)(unsigned)output+2UL>65536UL)return ASPECT_RUN_OPERAND;
- if(RESPONSE_INVALID() || program_owned || snapshot_owned || field_owned || field_wait ||
-    confirm_wait || window_owned || confirm_owned || policy_wait || keyboard_wait ||
+ if(!output || (unsigned long)(unsigned)output+2UL>65536UL)return ASPECT_RUN_OPERAND;
+ if(RESPONSE_INVALID() || program_owned || snapshot_owned || field_wait ||
+    confirm_wait || policy_wait || keyboard_wait ||
     key_wait || label_wait || window_wait)return ASPECT_RUN_STATE;
+ if(operation==29 && (field_owned || window_owned || confirm_owned))return ASPECT_RUN_STATE;
  if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
- /* Parent operation29 performs no output, parser work, transport polling or
-  * callbacks. No child scheduler runs between the two tagged byte reads. */
+ /*29 reads foreground terminal WORDs.30 samples one HITKEY WORD and returns
+  * its low byte;31 returns the retained high byte and retires it. Neither
+  * path polls transport, emits output or invokes a child callback/scheduler. */
  for(i=0;i<2;++i){
-  result=aspect_render_request(29,index|(i<<8));
+  result=aspect_render_request(operation==29?29:30+i,operation==29?index|(i<<8):0);
   if(service_check())return ASPECT_RUN_STATE;
   if((result&0xff00U)!=0xf000U)return result?typed(result):ASPECT_RUN_STATE;
   value|=(result&255U)<<(i*8);
  }
  *output=value;return 0;
 }
+unsigned __cdecl aspect_render_terminal_query(unsigned index,unsigned *output)
+{return index>8?ASPECT_RUN_OPERAND:word_query(29,index,output);}
+#ifdef ASPECT_HITKEY_PARENT
+unsigned __cdecl aspect_render_hitkey_query(unsigned *output)
+{return word_query(30,0,output);}
+#endif
 #endif
 void __cdecl aspect_render_policy_reset(void)
 {policy_queried=policy_wait=policy_received=0;keyboard_queried=keyboard_wait=keyboard_received=0;key_wait=key_policy_read=0;window_owned=window_wait=window_received=0;}

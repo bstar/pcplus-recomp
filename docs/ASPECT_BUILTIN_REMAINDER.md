@@ -1,6 +1,6 @@
 # Remaining recovered ASPECT builtin tables
 
-After the terminal-integer checkpoint, nine services in the recovered integer,
+After the [HITKEY checkpoint](ASPECT_HITKEY.md), eight services in the recovered integer,
 long and string callback tables still lack compiler/runtime bindings. This is
 an inventory of those tables, not the remaining work for the whole language.
 The maintained compiler maps and `runtime_bridge.asm` remain authoritative for
@@ -11,7 +11,6 @@ expression operand.
 | --- | --- | --- | --- |
 | Integer11 | `$H_LEVEL` | D9E3 | Sign-extends the byte at DS5B38. |
 | Integer24 | `FROMDDIR` | DA18 | Reads the full WORD at DS4AFE. |
-| Integer25 | `HITKEY` | DA1C | Calls resident651A non-consuming peek and normalizer77D2. |
 | Integer26 | `MONO` | DA24 | Reads physical display flag WORD DS7A86. |
 | Long2 | `$H_BAUD` | DA72 | Uses WORD index DSE458 in DWORD baud table DS3270; returns DX:AX. |
 | String15 | `$H_ELAPSED` | DAEB | Returns shared pointer DS5B1A. |
@@ -19,7 +18,7 @@ expression operand.
 | String17 | `$H_OFFLINE` | DAF3 | Returns shared pointer DS5B0E. |
 | String18 | `$H_ONLINE` | DAF7 | Returns shared pointer DS5B02. |
 
-The four integer getters have retained REA observations:
+The remaining integer getters and the implemented HITKEY have retained REA observations:
 
 - `$H_LEVEL`: `ev_62c3781124117a26634c7eac6b586776b3f0c131ef8349c5a0ce4310b161db9f`.
 - `FROMDDIR`: `ev_96a50639e4f0c4935b6840338745f63fdf6291ee495118fc722560e35e3d7e1e`.
@@ -42,11 +41,12 @@ Declarations produce C028, "Invalid use of reserved word", rather than the C025
 identifier error of the `$`-prefixed terminal operands. The retained private
 draft/report is SHA256
 `e9f8e64d04e688561602be1a364bf6e1dd1c45aef511d6c5b9b4d2e2c577ff10`,
-under `analysis/aspect-nonhost-builtins-20261118/`. The maintained compilers do
-not yet implement these operands; this oracle is not counted as a passing
-maintained compiler regression.
+under `analysis/aspect-nonhost-builtins-20261118/`. The maintained compilers now
+implement HITKEY and check its ten public oracle cases. FROMDDIR and MONO remain
+unbound; their twenty private oracle cases are not counted as passing maintained
+compiler coverage.
 
-`HITKEY` has recovered dependencies in `reconstruction/keyboard/core.asm` and
+The implemented `HITKEY` has recovered dependencies in `reconstruction/keyboard/core.asm` and
 the caller-cleanup adapter in `src/keyboard/api.asm`. Peek evidence is
 `ev_9bc44de1285653267fe1e2c64a2f8d8f3fffa0fb3fcccfe61137d4b9fbc4fcd5`;
 normalizer evidence is
@@ -56,22 +56,35 @@ words and mouse-peek behavior. `runtime_when_key_ready()` adds modal suppression
 and returns availability, so substituting it would change the operand.
 The normalizer can retain full BIOS words. The getter performs one peek and
 normalizes that one result; a future parent service must preserve this single
-observation when a hardware key arrives asynchronously. Two independently
-peeked byte responses could combine different key states and are not equivalent
-to the existing terminal-state query contract.
+observation when a hardware key arrives asynchronously. The capability25 parent
+captures one normalized WORD for its paired replies. Two independently peeked
+bytes would combine different key states.
 
 `FROMDDIR` needs the launch-origin lifecycle. The original directory producer
 clears DS4AFE on directory entry and sets it for a nonblank automatic script
 (`ev_186cf7e819989310ab103a002a93c6fd62517af38d1568ce7d4d0885a258baa9`).
 The current `script_directory_policy` also exports retained selection for manual
 launches. Neither `$D_ENTRY` nor an unconditional Boolean alias recovers this
-word's behavior.
+word's behavior. The successful directory-script path stores the returned
+entry number, not a Boolean. Manual Alt-F5 explicitly clears it before4B14
+when no script FILE is active (`ev_fed07cee314ea4408ae7f955c2b21d040fc7a9ffdbc91efbad33596d7c6d65b9`).
+The KEY-kind0 macro path instead calls4B1F without clearing
+(`ev_67be257bd0d48b0add66901375f076ebf431f22ea716cc697aa4eac51d7ed230`).
+Invocation/per-file initialization and cleanup do not clear it, so EXECUTE and
+later macro invocation can inherit the entry until manual reset or directory
+entry. The pinned original has four direct literal references to4AFE: these
+three writes and the getter; that search does not rule out every indirect write.
+Resetting inside the shared `terminal_script_start` would lose macro inheritance.
 
 `MONO` must use DS7A86, not `attributes_monochrome` at original DS8FF6. Its
 producer examines the BDA CRT-controller port's low byteB4
 (`ev_f023afd9e2ef7182dbaf48f2f4693299a3627322109a691056e99c4ce4e7eb6c`).
-The current renderer admits color mode3; supporting the getter must distinguish
-that admitted scope from original monochrome display support.
+The current parent's correct live field is `_display_rows_mono`, alias
+`drows_native_display_mono`, populated by the recovered display probe before
+PROGRAM. Its public info struct omits the field. The current renderer admits
+color mode3; supporting the getter must distinguish that admitted scope from
+original monochrome display support. Reprobing on every getter would also differ
+from reading the existing native state word.
 
 The six Host operands stay with the final Host stage. Their getter mechanics
 do not prove session initialization, refresh timing, buffer validity or baud

@@ -38,6 +38,14 @@ cell/NAWS checks. A failed upstream-missing-OO run remains preserved separately
 from the unchanged passing rerun. Hardware qualification and complete F01–F16
 parity stay open; the installed selector is unchanged.
 
+[HITKEY](ASPECT_HITKEY.md) now uses the exact original non-consuming peek and
+WORD normalizer, with real standalone BIOS and matching capability25 parent
+sampling. Both compilers, native/original inputs, DOS client/VM, source/GET,
+post-GET WHEN, nested Help and cold reproduction pass. Original KEYS ON disables
+automatic local-key dispatch; explicit HITKEY remains readable. The current GET
+loop defers WHEN script execution until field retirement. New release/BBS and
+hardware gates, remaining FROMDDIR/MONO/Host services and full parity remain open.
+
 [Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS
 workflows,34 package controls and fresh Enigma/Synchronet regressions pass.

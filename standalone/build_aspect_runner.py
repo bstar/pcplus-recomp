@@ -8,7 +8,7 @@ from build_aspect_runtime import ROOT, ASM, sha
 OUT = ROOT / 'build/aspect-runner'
 
 
-def main(extension=None,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False,terminal_builtins=False):
+def main(extension=None,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False,terminal_builtins=False,aspect_hitkey=False):
     # Only the separately named experimental process builder supplies this.
     # Default production inputs/flags and opcode coverage remain unchanged.
     output=extension['output'] if extension else OUT
@@ -26,6 +26,12 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
     if terminal_builtins and extension and extension.get('parent_render'):
         assert extension.get('compiler_parent_lease')
         feature_flags+=['-DASPECT_TERMINAL_QUERY']
+    aspect_hitkey=aspect_hitkey or bool(extension and extension.get('aspect_hitkey'))
+    hitkey_parent=bool(aspect_hitkey and extension and extension.get('parent_render'))
+    if aspect_hitkey:feature_flags+=['-DASPECT_HITKEY']
+    if hitkey_parent:
+        assert terminal_builtins
+        feature_flags+=['-DASPECT_HITKEY_PARENT']
     if extension and extension.get('get_display'):feature_flags+=['-DASPECT_GET_DISPLAY']
     if extension and extension.get('get_policy'):feature_flags+=['-DASPECT_GET_POLICY']
     get_vm=bool(extension and extension.get('get_vm'))
@@ -79,6 +85,7 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
                ROOT/'src/keyboard/api.h',
                ROOT/'reconstruction/directory_accounting/patch.asm']
     if terminal_builtins:sources += [ROOT/'src/aspect/terminal_builtins.c',ROOT/'src/aspect/terminal_builtins.h']
+    if aspect_hitkey:sources += [ROOT/'src/aspect/hitkey.c',ROOT/'src/aspect/hitkey.h']
     compiled_sources=[p for p in sources if p.suffix=='.c']
     serial_asm=[('uart','reconstruction/uart/core.asm','UART_OMF'),('uart_api','src/uart/api.asm',None),
                 ('txpace','src/aspect/txpace.asm',None),
@@ -106,7 +113,7 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
         from build_get_bank import build as build_get_bank
         get_objects,get_sources=build_get_bank(output,feature_flags,overlay_ready=bool(extension and extension.get('overlay_ready')))
         objects+=get_objects;sources+=get_sources
-    for name, relative, define in ASM+serial_asm+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else [])+([('clock_builtins','src/aspect/clock_builtins.asm',None)] if clock_builtins else [])+([('terminal_builtins','src/aspect/terminal_builtins.asm',None)] if terminal_builtins else []):
+    for name, relative, define in ASM+serial_asm+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else [])+([('clock_builtins','src/aspect/clock_builtins.asm',None)] if clock_builtins else [])+([('terminal_builtins','src/aspect/terminal_builtins.asm',None)] if terminal_builtins else [])+([('hitkey','src/aspect/hitkey.asm',None)] if aspect_hitkey and not hitkey_parent else []):
         source, obj = ROOT / relative, output / (name + '.obj')
         sources.append(source)
         abort_flags=[]
@@ -155,6 +162,7 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
                     str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/source_compile.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/serial_wait.c'),str(ROOT/'src/aspect/receive_runtime.c'),
                     *([] if banked_serial else [str(ROOT/'src/aspect/serial.c')]),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'),
                     *([str(ROOT/'src/aspect/terminal_builtins.c')] if terminal_builtins else []),
+                    *([str(ROOT/'src/aspect/hitkey.c')] if aspect_hitkey else []),
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
     if get_vm:
         with (output/'GETVM.lnk').open('a') as link:
@@ -196,6 +204,7 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
                   experimental_directory_proto=directory_proto,
                   experimental_clock_builtins=clock_builtins,
                   experimental_terminal_builtins=terminal_builtins,
+                  experimental_hitkey=aspect_hitkey,
                   scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN, thirteen SET/FETCH families and owned six-slot streams. Capability12 uses the real parent parser, selected key profile, cooperative help and native yes/no confirmation with child-owned receive. Raw ASIO retains immediate cancellation and queued raw delay semantics. Full language, command actions, other waits/flows, physical timing and arbitrary-bytecode safety remain unfinished.')
     if extension:
         result.update(experimental_external_commands=True,production_dispatch_changed=False,

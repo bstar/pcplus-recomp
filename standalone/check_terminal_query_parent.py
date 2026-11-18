@@ -26,7 +26,7 @@ def sha(path):
 
 
 class Parent(DosImage):
-    def __init__(self, product):
+    def __init__(self, product, capability=24):
         super().__init__(product/'TERMINAL.EXE', product/'terminal.map')
         self.phase = 'setup'
         self.current_psp = CHILD_PSP
@@ -61,8 +61,8 @@ class Parent(DosImage):
         self.uc.hook_add(UC_HOOK_INTR, self.interrupt)
         self.uc.hook_add(UC_HOOK_MEM_WRITE, self.write)
         assert self.far_prepare() == 0
-        assert self.get('_script_render_version') == 24
-        self.client_words = [0x5243, 24, self.get('_script_render_token'), *self.callback]
+        assert self.get('_script_render_version') == capability
+        self.client_words = [0x5243, capability, self.get('_script_render_token'), *self.callback]
         self.publish_client()
         assert self.request(0, CLIENT) == 0
         self.phase = 'query'
@@ -173,6 +173,75 @@ class Parent(DosImage):
         return u.reg_read(UC_X86_REG_AX)
 
 
+def child_handshake(child, capability=24):
+    """Actual linked descriptor/client validation ending at a controlled absent UART."""
+    handshake = []
+    import check_aspect_render_client as fixture
+    child = child.resolve()
+    child_manifest = json.loads((child/'manifest.json').read_text())
+    assert sha(child/'ASPECT.EXE') == child_manifest['binary_sha256']
+    assert child_manifest.get('experimental_terminal_builtins')
+    fixture.q.BINARY, fixture.q.MAP = child/'ASPECT.EXE', child/'ASPECT.map'
+    listing = fixture.q.MAP.read_text()
+    stack = re.search(r'^STACK\s+STACK\s+DGROUP\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)', listing, re.M|re.I)
+    code = re.search(r'^_TEXT\s+CODE\s+\S+\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)', listing, re.M|re.I)
+    assert stack and code
+
+    class Child(fixture.Client):
+        def __init__(self):
+            super().__init__()
+            self.low = self.base+int(stack[1],16)*16+int(stack[2],16)-self.data_base
+            self.top = self.low+int(stack[3],16)
+            self.put('__STACKLOW', self.low);self.put('__STACKTOP', self.top)
+            self.option = self.low+2304
+            self.uc.mem_write(self.data_base+self.option, b'/S1:0003:03:N:6200:0100\0')
+
+        def call(self, name, arguments=(), limit=250000, **unused):
+            u = self.uc
+            code_seg = self.base_segment+int(code[1],16)
+            # Inherited stop hook is at load-base+F000, while this child's
+            # actual near CODE can start at a nonzero relative paragraph.
+            return_off = 0xf000-int(code[1],16)*16
+            words = [return_off]+list(arguments)
+            sp = self.top-64-2*len(words)
+            u.mem_write(self.data_base+sp, struct.pack('<'+'H'*len(words), *words))
+            for reg, value in ((UC_X86_REG_CS, code_seg), (UC_X86_REG_DS, self.ds),
+                    (UC_X86_REG_SS, self.ds), (UC_X86_REG_SP, sp), (UC_X86_REG_EFLAGS, 0x202)):
+                u.reg_write(reg, value)
+            self.returned = False
+            u.emu_start(self.symbols[name], 0, count=limit)
+            assert self.returned and u.reg_read(UC_X86_REG_SP) == sp+2, name
+            return u.reg_read(UC_X86_REG_AX)
+
+        def open(self):
+            return self.call('_aspect_serial_open', [self.option])
+
+    for version in (0, 12, 20, 21, 22, 23, 24, 25, 255, 65535):
+        client = Child()
+        backend_calls = []
+
+        def absent_backend(u, address, size, unused):
+            if address != client.symbols['_aspect_serial_backend_open']:
+                return
+            backend_calls.append(True)
+            assert u.reg_read(UC_X86_REG_DS) == u.reg_read(UC_X86_REG_SS) == client.ds
+            sp = u.reg_read(UC_X86_REG_SP)
+            ret = struct.unpack('<H', u.mem_read(client.data_base+sp, 2))[0]
+            u.reg_write(UC_X86_REG_AX, 3)  # Explicit controlled ABSENT UART.
+            u.reg_write(UC_X86_REG_IP, ret)
+            u.reg_write(UC_X86_REG_SP, sp+2)
+
+        client.uc.hook_add(UC_HOOK_CODE, absent_backend)
+        client.words[22] = version;client.publish()
+        result = client.open()
+        assert result == (3 if version == capability else 1), (version, result)
+        assert len(backend_calls) == (1 if version == capability else 0)
+        assert not client.writes and not client.requests and not client.get('_aspect_serial_active')
+        handshake.append(dict(version=version, result=result,
+            reached_controlled_absent_backend=bool(backend_calls), passed=True))
+    return handshake
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--product', type=Path, required=True)
@@ -276,71 +345,7 @@ def main():
     m.client_words[2] ^= 1;m.publish_client()
     assert m.request(29, 0x100) == 10 and not m.getters
     cases.append(dict(case='second-byte-reauthenticates', passed=True))
-    handshake = []
-    if args.child:
-        import check_aspect_render_client as fixture
-        child = args.child.resolve()
-        child_manifest = json.loads((child/'manifest.json').read_text())
-        assert sha(child/'ASPECT.EXE') == child_manifest['binary_sha256']
-        assert child_manifest.get('experimental_terminal_builtins')
-        fixture.q.BINARY, fixture.q.MAP = child/'ASPECT.EXE', child/'ASPECT.map'
-        listing = fixture.q.MAP.read_text()
-        stack = re.search(r'^STACK\s+STACK\s+DGROUP\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)', listing, re.M|re.I)
-        code = re.search(r'^_TEXT\s+CODE\s+\S+\s+([0-9a-f]+):([0-9a-f]+)\s+([0-9a-f]+)', listing, re.M|re.I)
-        assert stack and code
-
-        class Child(fixture.Client):
-            def __init__(self):
-                super().__init__()
-                self.low = self.base+int(stack[1],16)*16+int(stack[2],16)-self.data_base
-                self.top = self.low+int(stack[3],16)
-                self.put('__STACKLOW', self.low);self.put('__STACKTOP', self.top)
-                self.option = self.low+2304
-                self.uc.mem_write(self.data_base+self.option, b'/S1:0003:03:N:6200:0100\0')
-
-            def call(self, name, arguments=(), limit=250000, **unused):
-                u = self.uc
-                code_seg = self.base_segment+int(code[1],16)
-                # Inherited stop hook is at load-base+F000, while this child's
-                # actual near CODE can start at a nonzero relative paragraph.
-                return_off = 0xf000-int(code[1],16)*16
-                words = [return_off]+list(arguments)
-                sp = self.top-64-2*len(words)
-                u.mem_write(self.data_base+sp, struct.pack('<'+'H'*len(words), *words))
-                for reg, value in ((UC_X86_REG_CS, code_seg), (UC_X86_REG_DS, self.ds),
-                        (UC_X86_REG_SS, self.ds), (UC_X86_REG_SP, sp), (UC_X86_REG_EFLAGS, 0x202)):
-                    u.reg_write(reg, value)
-                self.returned = False
-                u.emu_start(self.symbols[name], 0, count=limit)
-                assert self.returned and u.reg_read(UC_X86_REG_SP) == sp+2, name
-                return u.reg_read(UC_X86_REG_AX)
-
-            def open(self):
-                return self.call('_aspect_serial_open', [self.option])
-
-        for version in (0, 12, 20, 21, 22, 23, 24, 25, 255, 65535):
-            client = Child()
-            backend_calls = []
-
-            def absent_backend(u, address, size, unused):
-                if address != client.symbols['_aspect_serial_backend_open']:
-                    return
-                backend_calls.append(True)
-                assert u.reg_read(UC_X86_REG_DS) == u.reg_read(UC_X86_REG_SS) == client.ds
-                sp = u.reg_read(UC_X86_REG_SP)
-                ret = struct.unpack('<H', u.mem_read(client.data_base+sp, 2))[0]
-                u.reg_write(UC_X86_REG_AX, 3)  # Explicit controlled ABSENT UART.
-                u.reg_write(UC_X86_REG_IP, ret)
-                u.reg_write(UC_X86_REG_SP, sp+2)
-
-            client.uc.hook_add(UC_HOOK_CODE, absent_backend)
-            client.words[22] = version;client.publish()
-            result = client.open()
-            assert result == (3 if version == 24 else 1), (version, result)
-            assert len(backend_calls) == (1 if version == 24 else 0)
-            assert not client.writes and not client.requests and not client.get('_aspect_serial_active')
-            handshake.append(dict(version=version, result=result,
-                reached_controlled_absent_backend=bool(backend_calls), passed=True))
+    handshake = child_handshake(args.child) if args.child else []
     report = dict(passed=True, cases=cases, tagged_word_cases=9*len(WORDS),
         tagged_byte_requests=9*len(WORDS)*2, invalid_payloads=497,
         handshake_cases=handshake, original_inputs=[],

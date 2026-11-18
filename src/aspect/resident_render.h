@@ -76,6 +76,14 @@ unsigned __cdecl aspect_render_compiler_end(void);
 #define ASPECT_RENDER_CAP_VERSION 24U
 unsigned __cdecl aspect_render_terminal_query(unsigned,unsigned *);
 #endif
+#ifdef ASPECT_HITKEY_PARENT
+#ifndef ASPECT_TERMINAL_QUERY
+#error HITKEY parent service requires the complete terminal-query profile
+#endif
+#undef ASPECT_RENDER_CAP_VERSION
+#define ASPECT_RENDER_CAP_VERSION 25U
+unsigned __cdecl aspect_render_hitkey_query(unsigned *);
+#endif
 #ifdef ASPECT_HELP_PARENT_SNAPSHOT
 /*0: private DOS frame required;1: released parent snapshot is available;
  *2: invalid attached PROGRAM/client context. Wire capability remains23. */
