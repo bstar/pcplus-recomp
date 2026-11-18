@@ -98,17 +98,47 @@
     "build/screen-when-v3-20261119/checks.json": "e38147b63211b87aa1fb2c824b3c5844088afa8aa1b1fdca99de88143a2afe03",
     "build/notice-help/screen-help-v3-20261119/result.json": "aa2dd800f4f815a1c7df3ec20460eea890279212a901007eefd12fb39d43f897",
     "build/screen-contract-v1-20261119/result.json": "05d068997dc3e9b14016e2b4410cd6e9cb2742f646aa74bd3fca74bfd74d73ec",
-    "build/screen-package-legacy26-v1-20261119/result.json": "7ccef0aa9d3ca6181348969a9a5294c29ea4a2b7d2da487d1eddd6891288b2c6"
+    "build/screen-package-legacy26-v1-20261119/result.json": "7ccef0aa9d3ca6181348969a9a5294c29ea4a2b7d2da487d1eddd6891288b2c6",
+    "build/screen-core-committed-source-20261119.json": "83fb0c7b91f89afd70a171f70e599ae7fca7d72569ec33740bf52436521134b7",
+    "build/screen-rpc-failure-final-20261119/result.json": "a33d7577374863c3db1a49f6a88321104fa65ee27cebee3e5f4d9a5a4c14aefb",
+    "build/screen-rpc-failure-final-20261119/screen-rpc-refusal-reuse/rpc-priority.json": "ee7bed1454ddc0098b537abc6df3ad394b9e3a1f643d3cca14f3e66747a95125",
+    "build/screen-chat-pair-v1-20261119/result.json": "d217308d2e97e476cd131ee30c318d4edaa644734e1e3980f82ae44261df6809",
+    "docs/validation/aspect-screen-bbs.json": "1b8a0a1a53ec8ec204c1760fe8061d27cd92c2a27f639227af6769151ad4dd39"
   },
   "installed_changed": false,
   "selector_changed": false,
   "physical_verified": false,
   "connection_package_qualified": false,
   "remaining": [
-    "Actual parent RPC refusal through overlay failure gateway and subsequent same-parent overlay reuse.",
     "Complete cold source-export/package replay and matched BBS/package qualification.",
     "HOME checked-attribute branch canonical emulation/control producer and marker-plane initialization.",
     "Runtime PRM frame style selection and physical writes outside the visible aperture.",
     "Full F01-F16/ASPECT/emulation/protocol parity; Host last."
-  ]
+  ],
+  "application_committed_sources": 1053,
+  "application_actual_git_blobs_verified": true,
+  "application_source_commit": "62a7690e1a364c9afe5207939c7e1edb88185c48",
+  "RPC_refusal_reuse_DOS8086": {
+    "cases": 1,
+    "checks": 65,
+    "active_fault_injection": true,
+    "generated_observer_priority_cases": 6,
+    "generated_observer_priority_checks": 14,
+    "actual_parent_return": 3,
+    "actual_native_operand_error": 0,
+    "same_parent_second_interpreter": true
+  },
+  "Chat_pair_controls": {
+    "cases": 7,
+    "current_product_identities_explicit": true,
+    "recorder_binds_parent_and_editor": true
+  },
+  "Enigma_partial_BBS": {
+    "passed": true,
+    "checks": 18,
+    "wire_audit": true,
+    "capture_controls": 16,
+    "combined_BBS_checkpoint_verified": false,
+    "Synchronet_started": false
+  }
 }

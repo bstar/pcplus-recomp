@@ -27,6 +27,7 @@ def main():
   assert proof['screen_cases']>=5 and proof['screen_wide_cases']>=1
   assert any(r['cpu']=='8086' and r['cases']==5 for r in proof['screen_replays'])
   assert any(r['cpu']=='8086' for r in proof['screen_wide_replays'])
+  assert proof['screen_rpc_cases']>=1 and any(r['cpu']=='8086' and r['active_fault_injection'] for r in proof['screen_rpc_replays'])
  assert contract['passed'] and len(contract['cases'])=={23:34,24:39,25:45,26:51,27:57}[m['parent_render_capability']] and all(c['accepted']==(c['case'] in ('matched-pair','module-valid','archive-valid','capability23-without-terminal-query','capability24-without-hitkey','capability25-without-state-builtins','capability26-without-screen-commands')) for c in contract['cases'])
  assert archive['passed'] and not archive['card_written'] and not archive['selector_changed']
  assert archive['package_manifest_sha256']==contract['package_manifest_sha256']==sha(a.package/'manifest.json')
@@ -62,6 +63,7 @@ def main():
  if m.get('experimental_chat_send_mode'):
   assert any(d['chat_help'] for d in dos) and a.chat_pair_controls
   pair=read(a.chat_pair_controls);assert pair['passed'] and len(pair['cases'])==7
+  assert pair['current_parent_sha256']==m['files']['TERMINAL.EXE'] and pair['current_setup_sha256']==m['files']['PRMEDIT.EXE'],'Chat controls must bind this package parent/settings editor'
   assert all(c['passed'] and c['accepted']==(c['case'] in ('matched-current','matched-legacy')) for c in pair['cases'])
   for name,digest in pair['sources'].items():assert sha(ROOT/name)==digest,name
   chat_pairs=pair['cases']
@@ -71,7 +73,7 @@ def main():
  r=dict(checkpoint_verified=True,source_base_commit=revision,files=m['files'],source_count=proof['source_count'],
         source_original_inputs=[],source_ancestor_git_unavailable=True,package_contract_cases=len(contract['cases']),
         cold_package_contract_cases=proof['connection_package']['contract_cases'],cold_DOS_cases=proof['DOS_cases'],cold_termination_cases=proof['termination_cases'],
-        cold_screen_cases=proof.get('screen_cases',0),cold_screen_wide_cases=proof.get('screen_wide_cases',0),source_git_blobs_verified=True,
+        cold_screen_cases=proof.get('screen_cases',0),cold_screen_wide_cases=proof.get('screen_wide_cases',0),cold_screen_rpc_cases=proof.get('screen_rpc_cases',0),source_git_blobs_verified=True,
         archive_sha256=archive['archive_sha256'],archive_bytes=archive['archive_bytes'],DOS_checks=dos,chat_setup_pair_controls=chat_pairs,
         same_application_as_BBS_checkpoint=True,application_bytes_changed=False,installed_changed=False,selector_changed=False,physical_verified=False,
         receipts=receipts,sources={'standalone/record_compiler_bridge_package.py':sha(__file__)},

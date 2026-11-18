@@ -21,6 +21,7 @@ def main():
  p.add_argument('--overlay-io-checks',type=Path,action='append',default=[])
  p.add_argument('--screen-checks',type=Path,action='append',default=[])
  p.add_argument('--screen-wide-checks',type=Path,action='append',default=[])
+ p.add_argument('--screen-rpc-checks',type=Path,action='append',default=[])
  p.add_argument('--lab-payload',type=Path)
  p.add_argument('--connection-package',type=Path)
  p.add_argument('--termination-checks',type=Path,action='append',default=[])
@@ -100,13 +101,15 @@ def main():
    sources[name]=digest
  screen_reports=[json.loads(path.read_text()) for path in a.screen_checks]
  wide_reports=[json.loads(path.read_text()) for path in a.screen_wide_checks]
+ rpc_reports=[json.loads(path.read_text()) for path in a.screen_rpc_checks]
  if child.get('experimental_screen_commands'):
   assert parent.get('experimental_screen_commands_parent')
   assert any(r['cpu']=='8086' and {s['suite'] for s in r['suites']}=={'get','source','errors'} and r['cases']==5 for r in screen_reports),'Complete DOS8086 screen family receipt required'
   assert any(r['cpu']=='8086' for r in wide_reports),'Canonical DOS8086 wide-screen receipt required'
+  assert any(r['cpu']=='8086' and r['active_fault_injection'] and r['original_checks_preserved'] for r in rpc_reports),'Actual DOS8086 parent-refusal and overlay-reuse receipt required'
  else:
-  assert not screen_reports and not wide_reports
- for r in screen_reports+wide_reports:
+  assert not screen_reports and not wide_reports and not rpc_reports
+ for r in screen_reports+wide_reports+rpc_reports:
   assert r['passed'] and r['parent_sha256']==parent['binary_sha256'] and r['child_sha256']==child['binary_sha256'] and r['compiler_sha256']==compiler['binary_sha256']
   for name,digest in r['sources'].items():
    assert sha(ROOT/name)==digest and (name not in sources or sources[name]==digest),name
@@ -302,9 +305,31 @@ def main():
    assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
   assert replay['checked_HOME_exercised']==r['checked_HOME_exercised']
   wide_replays.append(dict(cases=len(replay['cases']),cpu=r['cpu'],checks_sha256=sha(fresh/leaf/'result.json'),original_checks_sha256=sha(path)))
+ rpc_replays=[]
+ for i,(path,r) in enumerate(zip(a.screen_rpc_checks,rpc_reports)):
+  leaf='build/screen-rpc-replay-'+str(i)
+  run(['standalone/test_aspect_screen_rpc_failure_dos.py','--parent-dir','build/parent','--child-dir','build/child','--compiler-dir','build/compiler','--cpu',r['cpu'],'--output',leaf])
+  replay=json.loads((fresh/leaf/'result.json').read_text())
+  assert replay['passed'] and replay['active_fault_injection'] and replay['original_checks_preserved'] and len(replay['cases'])==len(r['cases'])
+  for old,new in zip(r['cases'],replay['cases']):
+   assert old['case']==new['case'] and old['checks']==new['checks']
+   # The bounded active trace validates addresses and trap counts per run.
+   # Compare the actual policy result, not elapsed BIOS/timer instruction count.
+   for key in ('injected','restored','saved_guard','guard_after','rpc_return','gate_error','first_error','first_native','first_opcode'):
+    assert old['rpc_injection'][key]==new['rpc_injection'][key],(old['case'],key)
+   assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
+  rpc_replays.append(dict(cases=len(replay['cases']),cpu=r['cpu'],active_fault_injection=True,checks_sha256=sha(fresh/leaf/'result.json'),original_checks_sha256=sha(path)))
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,sources=sources,source_count=len(sources),
-             artifacts=artifacts,help_replays=help_replays,Help_cases=len(help_replays),Help_checks=sum(r['checks'] for r in help_replays),overlay_io_replays=io_replays,overlay_io_cases=len(io_replays),screen_replays=screen_replays,screen_cases=sum(r['cases'] for r in screen_replays),screen_wide_replays=wide_replays,screen_wide_cases=sum(r['cases'] for r in wide_replays),lab_payload=lab_payload,connection_package=connection_result,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
+             artifacts=artifacts,help_replays=help_replays,Help_cases=len(help_replays),
+             Help_checks=sum(r['checks'] for r in help_replays),
+             overlay_io_replays=io_replays,overlay_io_cases=len(io_replays),
+             screen_replays=screen_replays,screen_cases=sum(r['cases'] for r in screen_replays),
+             screen_wide_replays=wide_replays,screen_wide_cases=sum(r['cases'] for r in wide_replays),
+             screen_rpc_replays=rpc_replays,screen_rpc_cases=sum(r['cases'] for r in rpc_replays),
+             lab_payload=lab_payload,connection_package=connection_result,replays=replays,
+             DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,
+             termination_cases=sum(r['cases'] for r in termination_replays),
              scope=__doc__,physical_verified=False,installed_changed=False)
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print('PASS compiler bridge cold source:',len(sources),'sources;',result['DOS_cases'],'normal DOS cases;',result['termination_cases'],'expected fail-stops')

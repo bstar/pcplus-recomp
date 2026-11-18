@@ -123,9 +123,22 @@ the existing386/upper-memory observer recipe, at
 8086 Help observer timed out before child entry and remains a negative diagnostic;
 this is not a successful8086 nested-Help claim.
 
-The parent-refusal/nonlocal-unwind path followed by overlay reuse, complete
-source-export replay and the final connection package are tracked as additional
-integration gates. Component checks alone do not close them.
+The real parent-refusal path also passes65 actual DOS8086 checks at
+`build/screen-rpc-failure-final-20261119/result.json`. This explicitly active
+fixture temporarily changes one policy WORD at a valid LOCATE commit, observes
+the authenticated parent return3 and restores it. A bounded INT1 trace observes
+the resident failure gate, abort and longjmp; native operand error remains zero.
+The first child retires phase/count, FILEs and globals, with unchanged parent
+owners/JFT/history. A real Alt-F5 filename prompt then starts a second interpreter
+in that same parent, which passes native BOX/SCROLL pixels and GET. Products,
+buffers, stack and environment remain unchanged. Its generated-code priority
+proof passes six CPU cases/14 checks, including overwrite of the complete
+snapshot area and safe refusal to execute overwritten scratch code.
+
+Complete source-export replay and the final connection package remain additional
+integration gates. The user requested a pause before starting them. The
+[partial BBS checkpoint](ASPECT_SCREEN_BBS.md) passes Enigma18 plus the wire
+audit and16 capture controls; Synchronet remains unstarted.
 
 The maintained profile initializes `screen_attribute_checks` to zero and reset
 clears it. Native HOME's checked branch is component-tested, but its real profile

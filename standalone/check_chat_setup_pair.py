@@ -47,6 +47,8 @@ def main():
     assert out.is_relative_to(ROOT / 'build') and not out.exists()
     out.mkdir()
     result = dict(passed=True, cases=cases, receipts=receipts,
+        current_parent_sha256=parent['binary_sha256'],current_setup_sha256=setup['binary_sha256'],
+        legacy_parent_sha256=legacy_parent['binary_sha256'],legacy_setup_sha256=legacy_setup['binary_sha256'],
         sources={name: sha(ROOT / name) for name in ('standalone/check_chat_setup_pair.py', 'standalone/package_connection_test.py')},
         scope=__doc__ + ' Source-built products checked against their manifests; altered in-memory declarations only. No files staged, DOS execution or physical acceptance.')
     (out / 'result.json').write_text(json.dumps(result, indent=2) + '\n')

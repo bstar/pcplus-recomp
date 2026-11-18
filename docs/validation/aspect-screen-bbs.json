@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "passed": false,
+  "checkpoint_verified": false,
+  "kind": "partial-owned-BBS-qualification-paused",
+  "renderer_capability": 27,
+  "release_eligible": false,
+  "products": {
+    "TERMINAL.EXE": "7f5b3b0303eac3f4e4a1ee1bb15715015221ec6a656ad128830045de1c5619d5",
+    "ASPECT.EXE": "1a0369887a08084365cbd04dc3f41daa2545088b5a01382f22d3ee9179519fa4",
+    "ASPCOMP.EXE": "00fb07d154bb356145ed7696faa2e93c437188928da10f270c14ddccdca6c23b"
+  },
+  "lab_payload": "build/screen-lab-v1-20261119",
+  "runtime": "build/menu-size-accepted-20261104/candidate",
+  "Enigma": {
+    "passed": true,
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "sources_unchanged": true,
+      "PRM_unchanged": true,
+      "DOS_compiler_exact": true,
+      "both_script_logins": true,
+      "two_connections": true,
+      "stage_clean_before_second_login": true,
+      "real_carrier_notice": true,
+      "RX_complete_notice": true,
+      "exact_retry": true,
+      "only_expected_file": true,
+      "directory_two_connections": true,
+      "no_post_saved": true,
+      "runtime_source_only_startup": true,
+      "runtime_compile_files_retired": true,
+      "source_matching_retry_finish_search_raw_proxy": true,
+      "two_authenticated_sessions": true
+    },
+    "check_count": 18,
+    "partial_bytes": 4096,
+    "exact_retry_bytes": 65539,
+    "CPU": "386",
+    "explicit_UMB": true,
+    "live_source": true,
+    "strict_ZFIN_OO_finish": true,
+    "finish_gate_waived": false,
+    "finish": {
+      "offset": 131592,
+      "last_header_offset": 131592,
+      "end": 131614
+    },
+    "independent_wire_audit": true,
+    "capture_controls": 16,
+    "durable_exit_returncode": 0,
+    "accepted_product_runs": 1
+  },
+  "Synchronet": {
+    "passed": false,
+    "status": "not_started_due_to_explicit_user_pause",
+    "remaining": [
+      "stock editor regression",
+      "exact1920-cell screen comparison",
+      "actual CPR5,8 audit",
+      "NAWS80x24 audit"
+    ]
+  },
+  "incomplete_attempts": [
+    {
+      "capture": "build/bbs-lab/results/enigma/screen-builtins-carrier-20261119",
+      "stage": "fixture preflight",
+      "actual_product_started": false,
+      "reason": "new synthetic filename absent; existing frozen PA2DE84.BIN selected for later fresh labels"
+    },
+    {
+      "capture": "build/bbs-lab/results/enigma/screen-builtins-carrier-v2-20261119",
+      "passed": false,
+      "reason": "producer lifecycle lost before report persistence; second transport interrupted and strict finish incomplete",
+      "termination_signal": "unavailable",
+      "snapshots_or_traces_reconstructed": false,
+      "evidence": "build/screen-bbs-v1-20261119/incomplete-enigma-v2.json"
+    }
+  ],
+  "execution_durability": {
+    "unchanged_strict_producer": true,
+    "unchanged_transfer_wait_ms": 150000,
+    "detached_owned_processes": true,
+    "stdout_stderr_persisted": true,
+    "atomic_exit_receipt": "build/screen-bbs-v1-20261119/enigma-v3-job/exit.json"
+  },
+  "server_lifecycle": {
+    "ports_free_before_start": [
+      23231,
+      23233
+    ],
+    "products": {
+      "TERMINAL.EXE": "7f5b3b0303eac3f4e4a1ee1bb15715015221ec6a656ad128830045de1c5619d5",
+      "ASPECT.EXE": "1a0369887a08084365cbd04dc3f41daa2545088b5a01382f22d3ee9179519fa4",
+      "ASPCOMP.EXE": "00fb07d154bb356145ed7696faa2e93c437188928da10f270c14ddccdca6c23b"
+    },
+    "started": {
+      "enigma": {
+        "pid": 3213998,
+        "command": "node /home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source/main.js ",
+        "port": 23233
+      },
+      "enigma-v3": {
+        "pid": 3540347,
+        "command": "node /home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source/main.js ",
+        "port": 23233
+      }
+    },
+    "stopped": {
+      "proxy-v2": {
+        "pid": 3221507,
+        "signal": "SIGTERM",
+        "ownership_command": "node /home/bstar/projects/pcplus-recomp/lab/bbs/synthmodem_proxy_serial.js --runtime /home/bstar/projects/pcplus-recomp/build/menu-size-accepted-20261104/candidate --output /home/bstar/projects/pcplus-recomp/build/bbs-lab/screen-builtins-carrier-v2-20261119-proxy --bbs-port 23233 --framing-ms 250 --byte-delay-ms 0 --terminal-rows 24 --probe-terminal-size --disconnect-on-quit ",
+        "stopped": true
+      },
+      "enigma-v2": {
+        "pid": 3213998,
+        "helper": "lab/bbs/enigma.py stop",
+        "helper_exit": 0,
+        "stopped": true
+      },
+      "enigma-v3": {
+        "pid": 3540347,
+        "helper": "lab/bbs/enigma.py stop",
+        "helper_exit": 0,
+        "stopped": true
+      },
+      "proxy-v3": {
+        "pid": 3545262,
+        "method": "unchanged producer finally block",
+        "stopped": true
+      },
+      "durable-job-v3": {
+        "supervisor_pid": 3545089,
+        "producer_pid": 3545096,
+        "returncode": 0,
+        "stopped": true
+      }
+    },
+    "physical_or_live_BBS_contacted": false,
+    "ports_free_after_incomplete_run": [
+      23231,
+      23233
+    ],
+    "ports_free_after": [
+      23231,
+      23233
+    ],
+    "synchronet_started": false
+  },
+  "receipts": {
+    "build/bbs-lab/results/enigma/screen-builtins-carrier-v3-20261119/carrier-checks.json": "309814433a794b60d1e8abc518e3751e51a5bc930142ea6726d8f9ea645736b3",
+    "build/screen-builtins-carrier-audit-v1-20261119/result.json": "48005fd5965bfbfb8783738f6805f65aa764947aa5c440ca7d65cf448f3f1871",
+    "build/screen-builtins-carrier-controls-v1-20261119/result.json": "37044635aa1aeb3ca7acedab61bbdd6ed4cfbb4bf49e9265c31aa0657e80c35a",
+    "build/screen-bbs-v1-20261119/enigma-v3-job/exit.json": "21110612d7ca821af1afce614c9d913a0130d8560cb805579fa55fea6310b0ac",
+    "build/screen-bbs-v1-20261119/enigma-v3-job/stdout-stderr.log": "28582cdba9fab68932bae64a79e6ba805aefb762fab36b85464c035d62f89fec",
+    "build/screen-bbs-v1-20261119/lifecycle.json": "e47fa85e250b67b78f4ef26033d740a409f7375cb69fef6fa39b1c536a2bea5f",
+    "build/screen-bbs-v1-20261119/incomplete-enigma-v2.json": "881a370f4c561aee893d80cc6d473397dad32a893c261cf5c51427ec574f7cbc",
+    "build/bbs-lab/results/enigma/screen-builtins-carrier-v3-20261119/server-log-capture/result.json": "3ac42f138edbc91624295110f94f31c1f7e031b59273444ad45d046512d9d180"
+  },
+  "sources": {
+    "lab/bbs/test_proxy_carrier_dos.py": "64d1f9a13cfae259309ca9aa36ff9967ebfc1083e6bb7ebd570a6007eea331d3",
+    "lab/bbs/audit_proxy_carrier.py": "fb5ea1d5f65f7550be3f11ca68c6f9a93a48e8f98bdd803bec0a7c73cd56d381",
+    "lab/bbs/check_proxy_carrier_controls.py": "338c4eac1f559a2daf29afac23eba663b807407903388334e5eb5a55d3696208",
+    "lab/bbs/proxy_carrier_relay.py": "9aa9d7eea809b6ff2fbc7778834b98b08e8e22c3f54ce4a532aed0c3dd86b612",
+    "lab/bbs/bbs_log_capture.py": "1e018ccbd9c2f93aa13c6d455451d8b0e6dbd6afee357cad1f3ec93c0dd841c4",
+    "lab/bbs/audit_zmodem.py": "21915f685657722a5ea4b0149c5c8a8492bb79c311b8ec319000b6e47d966452",
+    "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+    "lab/bbs/synchronet.py": "974117a9b4971bb1a13dc9483aee08b77bcc4895097133dc7147c18150300dcc",
+    "lab/bbs/test_synchronet_screen_reference_dos.py": "9db5527ad18f68c4feabf377b20e511018fbc9eb68083f78a19e5bc4db1611e6",
+    "lab/bbs/audit_screen_reference.py": "82ea451cd4a5bc24a5194fcfa183e9d51ebf6b2c33bfd9c41ac8d99c34071d22",
+    "lab/bbs/audit_size_probe_screen.py": "0b6da43fad5632ba3dd2c6ed7cda76f812940e0a680c509b5d7c82d3e81b33fb"
+  },
+  "original_inputs": [],
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "temporary_owned_labs_stopped": true,
+  "live_BBS_contacted": false,
+  "scope": "Enigma-only accepted software regression on frozen capability27 parentv6/childoverlayv4/compiler-v2: two actual runtime source logins, virtual DCD loss at4096 bytes, exact65539-byte retry, strict sender OO and receiver ZFIN ordering, subsequent search, all18 checks, independent raw-wire audit and16 capture controls. The earlier lost-producer run remains incomplete and unqualified. Synchronet was not started because the user requested a sensible pause; full BBS checkpoint is therefore unverified. All owned servers/proxy/jobs stopped and23231/23233 free. No application/protocol/checker/timeout waiver, live BBS, physical modem/SIP/audio or full-PCPlus/ASPECT completion claim."
+}

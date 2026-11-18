@@ -60,9 +60,17 @@ passes51 package controls,13 lab controls and eight packaged DOS workflows,
 and passes fresh Enigma18/Synchronet22 plus wire/cell/CPR/NAWS audits. The
 prefeature contract fixture remains separate. The installed selector and
 capability24 candidate are unchanged; physical/full-feature gates remain open.
-The [next ASPECT recovery families](ASPECT_RECOVERY_NEXT.md) are native local
-screen/cursor commands, scripted connection control and script-owned transfers;
-the remaining work extends well beyond builtin tables.
+The [native local screen/cursor commands](ASPECT_SCREEN_COMMANDS.md) now have an
+opt-in capability27 parent/overlay profile and writable N0–N9 compiler support.
+Five full DOS8086 cases pass254 checks, including source startup/EXECUTE and
+operand failures; canonical132-column panning/status-row access passes58 more.
+The source-built application closure matches1053 actual Git blobs at62a7690.
+A real parent-refusal/resident-abort/same-parent reuse case passes65 checks.
+Complete package/cold qualification and physical gates remain separate;
+checked-HOME activation and frame-style producers remain open.
+The [next ASPECT recovery families](ASPECT_RECOVERY_NEXT.md) include scripted
+connection control and script-owned transfers; the remaining work extends well
+beyond builtin tables.
 
 [Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS

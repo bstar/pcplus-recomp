@@ -27,9 +27,10 @@ The maintained compilers now match1394 frozen original observations for these
 commands and writable N0–N9. Five full DOS8086 cases pass254 checks, including
 source startup/EXECUTE and operand failures; canonical132-column execution
 passes another58 checks. The child retains28 near-code bytes spare using a
-screen overlay, with existing buffers/stacks unchanged. Complete package/cold
-qualification and an actual parent-refusal unwind are additional gates; native
-HOME's checked-attribute producer and configurable frame styles remain open.
+screen overlay, with existing buffers/stacks unchanged. An actual parent-refusal unwind
+and same-parent second interpreter now pass65 checks. Complete package/cold
+qualification remains an additional gate; native HOME's checked-attribute
+producer and configurable frame styles remain open.
 
 The next two larger families remain required:
 
