@@ -149,6 +149,8 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
                        [str(source), '-o', str(obj)], check=True)
         objects.append(str(obj))
     banked_serial=bool(extension and extension.get('serial_bank'))
+    serial_overlay_ready=bool(extension and extension.get('serial_overlay_ready'))
+    assert not serial_overlay_ready or (banked_serial and extension.get('register_handoff') and extension.get('overlay_ready'))
     if banked_serial:
         public=['aspect_serial_directory_entry','aspect_serial_directory_record','aspect_serial_preload','aspect_serial_translate',
                 'aspect_serial_translation_policy','aspect_serial_open','aspect_serial_close','aspect_serial_compile_pause','aspect_serial_compile_resume']
@@ -159,11 +161,16 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
             'aspect_serial_compile_hold':'compile_hold','aspect_serial_compile_release':'compile_release'}
         aliases={n:n+'_impl' for n in public};aliases.update({n:'serial_bank_'+v for n,v in callbacks.items()})
         subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',
-            '-dASPECT_RUNTIME_SERIAL',*feature_flags,'-nt=ASIO_CODE','-nc=FARCODE',
+            '-dASPECT_RUNTIME_SERIAL',*feature_flags,*(['-dASPECT_SERIAL_OVERLAY_READY'] if serial_overlay_ready else []),'-nt=ASIO_CODE','-nc=FARCODE',
             *['-d'+n+'='+v for n,v in aliases.items()],'-fo='+str(output/'serial.o'),str(ROOT/'src/aspect/serial.c')],cwd=output,check=True)
-        bridge=ROOT/'src/aspect/serial_bank.asm';bridge_obj=output/'serial_bank.obj'
-        subprocess.run(['nasm','-fobj',*(['-DASPECT_CUSTOM_IRQ'] if extension.get('custom_irq') else []),'-I'+str(ROOT/'src/aspect')+'/',str(bridge),'-o',str(bridge_obj)],check=True)
-        objects += [str(output/'serial.o'),str(bridge_obj)]
+        bridge=ROOT/'src/aspect/serial_bank.asm'
+        objects.append(str(output/'serial.o'))
+        for suffix,defines in ([('root',['SERIAL_BANK_ROOT_ONLY']),('overlay',['SERIAL_BANK_OVERLAY_ONLY'])] if serial_overlay_ready else [('',[])]):
+            bridge_obj=output/('serial-bank-'+suffix+'.obj' if suffix else 'serial_bank.obj')
+            subprocess.run(['nasm','-fobj',*(['-DASPECT_CUSTOM_IRQ'] if extension.get('custom_irq') else []),
+                *(['-DASPECT_SERIAL_OVERLAY_READY'] if serial_overlay_ready else []),*['-D'+d for d in defines],
+                '-I'+str(ROOT/'src/aspect')+'/',str(bridge),'-o',str(bridge_obj)],check=True)
+            objects.append(str(bridge_obj))
         sources += [bridge,ROOT/'src/aspect/serial_bank.inc']
         if extension.get('register_handoff'):
             register_source=ROOT/'src/aspect/register_handoff.c';register_obj=output/'register_handoff.o'
@@ -210,6 +217,7 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
                   diagnostic_lease_fault_kind=extension.get('lease_fault_kind','divide') if extension else 'divide',
                   startup_heap_growth_bytes=extension.get('heap_growth_bytes') or 512 if extension and extension.get('register_handoff') else None,
                   experimental_serial_bank=banked_serial,
+                  experimental_serial_overlay_ready=serial_overlay_ready,
                   experimental_register_handoff=bool(extension and extension.get('register_handoff')),
                   source_extensions={'D7/01':'TRANSMITRAW hexadecimal bytes; requires maintained runtime, not legacy ASX portable'},
                   objects={p.name:sha(p) for p in [*[Path(p) for p in objects],

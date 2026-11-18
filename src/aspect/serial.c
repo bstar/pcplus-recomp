@@ -30,7 +30,18 @@ extern unsigned __cdecl aspect_render_prepare(unsigned,unsigned,unsigned);
 extern unsigned __cdecl aspect_render_attach(void);
 #endif
 static aspect_serial_handoff __far *handoff;
-static unsigned char input_translation[256];
+#ifdef ASPECT_SERIAL_OVERLAY_READY
+/* Existing storage stays in DGROUP. Resident hot readers must never fetch an
+ * ASIO overlay while GET/Help/Notice owns the shared code arena. */
+#define ASIO_HOT_STORAGE
+#define input_translation aspect_serial_input_translation
+#define input_translation_mode aspect_serial_input_translation_mode
+#define directory_record aspect_serial_directory_record_data
+#define directory_entry aspect_serial_directory_entry_data
+#else
+#define ASIO_HOT_STORAGE static
+#endif
+ASIO_HOT_STORAGE unsigned char input_translation[256];
 #ifdef ASPECT_COMPILER_PARENT_LEASE
 unsigned aspect_serial_compile_pause_owned;
 #define compile_pause_owned aspect_serial_compile_pause_owned
@@ -40,9 +51,9 @@ static unsigned compile_pause_owned;
 #if defined(ASPECT_EXTERNAL_PROCESS)
 const unsigned aspect_process_serial_c_guards=1;
 #endif
-static unsigned input_translation_mode;
-static unsigned char directory_record[114];
-static unsigned directory_entry;
+ASIO_HOT_STORAGE unsigned input_translation_mode;
+ASIO_HOT_STORAGE unsigned char directory_record[114];
+ASIO_HOT_STORAGE unsigned directory_entry;
 static unsigned char __far *preload_source;
 static unsigned preload_count,preload_read;
 static unsigned preload_flow,preload_carrier_policy;

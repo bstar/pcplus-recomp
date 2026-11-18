@@ -25,6 +25,7 @@ def main():
  p.add_argument('--notice',action='store_true',help='Also share notice code; requires resident notice checkpoint preparation')
  p.add_argument('--program',action='store_true',help='Also share the synchronous PROGRAM controller; keep its platform/IRQ adapters resident')
  p.add_argument('--screen',action='store_true',help='Also share native local-screen handlers; keep client gates/state resident')
+ p.add_argument('--serial',action='store_true',help='Also share cold ASIO code; requires resident hot readers and split serial gates')
  p.add_argument('--checked-io',action='store_true',help='Reject short overlay code/relocation reads through a source-owned DOS I/O adapter')
  a=p.parse_args()
  assert not a.program or a.notice
@@ -32,9 +33,10 @@ def main():
  assert base.is_relative_to(ROOT/'build') and out.is_relative_to(ROOT/'build') and not out.exists()
  m=json.loads((base/'manifest.json').read_text());assert m['experimental_overlay_layout_ready']
  if a.screen:assert m['experimental_screen_commands']
+ if a.serial:assert m.get('experimental_serial_overlay_ready') and m['experimental_serial_bank'] and m['experimental_register_handoff']
  assert sha(base/'ASPECT.EXE')==m['binary_sha256'] and m['original_inputs']==[]
  for name,h in m['sources'].items():assert sha(ROOT/name)==h,name
- out.mkdir();groups=[[],[],[],[],[],[]];objects={}
+ out.mkdir();groups=[[],[],[],[],[],[],[]];objects={}
  help_names={'input-view.obj','input-notice_content.obj','input-format.obj','input-document.obj','input-resource.obj',
              'help-cursor.obj','help-resource-io.obj','help_overlay_bridge_overlay.obj'}
  get_names={'get_runtime-c-bank.obj','get_context-c-bank.obj','get_command-c-bank.obj','get_native_field-c-bank.obj',
@@ -42,6 +44,7 @@ def main():
   'get_native_field-bank.obj','get_vm_bindings-bank.obj','get_bank_overlay-bank.obj'}
  notice_names={'notice-shared-owner-normal.obj','notice-shared-runtime.obj','notice-resident-checkpoint.obj','program_notice.obj'}
  screen_names={'screen_commands.obj','screen-runtime.obj','screen-client.obj','screen-bank-overlay.obj'}
+ serial_names={'serial.o','serial-bank-overlay.obj','register_handoff.o'}
  seen=set()
  for line in (base/'GETVM.lnk').read_text().splitlines():
   if not line.startswith('file '):continue
@@ -56,11 +59,13 @@ def main():
   if a.notice and (original.parent==ROOT/'build/notice-bank' or original.name in notice_names):group=3
   if a.program and original.name=='native_program_far.obj':group=4
   if a.screen and original.name in screen_names:group=5
+  if a.serial and original.name in serial_names:group=6
   seen.add(original.name);groups[group].append('file '+name)
  assert get_names<=seen and help_names<=seen
  if a.notice:assert notice_names<=seen
  if a.program:assert 'native_program_far.obj' in seen
  if a.screen:assert screen_names<=seen and 'screen-bank-root.obj' in seen
+ if a.serial:assert serial_names<=seen and 'serial-bank-root.obj' in seen and 'serial_bank.obj' not in seen
  if a.checked_io:
   path=ROOT/'src/aspect/overlay_io.asm';obj=out/'checked-io.obj'
   subprocess.run(['nasm','-fobj',str(path),'-o',str(obj)],check=True)
@@ -73,7 +78,7 @@ def main():
        # too: far state before DGROUP, _NULL first, BSS then stack last.
        'name ASPECT.EXE','option map=ASPECT.map',*groups[0],'begin','section',*groups[1],'section',*groups[2],
        *(['section',*groups[3]] if a.notice else []),*(['section',*groups[4]] if a.program else []),
-       *(['section',*groups[5]] if a.screen else []),'end']
+       *(['section',*groups[5]] if a.screen else []),*(['section',*groups[6]] if a.serial else []),'end']
  (out/'OVERLAY.lnk').write_text('\n'.join(link)+'\n')
  subprocess.run(['wlink','@OVERLAY.lnk'],cwd=out,check=True)
  layout=mz_overlay((out/'ASPECT.EXE').read_bytes());text=(out/'ASPECT.map').read_text()
@@ -94,6 +99,7 @@ def main():
  assert linear('GET_RUNTIME_STORAGE')+206<=linear('_NULL')==ds
  assert linear('_NULL')<linear('CONST')<linear('_BSS')<linear('STACK')
  assert linear('STACK')+8192==ds+size
+ serial_layout=None
  screen_layout=None
  if a.screen:
   bank=segments['SCRIPT_SCREEN_CODE'];near=segments['_TEXT']
@@ -116,6 +122,28 @@ def main():
    resident_data_bytes=12,resident_entry_count=len(entries),resident_reader_count=len(readers),
    overlay_section=section,overlay_objects=sorted(screen_names),
    scope='Trusted-linker placement: seven resident entry gates, four resident operand readers, resident abort/wire/client/owner-admission gates and12-byte data; native handlers, scalar client, C runtime and bank-local wrappers overlay. Execution/unwind and DOS memory acceptance require separate tests.')
+ if a.serial:
+  bank=segments['ASIO_CODE'];near=segments['_TEXT']
+  in_segment=lambda name,segment:addresses[name][0]==segment['segment'] and segment['offset']<=addresses[name][1]<segment['offset']+segment['size']
+  hot=['_aspect_serial_'+n for n in ('directory_entry','directory_record','translate','translation_policy')]
+  cold=['_aspect_serial_'+n for n in ('preload','open','close','compile_pause','compile_resume')]
+  callbacks=['_serial_bank_'+n+'_resident' for n in ('psp','render_active','render_prepare','accounting','backend_open','render_attach','break_release','flow_alive','ticks','poll','tx_empty','backend_close','compile_hold','compile_release')]
+  resident=hot+cold+callbacks+['uart_receive_interrupt','_aspect_serial_backend_open','_aspect_serial_backend_close','_aspect_serial_poll','_aspect_render_client_check','_aspect_render_request','_aspect_render_callback_dispatch','_aspect_render_callback_offset']
+  assert all(in_segment(name,near) and symbols[name]<layout['root_image_bytes'] for name in resident)
+  assert all(in_segment(name+'_far',bank) for name in cold)
+  assert all(in_segment('_aspect_register_'+name,bank) for name in ('validate','attach','start','publish'))
+  assert all(in_segment(name+'_impl',bank) for name in hot+cold)
+  fields={'_aspect_serial_input_translation':256,'_aspect_serial_input_translation_mode':2,'_aspect_serial_directory_record_data':114,'_aspect_serial_directory_entry_data':2}
+  assert all(ds<=symbols[name] and symbols[name]+count<=ds+size for name,count in fields.items())
+  section=3+int(a.notice)+int(a.program)+int(a.screen)
+  assert re.search(r'Overlay section '+str(section)+r' address [^\n]+\n=+.*?\nASIO_CODE\s',text,re.S)
+  vectors=text.split('|   Overlay Vectors   |',1)[1].split('Overlay section ',1)[0]
+  for name in cold+['_aspect_register_start']:
+   assert re.search(r'section '+str(section)+r' : '+re.escape(name+'_far' if name in cold else name)+r'\s*$',vectors,re.M)
+  assert not any(re.search(r' : '+re.escape(name)+r'\s*$',vectors,re.M) for name in hot)
+  serial_layout=dict(passed=True,serial_bank_bytes=bank['size'],resident_entry_count=9,resident_hot_reader_count=4,
+   resident_callback_count=len(callbacks),existing_hot_data_bytes=sum(fields.values()),overlay_section=section,
+   overlay_objects=sorted(serial_names),scope='Trusted-linker placement only: resident hot readers, public/callback gates, UART/backend and renderer private admission; cold serial and all register APIs share ASIO_CODE. No new DATA or reduced buffers/stacks; actual hot equivalence, loader and lifecycle proof required.')
  if a.checked_io:
   # The only non-exact read allowed by the adapter is the linker's initial
   # far-data/DGROUP preload ending in BSS/stack. Bind that identity to this
@@ -126,7 +154,7 @@ def main():
  for name in ('LOCHELP.HLP','help-resource.json'):
   if (base/name).exists():shutil.copyfile(base/name,out/name)
  m.pop('MZ_header_layout',None)
- m.update(binary_sha256=sha(out/'ASPECT.EXE'),experimental_standard_overlays=True,experimental_notice_overlay=a.notice,experimental_program_overlay=a.program,experimental_screen_overlay=a.screen,package_eligible=False,
+ m.update(binary_sha256=sha(out/'ASPECT.EXE'),experimental_standard_overlays=True,experimental_notice_overlay=a.notice,experimental_program_overlay=a.program,experimental_screen_overlay=a.screen,experimental_serial_overlay=a.serial,package_eligible=False,
   base_manifest_sha256=sha(base/'manifest.json'),base_binary_sha256=sha(base/'ASPECT.EXE'),overlay_objects=objects,
   MZ_overlay_layout=layout,
   GET_bank_layout=dict(passed=True,near_code_bytes=segments['_TEXT']['size'],near_code_spare=65536-segments['_TEXT']['size'],
@@ -141,6 +169,7 @@ def main():
   scope='Experimental standard overlays for GET and Help, with resident ISR/mouse code and SS-relative GET checkpoint state. Not packaged or physically verified.')
  m['sources']['standalone/build_aspect_standard_overlay.py']=sha(Path(__file__))
  if screen_layout:m['screen_bank_layout']=screen_layout
+ if serial_layout:m['serial_bank_layout']=serial_layout
  if a.checked_io:
   m['experimental_checked_overlay_io']=True
   m['checked_overlay_io_preload']=dict(segment=addresses['_runtime_get_field_storage'][0],offset=0,
