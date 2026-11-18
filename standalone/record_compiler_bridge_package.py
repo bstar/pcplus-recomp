@@ -56,12 +56,12 @@ def main():
  for n,h in bbs['products'].items():assert m['files'][n]==h,n
  receipts[str(bbs_path.relative_to(ROOT))]=sha(bbs_path)
  r=dict(checkpoint_verified=True,source_base_commit=revision,files=m['files'],source_count=proof['source_count'],
-        source_original_inputs=[],source_ancestor_git_unavailable=True,package_contract_cases=34,
+        source_original_inputs=[],source_ancestor_git_unavailable=True,package_contract_cases=len(contract['cases']),
         cold_package_contract_cases=proof['connection_package']['contract_cases'],cold_DOS_cases=proof['DOS_cases'],cold_termination_cases=proof['termination_cases'],
         archive_sha256=archive['archive_sha256'],archive_bytes=archive['archive_bytes'],DOS_checks=dos,chat_setup_pair_controls=chat_pairs,
         same_application_as_BBS_checkpoint=True,application_bytes_changed=False,installed_changed=False,selector_changed=False,physical_verified=False,
         receipts=receipts,sources={'standalone/record_compiler_bridge_package.py':sha(__file__)},
-        remaining=['Controlled deployment preserving current private configuration and call history.','Physical memory admission, modem/SIP/audio and Enigma/Synchronet acceptance.','Full ASPECT/other emulations/protocols/Host parity.'])
+        remaining=['Controlled deployment preserving current private configuration and call history.','Physical memory admission and the modem/SIP/audio path to Enigma/Synchronet.','Full ASPECT/other emulations/protocols/Host parity.'])
  a.output.write_text(json.dumps(r,indent=2)+'\n');print('Verified17-file compiler-bridge candidate, exact source/archive and packaged DOS cases')
 
 

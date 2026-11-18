@@ -39,8 +39,20 @@ cursor, physical-dimension and configured-attribute operands through a matching
 capability24 parent query. Exact native WORD behavior, original compiler syntax,
 client failures, DOS VM lifetimes, full-parent source/GET, nested Help and cold
 source reproduction are validated independently. Production has no fabricated
-screen snapshot. This development profile still has separate release/BBS and
-hardware gates; full F01–F16 completion remains open.
+screen snapshot. The later
+[capability24 connection candidate](docs/ASPECT_TERMINAL_CONNECTION.md) now
+reproduces all17 files and its ZIP from1111 committed sources and passes eight
+packaged DOS workflows plus current Enigma/Synchronet checks. A missing upstream
+OO finish on the first Enigma attempt remains a failed counterexample; the
+unchanged rerun passes every gate. Nothing was installed. Hardware and full
+F01–F16 completion remain open.
+
+The [remaining builtin-table audit](docs/ASPECT_BUILTIN_REMAINDER.md) identifies
+three non-Host operands still to bind: `HITKEY`, `FROMDDIR` and `MONO`. `HITKEY`
+must use the recovered non-consuming peek and key normalizer. `FROMDDIR` needs
+automatic-script launch origin, and `MONO` needs physical display state; neither
+can use a convenient existing attribute/selection alias. Six recovered Host
+operands retain their session-producer/lifecycle gates for the final Host stage.
 
 Earlier dated checkpoints below describe their own source/product identities;
 their “next” statements are historical where later evidence supersedes them.

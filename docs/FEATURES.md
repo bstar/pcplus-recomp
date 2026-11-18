@@ -31,8 +31,12 @@ coordinates, physical dimensions and configured attributes through an opt-in
 capability24 parent/child contract. Exact original WORD getters, original compiler
 probes, client failure paths, full DOS compiler/VM suites, source/GET, nested Help
 and cold reproduction pass. Standalone reads without the backend fail before
-assignment. Release/BBS/hardware qualification and complete F01–F16 parity stay
-open; the installed selector is unchanged.
+assignment. Their [capability24 connection candidate](ASPECT_TERMINAL_CONNECTION.md)
+now reproduces the complete17-file package/ZIP from1111 committed sources and
+passes eight packaged DOS cases, Enigma carrier/retry and Synchronet editor/
+cell/NAWS checks. A failed upstream-missing-OO run remains preserved separately
+from the unchanged passing rerun. Hardware qualification and complete F01–F16
+parity stay open; the installed selector is unchanged.
 
 [Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS

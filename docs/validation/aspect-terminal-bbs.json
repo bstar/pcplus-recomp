@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "checkpoint_verified": true,
+  "products": {
+    "TERMINAL.EXE": "90b037dde79a269c68d13648619f57b65370d374f29dcd96643471da823912d2",
+    "ASPECT.EXE": "75f1c9327f40de559d3ad9b78231264b8a8758aa0a2358fe20b3b76635575155",
+    "ASPCOMP.EXE": "baf2b02b657c6e591b58735d599b58b8fae1433993cfa0f8d91f8a4c94324601"
+  },
+  "renderer_capability": 24,
+  "Enigma": {
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "sources_unchanged": true,
+      "PRM_unchanged": true,
+      "DOS_compiler_exact": true,
+      "both_script_logins": true,
+      "two_connections": true,
+      "stage_clean_before_second_login": true,
+      "real_carrier_notice": true,
+      "RX_complete_notice": true,
+      "exact_retry": true,
+      "only_expected_file": true,
+      "directory_two_connections": true,
+      "no_post_saved": true,
+      "runtime_source_only_startup": true,
+      "runtime_compile_files_retired": true,
+      "source_matching_retry_finish_search_raw_proxy": true,
+      "two_authenticated_sessions": true
+    },
+    "partial_bytes": 4096,
+    "exact_retry_bytes": 65539,
+    "source_only_startup": true,
+    "emulated_CPU": "386",
+    "explicit_UMB": true,
+    "independent_wire_audit": true,
+    "capture_controls": 16
+  },
+  "Synchronet": {
+    "checks": {
+      "size_probe_requested": true,
+      "harness": true,
+      "runtime_unchanged": true,
+      "server_static_inputs_unchanged": true,
+      "message_bodies_unchanged": true,
+      "no_message_mail_or_transfer_writes": true,
+      "actual_ASPECT_login": true,
+      "staged_inputs_unchanged": true,
+      "frozen_editor_frame": true,
+      "actual_CPR_boundary": true,
+      "fixture_CPR_consumed": true,
+      "expected_geometry_advertised": true,
+      "source_inputs_unchanged": true,
+      "stock_editor_entered": true,
+      "draft_aborted": true,
+      "insert_toggled_overtype": true,
+      "home_marker_at_line_start": true,
+      "end_marker_at_line_end": true,
+      "delete_erases_final_character": true,
+      "tab_advances_to_next_stop": true,
+      "page_keys_report_document_boundaries": true,
+      "ctrl_y_delete_line_response": true
+    },
+    "emulated_CPU": "8086",
+    "physical_rows": 25,
+    "logical_rows": 24,
+    "NAWS": [
+      [
+        80,
+        24
+      ]
+    ],
+    "matched_cells": 1920,
+    "different_cells": 0,
+    "independent_CPR_cells_size_audits": true
+  },
+  "unchanged_candidate_retry": {
+    "first_qualification_passed": false,
+    "negative_audit_passed": true,
+    "required_OO_absent_in_upstream_Telnet": true,
+    "client_bytes_equal_prior_pass": true,
+    "exact_missing_boundary_localized_to_upstream": true,
+    "helper_tail_drain_race": "plausible; not proven",
+    "application_fault_established": false,
+    "second_qualification_passed": true,
+    "server_or_proxy_patches_applied": false,
+    "failed_capture_preserved": true
+  },
+  "receipts": {
+    "build/bbs-lab/results/enigma/terminal-builtins-enigma-v2-20261118/carrier-checks.json": "f08924abf53748277fc943476bda346b49ac89bf11bb6891727d1a68a7f17f99",
+    "build/terminal-builtins-enigma-audit-20261118/result.json": "3f2fac4c5a29a497e507e75a7bfbc4efd48636435ee1b819662fec4526762d1a",
+    "build/terminal-builtins-enigma-controls-20261118/result.json": "5d3674cfc2f1cc7c18ecb432c066ecde2caf762e8c57fa11873ad7ac1bbcd736",
+    "build/bbs-lab/results/synchronet/terminal-builtins-synchronet-20261118/proxy-integration.json": "f89753b36e07328b91ec9ce77f387c5ebc5ebba65dc5767a3c654d46d382e324",
+    "build/bbs-lab/results/synchronet/terminal-builtins-synchronet-20261118/screen-reference-audit.json": "8894f2b4e5ff5d2e4b47fc9ac9d05c9f2b1983347e712bca29ca7285c6b26daf",
+    "build/bbs-lab/results/synchronet/terminal-builtins-synchronet-20261118/size-probe-screen-audit.json": "95f1323a8604980ed9c120abbf8f7d7979ba0ec73f56ed02eb1338afa60e68e8",
+    "build/terminal-builtins-enigma-finish-counterexample-20261118/result.json": "c57bfeb30a365f7d717f84947177ebdce72b7ca3e163f093c90e88e36b64cf31",
+    "build/bbs-lab/results/enigma/terminal-builtins-enigma-20261118/carrier-checks.json": "733d29dd3fe727edafcf51af375053ddeeab8ee597647dcc8c74db1e964c0b09"
+  },
+  "runtime": "build/menu-size-accepted-20261104/candidate",
+  "temporary_owned_labs_stopped": true,
+  "live_BBS_contacted": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "scope": "Actual current source-built parent/interpreter/compiler through loopback SynthModem Telnet and owned stock BBS fixtures. Enigma carrier-loss/cleanup/redial/retry/finish/search and Synchronet unsaved-editor/abort/cell/CPR/NAWS checks. Getter semantics are separately covered by full-parent source/GET and geometry receipts. First retry lacked required OO already upstream and remains a failed, preserved counterexample; the unchanged rerun passes all gates. No peer/proxy/application patch was made to obtain that pass. No physical modem/SIP/DSP/audio or full application parity claim."
+}

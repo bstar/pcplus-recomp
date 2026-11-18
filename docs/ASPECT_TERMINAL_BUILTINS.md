@@ -74,7 +74,9 @@ compiler, client, VM and application evidence:
   output and the complete parent-return comparator remain checked.
 - Capability24 packaging has39 admission/archive controls; the existing
   capability23 package retains its34 controls. This staging fixture is for
-  contract validation, with separate release, BBS and hardware gates.
+  contract validation. The later
+  [connection checkpoint](ASPECT_TERMINAL_CONNECTION.md) supplies the complete
+  committed package/archive and fresh BBS qualification; hardware stays open.
 
 The interpreter is SHA256
 `75f1c9327f40de559d3ad9b78231264b8a8758aa0a2358fe20b3b76635575155`.
@@ -85,6 +87,7 @@ is `baf2b02b657c6e591b58735d599b58b8fae1433993cfa0f8d91f8a4c94324601`.
 
 This profile is not installed or physically accepted. The earlier
 [directory-protocol package](ASPECT_DIRECTORY_PROTO.md) retains its independent
-qualification and identities. Remaining ASPECT services, broader fault
+qualification and identities; the later capability24 connection candidate has
+its own package and lab receipts. Remaining ASPECT services, broader fault
 composition, complete setup/emulation/protocol parity and physical acceptance
 remain open. Host remains the final implementation stage.
