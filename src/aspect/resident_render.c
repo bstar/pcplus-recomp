@@ -308,14 +308,32 @@ unsigned __cdecl aspect_render_status(unsigned duplex)
  RESPONSE_DONE(result);
 }
 #ifdef ASPECT_TERMINAL_QUERY
+#ifdef ASPECT_SCREEN_PARENT
+/* Shared immutable owner admission. HITKEY permits field/window/confirmation
+ * owners but never an in-flight operation; foreground screen reads are strict.
+ * Bitwise aggregation preserves nonzero WORD semantics without new state. */
+static unsigned query_owner_busy(void)
+{
+ return program_owned|snapshot_owned|field_wait|confirm_wait|policy_wait|
+        keyboard_wait|key_wait|label_wait|window_wait;
+}
+#endif
 static unsigned word_query(unsigned operation,unsigned index,unsigned *output)
 {
  unsigned i,result,value=0;
  if(!output || (unsigned long)(unsigned)output+2UL>65536UL)return ASPECT_RUN_OPERAND;
+#ifdef ASPECT_SCREEN_PARENT
+ if(RESPONSE_INVALID() || query_owner_busy())return ASPECT_RUN_STATE;
+#else
  if(RESPONSE_INVALID() || program_owned || snapshot_owned || field_wait ||
     confirm_wait || policy_wait || keyboard_wait ||
     key_wait || label_wait || window_wait)return ASPECT_RUN_STATE;
+#endif
+#ifdef ASPECT_SCREEN_PARENT
+ if(operation==29 && (field_owned|window_owned|confirm_owned))return ASPECT_RUN_STATE;
+#else
  if(operation==29 && (field_owned || window_owned || confirm_owned))return ASPECT_RUN_STATE;
+#endif
  if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
  /*29 reads foreground terminal WORDs.30 samples one HITKEY WORD and returns
   * its low byte;31 returns the retained high byte and retires it. Neither
@@ -542,5 +560,18 @@ unsigned __cdecl aspect_render_alarm_policy(unsigned *duration,unsigned *enabled
  if(service_check() || (sound&0xfffeU)!=0xff00U ||
     (low&0xff00U)!=0xff00U || (high&0xff00U)!=0xff00U)return ASPECT_RUN_STATE;
  *duration=(low&255U)|((high&255U)<<8);*enabled=sound&1;return 0;
+}
+#endif
+
+#ifdef ASPECT_SCREEN_PARENT
+/* The overlay client enters resident CS before consulting private owners and
+ * the near ASIO validator. Validation precedes owner/serial refusal, as before. */
+unsigned __far __cdecl aspect_render_screen_ready(void)
+{
+ if(!attached || aspect_render_client_check() ||
+    (query_owner_busy()|field_owned|window_owned|confirm_owned))
+  return ASPECT_RUN_STATE;
+ if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+ return 0;
 }
 #endif

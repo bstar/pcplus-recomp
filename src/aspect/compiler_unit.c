@@ -84,10 +84,11 @@ static int type(const aspect_compiler_line *line,unsigned *parameter)
 static unsigned reserved(const char *name)
 {
  static const char *names[]={"text","comdata","connected","failure","forever","found","success","waitfor","hitkey","fromddir","mono",
+ "box","clear","home","locate","scroll","getvattr","putvattr",
  "$d_entry","$d_ldate","$d_kbdfile","$d_metakey","$d_name","$d_note","$d_phone","$d_pword","$d_script","$null","$d_baud","$fattr","$fdate","$fext","$filename","$fname","$ftime","$fsize",
  "$d_databit","$d_duplex","$d_mode","$d_parity","$d_port","$d_stopbit","$d_term","$d_total","$d_proto","$date","$time0","$time1","$col","$row","$scrncols","$scrnrows","$termbold","$termdim","$termnorm","$termrev","$termuline"};
  unsigned i;for(i=0;i<sizeof(names)/sizeof(names[0]);++i)if(!strcmp(name,names[i]))return 1;
- return aspect_compiler_emulation(name)>=0;
+ return (name[0]=='n'&&name[1]>='0'&&name[1]<='9'&&!name[2])||aspect_compiler_emulation(name)>=0;
 }
 static unsigned duplicate(aspect_compiler_symbol *symbol,const char *name)
 {for(;symbol;symbol=symbol->next)if(!strcmp(symbol->name,name))return 1;return 0;}

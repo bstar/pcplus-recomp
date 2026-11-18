@@ -26,6 +26,11 @@ static const command file_commands[]={
  {"fread","vdvi",0x42,0},{"fseek","vqv",0x43,0},
  {"ftell","vl",0x45,0},{"fwrite","vsv",0x47,0}
 };
+static const command screen_commands[]={
+ {"box","vvvvv",0x0c,0},{"clear","v",0x12,1},{"home","",0x57,0},
+ {"locate","vv",0x6a,0},{"scroll","vvvvvv",0x9c,0},
+ {"getvattr","vvi",0x52,0},{"putvattr","vvv",0x8c,0}
+};
 typedef struct setting {const char *name;unsigned selector,integer;} setting;
 static const setting settings[]={
  {"display",0x12,0},{"findcase",0x23,0},{"switchcase",0x44,0},
@@ -129,6 +134,46 @@ static void file_command(pc_compiler *c,const command *cmd)
  }
  if(c->expression.position!=c->expression.last)bad(c);
 }
+static void screen_word(pc_compiler *c,unsigned n)
+{
+ aspect_compiler_value v;unsigned char text[254];unsigned length;
+ if(aspect_compiler_atomic(&c->expression,n,&v))return;
+ if(v.tag==ASPECT_EXPR_CONSTANT){
+  aspect_compiler_token_copy(c->expression.line,v.index,text,sizeof(text));
+  length=strlen((char *)text);
+  if(length>=2&&text[0]=='0'&&text[1]=='x'){
+   if(v.explicit_long||length<3||length>6){bad(c);return;}
+   v.kind=0;v.number.integer=(unsigned)(v.negative?0UL-v.number.integer:v.number.integer);
+   v.negative=0;
+  }else{
+   if(length>5){bad(c);return;}
+   if(aspect_compiler_word_argument(&c->expression,n,&v))return;
+  }
+ }else if(aspect_compiler_word_argument(&c->expression,n,&v))return;
+ aspect_compiler_emit_operand(&c->expression,&c->output,&v,1);
+}
+static void screen_command(pc_compiler *c,const command *cmd)
+{
+ unsigned i,n,previous,commas;
+ emit(c,cmd->opcode);c->expression.position=1;
+ if(cmd->optional){emit(c,c->line.count>1);if(c->line.count==1)return;}
+ for(i=0;cmd->roles[i]&&pc_ready(c);++i){
+  commas=0;previous=0;
+  if(i){
+   while(pc_equal(c,c->expression.position,",")){
+    n=c->expression.position;
+    if(commas&&c->line.tokens[n].start==c->line.tokens[previous].start+c->line.tokens[previous].length){bad(c);return;}
+    previous=n;++commas;++c->expression.position;
+   }
+   n=c->expression.position;
+   if(!commas&&n<c->line.count&&c->line.tokens[n].start==c->line.tokens[n-1].start+c->line.tokens[n-1].length&&!pc_equal(c,n,"-")){bad(c);return;}
+  }
+  if(c->expression.position==c->expression.last||pc_equal(c,c->expression.position,"(")||pc_equal(c,c->expression.position,",")){bad(c);return;}
+  n=parse(c);if(!pc_ready(c))return;
+  if(cmd->roles[i]=='i')destination(c,n,0);else screen_word(c,n);
+ }
+ if(c->expression.position!=c->expression.last)bad(c);
+}
 #ifdef ASPECT_COMPILE_GET
 static void get_command(pc_compiler *c)
 {
@@ -221,6 +266,8 @@ void pc_commands(pc_compiler *c)
  if(pc_equal(c,0,"dos")){external_command(c,0x28);return;}
  if(pc_equal(c,0,"run")){external_command(c,0x9b);return;}
  if(pc_equal(c,0,"shell")){external_command(c,0xa3);return;}
+ for(i=0;i<sizeof(screen_commands)/sizeof(screen_commands[0]);++i)
+  if(pc_equal(c,0,screen_commands[i].name)){screen_command(c,&screen_commands[i]);return;}
  for(i=0;i<sizeof(file_commands)/sizeof(file_commands[0]);++i)
   if(pc_equal(c,0,file_commands[i].name)){file_command(c,&file_commands[i]);return;}
  if(pc_equal(c,0,"chdir")){path_command(c,0x11);return;}

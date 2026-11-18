@@ -1178,10 +1178,10 @@ _runtime_locals: times 36 db 0
 aspect_globals_table:
 _runtime_strings: times 128 dd 0
  global aspect_operand_integer_bank_a,_runtime_integer_a
-aspect_operand_integer_bank_a:
 %ifdef ASPECT_EMULATE_VM
 aspect_emulation_selector: dw 0
 %endif
+aspect_operand_integer_bank_a:
 _runtime_integer_a: times 10 dw 0
  global aspect_operand_integer_bank_b,_runtime_integer_b
 aspect_operand_integer_bank_b:
@@ -1223,6 +1223,55 @@ aspect_dispatch_handlers:
 %rep 215
 %if op=1
  dw ALARM_HANDLER
+%elif op=0x0c
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_box_entry
+ dw aspect_screen_box_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x12
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_clear_entry
+ dw aspect_screen_clear_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x57
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_home_entry
+ dw aspect_screen_home_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x6a
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_locate_entry
+ dw aspect_screen_locate_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x9c
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_scroll_entry
+ dw aspect_screen_scroll_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x52
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_getvattr_entry
+ dw aspect_screen_getvattr_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x8c
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_putvattr_entry
+ dw aspect_screen_putvattr_entry
+%else
+ dw unsupported
+%endif
 %elif op=0x2f
 %ifdef ASPECT_EMULATE_VM
  dw runtime_emulate_command

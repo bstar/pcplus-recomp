@@ -22,6 +22,8 @@ def sha(path):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--screen-profile', action='store_true',
+                   help='Exercise shared private-owner admission under capability27')
     a = p.parse_args()
     out = a.output.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists()
@@ -29,8 +31,9 @@ def main():
     dependencies = [Path(__file__).resolve(), ROOT/'standalone/hitkey_client_driver.c',
                     ROOT/'src/aspect/resident_render.c', *sorted((ROOT/'src/aspect').glob('*.h'))]
     sources = {str(p.relative_to(ROOT)): sha(p) for p in dependencies}
+    flags = FLAGS+(['ASPECT_STATE_BUILTINS_PARENT', 'ASPECT_SCREEN_PARENT'] if a.screen_profile else [])
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-ob', '-os',
-                    '-w4', '-we', '-k8192', *['-d'+f for f in FLAGS],
+                    '-w4', '-we', '-k8192', *['-d'+f for f in flags],
                     '-i='+str(ROOT/'src/aspect'), '-fm=CLIENT.map', '-fe=CLIENT.EXE',
                     str(ROOT/'standalone/hitkey_client_driver.c')], cwd=out, check=True)
     (out/'RUN.BAT').write_bytes(b'@echo off\r\nCLIENT >CHECK.LOG\r\nif errorlevel 1 goto failed\r\necho PASS>RESULT.TXT\r\ngoto done\r\n:failed\r\necho FAIL>RESULT.TXT\r\n:done\r\nexit\r\n')
@@ -46,7 +49,8 @@ def main():
     assert match, transcript
     assert all(sha(ROOT/p) == digest for p, digest in sources.items())
     result = dict(passed=True, cases=int(match[1]), checks=int(match[2]),
-                  compile_flags=FLAGS, sources=sources, original_inputs=[], transcript=transcript,
+                  compile_flags=flags, capability=27 if a.screen_profile else 25,
+                  screen_profile=a.screen_profile, sources=sources, original_inputs=[], transcript=transcript,
                   artifacts={p.name: sha(p) for p in out.iterdir() if p.is_file()},
                   scope=__doc__+' Fifteen full WORD values and fifteen changed-future-key cases; exact op30/31 with payload0, no premature destination publication, refusal/bad tags at either phase, all typed1..14 errors, pre/post-client faults and precedence, PROGRAM/snapshot/seven in-flight wait guards, all seven field/window/confirm owner combinations admitted, serial0/2/FFFF, detached/invalid output, canaries and successful retry. No transport/poll/WHEN callback boundary called. The parent one-sample/retire behavior and client admission are controlled models; real native peek, parent pending-word identity, far bridge, capability mismatch and physical hardware require separate tests.')
     (out/'result.json').write_text(json.dumps(result, indent=2)+'\n')

@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "resident_render.c"
+#ifdef ASPECT_SCREEN_PARENT
+#define EXPECTED_CAPABILITY 27
+#else
+#define EXPECTED_CAPABILITY 25
+#endif
 
 unsigned aspect_serial_active,runtime_error,runtime_set_duplex_changed,runtime_serial_local_echo;
 unsigned runtime_serial_break_units,runtime_keyboard_mode,runtime_serial_error;
@@ -78,7 +83,7 @@ int main(void)
  unsigned i,j,phase;unsigned *blocked[9];
  context="prepare-and-attach";setup();attached=0;
  ck(!aspect_render_prepare(1,2,3));
- ck(ASPECT_RENDER_CAP_VERSION==25&&aspect_render_client_record.version==25);
+ ck(ASPECT_RENDER_CAP_VERSION==EXPECTED_CAPABILITY&&aspect_render_client_record.version==EXPECTED_CAPABILITY);
  ck(aspect_render_client_record.magic==ASPECT_RENDER_CLIENT_MAGIC&&aspect_render_client_record.token==3);
  replies[0]=0;ck(!aspect_render_attach()&&attached==1);
  context="full-word-values";

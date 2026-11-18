@@ -122,6 +122,10 @@ FETCH_SETTINGS = {'break': 0x09, 'display': 0x12, 'duplex': 0x18,
                   'findcase': 0x23, 'keys': 0x29, 'msg_crlf': 0x2E,
                   'pausechar': 0x30, 'rxdata': 0x3B, 'switchcase': 0x44,
                   'txpace': 0x4C, 'waitcase': 0x55, 'whencase': 0x56, 'fgets_crlf': 0x22}
+SCREEN_COMMANDS = {'box': (0x0C, 'vvvvv', False), 'clear': (0x12, 'v', True),
+                   'home': (0x57, '', False), 'locate': (0x6A, 'vv', False),
+                   'scroll': (0x9C, 'vvvvvv', False), 'getvattr': (0x52, 'vvi', False),
+                   'putvattr': (0x8C, 'vvv', False)}
 OPS = {"+": 0x00, "-": 0xB5, "*": 0x7D, "/": 0x26, "%": 0x7B,
        "==": 0x32, "!=": 0x7F, "<": 0x6D, ">": 0x54,
        "<=": 0x68, ">=": 0x48}
@@ -271,7 +275,8 @@ class Compiler:
             if not part or not re.fullmatch(r'[a-z_$][a-z_0-9$]*', part[0]):
                 self.error('expected declaration name')
             name = part[0]
-            if name == 'text' or name in TYPED_BUILTINS or name in EMULATIONS:
+            if (name == 'text' or name in TYPED_BUILTINS or name in EMULATIONS or
+                    name in SCREEN_COMMANDS or re.fullmatch(r'n[0-9]', name)):
                 self.error(f'{name.upper()} is a reserved ASPECT keyword')
             symbols = self.globals if proc is None else proc.symbols
             if name in symbols:
@@ -323,6 +328,8 @@ class Compiler:
                 return TYPED_BUILTINS[node[1]][0]
             if node[1] == '$null' or re.fullmatch(r's[0-9]', node[1]):
                 return 3
+            if re.fullmatch(r'n[0-9]', node[1]):
+                return 0
             return self.symbol(node[1]).kind
         if tag == 'unary':
             return self.kind(node[2])
@@ -335,6 +342,8 @@ class Compiler:
     def lvalue(self, node):
         if node[0] != 'symbol' or node[1] in TYPED_BUILTINS:
             self.error('variable destination required')
+        if re.fullmatch(r'n[0-9]', node[1]):
+            return 0, bytes((0x65, int(node[1][1])))
         if re.fullmatch(r's[0-9]', node[1]):
             return 3, bytes((0x64, int(node[1][1])))
         symbol = self.symbol(node[1])
@@ -623,8 +632,63 @@ class Compiler:
         if parser.pos != len(operands):
             self.error('unexpected WHEN action operands')
 
+    def screen_command(self, tokens):
+        opcode, roles, optional = SCREEN_COMMANDS[tokens[0]]
+        parser = Expression(tokens[1:], self.line)
+        # Original word scanning retains source-width and comma-spacing rules
+        # absent from the general expression AST. Keep them in this context.
+        spans = [(m.start(1), m.end(1)) for m in TOKEN.finditer(self.source_lines[self.line - 1])]
+        self.emit(opcode)
+        if optional:
+            self.emit(int(bool(parser.tokens)))
+            if not parser.tokens:
+                return
+        for index, role in enumerate(roles):
+            commas = []
+            if index:
+                while parser.pos < len(parser.tokens) and parser.tokens[parser.pos] == ',':
+                    current = parser.pos + 1  # Account for the command token.
+                    if commas and spans[current][0] == spans[commas[-1]][1]:
+                        self.error('adjacent screen operand commas')
+                    commas.append(current)
+                    parser.pos += 1
+                current = parser.pos + 1
+                if (not commas and current < len(tokens) and
+                        spans[current][0] == spans[current - 1][1] and
+                        parser.tokens[parser.pos] != '-'):
+                    self.error('screen operands require a separator')
+            if parser.pos == len(parser.tokens) or parser.tokens[parser.pos] in ('(', ','):
+                self.error('screen command requires atomic integer operands')
+            first = parser.pos
+            node = parser.parse(7)
+            if role == 'i':
+                kind, wire = self.lvalue(node)
+                if kind != 0:
+                    self.error('screen command requires an integer destination')
+                self.emit(wire)
+                continue
+            value = self.atomic(node)
+            if value[0] == 'constant':
+                literal = parser.tokens[first + int(parser.tokens[first] == '-')]
+                if literal.startswith('0x'):
+                    if literal.endswith('l') or not 1 <= len(literal) - 2 <= 4:
+                        self.error('screen hexadecimal words require one to four digits')
+                    value = ('constant', 0, int(value[2]) & 0xffff)
+                else:
+                    if len(literal) > 5:
+                        self.error('screen decimal words require at most five digits')
+                    value = self.word_argument(node)
+            else:
+                value = self.word_argument(node)
+            self.operand(value, compact=True)
+        if parser.pos != len(parser.tokens):
+            self.error('unexpected screen command operands')
+
     def command(self, tokens):
         command = tokens[0]
+        if command in SCREEN_COMMANDS:
+            self.screen_command(tokens)
+            return
         # Original compiler consumes this standalone readonly operand without code.
         if command == 'connected' and len(tokens) == 1:
             return
@@ -1092,8 +1156,9 @@ class Compiler:
             self.patch(offset, proc.address)
 
     def compile(self, source: str) -> bytes:
+        self.source_lines = source.splitlines()
         current = None
-        for self.line, text in enumerate(source.splitlines(), 1):
+        for self.line, text in enumerate(self.source_lines, 1):
             if len(text.encode('cp437')) > 253:
                 self.error('physical source lines over 253 bytes are outside this compiler subset')
             tokens = tokenize(text, self.line)

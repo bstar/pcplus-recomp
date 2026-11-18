@@ -8,7 +8,7 @@ from build_aspect_runtime import ROOT, ASM, sha
 OUT = ROOT / 'build/aspect-runner'
 
 
-def main(extension=None,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False,terminal_builtins=False,aspect_hitkey=False,aspect_state_builtins=False):
+def main(extension=None,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False,terminal_builtins=False,aspect_hitkey=False,aspect_state_builtins=False,aspect_screen_commands=False):
     # Only the separately named experimental process builder supplies this.
     # Default production inputs/flags and opcode coverage remain unchanged.
     output=extension['output'] if extension else OUT
@@ -38,6 +38,12 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
         if extension and extension.get('parent_render'):
             assert terminal_builtins and hitkey_parent
             feature_flags+=['-DASPECT_STATE_BUILTINS_PARENT']
+    aspect_screen_commands=aspect_screen_commands or bool(extension and extension.get('aspect_screen_commands'))
+    if aspect_screen_commands:
+        feature_flags+=['-DASPECT_SCREEN_COMMANDS']
+        if extension and extension.get('parent_render'):
+            assert aspect_state_builtins
+            feature_flags+=['-DASPECT_SCREEN_PARENT']
     terminal_cache=terminal_builtins or aspect_state_builtins
     if extension and extension.get('get_display'):feature_flags+=['-DASPECT_GET_DISPLAY']
     if extension and extension.get('get_policy'):feature_flags+=['-DASPECT_GET_POLICY']
@@ -120,6 +126,11 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
         from build_get_bank import build as build_get_bank
         get_objects,get_sources=build_get_bank(output,feature_flags,overlay_ready=bool(extension and extension.get('overlay_ready')))
         objects+=get_objects;sources+=get_sources
+    if aspect_screen_commands:
+        from build_aspect_screen import build as build_screen
+        screen_objects,screen_sources=build_screen(output,feature_flags,
+            overlay_ready=bool(extension and extension.get('overlay_ready')))
+        objects+=screen_objects;sources+=screen_sources
     for name, relative, define in ASM+serial_asm+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else [])+([('clock_builtins','src/aspect/clock_builtins.asm',None)] if clock_builtins else [])+([('terminal_builtins','src/aspect/terminal_builtins.asm',None)] if terminal_cache else [])+([('state_builtins','src/aspect/state_builtins.asm',None)] if aspect_state_builtins else [])+([('hitkey','src/aspect/hitkey.asm',None)] if aspect_hitkey and not hitkey_parent else []):
         source, obj = ROOT / relative, output / (name + '.obj')
         sources.append(source)
@@ -213,6 +224,7 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
                   experimental_terminal_builtins=terminal_builtins,
                   experimental_hitkey=aspect_hitkey,
                   experimental_state_builtins=aspect_state_builtins,
+                  experimental_screen_commands=aspect_screen_commands,
                   scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN, thirteen SET/FETCH families and owned six-slot streams. Capability12 uses the real parent parser, selected key profile, cooperative help and native yes/no confirmation with child-owned receive. Raw ASIO retains immediate cancellation and queued raw delay semantics. Full language, command actions, other waits/flows, physical timing and arbitrary-bytecode safety remain unfinished.')
     if extension:
         result.update(experimental_external_commands=True,production_dispatch_changed=False,
@@ -229,6 +241,9 @@ def main(extension=None,directory_baud=False,directory_fields=False,directory_pr
     if get_vm:
         from build_get_bank import audit
         result['GET_bank_layout']=audit(output)
+    if aspect_screen_commands:
+        from build_aspect_screen import audit as audit_screen
+        result['screen_bank_layout']=audit_screen(output)
         result['MZ_header_layout']=mz_layout
         result['source_extensions']['49']='Opt-in ordinary GET: string/integer/long; both compilers still refuse GET; float4, sibling modes unsupported.'
         result['scope']+=' Opt-in GET bank invokes the recovered owner with maintained typed/native/service adapters; only raw authored mode0 fixtures are admitted. Compiler grammar, full memory/package and physical acceptance remain open.'

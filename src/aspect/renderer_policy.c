@@ -89,7 +89,19 @@ static unsigned render_live_state(unsigned scoped)
   if(!ui_flow_suppressed && (rows>24 || ui_flow_region_cells!=80 ||
      ui_flow_video_base!=3840 || ui_flow_coordinate_base!=0x1800))return 3;
  }else if(screen_viewport_enabled || screen_viewport_offset || screen_viewport_left)return 3;
+ /* Native LOCATE admits the physical last row, including the status row.
+  * The source-owned planes have capacity for the entire admitted physical
+  * geometry; active scroll/origin bounds remain the logical window. */
+#ifdef ASPECT_SCREEN_COMMANDS
+#ifdef TERMINAL_ASPECT_ROWS
+ if(width*physical>4096U || screen_cursor_row>=physical ||
+#else
+ if(width*25U>4096U || screen_cursor_row>=25 ||
+#endif
+    screen_cursor_column>=width || screen_first_row>screen_last_row ||
+#else
  if(screen_cursor_row>=rows || screen_cursor_column>=width || screen_first_row>screen_last_row ||
+#endif
     screen_last_row>=rows || csi_origin_row>csi_origin_bottom || csi_origin_bottom>=rows ||
     screen_cursor_column<screen_viewport_offset)return 3;
  visible=screen_cursor_column-screen_viewport_offset;

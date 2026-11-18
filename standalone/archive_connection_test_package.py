@@ -13,7 +13,7 @@ def main():
  assert m['original_inputs']==[] and not m['card_written']
  allowed={'TERMINAL.EXE','ASPECT.EXE','ASPCOMP.EXE','PRMEDIT.EXE','XLTEDIT.EXE','LOCHELP.HLP','START.BAT','SETUP.BAT','README.TXT','VERSION.TXT'}
  bridge=bool(m.get('experimental_compiler_lease_bridge'))
- assert bridge==(m.get('parent_render_capability') in (23,24,25,26))==bool(m.get('compiler_lease_module')),'Compiler capability/module declarations must match'
+ assert bridge==(m.get('parent_render_capability') in (23,24,25,26,27))==bool(m.get('compiler_lease_module')),'Compiler capability/module declarations must match'
  if bridge:
   allowed.add('PCCOMP.OVL')
   identity=m['products']['TERMINAL.EXE'];base=(ROOT/'build'/identity['folder']).resolve()
@@ -33,9 +33,10 @@ def main():
    manifests[leaf]=manifest
   assert render_capability(base/'TERMINAL.EXE')==m['parent_render_capability']
   validate_render_pair(m['parent_render_capability'],parent,manifests['ASPECT.EXE'])
-  assert bool(m.get('experimental_terminal_query'))==bool(m.get('experimental_terminal_builtins'))==(m['parent_render_capability'] in (24,25,26))
-  assert bool(m.get('experimental_hitkey_parent'))==bool(m.get('experimental_hitkey'))==(m['parent_render_capability'] in (25,26))
-  assert bool(m.get('experimental_state_builtins_parent'))==bool(m.get('experimental_state_builtins'))==(m['parent_render_capability']==26)
+  assert bool(m.get('experimental_terminal_query'))==bool(m.get('experimental_terminal_builtins'))==(m['parent_render_capability'] in (24,25,26,27))
+  assert bool(m.get('experimental_hitkey_parent'))==bool(m.get('experimental_hitkey'))==(m['parent_render_capability'] in (25,26,27))
+  assert bool(m.get('experimental_state_builtins_parent'))==bool(m.get('experimental_state_builtins'))==(m['parent_render_capability'] in (26,27))
+  assert bool(m.get('experimental_screen_commands_parent'))==bool(m.get('experimental_screen_commands'))==(m['parent_render_capability']==27)
   assert manifests['ASPCOMP.EXE'].get('experimental_get_compiler')
  if m.get('experimental_chat_loader'):allowed.add('PCCHAT.OVL')
  if m.get('experimental_keymap_editor'):

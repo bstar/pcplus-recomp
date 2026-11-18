@@ -135,6 +135,7 @@ unsigned aspect_compiler_expression_symbol(aspect_compiler_expression *e,unsigne
  aspect_compiler_token_copy(e->line,n->value.index,text,sizeof(text));memset(info,0,sizeof(*info));
  for(i=0;i<sizeof(builtins)/sizeof(builtins[0]);++i)if(!strcmp((char *)text,builtins[i].name)){info->kind=builtins[i].kind;info->index=builtins[i].index;info->readonly=info->builtin=1;return 0;}
  if(text[0]=='s'&&text[1]>='0'&&text[1]<='9'&&!text[2]){info->kind=3;info->index=text[1]-'0';info->builtin=2;return 0;}
+ if(text[0]=='n'&&text[1]>='0'&&text[1]<='9'&&!text[2]){info->kind=0;info->index=text[1]-'0';info->builtin=3;return 0;}
  s=e->procedure?e->procedure->symbols:0;
  for(;s;s=s->next)if(!strcmp(s->name,(char *)text))break;
  if(!s)for(s=e->unit?e->unit->globals:0;s;s=s->next)if(!strcmp(s->name,(char *)text))break;

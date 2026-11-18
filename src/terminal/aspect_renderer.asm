@@ -67,6 +67,14 @@ CPU 8086
  %undef RENDER_CAPABILITY
  %define RENDER_CAPABILITY 26
 %endif
+%ifdef ASPECT_SCREEN_COMMANDS
+ %ifndef ASPECT_STATE_BUILTINS
+  %error Screen commands require the complete state-builtin renderer
+ %endif
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 27
+ extern terminal_screen_request,terminal_screen_retire
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
 extern terminal_program_active,terminal_program_kind
@@ -174,6 +182,9 @@ terminal_render_prepare:
  call resident_bridge_disable
  or ax,ax
  jnz .done
+%ifdef ASPECT_SCREEN_COMMANDS
+ call terminal_screen_retire
+%endif
  mov word [terminal_aspect_active],0
  mov word [terminal_aspect_adopt],0
  mov word [terminal_script_label_valid],0
@@ -226,6 +237,9 @@ terminal_render_prepare:
  retf
 
 terminal_render_revoke:
+%ifdef ASPECT_SCREEN_COMMANDS
+ call terminal_screen_retire
+%endif
 %ifdef TERMINAL_COMPILER_LEASE_BRIDGE
  call far _compiler_overlay_retire
 %endif
@@ -372,6 +386,15 @@ render_body:
  call field_client_check
  or ax,ax
  jnz .done
+%ifdef ASPECT_SCREEN_COMMANDS
+ cmp di,32
+ jb .screen_interrupted
+ cmp di,36
+ jbe .screen_kept
+.screen_interrupted:
+ call terminal_screen_retire
+.screen_kept:
+%endif
 %ifdef TERMINAL_COMPILER_LEASE_BRIDGE
  cmp di,27
  je .compiler
@@ -440,6 +463,16 @@ render_body:
  je .hitkey_query
  cmp di,31
  je .hitkey_query
+%endif
+%ifdef ASPECT_SCREEN_COMMANDS
+ cmp di,32
+ jb .not_screen
+ cmp di,36
+ ja .not_screen
+ mov ax,di
+ call terminal_screen_request
+ ret
+.not_screen:
 %endif
  cmp di,12
  je .abort_confirm
@@ -1204,6 +1237,9 @@ terminal_render_unsupported:
  mov [cs:render_unsupported],ax
  mov ax,3
 terminal_render_typed_abort:
+%ifdef ASPECT_SCREEN_COMMANDS
+ call terminal_screen_retire
+%endif
  push ax
  call render_scope_end
  pop ax
@@ -1441,6 +1477,45 @@ field_retire:
  ret
 %endif
 
+%ifdef ASPECT_SCREEN_COMMANDS
+; Local native helpers borrow the same captured foreground scope as ordinary
+; parser work, without submitting bytes or invoking transport/history paths.
+global terminal_screen_admit,terminal_screen_scope_begin,terminal_screen_scope_end
+terminal_screen_admit:
+ cmp word [_script_handoff+22],0
+ jne .serial
+ call field_owned
+ or ax,ax
+ jnz .state
+ mov ax,[cs:render_snapshot_owned]
+ or ax,[cs:render_program_owned]
+ or ax,[cs:terminal_script_window_active]
+ or ax,[cs:terminal_script_confirm_active]
+ jnz .state
+ jmp _aspect_render_admit
+.serial: mov ax,14
+ ret
+.state: mov ax,10
+ ret
+terminal_screen_scope_begin:
+ push ax
+ mov ax,[terminal_parser_active]
+ mov [cs:render_saved_parser],ax
+ mov ax,[terminal_ansi_wait_active]
+ mov [cs:render_saved_wait],ax
+ call render_tick
+ mov [cs:render_started],ax
+ mov word [cs:render_remaining],4096
+ mov word [terminal_aspect_active],1
+ mov word [terminal_parser_active],1
+ pop ax
+ ret
+terminal_screen_scope_end:
+ push ax
+ call render_scope_end
+ pop ax
+ ret
+%endif
 SEGMENT _DATA public class=DATA use16
 global terminal_aspect_active,terminal_aspect_adopt
 global terminal_script_label_valid,terminal_script_label

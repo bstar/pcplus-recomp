@@ -91,6 +91,14 @@ unsigned __cdecl aspect_render_hitkey_query(unsigned *);
 #undef ASPECT_RENDER_CAP_VERSION
 #define ASPECT_RENDER_CAP_VERSION 26U
 #endif
+#ifdef ASPECT_SCREEN_PARENT
+#ifndef ASPECT_STATE_BUILTINS_PARENT
+#error Screen commands require the complete state-builtin parent profile
+#endif
+#undef ASPECT_RENDER_CAP_VERSION
+#define ASPECT_RENDER_CAP_VERSION 27U
+unsigned __far __cdecl aspect_render_screen_scalar(unsigned,unsigned);
+#endif
 #ifdef ASPECT_HELP_PARENT_SNAPSHOT
 /*0: private DOS frame required;1: released parent snapshot is available;
  *2: invalid attached PROGRAM/client context. Wire capability remains23. */

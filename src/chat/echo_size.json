@@ -15,7 +15,7 @@
   "sources": {
     "src/aspect/renderer_policy.c": {
       "profile": "echo-size-20",
-      "source_sha256": "6348ee6a72dbd930ce074e942dcd3baafb7c4b588e0e48d47e14e4c14b4f2474",
+      "source_sha256": "ed3fd89a0f3c0b5037058fd1ee6ac9672f8bd3272446bda5159e11ab3b550349",
       "control_code_data_bytes": [
         1334,
         0

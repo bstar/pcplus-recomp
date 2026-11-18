@@ -18,7 +18,10 @@ def main():
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--state-builtins', action='store_true',
                    help='Check capability26 and all eleven terminal/state WORD selectors')
+    p.add_argument('--screen-profile', action='store_true',
+                   help='Exercise shared private-owner admission under capability27; requires --state-builtins')
     a = p.parse_args()
+    assert not a.screen_profile or a.state_builtins
     out = a.output.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists()
     out.mkdir(parents=True)
@@ -26,7 +29,7 @@ def main():
                     ROOT/'src/aspect/resident_render.c', *sorted((ROOT/'src/aspect').glob('*.h'))]
     sources = {str(p.relative_to(ROOT)): sha(p) for p in dependencies}
     flags = FLAGS + (['ASPECT_HITKEY_PARENT', 'ASPECT_STATE_BUILTINS_PARENT']
-                     if a.state_builtins else [])
+                     if a.state_builtins else []) + (['ASPECT_SCREEN_PARENT'] if a.screen_profile else [])
     selectors = 11 if a.state_builtins else 9
     subprocess.run(['wcl', '-q', '-bt=dos', '-0', '-ms', '-ecc', '-s', '-ob', '-os',
                     '-w4', '-we', '-k8192', *['-d'+f for f in flags],
@@ -48,7 +51,8 @@ def main():
     assert all(sha(ROOT/p) == digest for p, digest in sources.items())
     result = dict(passed=True, cases=int(match[1]), checks=int(match[2]),
                   compile_flags=flags, state_builtins=a.state_builtins,
-                  selectors=list(range(selectors)), capability=26 if a.state_builtins else 24,
+                  selectors=list(range(selectors)), capability=27 if a.screen_profile else 26 if a.state_builtins else 24,
+                  screen_profile=a.screen_profile,
                   sources=sources, original_inputs=[], transcript=transcript,
                   artifacts={p.name: sha(p) for p in out.iterdir() if p.is_file()},
                   scope=__doc__+f' All{selectors} selectors, twelve full WORD values, tagged byte order, refusal/bad tags at either byte, pre/post-client faults and precedence, twelve private owners/waits, serial0/2, detached/invalid arguments, unchanged destination/canaries and successful retry. '+

@@ -6,10 +6,12 @@ explicitly rejects108 of215 original opcode slots. Optional application
 profiles add bounded services beyond that base; neither count proves complete
 language or application coverage. Host remains the final implementation stage.
 
-The next coherent target is the local screen/cursor command family, through
-actual compiled scripts and the admitted parent renderer. These operations
-support script menus and status displays and follow the current daily-use
-terminal/UI priority. The retained original dispatch inventory confirms:
+The local screen/cursor family now has an opt-in capability27 integration
+checkpoint through actual compiled scripts and the admitted parent renderer.
+[The screen-command record](ASPECT_SCREEN_COMMANDS.md) and
+[validation ledger](validation/aspect-screen-commands.json) describe its native,
+compiler and full DOS8086 coverage and remaining qualification gates. The
+retained original dispatch inventory confirms:
 
 | Command | Opcode | Original target |
 | --- | --- | --- |
@@ -21,21 +23,13 @@ terminal/UI priority. The retained original dispatch inventory confirms:
 | GETVATTR | 52 | overlay18:EA23 |
 | PUTVATTR | 8C | overlay18:EA3C |
 
-The current compiler command maps omit these commands; the runtime dispatch
-falls through to explicit unsupported. The mappings identify entry points,
-not complete grammar or semantics. The original BOX body has retained REA
-evidence `ev_69adaa250b9d1ed0e04e2aef07f121858aeebafa7ead2bbe3ef41940ecb51a68`.
-It calls operand readers, rectangle helper6EDC and local-window helper4056.
-The private retained assembly is
-`analysis/pcplus-overlay-17/functions/0x1e6d1.asm`.
-
-Recovery needs original compiler probes for operand types, optional arguments
-and refusals; native handler/dependency evidence; and execution through real
-compiler, VM and parent display owners. Clipping, cursor/attribute state,
-window/status geometry, owner refusal, UART/parser continuity and cleanup need
-explicit checks. Sending ANSI strings to emulate a local command does not
-establish the native operation. The current child has156 near-code bytes spare;
-new handlers need a measured placement plan that preserves buffers and stacks.
+The maintained compilers now match1394 frozen original observations for these
+commands and writable N0–N9. Five full DOS8086 cases pass254 checks, including
+source startup/EXECUTE and operand failures; canonical132-column execution
+passes another58 checks. The child retains28 near-code bytes spare using a
+screen overlay, with existing buffers/stacks unchanged. Complete package/cold
+qualification and an actual parent-refusal unwind are additional gates; native
+HOME's checked-attribute producer and configurable frame styles remain open.
 
 The next two larger families remain required:
 
