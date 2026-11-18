@@ -63,6 +63,38 @@ is125696 bytes; its page-rounded minimum is125824. No buffers or VM limits were
 reduced. The full application, remaining emulations/protocols and Host are still
 required; Host stays last.
 
+The matched17-file candidate is
+`build/directory-proto-committed-package-20261117/PCPLUS`, targeting C:\PCPLUS.
+Its source base is95abca1. Every one of the1105 files in the complete cold export
+matches its Git blob at that commit; original executables, previous objects and
+ancestor Git are absent from the export. The cold build reproduces all17 package
+files and its ZIP byte for byte, passes34 package controls and13 lab companion
+controls, and repeats the two source/GET workflows and63 nested-DOS/held-FILE/Help
+checks. The archive is
+`build/directory-proto-committed-archive-20261117/PCPLUSSE.ZIP`, SHA256
+`3d0c7233875525c3a14d8777c36797809169ea920af11d3a5d05b92baeecf31a`.
+
+Eight current-package DOS8086 workflows pass with COM3/IRQ5 and no BIOS UART
+entry: splash, SETUP, nested source compilation, compiled clock/alarm/emulation,
+line/port, Meta, seven-profile keyboard mapping/Help and Chat/Help. Synthetic
+private-file preservation and hardware/environment restoration are checked.
+These launcher regressions are separate from the selected-directory expression
+probes in the source/GET tests.
+
+Fresh current-byte Enigma checks pass carrier loss, two authenticated sessions,
+cleanup, exact65539-byte retry, post-transfer input and normal exit (18 checks).
+An independent wire audit passes; fifteen altered captures are rejected while
+the unchanged control passes. Synchronet passes22 editor checks and independent
+1920-cell/CPR/NAWS audits with zero differing cells. These use the actual loopback
+SynthModem Telnet proxy and owned stock BBS fixtures. They do not observe the live
+private board or the physical modem/SIP/audio path. The temporary lab servers
+were stopped after testing.
+
+This is a prepared hardware-test candidate. No installed selector, physical DOS
+installation, private configuration/history, live SynthModem or ATA settings
+changed. Physical Boca→SPA2102→SynthModem→Enigma acceptance and broader loader/Help
+fault composition remain required, alongside all whole-application parity gates.
+
 Run component checks through the pinned toolchain with fresh output directories:
 
 ```sh

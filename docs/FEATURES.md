@@ -16,9 +16,11 @@ full-parent source/GET checks and cold source reproduction. Their interpreter
 is a development profile; package/BBS/physical qualification remains open.
 The separate [baud-only profile](ASPECT_DIRECTORY_BAUD.md) now reproduces its
 complete17-file package/archive and passes eight packaged DOS workflows.
-Neither checkpoint closes any complete F01–F16 feature gate.
+The later [protocol-operand profile](ASPECT_DIRECTORY_PROTO.md) also implements
+the directory protocol mapping and qualifies the combined package on current
+Enigma/Synchronet fixtures. Hardware acceptance and full F01–F16 parity stay open.
 
-[Current checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
+[Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS
 workflows,34 package controls and fresh Enigma/Synchronet regressions pass.
 It includes the expanded interpreter, CONNECTED compiler, sequential Help frame

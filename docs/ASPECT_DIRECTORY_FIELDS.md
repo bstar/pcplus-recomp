@@ -56,6 +56,10 @@ interpreter, compiler and overlays and repeats both source/GET cases without
 original executables, prior objects or ancestor Git.
 
 This profile is not packaged, BBS-qualified, installed or physically accepted.
+The later [protocol-operand profile](ASPECT_DIRECTORY_PROTO.md) includes these
+eight getters with a separately identified, source-reproduced package and current
+Enigma/Synchronet regressions. That follow-up does not change this checkpoint's
+artifact identities or establish physical acceptance.
 The preceding [baud-only package](ASPECT_DIRECTORY_BAUD.md) has separate bytes
 and validation. Broader loader/Help fault composition, remaining ASPECT
 operands/commands, full emulation/protocol parity and all whole-application gates

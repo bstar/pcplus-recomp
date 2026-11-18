@@ -18,8 +18,13 @@ still needs BBS qualification and physical acceptance. The installed selector
 and private machine configuration are unchanged. Eight additional
 [directory integer operands](docs/ASPECT_DIRECTORY_FIELDS.md) now have exact
 native source, both compilers, opt-in runtime routing, full-parent source/GET
-checks and a cold source proof. Package/BBS qualification of those newer bytes,
-the remaining builtin/table owners and the complete application gates stay open.
+checks and a cold source proof. The later
+[protocol operand and combined package](docs/ASPECT_DIRECTORY_PROTO.md) adds the
+remaining directory integer selector7 and qualifies the combined runtime through
+source/package/Help reproduction and current Enigma/Synchronet workflows. All
+1105 exported sources match committed base95abca1. Hardware acceptance, broader
+fault composition, remaining builtin/command owners and complete application
+gates remain open. The installed selector is unchanged.
 
 Earlier dated checkpoints below describe their own source/product identities;
 their “next” statements are historical where later evidence supersedes them.

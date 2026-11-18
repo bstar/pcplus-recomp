@@ -46,3 +46,8 @@ source/GET cases; the packaged launcher cases do not add directory-baud operands
 The new profile is staged, not installed or physically accepted. The installed
 selector is unchanged. New-byte BBS qualification, broader fault composition and
 full ASPECT/emulation/protocol parity remain open. Host remains last.
+
+The later [protocol-operand profile](ASPECT_DIRECTORY_PROTO.md) includes this
+baud getter and the directory integer getters in a separately identified package
+with fresh Enigma/Synchronet checks. This baud-only artifact retains its own
+recorded limits; neither profile has physical acceptance.
