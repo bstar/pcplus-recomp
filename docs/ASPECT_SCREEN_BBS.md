@@ -1,11 +1,10 @@
-# Capability27 BBS checkpoint: paused after Enigma
+# Capability27 owned BBS checkpoint
 
 The frozen screen-command application passes the owned Enigma carrier-loss and
-retry regression. The combined BBS checkpoint remains incomplete: the user
-requested a sensible pause before Synchronet started. The
-[validation record](validation/aspect-screen-bbs.json) therefore records
-`passed=false` and `checkpoint_verified=false`, while preserving the accepted
-Enigma result separately.
+retry regression and the stock Synchronet editor regression. The
+[validation record](validation/aspect-screen-bbs.json) records the exact
+application hashes, independent audits and clean server shutdowns, with
+`passed=true` and `checkpoint_verified=true`.
 
 The application is parent `screen-parent-v6-20261119`, interpreter
 `screen-child-overlay-v4-20261119`, and compiler `screen-compiler-v2-20261118`.
@@ -30,14 +29,26 @@ The earlier v2 producer disappeared before persisting its in-memory relay
 traces; its second transfer remained incomplete. That negative is retained and
 unqualified. No traces were reconstructed and no finish check was waived.
 
-Both owned Enigma instances and their proxies are stopped. The accepted job's
-producer and supervisor have exited; ports23231 and23233 are free. Synchronet
-was never started. Resume with its existing stock editor regression and the
-independent1920-cell, CPR5,8 and NAWS80x24 audits, using fresh labels and verified
-free ports. Preserve these receipts and revalidate the frozen product manifests
-before starting another owned server.
+After the requested pause, the frozen manifests, prior Enigma receipts and
+checker sources were revalidated. Enigma did not need another run. The archived
+partial checkpoint remains at
+`build/screen-bbs-resume-v1-20261119/previous-partial-checkpoint.json`.
+
+The fresh Synchronet DOS8086 session passes all22 editor checks: actual ASPECT
+login, Insert/overtype, Home/End/Delete/Tab, page boundaries, Ctrl-Y and unsaved
+draft abort. Server inputs and message bodies remain unchanged, with no message,
+mail or transfer writes. Independent audits match all1920 logical cells with
+zero differences, verify the real CPR5,8 boundary and confirm NAWS80x24 for a
+physical80x25 display with status shown. The capture is
+`build/bbs-lab/results/synchronet/screen-builtins-screen-v1-20261119`.
+
+Synchronet used a durable test job and an owned PTY server supervisor. Both
+atomic exit receipts under `build/screen-bbs-resume-v1-20261119` record return
+code0; the stock server received its normal console `q` command. All owned
+servers, proxies, producers and supervisors are stopped. Ports23231 and23233
+were verified free before startup and after cleanup.
 
 No application, protocol or checker source changed for these runs. Installed
 selectors, private configuration, physical DOS hardware, live BBS services and
-SIP/audio settings remain unchanged. This is partial software qualification,
-not a release or whole-PCPlus/ASPECT completion claim.
+SIP/audio settings remain unchanged. This is a selected software regression
+checkpoint, not a release or whole-PCPlus/ASPECT completion claim.

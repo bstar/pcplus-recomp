@@ -8,8 +8,9 @@ inputs, never application inputs.
 
 The current full products are `build/screen-parent-v6-20261119`,
 `build/screen-child-overlay-v4-20261119` and
-`build/screen-compiler-v2-20261118`. This is an integration checkpoint; complete
-connection-package qualification and physical acceptance are separate gates.
+`build/screen-compiler-v2-20261118`. Their complete
+[connection package](ASPECT_SCREEN_CONNECTION.md) now passes software
+qualification; physical acceptance remains separate.
 The installed DOS selector and private configuration remain unchanged.
 
 | Command | Native operation |
@@ -135,10 +136,14 @@ buffers, stack and environment remain unchanged. Its generated-code priority
 proof passes six CPU cases/14 checks, including overwrite of the complete
 snapshot area and safe refusal to execute overwritten scratch code.
 
-Complete source-export replay and the final connection package remain additional
-integration gates. The user requested a pause before starting them. The
-[partial BBS checkpoint](ASPECT_SCREEN_BBS.md) passes Enigma18 plus the wire
-audit and16 capture controls; Synchronet remains unstarted.
+The complete [connection package](ASPECT_SCREEN_CONNECTION.md) reproduces all17
+files and its ZIP from1128 actual Git blobs atbd99894. Cold replay repeats every
+screen family above, four source/WHEN cases and63 Help checks. The package passes
+57 contract controls,13 lab controls, eight packaged DOS8086 workflows/50 checks
+and seven Chat/settings controls. Two additional recorder controls reject
+receipts naming a different parent or editor. The [BBS checkpoint](ASPECT_SCREEN_BBS.md)
+passes Enigma18 plus the wire audit/16 capture controls and Synchronet22 plus
+exact1920-cell, CPR5,8 and NAWS80x24 audits. All temporary owned servers are stopped.
 
 The maintained profile initializes `screen_attribute_checks` to zero and reset
 clears it. Native HOME's checked branch is component-tested, but its real profile

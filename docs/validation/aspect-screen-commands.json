@@ -103,14 +103,21 @@
     "build/screen-rpc-failure-final-20261119/result.json": "a33d7577374863c3db1a49f6a88321104fa65ee27cebee3e5f4d9a5a4c14aefb",
     "build/screen-rpc-failure-final-20261119/screen-rpc-refusal-reuse/rpc-priority.json": "ee7bed1454ddc0098b537abc6df3ad394b9e3a1f643d3cca14f3e66747a95125",
     "build/screen-chat-pair-v1-20261119/result.json": "d217308d2e97e476cd131ee30c318d4edaa644734e1e3980f82ae44261df6809",
-    "docs/validation/aspect-screen-bbs.json": "1b8a0a1a53ec8ec204c1760fe8061d27cd92c2a27f639227af6769151ad4dd39"
+    "docs/validation/aspect-screen-bbs.json": "475a11dab3e28c12ffdbf307cbc6d29afbf44bcd1d8aad46852768ac539f282b",
+    "build/screen-complete-cold-v1-20261118/result.json": "a069db9f94e4a3dc57b4428d786ae992e0ecee806efa4bb6992608df6ef1395c",
+    "build/screen-committed-package-v1-20261118/manifest.json": "4c56043588a7dd92927756f4b0d616cec03fa7bae4a159438f07a8ff7f0ec0c4",
+    "build/screen-committed-contract-v1-20261118/result.json": "134aa8ac1405019f5dfcac5e2da03131b1f0b76fef6600f5a88d019c3aa4e0ee",
+    "build/screen-committed-archive-v1-20261118/result.json": "26fa055e072e57cc3cd8cb9e573beb8f7fa322a7cb66fbafe80af8c7f3442a2e",
+    "docs/validation/aspect-screen-package.json": "c1bbb72d2bf8823c4cd68059ed5225210ebf0a93019bb9c399d92820bb9b864f",
+    "docs/validation/aspect-screen-package-dos.json": "ba79654e90d8534aa1a9ed938a27e2a12a275e6817c88e8e1c2c9bf76e8f5602",
+    "build/screen-package-chat-identity-controls-v1-20261118/result.json": "8e28170b12dceba1571c5525456bae28a1b4714bd90787db8b36d5bac22c72b9"
   },
   "installed_changed": false,
   "selector_changed": false,
   "physical_verified": false,
-  "connection_package_qualified": false,
+  "connection_package_qualified": true,
   "remaining": [
-    "Complete cold source-export/package replay and matched BBS/package qualification.",
+    "Controlled deployment and physical modem-path acceptance; installed selection remains unchanged.",
     "HOME checked-attribute branch canonical emulation/control producer and marker-plane initialization.",
     "Runtime PRM frame style selection and physical writes outside the visible aperture.",
     "Full F01-F16/ASPECT/emulation/protocol parity; Host last."
@@ -133,12 +140,37 @@
     "current_product_identities_explicit": true,
     "recorder_binds_parent_and_editor": true
   },
-  "Enigma_partial_BBS": {
-    "passed": true,
-    "checks": 18,
+  "qualification_source_commit": "bd99894c65539bcbfeb4beaba636b1339f49bc47",
+  "cold_export": {
+    "source_count": 1128,
+    "actual_git_blobs_verified": true,
+    "ancestor_git_unavailable": true,
+    "files": 17,
+    "baseline_DOS_cases": 4,
+    "screen_DOS_cases": 5,
+    "wide_DOS_cases": 1,
+    "RPC_DOS_cases": 1,
+    "Help_checks": 63,
+    "archive_sha256": "e620d99a86a566c6329c033f80f9e617a50c3ff676813ca5fa59022138ad1de7",
+    "archive_bytes": 389199
+  },
+  "BBS": {
+    "checkpoint_verified": true,
+    "Enigma_checks": 18,
     "wire_audit": true,
     "capture_controls": 16,
-    "combined_BBS_checkpoint_verified": false,
-    "Synchronet_started": false
-  }
+    "Synchronet_checks": 22,
+    "exact_cells": 1920,
+    "CPR": "5,8",
+    "NAWS": "80x24",
+    "owned_servers_stopped": true
+  },
+  "packaged_DOS8086": {
+    "cases": 8,
+    "checks": 50,
+    "port": 3,
+    "irq": 5,
+    "bios_entry_absent": true
+  },
+  "recorder_wrong_product_controls": 2
 }

@@ -28,9 +28,10 @@ commands and writable N0–N9. Five full DOS8086 cases pass254 checks, including
 source startup/EXECUTE and operand failures; canonical132-column execution
 passes another58 checks. The child retains28 near-code bytes spare using a
 screen overlay, with existing buffers/stacks unchanged. An actual parent-refusal unwind
-and same-parent second interpreter now pass65 checks. Complete package/cold
-qualification remains an additional gate; native HOME's checked-attribute
-producer and configurable frame styles remain open.
+and same-parent second interpreter now pass65 checks. The complete
+[capability27 package](ASPECT_SCREEN_CONNECTION.md) reproduces its17 files/ZIP
+from1128 committed sources and passes package/DOS/BBS qualification. Native
+HOME's checked-attribute producer and configurable frame styles remain open.
 
 The next two larger families remain required:
 

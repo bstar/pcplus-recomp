@@ -66,8 +66,12 @@ Five full DOS8086 cases pass254 checks, including source startup/EXECUTE and
 operand failures; canonical132-column panning/status-row access passes58 more.
 The source-built application closure matches1053 actual Git blobs at62a7690.
 A real parent-refusal/resident-abort/same-parent reuse case passes65 checks.
-Complete package/cold qualification and physical gates remain separate;
-checked-HOME activation and frame-style producers remain open.
+The [capability27 connection candidate](ASPECT_SCREEN_CONNECTION.md) reproduces
+all17 files/ZIP from1128 actual Git blobs atbd99894 and passes57 package
+controls, eight packaged DOS cases/50 checks and Enigma18/Synchronet22 with
+independent wire/cell/CPR/NAWS audits. Cold replay repeats all three screen
+families, source/WHEN and63 Help checks. Physical gates, checked-HOME activation
+and frame-style producers remain open; the installed selector is unchanged.
 The [next ASPECT recovery families](ASPECT_RECOVERY_NEXT.md) include scripted
 connection control and script-owned transfers; the remaining work extends well
 beyond builtin tables.
