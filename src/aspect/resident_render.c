@@ -307,6 +307,26 @@ unsigned __cdecl aspect_render_status(unsigned duplex)
  result=typed(aspect_render_request(ASPECT_RENDER_STATUS,duplex));
  RESPONSE_DONE(result);
 }
+#ifdef ASPECT_TERMINAL_QUERY
+unsigned __cdecl aspect_render_terminal_query(unsigned index,unsigned *output)
+{
+ unsigned i,result,value=0;
+ if(index>8 || !output || (unsigned long)(unsigned)output+2UL>65536UL)return ASPECT_RUN_OPERAND;
+ if(RESPONSE_INVALID() || program_owned || snapshot_owned || field_owned || field_wait ||
+    confirm_wait || window_owned || confirm_owned || policy_wait || keyboard_wait ||
+    key_wait || label_wait || window_wait)return ASPECT_RUN_STATE;
+ if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+ /* Parent operation29 performs no output, parser work, transport polling or
+  * callbacks. No child scheduler runs between the two tagged byte reads. */
+ for(i=0;i<2;++i){
+  result=aspect_render_request(29,index|(i<<8));
+  if(service_check())return ASPECT_RUN_STATE;
+  if((result&0xff00U)!=0xf000U)return result?typed(result):ASPECT_RUN_STATE;
+  value|=(result&255U)<<(i*8);
+ }
+ *output=value;return 0;
+}
+#endif
 void __cdecl aspect_render_policy_reset(void)
 {policy_queried=policy_wait=policy_received=0;keyboard_queried=keyboard_wait=keyboard_received=0;key_wait=key_policy_read=0;window_owned=window_wait=window_received=0;}
 unsigned __cdecl aspect_render_policy_inherit(void)

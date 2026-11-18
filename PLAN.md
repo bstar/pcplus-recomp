@@ -34,6 +34,14 @@ nested Help and cold source checks pass. This newer profile still needs its own
 package/BBS/hardware qualification; it does not supersede the prepared package
 or close any full feature gate.
 
+[Terminal integer recovery](docs/ASPECT_TERMINAL_BUILTINS.md) now adds all nine
+cursor, physical-dimension and configured-attribute operands through a matching
+capability24 parent query. Exact native WORD behavior, original compiler syntax,
+client failures, DOS VM lifetimes, full-parent source/GET, nested Help and cold
+source reproduction are validated independently. Production has no fabricated
+screen snapshot. This development profile still has separate release/BBS and
+hardware gates; full F01–F16 completion remains open.
+
 Earlier dated checkpoints below describe their own source/product identities;
 their “next” statements are historical where later evidence supersedes them.
 

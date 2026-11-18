@@ -26,19 +26,20 @@ def render_capability(binary):
 def validate_render_pair(capability,terminal,child):
     """Bind the published contract to both compiled product selections."""
     emulate=bool(child.get('experimental_emulate_VM'))
-    assert capability in (12,13,15,16,18,19,20,21,22,23),'Unknown renderer capability'
-    assert (capability in (20,21,22,23))==emulate,'Published parent capability and EMULATE interpreter must match'
+    assert capability in (12,13,15,16,18,19,20,21,22,23,24),'Unknown renderer capability'
+    assert (capability in (20,21,22,23,24))==emulate,'Published parent capability and EMULATE interpreter must match'
     assert bool(terminal.get('experimental_aspect_emulate_policy'))==emulate,'EMULATE parent policy and interpreter must match'
-    assert (capability in (19,20,21,22,23))==bool(child.get('experimental_alarm_VM')),'Published parent capability and ALARM interpreter must match'
+    assert (capability in (19,20,21,22,23,24))==bool(child.get('experimental_alarm_VM')),'Published parent capability and ALARM interpreter must match'
     if emulate:
         assert terminal.get('experimental_aspect_snapshot_lease') and child.get('experimental_snapshot_lease'),'EMULATE requires matching snapshot leases'
     for parent_flag,child_flag,versions in (
-        ('experimental_aspect_get_display','experimental_get_display',(21,22,23)),
-        ('experimental_aspect_get_policy','experimental_get_policy',(22,23)),
-        ('experimental_compiler_lease_bridge','experimental_compiler_parent_lease',(23,))):
+        ('experimental_aspect_get_display','experimental_get_display',(21,22,23,24)),
+        ('experimental_aspect_get_policy','experimental_get_policy',(22,23,24)),
+        ('experimental_compiler_lease_bridge','experimental_compiler_parent_lease',(23,24)),
+        ('experimental_terminal_query','experimental_terminal_builtins',(24,))):
         enabled=capability in versions
         assert bool(terminal.get(parent_flag))==bool(child.get(child_flag))==enabled,(parent_flag,child_flag,capability)
-    if capability==23:
+    if capability in (23,24):
         assert terminal.get('experimental_compiler_lease_arena') and child.get('experimental_get_VM'),'Compiler lease requires complete arena and GET VM'
 
 
@@ -209,7 +210,7 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
     if keymap_identity:identities['PCKEYMAP.EXE']=keymap_identity
     capability=render_capability(products['TERMINAL.EXE'].resolve())
     validate_render_pair(capability,terminal,manifests['ASPECT.EXE'])
-    if capability==23:assert manifests['ASPCOMP.EXE'].get('experimental_get_compiler'),'Compiler bridge requires GET-enabled source compiler'
+    if capability in (23,24):assert manifests['ASPCOMP.EXE'].get('experimental_get_compiler'),'Compiler bridge requires GET-enabled source compiler'
     companions,companion_sources=terminal_companions(products['TERMINAL.EXE'],terminal)
     for n,h in companion_sources.items():assert sources.get(n,h)==h;sources[n]=h
     assert terminal.get('special_edition') and terminal.get('experimental_original_reference') and terminal.get('experimental_phone_log_controls') and terminal.get('experimental_status_geometry')
@@ -362,8 +363,8 @@ def stage(output,products,source_base_commit=None,dos_directory='PCPLUSSE',keyma
         'experimental_auto_answer':bool(terminal.get('experimental_auto_answer')),
         'experimental_directory_resource_owner':bool(terminal.get('experimental_directory_resource_owner')),'experimental_phone_log_controls':True,'experimental_status_geometry':True,
         'authored_help_sha256':help_record['sha256'],'card_written':False,'validation':'Staged only; requires separate DOS/package and hardware acceptance.'}
-    record.update(parent_render_capability=capability,experimental_alarm_VM=bool(manifests['ASPECT.EXE'].get('experimental_alarm_VM')))
-    if capability==23:
+    record.update(experimental_terminal_query=bool(terminal.get('experimental_terminal_query')),experimental_terminal_builtins=bool(manifests['ASPECT.EXE'].get('experimental_terminal_builtins')),parent_render_capability=capability,experimental_alarm_VM=bool(manifests['ASPECT.EXE'].get('experimental_alarm_VM')))
+    if capability in (23,24):
         record.update(experimental_compiler_lease_bridge=True,compiler_lease_module=compiler_module_contract(products['TERMINAL.EXE'],terminal),experimental_GET_VM=True)
     if manifests['ASPECT.EXE'].get('experimental_emulate_VM'):record['experimental_emulate_VM']=True
     if terminal.get('experimental_path_control') or terminal.get('experimental_gateway_frontend'):

@@ -82,9 +82,9 @@ def check_directory_metadata(records,output,directory_baud=False,directory_field
 def main():
  global OUT
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--original',type=Path)
- p.add_argument('--get-lifecycle',action='store_true');p.add_argument('--output',type=Path);p.add_argument('--directory-baud',action='store_true');p.add_argument('--directory-fields',action='store_true');p.add_argument('--directory-proto',action='store_true');p.add_argument('--clock-builtins',action='store_true');args=p.parse_args()
+ p.add_argument('--get-lifecycle',action='store_true');p.add_argument('--output',type=Path);p.add_argument('--directory-baud',action='store_true');p.add_argument('--directory-fields',action='store_true');p.add_argument('--directory-proto',action='store_true');p.add_argument('--clock-builtins',action='store_true');p.add_argument('--terminal-builtins',action='store_true');args=p.parse_args()
  if args.output:OUT=args.output.resolve()
- subprocess.run(['python3',str(ROOT/'standalone/build_aspect_runtime.py'),'--output',str(OUT),*(['--get-lifecycle'] if args.get_lifecycle else []),*(['--directory-baud'] if args.directory_baud else []),*(['--directory-fields'] if args.directory_fields else []),*(['--directory-proto'] if args.directory_proto else []),*(['--clock-builtins'] if args.clock_builtins else [])],check=True)
+ subprocess.run(['python3',str(ROOT/'standalone/build_aspect_runtime.py'),'--output',str(OUT),*(['--get-lifecycle'] if args.get_lifecycle else []),*(['--directory-baud'] if args.directory_baud else []),*(['--directory-fields'] if args.directory_fields else []),*(['--directory-proto'] if args.directory_proto else []),*(['--clock-builtins'] if args.clock_builtins else []),*(['--terminal-builtins'] if args.terminal_builtins else [])],check=True)
  manifest=json.loads((OUT/'manifest.json').read_text());optional=None
  assert manifest['fixture_data']['file']=='CASES.DAT' and sha(OUT/'CASES.DAT')==manifest['fixture_data']['sha256']
  assert manifest['fixture_data']['schema']=='ACV2'
@@ -141,6 +141,8 @@ def main():
   SET_family=manifest['SET_family'],
   supported_slot_count=len(manifest['supported_slots']),
   scope='Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far and near heaps and native console/serial/WHEN/SET/FIND/CASE commands. Serial queue/clock/carrier and requested pacing units are explicit diagnostic models. Supported slots and unsupported coverage are bound to the manifest; full compiler/VM and arbitrary-bytecode safety remain unfinished.')
+ result['terminal_builtins_enabled']=args.terminal_builtins
+ result['terminal_fixture_unavailable']=True
  result['clock_builtins_enabled']=args.clock_builtins
  result['clock_builtin_disabled_guards_checked']=not args.clock_builtins
  result['directory_proto_enabled']=args.directory_proto

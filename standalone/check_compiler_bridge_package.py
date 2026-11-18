@@ -11,7 +11,7 @@ def main():
  a=p.parse_args();out=a.output.resolve();assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir()
  parent=json.loads(a.terminal.with_name('manifest.json').read_text());child=json.loads(a.runner.with_name('manifest.json').read_text())
  assert sha(a.terminal)==parent['binary_sha256'] and sha(a.runner)==child['binary_sha256']
- cap=render_capability(a.terminal);assert cap==23
+ cap=render_capability(a.terminal);assert cap in (23,24)
  cases=[]
  def check(name,fn,accepted=False):
   try:fn();actual=True
@@ -24,7 +24,16 @@ def main():
   for flag in flags:
    changed=copy.deepcopy(side);changed[flag]=False
    check('missing-'+flag,lambda:validate_render_pair(cap,changed if side is parent else parent,changed if side is child else child))
- for version in (20,21,22,24):check('wrong-capability-'+str(version),lambda:validate_render_pair(version,parent,child))
+ if cap==24:
+  for side,flag in ((parent,'experimental_terminal_query'),(child,'experimental_terminal_builtins')):
+   changed=copy.deepcopy(side);changed[flag]=False
+   check('missing-'+flag,lambda:validate_render_pair(cap,changed if side is parent else parent,changed if side is child else child))
+ for version in (20,21,22,23,24):
+  if version!=cap:check('wrong-capability-'+str(version),lambda:validate_render_pair(version,parent,child))
+ if cap==24:
+  changed=copy.deepcopy(parent);changed['experimental_terminal_query']=False
+  other=copy.deepcopy(child);other['experimental_terminal_builtins']=False
+  check('capability23-without-terminal-query',lambda:validate_render_pair(23,changed,other),True)
  fixture=out/'module';fixture.mkdir()
  for leaf in ('TERMINAL.EXE','terminal.map','PCCOMP.OVL'):shutil.copyfile(a.terminal.with_name(leaf),fixture/leaf)
  blob=(fixture/'PCCOMP.OVL').read_bytes()
@@ -41,7 +50,9 @@ def main():
   elif name=='wrong-fixups':m['experimental_compiler_lease_module']['relocations']+=1
   check('module-'+name,lambda:compiler_module_contract(fixture/'TERMINAL.EXE',m),name=='valid')
  package=json.loads((a.package/'manifest.json').read_text());directory=package['dos_directory']
- for name in ('valid','missing','corrupt','undeclared','wrong-capability','no-descriptor','forged-hash'):
+ archive_cases=['valid','missing','corrupt','undeclared','wrong-capability','no-descriptor','forged-hash']
+ if cap==24:archive_cases+=['query-disabled','builtins-disabled']
+ for name in archive_cases:
   folder=out/('archive-'+name);shutil.copytree(a.package,folder);m=copy.deepcopy(package);path=folder/directory/'PCCOMP.OVL'
   if name=='missing':m['files'].pop('PCCOMP.OVL')
   elif name in ('corrupt','forged-hash'):
@@ -50,6 +61,8 @@ def main():
   elif name=='undeclared':m.pop('experimental_compiler_lease_bridge')
   elif name=='wrong-capability':m['parent_render_capability']=20
   elif name=='no-descriptor':m.pop('compiler_lease_module')
+  elif name=='query-disabled':m['experimental_terminal_query']=False
+  elif name=='builtins-disabled':m['experimental_terminal_builtins']=False
   (folder/'manifest.json').write_text(json.dumps(m));target=out/(name+'-zip')
   with (out/(name+'.log')).open('w') as log:
    r=subprocess.run([sys.executable,str(ROOT/'standalone/archive_connection_test_package.py'),'--package',str(folder),'--output',str(target)],stdout=log,stderr=log)

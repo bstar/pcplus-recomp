@@ -121,7 +121,9 @@ unsigned aspect_compiler_expression_symbol(aspect_compiler_expression *e,unsigne
   {"$d_proto",0,7},
   {"$date",3,8},
   {"$time0",3,20},
-  {"$time1",3,21}
+  {"$time1",3,21},
+  {"$col",0,0},{"$row",0,12},{"$scrncols",0,13},{"$scrnrows",0,14},
+  {"$termbold",0,15},{"$termdim",0,16},{"$termnorm",0,17},{"$termrev",0,18},{"$termuline",0,19}
  };
  unsigned i;unsigned char text[254];const aspect_compiler_symbol *s;aspect_compiler_node *n;
  if(e->status)return e->status;

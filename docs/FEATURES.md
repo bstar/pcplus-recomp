@@ -26,6 +26,14 @@ parent/compiler/interpreter proof. Procedure declarations now reject all558
 identifier-shaped native keywords. This development profile has separate
 package/BBS/physical gates; full language and whole-application parity remain open.
 
+[Terminal integer operands](ASPECT_TERMINAL_BUILTINS.md) now read logical cursor
+coordinates, physical dimensions and configured attributes through an opt-in
+capability24 parent/child contract. Exact original WORD getters, original compiler
+probes, client failure paths, full DOS compiler/VM suites, source/GET, nested Help
+and cold reproduction pass. Standalone reads without the backend fail before
+assignment. Release/BBS/hardware qualification and complete F01–F16 parity stay
+open; the installed selector is unchanged.
+
 [Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS
 workflows,34 package controls and fresh Enigma/Synchronet regressions pass.

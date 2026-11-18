@@ -46,6 +46,13 @@ CPU 8086
  %define RENDER_CAPABILITY 23
  extern _compiler_overlay_bridge,_compiler_overlay_loaned,_compiler_overlay_retire
 %endif
+%ifdef ASPECT_TERMINAL_QUERY
+ %ifndef TERMINAL_COMPILER_LEASE_BRIDGE
+  %error Terminal query requires the complete compiler-lease renderer
+ %endif
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 24
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
 extern terminal_program_active,terminal_program_kind
@@ -396,6 +403,10 @@ render_body:
  cmp di,20
  je .emulate
 %endif
+%ifdef ASPECT_TERMINAL_QUERY
+ cmp di,29
+ je .terminal_query
+%endif
  cmp di,12
  je .abort_confirm
  cmp di,11
@@ -433,6 +444,45 @@ render_body:
  xor ax,ax
 .done:
  ret
+%ifdef ASPECT_TERMINAL_QUERY
+extern aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
+extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+.terminal_query:
+ cmp word [_script_handoff+22],0
+ jne .serial
+ push bx
+ call field_owned
+ pop bx
+ or ax,ax
+ jnz .state
+ mov ax,[cs:render_snapshot_owned]
+ or ax,[cs:terminal_script_window_active]
+ or ax,[cs:terminal_script_confirm_active]
+ jnz .state
+ push bx
+ call _aspect_render_admit
+ pop bx
+ or ax,ax
+ jnz .done
+ mov ax,bx
+ and ax,0xfeff
+ cmp ax,8
+ ja .operand
+ mov si,bx
+ mov bx,ax
+ shl bx,1
+ call [cs:.terminal_getters+bx]
+ test si,0x100
+ jz .terminal_low
+ mov al,ah
+.terminal_low:
+ xor ah,ah
+ or ax,0xf000
+ ret
+.terminal_getters:
+ dw aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
+ dw aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+%endif
 %ifdef TERMINAL_COMPILER_LEASE_BRIDGE
 .compiler:
  or bx,bx

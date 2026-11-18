@@ -384,6 +384,15 @@ global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
  push bp
  mov bp,sp
+%ifdef ASPECT_TERMINAL_BUILTINS
+ cmp word [bp+4],0
+ je .terminal
+ cmp word [bp+4],12
+ jb .ordinary_terminal
+ cmp word [bp+4],19
+ jbe .terminal
+.ordinary_terminal:
+%endif
 %ifdef ASPECT_DIRECTORY_PROTO
  cmp word [bp+4],7
  je .directory_proto
@@ -449,6 +458,28 @@ extern aspect_directory_builtin_stopbit,aspect_directory_builtin_term,aspect_dir
 .done:
  pop bp
  ret 2
+%ifdef ASPECT_TERMINAL_BUILTINS
+extern _runtime_terminal_refresh
+extern aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
+extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+.terminal:
+ push word [bp+4]
+ call _runtime_terminal_refresh
+ pop bx
+ or ax,ax
+ jnz fail
+ mov bx,[bp+4]
+ or bx,bx
+ jz .terminal_ready
+ sub bx,11
+.terminal_ready:
+ shl bx,1
+ call [cs:.terminal_getters+bx]
+ jmp .done
+.terminal_getters:
+ dw aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
+ dw aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+%endif
 %ifdef ASPECT_DIRECTORY_PROTO
 extern aspect_directory_builtin_proto
 .directory_proto:

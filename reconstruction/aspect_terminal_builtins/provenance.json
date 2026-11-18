@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "analysis_image_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+  "overlay": 16,
+  "exact_native_bytes": 36,
+  "getters": [
+    {
+      "name": "$COL",
+      "selector": 0,
+      "entry": "0xd9a7",
+      "DS_word": "0x399e",
+      "resident_thunk": "0xc5df",
+      "native_bytes": 4,
+      "native_sha256": "d5a10e6219023475279a7a8ce767213a2060e6bd7fca6c5da59b8368a26c2f17",
+      "REA_evidence": "ev_3910b5fff61256b9824e44d19f650471e467b1b6940cc6302dfa03882117f0fa"
+    },
+    {
+      "name": "$ROW",
+      "selector": 12,
+      "entry": "0xd9e8",
+      "DS_word": "0x399c",
+      "resident_thunk": "0xc963",
+      "native_bytes": 4,
+      "native_sha256": "b4efb2ca284997bd07439e336a72922b2dcdc62a74a7fa92d171cae6d4912a56",
+      "REA_evidence": "ev_72ce63c76225cb3d3fcfa7e08d3974a2a761f37c0a8a4945c878cecaab85fc78"
+    },
+    {
+      "name": "$SCRNCOLS",
+      "selector": 13,
+      "entry": "0xd9ec",
+      "DS_word": "0x7a72",
+      "resident_thunk": "0xc9e7",
+      "native_bytes": 4,
+      "native_sha256": "d82f2b86fa67e5da465b7ca341489734232ac23a0bf56745905ec87ea02f5bb8",
+      "REA_evidence": "ev_493c42053d355a9a36e1c180bb748dc2e5e6c9d987af87dcc19c1946c37c24e5"
+    },
+    {
+      "name": "$SCRNROWS",
+      "selector": 14,
+      "entry": "0xd9f0",
+      "DS_word": "0x7a74",
+      "resident_thunk": "0xca2f",
+      "native_bytes": 4,
+      "native_sha256": "91a9b1ce90c5239cc81ec66472f6e4a54ef827d62a659bc3531a03c75dab71ca",
+      "REA_evidence": "ev_487d2bdd53ad0029c34166fbbe076d50c2c479cb4389fc9ef98f0ad4d6669d07"
+    },
+    {
+      "name": "$TERMBOLD",
+      "selector": 15,
+      "entry": "0xd9f4",
+      "DS_word": "0x1d34",
+      "resident_thunk": "0xca77",
+      "native_bytes": 4,
+      "native_sha256": "ba0581afcedef43f647516b5b55257ec566443eeb0886ff6c595066ce04e664d",
+      "REA_evidence": "ev_2b29e5df69cdb3aefe5629a36d8316404e7a6e7c9cab821f4c2844ae1463a558"
+    },
+    {
+      "name": "$TERMDIM",
+      "selector": 16,
+      "entry": "0xd9f8",
+      "DS_word": "0x1d36",
+      "resident_thunk": "0xcabf",
+      "native_bytes": 4,
+      "native_sha256": "ac78755672b99517216bcb1748ea7304b5de22525a353926324eff78e730e803",
+      "REA_evidence": "ev_c06d2497c0b598ecc53fedae115de1fefc35ca87c81d1c564e784589a81c7a19"
+    },
+    {
+      "name": "$TERMNORM",
+      "selector": 17,
+      "entry": "0xd9fc",
+      "DS_word": "0x1d32",
+      "resident_thunk": "0xcb07",
+      "native_bytes": 4,
+      "native_sha256": "35296b4f8ba498811435b13bf095107602c0ea2f4abc62138d578c0d02530e7c",
+      "REA_evidence": "ev_2402f53dba1de5361636ee8230f6836422c2da6c2af2e09c8f116a09369389bb"
+    },
+    {
+      "name": "$TERMREV",
+      "selector": 18,
+      "entry": "0xda00",
+      "DS_word": "0x1d38",
+      "resident_thunk": "0xcb43",
+      "native_bytes": 4,
+      "native_sha256": "f1766b4aded0883ae1b7195e1977dcde1d8a49316231fa0f85fcd9f1822511cf",
+      "REA_evidence": "ev_c75952dc55fae10284b7e4457a08bac3b644e895e5071e5dd153dca308036386"
+    },
+    {
+      "name": "$TERMULINE",
+      "selector": 19,
+      "entry": "0xda04",
+      "DS_word": "0x1d3a",
+      "resident_thunk": "0xcb8b",
+      "native_bytes": 4,
+      "native_sha256": "2d2904a77ddea351b89fe29259c28b21688d20758ca74ff9233085d5468d9fec",
+      "REA_evidence": "ev_b5b8293c2ecb27253814dcdc6dbbf54e0c5a361b4dce1eb9544c5ecf682cce2f"
+    }
+  ],
+  "integer_dispatcher_entry": "0xd988",
+  "integer_table_DS": "0x4cb6",
+  "limitations": [
+    "Retained REA static evidence reused; no synthetic analysis image execution. Optional original comparison separately checks all36 bytes, dispatcher, slots and resident thunks.",
+    "Original getters read raw full WORDs without normalization or output. Logical cursor coordinates are zero based; dimensions are physical screen columns/rows, and TERMDIM reads configured preset WORD.",
+    "Live parent/child RPC and diagnostic models are maintained integration, not an original ABI. CPU overlay-loader transfer is explicitly modeled; application and hardware acceptance require separate evidence."
+  ]
+}
