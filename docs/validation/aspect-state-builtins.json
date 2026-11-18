@@ -160,12 +160,6 @@
     }
   },
   "sources": {
-    "build/state-child-overlay-v3-20261118/ASPECT.map": "7a03e1c6034455634f34807b28bf429028a1bc7a8a07dd78e41400a25230b6e9",
-    "build/state-child-overlay-v3-20261118/LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
-    "build/state-child-overlay-v3-20261118/help-resource.json": "7ca270b66c57e916b88fc4438ec8fc5bb017d5c633f1b964fbcc9c821a5af7d3",
-    "build/state-child-overlay-v3-20261118/manifest.json": "630ef8f78cbaae77f4932d827410587759145a5c9858196349eeeebebf3eeced",
-    "build/state-parent-v4-20261118/manifest.json": "be69ae81b518b091746ccb8f5bc0f3ef83266e6ea4dd53dd5ab40cd3298254bc",
-    "build/state-parent-v4-20261118/terminal.map": "cf569859e2fd1e8cdfde7ca547546ed2c07e1ed1aa056df0125911a6be77cc2f",
     "reconstruction/alternate_output/attribute.asm": "6a30ca3cc99b3385c447ecd8d8a58c2faaae7b91f2166e9a733d4e4a2c80acb6",
     "reconstruction/alternate_output/output.asm": "e0f106b942c7e43f99a5f18d53b2f3c9eb9ae09f1c932797871a9cdb82f397f7",
     "reconstruction/alternate_output/provenance.json": "d4de00c590c84cf4be3aa905b464a954e116a143c0d067cf20df17fa5782bf13",
@@ -1351,5 +1345,13 @@
     "The color mode3 renderer remains the admitted scope; MONO getter does not implement monochrome rendering.",
     "The v3 prefeature package fixture has earlier parent bytes and is not evidence for a final capability26 release.",
     "Old capability mismatch is retained as an audited negative, never qualification."
-  ]
+  ],
+  "test_artifacts": {
+    "build/state-child-overlay-v3-20261118/ASPECT.map": "7a03e1c6034455634f34807b28bf429028a1bc7a8a07dd78e41400a25230b6e9",
+    "build/state-child-overlay-v3-20261118/LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "build/state-child-overlay-v3-20261118/help-resource.json": "7ca270b66c57e916b88fc4438ec8fc5bb017d5c633f1b964fbcc9c821a5af7d3",
+    "build/state-child-overlay-v3-20261118/manifest.json": "630ef8f78cbaae77f4932d827410587759145a5c9858196349eeeebebf3eeced",
+    "build/state-parent-v4-20261118/manifest.json": "be69ae81b518b091746ccb8f5bc0f3ef83266e6ea4dd53dd5ab40cd3298254bc",
+    "build/state-parent-v4-20261118/terminal.map": "cf569859e2fd1e8cdfde7ca547546ed2c07e1ed1aa056df0125911a6be77cc2f"
+  }
 }

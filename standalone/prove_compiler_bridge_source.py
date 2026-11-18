@@ -55,7 +55,7 @@ def main():
  if a.connection_package:
   assert a.lab_payload,'Connection package requires the complete lab/Help source closure'
   connection=json.loads((a.connection_package/'manifest.json').read_text())
-  assert connection['experimental_compiler_lease_bridge'] and connection['parent_render_capability'] in (23,24,25)
+  assert connection['experimental_compiler_lease_bridge'] and connection['parent_render_capability'] in (23,24,25,26)
   assert not connection['original_inputs'] and not connection['card_written']
   for leaf,digest in connection['files'].items():assert sha(a.connection_package/connection['dos_directory']/leaf)==digest,leaf
   for leaf,digest in payload['products'].items():assert connection['files'][leaf]==digest,leaf
