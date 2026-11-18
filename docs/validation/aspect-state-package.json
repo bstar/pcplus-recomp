@@ -1,0 +1,297 @@
+{
+  "checkpoint_verified": true,
+  "source_base_commit": "2aec3a7380c86697ce4a64a2b306bf596924c9fe",
+  "files": {
+    "ASPCOMP.EXE": "3ba7aea567cccff1d513d253f4cffa6a514ccc7d83db46a810a194b43ea23cd6",
+    "ASPECT.EXE": "6f5ef0f0ac72ac47df3a4935cb1dc949031add73cc27d396c8d171ac589455a4",
+    "LOCHELP.HLP": "280f5f40dd839945e0491326736456bb4b4a77fdddd868e950b1e53787f43acf",
+    "PCCHAT.OVL": "a4842f9febc66f7fe081a8fa0b3732f6f9c67048bcb72b87210c25e529623dc8",
+    "PCCOMP.OVL": "b16df6d096022ef432c7fee22c8e165074cd9e412d92a8da56ca2c10940a2e89",
+    "PCHELP.RTE": "f163169fd4c4bf2d47a3a78879b8cb3cc4d9d255aa467e892bbca5e6db5dc57b",
+    "PCKEYMAP.EXE": "c94d43ba028727ca323ca1d69729b456644fdac76bd7c0a184aeb5ae7f35628a",
+    "PCLINE.OVL": "9613b8c2be76147f9519d613a6162e50ac50d2e936bf72fd00e2dc27e431e66e",
+    "PCMETA.OVL": "5aa5d286fa6ec76e97827e0acb939ae3a3fd17eaf63831e47ee30db4c6667226",
+    "PCPLUS.HLP": "45c6cdba0f94387b4c9e61819271365d51368306b8963a6317d7f6524319c195",
+    "PRMEDIT.EXE": "1c4ad0636cc611569172315216b0dea13f983b174bbe5f01aa4fca9ad15b3f26",
+    "README.TXT": "707f0f0153d70d2dc79c6f47f330875c3482cb1a388c0d28c644fc529758bf3a",
+    "SETUP.BAT": "64cf713a48a4eccd86280c6c38b00753432baf46edec69027fe19ca2802caeb0",
+    "START.BAT": "c51a0901cd9c4ba8b9636ca97d540f2cda02420116411ba22266a907fabd3818",
+    "TERMINAL.EXE": "d8fd76747405ab80359e3e77a81a735e457653fd43cafb41a79adce15ce1026e",
+    "VERSION.TXT": "2f76ffc350da0a734b0f5db19f5d6c83c3eedc248af8022f6cdba25bc58614a2",
+    "XLTEDIT.EXE": "c3cba6626b148e01cf8cafa4da64d33299797b5a7d76aa7db6b39b07440c8c10"
+  },
+  "source_count": 1115,
+  "source_original_inputs": [],
+  "source_ancestor_git_unavailable": true,
+  "package_contract_cases": 51,
+  "cold_package_contract_cases": 51,
+  "cold_DOS_cases": 2,
+  "cold_termination_cases": 0,
+  "archive_sha256": "78de53bc90ffb45ada7c72c5d9b79c6622ca5a1c5d684d2a8454f614e27d888f",
+  "archive_bytes": 386747,
+  "DOS_checks": [
+    {
+      "launcher": "START",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "resident_observer": true,
+      "precompiled_before_terminal": false,
+      "native_line_port": false,
+      "meta_editor": false,
+      "keymap_editor": false,
+      "keymap_profiles": null,
+      "keymap_help": false,
+      "chat_help": false,
+      "packaged_ASPECT_clock_alarm_exercised": false,
+      "packaged_ASPECT_EMULATE_exercised": false,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ]
+    },
+    {
+      "launcher": "SETUP",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "resident_observer": true,
+      "precompiled_before_terminal": false,
+      "native_line_port": false,
+      "meta_editor": false,
+      "keymap_editor": false,
+      "keymap_profiles": null,
+      "keymap_help": false,
+      "chat_help": false,
+      "packaged_ASPECT_clock_alarm_exercised": false,
+      "packaged_ASPECT_EMULATE_exercised": false,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual magenta splash captured by independent timer"
+      ]
+    },
+    {
+      "launcher": "START",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "resident_observer": false,
+      "precompiled_before_terminal": false,
+      "native_line_port": false,
+      "meta_editor": false,
+      "keymap_editor": false,
+      "keymap_profiles": null,
+      "keymap_help": false,
+      "chat_help": false,
+      "packaged_ASPECT_clock_alarm_exercised": false,
+      "packaged_ASPECT_EMULATE_exercised": false,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "nested DOS source compilation produces exact ASX",
+        "script writes expected result"
+      ]
+    },
+    {
+      "launcher": "START",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "resident_observer": false,
+      "precompiled_before_terminal": true,
+      "native_line_port": false,
+      "meta_editor": false,
+      "keymap_editor": false,
+      "keymap_profiles": null,
+      "keymap_help": false,
+      "chat_help": false,
+      "packaged_ASPECT_clock_alarm_exercised": true,
+      "packaged_ASPECT_EMULATE_exercised": true,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "DOS precompilation produces exact ASX",
+        "script writes expected result"
+      ]
+    },
+    {
+      "launcher": "START",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "resident_observer": false,
+      "precompiled_before_terminal": false,
+      "native_line_port": true,
+      "meta_editor": false,
+      "keymap_editor": false,
+      "keymap_profiles": null,
+      "keymap_help": false,
+      "chat_help": false,
+      "packaged_ASPECT_clock_alarm_exercised": false,
+      "packaged_ASPECT_EMULATE_exercised": false,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual packaged Alt-P loads its sibling module and returns"
+      ]
+    },
+    {
+      "launcher": "START",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "resident_observer": false,
+      "precompiled_before_terminal": false,
+      "native_line_port": false,
+      "meta_editor": true,
+      "keymap_editor": false,
+      "keymap_profiles": null,
+      "keymap_help": false,
+      "chat_help": false,
+      "packaged_ASPECT_clock_alarm_exercised": false,
+      "packaged_ASPECT_EMULATE_exercised": false,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual packaged Alt-M loads its sibling module and returns"
+      ]
+    },
+    {
+      "launcher": "START",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "resident_observer": false,
+      "precompiled_before_terminal": false,
+      "native_line_port": false,
+      "meta_editor": false,
+      "keymap_editor": true,
+      "keymap_profiles": 7,
+      "keymap_help": true,
+      "chat_help": false,
+      "packaged_ASPECT_clock_alarm_exercised": false,
+      "packaged_ASPECT_EMULATE_exercised": false,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual packaged Alt-F8 saves only the selected KBD and returns; shorter private KBD unchanged"
+      ]
+    },
+    {
+      "launcher": "START",
+      "cpu": "8086",
+      "port": 3,
+      "irq": 5,
+      "resident_observer": false,
+      "precompiled_before_terminal": false,
+      "native_line_port": false,
+      "meta_editor": false,
+      "keymap_editor": false,
+      "keymap_profiles": null,
+      "keymap_help": false,
+      "chat_help": true,
+      "packaged_ASPECT_clock_alarm_exercised": false,
+      "packaged_ASPECT_EMULATE_exercised": false,
+      "checks": [
+        "launcher returns to DOS",
+        "PCPLUS environment restored",
+        "COM3/PIC/IRQ vectors restored",
+        "private PRM/DIR/KEY/KBD/XLT/FON unchanged",
+        "packaged binaries unchanged",
+        "actual packaged Chat/PCHELP round trip retains AB and exact frame/cursor"
+      ]
+    }
+  ],
+  "chat_setup_pair_controls": [
+    {
+      "case": "matched-current",
+      "passed": true,
+      "accepted": true
+    },
+    {
+      "case": "matched-legacy",
+      "passed": true,
+      "accepted": true
+    },
+    {
+      "case": "new-parent-old-editor",
+      "passed": true,
+      "accepted": false
+    },
+    {
+      "case": "old-parent-new-editor",
+      "passed": true,
+      "accepted": false
+    },
+    {
+      "case": "old-module-API",
+      "passed": true,
+      "accepted": false
+    },
+    {
+      "case": "undeclared-API0107",
+      "passed": true,
+      "accepted": false
+    },
+    {
+      "case": "missing-editor-field",
+      "passed": true,
+      "accepted": false
+    }
+  ],
+  "same_application_as_BBS_checkpoint": true,
+  "application_bytes_changed": false,
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "receipts": {
+    "build/state-committed-package-v2-20261118/manifest.json": "016022be6d988580fa13d210d0abf024074dce50a105c85a207c8f8c2d8ca45b",
+    "build/state-complete-cold-20261118/result.json": "7976c006dff790f968abe3b07a5fab160a33658244fd1c558d86d8432e55091e",
+    "build/state-committed-package-contract-v2-20261118/result.json": "927255391c6c02007206148c58ed43aab8106dcefe2cf404142451bbe5870da3",
+    "build/state-committed-archive-v2-20261118/result.json": "2892a1bc44a6d7c355c0224c4028aeeec8d286b4ff86bab1df4b7a13ffcaebed",
+    "build/state-committed-package-dos-v2-20261118/splash/result.json": "9b07cd3644b82b57054fc636ab5af3a1d8bb75833df4ac2e20242bcf5227786c",
+    "build/state-committed-package-dos-v2-20261118/setup/result.json": "9b213bc8e3237ecd560cb27feeb4aa6cd68a6fb9e033d25698f28710ae19d794",
+    "build/state-committed-package-dos-v2-20261118/source/result.json": "2f863f132a40f711f600e98b8a1ef9c320f5501c57834fb6274649945c67102b",
+    "build/state-committed-package-dos-v2-20261118/commands/result.json": "e7deb7c72728a6f4c24eb379ea3d467842c26d4ef12fdf273f85d3eebdc99180",
+    "build/state-committed-package-dos-v2-20261118/line/result.json": "629eedd54d6af73dc51fa5e5e858c1fb460294110584f54a0fc15c664a4108a3",
+    "build/state-committed-package-dos-v2-20261118/meta/result.json": "c373326fa0517d88750cd1cb71ac1b9835da261902a9613164cf8649b8a45aea",
+    "build/state-committed-package-dos-v2-20261118/keymap/result.json": "ffe8ac8fd0252d952f4aa7396a8e7dc17b1b0b8f797dc9d628729bcbb34ca068",
+    "build/state-committed-package-dos-v2-20261118/chat/result.json": "fa8c943f5b7d43b147d6d3f8685339a97102b04b1099bb57f971552235a9f12c",
+    "build/state-chat-pairs-20261118/result.json": "3adcfeaeb0bf10be16195b7b084433afa338a3970e5ecd20921dddda6423bb45",
+    "docs/validation/aspect-state-bbs.json": "e1af9a886f2e483564b3543d130c0bef2e14623be062380b37cb5f35af7e1aed",
+    "build/state-complete-committed-source-20261118.json": "975453a7c12da67e010848a585e3e04908b982fd5296346e41805155cea81811"
+  },
+  "sources": {
+    "standalone/record_compiler_bridge_package.py": "ababa4f135736e8a84b69f8ceec0e76e653da076fdf77fea4c66a62a15c225fa"
+  },
+  "remaining": [
+    "Controlled deployment preserving current private configuration and call history.",
+    "Physical memory admission and the modem/SIP/audio path to Enigma/Synchronet.",
+    "Full ASPECT/other emulations/protocols/Host parity."
+  ],
+  "actual_committed_Git_blobs_verified": 1115,
+  "lab_contract_checks": 13
+}

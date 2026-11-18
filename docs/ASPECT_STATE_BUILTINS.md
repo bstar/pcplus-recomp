@@ -91,11 +91,13 @@ HITKEY parent executable and all four modules byte for byte. The reviewed
 command-menu optimization options remain unchanged.
 
 Evidence paths and identities are recorded in
-[the validation receipt](validation/aspect-state-builtins.json). A capability26
-contract fixture is staged for validation; it is not a committed-source release
-or a replacement for the prepared capability24 candidate. Fresh full-package,
-BBS and hardware qualification remain separate gates. No installed selector,
-physical DOS machine or private service/configuration is changed.
+[the validation receipt](validation/aspect-state-builtins.json). The subsequent
+[complete capability26 connection checkpoint](ASPECT_STATE_CONNECTION.md)
+reproduces all17 files and the ZIP from1115 committed sources and passes fresh
+package/DOS/BBS checks. The earlier prefeature fixture retains its own identity.
+Hardware qualification and optional production directory-bank/live adoption
+routing remain separate gates. No installed selector, physical DOS machine or
+private service/configuration is changed.
 
 The six Host builtin services stay with the final Host stage. Complete ASPECT,
 other emulations/protocols and the full F01–F16 application requirements remain

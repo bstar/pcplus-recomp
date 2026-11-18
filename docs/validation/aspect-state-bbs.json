@@ -1,0 +1,124 @@
+{
+  "passed": true,
+  "kind": "current-byte-owned-BBS-qualification",
+  "release_eligible": false,
+  "products": {
+    "TERMINAL.EXE": "d8fd76747405ab80359e3e77a81a735e457653fd43cafb41a79adce15ce1026e",
+    "ASPECT.EXE": "6f5ef0f0ac72ac47df3a4935cb1dc949031add73cc27d396c8d171ac589455a4",
+    "ASPCOMP.EXE": "3ba7aea567cccff1d513d253f4cffa6a514ccc7d83db46a810a194b43ea23cd6"
+  },
+  "runtime": "build/menu-size-accepted-20261104/candidate",
+  "Enigma": {
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "sources_unchanged": true,
+      "PRM_unchanged": true,
+      "DOS_compiler_exact": true,
+      "both_script_logins": true,
+      "two_connections": true,
+      "stage_clean_before_second_login": true,
+      "real_carrier_notice": true,
+      "RX_complete_notice": true,
+      "exact_retry": true,
+      "only_expected_file": true,
+      "directory_two_connections": true,
+      "no_post_saved": true,
+      "runtime_source_only_startup": true,
+      "runtime_compile_files_retired": true,
+      "source_matching_retry_finish_search_raw_proxy": true,
+      "two_authenticated_sessions": true
+    },
+    "partial_bytes": 4096,
+    "exact_retry_bytes": 65539,
+    "CPU": "386",
+    "explicit_UMB": true,
+    "live_source": true,
+    "actual_product_runs": 1,
+    "missing_OO_counterexamples": 0,
+    "finish_gate_waived": false,
+    "independent_wire_audit": true,
+    "capture_controls": 16
+  },
+  "Synchronet": {
+    "checks": {
+      "size_probe_requested": true,
+      "harness": true,
+      "runtime_unchanged": true,
+      "server_static_inputs_unchanged": true,
+      "message_bodies_unchanged": true,
+      "no_message_mail_or_transfer_writes": true,
+      "actual_ASPECT_login": true,
+      "staged_inputs_unchanged": true,
+      "frozen_editor_frame": true,
+      "actual_CPR_boundary": true,
+      "fixture_CPR_consumed": true,
+      "expected_geometry_advertised": true,
+      "source_inputs_unchanged": true,
+      "stock_editor_entered": true,
+      "draft_aborted": true,
+      "insert_toggled_overtype": true,
+      "home_marker_at_line_start": true,
+      "end_marker_at_line_end": true,
+      "delete_erases_final_character": true,
+      "tab_advances_to_next_stop": true,
+      "page_keys_report_document_boundaries": true,
+      "ctrl_y_delete_line_response": true
+    },
+    "CPU": "8086",
+    "physical_rows": 25,
+    "logical_rows": 24,
+    "status_hidden": 0,
+    "NAWS": [
+      [
+        80,
+        24
+      ]
+    ],
+    "matched_cells": 1920,
+    "different_cells": 0,
+    "actual_CPR": [
+      5,
+      8
+    ]
+  },
+  "server_lifecycle": {
+    "ports_free_before_start": true,
+    "synchronet_stopped": "console q, exit0",
+    "enigma_stopped": "owned lab stop, exit0",
+    "ports_free_after": [
+      23231,
+      23233
+    ]
+  },
+  "receipts": {
+    "build/bbs-lab/results/enigma/state-builtins-carrier-20261118/carrier-checks.json": "f7137f362ad61dd48b2658ee0c1c99ca42cd2403f932044ea4efbba952ae5971",
+    "build/state-builtins-carrier-audit-20261118/result.json": "31c3b34b2ce89af53a05c8bdd2fb3008c22e98214255325576099b3149497d15",
+    "build/state-builtins-carrier-controls-20261118/result.json": "1fd5395882b8bb0f59e6701c9a24644da9a61b6868cab8f69ef7ec3427a538a3",
+    "build/bbs-lab/results/synchronet/state-builtins-screen-20261118/proxy-integration.json": "783db31fd9e5fd8dc4018bf9c5e1a9ab6792d6a1e2cb82c7f6ccf7d789513528",
+    "build/bbs-lab/results/synchronet/state-builtins-screen-20261118/screen-reference-audit.json": "b1d89a0d2109bea5cb63eb2f3238c897190795ea8773cb6a081c83c3d6e39b18",
+    "build/bbs-lab/results/synchronet/state-builtins-screen-20261118/size-probe-screen-audit.json": "545bebbc9a8ffff36be190a4f035cb3647b7dfe030f308aef45c4c83d8ac4394",
+    "build/state-builtins-bbs-v4-20261118/result.json": "f3064f87b353fb8b4fa7cac962c05a905c0bbb89eff972e8069e8794b41ec1a2"
+  },
+  "sources": {
+    "lab/bbs/test_proxy_carrier_dos.py": "64d1f9a13cfae259309ca9aa36ff9967ebfc1083e6bb7ebd570a6007eea331d3",
+    "lab/bbs/audit_proxy_carrier.py": "fb5ea1d5f65f7550be3f11ca68c6f9a93a48e8f98bdd803bec0a7c73cd56d381",
+    "lab/bbs/check_proxy_carrier_controls.py": "338c4eac1f559a2daf29afac23eba663b807407903388334e5eb5a55d3696208",
+    "lab/bbs/test_synchronet_screen_reference_dos.py": "9db5527ad18f68c4feabf377b20e511018fbc9eb68083f78a19e5bc4db1611e6",
+    "lab/bbs/audit_screen_reference.py": "82ea451cd4a5bc24a5194fcfa183e9d51ebf6b2c33bfd9c41ac8d99c34071d22",
+    "lab/bbs/audit_size_probe_screen.py": "0b6da43fad5632ba3dd2c6ed7cda76f812940e0a680c509b5d7c82d3e81b33fb",
+    "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+    "lab/bbs/synchronet.py": "974117a9b4971bb1a13dc9483aee08b77bcc4895097133dc7147c18150300dcc"
+  },
+  "original_inputs": [],
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "scope": "Fresh exact-byte runs on parentv4/childoverlayv3/compiler through owned stock loopback Enigma and Synchronet and actual SynthModem Telnet proxy. Enigma passed18carrier/source/CRC/finish/search/exit checks, independent wire audit and16capture controls; Synchronet passed22editor checks and independent1920cell/CPR/NAWS audits. Both temporary owned upstream servers stopped and ports23231/23233 rechecked free. Lab payload metadata is a prefeature contract fixture; this is binary qualification, not committed release or full application/Host/hardware/SIP/audio acceptance. Exact application bytes also match the separately committed2aec3a7 17-file package; package/cold-source/DOS evidence is recorded separately. No physical or full-original-feature completion claim.",
+  "schema": 1,
+  "checkpoint_verified": true,
+  "renderer_capability": 26,
+  "source_base_commit": "2aec3a7380c86697ce4a64a2b306bf596924c9fe",
+  "temporary_owned_labs_stopped": true,
+  "live_BBS_contacted": false
+}

@@ -1334,7 +1334,7 @@
   "physical_verified": false,
   "release_qualified": false,
   "remaining": [
-    "Committed complete capability26 package/archive qualification and fresh BBS binding remain separate.",
+    "Controlled deployment and physical hardware qualification remain separate; software connection qualification is recorded in aspect-state-package.json.",
     "Optional production directory bank/live adopted resource routing remains unproven despite supplemental source-component execution.",
     "Six Host operands remain deferred to final Host stage.",
     "Full ASPECT/other emulation/protocol and F01\u2013F16 original application parity remain open."
@@ -1353,5 +1353,23 @@
     "build/state-child-overlay-v3-20261118/manifest.json": "630ef8f78cbaae77f4932d827410587759145a5c9858196349eeeebebf3eeced",
     "build/state-parent-v4-20261118/manifest.json": "be69ae81b518b091746ccb8f5bc0f3ef83266e6ea4dd53dd5ab40cd3298254bc",
     "build/state-parent-v4-20261118/terminal.map": "cf569859e2fd1e8cdfde7ca547546ed2c07e1ed1aa056df0125911a6be77cc2f"
+  },
+  "source_base_commit": "d974c9e458544b1d6fbb81ef3801a707aaee2177",
+  "separate_software_connection_checkpoint": {
+    "path": "docs/validation/aspect-state-package.json",
+    "source_base_commit": "2aec3a7380c86697ce4a64a2b306bf596924c9fe",
+    "complete_cold_sources": 1115,
+    "package_files": 17,
+    "package_controls": 51,
+    "DOS_workflows": 8,
+    "physical_verified": false
+  },
+  "combined_profile_deferred_WHEN": {
+    "receipt": "build/state-hitkey-when-20261118/result.json",
+    "sha256": "b2e33ce6e6a7060813c47272e1aedd3b3002c9c47be368bafaee9aef10361e9b",
+    "cases": 2,
+    "checks": 96,
+    "HITKEY_reads": 4,
+    "live_GET_modal_script_execution_verified": false
   }
 }

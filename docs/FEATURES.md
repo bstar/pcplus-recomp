@@ -43,7 +43,8 @@ WORD normalizer, with real standalone BIOS and matching capability25 parent
 sampling. Both compilers, native/original inputs, DOS client/VM, source/GET,
 post-GET WHEN, nested Help and cold reproduction pass. Original KEYS ON disables
 automatic local-key dispatch; explicit HITKEY remains readable. The current GET
-loop defers WHEN script execution until field retirement. New release/BBS and
+loop defers WHEN script execution until field retirement. The combined
+capability26 connection checkpoint now covers its package/BBS qualification;
 hardware gates, remaining Host services and full parity remain open.
 
 [FROMDDIR and MONO](ASPECT_STATE_BUILTINS.md) now have opt-in compiler/runtime
@@ -51,9 +52,17 @@ bindings and a matching capability26 parent. FROMDDIR retains the actual
 automatic-script entry across EXECUTE/macros and clears at manual/directory
 entry boundaries; MONO reads the physical display cache. Exact native/original
 comparisons, compiler and VM suites, actual DOS client/source/GET/Help and cold
-source reproduction pass. The staged contract fixture does not replace the
-prepared capability24 candidate. Complete package/BBS/hardware qualification,
-the six final-stage Host operands and full F01–F16 parity remain open.
+source reproduction pass. Physical qualification, the six final-stage Host
+operands and full F01–F16 parity remain open.
+The subsequent [capability26 connection candidate](ASPECT_STATE_CONNECTION.md)
+now reproduces all17 files and its ZIP from1115 actual committed Git blobs,
+passes51 package controls,13 lab controls and eight packaged DOS workflows,
+and passes fresh Enigma18/Synchronet22 plus wire/cell/CPR/NAWS audits. The
+prefeature contract fixture remains separate. The installed selector and
+capability24 candidate are unchanged; physical/full-feature gates remain open.
+The [next ASPECT recovery families](ASPECT_RECOVERY_NEXT.md) are native local
+screen/cursor commands, scripted connection control and script-owned transfers;
+the remaining work extends well beyond builtin tables.
 
 [Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS
