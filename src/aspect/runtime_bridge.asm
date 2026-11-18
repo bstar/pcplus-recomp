@@ -9,6 +9,12 @@ extern aspect_enumeration_attributes,aspect_enumeration_date,aspect_enumeration_
 extern aspect_enumeration_filename,aspect_enumeration_basename,aspect_enumeration_time
 BITS 16
 CPU 8086
+%ifdef ASPECT_STATE_BUILTINS
+%define ASPECT_TERMINAL_CACHE
+%endif
+%ifdef ASPECT_TERMINAL_BUILTINS
+%define ASPECT_TERMINAL_CACHE
+%endif
 %assign external_commands_enabled 0
 %ifdef ASPECT_EXTERNAL_COMMANDS
 %ifndef ASPECT_EXTERNAL_PROCESS
@@ -388,6 +394,12 @@ aspect_operand_builtin_integer:
  cmp word [bp+4],25
  je .hitkey
 %endif
+%ifdef ASPECT_STATE_BUILTINS
+ cmp word [bp+4],24
+ je .terminal
+ cmp word [bp+4],26
+ je .terminal
+%endif
 %ifdef ASPECT_TERMINAL_BUILTINS
  cmp word [bp+4],0
  je .terminal
@@ -471,7 +483,7 @@ extern _runtime_hitkey_refresh,_runtime_hitkey_value
  mov ax,[_runtime_hitkey_value]
  jmp .done
 %endif
-%ifdef ASPECT_TERMINAL_BUILTINS
+%ifdef ASPECT_TERMINAL_CACHE
 extern _runtime_terminal_refresh
 extern aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
 extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
@@ -482,6 +494,18 @@ extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_term
  or ax,ax
  jnz fail
  mov bx,[bp+4]
+%ifdef ASPECT_STATE_BUILTINS
+ cmp bx,24
+ jne .terminal_mono
+ mov bx,9
+ jmp .terminal_ready
+.terminal_mono:
+ cmp bx,26
+ jne .terminal_screen
+ mov bx,10
+ jmp .terminal_ready
+.terminal_screen:
+%endif
  or bx,bx
  jz .terminal_ready
  sub bx,11
@@ -492,6 +516,10 @@ extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_term
 .terminal_getters:
  dw aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
  dw aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+%ifdef ASPECT_STATE_BUILTINS
+extern aspect_state_fromddir,aspect_state_mono
+ dw aspect_state_fromddir,aspect_state_mono
+%endif
 %endif
 %ifdef ASPECT_DIRECTORY_PROTO
 extern aspect_directory_builtin_proto

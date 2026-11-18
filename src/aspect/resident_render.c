@@ -329,7 +329,13 @@ static unsigned word_query(unsigned operation,unsigned index,unsigned *output)
  *output=value;return 0;
 }
 unsigned __cdecl aspect_render_terminal_query(unsigned index,unsigned *output)
-{return index>8?ASPECT_RUN_OPERAND:word_query(29,index,output);}
+{
+#ifdef ASPECT_STATE_BUILTINS_PARENT
+ return index>10?ASPECT_RUN_OPERAND:word_query(29,index,output);
+#else
+ return index>8?ASPECT_RUN_OPERAND:word_query(29,index,output);
+#endif
+}
 #ifdef ASPECT_HITKEY_PARENT
 unsigned __cdecl aspect_render_hitkey_query(unsigned *output)
 {return word_query(30,0,output);}

@@ -1,7 +1,8 @@
 # Remaining recovered ASPECT builtin tables
 
-After the [HITKEY checkpoint](ASPECT_HITKEY.md), eight services in the recovered integer,
-long and string callback tables still lack compiler/runtime bindings. This is
+After the [state-builtin checkpoint](ASPECT_STATE_BUILTINS.md), six Host services
+in the recovered integer, long and string callback tables still lack
+compiler/runtime bindings. This is
 an inventory of those tables, not the remaining work for the whole language.
 The maintained compiler maps and `runtime_bridge.asm` remain authoritative for
 implemented dispatch. Reserved procedure keywords alone do not implement an
@@ -10,15 +11,13 @@ expression operand.
 | Kind/selector | Operand | Overlay16 getter | Observed read or operation |
 | --- | --- | --- | --- |
 | Integer11 | `$H_LEVEL` | D9E3 | Sign-extends the byte at DS5B38. |
-| Integer24 | `FROMDDIR` | DA18 | Reads the full WORD at DS4AFE. |
-| Integer26 | `MONO` | DA24 | Reads physical display flag WORD DS7A86. |
 | Long2 | `$H_BAUD` | DA72 | Uses WORD index DSE458 in DWORD baud table DS3270; returns DX:AX. |
 | String15 | `$H_ELAPSED` | DAEB | Returns shared pointer DS5B1A. |
 | String16 | `$H_NAME` | DAEF | Returns shared pointer DS5AE2. |
 | String17 | `$H_OFFLINE` | DAF3 | Returns shared pointer DS5B0E. |
 | String18 | `$H_ONLINE` | DAF7 | Returns shared pointer DS5B02. |
 
-The remaining integer getters and the implemented HITKEY have retained REA observations:
+The Host integer getter and the implemented non-Host operands have retained REA observations:
 
 - `$H_LEVEL`: `ev_62c3781124117a26634c7eac6b586776b3f0c131ef8349c5a0ce4310b161db9f`.
 - `FROMDDIR`: `ev_96a50639e4f0c4935b6840338745f63fdf6291ee495118fc722560e35e3d7e1e`.
@@ -42,9 +41,9 @@ identifier error of the `$`-prefixed terminal operands. The retained private
 draft/report is SHA256
 `e9f8e64d04e688561602be1a364bf6e1dd1c45aef511d6c5b9b4d2e2c577ff10`,
 under `analysis/aspect-nonhost-builtins-20261118/`. The maintained compilers now
-implement HITKEY and check its ten public oracle cases. FROMDDIR and MONO remain
-unbound; their twenty private oracle cases are not counted as passing maintained
-compiler coverage.
+implement all three operands. HITKEY's ten and FROMDDIR/MONO's twenty public
+oracle cases pass both maintained compilers. Their execution and producer
+evidence is separate from compiler syntax coverage.
 
 The implemented `HITKEY` has recovered dependencies in `reconstruction/keyboard/core.asm` and
 the caller-cleanup adapter in `src/keyboard/api.asm`. Peek evidence is
@@ -60,7 +59,8 @@ observation when a hardware key arrives asynchronously. The capability25 parent
 captures one normalized WORD for its paired replies. Two independently peeked
 bytes would combine different key states.
 
-`FROMDDIR` needs the launch-origin lifecycle. The original directory producer
+`FROMDDIR` implements the launch-origin lifecycle in the opt-in state profile.
+The original directory producer
 clears DS4AFE on directory entry and sets it for a nonblank automatic script
 (`ev_186cf7e819989310ab103a002a93c6fd62517af38d1568ce7d4d0885a258baa9`).
 The current `script_directory_policy` also exports retained selection for manual
@@ -75,8 +75,10 @@ later macro invocation can inherit the entry until manual reset or directory
 entry. The pinned original has four direct literal references to4AFE: these
 three writes and the getter; that search does not rule out every indirect write.
 Resetting inside the shared `terminal_script_start` would lose macro inheritance.
+The maintained parent therefore uses a separate retained `_aspect_fromddir`
+WORD and changes it at the explicit directory/automatic/manual boundaries.
 
-`MONO` must use DS7A86, not `attributes_monochrome` at original DS8FF6. Its
+`MONO` uses DS7A86, not `attributes_monochrome` at original DS8FF6. Its
 producer examines the BDA CRT-controller port's low byteB4
 (`ev_f023afd9e2ef7182dbaf48f2f4693299a3627322109a691056e99c4ce4e7eb6c`).
 The current parent's correct live field is `_display_rows_mono`, alias

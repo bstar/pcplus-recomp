@@ -5,6 +5,18 @@
 #include <stdlib.h>
 #include "resident_render.c"
 
+#ifdef ASPECT_STATE_BUILTINS_PARENT
+#define TERMINAL_WORD_COUNT 11U
+#define EXPECTED_CAPABILITY 26U
+#define GUARD_INDEX(i) (9U+((i)&1U))
+#define RETRY_INDEX_COUNT 11U
+#else
+#define TERMINAL_WORD_COUNT 9U
+#define EXPECTED_CAPABILITY 24U
+#define GUARD_INDEX(i) 0U
+#define RETRY_INDEX_COUNT 1U
+#endif
+
 unsigned aspect_serial_active,runtime_error,runtime_set_duplex_changed,runtime_serial_local_echo;
 unsigned runtime_serial_break_units,runtime_keyboard_mode,runtime_serial_error;
 unsigned aspect_serial_compile_pause_owned,runtime_compiler_scope_state;
@@ -66,43 +78,46 @@ int main(void)
  unsigned i,j,phase,output;unsigned *owners[12];
  context="prepare-and-attach";setup();attached=0;
  ck(!aspect_render_prepare(1,2,3));
- ck(ASPECT_RENDER_CAP_VERSION==24&&aspect_render_client_record.version==24);
+ ck(ASPECT_RENDER_CAP_VERSION==EXPECTED_CAPABILITY&&aspect_render_client_record.version==EXPECTED_CAPABILITY);
  ck(aspect_render_client_record.magic==ASPECT_RENDER_CLIENT_MAGIC&&aspect_render_client_record.token==3);
  replies[0]=0;ck(!aspect_render_attach()&&attached==1);
  context="full-word-values";
- for(i=0;i<9;++i)for(j=0;j<sizeof(words)/sizeof(words[0]);++j){
+ for(i=0;i<TERMINAL_WORD_COUNT;++i)for(j=0;j<sizeof(words)/sizeof(words[0]);++j){
   setup();expected_index=i;replies[0]=0xf000|(words[j]&255);replies[1]=0xf000|(words[j]>>8);
   query(0,2,words[j]);ck(check_calls==3);
  }
  context="bad-response-preserves-destination";
  for(phase=0;phase<2;++phase)for(i=0;i<sizeof(invalid)/sizeof(invalid[0]);++i){
-  setup();expected_index=i%9;replies[phase]=invalid[i];
+  setup();expected_index=i%TERMINAL_WORD_COUNT;replies[phase]=invalid[i];
   query(invalid[i]&&invalid[i]<=14?invalid[i]:ASPECT_RUN_STATE,phase+1,0);
   ck(check_calls==phase+2);
  }
  context="pre-and-post-client-faults";
- for(i=1;i<=3;++i){setup();bad_check_at=i;query(ASPECT_RUN_STATE,i-1,0);ck(check_calls==i);}
+ for(i=1;i<=3;++i){setup();expected_index=GUARD_INDEX(i);bad_check_at=i;query(ASPECT_RUN_STATE,i-1,0);ck(check_calls==i);}
  context="post-check-overrides-typed-error";
  for(phase=0;phase<2;++phase)for(i=1;i<=14;++i){
-  setup();replies[phase]=i;bad_check_at=phase+2;query(ASPECT_RUN_STATE,phase+1,0);
+  setup();expected_index=GUARD_INDEX(i);replies[phase]=i;bad_check_at=phase+2;query(ASPECT_RUN_STATE,phase+1,0);
  }
- context="detached";setup();attached=0;query(ASPECT_RUN_STATE,0,0);ck(!check_calls);
+ context="detached";setup();expected_index=GUARD_INDEX(0);attached=0;query(ASPECT_RUN_STATE,0,0);ck(!check_calls);
  context="serial-state";
- for(i=0;i<3;++i)if(i!=1){setup();aspect_serial_active=i;query(ASPECT_RUN_SERIAL,0,0);}
+ for(i=0;i<3;++i)if(i!=1){setup();expected_index=GUARD_INDEX(i/2);aspect_serial_active=i;query(ASPECT_RUN_SERIAL,0,0);}
  context="individual-private-owners";
  owners[0]=&program_owned;owners[1]=&snapshot_owned;owners[2]=&field_owned;owners[3]=&field_wait;
  owners[4]=&confirm_wait;owners[5]=&window_owned;owners[6]=&confirm_owned;owners[7]=&policy_wait;
  owners[8]=&keyboard_wait;owners[9]=&key_wait;owners[10]=&label_wait;owners[11]=&window_wait;
- for(i=0;i<12;++i){setup();*owners[i]=1;query(ASPECT_RUN_STATE,0,0);ck(*owners[i]==1);}
+ for(i=0;i<12;++i){setup();expected_index=GUARD_INDEX(i);*owners[i]=1;query(ASPECT_RUN_STATE,0,0);ck(*owners[i]==1);}
  context="invalid-index";
- for(i=9;i<256;++i){setup();expected_index=i;query(ASPECT_RUN_OPERAND,0,0);ck(!check_calls);}
+ for(i=TERMINAL_WORD_COUNT;i<256;++i){setup();expected_index=i;query(ASPECT_RUN_OPERAND,0,0);ck(!check_calls);}
  setup();expected_index=65535;query(ASPECT_RUN_OPERAND,0,0);ck(!check_calls);
  context="invalid-output";setup();output=0x7654;
- ck(aspect_render_terminal_query(0,0)==ASPECT_RUN_OPERAND);
- ck(aspect_render_terminal_query(0,(unsigned *)65535U)==ASPECT_RUN_OPERAND);
+ ck(aspect_render_terminal_query(GUARD_INDEX(1),0)==ASPECT_RUN_OPERAND);
+ ck(aspect_render_terminal_query(GUARD_INDEX(1),(unsigned *)65535U)==ASPECT_RUN_OPERAND);
  ck(!requests&&!check_calls&&output==0x7654&&!side_effects);
  /* A refusal must leave no partial word or persistent owner behind. */
- context="retry-after-second-byte-refusal";setup();replies[1]=ASPECT_RUN_OPERAND;query(ASPECT_RUN_OPERAND,2,0);
- requests=check_calls=0;replies[0]=0xf0ef;replies[1]=0xf0be;query(0,2,0xbeef);
+ context="retry-after-second-byte-refusal";
+ for(i=0;i<RETRY_INDEX_COUNT;++i){
+  setup();expected_index=i;replies[1]=ASPECT_RUN_OPERAND;query(ASPECT_RUN_OPERAND,2,0);
+  requests=check_calls=0;replies[0]=0xf0ef;replies[1]=0xf0be;query(0,2,0xbeef);
+ }
  printf("TERMINAL_QUERY_CLIENT %u cases %u checks 0 failures\r\n",cases,checks);return 0;
 }

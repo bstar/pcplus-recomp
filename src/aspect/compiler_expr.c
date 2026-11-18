@@ -92,6 +92,8 @@ unsigned aspect_compiler_expression_symbol(aspect_compiler_expression *e,unsigne
   {"success",0,27},
   {"waitfor",0,28},
   {"hitkey",0,25},
+  {"fromddir",0,24},
+  {"mono",0,26},
   {"$d_entry",0,3},
   {"$d_baud",1,0},
   {"$d_ldate",3,0},

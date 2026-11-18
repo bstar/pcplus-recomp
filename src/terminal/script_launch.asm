@@ -43,8 +43,7 @@ terminal_directory_script_connected:
  jz .startup_script
  cmp ax,2
  jne .done
- call terminal_script_start
- jmp .done
+ jmp .launch
 .startup_script:
 %endif
  mov si,terminal_directory_context+DLC_RECORD+0x34
@@ -89,6 +88,13 @@ terminal_directory_script_connected:
 .terminate:
  xor al,al
  stosb
+.launch:
+%ifdef ASPECT_STATE_BUILTINS
+ ; Native FROMDDIR records the full entry before the loader, even on failure.
+ ; Manual prompts and directory entry clear it; KEY macros/EXECUTE retain it.
+ mov ax,[terminal_directory_context+DLC_ENTRY]
+ mov [_aspect_fromddir],ax
+%endif
  call terminal_script_start
 .done:
  pop es
@@ -507,6 +513,10 @@ terminal_script_complete:
  je .bad
 .done: ret
 SEGMENT _DATA
+%ifdef ASPECT_STATE_BUILTINS
+global _aspect_fromddir
+_aspect_fromddir: dw 0
+%endif
 global _script_handoff,_script_divisor,_script_lcr
 _script_handoff:
 script_handoff: times 14 dw 0

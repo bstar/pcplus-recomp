@@ -7,7 +7,7 @@ import build_aspect_runner as runner
 ROOT=program.ROOT;OUT=ROOT/'build/aspect-process';sha=program.sha
 
 
-def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False,defer_help_resource=False,disk_script_snapshots=False,overlay_ready=False,early_help_model=False,help_parent_snapshot=False,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False,terminal_builtins=False,aspect_hitkey=False):
+def main(driver=None,parent_render=False,output=None,break_owner=False,notice_bank=False,notice_sound=False,notice_input=False,notice_help=False,help_resource=False,serial_bank=False,register_handoff=False,custom_irq=False,file_open_probe=False,heap_growth_bytes=None,program_result_probe=False,snapshot_lease=False,lease_fault_phase=None,lease_fault_foreign_ds=False,lease_fault_kind='divide',defer_script_buffers=False,buffer_probe=False,alarm_vm=False,emulate_vm=False,get_display=False,get_policy=False,get_vm=False,near_globals=False,compiler_parent_lease=False,defer_help_resource=False,disk_script_snapshots=False,overlay_ready=False,early_help_model=False,help_parent_snapshot=False,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False,terminal_builtins=False,aspect_hitkey=False,aspect_state_builtins=False):
     assert not help_parent_snapshot or (overlay_ready and early_help_model and compiler_parent_lease)
     assert not early_help_model or defer_help_resource
     assert not defer_help_resource or help_resource
@@ -176,6 +176,7 @@ def main(driver=None,parent_render=False,output=None,break_owner=False,notice_ba
     extension['clock_builtins']=clock_builtins
     extension['terminal_builtins']=terminal_builtins
     extension['aspect_hitkey']=aspect_hitkey
+    extension['aspect_state_builtins']=aspect_state_builtins
     extension['alarm_vm']=alarm_vm
     extension['emulate_vm']=emulate_vm
     extension['get_display']=get_display
@@ -206,6 +207,7 @@ if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--parent-render',action='store_true');parser.add_argument('--fault-diagnostic',action='store_true')
     parser.add_argument('--break-owner',action='store_true')
+    parser.add_argument('--state-builtins',action='store_true',help='Enable FROMDDIR/MONO cache consumers in the raw process profile')
     parser.add_argument('--notice-input',action='store_true')
     parser.add_argument('--notice-help',action='store_true')
     parser.add_argument('--help-resource',action='store_true')
@@ -215,6 +217,7 @@ if __name__=='__main__':
     parser.add_argument('--notice-sound',action='store_true',help='Experimental parent sound policy and serviced speaker binding')
     parser.add_argument('--notice-bank',action='store_true',help='Bind banked PROGRAM error notices in a separate experimental parent')
     args=parser.parse_args()
+    if args.state_builtins:assert not (args.parent_render or args.notice_bank or args.serial_bank or args.fault_diagnostic or args.break_owner)
     if args.notice_sound:assert args.notice_bank
     if args.notice_input:assert args.notice_sound
     if args.notice_help:assert args.notice_input
@@ -228,4 +231,4 @@ if __name__=='__main__':
         assert not args.break_owner
         main(ROOT/'standalone/aspect_notice_driver.c' if args.fault_diagnostic else None,parent_render=True,output=ROOT/(('build/aspect-help-resource-fault' if args.fault_diagnostic else 'build/aspect-help-resource-parent') if args.help_resource else ('build/aspect-notice-help-fault' if args.fault_diagnostic else 'build/aspect-notice-help-parent') if args.notice_help else ('build/aspect-notice-input-fault' if args.fault_diagnostic else 'build/aspect-notice-input-parent') if args.notice_input else ('build/aspect-notice-sound-fault' if args.fault_diagnostic else 'build/aspect-notice-sound-parent') if args.notice_sound else ('build/aspect-notice-fault' if args.fault_diagnostic else 'build/aspect-notice-parent')),notice_bank=True,notice_sound=args.notice_sound,notice_input=args.notice_input,notice_help=args.notice_help,help_resource=args.help_resource)
     elif args.fault_diagnostic:main(ROOT/'standalone/aspect_fault_driver.c',parent_render=True,output=ROOT/('build/aspect-fault-break' if args.break_owner else 'build/aspect-fault'),break_owner=args.break_owner)
-    else:main(parent_render=args.parent_render,output=ROOT/'build/aspect-process-break' if args.break_owner else None,break_owner=args.break_owner)
+    else:main(parent_render=args.parent_render,output=ROOT/'build/aspect-process-break' if args.break_owner else None,break_owner=args.break_owner,aspect_state_builtins=args.state_builtins)

@@ -60,6 +60,13 @@ CPU 8086
  %undef RENDER_CAPABILITY
  %define RENDER_CAPABILITY 25
 %endif
+%ifdef ASPECT_STATE_BUILTINS
+ %ifndef ASPECT_HITKEY
+  %error State builtins require the complete HITKEY renderer
+ %endif
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 26
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
 extern terminal_program_active,terminal_program_kind
@@ -503,7 +510,11 @@ extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_term
  jnz .done
  mov ax,bx
  and ax,0xfeff
+%ifdef ASPECT_STATE_BUILTINS
+ cmp ax,10
+%else
  cmp ax,8
+%endif
  ja .operand
  mov si,bx
  mov bx,ax
@@ -519,6 +530,10 @@ extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_term
 .terminal_getters:
  dw aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
  dw aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+%ifdef ASPECT_STATE_BUILTINS
+ extern aspect_state_fromddir,aspect_state_mono
+ dw aspect_state_fromddir,aspect_state_mono
+%endif
 %endif
 %ifdef ASPECT_HITKEY
 extern terminal_hitkey_sample,keyboard_queue_count,keyboard_queue_index

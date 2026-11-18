@@ -44,7 +44,16 @@ sampling. Both compilers, native/original inputs, DOS client/VM, source/GET,
 post-GET WHEN, nested Help and cold reproduction pass. Original KEYS ON disables
 automatic local-key dispatch; explicit HITKEY remains readable. The current GET
 loop defers WHEN script execution until field retirement. New release/BBS and
-hardware gates, remaining FROMDDIR/MONO/Host services and full parity remain open.
+hardware gates, remaining Host services and full parity remain open.
+
+[FROMDDIR and MONO](ASPECT_STATE_BUILTINS.md) now have opt-in compiler/runtime
+bindings and a matching capability26 parent. FROMDDIR retains the actual
+automatic-script entry across EXECUTE/macros and clears at manual/directory
+entry boundaries; MONO reads the physical display cache. Exact native/original
+comparisons, compiler and VM suites, actual DOS client/source/GET/Help and cold
+source reproduction pass. The staged contract fixture does not replace the
+prepared capability24 candidate. Complete package/BBS/hardware qualification,
+the six final-stage Host operands and full F01–F16 parity remain open.
 
 [Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS

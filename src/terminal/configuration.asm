@@ -45,6 +45,10 @@ terminal_select_directory:
  jz .invalid
  test word [terminal_option_mask],32
  jnz .invalid
+%ifdef ASPECT_STATE_BUILTINS
+ extern _aspect_fromddir
+ mov word [_aspect_fromddir],0
+%endif
  cmp word [terminal_directory_entry],0
  jne .selected
  call terminal_directory_choose

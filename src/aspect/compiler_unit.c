@@ -83,7 +83,7 @@ static int type(const aspect_compiler_line *line,unsigned *parameter)
 }
 static unsigned reserved(const char *name)
 {
- static const char *names[]={"text","comdata","connected","failure","forever","found","success","waitfor","hitkey",
+ static const char *names[]={"text","comdata","connected","failure","forever","found","success","waitfor","hitkey","fromddir","mono",
  "$d_entry","$d_ldate","$d_kbdfile","$d_metakey","$d_name","$d_note","$d_phone","$d_pword","$d_script","$null","$d_baud","$fattr","$fdate","$fext","$filename","$fname","$ftime","$fsize",
  "$d_databit","$d_duplex","$d_mode","$d_parity","$d_port","$d_stopbit","$d_term","$d_total","$d_proto","$date","$time0","$time1","$col","$row","$scrncols","$scrnrows","$termbold","$termdim","$termnorm","$termrev","$termuline"};
  unsigned i;for(i=0;i<sizeof(names)/sizeof(names[0]);++i)if(!strcmp(name,names[i]))return 1;

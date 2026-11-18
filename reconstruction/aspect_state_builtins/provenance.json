@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "analysis_image_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+  "overlay": 16,
+  "integer_table_DS": "0x4cb6",
+  "source": "src/aspect/state_builtins.asm",
+  "units": [
+    {
+      "name": "fromddir",
+      "selector": 24,
+      "entry": "0xda18",
+      "original_DS_word": "0x4afe",
+      "resident_thunk": "0xcd17",
+      "inputs": 65536,
+      "bytes": 4,
+      "binary_sha256": "e4c62a2fe13b0a965749ff965196346b12dd463f9b8a68e599229be856b26081",
+      "evidence_id": "ev_96a50639e4f0c4935b6840338745f63fdf6291ee495118fc722560e35e3d7e1e"
+    },
+    {
+      "name": "mono",
+      "selector": 26,
+      "entry": "0xda24",
+      "original_DS_word": "0x7a86",
+      "resident_thunk": "0xbc67",
+      "inputs": 65536,
+      "bytes": 4,
+      "binary_sha256": "7e0b190fd797461d494ef47560bf1b078cc67a11f30b347fabcdb05003268aa1",
+      "evidence_id": "ev_0a3f743642ba0d7946d987ba75937b67d1d5cdbc1c7ce217c88f7ff417c17809"
+    }
+  ],
+  "producer_evidence": {
+    "fromddir_directory": "ev_186cf7e819989310ab103a002a93c6fd62517af38d1568ce7d4d0885a258baa9",
+    "fromddir_manual_clear": "ev_fed07cee314ea4408ae7f955c2b21d040fc7a9ffdbc91efbad33596d7c6d65b9",
+    "mono_geometry": "ev_f023afd9e2ef7182dbaf48f2f4693299a3627322109a691056e99c4ce4e7eb6c"
+  },
+  "macro_origin_preservation_evidence": "ev_67be257bd0d48b0add66901375f076ebf431f22ea716cc697aa4eac51d7ed230",
+  "semantics": [
+    "FROMDDIR reads the full retained entry WORD, initialized0, cleared on directory entry/manual AltF5 prompt, assigned the returned entry before nonblank automatic script invocation. KEY-kind0 macros and EXECUTE retain it.",
+    "MONO reads the cached physical display WORD produced by original geometry6D1A: clear0 then increment iff the low byte of BDA0040:0063 isB4. It is independent of attributes_monochrome.",
+    "Flat/native getters are four bytes MOV AX,[nativeDSword];RET. OMF uses the live parent symbols or the child owned reply cache."
+  ],
+  "limitations": [
+    "Static byte/slot/thunk comparison is optional and outside normal application builds; no original producer or synthetic analysis executable is executed.",
+    "Lifecycle and parent transport correctness require separate maintained-source execution evidence.",
+    "The admitted current renderer is color mode3. Reading the correct physical field does not add monochrome terminal rendering or prove physical hardware behavior."
+  ]
+}
