@@ -45,6 +45,9 @@ _line_overlay_state: times 16 dw 0
 %ifdef TERMINAL_COMPILER_ARENA
 compiler_leaf: db 'PCCOMP.OVL',0
 %endif
+%ifdef TERMINAL_CONNECTION_ARENA
+connection_leaf: db 'PCCONN.OVL',0
+%endif
 meta_leaf: db 'PCMETA.OVL',0
 leaf: db 'PCLINE.OVL',0
 meta_loading: db 'Loading Meta Keys... Esc cancels.',0
@@ -75,6 +78,13 @@ open_module:
  cmp word [cs:owner_kind],1
  je .selected_leaf
  mov si,meta_leaf
+%ifdef TERMINAL_CONNECTION_ARENA
+ cmp word [cs:owner_kind],5
+ jne .not_connection
+ mov si,connection_leaf
+ jmp short .selected_leaf
+.not_connection:
+%endif
 %ifdef TERMINAL_COMPILER_ARENA
  cmp word [cs:owner_kind],4
  jne .selected_leaf
@@ -715,6 +725,10 @@ _line_port_front_poll:
  cmp word [cs:owner_kind],4
  je .load_admitted ; Authenticated flow-held compiler request owns this load.
 %endif
+%ifdef TERMINAL_CONNECTION_ARENA
+ cmp word [cs:owner_kind],5
+ je .load_admitted ; The connection front checked its own admission.
+%endif
  cmp word [cs:owner_kind],1
  je .load_admitted
  call far _recording_ui_ready
@@ -822,6 +836,10 @@ _line_port_front_poll:
 %ifdef TERMINAL_COMPILER_ARENA
  cmp word [cs:owner_kind],4
  je .done ; Kernel is not a UI frontend; publish only after file checks.
+%endif
+%ifdef TERMINAL_CONNECTION_ARENA
+ cmp word [cs:owner_kind],5
+ je .done ; PCCONN is not a UI frontend either; its front clears BSS.
 %endif
  push word [cs:frame+2]
  push word [cs:frame]

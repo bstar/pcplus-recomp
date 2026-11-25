@@ -28,10 +28,66 @@ generated `read-root.asm:32` uses PUSH immediate, which is unavailable on8086.
 Do not report the current probe as passing. Preserve v1/v2 logs and the v3
 failure; fix that instruction and rerun before expanding validation.
 
-The full five-case screen/source suite has not started. Help, RPC refusal/reuse,
-wide screen, nested preload, loader failures, abort/close/register publication
-and package/cold/DOS/BBS qualification remain required. Use the current GET
-compiler `build/connection-compiler-v1-20261118` for current-source preflight.
+**2026-11-24 resumption.** The v3 probe now uses `mov ax,0xffee`/`push ax`
+(AX is the return register, not a canary). On a fresh build it passes all four
+actual8086 DOS cases: `v1/mode0`, `v2/mode0`, `v2/mode1`, `v2/mode2`. These include
+the two loader-read counter positive controls (exits101/102 unreached) and
+twenty register-canary calls. Receipt: `build/asio-hot-dos-v3-20261124/result.json`.
+The hot-path probe is no longer provisional. It does not qualify the full
+application.
+
+`build/` had been removed to recover disk space. `tools/rebuild-asio-checkpoint.py`
+regenerates the parent, development compiler, both capability27 children and this
+experimental child from committed source alone, and checks every product against
+the SHA256 values above. Flags previously held only in the deleted manifests:
+parent recipe flags plus `--chat-send-mode`; child `heap_growth_bytes=256`,
+`disk_script_snapshots`, `defer_help_resource`, `early_help_model` and
+`help_parent_snapshot`; overlay relink `--notice --program --screen --checked-io`
+(`--serial` added for this product). Receipt: `build/rebuild-asio-checkpoint.json`.
+
+**2026-11-25 qualification (ASIO child `47a3a7f9…`, parent `7f5b3b03…`, compiler
+`build/connection-compiler-v1-20261118`).** Each run was paired with the
+capability27 control child `1a036988…`.
+
+* `test_aspect_screen_dos.py --suite all`: all five SCREEN/GET-VM cases pass on
+  both children. Receipts: `build/qual-screen-{asio,ctl}/`. Wide-screen and RPC
+  passed earlier: `build/asio-screen-{wide,rpc}-v1-20261124/`.
+* `test_notice_help_dos.py --help-resource --cpu 386` passes on both children.
+  Receipts: `build/notice-help/qual-help-{asio,ctl}/`.
+* `test_aspect_overlay_io_dos.py` passes every case of the accepted matrix in
+  `docs/validation/aspect-overlay-io.json` (none/read/short in run,
+  open/short in startup), plus none/read in startup.
+  * `open` in the run phase fails identically on the control child: no loader
+    open request occurs after serial attachment, because the overlay manager
+    keeps its handle. That case was never part of the accepted matrix.
+  * Receipts: `build/qual-ovl/`.
+
+`screen-error-attribute` initially failed on the ASIO child only, and the cause
+was the observer, not the product.
+
+* Both children exit 7 (`ASPECT_RUN_OPERAND`, the expected error). The parent
+  then holds status 5 with `terminal_program_active=1` while it finishes the
+  return path: UART quiet, register extract/commit including two seals,
+  revoke.
+* The renderer observer's timer recorded any such moment as a policy-admission
+  failure. That latch was meant for pre-EXEC refusal.
+* Whether an 18.2Hz tick lands in that short window depends only on layout
+  phase. On the ASIO child it consistently landed inside the parent's
+  `HOOK_CODE` register-owner seal loop. Instrumented runs showed the
+  stored/recomputed seals equal (`a003`) for both children, so the v7 handoff was
+  correct.
+* `standalone/test_aspect_renderer_dos.py` now latches only while the observed
+  EXEC is still pending (`exec_done==0`). The byte-pinned capture block and the
+  priority replay are unchanged.
+
+Still required before promotion:
+
+* Plan step 6 below: typed errors and native abort with each sibling active,
+  bank-stack balance/high-water, and loader faults injected specifically on
+  ASIO start/resume/close with same-parent relaunch. These need a new harness.
+* Nested preload 0/4096 across translation modes.
+* Package/cold/DOS/BBS qualification.
+
 No owned build/test/DOS processes remain; nothing was installed or selected.
 
 ## Original source audit

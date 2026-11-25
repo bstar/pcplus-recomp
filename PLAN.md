@@ -1,5 +1,11 @@
 # Complete DOS rebuild plan
 
+**Current priority (2026-11-25):** follow [the BBS calling roadmap](docs/ROADMAP_BBS.md).
+It ranks the work for the user's real Boca 14.4 → SPA2102 → SynthModem → BBS
+session (menus, setup, dialing directory, ZMODEM and the other transfers) and
+defines how long autonomous sessions pick and close goals. The objective below
+stays open; Host mode remains last.
+
 ## Active objective: complete the source-only PCPlus reconstruction
 
 ### November 17 resumption

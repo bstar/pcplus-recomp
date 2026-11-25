@@ -2,6 +2,7 @@
 ; preflight/stage keyboard before full reset;4/6 only. No RPC exposure yet.
 BITS 16
 CPU 8086
+%include "terminal_profile.inc"
 %ifdef ASPECT_EMULATE_POLICY
 %include "terminal_import.inc"
 SEGMENT _TEXT public class=CODE use16
@@ -34,10 +35,7 @@ terminal_script_emulate:
  mov si,ax
  or ah,ah
  jnz .operand
- cmp ax,4
- je .supported
- cmp ax,6
- jne .unsupported
+ profile_gate ax,.unsupported
 .supported:
  ; Every nonzero owner has the same typed state outcome. Fold the checks
  ; without changing their admission semantics or discarding any owner.

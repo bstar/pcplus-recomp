@@ -28,7 +28,7 @@
     },
     "src/aspect/renderer_policy.c": {
       "profile": "full",
-      "source_sha256": "ed3fd89a0f3c0b5037058fd1ee6ac9672f8bd3272446bda5159e11ab3b550349",
+      "source_sha256": "95817da8446190b3843a5e0149f931b0e2e7e5afb9035db24e254484195a491e",
       "control_code_data_bytes": [
         1414,
         0
@@ -88,7 +88,7 @@
     },
     "src/config/hook_input.c": {
       "profile": "no-inline",
-      "source_sha256": "d4031c9c276d47043e084ee249ecf5d505e45669e329b1ebcd20877be1380f0d",
+      "source_sha256": "ffee3778dc8dcab027b47942771224a7190cddcf45dfdb27b247ef194e0111ed",
       "control_code_data_bytes": [
         558,
         0
@@ -124,7 +124,7 @@
     },
     "src/config/live_configuration.c": {
       "profile": "full",
-      "source_sha256": "bb32533b8c4ffcc65bfe063e039c56e26711179f59dc31b2de5f489032dab49b",
+      "source_sha256": "f067bd3963cd7912764d4b705749efe8749312f12b5bee2de5611de414f36ff4",
       "control_code_data_bytes": [
         1423,
         44
@@ -424,7 +424,7 @@
     },
     "src/terminal/status_transition.c": {
       "profile": "no-inline",
-      "source_sha256": "302acc782718f6a1e5efabad1aba19ca50e757a39aca843cff2a0080a6e2b4be",
+      "source_sha256": "910cf0afbf460b6c0d29e1aeed456e0d699ff18cb1c1ef963fc30bfbb645f194",
       "control_code_data_bytes": [
         1871,
         2

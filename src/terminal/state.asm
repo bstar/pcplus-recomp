@@ -358,11 +358,27 @@ global render_translation_mask
 render_translation_mask: db 255
 global render_graphics_map
 render_graphics_map:
+%ifdef TERMINAL_DEC_GRAPHICS
+; Only 5Fh..7Eh are reachable (render/character.asm L_07da). Those 32 bytes
+; are the recovered PCPlus 2.01 DEC Special Graphics glyphs at DS:459b+5Fh
+; (CP437): blank, diamond, checker, HT/FF/CR/LF letters, degree, plus-minus,
+; NL/VT letters, corners, cross, scan lines, tees, bar, <=, >=, pi, !=, pound
+; and centered dot. Lower indices are identity because they are never read.
+%assign glyph 0
+%rep 0x5f
+ db glyph
+%assign glyph glyph+1
+%endrep
+ db 0x20,0x04,0xb0,'T','F','C','L',0xf8,0xf1,'N','V',0xd9,0xbf,0xda,0xc0,0xc5
+ db 0xc4,0xc4,0xc4,0xc4,0xc4,0xc3,0xb4,0xc1,0xc2,0xb3,0xf3,0xf2,0xe3,0xd8,0x9c,0xf9
+ db 0x7f
+%else
 %assign glyph 0
 %rep 128
  db glyph
 %assign glyph glyph+1
 %endrep
+%endif
 global render_translation_table
 render_translation_table:
 %assign glyph 0

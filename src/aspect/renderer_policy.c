@@ -18,6 +18,7 @@ extern unsigned ui_window_rows;
 #include "../transfer/download_file.h"
 #include "../transfer/upload_file.h"
 #include "../transfer/batch_download.h"
+#include "../config/terminal_profile.h"
 
 static unsigned near_span(unsigned offset,unsigned bytes)
 { return bytes && offset<=65535U-bytes+1U; }
@@ -41,7 +42,7 @@ static unsigned render_live_state(unsigned scoped)
  if(scoped){
   if(terminal_aspect_active!=1 || !terminal_parser_active || terminal_parser_active>16)return 3;
  }else if(terminal_aspect_active || terminal_parser_active)return 3;
- if(reset_ready!=1 || (csi_terminal_id!=4 && csi_terminal_id!=6) ||
+ if(reset_ready!=1 || TERMINAL_PROFILE_UNSUPPORTED(csi_terminal_id) ||
     terminal_ansi_m_policy>1)return 3;
  if(!capture_closed(&capture_file_result) || !capture_closed(&snapshot_file_result) ||
     !capture_closed(&monitor_file_result) || !capture_closed(&history_file_result) ||

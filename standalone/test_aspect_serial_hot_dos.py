@@ -129,7 +129,8 @@ _probe_preserved:
  CHECK
  call _aspect_serial_translation_policy
  CHECK
- push word 0xffee
+ mov ax,0xffee
+ push ax
  call _aspect_serial_translate
  add sp,2
  CHECK

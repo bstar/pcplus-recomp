@@ -3,6 +3,7 @@
  * Geometry changes deliberately execute configured RIS, as native DISPLAY does.
  */
 #include <dos.h>
+#include "../config/terminal_profile.h"
 #include "status_transition.h"
 #include "row_geometry.h"
 #include "../process/native_display_rows.h"
@@ -109,7 +110,7 @@ static word admit(native_display_rows_info *p)
  if(terminal_tab_wrap || terminal_parity>4 || terminal_data_bits<5 || terminal_data_bits>8 || terminal_stop_bits<1 || terminal_stop_bits>2)return 3;
  for(i=0;i<9;++i)if(rates[i]==(((unsigned long)terminal_baud_high<<16)|terminal_baud_low))rate=1;
  if(!rate)return 3;
- if(csi_terminal_id!=4 && csi_terminal_id!=6)return 3;
+ if(TERMINAL_ACTIVE_PROFILE_UNSUPPORTED(csi_terminal_id))return 3;
  if(screen_video_row_bytes!=160 || screen_attribute_row_bytes!=80 || screen_last_column!=79)return 3;
  if(screen_viewport_enabled || screen_viewport_active || screen_viewport_offset || screen_cursor_wrap || screen_attribute_checks || erase_protection_mode)return 3;
  if(text_video_segment!=0xb800 || text_cga_status_port || screen_attributes_base!=(word)screen_attribute_cells || erase_attribute_values_base!=(word)erase_attribute_values)return 3;

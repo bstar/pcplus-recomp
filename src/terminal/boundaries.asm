@@ -65,10 +65,12 @@ global render_service_b9f7
 render_service_b9f7:
  mov ax,0xb9f7
  jmp csi_unimplemented
+%ifndef TERMINAL_VT52 ; else reconstruction/vt52/parser.asm
 global terminal_escape_b98b
 terminal_escape_b98b:
  mov ax,0xb98b
  jmp csi_unimplemented
+%endif
 global terminal_escape_b9a3
 terminal_escape_b9a3:
  mov ax,0xb9a3

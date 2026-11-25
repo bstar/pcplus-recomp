@@ -77,7 +77,8 @@ port, baud, line or complete flow pair. The selected PRM subset is validated eve
 when a CLI category overrides it. Config failures return DOS errorlevel7 before
 UART access; help and invalid CLI syntax do not read the file. The importer does
 not save, create defaults or search for an installed configuration. It accepts
-profiles4 (VT220) and6 (ANSI), standard COM1..4 bindings and independent boolean
+profiles4 (VT220) and6 (ANSI) by default; the opt-in `--ansi-profiles` build
+also admits 2 VT100, 3 VT102, 5 VT320, 7 IBM PC, 8 WYSE 75, 9 ATT 605, 10 ATT 4410 and 11 TVI 922 (see `ANSI_FAMILY_PROFILES.md`). With `--vt52` a host can also switch a session into VT52 with DECANM (see `VT52.md`); VT52 is never a configured profile. It accepts standard COM1..4 bindings and independent boolean
 flow flags, including both enabled. Other legacy bytes remain opaque.
 
 See [startup evidence and boundaries](STARTUP_CONFIGURATION.md).

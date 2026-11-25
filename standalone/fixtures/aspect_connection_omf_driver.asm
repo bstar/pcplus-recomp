@@ -40,6 +40,45 @@ controlled_private_restore_sp:
 gate_saved_ss: dw 0
 gate_saved_sp: dw 0
 gate_busy: db 0
+%ifdef CONNECTION_RETAINED_REDIAL
+; Module entry/exit around the retained parent owner. The future loader
+; supplies the owner segment in its descriptor; this fixture's harness writes
+; it once before any call. AX=0 on success, FFFF if the codec refused.
+global connection_retained_enter,connection_retained_leave,retained_owner_seg
+connection_retained_enter:
+ push si
+ push di
+ push ds
+ push es
+ push ds
+ pop es
+ mov di,private_selections
+ mov ds,[cs:retained_owner_seg]
+ xor si,si
+ call redial_selection_unpack
+ sbb ax,ax
+ pop es
+ pop ds
+ pop di
+ pop si
+ ret
+connection_retained_leave:
+ push si
+ push di
+ push es
+ mov es,[cs:retained_owner_seg]
+ xor di,di
+ mov si,private_selections
+ call redial_selection_pack
+ sbb ax,ax
+ pop es
+ pop di
+ pop si
+ ret
+retained_owner_seg: dw 0
+%include "redial_selection_store.asm"
+SEGMENT _TEXT
+%endif
 %include "connection_callbacks.inc"
 
 SEGMENT _DATA public class=DATA use16

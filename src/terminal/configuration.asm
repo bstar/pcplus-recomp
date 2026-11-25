@@ -241,8 +241,15 @@ terminal_apply_display_configuration:
  mov ax,[terminal_configuration_values+TI_PROFILE]
  mov [csi_terminal_id],ax
  xor dx,dx
+%ifdef TERMINAL_ANSI_PROFILES
+ cmp ax,6
+ jb .profile_flag
+ cmp ax,7
+ ja .profile_flag
+%else
  cmp ax,6
  jne .profile_flag
+%endif
  inc dx
 .profile_flag:
  mov [attributes_monochrome],dx

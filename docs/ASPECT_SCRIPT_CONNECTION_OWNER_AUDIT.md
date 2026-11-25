@@ -564,6 +564,129 @@ compiler revoke deliberately fail-stops on an active invalid loan; that is
 precedent for containment, not a connection cleanup implementation.
 `src/process/compiler_overlay_front.asm:298,553`.
 
+### PCCONN companion layout (2026-11-25)
+
+`standalone/connection_module.py` packages the compact PCCONN MZ into the
+shared loader's existing companion format: payload, then two-byte payload
+offsets.
+
+The loader adds the parent load delta (BP) to each fixup word. It refuses a
+carry, a result of A000h or above, an offset past the payload, and an offset
+that is not at least two bytes past its predecessor
+(`src/line_port/overlay_shared.asm:789`). The packager therefore pre-adds
+the arena's parent-relative target segment to every module-local MZ segment
+word, and it rejects any nonlocal word. The unchanged loader rules then
+produce exactly a DOS MZ load at the arena.
+
+`standalone/check_connection_module.py` packages the `--retained-redial`
+probe for `redisplay_snapshot+16384` in the owner-linked parent map (target
+segment 58E3h, extent ending at offset 32768):
+
+- The file is 4174 bytes: 4050 payload bytes plus 62 fixups. The EOF probe
+  ends at 4175, and the allocated image is 11024 bytes.
+- Loading takes 12 bounded polls: 9 data, 1 EOF and 2 fixup.
+- For 343 parent load deltas, the loader-rule result is byte-identical to a
+  standard MZ load at the same arena. The loader refuses exactly at the
+  A000h boundary (3 cases).
+- Swapped, overlapping and past-payload fixup entries are each refused.
+- The 8192-byte compiler window is refused.
+
+Receipt: `build/pcconn-layout/result.json`. The remaining 6974 bytes of BSS
+and stack beyond the file are **not** initialized by the loader, so module
+entry must establish them before any native call. This receipt covers layout
+only. The actual-DOS kind-5 loader run is described in the next section.
+
+### PCCONN kind-5 loader in actual DOS (2026-11-25)
+
+The shared loader now has an opt-in owner kind 5 (`TERMINAL_CONNECTION_ARENA`)
+for `PCCONN.OVL`. It is factored into the compiler front, not duplicated:
+
+- `start`, the bounded poll loop, `release_raw` and the phase query take the
+  selected owner kind and its descriptor (`front_kind`/`front_desc`). Every
+  compiler entry selects kind 4 first. The public `_compiler_overlay_phase`
+  always reports the compiler's phase.
+- The 22-byte `_connection_overlay_expected` descriptor holds:
+  - `'CN'` and the version;
+  - the six loader words;
+  - the PSP-relative extent end, checked against the parent MCB;
+  - the allocated image bytes;
+  - the entry offset.
+
+  `build_terminal.py --connection-arena-probe MZ` writes it after linking,
+  using the final parent map and `connection_module.package()`.
+- **Admission bounds.** Kind 5 must satisfy:
+  - payload ≥ 256 bytes;
+  - fixups ≤ 512;
+  - payload + table + the EOF probe byte ≤ 16384;
+  - payload ≤ image ≤ 16384;
+  - entry < image.
+
+  The compiler's 8192-byte bound is unchanged for kind 4. The worst-case
+  file is 32 data polls, 1 EOF poll and 16 fixup polls, which fits the
+  existing 64-poll loop.
+- `overlay_shared.asm`:
+  - selects the `PCCONN.OVL` sibling leaf for kind 5;
+  - skips foreground UI admission for kind 5, because its front admits;
+  - publishes READY without any UI entry.
+- After READY, the front zeroes the BSS and stack from the payload end to the
+  image end. A DOS MZ load leaves those bytes undefined, and the loader stops
+  at the file.
+
+Without the flag, the objects for the front, the shared loader and
+`main.asm` are byte-identical to HEAD under the bridge, compiler-probe and
+plain define sets. The qualified parent rebuilds as `7f5b3b03…`. The opt-in
+cost is measured from the OMF segment lengths:
+
+| Segment | Before | With kind 5 | Added |
+| --- | ---: | ---: | ---: |
+| COMPILER_FRONT_CODE | 720 | 1088 | 368 |
+| CONFIG_CODE (shared loader) | 2618 | 2664 | 46 |
+
+The added 368 bytes include the 22-byte descriptor and the startup
+diagnostic entries. A separate front would cost at least 720 bytes.
+
+The opt-in parent build is `build/pcconn-probe-parent`
+(`f33aae71…`; its flags are in `pcconn-probe-parent.flags`). It is the
+qualified profile without the four bridge-only ASPECT flags. Its startup-only
+probe (`src/process/connection_overlay_probe.asm`) runs before UART
+ownership and never enters the module. It checks, in order:
+
+1. Load succeeds.
+2. A duplicate connection load is refused (1).
+3. A compiler load is refused (1) while kind 5 owns the arena.
+4. A compiler release is refused (1).
+5. The compiler phase reports FFFF and the connection phase reports 2.
+6. The allocated image is dumped.
+7. Release succeeds; a second release is refused (1). The phase is then 0
+   and no arena is reported.
+8. The 11024-byte extent is overwritten with A5h.
+9. Reload succeeds at the same segment, and the image is dumped again.
+10. Release succeeds.
+
+`standalone/test_connection_overlay_parent_dos.py` runs this in DOSBox-X
+(8086, FPU off). The two outcomes are:
+
+- **valid:** both dumps are byte-identical to `connection_module.mz_load()` at
+  the reported arena, followed by 6974 zero bytes. The arena segment equals
+  PSP + 10h + the descriptor target (`609C` = `0815` + 10h + `5877`).
+- **Fault cases:** missing, corrupt (CRC), truncated (EOF), out-of-range
+  fixup and unordered fixup (both with a matching CRC) each refuse with 4
+  after one check, release to phase 0 and exit nonzero. An oversized
+  image in the descriptor is refused before any open. The owner is never
+  claimed, so the phase reads FFFF.
+
+Receipts: `build/pcconn-dos-{valid,missing,corrupt,truncated,fixup-range,fixup-order,descriptor-extent}/result.json`.
+
+**Not done yet:**
+
+- entry into the module, and with it the REDIAL unpack/pack;
+- live admission from the child bridge. Kind 5 is refused at assembly time
+  in bridge builds;
+- the full exclusion gate against redisplay, Chat, GET, Help and other
+  snapshot borrowers;
+- quarantine on uncertain hardware state;
+- UART/ASIO rebind.
+
 ### Extraction, native DS and permanent footprint
 
 The current whole-PCCOMP extractor asserts that every segment relocation inside
@@ -625,17 +748,145 @@ existing compiler-only start/release code instead of adding another full front.
 The fifteen seven-byte slots are105 bytes, including their consumed flags,
 not merely the selected strings. Native REDIAL and DIAL with empty input reuse
 that state across commands and foreground dials. The compact same-allocation
-probe retains a consumed slot after DIAL200 then REDIAL; it does not preserve
-the list across an overwritten/reloaded arena. Before release, the entire105
+probe retains a consumed slot after DIAL200 then REDIAL. By itself it does not
+preserve the list across an overwritten or reloaded arena; the
+`--retained-redial` probe below does. Before release, the entire105
 bytes must be retained outside all overlapping transient extents and restored
 before the next native call. Foreground and script users must share one
 authoritative list or use an explicit coherent transfer; independent reset
 copies change semantics. Do not borrow the live N/S register payload for this
-storage or assume unused record buffers are safe. A concrete retained location
-and its cost remain unresolved at this checkpoint. The201-byte marker area's
-per-attempt versus cross-command lifecycle also remains unresolved and must not
-be silently classified as disposable. Other persistent engine fields require
-the same explicit lifetime decision.
+storage or assume unused record buffers are safe.
+
+The 2026-11-25 cross-reference audit ([recovery](ASPECT_SCRIPT_CONNECTION_RECOVERY.md#retained-state-lifecycle-2026-11-25-cross-reference-audit))
+classified the other fields:
+
+- The 201-byte area at DS:E57E is the dialing directory's cross-command
+  "marked entry" flags, with count DS:6F50. The script engine only clears it.
+  With no maintained marking producer, an all-zero transient copy plus count
+  is exact today. Once foreground marking exists, it must become the parent's
+  shared state instead.
+- HANGUP gate DS:3986 is the Host-mode-active flag. DS:1D78 is the PRM
+  Host Connection-type word (DIRECT when nonzero). Without a maintained Host
+  mode, the gate is constant-false.
+- Native foreground directory dials also rewrite the 105-byte list. A
+  maintained foreground dial must share the list or document the divergence.
+
+That leaves the 105-byte slot list as the persistent engine state that
+requires a parent-owned retained location.
+
+The remaining DS globals read by the connect loop (E5E3/E8AD/EB89) are not
+transaction state:
+
+- DS:6F4A is the directory page height. Its initial value is 10, and ov4
+  sets it to 10 or 25 for the screen geometry.
+- DS:E464..E480 and DS:E6C2..E6D0 are row/column screen coordinates, written
+  only by the ov4 geometry setters 1DE19/1DFCD.
+- DS:1F7A is a colour attribute: its initial value is 0x1B, and ov3's
+  monochrome defaults set it to 0x0F.
+- DS:4B02 is written only by ov2. When it is zero, the directory page is
+  redrawn (DA4E) before a dial. Its producer is not yet named.
+
+Its slot cursor and cycle counter are stack locals.
+
+### Retained REDIAL location (2026-11-25 design)
+
+Every native writer leaves slot byte 5 at 0 and the flag at 0 or 1, and the
+initial DGROUP state is fifteen empty slots with the flag set. The reachable
+state is therefore exactly 15 five-byte token fields plus 15 flag bits. The
+design keeps that in a dedicated, explicitly retained far owner:
+
+- `src/terminal/redial_selection_storage.asm` declares segment
+  `REDIAL_STORAGE` (class RETAINED_DATA, ordered before DGROUP). It holds 75 token bytes plus a WORD
+  mask (77 bytes, 80 when paragraph-aligned), initialized to the native
+  initial state (mask 0x7FFF). It is not yet linked into the parent.
+- `src/aspect/redial_selection_store.asm` is a 94-byte near codec for the
+  transient PCCONN `_TEXT`:
+  - `redial_selection_unpack` rebuilds the native 105-byte DS:70B4 area on
+    module entry.
+  - `redial_selection_pack` writes it back on every exit path, including
+    abort and carrier-loss unwinding, before the extent is released.
+  - Both refuse an unreachable state (byte 5 nonzero, flag above 1, mask
+    bit 15) with CF=1 and leave the destination unchanged. The caller must
+    treat that as a fail-closed module error and keep the previous retained
+    value.
+- `standalone/check_redial_selection_store.py` runs the codec under Unicorn.
+  It covers the initial state, 3000 random reachable round trips (including
+  high-bit and post-NUL token bytes, and either DF on entry), 2000 refusals
+  that leave the destination unchanged, and preservation of
+  SI/DI/BP/DS/ES/SS. Four mutations of the source (dropping CLD, flag
+  comparison, flag reconstruction, mask guard) are each caught. It reads no
+  original.
+
+**Linked parent measurement.** `standalone/build_terminal.py
+--redial-retained-owner` links the owner as class `RETAINED_DATA`, ordered
+before DGROUP. It needs an initialized class: startup never clears far
+storage after DGROUP, and initialized bytes placed after the zero buffers
+would grow the file. The owner is excluded from the `src/terminal` glob, so
+the same recipe without the flag still reproduces the qualified parent
+`7f5b3b03…` exactly.
+
+With the flag, `REDIAL_STORAGE` lands at 3ED9:02A0, right after
+PHONE_LOG_STORAGE's alignment pad, and DGROUP moves up 5 paragraphs. The map
+memory size goes from 524704 to 524784 bytes (+80), and the file grows from
+297149 to 297229 bytes (+80). The resulting parent is SHA256
+`23c244a27c98d720ea101841e781e6188e7eb797c1521e3463699327286a9334`.
+
+Like-for-like actual DOS 8086 runs of `test_aspect_screen_wide_dos.py` used
+the qualified child `1a036988…` and compiler `ce833af2…`. Both passed all
+7 samples, with the full GET VM and the allocation and stream probes:
+
+| Parent | Largest free before EXEC |
+| --- | --- |
+| Base rebuild `7f5b3b03…` | 129184 bytes |
+| Owner build `23c244a2…` | 129104 bytes (exactly 80 fewer) |
+
+In both runs the child's PSP allocation stays 7993 paragraphs and its near
+heap reaches 41906. Receipts:
+
+- `build/redial-base-screen-wide/checks.json` (`a7809956…`)
+- `build/redial-owner-screen-wide/checks.json` (`7aeeb54a…`)
+
+In these runs the child shrinks its block to 7993 paragraphs (127888 bytes),
+leaving 1296 bytes (base) or 1216 bytes (owner) of the largest free block
+unused, before the MCB header. That is the measured headroom for any further
+*resident* PCCONN glue in this profile. The 1206-byte COMPILER_FRONT_CODE
+shows that a second, separate front of similar size would consume nearly all
+of it, so the loader must be factored with the compiler front rather than
+duplicated. The earlier "142-byte margin" figure has no recorded derivation
+in this repository. The acceptance evidence is these actual-DOS runs, not that
+arithmetic. The owner is still opt-in, and the qualified parent profile is
+unchanged.
+
+**Transient persistence probe.** `check_aspect_connection_omf.py
+--retained-redial` links the codec into the compact PCCONN component. It adds
+50 bytes of entry/exit wrappers (`connection_retained_enter` and
+`connection_retained_leave`, reading the owner segment from a descriptor
+word) plus the 94-byte codec. Code grows from 3890 to 4034 bytes, and the
+allocated image from 10880 to 11024 bytes, still within the 16 KB candidate.
+The owner is placed in the synthetic parent, and CPU writes are bounded to
+its 77 bytes.
+
+The probe adds six cases:
+
+- Fresh-parent entry produces the native initial list.
+- DIAL 200 followed by leave changes the owner.
+- A *new* Unicorn machine starts with a zeroed slot arena and receives only
+  the 77 owner bytes. It restores the 105 native bytes exactly, and REDIAL
+  then exhausts with -1 and FAILURE 1 without starting a new attempt.
+- Control: the same fresh machine without the restore starts a new dial
+  attempt.
+- An unreachable native byte is refused, leaving the owner unchanged.
+- A corrupt owner mask is refused, leaving the native area unchanged.
+
+Removing the unpack call fails the probe. The default probe is unchanged at
+40 cases, 657 checks and 10880 bytes. The retained probe passes 46 cases and
+742 checks. Receipt: `build/omf-retained/result.json` (`489cb766…`). This is
+still a controlled synthetic-parent probe: no DOS loader, real parent
+descriptor or abort-path pack is exercised.
+
+Foreground directory dials remain single-entry and do not touch the list. A
+future foreground marking or multi-entry dial must read and write this same
+owner (packed, or through its own accounted codec), not a second copy.
 
 There is no source-only proof that this glue and retained connection state fit the observed142-byte total
 co-residency margin, especially after the proposed child near-gate additions
@@ -651,6 +902,13 @@ The later optional ASIO change saves5040 exact bytes in an unqualified build.
 Its full software suite is pending; that measurement is not production memory
 headroom or permission to relax any acceptance gate. The measured compact
 component and larger-extent proposals do not establish a new parent profile.
-At this pause checkpoint the remaining questions are the authoritative retained
-selection/marker state, full resource-service size, loader/exclusion/recovery
-integration, guarded UART/ASIO rebind and unchanged full8086 capacity acceptance.
+At this pause checkpoint the remaining questions are:
+
+- running pack on every PCCONN exit path (including abort/carrier-loss
+  unwinding) once a real loader exists. The owner is linked, measured in
+  actual DOS 8086, and its persistence is proven in the compact probe;
+- full resource-service size;
+- live bridge admission, module entry and the full snapshot-borrower
+  exclusion/recovery gate. The kind-5 loader itself now runs in actual DOS;
+- guarded UART/ASIO rebind;
+- unchanged full8086 capacity acceptance.

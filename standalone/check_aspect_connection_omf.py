@@ -34,6 +34,7 @@ class Pointer(int):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--retained-redial',action='store_true',help='Link the REDIAL retained-owner codec and check persistence across a fresh module instance')
     args=p.parse_args();out=args.output.resolve()
     assert out.is_relative_to(ROOT/'build') and not out.exists();out.mkdir(parents=True)
     native=load(ROOT/'standalone/check_aspect_connection_native.py','connection_native_model')
@@ -108,7 +109,9 @@ def main():
                             ' ret '+str(cleanup[old]) if cleanup.get(old,0) else ' ret'])
     (out/'connection_callbacks.inc').write_text('\n'.join(aliases)+'\n')
     (out/'connection_data_bindings.inc').write_text('\n'.join(data)+'\n')
-    driver_obj=out/'driver.obj';subprocess.run(['nasm','-fobj','-I'+str(out)+'/',str(DRIVER),'-o',str(driver_obj)],check=True)
+    retained=args.retained_redial;codec=ROOT/'src/aspect/redial_selection_store.asm';storage=ROOT/'src/terminal/redial_selection_storage.asm'
+    if retained:sources.update({codec,storage})
+    driver_obj=out/'driver.obj';subprocess.run(['nasm','-fobj','-I'+str(out)+'/',*(['-I'+str(ROOT/'src/aspect')+'/','-DCONNECTION_RETAINED_REDIAL'] if retained else []),str(DRIVER),'-o',str(driver_obj)],check=True)
     exe=out/'CONNOMF.EXE';mapping=out/'CONNOMF.MAP'
     subprocess.run(['wlink','system','dos','option','quiet','option','start=connection_probe_start',
         'option','map='+str(mapping),'name',str(exe),'file',','.join(str(x) for x in [driver_obj,*objects])],check=True)
@@ -147,7 +150,10 @@ def main():
     alias_maps={near_code(n):original_symbols[n] for n in external-exported if original_symbols[n] in entry_symbols}
     native.CODE=codebase;native.DATA=database
     private_ss=(database>>4);stack_top=near_data('private_stack_end');stack_base=near_data('private_stack_base')
-    stop=near_code('connection_probe_stop');parent=0x70000;cases=[];all_hits=set();highwater=[];far_calls=0
+    stop=near_code('connection_probe_stop');parent=0x70000;owner=parent+0x1100;owner_bytes=77
+    if retained:
+        initial_owner=subprocess.run(['nasm','-fbin','-DREDIAL_SELECTION_FLAT',str(storage),'-o','/dev/stdout'],check=True,capture_output=True).stdout;assert len(initial_owner)==owner_bytes
+    cases=[];all_hits=set();highwater=[];far_calls=0
     class Linked(native.Machine):
         def offset(self,at):
             if isinstance(at,Pointer):return int(at)
@@ -175,8 +181,11 @@ def main():
             self.u.mem_write(database+near_data('private_stack_guard_low'),b'L'*16)
             self.u.mem_write(database+near_data('private_stack_guard_high'),b'H'*16)
             self.u.mem_write(parent+0xfe0,b'P'*16);self.u.mem_write(parent+0x1000,b'Q'*16)
+            if retained:
+                self.u.mem_write(codebase+near_code('retained_owner_seg'),struct.pack('<H',owner>>4))
+                self.u.mem_write(owner,initial_owner)
             def memory_guard(u,access,at,width,value,unused):
-                assert loadbase<=at and at+width<=loadbase+footprint or parent+0xfe0<=at and at+width<=parent+0x1010,('CPU memory outside context',hex(at),width,self.trace)
+                assert loadbase<=at and at+width<=loadbase+footprint or parent+0xfe0<=at and at+width<=parent+0x1010 or retained and owner<=at and at+width<=owner+owner_bytes,('CPU memory outside context',hex(at),width,self.trace)
             self.u.hook_add(UC_HOOK_MEM_WRITE,memory_guard)
         def arg(self,n=0):
             if self.in_parent:
@@ -302,6 +311,37 @@ def main():
         retained_slots=slots==bytes(m.u.mem_read(database+m.offset(0x70b4),105)),
         exhausted_result=m.text(0xf100)==b'-1' and m.get(0xd124)==1,
         no_new_attempt=m.sent==0,flushed=m.get(0xdd86)==0))
+    if retained:
+        # Persistence across a fresh module instance: only the 77 retained
+        # owner bytes cross from the first Unicorn machine to the second.
+        dgroup=bytes([0,0,0,0,0,0,1])*15
+        def slots(m):return bytes(m.u.mem_read(database+m.offset(0x70b4),105))
+        def owner_state(m):return bytes(m.u.mem_read(owner,owner_bytes))
+        m=Linked();m.write(0x70b4,b'\xa5'*105)
+        ok=m.run('connection_retained_enter')==0
+        done('retained/fresh_parent_enter',m,dict(accepted=ok,native_initial=slots(m)==dgroup,owner_unchanged=owner_state(m)==initial_owner))
+        m=Linked();m.run('connection_retained_enter');m.model_selection=False;m.expanded=200;m.string(0xd13a,b'200')
+        m.run('aspect_connection_dial',b'\x64\0\1\x8c\0');first=m.text(0xf100);after_dial=slots(m)
+        ok=m.run('connection_retained_leave')==0;carried=owner_state(m)
+        done('retained/dial_then_leave',m,dict(accepted=ok,first_selected=first==b'200',list_changed=after_dial!=dgroup,
+            owner_changed=carried!=initial_owner,owner_mask_bit0=carried[75]&1==1))
+        # A reloaded module's BSS carries no list: model that as zeros.
+        m=Linked();m.u.mem_write(owner,carried);m.write(0x70b4,bytes(105))
+        m.model_selection=False;m.expanded=200;zero_arena=slots(m)==bytes(105)
+        ok=m.run('connection_retained_enter')==0;restored=slots(m)
+        m.sent=0;m.run('aspect_connection_redial',b'\1\x8c\0')
+        done('retained/fresh_instance_REDIAL',m,dict(fresh_arena_zero=zero_arena,accepted=ok,native_bytes_restored=restored==after_dial,
+            exhausted_result=m.text(0xf100)==b'-1' and m.get(0xd124)==1,no_new_attempt=m.sent==0,flushed=m.get(0xdd86)==0))
+        # Control: the same fresh instance without the restore does not exhaust.
+        m=Linked();m.write(0x70b4,bytes(105));m.model_selection=False;m.expanded=200
+        m.sent=0;m.run('aspect_connection_redial',b'\1\x8c\0')
+        done('retained/control_without_restore',m,dict(differs=not(m.text(0xf100)==b'-1' and m.get(0xd124)==1 and m.sent==0)))
+        m=Linked();m.run('connection_retained_enter');m.write(0x70b4+3*7+5,b'\x01');before=owner_state(m)
+        refused=m.run('connection_retained_leave')==0xffff
+        done('retained/refuse_unreachable_native',m,dict(refused=refused,owner_unchanged=owner_state(m)==before))
+        m=Linked();bad=bytearray(initial_owner);bad[76]|=0x80;m.u.mem_write(owner,bytes(bad));m.write(0x70b4,b'\x5a'*105)
+        refused=m.run('connection_retained_enter')==0xffff
+        done('retained/refuse_corrupt_owner',m,dict(refused=refused,native_unchanged=slots(m)==b'\x5a'*105))
     # MZ's memory contract includes its BSS/stack minimum allocation and loader
     # relocation table; no absent bytes are silently omitted from capacity.
     result=dict(passed=True,case_count=len(cases),checks=sum(len(c['checks']) for c in cases),cases=cases,
@@ -317,6 +357,7 @@ def main():
         measured_private_stack_highwater=max(highwater),controlled_far_calls=far_calls,executed_units=sorted(all_hits),
         data_spans=spans,verified_native_data_aliases=len(prov['data_bindings']),symbolic_imports=len(external-exported),callbacks=callbacks,source_adaptations=adaptations,
         executable_sha256=sha(exe),map_sha256=sha(mapping),sources={str(s.relative_to(ROOT)):sha(s) for s in sorted(sources)},
+        retained_redial=dict(enabled=retained,owner_bytes=owner_bytes if retained else 0,wrapper_bytes=(near_code('retained_owner_seg')+2-near_code('connection_retained_enter')) if retained else 0),
         original_inputs=[],scope='Actual linked symbolic OMF code executes with compact private DS=SS and a full4096-byte private stack. Controlled FAR gateway switches to a separate guarded synthetic parent DS=SS/stack then restores the private context. Representative matrix, not the frozen241-case native matrix. CPU writes and executed code are bounded; no CPU-read bounds claim. No DOS/process loader, real parent API, UART/ASIO/IRQ, filesystem/UI, persistent REDIAL state across unloads, application integration or release qualification. Same-allocation REDIAL retention is checked separately. Fixture wire/global buffers and opaque UI resource tokens are included; real native UI strings/code remain external. Stack high-water is observed for this matrix, not a worst-case proof. MZ minimum image allocation excludes PSP and its consumed nonresident relocation/header bytes; both additional sizes are reported. Actual DOS maxalloc policy is not modeled.')
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     print('CONNECTION_OMF',len(cases),'cases',result['checks'],'checks',footprint,'bytes',max(highwater),'stack highwater')

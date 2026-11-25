@@ -221,13 +221,106 @@ poll and can block in UART transmit; bounded CTS/clock behavior in the maintaine
 [connection controller](CONNECTION.md) is a separate policy.
 
 HANGUP's resident0445 can return immediately when both DS1D78 and DS3986 are
-nonzero; their full producer/lifecycle meaning remains unresolved here, and
-that early path retains the previous FAILURE value. Otherwise it clears
+nonzero (Host mode active on a DIRECT connection; see the lifecycle section
+below), and that early path retains the previous FAILURE value. Otherwise it clears
 FAILURE, brackets cursor state, optionally displays a message, conditionally
 drops DTR, sends the configured hangup command if carrier is present, tests
 carrier again and sets FAILURE1 if still asserted. It reconfigures through03A7,
 clears received input through ABCA and restores cursor state. The wrapper then
 refreshes status. No generic return AX or fatal cancellation status is proved.
+
+## Retained-state lifecycle (2026-11-25 cross-reference audit)
+
+This section answers the earlier open questions about the selection list, the
+201-byte marker area and the HANGUP gates. Every reference was found twice:
+by grepping the retained per-function exports (`analysis/pcplus-main` and
+`pcplus-overlay-anchored-*`) and by an independent raw-byte scan. That scan
+decoded every little-endian occurrence of each address, including negative
+displacements, in the resident image (EXE offset 4608, 53456 bytes) and all 31
+overlay payloads. The two methods agree. All other raw hits were misaligned
+noise that the per-function exports confirm. Overlay addresses below are CS
+offsets (overlay 4 at D4D0, 5/7 at E3B0, 9/15/21 at D0D0, 10 at E530, 19 at
+E660). Analysis output stays outside Git, as always.
+
+**DS:1D78 is the Host-mode Connection type setting.** It is PRM offset 1F4h,
+inside the 1264-byte PRM image at DS:1B84. No instruction writes it by
+direct address. Setup overlay 19 edits it at CS:EE67 (`mov ax,1D78h; push ax;
+call` the shared word editor). That handler is item 1 of the setup dispatch
+table at DS:4E46 (trampoline BE8F). Items 10/11 of the same table edit the
+answer-off/answer-on commands at 1C2F/1C16. PCSETUP's Host Mode Options screen
+lists "Connection type", and both PCSETUP and DGROUP DS:6125/612B contain
+MODEM/DIRECT. Every reader treats nonzero as DIRECT:
+
+- Overlay 9 Host paths (for example CS:E4B1 and E34E) skip the carrier test and
+  use session state instead when it is nonzero.
+- Overlay 10 Host exit (E71B) sends answer-off 1C2F and modem op 9 only when it
+  is zero.
+- Between-caller resets (E76D/E7D0) run the modem path only when it is zero.
+
+The installed PRM stores 1 at offset 1F4h. Naming it "Connection type" is an
+inference from the matching dispatch-table, setup-text and behavioral evidence.
+No string pointer links the overlay 19 item directly to its label.
+
+**DS:3986 is Host mode active.** Its only writers are in overlay 10. Host entry
+(CS:E645, `mov [3986h],ax` with AX=1, alongside saved session settings) sets it,
+and Host exit (E759) clears it. Its readers are:
+
+- resident0445 HANGUP;
+- overlay 15 transfer (EABF), whose existing alias is `session_wait_mode`;
+- overlay 21 (F080);
+- Chat ([CHAT_NATIVE.md](CHAT_NATIVE.md)).
+
+The HANGUP early return therefore means: during Host mode on a direct
+connection, do not drop DTR or send the hangup command. **The maintained parent
+has no Host mode.** DS:3986 is therefore always zero, and that gate is
+constant-false for scripted HANGUP. If Host mode is ever reconstructed, its
+active flag and the PRM Connection-type word must feed this gate.
+
+**DS:E57E[0..200] holds the dialing directory's per-entry "marked" flags,
+retained across commands.** DS:6F50 is the marked-entry count. Writers:
+
+- the overlay 4 directory UI toggles a mark at D6EB..D702 (count ±1);
+- Clear Marked zero-fills all 201 bytes at D767 and resets the count;
+- loading another directory zero-fills them at D8C8 (then opens PCPLUS.DIR,
+  DS:66D2);
+- overlay 7 entry erase (E45A) clears one entry's mark;
+- the overlay 5 selection loop clears the connected entry's mark (E866) or
+  the entry Delete removed (E814), decrementing the count each time.
+
+Overlay 5 E48E (dial marked entries) is the only producer that reads the marks
+into selections. It writes the decimal entry number of each marked entry
+1..200 into successive slots. ASPECT DIAL/REDIAL never sets a mark; it only
+clears one on connect/Delete. The area is foreground directory state, not
+per-attempt scratch. The maintained directory has no multi-entry marking UI,
+so no maintained producer exists, and an all-zero area with a zero count is
+behaviorally exact today. Do not discard this as disposable without that
+condition. Once foreground marking exists, the parent's marks and count are the
+single authoritative copy that scripted connect/Delete must clear.
+
+**DS:70B4 holds fifteen seven-byte slots, retained across commands, but
+foreground dials rewrite them.** Each slot is a ≤5-byte token plus NUL, with a
+done flag at +6. Only overlay 5 touches them:
+
+| Routine | Effect on the slots |
+| --- | --- |
+| EC49 reset | Clears every token and sets every flag to 1. |
+| E423 (DIAL/REDIAL text) | Nonempty text resets, then parses tokens into slots with flag 0. **Empty text keeps the list.** |
+| E48E (dial marked entries) | Resets, then fills from the marks. |
+| E4C8 (dial one entry) | Resets, writes slot 0 as decimal text, flag 0. |
+| E556 (MDIAL / manual record) | Resets, copies the manual token, flag 0. |
+| E5E3 loop | Sets the flag to 1 on connect (E849), on Delete (E814), and when EC61 rejects the token (index outside 0..200, via E6A1→E836). |
+| EC61 expansion | Uppercases the slot token in place. |
+
+An empty-text REDIAL (or DIAL `""`) therefore re-dials exactly the slots that
+were not consumed in the previous run. That run may have been a foreground
+directory dial, a dial of marked entries, or a script. The maintained product
+has only one producer: scripted DIAL/MDIAL/REDIAL. Its foreground directory
+dial does not populate this list. Faithful REDIAL needs the 105 bytes to live in
+parent-owned storage that survives child (script) process exits and transient
+PCCONN reloads. If foreground directory dials are not to diverge, they must
+also perform the E4C8 rewrite on that shared copy. Otherwise, document the
+divergence as an explicit maintained policy: REDIAL after a foreground dial
+reuses the script's last list.
 
 ## Ownership gap and a coherent implementation gate
 

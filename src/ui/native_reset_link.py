@@ -9,7 +9,7 @@ import re
 import subprocess
 
 
-def build_native_reset_bank(root,out,overlay=True,transaction=False):
+def build_native_reset_bank(root,out,overlay=True,transaction=False,ansi_profiles=False,vt52=False):
     assert not transaction or overlay
     root=Path(root);out=Path(out)/'native-reset-bank';out.mkdir(parents=True,exist_ok=True)
     native=[]
@@ -72,6 +72,9 @@ def build_native_reset_bank(root,out,overlay=True,transaction=False):
     for path in helpers:
         obj=out/(path.stem+'.obj');objects.append(obj)
         flags=['-DRESET_BANK_APP']+(['-DRESET_BANK_OVERLAY']if overlay else[])+(['-DRESET_BANK_TRANSACTION']if transaction else[])
+        # reset_live.asm carries the widened VT100..IBM PC owner gate.
+        flags+=(['-DTERMINAL_ANSI_PROFILES']if ansi_profiles and path.name=='reset_live.asm'else[])
+        flags+=(['-DTERMINAL_VT52']if vt52 and path.name=='reset_live.asm'else[])
         flags+=(['-Dreset_stack_top=nreset_stack_top']if path.name=='reset_bank_context.asm'else aliases if path.name=='reset_bank_body.asm'else[])
         subprocess.run(['nasm','-fobj',*flags,str(path.relative_to(root)),'-o',str(obj)],cwd=root,check=True)
     # Selection reads the full inventory, so every candidate is a build input.

@@ -202,7 +202,8 @@ exit
  else:checks['actual_init_and_dial']=bool(checks.get('emulated_modem_connected_to_selected_endpoint')) if emulated_modem else commands[:2]==['ATZ',('ATD'+target.decode('ascii'))]
  if mode in ('success','hangup','redial','direct'):
   checks['actual_DOS_CPR']=b'\x1b[1;16R' in wire
-  checks['actual_DOS_DA']=(b'\x1b[?62;2c' if profile==4 else b'\x1b[?1;2c') in wire
+  # Primary DA per id from the recovered table (src/reports/data.asm).
+  checks['actual_DOS_DA']=b'\x1b[?'+{2:b'1;2',3:b'6',4:b'62;2',5:b'63;2',6:b'1;2',7:b'1;2',8:b'1;0',9:b'7;5;1',10:b'1;2',11:b'62;2'}[profile]+b'c' in wire
   checks['immediate_banner_not_dropped']=len(screen)==4000 and screen[:30:2]==b'FIRST BYTE SAFE'
  if mode=='redial':checks['second_configured_attempt']=commands==['ATZ','ATDCaseTest:23','ATZ','ATDCaseTest:23']
  if mode=='hangup':checks['configured_hangup_reached_wire']=bool(checks.get('emulated_modem_disconnected_peer' if emulated_modem else 'configured_hangup_reached_wire'))

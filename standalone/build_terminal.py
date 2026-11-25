@@ -13,6 +13,7 @@ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--outpu
 parser.add_argument('--compiler-lease-bridge',action='store_true',help='Experimental capability23 compiler BEGIN/END through authenticated renderer')
 parser.add_argument('--compiler-lease-arena',action='store_true',help='Experimental whole-kernel cold arena module and startup-only loader; no child bridge')
 parser.add_argument('--compiler-lease-arena-probe',action='store_true',help='Diagnostic only: load/init/release whole kernel before UART, then exit')
+parser.add_argument('--connection-arena-probe',type=Path,help='Diagnostic only: package this source-built PCCONN MZ for kind5, load/reload/release before UART, then exit')
 parser.add_argument('--compiler-lease-module',action='store_true',help='Experimental resident core and cold compiler-bank layout; no child bridge admission yet')
 parser.add_argument('--meta-shared-runtime',action='store_true',help='Experimental shared Line/Port loader and transient Meta frontend; implies Alt-M')
 parser.add_argument('--meta-editor',action='store_true',help='Experimental serviced Alt-M and closed-lease live key adoption; implies matched module')
@@ -37,6 +38,7 @@ parser.add_argument('--chat-adapters',action='store_true',help='Link real TX/log
 parser.add_argument('--chat-text-transport',action='store_true',help='Link optional physical-completion TEXT TX sink; requires adapters; foreground TEXT remains unbound')
 parser.add_argument('--chat-timing',action='store_true',help='Select matching API0103 loader/module with serviced TEXT timing; requires physical-TX adapter; shortcuts remain unbound')
 parser.add_argument('--chat-echo',action='store_true',help='Experimental native echo scope/input service; requires timing/frontend; TEXT scheduling remains unbound')
+parser.add_argument('--redial-retained-owner',action='store_true',help='Link the 80-byte retained ASPECT REDIAL selection owner (initialized RETAINED_DATA before DGROUP)')
 parser.add_argument('--chat-send-mode',action='store_true',help='Import original Chat send-mode byte; requires Chat Redisplay')
 parser.add_argument('--chat-redisplay',action='store_true',help='Opt-in Chat Alt-F6 storage lease and serviced Redisplay return; requires foreground TEXT')
 parser.add_argument('--chat-foreground-text',action='store_true',help='Bind all ten direct Chat TEXT keys through module-owned scheduling; requires echo and compact labels')
@@ -84,6 +86,10 @@ parser.add_argument('--row-geometry-owner',action='store_true',help='Link offlin
 parser.add_argument('--display-preferences',action='store_true',help='Capture raw saved display words after successful startup import; no BIOS or key binding')
 parser.add_argument('--display-startup',action='store_true',help='Apply imported display preferences through the checked owner before UART enable')
 parser.add_argument('--line-control',action='store_true',help='Enable guarded original Ctrl-minus/Toggle Lines using the accepted display selector')
+parser.add_argument('--ansi-profiles',action='store_true',help='Also admit VT100/VT102/VT320 (ids 2/3/5, VT220-equivalent reset) and IBM PC (id 7, ANSI-equivalent reset); all share the recovered ANSI parser')
+parser.add_argument('--vt52',action='store_true',help='Recovered native VT52 parser for DECANM (ESC[?2l) and ESC < return; requires --ansi-profiles')
+parser.add_argument('--dec-graphics',action='store_true',help='Render ESC(0/ESC)0 DEC Special Graphics with the recovered CP437 glyph map instead of identity')
+parser.add_argument('--bbs-csi',action='store_true',help='Maintained ECMA-48 CSI handling for modern BBS hosts: consume unknown private/intermediate sequences, add HPA/HPR/VPA/VPR')
 parser.add_argument('--window-size-report',action='store_true',help='Reply to ordinary CSI18t with accepted logical text dimensions; no bridge deployment')
 parser.add_argument('--keyboard-bank',action='store_true',help='Move the unchanged foreground keyboard dispatcher into a retained code bank')
 parser.add_argument('--input-tables-data',action='store_true',help='Move two near input dispatch pointer tables from resident code into DGROUP')
@@ -133,6 +139,9 @@ parser.add_argument('--session-capture',action='store_true');parser.add_argument
 assert not(args.compiler_lease_bridge and args.compiler_lease_arena_probe),'Choose live bridge or startup-only compiler probe'
 if args.compiler_lease_bridge:args.compiler_lease_arena=True
 if args.compiler_lease_arena_probe:args.compiler_lease_arena=True
+if args.connection_arena_probe:
+ assert not(args.compiler_lease_bridge or args.compiler_lease_arena_probe),'PCCONN probe is a separate startup-only diagnostic'
+ args.compiler_lease_arena=True
 if args.compiler_lease_arena:args.compiler_lease_module=True
 if args.keymap_editor:assert args.original_reference and args.keyboard_bank and args.program_display_owner,'Keymap editor requires original-reference, keyboard-bank and display owner'
 if args.meta_shared_runtime:args.meta_editor=True
@@ -353,6 +362,11 @@ if args.display_preferences:out_name+='-display-preferences'
 if args.display_startup:out_name+='-display-startup'
 if args.line_control:out_name+='-line-control'
 if args.window_size_report:out_name+='-window-size-report'
+if args.ansi_profiles:out_name+='-ansi-profiles'
+if args.dec_graphics:out_name+='-dec-graphics'
+if args.vt52:out_name+='-vt52'
+if args.bbs_csi:out_name+='-bbs-csi'
+assert not args.vt52 or args.ansi_profiles,'--vt52 requires --ansi-profiles'
 if args.display_row_probe:out_name+='-display-row-probe'
 if args.local_controls:out_name+='-local-controls'
 if args.screen_pause:out_name+='-screen-pause'
@@ -396,6 +410,8 @@ if args.meta_services:out_name+='-meta-services'
 if args.meta_editor_module:out_name+='-meta-module'
 if args.meta_loader_probe:out_name+='-meta-probe'
 if args.meta_editor:out_name+='-meta-editor'
+if args.redial_retained_owner:out_name+='-redial-owner'
+if args.connection_arena_probe:out_name+='-connection-probe'
 if args.phone_log_bank:
  # Keep this new combination distinct without exceeding DOSBox's host-path
  # buffers as the existing feature suffix chain grows.
@@ -449,7 +465,8 @@ if args.hook_lookup:sources.append(ROOT/'src/process/hook_lookup_dos.asm')
 sources += [ROOT/'reconstruction/snapshot'/name for name in ['row.asm','copy.asm','video_begin.asm','video_end.asm']]
 # Screen RPC is opt-in below; its platform has a dedicated namespaced builder.
 sources += sorted(p for p in (ROOT/'src/terminal').glob('*.asm')
-                  if p.name not in ('script_screen_rpc.asm','script_screen_platform.asm'))
+                  if p.name not in ('script_screen_rpc.asm','script_screen_platform.asm')+(()if args.vt52 else('vt52_live.asm',)))
+if args.vt52:sources += [ROOT/'reconstruction/vt52/parser.asm',ROOT/'reconstruction/vt52/cursor.asm']
 if args.line_port:sources += [ROOT/'reconstruction/line_port/key.asm']+sorted(p for p in (ROOT/'src/line_port').glob('*.asm')if (args.line_port_overlay or not p.name.startswith('overlay')) and p.name!=('overlay_runtime.asm'if args.meta_shared_runtime else 'overlay_shared.asm'))
 if args.meta_editor:
  assert args.line_port_overlay and args.original_reference and args.path_control,'Meta editor requires composed transient/owned-screen profile'
@@ -465,6 +482,7 @@ if not args.global_help:sources=[p for p in sources if p.name!='help_program.asm
 if not args.gateway:sources=[p for p in sources if p.name!='gateway_front.asm']
 if not args.local_controls:sources=[p for p in sources if p.name!='local_controls.asm']
 if not args.window_size_report:sources=[p for p in sources if p.name!='window_size_report.asm']
+if not args.bbs_csi:sources=[p for p in sources if p.name!='bbs_csi.asm']
 if not args.reset_row_owner:sources=[p for p in sources if p.name!='reset_rows.asm']
 if not args.status_owner:sources=[p for p in sources if p.name!='status_transition_glue.asm']
 if not args.manual_init_owner:sources=[p for p in sources if p.name!='manual_init.asm']
@@ -478,7 +496,7 @@ if args.notice_sound:sources.append(ROOT/'src/ui/speaker_native.asm')
 # The dedicated call-log bank is built explicitly; never pull its callbacks or
 # end marker into established terminals through the assembly glob.
 sources = [p for p in sources if p.name not in
- ('phone_log_bank.asm','phone_log_resident.asm','phone_log_storage.asm','phone_log_end.asm','phone_log_startup_bank.asm','phone_log_lifecycle_bank.asm','phone_log_events_bank.asm','phone_log_disk_bank.asm','phone_log_controls_bank.asm','directory_reader_bank.asm')]
+ ('phone_log_bank.asm','phone_log_resident.asm','phone_log_storage.asm','phone_log_end.asm','phone_log_startup_bank.asm','phone_log_lifecycle_bank.asm','phone_log_events_bank.asm','phone_log_disk_bank.asm','phone_log_controls_bank.asm','directory_reader_bank.asm','redial_selection_storage.asm')]
 if args.projection_probe:sources.append(ROOT/'standalone/session_projection_probe.asm')
 if args.hook_probe:sources.append(ROOT/'standalone/hook_transaction_probe.asm')
 if args.input_probe:sources += [ROOT/'standalone/hook_transaction_probe.asm',ROOT/'standalone/hook_input_probe.asm']
@@ -565,6 +583,7 @@ for index,source in enumerate(sources):
  if args.compiler_lease_arena:options+=['-DTERMINAL_COMPILER_ARENA']
  if args.compiler_lease_bridge:options+=['-DTERMINAL_COMPILER_LEASE_BRIDGE']
  if args.compiler_lease_arena_probe:options+=['-DTERMINAL_COMPILER_ARENA_PROBE']
+ if args.connection_arena_probe:options+=['-DTERMINAL_CONNECTION_ARENA','-DTERMINAL_CONNECTION_ARENA_PROBE']
  if args.meta_loader_probe:options+=['-DTERMINAL_META_LOADER_PROBE']
  if args.line_port:options+=['-DTERMINAL_LINE_PORT']
  if args.line_port_overlay:options+=['-DTERMINAL_LINE_PORT_OVERLAY']
@@ -588,6 +607,11 @@ for index,source in enumerate(sources):
  if args.display_startup:options+=['-DTERMINAL_DISPLAY_STARTUP']
  if args.line_control:options+=['-DTERMINAL_LINE_CONTROL']
  if args.window_size_report and source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_WINDOW_SIZE_REPORT']
+ if args.bbs_csi and source==ROOT/'reconstruction/ansi/dispatch.asm':options+=['-DTERMINAL_BBS_CSI']
+ if args.ansi_profiles:options+=['-DTERMINAL_ANSI_PROFILES']
+ if args.dec_graphics:options+=['-DTERMINAL_DEC_GRAPHICS']
+ if args.vt52:options+=['-DTERMINAL_VT52']
+ if args.vt52 and source in (ROOT/'reconstruction/modes/core.asm',ROOT/'reconstruction/ansi/dispatch.asm'):options+=['-Dcsi_reset_terminal=terminal_profile_switch_reset']
  if args.row_geometry_owner and args.display_row_probe:options+=['-DTERMINAL_ROW_GEOMETRY_PROBE']
  if args.screen_pause:options+=['-DTERMINAL_SCREEN_PAUSE']
  if args.call_timer:options+=['-DTERMINAL_CALL_TIMER']
@@ -946,6 +970,8 @@ for source in c_sources:
  if args.directory_resource_owner:options+=['-dTERMINAL_DIRECTORY_RESOURCE_OWNER']
  if args.directory_retirement:options+=['-dTERMINAL_DIRECTORY_RETIREMENT']
  if args.directory_translation:options+=['-dDIRECTORY_TRANSLATION_RESOURCES']
+ if args.ansi_profiles:options+=['-dTERMINAL_ANSI_PROFILES']
+ if args.vt52:options+=['-dTERMINAL_VT52']
  if args.directory_scripts:options+=['-dDIRECTORY_SCRIPT_RESOURCES']
  if args.directory_compile:options+=['-dDIRECTORY_SCRIPT_COMPILE']
  if args.directory_adopt:options+=['-dDIRECTORY_RESOURCE_ADOPTION']
@@ -1047,13 +1073,13 @@ objects += list(map(str,sender['objects']))
 reset_bank=None
 if args.native_reset_bank:
  from ui.native_reset_link import build_native_reset_bank
- reset_bank=build_native_reset_bank(ROOT,OUT,overlay=not args.native_reset_static,transaction=args.native_reset_transaction)
+ reset_bank=build_native_reset_bank(ROOT,OUT,overlay=not args.native_reset_static,transaction=args.native_reset_transaction,ansi_profiles=args.ansi_profiles,vt52=args.vt52)
  objects+=list(map(str,reset_bank['objects']));sources+=reset_bank['inputs']
 phone_log_bank=None
 display_rows_bank=None
 if args.display_row_owner:
  from process.display_rows_link import build_display_rows_bank
- display_rows_bank=build_display_rows_bank(ROOT,OUT,geometry=args.row_geometry_owner,mouse=args.mouse,selectors=args.display_preferences,program_display=args.program_display_owner,startup=args.display_startup)
+ display_rows_bank=build_display_rows_bank(ROOT,OUT,geometry=args.row_geometry_owner,mouse=args.mouse,selectors=args.display_preferences,program_display=args.program_display_owner,startup=args.display_startup,ansi_profiles=args.ansi_profiles,vt52=args.vt52)
  objects+=list(map(str,display_rows_bank['objects']));sources+=display_rows_bank['inputs']
 if args.phone_log_bank:
  from build_phone_log_bank import build_bank
@@ -1075,9 +1101,9 @@ if args.compiler_lease_module:
   objects.append(str(obj))
   if stem=='lease_start':objects.append(lease_bank_obj)
  if args.compiler_lease_arena:
-  for stem in ['compiler_overlay_front']+(['compiler_overlay_probe'] if args.compiler_lease_arena_probe else []):
+  for stem in ['compiler_overlay_front']+(['compiler_overlay_probe'] if args.compiler_lease_arena_probe else [])+(['connection_overlay_probe'] if args.connection_arena_probe else []):
    source=ROOT/'src/process'/(stem+'.asm');obj=OUT/(stem+'.obj')
-   subprocess.run(['nasm','-f','obj',*(['-DTERMINAL_COMPILER_LEASE_BRIDGE'] if args.compiler_lease_bridge else []),str(source),'-o',str(obj)],check=True)
+   subprocess.run(['nasm','-f','obj',*(['-DTERMINAL_COMPILER_LEASE_BRIDGE'] if args.compiler_lease_bridge else []),*(['-DTERMINAL_CONNECTION_ARENA'] if args.connection_arena_probe else []),str(source),'-o',str(obj)],check=True)
    objects.append(str(obj));sources.append(source)
 ordering=['CODE','FARCODE']+(['LEASE_MODULE'] if args.compiler_lease_arena else [])+(['LEASE_BANK'] if args.compiler_lease_module else [])+(['NATIVE_DATA']if args.native_reset_static else[])+(['PHONE_DATA']if args.phone_log_bank else[])+['DATA','BSS','STACK']
 chat_loader=None
@@ -1107,6 +1133,13 @@ if args.chat_frontend:
  subprocess.run(['nasm','-fobj',*(['-DCHAT_FOREGROUND_TEXT'] if args.chat_foreground_text else []),*(['-DCHAT_REDISPLAY'] if args.chat_redisplay else []),str(source),'-o',str(obj)],check=True)
  objects.insert(objects.index(str(config_end_obj)),str(obj));sources.append(source)
 if args.directory_resource_owner:ordering+=['FAR_DATA','FROZEN_DATA']
+if args.redial_retained_owner:
+ # Initialized and placed before DGROUP: far storage after the zero buffers is
+ # never cleared by startup, and initialized data there would grow the file.
+ source=ROOT/'src/terminal/redial_selection_storage.asm';obj=OUT/'redial_selection_storage.obj'
+ subprocess.run(['nasm','-fobj',str(source),'-o',str(obj)],check=True)
+ objects.append(str(obj));sources.append(source)
+ ordering.insert(ordering.index('DATA'),'RETAINED_DATA')
 subprocess.run(['wlink','system','dos','order',*[value for kind in ordering for value in ('clname',kind)],'option','quiet','option','map='+str(OUT/'terminal.map'),'name',str(OUT/'TERMINAL.EXE'),'file',','.join(objects),'library',str(Path(os.environ['WATCOM'])/'lib286/dos/clibs.lib')],check=True)
 line_overlay=None
 if args.line_port_overlay:
@@ -1123,6 +1156,28 @@ if args.compiler_lease_module:
  compiler_lease_module=split(OUT/'TERMINAL.EXE',OUT/'terminal.map','redisplay_snapshot',arena_offset=16384 if args.compiler_lease_arena else 14336,arena_bytes=8192 if args.compiler_lease_arena else 2048,whole=args.compiler_lease_arena,overlays=[('line',line_overlay),('meta',meta_overlay)])
  compiler_lease_module.update(production_bridge_admission=False,runtime_arena_ownership_verified=False)
  sources.append(ROOT/'standalone/compiler_lease_module.py')
+connection_overlay=None
+if args.connection_arena_probe:
+ # Kind5 descriptor from the final (post-split) parent map. The module is a
+ # separately linked source-built MZ, packaged for redisplay_snapshot+16384.
+ import connection_module,struct
+ module_raw=args.connection_arena_probe.read_bytes();listing=(OUT/'terminal.map').read_text()
+ symbols={n:(int(a,16),int(b,16)) for a,b,n in re.findall(r'^([0-9a-f]+):([0-9a-f]+)[*+ ]+\s+(\w+)\s*$',listing,re.M|re.I)}
+ snap_seg,snap_off=symbols['redisplay_snapshot'];assert snap_off%16==0 and 16384+16384<=63000
+ target=snap_seg+(snap_off+16384)//16
+ dgroup=re.search(r'^DGROUP\s+([0-9a-f]+):0000',listing,re.M|re.I);assert dgroup
+ body,connection_overlay=connection_module.package(module_raw,target,16384)
+ header=connection_module.parse_mz(module_raw)['header'];entry=header[11]*16+header[10]
+ assert entry<connection_overlay['payload_bytes']
+ exe=bytearray((OUT/'TERMINAL.EXE').read_bytes());seg,off=symbols['_connection_overlay_expected']
+ at=struct.unpack_from('<14H',exe)[4]*16+seg*16+off;assert struct.unpack_from('<11H',exe,at)==(0x4e43,1)+(0,)*9
+ crc=int(connection_overlay['crc32'],16);keep=target+16384//16+16
+ struct.pack_into('<11H',exe,at,0x4e43,1,connection_overlay['payload_bytes'],connection_overlay['relocations'],crc&0xffff,crc>>16,
+  target,int(dgroup[1],16),keep,connection_overlay['allocated_image_bytes'],entry)
+ (OUT/'TERMINAL.EXE').write_bytes(exe);(OUT/'PCCONN.OVL').write_bytes(body)
+ connection_overlay.update(source_mz_sha256=connection_module.sha(module_raw),entry_offset=entry,keep_paragraphs=keep,
+  arena='redisplay_snapshot+16384',data_segment=int(dgroup[1],16))
+ sources.append(ROOT/'standalone/connection_module.py')
 listing=(OUT/'terminal.map').read_text();group=re.search(r'^DGROUP\s+[0-9a-f]+:[0-9a-f]+\s+([0-9a-f]+)',listing,re.M|re.I)
 assert group and int(group[1],16)<65536,'DS=SS small-model data/stack exceeds 64KiB'
 memory=inspect_terminal_memory(OUT/'TERMINAL.EXE',OUT/'terminal.map')
@@ -1264,6 +1319,10 @@ manifest['experimental_line_control']=args.line_control
 if args.line_control:manifest['limitations'].append('Ctrl-minus/Toggle Lines uses the accepted selector cycle after releasing menu frames. No imported/accepted preferences gives status7; tracked-online and busy/unsupported states retain guarded refusal/deferral. Saved preferences are not rewritten; live NAWS/BBS/physical acceptance remain separate gates.')
 if args.display_startup:manifest['limitations'].append('Imported display preferences apply after baseline capture before UART enable/dialing; no import preserves the default baseline without inventing selector readiness. Verified fallback and fatal refusal retain hardware cleanup. Live adoption/NAWS and BBS/physical acceptance remain separate gates; Toggle Lines is a separate option.')
 manifest['experimental_window_size_report']=args.window_size_report
+manifest['experimental_ansi_profiles']=args.ansi_profiles
+manifest['experimental_dec_graphics']=args.dec_graphics
+manifest['experimental_vt52']=args.vt52
+manifest['experimental_bbs_csi']=args.bbs_csi
 manifest['experimental_input_tables_data']=args.input_tables_data
 manifest['diagnostic_row_geometry_probe']=args.row_geometry_owner and args.display_row_probe
 if args.display_row_owner:
@@ -1322,6 +1381,7 @@ if args.compiler_lease_module:manifest['experimental_compiler_lease_module']=com
 if args.compiler_lease_bridge:manifest['experimental_compiler_lease_bridge']=True
 if args.compiler_lease_arena:manifest['experimental_compiler_lease_arena']=True
 if args.compiler_lease_arena_probe:manifest['diagnostic_compiler_lease_arena_probe']=True
+if connection_overlay:manifest['diagnostic_connection_arena_probe']=connection_overlay
 (OUT/'compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**helper_adapters},indent=2)+'\n')
 manifest['zmodem_compiler_helper_adapters']=zmodem_helper_adapters
 (OUT/'zmodem-compiler-helper-adapters.json').write_text(json.dumps({'binary_sha256':manifest['binary_sha256'],**zmodem_helper_adapters},indent=2)+'\n')

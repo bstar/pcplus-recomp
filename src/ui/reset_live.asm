@@ -333,11 +333,22 @@ live_admit_check:
  jne .bad_owner
 .profile:
  mov ax,[csi_terminal_id]
+%ifdef TERMINAL_VT52
+ cmp ax,1 ; DECANM runtime VT52; display state equals VT100's.
+ je .plain
+%endif
+%ifdef TERMINAL_ANSI_PROFILES
+ cmp ax,2
+ jb .bad_owner
+ cmp ax,11
+ jbe .plain
+%else
  cmp ax,4
  je .plain
  cmp ax,6
  jne .bad_owner
  jmp .plain
+%endif
 .bad_owner:
  stc
  ret

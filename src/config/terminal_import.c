@@ -1,6 +1,7 @@
 /* Maintained validation/application model for source-proved 2.01 fields.
  * CONFIGURATION.md and STARTUP_CONFIGURATION.md retain original provenance. */
 #include "terminal_import.h"
+#include "terminal_profile.h"
 #include <stddef.h>
 #include <string.h>
 #ifdef TERMINAL_CUSTOM_IRQ
@@ -54,7 +55,7 @@ terminal_import_status __cdecl terminal_import_decode(const prm_dos_image *image
  candidate.hardware_flow=word(image,OFFSET(0x1d1e));
  if(candidate.software_flow>1 || candidate.hardware_flow>1)return TERMINAL_IMPORT_FLOW;
  candidate.terminal_id=word(image,OFFSET(0x1d18));
- if(candidate.terminal_id!=4 && candidate.terminal_id!=6)return TERMINAL_IMPORT_PROFILE;
+ if(TERMINAL_PROFILE_UNSUPPORTED(candidate.terminal_id))return TERMINAL_IMPORT_PROFILE;
  candidate.normal_attribute=word(image,OFFSET(0x1d32));
  candidate.bold_attribute=word(image,OFFSET(0x1d34));
  candidate.preset_attribute=word(image,OFFSET(0x1d36));

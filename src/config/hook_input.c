@@ -1,6 +1,7 @@
 #include "hook_input.h"
 #include "../terminal/hook_transaction.h"
 #include "../terminal/register_owner.h"
+#include "terminal_profile.h"
 extern unsigned __far __cdecl terminal_register_context(void);
 extern unsigned __far __cdecl hook_xlt_bind(unsigned);
 extern unsigned __far __cdecl hook_xlt_stage(unsigned,xlt_dos_result *);
@@ -54,7 +55,7 @@ unsigned __far __cdecl terminal_hook_prepare_input(hook_input_result *result)
  if(terminal_hook_phase!=3 || terminal_hook_input_bound!=1 || !safe())return result->status;
  plan.profile=terminal_hook_proposal.settings.serial.terminal_id;
  plan.translation_mode=terminal_hook_proposal.settings.serial.translation_mode;
- if((plan.profile!=4 && plan.profile!=6) || plan.translation_mode>2){result->status=HOOK_INPUT_POLICY;return result->status;}
+ if(TERMINAL_PROFILE_UNSUPPORTED(plan.profile) || plan.translation_mode>2){result->status=HOOK_INPUT_POLICY;return result->status;}
  plan.profile_changed=plan.profile!=csi_terminal_id;
  plan.translation_changed=plan.translation_mode!=terminal_translation_mode;
  if(plan.translation_changed && (terminal_option_mask&16384U)){result->status=HOOK_INPUT_POLICY;return result->status;}

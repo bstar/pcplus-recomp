@@ -24,6 +24,19 @@ extern _compiler_lease_init,_compiler_lease_info
 global _compiler_overlay_expected
 _compiler_overlay_expected: dw 0x434b,1,0,0,0,0,0,0,0
 nonce: dw 0
+%ifdef TERMINAL_CONNECTION_ARENA
+; PCCONN (shared owner kind5) reuses start/poll/phase/release below. Fields
+; follow the compiler descriptor: 'CN', version, the six loader words, the
+; retained paragraph cut (PSP-relative extent end), allocated image bytes
+; (file payload plus BSS/stack) and the module entry offset. All are written
+; after linking by standalone/build_terminal.py from the matched parent map.
+global _connection_overlay_expected
+_connection_overlay_expected: dw 0x4e43,1,0,0,0,0,0,0,0,0,0
+%define CONNECTION_EXTENT 16384
+; Selected front owner. Every public entry selects its own owner first.
+front_kind: dw 4
+front_desc: dw _compiler_overlay_expected
+%endif
 %ifdef TERMINAL_COMPILER_LEASE_BRIDGE
 bridge_owner: dw 0
 bridge_active: dw 0
@@ -45,6 +58,9 @@ _compiler_overlay_%1:
  push di
  push ds
  push es
+%ifdef TERMINAL_CONNECTION_ARENA
+ call select_compiler
+%endif
  call context
  or ax,ax
  jnz %%valid
@@ -112,7 +128,12 @@ context_common:
  inc bx
  cmp [es:1],bx
  jne .bad
+%ifdef TERMINAL_CONNECTION_ARENA
+ mov si,[cs:front_desc]
+ mov ax,[cs:si+16]
+%else
  mov ax,[cs:_compiler_overlay_expected+16]
+%endif
  cmp ax,[es:3]
  ja .bad
  mov ax,1
@@ -133,7 +154,11 @@ load_module:
  mov cx,64
 .poll:
  call far _line_port_front_poll
+%ifdef TERMINAL_CONNECTION_ARENA
+ call front_phase
+%else
  call far _compiler_overlay_phase
+%endif
  cmp ax,2
  je .ready
  cmp ax,1
@@ -203,6 +228,97 @@ unavailable:
  jmp leave
 %endif
 
+%ifdef TERMINAL_CONNECTION_ARENA
+%ifdef TERMINAL_COMPILER_LEASE_BRIDGE
+%error PCCONN entries are startup-only until live connection admission exists
+%endif
+; Startup-only PCCONN owner (kind5): same parent context, same bounded loader.
+%macro connection_entry 1
+global _connection_overlay_%1
+_connection_overlay_%1:
+ push bp
+ mov bp,sp
+ push bx
+ push cx
+ push dx
+ push si
+ push di
+ push ds
+ push es
+ call select_connection
+ call context
+ or ax,ax
+ jnz %%valid
+ mov ax,2
+ jmp leave
+%%valid:
+%endmacro
+select_connection:
+ mov word [cs:front_kind],5
+ mov word [cs:front_desc],_connection_overlay_expected
+ ret
+; AX0 ready with BSS/stack zeroed; 1 already owned/busy/fatal; 4 refused or
+; failed load, already released (or left fatal by a failed close).
+connection_entry load
+ call load_module
+ or ax,ax
+ jnz .done
+ call clear_image
+ xor ax,ax
+.done:jmp leave
+; AX0 released; 1 not the ready connection owner.
+connection_entry release
+ call front_phase
+ cmp ax,2
+ mov ax,1
+ jne .done
+ call release_raw
+.done:jmp leave
+global _connection_overlay_phase,_connection_overlay_arena
+_connection_overlay_phase:
+ push word [cs:front_kind]
+ mov word [cs:front_kind],5
+ call front_phase
+ pop word [cs:front_kind]
+ retf
+; While ready: DX=arena segment, AX=allocated image bytes, CX=entry offset.
+; Otherwise AX=0. No admission or state change.
+_connection_overlay_arena:
+ push es
+ push word [cs:front_kind]
+ mov word [cs:front_kind],5
+ call front_phase
+ pop word [cs:front_kind]
+ cmp ax,2
+ mov ax,0
+ jne .done
+ call arena_segment
+ mov ax,[cs:_connection_overlay_expected+18]
+ mov cx,[cs:_connection_overlay_expected+20]
+.done:
+ pop es
+ retf
+; DX=load base+target from the active descriptor (DS=SS parent stack).
+arena_segment:
+ call config_segment
+ mov dx,ss
+ sub dx,[es:compiler_overlay_active_expected+10]
+ add dx,[es:compiler_overlay_active_expected+8]
+ ret
+; The loader stops at the file image; DOS MZ semantics leave BSS undefined, so
+; establish zero BSS/stack from payload end to the allocated image end.
+clear_image:
+ call arena_segment
+ mov di,[es:compiler_overlay_active_expected]
+ mov cx,[cs:_connection_overlay_expected+18]
+ sub cx,di
+ mov es,dx
+ xor ax,ax
+ cld
+ rep stosb
+ ret
+%endif
+
 ; All shared-runtime fields are explicitly far, in CONFIG's segment.
 config_segment:
  mov ax,seg _line_overlay_state
@@ -216,11 +332,25 @@ start:
  jne .bad
  cmp word [es:fatal],0
  jne .bad
+%ifdef TERMINAL_CONNECTION_ARENA
+ mov si,[cs:front_desc]
+ mov ax,0x434b
+ cmp word [cs:front_kind],4
+ je .magic
+ mov ax,0x4e43
+.magic:
+ cmp [cs:si],ax
+ jne .invalid
+ cmp word [cs:si+2],1
+ jne .invalid
+ add si,4
+%else
  cmp word [cs:_compiler_overlay_expected],0x434b
  jne .invalid
  cmp word [cs:_compiler_overlay_expected+2],1
  jne .invalid
  mov si,_compiler_overlay_expected+4
+%endif
  mov di,compiler_overlay_active_expected
  mov cx,6
 .copy:
@@ -231,11 +361,41 @@ start:
  loop .copy
  cmp word [es:compiler_overlay_active_expected],256
  jb .invalid
+%ifdef TERMINAL_CONNECTION_ARENA
+ cmp word [cs:front_kind],4
+ jne .connection_bound
+%endif
  cmp word [es:compiler_overlay_active_expected],8192
  ja .invalid
+%ifdef TERMINAL_CONNECTION_ARENA
+.connection_bound:
+%endif
  cmp word [es:compiler_overlay_active_expected+2],512
  ja .invalid
+%ifdef TERMINAL_CONNECTION_ARENA
+ cmp word [cs:front_kind],4
+ je .owner
+ ; Payload, fixup table and the loader's EOF probe byte must all lie inside
+ ; the exclusive extent, and so must the allocated image (BSS and stack).
+ mov ax,[es:compiler_overlay_active_expected+2]
+ shl ax,1
+ add ax,[es:compiler_overlay_active_expected]
+ cmp ax,CONNECTION_EXTENT-1
+ ja .invalid
+ mov si,[cs:front_desc]
+ mov ax,[cs:si+18]
+ cmp ax,CONNECTION_EXTENT
+ ja .invalid
+ cmp ax,[es:compiler_overlay_active_expected]
+ jb .invalid
+ cmp [cs:si+20],ax
+ jae .invalid
+.owner:
+ mov ax,[cs:front_kind]
+ mov [es:compiler_overlay_owner_kind],ax
+%else
  mov word [es:compiler_overlay_owner_kind],4
+%endif
  mov word [es:phase],1
  mov word [es:handle],0xffff
  xor ax,ax
@@ -263,6 +423,31 @@ start:
 .bad:mov ax,1
  ret
 global _compiler_overlay_phase
+%ifdef TERMINAL_CONNECTION_ARENA
+; Public phase is always the compiler's, whichever front owner is selected.
+_compiler_overlay_phase:
+ push word [cs:front_kind]
+ mov word [cs:front_kind],4
+ call front_phase
+ pop word [cs:front_kind]
+ retf
+; Near: AX=shared phase when the selected owner holds it, else FFFF.
+front_phase:
+ push es
+ call config_segment
+ mov ax,[es:compiler_overlay_owner_kind]
+ cmp ax,[cs:front_kind]
+ mov ax,0xffff
+ jne .done
+ mov ax,[es:phase]
+.done:
+ pop es
+ ret
+select_compiler:
+ mov word [cs:front_kind],4
+ mov word [cs:front_desc],_compiler_overlay_expected
+ ret
+%else
 _compiler_overlay_phase:
  push es
  call config_segment
@@ -273,9 +458,15 @@ _compiler_overlay_phase:
 .done:
  pop es
  retf
+%endif
 release_raw:
  call config_segment
+%ifdef TERMINAL_CONNECTION_ARENA
+ mov ax,[cs:front_kind]
+ cmp [es:compiler_overlay_owner_kind],ax
+%else
  cmp word [es:compiler_overlay_owner_kind],4
+%endif
  jne .bad
  cmp word [es:busy],0
  jne .bad
@@ -310,6 +501,9 @@ _compiler_overlay_retire:
  push es
  cmp word [cs:bridge_active],0
  jne fatal_parent
+%ifdef TERMINAL_CONNECTION_ARENA
+ call select_compiler
+%endif
  call release_raw
  pop es
  pop ds
@@ -331,6 +525,9 @@ _compiler_overlay_bridge:
  push di
  push ds
  push es
+%ifdef TERMINAL_CONNECTION_ARENA
+ call select_compiler
+%endif
  call context_common
  or ax,ax
  jz .identity
