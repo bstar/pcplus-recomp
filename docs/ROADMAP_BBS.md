@@ -32,7 +32,7 @@ reproduces from committed sources.
 | --- | --- | --- |
 | Physical connect + reach ENiGMA | User-confirmed with the source-built package | `HARDWARE_CONNECTION_TEST.md` |
 | Line rate on hardware | 2400 (V.22bis, native fallback); the high-rate backend times out in negotiation | `BOCA_COMMISSIONING.md` |
-| ANSI / CP437 rendering | Strong in emulation; ids 2..11, DEC graphics, VT52 and modern CSI are opt-in and **not yet in any package** | `ANSI_FAMILY_PROFILES.md`, `VT52.md`, `BBS_CSI.md` |
+| ANSI / CP437 rendering | Strong in emulation; ids 2..11, DEC graphics, VT52 and modern CSI are opt-in and packaged only in the G1 candidate (`C:\PCPLUSBB`) | `ANSI_FAMILY_PROFILES.md`, `VT52.md`, `BBS_CSI.md` |
 | ZMODEM / X / YMODEM | Pass in DOSBox against independent peers. One automatic ENiGMA download passed over software audio at 1200. | `TRANSFER_RELEASE_READINESS.md`, `LIVE_ZMODEM.md`, `ANALOG_MODEM_INTEGRATION.md` |
 | Uploads, cancel, >64 KiB over audio | Open | same |
 | Editor keys over audio | Counterexample: the caller sent 114 bytes and the guest received 126 | `lab/bbs/synthmodem-audio-dos.md` |
@@ -61,6 +61,11 @@ move to the next goal.
   - an install note lists the exact files to copy and how to fall back to the
     current `C:\PCPLUS`.
 - **Do not** write to the DOS card or the installed copy; the user installs.
+- **Status:** software-complete except Synchronet. See `BBS_HARDWARE_CANDIDATE.md`
+  and `standalone/build_bbs_candidate.py`. The pinned Synchronet development
+  archive changed upstream (`sbbs_dev.tgz` digest), so the lab refuses to set
+  up. Re-pinning a new upstream binary waits for the user's OK. Hardware
+  acceptance is H4.
 
 **G2. Connect-result robustness for a real 14.4 modem.**
 - **Work:**
@@ -263,3 +268,4 @@ Also stop when a goal can only progress with a hardware fact (H1..H4).
 | --- | --- | --- |
 | 2026-11-25 | (pre-roadmap) | Ids 8..11, VT52 and `--bbs-csi` added as opt-ins; none packaged yet. Next: G1. |
 | 2026-11-25 | regression check | Known-good package reproduces: TERMINAL `7f5b3b03` and PRMEDIT `1c4ad063` rebuild byte-identical; ASPECT sources unchanged; the other edits are flag-gated or expand to the original test. |
+| 2026-11-25 | G1 | Candidate `build_bbs_candidate.py` (TERMINAL `d59221a3`, PRMEDIT `21dc7dc2`, for `C:\PCPLUSBB`); `--control` reproduces all 17 known-good files. Package DOS workflows, ENiGMA login/menus and the opt-in harnesses pass. Synchronet is blocked on a changed upstream archive. Hardware acceptance (H4) is open. Next: G2. |

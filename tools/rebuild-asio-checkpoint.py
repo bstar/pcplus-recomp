@@ -75,7 +75,7 @@ def main():
 
     # Development GET compiler (current source).
     if not (TARGET['compiler'] / 'ASPCOMP.EXE').exists():
-        assert run(['standalone/build_aspect_compiler_dos.py', '--get', '--output', TARGET['compiler']], log) == 0
+        assert run(['standalone/build_aspect_compiler_dos.py', '--get', '--connection', '--output', TARGET['compiler']], log) == 0
         got = sha(TARGET['compiler'] / 'ASPCOMP.EXE')
         if got != EXPECTED['compiler']:
             sys.exit('compiler: got %s, expected %s' % (got, EXPECTED['compiler']))
