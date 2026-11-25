@@ -79,6 +79,9 @@ move to the next goal.
   documented as an intended difference from the original.
 - **Blocked on:** H1 for the real strings. Until then, build the parser change
   against the documented Hayes/Rockwell forms.
+- **Status:** acceptance checks and current-matcher characterization are in
+  `CONNECT_RESULTS.md`. The interim safe setup is autobaud off with plain
+  `CONNECT` in slot 0. Implementation is next.
 
 **G3. Login and editor fidelity over the real path.**
 - **Work:**
