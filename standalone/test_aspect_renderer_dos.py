@@ -302,6 +302,10 @@ timer:
  jne .done
  cmp word [es:PROGRAM_STATUS],5
  jne .done
+ ; Policy admission precedes EXEC. After the child returns, status5 is the
+ ; ordinary child-error result while the parent finishes its return path.
+ cmp word [cs:exec_done],0
+ jne .done
  cmp word [cs:admit_seen],0
  jne .done
  push cs

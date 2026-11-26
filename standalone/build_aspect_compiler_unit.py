@@ -6,7 +6,7 @@ from build_aspect_compiler_lexer import ROOT,sha
 OUT=ROOT/'build/aspect-compiler-unit'
 def main():
  OUT.mkdir(parents=True,exist_ok=True)
- names=['compiler_lexer.c','compiler_lexer.h','compiler_unit.c','compiler_unit.h','compiler_unit_dump.c','compiler_unit_dump.h','compiler_unit_probe.c']
+ names=['compiler_lexer.c','compiler_lexer.h','compiler_unit.c','compiler_unit.h','compiler_procedure_keywords.h','compiler_emulations.h','compiler_unit_dump.c','compiler_unit_dump.h','compiler_unit_probe.c']
  sources=[ROOT/'src/aspect'/name for name in names]
  subprocess.run(['wcl','-q','-bt=dos','-0','-ml','-ecc','-s','-w4','-we','-k8192','-fm=ASPINV.map','-fe=ASPINV.EXE',*[str(p) for p in sources if p.suffix=='.c']],cwd=OUT,check=True)
  sources.extend([Path(__file__),ROOT/'standalone/build_aspect_compiler_lexer.py'])

@@ -6,6 +6,43 @@ CPU 8086
  %endif
  global %1
  %1:
+ %ifdef ASPECT_SERIAL_OVERLAY_READY
+  %ifidni %1,_aspect_serial_directory_entry
+   mov ax,[_aspect_serial_directory_entry_data]
+   ret
+   %exitmacro
+  %elifidni %1,_aspect_serial_directory_record
+   xor ax,ax
+   cmp word [_aspect_serial_directory_entry_data],0
+   je %%done
+   mov ax,_aspect_serial_directory_record_data
+  %%done:
+   ret
+   %exitmacro
+  %elifidni %1,_aspect_serial_translation_policy
+   mov ax,[_aspect_serial_input_translation_mode]
+   ret
+   %exitmacro
+  %elifidni %1,_aspect_serial_translate
+   push bp
+   mov bp,sp
+   mov ax,[bp+4]
+   xor ah,ah
+   cmp word [_aspect_serial_input_translation_mode],1
+   jne %%done
+   push bx
+   mov bx,ax
+   mov al,[_aspect_serial_input_translation+bx]
+   pop bx
+  %%done:
+   pop bp
+   ret
+   %exitmacro
+  %endif
+ %endif
+ %ifdef SERIAL_BANK_ROOT_ONLY
+  extern %1 %+ _far
+ %endif
  push bp
  mov bp,sp
  %if %2
@@ -41,8 +78,14 @@ CPU 8086
  pop bp
  retf
 %endmacro
-SEGMENT _TEXT public class=CODE use16
-%include "serial_bank.inc"
+%ifndef SERIAL_BANK_OVERLAY_ONLY
+ SEGMENT _TEXT public class=CODE use16
+ %ifdef ASPECT_SERIAL_OVERLAY_READY
+  extern _aspect_serial_input_translation,_aspect_serial_input_translation_mode
+  extern _aspect_serial_directory_record_data,_aspect_serial_directory_entry_data
+ %endif
+ %include "serial_bank.inc"
+%endif
 %unmacro SERIAL_ENTRY 2
 %unmacro SERIAL_CALLBACK 3
 %macro SERIAL_ENTRY 2
@@ -60,10 +103,15 @@ SEGMENT _TEXT public class=CODE use16
  retf
 %endmacro
 %macro SERIAL_CALLBACK 3
+ %ifdef SERIAL_BANK_OVERLAY_ONLY
+  extern %1 %+ _resident
+ %endif
  global %1
  %1:
  call far %1 %+ _resident
  ret
 %endmacro
-SEGMENT ASIO_CODE public align=16 class=FARCODE use16
-%include "serial_bank.inc"
+%ifndef SERIAL_BANK_ROOT_ONLY
+ SEGMENT ASIO_CODE public align=16 class=FARCODE use16
+ %include "serial_bank.inc"
+%endif

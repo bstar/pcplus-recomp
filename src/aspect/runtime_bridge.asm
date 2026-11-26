@@ -9,6 +9,12 @@ extern aspect_enumeration_attributes,aspect_enumeration_date,aspect_enumeration_
 extern aspect_enumeration_filename,aspect_enumeration_basename,aspect_enumeration_time
 BITS 16
 CPU 8086
+%ifdef ASPECT_STATE_BUILTINS
+%define ASPECT_TERMINAL_CACHE
+%endif
+%ifdef ASPECT_TERMINAL_BUILTINS
+%define ASPECT_TERMINAL_CACHE
+%endif
 %assign external_commands_enabled 0
 %ifdef ASPECT_EXTERNAL_COMMANDS
 %ifndef ASPECT_EXTERNAL_PROCESS
@@ -320,6 +326,14 @@ global aspect_string_builtin
 aspect_string_builtin:
  push bp
  mov bp,sp
+%ifdef ASPECT_CLOCK_BUILTINS
+ cmp word [bp+4],8
+ je .clock_date
+ cmp word [bp+4],20
+ je .clock_time0
+ cmp word [bp+4],21
+ je .clock_time1
+%endif
  cmp word [bp+4],7
  ja .other
  push bx
@@ -348,6 +362,20 @@ aspect_string_builtin:
  mov ax,empty_script
  pop bp
  ret 2
+%ifdef ASPECT_CLOCK_BUILTINS
+extern aspect_builtin_date,aspect_builtin_time0,aspect_builtin_time1
+.clock_date:
+ call aspect_builtin_date
+ jmp .clock_done
+.clock_time0:
+ call aspect_builtin_time0
+ jmp .clock_done
+.clock_time1:
+ call aspect_builtin_time1
+.clock_done:
+ pop bp
+ ret 2
+%endif
 enumeration_string_getters:
  dw aspect_enumeration_attributes,aspect_enumeration_date,aspect_enumeration_extension
  dw aspect_enumeration_filename,aspect_enumeration_basename,aspect_enumeration_time
@@ -362,6 +390,46 @@ global aspect_operand_builtin_integer,aspect_operand_builtin_long
 aspect_operand_builtin_integer:
  push bp
  mov bp,sp
+%ifdef ASPECT_HITKEY
+ cmp word [bp+4],25
+ je .hitkey
+%endif
+%ifdef ASPECT_STATE_BUILTINS
+ cmp word [bp+4],24
+ je .terminal
+ cmp word [bp+4],26
+ je .terminal
+%endif
+%ifdef ASPECT_TERMINAL_BUILTINS
+ cmp word [bp+4],0
+ je .terminal
+ cmp word [bp+4],12
+ jb .ordinary_terminal
+ cmp word [bp+4],19
+ jbe .terminal
+.ordinary_terminal:
+%endif
+%ifdef ASPECT_DIRECTORY_PROTO
+ cmp word [bp+4],7
+ je .directory_proto
+%endif
+%ifdef ASPECT_DIRECTORY_FIELDS
+ cmp word [bp+4],10
+ ja .ordinary_integer
+ mov bx,[bp+4]
+ shl bx,1
+ call [cs:.directory_fields+bx]
+ jmp short .done
+.directory_fields:
+ dw unsupported,aspect_directory_builtin_databit,aspect_directory_builtin_duplex
+ dw aspect_directory_builtin_entry,aspect_directory_builtin_mode
+ dw aspect_directory_builtin_parity,aspect_directory_builtin_port,unsupported
+ dw aspect_directory_builtin_stopbit,aspect_directory_builtin_term,aspect_directory_builtin_total
+extern aspect_directory_builtin_databit,aspect_directory_builtin_duplex
+extern aspect_directory_builtin_mode,aspect_directory_builtin_parity,aspect_directory_builtin_port
+extern aspect_directory_builtin_stopbit,aspect_directory_builtin_term,aspect_directory_builtin_total
+.ordinary_integer:
+%endif
  cmp word [bp+4],29
  je .connected
  cmp word [bp+4],3
@@ -406,6 +474,68 @@ aspect_operand_builtin_integer:
 .done:
  pop bp
  ret 2
+%ifdef ASPECT_HITKEY
+extern _runtime_hitkey_refresh,_runtime_hitkey_value
+.hitkey:
+ call _runtime_hitkey_refresh
+ or ax,ax
+ jnz fail
+ mov ax,[_runtime_hitkey_value]
+ jmp .done
+%endif
+%ifdef ASPECT_TERMINAL_CACHE
+extern _runtime_terminal_refresh
+extern aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
+extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+.terminal:
+ push word [bp+4]
+ call _runtime_terminal_refresh
+ pop bx
+ or ax,ax
+ jnz fail
+ mov bx,[bp+4]
+%ifdef ASPECT_STATE_BUILTINS
+ cmp bx,24
+ jne .terminal_mono
+ mov bx,9
+ jmp .terminal_ready
+.terminal_mono:
+ cmp bx,26
+ jne .terminal_screen
+ mov bx,10
+ jmp .terminal_ready
+.terminal_screen:
+%endif
+ or bx,bx
+ jz .terminal_ready
+ sub bx,11
+.terminal_ready:
+ shl bx,1
+ call [cs:.terminal_getters+bx]
+ jmp .done
+.terminal_getters:
+ dw aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
+ dw aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+%ifdef ASPECT_STATE_BUILTINS
+extern aspect_state_fromddir,aspect_state_mono
+ dw aspect_state_fromddir,aspect_state_mono
+%endif
+%endif
+%ifdef ASPECT_DIRECTORY_PROTO
+extern aspect_directory_builtin_proto
+.directory_proto:
+ ; Native indexing is signed and unchecked. Refuse reserved/out-of-range
+ ; storage IDs before reading the table or replacing a destination.
+ cmp byte [aspect_directory_record+72],1
+ jb .invalid_proto
+ cmp byte [aspect_directory_record+72],18
+ ja .invalid_proto
+ call aspect_directory_builtin_proto
+ jmp .done
+.invalid_proto:
+ mov ax,7
+ jmp fail
+%endif
 aspect_operand_builtin_long:
  push bp
  mov bp,sp
@@ -1048,10 +1178,10 @@ _runtime_locals: times 36 db 0
 aspect_globals_table:
 _runtime_strings: times 128 dd 0
  global aspect_operand_integer_bank_a,_runtime_integer_a
-aspect_operand_integer_bank_a:
 %ifdef ASPECT_EMULATE_VM
 aspect_emulation_selector: dw 0
 %endif
+aspect_operand_integer_bank_a:
 _runtime_integer_a: times 10 dw 0
  global aspect_operand_integer_bank_b,_runtime_integer_b
 aspect_operand_integer_bank_b:
@@ -1093,6 +1223,55 @@ aspect_dispatch_handlers:
 %rep 215
 %if op=1
  dw ALARM_HANDLER
+%elif op=0x0c
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_box_entry
+ dw aspect_screen_box_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x12
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_clear_entry
+ dw aspect_screen_clear_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x57
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_home_entry
+ dw aspect_screen_home_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x6a
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_locate_entry
+ dw aspect_screen_locate_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x9c
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_scroll_entry
+ dw aspect_screen_scroll_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x52
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_getvattr_entry
+ dw aspect_screen_getvattr_entry
+%else
+ dw unsupported
+%endif
+%elif op=0x8c
+%ifdef ASPECT_SCREEN_COMMANDS
+ extern aspect_screen_putvattr_entry
+ dw aspect_screen_putvattr_entry
+%else
+ dw unsupported
+%endif
 %elif op=0x2f
 %ifdef ASPECT_EMULATE_VM
  dw runtime_emulate_command

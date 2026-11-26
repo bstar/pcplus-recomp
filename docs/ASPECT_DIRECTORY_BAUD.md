@@ -27,8 +27,27 @@ Enabled interpreter0bd5ad1c has near code64596, DGROUP40496, unchanged8192-byte
 stack and unchanged bank sizes. Its exact DOS minimum is125472 bytes. No buffer
 or limit was reduced. Both compilers' source grammar remains unchanged.
 
-The new profile has not been cold-replayed, packaged, installed or physically
-accepted. The previously prepared hardware-test package remains unchanged and unselected;
-the installed selector is unchanged. New-byte BBS/package,
-broader fault composition and full ASPECT/emulation/protocol parity remain open.
-Host remains last. Development is paused.
+On November17, a cold export of1063 source files reproduced the terminal,
+interpreter, compiler and overlays, then repeated the two source/GET cases and
+63 nested-DOS/held-FILE/Help checks. A separate complete1103-source export
+reproduced all17 files in `build/directory-baud-connection-package-20261117`
+and its ZIP byte for byte, without originals, prior objects or ancestor Git.
+The archive SHA256 is
+`38609dee876e476a8a2dff9690e7d80187b28482a8be3a6f9df6b57b2eae8bbe`.
+All34 package controls and13 lab companion controls pass.
+
+Eight packaged DOS8086 workflows pass with COM3/IRQ5 and the BIOS UART entry
+absent: splash, SETUP, nested source compilation, compiled clock/alarm/emulation,
+line/port, Meta, seven-profile keyboard mapping/Help and Chat/Help. These tests
+check synthetic private-file preservation and hardware/environment restoration.
+The selected-directory38400 expression is exercised in the separate full-parent
+source/GET cases; the packaged launcher cases do not add directory-baud operands.
+
+The new profile is staged, not installed or physically accepted. The installed
+selector is unchanged. New-byte BBS qualification, broader fault composition and
+full ASPECT/emulation/protocol parity remain open. Host remains last.
+
+The later [protocol-operand profile](ASPECT_DIRECTORY_PROTO.md) includes this
+baud getter and the directory integer getters in a separately identified package
+with fresh Enigma/Synchronet checks. This baud-only artifact retains its own
+recorded limits; neither profile has physical acceptance.

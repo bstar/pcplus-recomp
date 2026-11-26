@@ -1,4 +1,5 @@
 #include "setup_model.h"
+#include "terminal_profile.h"
 #include "terminal_import.h"
 #include "modem_import.h"
 #include "transfer_import.h"
@@ -32,7 +33,11 @@ static const descriptor fields[SETUP_FIELD_COUNT]={
 #else
  F("IRQ","Standard IRQ for selected COM port only.",0,0,IRQ,0,0),
 #endif
+#ifdef TERMINAL_ANSI_PROFILES
+ F("Terminal profile","ANSI-family ID 2-11: 4 VT220, 6 ANSI, etc",1,0x194,PROFILE,2,11),
+#else
  F("Terminal profile","Supported profile ID: 4 (VT220), 6 (ANSI)",1,0x194,PROFILE,4,6),
+#endif
  F("Autowrap","0 disabled, 1 enabled",1,0x19c,DECIMAL,0,1),
  F("Scrolling","0 disabled, 1 enabled",1,0x19e,DECIMAL,0,1),
  F("Normal color","Hex text attribute 00..FF",1,0x1ae,HEXWORD,0,255),
@@ -164,7 +169,7 @@ setup_status __cdecl setup_get(const prm_dos_image *image,unsigned index,char *t
    case PORT:if(v>3)return SETUP_STORED_VALUE;decimal(tmp,v+1);break;
    case BAUD:if(v>8)return SETUP_STORED_VALUE;decimal(tmp,rates[v]);break;
    case PARITY:if(v>4)return SETUP_STORED_VALUE;tmp[0]="NOEMS"[v];tmp[1]=0;break;
-   case PROFILE:if(v!=4 && v!=6)return SETUP_STORED_VALUE;decimal(tmp,v);break;
+   case PROFILE:if(TERMINAL_PROFILE_UNSUPPORTED(v))return SETUP_STORED_VALUE;decimal(tmp,v);break;
    case BASE:
     if(v!=bases[word(image,0)])return SETUP_STORED_VALUE;
     /* fall through */
@@ -229,7 +234,7 @@ setup_status __cdecl setup_set(const prm_dos_image *baseline,prm_dos_image *stag
     if(v!=(f->kind==BASE?bases[p]:irqs[p]))return SETUP_VALUE;
 #endif
     at=(f->kind==BASE?0x174:0x184)+p*2;
-   }else if(v<f->minimum || v>f->maximum || (f->kind==PROFILE && v!=4 && v!=6))return SETUP_VALUE;
+   }else if(v<f->minimum || v>f->maximum || (f->kind==PROFILE && TERMINAL_PROFILE_UNSUPPORTED(v)))return SETUP_VALUE;
   }
  }
  /* Nothing above mutates staged. Commit only after full parse. */

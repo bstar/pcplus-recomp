@@ -146,6 +146,12 @@ _small_code_:
  mov [terminal_exit_code],ax
  jmp terminal_shutdown
 %endif
+%ifdef TERMINAL_CONNECTION_ARENA_PROBE
+ extern terminal_connection_overlay_probe
+ call far terminal_connection_overlay_probe
+ mov [terminal_exit_code],ax
+ jmp terminal_shutdown
+%endif
 %ifdef TERMINAL_META_LOADER_PROBE
  ; Diagnostic owns the unused retained arena before any UART/session work.
  extern _meta_loader_parent_probe,process_psp,redisplay_snapshot
@@ -798,7 +804,11 @@ configuration_setup: db 'Could not run PRMEDIT setup successfully. Check PRMEDIT
 configuration_io: db 'Could not read the requested PCPLUS 2.01 configuration.',13,10,'$'
 configuration_serial: db 'Configuration has unsupported serial port or line settings.',13,10,'$'
 configuration_flow: db 'Configuration flow-control values must be 0 or 1.',13,10,'$'
+%ifdef TERMINAL_ANSI_PROFILES
+configuration_profile: db 'Terminal profile must be an ANSI-family id (2 to 11).',13,10,'$'
+%else
 configuration_profile: db 'Configuration terminal profile must be ANSI or VT220.',13,10,'$'
+%endif
 configuration_display: db 'Configuration has unsupported display settings.',13,10,'$'
 configuration_argument: db 'Invalid configuration request.',13,10,'$'
 configuration_modem: db 'Dialing requires a valid explicit modem configuration.',13,10,'$'

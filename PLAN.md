@@ -1,6 +1,71 @@
 # Complete DOS rebuild plan
 
-## Active objective: ready the real SynthModem → Enigma connection test
+**Current priority (2026-11-25):** follow [the BBS calling roadmap](docs/ROADMAP_BBS.md).
+It ranks the work for the user's real Boca 14.4 → SPA2102 → SynthModem → BBS
+session (menus, setup, dialing directory, ZMODEM and the other transfers) and
+defines how long autonomous sessions pick and close goals. The objective below
+stays open; Host mode remains last.
+
+## Active objective: complete the source-only PCPlus reconstruction
+
+### November 17 resumption
+
+The full objective remains open across F01–F16 in
+[the feature matrix](docs/FEATURES.md). Source-only terminal and companion builds
+do not establish full original application parity. The separate historical
+`PCPLUS.EXE` compatibility target still reads the original executable; PRMEDIT
+still requires an existing externally identified configuration. Complete setup,
+terminal emulations, protocols, ASPECT and Host remain required; Host stays last.
+
+The opt-in [selected-directory baud profile](docs/ASPECT_DIRECTORY_BAUD.md)
+now passes cold source reproduction, including all17 package files and the ZIP,
+34 package controls and eight packaged DOS8086 workflows. Its new interpreter
+still needs BBS qualification and physical acceptance. The installed selector
+and private machine configuration are unchanged. Eight additional
+[directory integer operands](docs/ASPECT_DIRECTORY_FIELDS.md) now have exact
+native source, both compilers, opt-in runtime routing, full-parent source/GET
+checks and a cold source proof. The later
+[protocol operand and combined package](docs/ASPECT_DIRECTORY_PROTO.md) adds the
+remaining directory integer selector7 and qualifies the combined runtime through
+source/package/Help reproduction and current Enigma/Synchronet workflows. All
+1105 exported sources match committed base95abca1. Hardware acceptance, broader
+fault composition, remaining builtin/command owners and complete application
+gates remain open. The installed selector is unchanged.
+
+[Clock string recovery](docs/ASPECT_CLOCK_BUILTINS.md) adds `$DATE`, `$TIME0`
+and `$TIME1` with native shared-buffer behavior. It also corrects procedure
+keyword binding across the original catalog and makes compiler builtin types
+explicit. Native/original, DOS compiler/runtime, callback/alias, parent source/GET,
+nested Help and cold source checks pass. This newer profile still needs its own
+package/BBS/hardware qualification; it does not supersede the prepared package
+or close any full feature gate.
+
+[Terminal integer recovery](docs/ASPECT_TERMINAL_BUILTINS.md) now adds all nine
+cursor, physical-dimension and configured-attribute operands through a matching
+capability24 parent query. Exact native WORD behavior, original compiler syntax,
+client failures, DOS VM lifetimes, full-parent source/GET, nested Help and cold
+source reproduction are validated independently. Production has no fabricated
+screen snapshot. The later
+[capability24 connection candidate](docs/ASPECT_TERMINAL_CONNECTION.md) now
+reproduces all17 files and its ZIP from1111 committed sources and passes eight
+packaged DOS workflows plus current Enigma/Synchronet checks. A missing upstream
+OO finish on the first Enigma attempt remains a failed counterexample; the
+unchanged rerun passes every gate. Nothing was installed. Hardware and full
+F01–F16 completion remain open.
+
+The [HITKEY checkpoint](docs/ASPECT_HITKEY.md) now binds the original normalized,
+non-consuming WORD peek through a single-observation capability25 parent pair
+and a real standalone BIOS path. Native/original, compiler, VM, callback,
+full-parent source/GET, nested Help and cold reproduction pass. New package/BBS
+and hardware qualification remain separate; the capability24 candidate is
+unchanged. The [remaining builtin-table audit](docs/ASPECT_BUILTIN_REMAINDER.md)
+identifies two non-Host operands still to bind: `FROMDDIR` and `MONO`. `FROMDDIR` needs
+automatic-script launch origin, and `MONO` needs physical display state; neither
+can use a convenient existing attribute/selection alias. Six recovered Host
+operands retain their session-producer/lifecycle gates for the final Host stage.
+
+Earlier dated checkpoints below describe their own source/product identities;
+their “next” statements are historical where later evidence supersedes them.
 
 ### November 4 checkpoint
 

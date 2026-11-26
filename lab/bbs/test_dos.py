@@ -57,6 +57,14 @@ async def run(args):
    assert 1<=sx<=999 and 1<=sy<=999
    fixture=bytearray(fixture);struct.pack_into('<HH',fixture,0x4e4,sx,sy)
    fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
+ if getattr(args,'full_parent_words',False):
+  # Display, mouse and sound words a full parent imports; the fixture's A5A5
+  # filler otherwise stops it at display startup (see test_ansi_profiles_dos.py).
+  assert fixture is not None,'--full-parent-words requires --config-fixture'
+  import struct
+  fixture=bytearray(fixture)
+  for at,value in [(0x4e4,8),(0x4e6,4),(0x1c2,0),(0x1c8,2),(0x1ca,25),(0x4ec,0),(0x1bc,0),(0x1be,0),(0x1e6,0)]:struct.pack_into('<H',fixture,at,value)
+  fixture=bytes(fixture);(output/'TEST.PRM').write_bytes(fixture)
  display_rows=getattr(args,'display_rows',None)
  if display_rows is not None:
   assert fixture is not None,'Display selection requires an explicit owned PRM'
@@ -122,10 +130,10 @@ async def run(args):
  (output/'sampler.asm').write_text(sampler)
  subprocess.run(['nasm','-f','bin',str(output/'sampler.asm'),'-o',str(output/'SNAP.COM')],check=True)
  modem=Modem('127.0.0.1',args.port,output,soft=args.flow=='SOFT',baud=args.baud,packet_delay_ms=args.packet_delay_ms,
-             raw=getattr(args,'raw_upstream',False),hardware_flow=getattr(args,'hardware_flow_model',False),ignore_rts=getattr(args,'ignore_rts',False))
+             raw=getattr(args,'raw_upstream',False),guarded_hangup_seconds=args.guarded_hangup_ms/1000 if getattr(args,'guarded_hangup_ms',None) else None,hardware_flow=getattr(args,'hardware_flow_model',False),ignore_rts=getattr(args,'ignore_rts',False))
  server=await asyncio.start_server(modem.accept,'127.0.0.1',0)
  port=server.sockets[0].getsockname()[1]
- prefix=('p1000 ' if automatic else 'p1000 a t d enter ')
+ prefix=f'p{args.startup_wait} '+(args.startup_keys+' ' if args.startup_keys else '')+('' if automatic else 'a t d enter ')
  if args.directory_browser:
   assert args.directory_fixture and args.entry<=10,'Browser lab recipe supports first-page selection'
   prefix='p500 '+('down p100 '*(args.entry-1))+'enter p1000 '
@@ -280,6 +288,10 @@ exit
 
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('name');p.add_argument('--port',type=int,required=True);p.add_argument('--label',default='probe');p.add_argument('--keys',default='');p.add_argument('--wait',type=int,default=12);p.add_argument('--timeout',type=int,default=70)
+ p.add_argument('--startup-wait',type=int,default=1000,help='Milliseconds before the first typed key; full parents show a startup splash that consumes early keys')
+ p.add_argument('--full-parent-words',action='store_true',help='Set the display/mouse/sound PRM words a full (packaged) parent imports; requires --config-fixture')
+ p.add_argument('--guarded-hangup-ms',type=int,help='Model the configured guarded +++/ATH hangup with this quiet time, as a full parent sends on Alt-X while online')
+ p.add_argument('--startup-keys',default='',help="Keys before dialing, e.g. 'enter p2000' to dismiss a full parent's startup splash")
  p.add_argument('--server-log',type=Path,help='Explicit owned ENiGMA log for a separate test server; default stock fixture')
  p.add_argument('--init-wait',type=int,choices=range(32768),help='Explicit /I initialization acknowledgement deadline in seconds')
  p.add_argument('--dial-fixture',action='store_true',help='Exercise configured automatic modem initialization/dialing inside DOS')

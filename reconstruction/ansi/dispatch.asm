@@ -739,6 +739,21 @@ L_ebcf: shl ax,1
 L_ebd1: xchg ax,bx
 L_ebd2: jmp word near [cs:bx+csi_command_table]
 L_ebd7: nop
+; --bbs-csi (src/terminal/bbs_csi.asm) maintained ECMA-48 entries; otherwise
+; each is the original ignore target, so the recovered table is unchanged.
+%ifdef TERMINAL_BBS_CSI
+%define BBS_SKIP csi_bbs_skip
+%define BBS_HPA L_e91c
+%define BBS_HPR L_e570
+%define BBS_VPA csi_bbs_vpa
+%define BBS_VPR L_e554
+%else
+%define BBS_SKIP L_ea50
+%define BBS_HPA L_ea50
+%define BBS_HPR L_ea50
+%define BBS_VPA L_ea50
+%define BBS_VPR L_ea50
+%endif
 csi_command_table:
  dw L_ea46
  dw L_ea50
@@ -748,14 +763,22 @@ csi_command_table:
  dw L_ea50
  dw L_ea50
  dw L_ea50
- dw L_ea50
- dw L_ea50
+ dw BBS_SKIP
+ dw BBS_SKIP
  dw L_eaae
- dw L_ea50
+ dw BBS_SKIP
  dw L_eafa
- dw L_ea50
- dw L_ea50
+ dw BBS_SKIP
+ dw BBS_SKIP
  dw L_eba8
+ dw BBS_SKIP
+ dw BBS_SKIP
+ dw BBS_SKIP
+ dw BBS_SKIP
+ dw BBS_SKIP
+ dw BBS_SKIP
+ dw BBS_SKIP
+ dw BBS_SKIP
  dw L_ea50
  dw L_ea50
  dw L_ea50
@@ -766,20 +789,12 @@ csi_command_table:
  dw L_ea50
  dw L_ea50
  dw L_ea50
+ dw BBS_SKIP
  dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
- dw L_ea50
+ dw BBS_SKIP
+ dw BBS_SKIP
+ dw BBS_SKIP
+ dw BBS_SKIP
  dw L_e894
  dw L_e538
  dw L_e554
@@ -812,12 +827,12 @@ csi_command_table:
  dw L_ea50
  dw L_ea50
  dw L_ea50
- dw L_ea50
- dw L_ea50
+ dw BBS_HPA
+ dw BBS_HPR
  dw L_ea50
  dw L_e9de
- dw L_ea50
- dw L_ea50
+ dw BBS_VPA
+ dw BBS_VPR
  dw L_e4c4
  dw L_ea5a
  dw L_e944
@@ -844,4 +859,19 @@ terminal_window_size_dispatch:
  call far terminal_window_size_report
  jc L_e9ce
  jmp L_ea50
+%endif
+%ifdef TERMINAL_BBS_CSI
+; Unknown private prefix, ':' or intermediate: consume through the final byte.
+extern csi_bbs_skip_far
+csi_bbs_skip:
+ call far csi_bbs_skip_far
+ jmp L_e9ce
+; VPA (CSI Pn d): CUP to row Pn keeping the cursor column; origin mode and
+; the row clamp are CUP's. HPA/HPR/VPR reuse CHA/CUF/CUD directly.
+csi_bbs_vpa:
+ mov ax,[screen_cursor_column]
+ inc ax
+ mov [(ansi_parameters+2)],ax
+ mov word [ansi_parameter_count],0x2
+ jmp L_e4c4
 %endif

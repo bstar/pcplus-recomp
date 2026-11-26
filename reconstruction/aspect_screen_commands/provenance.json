@@ -1,0 +1,261 @@
+{
+  "schema": 1,
+  "source": "src/aspect/screen_commands.asm",
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "unit": 1,
+      "name": "box",
+      "overlay": 17,
+      "entry": "0xe6d1",
+      "end_exclusive": "0xe700",
+      "bytes": 47,
+      "opcode": 12,
+      "binary_sha256": "77ba3edfa15db5b5bf783bddd798c0dc1835f4ffd7e7a01a97a215d406ba59ac",
+      "assembly_evidence_id": "ev_5db69e63f03d7c6aa83aa0863a654e104ee6675c0f43f85e991c343500bf1078"
+    },
+    {
+      "unit": 2,
+      "name": "clear",
+      "overlay": 17,
+      "entry": "0xe700",
+      "end_exclusive": "0xe713",
+      "bytes": 19,
+      "opcode": 18,
+      "binary_sha256": "55dd3ce433bfe43fd815a85b6f8f2b53af8a425e1ca3a5837408020f12369606",
+      "assembly_evidence_id": "ev_5671b012b4b27ceae87a8f76e532542f5c8ee3e2998163533abab75be1654fdf"
+    },
+    {
+      "unit": 3,
+      "name": "locate",
+      "overlay": 17,
+      "entry": "0xe7e5",
+      "end_exclusive": "0xe80a",
+      "bytes": 37,
+      "opcode": 106,
+      "binary_sha256": "ed42680564aec0c316205c87320341b25d960ebbec12efb7eae927f6b5daef6c",
+      "assembly_evidence_id": "ev_674e15334f9b0cc130902af7296596dc52b0795c26edfb59177abe8cb6153f48"
+    },
+    {
+      "unit": 4,
+      "name": "scroll",
+      "overlay": 17,
+      "entry": "0xe847",
+      "end_exclusive": "0xe862",
+      "bytes": 27,
+      "opcode": 156,
+      "binary_sha256": "705558f717fe2bc7306caea8c03b5685630e817f44b78ec6e38874a2d54cd560",
+      "assembly_evidence_id": "ev_4068d07a12af9132d6cc15db62997ad24e6180474599f840c78ccfa83a88dca5"
+    },
+    {
+      "unit": 5,
+      "name": "getvattr",
+      "overlay": 18,
+      "entry": "0xea23",
+      "end_exclusive": "0xea30",
+      "bytes": 13,
+      "opcode": 82,
+      "binary_sha256": "c333ded25d6ffb7ffd52890de9a552ea71b7f56325385e54ad051b7d2aece6ae",
+      "assembly_evidence_id": "ev_6c11146708115934c10bf6939e8d8b7f766f839a42e0f3a7643d0ac5bdf0bde0"
+    },
+    {
+      "unit": 6,
+      "name": "putvattr",
+      "overlay": 18,
+      "entry": "0xea3c",
+      "end_exclusive": "0xea4d",
+      "bytes": 17,
+      "opcode": 140,
+      "binary_sha256": "38d0fb908bda24e959ebebfbee52868b759f5acdaa4fa229a56c79d72edd09c0",
+      "assembly_evidence_id": "ev_ae9107546209e73a13a39e8b3505726c316695293c3d4bc48a3ef4b9e837ae77"
+    },
+    {
+      "unit": 7,
+      "name": "physical_offset",
+      "overlay": 18,
+      "entry": "0xeadc",
+      "end_exclusive": "0xeaef",
+      "bytes": 19,
+      "opcode": null,
+      "binary_sha256": "85d024b117c3d2092b0245e12df4e480182dd134df566991e4c586fef756a53a",
+      "assembly_evidence_id": "ev_7933839032c5365590a6a39a02ca981b45e3a7b729b35d43c5f5b25d801f401d"
+    },
+    {
+      "unit": 8,
+      "name": "row",
+      "overlay": 16,
+      "entry": "0xddcd",
+      "end_exclusive": "0xddd8",
+      "bytes": 11,
+      "opcode": null,
+      "binary_sha256": "4a0073b8d675d99d1ff145286b6ddc92fa2f0bb153de0a3b269e2d5081af34fc",
+      "assembly_evidence_id": "ev_5a9dbbc1f8d7a06a34ea0ef48e859fa7fcc924069fd814ea0c9a36bf4fd49eae"
+    },
+    {
+      "unit": 9,
+      "name": "column",
+      "overlay": 16,
+      "entry": "0xddd8",
+      "end_exclusive": "0xdde3",
+      "bytes": 11,
+      "opcode": null,
+      "binary_sha256": "f22d29498254b6b0113529e9d6b323ffeb6b88ec627e82e1eaeeceac95fca4d3",
+      "assembly_evidence_id": "ev_5a9dbbc1f8d7a06a34ea0ef48e859fa7fcc924069fd814ea0c9a36bf4fd49eae"
+    },
+    {
+      "unit": 10,
+      "name": "position",
+      "overlay": 16,
+      "entry": "0xde27",
+      "end_exclusive": "0xde3a",
+      "bytes": 19,
+      "opcode": null,
+      "binary_sha256": "3673b2000c42eb59a3b19fdb428986dfabf30aed16002618a941f47559d37495",
+      "assembly_evidence_id": "ev_cdd81caadb4795e2ffb046dd649b7641460008ed0f5ad3124652797edf64afa7"
+    }
+  ],
+  "abi": "Near DS=SS, DF=0. Native BP/SI/DI retained with conforming imported helpers; AX/BX/CX/DX/ES/FLAGS volatile. Commands/readers RET0; no fabricated FLAGS preservation.",
+  "data": {
+    "0x1d2e": "aspect_screen_configured_wide",
+    "0x1d32": "aspect_screen_normal",
+    "0x7a74": "aspect_screen_physical_rows",
+    "0x7a80": "aspect_screen_physical_last_row",
+    "0x7a7e": "aspect_screen_physical_last_column",
+    "0x7a7a": "aspect_screen_physical_stride"
+  },
+  "imports": {
+    "0xdd68": {
+      "name": "aspect_string_bounded_integer",
+      "contract": "stack upper,lower; RET4; AX integer; signed bounds conditioned on E37C; error1 may return/abort according to native policy"
+    },
+    "0xdde3": {
+      "name": "aspect_string_byte_operand",
+      "contract": "RET0; AX bounded0..255"
+    },
+    "0xe0e4": {
+      "name": "aspect_string_option_flag",
+      "contract": "RET0; consumes one byte; returns1 only for byte1"
+    },
+    "0xde3a": {
+      "name": "aspect_string_store_integer",
+      "contract": "stack value; RET2; consumes native integer destination"
+    },
+    "0x6edc": {
+      "name": "aspect_screen_scroll_rectangle",
+      "contract": "stack attr,bottomright,topleft,count; RET8; BIOS AH06"
+    },
+    "0x4056": {
+      "name": "aspect_screen_draw_box",
+      "contract": "stack attr,bottomright,topleft; RET6; uses current frame-style pointer3352 via6FEC"
+    },
+    "0x24da": {
+      "name": "aspect_screen_reset_attribute",
+      "contract": "RET0; copies normal1D32 to current1F70"
+    },
+    "0x24e2": {
+      "name": "aspect_screen_clear_home",
+      "contract": "RET0; clears bounds334A/3258 with normal1D32; resets current and homes to rowCEB0,col0"
+    },
+    "0x1bbe": {
+      "name": "aspect_screen_set_cursor",
+      "contract": "AX row,DX column; RET0; updates logical/shadow/hardware cursor, including viewport transition"
+    },
+    "0x6fa0": {
+      "name": "aspect_screen_read_video_byte",
+      "contract": "stack byte_offset; RET2 AX zero-extended byte from physical segment7A78; status port7A8E may CLI/STI"
+    },
+    "0x6c84": {
+      "name": "aspect_screen_write_video_byte",
+      "contract": "stack byte_offset,value; RET4; writes AL to physical segment7A78; status port7A8E may CLI/STI"
+    }
+  },
+  "operand_order": {
+    "box": [
+      "row1",
+      "col1",
+      "row2",
+      "col2",
+      "attribute"
+    ],
+    "clear": [
+      "presence_byte",
+      "optional_attribute"
+    ],
+    "locate": [
+      "row",
+      "column"
+    ],
+    "scroll": [
+      "count",
+      "row1",
+      "col1",
+      "row2",
+      "col2",
+      "attribute"
+    ],
+    "getvattr": [
+      "row",
+      "column",
+      "integer_destination"
+    ],
+    "putvattr": [
+      "row",
+      "column",
+      "attribute"
+    ]
+  },
+  "semantics": [
+    "Row and column use physical last indexes7A80/7A7E. Packed positions OR column WORD with low row byte shifted8; no added masking when range checks are disabled.",
+    "LOCATE configured-wide nonzero substitutes column upper131; other coordinate reads retain physical bounds.",
+    "SCROLL count upper is physical row count7A74;0 requests BIOS rectangle clear.",
+    "Physical offset is lowWORD(row*physical_stride+2*column). GET/PUT increment it to the attribute byte and do not use logical cursor/video offset or viewport addressing.",
+    "CLEAR optional attribute replaces full configured normal WORD with bounded byte and resets current; no-option retains configured normal and still resets current through24E2.",
+    "BOX clears rectangle then draws border; neither wrapper validates ordered or nondegenerate corners.6FEC computes each border count as zero-extended8-bit coordinate difference minus1, so coincident edges produce65535."
+  ],
+  "reused_home": {
+    "opcode": 87,
+    "entry": "0x1f56",
+    "source": "reconstruction/input_dispatch/home.asm",
+    "bytes": 25,
+    "evidence_id": "ev_37506588f17d0f8a76a2481d23ed54a5b7ece342c9971c062c91d985bc6c0352",
+    "semantics": "row0,column0 then conditional attribute-boundary adjustment0,1; differs from CLEAR origin-row home"
+  },
+  "reused_dependencies": [
+    "reconstruction/terminal_services/clear_home.asm",
+    "reconstruction/attributes/reset.asm",
+    "reconstruction/screen/set_cursor.asm",
+    "reconstruction/notice_window/frame.asm",
+    "reconstruction/ui_windows/read_byte.asm",
+    "reconstruction/notice_window/attribute.asm",
+    "src/aspect/string_operands.asm",
+    "src/aspect/string_services.asm"
+  ],
+  "limitations": [
+    "Native instruction recovery does not establish source grammar, application invocation, admitted parent RPC or video/hardware behavior.",
+    "Native unchecked rectangle/range-disabled arithmetic remains explicit; any maintained admission guard must be documented and independently tested.",
+    "Original image/mapping/provider evidence is optional checker provenance, never a normal application build input. Synthetic analysis executables are never executed."
+  ],
+  "original_default_frame": {
+    "pointer_DS_word": "0x3352",
+    "pointer_original_file_offset": "0x28ca2",
+    "initial_pointer": "0x1b7a",
+    "glyph_original_file_offset": "0x274ca",
+    "glyph_hex": "c9 cd bb ba bc cd c8 ba",
+    "glyph_order": [
+      "top_left",
+      "top_edge",
+      "top_right",
+      "right_edge",
+      "bottom_right",
+      "bottom_edge",
+      "bottom_left",
+      "left_edge"
+    ],
+    "source": "Original6401ccfd startup DATA overlay32, source file offset0x25950; static initialized bytes, not runtime observation.",
+    "draw_wrapper": "resident4056 pushes WORD DS3352 as first near pointer argument to6FEC.",
+    "context_limitations": [
+      "The existing standalone notice_window_native.asm single-border constant is maintained component data, not this native initialized default.",
+      "Current retained assembly exports show reads at3FC7/4056/406F; no complete runtime alias-write or PRM frame-setting analysis is claimed. A fixed double-border parent profile does not establish full original configuration import."
+    ]
+  }
+}

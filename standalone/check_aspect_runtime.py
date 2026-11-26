@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Run compiled authored ASX through incremental recovered DOS dispatch."""
-import argparse,json,os,struct,subprocess
+import argparse,json,os,re,struct,subprocess
 from pathlib import Path
 from build_aspect_runtime import ROOT,OUT,sha
 ORIGINAL='6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904'
@@ -43,11 +43,13 @@ def metadata_records(path):
  assert len({record['name'] for record in records})==len(records)
  return records
 
-def check_directory_metadata(records,output,directory_baud=False):
+def check_directory_metadata(records,output,directory_baud=False,directory_fields=False,directory_proto=False):
  """Bind authored metadata, ACV2 payload and actual DOS observations separately."""
  fixture=ROOT/'standalone/fixtures/aspect_directory_vectors.json'
  vectors=json.loads(fixture.read_text())['vectors'];assert len(vectors)==18
  if directory_baud:vectors+=json.loads((ROOT/'standalone/fixtures/aspect_directory_baud_runtime_vectors.json').read_text())['vectors']
+ if directory_fields:vectors+=json.loads((ROOT/'standalone/fixtures/aspect_directory_fields_runtime_vectors.json').read_text())['vectors']
+ if directory_proto:vectors+=json.loads((ROOT/'standalone/fixtures/aspect_directory_proto_runtime_vectors.json').read_text())['vectors']
  indexed={record['name']:record for record in records};checks=0
  lines=output.splitlines()
  assert sum(record['record'] is not None for record in records)==sum(bool(v.get('directory')) for v in vectors)
@@ -80,9 +82,9 @@ def check_directory_metadata(records,output,directory_baud=False):
 def main():
  global OUT
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--original',type=Path)
- p.add_argument('--get-lifecycle',action='store_true');p.add_argument('--output',type=Path);p.add_argument('--directory-baud',action='store_true');args=p.parse_args()
+ p.add_argument('--get-lifecycle',action='store_true');p.add_argument('--output',type=Path);p.add_argument('--directory-baud',action='store_true');p.add_argument('--directory-fields',action='store_true');p.add_argument('--directory-proto',action='store_true');p.add_argument('--clock-builtins',action='store_true');p.add_argument('--terminal-builtins',action='store_true');p.add_argument('--hitkey',action='store_true');p.add_argument('--state-builtins',action='store_true');args=p.parse_args()
  if args.output:OUT=args.output.resolve()
- subprocess.run(['python3',str(ROOT/'standalone/build_aspect_runtime.py'),'--output',str(OUT),*(['--get-lifecycle'] if args.get_lifecycle else []),*(['--directory-baud'] if args.directory_baud else [])],check=True)
+ subprocess.run(['python3',str(ROOT/'standalone/build_aspect_runtime.py'),'--output',str(OUT),*(['--get-lifecycle'] if args.get_lifecycle else []),*(['--directory-baud'] if args.directory_baud else []),*(['--directory-fields'] if args.directory_fields else []),*(['--directory-proto'] if args.directory_proto else []),*(['--clock-builtins'] if args.clock_builtins else []),*(['--terminal-builtins'] if args.terminal_builtins else []),*(['--hitkey'] if args.hitkey else []),*(['--state-builtins'] if args.state_builtins else [])],check=True)
  manifest=json.loads((OUT/'manifest.json').read_text());optional=None
  assert manifest['fixture_data']['file']=='CASES.DAT' and sha(OUT/'CASES.DAT')==manifest['fixture_data']['sha256']
  assert manifest['fixture_data']['schema']=='ACV2'
@@ -122,7 +124,21 @@ def main():
  summary=(OUT/'DONE.TXT').read_text().strip()
  assert (OUT/'PASS.TXT').exists() and not (OUT/'FAIL.TXT').exists(),(OUT/'RESULT.TXT').read_text()
  assert summary.startswith(f'ASPECT_RUNTIME {manifest["diagnostic_case_count"]} cases ') and summary.endswith('0 failures'),summary
- directory=check_directory_metadata(records,(OUT/'RESULT.TXT').read_text(),directory_baud=args.directory_baud)
+ state=manifest['state_builtin_fixture'];run_text=(OUT/'RESULT.TXT').read_text()
+ assert state['enabled']==args.state_builtins and state['diagnostic_cases']==(10 if args.state_builtins else 2)
+ for leaf,seed in (('STFROM',7),('STMONO',9)):
+  pattern=rf'^CASE {leaf}\.ASX error=3 .* int0={seed} long0=0$'
+  assert len(re.findall(pattern,run_text,re.M))==(2 if args.state_builtins else 1),(leaf,seed)
+ assert len(re.findall(r'^CASE STPAIR\.ASX error=0 ',run_text,re.M))==(6 if args.state_builtins else 0)
+ control=next(r for r in records if r['name']=='DFGATE.ASX')
+ assert control['error']==(0 if args.directory_fields else 3) and control['values']['integer0']==(0 if args.directory_fields else 7)
+ for name in ('CBDATE.ASX','CBTIME0.ASX','CBTIME1.ASX'):
+  control=next(r for r in records if r['name']==name)
+  assert control['error']==(0 if args.clock_builtins else 3)
+  if not args.clock_builtins:assert control['values']['string0']==b'OLD'
+ proto_control=next(r for r in records if r['name']=='DPGATE.ASX')
+ assert proto_control['error']==(7 if args.directory_proto else 3) and proto_control['values']=={'integer0':7,'long0':123}
+ directory=check_directory_metadata(records,(OUT/'RESULT.TXT').read_text(),directory_baud=args.directory_baud,directory_fields=args.directory_fields,directory_proto=args.directory_proto)
  result=dict(passed=True,DOS_summary=summary,binary_sha256=sha(OUT/'EXECUTE.EXE'),manifest_sha256=sha(OUT/'manifest.json'),
   check_sha256=sha(Path(__file__).resolve()),result_sha256=sha(OUT/'RESULT.TXT'),optional_original=optional,
   original_inputs=[] if optional is None else [str(args.original)],fixture_count=manifest['fixture_count'],
@@ -131,6 +147,18 @@ def main():
   SET_family=manifest['SET_family'],
   supported_slot_count=len(manifest['supported_slots']),
   scope='Actual recovered dispatcher executes source-compiled authored ASX through real DOS files/far and near heaps and native console/serial/WHEN/SET/FIND/CASE commands. Serial queue/clock/carrier and requested pacing units are explicit diagnostic models. Supported slots and unsupported coverage are bound to the manifest; full compiler/VM and arbitrary-bytecode safety remain unfinished.')
+ result['hitkey_enabled']=args.hitkey
+ result['state_builtins_enabled']=args.state_builtins
+ result['state_builtin_fixture']=state
+ result['terminal_builtins_enabled']=args.terminal_builtins
+ result['terminal_fixture_unavailable']=not args.state_builtins
+ result['terminal_fixture_unavailable_for_corpus']=True
+ result['clock_builtins_enabled']=args.clock_builtins
+ result['clock_builtin_disabled_guards_checked']=not args.clock_builtins
+ result['directory_proto_enabled']=args.directory_proto
+ result['directory_proto_disabled_guard_checked']=not args.directory_proto
+ result['directory_fields_enabled']=args.directory_fields
+ result['directory_field_disabled_guard_checked']=not args.directory_fields
  if args.get_lifecycle:result['GET_lifecycle']=manifest['GET_lifecycle']
  (OUT/('checks-native.json' if optional else 'checks.json')).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

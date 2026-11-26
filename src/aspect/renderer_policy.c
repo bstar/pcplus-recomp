@@ -18,6 +18,7 @@ extern unsigned ui_window_rows;
 #include "../transfer/download_file.h"
 #include "../transfer/upload_file.h"
 #include "../transfer/batch_download.h"
+#include "../config/terminal_profile.h"
 
 static unsigned near_span(unsigned offset,unsigned bytes)
 { return bytes && offset<=65535U-bytes+1U; }
@@ -41,7 +42,7 @@ static unsigned render_live_state(unsigned scoped)
  if(scoped){
   if(terminal_aspect_active!=1 || !terminal_parser_active || terminal_parser_active>16)return 3;
  }else if(terminal_aspect_active || terminal_parser_active)return 3;
- if(reset_ready!=1 || (csi_terminal_id!=4 && csi_terminal_id!=6) ||
+ if(reset_ready!=1 || TERMINAL_PROFILE_UNSUPPORTED(csi_terminal_id) ||
     terminal_ansi_m_policy>1)return 3;
  if(!capture_closed(&capture_file_result) || !capture_closed(&snapshot_file_result) ||
     !capture_closed(&monitor_file_result) || !capture_closed(&history_file_result) ||
@@ -89,7 +90,19 @@ static unsigned render_live_state(unsigned scoped)
   if(!ui_flow_suppressed && (rows>24 || ui_flow_region_cells!=80 ||
      ui_flow_video_base!=3840 || ui_flow_coordinate_base!=0x1800))return 3;
  }else if(screen_viewport_enabled || screen_viewport_offset || screen_viewport_left)return 3;
+ /* Native LOCATE admits the physical last row, including the status row.
+  * The source-owned planes have capacity for the entire admitted physical
+  * geometry; active scroll/origin bounds remain the logical window. */
+#ifdef ASPECT_SCREEN_COMMANDS
+#ifdef TERMINAL_ASPECT_ROWS
+ if(width*physical>4096U || screen_cursor_row>=physical ||
+#else
+ if(width*25U>4096U || screen_cursor_row>=25 ||
+#endif
+    screen_cursor_column>=width || screen_first_row>screen_last_row ||
+#else
  if(screen_cursor_row>=rows || screen_cursor_column>=width || screen_first_row>screen_last_row ||
+#endif
     screen_last_row>=rows || csi_origin_row>csi_origin_bottom || csi_origin_bottom>=rows ||
     screen_cursor_column<screen_viewport_offset)return 3;
  visible=screen_cursor_column-screen_viewport_offset;

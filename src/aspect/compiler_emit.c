@@ -19,6 +19,7 @@ static void variable(aspect_compiler_output *o,const aspect_compiler_symbol_info
  static const unsigned char params[4]={0x97,0x98,0x99,0x96};
  if(info->builtin==1){aspect_compiler_emit_byte(o,info->kind==0?0x6f:info->kind==1?0x70:0x6e);aspect_compiler_emit_byte(o,info->index);}
  else if(info->builtin==2){aspect_compiler_emit_byte(o,0x64);aspect_compiler_emit_byte(o,info->index);}
+ else if(info->builtin==3){aspect_compiler_emit_byte(o,0x65);aspect_compiler_emit_byte(o,info->index);}
  else if(info->space==ASPECT_SYMBOL_GLOBAL){aspect_compiler_emit_byte(o,globals[info->kind]);aspect_compiler_emit_byte(o,info->index);}
  else{aspect_compiler_emit_byte(o,info->space==ASPECT_SYMBOL_LOCAL?locals[info->kind]:params[info->kind]);aspect_compiler_emit_word(o,info->index);}
 }

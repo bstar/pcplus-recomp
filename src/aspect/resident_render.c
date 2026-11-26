@@ -307,6 +307,58 @@ unsigned __cdecl aspect_render_status(unsigned duplex)
  result=typed(aspect_render_request(ASPECT_RENDER_STATUS,duplex));
  RESPONSE_DONE(result);
 }
+#ifdef ASPECT_TERMINAL_QUERY
+#ifdef ASPECT_SCREEN_PARENT
+/* Shared immutable owner admission. HITKEY permits field/window/confirmation
+ * owners but never an in-flight operation; foreground screen reads are strict.
+ * Bitwise aggregation preserves nonzero WORD semantics without new state. */
+static unsigned query_owner_busy(void)
+{
+ return program_owned|snapshot_owned|field_wait|confirm_wait|policy_wait|
+        keyboard_wait|key_wait|label_wait|window_wait;
+}
+#endif
+static unsigned word_query(unsigned operation,unsigned index,unsigned *output)
+{
+ unsigned i,result,value=0;
+ if(!output || (unsigned long)(unsigned)output+2UL>65536UL)return ASPECT_RUN_OPERAND;
+#ifdef ASPECT_SCREEN_PARENT
+ if(RESPONSE_INVALID() || query_owner_busy())return ASPECT_RUN_STATE;
+#else
+ if(RESPONSE_INVALID() || program_owned || snapshot_owned || field_wait ||
+    confirm_wait || policy_wait || keyboard_wait ||
+    key_wait || label_wait || window_wait)return ASPECT_RUN_STATE;
+#endif
+#ifdef ASPECT_SCREEN_PARENT
+ if(operation==29 && (field_owned|window_owned|confirm_owned))return ASPECT_RUN_STATE;
+#else
+ if(operation==29 && (field_owned || window_owned || confirm_owned))return ASPECT_RUN_STATE;
+#endif
+ if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+ /*29 reads foreground terminal WORDs.30 samples one HITKEY WORD and returns
+  * its low byte;31 returns the retained high byte and retires it. Neither
+  * path polls transport, emits output or invokes a child callback/scheduler. */
+ for(i=0;i<2;++i){
+  result=aspect_render_request(operation==29?29:30+i,operation==29?index|(i<<8):0);
+  if(service_check())return ASPECT_RUN_STATE;
+  if((result&0xff00U)!=0xf000U)return result?typed(result):ASPECT_RUN_STATE;
+  value|=(result&255U)<<(i*8);
+ }
+ *output=value;return 0;
+}
+unsigned __cdecl aspect_render_terminal_query(unsigned index,unsigned *output)
+{
+#ifdef ASPECT_STATE_BUILTINS_PARENT
+ return index>10?ASPECT_RUN_OPERAND:word_query(29,index,output);
+#else
+ return index>8?ASPECT_RUN_OPERAND:word_query(29,index,output);
+#endif
+}
+#ifdef ASPECT_HITKEY_PARENT
+unsigned __cdecl aspect_render_hitkey_query(unsigned *output)
+{return word_query(30,0,output);}
+#endif
+#endif
 void __cdecl aspect_render_policy_reset(void)
 {policy_queried=policy_wait=policy_received=0;keyboard_queried=keyboard_wait=keyboard_received=0;key_wait=key_policy_read=0;window_owned=window_wait=window_received=0;}
 unsigned __cdecl aspect_render_policy_inherit(void)
@@ -508,5 +560,18 @@ unsigned __cdecl aspect_render_alarm_policy(unsigned *duration,unsigned *enabled
  if(service_check() || (sound&0xfffeU)!=0xff00U ||
     (low&0xff00U)!=0xff00U || (high&0xff00U)!=0xff00U)return ASPECT_RUN_STATE;
  *duration=(low&255U)|((high&255U)<<8);*enabled=sound&1;return 0;
+}
+#endif
+
+#ifdef ASPECT_SCREEN_PARENT
+/* The overlay client enters resident CS before consulting private owners and
+ * the near ASIO validator. Validation precedes owner/serial refusal, as before. */
+unsigned __far __cdecl aspect_render_screen_ready(void)
+{
+ if(!attached || aspect_render_client_check() ||
+    (query_owner_busy()|field_owned|window_owned|confirm_owned))
+  return ASPECT_RUN_STATE;
+ if(aspect_serial_active!=1)return ASPECT_RUN_SERIAL;
+ return 0;
 }
 #endif

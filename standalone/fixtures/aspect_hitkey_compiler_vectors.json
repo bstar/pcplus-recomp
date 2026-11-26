@@ -1,0 +1,117 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "cases": [
+    {
+      "label": "hitkey-assignment",
+      "source": "integer v\nproc main\nv=hitkey\nendproc\n",
+      "source_sha256": "becc07fc43c0508f6a5aabf2b9da058f409d2313dd4336663d1b38f12a758a16",
+      "dos_source_sha256": "fdc4b7bab686026f6c06093685c1d64efd514b82092c41b25f09d848e4e461df",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1994",
+      "asx_sha256": "1dd65e64c2582639738f4a76b0db60fd593232a7a31ca4188ca7418b29ce70fd"
+    },
+    {
+      "label": "hitkey-casefold",
+      "source": "integer v\nproc main\nv=HITKEY\nendproc\n",
+      "source_sha256": "a98a269f183813ddd0023b73dabd2596022c6c4150d414cb0ee15dad3a3ed208",
+      "dos_source_sha256": "6ab45c38e388d257272d4980d82060560abe89401f6731dd2ae680bb8319a13c",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1994",
+      "asx_sha256": "1dd65e64c2582639738f4a76b0db60fd593232a7a31ca4188ca7418b29ce70fd"
+    },
+    {
+      "label": "hitkey-long",
+      "source": "long v\nproc main\nv=hitkey+1L\nendproc\n",
+      "source_sha256": "2ac4a36d1e9fad6094f01194a6c5d3105750fc61c334f58748b75f1f1adb80bf",
+      "dos_source_sha256": "c5e94c79af6f38508fa5defdc541dc42d06ef263054176fcc1dd6a476274262e",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f19ac010000007a005b058e007a0094",
+      "asx_sha256": "cce7ffb169973379f720899f89e41903fa002781f821b9b8c22e29e779572523"
+    },
+    {
+      "label": "hitkey-string",
+      "source": "string v\nproc main\nv=hitkey\nendproc\n",
+      "source_sha256": "3b0f92657a65b0f904ed65b782b4f888beefadd2e1c6b37ab4d06b9b624cfcda",
+      "dos_source_sha256": "33a1310e7bf02c8790137f2b455285e61aea7284a038c1b8968f1d9e475b8ee3",
+      "log_sha256": "c8a046aa6c1b50256d4b33d5a08a834c366201e75dbaff188901b9c1efc9d130",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> HITKEY"
+      ]
+    },
+    {
+      "label": "hitkey-condition",
+      "source": "integer v\nproc main\nif hitkey<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "ec6bf167394d6e42116713d6c5093072c0e916cf6f6ce0d5184e2b4c46ab1df3",
+      "dos_source_sha256": "6c34a6ca57652da367e86646a65a2f5234e9b5e09744ce6c999b30bcf26031ba",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f19ab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "1b5a112f38f23ed4b0a5089795d9e5b2db38ba3f769c3eb477ee83e70ece6245"
+    },
+    {
+      "label": "hitkey-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=hitkey\nv=local\nendproc\n",
+      "source_sha256": "e23dcb30718b9fbcaaea15879a5e8581b42189c4b8706804327063d4cf8def39",
+      "dos_source_sha256": "46a7657042e4ec3d09a8dc3fb685fca8e7a425cda0607fe3a91535d9a49474e0",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f195b008d00a1000095",
+      "asx_sha256": "39d0e1d0517d277b360c7938b65ea80ff973edd76392fb658f8cb3d4b984fafd"
+    },
+    {
+      "label": "hitkey-parameter",
+      "source": "integer v\nproc main\ncall worker with hitkey\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "92f4ea3b1910ec3a9e9cfd2680f50bda53c0f959b17d1eb314d3f2bf7232df42",
+      "dos_source_sha256": "afebbd52e059fe0c6cc23bf3ef6f3406e8b27b900a85b5dee45d0bcaf80d9e38",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f19c80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "830248482c72b16457ba7014b7891a7c442c5f4a5ea7951df29961e1a9c53e77"
+    },
+    {
+      "label": "hitkey-readonly",
+      "source": "proc main\nhitkey=1\nendproc\n",
+      "source_sha256": "6de32ce085723ae77e9d699c69030ccd3bed39e64ff5ae916503518be9e3ba41",
+      "dos_source_sha256": "9454fa5a663eda7a3cdd586153d4ec2e70fbf50ae3ac33608a9ce44df356ef30",
+      "log_sha256": "546092a49122ccd82eda09812182d0af50496cd0e2d119f64578abcc0b614d7a",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "hitkey-reserved",
+      "source": "integer hitkey\nproc main\nendproc\n",
+      "source_sha256": "7aaa78c3509eda4a6f1d4cd3fd7387306f50d784582976f587f0d6139dbe89bf",
+      "dos_source_sha256": "61298df58fb7aa3080c623a01a148344c0f466076865c420d09c803149afeced",
+      "log_sha256": "837040a3356d815803d5ab333af9946898fc2f520afce2424ffc246bb6d2183f",
+      "success": false,
+      "errors": [
+        "Error C028 Line 1: Invalid use of reserved word ==> HITKEY"
+      ]
+    },
+    {
+      "label": "hitkey-function",
+      "source": "integer v\nproc main\nv=hitkey()\nendproc\n",
+      "source_sha256": "6f679012fc0e1b4c150ea44c4ab277ace4e43b64c88054b881f4d0efb5c97ec6",
+      "dos_source_sha256": "231ded87f5ae0c0d1b6375dfc07b59d8f129a3a47f50682059b02040a0a9ecea",
+      "log_sha256": "1b36c5a7c6ab0b65953536f818510174de95a3ffff28adb54fc029e35fb49570",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    }
+  ],
+  "scope": "Actual original compiler DOS8086 outputs for ten authored bare HITKEY integer operand sources. FROMDDIR and MONO drafts are excluded. No private configuration input or runtime behavior claim."
+}

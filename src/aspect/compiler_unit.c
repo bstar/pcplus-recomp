@@ -1,6 +1,7 @@
 /* First pass of the DOS compiler: source/symbol ownership and procedure layout.
  * Subsequent passes must validate all bodies, including discarded procedures. */
 #include "compiler_unit.h"
+#include "compiler_procedure_keywords.h"
 #include <stdlib.h>
 #include <stddef.h>
 #include <limits.h>
@@ -82,10 +83,15 @@ static int type(const aspect_compiler_line *line,unsigned *parameter)
 }
 static unsigned reserved(const char *name)
 {
- static const char *names[]={"text","comdata","connected","failure","forever","found","success","waitfor",
- "$d_entry","$d_ldate","$d_kbdfile","$d_metakey","$d_name","$d_note","$d_phone","$d_pword","$d_script","$null","$d_baud","$fattr","$fdate","$fext","$filename","$fname","$ftime","$fsize"};
+ static const char *names[]={"text","comdata","connected","failure","forever","found","success","waitfor","hitkey","fromddir","mono",
+ "box","clear","home","locate","scroll","getvattr","putvattr",
+#ifdef ASPECT_COMPILE_CONNECTION
+ "dial","mdial","redial","hangup",
+#endif
+ "$d_entry","$d_ldate","$d_kbdfile","$d_metakey","$d_name","$d_note","$d_phone","$d_pword","$d_script","$null","$d_baud","$fattr","$fdate","$fext","$filename","$fname","$ftime","$fsize",
+ "$d_databit","$d_duplex","$d_mode","$d_parity","$d_port","$d_stopbit","$d_term","$d_total","$d_proto","$date","$time0","$time1","$col","$row","$scrncols","$scrnrows","$termbold","$termdim","$termnorm","$termrev","$termuline"};
  unsigned i;for(i=0;i<sizeof(names)/sizeof(names[0]);++i)if(!strcmp(name,names[i]))return 1;
- return aspect_compiler_emulation(name)>=0;
+ return (name[0]=='n'&&name[1]>='0'&&name[1]<='9'&&!name[2])||aspect_compiler_emulation(name)>=0;
 }
 static unsigned duplicate(aspect_compiler_symbol *symbol,const char *name)
 {for(;symbol;symbol=symbol->next)if(!strcmp(symbol->name,name))return 1;return 0;}
@@ -173,6 +179,7 @@ unsigned aspect_compiler_unit_load(aspect_compiler_unit *u,FILE *file)
   if(equal(&line,0,"proc")){
    if(current || line.count!=2 || line.tokens[1].kind!=ASPECT_TOKEN_IDENTIFIER){fail(u,ASPECT_COMPILE_SYNTAX,&line);break;}
    aspect_compiler_token_copy(&line,1,name,sizeof(name));
+   if(aspect_compiler_procedure_reserved((char *)name)){fail(u,ASPECT_COMPILE_SYNTAX,&line);break;}
    for(p=u->procedures;p;p=p->next)if(!strcmp(p->name,(char *)name))break;
    if(p){fail(u,ASPECT_COMPILE_SYNTAX,&line);break;}
    p=allocate(u,(unsigned)(sizeof(*p)+strlen((char *)name)));

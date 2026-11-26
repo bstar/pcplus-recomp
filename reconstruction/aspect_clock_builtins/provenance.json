@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "analysis_image_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+  "overlay": 16,
+  "exact_native_bytes": 20,
+  "getters": [
+    {
+      "name": "$DATE",
+      "selector": 8,
+      "entry": "0xdac2",
+      "native_bytes": 3,
+      "native_sha256": "92bb9dfcf633ccefecda18812994655a783b1a70d851de54d66e8d25cde29658",
+      "REA_evidence": "ev_08db422bf3a5b25d9a40b1e83643002abd69a1cc8ff7145e0f3ea36acfcf7e5c"
+    },
+    {
+      "name": "$TIME0",
+      "selector": 20,
+      "entry": "0xdaff",
+      "native_bytes": 8,
+      "native_sha256": "707fe93e8fca6ce9f39fbdff16ec2e18fe5914519686185b7565c0f0d0729764",
+      "REA_evidence": "ev_927442f8e90b98eb988384b6ccc4bec8d4896a4aad1539ea987fcd9734d91c2e"
+    },
+    {
+      "name": "$TIME1",
+      "selector": 21,
+      "entry": "0xdb07",
+      "native_bytes": 9,
+      "native_sha256": "1fa84b9dc203f91b855f29f6f3771d3bf256397c0f28d0d92e4f225097454846",
+      "REA_evidence": "ev_dfc8b9446f0883495d467df754d3f9f43d0041b44b13740296b7e1f51c4b992f"
+    }
+  ],
+  "original_string_table_DS": "0x4cf8",
+  "resident_thunks": {
+    "8": "0xbfd3",
+    "20": "0xc327",
+    "21": "0xc36f"
+  },
+  "date_helper": "resident0x36d4",
+  "time_helper": "resident0x498b",
+  "limitations": [
+    "Retained REA static getter evidence reused; no synthetic analysis image execution. Optional private comparison separately verifies all20 bytes and three table slots/resident stubs.",
+    "DATE preserves year-minus1900 and returns its shared date buffer. TIME0/TIME1 use one shared mutable time buffer with native aliasing.",
+    "Each getter queries DOS anew and has no destination/flush/bytecode-operand side effects. Full compiler/runtime/parent qualification is recorded separately."
+  ]
+}

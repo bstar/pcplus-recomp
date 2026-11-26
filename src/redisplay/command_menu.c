@@ -42,6 +42,9 @@ static unsigned directory_parent;
 extern unsigned __far __cdecl recording_ui_ready(void);
 typedef unsigned short word;
 typedef unsigned char byte;
+#ifdef ASPECT_STATE_BUILTINS
+extern word aspect_fromddir;
+#endif
 #ifdef CHAT_NEAR_TEXT
 typedef const char __based(__segname("_CODE")) *menu_label;
 typedef struct item { menu_label name,help;word key;byte category,letter; } item;
@@ -609,7 +612,11 @@ unsigned COMMAND_MENU_CALL command_menu_event(word event,word key,word __far *fr
    command_reference_event(0,key,view);
 #endif
    selected=3;phase=3;query_size=0;query[0]=0;
-   if(record_blocked(0xfe00)){phase=6;notice=104;}}
+   if(record_blocked(0xfe00)){phase=6;notice=104;}
+#ifdef ASPECT_STATE_BUILTINS
+   else aspect_fromddir=0;
+#endif
+  }
   if(key==0x1700){reference_origin=1;
 #ifdef TERMINAL_META_SHARED
    command_reference_prepare(key);
@@ -920,7 +927,11 @@ activate:
 #ifdef PHONE_LOG_CONTROLS
   else if(items[selected].key==0xf400){phase=11;phone_log_controls_event(0,0,view);return 1;}
 #endif
-  else if(items[selected].key==0xfe00){phase=3;query_size=0;query[0]=0;}
+  else if(items[selected].key==0xfe00){
+#ifdef ASPECT_STATE_BUILTINS
+   aspect_fromddir=0;
+#endif
+   phase=3;query_size=0;query[0]=0;}
 #ifdef TERMINAL_DIRECTORY_VIEW
   else if(items[selected].key==0xf500){directory_parent=reference_origin?1:2;phase=10;directory_view_event(0,0,view);return 1;}
 #endif

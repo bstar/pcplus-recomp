@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "passed": true,
+  "feature": "Opt-in native ASPECT BOX/CLEAR/HOME/LOCATE/SCROLL/GETVATTR/PUTVATTR with writable N0-N9",
+  "renderer_capability": 27,
+  "products": {
+    "parent": {
+      "folder": "build/screen-parent-v6-20261119",
+      "binary_sha256": "7f5b3b0303eac3f4e4a1ee1bb15715015221ec6a656ad128830045de1c5619d5",
+      "manifest_sha256": "87009c47808b76b95f2551b48fd2d6b99803c308249ce7e85784fd287dbac3d2"
+    },
+    "child": {
+      "folder": "build/screen-child-overlay-v4-20261119",
+      "binary_sha256": "1a0369887a08084365cbd04dc3f41daa2545088b5a01382f22d3ee9179519fa4",
+      "manifest_sha256": "a98e5dc3ab86e721612518554b3ff78e3f367aa8893ba119f15b3458575bbcca"
+    },
+    "compiler": {
+      "folder": "build/screen-compiler-v2-20261118",
+      "binary_sha256": "00fb07d154bb356145ed7696faa2e93c437188928da10f270c14ddccdca6c23b",
+      "manifest_sha256": "7cf4196731cd59e11336c9745e8a39e1e78054c7ee46f736498b015758177b92"
+    }
+  },
+  "source_build_original_inputs": [],
+  "native_CPU_cases": 133442,
+  "native_new_instruction_bytes": 220,
+  "compiler_oracles": {
+    "cases": 1394,
+    "accepted": 557,
+    "rejected": 837
+  },
+  "ordinary_compiler": {
+    "cases": 4670,
+    "accepted": 1882,
+    "rejected": 2788,
+    "API_checks": 1693
+  },
+  "full_DOS8086": {
+    "cases": 5,
+    "checks": 254
+  },
+  "wide_DOS8086": {
+    "cases": 1,
+    "checks": 58,
+    "milestones": 7,
+    "activation": "Canonical peer CSI?3h/3l through receive/parser; no observer geometry seeding",
+    "checked_HOME_exercised": false
+  },
+  "baseline_source_DOS8086": {
+    "cases": 2,
+    "checks": 105
+  },
+  "WHEN_DOS8086": {
+    "cases": 2,
+    "checks": 82
+  },
+  "nested_Help": {
+    "cpu": "386",
+    "upper_memory": true,
+    "checks": 63
+  },
+  "layout": {
+    "passed": true,
+    "near_code_bytes": 65508,
+    "near_code_spare": 28,
+    "GET_code_bytes": 4079,
+    "editor_code_bytes": 1544,
+    "Help_code_bytes": 6561,
+    "field_state_bytes": 206,
+    "DGROUP_bytes": 40640,
+    "stack_bytes": 8192,
+    "notice_code_bytes": 6466,
+    "notice_overlay": true,
+    "program_code_bytes": 1463,
+    "program_overlay": true,
+    "screen_overlay": true,
+    "screen_code_bytes": 1016,
+    "minimum_DOS_bytes_including_PSP": 126640,
+    "page_rounded_minimum_including_PSP": 126848,
+    "scope": "Preliminary trusted-linker map/MZ bounds only; full callback, checkpoint, recovery and allocation acceptance requires DOS execution."
+  },
+  "package_controls": 57,
+  "legacy_capability26_controls": 51,
+  "receipts": {
+    "build/aspect-screen-native-final-source-20261118/result.json": "e858bde403a53069cd2ec49ddb09931026284bda537f528cc808c06fce481854",
+    "build/aspect-screen-native-final-original-20261118/result.json": "63308a530e45604caae7b295bb92bccac4fa5f0ac1ad459a9e638166fbf50550",
+    "build/screen-compiler-oracles-v2-20261118/result.json": "2a8ecf51776f35eb26d1b3f329e16b55538e88d8da82ee9cb27bed2cecf93adc",
+    "build/screen-compiler-regression-v2-20261118/checks.json": "257961ca4fd9bdf1c51d5445086594721a24a44f88839e03fc6eeb9d59a703f5",
+    "build/screen-numeric-bank-dos-20261118/result.json": "525258ae82533437cb6515a128ae273f8a624de2c0b0b9016123fa66d4e19dac",
+    "build/script-screen-platform-check-v5-20261118/result.json": "92f8edff4897a3ced0d1f13f3fd1c816bd3fc7bfd584d0ae8e7307a9fe29bd4a",
+    "build/script-screen-rpc-cpu-final-20261118/result.json": "e8e90c548311da3dab695ce6c6c2f45aba57fd4c5360098ac0d12a0fbb9cbfef",
+    "build/screen-policy-v2-20261118/result.json": "b1f9699d4135d556341a7855763e63969aaa53586bcf6f0bbfa98f345d10040c",
+    "build/screen-client-capacity-20261119/result.json": "9827161e6d71235aedf96dc924841df639ad28b6d69d2fe4b6249e1179f6f851",
+    "build/screen-client-review-v4-20261119/result.json": "51ab5604d0242263af2067797961fb71093b8c865ba7d7c8be1e8f0b55055b61",
+    "build/screen-parent-linked-current-v1-20261119/result.json": "c7c13db22e24a801f04742c4617c31154ce33cda48deef5abcd1f7fca7a7a22d",
+    "build/screen-full-reused-v1-20261119/result.json": "22a3d9966b395fee54ba21eac03dc71ab71d3e6ace9857efc728847c49ba9a04",
+    "build/screen-wide-dos-v6-compact-20261119/result.json": "6909420b15a2c29559abcfbba9dec5c7d64fd93ecc4b90288456f1bd08063c04",
+    "build/screen-base-source-lease-v3-20261119/checks.json": "b922723c9024859adb4aaec74e304a1bb2d936cf1b29c113f4c3f0cdeb3eb582",
+    "build/screen-when-v3-20261119/checks.json": "e38147b63211b87aa1fb2c824b3c5844088afa8aa1b1fdca99de88143a2afe03",
+    "build/notice-help/screen-help-v3-20261119/result.json": "aa2dd800f4f815a1c7df3ec20460eea890279212a901007eefd12fb39d43f897",
+    "build/screen-contract-v1-20261119/result.json": "05d068997dc3e9b14016e2b4410cd6e9cb2742f646aa74bd3fca74bfd74d73ec",
+    "build/screen-package-legacy26-v1-20261119/result.json": "7ccef0aa9d3ca6181348969a9a5294c29ea4a2b7d2da487d1eddd6891288b2c6",
+    "build/screen-core-committed-source-20261119.json": "83fb0c7b91f89afd70a171f70e599ae7fca7d72569ec33740bf52436521134b7",
+    "build/screen-rpc-failure-final-20261119/result.json": "a33d7577374863c3db1a49f6a88321104fa65ee27cebee3e5f4d9a5a4c14aefb",
+    "build/screen-rpc-failure-final-20261119/screen-rpc-refusal-reuse/rpc-priority.json": "ee7bed1454ddc0098b537abc6df3ad394b9e3a1f643d3cca14f3e66747a95125",
+    "build/screen-chat-pair-v1-20261119/result.json": "d217308d2e97e476cd131ee30c318d4edaa644734e1e3980f82ae44261df6809",
+    "docs/validation/aspect-screen-bbs.json": "475a11dab3e28c12ffdbf307cbc6d29afbf44bcd1d8aad46852768ac539f282b",
+    "build/screen-complete-cold-v1-20261118/result.json": "a069db9f94e4a3dc57b4428d786ae992e0ecee806efa4bb6992608df6ef1395c",
+    "build/screen-committed-package-v1-20261118/manifest.json": "4c56043588a7dd92927756f4b0d616cec03fa7bae4a159438f07a8ff7f0ec0c4",
+    "build/screen-committed-contract-v1-20261118/result.json": "134aa8ac1405019f5dfcac5e2da03131b1f0b76fef6600f5a88d019c3aa4e0ee",
+    "build/screen-committed-archive-v1-20261118/result.json": "26fa055e072e57cc3cd8cb9e573beb8f7fa322a7cb66fbafe80af8c7f3442a2e",
+    "docs/validation/aspect-screen-package.json": "c1bbb72d2bf8823c4cd68059ed5225210ebf0a93019bb9c399d92820bb9b864f",
+    "docs/validation/aspect-screen-package-dos.json": "ba79654e90d8534aa1a9ed938a27e2a12a275e6817c88e8e1c2c9bf76e8f5602",
+    "build/screen-package-chat-identity-controls-v1-20261118/result.json": "8e28170b12dceba1571c5525456bae28a1b4714bd90787db8b36d5bac22c72b9"
+  },
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "connection_package_qualified": true,
+  "remaining": [
+    "Controlled deployment and physical modem-path acceptance; installed selection remains unchanged.",
+    "HOME checked-attribute branch canonical emulation/control producer and marker-plane initialization.",
+    "Runtime PRM frame style selection and physical writes outside the visible aperture.",
+    "Full F01-F16/ASPECT/emulation/protocol parity; Host last."
+  ],
+  "application_committed_sources": 1053,
+  "application_actual_git_blobs_verified": true,
+  "application_source_commit": "62a7690e1a364c9afe5207939c7e1edb88185c48",
+  "RPC_refusal_reuse_DOS8086": {
+    "cases": 1,
+    "checks": 65,
+    "active_fault_injection": true,
+    "generated_observer_priority_cases": 6,
+    "generated_observer_priority_checks": 14,
+    "actual_parent_return": 3,
+    "actual_native_operand_error": 0,
+    "same_parent_second_interpreter": true
+  },
+  "Chat_pair_controls": {
+    "cases": 7,
+    "current_product_identities_explicit": true,
+    "recorder_binds_parent_and_editor": true
+  },
+  "qualification_source_commit": "bd99894c65539bcbfeb4beaba636b1339f49bc47",
+  "cold_export": {
+    "source_count": 1128,
+    "actual_git_blobs_verified": true,
+    "ancestor_git_unavailable": true,
+    "files": 17,
+    "baseline_DOS_cases": 4,
+    "screen_DOS_cases": 5,
+    "wide_DOS_cases": 1,
+    "RPC_DOS_cases": 1,
+    "Help_checks": 63,
+    "archive_sha256": "e620d99a86a566c6329c033f80f9e617a50c3ff676813ca5fa59022138ad1de7",
+    "archive_bytes": 389199
+  },
+  "BBS": {
+    "checkpoint_verified": true,
+    "Enigma_checks": 18,
+    "wire_audit": true,
+    "capture_controls": 16,
+    "Synchronet_checks": 22,
+    "exact_cells": 1920,
+    "CPR": "5,8",
+    "NAWS": "80x24",
+    "owned_servers_stopped": true
+  },
+  "packaged_DOS8086": {
+    "cases": 8,
+    "checks": 50,
+    "port": 3,
+    "irq": 5,
+    "bios_entry_absent": true
+  },
+  "recorder_wrong_product_controls": 2
+}

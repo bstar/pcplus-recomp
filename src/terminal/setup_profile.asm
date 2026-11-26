@@ -3,6 +3,7 @@
 ; mode3/old-screen restoration. Transport and application owners stay intact.
 BITS 16
 CPU 8086
+%include "terminal_profile.inc"
 GROUP DGROUP _DATA _BSS
 %include "terminal_import.inc"
 SEGMENT _TEXT public class=CODE use16
@@ -57,10 +58,7 @@ terminal_setup_profile_bind:
 terminal_setup_profile_stage:
  save
  mov word [terminal_setup_profile_ready],0
- cmp ax,4
- je .valid
- cmp ax,6
- jne .invalid
+ profile_gate ax,.invalid
 .valid:
  cmp word [terminal_parser_active],0
  jne .invalid

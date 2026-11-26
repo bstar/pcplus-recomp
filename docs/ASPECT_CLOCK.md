@@ -5,6 +5,11 @@ and `TIME` commands. These query the DOS clock; they do not set it. DATE takes
 a writable string destination. TIME takes a writable string destination and an
 atomic integer format operand:0 means12-hour with AM/PM,1 means24-hour.
 
+The later [clock string operand profile](ASPECT_CLOCK_BUILTINS.md) also executes
+`$DATE`, `$TIME0` and `$TIME1` through these formatters, retaining their original
+shared-buffer aliases. Its qualification and byte identities are separate from
+the historical command checkpoint below.
+
 ```text
 string today,now
 proc main

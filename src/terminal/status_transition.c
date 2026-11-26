@@ -4,6 +4,7 @@
  */
 #include <dos.h>
 #include "status_transition.h"
+#include "../config/terminal_profile.h"
 typedef status_word word;
 typedef unsigned char byte;
 #define TEXT __based(__segname("_CODE"))
@@ -94,7 +95,7 @@ static word preflight(void)
  for(i=0;i<sizeof(owners)/sizeof(owners[0]);++i)if(*owners[i])return 3;
  if(terminal_browser_screen_owned || terminal_editor_screen_owned || reset_bank_busy || terminal_auto_answer_notice_active || terminal_script_overlay_visible)return 3;
  if(notice_idle() || recording_owned())return 3;
- if(csi_terminal_id!=4 && csi_terminal_id!=6)return 3;
+ if(TERMINAL_ACTIVE_PROFILE_UNSUPPORTED(csi_terminal_id))return 3;
  if(ui_flow_suppressed>1 || ui_flow_region_cells!=80)return 3;
 #ifdef STATUS_LARGE_ROWS
  if(ui_window_rows!=25 && ui_window_rows!=28 && ui_window_rows!=43 && ui_window_rows!=50)return 3;

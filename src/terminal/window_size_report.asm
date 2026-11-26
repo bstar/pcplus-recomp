@@ -3,6 +3,7 @@
 ; reservation; UART ISR owns RX only. Full/bad queue silently refuses the reply.
 BITS 16
 CPU 8086
+%include "terminal_profile.inc"
 SEGMENT DISPLAY_CODE public align=16 class=FARCODE use16
 global terminal_window_size_report
 extern ansi_parameter_count,ansi_parameters,ansi_private,ansi_secondary
@@ -62,10 +63,7 @@ terminal_window_size_report:
  jnz .handled
 .geometry:
  mov ax,[csi_terminal_id]
- cmp ax,4
- je .profile
- cmp ax,6
- jne .handled
+ profile_gate ax,.handled
 .profile:
  cmp word [screen_columns],80
  jne .handled

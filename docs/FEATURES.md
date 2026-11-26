@@ -9,7 +9,80 @@ Chat and UI; complete ASPECT, other emulations and transfer protocols.
 **Host mode is the final implementation stage.** It remains required for full
 original feature parity and is deferred until those earlier stages are complete.
 
-[Current checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
+November17 resumed recovery adds eight opt-in
+[selected-directory integer operands](ASPECT_DIRECTORY_FIELDS.md), with exact
+native getters, original compiler probes, DOS runtime/compiler regressions,
+full-parent source/GET checks and cold source reproduction. Their interpreter
+is a development profile; package/BBS/physical qualification remains open.
+The separate [baud-only profile](ASPECT_DIRECTORY_BAUD.md) now reproduces its
+complete17-file package/archive and passes eight packaged DOS workflows.
+The later [protocol-operand profile](ASPECT_DIRECTORY_PROTO.md) also implements
+the directory protocol mapping and qualifies the combined package on current
+Enigma/Synchronet fixtures. Hardware acceptance and full F01–F16 parity stay open.
+
+[Clock string operands](ASPECT_CLOCK_BUILTINS.md) now have exact native getters,
+both compilers, opt-in runtime routing, shared-buffer/WHEN/DOS checks and a cold
+parent/compiler/interpreter proof. Procedure declarations now reject all558
+identifier-shaped native keywords. This development profile has separate
+package/BBS/physical gates; full language and whole-application parity remain open.
+
+[Terminal integer operands](ASPECT_TERMINAL_BUILTINS.md) now read logical cursor
+coordinates, physical dimensions and configured attributes through an opt-in
+capability24 parent/child contract. Exact original WORD getters, original compiler
+probes, client failure paths, full DOS compiler/VM suites, source/GET, nested Help
+and cold reproduction pass. Standalone reads without the backend fail before
+assignment. Their [capability24 connection candidate](ASPECT_TERMINAL_CONNECTION.md)
+now reproduces the complete17-file package/ZIP from1111 committed sources and
+passes eight packaged DOS cases, Enigma carrier/retry and Synchronet editor/
+cell/NAWS checks. A failed upstream-missing-OO run remains preserved separately
+from the unchanged passing rerun. Hardware qualification and complete F01–F16
+parity stay open; the installed selector is unchanged.
+
+[HITKEY](ASPECT_HITKEY.md) now uses the exact original non-consuming peek and
+WORD normalizer, with real standalone BIOS and matching capability25 parent
+sampling. Both compilers, native/original inputs, DOS client/VM, source/GET,
+post-GET WHEN, nested Help and cold reproduction pass. Original KEYS ON disables
+automatic local-key dispatch; explicit HITKEY remains readable. The current GET
+loop defers WHEN script execution until field retirement. The combined
+capability26 connection checkpoint now covers its package/BBS qualification;
+hardware gates, remaining Host services and full parity remain open.
+
+[FROMDDIR and MONO](ASPECT_STATE_BUILTINS.md) now have opt-in compiler/runtime
+bindings and a matching capability26 parent. FROMDDIR retains the actual
+automatic-script entry across EXECUTE/macros and clears at manual/directory
+entry boundaries; MONO reads the physical display cache. Exact native/original
+comparisons, compiler and VM suites, actual DOS client/source/GET/Help and cold
+source reproduction pass. Physical qualification, the six final-stage Host
+operands and full F01–F16 parity remain open.
+The subsequent [capability26 connection candidate](ASPECT_STATE_CONNECTION.md)
+now reproduces all17 files and its ZIP from1115 actual committed Git blobs,
+passes51 package controls,13 lab controls and eight packaged DOS workflows,
+and passes fresh Enigma18/Synchronet22 plus wire/cell/CPR/NAWS audits. The
+prefeature contract fixture remains separate. The installed selector and
+capability24 candidate are unchanged; physical/full-feature gates remain open.
+The [native local screen/cursor commands](ASPECT_SCREEN_COMMANDS.md) now have an
+opt-in capability27 parent/overlay profile and writable N0–N9 compiler support.
+Five full DOS8086 cases pass254 checks, including source startup/EXECUTE and
+operand failures; canonical132-column panning/status-row access passes58 more.
+The source-built application closure matches1053 actual Git blobs at62a7690.
+A real parent-refusal/resident-abort/same-parent reuse case passes65 checks.
+The [capability27 connection candidate](ASPECT_SCREEN_CONNECTION.md) reproduces
+all17 files/ZIP from1128 actual Git blobs atbd99894 and passes57 package
+controls, eight packaged DOS cases/50 checks and Enigma18/Synchronet22 with
+independent wire/cell/CPR/NAWS audits. Cold replay repeats all three screen
+families, source/WHEN and63 Help checks. Physical gates, checked-HOME activation
+and frame-style producers remain open; the installed selector is unchanged.
+[Scripted connection recovery](ASPECT_SCRIPT_CONNECTION_COMPILER.md) now adds
+DIAL/MDIAL/REDIAL/HANGUP grammars to both compilers, matching311 frozen original
+sources. Eleven new exact native units plus the reused attempt pass241 CPU
+cases/4330 checks; ordinary/compiler-stack/source-budget regressions pass.
+The application still refuses these opcode slots. Compact module placement,
+one-UART handoff, directory/guard refresh and native resource/accounting behavior
+remain required before enabling the full family. The
+[next ASPECT recovery families](ASPECT_RECOVERY_NEXT.md) also include script-owned
+transfers; the remaining work extends well beyond builtin tables.
+
+[Earlier checked-I/O connection candidate](CHECKED_IO_CONNECTION_PACKAGE.md) now
 reproduces all17 files and its ZIP from1103 committed sources. Eight packaged DOS
 workflows,34 package controls and fresh Enigma/Synchronet regressions pass.
 It includes the expanded interpreter, CONNECTED compiler, sequential Help frame
@@ -2423,6 +2496,10 @@ Verified source-built subcases, with every whole-feature gate still open:
 | F04 | Full-state versus position-only cursor save/restore | `CURSOR_STATE.md` and `validation/cursor-state-*.json`; standalone source instructions match 48 original scenarios. Unknown saved-state semantics and complete terminal integration remain open. |
 | F04 | Recovered insert/delete-line helpers and maintained live policy | `LINE_EDIT.md`, `LIVE_LINE_EDIT.md`;504 exact original bytes, real video helpers and a separately retained indefinite historical wait. Live NETWORK bounds counts/regions and preserves columns; ORIGINAL supplies a serviced36-tick alternate wait. Eight linked synthetic policy groups pass; complex900c repair still stops at2d98. Full interactive editor success requires its own current runtime evidence. |
 | F04 | Character insert/delete and HTS | `CHARACTER_EDIT.md`;1,095 exact bytes,43 native CPU cases and real DOS video checks. Live wrappers bound repetition, validate geometry and preflight unsupported repair; nine linked parser/video groups pass. Viewports and complex repair remain open. |
+| F04 | ANSI-family profiles and DEC Special Graphics (opt-in) | `ANSI_FAMILY_PROFILES.md`. `--ansi-profiles` admits ids 2/3/5/7 and 8..11 (WYSE 75, ATT 605, ATT 4410, TVI 922) on the recovered shared ANSI parser and reset state; `--dec-graphics` restores the original CP437 line-drawing map. Actual-DOS COM1 BBS-screen matrix (DA/secondary DA/CPR, scroll region, line drawing, refusal of 0/1/12) passes in the minimal parent and the full qualified flag set; the default and qualified parents are unchanged and still refuse 2/3/5/7. The VT52 sub-mode is a separate row; TTY (id 0) and ids 12+ remain open. |
+| F04 | VT52 sub-mode (opt-in) | `VT52.md`. `--vt52` (requires `--ansi-profiles`) links the exact recovered VT52 parser (f02e..f12c) and ESC Y cursor address (1f70..1fa0) in a far segment. DECANM `ESC[?2l` enters it and `ESC <` returns with the native profile-switch reset; ESC Z replies `ESC / Z`, and cursor keys send ESC A..D. Actual-DOS switch and screen cases pass for profiles 2/4/6 in the minimal and full qualified flag-set parents; the default, ANSI-min and qualified parents are byte-identical. The original VT52 keyboard file table and TTY remain open. |
+| F04 | Modern BBS CSI compatibility (opt-in, maintained) | `BBS_CSI.md`. `--bbs-csi` consumes unknown private/`:`/intermediate CSI sequences through their final byte (SyncTERM `ESC[=255h`, CTerm `ESC[0;40 D` no longer print tails) and adds HPA/HPR/VPR via native CHA/CUF/CUD plus a VPA stub. Actual-DOS probe (size-detection CPRs, DSR/DA/18t replies, ECH/CHA/EL/CNL/SCO save-restore, CP437) passes on the qualified flag set with and without the flag; default and qualified parents unchanged. REP, SU/SD and iCE colours remain open. |
+| F04 | BBS hardware candidate package (opt-ins packaged) | `BBS_HARDWARE_CANDIDATE.md`. `standalone/build_bbs_candidate.py` rebuilds all 17 package files from source with `--ansi-profiles --dec-graphics --bbs-csi --vt52` and the matching `--ansi-profiles` settings editor, staged for a side-by-side `C:\PCPLUSBB`; `--control` reproduces the qualified package byte for byte. Package DOS workflows, the opt-in harnesses and the stock ENiGMA login/menu session pass in DOSBox-X. Synchronet and physical Boca/SPA2102/SynthModem acceptance remain open. |
 | F04 | Native reset reconstruction and maintained current-profile RIS | `TERMINAL_RESET.md`, `LIVE_TERMINAL_RESET.md`; 2,301 exact native bytes with original comparisons. Native nonzero reset stops at its unrecovered KEY/profile-loader boundary. Live ESC c restores captured startup state/keymap/tabs for profiles 4/6, clears/homes via real helpers and preserves transport/configuration ownership. `PROFILE_LIVE.md` now adds confirmed4/6 profile changes with staged target keyboard selection, clean local view/reset state and no serial reconnection. This maintained RAM policy does not implement all original reset modes or emulations. |
 | F05 | Raw79-slot keyboard classification, explicit KBD import and enhanced BIOS selection | `KEYBOARD.md`, `KEYBOARD_MAPPING.md`, `KEY_MAPPING.md`, `LIVE_KEYBOARD.md`; recovered mapping code plus36-byte BDA detector, lossless KBD/KEY codecs, strict read-only profile import and bounded live output. Maintained network defaults are source-owned rather than factory tables.95 linked raw-key inputs and ten actual DOS delivery/import cases pass, including F11/F12 modifiers and NUL. KEY dispatch/TEXT/HOOK construction now has978 exact recovered bytes; global /T KEY import and nonblocking TEXT are integrated (LIVE_META_KEYS.md). Maintained PROGRAM/process execution now supports stored commands with bounded child/UART handoff; native PROGRAM dependencies are tracked separately below. ASPECT/HOOK, full keymap editing, factory defaults and physical BIOS validation remain open. |
 | F05/F06 | XLT native operations and checked standalone DOS import | `TRANSLATION.md`;176 exact recovered bytes and2,082 CPU/original comparisons cover file operations, identity and a translated receive helper. Main-loop mapping, raw parser continuation and overlay3 selection are traced separately. The maintained exact256-byte loader passes nine actual DOS filesystem and22 declared error/argument checks with destination preservation. `LIVE_TRANSLATION.md` adds explicit `/X` startup selection and normal receive mapping,783 linked inputs and seven actual DOS cases; continuation/TX/monitor/binary owners retain raw bytes. Saved PRM modes0/1/2 and the46-field editor now preserve, validate and classify translation selection;12 actual DOS cases and561 mode inputs cover startup, driver masking and live deferral. The maintained offline `XLT_EDITOR.md` adds table editing/save/reload with checked persistence and 19 actual DOS cases; bounded default XLT environment fallback is covered by `RESOURCE_LOOKUP.md` with117 linked inputs,30 DOS assertions and12 actual DOS startup cases; confirmed live mode adoption is covered by `LIVE_TRANSLATION_SETUP.md` with331 linked inputs and10 actual DOS workflows. `TRANSLATION_RELOAD.md` adds explicit Alt-F9/menu same-table reload from the frozen actual source,66 linked inputs and eleven production DOS workflows. `TRANSLATION_EDIT.md` now covers Alt-F8/menu invocation of the sibling XLTEDIT for the frozen actual selected table, checked post-editor reload,55 linked inputs and eight actual DOS workflows. Lookup for other resources remains open. |

@@ -1,0 +1,52 @@
+{
+  "source_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "units": [
+    {
+      "file": "reconstruction/vt52/parser.asm",
+      "start": 61486,
+      "end": 61740,
+      "bytes": 254,
+      "segment": "overlay 14",
+      "file_offset": 101246,
+      "sha256": "2be627e625bfc17d1edb1725321b86b9cc292deb76c80a8354e181dc82f7eb98",
+      "matched_original": true
+    },
+    {
+      "file": "reconstruction/vt52/cursor.asm",
+      "start": 8048,
+      "end": 8096,
+      "bytes": 48,
+      "segment": "resident code",
+      "file_offset": 12656,
+      "sha256": "598f67623794b96314c3c872a848e40d3103b3454b0de4a3adae7eda523e24d0",
+      "matched_original": true
+    }
+  ],
+  "state": {
+    "1d18": "csi_terminal_id",
+    "321e": "csi_previous_terminal_id",
+    "3342": "csi_wrap_pending",
+    "cdec": "ansi_charset_g0_flag_graphics",
+    "334a": "csi_last_row",
+    "3258": "screen_last_column"
+  },
+  "services": {
+    "5ca0": "ansi_next_byte",
+    "20a4": "vt52_profile_reset (native reset)",
+    "1efc": "screen_cursor_up",
+    "1e0c": "screen_cursor_down",
+    "1ea0": "screen_cursor_right",
+    "1e30": "screen_cursor_left",
+    "1bbe": "screen_set_cursor",
+    "da84": "csi_service_da84",
+    "d8b6": "csi_service_d8b6",
+    "da12": "csi_service_da12",
+    "e2f8": "vt52_print_row",
+    "d0d0": "vt52_print_controller",
+    "e3ca": "vt52_print_screen",
+    "abac": "vt52_identify (DS 755e = ESC / Z)"
+  },
+  "limitations": [
+    "Recovered names are analyst annotations. In the maintained build the native service calls bind to maintained shims in src/terminal/vt52_live.asm."
+  ]
+}

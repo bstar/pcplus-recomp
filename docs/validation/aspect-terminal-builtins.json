@@ -1,0 +1,180 @@
+{
+  "schema": 1,
+  "passed": true,
+  "feature": "Opt-in live ASPECT terminal integer operands",
+  "products": {
+    "TERMINAL.EXE": {
+      "folder": "build/terminal-query-parent-v4-20261118",
+      "sha256": "90b037dde79a269c68d13648619f57b65370d374f29dcd96643471da823912d2",
+      "manifest_sha256": "d53e25e2bbe778601cbeea0e81573e63fb2837e02d58f470577b4829a56a50b9"
+    },
+    "ASPECT.EXE": {
+      "folder": "build/terminal-query-child-overlay-20261118",
+      "sha256": "75f1c9327f40de559d3ad9b78231264b8a8758aa0a2358fe20b3b76635575155",
+      "manifest_sha256": "d14a31f96e775257525407284b9325f8999bf52eb824b4a45b50c7f0632a4dba"
+    },
+    "ASPCOMP.EXE": {
+      "folder": "build/terminal-builtins-compiler-20261118",
+      "sha256": "baf2b02b657c6e591b58735d599b58b8fae1433993cfa0f8d91f8a4c94324601",
+      "manifest_sha256": "5f3e6f0cf8a295c97aef20b0f965a88c69d758f4a15de27038caa535572dd475"
+    }
+  },
+  "source_build_original_inputs": [],
+  "optional_native_original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "renderer_capability": 24,
+  "native_getter_bytes": 36,
+  "native_word_cases": 589824,
+  "native_dispatcher_cases": 117,
+  "compiler_oracles": {
+    "cases": 90,
+    "accepted": 54,
+    "rejected": 36
+  },
+  "DOS_compiler_regression": {
+    "cases": 3246,
+    "API_checks": 1693
+  },
+  "DOS_client": {
+    "cases": 435,
+    "checks": 2766
+  },
+  "linked_parent_CPU": {
+    "grouped_cases": 163,
+    "WORD_cases": 117,
+    "tagged_byte_requests": 234,
+    "invalid_payloads": 497,
+    "handshake_versions": 10
+  },
+  "DOS_VM": {
+    "cases": 232,
+    "checks": 5218
+  },
+  "DOS_base_regressions": {
+    "enabled_cases": 1414,
+    "enabled_checks": 35415,
+    "disabled_cases": 1414,
+    "disabled_checks": 35415
+  },
+  "full_parent_source_GET": {
+    "cases": 2,
+    "checks": 103
+  },
+  "geometry": {
+    "DOS_CPU": "8086",
+    "cases": 8,
+    "checks": 344,
+    "physical_rows": [
+      25,
+      28,
+      43,
+      50
+    ],
+    "status": [
+      "shown",
+      "hidden"
+    ],
+    "wide_logical_columns": 132,
+    "wide_cursor_columns": [
+      120,
+      125,
+      131
+    ],
+    "physical_columns": 80
+  },
+  "nested_Help_checks": 63,
+  "cold_export": {
+    "sources": 1071,
+    "ancestor_git_unavailable": true,
+    "exact_products": true,
+    "source_GET_replay_cases": 2,
+    "Help_replay_checks": 63
+  },
+  "package_contract_controls": {
+    "capability24": 39,
+    "capability23": 34,
+    "fixture_only": true
+  },
+  "interpreter_layout": {
+    "passed": true,
+    "near_code_bytes": 65204,
+    "near_code_spare": 332,
+    "GET_code_bytes": 4079,
+    "editor_code_bytes": 1544,
+    "Help_code_bytes": 6561,
+    "field_state_bytes": 206,
+    "DGROUP_bytes": 40624,
+    "stack_bytes": 8192,
+    "notice_code_bytes": 6466,
+    "notice_overlay": true,
+    "program_code_bytes": 1463,
+    "program_overlay": true,
+    "minimum_DOS_bytes_including_PSP": 126208,
+    "page_rounded_minimum_including_PSP": 126352,
+    "scope": "Preliminary trusted-linker map/MZ bounds only; full callback, checkpoint, recovery and allocation acceptance requires DOS execution."
+  },
+  "receipts": {
+    "build/terminal-builtins-native-20261118/result.json": "58f73f09e4ae8b09a9064441e2d841338423ee03ae12aee2f7f4b14135a52efa",
+    "build/terminal-builtins-compiler-oracles-20261118/result.json": "ca4a0d49de06cea3ab186054ad66f883471ceccc2af0e5a740b19a5dca34b950",
+    "build/terminal-builtins-compiler-regression-20261118/checks.json": "3d90e1ced50302c4122114940d1dbc246488811acd3002d49451afb44b0453cc",
+    "build/terminal-query-client-20261118/result.json": "65b77db1c7d1f4d5c16d327edc24bbea8ee932febc658e74db18b313dc67614b",
+    "build/terminal-query-parent-cpu-20261118/result.json": "73a5a80e437e3b1db9f2e56bd9d123a37d18aa4707a3c8534f8ca8bf90899d36",
+    "build/terminal-builtins-dos-v3-20261118/result.json": "784ffcdaddc4d6ad20b76e1b14ae4529f7bc5b9bfebaff9faa41d88c18e14c95",
+    "build/terminal-builtins-regression-20261118/checks.json": "e90dc47dfcd3ad6eea8e8883c778f37b4d14cbd7a244c27c3ff8e25e5215a218",
+    "build/terminal-builtins-disabled-20261118/checks.json": "0de5c4f0c303aac890f04bd38b83c126c11fbcf4f3731bd544ea7769c0c6de2a",
+    "build/terminal-query-source-lease-20261118/checks.json": "5a5b7938b632f56506f27228d3b755d4a56620b2528b583acc3537589bc0666a",
+    "build/notice-help/terminal-builtins-nested-help-v2-20261118/result.json": "5c091e6944bbbf8fba814c19384694a05186998e28de891de083eadbc7b03f3a",
+    "build/terminal-builtins-cold-20261118/result.json": "f74a1f79880a09ae675200c7eb4611459c1f2bbd6d789206ca9dff61a2ef575c",
+    "build/terminal-builtins-package-controls-v2-20261118/result.json": "a3a787eddbc9fb7afb97af8e151e0374105bb8fd2fa6e95cb3b6d4c4d79081eb",
+    "build/terminal-builtins-old-package-controls-v3-20261118/result.json": "5d6445e63b6fced3878b3bb39e5a81ca5704e45554f93649f0ed3773e26ca27d",
+    "build/terminal-builtins-geometry-v2-20261118/result.json": "fdda120489276904ce2951b53469fd6b623d057d66f6bfe717ffbc944594dbd7"
+  },
+  "sources": {
+    "PLAN.md": "c034315743c2cbf3c7cbf16fdbe73a37670651917e9186ecaf79874d4322dbae",
+    "docs/ASPECT_TERMINAL_BUILTINS.md": "ce27c41df68975fc00e434711006cfc1042671ee4d62c71de2ae9052a6441212",
+    "docs/FEATURES.md": "16b996ecf4c44d39745aa83f19b0e1d8a5ce691e848f18367a384d6aefedcd66",
+    "reconstruction/aspect_terminal_builtins/provenance.json": "5a74d954d7379ecd156d6cb7dda9417c239f7580f53af4f73d562c37698078eb",
+    "src/aspect/compiler.py": "8fd791d5f012f1582b8ce7bd14d253ac9819c0a793a71b13482be860b1ab567a",
+    "src/aspect/compiler_expr.c": "3f42887a79b477c79ceda67176bc788402557c31d7975f296f7c1f516cfac9ff",
+    "src/aspect/compiler_unit.c": "9a3a686f9c06b6161baef35b9ce47d8b6506b1db508280fef9db1d22d1c2f9e8",
+    "src/aspect/resident_render.c": "356c7046457ac6f63e60c54e98dca454ff7d9e2194a5afe150e3445d21f8051a",
+    "src/aspect/resident_render.h": "915275ce24c8ad2c21eea602e4b4174c01848f27c51d36f02de468babff73305",
+    "src/aspect/runtime_bridge.asm": "4e2086a25aabb2d6fb636538229fdb85a87796e6d3d2ba132bd6915e280fa9c9",
+    "src/aspect/terminal_builtins.asm": "b98705ea313ba2d10ef4f6618df0cce0b379b3c53a8b6deef982df1e2022e710",
+    "src/aspect/terminal_builtins.c": "f9ef967c23266b12e5424faa033620eabb6e3954363f6da991277eac7da634c4",
+    "src/aspect/terminal_builtins.h": "5ff724685fddd58cd04f62df047f182127c7652de7a18760477406f05d4d85c1",
+    "src/terminal/aspect_renderer.asm": "66c4b7569770361b4e817aa535f530c6d0315f06c02534e08120ac11e649513f",
+    "standalone/archive_connection_test_package.py": "5fd0cbbde112877e85b6ec57b96f3115ab56abe8b9f4703a446c0f12d9581d26",
+    "standalone/build_aspect_process.py": "78b67ff9e992d45727260ba7b78bb23a93aadb92dea23abbfba3ff23dbae1dce",
+    "standalone/build_aspect_runner.py": "70c973423fba9d64b6852abee167314b7e682a2de90f1aa54ff32d9c18cacaf8",
+    "standalone/build_aspect_runtime.py": "26013636fb610378c0a6bb87f6b439dbde1b4abb0348983965353fb4e793d144",
+    "standalone/build_terminal.py": "21fbe323b8759a7e8f0b73fe84b997b1533101df702aaf3ebf2fa1b64be8bd45",
+    "standalone/check_aspect_runtime.py": "9da03437d722c54f000e17544bae44f2cfa76c3663d9a6d8b517812a36e6b183",
+    "standalone/check_aspect_terminal_builtin_oracles.py": "037caf938b0984d6cf5c365ea5935f7556b6f8cd6864ff05d88c72d92230cf32",
+    "standalone/check_aspect_terminal_builtins.py": "f571612344e1286be852525b05563e9fe1cecdadb662b8ad7680ff987a247477",
+    "standalone/check_compiler_bridge_package.py": "9743466206a91e6837b88c2a84a810d6dd99b469ce05f0cfffff98b3a645fe72",
+    "standalone/check_terminal_query_parent.py": "03f0d3cca08394bdb901a4ca90c857dcc8031431b043d5566eb089ccd637daf9",
+    "standalone/fixtures/aspect_terminal_builtin_compiler_vectors.json": "9283ef9debdc2c43f16ef6aa840236ac42e39732f4bbfac7a6751a5fa0953080",
+    "standalone/package_connection_test.py": "5cac3a52025d1955e7e4ec7d39424f3982d13a907b7fa6f286cae1e3df32ebce",
+    "standalone/prove_compiler_bridge_source.py": "51ae02001fd95e687da040f0e8055035ac199cbda2a4277b6e6397f145571415",
+    "standalone/record_compiler_bridge_package.py": "9d548784c0bd44df20ebaa85907eef894c0c2e78f2cb5bfaf451cf68b8bd925c",
+    "standalone/terminal_query_client_driver.c": "a7361e0bac6c03ce4147da0bea10d1a408383f125eae76e5e5e80063a74f6cc9",
+    "standalone/test_aspect_get_vm_dos.py": "08e67da2c0b4461eb40b2a6c2d031745f7a18f950a427b19f7197c5d98d352da",
+    "standalone/test_aspect_terminal_builtins_dos.py": "2c2d9190d3f37e0130a1ed1b5eef8f0bfbff96f3a02bb1fa9fe2a9b8169069d1",
+    "standalone/test_terminal_builtins_geometry_dos.py": "fbf64c1774b8abf62c13572964f27ee07548328655a781786a415ceda1f6736f",
+    "standalone/test_terminal_query_client_dos.py": "8b733f3e2bb282677e44b0ee6834ea2c732d48d4cd7a9330b3de71156f087e4d"
+  },
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "remaining": [
+    "Complete committed release packaging and independent Enigma/Synchronet qualification for capability24; current staged package is a mutation-control fixture.",
+    "Controlled deployment and physical memory/modem/serial/audio acceptance.",
+    "Remaining ASPECT builtin/command services, complete terminal emulations, transfer protocols, source-owned setup defaults and full F01-F16 parity. Host remains last."
+  ],
+  "limitations": [
+    "Native optional comparison consumes a SHA-bound original outside source-only application builds; overlay-loader transfer is modeled.",
+    "Linked-parent CPU admission/setup-retirement/PSP and child UART backend are explicit controlled boundaries, corroborated separately by real DOS source/GET and geometry runs.",
+    "DOS synthetic BIOS/UART/peer tests do not prove physical or arbitrary-TSR concurrency behavior.",
+    "Cold proof covers parent/interpreter/compiler and overlays plus selected source/GET and Help workflows; it does not qualify the staged connection archive."
+  ]
+}

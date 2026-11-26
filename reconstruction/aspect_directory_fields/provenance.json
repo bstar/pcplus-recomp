@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "overlay": 16,
+  "analysis_image_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+  "record_DS_offset": "0xe650",
+  "integer_dispatch_table_DS_offset": "0x4cb6",
+  "dispatcher_REA_evidence": "ev_9bac80d7375f8ce6a3ead676649b1f17961387f1afd1c0d8d73b15b17e525098",
+  "fields": [
+    {
+      "name": "$D_DATABIT",
+      "selector": 1,
+      "entry": "0xd9ab",
+      "record_offset": 49,
+      "width": 1,
+      "signed_byte": true,
+      "native_sha256": "122340466133ad19c3d5caa868b1e5f5bb6861ad18219d968453fea873d78267",
+      "REA_evidence": "ev_cab2d3e518aba02b2ec76fb4d0830db8c4dd335eabda70f14931cd91a4afd70b"
+    },
+    {
+      "name": "$D_DUPLEX",
+      "selector": 2,
+      "entry": "0xd9b0",
+      "record_offset": 51,
+      "width": 1,
+      "signed_byte": true,
+      "native_sha256": "2a850fab1207386b2d451e147387ea392dc44649ad355f02b5d38e9fc706bc35",
+      "REA_evidence": "ev_d1640b1c2120b0b7ea3383df0e59fcf974abe5e69bcf50e8c397c0bbaa623765"
+    },
+    {
+      "name": "$D_MODE",
+      "selector": 4,
+      "entry": "0xd9b9",
+      "record_offset": 74,
+      "width": 1,
+      "signed_byte": true,
+      "native_sha256": "de26461efbaecec714abe69cc6706d1ef65b9199509940c856b8e39a53c5dd0b",
+      "REA_evidence": "ev_8158fe34b8feb755d032ba7991c31b597876bdd43f9ad67e1535190487a87473"
+    },
+    {
+      "name": "$D_PARITY",
+      "selector": 5,
+      "entry": "0xd9be",
+      "record_offset": 48,
+      "width": 1,
+      "signed_byte": true,
+      "native_sha256": "dfac4805a333ae902b250bf5c0a3a24d187cb03a1279742d331fbc8d0f0f7e1b",
+      "REA_evidence": "ev_0c2e002a5243b1e1e791ed41e52cfc71a5a2266664acd8d17802ae2de9af74a2"
+    },
+    {
+      "name": "$D_PORT",
+      "selector": 6,
+      "entry": "0xd9c3",
+      "record_offset": 104,
+      "width": 1,
+      "signed_byte": true,
+      "native_sha256": "22a441315b3eed12b74001faf81e7b8e3daf118e712d047140c93671e0feafca",
+      "REA_evidence": "ev_95ce1e0dff5fb0ba35ea1c051f7a331053db75d364269218adf0168136f5d6cf"
+    },
+    {
+      "name": "$D_STOPBIT",
+      "selector": 8,
+      "entry": "0xd9d5",
+      "record_offset": 50,
+      "width": 1,
+      "signed_byte": true,
+      "native_sha256": "0dfdb412296cf5da503f033d77663eeb95addfa820f40d796adfb520c83a6bf1",
+      "REA_evidence": "ev_26c04c9ce8d1b13d8a78685d35abf3d7f2aa5903409670291e817baed56893fc"
+    },
+    {
+      "name": "$D_TERM",
+      "selector": 9,
+      "entry": "0xd9da",
+      "record_offset": 73,
+      "width": 1,
+      "signed_byte": true,
+      "native_sha256": "46d7aab316853aaed153f4e8350295a127a8a0f13e9d0bbecb850a5c89459bc6",
+      "REA_evidence": "ev_e55264e55c7afbf142deb887b6ac5776384f3668a7ec52f01144c1f279f23a10"
+    },
+    {
+      "name": "$D_TOTAL",
+      "selector": 10,
+      "entry": "0xd9df",
+      "record_offset": 70,
+      "width": 2,
+      "signed_byte": false,
+      "native_sha256": "c0e24a9c4fbb80bf6534d10e6a478ab2d806edee52be7a53dcc3635cb334db1c",
+      "REA_evidence": "ev_90915f47ba0a966482f4ba299944733806c36137391ead9bde74dbaad34f3fbf"
+    }
+  ],
+  "limitations": [
+    "Static native getter and dispatch evidence reused; synthetic analysis image never executed. Optional private checker compares bytes, dispatch slots and resident stubs directly against the original.",
+    "Byte fields sign-extend all256 values. TOTAL returns a raw16-bit word; signed ASPECT promotion is separate.",
+    "Owned selected snapshot supplies data. No-entry cleared-record zeros follow maintained policy; original application initialization is not established.",
+    "$D_PROTO has a separate indexed table owner and remains unrecovered; these getters do not establish full directory or ASPECT parity."
+  ]
+}

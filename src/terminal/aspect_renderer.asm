@@ -46,6 +46,35 @@ CPU 8086
  %define RENDER_CAPABILITY 23
  extern _compiler_overlay_bridge,_compiler_overlay_loaned,_compiler_overlay_retire
 %endif
+%ifdef ASPECT_TERMINAL_QUERY
+ %ifndef TERMINAL_COMPILER_LEASE_BRIDGE
+  %error Terminal query requires the complete compiler-lease renderer
+ %endif
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 24
+%endif
+%ifdef ASPECT_HITKEY
+ %ifndef ASPECT_TERMINAL_QUERY
+  %error HITKEY requires the complete terminal-query renderer
+ %endif
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 25
+%endif
+%ifdef ASPECT_STATE_BUILTINS
+ %ifndef ASPECT_HITKEY
+  %error State builtins require the complete HITKEY renderer
+ %endif
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 26
+%endif
+%ifdef ASPECT_SCREEN_COMMANDS
+ %ifndef ASPECT_STATE_BUILTINS
+  %error Screen commands require the complete state-builtin renderer
+ %endif
+ %undef RENDER_CAPABILITY
+ %define RENDER_CAPABILITY 27
+ extern terminal_screen_request,terminal_screen_retire
+%endif
 SEGMENT _TEXT public class=CODE use16
 extern terminal_receive_character,terminal_stack_top,process_psp
 extern terminal_program_active,terminal_program_kind
@@ -153,10 +182,16 @@ terminal_render_prepare:
  call resident_bridge_disable
  or ax,ax
  jnz .done
+%ifdef ASPECT_SCREEN_COMMANDS
+ call terminal_screen_retire
+%endif
  mov word [terminal_aspect_active],0
  mov word [terminal_aspect_adopt],0
  mov word [terminal_script_label_valid],0
  mov word [cs:render_attached],0
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
 %ifdef ASPECT_EXTERNAL_RENDER
  mov word [cs:render_program_owned],0
 %endif
@@ -202,6 +237,9 @@ terminal_render_prepare:
  retf
 
 terminal_render_revoke:
+%ifdef ASPECT_SCREEN_COMMANDS
+ call terminal_screen_retire
+%endif
 %ifdef TERMINAL_COMPILER_LEASE_BRIDGE
  call far _compiler_overlay_retire
 %endif
@@ -217,6 +255,9 @@ terminal_render_revoke:
  pop bx
  call resident_bridge_disable
  mov word [cs:render_attached],0
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
 %ifdef ASPECT_EXTERNAL_RENDER
  mov word [cs:render_program_owned],0
 %endif
@@ -316,6 +357,14 @@ render_psp:
 
 render_body:
  mov di,ax
+%ifdef ASPECT_HITKEY
+ cmp di,30
+ je .hitkey_pair
+ cmp di,31
+ je .hitkey_pair
+ mov word [cs:render_hitkey_pending],0
+.hitkey_pair:
+%endif
  call resident_bridge_caller_ds
  mov [cs:render_caller_ds],ax
  call render_psp
@@ -337,6 +386,15 @@ render_body:
  call field_client_check
  or ax,ax
  jnz .done
+%ifdef ASPECT_SCREEN_COMMANDS
+ cmp di,32
+ jb .screen_interrupted
+ cmp di,36
+ jbe .screen_kept
+.screen_interrupted:
+ call terminal_screen_retire
+.screen_kept:
+%endif
 %ifdef TERMINAL_COMPILER_LEASE_BRIDGE
  cmp di,27
  je .compiler
@@ -396,6 +454,26 @@ render_body:
  cmp di,20
  je .emulate
 %endif
+%ifdef ASPECT_TERMINAL_QUERY
+ cmp di,29
+ je .terminal_query
+%endif
+%ifdef ASPECT_HITKEY
+ cmp di,30
+ je .hitkey_query
+ cmp di,31
+ je .hitkey_query
+%endif
+%ifdef ASPECT_SCREEN_COMMANDS
+ cmp di,32
+ jb .not_screen
+ cmp di,36
+ ja .not_screen
+ mov ax,di
+ call terminal_screen_request
+ ret
+.not_screen:
+%endif
  cmp di,12
  je .abort_confirm
  cmp di,11
@@ -432,7 +510,111 @@ render_body:
  call render_scope_end
  xor ax,ax
 .done:
+%ifdef ASPECT_HITKEY
+ ; Field/client admission can return here before the operation handler. A
+ ; body-level typed failure retires any pending keyboard observation too.
+ or ax,ax
+ jz .hitkey_reply
+ cmp ax,14
+ ja .hitkey_reply
+ mov word [cs:render_hitkey_pending],0
+.hitkey_reply:
+%endif
  ret
+%ifdef ASPECT_TERMINAL_QUERY
+extern aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
+extern aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+.terminal_query:
+ cmp word [_script_handoff+22],0
+ jne .serial
+ push bx
+ call field_owned
+ pop bx
+ or ax,ax
+ jnz .state
+ mov ax,[cs:render_snapshot_owned]
+ or ax,[cs:terminal_script_window_active]
+ or ax,[cs:terminal_script_confirm_active]
+ jnz .state
+ push bx
+ call _aspect_render_admit
+ pop bx
+ or ax,ax
+ jnz .done
+ mov ax,bx
+ and ax,0xfeff
+%ifdef ASPECT_STATE_BUILTINS
+ cmp ax,10
+%else
+ cmp ax,8
+%endif
+ ja .operand
+ mov si,bx
+ mov bx,ax
+ shl bx,1
+ call [cs:.terminal_getters+bx]
+ test si,0x100
+ jz .terminal_low
+ mov al,ah
+.terminal_low:
+ xor ah,ah
+ or ax,0xf000
+ ret
+.terminal_getters:
+ dw aspect_terminal_col,aspect_terminal_row,aspect_terminal_cols,aspect_terminal_rows
+ dw aspect_terminal_bold,aspect_terminal_dim,aspect_terminal_norm,aspect_terminal_rev,aspect_terminal_uline
+%ifdef ASPECT_STATE_BUILTINS
+ extern aspect_state_fromddir,aspect_state_mono
+ dw aspect_state_fromddir,aspect_state_mono
+%endif
+%endif
+%ifdef ASPECT_HITKEY
+extern terminal_hitkey_sample,keyboard_queue_count,keyboard_queue_index
+.hitkey_query:
+ or bx,bx
+ jnz .operand
+ cmp word [_script_handoff+22],0
+ jne .serial
+ call _aspect_render_admit
+ or ax,ax
+ jnz .hitkey_rejected
+ cmp di,31
+ je .hitkey_high
+ cmp word [cs:render_hitkey_pending],0
+ jne .state
+ ; Native651A uses six mouse peek words. Refuse a corrupt index before its
+ ; unchecked address read; leave the raw queue and BIOS ring untouched.
+ cmp word [keyboard_queue_count],0
+ jne .hitkey_queue
+ ; Native7842 adds one to this byte for INT16. An invalid FF would wrap to
+ ; the consuming AH00 service, so admit only the two configured peek modes.
+ cmp byte [keyboard_bios_mode],0
+ je .hitkey_sample
+ cmp byte [keyboard_bios_mode],0x10
+ jne .operand
+ jmp .hitkey_sample
+.hitkey_queue:
+ cmp word [keyboard_queue_index],6
+ jae .operand
+.hitkey_sample:
+ call far terminal_hitkey_sample
+ mov [cs:render_hitkey_word],ax
+ mov word [cs:render_hitkey_pending],1
+ jmp .hitkey_byte
+.hitkey_high:
+ cmp word [cs:render_hitkey_pending],1
+ jne .state
+ mov ax,[cs:render_hitkey_word]
+ mov word [cs:render_hitkey_pending],0
+ mov al,ah
+.hitkey_byte:
+ xor ah,ah
+ or ax,0xf000
+ ret
+.hitkey_rejected:
+ mov word [cs:render_hitkey_pending],0
+ ret
+%endif
 %ifdef TERMINAL_COMPILER_LEASE_BRIDGE
 .compiler:
  or bx,bx
@@ -733,6 +915,9 @@ render_body:
  pop bp
  ret
 .serial:
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
  mov ax,14
  ret
 %ifdef ASPECT_EXTERNAL_RENDER
@@ -989,9 +1174,15 @@ render_body:
  call window_publish
  ret
 .state:
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
  mov ax,10
  ret
 .operand:
+%ifdef ASPECT_HITKEY
+ mov word [cs:render_hitkey_pending],0
+%endif
  mov ax,7
  ret
 
@@ -1046,6 +1237,9 @@ terminal_render_unsupported:
  mov [cs:render_unsupported],ax
  mov ax,3
 terminal_render_typed_abort:
+%ifdef ASPECT_SCREEN_COMMANDS
+ call terminal_screen_retire
+%endif
  push ax
  call render_scope_end
  pop ax
@@ -1200,6 +1394,11 @@ terminal_render_string:
  retf
 
 render_attached: dw 0
+%ifdef ASPECT_HITKEY
+global render_hitkey_pending,render_hitkey_word
+render_hitkey_pending: dw 0
+render_hitkey_word: dw 0
+%endif
 render_token: dw 0
 render_callback: dd 0
 render_child_ds: dw 0
@@ -1278,6 +1477,45 @@ field_retire:
  ret
 %endif
 
+%ifdef ASPECT_SCREEN_COMMANDS
+; Local native helpers borrow the same captured foreground scope as ordinary
+; parser work, without submitting bytes or invoking transport/history paths.
+global terminal_screen_admit,terminal_screen_scope_begin,terminal_screen_scope_end
+terminal_screen_admit:
+ cmp word [_script_handoff+22],0
+ jne .serial
+ call field_owned
+ or ax,ax
+ jnz .state
+ mov ax,[cs:render_snapshot_owned]
+ or ax,[cs:render_program_owned]
+ or ax,[cs:terminal_script_window_active]
+ or ax,[cs:terminal_script_confirm_active]
+ jnz .state
+ jmp _aspect_render_admit
+.serial: mov ax,14
+ ret
+.state: mov ax,10
+ ret
+terminal_screen_scope_begin:
+ push ax
+ mov ax,[terminal_parser_active]
+ mov [cs:render_saved_parser],ax
+ mov ax,[terminal_ansi_wait_active]
+ mov [cs:render_saved_wait],ax
+ call render_tick
+ mov [cs:render_started],ax
+ mov word [cs:render_remaining],4096
+ mov word [terminal_aspect_active],1
+ mov word [terminal_parser_active],1
+ pop ax
+ ret
+terminal_screen_scope_end:
+ push ax
+ call render_scope_end
+ pop ax
+ ret
+%endif
 SEGMENT _DATA public class=DATA use16
 global terminal_aspect_active,terminal_aspect_adopt
 global terminal_script_label_valid,terminal_script_label

@@ -3,6 +3,7 @@
 ; the application data image. Pane copies cannot own the status/modal rows.
 BITS 16
 CPU 8086
+%include "terminal_profile.inc"
 SEGMENT _TEXT public class=CODE use16
 %include "far_bridge.inc"
 NEAR_ENTRY screen_viewport_enter
@@ -204,10 +205,7 @@ terminal_viewport_admit_impl:
  cmp word [reset_ready],1
  jne .bad
  mov ax,[csi_terminal_id]
- cmp ax,4
- je .geometry
- cmp ax,6
- jne .bad
+ active_profile_gate ax,.bad
 .geometry:
  cmp word [screen_columns],80
  jne .bad

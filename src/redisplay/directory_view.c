@@ -13,6 +13,9 @@ static unsigned resource_notice;
 #endif
 typedef unsigned short word;
 typedef unsigned char byte;
+#ifdef ASPECT_STATE_BUILTINS
+extern word aspect_fromddir;
+#endif
 extern byte __far redisplay_snapshot[63000];
 extern byte directory_view_scratch[512];
 extern char terminal_directory_path[64];
@@ -224,6 +227,9 @@ unsigned __far __cdecl directory_view_event(word event,word key,word __far *fram
 {
  word i,next,status;byte c=(byte)key;
  if(event==0){
+#ifdef ASPECT_STATE_BUILTINS
+  aspect_fromddir=0;
+#endif
   view=frame;active=1;phase=PATH;selected=0;last_status=reader.status;
   if(terminal_directory_entry>=1 && terminal_directory_entry<=200)selected=terminal_directory_entry-1;
   for(size=0;size<63 && terminal_directory_path[size];++size)path[size]=terminal_directory_path[size];

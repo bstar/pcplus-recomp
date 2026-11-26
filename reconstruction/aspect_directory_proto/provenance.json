@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "analysis_image_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+  "overlay": 16,
+  "entry": "0xd9c8",
+  "end_exclusive": "0xd9d5",
+  "native_bytes": 13,
+  "native_sha256": "1dffa54504685abe42c90b0898ad05c7c3068d4397beeaec450e189a4b836268",
+  "record_protocol_offset": 72,
+  "integer_selector": 7,
+  "table_DS_offset": "0x4dd8",
+  "table_stride": 6,
+  "valid_storage_ids": [
+    1,
+    18
+  ],
+  "mapping": [
+    {
+      "storage_id": 1,
+      "ASPECT_code": 5,
+      "name": "MODEM7"
+    },
+    {
+      "storage_id": 2,
+      "ASPECT_code": 11,
+      "name": "1KXMODEM"
+    },
+    {
+      "storage_id": 3,
+      "ASPECT_code": 7,
+      "name": "TELINK"
+    },
+    {
+      "storage_id": 4,
+      "ASPECT_code": 17,
+      "name": "XMODEM"
+    },
+    {
+      "storage_id": 5,
+      "ASPECT_code": 8,
+      "name": "YMODEM"
+    },
+    {
+      "storage_id": 6,
+      "ASPECT_code": 4,
+      "name": "KERMIT"
+    },
+    {
+      "storage_id": 7,
+      "ASPECT_code": 13,
+      "name": "ASCII"
+    },
+    {
+      "storage_id": 8,
+      "ASPECT_code": 3,
+      "name": "CISB"
+    },
+    {
+      "storage_id": 9,
+      "ASPECT_code": 16,
+      "name": "WXMODEM"
+    },
+    {
+      "storage_id": 10,
+      "ASPECT_code": 12,
+      "name": "1KXMODEMG"
+    },
+    {
+      "storage_id": 11,
+      "ASPECT_code": 9,
+      "name": "YMODEMG"
+    },
+    {
+      "storage_id": 12,
+      "ASPECT_code": 14,
+      "name": "IMODEM"
+    },
+    {
+      "storage_id": 13,
+      "ASPECT_code": 6,
+      "name": "SEALINK"
+    },
+    {
+      "storage_id": 14,
+      "ASPECT_code": 0,
+      "name": "EXTPROTO1"
+    },
+    {
+      "storage_id": 15,
+      "ASPECT_code": 1,
+      "name": "EXTPROTO2"
+    },
+    {
+      "storage_id": 16,
+      "ASPECT_code": 2,
+      "name": "EXTPROTO3"
+    },
+    {
+      "storage_id": 17,
+      "ASPECT_code": 10,
+      "name": "ZMODEM"
+    },
+    {
+      "storage_id": 18,
+      "ASPECT_code": 15,
+      "name": "RASCII"
+    }
+  ],
+  "REA_evidence": [
+    "ev_624cc307d43978d40803819111473995cf03347ae7a18bad7818b3366ea94edd",
+    "ev_dee36cb6eafb02736057cdff1f8395ad0fa8786c99367fe781a36ced83c44a23",
+    "ev_85c22c548fa090d3ed9a2a323c2489766a5a77fbf2fa827e8e842f522a5c2169"
+  ],
+  "limitations": [
+    "Synthetic analysis image is static only and never executed; optional original comparison separately verifies code, consumed table words and resident stub.",
+    "Native IMUL uses a signed byte with unchecked lookup. Maintained bridge admits1..18; all other raw byte values fail with operand7 before assignment.",
+    "Index0 reaches the preceding resident-thunk table in original initialized data (wordCB1F); maintained no-entry cleared-record policy refuses instead of exposing that address.",
+    "Only18 consumed WORD values are reproduced in DGROUP with native six-byte stride. Unused original descriptor/pointer fields are zero; no original function addresses are embedded.",
+    "This expression reports configured directory protocol and does not implement transfers or establish full protocol/ASPECT parity."
+  ],
+  "valid_ID_domain_evidence": "docs/DIRECTORY_ACCOUNTING.md: original18-entry editor maps visible choices through DS714C to stored IDs1..18; zero is absent.",
+  "compiler_keyword_inventory": "analysis/aspect-vm-runtime/keywords-02/inventory.json group16:18 protocol constants0..17"
+}

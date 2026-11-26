@@ -22,15 +22,95 @@ class CompileError(ValueError):
 TYPES = {"integer": 0, "long": 1, "float": 2, "string": 3}
 PARMS = {"intparm": 0, "longparm": 1, "floatparm": 2, "strparm": 3}
 BUILTINS = {'comdata': 20, 'failure': 21, 'forever': 22, 'found': 23,
-            'success': 27, 'waitfor': 28, 'connected': 29, '$d_entry': 3}
+            'fromddir': 24, 'hitkey': 25, 'mono': 26,
+            'success': 27, 'waitfor': 28, 'connected': 29, '$d_entry': 3,
+            '$d_databit': 1, '$d_duplex': 2, '$d_mode': 4, '$d_parity': 5,
+            '$d_port': 6, '$d_stopbit': 8, '$d_term': 9, '$d_total': 10,
+            '$d_proto': 7, '$col': 0, '$row': 12, '$scrncols': 13, '$scrnrows': 14,
+            '$termbold': 15, '$termdim': 16, '$termnorm': 17, '$termrev': 18, '$termuline': 19}
 STRING_BUILTINS = {'$d_ldate': 0, '$d_kbdfile': 1, '$d_metakey': 2,
                    '$d_name': 3, '$d_note': 4, '$d_phone': 5,
                    '$d_pword': 6, '$d_script': 7, '$null': 19,
-                   '$fattr': 9, '$fdate': 10, '$fext': 11, '$filename': 12, '$fname': 13, '$ftime': 14}
+                   '$fattr': 9, '$fdate': 10, '$fext': 11, '$filename': 12, '$fname': 13, '$ftime': 14,
+                   '$date': 8, '$time0': 20, '$time1': 21}
 LONG_BUILTINS = {'$d_baud': 0, '$fsize': 1}
 TYPED_BUILTINS = {**{name: (0, slot) for name, slot in BUILTINS.items()},
                   **{name: (1, slot) for name, slot in LONG_BUILTINS.items()},
                   **{name: (3, slot) for name, slot in STRING_BUILTINS.items()}}
+# Native compiler keyword bindings cannot be redeclared as procedures.
+# Authored original-compiler oracle: aspect_procedure_keyword_vectors.json.
+RESERVED_PROCEDURES = frozenset((
+    '$col', '$d_baud', '$d_databit', '$d_duplex', '$d_entry', '$d_kbdfile', '$d_ldate', '$d_metakey',
+    '$d_mode', '$d_name', '$d_note', '$d_parity', '$d_phone', '$d_port', '$d_proto', '$d_pword',
+    '$d_script', '$d_stopbit', '$d_term', '$d_total', '$date', '$else', '$elseif', '$endif',
+    '$fattr', '$fdate', '$fext', '$filename', '$fname', '$fsize', '$ftime', '$h_baud',
+    '$h_elapsed', '$h_level', '$h_name', '$h_offline', '$h_online', '$ifdef', '$null', '$row',
+    '$scrncols', '$scrnrows', '$termbold', '$termdim', '$termnorm', '$termrev', '$termuline', '$time0',
+    '$time1', 'abortdl', 'add', 'adds60', 'adds90', 'adm3', 'adm31', 'adm5',
+    'alarm', 'and', 'andl', 'ansi', 'ansi8bit', 'ascii', 'ask', 'aspdebug',
+    'aspect', 'assign', 'atget', 'atime', 'atof', 'atoi', 'atol', 'atsay',
+    'att4410', 'att605', 'autoansoff', 'autoanson', 'autobaud', 'autodload', 'backspace', 'baud',
+    'baudrate', 'binary', 'blankex', 'blankon', 'blinkon', 'block', 'blockcheck', 'blockcur',
+    'boldon', 'box', 'break', 'bye', 'call', 'callog', 'callpause', 'case',
+    'cdhighinit', 'cdinxfer', 'ceil', 'character', 'charpace', 'chatmode', 'chdir', 'cisb',
+    'clear', 'clipchar', 'close', 'closed', 'cnct1200', 'cnct19200', 'cnct2400', 'cnct300',
+    'cnct38400', 'cnct4800', 'cnct9600', 'com1', 'com2', 'com3', 'com4', 'com5',
+    'com6', 'com7', 'com8', 'comdata', 'comgetc', 'comgetcd', 'comment', 'comp',
+    'computc', 'connect', 'connected', 'connection', 'cquote', 'cr', 'cr_lf', 'crc16',
+    'crc32', 'ctrl', 'curdn', 'curlf', 'curoff', 'curon', 'currt', 'curup',
+    'cwhen', 'databits', 'date', 'dec', 'decimal', 'default', 'define', 'delchar',
+    'delete', 'delline', 'dest', 'dgd100', 'dgd200', 'dgd210', 'dial', 'dialcmnd',
+    'dialentry', 'dialsuffix', 'dimon', 'dir', 'direct', 'disconnect', 'diskfree', 'display',
+    'div', 'dldir', 'dload', 'dlxproto1', 'dlxproto2', 'dlxproto3', 'dn_cr', 'dn_lf',
+    'dn_to', 'dos', 'dosmode', 'dosver', 'downto', 'dropdtr', 'dscroll', 'duplex',
+    'ebol', 'ebos', 'echo', 'editor', 'eeol', 'eeos', 'else', 'elseif',
+    'emulate', 'emulation', 'endcase', 'endcomment', 'endfor', 'endif', 'endproc', 'endswitch',
+    'endwhile', 'enq', 'eof', 'eolchar', 'eq', 'errdetect', 'errormsg', 'esprit3',
+    'even', 'execute', 'exit', 'exitcdhigh', 'exitfor', 'exitswitch', 'exitwhile', 'explode',
+    'extproto1', 'extproto2', 'extproto3', 'extrax80', 'extraxuser', 'failure', 'fastkbd', 'fatsay',
+    'fclear', 'fclose', 'fetch', 'fflush', 'fgetc', 'fgets', 'fgets_crlf', 'filetype',
+    'find', 'findcase', 'findfirst', 'findnext', 'finish', 'float', 'floatparm', 'floor',
+    'fnlookup', 'fopen', 'for', 'forever', 'found', 'fputc', 'fputs', 'fread',
+    'fromddir', 'fseek', 'fstrfmt', 'ftell', 'ftoa', 'full', 'fwrite', 'ge',
+    'get', 'getcur', 'getdir', 'getenv', 'getfattr', 'getfdate', 'getfile', 'getfsize',
+    'getftime', 'getvattr', 'getvchar', 'goodbye', 'gosub', 'goto', 'gt', 'h19',
+    'half', 'handshake', 'hangup', 'hardflow', 'help', 'hitkey', 'home', 'hook',
+    'host', 'ibm3101', 'ibm3161', 'ibm3270', 'ibmpc', 'if', 'ignore', 'imodem',
+    'inc', 'include', 'init', 'inport', 'inschar', 'insline', 'insmode', 'integer',
+    'intparm', 'isfile', 'itoa', 'keep', 'kermit', 'kermserve', 'key2ascii', 'keyget',
+    'keys', 'kflush', 'kload', 'le', 'lf', 'linefeed', 'linepace', 'locate',
+    'log', 'logfile', 'logout', 'long', 'longjmp', 'longparm', 'loopfor', 'loopwhile',
+    'lt', 'ltoa', 'mark', 'matget', 'maxdial', 'mdial', 'memfree', 'mempeek',
+    'mempoke', 'memread', 'memwrite', 'message', 'metakey', 'mget', 'mkdir', 'mload',
+    'mod', 'modem', 'modem7', 'mono', 'mousex', 'mousey', 'msg_crlf', 'mspause',
+    'mul', 'n0', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6',
+    'n7', 'n8', 'n9', 'neg', 'negotiate', 'neq', 'newuserlvl', 'no',
+    'noclear', 'nocnct1', 'nocnct2', 'nocnct3', 'nocnct4', 'nondest', 'none', 'normon',
+    'not', 'null', 'odd', 'off', 'on', 'open', 'or', 'orl',
+    'outport', 'overwrite', 'pacechar', 'packsize', 'padchar', 'padnum', 'parity', 'parmrest',
+    'parmsave', 'pause', 'pausechar', 'port', 'printer', 'proc', 'program', 'protect',
+    'protocol', 'prtname', 'pulldnkey', 'pulldnmenu', 'pushback', 'putenv', 'putvattr', 'putvchar',
+    'quit', 'rangechk', 'rascii', 'rca', 'rdflush', 'rdwrite', 'recvcrash', 'recycle',
+    'redial', 'redisplay', 'reg', 'relaxed', 'remotecmd', 'rename', 'resume', 'return',
+    'revon', 'rewind', 'rflush', 'rget', 'rmdir', 'rstrcmp', 'run', 'rxdata',
+    's0', 's1', 's2', 's3', 's4', 's5', 's6', 's7',
+    's8', 's9', 'screen', 'scroll', 'sealink', 'sendcr', 'sendcrash', 'sendfile',
+    'set', 'setfattr', 'setfdate', 'setftime', 'setjmp', 'shell', 'shellboot', 'shl',
+    'shr', 'snapshot', 'snow', 'softflow', 'sound', 'space', 'startchar', 'statline',
+    'statmsg', 'statrest', 'stopbits', 'strcat', 'strcmp', 'strcpy', 'streaming', 'strfmt',
+    'string', 'strip', 'strlen', 'strlwr', 'strparm', 'strpeek', 'strpoke', 'strset',
+    'strupdt', 'strupr', 'sub', 'substr', 'success', 'suspend', 'switch', 'switchcase',
+    'systype', 'tabex', 'telink', 'termbold', 'termdim', 'terminal', 'termkey', 'termnorm',
+    'termreset', 'termrev', 'termuline', 'termwidth', 'termwrt', 'text', 'time', 'timeout',
+    'timestamp', 'translate', 'transmit', 'tty', 'tv910', 'tv912', 'tv920', 'tv922',
+    'tv925', 'tv950', 'tv955', 'txmethod', 'txpace', 'type', 'uldir', 'ulinefont',
+    'ulineon', 'ulxproto1', 'ulxproto2', 'ulxproto3', 'undef', 'until', 'up_cr', 'up_lf',
+    'upto', 'usermode', 'usermsg', 'uservid', 'vgalines', 'vidrest', 'vidsave', 'vidstart',
+    'viewutil', 'vt100', 'vt102', 'vt220', 'vt320', 'vt52', 'wait', 'waitcase',
+    'waitcnct', 'waitfor', 'waitquiet', 'when', 'whencase', 'while', 'with', 'wrap',
+    'writec', 'writeprot', 'wxmodem', 'wyse100', 'wyse50', 'wyse75', 'xferkey', 'xmodem',
+    'xor', 'yes', 'ymodem', 'ymodemg', 'zero', 'zmodem',
+))
 SIZES = (2, 4, 8, 81)
 SET_BOOLEAN = {'display': 0x12, 'findcase': 0x23, 'switchcase': 0x44,
                'waitcase': 0x55, 'whencase': 0x56, 'keys': 0x29,
@@ -42,6 +122,11 @@ FETCH_SETTINGS = {'break': 0x09, 'display': 0x12, 'duplex': 0x18,
                   'findcase': 0x23, 'keys': 0x29, 'msg_crlf': 0x2E,
                   'pausechar': 0x30, 'rxdata': 0x3B, 'switchcase': 0x44,
                   'txpace': 0x4C, 'waitcase': 0x55, 'whencase': 0x56, 'fgets_crlf': 0x22}
+SCREEN_COMMANDS = {'box': (0x0C, 'vvvvv', False), 'clear': (0x12, 'v', True),
+                   'home': (0x57, '', False), 'locate': (0x6A, 'vv', False),
+                   'scroll': (0x9C, 'vvvvvv', False), 'getvattr': (0x52, 'vvi', False),
+                   'putvattr': (0x8C, 'vvv', False)}
+CONNECTION_COMMANDS = {'dial': 0x22, 'mdial': 0x70, 'redial': 0x92, 'hangup': 0x55}
 OPS = {"+": 0x00, "-": 0xB5, "*": 0x7D, "/": 0x26, "%": 0x7B,
        "==": 0x32, "!=": 0x7F, "<": 0x6D, ">": 0x54,
        "<=": 0x68, ">=": 0x48}
@@ -191,7 +276,8 @@ class Compiler:
             if not part or not re.fullmatch(r'[a-z_$][a-z_0-9$]*', part[0]):
                 self.error('expected declaration name')
             name = part[0]
-            if name == 'text' or name in TYPED_BUILTINS or name in EMULATIONS:
+            if (name == 'text' or name in TYPED_BUILTINS or name in EMULATIONS or
+                    name in SCREEN_COMMANDS or name in CONNECTION_COMMANDS or re.fullmatch(r'n[0-9]', name)):
                 self.error(f'{name.upper()} is a reserved ASPECT keyword')
             symbols = self.globals if proc is None else proc.symbols
             if name in symbols:
@@ -243,6 +329,8 @@ class Compiler:
                 return TYPED_BUILTINS[node[1]][0]
             if node[1] == '$null' or re.fullmatch(r's[0-9]', node[1]):
                 return 3
+            if re.fullmatch(r'n[0-9]', node[1]):
+                return 0
             return self.symbol(node[1]).kind
         if tag == 'unary':
             return self.kind(node[2])
@@ -255,6 +343,8 @@ class Compiler:
     def lvalue(self, node):
         if node[0] != 'symbol' or node[1] in TYPED_BUILTINS:
             self.error('variable destination required')
+        if re.fullmatch(r'n[0-9]', node[1]):
+            return 0, bytes((0x65, int(node[1][1])))
         if re.fullmatch(r's[0-9]', node[1]):
             return 3, bytes((0x64, int(node[1][1])))
         symbol = self.symbol(node[1])
@@ -543,8 +633,109 @@ class Compiler:
         if parser.pos != len(operands):
             self.error('unexpected WHEN action operands')
 
+    def screen_command(self, tokens):
+        opcode, roles, optional = SCREEN_COMMANDS[tokens[0]]
+        parser = Expression(tokens[1:], self.line)
+        # Original word scanning retains source-width and comma-spacing rules
+        # absent from the general expression AST. Keep them in this context.
+        spans = [(m.start(1), m.end(1)) for m in TOKEN.finditer(self.source_lines[self.line - 1])]
+        self.emit(opcode)
+        if optional:
+            self.emit(int(bool(parser.tokens)))
+            if not parser.tokens:
+                return
+        for index, role in enumerate(roles):
+            commas = []
+            if index:
+                while parser.pos < len(parser.tokens) and parser.tokens[parser.pos] == ',':
+                    current = parser.pos + 1  # Account for the command token.
+                    if commas and spans[current][0] == spans[commas[-1]][1]:
+                        self.error('adjacent screen operand commas')
+                    commas.append(current)
+                    parser.pos += 1
+                current = parser.pos + 1
+                if (not commas and current < len(tokens) and
+                        spans[current][0] == spans[current - 1][1] and
+                        parser.tokens[parser.pos] != '-'):
+                    self.error('screen operands require a separator')
+            if parser.pos == len(parser.tokens) or parser.tokens[parser.pos] in ('(', ','):
+                self.error('screen command requires atomic integer operands')
+            first = parser.pos
+            node = parser.parse(7)
+            if role == 'i':
+                kind, wire = self.lvalue(node)
+                if kind != 0:
+                    self.error('screen command requires an integer destination')
+                self.emit(wire)
+                continue
+            value = self.atomic(node)
+            if value[0] == 'constant':
+                literal = parser.tokens[first + int(parser.tokens[first] == '-')]
+                if literal.startswith('0x'):
+                    if literal.endswith('l') or not 1 <= len(literal) - 2 <= 4:
+                        self.error('screen hexadecimal words require one to four digits')
+                    value = ('constant', 0, int(value[2]) & 0xffff)
+                else:
+                    if len(literal) > 5:
+                        self.error('screen decimal words require at most five digits')
+                    value = self.word_argument(node)
+            else:
+                value = self.word_argument(node)
+            self.operand(value, compact=True)
+        if parser.pos != len(parser.tokens):
+            self.error('unexpected screen command operands')
+
+    def connection_command(self, tokens):
+        command = tokens[0]
+        opcode = CONNECTION_COMMANDS[command]
+        parser = Expression(tokens[1:], self.line)
+        spans = [(m.start(1), m.end(1)) for m in TOKEN.finditer(self.source_lines[self.line - 1])]
+        self.emit(opcode)
+        if command == 'hangup':
+            if parser.tokens:
+                self.error('HANGUP does not accept operands')
+            return
+        if command != 'redial':
+            if not parser.tokens or parser.tokens[0] in ('(', ','):
+                self.error(f'{command} requires an atomic string')
+            node = parser.parse(7)
+            if self.kind(node) != 3:
+                self.error(f'{command} requires a string')
+            self.operand(self.atomic(node), compact=True)
+        present = parser.pos < len(parser.tokens)
+        self.emit(int(present))
+        if present:
+            if command != 'redial':
+                commas = []
+                while parser.pos < len(parser.tokens) and parser.tokens[parser.pos] == ',':
+                    current = parser.pos + 1
+                    if commas and spans[current][0] == spans[commas[-1]][1]:
+                        self.error('adjacent connection operand commas')
+                    commas.append(current)
+                    parser.pos += 1
+                current = parser.pos + 1
+                if not commas and current < len(tokens) and spans[current][0] == spans[current - 1][1]:
+                    self.error('connection operands require a separator')
+            if parser.pos == len(parser.tokens) or parser.tokens[parser.pos] in ('(', ','):
+                self.error(f'{command} requires an atomic string')
+            node = parser.parse(7)
+            if self.kind(node) != 3:
+                self.error(f'{command} requires a string')
+            if command == 'mdial':
+                self.operand(self.atomic(node), compact=True)
+            else:
+                self.emit(self.lvalue(node)[1])
+        if parser.pos != len(parser.tokens):
+            self.error(f'unexpected {command} operands')
+
     def command(self, tokens):
         command = tokens[0]
+        if command in CONNECTION_COMMANDS:
+            self.connection_command(tokens)
+            return
+        if command in SCREEN_COMMANDS:
+            self.screen_command(tokens)
+            return
         # Original compiler consumes this standalone readonly operand without code.
         if command == 'connected' and len(tokens) == 1:
             return
@@ -1012,8 +1203,9 @@ class Compiler:
             self.patch(offset, proc.address)
 
     def compile(self, source: str) -> bytes:
+        self.source_lines = source.splitlines()
         current = None
-        for self.line, text in enumerate(source.splitlines(), 1):
+        for self.line, text in enumerate(self.source_lines, 1):
             if len(text.encode('cp437')) > 253:
                 self.error('physical source lines over 253 bytes are outside this compiler subset')
             tokens = tokenize(text, self.line)
@@ -1021,6 +1213,7 @@ class Compiler:
                 continue
             if tokens[0] == 'proc':
                 if (current or len(tokens) != 2 or tokens[1] in self.procedures or
+                        tokens[1] in RESERVED_PROCEDURES or
                         not re.fullmatch(r'[a-z_$][a-z_0-9$]*', tokens[1])):
                     self.error('invalid or duplicate procedure declaration')
                 current = Procedure(tokens[1])

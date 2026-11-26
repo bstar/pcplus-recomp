@@ -84,16 +84,58 @@ unsigned aspect_compiler_parse_expression(aspect_compiler_expression *e,unsigned
 }
 unsigned aspect_compiler_expression_symbol(aspect_compiler_expression *e,unsigned index,aspect_compiler_symbol_info *info)
 {
- static const char *names[]={"comdata","failure","forever","found","success","waitfor","$d_entry","$d_baud",
- "$d_ldate","$d_kbdfile","$d_metakey","$d_name","$d_note","$d_phone","$d_pword","$d_script","$null","$fattr","$fdate","$fext","$filename","$fname","$ftime","$fsize","connected"};
- static const unsigned slots[]={20,21,22,23,27,28,3,0,0,1,2,3,4,5,6,7,19,9,10,11,12,13,14,1,29};
+ static const struct {const char *name;unsigned char kind,index;} builtins[]={
+  {"comdata",0,20},
+  {"failure",0,21},
+  {"forever",0,22},
+  {"found",0,23},
+  {"success",0,27},
+  {"waitfor",0,28},
+  {"hitkey",0,25},
+  {"fromddir",0,24},
+  {"mono",0,26},
+  {"$d_entry",0,3},
+  {"$d_baud",1,0},
+  {"$d_ldate",3,0},
+  {"$d_kbdfile",3,1},
+  {"$d_metakey",3,2},
+  {"$d_name",3,3},
+  {"$d_note",3,4},
+  {"$d_phone",3,5},
+  {"$d_pword",3,6},
+  {"$d_script",3,7},
+  {"$null",3,19},
+  {"$fattr",3,9},
+  {"$fdate",3,10},
+  {"$fext",3,11},
+  {"$filename",3,12},
+  {"$fname",3,13},
+  {"$ftime",3,14},
+  {"$fsize",1,1},
+  {"connected",0,29},
+  {"$d_databit",0,1},
+  {"$d_duplex",0,2},
+  {"$d_mode",0,4},
+  {"$d_parity",0,5},
+  {"$d_port",0,6},
+  {"$d_stopbit",0,8},
+  {"$d_term",0,9},
+  {"$d_total",0,10},
+  {"$d_proto",0,7},
+  {"$date",3,8},
+  {"$time0",3,20},
+  {"$time1",3,21},
+  {"$col",0,0},{"$row",0,12},{"$scrncols",0,13},{"$scrnrows",0,14},
+  {"$termbold",0,15},{"$termdim",0,16},{"$termnorm",0,17},{"$termrev",0,18},{"$termuline",0,19}
+ };
  unsigned i;unsigned char text[254];const aspect_compiler_symbol *s;aspect_compiler_node *n;
  if(e->status)return e->status;
  if(!index||index>e->count||!info){aspect_compiler_expression_error(e,ASPECT_COMPILE_STATE);return e->status;}
  n=&e->nodes[index-1];if(n->value.tag!=ASPECT_EXPR_SYMBOL){aspect_compiler_expression_error(e,ASPECT_COMPILE_SYNTAX);return e->status;}
  aspect_compiler_token_copy(e->line,n->value.index,text,sizeof(text));memset(info,0,sizeof(*info));
- for(i=0;i<sizeof(names)/sizeof(names[0]);++i)if(!strcmp((char *)text,names[i])){info->kind=(i<7||i==24)?0:(i==7||i==23)?1:3;info->index=slots[i];info->readonly=info->builtin=1;return 0;}
+ for(i=0;i<sizeof(builtins)/sizeof(builtins[0]);++i)if(!strcmp((char *)text,builtins[i].name)){info->kind=builtins[i].kind;info->index=builtins[i].index;info->readonly=info->builtin=1;return 0;}
  if(text[0]=='s'&&text[1]>='0'&&text[1]<='9'&&!text[2]){info->kind=3;info->index=text[1]-'0';info->builtin=2;return 0;}
+ if(text[0]=='n'&&text[1]>='0'&&text[1]<='9'&&!text[2]){info->kind=0;info->index=text[1]-'0';info->builtin=3;return 0;}
  s=e->procedure?e->procedure->symbols:0;
  for(;s;s=s->next)if(!strcmp(s->name,(char *)text))break;
  if(!s)for(s=e->unit?e->unit->globals:0;s;s=s->next)if(!strcmp(s->name,(char *)text))break;

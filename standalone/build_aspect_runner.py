@@ -8,13 +8,43 @@ from build_aspect_runtime import ROOT, ASM, sha
 OUT = ROOT / 'build/aspect-runner'
 
 
-def main(extension=None,directory_baud=False):
+def main(extension=None,directory_baud=False,directory_fields=False,directory_proto=False,clock_builtins=False,terminal_builtins=False,aspect_hitkey=False,aspect_state_builtins=False,aspect_screen_commands=False):
     # Only the separately named experimental process builder supplies this.
     # Default production inputs/flags and opcode coverage remain unchanged.
     output=extension['output'] if extension else OUT
     feature_flags=['-DASPECT_EXTERNAL_PROCESS','-DASPECT_EXTERNAL_COMMANDS','-DASPECT_EXTERNAL_UNWIND'] if extension else []
     directory_baud=directory_baud or bool(extension and extension.get('directory_baud'))
     if directory_baud:feature_flags+=['-DASPECT_DIRECTORY_BAUD']
+    directory_fields=directory_fields or bool(extension and extension.get('directory_fields'))
+    if directory_fields:feature_flags+=['-DASPECT_DIRECTORY_FIELDS']
+    directory_proto=directory_proto or bool(extension and extension.get('directory_proto'))
+    if directory_proto:feature_flags+=['-DASPECT_DIRECTORY_PROTO']
+    clock_builtins=clock_builtins or bool(extension and extension.get('clock_builtins'))
+    if clock_builtins:feature_flags+=['-DASPECT_CLOCK_BUILTINS']
+    terminal_builtins=terminal_builtins or bool(extension and extension.get('terminal_builtins'))
+    if terminal_builtins:feature_flags+=['-DASPECT_TERMINAL_BUILTINS']
+    if terminal_builtins and extension and extension.get('parent_render'):
+        assert extension.get('compiler_parent_lease')
+        feature_flags+=['-DASPECT_TERMINAL_QUERY']
+    aspect_hitkey=aspect_hitkey or bool(extension and extension.get('aspect_hitkey'))
+    hitkey_parent=bool(aspect_hitkey and extension and extension.get('parent_render'))
+    if aspect_hitkey:feature_flags+=['-DASPECT_HITKEY']
+    if hitkey_parent:
+        assert terminal_builtins
+        feature_flags+=['-DASPECT_HITKEY_PARENT']
+    aspect_state_builtins=aspect_state_builtins or bool(extension and extension.get('aspect_state_builtins'))
+    if aspect_state_builtins:
+        feature_flags+=['-DASPECT_STATE_BUILTINS']
+        if extension and extension.get('parent_render'):
+            assert terminal_builtins and hitkey_parent
+            feature_flags+=['-DASPECT_STATE_BUILTINS_PARENT']
+    aspect_screen_commands=aspect_screen_commands or bool(extension and extension.get('aspect_screen_commands'))
+    if aspect_screen_commands:
+        feature_flags+=['-DASPECT_SCREEN_COMMANDS']
+        if extension and extension.get('parent_render'):
+            assert aspect_state_builtins
+            feature_flags+=['-DASPECT_SCREEN_PARENT']
+    terminal_cache=terminal_builtins or aspect_state_builtins
     if extension and extension.get('get_display'):feature_flags+=['-DASPECT_GET_DISPLAY']
     if extension and extension.get('get_policy'):feature_flags+=['-DASPECT_GET_POLICY']
     get_vm=bool(extension and extension.get('get_vm'))
@@ -67,6 +97,8 @@ def main(extension=None,directory_baud=False):
                ROOT/'src/config/resource_path.c',ROOT/'src/config/resource_path.h',ROOT/'src/aspect/runner_error.h',ROOT/'src/aspect/runtime_format.h',
                ROOT/'src/keyboard/api.h',
                ROOT/'reconstruction/directory_accounting/patch.asm']
+    if terminal_cache:sources += [ROOT/'src/aspect/terminal_builtins.c',ROOT/'src/aspect/terminal_builtins.h']
+    if aspect_hitkey:sources += [ROOT/'src/aspect/hitkey.c',ROOT/'src/aspect/hitkey.h']
     compiled_sources=[p for p in sources if p.suffix=='.c']
     serial_asm=[('uart','reconstruction/uart/core.asm','UART_OMF'),('uart_api','src/uart/api.asm',None),
                 ('txpace','src/aspect/txpace.asm',None),
@@ -94,7 +126,12 @@ def main(extension=None,directory_baud=False):
         from build_get_bank import build as build_get_bank
         get_objects,get_sources=build_get_bank(output,feature_flags,overlay_ready=bool(extension and extension.get('overlay_ready')))
         objects+=get_objects;sources+=get_sources
-    for name, relative, define in ASM+serial_asm:
+    if aspect_screen_commands:
+        from build_aspect_screen import build as build_screen
+        screen_objects,screen_sources=build_screen(output,feature_flags,
+            overlay_ready=bool(extension and extension.get('overlay_ready')))
+        objects+=screen_objects;sources+=screen_sources
+    for name, relative, define in ASM+serial_asm+([('directory_fields','src/aspect/directory_fields.asm',None)] if directory_fields else [])+([('directory_proto','src/aspect/directory_proto.asm',None)] if directory_proto else [])+([('clock_builtins','src/aspect/clock_builtins.asm',None)] if clock_builtins else [])+([('terminal_builtins','src/aspect/terminal_builtins.asm',None)] if terminal_cache else [])+([('state_builtins','src/aspect/state_builtins.asm',None)] if aspect_state_builtins else [])+([('hitkey','src/aspect/hitkey.asm',None)] if aspect_hitkey and not hitkey_parent else []):
         source, obj = ROOT / relative, output / (name + '.obj')
         sources.append(source)
         abort_flags=[]
@@ -112,6 +149,8 @@ def main(extension=None,directory_baud=False):
                        [str(source), '-o', str(obj)], check=True)
         objects.append(str(obj))
     banked_serial=bool(extension and extension.get('serial_bank'))
+    serial_overlay_ready=bool(extension and extension.get('serial_overlay_ready'))
+    assert not serial_overlay_ready or (banked_serial and extension.get('register_handoff') and extension.get('overlay_ready'))
     if banked_serial:
         public=['aspect_serial_directory_entry','aspect_serial_directory_record','aspect_serial_preload','aspect_serial_translate',
                 'aspect_serial_translation_policy','aspect_serial_open','aspect_serial_close','aspect_serial_compile_pause','aspect_serial_compile_resume']
@@ -122,11 +161,16 @@ def main(extension=None,directory_baud=False):
             'aspect_serial_compile_hold':'compile_hold','aspect_serial_compile_release':'compile_release'}
         aliases={n:n+'_impl' for n in public};aliases.update({n:'serial_bank_'+v for n,v in callbacks.items()})
         subprocess.run(['wcc','-q','-bt=dos','-0','-ms','-ecc','-s','-ob','-os','-w4','-we',
-            '-dASPECT_RUNTIME_SERIAL',*feature_flags,'-nt=ASIO_CODE','-nc=FARCODE',
+            '-dASPECT_RUNTIME_SERIAL',*feature_flags,*(['-dASPECT_SERIAL_OVERLAY_READY'] if serial_overlay_ready else []),'-nt=ASIO_CODE','-nc=FARCODE',
             *['-d'+n+'='+v for n,v in aliases.items()],'-fo='+str(output/'serial.o'),str(ROOT/'src/aspect/serial.c')],cwd=output,check=True)
-        bridge=ROOT/'src/aspect/serial_bank.asm';bridge_obj=output/'serial_bank.obj'
-        subprocess.run(['nasm','-fobj',*(['-DASPECT_CUSTOM_IRQ'] if extension.get('custom_irq') else []),'-I'+str(ROOT/'src/aspect')+'/',str(bridge),'-o',str(bridge_obj)],check=True)
-        objects += [str(output/'serial.o'),str(bridge_obj)]
+        bridge=ROOT/'src/aspect/serial_bank.asm'
+        objects.append(str(output/'serial.o'))
+        for suffix,defines in ([('root',['SERIAL_BANK_ROOT_ONLY']),('overlay',['SERIAL_BANK_OVERLAY_ONLY'])] if serial_overlay_ready else [('',[])]):
+            bridge_obj=output/('serial-bank-'+suffix+'.obj' if suffix else 'serial_bank.obj')
+            subprocess.run(['nasm','-fobj',*(['-DASPECT_CUSTOM_IRQ'] if extension.get('custom_irq') else []),
+                *(['-DASPECT_SERIAL_OVERLAY_READY'] if serial_overlay_ready else []),*['-D'+d for d in defines],
+                '-I'+str(ROOT/'src/aspect')+'/',str(bridge),'-o',str(bridge_obj)],check=True)
+            objects.append(str(bridge_obj))
         sources += [bridge,ROOT/'src/aspect/serial_bank.inc']
         if extension.get('register_handoff'):
             register_source=ROOT/'src/aspect/register_handoff.c';register_obj=output/'register_handoff.o'
@@ -142,6 +186,8 @@ def main(extension=None,directory_baud=False):
                     str(main_source), str(ROOT / 'src/aspect/runtime.c'),str(ROOT/'src/aspect/environment_runtime.c'),str(ROOT/'src/aspect/script_file_runtime.c'),str(ROOT/'src/aspect/file_info_runtime.c'),str(ROOT/'src/aspect/file_times_runtime.c'),str(ROOT/'src/aspect/enumeration_runtime.c'),
                     str(ROOT / 'src/aspect/file_io.c'),str(ROOT/'src/aspect/source_compile.c'),str(ROOT/'src/aspect/script_path.c'),str(ROOT/'src/aspect/serial_runtime.c'),str(ROOT/'src/aspect/serial_wait.c'),str(ROOT/'src/aspect/receive_runtime.c'),
                     *([] if banked_serial else [str(ROOT/'src/aspect/serial.c')]),str(ROOT/'src/aspect/directory_runtime.c'),str(ROOT/'src/aspect/resident_render.c'),str(ROOT/'src/aspect/when_runtime.c'),str(ROOT/'src/aspect/set_runtime.c'),str(ROOT/'src/aspect/find_runtime.c'),str(ROOT/'src/aspect/txpace.c'),str(ROOT/'src/config/resource_path.c'),
+                    *([str(ROOT/'src/aspect/terminal_builtins.c')] if terminal_cache else []),
+                    *([str(ROOT/'src/aspect/hitkey.c')] if aspect_hitkey else []),
                     *([str(p) for p in extension['c_sources']] if extension else []),*objects], cwd=output, check=True)
     if get_vm:
         with (output/'GETVM.lnk').open('a') as link:
@@ -171,6 +217,7 @@ def main(extension=None,directory_baud=False):
                   diagnostic_lease_fault_kind=extension.get('lease_fault_kind','divide') if extension else 'divide',
                   startup_heap_growth_bytes=extension.get('heap_growth_bytes') or 512 if extension and extension.get('register_handoff') else None,
                   experimental_serial_bank=banked_serial,
+                  experimental_serial_overlay_ready=serial_overlay_ready,
                   experimental_register_handoff=bool(extension and extension.get('register_handoff')),
                   source_extensions={'D7/01':'TRANSMITRAW hexadecimal bytes; requires maintained runtime, not legacy ASX portable'},
                   objects={p.name:sha(p) for p in [*[Path(p) for p in objects],
@@ -179,6 +226,13 @@ def main(extension=None,directory_baud=False):
                   platform='8086 DOS, small model, near DS=SS, cdecl, 8192-byte stack',
                   diagnostic_build=False,
                   experimental_directory_baud=directory_baud,
+                  experimental_directory_fields=directory_fields,
+                  experimental_directory_proto=directory_proto,
+                  experimental_clock_builtins=clock_builtins,
+                  experimental_terminal_builtins=terminal_builtins,
+                  experimental_hitkey=aspect_hitkey,
+                  experimental_state_builtins=aspect_state_builtins,
+                  experimental_screen_commands=aspect_screen_commands,
                   scope='DOS CLI for trusted ASX and maintained ASP compilation; partial105-slot runtime with native WHEN/CWHEN, thirteen SET/FETCH families and owned six-slot streams. Capability12 uses the real parent parser, selected key profile, cooperative help and native yes/no confirmation with child-owned receive. Raw ASIO retains immediate cancellation and queued raw delay semantics. Full language, command actions, other waits/flows, physical timing and arbitrary-bytecode safety remain unfinished.')
     if extension:
         result.update(experimental_external_commands=True,production_dispatch_changed=False,
@@ -195,6 +249,9 @@ def main(extension=None,directory_baud=False):
     if get_vm:
         from build_get_bank import audit
         result['GET_bank_layout']=audit(output)
+    if aspect_screen_commands:
+        from build_aspect_screen import audit as audit_screen
+        result['screen_bank_layout']=audit_screen(output)
         result['MZ_header_layout']=mz_layout
         result['source_extensions']['49']='Opt-in ordinary GET: string/integer/long; both compilers still refuse GET; float4, sibling modes unsupported.'
         result['scope']+=' Opt-in GET bank invokes the recovered owner with maintained typed/native/service adapters; only raw authored mode0 fixtures are admitted. Compiler grammar, full memory/package and physical acceptance remain open.'
@@ -203,4 +260,8 @@ def main(extension=None,directory_baud=False):
 
 
 if __name__ == '__main__':
-    main()
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--state-builtins',action='store_true')
+    args=parser.parse_args()
+    main(aspect_state_builtins=args.state_builtins)

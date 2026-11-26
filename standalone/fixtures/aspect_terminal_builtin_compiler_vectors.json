@@ -1,0 +1,825 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "cases": [
+    {
+      "label": "col-assignment",
+      "source": "integer v\nproc main\nv=$col\nendproc\n",
+      "source_sha256": "ec4154397486ddb1d895121cd1bac3351f11e796b1dfa70a61d1e4440117e79d",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0094",
+      "asx_sha256": "c7d093fdaa6cfae73cdbaf5a867445364fa5252f3cfd2b9bf08f30317e698e47"
+    },
+    {
+      "label": "col-casefold",
+      "source": "integer v\nproc main\nv=$COL\nendproc\n",
+      "source_sha256": "1c04e1ae35a9289ae74b12b3ce2868b44fc9c941671cf55f9c51f7765f453c97",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0094",
+      "asx_sha256": "c7d093fdaa6cfae73cdbaf5a867445364fa5252f3cfd2b9bf08f30317e698e47"
+    },
+    {
+      "label": "col-long",
+      "source": "long v\nproc main\nv=$col+1L\nendproc\n",
+      "source_sha256": "80ac8b9ebb4e2374ebf51b712f0ed5392ece28c6debecc634d3aae524a1c8e8c",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f00ac010000007a005b058e007a0094",
+      "asx_sha256": "ed34762e689b9c36436ab74d90731dec448364f0bcf7e98094f8d489d5b7e29e"
+    },
+    {
+      "label": "col-string",
+      "source": "string v\nproc main\nv=$col\nendproc\n",
+      "source_sha256": "203e5ccfe88128d5718237613b6661dca615ca7824a02a5231e41e7eba28cf4e",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $COL"
+      ]
+    },
+    {
+      "label": "col-condition",
+      "source": "integer v\nproc main\nif $col<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "463a9d0e7738f5a318b465d51291747d5c59fa01d02a03b5d78e0bf482d9f323",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f00ab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "4136d6135bdfab9445dcceb476cd08354642bc06df834374da6f4429eb4c9a67"
+    },
+    {
+      "label": "col-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$col\nv=local\nendproc\n",
+      "source_sha256": "f940e18e37628dc7111bc9eb95749b9db665f7d2b01a9add497176c68c585305",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f005b008d00a1000095",
+      "asx_sha256": "1f393d4c78cc76174a6ee67b91f4600ad95fd7f699a8c461feff380571f433ba"
+    },
+    {
+      "label": "col-parameter",
+      "source": "integer v\nproc main\ncall worker with $col\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "cda2341206243c1e52d0365d54c025b79c8b2d9e5e4333ff11db7fed3cd584e7",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f00c80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "9b28966575b34dcba96a11787e827467c81750e700bbdc65d21cd99ef32b618e"
+    },
+    {
+      "label": "col-readonly",
+      "source": "proc main\n$col=1\nendproc\n",
+      "source_sha256": "dc3aed5f65262c2f6fc1bbb8c0912d719ec2fe6604e0c338e6c2aebf74e59852",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "col-reserved",
+      "source": "integer $col\nproc main\nendproc\n",
+      "source_sha256": "730222913747268bbfd99bf0fc067adeeb6f19ce3b3d951e2b06265df9f94a25",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $COL"
+      ]
+    },
+    {
+      "label": "col-function",
+      "source": "integer v\nproc main\nv=$col()\nendproc\n",
+      "source_sha256": "85ebeef3431cf642d860bf5a082265570ef9aa329edd61cebb5fc5b0ac15932b",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "row-assignment",
+      "source": "integer v\nproc main\nv=$row\nendproc\n",
+      "source_sha256": "87669e53fb51deb13a16b2e869dbefe7a3263d9db0159f8f52089c30f8aebb5f",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0c94",
+      "asx_sha256": "c2f68c19640a126d4526a8edbbd47877af743843e79512ad80e0ebecac261364"
+    },
+    {
+      "label": "row-casefold",
+      "source": "integer v\nproc main\nv=$ROW\nendproc\n",
+      "source_sha256": "da74df16bcef30e48a702bf8705bb12ee387b79b1a9c7dc1bd98322be16ed296",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0c94",
+      "asx_sha256": "c2f68c19640a126d4526a8edbbd47877af743843e79512ad80e0ebecac261364"
+    },
+    {
+      "label": "row-long",
+      "source": "long v\nproc main\nv=$row+1L\nendproc\n",
+      "source_sha256": "18166ee6520dcad7d22072d29f942b7871632f7fad0ecb5281b2524c6de942e2",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f0cac010000007a005b058e007a0094",
+      "asx_sha256": "5420be5c1d416178aa9c91de981a386b0b1e742e52d33dce68efb6c65c1cba32"
+    },
+    {
+      "label": "row-string",
+      "source": "string v\nproc main\nv=$row\nendproc\n",
+      "source_sha256": "7f6e88df5a1f5c38e8b146262d4a43d777d6390d1b865b98c030d8d967a7968b",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $ROW"
+      ]
+    },
+    {
+      "label": "row-condition",
+      "source": "integer v\nproc main\nif $row<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "8888ff0fb6a05ed6523e5b192055f1f259d77b4731d1d553153ed621c2f65a59",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f0cab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "f2bc05799397eff4bb4fb5f33d69a0a94b641160978fdcf3491088f0ca2b5dd8"
+    },
+    {
+      "label": "row-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$row\nv=local\nendproc\n",
+      "source_sha256": "79ec74e5ce4073698bbf5fde61cdca57c02a3aebc28a7b7211ac46bf411a1543",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f0c5b008d00a1000095",
+      "asx_sha256": "03c9a6f31967c55bdcc8e689c2bff9f884174518a5eb9d989db5c63d7495fc54"
+    },
+    {
+      "label": "row-parameter",
+      "source": "integer v\nproc main\ncall worker with $row\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "39b15b2f477ea57b4ffbe49c530393eeab28c1b7dd3dc3503207a5cc6d3f647f",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f0cc80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "99926ade58e8f72c05e490f970f690d7038ce9113af7011299299dcd1dac97b5"
+    },
+    {
+      "label": "row-readonly",
+      "source": "proc main\n$row=1\nendproc\n",
+      "source_sha256": "2ffcbbf867be69e4873ffdbca50911d9d36f87ebbd1990d0cd4f6cac6036e733",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "row-reserved",
+      "source": "integer $row\nproc main\nendproc\n",
+      "source_sha256": "8f24daf729a03800eb54c43a41ba6b2cef50eb5e9c47ee70e8031b390577f3dc",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $ROW"
+      ]
+    },
+    {
+      "label": "row-function",
+      "source": "integer v\nproc main\nv=$row()\nendproc\n",
+      "source_sha256": "69093162a5df16e67d9877cda8eab60442daf58c5d98b65cde9ee7cc901387d4",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "scrncols-assignment",
+      "source": "integer v\nproc main\nv=$scrncols\nendproc\n",
+      "source_sha256": "aa7e6ed870ec794bddb4a2f08c121e81c631b7d56a70d9387aca88a006abb19f",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0d94",
+      "asx_sha256": "c2d678a495a26d7f0bd4d6573e1578520e45a69b0f09a58beea5a7cb0a517558"
+    },
+    {
+      "label": "scrncols-casefold",
+      "source": "integer v\nproc main\nv=$SCRNCOLS\nendproc\n",
+      "source_sha256": "c8c653c73aed74d2ef10842efd381812196b74d9096b6fdf08422c591dc679b8",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0d94",
+      "asx_sha256": "c2d678a495a26d7f0bd4d6573e1578520e45a69b0f09a58beea5a7cb0a517558"
+    },
+    {
+      "label": "scrncols-long",
+      "source": "long v\nproc main\nv=$scrncols+1L\nendproc\n",
+      "source_sha256": "015611f7b33a767178084f0e2b7197429d500b612162b5e412871e7f1907424b",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f0dac010000007a005b058e007a0094",
+      "asx_sha256": "5dc3e76720fb6e64fff0cf5cf115741eff67b42a1aac49414861c35be348c8f6"
+    },
+    {
+      "label": "scrncols-string",
+      "source": "string v\nproc main\nv=$scrncols\nendproc\n",
+      "source_sha256": "0f33434ab144df9e90b060fff86b0632ee0e9f29058755ebc2e82167476e6543",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $SCRNCOLS"
+      ]
+    },
+    {
+      "label": "scrncols-condition",
+      "source": "integer v\nproc main\nif $scrncols<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "9faef748c84fbbca7d152b5c543349e64413bd0503244006f70575934038f729",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f0dab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "06c61a791c3750b07e54c1e1dff0c0b99279f9bbbd9af4d85697cacfca13f500"
+    },
+    {
+      "label": "scrncols-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$scrncols\nv=local\nendproc\n",
+      "source_sha256": "408594b94c6a72c665aceb7b74fb502fe23fb4aee2535005076ee9c5450ea35e",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f0d5b008d00a1000095",
+      "asx_sha256": "51bc47be67b7cc78622d261fd69d734461ceea574ed7d787c52af73948f5ca42"
+    },
+    {
+      "label": "scrncols-parameter",
+      "source": "integer v\nproc main\ncall worker with $scrncols\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "9011335e5ea23d17240c8f2e46801b59962f35f700088173bf0afd95465ef7ab",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f0dc80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "c9a622266b1b0e85292dde7835bd4f1c4e3986cd21f901852dd643dfd7679e51"
+    },
+    {
+      "label": "scrncols-readonly",
+      "source": "proc main\n$scrncols=1\nendproc\n",
+      "source_sha256": "23013a1af11872c0cc422380d179a989e61d2a55664188ad2d9634531d3f3b4e",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "scrncols-reserved",
+      "source": "integer $scrncols\nproc main\nendproc\n",
+      "source_sha256": "fee02d70a89b8c57182a770690f13eb6a107fa3288f54b8fdb8023f5f7466a67",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $SCRNCOLS"
+      ]
+    },
+    {
+      "label": "scrncols-function",
+      "source": "integer v\nproc main\nv=$scrncols()\nendproc\n",
+      "source_sha256": "0f9546989ac3716c97c8d24aab57e85c8a2a2acf37399e45907790495f876076",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "scrnrows-assignment",
+      "source": "integer v\nproc main\nv=$scrnrows\nendproc\n",
+      "source_sha256": "b9c6715687a9d683580f8b689f352487396c5ee6214413947fe264b9ecd85395",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0e94",
+      "asx_sha256": "7ce23a2b1b12c59a1639d837f5b5bfad70ae93b8860f3f0ab9ead8e0fab2f41a"
+    },
+    {
+      "label": "scrnrows-casefold",
+      "source": "integer v\nproc main\nv=$SCRNROWS\nendproc\n",
+      "source_sha256": "961e8306ad8e593913f5a4c348771847af2c2d1562f10f0c7036293b92981029",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0e94",
+      "asx_sha256": "7ce23a2b1b12c59a1639d837f5b5bfad70ae93b8860f3f0ab9ead8e0fab2f41a"
+    },
+    {
+      "label": "scrnrows-long",
+      "source": "long v\nproc main\nv=$scrnrows+1L\nendproc\n",
+      "source_sha256": "5714c9e18c968d2d9d7c9d0d5ccbf09b8918eda700355a148cc303e2c0874887",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f0eac010000007a005b058e007a0094",
+      "asx_sha256": "3b04a67e6e31e2560c2ef70acf35c59a4506514171cbe28921aa5e9f2284bf0a"
+    },
+    {
+      "label": "scrnrows-string",
+      "source": "string v\nproc main\nv=$scrnrows\nendproc\n",
+      "source_sha256": "10c57ee13593a010079e7fda704d653cf482cdf4c0dc3da1844608c3361025f7",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $SCRNROWS"
+      ]
+    },
+    {
+      "label": "scrnrows-condition",
+      "source": "integer v\nproc main\nif $scrnrows<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "fc22bd96ad94e44d41e096d48eed5e5c00945446f03107425810d9b06d5f7fbd",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f0eab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "e74fd2d8843102b56b3cf90a39bccc93e050a299cc754ba2bd68b09a7f8c97e9"
+    },
+    {
+      "label": "scrnrows-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$scrnrows\nv=local\nendproc\n",
+      "source_sha256": "a2af30651f5e86d710c0de28696ac1e479b12f1238ca4e522f337986b0465d9a",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f0e5b008d00a1000095",
+      "asx_sha256": "1bf361de5e54771bd71799b9ba86fec5ee763ae88590d7816fccc13e509357b1"
+    },
+    {
+      "label": "scrnrows-parameter",
+      "source": "integer v\nproc main\ncall worker with $scrnrows\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "9e65cabe4708ed9f7ca3d05c885bdce4289ec33ce25f1dbd4c38b6aa3595f89a",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f0ec80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "ae684c3326c22ca3a3f9da6a299139e881ad33e8ad6394c0896bc5f5554392f0"
+    },
+    {
+      "label": "scrnrows-readonly",
+      "source": "proc main\n$scrnrows=1\nendproc\n",
+      "source_sha256": "2f4c5823035893b50051c2bbffeb2e965e4e2d1bbb08a9c5a7ca62704a1d8400",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "scrnrows-reserved",
+      "source": "integer $scrnrows\nproc main\nendproc\n",
+      "source_sha256": "8ab1f861564c3db5a015ee78b876bf5eeb32835edf62879c23a608b7be07af8c",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $SCRNROWS"
+      ]
+    },
+    {
+      "label": "scrnrows-function",
+      "source": "integer v\nproc main\nv=$scrnrows()\nendproc\n",
+      "source_sha256": "b3dd82a9f13ab27d95e8651a6cfe76b1b51a40a50a9208dd86b8a523b9c4bc5b",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "termbold-assignment",
+      "source": "integer v\nproc main\nv=$termbold\nendproc\n",
+      "source_sha256": "608c403edeb4905498907dc4feab7665024ae4c844c635e167a966cfbd007175",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0f94",
+      "asx_sha256": "1dc50845f6e2193e3df94be35045764dae56b0bf77c6db0f894040728ba155ef"
+    },
+    {
+      "label": "termbold-casefold",
+      "source": "integer v\nproc main\nv=$TERMBOLD\nendproc\n",
+      "source_sha256": "b59ce941e1698c7c202c839ea4ca25c23dacdfafcc9e48fb7ebcf6595d41f87f",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f0f94",
+      "asx_sha256": "1dc50845f6e2193e3df94be35045764dae56b0bf77c6db0f894040728ba155ef"
+    },
+    {
+      "label": "termbold-long",
+      "source": "long v\nproc main\nv=$termbold+1L\nendproc\n",
+      "source_sha256": "e69624c26202d70778de946a50857bd5022bdd7003d935d9488efc5d0be0ad2b",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f0fac010000007a005b058e007a0094",
+      "asx_sha256": "1643647ca5f36d6d1b4f2fd8feeb07811169456e402e7dfb3bd2d7e75309fa56"
+    },
+    {
+      "label": "termbold-string",
+      "source": "string v\nproc main\nv=$termbold\nendproc\n",
+      "source_sha256": "b877fbc7b09bf9dcba76216e9bdbd2199c49a77e611a073552aef571f972851b",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $TERMBOLD"
+      ]
+    },
+    {
+      "label": "termbold-condition",
+      "source": "integer v\nproc main\nif $termbold<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "93984a975df637d7bc4ac85318996fb1b2582763b9d8d9b55d275b8a9f5d45bf",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f0fab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "8596ba709e73f6310de4b138c81d97df5de05749f743b2d16de1738b2d3988fd"
+    },
+    {
+      "label": "termbold-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$termbold\nv=local\nendproc\n",
+      "source_sha256": "6f09cc4e23aae3248d84e40ae57fea48e7123e7d6ff82c33368e006ae5e3a23c",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f0f5b008d00a1000095",
+      "asx_sha256": "c01c44f7e891735d0e7cacda5b022b3508e01f9704bc25593794a0d18fcf962b"
+    },
+    {
+      "label": "termbold-parameter",
+      "source": "integer v\nproc main\ncall worker with $termbold\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "d63ff24e6b3756413528ec831a9906242d40c86a5fb908fa8fa40764f3babe94",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f0fc80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "85108b51e0b32f04a88067a9a31353ffd55b26a25b0f2cfed5daec191fb4728e"
+    },
+    {
+      "label": "termbold-readonly",
+      "source": "proc main\n$termbold=1\nendproc\n",
+      "source_sha256": "433db95be59d541c976dd991db41a38ebc37d99c3ac356e3f7d59f108ac15c49",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "termbold-reserved",
+      "source": "integer $termbold\nproc main\nendproc\n",
+      "source_sha256": "e18c34255fcac13fed05722ffb9a8ee03611dc081501bc242f8350294aa43f59",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $TERMBOLD"
+      ]
+    },
+    {
+      "label": "termbold-function",
+      "source": "integer v\nproc main\nv=$termbold()\nendproc\n",
+      "source_sha256": "de9e0852db34e852a329a5aae33ee9d7c8b706e5450969a75fe85e84dbd47e40",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "termdim-assignment",
+      "source": "integer v\nproc main\nv=$termdim\nendproc\n",
+      "source_sha256": "88306d8a65788ac5515b8904bc9f085c2cdca3fb4004d6e56e0a4c48a7c55a36",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1094",
+      "asx_sha256": "5907176ca0f6575d239c50169ecd4752c6cef5bc02d37e4855fdba010358f36e"
+    },
+    {
+      "label": "termdim-casefold",
+      "source": "integer v\nproc main\nv=$TERMDIM\nendproc\n",
+      "source_sha256": "eec4acfcb5194949833c23a6c0e2e38f38d88a45cacf0128b10cc1143592616f",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1094",
+      "asx_sha256": "5907176ca0f6575d239c50169ecd4752c6cef5bc02d37e4855fdba010358f36e"
+    },
+    {
+      "label": "termdim-long",
+      "source": "long v\nproc main\nv=$termdim+1L\nendproc\n",
+      "source_sha256": "3ae9a65f7e7bd7e86d056a5052bb8b6e4ace4cea931458d534eae9e08c61d0ab",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f10ac010000007a005b058e007a0094",
+      "asx_sha256": "c72f41ffbf56142ddf52b472795eb6f6c93e9233d98bf0c37d2b23923ff83f6c"
+    },
+    {
+      "label": "termdim-string",
+      "source": "string v\nproc main\nv=$termdim\nendproc\n",
+      "source_sha256": "1bb0b0bdec2aba8bd15b983c7647a38955f20d81a23494f4669e36c25423b786",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $TERMDIM"
+      ]
+    },
+    {
+      "label": "termdim-condition",
+      "source": "integer v\nproc main\nif $termdim<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "5c67cac5d699edbdb3cd8fb7138b7e2f3d1fc2637750666a4eb18680d9af339e",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f10ab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "b8dc7ea2c853d324affd1692da9982701668a562ca0b1beeaa1c40ec881d5c27"
+    },
+    {
+      "label": "termdim-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$termdim\nv=local\nendproc\n",
+      "source_sha256": "387966a5c1b0d66e4551bb167d735e584b4234bcbfc748855d8c11c0a79e9124",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f105b008d00a1000095",
+      "asx_sha256": "567b7415a742f2e9f3ebd34922cee1728e44784d1f7b116b8992d979f047220f"
+    },
+    {
+      "label": "termdim-parameter",
+      "source": "integer v\nproc main\ncall worker with $termdim\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "2c48f1f579f1cc4e53e7358fe57e4944635fd0a58b26ef80158eb101a0dfac74",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f10c80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "7c7742438f3eebb831b3f254ac199bc0864b407f97a6cc20d0a7fc01bb6346f7"
+    },
+    {
+      "label": "termdim-readonly",
+      "source": "proc main\n$termdim=1\nendproc\n",
+      "source_sha256": "98f580da2646f09dd5fa9a977e5a63980b1061ff39ed02c417b2f8f1733978c7",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "termdim-reserved",
+      "source": "integer $termdim\nproc main\nendproc\n",
+      "source_sha256": "d5a34a8baaa98fb1b42350562b939bb936ff695ccb56ef3c02cd7d571fa48a95",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $TERMDIM"
+      ]
+    },
+    {
+      "label": "termdim-function",
+      "source": "integer v\nproc main\nv=$termdim()\nendproc\n",
+      "source_sha256": "5a3ce4d7bd560cb81fac647cfd0f2b73d53c2b40af98acfeea08f6a422a78240",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "termnorm-assignment",
+      "source": "integer v\nproc main\nv=$termnorm\nendproc\n",
+      "source_sha256": "ca6eac34b1f0aea8e1826c4e2efac97792d5b8262d408617834a2a4da75805d7",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1194",
+      "asx_sha256": "03fd3b18dbe4203e9b9eb1f6fc849858a922285c2a06f02faeeec162ca364485"
+    },
+    {
+      "label": "termnorm-casefold",
+      "source": "integer v\nproc main\nv=$TERMNORM\nendproc\n",
+      "source_sha256": "dafac9a00dd37a13304308ec80fc878820de5e67599501658696bcba3ac3602e",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1194",
+      "asx_sha256": "03fd3b18dbe4203e9b9eb1f6fc849858a922285c2a06f02faeeec162ca364485"
+    },
+    {
+      "label": "termnorm-long",
+      "source": "long v\nproc main\nv=$termnorm+1L\nendproc\n",
+      "source_sha256": "630a6f468280182971bc971313fe754882fdd5f1623878dc4dbbc36d61473d4c",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f11ac010000007a005b058e007a0094",
+      "asx_sha256": "10e5aaeb458587e162be00cd0ad78b1adaf0580bada0d81558aca41b1029cc9a"
+    },
+    {
+      "label": "termnorm-string",
+      "source": "string v\nproc main\nv=$termnorm\nendproc\n",
+      "source_sha256": "0d668741cbd754d03c105b79f73314fd64aab133923a847d37bf2d806552f3a5",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $TERMNORM"
+      ]
+    },
+    {
+      "label": "termnorm-condition",
+      "source": "integer v\nproc main\nif $termnorm<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "fa0d9c2c88a77339512c86b99c905f1a3d4fd70b5fc32ed180fcdb0ee08b7503",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f11ab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "1408f5d95bc38b4fafea291a961133a3bfa46973ffcb20b3b680d5b509fcf8ce"
+    },
+    {
+      "label": "termnorm-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$termnorm\nv=local\nendproc\n",
+      "source_sha256": "e01ea0c02ffbc28e1e34082441786d974ed5288f41b47eb6b0d394daa4ce40fa",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f115b008d00a1000095",
+      "asx_sha256": "6542ff5649d0ac85d5e3ce50b3915d38b31008a69cd818d82c73aab8aaf17969"
+    },
+    {
+      "label": "termnorm-parameter",
+      "source": "integer v\nproc main\ncall worker with $termnorm\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "6a03595c9eb6fee2d67dccedd069d4a51be0d44ce6efe3a689a9573102f66ee4",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f11c80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "d1be5eb1c47845caaef467b114c8567a0a8d152cf2017965fb51271925b8c26c"
+    },
+    {
+      "label": "termnorm-readonly",
+      "source": "proc main\n$termnorm=1\nendproc\n",
+      "source_sha256": "dfb2c56175d53a52c7081c47e0699219a91e1c142dce6ac4dd9ff0da652dc270",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "termnorm-reserved",
+      "source": "integer $termnorm\nproc main\nendproc\n",
+      "source_sha256": "834e6b90b2b964481d3bf2db84d7e36fdfca4740f489e58ae5a77b75a964ab97",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $TERMNORM"
+      ]
+    },
+    {
+      "label": "termnorm-function",
+      "source": "integer v\nproc main\nv=$termnorm()\nendproc\n",
+      "source_sha256": "03f3a70b4711ddbc84bcdba600c9443c7a8c4b3ccd269b08b813dfea5bd8abbc",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "termrev-assignment",
+      "source": "integer v\nproc main\nv=$termrev\nendproc\n",
+      "source_sha256": "4357bf7dc136d3d6f52ee83256ece45d3bfcc190497c649d1bd4f78a26f55ed5",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1294",
+      "asx_sha256": "c2c8f6f9ec9330ea08c6ddacd10734e1d29f66e8c3150ab9a97312f0ebe0327d"
+    },
+    {
+      "label": "termrev-casefold",
+      "source": "integer v\nproc main\nv=$TERMREV\nendproc\n",
+      "source_sha256": "f396395edfc73d64bfa6c50ca2a28c3802e512e4e1ebbae38a8551bb77f5d2d7",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1294",
+      "asx_sha256": "c2c8f6f9ec9330ea08c6ddacd10734e1d29f66e8c3150ab9a97312f0ebe0327d"
+    },
+    {
+      "label": "termrev-long",
+      "source": "long v\nproc main\nv=$termrev+1L\nendproc\n",
+      "source_sha256": "47cd075814cb5631556ecff67539164e829637630c0023f22e6850f7d72d0c9c",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f12ac010000007a005b058e007a0094",
+      "asx_sha256": "9927280231d474a3e58f8cf65541e57f48ed469236183dbf03b7a6c7ff111943"
+    },
+    {
+      "label": "termrev-string",
+      "source": "string v\nproc main\nv=$termrev\nendproc\n",
+      "source_sha256": "62131515cfc8bf871251dc34d9afd98014341eb89e645594bd56cffd77bc2d1c",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $TERMREV"
+      ]
+    },
+    {
+      "label": "termrev-condition",
+      "source": "integer v\nproc main\nif $termrev<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "db02444fda11e7467d49eaae2aff09a5447fbc3d3af15461572362f4c5ade14d",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f12ab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "6befff003eb920effa13d3de90e6a4cd11dca7251ab9371d3e8975ed927540a9"
+    },
+    {
+      "label": "termrev-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$termrev\nv=local\nendproc\n",
+      "source_sha256": "284ed3515d94e2e7dd667076ed411fc19d6b08548a90c8c3ab19d13efa0ac054",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f125b008d00a1000095",
+      "asx_sha256": "27ad3fd799c0cb5f36994861655f697d0a2fefaa8f6832f6f0284a1d14129325"
+    },
+    {
+      "label": "termrev-parameter",
+      "source": "integer v\nproc main\ncall worker with $termrev\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "e3e9241d624af6005b80e9d85c956fe82d9275d33ffc72104541df815c5a58a0",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f12c80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "fbc3cb2a655d9b54e2289e610014b37a1eb5d79be135979773c852565034ff2d"
+    },
+    {
+      "label": "termrev-readonly",
+      "source": "proc main\n$termrev=1\nendproc\n",
+      "source_sha256": "d2e7efb8e8e855a6b75cbe56522537873122e143b1785fe6a9580e4d4b44a161",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "termrev-reserved",
+      "source": "integer $termrev\nproc main\nendproc\n",
+      "source_sha256": "84efcb408e4aa90cea7c6286b5a180cf50d9604334bb0465e776f4090ee60d16",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $TERMREV"
+      ]
+    },
+    {
+      "label": "termrev-function",
+      "source": "integer v\nproc main\nv=$termrev()\nendproc\n",
+      "source_sha256": "5e34a4f9d61b5fc4469005fbdaf6ecb9ee2f49c5ac2698c8348487012437eafe",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "termuline-assignment",
+      "source": "integer v\nproc main\nv=$termuline\nendproc\n",
+      "source_sha256": "d33a6b50b98fdb646d13f3bfcc045d45758b346eeead03fe851fbc78de22e880",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1394",
+      "asx_sha256": "ef02fcdd8897bdbced27f3277644b56c4abe9320805c0442f34f5677650c8773"
+    },
+    {
+      "label": "termuline-casefold",
+      "source": "integer v\nproc main\nv=$TERMULINE\nendproc\n",
+      "source_sha256": "2a5fc034baba789e0a38820a29d00630caec334adea54c21f4a133f35486e8eb",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1394",
+      "asx_sha256": "ef02fcdd8897bdbced27f3277644b56c4abe9320805c0442f34f5677650c8773"
+    },
+    {
+      "label": "termuline-long",
+      "source": "long v\nproc main\nv=$termuline+1L\nendproc\n",
+      "source_sha256": "0a191c29d3e5fd16371db52cc56ef85d44c1f6dfbaf25fc13514d0c31c8669e9",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f13ac010000007a005b058e007a0094",
+      "asx_sha256": "e2abe69c153f74b4635008426aa981c254709331d81c3f4f92d62178f1bc6bda"
+    },
+    {
+      "label": "termuline-string",
+      "source": "string v\nproc main\nv=$termuline\nendproc\n",
+      "source_sha256": "14f9352edb600cc42dff51eb4eccb8f68971d5ba4584ed79c0ab2aefab9bfef2",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> $TERMULINE"
+      ]
+    },
+    {
+      "label": "termuline-condition",
+      "source": "integer v\nproc main\nif $termuline<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "93e27a3cddc040857e93d407bbd2a91b5eeb933ab5c892132bc1e439a766b8a0",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f13ab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "87612753bf863d35756c39660a83c9aa50c922569c5cba1956aafe492bb5905f"
+    },
+    {
+      "label": "termuline-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=$termuline\nv=local\nendproc\n",
+      "source_sha256": "3ca2ead6e7b4ec69d6977b364bd839cb743f9b20ebd706a694d11900a27d0d53",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f135b008d00a1000095",
+      "asx_sha256": "cd7cc45df6b8680451ef98c26959ab95577de160ec71f9fb51b47191201c50dd"
+    },
+    {
+      "label": "termuline-parameter",
+      "source": "integer v\nproc main\ncall worker with $termuline\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "eafc0894c8a262b48ae1fd684344dd99e4fd000ba8cebe4037506615c21a2b1f",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f13c80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "20b44b45c25c2787ae94392d08f9a8b35bcb3f413c4b2e3ce086b15225fda792"
+    },
+    {
+      "label": "termuline-readonly",
+      "source": "proc main\n$termuline=1\nendproc\n",
+      "source_sha256": "e2a60b52ceccf56a3dd3a55de1f0301d8593df21b5197f118ed7a7163f10dbf2",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "termuline-reserved",
+      "source": "integer $termuline\nproc main\nendproc\n",
+      "source_sha256": "dac7ef93eff5b1738a4018441149bca2be3ccda15662e4c5fa1b9e0a5a48524a",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $TERMULINE"
+      ]
+    },
+    {
+      "label": "termuline-function",
+      "source": "integer v\nproc main\nv=$termuline()\nendproc\n",
+      "source_sha256": "ded3dc28de8dfadfb7c14e3c09c9d23e821d19fc70f5c6b7bb0775870d359c09",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    }
+  ],
+  "scope": "Actual original compiler DOS8086 outputs for authored sources; no private configuration input."
+}

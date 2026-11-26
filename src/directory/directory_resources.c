@@ -11,6 +11,7 @@
 #endif
 #include <dos.h>
 #include <string.h>
+#include "../config/terminal_profile.h"
 #ifndef KEY_RESOURCE_PRIVATE_READS
 #error Directory resources require non-inheritable KEY/KBD readers
 #endif
@@ -142,7 +143,7 @@ unsigned __cdecl directory_resources_stage(const directory_resource_request *req
  if(!external(request,sizeof(*request)) || !external(defaults,948) || !external(output,sizeof(*output)) ||
   !separate(request,sizeof(*request),defaults,948) || !separate(request,sizeof(*request),output,sizeof(*output)) ||
   !separate(defaults,948,output,sizeof(*output)))return DR_ARGUMENT;
- if((request->profile!=4 && request->profile!=6) || (request->cli_mask&~(
+ if(TERMINAL_PROFILE_UNSUPPORTED(request->profile) || (request->cli_mask&~(
 #ifdef DIRECTORY_TRANSLATION_RESOURCES
   allowed_mask
 #else

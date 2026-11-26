@@ -2,6 +2,7 @@
 #include "../capture/capture_file.h"
 #include "../capture/capture_fs.h"
 #include <string.h>
+#include "../config/terminal_profile.h"
 typedef char drc_word_abi[sizeof(unsigned)==2?1:-1];
 #ifdef DIRECTORY_TRANSLATION_RESOURCES
 typedef char drc_snapshot_abi[sizeof(directory_resource_cli_snapshot)==202?1:-1];
@@ -68,7 +69,7 @@ unsigned __cdecl directory_resource_cli_request(const unsigned char *record,
  directory_resource_request stage;
  if(cookie!=0xd731 || directory_resource_cli.state!=DRC_BOUND)return DRC_STATE;
  if(!external(record,114) || !external(request,sizeof(*request)) ||
-  !separate(record,114,request,sizeof(*request)) || (profile!=4 && profile!=6) || !psp)return DRC_ARGUMENT;
+  !separate(record,114,request,sizeof(*request)) || TERMINAL_PROFILE_UNSUPPORTED(profile) || !psp)return DRC_ARGUMENT;
  memset(&stage,0,sizeof(stage));memcpy(stage.record,record,114);
  stage.profile=profile;stage.psp=psp;stage.cli_mask=directory_resource_cli.original_mask&(512U|4096U
 #ifdef DIRECTORY_TRANSLATION_RESOURCES

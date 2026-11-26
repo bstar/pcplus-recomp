@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "original_sha256": "6401ccfddaf3aa5fe923ddeb5a76423b9216880dff6be2891e38ffcce8716904",
+  "analysis_image_sha256": "e14871502dba5f55646eb6184cf488c216381e6eda2ca47227a06934592b8302",
+  "overlay": 16,
+  "entry": "0xda1c",
+  "integer_selector": 25,
+  "integer_table_DS": "0x4cb6",
+  "resident_thunk": "0xbbfb",
+  "exact_getter_bytes": 8,
+  "exact_getter_hex": "e8fb8a50e8af9dc3",
+  "getter_sha256": "61c2bde1ac61ba74730d35f44fd86e4b18d397edfd400734e7600160beb18d80",
+  "evidence": {
+    "getter": "ev_172f3e6ad25ed8638f5eb8f48e91838efeef253cd2edb73b1d08d430616d3c22",
+    "peek": "ev_9bc44de1285653267fe1e2c64a2f8d8f3fffa0fb3fcccfe61137d4b9fbc4fcd5",
+    "normalizer": "ev_cb670ed8c108fd2f8a4d03d1d83765074271c3cae5e31f2e0ac94f3c59873699",
+    "bios_peek": "ev_f4cb5f36c1b098b06b477c53552e7fcc5d3215171f7c22073afbcd16d8385cb6"
+  },
+  "units": [
+    {
+      "entry": "0xda1c",
+      "bytes": 8,
+      "sha256": "61c2bde1ac61ba74730d35f44fd86e4b18d397edfd400734e7600160beb18d80"
+    },
+    {
+      "entry": "0x651a",
+      "bytes": 22,
+      "sha256": "c1f53407637c1e6aedcb21b1d42405b8c4623388f6a3ed66948bb0ded8f15b37"
+    },
+    {
+      "entry": "0x77d2",
+      "bytes": 43,
+      "sha256": "4575c0d57d8ebd385741a2f7d63834920268dd32f1fe28cb0d2bf3751da22a2a"
+    },
+    {
+      "entry": "0x7842",
+      "bytes": 21,
+      "sha256": "2071c27935876a4f7397e06d2b7b9a6dbe7fdfced776a6cad6e1af1be1929ea8"
+    }
+  ],
+  "semantics": [
+    "One non-consuming keyboard_peek at651A followed by the original callee-cleanup77D2 normalizer, near return and DS=SS ABI.",
+    "Parent native getter and FAR adapter execute in resident CODE; ASPECT_CODE calls the adapter with a FAR call.",
+    "Native pending mouse queue selects the six-entry peek table, not the separate dequeue table. BIOS mode0/10h selects status1/11h; emptyZF returns0, occupiedraw0000 returns0100.",
+    "Normalizer preserves special AL0/ALE0/AHE0, Backspace/Delete and signed372A comparison behavior; it can retain full WORDs."
+  ],
+  "limitations": [
+    "Getter/native dependency comparison is separate and optional; original executables and anchored analysis images are not application build inputs.",
+    "Native CPU replay supplies explicit INT16 device inputs. Actual DOS rings, VM/compiler and parent RPC admission are separate evidence.",
+    "Native queue index is unchecked. The maintained parent refuses a nonzero queue with index>=6 before lookup. Parent mouse producer is suspended for PROGRAM; no physical or separate child-notice mouse-producer integration claim.",
+    "On the parent zero-queue path, only BIOS modes0/10h are admitted before native7842 adds one for INT16; invalidFFh would wrap to a consuming read. This maintained admission is not in the original getter."
+  ]
+}

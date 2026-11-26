@@ -2,6 +2,7 @@
 ; Capture once after configuration, keyboard import and video initialization.
 BITS 16
 CPU 8086
+%include "terminal_profile.inc"
 GROUP DGROUP _DATA _BSS STACK
 SEGMENT _TEXT public class=CODE use16
 global terminal_reset_capture,ansi_escape_service_20a4,csi_reset_terminal
@@ -120,10 +121,7 @@ terminal_reset_capture:
  push dx
  cld
  mov ax,[csi_terminal_id]
- cmp ax,4
- je .supported
- cmp ax,6
- jne .unsupported
+ profile_gate ax,.unsupported
 .supported:
  push ds
  pop es

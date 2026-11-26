@@ -1,0 +1,597 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "cases": [
+    {
+      "label": "date-assignment",
+      "source": "string out\nproc main\nout=$date\nendproc\n",
+      "source_sha256": "334c3a70d18ca097c4d224a61eb1657f5e0c9cd2006d49c9bc59e16ee42c1e96",
+      "success": true,
+      "errors": [],
+      "hex": "01cfac8c006e080094",
+      "asx_sha256": "4e96bf9783d2784d870ffd0c8b341ec5a967d0ac10953e915903102451ed2fd9"
+    },
+    {
+      "label": "date-casefold",
+      "source": "string out\nproc main\nout=$DATE\nendproc\n",
+      "source_sha256": "de8c4c7e1ec5a92a803953d18deec90bb4530a987ff01ef18fe0b0bf6c2d2ed5",
+      "success": true,
+      "errors": [],
+      "hex": "01cfac8c006e080094",
+      "asx_sha256": "4e96bf9783d2784d870ffd0c8b341ec5a967d0ac10953e915903102451ed2fd9"
+    },
+    {
+      "label": "date-concat",
+      "source": "string out\nproc main\nout=\"[\"+$date+\"]\"\nendproc\n",
+      "source_sha256": "c9407399ee9531622bb9a1c2563aec55f29135238feb279f1d923531879bf722",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> $DATE",
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> ]"
+      ]
+    },
+    {
+      "label": "date-strcat",
+      "source": "string out\nproc main\nstrcat out $date\nendproc\n",
+      "source_sha256": "6eacc68eef0704214efac4b955d36ca65cbb1eb9c8783129a0c40191f4f965ed",
+      "success": true,
+      "errors": [],
+      "hex": "01cfaa8c006e080094",
+      "asx_sha256": "9c814895616060d964367c1df2935fb3ddb66b70e830f34304fcfe7ca84f39dc"
+    },
+    {
+      "label": "date-message",
+      "source": "\nproc main\nmessage $date\nendproc\n",
+      "source_sha256": "55c8da9d03c65961b68bcd16d3ebfcb99cd58dbdb3c732d313c639fc51d38b24",
+      "success": true,
+      "errors": [],
+      "hex": "00cf766e0894",
+      "asx_sha256": "8783ad338ac11e696277e0d667e6085ce0ff710596a711df88b2cb4f85a5d11c"
+    },
+    {
+      "label": "date-transmit",
+      "source": "\nproc main\ntransmit $date\nendproc\n",
+      "source_sha256": "25cae14dba0b337936582cf460b67ba8b130a3676c0cbf3e891bd4076f86dd17",
+      "success": true,
+      "errors": [],
+      "hex": "00cfbf6e0894",
+      "asx_sha256": "c57b874e24e9b9986476ab0f1fca9d7cd8acac636eedcd3d4b17b1682ce4cc92"
+    },
+    {
+      "label": "date-compare",
+      "source": "\nproc main\nstrcmp $date $date\nendproc\n",
+      "source_sha256": "98db24a631e9b09202f5d87c40fdb0bccffb95f7751981e18c80489bdc818f1d",
+      "success": true,
+      "errors": [],
+      "hex": "00cfab6e086e080094",
+      "asx_sha256": "33328da43d4c49207d15526473e31d54cbd6a1f251ad771a1b0f197d7748e9bd"
+    },
+    {
+      "label": "date-local",
+      "source": "string out\nproc main\nstring local\nlocal=$date\nout=local\nendproc\n",
+      "source_sha256": "081f9e2556e77ef3817723fe603419915849c31148ed52c814bbf8e8f292981e",
+      "success": true,
+      "errors": [],
+      "hex": "01d25100cfaca000006e0800ac8c00a000000095",
+      "asx_sha256": "54eeccc6692b50639f73d61fb8f713f4b49500a84564e0977da06e1bde786bc5"
+    },
+    {
+      "label": "date-parameter",
+      "source": "string out\nproc main\ncall worker with $date\nendproc\nproc worker\nstrparm value\nout=value\nendproc\n",
+      "source_sha256": "f7753f60d924d718bdddab202a59b1b862fb647191d19dcb63a26aa17673ee1d",
+      "success": true,
+      "errors": [],
+      "hex": "01cfd0cd6e08c80f000000d2afff94cfac8c009657000095",
+      "asx_sha256": "41d76810d9443d6b85e56343fb6b5880440c38bd8cfd7aec1ad5536148d95ff5"
+    },
+    {
+      "label": "date-bare",
+      "source": "\nproc main\n$date\nendproc\n",
+      "source_sha256": "793595e263a3f0ef47e52d0f78a120c61fbac4255bad82fa39580064e0e0a620",
+      "success": false,
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $DATE"
+      ]
+    },
+    {
+      "label": "date-readonly",
+      "source": "\nproc main\n$date=\"WRITE\"\nendproc\n",
+      "source_sha256": "8d8cb0aeafe9ca4789690574f678881686138ab53850dcffa9619c8378fba590",
+      "success": false,
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $DATE"
+      ]
+    },
+    {
+      "label": "date-reserved",
+      "source": "string $date\nproc main\n\nendproc\n",
+      "source_sha256": "7b483c6296196cce49ec0fb8a0f66428c722c4afae43829f816d84547d465202",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $DATE"
+      ]
+    },
+    {
+      "label": "date-date-destination",
+      "source": "\nproc main\ndate $date\nendproc\n",
+      "source_sha256": "3d709b36fe13c650b923f3bb7976566d9497761771f3182e83d0359756be3037",
+      "success": false,
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> $DATE"
+      ]
+    },
+    {
+      "label": "date-time-destination",
+      "source": "\nproc main\ntime $date 1\nendproc\n",
+      "source_sha256": "e78956d4d08dd1b64de7ae1933182f783db2801ce4d9a78e3efcd25867aa09c6",
+      "success": false,
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> $DATE"
+      ]
+    },
+    {
+      "label": "date-function",
+      "source": "string out\nproc main\nout=$date()\nendproc\n",
+      "source_sha256": "33bc88174ed75dff87cc227cef6f91bbf30b6dece801eca36673d9479717f05a",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> (",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "label": "date-integer",
+      "source": "integer out\nproc main\nout=$date\nendproc\n",
+      "source_sha256": "c07a61782e5c41298c083bc282b92458d52d126125fca68aae8c3e4faa0ac81d",
+      "success": false,
+      "errors": [
+        "Error C034 Line 3: Invalid expression token ==> $DATE",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "date-numeric-concat",
+      "source": "string out\nproc main\nout=$date+1\nendproc\n",
+      "source_sha256": "0e7993fbc742aabacf4d62e0e589f540bab93326295222a22f4fc35e62ce2649",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "label": "date-wrong-parameter",
+      "source": "\nproc main\ncall worker with $date\nendproc\nproc worker\nintparm value\nendproc\n",
+      "source_sha256": "bab154d240511e4a567f0f57796437134e993dfb7c6d84abccde917952d09d85",
+      "success": false,
+      "errors": [
+        "Error C049 Line 3: Mismatched parameter type"
+      ]
+    },
+    {
+      "label": "date-register",
+      "source": "\nproc main\ns9=$date\nendproc\n",
+      "source_sha256": "051a6e4b748bb18a89577b06773a090382737fd38743ca65357d090fae24f9a8",
+      "success": true,
+      "errors": [],
+      "hex": "00cfac64096e080094",
+      "asx_sha256": "5fb4f03c2967671cd20b93e2ada17f2b2e8df8f813f613decd11195a36c12a70"
+    },
+    {
+      "label": "date-double-concat",
+      "source": "string out\nproc main\nout=$date+$date\nendproc\n",
+      "source_sha256": "5063c56c8d3df8e980bb25166633abb5fbf31c5877604db116a86811e3f0eff2",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> $DATE"
+      ]
+    },
+    {
+      "label": "date-procedure-name",
+      "source": "proc $date\nendproc\nproc main\nendproc\n",
+      "source_sha256": "cb7e20d621115221478f137814224326bdca3f3af6d6e1bb63ff6376f6f07bd3",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $DATE",
+        "Error C004 Line 2: Undefined label ==> (null)"
+      ]
+    },
+    {
+      "label": "time0-assignment",
+      "source": "string out\nproc main\nout=$time0\nendproc\n",
+      "source_sha256": "f1d32176b58fa4324d4b965dccf95609380783721cf04c776854e1d7c646a76e",
+      "success": true,
+      "errors": [],
+      "hex": "01cfac8c006e140094",
+      "asx_sha256": "cfa3845108e7b3ada8e8390b6e64bedc5ebad8fbc090161849f036ba4e5090b6"
+    },
+    {
+      "label": "time0-casefold",
+      "source": "string out\nproc main\nout=$TIME0\nendproc\n",
+      "source_sha256": "33a0a71624dd52d994c346fac6610830a33deadc7eb46f282ecc78dc3e572294",
+      "success": true,
+      "errors": [],
+      "hex": "01cfac8c006e140094",
+      "asx_sha256": "cfa3845108e7b3ada8e8390b6e64bedc5ebad8fbc090161849f036ba4e5090b6"
+    },
+    {
+      "label": "time0-concat",
+      "source": "string out\nproc main\nout=\"[\"+$time0+\"]\"\nendproc\n",
+      "source_sha256": "eb68daf7e2ca7306ba1e04bea159bb62f7f2dcf6d3cc8421753fac5204bd6039",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> $TIME0",
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> ]"
+      ]
+    },
+    {
+      "label": "time0-strcat",
+      "source": "string out\nproc main\nstrcat out $time0\nendproc\n",
+      "source_sha256": "7132344ea02efd078d8f6aede4ecc63e5f5e90fab3aa3ef8fe9f51c6882aadb0",
+      "success": true,
+      "errors": [],
+      "hex": "01cfaa8c006e140094",
+      "asx_sha256": "c035054f1b9deba93b95bdfc5d5beeccd70a98cff71d2abc3cd585391ed01660"
+    },
+    {
+      "label": "time0-message",
+      "source": "\nproc main\nmessage $time0\nendproc\n",
+      "source_sha256": "d6650103c39403b58f6a0630782d53f1a519b2ad1bc647a9f5c2e5d5d0cbb17f",
+      "success": true,
+      "errors": [],
+      "hex": "00cf766e1494",
+      "asx_sha256": "ce39045c5be55422732bfa62058651665404033d84033d3f0d521a1e081b3077"
+    },
+    {
+      "label": "time0-transmit",
+      "source": "\nproc main\ntransmit $time0\nendproc\n",
+      "source_sha256": "17704578ff4706108a8ec14d1028928ccd151dbb2a245df62e03929fda46a242",
+      "success": true,
+      "errors": [],
+      "hex": "00cfbf6e1494",
+      "asx_sha256": "96dbca02e9282e3fbc52274f1a9f691003a07f1e15f5ca9b14a6c933efd5a65c"
+    },
+    {
+      "label": "time0-compare",
+      "source": "\nproc main\nstrcmp $time0 $time0\nendproc\n",
+      "source_sha256": "7b8127bd1755e59b71c9ca64b34734d0654cf2d855efbfe5901cf3eee806a498",
+      "success": true,
+      "errors": [],
+      "hex": "00cfab6e146e140094",
+      "asx_sha256": "367224a94c86ad78146aff40d062bcf9c4a372668cd68a7337dc03fa64cfdf97"
+    },
+    {
+      "label": "time0-local",
+      "source": "string out\nproc main\nstring local\nlocal=$time0\nout=local\nendproc\n",
+      "source_sha256": "e8990eef369bc49c72ad31eead512806c604af33ed202d9cb1329684028f393c",
+      "success": true,
+      "errors": [],
+      "hex": "01d25100cfaca000006e1400ac8c00a000000095",
+      "asx_sha256": "a53d5d64d6d57315fa14e98a6094656c58d67623223cb516643af6e334f7a477"
+    },
+    {
+      "label": "time0-parameter",
+      "source": "string out\nproc main\ncall worker with $time0\nendproc\nproc worker\nstrparm value\nout=value\nendproc\n",
+      "source_sha256": "5e172404e4ec52ce36a77367293dacaf30713164fa47497a40da81833ce2b0a3",
+      "success": true,
+      "errors": [],
+      "hex": "01cfd0cd6e14c80f000000d2afff94cfac8c009657000095",
+      "asx_sha256": "0cd8f7501cde35c29184587f739846d68e7c6f53469eb0229d9e7540a7308c27"
+    },
+    {
+      "label": "time0-bare",
+      "source": "\nproc main\n$time0\nendproc\n",
+      "source_sha256": "053f4bef026e3d07207912ea01fbac3041ef90cde925f212401b01d57254acee",
+      "success": false,
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $TIME0"
+      ]
+    },
+    {
+      "label": "time0-readonly",
+      "source": "\nproc main\n$time0=\"WRITE\"\nendproc\n",
+      "source_sha256": "866a2dd52ec8863ca5d38ad53bf0d9ddd3c5ee5bfa5fa85d16aa50d3c92260c0",
+      "success": false,
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $TIME0"
+      ]
+    },
+    {
+      "label": "time0-reserved",
+      "source": "string $time0\nproc main\n\nendproc\n",
+      "source_sha256": "765183f4ae04ff884be8fa2d13f79bb52e81ef4a15bdaf7ebe9384cfb8ab1a25",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $TIME0"
+      ]
+    },
+    {
+      "label": "time0-date-destination",
+      "source": "\nproc main\ndate $time0\nendproc\n",
+      "source_sha256": "2c6148edefe3099e97e75b68d3cb13c7fb59d549a401dc35cae0a149cfcf06a9",
+      "success": false,
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> $TIME0"
+      ]
+    },
+    {
+      "label": "time0-time-destination",
+      "source": "\nproc main\ntime $time0 1\nendproc\n",
+      "source_sha256": "660509f3773e47f6d44b1e315bcc6e367e9e3cbfdd7590f570581f6501f171cb",
+      "success": false,
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> $TIME0"
+      ]
+    },
+    {
+      "label": "time0-function",
+      "source": "string out\nproc main\nout=$time0()\nendproc\n",
+      "source_sha256": "0085438b314a5b5f400fe7af1f7fd8fe2903f704116a63c57f814af519ed5f65",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> (",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "label": "time0-integer",
+      "source": "integer out\nproc main\nout=$time0\nendproc\n",
+      "source_sha256": "58ff79d275e14de59e1eb3c4da0f5c84cc34f8de2d1e56a2081995d3e6cb0e48",
+      "success": false,
+      "errors": [
+        "Error C034 Line 3: Invalid expression token ==> $TIME0",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "time0-numeric-concat",
+      "source": "string out\nproc main\nout=$time0+1\nendproc\n",
+      "source_sha256": "7ab6f2e6e4679cbd71360a4c42375b53f9f90901f4403c00c63205c9bff438fa",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "label": "time0-wrong-parameter",
+      "source": "\nproc main\ncall worker with $time0\nendproc\nproc worker\nintparm value\nendproc\n",
+      "source_sha256": "63ceb631d8fbda43275946bad3650f3e3dc9584bee9bd8aa671f8041349f9d33",
+      "success": false,
+      "errors": [
+        "Error C049 Line 3: Mismatched parameter type"
+      ]
+    },
+    {
+      "label": "time0-register",
+      "source": "\nproc main\ns9=$time0\nendproc\n",
+      "source_sha256": "53fbd3a3c02b37b5daf6e3f30303a1daed1ac88b4450a2520af5f975c07cf487",
+      "success": true,
+      "errors": [],
+      "hex": "00cfac64096e140094",
+      "asx_sha256": "d932626c3e1dc27af4be5e1883a1d13e306f57683328837da5f3bd95603b8b68"
+    },
+    {
+      "label": "time0-double-concat",
+      "source": "string out\nproc main\nout=$time0+$time0\nendproc\n",
+      "source_sha256": "81fe24cc3720276aa6ca44d39362f371a6cf3f5edb4d9a8c88abec8ef164b35d",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> $TIME0"
+      ]
+    },
+    {
+      "label": "time0-procedure-name",
+      "source": "proc $time0\nendproc\nproc main\nendproc\n",
+      "source_sha256": "6d77816655d49b638484f9bc72ac15cd7bd165d123e30efb0379058e4c92ed48",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $TIME0",
+        "Error C004 Line 2: Undefined label ==> (null)"
+      ]
+    },
+    {
+      "label": "time1-assignment",
+      "source": "string out\nproc main\nout=$time1\nendproc\n",
+      "source_sha256": "241dbf60ef99ab8f64539cff7d1ac739a6d0106a58a3c2a6ae0ec3614460c034",
+      "success": true,
+      "errors": [],
+      "hex": "01cfac8c006e150094",
+      "asx_sha256": "a8849ef4da8b464ae082fb619c6921213dc5b1aab60369ca59ea5d63d359eaa2"
+    },
+    {
+      "label": "time1-casefold",
+      "source": "string out\nproc main\nout=$TIME1\nendproc\n",
+      "source_sha256": "195a52e9a9eb182e2bde3953564319842b9ca27d12a956b3dc7d6de36d62eb66",
+      "success": true,
+      "errors": [],
+      "hex": "01cfac8c006e150094",
+      "asx_sha256": "a8849ef4da8b464ae082fb619c6921213dc5b1aab60369ca59ea5d63d359eaa2"
+    },
+    {
+      "label": "time1-concat",
+      "source": "string out\nproc main\nout=\"[\"+$time1+\"]\"\nendproc\n",
+      "source_sha256": "1a8fd5aa6adf77804cfe8e341f410e0216808e19a4ae66589391c0f176393396",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> $TIME1",
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> ]"
+      ]
+    },
+    {
+      "label": "time1-strcat",
+      "source": "string out\nproc main\nstrcat out $time1\nendproc\n",
+      "source_sha256": "406eecd9fa4a9aa73a53b5a5cfdbe197bd2459885f18af581d5c7714628d83ec",
+      "success": true,
+      "errors": [],
+      "hex": "01cfaa8c006e150094",
+      "asx_sha256": "e496bb2058449997d83eb3ee671b9219256661db0b0f43dc1b4800a276f7e35b"
+    },
+    {
+      "label": "time1-message",
+      "source": "\nproc main\nmessage $time1\nendproc\n",
+      "source_sha256": "188a8c1a1ff1953a4d51e4b8c558886b054da3dbff587e645e3f3d888a847616",
+      "success": true,
+      "errors": [],
+      "hex": "00cf766e1594",
+      "asx_sha256": "e8b12af43212586251e6322e6a5e557e756070d7ba76258856afc4fdf51a711c"
+    },
+    {
+      "label": "time1-transmit",
+      "source": "\nproc main\ntransmit $time1\nendproc\n",
+      "source_sha256": "e4c5d56d37d98e1c8eea2783758932a0ecc37d3118428efc447310021a0971cb",
+      "success": true,
+      "errors": [],
+      "hex": "00cfbf6e1594",
+      "asx_sha256": "aab995ee5c5b45ca6b5d981290eeb98f68126a8dc708f8af1a4155b9ffe71775"
+    },
+    {
+      "label": "time1-compare",
+      "source": "\nproc main\nstrcmp $time1 $time1\nendproc\n",
+      "source_sha256": "7afe6c197579d2d464ae24a6e518607e34cd4973cce9c465642e7735e9ecc266",
+      "success": true,
+      "errors": [],
+      "hex": "00cfab6e156e150094",
+      "asx_sha256": "42e21e87504cb36b9f33db3a58cda81744992555772ede89689fbecfb852e6fa"
+    },
+    {
+      "label": "time1-local",
+      "source": "string out\nproc main\nstring local\nlocal=$time1\nout=local\nendproc\n",
+      "source_sha256": "6fb8d93765c9299fdf5543b126ab23429204f52a002dadb95d6dd691f1f2a38a",
+      "success": true,
+      "errors": [],
+      "hex": "01d25100cfaca000006e1500ac8c00a000000095",
+      "asx_sha256": "203bab17f066da573c3cb35df0f640a915bf20360e1d8c6639b6638ea4d75f8d"
+    },
+    {
+      "label": "time1-parameter",
+      "source": "string out\nproc main\ncall worker with $time1\nendproc\nproc worker\nstrparm value\nout=value\nendproc\n",
+      "source_sha256": "1d336f630b1a7a1b355870978a7aab7e2f8e17e861b1d7e5337e755fbb012c23",
+      "success": true,
+      "errors": [],
+      "hex": "01cfd0cd6e15c80f000000d2afff94cfac8c009657000095",
+      "asx_sha256": "0f0bd44294c2cb9c39f6ece000dd2b3204555d69b7e4dde157b2e90586a5b9ef"
+    },
+    {
+      "label": "time1-bare",
+      "source": "\nproc main\n$time1\nendproc\n",
+      "source_sha256": "1c7738b76d6f6cae94cae41a69a5a1855ada750a5c0958b80825e0148ff46c44",
+      "success": false,
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $TIME1"
+      ]
+    },
+    {
+      "label": "time1-readonly",
+      "source": "\nproc main\n$time1=\"WRITE\"\nendproc\n",
+      "source_sha256": "4c5b59a1effeff0324757348a4901dcad5627ce87286ccdf1f1ab8c0e1056fdc",
+      "success": false,
+      "errors": [
+        "Error C020 Line 3: Invalid command or expression token ==> $TIME1"
+      ]
+    },
+    {
+      "label": "time1-reserved",
+      "source": "string $time1\nproc main\n\nendproc\n",
+      "source_sha256": "39fa200bab89b84d124a75a1c0b52caa9e45a8eb5fde7fcd95b3fe32f25456b8",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $TIME1"
+      ]
+    },
+    {
+      "label": "time1-date-destination",
+      "source": "\nproc main\ndate $time1\nendproc\n",
+      "source_sha256": "42ec5ac189147d97e30ea05f155c00c525a909a35812cd23a881332f271e4927",
+      "success": false,
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> $TIME1"
+      ]
+    },
+    {
+      "label": "time1-time-destination",
+      "source": "\nproc main\ntime $time1 1\nendproc\n",
+      "source_sha256": "9b2244e2c26124e9804799c28d81e06cceacd9752466e6cabf371dae07c725a2",
+      "success": false,
+      "errors": [
+        "Error C025 Line 3: Invalid identifier ==> $TIME1"
+      ]
+    },
+    {
+      "label": "time1-function",
+      "source": "string out\nproc main\nout=$time1()\nendproc\n",
+      "source_sha256": "db36018586c94011c66964f56c3f590e6abd6ddb209e70334ce6a68c62a10915",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> (",
+        "Error C002 Line 3: Unexpected token ==> )"
+      ]
+    },
+    {
+      "label": "time1-integer",
+      "source": "integer out\nproc main\nout=$time1\nendproc\n",
+      "source_sha256": "707d6196ab535a4193396e1651007968500df7c96781892715399d98d58bf978",
+      "success": false,
+      "errors": [
+        "Error C034 Line 3: Invalid expression token ==> $TIME1",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "time1-numeric-concat",
+      "source": "string out\nproc main\nout=$time1+1\nendproc\n",
+      "source_sha256": "83eaeb8d254a5f0144b918a634adde3ec0ffd332bef11bcb1384b113f075d15e",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> 1"
+      ]
+    },
+    {
+      "label": "time1-wrong-parameter",
+      "source": "\nproc main\ncall worker with $time1\nendproc\nproc worker\nintparm value\nendproc\n",
+      "source_sha256": "e722fcae53109607518a383d44a8104db400d21dc79eb3d56c077d1f7d876501",
+      "success": false,
+      "errors": [
+        "Error C049 Line 3: Mismatched parameter type"
+      ]
+    },
+    {
+      "label": "time1-register",
+      "source": "\nproc main\ns9=$time1\nendproc\n",
+      "source_sha256": "778b5acb57c9a7672e9d29ceb672a23e0990786676b96e722d09b82ad2609408",
+      "success": true,
+      "errors": [],
+      "hex": "00cfac64096e150094",
+      "asx_sha256": "080abe43816eec11c02ed789a37edb9f763dbf0633bc44902b10d532af953896"
+    },
+    {
+      "label": "time1-double-concat",
+      "source": "string out\nproc main\nout=$time1+$time1\nendproc\n",
+      "source_sha256": "62eb9294c0536b8de14d51f85ca3ff387043819b0d200758dcb6ea3f25d61193",
+      "success": false,
+      "errors": [
+        "Error C002 Line 3: Unexpected token ==> +",
+        "Error C002 Line 3: Unexpected token ==> $TIME1"
+      ]
+    },
+    {
+      "label": "time1-procedure-name",
+      "source": "proc $time1\nendproc\nproc main\nendproc\n",
+      "source_sha256": "c8992efc77fb7bd6b04cc63cf84f1a935c7eb8ccdf135b3edd925d0885ce8ef1",
+      "success": false,
+      "errors": [
+        "Error C025 Line 1: Invalid identifier ==> $TIME1",
+        "Error C004 Line 2: Undefined label ==> (null)"
+      ]
+    }
+  ],
+  "scope": "Original compiler DOS8086 outputs for authored clock expression sources. No private configuration."
+}

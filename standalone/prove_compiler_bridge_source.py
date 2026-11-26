@@ -19,6 +19,9 @@ def main():
  p.add_argument('--checks', type=Path, action='append', required=True)
  p.add_argument('--help-checks',type=Path,action='append',default=[])
  p.add_argument('--overlay-io-checks',type=Path,action='append',default=[])
+ p.add_argument('--screen-checks',type=Path,action='append',default=[])
+ p.add_argument('--screen-wide-checks',type=Path,action='append',default=[])
+ p.add_argument('--screen-rpc-checks',type=Path,action='append',default=[])
  p.add_argument('--lab-payload',type=Path)
  p.add_argument('--connection-package',type=Path)
  p.add_argument('--termination-checks',type=Path,action='append',default=[])
@@ -55,7 +58,7 @@ def main():
  if a.connection_package:
   assert a.lab_payload,'Connection package requires the complete lab/Help source closure'
   connection=json.loads((a.connection_package/'manifest.json').read_text())
-  assert connection['experimental_compiler_lease_bridge'] and connection['parent_render_capability']==23
+  assert connection['experimental_compiler_lease_bridge'] and connection['parent_render_capability'] in (23,24,25,26,27)
   assert not connection['original_inputs'] and not connection['card_written']
   for leaf,digest in connection['files'].items():assert sha(a.connection_package/connection['dos_directory']/leaf)==digest,leaf
   for leaf,digest in payload['products'].items():assert connection['files'][leaf]==digest,leaf
@@ -96,6 +99,21 @@ def main():
   for name,digest in r['sources'].items():
    assert sha(ROOT/name)==digest and (name not in sources or sources[name]==digest),name
    sources[name]=digest
+ screen_reports=[json.loads(path.read_text()) for path in a.screen_checks]
+ wide_reports=[json.loads(path.read_text()) for path in a.screen_wide_checks]
+ rpc_reports=[json.loads(path.read_text()) for path in a.screen_rpc_checks]
+ if child.get('experimental_screen_commands'):
+  assert parent.get('experimental_screen_commands_parent')
+  assert any(r['cpu']=='8086' and {s['suite'] for s in r['suites']}=={'get','source','errors'} and r['cases']==5 for r in screen_reports),'Complete DOS8086 screen family receipt required'
+  assert any(r['cpu']=='8086' for r in wide_reports),'Canonical DOS8086 wide-screen receipt required'
+  assert any(r['cpu']=='8086' and r['active_fault_injection'] and r['original_checks_preserved'] for r in rpc_reports),'Actual DOS8086 parent-refusal and overlay-reuse receipt required'
+ else:
+  assert not screen_reports and not wide_reports and not rpc_reports
+ for r in screen_reports+wide_reports+rpc_reports:
+  assert r['passed'] and r['parent_sha256']==parent['binary_sha256'] and r['child_sha256']==child['binary_sha256'] and r['compiler_sha256']==compiler['binary_sha256']
+  for name,digest in r['sources'].items():
+   assert sha(ROOT/name)==digest and (name not in sources or sources[name]==digest),name
+   sources[name]=digest
  out.mkdir(); fresh=out/'source'
  for name,digest in sources.items():
   n=Path(name)
@@ -111,14 +129,14 @@ def main():
    subprocess.run([sys.executable,*args],cwd=fresh,env=env,stdout=log,stderr=log,check=True)
  recipe=json.loads((fresh/'standalone/keymap_connection_candidate_recipe.json').read_text())
  run(['standalone/build_terminal.py',*recipe['terminal_flags'],'--aspect-get-display','--aspect-get-policy',
-      '--compiler-lease-bridge',*(['--chat-send-mode'] if parent.get('experimental_chat_send_mode') else []),'--output-dir','build/parent'])
+      '--compiler-lease-bridge',*(['--aspect-terminal-query'] if parent.get('experimental_terminal_query') else []),*(['--aspect-hitkey'] if parent.get('experimental_hitkey_parent') else []),*(['--aspect-state-builtins'] if parent.get('experimental_state_builtins_parent') else []),*(['--aspect-screen-commands'] if parent.get('experimental_screen_commands_parent') else []),*(['--chat-send-mode'] if parent.get('experimental_chat_send_mode') else []),'--output-dir','build/parent'])
  assert child['startup_heap_growth_bytes'] in (128,256,512)
  overlay=bool(child.get('experimental_standard_overlays'))
  child_build='build/child-base' if overlay else 'build/child'
- run(['-c','import json,sys;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path('+repr(child_build)+').resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,get_display=True,get_policy=True,get_vm=True,near_globals=True,compiler_parent_lease=True,heap_growth_bytes='+str(child['startup_heap_growth_bytes'])+',defer_help_resource='+str(bool(child.get('experimental_deferred_help_resource')))+',disk_script_snapshots='+str(bool(child.get('experimental_disk_script_snapshots')))+',early_help_model='+str(bool(child.get('experimental_early_help_model')))+',help_parent_snapshot='+str(bool(child.get('experimental_help_parent_snapshot')))+',directory_baud='+str(bool(child.get('experimental_directory_baud')))+',overlay_ready='+str(bool(child.get('experimental_overlay_layout_ready')))+',**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
+ run(['-c','import json,sys;from pathlib import Path;sys.path.insert(0,"standalone");from build_aspect_process import main;main(parent_render=True,output=Path('+repr(child_build)+').resolve(),notice_bank=True,notice_sound=True,notice_input=True,notice_help=True,help_resource=True,serial_bank=True,register_handoff=True,custom_irq=True,get_display=True,get_policy=True,get_vm=True,near_globals=True,compiler_parent_lease=True,heap_growth_bytes='+str(child['startup_heap_growth_bytes'])+',defer_help_resource='+str(bool(child.get('experimental_deferred_help_resource')))+',disk_script_snapshots='+str(bool(child.get('experimental_disk_script_snapshots')))+',early_help_model='+str(bool(child.get('experimental_early_help_model')))+',help_parent_snapshot='+str(bool(child.get('experimental_help_parent_snapshot')))+',directory_baud='+str(bool(child.get('experimental_directory_baud')))+',directory_fields='+str(bool(child.get('experimental_directory_fields')))+',directory_proto='+str(bool(child.get('experimental_directory_proto')))+',clock_builtins='+str(bool(child.get('experimental_clock_builtins')))+',terminal_builtins='+str(bool(child.get('experimental_terminal_builtins')))+',aspect_hitkey='+str(bool(child.get('experimental_hitkey')))+',aspect_state_builtins='+str(bool(child.get('experimental_state_builtins')))+',aspect_screen_commands='+str(bool(child.get('experimental_screen_commands')))+',overlay_ready='+str(bool(child.get('experimental_overlay_layout_ready')))+',**json.loads(Path("standalone/keymap_connection_candidate_recipe.json").read_text())["aspect_options"])'])
  if overlay:
   run(['standalone/build_aspect_standard_overlay.py','--base',child_build,'--output','build/child',
-        *(['--notice'] if child.get('experimental_notice_overlay') else []),*(['--program'] if child.get('experimental_program_overlay') else []),*(['--checked-io'] if child.get('experimental_checked_overlay_io') else [])])
+        *(['--notice'] if child.get('experimental_notice_overlay') else []),*(['--program'] if child.get('experimental_program_overlay') else []),*(['--screen'] if child.get('experimental_screen_overlay') else []),*(['--checked-io'] if child.get('experimental_checked_overlay_io') else [])])
  run(['standalone/build_aspect_compiler_dos.py','--get','--output','build/compiler'])
  artifacts={}
  if parent.get('experimental_chat_send_mode'):
@@ -157,9 +175,16 @@ def main():
  for i,(path,r) in enumerate(zip(a.checks,reports)):
   leaf='build/replay-'+str(i)
   flags=['--'+key.replace('_','-') for key in families if r.get(key)]
+  flags += [arg for case in r['cases'] for arg in ('--case',case['case'])]
   flags += ['--'+key.replace('_','-') for key in ('allocation_probe','stream_probe') if r.get(key)]
   if r.get('CONNECTED_probe'):flags+=['--connected-probe']
   if r.get('DIRECTORY_BAUD_probe'):flags+=['--directory-baud-probe']
+  if r.get('DIRECTORY_FIELDS_probe'):flags+=['--directory-fields-probe']
+  if r.get('DIRECTORY_PROTO_probe'):flags+=['--directory-proto-probe']
+  if r.get('CLOCK_BUILTINS_probe'):flags+=['--clock-builtins-probe']
+  if r.get('TERMINAL_BUILTINS_probe'):flags+=['--terminal-builtins-probe']
+  if r.get('HITKEY_probe'):flags+=['--hitkey-probe']
+  if r.get('STATE_BUILTINS_probe'):flags+=['--state-builtins-probe']
   if 'get_watch_data:' in (path.parent/r['cases'][0]['case']/'observer.asm').read_text():flags+=['--watchdog']
   run(['standalone/test_aspect_get_vm_dos.py','--parent-dir','build/parent','--child-dir','build/child',
        '--get-compiler-dir','build/compiler','--cpu',r['emulated_cpu'],'--output',leaf,*flags])
@@ -249,9 +274,62 @@ def main():
   assert replay['passed'] and replay['checks']==r['checks']
   assert replay['parent_sha256']==r['parent_sha256'] and replay['child_sha256']==r['child_sha256']
   io_replays.append(dict(fault=r['fault'],phase=r['phase'],checks=len(replay['checks']),checks_sha256=sha(fresh/leaf/'result.json'),original_checks_sha256=sha(path)))
+ screen_replays=[]
+ for i,(path,r) in enumerate(zip(a.screen_checks,screen_reports)):
+  leaf='build/screen-replay-'+str(i)
+  suites={s['suite'] for s in r['suites']}
+  assert len(suites)==1 or suites=={'get','source','errors'}
+  suite='all' if len(suites)>1 else next(iter(suites))
+  run(['standalone/test_aspect_screen_dos.py','--parent-dir','build/parent','--child-dir','build/child','--compiler-dir','build/compiler','--cpu',r['cpu'],'--suite',suite,'--output',leaf])
+  replay=json.loads((fresh/leaf/'result.json').read_text())
+  assert replay['passed'] and replay['cases']==r['cases']
+  for old_suite,new_suite in zip(r['suites'],replay['suites']):
+   assert old_suite['suite']==new_suite['suite'] and len(old_suite['cases'])==len(new_suite['cases'])
+   for old,new in zip(old_suite['cases'],new_suite['cases']):
+    for key in ('case','checks','screen_exit_registers','screen_exit_status_cell'):
+     assert old[key]==new[key],(old['case'],key)
+    # Each run validates its own relocated child DS/CS. Compare native pixels
+    # and milestones without treating DOS placement as application semantics.
+    assert [{k:v for k,v in s.items() if k!='child_ds'} for s in old['screen_samples']]==[{k:v for k,v in s.items() if k!='child_ds'} for s in new['screen_samples']]
+    relative=Path(old_suite['suite'])/old['case']/'serial.bin'
+    assert (path.parent/relative).read_bytes()==(fresh/leaf/relative).read_bytes()
+  screen_replays.append(dict(cases=replay['cases'],cpu=r['cpu'],checks_sha256=sha(fresh/leaf/'result.json'),original_checks_sha256=sha(path)))
+ wide_replays=[]
+ for i,(path,r) in enumerate(zip(a.screen_wide_checks,wide_reports)):
+  leaf='build/screen-wide-replay-'+str(i)
+  run(['standalone/test_aspect_screen_wide_dos.py','--parent-dir','build/parent','--child-dir','build/child','--compiler-dir','build/compiler','--cpu',r['cpu'],'--output',leaf])
+  replay=json.loads((fresh/leaf/'result.json').read_text());assert replay['passed'] and len(replay['cases'])==len(r['cases'])
+  for old,new in zip(r['cases'],replay['cases']):
+   assert old['case']==new['case'] and old['checks']==new['checks']
+   assert [{k:v for k,v in s.items() if k!='child_ds'} for s in old['wide_samples']]==[{k:v for k,v in s.items() if k!='child_ds'} for s in new['wide_samples']]
+   assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
+  assert replay['checked_HOME_exercised']==r['checked_HOME_exercised']
+  wide_replays.append(dict(cases=len(replay['cases']),cpu=r['cpu'],checks_sha256=sha(fresh/leaf/'result.json'),original_checks_sha256=sha(path)))
+ rpc_replays=[]
+ for i,(path,r) in enumerate(zip(a.screen_rpc_checks,rpc_reports)):
+  leaf='build/screen-rpc-replay-'+str(i)
+  run(['standalone/test_aspect_screen_rpc_failure_dos.py','--parent-dir','build/parent','--child-dir','build/child','--compiler-dir','build/compiler','--cpu',r['cpu'],'--output',leaf])
+  replay=json.loads((fresh/leaf/'result.json').read_text())
+  assert replay['passed'] and replay['active_fault_injection'] and replay['original_checks_preserved'] and len(replay['cases'])==len(r['cases'])
+  for old,new in zip(r['cases'],replay['cases']):
+   assert old['case']==new['case'] and old['checks']==new['checks']
+   # The bounded active trace validates addresses and trap counts per run.
+   # Compare the actual policy result, not elapsed BIOS/timer instruction count.
+   for key in ('injected','restored','saved_guard','guard_after','rpc_return','gate_error','first_error','first_native','first_opcode'):
+    assert old['rpc_injection'][key]==new['rpc_injection'][key],(old['case'],key)
+   assert (path.parent/old['case']/'serial.bin').read_bytes()==(fresh/leaf/new['case']/'serial.bin').read_bytes()
+  rpc_replays.append(dict(cases=len(replay['cases']),cpu=r['cpu'],active_fault_injection=True,checks_sha256=sha(fresh/leaf/'result.json'),original_checks_sha256=sha(path)))
  for name,digest in sources.items():assert sha(ROOT/name)==sha(fresh/name)==digest,name
  result=dict(passed=True,original_inputs=[],ancestor_git_unavailable=True,sources=sources,source_count=len(sources),
-             artifacts=artifacts,help_replays=help_replays,Help_cases=len(help_replays),Help_checks=sum(r['checks'] for r in help_replays),overlay_io_replays=io_replays,overlay_io_cases=len(io_replays),lab_payload=lab_payload,connection_package=connection_result,replays=replays,DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,termination_cases=sum(r['cases'] for r in termination_replays),
+             artifacts=artifacts,help_replays=help_replays,Help_cases=len(help_replays),
+             Help_checks=sum(r['checks'] for r in help_replays),
+             overlay_io_replays=io_replays,overlay_io_cases=len(io_replays),
+             screen_replays=screen_replays,screen_cases=sum(r['cases'] for r in screen_replays),
+             screen_wide_replays=wide_replays,screen_wide_cases=sum(r['cases'] for r in wide_replays),
+             screen_rpc_replays=rpc_replays,screen_rpc_cases=sum(r['cases'] for r in rpc_replays),
+             lab_payload=lab_payload,connection_package=connection_result,replays=replays,
+             DOS_cases=sum(r['cases'] for r in replays),termination_replays=termination_replays,
+             termination_cases=sum(r['cases'] for r in termination_replays),
              scope=__doc__,physical_verified=False,installed_changed=False)
  (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
  print('PASS compiler bridge cold source:',len(sources),'sources;',result['DOS_cases'],'normal DOS cases;',result['termination_cases'],'expected fail-stops')

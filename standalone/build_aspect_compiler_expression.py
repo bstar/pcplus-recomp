@@ -6,7 +6,7 @@ from build_aspect_compiler_lexer import ROOT,sha
 OUT=ROOT/'build/aspect-compiler-expression'
 def main():
  OUT.mkdir(parents=True,exist_ok=True)
- names=['compiler_lexer.c','compiler_lexer.h','compiler_unit.c','compiler_unit.h','compiler_decimal.c','compiler_decimal.h','compiler_expr.c','compiler_expr.h','compiler_output.c','compiler_output.h','compiler_emit.c','compiler_emit.h','compiler_expression_dump.c','compiler_expression_dump.h','compiler_expression_probe.c']
+ names=['compiler_lexer.c','compiler_lexer.h','compiler_unit.c','compiler_unit.h','compiler_procedure_keywords.h','compiler_emulations.h','compiler_decimal.c','compiler_decimal.h','compiler_expr.c','compiler_expr.h','compiler_output.c','compiler_output.h','compiler_emit.c','compiler_emit.h','compiler_expression_dump.c','compiler_expression_dump.h','compiler_expression_probe.c']
  sources=[ROOT/'src/aspect'/name for name in names]
  subprocess.run(['wcl','-q','-bt=dos','-0','-ml','-fpc','-ecc','-s','-w4','-we','-k32768','-fm=ASPEXP.map','-fe=ASPEXP.EXE',*[str(p) for p in sources if p.suffix=='.c']],cwd=OUT,check=True)
  sources.extend([Path(__file__),ROOT/'standalone/build_aspect_compiler_lexer.py'])

@@ -1,0 +1,228 @@
+{
+  "compiler_sha256": "5664fdfae375774da5303cc8b53c00ef773a6650132de73c7206e46ddc05039a",
+  "cases": [
+    {
+      "label": "fromddir-assignment",
+      "source": "integer v\nproc main\nv=fromddir\nendproc\n",
+      "source_sha256": "113af75310314279724573ab51e4fe11681fb3f84d41a33920c178a165f7fafe",
+      "dos_source_sha256": "4177a20ec10cc51ac12b94ed3a6b29513f2513d2e19496d43c25ad9a727196e7",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1894",
+      "asx_sha256": "be644c98df7cbbdb967096eb66aea877b81c218b8a6afe213dfc52ff121d6063"
+    },
+    {
+      "label": "fromddir-casefold",
+      "source": "integer v\nproc main\nv=FROMDDIR\nendproc\n",
+      "source_sha256": "fa6f76d512167c7dc4c87c2fbf5958e0fee6c98d4e476277e031c5120021ecae",
+      "dos_source_sha256": "521d2bd36f5cd2f398ef2ed5652e5c7c1bd4438ed3549a2d1c4d521b28e09209",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1894",
+      "asx_sha256": "be644c98df7cbbdb967096eb66aea877b81c218b8a6afe213dfc52ff121d6063"
+    },
+    {
+      "label": "fromddir-long",
+      "source": "long v\nproc main\nv=fromddir+1L\nendproc\n",
+      "source_sha256": "f5400e010283d51c4b5fad8954f8280358fd5415e76ded7023e2729b7441c5b9",
+      "dos_source_sha256": "e5f14f6e34363dc6b0fab121711272fee700bdc6e86bf80ac62c596ffeafb44f",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f18ac010000007a005b058e007a0094",
+      "asx_sha256": "1f43adbf910fda1e940fad853d7038c4282721a4912abd078e9783b636f205f1"
+    },
+    {
+      "label": "fromddir-string",
+      "source": "string v\nproc main\nv=fromddir\nendproc\n",
+      "source_sha256": "1528260bbadd620cdf3bef9a7d7ada18a0425ce3ae6767b3456b8bb74c2c4238",
+      "dos_source_sha256": "1e0983c8f982496579ddea009bafd968673cb5f0b49908b841dc0108d9fdaa40",
+      "log_sha256": "5a5928cecdb502020c1fe15b2cd1a24fd88222aa4cb78451a3055c8771dff329",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> FROMDDIR"
+      ]
+    },
+    {
+      "label": "fromddir-condition",
+      "source": "integer v\nproc main\nif fromddir<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "4b66174fad95893a9dc65266bf565acd02c65ff2279350185ebb411bd8daab49",
+      "dos_source_sha256": "d70f2839675fee18e6839ca4fb36ca96be07b060c851087eff92ac66500dac7a",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f18ab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "a434f21ec9644e0a01091415824c71a4f3f50357d387b12a372f8f905b6e25bc"
+    },
+    {
+      "label": "fromddir-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=fromddir\nv=local\nendproc\n",
+      "source_sha256": "17c196ebbdf2d302cc15379fbbf57bdc3931c32e9a89060eb354f02b6fda041f",
+      "dos_source_sha256": "3cb1bc69dee8cb60443751f995272a119ae017e36b7a78b21b672f21ca4c4967",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f185b008d00a1000095",
+      "asx_sha256": "788eb07edc41ae9a75508b82f16532de9242a3a7e07f512701eb2a4102ecec28"
+    },
+    {
+      "label": "fromddir-parameter",
+      "source": "integer v\nproc main\ncall worker with fromddir\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "db7b887a93c646c18a7342c1889d7e7510cdf77cf643b15fad67a8b8c9901206",
+      "dos_source_sha256": "7ddc29449f7e46ccaf7bec8907143420be9124d05eb7a2b26d7d23bec728e77d",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f18c80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "db7e4464e327cbb269e1ddbcf8cbbb7b7c4dd56a0cbdfc18bb6e2db281acbe0f"
+    },
+    {
+      "label": "fromddir-readonly",
+      "source": "proc main\nfromddir=1\nendproc\n",
+      "source_sha256": "105d1c204dc7908347c47dba06f5dc65e31e659e8bbdd1637b2ed608da35e2be",
+      "dos_source_sha256": "f243233f07f13a9498603673a8a9d09c39f2400702a54543a27d0805d90812ce",
+      "log_sha256": "02de05530bd426ac77f70ed2061d98c2760229a8cc01d0d4487e8bebcb894a67",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "fromddir-reserved",
+      "source": "integer fromddir\nproc main\nendproc\n",
+      "source_sha256": "9f6175368a915e4c316dbc64daf51b74df3088c6cb329c779c5e18637c73bc3d",
+      "dos_source_sha256": "ab1f70a979721b818228a7a468d99988896cf83c5145476b4bbafb3c3a0a9687",
+      "log_sha256": "ba26e5d312a73865aa1a0e5d6a4b478580b23135a0fe1a8ec4e98769d309e720",
+      "success": false,
+      "errors": [
+        "Error C028 Line 1: Invalid use of reserved word ==> FROMDDIR"
+      ]
+    },
+    {
+      "label": "fromddir-function",
+      "source": "integer v\nproc main\nv=fromddir()\nendproc\n",
+      "source_sha256": "af7f58813cf6e439374d2fb1a87052d38857e8f332709ff6918d59af9c6514b6",
+      "dos_source_sha256": "0f08c5d0948cc36684fa3213acd5ac4d68a9a69f6bd7af4cc22b8d9b8ed85183",
+      "log_sha256": "2f2bebc5941dab2f907b70d94ff7509483ef9b0dce78ad8ec1079b9bd67d1085",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    },
+    {
+      "label": "mono-assignment",
+      "source": "integer v\nproc main\nv=mono\nendproc\n",
+      "source_sha256": "3b8bd296a72699fb9ce46e2baf23b21f8235f6f7a8c396d23cadbaa0d28b876b",
+      "dos_source_sha256": "477f7b4c34049b999aba00d56f126a0121c9b33016300e17dade2975a4fec67e",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1a94",
+      "asx_sha256": "d7de5a5d8a0fc96a787ea0917de821154d9f962b66a2fd57d665fddb2fc87191"
+    },
+    {
+      "label": "mono-casefold",
+      "source": "integer v\nproc main\nv=MONO\nendproc\n",
+      "source_sha256": "16236efbbf19b4b5c580b0bb995b63e14e58f65a78994d35a632b2c8b19bb23a",
+      "dos_source_sha256": "446d888305bc46aae0ab279108b28639a328e60d538ccd090752429e21017a35",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf5b008d006f1a94",
+      "asx_sha256": "d7de5a5d8a0fc96a787ea0917de821154d9f962b66a2fd57d665fddb2fc87191"
+    },
+    {
+      "label": "mono-long",
+      "source": "long v\nproc main\nv=mono+1L\nendproc\n",
+      "source_sha256": "d2ef69a62eb42811122c644750740c065bcd050ede01a2e9b87d52e4700d5f1c",
+      "dos_source_sha256": "f2956dcba263a134fbcd17d43e8d7a8fe14e05320863f1e3a3674705049b14b2",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf00056f1aac010000007a005b058e007a0094",
+      "asx_sha256": "8c5f1841bedf4e358ae24458a0f1a06a59958de7468c8551848bd033baa49802"
+    },
+    {
+      "label": "mono-string",
+      "source": "string v\nproc main\nv=mono\nendproc\n",
+      "source_sha256": "378821111ee4425a6c46d91bce03e63a079080312cedeb1c2bbbe4154cfe5137",
+      "dos_source_sha256": "e36d1f56854028f63ebfc9ad3a4c3e13cf2039af16318394f081fd882cd32279",
+      "log_sha256": "d9662a881d0cf5f39bcf711f024f1d354a06b8e2527b13f5b9243dc010767fd3",
+      "success": false,
+      "errors": [
+        "Error C023 Line 3: Invalid string constant (quotes missing) ==> MONO"
+      ]
+    },
+    {
+      "label": "mono-condition",
+      "source": "integer v\nproc main\nif mono<0\nv=7\nendif\nendproc\n",
+      "source_sha256": "e422a18a4c087f2418df3a6fdbcef317e6ea52ade9a88d7f4acd9ef59867e3b7",
+      "dos_source_sha256": "cc47610c04c918d8a5c42167abcb16f0eb2cfbb040e284c4133381d06ada3a2b",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cf6d006f1aab00007900151900000079005b008d00ab070094",
+      "asx_sha256": "5417db9ddbb4d675514fc9dc89cd5065b5e223304683edb4c2ee16fb2230c652"
+    },
+    {
+      "label": "mono-local",
+      "source": "integer v\nproc main\ninteger local\nlocal=mono\nv=local\nendproc\n",
+      "source_sha256": "d2782894e173a5466ab585ca94767368979dc8b19652bf4c3fb1a2134ccd9f2b",
+      "dos_source_sha256": "e47c149469e8f2ac8599e14e3ee94d1255f50d7237dd1d78e2b8bcd79e34ca56",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00d20200cf5b00a100006f1a5b008d00a1000095",
+      "asx_sha256": "fafc258b1c49ee1953690dda54813203f361f2a2b0cdcbddffed9e06857e0331"
+    },
+    {
+      "label": "mono-parameter",
+      "source": "integer v\nproc main\ncall worker with mono\nendproc\nproc worker\nintparm p\nv=p\nendproc\n",
+      "source_sha256": "cf653d178b5ac059d3fa61283746e98b7de24a97fd59e1cf008cb63e2739b547",
+      "dos_source_sha256": "2daf03285f6fe337727a7bde767efbe2dee660a0c7faf657811ba1b92dc3267b",
+      "log_sha256": "2a5ea70beb5b59fa35785ee10ba5372ff185af85994d49ad3e14407df0b8dfda",
+      "success": true,
+      "errors": [],
+      "hex": "00cfd0cc6f1ac80f000000d2feff94cf5b008d0097080095",
+      "asx_sha256": "fb2e2f83f66eceb3d96064dfa72d11b0ab4351126901897a03b73ff6d9ab8dcb"
+    },
+    {
+      "label": "mono-readonly",
+      "source": "proc main\nmono=1\nendproc\n",
+      "source_sha256": "dfaad8a11348219afc0d68164467168dfc25eb6684f6458b6894cf07d57d093a",
+      "dos_source_sha256": "73f7897db8b5c30e2f4362e89e4f1711c90e940c44f43ea4802210500978671a",
+      "log_sha256": "54cafa78e5537970c2cddb9007943c17ca1d5066cda05cfa24e5f5c882f22ec9",
+      "success": false,
+      "errors": [
+        "Error C044 Line 2: Invalid variable operand"
+      ]
+    },
+    {
+      "label": "mono-reserved",
+      "source": "integer mono\nproc main\nendproc\n",
+      "source_sha256": "e9a6c7ab37f2f5a066c5f3804114d8f399d5176403956efe04fddf0dd572558d",
+      "dos_source_sha256": "b74b3dcbdae8570973ffccf2f51a0e6bb807cbcd3262b1310fe7d4d01e86c9ef",
+      "log_sha256": "0979df4c843386669c3add97449cf64f768b4c2fbbf659e6ff0c5b23036c5426",
+      "success": false,
+      "errors": [
+        "Error C028 Line 1: Invalid use of reserved word ==> MONO"
+      ]
+    },
+    {
+      "label": "mono-function",
+      "source": "integer v\nproc main\nv=mono()\nendproc\n",
+      "source_sha256": "fb6e189553d95206a4f37c9f6f6937b3cfc3b05bd8f6948cb287e02fd6a520dc",
+      "dos_source_sha256": "611abc44f9fd95e243654c0555a7894833377fc374b6d6701eb0bd731182ee43",
+      "log_sha256": "a6f5a12cfe8739c506711fb0f5914ecd951674e5a82500e2d3209bfc52bb35a9",
+      "success": false,
+      "errors": [
+        "Error C035 Line 3: Missing operator",
+        "Error C036 Line 3: Missing operand"
+      ]
+    }
+  ],
+  "scope": "Actual original compiler DOS8086 outputs for twenty authored bare FROMDDIR and MONO integer operand sources. HITKEY is covered by its separate public fixture. No private configuration input or runtime behavior claim."
+}

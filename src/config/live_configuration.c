@@ -1,4 +1,5 @@
 #include "live_configuration.h"
+#include "terminal_profile.h"
 #include <stddef.h>
 #include <string.h>
 typedef char word_abi[sizeof(unsigned)==2?1:-1];
@@ -23,7 +24,7 @@ static unsigned valid_serial(const terminal_import_settings *s)
  unsigned i;unsigned long rate;
  if(s->port_number<1 || s->port_number>4 || s->parity>4 ||
   (s->data_bits!=7 && s->data_bits!=8) || (s->stop_bits!=1 && s->stop_bits!=2) ||
-  s->software_flow>1 || s->hardware_flow>1 || (s->terminal_id!=4 && s->terminal_id!=6) ||
+  s->software_flow>1 || s->hardware_flow>1 || TERMINAL_PROFILE_UNSUPPORTED(s->terminal_id) ||
   s->normal_attribute>255 || s->bold_attribute>255 || s->preset_attribute>255 ||
   s->reverse_attribute>255 || s->underline_attribute>255 || s->autowrap>1 ||
   s->scroll_enabled>1 || s->mapping_pause_character>255 || s->translation_mode>2 || s->clipboard_separator>255)return 0;

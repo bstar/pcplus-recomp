@@ -36,7 +36,23 @@
     "build/directory-baud-source-lease-20261108/checks.json": "6394dcb094c80ad0d0629cee7c1725f6681a0f2f4817264c1ae8344a318f8304",
     "build/notice-help/directory-baud-nested-help-20261108/result.json": "60ade3b818cd7db1d8868474f9898eab857baab463c17a44045d8bbdd6eff8d4",
     "build/directory-baud-enabled-20261108-overlay/manifest.json": "cb1ca5b7db2c386ec7228c68f482a6617bcd93ec20592eed0a63cc4cb9cb8899",
-    "build/directory-baud-disabled-20261108-overlay/manifest.json": "7fc65f976445dbb54a907a52de3f857db9edc6dff0adff5245ae69b076c05a21"
+    "build/directory-baud-disabled-20261108-overlay/manifest.json": "7fc65f976445dbb54a907a52de3f857db9edc6dff0adff5245ae69b076c05a21",
+    "build/directory-baud-native-resume-20261117/result.json": "dc2d5f100ed72e9ebd73f0d77720b1fb88ebacb1de149af8b7d0b50e6e0f3372",
+    "build/directory-baud-cold-resume-20261117/result.json": "0700d511cab244e020a1678e8021c9247baa12c68f04c1922d2ea4179b64c23f",
+    "build/directory-baud-package-cold-20261117/result.json": "ea88767a3ae661861a1bc63f63b94399988436adc596a0b35b5e127632bb9ffd",
+    "build/directory-baud-lab-20261117/package.json": "869475cf2e87b8af9da22fb4667efdd1600c0a5c3d2954cd825587961645c3d4",
+    "build/directory-baud-lab-contract-20261117/result.json": "cfe38f6bfe9b8594e6f3151818ba82d8a897489345d79ddb176c6cc5ec7d2177",
+    "build/directory-baud-connection-package-20261117/manifest.json": "ddc2b94cb541fbd75b50b0a9aff58318b2f11834b18024bcaa82d301679fe332",
+    "build/directory-baud-package-contract-20261117/result.json": "fd83c0bd4641b77ffbea562e406f7b5be7958a728026953d3f29f9dedf358c20",
+    "build/directory-baud-archive-20261117/result.json": "4d983f11940abf55df596b6762e0a4b64a656809159c06c8a1bc87cabf56c791",
+    "build/directory-baud-packaged-tests-20261117/splash/result.json": "e2d8bc6c341a9c2ad48836c75b5af4ca38a13a5ca510ad0725c8cd079ff44102",
+    "build/directory-baud-packaged-tests-20261117/setup/result.json": "84c5ebb12b221c03ed007cbe467a2f901ec56e23a1d7d309afe4018fa50fdcbf",
+    "build/directory-baud-packaged-tests-20261117/source/result.json": "2f60ff87c396c15a7d3091a0b20fd2e0c9e214962ed5f03f268387e164b56d55",
+    "build/directory-baud-packaged-tests-20261117/commands/result.json": "8a293e5d1ba14576d56c1572071e00b60a28e9eb1f736c45899e9fbf38758051",
+    "build/directory-baud-packaged-tests-20261117/line/result.json": "84f85eb4e3cb56afd9d32f90480585af4fffe52ce34f9a834f9402c7cdf82dae",
+    "build/directory-baud-packaged-tests-20261117/meta/result.json": "3ffc3943b59e8c445b2866ea3757327207110eefd99870bd0272c97dc361b4ea",
+    "build/directory-baud-packaged-tests-20261117/keymap/result.json": "aec9a2374a718adc2135424d45073cbc95e307f8e45fc2ad762751382393d3cf",
+    "build/directory-baud-packaged-tests-20261117/chat-help/result.json": "6c51b0d52af26a7c4f94c96962ca663169b5c217473720612431792998f3c57d"
   },
   "sources": {
     "src/aspect/directory_builtins.asm": "684ab368d737505817525b54ea6fbf3f60b934d086411acbf7577a41ca0beea3",
@@ -56,13 +72,32 @@
   "selector_changed": false,
   "physical_verified": false,
   "package_promoted": false,
-  "cold_source_replay": false,
+  "cold_source_replay": true,
   "limits": [
     "Exact17-byte native getter and original9-rate table verified independently; no original application inputs in source builds.",
     "Native unchecked indexing is guarded: indices above8 raise operand7 before table read or destination assignment.",
     "Configured directory speed is not negotiated carrier or measured UART DTE. No-entry cleared record uses index0=300 as maintained policy.",
     "Full-parent tests cover source startup/EXECUTE, GET, held stream, CONNECTED128 and selected directory38400, plus nested DOS/Help.",
-    "Opt-in directory_baud flag remains separate from the prepared17-file candidate; source replay/new-byte BBS/package/physical acceptance remain open.",
-    "Full original ASPECT/emulation/protocol parity incomplete; Host last. Development remains paused."
-  ]
+    "Opt-in directory_baud profile cold-rebuilds all17 package files and archive byte for byte; eight packaged DOS8086 workflows pass. New-byte BBS and physical acceptance remain open; installed selector unchanged.",
+    "Full original ASPECT/emulation/protocol parity incomplete; Host last. Development resumed November17."
+  ],
+  "cold_source_count": 1103,
+  "cold_source_original_inputs": [],
+  "cold_source_ancestor_git_unavailable": true,
+  "package_staged": true,
+  "package_source_base_commit": "b24b90d806e0098f4deb218ae0114917524be297",
+  "package_files": 17,
+  "package_contract_cases": 34,
+  "package_archive_sha256": "38609dee876e476a8a2dff9690e7d80187b28482a8be3a6f9df6b57b2eae8bbe",
+  "packaged_DOS_workflows": [
+    "splash",
+    "setup",
+    "source",
+    "commands",
+    "line",
+    "meta",
+    "keymap",
+    "chat-help"
+  ],
+  "new_byte_BBS_qualified": false
 }

@@ -1,0 +1,334 @@
+{
+  "schema": 1,
+  "passed": true,
+  "checkpoint_verified": true,
+  "kind": "current-byte-owned-BBS-qualification",
+  "renderer_capability": 27,
+  "release_eligible": false,
+  "products": {
+    "TERMINAL.EXE": "7f5b3b0303eac3f4e4a1ee1bb15715015221ec6a656ad128830045de1c5619d5",
+    "ASPECT.EXE": "1a0369887a08084365cbd04dc3f41daa2545088b5a01382f22d3ee9179519fa4",
+    "ASPCOMP.EXE": "00fb07d154bb356145ed7696faa2e93c437188928da10f270c14ddccdca6c23b"
+  },
+  "lab_payload": "build/screen-lab-v1-20261119",
+  "runtime": "build/menu-size-accepted-20261104/candidate",
+  "Enigma": {
+    "passed": true,
+    "checks": {
+      "DOS_normal_exit": true,
+      "hardware_restored": true,
+      "sources_unchanged": true,
+      "PRM_unchanged": true,
+      "DOS_compiler_exact": true,
+      "both_script_logins": true,
+      "two_connections": true,
+      "stage_clean_before_second_login": true,
+      "real_carrier_notice": true,
+      "RX_complete_notice": true,
+      "exact_retry": true,
+      "only_expected_file": true,
+      "directory_two_connections": true,
+      "no_post_saved": true,
+      "runtime_source_only_startup": true,
+      "runtime_compile_files_retired": true,
+      "source_matching_retry_finish_search_raw_proxy": true,
+      "two_authenticated_sessions": true
+    },
+    "check_count": 18,
+    "partial_bytes": 4096,
+    "exact_retry_bytes": 65539,
+    "CPU": "386",
+    "explicit_UMB": true,
+    "live_source": true,
+    "strict_ZFIN_OO_finish": true,
+    "finish_gate_waived": false,
+    "finish": {
+      "offset": 131592,
+      "last_header_offset": 131592,
+      "end": 131614
+    },
+    "independent_wire_audit": true,
+    "capture_controls": 16,
+    "durable_exit_returncode": 0,
+    "accepted_product_runs": 1
+  },
+  "Synchronet": {
+    "passed": true,
+    "checks": {
+      "size_probe_requested": true,
+      "harness": true,
+      "runtime_unchanged": true,
+      "server_static_inputs_unchanged": true,
+      "message_bodies_unchanged": true,
+      "no_message_mail_or_transfer_writes": true,
+      "actual_ASPECT_login": true,
+      "staged_inputs_unchanged": true,
+      "frozen_editor_frame": true,
+      "actual_CPR_boundary": true,
+      "fixture_CPR_consumed": true,
+      "expected_geometry_advertised": true,
+      "source_inputs_unchanged": true,
+      "stock_editor_entered": true,
+      "draft_aborted": true,
+      "insert_toggled_overtype": true,
+      "home_marker_at_line_start": true,
+      "end_marker_at_line_end": true,
+      "delete_erases_final_character": true,
+      "tab_advances_to_next_stop": true,
+      "page_keys_report_document_boundaries": true,
+      "ctrl_y_delete_line_response": true
+    },
+    "check_count": 22,
+    "CPU": "8086",
+    "physical_rows": 25,
+    "logical_rows": 24,
+    "status_hidden": 0,
+    "NAWS": [
+      [
+        80,
+        24
+      ]
+    ],
+    "matched_cells": 1920,
+    "different_cells": 0,
+    "actual_CPR": [
+      5,
+      8
+    ],
+    "cell_audit_checks": 10,
+    "delivered_bytes": 21471,
+    "actual_query_count": 1,
+    "durable_exit_returncode": 0,
+    "server_console_quit_returncode": 0
+  },
+  "incomplete_attempts": [
+    {
+      "capture": "build/bbs-lab/results/enigma/screen-builtins-carrier-20261119",
+      "stage": "fixture preflight",
+      "actual_product_started": false,
+      "reason": "new synthetic filename absent; existing frozen PA2DE84.BIN selected for later fresh labels"
+    },
+    {
+      "capture": "build/bbs-lab/results/enigma/screen-builtins-carrier-v2-20261119",
+      "passed": false,
+      "reason": "producer lifecycle lost before report persistence; second transport interrupted and strict finish incomplete",
+      "termination_signal": "unavailable",
+      "snapshots_or_traces_reconstructed": false,
+      "evidence": "build/screen-bbs-v1-20261119/incomplete-enigma-v2.json"
+    }
+  ],
+  "execution_durability": {
+    "unchanged_strict_producer": true,
+    "unchanged_transfer_wait_ms": 150000,
+    "detached_owned_processes": true,
+    "stdout_stderr_persisted": true,
+    "atomic_exit_receipt": "build/screen-bbs-v1-20261119/enigma-v3-job/exit.json",
+    "Synchronet": {
+      "server_supervisor_pid": 789767,
+      "server_pid": 789791,
+      "server_pgid": 789791,
+      "test_supervisor_pid": 799387,
+      "producer_pid": 799391,
+      "producer_pgid": 799391,
+      "proxy_pid": 799652,
+      "atomic_server_exit": "build/screen-bbs-resume-v1-20261119/synchronet-server/exit.json",
+      "atomic_producer_exit": "build/screen-bbs-resume-v1-20261119/synchronet-v1-job/exit.json",
+      "all_stopped": true
+    }
+  },
+  "server_lifecycle": {
+    "ports_free_before_start": [
+      23231,
+      23233
+    ],
+    "products": {
+      "TERMINAL.EXE": "7f5b3b0303eac3f4e4a1ee1bb15715015221ec6a656ad128830045de1c5619d5",
+      "ASPECT.EXE": "1a0369887a08084365cbd04dc3f41daa2545088b5a01382f22d3ee9179519fa4",
+      "ASPCOMP.EXE": "00fb07d154bb356145ed7696faa2e93c437188928da10f270c14ddccdca6c23b"
+    },
+    "started": {
+      "enigma": {
+        "pid": 3213998,
+        "command": "node /home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source/main.js ",
+        "port": 23233
+      },
+      "enigma-v3": {
+        "pid": 3540347,
+        "command": "node /home/bstar/projects/pcplus-recomp/build/bbs-lab/enigma/source/main.js ",
+        "port": 23233
+      }
+    },
+    "stopped": {
+      "proxy-v2": {
+        "pid": 3221507,
+        "signal": "SIGTERM",
+        "ownership_command": "node /home/bstar/projects/pcplus-recomp/lab/bbs/synthmodem_proxy_serial.js --runtime /home/bstar/projects/pcplus-recomp/build/menu-size-accepted-20261104/candidate --output /home/bstar/projects/pcplus-recomp/build/bbs-lab/screen-builtins-carrier-v2-20261119-proxy --bbs-port 23233 --framing-ms 250 --byte-delay-ms 0 --terminal-rows 24 --probe-terminal-size --disconnect-on-quit ",
+        "stopped": true
+      },
+      "enigma-v2": {
+        "pid": 3213998,
+        "helper": "lab/bbs/enigma.py stop",
+        "helper_exit": 0,
+        "stopped": true
+      },
+      "enigma-v3": {
+        "pid": 3540347,
+        "helper": "lab/bbs/enigma.py stop",
+        "helper_exit": 0,
+        "stopped": true
+      },
+      "proxy-v3": {
+        "pid": 3545262,
+        "method": "unchanged producer finally block",
+        "stopped": true
+      },
+      "durable-job-v3": {
+        "supervisor_pid": 3545089,
+        "producer_pid": 3545096,
+        "returncode": 0,
+        "stopped": true
+      }
+    },
+    "physical_or_live_BBS_contacted": false,
+    "ports_free_after_incomplete_run": [
+      23231,
+      23233
+    ],
+    "ports_free_after": [
+      23231,
+      23233
+    ],
+    "synchronet_started": true,
+    "synchronet_resume": {
+      "started": "2026-11-18T15:12:58.940738+00:00",
+      "ports_free_before_start": [
+        23231,
+        23233
+      ],
+      "supervisor_pid": 789767,
+      "supervisor_pgid": 789767,
+      "supervisor_source_sha256": "97a127040bf5d320b246e62a717b58b92a4a78c9e1e0bb17890960c15e9cd0aa",
+      "products": {
+        "TERMINAL.EXE": "7f5b3b0303eac3f4e4a1ee1bb15715015221ec6a656ad128830045de1c5619d5",
+        "ASPECT.EXE": "1a0369887a08084365cbd04dc3f41daa2545088b5a01382f22d3ee9179519fa4",
+        "ASPCOMP.EXE": "00fb07d154bb356145ed7696faa2e93c437188928da10f270c14ddccdca6c23b"
+      },
+      "previous_checkpoint_sha256": "1b8a0a1a53ec8ec204c1760fe8061d27cd92c2a27f639227af6769151ad4dd39",
+      "server_pid": 789791,
+      "server_pgid": 789791,
+      "server_command": "sbbs nd t! ne nh /home/bstar/projects/pcplus-recomp/build/bbs-lab/synchronet/runtime/ctrl ",
+      "ended": "2026-11-18T15:16:12.156962+00:00",
+      "console_shutdown": "q",
+      "server_exit": {
+        "started": "2026-11-18T15:12:58.972068+00:00",
+        "supervisor_pid": 789767,
+        "command": [
+          "/home/bstar/projects/pcplus-recomp/tools/bbs-dev",
+          "--command",
+          "python3",
+          "lab/bbs/synchronet.py",
+          "serve"
+        ],
+        "server_launcher_pid": 789791,
+        "server_pgid": 789791,
+        "ended": "2026-11-18T15:15:02.005350+00:00",
+        "returncode": 0,
+        "completed": true
+      },
+      "producer_exit": {
+        "started": "2026-11-18T15:13:30.790244+00:00",
+        "supervisor_pid": 799387,
+        "supervisor_pgid": 799387,
+        "command": [
+          "/home/bstar/projects/pcplus-recomp/tools/dev",
+          "--command",
+          "python3",
+          "lab/bbs/test_synchronet_screen_reference_dos.py",
+          "--runtime",
+          "build/menu-size-accepted-20261104/candidate",
+          "--terminal",
+          "build/screen-lab-v1-20261119/TERMINAL.EXE",
+          "--runner",
+          "build/screen-child-overlay-v4-20261119/ASPECT.EXE",
+          "--label",
+          "screen-builtins-screen-v1-20261119",
+          "--size-probe",
+          "--display-rows",
+          "25",
+          "--status-hidden",
+          "0"
+        ],
+        "source_sha256": "a5cdd9ab2299b7c15c0f27ffc28a679e2b7ac0b5520507ddfb4d5319e0942e58",
+        "products": {
+          "TERMINAL.EXE": "7f5b3b0303eac3f4e4a1ee1bb15715015221ec6a656ad128830045de1c5619d5",
+          "ASPECT.EXE": "1a0369887a08084365cbd04dc3f41daa2545088b5a01382f22d3ee9179519fa4",
+          "ASPCOMP.EXE": "00fb07d154bb356145ed7696faa2e93c437188928da10f270c14ddccdca6c23b"
+        },
+        "producer_pid": 799391,
+        "producer_pgid": 799391,
+        "ended": "2026-11-18T15:14:26.863625+00:00",
+        "returncode": 0,
+        "completed": true
+      },
+      "owned_proxy_pid": 799652,
+      "owned_proxy_stopped": true,
+      "ports_free_after": [
+        23231,
+        23233
+      ],
+      "all_owned_processes_absent": true,
+      "event_policy_sha256": "70c05c3b0f36fd258c4eac097bd12dd29486e01dcf2097dade3707871516bbab"
+    }
+  },
+  "receipts": {
+    "build/bbs-lab/results/enigma/screen-builtins-carrier-v3-20261119/carrier-checks.json": "309814433a794b60d1e8abc518e3751e51a5bc930142ea6726d8f9ea645736b3",
+    "build/screen-builtins-carrier-audit-v1-20261119/result.json": "48005fd5965bfbfb8783738f6805f65aa764947aa5c440ca7d65cf448f3f1871",
+    "build/screen-builtins-carrier-controls-v1-20261119/result.json": "37044635aa1aeb3ca7acedab61bbdd6ed4cfbb4bf49e9265c31aa0657e80c35a",
+    "build/screen-bbs-v1-20261119/enigma-v3-job/exit.json": "21110612d7ca821af1afce614c9d913a0130d8560cb805579fa55fea6310b0ac",
+    "build/screen-bbs-v1-20261119/enigma-v3-job/stdout-stderr.log": "28582cdba9fab68932bae64a79e6ba805aefb762fab36b85464c035d62f89fec",
+    "build/screen-bbs-v1-20261119/lifecycle.json": "e47fa85e250b67b78f4ef26033d740a409f7375cb69fef6fa39b1c536a2bea5f",
+    "build/screen-bbs-v1-20261119/incomplete-enigma-v2.json": "881a370f4c561aee893d80cc6d473397dad32a893c261cf5c51427ec574f7cbc",
+    "build/bbs-lab/results/enigma/screen-builtins-carrier-v3-20261119/server-log-capture/result.json": "3ac42f138edbc91624295110f94f31c1f7e031b59273444ad45d046512d9d180",
+    "build/bbs-lab/results/synchronet/screen-builtins-screen-v1-20261119/proxy-integration.json": "9da240c42f95410bed63750de3bdf5083fb52eb978aa41c3fc6696ca7f4a689e",
+    "build/bbs-lab/results/synchronet/screen-builtins-screen-v1-20261119/screen-reference-audit.json": "c5bd56d9fdf739605b02c13c148c7b68b9f2458080d3edc8dd98e4d8a4a29884",
+    "build/bbs-lab/results/synchronet/screen-builtins-screen-v1-20261119/size-probe-screen-audit.json": "c2d7aaf9ec1e1f8d347a3cbc2129a7fff30873da21e0397684a7a1258d63e5dd",
+    "build/screen-bbs-resume-v1-20261119/previous-partial-checkpoint.json": "1b8a0a1a53ec8ec204c1760fe8061d27cd92c2a27f639227af6769151ad4dd39",
+    "build/screen-bbs-resume-v1-20261119/lifecycle.json": "1683896c35adc7572421e82fb33d71e1beb7f74b078d88fd250c077282d73ef5",
+    "build/screen-bbs-resume-v1-20261119/durable_sync_server.py": "97a127040bf5d320b246e62a717b58b92a4a78c9e1e0bb17890960c15e9cd0aa",
+    "build/screen-bbs-resume-v1-20261119/durable_job.py": "a5cdd9ab2299b7c15c0f27ffc28a679e2b7ac0b5520507ddfb4d5319e0942e58",
+    "build/screen-bbs-resume-v1-20261119/synchronet-server/running.json": "894f495c33a19bb52cc98f0eba8389dcd7a6928af006b9e40ee9f4db4112551a",
+    "build/screen-bbs-resume-v1-20261119/synchronet-server/exit.json": "5dea60145437427753116f7eac2064472c78a165a308e05765268922669d395b",
+    "build/screen-bbs-resume-v1-20261119/synchronet-server/console.log": "8e6ecd841e3118a05285f9d8ddf18873191c18f4b0abffc7f85e806cdc6fd839",
+    "build/screen-bbs-resume-v1-20261119/synchronet-server/console-commands.jsonl": "ea671087773f9fbcaf0dccd3d39aa60ac770dc17d21d310a4c43340cd83ac42c",
+    "build/screen-bbs-resume-v1-20261119/synchronet-v1-job/command.json": "e60d897b631d65884687c25dfe70003061257523d7f9a27dd360cffe3e2e0c27",
+    "build/screen-bbs-resume-v1-20261119/synchronet-v1-job/running.json": "f2b2eacb31dadbe447f727de1cb7fa29127b7e4d102d76065899cae6421a9e45",
+    "build/screen-bbs-resume-v1-20261119/synchronet-v1-job/exit.json": "8bb252a711ddb6ef920cf856c58758590d65d50804e1d1644751c86b8b636d3c",
+    "build/screen-bbs-resume-v1-20261119/synchronet-v1-job/stdout-stderr.log": "861e4bfb2b4fdb5bb33c8e025347afd2469e299f4e84e6b5b716b154fa566b7a"
+  },
+  "sources": {
+    "lab/bbs/test_proxy_carrier_dos.py": "64d1f9a13cfae259309ca9aa36ff9967ebfc1083e6bb7ebd570a6007eea331d3",
+    "lab/bbs/audit_proxy_carrier.py": "fb5ea1d5f65f7550be3f11ca68c6f9a93a48e8f98bdd803bec0a7c73cd56d381",
+    "lab/bbs/check_proxy_carrier_controls.py": "338c4eac1f559a2daf29afac23eba663b807407903388334e5eb5a55d3696208",
+    "lab/bbs/proxy_carrier_relay.py": "9aa9d7eea809b6ff2fbc7778834b98b08e8e22c3f54ce4a532aed0c3dd86b612",
+    "lab/bbs/bbs_log_capture.py": "1e018ccbd9c2f93aa13c6d455451d8b0e6dbd6afee357cad1f3ec93c0dd841c4",
+    "lab/bbs/audit_zmodem.py": "21915f685657722a5ea4b0149c5c8a8492bb79c311b8ec319000b6e47d966452",
+    "lab/bbs/enigma.py": "526fcd6eb468ec7a85630685872d27a937abbc6b61f48ad8391a2353e5686017",
+    "lab/bbs/synchronet.py": "974117a9b4971bb1a13dc9483aee08b77bcc4895097133dc7147c18150300dcc",
+    "lab/bbs/test_synchronet_screen_reference_dos.py": "9db5527ad18f68c4feabf377b20e511018fbc9eb68083f78a19e5bc4db1611e6",
+    "lab/bbs/audit_screen_reference.py": "82ea451cd4a5bc24a5194fcfa183e9d51ebf6b2c33bfd9c41ac8d99c34071d22",
+    "lab/bbs/audit_size_probe_screen.py": "0b6da43fad5632ba3dd2c6ed7cda76f812940e0a680c509b5d7c82d3e81b33fb"
+  },
+  "original_inputs": [],
+  "installed_changed": false,
+  "selector_changed": false,
+  "physical_verified": false,
+  "temporary_owned_labs_stopped": true,
+  "live_BBS_contacted": false,
+  "scope": "Accepted current-byte owned stock Enigma and Synchronet software regression on frozen capability27 parentv6/childoverlayv4/compiler-v2. Prior Enigma18-check live-source DCD-loss/retry, strict ZFIN/OO wire audit and16 capture controls remain unchanged and revalidated. Fresh Synchronet DOS8086 passes22 stock editor checks plus independent10-check1920-cell/CPR5,8 and NAWS80x24 audits. Both owned durable server/test jobs exit0, proxies are gone and23231/23233 are free. Previous paused checkpoint and lost-producer negative remain preserved; no traces reconstructed or gates waived. No application/protocol/checker edits, installed selector, private configuration, physical modem/DOS/SIP/audio/live-BBS changes or full-PCPlus/ASPECT/release claim.",
+  "previous_partial_checkpoint": {
+    "path": "build/screen-bbs-resume-v1-20261119/previous-partial-checkpoint.json",
+    "sha256": "1b8a0a1a53ec8ec204c1760fe8061d27cd92c2a27f639227af6769151ad4dd39",
+    "checkpoint_verified": false
+  },
+  "qualified_after_resume": true
+}

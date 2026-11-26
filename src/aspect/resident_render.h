@@ -68,6 +68,37 @@ unsigned __cdecl aspect_render_emulate(unsigned selector);
 unsigned __cdecl aspect_render_compiler_begin(void);
 unsigned __cdecl aspect_render_compiler_end(void);
 #endif
+#ifdef ASPECT_TERMINAL_QUERY
+#ifndef ASPECT_COMPILER_PARENT_LEASE
+#error Terminal query requires the complete compiler-lease renderer profile
+#endif
+#undef ASPECT_RENDER_CAP_VERSION
+#define ASPECT_RENDER_CAP_VERSION 24U
+unsigned __cdecl aspect_render_terminal_query(unsigned,unsigned *);
+#endif
+#ifdef ASPECT_HITKEY_PARENT
+#ifndef ASPECT_TERMINAL_QUERY
+#error HITKEY parent service requires the complete terminal-query profile
+#endif
+#undef ASPECT_RENDER_CAP_VERSION
+#define ASPECT_RENDER_CAP_VERSION 25U
+unsigned __cdecl aspect_render_hitkey_query(unsigned *);
+#endif
+#ifdef ASPECT_STATE_BUILTINS_PARENT
+#ifndef ASPECT_HITKEY_PARENT
+#error State builtins require the complete HITKEY parent profile
+#endif
+#undef ASPECT_RENDER_CAP_VERSION
+#define ASPECT_RENDER_CAP_VERSION 26U
+#endif
+#ifdef ASPECT_SCREEN_PARENT
+#ifndef ASPECT_STATE_BUILTINS_PARENT
+#error Screen commands require the complete state-builtin parent profile
+#endif
+#undef ASPECT_RENDER_CAP_VERSION
+#define ASPECT_RENDER_CAP_VERSION 27U
+unsigned __far __cdecl aspect_render_screen_scalar(unsigned,unsigned);
+#endif
 #ifdef ASPECT_HELP_PARENT_SNAPSHOT
 /*0: private DOS frame required;1: released parent snapshot is available;
  *2: invalid attached PROGRAM/client context. Wire capability remains23. */
